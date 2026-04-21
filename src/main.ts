@@ -22,6 +22,7 @@ import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
 import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
+import { RoomClient } from './net/RoomClient';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -141,11 +142,13 @@ const interaction = new InteractionController(
   {
     onBreak: (bx, by, bz) => {
       audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
-      touchWorldEdit(bx, by, bz);
+      touchWorldEdit(bx, by, bz, 0);
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
-      touchWorldEdit(bx, by, bz);
+      const sel = hotbar.selected;
+      const blockId = sel ? stateId(sel.state) : 0;
+      touchWorldEdit(bx, by, bz, blockId);
     },
   },
 );
@@ -263,7 +266,41 @@ window.addEventListener('beforeunload', () => {
   void savePlayerNow();
 });
 
-const touchWorldEdit = (bx: number, _by: number, bz: number): void => {
+const urlParams = new URLSearchParams(window.location.search);
+const mpMode = urlParams.get('mp');
+const signalingUrl =
+  urlParams.get('signaling') ??
+  (window.location.protocol === 'https:' ? 'wss://localhost:7777' : 'ws://localhost:7777');
+let roomClient: RoomClient | null = null;
+let roomCode: string | null = null;
+
+async function initMultiplayer(): Promise<void> {
+  if (!mpMode) return;
+  const client = new RoomClient({
+    signalingUrl,
+    world,
+    name: 'Player',
+    onRoom: (code) => {
+      roomCode = code;
+    },
+    onError: (msg) => {
+      console.warn('[webmc] mp error:', msg);
+    },
+    onChat: (from, text) => {
+      console.log(`[chat ${from}]`, text);
+    },
+  });
+  try {
+    if (mpMode === 'create') await client.createRoom();
+    else await client.joinRoom(mpMode.toUpperCase());
+    roomClient = client;
+  } catch (err) {
+    console.warn('[webmc] multiplayer init failed', err);
+  }
+}
+void initMultiplayer();
+
+const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
   const cx = Math.floor(bx / 16);
   const cz = Math.floor(bz / 16);
   const chunk = world.getChunk(cx, cz);
@@ -271,18 +308,8 @@ const touchWorldEdit = (bx: number, _by: number, bz: number): void => {
     const light = lightCache.get(lightKey(cx, cz)) ?? null;
     chunkStore.markDirty(chunk, light);
   }
+  roomClient?.applyLocalBlockEdit({ x: bx, y: by, z: bz, block, meta: 0 });
 };
-
-const origOnBreak = (bx: number, by: number, bz: number): void => {
-  audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
-  touchWorldEdit(bx, by, bz);
-};
-const origOnPlace = (bx: number, by: number, bz: number): void => {
-  audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
-  touchWorldEdit(bx, by, bz);
-};
-void origOnBreak;
-void origOnPlace;
 
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
@@ -402,7 +429,7 @@ function frame(): void {
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
     `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
-    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}`;
+    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}${roomCode ? `  room ${roomCode}` : ''}`;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
