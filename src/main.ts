@@ -12,10 +12,13 @@ import {
   createMesherClient,
   extractBorderFromSubChunk,
 } from './world/workers/MesherClient';
+import { InteractionController } from './game/Interaction';
+import { Hotbar } from './ui/Hotbar';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
-if (!canvas || !hudEl) throw new Error('boot: #canvas or #hud missing');
+const appEl = document.querySelector<HTMLElement>('#app');
+if (!canvas || !hudEl || !appEl) throw new Error('boot: app elements missing');
 const hud: HTMLElement = hudEl;
 
 const renderer = new THREE.WebGLRenderer({
@@ -36,12 +39,13 @@ scene.fog = new THREE.Fog(0x8db5f0, 60, 220);
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 const registry = createDefaultRegistry();
-const STONE = makeState(registry.byName('webmc:stone') ?? 1, 0);
-const DIRT = makeState(registry.byName('webmc:dirt') ?? 2, 0);
-const GRASS = makeState(registry.byName('webmc:grass_block') ?? 3, 0);
-const COBBLE = makeState(registry.byName('webmc:cobblestone') ?? 4, 0);
-const LOG = makeState(registry.byName('webmc:oak_log') ?? 5, 0);
-const GLOW = makeState(registry.byName('webmc:glowstone') ?? 6, 0);
+const nameToState = (name: string): BlockState => makeState(registry.byName(name) ?? 1, 0);
+const STONE = nameToState('webmc:stone');
+const DIRT = nameToState('webmc:dirt');
+const GRASS = nameToState('webmc:grass_block');
+const COBBLE = nameToState('webmc:cobblestone');
+const LOG = nameToState('webmc:oak_log');
+const GLOW = nameToState('webmc:glowstone');
 
 const isOpaque = (state: BlockState): boolean => {
   if (state === AIR) return false;
@@ -91,6 +95,27 @@ scene.add(chunkRenderer.group);
 
 const mesherClient = createMesherClient();
 
+const interaction = new InteractionController(
+  camera,
+  () => {
+    const l = fp.lookVector();
+    return { x: l.x, y: l.y, z: l.z };
+  },
+  world,
+  isSolid,
+);
+interaction.attach(canvas);
+interaction.selectedBlock = STONE;
+
+const hotbar = new Hotbar(appEl, registry, [
+  { state: STONE, name: 'stone', color: colorOf(STONE) },
+  { state: DIRT, name: 'dirt', color: colorOf(DIRT) },
+  { state: GRASS, name: 'grass', color: colorOf(GRASS) },
+  { state: COBBLE, name: 'cobble', color: colorOf(COBBLE) },
+  { state: LOG, name: 'oak log', color: colorOf(LOG) },
+  { state: GLOW, name: 'glow', color: colorOf(GLOW) },
+]);
+
 function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
   const b: BorderOpacity = {
     nx: null,
@@ -102,8 +127,6 @@ function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
   };
   const here = world.getChunk(cx, cz);
   if (!here) return b;
-  const sectionHere = here.section(cy);
-  if (!sectionHere) return b;
 
   const nxChunk = world.getChunk(cx - 1, cz);
   const nxSection = nxChunk?.section(cy) ?? null;
@@ -130,24 +153,25 @@ function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
   return b;
 }
 
-async function meshAllDirty(): Promise<void> {
-  const pending: Promise<void>[] = [];
+function flushDirty(): void {
   for (const chunk of world.chunks()) {
-    for (const cy of chunk.meshDirty) {
-      const section = chunk.section(cy);
-      if (!section) continue;
-      const borders = borderFor(chunk.cx, cy, chunk.cz);
-      pending.push(
-        mesherClient
-          .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, colorOf, borders)
-          .then((response) => {
-            chunkRenderer.apply(response);
-          }),
-      );
-    }
+    if (chunk.meshDirty.size === 0) continue;
+    const dirty = Array.from(chunk.meshDirty);
     chunk.clearMeshDirty();
+    for (const cy of dirty) {
+      const section = chunk.section(cy);
+      if (!section) {
+        chunkRenderer.remove(chunk.cx, cy, chunk.cz);
+        continue;
+      }
+      const borders = borderFor(chunk.cx, cy, chunk.cz);
+      void mesherClient
+        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, colorOf, borders)
+        .then((response) => {
+          chunkRenderer.apply(response);
+        });
+    }
   }
-  await Promise.all(pending);
 }
 
 for (const chunk of world.chunks()) {
@@ -155,8 +179,7 @@ for (const chunk of world.chunks()) {
     if (chunk.section(cy)) chunk.markMeshDirty(cy);
   }
 }
-
-void meshAllDirty();
+flushDirty();
 
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
@@ -178,19 +201,28 @@ const rendererInfo = ((): { gl: string; rend: string } => {
 
 function frame(): void {
   const stats = timer.tick();
+  const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
+
   fp.update(dtSec, { isSolid });
+
+  const sel = hotbar.selected;
+  if (sel) interaction.selectedBlock = sel.state;
+  interaction.tick(now);
+
+  flushDirty();
+
   renderer.render(scene, camera);
 
   const look = fp.lookVector();
   hud.textContent =
-    `webmc M1\n` +
+    `webmc M2\n` +
     `${rendererInfo.gl}  ${rendererInfo.rend}\n` +
     `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
     `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}\n` +
-    `${fp.input.fly ? 'fly' : 'walk'}  ${fp.onGround ? 'ground' : 'air'}  ${fp.input.sprint ? 'sprint' : ''}`;
+    `${fp.input.fly ? 'fly' : 'walk'}  ${fp.onGround ? 'ground' : 'air'}  ${sel?.name ?? '?'}`;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

@@ -1,0 +1,119 @@
+import type * as THREE from 'three';
+import type { BlockState } from '@/blocks/state';
+import { AIR } from '@/blocks/state';
+import type { World } from '@/world/World';
+import type { SolidSampler } from '@/physics/collision';
+import { type RayHit, faceNormal, raycastVoxels } from '@/physics/raycast';
+
+export interface InteractionOptions {
+  reach: number;
+  repeatMs: number;
+}
+
+const DEFAULTS: InteractionOptions = {
+  reach: 6,
+  repeatMs: 220,
+};
+
+export class InteractionController {
+  private canvas: HTMLCanvasElement | null = null;
+  private held: 'break' | 'place' | null = null;
+  private lastActionAt = 0;
+  private readonly opts: InteractionOptions;
+  selectedBlock: BlockState = AIR;
+
+  private readonly onMouseDown: (e: MouseEvent) => void;
+  private readonly onMouseUp: (e: MouseEvent) => void;
+  private readonly onContextMenu: (e: MouseEvent) => void;
+
+  constructor(
+    private readonly camera: THREE.PerspectiveCamera,
+    private readonly getLook: () => { x: number; y: number; z: number },
+    private readonly world: World,
+    private readonly isSolid: SolidSampler,
+    opts: Partial<InteractionOptions> = {},
+  ) {
+    this.opts = { ...DEFAULTS, ...opts };
+    this.onMouseDown = (e) => {
+      if (document.pointerLockElement !== this.canvas) return;
+      if (e.button === 0) {
+        this.held = 'break';
+        this.act();
+      } else if (e.button === 2) {
+        this.held = 'place';
+        this.act();
+      }
+    };
+    this.onMouseUp = (e) => {
+      if ((e.button === 0 && this.held === 'break') || (e.button === 2 && this.held === 'place')) {
+        this.held = null;
+      }
+    };
+    this.onContextMenu = (e) => {
+      e.preventDefault();
+    };
+  }
+
+  attach(canvas: HTMLCanvasElement): void {
+    this.canvas = canvas;
+    canvas.addEventListener('mousedown', this.onMouseDown);
+    window.addEventListener('mouseup', this.onMouseUp);
+    canvas.addEventListener('contextmenu', this.onContextMenu);
+  }
+
+  detach(): void {
+    if (this.canvas) {
+      this.canvas.removeEventListener('mousedown', this.onMouseDown);
+      this.canvas.removeEventListener('contextmenu', this.onContextMenu);
+    }
+    window.removeEventListener('mouseup', this.onMouseUp);
+    this.canvas = null;
+  }
+
+  tick(nowMs: number): void {
+    if (this.held === null) return;
+    if (nowMs - this.lastActionAt < this.opts.repeatMs) return;
+    this.act(nowMs);
+  }
+
+  castRay(): RayHit | null {
+    const origin = this.camera.position;
+    const look = this.getLook();
+    return raycastVoxels(origin, look, this.opts.reach, this.isSolid);
+  }
+
+  private act(nowMs = performance.now()): void {
+    this.lastActionAt = nowMs;
+    const hit = this.castRay();
+    if (!hit || hit.distance === 0) return;
+    if (this.held === 'break') {
+      this.world.set(hit.bx, hit.by, hit.bz, AIR);
+    } else if (this.held === 'place' && this.selectedBlock !== AIR) {
+      const n = faceNormal(hit.face);
+      const tx = hit.bx + n[0];
+      const ty = hit.by + n[1];
+      const tz = hit.bz + n[2];
+      if (this.world.get(tx, ty, tz) !== AIR) return;
+      if (this.collidesWithPlayer(tx, ty, tz)) return;
+      this.world.set(tx, ty, tz, this.selectedBlock);
+    }
+  }
+
+  private collidesWithPlayer(bx: number, by: number, bz: number): boolean {
+    const p = this.camera.position;
+    const minX = bx;
+    const maxX = bx + 1;
+    const minY = by;
+    const maxY = by + 1;
+    const minZ = bz;
+    const maxZ = bz + 1;
+    return (
+      p.x + 0.3 > minX &&
+      p.x - 0.3 < maxX &&
+      p.y + 0.9 > minY &&
+      p.y - 1.62 < maxY &&
+      p.z + 0.3 > minZ &&
+      p.z - 0.3 < maxZ
+    );
+  }
+}
