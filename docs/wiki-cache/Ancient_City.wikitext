@@ -1,0 +1,1387 @@
+{{about||other uses|Ancient}}
+{{Infobox structure
+| image = Ancient City SE.png
+| imagesize = x165px
+| y level = -51
+| biome = {{BiomeLink|Deep Dark}}
+| mobs = {{EntityLink|Warden}} (from sculk shrieker)
+| blocks = * See {{slink||Blocks}}
+}}
+{{relevant tutorial|Exploring an ancient city}}
+An '''ancient city''' is a palatial [[structure]] found in [[deep dark]] biomes at Y level -51, harboring [[chest]]s containing some [[item]]s, such as [[disc fragment]]s, that cannot be found anywhere else. It is also the largest structure in the game.
+
+== Generation ==
+Ancient cities cannot generate overlapping each other; however, they can generate directly adjacent to each other<ref>{{bug|MC-250776||Ancient cities can generate directly adjacent to each other|WAI}}</ref>. 
+
+Because they can only generate in the deep dark, they will often be found under [[mountains]] and other places with low [[World_generation#Biomes|erosion]].
+
+{{Calculator|chunkbase|pois=Ac|zoom=0.25}}
+
+== Structure ==
+{{About||the technical details behind ancient city structures|Ancient City/Structure|the blueprints of ancient city structures|Ancient City/Structure/Blueprints}}
+=== Environment aesthetics ===
+An ancient city features a very large palace with a footprint of around 220 blocks on each horizontal axis, stretching throughout a [[deep dark]] biome. The floor of the city always generates at the [[Y level]] of -51. The palace is made up of long corridors with 2-block-deep floors of gray [[wool]], with the occasional rugs of blue, light blue, and cyan wool or [[carpet]] floors to reduce vibrations. Off to the sides of the main corridors are smaller ruin structures, which often contain one or two [[loot chest]]s. The city's center features a frame that contains exclusive [[reinforced deepslate]] blocks, though these are unobtainable in [[Survival]] mode. Other unique blocks such as [[soul lantern]]s, [[candle]]s, and different forms of [[deepslate]] and [[Sculk family|sculk]] can be found thoughout the city. [[Sculk shrieker]]s generate much more frequently in ancient cities than in the normal deep dark biome. The city always generates at the same position within a chunk (for example, the blocks that make up the center frame structure are always on the western edge of a chunk).
+
+Some of the city's structures resemble other elements of the game. The city center bears a resemblance to [[Warden#Concept artwork|early iterations of the warden's design]], and other structures are similar in appearance to [[pillager outpost]]s, the wool rooms in [[woodland mansion]]s, and [[mineshaft|abandoned mineshaft]]s.
+
+==== Overall view ====
+The following three renders are of the same individual ancient city.
+
+<gallery>
+Ancient City SE.png|The view from the direction of the entrance.
+Ancient City NW.png|Another direction.
+Ancient City D.png|The vertical view. The entrance is in the lower part of this picture.
+</gallery>
+
+==== Redstone circuits ====
+Underneath the frame at the city center lies a series of hidden basement rooms with naturally generating [[Redstone circuits|redstone circuitry]].
+
+The secret entrance is located at the base of the structure, underneath the wooden bridge between the city center and the wall. There is a [[piston door]] that is controlled by a [[sculk sensor]] in the basement's redstone circuits.
+
+<gallery>
+Ancient city basement 1.png|Basement of <code>city_center_1</code>.
+Ancient city basement 2.png|Basement of <code>city_center_2</code>.
+Ancient city basement 3.png|Basement of <code>city_center_3</code>.
+Ancient city basement 3 2.png|Piston door circuit in the basement of <code>city_center_3</code>.
+Ancient city basement 2 2.png|Furnace in the basement of <code>city_center_2</code>.
+</gallery>
+
+For {{cd|city_center_1}}, there is a [[chiseled deepslate]] block in front of the frame. Making a vibration around it can activate the [[sculk sensor]] and then open the piston door. There is also a [[pulse extender]] between the sculk sensor and piston door, which makes the piston door close 180 [[game tick]]s after the sculk sensor is deactivated.
+
+The circuit in {{cd|city_center_2}} is similar to the former, but with a signal strength filter. Only vibrations with a frequency equal to 8 (eating or drinking) can activate the piston door. Creating these vibrations on the path in the front of the frame in the city center activates the door.
+
+For {{cd|city_center_3}}, making a vibration on the path in front of the frame on the city center can activate the sculk sensor. Additionally, there's a [[T flip-flop]] between the sculk sensor and piston door. After the sculk sensor is activated, the piston door remains open until the sculk sensor is activated again.
+
+There are three basic redstone circuits in the basement:
+<gallery>
+Ancient city basement 1 1.png|Circuit of the [[target|target block]].
+Ancient city basement 1 2.png|Circuit of the [[lectern]] block.
+Ancient city basement 1 3.png|Circuit to show that some blocks can transfer a signal with a [[Redstone Repeater|repeater]] while some cannot.
+</gallery>
+
+=== File structure ===
+All ancient city structures found below are located in the folder <samp>[[client.jar]]/data/minecraft/structures/ancient_city</samp>{{only|java|short=1}}, <samp>data/structures/ancient_city</samp>{{only|bedrock|short=1}}.
+
+{|class="collapsible collapsed collapse-button-none" data-description="File structure"
+!List
+|-
+|<div class="toccolours treeview">
+* ancient_city
+** city
+*** entrance
+**** entrance_connector.nbt
+**** entrance_path_1.nbt
+**** entrance_path_2.nbt
+**** entrance_path_3.nbt
+**** entrance_path_4.nbt
+**** entrance_path_5.nbt
+** city_center
+*** city_center_1.nbt
+*** city_center_2.nbt
+*** city_center_3.nbt
+*** walls
+**** bottom_1.nbt
+**** bottom_2.nbt
+**** bottom_left_corner.nbt
+**** bottom_right_corner.nbt
+**** bottom_right_corner_1.nbt
+**** bottom_right_corner_2.nbt
+**** left.nbt
+**** right.nbt
+**** top_left_corner.nbt
+**** top_right_corner.nbt
+**** top.nbt
+** structures
+*** barracks.nbt
+*** camp_1.nbt
+*** camp_2.nbt
+*** camp_3.nbt
+*** chamber_1.nbt
+*** chamber_2.nbt
+*** chamber_3.nbt
+*** ice_box_1.nbt
+*** large_pillar_1.nbt
+*** large_ruin_1.nbt
+*** medium_pillar_1.nbt
+*** medium_ruin_1.nbt
+*** medium_ruin_2.nbt
+*** sauna_1.nbt
+*** small_ruin_1.nbt
+*** small_ruin_2.nbt
+*** small_statue.nbt
+*** tall_ruin_1.nbt
+*** tall_ruin_2.nbt
+*** tall_ruin_3.nbt
+*** tall_ruin_4.nbt
+** walls
+*** intact_corner_wall_1.nbt
+*** intact_horizontal_wall_1.nbt
+*** intact_horizontal_wall_2.nbt
+*** intact_horizontal_wall_bridge.nbt
+*** intact_horizontal_wall_passage_1.nbt
+*** intact_horizontal_wall_stairs_1.nbt
+*** intact_horizontal_wall_stairs_2.nbt
+*** intact_horizontal_wall_stairs_3.nbt
+*** intact_horizontal_wall_stairs_4.nbt
+*** intact_intersection_wall_1.nbt
+*** intact_lshape_wall_1.nbt
+*** ruined_corner_wall_1.nbt
+*** ruined_corner_wall_2.nbt
+*** ruined_horizontal_wall_stairs_1.nbt
+*** ruined_horizontal_wall_stairs_2.nbt
+*** ruined_horizontal_wall_stairs_3.nbt
+*** ruined_horizontal_wall_stairs_4.nbt
+</div>
+|}
+
+=== Components ===
+==== Entrance ====
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure name
+! scope="col" style="width: 200px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 200px" | Image
+|-
+| <code>ancient_city/city/entrance/entrance_connector</code>
+| 
+| 
+3 {{BlockLink|Candle}} (1 candle in one block)<br>
+6 {{BlockLink|Candle}} (2 candles in one block)<br>
+6 {{BlockLink|Candle}} (3 candles in one block)<br>
+5 {{BlockLink|Candle}} (4 candles in one block)<br>
+72 {{BlockLink|Chiseled Deepslate}}<br>
+928 {{BlockLink|Deepslate}}<br>
+21 {{BlockLink|Deepslate Brick Slab}}<br>
+9 {{BlockLink|Deepslate Brick Stairs}}<br>
+96 {{BlockLink|Deepslate Bricks}}<br>
+299 {{BlockLink|Deepslate Tile Stairs}}<br>
+595 {{BlockLink|Deepslate Tiles}}<br>
+138 {{BlockLink|Polished Basalt}}<br>
+416 {{BlockLink|Polished Deepslate}}<br>
+12 {{BlockLink|Polished Deepslate Wall}}<br>
+40 {{BlockLink|Smooth Basalt}}<br>
+6 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City entrance connector.png|250px]]
+|-
+| <code>ancient_city/city/entrance/entrance_path_1</code>
+| 
+| 
+12 {{BlockLink|Candle}} (1 candle in one block)<br>
+5 {{BlockLink|Candle}} (2 candles in one block)<br>
+5 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+78 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Cobbled Deepslate Slab}}<br>
+899 {{BlockLink|Deepslate}}<br>
+25 {{BlockLink|Deepslate Brick Slab}}<br>
+6 {{BlockLink|Deepslate Brick Stairs}}<br>
+41 {{BlockLink|Deepslate Bricks}}<br>
+305 {{BlockLink|Deepslate Tile Stairs}}<br>
+731 {{BlockLink|Deepslate Tiles}}<br>
+138 {{BlockLink|Polished Basalt}}<br>
+437 {{BlockLink|Polished Deepslate}}<br>
+3 {{BlockLink|Polished Deepslate Slab}}<br>
+14 {{BlockLink|Polished Deepslate Wall}}<br>
+48 {{BlockLink|Smooth Basalt}}<br>
+7 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City entrance path 1.png|250px]]
+|-
+| <code>ancient_city/city/entrance/entrance_path_2</code>
+| 
+| 
+10 {{BlockLink|Candle}} (1 candle in one block)<br>
+4 {{BlockLink|Candle}} (2 candles in one block)<br>
+4 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+59 {{BlockLink|Chiseled Deepslate}}<br>
+21 {{BlockLink|Dark Oak Planks}}<br>
+810 {{BlockLink|Deepslate}}<br>
+22 {{BlockLink|Deepslate Brick Slab}}<br>
+6 {{BlockLink|Deepslate Brick Stairs}}<br>
+39 {{BlockLink|Deepslate Bricks}}<br>
+9 {{BlockLink|Deepslate Tile Slab}}<br>
+254 {{BlockLink|Deepslate Tile Stairs}}<br>
+2,357 {{BlockLink|Deepslate Tiles}}<br>
+12 {{BlockLink|Ladder}}<br>
+113 {{BlockLink|Polished Basalt}}<br>
+348 {{BlockLink|Polished Deepslate}}<br>
+15 {{BlockLink|Polished Deepslate Wall}}<br>
+39 {{BlockLink|Smooth Basalt}}<br>
+7 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City entrance path 2.png|250px]]
+|-
+| <code>ancient_city/city/entrance/entrance_path_3</code>
+| 
+| 
+8 {{BlockLink|Candle}} (1 candle in one block)<br>
+3 {{BlockLink|Candle}} (2 candles in one block)<br>
+3 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+36 {{BlockLink|Chiseled Deepslate}}<br>
+4 {{BlockLink|Cobbled Deepslate}}<br>
+12 {{BlockLink|Cobbled Deepslate Wall}}<br>
+21 {{BlockLink|Dark Oak Fence}}<br>
+26 {{BlockLink|Dark Oak Log}}<br>
+93 {{BlockLink|Dark Oak Planks}}<br>
+566 {{BlockLink|Deepslate}}<br>
+20 {{BlockLink|Deepslate Brick Slab}}<br>
+4 {{BlockLink|Deepslate Brick Stairs}}<br>
+50 {{BlockLink|Deepslate Bricks}}<br>
+4 {{BlockLink|Deepslate Tile Slab}}<br>
+153 {{BlockLink|Deepslate Tile Stairs}}<br>
+2,163 {{BlockLink|Deepslate Tiles}}<br>
+18 {{BlockLink|Ladder}}<br>
+90 {{BlockLink|Polished Basalt}}<br>
+210 {{BlockLink|Polished Deepslate}}<br>
+8 {{BlockLink|Polished Deepslate Wall}}<br>
+31 {{BlockLink|Smooth Basalt}}<br>
+4 {{BlockLink|Soul Lantern}}<br>
+4 {{BlockLink|Torch}}<br>
+| [[File:Ancient City entrance path 3.png|250px]]
+|-
+| <code>ancient_city/city/entrance/entrance_path_4</code>
+| 
+| 
+8 {{BlockLink|Candle}} (1 candle in one block)<br>
+3 {{BlockLink|Candle}} (2 candles in one block)<br>
+3 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+28 {{BlockLink|Chiseled Deepslate}}<br>
+2 {{BlockLink|Cobbled Deepslate}}<br>
+9 {{BlockLink|Cobbled Deepslate Wall}}<br>
+13 {{BlockLink|Dark Oak Fence}}<br>
+20 {{BlockLink|Dark Oak Log}}<br>
+81 {{BlockLink|Dark Oak Planks}}<br>
+548 {{BlockLink|Deepslate}}<br>
+20 {{BlockLink|Deepslate Brick Slab}}<br>
+4 {{BlockLink|Deepslate Brick Stairs}}<br>
+56 {{BlockLink|Deepslate Bricks}}<br>
+3 {{BlockLink|Deepslate Tile Slab}}<br>
+139 {{BlockLink|Deepslate Tile Stairs}}<br>
+2,137 {{BlockLink|Deepslate Tiles}}<br>
+18 {{BlockLink|Ladder}}<br>
+4 {{BlockLink|Light Blue Carpet}}<br>
+91 {{BlockLink|Polished Basalt}}<br>
+184 {{BlockLink|Polished Deepslate}}<br>
+4 {{BlockLink|Polished Deepslate Wall}}<br>
+28 {{BlockLink|Smooth Basalt}}<br>
+2 {{BlockLink|Soul Lantern}}<br>
+1 {{BlockLink|Torch}}<br>
+| [[File:Ancient City entrance path 4.png|250px]]
+|-
+| <code>ancient_city/city/entrance/entrance_path_5</code>
+| 
+| 
+5 {{BlockLink|Candle}} (1 candle in one block)<br>
+3 {{BlockLink|Candle}} (2 candles in one block)<br>
+1 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+13 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Dark Oak Log}}<br>
+18 {{BlockLink|Dark Oak Planks}}<br>
+373 {{BlockLink|Deepslate}}<br>
+13 {{BlockLink|Deepslate Brick Slab}}<br>
+2 {{BlockLink|Deepslate Brick Stairs}}<br>
+39 {{BlockLink|Deepslate Bricks}}<br>
+2 {{BlockLink|Deepslate Tile Slab}}<br>
+76 {{BlockLink|Deepslate Tile Stairs}}<br>
+1,924 {{BlockLink|Deepslate Tiles}}<br>
+12 {{BlockLink|Ladder}}<br>
+3 {{BlockLink|Light Blue Carpet}}<br>
+72 {{BlockLink|Polished Basalt}}<br>
+93 {{BlockLink|Polished Deepslate}}<br>
+19 {{BlockLink|Smooth Basalt}}<br>
+| [[File:Ancient City entrance path 5.png|250px]]
+|}
+
+==== Center ====
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure name
+! scope="col" style="width: 200px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 200px" | Image
+|-
+| <code>ancient_city/city_center/city_center_1</code>
+| 
+| 
+2 {{BlockLink|Block of Redstone}}<br>
+23 {{BlockLink|Candle}} (1 candle in one block)<br>
+12 {{BlockLink|Candle}} (2 candles in one block)<br>
+13 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+8 {{BlockLink|Chiseled Deepslate}}<br>
+353 {{BlockLink|Cobbled Deepslate}}<br>
+6 {{BlockLink|Cracked Deepslate Bricks}}<br>
+4 {{BlockLink|Cracked Deepslate Tiles}}<br>
+1,476 {{BlockLink|Deepslate}}<br>
+29 {{BlockLink|Deepslate Brick Slab}}<br>
+9 {{BlockLink|Deepslate Brick Wall}}<br>
+3,346 {{BlockLink|Deepslate Bricks}}<br>
+69 {{BlockLink|Deepslate Tile Stairs}}<br>
+1,731 {{BlockLink|Deepslate Tiles}}<br>
+4 {{BlockLink|Dirt}}<br>
+1 {{BlockLink|Glass}}<br>
+138 {{BlockLink|Glass Pane}}<br>
+44 {{BlockLink|Grass Block}}<br>
+221 {{BlockLink|Gray Carpet}}<br>
+199 {{BlockLink|Gray Wool}}<br>
+1 {{BlockLink|Lectern}}<br>
+1 {{BlockLink|Lever}}<br>
+4 {{BlockLink|Piston Head}}<br>
+9 {{BlockLink|Polished Deepslate Wall}}<br>
+8 {{BlockLink|Redstone Comparator}}<br>
+20 {{BlockLink|Redstone Lamp}}<br>
+8 {{BlockLink|Redstone Repeater}}<br>
+1 {{BlockLink|Redstone Wall Torch}}<br>
+41 {{BlockLink|Redstone Dust}}<br>
+56 {{BlockLink|Reinforced Deepslate}}<br>
+1 {{BlockLink|Sculk Sensor}} (Waterlogged)<br>
+57 {{BlockLink|Soul Fire}}<br>
+6 {{BlockLink|Soul Lantern}}<br>
+57 {{BlockLink|Soul Sand}}<br>
+5 {{BlockLink|Sticky Piston}}<br>
+1 {{BlockLink|Target}}<br>
+| [[File:Ancient City city center 1_2.png|250px]]
+|-
+| <code>ancient_city/city_center/city_center_2</code>
+| 
+| 
+2 {{BlockLink|Block of Redstone}}<br>
+23 {{BlockLink|Candle}} (1 candle in one block)<br>
+12 {{BlockLink|Candle}} (2 candles in one block)<br>
+14 {{BlockLink|Candle}} (3 candles in one block)<br>
+3 {{BlockLink|Candle}} (4 candles in one block)<br>
+1 {{BlockLink|Chest}} (with<br>1 {{ItemLink|Golden Apple}})<br>
+6 {{BlockLink|Chiseled Deepslate}}<br>
+350 {{BlockLink|Cobbled Deepslate}}<br>
+6 {{BlockLink|Cracked Deepslate Bricks}}<br>
+4 {{BlockLink|Cracked Deepslate Tiles}}<br>
+1,476 {{BlockLink|Deepslate}}<br>
+40 {{BlockLink|Deepslate Brick Slab}}<br>
+31 {{BlockLink|Deepslate Brick Stairs}}<br>
+9 {{BlockLink|Deepslate Brick Wall}}<br>
+3,232 {{BlockLink|Deepslate Bricks}}<br>
+11 {{BlockLink|Deepslate Tile Slab}}<br>
+74 {{BlockLink|Deepslate Tile Stairs}}<br>
+1,751 {{BlockLink|Deepslate Tiles}}<br>
+4 {{BlockLink|Dirt}}<br>
+1 {{BlockLink|Furnace}} (with<br>1 {{ItemLink|Wooden Shovel}}<br>24 {{BlockLink|Deepslate}}<br>and some {{EntityLink|Experience Orb|xp}})<br>
+4 {{BlockLink|Glass}}<br>
+136 {{BlockLink|Glass Pane}}<br>
+44 {{BlockLink|Grass Block}}<br>
+221 {{BlockLink|Gray Carpet}}<br>
+158 {{BlockLink|Gray Wool}}<br>
+1 {{BlockLink|Lectern}}<br>
+4 {{BlockLink|Piston Head}}<br>
+2 {{BlockLink|Polished Deepslate Slab}}<br>
+9 {{BlockLink|Polished Deepslate Wall}}<br>
+9 {{BlockLink|Redstone Comparator}}<br>
+19 {{BlockLink|Redstone Lamp}}<br>
+8 {{BlockLink|Redstone Repeater}}<br>
+3 {{BlockLink|Redstone Wall Torch}}<br>
+45 {{BlockLink|Redstone Dust}}<br>
+56 {{BlockLink|Reinforced Deepslate}}<br>
+1 {{BlockLink|Sculk Sensor}} (Waterlogged)<br>
+57 {{BlockLink|Soul Fire}}<br>
+6 {{BlockLink|Soul Lantern}}<br>
+57 {{BlockLink|Soul Sand}}<br>
+5 {{BlockLink|Sticky Piston}}<br>
+1 {{BlockLink|Target}}<br>
+| [[File:Ancient City city center 2_2.png|250px]]
+|-
+| <code>ancient_city/city_center/city_center_3</code>
+| 
+| 
+2 {{BlockLink|Block of Redstone}}<br>
+23 {{BlockLink|Candle}} (1 candle in one block)<br>
+12 {{BlockLink|Candle}} (2 candles in one block)<br>
+13 {{BlockLink|Candle}} (3 candles in one block)<br>
+2 {{BlockLink|Candle}} (4 candles in one block)<br>
+7 {{BlockLink|Chiseled Deepslate}}<br>
+350 {{BlockLink|Cobbled Deepslate}}<br>
+6 {{BlockLink|Cracked Deepslate Bricks}}<br>
+4 {{BlockLink|Cracked Deepslate Tiles}}<br>
+1,476 {{BlockLink|Deepslate}}<br>
+29 {{BlockLink|Deepslate Brick Slab}}<br>
+9 {{BlockLink|Deepslate Brick Wall}}<br>
+3,287 {{BlockLink|Deepslate Bricks}}<br>
+65 {{BlockLink|Deepslate Tile Stairs}}<br>
+10 {{BlockLink|Deepslate Tile Wall}}<br>
+1,704 {{BlockLink|Deepslate Tiles}}<br>
+4 {{BlockLink|Dirt}}<br>
+2 {{BlockLink|Glass}}<br>
+136 {{BlockLink|Glass Pane}}<br>
+44 {{BlockLink|Grass Block}}<br>
+221 {{BlockLink|Gray Carpet}}<br>
+173 {{BlockLink|Gray Wool}}<br>
+1 {{BlockLink|Lectern}}<br>
+4 {{BlockLink|Piston Head}}<br>
+2 {{BlockLink|Polished Deepslate Slab}}<br>
+6 {{BlockLink|Polished Deepslate Stairs}}<br>
+9 {{BlockLink|Polished Deepslate Wall}}<br>
+2 {{BlockLink|Redstone Comparator}}<br>
+4 {{BlockLink|Redstone Lamp}}<br>
+13 {{BlockLink|Redstone Repeater}}<br>
+4 {{BlockLink|Redstone Torch}}<br>
+8 {{BlockLink|Redstone Wall Torch}}<br>
+52 {{BlockLink|Redstone Dust}}<br>
+56 {{BlockLink|Reinforced Deepslate}}<br>
+1 {{BlockLink|Sculk Sensor}} (Waterlogged)<br>
+57 {{BlockLink|Soul Fire}}<br>
+6 {{BlockLink|Soul Lantern}}<br>
+57 {{BlockLink|Soul Sand}}<br>
+5 {{BlockLink|Sticky Piston}}<br>
+1 {{BlockLink|Target}}<br>
+| [[File:Ancient City city center 3_2.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_1</code>
+| 
+| 
+117 {{BlockLink|Chiseled Deepslate}}<br>
+9 {{BlockLink|Cracked Deepslate Bricks}}<br>
+11 {{BlockLink|Cracked Deepslate Tiles}}<br>
+12 {{BlockLink|Dark Oak Fence}}<br>
+28 {{BlockLink|Dark Oak Planks}}<br>
+281 {{BlockLink|Deepslate}}<br>
+41 {{BlockLink|Deepslate Brick Stairs}}<br>
+669 {{BlockLink|Deepslate Bricks}}<br>
+4 {{BlockLink|Deepslate Tile Slab}}<br>
+169 {{BlockLink|Deepslate Tile Stairs}}<br>
+12 {{BlockLink|Deepslate Tile Wall}}<br>
+52 {{BlockLink|Deepslate Tiles}}<br>
+493 {{BlockLink|Gray Wool}}<br>
+30 {{BlockLink|Polished Deepslate}}<br>
+57 {{BlockLink|Polished Deepslate Stairs}}<br>
+4 {{BlockLink|Redstone Lamp}}<br>
+4 {{BlockLink|Sculk Sensor}} (Waterlogged)<br>
+| [[File:Ancient City bottom 1_2.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_2</code>
+| 
+| 
+87 {{BlockLink|Chiseled Deepslate}}<br>
+9 {{BlockLink|Cracked Deepslate Bricks}}<br>
+11 {{BlockLink|Cracked Deepslate Tiles}}<br>
+10 {{BlockLink|Dark Oak Fence}}<br>
+20 {{BlockLink|Dark Oak Planks}}<br>
+260 {{BlockLink|Deepslate}}<br>
+40 {{BlockLink|Deepslate Brick Stairs}}<br>
+651 {{BlockLink|Deepslate Bricks}}<br>
+2 {{BlockLink|Deepslate Tile Slab}}<br>
+125 {{BlockLink|Deepslate Tile Stairs}}<br>
+12 {{BlockLink|Deepslate Tile Wall}}<br>
+52 {{BlockLink|Deepslate Tiles}}<br>
+484 {{BlockLink|Gray Wool}}<br>
+31 {{BlockLink|Polished Deepslate}}<br>
+32 {{BlockLink|Polished Deepslate Stairs}}<br>
+3 {{BlockLink|Redstone Lamp}}<br>
+1 {{BlockLink|Sculk Sensor}}<br>
+2 {{BlockLink|Sculk Sensor}} (Waterlogged)<br>
+| [[File:Ancient City bottom 2_2.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_left_corner</code>
+| 
+| 
+59 {{BlockLink|Chiseled Deepslate}}<br>
+63 {{BlockLink|Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Stairs}}<br>
+198 {{BlockLink|Deepslate Bricks}}<br>
+1 {{BlockLink|Deepslate Tile Slab}}<br>
+109 {{BlockLink|Deepslate Tile Stairs}}<br>
+8 {{BlockLink|Deepslate Tile Wall}}<br>
+14 {{BlockLink|Deepslate Tiles}}<br>
+172 {{BlockLink|Gray Wool}}<br>
+| [[File:Ancient City bottom_left_corner.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_right_corner</code>
+| 
+| 
+63 {{BlockLink|Chiseled Deepslate}}<br>
+67 {{BlockLink|Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Stairs}}<br>
+223 {{BlockLink|Deepslate Bricks}}<br>
+4 {{BlockLink|Deepslate Tile Slab}}<br>
+142 {{BlockLink|Deepslate Tile Stairs}}<br>
+8 {{BlockLink|Deepslate Tile Wall}}<br>
+14 {{BlockLink|Deepslate Tiles}}<br>
+247 {{BlockLink|Gray Wool}}<br>
+| [[File:Ancient City bottom_right_corner.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_right_corner_1</code>
+| 
+| 
+43 {{BlockLink|Chiseled Deepslate}}<br>
+8 {{BlockLink|Dark Oak Planks}}<br>
+36 {{BlockLink|Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Stairs}}<br>
+203 {{BlockLink|Deepslate Bricks}}<br>
+4 {{BlockLink|Deepslate Tile Slab}}<br>
+109 {{BlockLink|Deepslate Tile Stairs}}<br>
+6 {{BlockLink|Deepslate Tile Wall}}<br>
+20 {{BlockLink|Deepslate Tiles}}<br>
+154 {{BlockLink|Gray Wool}}<br>
+3 {{BlockLink|Light Blue Carpet}}<br>
+| [[File:Ancient City bottom_right_corner_1.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/bottom_right_corner_2</code>
+| 
+| 
+48 {{BlockLink|Chiseled Deepslate}}<br>
+65 {{BlockLink|Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Stairs}}<br>
+195 {{BlockLink|Deepslate Bricks}}<br>
+4 {{BlockLink|Deepslate Tile Slab}}<br>
+121 {{BlockLink|Deepslate Tile Stairs}}<br>
+6 {{BlockLink|Deepslate Tile Wall}}<br>
+14 {{BlockLink|Deepslate Tiles}}<br>
+172 {{BlockLink|Gray Wool}}<br>
+| [[File:Ancient City bottom_right_corner_2.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/left</code>
+| 
+| 
+41 {{BlockLink|Chiseled Deepslate}}<br>
+1 {{BlockLink|Cracked Deepslate Bricks}}<br>
+120 {{BlockLink|Deepslate}}<br>
+16 {{BlockLink|Deepslate Brick Stairs}}<br>
+302 {{BlockLink|Deepslate Bricks}}<br>
+95 {{BlockLink|Deepslate Tile Stairs}}<br>
+6 {{BlockLink|Deepslate Tile Wall}}<br>
+7 {{BlockLink|Deepslate Tiles}}<br>
+242 {{BlockLink|Gray Wool}}<br>
+8 {{BlockLink|Polished Deepslate Stairs}}<br>
+| [[File:Ancient City left.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/right</code>
+| 
+| 
+41 {{BlockLink|Chiseled Deepslate}}<br>
+1 {{BlockLink|Cracked Deepslate Bricks}}<br>
+130 {{BlockLink|Deepslate}}<br>
+16 {{BlockLink|Deepslate Brick Stairs}}<br>
+288 {{BlockLink|Deepslate Bricks}}<br>
+98 {{BlockLink|Deepslate Tile Stairs}}<br>
+6 {{BlockLink|Deepslate Tile Wall}}<br>
+7 {{BlockLink|Deepslate Tiles}}<br>
+246 {{BlockLink|Gray Wool}}<br>
+8 {{BlockLink|Polished Deepslate Stairs}}<br>
+| [[File:Ancient City right.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/top</code>
+| 
+| 
+96 {{BlockLink|Chiseled Deepslate}}<br>
+362 {{BlockLink|Deepslate}}<br>
+44 {{BlockLink|Deepslate Brick Stairs}}<br>
+599 {{BlockLink|Deepslate Bricks}}<br>
+270 {{BlockLink|Deepslate Tile Stairs}}<br>
+10 {{BlockLink|Deepslate Tile Wall}}<br>
+20 {{BlockLink|Deepslate Tiles}}<br>
+566 {{BlockLink|Gray Wool}}<br>
+7 {{BlockLink|Polished Deepslate Stairs}}<br>
+| [[File:Ancient City top.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/top_left_corner</code>
+| 
+| 
+59 {{BlockLink|Chiseled Deepslate}}<br>
+63 {{BlockLink|Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Stairs}}<br>
+198 {{BlockLink|Deepslate Bricks}}<br>
+113 {{BlockLink|Deepslate Tile Stairs}}<br>
+8 {{BlockLink|Deepslate Tile Wall}}<br>
+14 {{BlockLink|Deepslate Tiles}}<br>
+172 {{BlockLink|Gray Wool}}<br>
+| [[File:Ancient City top_left_corner.png|250px]]
+|-
+| <code>ancient_city/city_center/walls/top_right_corner</code>
+| 
+| 
+55 {{BlockLink|Chiseled Deepslate}}<br>
+72 {{BlockLink|Deepslate}}<br>
+14 {{BlockLink|Deepslate Brick Stairs}}<br>
+186 {{BlockLink|Deepslate Bricks}}<br>
+1 {{BlockLink|Deepslate Tile Slab}}<br>
+115 {{BlockLink|Deepslate Tile Stairs}}<br>
+8 {{BlockLink|Deepslate Tile Wall}}<br>
+14 {{BlockLink|Deepslate Tiles}}<br>
+182 {{BlockLink|Gray Wool}}<br>
+| [[File:Ancient City top_right_corner.png|250px]]
+|}
+
+==== Ruins ====
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure name
+! scope="col" style="width: 200px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 200px" | Image
+|-
+| <code>ancient_city/structures/barracks</code>
+| A large, relatively spacious area containing 2 chests, a statue resembling the warden's head (Built identically to small_statue), and 2 shrine-like structures.
+| 
+2 {{BlockLink|Chest}} (with<br>some loot: chests/ancient_city)<br>
+3 {{BlockLink|Chiseled Deepslate}}<br>
+28 {{BlockLink|Cobbled Deepslate}}<br>
+10 {{BlockLink|Cobbled Deepslate Stairs}}<br>
+1,140 {{BlockLink|Deepslate}}<br>
+7 {{BlockLink|Deepslate Brick Slab}}<br>
+45 {{BlockLink|Deepslate Brick Stairs}}<br>
+6 {{BlockLink|Deepslate Bricks}}<br>
+2 {{BlockLink|Deepslate Tile Slab}}<br>
+6 {{BlockLink|Deepslate Tile Stairs}}<br>
+205 {{BlockLink|Deepslate Tiles}}<br>
+95 {{BlockLink|Polished Deepslate}}<br>
+2 {{BlockLink|Polished Deepslate Wall}}<br>
+1 {{BlockLink|Skeleton Skull}}<br>
+2 {{BlockLink|Soul Fire}}<br>
+2 {{BlockLink|Soul Sand}}<br>
+7 {{BlockLink|White Candle}} (1 white candle in one block)<br>
+10 {{BlockLink|White Candle}} (2 white candles in one block)<br>
+5 {{BlockLink|White Candle}} (3 white candles in one block)<br>
+| [[File:Ancient City barracks.png|250px]]
+|-
+| <code>ancient_city/structures/camp_1</code>
+| A elevated platform with clumps of blue, cyan, and light blue wool on it with cobbled deepslate ruins scattered around it.
+| 
+32 {{BlockLink|Blue Wool}}<br>
+117 {{BlockLink|Cobbled Deepslate}}<br>
+38 {{BlockLink|Cobbled Deepslate Stairs}}<br>
+19 {{BlockLink|Cyan Wool}}<br>
+3 {{BlockLink|Deepslate Bricks}}<br>
+25 {{BlockLink|Light Blue Wool}}<br>
+| [[File:Ancient City camp_1.png|250px]]
+|-
+| <code>ancient_city/structures/camp_2</code>
+| A more intact version of camp_1 with dark oak logs, a still-lit campfire, and a sort of table in the middle of the platform.
+| 
+13 {{BlockLink|Blue Wool}}<br>
+1 {{BlockLink|Campfire}}<br>
+117 {{BlockLink|Cobbled Deepslate}}<br>
+44 {{BlockLink|Cobbled Deepslate Stairs}}<br>
+13 {{BlockLink|Cyan Wool}}<br>
+13 {{BlockLink|Dark Oak Log}}<br>
+3 {{BlockLink|Deepslate Bricks}}<br>
+16 {{BlockLink|Light Blue Wool}}<br>
+| [[File:Ancient City camp_2.png|250px]]
+|-
+| <code>ancient_city/structures/camp_3</code>
+| An even more ruined version of camp_1, with most of its wool missing.
+| 
+3 {{BlockLink|Blue Carpet}}<br>
+13 {{BlockLink|Blue Wool}}<br>
+1 {{BlockLink|Campfire}}<br>
+102 {{BlockLink|Cobbled Deepslate}}<br>
+27 {{BlockLink|Cobbled Deepslate Stairs}}<br>
+3 {{BlockLink|Deepslate Bricks}}<br>
+6 {{BlockLink|Light Blue Wool}}<br>
+| [[File:Ancient City camp_3.png|250px]]
+|-
+| <code>ancient_city/structures/chamber_1</code>
+| 
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+10 {{BlockLink|Chiseled Deepslate}}<br>
+390 {{BlockLink|Cobbled Deepslate}}<br>
+2 {{BlockLink|Deepslate}}<br>
+197 {{BlockLink|Deepslate Bricks}}<br>
+64 {{BlockLink|Deepslate Tiles}}<br>
+| [[File:Ancient City chamber_1.png|250px]]
+|-
+| <code>ancient_city/structures/chamber_2</code>
+| A basic chamber made from Deepslate materials with a chest at the back.
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+5 {{BlockLink|Chiseled Deepslate}}<br>
+155 {{BlockLink|Cobbled Deepslate}}<br>
+1 {{BlockLink|Deepslate}}<br>
+78 {{BlockLink|Deepslate Bricks}}<br>
+33 {{BlockLink|Deepslate Tiles}}<br>
+| [[File:Ancient City chamber_2.png|250px]]
+|-
+| <code>ancient_city/structures/chamber_3</code>
+| Another basic chamber with 2 larger pillars near its entrance and a chest in the back.
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+3 {{BlockLink|Chiseled Deepslate}}<br>
+85 {{BlockLink|Cobbled Deepslate}}<br>
+1 {{BlockLink|Deepslate}}<br>
+75 {{BlockLink|Deepslate Bricks}}<br>
+40 {{BlockLink|Deepslate Tiles}}<br>
+| [[File:Ancient City chamber_3.png|250px]]
+|-
+| <code>ancient_city/structures/ice_box_1</code>
+| A rarer structure consisting of a room with stairs leading up to it. At the entrance are stone pressure plates that activate note blocks.
+Inside is a chest with loot from a loot table specific to the ice box structure, as well as ice blocks and top snow scattered around the inside of the room.
+| 
+12 {{BlockLink|Blue Ice}}<br>
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city_ice_box)<br>
+10 {{BlockLink|Chiseled Deepslate}}<br>
+384 {{BlockLink|Cobbled Deepslate}}<br>
+21 {{BlockLink|Cracked Deepslate Bricks}}<br>
+2 {{BlockLink|Deepslate}}<br>
+2 {{BlockLink|Deepslate Brick Stairs}}<br>
+228 {{BlockLink|Deepslate Bricks}}<br>
+150 {{BlockLink|Deepslate Tiles}}<br>
+8 {{BlockLink|Gray Carpet}}<br>
+9 {{BlockLink|Ice}}<br>
+1 {{BlockLink|Iron Trapdoor}}<br>
+3 {{BlockLink|Ladder}}<br>
+1 {{BlockLink|Lever}}<br>
+2 {{BlockLink|Note Block}}<br>
+62 {{BlockLink|Packed Ice}}<br>
+4 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Polished Deepslate Slab}}<br>
+8 {{BlockLink|Polished Deepslate Stairs}}<br>
+30 {{BlockLink|Snow}}<br>
+3 {{BlockLink|Soul Lantern}}<br>
+3 {{BlockLink|Stone Pressure Plate}}<br>
+| [[File:Ancient City ice_box_1.png|250px]]
+|-
+| <code>ancient_city/structures/large_pillar_1</code>
+| A large 4x4 pillar with patterns of chiselled and polished deepslate on its sides.
+| 
+16 {{BlockLink|Chiseled Deepslate}}<br>
+135 {{BlockLink|Deepslate}}<br>
+64 {{BlockLink|Deepslate Tile Stairs}}<br>
+20 {{BlockLink|Deepslate Tiles}}<br>
+84 {{BlockLink|Polished Deepslate}}<br>
+| [[File:Ancient City large_pillar_1.png|250px]]
+|-
+| <code>ancient_city/structures/large_ruin_1</code>
+| A large scattered square frame of small cobbled deepslate piles.
+| 
+35 {{BlockLink|Cobbled Deepslate}}<br>
+3 {{BlockLink|Deepslate Bricks}}<br>
+| [[File:Ancient City large_ruin_1.png|250px]]
+|-
+| <code>ancient_city/structures/medium_pillar_1</code>
+| A 2x2 pillar with a skeleton skull on its base.
+| 
+4 {{BlockLink|Chiseled Deepslate}}<br>
+87 {{BlockLink|Deepslate}}<br>
+2 {{BlockLink|Deepslate Tile Slab}}<br>
+20 {{BlockLink|Deepslate Tile Stairs}}<br>
+4 {{BlockLink|Deepslate Tiles}}<br>
+10 {{BlockLink|Polished Deepslate}}<br>
+1 {{BlockLink|Skeleton Skull}}<br>
+| [[File:Ancient City medium_pillar_1.png|250px]]
+|-
+| <code>ancient_city/structures/medium_ruin_1</code>
+| A medium scattered assortment of cobbled deepslate piles.
+| 
+19 {{BlockLink|Cobbled Deepslate}}<br>
+| [[File:Ancient City medium_ruin_1.png|250px]]
+|-
+| <code>ancient_city/structures/medium_ruin_2</code>
+| A larger scattered assortment of cobbled deepslate piles.
+| 
+29 {{BlockLink|Cobbled Deepslate}}<br>
+| [[File:Ancient City medium_ruin_2.png|250px]]
+|-
+| <code>ancient_city/structures/sauna_1</code>
+| A rare, larger structure featuring a pool and an elevated heated pool with 3 changing rooms, each containing a chest.
+| 
+3 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+46 {{BlockLink|Chiseled Deepslate}}<br>
+157 {{BlockLink|Cracked Deepslate Bricks}}<br>
+23 {{BlockLink|Cracked Deepslate Tiles}}<br>
+73 {{BlockLink|Deepslate}}<br>
+1 {{BlockLink|Deepslate Brick Slab}}<br>
+1,038 {{BlockLink|Deepslate Bricks}}<br>
+3 {{BlockLink|Deepslate Tile Slab}}<br>
+69 {{BlockLink|Deepslate Tile Stairs}}<br>
+17 {{BlockLink|Deepslate Tile Stairs}} (Waterlogged)<br>
+342 {{BlockLink|Deepslate Tiles}}<br>
+43 {{BlockLink|Water}}<br>
+10 {{BlockLink|White Candle}} (1 white candle in one block)<br>
+14 {{BlockLink|White Candle}} (2 white candles in one block)<br>
+4 {{BlockLink|White Candle}} (3 white candles in one block)<br>
+3 {{BlockLink|White Candle}} (4 white candles in one block)<br>
+| [[File:Ancient City sauna_1.png|250px]]
+|-
+| <code>ancient_city/structures/small_ruin_1</code>
+| Scattered piles of cobbled deepslate.
+| 
+16 {{BlockLink|Cobbled Deepslate}}<br>
+| [[File:Ancient City small_ruin_1.png|250px]]
+|-
+| <code>ancient_city/structures/small_ruin_2</code>
+| A few small piles of cobbled deepslate.
+| 
+16 {{BlockLink|Cobbled Deepslate}}<br>
+| [[File:Ancient City small_ruin_2.png|250px]]
+|-
+| <code>ancient_city/structures/small_statue</code>
+| A small, slightly elevated altar with a statue resembling the warden's head and white candles in front of it.
+| 
+22 {{BlockLink|Cobbled Deepslate}}<br>
+32 {{BlockLink|Deepslate}}<br>
+4 {{BlockLink|Deepslate Brick Slab}}<br>
+2 {{BlockLink|Deepslate Brick Stairs}}<br>
+2 {{BlockLink|Deepslate Tile Slab}}<br>
+2 {{BlockLink|Deepslate Tiles}}<br>
+44 {{BlockLink|Polished Deepslate}}<br>
+2 {{BlockLink|Polished Deepslate Wall}}<br>
+3 {{BlockLink|White Candle}} (1 white candle in one block)<br>
+1 {{BlockLink|White Candle}} (4 white candles in one block)<br>
+| [[File:Ancient City small_statue.png|250px]]
+|-
+| <code>ancient_city/structures/tall_ruin_1</code>
+| A tower with multiple ladder entrances to the second floor, and a 4-sided ladder pillar to the third floor, which has a chest.
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+5 {{BlockLink|Chiseled Deepslate}}<br>
+123 {{BlockLink|Deepslate Bricks}}<br>
+84 {{BlockLink|Deepslate Tile Slab}}<br>
+40 {{BlockLink|Deepslate Tile Stairs}}<br>
+4 {{BlockLink|Deepslate Tile Wall}}<br>
+199 {{BlockLink|Deepslate Tiles}}<br>
+92 {{BlockLink|Ladder}}<br>
+43 {{BlockLink|Polished Basalt}}<br>
+40 {{BlockLink|Polished Deepslate Wall}}<br>
+4 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City tall_ruin_1.png|250px]]
+|-
+| <code>ancient_city/structures/tall_ruin_2</code>
+| A 2-story building containing 2 chests and a staircase to its second floor, lined with gray carpets.
+| 
+2 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+336 {{BlockLink|Deepslate Bricks}}<br>
+68 {{BlockLink|Deepslate Tile Stairs}}<br>
+65 {{BlockLink|Deepslate Tile Wall}}<br>
+371 {{BlockLink|Deepslate Tiles}}<br>
+66 {{BlockLink|Gray Carpet}}<br>
+7 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City tall_ruin_2.png|250px]]
+|-
+| <code>ancient_city/structures/tall_ruin_3</code>
+| A heavily damaged version of tall_ruin_1. It still has a chest on its top floor.
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+87 {{BlockLink|Deepslate Bricks}}<br>
+30 {{BlockLink|Deepslate Tile Slab}}<br>
+33 {{BlockLink|Deepslate Tile Stairs}}<br>
+2 {{BlockLink|Deepslate Tile Wall}}<br>
+112 {{BlockLink|Deepslate Tiles}}<br>
+1 {{BlockLink|Ladder}}<br>
+21 {{BlockLink|Polished Deepslate Wall}}<br>
+| [[File:Ancient City tall_ruin_3.png|250px]]
+|-
+| <code>ancient_city/structures/tall_ruin_4</code>
+| A heavily damaged version of tall_ruin_2, which is missing one chest.
+| 
+1 {{BlockLink|Chest}} (with<br>some loots: chests/ancient_city)<br>
+230 {{BlockLink|Deepslate Bricks}}<br>
+42 {{BlockLink|Deepslate Tile Stairs}}<br>
+22 {{BlockLink|Deepslate Tile Wall}}<br>
+225 {{BlockLink|Deepslate Tiles}}<br>
+24 {{BlockLink|Gray Carpet}}<br>
+| [[File:Ancient City tall_ruin_4.png|250px]]
+|}
+
+==== Walls ====
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure name
+! scope="col" style="width: 200px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 200px" | Image
+|-
+| <code>ancient_city/walls/intact_corner_wall_1</code>
+| 
+| 
+1 {{BlockLink|Chiseled Deepslate}}<br>
+8 {{BlockLink|Deepslate Brick Stairs}}<br>
+305 {{BlockLink|Deepslate Bricks}}<br>
+157 {{BlockLink|Deepslate Tiles}}<br>
+436 {{BlockLink|Gray Wool}}<br>
+20 {{BlockLink|Ladder}}<br>
+5 {{BlockLink|Polished Basalt}}<br>
+89 {{BlockLink|Polished Deepslate}}<br>
+9 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_corner_wall_1.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_1</code>
+| 
+| 
+20 {{BlockLink|Chiseled Deepslate}}<br>
+183 {{BlockLink|Deepslate Bricks}}<br>
+82 {{BlockLink|Deepslate Tiles}}<br>
+216 {{BlockLink|Gray Wool}}<br>
+24 {{BlockLink|Polished Deepslate}}<br>
+2 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_1.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_2</code>
+| 
+| 
+18 {{BlockLink|Chiseled Deepslate}}<br>
+182 {{BlockLink|Deepslate Bricks}}<br>
+79 {{BlockLink|Deepslate Tiles}}<br>
+216 {{BlockLink|Gray Wool}}<br>
+24 {{BlockLink|Polished Deepslate}}<br>
+2 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_2.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_bridge</code>
+| 
+| 
+2 {{BlockLink|Chiseled Deepslate}}<br>
+20 {{BlockLink|Deepslate Brick Stairs}}<br>
+319 {{BlockLink|Deepslate Bricks}}<br>
+20 {{BlockLink|Deepslate Tile Slab}}<br>
+28 {{BlockLink|Deepslate Tile Stairs}}<br>
+127 {{BlockLink|Deepslate Tiles}}<br>
+176 {{BlockLink|Gray Wool}}<br>
+10 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_bridge.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_passage_1</code>
+| 
+| 
+13 {{BlockLink|Chiseled Deepslate}}<br>
+4 {{BlockLink|Deepslate Brick Stairs}}<br>
+161 {{BlockLink|Deepslate Bricks}}<br>
+16 {{BlockLink|Deepslate Tile Stairs}}<br>
+36 {{BlockLink|Deepslate Tiles}}<br>
+112 {{BlockLink|Gray Wool}}<br>
+11 {{BlockLink|Polished Deepslate}}<br>
+4 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_passage_1.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_stairs_1</code>
+| 
+| 
+16 {{BlockLink|Chiseled Deepslate}}<br>
+166 {{BlockLink|Deepslate Bricks}}<br>
+12 {{BlockLink|Deepslate Tile Stairs}}<br>
+81 {{BlockLink|Deepslate Tiles}}<br>
+226 {{BlockLink|Gray Wool}}<br>
+27 {{BlockLink|Polished Deepslate}}<br>
+3 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_stairs_1.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_stairs_2</code>
+| 
+| 
+20 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Deepslate Brick Stairs}}<br>
+177 {{BlockLink|Deepslate Bricks}}<br>
+9 {{BlockLink|Deepslate Tile Slab}}<br>
+3 {{BlockLink|Deepslate Tile Stairs}}<br>
+79 {{BlockLink|Deepslate Tiles}}<br>
+220 {{BlockLink|Gray Wool}}<br>
+26 {{BlockLink|Polished Deepslate}}<br>
+3 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_stairs_2.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_stairs_3</code>
+| 
+| 
+20 {{BlockLink|Chiseled Deepslate}}<br>
+2 {{BlockLink|Deepslate Brick Stairs}}<br>
+171 {{BlockLink|Deepslate Bricks}}<br>
+11 {{BlockLink|Deepslate Tile Slab}}<br>
+3 {{BlockLink|Deepslate Tile Stairs}}<br>
+81 {{BlockLink|Deepslate Tiles}}<br>
+220 {{BlockLink|Gray Wool}}<br>
+22 {{BlockLink|Polished Deepslate}}<br>
+5 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_stairs_3.png|250px]]
+|-
+| <code>ancient_city/walls/intact_horizontal_wall_stairs_4</code>
+| 
+| 
+12 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Deepslate Brick Stairs}}<br>
+4 {{BlockLink|Deepslate Brick Wall}}<br>
+100 {{BlockLink|Deepslate Bricks}}<br>
+9 {{BlockLink|Deepslate Tile Slab}}<br>
+25 {{BlockLink|Deepslate Tile Stairs}}<br>
+80 {{BlockLink|Deepslate Tiles}}<br>
+182 {{BlockLink|Gray Wool}}<br>
+20 {{BlockLink|Polished Deepslate}}<br>
+6 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_horizontal_wall_stairs_4.png|250px]]
+|-
+| <code>ancient_city/walls/intact_intersection_wall_1</code>
+| 
+| 
+1 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Deepslate Brick Stairs}}<br>
+264 {{BlockLink|Deepslate Bricks}}<br>
+127 {{BlockLink|Deepslate Tiles}}<br>
+331 {{BlockLink|Gray Wool}}<br>
+15 {{BlockLink|Ladder}}<br>
+5 {{BlockLink|Polished Basalt}}<br>
+80 {{BlockLink|Polished Deepslate}}<br>
+8 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_intersection_wall_1.png|250px]]
+|-
+| <code>ancient_city/walls/intact_lshape_wall_1</code>
+| 
+| 
+1 {{BlockLink|Chiseled Deepslate}}<br>
+189 {{BlockLink|Deepslate Bricks}}<br>
+91 {{BlockLink|Deepslate Tiles}}<br>
+246 {{BlockLink|Gray Wool}}<br>
+10 {{BlockLink|Ladder}}<br>
+5 {{BlockLink|Polished Basalt}}<br>
+59 {{BlockLink|Polished Deepslate}}<br>
+5 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City intact_lshape_wall_1.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_corner_wall_1</code>
+| 
+| 
+4 {{BlockLink|Cobbled Deepslate}}<br>
+12 {{BlockLink|Cobbled Deepslate Wall}}<br>
+16 {{BlockLink|Dark Oak Fence}}<br>
+12 {{BlockLink|Dark Oak Log}}<br>
+97 {{BlockLink|Dark Oak Planks}}<br>
+297 {{BlockLink|Deepslate Bricks}}<br>
+149 {{BlockLink|Deepslate Tiles}}<br>
+360 {{BlockLink|Gray Wool}}<br>
+5 {{BlockLink|Ladder}}<br>
+20 {{BlockLink|Light Blue Carpet}}<br>
+20 {{BlockLink|Light Blue Wool}}<br>
+5 {{BlockLink|Polished Basalt}}<br>
+81 {{BlockLink|Polished Deepslate}}<br>
+8 {{BlockLink|Soul Lantern}}<br>
+4 {{BlockLink|Torch}}<br>
+| [[File:Ancient City ruined_corner_wall_1.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_corner_wall_2</code>
+| 
+| 
+1 {{BlockLink|Cobbled Deepslate}}<br>
+2 {{BlockLink|Dark Oak Log}}<br>
+37 {{BlockLink|Dark Oak Planks}}<br>
+250 {{BlockLink|Deepslate Bricks}}<br>
+146 {{BlockLink|Deepslate Tiles}}<br>
+344 {{BlockLink|Gray Wool}}<br>
+15 {{BlockLink|Light Blue Carpet}}<br>
+20 {{BlockLink|Light Blue Wool}}<br>
+59 {{BlockLink|Polished Deepslate}}<br>
+7 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City ruined_corner_wall_2.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_horizontal_wall_stairs_1</code>
+| 
+| 
+7 {{BlockLink|Chiseled Deepslate}}<br>
+83 {{BlockLink|Deepslate Bricks}}<br>
+3 {{BlockLink|Deepslate Tile Stairs}}<br>
+67 {{BlockLink|Deepslate Tiles}}<br>
+142 {{BlockLink|Gray Wool}}<br>
+14 {{BlockLink|Polished Deepslate}}<br>
+1 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City ruined_horizontal_wall_stairs_1.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_horizontal_wall_stairs_2</code>
+| 
+| 
+10 {{BlockLink|Blue Carpet}}<br>
+12 {{BlockLink|Chiseled Deepslate}}<br>
+3 {{BlockLink|Dark Oak Log}}<br>
+10 {{BlockLink|Dark Oak Planks}}<br>
+3 {{BlockLink|Deepslate Brick Stairs}}<br>
+111 {{BlockLink|Deepslate Bricks}}<br>
+29 {{BlockLink|Deepslate Tile Slab}}<br>
+3 {{BlockLink|Deepslate Tile Stairs}}<br>
+72 {{BlockLink|Deepslate Tiles}}<br>
+177 {{BlockLink|Gray Wool}}<br>
+16 {{BlockLink|Polished Deepslate}}<br>
+1 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City ruined_horizontal_wall_stairs_2.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_horizontal_wall_stairs_3</code>
+| 
+| 
+7 {{BlockLink|Chiseled Deepslate}}<br>
+10 {{BlockLink|Cyan Carpet}}<br>
+10 {{BlockLink|Dark Oak Planks}}<br>
+61 {{BlockLink|Deepslate Bricks}}<br>
+3 {{BlockLink|Deepslate Tile Slab}}<br>
+1 {{BlockLink|Deepslate Tile Stairs}}<br>
+52 {{BlockLink|Deepslate Tiles}}<br>
+102 {{BlockLink|Gray Wool}}<br>
+11 {{BlockLink|Polished Deepslate}}<br>
+3 {{BlockLink|Soul Lantern}}<br>
+| [[File:Ancient City ruined_horizontal_wall_stairs_3.png|250px]]
+|-
+| <code>ancient_city/walls/ruined_horizontal_wall_stairs_4</code>
+| 
+| 
+2 {{BlockLink|Chiseled Deepslate}}<br>
+15 {{BlockLink|Deepslate Brick Slab}}<br>
+6 {{BlockLink|Deepslate Brick Stairs}}<br>
+61 {{BlockLink|Deepslate Bricks}}<br>
+112 {{BlockLink|Deepslate Tile Slab}}<br>
+28 {{BlockLink|Deepslate Tiles}}<br>
+30 {{BlockLink|Gray Wool}}<br>
+6 {{BlockLink|Polished Deepslate}}<br>
+| [[File:Ancient City ruined_horizontal_wall_stairs_4.png|250px]]
+|}
+
+=== Blocks ===
+{| class="wikitable"
+|-
+! Main components
+| <div style="-moz-column-count: 3; -webkit-column-count: 3; column-count: 3;">
+* {{BlockLink|Deepslate}}
+* {{BlockLink|Cobbled Deepslate}}
+* {{BlockLink|Polished Deepslate}}
+* {{BlockLink|Deepslate Bricks}}
+* {{BlockLink|Deepslate Tiles}}
+* {{BlockLink|Chiseled Deepslate}}
+* {{BlockLink|Cracked Deepslate Bricks}}
+* {{BlockLink|Cracked Deepslate Tiles}}
+* {{BlockLink|Cobbled Deepslate Slab}}
+* {{BlockLink|Cobbled Deepslate Stairs}}
+* {{BlockLink|Cobbled Deepslate Wall}}
+* {{BlockLink|Polished Deepslate Slab}}
+* {{BlockLink|Polished Deepslate Stairs}}
+* {{BlockLink|Polished Deepslate Wall}}
+* {{BlockLink|Deepslate Brick Slab}}
+* {{BlockLink|Deepslate Brick Stairs}}
+* {{BlockLink|Deepslate Brick Wall}}
+* {{BlockLink|Deepslate Tile Slab}}
+* {{BlockLink|Deepslate Tile Stairs}}
+* {{BlockLink|Deepslate Tile Wall}}
+* {{BlockLink|Gray Wool}}
+* {{BlockLink|Polished Basalt}}
+* {{BlockLink|Smooth Basalt}}
+* {{BlockLink|Dark Oak Log}}
+* {{BlockLink|Dark Oak Planks}}
+* {{BlockLink|Dark Oak Fence}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Candle}}
+* {{BlockLink|Soul Lantern}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Chest}}
+</div>
+|-
+! Blocks unique to some structures
+| <div style="-moz-column-count: 3; -webkit-column-count: 3; column-count: 3;">
+* {{BlockLink|Reinforced Deepslate}}
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Redstone Lamp}}
+* {{BlockLink|Soul Fire}}
+* {{BlockLink|Soul Sand}}
+* {{BlockLink|Redstone Dust}}
+* {{BlockLink|Redstone Comparator}}
+* {{BlockLink|Redstone Repeater}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Redstone Wall Torch}}
+* {{BlockLink|Block of Redstone}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|Target}}
+* {{BlockLink|Furnace}}
+* {{BlockLink|Lever}}
+* {{BlockLink|Sticky Piston}}
+* {{BlockLink|Piston Head}}
+* {{BlockLink|Gray Carpet}}
+* {{BlockLink|Glass}}
+* {{BlockLink|Glass Pane}}
+* {{BlockLink|Dirt}}
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Blue Wool}}
+* {{BlockLink|Cyan Wool}}
+* {{BlockLink|Light Blue Wool}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Iron Trapdoor}}
+* {{BlockLink|Ice}}
+* {{BlockLink|Packed Ice}}
+* {{BlockLink|Blue Ice}}
+* {{BlockLink|Snow}}
+* {{BlockLink|Note Block}}
+* {{BlockLink|Stone Pressure Plate}}
+* {{BlockLink|Skeleton Skull}}
+* {{BlockLink|White Candle}}
+* {{BlockLink|Water}}
+* {{BlockLink|Blue Carpet}}
+* {{BlockLink|Cyan Carpet}}
+* {{BlockLink|Light Blue Carpet}}
+</div>
+|}
+
+== Loot ==
+{{seealso|Chest loot}}
+The loot in the [[chest]]s includes several useful items for exploring the ancient city, such as [[snowball]]s and the [[Swift Sneak]] enchantment, as well as items that can't be found anywhere else, such as [[echo shard]]s and two exclusive [[armor trim]]s. Ancient city chests also have the second highest chance of any loot table to contain an [[enchanted golden apple]]—[[ominous vault]]s have a 22.5% chance.
+
+=== Normal ===
+{{LootChest|ancient-city}}
+
+=== Ice boxes ===
+{{LootChest|ancient-city-ice-box}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=[[Jigsaw structure|Jigsaw]]
+|spritename=jigsaw
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Ancient City
+|spritetype=env
+|nameid=ancient_city
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Ancient City
+|spritetype=env
+|nameid=ancient_city
+|aliasid=ancientcity
+|translationkey=feature.ancient_city
+|foot=1}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 16, 2021|link={{ytl|or1DfXdqu3U|t=159}}|Ancient cities are revealed at [[Minecraft Live 2021]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added ancient cities.}}
+|{{HistoryLine|||dev=22w11a|Ancient cities are not added yet in this non-experimental snapshot.}}
+|{{HistoryLine|||dev=22w13a|Added ancient cities and revamped with new structures, improvements to already existing structures and an updated [[loot table]].}}
+|{{HistoryLine|||dev=22w14a|Updated the loot table once again with echo shards, and replaced the [[golden carrot]] in {{cd|city_center_2}} with a [[golden apple]].
+|Removed the following structures (and variants thereof) as they were duplicates of other structures:
+* {{cd|small_portal_statue}}
+* {{cd|intact_horizontal_wall_stairs_upward}}
+* {{cd|top_piece}}
+* {{cd|bottom_piece}}}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|[[Ward armor trim]]s are now found in ancient city chests.}}
+|{{HistoryLine|||dev=23w05a|Increased the chance of [[ward armor trim]]s from 4.7% to 5%.}}
+|{{HistoryLine||1.20|dev=23w12a|[[Silence armor trim]]s are now found in ancient city chests.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=1.20.2 Pre-release 1|Mending enchanted books now have a higher chance of generating in ancient city chest loot.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Removed saddles from loot tables, replaced with 1–5 leather.}}
+|{{HistoryLine||26.1|dev=snap11|Removed the [[name tag]] from ancient city loot.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.33|Added ancient cities behind the "Wild Update" experimental toggle. Currently, it has outdated structure types and loots.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Ancient cities are now available without enabling experimental gameplay.}}
+|{{HistoryLine|||dev=Preview 1.19.0.27|Ancient cities were revamped with new structures, improvements to already existing structures and an updated loot table to match ''Java Edition''.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|[[Ward armor trim]]s are now found in ancient city chests.}}
+|{{HistoryLine|||dev=Preview 1.19.80.22|[[Silence armor trim]]s are now found in ancient city chests.}}
+|{{HistoryLine||1.20.40|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.40.20|Mending enchanted books now have a higher chance of generating in ancient city chest loot.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.25|Removed the [[name tag]] from ancient city loot.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The ancient cities were inspired by [[wikipedia:Mayan civilization|Mayan]] temples and [[wikipedia:Ancient Rome|Roman]] ruins.
+* In some concept art, it was revealed that the loot in ancient cities was originally going to be stored within jar-shaped pots, "screaming" vases, and stone chests.<ref>{{ytl|Z4haZTbU9ZA|The Secrets of Minecraft's Deep Dark @ 1:07|Minecraft|June 24, 2022|t=67s}}</ref>
+** [[Decorated pot]]s were subsequently added in the [[Trails & Tales]] update, but do not generate in ancient cities.
+* The intention of the ancient cities was to capture a feeling of something that feels like it was once bustling with life, but is now vacant and lifeless.<ref>{{ytl|Z4haZTbU9ZA|The Secrets of Minecraft's Deep Dark @ 1:21|Minecraft|June 24, 2022|t=81s}}</ref>
+
+== Gallery ==
+=== Render ===
+<gallery>
+File:Deep Dark Structure.png|Deep dark structure recreation render from [[Minecraft Live 2020]].
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Lush caves ancient city.png|An ancient city intersecting with a [[lush cave]].
+Ancient City under water.png|An underwater ancient city.
+AncientCityCenterScreenshot.png|Ancient city center.
+Ancient city piston door.png|Ancient city piston door.
+Ancient city redstone.png|Ancient city redstone.
+Ancient City Corner.jpg|A corner in an ancient city.
+Chiwi Ancient City.jpg|A path in an ancient city.
+Ancient City Center.jpg|The center of an ancient city.
+Ancient City Candles.jpg|[[Candle]]s in an ancient city.
+Ancient City Warden.jpg|The [[warden]] in an ancient city.
+Ancient City Generated Underwater in Aquifer.png|Part of an ancient city generated in an [[aquifer]].
+Ancient City Generated Underwater in Aquifer 2.png|Same city, different angle.
+Ancient City Wide View.png|A full look at the entirety of an ancient city.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+Ancientcity-header.jpeg|alt=A screenshot of an ancient city in Minecraft.|An ancient city.
+Ancientcity-ingame.jpeg|alt=A screenshot of a corridor with lit candles inside an ancient city.|A corridor with lit candles inside an ancient city.
+</gallery>
+
+=== Development images ===
+<gallery>
+WildUpdate.png|An ancient city.
+Warden x ancient city sneak peak.jpg|Sneak peek of a warden within an ancient city.
+Tenth Image Leading To A Very Scary Snapshot.jpg|The teaser image for [[Deep Dark Experimental Snapshot 1]], featuring the ancient city.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Deep dark concept.jpg|Concept artwork for the ancient city's center.
+Ancient City concept art 1.jpg|Concept artwork for the ancient city.
+Ancient city concept art 2.png|Ancient city "atmosphere" concept artwork.
+Ancient city concept art 3.png|Pots, vases, and stone chests concept art for the ancient cities.
+Ancient city concept art 4.png|Ditto.
+Ancient city concept art 5.png|Concept artwork showing the "lifelessness" of the ancient city.
+Ancient city concept art 6.png|Ruin layout concept art.
+Ancient city concept art 7.png|Ancient city gameplay concept art.
+Ancient city concept art 8.png|More ancient city gameplay concept art.
+Ancient city concept art 9.png|Ancient city blocks concept art.
+Ancient city concept art 10.png|Ancient city walls concept art.
+Ancient city concept art 11.png|Stone chest concept art. These would have generated within the ancient cities.
+</gallery>
+
+=== In other media ===
+<gallery>
+Warden in City.png|Artwork of the warden in a city.
+Patch of Sculk.jpg|[[Sunny]] and [[Efe]] exploring an ancient city.
+Ancient City trailer.jpg|An ancient city as it appears in the [[Wild Update]] trailer.<ref>https://youtu.be/chuRE9nxLT4</ref>
+Evade Efe.gif|Efe retrieving a [[chicken]] that snuck into the city.
+Evade the smell.gif|A warden taking notice.
+Live2023-06.jpeg|The ancient city as it appears in the announcement trailer for [[Minecraft Live 2023]].
+Warden Chasing Alex with Silence Trim Pixel Art.png|Pixel art of the warden chasing [[Alex]] over the [[silence armor trim]].
+Croc Ad 5.jpg|An ancient city as it appears in an advertisement for ''Minecraft Crocs''.<ref> https://www.youtube.com/shorts/e1AJo7jU5MI</ref> 
+</gallery>
+
+== See also ==
+* {{EntityLink|Warden}}
+* {{EnvLink|Stronghold}}
+* {{ItemLink|Music Disc}}
+
+== References ==
+{{reflist}}
+
+==External links==
+*{{mcnet|ancient-city|Building Blocks: Ancient City|April 25, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox generated structures|structures}}
+
+[[Category:Settlements]]
+
+[[de:Antike Stätte]]
+[[es:Ciudad antigua]]
+[[fr:Ancienne cité]]
+[[ja:古代都市]]
+[[ko:고대 도시]]
+[[lzh:太古之邑]]
+[[pl:Pradawne miasto]]
+[[pt:Cidade Ancestral]]
+[[ru:Древний город]]
+[[uk:Стародавнє місто]]
+[[zh:远古城市]]

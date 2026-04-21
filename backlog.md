@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M5
+
+- **Zstd compression (was M5.3).** zstd-via-wasm on ChunkBlob.payload. ~3x shrink, 50 KB dep.
+- **World selector UI (was M5.5).** DOM modal: list / create (name + seed) / load / delete / rename. DAL pieces already exist.
+- **.webmc zip export/import (was M5.6).** `client-zip` writer + `fflate` reader + world.json + player.json + chunks/\*.bin.
+- **Schema migrations scaffold (was M5.7).** `persist/migrations/vN_to_vN+1.ts` files, run on upgradeneeded + on import. Needed when schemaVersion bumps.
+- **Quota / OPFS fallback.** `navigator.storage.estimate` check + toast + LRU eviction of distant chunks.
+
 ## Post-M4
 
 - **Settings panel (was M4.4).** DOM sliders for FOV, view distance, sensitivity, master volume; persist to `localStorage['webmc.settings.v1']`. Also shown from ⚙️ button and `Esc` keypress.

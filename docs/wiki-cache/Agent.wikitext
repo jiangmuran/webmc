@@ -1,0 +1,164 @@
+{{Exclusive|Bedrock|Education}}{{Infobox entity
+| image = Agent.png
+| addedVersion = v0.16.0 alpha build 1
+| addedDate = August 29, 2016
+| imagesize = 100px
+| invimage = Agent Spawn Egg
+| health = ∞
+| behavior = Passive
+| damage = {{hp|5}}
+| size = Height: 0.93 blocks<br>Width: 0.6 blocks
+| spawn = See [[#Usage|Usage]]
+}}
+An '''agent''' is a mob that helps [[player]]s learn coding, by getting a player to code the actions on one. Agents can be programmed to execute several tasks, like planting and harvesting, mining, chopping trees, and building. It is only available in {{el|ee}} and {{BE}} worlds connected to a WebSocket server.  
+
+== Spawning ==
+
+In a ''Bedrock Edition'' world not connected to a WebSocket server, agents are [[Bedrock Edition unused features|unused]] and thus have no AI unless spawned by putting the command {{cmd|execute as @p run agent create}} into an [[NPC]], but can still store items given to them by a player in its inventory. Agents can also teleport between dimensions with the player. 
+
+Agents can be spawned with its spawn egg, obtainable with {{cmd|give @s spawn_egg 1 56}}. However, they do not spawn when spawned with the spawn egg.
+
+== Usage ==
+In ''Minecraft Education'', agents are used in conjunction with [[Code Connection]], and are programmable by a {{w|visual programming language}}.
+
+In the ''Education'' and ''Bedrock Editions'', agents can be used in conjunction with WebSocket servers. 
+
+Agents carry their own 27-slot [[inventory]], which can be manipulated by [[commands]] that the [[player]] programs one to use, or edited directly by a GUI that the player can access in-game, in any dimension.
+
+The visual interface allows the player to drag and drop commands, structural constructs and other components into a sequence, and associate the sequence with a custom-named slash command, which can be executed in the traditional way, from the console.
+
+[[File:Agent Flying.png|thumb|An agent in a [[dripstone cave]]]]
+Agents are completely invulnerable to all forms of [[damage]], although they are targeted by [[zoglin]]s and [[warden]]s. Agents pass through blocks, vehicles, and [[projectile]]s, thus making them unable to ride a [[minecart]] or [[boat]]. Agents cannot be [[Lead|leashed]].
+
+Agents can push pressure plates and {{control|use}} [[door]]s, [[button]]s, [[lever]]s, and [[fence gate]]s. They can {{control|destroy}} some blocks that are indestructible in [[Survival]] mode, such as [[bedrock]] and [[command block]], except for [[allow and deny]] blocks.
+
+=== Agent commands ===
+{{main|Commands/agent}}
+* <code>attack &lt;direction&gt;</code>
+* <code>destroy &lt;direction&gt;</code>
+* <code>drop &lt;int:slotNum&gt; &lt;int:quantity&gt; &lt;direction&gt;</code>
+* <code>drop all &lt;direction&gt;</code>
+* <code>move &lt;direction&gt;</code>
+* <code>turn &lt;turnDirection&gt;</code>
+* <code>inspect &lt;direction&gt;</code>
+* <code>inspect data &lt;direction&gt;</code>
+* <code>detect &lt;direction&gt;</code>
+* <code>detectredstone &lt;direction&gt;</code>
+* <code>transfer &lt;int:srcSlotNum&gt; &lt;int:quantity&gt; &lt;int:dstSlotNum&gt;</code>
+* <code>create agent</code>
+* <code>remove agent</code>
+* <code>teleport to player</code>
+* <code>teleport to location facing direction</code>
+* <code>collect &lt;string:item&gt;</code>
+* <code>till &lt;direction&gt;</code>
+* <code>place &lt;int:slotNum&gt; &lt;direction&gt;</code>
+* <code>place on move&lt;int:slotNum&gt; &lt;true/false&gt;</code>
+* <code>get item count &lt;int:slotNum&gt;</code>
+* <code>get item space &lt;int:slotNum&gt;</code>
+* <code>get item detail &lt;int:slotNum&gt;</code>
+
+<code>&lt;direction&gt;</code> refers to <code>forward|back|left|right|up|down</code>
+
+<code>&lt;turnDirection&gt;</code> refers to <code>left|right</code>
+
+== Sounds ==
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Anvil land.ogg
+|source=neutral
+| description = When an agent is spawned
+| id = mob.agent.spawn
+|translationkey=subtitles.block.generic.place
+|subtitle=Block placed
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Agent
+|spritetype=entity
+|nameid=agent
+|id=56
+|foot=1}}
+
+== History ==
+=== ''Bedrock Edition'' ===
+{{HistoryTable|{{HistoryLine|pocket alpha}}|{{HistoryLine||v0.16.0|dev=build 1|[[File:Agent.png|32px]] Added agents.}}|{{HistoryLine|||dev=build 2|Removed agents.}}|{{HistoryLine|pocket}}|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Agents have been re-added, hidden in a(n) <code>.apk</code> file.}}|{{HistoryLine|bedrock}}|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Added agent [[spawn egg]] texture file.}}|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|Agents can now be spawned by putting the command <code>execute @p ~ ~ ~ agent create</code> into an NPC. }}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable|{{HistoryLine|education}}|{{HistoryLine||1.0.1|[[File:Agent.png|32px]] Added learn to code mascot.}}|{{HistoryLine||1.0.2|The entity ID has been changed from <code>learn_to_code_mascot</code> to <code>agent</code>.}}|{{HistoryLine||1.4.0|The default name tag color for agents has been changed to blue.}}|{{HistoryLine||1.7|Agents can now be removed through {{cmd|remove}}.
+|[[Player]]s now can show their agent's coordinates on the [[HUD]].
+|{{cmd|summon agent}} now creates or teleports the executor's agent to the executor.
+|Added spawn eggs for agents.}}|{{HistoryLine||1.20.12|dev=1.20.10.0|Agents now have no range restrictions, it can move and build far away from the player.
+|Agents now have an animation for unsuccessful actions.
+|Agents now choose which item to detect or interact with in a “line of sight” in the direction the code specified, up to 1 block away.}}
+}}
+
+== Issues ==
+{{issue list|projects=mcpe}}
+
+== Trivia ==
+*In [[10 Years of Minecraft]], there is a puzzle in the "Library" area that involves controlling an agent with [[glazed terracotta]]. On the {{BE}} version of the map, the agent is added in as a new mob, while on {{JE}}, it is an [[armor stand]] with remodeled [[infested chiseled stone bricks]] on its head.
+*The agent addition in ''Pocket Edition'' was likely accidental due to ''Pocket Edition'' sharing the same codebase as ''Minecraft Education''.
+
+== Gallery ==
+=== Textures ===
+<gallery class="pixel-image">
+Agent (texture).png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Agent - 1.png|An agent.
+File:Some passive mobs.png|An agent with other passive mobs.
+File:Education Edition mobs.png|An agent alongside a [[NPC]] and [[camera]] in a tutorial world.
+File:Time agent1.png|Red-eyed version of Agent in [[hour of code]] 2021
+File:Time agent2.png|Yellow-eyed version of Agent in [[hour of code]] 2021
+File:Time agent0.png|Green-eyed version of Agent in [[hour of code]] 2021
+File:Time agent3.png|Blue-eyed version of Agent in [[hour of code]] 2021
+File:Time agent4.png|Pink-eyed version of Agent in [[hour of code]] 2021
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Code Builder Update.png|An agent in an official render.
+File:Code Builder Update agent cutout.png|Ditto but cut-out
+File:Efe, Noor, and Agent.png|An agent with [[Efe]] and [[Noor]]
+File:Learn to Code Update.png|An agent in promotional artwork for the [[Learn to Code Update|''Learn to Code Update'']].
+File:GOAT Update.jpg|An agent in promotional artwork for the [[GOAT Update|''GOAT Update'']].
+File:Mobile, Multiplayer & More.png|An agent in promotional artwork for [[Mobile, Multiplayer & More|''Mobile, Multiplayer & More'']].
+File:Redstone IRL.jpg|An agent building [[redstone]] contraptions with children.
+File:Agent's laptop.jpg|An agent touching a laptop showing the loading screen of [[Minecraft Education|''Minecraft Education'']].
+File:Agent's helix.jpeg
+File:Education Poster.png|An agent in promotional artwork.
+File:InspirationIsland screenshot 0.jpg|Half a statue of an agent in the ''Mirror'' section of [[Inspiration Island|''Inspiration Island'']]. The player is required to build the other half.
+File:Nitwit Ravager Agent.jpeg|An agent with a [[nitwit]] picking [[apples]] with a [[ravager]].  
+</gallery>
+
+== External links ==
+*{{Citation|url=https://education.minecraft.net/en-us/lessons/build-with-the-agent|title=Build with the agent|author=[https://education.minecraft.net/user/minecraft-strandstrand-kommune-no Tor E. Enne]|website=Minecraft Education|date=February 24, 2022}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+{{Navbox Education|exclusive}}{{featured}}
+
+[[Category:Passive mobs]]
+[[Category:Flying mobs]]
+[[Category:Minecraft Education mobs]]
+
+[[de:Agent]]
+[[es:Agente]]
+[[fr:Agent]]
+[[ja:エージェント]]
+[[ko:에이전트]]
+[[pl:Agent]]
+[[pt:Agente]]
+[[ru:Агент]]
+[[th:เอเจนต์]]
+[[zh:智能体]]

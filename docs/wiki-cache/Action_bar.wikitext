@@ -1,0 +1,116 @@
+[[File:Action_bar_bed_too_far.png|thumb|The message "You may not rest now; the bed is too far away" is shown on the action bar.]]
+
+The '''action bar''' is a space just above the player's [[hotbar]] where text can be displayed. Some gameplay elements, such as [[bed]]s, use this to give contextual hints to the player. Text can also be displayed here using the {{cmd|title}} command.
+
+== Behavior ==
+The action bar is displayed above where item names are shown when an item is selected in your hotbar, so an item name and action bar text can be shown on the screen at the same time.
+
+When text is displayed here, it instantly appears and remains on the screen for approximately 1.5 seconds{{info needed}} before fading out. If another action bar message is sent, it instantly replaces the previous text without any transition/animation and remains there for the usual 1.5 seconds it normally would if it was not replacing anything.
+
+{{IN|be}}, the opacity of the black background on the action bar can be adjusted in the [[Settings#Accessibility|accessibility settings]].
+
+== Gameplay uses ==
+{{IN|be}}, certain messages are shown in the [[chat]] instead of the action bar.
+{| class="wikitable"
+! Displayed text
+! Cause
+|-
+| Now Playing: %s
+| When a [[music disc]] starts playing nearby.
+|-
+| Press %1$s to Dismount
+| When the player starts riding a vehicle or animal.
+|-
+| This bed is occupied{{Only|je|short=1}}
+| When another entity is already in a bed.
+|-
+| You can sleep only at night or during thunderstorms{{Only|je|short=1}}
+| When a player tries to sleep during the day and without a thunderstorm.
+|-
+| You may not rest now; the bed is too far away{{Only|je|short=1}}
+| When a player tries to sleep in a bed that is too far away.
+|-
+| This bed is obstructed{{Only|je|short=1}}
+| When a player tries to sleep in a bed that has suffocating blocks directly above.
+|-
+| You may not rest now; there are monsters nearby{{Only|je|short=1}}
+| When a player tries to sleep in a bed while there are hostile mobs within a 17&times;11&times;17 box centered around the bed.
+|-
+| %s/%s players sleeping{{Only|je|short=1}}
+| When a player starts sleeping but not enough players are sleeping to skip the night. Announced to all players.
+|-
+| Sleeping through this night{{Only|je|short=1}}
+| When enough players are sleeping to skip the night. Announced to all players.
+|-
+| No amount of rest can pass this night{{Only|je|short=1}}
+| When a player starts sleeping but the {{gmr|players_sleeping_percentage}} game rule is set above 100.
+|-
+| %s is locked!{{Only|je|short=1}}
+| When a player attempts to open a [[chest]] that is locked.
+|-
+| Unable to open. Loot not generated yet.{{Only|je|short=1}}
+| When a player in [[Spectator]] tries to open a chest with loot that hasn't been opened yet.
+|-
+| Item hotbar saved (restore with %1$s+%2$s){{Only|je|short=1}}
+| After saving a creative hotbar.
+|-
+| Height limit for building is 319{{Only|je|short=1}}
+| Attempting to build past Y=319.
+|-
+| Social Interactions are only available in Multiplayer worlds{{Only|je|short=1}}
+| Attempting to open the [[social interactions]] screen in a [[Singleplayer]] world.
+|-
+| Chat disabled in client options.{{Only|je|short=1}}
+| Attempting to open the [[chat]] when it is disabled in the [[options]].
+|-
+| Chat disabled by launcher option. Cannot send message.{{Only|je|short=1}}
+| Attempting to open the chat when it is disabled from the [[launcher]].
+|-
+| Chat not allowed by account settings. Press '%s' again for more information.{{Only|je|short=1}}
+| Attempting to open the chat when it is disabled from the account.
+|-
+| Chat not allowed by account settings. Cannot send or view messages.{{Only|je|short=1}}
+| After pressing the chat keybind to get more information.
+|-
+| TNT explosions are disabled{{Only|je|short=1}}
+| When attempting to ignite a block of TNT while the {{gmr|tnt_explodes}} game rule is set to false.
+|}
+
+== Commands ==
+{{Main|Commands/title}}
+
+A custom text message can be displayed on the action bar using the {{cmd|title}} command:
+* {{JE|short=1}}: <code>title <targets> actionbar <title></code>
+* {{BE|short=1}}: <code>title <player: target> actionbar <titleText: message></code>
+
+== History ==
+{{missing info|When were other action bar messages listed above added and updated?}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added text: "Press [key] to dismount", which is displayed when you are in a minecart or boat or riding a saddled pig, horse, donkey or mule.}}
+|{{HistoryLine||1.11|dev=16w32a|The warning "You can only sleep at night" is now displayed on the action bar instead of in chat.|The warning "You may not rest now, there are monsters nearby" is now displayed on the action bar instead of in chat.|The warning "Height limit for building is 256 blocks" is now displayed on the action bar instead of in chat.|The warning "This bed is occupied" is now displayed on the action bar instead of in chat.|The warning "Unable to open. Loot not generated yet" is now displayed on the action bar instead of in chat.}}
+|{{HistoryLine|||dev=16w32b|Added the ability for {{command|title}} to display text in the action bar position.}}
+|{{HistoryLine|||dev=16w33a|Added the warning "You may not rest now, the bed is too far away" when the player is close enough to click on the bed but too far to sleep in it.}}
+|{{HistoryLine||1.12|dev=17w06a|Added saved hotbars which, when saved, display the text: "Item toolbar saved (restore with Shift+[key])" on the action bar.}}
+|{{HistoryLine|||dev=17w16a|Saving hotbars now displays "Item toolbar saved (restore with X+[key])" on the action bar. X does not change according to what "Load Toolbar Activator" is bound to.}}
+|{{HistoryLine||1.13|dev=pre2|The "You can only sleep at night" message when using a bed during the day has been changed to "You can sleep only at night and during thunderstorms."}}
+|{{HistoryLine||1.16.4|dev=Pre-release 1|With the addition of social interactions, a message was added when you try to open social interations in singleplayer: "Social Interactions are only available in Multiplayer worlds"}}
+|{{HistoryLine||1.17|dev=20w51a|After adding the {{code|playersSleepingPercentage}} gamerule, added message when trying to sleep when the gamerule is set to 100 or higher: "No amount of rest can pass this night"}}
+|{{HistoryLine||1.21.5|dev=25w10a|With the addition of the {{code|tntExplodes}} gamerule, added message when trying to ignite TNT blocks: "TNT explosions are disabled"}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== See also ==
+* [[Chat]]
+* [[Commands/title]]
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[ja:アクションバー]]
+[[pt:Barra de ação]]
+[[zh:动作栏]]

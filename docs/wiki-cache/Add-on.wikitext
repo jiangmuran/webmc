@@ -1,0 +1,346 @@
+{{For|similar game customization in {{JE}}|Data pack|Mod}}
+{{exclusive|bedrock}}
+[[File:Minecraft Add-Ons Poster.jpg|thumb|right|Promotional artwork for the introduction of add-ons to the [[Marketplace]]]]
+An '''add-on''' is a package format and a type of [[downloadable content]] that provides additional custom game features beyond the base game in ''Minecraft''. It contains a set of {{w|programming interface}}s used for constructing and [[Game customization|customizing]] certain game objects and elements, such as [[entities]], [[block]]s, [[item]]s, [[biome]]s, [[structure]]s, the [[user interface]], and more. It is officially supported by [[Mojang Studios]], who provide the [https://learn.microsoft.com/en-us/minecraft/creator/ Creator Documentation] for developers.
+
+Add-ons consist of three main APIs: a [[resource pack]] for managing assets and resources, a [[behavior pack]] for defining [[w:Data-driven programming|data-driven]] behaviors, and the Script API for writing a [[w:Imperative programming|set of procedural instructions]] to perform custom behaviors and interactions. These functions and utilities are used for {{w|video game modding}}.
+
+Add-ons are officially hosted on the [[Marketplace]], where players can download or purchase them on their devices using an in-game digital currency called [[Minecoin]]s. They must be submitted by members in the [[Minecraft Partner Program]] and approved by the Minecraft Content Team, or made directly in collaboration with [[Mojang Studios]] as official DLC. They can also be packaged for external downloading, but these cannot be imported on consoles.
+
+== Overview ==
+=== Packs ===
+Add-ons can be created with two types of data packs: [[behavior packs]] and [[resource packs]]. Behavior packs can be used to change [[gameplay]] and allow adding and customizing [[Mob AI|entity behaviors]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/entitybehaviorintroduction?view=minecraft-bedrock-stable|title=Entity Behavior Introduction|website=Microsoft Learn|date=September 19, 2023}}</ref> [[loot table]]s,<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoloottables?view=minecraft-bedrock-stable|title=Introduction to Loot Tables|website=Microsoft Learn|date=March 6, 2025}}</ref> [[Mob spawning|spawn rules]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/examples/cliententitydocumentation/datadrivenspawning?view=minecraft-bedrock-stable|title=Data-Driven Spawn Rules|website=Microsoft Learn|date=November 8, 2023}}</ref> [[item]] behaviors,<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/addcustomitems?view=minecraft-bedrock-stable|title=Custom Items|website=Microsoft Learn|date=September 18, 2024}}</ref> item [[recipe]]s,<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/recipeintroduction?view=minecraft-bedrock-stable|title=Recipe Introduction|website=Microsoft Learn|date=April 19, 2024}}</ref> biome characteristics,<ref name="biome-component-list">{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/biomes/biomeoverview?view=minecraft-bedrock-stable|title=Biome JSON and Overview|website=Microsoft Learn|date=April 10, 2025}}</ref> and much more. Resource packs affect how the game looks and have no effect on gameplay, and they allow adding and customizing [[textures]], [[models]], [[music]], texts, and interfaces.
+
+Definitions are written in [[JSON]] files, which are organized in multiple folders by their features. This system allows users to override and modify certain features in the base game, or add unique features with their own pack.
+
+All contents of an add-on can be packaged together in a zipped {{Cd|.mcaddon}} file. An add-on file can be automatically imported by the game, which will organize all contents in the dedicated directories in {{Cd|[[com.mojang]]}}.
+
+==== Sub-packs ====
+Resource packs and behavior packs can contain other packs inside the root, known as sub-packs.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/buildingsubpacks?view=minecraft-bedrock-stable|title=Building Sub-Packs|website=Microsoft Learn|date=August 28, 2025}}</ref> A sub-pack has the same format as the main pack and the directory of a sub-pack can have any name. Sub-packs need to be specified in the {{Cd|[[manifest.json]]}} file of the main pack, where a name and minimum memory tier can also be added. For example, a pack can have multiple less resource-intensive sub-packs for lower memory tiers, but it can also be used for other types of settings. The memory tier, affecting which sub-pack is used, can be adjusted in the pack's settings menu in-game.
+
+=== Molang ===
+{{main|Molang}}
+Molang is a simple expression-based language designed for fast, data-driven calculation of values at run-time, and with a direct connection to in-game values and systems. It is used {{in|BE}} in their add-on system with its purpose being to enable low-level systems like animation to support flexible data-driven behavior for both internal and external creators, while staying highly performant.<ref>[https://docs.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/molangintroduction "Molang Documentation - Introduction to Molang"]</ref>
+
+=== Scripting ===
+Scripting is an add-on feature used to write a set of procedural instructions for the game to perform custom behaviors and interactions at a certain time or in response to events and actions.<ref>{{citation |url=https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/introduction?view=minecraft-bedrock-stable |title=Introduction to Scripting in Minecraft |website=Microsoft Learn |date=July 17, 2025 |archive=1 }}</ref> It lets users control behaviors of entities, blocks, and items; characteristics of the world; or an entire [[w:Video game programming#Game structure|game loop]].<ref name="intro-scripting">{{citation |url=https://learn.microsoft.com/en-us/minecraft/creator/documents/scriptingintroduction?view=minecraft-bedrock-stable |title=Introduction to Scripting in Minecraft |website=Microsoft Learn |date=April 17, 2025 |archive=1 }}</ref> It is fundamentally different from the behavior pack system, the latter uses a component system with preset definitions provided by the game.
+
+Script files are written in the {{w|JavaScript}} programming language and loaded by the game under the {{cd|scripts}} directory inside an add-on. Users may use {{w|TypeScript}}, a dialect of JavaScript, which provides better error reporting and a [[w:Type system#Static type checking|static type system]].<ref name="intro-scripting"/><ref>{{citation |url=https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html |title=TypeScript for JavaScript Programmers |website=TypeScript |date=June 2, 2025 }}</ref> The Scripting API provides script modules for users to interact with the game, each module must be added as a dependency in the [[manifest.json]], some notable ones are:<ref>{{citation |url=https://wiki.bedrock.dev/scripting/api-modules |title=API Modules |website=Bedrock Wiki |date=June 8, 2025 }}</ref>
+<!-- nitpick some notable ones here for introductory/simplicity, don't include everything -->
+* {{cd|@minecraft/common}} &ndash; provides common resources, such as error classes or interfaces.
+* {{cd|@minecraft/server}} &ndash; provides interactions between the script engine and the game world, such as blocks, entities, items, players, and others.
+* {{cd|@minecraft/server-ui}} &ndash; provides players and server communication through customizable forms.
+* {{cd|@minecraft/server-graphics}} &ndash; allows to dynamically customize graphical settings from [[Vibrant Visuals]] defined in resource packs, at this moment only atmospherics.
+* {{cd|@minecraft/server-net}} &ndash; provides access to the Internet through [[w:HTTP#Request methods|web requests]], such as GET, POST, and others.
+* {{cd|@minecraft/server-gametest}} &ndash; provides the [[GameTest]] framework for testing behaviors and interactions within the game world. See {{slink|GameTest|Bedrock Edition}} for further information.
+* And other modules, [https://wiki.bedrock.dev/scripting/api-modules further reading].
+
+The Scripting API also provides a way to define and register custom commands.<ref>{{citation |url=https://learn.microsoft.com/en-us/minecraft/creator/documents/customcommands?view=minecraft-bedrock-stable |title=Scripting Custom Commands Overview |website=Microsoft Learn |date=March 27, 2025 }}</ref>
+
+The Scripting API version 2 is a major update to the Scripting API, which provides a new API to define custom components along with other major API changes that aren't backward compatible with the previous version.<ref>{{citation |url=https://learn.microsoft.com/en-us/minecraft/creator/documents/scripting/v2-overview?view=minecraft-bedrock-stable |title=Scripting V2 Overview |website=Microsoft Learn| date=July 17, 2025 }}</ref><ref>{{citation |url=https://learn.microsoft.com/en-us/minecraft/creator/documents/customcomponents?view=minecraft-bedrock-stable |title=Introducing Custom Components |website=Microsoft Learn |date=March 27, 2025 }}</ref>
+
+=== Marketplace ===
+The [[Marketplace]] is an in-game platform where creators may sell their add-ons to the player-base. All Marketplace content must be submitted by members in the [[Minecraft Partner Program]] and approved by the Minecraft Content Team. Purchased content in the Marketplace is synchronized to the player's Microsoft account, and if they are not signed in, it is saved locally on their device.
+
+Free add-ons are released as part of special events, for occasions such as to promote the release of ''[[A Minecraft Movie]]'' for Minecraft's 15 Years celebration and the eventful [[Movie:McDonald's|McDonald's X ''A Minecraft Movie'']] promotion. See {{Slink|2=Official add-ons}} for a full list of add-ons officially promoted by [[Mojang Studios]].<!-- adapted from the removed "History" section of [[Special:PermaLink/1777356]] -->
+
+In addition to the Marketplace, there are community websites dedicated to hosting community-made add-ons, although such add-ons may only be loaded on PCs and phones, whereas consoles can only access those add-ons through [[Realms]].
+
+== Loading tips{{anchor|Warnings}} ==
+[[File:Bedrock-modified-world-warning.png|thumb|An example of a loading tip since 1.20.70.21.]]
+Extra [[loading tip]] messages would appear if the player is loading a world with add-ons applied. The loading message box is titled "Modified World", and loading tip messages would primarily warn the player about the add-ons or resource packs applied. Here's the list of add-on applied loading tips:
+{{#section:Loading tip|add-on-tips}}
+
+== Official add-ons ==
+{{See also|Demo content}}
+{| class="wikitable sortable" width="100%"
+! width="135px" |Image
+! width="135px" |Name
+!Description
+!Release date
+! width="50px" |Purchasable
+|-
+|
+![[Minecon 2018 New Entity Sample]]
+|A pack to show the usage of add-ons to add custom [[entities]] for creators, showcased in [[MINECON Earth 2018]].
+|November 19, 2018
+| {{tc|partial|External download}}
+|-
+|
+![[Minecraft Live 2022 Sample Pack]]
+|A pack to demonstrate the Minecraft Entity Wizard in [[Blockbench]], showcased in [[Minecraft Live 2022]].
+|October 17, 2022
+| {{tc|partial|External download}}
+|-
+|[[File:POIP Thumbnail 0.jpg|width=150x150]]
+![[Poisonous Potato Add-On|Poisonous Potato]]
+|An add-on themed around the [[Poisonous Potato|poisonous potato]] April Fools' Day event in 2024.
+|April 1, 2024
+| {{tc|Yes}}
+|-
+|[[File:15 Year Party Supplies Key Art.jpg|width=150x150]]
+![[15 Year Party Supplies]]
+|An add-on themed around the [[15th anniversary]] of ''Minecraft'' with features from [[15 Year Journey]].
+|May 21, 2024
+| {{tc|Yes}}
+|-
+|[[File:Tet Thumbnail 0.jpg|width=150x150]]
+![[Tetris Add-On|Tetris]]
+|A collaborative add-on with features from ''[[Tetris]]''.
+|June 6, 2024
+| {{tc|Yes}}
+|-
+|[[File:LUSH Article DLC Keyart.jpg|width=150x150]]
+![[Lush Bath Bomb Add-On|Lush Bath Bomb]]
+|A collaborative add-on to promote bath bombs from [[W:Lush (company)|Lush]].
+|August 1, 2024
+| {{tc|Yes}}
+|-
+|[[File:Spongebob Squarepants Add-On Key Art.jpg|width=150x150]]
+![[SpongeBob SquarePants Add-On|SpongeBob SquarePants]]
+|A collaborative add-on with features from [[SpongeBob SquarePants]].
+|August 20, 2024
+| {{tc|Yes}}
+|-
+|[[File:Ghost Pets Add-On Key art.webp|width=150x150]]
+![[Ghost Pets Add-On|Ghost Pets]]
+|A themed add-on with ghost [[pet]] mobs for the [[Expect the unexpected]] event around [[The Garden Awakens]].
+|November 4, 2024
+| {{tc|Yes}}
+|-
+|[[File:Majestic Camping Add-On Key Art.jpg|width=150x150]]
+![[Majestic Camping Add-On|Majestic Camping]]
+|A camping-themed add-on for the Expect the unexpected event.
+|November 4, 2024
+| {{tc|Yes}}
+|-
+|[[File:Phantom Frames Add-On Key art.webp|width=150x150]]
+![[Phantom Frames]]
+|A themed add-on for the Expect the unexpected event.
+|December 4, 2024
+| {{tc|Yes}}
+|-
+|[[File:Scary Furniture Add-On Key Art.jpg|width=150x150]]
+![[Scary Furniture Add-On|Scary Furniture]]
+|An add-on for the Expect the unexpected event with haunted ''Minecraft'' furniture blocks.
+|December 10, 2024
+| {{tc|Yes}}
+|-
+|[[File:Mob Lights Add-On key art.webp|width=150x150]]
+![[Mob Lights Add-On|Mob Lights]]
+|Another themed add-on for the Expect the unexpected event.
+|December 10, 2024
+| {{tc|Yes}}
+|-
+|[[File:Monster Food Add-On key art.jpeg|width=150x150]]
+![[Monster Food Add-On|Monster Food]]
+|An add-on featured for Expect the unexpected with haunted food items and mobs.
+|December 10, 2024
+| {{tc|Yes}}
+|-
+|[[File:Lava Chicken Add-On key art.jpg|width=150x150]]
+![[Lava Chicken Add-On|Lava Chicken]]
+|A promotional add-on for [[A Minecraft Movie|''A Minecraft Movie'']] which adds Steve's Lava Chicken shown in the movie.
+|December 20, 2024
+| {{tc|Yes}}
+|-
+|[[File:Sonic Add-On Key Art.jpg|width=150x150]]
+![[Sonic Add-On|Sonic]]
+|A collaborative add-on with features from ''[[Sonic the Hedgehog]]''.
+|January 7, 2025
+| {{tc|Yes}}
+|-
+|[[File:A Minecraft Movie Add-on key art.jpg|width=150x150]]
+![[A Minecraft Movie: Add-on|A Minecraft Movie]]
+|An add-on that adds many features shown in ''A Minecraft Movie''.
+|February 26, 2025
+| {{tc|Yes}}
+|-
+|[[File:Jet Pack key art.jpeg|width=150x150]]
+![[A Minecraft Movie: JetPack Add-on|A Minecraft Movie: JetPack]]
+|A limited promotional add-on for ''A Minecraft Movie'' which could be obtained by purchasing tickets on its opening weekend.
+|February 27, 2025
+| {{tc|No}}
+|-
+|[[File:McDonald's Add-On key art.jpg|width=150x150]]
+![[McDonald's Add-On|McDonald's]]
+|An add-on themed around the collaboration of ''A Minecraft Movie'' with [[Movie:McDonald's|McDonald's]].
+|March 24, 2025
+| {{tc|Yes}}
+|-
+|[[File:Timecapsule Thumbnail 0.jpeg|width=150x150]]
+![[Time Capsule Add-On|Time Capsule]]
+|A promotional add-on made for the [[15 Days of Minecraft]] event.
+|May 16, 2025
+| {{tc|Yes}}
+|-
+|[[File:MLBFanCave Thumbnail 0.jpeg|width=150x150]]
+![[MLB Fan Cave Add-On|MLB Fan Cave]]
+|
+|June 2, 2025
+| {{tc|Yes}}
+|-
+|[[File:Adidas Thumbnail 0.jpeg|width=150x150]]
+![[Adidas Adventurers Add-On|Adidas Adventurers]]
+|A collaborative add-on with [[Adidas]].
+|June 3, 2025
+| {{tc|Yes}}
+|-
+|[[File:HTTYD thumbnail 0.jpeg|width=150x150]]
+![[How to Train Your Dragon Add-On|How to Train Your Dragon]]
+|A collaborative add-on with [[Universal Studios]] about the movie ''How to Train Your Dragon''.
+|June 10, 2025
+| {{tc|Yes}}
+|-
+|[[File:Minecraft Vibrant Memories.jpeg|width=150x150]]
+![[Vibrant Memories Add-On|Vibrant Memories]]
+|An add-on made to promote [[Vibrant Visuals]] after its release.
+|June 18, 2025
+| {{tc|Yes}}
+|-
+|[[File:Claims Adjuster Add-On Cover.jpg|width=150x150]]
+![[Claims Adjuster Add-On|Claims Adjuster]]
+|An official add-on that has been promoted with the [[Ice Cube Claims Adjuster]] series.
+|August 13, 2025
+| {{tc|Yes}}
+|-
+|[[File:Friendly Fishing Add-On Key Art.jpeg|width=150x150]]
+![[Friendly Fishing Add-On|Friendly Fishing]]
+|An official collaborative add-on between Marketplace Partners and Conservation International themed around sea life.
+|September 26, 2025
+| {{tc|Yes}}
+|-
+|
+![[Jurassic World Add-On|Jurassic World]]
+|
+|
+| {{tc|Yes}}
+|-
+|
+![[TRON Add-On|TRON]]
+|
+|
+| {{tc|Yes}}
+|-
+|[[File:Minecraft Mounts of Mayhem Dungeon Descent .net.jpeg|width=150x150]]
+![[Mounts of Mayhem: Dungeon Descent|Dungeon Descent]]
+|An add-on released to promote new features from [[Mounts of Mayhem]].
+|January 12, 2026
+| {{tc|Yes}}
+|}
+
+== History ==
+{{expand section|major technical API changes, packs history, the Scripting API version 2 changes}}
+{{HistoryTable
+|{{HistoryLine||August 12, 2016|link=https://twitter.com/SeargeDP/status/764033531223896064|The concept of add-ons was hinted at in a post by [[Searge]] on August 12, 2016, stating "There will be news about the API at Minecon."<ref>{{tweet|searge|764033531223896064|There will be news about the API at Minecon. I'll talk about the things I'm working on and what our plans are. But no more details for now.|August 12, 2016}}</ref> The next day it was confirmed by [[Grum]] to be a modding API for {{BE}} (formerly called {{PE}}, or ''MCPE''),<ref>{{tweet|_grum|764417838278926336|the MCPE on, would be nice to say that too.|August 13, 2016}}</ref> and at [[MINECON 2016]], the plan and roadmap for the development of add-ons were outlined.}}
+|{{HistoryLine||February 20, 2024|link=https://www.minecraft.net/en-us/article/introducing-add-ons|Previously, standalone add-ons from the [[Marketplace]] were not available and needed to be packaged with a world to be sold on the Marketplace. However, as of February 2024, individual add-ons can now be sold separately on the Marketplace.<ref>{{mcnet|introducing-add-ons|Introducing add-ons|February 20, 2024|Linn Viberg}}</ref>}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.21|Added extra loading tips that appear when a world has add-ons applied.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.23|Added eight new extra loading tips that replaced the previous ones.}}
+|{{HistoryLine||unknown|The Scripting API version 2 was added, introducing custom components API and other major changes that aren't compatible with previous version.}}
+}}
+
+== Videos ==
+Tutorials from the official [https://www.youtube.com/@MinecraftCreatorChannel Minecraft Creator Channel].
+{{yt|OdZlKpLOkj4}}
+{{yt|TUFeM5P4IwM}}
+{{yt|kkm8xxqGVvs}}
+{{yt|bCU8UxIZ-U4}}
+{{yt|kzWSItyz5Pk}}
+{{yt|zMF3JPahrPQ}}
+
+== Quotes ==
+{{quote|Within Minecraft, there are so many ways to be creative and build the worlds of your dreams. But when you want to extend Minecraft even further and introduce new mobs, items and other artifacts into your world, you’ll want to go to the next level of creation by building new Add-On packs that can transform Minecraft.|Mike Ammerlaan<ref name="minecraft.net">
+{{mcnet|building-your-first-custom-mobs-and-add-ons-minecraft|Building your first custom mobs and add-ons for Minecraft|September 11, 2021|Mike Ammerlaan|prefix=creator}}</ref>||Generic Mojang avatar.png}}
+
+== Gallery ==
+<gallery>
+Welcome Add-Ons.jpg|Promotional artwork released alongside the [[Change your game, your way!]] cinematic trailer
+Patrick-rodes-cake-golem.jpg|Render of a "Cake Golem" add-on<ref>{{Citation|url=https://www.artstation.com/artwork/n0od66|title=Cake Golem Blockbench Tutorial|author=Patrick Rodes|website=ArtStation|date=July 15, 2024}}</ref>
+Patrick-rodes-render-motorcycle-2.jpg|Artwork of a motorcycle add-on<ref>{{Citation|url=https://www.artstation.com/artwork/w0DOmw|title=Animation Presets Blockbench Tutorial|author=Patrick Rodes|website=ArtStation|date=July 15, 2024}}</ref>
+Bath Bomb Shuffle 2.mp4|Animation of the Merchant from the [[Lush Bath Bomb Add-On]]<ref>{{Tweet|Minecraft|1822793726877671462|It was 1. Great work, everyone 👍}}</ref>
+File:MC AddOnAchievements.jpeg|Promotional image for [[achievement]] compatibility with add-ons
+</gallery>
+
+== See also ==
+*[[Mod]]
+*[[Commands]]
+*[[Data pack]]
+*[[Resource pack]]
+*[[Skin pack]]
+*[[World template]]
+*[[Mash-up pack]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+=== Official documentation ===
+<!--NOTE: ONLY OFFICIAL DOCUMENTATION PROVIDED BY MOJANG SHOULD BE LINKED IN THIS SECTION-->
+
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/addonsreference/ Addons JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/animationsreference/ Animation JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/biomereference/examples/biomeoverview Biome Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/ Block JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/ Entity JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/featuresreference/ Features JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/ Item JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/ Molang Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/recipereference/ Recipe JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/ Particle JSON Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/reference/content/schemasreference/ Schema Documentation]
+*[https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/ Script API Documentation]
+
+=== Official tutorials ===
+<!--NOTE: ONLY OFFICIAL TUTORIALS PROVIDED BY MOJANG SHOULD BE LINKED IN THIS SECTION-->
+
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/gettingstarted Getting Started With Minecraft Add-Ons]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/resourcepack Introduction to Resource Packs]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/behaviorpack Introduction to Behavior Packs]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/minecraftentitywizard Getting Started with the Minecraft Entity Wizard]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/minecraftitemwizard Getting Started with the Minecraft Item Wizard]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/minecraftblockwizard Getting Started with the Minecraft Block Wizard]
+
+=== Tools and libraries ===
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/commonlyusedtools Commonly Used Tools]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/mctoolsoverview Minecraft Creator Tools]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/bedrockeditor/editoroverview Bedrock Editor]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/snowstormoverview?view=minecraft-bedrock-stable Snowstorm]
+*[https://learn.microsoft.com/en-us/minecraft/creator/documents/chunkeroverview?view=minecraft-bedrock-stable Chunker]
+
+=== Unofficial resources ===
+*[https://wiki.bedrock.dev Bedrock Wiki]
+*[https://www.curseforge.com/minecraft/search?class=mc-addons&page=1&pageSize=20 Minecraft Addons - CurseForge]
+*[https://mcpedl.com/?type=category&slug=addons Minecraft PE Mods, Maps, Skins, Seeds, Texture Packs | MCPEDL]
+
+=== Templates ===
+'''Resource and Behavior Example Packs'''
+*[https://github.com/Mojang/bedrock-samples Bedrock Add-On Sample Files]
+
+'''Script API Example Packs'''
+*[https://github.com/microsoft/minecraft-gametests Script API <code>@minecraft/server-gametest</code> samples]
+*[https://github.com/microsoft/minecraft-scripting-samples Script API <code>@minecraft/server</code> samples]
+
+== Navigation ==
+{{Navbox add-ons}}
+{{Navbox gameplay}}
+{{Navbox Bedrock Edition}}
+{{Navbox mods}}
+{{Mojang featured|https://www.minecraft.net/en-us/article/minecraft-bedrock-update}}{{Mojang featured|https://www.minecraft.net/en-us/article/add-ons-whats-name}}{{Mojang featured|https://www.minecraft.net/en-us/article/pandas-cats-and-new-add-features-beta}}{{Mojang featured|https://www.minecraft.net/en-us/article/scripting-api-now-public-beta}}
+[[Category:Add-ons| ]]
+[[Category:Game customization]]
+[[Category:Experimental]]
+
+{{Former official page now maintained by community}}
+
+[[de:Add-on]]
+[[es:Add-on]]
+[[fr:Extension]]
+[[ja:Add-on]]
+[[ko:애드온]]
+[[lzh:附囊]]
+[[pt:Complemento]]
+[[ru:Дополнения]]
+[[th:แอดออน]]
+[[uk:Доповнення]]
+[[zh:附加包]]

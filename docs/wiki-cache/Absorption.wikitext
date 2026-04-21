@@ -1,0 +1,124 @@
+{{Infobox effect
+|image = Absorption.png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-absorption}} #2552A5 (azure)
+|type=Positive
+}}
+'''Absorption''' is a [[status effect]] that pads the health bar with extra hearts.
+
+== Effect ==
+Absorption adds {{hp|4|absorption=1}} additional [[health]] points per level to the player, displayed as yellow hearts above the normal health bar. If the player takes [[damage]] while under this effect, the absorption health points are depleted first, followed by the standard health points. Absorption health cannot be replenished by natural regeneration or other effects and vanishes when the effect ends. Negative absorption levels do not appear to have an immediate effect when applied but give {{hp|4|absorption=1}} additional health points per level to the player when the status effect ends.
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+ ! Cause
+ ! Potency
+ ! Length
+ ! Trigger
+ |-
+ | {{ItemLink|Golden Apple}}
+ | I
+ | 2:00
+ | When eaten
+ |- 
+ | {{ItemLink|Enchanted Golden Apple}}
+ | IV
+ | 2:00
+ | When eaten
+ |-   
+ | {{ItemLink|Totem of Undying}}
+ | II
+ | 0:05
+ | When activated
+ |}
+
+== Immune mobs ==
+*The only completely immune mob is the [[ender dragon]].
+*The [[wither]], while being immune to the <code>/effect</code> command, can be given absorption hearts using the <code>/data</code> command.{{only|java}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here?;Postmortal}}
+
+== Data values ==
+=== ID ===
+{{EffectIDLink}}
+{{edition|java}}:
+{{ID table
+|edition=java
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Absorption
+|spritetype=effect
+|nameid=absorption
+|id=22
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Absorption
+|spritetype=effect
+|nameid=absorption
+|id=22
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.6.1|dev=13w24b|[[File:Absorption JE1 BE1.png|18px]]  Added Absorption, obtainable from eating either tier of [[golden apple]]s, replacing the original effect, [[Health Boost]].}}
+|{{HistoryLine||1.9|dev=15w37a|The Absorption level given by enchanted golden apples has been increased from I to IV.}}
+|{{HistoryLine|||dev=15w49a|[[File:Absorption JE2 BE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine||1.11|dev=16w39a|Added the [[totem of undying]], which gives the player Absorption.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Absorption JE3 BE3.png|18px]] Changed effect icon texture again.}}
+|{{HistoryLine||1.17|dev=20w49a|The absorption hearts [[Wither (status effect)|when withered]] or [[poison|when poisoned]] now show the textures for the effect instead of looking blank.<ref>{{bug|MC-18880|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|The Absorption effect is now removed after all the absorption hearts are gone.<ref>{{bug|MC-202432|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Absorption JE1 BE1.png|18px]] Added Absorption, which was unobtainable at the time.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Absorption is now obtainable from eating either tier of golden apples.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.2|Enchanted golden apples now give Absorption IV, instead of I.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|[[Totems of undying]] now grant Absorption.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.10|[[File:Absorption JE2 BE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Absorption JE3 BE3.png|18px]] Changed effect icon texture once again.{{check version|Weren't all effect icons changed in 1.11 and not 1.10? This is at least the case for the other effects.}}}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Absorption JE1 BE1.png|18px]]  Added Absorption, obtainable from eating either tier of [[golden apple]]s.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|The Absorption level given by enchanted golden apples has been increased from I to IV.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=?|psvita=?|ps4=1.52|wiiu=?|switch=1.0.3|[[File:Absorption JE2 BE2.png|18px]] Changed effect icon texture.{{info needed|Find out, which update changed this for the other consoles, since it was not changed for all consoles at the same time.}}}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added the [[totem of undying]], which gives the player Absorption.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[File:Absorption JE3 BE3.png|18px]] Changed effect icon texture once again.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:Hearts.png|thumb|386px|A player with the maximum number of Absorption and Health Boost hearts possible {{in|java}}.]]
+* Through the use of commands, the player can achieve {{hp|2048}} health points — the maximum amount possible to obtain without attributes — using a combination of Absorption and [[Health Boost]].
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Absorption]]
+[[es:Absorción]]
+[[fr:Absorption]]
+[[ja:衝撃吸収]]
+[[ko:흡수]]
+[[pt:Absorção]]
+[[ru:Поглощение]]
+[[uk:Поглинання]]
+[[zh:伤害吸收]]

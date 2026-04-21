@@ -1,0 +1,223 @@
+{{redirect|Amethyst Bud|the block that grows amethyst buds|Budding Amethyst|other uses|Amethyst}}
+{{Infobox block
+| group1 = Small Bud
+| group2 = Medium Bud
+| group3 = Large Bud
+| group4 = Cluster
+| 1-1 = Small Amethyst Bud (U) JE1.png
+| 2-1 = Medium Amethyst Bud (U) JE1.png
+| 3-1 = Large Amethyst Bud (U) JE1.png
+| 4-1 = Amethyst Cluster (U) JE1.png
+| invimage1 = Small Amethyst Bud
+| invimage2 = Medium Amethyst Bud
+| invimage3 = Large Amethyst Bud
+| invimage4 = Amethyst Cluster
+| transparent = Yes
+| light = '''Small''': Yes (1)<br>'''Medium''': Yes (2)<br>'''Large''': Yes (4)<br>'''Cluster''': Yes (5)
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| waterloggable = Yes
+| lavasusceptible = No
+}}
+'''Amethyst buds''' are the first three stages of growth of amethyst clusters, which grow on [[budding amethyst]].
+
+'''Amethyst clusters''' are the fourth and final growth stage of amethyst buds, which drop [[amethyst shard]]s when mined.
+
+== Obtaining ==
+=== Breaking ===
+The amethyst cluster block drops itself in any of its growth stages (rather than its [[amethyst shard]] drops) when mined with any tool with the [[Silk Touch]] enchantment.
+
+When mined without Silk Touch or broken by being pushed off an attached block by a [[piston]] or [[sticky piston]], only fully grown amethyst clusters drop [[amethyst shard]]s, while amethyst buds drop nothing. Breaking an amethyst cluster with a [[pickaxe]] drops 4 shards while any other method of breaking it yields 2 shards. The maximum amount of amethyst shards dropped can be increased with [[Fortune]]; Fortune I gives a {{fraction|1|3}} chance for 8 shards (averaging 5.33 shards), Fortune II gives a 25% chance (each) to give 8 or 12 shards (averaging 7 shards), and Fortune III gives a 20% chance (each) to give 8, 12, or 16 shards (averaging 8.8 shards).
+
+{{Breaking row|Amethyst Cluster,Amethyst Bud|drop=0|Pickaxe|link=none|horizontal=1|foot=1}}
+
+=== Natural generation ===
+Amethyst buds and clusters generate naturally as part of [[amethyst geode]]s, on exposed faces of budding amethysts.
+
+{{block distribution}}
+
+=== Post-generation ===
+Every time a [[budding amethyst]] block receives a [[random tick]], there is a 20% chance for a small amethyst bud to generate on any of its sides, as long as the block being replaced with the small amethyst bud is [[air]] or a [[water]] source block.
+
+== Usage ==
+
+=== Growing ===
+An amethyst bud placed on a [[budding amethyst]] (rather than any other block) regardless whether it was placed by the player or spawned by the budding amethyst itself, grows over time, going through three growth stages – small, medium, and large – before reaching its 4th and final growth stage as an amethyst cluster, which drops [[amethyst shard]]s when mined.
+
+{{IN|Java}}, the below logic can be applied:
+
+# Per [[random tick]], updates occur to any given block in the loaded chunk every '''68.27 seconds''' on average if the chunk center is within 128 blocks of a player's location.
+# Each random tick assigned to the budding amethyst block has a 20% chance of triggering an update on a budding amethyst block. Thus, it takes '''5 random ticks''' on average for a budding amethyst block to grow one of its faces by 1 stage.
+# Of the '''6 faces''' on a budding amethyst block, ''only one'' side is randomly selected to either accelerate by one growth stage or to develop a new bud. If the randomly-selected side is obstructed, then growth fails and nothing happens.
+# Each budding amethyst requires '''4 growth stages''' to reach maximum maturity and be gatherable.
+
+As such, the math can be applied if a player is within random tick range as to calculate amethyst growth rate:
+
+(68.27 seconds/1 random tick) × (5 random ticks/1 growth stage) × (4 growth stages/1 amethyst cluster) × (6 amethyst clusters/1 budding amethyst block) = 68.27×5×6×4 = 8192.4 seconds for an unobstructed budding amethyst block to fully grow each of its clusters. This time is equivalent to 2 hours 16 minutes 32.4 seconds or 6.827 in-game days.
+
+=== Decoration ===
+They can also be placed on certain other types of blocks for decoration. The block must be solid and have at least one side that form a full surface: for example, they can be placed on the bottom of stairs (or top of upside down stairs), but not on their side, or top. They can also be placed on the bottom of bottom slabs and on the top of top slabs. Of blocks that meet these criteria, some are still excluded.
+
+Amethyst clusters cannot be placed on:
+
+* All [[Solid block#List of non-solid blocks|non-solid blocks]];
+* blocks without any full surfaces, like [[fence]]s, [[fence gate]]s, [[wall]]s, [[glass pane]]s, [[iron bars]], [[lightning rod]]s, [[chain]]s, [[head]]s, [[grindstone]]s, [[bell]]s, [[lantern]]s, [[cauldron]]s, [[anvil]]s, [[conduit]]s, [[decorated pot]]s, [[chest]]s, [[pointed dripstone]];
+* [[leaves]];
+* [[big dripleaf]];
+* [[honey block]]s;
+* [[chorus flower]]s.
+
+=== Light ===
+Small, medium, and large amethyst buds give off a [[light]] level of 1, 2 and 4 respectively, while amethyst clusters give off a light level of 5.
+
+=== Sound ===
+Uniquely among other blocks, an amethyst cluster in all its growth stages makes a quiet overlay sound when generally interacted with, as well as its block breaking sound when hit with a projectile.
+
+== Sounds ==
+{{LoadBox
+|page=Amethyst Cluster/Sounds
+|title=List of sounds
+|link=Amethyst Cluster/Sounds
+|float=none
+|style=border: none; background: transparent; padding: 0
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Small Amethyst Bud
+|spritetype=block
+|nameid=small_amethyst_bud}}
+{{ID table
+|displayname=Medium Amethyst Bud
+|spritetype=block
+|nameid=medium_amethyst_bud}}
+{{ID table
+|displayname=Large Amethyst Bud
+|spritetype=block
+|nameid=large_amethyst_bud}}
+{{ID table
+|displayname=Amethyst Cluster
+|spritetype=block
+|nameid=amethyst_cluster
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Small Amethyst Bud
+|spritetype=block
+|nameid=small_amethyst_bud
+|id=587}}
+{{ID table2
+|displayname=Medium Amethyst Bud
+|spritetype=block
+|nameid=medium_amethyst_bud
+|id=586}}
+{{ID table2
+|displayname=Large Amethyst Bud
+|spritetype=block
+|nameid=large_amethyst_bud
+|id=585}}
+{{ID table2
+|displayname=Amethyst Cluster
+|spritetype=block
+|nameid=amethyst_cluster
+|id=584
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|facing|up|down, east, north, south, up, west|The direction the amethyst is facing, determined by its anchoring.}}
+{{bst|waterlogged|false|true,false|Whether or not the amethyst is located inside of [[water]].|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=|minecraft:block_face|up|down, east, north, south, up, west|The direction the amethyst is facing, determined by its anchoring.|Unsupported|foot=1}}
+
+== History ==
+{{See asset history|type=block}}
+=== Mention and announcement ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link={{WON|110762705/my-list-on-tile-types-so-far}}|[[Notch]] mentioned crystal blocks as a potential block type that can be found in the underground.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=23m14s}}|[[File:Amethyst Cluster (U) pJE20201003.png|32px]] Amethyst clusters are shown at [[Minecraft Live 2020]].}}
+|{{HistoryLine||October 20, 2020|link={{tweet|Cojomax99|1318530930005377024}}|[[File:Small Amethyst Bud (U) JE1.png|32px]] [[File:Medium Amethyst Bud (U) JE1.png|32px]] [[Cory Scheviak]] reveals small and medium amethyst buds on Twitter.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Small Amethyst Bud (U) JE1.png|32px]] [[File:Medium Amethyst Bud (U) JE1.png|32px]] [[File:Large Amethyst Bud (U) JE1.png|32px]] [[File:Amethyst Cluster (U) JE1.png|32px]]<br>[[File:Small Amethyst Bud (texture) JE1.png|32px]] [[File:Medium Amethyst Bud (texture) JE1.png|32px]] [[File:Large Amethyst Bud (texture) JE1.png|32px]] [[File:Amethyst Cluster (texture) JE1.png|32px]] Added amethyst buds and amethyst clusters.}}
+|{{HistoryLine|||dev=20w46a|Amethyst clusters can now be obtained with [[Silk Touch]].<ref>{{bug|MC-203631||Amethyst buds do not drop themselves with silk touch|Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w11a|Breaking amethyst clusters by hand, with a piston, or by other means now drops 2 amethyst shards instead of the 4 that it does when broken with a pickaxe.
+|Previously, only an iron pickaxe or higher could cause 4 amethyst shards to drop, and other means dropped nothing.}}
+|{{HistoryLine|||dev=21w17a|Removed unused 'lit' blockstate.}}
+|{{HistoryLine||?|The item models for some smaller amethyst buds have been changed so they appear higher in inventory slots.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|[[File:Small Amethyst Bud (U) BE1.png|32px]] [[File:Medium Amethyst Bud (U) BE1.png|32px]] [[File:Large Amethyst Bud (U) BE1.png|32px]] [[File:Amethyst Cluster (U) BE1.png|32px]]<br>[[File:Small Amethyst Bud (texture) JE1.png|32px]] [[File:Medium Amethyst Bud (texture) JE1.png|32px]] [[File:Large Amethyst Bud (texture) JE1.png|32px]] [[File:Amethyst Cluster (texture) JE1.png|32px]] Added amethyst buds and amethyst clusters.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Amethyst buds and amethyst clusters are no longer available only in [[Experimental Gameplay]].}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|[[File:Small Amethyst Bud (U) JE1 BE2.png|32px]] [[File:Medium Amethyst Bud (U) JE1 BE2.png|32px]] [[File:Large Amethyst Bud (U) JE1 BE2.png|32px]] [[File:Amethyst Cluster (U) JE1 BE2.png|32px]] Changed the model to match Java Edition.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|Now uses the <code>minecraft:block_face</code> [[block state]] instead of <code>facing_direction</code>.}}
+}}
+
+== Issues ==
+{{Issue list|Amethyst Cluster|Amethyst Bud|Amethyst Crystal}}
+
+== Trivia ==
+* While amethyst buds cannot be equipped in the head slot in [[Survival]] mode, equipping it using [[commands]] causes it to appear as a crown.
+* Amethyst clusters are the only mineable blocks in the game that emit a light level of 5.
+
+[[File:Steve wearing Amethyst Cluster.png|75px]]
+{{-}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Difference in growth of amethyst buds.png|Amethyst buds cannot grow on their own, but they grow when their neighboring budding amethysts receive random ticks.
+Dev Amethyst buds.png|The first image of amethyst buds.
+</gallery>
+
+=== Development images ===
+<gallery>
+Amethyst Cluster dev breaking sounds.mp4|An early version of the amethyst cluster's breaking sounds.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Natural}}
+
+[[Category:Natural blocks]]
+[[Category:Light sources]]
+
+[[de:Amethysthaufen]]
+[[es:Cúmulo de amatista]]
+[[fr:Amas d'améthyste]]
+[[it:Aggregato di ametista]]
+[[ja:アメジストの塊]]
+[[ko:자수정 군집]]
+[[pl:Skupisko ametystu]]
+[[pt:Agregado de Ametista]]
+[[ru:Аметистовый кластер]]
+[[uk:Аметистова друза]]
+[[zh:紫水晶簇]]

@@ -1,0 +1,180 @@
+{{for||Gas}}
+{{Infobox block
+| group = Normal
+| 1-1 = Air.png
+| group2 = Shown
+| 2-1 = Air (shown) JE2.png
+| invimage = Air
+| stackable = No
+| tool = None
+| renewable = Yes
+| transparent = Yes
+| light = No
+| flammable = No
+| lavasusceptible = No
+}}
+'''Air''' is an [[Invisible block|invisible]] [[block]] used to define unoccupied space where other blocks and [[items]] could exist; it represents the absence of a block or an item. It is one of the few blocks in the game that players cannot normally interact with.
+
+'''Cave air'''{{only|java}} is a variant found only underground in [[carver cave]]s and some [[Structure|generated structure]]s along with [[feature]]s like [[lava lake]]s.
+
+'''Void air'''{{only|java}} is a variant used internally for the 'air' in unloaded chunks and outside of the world height limits (above Y=319 and below Y=-64 in the [[Overworld]], and above Y=255 and below Y=0 in [[the Nether]] and [[the End]] dimensions).
+
+== Appearance ==
+All types of air are completely invisible.
+
+The only exception is that air can be visualized with the use of [[structure block]]s in [[Structure Block#Save|Save mode]]: when "Show invisible blocks" is enabled, air is represented as small blue cubes. Air, cave air, and void air are all displayed identically.
+
+== Obtaining ==
+{{IN|Bedrock}}, air cannot be obtained in the [[inventory]] without editing.
+
+{{IN|Java}}, the block is completely unobtainable as an item. When attempting to use commands with air as an item ID:
+
+* Using {{cmd|give}} does nothing.
+* Using {{cmd|clear}} will always fail to find any matching items.
+* Using {{cmd|item replace}} deletes the item in the specified slot.
+* Using {{cmd|summon}} to attempt to create an item entity (i.e. <code>/summon item ~ ~ ~ {Item:{id:"air"}}</code>) does nothing.
+
+As a block, air can be destroyed or created only by the placement or removal of other [[block]]s respectively. When using commands such as {{cmd|fill}}, specifying air deletes other blocks.
+
+=== Natural generation ===
+Upon world generation, all otherwise empty spaces are occupied by air.
+
+{{IN|java}}, carver caves and some underground structures generate containing cave air instead, including [[mineshaft]]s<ref>{{bug|MC-125112||Surface mineshafts in mesas use cave_air|WF}}</ref>, [[stronghold]]s, [[monster room]]s, and [[lava lake]]s<ref>{{bug|MC-128250||Surface water and lava ponds use cave_air|WF}}</ref>, and void air is used in place of unloaded chunks and above or below the [[world]]'s buildable area to denote illegal locations for blocks to be put.
+
+{{block distribution}}
+
+=== Post-generation ===
+When other [[block]]s are destroyed by any means, air is created.
+
+== Usage ==
+[[File:Shown Invisible Blocks.png|thumb|250px|Air, shown at left, is represented by blue cubes within structures. Cave air and void air are also shown as such.]]
+
+Air shares some properties with non-[[solid block]]s, including allowing the [[player]] or [[mob]] to move within that space without [[suffocating]], and also to catch their breath if they are [[drowning]] in [[water]].
+
+Cave air and void air have no special properties; they function the same as normal air.
+
+=== Piston interactivity ===
+Air and its variants are destroyed when pushed by a [[piston]]. They cannot be pulled by [[sticky piston]]s.
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|firstcolumnname=Block
+|generatetranslationkeys=y
+|displayname=Air
+|spritetype=block
+|nameid=air|showblocktags=y|blocktags=air,parrots_spawnable_on,replaceable}}
+{{ID table
+|displayname=Cave Air
+|spritetype=block
+|nameid=cave_air
+|form=block|showblocktags=y|blocktags=air,replaceable}}
+{{ID table
+|displayname=Void Air
+|spritetype=block
+|nameid=void_air
+|form=block
+|foot=1|showblocktags=y|blocktags=air,replaceable}}
+{{ID table
+|firstcolumnname=Fluid
+|displayname=Empty
+|spritename=air
+|spritetype=block
+|nameid=empty
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|shownumericids=y
+|edition=bedrock
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Air
+|spritetype=block
+|nameid=air
+|id=413
+|form=block
+|foot=1}}
+
+== Videos ==
+{{yt|7AS-15eef5c}}
+
+== History ==
+{{See technical block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java pre-classic}}
+|{{HistoryLine||Cave game tech test|link=Cave game tech test|Added air, which is any space devoid of blocks.
+|Air is not internally considered a block.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100114|Air now affects [[liquid]] blocks that are horizontally adjacent to it. If air is touching the [[fluid]] block, there is a {{frac|2|3}} chance for the fluid block to disappear and make the pool recede, and a {{frac|1|3}} chance for the fluid block to fill the air, making the pool spread.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w38b|Air is now internally a [[block]].<ref>{{tweet|Dinnerbone|381055646806077440|This snapshot may be very crashy because @_grum redefined the concept of "air". We're keeping an eye on the crash list though!|September 20, 2013}}</ref>}}
+|{{HistoryLine||1.9|dev=16w02a|Air is now translatable into other languages.}}
+|{{HistoryLine||1.10|dev=16w20a|[[File:Air (shown) JE1.png|32px]] Air can now be visualized with the use of [[structure block]]s.}}
+|{{HistoryLine||1.13|dev=18w06a|Two new variations of air have been added: cave air and void air.
+|[[Carver cave]]s now generate cave air instead of normal air.
+|Void air is now internally used at Y values less than 0 or greater than 255 and in unloaded [[chunk]]s.}}
+|{{HistoryLine||1.15|dev=19w39a|[[File:Air (shown) JE2.png|32px]] Outlines of air shown by "show invisible blocks" by a [[structure block]] no longer have black outlines.}}
+|{{HistoryLine||1.18|dev=21w37a|Void air is now internally used at Y values less than -64 or greater than 319 and in unloaded [[chunk]]s.{{check version|21w37a doesn't mention}}}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|Added air.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=Build 0016|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added air.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Added air.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeric ID was 0.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== See also ==
+* [[Void]]
+* [[Technical blocks]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox_invisible_block}}
+{{Navbox blocks|Natural}}
+{{navbox environment}}
+[[Category:Natural blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+
+[[de:Luft]]
+[[es:Aire]]
+[[fr:Air]]
+[[it:Aria]]
+[[ja:空気]]
+[[ko:공기]]
+[[lzh:氣]]
+[[nl:Lucht]]
+[[pl:Powietrze]]
+[[pt:Ar]]
+[[ru:Воздух]]
+[[th:อากาศ]]
+[[uk:Повітря]]
+[[zh:空气]]
