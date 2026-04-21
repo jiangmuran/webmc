@@ -2,6 +2,13 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M3
+
+- **Vertex AO** — sample 3 neighbor solids per quad corner, multiply into vertex shade. Needs a second Uint8Array attribute since `colors.a` now carries voxel light. Corner hardening is the visual win.
+- **Cross-chunk light BFS** — block and sky light currently stop at chunk borders. Horizontal bleed under overhangs requires propagating BFS queues into neighbor chunks and re-meshing them. Queue management + re-mesh trigger is the work.
+- **Biome-colored grass/leaves tint** — per-biome RGB tint sent as a vertex attribute or fragment uniform keyed by world XZ.
+- **WorldGenerator in a worker** — sync on main thread is fine at 6-chunk radius; mobile at 12 will need the migration.
+
 ## Post-M2
 
 - **Procedural atlas generator (was M2.4)** — deterministic noise+palette 16×16 tiles, 512×512 atlas PNG + JSON UV map. Ships alongside M3 biome tinting so biome colors are applied to real textures, not flat colors. Design: `/docs/specs/m2-block-interaction.md` §Atlas.
