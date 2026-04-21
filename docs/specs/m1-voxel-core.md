@@ -4,7 +4,7 @@
 
 This note decomposes M1 into concrete sub-tasks with owners, data shapes, and verification hooks before any implementation begins. Read `AGENT_CHARTER.md` + `docs/STANDARDS.md` first; read `docs/wiki-cache/Chunk_format.wikitext` for invariants we are matching (chunk dimensions, palette approach) and `docs/wiki-cache/Block_states.wikitext` for block-state modeling.
 
-**Clean-room reminder:** the wiki describes Minecraft's chunk format. We match its *behavior* (16×16 horizontal, 384 vertical, palette-encoded block storage) but our on-disk and in-memory layouts are webmc's own choices. Do NOT read `/mc-ref/`.
+**Clean-room reminder:** the wiki describes Minecraft's chunk format. We match its _behavior_ (16×16 horizontal, 384 vertical, palette-encoded block storage) but our on-disk and in-memory layouts are webmc's own choices. Do NOT read `/mc-ref/`.
 
 ## Sub-tasks
 
