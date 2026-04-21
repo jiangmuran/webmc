@@ -4,7 +4,7 @@
 
 Read: `AGENT_CHARTER.md` + `docs/STANDARDS.md` + `docs/phase-retros/m4.md`.
 
-Clean-room: our save format is webmc-native, not Anvil. We reference the wiki `Chunk_format.wikitext` for *conceptual* guidance (palette + bitpacked is the pattern) but every byte of our schema is original.
+Clean-room: our save format is webmc-native, not Anvil. We reference the wiki `Chunk_format.wikitext` for _conceptual_ guidance (palette + bitpacked is the pattern) but every byte of our schema is original.
 
 ## Sub-tasks
 

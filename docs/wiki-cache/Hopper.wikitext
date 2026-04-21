@@ -1,0 +1,479 @@
+{{distinguish|Copper}}{{About|the block|the crash utility|Hopper (crash utility)}}
+{{Infobox block
+|image=Hopper (D).png
+|imagecaption=''[[Java Edition]]''
+|image2=Hopper (D) BE.png
+|image2caption=''[[Bedrock Edition]]''
+|extratext = [[#Renders|View all renders]]
+|transparent='''JE''': Yes<br>'''BE''': Partial <small>(diffuses sky light, -2 to light)</small>
+|light=No
+|tool=wooden pickaxe
+|renewable=Yes
+|waterloggable = {{jebe|No|Yes}}
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+{{relevant tutorial|Hopper}}
+
+A '''hopper''' is a low-capacity storage [[block]] that can be used to collect [[item entities]] directly above it, as well as to transfer [[item]]s into and out of other containers. A hopper can be locked with [[redstone]] power to stop it from moving items into or out of itself.
+
+== Obtaining ==
+=== Breaking ===
+A hopper drops itself and its contents if mined with a [[pickaxe]]. Using any other item to mine a hopper drops only its contents.
+{{breaking row|horizontal=1|Hopper|Pickaxe|Wood|foot=1}}
+
+=== Crafting ===
+A hopper can be crafted from a chest and 5 iron ingots.
+{{Crafting
+|A1= Iron Ingot
+|C1= Iron Ingot
+|A2= Iron Ingot
+|B2= Chest
+|C2= Iron Ingot
+|B3= Iron Ingot
+|Output= Hopper
+|type= Redstone
+}}
+
+=== Natural generation ===
+Hoppers generate above [[barrel]]s in the [[trial chambers]].
+
+== Usage ==
+{{see also|Tutorial:Hopper}}
+[[File:Hopper aligment.png|Hoppers can face down or sideways.|thumb]]
+
+A hopper can be used as a container, as a crafting ingredient, and as a redstone component.
+
+A hopper has an "output" tube at its bottom that can face down or sideways and provides a visual indication of which block the hopper is set up to drop its items into, if that block has an inventory. To place a hopper, use the {{control|Place Block}} control while aiming at the surface to which its output should face (Hoppers ''do not'' orient themselves automatically). To place a hopper directly on the face of an already interactable block, the player can {{control|sneak}} while placing the hopper. Attempting to place a hopper aimed on the bottom face of a block instead faces downward. With some blocks, such as the [[furnace]] and [[brewing stand]], the hopper has multiple uses. A hopper does not change direction after placement, and it is not attached to the container it faces; the container can be removed or replaced, and the hopper remains unchanged.
+
+{{IN|Java}}, hoppers cannot be moved by [[piston]]s. Despite not having a full top surface, a few redstone components that require a support can be placed on top of hoppers (but not on their sides).
+
+=== Container ===
+[[File:Hopper GUI.png|thumb|176px|Hopper GUI showing the hopper's five slots of inventory at the top and the player's inventory below.]]
+
+A hopper can be used as a container and has 5 slots of inventory space. 
+
+To open the hopper GUI, {{control|use}} it. To move items between the hopper inventory and the player inventory or hotbar while the hopper GUI is open, drag or shift-click the items. To exit the hopper GUI, use the {{key|Esc}} key, B button or circle button, depending on the device.
+
+By default, the GUI of a hopper is labeled "Item Hopper". A hopper's GUI label can be changed by naming the hopper in an [[anvil]] before placing it, or, {{in|java}}, by using the [[Commands#data|data]] command (for example, to label a hopper at (0,64,0) "Steve's Hopper", use <code>/data merge block 0 64 0 {CustomName:'"Steve's Hopper"'}</code>).
+
+{{IN|java}}, a hopper's GUI can be "locked" (or subsequently unlocked) by setting the hopper's <code>lock</code> tag with the [[Commands#data|data]] command. If a hopper's <code>lock</code> tag is not blank, the hopper cannot be accessed except by players holding an item that matches the item predicate in the <code>lock</code> tag. For example, to lock a hopper at (0,64,0) so that only players holding an item named "Steve's Key" can access the hopper, use <code>/data merge block 0 64 0 {lock:{components:{"custom_name":"Steve's Key"}}}</code>.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Redstone component ===
+{{see also|Redstone circuit|Redstone components#Hopper}}
+[[File:Hopper logic flowchart.png|thumb|Flowchart of hopper logic]]
+
+While a hopper is ''neither'' powered by a [[redstone]] signal nor in ''cooldown'', it operates with three functions:
+
+*'''Push''' a single item from its own inventory into a container it faces
+*'''Pull''' a single item into its inventory from a container above it
+*'''Collect''' [[item entities]] (free-floating items in the world) into its inventory from the space above it
+
+A hopper first attempts to push any items inside it. Afterward, it checks if the block above it is a type of container. If so, it attempts to pull from it. Otherwise, the hopper attempts to collect item entities. Notably, hoppers can push to and pull from other hoppers, forming '''hopper pipes''' or '''hopper chains''', which allow transporting items across several blocks and are further discussed below.
+
+==== Redstone signals ====
+When a hopper receives a redstone signal, all three of its functions stop: in this situation the hopper is '''locked/disabled'''. Once the hopper loses power, its activity resumes as it goes back to being '''unlocked/enabled'''.<ref>The terms "locked" and "unlocked" were created by the community. "Enabled", on the other hand, is the name of the actual blockstate property that defines if the hopper should be operational or not ({{in|JE}}).</ref> Depowering a locked hopper does not affect its cooldown time. Therefore, unlocking a hopper that was not ''already'' in cooldown results in it starting to pull, push, or collect items as soon as it gets ticked.
+
+{{IN|be}}, the hoppers can only be locked on the input/consume [[redstone tick]] (C-tick).
+
+While a locked hopper does not push or pull/collect items, it may still receive items from [[dropper]]s, [[crafter]]s and other hoppers, and may have its items pulled out by another hopper beneath it. Hence, the item flow in a horizontal hopper pipe may be stopped by locking just one of the hoppers, but stopping a vertical hopper pipe requires locking two adjacent hoppers at the same time, such that both the pushing of the top one and the pulling of the bottom one are stopped.
+
+A hopper does not output any redstone signals by itself, but its fullness can be read using a [[redstone comparator]], which needs to be placed next to it and facing away from it. An empty hopper outputs a signal strength of 0 and a completely full hopper outputs a signal strength of 15. Notably, a single stackable item (16 or 64) outputs a signal strength of 1 and a single non-stackable item outputs a signal strength of 3. A table with all signal strengths can be found in the comparator article.
+
+{{IN|Java}}, if the hopper being read is part of a horizontal hopper pipe, the comparator can individually read each item passing through the chain, because items are pushed through the hoppers one by one at a speed that is manageable by the comparator. If there is an uninterrupted stream of items, the comparator does not switch off in between items. On the other hand, in a vertical hopper pipe, some of the hoppers may never produce a reading above 0, even with a continuous stream of items, because pushes and pulls both occur in the same game tick: The hoppers' items get pulled out a single game tick after they're pushed in and this isn't measurable by a comparator, because comparators need measurements lasting at least 2 game ticks (0.1 seconds, barring lag) to produce a reading.
+
+==== Collecting items ====
+A hopper collects items dropped inside itself or on top of it if the space above the hopper is occupied by a non-storage block. Items dropped inside the hopper are picked up regardless of the block above.
+
+{{IN|Java}}, items are only collected if the block above is not a full block or is in the block [[Block tag (Java Edition)|tag]] {{code|#does_not_block_hoppers}} ([[bee nest]]s and [[beehive]]s by default).
+
+{{IN|Bedrock}}, items are also collected from full blocks, a situation that might come from items rising up through solid blocks or being [[commands/summon|summoned]].
+
+Items are gathered from the entire 1 block space above the hopper, meaning that items sitting on partial blocks such as [[soul sand]] directly above a hopper can be collected.<ref>{{bug|MCPE-55824}}</ref>
+
+Collected items are placed in the leftmost empty slot of a hopper's inventory. If there are multiple dropped items above the hopper, the hopper collects them in the order they entered the chunk containing the hopper. This can be observed by pushing items onto a locked hopper from an adjacent chunk: regardless of which item lands first, the hopper will always collect the one that entered the chunk the earliest.
+
+Hoppers usually check for dropped items every [[game tick]] and they can collect items even before they are picked up by a [[player]] or destroyed by [[lava]]. After collecting an item (or stack of items), a hopper enters a cooldown period that lasts 8 game ticks (0.4 seconds, barring lag).
+
+Hoppers collect groups of items all at once rather than collecting them as single items one at a time. As a result, hoppers can collect item entities much faster than they can pull items from a container. Pulling from a moving [[minecart with chest]] or [[minecart with hopper]] is even slower, since the minecart is not always above the hopper.
+
+==== Pushing and pulling items ====
+A hopper with a storage container above it (such as a [[furnace]], [[chest]], [[dropper]], [[composter]], or another hopper) attempts to pull from the container instead of checking for floating items above it, and hence can not collect dropped items. A hopper always tries to push or pull items using the leftmost available slot. When a hopper is removing items from a chest, the items disappear from left to right. Similarly, when filling up a chest, the chest fills up from left to right. Hoppers prioritize pulling from the first slot of a container over pulling into the first hopper slot. If a hopper has stone in its first slot and nothing in its second while the container it is pulling from has chicken in its first slot but stone in the second, the hopper pulls the chicken from the first slot of the container into its empty second slot. However, if the hopper is unable to pull the chicken, such as if all slots are filled with stone, the hopper pulls the stone from the second slot of the container instead. Similarly, hoppers prioritize pushing from their first slot over pushing into the first slot of a container. If a hopper has stone in its first slot and chicken in its second while the container it is pushing to has chicken it its first slot but stone in the second, the hopper pushes stone from its first slot into the second slot of the container.
+
+{{IN|Java}}, the checks done by a hopper while pulling generally require less processing than the checks done by a hopper attempting collection. Therefore, a chain of hoppers topped with composters, storage containers, or full blocks (keep in mind that full blocks do not prevent hoppers from checking if there are [[minecarts with chests]] or [[minecarts with hoppers]] above them) rather than air/non-full blocks has better performance and lower potential for processing lag. <ref name=":0">{{ytl|LC3ZOOI1Rf0|Droppers Vs. Composters – The Effect Certain Blocks Have On Hopper Performance|ExperimentalIdea|November 25, 2019}}</ref> The performance improvement achieved is correlated with the number of storage slots the container has - for example a dropper will have better performance than a barrel. The single best block for performance is the composter.<ref name=":0" /> {{IN|Bedrock}}, a chain of hoppers with air or non-container blocks on top has better performance than a chain of hoppers topped by container blocks.<ref>https://cdn.discordapp.com/attachments/715523208530362389/890030941282631741/Redstone_MSPT_measure.xlsx</ref> This may be because, even though hoppers with containers on top do not check for items, they do check for hopper-minecarts and chest-minecarts to pull from, and that involves scanning the chunk entity list.<ref>{{bug|MCPE-109449}}</ref>
+
+{{Schematic|caption='''Push then pull'''
+Chest A is full of items while the hopper and chest B are empty.
+|ch-$+A||-
+|ho-$e|ch-$+B
+}}
+
+Item pushes and pulls are processed in the same game tick, but pushes are processed before pulls. In the schematic, the empty hopper first pulls an item from chest A as it cannot push anything into chest B. After the cooldown, the hopper first pushes its item into chest B before pulling another item from chest A, both pushing and pulling in the same tick, and the process repeats. The hopper stops pulling when A is empty, and stops pushing when B becomes full.
+
+After pulling and/or pushing items, a hopper enters an 8 game tick (0.4 seconds, barring lag) cooldown period (a transfer rate of 2.5 items per second, barring lag).
+
+{{IN|BE}}, when an item is pushed into an empty hopper (a player manually placing the item in the hopper does not count), it starts an 8-game-tick cooldown period. {{IN|JE}}, when an item is pushed into an empty hopper, the cooldown of that hopper lasts 7 game ticks (0.35 seconds, barring lag) instead. Pushing an item into a hopper that isn't empty does not trigger its cooldown.
+
+==== Bee nests and beehives ====
+Normally, hoppers do not attempt to collect items when a solid block is placed on top of them. However, hoppers attempt to collect items when [[bee nest]]s and [[beehive]]s are placed on top of them. This allows hoppers to collect [[honeycomb]] when bee nests and beehives are sheared by the player or a dispenser. If a [[dropper]] or [[dispenser]] ejects an item into a bee nest or beehive above a hopper, the hopper usually collects the item. If a dispenser or dropper ejects an item into a different solid block above a hopper, the item phases through the solid block and is not collected by the hopper.
+
+==== Container interactions ====
+Some [[container]]s interact with hoppers in specific ways:
+
+:;{{BlockLink|Barrel}}, {{EntityLink|id=oak boat with chest|boat with chest}}, {{BlockLink|dispenser}}, {{BlockLink|dropper}}
+::Hoppers interact normally with barrels, dispensers, droppers, and boats with chests.
+
+:;{{BlockLink|Brewing stand}}
+::A working hopper on the top face of a brewing stand deposits only into the ingredient slot and it can push only valid [[brewing]] ingredients. A hopper on side face of a brewing stand can deposit only [[blaze powder]] or bottles (including empty bottles) into the three brew slots. A hopper underneath a brewing stand always extracts from the three brew slots, whether brewing is finished or not&mdash;The hopper must be locked to allow potions to finish brewing.
+
+:;{{BlockLink|Chest}}, {{BlockLink|trapped chest}}
+::Large chests and large trapped chests are treated as a single container: a hopper depositing into a large chest fills up the entire chest and a hopper underneath a large chest empties the entire chest. Trapped chests being accessed by a player lock any adjacent hoppers, per the standard behavior of a hopper next to an active power source.
+
+:;{{BlockLink|Chiseled bookshelf}}
+::Hoppers and minecarts with hoppers can insert and remove books from the bookshelf. As with any other container, items are taken from the first slot that has an item that can fit in the hopper and are inserted into the first empty slot.
+
+:;{{BlockLink|Composter}}
+::Hoppers above composters can push compostable items into the composter's top face, with a chance of increasing the compost level as if the player used the item on the composter. Items that are not compostable cannot be pushed into the composter. Hoppers below the composter can pull [[bone meal]] when the composter is in stage 8, emptying the composter and resetting it to stage 0. Hoppers to the side of a composter do not interact with it.
+
+:;{{BlockLink|Crafter}}
+::Hoppers can insert ingredients in the crafting grid. Items are distributed in enabled slots, going left to right starting from the first row; if the crafter has all item slots filled then items are added to the lowest count item stack of the same type. A hopper below a crafter collects the ingredients from the crafting grid, not the resulting item.
+
+:;{{BlockLink|Decorated pot}}
+::Hoppers can deposit up to a stack of a single type of item into a decorated pot. Items are not pushed if the decorated pot is full or the pot contains a different item. Using a hopper (or a [[minecart]] with hopper) is the only way to retrieve items from a decorated pot without breaking it.
+
+:;{{BlockLink|Ender chest}}
+::Hoppers cannot interact with [[ender chest]]s in any way.
+
+:;{{BlockLink|Furnace}}, {{BlockLink|blast furnace}}, {{BlockLink|smoker}}
+::A working hopper pointing into the top of a furnace deposits only into the ingredient slot. It can push any item, including items that can't be smelted by the furnace. A hopper pointing into the side of a furnace deposits into the fuel slot, and only items that are usable as fuel. A hopper below a furnace pulls everything from the output slot and empty [[bucket]]s from the fuel slot left over from using [[lava bucket]]s as fuel. When a hopper removes items from a furnace, the experience points are 'stored' in the furnace until a player removes at least one smelted item, or the furnace block is broken.
+
+:;{{BlockSprite|Hopper}} Other hoppers
+::A sequence of three or more hoppers, each pushing items into the next, is called a '''hopper pipe'''. Working horizontal hopper pipes simply push items into each other at the expected rate of 2.5 items per second, but vertical hopper pipes are more complicated, as the hoppers are trying both to pull and to push. When a vertical pipe pulls from a single container, it simply transfers items at 2.5 items per second because the transfer rate is limited by the first hopper pulling items from the container. If a ''stack of items'' is in a vertical pipe, the items can be transferred twice as fast, because the hopper with the item stack is pushing items down while the hopper below it is also pulling items down.
+
+:;{{BlockLink|Shelf}}
+::Hoppers and minecarts with hoppers can insert and remove items from the shelf. Items are inserted into the first empty slot and extracted from the first slot that contains items, following standard container behavior.
+
+:;{{BlockLink|Jukebox}}
+::Hoppers can insert [[music disc]]s into jukeboxes, and extract the music discs after they finish playing. A jukebox emits a redstone signal while playing a disc, locking any adjacent hoppers.
+
+:;{{BlockLink|Lectern}}
+::Hoppers cannot remove or place books on [[lectern]]s. The redstone pulse emitted from a lectern when a page is turned can temporarily lock hoppers.
+
+:;{{EntityLink|Minecart with chest}}, {{EntityLink|minecart with hopper}}
+::Unlocked hoppers fill [[minecarts with chests]] and [[minecarts with hoppers]] if any part of the entity's hitbox is within the hopper's target block-space. Hopper minecarts try to pull items from the hopper at high speed. Hoppers can pull items from minecarts above them so rails can be placed directly on the top faces of a hoppers. If a [[detector rail]] is in the right position, it could lock the hopper per standard redstone-hopper behavior.
+
+:;{{BlockLink|Shulker box}}
+::Hoppers cannot put [[shulker box]]es into other shulker boxes. This allows for the creation of certain [[Tutorial:Hopper#Potions, books and shulker boxes|item filters]].
+::Otherwise, hoppers interact with shulker boxes normally.
+
+== Sounds ==
+=== Generic ===
+Despite being composed almost entirely of iron, hoppers do not use iron sounds.<ref>{{bug|MC-279219||Hoppers do not use minecraft:block.iron.* sounds despite being made of iron|Invalid}}</ref>
+
+{{Sound table/Block/Metal}}
+
+=== Unique ===
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=lock>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=block
+|description=When a player attempts to open a hopper locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=lock/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=lock/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}: ''None''
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Hopper
+|spritetype=block
+|nameid=hopper
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=hopper
+|spritetype=block
+|nameid=hopper
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Hopper
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Block
+|spritename=hopper
+|spritetype=block
+|nameid=hopper
+|id=154
+|form=block
+|itemform=item.hopper}}
+{{ID table
+|displayname=Item
+|spritename=hopper
+|spritetype=item
+|nameid=hopper
+|id=527
+|form=item
+|translationkey=tile.hopper.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=hopper
+|spritetype=block
+|nameid=Hopper
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|enabled|true|false,true|True if hopper can move items to and from its inventory.<br/>When the hopper is being powered by redstone current, this is set to false.}}
+{{bst|facing|down|down,east,north,south,west|The direction the hopper's output points.<br/>The hopper pushes items into containers in this direction only.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|facing_direction|0|0,1,2,3,4|The direction the hopper's output points.<br/>The hopper pushes items into containers in this direction only.
+*0: Output facing down
+*1: Output facing up (unused)
+*2: Output facing north
+*3: Output facing south
+*4: Output facing west
+*5: Output facing east}}
+{{bst|bits=0x8|toggle_bit|false|false,true|1 if hopper cannot move items to and from its inventory.<br/>When the hopper is being powered by redstone current, this is set to true.|0,1|foot=1}}
+
+=== Block data ===
+A hopper has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable|indent=**}}
+** {{nbt inherit/lockable|indent=**}}
+** {{nbt inherit/lootable|indent=**}}
+** {{nbt|list|Items}}: List of items in this container. Represents the {{DCL|minecraft:container}} component. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt|compound}}: An item, including the slot tag.
+**** {{nbt inherit/item|indent=****}}
+** {{nbt|int|TransferCooldown}}: Time until the next transfer in [[game tick]]s, naturally between 1 and 8 or 0 if there is no transfer.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Freight Station;Smelt Everything}}
+
+== Videos ==
+{{yt|fNnxOXUSAWY}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 14w31a}}
+{{See technical block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w01a|[[File:Hopper (D) JE1.png|32px]] [[File:Hopper (N) JE1.png|32px]] [[File:Hopper (E) JE1.png|32px]] [[File:Hopper (S) JE1.png|32px]] [[File:Hopper (W) JE1.png|32px]] Added hoppers.
+|[[File:Hopper (item) JE1.png|32px]] There is a temporary "work in progress" sprite for hoppers in the [[inventory]].
+|Hoppers use sounds associated with wooden blocks.
+|Hoppers can be [[craft]]ed from a [[chest]] and [[stone]] blocks with the following recipe:
+{{Crafting
+|class= collapsed
+|ignoreusage= 1
+|A1= Stone
+|C1= Stone
+|A2= Stone
+|B2= Chest
+|C2= Stone
+|B3= Stone
+|Output= Hopper
+}}
+}}
+|{{HistoryLine|||dev=13w01b|[[Rail]]s can now be placed on top of hoppers. 
+|Hoppers no longer load [[item]]s into [[minecart]]s without [[chest]]s.}}
+|{{HistoryLine|||dev=13w02a|[[File:Hopper (item) JE2 BE1.png|32px]] The [[inventory]] sprite of hoppers has been changed.
+|[[File:Hopper (item) 13w02a.png|32px]] However, the [[item]] of hoppers appears bugged if [[drop]]ped or placed in an [[item frame]] on Fancy [[graphics settings]].<ref>{{bug|MC-6737}}</ref>
+|Applying a [[redstone]] signal to a hopper now deactivates the hopper until the signal is removed.
+|Hoppers can no longer be used as [[fuel]] in a [[furnace]].
+|Hoppers are now [[craft]]ed using 5 [[iron ingot]]s and a [[chest]] rather than 5 [[stone]] and a [[chest]].
+{{Crafting
+|class= collapsed
+|ignoreusage = 1
+|A1= Iron Ingot
+|C1= Iron Ingot
+|A2= Iron Ingot
+|B2= Chest
+|C2= Iron Ingot
+|B3= Iron Ingot
+|Output= Hopper
+}}
+|Hoppers now pull only from the output slot of [[furnace]]s.
+|[[File:Hopper (D) JE2.png|32px]] [[File:Hopper (N) JE2.png|32px]] [[File:Hopper (E) JE2.png|32px]] [[File:Hopper (S) JE2.png|32px]] [[File:Hopper (W) JE2.png|32px]] The texture of hoppers has been given a unique texture. Hoppers no longer use the [[cauldron]] texture. Note that the top texture does not rotate with facing direction.
+|The preferred tool is now a pickaxe, rather than the axe.}}
+|{{HistoryLine|||dev=13w02b|Hoppers now treat large [[chest]]s properly, no longer needing two hoppers connected to them to fill up the entire [[inventory]].
+|Hoppers no longer take [[item]]s from containers when powered via a [[redstone]] current.
+|Hoppers now display correctly as a dropped or [[item frame|framed]] item.}}
+|{{HistoryLine|||dev=13w03a|Hoppers are now used to [[craft]] a [[minecart with hopper]].
+|Hoppers can now empty a [[minecart with hopper]].}}
+|{{HistoryLine||1.5.1|dev=pre|Hoppers now take empty [[bucket]]s out of furnace fuel slots.}}
+|{{HistoryLine||1.7.2|dev=release|[[File:Hopper (D) JE3.png|32px]] [[File:Hopper (N) JE3.png|32px]] [[File:Hopper (E) JE3.png|32px]] [[File:Hopper (S) JE3.png|32px]] [[File:Hopper (W) JE3.png|32px]] The UV of all blocks is broken on certain sides as a result of {{bug|MC-37106}} (few cases are listed on the wiki so far - this is a future project). This includes hoppers.}}
+|{{HistoryLine||1.7.4|dev=13w47a|[[File:Hopper (D) JE4.png|32px]] [[File:Hopper (N) JE4.png|32px]] [[File:Hopper (E) JE4.png|32px]] [[File:Hopper (S) JE4.png|32px]] [[File:Hopper (W) JE4.png|32px]] MC-37106 has been fixed, reverting hoppers to their pre-1.7.2 appearances.}}
+|{{HistoryLine|||dev=13w48a|This version fixed {{bug|MC-190}}, which hoppers were allegedly subject to since their introduction. However, a comparison of hopper UV in 13w02a and 14w08a failed to reveal any visible differences, even accounting for the example images on the ticket. More research is needed on this matter.}}
+|{{HistoryLine||1.8|dev=?|Hoppers no longer generate [[multiplayer]] lag when idle.}}
+|{{HistoryLine|||dev=14w10a|[[File:Hopper (D) JE5.png|32px]] [[File:Hopper (N) JE5.png|32px]] [[File:Hopper (E) JE5.png|32px]] [[File:Hopper (S) JE5.png|32px]] [[File:Hopper (W) JE5.png|32px]] Hoppers now use block models rather than having a hardcoded shape. This brings multiple changes: the inside texture now rotates with the hopper rather than being constant, the inside planes of hoppers are now shaded/have ambient occlusion, and some minor UV changes have occurred, notably on the smallest cuboid.}}
+|{{HistoryLine|||dev=14w31a|Hoppers now use metallic sounds.<ref>{{bug|MC-5991}}</ref>}}
+|{{HistoryLine||1.9|dev=15w33c|A hopper now generates as a part of the [[end ship]] in the [[end cities]].}}
+|{{HistoryLine|||dev=15w41a|End ships no longer contain a hopper.}}
+|{{HistoryLine|||dev=15w43a|[[Loot table]]s have been added; hoppers can now use loot tables.}}
+|{{HistoryLine|||dev=15w43c|[[File:Hopper (D) JE6.png|32px]] [[File:Hopper (N) JE6.png|32px]] [[File:Hopper (E) JE6.png|32px]] [[File:Hopper (S) JE6.png|32px]] [[File:Hopper (W) JE6.png|32px]] The UV on the hopper model has changed, resulting in minor differences, particularly to the smallest cuboid. This is likely due to the fix for {{bug|MC-73401}}.}}
+|{{HistoryLine|||dev=15w44a|[[File:Hopper (D) JE7.png|32px]] [[File:Hopper (N) JE7.png|32px]] [[File:Hopper (E) JE7.png|32px]] [[File:Hopper (S) JE7.png|32px]] [[File:Hopper (W) JE7.png|32px]] A mapping issue introduced in the previous snapshot for the sides of the large funnel region has been fixed. This may be due to the fix for {{bug|MC-50344}}.}}
+|{{HistoryLine||1.9.1|dev=pre1|A hopper can now push into and pull [[item]]s from a blocked [[chest]].}}
+|{{HistoryLine||1.11|dev=16w32a|The hopper's cooldown has been aligned to the global game time, as an attempt to fix {{bug|MC-105560}}. Since the majority of redstone components are ''not'' aligned to the global game time, this causes hopper timings to be seemingly random in most situations.}}
+|{{HistoryLine|||dev=16w35a|The change to the hopper's cooldown that was made in [[16w32a]] has been reverted, but the fix to {{bug|MC-105560}} was mantained.<ref>https://bugs-legacy.mojang.com/browse/MC-106075?focusedId=327478&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-327478</ref>
+|Non-empty hoppers do not enter cooldown when an item is pushed into them anymore.
+|Blocks that push an item into an empty hopper now apply a cooldown to it even if that hopper was already in cooldown, effectively overriding the previous cooldown.}}
+|{{HistoryLine|||dev=16w43a|The hopper's cooldown is broken yet again, as items do not get moved by hoppers at a regular speed.<ref>{{bug|MC-109303}}</ref>}}
+|{{HistoryLine|||dev=pre1|Custom hopper cooldowns (which can be set with commands) that last more than 8 game ticks cannot be overridden by blocks that push items into the hopper anymore.<ref>{{bug|MC-108127|||fixed}}</ref>
+|{{bug|MC-109303}} has been fixed, which means hopper clocks now work fine once again.
+|Now, if an empty hopper has an item pushed into it by another hopper, the cooldown of the former hopper will always last 7 game ticks. This change solves ''some'' of the hoppers' locationality issues.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Hopper (D) JE8.png|32px]] [[File:Hopper (N) JE8.png|32px]] [[File:Hopper (E) JE8.png|32px]] [[File:Hopper (S) JE8.png|32px]] [[File:Hopper (W) JE8.png|32px]]<br>[[File:Hopper (item) JE3 BE2.png|32px]] The textures of hoppers have been changed.}}
+|{{HistoryLine|||dev=19w03c|Hoppers now use correct cullface arguments, and some redundant faces have also been deleted.}}
+|{{HistoryLine||1.19|dev=22w13a|Hoppers no longer drop when breaking a [[minecart with hopper]].}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w44a|Hoppers can now interact with [[chiseled bookshelves]].}}
+|{{HistoryLine||1.19.4|dev=23w07a|Hoppers can now interact with [[jukebox]]es.}}
+|{{HistoryLine||1.20.5|dev=24w07a|Hoppers no longer try to pick up item entities if there is a full block placed above it, except for [[beehive]]s and [[bee nest]]s.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Hoppers now generate above [[barrel]]s at chamber entrances in [[trial chambers]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Hopper (D) JE2.png|32px]]{{verify|Is this model correct?}}<br>[[File:Hopper (item) JE2 BE1.png|32px]] Added hoppers. Upward hoppers also exist.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Hoppers can now be moved by [[piston]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Hopper (D) BE.png|32px]] [[File:Hopper (N) BE.png|32px]] [[File:Hopper (E) BE.png|32px]] [[File:Hopper (S) BE.png|32px]] [[File:Hopper (W) BE.png|32px]]<br>[[File:Hopper (item) JE3 BE2.png|32px]] The textures of hoppers have been changed.}}
+|{{HistoryLine||1.19.70|dev=Preview 1.19.70.20|Hoppers can now collect items through all blocks that have a lower height than a full block.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|Hoppers now generate above barrels at chamber entrances in trial chambers.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Hoppers drop themselves only if mined using a pickaxe, matching {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Hopper (D) JE1.png|32px]]<br>[[File:Hopper (item) JE2 BE1.png|32px]] Added hoppers.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Hopper (D) JE8.png|32px]]{{verify|Is this model correct?}}<br>[[File:Hopper (item) JE3 BE2.png|32px]] The textures of hoppers have been changed.}}
+|{{HistoryLine||ps3=none|psvita=none|ps4=1.91|Hoppers can now fill [[composter]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Hopper (D) JE2.png|32px]]{{verify|Is this model correct?}}<br>[[File:Hopper (item) JE2 BE1.png|32px]] Added hoppers.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w01a|{{info needed|describe how metadata was used for facing direction and powered state, as well as the four metadata variants that cause severe crashes (6, 7, 14, 15)}}
+|[[File:Hopper (U) JE1.png|32px]] Hoppers with a metadata value of 1 visually point in no direction. They functionally push items upward, however the behavior is inconsistent. It is currently only possible to obtain these through world editing.}}
+|{{HistoryLine|||dev=13w02a|[[File:Hopper (U) JE2.png|32px]] "Upwards" hoppers also now use the new texture.}}
+|{{HistoryLine||1.7.2|dev=?|Added {{cmd|setblock}}, which can be used to place the invalid data value versions of hoppers.}}
+|{{HistoryLine|||dev=release|[[File:Hopper (U) JE3.png|32px]] The UV of upward-facing hoppers is also now incorrect.}}
+|{{HistoryLine||1.7.4|dev=13w47a|[[File:Hopper (U) JE4.png|32px]] The UV on upwards hoppers is also now fixed.}}
+|{{HistoryLine||1.8|dev=14w10a|[[File:Missing Model JE2.png|32px]] The upwards hopper [[Missing model|no longer has a model]].}}
+|{{HistoryLine|||dev=14w26a|The upwards hopper has been removed.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to ''[[The Flattening]]'', this block's numeral ID was 154.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Hopper (U) BE.png|32px]] Upwards-facing hoppers now look like this.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* A [[wikipedia:Hopper (particulate collection container)|real-world hopper]] is a large, pyramidal or cone-shaped container used in industrial processes to hold particulate matter, like dust, gravel, nuts, seeds, etc., and can then dispense them from the bottom.
+* A hopper can transfer 9000 items per hour, or 150 items per minute.
+
+== Gallery ==
+=== Renders ===
+==== ''Java Edition'' ====
+<gallery>
+Hopper (N).png | Facing north
+Hopper (E).png | Facing east
+Hopper (S).png | Facing south
+Hopper (W).png | Facing west
+</gallery>
+
+==== ''Bedrock Edition'' ====
+<gallery>
+Hopper (N) BE.png | Facing north
+Hopper (E) BE.png | Facing east
+Hopper (S) BE.png | Facing south
+Hopper (W) BE.png | Facing west
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Hopper screenshot 1.png|In snapshot [[13w01a]], the hopper item uses a 'WIP' sprite, though the item still reads "Hopper".
+13w02a Banner.png|The 13w02a banner includes a [[minecart with TNT]] and a hopper.
+Hopper-recipe.jpeg|The hopper's crafting recipe as shown in the [[Block of the Month]] [[Minecraft.net]] article.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+* {{Mcnet|hopper|Block of the Month: Hopper|April 12, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Storage]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+[[Category:Mechanisms]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+[[Category:Generated structure blocks]]
+
+[[cs:Násypka]]
+[[de:Trichter]]
+[[es:Tolva]]
+[[fr:Entonnoir]]
+[[it:Tramoggia]]
+[[ja:ホッパー]]
+[[ko:호퍼]]
+[[nl:Trechter]]
+[[pl:Lej]]
+[[pt:Funil]]
+[[ru:Загрузочная воронка]]
+[[uk:Лійка]]
+[[zh:漏斗]]

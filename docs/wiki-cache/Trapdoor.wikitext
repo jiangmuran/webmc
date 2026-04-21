@@ -1,0 +1,197 @@
+{{For|the two blocks tall variant|Door}}
+[[File:All Trapdoors.png|thumb|All trapdoors]]
+
+A '''trapdoor''' is a solid [[block]] that can be used as an openable 1×1 barrier.
+
+== Variants ==
+* {{BlockLink|id=wooden-trapdoors|Wooden Trapdoor}}
+** {{BlockLink|Oak Trapdoor}}
+** {{BlockLink|Spruce Trapdoor}}
+** {{BlockLink|Birch Trapdoor}}
+** {{BlockLink|Jungle Trapdoor}}
+** {{BlockLink|Acacia Trapdoor}}
+** {{BlockLink|Dark Oak Trapdoor}}
+** {{BlockLink|Mangrove Trapdoor}}
+** {{BlockLink|Cherry Trapdoor}}
+** {{BlockLink|Pale Oak Trapdoor}}
+** {{BlockLink|Bamboo Trapdoor}}
+** {{BlockLink|Crimson Trapdoor}}
+** {{BlockLink|Warped Trapdoor}}
+* {{BlockLink|Iron Trapdoor}}
+* {{BlockLink|id=copper-trapdoors|Copper Trapdoor}}
+** {{BlockLink|Copper Trapdoor|Unoxidized Copper Trapdoor}} ({{BlockLink|Waxed Copper Trapdoor|Waxed}})
+** {{BlockLink|Exposed Copper Trapdoor}} ({{BlockLink|Waxed Exposed Copper Trapdoor|Waxed}})
+** {{BlockLink|Weathered Copper Trapdoor}} ({{BlockLink|Waxed Weathered Copper Trapdoor|Waxed}})
+** {{BlockLink|Oxidized Copper Trapdoor}} ({{BlockLink|Waxed Oxidized Copper Trapdoor|Waxed}})
+
+== Usage ==
+{{See also|Tutorial:Trapdoor uses|title1=Trapdoor uses}}
+
+=== Properties ===
+Wooden and copper trapdoors can be opened and closed by players or redstone pulse. Iron trapdoors can be opened only by redstone pulse. Trapdoors can be opened or closed with a player or mob inside.<ref>{{bug|MC-11075||Trapdoor Colliding With Player|Won't Fix}}</ref>
+
+To place a trapdoor, {{control|use}} a trapdoor item while pointing at the block it should be attached to. Once it is placed, the attachment block can be removed without breaking the trapdoor.
+
+When placed, a trapdoor either occupies the top or bottom part of a block, depending on where the player placed the trapdoor. If a trapdoor is placed on the top part of a block, it opens downward. If placed on the bottom part of a block, it opens upward. A trapdoor's "hinge" is located on the block attached to it.
+
+[[File:Trapdoors supporting lanterns.png|thumb|Closed trapdoors acting as solid surfaces for lanterns]]
+Trapdoors can act as a solid block when in the closed position, and thus certain items can be placed above or below it (depending on whether the closed trapdoor occupies the top half or bottom half of a block). When trapdoors are opened, they act like a non-solid block resulting as a non-placeable area. [[Lantern]]s, for example, can be placed on top of a closed trapdoor that occupies the top half of a block, and below a closed trapdoor that occupies the bottom half of a block.
+
+Trapdoors can be moved by [[piston]]s. Trapdoors block flowing water and lava. Waterlogged trapdoors release water from all sides apart from the top {{in|bedrock}}, or all sides apart from the side that is blocked by the trapdoor itself (and the top) {{in|java}}.
+
+Closing a trapdoor one block above the ground while standing under it causes the player to [[crawl]], and continue crawling until reaching an area with at least 1.5 empty blocks above, at which time the player stands automatically. This can be used to enter small secret tunnels or otherwise inaccessible terrain.
+
+[[File:Climbing a trapdoor.png|thumb|A player climbing an open trapdoor placed above a ladder]]
+{{IN|java}}, single trapdoors are climbable if they are open and placed directly above a [[ladder]] on the same side of a wall. This means if an open trapdoor is placed in the middle of two ladders, players can climb through the trapdoor directly as if it were another ladder. However, if there is more than one trapdoor between two ladders, players cannot climb through (they are stopped at the top of the first trapdoor).
+
+The sound of opening and closing of a trapdoor can be heard up to 16 blocks away, like most [[mob]] sounds.
+
+=== Barrier ===
+A trapdoor can be used as a switchable barrier to entity movement. Although primarily used to block movement by mobs and players, a trapdoor can also be used to control the movement of boats (for example, a top trapdoor placed in a two-wide water flow stops a boat when closed (extended out into the water flow), but allow it to move again when open), items and minecarts (a trapdoor can stop a falling item or minecart, then allow it to drop again when the trapdoor opens), etc.
+
+Trapdoors are 0.1875 ({{frac|3|16}}) blocks thick. The rest of a trapdoor's space can be moved through freely and provides a breathable space if placed underwater and not waterlogged.
+
+When a trapdoor opens or closes, it immediately changes its orientation without affecting anything in the space it "passes through". Moving trapdoors don't push entities the way that pistons do.
+
+Mobs consider all trapdoors closed, resulting in pathfinding mobs falling through open trapdoors.<ref>{{bug|MC-50556||Mobs walk off open wooden and iron trapdoors or get trapped in them because they think they are closed|WAI}}</ref> A player can take advantage of this behavior to construct mob traps.
+
+=== Redstone component ===
+All types of trapdoors can be controlled with redstone power.
+
+A trapdoor is a [[Redstone components#Mechanism components|redstone mechanism]] and can be activated by:
+* an adjacent active '''[[Redstone components#Power components|power component]]''', including above or below: for example, a [[redstone torch]], a [[block of redstone]], a [[daylight detector]], etc.
+* an adjacent '''powered block''' (for example, a block with an active redstone torch under it), including above or below
+* a powered '''[[redstone comparator]]''' or '''[[redstone repeater]]''' facing the trapdoor
+* powered '''[[redstone dust]]''' configured to point at the trapdoor or a single redstone "cross" next to it; a trapdoor is ''not'' activated by adjacent powered redstone dust that is configured to point in another direction, or a single redstone "dot" next to it.
+
+When activated, a trapdoor immediately rotates around its hinge side to its open state. When deactivated, a trapdoor immediately returns to its closed state. Each change of state takes one game tick.
+
+An activated wooden or copper trapdoor can still be closed by a player, and does not re-open until it receives a new activation signal (if a trapdoor has been closed "by hand", it still needs to be deactivated and then reactivated to open by redstone).
+
+{{IN|be}} trapdoors only activate on the input/consumer [[redstone tick]] (C-tick).
+
+== Block states ==
+{{see also|Block states}}
+
+<section begin="block states"/>{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the trapdoor swings open.<br>The opposite from the side its hinge is attached to.}}
+{{bst|half|bottom|bottom,top|Whether the trapdoor occupies the top or bottom part of a block.}}
+{{bst|open|false|false,true|True if the trapdoor is currently open (may differ from <code>powered</code>).}}
+{{Bst|powered|false|false,true|True if the trapdoor is currently powered (may differ from <code>open</code>).}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this trapdoor.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2|direction|0|0,1,2,3|The direction the trapdoor is facing.
+*0: Trapdoor on the west side of a block
+*1: Trapdoor on the east side of a block
+*2: Trapdoor on the north side of a block
+*3: Trapdoor on the south side of a block
+}}
+{{bst|bits=0x8|open_bit|false|false,true|True if the trapdoor is currently open.|0,1}}
+{{bst|bits=0x4|upside_down_bit|false|false,true|Whether the trapdoor occupies the top or bottom part of a block.|0,1|foot=1}}<section end="block states"/>
+
+== Videos ==
+{{yt|6B40jGablsg}}
+
+== History ==
+For changes that affect only specific types of trapdoors, see the "History" section in the respective pages ([[Wooden Trapdoor#History|wooden]], [[Iron Trapdoor#History|iron]], and [[Copper Trapdoor#History|copper]]).
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|[[File:Oak Trapdoor (D) JE1.png|32px]] Added trapdoors. At this time, only one type (wooden) is available.
+|Closed trapdoors always occupy the bottom of the block space.}}
+|{{HistoryLine||Sound Update|The open and closing [[sound]]s of trapdoors have been changed.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|Trapdoors can now be placed on the upper side of a block in addition to the lower side.}}
+|{{HistoryLine|||dev=12w40a|Trapdoors can no longer be opened by left-clicking, only right-clicking opens trapdoors now.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Trapdoors can be placed on the sides of single [[slab]]s.}}
+|{{HistoryLine||1.8|dev=14w07a|[[File:Iron Trapdoor (D) JE1.png|32px]] Added iron trapdoors.}}
+|{{HistoryLine|||dev=14w08a| "Trapdoor" has been renamed to "Wooden Trapdoor".}}
+|{{HistoryLine||1.9|dev=15w31a|Trapdoors no longer require attachment [[block]]s.
+|An open trapdoor may now be climbed like a [[ladder]] if it is directly above a ladder and on the same side of the block.}}
+|{{HistoryLine|||dev=15w43a|Due to the addition of new sound events, trapdoors no longer make any [[sound]]s when opened or closed, since the sound files are missing.}}
+|{{HistoryLine|||dev=16w04a|Trapdoors now have sounds again, which are now different from the door sounds.}}
+|{{HistoryLine||1.13|dev=17w47a|[[File:Spruce Trapdoor JE1 BE1.png|32px]] [[File:Birch Trapdoor JE1 BE1.png|32px]] [[File:Jungle Trapdoor JE1 BE1.png|32px]] [[File:Acacia Trapdoor JE1 BE1.png|32px]] [[File:Dark Oak Trapdoor JE1 BE1.png|32px]] Trapdoors now come in all 6 types of wood.}}
+|{{HistoryLine|||dev=18w10d|Trapdoors can now be [[Waterlogging|waterlogged]].}}
+|{{HistoryLine||1.16|dev=20w06a|[[File:Crimson Trapdoor JE1 BE1.png|32px]] [[File:Warped Trapdoor JE1 BE1.png|32px]] Added crimson and warped trapdoors.}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Mangrove Trapdoor JE1 BE1.png|32px]] Added mangrove trapdoors.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[File:Bamboo Trapdoor JE1 BE1.png|32px]] Added bamboo trapdoors behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Cherry Trapdoor JE1 BE1.png|32px]] Added cherry trapdoors behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w43a|[[File:Copper Trapdoor JE1 BE1.png|32px]] [[File:Exposed Copper Trapdoor JE1 BE1.png|32px]] [[File:Weathered Copper Trapdoor JE1 BE1.png|32px]] [[File:Oxidized Copper Trapdoor JE1 BE1.png|32px]] Added copper trapdoors behind the "[[Java Edition 1.21|Update 1.21]]" experimental data pack.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Pale Oak Trapdoor JE1 BE1.png|32px]] Added pale oak trapdoors.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.4.0|[[File:Oak Trapdoor JE1 BE1.png|32px]] Added wooden trapdoors.}}
+|{{HistoryLine||v0.12.1|dev=build 12|Trapdoors can now be placed on the upper half of a [[block]], opening downward, and can still be placed on the lower half, opening upward.}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Iron Trapdoor (D) JE1.png|32px]] Added iron trapdoors.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Trapdoors no longer require attachment blocks.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[File:Spruce Trapdoor JE1 BE1.png|32px]] [[File:Birch Trapdoor JE1 BE1.png|32px]] [[File:Jungle Trapdoor JE1 BE1.png|32px]] [[File:Acacia Trapdoor JE1 BE1.png|32px]] [[File:Dark Oak Trapdoor JE1 BE1.png|32px]] Trapdoors now come in all 6 types of wood.
+|[[Water]] can now be placed in the same [[block]] as trapdoors.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|[[File:Crimson Trapdoor JE1 BE1.png|32px]] [[File:Warped Trapdoor JE1 BE1.png|32px]] Added crimson and warped trapdoors.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|[[File:Mangrove Trapdoor JE1 BE1.png|32px]] Added mangrove trapdoors.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|[[File:Bamboo Trapdoor JE1 BE1.png|32px]] Added bamboo trapdoors behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[File:Cherry Trapdoor JE1 BE1.png|32px]] Added cherry trapdoors behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" experimental toggle.}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.22|[[File:Copper Trapdoor JE1 BE1.png|32px]] [[File:Exposed Copper Trapdoor JE1 BE1.png|32px]] [[File:Weathered Copper Trapdoor JE1 BE1.png|32px]] [[File:Oxidized Copper Trapdoor JE1 BE1.png|32px]] Added copper trapdoors behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Pale Oak Trapdoor JE1 BE1.png|32px]] Added pale oak trapdoors.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Oak Trapdoor JE1 BE1.png|32px]] Added wooden trapdoors.}}
+|{{HistoryLine||xbox=TU9|Trapdoors can be placed on the sides of single slabs.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|wiiu=Patch 1|switch=1.0.1|[[File:Iron Trapdoor (D) JE1.png|32px]] Added iron trapdoors.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Trapdoors no longer require attachment [[block]]s.|An open trapdoor may now be climbed like a ladder if it is directly above a [[ladder]] and on the same side of the block.|Trapdoors now have their own [[sounds]].}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[File:Spruce Trapdoor JE1 BE1.png|32px]] [[File:Birch Trapdoor JE1 BE1.png|32px]] [[File:Jungle Trapdoor JE1 BE1.png|32px]] [[File:Acacia Trapdoor JE1 BE1.png|32px]] [[File:Dark Oak Trapdoor JE1 BE1.png|32px]] Trapdoors now come in all 6 types of wood.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Oak Trapdoor JE1 BE1.png|32px]] [[File:Iron Trapdoor (D) JE1.png|32px]] Added two types of trapdoors: wooden and iron.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+File:Doortypes.png|All trapdoor types alongside with their respective door counterparts
+File:InvatorryThing (1).png|alt=
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/taking-inventory-trapdoor Taking Inventory: Trapdoor] – Minecraft.net on October 19, 2018
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Utility blocks]]
+[[Category:Climbable blocks]]
+
+[[cs:Poklop]]
+[[de:Falltür]]
+[[es:Trampilla]]
+[[fr:Trappe]]
+[[it:Botola]]
+[[ja:トラップドア]]
+[[ko:다락문]]
+[[lzh:窖門]]
+[[nl:Valluik]]
+[[pl:Klapa]]
+[[pt:Alçapão]]
+[[ru:Люк]]
+[[th:ประตูกับดัก]]
+[[uk:Люк]]
+[[zh:活板门]]

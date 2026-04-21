@@ -1,0 +1,979 @@
+{{About|the block that detects block updates|the redstone mechanism|Tutorial:Block update detector}}
+{{Infobox block
+| image = Observer.png
+| image2 = Observer (back).gif
+| invimage = Observer
+| transparent = No
+| light = No
+| tool = wooden pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+An '''observer''' is a [[block]] that emits a quick [[redstone]] pulse from its back whenever its "face" detects that the [[block]], [[fluid]], or [[air]] directly in front of it has changed.
+
+== Obtaining ==
+=== Breaking ===
+An observer requires a [[pickaxe]] to be mined. When mined without a pickaxe, it drops nothing.
+{{breaking row|Observer|Pickaxe|Wood|horizontal=1}}
+
+=== Crafting ===
+{{Crafting
+|A1=Cobblestone
+|B1=Cobblestone
+|C1=Cobblestone
+|A2=Redstone Dust
+|B2=Redstone Dust
+|C2=Nether Quartz
+|A3=Cobblestone
+|B3=Cobblestone
+|C3=Cobblestone
+|Output=Observer
+|type=Redstone
+}}
+
+== Usage ==
+An observer is placed similarly to a [[piston]]. It observes the block that it is placed against. The texture of the detecting side is that of an observing face. As observers can detect the state of other observers, placing two adjacent observers, each watching the other, can make a fast and compact redstone clock. They send out a [[redstone pulse]].
+
+=== Behavior ===
+{{IN|java}}, an observer detects [[Block update#Post placement update|shape updates]] coming from the block it's facing. This can involve changes in block states (like crops growing, for example), or the breaking or placing of a block. This makes observers differ from block update detectors in terms of what they can detect.{{only|JE|short=1}}
+
+{{IN|bedrock}}, an observer acts as a block update detector and detects anything that causes a block update.
+
+The causes and propagation of block updates are different between ''Java Edition'' and ''Bedrock Edition''. As a result, each can detect some kinds of changes that the other cannot. See the table below for a comparison.
+
+When it detects something, the observer emits a [[redstone pulse]] of [[Redstone circuit#Power|strong power]] at signal strength 15 for 2 [[game tick]]s. The pulse can power [[redstone dust]], a [[redstone comparator]], a [[redstone repeater]], or any [[Redstone components#Mechanism components|mechanism component]] located at its opposite end.
+
+In ''Java Edition'', the pulse is emitted with a delay of 2 game ticks. In ''Bedrock Edition'', it is delayed by 2 game ticks as well, but it's sometimes delayed by 4 or 6 game ticks due to {{bug|MCPE-15793}}, a bug causing redstone delays to be incorrect when components are activated by world changes (which, in the case of the observer in ''Bedrock Edition'', is the only way it can be activated), as opposed to pure redstone components ticking. Its timing can also be incorrect due to {{bug|MCPE-73342}}.
+
+Observers also emit a pulse after getting moved by [[pistons]]: this enables them to be used in [[flying machines]]. {{IN|JE}}, however, moving an observer that is currently emitting a redstone signal will cause it to turn off instead.
+
+Because observers in ''Java Edition'' react to shape updates, they can detect some changes that a [[block update detector]] (BUD) would be unresponsive to, as opposed to ''Bedrock Edition'' where observers detect the exact same updates that any other BUD would detect.
+
+[[File:Observer conduction behaviour.png|alt=An observer preventing the redstone signal from being transmitted.|thumb|200px|Observers preventing the redstone signal from being transmitted in ''Java Edition'']]
+Observers are visually opaque and non-[[conductive]]: they block light and allow mob spawning on top, do not cut off redstone wire, and cannot conduct redstone power. {{IN|java}}, they also allow opening chests below and prevent redstone wire placed on it from transmitting a signal downward.
+
+=== Limitations ===
+{| class="sortable wikitable collapsible collapsed"
+! rowspan="2" | Block change
+! colspan="2" | Detected in
+|-
+! {{el|be}}
+! {{el|je}}
+|-
+| <div class="mw-collapsible mw-collapsed">{{BlockSprite|oak-planks}} A [[block]] or a [[fluid]] being placed or broken in any way; either directly by [[player]], [[enderman]], or [[ravager]] or through:
+<div class="mw-collapsible-content" style="column-count:2">
+* Placing/breaking two-block-tall/wide blocks
+* [[Snow golem]] or [[snowfall]] creating [[snow]]
+* Snow melting
+* [[Dispenser]] placing [[carved pumpkin]], [[wither skeleton skull]], [[shulker box]], or [[dyed shulker box]]
+* Creating/removing [[fluid]] using player or dispenser
+* Placing [[scaffolding]] on top/side of another scaffolding
+* [[Entities]] on [[fire]] touching [[powder snow]], causing it to melt
+* Block being broken by fluid, (sticky) [[piston]], [[explosion]], or [[opacity]],<ref>For example, a [[button]] attached to a block, when breaking the block, that button breaks and causes block update that can be detected by observer.</ref>
+* Inconsistent [[light level]]<ref>For example, a [[mushroom]] are on light level of 13, according to the Minecraft Wiki, at level 13 and above, mushroom uproots unless on [[mycelium]], [[podzol]], or [[nylium]]. When the mushroom is updated, that mushroom breaks and causes a block update that can be detected by observer.</ref><ref>Another example, a [[wheat crop]] uproots at level 0 or below. When updating the wheat, that wheat breaks and causes a block update that can be detected by observer.</ref>
+* Flammable blocks getting burned up by [[fire]] or [[lava]]
+* A [[falling block]] turning into a [[falling block]] entity and vice versa
+* [[Cactus]] breaking either by placing a [[solid block]] next to it, or by placing a [[fluid]] on top of it<ref>While it's not possible to set this up normally (since the observer has to place on the side of the cactus (because the top and the bottom are already occupied by the [[fluid]] and the block that supports the cactus (like sand) relatively), which causes the cactus to break), it's possible to reproduce this using the {{cmd|/fill ~ ~ ~ cactus strict}} command.{{verify}}</ref>
+* [[Villager]] planting and destroying crops
+* [[Zombie]] breaking [[door]]s
+* [[Leaves]] decaying
+* [[Chorus Plant (block)|Chorus plant]] break due to their invalid placement<ref>For example, places 2 chorus plants on top of an [[end stone]], and when a chorus plant is placed on the side of the bottom one, that "bottom" chorus plant breaks and causes block update, which can be detected by the observer.</ref>
+* Using up a [[damaged anvil]], causing the damaged anvil to break
+* Fully eating a cake
+* [[Water]] touching a [[sponge]], causing the area near the sponge to be removed and create a block update to the water
+* A wither rose block being planted after wither kills a mob if the block is [[grass block]], [[dirt]], [[coarse dirt]], [[moss block]], [[mud]], [[soul sand]], [[soul soil]]{{only|JE|short=1}}, or [[netherrack]]
+* Left-clicking the [[dragon egg]], causing it to [[Teleportation|teleport]] and create a block update at the starting teleporting point and the teleporting destination of the dragon egg
+* [[Boat]] and [[boat with chest]] breaking a [[lily pad]]
+* [[Turtle]] laying [[turtle egg]](s), trampling an <code>eggs=1</code> [[turtle egg]] or turtle egg(s) hatching into baby turtle(s)
+* Damaging a [[silverfish]], causing a nearby [[infested block]] to turn into a silverfish and create a block update
+* [[Frog]] laying [[frogspawn]] or frogspawn hatching into [[tadpole]]
+* Thrown [[trident]] breaks [[pointed dripstone]]
+* [[Sniffer egg]] hatching into [[snifflet]]
+* The spawning of the upper part of the pitcher crop that has the block state <code>age</code> change to 2
+</div></div>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|waterlogged chest}} [[Water]] being inserted to or removed from a block that can be [[waterlogged]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|water}} {{BlockSprite|lava}} A [[water]] (or [[lava]], if the [[game rule]] <code>lavaSourceConversion</code> is set to <code>true</code>{{only|java|short=1}}) source block being created by having 2 water source blocks unite to each other.
+| {{tc|yes}}
+| {{tc|Yes}}
+|-
+| <div class="mw-collapsible mw-collapsed">{{BlockSprite|fire}} {{BlockSprite|soul fire}} [[Fire]] being ignited or extinguished in any way; either directly by player or through:
+<div class="mw-collapsible-content" style="column-count:2">
+* A dispenser
+* Fire spreading to flammable blocks next to [[lava]] or fire
+* [[Fireball]] from a dispenser, a [[ghast]], or a [[blaze]]
+* [[Lightning]]
+* A [[bed]] or a [[respawn anchor]] exploding
+* Placing an [[end crystal]] on [[bedrock]] or [[obsidian]] in [[the End]]
+* Being extinguished by [[fluid]], [[splash water bottle]], [[lingering water bottle]], or naturally</div></div>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|soul fire}} A [[fire]] is turned into a [[soul fire]] (but not vice versa).
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|cauldron}} {{BlockSprite|water cauldron}} {{BlockSprite|lava cauldron}} {{BlockSprite|powder snow cauldron}} [[Fluid]] or [[powder snow]] being placed in or removed from a [[cauldron]] or the level of the [[water]]/lava/powder snow cauldron changing in any way, for example using [[bucket]] (empty, water, [[lava]], powder snow), [[glass bottle]], [[water bottle]], [[rain]], [[snowfall]], [[pointed dripstone]], burning [[entity]] on water/powder snow cauldron.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| A block being replaced by {{cmd|setblock}}, {{cmd|fill}}, or {{cmd|clone}} commands.
+| {{tc|Yes}}
+| {{tc|Partial}}<ref>Will be detected without the <code>strict</code> argument, will not with the <code>strict</code> argument.</ref>
+|-
+| {{ItemSprite|debug stick}} Changing the [[block state]] of a block using a [[debug stick]].{{only|java}}
+| {{tc|N/A}}
+| {{tc|No}}
+|-
+| {{BlockSprite|nether portal}} A [[nether portal]] being created.
+| {{tc|Yes}}
+| {{tc|No}}<ref>{{bug|MC-107664}}</ref>
+|-
+| {{BlockSprite|nether portal}} A [[nether portal]] being destroyed.
+| {{tc|No}}<ref>{{bug|MCPE-130935}}</ref>
+| {{tc|Yes}}
+|-
+| {{BlockSprite|end portal}} An [[end portal]] being created.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|end portal}} An [[end portal]] being destroyed.
+| {{tc|No}}
+| {{tc|N/A}}<ref>{{IN|JE}} removing an [[end portal frame]] block won't destroy the portal.</ref>
+|-
+| {{EntitySprite|iron golem}} {{EntitySprite|snow golem}} {{EntitySprite|wither}} The creation of an [[iron golem]], a [[snow golem]] or a [[wither]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|piston}} {{BlockSprite|sticky-piston}} A (sticky) [[piston]] (head) extending or retracting.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|piston}} {{BlockSprite|sticky-piston}} A block being pushed or pulled by a (sticky) [[piston]]; either directly or stuck to [[slime block]] or [[honey block]] moved by the piston.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|monster spawner}} A [[monster spawner]] block activating.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|monster spawner}} The mob spawn of a [[monster spawner]] being changed using a [[spawn egg]].
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|Trial Spawner}} {{BlockSprite|Ominous Trial Spawner}} Activation or deactivation of [[trial spawner]] or [[ominous trial spawner]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|Vault}} {{BlockSprite|Ominous Vault}} Opening and closing of [[vault]] or [[ominous vault]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|chest}} {{BlockSprite|trapped-chest}} A (trapped) [[chest]] turns into a large (trapped) chest and vice versa.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|chest}} {{BlockSprite|trapped-chest}} {{BlockSprite|ender-chest}} A [[chest]], a [[trapped chest]], or an [[ender chest]] opening or closing.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|shulker-box}} {{BlockSprite|shulker-boxes}} A [[shulker box]] opening or closing.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|barrel}} A [[barrel]] opening or closing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|chest}} {{BlockSprite|trapped-chest}} {{BlockSprite|barrel}} {{BlockSprite|shulker-box}} An item being moved in or out of a [[chest]], [[trapped chest]], [[barrel]], or [[shulker box]].
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|furnace}} The [[inventory]] of any other container changing.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|anvil}} The crack stage of an [[anvil]] changing after use.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|snow}} A [[snow]] layer being added into snow by [[player]] or by [[snowfall]].<ref>{{IN|java}} the [[game rule]] <code>snowAccumulationHeight</code> must be larger than {{cd|1}}.</ref>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|beacon}} A [[beacon]] activating or deactivating.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|command block}} A [[command block]] producing a success.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|command block}} The unconditional/conditional stage of a command block changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|command block}} The impulse/chain/repeat stage of a command block changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|cake}} {{BlockLink|id=candle-cake}} A piece of a [[cake]] or a [[cake with candle]]s changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|hopper}} A [[hopper]] being activated or deactivated. (Turning the hopper on/off)
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|farmland}} Dry [[farmland]] changing between its six dry-looking hydration stages.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|farmland-wet}} [[Farmland]] changing between dry and humid or vice versa.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dispenser}} {{BlockSprite|dropper}} A [[dispenser]] or a [[dropper]] activating or deactivating.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|redstone-ore}} {{BlockSprite|deepslate redstone ore}} A (deepslate) [[redstone ore]] block activating or deactivating.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|grass-block}} {{BlockSprite|mycelium}} {{BlockSprite|nylium}} {{BlockSprite|warped nylium}} [[Grass block]] or [[mycelium]] turning to [[dirt]] or [[nylium]] to [[netherrack]] after being spread using [[bone meal]] or grass block or mycelium decaying to dirt or nylium into netherrack.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dirt}} [[Coarse dirt]] or [[rooted dirt]] converting into [[dirt]] through the use of a [[hoe]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|farmland}} [[Grass block]], [[dirt]], or [[dirt path]] converting into [[farmland]] through the use of a [[hoe]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dirt path}} [[Grass block]], [[podzol]], [[mycelium]], [[dirt]], [[coarse dirt]], or [[rooted dirt]] converting into [[dirt path]] through the use of a [[shovel]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dirt}} [[Farmland]] or [[dirt path]] converting into dirt.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|concrete powder}} [[Concrete powder]] converting into [[concrete]], either through direct contact with [[water]], or entering water as a [[falling block]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sea pickle}} A [[sea pickle]] being added into a colony of sea pickles.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|pink petals}} A [[pink petal]] being added into a group of pink petals.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|turtle egg}} A [[turtle egg]] being added into a cluster of turtle eggs.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|turtle egg}} A [[turtle egg]] being removed from a cluster of turtle eggs by breaking or trampling.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|turtle egg}}{{BlockSprite|sniffer egg}} The <code>hatch</code> [[block state]] of a [[turtle egg]] and a [[sniffer egg]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|infested stone}} A [[stone]], [[cobblestone]], [[deepslate]], or any [[stone brick]] variant block being turned into an [[infested block]] by [[silverfish]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|double smooth stone slab}} A double [[slab]] being created by adding a slab into another slab.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|ice}} [[Ice]] melting into [[water]] or water freezing into ice.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|frosted ice}} Water freezing into [[frosted ice]] through the use of [[Frost Walker]] or frosted ice melting into water.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|carved pumpkin}} Turn [[pumpkin]] into [[carved pumpkin]] using [[shears]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|stripped oak log}} {{BlockSprite|stripped stems}} {{BlockSprite|block of stripped bamboo}} Turn [[log]]s/[[wood]]s/[[log|stem]]s/[[hyphae]]/[[block of bamboo]] into [[stripped log]]s/woods/stems/hyphae/[[block of stripped bamboo]] using [[axe]]s.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|saplings}} {{BlockSprite|bamboo}} The stage of a [[sapling]] or [[bamboo]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|mangrove propagule}} {{BlockSprite|bamboo}} {{BlockSprite|wheat}} {{BlockSprite|carrots}} {{BlockSprite|potatoes}} {{BlockSprite|beetroots}} {{BlockSprite|melon stem}} {{BlockSprite|pumpkin stem}} {{BlockSprite|nether wart}} {{BlockSprite|cocoa}} {{BlockSprite|sweet berry bush}} {{BlockSprite|chorus flower}} {{BlockSprite|cactus}} {{BlockSprite|sugar cane}} {{BlockSprite|kelp}} {{BlockSprite|weeping vines}} {{BlockSprite|twisting vines}} {{BlockSprite|cave vines}} {{BlockSprite|fire}} {{BlockSprite|frosted ice}} {{BlockSprite|torchflower crop}} {{BlockSprite|pitcher crop}} The age of [[mangrove propagule]]s, [[bamboo]], [[wheat]], [[carrot]]s, [[potato]]es, [[beetroots]], [[melon stem]], [[pumpkin stem]], [[nether wart]], [[cocoa]], [[sweet berry bush]], [[chorus flower]], [[cactus]], [[sugar cane]], [[kelp]], [[weeping vines]], [[twisting vines]], [[cave vines]], [[fire]], [[frosted ice]], [[torchflower crop]], or [[pitcher crop]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|torchflower}} A [[torchflower crop]] turning into a [[torchflower]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|water}} {{BlockSprite|lava}} [[Fluid]] flowing into the empty space to or draining from a block.<ref>When the fluid source block is removed, all of the fluid flowing from the source is removed and causes a block update.</ref>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|water}} {{BlockSprite|lava}} {{BlockSprite|light}} {{BlockSprite|composter}} [[Fluid]], [[light block]], or [[composter]] level changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|stone}} (Flowing) [[water]] turning into [[stone]] through contact with [[lava]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|cobblestone}} Flowing lava turning into [[cobblestone]] through contact with water.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|obsidian}} Lava turning into [[obsidian]] through contact with water.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|basalt}} (Flowing) lava turning into [[basalt]] through contact with [[soul soil]] and [[blue ice]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bubble column}} Water turning into [[bubble column]] or vice versa.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bubble column}} Upward bubble column turning into whirlpool bubble column or vice versa.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|end portal frame}} An [[eye of ender]] being inserted into an [[end portal frame]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|red bed}} [[Player]] or [[villager]] sleeping/waking up in a [[bed]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|grass-block}} {{BlockSprite|mycelium}} {{BlockSprite|podzol}} A [[grass block]], a [[mycelium]], or a [[podzol]] block becoming snowy or not snowy.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|oak sign}} {{BlockSprite|oak hanging sign}} Text in a [[sign]] or a [[hanging sign]] being edited.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|oak sign}} {{BlockSprite|oak hanging sign}} A dye or glow being applied to a sign or a hanging sign or removed from it.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|oak sign}} {{BlockSprite|oak hanging sign}} Waxing a [[sign]] or a [[hanging sign]] using a [[honeycomb]].
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|structure block}} {{BlockSprite|redstone-comparator}} The mode of a [[structure block]] or a [[comparator]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|grass-block}} {{BlockSprite|short-grass}} {{BlockSprite|fern}} A [[grass block]], [[short grass]]{{only|BE|short=1}} or [[fern]]{{only|BE|short=1}} being grazed by a [[sheep]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|carrots}} A [[carrot]] crop being eaten by a [[rabbit]].
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|stone button}} A [[button]] being pressed or returning to inactive state.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|stone pressure plate}} {{BlockSprite|detector rail}} A [[pressure plate]] or the [[detector rail]] activating or returning to inactive state.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|weighted pressure plates}} {{BlockSprite|redstone dust}} {{BlockSprite|daylight detector}} {{BlockSprite|target}} The power of a [[weighted pressure plate]], [[redstone wire]], [[daylight detector]], or [[target]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|lever}} A [[lever]] being flicked.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|redstone lamp}} {{BlockSprite|redstone torch}} A [[redstone lamp]] or a [[redstone torch]] lighting up or turning off.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|daylight detector}} The mode of [[daylight detector]] being changed.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|TNT}} A [[TNT]] igniting.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|brain coral block}} {{BlockSprite|brain coral}} {{BlockSprite|brain coral fan}} [[Coral]]/[[coral block]]/[[coral fan]] converting into [[dead coral]]/[[dead coral block]]/[[dead coral fan]].
+| {{tc|Yes}}<ref>{{IN|bedrock}}, the death of a coral fan cannot happen under normal circumstances &mdash; it happens ''the next tick after the coral fan is placed'', so the observer has already read the placement or water removal update, and coral fans placed using commands are waterlogged &mdash; but if lag is used to make the unwaterlogging and death events happen separately, the observer detects both. For coral, the death also happens too fast for the observer to detect it separate from the placement or water removal, but a non-waterlogged coral can be placed using commands. Coral blocks take multiple seconds to die, and removing water next to the coral block does not activate the observer anyway, so they can be detected under normal circumstances.</ref>
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sponge}} A [[sponge]] turning into a [[wet sponge]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|wet sponge}} A [[wet sponge]] drying into a [[sponge]] in [[the Nether]].<ref>This event cannot normally happen, but if [[commands]] are used to place a wet sponge in the Nether, the sponge dries when it receives a random tick.</ref>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|oak-door}} A [[door]] being opened or closed by a [[player]], a [[villager]], a [[piglin]], a [[piglin brute]], a [[vindicator]]{{only|JE|short=1}}, a [[wandering trader]]{{only|BE|short=1}}, or [[redstone]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|oak-trapdoor}} A [[trapdoor]] being opened or closed by a [[player]] or [[redstone]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|oak-fence-gate}} A [[fence gate]] being opened or closed by a [[player]] or [[redstone]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|oak-fence-gate}} The <code>in_wall</code> [[block state]] of a [[fence gate]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|furnace}} {{BlockSprite|blast furnace}} {{BlockSprite|smoker}} A [[furnace]], a [[blast furnace]], or a [[smoker]] lighting up or turning off.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|leaves}} The distance of [[leaves]] from the closest [[log]] changing.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|scaffolding}} The distance of a [[scaffolding]] from the closest supporting block changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|scaffolding}} The <code>bottom</code> [[block state]] of a [[scaffolding]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|brewing-stand}} A [[potion]] being moved in or out of a [[brewing stand]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|lectern}} [[Book and quill]] or [[written book]] being moved in or out of a [[lectern]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|note-block}} The note of a [[note block]] being changed.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|note-block}} A [[note block]] being left-clicked in [[Survival]] mode.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|note-block}} The <code>instrument</code> [[block state]] of a [[note block]] changing.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|jukebox}} A [[music disc]] being inserted to or removed from a [[jukebox]] by [[player]], [[hopper]], or [[minecart with hopper]].
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|redstone-repeater}} A [[redstone repeater]] locking or unlocking.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|redstone-repeater}} The delay of a [[redstone repeater]] being changed.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|redstone-repeater}} {{BlockSprite|redstone-comparator}} {{BlockSprite|observer}} {{BlockSprite|note block}} {{BlockSprite|lectern}} {{BlockSprite|lightning rod}} {{BlockSprite|activator rail}} {{BlockSprite|powered rail}} {{BlockSprite|sculk sensor}} {{BlockSprite|calibrated sculk sensor}} {{BlockSprite|tripwire}} {{BlockSprite|tripwire hook}} A [[redstone repeater]], a [[redstone comparator]], an observer, a [[note block]], a [[lectern]], a [[lightning rod]], an [[activator rail]], a [[powered rail]], a [[sculk sensor]]<ref group="n" name="Sensor">When deactivated, the sculk sensor's and the calibrated sculk sensor's "sculk_sensor_phase" block stage is converted from "active"->"cooldown"->"inactive". This means that a deactivating sculk sensor actually triggers an observer twice in a row.</ref>, a [[calibrated sculk sensor]]<ref group="n" name="Sensor"/>, a [[tripwire]], or a [[tripwire hook]] activating or deactivating.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|tripwire}} {{BlockSprite|tripwire hook}} A [[tripwire]] or a [[tripwire hook]] attaching or detaching.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|tripwire}} The <code>disarmed</code>{{only|java|short=1}} or <code>disarmed_bit</code>{{only|bedrock|short=1}} [[block state]] of a [[tripwire]] changing.<ref>The <code>disarmed</code>{{only|java|short=1}} or <code>disarmed_bit</code>{{only|bedrock|short=1}} block state cannot change without also detaching the tripwire, so this event cannot happen in isolation.</ref>
+| {{tc|N/A}}
+| {{tc|N/A}}
+|-
+| {{BlockSprite|sculk shrieker}} [[Sculk shrieker]] starting shrieking.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk shrieker}} [[Sculk shrieker]] stopping shrieking.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk catalyst}} [[Sculk catalyst]] blooming or unblooming.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dragon-head}} {{BlockSprite|piglin-head}} A [[dragon head]] or a [[piglin head]] activating or deactivating.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|player head}} {{BlockSprite|zombie head}} {{BlockSprite|creeper head}} {{BlockSprite|skeleton skull}} {{BlockSprite|wither skeleton skull}} A [[player head]], a [[zombie head]], [[creeper head]], a [[skeleton skull]], or a [[wither skeleton skull]] getting powered or depowered.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|conduit}} A [[conduit]] activating.
+| {{tc|N/A}}
+| {{tc|N/A}}
+|-
+| {{BlockSprite|conduit}} A [[conduit]] deactivating.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{ItemSprite|item-frame}} An [[item frame]] being placed or an item being added to, rotated in or removed from an item frame.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|end-gateway}} Something being teleported by an [[end gateway]].
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|flower-pot}} An item being inserted to or removed from a [[flower pot]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|all walls}} {{BlockSprite|fences}} {{BlockSprite|iron-bars}} {{BlockSprite|stained glass panes}} {{BlockSprite|stairs}} {{BlockSprite|redstone-dust}} {{BlockSprite|tripwire}} {{BlockSprite|vines}} {{BlockSprite|mushroom blocks}} {{BlockSprite|mushroom stem}} {{BlockSprite|fire}} {{BlockSprite|rail}} {{BlockSprite|powered rail}} {{BlockSprite|detector rail}} {{BlockSprite|activator rail}} {{BlockSprite|glow lichen}} {{BlockSprite|sculk vein}} {{BlockSprite|pointed dripstone}} {{BlockSprite|chorus plant}} The shape or rotation of [[wall]]s, [[fence]]s, [[iron bars]], [[glass pane]]s, [[stairs]], [[tripwire]], [[redstone]], [[vines]], [[mushroom block]]s, [[mushroom stem]], [[fire]], all type of [[rail]]s, [[glow lichen]], [[sculk vein]], [[pointed dripstone]], or [[Chorus Plant (block)|chorus plant]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|all walls}} The <code>top</code> [[block state]] of the [[wall]]s changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|melon}} {{BlockSprite|pumpkin}} A [[melon]]/[[pumpkin]] created from a melon stem/pumpkin stem.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|attached melon stem}} {{BlockSprite|attached pumpkin stem}} The [[stem]] of a [[melon]] or [[pumpkin]] attaching or detaching.
+| {{tc|Yes}}<ref>{{IN|bedrock}}, placing a pumpkin or melon next to a corresponding stem does not cause the stem to attach.</ref>
+| {{tc|Yes}}
+|-
+| {{BlockSprite|kelp plant}} {{BlockSprite|weeping vines plant}} {{BlockSprite|twisting vines plant}} {{BlockSprite|cave vines plant}} [[Kelp]]/[[weeping vines]]/[[twisting vines]]/[[cave vines]] turning into a [[kelp]]/[[weeping vines]]/[[twisting vines]]/[[cave vines]] plant or vice versa.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|lit cave vines}} {{BlockSprite|lit cave vines plant}} The <code>berries</code> [[block state]] of the [[cave vines]] (plant) changing.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|campfire}} {{BlockSprite|soul-campfire}} A [[campfire]] being lit or extinguished.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|campfire}} {{BlockSprite|soul-campfire}} [[Food]] being cooked or popping out of a campfire.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|campfire}} {{BlockSprite|soul-campfire}} A [[hay bale]] being placed or removed below a campfire.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|respawn anchor}} [[Glowstone]] being added into a [[respawn anchor]].
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|respawn anchor}} A [[respawn anchor]] being used.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|lodestone}} A [[lodestone]] being used.
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|block of copper}} {{BlockSprite|cut copper}} {{BlockSprite|cut copper slab}} {{BlockSprite|cut copper stairs}} {{BlockSprite|chiseled copper}} {{BlockSprite|copper bulb}} {{BlockSprite|copper door}} {{BlockSprite|copper grate}} {{BlockSprite|copper trapdoor}} Oxidation level of unwaxed [[block of copper]] or [[cut copper]] block, [[slab]], [[stairs]], [[chiseled]], [[copper grate]], [[bulb]], [[door]], or [[trapdoor]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|block of copper}} {{BlockSprite|cut copper}} {{BlockSprite|cut copper slab}} {{BlockSprite|cut copper stairs}} {{BlockSprite|chiseled copper}} {{BlockSprite|copper bulb}} {{BlockSprite|copper door}} {{BlockSprite|copper grate}} {{BlockSprite|copper trapdoor}} [[block of copper]] or [[cut copper]] block, [[slab]], [[stairs]], [[chiseled]], [[copper grate]], [[bulb]], [[door]], or [[trapdoor]] being waxed or unwaxed.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|Creaking Heart}} Activation and deactivation of [[creaking heart]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|tall grass}} {{BlockSprite|large fern}} {{BlockSprite|tall seagrass}} [[Grass]]/[[fern]]/[[seagrass]] turning into [[tall grass]]/[[large fern]]/[[Seagrass|tall seagrass]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|cactus}} {{BlockSprite|sugar cane}} {{BlockSprite|bamboo}} {{BlockSprite|bamboo shoot}} {{BlockSprite|vines}} {{BlockSprite|weeping vines}} {{BlockSprite|twisting vines}} {{BlockSprite|kelp}} {{BlockSprite|cave vines}} {{BlockSprite|pointed dripstone}} {{BlockSprite|chorus flower}} [[Cactus]], [[sugar cane]], [[bamboo]], [[bamboo shoot]], [[vines]], [[weeping vines]], [[twisting vines]], [[kelp]], [[cave vines]], [[pointed dripstone]], or [[chorus flower]] growing.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|Closed Eyeblossom}} {{BlockSprite|Open Eyeblossom}} Opening and closing of [[eyeblossom]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|chorus plant}} [[Chorus flower]] growing or leaving a [[chorus plant]] behind and causing a block update to that.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|budding amethyst}} An [[amethyst cluster]] growing.<ref>From nothing to small to medium to large and finally to cluster.</ref>
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bamboo shoot}} A [[bamboo shoot]] turning into [[bamboo]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bamboo}} The <code>leaves</code> [[block state]] of [[bamboo]] changing.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|mushrooms}} [[Mushroom]] spreading.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|flowers}} 1-block-tall [[flower]]s spreading after [[bone meal]] is used on one.{{only|BE}}
+| {{tc|No}}
+| {{tc|N/A}}
+|-
+| {{BlockSprite|glow lichen}} [[Glow lichen]] spreading after [[bone meal]] is used on one.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|moss block}} [[Moss block]]s spreading after [[bone meal]] is used on one.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|big dripleaf}} A [[big dripleaf]] increasing or decreasing its tilt.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|big dripleaf stem}} A [[big dripleaf]] turning into a big dripleaf stem.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|big dripleaf}} A [[big dripleaf]] growing after [[bone meal]] is used on it.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|small dripleaf}} A [[small dripleaf]] turning into a [[big dripleaf]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|hanging roots}} [[Hanging roots]] being created underneath [[rooted dirt]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|hanging mangrove propagule}} A hanging [[mangrove propagule]] being created underneath [[mangrove leaves]] after [[bone meal]] is used on it.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sea pickle}} The number of [[sea pickle]](s) changing after [[bone meal]] is used on a [[coral block]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sea pickle}} A [[sea pickle]] being created after [[bone meal]] is used on a [[coral block]].{{only|Java}}
+| {{tc|N/A}}<ref>{{IN|bedrock}}, using bone meal on a coral block does not create sea pickles, due to {{bug|MCPE-171383}}.</ref>
+| {{tc|Yes}}
+|-
+| {{BlockSprite|pink petals}} Using [[bone meal]] on [[pink petals]] that do not already have 4 petals.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|grass block}} {{BlockSprite|water}} {{BlockSprite|moss block}} {{BlockSprite|crimson nylium}} {{BlockSprite|warped nylium}} Vegetation<ref>Includes [[short grass]], [[tall grass]], 1-block-tall [[flower]]s, [[seagrass]], [[Tall Seagrass|tall seagrass]], [[coral]], (wall) [[coral fan]], [[moss carpet]], [[azalea]], [[flowering azalea]], [[crimson roots]], [[warped roots]], [[Nether fungus]], [[Nether sprouts]], [[twisting vine]], and [[pink petal]]s.</ref> growing on top of or inside [[grass block]], [[water]], [[moss block]], or [[nylium]] after [[bone meal]] is used on one.
+| {{tc|N/A}}
+| {{tc|Yes}}
+|-
+| {{EnvSprite|tree}} A [[sapling]] or a [[propagule]] turning into a [[tree]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{EnvSprite|huge mushroom}} A [[mushroom]] turning into a [[huge mushroom]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{EnvSprite|azalea tree}} An [[azalea]] turning into an [[azalea tree]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{EnvSprite|huge fungus}} A [[Nether fungus]] turning into a [[huge fungus]] after [[bone meal]] is used on it.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|dirt}} A [[grass block]] turning into [[dirt]] when a [[sapling]] grows into a tree on that [[grass block]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|podzol}} A [[grass block]]/[[dirt]] turning into [[podzol]]<ref>Applies to the block under the sapling and the area around the sapling.</ref> when a 2×2 [[spruce sapling]] grows into a tree on that grass block/dirt.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|rooted dirt}} A [[grass block]]/[[dirt]] or any other blocks turning into [[rooted dirt]] by when an [[azalea]] or a [[flowering azalea]] grows on that grass block/dirt.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|muddy mangrove roots}} [[Mud]] turning into [[muddy mangrove roots]] when a [[mangrove tree]] grows.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk}} A block that has <code>sculk_replaceable</code> tag turning into [[sculk]] by [[sculk catalyst]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk vein}} A [[sculk vein]]/sculk veins being created by sculk catalyst.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk vein}} The shape of sculk vein(s) changing by sculk catalyst.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sculk sensor}} {{BlockSprite|sculk shrieker}} A [[sculk sensor]] or a [[sculk shrieker]] being created by sculk catalyst.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bell}} A [[bell]] ringing.
+| {{tc|Yes}}
+| {{tc|No}}
+|-
+| {{BlockSprite|bell}} A [[bell]] getting powered by a redstone signal.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bell}} A [[bell]] getting depowered.
+| {{tc|No}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bee nest}} {{BlockSprite|beehive}} A [[bee]] leaving a [[bee nest]] or a [[beehive]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|bee nest}} {{BlockSprite|beehive}} A [[bee]] entering a [[bee nest]] or a [[beehive]] (thus increasing the honey level).
+| {{tc|No}}
+| {{tc|No}}
+|-
+| {{BlockSprite|bee nest}} {{BlockSprite|beehive}} The [[honey]] being collected from a bee nest or a beehive using [[shears]] or a [[glass bottle]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|candle}} {{BlockSprite|candles}} A (dyed) [[candle]] being added into a (dyed) candle.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockLink|id=candle-cake}} A candle being added into a [[cake]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|candle}} {{BlockSprite|candles}} {{BlockLink|id=candle-cake}} A candle, [[dyed candle]], or candle cake being lit or extinguished.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|mud}} [[Dirt]]/[[coarse dirt]]/[[rooted dirt]] turning into [[mud]] through the use of a [[water bottle]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|clay}} [[Mud]] turning into [[clay]] through the use of [[pointed dripstone]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|chiseled bookshelf}} A [[book]] being added or removed from a [[chiseled bookshelf]] by [[player]], [[hopper]], [[minecart with hopper]], or [[dropper]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|suspicious sand}} {{BlockSprite|suspicious gravel}} A [[suspicious sand]] or [[suspicious gravel]] becoming less dusted as the player uses a [[brush]], or more dusted if the player stops using a brush.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| {{BlockSprite|sand}} {{BlockSprite|gravel}} A suspicious block turning into [[sand]] or [[gravel]].
+| {{tc|Yes}}
+| {{tc|Yes}}
+|-
+| All other [[block]]/[[block state]] changes.
+| {{tc|Yes}}
+| {{tc|Yes}}
+|}
+
+=== Note blocks ===
+The observer can be placed under [[note block]]s to produce bass drum sounds.
+
+== Sounds ==
+{{Edition|Java}}:
+{{Sound table/Block/Stone/JE}}
+{{Edition|Bedrock}}:
+{{Sound table/Block/Metal/BE}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Observer
+|spritetype=block
+|nameid=observer
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Observer
+|spritetype=block
+|nameid=observer
+|id=251
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|south|down,east,north,south,up,west|The direction the observer is observing. The same direction the player faces when placing the block.}}
+{{bst|powered|false|false,true|True while the observer is observing a change and emitting a pulse.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|minecraft:facing_direction|down|down,east,north,south,up,west|The direction the observer is observing. The same direction the player faces when placing the block.|Unsupported}}
+{{bst|bits=0x8|powered_bit|false|false,true|True while the observer is observing a change and emitting a pulse.|0,1|foot=1}}
+
+== Videos ==
+{{yt|lzMD0Wt0N7I}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||November 24, 2012|link= https://youtube.com/watch?v=YG9RNyRhIow?t=5m42s|When announcing the upcoming 1.5 [[Redstone Update]], [[Jeb]] mentions that changes to redstone logic may break existing BUD functionality, and therefore that block update detection may need to be implemented into the game in a more permanent, intentional form, rather than as a behavioral quirk.}}
+|{{HistoryLine||May 2, 2016|link=none|[[Jeb]] tweeted that [[Daniel Wustenhoff]] is working on a [[BUD]] block.<ref>{{tweet|jeb|727043609552367616|Hype train! @darngeek is working on a device that acts as a proper BUD block in MC:PE (PC eventually), currently called "Observer"|May 2, 2016}}</ref>
+|[[File:Observer (front texture) pBE20160502.png|32px]] [[Tommaso Checchi]] tweeted his "rejected graphics" for the observer [[block]].<ref name="ReferenceA">{{tweet|tomcc|727044087522713600|Here's my rejected graphics for the Observer, because @darngeek has no artistic sensibility|May 2, 2016}}</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w39a|[[File:Observer JE1.png|32px]] Added observers. 
+|Note: the "arrow" texture on the top/bottom of observers is pointing the wrong direction (toward the input, rather than the output).
+|Observers act as a [[block update detector]].
+|Observers emit pulses that last 2 [[game tick]]s and have a signal strength of 1.
+|Observers can strongly power [[block]]s (like a [[redstone repeater]]).
+|Observers have no delay between detecting a block update and emitting a pulse, meaning they are instant.
+|Observers are placed with the observing, or input, side facing the [[player]].}}
+|{{HistoryLine|||dev=16w41a|Observers now emit 4 [[game tick]] pulses.<ref>{{bug|MC-107410}}</ref>
+|The signal strength of observers has now been changed to 15.<ref>{{bug|MC-107783}}</ref><ref>{{bug|MCPE-17439}}</ref>
+|Observers ''appear'' to no longer strongly power [[block]]s and to emit weak power instead, like a [[block of redstone]] (and this may be the intended behavior for this snapshot). In reality they still emit strong power, but now they only update the block in front of their output side and nothing else, causing buggy behavior.<ref>{{bug|MC-108696}}</ref>
+|Observers are now placed with the output facing the player.<ref>{{bug|MC-107934}}</ref><ref>{{bug|MCPE-17321}}</ref>
+|A bug where observers would redirect [[redstone dust]] from all 4 directions has now been fixed.<ref>{{bug|MC-107795}}</ref> (They are supposed to redirect dust only from their output side.)}}
+|{{HistoryLine|||dev=16w42a|The developers have attempted to make observers no longer detect [[block]] updates happening to [[air]] blocks, in order to make observer behavior more predictable.<ref>{{bug|MC-107730}}</ref> In the process, they have broken [[redstone]] mechanics a bit, so that the block update bug from the previous snapshot now affects [[redstone repeater]]s and [[redstone comparator]]s, too.<ref>{{bug|MC-108897}}</ref>}}
+|{{HistoryLine|||dev=16w43a|[[File:Observer JE2.png|32px]] The model of observers has now been changed. The rotation of the "arrow" texture has now been fixed so it points in the correct direction.
+|General [[redstone]] mechanics for observers now work as they did before [[16w42a]], with the exception of the change named below.
+|Observers now output strong power like in 16w39a, except that they, as well as [[redstone repeater]]s and [[redstone comparator]]s, no longer provide block updates to transparent [[block]]s or [[air]].}}
+|{{HistoryLine|||dev=16w44a|The observer [[block]] update changes relating to [[redstone]] from [[16w42a]] and [[16w43a]] have now been fully reverted.
+|The behavior of observers has now been overhauled/redefined: observers now detect the newly added [[Block_updates#Post placement update|shape updates]] instead of [[Block_updates#Neighbor changed update|neighbor updates]]. This change has made observer behavior much more predictable, as unexpected/invisible block updates would no longer trigger observers.<ref>{{bug|MC-107760}}</ref>
+|Currently, many block state changes do not emit shape updates (for example, changes that are not saved when the world is unloaded, such as the shape of a fence, or whether or not a repeater is locked).
+|Observers have now been changed to emit a 2-game-tick pulse when activated.<ref>{{bug|MC-108697}}</ref>
+|Observers no longer output power instantly.<ref>{{bug|MC-107623}}</ref>}}
+|{{HistoryLine|||dev=pre1|[[File:Observer JE3.png|32px]] The front and top texture of observers have now been changed.
+|The [[redstone]] output side of observers now blinks red when it outputs power.}}
+|{{HistoryLine||1.13|dev=17w47a|[[Block_updates#Post placement update|Shape updates]]' implementation has been improved and refined, as a result observers can detect many more changes than before (e.g. the changes in the shape of [[fence]]s and [[redstone dust]].)}}
+|{{HistoryLine|||dev=pre4|Observers no longer produce a pulse when placed by hand.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Observer JE4 BE3.png|32px]] [[File:Observer (back) JE1 BE1.gif|32px]] The textures of observers has now been changed.}}
+|{{HistoryLine||1.16|dev=20w10a|Observers can now support [[ladder]]s and [[tripwire hook]]s.<ref>{{bug|MC-146824}}</ref>}}
+|{{HistoryLine|||dev=20w14a|Observers now correctly detect fences connecting to a newly grown tree.<ref>{{bug|MC-176644}}</ref>}}
+|{{HistoryLine|||dev=pre3|[[File:Observer (back) JE2.gif|32px]] The back texture of activated observers has been changed.}}
+|{{HistoryLine||1.17|dev=21w13a|Observers now correctly detect when a [[grass block]] changes to [[dirt]] if a tree grows on top.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Observer BE1.png|32px]] Added observer blocks.}}
+|{{HistoryLine||v0.15.3|Observers are now placed like a [[piston]] and not a [[log]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Observer BE2.png|32px]] The front and top texture of observers have now been changed.
+|Observer blocks can now detect many more [[block]] changes.
+|The strength of the redstone pulse outputted by observer blocks has now been increased.
+|Observers no longer pulse twice when observing a retracting [[piston]].
+|Opening and closing the [[command block]] screen no longer activates an observer block.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Observer JE4 BE3.png|32px]] The textures of observers has now been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.53|Observers no longer emit a pulse when they are first placed.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.55|Observers no longer get stuck in an active state when moved by [[piston]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Observer JE3.png|32px]] Added observers.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Observers now register changes to [[item frame]]s and [[flower pot]]s.}}
+|{{HistoryLine||xbox=TU63|xbone=CU53|ps3=1.67|psvita=1.67|ps4=1.67|wiiu=Patch 32|switch=1.0.13|The red light on the back side of the observer is now lit when the observer is activated.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Observer JE4 BE3.png|32px]] The textures of observers has now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Observer BE1.png|32px]] Added observers.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 218.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.23|Now uses the <code>minecraft:facing_direction</code> [[block state]] instead of <code>facing_direction</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The current observer texture was created because [[Jeb]] kept confusing the front with the back. He said it was inspired by the "rejected texture" created by Tommaso Checchi.<ref name="ReferenceA">{{tweet|tomcc|727044087522713600|Here's my rejected graphics for the Observer, because @darngeek has no artistic sensibility|May 2, 2016}}</ref><ref>{{tweet|jeb_|795625080067866624|I kept confusing myself which side was front and back, so here's something inspired by the works of @_tomcc http://i.imgur.com/IK2d8m2.png}}</ref>
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+Rejected graphics for the Observer.jpg|Rejected graphics for the observer.
+Jeb Observer.png|Development image of an observer from Jeb.
+Frowny Observers.png|The first image released of the new observer texture for ''Java Edition''.
+</gallery>
+
+== See also ==
+* [[Tutorial:Block update detector]]
+* [[Redstone Comparator]]
+
+== References ==
+{{Reflist}}
+{{notelist|n}}
+
+== External links ==
+*{{Mcnet|block-week-observer|Block of the Week: Observer|November 10, 2017|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}{{Mojang featured|https://www.minecraft.net/en-us/article/block-week-observer}}
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+
+[[de:Beobachter]]
+[[es:Observador]]
+[[fr:Observateur]]
+[[it:Osservatore]]
+[[ja:オブザーバー]]
+[[ko:관측기]]
+[[nl:Observeerder]]
+[[pl:Detektor]]
+[[pt:Observador]]
+[[ru:Наблюдатель]]
+[[uk:Спостерігач]]
+[[zh:侦测器]]

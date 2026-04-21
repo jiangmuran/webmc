@@ -1,0 +1,474 @@
+{{For}}
+{{split|Noise cave|Carver cave|Underwater cave|reason=many technical differences that should be noted separately, like how canyons have their own page now. this page is quite long|timestamp=16 February 2025|discuss=Talk:Cave#Split_proposal_pt._2}}
+{{infobox structure
+| image = Cave.png
+| image1size = 300px
+| canspawn = Yes
+| biome = 
+* {{EnvLink|Overworld}}
+* {{EnvLink|The Nether}}
+| blocks = 
+* {{BlockLink|Air}}
+* {{BlockLink|Cave Air}}{{only|java}}
+}}
+
+A '''cave''' (also known as a '''cavern''') is a common [[terrain feature]] that generates in the [[Overworld]] and [[the Nether]]. Caves are usually found underground. They are open spaces of various sizes and shapes that often intersect with each other or with different [[generated structures]], creating vast cave systems. They feature an abundance of [[ore]]s, as well as hostile mobs that spawn in the [[Light|darkness]].
+
+== Generation ==
+{{main|World generation#Noise caves|World generation#Carvers}}
+
+Caves are a part of Minecraft's terrain consisting of randomly generated cavities of [[air]], [[water]] or [[lava]], creating a hollow area and exposing other blocks generated with the terrain (such as [[stone]]s and [[Ore (feature)|ores]]).
+
+Caves generate at any [[altitude]] up to Y-level 256, and may span from the surface all the way to Y-level -59. Because of low [[light]] levels, hostile [[mob]]s and certain animals like [[bat]]s and [[glow squid]]s (only in water) often spawn in caves.
+
+Caves come in two distinct types; noise caves and carver caves. Noise caves are generated along with the base terrain, while carver caves are added later on as generated features.
+
+{{Calculator|chunkbase|pois=Ca|zoom=0.5}}
+
+== Noise caves ==
+[[File:Noise cave mechanism.jpg|thumb|The mechanics of noise cave generation explained by former Mojang dev [[Henrik Kniberg]].<ref>{{tweet|henrikkniberg|1364265702861987841|I get a lot of questions about how the new Minecraft noise caves work, and why we call them silly things like Cheese caves and Spaghetti caves. Here's an attempt to summarize it in a picture, hope it makes some kind of sense :)}}</ref>]]
+Noise caves are generated using a noise. They come in the form of cheese caves, spaghetti caves, and noodle caves.<ref name="21w06a">{{snap|21w06a|February 10, 2021}}</ref> By adjusting noise frequency, hollowness (for cheese caves), and thickness (for spaghetti caves, noodle caves, and noise pillars), noise caves can vary in extremely diverse ways. When generating noise caves, the game firstly generates a random noise field, and "smudges" it using a mathematical trick called [[wikipedia:Perlin noise|Perlin noise]]. These processes then result in a 3D noise image. Noise pillars also generate inside cave blobs.
+
+Noise caves are a part of the base terrain generation, and so do not intersect generated structures or mineral deposits. They are typically decorated with biome-specific features and decoration such as grass, sand, snow, or trees at higher y-levels, or dripstone pillars or clay deltas at lower y-levels. This is important, as cave noise is dually used to generate important Overworld terrain features such as overhangs or floating islands on the surface.<ref>https://www.youtube.com/watch?v=ob3VwY4JyzE</ref>
+{{-}}
+
+=== Cheese cave ===
+{{distinguish|Cheese}}
+[[File:Cheese Cave.png|thumb|Inside of a [https://minecraft.wiki/w/File:Noise%20cave%20mechanism.jpg high-hollowness low-frequency] cheese cave.]]
+
+Cheese caves are pocket areas of the underground that come in various sizes. Cheese caves offer large and open spaces, being the largest cave type in the game. They frequently generate noise pillars and expose many [[ore]]s. When generating, the black part of noise image becomes stone or deepslate, and white part becomes air, making it resemble cheese with many holes.
+{{-}}
+
+
+=== Spaghetti cave ===
+[[File:Spaghetti Cave.png|thumb|right|Inside of a spaghetti cave.]]
+[[File:Spaghetti cave X-ray.png|thumb|right|Spaghetti cave in Spectator mode.]]
+
+Spaghetti caves are long, narrow, winding caves and are a bit similar to small or medium carver caves, but longer. When generating, the edge of black and white part of noise image becomes air, making it look like long and wide spaghetti.
+{{-}}
+
+=== Noodle cave ===
+[[File:Noodle Cave.png|thumb|right|Inside of a noodle cave.]]
+[[File:Snapshot-21w17a-noodle-caves-full.jpg|thumb|right|Noodle caves in Spectator mode.]]
+
+Noodle caves are a thinner and squigglier variant of spaghetti caves. They consist of tunnels usually 1 to 5 blocks in width. When generating, the edge of black and white part of noise image becomes air, making it look like long and thin noodles.
+{{-}}
+
+=== Noise pillar ===
+[[File:Stone cave pillars.png|thumb|right|Pillars in a cheese cave.]]
+[[File:Deepslate speleothems.png|thumb|right|Another cave with pillars.]]
+
+Noise pillars look like [[Dripstone (feature)|large dripstones]] or speleothems, but consist usually of stone. They can be found in any type of noise cave, making caves more realistic.
+{{-}}
+
+=== Aquifer ===
+[[File:A lava lake.png|right|thumb|Example of two underground liquid bodies and a lava lake.]]
+[[File:Aquifers of different levels.jpg|thumb|Example of two water bodies of differing levels.]]
+[[File:Lava Aquifer.jpg|thumb|Example of two large lava bodies.]]
+
+Aquifers are liquid systems used to generate bodies of liquids in a world. Almost all liquids in a world (including those in carvers, noise caves, rivers, and oceans) are generated by aquifers. Aquifers may create underground liquid bodies that look like lakes, as well as water or lava waterfalls. Note that [[lava lake]]s are also generated underground, but are not aquifers.
+
+Aquifers below Y=0 may sometimes generate with [[lava]] instead of water, with aquifers from y=-55 to -63 always consisting of lava.
+
+If two liquid bodies of different levels or types are too close, some blocks may be generated between them to separate them.  These may resemble "rimstone dams" in caves.
+{{-}}
+
+== Carver caves ==
+{{redirect|Carver|carver canyons|Canyon|how carvers are generated|World generation#Carvers|the definition of carvers in data packs|Carver definition}}
+
+Carver caves' structure typically consists of a series of irregular tunnels branching off and winding in other directions, which may cut through to the surface, creating natural entrances to the cave.
+
+A carver cave may have a main room (aka '''circular void''') connecting 1 to 4 trunks, each trunk with zero or two branches. It may also have no main room, only one trunk and zero or two branches on it, that is, an I-shaped or T-shaped cave. There is a one-in-four probability of generating a cave with the main room, and another three-quarters probability of generating an I-shaped or T-shaped cave.
+
+The main room is an ellipsoidal void of various size. It sometimes may be too small to be found, making the cave looks I-shaped or T-shaped. But as long as the cave is not I-shaped or T-shaped, it must have a main room. 
+
+For each trunk or branch, it is usually thin at both ends and thick in the middle. However, the thickness does not vary so evenly. It sometimes flickers thick and thin as it advances. Sometimes it becomes so thin that there are some interruptions. Multiple interruptions make it look like a series of continuous bubbles. The length from the root of the trunk to the top of a branch varies from 85 to 112 blocks.
+<!--
+int temp=(4 * 2 - 1) * 16;    //112
+int length = temp - randomSource.nextInt(temp / 4);    //[85,112)
+-->
+The trunk and branches are curved, and they are often intertwined with each other to make complex caves. Multiple caves sometimes merge with each other making them more messy and spacious.
+
+The ceiling of the main room, trunks, and branches is usually round, while the floor is usually flat.
+
+In contrast with noise caves' gradual and natural openings, carver caves frequently cut straight through surface blocks and generated features, either destroying them or inhibiting their generation. [[Sand]] often falls into caves generated near the surface of a [[desert]] or [[beach]]; craters in the sand can alert the player to caves below the surface. Caves cannot cut through [[red sand]] nor [[snow block]]s, despite these generating as a surface block in several biomes.<ref>{{Cite bug|MC|16132|Cave carvers don't cut through snow blocks|date=May 23, 2013}}</ref> They frequently intersect and expose other natural structures such as other caves, [[monster room]]s, carver [[canyon]]s, and [[mineshaft]]s.
+
+===Overworld carver cave===
+The carver cave generation in the Overworld starts from Y=-56 to Y=180. The probability of cave generation is higher at Y=-56 to Y=47.
+<!--minecraft:cave and minecraft:cave_extra_underground-->
+
+Their main rooms vary from roughly 1 to 14 blocks in height, and from roughly 5 to 15 blocks in diameter.
+<!--
+float roomThickness = 1.0F + randomSource.nextFloat() * 6.0F;    //[1,6]
+double horizonRadius = 1.5 + (double)(Mth.sin(1.5707964F) * roomThickness);    //[2.5,7.5)
+double verticalRadius = horizonRadius * yScale;    //[0.25,6.75) in Overworld, [1.25,3.75) in Nether
+-->
+The horizon thickness of trunks varies from roughly 2 to 38, while the vertical thickness of trunks varies from roughly 1 to 36.
+<!--
+float thickness = this.getThickness(randomSource);    //[0,12) in Overworld, [0,6) in Nether
+double horizon = 1.5 + (double)(Mth.sin(3.1415927F * (float)lengthToRootOfThisTrunk / (float)length) * thickness);
+double vertical = horizon * (isNetherCave? 5 : 1);//very tall if nether cave
+double horizonRadius = horizon * horizonRadiusMultiplier;    //[1.05,18.9) in Overworld, [1.5,7.5) in Nether
+double verticalRadius = vertical * verticalRadiusMultiplier;   //[1.2,17.55) in Overworld, [7.5,37.5) in Nether
+double floorLevel; //varies from [-1.0,-0.4) in Overworld, 0.7 in Nether
+double horizonThickness = horizonRadius * 2;
+double verticalThickness = verticalRadius * (1 - floorLevel);
+-->
+The horizon thickness of branches varies from roughly 2 to 7, while the vertical thickness of trunks varies from roughly 1 to 7.
+<!--
+float thickness = randomSource.nextFloat() * 0.5F + 0.5F;    //[0.5, 1.0)
+double horizon = 1.5 + (double)(Mth.sin(3.1415927F * (float)lengthToRootOfThisTrunk / (float)length) * thickness);
+double vertical = horizon * (isNetherCave? 5 : 1);//very tall if nether cave
+double horizonRadius = horizon * horizonRadiusMultiplier;    //[1.05,3.5) in Overworld, [1.5,2.5) in Nether
+double verticalRadius = vertical * verticalRadiusMultiplier;   //[1.2,3.25) in Overworld, [7.5,12.5) in Nether
+double floorLevel; //varies from [-1.0,-0.4) in Overworld, -0.7 in Nether
+double horizonThickness = horizonRadius * 2;
+double verticalThickness = verticalRadius * (1 - floorLevel);
+-->
+
+A cave may connect to the surface of the terrain, creating natural entrances to the cave. They sometimes connect to the sea. Caves and [[mineshafts]] also regularly contain at least minor [[water]] or [[lava]] flows as well as caves being made up of a number of aquifers of water and lava.
+
+Some biome decoration might appear as well. For example, in [[jungle]] biomes, [[vines]] generate in carver caves near the surface, while [[sculk]] and related blocks may appear in the [[deep dark]].
+
+=== Nether carver cave ===
+[[File:Nether carvers.png|thumb|Nether carver cave generation]]
+The carver cave generation in the Nether starts from Y=0 to Y=126.
+
+Their main rooms vary from roughly 2 to 8 blocks in height, and from roughly 5 to 15 blocks in diameter. Compared to caves in the Overworld, the vertical thickness of the caves in the Nether is higher. The horizontal thickness of trunks varies from roughly 3 to 15, while the vertical thickness of trunks varies from roughly 12 to 64. The horizontal thickness of branches varies from roughly 3 to 5, while the vertical thickness of trunks varies from roughly 12 to 22.
+
+==== Gallery ====
+<gallery>
+File:Carver caves.png|Several carver caves.
+File:Carver cave of room and trunk.png|Cave with main room and a trunk.
+File:Carver cave with room.png|Cave with main room and two trunks.
+File:I-shaped carver cave.png|An I-shaped cave.
+File:Long T-shaped carver cave.png|A T-shaped cave.
+File:Carver cave with bubbles.png|Cave with bubbles.
+File:T-shaped carver cave with wide trunk.png|A T-shaped cave with a wide trunk.
+File:Zombie in a cavern.png|A small cave with a [[zombie]] inside.
+File:Medium-cave.png|A medium cave with a [[skeleton]].
+File:Medium Connected Cavern.png|A sizable cave connected to several others.
+File:Large cave.png|A large cave with [[gold ore]], [[iron ore]] and [[coal ore]].
+File:MegaCave.png|A big cave with many types of ores and monsters.
+File:Round Cave.png|An above-ground circular void.
+File:Sea-access-cave.png|An example of a cave connected with the sea.
+File:Bedrock Hole.png|A Nether carver exposing [[bedrock]]
+</gallery>
+{{-}}
+
+==== Underwater carver caves ====
+[[File:Underwater Cave.png|thumb|right|An underwater cave, flooded completely with water.]]
+
+Underwater caves are completely flooded caves that may have [[underwater magma]].
+
+Being completely underwater, only the magma blocks provide any air for entities to breathe, since they generate [[bubble column]]s. They sometimes have [[seagrass]], but [[kelp]] cannot generate due to being exposed to the sky, unlike sea-access caves.
+{{-}}
+
+== Structures and features ==
+=== Monster room ===
+{{main|Monster Room}}
+Monster rooms, formerly called dungeons, are structure-like [[feature]]s that appear in the underground that contain [[monster spawner]]s. They are small rooms made of cobblestone and mossy cobblestone and contain a monster spawner that produces either [[Zombie|zombies]], [[Skeleton|skeletons]], or [[Spider|spiders]] and up to 2 [[chest]]s. Finding a monster room without a chest is unlikely but possible.
+
+=== Ancient city ===
+{{main|Ancient City}}
+An ancient city is a palatial structure found in the deep dark, harboring chests containing items that cannot be found anywhere else or that help a player avoid a warden. An ancient city features a large palace that stretches throughout a deep dark biome. The palace is made up of long corridors with gray wool floors to prevent vibrations as well as some smaller ruins off to the side of the main corridors, which contain between one or two loot chests. The city center features a frame resembling a warden's head, where there are reinforced deepslate blocks, which is an unobtainable material in Survival mode. Other unique blocks such as soul lanterns and candles as well as different forms of deepslate can be found here.
+
+=== Mineshaft ===
+{{main|Mineshaft}}
+A mineshaft is a generated structure found underground or underwater, having 3×3 mazes of tunnels with cave spiders and ores exposed on the walls or floor regularly.
+
+=== Lava lake ===
+{{main|Lava lake}}
+[[File:LavaLake.png|right|thumb|Example of an underground lava lake.]]
+
+Lava lakes may generate underground with an air pocket, which makes them look like small caves with lava aquifers.
+
+=== Amethyst geode ===
+{{main|Amethyst geode}}
+An amethyst geode is a [[feature]] found in the underground of the [[Overworld]]. Amethyst geodes contain [[smooth basalt]], [[calcite]], and are the only source, apart from Ancient City and Trial Chambers chests, of [[amethyst cluster|amethyst]] [[amethyst shard|item]]s and [[block of amethyst|block]]s.
+== Cave biomes ==
+There are some [[biome]]s generated only in caves in the Overworld.
+
+=== Dripstone caves ===
+{{main|Dripstone Caves}}
+A dripstone cave is an underground biome often found far away from oceans, in areas with high [[continentalness]] values. It features a landscape covered by speleothems, taking the form of patches of [[pointed dripstone]] and large [[dripstone block]] pillars. Small sources of water can be found on the floor. [[Drowned]] can spawn here in aquifers.
+
+=== Lush caves ===
+{{main|Lush Caves}}
+A lush cave is an underground biome that is usually found below biomes with high [[humidity]] values, such as [[dark forest]]s and [[old growth taiga]]s. It is filled with unique flora, [[cave vine]]s covering the roof, and [[clay]] pools of [[water]] on the bottom. This biome can be found underground below [[azalea tree]]s. [[Axolotl]]s and [[tropical fish]] can spawn here.
+
+=== Deep dark ===
+{{main|Deep Dark}}
+The deep dark mainly generates deep underground in the deepslate layer, usually in mountainous areas with low [[Biome#Erosion|erosion]] values, and never below an ocean. The floor in this biome often has patches of [[sculk]] blocks surrounded by [[sculk vein]]s, which include sculk-related blocks such as [[sculk shrieker]]s, [[sculk sensor]]s, and [[sculk catalyst]]s. No mobs spawn  naturally in this biome, but if a player triggers the sculk shriekers a certain amount of times, the [[warden]], a powerful hostile mob, may appear, giving the player the [[Darkness]] effect. This biome may contain one or more [[ancient cities]].
+
+=== Sulfur caves ===
+{{main|Sulfur Caves}}
+{{In development|java|bedrock|26.2|26.20|experimental-be=Drop 2 of 2026|section=1}}
+The sulfur caves are cave [[biome]]s consisting of [[sulfur]] and [[cinnabar]] blocks, where [[sulfur cube]]s spawn and [[sulfur pool]]s generate. It was revealed at [[Minecraft Live – March 2026]].
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java Pre-classic}}
+|{{HistoryLine||Cave game tech test|link=Cave game tech test|Development on "[[Cave Game]]" started; caverns are showcased.}}
+|{{HistoryLine||rd-132211|Caves have been temporarily removed.}}
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.3a|Re-added caves.}}
+|{{HistoryLine||August 25, 2009|link=https://www.youtube.com/watch?v=YoEn4f7H5M4|Caves are shown to be longer and more narrow.
+|It was demonstrated that bigger caves are located deeper underground.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added the above cave changes.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100122-2251|Caves are no longer filled with [[water]] as often.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Removed caves.}}
+|{{HistoryLine||20100325-1545|Caves were reimplemented.}}
+|{{HistoryLine||20100327|Removed caves again.}}
+|{{HistoryLine||20100616-1808|Again reimplemented caves.{{check version|Which 0616 version this is is unknown, but it definitely isn't the one we have archived.}}
+|Caves are now clustered instead of random.{{check version|Which 0616 version this is is unknown, but it definitely isn't the one we have archived.}}
+|Caves have 1–5 exits, enabling multiple escapes.
+|Caves are now so clustered that a cave could be described as "Swiss cheese". 
+|More water and [[lava]] springs generate in caves. 
+|Tunnels have a wider variety of thickness.{{check version|Which 0616 version this is is unknown.}}}}
+|{{HistoryLine||20100617-1531|[[Gravel]] and [[dirt]] can now be found in caves as [[Ore (feature)|ore feature]]s.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.3|Caves now have ambient noises such as moans and train whistles.}}
+|{{HistoryLine||v1.2.6|Pools of water and lava can now be found in caves.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w38a|[[Bat]]s added, and are the only passive [[mob]] to spawn in dark caves.}}
+|{{HistoryLine|||dev=12w38b|New cave sounds added.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Cave generation tweaked, making caves less dense and interconnected.<ref>{{cite|url=https://www.minecraftforum.net/topic/1981051|title=It seems that the underground is no longer swiss cheese anymore.|website=Minecraft Forum|date=September 17, 2013}}</ref><ref>[[:de:Datei:Höhlenverteilung 13w36a.gif]]</ref>}}
+|{{HistoryLine||1.8|dev=14w20a|Caves now generate on the surface of desert, mesa, mega taiga, and mushroom [[biome]]s.}}
+|{{HistoryLine|||dev=14w32a|Caves surfacing in mesa biomes now generate with [[red sandstone]] rather than [[sandstone]].}}
+|{{HistoryLine||1.10|dev=16w20a|Caves no longer generate with sandstone in the ceiling, when they surface through sand of any type.  The sand instead shows unstable sand particles, until it is disturbed.}}
+|{{HistoryLine||1.13|dev=18w08a|Caves and ravines can now generate underwater.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=24m55s}}|The [[Caves & Cliffs]] update was announced at [[Minecraft Live 2020]], revealing cave biomes, aquifers, and noise caves. }}
+|{{HistoryLine||1.17|dev=21w06a|Revamped cave generation by adding cheese caves, spaghetti caves, and flooded aquifer caves.
+|Removed flooded carver caves, as they are replaced by aquifers.
+|Caves can now generate down to Y{{=}}-60.}}
+|{{HistoryLine|||dev=21w07a|Noise caves and aquifers appear less often, and caves that are below the Y level of 0 are now made with [[grimstone]]}}
+|{{HistoryLine|||dev=21w08a|Added crevice carvers.
+|Carvers now generate below Y{{=}}0.
+|Tweaked cave sizes.
+|Added more variation to carvers.<ref>{{tweet|henrikkniberg|1364649861761630209|Oh forgot to mention in the changelog: we also added some more variation to the old cave carvers (width, heigh, floor cutoff, etc). Just to make them blend in a bit better with the noise caves instead of being instantly recognizable.|24 Feb 2021}}</ref>}}
+|{{HistoryLine|||dev=21w10a|Crevice carvers are now much less common.}}
+|{{HistoryLine|||dev=21w11a|Tweaked cave sizes.}}
+|{{HistoryLine|||dev=21w13a|Made carvers less likely to be too flat to walk through.
+|Increased likelihood of huge caves (large cheese caves).
+|Reduced likelihood of tall 1-block thin pillars.
+|Changes were made to make the cheese caves more varied in aspect and size.
+|[[Deepslate]] [[Ore (feature)|ore feature]]s can now be found between heights 0 and 16.
+|[[Dripstone cluster]]s can now be found rarely in regular caves.}}
+|{{HistoryLine|||dev=21w15a|All changes to caves from 21w06a-21w13a apart from dripstone clusters and deepslate and tuff [[Ore (feature)|ore feature]]s have been disabled and relegated to the [[Caves & Cliffs Prototype Data Pack]].}}
+|{{HistoryLine|||dev=21w18a|Added noodle caves in the prototype data pack.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Re-introduced all previous changes to cave generation, which were available only through certain snapshots and the [[Caves & Cliffs Prototype Data Pack]] prior to this experimental snapshot.
+|[[Lush cave]]s and [[dripstone cave]]s can now generate naturally.
+|Noise caves are no longer flooded above Y{{=}}30.
+|Noodle caves now generate at all altitudes.{{verify|were they capped at Y{{=}}130 in this version, or was that not a thing until later?}}}}
+|{{HistoryLine|||dev=July 14, 2021|slink=https://twitter.com/henrikkniberg/status/1415237012731346947|According to [[Henrik Kniberg]], crevice carvers have been retired because noise caves "do a better job of making cool natural-looking crevice".}}
+|{{HistoryLine|||dev=experimental snapshot 2|Noise caves are less likely to extend from the surface to negative Y levels.
+|Cheese caves are a bit smaller and less likely to intersect the surface.}}
+|{{HistoryLine|||dev=experimental snapshot 3|Aquifers can go deeper and are more likely to connect with cave systems further down.
+|Aquifers have more high-frequency variation, and are more likely to be spread out instead of concentrated in one region.}}
+|{{HistoryLine|||dev=experimental snapshot 5|Carvers are now able to cut through [[red sand]] and [[calcite]].}}
+|{{HistoryLine|||dev=experimental snapshot 6|Aquifers under oceans and rivers are more likely to link to underground areas.
+|Carvers are now able to cut through sand and gravel on ocean floors.}}
+|{{HistoryLine|||dev=experimental snapshot 7|Noodle caves are now able to generate at any height and are no longer capped at Y{{=}}130.}}
+|{{HistoryLine|||dev=21w40a|Some fixes to aquifer generation have resulted in their locations getting shifted around.}}
+|{{HistoryLine|||dev=21w43a|Reduced the amount of flooded caves near rivers and oceans.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added the deep dark biome and ancient cities.}}
+|{{HistoryLine|||dev=22w11a|[[Sculk]] patches in deep dark now also replace part of the terrain's walls or ceilings, and become larger in general.
+|[[Ancient cities]] in Deep Dark from the previous experimental snapshot have not been added.}}
+|{{HistoryLine|||dev=22w13a|Re-added ancient cities and revamped with new structures, improvements to already existing structures and an updated loot table.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Nov 24, 2012|link={{ytl|YMhyX_lKWV4|t=18m15s}}|Performance issues relating to caves were discussed at [[MINECON 2012]].}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added caves.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Caves can now generate underwater.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added ambient cave sounds.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.52|Caves now generate down to Y{{=}}-64.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.52|[[Deepslate]] [[Ore (feature)|ore feature]]s can now be found between heights 0 and 16.}}
+|{{HistoryLine|||dev=beta 1.16.230.54|[[Dripstone cluster]]s can now be found rarely in regular caves.}}
+|{{HistoryLine|||dev=beta 1.16.230.56|Revamped cave generation by adding cheese caves, spaghetti caves, and flooded aquifer caves.
+|Caves can now generate down to Y{{=}}-60.}}
+|{{HistoryLine|||dev=beta 1.17.0.50|[[Lush Caves]] and [[Dripstone Caves]] can now generate naturally behind [[experimental gameplay]] toggle.}}
+|{{HistoryLine||1.17.10|exp=Caves and Cliffs|dev=release|The new cave generation has been made accessible, behind [[experimental gameplay]] toggle.}}
+|{{HistoryLine||1.17.30|exp=Caves and Cliffs|dev=beta 1.17.30.23|Added noodle caves, behind [[experimental gameplay]] toggle.
+|Noise caves are no longer flooded above Y{{=}}30 behind [[experimental gameplay]] toggle.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.20|[[Lush cave]]s and [[dripstone cave]]s can now generate naturally by default without enabling experimental gameplay toggle.
+|The new cave generation has been made accessible by default, without enabling experimental gameplay toggle.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added caves.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added caves.}}
+|{{HistoryLine||1.3.12|Improved visibility in caves.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+===Carvers===
+<gallery>
+EarlyClassicCave.png|A cave in early Classic.
+0point30cave.png|A cave in Classic 0.30.
+Wormhole Cave Beta.png|A wormhole entrance.
+DeadbushCave.png|A [[dead bush]] in a [[badlands]] cave.
+Pit.png|A cave entrance found in a [[Birch Forest]] biome.
+LuckyCave.png|A cave with all seven types of Overworld ore.
+Red Sandstone Cave.png|An entrance generated in a badlands biome.
+Vines in a cave.png|A cave generated near the surface of a jungle biome, causing vines to grow on its wall.
+Cave with ores.png|Various ores.
+Water Cave Filling.png|A water cave, with water flowing inside.
+Badlands Cave.png|The inside of a cave near the surface of badlands.
+Underwater Cave.png|A cave that generated underneath an ocean.
+Cubic caves 164311266871034.png|Unusually repetitive cave generation seen in [[Spectator mode]].
+Hugecrater.png|A deep cave entrance.
+SandstoneFormation.png|Natural sandstone blocking sand from entering a cave system.
+Cavernenter.png|Dark cave entrance.
+Cavernmobs.png|Mobs that spawned in a unlit cave.
+Desertcave.png|Cave entrance in a [[desert]] biome.
+Ice Cave.png|A circular cave entrance generated in snowy plains biome.
+Caveopening.png|Huge cave generated inside a hillside.
+Dark cave.png|Pitch-black cave.
+DesertCave.png|In the desert, players have to be careful about mining in the ceiling, as this can cause a cave-in and easily kill the player.
+Mega Cave.png|Another example of a mega cave with a [[mineshaft]].
+Iron Ore in Cave.png|Cave entrance in a desert.
+21w07a Cave carvers.jpg|Carvers didn't generate below Y=0 in early caves & cliffs snapshots.
+Mesa Cave Entrance.png|Cave entrance in a badlands biome.
+Desert Cave Entrance.png|Cave entrance in a desert biome.
+Better Together Cave.jpg|A cave full of monsters in ''Bedrock Edition''.
+1.17 Cave.jpg|A cave in 1.17.
+Cave Entrance With Dripstone.jpg|A cave entrance with dripstone.
+</gallery>
+
+=== Noise caves ===
+<gallery>
+Cheese caves.jpg|A world full of cheese caves.
+File:Cheese caves (Minecraft Alpha 1.0.11).png|Alpha's characteristic terrain quirks were generated just like modern cheese caves, though limited to higher y-axes.
+Start of spaghetti cave.png|The start of a spaghetti cave.
+Winding spaghetti cave.png|A spaghetti cave winding through the underground.
+Spaghetti cave X-ray.png|An X-ray view of a spaghetti cave.
+Stone speleothems.png|Stone speleothems in a cave.
+Cave pillars.png|A noise cave with varying sizes of speleothems.
+Cheese cave pillars.png|A noise cave with thick, clustered pillars.
+Open cheese cave.png|A more open cave with narrower pillars.
+Tall cave pillars.png|Tall pillars in a cave.
+Grimstone cheese cave.png|A noise cave below Y=0.
+Grimstone pillar.png|A deepslate pillar in a noise cave.
+Multiple ores.png|Multiple ores, found in the new big cave.
+Open cave.png|A large cave underground, with ferns growing in it.
+Very large cave.png|A large cave.
+Deepslate spaghetti cave.png|Another cave.
+Jappa Cave 1.jpg|Ores in a cave.
+Jappa Cave 2.jpg|Ores in a cave.
+Mega Cavern.jpg|A huge cave full of lava from Caves & Cliffs development.
+Giga Cavern.jpg|An even huger cave full of lava from Cave & Cliffs development.
+Cave Waterfall.jpg|A waterfall in a cave.
+Big Mineshaft Cave.jpg|A big cave with a hanging mineshaft.
+Cave Exit.jpg|A cave exit.
+Big Dark Cave.jpg|A dark cave full of monsters.
+Dark Cave 1.jpg|A dark cave with monsters.
+Dark Cave 2.jpg|A dark cave with lava.
+Lava Lake Parity.jpg|A comparison of a lava lake between {{JE}} (left) and {{BE}} (right).
+Cave Zombies.jpg|Lots of monsters in a cave.
+Large Lava Cave.jpg|A tall cave full of lava.
+Ominous Entrance.jpg|A large cave entrance.
+Mountainside Crevice.jpg|A cave that opens to a mountainside.
+In a Mountain Cave.jpg|A player in a mountain cave.
+Big Cave Lavafalls.jpg|Big lavafalls in a big cave.
+Cool Cave.jpg|A big cave.
+</gallery>
+
+==== Aquifers ====
+<gallery>
+Aquifer land entrance.png|An entrance to an aquifer from land.
+Aquifer boundary.png|An aquifer boundary, creating an underground lake.
+Aquifer meets ocean.png|An aquifer meets an ocean.
+Magma in aquifer.png|Magma blocks on the floor of an aquifer, creating bubble columns.
+Tiny aquifer.png|A tiny aquifer, made up of six water sources.
+Massive aquifer.png|A large aquifer with narrow pillars.
+Aquifer levels.png|The differing water levels of several aquifers.
+Grimstone aquifer.png|An aquifer below Y=0.
+Water and Lava Aquifers.png|A water and a lava aquifer that generated next to each other. Note the lush caves in the back.
+Flooded canyon.png|Partially-flooded canyon cave.
+Flooded cave.png|A flooded cave.
+Ominous Aquifer.jpg|A dark flooded cave.
+Aquifer Cross Section.jpg|A cross section showing caves and aquifers.
+Lava and Water Aquifers.jpg|A lava aquifer and water aquifer.
+Water and Lava Aquifers.jpg|A water aquifer and lava aquifer. There is a mine in the background.
+Drained Ocean.jpg|The result of aquifers being too big.
+Experimental Aquifer 1.jpg|Aquifers in development.
+Experimental Aquifer 2.jpg|Aquifers in development.
+Experimental Aquifer 3.jpg|Aquifers in development.
+1.18-exp6 Cavier Ocean Floors.jpg|Aquifers in development.
+Chiwi Underwater Cave 1.jpg|An underwater cave.
+Chiwi Underwater Cave 2.jpg|An underwater cave.
+Chiwi Underwater Cave 3.jpg|An underwater cave.
+How it's Going.jpg|Boating in a cave.
+Water Pillar Cave.jpg|A cave with water and pillars.
+</gallery>
+
+=== Hollows ===
+<gallery>
+Hollow 1.png|A hollow formed by the terrain generator.
+Hollow 2.png|A larger hollow with a lake inside.
+</gallery>
+
+=== Cracks ===
+<gallery>
+Xray view of crack carvers.png|Crack carvers from the caves & cliffs snapshots.
+Crack Carver Light.jpg|Light shining through cracks in a cave ceiling.
+Illuminated Cavern.png|A cave lit by light from cracks.
+</gallery>
+
+=== Biomes ===
+<gallery>
+Lush Caves.png|[[Lush Caves]].
+Dripstone Caves.png|[[Dripstone Caves]].
+Driplush caves.png|The lush caves and dripstone caves meet.
+</gallery>
+
+=== Other ===
+<gallery>
+Minecraft PlayStation Cover art.png|Artwork of Steve in a Cave.
+</gallery>
+
+== Trivia ==
+* Before they were added to ''Minecraft'', large underground lakes were already present in ''[[Minicraft]]''.
+
+== See also ==
+* [[Ambience]], sounds that can be heard around and within dark caves.
+* [[Tutorial:Exploring caves|A guide to exploring caves]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox terrain features}}
+
+[[de:Höhle]]
+[[es:Cueva]]
+[[fr:Caverne]]
+[[hu:Barlang]]
+[[it:Caverna]]
+[[ja:洞窟]]
+[[ko:동굴]]
+[[nl:Grot]]
+[[pl:Jaskinia]]
+[[pt:Caverna]]
+[[ru:Пещера]]
+[[th:ถ้ำ]]
+[[uk:Печера]]
+[[zh:洞穴]]

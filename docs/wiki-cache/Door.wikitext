@@ -1,0 +1,573 @@
+{{About|the block|the music track|Door (song)|the single block tall variant|Trapdoor|the feature in {{MCD}}|MCD:Door}}
+[[File:All Doors.png|thumb|All doors.]]
+A '''door''' is a block that serves as a switchable barrier to entity movement.
+
+== Variants ==
+* {{Blocklink|id=wooden-doors|Wooden Door}}
+** {{BlockLink|Oak Door}}
+** {{BlockLink|Spruce Door}}
+** {{BlockLink|Birch Door}}
+** {{BlockLink|Jungle Door}}
+** {{BlockLink|Acacia Door}}
+** {{BlockLink|Dark Oak Door}}
+** {{BlockLink|Mangrove Door}}
+** {{BlockLink|Cherry Door}}
+** {{BlockLink|Pale Oak Door}}
+** {{BlockLink|Bamboo Door}}
+** {{BlockLink|Crimson Door}}
+** {{BlockLink|Warped Door}} 
+* {{BlockLink|Iron Door}}
+* {{Blocklink|id=copper-doors|Copper Door}}
+** {{BlockLink|Copper Door|Unoxidized Copper Door}} ({{BlockLink|Waxed Copper Door|Waxed}})
+** {{BlockLink|Exposed Copper Door}} ({{BlockLink|Waxed Exposed Copper Door|Waxed}})
+** {{BlockLink|Weathered Copper Door}} ({{BlockLink|Waxed Weathered Copper Door|Waxed}})
+** {{BlockLink|Oxidized Copper Door}} ({{BlockLink|Waxed Oxidized Copper Door|Waxed}})
+
+== Usage ==
+=== Placement ===
+Doors must be supported by a full solid block face beneath them. The bottom half of the door is placed where the player is aiming, with the top half extending one block above. If there is not enough space for the door, or not an appropriate supporting block underneath the base, no action is performed.
+
+==== Facing direction ====
+When placed, a door occupies the side of the block closest to the player, or behind the player if placed in the player's own space.
+
+==== Hinge placement ====
+When placed, a door checks the blocks to its immediate left and right and uses the following rules to determine hinge placement:
+* If another matching door is adjacent, with its handle side touching the newly placed door, a double door forms. This causes the new door to have its handle touching the existing doors handle, with hinges opposite. 
+* If there is no other matching door present, the hinge is placed on the side with the highest number of adjacent solid block faces. 
+* In [[Java Edition|''Java Edition'']], if there are no blocks adjacent, or both sides fulfill a single other rule, the hinge is placed on the side closest to the players aim.
+
+=== Behavior ===
+[[Water]] and [[lava]] flow around doors. 
+
+[[Mob]]s can spawn in a space occupied by a door.
+
+The sound of opening and closing of a door can be heard up to 16 blocks away, like most mob sounds.
+
+When placed using the {{cmd|setblock}} command, only one half of a door is placed, because doors are actually two separate blocks. The lower half still works, but with graphical bugs, and the upper half does not. Redstone cannot be used because it updates the half, breaking it. The upper half does not drop anything when broken, the lower half drops a normal door. This implies that the upper half is dependent on the lower.
+
+=== Barrier ===
+A door can be used as a switchable barrier to entity movement. Although primarily used to block movement by mobs and players, a door can also be used to control the movement of boats (for example, a door placed in a two-wide water flow stops a boat when perpendicular to the flow, but allow it to move again when parallel), items and minecarts (a door can stop a falling item or minecart, then allow it to drop again when the door moves), etc.
+
+{{IN|Java}}, doors provide a breathable space if placed underwater. {{IN|bedrock}}, doors in water source blocks are [[waterlogged]] and do not displace water source blocks.
+
+Doors are 0.1875 ({{frac|3|16}}) blocks thick (0.1825 {{in|bedrock}}). The rest of a door's space can be moved through freely. A door occupies two block spaces and both halves normally act as a single barrier, although doors can be opened or closed with a player or mob occupying the bottom block of the door,<ref>{{bug|MC-54255||You can stand on the bottom block of a door, allowing you to climb it like a ladder|WF}}</ref> in which case the player can jump up to land on the bottom half of the door and then again to land on top of the door.
+
+=== Air pockets ===
+Doors can be used as air pockets underwater in ''Java Edition'' as doors cannot be waterlogged. This method cannot be used in ''Bedrock Edition'' as doors can be waterlogged. In both editions, doors can be used to create air pockets in [[lava]]. Because there is no [[air]] around the door, wooden doors do not [[burn]].
+
+=== Fuel ===
+Similar to [[planks]], [[Wooden Door|wooden doors]] can be used as [[fuel]] in [[furnaces]].
+
+[[Wooden Door|Overworld wooden doors]] ([[oak|oak door]], [[spruce|spruce door]], [[birch|birch door]], [[Jungle tree|jungle door]], [[acacia|acacia door]], [[dark oak|dark oak door]], [[Mangrove|mangrove door]], [[Bamboo|bamboo door]], and [[Pale oak|pale oak door]]) can '''smelt 1 [[item]] per''' '''door.'''
+
+However, [[Wooden Door|Nether wooden doors]] ([[crimson]] and [[warped]]) and metal doors ([[Iron Door|iron]] and [[Copper Door|copper]]) cannot be used as [[fuel]].
+
+== Block states ==
+{{see also|Block states}}
+
+<section begin="block states"/>{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the door's "inside" is facing.<br>The direction the player faces while placing the door.<br>For example, a door facing east occupies the west part of its block when closed.}}
+{{bst|half|lower|lower,upper|Identifies which part of the door the block is.}}
+{{bst|hinge|left|left,right|Identifies the side the hinge is on (when facing the same direction as the door's inside).}}
+{{bst|open|false|false,true|True if the door is currently open.}}
+{{bst|powered|false|false,true|True if the door is currently powered by redstone.|foot=1}}
+
+{{el|be}}:<br>
+Lower Door Block:
+{{bst|showaux=1|bits=0x1,0x2|direction|0|0,1,2,3|The direction the door's "inside" is facing.<br>The direction the player faces while placing the door.<br>For example, a door facing east occupies the west part of its block when closed.
+*0: Facing east
+*1: Facing south
+*2: Facing west
+*3: Facing north}}
+{{bst|bits=—<sup>{{sic}}</sup>|door_hinge_bit|false|false,true|Identifies the side the hinge is on (when facing the same direction as the door's inside). false if hinge is on the left (the default), true if on the right.<br>Lower door block has the same aux value when it is opened and closed.|0,0<sup>{{sic}}</sup>}}
+{{bst|bits=0x4|open_bit|false|false,true|True if the door is currently open.|0,1}}
+{{bst|bits=0x8|upper_block_bit|false|false,true|Always false for the lower part of a door.|0,1|foot=1}}
+
+Upper Door Block:
+{{bst|showaux=1|bits=—<sup>{{sic}}</sup>|direction|0|0,1,2,3|The direction the door's "inside" is facing.<br>The direction the player faces while placing the door.<br>For example, a door facing east occupies the west part of its block when closed.
+*0: Facing east
+*1: Facing south
+*2: Facing west
+*3: Facing north
+Upper door block has the same aux value no matter what it faces.|0,0,0,0<sup>{{sic}}</sup>}}
+{{bst|bits=—<sup>{{sic}}</sup>|door_hinge_bit|false|false,true|Identifies the side the hinge is on (when facing the same direction as the door's inside). false if hinge is on the left (the default), true if on the right.<br>Upper door block doesn't support aux value when its hinge is on the '''right'''.|0,Unsupported}}
+{{bst|bits=—<sup>{{sic}}</sup>|open_bit|false|false,true|True if the door is currently open.<br>Lower door block has the same aux value when it is opened and closed.|0,0<sup>{{sic}}</sup>}}
+{{bst|bits=0x8|upper_block_bit|false|false,true|Always true for the upper part of a door.|0,1|foot=1}}<section end="block states"/>
+
+
+==Sounds==
+=== Generic ===
+==== Normal wood ====
+{{Sound table/Block/Wood}}
+
+==== Cherry wood ====
+{{Sound table/Block/Cherry wood}}
+
+==== Bamboo wood ====
+{{Sound table/Block/Bamboo wood}}
+
+==== Nether wood ====
+{{Sound table/Block/Nether wood}}
+
+==== Iron ====
+{{Sound table/Block/Iron}}
+
+==== Copper ====
+{{Sound table/Block/Copper}}
+
+=== Unique ===
+==== Copper door waxing ====
+{{:Block of Copper/Sounds|a copper door}}
+
+==== Other ====
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Wooden Door open3.ogg
+|sound2=Wooden Door open4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a wooden door opens
+|id=block.wooden_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Wooden Door close2.ogg
+|sound2=Wooden Door close5.ogg
+|sound3=Wooden Door close6.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a wooden door closes
+|id=block.wooden_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Cherry door toggle1.ogg
+|sound2=Cherry door toggle2.ogg
+|sound3=Cherry door toggle3.ogg
+|sound4=Cherry door toggle4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a cherry wood door opens
+|id=block.cherry_wood_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Door creaks
+|source=block
+|description=When a cherry wood door closes
+|id=block.cherry_wood_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Bamboo Door toggle1.ogg
+|sound2=Bamboo Door toggle2.ogg
+|sound3=Bamboo Door toggle3.ogg
+|sound4=Bamboo Door toggle4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a bamboo wood door opens
+|id=block.bamboo_wood_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Door creaks
+|source=block
+|description=When a bamboo wood door closes
+|id=block.bamboo_wood_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Nether Door toggle1.ogg
+|sound2=Nether Door toggle2.ogg
+|sound3=Nether Door toggle3.ogg
+|sound4=Nether Door toggle4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a Nether wood door opens
+|id=block.nether_wood_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Door creaks
+|source=block
+|description=When a Nether wood door closes
+|id=block.nether_wood_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Iron Door open1.ogg
+|sound2=Iron Door open2.ogg
+|sound3=Iron Door open3.ogg
+|sound4=Iron Door open4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When an iron door opens
+|id=block.iron_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Iron Door close1.ogg
+|sound2=Iron Door close2.ogg
+|sound3=Iron Door close3.ogg
+|sound4=Iron Door close4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When an iron door closes
+|id=block.iron_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound =Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle2.ogg<!--Duplicated on purpose-->
+|sound4=Copper Door toggle3.ogg
+|sound5=Copper Door toggle3.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a copper door opens
+|id=block.copper_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=''Varies''<wbr><ref group=sound>0.9-1.0 for <code>toggle1</code>, the first <code>toggle2</code>, and the first <code>toggle3</code>, and 0.99-1.1 for the second <code>toggle2</code> and the second <code>toggle3</code></ref>
+|distance=16}}
+| {{SoundLine
+|sound=Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle3.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a copper door closes
+|id=block.copper_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Zombie hit wood1.ogg
+|sound2=Zombie hit wood2.ogg
+|sound3=Zombie hit wood3.ogg
+|sound4=Zombie hit wood4.ogg
+|subtitle=Door shakes
+|source=hostile
+|description=When a [[zombie]] attacks a wooden or copper<ref group=sound name=zombiesound>{{Bug|MC-270960||Zombies play wooden door breaking sounds when attacking copper doors}}</ref> door
+|id=entity.zombie.attack_wooden_door
+|translationkey=subtitles.entity.zombie.attack_wooden_door
+|volume=2.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Zombie breaks door.ogg
+|subtitle=Door breaks
+|source=hostile
+|description=When a zombie breaks a wooden or copper<ref group=sound name=zombiesound>{{Bug|MC-270960||Zombies play wooden door breaking sounds when attacking copper doors}}</ref> door
+|id=entity.zombie.break_wooden_door
+|translationkey=subtitles.entity.zombie.break_wooden_door
+|volume=2.0
+|pitch=0.8-1.2
+| distance = 16}}
+| {{SoundLine
+|sound=Zombie hit metal1.ogg
+|sound2=Zombie hit metal2.ogg
+|sound3=Zombie hit metal3.ogg
+|subtitle=Block broken <ref group=sound name=ironsubtitle>{{Bug|MC-226770}}</ref>
+|source=Hostile Creatures 
+|description=''Unused''<ref group=sound>{{bug|MC-218122}}</ref>
+|id=entity.zombie.attack_iron_door
+|translationkey=subtitles.block.generic.break|translationkeynote=<ref group=sound name=ironsubtitle/>
+|volume=''None''
+|pitch=''None''
+| distance = ''None''
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Wooden Door open3.ogg
+|sound2=Wooden Door open4.ogg
+|source=block
+|description=When a wooden door opens
+|id=open.wooden_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Wooden Door close2.ogg
+|sound2=Wooden Door close5.ogg
+|sound3=Wooden Door close6.ogg
+|source=block
+|description=When a wooden door closes
+|id=close.wooden_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Cherry door toggle1.ogg
+|sound2=Cherry door toggle2.ogg
+|sound3=Cherry door toggle3.ogg
+|sound4=Cherry door toggle4.ogg
+|source=block
+|description=When a cherry wood door opens
+|id=open.cherry_wood_door
+|volume=1.0
+|pitch=0.9-1.0}}
+| {{SoundLine
+|source=block
+|description=When a cherry wood door closes
+|id=close.cherry_wood_door
+|volume=1.0
+|pitch=0.9-1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Bamboo Door toggle1.ogg
+|sound2=Bamboo Door toggle2.ogg
+|sound3=Bamboo Door toggle3.ogg
+|sound4=Bamboo Door toggle4.ogg
+|source=block
+|description=When a bamboo wood door opens
+|id=open.bamboo_wood_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|source=block
+|description=When a bamboo wood door closes
+|id=close.bamboo_wood_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Nether Door toggle1.ogg
+|sound2=Nether Door toggle2.ogg
+|sound3=Nether Door toggle3.ogg
+|sound4=Nether Door toggle4.ogg
+|source=block
+|description=When a Nether wood door opens
+|id=open.nether_wood_door
+|volume=1.0
+|pitch=0.9-1.0}}
+| {{SoundLine
+|source=block
+|description=When a Nether wood door closes
+|id=close.nether_wood_door
+|volume=1.0
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Iron Door open1.ogg
+|sound2=Iron Door open2.ogg
+|sound3=Iron Door open3.ogg
+|sound4=Iron Door open4.ogg
+|source=block
+|description=When an iron door opens
+|id=open.iron_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Iron Door close1.ogg
+|sound2=Iron Door close2.ogg
+|sound3=Iron Door close3.ogg
+|sound4=Iron Door close4.ogg
+|source=block
+|description=When an iron door closes
+|id=close.iron_door
+|volume=0.9
+| pitch = 0.9-1.0}}
+| {{SoundLine
+| sound =Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle3.ogg
+|source=block
+|description=When a copper door opens
+|id=open_door.copper
+|volume=1.0
+|pitch=1.0-1.1}}
+| {{SoundLine
+|source=block
+|description=When a copper door closes
+|id=close_door.copper
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Zombie hit wood1.ogg
+|sound2=Zombie hit wood2.ogg
+|sound3=Zombie hit wood3.ogg
+|sound4=Zombie hit wood4.ogg
+|source=hostile
+|description=While a zombie is breaking a wooden or copper<ref group=sound name=zombiesound>{{Bug|MCPE-186407||Zombies play wooden door breaking sounds when attacking copper doors}}</ref> door
+|id=mob.zombie.wood
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Zombie breaks door.ogg
+|source=hostile
+|description=When a zombie breaks a wooden or copper<ref group=sound name=zombiesound>{{Bug|MCPE-186407||Zombies play wooden door breaking sounds when attacking copper doors}}</ref> door
+|id=mob.zombie.woodbreak
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+Historical sounds:
+{|class="wikitable"
+!Sound
+!Description
+!From
+!to
+![[Resource location]]
+!Pitch
+|-
+|{{Sound|2=Door closing old.ogg}}
+|Opening
+|[[Java Edition Infdev 20100607|Infdev 20100607 ?]]
+|[[Java Edition RC1|1.0.0 RC1]]
+|
+|?
+|-
+|{{Sound|2=Door open.ogg}}
+|Door opening (Second Version)
+|[[Java Edition RC1|1.0.0 RC1]]
+|[[Java Edition 15w43a|15w43a]]
+|random.door_open{{only|bedrock|short=1}}
+|0.9-1.1
+|-
+|{{Sound|2=Door opening old.ogg}}
+|Closing
+|[[Java Edition Infdev 20100607|Infdev 20100607 ?]]
+|[[Java Edition RC1|1.0.0 RC1]]
+|
+|?
+|-
+|{{Sound|2=Door close.ogg}}
+|Closing (Second Version)
+|[[Java Edition RC1|1.0.0 RC1]]
+|[[Java Edition 15w43a|15w43a]]
+|random.door_close{{only|bedrock|short=1}}
+|0.9-1.1
+|}
+
+== Videos ==
+{{yt|wx-24Kp7cIA}}
+
+== History ==
+{{See asset history|type=block}}
+{{hatnote|For a history of the top and bottom blocks that form doors, see [[Technical blocks/Doors]]}}
+
+This table lists changes that affect more than one type of door (wooden, iron, and copper).
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100607|Added wooden doors.
+|Doors are currently unstackable.
+|The crafting recipe of doors produces one door per 6 planks.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|Added iron doors.
+|Doors can now be controlled by redstone power.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|Punching the back face of a left-hinge door or the front face of a right-hinge door, as well as destroying a door, would [[Java Edition placeholder texture uses|create]] particles using the [[Placeholder texture#Texture atlas blank spaces|block placeholder texture]].}}
+|{{HistoryLine||1.7.3|Doors no longer produce placeholder texture particles.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=December 13, 2013|slink=https://twitter.com/jeb_/status/411425952338808832|[[Jens Bergensten|Jeb]] tweeted an image showing that the crafting recipes for doors are changed so that 3 doors are crafted at once. Doors are also stackable to 64.}}
+|{{HistoryLine|||dev=14w02a|Doors are now stackable to 64.
+|The [[crafting]] recipes of doors now yield 3 doors instead of 1.}}
+|{{HistoryLine|||dev=14w32d|Added doors for spruce, birch, jungle, acacia and dark oak wood variants.}}
+|{{HistoryLine||1.9|dev=15w43a|Doors now have [[sound]]s for placing and different sounds for opening and closing.}}
+|{{HistoryLine|||dev=15w47a|Doors now make [[sound]]s when placed,<ref>{{bug|MC-2844||Doors have no placement sound.|Fixed}}</ref> despite these apparently already being added in 15w43a.}}
+|{{HistoryLine|||dev=15w49a|Doors are now placed facing left/right depending on which half of the [[block]] the [[player]] clicks on, unless neighboring doors or solid/opaque blocks cause them to place a certain way.}}
+|{{HistoryLine||1.13|dev=17w47a|Doors can no longer be placed with their lower half inside entities<ref>{{bug|MC-2208}}</ref> but can still be placed with their upper half inside entities.<ref>{{bug|MC-123619}}</ref>|Doors can now also be placed by aiming at the side of a block.}}
+|{{HistoryLine||1.16|dev=20w06a|Added crimson and warped doors.}}
+|{{HistoryLine||1.19|dev=22w11a|Added mangrove doors.}}
+|{{HistoryLine|||dev=22w14a|With the addition of [[mangrove swamp]]s, mangrove doors are now obtainable.}}
+|{{HistoryLine||1.19.3|dev=22w42a|exp=Update 1.20|Added bamboo doors.}}
+|{{HistoryLine||1.19.4|dev=23w07a|exp=Update 1.20|Added cherry doors.}}
+|{{HistoryLine||1.20.3|dev=23w43a|exp=Update 1.21|Added copper doors with their weathered and waxed variants.}}
+|{{HistoryLine||1.21|dev=24w21a|Doors of different materials now default to being placed oriented together to form a double door instead of both being placed with the hinge on the same side of the block.}}
+|{{HistoryLine||1.21.2|dev=24w40a|exp=Winter Drop|Added pale oak doors.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|There are textures for both wooden and iron doors.}}
+|{{HistoryLine||v0.7.4|Doors can no longer be placed on top of farmland.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Doors are now stackable to 64.
+|The [[crafting]] recipes of doors now yield 3 doors instead of 1.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|Doors of different materials now default to being placed oriented together to form a double door instead of both being placed with the hinge on the same side of the block.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added two types of doors: wooden and iron.}}
+|{{HistoryLine||xbox=TU5|Doors can be found in the Redstone & Transportation tab in the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Moved doors to the Building Blocks tab in the Creative inventory.}}
+|{{HistoryLine||xbox=TU26|xbone=CU15|ps3=1.18|psvita=1.18|ps4=1.18|Doors are now stackable to 64.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Doors now have different [[sound]]s for opening and closing.|Doors now make [[sound]]s when placed.|Doors are now placed facing left/right depending on which half of the [[block]] the [[player]] clicks on, unless neighboring doors or solid/opaque blocks cause them to place a certain way.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added two types of doors: wooden and iron.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+File:Doortypes.png|All door types alongside their respective trapdoor counterparts.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== See also ==
+* [[Door (disambiguation)]]
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Double blocks]]
+
+[[cs:Dveře]]
+[[de:Tür]]
+[[es:Puerta]]
+[[fr:Porte]]
+[[hu:Ajtók]]
+[[it:Porta]]
+[[ja:ドア]]
+[[ko:문]]
+[[nl:Deur]]
+[[pl:Drzwi]]
+[[pt:Porta]]
+[[ru:Дверь]]
+[[th:ประตู]]
+[[uk:Двері]]
+[[zh:门]]

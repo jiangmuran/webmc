@@ -1,0 +1,287 @@
+{{redirect|Mines||Mine}}
+{{for|the April fools version|Potato Mineshaft}}
+{{Infobox structure
+| group = Regular
+| 1-1 = Mineshaft with Chain.png
+| group2 = Badlands
+| 2-1 = Badlands mineshaft.png
+| biome =
+;Regular mineshaft
+:Any {{EnvLink|Overworld}} biome except for Badlands and Deep Dark
+;Badlands mineshaft
+:{{BiomeLink|Badlands}}
+:{{BiomeLink|Eroded Badlands}}
+:{{BiomeLink|Wooded Badlands}}
+| mobs = 
+* {{EntityLink|Cave Spider}} (from [[monster spawner]])
+| blocks =
+* {{BlockLink|Rail}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Cobweb}}
+* {{BlockLink|text=Cave Spider Monster Spawner|Monster Spawner}}
+* {{BlockLink|Iron Chain}}
+* {{EntityLink|Minecart with Chest}}
+On regular mineshafts:
+*{{BlockLink|Oak Planks}}
+*{{BlockLink|Oak Fence}}
+*{{BlockLink|Oak Log}}
+On badlands mineshafts:
+*{{BlockLink|Dark Oak Planks}}
+*{{BlockLink|Dark Oak Fence}}
+*{{BlockLink|Dark Oak Log}}
+| canspawn = No
+}}
+'''Mineshafts''' are common underground [[structure]]s primarily found underground in the [[Overworld]]. They consist of interlinked 3×3 tunnels with incomplete [[rail]] lines running through them, with [[planks|oak wood]] platforms bridging gaps or hanging in larger exposed caverns. Mineshafts are the only structures where [[cave spider]] [[monster spawner]]s can be found.
+
+A unique variant of mineshafts made out of [[dark oak]] wood can generate on the surface in [[badlands]] biomes.
+
+== Generation ==
+Mineshafts generate underground in any Overworld [[biome]] except for the [[deep dark]] (although a mineshaft can overlap). They generate before [[chunk]] features such as [[ore]]s. Multiple mineshafts can generate near each other, producing larger complexes. When mineshafts intersect with [[cave]]s and [[canyon]]s, corridors generate a bridge of [[planks]] over empty space, either suspended with [[iron chain]]s above or supported by [[log]] pillars below. When a mineshaft intersects with an [[aquifer]], a barrier of solid blocks generates to prevent fluids from flowing into the mineshaft, often resulting in corridors cut off from the rest of the mineshaft.<ref>{{bug|MC-214787|||WAI}}</ref>
+
+Mineshafts often generate on the surface in [[badlands]] biomes. Badlands mineshafts are composed of dark oak planks and [[fence]]s with railways more complete above ground. Since badlands biomes generate [[gold ore]] often and at higher altitudes, they are good places to easily find gold.
+
+Mineshafts are the most common generated structures in the Overworld, having a 0.4% chance to attempt to begin generating in every chunk.
+
+{{Calculator|chunkbase|pois=M|zoom=0.5}}
+
+== Structure ==
+{{main|{{PAGENAME}}/Structure}}
+
+[[File:Minecart with chest in mineshaft.png|right|thumb|A minecart with chest in a mineshaft.]]
+[[File:MineshaftRoom.png|thumb|The central room of the mineshaft.]]
+[[File:21w07a Mineshaft.png|thumb|A mineshaft generating across a large cave.]]
+
+All mineshafts have: 
+* '''Starting point:''' a 10×10 parlor, with an arched ceiling and one to four exits in each direction.
+* '''Corridors:''' some 3×3 tunnels and junctions are supported by [[planks]] and [[fence]]s. Some places are decorated with [[torch]]es and [[cobweb]]s. On long corridors, these supports are placed four blocks away from each other, while some have missing planks which may be filled up with cobwebs or blocks of [[stone]] jutting out from the top. The tunnels are connected by incomplete rail systems on the ground, upon which [[minecarts with chest]]s generate uncommonly. Cobwebs do not generate if they would not be connected to solid blocks, while corridors generate with [[log]] pillars, [[iron chain]]s, and fences for support if they are in mid-air.
+* '''Crossings:''' dual-floor, 5×5 intersections supported by wooden columns.
+* '''Staircases:''' diagonal tunnels, [[stairs]] blocks are not used.
+* '''Abandoned passageways:''' accessory corridors with numerous [[cobweb]]s concealing [[cave spider]] [[monster spawner]]s.
+
+Any chest found in a mineshaft always occurs as a [[minecart with chest]] that rests on top of some rails.
+
+== Loot ==
+{{seealso|Chest loot}}
+{{LootChest|mineshaft}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=[No displayed name]
+|spritename=mineshaft
+|spritetype=env
+|nameid=mineshaft
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Mineshaft
+|spritetype=env
+|nameid=mineshaft}}
+{{ID table
+|displayname=Badlands Mineshaft
+|spritetype=env
+|nameid=mineshaft_mesa<ref>{{bug|MC-191829}}</ref>
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Mineshaft
+|spritetype=env
+|nameid=mineshaft
+|translationkey=feature.mineshaft
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:mineshaft}}
+** {{Nbt inherit/structure}}
+**{{nbt|string|mineshaft_type}}: Either <code>normal</code> or <code>mesa</code>. <code>normal</code> for mineshaft made of oak, while <code>mesa</code> for mineshaft made of dark oak.
+</div><section end="config"/>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Added mineshafts.}}
+|{{HistoryLine|||dev=Pre-release 2 ;)|Mineshafts are a lot less dense and do not stretch out as far as before.<ref>[[:de:Datei:Mine Ausdehnung b1.8.gif]]</ref>
+|To counter this change, they were made 2{{frac|1|2}} times as common throughout the world.<ref>[[:de:Datei:Mine Verteilung b1.8.gif]]</ref>}}
+|{{HistoryLine||1.8.1|Support beams in mineshafts now generate using [[oak fence]]s instead of [[oak planks]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Added [[pumpkin seeds]] to mineshaft chests.}}
+|{{HistoryLine||1.2.1|dev=12w05a|Added bridges made of [[oak planks]] under floating sections of mineshafts.}}
+|{{HistoryLine||1.4.6|dev=12w50a|Added [[enchanted book]]s to mineshaft chests.}}
+|{{HistoryLine||1.5|dev=13w02a|Changed mineshaft chests to [[minecarts with chest]]s on rails.}}
+|{{HistoryLine||1.6.1|dev=13w18a|Added iron horse armor to mineshaft chests.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Mineshafts appear as often as in the original release of [[Java Edition Beta 1.8 Pre-release]] again,<ref>[[:de:Datei:Mine Verteilung 13w36a.gif]]</ref> but without any increase in density or size, which makes them 60% less common than before.}}
+|{{HistoryLine||1.9|dev=15w44a
+|Added [[torch]]es, [[beetroot seeds]], [[name tag]]s, enchanted and normal [[golden apple]]s, [[activator]], [[detector rail|detector]], and [[powered rail]]s to minecart chests.
+|Removed [[saddle]]s and [[iron horse armor]] from minecart chests.
+|Decreased the average yields of [[iron ingot|iron]] and [[gold ingot]]s, [[melon seeds|melon]] and [[pumpkin seeds]], [[diamond]]s, [[lapis lazuli]], [[redstone]], and [[bread]].
+|Increased the average yield of [[iron pickaxe]]s and substantially increased the average yield of [[rail]]s and enchanted books.}}
+|{{HistoryLine||1.10|dev=16w20a|Mineshafts can now generate on the surface in [[mesa]] biomes, using dark oak planks and fences rather than oak.
+|If directly exposed to the sky during generation, no wooden parts spawn at that exact location.
+|No longer generate floating in the air when using a low ground level in a superflat world.}}
+|{{HistoryLine||1.17|dev=21w06a|Mineshaft pieces no longer generate if they were fully floating in the air.
+|Corridors now generate with [[wood]]en pillars for support if needed.
+|Floating [[cobweb]]s from open spaces no longer generate.}}
+|{{HistoryLine|||dev=21w07a|Corridors are now supported by chains above.
+|Wooden pillars are now made of oak [[log]]s instead of bark [[wood]].}}
+|{{HistoryLine|||dev=21w13a|Increased the max length of pillars and chains.
+|[[Glow berries]] now generate as loot in mineshaft [[minecart with chest]]s.}}
+|{{HistoryLine||1.18|dev=21w37a|The starting room in mineshafts no longer generates with a [[dirt]] floor.<ref>{{bug|MC-215876||Dirt can generate below y{{=}}0 from mineshafts|Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w41a|Mineshafts in [[badlands]] generate higher up.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=1.20.2 Pre-release 1|Efficiency enchanted books now have a higher chance of generating in mineshaft chest loot.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added mineshafts.
+|Cave spider spawners are replaced by regular [[spider]]s until potion effects are added.}}
+|{{HistoryLine||v0.10.0|dev=September 9, 2014|slink={{tweet|_tomcc|509281262607925249}}|[[Tommaso Checchi]] tweeted a picture of mineshafts generated at surface level within a badlands biome.}}
+|{{HistoryLine|||dev=build 1|Mineshafts can now generate on the surface in badlands biomes.
+|Above-ground mineshafts now use dark oak planks and fences rather than oak.}}
+|{{HistoryLine||v0.11.0|dev=build 12|Mineshafts now generate with cave spider spawners.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Mineshafts now generate [[minecarts with chest]]s.
+|Added enchanted books to mineshafts}}
+|{{HistoryLine||v0.15.0|dev=build 1|Name tags now can be found inside chest minecarts.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=?|Mineshafts are now more common.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Mineshafts are now less dense.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|[[Glow berries]] now generate as loot in mineshaft [[chest minecart]]s.}}
+|{{HistoryLine|||dev=beta 1.16.230.56|Mineshafts now fit into large caves.
+|Mineshaft corridors are now attached to the ceiling via chains or to the floor via wood columns when missing support platform.}}
+|{{HistoryLine|||dev=beta 1.17.0.50|[[Cobweb]]s no longer generate suspended in the air in mineshaft.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.20|Mineshaft tunnels can't replace [[bedrock]] anymore.<ref>{{bug|MCPE-141123||[Experimental] The passage from the mine created a passage to the bedrock|Fixed}}</ref>}}
+|{{HistoryLine|||dev=beta 1.18.0.24|The starting room in mineshafts no longer generates with a dirt floor.
+|Mineshaft support pillars are no longer able to extend into lava.<ref>{{bug|MCPE-135221||Mineshaft can generate on lava lakes, causing fire|Fixed}}</ref>
+|Wooden pillars are now made of oak [[log]]s instead of bark [[wood]].<ref>{{bug|MCPE-125133||Mineshaft support pillars are made out of bark oak wood, not logs|Fixed}}</ref>}}
+|{{HistoryLine||1.20.40|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.40.20|Efficiency enchanted books now have a higher chance of generating in mineshaft chest loot.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added mineshafts.}}
+|{{HistoryLine||xbox=TU12|Added [[wood]]en bridges under floating sections of mineshafts.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Mineshafts can now generate on the surface in mesa [[biome]]s, using [[dark oak]] planks and fences rather than [[oak]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added mineshafts.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+<!--outdated info
+* When generated, mineshafts cut through the top bedrock layer(s), if they happen to generate at the bedrock layers.{{until|be 1.18.0}}<ref>{{bug|MCPE-141123||[Experimental] The passage from the mine created a passage to the bedrock|Fixed}}</ref>-->
+* The central room of a mineshaft ''never'' generates in the same chunk as (0, 0) in any ''Minecraft'' world.{{only|java}} 
+
+=== Publicity ===
+* In [[LEGO Minecraft]] Micro World – "The Village", a mineshaft is beneath a village.<ref>http://shop.lego.com/en-US/Micro-World-The-Village-21105</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+SBP Spawner Area.png|The monster spawner location
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Mineshaft in Spectator.png|A view of a mineshaft generated in a default ''Minecraft'' world, shown in [[Spectator]] mode.
+Aquifer Mineshaft.png|A mineshaft that generated directly above an [[aquifer]].
+Mineshaft Spawner Closeup.png|A [[cave spider]] [[monster spawner]] in a mineshaft.
+Surface mineshaft.png|A mineshaft generated on a [[superflat]] using the customize feature.
+Spawnerinmineshaft.png|A [[spider]] monster spawner which generated connected to a mineshaft. Check the image for seed and coordinates.
+Bedrockmineshaft.png|A mineshaft, which generated at [[bedrock]] level, along with diamonds. Check the image for seed and coordinates.
+Triplecanyonwithmineshaft.png|A triple [[canyon]] with a mineshaft at the bottom.
+Mineshaft with fences.png|A [[cobweb]] generated in a mineshaft.
+Grimstone mineshaft.png|A mineshaft generating across a cave deep underground.
+Mineshaft in an underground canyon.png|A double ravine with many mineshaft bridges in it.
+3 structures together.png|A [[desert pyramid]], mineshaft, and a [[stronghold]] generated together.
+New mineshaft.png|Mineshaft sections in a cave.
+Deep Dark Mineshaft from above.png|A mineshaft in a [[deep dark]] biome.
+Deep Dark Mineshaft from below.png|Another view of the deep dark mineshaft.
+Captura de pantalla 2022-06-19 184237.png|Two mineshaft tunnels parallel to each other.
+Mineshaft Hanging Over Lava.jpg|A mineshaft hanging over lava.
+Aboveground Spawner.jpg|The monster spawner corridor generated above ground.
+GoldMine.jpg|An entrance to a mineshaft.
+Badlands mineshaft in canyon.png|A badlands mineshaft bridge generated over a canyon.
+Skeleton spawner in badlands mineshaft.png|A [[skeleton]] monster spawner in a badlands mineshaft.
+Badlands Mineshaft Grotto.jpg|A hanging badlands mineshaft in a grotto.
+Floating Island Mineshaft.jpg|A mineshaft hanging from beneath a floating island.
+Mineshaft Ravine Bridge.png|A mineshaft intersecting with a ravine.
+Chest inside minecart with chest.png|A mineshaft's chest cart generated in a [[monster room]] chest.
+Badlands island mineshaft.png|A small badlands mineshaft that tried to generate on an island.
+Ice Mineshaft.jpg|A badlands mineshaft spawned into an iceberg.
+Over.png|A mineshaft which generated in close proximity to a stronghold.
+Shaftless Mineshaft.png|A mineshaft that only generated the central room, without any of the tunnels.
+Multiple structures in a canyon.png|A mineshaft along with a stronghold and a [[jungle pyramid]] generated in one ravine.
+3inone.png|A mineshaft, [[monster room]], and a stronghold generated in one area.
+Minecraftstoreroom.png|A mineshaft that generated with two store rooms in a stronghold.
+Seven natural spawners in close proximity.png|Five [[monster room]]s and two cave spider monster spawners close together in a mineshaft, cleared to show all 7 monster spawners.
+Floating rails.png|A floating [[rail]] in a mineshaft.
+Monster room at end of mineshaft corridor.png|A [[monster room]] that connected to a dead end of a mineshaft.
+2 spawners, geode and mineshaft.png|An [[amethyst geode]] with a mineshaft and 2 cave spider monster spawners. Check the image for more details, including seed and coordinates.
+Mineshaft with portal.png|A [[ruined portal]] generated along with a mineshaft.
+2 spawners next to to each other.png|Two cave spider monster spawners next to each other.
+Minecart with flora.png|A [[lush caves]] biome inside a mineshaft.
+Nerf Mineshaft.png|A Mineshaft as it appears in the ''Nerf World'' DLC map.
+MineshaftStaircase1.png|Example of a staircase
+MesaMineshaft.png|A badlands mineshaft that generated in a desert biome.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+MCPE Gold Rush.jpeg|“[[Pocket Edition|MCPE]], now with 100% more [[gold]] rush!”
+A spider in a mineshaft.jpeg|A mineshaft and a [[spider]].
+A mineshaft with rails.jpeg|A mineshaft with rails.
+</gallery>
+
+=== In other media ===
+<gallery>
+Mineshaft Artwork.jpg|Artwork of the structure.
+Efe mining.jpeg|[[Efe]] in a mineshaft.
+Mineshaft reveal.png|The entrance to a mineshaft on [[Birch Island]].
+Chicken runs through a mineshaft.png|[[Sunny]] chasing a [[chicken]] through a mineshaft.
+Minecraft Experience website carousel battle.jpg|A mineshaft as it appears in [[Minecraft Experience: Villager Rescue|''Minecraft Experience: Villager Rescue'']].
+LEGOMCBadlandsMineshaft.webp|A [[LEGO Minecraft|Lego]] set of a badlands mineshaft.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{mcnet|mineshaft|Building Blocks: Mineshaft|November 9, 2024|Duncan Geere}}
+
+== Navigation ==
+{{Navbox generated structures}}
+
+[[Category:Mines]]
+
+[[de:Mine]]
+[[es:Mina abandonada]]
+[[fr:Puits de mine]]
+[[it:Miniera abbandonata]]
+[[ja:廃坑]]
+[[ko:폐광]]
+[[lzh:礦道]]
+[[nl:Mijnschacht]]
+[[pl:Opuszczona kopalnia]]
+[[pt:Mina Abandonada]]
+[[ru:Заброшенная шахта]]
+[[uk:Покинуті шахти]]
+[[zh:废弃矿井]]

@@ -1,0 +1,399 @@
+{{About|the block that drops projectiles as an item|the block that can fire projectiles |Dispenser}}
+{{Infobox block
+| image = Dropper.png
+| extratext = View [[#Renders|all renders]]
+| transparent = No
+| light = No
+| tool = Wooden Pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''dropper''' is a low-capacity storage [[block]] that can eject its contents [[Item (entity)|into the world]] or into other containers when given a [[redstone]] signal.
+
+== Obtaining ==
+=== Breaking ===
+A dropper can be mined with a [[pickaxe]], in which case it drops itself and its contents. If mined without a pickaxe, the dropper drops only its contents.
+{{breaking row|horizontal=1|Dropper|Pickaxe|Wood|foot=1}}
+
+=== Crafting ===
+{{Crafting
+|A1= Cobblestone
+|B1= Cobblestone
+|C1= Cobblestone
+|A2= Cobblestone
+|C2= Cobblestone
+|A3= Cobblestone
+|B3= Redstone Dust
+|C3= Cobblestone
+|Output= Dropper
+|type= Redstone
+}}
+
+== Usage ==
+A dropper can be used as a container or as a [[redstone component]] to move items.
+
+A dropper can be placed so that its output faces in any direction, including up or down. When placed, the dropper's output faces toward the player. With default textures, the droppers output side looks like a face when positioned for horizontal output. Otherwise, the output side has a square hole.
+
+{{IN|java}}, droppers cannot be moved by [[piston]]s.
+
+=== Container ===
+[[File:Dropper GUI.png|thumb|right|176px|GUI of the dropper.]]
+A dropper has 9 slots of inventory space.
+
+To open the dropper GUI, use the {{control|Use Item}} [[control]]. To move items between the dropper inventory and the player inventory or hotbar while the dropper GUI is open, drag or shift-click the items. To exit the dropper GUI, use the {{key|Esc}} control.
+
+By default, the GUI of a dropper is labeled "Dropper". A dropper's GUI label can be changed by naming the dropper in an [[anvil]] before placing it. {{IN|java}}, droppers can also be renamed by using the {{cmd|data}} command (for example, to label a dropper at (0,64,0) "Alice's Dropper", use {{cmd|data merge block 0 64 0 <nowiki>{CustomName:'"Alice's Dropper"'}</nowiki>}}).
+
+{{IN|java}}, a dropper can be "locked" (or subsequently unlocked) by setting the dropper's <code>lock</code> tag with the {{cmd|data}} command. If a dropper's <code>lock</code> tag is not blank, the dropper cannot be accessed except by players holding an item that matches the item predicate in the <code>lock</code> tag. For example, to lock a dropper at (0,64,0) so that only players holding an item named "Alice's Key" can access the dropper, use {{cmd|data merge block 0 64 0 <nowiki>{lock:{components:{"custom_name":"Alice's Key"}}}</nowiki>}}.
+
+=== Redstone component ===
+{{see also|Redstone circuit}}
+A dropper can be used to eject items, or push items into another container.
+
+;Activation
+
+: A dropper can be activated by:
+:* an adjacent active '''[[power component]]''' (''exceptions:'' a redstone torch does not turn ON a dropper it is attached to)
+:* an adjacent powered opaque '''block''' (strongly-powered or weakly-powered)
+:* a powered '''[[redstone repeater]]''' or '''[[redstone comparator]]''' facing the dropper
+:* powered '''[[redstone dust]]''' configured to point at the dropper, or on top of it; a dropper is ''not'' activated by adjacent powered redstone dust that is configured to point in another direction.
+
+: In addition to the methods above, droppers {{in|java}} can also be activated by [[quasi-connectivity]]. A dropper activates if one of the methods above ''would'' activate a mechanism component in the block above the dropper, even if there is no mechanism component there (even if the block above the dropper is [[air]] or a transparent block), but only when the dropper receives a block update (including a redstone update within two blocks of the dropper).
+
+: A dropper has a delay of {{convert|4|game tick|second}} between activation and a response. During this time, additional inputs are ignored.
+
+: {{IN|be}}, the dropper can only activate on the input/consumer redstone tick ([[C-tick]]).
+
+;Behavior
+{{See also|Tutorial:Item transportation#Dropper elevator}}
+
+: When activated, a dropper waits {{convert|4|game tick|second}} and then ejects one item from its inventory. The dropper does not continue to eject items while activated — ejection occurs only on the initial activation (the [[Pulse circuit#Pulses|rising edge]] of an input signal). To eject multiple items, repeatedly activate the dropper with a [[clock circuit]].
+
+: If multiple slots are occupied by items, a random occupied slot is chosen for ejection. The slot is chosen when an item is ejected, not when the dropper is initially activated, thus it is possible to move items into or out of a dropper between its activation and item dispensing. 
+
+: If the dropper is facing a container, the ejected item is transferred into the container. If the container it is facing is full, or the item cannot be inserted into the container, the dropper does not activate. Examples of containers that items cannot be inserted into include chests that cannot be opened because of a solid block above them, and droppers that are already in an activated state. 
+
+: Otherwise, the item is ejected in the direction the dropper is facing, as if a player had used the {{control|drop}} [[control]]. Even items that would be treated differently by a [[dispenser]] (such as [[arrow]]s) are simply ejected by a dropper.
+
+: A dropper makes a clicking noise (the <code>random.click</code> [[sound event]]) when activated empty or when ejecting items into air. It is silent when it successfully transfers an item into any kind of chest or barrel, or another dropper.
+
+: A dropper is an opaque block, so powering it directly can cause adjacent [[mechanism component]]s (including other droppers) to activate as well.
+
+: A line of droppers, each pushing items into the next dropper, is known as a '''dropper pipe'''. A dropper pipe must be [[clock circuit|clocked]] to move items, but can be clocked to move items faster than a hopper pipe's transfer rate. When a dropper pipe pushes items upward, it is known as a '''droppervator''' (short for "dropper elevator").
+
+: A dropper that is directly powered by redstone will activate before any adjacent droppers activated during the same game tick. In a droppervator or dropper pipe, this has the effect of moving the item in the directly-powered dropper 2 blocks in one game tick. First, the item is ejected from the directly powered dropper. Then, during the same game tick, this item is ejected from the adjacent dropper. 
+
+
+==== Container interactions ====
+Some [[container]]s interact with droppers in specific ways:
+
+:;{{BlockLink|Barrel}}, {{EntityLink|id=oak boat with chest|boat with chest}}, {{BlockLink|dispenser}}, {{BlockLink|dropper}}
+::Droppers interact normally with barrels, boats with chests, dispensers, and other droppers.
+
+:;{{BlockLink|Brewing stand}}
+::A dropper facing toward a brewing stand from above deposits only into the ingredient slot and it can insert only valid [[brewing]] ingredients. A dropper facing toward a brewing stand from the sides or from below can deposit only [[blaze powder]] in the fuel slot, or filled bottles into the three brew slots.
+
+:;{{BlockLink|Chest}}, {{BlockLink|trapped chest}}
+::Large chests and large trapped chests are treated as a single container: a dropper depositing into a large chest fills up the entire chest. Trapped chests being accessed by a player trigger any adjacent droppers, depositing items into the chest if they are facing toward it.
+
+:;{{BlockLink|Chiseled bookshelf}}
+::A dropper facing toward a chiseled bookshelf from any direction can insert [[book]]s, [[books and quills]], [[written book]]s, [[enchanted book]]s, and [[knowledge book]]s.
+
+:;{{BlockLink|Crafter}}
+::Droppers can insert ingredients in the crafting grid. Items are distributed in enabled slots, going left to right starting from the first row; if the crafter has all item slots filled then items are added to the lowest count item stack of the same type.
+
+:;{{BlockLink|Composter}}
+::A dropper facing toward a composter from above can push compostable items into the composter, with a chance of increasing the compost level as if the player used the item on the composter.
+
+:;{{BlockLink|Decorated pot}}
+::Droppers can deposit up to a stack of a single type of item into a decorated pot. Items are not inserted if the decorated pot is full or the pot contains a different item.
+
+:;{{BlockLink|Ender chest}}
+::Droppers cannot interact with ender chests in any way.
+
+:;{{BlockLink|Furnace}}, {{BlockLink|blast furnace}}, {{BlockLink|smoker}}
+::A dropper facing toward a furnace from above deposits only into the ingredient slot. It can insert any item, including items that can't be smelted by the furnace. A dropper facing toward a furnace from the sides or from below deposits only into the fuel slot, and only items that are usable as fuel. 
+
+:;{{BlockLink|Hopper}}
+::A dropper facing toward a hopper can insert items even if the hopper is locked by an active redstone signal.
+
+:; {{BlockLink|Shelf}}
+:: A dropper facing towards a shelf can insert items into available slots. It will try to add to a stack of the same type, inserting into the first empty slot if it can't, doing so from left to right. The dropper does not activate if the item cannot fit in the shelf.
+
+:;{{BlockLink|Jukebox}}
+::A dropper can insert [[music disc]]s into a jukebox from any direction. The dropper does not activate if the jukebox is already playing a disc.
+
+:;{{BlockLink|Lectern}}
+::Droppers cannot interact with lecterns in any way.
+
+:;{{EntityLink|Minecart with chest}}, {{EntityLink|minecart with hopper}}
+::A dropper can insert items into minecarts with chests and minecarts with hoppers if any part of the entity's hitbox is within the dropper's target block-space. A dropper can fill a minecart with hopper even if the latter has been locked by an [[activator rail]].
+
+:;{{BlockLink|Shulker box}}
+::Droppers cannot put shulker boxes into other shulker boxes. Otherwise, droppers interact with shulker boxes normally.
+
+=== Note blocks ===
+Droppers can be placed under [[note block]]s to produce "bass drum" sounds.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{el|je}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|rowspan=2
+|sound=Click.ogg
+|subtitle=Dispensed item <ref group=sound name=Lousyevents>The dropper reuses other containers' sound events instead of having its own, see {{bug|MC-98316}}.</ref>
+|source=block
+|description=When a dropper drops an item
+|id=block.dispenser.dispense|idnote=<ref group=sound name=Lousyevents/>
+|translationkey=subtitles.block.dispenser.dispense|translationkeynote=<ref group=sound name=Lousyevents/>
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Dispenser fails <ref group=sound name=Lousyevents/>
+|source=block
+|description=When a dropper fails to activate
+|id=block.dispenser.fail|idnote=<ref group=sound name=Lousyevents/>
+|translationkey=subtitles.block.dispenser.fail|translationkeynote=<ref group=sound name=Lousyevents/>
+|volume=1.0
+|pitch=1.2
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=Lousyevents/>
+|source=block
+|description=When a player attempts to open a dropper locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=Lousyevents/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=Lousyevents/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|rowspan=2
+|sound=Click.ogg
+|source=block
+|description=When a dropper drops an item
+|id=block.click
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a dropper fails to activate
+|id=block.click
+|volume=1.0
+| pitch = 1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dropper
+|spritetype=block
+|nameid=dropper
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=dropper
+|spritetype=block
+|nameid=dropper
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dropper
+|spritetype=block
+|nameid=dropper
+|id=125
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=dropper
+|spritetype=block
+|nameid=Dropper
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Dispenser|block states}}
+
+=== Block data ===
+A dropper has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable|indent=**}}
+** {{nbt inherit/lockable|indent=**}}
+** {{nbt inherit/lootable|indent=**}}
+** {{nbt|list|Items}}: List of items in this container. Represents the {{DCL|minecraft:container}} component. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt|compound}}: An item, including the slot tag. Dropper slots are numbered 0-8 with 0 in the top left corner.
+**** {{nbt inherit/item|indent=****}}
+**{{Nbt|byte|Lunar}}: Exists only in the april fools snapshot [[Java Edition 23w13a or b|23w13a_or_b]]. Optional. When set to any full number from -128 to 127, turns it to a lunar base dropper, and placing light or heavy [[Pressure Plate|pressure plate]] on top of it creates the [[Lunar Base|lunar base]] structure.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+<div style="text-align:center">{{yt|B8i3BEnlmv8}}{{yt|gR1iAgz0kgs}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w03a|[[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (E) JE1 BE1.png|32px]] [[File:Dropper (S) JE1 BE1.png|32px]] [[File:Furnace (N) JE2 BE1.png|32px]] Added droppers.
+|Droppers are crafted using 7 cobblestone, one hopper, and one piece of redstone:
+ {{Crafting |nocat=1 |foot=1
+ |A1=Cobblestone |B1=Cobblestone |C1=Cobblestone
+ |A2=Cobblestone |B2=Hopper      |C2=Cobblestone
+ |A3=Cobblestone |B3=Redstone    |C3=Cobblestone
+ |Output=Dropper
+ |ignoreusage=1
+ }}
+|The top and bottom textures of droppers currently remain fixed regardless of the facing direction.}}
+|{{HistoryLine|||dev=13w04a|[[File:Dropper (U) JE1 BE1.png|32px]] [[File:Dropper (D) JE1 BE1.png|32px]] Droppers can now face all six directions.
+|The crafting recipe of droppers has now been changed, removing the hopper from the middle.}}
+|{{HistoryLine|||dev=13w10b|Activated droppers now do not fire if they receive a [[block]] update.}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (E) JE2.png|32px]] [[File:Dropper (S) JE2.png|32px]] [[File:Furnace (W) JE3.png|32px]] [[File:Dispenser (D) JE2.png|32px]] The models of dropper have been changed.}}
+|{{HistoryLine||1.9.1|dev=pre1|Droppers can now use [[loot table]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Furnace (N) JE3 BE2.png|32px]] [[File:Dropper (E) JE3.png|32px]] [[File:Dropper (S) JE3.png|32px]] [[File:Furnace (W) JE4.png|32px]] [[File:Dropper (U) JE2 BE2.png|32px]] [[File:Dispenser (D) JE3.png|32px]] The textures of droppers have now been changed.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w44a|Droppers can now interact with [[chiseled bookshelves]].}}
+|{{HistoryLine||1.19.4|dev=23w07a|Droppers can now interact with [[jukeboxes]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w42a|Droppers can now be used to craft [[crafter]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (E) JE1 BE1.png|32px]] [[File:Dropper (S) JE1 BE1.png|32px]] [[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (U) JE1 BE1.png|32px]] [[File:Dropper (D) JE1 BE1.png|32px]] Added droppers.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Droppers can now be moved by [[piston]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Furnace (N) JE3 BE2.png|32px]] [[File:Dropper (E) BE2.png|32px]] [[File:Dropper (S) BE2.png|32px]] [[File:Furnace (N) JE3 BE2.png|32px]] [[File:Dropper (U) JE2 BE2.png|32px]] [[File:Dispenser (D) BE2.png|32px]] The textures of droppers have now been changed.}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.21|Droppers can now be used to craft [[crafter]]s.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Droppers drop themselves only if mined using a pickaxe, matching {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|[[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (E) JE1 BE1.png|32px]] [[File:Dropper (S) JE1 BE1.png|32px]] [[File:Furnace (N) JE2 BE1.png|32px]] Added droppers.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Furnace (N) JE3 BE2.png|32px]] [[File:Dropper (E) JE3.png|32px]] [[File:Dropper (S) JE3.png|32px]] [[File:Furnace (W) JE4.png|32px]] [[File:Dropper (U) JE2 BE2.png|32px]] [[File:Dispenser (D) JE3.png|32px]] The textures of droppers have now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper (E) JE1 BE1.png|32px]] [[File:Dropper (S) JE1 BE1.png|32px]] [[File:Furnace (N) JE2 BE1.png|32px]] [[File:Dropper JE1 BE1.png|32px]] [[File:Dropper (U) JE1 BE1.png|32px]] Added droppers.}}
+}}
+
+<gallery>
+1st image of new Dispenser slash dropper Placement.png|The first image of droppers (bottom) [[dinnerbonetweet:293667947434631168|released]] by [[Mojang]].
+13w03a Banner.png|The 13w03a banner featuring a dropper and a [[minecart with hopper]].
+Jeb Dropper.png|A dropper in action.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 158.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The dropper is similar in appearance with the [[dispenser]] in the fact that they both resemble a face when not facing up or down.
+** This similarity is pushed further by the fact that the dropper's crafting recipe is the same as the dispenser but without a bow.
+
+== Gallery ==
+=== Renders ===
+==== ''Java Edition'' ====
+<gallery>
+Dropper (S).png|Facing south
+Dropper (W).png|Facing west
+Dropper (N).png|Facing north
+Dropper (E).png|Facing east
+Dropper (U).png|Facing up
+Dropper (D).png|Facing down
+</gallery>
+
+==== ''Bedrock Edition'' ====
+<gallery>
+Dropper (S) BE.png|Facing south
+Dropper (W) BE.png|Facing west
+Dropper (N).png|Facing north
+Dropper (E) BE.png|Facing east
+Dropper (U).png|Facing up
+Dropper (D) BE.png|Facing down
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Dropper (inventory) MCE.png|alt=A dropper as it appeared in <nowiki>''Minecraft Earth''</nowiki>.|A {{MCE|dropper}} as it appeared in {{MCE}}.
+File:Dropper MCC Event.png|A dropper as it appeared in [[MCC x Minecraft 15th Anniversary Party]].
+</gallery>
+
+== See also ==
+* {{BlockLink|Dispenser}}
+* {{BlockLink|Hopper}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|block-week--dropper|Block of the Week: Dropper|October 8, 2020|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Storage]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[de:Spender]]
+[[es:Soltador]]
+[[fr:Dropper]]
+[[it:Gettatore]]
+[[ja:ドロッパー]]
+[[ko:공급기]]
+[[nl:Dropper]]
+[[pl:Podajnik]]
+[[pt:Liberador]]
+[[ru:Выбрасыватель]]
+[[uk:Викидач]]
+[[zh:投掷器]]

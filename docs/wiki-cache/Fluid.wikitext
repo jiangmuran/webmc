@@ -1,0 +1,236 @@
+{{See also|Solid block}}
+{{For|other uses|Liquid}}
+[[File:LiquidsComparison.png|thumb|right|300px|Flowing water and lava.]]
+[[File:Coral reef at night.png|thumb|right|Many animals, such as the [[coral]] and [[tropical fish]] in this picture, rely on fluids such as water to survive.]]
+'''Fluids''' (also known by players as '''liquids''') are [[block]]s that are able to flow over the terrain, forming rivers or falls. There are only two fluid blocks: [[water]] and [[lava]].
+{| style="margin:auto;text-align:center" data-description="Fluids"
+|-
+| scope="col" style="width:68px" | [[File:Water.gif|150px|link=Water]]
+| scope="col" style="width:68px" | [[File:Lava.gif|150px|link=Lava]]
+|-
+| '''[[Water]]'''
+| '''[[Lava]]'''
+|}
+There are other in-game substances that show fluid properties but cannot be placed as fluid blocks, mainly [[potion]]s, dyed water,{{only|bedrock}} [[milk]], and [[Honey Bottle|honey]].
+
+== Properties ==
+Fluids can be placed as source blocks by using a [[water bucket]] and can be picked up with an empty [[bucket]]. It is possible to use a [[glass bottle]] from a water source to fill it, but the source is not removed.
+
+When placed, fluid blocks that are completely confined by the blocks around them render as '''still'''. Otherwise, they become the source of a [[#Spread|liquid flow]], spreading according to the [[wikipedia:Fluid dynamics|fluid]] rules and being rendered with the direction of flow shown by animated lines
+[[File:Water and lava still.png|thumb|Water and lava as still blocks.]][[File:Lava flowing one side.png|thumb|Lava block open to flow on one side]]
+
+A source block appears as being "full" nearly to the top of its containing blocks (if any) while flowing fluid blocks appear to be "emptier" the further they are from their source.
+
+Fluids can interact [[#Mixing|with each other]], and with other [[block]]s they are placed next to or flow over or past, according to the properties of the affected block.
+
+Flowing fluids exert pressure on [[entities]] pushing them in the direction of the flow. Items that are thrown or dropped into flowing water are carried along until they get caught in an eddy or the flow reaches its maximum extent. Being carried in a flow does not prevent de-spawning. [[Mob]]s that are able to float in fluids do not drown, but cannot swim upstream. The minority of mobs that swim (such as [[fish]] and [[axolotl]]) can also swim upstream.
+
+Flowing lava transports netherite items ( scraps, ingots, blocks, or made items ''only'' ) in the same way, but all other items burn up before they can be carried any distance and are thus lost.
+
+Fluid blocks are replaceable in the same way that [[air]] is, so placing a ''solid'' block into a liquid source replaces it.
+
+Placing most blocks that can be [[waterlogging|waterlogged]] into a water source block does not destroy the source block, or stop water from flowing from the source block. Full blocks that can be waterlogged, such as [[leaves]], [[mangrove roots]], and [[copper grate]]s, do stop water from flowing from a source block.{{only|je}} Other waterlogged blocks with a full square surface, such as [[stairs]] and [[trapdoors]], block water flow in the direction of the square surface. No block can occupy the same space as a lava source block; placing any block into a lava source block destroys the source block.
+
+Placing any type of block into any flow blocks it, redirecting or stopping it.
+
+Normally, water cannot be placed in the Nether. The only ways to get water into the Nether is by using the {{cmd|setblock}} or {{cmd|fill}} [[command]]s, and using the water item.{{only|be|short=1}}
+
+==== Self generation of water and lava sources ====
+{{IN|je}}, when a block that liquids can flow into (including air) or a waterloggable block has at least two water sources next to any of its horizontal faces and has a block that liquids cannot flow into below itself, a water source is created at that position. This is true even when the generating sources are in waterlogged blocks, unless said blocks do not let water flow from that side. {{IN|be}} the process is similar, aside from a few differences:
+
+*Having two sources one diagonally above the other also results in a new source
+*The game will first attempt to create a flowing water block if there isn't one already, then the flowing water is changed to a source 5 ticks later
+*Only waterloggable blocks that are capable of containing flowing water can be turned into water sources
+
+{{IN|je}}, source generation is controlled by the [[game rule]]s for <code>waterSourceConversion</code> (set to <code>true</code> by default) and <code>lavaSourceConversion</code> (set to <code>false</code> by default). Changing the <code>lavaSourceConversion</code> game rule to <code>true</code> makes lava generate new source blocks just like water does.
+
+=== Mechanics ===
+[[File:WaterSpread.gif|thumb|Water flowing down a cliff, demonstrating flowing mechanics.]]
+
+==== Level ====
+Fluid blocks have a <code>level</code><ref>For {{editions|je}} only the <code>level</code> ''[[blockstate]]'' is taken into consideration in this section, even though a <code>level</code> ''[[blockstate#List of fluid states|fluidstate]]'' also exists.</ref> (or <code>liquid depth</code>{{only|be|short=1}}) value that measures how "empty" it is. A source block is "full" with a level of 0. Water and lava in the [[Nether]] have a level equal to the level of the fluid that generated them +1, with a maximum possible "emptiness" value of 7, where the flow stops. Thus, a flowing block next to a source has level value 1, the next further away has level value 2, and so on until level 7. Lava in the [[Overworld]] or [[the End]] increases two levels per flowing block instead, with a maximum emptiness value of 6. {{IN|je}}, a flowing fluid that has source or another flowing fluid of the same kind above itself is assigned the level value 8 instead. {{IN|be}}, if a flowing fluid has a fluid of the same kind above itself, the level of the former fluid is 8 + the level of the latter, wrapping back to 8 for values higher than 15. Flowing fluids can never have a level value of 0.
+
+The rendering of fluids is partially based on the level values, specifically the height of the fluid and the direction of flow displayed.
+
+==== Spread ====
+<gallery>
+Water spread v1-13.png|Water spreading from source
+Lava spread v1-13.png|Lava spreading from a source
+Water flow around fence.png|Water flowing around fence posts already placed
+</gallery>
+Once a source block is placed, the fluid spreading procedure begins. Sources in waterlogged blocks, except for ones that are full blocks,{{only|je|short=1}} work the same way. Additionally, waterlogged stairs don't spread water from the back and the bottom, as they are full sides surfaces.
+This block is the first of a list of blocks involved in the spreading procedure.
+The fluid spreading procedure may need the source to receive a block update signal if it was created without being placed.
+
+First, each open side of a fluid block starts to flow. A water block in a flat area spreads out in all four directions until it reaches the depth limit, forming a diamond shape spanning fifteen blocks point-to-point. A water source floating in midair starts to flow downwards and then, 5 ticks later, flows out to its four sides. Each flowing block created is added to a list of blocks to be considered for further spreading.
+
+Now the blocks directly below each source or flowing blocks on the "spreading list" are checked:
+# If that block is [[air]], it is replaced by a flowing fluid block with a depth value of 0. This new block is also added to the "spreading list".
+#* Because of this, a fluid can flow much farther if it flows downward occasionally than if it remains on a flat surface.
+# If the block below is a waterlogged and exposes its liquid phase on its top,{{only|je|short=1}} then checking stops as the waterlogged source block has its own "spreading list".
+# If the block below is a type of [[Solid block#List of non-solid blocks|non-solid block]] that is affected by the fluid, [[cobweb]]{{only|je|short=1}} or a [[bamboo shoot]] then it may be converted into a dropped [[item]]. The block is then replaced by a flowing block with depth value 1 greater that the block above and is added to the spreading list. The block above is removed from the "spreading list".
+# If the block below is a [[solid block]], or one of a few non-solid blocks (e.g. [[ladder]]s) that are unaffected by fluids, flow spreads out to all open sides. These additional flowing blocks are added to the list. 
+#* If all four of the surrounding blocks are also solid or fluid sources, the spreading procedure stops. This is how a lava or water column that does not spread over the ground can be created.
+# If the block below is a fluid block of another type, the rules for mixing fluids are considered. If new flowing blocks are created they are added to the list.
+# If the block below is a source block of the same fluid, then flowing stops.
+
+Flowing fluid has a speed value that governs how fast the spreading effect takes place. Water moves at 1 block every 5 [[tick]]s, or 4 blocks per second. Lava in [[the Nether]] moves at 1 block every 10 [[tick]]s, or 2 blocks per second. However, lava in the [[Overworld]] is much slower, and moves at only 1 block every 30 game ticks, or 2 blocks every 3 seconds.
+{| class="wikitable"
+|+
+!Fluid
+!Dimension
+!Speed
+|-
+|Water
+|Overworld
+|1 block per 5 ticks
+4 blocks per second
+|-
+| rowspan="2" |Lava
+|Nether
+|1 block per 10 ticks
+2 blocks per second
+|-
+|Overworld
+|1 block per 30 ticks
+2 blocks per 3 seconds
+|}
+
+==== Flow direction ====
+[[File:Normal spread waterlogged fence.png|thumb|upright|Normal water spreading]]
+
+The shape of the ground around a flow is considered when evaluating its spread, giving preference to the creation of water or lava falls, for aesthetic purposes.
+
+[[File:FlowingWaterCliffEdge.png|thumb|upright|left|Fluids consider the shortest distance to the edge of a cliff, and prioritize flowing in that direction.]]
+[[File:Waterlogged spread stair.png|thumb|upright|Water flowing from a [[waterlogging|waterlogged]] [[stair]] {{in|java}}]]
+[[File:Water flow with motion blocking.jpg|thumb|upright|left|The upper water source block flows towards the bottom-left source block, but not the bottom-right, because [[glass]] [[blocks motion]] but [[ladder]]s do not.]]
+
+During the evaluation of horizontal spread, the area around source and flowing blocks is checked for air, fluids (a waterlogged block is considered only if it exposes its liquid phase on its top and the spreading fluid is water) or blocks that can be destroyed by fluids one block below the fluid block. The area checked is up to 5 blocks away for water or lava in the Nether and up to 3 blocks away for lava elsewhere. For example, the flow of water from a single source placed within 5 blocks of an edge is only one block wide to the edge, and then falls as a one block wide stream.
+
+Some waterloggable blocks {{in|be}} and all waterloggable blocks {{in|je}} let water spread only from their non-full sides, if there are any.
+
+=== Dripping ===
+[[File:LavaParticles.png|thumb|Lava seeping through one layer of [[dirt]]]]
+
+If [[particles]] are fully enabled in the [[options]] menu, solid blocks that have air below and fluid above [[particles#dripWater|drip]], as a visual indication that only one layer of blocks separates the player from the fluid above. Dripping [[lava]] does not cause damage or start fires. It can take several seconds before dripping starts.
+
+=== Block updates ===
+{{IN|be}} these actions cause a fluid block to update:
+* Another block is placed into its space
+* Fluid starts to flow in from an adjacent block
+* An established incoming flow stops
+
+{{IN|je}} [[block update#Post placement update|post placement updates]] affect fluid sources including waterlogged blocks as well as flowing fluids only if the updates generate from the same fluid, and [[block update#Neighbor changed update|neighbor changed updates]] affect all fluids excluding waterlogged blocks.
+
+[[Generated structures]] never cause block updates to adjacent fluids when they generate. For example, a cave entrance that is created partly below water level at the edge of a body of water or lava does not cause the fluid to flow until it receives a block update. On the other hand, fluids created as ''part'' of a structure flow immediately if not completely confined; this includes holes in the bottom of an ocean that open into a [[ravine]] below.
+
+=== Mixing ===
+When the two fluids interact, the results vary depending on the position of the fluid source. 
+
+Some interactions trigger when one liquid attempts to flow into the same block as another, while others simply occur when the liquids occupy adjacent blocks:
+
+# If flowing lava ''contacts'' a water block (source or flowing) in any direction except downward, the lava turns into {{BlockLink|cobblestone}}.
+# If lava ''flows'' ''into'' a water block (source or flowing), the water turns into {{BlockLink|stone}}. Due to rule 1, this can only occur if the lava flows into water from above.
+# If water (source or flowing) ''contacts'' a lava source block on the top or sides, the lava turns into {{BlockLink|obsidian}}.
+# If lava simultaneously ''contacts'' [[soul soil]] from above and [[blue ice]] in any direction, the lava turns into {{BlockLink|basalt}}.
+
+Mixing two fluids can be useful for [[Tutorial:Cobblestone farming|cobblestone farming]].
+
+== Videos ==
+<div style="text-align:center">
+{{yt|x80vGiSJ7Uo|align=inline}}
+{{yt|Of2yfwTtmTY|align=inline}}
+</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.12a|Added [[water]] and [[lava]].}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100130|Added [[mushroom stew]].}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.8|Added [[milk]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Fluid that is suspended above an open area by one block thick of material seeps through the material and has drip particles fall to the floor.
+|Lava that falls onto water produces [[stone]] instead of replacing the water.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Added [[cauldron]]s, which can hold water.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|A flowing lava block could be converted into a source block if the following conditions were met:
+*it is bordered by 4 lava sources in a cross-like arrangement
+*the 4 sources and the flowing lava block are on the same horizontal level
+*there is either a lava source block or a block that cannot be destroyed by liquids underneath the flowing lava
+}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Lava source blocks can no longer be created.}}
+|{{HistoryLine||1.8|dev=14w27a|Added [[rabbit stew]].}}
+|{{HistoryLine||1.9|dev=15w31a|Added [[beetroot soup]].}}
+|{{HistoryLine||1.13|dev=18w10c|Changed water physics.}}
+|{{HistoryLine|||dev=18w16a|[[#Self generation of water and lava sources| Self generation]] does not create a flowing water block first before creating the water source anymore.}}
+|{{HistoryLine|||dev=18w10d|Water no longer flows through the rear side of stairs.}}
+|{{HistoryLine|||dev=18w19a|Separated some of the logic for blocks and fluids.}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[suspicious stew]].}}
+|{{HistoryLine||1.15|dev=19w34a|Added honey bottles.}}
+|{{HistoryLine||1.16|dev=20w09a|Lava now pushes [[entities]].}}
+|{{HistoryLine|||dev=20w13a|Basalt can now be formed when [[lava]] flows over [[soul soil]] next to [[blue ice]] and water flowing horizontally into lava now turns the lava into [[cobblestone]].}}
+|{{HistoryLine||1.17|dev=20w45a|Lava can now be put into cauldrons.}}
+|{{HistoryLine||1.19|dev=22w44a| Added the <code>waterSourceConversion</code> and <code>lavaSourceConversion</code> gamerules.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Added [[water]] and [[lava]].}}
+|{{HistoryLine||v0.8.0|dev=build 1|Fluids no longer attempt to spread upon receiving a [[random tick]].}}
+|{{HistoryLine|||dev=build 5|Lava that falls onto water produces [[stone]] instead of replacing the water.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Fluid that is suspended above an open area by one block thick of non-[[transparent]] material seeps through the material and has drip particles fall to the floor.}}
+|{{HistoryLine||v0.11.0|dev=build 14|Fluids once attempt to spread upon receiving a random tick.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[water]], [[lava]], [[milk bucket]] and [[mushroom stew]]s.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[cauldron]]s, which can hold water.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added [[rabbit stew]].}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added [[beetroot soup]].}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Potions can now be put into cauldrons.|Water in cauldrons can now be dyed.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Changed water physics.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.88|wiiu=none|switch=none|Lava can now be put into cauldrons.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Watersb.png|A water source. Click [[Water#Source Blocks|here]] for more designs
+File:Waterfl.png|Flowing water.
+File:Lavasb.png|Lava.
+File:Lavafl.png|Flowing lava.
+File:SolidLiquid.png|Water and [[stone]].
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox blocks|natural}}
+{{Navbox environment}}
+
+[[Category:Fluids| ]]
+
+[[cs:Kapalina]]
+[[de:Flüssigkeit (Begriffsklärung)]]
+[[es:Fluido]]
+[[fr:Liquide]]
+[[hu:Folyadékok]]
+[[it:Fluido]]
+[[ja:液体]]
+[[ko:액체]]
+[[nl:Vloeistoffen]]
+[[pl:Ciecze]]
+[[pt:Fluido]]
+[[ru:Жидкости]]
+[[uk:Рідина]]
+[[zh:液体]]

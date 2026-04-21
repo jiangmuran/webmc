@@ -92,7 +92,7 @@ interface CrawlState {
   visitedCategories: string[];
   fetchedSlugs: string[];
   lastRunAt: string;
-  errors: Array<{ slug: string; message: string }>;
+  errors: { slug: string; message: string }[];
 }
 
 interface ApiCategoryMember {
@@ -154,7 +154,9 @@ async function apiQuery(params: Record<string, string>, attempt = 1): Promise<Ap
   url.searchParams.set('format', 'json');
   url.searchParams.set('formatversion', '2');
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, API_TIMEOUT_MS);
   try {
     const res = await fetch(url, {
       headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
@@ -164,7 +166,7 @@ async function apiQuery(params: Record<string, string>, attempt = 1): Promise<Ap
       if (attempt < 4) {
         const backoff = 1500 * 2 ** (attempt - 1) + Math.random() * 500;
         await sleep(backoff);
-        return apiQuery(params, attempt + 1);
+        return await apiQuery(params, attempt + 1);
       }
     }
     if (!res.ok) throw new Error(`api http ${String(res.status)}`);
@@ -177,7 +179,7 @@ async function apiQuery(params: Record<string, string>, attempt = 1): Promise<Ap
 async function fetchCategoryMembers(category: string): Promise<ApiCategoryMember[]> {
   const members: ApiCategoryMember[] = [];
   let cont: Record<string, string> = {};
-  while (true) {
+  for (;;) {
     const resp = await apiQuery({
       action: 'query',
       list: 'categorymembers',
@@ -241,7 +243,9 @@ async function fetchRaw(page: string, attempt = 1, hops = 0): Promise<string> {
   const slug = slugify(page);
   const url = `${WIKI_BASE}/w/${encodeURIComponent(slug)}?action=raw`;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, API_TIMEOUT_MS);
   try {
     const res = await fetch(url, {
       headers: { 'User-Agent': USER_AGENT, Accept: 'text/plain, text/x-wiki, */*' },
@@ -259,7 +263,7 @@ async function fetchRaw(page: string, attempt = 1, hops = 0): Promise<string> {
       if (redirect && hops < 3) {
         const target = redirect[1]?.trim();
         if (target && target.toLowerCase() !== page.toLowerCase()) {
-          return fetchRaw(target, 1, hops + 1);
+          return await fetchRaw(target, 1, hops + 1);
         }
       }
       return body;
@@ -268,7 +272,7 @@ async function fetchRaw(page: string, attempt = 1, hops = 0): Promise<string> {
     if ((res.status === 429 || res.status >= 500) && attempt < 4) {
       const backoff = 1500 * 2 ** (attempt - 1) + Math.random() * 500;
       await sleep(backoff);
-      return fetchRaw(page, attempt + 1, hops);
+      return await fetchRaw(page, attempt + 1, hops);
     }
     throw new Error(`http ${String(res.status)}`);
   } finally {
