@@ -23,6 +23,10 @@ import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
 import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
 import { RoomClient } from './net/RoomClient';
+import { ItemRegistry } from './items/item';
+import { Inventory } from './items/Inventory';
+import { BlockDropRegistry } from './items/block-drops';
+import { PlayerState } from './game/PlayerState';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -98,6 +102,35 @@ const loader = new ChunkLoader(world, generator, {
   unloadPadding: 2,
   perFrameBudget: 4,
 });
+const itemRegistry = new ItemRegistry();
+const blockToItem = new Map<number, number>();
+for (const def of registry.defs) {
+  if (def.name === 'webmc:air') continue;
+  const blockId = registry.byName(def.name);
+  if (blockId === undefined) continue;
+  const id = itemRegistry.register({
+    name: def.name,
+    maxStack: 64,
+    durability: 0,
+    blockId,
+  });
+  blockToItem.set(blockId, id);
+}
+
+const dropRegistry = new BlockDropRegistry();
+for (const [blockId, itemId] of blockToItem) {
+  dropRegistry.register(blockId, [{ itemId, min: 1, max: 1 }]);
+}
+
+const inventory = new Inventory(itemRegistry);
+const playerState = new PlayerState({
+  inventory,
+  onRespawn: () => {
+    const s = generator.surfaceAt(0, 0) + 4;
+    fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+  },
+});
+
 const lightCache = new Map<string, ChunkLight>();
 const lightKey = (cx: number, cz: number): string => `${cx.toString()},${cz.toString()}`;
 const lightOracle = {
@@ -142,6 +175,10 @@ const interaction = new InteractionController(
   {
     onBreak: (bx, by, bz) => {
       audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+      const prevState = world.get(bx, by, bz);
+      const prevBlockId = stateId(prevState);
+      const drops = dropRegistry.drops(prevBlockId, undefined, 99);
+      for (const s of drops) inventory.add(s);
       touchWorldEdit(bx, by, bz, 0);
     },
     onPlace: (bx, by, bz) => {
@@ -416,6 +453,9 @@ function frame(): void {
 
   renderer.render(scene, camera);
 
+  playerState.sprinting = fp.input.sprint;
+  playerState.tick(dtSec);
+
   if (now - lastPlayerSaveAt > 5000) {
     lastPlayerSaveAt = now;
     void savePlayerNow();
@@ -429,7 +469,8 @@ function frame(): void {
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
     `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
-    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}${roomCode ? `  room ${roomCode}` : ''}`;
+    `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  items ${inventory.hotbar.filter((s) => s !== null).length}/9${roomCode ? `  room ${roomCode}` : ''}\n` +
+    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}`;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
