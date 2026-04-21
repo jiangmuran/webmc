@@ -8,6 +8,8 @@ import { type RayHit, faceNormal, raycastVoxels } from '@/physics/raycast';
 export interface InteractionOptions {
   reach: number;
   repeatMs: number;
+  onBreak?: (bx: number, by: number, bz: number) => void;
+  onPlace?: (bx: number, by: number, bz: number) => void;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -88,6 +90,7 @@ export class InteractionController {
     if (!hit || hit.distance === 0) return;
     if (this.held === 'break') {
       this.world.set(hit.bx, hit.by, hit.bz, AIR);
+      this.opts.onBreak?.(hit.bx, hit.by, hit.bz);
     } else if (this.held === 'place' && this.selectedBlock !== AIR) {
       const n = faceNormal(hit.face);
       const tx = hit.bx + n[0];
@@ -96,6 +99,7 @@ export class InteractionController {
       if (this.world.get(tx, ty, tz) !== AIR) return;
       if (this.collidesWithPlayer(tx, ty, tz)) return;
       this.world.set(tx, ty, tz, this.selectedBlock);
+      this.opts.onPlace?.(tx, ty, tz);
     }
   }
 

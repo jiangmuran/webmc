@@ -18,6 +18,7 @@ import {
 } from './world/workers/MesherClient';
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
+import { AudioBus } from './engine/audio/AudioBus';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -95,6 +96,8 @@ scene.add(chunkRenderer.group);
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
 const mesherClient = createMesherClient();
+const audio = new AudioBus({ masterVolume: 0.35 });
+audio.attachUnlock(document.body);
 
 const interaction = new InteractionController(
   camera,
@@ -104,6 +107,14 @@ const interaction = new InteractionController(
   },
   world,
   isSolid,
+  {
+    onBreak: (bx, by, bz) => {
+      audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+    },
+    onPlace: (bx, by, bz) => {
+      audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
+    },
+  },
 );
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
@@ -258,6 +269,7 @@ function frame(): void {
     (interaction as unknown as { held: string | null }).held = null;
   }
 
+  audio.setListener(fp.position.x, fp.position.y, fp.position.z);
   dayNight.tick(dtSec);
   const uniforms = chunkRenderer.material.uniforms;
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
