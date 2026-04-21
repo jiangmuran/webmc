@@ -1,0 +1,183 @@
+{{Joke feature}}
+{{Infobox block
+| renewable = Yes
+| image = Potato Sign.png
+| stackable = Yes
+| maxStack = 23
+| tool = Axe
+| light = No
+| transparent = Yes
+| flammable = No
+| lavasusceptible = No
+}}
+A '''potato sign''' is a variant of a [[sign]] made of [[potato planks]], only present in [[24w14potato]].
+
+== Obtaining ==
+=== Breaking ===
+{{Breaking row|horizontal=1|Potato Sign|axe|hidecopper=1}}
+
+=== Crafting ===
+{{Crafting
+|A1 = Potato Planks
+|A2 = Potato Planks
+|B1 = Potato Planks
+|B2 = Potato Planks
+|B3 = Stick
+|C1 = Potato Planks
+|C2 = Potato Planks
+|Output = Potato Sign,3
+|ignoreusage=1
+}}
+
+== Usage ==
+{{For|information on the usage of all signs|Sign#Usage}}
+
+== Sounds ==
+=== Generic ===
+{{info needed section|{{bug|MC-177082}} was only fixed considerably after the version containing this block was released, so I have strong reason to believe the provided table is inaccurate due to it listing a subtitle for .fall that does not exist in this specific version}}
+{{Sound table/Block/Nether wood/JE}}
+
+=== Unique ===
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Ink sac1.ogg
+|sound2=Ink sac2.ogg
+|sound3=Ink sac3.ogg
+|subtitle=Glow Ink Sac splotches
+|source=block
+|description=When a [[glow ink sac]] is used on a sign
+|id=item.glow_ink_sac.use
+|translationkey=subtitles.item.glow_ink_sac.use
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.95, or 1.05 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|subtitle=Ink Sac splotches
+|source=block
+|description=When an [[ink sac]] is used on a sign
+|id=item.ink_sac.use
+|translationkey=subtitles.item.ink_sac.use
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 0.85, 0.88, or 0.9 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Dye.ogg
+|subtitle=Dye stains
+|source=block
+|description=When [[dye]] is used on a sign
+|id=item.dye.use
+|translationkey=subtitles.item.dye.use
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.9, 0.95, or 1.1</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Wax on1.ogg
+|sound2=Wax on2.ogg
+|sound3=Wax on3.ogg
+|subtitle=Wax on
+|source=block
+|description=When a sign is waxed
+|id=item.honeycomb.wax_on
+|translationkey=subtitles.item.honeycomb.wax_on
+|volume=1.0
+|pitch=1.0/0.9/1.1
+|distance=16}}
+| {{SoundLine
+|sound=Sign waxed interact fail1.ogg
+|sound2=Sign waxed interact fail2.ogg
+|sound3=Sign waxed interact fail3.ogg
+|subtitle=Sign wobbles
+|source=block
+|description=When a player attempts to edit a waxed sign
+|id=block.sign.waxed_interact_fail
+|translationkey=subtitles.block.sign.waxed_interact_fail
+|volume=1.0
+|pitch=''varies''<wbr><ref name=waxfail group=sound>{{cd|fail1}} can be 1.0 or 0.9; {{cd|fail2}} and {{cd|fail3}} can be 0.8 or 0.9</ref>
+| distance = 16
+}}
+}}
+
+== Data values ==
+{{ID table
+|edition=java
+|spritetype=block
+|displayname=Potato Sign
+|nameid=potato_sign
+|generatetranslationkeys=1
+|showblocktags=1
+|blocktags=signs, wall_post_override, all_signs, standing_signs, mineable/axe}}
+{{ID table
+|edition=java
+|spritetype=block
+|displayname=Potato Sign
+|spritename=Potato Wall Sign
+|nameid=potato_wall_sign
+|generatetranslationkeys=1
+|showblocktags=1
+|blocktags=wall_signs, signs, wall_post_override, all_signs, mineable/axe
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+;Standing
+{{bst|rotation|0
+|0|The block is facing south.
+|1|The block is facing south-southwest.
+|2|The block is facing southwest.
+|3|The block is facing west-southwest.
+|4|The block is facing west.
+|5|The block is facing west-northwest.
+|6|The block is facing northwest.
+|7|The block is facing north-northwest.
+|8|The block is facing north.
+|9|The block is facing north-northeast.
+|10|The block is facing northeast.
+|11|The block is facing east-northeast.
+|12|The block is facing east.
+|13|The block is facing east-southeast.
+|14|The block is facing southeast.
+|15|The block is facing south-southeast.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this sign.|foot=1}}
+;Wall
+{{bst|facing|north|east,north,south,west|The direction the block is facing. For example, a block facing east is attached to a block to its west.<br>Opposite from the direction a player faces when placing the block.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this sign.|foot=1}}
+
+=== Block data ===
+A potato sign has a block entity associated with it that holds additional data about the block.
+
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|byte|is_waxed}}: 1 or 0 (true/false) - true if the text is locked with [[honeycomb]].
+** {{nbt|compound|front_text}}: A compound that discribes front text.
+*** {{nbt|byte|has_glowing_text}}: 1 or 0 (true/false) - true if the sign has been dyed with a [[glow ink sac]].
+*** {{nbt|string|color}}: The color that has been used to dye the sign. The default value is {{cd|black}} One of {{cd|d=and|white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black}}.
+*** {{nbt|list|filtered_messages}}: Only in [[Realms]]. The lines of text shown to players with the profanity filter turned on instead of the regular lines. This tag is automatically set to {{code|""}} for lines containing blocked words and to the line's normal contents for the other lines when a player with the profanity filter turned ''off'' edits the sign, so players with the filter ''on'' cannot see the blocked words. If a player with the filter ''on'' tries to use blocked words in one or more lines, the line(s) in {{nbt|list|messages}} containing blocked words are set to {{code|""}}, which makes them render completely blank, and this tag is also given the same contents. If multiple lines have been edited before the sign editing GUI is closed, only the lines containing blocked words are blanked.
+*** {{nbt|list|messages}}: A list of text for each line.
+**** {{nbt|string}}: Text for each line. Must be [[Raw JSON text format]]. The character limit for the Text tags depends on the width of the characters.
+** {{nbt|compound|back_text}}: A compound that discribes back text.
+*** The same structure as {{nbt|compound|front_text}}.
+</div><section end="block data"/>
+
+== Issues ==
+{{April Fools issue list}}
+
+== Trivia ==
+* Potato signs have a maximum stack size of 23, and are the first item in any version of the game to have this maximum stack size.
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|24w14potato}}
+
+[[Category:Joke blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Blocks with GUI]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Non-solid blocks]]
+
+[[ja:Potato Sign]]
+[[zh:马铃薯木告示牌]]

@@ -1,0 +1,328 @@
+{{about|the invisible light-producing block|light producing blocks in general|Light#Light level}}
+{{Infobox block
+| title = Light
+| group = Held
+| group2 = Shown
+| 1-1 = Light 15.png
+| 1-1caption = ''Java Edition''
+| 1-2 = Light 15 BE1.png
+| 1-2caption = ''Bedrock Edition''
+| 2-1 = Light (shown).png
+| 2-1class = notpageimage
+| invimage = Light
+| invimage2 = ----
+| invimage3 = Light 15 BE
+| extratext = View [[#Renders|all renders]]
+| transparent = Yes
+| tool = None
+| renewable = No
+| stackable = Yes (64)
+| light = See {{slink||Usage}}
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+| rarity = * Epic {{only|java|short=1}}
+* Common {{only|bedrock|short=1}}
+|mapcolor= '''No waterlogging:''' {{Map color|light}}
+'''Waterlogging:''': {{Map color|water}} 
+}}
+'''Lights''' are [[invisible block]]s, primarily intended for map makers, that can produce any [[light]] level from 0 to 15.
+
+== Obtaining ==
+Light blocks cannot be mined, similar to [[air]], and can be targeted only if the player is holding a Light item in the main hand. Light blocks with a light level of 0 are functionally identical to air.
+
+They do not attach to any [[block]], meaning that breaking an adjacent block does not remove the light block. However, they can be broken by replacing them with another block.<ref>{{bug|MC-263398|||WAI}}</ref> The exception is [[water]] (including, {{in|be}}, flowing water), which can occupy the same space as a light block. See [[Waterlogging]] for more information.
+
+{{IN|Java}}, light blocks are available in the [[Creative inventory]]. Across both ''Java Edition'' and ''Bedrock Edition'', they can also be obtained by using commands such as {{cmd|give}}. Using {{cmd|1=give <target> minecraft:light[block_state={level:"<int>"}<nowiki>]</nowiki>}} can give a light block with a specific light level and corresponding texture. If the level is below 0, the non-bulb texture is used, and above 15 the level 15 texture. If the block state is not specified or not between 0 and 15, the light block emits a light level of 15. {{IN|be}}, specifying the data value from 0 to 15 determines the block's [[light]] level; if the data value is not specified, the light block emits a light level of 0. The command is: {{Cmd|give <target> light_block [amount: int] [data: int (0 - 15)] [components: [[json]]]}}.
+
+== Usage ==
+[[File:Shown Invisible Blocks.png|thumb|The difference between air (top left) and light (bottom right) when "show invisible blocks" is enabled.]]
+[[File:Particle light.png|thumb|A light block with a light level of 9.]]
+
+Each light block has an associated [[light]] level, which can be any value from 0 to 15. In the [[player]]'s [[inventory]], light blocks display their light level in the top-left corner with a unique sprite for each light level.
+
+=== Placement and Interaction ===
+Light blocks are mainly used in [[Creative mode]], so the description below mainly applies to that mode.
+
+Light blocks are not visible, and have no hitbox unless the player is holding another light block in their main hand. When the player holds a light block, any placed light block become interactive, displaying a small icon in the center indicating the block's location and current light level. The block icon is a [[particle]], and does not become visible if particles are set to their lowest setting, although the hitbox remains visible and interactive until the light block leaves the player's main hand.
+
+When holding a light block in the main hand, clicking 'use' on a light block that is already placed on the ground causes the light level of the light block to increase by one. If the light level is already 15, it resets to 0. If a light block's level has been modified, it can be copied back into the player's hotbar by using the 'pick block' button while holding another light block. 
+
+In [[Survival mode]], a light block can be placed, however only its hitbox is visible, and the block is not interactive (it does not allow to increase its level). 
+
+In [[Adventure mode]], a light block cannot be placed, and already placed blocks are completely invisible and inaccessible (only the light they produce is visible).
+
+=== Behavior ===
+Liquids such as water and lava cannot pass through light blocks unless they are waterlogged (either with the [[debug stick]] or by placing water on either side of the block.) but falling blocks like sand, gravel, and anvils pass through the Light block as if it is air. If a falling block lands on a light block, or another block is placed over it, the light block is destroyed.
+
+Light blocks are detected by [[observer]]s, and {{in|bedrock}} they can be pushed and pulled by [[piston]]s.
+
+=== Light source ===
+Since light blocks produce light, their primary use is to illuminate certain areas of the world.
+
+== Sounds ==
+{{Sound table/Block/Stone}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Light
+|spritetype=block
+|nameid=light
+|blocktags=dragon_transparent,wither_immune
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Light
+|spritename=light-0-be
+|spritetype=block
+|nameid=light_block_0
+|aliasid=light_block / 0
+|id=-215
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-1-be
+|spritetype=block
+|nameid=light_block_1
+|aliasid=light_block / 1
+|id=-929
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-2-be
+|spritetype=block
+|nameid=light_block_2
+|aliasid=light_block / 2
+|id=-930
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-3-be
+|spritetype=block
+|nameid=light_block_3
+|aliasid=light_block / 3
+|id=-931
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-4-be
+|spritetype=block
+|nameid=light_block_4
+|aliasid=light_block / 4
+|id=-932
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-5-be
+|spritetype=block
+|nameid=light_block_5
+|aliasid=light_block / 5
+|id=-933
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-6-be
+|spritetype=block
+|nameid=light_block_6
+|aliasid=light_block / 6
+|id=-934
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-7-be
+|spritetype=block
+|nameid=light_block_7
+|aliasid=light_block / 7
+|id=-935
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-8-be
+|spritetype=block
+|nameid=light_block_8
+|aliasid=light_block / 8
+|id=-936
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-9-be
+|spritetype=block
+|nameid=light_block_9
+|aliasid=light_block / 9
+|id=-937
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-10-be
+|spritetype=block
+|nameid=light_block_10
+|aliasid=light_block / 10
+|id=-938
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-11-be
+|spritetype=block
+|nameid=light_block_11
+|aliasid=light_block / 11
+|id=-939
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-12-be
+|spritetype=block
+|nameid=light_block_12
+|aliasid=light_block / 12
+|id=-940
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-13-be
+|spritetype=block
+|nameid=light_block_13
+|aliasid=light_block / 13
+|id=-941
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-14-be
+|spritetype=block
+|nameid=light_block_14
+|aliasid=light_block / 14
+|id=-942
+|translationkey=tile.light_block.name}}
+{{ID table2
+|displayname=Light
+|spritename=light-15-be
+|spritetype=block
+|nameid=light_block_15
+|aliasid=light_block / 15
+|id=-943
+|translationkey=tile.light_block.name
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|waterlogged|false|true,false|Whether or not there's water in the same place as this light block.}}
+{{bst|level|15|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|The amount of light this block outputs.|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w13a|[[File:Light 0 JE1.png|32px]] [[File:Light 1 JE1.png|32px]] [[File:Light 2 JE1.png|32px]] [[File:Light 3 JE1.png|32px]] [[File:Light 4 JE1.png|32px]] [[File:Light 5 JE1.png|32px]] [[File:Light 6 JE1.png|32px]] [[File:Light 7 JE1.png|32px]] [[File:Light 8 JE1.png|32px]] [[File:Light 9 JE1.png|32px]] [[File:Light 10 JE1.png|32px]] [[File:Light 11 JE1.png|32px]] [[File:Light 12 JE1.png|32px]] [[File:Light 13 JE1.png|32px]] [[File:Light 14 JE1.png|32px]] [[File:Light 15 JE1.png|32px]] Added lights.
+|[[File:Light (held) JE1.png|32px]] Unlike {{in|Bedrock}}, while a player is holding the item, a [[particle]] is displayed similar to a [[barrier]].}}
+|{{HistoryLine|||dev=21w18a|[[File:Light 0 JE2.png|32px]] [[File:Light 1 JE2.png|32px]] [[File:Light 2 JE2.png|32px]] [[File:Light 3 JE2.png|32px]] [[File:Light 4 JE2.png|32px]] [[File:Light 5 JE2.png|32px]] [[File:Light 6 JE2.png|32px]] [[File:Light 7 JE2.png|32px]] [[File:Light 8 JE2.png|32px]] [[File:Light 9 JE2.png|32px]] [[File:Light 10 JE2.png|32px]] [[File:Light 11 JE2.png|32px]] [[File:Light 12 JE2.png|32px]] [[File:Light 13 JE2.png|32px]] [[File:Light 14 JE2.png|32px]] [[File:Light 15 JE2.png|32px]] The textures of lights has been changed.}}
+|{{HistoryLine|||dev=21w20a|[[File:Light 0 JE3.png|32px]] [[File:Light 1 JE3.png|32px]] [[File:Light 2 JE3.png|32px]] [[File:Light 3 JE3.png|32px]] [[File:Light 4 JE3.png|32px]] [[File:Light 5 JE3.png|32px]] [[File:Light 6 JE3.png|32px]] [[File:Light 7 JE3.png|32px]] [[File:Light 8 JE3.png|32px]] [[File:Light 9 JE3.png|32px]] [[File:Light 10 JE3.png|32px]] [[File:Light 11 JE3.png|32px]] [[File:Light 12 JE3.png|32px]] [[File:Light 13 JE3.png|32px]] [[File:Light 14 JE3.png|32px]] [[File:Light 15 JE3.png|32px]] The textures of lights has been changed, again.
+|The [[rarity]] of light has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.18|dev=21w42a|The respective item texture of lights is now used as the particle instead of four yellow stars, matching {{el|be}}.<ref>{{bug|MC-233771||Parity issue: Light blocks do not display their light level when shown via a held light block item|Fixed}}</ref>
+|The texture for the four stars now used only as placeholder texture by item model.<ref>{{bug|MC-239401}}</ref>}}
+|{{HistoryLine||1.19|dev=22w11a|[[Wither]]s and [[ender dragon]]s can no longer [[break]] light blocks.}}
+|{{HistoryLine||1.19.3|dev=22w44a|Light blocks are now available in the [[Creative inventory]], but only if cheats are enabled.}}
+|{{HistoryLine|||dev=22w45a|Moved light blocks behind the "Operator Utilities" tab in the Creative inventory. The tab is available only if cheats are enabled and the "Operator Items Tab" option in the controls menu is turned on.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.4|Added textures for Light Blocks.
+|[[File:Light 0 BE1.png|32px]] [[File:Light 1 BE1.png|32px]] [[File:Light 2 BE1.png|32px]] [[File:Light 3 BE1.png|32px]] [[File:Light 4 BE1.png|32px]] [[File:Light 5 BE1.png|32px]] [[File:Light 6 BE1.png|32px]] [[File:Light 7 BE1.png|32px]] [[File:Light 8 BE1.png|32px]] [[File:Light 9 BE1.png|32px]] [[File:Light 10 BE1.png|32px]] [[File:Light 11 BE1.png|32px]] [[File:Light 12 BE1.png|32px]] [[File:Light 13 BE1.png|32px]] [[File:Light 14 BE1.png|32px]] [[File:Light 15 BE1.png|32px]] Added Light Blocks.
+|[[File:Missing Tile (texture) BE1.png|32px]] Light blocks have a second form with an ID of <code>-215</code> and the following identifier: <code>item.light_block</code>. They also use the placeholder texture.}} 
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.13|The second form of the light block has been removed.}} 
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.22|Light blocks now reveal a particle when the player is holding the item, showing the respective item texture as the particle.}}
+|{{HistoryLine|||dev=beta 1.17.30.20|Right-clicking a light block with another now changes its light level by 1.
+|Left-clicking a light block while holding a light block now removes it.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.22|Light blocks are now invulnerable to explosions.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of light blocks from 3,600,000 to 3,600,000.8.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|Light block no longer drops itself when breaking.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.20.21|The different [[block states]] for the <code>light_block</code> ID have been split up into their own IDs.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Light Block" to "Light" to match {{JE}}.}}
+}}
+
+== Gallery ==
+=== Renders ===
+; ''Java Edition''
+<gallery class="pixel-image">
+Light 0 JE3.png | 
+Light 1 JE3.png | 
+Light 2 JE3.png | 
+Light 3 JE3.png | 
+Light 4 JE3.png | 
+Light 5 JE3.png | 
+Light 6 JE3.png | 
+Light 7 JE3.png | 
+Light 8 JE3.png | 
+Light 9 JE3.png | 
+Light 10 JE3.png | 
+Light 11 JE3.png | 
+Light 12 JE3.png | 
+Light 13 JE3.png | 
+Light 14 JE3.png | 
+Light 15 JE3.png |
+</gallery>
+
+; ''Bedrock Edition''
+<gallery class="pixel-image">
+Light 0 BE.png |
+Light 1 BE.png |
+Light 2 BE.png |
+Light 3 BE.png |
+Light 4 BE.png |
+Light 5 BE.png |
+Light 6 BE.png |
+Light 7 BE.png |
+Light 8 BE.png |
+Light 9 BE.png |
+Light 10 BE.png |
+Light 11 BE.png |
+Light 12 BE.png |
+Light 13 BE.png |
+Light 14 BE.png |
+Light 15 BE.png |
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Light (shown) JE1.png|The light block as seen with a structure block in save mode.
+Light behaviour examples.png|A screenshot displaying the way light blocks can prevent the flow of water and lava, as well as being waterlogged.
+</gallery>
+
+== Issues ==
+{{Issue list|\"light block\"|\"light blocks\"}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox_Invisible_Blocks}}
+{{Navbox blocks|creative}}
+
+
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+[[Category:Creative or commands only blocks]]
+
+[[de:Lichtblock]]
+[[es:Luz (bloque)]]
+[[fr:Lumière (bloc)]]
+[[ja:ライトブロック]]
+[[ko:빛 (블록)]]
+[[pl:Blok światła]]
+[[pt:Luz (bloco)]]
+[[ru:Блок света]]
+[[uk:Світло (блок)]]
+[[zh:光源方块]]

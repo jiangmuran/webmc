@@ -1,0 +1,139 @@
+{{Distinguish|Basalt Deltas}}
+{{Infobox structure
+| title = Delta
+| image = Delta iso render.png
+| biome = {{BiomeLink|Basalt Deltas}}
+| blocks =
+* {{BlockLink|Lava}}
+* {{BlockLink|Magma Block}}
+* {{BlockLink|Blackstone}}
+* {{BlockLink|Lava}}
+| canspawn = No
+}}
+A '''delta''' is a one-block-deep sheet of constrained [[lava]] found among the terrain of [[basalt deltas]] biome in [[the Nether]].
+
+== Description ==
+Deltas are one-block-deep terraced lava lakes, often divided by lines of [[blackstone]]. [[Magma block]]s also generate as part of these [[Structure|generated structure]]s, replacing some of the lava. Deltas tend to be adjacent to or surrounded by [[basalt column]]s.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=delta
+|spritetype=env
+|nameid=delta_feature
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=delta
+|spritetype=env
+|nameid=delta
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=delta
+|spritetype=env
+|nameid=delta_feature
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+{{see also|Custom feature}}
+<section begin="config" /><div class="treeview">
+{{nbt|compound|config}}
+** {{nbt|compound|contents}} The block to use on the inside of the delta.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|rim}} The block to use for the rim of the delta.
+*** {{nbt inherit/block_state}}
+** {{nbt|int}}{{nbt|compound|size}} The size of the inside of the delta. Value between 0 and 16 (inclusive).
+*** {{Nbt inherit/int provider}}
+** {{nbt|int}}{{nbt|compound|rim_size}} The size of the rim of the delta. Value between 0 and 16 (inclusive).
+*** {{nbt inherit/int_provider}}
+</div>
+
+The only rule for which blocks the delta feature can replace (via the 'contents' or 'rim' block state) is that the target block must have one air block above it and no horizontally-adjacent air blocks. One consequence of this is that delta features cannot generate underwater, but can generate on the water's surface if the feature placement is on the same y-level.
+
+Delta features are always generated last regardless of the order specified by their biome's generation step. In effect, this means that delta blocks can be overridden by features such as tall grass, often resulting in a splotchy appearance.<section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:delta_feature",
+  "config": {
+    "contents": {
+      "Name": "minecraft:lava",
+      "Properties": {
+        "level": "0"
+      }
+    },
+    "rim": {
+      "Name": "minecraft:magma_block"
+    },
+    "rim_size": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 2,
+        "min_inclusive": 0
+      }
+    },
+    "size": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 7,
+        "min_inclusive": 3
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w15a|Added deltas.}}
+|{{HistoryLine||1.17|dev=20w45a|Due to a bug,<ref>{{bug|MC-203574}}</ref> deltas no longer generate.}}
+|{{HistoryLine|||dev=20w46a|Deltas now generate again in [[the Nether]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added deltas.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Low lava delta.png|A large delta near the lava oceans.
+File:Smalldelta.png|Small delta next to the lava ocean.
+File:Lava delta.png|Several stacked deltas.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[de:Delta]]
+[[es:Delta]]
+[[fr:Delta]]
+[[ja:三角州]]
+[[ko:삼각주]]
+[[lzh:三角洲]]
+[[pt:Delta]]
+[[ru:Дельта]]
+[[th:ดินดอนสามเหลี่ยม]]
+[[zh:三角洲]]

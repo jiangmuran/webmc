@@ -1,0 +1,182 @@
+{{outdated|edition=java}}
+{{Infobox item
+| image = Missing Model JE3.png
+| renewable = No
+| stackable = Yes (64)
+}}
+'''Invalid data value leaves2''' refers to item forms of the secondary [[leaves]] block with damage values outside of the usual range which leaves can usually be obtained in.
+
+== Obtaining ==
+Without the use of [[commands]], invalid data value leaves2 are unobtainable in the last versions in which they existed without inheriting them from a prior version in which they were obtainable.
+
+Only eight damage variants of the leaves2 block are currently known to be obtainable. Two of these correspond to existing species (0 for acacia and 1 for dark oak), with the other six being invalid data value variants. There is currently no known way to obtain leaves2 items with damage values of 6, 7, 10, 11, 12, 13, 14 or 15. Like with all other invalid data value items documented on this wiki, there is also no known way to obtain items with damage values 16 and above, nor -1 and below.
+
+=== Transmutation ===
+[[mcdf:Java Edition:Block Transmutation#Arrow Transmutation|Block transmutation]] with arrows can be used to obtain leaves2 blocks with metadata 2 and 3. These blocks can be mined with shears in 14w21b or earlier to obtain the item corresponding to these blocks. The initial block being transmuted must be acacia leaves from an existing tree which has not been updated, i.e. a leaves2 block with metadata value 0. Dark oak leaves, as well as player-placed acacia leaves or acacia leaves which have received a block update, cannot be transmuted. As such, an acacia tree must be grown ''in situ'' within a dedicated transmutation apparatus.
+
+=== Breaking leaves2 blocks ===
+From 14w25a to 14w28a, leaves2 blocks existing in the world will drop invalid data value leaves2 items when broken with shears.<ref>{{bug|MC-57973||Dark Oak / Acacia Leaves missing texture|Fixed}}</ref> Acacia leaves will drop items with a damage value of 4, and dark oak leaves will drop items with a damage value of 5.
+
+From 14w25a to 14w30b, breaking leaves2 blocks with a [[Silk Touch]] enchanted non-shears tool will drop different invalid data value leaves2 items:<ref>{{bug|MC-62017||texture of dark acacia and dark oak leaves are missing when the break with a tool with silk touch|Fixed}}</ref> acacia leaves drop damage value 8, and dark oak leaves drop damage value 9.
+
+Invalid data value leaves blocks that exist in the world cannot be broken in 14w25a or 14w25b, as approaching a chunk containing them will crash the game in these two versions. They cannot be broken in 14w26a or later, as such versions treat invalid blocks as air.
+
+== Usage ==
+
+=== Placement ===
+{{info needed section|placement behavior: did placed IDV leaves just act like 0 to 3, or did the placed leaves reflect the behavior of the block that dropped them? this should be easier to test since they're a more recent addition. I assume 2-3 crash later versions}}
+
+=== Conversion to future versions ===
+In 1.13 (17w47a) onwards, distinguishing between block and item variants using metadata and damage was formally abolished. As a result of this, existing items would be converted over to the new ID system automatically. Invalid data value leaves behave anomalously in that instead of converting to their respective parent species, they all convert to acacia leaves instead. Despite these items often being unknowingly collected and stored in older versions in such a way that conversion like this would end up being undesirable, Mojang have decided to not fix this.<ref>{{bug|MC-249703||Leaves items with incorrect damage/metadata values become oak/acacia instead of their actual species|Won't Fix}}</ref>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w43a|A second block ID is now used for two newly-implemented species of leaves. Invalid data variants exist as a consequence of how block and item metadata is handled.
+|As a result of this, due to only two spots for species being taken, two more remain which are unfilled, resulting in invalid data values. These can be obtained via block transmutation and picked up.
+|Leaves2 items with damage values 2 and above are named "Acacia Leaves" regardless of the species they actually represent.}}
+|{{HistoryLine||1.8|dev=14w10a|The item forms of all invalid data value log2 blocks have changed; those corresponding to rotated logs now map textures correctly but the lighting behaves rotated as well, and the remaining unused variants now are 2D in item form.
+|Leaves2 blocks in the world with metadata corresponding to unused species now [[Missing model|have no model]] [[File:Missing Model JE2.png|32px]]. The particles of said blocks are still that of the leaves they previously were.{{verify|use a resource pack for this due to identical textures}}}}
+|{{HistoryLine|||dev=14w17a|Leaves2 items with data values outside of the expected range now have the correct name corresponding to the data value it represents, rather than all sharing the name "Acacia Leaves". The items which do not correspond to valid species data (2, 3, 6, 7, 10, 11, 14 and 15) are named "Oak Leaves", despite oak leaves being a completely different block ID.}}
+|{{HistoryLine|||dev=14w25a|{{pximg|Missing Model (inventory) JE1.png|32px}} With the introduction of data-driven item models, any item with a data value outside of what is accepted by the game has no model to point to, resulting in use of the [[Missing textures and models|missing item model]].
+|Leaves2 blocks corresponding to the two empty species slots now cause the game to crash if approached. It is therefore impossible to interact with these blocks to obtain damage values 2 or 3, nor any potential higher damage values allowed by this snapshot.
+|Leaves2 items with damage values 4 and 5 can be obtained by breaking acacia and dark oak leaves with shears, and damage values 8 and 9 can be obtained via the use of Silk Touch.}}
+|{{HistoryLine|||dev=14w28b|Leaves2 items with damage values 4 and 5 are no longer obtainable from breaking leaves2 with shears.}}
+|{{HistoryLine|||dev=14w30a|Invalid data value leaves2 items, alongside other invalid data value items, now appear the size of a full block when held in third person or by another player or mob.}}
+|{{HistoryLine|||dev=14w30c|Leaves2 items with damage values 8 and 9 are no longer obtainable with Silk Touch tools.}}
+|{{HistoryLine||1.9|dev=15w31a|{{pximg|Missing Model (inventory) JE2.png|32px}} The missing model's inventory appearance has changed, resulting in the appearance of invalid data value leaves2 items also changing.
+|The items also appear the size of a full block when held in first person and when dropped on the ground, and also appear larger than before in an [[item frame]].}}
+|{{HistoryLine||1.13|dev=17w43a|{{pximg|Missing Model (inventory) JE3.png|32px}} The missing texture has changed, resulting in the appearance of invalid data value leaves2 items also changing.}}
+|{{HistoryLine|||dev=17w47a|Numeric IDs for blocks and items have been completely removed from the game, with different species of leaves being given their own string IDs. As a result, invalid data value leaves2 items have been "removed" as any such item now converts cleanly into acacia leaves.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Glitched Jungle Leaves - Minecraft Pocket Edition Alpha.png|32px]] Acacia leaves with damage/metadata values 2, 3, 6, 7, 10, 11, 14, and 15 display this texture when in the inventory.}} 
+|{{HistoryLine||v0.15.0|dev=build 1|Acacia leaves with invalid damage/metadata values no longer display this behavior.}}
+}}
+
+; Inventory appearances ''(values marked in red are not known to be obtainable in survival mode)''
+{| class="wikitable" style="text-align:center"
+! colspan="2" rowspan="2" | From version
+! colspan="14" | Damage value
+! rowspan="2" | Notes
+|-
+! 2
+! 3
+! 4
+! 5
+| class="tc-never" | '''6'''
+| class="tc-never" | '''7'''
+! 8
+! 9
+| class="tc-never" | '''10'''
+| class="tc-never" | '''11'''
+| class="tc-never" | '''12'''
+| class="tc-never" | '''13'''
+| class="tc-never" | '''14'''
+| class="tc-never" | '''15'''
+|-
+! [[Java Edition 1.7.2|1.7.2]]
+! [[Java Edition 13w43a|13w43a]]
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+|-
+! rowspan="2" | [[Java Edition 1.8|1.8]]
+! [[Java Edition 14w10a|14w10a]]
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Oak Leaves (inventory) JEUNK+12.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| {{pximg|Leaves2 (inventory) JE2.png|32px}}
+| style="text-align:left" | States corresponding to nonexistent species are now 2D.
+|-
+! [[Java Edition 14w25a|14w25a]]
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| style="text-align:left" | [[Missing model|Model no longer exists]]
+|-
+! [[Java Edition 1.9|1.9]]
+! [[Java Edition 15w31a|15w31a]]
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| style="text-align:left" | The missing model is no longer rotated or downscaled.
+|-
+! [[Java Edition 1.13|1.13]]
+! [[Java Edition 17w43a|17w43a]]
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| style="text-align:left" | The missing texture has changed.
+|}
+
+== Issues ==
+Invalid data value leaves2 ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [[mcdf:Java Edition:Invalid Data Value Leaves2|Invalid Data Value Leaves2]] at the ''Minecraft Discontinued Features'' wiki
+
+
+== Navigation ==
+{{Navbox IDV items}}

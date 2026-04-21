@@ -1,0 +1,2189 @@
+{{about||other uses|Bastion (disambiguation)}}
+{{Infobox structure
+| group1 = Treasure room
+| group2 = Bridge
+| group3 = Housing units
+| group4 = Hoglin stables
+| 1-1 = Bastion Remnant 1.png
+| 2-1 = Bastion Remnant 2.png
+| 3-1 = Bastion Remnant 3.png
+| 4-1 = Bastion Remnant 4.png
+| biome = 
+* {{BiomeLink|Nether Wastes}}
+* {{BiomeLink|Soul Sand Valley}}
+* {{BiomeLink|Crimson Forest}}
+* {{BiomeLink|Warped Forest}}
+| mobs = 
+* {{EntityLink|Hoglin}} (bridge and hoglin stables)
+* {{EntityLink|Magma Cube}} (from [[monster spawner]] in treasure room)
+* {{EntityLink|Piglin}}
+* {{EntityLink|Piglin Brute}}
+| blocks =
+* See {{slink||Structure}} 
+* See {{slink||Blocks}}
+}}
+{{relevant tutorial|Defeating a bastion remnant}}
+
+'''Bastion remnants''', also simply referred to as '''bastions''',<ref>{{mcnet|everything-we-announced-minecon-live-2019|Everything We Announced at MINECON Live 2019|September 28, 2019|Tom Stone}}</ref> are large, castle-like [[generated structures]] found in [[the Nether]] in all of the biomes except [[basalt deltas]]. They generate in four distinct variants, each with a unique structure and set of loot. [[Piglin]]s and [[piglin brute]]s spawn in these structures on generation, and [[hoglin]]s may also spawn on generation in the bridge and hoglin stables variants. Bastion remnants are the only place to find [[gilded blackstone]], the [[Pigstep music disc]], the [[snout banner pattern]] and [[Snout Armor Trim|armor trim]], [[monster spawner]]s which spawn [[magma cube]]s, and the [[netherite upgrade]] smithing template.
+
+== Generation ==
+[[File:Java Nether Structure Generation1.png|thumb|Nether structure generation {{in|Java}}. The black lines represent each region and the dots represent coordinates. Green is where they can generate and red is where they cannot.]]
+[[File:Bedrock Nether Structure Generation.png|thumb|Nether structure generation {{in|bedrock}}. The black lines represent each region and the dots represent coordinates. Green is where they can generate and red is where they cannot.]]
+
+Bastion remnants generate in all Nether biomes except basalt deltas, although a bastion may extend into one. If a bastion tries to generate in a basalt delta, the bastion does not generate and a [[Nether fortress]] generates instead. To generate the structure, the game splits the Nether into regions, in which either a Nether fortress or a bastion remnant can generate. The regions are 432×432 blocks {{in|Java}} and 480×480 blocks {{in|bedrock}}. Each region has a 4-chunk separation located on the south and east borders of the region in which neither a fortress nor a bastion can generate. This leaves only a 368×368 block section {{in|Java}} or 416×416 block section {{in|bedrock}} where a structure can generate. Two structures never generate in the same region, although they might overlap if they generate close to the separation border. {{IN|Java}}, the chance of a bastion generating instead of a fortress is {{frac|3|5}} (60%), while {{in|bedrock}} the chance of a bastion generating instead of a fortress is {{frac|2|3}} (66.6%). Each of the four variants of bastion remnants has an equal chance of generating.
+
+Piglins, piglin brutes, and hoglins that spawn upon generation in bastion remnants neither despawn naturally nor do they hunt each other. Piglin brutes also spawn exclusively here upon structure generation, and do not despawn unless killed, or if [[difficulty]] is set to Peaceful. Like [[shulker]]s in [[end cities]], once these mobs are killed, they do not respawn, though the bastion remnant continues to spawn normal mobs depending on the biome it is located in. 
+
+{{Calculator|chunkbase|dimension=nether|pois=Br|zoom=0.25}}
+
+== Structure ==
+{{main|Bastion Remnant/Structure}}
+Bastion remnants generate as 4 types of structures: bridges, hoglin stables, housing units, and treasure rooms. Each type has its own set of structures that compose it. These structures may be supported by ramparts that contain cave-like paths. [[Piglin]]s, [[piglin brute]]s, and [[hoglin]]s spawn frequently throughout. Unlike [[Nether fortress]]es, when over the [[lava sea]], they do not generate pillars of solid blocks down to the solid terrain beneath, but float above, entirely even.<ref>{{bug|MC-179796||Bastion remnants have no foundation|WAI}}</ref>
+
+All bastion remnant structures found below are located in the folder <samp>[[client.jar]]/data/minecraft/structures/bastion</samp>.
+
+=== File structure ===
+{| class="collapsible collapsed collapse-button-none" data-description="File structure"
+! List
+|-
+|<div class="toccolours treeview">
+*bastion
+**blocks
+***air.nbt
+***gold.nbt
+**bridge
+***bridge_pieces
+****bridge.nbt
+***connectors
+****back_bridge_bottom.nbt
+****back_bridge_top.nbt
+***legs
+****leg_0.nbt
+****leg_1.nbt
+***ramparts
+****rampart_0.nbt
+****rampart_1.nbt
+***rampart_plates
+****plate_0.nbt
+***starting_pieces
+****entrance.nbt
+****entrance_base.nbt
+****entrance_face.nbt
+***walls
+****wall_base_0.nbt
+****wall_base_1.nbt
+**hoglin_stable
+***air_base.nbt
+***connectors
+****end_post_connector.nbt
+***large_stables
+****inner_0.nbt
+****inner_1.nbt
+****inner_2.nbt
+****inner_3.nbt
+****inner_4.nbt
+****outer_0.nbt
+****outer_1.nbt
+****outer_2.nbt
+****outer_3.nbt
+****outer_4.nbt
+***posts
+****end_post.nbt
+****stair_post.nbt
+***ramparts
+****ramparts_1.nbt
+****ramparts_2.nbt
+****ramparts_3.nbt
+***rampart_plates
+****rampart_plate_1.nbt
+***small_stables
+****inner_0.nbt
+****inner_1.nbt
+****inner_2.nbt
+****inner_3.nbt
+****outer_0.nbt
+****outer_1.nbt
+****outer_2.nbt
+****outer_3.nbt
+***stairs
+****stairs_0_mirrored.nbt
+****stairs_1_0.nbt
+****stairs_1_1.nbt
+****stairs_1_2.nbt
+****stairs_1_3.nbt
+****stairs_1_4.nbt
+****stairs_2.nbt
+****stairs_2_0.nbt
+****stairs_2_1.nbt
+****stairs_2_2.nbt
+****stairs_2_3.nbt
+****stairs_2_4.nbt
+****stairs_3.nbt
+****stairs_3_0.nbt
+****stairs_3_1.nbt
+****stairs_3_2.nbt
+****stairs_3_3.nbt
+****stairs_3_4.nbt
+***starting_pieces
+****stairs_0_mirrored.nbt
+****stairs_1_mirrored.nbt
+****stairs_2_mirrored.nbt
+****stairs_3_mirrored.nbt
+****stairs_4_mirrored.nbt
+****starting_stairs_0.nbt
+****starting_stairs_1.nbt
+****starting_stairs_2.nbt
+****starting_stairs_3.nbt
+****starting_stairs_4.nbt
+***walls
+****side_wall_0.nbt
+****side_wall_1.nbt
+****wall_base.nbt
+**mobs
+***empty.nbt
+***crossbow_piglin.nbt{{only|java|short=1}}
+***hoglin.nbt{{only|java|short=1}}
+***melee_piglin.nbt{{only|java|short=1}}
+***melee_piglin_always.nbt{{only|java|short=1}}
+***sword_piglin.nbt{{only|java|short=1}}
+***melee_piglin.mcstructure{{only|bedrock|short=1}}
+***melee_piglin_always.mcstructure{{only|bedrock|short=1}}
+***crossbow_piglin.mcstructure{{only|bedrock|short=1}}
+***hoglin.mcstructure{{only|bedrock|short=1}}
+***sword_piglin.mcstructure{{only|bedrock|short=1}}
+**treasure
+***big_air_full.nbt
+***bases
+****lava_basin.nbt
+****centers
+*****center_0.nbt
+*****center_1.nbt
+*****center_2.nbt
+*****center_3.nbt
+***brains
+****center_brain.nbt
+***connectors
+****center_to_wall_middle.nbt
+****center_to_wall_top.nbt
+****center_to_wall_top_entrance.nbt
+***corners
+****bottom
+*****corner_0.nbt
+*****corner_1.nbt
+****edges
+*****bottom.nbt
+*****middle.nbt
+*****top.nbt
+****middle
+*****corner_0.nbt
+*****corner_1.nbt
+****top
+*****corner_0.nbt
+*****corner_1.nbt
+***entrances
+****entrance_0.nbt
+***extensions
+****empty.nbt
+****fire_room.nbt
+****house_0.nbt
+****house_1.nbt
+****large_bridge_0.nbt
+****large_bridge_1.nbt
+****large_bridge_2.nbt
+****large_bridge_3.nbt
+****roofed_bridge.nbt
+****small_bridge_0.nbt
+****small_bridge_1.nbt
+****small_bridge_2.nbt
+****small_bridge_3.nbt
+***ramparts
+****bottom_wall_0.nbt
+****lava_basin.nbt{{only|bedrock|short=1}}
+****lava_basin_main.nbt
+****lava_basin_side.nbt
+****mid_wall_main.nbt
+****mid_wall_side.nbt
+****top_wall.nbt
+***roofs
+****center_roof.nbt
+****corner_roof.nbt
+****wall_roof.nbt
+***stairs
+****lower_stairs.nbt
+***walls
+****entrance_wall.nbt
+****lava_wall.nbt
+****bottom
+*****wall_0.nbt
+*****wall_1.nbt
+*****wall_2.nbt
+*****wall_3.nbt
+****mid
+*****wall_0.nbt
+*****wall_1.nbt
+*****wall_2.nbt
+****outer
+*****bottom_corner.nbt
+*****medium_outer_wall.nbt
+*****mid_corner.nbt
+*****outer_wall.nbt
+*****tall_outer_wall.nbt
+*****top_corner.nbt
+****top
+*****main_entrance.nbt
+*****wall_0.nbt
+*****wall_1.nbt
+**units
+***air_base.nbt
+***center_pieces
+****center_0.nbt
+****center_1.nbt
+****center_2.nbt
+***edges
+****edge_0.nbt
+***fillers
+****stage_0.nbt
+***pathways
+****pathway_0.nbt
+****pathway_wall_0.nbt
+***ramparts
+****ramparts_0.nbt
+****ramparts_1.nbt
+****ramparts_2.nbt
+***rampart_plates
+****plate_0.nbt
+***stages
+****stage_0_0.nbt
+****stage_0_1.nbt
+****stage_0_2.nbt
+****stage_0_3.nbt
+****stage_1_0.nbt
+****stage_1_1.nbt
+****stage_1_2.nbt
+****stage_1_3.nbt
+****stage_2_0.nbt
+****stage_2_1.nbt
+****stage_3_0.nbt
+****stage_3_1.nbt
+****stage_3_2.nbt
+****stage_3_3.nbt
+****rot
+*****stage_1_0.nbt
+***walls
+****connected_wall.nbt
+****wall_base.nbt
+***wall_units
+****edge_0.nbt{{only|bedrock|short=1}}
+****edge_0_large.nbt
+****unit_0.nbt
+</div>
+|}
+
+=== Bridge ===
+The '''bridge''' consists of a large ruined rampart structure with a piglin face carved into it. The inside of the "mouth" consists of multiple levels of walkways surrounded by lava. A damaged bridge goes out from the mouth, with a support pillar on the far side. 
+
+{| class="wikitable collapsible collapsed"
+! Structure name !! Description !! Consists of !! Image
+|-
+| <code>bastion/bridge/bridge_pieces/bridge</code>
+| The double deck bridge. Only 1 generates per bastion.
+|
+1384 {{BlockLink|Polished Blackstone Bricks}}<br>
+316 {{BlockLink|Blackstone}}<br>
+155 {{BlockLink|Basalt}}<br>
+45 {{BlockLink|Polished Basalt}}<br>
+16 {{BlockLink|Block of Gold}}<br>
+8 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+5 {{BlockLink|Iron Chain}}<br>
+5 {{BlockLink|Lantern}}<br>
+4 {{BlockLink|Chiseled Polished Blackstone}}<br>
+4 {{BlockLink|Block of Quartz}}<br>
+2 {{BlockLink|id=smooth quartz|Smooth Quartz Block}}<br>
+2 {{BlockLink|Smooth Quartz Slab}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group">There is a 10% chance of spawning a piglin brute, a 40% chance of spawning a piglin with a golden sword, a 40% of spawning a piglin with a crossbow, and a 10% chance of not spawning at all.</ref>
+| [[File:Bastion Remnant bridge.png|250px]]
+|-
+| <code>bastion/bridge/connectors/back_bridge_bottom</code>
+| First floor of the double deck bridge behind the rampart.
+|
+75 {{BlockLink|Polished Blackstone Bricks}}<br>
+16 {{BlockLink|Blackstone}}
+| [[File:Bastion Remnant back_bridge_bottom.png|250px]]
+|-
+| <code>bastion/bridge/connectors/back_bridge_top</code>
+| Second floor of the double deck bridge behind the rampart.
+|
+48 {{BlockLink|Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Blackstone}}
+| [[File:Bastion Remnant back_bridge_top.png|250px]]
+|-
+| <code>bastion/bridge/legs/leg_0</code>
+| A pillar under the bridge.
+|
+115 {{BlockLink|Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Blackstone}}
+| [[File:Bastion Remnant leg_0.png|75px]]
+|-
+| <code>bastion/bridge/legs/leg_1</code>
+| A pillar under the bridge.
+|
+120 {{BlockLink|Polished Blackstone Bricks}}<br>
+38 {{BlockLink|Blackstone}}
+| [[File:Bastion Remnant leg_1.png|75px]]
+|-
+| <code>bastion/bridge/rampart_plates/plate_0</code>
+| A wall on <code>bastion/bridge/ramparts/rampart_1</code>.
+|
+260 {{BlockLink|Polished Blackstone Bricks}}<br>
+82 {{BlockLink|Basalt}}<br>
+38 {{BlockLink|Blackstone}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}
+| [[File:Bastion Remnant plate_0.png|200px]]
+|-
+| <code>bastion/bridge/ramparts/rampart_0</code>
+| rowspan="2"|The upper half of one side of the rampart. 2 of these generate per bastion.
+|
+2954 {{BlockLink|Polished Blackstone Bricks}}<br>
+491 {{BlockLink|Blackstone}}<br>
+235 {{BlockLink|Basalt}}<br>
+89 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Gilded Blackstone}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:Bastion Remnant rampart_0.png|250px]]
+|-
+| <code>bastion/bridge/ramparts/rampart_1</code>
+|
+4361 {{BlockLink|Polished Blackstone Bricks}}<br>
+496 {{BlockLink|Blackstone}}<br>
+346 {{BlockLink|Basalt}}<br>
+146 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+11 {{BlockLink|Gilded Blackstone}}<br>
+3 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Lantern}}<br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group">There is a {{frac|5|6}} chance of spawning a piglin brute and a {{frac|1|6}} chance of spawning a piglin with a golden sword.</ref>
+| [[File:Bastion Remnant rampart_1.png|200px]]
+|-
+| <code>bastion/bridge/starting_pieces/entrance</code>
+| The upper half of the rampart. Only 1 generates per bastion.
+|
+6548 {{BlockLink|Polished Blackstone Bricks}}<br>
+849 {{BlockLink|Blackstone}}<br>
+328 {{BlockLink|Basalt}}<br>
+47 {{BlockLink|Polished Basalt}}<br>
+38 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+30 {{BlockLink|Lava}} (source blocks)<br>
+11 {{BlockLink|Chiseled Polished Blackstone}}<br>
+11 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Block of Gold}}<br>
+5 {{BlockLink|Gilded Blackstone}}<br>
+3 {{BlockLink|Iron Chain}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 Loot {{BlockLink|Chest}} (Bridge)<br>
+14 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+2 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group">This hoglin has a {{frac|1|3}} chance of not spawning.</ref><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:Bastion Remnant entrance.png|250px]]
+|-
+| <code>bastion/bridge/starting_pieces/entrance_base</code>
+| The lower half of the rampart. Only 1 generates per bastion.
+|
+10685 {{BlockLink|Blackstone}}<br>
+2953 {{BlockLink|Polished Blackstone Bricks}}<br>
+396 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+52 {{BlockLink|Lava}} (source blocks)<br>
+10 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Chiseled Polished Blackstone}}<br>
+2 {{BlockLink|Block of Gold}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+7 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:Bastion Remnant entrance_base.png|200px]]
+|-
+| <code>bastion/bridge/starting_pieces/entrance_face</code>
+| Structure in front of the rampart resembling a face.
+|
+517 {{BlockLink|Polished Blackstone Bricks}}<br>
+136 {{BlockLink|Basalt}}<br>
+49 {{BlockLink|Blackstone}}<br>
+13 {{BlockLink|Polished Basalt}}<br>
+12 {{BlockLink|Netherrack}}
+| [[File:Bastion Remnant entrance_face.png|250px]]
+|-
+| <code>bastion/bridge/walls/wall_base_0</code>
+| The lower half of one side of the rampart.
+|
+4854 {{BlockLink|Blackstone}}<br>
+228 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Block of Gold}}<br>
+2 {{BlockLink|Chiseled Polished Blackstone}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:Bastion Remnant wall_base_0.png|250px]]
+|-
+| <code>bastion/bridge/walls/wall_base_1</code>
+| The lower half of one side of the rampart.
+|
+5034 {{BlockLink|Blackstone}}<br>
+213 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+2 {{BlockLink|Chiseled Polished Blackstone}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Polished Blackstone Bricks}}
+| [[File:Bastion Remnant wall_base_1.png|250px]]
+|}
+{{-}}
+
+=== Hoglin stables ===
+The '''hoglin stables''' consist of a three-part rampart with damaged hoglin stables on either side. Hoglin stables' pieces are contained in the subfolder <samp>hoglin_stable</samp>. They contain the hoglin stable chests.
+
+{| class="wikitable collapsible collapsed"
+! Structure name !! Description !! Consists of !! Image
+|-
+| {{cd|bastion/hoglin_stable/air_base}}
+| A technical connecting part.
+| None
+| N/A
+|-
+| {{cd|bastion/hoglin_stable/connectors/end_post_connector}}
+| A technical connecting part between posts.
+| None
+| N/A
+|-
+| {{cd|bastion/hoglin_stable/large_stables/inner_0}}
+| rowspan="10" |Large stables for hoglins.
+|
+168 {{BlockLink|Polished Blackstone Bricks}}<br>
+74 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+5 {{BlockLink|Blackstone Slab}}<br>
+5 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:large_stables_inner_0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/inner_1}}
+|
+146 {{BlockLink|Polished Blackstone Bricks}}<br>
+61 {{BlockLink|Basalt}}<br>
+19 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+16 {{BlockLink|Blackstone}}<br>
+11 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Soul Sand}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:large_stables_inner_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/inner_2}}
+|
+225 {{BlockLink|Polished Blackstone Bricks}}<br>
+39 {{BlockLink|Basalt}}<br>
+29 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+7 {{BlockLink|Blackstone Slab}}<br>
+5 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Soul Sand}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:large_stables_inner_2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/inner_3}}
+|
+246 {{BlockLink|Polished Blackstone Bricks}}<br>
+33 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+32 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Gilded Blackstone}}<br>
+3 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Lava}}<br>
+1 {{BlockLink|Blackstone}}<br>
+1 Loot {{BlockLink|Chest}} (Hoglin Stable)<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:large_stables_inner_3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/inner_4}}
+|
+235 {{BlockLink|Polished Blackstone Bricks}}<br>
+47 {{BlockLink|Basalt}}<br>
+47 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:large_stables_inner_4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/outer_0}}
+|
+166 {{BlockLink|Polished Blackstone Bricks}}<br>
+76 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+5 {{BlockLink|Blackstone Slab}}<br>
+3 {{BlockLink|Blackstone Wall}}<br>
+3 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:large_stables_outer_0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/outer_1}}
+|
+145 {{BlockLink|Polished Blackstone Bricks}}<br>
+62 {{BlockLink|Basalt}}<br>
+19 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Soul Sand}}<br>
+1 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group">This gold block has only a 25% chance of appearing. Otherwise, air is generated in its place.</ref><br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:large_stables_outer_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/outer_2}}
+|
+225 {{BlockLink|Polished Blackstone Bricks}}<br>
+38 {{BlockLink|Basalt}}<br>
+30 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+7 {{BlockLink|Blackstone Slab}}<br>
+5 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Soul Sand}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:large_stables_outer_2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/outer_3}}
+|
+252 {{BlockLink|Polished Blackstone Bricks}}<br>
+33 {{BlockLink|Basalt}}<br>
+32 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+5 {{BlockLink|Blackstone Wall}}<br>
+4 {{BlockLink|Blackstone}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Lava}} (source block)
+| [[File:large_stables_outer_3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/large_stables/outer_4}}
+|
+235 {{BlockLink|Polished Blackstone Bricks}}<br>
+48 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+46 {{BlockLink|Basalt}}<br>
+4 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:large_stables_outer_4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/posts/end_post}}
+| A post between stables.
+|96 {{BlockLink|Polished Blackstone Bricks}}
+| [[File:hoglin_stable_posts_end_post.png|35px|center]]
+|-
+| {{cd|bastion/hoglin_stable/posts/stair_post}}
+| Two posts between stables.
+|192 {{BlockLink|Polished Blackstone Bricks}}
+| [[File:hoglin_stable_posts_stair_post.png|100px|center]]
+|-
+| {{cd|bastion/hoglin_stable/rampart_plates/rampart_plate_1}}
+| A wall on <code>bastion/hoglin_stable/ramparts/ramparts_1</code>.
+|
+260 {{BlockLink|Polished Blackstone Bricks}}<br>
+81 {{BlockLink|Basalt}}<br>
+38 {{BlockLink|Blackstone}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}
+| [[File:hoglin_stable_rampart_plate_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/ramparts/ramparts_1}}
+| rowspan="3" | The upper half of a part of the rampart. 3 of these generate per bastion.
+|
+4055 {{BlockLink|Polished Blackstone Bricks}}<br>
+459 {{BlockLink|Blackstone}}<br>
+346 {{BlockLink|Basalt}}<br>
+130 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+9 {{BlockLink|Gilded Blackstone}}<br>
+4 {{BlockLink|Block of Gold}}<br>
+4 {{BlockLink|Lantern}}<br>
+3 Loot {{BlockLink|Chest}} (Generic)<br>
+3 {{BlockLink|Chiseled Polished Blackstone}}<br>
+6 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:hoglin_stable_ramparts_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/ramparts/ramparts_2}}
+|
+2885 {{BlockLink|Polished Blackstone Bricks}}<br>
+440 {{BlockLink|Blackstone}}<br>
+236 {{BlockLink|Basalt}}<br>
+77 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+7 {{BlockLink|Gilded Blackstone}}<br>
+2 Loot {{BlockLink|Chest}} (Generic)<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:hoglin_stable_ramparts_2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/ramparts/ramparts_3}}
+|
+1281 {{BlockLink|Polished Blackstone Bricks}}<br>
+467 {{BlockLink|Blackstone}}<br>
+74 {{BlockLink|Basalt}}<br>
+10 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Gilded Blackstone}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:hoglin_stable_ramparts_3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/inner_0}}
+| rowspan="8" |Small stables for hoglin.
+|
+69 {{BlockLink|Polished Blackstone Bricks}}<br>
+53 {{BlockLink|Basalt}}<br>
+35 {{BlockLink|Blackstone}}<br>
+29 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Blackstone Slab}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:small_stables_inner_0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/inner_1}}
+|
+91 {{BlockLink|Polished Blackstone Bricks}}<br>
+43 {{BlockLink|Basalt}}<br>
+17 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+14 {{BlockLink|Blackstone Slab}}<br>
+9 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:small_stables_inner_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/inner_2}}
+|
+127 {{BlockLink|Polished Blackstone Bricks}}<br>
+59 {{BlockLink|Basalt}}<br>
+21 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+12 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Soul Sand}}<br>
+1 Loot {{BlockLink|Chest}} (Hoglin Stable)<br>
+1 {{BlockLink|Gilded Blackstone}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:small_stables_inner_2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/inner_3}}
+|
+84 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+14 {{BlockLink|Blackstone Slab}}<br>
+6 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:small_stables_inner_3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/outer_0}}
+|
+69 {{BlockLink|Polished Blackstone Bricks}}<br>
+53 {{BlockLink|Basalt}}<br>
+35 {{BlockLink|Blackstone}}<br>
+28 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Blackstone Slab}}<br>
+4 {{BlockLink|Blackstone Wall}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:small_stables_outer_0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/outer_1}}
+|
+90 {{BlockLink|Polished Blackstone Bricks}}<br>
+43 {{BlockLink|Basalt}}<br>
+17 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+14 {{BlockLink|Blackstone Slab}}<br>
+10 {{BlockLink|Blackstone}}<br>
+4 {{BlockLink|Blackstone Wall}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:small_stables_outer_1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/outer_2}}
+|
+126 {{BlockLink|Polished Blackstone Bricks}}<br>
+59 {{BlockLink|Basalt}}<br>
+22 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+21 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+2 {{BlockLink|Soul Sand}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:small_stables_outer_2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/small_stables/outer_3}}
+|
+86 {{BlockLink|Polished Blackstone Bricks}}<br>
+32 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+14 {{BlockLink|Blackstone Slab}}<br>
+6 {{BlockLink|Blackstone}}<br>
+4 {{BlockLink|Blackstone Wall}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Hoglin}}<ref group="n" name="hoglin group"/>
+| [[File:small_stables_outer_3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_1_0}}
+| rowspan="25" | Stairs connecting floors of stables.
+|
+180 {{BlockLink|Polished Blackstone Bricks}}<br>
+57 {{BlockLink|Basalt}}<br>
+31 {{BlockLink|Blackstone}}<br>
+18 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Magma Block}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 1 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_1_1}}
+|
+225 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+27 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+24 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+4 {{BlockLink|Magma Block}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:hoglin stable stairs 1 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_1_2}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:hoglin stable stairs 1 2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_1_3}}
+|
+167 {{BlockLink|Polished Blackstone Bricks}}<br>
+65 {{BlockLink|Blackstone}}<br>
+39 {{BlockLink|Basalt}}<br>
+30 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Magma Block}}<br>
+2 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:hoglin stable stairs 1 3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_1_4}}
+|
+129 {{BlockLink|Polished Blackstone Bricks}}<br>
+51 {{BlockLink|Blackstone}}<br>
+32 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Magma Block}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Polished Basalt}}
+| [[File:hoglin stable stairs 1 4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_2_0}}
+|
+185 {{BlockLink|Polished Blackstone Bricks}}<br>
+57 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 2 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_2_1}}
+|
+227 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+25 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 2 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_2_2}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 2 2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_2_3}}
+|
+170 {{BlockLink|Polished Blackstone Bricks}}<br>
+64 {{BlockLink|Blackstone}}<br>
+44 {{BlockLink|Basalt}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 2 3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_2_4}}
+|
+130 {{BlockLink|Polished Blackstone Bricks}}<br>
+53 {{BlockLink|Blackstone}}<br>
+32 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Polished Basalt}}
+| [[File:hoglin stable stairs 2 4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_3_0}}
+|
+182 {{BlockLink|Polished Blackstone Bricks}}<br>
+57 {{BlockLink|Basalt}}<br>
+27 {{BlockLink|Blackstone}}<br>
+19 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Magma Block}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:hoglin stable stairs 3 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_3_1}}
+|
+217 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+26 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+9 {{BlockLink|Magma Block}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable stairs 3 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_3_2}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+| [[File:hoglin stable stairs 3 2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_3_3}}
+|
+170 {{BlockLink|Polished Blackstone Bricks}}<br>
+63 {{BlockLink|Blackstone}}<br>
+44 {{BlockLink|Basalt}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Iron Chain}}
+| [[File:hoglin stable stairs 3 3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/stairs/stairs_3_4}}
+|
+127 {{BlockLink|Polished Blackstone Bricks}}<br>
+53 {{BlockLink|Blackstone}}<br>
+32 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Magma Block}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Polished Basalt}}
+| [[File:hoglin stable stairs 3 4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/stairs_0_mirrored}}
+|
+185 {{BlockLink|Polished Blackstone Bricks}}<br>
+58 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Glowstone}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable starting pieces stairs 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/stairs_1_mirrored}}
+|
+227 {{BlockLink|Polished Blackstone Bricks}}<br>
+50 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+25 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable starting pieces stairs 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/stairs_2_mirrored}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+50 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable starting pieces stairs 2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/stairs_3_mirrored}}
+|
+170 {{BlockLink|Polished Blackstone Bricks}}<br>
+63 {{BlockLink|Blackstone}}<br>
+45 {{BlockLink|Basalt}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable starting pieces stairs 3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/stairs_4_mirrored}}
+|
+131 {{BlockLink|Polished Blackstone Bricks}}<br>
+53 {{BlockLink|Blackstone}}<br>
+33 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Polished Basalt}}
+| [[File:hoglin stable starting pieces stairs 4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/starting_stairs_0}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+57 {{BlockLink|Basalt}}<br>
+27 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+8 {{BlockLink|Magma Block}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Lantern}}
+| [[File:hoglin stable starting stairs 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/starting_stairs_1}}
+|
+227 {{BlockLink|Polished Blackstone Bricks}}<br>
+47 {{BlockLink|Basalt}}<br>
+28 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+25 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+| [[File:hoglin stable starting stairs 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/starting_stairs_2}}
+|
+184 {{BlockLink|Polished Blackstone Bricks}}<br>
+49 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Polished Basalt}}<br>
+2 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 {{BlockLink|Lantern}}<br>
+| [[File:hoglin stable starting stairs 2.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/starting_stairs_3}}
+|
+167 {{BlockLink|Polished Blackstone Bricks}}<br>
+55 {{BlockLink|Blackstone}}<br>
+44 {{BlockLink|Basalt}}<br>
+23 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+14 {{BlockLink|Magma Block}}<br>
+11 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Polished Basalt}}<br>
+1 {{BlockLink|Blackstone Stairs}}
+| [[File:hoglin stable starting stairs 3.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/starting_pieces/starting_stairs_4}}
+|
+129 {{BlockLink|Polished Blackstone Bricks}}<br>
+51 {{BlockLink|Blackstone}}<br>
+32 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Magma Block}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Polished Basalt}}
+| [[File:hoglin stable starting stairs 4.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/walls/side_wall_0}}
+| rowspan="3" | The lower half of a part of the rampart. 3 of these generate per bastion. There is always 1 wall base in the middle, and the outer two walls are randomly chosen to be either side wall 0 or side wall 1.
+|
+4680 {{BlockLink|Blackstone}}<br>
+220 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+12 {{BlockLink|Chiseled Polished Blackstone}}<br>
+6 {{BlockLink|Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Gilded Blackstone}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:hoglin stable side wall 0.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/walls/side_wall_1}}
+|
+4924 {{BlockLink|Blackstone}}<br>
+173 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+26 {{BlockLink|Chiseled Polished Blackstone}}<br>
+12 {{BlockLink|Block of Gold}}<br>
+7 {{BlockLink|Polished Blackstone Bricks}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+5 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+| [[File:hoglin stable side wall 1.png|250px]]
+|-
+| {{cd|bastion/hoglin_stable/walls/wall_base}}
+|
+5286 {{BlockLink|Blackstone}}<br>
+66 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+27 {{BlockLink|Blackstone Stairs}}<br>
+4 {{BlockLink|Chiseled Polished Blackstone}}<br>
+3 {{BlockLink|Gilded Blackstone}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+| [[File:hoglin stable wall base.png|250px]]
+|}
+{{-}}
+
+=== Housing units ===
+The '''housing unit''' consists of multiple ruined two-part ramparts arranged around a central courtyard with [[nether wart]] growing in the middle. Housing unit pieces are contained in the subfolder <samp>units</samp>.
+
+{| class="wikitable collapsible collapsed"
+! Structure name !! Description !! Consists of !! Image
+|-
+| {{cd|bastion/units/center_pieces/center_0}}
+| rowspan="3" | Central courtyards with [[Nether wart]] growing in the middle. Only 1 generates per bastion.
+|
+72 {{BlockLink|Polished Blackstone Bricks}}<br>
+21 {{BlockLink|Blackstone}}<br>
+15 {{BlockLink|Chiseled Polished Blackstone}}<br>
+15 {{BlockLink|Soul Sand}}<br>
+9 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+7 {{BlockLink|Blackstone Slab}}<br>
+6 {{BlockLink|Nether Wart}}<br>
+2 {{BlockLink|Blackstone Wall}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)
+| [[File:Bastion units center 0.png|250px]]
+|-
+| {{cd|bastion/units/center_pieces/center_1}}
+|
+32 {{BlockLink|Polished Blackstone Bricks}}<br>
+23 {{BlockLink|Blackstone}}<br>
+11 {{BlockLink|Blackstone Slab}}<br>
+7 {{BlockLink|Chiseled Polished Blackstone}}<br>
+7 {{BlockLink|Soul Sand}}<br>
+4 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Nether Wart}}
+|[[File:Bastion units center 1.png|250px]]
+|-
+| {{cd|bastion/units/center_pieces/center_2}}
+|
+71 {{BlockLink|Polished Blackstone Bricks}}<br>
+26 {{BlockLink|Blackstone}}<br>
+22 {{BlockLink|Soul Sand}}<br>
+8 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+5 {{BlockLink|Blackstone Slab}}<br>
+5 {{BlockLink|Chiseled Polished Blackstone}}<br>
+5 {{BlockLink|Nether Wart}}<br>
+1 {{BlockLink|Blackstone Wall}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)
+|[[File:Bastion units center 2.png|250px]]
+|-
+| {{cd|bastion/units/pathways/pathway_0}}
+| rowspan="2" | Pathways connecting the center and the house units.
+|
+6 {{BlockLink|Blackstone}}
+| [[File:Bastion units pathways.png|250px]]
+|-
+| {{cd|bastion/units/pathways/pathway_wall_0}}
+|
+6 {{BlockLink|Blackstone}}
+| [[File:Bastion units pathways.png|250px]]
+|-
+| {{cd|bastion/units/rampart_plates/plate_0}}
+| A wall on <code>bastion/units/ramparts/ramparts_0</code>.
+|
+260 {{BlockLink|Polished Blackstone Bricks}}<br>
+81 {{BlockLink|Basalt}}<br>
+38 {{BlockLink|Blackstone}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}
+|[[File:Bastion units plate 0.png|250px]]
+|-
+| {{cd|bastion/units/ramparts/ramparts_0}}
+| rowspan="3" | The upper half of one side of the rampart. 2 of these generate per bastion.
+|
+4441 {{BlockLink|Polished Blackstone Bricks}}<br>
+494 {{BlockLink|Blackstone}}<br>
+342 {{BlockLink|Basalt}}<br>
+114 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 Loot {{BlockLink|Chest}} (Generic)<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+|[[File:Bastion units ramparts 0.png|250px]]
+|-
+| {{cd|bastion/units/ramparts/ramparts_1}}
+|
+3022 {{BlockLink|Polished Blackstone Bricks}}<br>
+482 {{BlockLink|Blackstone}}<br>
+236 {{BlockLink|Basalt}}<br>
+79 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+6 {{BlockLink|Blackstone Stairs}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+|[[File:Bastion units ramparts 1.png|250px]]
+|-
+| {{cd|bastion/units/ramparts/ramparts_2}}
+|
+1417 {{BlockLink|Polished Blackstone Bricks}}<br>
+531 {{BlockLink|Blackstone}}<br>
+74 {{BlockLink|Basalt}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}
+|[[File:Bastion units ramparts 2.png|250px]]
+|-
+| {{cd|bastion/units/edges/edge_0}}
+| rowspan="19" | House units and some roofs. They generate a <code>stage_0</code>, then a <code>stage_1</code>, a <code>stage_2</code>, and finally a <code>stage_3</code> on top.
+|
+240 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+6 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}
+|[[File:Bastion units edge 0.png|250px]]
+|-
+| {{cd|bastion/units/fillers/stage_0}}
+|
+241 {{BlockLink|Polished Blackstone Bricks}}<br>
+30 {{BlockLink|Basalt}}<br>
+6 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+|[[File:Bastion units stage 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/rot/stage_1_0}}
+|
+177 {{BlockLink|Polished Blackstone Bricks}}<br>
+29 {{BlockLink|Basalt}}<br>
+24 {{BlockLink|Blackstone}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}
+|[[File:Bastion units rot stage 1 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_0_0}}
+|
+239 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+6 {{BlockLink|Blackstone}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 0 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_0_1}}
+|
+268 {{BlockLink|Polished Blackstone Bricks}}<br>
+34 {{BlockLink|Basalt}}<br>
+9 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Blackstone}}<br>
+4 {{BlockLink|Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Lava}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 0 1.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_0_2}}
+|
+279 {{BlockLink|Polished Blackstone Bricks}}<br>
+27 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{BlockLink|Iron Chain}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+|[[File:Bastion units stage 0 2.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_0_3}}
+|
+231 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+13 {{BlockLink|Blackstone}}<br>
+10 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 0 3.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_1_0}}
+|
+178 {{BlockLink|Polished Blackstone Bricks}}<br>
+29 {{BlockLink|Basalt}}<br>
+24 {{BlockLink|Blackstone}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+2 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 1 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_1_1}}
+|
+281 {{BlockLink|Polished Blackstone Bricks}}<br>
+8 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{BlockLink|Lava}}
+|[[File:Bastion units stage 1 1.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_1_2}}
+|
+244 {{BlockLink|Polished Blackstone Bricks}}<br>
+18 {{BlockLink|Basalt}}<br>
+4 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+|[[File:Bastion units stage 1 2.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_1_3}}
+|
+279 {{BlockLink|Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Basalt}}<br>
+5 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/><br>
+1 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 1 3.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_2_0}}
+|
+176 {{BlockLink|Polished Blackstone Bricks}}<br>
+29 {{BlockLink|Basalt}}<br>
+23 {{BlockLink|Blackstone}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 2 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_2_1}}
+|
+170 {{BlockLink|Polished Blackstone Bricks}}<br>
+29 {{BlockLink|Basalt}}<br>
+23 {{BlockLink|Blackstone}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units stage 2 1.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_3_0}}
+|
+79 {{BlockLink|Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}
+|[[File:Bastion units stage 3 0.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_3_1}}
+|
+69 {{BlockLink|Polished Blackstone Bricks}}<br>
+8 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}
+|[[File:Bastion units stage 3 1.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_3_2}}
+|
+69 {{BlockLink|Polished Blackstone Bricks}}<br>
+20 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Lava}}
+|[[File:Bastion units stage 3 2.png|250px]]
+|-
+| {{cd|bastion/units/stages/stage_3_3}}
+|
+60 {{BlockLink|Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Lava}}
+|[[File:Bastion units stage 3 3.png|250px]]
+|-
+| {{cd|bastion/units/wall_units/edge_0_large}}
+|
+290 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+12 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Cracked Polished Blackstone Bricks}}
+|[[File:Bastion units edge 0 large.png|250px]]
+|-
+| {{cd|bastion/units/wall_units/unit_0}}
+|
+241 {{BlockLink|Polished Blackstone Bricks}}<br>
+31 {{BlockLink|Basalt}}<br>
+6 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Block of Gold}}<ref group="n" name="gold group"/>
+|[[File:Bastion units wall unit 0.png|250px]]
+|-
+| {{cd|bastion/units/walls/connected_wall}}
+| The lower half of the rampart on the side. Only 1 generates per bastion.
+|
+4806 {{BlockLink|Blackstone}}<br>
+158 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+12 {{BlockLink|Basalt}}<br>
+5 {{BlockLink|Block of Gold}}<br>
+1 {{BlockLink|Chiseled Polished Blackstone}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/>
+|[[File:Bastion units connected wall.png|250px]]
+|-
+| {{cd|bastion/units/walls/wall_base}}
+| The lower half of one side of the rampart connects with house units. Only 1 generates per bastion.
+|
+4654 {{BlockLink|Blackstone}}<br>
+191 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+16 {{BlockLink|Blackstone Stairs}}<br>
+12 {{BlockLink|Block of Gold}}<br>
+11 {{BlockLink|Chiseled Polished Blackstone}}<br>
+8 {{BlockLink|Polished Blackstone Bricks}}<br>
+2 Loot {{BlockLink|Chest}} (Generic)<br>
+7 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:Bastion units wall base.png|250px]]
+|-
+| {{cd|bastion/units/air_base}}
+|A technical connection part.
+|
+1 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:Polished_Blackstone_Bricks.png|200px]]
+|}
+{{-}}
+
+=== Treasure room ===
+The '''treasure room''' structure consists of a large rampart supported by buttresses, with a bridge going between it and the treasure room itself. The rampart contains several treasure chests and a handful of [[blocks of gold]].
+
+The treasure room consists of many bridges suspended above a lava floor. At the bottom of a treasure room, there is a [[magma cube]] monster spawner, and a center loot area consisting of [[blocks of gold]], as well as 1 or 2 treasure chests. Additional chests generate in the bastion remnant, but they use the "generic" loot table instead of the "treasure" loot table. Treasure room pieces are contained in the subfolder <samp>treasure</samp>.
+
+[[Ghast|Ghasts]] may spawn in the treasure room if the room is in the correct biome, which can create a difficult experience for the player. Their group size depends on the biome and edition.
+
+{| class="wikitable collapsible collapsed"
+! Structure name !! Description !! Consists of !! Image
+|-
+| {{cd|bastion/treasure/bases/centers/center_0|wordbreak=1}}
+| rowspan="4"|Center loot areas on the lava basin in the treasure room. Only 1 generates per bastion.
+|
+121 {{BlockLink|Polished Blackstone Bricks}}<br>
+19 {{BlockLink|Block of Gold}}<br>
+14 {{BlockLink|Blackstone}}<br>
+4 {{BlockLink|Blackstone Wall}}<br>
+1 Loot {{BlockLink|Chest}} (Treasure)<br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure center 0.png|250px]]
+|-
+| {{cd|bastion/treasure/bases/centers/center_1|wordbreak=1}}
+|
+118 {{BlockLink|Polished Blackstone Bricks}}<br>
+17 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Block of Gold}}<br>
+2 Loot {{BlockLink|Chest}} (Treasure)<br>
+2 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure center 1.png|250px]]
+|-
+| {{cd|bastion/treasure/bases/centers/center_2|wordbreak=1}}
+|
+134 {{BlockLink|Polished Blackstone Bricks}}<br>
+16 {{BlockLink|Block of Gold}}<br>
+11 {{BlockLink|Blackstone}}<br>
+6 {{BlockLink|Blackstone Wall}}<br>
+1 {{BlockLink|Chest}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure center 2.png|250px]]
+|-
+| {{cd|bastion/treasure/bases/centers/center_3|wordbreak=1}}
+|
+75 {{BlockLink|Polished Blackstone Bricks}}<br>
+13 {{BlockLink|Block of Gold}}<br>
+5 {{BlockLink|Blackstone}}<br>
+1 Loot {{BlockLink|Chest}} (Treasure)<br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure center 3.png|250px]]
+|-
+| {{cd|bastion/treasure/bases/lava_basin|wordbreak=1}}
+| The lava basin at the bottom of the treasure room and a bridge on it. Only 1 generates per bastion.
+|
+956 {{BlockLink|Lava}}<br>
+802 {{BlockLink|Polished Blackstone Bricks}}<br>
+129 {{BlockLink|Blackstone}}<br>
+3 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 Magma Cube {{BlockLink|Monster Spawner}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure bases lava.png|250px]]
+|-
+| {{cd|bastion/treasure/brains/center_brain|wordbreak=1}}
+| rowspan="4"|Technical connection parts.
+| N/A
+| N/A
+|-
+| {{cd|bastion/treasure/connectors/center_to_wall_middle|wordbreak=1}}
+| N/A
+| N/A
+|-
+| {{cd|bastion/treasure/connectors/center_to_wall_top|wordbreak=1}}
+| N/A
+| N/A
+|-
+| {{cd|bastion/treasure/connectors/center_to_wall_top_entrance|wordbreak=1}}
+| N/A
+| N/A
+|-
+| {{cd|bastion/treasure/corners/bottom/corner_0|wordbreak=1}}
+| rowspan="2"|The corners of the corridors of the first, second, and third floors are shown in the treasure room.
+|
+191 {{BlockLink|Polished Blackstone Bricks}}<br>
+20 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+19 {{BlockLink|Basalt}}<br>
+7 {{BlockLink|Blackstone}}<br>
+7 {{BlockLink|Polished Blackstone Brick Stairs}}
+|[[File:bastion treasure bottom corner 0.png|125px]]
+|-
+| {{cd|bastion/treasure/corners/bottom/corner_1|wordbreak=1}}
+|
+89 {{BlockLink|Polished Blackstone Bricks}}<br>
+60 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+43 {{BlockLink|Basalt}}<br>
+1 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Polished Basalt}}<br>
+|[[File:bastion treasure bottom corner 1.png|125px]]
+|-
+| {{cd|bastion/treasure/corners/edges/bottom|wordbreak=1}}
+| rowspan="3"|The corners of walls.
+|
+64 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure bottom edge.png|50px]]
+|-
+| {{cd|bastion/treasure/corners/edges/middle|wordbreak=1}}
+|
+60 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure middle edge.png|50px]]
+|-
+| {{cd|bastion/treasure/corners/edges/top|wordbreak=1}}
+|
+68 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure top edge.png|50px]]
+|-
+| {{cd|bastion/treasure/corners/middle/corner_0|wordbreak=1}}
+| rowspan="2"|The corners of the corridors of the fourth, fifth, and sixth floors of the treasure room.
+|
+86 {{BlockLink|Polished Blackstone Bricks}}<br>
+25 {{BlockLink|Basalt}}<br>
+21 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Blackstone Slab}}
+|[[File:bastion treasure middle corner 0.png|125px]]
+|-
+| {{cd|bastion/treasure/corners/middle/corner_1|wordbreak=1}}
+|
+74 {{BlockLink|Polished Blackstone Bricks}}<br>
+29 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+27 {{BlockLink|Basalt}}<br>
+5 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Iron Chain}}<br>
+1 {{BlockLink|Lantern}}
+|[[File:bastion treasure middle corner 1.png|125px]]
+|-
+| {{cd|bastion/treasure/corners/top/corner_0|wordbreak=1}}
+| rowspan="2"|The corners of the corridors of the seventh and eighth floors of the treasure room.
+|
+67 {{BlockLink|Polished Blackstone Bricks}}<br>
+40 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Blackstone}}<br>
+19 {{BlockLink|Cracked Polished Blackstone Bricks}}
+|[[File:bastion treasure top corner 0.png|125px]]
+|-
+| {{cd|bastion/treasure/corners/top/corner_1|wordbreak=1}}
+|
+74 {{BlockLink|Polished Blackstone Bricks}}<br>
+39 {{BlockLink|Basalt}}<br>
+14 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Blackstone}}<br>
+1 {{BlockLink|Polished Blackstone Stairs}}
+|[[File:bastion treasure top corner 1.png|125px]]
+|-
+| {{cd|bastion/treasure/entrances/entrance_0|wordbreak=1}}
+| The bridge going between the entrance and the treasure room.
+|
+292 {{BlockLink|Polished Blackstone Bricks}}<br>
+13 {{BlockLink|Blackstone}}<br>
+2 {{BlockLink|Block of Gold}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure entrance 0.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/empty|wordbreak=1}}
+| rowspan="4"| Structures extending from the corridors.
+|1 {{BlockLink|Basalt}}
+|[[File:Basalt (UD).png|200px]]
+|-
+| {{cd|bastion/treasure/extensions/fire_room|wordbreak=1}}
+|
+355 {{BlockLink|Polished Blackstone Bricks}}<br>
+66 {{BlockLink|Blackstone}}<br>
+18 {{BlockLink|Basalt}}<br>
+13 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Fire}}<br>
+4 {{BlockLink|Netherrack}}<br>
+1 {{BlockLink|Blackstone Slab}}
+|[[File:bastion treasure fire room.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/house_0|wordbreak=1}}
+|
+124 {{BlockLink|Polished Blackstone Bricks}}<br>
+47 {{BlockLink|Blackstone}}<br>
+7 {{BlockLink|Basalt}}<br>
+1 {{BlockLink|Polished Blackstone Stairs}}
+|[[File:bastion treasure house 0.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/house_1|wordbreak=1}}
+|
+151 {{BlockLink|Polished Blackstone Bricks}}<br>
+42 {{BlockLink|Blackstone}}<br>
+11 {{BlockLink|Basalt}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Blackstone Slab}}
+|[[File:bastion treasure house 1.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/large_bridge_0|wordbreak=1}}
+| rowspan="4"| Large bridges extending from the corridors.
+|
+20 {{BlockLink|Polished Blackstone Bricks}}<br>
+18 {{BlockLink|Blackstone}}<br>
+9 {{BlockLink|Basalt}}
+|[[File:bastion treasure large bridge 0.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/large_bridge_1|wordbreak=1}}
+|
+20 {{BlockLink|Polished Blackstone Bricks}}<br>
+8 {{BlockLink|Blackstone}}<br>
+7 {{BlockLink|Basalt}}
+|[[File:bastion treasure large bridge 1.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/large_bridge_2|wordbreak=1}}
+|
+37 {{BlockLink|Blackstone}}<br>
+31 {{BlockLink|Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Lava}}
+|[[File:bastion treasure large bridge 2.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/large_bridge_3|wordbreak=1}}
+|
+46 {{BlockLink|Polished Blackstone Bricks}}<br>
+42 {{BlockLink|Basalt}}<br>
+3 {{BlockLink|Blackstone}}
+|[[File:bastion treasure large bridge 3.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/roofed_bridge|wordbreak=1}}
+| A bridge with a roof extending from the corridors.
+|
+92 {{BlockLink|Polished Blackstone Bricks}}<br>
+27 {{BlockLink|Blackstone}}
+|[[File:bastion treasure roofed bridge.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/small_bridge_0|wordbreak=1}}
+| rowspan="4"| Small bridges extending from the corridors.
+|
+7 {{BlockLink|Polished Blackstone Bricks}}<br>
+6 {{BlockLink|Blackstone}}
+|[[File:bastion treasure small bridge 0.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/small_bridge_1|wordbreak=1}}
+|
+19 {{BlockLink|Polished Blackstone Bricks}}<br>
+12 {{BlockLink|Basalt}}
+|[[File:bastion treasure small bridge 1.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/small_bridge_2|wordbreak=1}}
+|
+11 {{BlockLink|Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Blackstone}}
+|[[File:bastion treasure small bridge 2.png|250px]]
+|-
+| {{cd|bastion/treasure/extensions/small_bridge_3|wordbreak=1}}
+|
+34 {{BlockLink|Polished Blackstone Bricks}}<br>
+23 {{BlockLink|Basalt}}
+|[[File:bastion treasure small bridge 3.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/bottom_wall_0|wordbreak=1}}
+| One side of the lower half of the rampart.
+|
+2571 {{BlockLink|Blackstone}}<br>
+109 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+16 {{BlockLink|Magma Block}}<br>
+12 {{BlockLink|Basalt}}<br>
+24 {{BlockLink|Lava}} Source<br>
+2 {{BlockLink|Polished Blackstone Bricks}}<br>
+1 {{BlockLink|Chiseled Polished Blackstone}}
+|[[File:bastion treasure bottom wall 0.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/lava_basin_main|wordbreak=1}}<!--This is structurally the same as lava_basin_side, they just have different jigsaw blocks-->
+| Lava basin under the bridge between the rampart and the treasure room. Only 1 generates per bastion.
+|
+7250 {{BlockLink|Polished Blackstone Bricks}}<br>
+357 {{BlockLink|Lava}} (Source)<br>
+55 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+13 {{BlockLink|Chiseled Polished Blackstone}}
+|[[File:bastion treasure lava basin.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/lava_basin_side|wordbreak=1}}
+| Lava basin on the left between the rampart and the treasure room. Only 1 generates per bastion.
+|
+7250 {{BlockLink|Polished Blackstone Bricks}}<br>
+357 {{BlockLink|Lava}} (Source)<br>
+55 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+13 {{BlockLink|Chiseled Polished Blackstone}}
+|[[File:bastion treasure lava basin.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/mid_wall_main|wordbreak=1}}
+|The middle right part of the rampart that connects to the bridge. Only 1 generates per bastion.
+|
+3088 {{BlockLink|Polished Blackstone Bricks}}<br>
+86 {{BlockLink|Basalt}}<br>
+42 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+41 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+29 {{BlockLink|Blackstone}}<br>
+6 {{BlockLink|Lantern}}<br>
+2 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Block of Gold}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/><br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure ramparts mid wall 0.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/mid_wall_side|wordbreak=1}}
+| The middle left part of the rampart. Only 1 generates per bastion.
+|
+2941 {{BlockLink|Polished Blackstone Bricks}}<br>
+103 {{BlockLink|Basalt}}<br>
+47 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+26 {{BlockLink|Blackstone}}<br>
+15 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+5 {{BlockLink|Lantern}}<br>
+2 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Block of Gold}}<br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/><br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure ramparts mid wall 1.png|250px]]
+|-
+| {{cd|bastion/treasure/ramparts/top_wall|wordbreak=1}}
+| The upper half of one side of the rampart.
+|
+1187 {{BlockLink|Polished Blackstone Bricks}}<br>
+39 {{BlockLink|Blackstone}}<br>
+38 {{BlockLink|Basalt}}<br>
+25 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+6 {{BlockLink|Block of Gold}}<ref group="n" name="gold group treasure">Each gold block has a 70% chance of appearing. Otherwise, air, polished blackstone, or cracked polished blackstone is generated instead.</ref><br>
+2 {{BlockLink|Lantern}}
+|[[File:bastion treasure ramparts top wall.png|250px]]
+|-
+|{{cd|bastion/treasure/roofs/center_roof|wordbreak=1}}
+| rowspan="3"|The roof of the treasure room.
+|
+1152 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure roof center.png|250px]]
+|-
+|{{cd|bastion/treasure/roofs/corner_roof|wordbreak=1}}
+|
+50 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure roof corner.png|250px]]
+|-
+|{{cd|bastion/treasure/roofs/wall_roof|wordbreak=1}}
+|
+240 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure roof wall.png|250px]]
+|-
+|{{cd|bastion/treasure/stairs/lower_stairs|wordbreak=1}}
+| Stairs on the bridge of <code>bastion/treasure/bases/lava_basin</code>.
+|
+13 {{BlockLink|Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+7 {{BlockLink|Blackstone}}
+|[[File:bastion treasure stairs.png|250px]]
+|-
+|{{cd|bastion/treasure/walls/bottom/wall_0|wordbreak=1}}
+| rowspan="4"|The corridors of the first, second, and third floors of the treasure room. 4 generate per bastion, 1 on each side.
+|
+1043 {{BlockLink|Polished Blackstone Bricks}}<br>
+83 {{BlockLink|Blackstone}}<br>
+45 {{BlockLink|Basalt}}<br>
+37 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+15 {{BlockLink|Iron Chain}}<br>
+6 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+4 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Chest}}<br> (Generic)
+1 {{BlockLink|Lava}}<br>
+1 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure wall bottom 0.png|250px]]
+|-
+|{{cd|bastion/treasure/walls/bottom/wall_1|wordbreak=1}}
+|
+983 {{BlockLink|Polished Blackstone Bricks}}<br>
+108 {{BlockLink|Basalt}}<br>
+40 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+30 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall bottom 1.png|250px]]
+|-
+|{{cd|bastion/treasure/walls/bottom/wall_2|wordbreak=1}}
+|
+1075 {{BlockLink|Polished Blackstone Bricks}}<br>
+111 {{BlockLink|Basalt}}<br>
+54 {{BlockLink|Blackstone}}<br>
+12 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+10 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+4 {{BlockLink|Lantern}}<br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall bottom 2.png|250px]]
+|-
+|{{cd|bastion/treasure/walls/bottom/wall_3|wordbreak=1}}
+|
+952 {{BlockLink|Polished Blackstone Bricks}}<br>
+130 {{BlockLink|Basalt}}<br>
+51 {{BlockLink|Blackstone}}<br>
+26 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+9 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Lava}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall bottom 3.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/mid/wall_0|wordbreak=1}}
+| rowspan="3"|The corridors of the fourth, fifth, and sixth floors of the treasure room. 4 generate per bastion, 1 on each side.
+|
+434 {{BlockLink|Polished Blackstone Bricks}}<br>
+123 {{BlockLink|Basalt}}<br>
+27 {{BlockLink|Blackstone}}<br>
+25 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+20 {{BlockLink|Polished Basalt}}<br>
+13 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+3 {{BlockLink|Lava}}<br>
+1 {{BlockLink|Blackstone Stairs}}<br>
+1 Loot {{BlockLink|Chest}} (Generic)<br>
+1 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure wall mid 0.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/mid/wall_1|wordbreak=1}}
+|
+412 {{BlockLink|Polished Blackstone Bricks}}<br>
+198 {{BlockLink|Basalt}}<br>
+77 {{BlockLink|Blackstone}}<br>
+40 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+2 {{BlockLink|Iron Chain}}<br>
+2 {{BlockLink|Lantern}}<br>
+2 {{BlockLink|Lava}}<br>
+2 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+1 {{BlockLink|Polished Basalt}}<br>
+3 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall mid 1.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/mid/wall_2|wordbreak=1}}
+|
+575 {{BlockLink|Polished Blackstone Bricks}}<br>
+130 {{BlockLink|Basalt}}<br>
+33 {{BlockLink|Blackstone}}<br>
+21 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+3 {{BlockLink|Iron Chain}}<br>
+3 {{BlockLink|Lava}} (Source)<br>
+2 {{BlockLink|Blackstone Stairs}}<br>
+2 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Polished Basalt}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall mid 2.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/outer/bottom_corner|wordbreak=1}}
+| rowspan="6"|The walls of the treasure room.
+|
+160 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 1.png|100px]]
+|-
+| {{cd|bastion/treasure/walls/outer/medium_outer_wall|wordbreak=1}}
+|
+768 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 2.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/outer/mid_corner|wordbreak=1}}
+|
+150 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 3.png|100px]]
+|-
+| {{cd|bastion/treasure/walls/outer/outer_wall|wordbreak=1}}
+|
+720 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 4.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/outer/tall_outer_wall|wordbreak=1}}
+|
+816 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 5.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/outer/top_corner|wordbreak=1}}
+|
+170 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 6.png|100px]]
+|-
+| {{cd|bastion/treasure/walls/top/main_entrance|wordbreak=1}}
+|The corridors of the seventh and eighth floors of the treasure room connect to the bridge outside.
+|
+593 {{BlockLink|Polished Blackstone Bricks}}<br>
+105 {{BlockLink|Basalt}}<br>
+79 {{BlockLink|Blackstone}}<br>
+72 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+11 {{BlockLink|Polished Basalt}}<br>
+8 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+6 {{BlockLink|Lantern}}<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin melee group"/><br>
+1 {{EntityLink|Piglin brute}}
+|[[File:bastion treasure wall top main.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/top/wall_0|wordbreak=1}}
+|rowspan="2"|The corridors of the seventh and eighth floors of the treasure room.
+|
+502 {{BlockLink|Polished Blackstone Bricks}}<br>
+102 {{BlockLink|Blackstone}}<br>
+55 {{BlockLink|Basalt}}<br>
+53 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+10 {{BlockLink|Polished Blackstone Brick Stairs}}<br>
+7 {{BlockLink|Lantern}}<br>
+6 {{BlockLink|Blackstone Stairs}}<br>
+2 {{BlockLink|Blackstone Slab}}<br>
+2 {{BlockLink|Iron Chain}}<br>
+2 {{BlockLink|Chiseled Polished Blackstone}}<br>
+2 {{BlockLink|Lava}}
+|[[File:bastion treasure wall top 0.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/top/wall_1|wordbreak=1}}
+|
+602 {{BlockLink|Polished Blackstone Bricks}}<br>
+134 {{BlockLink|Basalt}}<br>
+116 {{BlockLink|Blackstone}}<br>
+52 {{BlockLink|Cracked Polished Blackstone Bricks}}<br>
+8 {{BlockLink|Blackstone Wall}}<br>
+5 {{BlockLink|Iron Chain}}<br>
+3 {{BlockLink|Blackstone Slab}}<br>
+3 {{BlockLink|Lantern}}<br>
+1 {{BlockLink|Lava}} (Source)<br>
+2 {{EntityLink|Piglin}} or {{EntityLink|Piglin brute}}<ref group="n" name="piglin group"/>
+|[[File:bastion treasure wall top 1.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/entrance_wall|wordbreak=1}}
+|The wall of the treasure room connects with the bridge outside.
+|
+763 {{BlockLink|Polished Blackstone Bricks}}<br>
+12 {{BlockLink|Basalt}}
+|[[File:bastion treasure wall 0.png|250px]]
+|-
+| {{cd|bastion/treasure/walls/lava_wall|wordbreak=1}}
+| The wall between the treasure room and the lava basin on the left.
+|
+840 {{BlockLink|Polished Blackstone Bricks}}
+|[[File:bastion treasure wall 7.png|100px]]
+|-
+| {{cd|bastion/treasure/big_air_full|wordbreak=1}}
+| A technical connection part.
+| None
+| N/A
+|}
+{{-}}
+
+=== Blocks ===
+
+{{columns-list|colwidth=20em|
+* {{BlockLink|Basalt}}
+* {{BlockLink|Polished Basalt}}
+* {{BlockLink|Blackstone}}
+* {{BlockLink|Blackstone Slab}}
+* {{BlockLink|Blackstone Stairs}}
+* {{BlockLink|Blackstone Wall}}
+* {{BlockLink|Gilded Blackstone}}
+* {{BlockLink|Polished Blackstone Bricks}}
+* {{BlockLink|Polished Blackstone Brick Stairs}}
+* {{BlockLink|Cracked Polished Blackstone Bricks}}
+* {{BlockLink|Chiseled Polished Blackstone}}
+* {{BlockLink|Block of Gold}}
+* {{BlockLink|Iron Chain}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Glowstone}}
+* {{BlockLink|Lantern}}
+* {{BlockLink|Lava}}
+* {{BlockLink|Magma Block}}
+* {{BlockLink|Nether Wart}}
+* {{BlockLink|Netherrack}}
+* {{BlockLink|Block of Quartz}}
+* {{BlockLink|Smooth Quartz Block}}
+* {{BlockLink|Smooth Quartz Slab}}
+* {{BlockLink|Soul Sand}}
+* {{BlockLink|Monster Spawner}}
+}}
+
+== Loot == 
+{{see also|Chest loot}}
+
+=== Bridge ===
+This loot appears in some structures in bridge bastion remnants.
+
+{{LootChest|bastion-bridge}}
+
+{{notelist}}
+
+=== Generic ===
+This loot appears in chests throughout all types of bastion remnants.
+
+{{LootChest|bastion-generic}}
+
+{{notelist}}
+
+=== Hoglin Stable ===
+This loot appears in some structures in hoglin stable bastion remnants.
+
+{{LootChest|bastion-hoglin-stable}}
+
+{{notelist}}
+
+=== Treasure ===
+This loot appears in some structures in treasure bastion remnants.
+
+{{LootChest|bastion-treasure}}
+
+{{notelist}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=[[Jigsaw structure|Jigsaw]]
+|spritename=jigsaw
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Bastion Remnant
+|spritetype=env
+|nameid=bastion_remnant
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Bastion Remnant
+|spritetype=env
+|nameid=bastion_remnant
+|aliasid=bastionremnant
+|translationkey=feature.bastion_remnant
+|foot=1}}
+
+== Advancements ==
+{{load advancements|Those Were The Days;War Pigs}}
+
+== History ==
+{{see also|Bastion Remnant/Outdated loot tables in Java Edition}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w16a|Added bastion remnants.}}
+|{{HistoryLine|||dev=20w17a|Bastion remnant loot has been tweaked.
+|Ancient debris and netherite scrap have been made rarer.
+|Diamond gear is now found instead of netherite gear.
+|Damaged randomly enchanted crossbows can now be found in bastion bridge chests.
+|Other small changes to weights, stack sizes, pool contents, and rolls have been made.
+|[[Barrier]]s no longer generate in bastion lava pools.<ref>{{bug|MC-178797}}</ref>}}
+|{{HistoryLine|||dev=20w19a|Bastion remnants are now slightly less common.}}
+|{{HistoryLine|||dev=pre3|Duplicate, unused structures have been removed.
+|The fifth inner and outer large hoglin stable variants did not generate prior to this pre-release.
+|A stray [[emerald block]] has been removed from {{cd|treasure/big_air_full}}. This emerald block was never found in naturally generated bastions as it would be overwritten.}}
+|{{HistoryLine||1.16.2|dev=20w27a|Added [[piglin brutes]], which spawn in bastion remnants.}}
+|{{HistoryLine|||dev=20w30a|[[Gilded blackstone]] is now more likely to generate underneath [[chest]]s in bastion remnants.
+|The loot of bastion remnant chests has been changed, generally making more valuable items more common and in larger quantities.}}
+|{{HistoryLine||1.18.2|dev=pre1|If a bastion attempts to generate in basalt deltas, a [[Nether fortress]] generates in its place, instead of being skipped entirely.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|[[Netherite upgrade]]s and [[snout armor trim]]s are now found in bastion chests.}}
+|{{HistoryLine|||dev=23w05a|Increased the chance of [[netherite upgrade]]s and [[snout armor trim]]s from 3.2% to 10% and from 4.7% to 8.3%.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Bastion remnant chests can now contain diamond [[spear]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added bastion remnants.}}
+|{{HistoryLine|||dev=beta 1.16.0.59|Magma cube [[monster spawner]]s can now be found in bastion remnants.
+|Tweaked bastion remnant loot.}}
+|{{HistoryLine|||dev=beta 1.16.0.63|Bastion remnant loot has been tweaked again to closer resemble Java Edition.
+|Bastion remnants now contain diamond gear instead of netherite gear.
+|Other small changes to weights, stack sizes, pool contents, and rolls have been made.}}
+|{{HistoryLine||1.16.20|dev=beta 1.16.20.50|Added [[piglin brutes]], which spawn in bastion remnants.}}
+|{{HistoryLine||1.17.10|dev=beta 1.17.10.21|The loot of Bastion Remnants has been changed, generally making more valuable items more common and in larger quantities.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|[[Netherite upgrade]]s and [[snout armor trim]]s are now found in bastion chests.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:abandoned jigsaw test 1.png|thumb|{{cd|bastion/jigsaw_test}} in ''Bedrock Edition''. The structure has been modified to replace the invalid {{code|orientation}} states with {{code|north_up}}.]][[File:abandoned jigsaw test 2.png|thumb|Signs in {{cd|bastion/jigsaw_test}}.]]
+* The structure {{cd|bastion/hoglin_stable/starting_pieces/stairs_1_mirrored}}, despite containing the word "mirrored", it is not stored as mirrored like the other mirrored stairs. This has no effect on generation due to the placement of [[jigsaw block]]s in the structure.
+* {{IN|Bedrock}}, there are multiple unused structure files. Unlike the unused structures {{in|Java}}, these structures are more technical.
+** Two files named {{cd|bastion/units/wall_units/edge_0|bastion/treasure/ramparts/lava_basin|d=and}} contain blocks that have not been added to the game, including {{cd|blackstone_bricks|blackstone_brick_stairs|cracked_blackstone_bricks|chiseled_blackstone_bricks|d=and}}.
+** A test structure file, {{cd|bastion/jigsaw_test}}, contains two oak signs, some jigsaw blocks, stained glass, and stone.
+*** All of the jigsaw blocks in this structure use invalid {{code|orientation}} states: {{code|identity}}, {{code|rot_90_x_neg}}, {{code|rot_120_npp}}, {{code|rot_120_nnn}}, {{code|rot_180_edge_yz_pos}}, {{code|rot_90_x_pos}}, {{code|rot_120_ppn}}, {{code|rot_120_pnp}}, {{code|rot_180_edge_yz_neg}}, {{code|rot_180_face_xz}}, {{code|rot_90_y_neg}}, {{code|rot_90_y_pos}}
+* Buried sections can exist within the bastion and alongside it. Ore may generate alongside or within [[netherrack]], but [[glowstone blob]]s can do so within its air.
+
+== Gallery ==
+=== Screenshots ===
+
+==== Bridge ====
+<gallery>
+File:Bastion Remnant Vibrant Visuals.png|The front of a bridge bastion, with the pile of gold
+File:Bridge bastion back.png|Inside the bridge bastion as seen from the back
+File:Bridge bastion side.png|Side view of a bridge bastion
+File:BuriedBastionRemnant.png|A bridge bastion in a warped forest that is almost completely buried
+</gallery>
+
+==== Hoglin stables ====
+<gallery>
+File:Stables bastion on lava.png|Hoglin stables directly above the lava sea
+File:Hoglin stables inside.png|Inside the hoglin stables
+File:Basaltdeltabastionremnant.png|A hoglin stables bastion generating partway through a basalt delta biome
+File:Bastion with basalt pillars.png|Another hoglin stables bastion with basalt deltas
+</gallery>
+
+==== Housing units ====
+<gallery>
+File:Housing units inside.png|Inside the housing units bastion, notable for the [[Nether Wart|nether wart]]
+File:BastionSpawn.png|A housing unit bastion remnant in a [[soul sand valley]] biome, right as the player exits the Nether portal
+File:EncasedBastion.png|A housing unit bastion remnant almost completely encased in netherrack
+</gallery>
+
+==== Treasure room ====
+<gallery>
+File:Treasure bastion tower.png|The front of the treasure bastion tower clearly exposes all pathways
+File:Treasure bastion tower back.png|The back of the treasure bastion, showing blocks of gold
+File:Bastion Remnant Bridge.png|Exterior of a treasure room bastion remnant.
+File:Treasure bastion box top.png|A top-down view of the treasure box
+File:Treasure bastion box bottom.png|The bottom of the treasure box, with the magma cube spawner
+File:Treasure bastion box chest.png|A chest on the side of the treasure box
+File:Bastion treasure chest.png|An example of the loot tables in a bastion's treasure chest
+</gallery>
+
+=== Promotional images ===
+<gallery>
+File:Bastion Piglin.jpg|Piglin in a bastion.
+File:Bastion Piglin Brute.jpg|Piglin brute in a bastion.
+File:Lava Bastion.jpg|A hoglin stables bastion generated surrounded by lava.
+File:Soul Sand Valley Bastion 1.jpg|A bridge bastion in a soul sand valley.
+File:Soul Sand Valley Bastion 2.jpg|A housing unit bastion in a soul sand valley.
+File:Bastion Hoglin.jpg|Hoglin in a bastion.
+File:Bastion Walls.jpg|The central courtyard in a housing unit bastion, with a [[Nether wart]] garden.
+File:Ari loots a bastion.jpg|Ari looting a bastion chest.
+File:Flying Over Bastion.jpg|Steve gliding over a housing unit bastion.
+File:Double tap piglin.jpg
+</gallery>
+
+=== In other media ===
+<gallery>
+MCD Gold Room 1.png|A [[Dungeons:Gold Room|bastion]] as it appears in ''[[Minecraft Dungeons]]''.
+Horde of the Bastion Base MCL.jpg|The [[Legends:Horde of the Bastion|Horde of the Bastion]], a force themed around bastions from {{MCL}}.
+LEGOMCTheNetherBastionBoxed.png|A [[LEGO Minecraft|Lego]] set about a bastion remnant.
+</gallery>
+
+== Notes ==
+{{reflist|group=n}}
+
+== External links ==
+* {{Mcnet|bastion-remnant|Building Blocks: Bastion remnant|November 15, 2025|[[Duncan Geere]]}} 
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox generated structures|structures}}
+[[Category:The Nether]]
+
+[[de:Bastionsruine]]
+[[es:Bastión en ruinas]]
+[[fr:Vestiges de bastion]]
+[[it:Resti di bastione]]
+[[ja:砦の遺跡]]
+[[ko:보루 잔해]]
+[[lzh:砦堡古跡]]
+[[pl:Ruiny bastionu]]
+[[pt:Bastião em Ruínas]]
+[[ru:Развалины бастиона]]
+[[uk:Залишки бастіону]]
+[[zh:堡垒遗迹]]

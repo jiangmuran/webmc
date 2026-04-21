@@ -1,0 +1,425 @@
+'''Mob infighting''' is a mechanic in ''Minecraft'' in which certain [[mob]]s retaliate against other mobs, as part of their [[mob AI]].
+
+== Overview ==
+[[File:SkeletonvsSpiderJockeySkeleton.png|right|thumb|Two skeletons fighting each other.]]
+
+If a [[mob]] capable of attacking is directly attacked by a player or another mob, the damaged mob stops attacking its current target and attacks the mob or player that damaged it. This causes the mob that did the damage to retaliate in turn, and the two of them become locked into a duel until one of them dies. This is useful in combat as it distracts two monsters temporarily, kills one of them, and severely weakens the other.
+
+Once a mob has taken damage from a mob or player, that mob or player is set as the mob's permanent target. This means that even if another mob or player attacks an infighting mob, the infighting mob does not stop trying to attack its permanent target. A mob can refuse to infight with another monster if the player or a mob already attacked it, so the player or a mob was already set as the mob's permanent target. That mob does not infight with any other mob until the attacking player or mob dies. If the attacker goes beyond the mob's sight range, this resets the retaliating behavior and the mob either returns to neutral mode or searches for a new target.
+
+== Specific mob behavior ==
+=== Retaliation ===
+Not all mobs have the same infighting behavior. Below is a list of how each mob reacts to being attacked by another. In ''[[Bedrock Edition]]'', retaliation is controlled by the AI Goal component {{cd|minecraft:behavior.hurt_by_target}} in the entity [[JSON]] files.
+
+{| class="wikitable hlist"
+! Mob
+! Behavior
+|-
+| 
+* {{EntityLink|Bogged}}
+* {{EntityLink|Cave Spider}}
+* {{EntityLink|Enderman}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Nautilus}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Spider}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Warden}}
+* {{EntityLink|Witch}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Zombie Nautilus}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Blaze}}
+* {{EntityLink|Drowned}}
+* {{EntityLink|Ghast}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Shulker}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Villager}}
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Killer Bunny}}
+| Retaliates normally, as described above.
+|-
+|
+* {{EntityLink|Dolphin}}
+* {{EntityLink|Piglin}}
+* {{EntityLink|Piglin Brute}}
+* {{EntityLink|Silverfish}}
+* {{EntityLink|Vex}}
+* {{EntityLink|Wolf}}
+* {{EntityLink|Zombified Piglin}}
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Blaze}}
+* {{EntityLink|Drowned}}
+* {{EntityLink|Endermite}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Villager}}
+| These are pack mobs. When they retaliate, they call nearby mobs of the same type to help them if those mobs aren't already targeting another mob or player. Mobs that respond to the call set the victim as their permanent target. Additionally, piglins and piglin brutes retaliate in groups if a piglin/piglin brute is attacked by any mob including goats.{{only|java|short=true}}<ref>{{bug|MC-227625||Piglins, piglin brutes and hoglins can still attack goats when attacked}}</ref> In ''[[Bedrock Edition]]'', if the {{cd|broadcast_anger}} field is set to {{cd|true}} in the {{cd|minecraft:angry}} component in the entity [[JSON]] files, it makes the mob a pack mob.
+|-
+| {{EntityLink|Bee}}
+| Bees are a pack mob (see above) but they attack back only once until they are made angry again.
+|-
+| {{EntityLink|Hoglin}}
+| Hoglins are a pack mob (see above) but only adults can alert others, when attacked. Babies cannot.
+|-
+|{{EntityLink|Shulker}}
+
+
+|In [[Java Edition]] shulkers are a pack mob (see above) but they can retaliate against each other.
+|-
+| {{EntityLink|Zoglin}}
+| Adults only retaliate. Babies cannot.
+|-
+| {{EntityLink|Polar Bear}}
+| Retaliates as a pack mob only when a baby polar bear is attacked.
+|-
+| {{EntityLink|Wither}}
+| Retaliates normally, but not against undead mobs.
+|-
+| {{EntityLink|Breeze}}{{only|be|short=true}}
+| Retaliates normally, but not against [[trial chambers]] mobs.
+|-
+| {{EntityLink|Creeper}}
+| Retaliates only if it is not already chasing the player.
+|-
+| 
+* {{EntityLink|Evoker}}
+* {{EntityLink|Pillager}}
+* {{EntityLink|Ravager}}
+* {{EntityLink|Vindicator}}
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Illusioner}}
+| These are all the [[illager]] monsters. They retaliate against non-illager monsters. Additionally, evokers sometimes forget their target and focus back on the player. {{IN|Java}}, ravagers are also a pack mob and call other ravagers when attacked.
+|-
+| {{EntityLink|Llama}}, {{EntityLink|Trader Llama}}
+| Attacks back only once, although two llamas can alternate spitting at each other until one of them dies or is attacked by a different mob.
+|-
+| {{EntityLink|Panda}}
+| Aggressive pandas only retaliate. All other types try to attack back only once.
+|-
+|
+* {{EntityLink|Axolotl}}
+* {{EntityLink|Cat}}
+* {{EntityLink|Creaking}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Frog}}
+* {{EntityLink|Fox}}
+* {{EntityLink|Giant}}
+* {{EntityLink|Goat}}
+* {{EntityLink|Guardian}}
+* {{EntityLink|Magma Cube}}
+* {{EntityLink|Ocelot}}
+* {{EntityLink|Phantom}}
+* {{EntityLink|Pufferfish}}
+* {{EntityLink|Slime}}
+* {{EntityLink|Snow Golem}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Endermite}}
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Breeze}}
+* {{EntityLink|Ghast}}
+| Does not retaliate.
+|}
+
+;Notes
+* [[Endermen]] retaliate, but this rarely happens because they are immune to most projectiles. Endermen become hostile toward iron golems, the ender dragon, withers, zoglins and "Johnny" vindicators if damaged by any one of them.
+* Witches don't usually fight one another, but when a battle between two witches begins, it does not end without outside interference, because they continually heal themselves with potions of Healing.
+* Skeletons and witches can get into an eternal infighting battle. The witch's harming potions heal the skeleton, and the witch also drinks enough healing potions to counter the skeleton's arrows.
+* Most mobs do not retaliate to being rammed by a [[goat]], except for [[piglin]]s, [[piglin brute]]s, [[hoglin]]s, [[zoglin]]s, [[vindicator]]s named "Johnny," and [[warden]]s.
+* In Bedrock Edition, mobs do not retaliate to being damaged by [[firework rocket]]s.
+* A creeper retaliates against a mob that attacks it, but only if the player is outside the creeper's sight range. If not, the creeper continues pursuing the player.
+* Breaking gold, opening a chest, or failing to wear gold armor near a [[piglin]] causes the piglin to set the player as its permanent target. This means that a piglin does not infight with other mobs once it becomes angry at the player, even if the player never directly attacks the piglin.
+* [[Withers]] in ''[[Bedrock Edition]]'' can retaliate only against invisible mobs, because it would already attack non-undead mobs instantly.
+
+=== Hunting ===
+Some mobs fight others for other reasons than retaliation, such as hunting and fighting natural enemies.
+{| class="wikitable hlist"
+! Predator
+! Prey
+|-
+| {{EntityLink|Axolotl}}
+| 
+* {{EntityLink|Cod}}
+* {{EntityLink|Drowned}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Glow Squid}}
+* {{EntityLink|Guardian}}
+* {{EntityLink|Pufferfish}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Squid}}
+* {{EntityLink|Tadpole}}
+* {{EntityLink|Tropical Fish}}
+|-
+|
+* {{EntityLink|Bogged}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Stray}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Iron Golem}}
+|-
+| {{EntityLink|Breeze}}
+| {{EntityLink|Iron Golem}}
+|-
+|
+* {{EntityLink|Cave Spider}}
+* {{EntityLink|Spider}}
+| {{EntityLink|Iron Golem}}
+|-
+| {{EntityLink|Cat}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Rabbit}}
+|-
+| {{EntityLink|Drowned}}
+|
+* {{EntityLink|Axolotl}}
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Villager}}
+* {{EntityLink|Wandering Trader}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Snow Golem}}
+|-
+|
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Guardian}}
+|
+* {{EntityLink|Axolotl}}
+* {{EntityLink|Glow Squid}}
+* {{EntityLink|Squid}}
+|-
+| {{EntityLink|Enderman}}
+| {{EntityLink|Endermite}}
+|-
+| {{EntityLink|Endermite}}
+| {{EntityLink|Enderman}}{{only|bedrock|short=1}}
+|-
+|
+* {{EntityLink|Evoker}}
+* {{EntityLink|Vindicator}}
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Illusioner}}
+|
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Villager|Adult Villager}}
+* {{EntityLink|Wandering Trader}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Snow Golem}}
+|-
+| {{EntityLink|Frog}}
+|
+* {{EntityLink|Magma Cube|Small Magma Cube}}
+* {{EntityLink|Slime|Small Slime}}
+|-
+| {{EntityLink|Fox}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Cod}}
+* {{EntityLink|Chicken}}
+* {{EntityLink|Rabbit}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Tropical Fish}}
+|-
+| {{EntityLink|Goat}}
+| Randomly attack mobs (including armor stands{{only|java|short=1}} and cameras) that remain stationary for too long.
+|-
+|
+* {{EntityLink|Husk}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Villager}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Old Zombie Villager}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Villager}}
+* {{EntityLink|Wandering Trader}}
+
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Old Villager}}
+* {{EntityLink|Snow Golem}}
+|-
+| {{EntityLink|Iron Golem}}
+| Every [[monster]] except for the [[creeper]].
+|-
+| {{EntityLink|Killer Bunny}}{{only|java|short=1}}
+| {{EntityLink|Wolf}}
+|-
+| {{EntityLink|Llama}}
+| {{EntityLink|Wolf}}
+|-
+| {{EntityLink|Magma Cube}}
+| {{EntityLink|Iron Golem}}
+|-
+|
+* {{EntityLink|Nautilus}}
+* {{EntityLink|Zombie Nautilus}}
+|
+* {{EntityLink|Pufferfish}}
+|-
+| {{EntityLink|Ocelot}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Chicken}}
+|-
+|
+* {{EntityLink|Piglin}}
+* {{EntityLink|Piglin Brute}}
+|
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Hoglin}} (ocassionally hunted)
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Snow Golem}} (immediately if any of those golems attacks a piglin or a piglin brute)
+|-
+|
+* {{EntityLink|Pillager}}
+* {{EntityLink|Ravager}}
+* {{EntityLink|Vex}}
+|
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Villager|Adult Villager}}
+* {{EntityLink|Wandering Trader}}
+|-
+| {{EntityLink|Polar Bear}}
+| {{EntityLink|Fox}}
+|-
+| {{EntityLink|Pufferfish}}
+|
+Defensively attack:
+* {{EntityLink|Axolotl}}
+* All non-aquatic mobs
+|-
+| {{EntityLink|Silverfish}}
+| 
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Snow Golem}}
+|-
+| {{EntityLink|Slime}}
+|
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Snow Golem}}{{only|bedrock|short=1}}
+|-
+| {{EntityLink|Snow Golem}}
+| Every [[monster]] except for the [[ghast]] and [[hoglin]]{{only|bedrock|short=1}}
+|-
+| {{EntityLink|Tamed Wolf}}
+| Every mob that the owner attacks except for [[creeper]]s, [[ghast]]s and other tamed [[wolves]] with the same owner.
+|-
+| {{EntityLink|Trader Llama}}
+|
+* {{EntityLink|Drowned}}
+* {{EntityLink|Evoker}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Pillager}}
+* {{EntityLink|Ravager}}
+* {{EntityLink|Vex}}
+* {{EntityLink|Vindicator}}
+* {{EntityLink|Wolf}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Villager}}
+* Any mob that attacks its [[wandering trader]]
+
+'''{{IN|java}} only:'''
+* {{EntityLink|Illusioner}}
+|-
+| {{EntityLink|Fox|Trusting Fox}}
+| Any mob that attacks its trusted player except other [[fox|trusting foxes]] and [[ghasts]].
+
+'''Natural enemies:'''
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Cod}}
+* {{EntityLink|Chicken}}
+* {{EntityLink|Rabbit}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Tropical Fish}}
+|-
+|{{EntityLink|Vindicator}} named "Johnny"
+| Every mob except fellow illagers, [[ghast]]s, and [[agent]]s.
+
+'''{{IN|bedrock|education}} only:'''
+* {{EntityLink|Armor Stand}}
+* {{EntityLink|Camera}}
+|-
+|{{EntityLink|Warden}}
+| Every mob except other wardens.
+
+'''{{IN|bedrock|education}} only:'''
+* {{EntityLink|Camera}}
+|-
+|{{EntityLink|Witch}}
+|
+'''{{IN|bedrock}} only:'''
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Snow Golem}}
+
+'''Only as part of a patrol {{in|java}} only:'''
+* {{EntityLink|Iron Golem}}
+|-
+|{{EntityLink|Wither}}
+| Every mob except [[undead]] mobs, ghasts, and agents.
+
+'''{{IN|bedrock|education}} only:'''
+* {{EntityLink|Camera}}
+|-
+|{{EntityLink|Wither Skeleton}}
+|
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Piglin}}
+* {{EntityLink|Piglin Brute}}
+
+|-
+|{{EntityLink|Wolf}}
+|
+* {{EntityLink|Baby Turtle}}
+* {{EntityLink|Bogged}}
+* {{EntityLink|Fox}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Rabbit}}
+* {{EntityLink|Sheep}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+
+|-
+|{{EntityLink|Zoglin}}
+| Every mob except creepers, ghasts, agents and other zoglins.
+
+'''{{IN|bedrock|education}} only:'''
+* {{EntityLink|Armor Stand}}
+* {{EntityLink|Camera}}
+|}
+
+== See also ==
+* [[Mob AI]]
+* [[Music Disc]]
+* [[Mob fleeing]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+
+[[es:Pelea entre monstruos]]
+[[ja:報復]]
+[[pt:Luta de criaturas]]

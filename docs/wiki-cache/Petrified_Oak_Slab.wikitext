@@ -1,0 +1,301 @@
+{{Distinguish|Oak Slab}}
+{{Infobox block
+| image = Petrified Oak Slab.png
+| invimage = Petrified Oak Slab
+| invimage2 = Wooden Slab
+| renewable = No
+| stackable = Yes (64)
+| tool = wooden pickaxe
+| light = No
+| transparent = '''Double slab''': No<br>
+'''Single slab''': Partial <small>(blocks light)</small>{{only|java|short=1}}<br>Yes{{only|bedrock|short=1}}
+| flammable = No
+| lavasusceptible = No
+}}
+A '''petrified oak slab''', known generically as a '''wooden slab''' {{in|be}}, is a unique type of [[slab]] available through commands or by upgrading from legacy versions. Unlike all other slabs, they are unobtainable in vanilla [[Survival]] gameplay.
+
+== Obtaining ==
+Petrified oak slabs are unobtainable in new [[Survival]] worlds. They can be obtained only by using [[commands]] such as {{cmd|give}} or placed in the world using commands such as {{cmd|setblock}}.
+
+=== Breaking ===
+Petrified oak slabs require a [[pickaxe]] to mine. When broken, they drop themselves {{in|java}} or regular [[oak slab]]s {{in|bedrock}}.
+
+{{Breaking row|Petrified Oak Slab|horizontal=1|foot=1|Pickaxe|Wooden}}
+
+=== Crafting ===
+Petrified oak slabs are uncraftable in current versions without the use of a [[data pack]] or [[behavior pack]].
+
+=== Upgrading ===
+Petrified oak slabs are obtainable and craftable as one would expect in versions released before [[Java Edition 1.3.1]] (snapshot [[12w17a]]) or [[Pocket Edition v0.7.3 alpha]], in which they are the only wooden slab type.
+
+== Usage ==
+{{main|Slab#Usage}}
+Petrified oak slabs are functionally like other slabs and share most of their placement, collision, and other block behaviors with them. They date back to the earliest releases when there was only one kind of wooden slab, which had the texture of oak planks but was implemented as a variant of the generic slab, all other variants of which were made of stone. It therefore had stone properties as well.
+
+When other plank variants were introduced, true wooden slabs were added to the game with variants for each species and properties more appropriate for wood. From then on, all wooden slabs that were crafted or generated in structures were of the real wood type, but the stone variants can still exist in older worlds. These stonelike "wooden" slabs are noteworthy for how their behavior differs from what their name and appearance imply.
+
+=== Differences from normal slabs ===
+Unlike other wooden slabs:
+
+* Petrified oak slabs make the sounds characteristic of [[stone]].
+* They require a pickaxe to [[#Breaking|mine]]. If broken without a pickaxe, they drop nothing.
+* They are not [[Fire|flammable]], nor are they set on fire by nearby [[lava]].
+* They cannot be used as fuel in a [[furnace]].
+* They have a greater blast resistance.
+* [[Note block]]s placed on top produce bass drum sounds, similarly to other stone-like blocks.
+
+Unlike other slabs in general:
+* They cannot be crafted or obtained normally in Survival.
+* They do not have a direct full-block equivalent.
+* {{IN|bedrock}} they do not drop themselves, but rather drop an [[oak slab]].
+
+== Sounds ==
+{{IN|Bedrock}}, when a petrified oak slab is combined into a double slab, the block's use sound is played.<ref>{{Bug|MCPE-79659||Placing a second slab on a slab plays the wrong sound event|None}}</ref>
+
+{{Sound table/Block/Stone}}
+{{SoundTable
+| title = ''Bedrock Edition'' combine sounds
+| type = bedrock
+| {{SoundLine
+| sound =Stone hit1.ogg
+|sound2=Stone hit2.ogg
+|sound3=Stone hit3.ogg
+|sound4=Stone hit4.ogg
+|sound5=Stone hit5.ogg
+|sound6=Stone hit6.ogg
+|source=block
+|description=When a petrified oak slab is combined into a double slab
+|id=use.stone
+|translationkey=subtitles.block.generic.place
+|subtitle=Block placed
+|volume=1.0
+| pitch = 0.8
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Petrified Oak Slab
+|spritetype=block
+|nameid=petrified_oak_slab
+|blocktags=slabs, mineable/pickaxe
+|itemtags=slabs
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showforms=y
+|showaliasids=y
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wooden Double Slab
+|spritename=oak-planks
+|spritetype=block
+|nameid=petrified_oak_double_slab
+|aliasid=double_stone_block_slab / 2, double_stone_slab / 2
+|id=-903
+|form=block
+|itemform=petrified_oak_double_slab
+|itemform2=<br>Alias ID: <code>real_double_stone_slab / 2</code>
+|translationkey=tile.double_stone_slab.wood.name}}
+{{ID table
+|displayname=Wooden Slab
+|spritename=petrified-oak-slab
+|spritetype=block
+|nameid=petrified_oak_slab
+|aliasid=stone_block_slab / 2, stone_slab / 2
+|id=-902
+|itemform=petrified_oak_slab
+|itemform2=<br>Alias ID: <code>double_stone_slab / 2</code>
+|translationkey=tile.stone_slab.wood.name
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Slab|block states}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Added petrified oak slabs.
+|Petrified oak slabs were the "usual" wood slab in this version, as they were craftable from planks like all other slabs were, and accordingly named "Wooden Slab" in item form.
+|Their behavior was due to sharing a block ID with all other slabs at the time, distinguished only by metadata, which could not define other block properties such as material and hardness.
+|The crafting recipe originally only produced 3 wooden slabs.
+{{pipe escape|{| class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+|-
+|{{Crafting Table
+|A3= Oak Planks
+|B3= Oak Planks
+|C3= Oak Planks
+|Output = Wooden Slab, 3
+|ignoreusage=1}}
+|}}}
+}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=1.2|Wooden slabs can be placed in the top half of blocks.
+|The crafting recipe has been changed to produce 6 wooden slabs instead of 3.
+{{pipe escape|{| class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+|-
+|{{Crafting Table
+|A3= Oak Planks
+|B3= Oak Planks
+|C3= Oak Planks
+|Output = Wooden Slab, 6
+|ignoreusage=1}}
+|}}}
+}}
+|{{HistoryLine||1.3.1|dev=12w17a|A separate block ID has been added for wooden slabs, to account for the addition of slabs with new wood types. This new ID also has the characteristics of normal wood blocks. As of this version, the petrified oak slab, still called "Wooden Slab", is now unobtainable, and can only be obtained by having them present in the world from previous versions (placed or as items).}}
+|{{HistoryLine||1.13|dev=17w47a|"Wooden Slab" has been renamed to "Petrified Oak Slab".
+|Petrified oak slabs have been made available in the Creative inventory.}}
+|{{HistoryLine||1.19.3|dev=22w42a|Petrified oak slabs are no longer in the Creative inventory.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|[[File:Petrified Oak Slab BE1.png|32px]] Added wooden slabs, which are currently unobtainable.}}
+|{{HistoryLine||v0.2.0|[[File:Petrified Oak Slab BE2.png|32px]] The texture of wooden slabs has been changed to match that of [[planks]].}}
+|{{HistoryLine||v0.3.0|Wooden slabs can now obtained via [[crafting]] in [[Survival]] mode.
+|Wooden slabs are now available in the [[Creative]] inventory.}}
+|{{HistoryLine||v0.4.0|[[File:Petrified Oak Slab BE3.png|32px]] The model of bottom wooden slabs now uses the bottom half of the full block's texture.}}
+|{{HistoryLine||v0.7.3|Wooden slabs have been renamed to "Fake Wood Slab" and are no longer obtainable except by using inventory editors. This was done to make way for the new wooden slabs with wood-like properties and multiple species.
+|Fake wood slabs now drop the new [[wooden slab]]s.}}
+|{{HistoryLine||v0.11.0|dev=build 1|"Fake Wood Slab" has been renamed to "Wooden Slab".}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.23|Removed wooden slabs. Existing wooden slab blocks and items in old worlds are converted into [[oak slab]]s.|Double wooden slabs still exist.}}
+|{{HistoryLine|||dev=Preview 1.21.0.25|Re-added wooden slabs.<ref>{{bug|MCPE-180964||Petrified oak ("wooden") slabs are not converted properly|F}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU0|ps3=1.00|psvita=1.00|ps4=1.00|Added petrified oak slabs.}}
+|{{HistoryLine||xbox=TU9|Petrified oak slabs are no longer obtainable in [[Survival]].
+|However, they still exist in the [[Creative]] inventory as the only type of oak slab there.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Petrified oak slabs are no longer available in the [[Creative]] inventory.}}
+}}
+
+=== Appearance changes ===<!--to be later made into an "Asset history" subpage if I get my way-->
+==== Block ====
+{{info needed section|BE/LCE needs completed}}
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|[[File:Petrified Oak Slab JE1.png|32px]] [[File:Oak Planks JE3 BE1.png|32px]] Added petrified oak slabs.}}
+|{{HistoryLine||1.7|[[File:Petrified Oak Slab JE2.png|32px]] The UV of many non-full blocks has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|[[File:Petrified Oak Slab JE3.png|32px]] [[File:Oak Planks JE4 BE2.png|32px]] The oak planks texture has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine||1.2.1|dev=1.2|[[File:Oak Slab Top JE1 BE1.png|32px]] This is how petrified oak top slabs looked.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Petrified Oak Slab JE4.png|32px]] [[File:Oak Planks JE5.png|32px]] The oak planks texture has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine|||dev=18w47a|[[File:Petrified Oak Slab JE5.png|32px]] [[File:Oak Planks JE6 BE3.png|32px]] The oak planks texture has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|[[File:Petrified Oak Slab BE1.png|32px]] [[File:Oak Planks JE3 BE1.png|32px]] Added petrified oak slabs.}}
+|{{HistoryLine||v0.2.0|[[File:Petrified Oak Slab BE2.png|32px]] [[File:Oak Planks JE4 BE2.png|32px]] The oak planks texture has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine||v0.4.0|[[File:Petrified Oak Slab BE3.png|32px]] The UV of many non-full blocks has changed, changing the petrified oak slab's appearance.}}
+}}
+
+==== Item ====
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100131-2156|[[File:Petrified Oak Slab (inventory) JE1.png|32px]] [[Durability]] has been introduced. It can be assigned to stone slab items via an inventory editor, but is functionally meaningless in this case.}}
+|{{HistoryLine|||dev=20100201-2227|[[File:Petrified Oak Slab (inventory) JE2.png|32px]] All 3D items now appear slightly darker on the left.}}
+|{{HistoryLine|||dev=?<!--after the above, but before the archived 0206-->|[[File:Petrified Oak Slab (inventory) JE3.png|32px]] All 3D items now appear much brighter.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||Minecraft Infdev|dev=20100611|link=Minecraft Infdev|slink=Java Edition Infdev 20100611|[[File:Petrified Oak Slab (inventory) JE4.png|32px]] All 3D items now appear slightly darker.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Petrified Oak Slab (inventory) JE5.png|32px]] All 3D items now appear very slightly darker.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[File:Petrified Oak Slab (inventory) JE6.png|32px]] The durability bar appears slightly emptier.}}
+|{{HistoryLine||1.3|[[File:Petrified Oak Slab (inventory) JE7.png|32px]] Item damage is now used to track block variants. Stone slabs with 2 damage are now petrified oak slabs.}}
+|{{HistoryLine||1.6|dev=Test Build 3|[[File:Petrified Oak Slab (inventory) JE8.png|32px]] All 3D items now appear much brighter and are rotated 90 degrees clockwise from their previous positions.}}
+|{{HistoryLine||1.7|[[File:Petrified Oak Slab (inventory) JE9.png|32px]] The UV of slabs now uses the bottom half of the texture for the side.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Petrified Oak Slab (inventory) JE10.png|32px]] All 3D items now appear even brighter than previously, with almost no shading.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|[[File:Petrified Oak Slab (inventory) JE11.png|32px]] The oak planks texture has changed, changing the petrified oak slab's appearance.}}
+|{{HistoryLine|||dev=RC2|[[File:Petrified Oak Slab (inventory) JE12.png|32px]] All 3D items are now shaded more reasonably.}}
+|{{HistoryLine||1.3.1|dev=12w22a|[[File:Petrified Oak Slab (inventory) JE13.png|32px]] Most 3D items in the inventory have been rotated 90 degrees anti-clockwise.}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Petrified Oak Slab (inventory) JE14.png|32px]] Items appeared slightly darker in the player's inventory than in chests prior to this version.}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:Petrified Oak Slab (inventory) JE15.png|32px]] Petrified oak slab items [[Missing textures and models|no longer have a model]].}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Petrified Oak Slab (inventory) JE16.png|32px]] The missing model has changed, modifying the petrified oak slab's appearance.}}
+|{{HistoryLine||1.13|dev=17w43a|[[File:Petrified Oak Slab (inventory) JE17.png|32px]] The missing model has changed, modifying the petrified oak slab's appearance.}}
+|{{HistoryLine|||dev=17w47a|[[File:Petrified Oak Slab (inventory) JE18.png|32px]] Petrified oak slabs now have an item model again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Petrified Oak Slab (inventory) JE19.png|32px]] The planks texture has been changed.}}
+|{{HistoryLine|||dev=18w45a|[[File:Petrified Oak Slab (inventory) JE20.png|32px]] Some side pixels on the item model appear to have been rearranged.}}
+|{{HistoryLine|||dev=18w47a|[[File:Petrified Oak Slab (inventory) JE21.png|32px]] The planks texture has changed once again.}}
+|{{HistoryLine||1.15|dev=19w38a|[[File:Petrified Oak Slab (inventory) JE22.png|32px]] The same pixels on the inventory item as were changed in 18w45a have been changed again, possibly a reversion of said change.}}
+|{{HistoryLine|||dev=19w39a|[[File:Petrified Oak Slab (inventory) JE23.png|32px]] The right side of the item has been brightened, and the left side darkened.}}
+|{{HistoryLine|||dev=19w40a|[[File:Petrified Oak Slab (inventory) JE24.png|32px]] The item appears to have far less shading then previously.}}
+|{{HistoryLine|||dev=19w41a|[[File:Petrified Oak Slab (inventory) JE25.png|32px]] Item shading is once again in effect to a similar degree as before.}}
+|{{HistoryLine|||dev=19w42a|[[File:Petrified Oak Slab (inventory) JE26.png|32px]] The item appears identical to how it did in 19w40a, with minimal shading.}}
+|{{HistoryLine|||dev=Pre-release 1|[[File:Petrified Oak Slab (inventory) JE27.png|32px]] The same pixels as were changed in 18w45a and 19w38a appear to have been changed once more.}}
+|{{HistoryLine|||dev=Pre-release 3|[[File:Petrified Oak Slab (inventory) JE28.png|32px]] Item shading is now darker, less so than in 19w39a, but more so than in 1.14.4.}}
+|{{HistoryLine|||dev=Pre-release 4|[[File:Petrified Oak Slab (inventory) JE29.png|32px]] The left side of items is now brighter, but the top face is now slightly darker.}}
+|{{HistoryLine||1.17|dev=21w10a|[[File:Petrified Oak Slab (inventory) JE30.png|32px]] Item lighting appears to have been reverted to its 1.15 Pre-release 3 levels.}}
+|{{HistoryLine||1.21.11|dev=25w44a|[[File:Petrified Oak Slab (inventory) JE31.png|32px]] The same pixels as were changed in 18w45a, 19w38a and 1.15 Pre-release 1 have once again changed.}}
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Wooden slabs do not currently have an associated icon in <samp>[[gui_blocks.png]]</samp>, resulting in inconsistent inventory icon behavior.{{info needed|what exactly?}}}}
+|{{HistoryLine||v0.3.0|Wooden slabs are now assigned an inventory icon.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=?|With the addition of block states, the state used for these slabs has a specific name: <samp>wood_old</samp> and the variant name: <samp>old_wood_slab</samp>. The item texture was missing for having a variant name that was not registered in the model item rendering code and in the game assets item model.}}<!-- RESEARCH NEEDED - MAKE THIS ABOUT SLABS
+{{History|||dev=14w26a|Block metadata has been completely removed from this snapshot onward with the introduction of [[block states]]. As this block never used block metadata at all prior to this version, fifteen unused, inaccessible metadata variants of it have been completely removed from the game:
+{{dvt|spritetype=block|sprite=bedrock|[[Bedrock]]}}
+{{dvt|sprite=missing-texture-block|dv=1-15|[[Java Edition removed blocks#Boring variants|Inaccessible "boring" variants of bedrock]]|foot=1}}}}-->
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 43 and 44.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Wooden slabs are added with the <code>stone_slab</code> ID, however their item form's ID is incorrectly registered as <code>double_stone_slab</code>.
+|The direct item form of double wooden slabs have the <code>real_double_stone_slab</code> ID.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.27|The IDs of wooden slabs and double wooden slabs have been changed to <code>stone_block_slab</code> and <code>double_stone_block_slab</code> respectively.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|Wooden slabs now use the <code>minecraft:vertical_half</code> [[block state]] instead of <code>top_slot_bit</code>.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.23|The ID of wooden slabs have now been merged with the regular [[oak slab]] (<code>oak_slab</code>), effectively removing wooden slabs completely. Wooden slabs placed before the preview 1.21.0.23 are converted to oak slabs.|Double wooden slabs still exist.}}
+|{{HistoryLine|||dev=Preview 1.21.0.25|Re-added wooden slabs, now with a new ID: <code>petrified_oak_slab</code>.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|The different stone slab type [[block states]] for the <code>double_stone_block_slab</code> ID have been split up into their own IDs.}}
+}}
+
+== Nomenclature ==
+Petrified oak slabs are often referred as "alpha slabs" even through petrified oak slab were added in [[Java Edition Beta 1.3|Beta 1.3]]. In a similar case [[invalid data value leaves]] are often referred as "alpha leaves" even through other leaves types were added in [[Java Edition Beta 1.2|Beta 1.2]].
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+FireSafeInHouse.png|A petrified oak slab house with a [[netherrack]] fireplace.
+FakeSlabs.jpg|A fake wood slab in a [[player]]'s [[inventory]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Unused features}}
+{{Navbox slab}}{{Navbox blocks|creative}}
+
+[[Category:Creative or commands only blocks]]
+[[Category:Slabs]]
+
+[[fr:Dalle en chêne pétrifiée]]
+[[ja:石化したオークのハーフブロック]]
+[[ko:규화한 참나무 반 블록]]
+[[pt:Laje de Carvalho Petrificado]]
+[[zh:石化橡木台阶]]

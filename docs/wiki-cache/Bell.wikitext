@@ -1,0 +1,329 @@
+{{about|the block|the note block instrument|Note Block#Instruments}}
+{{Infobox block
+| group = Floor
+| 1-1 = Bell.png
+| 1-1caption = {{JE}}
+| 1-2 = Bell BE.png
+| 1-2caption = {{BE}}
+| group2 = Ceiling
+| 2-1 = Ceiling Bell.png
+| group3 = Wall
+| 3-1 = Wall Bell.png
+| group4 = Double Wall
+| 4-1 = Double Wall Bell.png
+| transparent = Yes
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+|waterloggable = {{jebe|No|Yes}}
+| lavasusceptible = No
+}}
+A '''bell''' is a [[block]] that can be rung {{Control|use|text=by hand}}, with a [[projectile]] or using a [[redstone signal]] to make all nearby [[villager]]s run to their [[bed]]s. {{IN|je}}, this also [[Glowing|reveals]] all [[illager]]-related [[mobs]] in a large radius. It can be found in [[villages]] or [[Trading|purchased]] from villagers, and cannot be [[crafted]].
+
+== Obtaining ==
+=== Breaking ===
+A bell can be mined with anything, but [[pickaxe]]s are the fastest. A bell also breaks and drops itself if the block it is attached to is moved or destroyed, and, {{in|java}}, if a [[piston]] extends or pushes a block into its location.
+{{breaking row|horizontal=1|Bell|pickaxe}}
+
+=== Natural generation ===
+Bells can generate naturally in all [[village]] variants, usually near the center of the village in the meeting point.
+
+=== Generated loot ===
+{{LootChestItem|bell}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+Bells can be anchored to the side of blocks, ceilings, and floors and drop as an item if the sustain block is broken or moved by a piston. They can also be attached to trapdoors but break if the trapdoor is opened.
+
+When the {{control|use}} control is pressed while looking at the side of a bell, it produces a sound as well as a "swaying" animation. A bell can also be rung using a [[redstone]] signal, by any projectile, or by dropping an [[item]] on it.{{Only|BE}}
+
+If the player rings the bell while villagers are sleeping, all of the villagers wake up. Bells can be rung by players only from certain angles (villagers are not subject to this restriction); trying from an incorrect angle does not cause the bell to ring.
+
+Villagers ring the bell only during raids.
+
+=== Claiming ===
+A villager can detect a bell within 48 blocks [[euclidean distance]] horizontally and 6 blocks vertically (either up or down) from the base of its hitbox. The villager can claim the bell if it gets within 6 blocks [[taxicab distance]] of the bell and there is a valid path that can lead them to be in the block beside the bell. Baby villagers do not claim nor ring a bell.   
+
+When villagers spawn and have not already claimed a bed or workstation, they will automatically claim any bell within 6 blocks of them, even if they cannot reach it. Additionally, when a bell is placed within 48 blocks from the pillow of a claimed [[bed]] and there is a valid path a villager can walk through, the bell gets automatically claimed in the afternoon (between 9000t and 12000t), which is displayed by green particles appearing above the bell. This does not work with claimed workstations.
+
+Claimed bells are [[Point of Interest|POIs]] and determine the position of a [[Village|village center]] among claimed beds and workstations.
+
+When a player subject to the [[Bad Omen]] effect enters a village with a bell, the claiming mechanisms are forced no matter the time, meaning that if the bell is close enough either from a villager or from a claimed bed, it becomes part of the village.
+
+A claimed bell defines a gathering site of a village, and villagers pathfind close to it in the afternoon.
+
+If the bell is broken, anger particles appear above the village leader's head.{{only|be}}
+
+If a player rings a bell, the villagers run to their beds even if there is no raid. Villagers can activate a bell even through blocks, but only if it was previously claimed and at least 2 blocks (also diagonal) from the base of their hitbox.
+
+=== Raid ===
+{{seealso|Tutorial:Defeating a village raid}}
+When the bell is rung, villagers within a distance of 32 blocks run to the nearest bed within 32 blocks immediately.
+
+{{IN|je}}, when a [[raid]]'s first wave appears, at least one villager rushes to ring the bell in the center of the village (if they are close enough) to warn the other villagers of an incoming raid before running to their beds. {{IN|bedrock}}, bells in the corresponding [[village]] ring automatically at the start of a raid, warning villagers to return to their beds.
+
+==== Glowing effect ====
+{{exclusive|java|section=1}}
+If a bell is rung and there is a raid mob within a 32 block spherical range, the [[Glowing]] effect is applied to all raid mobs within 48 blocks for 3 seconds, and {{EffectSprite|particle-bell-highlight-1}}{{EffectSprite|particle-bell-highlight-2}} particles appear. It produces a resonating sound once this process is complete. The raid mobs do not have to be actively participating in a raid to receive the Glowing effect; the effect applies to [[illager]]s in [[woodland mansion]]s, or [[witch]]es that naturally spawn in the Overworld.
+
+=== Piglins ===
+[[Piglin]]s run toward any bell item on the ground, and inspect it for 6 seconds {{in|java}} or 8 seconds {{in|bedrock}}<ref>{{bug|MCPE-99448||Piglins need 8 seconds to barter, while they only need 6 in java}}</ref> before putting it in their inventory. Breaking or ringing a bell does not aggravate them.<ref>{{bug|MC-179104||Piglins don't mind players mining bells near them|WAI}}</ref>
+
+=== Redstone component ===
+{{IN|je}}, bells ring one time upon receiving a redstone signal. Observers can detect when a bell receives a redstone signal, and when it stops receiving a signal (corresponding to the {{code|powered}} block state). Observers cannot detect when a bell is activated by the player or other entities. [[Sculk sensor]]s, however, can detect a bell being rung in any way, or when placed or broken. Bells are transparent blocks and cannot be powered.
+
+{{IN|bedrock}}, [[observer]]s can detect when a bell is rung. Observers do not emit a signal when the bell stops ringing or becomes unpowered. Bells also conduct redstone power {{in|bedrock}}.
+
+{{IN|be}}, bells can only activate on the input/consume redstone tick ([[C-tick]]).
+
+=== Piston interactivity ===
+{{IN|je}}, bells are destroyed when [[piston]]s push them. It also can not be pulled by [[sticky piston]]s.
+
+{{IN|be}}, bells can be pushed and pulled by both [[piston]]s and [[sticky piston]]s, but breaks if unsupported, turning into drops when applicable.
+
+== Sounds ==
+=== Generic ===
+{{edition|java}}:
+{{Sound table/Block/Anvil/JE}}
+{{edition|bedrock}}: <ref group=sound>{{Bug|MCPE-140091||Bell makes incorrect sounds when placed}}</ref>
+{{Sound table/Block/Metal/BE}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Bell use1.ogg
+|sound2=Bell use2.ogg
+|subtitle=Bell rings
+|description=When a bell is hit
+|source=block
+|id=block.bell.use
+|translationkey=subtitles.block.bell.use
+|volume=24.0
+|pitch=''varies'' <ref group="sound">Can be 0.93, 0.95, or 0.97 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Bell resonate.ogg
+|subtitle=Bell resonates
+|id=block.bell.resonate
+|translationkey=subtitles.block.bell.resonate
+|source=block
+|description=When a bell is rung and raiders are nearby
+|volume=1.0
+|pitch=''varies'' <ref group="sound">Can be 0.85, 0.9, or 1.0 for each sound</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bell use1.ogg
+|sound2=Bell use2.ogg
+|source=block
+|subtitle=Bell rings
+|description=When a bell is hit
+|id=block.bell.hit
+|translationkey=subtitles.block.bell.use
+|volume=1.0
+| pitch = ''varies'' <ref group="sound">Can be 0.93, 0.95, or 0.97 for each sound</ref>
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bell
+|spritetype=block
+|nameid=bell
+|itemtags=piglin_loved
+|foot=1
+}}
+{{ID table
+|displayname=Block entity
+|spritename=bell
+|spritetype=block
+|nameid=bell
+|foot=1
+}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bell
+|spritetype=block
+|nameid=bell
+|blocktags=minecraft:is_pickaxe_item_destructible
+|id=461
+|foot=1
+}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=bell
+|spritetype=block
+|nameid=Bell
+|foot=1
+}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|attachment|floor|ceiling,double_wall,floor,single_wall|What the bell is attached to.}}
+{{bst|facing|north|east,north,south,west|The direction the bell is facing.<br>Opposite from the direction the player faces when placing a bell.}}
+{{bst|powered|false|true,false|Whether the bell is attached to a power source, such as a redstone torch.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=0x4,0x8|attachment|standing|standing,hanging,side,multiple|What the bell is attached to.|0,1,2,3}}
+{{bst|bits=0x1,0x2|direction|0|0,1,2,3|The direction the bell is facing. Opposite from the direction a player faces when placing the block.
+*0: South facing bell
+*1: West facing bell
+*2: North facing bell
+*3: East facing bell}}
+{{bst|bits=0x10|toggle_bit|false|false,true|Each time the bell is rung, this value toggles between true and false.|0,1|foot=1}}
+
+=== Block data ===
+A bell has a [[block entity]] associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+</div><section end="block data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Sound the Alarm!;Oooh, shiny!}}
+
+== Advancements ==
+{{load advancements|Oh, Shiny!}}
+
+== History ==
+''For a history of changes to textures and models for each block state, see [[/Asset history]]''
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Floor Bell (N) JE1.png|32px]] [[File:Wall Bell (N) JE1.png|32px]] [[File:Ceiling Bell (N) JE1.png|32px]] [[File:Bell (item) JE1 BE1.png|32px]] Added bells, with "<code>floor</code>", "<code>wall</code>" and "<code>ceiling</code>" attachments. The "<code>wall</code>" attachment is inaccessible, and [[Missing model|has no model]].}}
+|{{HistoryLine|||dev=18w47a|[[File:Floor Bell (N) JE2.png|32px]] [[File:Ceiling Bell (N) JE2.png|32px]] Planks textures have been updated, changing the appearance of bells.}}
+|{{HistoryLine|||dev=18w48a|Bells now generate in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Bells now generate in the updated [[savanna]] villages and the new [[snowy tundra]] villages.}}
+|{{HistoryLine|||dev=18w50a|[[File:Floor Bell (N) JE3.png|32px]] [[File:Ceiling Bell (N) JE3.png|32px]] The models for floor and ceiling bells have changed, matching {{edition|bedrock}} in the former case.
+|[[File:Wall Bell (N) JE2.png|32px]] Bells with wall attachments are now properly implemented, no longer not having models. An oddity regarding their states is that their facing state corresponds to the direction they attach to, as opposed to the block face they attach to (an oddity shared with [[cocoa]]).
+|[[File:Double Wall Bell (N) JE1.png|32px]] Bells with two wall attachments have also been added.
+|Bells now generate in the updated [[desert]] and [[taiga]] villages.
+|Added [[sound]]s for bells.
+|Bells now have a shaking animation when hit.}}
+|{{HistoryLine|||dev=19w03a|More cullface arguments have been added to bell [[model]].}}
+|{{HistoryLine|||dev=19w11a|Bells are now [[trading|sold]] by armorer, toolsmith and weaponsmith [[villager]]s, making them [[renewable]].
+|Bells now ring when hit by [[arrow]]s, [[spectral arrow]]s, [[tipped arrow]]s, and [[trident]]s.}}
+|{{HistoryLine|||dev=19w13b|Hitting a bell now gives the [[glowing]] effect to raiders within a 32-[[block]]-radius of the bell.}}
+|{{HistoryLine|||dev=pre3|[[File:Floor Bell (N) JE4.png|32px]] [[File:Wall Bell (N) JE3.png|32px]] [[File:Double Wall Bell (N) JE2.png|32px]] [[File:Ceiling Bell (N) JE4.png|32px]] The models of bells has been changed.}}
+|{{HistoryLine||1.15|dev=19w36a|Bells now ring if powered with a [[redstone]] signal.}}
+|{{HistoryLine||1.16|dev=20w11a|Bells now ring when hit by any [[projectile]].}}
+|{{HistoryLine|||dev=20w16a|Bells now generate in [[ruined portal]] chests.}}
+|{{HistoryLine|||dev=20w22a|Bells now do not need a completely full face to hang from, and as such can be attached to the bottom face of many more blocks.<ref>{{bug|MC-169683||Bells cannot be hung from certain blocks that have a wide enough base|Fixed}}</ref>}}
+|{{HistoryLine||1.21.4|dev=24w44a|Bells now drop when broken with any tool. Before, they needed at least a wooden pickaxe, or to have their supporting block removed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|exp=Experimental Gameplay|[[File:Bell BE1.png|32px]] [[File:Bell (item) JE1 BE1.png|32px]] Added bells behind [[Experimental Gameplay]].
+|Unlike {{in|java}}, the side texture of bells is currently made of stone rather than planks.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|Bells can now generate in the new [[village]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Functionality has been added to bells. The [[player]] can now interact with the bell by shooting it with projectiles such as [[arrow]]s, [[trident]]s, [[splash potion]]s, [[firework rocket]]s, [[snowball]]s and throwing dropped [[item]]s, or activating it when wired to [[redstone]].|Bells are no longer locked behind Experimental Gameplay.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Bells can now be obtained from [[trading]] with armorer, toolsmith, and weaponsmith [[villager]]s.
+|Villagers now run into their houses when a bell is rung.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Bells now generate in [[ruined portal]] chests.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.22|Bells can no longer catch on fire or be destroyed by fire.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the hardness of bells from 1 to 5.
+|Increased the blast resistance of bells from 3 to 5.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Bells are mined faster when using an improper tool.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Bell BE1.png|32px]] [[File:Bell (item) JE1 BE1.png|32px]] Added bells.|Bells can be obtained from [[trading]] with armorer, toolsmith, and weaponsmith [[villager]]s.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w50a|The block states {{code|<nowiki>face=ceiling|floor|wall</nowiki>}} of bells have been changed to {{code|<nowiki>attachment=ceiling|double_wall|floor|single_wall</nowiki>}}.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|{{anchor|Unused}}[[File:Granite Bell.png|32px]] [[File:Polished Granite Bell.png|32px]] [[File:Diorite Bell.png|32px]] There are unused bells with the side textures of [[granite]], polished granite and [[diorite]] that can be obtained via [[commands]]. These are without a doubt due to rotation metadata being misinterpreted as variant data, as granite, polished granite, and diorite are simply metadata variants of stone in this version.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|The bells with granite, polished granite, and diorite textures have been removed. Existing bells with these textures are automatically converted to rotated standing bells.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* {{IN|bedrock}}, bells deflect any projectile that does not disappear when hitting a surface ([[arrow]]s or [[trident]]s).
+* {{IN|bedrock}}, If a villager tries to give another villager food near a bell, there is a chance it might hit the bell with the food and cause all the villagers to run, thrower included.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Bell gongs.gif|An animation of a bell gong.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:LadyAgnes savanna village.jpg|LadyAgnes tweets a screenshot of an updated savanna village, which features a bell.<ref>{{tweet|LadyAgnes|1065957800831082496|Me and the amazing @ProfMobius are working on the updated looks of villages, here is a savanna village!|November 23, 2018}}</ref>
+File:Bells.png|A close up of the bell in the previous image. Also uses the old bell texture.
+File:Market stall with bell.png|A bell between two market stalls in a superflat village.
+File:The annoying bell.png|Villagers ringing a bell during a [[raid]].
+File:Bell on Underside.jpg|A bell placed on the underside of a block.
+File:Cozy Cabin Bells.jpg|Bells placed on a cozy cabin.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|utility}}
+
+[[Category:Utility blocks]]
+[[Category:Createable blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+[[Category:Mechanisms]]
+
+[[de:Glocke]]
+[[es:Campana]]
+[[fr:Cloche]]
+[[it:Campana]]
+[[ja:鐘]]
+[[ko:종]]
+[[pl:Dzwon]]
+[[pt:Sino]]
+[[ru:Колокол]]
+[[uk:Дзвін]]
+[[zh:钟]]

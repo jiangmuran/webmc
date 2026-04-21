@@ -1,0 +1,104 @@
+{{Infobox book
+| title = End Poem
+| imagearea = [[File:End Poem Section.png]]<br>'''{{JE}}'''<br>[[File:End Poem Bedrock.png]]<br>'''{{BE}}'''
+| defaultimagesize =
+| author = [[wikipedia:Julian_Gough|Julian Gough]]
+| audio = 
+| cover =
+| language = English
+| genre = Narrative poem
+| location = ''[[Minecraft]]''
+| publisher = [[Mojang Studios]]
+| date = November 11, 2011
+| media = Digital
+}}
+
+The '''End Poem''' is a freehand narrative poem written by novelist and poet [[wikipedia:Julian_Gough|Julian Gough]] that can be seen when the [[player]] enters the [[exit portal]] in [[the End]] dimension. The poem is followed by the [[credit sequence]].
+
+== Accessing ==
+After entering [[the End]] dimension and killing the [[ender dragon]], the [[exit portal]] is activated, allowing the player to enter and view the End Poem, followed by the credits. The player is then teleported to their spawn point if available, or the world spawn if not. The End Poem only shows upon the player's first entry of the exit portal. The player can also trigger the End Poem by entering an End portal built using [[Creative]] mode or [[commands]].
+
+The End Poem can be successively sped up by holding {{key|Space}}, then additionally {{key|Ctrl}}, then the other {{key|Ctrl}}.{{only|je}} The poem can be skipped entirely by pressing {{key|Esc}} {{in|je}} or "Skip" {{in|be}}.
+
+== Contents ==
+{{Spoiler warning|section|the ''End Poem'' '''text'''}}
+The End Poem lasts 7 minutes and 38 seconds. It takes the form of a scrolling dialogue between two voices who are discussing the player's accomplishments, dreams, and relation to the rest of the universe. The voices claim to be all the universe that is distinct from the player, and that the player is reading their cosmic thoughts as words on a screen. The credits appear below the End Poem. During the End Poem and credits, the track "[[Alpha (song)|Alpha]]" in the [[Minecraft - Volume Beta|official soundtrack]] (<code>alpha.ogg</code>{{only|java}}/<code>credits.ogg</code>{{only|bedrock}}) plays.
+
+=== Technical details ===
+{{IN|java}}, the End Poem and credits are stored in [[client.jar]]; the text of the End Poem is located in <code>assets/minecraft/texts/end.txt</code>. {{IN|bedrock}}, the text of the End Poem is located in <code>[[Bedrock Edition installation files|Content]]/data/credits/end.txt</code>. While ''Java Edition'' can be edited with a [[resource pack]], ''Bedrock Edition'' can not be directly edited. The first voice's dialog uses the [[formatting code]] <code>§3</code> (or dark aqua), and the second voice's dialogue uses <code>§2</code> (or dark green). The player's name is inserted with <code>PLAYERNAME</code>, and the scrambled text is stored as <code>§f§k§a§b</code>. The End Poem is shown the first time the player enters the exit portal based on their {{nbt|byte|seenCredits}}{{only|je|short=1}}/{{nbt|bool|hasSeenCredits}}{{only|be|short=1}} tag being 0/{{cd|false}}, after which it is changed to 1/{{cd|true}} once the player first enters an End portal while in the End.
+
+{{/End Poem}}
+
+== Copyright ==
+While the End Poem has been in the game since its release, [[Mojang]] and [[Microsoft]] did not own it, and only had "informal permission" to use it, according to the original author [[wikipedia:Julian Gough|Julian Gough]]. Julian stated that due to poor and unpleasant communication between him and [[Carl Manneh]], then-CEO of Mojang, he refused to sign a contract to fully transfer the rights of the poem to Mojang after he finished it, though they reached an informal agreement. In August 2014, a month before Microsoft purchased Mojang for $2.5 billion, Carl contacted Julian again, asking him to sign the contract. Julian refused once more and therefore owns all rights to the End Poem. On December 7, 2022, Julian announced that the End Poem was released into the public domain under the [https://creativecommons.org/publicdomain/zero/1.0/ CC0 1.0 Universal (CC0 1.0)] license.<ref>https://theeggandtherock.com/p/i-wrote-a-story-for-a-friend</ref>
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 16, 2011|link=none|[[Notch]] tweeted, putting out a call for writing talent to write "silly over-the-top out-of-nowhere text" for the end of the game.<ref>{{tweet|notch|125612634425921537|Are YOU a talented writer (famous is a plus ;D) who wants to write a silly over-the-top out-of-nowhere text for when you win Minecraft?|October 6, 2011.}}</ref>
+|The writer [[wikipedia:Julian Gough|Julian Gough]]<ref>{{citation|url=https://boingboing.net/2012/01/09/ending-an-endless-game-an-int.html|title=Ending an endless game: an interview with Julian Gough, author of Minecraft's epic finale|website=Boing Boing|author=Tom Chatfield|date=January 9, 2012}}</ref> wrote what has become known as the End Poem.
+|Later, Notch stated that Gough's short story [http://pastebin.com/ateTJxEK The iHole] convinced him that Gough was the right person to write the End Poem.<ref>{{tweet|notch|222246755603988480|Here's the story that convinced me @juliangough was the right guy to write the end game text for Minecraft: https://www.juliangough.com/the-ihole-in-original-apple-fl/|July 9, 2012}}</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Added the End Poem. The file containing the End Poem is called <code>win.txt</code>.}}
+|{{HistoryLine||1.6.1|The file containing the End Poem is now called <code>end.txt</code>.}}
+|{{HistoryLine||1.17|dev=1.17 Pre-release 4|Can now be scrolled faster by pressing {{key|Space}} or {{key|Ctrl}}.}}
+|{{HistoryLine||1.20|dev=23w17a|Can now be scrolled upward by pressing {{key|Up}}.}}
+|{{HistoryLine||1.20.5|dev=24w09a|The dirt background has been replaced with the animated End portal effect.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added the End Poem.}}
+|{{HistoryLine|||dev=?|The track {{cd|credits.ogg}} now plays during the End Poem.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|The End Poem now only plays once when entering the [[exit portal]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|Added the End Poem.|Unlike other versions of the game, the credits do not play immediately after the End Poem.}}
+}}
+
+== Issues ==
+{{Issue list|poem}}
+
+== Gallery ==
+<gallery>
+End Poem Header.png|The logo at the start of the End Poem {{in|be}}.
+End Poem Section.png|A section of the End Poem.
+Who are we?.jpg|Another section of the End Poem.
+Minecraft Credits Logo 1 20 4.png|The logo at the start of the End Poem in [[Java Edition 1.20.4]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{citation|url=https://en.wikipedia.org/wiki/End_Poem|title=End Poem|section=|website=Wikipedia|author=|date=|quote=|archive-url}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+
+[[Category:Fiction]]
+[[Category:Game terms]]
+[[Category:The End|P]]
+
+[[de:Abspann]]
+[[es:Poema del End]]
+[[fr:Poème de l'End]]
+[[ja:エンドポエム]]
+[[ko:엔드 시]]
+[[lzh:終末之詩]]
+[[nl:Endgedicht]]
+[[pl:Poemat Endu]]
+[[pt:Poema do End]]
+[[ru:Поэма Края]]
+[[th:บทกวีเอนด์]]
+[[uk:Поема Енду]]
+[[zh:终末之诗]]

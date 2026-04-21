@@ -1,0 +1,356 @@
+{{About||the glowing variant|Glow Item Frame|other uses|Frame}}
+<!--This page uses a custom infobox because a specific infobox for "Block in BE and item entity in JE" has not been made. This means that all fields have to be edited manually, including label links, blast resistance/hardness values, and categories that are usually added by the Block or Item entity infobox. The same order, names, and rows from the Block and Entity infoboxes need to be maintained.-->
+{{infobox
+| image = Item Frame.png
+| invimage = Item Frame
+| extratext = [[#Renders|View all renders]]
+| rows = 
+{{infobox row|[[Rarity|Rarity tier]]|Common}}
+{{infobox row|[[Renewable resource|Renewable]]|Yes}}
+{{infobox row|Stackable|Yes (64)}}
+{{infobox row|Tool{{only|be|short=1}}|Any}}
+{{infobox row|Drops|{{ItemLink|Item Frame}} (1)<br>{{EnvSprite|items}} The item it contains.}}
+{{infobox row|[[Explosion#Blast resistance|Blast resistance]]{{only|be|short=1}}|0.25}}
+{{infobox row|[[Breaking#Blocks by hardness|Hardness]]{{only|be|short=1}}|0.25}}
+{{infobox row|[[Light|Luminous]]{{only|be|short=1}}|No}}
+{{infobox row|[[Opacity|Transparent]]{{only|be|short=1}}|Yes}}
+{{infobox row|[[Waterlogging|Waterloggable]]{{only|be|short=1}}|Yes}}
+{{infobox row|[[Flammable]]{{only|be|short=1}}|No}}
+{{infobox row|Catches fire from [[lava]]{{only|be|short=1}}|No}}
+}}
+An '''item frame''' is an [[entity]]{{only|java|short=y}} or [[block]]{{only|bedrock|short=y}} that displays the item or block that is inside it.
+
+== Obtaining ==
+=== Breaking ===
+{{IN|java}}, because the item frame is an [[entity]], it can be broken by simply punching it, even in [[Adventure]] mode. It is also targeted by commands using the {{cd|@e}} selector.
+
+{{IN|bedrock}}, no tool can accelerate the breaking process of the item frame.
+{{breaking row|Item Frame|horizontal=1}}
+An item frame drops itself when it's destroyed.
+
+If the item frame contains an item, punching it drops the item, leaving the frame.
+
+=== Natural generation ===
+An item frame containing a pair of [[elytra]] generates in each [[End ship]].
+[[File:BoatElytra.png|thumb|An item frame naturally generating in an End ship.]]
+
+=== Crafting ===
+{{Crafting
+|A1= Stick
+|B1= Stick
+|C1= Stick
+|A2= Stick
+|B2= Leather
+|C2= Stick
+|A3= Stick
+|B3= Stick
+|C3= Stick
+|Output= Item Frame
+|type= Decoration block
+}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+=== Placement ===
+Item frames can be placed on the sides of most [[solid block]]s (including [[slab]]s, [[stairs]], [[fence]]s, [[wall]]s, [[door]]s, [[trapdoor]]s, [[fence gate]]s, [[glass pane]]s, [[iron bars]], [[chain]]s, etc)<!-- lots of exceptions and edition differences, not worth it listing them all-->, {{in|java}} as well as some non-solid blocks such as [[repeater]]s and [[comparator]]s. They can also be placed on the top and bottom of the solid blocks. To place item frames on interactable blocks (such as [[chest]]s and [[door]]s), the player needs to be [[sneaking]]. Item frames can also be placed on the lid of a [[shulker box]], but, {{in|java}}, they pop off when the lid is opened. In ''Java Edition'', item frames cannot be placed on the top face of [[fence]]s, [[wall]]s, and [[fence gate]]s.
+
+As item frames are an entity in ''Java Edition'', multiple item frames can occupy the same block, although on different faces. An item frame can occupy the same space as any non-solid block, or a solid block whose collision box does not intersect the item frame's hitbox. {{IN|bedrock}}, item frames behave like signs and thus cannot occupy the same space as other blocks or other item frames. They can, however, be [[waterlogged]].
+
+=== Item display ===
+[[File:Item Frame (map filled partial).png|thumb|150px|Item frame with partially filled map]]
+Players can place items in the frame by {{control|using}} the item. If a [[map]] is placed in an item frame, it enlarges to show the map in the size of a full block, with the item frame's location displayed as a green pointer on the map, pointing in the direction the item frame is facing. If this is done in [[the Nether]], the green cursor spins around similar to the white cursor (players). If an item in an item frame has been renamed using an [[anvil]], it displays its custom name when the cursor is over the item frame. If the player places a block inside the frame, it is displayed in miniature half in, half out of the block. This can be most notably seen on stairs or slabs.
+
+When the item frame is displaying an item, pressing the {{control|pick block}} control picks the displayed item instead of the item frame.
+
+=== Rotation ===
+The displayed item can be rotated by right-clicking the frame. Items displayed in the item frame can turn 45° diagonally, with a total of 8 possibilities (90° and 4 possibilities if it is a map), and the frame outputs a [[Mechanics/Redstone/Circuit#Power level|redstone signal]] depending on the rotation phase that can be interpreted by a [[redstone comparator]] (note that this rotation value is separate from the clock or compass rotation). As long as the frame remains placed, it remembers the orientation of the last item it held, and uses it for the next item it holds.{{only|java}}
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+== Sounds ==
+=== Generic ===
+{{Edition|Bedrock}}:<!--Item frames are blocks in BE, so they get the generic section.-->
+{{Sound table/Block/Item frame/BE}}
+
+=== Unique ===
+{{:Item Frame/Sounds}}
+
+== Achievements ==
+{{load achievements|Map room}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Item Frame
+|spritetype=item
+|nameid=item_frame
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Item Frame
+|spritetype=entity
+|nameid=item_frame
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item Frame
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Item
+|spritename=item-frame
+|spritetype=item
+|nameid=frame
+|id=513
+|form=item}}
+{{ID table
+|displayname=Block
+|spritename=item-frame
+|spritetype=block
+|nameid=frame
+|id=199
+|form=block
+|itemform=item.frame
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=item-frame
+|spritetype=block
+|nameid=ItemFrame
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:<br>
+Despite being an [[entity]] in ''Java Edition'', item frames utilize block states internally.
+{{bst|map|false|false,true|If this item frame contains a map.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2|facing_direction|0
+|5|East facing item frame|0
+|4|West facing item frame|1
+|3|South facing item frame|2
+|2|North facing item frame|3
+|1|Up facing item frame|Unsupported
+|0|Down facing item frame|Unsupported}}
+{{bst|bits=0x4|item_frame_map_bit|false|false,true|If this item frame contains a map.|0,1}}
+{{bst|item_frame_photo_bit|false|false,true|If this item frame contains a [[photo]].|Unsupported|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/entity_data}} Unlike spawn eggs, cannot change the type of entity created using the <code>id</code> tag. Data that item frames do not normally use (see below) has no effect.
+</div>
+
+=== Entity data ===
+{{main|Entity format}}
+
+{{IN|java}}, item frames have entity data that define various properties of the entity.
+
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/hangable}}
+** {{Nbt|bool|Fixed}}: {{cd|1|0|d=or}} ({{cd|true|false|d=/}}) - If {{cd|true}}: the item frame does not drop when it has no support block, it can not be moved by pistons, and it won't take damage (except from creative players). An item cannot be placed in or removed from a fixed item frame. The item in a fixed item frame (if any) can not be rotated.
+** {{Nbt|bool|Invisible}}: {{cd|1|0|d=or}} ({{cd|true|false|d=/}}) - Whether the item frame (background) is invisible. An item or map inside an invisible item frame is still visible.
+** {{nbt|compound|Item}}: The item in the item frame (no slot tag). If the item frame is empty, this tag does not exist.
+*** {{nbt inherit/itemnoslot|indent=***}}
+** {{nbt|float|ItemDropChance}}: The chance for the item to drop when the item frame breaks. This is a 100% chance by default.
+** {{nbt|byte|ItemRotation}}: The current angle or rotation of the item, as a multiple of 45 degrees, going clockwise. <code>0</code> means the item is upright, <code>1</code> means the item is turned 45 degrees clockwise from the upright orientation. This value can only ever be between {{cd|0}} and {{cd|7}}, just like its redstone output when measured with a [[comparator]].
+</div><section end="entity data"/>
+
+=== Block data ===
+{{IN|bedrock}}, an item frame has a block entity associated with it that holds additional data about the block.
+
+See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+<div style="text-align:center">{{yt|rJLj95DBb-w}}</div>
+
+== History ==
+{{Needs render|</p>
+* Item frame with map from Legacy Console Edition versions TU31-TU42.
+* 14w25a item frames, which used the oak texture for some reason</p>}}
+{{See technical block}}
+
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||August 15, 2012|link={{tweet|Dinnerbone|235724805196877824}}|[[File:Item Frame pJE20120815.png|32px]] [[Dinnerbone]] showed the first image of item frames.}}
+|{{HistoryLine||August 15, 2012|link={{tweet|Dinnerbone|235742974271700993}}|[[File:Item Frame (item) pJE20120815.png|32px]] Dinnerbone showed item frame in item form.}}
+|{{HistoryLine||August 15, 2012|link={{tweet|jeb_|235746335368814592}}|[[File:Item Frame pJE20120815-2.png|32px]] [[Jeb]] showed the item frames with new model.}}
+|{{HistoryLine||August 16, 2012|link={{tweet|Dinnerbone|236062188555624448}}|[[File:Item Frame (item) JE1 BE1.png|32px]] Dinnerbone showed the item frame in item form with new texture.}}
+}}
+
+=== ''Java Edition'' ===
+{{info needed section|{{bug|MC-194948}}}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Item Frame JE1 BE1.png|32px]] [[File:Item Frame (item) JE1 BE1.png|32px]] Added item frames. 
+|There is currently a bug where attempting to place an item frame in [[multiplayer]] causes an internal server error, as well as other bugs.}}
+|{{HistoryLine|||dev=12w34b|The multiplayer item frame bug has been fixed.}}
+|{{HistoryLine|||dev=12w38a|Item frames no longer despawn when the [[player]] moves 20 [[block]]s away.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Items renamed using an [[anvil]] now display their name when looked at up close.}}
+|{{HistoryLine|||dev=13w38a|[[Map]]s placed in an item frame now cover the whole block face, allowing seamless tiling of adjacent maps. This makes undiscovered areas of maps invisible.}}
+|{{HistoryLine|||dev=13w43a|[[File:Item Frame (map) JE1 BE1.png|32px]] Incomplete maps placed in item frames now display the item frame texture underneath.}}
+|{{HistoryLine||1.8|dev=14w04a|[[Item]]s and [[block]]s displayed in the item frame now rotate 45 degrees when rotated instead of 90 degrees, and a [[comparator]] outputs a [[redstone]] signal depending on the rotation phase.}}
+|{{HistoryLine|||dev=14w10a|Multiple item frames can no longer be placed on the same block face.}}
+|{{HistoryLine|||dev=14w25a|Item frames now use the oak planks texture instead of the birch planks texture.}}
+|{{HistoryLine|||dev=14w28b|Item frames now use the birch planks texture again instead of the oak planks texture.}}
+|{{HistoryLine||1.9|dev=15w41a|An item frame now generates in the treasure room of [[End ship]]s, above the [[shulker]] that guards the treasure. It holds [[elytra]].}}
+|{{HistoryLine|||dev=15w49a|Item frames are no longer destroyed by [[lightning]] bolts.}}
+|{{HistoryLine|||dev=15w50a|Added [[sound]]s to item frames: <code>entity.itemframe.add_item</code>, <code>entity.itemframe.break</code>, <code>entity.itemframe.place</code>, <code>entity.itemframe.remove_item</code>, and <code>entity.itemframe.rotate_item</code>.}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of item frames has been changed from <code>ItemFrame</code> to <code>item_frame</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|As part of ''[[The Flattening]]'', the numeric item ID (389) of item frames has been removed.{{info needed|and what was the numeric entity ID?}}}}
+|{{HistoryLine|||dev=17w50a|Item frames can now be placed on floors and ceilings.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Item Frame JE2 BE2.png|32px]] [[File:Item Frame (map) JE2 BE2.png|32px]] [[File:Item Frame (item) JE2 BE2.png|32px]] The textures of item frames have been changed.}}
+|{{HistoryLine|||dev=19w11a|Item frames are now [[trading|sold]] by cartographer [[villager]]s for 7 emeralds.}}
+|{{HistoryLine||1.15|dev=19w38a|[[File:Item Frame 19w38a.png|32px]] [[File:Item Frame Map 19w38a.png|32px]] Item frames now appear dark, same as suffocating [[mob]]s.<ref>{{bug|mc-161283||Item frames are not lit correctly and always appear black|Fixed}}</ref>}}
+|{{HistoryLine|||dev=19w39a|Item frames are now colored correctly.}}
+|{{HistoryLine||1.16|dev=20w10a|The NBT <code>Invisible</code> and <code>Fixed</code> have been added to item frames.}}
+|{{HistoryLine||1.18|dev=21w41a|[[File:Item Frame (item) JE3.png|32px]] The textures of item frames as an item have been changed.<ref>{{bug|MC-118134}}</ref>}}
+|{{HistoryLine||1.19|dev=22w15a|Item frames now adjusts its hitbox to account for the larger size of a framed [[map]].}}
+|{{HistoryLine|||dev=pre3|Reverted the change in 22w15a.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Item frames are no longer destroyed by [[TNT]] that explodes in [[water]].<ref>{{bug|MC-3697}}</ref>}}
+|{{HistoryLine||1.21.4|dev=24w44a|Players in Survival or Adventure can now use {{control|pick block}} on item frames.<ref>{{bug|MC-65931||The pick block function doesn't work with entities while in survival or adventure mode|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Item Frame JE1 BE1.png|32px]] [[File:Item Frame (map) JE1 BE1.png|32px]] [[File:Item Frame (item) JE1 BE1.png|32px]] Added item frames.
+|Item frames are considered as a [[block entity]] instead of an [[entity]].<ref>{{tweet|_tomcc|690127591525728257|Let's create some drama: ItemFrames in MCPE will behave like signs and won't be placeable in blocks, and can't put many in the same block.|21 Jan 2016}}</ref>}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|An item frame containing [[elytra]] now generates in [[End city]] ships.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Item Frame JE2 BE2.png|32px]] [[File:Item Frame (map) JE2 BE2.png|32px]] [[File:Item Frame (item) JE2 BE2.png|32px]] The textures of item frames have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Item frames can now be [[trading|bought]] from cartographer [[villager]]s.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Item frames can now be placed on the top and bottom of [[block]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Trading has been changed, item frames are now offered by expert-level cartographer villager.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.20|[[File:Item Frame (item) JE3.png|32px]] The textures of item frames as an item have been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Item Frame LCE1.png|32px]] [[File:Item Frame (item) JE1 BE1.png|32px]] Added item frames.|Maps now show an X at the location of the [[End portal]] if someone is in [[the End]].|[[File:Green Point (texture) BE1.png|32px]] Maps in item frames have their position represented by a green triangle.}}
+|{{HistoryLine||xbox=TU10|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Reaching the maximum number of item frames/[[painting]]s in a world now prevents the player from placing more of them instead of removing existing ones.}}
+|{{HistoryLine||xbox=TU11|The [[spawn limit|limit]] for item frames in a world has been increased. A message is now displayed when the maximum number of item frames are reached.}}
+|{{HistoryLine||xbox=TU12|[[File:Item Frame JE1 BE1.png|32px]] Item frames now use the same textures as {{edition|je}}, instead of using the bottom texture for [[cake]].}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|[[File:Item Frame (map) JE1 BE1.png|32px]] [[Map]]s placed in an item frame now cover the whole block face.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Item Frame LCE3.png|32px]] Item frames now use [[oak planks]] textures for the border.|[[Item]]s and [[block]]s displayed in the item frame now rotate 45 degrees when rotated instead of 90 degrees, and a [[comparator]] now outputs a [[redstone]] signal depending on the rotation phase.|Hitting an item frame with an item inside now only removes the item instead of destroying the entire item frame.}}
+|{{HistoryLine||xbox=TU41|xbone=CU30|ps3=1.33|psvita=1.33|ps4=1.33|wiiu=Patch 11|switch=1.0.1|Only up to 100 item frames and [[painting]]s can now be rendered on the screen at once.{{check version}}}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|[[File:Item Frame JE1 BE1.png|32px]] [[File:Item Frame (map) JE1 BE1.png|32px]] Item frames now use the textures for [[birch planks]] instead of [[oak planks]] once again.|Added [[sound]]s for item frames.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|An item frame now generates in the treasure room of [[End ship]]s, above the [[shulker]] that guards the treasure. It holds [[elytra]].}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Frame (texture) BE1.png|32px]] Maps in item frames now have their position represented by an item frame icon.}}
+|{{HistoryLine||xbox=TU56|xbone=CU47|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|If the [[item]] in the item frame has a name (from an [[anvil]]) it now shows as if there is a name tag on the item frame.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|[[Observers]] now register changes to item frames.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Item Frame JE2 BE2.png|32px]] [[File:Item Frame (map) JE2 BE2.png|32px]] [[File:Item Frame (item) JE2 BE2.png|32px]] The textures of item frames have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Item Frame JE1 BE1.png|32px]] [[File:Item Frame (map) JE1 BE1.png|32px]] [[File:Item Frame (item) JE1 BE1.png|32px]] Added item frames.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*The item frame is based upon a suggestion on [[wikipedia:Reddit|Reddit]], like the [[ender chest]] and [[flower pot]].<ref>{{tweet|dinnerbone|235747041286975488|My next task is going to be flower pots. Credit: http://www.reddit.com/r/Minecraft/comments/l6lih/suggestion_item_frames_for_holding_tools_and/}}</ref>
+*The item frame is the only entity to reference a block [[model]].{{only|java|short=1}} Because of this, the texture of the frame border is the same as the birch planks texture.
+*Item frame is the only placeable item that can interfere with other non-full block entities.
+*Due to the way layer textures are displayed in ''Minecraft'', maps float on item frames, similar to how icons float on the map itself.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Item Frame.png|Item frame
+Item Frame (map).png|Map item frame
+Item Frame with Item.png|With item
+Item Frame with rotated Item.png|With rotated item
+Item Frame with Block.png|With block
+Item Frame with rotated Block.png|With rotated block
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Slab Frame.png|An item frame on the side of a slab.
+ItemFrameBoxed.png|Four item frames in a one-block space.{{only|java}} 
+Item Frames Woodbase.png|The frame itself uses the texture of birch planks.
+Item Frame rotation.gif|The rotation of an item in an item frame.
+Front-back-itemframe.png|The front and back of an item frame are the same.
+Frame fireplace.png|An image of a fireplace retweeted by Dinnerbone.
+11 Framed.png|[[11]] in an item frame.
+</gallery>
+
+=== Development images ===
+<gallery>
+Suggestion for itemframes.png|Original Reddit image suggesting item frames and flower pots.
+Item frame2.png|Dinnerbone's first screenshot showing armor and weapons.
+Item frame3.png|Dinnerbone's second screenshot showing a map, a compass, and two diamond swords.
+Item frame4.png|Dinnerbone's third screenshot showing a golden sword in all directions, the item frame item itself, and a working clock.
+Item frame1.png|Jeb's screenshot of the item frame.
+FlowerPot.png|Snapshot showing plant pots and item frames.
+Item frame5.png|Snapshot image of an ender pearl in an item frame.
+SOATPC.png|An image tweeted by Dinnerbone showing how hovering over an item frame containing a renamed item shows a name tag.
+Pocket Edition Item Frames.jpg|First image of item frames in ''Bedrock Edition''.
+</gallery>
+
+== See also ==
+*{{ItemLink|Painting}}
+*{{ItemLink|Shelf}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox items|Utilities}}
+{{Navbox entities|other}}
+
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Storage]]
+[[Category:Readable by comparators]]
+[[Category:Stationary entities]]
+[[Category:Renewable resources]]
+[[Category:Stackable resources]]
+[[Category:Non-solid blocks]]
+[[Category:Missing blast resistance]]
+[[Category:Missing hardness]]
+
+[[cs:Rámeček]]
+[[de:Rahmen]]
+[[es:Marco]]
+[[fr:Cadre]]
+[[hu:Eszköz keret]]
+[[it:Cornice]]
+[[ja:額縁]]
+[[ko:아이템 액자]]
+[[nl:Voorwerplijst]]
+[[pl:Ramka na przedmiot]]
+[[pt:Moldura]]
+[[ru:Рамка]]
+[[th:กรอบไอเทม]]
+[[uk:Рамка для предметів]]
+[[zh:物品展示框]]

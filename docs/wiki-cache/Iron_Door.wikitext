@@ -1,0 +1,310 @@
+{{Infobox block
+| image = Iron Door.png
+| invimage = Iron Door
+| transparent = Partial
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = No ({{edition|java}})<br>Yes ({{edition|bedrock}})
+}}
+The '''iron door''' is a variant of the [[door]] made of iron that can only be opened using [[redstone]]. Iron doors are more secure than [[Wooden Door|wooden]] and [[copper door]]s because they cannot be opened by hand and cannot be broken by [[zombie]]s. They are also more resistant to explosions, and immune to fire and lava.
+
+== Obtaining ==
+Iron doors are most commonly found in [[stronghold]]s, where they generate often. They are also craftable by the player using 6 [[iron ingot]]s.
+
+=== Breaking ===
+The suitable tool to break iron door is [[pickaxe]].
+{{Breaking row
+| horizontal = 1
+| Iron Door
+| Pickaxe
+| hideshears = 1
+| hidesword = 1
+| foot = 1
+}}
+Iron door drops itself when it's destroyed.
+
+Iron door also drops itself when its supporting block is moved or removed.
+=== Natural generation ===
+Iron doors generate as part of:
+
+* Prison rooms in [[woodland mansion]]s
+* [[Stronghold]]s with a stone [[button]] to open{{only|JE}}
+
+=== Crafting ===
+{{Crafting
+|A1 = Iron Ingot
+|B1 = Iron Ingot
+|A2 = Iron Ingot
+|B2 = Iron Ingot
+|A3 = Iron Ingot
+|B3 = Iron Ingot
+|Output = Iron Door, 3
+|type= Redstone
+}}
+
+== Usage ==
+{{main|Door#Usage}}
+Iron doors can only be opened with redstone power; players or [[wind charge]] blasts cannot toggle iron doors.
+
+==== Barrier ====
+Iron doors can only be opened and closed by a [[redstone]] signal. When an iron door opens or closes, it immediately changes its orientation without affecting anything in the space between.
+
+==== Redstone component ====
+{{see also|Redstone circuit}}
+An iron door is a redstone [[mechanism component|mechanism]] and can be activated by [[Redstone mechanics#Power | weakly powering]] any cardinally adjacent block.
+
+When activated, the iron door immediately opens. When deactivated, it immediately closes.
+
+==== Air pockets ====
+Iron doors can be used as air pockets underwater {{in|Java}} because they can't be waterlogged. They can also be used as air pockets in [[lava]] in both [[Java Edition|Java]] and [[Bedrock Edition]]s since they don't burn in lava.
+
+=== Piston interactivity ===
+Iron door is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Iron}}
+
+=== Unique ===
+{{el|java}}:
+{{SoundTable
+|type = java
+| {{SoundLine
+|sound=Iron Door open1.ogg
+|sound2=Iron Door open2.ogg
+|sound3=Iron Door open3.ogg
+|sound4=Iron Door open4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When an iron door opens
+|id=block.iron_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Iron Door close1.ogg
+|sound2=Iron Door close2.ogg
+|sound3=Iron Door close3.ogg
+|sound4=Iron Door close4.ogg
+|subtitle=Door creaks
+|source=block
+|description=When an iron door closes
+|id=block.iron_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=0.9
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Zombie hit metal1.ogg
+|sound2=Zombie hit metal2.ogg
+|sound3=Zombie hit metal3.ogg
+|subtitle=Block broken <ref group=sound name=ironsubtitle>{{Bug|MC-226770}}</ref>
+|source=Hostile Creatures 
+|description=''Unused''<ref group=sound>{{bug|MC-218122}}</ref>
+|id=entity.zombie.attack_iron_door
+|translationkey=subtitles.block.generic.break|translationkeynote=<ref group=sound name=ironsubtitle/>
+|volume=''None''
+|pitch=''None''
+| distance = ''None''
+}}
+}}
+
+{{el|bedrock}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Iron Door open1.ogg
+|sound2=Iron Door open2.ogg
+|sound3=Iron Door open3.ogg
+|sound4=Iron Door open4.ogg
+|source=block
+|description=When an iron door opens
+|id=open.iron_door
+|volume=0.9
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Iron Door close1.ogg
+|sound2=Iron Door close2.ogg
+|sound3=Iron Door close3.ogg
+|sound4=Iron Door close4.ogg
+|source=block
+|description=When an iron door closes
+|id=close.iron_door
+|volume=0.9
+| pitch = 0.9-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+| edition = java
+| showblocktags = y
+| showitemtags = y
+| showforms = y
+| generatetranslationkeys = y
+| displayname = Iron Door
+| spritetype = block
+| nameid = iron_door
+| blocktags = doors
+| itemtags = doors
+| foot = 1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+| edition = bedrock
+| firstcolumnname = Iron Door
+| shownumericids = y
+| showforms = y
+| generatetranslationkeys = y
+| spritename = iron-door
+| displayname = Block
+| spritetype = block
+| nameid = iron_door
+| id = 71
+| form = block
+| itemform = item.iron_door
+}}
+{{ID table
+|spritename=iron-door
+|displayname=Item
+|spritetype=item
+|nameid=iron_door
+|id=372
+|form=item
+|itemtags=minecraft:door
+| foot = 1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Door|block states}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 25w02a}}
+{{For         |         a broader history of doors see         |         Door#History}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Iron Door JE1 BE1.png|32px]] [[File:Iron Door (Right) JE1 BE1.png|32px]] [[File:Iron Door (item) JE1 BE1.png|32px]] Added iron doors.
+|Iron doors can be controlled by redstone power.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Iron doors can now be found naturally in [[stronghold]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Iron doors are broken much faster using a [[pickaxe]], and the [[mining]] speed is now [[tier]] dependent.}}
+|{{HistoryLine||1.2.1|dev=12w06a|[[File:Iron Door JE2 BE5.png|32px]] Changed top model of iron door.}}
+|{{HistoryLine|||dev=12w07a|Zombies can no longer break iron doors.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Iron Door (in minecart) 14w04a.png|32px]] If an iron door is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine|||dev=14w10a|[[File:Iron Door JE3.png|32px]] The models of iron doors have been changed.}}
+|{{HistoryLine|||dev=14w33b|[[File:Iron Door (item) JE2 BE2.png|32px]] All [[item]] textures for iron doors have been changed. Iron doors now have hinges on the left and handles on the right, existing iron doors have a slight item textures change as well.}}
+|{{HistoryLine||1.9|dev=15w43a|Iron doors now have different [[sound]]s than wooden doors.}}
+|{{HistoryLine||1.11|dev=16w33a|Iron doors no longer have a right-click action - previously they would result in the hand swinging, and would override other valid right click actions such as snowball throwing.<ref>{{bug|MC-4582}}</ref>}}
+|{{HistoryLine|||dev=16w39a|Iron doors now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Iron Door JE4.png|32px]] The textures of iron doors have been changed.}}
+|{{HistoryLine||1.15|dev=19w39a|Iron doors must now be mined with a [[pickaxe]] for it to be dropped as an [[item]].}}
+|{{HistoryLine||1.18|dev=21w41a|[[File:Iron Door (item) JE3 BE3.png|32px]] [[Item]] textures for iron doors have been changed.}}
+|{{HistoryLine|||dev=pre5|[[File:Iron Door JE5.png|32px]] Changed top and bottom models of iron doors. Changed iron door textures.}}
+|{{HistoryLine||1.20.3|dev=pre3|An iron door can no longer drop as an item if the top half of the door is broken with anything in hands.<ref>{{bug|MC-189739}}</ref>}}
+|{{HistoryLine||1.21.4|dev=24w44a|Now drop when broken with any tool.}}
+|{{HistoryLine||1.21.5|dev=25w02a|Added new break, place, step, fall and hit sounds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|[[File:Iron Door JE1 BE1.png|32px]] Added iron doors. [[File:Iron Door (bottom texture) JE1 BE1.png|32px]] The iron door items exist, but due to a bug in the code that renders items in the hotbar, they cannot be used.}}
+|{{HistoryLine||v0.1.3|[[File:Iron Door BE2.png|32px]] The models of iron doors have been changed to not display transparency on upper half.}}
+|{{HistoryLine||v0.2.0|[[File:Iron Door (item) JE1 BE1.png|32px]] Added iron door inventory icons.
+|[[File:Iron Door JE1 BE1.png|32px]] The models of iron doors have been changed to display transparency on upper half.}}
+|{{HistoryLine||v0.2.1 alpha2|link=Pocket Edition v0.2.1 alpha2|[[File:Iron Door BE3.png|32px]] The textures of iron doors have been changed.}}
+|{{HistoryLine||v0.5.0|[[File:Iron Door BE4.png|32px]] The models of iron doors have been changed.}}
+|{{HistoryLine||v0.8.0|dev=build 2|[[File:Iron Door JE2 BE5.png|32px]] The textures of iron doors have been reverted to before v0.2.1 alpha2.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Iron doors are now available in the [[Creative inventory]].
+|A [[crafting]] recipe for iron doors has been added.
+|Redstone mechanics added, making iron doors able to function normally.}}
+|{{HistoryLine|||dev=build 4|[[File:Iron Door (item) JE2 BE2.png|32px]] The [[item]] textures of iron doors has been changed.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Iron doors now generate in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Iron Door BE6.png|32px]] The textures of iron doors have been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|Zombies can no longer break iron doors.<ref>{{bug|MCPE-43725}}</ref>}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.20|[[File:Iron Door (item) JE3 BE3.png|32px]] The [[item]] texture for iron doors has been changed.}}
+|{{HistoryLine|||dev=beta 1.18.10.22|The upper texture for iron doors has been changed.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.23|An iron door can no longer drop as an item if the top half of the door is broken with anything in hands.<ref>{{bug|MCPE-126620}}</ref>}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Iron doors no longer require a pickaxe to drop themselves, and are mined faster when using an improper tool.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.25|Added new break, place, step, fall and hit sounds.
+|Iron doors no longer have a right-click action - previously they would result in the hand swinging, and would override other valid right click actions such as snowball throwing.<ref>{{bug|MCPE-19129}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Iron Door (item) JE1 BE1.png|32px]] Added iron doors.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Iron doors can now be found naturally in [[stronghold]]s.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Moved iron doors to the "Building Blocks" tab in the Creative inventory.}}
+|{{HistoryLine||xbox=TU27|xbone=CU15|ps3=1.18|psvita=1.18|ps4=1.18|The [[crafting]] recipes of doors now yield 3 doors instead of 1.}}
+|{{HistoryLine||xbox=TU32|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=1.0.1|Iron doors no longer have a right-click action - previously they would result in the hand swinging, and would override other valid right click actions such as snowball throwing.{{info needed|When did this change happen for other consoles editions?}}}}
+|{{HistoryLine||xbox=TU33|xbone=CU21|ps3=1.24|psvita=1.24|ps4=1.24|wiiu=Patch 3| [[File:Iron Door (item) JE2 BE2.png|32px]] Changed the texture of the iron door item.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13| [[File:Iron Door (item) JE1 BE1.png|32px]] The texture of the iron door item has been changed to how it looked like before TU33.}}
+|{{HistoryLine||xbox=TU44|xbone=CU34|ps3=1.37|psvita=1.37|ps4=1.37|wiiu=Patch 14| [[File:Iron Door (item) JE2 BE2.png|32px]] The texture of the iron door item has been changed back  to how it looked like in TU33.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Iron doors now generate in [[woodland mansion]]s.}}
+|
+{{HistoryLine||?|Iron doors must now be mined with a [[pickaxe]] for it to be dropped as an [[item]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Iron Door BE6.png|32px]] The textures of iron doors have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Iron Door (item) JE1 BE1.png|32px]] Added iron doors.}}
+|{{HistoryLine||1.9.19|Iron doors now generate in [[woodland mansion]]s.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], the block ID was 71 and the item as 330.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|Doors now use the block state <code>cardinal_direction</code> (uses string values) instead of <code>direction</code> (uses integer values).}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Iron Door in Stronghold.png|Naturally occurring iron door in a [[stronghold]].
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox iron}}
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Utility blocks]]
+[[Category:Mechanisms]]
+[[Category:Double blocks]]
+
+[[es:Puerta de hierro]]
+[[fr:Porte en fer]]
+[[ja:鉄のドア]]
+[[ko:철 문]]
+[[pt:Porta de ferro]]
+[[zh:铁门]]

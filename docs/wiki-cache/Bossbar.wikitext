@@ -1,0 +1,110 @@
+{{About|the HUD element|the command|Commands/bossbar}}
+[[File:Bossbar wither.png|thumb|The bossbar of the [[wither]].]]
+[[File:Bossbar enderdragon.png|thumb|The bossbar of the [[ender dragon]].]]
+[[File:Bossbar raid.png|thumb|The bossbar of a [[raid]] {{in|Java}}. It is divided into several parts and the remaining number of raiders is visible.]]
+A '''bossbar''' is a bar at the top of the screen that can track [[health]] of a [[boss]] mob or the total health of [[raid]] mobs.
+
+The bossbar appears naturally in the game through three means: during a [[raid]], after constructing a [[wither]], and upon entering the End if the [[ender dragon]] has not yet been defeated.
+
+== Creation ==
+=== Manual ===
+{{main|Commands/bossbar}}
+{{exclusive|java|section=1}}
+{{IN|java}}, a bossbar can be created manually using the {{Command|bossbar}} command.
+
+=== Natural ===
+==== Boss mobs ====
+A bossbar appears in the top center of the screen when near a [[wither]] or [[ender dragon]]. For the ender dragon's bossbar to appear, the player must be within a [[Euclidean distance]] of 192 blocks from the [[coordinates]] (0.0, 192, 0.0) in [[the End]] dimension.<sup>[''[[Java Edition|JE]] only'']</sup>, For the wither's bossbar to appear, the player must be loading the [[chunk]] the wither is in and be within 24 chunks and 3.5 blocks of a chunk the wither is in. For the bossbar to update after taking damage, a mob has to have the [[NBT tag|NBT-Tag]] NoAI set to 0b. <ref name="A">{{bug|MC-84243|||WAI}}</ref>
+
+==== Raids ====
+When a player is within a 93 block radius of the center of a [[raid]], a raid bossbar appears, showing the total health of all raid mobs present during the current wave.
+
+== Components ==
+=== Color ===
+The color of a bossbar depends on which boss mob or event is active:
+* the ender dragon has a pink bossbar,
+* the wither has a light purple bossbar {{in|java}}, or a dark purple bossbar {{in|bedrock}},
+* the raid bossbar is colored red.
+
+=== Style ===
+A bossbar has a style attribute. It can be either "progress", "notched_6", "notched_10", "notched_12" or "notched_20". The value "progress" creates a clean bar, while the other ones create a notched bar with 6, 10, 12 or 20 segments.
+
+The ender dragon and wither own a "progress" bossbar. The bossbar shown during a raid uses the "notched_10" style {{in|java}}, and the "progress" style {{in|bedrock}}.
+
+=== ID system ===
+A bossbar has an ID, which can be used to do certain actions with one bossbar. An ID is not shown on the bossbar{{Verify}}.
+
+== Removal ==
+{{Expand section}}
+=== Manual ===
+A bossbar can be disabled by using {{Command|bossbar remove ''<id>''}}.
+=== Natural ===
+A bossbar for the [[ender dragon]] or [[wither]] can be removed by killing it. A bossbar for a [[raid]] can be removed by completing the raid, which is to kill all the raiders involved in this raid.
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Added bossbars.
+|The only color is pink.
+|[[Ender dragon]]s use bossbars.
+|"Boss health" was displayed over the bossbar.}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[Wither]]s use bossbars.}}
+|{{HistoryLine|||dev=12w34b|Added boss names above the wither.{{Verify|Was the ender dragon broken here too, or was that introduced later?}}}}
+|{{HistoryLine||1.5|dev=13w05b|Ender dragons now properly display their names above their bossbar.<ref>{{Bug|MC-7700}}</ref>}}
+|{{HistoryLine||1.9|dev=15w31a|Withers now have a purple bossbar.
+|Multiple bossbars can now show without overlapping.
+|Bossbars are no longer briefly visible after respawning or opening a new world.<ref>{{Bug|MC-4474}}</ref>
+|Bossbars are now visible even when the boss is not being looked at.<ref>{{Bug|MC-68062}}</ref>
+|Bossbars now have a smooth animation when the bar fills up or empties.}}
+|{{HistoryLine|||dev=16w02a|Ender dragons created using {{Command|summon}} no longer show a health bar.}}
+|{{HistoryLine||1.11|dev=16w32a
+|Ender dragons with custom names now show their name above their bossbar.<ref name="MC-83571">{{Bug|MC-83571}}</ref>}}
+|{{HistoryLine||1.11.1|dev=16w50a|Withers with custom names now show their name above their bossbar.<ref name="MC-83571"/><ref>{{Bug|MC-110234}}</ref>}}
+|{{HistoryLine||1.13|dev=18w02a|Unnamed ender dragons now show "<code>entity.EnderDragon.name</code>" above their bossbar, rather than "Ender Dragon".<ref name="MC-124113">{{Bug|MC-124113}}</ref>}}
+|{{HistoryLine|||dev=18w03a|Ender dragons now show "Ender Dragon" again.<ref name="MC-124113"/>}}
+|{{HistoryLine|||dev=18w05a|Added the {{Command|bossbar}} command, which can create a custom bossbar.}}
+|{{HistoryLine||1.14|dev=18w47a|[[Raid]]s use bossbars.}}
+|{{HistoryLine|||dev=18w49a|The raid bossbar now slowly fills up when a raid is triggered or when a wave is cleared.}}
+|{{HistoryLine|||dev=19w13b|Notched bossbars now display correctly when more than one is active.<ref>{{Bug|MC-146070}}</ref>}}
+|{{HistoryLine||1.16|dev=20w17a|Bossbars with scores now update correctly when reloading the world.<ref>{{Bug|MC-135738}}</ref>}}
+|{{HistoryLine||1.19|dev=22w11a|Notched bossbars now display correctly when more than one is active.{{More info|This happened twice?}}<ref>{{Bug|MC-165036}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|Added bossbars.|The [[Wither]] is the only mob to currently have a bossbar.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|[[Ender dragon]]s added with their respective bossbars.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added bossbars.|The only color is pink.|[[Ender dragon]]s use bossbars.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[Wither]]s use bossbars.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Multiple bossbars can now show without overlapping.|Bossbars are now visible even when the boss is not being looked at.{{check version}}|Bossbars now have a smooth animation when the bar fills up or empties.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[Raid]]s use bossbars. Unlike in Java edition, the color is pink instead of red and the bossbar is not divided into several parts}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+Dinnerbone Bossbars.png|First image of multiple bossbars.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[fr:Barre de boss]]
+[[ja:ボスバー]]
+[[pt:Barra de chefes]]
+[[zh:Boss栏]]

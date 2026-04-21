@@ -1,0 +1,153 @@
+{{Infobox enchantment
+| maxlevel = V
+| primaryitems = {{ItemSprite|Trident|link=Trident}}
+| weight = 2
+| id = impaling
+| incompat = * [[Sharpness]]<ref group="note" name="bookincompatible">In Survival, this incompatibility is only relevant with [[enchanted book]]s, as no enchantable item is compatible with both of these enchantments.</ref>
+* [[Smite]]<ref group="note" name="bookincompatible" />
+* [[Bane of Arthropods]]<ref group="note" name="bookincompatible" />
+* [[Density]]<ref group="note" name="bookincompatible" />
+* [[Breach]]<ref group="note" name="bookincompatible" />
+* [[Cleaving]]<ref group="note" name="bookincompatible" />
+}}
+'''Impaling''' is an [[enchantment]] applied to [[trident]]s that substantially increases damage against [[aquatic]] mobs,{{Only|je|short=1}} or increases damage against entities in water or rain.{{Only|be|short=1}}
+
+== Obtaining ==
+Impaling can be obtained from [[enchanting table]]s, drops from mobs that have spawned in a [[raid]],{{only|bedrock}} books obtained by [[fishing]], [[monster room]] chests, librarian [[villager]]s, and non-village [[structure]] loot.
+
+== Usage ==
+Each level of Impaling adds 2.5 ({{hp|2|notag=1}} × {{frac|1|1|4}}) extra damage per hit. In {{BE}}, the values are rounded down to the nearest whole number. This applies both to the trident projectile and in melee combat.
+
+{{IN|java}}, only [[aquatic mobs]] receive the extra damage. Aquatic mobs include [[axolotl]]s, [[dolphin]]s, [[guardian]]s, [[elder guardian]]s, [[nautilus]]es, [[zombie nautilus]]es, [[squid]], [[glow squid]], [[tadpole]]s, [[turtle]]s, and [[fish|all variants of fish]], but not [[drowned]],<ref>{{bug|MC-128249|||WAI}}</ref> as drowned are classified purely as undead mobs and not underwater mobs. A thrown trident with Impaling I kills the majority of these mobs in one hit (≤10 HP), whereas an Impaling III trident is needed to kill a nautilus or zombie nautilus in one hit (15 HP) or a turtle or guardian in two hits (30 HP), and an Impaling V trident is needed to kill an elder guardian in four hits (80 HP).
+
+{{IN|bedrock}}, the damage applies to ''all'' mobs and players when in contact with water: underwater, in flowing water, and in rain.<ref>{{bug|MCPE-34025}}</ref>
+
+In the [[Java Edition Combat Test]]s, Impaling has both of these effects.
+
+=== Damage per hit ===
+These tables detail how much damage is done per attack based on the level of enchantment used, assuming the target is not wearing armor and the attack is fully charged.{{only|java}} While both Java Edition and Bedrock Edition add {{hp|2.5}} per level, Bedrock Edition rounds down to the nearest whole number which makes Impaling I, Impaling III, and Impaling V weaker than Java Edition.
+
+{| class="wikitable"
+|+Impaling extra damage
+!Edition
+!I
+!II
+!III
+!IV
+!V
+|-
+|{{IN|java}}
+|{{hp|2.5}}
+|{{hp|5}}
+|{{hp|7.5}}
+|{{hp|10}}
+|{{hp|12.5}}
+|-
+|{{IN|bedrock}}
+|{{hp|2}}
+|{{hp|5}}
+|{{hp|7}}
+|{{hp|10}}
+|{{hp|12}}
+|}
+
+==== ''Java Edition'' ====
+{| class="wikitable"
+!Type!!Base damage!!Impaling I!!Impaling II!!Impaling III!!Impaling IV!!Impaling V
+|-
+|{{ItemSprite|Trident}} Melee||{{hp|9}}||{{hp|11.5}}||{{hp|14}}||{{hp|16.5}}||{{hp|19}}||{{hp|21.5}}
+|-
+|{{ItemSprite|Trident}} Melee (critical)||{{hp|13.5}}||{{hp|16}}||{{hp|18.5}}||{{hp|21}}||{{hp|23.5}}||{{hp|26}}
+|-
+|{{ItemSprite|Trident}} Ranged||{{hp|8}}||{{hp|10.5}}||{{hp|13}}||{{hp|15.5}}||{{hp|18}}||{{hp|20.5}}
+|}
+
+==== ''Bedrock Edition'' ====
+{| class="wikitable"
+!Type!!Base damage!!Impaling I!!Impaling II!!Impaling III!!Impaling IV!!Impaling V
+|-
+|{{ItemSprite|Trident}} Melee||{{hp|9}}||{{hp|11}}||{{hp|14}}||{{hp|16}}||{{hp|19}}||{{hp|21}}
+|-
+|{{ItemSprite|Trident}} Melee (critical)||{{hp|13.5}}||{{hp|16.5}}||{{hp|21}}||{{hp|24}}||{{hp|28.5}}||{{hp|31.5}}
+|-
+|{{ItemSprite|Trident}} Ranged||{{hp|8}}||{{hp|10}}||{{hp|13}}||{{hp|15}}||{{hp|18}}||{{hp|20}}
+|}
+
+=== Specific cases ===
+If Impaling is applied to a [[bow]] by use of [[command]]s or an [[anvil]] in Creative, the enchantment affects the weapon's [[arrow]]s. If Impaling is applied to a [[crossbow]] by use of commands or an anvil in Creative, the enchantment affects weapon's arrows but not its [[firework rocket]]s.
+
+==Incompatibilities==
+Impaling is incompatible with [[Sharpness]], [[Smite]], [[Bane of Arthropods]], [[Density]], [[Breach]], and [[Cleaving]]{{upcoming|Java Combat Tests|nocat=1}}, but in Survival these incompatibilities can only be encountered with [[enchanted book]]s, as no weapon types have access to both Impaling and one of the other aforementioned enchantments. If [[command]]s are used to have two or more of these enchantments on the same item, their effects stack.{{only|java}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=impaling
+|displayname=Impaling
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=impaling
+|displayname=Impaling
+|id=29
+|translationkey=enchantment.tridentImpaling
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|Along with the addition of [[trident]]s, the Impaling enchantment has now been added.}}
+|{{HistoryLine||1.17|dev=20w51a|Impaling now deals extra damage to the [[axolotl]]s.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[Drowned]] can now use the Impaling enchantment.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|exp=Experimental Gameplay|Added the Impaling enchantment as part of [[Experimental Gameplay]], which is able to be applied to the brand-new tridents.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|The Impaling enchantment has now been fully implemented.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|Along with the addition of tridents, the Impaling enchantment can now be applied to them.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||4|Impaling now deals extra [[damage]] to all [[mob]]s in [[water]] or [[rain]], in addition to its existing effect against [[aquatic]] mobs.}}
+|{{HistoryLine||8|Impaling is now calculated before adding [[critical hit]] and [[potion effect]] damage, increasing its effectiveness.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+{{Reflist}}
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee-ranged}}
+
+[[de:Harpune]]
+[[es:Empalamiento]]
+[[fr:Empalement]]
+[[ja:水生特効]]
+[[pt:Empalamento]]
+[[th:ทิ่มแทง]]
+[[uk:Протикання]]
+[[zh:穿刺]]

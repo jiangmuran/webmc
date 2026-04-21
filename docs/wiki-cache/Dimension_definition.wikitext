@@ -1,0 +1,106 @@
+{{about|data pack contents|other uses|Dimension}}
+{{exclusive|java}}
+[[File:Floating Islands custom dimension.png|thumb|300px|A custom dimension using a [[dimension type|custom type]], a fixed [[plains]] biome, and the <code>minecraft:floating_islands</code> [[noise settings]].]]
+{{relevant tutorial|Adding a new dimension}}
+'''Dimensions''' are [[JSON]] files located in [[data pack]]s that define dimensions for the game. New dimensions added can be accessed by using commands, like {{cmd|/execute in <dimension> run teleport <coordinates>}}.
+
+== Usage ==
+Dimensions are stored as [[JSON]] files within a data pack, at the path <code>data/<namespace>/dimension/<name>.json</code>. Alternatively, a [[Custom world preset]] can be used to customize all dimensions in a world. Dimensions stored separately override the dimension set in the selected world preset. This allows datapacks to only override a single dimension while keeping the other dimensions untouched. However, the user-selected world preset then doesn't have an impact on the given dimension.
+
+== JSON format ==
+<div class="treeview">
+When stored as separate dimensions, they follow the following syntax:
+* {{nbt|compound}} The root tag.
+** {{nbt|string|type}}: {{json ref|dimension type}}. Can be preset <code>overworld</code>, <code>the_nether</code>, <code>the_end</code>, <code>overworld_caves</code>, or a custom dimension type
+** {{nbt|compound|generator}}: Generation settings used for that dimension.
+*** {{nbt|string|type}}: The [[#Generator types|generator]] type as [[resource location]]. One of <code>noise</code>, <code>flat</code>, or <code>debug</code>.
+*** Additional fields of the generator, described below.
+</div>
+
+== Generator types ==
+
+=== debug ===
+The generator type used when selecting [[debug mode]] in the world creation menu. This generator has no additional fields.
+
+=== flat ===
+The generator type used for [[superflat]] worlds.
+<div class="treeview">
+* Additional fields:
+** {{Nbt|compound|settings}}: Superflat settings.
+*** {{nbt inherit/flat generator settings}}
+</div>
+
+=== noise ===
+The generator used in all the default [[dimension]]s.
+<div class="treeview">
+* Additional fields:
+** {{Nbt|string}}{{Nbt|compound|settings}}: {{json ref|noise settings|inline=1}} &mdash; Settings for the noise generator.
+** {{nbt|compound|biome_source}}: Settings determining the biome layout.
+*** {{nbt|string|type}}: The [[#Biome sources|biome source]] type as a [[resource location]].
+*** Additional fields of the biome source, described below.
+</div>
+
+== Biome sources ==
+
+=== checkerboard ===
+The checkerboard biome source places biomes in a checkerboard pattern.
+<div class="treeview">
+* Additional fields:
+** {{nbt|string}}{{nbt|list|biomes}}: {{json ref/biome|tag=1}}
+** {{nbt|int|scale}}: Optional. Value between 0 and 62 that defaults to 2. Determines the size of the checkerboard grid. A scale of 0 means each cell of the grid is one chunk wide. Doubles each time the scale increases.
+</div>
+
+=== fixed ===
+The fixed biome source, also called [[single biome]], uses one specified biome everywhere.
+<div class="treeview">
+* Additional fields:
+** {{nbt|string|biome}}: {{json ref/biome}} &mdash; The single biome to use.
+</div>
+
+=== multi_noise ===
+<div class="treeview">
+* Additional fields:
+** {{nbt|string|preset}}: A reference to a [[#Multi noise parameter list|parameter list]]. The default parameter lists are <code>overworld</code> and <code>nether</code>.
+* Or:
+** {{nbt|list|biomes}}: List of biome parameters points. Needs at least one entry. Biomes can appear in more than one parameter point.
+*** {{nbt|compound}}: A parameter point.
+**** {{nbt|string|biome}}: {{json ref/biome}} &mdash; The biome used at this parameter point.
+**** {{nbt|compound|parameters}}: The parameters of this entry
+***** {{Nbt inherit/parameter point}}
+</div>
+
+=== the_end ===
+The biome source used for [[the End]] dimension. This biome source has no additional fields.
+
+== Multi noise parameter list ==
+A multi-noise biome source parameter list is stored as [[JSON]] files within a data pack, at the path <code>data/<namespace>/worldgen/multi_noise_biome_source_parameter_list/<name>.json</code>. It is used to avoid changing world preset files when adding new biomes to experimental data packs.
+
+The syntax is as follows:
+<div class="treeview">
+** {{nbt|string|preset}}: A reference to a hardcoded parameter list preset. The available presets are <code>overworld</code> and <code>nether</code>.
+</div>
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=Pre-release 1|Added dimensions to [[data pack]]s.}}
+|{{HistoryLine||1.16.2|dev=20w29a|The [[Custom noise settings|noise settings]] for custom dimensions can now also be stored in separate files.}}
+|{{HistoryLine|||dev=pre1|Custom dimensions now use the same folder pattern in data packs as other resources: <samp>namespace/<''type''>/resource.json</samp>.}}
+|{{HistoryLine||1.19|dev=22w11a|Removed the <code>seed</code> field in <code>noise</code> generator and <code>the_end</code> biome source, and the world seed is now always used for all dimensions.
+|[[Dimension type]]s can no longer be inlined in the dimension, they have to be a reference to a separate dimension_type file.}}
+|{{HistoryLine||1.19.4|dev=1.19.4-pre1|Added multi-noise biome source parameter list.}}
+}}
+
+== External links ==
+* [https://misode.github.io/dimension/ Dimension Generator on misode.github.io]
+
+== Navigation ==
+{{Navbox Java Edition technical|datapack}}
+
+[[Category:Dimensions]]
+
+[[de:Dimensionsdefinition]]
+[[fr:Définition de dimension]]
+[[ja:カスタムディメンション]]
+[[pt:Definição de dimensão]]
+[[zh:维度定义格式]]

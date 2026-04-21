@@ -1,0 +1,137 @@
+{{For||Bamboo (disambiguation)}}
+{{Infobox structure
+| title = Bamboo
+| imagesize = 125px
+| image = Bamboo generated.png
+| biome = {{BiomeLink|Jungle}}<br>{{BiomeLink|Bamboo Jungle}}<br>{{BiomeLink|Bamboo Jungle Hills}}{{only|be|short=1}}(Unused)<br>{{BiomeLink|Jungle Hills}}{{only|be|short=1}}(Unused)<br>{{BiomeLink|Modified Jungle}}{{only|be|short=1}}(Unused)<br>{{BiomeLink|Modified Jungle Edge}}{{only|be|short=1}}(Unused)
+| blocks =
+* {{BlockLink|Bamboo}}
+* {{BlockLink|Podzol}}
+|canspawn=No, but a bamboo block or bamboo shoot block can grow into a bamboo plant
+}}
+
+A '''bamboo''' is a [[feature]] that consist of [[bamboo]] blocks, found throughout [[jungle]] biomes.
+
+== Generation ==
+Bamboo features are made of [[bamboo]] blocks. They can be found in [[jungle]]s and much more commonly in [[bamboo jungle]]s.
+
+If the feature generates in a bamboo jungle, then there is a chance for a [[podzol]] disk to generate under the bamboo stalk. This is one of few places podzol naturally appears outside of [[old growth taiga|old growth taigas]] and [[trial chambers]]. In bamboo jungles, overlapping podzol disks of various sizes will cover almost all of the biome's surface.
+
+The height of the bamboo stalk varies between 5 and 16 blocks, but if there is an obstacle blocking it then it will be cut short.
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=bamboo
+|spritetype=block
+|nameid=bamboo
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=bamboo
+|spritetype=block
+|nameid=bamboo_no_podzol
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=bamboo
+|spritetype=block
+|nameid=bamboo_some_podzol
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=bamboo
+|spritetype=block
+|nameid=bamboo_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=podzol
+|spritetype=block
+|nameid=optional_podzol_feature
+|foot=1
+}}
+which are used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=bamboo
+|spritetype=block
+|nameid=bamboo_then_podzol_feature
+|foot=1
+}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|float|probability}} The probability for a podzol disk to generate below the bamboo. The disk has a radius of 1 to 4 blocks. Value between 0.0 and 1.0 (inclusive).
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:bamboo",
+  "config": {
+    "probability": 0.2
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 29, 2018|link={{tweet|minecraft|1046096508570009602}}|Bamboo is announced at [[MINECON Earth 2018]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w43a|Added bamboo.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Added bamboo.}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|Bamboo can now generate in [[jungle]] [[biome]]s.
+|Added [[bamboo jungle]]s, where bamboo naturally generates.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.23|Bamboo no longer generates in [[sparse jungle]]s
+|Bamboo generates in larger and denser patches in [[bamboo jungle]]s.
+|The width of bamboo generated in [[bamboo jungle]]s is now consistent across the entire plant.}}
+}}
+
+== Issues ==
+{{issue list|bamboo}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Bamboo Jungle.png|Bamboo seen in a [[jungle]] [[biome]] variant.
+File:Bamboo Jungle in Amplified world.png|Bamboo Jungle in an [[Amplified]] world in 1.19-rc2.
+File:Naturalbamboo.png|Multiple naturally generated bamboo stems growing by a river.
+</gallery>
+
+== Navigation ==
+{{Navbox bamboo}}
+{{Navbox generated features}}
+
+[[fr:Bambou (élément du terrain)]]
+[[ja:竹 (生成物)]]
+[[ko:대나무 (지물)]]
+[[pt:Bambu (recurso)]]
+[[ru:Бамбук (натуральная декорация)]]
+[[zh:竹子（地物）]]

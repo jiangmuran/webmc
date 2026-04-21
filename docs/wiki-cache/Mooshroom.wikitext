@@ -1,0 +1,542 @@
+{{about|a variant of cow spawning in mushroom fields biomes|the hostile mob in {{MCD}}|MCD:Mooshroom|the 2020 mob vote mob|Moobloom}}
+{{distinguish|Mushroom|MCE:Moobloom|MCE:Moolip}}
+{{Infobox entity
+| group = Red
+| 1-1 = Mooshroom.png
+| 1-2 = Baby Mooshroom BE3 JE3.png
+| group2 = Brown
+| 2-1 = Brown Mooshroom.png
+| 2-2 = Baby Mooshroom Brown BE3 JE3.png
+| *-1caption = Adult
+| *-2caption = Baby
+| *-2size = 95px
+| invimage = Mooshroom Spawn Egg
+| health = {{hp|10}}
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| size = '''Adult:'''<br>Height: 1.4 blocks<br>Width: 0.9 blocks<br>
+'''Baby:'''<br>Height: 0.7 blocks<br>Width: 0.45 blocks<br>
+| speed = 0.2
+| spawn = {{BiomeLink|Mushroom Fields}}
+| usableitems = {{drop|Item|Bucket}}
+{{drop|Item|Bowl}}
+{{drop|Item|Shears}}
+{{drop|Item|Wheat}}
+{{drop|Block|Flowers}}<small>(brown variant only)</small>
+{{drop|Item|Lead}}
+{{drop|item|Name Tag}}
+{{drop|Block|Golden Dandelion}}<small>(baby and brown variant only)</small>
+}}
+
+A '''mooshroom''' is a mushroom-covered variant of a [[cow]] exclusive to the rare [[mushroom fields]] biome. Mooshrooms are a great source of mushroom stew and leather.
+
+== Spawning ==
+Red mooshrooms can spawn in [[mushroom fields]] [[biome]]s in herds of 4–8 on [[mycelium]] blocks. They do not naturally spawn in any other biome.
+
+Red mooshrooms have a 5% chance of spawning as babies.
+
+A red mooshroom transforms into a brown mooshroom, and vice versa, when it is struck by [[lightning]]. Brown mooshrooms never spawn naturally.
+
+{{Mob spawn table}}
+
+=== Breeding ===
+{{Main|Breeding}}
+
+A pair of mooshrooms can breed when being given [[wheat]]. A mooshroom cannot be bred with a cow.
+
+Breeding two red mooshrooms has a {{frac|1|1024}} chance to spawn a brown baby variant and vice versa. When breeding a red mooshroom and a brown mooshroom together, the baby has a {{frac|1|2}} chance of being either variant.
+
+Feeding wheat to a baby mooshroom shortens its growing time by 10% of the remaining time. Baby mooshrooms do not have mushrooms on their backs; they appear once the baby grows to an adult.
+
+== Drops ==
+=== Breeding ===
+{{xp|1|7}} upon successful [[breeding]]
+=== On death ===
+{{DropTable
+|{{DropLine|name=Raw Beef|notes=not_burn|quantity=1-3|lootingquantity=0-1}}
+|{{DropLine|name=Steak|notes=burn|quantity=1-3|lootingquantity=0-1}}
+|{{DropLine|name=Leather|quantity=0-2|lootingquantity=0-1}}
+}}
+* {{xp|1|3}} (when killed by a [[player]] or tamed [[wolf]])
+
+Shearing a mooshroom drops 5 corresponding [[mushroom]]s and turns the mooshroom into a temperate [[cow]], emitting a smaller version of the [[particles#largeexplode|explosion]] particle. The mushrooms do not grow back.
+
+Like other baby animals, killing a baby mooshroom yields no items or experience.
+
+== Behavior ==
+Mooshrooms have the same AI behavior as cows: they walk around slowly and aimlessly, huffing and mooing occasionally. They avoid danger such as cliffs, fire, or lava, but make no attempt to stay out of water.
+
+A mooshroom follows a player holding [[wheat]]. 
+
+A [[lightning]] strike 4 blocks within a mooshroom switches its color, from red to brown, and vice versa. Mooshrooms do not take damage from lightning during this transformation.
+
+=== Milking ===
+A mooshroom can be milked by {{control|using}} a [[bucket]] on it, yielding a [[milk bucket]]. Mooshrooms can also be {{control|used|text=milked}} using [[bowl]]s to get [[mushroom stew]].
+
+When a small flower is fed to a  brown mooshroom, the brown mooshroom produces a [[suspicious stew]] related to that small flower the next time it is {{control|use item|text=milked}} with a [[bowl]]. Red mooshrooms do not produce suspicious stew. The brown mooshroom returns to producing mushroom stew until fed another small flower. The small flowers produce the suspicious stew with the following effects.
+
+{{:Suspicious Stew/Effects}}
+
+=== Jockey ===
+{{Exclusive|bedrock|section=1}}
+[[File:Baby Zombie Riding Mooshroom.png|thumb|width=165x165|A red mooshroom ridden by a baby zombie before Spring To Life and Tiny Takeover]]
+15% of nearby baby [[zombies]], [[husks]], or [[drowned]] may ride an adult mooshroom to form a [[jockey]].
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Cow idle1.ogg
+|sound2=Cow idle2.ogg
+|sound3=Cow idle3.ogg
+|sound4=Cow idle4.ogg
+|subtitle=Cow moos <ref group=sound name=LousyEvents>The mooshroom reuses many of the cow's sound events instead of having its own, resulting in these unintuitive subtitles - see {{bug|MC-98316}}</ref>
+|source=neutral
+|description=Randomly
+|id=entity.cow.ambient|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.ambient|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Cow hurt1.ogg
+|sound2=Cow hurt2.ogg
+|sound3=Cow hurt3.ogg
+|subtitle=Cow dies<ref group=sound name=LousyEvents/> 
+|source=neutral
+|description=When a mooshroom dies
+|id=entity.cow.death|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.death|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|subtitle=Cow hurts<ref group=sound name=LousyEvents/>
+|source=neutral
+|description=When a mooshroom is damaged
+|id=entity.cow.hurt|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.hurt|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Cow step1.ogg
+|sound2=Cow step2.ogg
+|sound3=Cow step3.ogg
+|sound4=Cow step4.ogg
+|subtitle=Footsteps 
+|source=neutral
+|description=While a mooshroom is walking
+|id=entity.cow.step|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom convert1.ogg
+|sound2=Mooshroom convert2.ogg
+|subtitle=Mooshroom transforms 
+|source=neutral
+|description=When a mooshroom is struck by lightning
+|id=entity.mooshroom.convert
+|translationkey=subtitles.entity.mooshroom.convert
+|volume=1.5
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom eat1.ogg
+|sound2=Mooshroom eat2.ogg
+|sound3=Mooshroom eat3.ogg
+|sound4=Mooshroom eat4.ogg
+|subtitle=Mooshroom eats 
+|source=neutral
+|description=When a brown mooshroom is fed a flower
+|id=entity.mooshroom.eat
+|translationkey=subtitles.entity.mooshroom.eat
+|volume=2.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.95, or 1.05 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|subtitle=Cow gets milked<ref group=sound name=LousyEvents/>
+|source=neutral
+|description=When a mooshroom is milked
+|id=entity.cow.milk|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.milk|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Mooshroom gets milked 
+|source=neutral
+|description=When a mooshroom is milked with a bowl
+|id=entity.mooshroom.milk
+|translationkey=subtitles.entity.mooshroom.milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound name=milkpitch>Can be 1.0, 0.9, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|subtitle=Mooshroom gets milked suspiciously
+|source=neutral
+|description=When a brown mooshroom is milked with a bowl after being fed a flower
+|id=entity.mooshroom.suspicious_milk
+|translationkey=subtitles.entity.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound name=milkpitch/>
+|distance=16}}
+| {{SoundLine
+|sound=Shear.ogg
+|subtitle=Shears click 
+|source=neutral
+|description=When a mooshroom is sheared
+|id=entity.mooshroom.shear
+|translationkey=subtitles.item.shears.shear
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Cow idle1.ogg
+|sound2=Cow idle2.ogg
+|sound3=Cow idle3.ogg
+|sound4=Cow idle4.ogg
+|source=neutral
+|description=Randomly
+|id=mob.cow.say
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|rowspan=2
+|sound=Cow hurt1.ogg
+|sound2=Cow hurt2.ogg
+|sound3=Cow hurt3.ogg
+|source=neutral
+|description=When a mooshroom dies
+|id=mob.cow.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|source=neutral
+|description=When a mooshroom is damaged
+|id=mob.cow.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Cow step1.ogg
+|sound2=Cow step2.ogg
+|sound3=Cow step3.ogg
+|sound4=Cow step4.ogg
+|source=neutral
+|description=While a mooshroom is walking
+|id=mob.cow.step
+|volume=0.65
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Mooshroom convert1.ogg
+|sound2=Mooshroom convert2.ogg
+|source=neutral
+|description=When a mooshroom is struck by lightning
+|id=mob.mooshroom.convert
+|volume=0.75
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mooshroom eat1.ogg
+|sound2=Mooshroom eat2.ogg
+|sound3=Mooshroom eat3.ogg
+|sound4=Mooshroom eat4.ogg
+|subtitle=Mooshroom eats 
+|source=Friendly Creatures
+|description=When a brown mooshroom is fed a flower
+|id=mob.mooshroom.eat
+|volume=1.0/0.95/1.05
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|source=neutral
+|description=When a mooshroom is milked
+|id=mob.cow.milk
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Mooshroom gets milked 
+|source=Friendly Creatures
+|description=When a mooshroom is milked with a bowl
+|id=mob.mooshroom.suspicious_milk
+|volume=1.0/0.9/1.1
+| pitch = 1.0
+}}
+}}
+
+[[pt:Mooshroom/Sons]]
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Mooshroom
+|spritetype=entity
+|nameid=mooshroom
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Mooshroom
+|spritetype=entity
+|nameid=mooshroom
+|showentityfamily=y
+|entityfamily=mob,mushroomcow
+|id=16
+|foot=1}}
+
+=== Entity data ===
+
+Mooshrooms have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|list|stew_effects}}: The effects applied to the [[suspicious stew]] from milking the mooshroom.
+*** {{nbt|compound}}
+**** {{nbt|string|id}}: Optional. The [[effect#Effect list|Effect identifier]] of the status effect the brown mooshroom may give to a suspicious stew.
+**** {{nbt|int|duration}}: Optional. An integer indicating the duration of the status effect the brown mooshroom may give to a suspicious stew.
+** {{nbt|string|Type}}: ID of the mooshroom's type. Represents the {{DCL|minecraft:mooshroom/variant}} component.
+</div>
+{|class="wikitable mw-collapsible mw-collapsed"
+! Variant
+! Identifier
+|-
+| [[File:Mooshroom.png|32px]] Red
+| <code>red</code>
+|-
+| [[File:Brown Mooshroom.png|32px]] Brown
+| <code>brown</code>
+|}<section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Repopulation;Cow Tipper;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|The Parrots and the Bats;Two By Two;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{more images|section=1|Did the mushrooms previously have shading before 1.8?}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Red Mooshroom JE1.png|48px]] Added mooshrooms.
+|They cannot be milked with a [[bucket]] like regular [[cows]] can. Right clicking on a mooshroom with more than one [[bowl]] equipped turns the whole stack into just one bowl of [[mushroom stew]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Breeding a [[cow]] with a mooshroom may result in either, chosen randomly. The offspring may be more likely to be the kind the [[player]] gave [[wheat]] to first, similarly to [[sheep]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|[[File:Red Mooshroom Before 1.8.2.png|48px]] The mooshroom's horns have been moved.
+|The mooshroom udder's model is changed, but the texture isn't changed to match the new [[model]], resulting in the texture on the udder being off-placed.<ref>{{bug|MC-49704}}</ref>
+|[[File:Baby Red Mooshroom JE1 BE1.png|x46px]] Added baby mooshrooms. 
+|Mooshrooms can now be bred with [[wheat]].}}
+|{{HistoryLine||1.2.1|dev=12w07a|Mooshrooms can no longer breed with [[cows]].}}
+|{{HistoryLine|||dev=12w07b|Mooshrooms have a new [[AI]] system.}}
+|{{HistoryLine||1.4.2|dev=12w38a|Added new step, hurt, and idle [[sound]]s for mooshroom.}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[lead]]s, which can be used to leash mooshrooms.}}
+|{{HistoryLine||1.8|dev=14w02a|Baby mooshroom growth can now be accelerated using wheat.}}
+|{{HistoryLine|||dev=14w05b|Mooshroom's [[mushroom]]s are no longer visible when they have the [[Invisibility]] effect.}}
+|{{HistoryLine|||dev=14w26b|Mooshrooms now require [[mycelium]], not [[grass]], for random spawning and spawning from [[mob spawner]]s.}}
+|{{HistoryLine||1.8.2|dev=pre5|Fixed mooshroom udder texture not displaying correctly.
+|Fixed mooshrooms incorrectly displaying custom mushroom [[model]]s.
+|[[File: Red Mooshroom JE2 BE1.png|48px]] Changed Mooshroom's Mushroom model.}}
+|{{HistoryLine||1.9|dev=15w31a|It is no longer possible to get stew from mooshrooms in [[Creative]] mode.<ref>{{bug|MC-90969}}</ref>}}
+|{{HistoryLine|||dev=15w39a|Mooshrooms are now slightly taller (1.4 blocks tall rather than 1.3, with babies 0.7 blocks tall rather than 0.65).}}
+|{{HistoryLine||MINECON Earth 2018|link=https://www.youtube.com/watch?v=vh04binv1bQ&t=5m16s|The [[Mojang]] panel debates whether to add brown mooshrooms.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Red Mooshroom JE3 BE2.png|48px]] [[File:Baby Red Mooshroom JE2 BE2.png|38px]] The textures of the mooshroom and baby mooshroom have been changed.}}
+|{{HistoryLine|||dev=19w08a|[[File:Brown Mooshroom JE1 BE1.png|48px]] [[File:Baby Brown Mooshroom JE1 BE1.png|38px]] Added the brown mooshroom variant, which spawns when a regular mooshroom is struck by lightning.
+|Brown mooshrooms give the player [[suspicious stew]] when fed a [[flower]].
+|Breeding two red mooshrooms has a {{frac|1|1024}} chance to spawn a brown baby variant, and vice versa.}}
+|{{HistoryLine||1.15|dev=19w39a|[[File:Red Mooshroom JE4.png|48px]] [[File:Brown Mooshroom JE2.png|48px]] The textures of the [[mushroom]]s on mooshrooms have been flipped.
+|[[File:Baby Red Mooshroom JE3.png|38px]] [[File:Baby Brown Mooshroom JE2.png|38px]] The [[model]] of baby mooshrooms have been changed.}}
+|{{HistoryLine||1.16|dev=20w15a|Mooshrooms can now be sheared by [[dispenser]]s.}}
+|{{HistoryLine|||dev=pre1|It is once again possible to get stew from mooshrooms in [[Creative]] mode.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Baby Red Mooshroom 24w33a.png|48px]] [[File:Baby Brown Mooshroom 24w33a.png|48px]] Due to a bug, the baby red and brown mooshroom [[models]] are currently broken.<ref>{{bug|MC-275273}}</ref>}}
+|{{HistoryLine|||dev=24w34a|The baby red and brown mooshroom models are now been fixed.}}
+|{{HistoryLine||1.21.5|dev=25w05a|The red and brown mooshroom models have been updated to include an extruded snout and mirrored legs.
+|Other than being resized, the texture itself hasn't changed, meaning the extruded snout is not visible by default.}}
+|{{HistoryLine|||dev=25w07a|[[File:Red Mooshroom JE5 BE3.png|48px]] [[File:Baby Red Mooshroom JE4.png|38px]] [[File:Brown Mooshroom JE3 BE2.png|48px]] [[File:Baby Brown Mooshroom JE3.png|38px]] The textures for both variants have been updated.}}
+|{{HistoryLine|||dev=25w10a|[[File:Baby Mooshroom JE5 BE4.png|38px]] [[File:Baby Brown Mooshroom JE4 BE3.png|38px]] The red and brown baby models now have their heads positioned correctly, to match parity with Bedrock Edition.}}
+|{{HistoryLine||26.1|dev=snap2|[[File:Baby Mooshroom BE3 JE3.png|32px]] [[File:Baby Mooshroom Brown BE3 JE3.png|32px]] The model and textures of baby mooshrooms have been changed.}}
+|{{HistoryLine|||dev=snap5 |Added [[golden dandelion]]s, which can be used to prevent baby red mooshrooms from growing up. They currently do not work on baby brown mooshrooms.}}
+|{{HistoryLine|||dev=snap8|[[Golden dandelion]]s now work on baby brown mooshrooms.<ref>{{bug|MC-305989}}</ref>
+|Small flowers (except the golden dandelion) can no longer be used on baby brown mooshrooms. Previously, using a small flower on one defined the effect of the first [[suspicious stew]] obtained for when it's milked as an adult.}}}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Red Mooshroom JE2 BE1.png|48px]] [[File:Baby Red Mooshroom JE1 BE1.png|38px]] Added mooshrooms and their baby variant.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Baby zombies [[chicken jockey|jockeys]] can now mount mooshrooms when trying to attack [[player]]s, [[villager]]s, or [[golem]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Baby [[husk]]s can now mount mooshrooms.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Red Mooshroom JE3 BE2.png|48px]] [[File:Baby Red Mooshroom JE2 BE2.png|38px]] The textures of mooshrooms and baby mooshrooms have been changed.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|[[File:Brown Mooshroom JE1 BE1.png|48px]] [[File:Baby Brown Mooshroom JE1 BE1.png|38px]] Added brown mooshrooms.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Mooshrooms now spawn at light level 9 or above.<ref>{{Bug|MCPE-66830}}</ref>}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|[[File:Red Mooshroom JE5 BE3.png|48px]] [[File:Baby Red Mooshroom BE3.png|38px]] [[File:Brown Mooshroom JE3 BE2.png|48px]] [[File:Baby Brown Mooshroom BE2.png|38px]] The textures of mooshrooms have been changed. Most notably, the nose now extrudes from their models.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.27|exp=Drop 1 of 2026|[[File:Baby Mooshroom BE3 JE3.png|32px]] [[File:Baby Mooshroom Brown BE3 JE3.png|32px]] The model and textures of baby mooshrooms have been changed.|Tweaked the bounding box of both adult and baby mooshrooms to align with Java Edition and the new model.|[[File:Red Mooshroom BE4.png|48px]] [[File:Brown Mooshroom BE4.png|48px]] Due to a bug, the models of adult mooshrooms are slightly broken.<ref>{{bug|MCPE-234684}}</ref>}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|All features behind the "Drop 1 of 2026" experimetal toggle are fully implemented.}}
+|{{HistoryLine|||dev=Preview 26.10.21|[[File:Red Mooshroom JE5 BE3.png|48px]] [[File:Brown Mooshroom JE3 BE2.png|48px]] The models of adult mooshrooms have been fixed.
+|Added [[golden dandelion]]s, which can be used to prevent baby mooshrooms from growing up.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Red Mooshroom JE2 BE1.png|48px]] [[File:Baby Red Mooshroom JE1 BE1.png|38px]] Added mooshrooms and baby mooshrooms.|Mooshrooms can be bred using [[wheat]].|Mooshrooms can rarely spawn in the [[plains]] biome.}}
+|{{HistoryLine||xbox=TU11|Mooshrooms can no longer be [[shear]]ed if the [[spawn limit]] for animals is reached.}}
+|{{HistoryLine||xbox=TU12|Mooshrooms can no longer breed with [[cow]]s.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Using a mooshroom [[spawn egg]], baby mooshrooms can now be spawned by using {{xbtn|lt}}/{{psbtn|l2}}/{{wbtn|zl}} on a mooshroom.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Baby mooshroom growth can now be accelerated using wheat.
+|The [[sound]]s of mooshrooms have been updated.}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Mooshrooms now have separate [[spawn limit]]s.{{verify|Was this ever not the case? In CU1 they already had seperate spawn limits.}}}}
+|{{HistoryLine||xbox=TU56|xbone=CU47|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|Mooshrooms can now be milked in [[Creative]] mode.}}	
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|[[File:Red Mooshroom JE2 BE1.png|48px]] [[File:Baby Red Mooshroom JE1 BE1.png|38px]] Added mooshrooms.}}
+}}
+
+<gallery>
+Red Mooshroom 19w38a.png|Glitched red mooshroom in 19w38a
+Brown Mooshroom 19w38a.png|Glitched brown mooshroom in 19w38a
+</gallery>
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID of the mooshroom has now been changed from <code>MushroomCow</code> to <code>mooshroom</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID of mooshrooms has now been changed from <code>mushroomcow</code> to <code>mooshroom</code>.}}
+}}
+
+== Issues ==
+
+{{issue list}}
+
+== Trivia ==
+* {{IN|earth}}, there was a buttercup-covered variant of mooshrooms known as "[[moobloom]]s".<ref>{{tweet|jorax79|1151394648281120769|Mooblooms! A new mob variant in Minecraft Earth!|July 17, 2019}}</ref> This variant was also part of the [[Minecraft Live 2020]] Mob Vote. It came last and there are currently no known plans to add it to the game.
+* Unlike [[cow]]s, mooshrooms do not have a Moody sound variant.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:Mooshroom-ingame.jpeg|A red mooshroom.
+File:Mooshroom-ingame2.jpeg|A brown mooshroom.
+File:Double tap cow.jpg
+</gallery>
+
+=== Development images ===
+<gallery>
+Mushroom cow.png|The first image released of the mooshroom.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Mooshroom Death.png|A dying mooshroom
+File:Mooshrooms1.png|A series of mooshrooms spawned on top of a [[Huge Mushroom|huge red mushroom]]
+File:BabyMooshroom.png|A baby mooshroom
+File:Mooshrooms.png|A few mooshrooms next to a lake
+File:MinecartMooshroom.png|A mooshroom in a minecart
+File:All mooshroom variants.png|Adult and baby forms of the red and brown mooshrooms
+</gallery>
+
+=== Mojang artwork ===
+<gallery>
+File:Mooshroom artwork.jpeg
+File:Mm-mooshroom-header.png|A close-up of a mooshroom
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Red Mooshroom (texture) JE6 BE3.png|New mooshroom texture file.
+Brown Mooshroom (texture) JE2 BE2.png|New brown mooshroom texture file.
+Baby Red Mooshroom (texture).png|Baby mooshroom texture file.
+Baby Brown Mooshroom (texture).png|Baby brown mooshroom texture file.
+Red Mooshroom (texture).png|Old mooshroom texture file.
+Brown Mooshroom (texture).png|Old brown mooshroom texture file.
+</gallery>
+
+===In other media===
+<gallery>
+File:Mooshroom Minecraft Instagram.jpg|Artwork of a mooshroom
+File:Mooshroom flippin fig.jpg|[[Flippin' Figs]] mooshroom figure.
+File:LEGO Mooshroom.png|A [[LEGO Minecraft]] minifigure of a mooshroom
+File:Baby Mooshroom Plush JINX.jpg|A baby mooshroom [[plush]] made by JINX
+File:Mooshroom in Natural Habitat.jpg|The plush in a field.
+File:Woodsword Chronicles mooshroom.jpg|A mooshroom as it appears in {{WSC|3|1}}
+</gallery>
+
+== External links ==
+* [[Wikipedia:Cordyceps|Cordyceps fungi]]
+* {{mcnet|mooshroom|Mob Menagerie: Mooshroom|January 11, 2025|Duncan Geere}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Animal mobs]]
+
+[[cs:Krávomůrka]]
+[[de:Mooshroom]]
+[[es:Champiñaca]]
+[[fr:Mooshroom]]
+[[hu:Mooshroom]]
+[[it:Mooshroom]]
+[[ja:ムーシュルーム]]
+[[ko:무시룸]]
+[[nl:Mooshroom]]
+[[pl:Mooshroom]]
+[[pt:Mooshroom]]
+[[ru:Грибная корова]]
+[[th:มูชรูม]]
+[[uk:Мушрум]]
+[[zh:哞菇]]

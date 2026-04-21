@@ -1,0 +1,199 @@
+{{about|the April Fools' joke|the NBT tag to lock chests|Chest#Block data}}
+{{Distinguish|Trapped Chest}}
+{{Outdated feature|edition=java}}
+{{exclusive|java|console}}
+{{Infobox block
+| 1-1 = Chest JE1.png
+| 1-1size = 150px
+| 1-2 = Large Chest JE1.png
+| 1-2caption = Before 12w19a (1.3.1)
+| 1-2size = 250px
+| 1-3 = Missing Model JE2.png;Missing Model (anisotropic filtering) JE2.png
+| 1-3size = 150px
+| 1-3caption = 13w18a (1.6.1) onward
+| 2-1 = Locked chest LCE3.png
+| 2-1size = 150px
+| 2-1caption = Placed
+| 2-2 = Locked chest LCE Inventory.png
+| 2-2size = 150px
+| 2-2caption = In hand/inventory
+| group = Java Edition
+| group2 = Legacy Console Edition
+| invimage = Locked chest
+| invimage2 = [Locked chest]Locked Chest 12w19a
+| invimage3 = [Locked chest]Locked Chest 12w22a
+| invimage4 = [Locked chest]Locked Chest 13w01a
+| invimage5 = [Locked chest]Locked Chest 13w03a
+| invimage6 = [Locked chest]Missing Model JE1
+| transparent = No
+| hardness = -1 (Beta 1.4)<br/>0 (Beta 1.4_01)
+| light = Yes (15)
+| tool = None
+| renewable = No
+| stackable = Yes (64), when its item form existed
+| flammable = No
+| lavasusceptible = Yes
+| mapcolor = WOOD
+}}
+The '''Locked chest'''{{note|Capitalized in this way in-game, unlike other items or blocks}} or '''Steve Co. Supply Crate''' was a [[block]] intended to direct players to the [[Minecraft Store]], a site created as an [[April Fools' Day jokes#2011|April Fools' Day joke]].
+
+== Obtaining ==
+=== Breaking ===
+When first introduced in [[Beta 1.4]], locked chests were indestructible except to explosions, which allowed it to drop.
+
+From [[Beta 1.4_01]] up until its removal, locked chests could be broken instantly with any tool or by hand.
+
+{{Breaking row|Locked chest|horizontal=1|foot=1}}
+
+=== Natural generation ===
+In Beta 1.4, if the date is April 1 of any year, the game picks a random location to generate a locked chest in every new chunk. If the chosen location is air and has a solid block below, a locked chest generates.
+
+The server console outputs "added a chest!!" every time a locked chest generates.
+
+== Usage ==
+[[File:Locked Chest Message.gif|thumb|left|256px|The prompt that appears when the locked chest is used.]] 
+The locked chest's initial purpose was to direct players to the [[Minecraft store]] at the URL [https://web.archive.org/web/20110401175108/https://www.minecraft.net/store/loot.jsp https://www.minecraft.net/store/loot.jsp]. Clicking the {{Control|use|text=use button}} would result in the dialog box to the left being displayed.
+
+This functionality was exclusive to Beta 1.4; all later versions did not trigger this, and instead the block would disappear after a while, similar to [[leaves]].{{verify|is this the case for all versions pre removal?}}
+{{-}}
+=== Placement and orientation ===
+Locked chests would decide their facing direction according to the blocks around them, generally making an attempt to face outward from walls. If their face was obstructed by a block, they would rotate accordingly to face away from said block.
+
+Prior to Beta 1.8, said behavior was standard for directional blocks such as chests and furnaces. From Beta 1.8 onward, said blocks would instead face toward the player placing them, and would not change their facing direction depending on nearby blocks. The locked chest, being an unsupported block, was not subject to this change, and retained its old behavior up until its removal, making it unique in this aspect.
+
+=== Fuel ===
+Locked chests could be used as [[smelting|fuel]], lasting 1.5 items, the same as a regular [[chest]].
+
+=== Note blocks ===
+Locked chests can be placed under [[Note block|note blocks]] to produce "bass" sounds.
+
+== Sounds ==
+Locked chests did not have any unique sounds, such as an opening sound.
+{{Sound table/Block/Wood/JE/Old}}
+{{verify|did unique sounds for walking, punching, etc. exist at this point in development?}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Locked chest
+|spritetype=block
+|nameid=chest_locked_aprilfools_super_old_legacy_we_should_not_even_have_this
+|id=95
+|translationkey=tile.lockedchest.name
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4|[[File:Chest (N) JE1.png|32px]] [[File:Chest (E) JE1.png|32px]] [[File:Chest (S) JE1.png|32px]] [[File:Chest (W) JE1.png|32px]]<br>[[File:Locked chest (inventory) JE1.png|32px]] Added locked chests. 
+|[[File:Large Chest JE1.png|52px]] Added large locked chests. Locked chests can join with each other to form large locked chests.
+|Locked chests use the [[model]]s and [[texture]]s of [[chest]]s.
+|Locked chests randomly spawn in worlds if the date is set to April 1st.
+|They would even generate in strange locations such as on top of trees or in midair.
+|The server console outputted "added a chest!!" each time a chest was generated.}}
+|{{HistoryLine||April 1, 2011|link={{tweet|notch|53746813626355712}}|[[Notch]] states that he planned to remove them at midnight on April 2nd, but didn't due to illness.}}
+|{{HistoryLine||1.4_01|Locked chests no longer naturally generate.
+|Locked chests have not been removed from the game entirely; instead code has been added for locked chests in the world to disappear, to avoid [[crash]]es, causing them to decay in a fashion similar to [[leaves]]. If locked chests are stored in the [[inventory]], they remain until they are placed in the world.
+|Removed large locked chests.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w37a|Locked chests have been removed as an [[item]].
+|Locked chests can now be placed only with the block-placement [[commands|command]] such as {{cmd|setblock}}.
+|Locked chests have been given a dedicated namespaced alphanumeric ID for numeric ID 95: <code>minecraft:chest_locked_aprilfools_super_old_legacy_we_should_not_even_have_this</code> &ndash; this is currently the longest such ID in the history of ''Minecraft''.}}
+|{{HistoryLine|||dev=13w41a|Added [[white stained glass]], which has now replaced the ID of locked chest (95). As such, any existing locked chests would seamlessly convert over to stained glass upon updating to this version.
+|The alphanumeric ID for block 95 has been changed from <code>chest_locked_aprilfools_super_old_legacy_we_should_not_even_have_this</code> to <code>stained_glass</code>.}}
+}}
+
+==== Unsupported texture history ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w21a|[[File:Placeholder Block JE1 BE1.png|32px]] [[File:Placeholder Block JE1 BE1.png|32px]] [[File:Placeholder Block JE1 BE1.png|32px]] [[File:Placeholder Block JE1 BE1.png|32px]]<br>[[File:Locked chest (inventory) JE5.png|32px]]  The original chest textures have been removed from <samp>[[terrain.png]]</samp>. As a result, the locked chest now points to texture zones occupied by the block [[placeholder texture]]. This is also the texture its particles use.}}
+|{{HistoryLine|||dev=12w22a|[[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]]<br>[[File:Locked chest (inventory) JE6.png|32px]]  The texture of locked chests has been changed with the addition of the [[block of emerald]], whose texture is positioned where the chest's top/bottom previously was. This is also the texture its particles use.}}
+|{{HistoryLine||1.5|dev=13w01a|[[File:Locked chest (N) JE4.png|32px]] [[File:Locked chest (E) JE4.png|32px]] [[File:Locked chest (S) JE4.png|32px]] [[File:Locked chest (W) JE4.png|32px]]<br>[[File:Locked chest (inventory) JE8.png|32px]]  The texture of locked chests has been changed with the addition of the [[block of redstone]], whose texture is positioned where the chest's side/back originally was.}}
+|{{HistoryLine|||dev=13w02a|Due to major texture storage changes in this version, the locked chest no longer has a valid texture, making it [[crash]] the game if rendered into view.}}
+|{{HistoryLine|||dev=13w03a|[[File:Locked chest JE5.png|32px]] [[File:Locked chest JE5.png|32px]] [[File:Locked chest JE5.png|32px]] [[File:Locked chest JE5.png|32px]]<br>[[File:Locked chest (inventory) JE9.png|32px]] The aforementioned crash has been fixed by using the [[missing texture]] for locked chests.
+|No particle texture is defined for the locked chest. As such, it defaults to using [[Placeholder texture#Default texture|the texture at (0,0) on the atlas]]. Coincidentally, in the default textures, this is also the missing texture.}}
+|{{HistoryLine||1.6.1|dev=13w18a|[[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]]<br>[[File:Locked chest (inventory) JE10.png|32px]]  The missing texture has been changed, which has caused the appearance of locked chest blocks to change as well.
+|As the missing texture is no longer 64x64, the texture atlas arrangement has shifted as a result. The texture at (0,0) is now flowing lava, and as such this is the particle locked chests use.}}
+|{{HistoryLine||1.7.2|dev=13w38a|[[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]] Anisotropic filtering has been added as an option - enabling it changes the missing texture, and the appearance of locked chests as a result.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Locked chests have never existed in this edition. Their numeric ID, 95, is instead used by [[invisible bedrock]].}}
+|{{HistoryLine||v0.3.0|With the addition of <code>en_US.lang</code> in this version, locked chests were given the translation string {{code|tile.lockedchest.name{{=}}Locked chest}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=?|Added locked chests.<ref>{{ytl|pLfrGEp2vLs|Minecraft: Xbox 360 Edition TU1 SECRET items - Locked Chest, Bedrock, Lit Furnace, and Still Water|MinecraftDigger|February 22, 2021}}</ref>}}
+|{{HistoryLine||xbox=1.66.0033.0|[[File:Chest (N) JE1.png|32px]] [[File:Chest (E) JE1.png|32px]] [[File:Chest (S) JE1.png|32px]] [[File:Chest (W) JE1.png|32px]]<br>[[File:Locked chest (inventory) LCEUNK0033.png|36px]] Locked chests exist as of this version.
+|The locked chest has numeric ID 95.
+|Like with locked chests in ''Java Edition'', it emits light and decays over time.
+|Unlike in ''Java Edition'', it can be broken instantly.
+|The locked chest has no description in the inventory unlike many other items.
+|If dropped on the ground in a multiplayer world, all players are automatically disconnected.}}
+}}
+
+==== Unsupported texture history ====
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|[[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]] [[File:Locked chest JE3.png|32px]]<br>[[File:Locked chest (inventory) LCEUNKTU9.png|36px]] Locked chests now use the placeholder texture on all horizontal sides and the emerald block texture on the top and bottom.<ref>{{ytl|ntXHCUyI_xA|Minecraft Xbox 360 + Xbox One Mod Map Download (Easy To Download Mods)|ibxtoycat|May 6, 2013|t=1m58s}}</ref>}}
+|{{HistoryLine||xbox=TU12|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|[[File:Locked chest LCE3.png|32px]] [[File:Locked chest LCE3.png|32px]] [[File:Locked chest LCE3.png|32px]] [[File:Locked chest LCE3.png|32px]]  When placed, the locked chest now [[Placeholder texture#Default texture|defaults to using the grass block top texture on all sides]].
+|[[File:Locked chest (held, first person) LCE3.png|32px]] [[File:Locked chest (held, third person) LCE3.png|32px]] [[File:Locked_chest_LCE_Inventory.png|30px]] 
+[[File:Locked chest (inventory) LCEUNKTU12.png|36px]] In the inventory and when held, the locked chest uses the entirety of <samp>terrain.png</samp> on all sides. All [[animation placeholder texture]]s excluding the second fire texture are replaced with the actual animations. The behavior seems quite inconsistent - residual cases of the purple placeholder texture appear to be present on the item in some cases but not all.}}
+}}
+
+== Issues == 
+Locked chest is a removed block and was an April Fools' joke, and as such issues relating to it cannot be fixed.
+
+== Trivia ==
+* Steve Co. Supply Crate is a reference to the ''[https://wiki.teamfortress.com/wiki/Mann_Co._Supply_Crate Mann Co. Supply Crate]'' from ''{{w|Team Fortress 2}}'', where a [https://wiki.teamfortress.com/wiki/Mann_Co._Supply_Crate_Key key] must be purchased for $2.49 in the in-game shop called ''Mann Co. Store'' in order to open the crate.
+* At the time of the locked chest being added into ''Minecraft'', it looked identical to a normal chest. However, after Beta 1.8, when the chest model was updated to be smaller than a full block, the locked chest, a deprecated block at that point, remained with the old model, and as such would appear larger than an ordinary chest.
+* If a Beta 1.4 world with Locked chests is updated to Release 1.7.2 or later, all locked chests turn into [[white stained glass]].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Locked-chest.png|A locked chest glowing at night.
+Chest-Comparison.png|Unlike normal chests, locked chests continued to use the standard block model, as seen in this screenshot taken in 1.2.5.
+Locked Chest Ver. 3.png|The locked chest's 12w22a-1.4.7 appearance, in placed, dropped, held and framed forms.‎
+Locked Chest Ver. 4.png|The locked chest's 13w01a-13w01b appearance, in placed, dropped, held and framed forms.‎
+Locked Chest Ver. 5.png|The locked chest's 13w03a-13w17a appearance, in placed, dropped, held and framed forms.‎
+Locked Chest Ver. 6.png|The locked chest's 13w18a-13w39b appearance, in placed, dropped, held and framed forms.‎
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|removed}}
+{{Navbox removed features}}
+{{Navbox jokes|beta 1.4}}
+
+[[Category:Removed blocks]]
+[[Category:Joke features]]
+[[Category:Joke blocks]]
+
+[[cs:Zamčená truhla]]
+[[de:Verschlossene Truhe]]
+[[es:Cofre cerrado]]
+[[fr:Coffre verrouillé]]
+[[it:Baule bloccato]]
+[[ja:鍵のかかったチェスト]]
+[[ko:잠긴 상자]]
+[[lzh:閂箱]]
+[[nl:Vergrendelde kist]]
+[[pl:Zablokowana skrzynia]]
+[[pt:Baú Trancado]]
+[[ru:Запертый сундук]]
+[[zh:上锁的箱子]]

@@ -1,0 +1,351 @@
+{{Infobox block
+| group = Empty
+| 1-1 = Chiseled Bookshelf (S 0).png
+| group2 = Full
+| 2-1 = Chiseled Bookshelf (S 63).png
+| extratext = [[#Gallery|View all renders]]
+| transparent = No
+| light = No
+| tool = Axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = Yes{{only|java|short=1}}<br>No{{only|bedrock|short=1}}
+}}
+'''Chiseled bookshelves''' are [[block]]s that can hold [[book]]s, [[books and quills]], [[written book]]s, [[enchanted book]]s, and [[knowledge book]]s.
+
+== Obtaining ==
+=== Breaking ===
+Chiseled bookshelves can be destroyed with any [[tool]], but an [[axe]] mines it the fastest. When broken, all contained books are dropped as items. The block itself drops only when broken using a tool enchanted with [[Silk Touch]].<ref>{{bug|MC-261722||Chiseled bookshelf doesn't drop without using the silk touch enchantment|WAI}}</ref>
+{{breaking row|horizontal=1|Chiseled Bookshelf|axe|drop=0}}
+
+=== Crafting ===
+{{Crafting
+|A1=Any Planks
+|B1=Any Planks
+|C1=Any Planks
+|A2=Any Wooden Slab
+|B2=Any Wooden Slab
+|C2=Any Wooden Slab
+|A3=Any Planks
+|B3=Any Planks
+|C3=Any Planks
+|Output=Chiseled Bookshelf
+|type=Building block
+}}
+
+== Usage ==
+Chiseled bookshelves cannot be moved by [[piston]]s.{{only|je}}
+
+=== Holding books ===
+[[File:Chiseled BookshelfTextures.png|thumb|All of the chiseled bookshelf textures before [[Java Edition 22w46a|22w46a]].]]
+Chiseled bookshelves can hold up to six [[book]]s, [[books and quills]], [[written book]]s, [[enchanted book]]s, and/or [[knowledge book]]s. There is no GUI; books are instead added into the bookshelf by {{ctrl|using}} on a slot with a book. Doing so places a book in that slot. {{ctrl|Using}} on an occupied slot removes the book from that slot.
+
+Chiseled bookshelves do not increase the power of [[enchanting table]]s.
+
+=== Redstone signal ===
+[[File:chiseled_bookshelf_power.png|thumb|100px|The correspondences between slot and signal power.]]
+A [[redstone comparator]] sends a signal (1–6) indicating the last slot interacted with. When no slot has been interacted with yet, it outputs 0.
+
+An [[observer]] can detect when a book is added or removed from the bookshelf.
+
+=== Hoppers, minecarts with hoppers, and droppers ===
+[[Hopper]]s and [[minecarts with hopper]]s can insert and remove books from the bookshelf. As with any other container, items are taken from the first slot that has an item that can fit in the hopper and are inserted into the first empty slot. [[Dropper]]s behave similarly when inserting books into the bookshelf.
+
+When a hopper that is not already 100% full fails to remove a book from a non-empty bookshelf because there is no room for the book in the hopper's inventory, that is still counted as an "interaction" with the slot. Thus, a hopper that cannot remove any of the books effectively sets the last-interacted slot to the last non-empty slot in the bookshelf.<ref>{{bug|MC-257178||Chiseled Bookshelf redstone behavior is inconsistent|Fixed}}</ref>
+
+=== Fuel ===
+Chiseled bookshelves can be used as fuel in furnaces to smelt 1.5 items.
+
+=== Note blocks ===
+Chiseled bookshelves can be placed under [[note block]]s to produce a "bass" sound.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Chiseled bookshelf}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|subtitle=Book placed
+|source=block
+|description=When a non-enchanted book is placed in a chiseled bookshelf
+|id=block.chiseled_bookshelf.insert
+|translationkey=subtitles.chiseled_bookshelf.insert
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=insertvaries>Can be 1.0, 0.85, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf insert enchanted1.ogg
+|sound2=Chiseled bookshelf insert enchanted2.ogg
+|sound3=Chiseled bookshelf insert enchanted3.ogg
+|sound4=Chiseled bookshelf insert enchanted4.ogg
+|subtitle=Enchanted Book placed
+|source=block
+|description=When an enchanted book is placed in a chiseled bookshelf
+|id=block.chiseled_bookshelf.insert.enchanted
+|translationkey=subtitles.chiseled_bookshelf.insert_enchanted
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=insertvaries />
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|subtitle=Book taken
+|source=block
+|description=When a non-enchanted book is removed from a chiseled bookshelf
+|id=block.chiseled_bookshelf.pickup
+|translationkey=subtitles.chiseled_bookshelf.take
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=pickupvaries>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup enchanted1.ogg
+|sound2=Chiseled bookshelf pickup enchanted2.ogg
+|sound3=Chiseled bookshelf pickup enchanted3.ogg
+|subtitle=Enchanted Book taken
+|source=block
+|description=When an enchanted book is removed from a chiseled bookshelf
+|id=block.chiseled_bookshelf.pickup.enchanted
+|translationkey=subtitles.chiseled_bookshelf.take_enchanted
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=pickupvaries />
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|source=block
+|description=When a non-enchanted book is placed in a chiseled bookshelf
+|id=insert.chiseled_bookshelf
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=insertvaries>Can be 1.0, 0.85, or 1.1 for each sound</ref>}}
+| {{SoundLine
+|sound=Chiseled bookshelf insert enchanted1.ogg
+|sound2=Chiseled bookshelf insert enchanted2.ogg
+|sound3=Chiseled bookshelf insert enchanted3.ogg
+|sound4=Chiseled bookshelf insert enchanted4.ogg
+|source=block
+|description=When an enchanted book is placed in a chiseled bookshelf
+|id=insert_enchanted.chiseled_bookshelf
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=insertvaries />}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|source=block
+|description=When a non-enchanted book is removed from a chiseled bookshelf
+|id=pickup.chiseled_bookshelf
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=pickupvaries>Can be 1.0, 0.8, or 1.1 for each sound</ref>}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup enchanted1.ogg
+|sound2=Chiseled bookshelf pickup enchanted2.ogg
+|sound3=Chiseled bookshelf pickup enchanted3.ogg
+|source=block
+|description=When an enchanted book is removed from a chiseled bookshelf
+|id=pickup_enchanted.chiseled_bookshelf
+|volume=0.8
+| pitch = ''varies'' <ref group=sound name=pickupvaries>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chiseled Bookshelf
+|spritetype=block
+|nameid=chiseled_bookshelf
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=chiseled-bookshelf
+|spritetype=block
+|nameid=chiseled_bookshelf
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chiseled Bookshelf
+|spritetype=block
+|nameid=chiseled_bookshelf
+|id=-526
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=chiseled-bookshelf
+|spritetype=block
+|nameid=ChiseledBookshelf
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the bookshelf is facing.<br>Opposite from the direction the player faces when placing it.}}
+{{bst|slot_0_occupied|false|true,false|Whether there is a book in the upper-left slot.}}
+{{bst|slot_1_occupied|false|true,false|Whether there is a book in the upper-middle slot.}}
+{{bst|slot_2_occupied|false|true,false|Whether there is a book in the upper-right slot.}}
+{{bst|slot_3_occupied|false|true,false|Whether there is a book in the lower-left slot.}}
+{{bst|slot_4_occupied|false|true,false|Whether there is a book in the lower-middle slot.}}
+{{bst|slot_5_occupied|false|true,false|Whether there is a book in the lower-right slot.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|books_stored|0
+|0 - 63|The confguration of the books in the bookshelf.|Unsupported
+}}
+{{bst|bits=|direction|0|0,1,2,3|The direction the bookshelf is facing.<br>Opposite from the direction the player faces when placing it.
+*0: facing South
+*1: facing West
+*2: facing North
+*3: facing East|Unsupported
+|foot=1}}
+
+=== Block data ===
+A chiseled bookshelf has a [[block entity]] associated with it that holds additional data about the [[block]].
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|list|Items}}: List of books in the bookshelf. Represents the {{DCL|minecraft:container}} component.
+*** {{nbt|compound}}: An item, including the slot tag. The valid slot numbers are 0-5.
+**** {{nbt inherit/item|indent=****}}
+** {{nbt|int|last_interacted_slot}}: Last interacted slot (0–5), or -1 if no slot has been interacted with yet.
+</div><section end="block data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Advancements ==
+{{load advancements|The Power of Books}}
+
+== History ==
+{{See asset history|type=block}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2022|link={{ytl|https://youtu.be/iM9KtHaDcUg?t=5839}}|Chiseled bookshelves were announced at [[Minecraft Live 2022]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[File:Chiseled Bookshelf (stage 0) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 1) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 2) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 3) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 4) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 5) (S) JE1.png|32px]] [[File:Chiseled Bookshelf (stage 6) (S) JE1.png|32px]] Added chiseled bookshelves behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine|||dev=22w44a|[[Hopper]]s, [[minecart with hopper]]s, and [[dropper]]s can now interact with chiseled bookshelves.
+|Order of books in the Item tag has been reversed.}}
+|{{HistoryLine|||dev=22w45a|Added unique sounds for chiseled bookshelves, which previously used wood sounds and wood placing sounds for interacting.}}
+|{{HistoryLine|||dev=22w46a|Books are now added and removed by interacting directly with the six slots, versus the former behavior of inserting into the first empty slot and removing from the last filled slot.
+|Block texture now indicates which slots are filled.}}
+|{{HistoryLine|||dev=pre1|Top and bottom textures are no longer directional.<ref>{{bug|MC-257506||Top and bottom texture of chiseled bookshelf rotates depending on placement|Fixed}}</ref>|The book is now removed from an occupied slot even if a book is currently held in hand.
+|Added {{cd|last_interacted_slot}} to block NBT data.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft chiseled bookshelves.}}
+|{{HistoryLine||1.20|dev=23w12a|Chiseled bookshelves are now available without using the "Update 1.20" experimental data pack.}}
+|{{HistoryLine|||dev=Release Candidate 1|[[Knowledge book]]s now can be placed inside chiseled bookshelves.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Chiseled bookshelves now emit a <code>block_change</code> [[vibration]] of frequency <code>11</code> when receiving books from hoppers.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|[[File:Chiseled Bookshelf (stage 0) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 1) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 2) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 3) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 4) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 5) (S) BE1.png|32px]] [[File:Chiseled Bookshelf (stage 6) (S) BE1.png|32px]] Added chiseled bookshelves behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|Added unique sounds for chiseled bookshelves, which previously used wood sounds and wood using sounds for interacting.
+|[[Hopper]]s can now interact with chiseled bookshelves.}}
+|{{HistoryLine|||dev=Preview 1.19.60.22|Books are now added and removed by interacting directly with the six slots, versus the former behavior of inserting into the first empty slot and removing from the last filled slot.
+|The book is now removed from an occupied slot even if a book is currently held in hand.}}
+|{{HistoryLine|||dev=Preview 1.19.60.24|[[Dropper]]s and [[minecart with hopper]]s can now interact with chiseled bookshelves.
+|Minecart with hoppers only can remove books.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Chiseled bookshelves are now available without using the "Next Major Update" experimental toggle.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* There are 12<sup>9</sup> (5,159,780,352) different ways to craft a chiseled bookshelf, as each of the nine slots in the crafting grid can contain planks or slabs of any of the twelve wood types.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Chiseled Bookshelf (S 0).png
+Chiseled Bookshelf (S 32).png
+Chiseled Bookshelf (S 48).png
+Chiseled Bookshelf (S 56).png
+Chiseled Bookshelf (S 60).png
+Chiseled Bookshelf (S 62).png
+Chiseled Bookshelf (S 63).png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Chiseled Bookshelf Heart.jpg|Books arranged in a heart pattern.
+Chiseled Bookshelf Curtains 1.jpg|Chiseled bookshelves and wool.
+Chiseled Bookshelf Curtains 2.jpg|Chiseled bookshelves and wool.
+Sunny T&T.jpeg|[[Sunny]] in front of a chiseled bookshelf door.
+</gallery>
+
+=== In other media ===
+<gallery>
+Bookdoor.gif|[[Steve]] opening a door made of chiseled bookshelves.
+Efe Looking at Chiseled Bookshelves Pixel Art.png|[[Efe]] looking at chiseled bookshelves.
+Redstone Behind Chiseled Bookshelf Pixel Art.png|Redstone behind the chiseled bookshelves.
+Efe Putting a Book within the Chiseled Bookshelf Pixel Art.png|Efe putting a book inside the chiseled bookshelf.
+Efe Looking at Enchanting Table Pixel Art.png|A wallpaper of Efe looking at an enchanting table.
+Spook Wallpaper.jpg|Another wallpaper, showing Efe spooking [[Makena]] using a [[zombie head]], with chiseled bookshelves above them.
+McPainting.jpeg|Chiseled bookshelves in {{AMCM}} McDonalds commercial.
+</gallery>
+
+== See also ==
+* {{BlockLink|Shelf}}
+* {{BlockLink|Bookshelf}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/chiseled-bookshelf Block of the Month: Chiseled Bookshelf] – Minecraft.net on June 29, 2023
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Readable by comparators]]
+[[Category:Storage]]
+[[Category:Block entities]]
+
+[[de:Gearbeitetes Bücherregal]]
+[[es:Estantería]]
+[[fr:Bibliothèque sculptée]]
+[[ja:模様入りの本棚]]
+[[ko:조각된 책장]]
+[[lzh:雕書櫥]]
+[[pl:Rzeźbiona biblioteczka]]
+[[pt:Porta-Livros]]
+[[ru:Резная книжная полка]]
+[[uk:Різьблена книжкова полиця]]
+[[zh:雕纹书架]]

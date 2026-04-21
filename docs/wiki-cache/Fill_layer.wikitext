@@ -1,0 +1,46 @@
+'''Fill layer''' is a technical [[feature]] that fills all air blocks in a 16×1×16 layer with a specified block. It is used by the game in [[superflat]] worlds.
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=fill_layer
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state}} The block to fill with.
+*** {{nbt inherit/block_state}}
+** {{nbt|int|height}} The layer to fill, starting at the bottom of the world. Value between 0 and 4064 (inclusive).
+</div><section end="config"/>
+
+'''An example:'''
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:fill_layer",
+  "config": {
+    "state": {
+      "Name": "minecraft:stone"
+    },
+    "height": 1
+  }
+}
+</syntaxhighlight>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Remplissage de couche]]
+[[ja:Fill layer]]
+[[lzh:平充]]
+[[pt:Camada de preenchimento]]
+[[ru:Слоевой заполнитель]]
+[[zh:填充层]]

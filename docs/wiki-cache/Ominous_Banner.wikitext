@@ -1,0 +1,285 @@
+{{Infobox block
+| group = Standing
+| 1-1 = Ominous Banner.gif
+| group2 = Wall
+| 2-1 = Ominous Wall Banner.png
+| invimage = Ominous Banner
+| rarity = Uncommon
+| transparent = Yes
+| light = No
+| tool = axe
+| renewable = Yes
+| stackable = Yes (16)
+| flammable = No
+| waterloggable = {{jebe|No|Yes}}
+| lavasusceptible = Yes
+}}
+An '''ominous banner''' is a special uncraftable variant of the [[banner]] obtained from [[raid captain]]s and [[pillager outpost]]s.
+
+== Obtaining ==
+=== Breaking ===
+Ominous banners can be broken with or without a [[tool]], but an [[axe]] is fastest.
+{{breaking row|horizontal=1|Ominous Banner|Axe}}
+
+A ominous banner also breaks and drops itself as an [[Item (entity)|item]] if the block the banner is attached to is moved, removed, or destroyed.
+
+=== Natural generation ===
+Ominous banners are carried by [[raid captain]]s.<br> They are located in [[pillager outpost]]s.
+
+{{IN|java}}, the ominous banner cannot be crafted or copied because the design uses 8 patterns.
+
+{{IN|bedrock}}, the ominous banner is a separate type that cannot be placed in a loom.
+
+Ominous banners have the following pattern:
+
+[[File:Ominous Banner.png|32px]]
+[[File:Ominous Banner BE.png|32px]]
+
+White banner{{only|java|short=1}}
+* Cyan Lozenge
+* Light Gray Base
+* Gray Pale
+* Light Gray Bordure
+* Black Fess
+* Light Gray Per Fess
+* Light Gray Roundel
+* Black Bordure
+Separate type entirely{{only|bedrock|short=1}}
+
+=== Mob loot ===
+[[Illager]]s that spawn carrying an ominous banner always drop it upon death.
+
+== Usage ==
+{{see also|Banner#Usage}}
+Ominous banners are a special type of banner in the game as they have more than 6 patterns, and as such cannot be crafted. Ominous banners have the same placement functionality as regular banners.
+
+=== Helmet ===
+{{exclusive|java|section=13}}
+While an ominous banner cannot be equipped in the [[Helmet|head slot]] in [[Survival]] mode, equipping it using commands causes it to appear on top of the player. This is how [[raid captain]]s wear banners{{only|java|short=1}}.
+
+=== Chestplate ===
+{{exclusive|bedrock|section=13}}
+While an ominous banner cannot be equipped in the [[chestplate]] slot in Survival mode, equipping it using NBT editors causes it to appear on top of the player. This is how [[raid captain]]s wear banners{{only|bedrock|education|short=1}}.
+
+<gallery>
+Pillager with Ominous Banner.png|
+Vindicator with Ominous Banner.png|
+Evoker with Ominous Banner.png|
+Illusioner with Ominous Banner.png|
+</gallery>
+
+=== Crafting ingredient ===
+Since ominous banners have more than six patterns, adding it to the shield causes the banner to be reduced to six patterns on the shield.
+{{Crafting
+|showdescription=1
+|Shield
+|Ominous Banner
+|Output=Ominous Shield
+|B2link=Banner
+|type=Combat
+|description=Applies the banner pattern to the shield. The banner is consumed.<br>The shield must have no pre-existing patterns.<br>Does not change existing durability or enchantments on the shield.
+}}
+
+=== Copying ===
+Unlike normal banners, ominous banners cannot be copied to make additional copies of the ominous banner.
+
+=== Map marker ===
+{{exclusive|java|section=13}}
+Like regular banners, ominous banners can also serve as a map marker, having the same functionality as regular banners when used for marking points on a map.
+
+=== Renaming ===
+An ominous banner can be given a custom name that remains as the ominous banner is placed and retrieved. The player can use an [[anvil]] to rename the ominous banner item, or may change the <code>CustomName</code> tag using the {{cmd|data}} command on the ominous banner block.
+
+=== Fuel ===
+Ominous banners can be used as a fuel in [[furnace]]s, smelting 1.5 items per banner.
+
+=== Note blocks ===
+Ominous banners can be placed under [[note block]]s to produce "bass" sounds.
+
+=== Looms ===
+Unlike a regular [[banner]], ominous banners can't be used in a [[loom]] to apply patterns.<!-- Source? -->
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}: ''None''
+
+{{edition|bedrock}}:
+{{:Banner/Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Ominous Banner
+|spritetype=block
+|nameid=white_banner
+|blocktags=banners, wall_post_override
+|itemtags=banners
+|translationkey=block.minecraft.ominous_banner}}
+{{ID table
+|displayname=Ominous Wall Banner
+|spritetype=block
+|nameid=white_wall_banner
+|blocktags=banners, wall_post_override
+|form=block
+|translationkey=block.minecraft.ominous_banner
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=banners
+|spritetype=block
+|nameid=banner
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Ominous Banner
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Standing
+|spritename=ominous-banner
+|spritetype=block
+|nameid=standing_banner
+|translationkey=-
+|id=176
+|form=block}}
+{{ID table
+|displayname=Wall
+|spritename=ominous-wall-banner
+|spritetype=block
+|nameid=wall_banner
+|id=177
+|form=block
+|translationkey=-}}
+{{ID table
+|displayname=Item
+|spritename=ominous-banner
+|spritetype=item
+|nameid=banner
+|translationkey=item.banner.illager_captain.name
+|id=567
+|form=item
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=banners
+|spritetype=block
+|nameid=Banner
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Banner|block states}}
+
+=== Block data ===
+An ominous banner has a block entity associated with it that holds additional data about the block. 
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Banner|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/item_name}}
+{{:Data component format/banner_patterns}}
+{{:Data component format/hide_additional_tooltip}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|I've got a bad feeling about this}}
+
+== Advancements ==
+{{load advancements|Voluntary Exile}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w45a|[[File:Ominous Banner JE1.png|17px]] Added [[illager]] banners.
+|Added [[illager patrol]]s, where the leader of an illager patrol carries an [[illager]] banner.}}
+|{{HistoryLine|||dev=18w46a|[[File:Ominous Banner JE2.png|17px]] The pattern of [[illager]] banner now has a black border.}}
+|{{HistoryLine|||dev=18w47a|Illager banners now generate in [[pillager outpost]] watchtowers.}}
+|{{HistoryLine|||dev=pre2|"Illager Banners" have been renamed to "Ominous Banners".}}
+|{{HistoryLine||1.19.3|dev=22w43a|The ominous banner is now available in the Creative inventory.}}
+|{{HistoryLine||1.21.2|dev=24w33a|The [[rarity]] of ominous banners has been changed from "Common" to "Uncommon". Previously it used a gold colored text component for its name.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|[[File:Ominous Banner BE.png|17px]] Added [[illager]] banners.
+|Added [[illager captain]]s, which drop an [[illager]] banner upon [[death]].}}
+|{{HistoryLine|||dev=beta 1.11.0.3|Illager banners now generate in [[pillager outpost]] watchtowers, instead of gray banners.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|Illager banners can now be used to customize [[shield]]s.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of ominous banners has been changed from "Common" to "Uncommon".
+|"Illager Banner" has been renamed to "Ominous Banner", matching ''Java Edition''.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Ominous Banner BE.png|17px]] Added [[illager]] banners, which generate with [[pillager outpost]]s and are [[drops|dropped]] by [[illager captain]]s upon [[death]].}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*The ominous banner in ''[[Bedrock Edition]]'' is available as a separate item but is just a second variant (type 1) of the white banner (type 0).
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Ominous Banner.gif
+File:Ominous Wall Banner.png
+File:Ominous Banner BE.gif|Ominous banner pattern in Bedrock Edition.
+File:Ominous Banner Revision 1.gif|Old ominous banner pattern.
+File:Ominous Banner washing.gif|Washing with cauldron shows how to apply the ominous banner pattern.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Ominous banner before MC 1.12.png|An ominous banner before the [[World of Color Update]], which was obtainable only via commands.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Lego Ominous Banner.png|Lego ominous banner from 21160
+File:Rampart Captain Banner.png|An ominous banner within ''[[Minecraft Dungeons]]''.
+</gallery>
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Generated structure blocks]]
+[[Category:Createable blocks]]
+[[Category:Block entities]]
+[[Category:Non-solid blocks]]
+[[Category:Double blocks]]
+
+[[fr:Bannière funeste]]
+[[ko:불길한 현수막]]
+[[pt:Estandarte Ameaçador]]
+[[uk:Зловісний стяг]]
+[[zh:不祥旗帜]]

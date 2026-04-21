@@ -1,0 +1,360 @@
+{{For||Dripstone}}
+{{Infobox structure
+|title= Dripstone
+|image=Large dripstone.png
+|imagesize=x200px
+|biome={{BiomeLink|Dripstone caves}}
+|blocks=
+* {{BlockLink|Dripstone Block}}
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Water}}
+|canspawn=No
+}}
+Dripstone [[feature]]s can be found commonly in [[dripstone caves]] biomes. There are three types of dripstone feature: '''large dripstone''', '''dripstone cluster''' and '''pointed dripstone''' (also known as '''small dripstone''').
+
+== Description ==
+Dripstone features generate inside large hollows in the [[dripstone caves]] biome. They can generate in water.
+
+There are three types of dripstone feature:
+
+*The first type is the "large dripstone", which takes the form of either a separated stalagmite and stalactite, or a stalagnate, and is composed of [[dripstone block]]s. Stalagnates generate around two positions selected on the floor and ceiling of a cave, which may potentially be separated by several blocks horizontally. The maximum possible size of a large dripstone varies depending on the available space.
+
+*The second type is the "dripstone cluster"{{until|JE 26.2}} ("speleothem cluster"{{upcoming|JE 26.2}}), a patch of dripstone blocks replacing a section of a cave’s walls, floor and ceiling. Some [[pointed dripstone]] blocks will generate hanging from the ceiling and growing on the floor in these patches, attached to the dripstone blocks, forming detailed speleothem growths. [[Water]] puddles can also occasionally be found on the floor patches.
+
+*The third type is the "pointed dripstone"{{until|JE 26.2}} ("speleothem"{{upcoming|JE 26.2}}), which is similar to the dripstone cluster, but only has a single stalagmite or stalactite.
+
+When these types overlap, it results in pointed dripstone generating on the large columns of dripstone blocks.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=large-dripstone
+|spritetype=env
+|nameid=large_dripstone
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=large-dripstone
+|spritetype=env
+|nameid=dripstone_cluster
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=large-dripstone
+|spritetype=env
+|nameid=pointed_dripstone
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=large-dripstone
+|spritetype=env
+|nameid=large_dripstone
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=dripstone_cluster
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=pointed_dripstone
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=dripstone_cluster_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=large-dripstone
+|spritetype=env
+|nameid=large_dripstone_feature
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=pointed_dripstone_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=small_dripstone_snap_to_surface_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=pointed-dripstone
+|spritetype=block
+|nameid=small_dripstone_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+
+If {{cd|type}} is '''{{cd|dripstone_cluster}}'''{{until|JE 26.2}} ('''{{cd|speleothem_cluster}}'''{{upcoming|JE 26.2}}):
+<section begin="cluster config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|int|floor_to_ceiling_search_range}} For how many blocks the feature searches for the floor or ceiling. Value between 1 and 512 (inclusive).
+** {{nbt|int}}{{nbt|compound|height}} The height of the cluster. Value between 1 and 128 (inclusive).
+*** {{Nbt inherit/int provider}}
+** {{nbt|int}}{{nbt|compound|radius}} The radius of the cluster. Value between 1 and 128 (inclusive).
+*** {{nbt inherit/int_provider}}
+** {{nbt|int|max_stalagmite_stalactite_height_diff}} The maximum height difference between stalagmites and stalactites. Value between 0 and 64 (inclusive).
+** {{nbt|int|height_deviation}} The height deviation. Value between 1 and 64 (inclusive).
+** {{nbt|int}}{{nbt|compound|dripstone_block_layer_thickness}}{{until|JE 26.2}} ({{nbt|compound|speleothem_block_layer_thickness}}{{upcoming|JE 26.2}}) The dripstone block layer's thickness. Value between 0 and 128 (inclusive).
+*** {{nbt inherit/int_provider}}
+** {{nbt|float}}{{nbt|compound|density}} Value between 0.0 and 2.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|float}}{{nbt|compound|wetness}} Value between 0.0 and 2.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|float|chance_of_dripstone_column_at_max_distance_from_center}}{{until|JE 26.2}} ({{nbt|float|chance_of_speleothem_column_at_max_distance_from_center}}{{upcoming|JE 26.2}}) Value between 0.0 and 1.0 (inclusive).
+** {{nbt|int|max_distance_from_edge_affecting_chance_of_dripstone_column}}{{until|JE 26.2}} ({{nbt|int|max_distance_from_edge_affecting_chance_of_speleothem}}{{upcoming|JE 26.2}}) Value between 1 and 64 (inclusive).
+** {{nbt|int|max_distance_from_center_affecting_height_bias}} Value between 1 and 64 (inclusive).
+** {{nbt|string|base_block}}{{upcoming|JE 26.2}} Describes the block forming the base of the speleothem.
+** {{nbt|string|pointed_block}}{{upcoming|JE 26.2}} Describes the block creating the columns of the speleothem.
+** {{nbt|string|replaceable_blocks}}{{upcoming|JE 26.2}} Describes which blocks the feature can generate on.
+</div><section end="cluster config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:dripstone_cluster",
+  "config": {
+    "chance_of_dripstone_column_at_max_distance_from_center": 0.1,
+    "density": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 0.7,
+        "min_inclusive": 0.3
+      }
+    },
+    "dripstone_block_layer_thickness": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 4,
+        "min_inclusive": 2
+      }
+    },
+    "floor_to_ceiling_search_range": 12,
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 6,
+        "min_inclusive": 3
+      }
+    },
+    "height_deviation": 3,
+    "max_distance_from_center_affecting_height_bias": 8,
+    "max_distance_from_edge_affecting_chance_of_dripstone_column": 3,
+    "max_stalagmite_stalactite_height_diff": 1,
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 8,
+        "min_inclusive": 2
+      }
+    },
+    "wetness": {
+      "type": "minecraft:clamped_normal",
+      "value": {
+        "deviation": 0.3,
+        "max": 0.9,
+        "mean": 0.1,
+        "min": 0.1
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+If {{cd|type}} is '''{{cd|large_dripstone}}''':
+<section begin="large config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|int|floor_to_ceiling_search_range}} (optional, defaults to 30) The search range from start point to cave floor or ceiling (rather than from floor to ceiling). Value between 1 and 512 (inclusive).
+** {{nbt|int}}{{nbt|compound|column_radius}} Used to provide a min and max value for radius. Note that this int provider doesn't provide a single int, but provides the min and max value of the specified distribution. Value between 1 and 60 (inclusive). See [https://www.desmos.com/calculator/8epce7fyjr the graph for details].
+*** {{nbt inherit/int_provider}}
+** {{nbt|float}}{{nbt|compound|height_scale}} Higher value leads to higher height. Value between 0.0 and 20.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|float|max_column_radius_to_cave_height_ratio}} The ratio of the max radius to the height of the cave. Value between 0.0 and 1.0 (inclusive).
+** {{nbt|float}}{{nbt|compound|stalactite_bluntness}} Truncate the tip of stalactite. Higher value leads to lower height. Value between 0.1 and 10.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|float}}{{nbt|compound|stalagmite_bluntness}} Truncate the tip of stalagmite. Higher value leads to lower height. Value between 0.1 and 10.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|float}}{{nbt|compound|wind_speed}} Larger value results in larger inclination. Value between 0.0 and 2.0 (inclusive).
+*** {{nbt inherit/float_provider}}
+** {{nbt|int|min_radius_for_wind}} The min column radius to used for the wind. Value between 0 and 100.
+** {{nbt|float|min_bluntness_for_wind}} The min value of the bluntnesses to used for the wind. Value between 0.0 and 5.0 (inclusive).
+** {{nbt|string|replaceable_blocks}}{{upcoming|JE 26.2}} Describes which blocks the feature can generate on.
+</div><section end="large config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:large_dripstone",
+  "config": {
+    "column_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 19,
+        "min_inclusive": 3
+      }
+    },
+    "floor_to_ceiling_search_range": 30,
+    "height_scale": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 2.0,
+        "min_inclusive": 0.4
+      }
+    },
+    "max_column_radius_to_cave_height_ratio": 0.33,
+    "min_bluntness_for_wind": 0.6,
+    "min_radius_for_wind": 4,
+    "stalactite_bluntness": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 0.9,
+        "min_inclusive": 0.3
+      }
+    },
+    "stalagmite_bluntness": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 1.0,
+        "min_inclusive": 0.4
+      }
+    },
+    "wind_speed": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 0.3,
+        "min_inclusive": 0.0
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+If {{cd|type}} is '''{{cd|pointed_dripstone}}'''{{until|JE 26.2}} ('''{{cd|speleothem}}'''{{upcoming|JE 26.2}})
+<section begin="pointed config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|float|chance_of_taller_dripstone}}{{until|JE 26.2}} ({{nbt|float|chance_of_taller_generation}}{{upcoming|JE 26.2}}) (optional, defaults to 0.2) Value between 0.0 and 1.0 (inclusive). Probability for double-block dripstone.
+** {{nbt|float|chance_of_directional_spread}} (optional, defaults to 0.7) Value between 0.0 and 1.0 (inclusive). Probability that the dripstone spreads in a horizontal direction.
+** {{nbt|float|chance_of_spread_radius2}} (optional, defaults to 0.5) Value between 0.0 and 1.0 (inclusive). Probability of horizontal spread by two blocks.
+** {{nbt|float|chance_of_spread_radius3}} (optional, defaults to 0.5) Value between 0.0 and 1.0 (inclusive). After the spread by two blocks, probability of spreading the third block.
+** {{nbt|string|base_block}}{{upcoming|JE 26.2}} Describes the block forming the base of the speleothem.
+** {{nbt|string|pointed_block}}{{upcoming|JE 26.2}} Describes the block creating the columns of the speleothem.
+** {{nbt|string|replaceable_blocks}}{{upcoming|JE 26.2}} Describes which blocks the feature can generate on.
+</div><section end="pointed config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:pointed_dripstone",
+  "config": {
+    "chance_of_directional_spread": 0.7,
+    "chance_of_spread_radius2": 0.5,
+    "chance_of_spread_radius3": 0.5,
+    "chance_of_taller_dripstone": 0.2
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=2185}}|Dripstone clusters are announced and shown at [[Minecraft Live 2020]].}}
+|{{HistoryLine||November 18, 2020|link={{tweet|henrikkniberg|1328251855311409153}}|[[Henrik Kniberg]] tweeted a picture of the equation used to generate the shape of stalagmites.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w49a|Added dripstone features.}}
+|{{HistoryLine|||dev=21w13a|Dripstone clusters can now be found rarely in regular [[caves]].}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|All three types of dripstone features now generate naturally in [[dripstone caves]].
+|Dripstone clusters can no longer generate outside dripstone caves biomes.}}
+|{{HistoryLine|||dev=Pre-release 5|Pointed Dripstone clusters no longer have a chance of spawning only stalagmites of height one.<ref>{{bug|MC-235567}}</ref>}}
+|{{HistoryLine|||dev=Pre-release 6|Dripstone now generates at high y values.<ref>{{bug|MC-242016}}</ref>
+|Pointed dripstone no longer makes holes in lava pools.<ref>{{bug|MC-242479}}</ref>
+|Dripstone features are generated a bit more sparsely.}}
+|{{HistoryLine|||dev=Pre-release 7|The numbers of dripstone features have been increased again.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|{{cd|pointed_dripstone}} has been renamed to {{cd|speleothem}}.|{{cd|dripstone_cluster}} has been renamed to {{cd|speleothem_cluster}}.|Added the {{cd|base_block}}, {{cd|pointed_block}}, and {{cd|replaceable_blocks}} fields to the renamed features, as well as the latter to {{cd|large_dripstone}}.|Additional fields have been renamed (e.g. {{cd|chance_of_taller_dripstone}} to {{cd|chance_of_taller_generation}}) to account for the name changes.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.220|dev=beta 1.16.220.50|Added the dripstone clusters. They don't naturally generate yet and are only accessible through [[add-on]]s.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Dripstone clusters now generate throughout [[cave]]s in the [[Overworld]].}}
+|{{HistoryLine||1.17.30|exp=Caves and Cliffs|dev=beta 1.17.20.22|Dripstone clusters can now generate below Y{{=}}0 to Y{{=}}-64 if the Caves & Cliffs [[experimental gameplay]] toggle is enabled.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.21|The numbers of dripstone features have been increased to match ''Java Edition''.}}
+|{{HistoryLine|||dev=beta 1.18.10.26|Pointed Dripstone now sometimes generate on large stalactites and stalagmites.<ref>{{bug|MCPE-128128}}</ref>
+|Pointed Dripstone clusters no longer have a chance of spawning only stalagmites of height one.<ref>{{bug|MCPE-148588}}</ref>
+|Large Dripstone feature does not generate floating on top of lava anymore.<ref>{{bug|MCPE-141131}}</ref>}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*For a brief time in snapshot [[21w06a]], dripstone clusters were one of the only underground structures that did not generate correctly in negative y levels. This was because the developers initially hardcoded the minimum y level to be 0, intending to change it when changing the world height, then forgot to.<ref>{{tweet|henrikkniberg|1360164611622924288|(paus for meetings... back again, poking around in the code). Hmmm. Wait. What? Oh LOL! Yeah you'd be surprised how many bugs are caused by dumb things like this :)|February 12, 2021|archive=no|archiveid=20210212095140}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Dripstone Stalagmite.png|A large dripstone stalagmite that generated in a cave.
+Flooded Stalactite.png|A large dripstone stalactite that generated in a flooded cave.
+Flooded Stalagnates.png|Two dripstone stalagnates that generated in a flooded cave.
+Canyon Drip.png|A dripstone cluster on the side of a ravine.
+Dripstone Column.png|A pointed dripstone column in a dripstone cluster.
+Dripstone Caves Light.png|A large cave filled with dripstone.
+</gallery>
+
+=== Development images ===
+<gallery>
+Stalactite Geode.jpg|A geode inside a dripstone cluster.
+Dripstone Debugging 1.jpg|Debugging dripstone clusters.
+Dripstone Debugging 2.jpg|Debugging dripstone clusters.
+Dripstone Math.jpg|The math behind the shape of dripstone clusters.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Racimo de espeleotema]]
+[[fr:Spéléothème (élément du terrain)]]
+[[ja:鍾乳石 (生成物)]]
+[[ko:점적석 (지물)]]
+[[pt:Espeleotema (recurso)]]
+[[ru:Капельник (натуральная декорация)]]
+[[zh:滴水石（地物）]]

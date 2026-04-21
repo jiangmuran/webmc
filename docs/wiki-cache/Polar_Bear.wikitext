@@ -1,0 +1,421 @@
+{{For||Bear}}
+{{Infobox entity
+| image = Polar Bear.png
+| imagecaption = Adult
+| image2 = Baby Polar Bear JE7 BE3.png
+| image2caption = Baby
+| image2size = 80px
+| invimage = Polar Bear Spawn Egg
+| health = {{health|30}}
+| behavior = Neutral (adult)<br>Passive (baby)
+| mobtype = {{EntityLink|Animal}}
+| damage = Easy: {{hp|4}}<br>
+Normal: {{hp|6}}<br>
+Hard: {{hp|9}}<br>
+| size = '''Adult:'''<br>Height: 1.4 blocks<br>Width: 1.4 blocks<br>
+'''Baby:'''<br>Height: 0.7 blocks<br>Width: 0.7 blocks<br>
+| speed = 0.25
+| knockbackresistance = 60%
+| spawn = {{BiomeLink|Snowy Plains}}<br>{{BiomeLink|Ice Spikes}}<br>{{BiomeLink|Frozen Ocean}}<br>{{BiomeLink|Deep Frozen Ocean}}<br>{{BiomeLink|Frozen River}}{{only|bedrock|short=1}}<br>
+{{BiomeLink|Snowy Slopes}} {{only|bedrock|short=1}}<br>
+{{BiomeLink|Jagged Peaks}} {{only|bedrock|short=1}}<br>
+{{BiomeLink|Frozen peaks}} {{only|bedrock|short=1}}
+| usableitems = {{drop|Item|Lead}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+'''Polar bears''' are large [[neutral mobs]] that live in icy [[biome]]s. Adult polar bears are protective of their babies, attacking [[player]]s that get too close or attack any babies near them.
+
+== Spawning ==
+Polar bears spawn in [[Snowy Plains|snowy plains]], [[Ice Spikes|ice spikes]], [[Frozen ocean|frozen]] and [[deep frozen ocean]] biomes, and additionally/sometimes in [[frozen river]], [[legacy frozen ocean]], [[snowy slopes]], [[jagged peaks]], and [[frozen peaks]] biomes {{in|BE}}. They spawn in groups of up to two, above [[ice]]. {{IN|JE}}, polar bears don't spawn on ice in snowy plains and ice spikes biomes. If there is a group, the second polar bear is a baby.
+
+{{Mob spawn table|Polar Bear}}
+
+== Drops ==
+=== On death ===
+On {{JE}}, one of cod or salmon is selected. On {{BE}}, both drops are rolled.<ref>{{bug|MCPE-221508}}</ref>
+{{DropTable
+|{{DropLine|name=Raw Cod|edition=java|notes=not_burn|quantity=0-2|lootingquantity=0-1|multiplychance=3/4}}
+|{{DropLine|name=Cooked Cod|edition=java|notes=burn|quantity=0-2|lootingquantity=0-1|multiplychance=3/4}}
+|{{DropLine|name=Raw Salmon|edition=java|notes=not_burn|quantity=0-2|lootingquantity=0-1|multiplychance=1/4}}
+|{{DropLine|name=Cooked Salmon|edition=java|notes=burn|quantity=0-2|lootingquantity=0-1|multiplychance=1/4}}
+|{{DropLine|name=Raw Cod|edition=bedrock|notes=not_burn|quantity=0-2|lootingquantity=0-1|multiplychance=3/3}}
+|{{DropLine|name=Cooked Cod|edition=bedrock|notes=burn|quantity=0-2|lootingquantity=0-1|multiplychance=3/3}}
+|{{DropLine|name=Raw Salmon|edition=bedrock|notes=not_burn|quantity=0-2|lootingquantity=0-1|multiplychance=1/1}}
+|{{DropLine|name=Cooked Salmon|edition=bedrock|notes=burn|quantity=0-2|lootingquantity=0-1|multiplychance=1/1}}
+}}
+* {{xp|1|3}} from player or tamed [[wolves]] kills.
+
+Killing a baby polar bear yields no [[item]]s or [[experience]].
+
+== Behavior ==
+[[File:Polar Bear attacking.gif|thumb|150px|A polar bear attacking.]]
+Polar bears can be passive, neutral, or hostile depending on the situation. Baby polar bears are passive, and adults are neutral; becoming hostile when a player either directly attacks it or when the player comes close to or attacks any baby polar bears near it (unless killed in one hit{{Only|java|short=yes}}).
+
+If a baby polar bear is attacked, unless killed in one hit{{only|java|short=yes}}, all adults within a 41×21×41 area become hostile toward the player or mob, regardless of difficulty, although in Peaceful difficulty their attacks do zero damage to players.
+
+{{IN|java}}, attacking an adult who is within a 16×8×16 area of a cub also provokes other adults within a 21×21×21 area of the attacked adult.
+
+Polar bears also attack [[fox]]es.
+* Adult polar bears attack any fox that stays near it for a while, hitting it once every few seconds. Baby polar bears are more aggressive and attack foxes within 16 blocks.
+
+Polar bears attack by rearing on their back legs and mauling down with their front paws. Their swimming speed is equal to the player's, making them difficult to get away from if they are attacking in [[water]]. 
+
+Polar bears are immune to freezing damage from [[powder snow]].
+
+Unlike most animal mobs, polar bears cannot [[breed]]. Baby polar bears can only be found when they naturally spawn. A baby polar bear eventually turns into an adult after 24000 ticks (20 minutes), and their growth cannot be sped up.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Polar bear idle1.ogg
+|sound2=Polar bear idle2.ogg
+|sound3=Polar bear idle3.ogg
+|sound4=Polar bear idle4.ogg
+|description=Randomly from an adult polar bear
+|subtitle=Polar Bear groans
+|source=neutral
+|id=entity.polar_bear.ambient
+|translationkey=subtitles.entity.polar_bear.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Baby polar bear idle1.ogg
+|sound2=Baby polar bear idle2.ogg
+|sound3=Baby polar bear idle3.ogg
+|sound4=Baby polar bear idle4.ogg
+|description=Randomly from a baby polar bear
+|subtitle=Baby Polar Bear hums
+|source=neutral
+|id=entity.polar_bear.ambient_baby
+|translationkey=subtitles.entity.polar_bear.ambient_baby
+|volume=1.0
+|pitch=1.3-1.7
+|distance=16}}
+| {{SoundLine
+|sound=Polar bear death1.ogg
+|sound2=Polar bear death2.ogg
+|sound3=Polar bear death3.ogg
+|subtitle=Polar Bear dies
+|source=neutral
+|description=When a polar bear dies
+|id=entity.polar_bear.death
+|translationkey=subtitles.entity.polar_bear.death
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Polar bear hurt1.ogg
+|sound2=Polar bear hurt2.ogg
+|sound3=Polar bear hurt3.ogg
+|sound4=Polar bear hurt4.ogg
+|subtitle=Polar Bear hurts
+|source=neutral
+|description=When a polar bear is damaged
+|id=entity.polar_bear.hurt
+|translationkey=subtitles.entity.polar_bear.hurt
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Polar bear step1.ogg
+|sound2=Polar bear step2.ogg
+|sound3=Polar bear step3.ogg
+|sound4=Polar bear step4.ogg
+|source=neutral
+|description=While a polar bear is walking
+|subtitle=Footsteps
+|id=entity.polar_bear.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Polar bear roar1.ogg
+|sound2=Polar bear roar2.ogg
+|sound3=Polar bear roar3.ogg
+|description=When a polar bear attempts to attack something
+|subtitle=Polar Bear roars
+|source=neutral
+|id=entity.polar_bear.warning
+|translationkey=subtitles.entity.polar_bear.warning
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7) <ref group=sound>Except a second copy of {{cd|warning3}}, which is 0.72-1.08 (Baby: 1.17-1.53)</ref>
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Polar bear idle1.ogg
+|sound2=Polar bear idle2.ogg
+|sound3=Polar bear idle3.ogg
+|sound4=Polar bear idle4.ogg
+|source=neutral
+|description=Randomly from an adult polar bear
+|id=mob.polarbear.idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Baby polar bear idle1.ogg
+|sound2=Baby polar bear idle2.ogg
+|sound3=Baby polar bear idle3.ogg
+|sound4=Baby polar bear idle4.ogg
+|source=neutral
+|description=Randomly from a baby polar bear
+|id=mob.polarbear_baby.idle
+|volume=1.0
+|pitch=1.3-1.7}}
+| {{SoundLine
+|sound=Polar bear death1.ogg
+|sound2=Polar bear death2.ogg
+|sound3=Polar bear death3.ogg
+|source=hostile
+|description=When a polar bear dies
+|id=mob.polarbear.death
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Polar bear hurt1.ogg
+|sound2=Polar bear hurt2.ogg
+|sound3=Polar bear hurt3.ogg
+|sound4=Polar bear hurt4.ogg
+|source=hostile
+|description=When a polar bear is damaged
+|id=mob.polarbear.hurt
+|volume=0.7
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Polar bear step1.ogg
+|sound2=Polar bear step2.ogg
+|sound3=Polar bear step3.ogg
+|sound4=Polar bear step4.ogg
+|source=neutral
+|description=While a polar bear is walking
+|id=mob.polarbear.step
+|volume=0.7
+|pitch=1.0}}
+| {{SoundLine
+|sound=Polar bear roar1.ogg
+|sound2=Polar bear roar2.ogg
+|sound3=Polar bear roar3.ogg
+|source=hostile
+|description=When a polar bear attempts to attack something
+|id=mob.polarbear.warning
+|volume=1.2
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Polar Bear
+|spritetype=entity
+|nameid=polar_bear
+|showentitytags=y
+|entitytags=freeze_immune_entity_types, followable_friendly_mobs
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Polar Bear
+|spritetype=entity
+|nameid=polar_bear
+|showentityfamily=y
+|entityfamily=mob,polarbear
+|id=28
+|foot=1}}
+
+=== Entity data ===
+
+Polar bears have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/angerable}}
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{info needed section|
+* Did the texture change late in the PS4 edition?}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||March 7, 2016|link={{tweet|jeb|706860591424671744}}|[[Jeb]] hints at a neutral mob with a light gray "base texture" color.}}
+|{{HistoryLine||April 8, 2016|link={{tweet|jeb|718368993015414784}}|[[Jeb]] tweets a picture of the polar bears.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.10|dev=16w20a|[[File:Polar Bear JE1.png|32px]] [[File:Baby Polar Bear JE1.png|22px]] Added polar bears.}}
+|{{HistoryLine|||dev=pre1|Adult polar bears now jump in [[water]], if on [[fire]].}}
+|{{HistoryLine|||dev=pre2|Polar bears now have [[sound]]s: <code>entity.polar_bear.baby_ambient</code>, <code>entity.polar_bear.ambient</code>, <code>entity.polar_bear.death</code>, <code>entity.polar_bear.hurt</code>, <code>entity.polar_bear.step</code>, and <code>entity.polar_bear.warning</code>.}}
+|{{HistoryLine||1.13|dev=18w19a|Polar bears can now spawn on top of [[ice]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Polar Bear JE2.png|32px]] [[File:Baby Polar Bear JE6.png|22px]] The textures of polar bears and baby polar bears have now been changed.}}
+|{{HistoryLine|||dev=19w07a|Polar bears now attack [[fox]]es.}}
+|{{HistoryLine|||dev=19w14a|Polar bears are no longer a valid [[mob]] for earning the [[Advancement#Monster Hunter|Monster Hunter]] advancement and are no longer required to complete the [[Monsters Hunted]] advancement.}}
+|{{HistoryLine||1.15|dev=19w39a|[[File:Baby Polar Bear JE3.png|22px]] Due to a bug, the baby polar bear [[model]] is currently broken.<ref>{{bug|MC-161946}}</ref>}}
+|{{HistoryLine|||dev=19w40a|[[File:Baby Polar Bear JE6.png|22px]] The baby polar bear model has now been fixed.}}
+|{{HistoryLine||1.16|dev=20w10a|[[Firework]] damage now provokes polar bears.<ref>{{bug|MC-111498||Fireworks and water bottles damage don't make neutral mobs angry or hostile|Fixed}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Polar bears are now immune to [[Damage#Freezing|freezing]].
+|Now drop [[cooked cod]] or [[salmon]] instead of [[raw cod]] or [[salmon]] if on [[fire]] when killed or killed by a [[fire]] source.}}
+|{{HistoryLine||1.20.5|dev=23w51a|Changed the baby polar bear ambient subtitle so that it more clearly indicates that a baby polar bear made it, as opposed to an adult.<ref>{{bug|MC-185379}}</ref>}}
+|{{HistoryLine||1.21|dev=24w21a|Adult polar bears now only panic from [[cactus]], [[freezing]], [[fire]] and [[lightning]] bolt damage.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Baby Polar Bear JE5.png|22px]] Due to a bug, the baby polar bear [[model]] is currently broken.<ref>{{bug|MC-275221}}</ref>}}
+|{{HistoryLine|||dev=24w34a|[[File:Baby Polar Bear JE6.png|22px]] The baby polar bear model has now been fixed.}}
+|{{HistoryLine||26.1|dev=snap5 |Added [[golden dandelion]]s, which can be used to prevent baby polar bears from growing up.}}
+|{{HistoryLine|||dev=snap6|[[File:Baby Polar Bear JE7 BE3.png|32px]] The model and texture of baby polar bears have been changed.|Baby polar bears no longer attack foxes.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Polar Bear BE1.png|32px]] Added polar bears.| [[File:Baby Polar Bear BE1.png|22px]] Added baby polar bears. Due to a bug, the model is not the same as {{JE}}.<ref>{{bug|MCPE-43578}}</ref>}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Polar bears no longer hurt [[player]]s in [[Peaceful]] difficulty.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Polar bears can now spawn on top of [[ice]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Polar Bear BE2.png|32px]] [[File:Baby Polar Bear BE2.png|22px]] The textures of polar bears and baby polar bears have now been changed.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Adult polar bears now attack [[fox]]es.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Polar bears are now immune to [[Damage#Freezing|freezing]].}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.20|Adult polar bears can no longer enter boats and boats with chests.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Baby polar bears now attack foxes.<ref>{{bug|MCPE-48072|||WAI}}</ref>|Baby polar bears no longer attack players.<ref>{{bug|MCPE-173833}}</ref>|Because of the above changes, adult polar bears with babies no longer attack players.<ref>{{bug|MCPE-235252}}</ref>}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|Baby polar bears no longer attack players.{{note|This bug was fixed twice.}}}}
+|{{HistoryLine|||dev=Preview 26.10.21|[[File:Baby Polar Bear JE7 BE3.png|32px]] The model and texture of baby polar bears have been changed.
+|Added [[golden dandelion]]s, which can be used to prevent baby polar bears from growing up.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|[[File:Polar Bear JE1 BE1.png|32px]] [[File:Baby Polar Bear JE1 BE1.png|22px]] Added polar bears.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Polar bears can now spawn on top of [[ice]].{{verify}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Polar Bear JE1 BE1.png|32px]] [[File:Baby Polar Bear JE1 BE1.png|22px]] Added polar bears.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has now been changed from <code>PolarBear</code> to <code>polar_bear</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has now been changed from <code>polarbear</code> to <code>polar_bear</code>.}}
+}}
+
+== Issues ==
+
+{{issue list}}
+
+== Trivia ==
+* Adding polar bears to ''Minecraft'' was a request by [[Jeb]]'s wife. Jeb answered they'd be added "if they ever had a bear of their own". Once their son was born, he was named "Björn" (Swedish for "bear"), and polar bears were added.<ref>{{Mcnet|meet-polar-bear|We have a room in our house where all polar bear-related items end up. It’s essentially the library, or a hallway, really, with all our books in it, and there are two chairs so you can sit and read if you want - but we have a polar bear tapestry on the wall, and lots of polar bear plushies. So it feels like a Polar Bear room. Jenny had been nagging me for a long time to add a bear to Minecraft. And so I told her - well, if we ever have a bear of our own, I’ll add a bear in Minecraft. And then it turned true, because our son was born and we called him Björn - which means bear in Swedish! So I had to add a bear in the game. - JENS BERGENSTEN}}</ref>
+* During the development of the frozen ocean biome, polar bears were removed from spawning, due to being deemed too "sad". They were added back in because it is more accurate to the polar bear's real life status.<ref>{{Citation|url=https://clips.twitch.tv/DreamyCaringShingleNomNom|title=Polar bears were originally removed from iceberg biomes|author=CBSUnstoppable|website=Twitch}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Screenshot polar bear frozen ocean.png|A polar bear standing on ice.
+File:PolarBearAttack.png|A polar bear on its hind legs, attacking the player.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Flatbedrock.png|alt=A screenshot of two polar bears standing on ice in a snowy flat world|Two polar bears standing on [[ice]] in a [[snow]]y [[flat]] [[world]].
+File:Polar Bears.png|Development teaser screenshot by [[Jeb]].
+File:16w20a.png|Polar bears featured on [[16w20a]] banner.
+File:Polar Beary Bush.jpg|Image from [[Rockenroll4life]] of a "Polar Beary Bush".
+File:Introducing baby polar bears.jpg|Image promoting the remodeled baby polar bear
+File:Friend shaped bear.jpg|A baby polar bear and its parent in an [[Ice Spikes|ice spikes]] biome
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Polar Bear (texture).png|Polar bear texture file
+Baby Polar Bear (texture).png|Baby polar bear texture file
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Polar Bear head.png|Image from [[16w20a]] blog post.
+File:Polar Bear Artwork.png|Artwork
+File:Polar Bear attacking artwork.png|Polar Bear attacking artwork.
+File:Stay Cool.jpg|Artwork of a polar bear chasing a [[villager]].
+File:LEGO Polar Bear.png|[[Lego Minecraft]] minifigure
+File:Lego Cub.png|[[Lego Minecraft]] Baby Polar Bear minifigure
+File:Polar Bear Shirt.png|An official T-shirt design featuring a polar bear and two baby polar bears.
+File:15YearJourney MarketingScreenshot 2 Polar Bears.jpeg|[[Sunny]] looking at polar bears in [[15 Year Journey]].
+File:Season of Giving.jpg|A polar bear on artwork for the ''Season of Giving'' promotion. 
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[[wikipedia:polar bear|Polar bear]] article on Wikipedia
+*{{Mcnet|meet-polar-bear|Meet the Polar Bear|January 10, 2017|Marsh Davies}}
+*{{Mcnet|mob-menagerie--polar-bear|Mob Menagerie: Polar Bear|February 9, 2023|Duncan Geere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Neutral mobs]]
+[[Category:Animal mobs]]
+
+[[de:Eisbär]]
+[[es:Oso polar]]
+[[fr:Ours blanc]]
+[[hu:Jegesmedve]]
+[[it:Orso polare]]
+[[ja:シロクマ]]
+[[ko:북극곰]]
+[[nl:IJsbeer]]
+[[pl:Niedźwiedź polarny]]
+[[pt:Urso-Polar]]
+[[ru:Белый медведь]]
+[[th:หมีขั้วโลก]]
+[[uk:Білий ведмідь]]
+[[zh:北极熊]]

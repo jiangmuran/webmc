@@ -1,0 +1,201 @@
+{{outdated|edition=java}}
+{{Infobox item
+| image = Missing Model JE3.png
+| renewable = Yes
+| stackable = Yes (64)
+}}
+'''Invalid data value vines''' are item forms of the [[vines]] block with damage values outside of the usual range which vines can usually be obtained in.
+
+== Obtaining ==
+Without the use of [[commands]], invalid data value vines are unobtainable in the last versions in which they existed without inheriting them from a prior version in which they were obtainable.
+
+=== Breaking ===
+From [[Java Edition Beta 1.8|Beta 1.8]] to [[Java Edition Beta 1.9 Prerelease 5|Beta 1.9 Prerelease 5]],{{verify}} invalid data value vines were obtainable via breaking any existing vines block with [[shears]]. The data value of vines dropped would correspond to the data value of the block it came from, allowing 15 different variations to be obtained, while also rendering the default item with data value 0 completely unobtainable due to it corresponding to a vines block with no connections. The "up" state is ignored due to not being determined by metadata.{{verify}} As multiple vines cannot be manually placed into the same space in this version, they should instead be positioned above each other and given time to grow into a block space corresponding to the desired data value.
+
+{| class="wikitable"
+! colspan="2" | Value
+! South
+! West
+! North
+! East
+! Notes
+! Valid?
+|-
+! {{BlockSprite|Vines}}
+! 0
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|No}}
+| Unobtainable in version range
+! {{tc|Yes}}
+|-
+! {{BlockSprite|missingno}}
+! 1
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 2
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 3
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 4
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 5
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 6
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 7
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|No}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 8
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 9
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 10
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 11
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 12
+! {{tc|No}}
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 13
+! {{tc|Yes}}
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 14
+! {{tc|No}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|-
+! {{BlockSprite|missingno}}
+! 15
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+! {{tc|Yes}}
+|
+! {{tc|No}}
+|}
+
+From Beta 1.9 Prerelease 6{{verify}} onwards, breaking vines would always return an item with damage value 0, rendering invalid data values unobtainable.
+
+=== Stacking ===
+As vines as an item do not track their damage value for any purpose, invalid data value vines can be created by picking up dropped normal vines with an incomplete stack of invalid data value vines already in the inventory, as well as merging together existing item stacks. This can also result in invalid data value vines being converted to non-anomalous vines in the same way, and therefore care should be taken when transporting such items. As such, if collection of all 15 different types of vines is desired, they should be stored in a storage container such as a [[chest]] in different slots via manual placement - shift-clicking should be avoided.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Vines (inventory) JE1.png|32px]] Added vines.
+|Invalid data value vines are obtainable in Survival via shears.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Breaking vines in Survival now always drops vines with a damage value of 0.{{check version}}<ref>Old issues page on the wiki: [[Minecraft Wiki:Issues/Beta 1.9pre5#Fixed/Skipped 2]]</ref>}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Vines (inventory) JE2.png|32px]] Items appeared slightly darker in the player's inventory than in chests prior to this version. They now appear very slightly brighter in the inventory, and match the brightness of items in chests. }}
+|{{HistoryLine||1.8|dev=14w25a|{{pximg|Missing Model (inventory) JE1.png|32px}} With the introduction of data-driven item models, any item with a data value outside of what is accepted by the game has no model to point to, resulting in use of the [[Missing textures and models|missing item model]].}}
+|{{HistoryLine|||dev=14w30a|Invalid data value vines, alongside other invalid data value items, now appear the size of a full block when held in third person or by another player or mob.}}
+|{{HistoryLine||1.9|dev=15w31a|{{pximg|Missing Model (inventory) JE2.png|32px}} The missing model's inventory appearance has changed, resulting in the appearance of invalid data value vines also changing.
+|The items also appear the size of a full block when held in first person and when dropped on the ground, and also appear larger than before in an [[item frame]].}}
+|{{HistoryLine||1.13|dev=17w43a|{{pximg|Missing Model (inventory) JE3.png|32px}} The missing texture has changed, resulting in the appearance of invalid data value vines also changing.}}
+|{{HistoryLine|||dev=17w47a|Numeric IDs for blocks and items have been completely removed from the game. As a result, invalid data value vines have been "removed" as they now convert into normal vines items.}}
+}}
+
+== Issues ==
+Invalid data value vines ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [[mcdf:Java Edition:Invalid Data Value Vines (Item)|Invalid Data Value Vines]] at the ''Minecraft Discontinued Features'' wiki
+
+
+== Navigation ==
+{{Navbox IDV items}}

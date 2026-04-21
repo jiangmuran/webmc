@@ -1,0 +1,494 @@
+{{Infobox entity
+| image = Magma Cube.png
+| invimage = Magma Cube Spawn Egg
+| health = '''Large:''' {{hp|16}}<br>'''Medium:''' {{hp|4}}<br>'''Small:''' {{hp|1}}
+| armor = '''Large:''' {{armor|12}}<br>'''Medium:''' {{armor|6}}<br>'''Small:''' {{armor|3}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| damage = '''Large:'''<br>Easy: {{hp|4}}<br>Normal: {{hp|6}}<br>Hard: {{hp|9}}<br>'''Medium:'''<br>Easy: {{hp|3}}<br>Normal: {{hp|4}}<br>Hard: {{hp|6}}<br>'''Small:'''<br>Easy: {{hp|2.5}}<br>Normal: {{hp|3}}<br>Hard: {{hp|4.5}}
+| size = '''{{IN|Java}}:'''<br>
+'''Large:'''<br>Height: 2.08 blocks<br>Width: 2.0808 blocks<br>
+'''Medium:'''<br>Height: 1.04 blocks<br>Width: 1.0404 blocks<br>
+'''Small:'''<br>Height: 0.52 blocks<br>Width: 0.5202 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+'''Large:'''<br>Height: 2.08 blocks<br>Width: 2.08 blocks<br>
+'''Medium:'''<br>Height: 1.04 blocks<br>Width: 1.02 blocks<br>
+'''Small:'''<br>Height: 0.52 blocks<br>Width: 0.52 blocks<br>
+| spawn = 
+* {{BiomeLink|Nether Wastes}}
+* {{BiomeLink|Basalt Deltas}}
+* {{EnvLink|Nether Fortress}}
+* {{EnvLink|Bastion Remnant}}: from [[monster spawner]]s.
+}}
+A '''magma cube''' is a [[hostile mob]] found in [[the Nether]]. A magma cube behaves similarly to a [[slime]] in that it splits into smaller magma cubes on death, all the way down to tiny size, but is fireproof, jumps higher and less often, and deals more [[damage]]. Magma cubes are a source of [[magma cream]] and the only source of [[froglight]]s if eaten by a [[frog]] while small.
+
+== Spawning ==
+{{see also|Mob spawn#Spawn cycle}}
+Magma cubes spawn in areas of the Nether at all light levels. The space they spawn in must be clear of solid obstructions and liquids. Because they are inherently fireproof, magma cubes can spawn on [[magma block]]s. 
+
+Only sizes 1, 2 and 4 (NBT {{code|Size}} tag values 0, 1 and 3 respectively) spawn naturally. With use of {{command|summon}}, magma cubes can potentially range from size 1 to 127 (NBT <code>Size</code> tag 0–126).{{verify|edition=bedrock|Is there a different maximum size in Bedrock, and if so what is it?}}
+
+[[File:MagmaCubeSpawn.png|thumb|right|This large magma cube attempts to spawn on the [[basalt]], but because there is a piece of [[Iron Bars|iron bar]] intersecting its hitbox, it is unable to spawn. This check is performed before the size of the magma cube is determined, meaning no magma cubes can spawn at that location.]]
+
+A magma cube needs a 2.08×2.08×2.08 free space to spawn. The area in which they spawn must be clear of solid or liquid obstructions. When a magma cube attempts to spawn, the game checks for the space requirement of a large magma cube, and the size is determined later. Therefore, since large magma cubes are slightly taller than 2 blocks, no magma cubes, regardless of size, are able to spawn at all in 2-block-high areas. Also, since large magma cubes are slightly wider than 2 blocks, and mobs spawn at the center of a block, having any block within the 2.08×2.08×2.08 area, even as thin as a [[glass pane]], can prevent a magma cube of any size from spawning. Although, way less magma cubes spawn in {{BiomeLink|Nether Wastes}}.
+
+Magma cubes' size is affected by [[regional difficulty]]: chances range from 33% for each size at the low difficulty to 16% small, 33% medium, and 50% big with higher difficulty.
+
+{{Mob spawn table}}
+
+=== Monster spawners ===
+Magma cube [[monster spawner]]s generate in the main treasure room of treasure [[bastion remnant]]s. They always hang under the side of the bridge directly above the stash of gold and the center loot chests hanging on 2 [[iron chain]]s, and they generate opposite to the staircase on the bridge.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Magma Cream|edition=java|notes=medium_cube,not_frog|quantity=-2-1|lootingquantity=0-1}}
+|{{DropLine|name=Magma Cream|edition=bedrock|notes=medium_cube,not_frog|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Verdant Froglight|notes=cold_frog}}
+|{{DropLine|name=Ochre Froglight|notes=temperate_frog}}
+|{{DropLine|name=Pearlescent Froglight|notes=warm_frog}}
+|notes=
+medium_cube = Only if magma cube size is medium or big.
+not_frog = Only when ''not'' killed by a [[frog]].
+cold_frog = Only when killed by a [[cold frog]].
+temperate_frog = Only when killed by a [[temperate frog]].
+warm_frog = Only when killed by a [[warm frog]].
+}}
+
+* Large magma cube:{{xp|4}} experience and 2-4 medium magma cubes
+* Medium magma cube: {{xp|2}} experience and 2-4 small magma cubes
+* Small magma cube: {{xp|1}} experience
+
+== Behavior ==
+[[File:Magma Cube jumping.gif|thumb|right|upright|Magma cube jumping.]]
+A magma cube seeks out any [[player]] or an [[iron golem]] within a spherical distance of 16 blocks. If it finds no enemy, it changes direction every 40 to 100 ticks (2 to 5 seconds) and jumps forward every 40 to 120 ticks (2 to 6 seconds). If it finds a target, the delay before jumping is {{fraction|1|3}} as long (13 to 40 ticks), and the magma cube changes direction directly toward the target before jumping.
+
+Magma cubes cannot be hurt by fall damage or burning, and are not slowed down by lava. They can swim upward in lava and leap above its surface. 
+
+Their jump height depends on their size (6 high for large). Their forward speed is twice that of most other mobs. They always make a distinct sound upon jumping up and landing, but no idle sounds.
+
+When a magma cube is killed, it splits into 2-4 smaller magma cubes. Tiny magma cubes disappear when killed, like other mobs.
+
+They can swim in water and attempt to stay on the surface. Like [[slime]]s, magma cubes starts taking [[drowning]] damage if submerged in water for 15 seconds, splitting into smaller cubes if possible.
+
+Magma cubes take extra damage from [[powder snow]], taking {{hp|5}} every two seconds, unlike {{hp|1}} for other mobs.
+
+Unlike most mobs, magma cubes have no pathfinding ability, meaning that they do not avoid falling off cliffs and cannot go around walls, even when chasing a player. This behavior is shared by slimes.
+
+When they are in lava, they hover and try to move to nearby land.
+
+The eyes and yellow core of magma cubes are emissive with [[Vibrant Visuals]].
+
+=== Combat ===
+{{see also|Tutorial:Combat#Magma cubes}}
+Magma cubes attack by jumping and attempting to land on the player, and cause damage when touched anywhere. As their jump rate is random, magma cubes can be hard to fight.
+
+The health of a magma cube is its size squared; the attack strength is its size + 2, and the armor points are its size tripled.
+
+A magma cube jumps a distance of approximately its length times 1.5 and a height equivalent to its size in blocks. This means that a large magma cube jumps 4 blocks in height and moves significantly quicker than a small magma cube, which jumps 2 blocks in height; while a tiny magma cube moves slowly and jumps 1 block in height.
+
+Magma cubes continuously damage all players and iron golems they collide with (although [[damage immunity]] reduces the actual damage to 1 attack every half second), equivalent to about twice as often as other mobs.  Despite other mobs only damaging targets they specifically attack.<ref>{{bug|MC-131426||Big Slimes have little to no Attack Cooldown (compared to other mobs)}}</ref> This means that a large magma cube deals {{hp|12}} of damage per second on normal difficulty. Unlike [[slime]]s, tiny magma cubes can deal damage to the player.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Slime attack1.ogg
+|sound2=Slime attack2.ogg
+|subtitle=Slime attacks <ref group=sound name=LousyEvents>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=Hostile Creatures
+|overridesource=1
+|description=When a magma cube attacks something
+|id=entity.slime.attack|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.slime.attack|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Slime big1.ogg
+|sound2=Slime big2.ogg
+|sound3=Slime big3.ogg
+|sound4=Slime big4.ogg
+|subtitle=Magma Cube dies
+|source=Hostile Creatures
+|overridesource=1
+|description=When a non-small magma cube dies
+|id=entity.magma_cube.death
+|translationkey=subtitles.magma_cube.death
+|volume=Large: 1.2<br>Medium: 0.4
+|pitch=0.64-0.96
+|distance=16}}
+| {{SoundLine
+|sound=Slime small1.ogg
+|sound2=Slime small2.ogg
+|sound3=Slime small3.ogg
+|sound4=Slime small4.ogg
+|sound5=Slime small5.ogg
+|subtitle=Magma Cube dies
+|source=Hostile Creatures
+|overridesource=1
+|description=When a small magma cube dies
+|id=entity.magma_cube.death_small
+|translationkey=subtitles.magma_cube.death
+|volume=0.0
+|pitch=1.12-1.68
+|distance=16}}
+| {{SoundLine
+|sound=Slime big1.ogg
+|sound2=Slime big2.ogg
+|sound3=Slime big3.ogg
+|sound4=Slime big4.ogg
+|subtitle=Magma Cube hurts
+|source=Hostile Creatures
+|overridesource=1
+|description=When a non-small magma cube is damaged
+|id=entity.magma_cube.hurt
+|translationkey=subtitles.magma_cube.hurt
+|volume=Large: 1.2<br>Medium: 0.4
+|pitch=0.64-0.96
+|distance=16}}
+| {{SoundLine
+|sound=Slime small1.ogg
+|sound2=Slime small2.ogg
+|sound3=Slime small3.ogg
+|sound4=Slime small4.ogg
+|sound5=Slime small5.ogg
+|subtitle=Magma Cube hurts
+|source=Hostile Creatures
+|overridesource=1
+|description=When a small magma cube is damaged
+|id=entity.magma_cube.hurt_small
+|translationkey=subtitles.magma_cube.hurt
+|volume=0.0
+|pitch=1.12-1.68
+|distance=16}}
+| {{SoundLine
+|sound=Magmacube jump1.ogg
+|sound2=Magmacube jump2.ogg
+|sound3=Magmacube jump3.ogg
+|sound4=Magmacube jump4.ogg
+|subtitle=Magma Cube squishes
+|source=Hostile Creatures
+|overridesource=1
+|description=When a magma cube jumps
+|id=entity.magma_cube.jump
+|translationkey=subtitles.magma_cube.squish
+|volume=Large: 1.2<br>Medium: 0.4<br>Small:0.0
+|pitch=Non-small: 0.64-0.96<br>Small: 1.12-1.68
+|distance=16}}
+| {{SoundLine
+|sound=Magmacube big1.ogg
+|sound2=Magmacube big2.ogg
+|sound3=Magmacube big3.ogg
+|sound4=Magmacube big4.ogg
+|subtitle=Magma Cube squishes
+|source=Hostile Creatures
+|overridesource=1
+|description=When a non-small magma cube lands
+|id=entity.magma_cube.squish
+|translationkey=subtitles.magma_cube.squish
+|volume=Large: 1.2<br>Medium: 0.4
+|pitch=1.0-1.5
+|distance=16}}
+| {{SoundLine
+|sound=Magmacube small1.ogg
+|sound2=Magmacube small2.ogg
+|sound3=Magmacube small3.ogg
+|sound4=Magmacube small4.ogg
+|sound5=Magmacube small5.ogg
+|subtitle=Magma Cube squishes
+|source=Hostile Creatures
+|overridesource=1
+|description=When a small magma cube lands
+|id=entity.magma_cube.squish_small
+|translationkey=subtitles.magma_cube.squish
+|volume=0.0
+|pitch=1.0-1.5
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Magmacube small1.ogg
+|sound2=Magmacube small2.ogg
+|sound3=Magmacube small3.ogg
+|sound4=Magmacube small4.ogg
+|sound5=Magmacube small5.ogg
+|source=hostile
+|description=When a magma cube dies
+|id=mob.magmacube.small
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|source=hostile
+|description=When a magma cube is damaged
+|id=mob.magmacube.small
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Magmacube big1.ogg
+|sound2=Magmacube big2.ogg
+|sound3=Magmacube big3.ogg
+|sound4=Magmacube big4.ogg
+|source=hostile
+|description=When a non-small magma cube jumps or lands
+|id=mob.magmacube.big
+|volume=1.0
+|pitch=0.64-0.96}}
+| {{SoundLine
+|sound=Magmacube small1.ogg
+|sound2=Magmacube small2.ogg
+|sound3=Magmacube small3.ogg
+|sound4=Magmacube small4.ogg
+|sound5=Magmacube small5.ogg
+|source=hostile
+|description=When a small magma cube jumps or lands
+|id=mob.magmacube.small
+|volume=1.0
+|pitch=0.64-0.96}}
+| {{SoundLine
+|sound=-
+|source=-
+|description=When a magma cube attacks something
+|id=mob.attack
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Slime attack1.ogg
+|sound2=Slime attack2.ogg
+|source=hostile
+|description=''Unused sound event''
+|id=mob.slime.attack
+|volume=1.0
+| pitch = 1.0
+}}
+| {{SoundLine
+|sound=Magmacube jump1.ogg
+|sound2=Magmacube jump2.ogg
+|sound3=Magmacube jump3.ogg
+|sound4=Magmacube jump4.ogg
+|source=Hostile Creatures
+|overridesource=1
+|description=''Unused sound event''
+|id=mob.magmacube.jump
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Magma Cube
+|spritetype=entity
+|nameid=magma_cube
+|showentitytags=y
+|entitytags=fall_damage_immune, freeze_hurts_extra_types, frog_food, non_controlling_rider
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Magma Cube
+|spritetype=entity
+|nameid=magma_cube
+|showentityfamily=y
+|entityfamily=magmacube,mob,monster
+|id=42
+|foot=1}}
+
+=== Entity data ===
+Magma cubes have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|Size}}: The size of the magma cube. Note that this value is zero-based, so 0 is the smallest magma cube, 1 is the next larger, etc. The sizes that spawn naturally are 0, 1, and 3.
+** {{nbt|byte|wasOnGround}}: 1 or 0 (true/false) - true if the magma cube is touching the ground.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads;With Our Powers Combined!}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads;With Our Powers Combined!}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Magma Cube JE1 BE1.png|52px]] [[File:Magma Cube JE1 BE1.png|42px]] [[File:Magma Cube JE1 BE1.png|32px]] Added magma cubes.
+|''“It started out as a retexturing of the Slime for the Nether - it was just going to be a Lava Slime. But then when I named it that, I felt it was a bit lazy to retexture a mob. I wanted to make it more unique. I can’t really remember how I came up with the idea to have a layered block, but it’s one of my favourite mobs now. It really intrigues me. It doesn’t stand out in any particular way - I just really like it! You can use Magma Cream [an item Magma cubes drop] to brew Fire Resistance potions.”'' -[[Jeb]]<ref>{{Mcnet|meet-magma-cube}}</ref>}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Magma cubes have been made quite rare. Here are the current spawning rules for magma cubes. Big magma cubes require a {{tooltip|3×2½×3|3 blocks on x and z axis, 2.5 blocks on y axis}} space to spawn, small magma cubes require a {{tooltip|3×2×3|3 blocks on x and z axis, 2 blocks on y axis}} space, and tiny magma cubes require a {{tooltip|1×2×1|1 block on x and z axis, 2 blocks on y axis}} space (or {{tooltip|1×1×1|1 block on all axis}} if the upper block is not opaque).<ref>http://www.minecraftforum.net/topic/385523-slime-spawning/</ref>}}
+|{{HistoryLine|||dev=RC1|Magma cubes have been given [[sound]]s.}}
+|{{HistoryLine||1.1|dev=release|Large and small magma cubes now drop [[magma cream]].}}
+|{{HistoryLine||1.3.1|dev=12w18a|Magma cubes no longer show their animation in [[singleplayer]], due to singleplayer being a local server.}}
+|{{HistoryLine|||dev=12w23a|Magma cubes now show their animation in [[multiplayer]].}}
+|{{HistoryLine||1.8|dev=14w06b|Magma cubes can now [[swimming|swim]] as a result of the update to the new AI.
+|Magma cubes now randomly change direction every so often, reducing the chance of them getting stuck at walls or corners.
+|Magma cubes now randomly despawn over time if no [[player]] is within a 32 block range.
+|The jumping mechanics of magma cubes have been changed. How far they jump now corresponds to the length of their size; they jump approximately 1.5 times their current length. For example, a tiny size 1 magma cube jumps slowly, while a large size 4 magma cube jumps farther. Also, when attacking, magma cubes turn their whole body to face the [[player]].}}
+|{{HistoryLine||1.10|dev=16w20a|Magma cubes now spawn almost twice as often in the general [[Nether]] (rate is now {{frac|2|153}}, was {{frac|1|151}}).}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Magma Cube JE2 BE2.png|52px]] [[File:Magma Cube JE2 BE2.png|42px]]  [[File:Magma Cube JE2 BE2.png|32px]] The textures of magma cubes has now been changed.}}
+|{{HistoryLine|||dev=18w44a|[[File:Magmacube texture change 18w43a to 18w44a.gif|x48px]] The model of the magma cubes have now slightly tweaked. The color channel of transparent pixels are now filled to black.}}
+|{{HistoryLine|||dev=19w08a|[[Hitbox]] side length for sizes 0, 1, 3 (small, medium, big) changed from 0.51, 1.02, 2.04 to 0.5202, 1.0404, 2.0808, respectively.}}
+|{{HistoryLine|||dev=19w12a|Magma cubes now hop on the surface of the lava instead of swim.}}
+|{{HistoryLine||1.14.3|dev=pre4|Magma cubes now hover over the surface of the lava.}}
+|{{HistoryLine||1.16|dev=20w06a|Small cubes now have moving sounds again.<ref>{{bug|MC-97958||Small slime has no jump or squish sound|Fixed}}</ref>}}
+|{{HistoryLine|||dev=20w15a|Magma cubes now spawn in [[basalt deltas]] biome.}}
+|{{HistoryLine|||dev=20w16a|Magma cube spawners now generate in [[bastion remnant]]s.}}
+|{{HistoryLine|||dev=?|Their spawning rules were changed.}}
+|{{HistoryLine||1.17|dev=21w13a|Magma cubes now take extra damage when [[Damage#Freezing|freezing]].}}
+|{{HistoryLine|||dev=pre1|Magma cubes no longer interact with the player.<ref name=Bug>{{bug|MC-225911||Slimes and magma cubes not interacting with player.|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre2|Magma cubes now interact with the player again.<ref name=Bug/>}}
+|{{HistoryLine||1.19|dev=22w11a|Magma cubes now drop froglights when killed by a frog.}}
+|{{HistoryLine||1.20|dev=23w18a|Magma cubes are now affected by the [[Jump Boost]] effect.<ref>{{bug|MC-48923||Slime/magma cubes not affected by jump boost potion effect|Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w33a|The sounds of magma cubes are now controlled by the "Hostile Creatures" instead of the "Friendly Creatures" sound slider.<ref>{{bug|MC-118616||The sounds of magma cubes and slimes aren't controlled by the "Hostile Creatures" sound slider|Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w03a|[[Hitbox]] side length for sizes 0, 1, 3 (small, medium, big) changed from 0.5202, 1.0404, 2.0808 to 0.52, 1.04, 2.08, respectively.}}
+|{{HistoryLine||1.21.4|dev=24w44a|The magma cube texture layout has been changed as the texture's UV mapping has been updated.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Magma Cube JE1 BE1.png|52px]] Added magma cubes. 
+|Magma cubes are currently unobtainable in-game without hacking.}}
+|{{HistoryLine|||dev=build 8|Magma cubes can now be spawned using [[spawn egg]]s.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Magma cubes now spawn naturally.
+|[[File:Magma Cube JE1 BE1.png|42px]] [[File:Magma Cube JE1 BE1.png|32px]] Magma cubes now split into smaller cubes when killed.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Magma cube cores now glow from [[File:Magma Cube (inner) Revison 1 BE.png|32px]] to [[File:Magma Cube (inner) Revison 2 BE.png|32px]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Magma Cube JE2 BE2.png|52px]] [[File:Magma Cube JE2 BE2.png|42px]]  [[File:Magma Cube JE2 BE2.png|32px]] The textures of magma cubes has now been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Magma cubes now spawn in [[basalt deltas]].}}
+|{{HistoryLine|||dev=beta 1.16.0.59|Magma cube spawners now generate in [[bastion remnant]]s.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Magma Cubes now take extra damage when [[Damage#Freezing|freezing]].}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.30.20|Medium magma cubes hitboxes now corrected and matches [[Slime]].<ref>{{bug|MCPE-132159||Medium magma cube hit box is too small|Fixed}}</ref>}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.26|Magma cubes now drop froglights when killed by a frog behind the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.18.20|dev=Preview 1.18.20.28|Small magma cubes now deal {{hp|3}} damage instead of {{hp|2}} on normal mode.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|Magma cubes are now affected by the [[Jump Boost]] effect.}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.20|A magma cube named with a [[name tag]] now produces smaller magma cubes with the same name when it dies.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Magma Cube JE1 BE1.png|52px]] [[File:Magma Cube JE1 BE1.png|42px]] [[File:Magma Cube JE1 BE1.png|32px]] Added magma cubes.|Magma cubes drop [[magma cream]], a feature from [[Java Edition 1.1]].}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=Patch 1|switch=1.0.1|Magma cubes no longer visibly catch fire when going into fire or lava.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Magma cubes now spawn almost twice as often in the general [[Nether]] (rate is now {{frac|2|153}}, was {{frac|1|151}}).{{verify|Both chances may not have been correct, since wither skeletons are rarely spawned as well unlike on Java Edition.}}{{check version}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Magma Cube JE1 BE1.png|52px]] [[File:Magma Cube JE1 BE1.png|42px]] [[File:Magma Cube JE1 BE1.png|32px]] Added magma cubes.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from {{code|LavaSlime}} to {{code|magma_cube}}.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has been changed from {{code|lavaslime}} to {{code|magma_cube}}.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* According to a minecraft.net article, magma cubes don't actually attack the player like other mobs, but instead, their heat is dangerous when close.<ref>{{Mcnet|visit-nether-|Visit the Nether!|October 11, 2019|Duncan Geere}}</ref>
+* Magma cube is the only mob native to the Nether that can truly swim in water.
+** Zombified piglins, skeletons, and wither skeletons sink in water.
+** Piglins, piglin brutes and hoglins sink in water and drown.
+** Endermen, blazes, and striders take damage in water immediately.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Magma Cube Swarm.png|Magma cubes.
+Magma Cube Size.png|Size comparison between a large magma cube and a player.
+Magmacube.png|They emit the same flame particles as a mob spawner upon landing.
+MagmaCubeFamily.png|A group of small magma cubes.
+Stretched Magma Cube.png|A separated magma cube. Note the lava core.
+Magmacubelava.png|A magma cube leaping out of lava.
+Magma Cube Spawner in Bastion Remnant.png|A magma cube [[monster Spawner|spawner]] inside a [[bastion remnant]].
+MagmaSpawnerGrid.png|A magma cube spawner completely disabled with 9 solid blocks {{in|je}}.
+MagmaSpawnerDisabled.png|A magma cube spawner in a bastion remnant, being disabled with solid blocks.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Superflat Magma Cubes.png|A large number of magma cubes in a superflat world.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Magmacube (texture).png|Magma cube texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Magma Cube Mobestiary.jpg|The magma cube page from the [[Minecraft Books#Minecraft Mobestiary|Mobestiary]].
+File:LEGO Large Magma Cube.jpg|[[Lego Minecraft]] large Magma cube.
+File:Warm mobs and one cold.jpg
+File:Magma Cube figure pack.png|An [[action figure]] pack of three Magma cubes.
+File:Magma Cube figure pack (unboxed).png|An unboxed action figure pack of three Magma cubes.
+File:Cubes family photo.png|The Magma cube in a picture with the Slime and sulfur cube.
+File:LEGO Small Magma Cube.png|[[Lego Minecraft|Lego]] small Magma cube.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|meet-magma-cube|Meet the Magma Cube|February 21, 2017|[[Tom Stone]]}} 
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Nether mobs]]
+[[Category:Monster mobs]]
+
+[[cs:Magmaslizoun]]
+[[de:Magmawürfel]]
+[[es:Cubo de magma]]
+[[fr:Cube de magma]]
+[[hu:Magmakocka]]
+[[it:Cubo di magma]]
+[[ja:マグマキューブ]]
+[[ko:마그마 큐브]]
+[[nl:Magmakubus]]
+[[pl:Kostka magmy]]
+[[pt:Cubo de Magma]]
+[[ru:Магмовый куб]]
+[[th:สไลม์ไฟ]]
+[[zh:岩浆怪]]

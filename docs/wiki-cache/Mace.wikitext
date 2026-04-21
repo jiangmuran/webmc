@@ -1,0 +1,525 @@
+{{For}}
+{{Infobox item
+| image = Mace.png
+| image2 = Enchanted Mace.gif
+| rarity = Epic
+| attackdamage = '''Normal attack:'''<br>{{hp|6}}<br>'''Smash attack:'''<br>{{hp|12}} to <abbr title="infinity">∞</abbr>
+| attackspeed = 0.6
+| attackrange = 3
+| hitboxmargin = 0
+| durability = {{jebe|500|501}}
+| enchantability = 15
+| renewable = No ([[Renewable resource#Vault|except via ominous vault]])
+| stackable = No
+}}
+A '''mace''' is a [[Melee attack|melee]] [[weapon]] that can do smash attacks which deal more [[damage]] the farther the user falls before hitting an [[entity]]. Landing a successful smash attack causes the user to land without taking any [[fall damage]] accumulated prior to attacking. It is [[crafted]] with a [[heavy core]] which only drops from [[ominous vault]]s at a chance of 7.5%, and a [[breeze rod]] which is obtained from [[breeze]]s.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|B1= Heavy Core
+|B2= Breeze Rod
+|Output= Mace
+|type=Combat
+}}
+
+== Usage ==
+=== Attacking ===
+{{control|attack|text=Attacking}} with a mace costs 1 [[durability]], regardless of whether the attack is a smash attack (see below). {{IN|java}}, a [[boat]] or [[minecart]] hit by a mace is instantly destroyed without decreasing the mace's durability.
+
+==== Normal attack ====
+A mace can be {{control|attack|text=used}} while standing on the ground to perform a normal attack, dealing {{hp|6}} damage when the attack cooldown is fully charged. {{IN|java}}, it has the slowest [[attack speed]] in the game, at 0.6. If used normally, it deals 3.6 damage per second (DPS) or 5.4 if using critical hits, while a wooden sword deals 6.4 DPS. In {{JE}}, a [[Breach]] IV mace has the third-highest DPS and the highest damage per hit of all weapons versus entities wearing [[Diamond Armor|diamond]] or [[netherite armor]]. In {{BE}}, Breach IV maces have both the highest damage per hit and the highest DPS against entities wearing diamond or netherite armor, due to having no [[attack cooldown]].
+
+==== Smash attack ====
+[[File:Mace wind charge.gif|thumb|Using a wind charge to do a smash attack from the ground.]]
+===== Falling =====
+A mace does a smash attack when it is {{control|attack|text=used}} after the player has fallen 1.5 blocks or more, regardless of the mace's current attack cooldown progress.<ref>{{cite bug|MC|270160|Mace Smash Attacks Activate on Cooldown|resolution=Works As Intended}}</ref> The player must not be grounded or in elytra flight, and the fall height used in calculation is simply the starting height (Y coordinate) minus the ending height (Y coordinate). Successfully performing a smash attack without touching the ground resets the player's fall height to the height where the smash attack was performed, nullifying any fall damage. The player begins accumulating fall damage once again if they continue to fall.
+
+===== Activation =====
+When a smash attack is performed, extra damage is dealt to the attacked entity based on the distance fallen prior to the attack. All entities within 2.5 blocks of the attack are knocked back, similar to the effect of a [[wind charge]].{{Info needed|By how much?}} The knockback from smash attacks does not affect the attacker, though the [[Wind Burst]] enchantment can be used to launch them in a similar way. A smash attack can be performed on any entity, which includes mobs, [[player]]s, and non-mob entities like [[armor stand]]s. Smash attacks cannot be performed if the player has the [[Slow Falling]] effect.
+
+Descending with an [[elytra]] counts as blocks fallen for smash attacks.<ref>{{cite bug|MC|270393|Extra mace damage could be accumulated while using the elytra|resolution=Works As Intended}}</ref> In {{JE}}, the elytra must be unequipped before attacking for the smash attack to activate, as being in elytra flight does not activate a smash attack.<ref name="mace-elytra">{{cite bug|MC|269388|Mace falling damage increase is applied while using an elytra|resolution=Fixed}}</ref> In {{BE}}, unequipping the elytra before attacking is not necessary, as smash attacks activate even while the user is in elytra flight.<ref>{{Cite bug|MCPE|179914|Mace can applies falling damage increase while using an elytra}}</ref>
+
+===== Damage =====
+A successful smash attack causes a mace to deal {{hp|4}} extra damage for each of the first 3 blocks fallen, {{hp|2}} extra damage for each of the next 5 blocks fallen, and {{hp|1}} extra damage for each block fallen after that. The [[Density]] enchantment can be used to increase smash attack damage by {{hp|0.5}} per level for each block fallen. Smash attacks are usually [[critical hit]]s, where both the mace's base damage and its smash attack damage are increased by 50%. The damage a mace smash attack can accumulate from falling is unlimited.<ref>{{bug|MC-269391||Mace falling damage increase is uncapped|Invalid}}</ref>
+
+===== Damage comparisons =====
+The amount of fallen blocks needed to defeat a player wearing full [[Protection]] IV netherite armor from full health are the following:
+* Unenchanted mace: A critical hit after falling 30 blocks.
+* [[Breach]] IV mace: A critical hit after falling 19 blocks.
+* [[Density]] V mace: A critical hit after falling 10 blocks.
+* Breach IV mace with [[Strength]] II: A critical hit after falling 13 blocks.
+* Density V mace with Strength II: A critical hit after falling 9 blocks.
+
+The amount of fallen blocks needed to defeat a [[warden]] from full health are the following:
+* Unenchanted mace: A critical hit after falling 321 blocks.
+* Density V mace: A critical hit after falling 95 blocks.
+* Density V mace with Strength II: A critical hit after falling 93 blocks.
+
+=== Statistics ===
+==== ''Java Edition'' ====
+{{IN|java}}, maces have an attack speed of 0.6 (1.667 seconds), and have the following statistics:
+
+{| class="wikitable"
+!colspan=9 |Unenchanted normal attack
+|-
+!Type!!Attack damage!!Attack speed!!<abbr title="Damage/Second">DPS</abbr>!!Attack range!!Hitbox margin!!Lifetime damage inflicted<ref group="note" name="lifetime-damage">The formula to find the total lifetime damage is ''Lifetime damage minimum = Durability × Damage per hit''. It assumes the mace is at maximum charge.</ref>!!Durability!!Enchantability
+|-
+|{{ItemSprite|Mace}}||{{hp|6}}|| rowspan=2 |0.6 (1.667 seconds)||3.6|| rowspan=2 |3 (3 blocks)|| rowspan=2 |0||{{hp|3000}}|| rowspan=2 |500|| rowspan=2 |15
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||5.4||{{hp|4500}}
+|}
+
+{| class="wikitable"
+!colspan=7 |Enchanted normal attack
+|-
+!Type!!Armor type!!Unenchanted!!Breach I!!Breach II!!Breach III!!Breach IV
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Leather Cap}}{{ItemSprite|Leather Tunic}}{{ItemSprite|Leather Pants}}{{ItemSprite|Leather Boots}} Leather Armor||{{hp|6}}||{{hp|6.919872}}||{{hp|6.979992}}||{{hp|6.979992}}||{{hp|6.979992}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|9.617929}}||{{hp|9.739863}}||{{hp|9.780389}}||{{hp|9.780389}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Copper Helmet}}{{ItemSprite|Copper Chestplate}}{{ItemSprite|Copper Leggings}}{{ItemSprite|Copper Boots}} Copper Armor||{{hp|6}}||{{hp|7.045408}}||{{hp|7.912878}}||{{hp|7.912878}}||{{hp|7.912878}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|9.964975}}||{{hp|10.3673}}||{{hp|10.58808}}||{{hp|10.67586}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Golden Helmet}}{{ItemSprite|Golden Chestplate}}{{ItemSprite|Golden Leggings}}{{ItemSprite|Golden Boots}} Golden Armor||{{hp|6}}||{{hp|7.095023}}||{{hp|8.135944}}||{{hp|8.271057}}||{{hp|8.271057}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|10.00521}}||{{hp|10.42335}}||{{hp|10.87971}}||{{hp|10.96998}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Chainmail Helmet}}{{ItemSprite|Chainmail Chestplate}}{{ItemSprite|Chainmail Leggings}}{{ItemSprite|Chainmail Boots}} Chainmail Armor||{{hp|6}}||{{hp|7.149442}}||{{hp|8.236761}}||{{hp|8.656408}}||{{hp|8.656408}}
+|-
+|{{ItemSprite|Enchanted Mace}}(critical)||{{hp|9}}||{{hp|10.04886}}||{{hp|10.76973}}||{{hp|11.05203}}||{{hp|11.09876}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Iron Helmet}}{{ItemSprite|Iron Chestplate}}{{ItemSprite|Iron Leggings}}{{ItemSprite|Iron Boots}} Iron Armor||{{hp|6}}||{{hp|7.349352}}||{{hp|8.601075}}||{{hp|9.77372}}||{{hp|10}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|10.4267}}||{{hp|11.44761}}||{{hp|12.06808}}||{{hp|12.22049}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Diamond Helmet}}{{ItemSprite|Diamond Chestplate}}{{ItemSprite|Diamond Leggings}}{{ItemSprite|Diamond Boots}} Diamond Armor||{{hp|6}}||{{hp|8.601075}}||{{hp|10.88061}}||{{hp|12.93469}}||{{hp|14.81935}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|11.65641}}||{{hp|14.57641}}||{{hp|17.2672}}||{{hp|19.56349}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Netherite Helmet}}{{ItemSprite|Netherite Chestplate}}{{ItemSprite|Netherite Leggings}}{{ItemSprite|Netherite Boots}} Netherite Armor||{{hp|6}}||{{hp|8.824868}}||{{hp|11.31701}}||{{hp|13.57202}}||{{hp|15.64694}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|12.09675}}||{{hp|15.31636}}||{{hp|18.20016}}||{{hp|20.83542}}
+|-
+!Type!!Base attack damage!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> I!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> II!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> III!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> IV!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> V
+|-
+|{{ItemSprite|Enchanted Mace}}||{{hp|6}}||{{hp|8.5}}||{{hp|11}}||{{hp|13.5}}||{{hp|16}}||{{hp|18.5}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|11.5}}||{{hp|14}}||{{hp|16.5}}||{{hp|19}}||{{hp|21.5}}
+|}
+{{Calculator|maceDamage}}
+
+==== ''Bedrock Edition'' ====
+{{IN|bedrock}}, maces have no attack cooldown, and have the following statistics:
+
+{| class="wikitable"
+!colspan=9 |Unenchanted normal attack
+|-
+!Type!!Attack damage!!<abbr title="Damage/Second">DPS</abbr>!!Attack range!!Hitbox margin!!Lifetime damage inflicted<ref group="note" name="lifetime-damage"/>!!Durability!!Enchantability
+|-
+|{{ItemSprite|Mace}}||{{hp|6}}||12|| rowspan=2 |3 (3 blocks)|| rowspan=2 |0||{{hp|3006}}|| rowspan=2 |501|| rowspan=2 |15
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||18||{{hp|4509}}
+|}
+
+{| class="wikitable"
+!colspan=7 |Enchanted normal attack
+|-
+!Type!!Armor type!!Unenchanted!!Breach I!!Breach II!!Breach III!!Breach IV
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Leather Cap}}{{ItemSprite|Leather Tunic}}{{ItemSprite|Leather Pants}}{{ItemSprite|Leather Boots}} Leather Armor||{{hp|6}}||{{hp|6.919872}}||{{hp|6.979992}}||{{hp|6.979992}}||{{hp|6.979992}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|9.617929}}||{{hp|9.739863}}||{{hp|9.780389}}||{{hp|9.780389}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Copper Helmet}}{{ItemSprite|Copper Chestplate}}{{ItemSprite|Copper Leggings}}{{ItemSprite|Copper Boots}} Copper Armor||{{hp|6}}||{{hp|7.045408}}||{{hp|7.912878}}||{{hp|7.912878}}||{{hp|7.912878}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|9.964975}}||{{hp|10.3673}}||{{hp|10.58808}}||{{hp|10.67586}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Golden Helmet}}{{ItemSprite|Golden Chestplate}}{{ItemSprite|Golden Leggings}}{{ItemSprite|Golden Boots}} Golden Armor||{{hp|6}}||{{hp|7.095023}}||{{hp|8.135944}}||{{hp|8.271057}}||{{hp|8.271057}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|10.00521}}||{{hp|10.42335}}||{{hp|10.87971}}||{{hp|10.96998}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Chainmail Helmet}}{{ItemSprite|Chainmail Chestplate}}{{ItemSprite|Chainmail Leggings}}{{ItemSprite|Chainmail Boots}} Chainmail Armor||{{hp|6}}||{{hp|7.149442}}||{{hp|8.236761}}||{{hp|8.656408}}||{{hp|8.656408}}
+|-
+|{{ItemSprite|Enchanted Mace}}(critical)||{{hp|9}}||{{hp|10.04886}}||{{hp|10.76973}}||{{hp|11.05203}}||{{hp|11.09876}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Iron Helmet}}{{ItemSprite|Iron Chestplate}}{{ItemSprite|Iron Leggings}}{{ItemSprite|Iron Boots}} Iron Armor||{{hp|6}}||{{hp|7.349352}}||{{hp|8.601075}}||{{hp|9.77372}}||{{hp|10}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|10.4267}}||{{hp|11.44761}}||{{hp|12.06808}}||{{hp|12.22049}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Diamond Helmet}}{{ItemSprite|Diamond Chestplate}}{{ItemSprite|Diamond Leggings}}{{ItemSprite|Diamond Boots}} Diamond Armor||{{hp|6}}||{{hp|8.601075}}||{{hp|10.88061}}||{{hp|12.93469}}||{{hp|14.81935}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|11.65641}}||{{hp|14.57641}}||{{hp|17.2672}}||{{hp|19.56349}}
+|-
+|{{ItemSprite|Enchanted Mace}}|| rowspan=2 |{{ItemSprite|Netherite Helmet}}{{ItemSprite|Netherite Chestplate}}{{ItemSprite|Netherite Leggings}}{{ItemSprite|Netherite Boots}} Netherite Armor||{{hp|6}}||{{hp|8.824868}}||{{hp|11.31701}}||{{hp|13.57202}}||{{hp|15.64694}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|12.09675}}||{{hp|15.31636}}||{{hp|18.20016}}||{{hp|20.83542}}
+|-
+!Type!!Base attack damage!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> I!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> II!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> III!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> IV!!Smite / <abbr title="Bane of Arthopods">BoA</abbr> V
+|-
+|{{ItemSprite|Enchanted Mace}}||{{hp|6}}||{{hp|8}}||{{hp|11}}||{{hp|13}}||{{hp|16}}||{{hp|18}}
+|-
+|{{ItemSprite|Enchanted Mace}} (critical)||{{hp|9}}||{{hp|12}}||{{hp|16.5}}||{{hp|19.5}}||{{hp|24}}||{{hp|27}}
+|}
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|head=1
+|recipeType=Item repair
+|ingredients=2× Damaged Mace
+|Damaged Mace
+|Damaged Mace
+|Output=Mace
+|type=Combat
+|ignoreusage=1
+|showdescription=1
+|description=The [[durability]] of the two maces is added together, plus an extra 5% durability.
+|showname=0
+}}
+{{Grinding
+|ingredients=2× Damaged Mace
+|Damaged Mace
+|Damaged Mace
+|Mace
+|showdescription=1
+|description=The durability of the two maces is added together, plus an extra 5% durability.
+|foot=1
+}}
+
+==== Anvil repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|Damaged Mace
+|Damaged Mace; Breeze Rod
+|Mace
+}}
+
+A mace can be repaired in an [[anvil]] by adding [[breeze rod]]s or another mace. One breeze rod restores 25% of the mace's durability. Both methods preserve the mace's enchantments.
+
+=== Enchantments ===
+==== Applicable enchantments ====
+A mace can receive the following [[enchantment]]s:
+
+{| class="wikitable sortable col-3-center"
+|+
+!Name
+!Description
+!Max level
+![[Enchantment#Obtaining|Method]]
+!Weight
+|-
+|[[Density]]<ref group="note" name="note1">Density, Breach, Smite, and Bane of Arthropods are mutually exclusive.</ref>
+|Increases the damage dealt per block fallen, increasing by 0.5 per level.
+|V
+|{{BlockLink|Enchanting Table}}<br />{{BlockLink|Anvil}}
+|5
+|-
+|[[Breach]]<ref group="note" name="note1" />
+|Reduces the effectiveness of the [[armor]] on the target. The armor's effectiveness is reduced by 15% per level.
+|IV
+|{{BlockLink|Enchanting Table}}<br />{{BlockLink|Anvil}}
+|4
+|-
+|[[Wind Burst]]
+|Emits a burst of wind (like that of a [[wind charge]]) upon executing a mace smash attack on an entity, launching the attacker upward. It can be used to chain smash attacks together, and the strength of the launch increases per level.
+|III
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Smite]]<ref group="note" name="note1" />
+|Increases the damage dealt to [[undead]].
+|V
+|{{BlockLink|Enchanting Table}}{{only|be|short=1}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Bane of Arthropods]]<ref group="note" name="note1" />
+|Increases the damage dealt to [[arthropod]]s.
+|V
+|{{BlockLink|Enchanting Table}}{{only|be|short=1}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Fire Aspect]]
+|Ignites any targets hit by the mace. {{IN|bedrock}}, it also lights unlit [[candle]]s, [[campfire]]s, and blocks of [[TNT]] when used.
+|II
+|{{BlockLink|Enchanting Table}}{{only|be|short=1}}<br />{{BlockLink|Anvil}}
+|2
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}<br />{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]
+|Repairs the mace when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The mace vanishes on death, not dropping as an item.
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+
+==== Enchantment behavior ====
+Maces have exclusive access to the [[Density]], [[Breach]], and [[Wind Burst]] enchantments.
+
+===== Density =====
+{{main|Density}}
+Maces [[Enchanting#Summary_of_enchantments_by_item|enchanted]] with Density deal more damage when executing a smash attack. The damage is increased by {{Hp|0.5}} for each block fallen per level of enchantment, with a maximum level of 5. Normal attacks do not have their damage increased.
+
+===== Breach =====
+{{main|Breach}}
+Maces enchanted with Breach partially ignore a target's [[armor points]] and [[armor toughness]] when attacking. The reduction is 15% per level of enchantment, with a maximum level of 4. By use of Breach IV, a mace's normal attack has the highest damage-per-hit of any melee weapon against targets wearing [[Diamond Armor|diamond]] or [[netherite armor]].
+
+===== Wind Burst =====
+{{main|Wind Burst}}
+[[File:Chaining smash attacks.gif|thumb|Chaining smash attacks by use of Wind Burst.]]
+Maces enchanted with Wind Burst cause a powerful upwards knockback effect upon executing a successful smash attack. The height gain is 8 blocks per level, with a maximum level of 3. Wind Burst can be used to repeatedly chain smash attacks together. Unlike [[wind charge]]s, Wind Burst does not negate fall damage.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Mace smash ground1.ogg
+|sound2=Mace smash ground2.ogg
+|sound3=Mace smash ground3.ogg
+|sound4=Mace smash ground4.ogg
+|subtitle=Mace smashes
+|source=Players
+|description=When a mace deals extra damage to an entity on the ground from a fall of five blocks or less
+|id=item.mace.smash_ground
+|translationkey=subtitles.item.mace.smash_ground
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mace smash ground heavy.ogg
+|subtitle=Mace smashes
+|source=Players
+|description=When a mace deals extra damage to an entity on the ground from a fall of greater than five blocks
+|id=item.mace.smash_ground_heavy
+|translationkey=subtitles.item.mace.smash_ground
+|volume=
+|pitch=
+|distance=16}}
+| {{SoundLine
+|sound=Mace smash air1.ogg
+|sound2=Mace smash air2.ogg
+|sound3=Mace smash air3.ogg
+|subtitle=Mace smashes
+|source=Players
+|description=When a mace deals extra damage to an entity in the air
+|id=item.mace.smash_air
+|translationkey=subtitles.item.mace.smash_air
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Mace smash ground1.ogg
+|sound2=Mace smash ground2.ogg
+|sound3=Mace smash ground3.ogg
+|sound4=Mace smash ground4.ogg
+|source=player
+|description=When a mace deals extra damage to an entity on the ground from a fall of five blocks or less
+|id=mace.smash_ground
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mace smash ground heavy.ogg
+|source=player
+|description=When a mace deals extra damage to an entity on the ground from a fall of greater than five blocks
+|id=mace.heavy_smash_ground
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mace smash air1.ogg
+|sound2=Mace smash air2.ogg
+|sound3=Mace smash air3.ogg
+|source=player
+|description=When a mace deals extra damage to an entity in the air
+|id=mace.smash_air
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Mace
+|spritetype=item
+|nameid=mace
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Mace
+|spritetype=item
+|nameid=mace
+|id=322
+|form=item
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Overkill;Over-Overkill}}
+
+== Advancements ==
+{{load advancements|Over-Overkill}}
+
+== Videos ==
+{{yt|uqlUTYLnadw}}
+{{yt|SGsDQc7HAIc}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|dev=24w11a|experiment=Update 1.21|[[File:Mace JE1 BE1.png|32px]] Added maces. No enchantments can be applied to it in Survival.}}
+|{{HistoryLine|||dev=24w12a|experiment=Update 1.21|Maces no longer break webs faster like swords do.<ref>{{cite bug|MC|269513|Maces can break cobwebs|resolution=Fixed}}</ref>
+|Maces now have a unique sound when hitting an entity from a fall of more than five blocks.}}
+|{{HistoryLine|||dev=24w13a|experiment=Update 1.21|Mace falling damage increase is no longer applied while using an elytra.<ref name="mace-elytra"/>
+|Maces now have a more explosive particle effect when executing a smash attack.
+|The power and range of the knockback effect from a smash attack has been increased.
+|Added an even stronger knockback effect for when falling more than five blocks before performing a smash attack.
+|Successfully striking a target with a smash attack now resets all vertical momentum.
+|The baseline additional damage dealt by the mace's smash attack has been slightly reduced to {{Hp|3}} per fallen block.
+|[[Mending]], [[Unbreaking]], [[Smite]], [[Bane of Arthropods]], [[Fire Aspect]], and [[Curse of Vanishing]] enchantments can now be applied to maces.
+|Added [[Density]], [[Breach]], and [[Wind Burst]] enchantments, which are unique to the mace.}}
+|{{HistoryLine||1.21|dev=24w18a|Maces are now available without using the "Update 1.21" experimental data pack.
+|Mace durability has been increased from 250 to 500.
+|Mace attack damage has been reduced from {{Hp|7}} to {{Hp|6}}.
+|Mace attack speed has been drastically reduced from 1.6 to 0.5, the lowest attack speed in the game.
+|Mace smash attack mechanics have been changed. Rather than damage increasing by {{Hp|3}} per fallen block, the damage is instead increased {{Hp|4}} for the first 3 blocks fallen, by {{Hp|2}} for the next 5 blocks fallen, and by {{Hp|1}} for all subsequent blocks fallen.
+|[[Sharpness]] can now be applied to maces.<ref>{{cite bug|MC|272982|Mace can have sharpness|resolution=Fixed}}</ref>
+|[[Fire Aspect]] can no longer be applied to maces.
+|[[Density]], [[Breach]], [[Smite]] and [[Bane of Arthropods]] are now incompatible with each other.}}
+|{{HistoryLine|||dev=24w19a|[[Fire Aspect]] can now once again be applied to maces.
+|[[Density]] and [[Breach]] are now mutually exclusive.}}
+|{{HistoryLine|||dev=pre1|Mace attack speed has been increased from 0.5 to 0.6.}}
+|{{HistoryLine|||dev=pre2|Mace rarity has been changed from "Common" to "Epic".}}
+|{{HistoryLine|||dev=pre4|[[Sharpness]] can no longer be applied to maces.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Added a new [[death message]] for being killed by a mace smash attack.}}
+|{{HistoryLine|||dev=24w37a|Mace damage now scales with distance fallen when it is used by mobs.<ref>{{bug|MC-275300||Mace smash attack damage does not work with mobs, even though particles and sounds happen|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.22|experiment=Update 1.21|[[File:Mace JE1 BE1.png|32px]] Added maces.}}
+|{{HistoryLine|||dev=Preview 1.20.80.23|Maces now have a unique sound when hitting an entity from a fall of more than five blocks.
+|Renamed sound events and sounds files from <code>windswept_mace</code> to <code>mace</code>.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.21|experiment=Update 1.21|Maces now have a more explosive particle effect when executing a smash attack.
+|Added [[Density]], [[Breach]], and [[Wind Burst]] enchantments, which are unique to the mace.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Maces are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.23|[[Unbreaking]], [[Smite]], [[Bane of Arthropods]], and [[Fire Aspect]] enchantments can now be applied to maces.
+|Tweaked the cost of applying the mace's exclusive enchantments in the enchantment table.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Mace durability has been increased from 251 to 501.
+|Mace attack damage has been reduced from {{Hp|8}} to {{Hp|6}}.
+|Mace smash attack mechanics have been changed. Rather than damage increasing by {{Hp|3}} per fallen block, the damage is instead increased {{Hp|4}} for the first 3 blocks fallen, by {{Hp|2}} for the next 5 blocks fallen, and by {{Hp|1}} for all subsequent blocks fallen.
+|Mace smash attack no longer creates dirt particles when hitting a target whose center is in the air.
+|[[Density]] and [[Breach]] are now mutually exclusive}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|Mace [[rarity]] has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Added a new death message for when players or their pets are defeated by a mace smash attack.}}
+|{{HistoryLine|||dev=Preview 1.21.30.24|Mobs equipped with maces can now perform smash attacks.|Due to bug, maces can now be stacked up to 64.<ref>{{bug|MCPE-185896}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.30.25|Maces are no longer stackable.|Mobs can no longer perform mace smash attacks.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.21|Mobs can now perform mace smash attacks again.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Mace damage now scales with distance fallen when it is used by mobs.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The mace's design pitch was made by developer [[Ulraf]].<ref> https://youtu.be/2cxUNoWNy50?t=4173</ref>
+* One of the original ideas for what would be the main reward of the [[trial chambers]] was a long-ranged weapon, before the mace was conceptualized and chosen over it by the developers.<ref> https://youtu.be/2cxUNoWNy50?t=4208</ref>
+* The earliest implementation of the mace in {{el|be}} used the attachable system, a system used to play custom animations. However the mace's attachable system files did not contain any custom animations, and it was later rewritten to use the standard item system.
+
+== Gallery ==
+=== Icons ===
+<gallery>
+Enchanted Mace.gif|An enchanted mace.
+</gallery>
+=== Mojang screenshots ===
+<gallery>
+Noor holding a Mace.png|[[Noor]] holding a mace.
+Bedrock 1.20.80.22 PatchNotes.png|Noor using a mace against a zombie.
+Noor Slays.png|Noor slaying multiple zombies with a mace.
+Alex vs. Husk.png|[[Alex]] fighting a [[husk]] with a mace.
+Ari misses the hit.png|[[Ari]] trying to land a hit on a [[creeper]] with a mace.
+Efe jumps off high point with mace.jpeg|[[Efe]] jumping off a cliff with a mace.
+</gallery>
+
+=== In other media ===
+<gallery>
+Redeem-Hero Mobile.png|[[Steve]] wielding a mace beside [[Alex]] and [[Makena]].
+SteveTowers.jpeg|Steve standing on top of a large column with mace in hand.
+SteveFalls.png|Steve dropping down through a hole.
+SteveWhacks.jpeg|Steve striking down a [[warden]] in one hit using a mace.
+SteveWins.png|Steve posing with a [[sculk catalyst]] after defeating the warden with a mace.
+Ari Noor Maces.jpg|Ari and Noor holding maces.
+AMCMEventMace.png|A mace as it appears in [[A Minecraft Movie Live Event]].
+Mace (MCD).png|A {{MCD|mace}} {{in|MCD}}.
+</gallery>
+
+== See also ==
+*{{ItemLink|Spear}}
+**{{ItemLink|Wooden Spear}}
+**{{ItemLink|Stone Spear}}
+**{{ItemLink|Copper Spear}}
+**{{ItemLink|Iron Spear}}
+**{{ItemLink|Golden Spear}}
+**{{ItemLink|Diamond Spear}}
+**{{ItemLink|Netherite Spear}}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|mace|Taking Inventory: Mace|October 3, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox weapons}}
+{{Navbox items|tools}}
+{{Navbox combat|melee}}
+
+[[Category:Combat]]
+
+[[de:Streitkolben]]
+[[es:Maza]]
+[[fr:Masse]]
+[[it:Mazza]]
+[[ja:メイス]]
+[[ko:철퇴]]
+[[lzh:椎]]
+[[pl:Buzdygan]]
+[[pt:Maça]]
+[[ru:Булава]]
+[[th:คทา]]
+[[uk:Булава]]
+[[zh:重锤]]

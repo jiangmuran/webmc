@@ -1,0 +1,522 @@
+{{about|the empty bucket}}
+{{Infobox item
+| image = Bucket.png
+| renewable = Yes
+| stackable = Yes (16), except in furnace fuel slot
+}}
+A '''bucket''' is a utility item used to carry [[water]], [[lava]], [[milk]], [[powder snow]], [[Bucket of mob|various aquatic mobs]], and the [[sulfur cube]].{{upcoming|Chaos Cubed}}
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+ |A2= Iron Ingot
+ |C2= Iron Ingot
+ |B3= Iron Ingot
+ |Output= Bucket
+ |type= Utility
+}}
+
+=== Generated loot ===
+{{LootChestItem|bucket}}
+
+== Usage ==
+Empty buckets can be used to "pick up" a [[water]] or [[lava]] source block by pressing {{control|use}} [[item]] on a block of the relevant type. If the empty bucket is part of a stack and the player's [[inventory]] is full, the filled bucket drops in front of the player as an item. 
+
+A bucket filled with a source block can then be used to {{control|place}} its source block contents in the empty block next to the side of the block the player is currently looking at, or replacing the block looked at for some replaceable blocks.
+
+One can press {{control|use}} when looking at a [[cow]], [[mooshroom]], or [[goat]] to fill a bucket with [[milk]]. A bucket full of milk can be emptied only by drinking it or by using it to craft a [[cake]].
+
+A bucket full of water can be used on a live aquatic mob ([[cod]], [[salmon]], [[tropical fish]], [[pufferfish]], [[axolotl]], or [[tadpole]]) to collect the mob in the bucket for transportation to another location. The mob in item form becomes a [[bucket of aquatic mob]].
+
+An empty bucket can be used to empty a [[cauldron]] with [[water]] or [[lava]], filling the bucket with the fluid. This does not work with [[dispensers]]<ref>{{bug|MC-165196|||Invalid}}</ref>.
+
+A [[lava bucket]] placed in the fuel slot of a [[furnace]] becomes an empty bucket after the lava is consumed during [[smelting]].
+
+An empty bucket fills with [[water]] when placed in the fuel slot of a [[furnace]] while smelting a [[wet sponge]].
+
+An empty bucket can be used to collect [[powder snow]], filling the bucket with powder snow. Emptying the powder snow bucket places the powder snow block in the empty block next to the side of the block the player is currently looking at.
+
+An empty bucket can be used to carry and transport a [[sulfur cube]].{{upcoming|Chaos Cubed}}
+
+== Sounds ==
+{{el|je}}:
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When a bucket is filled with water
+|id=item.bucket.fill
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket1.ogg
+|sound3=Empty water bucket2.ogg
+|sound4=Empty water bucket3.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When a water bucket is emptied <ref group=sound><code>empty1</code> plays at twice the frequency as the other sounds</ref>
+|id=item.bucket.empty
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=1.0 <ref group=sound>Except for the second copy of <code>empty1</code>, which is 0.9</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Fill lava bucket1.ogg
+|sound2=Fill lava bucket2.ogg
+|sound3=Fill lava bucket3.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When a bucket is filled with lava
+|id=item.bucket.fill_lava
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=1.0 
+|distance=16}}
+| {{SoundLine
+|sound=Empty lava bucket1.ogg
+|sound2=Empty lava bucket2.ogg
+|sound3=Empty lava bucket3.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When a lava bucket is emptied
+|id=item.bucket.empty_lava
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Fill powder snow bucket1.ogg
+|sound2=Fill powder snow bucket2.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When a bucket is filled with powder snow
+|id=item.bucket.fill_powder_snow
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=1.0/0.9/1.1
+|distance=16}}
+| {{SoundLine
+|sound=Empty powder snow bucket1.ogg
+|sound2=Empty powder snow bucket2.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When a powder snow bucket is emptied
+|id=item.bucket.empty_powder_snow
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+
+| {{SoundLine
+|rowspan=2
+|sound=Fill fish bucket1.ogg
+|sound2=Fill fish bucket2.ogg
+|sound3=Fill fish bucket3.ogg
+|subtitle=Fish captured
+|source=neutral
+|description=When a fish is collected into a water bucket
+|translationkey=subtitles.item.bucket.fill_fish
+|id=item.bucket.fill_fish
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Tadpole captured
+|source=neutral
+|description=When a tadpole is collected into a bucket
+|id=item.bucket.fill_tadpole
+|translationkey=subtitles.item.bucket.fill_tadpole
+|volume=0.5
+|pitch=1.5
+|distance=16}}
+| {{SoundLine
+|sound=Fill axolotl1.ogg
+|sound2=Fill axolotl2.ogg
+|sound3=Fill axolotl3.ogg
+|subtitle=Axolotl scooped
+|source=neutral
+|description=When an axolotl is collected into a bucket
+|id=item.bucket.fill_axolotl
+|translationkey=subtitles.item.bucket.fill_axolotl
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=3
+|sound=Empty fish bucket1.ogg
+|sound2=Empty fish bucket2.ogg
+|sound3=Empty fish bucket3.ogg
+|subtitle=Bucket empties
+|source=neutral
+|description=When a fish is placed from a bucket
+|id=item.bucket.empty_fish
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Bucket empties
+|source=neutral
+|description=When a tadpole is placed from a bucket
+|id=item.bucket.empty_tadpole
+|translationkey=subtitles.item.bucket.empty
+|volume=0.5
+|pitch=1.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Bucket empties
+|source=neutral
+|description=When an axolotl is placed from a bucket
+|id=item.bucket.empty_axolotl
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|source=player
+|subtitle=Cow gets milked
+|description=When a cow is milked
+|id=entity.cow.milk
+|translationkey=subtitles.entity.cow.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Goat gets milked
+|description=When a regular goat is milked
+|source=neutral
+|id=entity.goat.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|subtitle=Goat gets milked
+|source=neutral
+|description=When a screaming goat is milked
+|id=entity.goat.screaming.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|source=block
+|description=When a bucket is filled with water
+|id=bucket.fill_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket2.ogg
+|sound3=Empty water bucket3.ogg
+|source=block
+|description=When a water bucket is emptied
+|id=bucket.empty_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Water Splash Old.ogg
+|source=block
+|description=When a water bucket is placed in a cauldron<wbr><ref group=sound name=bucketsplash>{{Bug|MCPE-135919}}</ref>
+|id=cauldron.fillwater
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a water bucket is removed from a cauldron<wbr><ref group=sound name=bucketsplash/>
+|id=cauldron.takewater
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fill lava bucket1.ogg
+|sound2=Fill lava bucket2.ogg
+|sound3=Fill lava bucket3.ogg
+|source=block
+|description=When a bucket is filled with lava
+|id=bucket.fill_lava
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Empty lava bucket1.ogg
+|sound2=Empty lava bucket2.ogg
+|sound3=Empty lava bucket3.ogg
+|source=block
+|description=When a lava bucket is emptied
+|id=bucket.empty_lava
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fill powder snow bucket1.ogg
+|sound2=Fill powder snow bucket2.ogg
+|source=player
+|description=When a bucket is filled with powder snow
+|id=bucket.fill_powder_snow
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Empty powder snow bucket1.ogg
+|sound2=Empty powder snow bucket2.ogg
+|source=block
+|description=When a powder snow bucket is emptied
+|id=bucket.empty_powder_snow
+|volume=1.0
+|pitch=1.0}}
+
+| {{SoundLine
+|sound=Fill fish bucket1.ogg
+|sound2=Fill fish bucket2.ogg
+|sound3=Fill fish bucket3.ogg
+|source=block
+|description=When a creature is collected into a water bucket
+|id=bucket.fill_fish
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Empty fish bucket1.ogg
+|sound2=Empty fish bucket2.ogg
+|sound3=Empty fish bucket3.ogg
+|source=block
+|description=When a creature is placed from a bucket
+|id=bucket.empty_fish
+|volume=1.0
+|pitch=1.0}}
+
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|source=neutral
+|description=When a cow is milked
+|id=mob.cow.milk
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|description=When a regular goat is milked
+|source=neutral
+|id=mob.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=1.0, 0.9, 1.1}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|description=When a screaming goat is milked
+|source=neutral
+|id=mob.goat.milk.screamer
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bucket
+|spritetype=item
+|nameid=bucket
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|showaliasids=y
+|generatetranslationkeys=y
+|displayname=Bucket
+|spritetype=item
+|nameid=bucket
+|id=360
+|aliasid=bucket / 0
+|form=item
+|foot=1}}
+
+== Videos ==
+<div style="text-align:center">{{yt|0tVu5HYLQMw}}</div>
+
+== Advancements ==
+{{Load advancements|Hot Stuff}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100615|[[File:Bucket JE1 BE1.png|32px]] Added buckets.
+|Buckets can currently pick up only [[water]] and [[lava]].}}
+|{{HistoryLine||20100625-1917|Buckets can now be found in the new [[dungeon]] chests.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.11|[[Cow]]s are now [[Cow#Milking|milkable]] by using buckets.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Added [[mooshroom]]s, which can be milked like normal [[cow]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|In [[Creative]] mode, buckets now remain empty when {{control|used}} to pick up [[water]] and [[lava]].}}
+|{{HistoryLine||1.2.1|dev=12w06a|Buckets are now [[renewable]], due to zombies having a chance to drop iron ingots.}}
+|{{HistoryLine||1.3.1|dev=12w21a|Buckets are now stackable up to 16.
+|[[Dispenser]]s can now use buckets to collect and dispense water and lava.}}
+|{{HistoryLine|||dev=12w22a|[[Smelting]] in a [[furnace]] with a [[lava bucket]] now leaves an empty bucket for the [[player]] to retrieve.
+|Fixed bug causing stacked buckets to disappear when used to milk cows.}}
+|{{HistoryLine||1.8|dev=14w25b|An empty bucket in the [[fuel]] slot now fills and become a [[water bucket]] after a [[wet sponge]] is dried. This happens for empty buckets placed by the [[player]] while the furnace is still smelting, and for empty buckets left by lava buckets.
+|Stacked buckets in the fuel slot now become a single water bucket.}}
+|{{HistoryLine|||dev=14w26a|The [[player]] can now place only one bucket in the [[fuel]] slot, which fixes the bug above.}}
+|{{HistoryLine||1.9|dev=15w44a|A full [[cauldron]] can now be emptied with a bucket, filling the bucket with [[water]].
+|The average yield of buckets from [[dungeon]] chests has been substantially decreased.}}
+|{{HistoryLine|||dev=15w46a|Buckets now replace single [[snow layer]]s when {{control|used}} on the top, instead of placing the [[water]] or [[lava]] in the [[air]] above the snow layer.}}
+|{{HistoryLine|||dev=15w50a|Added [[sound]]s for buckets: <code>item.bucket.fill</code>, <code>item.bucket.fill_lava</code>, <code>item.bucket.empty</code>, and <code>item.bucket.empty_lava</code>.}}
+|{{HistoryLine||1.11|dev=16w39a|Buckets are now found in the new [[woodland mansion]] chests.}}
+|{{HistoryLine|||dev=November 18, 2017|slink=https://youtu.be/A_Z3AokMwWI?t=1h52m07s|Buckets were said to be able to pick up fish mobs.}}
+|{{HistoryLine||1.13|dev=18w08b|Added [[fish bucket]]s, which turn into regular buckets when {{control|used}}.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Bucket JE2 BE2.png|32px]] The texture of buckets has been changed.}}
+|{{HistoryLine|||dev=18w49a|Buckets can now be found in chests in [[savanna]] [[village]] houses.}}
+|{{HistoryLine||1.16|dev=pre1|Using a bucket on water or lava in Creative mode now provides the player with one water or lava bucket in the inventory.<ref>{{bug|MC-9856}}</ref> This is created in a new inventory slot rather than replacing the used bucket. A limit of one bucket per fluid can be obtained this way - attempting to fill a bucket where a filled one already exists in the inventory removes the fluid as expected but does not provide any new buckets.
+|Cows and mooshrooms can also now be milked in Creative mode,<ref>{{bug|MC-36322}}</ref> providing the player with limitless milk buckets.}}
+|{{HistoryLine|||dev=pre4|Milking cows now provides Creative players with only one bucket.<ref>{{bug|MC-188352}}</ref>}}
+|{{HistoryLine||1.17|dev=October 3, 2020|slink=https://youtu.be/DWZIfsaIgtE?t=2h04m58s|Buckets were revealed to be able to be used to collect [[axolotl]]s.}}
+|{{HistoryLine|||dev=20w46a|Added [[powder snow]], which can be collected with buckets.}}
+|{{HistoryLine|||dev=20w51a|Added [[buckets of axolotls]], which turn into regular buckets when used.}}
+|{{HistoryLine|||dev=21w13a|Added [[goat]]s, which can be milked using buckets.}}
+|{{HistoryLine||1.19|dev=22w11a|Added [[buckets of tadpoles]], which turn into regular buckets when used.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Buckets can now be found in [[trial chambers]] intersection barrels.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[buckets of sulfur cube]]s, which turn into regular buckets when used.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.7.0|[[File:Bucket JE1 BE1.png|32px]] Added buckets.}}
+|{{HistoryLine||v0.7.4|Filled buckets no longer stack.<ref>{{bug|MCPE-3960}}</ref>
+|Empty buckets no longer allow [[liquid]] sources to be targeted and broken like [[block]]s.<ref>{{bug|MCPE-3857}}</ref>
+|The stack limit for empty buckets has been changed from 64 to 16.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added [[mooshroom]]s, which can be milked using buckets.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Added [[dispenser]]s, which can use buckets to collect and dispense water and lava.|A full [[cauldron]] can now be emptied with a bucket, filling the bucket with [[water]].}} 
+|{{HistoryLine||v0.16.0|dev=build 1|Added [[sound]]s when using buckets.
+|An empty bucket in the [[fuel]] slot now fills and becomes a [[water bucket]] after a [[wet sponge]] is dried. This happens for empty buckets left by [[lava bucket]]s.
+|Buckets no longer highlight fluid blocks when aiming at them.}}
+|{{HistoryLine|||dev=build 5|[[Player]]s can now directly place empty buckets in a furnace.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Buckets now generate in [[woodland mansion]] chests.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added [[fish bucket]]s, which turn into regular buckets when used.
+|Empty buckets can now be used to catch [[fish]].
+|Moved all bucket items from the Equipment tab to the Items tab in the [[Creative inventory]].{{verify|type=update}}{{info needed}}<!---please check snapshots, only 1 major release version was checked each--->}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|[[Cauldron]]s filled with [[lava]] can now be emptied by using a bucket, filling it with lava.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Bucket JE2 BE2.png|32px]] The texture of buckets has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Buckets can now be found in [[savanna]] [[village]] house [[chest]]s.}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.52|[[Goat]]s are now milkable by using buckets.}}
+|{{HistoryLine||1.16.210|dev=beta 1.16.210.53|Added [[powder snow]], which can be collected with buckets.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.52|Added [[buckets of axolotls]], which turn into regular buckets when used.}}
+|{{HistoryLine||1.17.10|dev=beta 1.17.10.22|Empty buckets can no longer be used to catch fish.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.24|Added [[buckets of tadpoles]], which turn into regular buckets when used, behind the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Added a delay of 10 ticks for retrieving liquids with a bucket after they've been placed.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Buckets can now be found in [[trial chambers]] intersection barrels.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.21|Removed the delay for retrieving liquids with a bucket after they've been placed.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[buckets of sulfur cube]]s, which turn into regular buckets when used.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|[[File:Bucket JE1 BE1.png|32px]] Added buckets.}}
+|{{HistoryLine||xbox=TU9|Buckets are now stackable up to 16.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|A full [[cauldron]] can now be emptied with a bucket, filling the bucket with [[water]].|Added [[sound]]s for buckets.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Buckets are now found in the new [[woodland mansion]] chests.}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|Buckets can now be usesd to milk [[cows]] and [[mooshrooms]] even in creative mode.}}
+|{{HistoryLine|PS4}}
+|{{HistoryLine||1.90|[[File:Bucket JE2 BE2.png|32px]] The texture of buckets has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3DS}}
+|{{HistoryLine||0.1.0|[[File:Bucket JE1 BE1.png|32px]] Added buckets.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 325.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== In other media ===
+<gallery>
+Bucket SDGP.png|Bucket in the [[Super Duper Graphics Pack]].
+</gallery>
+
+== See also ==
+*[[Cauldron]]
+*[[Bowl]]
+*[[Glass Bottle]]
+*[[Water]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|taking-inventory-bucket|Taking Inventory: Bucket|December 14, 2018|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+{{Navbox combat|general}}
+
+[[Category:Utilities]]
+
+[[cs:Kbelík]]
+[[de:Eimer]]
+[[es:Cubo]]
+[[fr:Seau]]
+[[hu:Vödör]]
+[[it:Secchio]]
+[[ja:バケツ]]
+[[ko:양동이]]
+[[nl:Emmer]]
+[[pl:Wiadro]]
+[[pt:Balde]]
+[[ru:Ведро]]
+[[th:ถัง]]
+[[uk:Відро]]
+[[zh:铁桶]]

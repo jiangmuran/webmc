@@ -1,0 +1,467 @@
+{{Infobox block
+| image = Daylight Detector.png
+| imagecaption = Regular
+| image2 = Inverted Daylight Detector.png
+| image2caption = Inverted
+| invimage = Daylight Detector
+| invimage2 = Inverted Daylight Detector
+| transparent = Yes
+| light = No
+| tool = axe
+| renewable = Yes
+| stackable = Yes (64)
+| waterloggable = {{jebe|No|Yes}}
+| flammable = No
+| lavasusceptible = Yes
+}}
+A '''daylight detector''' is a [[block]] that outputs a [[redstone]] signal based on its exposure to [[Light#Internal light level|sky light]].
+
+{{Control|Using}} the detector inverts it, causing it instead to output a constant strong signal that weakens from exposure to sky light.
+
+== Obtaining ==
+=== Breaking ===
+Daylight detectors can be mined by hand or with any tool, but [[axe]]s are the quickest. Inverted daylight detectors cannot be collected directly; they drop a regular daylight detector. {{IN|BE}}, the inverted detector may be obtained by using {{control|pick block}} in [[Creative]] mode<ref>[[bugtracker:MCPE-179063|MCPE-179063]] – Pickblocking an inverted Daylight Sensor produces "tile.daylight_detector_inverted.name" block</ref>, or via inventory editing or add-ons.
+{{breaking row|horizontal=1|Daylight Detector|Axe|foot=1}}
+
+=== Crafting ===
+{{Crafting
+|A1= Glass
+|B1= Glass
+|C1= Glass
+|A2= Nether Quartz
+|B2= Nether Quartz
+|C2= Nether Quartz
+|A3= Any Wooden Slab
+|B3= Any Wooden Slab
+|C3= Any Wooden Slab
+|Output= Daylight Detector
+|type= Redstone
+}}
+
+== Usage ==
+=== Redstone component ===
+[[File:Daylight sensor output clear.png|Graphed daylight detector output in clear weather. The red vertical line denotes the player sleep time, at 12,523.|thumb]]
+{{see also|Redstone circuit}}
+
+A daylight detector can be used to produce redstone power in proportion to the [[daylight cycle]].
+
+A daylight detector is 0.375 blocks high (3/8ths of a block). Daylight detectors can be moved by [[piston]]s.{{only|bedrock}} [[Water]] and [[lava]] flow around daylight detectors without affecting them. 
+
+; Placement
+: To place a daylight detector, use the "Use Item/Place Block" control.
+
+: A daylight detector can be "inverted", which reverses the power levels produced by the daylight detector. To invert a daylight detector, aim at the placed daylight detector and use the "Use Item/Place Block" control.
+
+; Activation
+: A daylight detector activates when exposed to sufficient daylight ([[#Daylight detector|daylight detector]] mode) or when exposure to daylight is low enough ([[#Inverted Daylight Detector|inverted daylight detector]] mode).
+
+: Sources of block light ([[torch]]es, [[glowstone]], etc.) cannot activate a daylight detector.
+
+; Behavior
+: An active daylight detector:
+:*powers adjacent [[redstone dust]], including below it, and [[redstone comparator]]s facing away from the daylight detector, to a power level that depends on the time of day, the weather, the detector's exposure to the sky, and the [[Light#Internal light level|internal sky light level]] (see tables below)
+:*powers adjacent [[redstone repeater]]s facing away from the daylight detector to power level 15
+:*activates adjacent [[Redstone components#Mechanism components|redstone mechanisms]], including above and below, such as [[piston]]s, [[redstone lamp]]s, etc.
+
+: A daylight detector has no effect on other adjacent blocks (for example, it cannot power a block the way a repeater can). 
+
+: The output signal of daylight detectors in the loaded chunk is updated every 20 gametime{{only|java|short=1}}/daytime{{only|bedrock|short=1}}. Block updates have no effect on daylight detectors.
+
+==== Daylight detector ====
+In the [[Overworld]], a daylight detector's outputted [[signal strength]] depends on the time of day, the weather, the detector's exposure to the sky, and the [[Light#Internal light level|'''internal sky light level''']].
+
+{| class="wikitable" style="text-align:center"
+|+ Daylight detector power levels when '''sky light level''' is 15
+! rowspan="2" |Power
+! colspan="2" |Clear
+! colspan="2" |Rain or snowfall
+! colspan="2" |Thunder
+|-
+! Time ↓ !! Time ↑
+! Time ↓ !! Time ↑
+! Time ↓ !! Time ↑
+|-
+| 0
+| colspan="2" | {{ClockPhase|18000}} 13,670–(Midnight/18,000)-22,330 
+(8,660 Gtk/7:13)
+| colspan="2" | {{ClockPhase|18000}} 13,670-(Midnight/18,000)–22,330 
+(8,660 Gtk/7:13)
+| colspan="2" | {{ClockPhase|18000}} 13,670-(Midnight/18,000)–22,330 
+(8,660 Gtk/7:13)
+|-
+| 1
+| style="text-align: left;" | {{ClockPhase|22556}} 22,331–22,781 
+(450 Gtk/22.5 sec) 
+| style="text-align: left;" | {{ClockPhase|13444}} 13,219–13,669
+(450 Gtk/22.5 sec)
+| style="text-align: left;" | {{ClockPhase|22564}} 22,331–22,798
+(467 Gtk/23.35 sec) 
+| style="text-align: left;" | {{ClockPhase|13436}} 13,203–13,669
+(466 Gtk/23.3 sec)
+| style="text-align: left;" | {{ClockPhase|22637}} 22,331–22,943 
+(612 Gtk/30.6 sec) 
+| style="text-align: left;" | {{ClockPhase|13363}} 13,058–13,669 
+(611 Gtk/30.55 sec)
+|-
+| 2
+| style="text-align: left;" | {{ClockPhase|22925}} 22,782–23,069{{only|short=1|java}}/23,070{{only|short=1|bedrock}}
+J: (287 Gtk/14.35 sec)
+B: (288 Gtk/14.4 sec) 
+| style="text-align: left;" | {{ClockPhase|13074}} 12,931–13,218 
+(287 Gtk/14.35 sec)
+| style="text-align: left;" | {{ClockPhase|23015}} 22,799–23,231
+(432 Gtk/21.6 sec) 
+| style="text-align: left;" | {{ClockPhase|12985}} 12,769{{only|short=1|java}}/12,770{{only|short=1|bedrock}}-13,202
+J: (433 Gtk/21.65 sec)
+B: (432 Gtk/21.6 sec)
+| style="text-align: left;" | {{ClockPhase|23148}} 22,944–23,352 
+(408 Gtk/20.4 sec) 
+| style="text-align: left;" | {{ClockPhase|12852}} 12,648–13,057 
+(409 Gtk/20.45 sec)
+|-
+| 3
+| style="text-align: left;" | {{ClockPhase|23183}} 23,070{{only|short=1|java}}/23,071{{only|short=1|bedrock}}-23,296 
+J: (226 Gtk/11.3 sec)
+B: (225 Gtk/11.25 sec) 
+| style="text-align: left;" | {{ClockPhase|12817}} 12,705–12,930
+(225 Gtk/11.25 sec)
+| style="text-align: left;" | {{ClockPhase|23368}} 23,232–23,504
+(272 Gtk/13.6 sec) 
+| style="text-align: left;" | {{ClockPhase|12632}} 12,497–12,768{{only|short=1|java}}/12,769{{only|short=1|bedrock}}
+J: (271 Gtk/13.55 sec)
+B: (272 Gtk/13.6 sec)
+| style="text-align: left;" | {{ClockPhase|23526}} 23,353–23,700 
+(347 Gtk/17.35 sec) 
+| style="text-align: left;" | {{ClockPhase|12473}} 12,300–12,647 
+(347 Gtk/17.35 sec)
+|-
+| 4
+| style="text-align: left;" | {{ClockPhase|23413}} 23,297–23,529
+(232 Gtk/11.6 sec) 
+| style="text-align: left;" | {{ClockPhase|12587}} 12,471–12,704 
+(233 Gtk/11.65 sec)
+| style="text-align: left;" | {{ClockPhase|23625}} 23,505–23,745
+(240 Gtk/12 sec) 
+| style="text-align: left;" | {{ClockPhase|12376}} 12,256–12,496 
+(240 Gtk/12 sec)
+| style="text-align: left;" | {{ClockPhase|23880}} 23,701-(Dawn/24,000/0)–59 
+(240 Gtk/12 sec) 
+| style="text-align: left;" | {{ClockPhase|12120}} 11,941{{only|short=1|java}}/11,942{{only|short=1|bedrock}}-(Dusk/12,000)-12,299 
+J: (358 Gtk/17.9 sec) 
+B: (357 Gtk/17.85 sec)
+|-
+| 5
+| style="text-align: left;" | {{ClockPhase|23648}} 23,530–23,767
+(237 Gtk/11.85 sec) 
+| style="text-align: left;" | {{ClockPhase|12351}} 12,233–12,470
+(237 Gtk/11.85 sec)
+| style="text-align: left;" | {{ClockPhase|23868}} 23,746–23,991
+(245 Gtk/12.25 sec) 
+| style="text-align: left;" | {{ClockPhase|12132}} 12,010–12,255
+(245 Gtk/12.25 sec)
+| style="text-align: left;" | {{ClockPhase|250}} 60–441 
+(381 Gtk/19.05 sec) 
+| style="text-align: left;" | {{ClockPhase|11750}} 11,560–11,940{{only|short=1|java}}/11,941{{only|short=1|bedrock}}
+J:(380 Gtk/19 sec)
+B: (381 Gtk/19.05 sec)
+|-
+| 6
+| style="text-align: left;" | {{ClockPhase|23864}} 23,768–23,960 
+(192 Gtk/9.6 sec) 
+| style="text-align: left;" | {{ClockPhase|12136}} 12,041–12,232
+(191 Gtk/9.55 sec)
+| style="text-align: left;" | {{ClockPhase|193}} 23,992–(Dawn/24,000/0)-394 
+(386 Gtk/19.3 sec) 
+| style="text-align: left;" | {{ClockPhase|11808}} 11,607–(Dusk/12,000)-12,009 
+(402 Gtk/20.1 sec)
+| style="text-align: left;" | {{ClockPhase|740}} 442–1,039 
+(597 Gtk/29.85 sec) 
+| style="text-align: left;" | {{ClockPhase|11260}} 10,962–11,559 
+(597 Gtk/29.85 sec)
+|-
+| 7
+| style="text-align: left;" | {{ClockPhase|63}} 23,961–(Dawn/24,000/0)-166 
+(205 Gtk/10.25 sec) 
+| style="text-align: left;" | {{ClockPhase|11937}} 11,835–(Dusk/12,000)-12,040 (205 Gtk/10.25 sec)
+| style="text-align: left;" | {{ClockPhase|638}} 395–882 
+(487 Gtk/24.35 sec) 
+| style="text-align: left;" | {{ClockPhase|11362}} 11,119–11,606
+(487 Gtk/24.35 sec)
+| style="text-align: left;" | {{ClockPhase|1387}} 1,040–1,735 
+(695 Gtk/34.75 sec) 
+| style="text-align: left;" | {{ClockPhase|10613}} 10,266–10,961 
+(695 Gtk/34.75 sec)
+|-
+| 8
+| style="text-align: left;" | {{ClockPhase|351}} 167–535 
+(368/18.4 sec) 
+| style="text-align: left;" | {{ClockPhase|11649}} 11,465{{only|short=1|java}}/11,466{{only|short=1|bedrock}}-11,834
+J: (369 Gtk/18.45 sec)
+B: (368 Gtk/18.4 sec)
+| style="text-align: left;" | {{ClockPhase|1156}} 883–1,429{{only|short=1|java}}/1,430{{only|short=1|bedrock}}
+J: (546 Gtk/27.3 sec)
+B: (547 Gtk/27.35 sec) 
+| style="text-align: left;" | {{ClockPhase|10844}} 10,571–11,118
+(547 Gtk/27.35 sec)
+| style="text-align: left;" | {{ClockPhase|2172}} 1,736–2,608 
+(872 Gtk/43.6 sec) 
+| style="text-align: left;" | {{ClockPhase|9828}} 9,392–10,265 
+(873 Gtk/43.65 sec)
+|-
+| 9
+| style="text-align: left;" | {{ClockPhase|734}} 536–933
+(397 Gtk/19.85 sec) 
+| style="text-align: left;" | {{ClockPhase|10250}} 11,067–11,464{{only|short=1|java}}/11,465{{only|short=1|bedrock}}
+J: (397 Gtk/19.85 sec)
+B: (398 Gtk/19.9 sec)
+| style="text-align: left;" | {{ClockPhase|1749}} 1,430{{only|short=1|java}}/1,431{{only|short=1|bedrock}}-2,069
+J: (639 Gtk/31.95 sec)
+B: (638 Gtk/31.6 sec)
+| style="text-align: left;" | {{ClockPhase|10250}} 9,931–10,570
+(639 Gtk/31.95 sec)
+| style="text-align: left;" | {{ClockPhase|3275}} 2,609–3,942 
+(1,333 Gtk/1:06.65 sec) 
+| style="text-align: left;" | {{ClockPhase|8725}} 8,059–9,391 
+(1,332 Gtk/1:06.6 sec)
+|-
+| 10
+| style="text-align: left;" | {{ClockPhase|1152}} 934–1,371
+(437 Gtk/21.85 sec) 
+| style="text-align: left;" | {{ClockPhase|10847}} 10,629–11,066
+(437 Gtk/21.85 sec)
+| style="text-align: left;" | {{ClockPhase|2472}} 2,070–2,875
+(805 Gtk/40.25 sec) 
+| style="text-align: left;" | {{ClockPhase|9527}} 9,125{{only|short=1|java}}/9,126{{only|short=1|bedrock}}-9,930
+J: (805 Gtk/40.25 sec)
+B: (804 Gtk/40.2 sec)
+| colspan="2" | {{ClockPhase|6000}} 3,943–(Noon/6,000)-8,058 
+(4115 Gtk/3:25)
+|-
+| 11
+| style="text-align: left;" | {{ClockPhase|1618}} 1,372–1,865
+(493 Gtk/24.65 sec) 
+| style="text-align: left;" | {{ClockPhase|10382}} 10,136–10,628
+(492 Gtk/24.6 sec)
+| style="text-align: left;" | {{ClockPhase|3492}} 2,876–4,108
+(1,232 Gtk/1:01.6) 
+| style="text-align: left;" | {{ClockPhase|8508}} 7,892–9,124{{only|short=1|java}}/7,893–9,125{{only|short=1|bedrock}}
+J: (1,232 Gtk/1:01.6)
+B: (1,232 Gtk/1:01.6)
+| N/A || N/A
+|-
+| 12
+| style="text-align: left;" | {{ClockPhase|2155}} 1,866–2,444
+(578 Gtk/28.9 sec) 
+| style="text-align: left;" | {{ClockPhase|9846}} 9,557–10,135
+(578 Gtk/28.9 sec)
+| colspan="2" |{{ClockPhase|6000}} 4,109–(Noon/6,000)-7,891{{only|short=1|java}}/7,892{{only|short=1|bedrock}}
+J:(3,410 Gtk/2:50)
+B: (3,783 Gtk/3:9.15)
+|N/A || N/A
+|-
+| 13
+| style="text-align: left;" | {{ClockPhase|2810}} 2,445–3,175 
+(730 Gtk/36.5 sec) 
+| style="text-align: left;" | {{ClockPhase|9191}} 8,826–9,556
+(730 Gtk/36.5 sec)
+| N/A || N/A
+| N/A || N/A
+|-
+| 14
+| style="text-align: left;" | {{ClockPhase|3735}} 3,176–4,294
+(1,118 Gtk/55.9 sec) 
+| style="text-align: left;" | {{ClockPhase|8265}} 7,706–8,825
+(1,119 Gtk/55.95 sec)
+| N/A || N/A
+| N/A || N/A
+|-
+| 15
+| colspan="2" | {{ClockPhase|6000}} 4,295–(Noon/6,000)-7,705 
+(3,410 Gtk/2:50)
+| N/A || N/A
+| N/A || N/A
+|}
+
+A non-inverted daylight detector never produces a signal in [[the Nether]] and, {{in|Bedrock}}, also [[the End]]. {{IN|Java}}, daylight detectors always produces a maximum signal strength of 15 from exposure to the End dimension's sky, as the End's internal sky light level never changes.
+
+==== Inverted daylight detector ====
+{{control|Using}} a daylight detector inverts it. However, the output of the inverted detector is not a simple inversion of the daylight detector's output; it uses a much simpler algorithm that depends on the [[Light#Internal_light_level|'''internal sky light level''']]. Specifically, it outputs a signal strength of 15 minus the current internal sky light level, where values over 15 or below 0 are taken as 15 or 0 respectively. This means that, in the Overworld, an inverted daylight detector actually outputs a strength of 11 at midnight when the weather is clear, if it has line of sight with the sky. The effects of shade are applied before inverting, so shade ''increases'' the signal strength when it is not already full, and prevents it from reaching zero. Completely blocking an inverted daylight detector from exposure to the sky causes it to emit a signal strength of 15 at all times of day.
+
+{{In|Java}}, inverted daylight detectors in the Nether always produce a signal strength of 15; in the End, they work similarly to in the Overworld. {{In|Bedrock}}, inverted daylight detectors in the Nether or End never produce a signal under any circumstance.
+
+The cells on inverted daylight detectors are emissive if [[Vibrant Visuals]] is enabled.
+
+=== Fuel ===
+Daylight detectors can be used as a [[fuel]] in [[furnace]]s, smelting 1.5 items per block.
+
+=== Note blocks ===
+Daylight detectors can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+{{Sound table/Block/Wood}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Daylight Detector
+|spritetype=block
+|nameid=daylight_detector
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=daylight-detector
+|spritetype=block
+|nameid=daylight_detector
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Daylight Detector
+|spritetype=block
+|nameid=daylight_detector
+|id=151}}
+{{ID table
+|displayname=Inverted Daylight Detector
+|spritetype=block
+|nameid=daylight_detector_inverted
+|id=178
+|form=block
+|translationkey=-
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=daylight-detector
+|spritetype=block
+|nameid=DaylightDetector
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|inverted|false|false,true|If true, the daylight detector is inverted.}}
+{{bst|power|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|The current redstone power level produced by the daylight detector.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|redstone_signal|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|The current redstone power level produced by the daylight detector.|foot=1}}
+
+=== Block data ===
+A daylight detector has a block entity associated with it which stores only its entity ID and position (the minimum data for a block entity). Although the daylight detector's block entity stores no additional data, the block entity ensures that the daylight detector is updated every game tick.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+{{yt|8LFNK6Q7iRY}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||July 6, 2010|link=wordofnotch:776816446|[[Notch]] suggests that he may implement daylight sensors (in the blog post mentioning [[Java Edition Alpha v1.0.2_01|Alpha 1.0.2_01]]).}}
+|{{HistoryLine||November 24, 2012|link=Redstone Update|[[Jeb]] stated that there may be a daylight sensor.}}
+|{{HistoryLine||January 2, 2013|link={{tweet|jeb_|286493347756011520}}|Jeb tweeted an [https://web.archive.org/web/20230330102904/https://imgur.com/DmHt3 image] of the daylight sensor.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w01a|[[File:Daylight Detector JE1 BE1.png|32px]] Added daylight sensors.}}
+|{{HistoryLine||1.8|dev=14w31a|[[File:Inverted Daylight Detector JE1 BE1.png|32px]] Daylight sensors can now be toggled between [[Daylight cycle#Daytime|day]] and [[Daylight cycle#Nighttime|night]] by {{control|using}} them.}}
+|{{HistoryLine||1.9|dev=15w47a|Daylight sensors no longer emit signal during the night when sufficiently shaded.
+|Inverted daylight sensors now emit a variable signal at night.}}
+|{{HistoryLine||1.13|dev=17w47a|"Daylight Sensor" has been renamed to "Daylight Detector".}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Daylight Detector JE1 BE1.png|32px]] [[File:Inverted Daylight Detector JE1 BE1.png|32px]] Added daylight sensors.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Daylight sensors can now be moved by [[piston]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Daylight Sensor" to "Daylight Detector" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Daylight Detector JE1 BE1.png|32px]] Added daylight sensors.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|[[File:Inverted Daylight Detector JE1 BE1.png|32px]] Daylight sensors can now be toggled between [[Daylight cycle#Daytime|day]] and [[Daylight cycle#Nighttime|night]] by {{control|using}} them.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Daylight sensors can now be moved by [[piston]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Daylight Detector JE1 BE1.png|32px]] [[File:Inverted Daylight Detector JE1 BE1.png|32px]] Added daylight sensors.}}
+|{{HistoryLine||?|Daylight sensors are no longer instantly broken.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[block entity]] ID has now been changed from <code>DLDetector</code> to <code>daylight_detector</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|The different block IDs for the daylight detector have now been merged into one ID.
+|Added an inverted block state to daylight detectors.
+|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 151 and 178.}}
+}}
+
+== Issues ==
+{{Issue list|Daylight Sensor|Daylight Detector}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:MCTimegraph.png|A graph visualising the states of a Daylight Detector under different weather conditions (ends rounded to the nearest quarter of a thousand Game-ticks)
+File:Sunny's Sun.png|An example of lights being powered upon the sunrise.
+File:Daylight Art.png|Art made using both states of the daylight detector.
+File:Waterproofed Lamp.png|One of the more common uses of the block, a simple street light using a redstone lamp.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Jeb Daylight Detector.png|First image of a daylight detector.
+File:13w01a Banner.png|The 13w01a snapshot image released by [[Mojang]].
+File:Daylight-sensor-recipe.jpeg
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/daylight-detector Block of the Month: Daylight Detector] – Minecraft.net on December 14, 2023
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Redstone]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+
+[[de:Tageslichtsensor]]
+[[es:Sensor de luz solar]]
+[[fr:Capteur de lumière]]
+[[ja:日照センサー]]
+[[ko:햇빛 감지기]]
+[[nl:Daglichtsensor]]
+[[pl:Detektor światła dziennego]]
+[[pt:Detector de Luz Solar]]
+[[ru:Датчик дневного света]]
+[[zh:阳光探测器]]

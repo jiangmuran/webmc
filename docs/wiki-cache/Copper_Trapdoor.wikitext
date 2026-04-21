@@ -1,0 +1,484 @@
+{{Infobox block
+| group1 = Unoxidized
+| 1-1 = Copper Trapdoor.png
+| invimage = Copper Trapdoor
+| group2 = Exposed
+| 2-1 = Exposed Copper Trapdoor.png
+| invimage2 = Exposed Copper Trapdoor
+| group3 = Weathered
+| 3-1 = Weathered Copper Trapdoor.png
+| invimage3 = Weathered Copper Trapdoor
+| group4 = Oxidized
+| 4-1 = Oxidized Copper Trapdoor.png
+| invimage4 = Oxidized Copper Trapdoor
+| invimage5 = Waxed Copper Trapdoor
+| invimage6 = Waxed Exposed Copper Trapdoor
+| invimage7 = Waxed Weathered Copper Trapdoor
+| invimage8 = Waxed Oxidized Copper Trapdoor
+| transparent = Yes
+| light = No
+| tool = stone pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+|mapcolor = 
+* {{TooltipSprite||Copper Trapdoor}} {{Map color|Block of Copper}}{{only|je|short=1}}
+* {{TooltipSprite||Exposed Copper Trapdoor}} {{Map color|Exposed Copper}}{{only|je|short=1}}
+* {{TooltipSprite||Weathered Copper Trapdoor}} {{Map color|Weathered Copper}}{{only|je|short=1}}
+* {{TooltipSprite||Oxidized Copper Trapdoor}} {{Map color|Oxidized Copper}}{{only|je|short=1}}
+* {{Map color|Iron Trapdoor}}{{only|be|short=1}}
+}}
+
+A '''copper trapdoor''' is a type of [[trapdoor]] made from copper that can be opened and closed by the player without [[redstone]]. A copper trapdoor can exist in one of eight variants depending on how oxidized it is and whether it is waxed or not.
+
+== Obtaining ==
+=== Breaking ===
+Copper trapdoors can be mined only with a [[stone pickaxe]] or better. If a copper trapdoor is mined without the use of a valid [[pickaxe]], it drops nothing.
+{{Breaking row
+|Copper Trapdoor|sprite=all-copper-trapdoors
+|Pickaxe
+|Stone
+|horizontal=1
+}}
+
+=== Natural generation ===
+Oxidized and waxed oxidized copper trapdoors generate naturally in [[trial chambers]].
+
+=== Crafting ===
+{{Crafting
+|head=1
+|A2= Copper Ingot
+|A3= Copper Ingot
+|B2= Copper Ingot
+|B3= Copper Ingot
+|Output=Copper Trapdoor
+|type=Redstone
+}}
+{{Crafting
+|Matching Unwaxed Copper Trapdoor
+|Honeycomb
+|Output=Matching Waxed Copper Trapdoor
+|type= Redstone
+|foot=1
+}}
+
+== Usage ==
+{{main|Trapdoor#Usage|Tutorials/Trapdoor uses}}
+Copper trapdoors can be opened and closed by players or a [[redstone signal]]. Copper trapdoors are also affected by the wind burst of thrown [[wind charge]]s, causing them to open if closed, or vice versa.
+
+=== Barrier ===
+A copper trapdoor can be opened or closed by pressing the {{control|use|text=Use Item/Place Block}} [[control]].
+
+=== Redstone component ===
+Copper trapdoors can be controlled with redstone power. When activated, the copper trapdoor immediately opens. When deactivated, it immediately closes.
+
+An activated copper trapdoor can still be closed by a player, and does not re-open until it receives a new activation signal (if a trapdoor has been closed "by hand", it still needs to be deactivated and then reactivated to open by redstone). 
+
+=== Oxidation ===
+{{main|Oxidation}}
+Non-waxed copper trapdoors have four stages of oxidation (including the initial normal state). [[Lightning bolt]]s can remove the oxidation on copper trapdoors. However, [[axe]]s cannot be used in the same way they can with other copper blocks (because right clicking on non-waxed copper trapdoors while holding an axe only toggles the trapdoor). Instead, copper trapdoors must be right-clicked with an axe while crouching to deoxidize them. They can be waxed with [[honeycomb]] to prevent oxidation from progressing.
+
+As the block begins to oxidize (exposed), it gets discolored and green spots begin to appear. As the oxidation continues (weathered), the block is a green color with brown spots. In the last stage (oxidized), the block is teal with several green spots.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Copper}}
+
+=== Unique ===
+==== Waxing ====
+{{:Block of Copper/Sounds|a copper trapdoor}}
+
+==== Opening ====
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Copper Trapdoor toggle1.ogg
+|sound2=Copper Trapdoor toggle2.ogg
+|sound3=Copper Trapdoor toggle3.ogg
+|sound4=Copper Trapdoor toggle4.ogg
+|subtitle=Trapdoor opens
+|source=block
+|description=When a copper trapdoor opens
+|id=block.copper_trapdoor.open
+|translationkey=subtitles.block.copper_trapdoor.toggle
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Trapdoor closes
+|source=block
+|description=When a copper trapdoor closes
+|id=block.copper_trapdoor.close
+|translationkey=subtitles.block.copper_trapdoor.toggle
+|volume=1.0
+|pitch=0.9-1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Copper Trapdoor toggle1.ogg
+|sound2=Copper Trapdoor toggle2.ogg
+|sound3=Copper Trapdoor toggle3.ogg
+|sound4=Copper Trapdoor toggle4.ogg
+|source=block
+|description=When a copper trapdoor opens
+|id=open_trapdoor.copper
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a copper trapdoor closes
+|id=open_trapdoor.copper<!--sic-->
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Trapdoor
+|spritetype=block
+|nameid=copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Trapdoor
+|spritetype=block
+|nameid=exposed_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Trapdoor
+|spritetype=block
+|nameid=weathered_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Trapdoor
+|spritetype=block
+|nameid=oxidized_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Trapdoor
+|spritetype=block
+|nameid=waxed_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Trapdoor
+|spritetype=block
+|nameid=waxed_exposed_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Trapdoor
+|spritetype=block
+|nameid=waxed_weathered_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Trapdoor
+|spritetype=block
+|nameid=waxed_oxidized_copper_trapdoor
+|blocktags=mineable/pickaxe, needs_stone_tool
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Copper Trapdoor
+|spritetype=block
+|nameid=copper_trapdoor
+|id=-792
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Trapdoor
+|spritetype=block
+|nameid=exposed_copper_trapdoor
+|id=-793
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Trapdoor
+|spritetype=block
+|nameid=weathered_copper_trapdoor
+|id=-794
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Trapdoor
+|spritetype=block
+|nameid=oxidized_copper_trapdoor
+|id=-795
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Trapdoor
+|spritetype=block
+|nameid=waxed_copper_trapdoor
+|id=-796
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Trapdoor
+|spritetype=block
+|nameid=waxed_exposed_copper_trapdoor
+|id=-797
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Trapdoor
+|spritetype=block
+|nameid=waxed_weathered_copper_trapdoor
+|id=-798
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Trapdoor
+|spritetype=block
+|nameid=waxed_oxidized_copper_trapdoor
+|id=-799
+|blocktags=trapdoors,minecraft:stone_tier_destructible,minecraft:is_pickaxe_item_destructible,one_way_collidable
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Trapdoor|block states}}
+
+== Achievements ==
+{{load achievements|Wax on, Wax off}}
+
+== Advancements ==
+{{load advancements|Wax on;Wax off}}
+
+== Videos ==
+{{yt|6B40jGablsg}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|Copper trapdoors are shown at [[Minecraft Live 2023]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w43a|[[File:Copper Trapdoor JE1 BE1.png|32px]] [[File:Exposed Copper Trapdoor JE1 BE1.png|32px]] [[File:Weathered Copper Trapdoor JE1 BE1.png|32px]] [[File:Oxidized Copper Trapdoor JE1 BE1.png|32px]] Added copper trapdoors behind the "[[Java Edition 1.21|Update 1.21]]" [[experimental]] [[data pack]].
+|The crafting recipe was originally six matching copper blocks.
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|C2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|C3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|Output=Matching Unwaxed Copper Trapdoor, 2; Matching Waxed Copper Trapdoor, 2
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=23w44a|[[File:Copper Trapdoor JE2 BE2.png|32px]] [[File:Exposed Copper Trapdoor JE2 BE2.png|32px]] [[File:Weathered Copper Trapdoor JE2 BE2.png|32px]] [[File:Oxidized Copper Trapdoor JE2 BE2.png|32px]] Updated block textures.}}
+|{{HistoryLine|||dev=23w45a|Copper trapdoors now generate naturally within [[trial chambers]].}}
+|{{HistoryLine||1.21|dev=24w18a|Copper trapdoors are now available without using the "Update 1.21" experimental data pack.
+|The crafting recipe for copper trapdoors has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|C2 = Copper Ingot
+|C3 = Copper Ingot
+|Output = Copper Trapdoor, 2
+|ignoreusage=1}}
+{{!}}}
+|Crafting recipes for all other variants of copper trapdoors have been removed.}}
+|{{HistoryLine||1.21.9|dev=25w32a|The crafting recipe for copper trapdoors has been changed once again:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Trapdoor
+|ignoreusage=1}}
+{{!}}}
+|The old recipe now crafts [[copper bars]] instead.
+}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.22|[[File:Copper Trapdoor JE1 BE1.png|32px]] [[File:Exposed Copper Trapdoor JE1 BE1.png|32px]] [[File:Weathered Copper Trapdoor JE1 BE1.png|32px]] [[File:Oxidized Copper Trapdoor JE1 BE1.png|32px]] Added copper trapdoors behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.
+|The crafting recipe was originally six matching copper blocks.
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|C2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|C3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|Output=Matching Unwaxed Copper Trapdoor, 2; Matching Waxed Copper Trapdoor, 2
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=Preview 1.20.50.23|[[File:Copper Trapdoor JE2 BE2.png|32px]] [[File:Exposed Copper Trapdoor JE2 BE2.png|32px]] [[File:Weathered Copper Trapdoor JE2 BE2.png|32px]] [[File:Oxidized Copper Trapdoor JE2 BE2.png|32px]] Updated block textures.
+|Added crafting table recipes for all oxidization levels of waxed copper trapdoors.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Copper trapdoors now generate naturally within [[trial chambers]].}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Copper trapdoors are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|The crafting recipe for copper trapdoors has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|C2 = Copper Ingot
+|C3 = Copper Ingot
+|Output = Copper Trapdoor, 2
+|ignoreusage=1}}
+{{!}}}
+|Crafting recipes for all other variants of copper trapdoors have been removed.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Copper trapdoors now require a [[stone pickaxe]] or better for drops and quick mining.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.23|The crafting recipe for copper trapdoors has been changed once again. Unlike {{JE}}, it gives 2 trapdoors instead of 1:<ref>{{bug|MCPE-227893}}</ref>
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Trapdoor,2
+|ignoreusage=1}}
+{{!}}}
+|The old recipe now crafts [[copper bars]] instead.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.23|The crafting recipe for copper trapdoors has been changed once again to match {{JE}}:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Trapdoor
+|ignoreusage=1}}
+{{!}}}
+}}
+}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:All Oxidizing Blocks.png|All blocks that can oxidize, including copper trapdoors.
+File:Copper Age tomorrow 1.jpg
+File:Copper Age tomorrow 2.jpg
+File:Copper Age tomorrow 4.jpg
+</gallery>
+
+=== In other media ===
+<gallery>
+Tuff And Copper Blocks Artwork.jpg|Artwork featuring copper trapdoors.
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox blocks|utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Climbable blocks]]
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+
+[[de:Kupferfalltür]]
+[[es:Trampilla de cobre]]
+[[fr:Trappe en cuivre]]
+[[it:Botola di rame]]
+[[ja:銅のトラップドア]]
+[[ko:구리 다락문]]
+[[pt:Alçapão de Cobre]]
+[[ru:Медный люк]]
+[[uk:Мідний люк]]
+[[zh:铜活板门]]

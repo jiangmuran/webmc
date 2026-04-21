@@ -1,0 +1,127 @@
+{{Joke feature}}
+{{Infobox entity
+| image = Batato.gif
+| invimage = Batato Spawn Egg
+| size = 
+| spawn = Potato dimension under the same conditions as bats (light level of 3 or less in neighboring blocks)
+| health = {{hp|6}}
+| behavior = Passive
+| mobtype = {{EntityLink|Potato Mob|Potato}}
+}}
+A '''batato''' is a modified version of the [[bat]], with a [[poisonous potato]] replacing the body and head of the mob. It has the same AI as the regular bat.
+
+== Spawning ==
+Batatos can spawn in groups of 8-16 in the [[Potato dimension]] under the same conditions as bats (light level of 3 or less at any height on [[opaque]] blocks that are not directly exposed to the sky. They also need at least 1.5 air blocks).
+
+== Loot ==
+{{DropTable|edition=java|nosource=1
+|{{DropLine|name=Poisonous Potato|dropchance=50%}}
+|{{DropLine|name=Venomous Potato|dropchance=5%}}
+|{{DropLine|name=Poisonous Potato Plant|notes=player|quantity=1|dropchance=33.33%}}
+}}
+
+== Sounds ==
+Batatos use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Bat idle1.ogg
+|sound2=Bat idle2.ogg
+|sound3=Bat idle3.ogg
+|sound4=Bat idle4.ogg
+|subtitle=Bat screeches
+|source=neutral
+|description=Randomly while flying
+|id=entity.bat.ambient
+|translationkey=subtitles.entity.bat.ambient
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat death.ogg
+|subtitle=Bat dies
+|source=neutral 
+|description=When a batato dies
+|id=entity.bat.death
+|translationkey=subtitles.entity.bat.death
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat hurt1.ogg
+|sound2=Bat hurt2.ogg
+|sound3=Bat hurt3.ogg
+|sound4=Bat hurt4.ogg
+|subtitle=Bat hurts
+|source=neutral 
+|description=When a batato is damaged
+|id=entity.bat.hurt
+|translationkey=subtitles.entity.bat.hurt
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat loop.ogg
+|subtitle=MC-177087
+|source=-
+|description=''Unused sound event'' <ref group="sound">{{bug|MC-185413}}</ref>
+|id=entity.bat.loop
+|translationkey=- 
+|volume=''None''
+|pitch=''None''
+|distance=''None''}}
+| {{SoundLine
+|sound=Bat takeoff.ogg
+|subtitle=Bat takes off
+|source=neutral 
+|description=When a batato starts flying
+|id=entity.bat.takeoff
+|translationkey=subtitles.entity.bat.takeoff
+|volume=0.05
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showentitytags=y
+|displayname=Batato
+|spritetype=entity
+|nameid=batato
+|entitytags=fall_damage_immune
+|generatetranslationkeys=entity.minecraft.batato
+|foot=1}}
+
+=== Entity data ===
+Batatos have entity data associated with them that contain various properties.
+
+{{main|Entity format}}
+<div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|BatFlags}}: 1 or 0 (true/false) - true if the batato is hanging upside-down from a block, false if the batato is flying.
+</div>
+
+== Issues ==
+{{April Fools issue list}}
+
+== Gallery ==
+<gallery class="pixel-image">
+BatatoFace.png|Batato's front face
+</gallery>
+
+== Navigation ==
+{{Navbox entities|joke}}
+{{Navbox jokes|24w14potato}}
+
+[[Category:Joke mobs]]
+[[Category:Joke entities]]
+
+[[ja:Batato]]
+[[ru:Летучая картошка]]
+[[zh:蝙薯]]

@@ -1,0 +1,673 @@
+{{for}}
+{{Infobox block
+|invimage=Beacon
+|invimage2=Beacon BE
+|transparent=Yes
+|light=Yes (15)
+|tool=Any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|waterloggable = {{jebe|No|Yes}}
+|lavasusceptible=No
+|rarity=Rare
+}}
+A '''beacon''' is a [[block]] that can be placed in view of the [[sky]], on top of a pyramid made of valuable [[mineral]] blocks, to activate it. Once active, it projects a beam upward and can be {{Control|use|text=set}} to provide constant [[status effect]]s to all [[player]]s in a radius around it. A beacon's range and available effects depend on the size of its pyramid base, between one and four layers.
+
+== Obtaining ==
+=== Breaking ===
+A beacon can be mined successfully by hand or with any [[tool]]. When destroyed by an [[explosion]], the block always drops as an [[item (entity)|item]].
+
+{{breaking row|horizontal=1|Beacon|Any|foot=1}}
+
+=== Crafting ===
+{{Crafting
+|showname=1
+|A1= Glass
+|B1= Glass
+|C1= Glass
+|A2= Glass
+|B2= Nether Star
+|C2= Glass
+|A3= Obsidian
+|B3= Obsidian
+|C3= Obsidian
+|Output= Beacon 
+|type= Miscellaneous
+}}
+
+== Usage ==
+When "activated", beacon blocks provide two unique functions: 
+
+* A landmark beam reaching into the sky which is visible from far away.
+* Powers, which give players status effects within a certain range.
+
+Additionally, {{in|bedrock}} beacons can also be [[waterlogged]].
+
+=== Activation ===
+[[File:Beacon multitype pyramid.webp|alt=The beacon base can be made of the different mineral blocks combined.|thumb|The beacon base can be made of the different mineral blocks combined.]]
+In order to activate a beacon, the beacon must meet the following requirements:
+
+* Beacons require an unobstructed view of the sky.<br> All the blocks that let light pass through (glass, water, leaves, slabs, etc.) and [[bedrock]] (the Nether ceiling) <!-- works in vanilla since 1.8.2, do not remove without reason --> are allowed.
+* The beacon is on top of a pyramid constructed from [[iron block]]s, [[gold block]]s, [[emerald block]]s, [[diamond block]]s, and/or [[netherite block]]s. <br>
+The type of block used is purely cosmetic, having no effect on the pyramid's power level or the range and strength of the [[status effect]]. A mixture of blocks of different types can also be used in any orientation, so long as they form a pyramid structure, like the ones listed below.
+
+Status effect range can be improved by increasing the pyramid power level (see chart below). At level 4, the pyramid gives the option to increase the primary effect's strength to Level II in the beacon's GUI.
+
+==== Pyramids ====
+{{for|other pyramid structures|Pyramid}}
+[[File:Beacon Pyramid.png|thumb|right|The four possible pyramid arrangements when using the beacon block. From left to right the pyramid structures decrease in complexity and strength.]]
+Pyramids are the structures required to activate beacons. There are four possible pyramid heights. More pyramid levels make more powers available in a wider affected vicinity. The type of mineral block used to build the pyramid is entirely cosmetic and has no functional effect. Several different block types can be mixed without affecting functionality. If the pyramid is damaged so that the beacon deactivates, the previously-set powers resume their effects upon reactivation when the pyramid is repaired. This applies to [[piston]]-altered pyramids as well. 
+{| class="wikitable" data-description="Pyramid materials"
+|+ A single beacon pyramid
+|-
+! Level
+! Mineral blocks
+! Materials
+! Layers
+|-
+| 1
+| 9
+| 81 (1 stack + 17 items)
+| 3×3, beacon
+|-
+| 2
+| 34
+| 306 (4 stacks + 50 items)
+| 5×5, 3×3, beacon
+|-
+| 3
+| 83 (1 stack + 19 blocks)
+| 747 (11 stacks + 43 items)
+| 7×7, 5×5, 3×3, beacon
+|-
+| 4
+| 164 (2 stacks + 36 blocks)
+| 1476 (23 stacks + 4 items)
+| 9×9, 7×7, 5×5, 3×3, beacon
+|}
+
+{{layered blueprint|name=Full Beacon|default=Layer 5
+|D=Block of Diamond|B=Beacon <!-- Change to top texture -->
+|----Layer 1|
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+DDDDDDDDD
+|----Layer 2|
+         
+ DDDDDDD 
+ DDDDDDD 
+ DDDDDDD 
+ DDDDDDD 
+ DDDDDDD 
+ DDDDDDD 
+ DDDDDDD 
+         
+|----Layer 3|
+         
+         
+  DDDDD  
+  DDDDD  
+  DDDDD  
+  DDDDD  
+  DDDDD  
+         
+         
+|----Layer 4|
+         
+         
+         
+   DDD   
+   DDD   
+   DDD   
+         
+         
+         
+|----Layer 5|
+         
+         
+         
+         
+    B    
+         
+         
+         
+         
+}}
+
+[[File:Efficient beacon.png|thumb|right|This six-beacon pyramid provides all six effects from a single structure using the fewest mineral blocks possible.]]
+Multiple beacons can make use of the same specific mineral blocks below them. Combined pyramids do not need to be symmetrical. The image to the right shows a 6-beacon (2 by 3) pyramid. It requires a total of 244 mineral blocks, with a base layer of 10 by 11.
+
+{| class="wikitable" data-description="Pyramid materials"
+|+ Multiple beacons pyramid (tier 4 can enable all buffs)
+|-
+! Level
+! Mineral blocks
+! Materials
+! Layers
+|-
+| 1
+| 20
+| 180 (2 stacks + 52 items) 
+| 4×5, beacons
+|-
+| 2
+| 62
+| 558 (8 stacks + 46 items)
+| 6×7, 4×5, beacons
+|-
+| 3
+| 134 (2 stacks + 6 blocks)
+| 1206 (18 stacks + 54 items)
+| 8×9, 6×7, 4×5, beacons
+|-
+| 4
+| 244 (3 stacks + 52 blocks)
+| 2196 (34 stacks + 20 items)
+| 10×11, 8×9, 6×7, 4×5, beacons
+|}
+<!-- Efficient beacon layer blueprint design. Not finished
+{{layered blueprint|name=Efficient Beacon|default=Layer 5
+|D=Block of Diamond|B=Beacon <!-- Change to top texture 
+|----Layer 1|
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+DDDDDDDDDDD
+|----Layer 2|
+         
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ DDDDDDDDD 
+ 
+         
+|----Layer 3|
+         
+         
+  DDDDD  
+  DDDDD  
+  DDDDD  
+  DDDDD  
+  DDDDD  
+         
+         
+|----Layer 4|
+         
+         
+         
+   DDD   
+   DDD   
+   DDD   
+         
+         
+         
+|----Layer 5|
+         
+         
+         
+         
+    B    
+         
+         
+         
+         
+}}-->
+
+=== Beam ===
+A vertical beam appears from a beacon if the beacon is activated, extending from the beacon block, up to height 2048. 
+
+Horizontally, the beam is visible from any loaded chunk, which can be up to 512 blocks {{in|Java}} and 2048 blocks {{in|Bedrock}}.
+
+==== Colors ====
+The color of the beam may be changed by placing blocks of [[stained glass]] or [[stained glass pane]]s anywhere above the beacon block. The beam changes colors according to the colors of glass placed above it: the first block sets the beam color, while each additional block sets the color by averaging the red, green, and blue components of the current beam color and the block's color. The color values are the same as [[Dye#Color values|those for the corresponding dye]]. This also works using [[hardened stained glass]] and [[hardened stained glass pane]]s.{{only|bedrock|education}} Stained glass panes have the same effect on the beam as stained glass blocks.
+
+The resulting beam color can be found as <math>\vec{C} = \frac{1}{2^{n}}\left(\vec{c_0} + \sum_{i=1}^n{2^{i-1}\vec{c_i}}\right)</math> where <math>\vec{c_i}</math> is the sequence of glass colors (<math>\vec{c_0}</math> corresponds to the lowest block and <math>\vec{c_n}</math> to the highest one).
+
+Beacon beams cannot go through most blocks, but can go through [[bedrock]] (to allow beacons to be used in [[the Nether]]) and [[end portal frame]]s.
+
+{{Calculator|beaconColor}}
+
+=== Powers ===
+{{see also|Effect}}
+
+[[File:Beacon GUI.png|thumb|right|The GUI shown when pressing {{control|use}} on the block.]]
+Once the beacon is emitting a beam, it can then be ''fed'' one [[iron ingot]], [[gold ingot]], [[emerald]], [[diamond]], or [[netherite ingot]] to select the status effects given to players within range of the beacon. This is done through the beacon's GUI, displayed by pressing {{control|use}} while looking at the beacon block. It doesn't matter which of the items is fed into the beacon.
+
+In the GUI, the player places the item to be fed in the empty slot and clicks an effect from the "Primary Power" section on the left. If the beacon is sitting on a 4-level pyramid, the "Secondary Power" section on the right also becomes active. The player can then choose either to turn on the [[Regeneration]] power in addition to the Primary Power or to raise the primary power to Level II. The user clicks the "Done" button (green checkmark), the item is consumed, and the power(s) become activated, with the outline of the effect on the [[HUD]] being blue. To change the beacon's powers, this process must be followed again, consuming another ingot or gem.
+
+If the pyramid is broken, effects deactivate or weaken depending on the level of the pyramid that is no longer complete. Upon restoration of the pyramid, the originally selected power returns without the need to spend another item. If a smaller pyramid is upgraded, the effect range increases to that of the new pyramid without the need of reactivating it, however upgrading to level 4 does not modify the effect power (to increase the power, the player must use the beacon's GUI).
+
+The five primary powers are: 
+*{{EffectLink|Speed}} I: Increased movement speed.
+*{{EffectLink|Haste}} I: Increased mining and attack speed.
+*{{EffectLink|Resistance}} I: Decreased nearly all incoming damage (2-level pyramid required).
+*{{EffectLink|Jump Boost}} I: Increased jumping distance and height (2-level pyramid required).
+*{{EffectLink|Strength}} I: Increased melee damage (3-level pyramid required).
+
+The secondary powers only available with a 4-level pyramid are:
+*{{EffectLink|Regeneration}} I: Regenerates health.
+*Increasing the primary power to level II.
+
+{{IN|java}}, it is also possible to combine two different primary Level I powers:
+*select a primary power in the left panel
+*select the Level II option in the right panel
+*select the second desired power back in the left panel
+Only one of the two powers appears to be selected, although both effects are active.<ref>{{bug|MC-174630||Secondary beacon effect remains when switching primary effect}}</ref>
+
+Every 4 seconds, the selected powers are applied with a duration of 9 seconds, plus 2 seconds per pyramid level, to all players in range. Thus, when powers are changed or a player travels outside the area of effect, the powers persist for 5–9 seconds, or 13–17 seconds with a full pyramid.
+
+==== Range ====
+The beacon affects an area in the shape of a square column, which reaches downward and out to each side at a range determined by the size of the pyramid base (see table below), and upward a distance of that range + the height of this dimension blocks.
+
+The effect duration from the beacon is also determined by the size of the pyramid base (Pyramid size &times; 2 + 9).
+
+The range of the beacon effect is limited by the simulation distance. As such, on simulation distance of 4 with a level 4 pyramid, the effect does not reach the chunks on the corners of the beacon range.
+
+The distance from the player to the beacon block does not affect the intensity of the status effect.
+
+'''Beacon pyramid effects {{in|JE}}:'''
+{| class="wikitable" data-description="Pyramid effects"
+!Pyramid size<br>(levels)
+!Effect radius excluding beacon<br>(blocks)
+!Effect duration<br>(seconds)
+|-
+|1 ||20||11
+|-
+|2 ||30||13
+|-
+|3 ||40||15
+|-
+|4 ||50||17
+|}
+
+'''Beacon pyramid effects {{in|BE}}:'''
+{| class="wikitable sortable" style="margin:2px; border: 1px solid silver; text-align: left;" data-description="Pyramid effects"
+! rowspan="2" |Pyramid size<br>(levels)
+! colspan="2" style="text-align:center" |Effect radius excluding beacon<br>(blocks)
+! rowspan="2" |Effect duration<br>(seconds)
+|-
+! South & East
+! North & West
+|-
+| style="text-align:left" |1 || 20 || 21 || 10
+|-
+| style="text-align:left" |2 || 30 || 31 || 12
+|-
+| style="text-align:left" |3 || 40 || 41 || 14
+|-
+| style="text-align:left" |4 || 50 || 51 || 16
+|}
+
+=== Light source ===
+Beacon blocks can function as light sources, emitting a light level 15. Like other [[light]] sources, they melt [[snow]] and [[ice]]. A beacon produces this light even when it doesn't emit a beam.
+
+=== Piston interactivity ===
+Beacons cannot be pushed nor pulled by [[piston]]s or [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Edition|Java}}:
+{{Sound table/Block/Stone/JE}}
+{{Edition|Bedrock}}:
+{{Sound table/Block/Glass/BE}}
+
+=== Unique ===
+{{el|je}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Beacon activate.ogg
+|subtitle=Beacon activates
+|source=block
+|description=When a beacon activates
+|id=block.beacon.activate
+|translationkey=subtitles.block.beacon.activate
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Beacon ambient.ogg
+|subtitle=Beacon hums
+|source=block
+|description=Randomly while active
+|id=block.beacon.ambient
+|translationkey=subtitles.block.beacon.ambient
+|pitch=1.0
+|volume=0.9
+|distance=7}}
+| {{SoundLine
+|sound=Beacon deactivate.ogg
+|subtitle=Beacon deactivates
+|source=Blocks
+|description=When a beacon turns off or is broken<ref group=sound name=deactivate>{{Bug|MC-153086||Beacons always play deactivating sound when broken, even when not powered}}</ref>
+|id=block.beacon.deactivate
+|translationkey=subtitles.block.beacon.deactivate
+|pitch=1.0
+|volume=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Beacon power1.ogg
+|sound2=Beacon power2.ogg
+|sound3=Beacon power3.ogg
+|subtitle=Beacon power selected
+|source=Blocks
+|description=When a beacon's power is switched
+|id=block.beacon.power_select
+|translationkey=subtitles.block.beacon.power_select
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=lock>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=block
+|description=When a player attempts to open a beacon locked using the {{nbt|string|Lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=lock/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=lock/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Beacon activate.ogg
+|source=block
+|description=When a beacon activates
+|id=beacon.activate
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Beacon ambient.ogg
+|source=block
+|description=Randomly while active
+|id=beacon.ambient
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Beacon deactivate.ogg
+|source=block
+|description=When a beacon turns off
+|id=beacon.deactivate
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Beacon power1.ogg
+|sound2=Beacon power2.ogg
+|sound3=Beacon power3.ogg
+|source=block
+|description=When a beacon's power is switched
+|id=beacon.power
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Beacon
+|spritetype=block
+|nameid=beacon
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=beacon
+|spritetype=block
+|nameid=beacon
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Beacon
+|spritetype=block
+|nameid=beacon
+|id=138
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=beacon
+|spritetype=block
+|nameid=Beacon
+|foot=1}}
+
+=== Block data ===
+A beacon has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable}}
+** {{nbt inherit/lockable}}
+** {{nbt|string|primary_effect}}: Optional. The primary effect selected, see [[Status effect|Potion effects]] for resource locations. Cannot be set to an effect that beacons do not normally use. Although Regeneration cannot normally be chosen as the primary effect, setting this value to {{cd|minecraft:regeneration}} works and even allows Regeneration II to be chosen as the secondary via the normal beacon GUI. 
+** {{nbt|string|secondary_effect}}: Optional. The secondary effect selected, see [[Status effect|Potion effects]] for resource locations. Cannot be set to an effect that beacons do not normally use. When set without a primary effect, does nothing. When set to the same as the primary, the effect is given at level 2 (the normally available behavior for 5 effects). When set to a different value than the primary (normally only Regeneration), gives the effect at level 1. 
+</div><section end="block data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|The Beaconator}}
+
+== Advancements ==
+{{load advancements|Bring Home the Beacon;A Furious Cocktail;Beaconator;How Did We Get Here?}}
+
+== Videos ==
+{{yt|F_ijYaiwGUQ}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w32a|[[File:Beacon JE1.png|32px]] Added a block named "Work in Progress".
+|[[File:Beacon pyramid revision 1.png|48px]] "Work in Progress" can produce beams.}}
+|{{HistoryLine|||dev=12w34a|"Work in Progress" has been removed from the [[Creative inventory]].}}
+|{{HistoryLine|||dev=12w36a|"Work in Progress" has been renamed to "Beacon".
+|Beacons can be found in the Creative inventory again. 
+|Beacons are now [[craft]]able.
+|[[File:Beacon JE2.gif|32px]] The texture of beacons has been changed.}}
+|{{HistoryLine|||dev=12w38a|[[File:Beacon JE3.png|32px]] The texture of beacons has been changed, again.
+|[[File:Beacon pyramid revision 3.gif|48px]] The beacon beam has been changed from a semi-transparent smooth beam (which conflicted with water transparency), to [[File:Beacon Beam (texture) JE1.png|32px]] a pattern with 0% transparency.}}
+|{{HistoryLine|||dev=12w40a|[[File:Beacon JE4 BE1.png|32px]] The texture of beacons has been changed, again.
+|[[File:Beacon pyramid revision 4.gif|48px]] The beacon beam has been changed [[File:Beacon Beam (texture) JE2.png|32px]] again.}}
+|{{HistoryLine|||dev=12w40b|The beacon beam no longer glitches at tiny and short render distance.}}
+|{{HistoryLine||1.5|dev=13w05a|The effect range of beacons has been increased from 16/24/32/40 [[block]]s to 20/30/40/50 blocks.
+|Beacon effects now extend up to the world height limit (Y{{=}}256).}}
+|{{HistoryLine||1.6.1|dev=13w23a|With the [[Regeneration]] effect being nerfed slightly, the same [[status effect]] produced from beacons has been nerfed slightly too.}}
+|{{HistoryLine|||dev=13w24a|The beacon "crystal" texture, used from 12w36a to 12w37a, has been removed as per the resource pack reform.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The [[player]] can now achieve the Beaconator [[achievement]] by placing a beacon on a level-4 pyramid of specific mineral [[block]]s.}}
+|{{HistoryLine||1.8|dev=14w29a|Beacons now display the cracking animation when being broken.}}
+|{{HistoryLine|||dev=August 5, 2014|slink={{tweet|Dinnerbone|496649440896503808}}|[[Dinnerbone]] tweets a screenshot containing a colored beacon beam. The color appears to change when the beam passes through [[stained glass]].}}
+|{{HistoryLine|||dev=14w32a|The light of beacons now changes as it goes through stained glass.}}
+|{{HistoryLine|||dev=August 7, 2014|slink={{tweet|Dinnerbone|497367641900609536}}|Dinnerbone tweets that the beacon beam can now pass through [[block]]s that block [[light]] slightly.}}
+|{{HistoryLine|||dev=14w32b|Beacon beams now show if they are going through a block that doesn't completely block light rather than partially block light. This allows beacon beams to go through [[water]] and [[lava]].
+|Beacons in [[the Nether]] and [[the End]] now check for [[block]]s and render the beam only up to the world height (Y{{=}}127).|Beacon beams now immediately update when blocks above the beacon are changed. This applies to the beam appearing, disappearing and changing color. Previously it could sometimes take a few seconds.}}
+|{{HistoryLine||1.8.2|dev=pre5|[[Bedrock]] no longer obstructs beacon activation or beams.
+|Beacons in [[the Nether]] and [[the End]] now check and use the full build height (Y{{=}}255) rather than the world height (Y{{=}}127).}}
+|{{HistoryLine||1.9|dev=15w31a|Beacons now generate naturally in [[end ships]].}}
+|{{HistoryLine|||dev=15w32c|Beacons no longer generate in end ships and have been replaced by [[pumpkin]]s.}}
+|{{HistoryLine|||dev=15w47a|Beacons no longer drop their contents when broken or when the interface is exited.
+|Beacons are now able to interact with [[hopper]]s.}}
+|{{HistoryLine|||dev=15w47b|The beacon effect duration now increases with pyramid level (it was formerly a constant 9 seconds).}}
+|{{HistoryLine|||dev=15w49a|Beacons once again drop their contents when broken or when the interface is exited (as they had before 15w47a).
+|Beacons can no longer interact with [[hopper]]s (as they had since [[15w47a]]).}}
+|{{HistoryLine|||dev=16w02a|Beacons now immediately activate when placed on valid pyramids.}}
+|{{HistoryLine|||dev=16w03a|Beacons no longer immediately activate when placed on valid pyramids.}}
+|{{HistoryLine||1.13|dev=18w19a|Beacons now produce [[sound]]s.}}
+|{{HistoryLine|||dev=18w21a|The [[rarity]] of beacons has been changed from "Common" to "Rare".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Beacon JE5.png|32px]] The texture of beacons has been changed.|[[File:Beacon pyramid revision 5.gif|48px]] Due to the change of the texture of beacons, the look of the beacon pyramid has been changed.}}
+|{{HistoryLine|||dev=18w44a|[[File:Beacon.png|32px]] The texture of beacons has been changed, once again.}}
+|{{HistoryLine|||dev=19w14a|Beacon beam no longer stops at the build height limit.}}
+|{{HistoryLine||1.15|dev=19w41a|Beacon beams are no longer visible from the inside.}}
+|{{HistoryLine||1.16|dev=20w07a|Beacons can now be activated with [[netherite block]]s.
+|Beacons can now be fueled using [[netherite ingot]]s.
+|The texture of the UI of beacons has been changed.
+|Beacons are now [[renewable]], as [[soul sand]], one of the blocks used to construct [[wither]]s, is now renewable through [[bartering]].}}
+|{{HistoryLine||1.17|dev=21w07a|Beacon beams are now visible up to 1343 blocks away from the source instead of 256 blocks.}}
+|{{HistoryLine||1.21.5|dev=25w05a|Beacon beams now render beyond 16 chunks, up to the player's render distance.
+|Beacon beams now appear thicker when further away so that they remain visible.
+|Beacon beams are now 2048 blocks high, from 1024.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 4|[[File:Beacon JE4 BE1.png|32px]] Added beacons.
+|Unlike other editions, beacons conduct [[redstone]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Beacon beams now change colors when shining through [[stained glass]] or [[stained glass pane]]s.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|Beacons now produce [[sound]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Beacon.png|32px]] The texture of beacons has been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|The beam color can now be mixed with several different stained glass colors.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Beacons can now be activated with [[netherite block]]s.
+|[[Netherite ingot]]s can now be used as a beacon ingredient.
+|The texture of the UI of beacons has been changed.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of beacons has been changed from "Common" to "Rare" to match {{JE}}.}}
+|{{HistoryLine|||dev=Preview 1.21.30.23|Beacons no longer conduct [[redstone]].}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.20|Beacon beams are now visible when a [[player]] moves over 70 blocks away from them.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.26|Beacons now render from any chunk loaded in worlds opened in at least 1.21.90.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Beacon JE4 BE1.png|32px]] Added beacons.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|wiiu=Patch 1|switch=1.0.1|Beacon beams now change colors when shining through [[stained glass]] or [[stained glass pane]]s.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|The vertical range of beacon has been nerfed to match horizontal range.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|The beacon effect duration now increases with pyramid level (it was formerly a constant 9 seconds).}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Beacons now produce [[sound]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Beacon.png|32px]] The texture of beacons has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New Nintendo 3DS Edition}}
+|{{HistoryLine||1.3.12|[[File:Beacon JE4 BE1.png|32px]] Added beacons.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w47a|A new [[tag]],{{verify|does this link make sense? tags didn't exist until 1.13}} <code>PaymentItem</code>, now stores the sacrifice item within the beacon's [[block entity]] data.}}
+|{{HistoryLine|||dev=15w49a|The <code>PaymentItem</code> [[tag]] has been removed (introduced in 15w47a).}}
+|{{HistoryLine||1.11|dev=16w32a|The block entity ID has been changed from <code>Beacon</code> to <code>beacon</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 138.}}
+|{{HistoryLine||1.20.2|dev=23w32a|The integer <code>Primary</code> and <code>Secondary</code> NBT formats for beacon have changed to string <code>primary_effect</code> and <code>secondary_effect</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:Beam 12w38a.png|thumb|The map icon texture is hidden in the transparent part of the beacon beam texture in [[Java Edition 12w38a]].]]
+*The texture of the beacon is 16×16 but renders only the 10×10 area in the center.
+*It is possible to see the beacon beam on the bottom of an activated beacon.<ref>{{bug|MC-106124||Beacon beam appears on bottom of block|WF}}</ref>
+*A fully powered beacon can fit within the upper level of the [[desert pyramid]] with the beacon’s beam perfectly being placed in the hole at the top.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Beacon building.png|A beacon with all of the blocks that can power beacons.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:BeaconTopMIME.png|The top of a beacon's beam.
+File:Looking up a beacon's beam.jpg|A view from inside the beacon before [[Java Edition 19w41a]].
+File:Beam passing through glass and beacon.png|Two beams from a beacon, one passing through glass and the other through a beacon block.
+File:Beam Goes Through End Portal.png|Beacon beam going through an [[end portal frame]] block.
+File:Red Sandstone Coloured Beacon.png|The first image of a colored beacon, tweeted by Nathan Adams.
+File:Underwater Beacon.png|The first image of an underwater beacon, tweeted by Nathan Adams.
+File:BeaconLightChange.png|The beacon's light changing as it passes through magenta stained glass.
+File:Beacon Spectrum.png|The full visible light spectrum created by colored beacons.
+File:Beacon Greyscale.png|A grayscale spectrum.
+File:Big multitype pyramid.png|A beacon is still functional when the pyramid is made of different [[block]]s.
+File:Beacon effects distance.png|A visualization of the effects range for each level. At level 4, the area affected is 101×101 blocks.
+File:Better Together Colored Beacon.jpg|A colored beacon beam in ''Bedrock Edition''.
+File:Beacon Tower.png|One of the many uses for the beacon.
+File:Beacon Display.png|The texture of the beacon used from [[Java Edition 12w40a]] until the [[Texture Update]].
+</gallery>
+
+=== Development images ===
+<gallery>
+File:Beacon Crystal (texture) JE1.png|The texture file for the beacon in [[Java Edition 12w36a]] was laid out almost identically to that of the end crystal.
+File:First Beacon Block Image.png|First image released by [[Jeb]].
+File:Beacon Display (old).png|The '''old''' texture from [[Java Edition 12w36a]] of the beacon.
+File:Old Beacon Comparison.png|The '''old''' texture from [[Java Edition 12w38a]] displaying the powered and the non-powered beacon.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:MCSM2 The New Order at the Rainbow Beacon.png|Several beacons in {{MCSM}}
+File:Beacon (inventory) MCE.png|A {{MCE|beacon}} as it appeared in {{MCE}}
+File:Mcd beacon activation.webp|A {{MCD|beacon}} as it appears in {{MCD}}
+File:Red Sunny.jpg|[[Sunny]] posing in front of a rainbow of beacons, clad in [[smithing templates|trimmed armor]].<ref>https://www.instagram.com/p/CtjxC_tgjQf/</ref>
+File:AMCM Beacon storyboard.jpeg|Storyboard of a beacon in {{AMCM}}, during the {{AMCM|Great Darkening}}
+</gallery>
+
+== References ==
+{{reflist}}
+
+== See also == 
+*{{BlockLink|Conduit}}
+*{{EntityLink|Wither}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox environment}}
+
+[[Category:Utility blocks]]
+[[Category:Player-built structures]]
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+[[Category:Light sources]]
+[[Category:Blocks with GUI]]
+
+[[cs:Maják]]
+[[de:Leuchtfeuer]]
+[[el:Φάρος]]
+[[es:Faro]]
+[[fr:Balise]]
+[[hu:Jelzőfény]]
+[[it:Faro]]
+[[ja:ビーコン]]
+[[ko:신호기]]
+[[lzh:烽火臺]]
+[[nl:Baken]]
+[[pl:Magiczna latarnia]]
+[[pt:Sinalizador]]
+[[ru:Маяк]]
+[[uk:Маяк]]
+[[zh:信标]]

@@ -1,0 +1,415 @@
+{{Redirect|Bog|the swamp biome|Swamp|the mangrove swamp biome|Mangrove Swamp}}
+{{About|the swamp skeleton variant|other skeletons|Skeleton (disambiguation)}}
+{{Infobox entity
+| defaultimagesize = 100px
+| group = Idle
+| 1-1 = Bogged.png
+| group2 = Sheared
+| 2-1 = Sheared Bogged.png
+| invimage = Bogged Spawn Egg
+| health = {{hp|16}}
+| armor = {{armor|0}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}
+| damage = '''Ranged:'''<br>
+{{ItemLink|Bow}}:<br>
+'''{{IN|Java}}:'''<br>Easy: {{hp|2|poisoned=1}} - {{hp|4|poisoned=1}}<br>
+Normal: {{hp|3|poisoned=1}} - {{hp|5|poisoned=1}}<br>
+Hard: {{hp|4|poisoned=1}} - {{hp|8|poisoned=1}}<br>
+'''{{IN|Bedrock}}:'''<br>
+Easy: {{hp|1|poisoned=1}} - {{hp|4|poisoned=1}}<br>
+Normal: {{hp|1|poisoned=1}} - {{hp|4|poisoned=1}}<br> 
+depending on proximity<br>
+Hard: {{hp|1|poisoned=1}} - {{hp|5|poisoned=1}}<br>
+depending on proximity
+<br>
+[[File: Arrow of Poison.png|16px]] [[Tipped Arrow|Arrow of Poison]] : <br>
+{{EffectLink|Poison}} for 4 seconds, dealing {{hp|3|poisoned=1}}<br>
+<hr>
+'''Melee:'''<br>
+Easy and Normal: {{hp|2}}<br>
+Hard: {{hp|3}}<br>
+| size = '''Java:'''<br>Height: 1.99 blocks<br>Width: 0.6 blocks<br>
+'''Bedrock:'''<br>Height: 1.9 blocks<br>Width: 0.6 blocks
+| spawn = * {{BiomeLink|Swamp}}
+* {{BiomeLink|Mangrove Swamp}}
+* {{EnvLink|Trial Chambers}}: from [[trial spawner]]s.
+| equipment = {{drop|Item|Bow}} (right hand: 95%; left hand: 5%){{only|java|short=1}}; may be enchanted)<br>
+{{drop|Item|id=chestplate|Armor}} (occasionally, may be enchanted)<br>
+{{drop|Block|Carved Pumpkin}} (22.5% chance, only during Halloween){{only|je|short=1}}<br>
+{{drop|Block|Jack o'Lantern}} (2.5% chance, only during Halloween){{only|je|short=1}}
+| usableitems = {{drop|Item|Shears}}
+| tickingorder = 
+| gravity = 
+}}
+A '''bogged''' is a [[mushroom]]-covered [[skeleton]] variant that spawns in [[swamp]]s and [[mangrove swamp]]s. Bogged behave similarly to skeletons, but have less [[health]], fire their [[bow]]s more slowly, take damage from [[powder snow]], cannot convert to [[stray]]s, and shoot [[tipped arrow]]s of [[Poison]].
+
+== Spawning ==
+Bogged can [[Mob spawning|spawn]] in [[swamp]]s and [[mangrove swamp]]s, replacing about 30% of [[skeleton]]s, as well as in [[trial chambers]] via [[trial spawner]]s.
+
+=== Natural spawning ===
+* {{IN|java}}, they spawn in groups of four at a light level of 0 and can spawn both underground and above ground.
+
+* {{IN|bedrock}}, they spawn in groups of 1--2 at light levels 0 through 7, meaning they can spawn during the day in [[mangrove swamp]]s where the overhead canopy is dense enough, but they cannot spawn underground.
+<!-- The 0--7 light level is NOT a leftover from some old wiki page. 1.21.0 spawn_rules/bogged.json contains this:
+        "minecraft:spawns_on_surface": {
+        },
+        "minecraft:brightness_filter": {
+          "min": 0,
+          "max": 7,
+          "adjust_for_weather": true
+        },
+-->
+{{Mob spawn table}}
+
+=== Trial spawners ===
+Bogged have a {{frac|1|3}} chance to be selected as the "ranged" mob for trial spawners in [[Trial Chambers|trial chambers]].
+
+=== Spider jockeys ===
+{{exclusive|Bedrock|section=1}}[[Spider]]s and [[cave spider]]s spawned in swamps and mangrove swamps have a 1% chance to spawn as a [[spider jockey]], with an 80% chance of the rider being a bogged.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Bone|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Arrow|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Arrow of Poison|notes=player_or_pet|quantity=0-1|lootingquantity=0-1|limit=1}}
+}}
+* Naturally spawned equipment is damaged when dropped. An [[enchant]]ed [[bow]] has an 8.5% chance of dropping if killed by the [[player]] or a tamed [[wolf]] (9.5% with [[Looting]] I, 10.5% with Looting II, and 11.5% with Looting III). The equipment list is identical to that of the base [[Skeleton]]<!-- At least in Bedrock, it is. The 1.21.0 json line for equipment is literally "table": "loot_tables/entities/skeleton_gear.json" -->.
+** Bogged spawned from [[ominous trial spawner]]s do not drop their armor on death.
+* Picked-up items always drop and drop with the same damage level it had when picked up.
+* {{xp|5}} [[experience]] orbs when killed by a [[player]] or a [[tamed wolf]], and an extra {{xp|1|3}} orbs for each piece of natural equipment that ''does not'' drop upon death.
+** Because all bogged spawn with at least a [[bow]], this means that an unarmored bogged drops {{xp|6|8}} if it does not drop its bow upon death.
+
+=== Shearing ===
+A bogged drops 2 [[mushroom]]s when [[shear]]ed. Each individual mushroom has an equal chance of dropping as either a [[Brown Mushroom|brown]] or [[red mushroom]]. Afterward, it cannot be sheared again, and the mushrooms growing from its head are permanently removed from the bogged.
+
+== Behavior ==
+[[File:Bogged Attacking Screenshot.png|thumb|A bogged attacking the player.]]
+Bogged behave the same as normal [[Skeleton|skeletons]] and shoot [[tipped arrow]]s that inflict [[Poison]] for 4 seconds (dealing {{hp|poisoned=1|3}} [[damage]]) on any target that they hit. When shooting their [[bow]], bogged are just as fast as skeletons or [[stray]]s, but bogged have a longer cooldown between attacks. The cooldown is 3.5 seconds on Easy and Normal [[difficulties]], or 2.5 seconds on Hard. This is 1.5 seconds slower than the skeleton's attack [[cooldown]]. A bogged holding a [[tipped arrow]] or [[spectral arrow]] in its off-hand always shoots that type of arrow instead, and the [[arrow]] held is not consumed.
+
+Unlike regular skeletons, bogged in [[powder snow]] take freezing [[damage]] and do not convert into [[Stray|strays]].<ref>{{bug|MC-268579||Bogged in powder snow freeze on death instead of converting to Stray|WAI}}</ref>
+
+Being an [[undead]] mob, they are: 
+* Damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* Unaffected by the status effects [[Regeneration]] and [[Poison]].
+* Ignored by the [[wither]].
+* Affected by the [[Smite]] [[enchantment]].
+* Unable to swim in [[water]], but do not drown.
+* A threat to [[armadillo]]s, causing them to hide in their shell.
+
+As they are also under the "skeletons" [[entity type tag]], if a bogged kills a [[creeper]], the creeper drops a [[music disc]], randomly selected from [[Music Disc 13|13]], [[Music Disc cat|cat]], [[Music Disc blocks|blocks]], [[Music Disc chirp|chirp]], [[Music Disc far|far]], [[Music Disc mall|mall]], [[Music Disc mellohi|mellohi]], [[Music Disc stal|stal]], [[Music Disc strad|strad]], [[Music Disc ward|ward]], [[Music Disc 11|11]], and [[Music Disc wait|wait]].
+
+The eyes of bogged are emissive with [[Vibrant Visuals]], similar to strays and [[parched]].
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+|type=java
+| {{SoundLine
+|sound=Bogged ambient1.ogg
+|sound2=Bogged ambient2.ogg
+|sound3=Bogged ambient3.ogg
+|sound4=Bogged ambient4.ogg
+|subtitle=Bogged rattles
+|source=hostile
+|description=Randomly
+|id=entity.bogged.ambient
+|translationkey=subtitles.entity.bogged.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Bogged hurt1.ogg
+|sound2=Bogged hurt2.ogg
+|sound3=Bogged hurt3.ogg
+|sound4=Bogged hurt4.ogg
+|subtitle=Bogged hurts
+|source=hostile
+|description=When a bogged is damaged
+|id=entity.bogged.hurt
+|translationkey=subtitles.entity.bogged.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Bogged death.ogg
+|subtitle=Bogged dies
+|source=hostile
+|description=When a bogged dies
+|id=entity.bogged.death
+|translationkey=subtitles.entity.bogged.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Bogged step1.ogg
+|sound2=Bogged step2.ogg
+|sound3=Bogged step3.ogg
+|sound4=Bogged step4.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=While a bogged is walking
+|id=entity.bogged.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|subtitle=Skeleton shoots
+|source=hostile
+|description=When a bogged shoots an arrow
+|id=entity.skeleton.shoot
+|translationkey=subtitles.entity.skeleton.shoot
+|volume=1.0
+|pitch={{frac|5|6}}-1.25
+|distance=16}}
+| {{SoundLine
+|sound=Shear.ogg
+|subtitle=Shears click
+|source=Players <small>(player)</small><br>Blocks <small>(dispenser)</small>|overridesource=1
+|description=When a bogged's mushrooms are sheared
+|id=entity.bogged.shear
+|translationkey=subtitles.item.shear
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bogged ambient1.ogg
+|sound2=Bogged ambient2.ogg
+|sound3=Bogged ambient3.ogg
+|sound4=Bogged ambient4.ogg
+|source=hostile
+|description=Randomly
+|id=mob.bogged.say
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Bogged hurt1.ogg
+|sound2=Bogged hurt2.ogg
+|sound3=Bogged hurt3.ogg
+|sound4=Bogged hurt4.ogg
+|source=hostile
+|description=When a bogged is damaged
+|id=mob.bogged.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Bogged death.ogg
+|source=hostile
+|description=When a bogged dies
+|id=mob.bogged.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Bogged step1.ogg
+|sound2=Bogged step2.ogg
+|sound3=Bogged step3.ogg
+|sound4=Bogged step4.ogg
+|source=hostile
+|description=While a bogged is walking
+|id=mob.bogged.step
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|source=player
+|description=When a bogged shoots an arrow
+|id=random.bow
+|volume=1.0
+|pitch=0.83-1.25}}
+| {{SoundLine
+|sound=Shear.ogg
+|source=Players <small>(player)</small><br>Blocks <small>(dispenser)</small>|overridesource=1
+|description=When a bogged's mushrooms are sheared
+|id=mob.bogged.shear
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Bogged
+|spritetype=entity
+|nameid=bogged
+|entitytags=burn_in_daylight,can_breathe_under_water, ignores_poison_and_regen, inverted_healing_and_harm, no_anger_from_wind_charge, skeletons, undead, wither_friends, sensitive_to_smite 
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Bogged
+|spritetype=entity
+|nameid=bogged
+|showentityfamily=y
+|entityfamily=bogged,mob,monster,skeleton,undead
+|id=144
+|foot=1}}
+
+=== Entity data ===
+Bogged have entity data associated with them that contains various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads;Sniper Duel}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+<!-- Bogged is not a valid mob for Sniper Duel.-->
+{{load advancements|Monster Hunter;Monsters Hunted;Not Today, Thank You;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Added skeletons with Poison tipped arrows as placeholders for bogged in trial chambers.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w07a|[[File:Bogged JE1 BE1.png|32px]] Added bogged, replacing skeletons with Poison tipped arrows in trial chambers.|Creepers now drop music discs when killed by bogged.}}
+|{{HistoryLine|||dev=24w09a|[[File:Bogged JE2 BE2.png|32px]] The texture and model of bogged has been changed.
+|Bogged now drop 2 [[mushroom]]s (either both red/brown or one of each) when [[shear]]ed.}}
+|{{HistoryLine||1.21|dev=24w18a|Bogged are now available without using the "Update 1.21" experimental data pack.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Now naturally spawn with armor in the order of (most likely to least likely): helmet, chestplate, leggings, boots.<ref>{{Cite bug|MC|182478|Mob armor generates starting with boots rather than helmet|date=May 5, 2020}}</ref>}}
+|{{HistoryLine||1.21.4|dev=24w45a|Bogged now prefer to pick [[bows]] from the ground as opposed to other items.}}
+|{{HistoryLine||1.21.11|dev=pre1|Bogged can no longer pick up spears.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Added skeletons with Poison tipped arrows as placeholders for bogged in trial chambers.}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.24|[[File:Bogged JE1 BE1.png|32px]] Added bogged, replacing skeletons with Poison tipped arrows in trial chambers.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.21|[[File:Bogged JE2 BE2.png|32px]] Updated bogged texture and model.
+|Bogged now drop 2 [[mushroom]]s (either both red/brown or one of each) when [[shear]]ed.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Bogged are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|Bogged no longer inflict slowness when melee attacking.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.21|[[File:Spider Jockey (Bogged) BE.png|64px]] [[File:Cave Spider Jockey (Bogged) BE.png|64px]] Bogged can now spawn as riders of [[spider jockey]]s.<ref>{{bug|MCPE-221119|||F}}</ref>}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Bogged can no longer pick up [[spear]]s.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* In real life, human corpses can become mummified within peat bogs, with levels of preservation varying from perfect to just the skeletons. These are referred to as {{w|Bog body|bog bodies|newtab=1}}.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Bogged.png|A bogged.
+File:Bogged Left-handed JE2.png|A left-handed bogged.
+File:Bogged Aiming.png|A bogged aiming its bow.
+File:Bogged.webp|Idle animation.
+File:Sheared Bogged.png|A sheared bogged.
+File:MinecraftBoggedWithoutSecondLayer.png|A bogged without its second layer (this state cannot be seen in vanilla gameplay).
+File:MinecraftShearedBoggedWithoutSecondLayer.png|A sheared bogged without its second layer (this state cannot be seen in vanilla gameplay).
+File:Spider Jockey (Bogged) BE.png|A bogged spider jockey.{{Only|be}}
+File:Cave Spider Jockey (Bogged) BE.png|A bogged cave spider jockey.{{Only|be}}
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Skeleton comparison.png|A bogged being compared to the other skeletons {{in|je}}.
+Bogged Diamond Armor.png|A bogged wearing full diamond [[armor]].
+</gallery>
+
+==== Before 24w09a ==== 
+<gallery>
+Boggedmob.jpg|A bogged in a [[swamp]] before [[24w09a]].
+Bogged in Mangrove Swamp with a Lantern.png|A bogged in a mangrove swamp next to a [[lantern]].
+Boggedscreenshot.png|Several bogged in the [[trial chambers]].
+Boggedmangrove.png|Two bogged in a [[mangrove swamp]].
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Bogged Pre Release teaser.png|Bogged in a [[swamp]] with a heart.
+Bogged near spawner.png|Bogged near a [[trial spawner]].
+The bogged in the trial chamber.png|Bogged on top of a trial spawner.
+A group of bogged.png|A group of bogged in the [[trial chambers]].
+Bedrock 1.20.70.24 PatchNotes.jpeg|A bogged fighting a [[player]] at a [[ruined portal]] inside a mangrove swamp.
+Here is the bogged.jpg|A bogged near a [[trial spawner]].
+Makena vs. Bogged.jpg|[[Makena]] fighting several bogged in an [[ominous trial]].
+Coming soon, the bogged.jpeg|A teaser featuring the bogged peeking above [[mud]].
+The bogged in a swamp.jpeg|The bogged in a swamp.
+The bogged shooting an arrow.jpeg|The bogged shooting an arrow.
+Shootingbogged.jpeg|A bogged aiming at something at night.
+</gallery>
+
+==== Development renders ====
+<gallery>
+Bogged JE1 BE1.png|A bogged before [[24w09a]].
+Bogged without Overlay.png|A bogged in 24w07a without its overlay texture (this state is never seen in vanilla gameplay).
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Bogged (texture).png|Bogged texture file.
+Bogged Overlay (texture).png|Bogged overlay texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+Well this is the Bogged.png|A bogged peeking out from behind a corner, in the [[Tricky Trials Update Official Trailer]].
+Bogged squad.png|[[Steve]] before a group of bogged.
+Bogged take aim.png|Several bogged aiming.
+First person Sunny.png|A first person shot of [[Sunny]] firing at a bogged.
+Makena and Efe's trial.png|[[Makena]] and [[Efe]] fighting various bogged.
+Bogged trial storyboard.mp4|Storyboards of several bogged poisoning [[Kai]].
+Minecraft Trial Chamber Legends spritework.jpg|Pixel art of a bogged used in [[Trial Chamber Legends]].
+Bogged action figure.png|An [[action figure]] of a bogged.
+Bogged action figure (Unboxed).png|An unboxed action figure of a bogged.
+Bogged potato.png|The potato bogged from [[24w14potato]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Undead mobs]]
+[[Category:Monster mobs]]
+
+[[de:Sumpfskelett]]
+[[es:Ciénago]]
+[[fr:Embourbé]]
+[[it:Paludoso]]
+[[ja:ボグド]]
+[[ko:보그드]]
+[[pl:Bagniak]]
+[[pt:Pantanoso]]
+[[ru:Болотник]]
+[[uk:Болотяник]]
+[[zh:沼骸]]

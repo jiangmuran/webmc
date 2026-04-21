@@ -1,0 +1,680 @@
+{{Distinguish|Pumpkin Pie}}
+{{Infobox block
+| title = Cake
+| group = Cake
+| group2 = Cake with Candle
+| 1-1 = Cake.png
+| 2-1 = Cake with Candle.png
+| extratext = View [[#Gallery|all renders]]
+| consumptiontime = {{convert|0|ticks|seconds}}
+| hungercustom = {{BlockSprite|cake-side-sliced}} {{hunger|2}}<br>{{BlockSprite|cake-side}} {{hunger|14}}
+| saturationcustom = {{BlockSprite|cake-side-sliced}} {{hunger|0.4}}<br>{{BlockSprite|cake-side}} {{hunger|2.8}}
+| saturationboost = {{BlockSprite|cake-side-sliced}} <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|0.267}}<br/>{{BlockSprite|cake-side-sliced}} <abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 0.133 seconds
+<hr>
+{{BlockSprite|cake-side}} <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|1.867}}<br/>{{BlockSprite|cake-side}} <abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 0.933 seconds
+| alwaysconsumable = No
+| transparent = Yes
+| light = '''With a candle''':<br>Yes (3) when lit<br>'''Otherwise''': No
+| tool = any
+| renewable = Yes
+| stackable = {{jebe|No|Yes (64)}}
+| heals = {{hunger|14}}<br>({{hunger|2}} / slice)
+| flammable = No
+| waterloggable = {{jebe|No|Yes}}
+| lavasusceptible = No
+}}
+A '''cake''' is both [[food]] and a [[block]]. It can be eaten by placing and {{Control|use|text=using}} it, with each use consuming one of its seven slices.
+
+A '''cake with candle''' is an uneaten cake with any type of [[candle]] placed on it, which can be lit with a [[flint and steel]] to emit [[light]].
+
+== Obtaining ==
+=== Breaking ===
+Once the cake is placed, it cannot be recollected even with the use of [[Silk Touch]], meaning placing it is final. Cakes with [[candle]]s always drop their respective candle when broken.
+{{breaking row|horizontal=1|Cake|drop=0}}
+
+=== Generated loot ===
+{{LootChestItem|cake}}
+=== Crafting ===
+{{Crafting
+|A1=Milk Bucket
+|B1=Milk Bucket
+|C1=Milk Bucket
+|A2=Sugar
+|B2=Any Egg
+|C2=Sugar
+|A3=Wheat
+|B3=Wheat
+|C3=Wheat
+|Output=Cake
+|type=Foodstuff
+|showdescription=1
+|description=After crafting the cake, the empty [[bucket]]s remain in the crafting grid {{in|java}}, or are moved to the first available inventory slot {{in|bedrock}}.
+}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+{{see also|Tutorial:Hunger management}}
+[[File:Eating Cake Demo.png|thumb|[[Sunny]] and [[Alex]] eating a cake together.]]
+Unlike most [[food]], the cake cannot be eaten as an [[item]] in the hotbar. Before being eaten, it must first be placed on top of a solid [[block]]. Placing the cake on a slab also works, as the slab acts like a solid block. The cake instead floats half a block on top of the slab.
+
+Each cake has seven "slices"; each use consumes one slice progressing inward from the west. A single slice restores {{hunger|2}} hunger and 0.4 hunger [[Hunger#Mechanics|saturation]]. Eating all seven slices of a cake restores {{hunger|14}} hunger and 2.8 hunger saturation.
+
+Since eating a cake comes with no animation, the cake can be eaten at a rate of one slice per [[tick]]. Multiple [[player]]s can eat from the same cake at the same time. {{IN|java}}, eating cake makes no [[sound]], unlike other foods.
+
+As a [[redstone]] component, when connected to a [[comparator]], a whole cake emits a signal strength of 14. The signal strength decreases two units with each slice.
+
+Cake destroys [[Entity#Gravity-affected blocks|falling blocks]] if placed under them, similar to a [[torch]]. A player who is [[sneaking]] can place any block (including a cake or a falling block) on top of a cake without the block breaking.
+
+=== Pandas ===
+Some [[panda]]s move toward a dropped cake to pick up and eat it. Some may not, depending on the cake's location. Cake cannot be used to breed pandas. 
+
+=== Composting ===
+Placing a cake into a [[composter]] raises the compost level by 1.
+
+=== Piston interactivity ===
+A cake is broken when pushed by a [[piston]], and it drops nothing.
+
+=== Cakes with candles ===
+[[File:Cake with Candle.png|thumb|upright|A cake with candle created by placing a candle on an uneaten cake.]]
+{{control|Using}} a [[candle]] on an uneaten cake creates a '''cake with candle'''{{fn|'''Candle Cake''' in [[Language#Differences between English variants|Australian & New Zealand English]].}} of that color (including uncolored). Eating any of the cake causes the candle to drop. 
+
+{{control|Using}} [[flint and steel]], [[fire charge]], or any flaming projectile on an unlit cake with candle lights its candle. Lit cakes with candles emit a [[light level]] of 3 and [[Vibrant Visuals#Point lighting|point lighting]] of {{Color|#d3852b}} when the "Render Dragon Features for Creators" [[experiment]] is enabled in ''[[Minecraft Preview]]''. {{control|Interacting}} with the lit candle (but not the cake) extinguishes it.
+
+Lit candled cakes emit the same [[Vibrant Visuals#Point lighting|point lighting]] as [[candle]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wool}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Cake add_candle1.ogg
+|sound2=Cake add_candle2.ogg
+|sound3=Cake add_candle3.ogg
+|subtitle=Cake squishes
+|source=Blocks
+|description=When a [[candle]] is placed on a cake
+|id=block.cake.add_candle
+|translationkey=subtitles.block.cake.add_candle
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Cake add_candle1.ogg
+|sound2=Cake add_candle2.ogg
+|sound3=Cake add_candle3.ogg
+|source=block
+|description=When a candle is placed on a cake
+|id=cake.add_candle
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Burp.ogg
+|source=player
+|description=After a player eats a cake
+|id=random.burp
+|volume=0.5
+| pitch = 0.9-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cake
+|spritetype=block
+|nameid=cake}}
+{{ID table
+|displayname=Cake with Candle
+|spritename=candle-cake
+|spritetype=block
+|nameid=candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with White Candle
+|spritename=white-candle-cake
+|spritetype=block
+|nameid=white_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Orange Candle
+|spritename=orange-candle-cake
+|spritetype=block
+|nameid=orange_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Magenta Candle
+|spritename=magenta-candle-cake
+|spritetype=block
+|nameid=magenta_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Light Blue Candle
+|spritename=light-blue-candle-cake
+|spritetype=block
+|nameid=light_blue_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Yellow Candle
+|spritename=yellow-candle-cake
+|spritetype=block
+|nameid=yellow_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Lime Candle
+|spritename=lime-candle-cake
+|spritetype=block
+|nameid=lime_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Pink Candle
+|spritename=pink-candle-cake
+|spritetype=block
+|nameid=pink_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Gray Candle
+|spritename=gray-candle-cake
+|spritetype=block
+|nameid=gray_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Light Gray Candle
+|spritename=light-gray-candle-cake
+|spritetype=block
+|nameid=light_gray_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Cyan Candle
+|spritename=cyan-candle-cake
+|spritetype=block
+|nameid=cyan_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Purple Candle
+|spritename=purple-candle-cake
+|spritetype=block
+|nameid=purple_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Blue Candle
+|spritename=blue-candle-cake
+|spritetype=block
+|nameid=blue_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Brown Candle
+|spritename=brown-candle-cake
+|spritetype=block
+|nameid=brown_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Green Candle
+|spritename=green-candle-cake
+|spritetype=block
+|nameid=green_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Red Candle
+|spritename=red-candle-cake
+|spritetype=block
+|nameid=red_candle_cake
+|blocktags=candle_cakes
+|form=block}}
+{{ID table
+|displayname=Cake with Black Candle
+|spritename=black-candle-cake
+|spritetype=block
+|nameid=black_candle_cake
+|blocktags=candle_cakes
+|form=block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|firstcolumnname=Cake
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Block
+|spritename=cake
+|spritetype=block
+|nameid=cake
+|id=92
+|form=block
+|itemform=item.cake}}
+{{ID table
+|displayname=Item
+|spritename=cake
+|spritetype=item
+|nameid=cake
+|id=417
+|form=item}}
+{{ID table2
+|displayname=Cake with Candle
+|spritename=candle-cake
+|spritetype=block
+|nameid=candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=684}}
+{{ID table2
+|displayname=Cake with White Candle
+|spritename=white-candle-cake
+|spritetype=block
+|nameid=white_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=685}}
+{{ID table2
+|displayname=Cake with Orange Candle
+|spritename=orange-candle-cake
+|spritetype=block
+|nameid=orange_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=686}}
+{{ID table2
+|displayname=Cake with Magenta Candle
+|spritename=magenta-candle-cake
+|spritetype=block
+|nameid=magenta_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=687}}
+{{ID table2
+|displayname=Cake with Light Blue Candle
+|spritename=light-blue-candle-cake
+|spritetype=block
+|nameid=light_blue_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=688}}
+{{ID table2
+|displayname=Cake with Yellow Candle
+|spritename=yellow-candle-cake
+|spritetype=block
+|nameid=yellow_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=689}}
+{{ID table2
+|displayname=Cake with Lime Candle
+|spritename=lime-candle-cake
+|spritetype=block
+|nameid=lime_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=690}}
+{{ID table2
+|displayname=Cake with Pink Candle
+|spritename=pink-candle-cake
+|spritetype=block
+|nameid=pink_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=691}}
+{{ID table2
+|displayname=Cake with Gray Candle
+|spritename=gray-candle-cake
+|spritetype=block
+|nameid=gray_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=692}}
+{{ID table2
+|displayname=Cake with Light Gray Candle
+|spritename=light-gray-candle-cake
+|spritetype=block
+|nameid=light_gray_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=693}}
+{{ID table2
+|displayname=Cake with Cyan Candle
+|spritename=cyan-candle-cake
+|spritetype=block
+|nameid=cyan_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=694}}
+{{ID table2
+|displayname=Cake with Purple Candle
+|spritename=purple-candle-cake
+|spritetype=block
+|nameid=purple_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=695}}
+{{ID table2
+|displayname=Cake with Blue Candle
+|spritename=blue-candle-cake
+|spritetype=block
+|nameid=blue_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=696}}
+{{ID table2
+|displayname=Cake with Brown Candle
+|spritename=brown-candle-cake
+|spritetype=block
+|nameid=brown_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=697}}
+{{ID table2
+|displayname=Cake with Green Candle
+|spritename=green-candle-cake
+|spritetype=block
+|nameid=green_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=698}}
+{{ID table2
+|displayname=Cake with Red Candle
+|spritename=red-candle-cake
+|spritetype=block
+|nameid=red_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=699}}
+{{ID table2
+|displayname=Cake with Black Candle
+|spritename=black-candle-cake
+|spritetype=block
+|nameid=black_candle_cake
+|blocktags=candle_cakes
+|form=block
+|id=700
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:<br>
+Cakes:
+{{bst|bites|0|0,1,2,3,4,5,6|Number of bites taken from the cake.|foot=1}}
+Cakes with Candles:
+{{bst|lit|false|false,true|Whether the candle on the cake is lit.|foot=1}}
+
+{{edition|bedrock}}:<br>
+Cakes:
+{{bst|showaux=1|bits=0x1,0x2,0x4|bite_counter|0|0,1,2,3,4,5,6|Number of bites taken from the cake.|foot=1}}
+Cakes with Candles:
+{{bst|showaux=1|bits=0x1|lit|false|false,true|Whether the candle on the cake is lit.|0,1|foot=1}}
+
+== Achievements ==
+{{load achievements|The Lie;Birthday Song}}
+
+== Advancements ==
+{{load advancements|Birthday Song}}
+
+== History ==
+{{See technical block}}
+{{info needed section|{{bug|MC-45375}}}}
+{{More images|section=1|1.17 Pre-release 1 lit candle texture changes.}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||November 23, 2010|link={{tweet|notch|7118994444124160}}|[[Notch]] stated if ''Minecraft'' won the [[2010 Indie of the Year Awards]], he would add cake to ''Minecraft''.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[File:Cake JE1.png|32px]] [[File:Cake (1 bite) JE1.png|32px]] [[File:Cake (2 bites) JE1.png|32px]] [[File:Cake (3 bites) JE1.png|32px]] [[File:Cake (4 bites) JE1.png|32px]] [[File:Cake (5 bites) JE1.png|32px]]<br>[[File:Cake (item) JE1 BE1.png|32px]] Since ''Minecraft'' won the title, cake has been added.
+|A slice of cake heals {{hp|3}} and the whole cake heals {{hp|18}}.
+|[[File:Cake (6 bites) JE1.png|32px]] Cake with six bites taken out of it exists, but is normally inaccessible until release version 1.8, as using a cake with five bites will consume it completely.}}
+|{{HistoryLine||1.5|[[Achievement/Java Edition|Achievements]] have been added, including "The Lie", which is rewarded when the [[player]] crafts a cake.}}
+|{{HistoryLine||1.7|The textures for the side and inside of cakes have been shifted vertically due to changes to texture mapping in this version. This does not change how normally-obtainable states of cake look (see [[#Data history]] for a case where this change has a visual impact), but [[texture pack]]s from previous versions will no longer be compatible.}}
+|{{HistoryLine||1.8|dev=Pre-release|Cake now restores {{hunger|12}} and its slice restores {{hunger|2}}.
+|Cake is available in the Creative inventory.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.1|dev=12w01a|When cake is crafted, the empty [[bucket]]s are now moved to the [[player]]'s [[inventory]], rather than staying in the [[crafting]] grid.}}
+|{{HistoryLine||1.5|dev=13w02a|[[File:Cake JE2.png|32px]] [[File:Cake (1 bite) JE2.png|32px]] [[File:Cake (2 bites) JE2.png|32px]] [[File:Cake (3 bites) JE2.png|32px]] [[File:Cake (4 bites) JE2.png|32px]] [[File:Cake (5 bites) JE2.png|32px]] [[File:Cake (6 bites) JE2.png|32px]] Cakes now use the inside texture for all orthogonal faces.}}
+|{{HistoryLine|||dev=13w03a|[[File:Cake JE3 BE1.png|32px]] [[File:Cake (1 bite) JE3 BE1.png|32px]] [[File:Cake (2 bites) JE3 BE1.png|32px]] [[File:Cake (3 bites) JE3 BE1.png|32px]] [[File:Cake (4 bites) JE3 BE1.png|32px]] [[File:Cake (5 bites) JE3 BE1.png|32px]] [[File:Cake (6 bites) JE3 BE1.png|32px]] Cakes now use the outside side texture for the sides again.<ref>{{bug|MC-7119||Cake uses inside texture on all sides when placed|Fixed}}</ref>}}
+|{{HistoryLine||1.8|dev=14w02a|Farmer [[villager]]s now [[trading|sell]] 1 cake for 1 [[emerald]].}}
+|{{HistoryLine|||dev=14w27a|Cake slices available when eating cakes have been increased from 6 to 7, restoring {{hunger|14}} in total. This allows the 6-bites cake to be obtained legitimately.}}
+|{{HistoryLine|||dev=14w28a|Cake now emits a [[comparator]] signal.
+|When cake is crafted, empty [[bucket]]s now stay in the [[crafting table]].}}
+|{{HistoryLine||1.9|dev=15w37a|Cake can no longer be eaten in survival with the primary attack (left-click).}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Cake JE4.png|32px]] [[File:Cake (1 bite) JE4.png|32px]] [[File:Cake (2 bites) JE4.png|32px]] [[File:Cake (3 bites) JE4.png|32px]] [[File:Cake (4 bites) JE4.png|32px]] [[File:Cake (5 bites) JE4.png|32px]] [[File:Cake (6 bites) JE4.png|32px]]<br>[[File:Cake (item) JE2 BE2.png|32px]] The texture of cake has been changed.
+|Cakes can now be eaten by [[panda]]s when they are thrown to them.}}
+|{{HistoryLine|||dev=19w03a|Placing a cake into the new [[composter]] now raises the compost level by 1.}}
+|{{HistoryLine|||dev=19w08a|[[File:Cake (item) JE3 BE3.png|32px]] The texture of cake [[item]]s have been changed, this time to have a large cherry in the middle to match its block counterpart.}}
+|{{HistoryLine||May 17–20, 2019|link=none|[[File:10 years cake render.png|32px]] Cakes now display a "10" above them, textured with [[white concrete]], to celebrate the 10 year anniversary of the first public version of ''Minecraft'' ([[0.0.11a]]) being released.}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Cake with Candle JE1.png|32px]] [[File:Cake with White Candle JE1.png|32px]] [[File:Cake with Light Gray Candle JE1.png|32px]] [[File:Cake with Gray Candle JE1.png|32px]] [[File:Cake with Black Candle JE1.png|32px]] [[File:Cake with Brown Candle JE1.png|32px]] [[File:Cake with Red Candle JE1.png|32px]] [[File:Cake with Orange Candle JE1.png|32px]] [[File:Cake with Yellow Candle JE1.png|32px]] [[File:Cake with Lime Candle JE1.png|32px]] [[File:Cake with Green Candle JE1.png|32px]] [[File:Cake with Cyan Candle JE1.png|32px]] [[File:Cake with Light Blue Candle JE1.png|32px]] [[File:Cake with Blue Candle JE1.png|32px]] [[File:Cake with Purple Candle JE1.png|32px]] [[File:Cake with Magenta Candle JE1.png|32px]] [[File:Cake with Pink Candle JE1.png|32px]] [[File:Candle Cake (lit) JE1.png|32px]] [[File:White Candle Cake (lit) JE1.png|32px]] [[File:Light Gray Candle Cake (lit) JE1.png|32px]] [[File:Gray Candle Cake (lit) JE1.png|32px]] [[File:Black Candle Cake (lit) JE1.png|32px]] [[File:Brown Candle Cake (lit) JE1.png|32px]] [[File:Red Candle Cake (lit) JE1.png|32px]] [[File:Orange Candle Cake (lit) JE1.png|32px]] [[File:Yellow Candle Cake (lit) JE1.png|32px]] [[File:Lime Candle Cake (lit) JE1.png|32px]] [[File:Green Candle Cake (lit) JE1.png|32px]] [[File:Cyan Candle Cake (lit) JE1.png|32px]] [[File:Light Blue Candle Cake (lit) JE1.png|32px]] [[File:Blue Candle Cake (lit) JE1.png|32px]] [[File:Purple Candle Cake (lit) JE1.png|32px]] [[File:Magenta Candle Cake (lit) JE1.png|32px]] [[File:Pink Candle Cake (lit) JE1.png|32px]] Added candle cake.}}
+|{{HistoryLine|||dev=21w19a|The name of "Candle Cake" has been changed to "Cake with Candle".}}
+|{{HistoryLine|||dev=pre1|Changed lit cake with candle textures.}}
+|{{HistoryLine|||dev=pre3|[[File:Candle Cake (lit) JE2.png|32px]] [[File:White Candle Cake (lit) JE2.png|32px]] [[File:Light Gray Candle Cake (lit) JE2.png|32px]] [[File:Gray Candle Cake (lit) JE2.png|32px]] [[File:Black Candle Cake (lit) JE2.png|32px]] [[File:Brown Candle Cake (lit) JE2.png|32px]] [[File:Red Candle Cake (lit) JE2.png|32px]] [[File:Orange Candle Cake (lit) JE2.png|32px]][[File:Yellow Candle Cake (lit) JE2.png|32px]] [[File:Lime Candle Cake (lit) JE2.png|32px]] [[File:Green Candle Cake (lit) JE2.png|32px]] [[File:Cyan Candle Cake (lit) JE2.png|32px]]  [[File:Light Blue Candle Cake (lit) JE2.png|32px]] [[File:Blue Candle Cake (lit) JE2.png|32px]] [[File:Purple Candle Cake (lit) JE2.png|32px]] [[File:Magenta Candle Cake (lit) JE2.png|32px]] [[File:Pink Candle Cake (lit) JE2.png|32px]] Changed lit cake with candle textures.}}
+|{{HistoryLine||1.19|dev=22w14a|Giving a cake to an [[allay]] is now required for the "Birthday Song" [[advancement]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Cakes can now be found in [[trial chambers]] intersection chests.}}
+|{{HistoryLine||1.21.5|dev=25w06a|Cake can now be crafted using [[blue egg]]s or [[brown egg]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.7.0|[[File:Cake JE3 BE1.png|32px]] [[File:Cake (1 bite) JE3 BE1.png|32px]] [[File:Cake (2 bites) JE3 BE1.png|32px]] [[File:Cake (3 bites) JE3 BE1.png|32px]] [[File:Cake (4 bites) JE3 BE1.png|32px]] [[File:Cake (5 bites) JE3 BE1.png|32px]] [[File:Cake (6 bites) JE3 BE1.png|32px]]<br>[[File:Cake (item) JE1 BE1.png|32px]] Added cake.
+|Cake restores {{hp|12}}.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Cake now restore {{hunger|12}}.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Cake can now be used to emit a [[comparator]] signal.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Cake currently does not show its inside texture on two or more bites.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Farmer villagers now [[trading|sell]] cake for one [[emerald]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.31|Cake is now stackable.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Cake can now be found inside [[buried treasure]] chests.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Cake, as a dropped [[item]], can now be eaten by [[panda]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Cake BE2.png|32px]] [[File:Cake (1 bite) BE2.png|32px]] [[File:Cake (2 bites) BE2.png|32px]] [[File:Cake (3 bites) BE2.png|32px]] [[File:Cake (4 bites) BE2.png|32px]] [[File:Cake (5 bites) BE2.png|32px]] [[File:Cake (6 bites) BE2.png|32px]] <br>[[File:Cake (item) JE2 BE2.png|32px]] The texture of cake has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Cake can now be used to fill up [[composter]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Cake [[trading|sold]] by farmers now has a 50% chance to cost 8{{verify|Did it really cost 8 emeralds?}} [[emerald]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.5|[[File:Cake (item) JE3 BE3.png|32px]] The texture of cake [[item]]s has been changed, once again.}}
+|{{HistoryLine|||dev=beta 1.11.0.7|Cake [[trade]]s from farmer [[villager]]s have been reverted.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.53|Cake now shows its inside texture on two or more bites.}}
+|{{HistoryLine||1.17.10|dev=beta 1.17.10.22|[[File:Cake with Candle JE1.png|32px]] [[File:Cake with White Candle JE1.png|32px]] [[File:Cake with Light Gray Candle JE1.png|32px]] [[File:Cake with Gray Candle JE1.png|32px]] [[File:Cake with Black Candle JE1.png|32px]] [[File:Cake with Brown Candle JE1.png|32px]] [[File:Cake with Red Candle JE1.png|32px]] [[File:Cake with Orange Candle JE1.png|32px]] [[File:Cake with Yellow Candle JE1.png|32px]] [[File:Cake with Lime Candle JE1.png|32px]] [[File:Cake with Green Candle JE1.png|32px]] [[File:Cake with Cyan Candle JE1.png|32px]] [[File:Cake with Light Blue Candle JE1.png|32px]] [[File:Cake with Blue Candle JE1.png|32px]] [[File:Cake with Purple Candle JE1.png|32px]] [[File:Cake with Magenta Candle JE1.png|32px]] [[File:Cake with Pink Candle JE1.png|32px]] [[File:Candle Cake (lit) JE2.png|32px]] [[File: White Candle Cake (lit) JE2.png|32px]] [[File:Light Gray Candle Cake (lit) JE2.png|32px]] [[File:Gray Candle Cake (lit) JE2.png|32px]] [[File:Black Candle Cake (lit) JE2.png|32px]] [[File:Brown Candle Cake (lit) JE2.png|32px]] [[File:Red Candle Cake (lit) JE2.png|32px]] [[File:Orange Candle Cake (lit) JE2.png|32px]] [[File:Yellow Candle Cake (lit) JE2.png|32px]] [[File:Lime Candle Cake (lit) JE2.png|32px]] [[File:Green Candle Cake (lit) JE2.png|32px]] [[File:Cyan Candle Cake (lit) JE2.png|32px]] [[File:Light Blue Candle Cake (lit) JE2.png|32px]] [[File:Blue Candle Cake (lit) JE2.png|32px]] [[File:Purple Candle Cake (lit) JE2.png|32px]] [[File:Magenta Candle Cake (lit) JE2.png|32px]] [[File:Pink Candle Cake (lit) JE2.png|32px]] Added cakes with candles.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Cakes can now be found in [[trial chambers]] intersection chests.}}
+|{{HistoryLine||1.21.70|exp=Drop 1 2025|dev=Preview 1.21.70.22|Cake can now be crafted using [[blue egg]]s or [[brown egg]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Cake JE3 BE1.png|32px]] [[File:Cake (1 bite) JE3 BE1.png|32px]] [[File:Cake (2 bites) JE3 BE1.png|32px]] [[File:Cake (3 bites) JE3 BE1.png|32px]] [[File:Cake (4 bites) JE3 BE1.png|32px]] [[File:Cake (5 bites) JE3 BE1.png|32px]] [[File:Cake (6 bites) JE3 BE1.png|32px]]<br>[[File:Cake (item) JE1 BE1.png|32px]] Added cake.}}
+|{{HistoryLine||xbox=TU6|Cake has been made stackable, as a then-version exclusive.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Farmer [[villager]]s now [[trading|sell]] 1 cake for 1 [[emerald]].|Cake slices available when eating cakes have been increased from 6 to 7, allowing the 6-bites cake to be obtained legitimately.|Cake now emits a [[comparator]] signal.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Cake can now be found inside [[buried treasure]] chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.83|wiiu=none|switch=none|Cake, as a dropped [[item]], can now be eaten by [[panda]]s. Cakes can also be fed to pandas by pressing {{ctrl|use}} on them.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Cake JE4.png|32px]] [[File:Cake (1 bite) JE4.png|32px]] [[File:Cake (2 bites) JE4.png|32px]] [[File:Cake (3 bites) JE4.png|32px]] [[File:Cake (4 bites) JE4.png|32px]] [[File:Cake (5 bites) JE4.png|32px]] [[File:Cake (6 bites) JE4.png|32px]]{{verify|Are these the textures/models used?}}<br>[[File:Cake (item) JE2 BE2.png|32px]] The single, lone texture of cake has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Cake can now be used to fill up [[composter]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Cake JE3 BE1.png|32px]] [[File:Cake (1 bite) JE3 BE1.png|32px]] [[File:Cake (2 bites) JE3 BE1.png|32px]] [[File:Cake (3 bites) JE3 BE1.png|32px]] [[File:Cake (4 bites) JE3 BE1.png|32px]] [[File:Cake (5 bites) JE3 BE1.png|32px]] [[File:Cake (6 bites) JE3 BE1.png|32px]]<br>[[File:Cake (item) JE1 BE1.png|32px]] Added cake.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[File:Cake (7 bites) JE1.png|32px]]<br>[[File:Cake (8 bites) JE1.png|32px]] [[File:Cake (9 bites) JE1.png|32px]] [[File:Cake (10 bites) JE1.png|32px]] [[File:Cake (11 bites) JE1.png|32px]] [[File:Cake (12 bites) JE1.png|32px]] [[File:Cake (13 bites) JE1.png|32px]] [[File:Cake (14 bites) JE1.png|32px]] [[File:Cake (15 bites) JE1.png|32px]]<br>[[File:Cake (8 bites) JE1 (facing NWU).png|32px]] [[File:Cake (9 bites) JE1 (facing NWU).png|32px]] [[File:Cake (10 bites) JE1 (facing NWU).png|32px]] [[File:Cake (11 bites) JE1 (facing NWU).png|32px]] [[File:Cake (12 bites) JE1 (facing NWU).png|32px]] [[File:Cake (13 bites) JE1 (facing NWU).png|32px]] [[File:Cake (14 bites) JE1 (facing NWU).png|32px]] [[File:Cake (15 bites) JE1 (facing NWU).png|32px]]<br>Cakes with seven through fifteen bites also exist, as the number of bites is stored using block metadata which varies from 0 to 15. These have a glitched appearance, with misaligned cake textures as well as the block [[placeholder texture]] on the bottom (as the texture next to the bottom of the cake on [[terrain.png]], which it overflows to, is itself a placeholder).}}
+|{{HistoryLine||1.7|[[File:Cake (8 bites) JE2 (facing NWU).png|32px]] [[File:Cake (9 bites) JE2 (facing NWU).png|32px]] [[File:Cake (10 bites) JE2 (facing NWU).png|32px]] [[File:Cake (11 bites) JE2 (facing NWU).png|32px]] [[File:Cake (12 bites) JE2 (facing NWU).png|32px]] [[File:Cake (13 bites) JE2 (facing NWU).png|32px]] [[File:Cake (14 bites) JE2 (facing NWU).png|32px]] [[File:Cake (15 bites) JE2 (facing NWU).png|32px]]<br>The cake side texture shown from underneath has flipped to the other side.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Cake (8 bites) JE3.png|32px]] [[File:Cake (9 bites) JE3.png|32px]] [[File:Cake (10 bites) JE3.png|32px]] [[File:Cake (11 bites) JE3.png|32px]] [[File:Cake (12 bites) JE3.png|32px]] [[File:Cake (13 bites) JE3.png|32px]] [[File:Cake (14 bites) JE3.png|32px]] [[File:Cake (15 bites) JE3.png|32px]]<br>Cakes with data 8 through 15 now use the red mushroom block texture with the addition of the red [[mushroom block]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w02a|[[File:Cake (8 bites) JE4.png|32px]] [[File:Cake (9 bites) JE4.png|32px]] [[File:Cake (10 bites) JE4.png|32px]] [[File:Cake (11 bites) JE4.png|32px]] [[File:Cake (12 bites) JE4.png|32px]] [[File:Cake (13 bites) JE4.png|32px]] [[File:Cake (14 bites) JE4.png|32px]] [[File:Cake (15 bites) JE4.png|32px]]<br>[[File:Cake (8 bites) JE4 (facing NWU).png|32px]] [[File:Cake (9 bites) JE4 (facing NWU).png|32px]] [[File:Cake (10 bites) JE4 (facing NWU).png|32px]] [[File:Cake (11 bites) JE4 (facing NWU).png|32px]] [[File:Cake (12 bites) JE4 (facing NWU).png|32px]] [[File:Cake (13 bites) JE4 (facing NWU).png|32px]] [[File:Cake (14 bites) JE4 (facing NWU).png|32px]] [[File:Cake (15 bites) JE4 (facing NWU).png|32px]]<br>With the advent of major changes in texture storage and architecture, overeaten cakes now display other parts of cakes as well as part of a crop texture.
+|From this version up until 14w08a, overeaten cakes start to draw from the textures next to them on <samp>[[blocks-atlas]]</samp>, in much the same way they previously did with terrain.png. However, as texture atlases are unstable and textures tend to change positions as new blocks and textures are added, overeaten cakes change the texture they draw from almost every time new textures are added or existing textures are resized.}}
+|{{HistoryLine|||dev=13w03a|[[File:Cake (8 bites) JE5.png|32px]] [[File:Cake (9 bites) JE5.png|32px]] [[File:Cake (10 bites) JE5.png|32px]] [[File:Cake (11 bites) JE5.png|32px]] [[File:Cake (12 bites) JE5.png|32px]] [[File:Cake (13 bites) JE5.png|32px]] [[File:Cake (14 bites) JE5.png|32px]] [[File:Cake (15 bites) JE5.png|32px]]<br>[[File:Cake (8 bites) JE5 (facing NWU).png|32px]] [[File:Cake (9 bites) JE5 (facing NWU).png|32px]] [[File:Cake (10 bites) JE5 (facing NWU).png|32px]] [[File:Cake (11 bites) JE5 (facing NWU).png|32px]] [[File:Cake (12 bites) JE5 (facing NWU).png|32px]] [[File:Cake (13 bites) JE5 (facing NWU).png|32px]] [[File:Cake (14 bites) JE5 (facing NWU).png|32px]] [[File:Cake (15 bites) JE5 (facing NWU).png|32px]]<br>Overeaten cakes now display a different part of the cake texture than before.}}
+|{{HistoryLine|||dev=13w09a|[[File:Cake (8 bites) JE6.png|32px]] [[File:Cake (9 bites) JE6.png|32px]] [[File:Cake (10 bites) JE6.png|32px]] [[File:Cake (11 bites) JE6.png|32px]] [[File:Cake (12 bites) JE6.png|32px]] [[File:Cake (13 bites) JE6.png|32px]] [[File:Cake (14 bites) JE6.png|32px]] [[File:Cake (15 bites) JE6.png|32px]]<br>[[File:Cake (8 bites) JE6 (facing NWU).png|32px]] [[File:Cake (9 bites) JE6 (facing NWU).png|32px]] [[File:Cake (10 bites) JE6 (facing NWU).png|32px]] [[File:Cake (11 bites) JE6 (facing NWU).png|32px]] [[File:Cake (12 bites) JE6 (facing NWU).png|32px]] [[File:Cake (13 bites) JE6 (facing NWU).png|32px]] [[File:Cake (14 bites) JE6 (facing NWU).png|32px]] [[File:Cake (15 bites) JE6 (facing NWU).png|32px]]<br>Overeaten cakes now display a crop texture on the side.}}
+|{{HistoryLine||1.6.1|dev=13w17a|[[File:Cake (8 bites) JE7.png|32px]] [[File:Cake (9 bites) JE7.png|32px]] [[File:Cake (10 bites) JE7.png|32px]] [[File:Cake (11 bites) JE7.png|32px]] [[File:Cake (12 bites) JE7.png|32px]] [[File:Cake (13 bites) JE7.png|32px]] [[File:Cake (14 bites) JE7.png|32px]] [[File:Cake (15 bites) JE7.png|32px]]<br>[[File:Cake (8 bites) JE7 (facing NWU).png|32px]] [[File:Cake (9 bites) JE7 (facing NWU).png|32px]] [[File:Cake (10 bites) JE7 (facing NWU).png|32px]] [[File:Cake (11 bites) JE7 (facing NWU).png|32px]] [[File:Cake (12 bites) JE7 (facing NWU).png|32px]] [[File:Cake (13 bites) JE7 (facing NWU).png|32px]] [[File:Cake (14 bites) JE7 (facing NWU).png|32px]] [[File:Cake (15 bites) JE7 (facing NWU).png|32px]]<br>Overeaten cakes now display a part of the powered [[redstone comparator]] texture.}}
+|{{HistoryLine|||dev=13w18a|[[File:Cake (8 bites) JE8.png|32px]] [[File:Cake (9 bites) JE8.png|32px]] [[File:Cake (10 bites) JE8.png|32px]] [[File:Cake (11 bites) JE8.png|32px]] [[File:Cake (12 bites) JE8.png|32px]] [[File:Cake (13 bites) JE8.png|32px]] [[File:Cake (14 bites) JE8.png|32px]] [[File:Cake (15 bites) JE8.png|32px]]<br>[[File:Cake (8 bites) JE8 (facing NWU).png|32px]] [[File:Cake (9 bites) JE8 (facing NWU).png|32px]] [[File:Cake (10 bites) JE8 (facing NWU).png|32px]] [[File:Cake (11 bites) JE8 (facing NWU).png|32px]] [[File:Cake (12 bites) JE8 (facing NWU).png|32px]] [[File:Cake (13 bites) JE8 (facing NWU).png|32px]] [[File:Cake (14 bites) JE8 (facing NWU).png|32px]] [[File:Cake (15 bites) JE8 (facing NWU).png|32px]]<br>Overeaten cakes now display the [[carrots]] texture. The inside underside also uses the feet of the [[cauldron]].}}
+|{{HistoryLine||1.7.2|dev=13w41a|[[File:Cake (8 bites) JE9.png|32px]] [[File:Cake (9 bites) JE9.png|32px]] [[File:Cake (10 bites) JE9.png|32px]] [[File:Cake (11 bites) JE9.png|32px]] [[File:Cake (12 bites) JE9.png|32px]] [[File:Cake (13 bites) JE9.png|32px]] [[File:Cake (14 bites) JE9.png|32px]] [[File:Cake (15 bites) JE9.png|32px]]<br>[[File:Cake (8 bites) JE9 (facing NWU).png|32px]] [[File:Cake (9 bites) JE9 (facing NWU).png|32px]] [[File:Cake (10 bites) JE9 (facing NWU).png|32px]] [[File:Cake (11 bites) JE9 (facing NWU).png|32px]] [[File:Cake (12 bites) JE9 (facing NWU).png|32px]] [[File:Cake (13 bites) JE9 (facing NWU).png|32px]] [[File:Cake (14 bites) JE9 (facing NWU).png|32px]] [[File:Cake (15 bites) JE9 (facing NWU).png|32px]]<br>Overeaten cakes now display a part of the block breaking texture, and the texture of the [[block of diamond]] inside.}}
+|{{HistoryLine||1.8|dev=14w10a|[[File:Missing Model JE2.png|32px]] Cakes with data values 7 and above now [[Missing model|have no model]].}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 92, and the item's 354.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+=== Interaction ===
+* Because cake is only {{frac|7|8}} blocks wide, it is possible to stand on the edge of a [[block]] beneath a cake. This makes it possible to create a functioning staircase using cakes placed on a ramp of 1×1 blocks.
+* It is possible to place cake on top of another cake by placing a cake on the ground, then placing another cake on the side of a block above and to the side of the first cake, similar to placing [[torch]]es on a [[chest]]. Eating the lower cake causes the upper cake to disappear, as does mining out the block of cake it is sitting on.
+* [[Mob]]s on top of cakes rotate while attempting to move, a pathfinding oversight shared with [[fence]]s.
+* If cake is placed in a hole one block deep, players can get across the hole without jumping, although a player standing on the cake must jump to get out of the hole.
+
+=== Miscellaneous ===
+[[File:IOTY.png|thumb|100px|The 2010 Indie of the Year Awards logo.]]
+* Cake was added to ''[[Minecraft]]'' following the ModDB [[2010 Indie of the Year Awards]]. [[Notch]] agreed to add cake to ''Minecraft'' if it won, which led to a campaign called "The Quest For Cake". ''Minecraft'' won 3 of the 7 awards, including the "Indie of the Year" award.
+* The player can place cake on top of a [[bed]], and while [[sleeping]], the cake shows on the player's screen as if it were on top of their head.
+* The name of the achievement for crafting a cake is a reference to the internet meme "The Cake is a Lie", which originated from [[wikipedia:Valve Corporation|Valve Software's]] game, ''[[wikipedia:Portal (video game)#Plot|Portal]]''.
+* On May 17, 2019, for the [[10th Anniversary|10th anniversary]] of ''Minecraft'', the cake [[model]] was changed to display a "10" above it, made of [[white concrete]].
+* Unlike most foods, cakes don't count towards the advancement "[[A Balanced Diet]]" {{in|java}}.<ref>{{bug|MC-117561||Cake not counting in 'A Balanced Diet' advancement}}</ref>
+
+== Gallery ==
+=== Renders ===
+==== Cake ====
+<gallery>
+File:Cake.png
+File:Cake (1 bite).png
+File:Cake (2 bites).png
+File:Cake (3 bites).png
+File:Cake (4 bites).png
+File:Cake (5 bites).png
+File:Cake (6 bites).png
+File:10 years cake render.png|10 year anniversary cake model
+File:10 years cake 1.png|Ditto, with one more slice missing
+File:10 years cake 2.png|Ditto, with one more slice missing
+File:10 years cake 3.png|Ditto, with one more slice missing
+</gallery>
+
+==== Cake with candle ====
+<gallery>
+Cake with Candle.png
+Cake with White Candle.png
+Cake with Light Gray Candle.png
+Cake with Gray Candle.png
+Cake with Black Candle.png
+Cake with Brown Candle.png
+Cake with Red Candle.png
+Cake with Orange Candle.png
+Cake with Yellow Candle.png
+Cake with Lime Candle.png
+Cake with Green Candle.png
+Cake with Cyan Candle.png
+Cake with Light Blue Candle.png
+Cake with Blue Candle.png
+Cake with Purple Candle.png
+Cake with Magenta Candle.png
+Cake with Pink Candle.png
+</gallery>
+
+==== Lit cake with candle ====
+<gallery>
+Candle Cake (lit).png
+White Candle Cake (lit).png
+Light Gray Candle Cake (lit).png
+Gray Candle Cake (lit).png
+Black Candle Cake (lit).png
+Brown Candle Cake (lit).png
+Red Candle Cake (lit).png
+Orange Candle Cake (lit).png
+Yellow Candle Cake (lit).png
+Lime Candle Cake (lit).png
+Green Candle Cake (lit).png
+Cyan Candle Cake (lit).png
+Light Blue Candle Cake (lit).png
+Blue Candle Cake (lit).png
+Purple Candle Cake (lit).png
+Magenta Candle Cake (lit).png
+Pink Candle Cake (lit).png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Cakes stacked.png|A cake placed on top of another.
+File:Cakeeating.png|The sizes of cake when eaten.
+File:10 Years Cake.jpg|The 10-years cake [[model]] placed in the world.
+File:Panda eat a cake.png|A panda eating a cake.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Jappa Cake 1.jpg|Cake and the [[Totem of Undying]].
+Noor in a room full of cake.jpeg|[[Noor]] in a room full of cake.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:15Years-Banner-2.png|Official artwork of [[Efe]] with a cake, [[Sunny]] bringing a [[candle]], and [[Ari]] carrying [[Flint and Steel|flint and steel]] to light it.
+File:15 Year Journey 15 Year Cake Sticker.png|Sticker of a cake featured in [[15 Year Journey]].
+File:Jason and Jack's Cake.png|A real cake made for a video featuring [[Jason Momoa]] and [[Jack Black]], promoting both [[A Minecraft Movie]] and the [[15th Anniversary|15th anniversary]].
+File:Efe Crafter Cakes Artwork.jpg|Efe crafting cakes with a [[crafter]].
+File:Stacked Cakes.png|Developer concept for stacked cakes.
+File:Assortment of sweets and obsidian.jpeg|A Halloween candy [[bowl]] with an assortment of sweets and [[obsidian]].
+File:Edible tweet.jpg|An "edible tweet" of cake.
+File:Cake flippin fig.png|Cake figure of Flippin' Figs
+</gallery>
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Food]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Readable by comparators]]
+
+[[cs:Dort]]
+[[de:Kuchen]]
+[[es:Tarta]]
+[[fr:Gâteau]]
+[[hu:Torta]]
+[[it:Torta]]
+[[ja:ケーキ]]
+[[ko:케이크]]
+[[nl:Taart]]
+[[pl:Ciasto]]
+[[pt:Bolo]]
+[[ru:Торт]]
+[[th:เค้ก]]
+[[tr:Pasta]]
+[[uk:Торт]]
+[[zh:蛋糕]]
+[[Category:10th Anniversary]]

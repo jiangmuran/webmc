@@ -1,0 +1,291 @@
+{{Dungeons hatnote|Endermite|type=mob}}
+{{Infobox entity
+| image = Endermite.gif
+| imagesize = 200px
+| invimage = Endermite Spawn Egg
+| health = {{hp|8}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Arthropod}}
+| damage = Easy and Normal: {{hp|2}}<br>
+Hard: {{hp|3}}
+| spawn = 5% chance when an [[ender pearl]] lands
+| size = Height: 0.3 blocks<br>Width: 0.4 blocks
+}}
+'''Endermites''' are small [[arthropod]] [[hostile mob]]s that attack by biting. They sometimes spawn when a [[player]] throws an [[ender pearl]]. [[Endermen]] are hostile toward endermites.
+
+== Spawning ==
+Endermites have a 5% chance to spawn when a player-thrown ender pearl lands. They spawn at the player's original position when the pearl lands{{only|je}}, or at the pearl's landing site{{only|be}}.
+
+An endermite despawns within 2 minutes, regardless of the player's distance, unless it has been named with a [[name tag]]. This applies even when it is in a [[minecart]], [[boat]], or [[boat with chest]].
+
+== Drops ==
+=== On death ===
+Endermites drop {{xp|3}} experience orbs when killed by a player or [[tamed wolf]].
+
+== Behavior ==
+{{see also|Tutorial:Enderman farming}}
+Endermites attack players within 16 [[block]]s.
+
+{{IN|JE}}, endermites become hostile towards any mob that attacks another endermite. Endermites {{in|BE}} on the other hand do not become hostile towards any mob that attacks it.
+
+[[Enderman|Endermen]] attack endermites in line of sight within 64 blocks. Endermites attack endermen {{in|BE}}.
+
+As [[arthropod]]s, endermites are affected by the [[Bane of Arthropods]] enchantment.
+
+Like endermen, the eye of an endermite is emissive with [[Vibrant Visuals]].
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Silverfish idle1.ogg
+|sound2=Silverfish idle2.ogg
+|sound3=Silverfish idle3.ogg
+|sound4=Silverfish idle4.ogg
+|subtitle=Endermite scuttles
+|source=hostile
+|description=Randomly
+|id=entity.endermite.ambient
+|translationkey=subtitles.entity.endermite.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish death.ogg
+|subtitle=Endermite dies
+|source=hostile
+|description=When an endermite dies
+|id=entity.endermite.death
+|translationkey=subtitles.entity.endermite.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish hurt1.ogg
+|sound2=Silverfish hurt2.ogg
+|sound3=Silverfish hurt3.ogg
+|subtitle=Endermite hurts
+|source=hostile
+|description=When an endermite is damaged
+|id=entity.endermite.hurt
+|translationkey=subtitles.entity.endermite.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish step1.ogg
+|sound2=Silverfish step2.ogg
+|sound3=Silverfish step3.ogg
+|sound4=Silverfish step4.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=<!--While an endermite is walking-->''Unused sound event''<ref group=sound>{{bug|MC-117609||Silverfish and Endermites don't make footstep sounds or subtitles}}</ref>
+|id=entity.endermite.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Silverfish idle1.ogg
+|sound2=Silverfish idle2.ogg
+|sound3=Silverfish idle3.ogg
+|sound4=Silverfish idle4.ogg
+|source=hostile
+|description=Randomly
+|id=mob.endermite.say
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish death.ogg
+|source=hostile
+|description=When an endermite dies
+|id=mob.endermite.kill
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish hurt1.ogg
+|sound2=Silverfish hurt2.ogg
+|sound3=Silverfish hurt3.ogg
+|source=hostile
+|description=When an endermite is damaged
+|id=mob.endermite.hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish step1.ogg
+|sound2=Silverfish step2.ogg
+|sound3=Silverfish step3.ogg
+|sound4=Silverfish step4.ogg
+|source=hostile
+|description=While an endermite is walking
+|id=mob.endermite.step
+|volume=0.15
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Endermite
+|spritetype=entity
+|nameid=endermite
+|entitytags=arthropod, powder_snow_walkable_mobs, sensitive_to_bane_of_arthropods
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Endermite
+|spritetype=entity
+|nameid=endermite
+|showentityfamily=y
+|entityfamily=arthropod,endermite,lightweight,mob,monster
+|id=55
+|foot=1}}
+
+=== Entity data ===
+Endermites have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|Lifetime}}: How long the endermite has existed in ticks. Disappears when this reaches around 2400.
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{Load advancements|Monster Hunter;Monsters Hunted;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w11a|[[File:Endermite Revision 1.png|32px]] Added endermites. 
+|[[Endermen]] are hostile to endermites.
+|Endermites have a 15% chance of spawning when an enderman teleports (with that chance decreasing by 1 percentage point per endermite spawn) and a 5% chance to spawn when a [[player]] uses an [[ender pearl]]. 
+|Endermites have a [[silverfish]] model, but they have a unique purple [[texture]].}}
+|{{HistoryLine|||dev=14w11b|Endermites no longer despawn when named with a [[name tag]].}}
+|{{HistoryLine|||dev=14w17a|[[File:Endermite Revision 2.png|24px]] Endermites now have a unique [[model]].
+|[[Endermen]] are no longer [[hostile]] to non-[[ender pearl|pearl]]-spawned endermites.}}
+|{{HistoryLine|||dev=14w28a|Endermites no longer spawn from endermen.}}
+|{{HistoryLine||1.15|dev=19w34a|Endermites now take damage on [[magma block]]s.}}
+|{{HistoryLine|||dev=pre3|Endermites no longer suffocate in [[soul sand]].}}
+|{{HistoryLine||1.17|dev=20w46a|Endermen are now again hostile to non-pearl-spawned endermites.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Endermite Revision 2.png|24px]] Added endermites.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Endermite Revision 2.png|24px]] Added endermites.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Endermite Revision 2.png|24px]] Added endermites.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The endermite's [[entity]] ID has been changed from <code>Endermite</code> to <code>endermite</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Endermites are the smallest hostile mob by hitbox size.
+* Endermites are said to come from an "in-between" dimension, and are left behind by endermen as they teleport through.<ref>{{YouTube link|Tjloo2AHgng|archive=|MINECON Earth - Java Team Panel|Minecraft|November 18, 2017|t=225s}}</ref>
+** In a 2025 [[minecraft.net]] article, the dimension that endermites come from was referred to as a terrifying and "scary in-betweeny dimension". It is explained that endermites attack players and endermen because they don’t like "being dragged between dimensions".<ref name="mcnet">{{mcnet|endermite|Mob Menagerie: Endermite|September 22, 2025|Duncan Geere|archive-url|archive-time|url-prefix}}</ref>
+* According to the same article, endermites are "Lil fuzzy wuzzy killers".<ref name="mcnet"/>
+* [[Dinnerbone]] once mentioned an "ultimate plan" for endermites involving the [[dragon egg]], though this never came to fruition.<ref>{{tweet|Dinnerbone|444176255521681408|I do have an Ultimate Plan™ with endermites, but it will wait. May also include dragon egg but I haven't discussed this with the team yet.|March 13, 2014|archive=|archiveid=}}</ref>
+** In response to a question asking if the ultimate plan was an evil plan,<ref>{{tweet|TheEvilOlives|444177567075954688|@Dinnerbone ooh is it an evil plan?|March 13, 2014|archive=|archiveid=}}</ref> Dinnerbone stated that "everything is an evil plan to somebody".<ref>{{tweet|Dinnerbone|444177665076248576|@TheEvilOlives Everything is an evil plan to somebody|March 13, 2014|archive=|archiveid=}}</ref>
+*** When the person who asked the initial question stated they liked evil plans,<ref>{{tweet|TheEvilOlives|444183113455771648|@Dinnerbone I like evil plans ^_^|March 13, 2014|archive=|archiveid=}}</ref> Dinnerbone cryptically stated that he liked "evil plants".<ref>{{tweet|Dinnerbone|444183159316676609|@TheEvilOlives I like evil plants.|March 13, 2014|archive=|archiveid=}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:A group of endermen being mauled by endermites.png|A haunting of endermen losing to a horde of endermites.
+File:A group of endermites being mauled.png|Endermites being killed by endermen.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Endermite (texture).png|Endermite texture file.
+</gallery>
+
+== See also ==
+* {{EntityLink|Enderman}}
+* {{ItemLink|Ender pearl}}
+* {{EntityLink|Silverfish}}
+* {{ItemLink|Spawn Egg}}
+* {{EnvLink|The End}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|endermite|Mob Menagerie: Endermite|September 22, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox The End}}
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Arthropod mobs]]
+[[Category:End mobs]]
+
+[[cs:Endermit]]
+[[de:Endermite]]
+[[es:Endermite]]
+[[fr:Endermite]]
+[[hu:Endermite]]
+[[it:Endermite]]
+[[ja:エンダーマイト]]
+[[ko:엔더마이트]]
+[[lzh:終眇蟎]]
+[[nl:Endermite]]
+[[pl:Endermit]]
+[[pt:Endermite]]
+[[ru:Чешуйница Края]]
+[[uk:Ендермайт]]
+[[zh:末影螨]]

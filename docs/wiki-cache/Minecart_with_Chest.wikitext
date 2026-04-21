@@ -1,0 +1,250 @@
+{{For||Minecart (disambiguation)|Chest (disambiguation)}}
+{{Infobox item entity
+| image1caption = {{JE}}
+| image1 = Minecart with Chest.png
+| image2caption = {{BE}}
+| image2 = Minecart with Chest BE3.png
+| invimage = Minecart with Chest
+| renewable = Yes
+| stackable = No
+| size = Height: 0.7 blocks<br>Width: 0.98 blocks
+| networkid = 
+| drops = 1 {{ItemLink|Minecart with Chest}}<br> plus contents
+| health = {{hp|6}}
+}}
+A '''minecart with chest''' is a single [[chest]] inside a [[minecart]], and functions as such.
+
+== Obtaining ==
+=== Natural generation ===
+Minecarts with chests containing loot naturally generate in [[mineshaft]]s, each on top of a piece of [[rail]].
+
+=== Crafting ===
+{{Crafting
+|Chest
+|Minecart
+|Output=Minecart with Chest
+|type=Transportation
+}}
+
+Minecarts with chests can be retrieved by attacking them. By doing so, they drop as an [[item]] and any other contents of the chest are dropped as well. [[Critical hits]] are not applied to them although the particles suggest otherwise.
+
+== Usage ==
+[[File:Minecart with Chest GUI.png|thumb|176px|The GUI of a minecart with chest.]]
+Minecarts with chests can be placed by {{control|use item|text=using its item}} on any type of [[rail]].
+
+Chest minecarts' contents can be accessed by pressing {{control|use item}} button on them. The interaction makes no sounds and the chest does not show the opening or closing animation, unlike regular chests.
+
+The boost that minecarts with chests gain from [[powered rail]]s is dependent on their load. For example, from a 1 powered rail starter track, an empty minecart with chest travels 64 blocks, but a full minecart with chest travels only 16 blocks (opposed to 80 blocks for an occupied normal minecart and 8 blocks for an empty normal minecart).
+
+Another physical property of chest minecarts is their ability to be stacked. While three chests can fit in an area three blocks tall, up to four chest minecarts can fit in the same area. Like other minecarts, an unlimited number of minecarts with chests can exist in the same block space.
+
+Minecarts with chests are also able to interact with [[hopper]]s. Hoppers can take items out from the minecart chest if they are below the track as the minecart rolls over it or put them in if the minecart rolls under a downward facing hopper. Hoppers can also input items if they are facing into the side of the minecart.
+
+Opening or destroying a minecart with chest angers [[piglin]]s.
+
+When on top of [[detector rail]]s, nearby [[redstone comparator]]s emit redstone signals based on how full the minecarts with chests are.
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Minecarts with chests use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].<ref group=sound name=rollsource>{{bug|MC-42132}}</ref>
+
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|subtitle=Minecart rolls
+|source=Friendly Mobs <ref group=sound name=rollsource/>
+|overridesource=1
+|description=While a minecart with chest is moving
+|id=entity.minecart.riding
+|translationkey=subtitles.entity.minecart.riding
+|volume=0.0-0.35 <ref group=sound>Relates linearly with horizontal velocity (max 0.5)</ref>
+|pitch=0.0-1.0 <ref group=sound>Increases by 0.0025 per tick if the minecart's horizontal velocity is more than 0.01</ref>
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|source=neutral
+|description=While a minecart with chest is moving
+|id=minecart.base
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with Chest
+|spritetype=item
+|nameid=chest_minecart
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Minecart with Chest
+|spritetype=entity
+|nameid=chest_minecart
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with Chest
+|spritetype=item
+|nameid=chest_minecart
+|id=389
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Minecart with Chest
+|spritetype=entity
+|nameid=chest_minecart
+|showentityfamily=y
+|entityfamily=inanimate,minecart
+|id=98
+|foot=1}}
+
+=== Entity data ===
+Minecarts with chests have entity data associated with them that contain various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/container entity}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/vehicle}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Freight Station}}
+
+== Videos ==
+<div style="text-align:center">{{yt|2yVVMiQrCwo}}</div>
+
+== History ==
+[[File:Minecart with Chest BE3.png|thumb|The minecart models {{in|Bedrock}} were north or south on the sides. In the latest version, the front and rear sides are north or south. But the absolute orientation of the chest was not changed.]]
+{{info needed section|In bedrock edition 1.16.100 it seems that chests in minecarts face sideways instead of forward - when was this changed?}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.14|[[File:Minecart with Chest JE1.png|32px]] [[File:Minecart with Chest (item) JE1 BE1.png|32px]] Minecarts with chests have been added.
+|At this point, they are either called "chest minecarts" or "storage minecarts" because no in-game name was indicated.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|"Minecart with Chest" has been first indicated as its name, via the new item tooltips.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Minecart with Chest JE2.png|32px]] The [[model]] of the minecart with chest has been changed to match the new [[chest]] model. However, the [[chest]] is incorrectly offset.<ref>[[mcw:Issues/Beta 1.8pre2#Graphical]]</ref>}}
+|{{HistoryLine|||dev={{tooltip|release|Changes between the last pre-release and the full release}}|slink=none|[[File:Minecart with Chest JE3 BE1.png|32px]] The model of minecarts with chests has been fixed.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w02a|Minecarts with chests now generate in [[mineshaft]]s in place of normal chests.}}
+|{{HistoryLine||1.9|dev=15w43a|[[Loot table]]s have been added; minecarts with chests now use loot tables, and those in generated in [[mineshaft]]s now use loot tables.}}
+|{{HistoryLine||1.9.1|dev=pre2|The title of the [[inventory]] has been changed from 'Chest minecart' to 'Minecart with Chest'.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Minecart with Chest JE4 BE2.png|32px]] [[File:Minecart with Chest (item) JE2 BE2.png|32px]] The textures of minecarts with chests have been changed.}}
+|{{HistoryLine||1.16.2|dev=pre1|[[Piglin]]s now become angry with players who open or destroy a chest minecart.}}
+|{{HistoryLine||1.19|dev=22w13a|The crafting recipe for a minecart with chest is now shapeless.
+|Breaking a minecart with chest now drops the item instead of the minecart and chest separately, though the contents of the chest are still dropped.<ref>{{bug|MC-249493|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Minecart with Chest JE3 BE1.png|32px]] [[File:Minecart with Chest (item) JE1 BE1.png|32px]] Added minecarts with chests.}}
+|{{HistoryLine|||dev=build 3|Minecarts with chests now drop [[item]]s when destroyed in [[Creative]] mode.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID has been changed from <code>minecartchest</code> to <code>chest_minecart</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Minecart with Chest JE4 BE2.png|32px]] [[File:Minecart with Chest (item) JE2 BE2.png|32px]] The textures of minecarts with chests have been changed.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.31|Breaking a minecart with chest now drops the item instead of the minecart and chest separately, though the contents of the chest are still dropped.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Minecart with Chest JE1.png|32px]] [[File:Minecart with Chest (item) JE1 BE1.png|32px]] Added minecarts with chests.}}
+|{{HistoryLine||xbox=TU5|[[File:Minecart with Chest JE3 BE1.png|32px]] The [[model]] of the minecart with chest has been changed to match the new [[chest]] model.}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|The minecart [[spawn limit|limit]] has been increased.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Minecart with Chest JE4 BE2.png|32px]] [[File:Minecart with Chest (item) JE2 BE2.png|32px]] The textures of minecarts with chests have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Minecart_with_Chest_JE3_BE1.png|32px]] [[File:Minecart_with_Chest_(item)_JE1_BE1.png|32px]] Added minecarts with chests.
+|Minecarts with chests emit smoke [[particles]] when destroyed.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from <code>MinecartChest</code> to <code>chest_minecart</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 342.{{info needed|and what was the entity's?}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Compact Minecart Storage.png|A compact storage using chest minecarts (left) compared to chest storage in the same volume. At the time this screenshot was taken, chests could not be placed next to each other.
+GlitchedMinecartChest.png|This minecart with chest is trapped inside a block, due to a [[stronghold]] and a [[mineshaft]] that generated partially overlapping.
+Minecartportal.png|A minecart with chest generated on top of an [[end portal frame]], because there is a mineshaft behind the wall.
+Chest Minecart Stack.png|A large stack of chest minecarts.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Minecart Chest Mob Vote Server.png|A minecart with chest as it appeared in the [[2022 Mob Vote Event]]
+File:Walmart promo.jpeg|Artwork of a chest cart for a [[Walmart]] promotion
+File:Minecart with Chest (inventory) MCE.png|A {{MCE|minecart with chest}} as it appeared in {{MCE}}
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Storage]]
+[[Category:Readable by comparators]]
+[[Category:Vehicles]]
+
+[[cs:Nákladní vozík]]
+[[de:Güterlore]]
+[[es:Vagoneta con cofre]]
+[[fr:Wagonnet de stockage]]
+[[hu:Tárolócsille]]
+[[it:Carrello da miniera]]
+[[ja:チェスト付きのトロッコ]]
+[[ko:상자가 실린 광산 수레]]
+[[lzh:箱礦車]]
+[[nl:Mijnkar met kist]]
+[[pl:Wagonik ze skrzynią]]
+[[pt:Carrinho de mina com baú]]
+[[ru:Вагонетка с сундуком]]
+[[uk:Вагонетка зі скринею]]
+[[zh:运输矿车]]

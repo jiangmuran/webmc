@@ -1,0 +1,139 @@
+{{Infobox structure
+| title = Basalt columns
+| image = Tall basalt column.png
+| imagesize = 200px
+| biome = {{BiomeLink|Basalt Deltas}}
+| blocks =
+* {{BlockLink|Basalt}}
+| canspawn = No
+}}
+'''Basalt columns''' are vertical clusters of [[basalt]] blocks found within [[basalt delta]] biomes. They may also contain lava and magma in the many gaps between the towers.
+
+== Generation ==
+[[File:Basalt columns with many variations.png|thumb|An example of basalt columns in the air and on the ground.]]Basalt columns generate as part of the ''surface structure generation'' in the [[Basalt Deltas]] biome. They appear in two variations: '''small basalt columns''' and '''large basalt columns'''. These formations are placed during the ''Surface Structures'' decoration step and contribute to the biome's rugged, volcanic terrain.
+
+The game defines their generation using the following features:
+
+* '''Small Basalt Columns''' – Controlled by <code>NetherPlacements.SMALL_BASALT_COLUMNS</code>
+* '''Large Basalt Columns''' – Controlled by <code>NetherPlacements.LARGE_BASALT_COLUMNS</code>
+
+Basalt columns are defined as ''Placed Features'', which determine their spawning frequency and location. The generation process follows these steps:
+
+# ''Configured Features'':
+#* The game references pre-defined basalt column structures from <code>NetherFeatures.SMALL_BASALT_COLUMNS</code> and <code>NetherFeatures.LARGE_BASALT_COLUMNS</code>.
+#* These features define the ''basic shape and formation'' of the columns.
+# ''Placement Registration'' (<code>NetherPlacements.bootstrap()</code>):
+#* The basalt column features are registered with specific placement rules:
+#** Small Basalt Columns spawn 4 times per chunk (<code>CountOnEveryLayerPlacement.of(4)</code>).
+#** Large Basalt Columns spawn 2 times per chunk (<code>CountOnEveryLayerPlacement.of(2)</code>).
+#* The placement occurs using the <code>BiomeFilter.biome()</code> rule, ensuring they only appear in the Basalt Deltas biome.
+# ''World Generation Step'' (<code>GenerationStep.Decoration.SURFACE_STRUCTURES</code>):
+#* During terrain decoration, the game places basalt columns in randomized locations.
+#* Their height, clustering, and spread are determined by internal ''noise functions'' and world height layers.
+
+==== Interaction with other features ====
+
+* Basalt columns often generate alongside ''Basalt Blobs'' (<code>NetherPlacements.BASALT_BLOBS</code>), which contribute to the rugged terrain.
+* The presence of ''Blackstone Blobs'' (<code>NetherPlacements.BLACKSTONE_BLOBS</code>) adds variation to the biome’s rocky surface.
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=basalt-columns
+|spritetype=env
+|nameid=basalt_columns
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=basalt-columns
+|spritetype=env
+|nameid=large_basalt_columns
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=basalt-columns
+|spritetype=env
+|nameid=small_basalt_columns
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=basalt-columns
+|spritetype=env
+|nameid=basalt_columns_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|int}}{{nbt|compound|reach}} The max radius of a column in this column cluster. Value between 0 and 3 (inclusive).
+*** {{nbt inherit/int_provider}}
+** {{nbt|int}}{{nbt|compound|height}} The max height is <code>height + 1</code>. Value between 1 and 10 (inclusive).
+*** {{nbt inherit/int_provider}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:basalt_columns",
+  "config": {
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 4,
+        "min_inclusive": 1
+      }
+    },
+    "reach": 1
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w15a|Added basalt columns.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added basalt columns.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*In real life, {{w|columnar jointing}} is the phenomenon that causes rocks to form arrays of columns. Other rocks featured in ''Minecraft'' that can be subject to columnar jointing include [[andesite]], [[tuff]], and [[Nether quartz|quartz]].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Lava sea columns.png|Basalt columns in a lava sea.
+File:Floating column.png|These basalt columns generated on a floating [[blackstone]] island.
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Columnas de basalto]]
+[[fr:Colonnes de basalte]]
+[[ja:玄武岩の柱の塊]]
+[[lzh:黑堦石峰林]]
+[[pt:Colunas de basalto]]
+[[zh:玄武岩石柱林]]

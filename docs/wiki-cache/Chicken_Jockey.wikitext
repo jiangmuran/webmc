@@ -1,0 +1,373 @@
+{{For||Jockey (disambiguation)}}
+{{Infobox entity
+| group = Zombie
+| 1-1 = Chicken Jockey.png
+| group2 = Zombie Villager
+| 2-1 = Chicken Plains Zombie Villager Jockey.png
+| group3 = Husk
+| 3-1 = Chicken Husk Jockey.png
+| group4 = Gurgle
+| 4-1 = Chicken Gurgle Jockey.png
+| 4-1caption = {{JE}}
+| 4-2 = Chicken Gurgle Jockey BE4.png
+| 4-2caption = {{BE}}
+| group5 = Zombified Piglin
+| 5-1 = Chicken Zombified Piglin Jockey.png
+| extratext = View [[#Gallery|all renders]]
+| health = '''All riders:'''&nbsp;{{hp|20}}<br>'''Ridden mob:'''&nbsp;See ridable mobs
+| damage = Easy: {{hp|2.5}}<br />Normal: {{hp|3}}<br />Hard: {{hp|4.5}}
+| spawn = '''Zombie rider:'''<br>
+Anywhere a baby [[zombie]] can spawn<br>
+'''Zombie Villager rider:'''<br>
+Anywhere a baby [[zombie villager]] can spawn<br>
+'''Husk rider:'''<br>
+Anywhere a baby [[husk]] can spawn<br>
+'''Drowned rider:'''<br>
+Anywhere a baby [[drowned]] can spawn<br>
+'''Zombified Piglin rider:'''<br>
+Anywhere a baby [[zombified piglin]] can spawn
+}}
+A '''chicken jockey''' is the rare appearance of a baby [[zombie]], baby [[husk]], or a [[gurgle]] (or baby [[zombie villager]], or baby [[zombified piglin]] {{in|java}}<ref>Not {{in|bedrock}} due to {{bug|MCPE-234690}} and {{bug|MCPE-235955}}.</ref>) riding a [[chicken]]. {{IN|bedrock}}, baby zombies and variants can also mount other common [[mob]]s.
+
+== Spawning ==
+{{IN|java}}, [[chicken]] jockeys spawn directly in the world, like all other mobs. {{IN|bedrock}}, baby zombies and certain variants do not spawn directly but instead mount other nearby mobs.
+
+=== Direct spawning ===
+{{exclusive|java|section=1}}
+Each baby zombie, baby zombie villager, baby husk, baby drowned or baby zombified piglin that spawns naturally has a 5% chance to check for an existing [[chicken]] within an approximately 10×6×10 (L*H*W) box centered on the baby's spawn location and spawn riding one of those chickens if there are any. If it fails that 5% chance, there is an additional 5% chance of the baby spawning mounted on a new adult chicken.
+
+Therefore, in a chicken-free environment, each baby zombie has a 4.75% chance of spawning directly as a chicken jockey. If chickens are present, this chance increases to 9.75%.
+
+Taking into consideration the fact that each type of zombie has a 5% chance of spawning as a baby, each spawned zombie has a 0.2375% chance of directly spawning as a chicken jockey in a chicken-free environment. If chickens are present, the chance increases to 0.4875%.
+
+Chickens that are mounted by zombies despawn naturally, cannot lay eggs, and drop {{xp|10}} experience instead of the usual {{xp|1|3}}. If a jockey spawns riding a new chicken, the [[Chicken#Variants|variant of the chicken]] depends on the biome it spawns in. If a jockey spawns riding an existing chicken, the chicken keeps its NBT data (variant, health, custom name, age, etc), but its <code>IsChickenJockey</code> tag is set to <code>1</code>.
+
+Chicken jockeys can sometimes spawn with equipment. Zombie, zombie villager and husk chicken jockeys may spawn holding an [[iron sword]], [[iron spear]], or [[iron shovel]], and wearing [[armor]]. Drowned chicken jockeys may spawn holding a [[trident]], [[fishing rod]], or [[nautilus shell]]. Zombified piglin chicken jockeys always spawn holding a [[golden sword]] or [[golden spear]]. 
+
+Although chickens take damage from standing on [[magma block]]s, zombified piglin chicken jockeys still spawn on them, killing the chicken and leaving just the baby zombified piglin.
+
+Zombified piglin chicken jockeys do not become hostile if the chicken is attacked or killed.
+
+Due to the biomes the riders spawn in, husk and zombified piglin chicken jockeys can only spawn with a warm chicken, unless they spawn riding an existing chicken. If a zombified piglin chicken jockey spawns from a [[Nether Portal (block)|Nether portal block]], the variant of the chicken depends on the biome the portal block is located in.
+
+=== Mounting ===
+{{exclusive|bedrock|section=1}}
+{{IN|bedrock}}, 15% of naturally spawned baby zombies, baby husks and gurgles can mount other mobs when spawned. This includes baby zombies summoned by [[monster spawner]]s and [[spawn eggs]]. Such a mob can be [[summoned]] with the <code>minecraft:as_baby_jockey</code> [[spawn event]]. 
+
+The following mobs can be mounted:
+
+{{columns-list|colwidth=20em|
+* {{EntitySprite|Chicken}} Adult [[chicken]]s
+* {{EntityLink|Cow|Cows}}
+* {{EntitySprite|Pig}} Adult unsaddled [[pig]]s
+* {{EntityLink|Sheep}}
+* {{EntityLink|Mooshroom|Mooshrooms}}
+* {{EntitySprite|Ocelot}} Wild [[ocelot]]s
+* {{EntitySprite|Cat}} Stray [[cat]]s
+* {{EntitySprite|Angry Wolf}} Wild [[wolves]]
+* {{EntitySprite|Horse}} Wild adult [[horse]]s
+* {{EntitySprite|Donkey}} Wild adult [[donkey]]s
+* {{EntitySprite|Mule}} Untamed adult [[mule]]s
+* {{EntitySprite|Skeleton Horse}} Adult [[skeleton horse]]s
+* {{EntitySprite|Zombie Horse}} Wild adult [[zombie horse]]s
+* {{EntitySprite|Zombie Nautilus}} Wild [[zombie nautilus]]es (only [[drowned]])
+* {{EntityLink|Panda|Pandas}}
+* {{EntitySprite|Zombie}} Adult zombies
+* {{EntitySprite|Husk}} Adult [[husk]]s
+* {{EntitySprite|zombie villager}} Adult [[zombie villager]]s
+* {{EntitySprite|zombified piglin}} Adult [[zombified piglin]]s
+* {{EntityLink|Spider|Spiders}} that were not spawned as a [[spider jockey]]
+* {{EntityLink|Cave Spider|Cave spiders}} that were not spawned as a spider jockey
+}}
+
+Due to a bug, baby zombified piglins jockeys don't spawn properly.<ref>{{bug|MCPE-235955}}</ref><ref>https://github.com/Mojang/bedrock-samples/blob/493f4ffc613f7335a2a7591971d6971f210aa049/behavior_pack/entities/zombie_pigman.json#L521C1-L521C43 - This is because of a [[spawn event]] not existing in the {{cd|events}} field in the zombified piglin's {{cd|minecraft:entity}} [[JSON]] file.</ref>
+
+Due to another bug, baby zombie villagers can no longer mount mobs as jockeys.<ref>{{bug|MCPE-234690}}</ref>
+
+== Drops ==
+The baby [[zombie]] (or variant) and the ridden mob each drop the same items they normally would. If the baby zombie or baby husk{{only|be|short=1}}<ref name=":0">{{bug|MCPE-224103||Husk Incorrectly Drops Lava Chicken Record When Riding a Chicken}}</ref> is killed by a [[player]] or tamed [[wolf]] while riding a [[chicken]], it also drops the [[Music Disc Lava Chicken|Lava Chicken music disc]]. Note that the jockey must be a zombie, not a [[zombie villager]], [[husk]],{{only|je|short=1}} [[drowned]], or [[zombified piglin]], and it must ride a chicken.
+
+== Behavior ==
+{{main|Riding}}
+The jockey’s behavior is controlled by the rider.
+
+* Chicken jockeys fall slowly and do not take fall damage, like normal chickens.
+* The ridden mob can run through 1 block high gaps if its [[hitbox]] allows it. The rider suffocates unless the above block is transparent.
+* The rider can pick up/equip items if capable.
+* Chickens (unless spawned with commands without the {{cd|IsChickenJockey}} tag) do not lay [[egg]]s.<ref>{{bug|MC-165545|||WAI}}</ref> However, they can still [[breed]] with other chickens, and the offspring do lay eggs. {{IN|BE}}, if a baby zombie or a variant mounts a normal chicken, the chicken stops laying eggs. If the rider is killed, the chicken starts laying eggs again. 
+* Zombie riders (both the riders and ridden mobs<ref>{{bug|MC-48965|resolution=Works as intended}}</ref>) [[despawn]] like regular hostile mobs.
+* {{IN|je}}, the chicken acts like a regular [[passive mob]] again if the rider is killed, but still does not lay eggs and may despawn.
+* Only the ridden mob needs a [[name tag]] to prevent both the ridden mob and rider from despawning.
+* Curing a [[zombie villager]] jockey:
+** {{IN|je}}: turns it into a villager chicken jockey. The baby villager continues to ride the chicken if it grows up<ref>{{bug|MC-200418}}</ref> or turns into a [[witch]].
+** {{IN|be}}: dismounts the villager riding the jockey after it has been cured.
+
+== History ==
+{{more images|JE snap 7 renders|section=1}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||November 29, 2013|link=https://web.archive.org/web/20221008212237/https://imgur.com/a/PbRh1|A two-image gallery was uploaded to [[wikipedia:Imgur|Imgur]], and showed a baby [[zombie]] ''inside'' a [[chicken]]. It was also posted to [[wikipedia:Reddit|Reddit]].}}
+|{{HistoryLine||November 30, 2013|link={{tweet|Dinnerbone|406775245765619712}}|[[Dinnerbone]] tweeted the link to an image of chicken jockeys, after seeing the image on Reddit.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.4|dev=13w49a|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]] Added chicken jockeys.}}
+|{{HistoryLine||1.7.5|Chickens that are part of chicken jockeys can now despawn when no longer ridden.}}
+|{{HistoryLine||1.8|dev=14w02a|Chicken jockeys no longer lay eggs. <!-- January 9, 2014 -->}}
+|{{HistoryLine||1.9|dev=15w35a|[[File:Chicken Zombie Farmer Jockey.png|32px]] [[File:Chicken Zombie Librarian Jockey.png|32px]] [[File:Chicken Zombie Priest Jockey.png|32px]] [[File:Chicken Zombie Smith Jockey.png|32px]] [[File:Chicken Zombie Butcher Jockey.png|32px]] [[File:Chicken Zombie Nitwit Jockey.png|32px]] [[Zombie villager]]s now retain their professions and clothes, which have a tattered appearance. This has caused [[zombie villager]] chicken jockeys to have a changed appearance, as well.}}
+|{{HistoryLine||1.10|dev=16w20a|[[File:Chicken Husk Jockey Revision 1.png|32px]] Added a baby [[husk]] jockey variant.}}
+|{{HistoryLine||1.13|dev=18w11a|[[File:Chicken Drowned Jockey Revision 1.png|32px]] Added a baby [[drowned]] jockey variant.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Chicken Jockey JE2 BE2.png|32px]] The texture of zombie chicken jockeys has been changed.
+|[[File:Chicken Husk Jockey JE2.png|32px]] The texture of husk chicken jockeys has been changed.
+|[[File:Chicken Zombie Pigman Jockey JE2.png|32px]] The texture of [[zombie pigman]] chicken jockeys has been changed.
+|[[File:Chicken Drowned Jockey JE2.png|32px]] The texture of gurgle chicken jockeys has been changed.}}
+|{{HistoryLine|||dev=18w50a|[[File:Chicken Desert Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Jungle Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Plains Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Savanna Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Snowy Plains Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Swamp Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Taiga Zombie Villager Jockey JE2 BE2.png|32px]] Zombie villager chicken jockeys now have different clothes in [[desert]], [[jungle]], [[plains]], [[savanna]], snowy, [[swamp]] and [[taiga]] biomes.
+|Zombie villager chicken jockeys no longer have a profession.
+|[[File:Giant Jockey JE1.png|32px]] [[Giant]]s now use zombie AI so they can be spawned as giant chicken jockeys.}}
+|{{HistoryLine|||dev=19w03a|Reverted the changes made to giants from 18w50a, removing giant chicken jockeys.
+|Existing giant chicken jockeys now appear as adults.}}
+|{{HistoryLine||1.16|dev=20w09a|"Zombie pigman jockey" has been renamed to "zombified piglin jockey".
+|[[File:Chicken Zombified Piglin Jockey JE1.png|32px]] The [[model]] and texture of zombified piglin jockeys have been changed.}}
+|{{HistoryLine|||dev=20w22a|[[File:Chicken Zombified Piglin Jockey JE4.png|32px]] The model of zombified piglin jockeys has been changed, again.}}
+|{{HistoryLine|||dev=pre4|[[File:Baby Zombified Piglin Jockey MC-188880.png|32px]] The model of the zombified piglin jockey wasn't positioned properly due to a bug.}}
+|{{HistoryLine||1.16.2|dev=20w30a|[[File:Chicken Zombified Piglin Jockey JE4.png|32px]] The model of the zombified piglin jockey has been fixed.<ref>{{bug|MC-188880||Baby zombified piglins riding on chickens aren't positioned properly|Fixed}}</ref>}}
+|{{HistoryLine||1.21.5|dev=25w06a|[[File:Cold Chicken Jockey JE1 BE1.png|32px]] [[File:Warm Chicken Jockey JE1 BE1.png|32px]] Chicken jockeys now spawn as warm or cold chicken variants in their respective biomes.
+|Baby zombie villagers now spawn as warm or cold chicken variants in their respective biomes.
+|Baby husks now spawn as the warm chicken variant.
+|Gurgle now spawn as warm or cold chicken variants in their respective biomes.
+|[[File:Warm Chicken Zombified Piglin Jockey.png|32px]] Baby zombified piglins now spawn as warm or cold chicken variants in their respective biomes. <!-- Cold chicken should spawn in cold biomes from the Nether portal and should be included. -->}}
+|{{HistoryLine||1.21.7|dev=Release Candidate 1|Zombie chicken jockeys now drop the [[Music Disc Lava Chicken|Lava Chicken]] music disc when killed by a player or tamed wolf.}}
+|{{HistoryLine||26.1|dev=snap7|The models and textures of baby zombie variants have changed.}}
+|{{HistoryLine|||dev=snap10|The models and textures of baby zombies, husks, and drowned have changed.
+|[[File:Chicken Zombified Piglin Jockey JE5.png|32px]] The riding positions of baby zombies, husks, drowned, piglins, zombified piglins, and zombie villagers have been changed.<ref>{{bug|MC-306300}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Chicken Jockey JE1 BE1.png|32px]]Added baby zombies and chicken jockeys.}}
+|{{HistoryLine|||dev=build 2|[[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]]Added baby zombie pigmen and their chicken jockeys.}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Chicken Zombie Farmer Jockey.png|32px]] [[File:Chicken Zombie Librarian Jockey.png|32px]] [[File:Chicken Zombie Priest Jockey.png|32px]] [[File:Chicken Zombie Smith Jockey.png|32px]] [[File:Chicken Zombie Butcher Jockey.png|32px]] [[File:Chicken Zombie Nitwit Jockey.png|32px]] Added baby zombie villagers and their chicken jockey.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Overhauled the jockey mechanics. Baby zombies, baby zombie villagers, and baby zombie pigmen that are not jockeys already now have a 15% chance of becoming able to mount certain mobs, including chickens, when angered.}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Chicken Husk Jockey JE1.png|32px]] Added baby husks which can become a chicken jockey.}}
+|{{HistoryLine||v0.16.0|dev=?|Baby zombie pigmen can no longer mount [[mob]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Chicken Jockey JE2 BE2.png|32px]] The texture of zombie chicken jockeys has been changed.
+|[[File:Chicken Husk Jockey JE2.png|32px]] The texture of husk chicken jockeys has been changed.
+|[[File:Chicken Desert Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Jungle Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Plains Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Savanna Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Snowy Plains Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Swamp Zombie Villager Jockey JE2 BE2.png|32px]] [[File:Chicken Taiga Zombie Villager Jockey JE2 BE2.png|32px]] The texture of zombie villager chicken jockeys has been changed.
+|Zombie villager chicken jockeys no longer have a profession.}}
+|{{HistoryLine||1.21.70|exp=Drop 1 2025|dev=Preview 1.21.70.22|[[File:Cold Chicken Jockey JE1 BE1.png|32px]] [[File:Warm Chicken Jockey JE1 BE1.png|32px]] Added cold and warm chickens, which can be mounted by baby zombies, baby zombie villagers, and baby husks.}}
+|{{HistoryLine||1.21.93|Zombie chicken jockeys now drop the [[Music Disc Lava Chicken|Lava Chicken]] music disc when killed by a player.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.20|Zombie chicken jockeys now drop the Lava Chicken music disc when killed by a tamed wolf.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Baby [[zombie villagers]] and baby [[husks]] can no longer mount chickens and adult zombies, however can still find other mounts.}}
+|{{HistoryLine|||dev=Preview 1.21.130.26|Baby husks can once again mount chickens and adult zombies.
+|Baby zombie villagers can no longer mount mobs as jockeys.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.27|15% of baby [[drowned]] that spawn now find mobs to mount.
+|Due to a bug, baby [[zombified piglin]]s jockeys don't spawn correctly.<ref>{{bug|MCPE-235955}}</ref>
+|Due to more bugs, baby husks no longer mount mobs as jockeys, and baby zombie villagers can still not mount mobs as jockeys.<ref>{{bug|MCPE-234690}}</ref>}}
+|{{HistoryLine||26.10|dev=Preview 26.10.24|Fixed a [[family]] typo preventing baby husks jockeys from mounting mobs.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=none|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey LCE1.png|32px]] Added chicken jockeys.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Baby zombies can now ride most mobs, that match as bedrock edition's. However, normal chicken jockeys are still spawned.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Chicken Jockey JE2 BE2.png|32px]] The texture of chicken jockeys has been changed.
+|[[File:Chicken Zombie Pigman Jockey LCE2.png|32px]] The texture of baby zombie pigman jockeys has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]] Added chicken jockeys.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* {{IN|java}}, the chance for a baby zombie villager to spawn wearing full enchanted diamond armor holding an enchanted iron sword in its left hand while riding a chicken is about 1 in 2.91082×10<sup>22</sup>, however it is still not the rarest jockey.
+* {{IN|java}}, the rarest mob is the zombie villager chicken jockey from abandoned jungle village with fully enchanted diamond armor, jack o'lantern, leader attributes, and an enchanted iron sword in its left hand.
+* {{IN|bedrock}}, the rarest [[jockey]] is a baby [[zombie]] with full enchanted [[diamond armor]] with an enchanted [[iron spear]] riding a baby brown panda.
+* {{IN|bedrock}} as of [[Bedrock Edition 26.0|26.0]], if there were no bugs, there are 3074 possible zombie (variant) riders, when including all mob variants. This does not include different armor configurations for zombies, husks, and zombified piglins, cat, chicken, cow, pig, and wolf sound variants, and statistics.
+* Zombified piglin chicken jockeys can spawn from portals in the [[Overworld]].
+* A chicken jockey is the main protagonist of the openings for ''[[MINECON Live 2019]]'' and ''[[Minecraft Live 2020]]''.
+
+== Gallery ==
+=== Renders ===
+==== Chicken jockey ====
+{| class="wikitable"
+! rowspan="2" colspan="2" | Jockey
+! colspan="3" | Chicken variant
+|-
+! Temperate
+! Warm
+! Cold
+|-
+! colspan="2" | Zombie
+| [[File:Chicken Jockey.png|100px]]
+| [[File:Warm Chicken Jockey.png|100px]]
+| [[File:Cold Chicken Jockey.png|100px]]
+|-
+! colspan="2" | Husk
+| [[File:Chicken Husk Jockey.png|100px]]
+| [[File:Warm Chicken Husk Jockey.png|100px]]
+| [[File:Cold Chicken Husk Jockey.png|100px]]
+|-
+! colspan="2" | Gurgle
+| [[File:Chicken Gurgle Jockey.png|100px]]
+| [[File:Warm Chicken Gurgle Jockey.png|100px]]
+| [[File:Cold Chicken Gurgle Jockey.png|100px]]
+|-
+! colspan="2" | Zombified piglin
+| [[File:Chicken Zombified Piglin Jockey.png|100px]]
+| [[File:Warm Chicken Zombified Piglin Jockey.png|100px]]
+| [[File:Cold Chicken Zombified Piglin Jockey.png|100px]]
+|- class="collapsible collapsible-rows collapsed"
+! colspan="5" | Zombie villager jockey renders
+|-
+! rowspan="7" | Zombie villager
+! Plains
+| [[File:Chicken Plains Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Plains Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Plains Zombie Villager Jockey.png|100px]]
+|-
+! Desert
+| [[File:Chicken Desert Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Desert Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Desert Zombie Villager Jockey.png|100px]]
+|-
+! Savanna
+| [[File:Chicken Savanna Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Savanna Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Savanna Zombie Villager Jockey.png|100px]]
+|-
+! Taiga
+| [[File:Chicken Taiga Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Taiga Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Taiga Zombie Villager Jockey.png|100px]]
+|-
+! Snowy
+| [[File:Chicken Snowy Plains Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Snowy Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Snowy Zombie Villager Jockey.png|100px]]
+|-
+! Jungle
+| [[File:Chicken Jungle Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Jungle Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Jungle Zombie Villager Jockey.png|100px]]
+|-
+! Swamp
+| [[File:Chicken Swamp Zombie Villager Jockey.png|100px]]
+| [[File:Warm Chicken Swamp Zombie Villager Jockey.png|100px]]
+| [[File:Cold Chicken Swamp Zombie Villager Jockey.png|100px]]
+|}
+
+<gallery>
+File:Over power zombie villager jockey.png|A [[zombie villager]] chicken jockey, wearing full enchanted diamond [[armor]] and holding an enchanted [[iron sword]] in its left hand. This is one of the rarest possible jockeys {{in|je}}.
+File:ChickenJockeyWithArmor.png|A zombie chicken jockey with diamond armor and a diamond sword.
+</gallery>
+
+==== Mounts ====
+{{needs render|Add zombie donkey, mule, zombie horse, and skeleton horse jockeys as well as updating the models of the cow mooshroom and baby zombie riding them.|section=1}}
+{{Exclusive|Bedrock|section=1}}
+<gallery>
+File:Baby Zombie Riding Zombie.png|Adult zombie jockey
+File:Baby Zombie Riding Zombie Butcher.png|Adult zombie villager jockey
+File:Baby Zombie Riding Husk.png|Adult husk jockey
+File:Baby Zombie Riding Zombified Piglin.png|Adult zombified piglin jockey
+File:Baby Zombie Riding Pig.png|Pig jockey
+File:Baby Zombie Riding Cow.png|Cow jockey
+File:Baby Zombie Riding Mooshroom.png|Mooshroom jockey
+File:Baby Zombie Riding Sheep.png|Sheep jockey
+File:Baby Zombie Riding Wolf.png|Wolf jockey
+File:Baby Zombie Riding Ocelot.png|Ocelot jockey
+File:Baby Zombie Riding Tuxedo Cat.png|Stray cat jockey
+File:Baby Zombie Riding Horse.png|Horse jockey
+File:Baby Zombie Riding Panda.png|Panda jockey
+File:Baby Zombie Riding Spider.png|Spider jockey
+File:Baby Zombie Riding Cave Spider.png|Cave spider jockey
+File:Baby Husk Riding Husk.png|Adult husk jockey
+File:Baby Drowned Zombie Nautilus Jockey BE.png|Zombie nautilus jockey
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:A baby zombie inside a chicken in 14w25b.png|A baby zombie inside a chicken before [[Java Edition 1.7.4|1.7.4]] and in [[Java Edition 14w25b|14w25b]].
+File:ChickenJockeyAndChickens.png|A chicken jockey with some other [[chicken]]s walking around.
+File:Chicken Egg.png|Chickens can still lay [[egg]]s while being ridden when spawned with commands without the {{cd|IsChickenJockey}} tag.
+File:Upside down chicken jockey.png|A chicken jockey named "[[Easter eggs#Upside-down mobs|Dinnerbone]]".
+File:A villager chicken jockey.png|A baby [[zombie villager]] chicken jockey.
+File:Chicken Jockey Hitbox.png|The chicken hitbox below the [[zombie]].
+File:Dead Chicken Jockey Hitbox.png|Hitting from below leaves the zombie unharmed.
+File:4 Variations.png|The four variations of chicken jockeys using "Grumm" or "Dinnerbone" [[name tag]]s.
+File:Chicken Jockey Egg.png|The [[zombie]] on the chicken jockey (pre-1.8) has picked up an [[egg]] that the [[chicken]] laid.
+File:Bedrock Edition zombie jockey.png|A chicken jockey {{in|be}}.
+File:Chicken Jockey in Player's House.png|A chicken jockey that broke into a house before [[Tiny Takeover]].
+File:DrownedChickenJockey.png|A [[drowned]] chicken jockey.
+File:ZombiePigmanChicken.png|A [[zombified piglin]] chicken jockey in [[the Nether]] before [[1.21.5]].
+File:DetachedChickenJockey.png|A detached chicken jockey.
+File:BurningChickenJockey.png|A chicken jockey's [[zombie]] burning up in the [[sun]].
+File:AZombifiedPiglinJockeyspawnedbytheSpawner.png|A baby [[zombified piglin]] chicken jockey spawned by a [[monster spawner]].
+File:Chicken jockey in cave.png|Chicken jockey found in a cave.
+File:Baby zombified piglin on baby cold chicken.png|A baby zombified piglin riding an existing baby cold chicken.
+File:Giant Jockey JE1.png|A giant chicken jockey
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+30 14-23-02 S95BY9PNc.png|The first image of chicken jockeys.
+Chicken Jockey Origins 1.jpg|An image that inspired the chicken jockey.
+Chicken Jockey Origins 2.jpg|An image that inspired the chicken jockey.
+Chicken Jockey Infiltrator.png|A chicken jockey in a chicken pen.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Mob chickenjockey header.jpeg
+File:Chicken Jockey Artwork.png|Chicken jockey artwork.
+File:Chicken Jockeys Art.png|Chicken jockeys artwork.
+File:Chicken Jockey run.gif|Animation of a chicken running, created for the [[Mounts of Mayhem (trailer)|Mounts of Mayhem trailer]]
+File:Chicken Jockey Animated Pixel Artwork.gif|Chicken jockey animated artwork.
+File:Wait up, lets go.gif|A chicken jockey trying to keep up with an array of [[minecart]]s.
+File:Chicken Jockey Mobestiary.jpg|Chicken jockey from the [[Minecraft: Mobestiary|Mobestiary]].
+File:LEGO Chicken Jockey.png|[[Lego Minecraft]] chicken jockey.
+File:Chicken jockey flippin fig.jpg|[[Flippin' Figs]] figure of a chicken jockey.
+File:MCSM Chicken Jockey.png|A {{MCSM|chicken jockey}} in {{MCSM}}.
+File:AMCM Ugly lil zombie.jpeg|The {{AMCM|chicken jockey}} in {{AMCM}}.
+File:Chicken jockeys racing.jpeg|Chicken jockeys racing.
+File:Mounts of Mayhem Key Art.png|A chicken jockey in the [[Mounts of Mayhem]] key art.
+File:MCD Chicken Jockey Tower.png|A {{MCD|chicken jockey tower}} in {{MCD}}
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|meet-chicken-jockey|Meet the Chicken Jockey|October 10, 2017|Emily Richardson}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Jockeys]]
+
+[[Category:Hostile mobs]]
+[[Category:Animal mobs]]
+[[Category:Monster mobs]]
+
+[[cs:Slepice žokej]]
+[[de:Hühnerreiter]]
+[[es:Jinete avícola]]
+[[it:Cavalcatore di gallina]]
+[[ja:チキンジョッキー]]
+[[ko:치킨 조키]]
+[[nl:Kipberijder]]
+[[pl:Kurzy jeździec]]
+[[pt:Jockey de Galinha]]
+[[ru:Зомби-наездник]]
+[[uk:Жокей на курці]]
+[[zh:鸡骑士]]

@@ -1,0 +1,250 @@
+{{about|the entity|the command|Commands/camera|camera options|Options#Video Settings|camera effects|Screen effects}}
+{{exclusive|edu}} 
+{{unobtainable|edition=be}}
+{{Infobox entity
+| title = Tripod Camera
+| image = Camera.png
+| invimage = Camera
+| health = {{hp|4}}
+| behavior = Passive
+| size = Height: 1.8 Blocks<br>Width: 0.75 blocks
+| spawn = See [[#Obtaining|Obtaining]]
+}}
+{{Infobox block
+| title = Camera Block
+| image = Camera (block).png
+| transparent = No
+| light = 0
+| tool = any
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| renewable = No
+}}
+
+The '''camera''' is an inanimate [[passive mob]]<ref group="note" name="mob-family">Belongs to the <code>mob</code> entity family in the game's code.</ref> that is able to capture and store images. {{IN|edu}}, it works together with the [[portfolio]] item to create collections of [[photo]]s.<ref name="screenshot-edu">https://aka.ms/MEEBookAndQuill</ref>
+
+== Obtaining ==
+The camera can be obtained in the [[Creative inventory]] in ''Minecraft Education''. It can be obtained by either NBT editors, inventory editors, or glitches {{in|Bedrock}}.
+
+== Usage ==
+Using a camera from one's [[inventory]] captures a first-person screenshot. It may also be placed, creating a camera [[entity]] that can track the user, and take pictures from the camera's perspective. Photos that are taken with the camera appear in the [[portfolio]].
+
+Close-up snapshots of an [[item]] on the ground can be taken by holding the Shift key while right-clicking.
+
+Screenshots from camera can be inserted into [[book and quill]].<ref name="screenshot-edu"/>
+
+Photos that are taken with the camera block are stored in {{cd|[[com.mojang]]/screenshots}}.
+
+== Behavior ==
+[[File:CameraMob in a boat.png|thumb|Camera in a [[boat]]]]
+Cameras are mostly inanimate [[entities]], but they occasionally move when falling and they move at the [[player]]'s direction when they take a picture.
+
+Cameras are classified as [[mob]]s in the game code, they obey gravity, allowing them to fall and having effects common to all other [[entities]]. Cameras can be affected by [[status effects]]. They can be killed by [[Harming]] and [[Decay]] splash/lingering potions, and they play the player death sound and fall to their side and disappear, dropping no item. Cameras can't be [[leashed]] but they can ride on [[boats]] and [[minecart]]s.
+
+[[File:CameraMob being damaged by poison.png|thumb|Camera being harmed by [[poison]] effect]]
+Cameras are harmed by [[fire]], [[lava]], and [[campfire]] damage but they never die from it. Cameras can be destroyed by any [[projectile]] used by the player, such as [[arrows]], [[tridents]], or [[snowball]]s. Cameras never drown and are invulnerable to the [[void]], [[cacti]], [[falling block]]s, to [[explosion]]s or by [[firework rocket]]s.
+
+[[Warden]]s, [[wither]]s, [[zoglin]]s, [[goat]]s, and [[vindicator]]s named Johnny attack cameras, but the camera remains undamaged; [[pufferfish]] also inflate when a camera is nearby. [[Foxes]] don't sleep near cameras as well.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Normal/BE}}
+=== Unique === 
+
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound = Camera1.ogg
+| sound2 = Camera2.ogg
+| sound3 = Camera3.ogg
+| description = When a picture is taken with a camera
+| source = player
+| id = camera.take_picture
+| volume = 1.0
+| pitch = 1.0}}
+| {{SoundLine
+| sound = Player hurt1.ogg
+| sound2 = Player hurt2.ogg
+| sound3 = Player hurt3.ogg
+| description = When a camera dies
+| source = player
+| id = game.player.die
+| volume = 1.0
+| pitch =  0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|firstcolumnname=Camera
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Block
+|spritename=camera
+|spritetype=block
+|nameid=camera
+|id=242
+|form=block
+|itemform=item.camera}}
+{{ID table
+|displayname=Item
+|spritename=camera
+|spritetype=item
+|translationtype=item
+|nameid=camera
+|id=593
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Camera
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Entity
+|spritename=camera
+|spritetype=entity
+|nameid=tripod_camera
+|showentityfamily=y
+|entityfamily=inanimate,mob,tripodcamera
+|id=62
+|foot=1}}
+
+=== Entity data ===
+See [[Bedrock Edition level format/Entity format]].
+
+== Videos ==
+{{yt|1XLRGFibFNQ}}
+
+== History ==
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|[[File:Camera BE1.png|50px]] [[File:Camera (item texture) BE0.png|32px]] The textures and model of the camera can be found in the game files.<ref name="found">[{{Reddit|jkkmr/found_image_file_for_camera_in_minecraft_portable}} Reddit - Found image file for camera in Minecraft Portable Edition Demo APK file.]</ref><ref>https://web.archive.org/web/20160604161800/https://twitter.com/Kappische/status/103548954368679936</ref>
+|Two Java methods named <code>saveScreenshot</code> and <code>postScreenshotToFacebook</code> exist for saving images to the device and to Facebook respectively, though only the former contains code.}}
+|{{HistoryLine||v0.2.0|[[File:Camera BE2.png|50px]] [[File:Music Disc Blocks JE1 BE1.png|32px]] Added cameras.
+|Changed item and tripod textures.
+|To use a camera, equip it in the [[player]]'s hand, then look in the direction the player wants the picture to be taken. Long-press the screen, and a camera [[drops]] to the ground where the player are standing. Step back, then press on the camera until it starts emitting smoke [[particles]]. The smoke means a picture has been taken, and the camera may disappear immediately afterward.
+|Cameras have infinite uses.
+|The entity ID is 62 and item 456.<ref>https://www.minecraftforum.net/topic/1233138-i-found-the-camera-id/</ref>}}
+|{{HistoryLine||v0.4.0|The camera is now invisible and makes the standard player [[damage]] sound.}}
+|{{HistoryLine||v0.7.0|Added the ability to hide the GUI, which has now made the camera obsolete.}}
+|{{HistoryLine||v0.8.0|dev=build 2|[[File:Egg JE1 BE1.png|32px]] The camera now uses an [[egg]] texture in the inventory.}}
+|{{HistoryLine||v0.9.0|dev=build 1|The camera [[entity]] has been removed. [[Tommaso]] also stated: ''"It doesn't mean that it's dead forever, in fact I have a lot of ideas for it! I think it will be back when have [[shader]]s, sharing and [[redstone]]."''<ref>{{Reddit|sub=MCPE|281sep/camera|ci6znr8}}</ref>}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Camera BE3.png|32px]] [[File:Camera (item) BE2.png|32px]] The camera entity has been re-added with a new model and item texture.
+|Cameras summon [[lightning]] if a player loads a world with one.}}
+|{{HistoryLine||v0.14.2|The camera [[item]] ID has been changed to 498, but it cannot be used at the moment. The [[entity]] can now be spawned with a [[spawn egg]] with a [[damage]] value of 62.
+|According to the language files of the game, the empty label that shows up whenever hovering a finger to a camera would now say "Take Picture". However, the button doesn't do anything.}}
+|{{HistoryLine||v0.15.0|dev=build 1|The previous empty label on the camera mentioned above now displays the words "Take Picture". It still doesn't do anything.
+|The [[health]] of the camera [[entity]] is now {{hp|2}} instead {{hp|4}}.
+|The camera no longer summons [[lightning]].}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:Camera (block).png|32px]] The camera now appears as a [[block]] in the inventory. It can also be placed as a block using [[commands]].
+|The "Take Picture" button now appears to function properly, but no image files are created.
+|The changes to the camera were likely accidental due to ''Pocket Edition'' sharing the same codebase as ''Education Edition''.}}
+|{{HistoryLine|||dev=build 2|The camera [[block]] form is no longer obtainable.}}
+|{{HistoryLine|||dev=build 4|The camera's item form has been removed, and the camera can no longer be obtained or placed using any [[command]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|[[File:Camera BE3.png|32px]] [[File:Camera (block).png|32px]] The camera has been reimplemented.
+|The camera [[entity]] can now be spawned with a [[spawn egg]] with [[damage]] value 258.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|The camera can now be obtained with the {{cmd|give}} [[command]].}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|The camera can no longer be obtained with the {{cmd|give}} command.
+|Functionality has been added to the camera. Screenshots that are taken by the camera can now be saved into the {{cd|screenshots}} folder.
+|Cameras are now a part of the {{el|ee}} toggle as a hidden feature.
+|Cameras no longer have a [[death]] animation when killed by the [[player]] and instead, instantly emit smoke [[particles]].}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.50|The camera can now be obtained with the {{cmd|give}} [[command]] once again.}}
+|{{HistoryLine|||dev=beta 1.16.100.55|The camera can no longer be obtained with the {{cmd|give}} command.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.0|[[File:Camera BE3.png|32px]] [[File:Camera (block).png|32px]] Added cameras.}}
+|{{HistoryLine||1.4.0|Cameras no longer have a [[death]] animation when killed by the [[player]] manually and instead instantly emit smoke [[particles]].}}
+}}
+
+<gallery>
+PEcameras030.jpg|A row of cameras, as seen in [[Pocket Edition v0.3.0 alpha|v0.3.0]].
+PEcameraphoto.jpg|Example image taken by the camera [[entity]].
+CameraUse-1.png|The first method of using cameras.
+CameraUse-2.png|The second method of using cameras.
+Dinnerbone Camera.png|A camera spawned using a [[spawn egg]] named "[[Dinnerbone]]" in the [[Pocket Edition v0.15.0 alpha|v0.15.0]].
+Cam2.png|A camera falling from a [[tree]].
+</gallery>
+
+=== Future ===
+At the Minecraft [[Pocket Edition]] panel at [[MINECON 2012]], as well as one of [[Johan Bernhardsson|Jbernhardsson]]'s livestreams, it was stated that future plans include trying to have a proper use for cameras, perhaps an easier way to take screenshots and share them with others.<ref>{{ytl|YMhyX_lKWV4}}</ref> In the BlockTalk Q&A, the camera was briefly mentioned as part of a broader "sharing" theme planned for {{el|be}} in the future.<ref>{{ytl|Ruf6tvqsD84}}</ref>
+It later got implemented into {{el|ee}}, using the camera to make screenshots and share them in a special book.
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* A camera prevents a [[book and quill]] from working. Attempting to craft it or obtain it by commands gives a regular book instead, due to non-implementation of photo attaching to written books.{{verify|this feature is implemented in Minecraft Education, perhaps not in Bedrock Edition?}}
+* The camera can take a screenshot, which appears a bit smaller with a thick paper outline having cuts on its edges, making it look like an old photograph.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:RenderCameraUnusedTexture.png|A recreation of a potential camera animation, using an unused texture from [[Pi Edition]].
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Dinnerbone Camera.png|A camera spawned with the name "Dinnerbone".
+File:CameraMob being damaged by lava.png|A camera being damaged by [[lava]].
+File:CameraMob in a minecart.png|A camera sitting in a [[minecart]].
+File:CameraMob with slow falling.png|A camera with [[slow falling]] effect.
+File:Johnny attacking a Camera.png|A [[vindicator]] named Johnny attacking a camera.
+File:Education Edition mobs.png|A camera alongside a [[NPC]] and a [[agent]] in a tutorial world.
+File:Education Edition Exclusive Features.png|The camera and camera block placed in a world along with other Education Edition features.
+File:Screenshot by camera.jpg|An example of the screenshot taken by a camera in [[Bedrock Edition beta 1.13.0.1|beta 1.13.0.1]].
+File:Say Cheese.png|[[Steve]], [[Alex]], [[Jesse]], and an [[Agent]] getting their picture taken.
+File:Photoexample2.jpg|Another example of a screenshot taken by a camera in 1.21.51.
+</gallery>
+
+=== In other media ===
+<gallery>
+Education Poster.png|The camera in promotional artwork for [[Minecraft Education]].
+</gallery>
+
+== See also ==
+* {{ItemLink|Portfolio}}
+* [[Screenshot]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://education.minecraft.net/en-us/trainings/learn-to-play-the-camera Learn to Play: The Camera] – Minecraft.net on August 22, 2018
+
+== Navigation ==
+{{Navbox unused features}}{{Navbox entities|other}}
+{{Navbox items|Creative}}
+{{Navbox blocks|Unused}}
+{{Navbox Education|exclusive}}
+
+[[Category:Minecraft Education blocks]]
+[[Category:Minecraft Education items]]
+[[Category:Passive mobs]]
+[[Category:Stationary entities]]
+
+[[cs:Kamera]]
+[[de:Kamera]]
+[[es:Cámara]]
+[[fr:Appareil photo]]
+[[it:Fotocamera]]
+[[hu:Kamera]]
+[[ja:カメラ]]
+[[ko:카메라]]
+[[nl:Camera]]
+[[pl:Aparat]]
+[[pt:Câmera]]
+[[ru:Камера]]
+[[uk:Камера]]
+[[zh:摄像机]]

@@ -1,0 +1,503 @@
+[[File:Opaque Leaves.png|thumb|200px|When leaves are opaque (in "fast" graphics), they completely obstruct rendering.]]
+[[File:Transparent Leaves.png|thumb|200px|When leaves are transparent (in "fancy" graphics), the world behind them is also rendered.]]
+{{about|see-through block textures, models, and lighting|similar concepts|Transparency}}
+{{wip|The term "transparency" has been used to describe many different properties in colloquial use; this page has been narrowed down to the visual and light-related definition.}}
+'''Opacity''' (and its inverse, '''transparency''') are properties of [[blocks]] which affect how the game renders it and other nearby blocks, as well as how {{w|Hidden-surface determination|occlusion culling}} is handled.
+
+== Properties ==
+The primary purpose of opacity is to tell the game engine if it needs to render other blocks behind that block; an opaque block completely obscures the view behind it, while a transparent block does not. Therefore, transparency applies not only to [[solid block]]s like [[ice]] and [[glass]], but also to blocks like [[cacti]], [[stairs]], [[chest]]s, and single [[slab]]s, which are not considered full blocks.
+By this definition, transparency does not imply that a block is actually see-through, which is a quality of the item texture specified by the game or [[resource pack]].
+[[File:Bedrock Edition transparency distance cutoff.png|alt=Leaves and kelp becoming opaque at long distances on Bedrock Edition.|thumb|[[Leaves]] and [[kelp]] becoming opaque far away on ''[[Bedrock Edition]]''.]]
+In ''[[Bedrock Edition]]'', most transparent blocks become opaque when located far away from the player. This is especially noticeable when looking long distances with the [[spyglass]]. The distance at which blocks become opaque is proportional to the render distance.
+
+[[Water]] that is completely surrounded by water or opaque blocks does not have a current. However, if one of the surrounding blocks is transparent, the water shows a downward current on its side, like a waterfall, although swim speed through that water remains unchanged.
+
+Opacity is independent of redstone [[conductivity]] and spawnability for full blocks, although they often coincide. A [[slime block]] is an example of this independence: a slime block is partially light-transparent and has a see-through texture, but still conducts redstone power and allows mob spawning on top.
+
+== Lighting ==
+Opacity also affects how [[light]] propagates through the world. Opaque blocks completely prevent light from traveling through them, while transparent blocks generally diminish the light by one light level per block (these values can be overridden however, and there are several [[Light#Light-filtering_blocks|exceptions]]).
+
+The [[Grass Block#Spread|growth of grass blocks]] is linked to the amount of light in the blocks directly above them. A grass block can be killed by placing an opaque or partially transparent block above it.
+
+Some transparent blocks can reduce or block [[light]], according to type:
+* {{BlockLink|Glass}} and {{BlockLink|carpets}} do not reduce the light passing through them, i.e. there is no additional modifier. In other words, light passes through them as if it were [[air]].
+* {{BlockLink|Lava}} is set to completely block light propagation. This is often unnoticeable since [[lava]] has the maximum light level of 15, but can be observed in cases where lava blocks skylight propagation.
+* {{BlockLink|Water}}, {{BlockLink|ice}}, {{BlockLink|leaves|id=oak leaves}}, {{BlockLink|slime block|text=slime blocks}}, {{BlockLink|honey block|text=honey blocks}}, and {{BlockLink|cobweb|text=cobwebs}} do not have any extra effect on block light, but they do diffuse sky light.
+** {{IN|bedrock}}, water and ice have a -1 modifier to light propagation, on top of the normal decrease of 1 per block.
+** The light level from [[sunlight]] or [[moon]]light is the same in each block of air in the column of air above the highest obstruction in the column. When placed, water, ice, leaves, slime blocks, honey blocks, and cobwebs obstruct that light column so that the lowest air block above the leaves acts as other light sources do.
+* Sunlight is attenuated by [[leaves]] and each vertical layer of leaf blocks attenuates the light further.
+
+== Types of transparent blocks ==
+{| class="wikitable hlist" data-description="Transparent blocks"
+!Full-block solids
+|
+* {{BlockLink|Barrier}}
+* {{BlockLink|Beacon}}
+* {{BlockLink|Copper Grate}}
+* {{BlockLink|Frosted Ice}}
+* {{BlockLink|Glass}}
+* {{BlockLink|Glowstone}}
+* {{BlockLink|Ice}}
+* {{BlockLink|Leaves|id=oak leaves}}
+* {{BlockLink|Sea Lantern}}
+* {{BlockLink|Mangrove Roots}}
+|-
+!Non-full-block solids
+|
+* {{BlockLink|Amethyst Bud}}
+* {{BlockLink|Amethyst Cluster}}
+* {{BlockLink|Anvil}}
+* {{BlockLink|Azalea}}
+* {{BlockLink|Bamboo}}
+* {{BlockLink|Beds|Link=Bed}}
+* {{BlockLink|Bell}}
+* {{BlockLink|Big Dripleaf}}
+* {{BlockLink|Brewing Stand}}
+* {{BlockLink|Bubble Column}}
+* {{BlockLink|id=cactus-side|Cactus}}
+* {{BlockLink|Cake}}
+* {{BlockLink|Calibrated Sculk Sensor}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Candle}}
+* {{BlockLink|Carpets}}
+* {{BlockLink|Cauldron}}
+* {{BlockLink|Chains}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Chorus Flower}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Cobweb}}
+* {{BlockLink|Cocoa}}
+* {{BlockLink|Composter}}
+* {{BlockLink|Conduit}}
+* {{BlockLink|Daylight Detector}}
+* {{BlockLink|Decorated Pot}}
+* {{BlockLink|Dirt Path}}
+* {{BlockLink|Doors}}
+* {{BlockLink|Dragon Egg}}
+* {{BlockLink|Enchanting Table}}
+* {{BlockLink|End Portal Frame}}
+* {{BlockLink|End Rod}}
+* {{BlockLink|Ender Chest}}
+* {{BlockLink|Farmland}}
+* {{BlockLink|Fence Gates|id=oak fence gate}}
+* {{BlockLink|Fences}}
+* {{BlockLink|Flower Pot}}
+* {{BlockLink|Glass Pane}}
+* {{BlockLink|Grindstone}}
+* {{BlockLink|id=oak wall hanging sign|Hanging Sign}} <small>(wall variant)</small>
+* {{BlockLink|Honey Block}}
+* {{BlockLink|Hopper}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Lantern}}
+* {{BlockLink|Lectern}} 
+* {{BlockLink|Lightning Rod}}
+* {{BlockLink|Lily Pad}}
+* {{BlockLink|id=all-heads|Mob head|Mob Heads}}
+* {{BlockLink|Moss Carpet}}
+* {{BlockLink|Piston}} <small>(extended)</small>
+* {{BlockLink|Pitcher Plant}} <small>(crop variant)</small>
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Redstone Comparator}}
+* {{BlockLink|Redstone Repeater}}
+* {{BlockLink|Scaffolding}}
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Sculk Shrieker}}
+* {{BlockLink|Sea Pickle}} 
+* {{BlockLink|id=all-slabs|Slabs}} <small>(single)</small>
+* {{BlockLink|Sniffer Egg}}
+* {{BlockLink|Snow}} <small>(2–8 layers)</small>
+* {{BlockLink|id=all-stairs|Stairs}}
+* {{BlockLink|id=piston|Sticky Piston}} <small>(extended)</small>
+* {{BlockLink|Stonecutter}}
+* {{BlockLink|Sweet Berry Bush}}
+* {{BlockLink|Trapdoors}}
+* {{BlockLink|Trapped Chest}}
+* {{BlockLink|Turtle Egg}} 
+* {{BlockLink|id=all-walls|Walls}}
+|-
+!Non-solids
+| 
+* {{BlockLink|Air}}
+* {{BlockLink|id=banners|Banner|Banners}}
+* {{BlockLink|Buttons}}
+* {{BlockLink|Cave Vines}}
+* {{BlockLink|Coral|Corals}} 
+* {{BlockLink|Coral Fans}} 
+* {{BlockLink|id=wheat-crops-8|Crops}}
+* {{BlockLink|Dead Bush}}
+* {{BlockLink|Dead Coral Fans}} 
+* {{BlockLink|Dead Coral|Dead Corals}}
+* {{BlockLink|End Gateway}}
+* {{BlockLink|End Portal}}
+* {{BlockLink|Fern}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Flowers}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Hanging Roots}}
+* {{BlockLink|id=oak hanging sign|Hanging Sign}} <small>(ceiling variants)</small>
+* {{BlockLink|Kelp}} 
+* {{BlockLink|Lever}}
+* {{BlockLink|Light|link=Light (block)}}
+* {{BlockLink|Mushrooms}}
+* {{BlockLink|Nether Fungi}}
+* {{BlockLink|Nether Portal}}
+* {{BlockLink|Nether Sprouts}}
+* {{BlockLink|Nether Wart}}
+* {{BlockLink|Pink Petals}}
+* {{BlockLink|Pitcher Plant}} <small>(non-crop variant)</small>
+* {{BlockLink|Powder Snow}}
+* {{BlockLink|Pressure Plates}}
+* {{BlockLink|Rail}}
+** {{BlockLink|Activator Rail|Activator}}
+** {{BlockLink|Detector Rail|Detector}}
+** {{BlockLink|Powered Rail|Powered}}
+* {{BlockLink|Redstone Dust}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Crimson Roots}}
+* {{BlockLink|Warped Roots}}
+* {{BlockLink|Saplings}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Seagrass}}
+* {{BlockLink|Short Grass}}
+* {{BlockLink|id=oak-sign|Sign}}
+* {{BlockLink|Small Dripleaf}}
+* {{BlockLink|Snow}} <small>(1 layer)</small>
+* {{BlockLink|Soul Torch}}
+* {{BlockLink|Spore Blossom}}
+* {{BlockLink|Pumpkin Stem|Stems}}
+* {{BlockLink|Structure Void}}
+* {{BlockLink|Sugar Cane}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Tripwire Hook}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Twisting Vines}}
+* {{BlockLink|Vines}}
+* {{BlockLink|Weeping Vines}}
+|-
+!Fluids
+| 
+* {{BlockLink|Lava}}
+* {{BlockLink|Water}}
+|-
+!Rendering only
+|
+* {{BlockLink|Invisible Bedrock}}
+* {{BlockLink|Slime Block}} <small>(mob spawning possible)</small>
+* {{BlockLink|Monster Spawner}}
+|}
+
+== Occlusion Shape ==
+
+{{info needed section|
+Are there differences {{in|BE}}?
+}}
+
+The occlusion shape manages if a block prevent or not the propagation of light, prevents or not the rendering of adjacent faces of other blocks, among other functions.
+
+Most blocks have their occlusion shape identical to their [[interaction box]] or an empty occlusion shape. A block has an empty occlusion shape if it doesn't have a [[collision box]]{{note|In this context, the [[scaffolding]] and [[Hanging Sign|wall hanging signs]] are considered no collision block, even though they have a collision box. This is because before defining their collision box, they are defined as {{cd|noCollision}}.}} or if it is explicitly defined not to have a occlusion.
+
+{{Collapse
+|title=
+The list below shows all blocks defined as {{cd|noOcclusion}} {{in|JE}}:
+|content={{flatlist|
+*{{BlockLink|Amethyst Buds|link=Amethyst Bud}}
+*{{BlockLink|Amethyst Cluster}}
+*{{BlockLink|Azalea}}
+*{{BlockLink|Bamboo}}
+*{{BlockLink|Barrier}}
+*{{BlockLink|Beacon}}
+*{{BlockLink|Beds}}
+*{{BlockLink|Brewing Stand}}
+*{{BlockLink|Campfire}}
+*{{BlockLink|Candles}}
+*{{BlockLink|Cauldron}} 
+**{{BlockLink|Lava Cauldron}}
+**{{BlockLink|Powder Snow Cauldron}}
+**{{BlockLink|Water Cauldron}}
+*{{BlockLink|Chorus Flower}}
+*{{BlockLink|Chorus Plant}}
+*{{BlockLink|Cocoa}}
+*{{BlockLink|Conduit}}
+*{{BlockLink|All Copper Bars|link=Copper Bars}}
+*{{BlockLink|Copper Chains|link=Copper Chain}}
+*{{BlockLink|Copper Golem Statues|link=Copper Golem Statue}}
+*{{BlockLink|Copper Grates|link=Copper Grate}}
+*{{BlockLink|Decorated Pot}}
+*{{BlockLink|Doors}}
+*{{BlockLink|Dragon Egg}}
+*{{BlockLink|Dried Ghast}}
+*{{BlockLink|End Rod}}
+*{{BlockLink|Flower Pot}} 
+**{{BlockSprite|potted-acacia-sapling}}{{BlockSprite|potted-poppy}}{{BlockSprite|potted-bamboo}}{{BlockSprite|potted-crimson-fungi}}⋯ [[Flower Pot|All Potted Plants/Fungi]]
+*{{BlockLink|Flowering Azalea}}
+*{{BlockLink|Frogspawn}}
+*{{BlockLink|Frosted Ice}}
+*{{BlockLink|Glass}}
+*{{BlockLink|Glass Pane}}
+*{{BlockLink|Heads}}
+*{{BlockLink|Honey Block}}
+*{{BlockLink|Hopper}}
+*{{BlockLink|Ice}}
+*{{BlockLink|Iron Bars}}
+*{{BlockLink|Iron Chain}}
+*{{BlockLink|Ladder}}
+*{{BlockLink|Lanterns}}
+*{{BlockLink|Leaves}}
+*{{BlockLink|Light|link=Light (block)}}
+*{{BlockLink|Lightning Rods|link=Lightning Rod}}
+*{{BlockLink|Lily Pad}}
+*{{BlockLink|Mangrove Roots}}
+*{{BlockLink|Monster Spawner}}
+*{{BlockLink|Moving Piston}}
+*{{BlockLink|Pale Moss Carpet}}
+*{{BlockLink|Pointed Dripstone}}
+*{{BlockLink|Powder Snow}}
+*{{BlockLink|Sea Pickle}}
+*{{BlockLink|Shulker Boxes}}
+*{{BlockLink|Slime Block}}
+*{{BlockLink|Sniffer Egg}}
+*{{BlockLink|Soul Campfire}}
+*{{BlockLink|Stained Glass}}
+*{{BlockLink|Stained Glass Panes}}
+*{{BlockLink|Test Instance Block}}
+*{{BlockLink|Tinted Glass}}
+*{{BlockLink|Trapdoor}}
+*{{BlockLink|Vault}}
+}}
+}}
+
+However, there are blocks that, even though they have a non-empty occlusion shape, have an occlusion shape that differs from their interaction box. The table below shows all the exceptions {{in|JE}}:{{Note|In the table, trios like 1×2×3 represent a box in the shape of a cuboid with 1px in X, 2px in Y, and 3px in Z. If the note column is empty, the center of XZ-plane is the same as the center of the block and starts at the base. For example, 16×16×16 is a full block.}}
+{{Clear}}
+{| class="wikitable sortable collapsed collapsible"
+!Block !! Occlusion Shape
+!Interaction Box
+!Notes
+|-
+|{{BlockLink|Fences}} || 4×16×4
+Additionally, for all sides set to {{Cd|true}}:
+*Facing east/west: 6×9×2
+*Facing north/south: 2×9×6
+ 
+|4×16×4
+Additionally, for all sides set to {{Cd|true}}:
+*Facing east/west: 6×16×4
+*Facing north/south: 4×16×6
+|Centered on the block's center. The additional boxes for sides set to {{Cd|true}} face the respective direction.
+
+For the occlusion shape, the additional boxes's top are 1px below the top of the block.
+|-
+|{{BlockLink|Fence Gates}} 
+|| 
+
+Two boxes 2×11×2
+
+Each box is adjacent to opposite vertical faces of the block.
+
+If facing is {{cd|east}}/{{cd|west}}: The boxes are centralized on the Y-axis.
+
+If facing is {{cd|north}}/{{cd|south}}: The boxes are centralized on the X-axis.
+|
+Not in wall, facing is {{cd|east}}/{{cd|west}}: 16×16×4
+
+Not in wall, facing is {{cd|north}}/{{cd|south}}: 4×16×16
+
+In wall, facing is {{cd|east}}/{{cd|west}}: 16×13×4
+
+In wall, facing is {{cd|north}}/{{cd|south}}: 4×13×16
+|
+If in_wall is {{cd|false}}: The boxes's top are at the top of the block.
+
+If in_wall is {{cd|true}}: The boxes's top are 3px below the top of the block.
+|-
+|{{BlockLink|Lectern}} 
+|| Identical to its collision box, that is:
+
+16×2×16, with an 8x12x8 column above 
+| The collision box plus two 16x4x4.333333 boxs and a 16x4x4.333334 box. 
+| The additional blocks of the interaction box are positioned diagonally, approaching the visual model. They are also rotated according to the facing.
+|-
+|{{BlockLink|Sculk Shrieker}} || 16×8×16
+|Full block (16×16×16)
+| The occlusion shape is identical to collision box
+|}
+
+{{anchor|Solid render}}
+If a block's occlusion shape is a full block, it is considered a ''solid render block''.
+
+=== Propagation of light ===
+
+When a block has a [[light level]] greater than one, it attempts to propagate the light in all six directions. If successful, the light is propagated to the adjacent block and with one less level. 
+
+However, there are two situations that can prevent light propagation between blocks:
+
+*Case the block through which the light is trying to propagate is a solid render block or [[tinted glass]].
+
+*Case, when joining the adjacent faces of the blocks, considering their occlusion shape, forms a full square.
+
+For example, a top [[slab]] does not propagate light to a horizontally adjacent bottom slab. Because, by joining the adjacent faces of its occlusion shape, that is, the top 8×16 with the bottom 8×16, it forms a full square.
+
+However, not all blocks use their shape to prevent light propagation; in reality, only a select list of blocks uses their occlusion shape for this purpose. All other blocks are considered to have an empty occlusion shape when it comes to light propagation.
+
+{{Collapse
+|title=
+The list below shows all blocks that can use their shape for light occlusion {{in|JE}}:
+|content={{flatlist|
+*{{BlockLink|Calibrated Sculk Sensor}}
+*{{BlockLink|Daylight Detector}}
+*{{BlockLink|Dirt Path}}
+*{{BlockLink|Enchanting Table}}
+*{{BlockLink|End Portal Frame}}
+*{{BlockLink|Farmland}}	
+*{{BlockLink|Lectern}}	
+*{{BlockLink|Pistons}} 
+**extended
+*{{BlockLink|Piston Head}}	
+*{{BlockLink|Sculk Sensor}}	
+*{{BlockLink|Sculk Shrieker}}	
+*{{BlockLink|Shelves}}	
+*{{BlockLink|Slabs}} 
+**no double
+*{{BlockLink|Snow}}	
+*{{BlockLink|Stairs}}	
+*{{BlockLink|Stonecutter}}	
+}}
+}}
+
+Considering solid render blocks with an empty occlusion shape is important for the functioning of light emitters. If, for example, [[glowstone]] considered its shape, it could never propagate light to other blocks. This would occur because each of its faces is already a complete square, and when joined with a face of any other block (even if it is empty) would generate a full square. Therefore, solid render blocks do not receive light (due to the first condition at the beginning of the session) but can still emit light (due it to be considered with an empty occlusion shape).
+
+Some blocks that use their shape for light occlusion are also light emitters, from exemple the [[enchanting table]]. Unlike solid render blocks, these can obstruct their own emitted light. This could be a total obstruction on one face (e.g., the enchanting table does not emit its light from the face below) or a partial obstruction on one face (e.g., the enchanting table does not emit its light to a horizontally adjacent top slab).
+
+This behavior works for both [[block light]] and [[sky light]] propagated ''between'' blocks. For light emitted directly from the sky onto the block, the behavior is slightly different. The game creates a column of blocks with level 15 sky light starting from the top of the world and extending to the tallest block that satisfies at least one of the conditions below:
+
+* The block below has a full block [[interaction box]] or is a [[chorus plant]], and isn't in list below:
+{{Collapse
+|title=
+|content={{flatlist|
+*{{BlockLink|Barrier}}
+*{{BlockLink|Copper Grates|link=Copper Grate}}
+*{{BlockLink|Firefly Bush}}
+*{{BlockLink|Glass}}
+*{{BlockLink|Glow Lichen}}
+*{{BlockLink|Large Fern}}
+*{{BlockLink|Lilac}}
+*{{BlockLink|Pale Moss Carpet}}
+*{{BlockLink|Peony}}
+*{{BlockLink|Pitcher Plant}}
+*{{BlockLink|Rose Bush}}
+*{{BlockLink|Stained glass}}
+*{{BlockLink|Sunflower}}
+*{{BlockLink|Tall grass}}
+*{{BlockLink|Vines}}
+*{{BlockLink|Wheat|link=Wheat Seed}}
+}}
+}}
+
+* The block below to be in a [[fluid]] (including [[waterlogged]] blocks), and isn't a [[copper grate]].
+
+* Its bottom face joined with the top face of the block below form a full square. Again, considering only the shape of some blocks, the same ones from propagation between blocks.
+
+Blocks above and below the dimension's building limit are considered air. If there are no blocks blocking the skylight, it can continue through the [[void]].
+
+=== Block face rendering ===
+
+To improve game performance, ''Minecraft'' does not render all block faces. Block faces that are completely hidden by the face of the adjacent block do not need to be rendered, and rendering them will result in a performance loss without any gain.
+
+The occlusion shape is used to determine when one face of a block is hiding the face of another. If face A of one block is adjacent to face B of another block, and when comparing the shape of each face, considering the occlusion shape of each block, cas the face A is full{{note|A face is considered full when, internally, the {{cd|VoxelShape}} representing its face is exactly a block. However, there are cases where a face is complete but the shape it represents is not exactly a block; for example, the {{cd|VoxelShape}} of a full side of a [[stairs]] is considered a block plus a half block (one inside the other) and not a single block. Therefore, the stairs prevents the rendering a [[stone]] but not prevents the rendering of a [[powder snow]], for example.}} or if face B is not empty and there is no point that is only on face B (in other words: if the non-empty face B is contained in the face A), then face B is not rendered.
+
+This is the only time in the game when the occlusion format of all blocks is actually used. For light rendering, only blocks with a full block occlusion shape (solid render blocks) and blocks from a select list are used. In other uses, only the fact that a block is or is not a solid render block is used.
+
+However, there are certain non-occluded blocks that sometimes do not render the face of the adjacent block. This often occurs when there are transparent blocks next to the same transparent block. For example, in a [[glass]] cuboid, only the sides are rendered, preventing many glass faces from being visible within the cuboid, which would be visible due to the transparency of the glass and would break the continuity of the cuboid.
+
+[[Stained glass]] also prevents the rendering of identical blocks next to it. However, it must be the same block type (same [[block id]]); for example, a green stained glass does not prevent the yellow stained glass next to it from rendering its face. Below is a list of all blocks that prevent the re-registration of the blocks next to them, if and only if they are of the same block type.
+{{flatlist|
+*{{BlockLink|Copper Grates|link=Copper Grate}}
+*{{BlockLink|Frosted Ice}}
+*{{BlockLink|Glass}}
+*{{BlockLink|Honey Block}}
+*{{BlockLink|Ice}}
+*{{BlockLink|Slime Block}}
+*{{BlockLink|Stained Glass}}
+*{{BlockLink|Tinted Glass}}
+*{{BlockLink|Powder Snow}}
+}}
+
+[[Mangrove roots]] does not render other magoves rootes that are directly above or below it. However, it still renders those that are next to it.
+
+[[Iron bars]], [[copper bars]], [[glass pane]] and [[stained glass pane]] don't render the face of adjacent blocks of the same type. Furthermore, these blocks will not render the faces of adjacent blocks if both the block itself and the adjacent block are within the [[Block_tag_(Java_Edition)#bars|#bars]] tag. In vanilla, only the iron bar and (all) copper bars are in this tag, however, using [[data packs]] it is possible to add the glass pane and stained glass pane.
+
+When {{UI|Options|Accessibility Settings|See-Through Leaves}} is not enabled, [[leaves]] don't render other leaves, even if they are of different types.
+
+[[Water]] and [[lava]] normally don't render block faces that are in the same fluid. Because the rendering of liquids is more complex, sometimes the faces are rendered. For example, a [[waterlogged]] top [[slab]] will still have its upper face rendered if there is a block of water on top of it.
+
+==== Cullfaces ====
+
+{{IN|JE}}, the parts of the block that may not render because it is adjacent to a certain block depends on the [[Model#Item_models|block's model]]. More specifically, the face <face> of the nth block model's element does not render if there is a block preventing rendering in direction defined by 
+{{cd|elements[n].faces.<face>.cullface}}. However, there are blocks that are not rendered by models but rather by the associated [[block entity]]. These are{{note|The book of a [[enchantment table]] and bell of the [[bell]] are also rendered by the associated block entity (only the enchantment table base and bell holder are defined by the model).}}:
+{{Flatlist|
+* {{BlockLink|Chest}}
+* {{BlockLink|Copper chests|link=Copper chest}}
+* {{BlockLink|Trapped chest}}
+* {{BlockLink|Signs}}
+** {{BlockLink|Wall Signs|link=sign}}
+* {{BlockLink|Hanging Signs}}
+** {{BlockLink|Wall Hanging Signs|link=Hanging Signs}}
+* {{BlockLink|Banners}}
+* {{BlockLink|Shulker Boxes}}
+* {{BlockLink|Moving Piston}}
+* {{BlockLink|Beds}}
+* {{BlockLink|Conduit}}
+* {{BlockLink|Copper Golem Statue}}
+* {{BlockLink|End Portal}}
+* {{BlockLink|End Gateway}}
+}}
+
+These entity blocks has not a cullface, with the exception of the end portal.<!--Based on in-game testing, without code analysis.-->
+
+Most block models do not render the elements' faces that are on the block face. An exception is the [[beacon]], which renders the glass shell{{note|The beacon also renders the obsidian base, but that is actually 0.1 pixels above the face of the block}}.{{More info|What are all the exceptions?}}
+<!--
+
+Incorrect. In reality, all faces can be hidden from view, but which side is hidden depends on the UV light. I don't know exactly how it works.
+
+Furthermore, there are block cullfaces that are not rendered depending on the direction the player is looking, when it is opposite to that direction. For example, looking from the north, the south cullfaces will not be rendered. Some blocks, like [[spawner]], appear to render all faces, but in reality there may be two elements in the model: a complete block (with cullfaces) and a slightly smaller block (15.996 pixels each side) inside, where the opposite cullfaces are on the horizontal faces (the north face has the south cullface, etc.), so opposite faces are rendered.-->
+
+=== Other uses ===
+
+{{empty section}}
+
+== Videos ==
+<div style="text-align:center">{{yt|C9yJWCAWN6c}}</div>
+
+== Issues ==
+{{Issue list|opacity|transparency}}
+
+== Trivia ==
+* In [[the Nether]], the spawn point is always on top of an opaque [[block]]. This can be seen if the player used a [[respawn anchor]] to set their spawn in the Nether.
+* If an opaque block is given transparent pixels in an edited texture, then instead of showing the block behind it through the transparent part, it simply fills in the area with white.{{verify|Is it always white, or is it just the color used in that region ignoring the alpha channel? For examples, leaves have empty areas made "black" with 0 alpha, and that's why the gaps render black in-game with fast graphics.}} However, currently X-ray texture packs could be created using the blocks custom models feature.<ref>{{bug|MC-172659}}</ref>
+
+== See also ==
+* [[Liquid]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox environment}}
+
+[[Category:Gameplay]]
+
+[[de:Transparenz]]
+[[es:Transparencia]]
+[[fr:Transparence]]
+[[it:Opacità]]
+[[ja:不透明度]]
+[[ko:불투명도]]
+[[nl:Ondoorzichtigheid]]
+[[pl:Przezroczystość]]
+[[pt:Opacidade]]
+[[ru:Прозрачность]]
+[[uk:Непрозорість]]
+[[zh:不透明度]]

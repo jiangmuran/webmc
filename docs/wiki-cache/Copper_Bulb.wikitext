@@ -1,0 +1,389 @@
+{{Infobox block
+| group1 = Unoxidized
+| 1-1 = Copper Bulb.png
+| 1-2 = Lit Copper Bulb.png
+| invimage = Copper Bulb
+| group2 = Exposed
+| 2-1 = Exposed Copper Bulb.png
+| 2-2 = Lit Exposed Copper Bulb.png
+| invimage2 = Exposed Copper Bulb
+| group3 = Weathered
+| 3-1 = Weathered Copper Bulb.png
+| 3-2 = Lit Weathered Copper Bulb.png
+| invimage3 = Weathered Copper Bulb
+| group4 = Oxidized
+| 4-1 = Oxidized Copper Bulb.png
+| 4-2 = Lit Oxidized Copper Bulb.png
+| invimage4 = Oxidized Copper Bulb
+| invimage5 = Waxed Copper Bulb
+| invimage6 = Waxed Exposed Copper Bulb
+| invimage7 = Waxed Weathered Copper Bulb
+| invimage8 = Waxed Oxidized Copper Bulb
+| extratext = [[#Renders|View all renders]]
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Stone Pickaxe
+| light = Yes, when lit <br> Unoxidized: 15 <br> Exposed: 12 <br> Weathered: 8 <br> Oxidized: 4
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+|mapcolor = 
+* {{TooltipSprite||Copper Bulb}} {{Map color|Block of Copper}}
+* {{TooltipSprite||Exposed Copper Bulb}} {{Color|rgb({{Map color/data|block=Exposed Copper}})|44 <small><small>TERRACOTTA_LIGHT_GRAY</small></small>}}
+* {{TooltipSprite||Weathered Copper Bulb}} {{Map color|Weathered Copper}}
+* {{TooltipSprite||Oxidized Copper Bulb}} {{Map color|Oxidized Copper}}
+}}
+A '''copper bulb''' is a [[light]]-emitting [[block]]. It toggles on or off when it receives a [[redstone]] pulse, and does not need continuous power to emit light. Its light level depends on its state of [[oxidation]].
+
+'''Waxed copper bulbs''' do not oxidize, but otherwise function identically.
+
+== Obtaining ==
+=== Breaking ===
+Copper bulbs can be mined only with a [[stone pickaxe]] or better. If a copper bulb is mined without the use of a valid pickaxe, it drops nothing.
+{{Breaking row
+|Copper Bulb, Exposed Copper Bulb, Weathered Copper Bulb, Oxidized Copper Bulb
+|Pickaxe
+|Stone
+|horizontal=1
+}}
+
+=== Natural generation ===
+Lit, waxed copper bulbs in random states of oxidation are generated in [[trial chambers]].
+
+=== Crafting ===
+{{Crafting
+|head=1
+|A2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B1=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B2=Blaze Rod
+|B3=Redstone Dust
+|C2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|Output=Matching Unwaxed Copper Bulb, 4; Matching Waxed Copper Bulb, 4
+|type=Redstone
+}}
+{{Crafting
+|Matching Unwaxed Copper Bulb
+|Honeycomb
+|Output=Matching Waxed Copper Bulb
+|type=Redstone
+|foot=1
+}}
+
+== Usage ==
+Copper bulbs can be activated to emit [[light]], with the light level emitted decreasing for each stage of oxidation.
+When the copper bulb receives a redstone pulse, it instantly toggles between its lit and unlit states.
+
+=== Redstone component ===
+A [[comparator]] can read the state of a copper bulb, and it emits a signal strength of 15 if the bulb is lit, regardless of oxidation. If the bulb is unlit, the comparator does not emit any power, allowing this comparator and copper bulb combination to act as a compact [[T flip-flop]].
+
+While the copper bulb is receiving redstone power (either to toggle the bulb on or off) a red dot appears in the center of the block. An [[observer]] can detect this, and emits a signal when a copper bulb becomes powered or unpowered.
+
+{{IN|be}}, the copper bulb can only activate on the input/consumer [[redstone tick]] (C-tick).
+
+=== Oxidation ===
+{{main|Oxidation}}
+Non-waxed copper bulbs have four stages of oxidation (including the initial normal state). [[Lightning bolt]]s and [[axe]]s can remove the oxidation on copper bulbs. They can be waxed with [[honeycomb]] to prevent oxidation from progressing.
+
+As the block begins to oxidize (exposed), it gets discolored and green spots begin to appear. As the oxidation continues (weathered), the block is a green color with brown spots. In the last stage (oxidized), the block is teal with several green spots.
+
+The [[light level]] emitted by copper bulbs also changes depending on the stage of oxidation.
+{| class="wikitable"
+! Oxidation level
+! Light level
+|-
+| {{BlockSprite|Lit Copper Bulb}} Normal
+| 15
+|-
+| {{BlockSprite|Lit Exposed Copper Bulb}} Exposed
+| 12
+|-
+| {{BlockSprite|Lit Weathered Copper Bulb}} Weathered
+| 8
+|-
+| {{BlockSprite|Lit Oxidized Copper Bulb}} Oxidized
+| 4
+|}
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb copper bulbs at any stage of oxidization, either through picking them up or being interacted with them. This provides the medicine ball/slow flat effect to the mob when hitting it.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Copper bulb}}
+
+=== Unique ===
+==== Waxing ====
+{{:Block of Copper/Sounds|a copper bulb}}
+
+==== Toggling ====
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Copper bulb toggle.ogg
+|subtitle=Copper Bulb turns on
+|source=block
+|description=When a copper bulb is toggled on
+|id=block.copper_bulb.turn_on
+|translationkey=subtitles.block.copper_bulb.turn_on
+|volume=1.0
+|pitch=1.0
+|distance=6}}
+| {{SoundLine
+|subtitle=Copper Bulb turns off
+|source=block
+|description=When a copper bulb is toggled off
+|id=block.copper_bulb.turn_off
+|translationkey=subtitles.block.copper_bulb.turn_off
+|volume=1.0
+|pitch=0.75
+| distance = 6
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Copper bulb turn on.ogg
+|source=block
+|description=When a copper bulb is toggled on
+|id=block.copper_bulb.turn_on
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Copper bulb turn off.ogg
+|source=block
+|description=When a copper bulb is toggled off
+|id=block.copper_bulb.turn_off
+|volume=1.0
+| pitch = 0.75
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Bulb
+|spritetype=block
+|nameid=copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Exposed Copper Bulb
+|spritetype=block
+|nameid=exposed_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Weathered Copper Bulb
+|spritetype=block
+|nameid=weathered_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Oxidized Copper Bulb
+|spritetype=block
+|nameid=oxidized_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Waxed Copper Bulb
+|spritetype=block
+|nameid=waxed_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Waxed Exposed Copper Bulb
+|spritetype=block
+|nameid=waxed_exposed_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Waxed Weathered Copper Bulb
+|spritetype=block
+|nameid=waxed_weathered_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool}}
+{{ID table
+|displayname=Waxed Oxidized Copper Bulb
+|spritetype=block
+|nameid=waxed_oxidized_copper_bulb
+|blocktags=mineable/pickaxe, needs_stone_tool
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Bulb
+|spritetype=block
+|nameid=copper_bulb
+|id=-776}}
+{{ID table2
+|displayname=Exposed Copper Bulb
+|spritetype=block
+|nameid=exposed_copper_bulb
+|id=-777}}
+{{ID table2
+|displayname=Weathered Copper Bulb
+|spritetype=block
+|nameid=weathered_copper_bulb
+|id=-778}}
+{{ID table2
+|displayname=Oxidized Copper Bulb
+|spritetype=block
+|nameid=oxidized_copper_bulb
+|id=-779}}
+{{ID table2
+|displayname=Waxed Copper Bulb
+|spritetype=block
+|nameid=waxed_copper_bulb
+|id=-780}}
+{{ID table2
+|displayname=Waxed Exposed Copper Bulb
+|spritetype=block
+|nameid=waxed_exposed_copper_bulb
+|id=-781}}
+{{ID table2
+|displayname=Waxed Weathered Copper Bulb
+|spritetype=block
+|nameid=waxed_weathered_copper_bulb
+|id=-782}}
+{{ID table2
+|displayname=Waxed Oxidized Copper Bulb
+|spritetype=block
+|nameid=waxed_oxidized_copper_bulb
+|id=-783
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|lit|false|false,true|Whether the copper bulb is lit.}}
+{{bst|powered|false|false,true|Whether the copper bulb is powered.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=|lit|false|false,true|Whether the copper bulb is lit.|Unsupported}}
+{{bst|powered_bit|false|false,true|Whether the copper bulb is powered.|Unsupported|foot=1}}
+
+== Achievements ==
+{{load achievements|Wax on, Wax off}}
+
+== Advancements ==
+{{load advancements|Wax on;Wax off;Lighten Up}}
+
+== Videos ==
+{{yt|7XfMYS71emY}}
+
+== History ==
+=== Announcement and reveal ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|[[File:Lit Copper Bulb.png|32px]] [[File:Lit Exposed Copper Bulb.png|32px]] [[File:Lit Weathered Copper Bulb.png|32px]] [[File:Lit Oxidized Copper Bulb.png|32px]] [[File:Oxidized Copper Bulb.png|32px]] Copper bulbs were announced at [[Minecraft Live 2023]] as part of the [[trial chambers]].}}
+|{{HistoryLine||October 17, 2023|link=https://twitter.com/kingbdogz/status/1714359749662425120|[[Kingbdogz]] revealed in a tweet that weathered copper bulbs would give off a light level of eight.<ref>{{tweet|kingbdogz|1714359749662425120|Weathered Copper Bulbs will be the first survival block that emits a light level of 8 👀|October 17, 2023}}</ref>}}
+|{{HistoryLine||October 24, 2023|[[File:Copper Bulb JE1 BE1.png|32px]] [[File:Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Weathered Copper Bulb JE1 BE1.png|32px]] More unlit variants of the copper bulbs were revealed.|link=https://www.minecraft.net/en-us/article/test-new-decorative-blocks}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w43a|[[File:Copper Bulb JE1 BE1.png|32px]] [[File:Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Oxidized Copper Bulb JE1 BE1.png|32px]] [[File:Lit Copper Bulb JE1 BE1.png|32px]] [[File:Lit Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Lit Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Oxidized Copper Bulb JE1 BE1.png|32px]]<br>[[File:Powered Copper Bulb JE1 BE1.png|32px]] [[File:Powered Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Powered Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Powered Oxidized Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Oxidized Copper Bulb JE1 BE1.png|32px]] Added copper bulbs behind the "[[Java Edition 1.21|Update 1.21]]" experimental [[data pack]].
+|Currently, copper bulbs toggle between lit and unlit states with a delay of one [[game tick]].}}
+|{{HistoryLine|||dev=23w45a|Now generates naturally within [[trial chambers]].}}
+|{{HistoryLine|||dev=23w46a|Toggling between lit and unlit states no longer has a delay.}}
+|{{HistoryLine||1.21|dev=24w18a|Copper bulbs are now available without using the "Update 1.21" experimental data pack.}}
+|{{HistoryLine|||dev=24w19a|Replaced the sounds for "turn off" and "turn on" with one "toggle" sound.}}
+|{{HistoryLine||1.21.4|dev=24w46a|[[File:Lit Powered Exposed Copper Bulb JE2 BE2.png|32px]] The lit powered texture of exposed copper bulbs has been changed to fix two inconsistent pixel colors.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[sulfur cube]]s, which have the ability to absorb copper bulbs at any oxidization stage, providing the medicine ball/slow flat effect to the mob.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.22|[[File:Copper Bulb JE1 BE1.png|32px]] [[File:Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Oxidized Copper Bulb JE1 BE1.png|32px]] [[File:Lit Copper Bulb JE1 BE1.png|32px]] [[File:Lit Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Lit Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Oxidized Copper Bulb JE1 BE1.png|32px]]<br>[[File:Powered Copper Bulb JE1 BE1.png|32px]] [[File:Powered Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Powered Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Powered Oxidized Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Exposed Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Weathered Copper Bulb JE1 BE1.png|32px]] [[File:Lit Powered Oxidized Copper Bulb JE1 BE1.png|32px]] Added copper bulbs behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Now generates naturally within [[trial chambers]].}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Copper bulbs are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Copper bulbs now require a [[stone pickaxe]] or better for drops and quick mining.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|[[File:Lit Powered Exposed Copper Bulb JE2 BE2.png|32px]] The lit powered texture of exposed copper bulbs has been changed to fix two inconsistent pixel colors.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb copper bulbs at any oxidization stage, providing the medicine ball/slow flat effect to the mob.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+==== Powered ====
+<gallery>
+Powered Copper Bulb.png|Powered copper bulb
+Powered Exposed Copper Bulb.png|Powered exposed copper bulb
+Powered Weathered Copper Bulb.png|Powered weathered copper bulb
+Powered Oxidized Copper Bulb.png|Powered oxidized copper bulb
+Lit Powered Copper Bulb.png|Lit powered copper bulb
+Lit Powered Exposed Copper Bulb.png|Lit powered exposed copper bulb
+Lit Powered Weathered Copper Bulb.png|Lit powered weathered copper bulb
+Lit Powered Oxidized Copper Bulb.png|Lit powered oxidized copper bulb
+</gallery>
+
+==== Unpowered ====
+<gallery>
+Copper Bulb.png|Copper bulb
+Exposed Copper Bulb.png|Exposed copper bulb
+Weathered Copper Bulb.png|Weathered copper bulb
+Oxidized Copper Bulb.png|Oxidized copper bulb
+Lit Copper Bulb.png|Lit copper bulb
+Lit Exposed Copper Bulb.png|Lit exposed copper bulb
+Lit Weathered Copper Bulb.png|Lit weathered copper bulb
+Lit Oxidized Copper Bulb.png|Lit oxidized copper bulb
+</gallery>
+
+=== Screenshots ===
+<gallery>
+All Oxidizing Blocks.png|All blocks that can oxidize, including copper bulbs.
+Bulb With Comparator.png|A comparator reading a lit copper bulb and outputting a redstone signal.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Copper bulb teaser 01.jpg|[[Brandon Pearce]] scraping a copper bulb.<ref>{{tweet|Minecraft|1713611645724000571|New Bulbs from #MinecraftLive: Copper These new bulbs offer players a fun and unique way to illuminate their builds! When oxidized, they appear dim, but you can easily brighten up a room by using your axe to scrape away the oxidation.|October 15, 2023}}</ref>
+Copper Bulb in Trial Chamber.jpeg|alt=Copper bulbs can be seen in a trial chamber.|Copper bulbs seen in a trial chamber.<ref>{{tweet|Minecraft|1713611637041832312|Introducing Minecraft 1.21, an adventurous mix of trap-filled trial chambers, new challenges, and playful engineering to delve into solo or with friends!|October 15, 2023}}</ref>
+TurnedOffCopperBulbs?.png|alt=Unlit oxidized copper bulbs can be seen in the village that Agnes visits in Minecraft Live 2023|Unlit variant of oxidized copper bulbs seen in the village that Agnes visits at Minecraft Live 2023.
+Unlit Copper Bulbs.png|More unlit variants of the copper bulbs revealed on an official article at ''minecraft.net''
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Kai's light.png|[[Kai]] scraping a copper bulb.
+File:Tuff And Copper Blocks Artwork.jpg|Artwork featuring copper bulb.
+File:What my parents think.jpg
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox blocks|utility}}
+
+[[Category:Mechanisms]]
+[[Category:Readable by comparators]]
+[[Category:Manufactured blocks]]
+[[Category:Light sources]]
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+
+[[de:Kupferleuchte]]
+[[es:Lámpara de cobre]]
+[[fr:Ampoule en cuivre]]
+[[ja:銅の電球]]
+[[ko:구리 전구]]
+[[lzh:銅燈]]
+[[pl:Miedziana lampa]]
+[[pt:Lâmpada de Cobre]]
+[[ru:Медная лампа]]
+[[uk:Мідна жарівка]]
+[[zh:铜灯]]

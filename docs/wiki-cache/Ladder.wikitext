@@ -1,0 +1,265 @@
+{{About||the ladder in ''Story Mode''|MCSM:Ladder|the ladder in ''Minecraft Earth''|MCE:Ladder}}
+{{Infobox block
+| image = Ladder (S) JE4.png
+| image2 = Ladder (texture).png
+| image2class = pixel-image
+| extratext = [[#Gallery|View all renders]]
+| transparent = Yes
+| light = No
+| tool = Axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+
+The '''ladder''' is a [[block]] used for climbing walls either vertically or horizontally. They can be placed only on the sides of other blocks.
+
+== Obtaining ==
+=== Breaking ===
+The suitable tool to break ladder is [[axe]].
+{{breaking row|horizontal=1|Ladder|Axe}}
+Ladder drops itself when it's destroyed.
+
+=== Natural generation ===
+Ladders generate naturally in library rooms of [[stronghold]]s and in intersection rooms with a wooden ceiling. Ladders can also be found in [[village]] structures such as [[Village/Structures|plains and taiga temple]]s and many small or medium houses, as well as in churches. They may also be found leading to the basements of [[igloo]]s, in [[end ship]]s on the pillar leading up to the crow's nest, and in rail rooms of [[woodland mansion]]s. Ladders can also generate in [[ancient cities]], [[trail ruins]], [[trial chambers]], and in [[end cities]].
+
+=== Crafting ===
+{{Crafting
+|A1= Stick
+|C1= Stick
+|A2= Stick
+|B2= Stick
+|C2= Stick
+|A3= Stick
+|C3= Stick
+|Output= Ladder,3
+|type= Decoration block
+}}
+
+== Usage ==
+Ladders provide a way to cushion a [[player]]'s impact after a free fall. Upon entering a ladder's area of effect, the player's speed is reduced instantly to normal ladder descent speed and no damage is taken. Falling onto the narrow top surface of the ladder incurs falling damage as normal.
+
+Holding the {{control|sneak}} key while climbing a ladder causes the player to grab hold of the ladder and not fall off. While the player is holding on to a ladder, mining speed decreases.
+
+Any [[mob]] ''can'' climb a ladder in the same way a player does: by pushing against it. Mobs cannot use ladders deliberately — they do not remain on a ladder to get somewhere, but a ladder directly in their path lets them climb up.
+
+=== Placement ===
+Ladders can be placed on any full solid block face.
+
+Ladders displace [[lava]] blocks to create an [[air]] pocket and can be used instead of [[glass]] to let lava light shine through a ceiling. They also displace flowing water, but a ladder placed inside a [[water]] source block becomes [[waterlogged]] and does not create an air pocket.
+
+=== Climbing ===
+A ladder takes effect whenever the [[player]]'s lower half is in the block occupied by a ladder. These effects are:
+* If the player pushes against a wall, the player moves upward at about 2.35 blocks per second instead of horizontally. (Thus inside a 1×1 ladder shaft, the player can use any movement key to move upward.)
+* If a player occupies the 1×1 ladder shaft, the player can ascend the ladder by holding {{ctrl|jump}} instead of using a horizontal movement key.
+* If a player moving perpendicular to the ladder block enters the ladder block, the player begins to move upward, but then falls off the ladder shortly afterward if the player continues to move horizontally.
+* The player's maximum downward speed is reduced to a "descending ladder" speed, at about 3 blocks per second.
+* The player's horizontal movement friction is the same as on [[ice]]. (That is, moving around in the tiny space the player is in while still hanging on the ladder at the same level.)
+
+Additionally:
+* In ''Bedrock Edition'', a player can hold down the jump button while climbing a ladder to make the climbing speed faster.
+* Also in ''Bedrock Edition'', waterlogged ladders cannot be climbed.
+* In ''Java Edition'', when a [[trapdoor]] satisfies the following conditions, it also becomes climbable:
+** The trapdoor is placed directly above a ladder.
+** The trapdoor is opened.
+** The trapdoor and the ladder directly below it face the same direction.
+* A player on a [[slab]] in front of the ladder must jump to get on the ladder despite being only half a block down.
+* Like [[vine]]s, ladders slow the player down when walked through.
+* Consuming [[food]], blocking with a [[shield]] or pulling back a [[bow]], do not slow the player down while climbing ladders (unlike when [[walking]], [[sprinting]] and [[swimming]]).<ref>{{bug|MC-12305|||WAI}}</ref>
+
+=== Fuel ===
+A ladder can be used as [[fuel]] in [[furnace]]s, [[smelting]] 1.5 [[item]]s per ladder.
+
+== Sounds ==
+{{Sound table/Block/Ladder}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Ladder
+|spritetype=block
+|nameid=ladder
+|blocktags=climbable
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Ladder
+|spritetype=block
+|nameid=ladder
+|id=65
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction from the block the ladder is attached to, to the ladder.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this ladder.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|facing_direction|2|2,3,4,5|The direction from the block the ladder is attached to, to the ladder.
+*2: Ladder facing north
+*3: Ladder facing south
+*4: Ladder facing west
+*5: Ladder facing east|
+|0,1|Unused|0,1
+|foot=1}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 12w38a}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100607|[[File:Ladder (S) JE1.png|32px]] [[File:Ladder (E) JE1.png|32px]] Added ladders. In an interview with [[wikipedia:Rock, Paper, Shotgun|Rock, Paper, Shotgun]], [[Notch]] stated that he never originally wanted to add ladders because they are never fun, and that the fans convinced him to do it.<ref>http://www.rockpapershotgun.com/2012/09/14/beyond-minecraft-notch-on-fame-pressure-sequels</ref>
+|Ladders can be placed on every other [[block]] and still be climbable because the [[player]] can climb a ladder when ''any'' part of the body was on it, not just the lowest part.
+|The [[crafting]] recipe of ladders produces one ladder per 7 [[stick]]s.}}
+|{{HistoryLine||20100617-1531|Ladders are no longer destroyed by [[water]].}}
+|{{HistoryLine||20100618|[[File:Ladder (S) JE2.png|32px]] [[File:Ladder (E) JE2.png|32px]] The texture of ladders has been darkened.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4|Pressing the [[sneak]] key now stops the [[player]] from moving down the ladder.}}
+|{{HistoryLine||1.5|The [[player]] can no longer climb ladders spaced every other [[block]].
+|The [[crafting]] recipe now produces 2 ladders, thus the changes do not change the number of [[stick]]s needed to make a ladder of a given height.}}
+|{{HistoryLine||1.6|dev=Test Build 3|Ladders can no longer be placed on [[glowstone]].}}
+|{{HistoryLine||1.8|dev=Pre-release|Ladders now generate in [[village]]s and [[stronghold]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.1|dev=12w01a|The collision boxes for ladders have now been removed.}}
+|{{HistoryLine||1.2.1|dev=12w03a|The collision boxes for ladders have now been re-added.}}
+|{{HistoryLine|||dev=1.2|The crafting recipe now produces 3 ladders per 7 [[stick]]s, as opposed to 1 from [[Infdev]] until [[Java Edition Beta 1.4_01|Beta 1.4_01]] and 2 from [[Java Edition Beta 1.5|Beta 1.5]] until [[Java Edition 1.1|1.1]].}}
+|{{HistoryLine||1.4.2|dev=12w38a|Added a [[sound]] for climbing up ladders.}}
+|{{HistoryLine||1.5|dev=13w02a|Added [[death messages]] for ladders: "Player fell off a ladder".}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Ladder (in minecart) 14w04a.png|32px]] If a ladder is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine|||dev=14w10a|[[File:Ladder (N) JE2 BE1.png|32px]] [[File:Ladder (E) JE2 BE1.png|32px]] [[File:Ladder (S) JE2 BE1.png|32px]] [[File:Ladder (W) JE2 BE1.png|32px]] The back faces of ladders now render.<ref>Possibly the bug referenced by {{bug|MC-25378}}</ref>}}
+|{{HistoryLine|||dev=14w31a|Ladders are now mined faster using [[axe]]s.}}
+|{{HistoryLine||1.9|dev=15w31a|The ladder's bounding box is now {{frac|3|16}} block (formerly {{frac|2|16}}).
+|An open [[trapdoor]] may now be climbed like a ladder if it is directly above a ladder and on the same side of the block.
+|Ladders are now generated in [[end ship]]s.}}
+|{{HistoryLine|||dev=15w43a|A length of ladder generates as part of the shaft from [[igloo]]s leading to their basements.}}
+|{{HistoryLine||1.11|dev=16w33a|Ladders can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine|||dev=16w39a|Ladders now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||1.13|dev=18w10d|[[Water]] can now be placed on the same block as ladders.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Ladder (N) JE3 BE2.png|32px]] [[File:Ladder (E) JE3 BE2.png|32px]] [[File:Ladder (S) JE3 BE2.png|32px]] [[File:Ladder (W) JE3 BE2.png|32px]] The texture of ladders has been changed.}}
+|{{HistoryLine|||dev=18w45a|Ladders can now also be climbed by pressing the jump key.}}
+|{{HistoryLine|||dev=19w13a|Ladders can now be placed on [[glowstone]].}}
+|{{HistoryLine||1.16|dev=20w10a|Ladders can now be placed on [[blocks of redstone]], [[observer]]s, and [[target]]s.<ref>{{Cite bug|MC|146824|Inconsistency: Ladders and tripwire hooks cannot be placed on the sides of redstone blocks, observers and target blocks|date=March 27, 2019}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|[[File:Ladder (N) JE4.png|32px]] [[File:Ladder (E) JE4.png|32px]] [[File:Ladder (S) JE4.png|32px]] [[File:Ladder (W) JE4.png|32px]] The model of the ladder has been changed so that the back texture is mirrored.}}
+|{{HistoryLine||1.19|dev=22w13a|Ladders now generate in [[ancient cities]].}}
+|{{HistoryLine||1.20|dev=23w12a|Ladders now generate in [[trail ruins]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Ladders now generate in [[trial chambers]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|[[File:Ladder JE2 BE1.png|32px]] Added ladders. Their back faces do not render.}}
+|{{HistoryLine||v0.3.0|Survival players no longer start out with an infinite amount of ladders in the inventory.}}
+|{{HistoryLine||v0.9.0|dev=build 1|The back faces of ladders now render.}}
+|{{HistoryLine|||dev=build 10|The ladder collision box has been made slightly thinner.}}
+|{{HistoryLine||v0.11.0|dev=?|[[Mob]]s can now climb ladders.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added a [[sound]] for climbing up ladders.
+|With [[sneaking]] added, it is now possible to sit on a ladder without moving.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|A length of ladder generates as part of the shaft from [[igloo]]s leading to their basements.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Ladders now generate in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[Water]] can now be placed on the same [[block]] as ladders.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Ladder JE3 BE2.png|32px]] The texture of ladders has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Ladders can now also be climbed by pressing the jump key.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Ladder JE2 BE1.png|32px]] Added ladders.}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The collision boxes for ladders have now been removed.{{check version}}}}
+|{{HistoryLine||xbox=TU10|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The collision boxes for ladders have now been re-added.{{check version}}}}
+|{{HistoryLine||xbox=TU12|The [[crafting]] recipe now yields 3 ladders instead of 2.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|A length of ladder generates as part of the shaft from [[igloo]]s leading to their basements.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|An open [[trapdoor]] may now be climbed like a ladder if it is directly above a ladder and on the same side of the block.|Ladders are now generated in [[end ship]]s.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Ladders can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Ladders now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Ladder JE3 BE2.png|32px]] The texture of ladders has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Ladders can now also be climbed by pressing the jump key.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Ladder JE2 BE1.png|32px]] Added ladders.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w07a|[[File:Missing Model JE1.png|32px]] Ladders with metadata values 0-1 and 6-15 now [[Missing model|have no model]].}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 65.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* It is possible to use ladders one [[block]] apart in a corner by placing every other ladder on the alternating side of the corner. This method requires jumping and shifting sides constantly.
+* By holding the jump key, players can still use [[water]] ladders that have ladders placed every other block.
+* Attempting to place a ladder on a spot another ladder occupies may instead place the ladder somewhere nearby (because of the ladder's hitbox).
+* It is possible to remove a ladder while standing on a ladder and holding the sneak key, but it can take a long time because the countdown for breaking the ladder often resets.
+* In ''Java Edition'', [[stick]]s can be crafted into ladders to gain a slight bonus in [[fuel]] efficiency. While 7 sticks can smelt 3.5 items, if they are crafted into 3 ladders, 4.5 items can be smelted.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Ladder (E) JE4.png
+Ladder (W) JE4.png
+Ladder (N) JE4.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Ladders Blocking Water.png|Opened ceiling on [[water]].
+Ladders Displacing Water.png|Tunnel through water.
+Ladders Blocking Lava.png|Ceiling lit by ladder-suspended [[lava]].
+Ladder in Stronghold.png|Naturally occurring ladders in a [[stronghold]].
+Floating Ladders.png|A [[mineshaft]] has intersected with a stronghold resulting in floating ladders.
+Spaced Ladder Trick.png|In versions prior to [[Java Edition Beta 1.5|Beta 1.5]], spacing ladders was a way to climb, without wasting ladders.
+No airpocket in java.png|No air-pocket is made in [[Java Edition 1.13]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|taking-inventory-ladder|Taking Inventory: Ladder|January 4, 2019|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Climbable blocks]]
+
+[[cs:Žebřík]]
+[[de:Leiter]]
+[[es:Escalera de mano]]
+[[fr:Échelle]]
+[[hu:Létra]]
+[[it:Scala a pioli]]
+[[ja:はしご]]
+[[ko:사다리]]
+[[nl:Ladder]]
+[[pl:Drabina]]
+[[pt:Escada de Mão]]
+[[ru:Лестница]]
+[[uk:Драбина]]
+[[zh:梯子]]

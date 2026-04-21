@@ -1,0 +1,332 @@
+{{For|other uses|Carrot (disambiguation)|Seeds}}
+{{Infobox item
+| group = Age 0-1
+| 1-1 = Carrots Age 0-1.png
+| 1-2 = Carrots Age 0-1 BE.png
+| group2 = Age 2-3
+| 2-1 = Carrots Age 2-3.png
+| 2-2 = Carrots Age 2-3 BE.png
+| group3 = Age 4-6
+| 3-1 = Carrots Age 4-6.png
+| 3-2 = Carrots Age 4-6 BE.png
+| group4 = Age 7
+| 4-1 = Carrots Age 7.png
+| 4-2 = Carrots Age 7 BE.png
+| *-1caption = ''Java Edition''
+| *-2caption = ''Bedrock Edition''
+| *-1class = notpageimage
+| *-2class = notpageimage
+| image2 = Carrot JE3 BE2.png
+| invimage = Carrot
+| consumptiontime = {{convert|32|ticks|seconds}}
+| hunger = 3
+| saturation = 3.6
+| saturationboost = <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|2.4}}<br/><abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 1.2 seconds
+| alwaysconsumable = No
+| renewable = Yes
+| stackable = Yes (64)
+}}
+A '''carrot''' is a [[food]] item obtained from carrot crops that can be used to plant them, eaten or used as a crafting ingredient.
+
+'''Carrot crops''' are planted in [[farmland]] and used to grow carrots.
+
+== Obtaining ==
+=== Breaking ===
+{{See also|Fortune#Seeds}}
+Fully grown carrot crops drop 2 to 5 carrots ({{frac|3|5|7}} per crop harvested on average). Yield can be increased using a tool enchanted with [[Fortune]], with Fortune III harvesting an average of {{frac|5|3|7}} carrots.
+
+The yield is calculated by a binomial distribution: 2 drops are fixed, then a drop is attempted three times with a success rate of 57.14286% to yield the extra 0–3 drops. Each level of Fortune enchantment increases the number of attempts by one.
+{{breaking row|Carrots|link=none|horizontal=1}}
+
+=== Natural generation ===
+[[Village]] farm plots have a chance of having carrots. The exact chance depends on the style of the village:
+
+{| class="wikitable"
+! Village style !! Chance
+|-
+| {{EnvSprite|plains-village}} Plains || 30%
+|-
+| {{EnvSprite|snowy-village}} Snowy || 10%
+|}
+
+=== Mob loot ===
+[[Zombie]]s, [[husk]]s, and [[zombie villager]]s have a 2.5% ({{frac|1|40}}) chance of dropping either an [[iron ingot]], carrot, or [[potato]] when killed by a player or tamed [[wolf]]. This is increased by 1% ({{frac|1|100}}) per level of looting. This gives carrots the following chances of dropping:
+* {{frac|1|120}} (about 0.83%)
+* {{frac|7|600}} (about 1.17%) with Looting I
+* {{frac|9|600}} (about 1.50%) with Looting II
+* {{frac|11|600}} (about 1.83%) with Looting III
+{{Drop sources|Carrot}}
+
+=== Generated loot ===
+{{LootChestItem|carrot}}
+
+== Usage ==
+
+=== Food ===
+{{see also|Tutorial:Hunger management|title1=Hunger management}}
+
+To eat a carrot, press and hold {{control|use}} while the carrot is selected in the [[hotbar]]. Eating a carrot restores {{hunger|3}} [[hunger]] and 3.6 hunger [[Hunger#Mechanics|saturation]].
+
+=== Farming ===
+{{see also|Tutorial:Crop farming|title1 = Crop farming }}
+
+Carrots can be [[farming|farmed]] and harvested on [[farmland]]. Planted carrots go through 8 [[Block tick|stages]] of growth, but only 4 ''apparent'' stages because the texture only changes upon reaching stages 3, 5, and 8 with stage 8 being the final, mature appearance.
+
+Carrots require a [[Light|light level]] of 8 or greater to plant{{only|java}} and 9 or greater to grow. {{IN|Bedrock}} they can be planted at any light level, but need an [[Light#Internal light level|internal light level]] of 9 to grow. Crops grow faster if the farmland they are planted in is [[hydrated]]. Using [[bone meal]] on crops also increases the speed of growth by randomly increasing their growth stage by 2 to 5.
+
+Crops break if pushed by a [[piston]] or if their supporting farmland breaks or turns to dirt (e.g. by being trampled), dropping their usual drops.
+
+If {{cmd|gamerule mobGriefing}} is <code>true</code>, [[rabbit]]s find mature carrot [[crops]]{{only|je}} / carrot crops with growth stage greater than 1.{{only|be}} This reduces the growth stages by one, removing the crop completely when the growth stage reaches 0.
+
+=== Animal food ===
+Carrots can be used to [[breed]] and attract [[pig]]s and [[rabbit]]s, and make baby pigs and rabbits grow up faster by 10% of the remaining time.
+
+Carrots can be used to heal, grow, and increase temper of [[horse]]s, [[donkey]]s, and [[mule]]s, but does not breed them. {{IN|Java}}, due to a bug, [[skeleton horse]]s (in their hostile state; being ridden by [[skeleton]]s) can also be fed carrots.<ref>{{bug|MC-304372||Skeleton horses can be interacted when ridden by hostile mobs}}</ref>
+
+=== Villagers ===
+Villagers can pick up carrot items to become willing, which allow them to breed. Villagers require 12 carrots to become willing.
+
+=== Trading ===
+{{Trade uses}}
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Composting ===
+Placing a carrot into a [[composter]] has a 65% chance of raising the compost level by 1.
+
+== Sounds ==
+=== Block ===
+{{Sound table/Block/Crop}}
+
+=== Item ===
+{{Sound table/Entity/Food}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Carrots
+|spritetype=block
+|nameid=carrots
+|blocktags=bee_growables, crops
+|form=block}}
+{{ID table
+|displayname=Carrot
+|spritetype=item
+|nameid=carrot
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showforms=y
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Carrots
+|spritetype=block
+|nameid=carrots
+|id=141
+|form=block
+|translationkey=-}}
+{{ID table
+|displayname=Carrot
+|spritetype=item
+|nameid=carrot
+|id=279
+|form=item
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:<br>
+{{bst|age|0
+|0,1|{{BlockSprite|carrots-1}}
+|2,3|{{BlockSprite|carrots-2}}
+|4,5,6|{{BlockSprite|carrots-3}}
+|7|{{BlockSprite|carrots-4}} Fully grown.|foot=1}}
+
+{{el|be}}:<br>
+{{bst|showaux=1|bits=0x1,0x2,0x4|growth|0
+|0,1|{{BlockSprite|carrots-1}}|
+|2,3|{{BlockSprite|carrots-2}}|
+|4,5,6|{{BlockSprite|carrots-3}}|
+|7|{{BlockSprite|carrots-4}} Fully grown.||foot=1}}
+
+== Advancements ==
+{{load advancements|Husbandry;A Balanced Diet}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 19w03a}}
+{{See technical block|Carrots}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Carrot JE1.png|32px]] Added carrots. 
+|[[File:Carrots Age 0-1 JE1.png|32px]] [[File:Carrots Age 2-3 JE1.png|32px]] [[File:Carrots Age 4-6 JE1.png|32px]] [[File:Carrots Age 7 JE1.png|32px]] Added carrot crops.
+|Carrots can be obtained only as a rare [[drop]] from [[zombie]]s.
+|Carrots can be used to craft [[golden carrot]]s.}}
+|{{HistoryLine|||dev=August 28, 2012|slink={{tweet|Dinnerbone|240428477856231424}}|[[Dinnerbone]] released an image of a [[saddle]]d [[pig]] being controlled with a [[carrot on a stick]]. [[Wheat]] was considered as a "fuel" along with carrots,<ref>{{Tweet|Dinnerbone|240188453789257728|I told people that I'd think about carrots on a stick for controlling mounted pigs, but now I can't decide; carrots or wheat? Inconsistent!}}</ref> but Dinnerbone eventually decided on carrots.<ref>{{Tweet|Dinnerbone|240355810650247168|#2 pigs eat anything but we'll go with carrots for the hilarity of it.}}</ref>}}
+|{{HistoryLine|||dev=12w36a|Carrots can now be found in [[village]]s.
+|Carrots are now used to breed [[pig]]s.
+|Carrots are now used to craft [[carrot on a stick]].}}
+|{{HistoryLine|||dev=12w37a|[[File:Carrot JE2 BE1.png|32px]] The texture of carrots has been changed. The texture has been changed to a singular carrot, with the tooltip changed to reflect this.}}
+|{{HistoryLine||1.5|dev=13w04a|[[Bone meal]] now grows carrots by 1 stage instead of fully growing it. The [[player]] might not see it grow, because some stages look the same.}}
+|{{HistoryLine||1.8|dev=14w02a|Carrots now restore {{hunger|3}} points and 3.6 hunger [[saturation]], instead of {{hunger|4}} and 4.8 hunger saturation.
+|Farmer [[villager]]s now [[trading|buy]] 15–19 carrots for 1 [[emerald]].}}
+|{{HistoryLine|||dev=14w04a|[[Farmer]] (profession) [[villager]]s now harvest fully grown carrots.
+|Villagers can now be made willing using 12 carrots.}}
+|{{HistoryLine|||dev=14w06a|[[File:Carrots Age 0-1 JE2.png|32px]] [[File:Carrots Age 2-3 JE2.png|32px]] [[File:Carrots Age 4-6 JE2.png|32px]] [[File:Carrots Age 7 JE2.png|32px]] Carrot crops are now a pixel higher - previously they were offset one pixel down as to match farmland's sunken model. This is likely an accidental result of model conversion.}}
+|{{HistoryLine|||dev=14w10a|[[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]]<br>[[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]] [[File:Missing Model (anisotropic filtering) JE2.png|32px]]<br>Carrot crops of all stages [[Missing model|no longer have a model]].}}
+|{{HistoryLine|||dev=14w10b|[[File:Carrots Age 0-1 JE4.png|32px]] [[File:Carrots Age 2-3 JE4.png|32px]] [[File:Carrots Age 4-6 JE4.png|32px]] [[File:Carrots Age 7 JE4.png|32px]] Carrot crops now have models again.<ref>{{bug|MC-50232}}</ref> In addition, they are now offset downward by one pixel once more.<ref>{{bug|MC-50155}}</ref>}}
+|{{HistoryLine|||dev=14w25a|[[File:Carrots Age 0-1 JE5.png|32px]] [[File:Carrots Age 2-3 JE5.png|32px]] [[File:Carrots Age 4-6 JE5.png|32px]] [[File:Carrots Age 7 JE5.png|32px]] Carrot crops are now darker and subject to directional shading.}}
+|{{HistoryLine|||dev=14w27a|[[File:Carrots Age 0-1 JE6.png|32px]] [[File:Carrots Age 2-3 JE6.png|32px]] [[File:Carrots Age 4-6 JE6.png|32px]] [[File:Carrots Age 7 JE6.png|32px]] Carrot crops are no longer subject to directional shading.
+|Added [[rabbit]]s, which can be [[bred]] and/or tamed using carrots. Rabbits also grief carrot crops.
+|Carrots are now used to craft [[rabbit stew]].}}
+|{{HistoryLine|||dev=14w34a|Rabbits can no longer be tamed.}}
+|{{HistoryLine||1.9|dev=15w38a|The [[drop]] chances have been slightly improved from an average of {{frac|2|3|5}} per [[crop]] harvested to {{frac|2|5|7}}.}}
+|{{HistoryLine|||dev=15w49a|The hitbox of planted carrots now adjusts depending on their growth state.<ref>{{bug|MC-55942|||Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=18w06a|Carrots can now grow at night.}}
+|{{HistoryLine|||dev=18w11a|Carrots can now generate in the chests of [[shipwreck]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Carrot JE3 BE2.png|32px]] The texture of carrots has been changed.
+|[[File:Carrots Age 0-1 JE7.png|32px]] [[File:Carrots Age 2-3 JE7.png|32px]] [[File:Carrots Age 4-6 JE7.png|32px]] [[File:Carrots Age 7 JE7.png|32px]] The textures of carrot crops have been changed.}}
+|{{HistoryLine|||dev=18w47a|Carrots can now generate in the [[chest]]s of [[pillager outpost]]s.}}
+|{{HistoryLine|||dev=19w03a|Placement and breaking [[sound]]s have been added to carrots.
+|Placing a carrot into the new [[composter]] has a 50% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Carrots now have a 65% chance of increasing the compost level in a composter by 1.}}
+|{{HistoryLine|||dev=19w09a|Carrot growth is now determined by the light level of the crop's block. Previously it was determined by the light level of the block above.}}
+|{{HistoryLine|||dev=19w11a|Farmer villagers now buy 22 carrots for 1 emerald.
+|Carrots can now be planted by aiming at the side and underside of blocks rather than just on top of the farmland.<ref>{{bug|MC-135157}}</ref>|Carrots can now replace replaceable blocks such as fire when planted.}}
+|{{HistoryLine||1.15|dev=19w34a|[[Bee]]s can now pollinate carrot crops.}}
+|{{HistoryLine||1.17|dev=21w13a|[[File:Carrots Age 0-1 JE8.png|32px]] [[File:Carrots Age 2-3 JE8.png|32px]] [[File:Carrots Age 4-6 JE8.png|32px]] [[File:Carrots Age 7 JE8.png|32px]] The "crop" template model has changed such that pixels appear in the same physical positions on opposite sides of texture planes, changing the carrot crop's appearance in the process.<ref>{{bug|MC-199242}}</ref>}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Carrots Age 7 JE9.png|32px]] A stray dark pixel has been removed from the texture of fully-grown carrots.<ref>{{bug|MC-226711}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w32a|Carrots being eaten by rabbits now emit a <code>block_change</code> [[vibration]] of frequency <code>11</code>.}}
+|{{HistoryLine||1.21.6|dev=25w21a|Carrots are now usable on horses, donkeys, and mules.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||October 15, 2013|link=https://web.archive.org/web/20151105235351/https://twitter.com/jbernhardsson/status/390118430298218496|[[Johan Bernhardsson]] announces carrots alongside [[potato]]es for 0.8.0.}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Carrot JE2 BE1.png|32px]] Added carrots.
+|[[File:Carrots Age 0-1 JE6 BE1.png|32px]] [[File:Carrots Age 2-3 JE6 BE1.png|32px]] [[File:Carrots Age 4-6 JE6 BE1.png|32px]] [[File:Carrots Age 7 JE6 BE1.png|32px]]{{verify|Correct models?}} Added carrot crops.
+|Carrots can be obtained by killing [[zombie]]s.
+|[[Pig]]s follow players holding carrots, but cannot be fed yet.}}
+|{{HistoryLine|||dev=build 3|Carrots now have a chance to [[drop]] when tilling [[grass block]]s.}}
+|{{HistoryLine|||dev=build 4|Carrots are no longer dropped by tilling [[grass block]]s.
+|Pigs can now be fed carrots to enter love mode and breed.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Carrot crops now naturally spawn in [[village]]s.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Carrots now restore [[hunger]] instead of [[health]].
+|Brown robed [[villager]]s can now harvest fully grown carrot crops.
+|Carrots can now be used to craft [[golden carrot]]s.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Carrots can now be used to breed [[rabbit]]s.
+|Carrots can now be used to craft [[rabbit stew]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Carrots are now used to craft [[carrot on a stick]].}}
+|{{HistoryLine||v0.16.2|Carrots can now be found in a [[chest]] inside the large house in [[snowy tundra]] and [[snowy taiga]] [[village]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Farmer [[villager]]s now [[trading|buy]] 15–19 carrots for 1 [[emerald]].
+|Carrots can now be picked up by villagers and become willing.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Carrots can now be found inside of [[bonus chest]]s.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Carrots can now be found inside [[shipwreck]] chests.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Carrots can now be eaten in Creative mode and on Peaceful difficulty.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Carrots can be found in the new [[pillager outpost]]s.
+|[[File:Carrot JE3 BE2.png|32px]] The texture of carrots has been changed.
+|[[File:Carrots Age 0-1 JE7.png|32px]] [[File:Carrots Age 2-3 JE7.png|32px]] [[File:Carrots Age 4-6 JE7.png|32px]] [[File:Carrots Age 7 JE7.png|32px]]{{verify|Correct models?}} The textures of carrot crops have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Carrots can now be used to fill up [[composter]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|[[Trading]] has been changed, farmer [[villager]]s now have a 25% chance to [[trading|buy]] 22 carrots for an [[emerald]].}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[Bee]]s can now pollinate carrot crops.}}
+|{{HistoryLine||?|[[File:Carrots Age 0-1 BE.png|32px]] [[File:Carrots Age 2-3 BE.png|32px]] [[File:Carrots Age 4-6 BE.png|32px]] [[File:Carrots Age 7 BE.png|32px]] Carrot crop planes use a mapping that results in unnatural mirroring when viewed from certain angles, such as northwest.<ref>{{bug|MCPE-146936}}</ref>}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|[[File:Carrots Age 0-1 JE7.png|32px]] [[File:Carrots Age 2-3 JE7.png|32px]] [[File:Carrots Age 4-6 JE7.png|32px]] [[File:Carrots Age 7 JE7.png|32px]] Carrot crops no longer appear mirrored when viewed from certain angles.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.26|Carrots are now usable on horses, donkeys, and mules.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Carrot JE2 BE1.png|32px]] Added carrots.
+|[[File:Carrots Age 0-1 JE6 BE1.png|32px]] [[File:Carrots Age 2-3 JE6 BE1.png|32px]] [[File:Carrots Age 4-6 JE6 BE1.png|32px]] [[File:Carrots Age 7 JE6 BE1.png|32px]]{{verify|Correct models?}} Added carrot crops.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added [[rabbit]]s, which can be [[bred]] and/or tamed using carrots. Rabbits also grief carrot crops.|Carrots are now used to craft [[rabbit stew]].|Carrots now restore {{hunger|3}} points and 3.6 hunger [[saturation]], instead of {{hunger|4}} and 4.8 hunger saturation.{{check version}}|Farmer [[villager]]s now [[trading|buy]] 15–19 carrots for 1 [[emerald]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|The hitbox of planted carrots now adjusts depending on their growth state.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Carrots can now be found inside [[shipwreck]] chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Carrot JE3 BE2.png|32px]] The texture of carrots has been changed.
+|[[File:Carrots Age 0-1 JE7.png|32px]] [[File:Carrots Age 2-3 JE7.png|32px]] [[File:Carrots Age 4-6 JE7.png|32px]] [[File:Carrots Age 7 JE7.png|32px]]{{verify|Correct models?}} The textures of carrot crops have been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Carrots can now generate in the [[chest]]s of [[pillager outpost]]s.|Carrots can now be used to fill up [[composter]]s.|[[Trading]] has been changed, farmer [[villager]]s now have a chance to [[trading|buy]] 22 carrots for an [[emerald]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Carrot JE2 BE1.png|32px]] Added carrots.
+|[[File:Carrots Age 0-1 JE6 BE1.png|32px]] [[File:Carrots Age 2-3 JE6 BE1.png|32px]] [[File:Carrots Age 4-6 JE6 BE1.png|32px]] [[File:Carrots Age 7 JE6 BE1.png|32px]]{{verify|Correct models?}} Added carrot crops.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Crop blocks now have dedicated model json files; previously the geometry was defined in the game code itself.{{info needed|The file crop.json was added in this version, but invalid data value crops do not use the missing model until 14w10a, unlike for torches and redstone torches which use it starting from 14w06b. Was the model json file actually used in this version, or was it only used from a future version onwards?}}}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 141, and the item's 391.}}
+|{{HistoryLine||1.17|dev=21w19a|<code>minecraft:carrots</code> has been added to the newly-implemented <code>#minecraft:mineable/axe</code> [[block tag]]. This, however, has no effect in-game, since the block breaks instantly anyway regardless of tool used or active effects.{{check the code|Prior to this version, assigned tools were presumably hardcoded; were carrots also coded to have axes as their "preferred" tool before this version?}}}}
+|{{HistoryLine||1.21.5|dev=25w10a|<code>minecraft:carrots</code> has been removed from the block tags <code>#minecraft:mineable/axe</code> and <code>#minecraft:sword_efficient</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:AllSeeds.png|All the seeds that exist in the game (except [[nether wart]] and [[cocoa beans]]).
+File:VillageGrowingCarrotsAndPotatoes.png|Carrots and [[potato]]es found growing naturally in a [[village]].
+File:Carrots Growing.png|Carrots in multiple stages of growth.
+File:Carrot in a monster room.jpg|A carrot that dropped from a zombie, just to the right of the [[spawner]].
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:Steve aura farming.jpeg|[[Steve]] "aura farming"<!-- Words from the source tweet --> in a carrot patch
+File:Dev Diaries Ari feeds horse.jpeg|[[Ari]] feeding a horse a carrot
+File:Tiny Takeover Sunny feeds babies.jpg|[[Sunny]] feeding baby animals carrots
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Carrot SDGP.png|Carrot in the [[Super Duper Graphics Pack]].
+File:Carrot (inventory) MCE.png|A {{MCE|carrot}} as it appeared in {{MCE}}
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|food}}
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Food]]
+[[Category:Non-solid blocks]]
+[[Category:Generated structure blocks]]
+
+[[cs:Mrkev]]
+[[de:Karotte]]
+[[es:Zanahoria]]
+[[fr:Carotte]]
+[[hu:Sárgarépa]]
+[[it:Carota]]
+[[ja:ニンジン]]
+[[ko:당근]]
+[[lzh:胡蘆菔]]
+[[nl:Wortel]]
+[[pl:Marchewka]]
+[[pt:Cenoura]]
+[[ru:Морковь]]
+[[th:แคร์รอต]]
+[[uk:Морква]]
+[[zh:胡萝卜]]

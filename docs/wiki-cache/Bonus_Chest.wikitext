@@ -1,0 +1,154 @@
+{{for|other uses|Chest (disambiguation)}}
+{{Infobox structure
+| biome = Any
+| blocks = 
+* {{BlockLink|Chest}}
+* {{BlockLink|Torch}}
+* Terrain-generated blocks can disrupt the creation of torches.
+* For more information, see {{slink||Construction}}
+|canspawn=No
+}}
+The '''bonus chest''' is a structure-like [[feature]] that appears near the [[player]]'s spawn toggled in the [[Create New World|create new world]] screen. It generates with a semi-random collection of basic items to help the player survive early on and gather necessary resources, including [[tool]]s, [[block]]s, and [[food]].
+
+== Generation ==
+[[File:Bonus Chest Vibrant Visuals.png|thumb|A bonus chest as seen in-game]]
+If the "Bonus Chest" option is enabled in the [[Create New World|create new world]] screen, in the "More World Options..." section {{in|java}} or "Advanced" tab {{in|bedrock}}, a single bonus chest is generated in the world, no matter how many players there are. It appears somewhere near the player's initial spawn point, within the chunk at the world spawn point, with four [[torch]]es generated around it on adjacent blocks. It always generates on the highest block, and cannot generate naturally nor with the {{code|/place}} command if it reaches the build limit.
+
+The Bonus Chest option is not available in [[Hardcore]] mode, thus making the bonus chest unavailable as well.
+
+{{IN|java}}, on [[server]]s, the bonus chest can be enabled by running the server with the {{code|--bonusChest}} argument.
+
+== Construction ==
+Bonus chests contain a single chest surrounded by four [[torch]]es. The torches may be overridden if the torch locations are obstructed by other blocks such as uneven ground, trees, or leaves, or they may instead float.
+{{BlockGrid|c=chest|t=torch
+| t
+|tct
+| t
+}}
+
+== Loot ==
+{{FakeImage|
+{{Container
+|type=chest
+|1=Apple,1
+|5=Oak Planks,2
+|6=Dark Oak Log,1
+|7=Wooden Pickaxe,1
+|8=Dark Oak Log
+|10=Raw Salmon
+|11=Oak Planks,4
+|12=Oak Planks
+|13=Bread
+|20=Bread
+|22=Jungle Log
+|25=Jungle Log
+|27=Wooden Axe
+}}
+|Example of loot in a bonus chest.
+}}
+
+{{LootChest|bonus|java=1}}
+{{LootChest|bonus|items|chance|chests|bedrock=1}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=chest
+|spritetype=block
+|nameid=bonus_chest
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=chest
+|spritetype=block
+|nameid=bonus_chest
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=chest
+|spritetype=block
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config" /><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config" />
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:bonus_chest",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{info needed section|historical loot tables or loot chances from before loot tables actually existed (a lot of other pages should probably get these as well)}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w16a|Added the 'bonus chest' option to the [[Create New World]] menu.}}
+|{{HistoryLine|||dev=12w17a|The player can no longer have a bonus chest in Hardcore mode.}}
+|{{HistoryLine|||dev=12w19a|Torches now spawn around bonus chests if each side has a block at the same height around it.
+|The server jar now accepts the [[Tutorials/Setting up a server#Minecraft options|command-line argument]] <code>--bonusChest</code>.}}
+|{{HistoryLine||?|One axe and one pickaxe is now always guaranteed.}}
+|{{HistoryLine||1.7.2|dev=1.7|Wood in bonus chests may now be acacia.}}
+|{{HistoryLine||1.9|dev=15w43a|Wood found in bonus chests can now be of any type, rather than just acacia or oak.}}
+|{{HistoryLine|||dev=15w44a|Bonus chests now have less wood.}}
+|{{HistoryLine||?|All wood types are now possible.}}
+|{{HistoryLine||1.19|dev=22w15a|Bonus chests can now contain [[mangrove log]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added the Bonus Chest option, which can be toggled in World Options.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the 'bonus chest' option to the [[options]] menu.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|Bonus chests can now contain [[cocoa beans]], [[potato]]es, [[carrot]]s, [[brown mushroom]]s, [[melon seeds]], [[pumpkin seeds]], [[birch sapling]]s, [[Cactus|cacti]], and [[Jungle Sapling|jungle tree sapling]]s.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Bonus chests are now labelled as "Bonus Chest" in its UI.{{check version|In the latest version mining it provides an unrenamed chest. That may also have been different back then.}}}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.0.21|Added the Bonus Chest option, which can be toggled in World Options.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+Better Together Bonus Chest 1.jpg|First image of the bonus chest option {{in|Bedrock}}.
+Better Together Bonus Chest 2.jpg|First image of a bonus chest in ''Bedrock Edition''.
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[de:Bonustruhe]]
+[[es:Cofre de regalo]]
+[[ja:ボーナスチェスト]]
+[[pt:Baú bônus]]
+[[ru:Бонусный сундук]]
+[[uk:Бонусна скриня]]
+[[zh:奖励箱]]

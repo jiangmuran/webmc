@@ -1,0 +1,223 @@
+{{For||Minecart (disambiguation)}}{{Infobox item entity
+| image = Minecart with Hopper.png
+| invimage = Minecart with Hopper
+| renewable = Yes
+| stackable = No
+| size = Height: 0.7 blocks<br>Width: 0.98 blocks
+| networkid = 
+| drops = 1 {{ItemLink|Minecart with Hopper}}<br>plus contents
+| health = {{hp|6}}
+}}
+A '''minecart with hopper''' is a [[minecart]] with a [[hopper]] inside. Unlike a normal hopper, it pulls items from containers much more quickly, cannot push items into containers, can collect [[item entities]] through a single layer of [[solid block]]s, and is locked and unlocked via [[activator rail]]s.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|Hopper
+|Minecart
+|Output= Minecart with Hopper
+|type= Transportation
+}}
+
+Minecarts with hoppers can be retrieved by attacking them. By doing so, it drops as an [[item (entity)|item]] along with the contents of the hopper. [[Critical hits]] are not applied to them although the particles suggest otherwise.
+
+== Usage ==
+[[File:Minecart with Hopper GUI.png|thumb|176px|The GUI of a minecart with hopper.]]
+Minecarts with hoppers are placed similarly to other [[minecart]]s.
+
+A minecart with hopper pulls in items lying nearby (within a range slightly larger than the cart itself), or inside a container directly above the minecart, at a high speed. In [[Java Edition|''Java Edition'']] a hopper minecart pulls items from a container directly above the minecart at a speed of one item every [[game tick]] in (20 items per second), eight times as fast as a normal hopper. In [[Bedrock Edition|''Bedrock Edition'']] it pulls an item only every two game ticks (10 items per second), four times as fast as a normal hopper. It also picks up items that are lying on a block directly above the track. It does not push items into containers, but a hopper underneath the track can remove items from a minecart with hopper on the track. Ordinary hoppers can also drop items into a minecart with hopper like other containers, at the normal speed of 2.5 items per second. In ''Bedrock Edition'' a minecart with hopper on a curved rail pulls in items in a hopper lying in front of its moving direction and one block above if the hopper's output funnel is pointed downward and no block is below that hopper.<ref>{{bug|MCPE-94293}}</ref>
+
+The minecart with hopper can be disabled by passing over a powered [[activator rail]], and can be reenabled by an inactive activator rail.
+
+An empty minecart with hopper can travel more than 85 blocks without stopping (as opposed to a normal cart going less than 12 blocks) from a dead stop using a two-powered track starter, even with another minecart in front of it. However, the distance traveled by a minecart with hopper depends on the hopper's load. Using a one-powered rail starter track, a minecart with an empty hopper travels 64 blocks until it stops (as opposed to an empty normal minecart going 8 blocks). The distance traveled diminishes non-linearly with increased hopper load; a minecart with a full hopper can travel only 16 blocks in this setup.
+
+{{See also|Tutorial:Storage minecarts}}
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Minecarts with hoppers use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].<ref group=sound name=rollsource>{{bug|MC-42132}}</ref>
+
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|subtitle=Minecart rolls
+|source=Friendly Mobs <ref group=sound name=rollsource/>
+|overridesource=1
+|description=While a minecart with hopper is moving
+|id=entity.minecart.riding
+|translationkey=subtitles.entity.minecart.riding
+|volume=0.0-0.35 <ref group=sound>Relates linearly with horizontal velocity (max 0.5)</ref>
+|pitch=0.0-1.0 <ref group=sound>Increases by 0.0025 per tick if the minecart's horizontal velocity is more than 0.01</ref>
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|source=neutral
+|description = While a minecart with hopper is moving
+|id=minecart.base
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with Hopper
+|spritetype=item
+|nameid=hopper_minecart
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Minecart with Hopper
+|spritetype=entity
+|nameid=hopper_minecart
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with Hopper
+|spritetype=item
+|nameid=hopper_minecart
+|id=526
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Minecart with Hopper
+|spritetype=entity
+|nameid=hopper_minecart
+|showentityfamily=y
+|entityfamily=inanimate,minecart
+|id=96
+|foot=1}}
+
+=== Entity data ===
+Minecarts with hoppers have entity data associated with them that contain various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/container entity}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/vehicle}}
+** {{nbt|bool|Enabled}}: {{cd|1}} or {{cd|0}} ({{cd|true}}/{{cd|false}}) - If {{cd|true}}, the minecart hopper picks up items into its inventory.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Videos ==
+<div style="text-align:center">{{yt|I5etC7LeCac}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w03a|[[File:Minecart with Hopper JE1 BE1.png|32px]] [[File:Minecart with Hopper (item) JE1 BE1.png|32px]] Added minecart with hopper.}}
+|{{HistoryLine||1.9|dev=15w43a|Loot tables are added; minecarts with hoppers now can use loot tables.}}
+|{{HistoryLine||1.9.1|dev=pre2|The title of the [[inventory]] is changed from 'Hopper minecart' to 'Minecart with Hopper'.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Minecart with Hopper JE2 BE2.png|32px]] [[File:Minecart with Hopper (item) JE2 BE2.png|32px]] The textures of the minecart with hopper have now been changed.}}
+|{{HistoryLine||1.15|dev=19w38a|[[File:Minecart with Hopper 19w38a.png|32px]] The hopper now appears dark, same as suffocating mobs.}}
+|{{HistoryLine|||dev=19w39a|The hopper now renders correctly.}}
+|{{HistoryLine||1.16.2|dev=pre1|Opening or destroying a minecart with hopper now angers nearby [[piglin]]s.}}
+|{{HistoryLine||1.19|dev=22w13a|The crafting recipe for a minecart with hopper is now shapeless.
+|Breaking a minecart with hopper now drops the item instead of the minecart and hopper separately. The contents of the hopper are still dropped.<ref>{{bug|MC-249493|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.4|dev=23w06a|Minecart with hopper no longer aggravates [[piglin]]s when opened or destroyed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Minecart with Hopper JE1 BE1.png|32px]] [[File:Minecart with Hopper (item) JE1 BE1.png|32px]] Added minecart with hopper.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Minecart with Hopper JE2 BE2.png|32px]] [[File:Minecart with Hopper (item) JE2 BE2.png|32px]] The textures of the minecart with hopper have now been changed.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.31|Breaking a minecart with hopper now drops the item instead of the minecart and hopper separately. The contents of the hopper are still dropped.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Minecart with Hopper JE1 BE1.png|32px]] [[File:Minecart with Hopper (item) JE1 BE1.png|32px]] Added minecart with hopper.}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|The minecart [[spawn limit|limit]] has been increased.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Minecart with Hopper JE2 BE2.png|32px]] [[File:Minecart with Hopper (item) JE2 BE2.png|32px]] The textures of the minecart with hopper have now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Minecart with Hopper JE1 BE1.png|32px]] [[File:Minecart with Hopper (item) JE1 BE1.png|32px]] Added minecart with hopper.
+|Minecarts with hoppers now emit smoke [[particles]] when destroyed.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID of the minecart with hopper has now been changed from <code>MinecartHopper</code> to <code>hopper_minecart</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 408.{{info needed|and the numeric entity ID was what?}}}}
+|{{HistoryLine||1.19.4|dev=23w03a|<code>TransferCooldown</code> data has been removed.}}
+}}
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID of the minecart with hopper has now been changed from <code>minecarthopper</code> to <code>hopper_minecart</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+First hopper Minecart Image.png|The first image of hopper carts released by Dinnerbone.<ref>{{Tweet|Dinnerbone|291215700213772289|Well you guys got that quick. The letters in the hotbar were for <nowiki>[imgur link]</nowiki>|January 15, 2013}}</ref>
+13w03a Banner.png|The 13w03a banner showing a minecart with hopper and a [[dropper]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Storage]]
+[[Category:Readable by comparators]]
+[[Category:Vehicles]]
+
+[[cs:Vozík s násypkou]]
+[[de:Trichterlore]]
+[[es:Vagoneta con tolva]]
+[[fr:Wagonnet à entonnoir]]
+[[hu:Tölcsér csille]]
+[[it:Carrello da miniera]]
+[[ja:ホッパー付きのトロッコ]]
+[[ko:호퍼가 실린 광산 수레]]
+[[nl:Mijnkar met trechter]]
+[[pl:Wagonik z lejem]]
+[[pt:Carrinho de mina com funil]]
+[[ru:Вагонетка с воронкой]]
+[[uk:Вагонетка з лійкою]]
+[[zh:漏斗矿车]]

@@ -1,0 +1,251 @@
+{{distinguish|MCD:Desert Temple}}
+{{for||Pyramid|Temple|Desert (disambiguation)}}
+{{Infobox structure
+| image = Desert pyramid.png
+| imagesize = 250px
+| biome = {{BiomeLink|Desert}}
+| blocks = * {{BlockLink|Blue Terracotta}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Chiseled Sandstone}}
+* {{BlockLink|Cut Sandstone}}
+* {{BlockLink|Orange Terracotta}}
+* {{BlockLink|Sand}}
+* {{BlockLink|Sandstone}}
+* {{BlockLink|Sandstone Slab}}
+* {{BlockLink|Sandstone Stairs}}
+* {{BlockLink|Stone Pressure Plate}}
+* {{BlockLink|Suspicious Sand}}
+* {{BlockLink|TNT}}
+| canspawn = No
+}}
+{{relevant tutorial|Defeating temples}}
+A '''desert pyramid''', commonly referred to as a '''desert temple''', is an uncommon above ground [[structure]] found in [[desert]] biomes built mostly of [[sandstone]]. The desert pyramid contains four loot [[chest]]s hidden under the floor in the center protected by a [[TNT]] trap under the floor, and a secret buried room to the side where [[archaeology]] can be performed by brushing the generated [[suspicious sand]].
+
+== Generation ==
+Desert pyramids generate in [[desert]] biomes. Desert pyramids have a lower generation frequency {{in|JE}} than {{in|BE}}.
+
+{{Calculator|chunkbase|pois=Dt|zoom=0.25}}
+
+== Structure ==
+{{main|/Structure}}
+Desert pyramids are intended to represent an excavation site. The structure is constructed with normal, smooth, chiseled, and cut sandstone, as well as orange and blue [[terracotta]], sandstone [[slab]]s, and sandstone [[stairs]].
+[[File:Desert Temple Interior.png|thumb|left|The inside view of a desert pyramid’s central room.]]
+The pattern of orange terracotta on the towers of desert pyramids resembles an {{w|Ankh}}, the ancient Egyptian symbol for life and the {{w|Nile (river)|Nile}} key. There is one main entrance in the front, two more entrances in the back on both the left and right sides near the top of the pyramid, and a one-block wide window at the top. Even if the rest of the pyramid generates mostly buried by sand, the top of the pyramid is almost always above ground. A mostly buried pyramid can still be accessed by the window in the top if necessary, though fall [[damage]] is likely. In the center of the pyramid's 21×21 ground floor is a checkerboard pattern of terracotta and sandstone in a wind rose symbol, with a block of blue terracotta in the center.
+[[File:The four chests with the TNT trap.png|thumb|A preview of the four hidden chests with the TNT trap under the desert pyramid.]]
+Underneath this terracotta is a secret fosse containing four chests, which are rigged by a [[stone pressure plate]] directly under the blue terracotta block. The pressure plate is connected to a 3×3 grid of [[TNT]], which means that if a [[player]] or [[mob]] unintentionally steps on the plate, it sets off the nine TNT blocks, which destroy the chests and their loot and can kill the player. As there is no light in the chest room, mobs sometimes spawn inside it and trigger the TNT trap, destroying the chests and loot before any player can reach it.
+[[File:Desert Pyramid collapsed stairs.png|thumb|View of an excavated cellar room, showing position of the collapsed stairs.]]
+Desert pyramids also generate with a lower room situated in the back (either on the left or right), and buried in sand. Six to eight of these sand blocks generate as [[suspicious sand]]. This room is 5×5 blocks, has another instance of the sandstone wind rose pattern on the ground, and is connected to the main floor with collapsed stairs.
+
+When a desert pyramid generates above a [[ravine]], the foundation extends downward until it reaches the bottom.
+
+=== Generated loot ===
+{{seealso|Chest loot}}
+{{LootChest|desert}}
+The loot chances above are ''per chest''. As each chest has a 2.6% chance to contain an enchanted golden apple for example, with four chests, each pyramid has about a 10% chance overall of having at least one.
+
+=== Archaeological loot ===
+{{LootChest|brushable-desert-temple}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Desert Pyramid
+|spritetype=env
+|nameid=desert_pyramid
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Desert Pyramid
+|spritetype=env
+|nameid=desert_pyramid
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Temple
+|spritename=desert-pyramid
+|spritetype=env
+|nameid=temple
+|translationkey=feature.temple
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:desert_pyramid}}
+** {{Nbt inherit/structure}}
+</div><section end="config"/>
+
+== History ==
+{{see also|Desert Pyramid/Structure (old)}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w21a|[[File:Desert Pyramid JE1 BE1.png|50px]] Added desert pyramids. A desert pyramid does not generate fully if generated partially on lakes.|Desert pyramids always generate their floors at Y{{=}}65, causing the pyramids to get buried under certain terrain configurations.}}
+|{{HistoryLine||1.4.6|dev=12w50a|[[Enchanted book]]s now may generate in desert pyramid chests.}}
+|{{HistoryLine||1.6.1|dev=13w18a|Added [[horse armor]] to the chest's [[loot]].}}
+|{{HistoryLine||1.8|dev=14w03a|[[File:Desert Pyramid JE2 BE2.png|50px]] Desert pyramids now generate with [[hardened clay]] instead of [[wool]].}}
+|{{HistoryLine||1.9|dev=15w44a|The chest loot is changed.
+|Added gunpowder, sand, string, spider eyes and normal and enchanted golden apples.
+|Average yields of diamonds, gold ingots and iron ingots were very decreased.
+|Average yields of horse armor, enchanted books, rotten flesh, saddles and emeralds are a little increased.}}
+|{{HistoryLine||1.13|dev=18w06a|Desert pyramids are first officially named.
+|The structure ID of desert pyramids have been changed from {{cd|temple}} to {{cd|desert_pyramid}}, allowing them to be located independently via the {{cmd|locate}} command.
+|Changed generation locations of desert pyramids.}}
+|{{HistoryLine||1.14|dev=18w50a|[[File:Desert Pyramid JE3 BE3.png|50px]] The textures of desert pyramids has been changed.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Due to deserts becoming rarer, desert pyramids are now less common.}}
+|{{HistoryLine|||dev=experimental snapshot 3|Desert pyramids now always spawn on the surface rather than at a fixed Y-level.
+|Previously, their sandstone and terracotta floor was at Y{{=}}65.}}
+|{{HistoryLine|||dev=experimental snapshot 4|Desert pyramids now tend to generate partially buried.
+|Desert pyramids are no longer able to generate above water sources.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|The [[dune armor trim]] may now be found in the desert pyramid chests.}}
+|{{HistoryLine|||dev=23w05a|Increased the chance of [[dune armor trim]]s from from 11.1% to 14.3%.
+|The dune armor trims now always generate two templates in a desert pyramid chest when found.}}
+|{{HistoryLine|||dev=23w07a|The desert temple now includes a new room filled with [[sand]] and [[suspicious sand]].
+|Some sand and suspicious sand appear exposed and can be found at the same height as the [[blue terracotta]].
+|The suspicious sand may contain archer, prize, and skull pottery shard; gunpowder, TNT, diamond, and emerald.}}
+|{{HistoryLine||1.20|dev=23w12a|The loot of the suspicious sand in desert pyramid has been changed.
+|Miner pottery shards now spawn in desert well with the probability of 1/8.
+|The probability of all items spawn in desert pyramid is now 1/8.}}
+|{{HistoryLine|||dev=23w14a|A [[suspicious sand]] is now visible on the top layer of the newly added room in desert pyramids.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=1.20.2 Pre-release 1|Unbreaking enchanted books now have a higher chance of generating in desert pyramid chest loot.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Saddles have been replaced with stacks of 1-5 leather in desert pyramid chests.}}
+|{{HistoryLine||1.21.9|dev=25w31a|[[Copper horse armor]] now generates in desert pyramid chests.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|Added desert pyramids. They could also be found in the desert hills [[biome]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Enchanted books and horse armor now generate in desert pyramid chests.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|Now includes a new room filled with [[sand]] and [[suspicious sand]].
+|Some sand appears exposed and can be found at the same height as the [[blue terracotta]].}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|The [[dune armor trim]] may be found in the desert pyramid chest now.}}
+|{{HistoryLine||1.20.40|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.40.20|Unbreaking enchanted books now have a higher chance of generating in desert pyramid chest loot.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.25|Saddles have been replaced with stacks of 1-5 leather in desert pyramid chests.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added desert pyramids.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added [[horse armor]] and [[enchanted book]]s to the chest's [[loot]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Desert pyramids now generate with stained clay instead of wool.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.88|wiiu=none|switch=none|Desert pyramids now generate with [[smooth sandstone]] instead of [[cut sandstone]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added desert pyramids.}}
+}}
+<gallery>
+Old desert temple.png|The main room of a desert pyramid from older versions, where dyed wool could be found.
+Double desert temple.png|A perfect naturally-generated double desert pyramid.
+Desert village inside a desert pyramid.png|A pyramid generated in a [[village]].
+Empty quarter monster room in desert pyramid.png|A desert pyramid that has a [[monster room]] generated inside it.
+</gallery>
+
+== Issues ==
+{{issue list|Desert pyramid|Desert temple}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Desert Temple Archaeology Room.png|The [[archaeology]] room
+Pyramide.png|A chamber inside in one of the two towers
+Desert temple top room.png|The chamber from the top floor
+Excavated Desert Temple.png|A desert pyramid containing terracotta
+Pyramid Chests.png|The treasure room inside the hidden lower chamber of the pyramid
+The 9 TNT rigged under the Stone Pressure Plate.png|The nine [[TNT]] rigged under the stone [[pressure plate]]
+Desert temple on map.png|What desert pyramids look like on [[map]]s
+Uncovered Pyramid.png|A reconstructed pyramid with the shaft extending below it
+Airborne Pyramid.png|The previous pyramid viewed from a different angle
+Zuri Excavates.jpg|[[Zuri]] approaching the structure
+Deser pyramid spwaning partly inside a village.png|A desert pyramid generated partly inside a [[desert village]]
+Makena excavates.png|[[Makena]] excavating in the pyramid
+</gallery>
+
+==== Unique generation ====
+<gallery>
+Village and Temple.png|A pyramid generated in a desert [[village]]. A [[desert well]] and a buried, ruined portal are also visible.
+Buried desert temple.png|A desert pyramid generated under the sand
+TempleUnderVillage.png|A desert pyramid partly generated under the sand with a desert village generating near it
+Temple in 3 biomes.png|A pyramid generated on a thin desert caused by a badlands biome being generated next to a plains biome resulting in the pyramid being in 3 biomes
+Desert pyramid inside a mountain.png|A desert pyramid generated inside a mountain
+Hutvillageandpyramidclosetoeachother.png|A [[village]], a [[swamp hut]] and a desert pyramid close to each other
+Desert pyramid flooded.jpg|A pyramid completely surrounded by an [[ocean]].
+VillageandTemple.png|Desert pyramid generated close to the village on the edge of desert biome
+PyramininVillage.png|Desert pyramid generated in village
+BuriedTemple.png|A desert pyramid completely buried under a hill
+Pyramidpillagervillag.png|A deeply buried desert pyramid outside of a village. In the distance, a [[pillager outpost]] and another pyramid generated.
+3 structures together.png|Desert pyramid, [[mineshaft]] and [[stronghold]] generated close together
+Pyramid in 3 biomes.png|Desert pyramid reaching into 3 biomes ([[river]], desert and [[plains]])
+Pillager Outpost Inside Desert Temple.png|A pillager outpost that generated inside of a desert pyramid
+Outpost and pyramid.png|Pillager outpost and desert pyramid generated on top of each other
+Buried pyramid.png|Desert pyramid found completely buried underground
+Desert pyramid connected to a mineshaft.png|Desert pyramid connected to a badlands mineshaft
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Desertpyramid-ingame.jpeg|alt=The interior of a desert pyramid in Minecraft.|The interior of a desert pyramid
+File:Noor excavates.jpg|alt=A player excavating an Emerald from some suspicious sand in a Desert Pyramid.|[[Noor]] excavating an emerald in the archeological room
+File:Too Many Temples.jpg|A lot of desert pyramids
+File:Temple Horizon.jpg|Many desert temples on the horizon
+File:Buried Pyramid.jpg|A pyramid half buried in the sand
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Ari Outside Desert Pyramid Pixel Art.png|[[Ari]] outside a desert pyramid
+File:Ari Admiring Decorated Pots Pixel Art.png|Part of a desert pyramid is seen in the background.
+File:Live2023-10.jpeg|[[Sunny]] excavating a [[pottery sherd]] near a desert pyramid
+File:Cactus Valley range.jpg|A desert pyramid as it appears in [[Catastrophic Pandamonium]]
+File:TFIL1.png|A makeshift desert pyramid, used to house the ''The Floor Is Lava'' minigame in [[Realms Celebration]]
+File:Ari and Makena in a desert.jpeg|A desert pyramid as it appears in [[15 Year Journey]]
+File:DesertTempleEntranceMCD.png|The {{MCD|Desert Temple}} as it appears in ''[[Minecraft Dungeons]]''.
+File:LEGO Minecraft Prototype Desert Pyramid.jpg|A prototype of a ''[[Lego]]'' desert pyramid
+</gallery>
+
+== See also ==
+* [[Tutorial:Defeating temples#Desert temple|Tutorial on defeating desert pyramids]]
+* [[Jungle pyramid]]
+* [[Minecraft Dungeons:Desert Temple]]
+* [[Beacon]]
+* [[Brick pyramid]]
+
+== External links ==
+* {{mcnet|desert-pyramid|Building Blocks: Desert Pyramid|May 29, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox desert}}
+{{Navbox generated structures}}
+
+[[Category:Temples]]
+
+[[cs:Pouštní chrám]]
+[[de:Wüstentempel]]
+[[es:Pirámide del desierto]]
+[[fr:Pyramide du désert]]
+[[hu:Sivatagi templom]]
+[[it:Piramide del deserto]]
+[[ja:砂漠の寺院]]
+[[ko:사막 피라미드]]
+[[lzh:漠殿]]
+[[nl:Woestijnpiramide]]
+[[pl:Piramida]]
+[[pt:Templo do Deserto]]
+[[ru:Храм в пустыне]]
+[[th:พีระมิดทะเลทราย]]
+[[uk:Храм в пустелі]]
+[[zh:沙漠神殿]]

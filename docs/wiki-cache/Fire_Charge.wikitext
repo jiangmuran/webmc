@@ -1,0 +1,254 @@
+{{for||Fire (disambiguation)}}
+{{Infobox item entity
+|image=Fire Charge.png
+|invimage=Fire Charge
+|renewable=Yes
+|stackable=Yes (64)
+|networkid='''[[JE]]''': 64
+}}
+A '''fire charge''' is an [[item]] that can be {{control|used}} as a single-use version of a [[flint and steel]] or shot as a [[small fireball]] from a [[dispenser]].
+
+== Obtaining ==
+Despite firing small fireballs, [[blaze]]s do not drop fire charges.
+
+=== Generated loot ===
+{{LootChestItem|fire-charge}}
+
+=== Crafting ===
+{{Crafting
+|Blaze Powder
+|Coal; Charcoal
+|Gunpowder
+|Output= Fire Charge, 3
+|type= Miscellaneous
+}}
+
+=== Bartering ===
+When given a [[gold ingot]], [[piglin]]s have a ~8.53% ({{frac|40|469}}) chance to [[barter]] a single fire charge.
+
+=== Natural occurrence ===
+{{main|Ominous Trial Spawner#Projectile spawning}}
+During [[ominous trial]]s, each [[ominous trial spawner]] has a {{frac|1|5}} chance to dispense a fire charge on top of either a player or a mob it spawns. The fire charge is directly dispensed into the world and cannot be obtained in the inventory.
+
+== Usage ==
+[[File:Natural Fire Charge.png|200px|thumb|Dispensed small fireball]]
+
+Fire charges can be used as ammunition in [[dispenser]]s or as a single-use substitute for a [[flint and steel]].
+
+When used, it instantly places a [[fire]], similar to flint and steel. But, unlike flint and steel, the fire charge is consumed in the process. It can prime [[TNT]] and light [[nether portal]]s, [[campfire]]s, [[candle]]s, [[Cake|cakes with candles]], and [[creeper]]s{{only|JE}}.
+
+When a fire charge is fired from a dispenser, it shoots a [[small fireball]]. However, a player ''cannot'' simply {{ctrl|use}} a fire charge while holding it to shoot a small fireball.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+== Sounds ==
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Ghast fireball4.ogg
+|subtitle=Ghast shoots
+|source=hostile
+|description=When a fireball is shot by a ghast
+|id=entity.ghast.shoot
+|translationkey=subtitles.entity.ghast.shoot
+|volume=10.0
+|pitch=0.8-1.2
+|distance=16 {{verify}}}}
+| {{SoundLine
+|subtitle=Blaze shoots <ref group=sound name=LousyEvents>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=hostile
+|description=When a fire charge is fired from a dispenser or a blaze
+|id=entity.blaze.shoot|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.blaze.shoot|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=2.0
+|pitch=0.8–1.2
+|distance=32}}
+| {{SoundLine
+|subtitle=Fireball whooshes
+|source=block
+|description=When a fire charge is used by hand
+|id=item.firecharge.use|idnote=<ref group=sound name=nounderscore>{{bug|MC-177457}}</ref>
+|translationkey=subtitles.item.firecharge.use|translationkeynote=<ref group=sound name=nounderscore/>
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|subtitle=Fireball whooshes
+|source=hostile
+|description=When a fire charge is used to light a creeper
+|id=item.firecharge.use|idnote=<ref group=sound name=nounderscore/>
+|translationkey=subtitles.item.firecharge.use|translationkeynote=<ref group=sound name=nounderscore/>
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Ghast fireball4.ogg
+|source=hostile
+|description=When something shoots or uses a fire charge
+|id=mob.ghast.fireball
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Fire Charge
+|spritetype=item
+|nameid=fire_charge
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Fire Charge
+|spritetype=item
+|nameid=fire_charge
+|aliasid=fireball
+|id=509
+|form=item
+|translationkey=item.fireball.name
+|foot=1}}
+
+=== Entity data ===
+{{main|Small Fireball#Entity data}}
+
+== Achievements ==
+{{Load achievements|Into the Nether}}
+
+== Advancements ==
+{{load advancements|We Need to Go Deeper}}
+
+== Videos ==
+<div style="text-align:center">{{yt|IiCTxsHg6SQ}}</div>
+
+== History ==
+{{for|information pertaining to small fireballs (which fire charges produce when shot from a dispenser)|Small Fireball#History}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Fire Charge JE1 BE1.png|32px]] Added the fire charge texture. It is currently only used by [[fireball]]s and [[small fireball]]s, both of which are entities, and is not used by any items.}}
+|{{HistoryLine||1.2.1|dev=12w04a|Added fire charges, which use the above texture. They can be crafted only with [[coal]].}}
+|{{HistoryLine|||dev=12w05a|Fire charges can now be crafted with charcoal.}}
+|{{HistoryLine||1.4.2|dev=12w38b|The [[sound]] when using the fire charge has now been changed together with the sound for using a [[flint and steel]].}}
+|{{HistoryLine||1.4.6|dev=12w49a|Fire charges can now be used to craft [[firework]]s.}}
+|{{HistoryLine||1.8|dev=14w31a|The sound when using fire charges to set fire has now been changed; it now uses the same sound as when fired from [[dispenser]]s.|Fire charges can now be used to ignite [[TNT]]. Previously using it on it resulted in fire being placed adjacent to it.}}
+|{{HistoryLine||1.9|dev=15w33c|When firing a fire charge, dispensers now shoot a [[dragon fireball]] entity instead of a small fireball.}}
+|{{HistoryLine|||dev=15w44b|Dispensers shoot fire charges as [[small fireball]]s once again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Fire Charge JE2 BE2.png|32px]] The texture of fire charges has now been changed.}}
+|{{HistoryLine||1.15|dev=19w42a|Fire charges shot by dispensers can now light campfires when colliding with them.}}
+|{{HistoryLine||1.16|dev=20w07a|Fire charges have a {{frac|5|109}} (~4.59%) chance of being given by the new [[piglin]]s when [[bartering]], in a stack size of 1.}}
+|{{HistoryLine|||dev=20w09a|Fire charges now have a {{frac|20|226}} (~8.85%) chance of being given by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine|||dev=20w10a|Fire charges now have a {{frac|40|411}} (~9.73%) chance of being given by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine|||dev=20w11a|Fire charges now have a {{frac|40|417}} (~9.59%) chance of being given by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine|||dev=20w13a|Fire charges now have a {{frac|40|424}} (~9.43%) chance of being given by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine|||dev=20w16a|Fire charges now generate in [[ruined portal]] chests.}}
+|{{HistoryLine|||dev=20w20a|Fire charges now have a {{frac|40|423}} (~9.46%) chance of being given by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Fire charges now have a {{frac|40|459}} (~8.71%) chance of being given by piglins when bartering, in a stack size of 1.}}
+|{{HistoryLine||1.19.3|dev=pre2|Fire charges can now be {{control|used}} to forcibly detonate [[creeper]]s.<ref>{{bug|MC-185618|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.4|dev=23w06a|Added the [[fire charge]] to the "Ingredients" tab in the creative inventory.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Fire charges can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Fire charges can now be dispensed by [[ominous trial spawner]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Fire Charge JE1 BE1.png|32px]] Added fire charges.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Fire charges can now be used to craft [[firework star]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Fire Charge JE2 BE2.png|32px]] The texture of fire charges has now been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Fire charges can now be obtained from bartering with piglin.
+|Fire charges can now be found in [[ruined portal]] chests.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Fire charges can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Fire charges can now be dispensed by [[ominous trial spawner]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Fire Charge JE1 BE1.png|32px]] Added fire charges.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|The sound when using fire charges to set fire has now been changed; it now uses the same sound as when fired from [[dispenser]]s.{{check version}}|Fire charges can now be used to ignite [[TNT]]. Previously using it on it resulted in fire being placed adjacent to it.{{check version}}}}	
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Fire Charge JE2 BE2.png|32px]] The texture of fire charges has now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Fire Charge JE1 BE1.png|32px]] Added fire charges.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 385.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The ID of fire charges has been changed from <code>fireball</code> to <code>fire_charge</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+GodPortal.png|A fire charge found in a [[ruined portal]] chest, together with an [[enchanted golden apple]].
+</gallery>
+
+== See also ==
+* [[Flint and steel]]
+* [[Small Fireball]]
+* [[Dragon Fireball]]
+* [[Fireball]]
+* [[Ghast]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|taking-inventory-fire-charge|Taking Inventory: Fire Charge|January 11, 2019|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox combat|general}}
+
+[[cs:Ohnivá koule]]
+[[de:Feuerkugel]]
+[[es:Carga ígnea]]
+[[fr:Charge de feu]]
+[[hu:Tűzgolyó]]
+[[ja:ファイヤーチャージ]]
+[[ko:화염구]]
+[[lzh:焰彈]]
+[[nl:Vuurbal]]
+[[pl:Ognista kula]]
+[[pt:Bola de fogo]]
+[[ru:Огненный шар]]
+[[th:ลูกไฟ]]
+[[uk:Заряд полум'я]]
+[[zh:火焰弹]]

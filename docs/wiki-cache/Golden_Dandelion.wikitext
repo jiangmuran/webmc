@@ -1,0 +1,245 @@
+{{Infobox block
+| title = Golden Dandelion
+| image = Golden Dandelion.png
+| invimage = Golden Dandelion
+| renewable = Yes
+| stackable = Yes (64)
+| tool = any
+| light = No
+| transparent = Yes
+| flammable = {{jebe|Yes (60)|Yes (30)}}
+| lavasusceptible = No
+}}
+
+A '''golden dandelion''' is a [[craft]]able [[flower]] that can be {{ctrl|fed}} to [[baby]] [[mob]]s to pause their aging, or resume it by feeding another one to the same baby mob. It does not generate naturally and can only be obtained through [[crafting]] or the [[wandering trader]].
+
+== Obtaining ==
+Unlike other one-block-tall flowers {{in|be}}, players cannot spread golden dandelions on top of nearby grass blocks by applying [[bone meal]] on a golden dandelion.
+
+=== Breaking ===
+A golden dandelion can be broken instantly with any item or by hand, dropping itself.
+
+A golden dandelion also breaks if [[water]] or [[lava]] runs over its location, if a [[piston]] extends or pushes a block into its location, or if a block under the plant is moved or destroyed.
+{{breaking row|Golden Dandelion|horizontal=1}}
+
+=== Crafting ===
+{{Crafting
+|A1 = Gold Nugget
+|B1 = Gold Nugget
+|C1 = Gold Nugget
+|A2 = Gold Nugget
+|B2 = Dandelion
+|C2 = Gold Nugget
+|A3 = Gold Nugget
+|B3 = Gold Nugget
+|C3 = Gold Nugget
+|Output = Golden Dandelion
+| type = Decoration block
+}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+Like other flowers, golden dandelions can be used as decoration, placed in [[flower pot]]s, and planted on [[grass block]]s, [[dirt]], [[coarse dirt]], [[rooted dirt]], [[farmland]], [[podzol]], [[mycelium]], [[moss block]]s, [[pale moss block]]s, [[mud]], or [[muddy mangrove roots]]. Unlike other flowers however, golden dandelions cannot be [[composted]], and neither attract nor get pollinated by [[bee]]s.
+
+=== Baby mobs ===
+A golden dandelion can be {{ctrl|used}} on a [[baby]] mob that normally ages (excluding [[villager]]s but including small [[sulfur cube]]s{{upcoming|Chaos Cubed}}), which resets and locks its aging time ({{convert|24000|tick|min}} for most mobs, or {{convert|48000|tick|min}} for [[snifflet]]s), prevents it from [[despawning]], and displays downward-moving particles. One cannot be used if the mob has the [[Entity type tag (Java Edition)#cannot_be_age_locked|{{cd|cannot_be_age_locked}}]] entity tag. The golden dandelion is consumed when used on a mob. If a second golden dandelion is used on the same mob, the mob resumes aging and upward-moving particles are displayed. The golden dandelion has a 2 second use cooldown per mob.
+
+Using a golden dandelion on a baby mob sets the NBT value {{cd|AgeLocked}}{{only|JE}} or {{cd|GrowthPaused}}{{only|BE}} to 1. Using it again sets the NBT value back to 0.
+
+<gallery>
+Golden dandelion aging lock particles.gif|Particles shown when a baby mob's aging is halted
+Golden dandelion aging resume particles.gif|Particles shown when a baby mob's aging is resumed
+</gallery>
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Suspicious stew ===
+{{main|Suspicious Stew}}
+Suspicious stew that is created using a golden dandelion imparts the [[Saturation (effect)|Saturation]] effect for 0.35 seconds {{in|java}} or 0.3 seconds {{in|bedrock}}. The Saturation effect restores an additional {{hunger|7}} hunger and 14 saturation {{in|java}}, or {{hunger|6}} hunger {{in|bedrock}}. The suspicious stew can be made using a golden dandelion or produced by feeding a dandelion to a non-baby brown [[mooshroom]] and then milking it with a bowl.
+
+{{Crafting
+|ignoreusage=1
+|Red Mushroom
+|Brown Mushroom
+|Bowl
+|Golden Dandelion
+|Output=Suspicious Stew
+|shapeless=true
+}}
+
+=== Piglins ===
+[[Piglin]]s run toward any golden dandelion item on the ground and inspect it for 6 seconds {{in|java}} or 8 seconds {{in|bedrock}}<ref>{{bug|MCPE-99448||Piglins need 8 seconds to barter, while they only need 6 in java}}</ref> before putting it in their inventory.
+
+=== Bee nests ===
+[[Oak]], [[birch]], and [[cherry]] trees grown from [[sapling]]s planted within 2 blocks of a golden dandelion have a 5% chance to grow with a [[bee nest]] and 2–3 [[bee]]s in it.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Grass}}
+
+=== Unique ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Golden dandelion use.ogg
+|subtitle=Golden Dandelion halts aging
+|source=player
+|description=Feeding the golden dandelion to an aging baby entity
+|id=item.golden_dandelion.use
+|translationkey=subtitles.item.golden_dandelion.use
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Golden dandelion unuse.ogg
+|subtitle=Golden Dandelion starts aging
+|source=player
+|description=Feeding the golden dandelion to a non-aging baby entity
+|id=item.golden_dandelion.unuse
+|translationkey=subtitles.item.golden_dandelion.unuse
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Golden dandelion use.ogg
+|subtitle=-
+|source=neutral
+|description=Feeding the golden dandelion to an aging baby entity
+|id=mob.pause_growth
+|translationkey=-
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Golden dandelion unuse.ogg
+|subtitle=-
+|source=neutral
+|description=Feeding the golden dandelion to a non-aging baby entity
+|id=mob.reset_growth
+|translationkey=-
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+}}
+
+== Data values ==
+=== ID ===
+''[[Java Edition]]'':
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Golden Dandelion
+|spritetype=block
+|nameid=golden_dandelion
+|blocktags=flowers, small_flowers
+|itemtags=flowers, small_flowers
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Golden Dandelion
+|spritetype=block
+|nameid=golden_dandelion
+|id=1346
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Oooh, shiny!}}
+
+== Advancements ==
+{{load advancements|Oh Shiny}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||26.1|dev=snap5|[[File:Golden Dandelion JE1 BE1.png|32px]] Added golden dandelions.}}
+|{{HistoryLine|||dev=snap6|Golden dandelions no longer work on tamed skeleton horses and zombie horses.
+|Golden dandelions now work on tadpoles.}}
+|{{HistoryLine|||dev=snap7|Golden dandelions now work on baby hoglins.}}
+|{{HistoryLine|||dev=snap8|Golden dandelions now work on baby brown mooshrooms.<ref>{{bug|MC-305989}}</ref>}}
+|{{HistoryLine|||dev=snap10|Golden dandelions now display particle effects when stopping or starting aging.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Golden dandelions can now be used on small [[sulfur cube]]s.}} 
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21|[[File:Golden Dandelion JE1 BE1.png|32px]] Added golden dandelions.}}
+|{{HistoryLine|||dev=Preview 26.10.23|Golden dandelions can now be crafted into [[yellow dye]].
+|Golden dandelions can now be used to craft [[suspicious stew]].
+|Golden dandelions can now be used to distract [[piglin]]s.
+|Golden dandelions can now be picked up by certain [[mob]]s.
+|Golden dandelions can now be sold by [[wandering trader]]s.
+|Golden dandelions now produce [[Particles (Bedrock Edition)|particles]] and sounds on use.
+|[[Bone meal]] can no longer be used to spawn more [[flower]]s around it.}}
+|{{HistoryLine|||dev=Preview 26.10.24|Golden dandelions now display green particles on use, moving upward when locking the age and downward when resetting the age.
+|Golden dandelions now play different lock and reset sounds on use.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Golden dandelions can now be used on small [[sulfur cube]]s.}}	
+|{{HistoryLine||26.30|dev=Preview 26.30.20|Implemented all features from the "Drop 2 of 2026" experiment in vanilla gameplay.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+=== Publicity ===
+* A day after the item's introduction, [[YouTube]] creator [[Camman18]] released a viral short that included the memetic phrase "the golden dandelion, which is a golden dandelion."<ref>{{YouTube link|sR4r9g2m61s|NEW GOLDEN DANDELION & MOB TEXTURES|camman18|January 28th, 2026}}</ref><ref>{{Citation|url=https://knowyourmeme.com/memes/then-we-got-the-golden-dandelion|title=Then We Got the Golden Dandelion|author=[https://knowyourmeme.com/users/phillip-hamilton Phillip Hamilton]|website=Know Your Meme|date=February 2, 2026}}</ref>
+** In [[Minecraft Live – March 2026]], the meme was shown in [[the Deep Dig]], where Camman18 was featured.
+
+== Gallery ==
+
+=== Mojang images ===
+<gallery>
+File:Golden Dandelion.jpg|[[Makena]] feeding a baby turtle a golden dandelion
+File:Efe and baby aquatic animals.jpg|[[Efe]] feeding aquatic babies golden dandelions
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Sunny reaches out.jpg|[[Sunny]] reaching out through {{Wikipedia|Instagram}} to feed a chick with a golden dandelion
+File:Website golden dandelion.png|Golden dandelion artwork
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{navbox new content|Tiny Takeover}}
+{{Navbox gold}}
+{{Navbox flower}}
+{{Navbox blocks|natural}}
+
+[[Category:Flowers]]
+
+[[de:Goldener Löwenzahn]]
+[[es:Diente de león dorado]]
+[[fr:Pissenlit doré]]
+[[it:Dente di leone d'oro]]
+[[ja:金のタンポポ]]
+[[ko:황금 민들레]]
+[[lzh:金蒲公英]]
+[[nl:Gouden paardenbloem]]
+[[pt:Dente-de-Leão Dourado]]
+[[ru:Золотой одуванчик]]
+[[th:Golden Dandelion]]
+[[uk:Золота кульбаба]]
+[[zh:金蒲公英]]

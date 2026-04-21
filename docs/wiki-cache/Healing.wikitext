@@ -1,0 +1,330 @@
+{{about|regaining health|the status effect that instantly heals|Instant Health|the status effect that gradually heals|Regeneration|healing in ''Minecraft Earth''|MCE:Health|other uses}}
+'''Healing''' is the mechanic of regaining lost [[health]].
+
+== Natural regeneration ==
+{{main|Food#Natural regeneration}}
+{{redirect|natural_health_regeneration|the game rule|Game rule#natural_health_regeneration}}
+Whenever a player's [[hunger]] is {{hunger|18}} or higher, they regenerate {{hp|1}} every 4 seconds. This increases the player's [[exhaustion]] by 6, of which 4 cost {{hunger|1}} hunger. If existing, the player's saturation is used up first. Natural healing is deactivated when the game rule {{gmr|natural_health_regeneration|naturalregeneration}} is set to false.
+
+=== Saturation boost ===
+{{exclusive|java|section=1}}
+{{main|Food#Saturation boost}}
+If the player's hunger bar is ''completely'' filled and they have left over [[saturation]], this saturation gets drained, healing at a rate of {{hp|2}} every second. Just as with the hunger-based regeneration, every {{hp|1}} regenerated deducts 1.5 saturation. With the maximum amount of 20 saturation, the player can rapidly regenerate up to {{hp|13}}.
+
+=== Peaceful difficulty ===
+When the [[difficulty]] is set to Peaceful, the player regenerates at a standard rate of {{hp|1}} per second, additionally with {{hp|1}} every 4 seconds because the player's hunger bar is filled. [[Chorus fruit]], [[golden apple]]s, [[honey bottle]]s, and suspicious stew can be eaten even when the hunger bar is full, increasing the player's regeneration even further. On the other hand, this also causes the player to lose [[Hunger#Mechanics|saturation]] even when changing from other difficulty levels to Peaceful mode.
+
+== Artificial regeneration ==
+=== Potions ===
+The player can drink a [[potion]] to regain health immediately or over time.
+
+==== Potion of Healing ====
+The potion of Healing [[Instant Health|instantly regenerates]] {{hp|4}}. If it gets amplified with [[glowstone dust]], this value increases to {{hp|8}}.
+
+Brewing scheme:
+{| class="wikitable"
+! Potion
+! Ingredients
+! Scheme
+! Effect
+! Duration <br /> (in minutes)
+|- style="text-align: center;"
+! {{Inventory slot|Potion of Healing}} <br /> [[Potion|Potion of Healing]] 
+| [[Glistering melon slice]] <br />+<br /> [[Potion|Awkward potion]]
+| {{Brewing Stand
+  | Input=   Glistering Melon Slice
+  | Output1=  
+  | Output2= Awkward Potion
+  | Output3= 
+}}
+| Regenerates {{hp|4}} per potion.
+| Instant
+|-
+|}
+
+It can also be turned into a [[lingering potion]] that heals up to {{hp|10}} when the player is inside an area effect. [[Glowstone dust]] amplifies healing up to {{hp|20}}.
+
+Brewing scheme:
+{| class="wikitable"
+! Potion
+! Ingredients
+! Scheme
+! Effect
+! Duration <br /> (in minutes)
+|- style="text-align: center;"
+! {{Inventory slot|Lingering Potion of Healing}} <br /> [[Lingering Potion|Lingering Potion of Healing]] 
+| [[Dragon's Breath]] <br />+<br /> [[Splash Potion|Splash Potion of Healing]]
+| {{Brewing Stand
+  | Input=   Dragon's Breath
+  | Output1=  
+  | Output2= Splash Potion of Healing
+  | Output3= 
+}}
+| Regenerates {{hp|2}} per second.
+| {{EffectLink|Instant Health}} 0:05
+|-
+|}
+
+==== Potion of Regeneration ====
+The potion of Regeneration heals {{hp|1}} every 2.5 seconds over 45 seconds, resulting in {{hp|18}} in total. Amplifying the potion with glowstone increases this rate to {{hp|1}} every 1.25 seconds for 0:22 seconds, whereas [[redstone]] increases the duration to 1:30{{only|java|short=1}}/2:00{{only|bedrock|short=1}} minutes, restores {{hp|36}}{{only|java|short=1}} / {{hp|48}}{{only|bedrock|short=1}}
+
+Brewing scheme:
+{| class="wikitable"
+! Potion
+! Ingredients
+! Scheme
+! Effect
+! Duration <br /> (in minutes)
+|- style="text-align: center;"
+! {{Inventory slot|Potion of Regeneration}} <br /> [[Potion|Potion of Regeneration]]
+| [[Ghast tear]] <br> + <br /> [[Potion|Awkward Potion]]
+| {{Brewing Stand
+  | Input=   Ghast Tear
+  | Output1=  
+  | Output2= Awkward Potion
+  | Output3= 
+}}
+| Regenerates health over time.
+| {{EffectLink|Regeneration}} 0:45
+|}
+
+{{IN|bedrock}}, adding gunpowder to make a splash potion decreases its duration, making healing less effective. Splash potion of regeneration heals {{hp|1}} every 2.5 seconds over 33 seconds, resulting in {{hp|13}} in total. Amplifying the potion with glowstone increases this rate to {{hp|1}} every 1.25 seconds for 0:16 seconds, whereas [[redstone]] increases the duration to 1:30 minutes, restores {{hp|36}}.
+
+Adding dragon breath on splash potion to make lingering potion. Lingering potion of regeneration heals {{hp|1}} every 2.5 seconds over 11 seconds, resulting in {{hp|4}} in total. Amplifying the potion with glowstone increases this rate to {{hp|1}} every 1.25 seconds for 0.5 seconds, whereas [[redstone]] increases the duration to 0:22{{only|java|short=1}} / 0:30{{only|bedrock|short=1}} seconds, restores {{hp|8}}{{only|java|short=1}}{{hp|12}}{{only|bedrock|short=1}}.
+
+==== Tipped arrow ====
+Tipped arrow shots from a [[bow]], [[crossbow]], or [[dispenser]] inflict arrow damage and a status effect. Arrows of healing give the same effect as its potion ({{hp|4}} for an arrow of healing I, and {{hp|8}} for an arrow of healing II). Regeneration I arrows last 5 seconds (restores {{hp|2}}), the extended regeneration I arrows last 0:11{{only|java|short=1}} / 0:15{{only|bedrock|short=1}} seconds (restores {{hp|4}}{{only|java|short=1}} / {{hp|6}}{{only|bedrock|short=1}}), and arrows of regeneration II give regeneration II for 0:02 seconds (restores {{hp|2}}). However, arrow damage decreases or sometimes even nullifies the health recovered unless a weak bow shot is used or the player is wearing good armor.
+
+=== Golden apple ===
+A [[golden apple]] and [[enchanted golden apple]] can heal the player in different ways:
+* Both golden apples refill {{hunger|4}} [[hunger]].
+* They provide 9.6 saturation, which can be drained for {{hp|6}} quickly if the player's hunger bar is filled.
+* Similar to a potion, a golden apple provides the [[Regeneration]] status effect. A normal golden apple gives Regeneration II for 5 seconds, and an enchanted golden apple for 20 seconds, resulting in {{hp|4}} regenerated from a normal golden apple and {{hp|16}} from an enchanted one. {{IN|bedrock}}, enchanted apple gives regeneration V for 30 seconds, which enough to recover full health in a few seconds. The enchanted golden apple also gives the status effects [[Fire Resistance]] and [[Resistance]] for 5 minutes.
+* A normal golden apple can be crafted by 8 [[gold ingot]]s, and a regular [[apple]], and can be found in generated [[chests]]. The enchanted golden apple cannot be crafted, and are found exclusively in generated chests.
+
+=== Totem of undying ===
+{{Main|Totem of undying}}
+When used, a totem of undying prevents the player's death and provides [[Regeneration]] II for 45 seconds, restoring {{hp|36}}. It also clears all the player's effects and gives 40 seconds of [[Fire Resistance]] and 5 seconds of [[Absorption]] II.
+
+=== Suspicious stew ===
+{{Main|Suspicious stew}}
+* Suspicious stew refills {{hunger|6}} hunger.
+* It provides 7.2 saturation.
+* If made from [[blue orchid]]s or [[dandelion]]s gives 0.35 seconds of [[Saturation (effect)|Saturation]] (refills {{Hunger|13}} total)
+* If made from [[oxeye daisy]] gives 8 seconds of Regeneration I (restores {{hp|3}}).
+
+=== Beacon ===
+When a [[beacon]] is upgraded to the highest level, it can be configured to provide the Regeneration status effect. As long as a player is within the radius of such a beacon, they regenerate {{hp|1}} every 2.5 seconds.
+
+=== Axolotl ===
+During a fight, [[axolotl]]s can give players Regeneration I for 5 seconds, restoring {{Hp|2}} per axolotl, for up to 2 minutes.{{Only|Java}}
+
+== Mob healing ==
+In contrast to the player, most [[mob]]s cannot heal by themselves. Nevertheless, there are several ways to heal animals and monsters.
+
+=== Potions ===
+Most mobs are healed by potions of Healing and Regeneration just like the player.
+
+On the other hand, [[undead]] mobs take ''damage'' from these potions, and healing them requires a potion of Harming. Potions of Regeneration or Poison don't affect undead mobs at all.
+
+=== Regeneration ===
+[[Horse]]s, [[donkey]]s, [[mule]]s, [[zombie horse]]s [[skeleton horse]]s, [[llama]]s, [[trader llama]]s, [[camel]]s, and [[camel husk]]s (all members of the [[Entity format#Abstract classes|{{cd|AbstractHorse}}]] class) automatically regenerate at a slow rate, having a {{frac|1|900}} chance to regenerate {{hp|1}} health point each game tick.
+
+[[Allay]]s automatically regenerate at a rate of {{Hp|2}} per second {{in|java}}, or a rate of {{Hp|1.83}} per second {{in|bedrock}}.
+
+[[Happy ghast]]s automatically regenerate at a rate of {{hp|1}} every 30 seconds. However, if they are between [[Altitude|Y-levels]] 187 and 196 (corresponding to the [[cloud]] level), or if it is [[rain]]ing or [[Snowfall|snowing]], they regenerate at a rate of {{hp|1}} per second.
+
+=== Axolotl ===
+Axolotls may play dead when taking damage underwater, dropping to the ground for 10 seconds while regenerating.
+
+=== Fox ===
+Foxes can eat foods that inflict regeneration, such as golden apples, enchanted golden apples, or suspicious stew.
+
+=== Iron golem ===
+Iron golems can be healed {{control|using}} [[iron ingot]]s on them, restoring their health by {{hp|25}}. This cannot be done using [[iron nugget]]s or [[iron block]]s.
+
+=== Spider ===
+{{IN|java}}, spiders on Hard difficulty can spawn with permanent positive status effects, which can include Regeneration, making the spider gradually recover health.
+
+=== Villager ===
+Villagers gain 10 seconds of regeneration when new trades are unlocked. 
+Additionally {{in|bedrock}}, villagers recover health when waking up from bed every morning.
+
+=== Witch ===
+Witches use potions of Healing to heal themselves. 
+Additionally, witches throw splash potions of Healing or Regeneration at [[illager]]s during [[raid]]s.
+
+=== Feeding ===
+Some animals can also be ''fed'' in order to recover a set amount of health. The following animals can be fed:
+{| class="wikitable"
+|-
+!Animal
+!Maximum health
+!Food
+!Healing 
+|- 
+| rowspan="8" |{{EntityLink|link=Wolf|Tamed Wolf|id=tamed-wolf}}
+| rowspan="8" |{{hp|40|mob=1}}
+
+|{{ItemLink|Pufferfish|link=Pufferfish (item)}}<br>{{ItemLink|Tropical Fish|link=Tropical Fish (item)}}
+|{{hp|2|mob=1}}
+|- 
+|{{ItemLink|Raw Chicken}}<br>{{ItemLink|Raw Cod}}<br>{{ItemLink|Raw Mutton}}<br>{{ItemLink|Raw Salmon}}
+|{{hp|4|mob=1}}
+|-
+|{{ItemLink|Raw Beef}}<br>{{ItemLink|Raw Porkchop}}<br>{{ItemLink|Raw Rabbit}}
+|{{hp|6|mob=1}}
+|-
+|{{ItemLink|Rotten Flesh}}
+|{{hp|8|mob=1}}
+|-
+|{{ItemLink|Cooked Cod}}<br>{{ItemLink|Cooked Rabbit}}
+|{{hp|10|mob=1}}
+|- 
+|- 
+|{{ItemLink|Cooked Chicken}}<br>{{ItemLink|Cooked Mutton}}<br>{{ItemLink|Cooked Salmon}}
+|{{hp|12|mob=1}}
+|-
+|{{ItemLink|Cooked Porkchop}}<br>{{ItemLink|Steak}}
+|{{hp|16|mob=1}}
+|-  
+|{{ItemLink|Rabbit Stew}}
+|{{hp|20|mob=1}}
+|-
+|{{EntityLink|Cat|Tamed Cat}}
+|{{hp|10|mob=1}}
+|{{ItemLink|Raw Cod}}<br>{{ItemLink|Raw Salmon}}
+|{{hp|2|mob=1}} 
+|-
+| rowspan="6" |{{EntityLink|Horse}}<br>{{EntityLink|Donkey}}<br>{{EntityLink|Mule}}
+| rowspan="6" |{{hp|15|mob=1}} to {{hp|30|mob=1}}
+|{{ItemLink|Sugar}}
+|{{hp|1|mob=1}}
+|-
+|{{ItemLink|Wheat}}
+|{{hp|2|mob=1}}
+|-
+|{{ItemLink|Apple}}<br>{{ItemLink|Carrot}}
+|{{hp|3|mob=1}}
+|-
+|{{ItemLink|Golden Carrot}}
+|{{hp|4|mob=1}}
+|-
+|{{ItemLink|Golden Apple}}
+|{{hp|10|mob=1}}
+|-
+|{{BlockLink|Hay Bale}}
+|{{hp|20|mob=1}}
+|-
+|{{EntityLink|Zombie Horse}}
+|{{hp|25|mob=1}}
+|{{BlockLink|Red Mushroom}}
+|{{hp|3|mob=1}}
+|-
+| rowspan="2" |{{EntityLink|Llama}}<br>{{EntityLink|Trader Llama}}
+| rowspan="2" |{{hp|15|mob=1}} to {{hp|30|mob=1}} 
+|{{ItemLink|Wheat}}
+|{{hp|2|mob=1}} 
+|-
+|{{BlockLink|Hay Bale}}
+|{{hp|10|mob=1}}
+|-
+|{{EntityLink|Camel}}
+|{{hp|32|mob=1}}
+|{{BlockLink|Cactus}}
+|{{hp|2|mob=1}} 
+|-
+|{{EntityLink|Camel Husk}}
+|{{hp|32|mob=1}}
+|{{ItemLink|Rabbit's Foot}}
+|{{hp|2|mob=1}}
+|- 
+| rowspan="4" |{{EntityLink|Nautilus}}<br>{{EntityLink|Zombie Nautilus}}
+| rowspan="4" |{{hp|15|mob=1}}
+
+|{{ItemLink|Bucket of Pufferfish}}<br>{{ItemLink|Bucket of Tropical Fish}}<br>{{ItemLink|Pufferfish|link=Pufferfish (item)}}<br>{{ItemLink|Tropical Fish|link=Tropical Fish (item)}}
+|{{hp|2|mob=1}}
+|- 
+|{{ItemLink|Bucket of Cod}}<br>{{ItemLink|Bucket of Salmon}}<br>{{ItemLink|Raw Cod}}<br>{{ItemLink|Raw Salmon}}
+|{{hp|4|mob=1}}
+|-
+|{{ItemLink|Cooked Cod}}
+|{{hp|10|mob=1}}
+|-
+|{{ItemLink|Cooked Salmon}}
+|{{hp|12|mob=1}}
+|-
+|{{EntityLink|Sniffer}}{{only|be|short=1}}
+|{{hp|14|mob=1}}
+|{{ItemLink|Torchflower Seeds}}
+|{{hp|2|mob=1}} 
+|-
+|}
+
+=== Boss healing ===
+==== Ender dragon ====
+The [[ender dragon]] gets healed by any nearby [[end crystal]] {{hp|1}} every 10 ticks. If a crystal gets destroyed while its beam is pointed at the dragon, though, the dragon takes {{hp|10}} [[damage]] instead.
+
+==== Wither ====
+The [[wither]] has a passive regeneration rate of {{hp|1}} every 20 ticks (1 second), and a direct killing blow on a target instantly heals {{hp|5}}.
+
+== History ==
+{{Update|history on pocket/bedrock}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Added the [[golden apple]], which heals {{hp|20}}.}}
+
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Added [[hunger]] and saturation. Food now refills the hunger bar, instead of directly recovering health. Before this, you could not regenerate health without eating, though on Peaceful difficulty you healed quickly regardless of food supply.
+|Golden apples now give Regeneration I for 30 seconds instead of {{hp|20}}.}}
+
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Added [[potion]]s of Healing and Regeneration.}}
+|{{HistoryLine||1.3.1|dev=12w21a|Added a [[Enchanted Golden Apple|second kind of golden apples]] that can be crafted using [[blocks of gold]]. It provides Regeneration IV for 30 seconds and Resistance I and Fire Resistance for 5 minutes.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added [[beacon]]s. They can be configured to provide Regeneration I.}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[horse]]s, which regenerate slowly by themselves.
+|They can be fed using [[sugar]], [[wheat]], [[apple]]s, [[golden carrot]]s and [[golden apple]]s.}}
+|{{HistoryLine|||dev=13w23a|Natural health regeneration now consumes hunger.
+|Added game rule {{cd|naturalRegeneration}}.}}
+|{{HistoryLine||1.8|dev=14w26c|[[Hay bale]]s can now be fed to [[horse]]s, healing them by {{hp|20}}.}}
+|{{HistoryLine||1.9|dev=15w37a|The enchanted golden apple now provides Regeneration II instead of Regeneration V, as well as Absorption IV instead of Absorption I.}}
+|{{HistoryLine|||dev=15w40a|Added saturation boost, where saturation is consumed to heal faster.}}
+|{{HistoryLine|||dev=15w44a|Saturation boost now requires the player to be at {{hunger|20}} to activate.|Enchanted golden apples can no longer be crafted, but are found only in [[desert pyramid]]s, [[stronghold]]s, and [[mineshaft]]s.}}
+|{{HistoryLine||1.11|dev=16w32a|[[Exhaustion]] values changed, Healing now takes even more Hunger.}}|{{HistoryLine|||dev=16w39a|Added [[llama]]s, which regenerate health slowly.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added healing and all of its mechanics from and prior to [[Java Edition Beta 1.6.6]].}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[hunger]] and saturation. Food now refills the hunger bar, instead of directly recovering health.
+|Golden apples now give Regeneration I for 30 seconds instead of {{hp|20}}.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[potion]]s of Healing and Regeneration.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added a [[Enchanted Golden Apple|second kind of golden apples]] that can be crafted using [[blocks of gold]] which gives [[Regeneration]] when eaten. It provides Regeneration IV for 30 seconds and Resistance I and Fire Resistance for 5 minutes. {{info needed|Was it changed to regeneration 5 in TU19 just like in Java Edition 1.6.1?}}}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added [[beacon]]s. They can be configured to provide Regeneration I.|Added [[horse]]s, which regenerate slowly by themselves.
+|They can be fed using [[sugar]], [[wheat]], [[apple]]s, [[golden carrot]]s and [[golden apple]]s.|Natural health regeneration now consumes hunger.{{check version}}|Added a [[host options|host option]] to disable natural health regeneration.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Health now regenerate based on your saturation.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|The enchanted golden apple now provides Absoprtion IV instead of Absorption I.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Exhaustion]] values changed, Healing now takes even more Hunger.|Added [[llama]]s, which regenerate health slowly.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||5|The player now naturally regenerates health when above a hunger level of {{hunger|7|total=20}} instead of {{hunger|18|total=2}} and every {{convert|60|ticks|seconds}} instead of every {{convert|80|ticks|seconds}}.}}
+|{{HistoryLine||6|The player now naturally regenerates health every {{convert|40|ticks|seconds}} instead of every {{convert|60|ticks|seconds}}.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[de:Heilung]]
+[[es:Curación]]
+[[ja:治癒]]
+[[pt:Cura]]
+[[zh:治疗]]

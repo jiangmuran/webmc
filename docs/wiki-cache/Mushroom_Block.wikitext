@@ -1,0 +1,291 @@
+{{About|the block|the plant|Mushroom|the structure|Huge Mushroom|other uses|Fungus}}
+{{Infobox block
+|title=Mushroom Block
+|group=Red
+|1-1=Red Mushroom Block.png
+|group2=Brown
+|2-1=Brown Mushroom Block.png
+|group3=Stem
+|3-1=Mushroom Stem.png
+|group4=Pores
+|4-1=Mushroom Block.png
+|invimage=Red Mushroom Block
+|invimage2=Brown Mushroom Block
+|invimage3=Mushroom Stem
+|extratext = View [[#Gallery|all renders]]
+|transparent=No
+|light=No
+|tool=Axe
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=Yes
+|renewable=Yes
+|mapcolor = 
+* {{TooltipSprite||Red Mushroom Block}} {{Map color|Red Mushroom Block}}
+* {{TooltipSprite||Brown Mushroom Block}} {{Map color|Brown Mushroom Block}}
+* {{TooltipSprite||Mushroom Stem}} {{Map color|Mushroom Stem}}
+}}
+A '''mushroom block''' is a solid [[block]] that makes up a [[huge mushroom]], which consists of a '''mushroom stem''' and '''brown mushroom blocks''' or '''red mushroom blocks''', depending on the color of the huge mushroom.
+
+== Obtaining ==
+=== Breaking ===
+Mushroom blocks are most quickly broken with an [[axe]], with a 77.77% chance of dropping 0, an 11.11% chance of dropping 1, and an 11.11% chance of dropping 2 [[mushroom]]s of the corresponding type. When mining a naturally generated [[huge mushroom]] structure, only the cap blocks drop mushroom items; the stem blocks drop nothing. [[Fortune]] does not affect the drop rate of mushrooms in any form.<ref>{{bug|MC-156657||Fortune doesn't work on mushroom blocks|Invalid}}</ref>
+
+The blocks themselves can be retrieved only by using a [[tool]] enchanted with [[Silk Touch]]. Mining the mushroom cap or stem yields a block with the cap or stem texture, respectively, on all faces.
+
+Additionally, {{in|java}}, if two similar mushroom blocks are placed next to each other and one of them is broken, the side of the other block that it was facing reveals the pore texture. This is because the side of these blocks change texture if they touch another block of the same type.
+
+Mushroom blocks can be moved and are not broken by pistons.
+{{breaking row|horizontal=1|sprite=Mushroom Blocks|Mushroom Block|Axe|drop=0}}
+
+=== Natural generation ===
+{{main|Huge mushroom}}
+Mushroom blocks generate as part of [[huge mushroom]] structures.
+
+{{block distribution}}
+
+=== Creative inventory ===
+The brown and red mushroom blocks (with the cap texture on all faces) as well as the mushroom stem are available in the [[Creative inventory]].
+
+=== Commands ===
+{{IN|bedrock}}, commands can be used to obtain legacy variants of brown and red mushroom blocks with additional texture arrangements, including a block with the pore texture on all sides and 9 blocks with the cap texture on top, one or two cap textures on (adjacent) sides, and the pore texture on the remaining sides and bottom. The all-pores blocks, of which there are 4 distinct variants for each color, all look identical but retain the color and variant number distinctions internally (hence they do not stack together). If broken with a [[Silk Touch]] tool, all these variants drop cap blocks of the appropriate color. Otherwise, they have a chance of dropping mushroom items of the appropriate color.
+
+== Usage ==
+=== Composting ===
+Mushroom blocks can be used in the [[composter]] with an 85% chance to make a new layer.
+
+Mushroom stems can be used in the [[composter]] with a 65% chance to make a new layer.
+
+=== Note blocks ===
+Mushroom blocks can be placed under [[note block]]s to produce "bass" sounds.
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb mushroom blocks, either through picking them up or being interacted with them. This provides the curling stone/slow sliding effect to the mob when hitting it.
+
+== Sounds ==
+{{Sound table/Block/Wood}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Brown Mushroom Block
+|spritetype=block
+|nameid=brown_mushroom_block}}
+{{ID table
+|displayname=Red Mushroom Block
+|spritetype=block
+|nameid=red_mushroom_block}}
+{{ID table
+|displayname=Mushroom Stem
+|spritetype=block
+|nameid=mushroom_stem
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Brown Mushroom Block
+|spritetype=block
+|nameid=brown_mushroom_block
+|aliasid=brown_mushroom_block / 14
+|id=99
+|translationkey=tile.brown_mushroom_block.cap.name}}
+{{ID table2
+|displayname=Red Mushroom Block
+|spritetype=block
+|nameid=red_mushroom_block
+|aliasid=red_mushroom_block / 14
+|id=100}}
+{{ID table2
+|displayname=Mushroom Stem
+|spritetype=block
+|nameid=mushroom_stem
+|aliasid=brown_mushroom_block / 10, brown_mushroom_block / 15, red_mushroom_block / 10, red_mushroom_block / 15
+|id=-1008
+|translationkey=tile.brown_mushroom_block.stem.name
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|east|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the east face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.}}
+{{bst|down|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the bottom face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.}}
+{{bst|north|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the north face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.}}
+{{bst|south|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the south face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.}}
+{{bst|up|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the top face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.}}
+{{bst|west|true|false,true|{{BlockSprite|mushroom-blocks}} / {{BlockSprite|mushroom-stem}} If true, the west face has the cap/stem texture.<br>{{BlockSprite|mushroom-block-pores}} If false, it has the pores texture instead.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|huge_mushroom_bits|0
+|0|{{BlockSprite|mushroom-block-pores}} All six faces have the pores texture.|
+|1|{{BlockSprite|mushroom-blocks}} Cap texture on top, west and north; pores on other sides.|
+|2|{{BlockSprite|mushroom-blocks}} Cap texture on top and north; pores on other sides.|
+|3|{{BlockSprite|mushroom-blocks}} Cap texture on top, north and east; pores on other sides.|
+|4|{{BlockSprite|mushroom-block-pores}} Cap texture on top and west; pores on other sides.|
+|5|{{BlockSprite|mushroom-block-pores}} Cap texture on top; pores on other sides.|
+|6|{{BlockSprite|mushroom-block-pores}} Cap texture on top and east; pores on other sides.|
+|7|{{BlockSprite|mushroom-block-pores}} Cap texture on top, south and west; pores on other sides.|
+|8|{{BlockSprite|mushroom-block-pores}} Cap texture on top and south; pores on other sides.|
+|9|{{BlockSprite|mushroom-block-pores}} Cap texture on top, east and south; pores on other sides.|
+|11,12,13|{{BlockSprite|mushroom-block-pores}} All six faces have the pores texture.|
+|14|{{BlockSprite|mushroom-blocks}} All six faces have the cap texture.|
+|10,15|{{BlockSprite|mushroom-stem}} All six faces have the stem texture; converted to Mushroom Stem block.||foot=1}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||June 14, 2011|link={{tweet|notch|80654817512525825}}|[[Notch]] showed a picture of a [[Java Edition Beta 1.7|Beta 1.7]] change-list. Although it was completely blurred out and was at first thought of as a joke, Notch later stated that one of the pictures with the new [[light]]ing system and the change list had a secret in them.
+|One place where people discussed it was on the [https://www.minecraftforum.net Minecraft Forums], where it was discovered that the tabs at the top of the change list, which were partly covered, could be decoded based on the one-pixel tall pattern available in the image.<ref>https://www.minecraftforum.net/topic/379958-</ref>
+|After a user named "tmcaffeine" on the forums successfully decoded the image, the tabs read: ExperienceOrb.java, changelist.txt, Level.java, Tile.java, '''HugeMushroomTile'''.jav(a?), HugeMushroomFeature.(java?), RandomLevelSource(cut).<ref>https://www.minecraftforum.net/topic/380498-</ref>
+|This led people to believe that huge mushrooms would be added, and indeed, later on, [[Notch]] revealed a screenshot on [[wikipedia:Google+|Google+]] in which two huge mushrooms could be seen as well as a [[village]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Brown Mushroom Block (E) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (S) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (U) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Red Mushroom Block (E) JE1 BE1.png|32px]] [[File:Red Mushroom Block (S) JE1 BE1.png|32px]] [[File:Red Mushroom Block (U) JE1 BE1.png|32px]] [[File:Red Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Mushroom Block JE1 BE1.png|32px]] [[File:Mushroom Stem (ES) JE1 BE1.png|32px]] [[File:Mushroom Stem (ESU) JE1 BE1.png|32px]] Added mushroom blocks.
+|Mushroom blocks cannot be obtained from the [[Creative inventory]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|The various mushroom block types are now [[drops|dropped]] when [[breaking|mined]] with a [[pickaxe]] enchanted with [[Silk Touch]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Mushroom blocks are broken faster using an [[axe]].}}
+|{{HistoryLine||1.8|dev=14w25a|When harvested with the [[Silk Touch]] enchantment, mushroom blocks now [[drops|drop]] blocks with corresponding mushroom texture (red or brown) on all sides rather than the one with spores.}}
+|{{HistoryLine||1.13|dev=17w47a|Three variants of mushroom blocks are now available from the [[Creative inventory]].
+|"Mushroom" has been renamed to "Brown Mushroom Block" and "Red Mushroom Block".
+|Mushroom stems have been added as an [[item]] within the [[inventory]]. Before this, it could be found naturally or be placed with {{cmd|setblock}}.
+|There is no longer any distinction between brown and red mushroom stems, and the stem block is now handled as a separate type of block from the caps.
+|Mushroom stems no longer [[drops|drop]] (small) mushrooms when [[breaking|broken]], but can now drop as stem blocks when [[breaking|mined]] with a [[tool]] with the [[Silk Touch]] enchantment.
+|[[File:Mushroom Stem (E) JE1 BE1.png|32px]] [[File:Mushroom Stem (S) JE1 BE1.png|32px]] [[File:Mushroom Stem (U) JE1 BE1.png|32px]] [[File:Mushroom Stem (SU) JE1 BE1.png|32px]] [[File:Mushroom Stem (EU) JE1 BE1.png|32px]] [[File:Mushroom Stem (ES) JE1 BE1.png|32px]] [[File:Mushroom Stem (ESU) JE1 BE1.png|32px]] Mushroom stems now use the same connection logic as cap blocks.}}
+|{{HistoryLine|||dev=18w06a|Mushroom blocks no longer function as [[furnace]] fuel.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Mushroom Block JE2 BE2.png|32px]] [[File:Brown Mushroom Block (E) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (S) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (U) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Mushroom Block JE2 BE2.png|32px]] [[File:Red Mushroom Block (E) JE2 BE2.png|32px]] [[File:Red Mushroom Block (S) JE2 BE2.png|32px]] [[File:Red Mushroom Block (U) JE2 BE2.png|32px]] [[File:Red Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Mushroom Block JE2 BE2.png|32px]] [[File:Mushroom Stem (E) JE2 BE2.png|32px]] [[File:Mushroom Stem (S) JE2 BE2.png|32px]] [[File:Mushroom Stem (U) JE2 BE2.png|32px]] [[File:Mushroom Stem (SU) JE2 BE2.png|32px]] [[File:Mushroom Stem (EU) JE2 BE2.png|32px]] [[File:Mushroom Stem (ES) JE2 BE2.png|32px]] [[File:Mushroom Stem (ESU) JE2 BE2.png|32px]] The textures of mushroom blocks have been changed.}}
+|{{HistoryLine|||dev=19w03a|Mushroom stems can now be used in [[composter]]s.}}
+|{{HistoryLine|||dev=19w03b|Mushroom blocks can now be used in composters to have a 80% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Mushroom blocks now have an 85% chance of increasing the compost level in a composter by 1.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[sulfur cube]]s, which have the ability to absorb mushroom blocks, providing the curling stone/slow sliding effect to the mob.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Brown Mushroom Block (E) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (S) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (U) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Red Mushroom Block (E) JE1 BE1.png|32px]] [[File:Red Mushroom Block (S) JE1 BE1.png|32px]] [[File:Red Mushroom Block (U) JE1 BE1.png|32px]] [[File:Red Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Mushroom Block JE1 BE1.png|32px]] [[File:Mushroom Stem (ES) JE1 BE1.png|32px]] [[File:Mushroom Stem (ESU) JE1 BE1.png|32px]] Added mushroom blocks.
+|6-sided cap, stem and pores blocks are available in the [[creative inventory]].}}
+|{{HistoryLine|||dev=build 4|Mushroom blocks now drop [[mushroom]]s when [[breaking|mined]].}}
+|{{HistoryLine||v0.12.1|dev=build 1|Mushroom blocks can now be obtained using a [[tool]] with the [[Silk Touch]] enchantment.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Brown Mushroom Block (E) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (S) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (U) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Red Mushroom Block (E) JE2 BE2.png|32px]] [[File:Red Mushroom Block (S) JE2 BE2.png|32px]] [[File:Red Mushroom Block (U) JE2 BE2.png|32px]] [[File:Red Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Mushroom Block JE2 BE2.png|32px]] [[File:Mushroom Stem (ES) JE2 BE2.png|32px]] [[File:Mushroom Stem (ESU) JE2 BE2.png|32px]] The textures of mushroom blocks have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Mushroom blocks can now be used to fill up [[composter]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Variants of brown, red and stem now have been renamed to "Brown Mushroom Block", "Red Mushroom Block" and "Mushroom Stem", respectively.}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.30.26|Mushroom blocks can no longer be used as fuel in a furnace.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.20.21|The chance of dropping [[mushroom]]s (max of 2) from brown and red mushroom block was increased to match {{el|je}}, from 10% per mushroom to 11.11%.
+|Mushroom stems no longer drop mushrooms when mined with a non-Silk Touch tool.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The <code>mushroom_stem</code> ID has been split up from <code>brown_mushroom_block</code> and <code>red_mushroom_block</code> IDs. Existing stem blocks in older worlds are automatically replaced during world upgrade.
+|Mushroom stems now have an 65% chance of increasing the compost level in a composter by 1 instead of 85% to match {{JE}}.
+|The all-sided pore mushroom block has been removed from [[Creative inventory]].}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb all mushroom blocks, providing the curling stone/slow sliding effect to the mob.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Brown Mushroom Block (E) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (S) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (U) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Red Mushroom Block (E) JE1 BE1.png|32px]] [[File:Red Mushroom Block (S) JE1 BE1.png|32px]] [[File:Red Mushroom Block (U) JE1 BE1.png|32px]] [[File:Red Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Mushroom Block JE1 BE1.png|32px]] [[File:Mushroom Stem (ES) JE1 BE1.png|32px]] [[File:Mushroom Stem (ESU) JE1 BE1.png|32px]] Added mushroom blocks.
+|Mushroom blocks cannot be obtained from the Creative inventory.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|When harvested with [[Silk Touch]] enchantment, mushroom blocks now [[drops|drop]] blocks with corresponding mushroom texture (red or brown) on all sides rather than the one with spores.}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Added four variants of mushroom blocks to the Creative inventory and superflat. This includes the mushroom pore block.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Brown Mushroom Block (E) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (S) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (U) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Brown Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Red Mushroom Block (E) JE2 BE2.png|32px]] [[File:Red Mushroom Block (S) JE2 BE2.png|32px]] [[File:Red Mushroom Block (U) JE2 BE2.png|32px]] [[File:Red Mushroom Block (SU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (EU) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ES) JE2 BE2.png|32px]] [[File:Red Mushroom Block (ESU) JE2 BE2.png|32px]]<br>[[File:Mushroom Block JE2 BE2.png|32px]] [[File:Mushroom Stem (ES) JE2 BE2.png|32px]] [[File:Mushroom Stem (ESU) JE2 BE2.png|32px]] The textures of mushroom blocks have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Brown Mushroom Block (E) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (S) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (U) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Brown Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Red Mushroom Block (E) JE1 BE1.png|32px]] [[File:Red Mushroom Block (S) JE1 BE1.png|32px]] [[File:Red Mushroom Block (U) JE1 BE1.png|32px]] [[File:Red Mushroom Block (SU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (EU) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ES) JE1 BE1.png|32px]] [[File:Red Mushroom Block (ESU) JE1 BE1.png|32px]]<br>[[File:Mushroom Block JE1 BE1.png|32px]] [[File:Mushroom Stem (ES) JE1 BE1.png|32px]] [[File:Mushroom Stem (ESU) JE1 BE1.png|32px]] Added mushroom blocks. All four types of mushroom blocks can be obtained in the Creative inventory.}}
+}}
+
+<gallery>
+Decoded change list.png|The decoded change-list.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Both mushroom blocks now use the newly-implemented model json file {{code|models/block/cube.json}}; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.13|dev=17w47a|Mushroom stems now have their own ID.
+|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 99 and 100.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+==== Mushroom ====
+<gallery>
+Mushroom Block.png
+</gallery>
+==== Brown mushroom ====
+<gallery>
+Brown Mushroom Block (E).png
+Brown Mushroom Block (S).png
+Brown Mushroom Block (U).png
+Brown Mushroom Block (SU).png
+Brown Mushroom Block (EU).png
+Brown Mushroom Block (ES).png
+Brown Mushroom Block.png
+</gallery>
+
+==== Red mushroom ====
+<gallery>
+Red Mushroom Block (E).png
+Red Mushroom Block (S).png
+Red Mushroom Block (U).png
+Red Mushroom Block (SU).png
+Red Mushroom Block (EU).png
+Red Mushroom Block (ES).png
+Red Mushroom Block (ESU).png
+</gallery>
+
+==== Mushroom stem ====
+<gallery>
+Mushroom Stem (E).png
+Mushroom Stem (S).png
+Mushroom Stem (U).png
+Mushroom Stem (SU).png
+Mushroom Stem (EU).png
+Mushroom Stem (ES).png
+Mushroom Stem (ESU).png
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week-mushroom Block of the Week: Mushroom] – Minecraft.net on July 7, 2017
+*[https://www.minecraft.net/en-us/article/red-mushroom Block of the Month: Red Mushroom] – Minecraft.net on May 8, 2025
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Fungi]]
+[[Category:Natural blocks]]
+
+[[de:Pilzblock]]
+[[es:Bloque de champiñón]]
+[[fr:Bloc de champignon]]
+[[hu:Óriásgombák]]
+[[it:Blocco di fungo]]
+[[ja:キノコブロック]]
+[[ko:버섯 블록]]
+[[pl:Grzyb (blok)]]
+[[pt:Bloco de cogumelo]]
+[[ru:Грибной блок]]
+[[zh:蘑菇方块]]

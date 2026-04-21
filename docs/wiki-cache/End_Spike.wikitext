@@ -1,0 +1,176 @@
+{{about|the large obsidian pillars in the End dimension||Spike}}
+{{Infobox structure
+| title = End spike
+| image = End spike.png
+| image2 = End spike with Cage.png
+| biome = {{biomeLink|The End}}
+| blocks =
+* {{BlockLink|Air}}
+* {{BlockLink|Bedrock}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Iron Bars}} (in some cases)
+* {{BlockLink|Obsidian}}
+* {{EntityLink|End Crystal}}
+| canspawn = Yes, while the [[ender dragon]] is respawning
+}}
+'''End spikes'''<ref><code>end_spike</code> – in-game structure ID {{in|Java}}.</ref> (also known as '''obsidian spikes''', '''obsidian pillars''', '''obsidian towers''', and '''End pillars''') are a [[feature]] in [[the End]] that are made of [[obsidian]]. There are ten End spikes per world, all generating on the central End island.
+
+== Generation ==
+End spikes generate naturally the first time the [[player]] enters [[the End]], and regenerate when the [[ender dragon]] is respawned.
+
+When the ender dragon respawns, any blocks the player had placed within 10 blocks in all directions of the bedrock block at the top of the End spikes are deleted, as well as blocks inside the square containing the edge of the pillar down to Y=66.
+
+== Construction ==
+{{main|/Structure}}
+End spikes are composed of [[obsidian]], with a single [[bedrock]] block, a [[fire]] block, and an [[End crystal]] on top of each pillar. They have cylindrical forms.
+
+The following 10 pillars generate in a 43-block radius circle{{info needed|How does the circle generate? "Cricle" alone is ambiguous as perfect circles don't exist in Minecraft}} around the exit portal in a random order (total of 40499 obsidian):
+
+* A 3-block radius pillar ending at Y=76 (total of 1596 blocks of obsidian);
+* A 3-block radius pillar with iron bars ending at Y=79 (total of 1659 blocks of obsidian);
+* A 3-block radius pillar with iron bars ending at Y=82 (total of 1722 blocks of obsidian);
+* A 4-block radius pillar ending at Y=85 (total of 3145 blocks of obsidian);
+* A 4-block radius pillar ending at Y=88 (total of 3256 blocks of obsidian);
+* A 4-block radius pillar ending at Y=91 (total of 3367 blocks of obsidian);
+* A 5-block radius pillar ending at Y=94 (total of 5358 blocks of obsidian);
+* A 5-block radius pillar ending at Y=97 (total of 5529 blocks of obsidian);
+* A 5-block radius pillar ending at Y=100 (total of 5700 blocks of obsidian);
+* A 6-block radius pillar ending at Y=103 (total of 9167 blocks of obsidian).
+
+The bottom of all pillars are at Y level 0, which means that pillars are generated through the island. If the End biome is used in the [[Overworld]], End spikes generate all the way down to Y=-64, replacing all other blocks, including bedrock. The second and third shortest pillars include a cage comprised of 73 [[iron bars]] surrounding the End crystal, to protect it from projectiles.
+
+The pillars are generated at the following coordinates (center of the pillar) regardless of the seed:
+* (-42,  -1)
+* (-34,  -25)
+* (-34,  24)
+* (-13,  -40)
+* (-13,  39)
+* (12,  -40)
+* (12,  39)
+* (33,  -25)
+* (33,  24)
+* (42, 0)
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=end-spike
+|spritetype=env
+|nameid=end_spike
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=end-spike
+|spritetype=env
+|nameid=end_spike
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=end-spike
+|spritetype=env
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|boolean|crystal_invulnerable}} (optional, defaults to false) Whether the End crystals on it are invulnerable.
+** {{nbt|list|crystal_beam_target}} (optional) Block position of the beam target.
+*** {{nbt|int}} The X coordinate.
+*** {{nbt|int}} The Y coordinate.
+*** {{nbt|int}} The Z coordinate.
+** {{nbt|list|spikes}} (Required, but can be empty. If empty, uses the default random spikes) Configurations of each spike.
+*** {{nbt|compound}} A spike.
+**** {{nbt|int|centerX}} (optional, defaults to 0) The X coordinate.
+**** {{nbt|int|centerZ}} (optional, defaults to 0)  The Z coordinate.
+**** {{nbt|int|radius}} (optional, defaults to 0)  The radius of the spike.
+**** {{nbt|int|height}} (optional, defaults to 0)  The height of the spike.
+**** {{nbt|boolean|guarded}} (optional, defaults to false)  Whether to generate an iron bar cage around the crystal.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:end_spike",
+  "config": {
+    "crystal_invulnerable": false,
+    "spikes": []
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Added End spikes and [[the End]] dimension.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Added [[End crystal]]s on top of the End spikes.}}
+|{{HistoryLine||1.9|dev=15w31a|The tallest End spikes now have [[iron bars]] around End crystals.
+|The End spikes now generate in a circle around the [[exit portal]].
+|There are now exactly 10 End spikes, with End crystals at Y{{=}}76, 79, 82, 85, 88, 91, 94, 97, 100, and 103.}}
+|{{HistoryLine|||dev=15w33c|End spikes now regenerate upon resummoning the [[ender dragon]].}}
+|{{HistoryLine|||dev=16w07a|The End spikes no longer generate with iron bars.}}
+|{{HistoryLine|||dev=pre1|Some of the shorter End spikes now generate with iron bars again.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|End spikes no longer appear upon initial generation of the End, and only generate when the ender dragon is respawned. This is unintentional due to world generation changes in the [[Overworld]] accidentally causing changes in [[the Nether]] and the End.}}
+|{{HistoryLine|||dev=21w37a|End spikes appear upon initial generation of the End once again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added End spikes and [[the End]] dimension.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added End spikes and [[the End]] dimension.}}
+}}
+
+== Issues ==
+{{Issue list|End spike|Obsidian spike|Obsidian pillar|Obsidian tower|End pillar}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+OldObsidianPillars.png|End spikes in [[the End]] before [[End crystal]]s were added. [[Endermen]] are also visible.
+ObsidianSquare.png|A square End spike (no longer possible since [[Java Edition 1.9|1.9]]).
+Square Obsidian Pillar 1.14.png|A square End spike naturally generating in [[Java Edition 1.14|1.14]].
+</gallery>
+
+== See also ==
+* {{EntityLink|Enderman}}
+* {{BlockLink|End Stone}}
+* {{EntityLink|Ender Dragon}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+[[Category:The End|S]]
+
+[[de:Obsidiansäule]]
+[[es:Pico del End]]
+[[fr:Pilier d'obsidienne]]
+[[ja:黒曜石の柱]]
+[[ko:엔드 기둥]]
+[[lzh:黑曜石柱]]
+[[nl:Obsidianen pilaren]]
+[[pl:Obsydianowy słup]]
+[[pt:Pilar do End]]
+[[ru:Обсидиановый столб]]
+[[th:เสาหินออบซิเดียน]]
+[[uk:Шип Енду]]
+[[zh:黑曜石柱]]

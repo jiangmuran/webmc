@@ -1,0 +1,190 @@
+{{for}}
+{{Infobox block
+| group = Held
+| group2 = Shown
+| 1-1 = Barrier (held).png
+| 2-1 = Barrier (shown).png
+| transparent = Partial <small>(lets light pass through)</small>
+| light = No
+| tool = none
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| rarity =
+* Epic {{only|java|short=1}}
+* Common {{only|bedrock|short=1}}
+| waterloggable = Yes
+|mapcolor= '''No waterlogging:''' {{Map color|barrier}}
+'''Waterlogging:''': {{Map color|water}} 
+}}
+A '''barrier''' is an [[invisible block]] used to create solid boundaries.
+
+== Obtaining ==
+Barriers cannot be obtained in the creative mode inventory and are only obtainable via commands such as {{cmd|give}}, {{cmd|item}} {{in|java}}, and {{cmd|replaceitem}} and {{cmd|give}} {{in|bedrock}} and cannot be broken in Survival mode.
+
+{{IN|Java}}, barriers are available in the Creative inventory if cheats are enabled and the "Operator Items Tab" setting is turned on.
+
+=== Natural generation ===
+In normal worlds, barriers do not generate naturally. {{IN|java}}, they generate as the floor in [[debug mode]] worlds.
+
+== Usage ==
+[[File:Shown Invisible Blocks.png|thumb|The difference between air (top left) and barriers (bottom left) when "show invisible blocks" is enabled.]]
+Barrier blocks are mainly used to build an impenetrable barrier that cannot be broken in standard Survival mode. For example, they can be used to protect a reserved area from entry by players, mobs, and other entities. Unlike other kinds of unbreakable blocks that could be used for this purpose (such as [[bedrock]]), barrier blocks are unobtrusive because they are invisible. Barrier blocks cannot be destroyed by [[TNT]], [[creeper]] explosions, or any other [[explosion]]s. Furthermore, they have a greater amount of blast resistance than any other unbreakable block.
+
+Unlike other operator blocks such as [[command block]]s, barriers can be placed by players in Survival mode.
+
+In the player's [[inventory]], the block is displayed as a red box with a slash through it, but when placed it is completely invisible.
+
+Barriers are transparent to light and do not block [[beacon]]s. [[Fence]]s, [[iron bars]], [[glass pane]]s, and similar blocks do not visually connect with barriers. Barriers interact with blocks and mobs as a solid block. All dependent blocks can be placed on a barrier, such as [[torch]]es or [[redstone]], and it can suffocate mobs. Mobs cannot spawn on barriers.
+
+In [[Creative]] mode, if a player is holding a barrier block in their hand, all placed barrier blocks display the barrier icon as a [[particle]]. This effect is client-side, and if a player holds a barrier block in Survival mode, the particle does not appear. In ''Java Edition'', barriers take a few seconds to appear and disappear when holding a barrier. In ''Bedrock Edition'', it disappears instantly. Barrier blocks are not shown if the particle setting is set to "minimal". 
+
+<gallery>
+Barrier Outline Box.png
+Barrier Outline Box (held).png
+</gallery>
+
+=== Waterlogging ===
+Barrier blocks can be waterlogged by being placed into a water source block or by manually {{control|using}} a [[water bucket]] on them. {{IN|java}}, water cannot be placed in them or taken out by non-direct interactions such as [[dispenser]]s; this is allowed {{in|bedrock}}. {{IN|java}}, only players in Creative mode can waterlog or remove water from barriers, while {{in|bedrock}} there are no game mode restrictions. {{IN|java}}, water does not flow out of waterlogged barriers. See [[waterlogging]] for more details on what blocks can be waterlogged.
+
+=== Piston interactivity ===
+Barriers cannot be pushed by [[piston]]s. They also cannot be pushed nor pulled by [[sticky piston]]s.
+
+== Sounds ==
+{{Sound table/Block/Normal}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Barrier
+|spritetype=block
+|nameid=barrier
+|blocktags=blocks_wind_charge_explosions, dragon_immune, snow_layer_cannot_survive_on, wither_immune
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Barrier
+|spritetype=block
+|nameid=barrier
+|id=416
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|waterlogged|false|true,false|Whether or not there's water in the same place as this barrier.|foot=1}}
+
+<div style="text-align:center"></div>
+
+== History ==
+=== Tweet ===
+{{HistoryTable
+|{{HistoryLine||January 30, 2014|link={{tweet|_grum|428874685418602496}}|[[Grum]] posted about an invisible block.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w05a|[[File:Barrier JE1 BE1.png|32px]] Added barriers.}}
+|{{HistoryLine|||dev=14w06a|Barriers now use [[block of redstone]] breaking [[particles]] instead of [[lava]].
+|A barrier particle effect has been added to the particle [[commands|command]]. With this, the [[player]] can now see where there are barriers.}}
+|{{HistoryLine|||dev=14w06b|Barriers are now visible when holding the [[item]] in [[Creative]] mode.}}
+|{{HistoryLine|||dev=14w20a|[[Wither]]s and [[ender dragon]]s can no longer [[breaking|break]] barriers.}}
+|{{HistoryLine||1.8.1|dev=pre3|Blue wither skulls no longer break barriers.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Barrier JE2 BE2.png|32px]] The texture of barriers has been changed.}}
+|{{HistoryLine||1.15|dev=pre2|Barriers are now visible when holding a barrier in the offhand.<ref>{{bug|MC-83003}}</ref>}}
+|{{HistoryLine||1.16|dev=20w16a|Barriers naturally generate inside bastion remnants.}}
+|{{HistoryLine|||dev=20w17a|Barriers no longer generate in bastion remnants.}}
+
+|{{HistoryLine||1.17|dev=21w13a|Barriers are no longer visible when held in the offhand.<ref>{{bug|MC-221824}}</ref>}}
+|{{HistoryLine|||dev=21w20a|[[File:Barrier (shown) JE1.png|32px]][[File:Barrier Outline Box (shown) JE1.png|32px]] Barriers are now revealed by save-mode [[structure block]]s.<ref>{{bug|MC-102220}}</ref>
+|The [[rarity]] of barriers has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.19.3|dev=22w42a|Barriers no longer emit block particles when broken.<ref>{{bug|MC-221568}}</ref>}}|{{HistoryLine|||dev=22w44a|Barriers are now available in the Creative inventory, but only if cheats are enabled.}}
+|{{HistoryLine|||dev=22w45a|Moved barriers behind the Operator Utilities tab in the Creative inventory. The tab is only available if cheats are enabled and the "Operator Items Tab" option in the controls menu is turned on.}}
+|{{HistoryLine||1.20.2|dev=23w31a|Barriers can now be [[waterlogging|waterlogged]] by players in Creative mode.
+|Barriers can no longer produce particles when fallen onto<ref>{{bug|MC-122547||Barriers can produce fall particles|Fixed}}</ref> or [[brush]]ed.<ref>{{bug|MC-260085||Particles are created when using a brush on a barrier|Fixed}}</ref>}}}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.1|[[File:Barrier JE1 BE1.png|32px]] Added barriers.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Barrier JE2 BE2.png|32px]] The texture of barriers has been changed.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|Barrier no longer drops itself when breaking.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[File:Barrier JE1 BE1.png|32px]] Added barrier. It is unobtainable.}}
+|{{HistoryLine||xbox=TU36|xbone=CU25|ps3=1.28|psvita=1.28|ps4=1.28|wiiu=Patch 7|switch=1.0.1|With the addition of the [[battle mini game]], barriers are now used in various battle maps.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Added a new [[tutorial world]] which uses barrier blocks.}}
+|{{HistoryLine||xbox=TU73|xbone=none|ps3=1.82|psvita=1.82|ps4=1.83|wiiu=Patch 42|switch=none|Barrier blocks have been removed from the [[tutorial world]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Barrier JE2 BE2.png|32px]] The texture of barriers has been changed.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 166.}}
+}}
+
+== Issues ==
+
+{{issue list}}
+
+== Trivia ==
+* The symbol used is not compliant with [[Wikipedia:ISO 3864-1|ISO 3864-1]], as the diagonal line is mirrored.<ref>{{bug|MC-64322|resolution=WAI}}</ref>
+* The barrier's vanilla block model defines only what texture to use for block breaking particles, and it does not have a parent model or anything that would give the block a physical shape.
+* Barriers are hardcoded to not render any block model.<ref>{{bug|MC-131775}}</ref>
+
+== Gallery ==
+
+=== Screenshots ===
+<gallery>
+File:Barrier Redstone.png|Barriers support any block, and can transmit a redstone signal.
+File:Wizard pig.png|A pig standing on a barrier.
+File:Indebugmode.png|Barriers in [[debug mode]].
+</gallery>
+
+=== Development images ===
+<gallery>
+File:1.8 Dev Barrier.png|Dev image of barriers.
+File:Grum Barriers.png|Ditto.
+</gallery>
+
+== References ==
+
+{{reflist}}
+
+== Navigation ==
+{{Navbox_invisible_block}}
+{{Navbox blocks|creative}}
+
+[[Category:Creative or commands only blocks]]
+
+[[cs:Bariéra]]
+[[de:Barriere]]
+[[es:Barrera]]
+[[fr:Barrière invisible]]
+[[it:Barriera]]
+[[ja:バリアブロック]]
+[[ko:방벽]]
+[[lzh:障]]
+[[nl:Barrière]]
+[[pl:Bariera]]
+[[pt:Barreira]]
+[[ru:Барьер]]
+[[uk:Бар'єр]]
+[[zh:屏障]]

@@ -1,0 +1,526 @@
+{{For}}
+{{Infobox entity
+| image = Dolphin.gif
+| imagecaption = Adult
+| imagesize = 220px
+| image2 = Baby Dolphin.gif
+| image2caption = Baby
+| image2size = 140px
+| invimage = Dolphin Spawn Egg
+| health = {{health|10}}
+| behavior = Neutral (adult)<br> Passive (baby)
+| mobtype = {{EntityLink|Animal}}<br>{{EntityLink|Aquatic}}
+| damage = Easy: {{hp|2.5}}<br>Normal: {{hp|3}}<br>Hard: {{hp|4.5}}
+| size = '''Adult:'''<br>Height: 0.6 blocks<br>Width: 0.9 blocks<br>
+'''Baby:'''<br>Height: 0.39 blocks<br>Width: 0.585 blocks
+| spawn = {{BiomeLink|Lukewarm Ocean}}<br>{{BiomeLink|Deep Lukewarm Ocean}}<br>{{BiomeLink|Ocean}}<br>{{BiomeLink|Deep Ocean}}<br>{{BiomeLink|Warm Ocean}}
+| speed = 1.2
+| usableitems = {{drop|Item|Lead}}
+{{drop|Item|Raw Cod}}
+{{drop|Item|Raw Salmon}}
+{{drop|Item|Tropical Fish}}
+{{drop|Item|Pufferfish}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+'''Dolphins''' are aquatic [[neutral mob]]s that live in non-frozen [[ocean]]s. They grant a speed boost to [[player]]s that [[swim]] near them and follow the player while swimming.
+
+== Spawning ==
+Dolphins are found in groups (pods) of 1-2{{Only|je|short=1}} or 3-5{{Only|be|short=1}} in all [[ocean]] biomes, excluding frozen oceans and cold oceans. They spawn exclusively between levels 50 and 64.
+Dolphins continuously spawn as long as their spawn requirements are met, and naturally despawn if no players are nearby, similar to [[squid]] and [[nautilus]]es. 
+
+{{IN|je}}, dolphins, squids, and nautiluses together make up the water creatures [[mob cap]].
+
+Dolphins have a 10% chance to spawn as a baby.
+
+{{Mob spawn table}}
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Raw Cod|notes=not_burn|quantity=0-1|lootingquantity=0-1}}
+|{{DropLine|name=Cooked Cod|notes=burn|quantity=0-1|lootingquantity=0-1}}
+}}
+* {{xp|1|3}}, if kill credit is given to the player.
+
+Killing a baby dolphin yields neither items nor experience.
+
+== Behavior ==
+[[File:DolphinJumping.gif|thumb|Dolphins jumping in water.]]
+Dolphins normally swim in pods, occasionally leaping out of the [[water]] to get air. They are also able to jump from one body of water to another. Additionally, they chase after [[player]]s in [[boat]]s but do not give the speed boost effect.
+
+Players who [[Swimming#Sprint-swimming|sprint-swim]] within a 9 block spherical radius of a dolphin receive a swimming speed boost for 5 seconds, replenished as long as the player continues to sprint-swim within a 15 block spherical radius of a dolphin. [[Invisibility]] reduces both of these ranges like normal, based on the amount of armor the player is wearing. {{IN|java}}, the speed boost is granted by the [[Dolphin's Grace]] effect, while {{in|bedrock}} the player simply gets the speed boost without a status effect. The dolphin keeps following the player as long as they are sprint-swimming, allowing the player to swim under the speed boost for long distances.
+
+{{IN|java}}, dolphins are lured by [[item (entity)|dropped item]]s that are inside nearby water blocks, picking them up, throwing around and chasing after them. If the dolphin can not find a path to a dropped item, the dolphin may stay underwater to the point of [[drowning]].<ref>{{bug|MC-221510}}</ref> If the dolphin is in, or on, a [[waterlogged]] bottom [[slab]] or [[chest]] with an [[air]] block above, or a bubble column, the dolphin is prevented from drowning. 
+
+When a player or another mob hits a dolphin (unless the dolphin is killed in one hit {{in|Java}}), the whole pod retaliates, attacking all at once, similar to [[wolves]] and [[zombified piglin]]s. Hostile dolphins remain hostile even if they are fed fish. Hostile dolphins are far more dangerous {{in|bedrock}}.
+
+When dolphins are fed raw fish, they swim to the nearest [[shipwreck]] or [[ocean ruins]]; {{in|java}}, the structures a dolphin can locate are defined in the <code>dolphin_located</code> [[Tag#Structure tags|tag]]. Dolphins also avoid [[guardian]]s and [[elder guardian]]s.
+
+Unlike most “animal” mobs, dolphins cannot [[breed]]. Baby dolphins can only be found when they naturally spawn. A baby dolphin eventually turns into an adult after 24000 ticks (20 minutes), and its growth time can be accelerated by 10% each time it is fed fish. A baby dolphin fed a fish once per second grows up in approximately 48 seconds using 47 fish.
+
+Like many other [[baby]] mobs, a [[golden dandelion]] can be used on a baby dolphin to prevent it from growing up, or used a second time to resume its aging.
+
+Dolphins do not deal any damage in [[Peaceful]] difficulty and are completely passive.
+
+Unlike other neutral mobs, dolphins do not count towards the {{cd|AngryAt}} tag.<ref>{{Bug|MC-256289||AngryAt tag is not used by certain neutral mobs, causing them to forget their target upon reloading game}}</ref><ref>{{Bug|MC-195278||If the "universalAnger" is set to true, certain neutral mobs don't fight back when you attack them}}</ref><ref>{{Bug|MC-187857||New neutral mob behaviour improvements were not implemented for llamas, dolphins, and spiders in the daylight}}</ref>
+
+=== Weaknesses ===
+If a dolphin leaves the [[water]] in dry weather, it starts taking suffocation damage after two minutes, and eventually dies. It takes no damage out of water during [[rain]]. Regardless of weather, a dolphin on land actively seeks out a body of water, or seeks its target if in a hostile state.
+
+They cannot survive without air. If they stay submerged for about four minutes, they begin [[drowning]]. The [[water breathing]] effect prevents them from drowning.
+
+Like most other aquatic mobs, dolphins cannot ride [[boat]]s.
+
+Dolphins can be towed by a [[lead]].
+
+{{IN|JE}}, the dolphin is an aquatic [[mob]] and is thus affected by the [[Impaling]] enchantment. {{IN|BE}}, it is only affected when in the water, as all mobs are.
+
+=== Breeding ===
+Dolphins cannot be bred by the player. Baby dolphins only occur through natural spawning in the wild.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Dolphin idle1.ogg
+|sound2=Dolphin idle2.ogg
+|sound3=Dolphin idle3.ogg
+|sound4=Dolphin idle4.ogg
+|sound5=Dolphin idle5.ogg
+|sound6=Dolphin idle6.ogg
+|sound7=Dolphin blowhole1.ogg
+|sound8=Dolphin blowhole2.ogg
+|subtitle=Dolphin chirps
+|source=neutral
+|description=Randomly while on land
+|id=entity.dolphin.ambient
+|translationkey=subtitles.entity.dolphin.ambient
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin water idle1.ogg
+|sound2=Dolphin water idle2.ogg
+|sound3=Dolphin water idle3.ogg
+|sound4=Dolphin water idle4.ogg
+|sound5=Dolphin water idle5.ogg
+|sound6=Dolphin water idle6.ogg
+|sound7=Dolphin water idle7.ogg
+|sound8=Dolphin water idle8.ogg
+|sound9=Dolphin water idle9.ogg
+|sound10=Dolphin water idle10.ogg
+|subtitle=Dolphin whistles
+|source=neutral
+|description=Randomly while in water
+|id=entity.dolphin.ambient_water
+|translationkey=subtitles.entity.dolphin.ambient_water
+|volume=1.0 <ref group=sound>Except {{cd|idle_water1}} and {{cd|10}}, which are 0.8, and {{cd|idle_water7}} and {{cd|8}}, which are 0.75</ref>
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin eat1.ogg
+|sound2=Dolphin eat2.ogg
+|sound3=Dolphin eat3.ogg
+|subtitle=Dolphin eats
+|source=neutral
+|description=When a fish is fed to a dolphin
+|id=entity.dolphin.eat
+|translationkey=subtitles.entity.dolphin.eat
+|volume=0.75
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin attack1.ogg
+|sound2=Dolphin attack2.ogg
+|sound3=Dolphin attack3.ogg
+|subtitle=Dolphin attacks
+|source=neutral
+|description=When a dolphin attacks something
+|id=entity.dolphin.attack
+|translationkey=subtitles.entity.dolphin.attack
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin death1.ogg
+|sound2=Dolphin death2.ogg
+|subtitle=Dolphin dies
+|description=When a dolphin dies
+|source=neutral
+|id=entity.dolphin.death
+|translationkey=subtitles.entity.dolphin.death
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin hurt1.ogg
+|sound2=Dolphin hurt2.ogg
+|sound3=Dolphin hurt3.ogg
+|subtitle=Dolphin hurts
+|source=neutral
+|description=When a dolphin is damaged
+|id=entity.dolphin.hurt
+|translationkey=subtitles.entity.dolphin.hurt
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin jump1.ogg
+|sound2=Dolphin jump2.ogg
+|sound3=Dolphin jump3.ogg
+|subtitle=Dolphin jumps
+|source=neutral
+|description=When a dolphin jumps
+|id=entity.dolphin.jump
+|translationkey=subtitles.entity.dolphin.jump
+|volume=0.75
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin play1.ogg
+|sound2=Dolphin play2.ogg
+|subtitle=Dolphin plays
+|source=neutral
+|description=Randomly when a dolphin finds an item
+|id=entity.dolphin.play
+|translationkey=subtitles.entity.dolphin.play
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin splash1.ogg
+|sound2=Dolphin splash2.ogg
+|sound3=Dolphin splash3.ogg
+|subtitle=Dolphin splashes
+|source=neutral
+|description=When a dolphin enters water
+|id=entity.dolphin.splash
+|translationkey=subtitles.entity.dolphin.splash
+|volume=Around 0.1 or 0.02<ref group=sound>Depends on the dolphin's motion, usually around 0.1 or 0.02.</ref>
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Dolphin swim1.ogg
+|sound2=Dolphin swim2.ogg
+|sound3=Dolphin swim3.ogg
+|sound4=Dolphin swim4.ogg
+|sound5=Fish swim5.ogg
+|sound6=Fish swim6.ogg
+|sound7=Fish swim7.ogg
+|subtitle=Dolphin swims
+|source=neutral
+|description=While a dolphin is swimming
+|id=entity.dolphin.swim
+|translationkey=subtitles.entity.dolphin.swim
+|volume=Around 0.03<ref group=sound>Depends on the dolphin's motion, usually around 0.03</ref>
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Dolphin idle1.ogg
+|sound2=Dolphin idle2.ogg
+|sound3=Dolphin idle3.ogg
+|sound4=Dolphin idle4.ogg
+|sound5=Dolphin idle5.ogg
+|sound6=Dolphin idle6.ogg
+|source=neutral
+|description=Randomly while on land
+|id=mob.dolphin.idle
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin water idle1.ogg
+|sound2=Dolphin water idle2.ogg
+|sound3=Dolphin water idle3.ogg
+|sound4=Dolphin water idle4.ogg
+|sound5=Dolphin water idle5.ogg
+|sound6=Dolphin water idle6.ogg
+|sound7=Dolphin water idle7.ogg
+|sound8=Dolphin water idle8.ogg
+|sound9=Dolphin water idle9.ogg
+|sound10=Dolphin water idle10.ogg
+|source=neutral
+|description=Randomly when in water
+|id=mob.dolphin.idle_water
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin attack1.ogg
+|sound2=Dolphin attack2.ogg
+|sound3=Dolphin attack3.ogg
+|source=neutral
+|description=When a dolphin attacks something
+|id=mob.dolphin.attack
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin blowhole1.ogg
+|sound2=Dolphin blowhole2.ogg
+|source=neutral
+|description=Randomly while on land
+|id=mob.dolphin.blowhole
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin death1.ogg
+|sound2=Dolphin death2.ogg
+|source=neutral
+|description=When a dolphin dies
+|id=mob.dolphin.death
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin eat1.ogg
+|sound2=Dolphin eat2.ogg
+|sound3=Dolphin eat3.ogg
+|source=neutral
+|description=When a fish is fed to a dolphin
+|id=mob.dolphin.eat
+|volume=0.7
+|pitch=1.0}}
+| {{SoundLine
+|sound=Dolphin hurt1.ogg
+|sound2=Dolphin hurt2.ogg
+|sound3=Dolphin hurt3.ogg
+|source=neutral
+|description=When a dolphin is damaged
+|id=mob.dolphin.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin jump1.ogg
+|sound2=Dolphin jump2.ogg
+|sound3=Dolphin jump3.ogg
+|source=neutral
+|description=When a dolphin jumps
+|id=mob.dolphin.jump
+|volume=0.7
+|pitch=1.0}}
+| {{SoundLine
+|sound=Dolphin play1.ogg
+|sound2=Dolphin play2.ogg
+|source=neutral
+|description=Randomly when a dolphin finds an item
+|id=mob.dolphin.play
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin splash1.ogg
+|sound2=Dolphin splash2.ogg
+|sound3=Dolphin splash3.ogg
+|source=neutral
+|description=When a dolphin enters water
+|id=mob.dolphin.splash
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Dolphin swim1.ogg
+|sound2=Dolphin swim2.ogg
+|sound3=Dolphin swim3.ogg
+|sound4=Dolphin swim4.ogg
+|source=neutral
+|description=While a dolphin is swimming
+|id=mob.dolphin.swim
+|volume=1.0
+| pitch = 0.8-1.2 (Baby: 1.3-1.7)
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|showentitytags=y
+|displayname=Dolphin
+|spritetype=entity
+|nameid=dolphin
+|entitytags=aquatic, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Dolphin
+|spritetype=entity
+|nameid=dolphin
+|showentityfamily=y
+|entityfamily=aquatic,dolphin,mob
+|id=31
+|foot=1}}
+
+=== Entity data ===
+Dolphins have entity data associated with them that contains various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|Moistness}}: How moist this dolphin is. Set to 2400 when in water or rain. Decreases by 1 every tick otherwise. The dolphin takes damage when 0 or below.
+** {{nbt|byte|GotFish}}: 1 or 0 (true/false) - if true, this dolphin got fish from a player.
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Echolocation;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||November 18, 2017|link=https://www.youtube.com/watch?v=mAapz_nIC_Y|[[File:Dolphin (pre-release).png|50px]][[File:Dolphin Old.png|50px]] Dolphins were shown in a video clip during [[MineCon Earth]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w15a|[[File:Dolphin.gif|50px]] Added dolphins.}}
+|{{HistoryLine|||dev=18w19a|Dolphins now swim to the surface, if [[drowning]].
+|Dolphins now give the [[player]] the "Dolphin's Grace" [[status effect]] that allows the player to [[swim]] faster, if the player swims near them.}}
+|{{HistoryLine|||dev=18w19b|Dolphins now drop [[experience]].<ref>{{bug|MC-128681}}</ref>}}
+|{{HistoryLine|||dev=18w20c|Dolphins on land now jump to try to get back into the [[water]].
+|Dolphins now survive for two minutes out of [[water]], instead of ten seconds.}}
+|{{HistoryLine|||dev=18w21a|Dolphins now lead [[player]]s to [[buried treasure]].
+|Dolphins can no longer wear [[armor]].<ref>{{bug|MC-128493}}</ref>}}
+|{{HistoryLine|||dev=pre2|Dolphins can no longer sit in [[boat]]s.<ref>{{bug|MC-128241}}</ref>}}
+|{{HistoryLine|||dev=pre6|Dolphins now bring the [[player]] to [[buried treasure]] more accurately.}}
+|{{HistoryLine||1.14|dev=19w08a|Dolphins can no longer have armor equipped onto them with a [[dispenser]].}}
+|{{HistoryLine||1.16|dev=20w10a|[[Firework]] damage now provokes dolphins.<ref>{{bug|MC-111498||Fireworks and water bottles damage don't make neutral mobs angry or hostile|Fixed}}</ref>}}
+|{{HistoryLine||1.18|dev=21w40a|Dolphins now spawn only between Y{{=}}50 and Y{{=}}64.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Dolphin.gif|30px]] Added baby variants of dolphins, to match parity with Bedrock Edition.}}
+|{{HistoryLine||26.1|dev=snap5|[[File:Baby Dolphin JE2 BE2.gif|32px]] The model and texture of baby dolphins have been changed.
+|Added [[golden dandelion]]s, which can be used to prevent baby dolphins from growing up.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|[[File:Dolphin BE Revision 1.png|50px]] [[File:Dolphin BE Revision 1.png|30px]] Added dolphins and baby dolphins.}}
+|{{HistoryLine|||dev=beta 1.2.20.2|[[File:Dolphin.gif|50px]] [[File:Dolphin.gif|30px]] The [[model]]s of dolphins have been updated with minor adjustments to the orientation of their fins.
+|Dolphins now have [[sound]]s.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Dolphins now lead [[player]]s to [[shipwreck]]s and [[underwater ruins]].}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|Dolphins now dry out at the same rate as they do {{in|java}}; 120 seconds.
+|Dolphins on land now try to get back into the [[water]].}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.21|Dolphins now spawn only between Y{{=}}50 and Y{{=}}64.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.26|Dolphins no longer spawn in [[cold ocean]] or [[deep cold ocean]] biomes.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|[[File:Baby Dolphin JE2 BE2.gif|32px]] The model and texture of baby dolphins have been changed.}}
+|{{HistoryLine|||dev=Preview 26.10.21
+|Added [[golden dandelion]]s, which can be used to prevent baby dolphins from growing up.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Dolphin BE Revision 1.png|50px]] [[File:Dolphin BE Revision 1.png|30px]] Added dolphins.
+|Baby dolphins can be spawned when the [[player]] uses its [[spawn egg]] on a dolphin.|The [[spawn limit|maximum number]] of dolphins in a world is 18.}}
+}}
+
+=== Data History ===
+{{HistoryTable|{{HistoryLine|java}}|{{HistoryLine||1.13|dev=18w21a|Added the <code>TreasurePosX</code>, <code>TreasurePosY</code>, <code>TreasurePosZ</code>, <code>GotFish</code> and <code>CanFindTreasure</code> tags.}}|{{HistoryLine||?|dev=?|Removed <code>CanFindTreasure</code> tags.}}|{{HistoryLine||1.21.5|dev=25w07a|Removed <code>TreasurePosX</code>, <code>TreasurePosY</code> and <code>TreasurePosZ</code> tags. They were used to store the dolphin's X,Y and Z coordinate destination when leading a player to a treasure.}}
+}}
+
+== Issues ==
+{{issue list|Dolphin}}
+
+== Trivia ==
+*To create the [[sound]]s that the dolphins make in the game, [[Mojang Studios]]' lead sound designer, [[Samuel Åberg]], went to [[wikipedia:Kolmården Wildlife Park|Kolmården Wildlife Park]] to record [[wikipedia:Dolphin|real dolphins]].<ref>{{Mcnet|talking-dolphins|Talking Dolphins|May 19, 2018|[[Marsh Davies]]}}</ref>
+*Dolphins originally had a separate head and body when shown in a clip at [[MINECON 2017]]. It is also shown in artwork for [[Java Edition 1.13]], the [[Bundles of Bravery - Official Trailer|Bundles of Bravery]] trailer, and an [[AI for Good: Solving Problems with AI|episode]] of the [[AI Adventurers]] series.<ref>{{YouTube link|cpQVeaqdf9s|AI for Good: Solving Problems with AI|Minecraft|September 3, 2024}}</ref>
+*Real-life dolphins don't suffocate outside of water; they breathe air like all mammals, although they can die of dehydration out of water.
+*In 2018, a prediction poll was held in which Chinese users could vote on which Chinese animal they expected to see in ''Minecraft'', to promote the release of Minecraft China. One of the options for voting was the possibly extinct baiji dolphin. The [[panda]] won the poll and was announced days later at [[MINECON Earth 2018]].<ref>https://mc.163.com/pe/client/activity/voteforanimalpc/</ref>
+*Mojang has considered and rejected the suggestion to allow dolphins to be tamed or ridden. They also decided against adding behaviors that deviate significantly from real-life dolphins, such as fleeing from [[drowned]].<ref>
+{{cite|url=https://feedback.minecraft.net/hc/en-us/articles/360005029872-Previously-Considered-Suggestions|title=(Archived) Previously Considered Suggestions|website=Minecraft Feedback|date=May 7, 2020}}
+</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Dolphins!.png|A pod of dolphins.
+File:Dolphin suffocating.png|A dolphin taking [[damage]] because it is not in [[water]].
+File:Dolphin Screenshot.png|A Dolphin seen underwater.
+File:Dolphins attacking player.png|Several dolphins attacking the player, after the player hit one of them.
+File:Swimming dolphins.png|Dolphins swimming with the player.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Leaping Dolphins and Sunset.png|2 dolphins leaping above the [[ocean]] at [[sun]]set.
+File:Coral Reef Dolphins.png|A pod of four dolphins [[swimming]] above an ocean ravine and a [[coral reef]].
+File:Dolphins and Item.png|Dolphins chasing after a [[raw cod]] item.
+File:Bedrock Dolphin.jpg|A dolphin in ''Bedrock Edition''.
+File:Dolphins in every timeline.jpg|2 baby dolphins in "every timeline"
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Dolphin (texture).png|Dolphin texture file.
+Baby Dolphin (texture).png|Baby dolphin texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Update Aquatic.jpg|Dolphins in promotional artwork for the [[Update Aquatic]].
+File:Dolphin Artwork.png|Official dolphin artwork.
+File:Dolphin Animated Pixel Artwork.gif|Animated dolphin artwork.
+File:Summer Sale Marketplace artwork 2.jpg|Dolphin in official artwork.
+File:Ari follows dolphin.png|[[Ari]] following a dolphin.
+File:LEGO Dolphin.png|[[Lego Minecraft|Lego]] dolphin.
+File:Minecraft Journey to the World's End Volume 2.jpg|A dolphin on the cover of ''[[Minecraft: The Manga]]''.
+File:First Day of Summer.jpg|[[Noor]], [[Kai]] and a tamed [[wolf]] watching several dolphins.<ref>{{tweet|Minecraft|1803913215933284637|It's the first day of summer! Stay cool & don't forget your water bucket 😎☀️|June 20, 2024}}</ref>
+File:Dolphin flippin fig.jpg|Dolphin figure of [[Flippin' Figs]].
+File:McMovieDolphin.png|A dolphin as seen in {{AMCM}}.
+File:Dolphins breaching affectionately.jpeg|2 dolphins breathing affectionately.
+File:Dye Mine Explore hoodie.jpg|A hoodie featuring two dolphins.
+File:Acid Dolphin.png
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|meet-dolphin|Meet the Dolphin|April 19, 2018|[[Per Landin]]}}
+
+== Navigation ==
+{{Navbox ocean}}{{Navbox entities|mobs}}
+
+[[Category:Neutral mobs]]
+[[Category:Aquatic mobs]]
+[[Category:Animal mobs]]
+
+[[de:Delfin]]
+[[es:Delfín]]
+[[fr:Dauphin]]
+[[hu:Delfin]]
+[[it:Delfino]]
+[[ja:イルカ]]
+[[ko:돌고래]]
+[[nl:Dolfijn]]
+[[pl:Delfin]]
+[[pt:Golfinho]]
+[[ru:Дельфин]]
+[[th:โลมา]]
+[[uk:Дельфін]]
+[[zh:海豚]]

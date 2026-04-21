@@ -1,0 +1,194 @@
+{{About|the unused mob|regular zombies|Zombie|the command that can resize any entity|Commands/attribute}}{{exclusive|java|console}}{{Infobox entity
+| imagesize = 295px
+| image = Giant.png
+| health = {{hp|100}}
+| damage = Easy: {{hp|26}}<br>Normal: {{hp|50}}<br>Hard: {{hp|75}}
+| size = Height: 12 blocks<br>Width: 3.6 blocks
+| spawn = By commands
+| behavior = Hostile <small>(no AI)</small>
+| mobtype = {{EntityLink|Monster}}
+}}
+'''Giants''' are [[Java Edition unused features|unused]] over-sized [[hostile mob]]s {{in|java|console}} that resemble [[zombie]]s.
+
+== Drops ==
+A giant drops {{xp|5}} [[experience points]] when killed and has a chance of dropping some of its equipment if it has any.
+
+== Spawning == 
+No biome includes giants on their spawn lists, so they can never spawn naturally. Giants also have no [[spawn egg]].
+
+=== Commands ===
+Giants can be spawned using [[commands]] such as {{cmd|summon minecraft:giant}}.
+
+== Behavior ==
+Giants are close to 12 [[block]]s tall, and they use a six-times-enlarged [[zombie]] model. Giants are not undead mobs. 
+
+Because giants are not actually undead, they do not burn in sunlight and they are damaged by [[potions of Harming]] and healed by [[potions of Healing]], are attacked by the [[wither]], immune to [[Smite]], affected by [[Regeneration]] and [[Poison]], and do ''not'' scare [[armadillo]]s. [[Iron golem]]s and [[snow golem]]s attack giants as they attack other hostile [[mob]]s. Giants do not convert into drowned when submerged in water; instead, they slowly suffocate and die. 
+
+Giants currently have no AI. The consequence of this is that they always face south when summoned, and they always stay that way, never wandering. They cannot turn their head, chase the player, or respond to damage. A giant's viewing direction can be changed only with commands or by shoving it into a [[minecart]] that faces a different direction.
+
+Giants can move if ridden by another mob using [[Tutorial:Command NBT tags|NBT tags]].
+
+== Sounds ==
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Player hurt1.ogg
+|sound2=Player hurt2.ogg
+|sound3=Player hurt3.ogg
+|subtitle=Dying
+|source=hostile
+|description=When a giant dies
+|id=entity.hostile.death
+|translationkey=subtitles.entity.generic.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|subtitle=Something hurts
+|source=hostile
+|description=When a giant is damaged
+|id=entity.hostile.hurt
+|translationkey=subtitles.entity.generic.hurt
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Giant
+|spritetype=entity
+|nameid=giant
+|foot=1}}
+
+=== Entity data ===
+{{see also|Entity format}}
+Giants have entity data associated with them that contain various properties.
+
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+== Advancements ==
+{{load advancements|It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100205-1558|[[File:Giant JE1.png|50px]] Added giants.
+|Giants act like any normal hostile [[mob]] – they walk toward the [[player]] until they are touching them. However, the giant is not able to "touch" anything unless standing on top of it, making it hard for them to do combat against opponents.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1433|[[File:Steve JE3 BE1.png|50px]] Giants texture are now based on [[Mob (entity)|mobs]] instead of [[zombie]]s.}}
+|{{HistoryLine||20100415|The previous change has been reverted.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=RC1|The hurt [[sound]]s that giants make have been changed since they were using the same sound that is used when the [[player]] is hurt. Any physical [[damage]] now plays a "tick" sound, and damage from falling now plays sounds like that sound like bones breaking, as in previous versions, whenever the giant was damaged, they would make a deep "Ooh!" sound.}}
+|{{HistoryLine||1.4.2|dev=12w38a|The hurt sounds for giants have been changed once again as a result of the player hurt sounds changing.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Giants can now be spawned without mods by using the new {{cmd|summon}} [[command]].}}
+|{{HistoryLine||1.8|dev=14w06a|[[Armor]] on giants is now rendered. This originated from a bug in [[14w05a]], which caused all [[mob]]s to render worn armor. In repairing this bug, [[Grum]] has now allowed giants to render armor.
+|Giants no longer use any AI.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Zombie JE3 BE2.png|50px]] The texture of giants have been changed as a result of the zombie texture change.}}
+|{{HistoryLine|||dev=18w50a|Giants now use [[zombie]] AI (For instance, they move and burn in the [[sun]]light) and NBT data.
+|Giants now have the [[zombie]] hurt [[sound]] effect.
+|Giants now move twice as fast as zombies.
+|Giants now attack and infect [[villager]]s.
+|[[File:Baby Zombie JE2 BE2.png|25px]] Giants now also have a baby variant.
+|[[File:Giant Jockey JE1.png|25px]] Giants now also have a chicken jockey variant.}}
+|{{HistoryLine|||dev=19w03a|Reverted changes from 18w50a.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=none|psvita=none|ps4=none|wiiu=none|switch=1.0.1|[[File:Giant JE1.png|50px]] Added giants.
+|Giants cannot be spawned without modifying the game.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The hurt [[sound]]s that giants make have been changed since they were using the same sound that is used when the [[player]] is hurt. Any physical [[damage]] now plays a "tick" sound, and damage from falling now plays sounds like that sound like bones breaking, as in previous versions, whenever the giant was damaged, they would make a deep "Ooh!" sound.{{verify}}}}
+|{{HistoryLine||xbox=TU20|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|[[File:Giant LCE2.png|50px]]Giants now use the arrow texture and have no AI.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|The hurt sounds for giants have been changed once again as a result of the player hurt sounds changing.{{verify}}}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of giants has been changed from {{cd|Giant}} to {{cd|giant}}.}}
+}}
+
+== Issues ==
+Giants are an unsupported mob and as such issues relating to them may not be fixed.
+
+== Trivia ==
+* Changes made to the zombie model (for example, using a [[resource pack]]) change the giant's model as well.
+* [[Notch]] removed the giants spawning capabilities because "they are too overpowered". He did not remove them entirely because "they are just too cool to remove".{{citation needed}}
+* Players are unable to attack a giant's head and torso unless they are positioned near the bottom of the giant. Projectiles such as arrows can hit these areas as normal.
+* Killing a giant cannot give the [[player]] the Monster Hunter [[advancement]].
+* In the April Fools' snapshot [[24w14potato]], giants were overhauled. They have AI and can spawn naturally (during the battle with [[mega spud]] boss). If spawned in the [[Potato dimension]], giants have the skin of Mojang Studios developer [[Jay Wells]].
+* If the player uses the command /attribute to set the base scale of a Zombie to 6, It becomes the same size of a Giant.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Giant and Zombie.png|A giant next to a normal size [[zombie]]. Note how the zombie burns in daylight but the giant doesn't.
+File:MinecartGiant.png|A giant "riding" a [[minecart]] in the older versions.
+File:Giant in a cave.png|A giant in a [[cave]].
+File:GiantsWithEquipment.png|Two giants summoned one of them wearing equipment.
+File:GiantBurning.png|A giant burning in a pool of [[lava]].
+File:Giant being damaged by potion.png|A giant getting damaged by a [[splash potion]] of Harming.
+File:A giant.png|A giant in the middle of a [[plains]] biome.
+File:Giant Spawner.png|A giant [[monster spawner]].
+File:UsingZombieAI.png|In [[18w50a]], a giant using the [[zombie]] AI.
+File:Giant Jockey JE1.png|In 18w50a, a giant chicken jockey
+File:Village and Pillage Armored Giant.png|A giant that spawned with a [[chainmail helmet]] and an iron shovel spawned in 18w50a.
+File:A giant from a player's view.png|A giant from a player’s eye view.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Giant & Golem.jpg|A giant and an iron golem.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Zombie (texture).png|Giant texture file similar to zombie.
+</gallery>
+
+=== In other media ===
+<gallery>
+Poisonous Potato Giant (24w14potato).png|The poisonous potato giant from [[Java Edition 24w14potato|24w14potato]].
+Potato Giant (texture).png|Potato giant texture file from [[Java Edition 24w14potato|24w14potato]].
+</gallery>
+
+== Navigation ==
+{{Navbox entities|unimplemented}}
+{{Navbox unused features}}
+
+[[Category:Hostile mobs]]
+[[Category:Unused mobs]]
+[[Category:Monster mobs]]
+
+[[cs:Obr]]
+[[de:Riese]]
+[[es:Gigante]]
+[[fr:Géant]]
+[[hu:Óriás]]
+[[it:Gigante]]
+[[ja:ジャイアント]]
+[[ko:거인]]
+[[lzh:巨人]]
+[[nl:Reus]]
+[[pl:Olbrzym]]
+[[pt:Gigante]]
+[[ru:Гигант]]
+[[th:ซอมบี้ยักษ์]]
+[[tr:Dev]]
+[[uk:Велетень]]
+[[zh:巨人]]

@@ -1,0 +1,251 @@
+
+{{needs update|
+* Major changes have been made in 2023{{Tag|1=[{{fullurl:{{TALKPAGENAME}}}} <span title="{{#if: {{{1|}}} | {{#replace:{{{1}}}|"|'}} | The version in which this happened needs to be specified.}}" {{#if: {{{1|}}} | style="border-bottom: 1px dotted"}}>what version?</span>]|nocat=1}}{{
+#if: {{{nocat|}}}
+|
+|
+}} to these blocks and their particle behavior}}
+{{missing info|block particles when dug by a warden}}
+Certain [[block]]s in the game are designed to be '''invisible'''.
+
+== Intentionally invisible blocks ==
+* {{BlockLink|Air}}
+* {{BlockLink|Cave Air}}{{only|java}}
+* {{BlockLink|Void Air}}{{only|java}}
+* {{BlockLink|Light Block}}
+* {{BlockLink|Barrier}}
+* {{BlockLink|Invisible Bedrock}}{{only|bedrock|education}}
+* {{BlockLink|Structure Void}}
+* {{BlockLink|id=air|client_request_placeholder_block}}{{only|bedrock}}
+
+=== Properties ===
+{| class="wikitable" style="text-align:center" data-description="Information about invisible blocks"
+! Block
+! Solid?
+! Blocks [[third-person view]]?
+! Visible when held?
+! Shown by [[structure block]]s?
+|-
+! colspan="5" | {{el|je}}
+|-
+! {{BlockLink|Air}}
+| No
+| {{tc|yes|No}}
+| N/A<ref name="noitem" group="note">This block does not have an item form</ref>
+| {{tc|Yes}}: [[File:Air (shown).png|16px]]<ref name="identicalair">The three air types are not distinguished: {{bug|MC-221834}}</ref>
+|-
+! {{BlockLink|Cave Air}}
+| No
+| {{tc|yes|No}}
+| N/A<ref name="noitem" group="note"/>
+| {{tc|Yes}}: [[File:Air (shown).png|16px]]<ref name="identicalair"/>
+|-
+! {{BlockLink|Void Air}}
+| No
+| {{tc|yes|No}}
+| N/A<ref name="noitem" group="note"/>
+| {{tc|Yes}}: [[File:Air (shown).png|16px]]<ref name="identicalair"/>
+|-
+! {{BlockLink|Light Block}}
+| No
+| {{tc|yes|No}}
+| {{tc|Yes}}: [[File:Light (held).png|16px]]
+| {{tc|Yes}}: [[File:Light (shown).png|16px]]
+|-
+! {{BlockLink|Barrier}}
+| Yes
+| {{tc|no|Yes}}<ref>{{bug|MC-189617}}</ref>
+| {{tc|Yes}}: [[File:Barrier (held).png|16px]]
+| {{tc|Yes}}: [[File:Barrier (shown).png|16px]]
+|-
+|-
+! {{BlockLink|Structure Void}}
+| No
+| {{tc|yes|No}}
+| {{tc|No}}<ref>Apparently intended despite making manipulation more difficult: {{bug|MC-102210}}</ref>
+| {{tc|Yes}}: [[File:Structure Void (shown) JE3.png|16px]]
+|-
+! colspan="5" | {{el|be}}
+|-
+! {{BlockLink|Air}}
+| No
+| {{tc|yes|No}}
+| N/A<ref name="noitem" group="note"/>
+! style="background-color:#ffa0a0" | No such functionality
+|-
+! {{BlockLink|Light Block}}
+| No
+| {{tc|yes|No}}
+| {{tc|Yes}}: [[File:Light 15 BE1.png|16px]]
+! rowspan="6" style="background-color:#ffa0a0" | No such functionality
+|-
+! {{BlockLink|Barrier}}
+| Yes
+| {{tc|no|Yes}}<ref>{{bug|MCPE-128597}}</ref>
+| {{tc|Yes}}: [[File:Barrier (held).png|16px]]
+|-
+! {{BlockLink|Invisible Bedrock}}
+| Yes
+| {{tc|yes|No}}
+| {{tc|No}}
+|-
+! {{BlockLink|Structure Void}}
+| No
+| {{tc|yes|No}}
+| {{tc|Yes|Yes: [[File:Structure Void BE3.png|16px]]}}
+|-
+! {{BlockLink|id=air|client_request_placeholder_block}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+|}
+{{notelist}}
+
+==== Visibility ====
+Invisible [[block]]s are intended to never be directly visible to those not directly manipulating them, due to being intended for mapmaking and other such purposes. Despite this, there are cases where they can actually be seen, directly contradicting their intended invisibility.
+<!--test: when a turtle digs on them, when using a brush, when a breeze exists on top-->
+{| class="wikitable" style="text-align:center" data-description="Visibility of invisible blocks"
+! rowspan="2" | Block
+! colspan="2" | Shown when targeted?
+! colspan="6" | Block particles?
+|-
+! Highlight
+! Outline
+! When breaking
+! When broken
+! When sprinted on
+! When fallen on
+! When walked on by an iron golem
+! When dug through by a warden
+|-
+! colspan="9" | {{el|je}}
+|-
+! {{BlockLink|Air}}
+! rowspan="6" style="background-color:#ffa0a0" | No such functionality
+| {{tc|yes|Never}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|Cave Air}}
+| {{tc|yes|Never}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|Void Air}}
+| {{tc|yes|Never}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|Light Block}}
+| {{tc|yes|Only when held}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|no|Yes}}<ref>{{bug|MC-221861}}</ref>
+| {{tc|no|Yes}}<ref>{{bug|MC-221864}}</ref>
+| {{info needed}}
+|-
+! {{BlockLink|Barrier}}
+| {{tc|no|Always}}<ref>Apparently intended despite being inconsistent and allowing visibility and interactivity for non-mapmakers; see {{bug|MC-48672}}</ref>
+| {{tc|yes|No}}
+| {{tc|no|No}}
+| {{tc|yes|No}}
+| {{tc|no|Yes}}<ref name="fall">{{bug|MC-122547}}</ref>
+| {{tc|no|Yes}}<ref>{{bug|MC-150183}}</ref>
+| {{info needed}}
+|-
+! {{BlockLink|Structure Void}}
+| {{tc|no|Always}}<ref>Apparently intended despite being inconsistent and allowing visibility and interactivity for non-mapmakers; see {{bug|MC-221850}}</ref>
+| {{tc|yes|No}}
+| {{tc|no|No}}
+| {{tc|yes|No}}
+| {{tc|no|Yes}}<ref name="fall"/>
+| {{tc|no|Yes}}<ref>{{bug|MC-225958}}</ref>
+| {{info needed}}
+|-
+! colspan="9" | {{el|be}}
+|-
+! {{BlockLink|Air}}
+| {{tc|yes|Never}}
+| {{tc|yes|Never}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+! style="background-color:#ffa0a0" | No such functionality
+| {{info needed}}
+|-
+! {{BlockLink|Light Block}}
+| colspan="3" style="background-color:#C6EFCE" | Yes
+| {{tc|no|Yes}}<ref>{{bug|MCPE-128606}}</ref>
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+! rowspan="6" style="background-color:#ffa0a0" | No such functionality
+| {{info needed}}
+|-
+! {{BlockLink|Barrier}}
+| {{tc|partial|Never}}<ref>{{bug|MCPE-128599}}</ref>
+| {{tc|no|Always}}
+| {{tc|yes|No}}
+| {{tc|no|Yes}}<ref>{{bug|MCPE-128602}}</ref>
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|Invisible Bedrock}}
+| colspan="3" style="background-color:#ffffdd" | Cannot be targeted
+| {{tc|no|Yes}}
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|Structure Void}}
+| {{tc|no|Always}}
+| {{tc|partial|Never}}<ref>{{bug|MCPE-128601}}</ref>
+| {{tc|no|Yes}}<ref>{{bug|MCPE-128608}}</ref>
+| {{tc|no|Yes}}<ref>{{bug|MCPE-128603}}</ref>
+| {{tc|yes|No}}
+| {{tc|yes|No}}
+| {{info needed}}
+|-
+! {{BlockLink|id=air|client_request_placeholder_block}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+| {{info needed}}
+|}
+
+== Other invisible blocks ==
+{{info needed section|At a point in time, there were invisible variants of (in Java) doors, ladders, multiple chests, (in Bedrock) end rods and probably more. Could a history section be made on these?}}
+
+The following blocks can also be invisible under certain circumstances:
+
+* {{BlockLink|Walls}}, if all states false
+* {{BlockLink|Moving Piston}}
+
+== References ==
+{{reflist}}
+
+
+[[de:Unsichtbarer Block (Begriffsklärung)]]
+[[ja:不可視ブロック]]
+[[pt:Bloco invisível]]
+
+== Navigation ==
+{{Navbox blocks|natural}}
+{{Navbox invisible block}}

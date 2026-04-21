@@ -1,0 +1,371 @@
+{{About|the item in ''[[Minecraft]]''|the scrapped consumable in {{MCD}}|MCD:Ender Pearl|the object in {{AMCM}}|Movie:Ender Pearl}}
+{{Infobox item
+| image = Ender Pearl.png
+| imageclass = pixel-image
+| invimage = Ender Pearl
+| usecooldown = 1 second (20 ticks)
+| renewable = Yes
+| stackable = Yes (16)
+| size = Height: 0.25 blocks<br>Width: 0.25 blocks
+}}
+An '''ender pearl''' is an [[item]] that can be [[Projectile|thrown]] to [[Teleportation|teleport]] to where it lands, or used to craft [[eyes of ender]], which are required to access [[the End]].
+
+== Obtaining ==
+=== Mob loot ===
+{{Drop sources|Ender Pearl}}
+
+=== Generated loot ===
+{{LootChestItem|ender-pearl}}
+
+A [[trapped chest]] always containing 2 ender pearls can be found in the "fake end portal" room of [[woodland mansion]]s.
+
+=== Trading ===
+{{Trade sources}}
+
+=== Bartering ===
+[[Piglin]]s have a {{frac|10|469}} (~2.13%) chance to [[barter]] 2–4 ender pearls when given a [[gold ingot]].
+
+== Usage ==
+Ender pearls can be thrown by pressing {{control|use}}. After it is thrown, the ender pearl is consumed, and the player teleports to where it lands, taking {{hp|5}} [[fall damage]]. This will work even if the ender pearl lands in another [[dimension]]{{verify|Verify for Bedrock Edition}}. Wearing armor enchanted with [[Protection]] and/or [[Feather Falling]] reduces the damage taken from the ender pearl. If a player dies from fall damage due to throwing an ender pearl, the [[death message]] says "<player> hit the ground too hard".
+
+However, if the player throws an ender pearl before hitting the ground, the fall damage is negated, dealing only the pearl’s damage.
+
+Ender pearls have a cooldown of one second before they can be used again. The cooldown is shown in the hotbar by a white overlay on the ender pearl that shrinks and must disappear before the player can use it again. If there are other inventory or hotbar slots containing ender pearls, they are covered with the white overlay as well.<ref>{{bug|MC-88236|||WAI}}</ref>
+
+If the player throws an ender pearl and then dies while the pearl is in a loaded chunk before impact, the pearl disappears and the player is not teleported; {{in|java}}, the pearl does not vanish upon the player's death if the [[game rule]] {{cd|enderPearlsVanishOnDeath}} is set to {{cd|false}}.
+
+Ender pearls that fall into the [[void]] disappear, and do not trigger the player to teleport. Ender pearl entities are invincible and therefore are not destroyed by [[lava]], and can teleport the player to the bottom of lava pools/lava oceans.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Spawning endermites ===
+An ender pearl has a 5% chance to spawn an [[endermite]] when it lands. This is the only way through which endermites can spawn, without using cheats. The endermite spawns at ''the player's position'' when the pearl lands{{only|je}}, or at the pearl's landing site{{only|be}}.
+
+=== Stasis chamber ===
+Ender pearls are affected by [[bubble column]]s. An ender pearl can remain afloat on top of an upward bubble column, allowing it to be stored indefinitely{{only|je}}. A mechanism can then be triggered to make the ender pearl hit a solid surface (e.g. by closing a [[trapdoor]]), teleporting the thrower back to the setup wherever they are. {{IN|be}}, [[honey block]]s can be used to make the ender pearl go straight down, creating a stasis chamber.{{info needed|Elaborate. The current statement isn't very coherent and doesn't explain the specific setup.}}
+
+=== Chunk loading ===
+{{Main|Chunk#Chunk loading}}
+{{exclusive|java|section=yes}}
+An ender pearl creates a ticket for chunk loading every time it moves (due to its own tick) into a new [[chunk]], and also periodically almost every 2 seconds (39 ticks). It loads and ticks the chunk it is in with a ticket level of 31 as entity processing. It also loads a two-chunk wide ring (a 5×5 chunk area centered on the pearl's chunk) around it as lazy chunks, the first ring being block ticking and the second ring being border chunks. The ender pearl continues to load chunks as long as the player who threw it is online, even when that player is in a different dimension. The pearl stops loading chunks when the player logs off, and starts loading chunks again when the player logs in.
+
+== Behavior ==
+<section begin="thrownball"/><!-- For transclusion; do not remove or tamper -->
+{{Infobox entity
+| title = {{PAGENAME}} (entity)
+| size = Height: 0.25 blocks<br>Width: 0.25 blocks
+| tickingorder = adp
+| gravity = 0.03
+| drag = 0.99
+| drag_float = true
+}}
+
+=== Motion ===
+{{Main|Entity#Motion|Projectile#Initial conditions}}
+<includeonly>==== Thrown by player ====</includeonly><!--
+Include for transclusion only
+-->
+When thrown straight up, {{lc:{{PAGENAME}}}}s travel 27.68993 blocks{{Only|java}} / about 45 blocks{{Only|bedrock}} (plus randomness). They travel up to ~51.5 blocks forward when thrown at an optimum launch angle of ~40° (on even ground).
+
+Since the thrower's velocity influences the throw, timing a throw with a jump towards the target can increase the throwing range. It increases to about 42 blocks when thrown straight up and 64 blocks forward at a 35° angle{{Verify}}. For the same reason, throwing while falling significantly decreases the range.
+
+Thrown {{lc:{{PAGENAME}}}}s experience initial speed of about 1.5 block/tick. Their movement follows the ticking order of acceleration, drag, position and this can be simulated to predict the overall trajectory. Below is a calculator to predict the initial conditions in order to hit a desired coordinate:
+
+{{:Calculators/Projectile motion|name=thrown {{lc:{{PAGENAME}}}}|type=6|gravity=-0.03|dragx=0.99|dragy=0.99|speed=1.5|hideproperties=1|x0=0|y0=1.62|z0=0|xt=51|yt=0|zt=0|hidedynamics=1}}<!--
+-->
+<includeonly>==== Shot by dispenser ====
+{{ucfirst:{{lc:{{PAGENAME}}}}}}s shot by dispensers behave in the exact manner as when they were thrown by a player, with the only difference in their initial conditions. The initial position of {{lc:{{PAGENAME}}}}s when shot by a dispenser offsets exactly 0.7 blocks forward and 0.1 blocks higher from the center of the block. Their initial speed is slightly randomized, which averages to about 1.1 block/tick.</includeonly><!--
+Include for transclusion only
+-->
+
+=== Collisions ===
+{{Main|Projectile#Collisions}}
+
+Thrown {{lc:{{PAGENAME}}}}s collide with blocks according to their collision box. They also collide with entities, but with the entities' collision box inflated to about 0.3 blocks in every direction. They collide with all living entities, including minecarts, boats, end crystals, falling blocks, and TNT.<section end="thrownball"/><!-- For transclusion; do not remove or tamper -->
+
+{{#lst:Projectile|collision-block-pearl}}
+
+== Sounds ==
+{{JE}}:
+Thrown ender pearls use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Bow shoot.ogg
+|subtitle=Ender Pearl flies
+|source=neutral
+|description=When an ender pearl is thrown
+|id=entity.ender_pearl.throw
+|translationkey=subtitles.entity.ender_pearl.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|sound=Teleport1.ogg
+|sound2=Teleport2.ogg
+|subtitle=Player teleports
+|source=player
+|description=When an ender pearl teleports a player
+|id=entity.player.teleport
+|translationkey=subtitles.entity.player.teleport
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bow shoot.ogg
+|source=player
+|description=When an ender pearl is thrown
+|id=random.bow
+|volume=0.5
+| pitch = 0.33-0.5
+}}
+| {{SoundLine
+|sound=Teleport1.ogg
+|sound2=Teleport2.ogg
+|source=player
+|description=When an ender pearl teleports a player
+|id=entity.player.teleport
+|translationkey=subtitles.entity.player.teleport
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Ender Pearl
+|spritetype=item
+|nameid=ender_pearl
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Thrown Ender Pearl
+|spritetype=entity
+|spritename=Ender Pearl
+|nameid=ender_pearl
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Ender Pearl
+|spritetype=item
+|nameid=ender_pearl
+|id=422
+|form=item
+|foot=1}} 
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Ender Pearl
+|spritetype=entity
+|nameid=ender_pearl
+|id=87
+|foot=1}}
+
+===Entity data===
+Thrown ender pearls have entity data that define various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|compound|Item}}: The item to render as, may be absent.
+*** {{nbt inherit/itemnoslot|indent=***}}
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{Load achievements|Beam Me Up}}
+
+== Advancements ==
+{{load advancements|Remote Getaway;Bullseye}}
+
+== History ==
+{{info needed section|Did they have a different throw sound before RC1 like eggs and snowballs did?}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Ender Pearl JE1.png|32px]] Added ender pearls along with [[endermen]]. 
+|Ender pearls have no use, but can stack up to 64.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Ender pearls are now less commonly found near bodies of [[water]] since [[endermen]] now teleport away when in contact with water. Before this version, endermen didn't attempt to teleport and were [[damage]]d/killed from water much more frequently, causing numerous ender pearls to occur around bodies of water.
+|Later, on a suggestion from [[wikipedia:Reddit|Reddit]] user isJesus, [[Notch]] implemented the teleporting feature for ender pearls.<ref>{{Reddit2|sub = Minecraft|text= We love the idea, it makes perfect sense! It needs to be balanced, though, to prevent a pile of pearls from becoming super op. We'll probably do some game designing on Monday.|id = kpsay|cid = c2mabfj|author = xNotch|date = September 27, 2011}}</ref><ref>{{tweet|notch|118614580539826176|Ender Pearls have a unique ability now. They're fun.|September 27, 2011|archive=|archiveid=}}</ref><ref>{{Reddit2|sub = Minecraft|text= It's the throw, teleport thing suggested on here!<br>It doesn't work at all in creative mode, and in survival or hardcore mode, it deals 5 points of falling damage. It's exciting to try to throw your way out of a ravine. Hit the wall, and you're basically screwed.|id = kss7n|cid = c2mwldd|author = xNotch|date = September 27, 2011}}</ref>}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Added teleporting feature to ender pearls.
+|Using an ender pearl to teleport resulted in being kicked from servers for "hacking". This is due to a check triggering that was supposed to prevent modified clients from moving too quickly.
+|Ender pearls now stack up to 16.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Ender pearls are now used to craft [[eyes of ender]].
+|Ender pearls can now be found in the new [[stronghold]] altar [[chest]]s.}}
+|{{HistoryLine||1.3.1|dev=12w24a|[[File:Ender Pearl JE2 BE1.png|32px]] The texture of ender pearls has been changed.}}
+|{{HistoryLine||1.8|dev=14w02a|As part of the revamp of the trading system, cleric [[villager]]s now [[trading|buy]] ender pearls.}}
+|{{HistoryLine|||dev=14w03a|Villager clerics no longer buy ender pearls.}}
+|{{HistoryLine|||dev=14w11b|Ender pearls have a 5% chance to spawn [[endermite]]s when used.}}
+|{{HistoryLine|||dev=14w32a|Thrown ender pearls now vanish when their owner dies.}}
+|{{HistoryLine||1.9|dev=15w31a|Ender pearls can now be thrown in [[Creative]] mode.}}
+|{{HistoryLine|||dev=15w34c|Ender pearls now have a cooldown after using them.}}
+|{{HistoryLine|||dev=15w41a|[[Villager]] clerics now [[trading|sell]] ender pearls for 4–7 [[emerald]]s, as one of their tier III trades.}}
+|{{HistoryLine|||dev=15w49a|Thrown ender pearls now take the user's motion into account. For example, an ender pearl thrown forward lands closer if the player is falling, and lands farther if the player is ascending.}}
+|{{HistoryLine||1.10|dev=16w21a|Ender pearls can now teleport riders off their mounts.}}
+|{{HistoryLine||1.11|dev=16w39a|Ender pearls can now be found in [[woodland mansion]]s' fake portal room [[chest]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Ender Pearl JE3 BE2.png|32px]] The texture of ender pearls has been changed.}}
+|{{HistoryLine|||dev=18w50a|Thrown ender pearls now have an optional {{code|Item}} tag that can specify a different item stack to render.}}
+|{{HistoryLine|||dev=19w11a|Cleric villagers now sell ender pearls for 5 emeralds.}}
+|{{HistoryLine||1.16|dev=20w07a|Ender pearls have a {{frac|2|109}} (~1.83%) chance of being offered by [[piglin]]s when [[bartering]], in a stack size of 2–4.}}
+|{{HistoryLine|||dev=20w09a|Ender pearls now have a {{frac|10|226}} (~4.42%) chance of being offered by piglins when bartering, in a stack size of 1–5.}}
+|{{HistoryLine|||dev=20w10a|Ender pearls now have a {{frac|20|411}} (~4.87%) chance of being offered by piglins when bartering, in a stack size of 4–8.}}
+|{{HistoryLine|||dev=20w20a|Ender pearls now have a {{frac|20|423}} (~4.73%) chance of being offered by piglins when bartering, in a stack size of 4–8.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Ender pearls now have a {{frac|10|459}} (~2.18%) chance of being offered by piglins when bartering, in a stack size of 2–4.}}
+|{{HistoryLine|||dev=pre1|Ender pearls are now affected by [[bubble column]]s.<ref>{{bug|MC-125758|||Fixed}}</ref>
+|Ender pearls no longer get destroyed at contact with non-solid blocks.<ref>{{bug|MC-73884|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=pre1|Added the [[game rule]] {{cd|enderPearlsVanishOnDeath}}.}}
+|{{HistoryLine||1.20.3|dev=23w43a|Thrown ender pearls produce a teleportation sound on impact.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Ender pearls can now be found in corridor barrels in [[trial chambers]].}}
+|{{HistoryLine||1.21|dev=24w19a|Ender pearls are no longer able to teleport the player in [[spectator]] mode.<ref>{{bug|MC-267947}}</ref>}}
+|{{HistoryLine|||dev=24w21a|Ender pearls are once again able to teleport the player in [[spectator]] mode.<ref>{{bug|MC-277750}}</ref>}}
+|{{HistoryLine|||dev=pre1|Ender pearls that are thrown through portals can now teleport players to a different dimension than the one they are currently in.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Thrown ender pearls no longer go through the [[world border]] if hit.}}
+|{{HistoryLine|||dev=24w36a|Ender pearls now teleport the player following this formula: Teleport destination equals the current player coordinates plus the Ender pearl destination block coordinates.}}
+|{{HistoryLine|||dev=24w37a|Ender pearls now teleport the player where they land again, reverting previous snapshot changes.|Ender pearls now load the chunk around it when thrown and when landing.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Ender Pearl JE2 BE1.png|32px]] Added ender pearls. 
+|While fully implemented, ender pearls currently have no assigned ID and are currently unobtainable in-game.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Ender pearls are now obtainable in-game.
+|Ender pearls can now be used to craft [[eyes of ender]].}}
+|{{HistoryLine|||dev=alpha 1.0.0.0|Ender pearls now require a 1-second cooldown.}}
+|{{HistoryLine|||dev=alpha 1.0.0.1|Ender pearl cooldown now has an animation.}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Ender pearls can now be [[trading|bought]] from cleric [[villager]]s for 4-7 [[emerald]]s.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Ender pearls can now be found in [[woodland mansion]]s' [[chest]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Ender Pearl JE3 BE2.png|32px]] The texture of ender pearls has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|[[Trading]] has been changed, expert-level cleric [[villager]]s now [[trading|sell]] an ender pearl for 5 [[emerald]]s as part of their trade.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Ender pearls can now be obtained from [[bartering]] with [[piglin]]s.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Ender pearls now have a {{frac|10|459}} (~2.18%) chance of being offered by piglins when bartering, in a stack size of 2–4.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Ender pearls can now be found in corridor barrels in [[trial chambers]].}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The sprite of ender pearls, when rendered in the world, now have the correct scaling and positional offset.|They now match {{JE}}, and also match better with their collider.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Ender Pearl JE2 BE1.png|32px]] Added ender pearls.}}
+|{{HistoryLine||xbox=TU7|Ender pearls can now be thrown in survival and creative mode, which teleports the player.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Ender pearls now have a chance to spawn [[endermite]]s.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[Villager]] clerics now [[trading|sell]] ender pearls for 4–7 [[emerald]]s, as one of their tier III trades.|Thrown ender pearls now take the user's motion into account. For example, an ender pearl thrown forward lands closer if the player is falling, and lands farther if the player is ascending.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Ender pearls can now be found in [[woodland mansion]]s' fake portal room [[chest]]s.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Ender pearls now have a cooldown after using them.}}
+|{{HistoryLine||xbox=TU63|xbone=CU53|ps3=1.67|psvita=1.67|ps4=1.67|wiiu=Patch 32|switch=1.0.13|Ender pearls that land above the nether ceiling no longer teleport the player.}}
+|{{HistoryLine||xbox=TU72|xbone=none|ps3=1.81|psvita=1.81|ps4=1.81|wiiu=Patch 41|switch=none|Thrown ender pearls produce a teleportation sound on impact.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Ender Pearl JE3 BE2.png|32px]] The texture of ender pearls has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[Trading]] has been changed, expert-level cleric [[villager]]s now [[trading|sell]] an ender pearl for 5 [[emerald]]s as part of their trade.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Ender Pearl JE2 BE1.png|32px]] Added ender pearls.}}
+}}
+
+<gallery>
+Enderlake.png|Ender pearls were formerly found in [[water]], however endermen now teleport out to prevent damage.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID of ender pearls has been changed from <code>ThrownEnderpearl</code> to <code>ender_pearl</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 368.{{info needed|and what was the entity's?}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Ender pearls can be used to teleport/move through non-[[solid block]]s without suffocation and solid blocks by pressing against the blocks and using the ender pearl at the [[player]]'s feet until the player goes through.<ref>{{bug|MC-2164}}</ref><ref>{{ytl|KA1UmxraeUg}}</ref>
+* In ''[[Java Edition]]'', it is possible to spawn a thrown ender pearl using commands, but it does not teleport, unless it is assigned an owner.
+* If the player throws an ender pearl in Survival mode and changes to Creative mode before the pearl lands, the player is still teleported.
+* The player is still teleported by throwing an ender pearl and entering [[the Nether]] before it lands. The pearl is not lost if an ender pearl is thrown into a [[nether portal]] and the player travels through the portal; the pearl lands and teleports the player as usual.
+* If multiple ender pearls are thrown in succession, the player can be hurt only once from fall damage within about a one-second span.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:Sunny and Noor head into the Nether.jpg|"[[Sunny]] and [[Noor]] are next to a fully rebuilt [[Ruined Portal]]. The brave Sunny throws an Ender Pearl towards the lit Nether Portal. Noor is to the side holding a [[Lead|Leash]] tied to a [[Boat]] with a [[Sheep]] in it."
+File:Enderpearl-recipe.jpeg|A recipe using an Ender pearl.
+</gallery>
+
+=== In other media ===
+<gallery>
+Ender Pearl Suggestion.gif|The original suggestion image for teleporting with ender pearls.
+AMCM-FBTBC-ender-pearl.jpg|Ender pearl in {{amcm}}.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== See also ==
+* [[The End]]
+* [[Ender Dragon]]
+* [[End Portal]]
+* [[Enderman]]
+
+== External links ==
+* {{Mcnet|ender-pearl|Taking Inventory: Ender Pearl|February 18, 2025|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Projectiles]]
+
+[[cs:Endová perla]]
+[[de:Enderperle]]
+[[es:Perla de ender]]
+[[fr:Perle de l'Ender]]
+[[hu:Véggyöngy]]
+[[ja:エンダーパール]]
+[[ko:엔더 진주]]
+[[lzh:終眇玥]]
+[[nl:Enderparel]]
+[[pl:Enderperła]]
+[[pt:Pérola de ender]]
+[[ru:Жемчуг Края]]
+[[th:ไข่มุกเอนเดอร์]]
+[[uk:Перлина Енду]]
+[[zh:末影珍珠]]

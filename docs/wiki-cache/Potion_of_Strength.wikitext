@@ -1,0 +1,369 @@
+{{redirect|Strength Potion|the potion in {{MCD}}|MCD:Strength Potion}}
+{{Infobox item
+| title = Potion of Strength
+| group = Potion
+| 1-1 = Potion of Strength.png
+| group2 = Splash Potion
+| 2-1 = Splash Potion of Strength.png
+| group3 = Lingering Potion
+| 3-1 = Lingering Potion of Strength.png
+| invimage = Potion of Strength
+| invimage2 = Splash Potion of Strength
+| invimage3 = Lingering Potion of Strength
+| invimage4 = ----
+| invimage5 = Potion of Strength Extended
+| invimage6 = Splash Potion of Strength Extended
+| invimage7 = Lingering Potion of Strength Extended
+| invimage8 = ----
+| invimage9 = Potion of Strength Enhanced
+| invimage10 = Splash Potion of Strength Enhanced
+| invimage11 = Lingering Potion of Strength Enhanced
+| consumptiontime = {{convert|32|ticks|seconds}}
+| alwaysconsumable = Yes
+| renewable = Yes
+| stackable = No
+}}
+A '''potion of Strength''' is a [[potion]] that provides [[Strength]] when used.
+
+== Obtaining ==
+=== Brewing ===
+{{Brewing
+|head = 1
+|Blaze Powder
+|base = Awkward Potion
+|Potion of Strength
+|showvariants=1
+}}
+{{Brewing
+|Redstone Dust
+|base = Potion of Strength
+|Potion of Strength Extended
+|name = Potion of Strength +
+|showvariants=1
+}}
+{{Brewing
+|Glowstone Dust
+|base = Potion of Strength
+|Potion of Strength Enhanced
+|name = Potion of Strength II
+|showvariants=1
+}}
+{{Brewing
+|Gunpowder
+|base2=Potion of Strength
+|base1=Potion of Strength Extended
+|base3= Potion of Strength Enhanced
+|Splash Potion of Strength Extended
+|Splash Potion of Strength
+|Splash Potion of Strength Enhanced
+|name = Splash Potion of Strength
+|ingredients = [[Gunpowder]] +<br> '''Potion of Strength'''
+}}
+{{Brewing
+|Dragon's Breath
+|base2=Splash Potion of Strength
+|base1=Splash Potion of Strength Extended
+|base3=Splash Potion of Strength Enhanced
+|Lingering Potion of Strength Extended
+|Lingering Potion of Strength
+|Lingering Potion of Strength Enhanced
+|name = Lingering Potion of Strength
+|ingredients = [[Dragon's Breath]] +<br> '''Splash Potion of Strength'''
+|foot=1
+}}
+
+=== Generated loot ===
+Each [[Trial Chambers#Supply|trial chambers supply]] chest can [[Generated loot|generate]] with 2 to 10 potions of Strength in it.
+{| class="wikitable collapsible collapsed"
+|+ Exact chances
+|-
+! # of potions !! Chance
+|-<!--
+-->{{#vardefine:p|(1/18)}}<!--
+-->{{#vardefine:q|(1-{{#var:p}})}}
+|  0 ||      {{#expr:({{#var:p}}^0*{{#var:q}}^3*1 + {{#var:p}}^0*{{#var:q}}^4*1 + {{#var:p}}^0*{{#var:q}}^5*1 ) / 3}}
+|-
+|  2 ||      {{#expr:({{#var:p}}^1*{{#var:q}}^2*3 + {{#var:p}}^1*{{#var:q}}^3*4 + {{#var:p}}^1*{{#var:q}}^4*5 ) / 3}}
+|-
+|  4 ||      {{#expr:({{#var:p}}^2*{{#var:q}}^1*3 + {{#var:p}}^2*{{#var:q}}^0*6 + {{#var:p}}^2*{{#var:q}}^3*10) / 3}}
+|-
+|  6 ||      {{#expr:({{#var:p}}^3*{{#var:q}}^0*1 + {{#var:p}}^3*{{#var:q}}^1*4 + {{#var:p}}^3*{{#var:q}}^2*10) / 3}}
+|-
+|  8 || 1 in {{#expr:(                              {{#var:p}}^4*{{#var:q}}^0*1 + {{#var:p}}^4*{{#var:q}}^1*5 )^-1 * 3}}
+|-
+| 10 || 1 in {{#expr:(                                                            {{#var:p}}^5*{{#var:q}}^0*1 )^-1 * 3}}
+|}<!--
+-->{{LootChestItem|potion-of-strength}}
+
+== Usage ==
+=== Effect ===
+{| class="wikitable"
+! Potion type
+! Tier
+! Duration
+! Effect
+! Description
+|-
+| rowspan="2" |Potion
+| 1
+| Regular: 3:00 <br> Extended: 8:00
+| rowspan="6" |{{EffectLink|Strength}}
+| [[Java Edition|JE]]: Increases melee damage by {{hp|3}}. <br>[[Bedrock Edition|BE]]: Increases melee damage by 30%, and then by {{hp|1}}.
+|-
+| 2
+| 1:30
+| [[Java Edition|JE]]: Increases melee damage by {{hp|6}}. <br>[[Bedrock Edition|BE]]: Increases melee damage by 69%, and then by {{hp|2.3}}.
+|-
+| rowspan="2" |Splash Potion
+| 1
+| Regular: 3:00 <br> Extended: 8:00
+| rowspan="4" |The same as the corresponding drinkable potion.
+|-
+| 2
+| 1:30
+|-
+| rowspan="3" |Lingering Potion
+| 1
+| Regular: 0:45 <br> Extended: 3:00
+|-
+| 2
+| 0:22
+|}
+
+=== Base potion ===
+The [[potion]] of [[Strength]] is a base for brewing [[potions of Weakness]].
+
+{{Brewing
+|head = 1
+|Fermented Spider Eye
+|base = Potion of Strength
+|Potion of Weakness
+|showvariants=1
+}}
+{{Brewing
+|Fermented Spider Eye
+|base = Potion of Strength Extended
+|Potion of Weakness Extended
+|name = [[Potion of Weakness]]+
+|ingredients = [[Fermented Spider Eye]] +<br> '''Potion of Strength+'''
+|showvariants=1
+|foot = 1
+}}
+
+=== Crafting ingredient ===
+{{Crafting
+|head = 1
+|ignoreusage = 1
+|showname = 1
+|name = [[Arrow of Strength]]
+|ingredients = [[Arrow]] +<br>'''Lingering Potion of Strength'''
+|A1 = Arrow
+|A2 = Arrow
+|A3 = Arrow
+|B1 = Arrow
+|B2 = Lingering Potion of Strength; Lingering Potion of Strength Enhanced; Lingering Potion of Strength Extended
+|B3 = Arrow
+|C1 = Arrow
+|C2 = Arrow
+|C3 = Arrow
+|Output = Arrow of Strength, 8; Arrow of Strength Enhanced, 8; Arrow of Strength Extended, 8
+|foot = 1
+}}
+
+== Sounds ==
+{{Main|Potion#Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition = java
+|showforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Strength
+|spritetype = item
+|nameid = potion
+|form = item
+|translationkey = item.minecraft.potion.effect.strength
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Strength
+|spritetype=item
+|nameid=splash_potion
+|form=item
+|translationkey=item.minecraft.splash_potion.effect.strength
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Strength
+|spritetype=item
+|nameid=lingering_potion
+|form=item
+|translationkey=item.minecraft.lingering_potion.effect.strength
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition = bedrock
+|shownumericids = y
+|showforms = y
+|notshowbeitemforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Strength
+|spritetype = item
+|nameid = potion
+|id = 426
+|form = item
+|translationkey = potion.damageBoost.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Strength
+|spritetype=item
+|nameid=splash_potion
+|id=561
+|form=item
+|translationkey=potion.damageBoost.splash.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Strength
+|spritetype=item
+|nameid=lingering_potion
+|id=562
+|form=item
+|translationkey=potion.damageBoost.linger.name
+|foot=1
+}}
+
+=== Metadata ===
+{{see also|Potion#Metadata}}
+{{edition|bedrock}}:
+{| class="wikitable"
+|-
+! Potion !! Regular !! Extended !! Level II
+|-
+| Potion of Strength || 14 || 15 || 16
+|}
+
+=== Item data ===
+{{see also|Potion#Item data}}
+{{edition|je}}:
+{{see also|Data component format}}
+Regular, splash, and lingering potions all use a "{{cd|potion}}" tag inside "{{cd|potion_contents}}" component to indicate the potion type.
+{| class=wikitable
+!Potion
+!Regular
+!Level II
+!Extended
+|-|
+| Potion of Strength || <code>strength</code> || <code>strong_strength</code> || <code>long_strength</code>
+|}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Local Brewery}}
+
+== Advancements ==
+{{Load advancements|Local Brewery;A Furious Cocktail;How Did We Get Here?;Husbandry}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2
+|Added potions, but they were completely unobtainable and were random.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|[[File:Potion of Strength JE1 BE1.png|32px]] [[Brewing stand]]s have been implemented, making potions of [[Strength]] obtainable without mods.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|[[File:Splash Potion of Strength JE1 BE1.png|32px]] Added splash potions of Strength.}}
+|{{HistoryLine||1.3.1|dev=12w22a|Potions of Strength are added to the [[Creative inventory]]. The extended-enhanced version (both extended time and level II) also exists in the inventory.}}
+|{{HistoryLine||1.5|dev=13w09c|Extended-enhanced potions of Strength no longer exist in the Creative inventory.}}
+<!-- the following line is contradictory.
+|{{HistoryLine|||dev=14w27a|[[File:Potion of Strength JE1 BE1.png|32px]] Added potions of [[Strength]].}}
+also bookmark -->
+|{{HistoryLine||1.8.1|dev=pre1|Potion of Strength can now be extended.}}
+|{{HistoryLine||1.9|dev=15w31a|Potions of Strength can no longer be brewed into [[potions of Weakness]] with a fermented spider eye.
+|Removed extended-enhanced potions of Strength.{{verify}}}}
+|{{HistoryLine|||dev=15w33a|[[File:Lingering Potion of Strength JE1 BE1.png|32px]] Added lingering potions of Strength.
+|Potion of [[Strength]] has been changed from a 130% increase to 3-point increase per level.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Potion of Strength JE2 BE2.png|32px]] [[File:Potion of Strength.gif|32px]] [[File:Splash Potion of Strength JE2 BE2.png|32px]] [[File:Lingering Potion of Strength JE2 BE2.png|32px]] The textures of potions of Strength have been changed.}}
+|{{HistoryLine||1.19.4|dev=Pre-release 1|Potions no longer have an enchantment glint.}}
+|{{HistoryLine|||dev=Pre-release 3|[[File:Potion of Strength JE3.png|32px]] [[File:Splash Potion of Strength JE3.png|32px]] [[File:Lingering Potion of Strength JE3.png|32px]] Changed colors of potions of Strength.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Potions of Strength can now be ejected as loot from [[ominous trial spawner]]s.
+|Lingering potions of Strength can now be dispensed as [[ominous item spawner|projectiles]] by ominous trial spawners.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Potion of Strength JE1 BE1.png|32px]] [[File:Splash Potion of Strength JE1 BE1.png|32px]] Added potions of Strength with its splash variant.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Potions of Strength are now obtainable in [[Survival]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Lingering Potion of Strength JE1 BE1.png|32px]] Added lingering potions of Strength.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Potion of Strength BE2.png|32px]] [[File:Splash Potion of Strength BE2.png|32px]] [[File:Lingering Potion of Strength BE2.png|32px]] The textures for potions of Strength have been changed.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|Removed the [[enchantment glint]] from potions of Strength.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Potion of Strength JE3.png|32px]] [[File:Splash Potion of Strength JE3.png|32px]] [[File:Lingering Potion of Strength JE3.png|32px]] The textures for potions of Strength have been changed.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Potions of Strength can now be ejected as loot from [[ominous trial spawner]]s.
+|Lingering potions of Strength can now be dispensed as [[ominous item spawner|projectiles]] by ominous trial spawners.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Potion of Strength JE1 BE1.png|32px]] Added potions of Strength.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Potion of [[Strength]] has been changed from 130% increase to 3-point increase per level.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Potion of Strength JE2 BE2.png|32px]] [[File:Potion of Strength.gif|32px]] [[File:Splash Potion of Strength JE2 BE2.png|32px]] [[File:Lingering Potion of Strength JE2 BE2.png|32px]] The textures of potions of Strength have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Potion of Strength JE1 BE1.png|32px]] Added potions of Strength.}}
+|{{HistoryLine||1.7.10|[[File:Lingering Potion of Strength JE1 BE1.png|32px]] Added lingering potions of Strength.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== In other media===
+<gallery>
+File:Dungeons StrengthPotion.png|A {{MCD|strength potion}} as it appears in {{MCD}}.
+</gallery>
+
+== See also ==
+*{{ItemLink|Suspicious Stew}}
+*{{ItemLink|Glass Bottle}}
+*{{ItemLink|Medicine}}
+*{{ItemLink|Uncraftable potion}}
+*{{BlockLink|Beacon}}
+*{{ItemLink|Potion of Weakness}}
+*{{BlockLink|Ominous Trial Spawner}}
+*{{ItemLink|Arrow of Strength}}
+*{{EffectLink|Strength}}
+
+== Navigation ==
+{{Navbox brewing}}
+{{Navbox items|Utilities}}
+
+[[Category:Potions]]
+
+[[fr:Potion de force]]
+[[pt:Poção de Força]]
+[[zh:力量药水]]

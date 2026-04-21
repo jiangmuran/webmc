@@ -1,0 +1,273 @@
+{{About|the joke boss mob|the Mojang employee known as Mega_Spud on social media|Jay Wells|the mega spud trophy in 25w14craftmine|Trophy (April Fools' joke)}}
+{{Joke feature}}
+{{Infobox entity
+| image = Mega Spud.png
+| invimage = Mega Spud Spawn Egg
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Potato Mob|Potato}}
+| health = {{hp|1024}}
+| armor = {{armor|5}}
+| damage = '''Melee:'''<br>Easy: {{hp|3}}<br>Normal: {{hp|4}}<br>Hard: {{hp|6}}<br> '''{{ItemLink|id=fire-charge|text=Fireball}}:''' <br>
+'''Impact:''' <br/>Easy: {{hp|4}}<br/>Normal: {{hp|6}}<br/>Hard: {{hp|9}}<br/>'''{{EnvLink|Explosion|link=none}}:'''<br/>''varies by proximity, maximum:''<br/>Easy: {{hp|8.5}}<br/>Normal: {{hp|15}}<br/>Hard: {{hp|22.5}}
+| spawn = {{EnvLink|Colosseum}}
+}}
+The '''mega spud''' is a joke [[boss mob]] found in [[colosseum]]s in [[24w14potato]].
+
+== Spawning ==
+One mega spud spawns in each [[colosseum]] upon [[World generation|generation]]. If it can, the mega spud always stays in proximity to the place it spawned at.
+
+== Drops ==
+=== On death ===
+Mega spud drops [[Potatiesh, Greatstaff of the Peasant]] and {{xp|50}} xp when killed by a [[player]] or tamed [[wolf]]. It is crucial to remember this during the final stages of the battle, as mega spud can inflict damage on itself with its own attacks. Therefore, the player must ensure that they are the one to deliver the finishing blow.
+
+{{DropTable|edition=java
+|{{DropLine|name=Potatiesh, Greatstaff of the Peasant}}
+}}
+
+== Behavior ==
+Mega spud moves around similarly to a [[slime]]. When it detects a player, the mega spud starts shooting [[fireball]]s at them. This fireball is stronger than that of a [[ghast]]: it has an <code>explosionPower</code> of 2, and can destroy [[stone]]-like [[block]]s, which ghast's fireball cannot.
+
+Besides fireballs, the mega spud also uses a melee attack, which deals {{hp|2}} damage on Easy and Normal, and {{hp|3}} on Hard.
+
+Mega spud has 10 phases, plus the initial "zeroth" phase. When damaged for the first time, it instantly switches to the first phase, but its health remains the same. Each next phase requires dealing {{hp|102.4}} points of [[damage]] to the mega spud, but it can receive a maximum of {{hp|100}} damage at once, no matter what weapon or buffs are used.
+
+Whenever a new phase begins, the mega spud performs the following actions:
+* Creates a shield around itself, similar to the [[wither]]'s armor, and becomes invulnerable to all forms of damage, except for [[void]] damage and the {{cmd|kill}} command.
+** During this shielded state, any mobs that are engaged in combat with mega spud typically cease their attack. Even if the mobs are then directly attacked by mega spud, there is no retaliation.
+** There are occasions where the mobs do ''not'' cease their attack. In such cases, the mobs can inflict damage on mega spud as per usual, without the repercussion of having the damage reflected back at them, as is the case for players. It is unclear how or why this occurs, but it is likely to be a glitch.
+* Shrinks by about half a block, and gets slightly faster.
+* Drops a number of [[corrupted potato peels]].
+** On average, in each next phase it drops less peels, but always drops at least one.
+* Spawns minions. Number of minions is equal to the number of the started phase. Each next phase has a stronger mob as a minion.
+** Minions are spawned in a 8×4×8 box around the spot that the mega spud spawned in. This mechanic uses the same particles and sounds as [[trial spawner]]s.
+* Changes name, as seen on top of the bossbar.
+** This action is not always carried out properly, and sometimes mega spud changes its name too early.
+
+While in the invulnerable state, the mega spud reflects every attack that the player does back at them. This is different from how the [[Thorns]] enchantment works, because the mega spud reflects 100% of the incoming damage: for example, shooting the boss with a bow with [[Power]] V can instantly kill an unarmored player. Attempting to damage the boss in this state also causes all of its minions to gain the [[Glowing]] effect for 10 seconds, which indicates that minions must be defeated first.
+
+If the player dies, the current phase is reset, and a new set of minions is spawned.
+
+When all minions from a given phase are killed or moved to unloaded chunks, the mega spud roars angrily and loses its shield. It can then be damaged like a normal mob. Unlike the [[wither]] or the [[ender dragon]], the mega spud is ''not'' immune to [[status effect]]s, [[fire]], [[suffocation]] or [[drowning]].
+
+{| class="wikitable" style="text-align:center"
+|-
+! Phase || Name || Health || Hitbox size<ref>Hitbox is always a cube.</ref><br>(blocks) || Mobs spawned || Combined health<br> of all spawned mobs || Average number<br> of peels dropped
+|-
+| 0 || Potatolord of the Fried Legion || 1024 || 5.20 || - || - || -
+|-
+| 1 || Clucky Contaminator || 1024-921.6 || 4.68 || One [[chicken]] || 4 || 15.061
+|-
+| 2 || Toxic Talon Talus || 921.6-819.2 || 4.16 || Two [[armadillo]]s || 24 || 11.250
+|-
+| 3 || Venomous Vagabond || 819.2-716.8 || 3.64 || Three [[poisonous potato zombie]]s || 60 || 8.200
+|-
+| 4 || Arachnid Administrator || 716.8-614.4 || 3.12 || Four [[spider]]s || 64 || 5.823
+|-
+| 5 || Spud Scavenger Stray || 614.4-512 || 2.60 || Five [[stray]]s || 100 || 4.037
+|-
+| 6 || Creeper Kingpin || 512-409.6 || 2.08 || Six [[creeper]]s || 120 || 2.758
+|-
+| 7 || Poisonous Piglin Potentate || 409.6-307.2 || 1.56 || Seven [[piglin brute]]s || 350 || 1.900
+|-
+| 8 || Ghastly Ghoulmaster || 307.2-204.8 || 1.04 || Eight [[ghast]]s || 80 || 1.380
+|-
+| 9 || Plaguewhale Patriarch || 204.8-102.4 || 0.52 || Nine [[plaguewhale slab]]s || 720 || 1.112
+|-
+| 10 || Giant Green Globule || 102.4-0 || 0.52<ref>Size does not change in the last phase.</ref> || Ten [[giant]]s || 1000 || 1.014
+|}
+{{Reflist}}
+
+Adding the 1024 points of boss health to combined health of all mobs that mega spud spawns, player must deal 3546 points of damage in order to defeat the boss.
+
+Mega spud can enter [[minecart]]s, and from phase eight it can also enter [[boat]]s. A [[fishing rod]] can pull the mega spud.
+
+Besides the player, mega spud is also aggressive to [[iron golem]]s, [[villager]]s, and [[wandering trader]]s.
+
+=== Peaceful difficulty ===
+On [[Peaceful]], the mega spud does not despawn, but is harmless to the player. Any minions beyond phase 2 despawn immediately, so mega spud loses its shield quickly after gaining it.
+
+== Sounds ==
+Mega spuds use the Hostile Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Mega Spud idle1.ogg
+|sound2=Mega Spud idle2.ogg
+|sound3=Mega Spud idle3.ogg
+|sound4=Mega Spud idle4.ogg
+|subtitle=Mega Spud plays big
+|source=hostile
+|description=Randomly
+|id=entity.megaspud.idle
+|translationkey=subtitles.entity.megaspud.idle
+|volume=''Varies''<wbr><ref group=sound name=volume>0.4 + 0.4 × size</ref>
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud hurt1.ogg
+|sound2=Mega Spud hurt2.ogg
+|sound3=Mega Spud hurt3.ogg
+|sound4=Mega Spud hurt4.ogg
+|subtitle=Mega Spud is peeled
+|source=hostile
+|description=When a mega spud is damaged
+|id=entity.megaspud.hurt
+|translationkey=subtitles.entity.megaspud.hurt
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud death.ogg
+|subtitle=Mega Spud peels away
+|source=hostile
+|description=When a mega spud dies
+|id=entity.megaspud.death
+|translationkey=subtitles.entity.megaspud.death
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud fireball.ogg
+|subtitle=Mega Spud fires
+|source=hostile
+|description=When a mega spud shoots a fireball
+|id=entity.megaspud.fireball
+|translationkey=subtitles.entity.megaspud.fireball
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud boss spawn.ogg
+|subtitle=Mega Spud challenges you
+|source=hostile
+|description=When a mega spud summons minions
+|id=entity.megaspud.challenge
+|translationkey=subtitles.entity.megaspud.challenge
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud summon.ogg
+|subtitle=Mega Spud spawns minions
+|source=hostile
+|description=When a mega spud summons minions
+|id=entity.megaspud.summon
+|translationkey=subtitles.entity.megaspud.summon
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|subtitle=Trial Spawner spawns a mob
+|source=block
+|description=When a mega spud summons minions
+|id=block.trial_spawner.spawn_mob
+|translationkey=subtitles.block.trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Mega Spud mega spud.ogg
+|subtitle=Mega Spud is upset
+|source=hostile
+|description=When all of a mega spud's minions are defeated
+|id=entity.megaspud.upset
+|translationkey=subtitles.entity.megaspud.upset
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=3
+|sound=Mega Spud big1.ogg
+|sound2=Mega Spud big2.ogg
+|sound3=Mega Spud big3.ogg
+|sound4=Mega Spud big4.ogg
+|subtitle=Mega Spud flops
+|source=hostile
+|description=When a non-tiny<ref group=sound name=tiny>A mega spud is tiny when its size is less than or equal to 1</ref> mega spud jumps
+|id=entity.megaspud.jump
+|translationkey=subtitles.entity.megaspud.squish
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=0.64-0.96
+|distance=16}}
+| {{SoundLine
+|subtitle=Mega Spud flops
+|source=hostile
+|description=When a tiny<ref group=sound name=tiny/> mega spud jumps
+|id=entity.megaspud.jump_hi
+|translationkey=subtitles.entity.megaspud.squish
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=2.24-3.36
+|distance=16}}
+| {{SoundLine
+|subtitle=Mega Spud flops
+|source=hostile
+|description=When a mega spud lands
+|id=entity.megaspud.jump_hi
+|translationkey=subtitles.entity.megaspud.squish
+|volume=''Varies''<wbr><ref group=sound name=volume/>
+|pitch=2.0-3.0
+| distance = 16
+}}
+}}
+
+== Data values ==
+{{ID table
+|edition=java
+|displayname=Mega Spud, Potatolord of the Fried Legion
+|spritename=Mega Spud
+|spritetype=entity
+|nameid=mega_spud
+|generatetranslationkeys=1
+|foot=1}}
+
+=== Entity data ===
+Mega spuds have entity data associated with them that contain various properties.
+
+{{main|Entity format}}
+<div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|Size}}: How big the mega spud is. Mega spuds summoned using {{cmd|summon}} default to 0, while naturally spawned mega spuds default to 8.
+** {{nbt|byte|wasOnGround}}: Whether this mega spud is on the ground. Is used in conjunction with OnGround to create landing sounds and particles.
+** {{nbt|int|homeX}}: The X coordinate of this mega spud's home.
+** {{nbt|int|homeY}}: The Y coordinate of this mega spud's home.
+** {{nbt|int|homeZ}}: The Z coordinate of this mega spud's home.
+</div>
+
+== Issues ==
+{{April Fools issue list}}
+
+== Trivia ==
+* The Mojang employee [[Jay Wells]] is known online as Mega_Spud.
+* The mega spud's spawn egg uses the Potato [[rarity]], a rarity exclusive to snapshot 24w14potato.
+* The mega spud has the most health of any [[mob]] added in all snapshots including joke versions.
+* Its initial name, "''Mega Spud, Potatolord of the Fried Legion''" is a reference to Lord Jaraxxus from World of Warcraft who exclaims "''You face Jaraxxus, Eredar Lord of the Burning Legion!''" when his boss fight begins.
+
+== Gallery ==
+=== Texture ===
+<gallery class="pixel-image">
+Mega spud.png|The texture of the mega spud. In game, the model and texture are stretched vertically.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Inside colosseum.png|A mega spud naturally spawned in a colosseum, with a group of [[plaguewhale slab]]s.
+</gallery>
+
+== Navigation ==
+{{Navbox entities|joke}}
+{{Navbox jokes|24w14potato}}
+
+[[Category:Joke mobs]]
+[[Category:Joke entities]]
+[[Category:Boss mobs]]
+
+[[ja:Mega Spud]]
+[[ru:Мегаклубень]]
+[[zh:超级马铃薯怪]]

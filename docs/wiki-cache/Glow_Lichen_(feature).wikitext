@@ -1,0 +1,94 @@
+{{for|the block|Glow Lichen}}
+{{Infobox structure
+| title = Glow lichen
+| image = Lichen generated.png
+| biome = Any Overworld cave biomes
+| blocks =
+* {{BlockLink|Glow Lichen}}
+}}
+A '''glow lichen''' is a [[feature]] that consist of several (1-3) [[glow lichen]] blocks, not diagonally within each feature.
+
+== Generation ==
+Glow lichen feature can be found in all the [[Overworld]] cave biomes. It generates on the four sides and lower surface of stone-like blocks including {{BlockLink|stone}}, {{blockLink|andesite}}, {{BlockLink|diorite}}, {{BlockLink|granite}}, {{BlockLink|dripstone block}}, {{BlockLink|calcite}}, {{BlockLink|tuff}}, {{BlockLink|cinnabar}}, {{BlockLink|sulfur}} and {{BlockLink|deepslate}}. It generates only in [[air]] and [[water]].
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=glow-lichen
+|spritetype=block
+|nameid=multiface_growth
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=glow-lichen
+|spritetype=block
+|nameid=glow_lichen
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=glow-lichen
+|spritetype=block
+|nameid=glow_lichen_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=glow-lichen
+|spritetype=block
+|nameid=underground_glow_lichen_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|string|block}} (optional, defaults to {{cd|glow_lichen}}) The block to place, currently must be {{cd|glow_lichen}} or {{cd|sculk_vein}}.
+** {{nbt|int|search_range}} (optional, defaults to 10) Value between 1 and 64 (inclusive).
+** {{nbt|float|chance_of_spreading}} (optional, defaults to 0.5) Value between 0.0 and 1.0 (inclusive).
+** {{nbt|boolean|can_place_on_floor}} (optional, defaults to false).
+** {{nbt|boolean|can_place_on_ceiling}} (optional, defaults to false).
+** {{nbt|boolean|can_place_on_wall}} (optional, defaults to false).
+** {{nbt|string}}{{nbt|list|can_be_placed_on}} Can be a block ID or a block tag, or a list of block IDs.
+</div><section end="config"/>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev = 21w03a|[[File:Glow Lichen (D).png|32px]]Added glow lichens}}
+|{{HistoryLine|||dev = 21w07a|Glow lichen can now be naturally generated on deepslate.}}
+|{{HistoryLine|||dev=21w08a|Glow lichen now generates almost twice as often.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.50|[[File:Glow Lichen (D).png|32px]]Added glow lichens, which are currently only available through the Caves and Cliffs experiment.}}
+|{{HistoryLine|||dev=beta 1.16.230.54|Glow lichen can now appear on the walls of underground water lakes.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Glow lichen is no longer available only through experimental gameplay.}}
+|{{HistoryLine||1.17.30|exp=Caves and Cliffs|dev=beta 1.17.20.22|Glow lichen can now generate between Y{{=}}-64 and Y{{=}}63.}}
+|{{HistoryLine||1.17.40|exp=Caves and Cliffs|dev= beta 1.17.40.20|The maximum Y-level that glow lichen can generate has been increased to 120.}}
+|{{HistoryLine||1.18.0|dev= beta 1.18.0.22|Glow lichen is no longer able to generate anywhere outside of caves.}}
+}}
+
+==Issues==
+{{Issue list|glow lichen}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Lichen lumineux (élément du terrain)]]
+[[ja:ヒカリゴケ (生成物)]]
+[[pt:Líquen brilhante (recurso)]]
+[[uk:Світлолишайник (об'єкт)]]
+[[zh:发光地衣（地物）]]

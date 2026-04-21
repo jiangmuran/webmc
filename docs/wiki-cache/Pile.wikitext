@@ -1,0 +1,200 @@
+{{distinguish|Pie}}
+{{Infobox structure
+| group1 = Hay
+| 1-1 = Hay Pile.png
+| group2 = Ice
+| 2-1 = Ice Pile.png
+| group3 = Melon
+| 3-1 = Melon Pile.png
+| group4 = Pumpkin
+| 4-1 = Pumpkin Pile.png
+| group5 = Snow
+| 5-1 = Snow Pile.png
+| biome = See {{EnvLink|Village}}
+| blocks = 
+Hay Pile:
+* {{BlockLink|Hay Bale}}
+Ice Pile:
+* {{BlockLink|Blue Ice}}
+* {{BlockLink|Packed Ice}}
+Melon Pile:
+* {{BlockLink|Melon}}
+Pumpkin Pile:
+* {{BlockLink|Jack o'Lantern}}
+* {{BlockLink|Pumpkin}}
+Snow Pile:
+* {{BlockLink|Snow}}
+| canspawn = No
+}}
+A '''pile''' is a [[feature]] that generates up to 25 specific blocks, the type of which correspond to the theme of a given [[village]].
+
+Piles may generate anywhere inside the village and the amount of piles that spawn in a village varies.
+
+There are five variants of a pile: '''hay, ice, melon, pumpkin''', and '''snow'''.
+
+== Generation ==
+Piles generate only inside [[village]]s.
+
+Hay piles contain [[hay bale]]s; ice piles contain [[packed ice]] and sometimes [[blue ice]]; melon piles contain [[melon]] blocks; pumpkin piles contain [[pumpkin]] blocks and sometimes [[jack o'lantern]]s; and snow piles contain [[snow]] layers. Up to 25 blocks can be in a given pile.
+
+The variants of the pile spawn naturally in the following villages:
+{| class="wikitable col-1-left" data-description="Pile variant villages" style="text-align:center;"
+! rowspan=2|{{EnvLink|Village}} type
+! colspan=5|Pile variant
+|-
+! {{BlockLink|Hay Bale}}
+! {{BlockLink|Packed Ice}}
+! {{BlockLink|Melon}}
+! {{BlockLink|Pumpkin}}
+! {{BlockLink|Snow}}
+|-
+| {{EnvLink|Plains Village}} || {{tc|yes}} || || || ||
+|-
+| {{EnvLink|Desert Village}} || {{tc|yes}} || || || ||
+|-
+| {{EnvLink|Savanna Village}} || {{tc|yes}} || || {{tc|yes}} || ||
+|-
+| {{EnvLink|Snowy Village}} || || {{tc|yes}} || || || {{tc|yes}}
+|-
+|{{EnvLink|Taiga village}} || || || || {{tc|yes}} ||
+|}
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=block_pile
+|foot=1}}
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pile_hay
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pile_ice
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pile_melon
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pile_pumpkin
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pile_snow
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=hay_pile_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=ice_pile_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=melon_pile_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=pumpkin_pile_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=pile
+|spritetype=env
+|nameid=snow_pile_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state_provider}} The block to use.
+*** {{nbt inherit/block_state_provider}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:block_pile",
+  "config": {
+    "state_provider": {
+      "type": "minecraft:rotated_block_provider",
+      "state": {
+        "Name": "minecraft:hay_block",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w48a|Added hay pile.}}
+|{{HistoryLine|||dev=18w49a|Added melon pile, ice pile, and snow pile.}}
+|{{HistoryLine|||dev=18w50a|Added pumpkin pile.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=?|Added hay pile.}}
+|{{HistoryLine|||dev=?|Added ice pile.}}
+|{{HistoryLine|||dev=?|Added melon pile.}}
+|{{HistoryLine|||dev=?|Added pumpkin pile.}}
+|{{HistoryLine|||dev=?|Added snow pile.}}
+}}
+
+==Issues==
+{{issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Pila]]
+[[fr:Pile]]
+[[ja:山積みのブロック]]
+[[ko:뭉치]]
+[[lzh:垛]]
+[[pt:Pilha (recurso)]]
+[[ru:Куча]]
+[[uk:Купа]]
+[[zh:方块堆]]

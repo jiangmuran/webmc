@@ -1,0 +1,74 @@
+{{Infobox structure
+| image1 = Ice.png
+| image2 = Snow.png
+| image1size = 100px
+| image2size = 100px
+| biome = All {{EnvLink|Overworld}} biomes except {{biomeLink|the Void}}
+| blocks =
+* {{BlockLink|Ice}}
+* {{BlockLink|Snow}}
+|canspawn=No
+}}
+A '''freeze top layer''' is a [[feature]] found throughout the [[Overworld]].
+
+== Generation ==
+Freeze top layer is a feature that is used to add snow and ice to mountains and cold [[biome]]s.
+
+Freeze top layer tries to generate in all chunks in the [[Overworld]]. In each chunk, it tries at each block column to generate snow or ice on the terrain surface if the [[Biome#Temperature|biome temperature]] there is cold enough (below 0.15) and the block light level is less than 10. If the surface is water, an [[ice]] block replaces the water. Additionally, [[snow]] tries to generate on the surface if it can attach on the surface's block.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=freeze-top-layer
+|spritetype=env
+|nameid=freeze_top_layer
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=freeze-top-layer
+|spritetype=env
+|nameid=freeze_top_layer
+|foot=1}}
+
+{{el|be}}:
+{{IN|bedrock}}, it is technically not a feature. The game simply iterates through each horizontal coordinate after the chunk generation to generate ice and snow.
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:freeze_top_layer",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{Expand section}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.18|dev=21w41a|Freeze top layer now becomes a feature technically.{{verify|given how it behaves in older versions (e.g. not generating in the Far Lands in cold biomes, and also that 13w01a feature generation bug), it was probably a feature well before this point}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Couche supérieure de gel]]
+[[ja:地表の氷雪]]
+[[pt:Camada superior congelada]]
+[[lzh:冰層]]
+[[zh:冰冻顶层]]

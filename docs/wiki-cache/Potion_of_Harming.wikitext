@@ -1,0 +1,295 @@
+{{Infobox item
+| title = Potion of Harming
+| group = Potion
+| 1-1 = Potion of Harming.png
+| group2 = Splash Potion
+| 2-1 = Splash Potion of Harming.png
+| group3 = Lingering Potion
+| 3-1 = Lingering Potion of Harming.png
+| invimage = Potion of Harming
+| invimage2 = Splash Potion of Harming
+| invimage3 = Lingering Potion of Harming
+| invimage4 = ----
+| invimage5= Potion of Harming Enhanced
+| invimage6= Splash Potion of Harming Enhanced
+| invimage7= Lingering Potion of Harming Enhanced
+| consumptiontime = {{convert|32|ticks|seconds}}
+| alwaysconsumable = Yes
+| renewable = Yes
+| stackable = No
+}}
+A '''potion of Harming''' is a potion that provides [[Instant Damage]] when used.
+
+== Obtaining ==
+=== Brewing ===
+{{Brewing
+|head = 1
+|Fermented Spider Eye
+|base = Potion of Healing
+|Potion of Harming
+|showvariants=1
+}}
+{{Brewing
+|Fermented Spider Eye
+|base = Potion of Poison
+|Potion of Harming
+|showvariants=1
+}}
+{{Brewing
+|Glowstone Dust
+|base = Potion of Harming
+|Potion of Harming Enhanced
+|name = Potion of Harming II
+|showvariants=1
+}}
+{{Brewing
+|Gunpowder
+|base3= Potion of Harming Enhanced
+|base2= Potion of Harming
+|
+|Splash Potion of Harming
+|Splash Potion of Harming Enhanced
+|name = Splash Potion of Harming
+|ingredients = [[Gunpowder]] +<br> '''Potion of Harming'''
+}}
+{{Brewing
+|Dragon's Breath
+|base3= Splash Potion of Harming Enhanced
+|base2= Splash Potion of Harming
+|
+|Lingering Potion of Harming
+|Lingering Potion of Harming Enhanced
+|name = Lingering Potion of Harming
+|ingredients = [[Dragon's Breath]] +<br> '''Splash Potion of Harming'''
+|foot=1
+}}
+
+== Usage ==
+=== Effect ===
+{| class="wikitable"
+! Potion type
+! Tier
+! Duration
+! Effect
+! Description
+|-
+| rowspan="2" |Potion
+| 1
+| rowspan="6" |Instant
+| rowspan="6" |{{EffectLink|Instant Damage}}
+| Damages {{hp|6}}.
+|-
+| 2
+| Damages {{hp|12}} (doubles with every additional level).
+|-
+| rowspan="2" |Splash Potion
+| 1
+| Damages {{hp|6}}.
+|-
+| 2
+| Damages {{hp|12}} (doubles with every additional level).
+|-
+| rowspan="2" |Lingering Potion
+| 1
+| Damages {{hp|6}}.
+|-
+| 2
+| Damages {{hp|12}} (doubles with every additional level).
+|}
+
+=== Crafting ingredient ===
+{{Crafting
+|head = 1
+|ignoreusage = 1
+|showname = 1
+|name = [[Arrow of Harming]]
+|ingredients = [[Arrow]] +<br>'''Lingering Potion of Harming'''
+|A1 = Arrow
+|A2 = Arrow
+|A3 = Arrow
+|B1 = Arrow
+|B2 = Lingering Potion of Harming; Lingering Potion of Harming Enhanced
+|B3 = Arrow
+|C1 = Arrow
+|C2 = Arrow
+|C3 = Arrow
+|Output = Arrow of Harming, 8; Arrow of Harming Enhanced, 8
+|foot = 1
+}}
+
+== Sounds ==
+{{Main|Potion#Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition = java
+|showforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Harming
+|spritetype = item
+|nameid = potion
+|form = item
+|translationkey = item.minecraft.potion.effect.Harming
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Harming
+|spritetype=item
+|nameid=splash_potion
+|form=item
+|translationkey=item.minecraft.splash_potion.effect.harming
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Harming
+|spritetype=item
+|nameid=lingering_potion
+|form=item
+|translationkey=item.minecraft.lingering_potion.effect.harming
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition = bedrock
+|shownumericids = y
+|showforms = y
+|notshowbeitemforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Harming
+|spritetype=item
+|nameid = potion
+|id = 426
+|form = item
+|translationkey = potion.harm.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Harming
+|spritetype=item
+|nameid=splash_potion
+|id=561
+|form=item
+|translationkey=potion.harm.splash.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Harming
+|spritetype=item
+|nameid=lingering_potion
+|id=562
+|form=item
+|translationkey=potion.harm.linger.name
+|foot=1
+}}
+
+=== Metadata ===
+{{IN|bedrock}}:
+{| class = wikitable
+! Potion !! Regular !! Enhanced
+|-|
+|{{ItemSprite|potion-of-harming}} Potion of Harming || 23 || 24
+|}
+
+=== Item data ===
+{{see also|Potion#Item data}}
+{{JE}}:
+{{see also|Data component format}}
+Normal potions use a "potion" tag inside "potion_contents" component to indicate the potion type.
+{| class=wikitable
+!Potion
+!Regular
+!Level II
+|-|
+| Potion of Harming || <code>harming</code> || <code>strong_harming</code>
+|}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Local Brewery}}
+
+== Advancements ==
+{{load advancements|Husbandry;Local Brewery}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|[[File:Potion of Harming JE1 BE1.png|32px]] Added potions of Harming. They can only be obtained by adding a [[fermented spider eye]] to a [[potion of Poison]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4| [[File:Splash Potion of Harming JE1 BE1.png|32px]] Added splash potions of Harming.
+|Potions of Harming can now be brewed by adding a fermented spider eye to a [[potion of Healing]].}}
+|{{HistoryLine||1.3.1|dev=12w22a|[[File:Potion of Harming JE1 BE1.png|32px]]Added the potion of Harming to the [[Creative inventory]].}}
+|{{HistoryLine||1.4.2|dev=12w38a|Added witches, which can throw splash potions of Harming to fight the [[player]]. These are [[projectile]]s and cannot be picked up.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Potions of Harming can now be brewed from [[potions of Water Breathing]] and a [[fermented spider eye]].}}
+|{{HistoryLine||1.9|dev=15w31a|Potions of Harming can no longer be brewed from [[potions of Water Breathing]].}}
+|{{HistoryLine|||dev=15w33a|[[File:Lingering Potion of Harming JE1 BE1.png|32px]]Added the lingering potion of Harming.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Potion of Harming JE2 BE2.png|32px]] [[File:Potion of Harming.gif|32px]] [[File:Splash Potion of Harming JE2 BE2.png|32px]] [[File:Lingering Potion of Harming JE2 BE2.png|32px]] Changed the textures of potions of Harming.}}
+|{{HistoryLine||1.19.4|dev=pre3|[[File:Potion of Harming JE3.png|32px]] [[File:Splash Potion of Harming JE3.png|32px]] [[File:Lingering Potion of Harming JE3.png|32px]] Changed color of potion of Harming.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Potion of Harming JE1 BE1.png|32px]] [[File:Splash Potion of Harming JE1 BE1.png|32px]] Added potions of Harming with its splash variant.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Lingering Potion of Harming JE1 BE1.png|32px]] Added lingering potions of Harming.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Potion of Harming BE2.png|32px]] [[File:Splash Potion of Harming BE2.png|32px]] [[File:Lingering Potion of Harming BE2.png|32px]] The textures for potions of Harming have been changed.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|Removed the [[enchantment glint]] from potions of Harming.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Potion of Harming JE3.png|32px]] [[File:Splash Potion of Harming JE3.png|32px]] [[File:Lingering Potion of Harming JE3.png|32px]] The textures for potions of Harming have been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Potion of Harming JE1 BE1.png|32px]] [[File:Splash Potion of Harming JE1 BE1.png|32px]] Added the potion of Harming with its splash variant.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Lingering Potion of Harming JE1 BE1.png|32px]] Added the lingering potion of Harming.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Potion of Harming JE2 BE2.png|32px]] [[File:Splash Potion of Harming JE2 BE2.png|32px]] [[File:Lingering Potion of Harming JE2 BE2.png|32px]] Changed the textures of potions of Harming.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Potion of Harming JE1 BE1.png|32px]] [[File:Splash Potion of Harming JE1 BE1.png|32px]] Added the potion of Harming with its splash variant.}}
+|{{HistoryLine||1.7.10|[[File:Lingering Potion of Harming JE1 BE1.png|32px]] Added the lingering potions of Harming.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== See also ==
+*{{ItemLink|Suspicious Stew}}
+*{{ItemLink|Glass Bottle}}
+*{{ItemLink|Medicine}}
+*{{ItemLink|Uncraftable potion}}
+*{{EntityLink|Dragon Fireball}}
+*{{ItemLink|Potion of Healing}}
+*{{ItemLink|Potion of Poison}}
+*{{EffectLink|Wither}}
+*{{ItemLink|Arrow of Harming}}
+*{{EffectLink|Instant Damage}}
+
+== Navigation ==
+{{Navbox brewing}}
+
+[[Category:Potions]]
+
+[[fr:Potion de dégâts]]
+[[pt:Poção de Dano]]
+[[zh:伤害药水]]

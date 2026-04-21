@@ -1,0 +1,154 @@
+{{seealso|Java Edition Far Lands/Pre-Beta 1.8}}
+{{exclusive|Java}}
+
+The Far Lands were a terrain bug that occurred in versions of {{MC}} up to Beta 1.7.3. They were caused by errors in the math that governs terrain generation, resulting in abnormal structures resembling excessively stretched-out terrain.
+
+The X/Z [[Java Edition Far Lands/Pre-Beta 1.8|Far Lands]] were fixed in [[Java Edition Beta 1.8 Pre-release|Beta 1.8 Pre-release]], so they do not exist without modifications to Minecraft. In addition, most of the [[Java Edition distance effects|distance effects]] were fixed. The Y Far Lands (aka the Sky and Ground Far Lands) were overlooked, but were fixed in 1.13 with the world generation rewrite.
+
+It is possible to force the X/Z Far Lands to generate in a Custom World when setting the Coordinate Scale to extreme high values.
+
+== Technical ==
+The Far Lands were a terrain generation bug that occurred at ±12,550,824 along the X and Z-axes prior to Beta 1.8, as well as the Y-axis (technically) before Java 1.13.
+
+The Far Lands generate because of an integer overflow error within Minecraft. The [[noise generator]] that draws Minecraft's height map increases by 171.103 for every block, causing an integer overflow at approximately ±12,550,824 (sometimes ±12,550,821.) Multiplying the aforementioned numbers results in the 32-bit signed integer max value, which when overflowed, results in an extreme noise seed.
+
+== Location ==
+[[File:Far Lands in 1.8.1.png|thumb|Far Lands generating in 1.8.1]]
+On the X and Z axis, the Far Lands and Farther Lands initiate as they did in Beta 1.7 and below (±12,550,824), with an identical chance of offset at positive positions. However, due to the new height limits and new world generation, they are actually 256 blocks tall, instead of 128. And the Far Lands look more rounded. There is a world border at the 32-bit integer limit (2,147,483,647), which crashes the game upon approaching (likely due to an integer overflow when casting the player's position to a 32-bit integer).
+
+Any attempt to quit the game near the 32-bit integer limit also results in crashing. 
+
+On the Y-axis, the Far Lands initiate at around twice the former number, which is therefore ±25,101,648.
+[[File:Fl 1.11.2int overload.png|alt=200 Blocks from the 32-bit integer limit where world rendering glitches out. At 2,147,483,520, the game crashes.|thumb|The World at the 32-bit integer limit.]]
+The Farther Lands also generate at ±2,008,131,840 on the Y-axis, however, they cannot be generated without lowering the selector noise period.
+
+The location of the 64-bit variant of the Far Lands depends of the game version. In versions between Beta 1.8 and 1.6.4 inclusive, they start at 59 quadrillion blocks. In versions 1.7.2 through 1.13.2, they start at 53.9 quadrillion blocks due to a small change in the coordinate scale, that is not noticeable for 32-bit overflowing. The Far Lands in positive coordinates don't begin exactly after {{frac|2<sup>63</sup>|171.103}} blocks due to the remainder of the overflow. The Far lands in negative coordinates have a remainder of 2<sup>32</sup>, as a result, they begin exactly after {{frac|2<sup>63</sup>|171.103}} blocks. In versions 1.14{{check version}} and later they start at 1.8 septillion blocks, due to a change in that version that takes the noise coordinate and divides it by 2<sup>25</sup>.
+
+== Structure ==
+The edge Far Lands and corner Far Lands, as well as their Farther variations, generate relatively identically to their pre-Beta 1.8 counterparts, but utilizing the entire height limit, causing them to generate all the way up to y=256 until they reach the sky Far Lands at y=+25,101,648 (and equivalently the ground Far Lands at y=-25,101,648). Since the 21w06a snapshot and until 1.18.1, however, The Far Lands are thinner and more geometrical, with a cross-section made of perpendicular lines and rectangles.
+
+As of 1.18.2, they appear as a giant wall of stone with caves in them.
+
+=== Far Lands ===
+==== Sky Far Lands ====
+{{outdated|section=1|The ''[[Old Customized|Customized]]'' world type was removed in [[Java Edition 1.13|1.13]], so the Sky Far Lands can no longer be generated without mods.}}
+[[File:Far lands on Y.png|thumb|right|The Far Lands generating on an unmodded modern custom world, before 1.13. A high coordinate scale was also used to generate this, resulting in repetitive terrain.]]
+
+The Far Lands generate at positive values of the Y-axis past y=25,101,648. [[Monolith]]s generate up to this point if the player can get them to generate.
+
+Setting the Height Scale extremely high can generate the Far Lands in the sky up to the height limit.
+
+This is possible in Vanilla.
+
+==== Vertex Far Lands ====
+When the Sky or Ground Far Lands meet with the vanilla Corner Far Lands, many interesting terrain features can be sighted. The content of these intersections appears to vary throughout worlds, with some being completely blank, some completely solid, and some generating like regular Far Lands material. In some cases, diagonal patterns with large absent chunks generate.<ref>{{ytl|-w6okOz-iNs|Minecraft Stops Here. Please Turn Around!|AntVenom|January 20, 2018}}</ref>
+
+<gallery>
+Sky Far Lands.png|The Sky Far Lands.
+Void Far Lands.png|The Ground Far Lands.
+Negativeylands.png|The Ground Far Lands.
+Positriplecorner.png|An intersection of all 3 sets of Far Lands, where the Y-axis is positive.
+Positriplecornerbetter.png|A more extensive view of the previous scenario.
+Vertex Far Lands (positive) (1).png
+Negatriplecorner.png|An intersection of all 3 sets of Far Lands, where the Y-axis is negative.
+Vertex Far Lands (negative) (1).png
+Vertexfarlandscrazyterrain.png|Inside the Sky Vertex Far Lands, with crazy terrain.
+Vertexfarlandsdiagonalpattern.png|Inside the Ground Vertex Far Lands, with a diagonal pattern.
+Voidfartherlands.png|The Ground Farther Lands inside the Ground Corner Far Lands.
+Skycornerfarlands.png|The Sky Corner Far Lands.
+Skycornerfarlandsinside.png|Inside the Sky Corner Far Lands.
+Voidcornerfarlands.png|The Ground Corner Far Lands.
+Voidcornerfarlandsinside.png|Inside the Ground Corner Far Lands.
+Fartherlandsskycornerfarlands.png|The Farther Lands inside the Sky Corner Far Lands.
+Fartherlandsskyvertexfarlands.png|The Farther Lands inside the Sky Vertex Far Lands.
+Fartherlandsvoidcornerfarlands.png|The Farther Lands inside the Ground Corner Far Lands.
+Fartherlandsvoidvertexfarlands.png|The Farther Lands inside the Ground Vertex Far Lands.
+</gallery>
+
+=== Depth noise Far Lands ===
+Like low/high and selector noise which respectively control the Far and Farther Lands, depth noise can be made to overflow at a given position. By default, it overflows at 42,949,672.96 blocks. Due to the Far Lands initiating before it, the overflow in depth noise is effectively impossible to see. However, if depth noise is made to overflow before tradition far lands, achievable by pushing the far lands farther out than this distance or moving the depth noise far lands closer, the effects can be seen immediately as it overflows, the terrain jumps up a few blocks. Terrain after this point is slightly more boring than before due to depth noise controlling subtle variation, which no longer exists after the overflow due to it almost always being at the max possible value. Every so often, very long "rifts" characteristic of depth noise far lands can be seen, which extend for extremely long. These rifts end once they hit the point twice the distance of the first overflow, and rifts as a whole past this point do not seem to be able to come into existence. Rifts have also only been noted on the positive X axis and are yet to be found on the Z axis.
+[[File:First Stage of Degrading.png|thumb|The start of the edge fringelands in an early version of Minecraft]]
+
+=== The Fringe Lands ===
+The Fringe Lands are a stage of terrain breakdown where the Far Lands begin to break down at extremely high distances. Unlike Bedrock Edition and pre-b1.8, in modern versions they do not generate with any skygrid artifacts without additional modification to the game's code. The X axis breaks down at about 8.6 quindecillion blocks, earlier than the Z axis at about 9.17 quindecillion blocks for a currently unknown reason, resulting in one 2D stripe of worldgen surrounding by an infinite ocean if X&Z noise scale is set high enough.
+
+==== Corner Fringe Lands ====
+The Corner Fringe Lands appear much earlier than the regular Fringe Lands, at around 40.5 septillion blocks on both axes.
+
+==== Fringe Farther Lands ====
+The Fringe Farther Lands appear between 2.5 duodecillion and 10 duodecillion blocks out. Also after the Z Fringe Farther Lands completely broke down, a skygrid can generate.
+
+==== Vertex Fringe Lands ====
+This type of fringe lands only appears if you set the noise multiplier of all three axis to 1 quadrillion. The vertex fringe lands degrade into skygrid at the much earlier coordinate of 100 quadrillion blocks, and this coordinate does indeed vary.
+
+== Effects ==
+While completely unrelated to terrain, these effects occur coincidentally with Far Lands due to their shared extreme distances and are worth noting as a result.
+
+=== Floating-point precision errors with entities and particles ===
+{{main|Java Edition distance effects}}
+
+Even in modern versions of Minecraft, the floating-point precision errors still exist, but only with translucent block rendering, natural snow generation and snowfall at extreme heights.
+
+=== Darkness ===
+{{main|Java Edition hard limits}}
+In vanilla Minecraft 1.14, the lighting system breaks beyond 2<sup>25</sup> (X/Z ±33,554,432)<ref>{{bug|MC-194878}}</ref> (though this distance is available only via editing source codes), however, it isn't like what would happen beyond X/Z=32,000,000 in older versions. Instead, everything abruptly becomes absolutely dark and ignores light sources. By pressing F3, it shows that the sky light level is 0, thus [[Undead|undead mobs]] do not burn when exposed to the sky. The chunks, however, are still solid and block physics still function. Night Vision can help to counteract the visual darkness; it is currently unknown whether the [[Conduit Power]] effect works or not.
+
+== Explanation ==
+{{main|Java Edition Far Lands/Pre-Beta 1.8#Cause}}
+The Far Lands happen for much the same reason as they used to. As 64-bit overflowing has not been patched, its breaking can be calculated by replacing 2<sup>31</sup> in calculations with 2<sup>63</sup>. A table of useful values are as follows.
+
+{{:Noise generator/Tables/Terrain}}
+
+== Vanilla ==
+In Custom World Type worlds, by setting the coordinate scale very high it is possible to generate Far Lands-like formations in Vanilla Minecraft. The only form of recognizable farlands however is a form of selector noise failure resembling a wider form of the farther lands.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Fixed 32-bit overflow of noise functions. The Far Lands can no longer generate within world boundary without modification to the game.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w07a|The height limit has been increased to 256 blocks, and as such trees and structures are able to generate above the Far Lands.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The terrain generation has been overhauled and now generates up to 256 blocks, and as such the Far Lands now generate to that height.}}
+|{{HistoryLine||1.8|dev=14w17a|Added [[Old Customized|customized]] world generation. This made it possible to create the Sky and Ground Far Lands without mods.}}
+|{{HistoryLine||1.13|dev=18w06a|Removed customized worlds. The Sky and Ground Far Lands can no longer be created without mods.}}
+|{{HistoryLine||?|The Far Lands now begin at ~1.8 septillion blocks instead of ~53.9 quadrillion blocks due to world generation changes.{{check version}}}}
+|{{HistoryLine||1.17|dev=21w06a|The Far Lands now appear much thinner than before, with the Edge Far Lands now containing strips of terrain at various widths connecting via right angles.<br>It is also now possible to (with a modification) manipulate the Y Scale to allow the Sky and Ground Far Lands to generate.}}
+|{{HistoryLine|||dev=21w15a|The Far Lands now look like the Beta Far Lands again as the Noise caves are disabled.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|The Far Lands now appear thinner like 21w06a again.}}
+|{{HistoryLine||1.18.2|dev=Pre-release 2|The Far Lands generate a mostly flat wall on their faces, with shallow recesses shaped like the 21w06a Far Lands. The terrain in the Far Lands appears somewhat normal, albeit at a high altitude. The endless tunnels are notably missing.}}
+}}
+<gallery>
+Bedrock Java Far Lands 1.jpg|Post-1.2 Java Edition Far Lands loaded in Bedrock Edition.
+Bedrock Java Far Lands 2.jpg|Another angle.
+</gallery>
+
+== Trivia ==
+=== In Super Smash Bros. Ultimate ===
+In [[Super Smash Bros. Ultimate]], the "Classic Mode" route for Steve and Alex is titled "Journey to the Far Lands", in which the player faces off against other Super Smash Bros. fighters, all resembling mobs that appear in Minecraft.
+
+=== The End ===
+The End was implemented after the Far Lands were removed, meaning that the End Far Lands never generated naturally.
+
+<gallery>
+PCFarEnd.png|The edge Far Lands on Java Edition.
+PCCornerEnd.png|The corner Far Lands on Java Edition.
+PCFarMap.png|A map created in the corner Far Lands on Java Edition.
+18FarEnd.png|The edge Far Lands on Java Edition before 1.9.
+18CornerEnd.png|The corner Far Lands on Java Edition before 1.9.
+18FarMap.png|A map created in the corner Far Lands on Java Edition before 1.9.
+Endcityfarlands.png|An end city in the Far Lands.
+Endendgefartherlands.png|The Farther Lands in the End.
+Endfartherlands.png|The Corner Farther Lands in the End.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox removed features}}
+{{Navbox environment}}
+{{Navbox Java Edition}}
+
+[[pt:Far Lands (Edição Java)]]
+[[zh:边境之地/Java版]]
+[[Category:Far Lands]]

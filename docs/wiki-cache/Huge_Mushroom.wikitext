@@ -1,0 +1,293 @@
+{{About|the Overworld structure|Nether structure|Huge Fungus|other uses|Fungus}}
+{{Infobox structure
+| title = Huge mushroom
+| group1 = Red
+| 1-1 = Huge Red Mushroom.png
+| group2 = Brown
+| 2-1 = Huge Brown Mushroom.png
+| biome =
+* {{BiomeLink|Mushroom Fields}}
+* {{BiomeLink|Dark Forest}}
+* {{BiomeLink|Swamp}}{{only|bedrock|short=1}}
+* {{BiomeLink|Swamp Hills}}{{only|bedrock|short=1}}(Unused)
+* {{BiomeLink|Dark Forest Hills}}{{only|bedrock|short=1}}(Unused)
+| blocks = {{BlockLink|link=Mushroom Block|Mushroom Blocks}}
+| canspawn = Yes, when the player uses [[bone meal]] on a [[mushroom]].
+}}
+'''Huge mushrooms''' are tree-like [[feature]]s that consist of [[mushroom block]]s. They can be found naturally in [[swamp]]{{only|bedrock|short=1}}, [[dark forest]], and [[mushroom fields]] biomes, or grown from a small [[mushroom]] by applying [[bone meal]] on it – small mushrooms do not turn into huge mushrooms naturally.
+
+== Generation ==
+Huge mushrooms naturally generate in [[swamp]]{{only|bedrock|short=1}}, [[dark forest]], and [[mushroom fields]] biomes.
+
+== Growth ==
+Huge mushrooms have a 40% chance to be grown by applying [[bone meal]] to a small red or brown [[mushroom]] that is planted on [[grass block]], [[dirt]], [[coarse dirt]], [[rooted dirt]], [[mud]], [[muddy mangrove roots]], [[moss block]], or [[pale moss block]] with a sky and block [[light level]] of 12 or less, or on [[podzol]], [[mycelium]] or [[nylium]] at any light level. A minimum of 5 blocks above the mushroom must be free of solid blocks, although 7 blocks are necessary for most to spawn. 13 blocks are required for it to be possible to generate all types of huge mushrooms. Extra tall huge mushrooms have a ~5% chance of growing.
+
+A huge mushroom does not grow above the height limit.
+
+Any small mushroom placed does not grow into a huge mushroom naturally; bone meal must be applied.
+
+== Construction ==
+{{main|/Structure}}
+
+A huge mushroom's height is normally between 5 and 7 [[block]]s inclusive, but have a {{frac|1|12}} chance to generate twice as high (minus 1 block), meaning they can be 9, 11, or 13 blocks tall.<ref>http://www.reddit.com/r/MCPE/comments/288c1n/are_there_supposed_to_be_super_tall_mushrooms/</ref>
+
+[[File:Huge Brown Mushroom.png|thumb|upright|A huge brown mushroom]]
+[[File:Huge Red Mushroom.png|thumb|upright|A huge red mushroom]]
+To grow, the block under the huge mushroom's stem must be [[dirt]], [[podzol]], or [[mycelium]]. Light level does not matter if placed on [[podzol]] or [[mycelium]], but if placed on [[dirt]], [[coarse dirt]] or [[grass blocks]] both skylight and blocklight must be 12 or less. Each type of mushroom also has its own space requirements, which are described below.
+
+=== Huge brown mushrooms ===
+Huge brown mushrooms consist of a single stalk in the center, with a 7×7 canopy of brown mushroom blocks at the top with the corners missing. 
+
+For the mushroom to grow, the lowest four blocks of the stem (i.e. the three blocks above the small mushroom being grown) must be air or leaves, and a 7×(height−3)×7 region above must similarly be clear of anything except air or leaves. Due to the space requirement matching the size of the canopy at the top, it is possible for a huge brown mushroom to grow with its canopy directly touching a mushroom next to it.
+
+=== Huge red mushrooms ===
+Huge red mushrooms, like their brown counterparts, have a single stalk in the center, but a different canopy, composed of five 3×3 slabs of red mushroom blocks arranged above and around the stalk, forming a 'dome'. Unlike brown mushrooms, red mushrooms only check the blocks directly above the small mushroom, and do not require the rest of the dome to be clear of other blocks. Blocks that mobs can't suffocate in, such as slabs, end portal frame and end portal, are replaced; full blocks remain.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_red_mushroom
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_brown_mushroom
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_red_mushroom
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_brown_mushroom
+|foot=1}}
+which are used in:
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=mushroom_island_vegetation
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=tree
+|spritetype=env
+|nameid=dark_forest_vegetation
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_red_mushroom_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_brown_mushroom_feature
+|foot=1}}
+which are used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=huge-mushroom
+|spritetype=env
+|nameid=huge_mushroom_feature
+|foot=1
+}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=tree
+|spritetype=env
+|nameid=minecraft:legacy:forest_foliage_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=tree
+|spritetype=env
+|nameid=minecraft:legacy:flower_forest_foliage_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=tree
+|spritetype=env
+|nameid=minecraft:legacy:roofed_forest_foliage_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=tree
+|spritetype=env
+|nameid=minecraft:legacy:swamp_foliage_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|cap_provider}} The block to use for the cap.
+*** {{nbt inherit/block_state_provider}}
+** {{nbt|compound|stem_provider}} The block to use for the stem.
+*** {{nbt inherit/block_state_provider}}
+** {{nbt|int|foliage_radius}} (optional，defaults to 2) The size of the cap.
+** {{nbt|compound|can_place_on}} The block predicate that defines which blocks the huge mushroom can be placed on.
+*** {{Nbt inherit/block predicate}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:huge_red_mushroom",
+  "config": {
+    "cap_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:red_mushroom_block",
+        "Properties": {
+          "down": "false",
+          "east": "true",
+          "north": "true",
+          "south": "true",
+          "up": "true",
+          "west": "true"
+        }
+      }
+    },
+    "foliage_radius": 2,
+    "stem_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:mushroom_stem",
+        "Properties": {
+          "down": "false",
+          "east": "true",
+          "north": "true",
+          "south": "true",
+          "up": "false",
+          "west": "true"
+        }
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||June 14, 2011|link={{tweet|notch|80654817512525825}}|Notch showed a picture of a Beta 1.7 change-list. Although it was completely blurred out and was at first thought of as a joke, Notch later stated that one of the pictures with the new lighting system and the change list had a secret in them.
+|One place where people discussed it was on the [http://www.minecraftforum.net Minecraft Forums], where it was discovered that the tabs at the top of the change list, which were partly covered, could be decoded based on the one pixel tall pattern available in the image.<ref>http://www.minecraftforum.net/topic/379958-</ref>
+|After a user named "tmcaffeine" successfully decoded the image, the tabs read: ExperienceOrb.java, changelist.txt, Level.java, Tile.java, HugeMushroomTile.jav(a?), '''HugeMushroomFeature'''.(java?), RandomLevelSource(cut).<ref>http://www.minecraftforum.net/topic/380498-</ref>
+|This led people to believe that huge mushrooms would be added, and indeed, later on Notch revealed a screenshot on Google+ in which two huge mushrooms could be seen as well as a [[village]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Huge mushrooms were added.
+|They did not generate naturally, but could be planted by the [[player]] by using [[bone meal]] on a red or brown [[mushroom]] planted on grass or dirt.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|The mushroom island biome was added, which naturally generates huge mushrooms.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The roofed forest biome was added, which naturally generates huge mushrooms.}}
+|{{HistoryLine||1.10|dev=16w20a|Huge mushrooms can now generate or grow much taller, matching the height from Pocket Edition.}}
+|{{HistoryLine||1.13|dev=17w47a|Huge red mushrooms no longer require an additional block of air above them to grow.}}
+|{{HistoryLine||1.15|dev=19w41a|Huge brown mushrooms no longer require an additional block of air above them to grow.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added huge mushrooms.}}
+|{{HistoryLine||v0.10.0|dev=build 1|Huge mushrooms can now generate in swamps.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added huge mushrooms.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Huge mushrooms can now generate or grow much taller, matching the height from Java and Bedrock editions.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Huge mushrooms are added.}}
+}}
+
+=== Historical screenshots ===
+<gallery>
+Decoded change list.png|The decoded change-list
+Minecraft river testing.jpg|A river test with 3 huge red mushrooms (Bottom left, top, and one hidden behind a tree at the far left).
+PqYck.jpg|An early village (a first screenshot about villages, posted by Notch) with 2 huge mushrooms.
+Original enderman screenshot.png|The first screenshot of endermen, with a huge mushroom on the right.
+Red Huge Mushroom 17w46a-17w47a.png|Demonstration of the changes to huge red mushroom growth mechanics in 17w47a.
+Brown Huge Mushroom 19w40a-19w41a.png|Demonstration of the changes to huge brown mushroom growth mechanics in 19w41a.
+</gallery>
+
+==Issues==
+{{issue list}}
+
+== Trivia ==
+* All huge mushrooms have exactly 45 blocks besides the stalk, so an average of 13.5 mushrooms can be obtained from each huge mushroom's cap.
+* Red mushrooms are rarer than brown mushrooms, but this is not the case for huge mushrooms.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Dark Forest Brown Huge Mushroom.png|A brown huge mushroom found in a dark forest.
+Dark Forest Red Huge Mushroom.png|A red huge mushroom found in a dark forest.
+Brown Hugemushroom y13block.jpg|A brown 13 block-tall huge mushroom generated in a swamp {{in|bedrock}}.
+Red Hugemushroom y13block.jpg|A red 13 block-tall huge mushroom generated in mushroom fields.
+Huge mushroom growth.png|A guide to the minimum growth requirements for each type of huge mushroom.
+Mushroom House.png|A huge mushroom house incorporating both red and brown huge mushroom.
+Roof for growing huge mushrooms..png|Enough roof for growing huge mushrooms even in daylight.
+RedBrownMushroom.png|Red and brown huge mushrooms in mushroom fields.
+Dark Forest.png|Huge mushrooms generated in a dark forest.
+Swamp BE.jpg|Some huge mushrooms generated in a swamp {{in|bedrock}}.
+Mushroom overlapping small dark oak tree.jpg|A huge mushroom generated in a tree-chopping room of a [[woodland mansion]].
+Roofed-Forest-Red-Mushroom.png|A red mushroom intersecting a dark oak tree.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+* {{mcnet|red-mushroom|Block of the Month: Red Mushroom|May 8, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[Category:Fungi]]
+
+[[de:Riesenpilz]]
+[[es:Champiñón enorme]]
+[[fr:Champignon géant]]
+[[hu:Óriásgombák]]
+[[it:Fungo gigante]]
+[[ja:巨大キノコ]]
+[[ko:버섯 블록]]
+[[lzh:巨菌]]
+[[pl:Wielki grzyb]]
+[[pt:Cogumelo gigante]]
+[[ru:Огромный гриб]]
+[[uk:Величезний гриб]]
+[[zh:巨型蘑菇]]

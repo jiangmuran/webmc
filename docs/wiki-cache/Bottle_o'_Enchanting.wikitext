@@ -1,0 +1,270 @@
+{{Infobox item entity
+|image=Bottle o' Enchanting.gif
+|imagesize=160px
+|invimage=Bottle o' Enchanting
+|stackable=Yes (64)
+|renewable=Yes
+|size=Height: 0.25 blocks<br>Width: 0.25 blocks
+|rarity=Uncommon
+|networkid=
+}}
+A '''bottle o' enchanting''' is an [[item]] that can be thrown to break it and release [[experience orbs]].
+
+== Obtaining ==
+=== Generated loot ===
+{{LootChestItem|bottle-o'-enchanting}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+A bottle o' enchanting can be thrown by pressing {{control|use}}. On impact, it destroys itself and drops [[experience]] orbs worth {{xp|3|11}} (average 7.0) and sends out blue particles. Bottles o' enchanting can be used to increase the player's level for [[enchanting]], using an [[anvil]], or repairing tools and armor enchanted with [[Mending]].
+
+Bottles o' enchanting have an [[enchantment glint]] like enchanted items do.
+
+{{:Calculators/Projectile motion|name=Bottle o' enchanting|type=6|gravity=-0.07|dragx=0.99|dragy=0.99|hideproperties=1|hidedynamics=1}}
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Bottles o' enchanting use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Glass dig1.ogg
+|sound2=Glass dig2.ogg
+|sound3=Glass dig3.ogg
+|subtitle=Bottle smashes
+|source=neutral
+|description=When a bottle o' enchanting impacts something
+|id=entity.splash_potion.break
+|translationkey=subtitles.entity.potion.splash
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Bow shoot.ogg
+|subtitle=Bottle thrown
+|source=neutral
+|description=When a bottle o' enchanting is thrown by a player
+|id=entity.experience_bottle.throw
+|translationkey=subtitles.entity.potion.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Dispensed item
+|source=block
+|description=When a bottle o' enchanting is dispensed from a [[dispenser]]
+|id=block.dispenser.launch
+|translationkey=subtitles.block.dispenser.dispense
+|volume=1.0
+|pitch=1.2
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Glass dig1.ogg
+|sound2=Glass dig2.ogg
+|sound3=Glass dig3.ogg
+|source=block
+|description=When a splash potion impacts something
+|id=random.glass
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Bow shoot.ogg
+|source=player
+|description=When a splash potion is thrown by a player
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+| {{SoundLine
+|source=player
+|description=When a splash potion is dispensed from a dispenser
+|id=random.bow
+|volume=1.0
+| pitch = 0.83-1.25
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bottle o' Enchanting
+|spritetype=item
+|nameid=experience_bottle
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Thrown Bottle o' Enchanting
+|spritetype=entity
+|spritename=Bottle o' Enchanting
+|nameid=experience_bottle
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Bottle o' Enchanting
+|spritetype=item
+|nameid=experience_bottle
+|id=508
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Bottle o' Enchanting
+|spritetype=entity
+|nameid=xp_bottle
+|id=68
+|foot=1}}
+
+=== Entity data ===
+{{see also|Chunk format}}
+
+Thrown bottles o' enchanting have entity data that define various properties of the entity.
+
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|compound|Item}}: The item to render as, may be absent.
+*** {{nbt inherit/itemnoslot|indent=***}}
+</div><section end="entity data"/>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w04a|[[File:Bottle o' Enchanting JE1 BE1.png|32px]] Added bottles o' enchanting. 
+|Bottles o' enchanting can currently be obtained only in [[Creative]] mode.}}
+|{{HistoryLine||1.3.1|dev=12w21a|With the implementation of the [[trading]] system, the [[player]] can now trade with priest [[villager]]s to obtain 2–4 bottles o' enchanting for 1 [[emerald]].}}
+|{{HistoryLine||1.8|dev=14w02a|With the trading revamp, villagers no longer [[trading|sell]] bottles o' enchanting, making them again unobtainable in [[Survival]].}}
+|{{HistoryLine|||dev=14w31a|Cleric [[villager]]s now sell bottles o' enchanting for 3–11 [[emerald]]s each, making them [[renewable]] again.}}
+|{{HistoryLine||1.9|dev=15w49a|Bottles o' enchanting, like all projectiles, now take thrower's motion into account.}}
+|{{HistoryLine||1.13|dev=18w11a|Bottles o' enchanting can now generate in [[shipwreck]] chests.}}
+|{{HistoryLine|||dev=18w21a|The [[rarity]] of bottles o' enchanting has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Bottle o' Enchanting JE2 BE2.png|32px]] The texture of bottles o' enchanting has now been changed.}}
+|{{HistoryLine|||dev=18w47a|Bottles o' enchanting can now generate in [[pillager outpost]] chests.}}
+|{{HistoryLine|||dev=18w50a|Now have an optional <code>Item</code> tag that can specify a different item stack to render.}}
+|{{HistoryLine|||dev=19w11a|Cleric villagers now sell bottles o' enchanting for 3 emeralds.}}
+|{{HistoryLine||1.19|dev=22w13a|Bottles o' enchanting may now be found in [[ancient city]] chests.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Thrown bottles o' enchanting no longer go through the [[world border]] if hit.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Bottle o' Enchanting JE1 BE1.png|32px]] Added bottles o' enchanting. 
+|Due to the lack of [[trading]], bottles o' enchanting are currently available only in [[Creative]] mode, similar to [[12w04a]] when it was first released.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|With villager [[trading]] added, it is now possible to obtain bottles o' enchanting legitimately.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Bottles o' enchanting can now be found inside [[shipwreck]] and [[buried treasure]] chests.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Bottles o' enchanting can now be found in [[pillager outpost]] chests.
+|[[File:Bottle o' Enchanting JE2 BE2.png|32px]] The texture of bottles o' enchanting has now been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|[[Trading]] has now been changed and bottles o' enchanting are now [[trading|sold]] by cleric [[villager]]s for 3 [[emerald]]s.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of bottles o' enchanting has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The sprites of bottles o' enchanting, when rendered in the world, now have the correct scaling and positional offset.|They now match {{JE}} and also match better with their collider.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Bottle o' Enchanting JE1 BE1.png|32px]] Added bottles o' enchanting.|Bottles o' enchanting can currently be obtained only in [[creative]] mode.
+|Bottle o' enchanting can be found in the Miscellaneous tab in the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU12|Moved bottle o' enchanting to the Brewing tab in the Creative inventory.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|With the implementation of the [[trading]] system, the [[player]] can now trade with priest [[villager]]s to obtain 2–4 bottles o' enchanting for 1 [[emerald]].}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|The distance how far bottles o' enchanting can be thrown has been massively reduced to match ''Java Edition''.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Cleric [[villager]]s now sell bottles o' enchanting for 3–11 [[emerald]]s each.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Bottles o' enchanting, like all projectiles, now take thrower's motion into account.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Bottles o' enchanting can now be found inside [[shipwreck]] and [[buried treasure]] chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Bottle o' Enchanting JE2 BE2.png|32px]] The texture of bottles o' enchanting has now been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Bottles o' enchanting can now be found in [[pillager outpost]] chests.|[[Trading]] has now been changed and bottles o' enchanting are now [[trading|sold]] by cleric [[villager]]s for 3 [[emerald]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Bottle o' Enchanting JE1 BE1.png|32px]] Added bottles o' enchanting.
+|Bottles o' enchanting are not available within the [[Creative inventory]].}}
+|{{HistoryLine||?|Added bottles o' enchanting to the Creative inventory.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has now been changed from <code>ThrownExpBottle</code> to <code>xp_bottle</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 384.{{info needed|and what was the entity's?}}}}
+|{{HistoryLine|||dev=pre5|The entity ID has now been changed to <code>experience_bottle</code>.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has now been changed from <code>potion.experience</code> to <code>xp_bottle</code>.}}
+}}
+
+== Issues ==
+{{issue list|Bottle o' Enchanting|Experience Bottle}}
+
+== Gallery ==
+=== Texture ===
+<gallery>
+Bottle o' Enchanting JE2 BE2.png|Texture (without [[enchantment glint]])
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Bottle O' Enchanting Splash.gif|Bottle o' enchanting splash animation on impact.
+Bottle O' Enchanting villager.png|Players may trade with villagers to obtain bottles o' enchanting in Survival mode.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Projectiles]]
+
+[[cs:Lektvar očarování]]
+[[de:Erfahrungsfläschchen]]
+[[es:Frasco con experiencia]]
+[[fr:Fiole d'expérience]]
+[[it:Ampolla d'esperienza]]
+[[ja:エンチャントの瓶]]
+[[ko:경험치 병]]
+[[lzh:淬靈瓶]]
+[[pl:Zaklęta butelka]]
+[[pt:Frasco de experiência]]
+[[ru:Зелье опыта]]
+[[th:ขวดแห่งเวทมนตร์]]
+[[uk:Пляшка чарів]]
+[[zh:附魔之瓶]]

@@ -1,0 +1,1779 @@
+{{About||the smaller seasonal updates|Game drops|drops as in falls|Damage#Fall damage|the entity|Item (entity)}}
+{{Redirect|Drop}}
+{{Redirect|Loot|the command|Commands/loot|the JSON table|Loot table|loot generated naturally in structures|Generated loot|the enchantment|Looting}}
+{{Hatnote|"Block drops", "Entity drops" and "Mob drops" redirect here. For the game rules, see [[Game rule]].}}
+
+[[File:Skeleton drops.png|thumb|right|Drops from a [[skeleton]]: an [[experience orb]], [[arrow]], and [[bone]].]]
+
+'''Drops''' are [[item (entity)|items]] that appear when [[mob]]s and some other [[entities]] die or when most kinds of [[block]]s are broken.
+
+== Types of drops ==
+Mobs do not drop any of the following if the game rule {{gmr|mob_drops|domobloot}} is set to {{cd|false}}.
+
+=== Common drops ===
+'''Common drops''' may appear at the location of a [[mob]] at the moment it receives [[Health#Death|fatal damage]]. Most mobs have certain items that they may drop when killed. Some common drops, such as [[leather]], don't always drop, but have a large chance (at least 50%, depending on the drop range) to do so. Some common drops, such as [[blaze rod]]s, don't drop at all if the mob was not killed by the [[player]].
+
+Each of these items has a drop range, which is a random [[wikipedia:Uniform distribution (discrete)|uniform distribution]] of numbers of items that drop. For example, a [[cow]] drops 0–2 leather items and 1–3 [[raw beef]] items. Because the range for leather includes 0, there is a {{frac|1|3}} chance of no leather being dropped.
+
+A [[baby animal]] does not drop any common drops upon death. 
+
+==== Looting ====
+Some common and uncommon drops are affected by the [[Looting]] enchantment. At most, a number of additional items equal to enchantment level are dropped.
+
+More specifically, the game generates a fractional number ranging from 0 to the Looting level, which is then rounded to the nearest integer. This causes the numbers in the middle of drop range to occur twice as often. The probabilities are as follows:
+
+{| class="wikitable"
+|+Looting extra items
+|-
+! Looting level
+! No items
+! 1 item
+! 2 items
+! 3 items
+|-
+| Looting I
+| {{frac|1|2}}
+| {{frac|1|2}}
+| --
+| --
+|-
+| Looting II
+| {{frac|1|4}}
+| {{frac|1|2}}
+| {{frac|1|4}}
+| --
+|-
+| Looting III
+| {{frac|1|6}}
+| {{frac|1|3}}
+| {{frac|1|3}}
+| {{frac|1|6}}
+|}
+
+A [[stray]]'s tipped [[arrow]] is a special case: while Looting can attempt to increase arrow drop amount, the final number of dropped arrows is capped at 1. So, Looting effectively increases arrow dropping odds, up to {{frac|11|12}} with Looting III.
+<!-- only common and rare drop shown at table 
+=== Uncommon drops ===
+''Uncommon drops'' normally consist of a single item that has less than 50% chance of dropping. Technically, they're just common drops that have a negative drop range minimum. For example, a spider's eye has a drop range of -1–1, so there's a {{frac|1|3}} chance of dropping one eye and {{frac|2|3}} chance to drop either zero or "negative one", i.e. nothing. They otherwise behave just like common drops.
+
+The Looting enchantment technically works just like it does for common drops, however, if "negative" number of items would drop before Looting bonus, it is subtracted from the bonus instead of being added to it, potentially bringing it down to zero.
+-->
+=== Rare drops ===
+''Rare drops'' normally appear if the monster is killed by a player (see {{Slink||Player kills}} below), although some rare drops can also be obtained by other means. Rare drops are always a single item, but may appear in conjunction with other common drops. A drop is considered rare if they are accompanied by the <code>random_chance_with_looting</code> condition in the mob's [[loot table]].
+
+Rare drops typically have a 2.5% chance of dropping, plus 1 percentage point per level of [[Looting]] on the weapon used (up to a maximum of 5.5% with Looting III). An exception to this is that a [[rabbit]] drops a [[rabbit's foot]] with a 10% chance, plus 3 percentage points per level of Looting (to a maximum of 19% with Looting III). {{In|Bedrock}} there are other exceptions: a [[wither skeleton]] drops a [[wither skeleton skull]] with a 2.5% chance plus 2 percentage points per level of Looting (to a maximum of 8.5% with Looting III), and a [[drowned]] drops a [[copper ingot]] with an 11% chance plus 2 percentage points per level of looting (to a maximum of 17% with Looting III).
+
+Note that in case of multiple rare drops ([[guardian]] and [[zombie]] types) the 2.5% chance is split between them, instead of being rolled for each item.
+
+The [[shulker shell]] is technically also a rare drop, only ever dropping in singles from [[shulker]]s, although they don't require a player kill, have a 50% base chance, and increase by 6.25% per Looting level.{{only|java|short=1}}
+
+=== Equipped items ===
+[[File:Power Bow Rare Drop.png|thumb|250px|An enchanted bow received from a skeleton's drops.]]
+
+When killed by a player or a tamed [[wolf]], a mob can drop equipment and armor that it spawned with. Each piece of equipment the mob was spawned with is dropped with an 8.5% chance {{in|java}} or 25% chance {{in|bedrock}}. [[Potion]]s and [[milk bucket]]s temporarily held by [[witch]]es or [[wandering trader]]s also have a 8.5% chance of dropping if the mob is killed while holding one; a [[vex]]'s [[iron sword]], and [[carved pumpkin]]s and [[jack o'lantern]]s worn during Halloween in ''Java Edition'' have a 0% chance instead. This value is determined by the mob's [[Chunk format/Mob|<code>drop_chances</code> tag]].
+
+The [[Looting]] enchantment increases this chance by 1% per level (up to 11.5% in ''Java Edition'' or 28% in ''Bedrock Edition'' with Looting III). The chance is rolled for each piece of equipment, so it is possible for a mob to drop more than one piece of equipment upon death.
+
+If the item has durability, its damage is defined by the formula: {{cd|MaxDamage – randomInt(1+ randomInt(Max(MaxDamage–3,1)))}} where {{cd|MaxDamage}} is the item's [[Data_component_format#max_damage|maximum damage]] and {{cd|randomInt(x)}} is an random integer between {{cd|0}} and {{cd|x–1}}. Thus the damage varies between 4 and the maximum damage, being more likely to have greater damage (if the maximum damage is less than 4, the damage is always equal to the maximum damage). More specifically, the chance of having the chance of having durability {{cd|0&le;d&le;M}}, where {{cd|M {{=}} Max(MaxDamage–3,1)}}, is given by the formula {{cd|{{frac|1|M}}(H<sub>M</sub>–H<sub>d</sub>)}}, where {{cd|H<sub>n</sub>{{=}} 1+1/2+1/3+...+1/n}}, which would be the [[w:Harmonic_number|harmonic number]] n, with {{cd|H<sub>0</sub>{{=}}0}}.
+
+There are also some equipped items that are guaranteed to drop. In all of these cases, the items are dropped even if the mob is not killed by a player or a tamed wolf.
+
+* All items a mob picks up after spawning are always dropped, even when it isn't killed by a player and even if it is a baby [[zombie]].
+** This is not the case for [[villager]]s.
+* The item a [[fox]] spawns with is always dropped.
+* A [[drowned]] spawned with a [[nautilus shell]] in the off-hand always drops it.
+* An ominous banner is always dropped by [[illager]]s wearing it.
+* [[Horse]]s, [[donkey]]s, [[mule]]s, [[llama]]s, [[camel]]s, [[happy ghast]]s, [[pig]]s, and [[strider]]s drop any [[item]]s equipped to them by players, like [[saddle]]s, [[carpet]]s or [[chest]]s.
+
+=== Experience orbs ===
+{{Main|Experience}}
+
+''Experience orbs'' drop only if a [[mob]] dies less than three seconds after being attacked (melee, bow, snowballs, eggs, and potions causing instant damage) by a player or by a player's pet [[wolf]], though not by a player-activated [[dispenser]]. Their total value is the specific amount of experience granted by killing that mob. They are also dropped from a thrown [[bottle o' enchanting]]. Collected experience accumulates into levels which can be used for [[enchanting]] or [[repairing]], or is split equally between accumulating levels and repairing the held tool if said tool is enchanted with [[mending]].
+
+Unlike other drops, such as [[item (entity)|items]], experience orbs appear at the location of the mob's corpse at the moment it disappears in a puff of smoke.{{only|be|short=1}} Experience orbs move toward any nearby players.
+
+== Mob drops ==
+===Animals and miscellaneous===
+{| class="wikitable" data-description="Mob drops"
+|-
+! Mob
+! Exp
+! Common drops
+! Rare drops
+! Equipped and worn items
+! Notes
+! Affected by the [[Looting]] enchantment
+|-
+| {{EntityLink|Agent}}{{only|bedrock|education|short=1}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Allay}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| {{Drop|Env|Item|text=Any item}}
+| Drops the items it is holding.
+| {{tc|no}}
+|-
+| {{EntityLink|Armadillo}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+| Brushing drops 1 {{ItemLink|Armadillo Scute}}. Also drops 1 {{ItemLink|Armadillo Scute}} every 5–10 minutes.
+| {{tc|no}}
+|-
+| {{EntityLink|Axolotl}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Bat}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Bee}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Camel}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''
+| If sheared when it has the saddle, the saddle drops.
+| {{tc|no}}
+|- 
+| {{EntityLink|Cat}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|String}}
+| ''None''
+| ''None''
+| Tamed cat can also give player gift at morning after player sleeps:
+
+* {{ItemLink|Feather}}
+* {{ItemLink|Phantom membrane}}
+* {{ItemLink|Rabbit's foot}}
+* {{ItemLink|Rabbit hide}}
+* {{ItemLink|Rotten flesh}}
+* {{ItemLink|Raw chicken}}
+* {{ItemLink|String}}
+| {{Tc|no}}
+|- 
+| {{EntityLink|Chicken}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Feather}}<br>1 {{ItemLink|Raw Chicken}} ''or'' 1 {{ItemLink|Cooked Chicken}}
+| ''None''
+| ''None''
+| Meat is cooked if killed while on fire.<br>Feather and meat drops are both affected by Looting.<br>Also lays an {{ItemLink|Egg}} every 5–10 minutes.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Cod}}
+| style="text-align:center" |1–3
+| 1 {{ItemLink|Raw Cod}} ''or'' 1 {{ItemLink|Cooked Cod}}{{only|Java|short=1}}
+| {{ItemLink|Bone}} (25%) {{only|bedrock|short=1}}<br>{{ItemLink|Bone Meal}} (5%) {{only|java|short=1}}
+| ''None''
+| Fish is cooked if killed while on fire.{{only|java|short=1}}
+| {{Tc|partial|bone and bone meal drops only}}
+|-
+| {{EntityLink|Copper Golem}}
+| style="text-align:center" |0
+| 1–3 {{ItemLink|Copper Ingot}}
+| ''None''
+| ''None''
+| Drops the item it is holding when turning into a {{BlockLink|Copper Golem Statue}}.<br>If it has a {{BlockLink|Poppy}} on its head, it drops it if sheared or if it turns into a statue.
+| {{tc|no}}
+|-
+|{{EntityLink|Cow}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Leather}}<br>1–3 {{ItemLink|Raw Beef}} ''or'' 1–3 {{ItemLink|Steak}}
+| ''None''
+| ''None''
+| Meat is cooked if killed while on fire.<br>Gives {{ItemLink|Milk Bucket}} when pressing {{Control|use}} with an empty bucket on it.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Dolphin}}
+| style="text-align:center" |1-3
+| 0–1 {{ItemLink|Raw Cod}}  ''or'' 0–1 {{ItemLink|Cooked Cod}}
+| ''None''
+| ''None''
+| Fish is cooked if died while on fire.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Donkey}}<br>{{EntityLink|Mule}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Leather}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''<br>1 {{BlockLink|Chest}} ''if equipped''
+| Also drops all of the chest's contents, if sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Fox}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+|
+{{ItemLink|Egg}}<br>{{ItemLink|Emerald}}<br>{{ItemLink|Feather}}<br>
+{{ItemLink|Leather}}<br>
+{{ItemLink|Rabbit Hide}}<br>
+{{ItemLink|Rabbit's Foot}}<br>
+{{ItemLink|Wheat}}
+| All naturally spawned items have 8.5%{{only|JE|short=1}} or 100%{{only|BE|short=1}} to drop, except cooked porkchop, which can be eaten by foxes.
+| {{Tc|yes|Increases chance of drop{{only|JE|short=1}}}}
+|-
+| {{EntityLink|Frog}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Goat}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| 1 {{ItemLink|Goat Horn}} ''if they ram into [[solid block]]s''
+| "Ponder", "Sing", "Seek" and "Feel" for normal goat.<br>"Admire", "Call", "Yearn" and "Dream" for screaming goat.
+| {{Tc|n/a}}
+|- 
+| {{EntityLink|Glow Squid}}
+| style="text-align:center" |1–3
+| 1–3 {{ItemLink|Glow Ink Sac}}
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Happy Ghast}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| 1 {{ItemLink|Harness}} ''if equipped''
+| If sheared when it has the harness, the harness drops.
+| {{Tc|no}}
+|-
+| {{EntityLink|Horse}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Leather}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''<br>1 {{ItemLink|id=iron-horse-armor|Horse Armor}} ''if equipped''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Iron Golem}}
+| style="text-align:center" |0
+| 3–5 {{ItemLink|Iron Ingot}}<br>0–2 {{BlockLink|Poppy}}
+| ''None''
+| ''None''
+|
+| {{Tc|no}}
+|-
+| {{EntityLink|Llama}}<br>{{EntityLink|Trader Llama}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Leather}}
+| ''None''
+| 1 {{BlockLink|Carpet|id=carpets}} ''if equipped''<br>1 {{BlockLink|Chest}} ''if equipped''
+| Also drops all of the chest's contents.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Mooshroom}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Leather}}<br>1–3 {{ItemLink|Raw Beef}} ''or'' 1–3 {{ItemLink|Steak}}
+| ''None''
+| ''None''
+| Meat is cooked if killed while on fire.<br>Shearing drops 5 corresponding {{BlockSprite|Brown Mushroom}} {{BlockSprite|Red Mushroom}}[[Mushroom]], converting it to a normal cow, a process that cannot be reverted.<br>Gives {{ItemLink|Milk Bucket}} when pressing {{Control|use}} with an empty bucket.<br>Gives {{ItemLink|Mushroom Stew}} when pressing {{control|use}} with an empty bowl on it.<br> If a brown mooshroom is fed a flower, then it produces {{ItemLink|suspicious stew}} if milked with a bowl, but only once.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Nautilus}}
+| style="text-align:center" |1–3
+| ''None''
+| 0–1 {{ItemLink|Nautilus Shell}}
+| 1 {{ItemLink|Saddle}} ''if saddled''<br>1 {{ItemLink|id=iron-nautilus-armor|Nautilus Armor}} ''if equipped''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|Yes}}
+|-
+| {{EntityLink|NPC}}{{only|bedrock|education|short=1}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Ocelot}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Panda}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Bamboo}}{{only|bedrock|short=1}}<br> 1 {{ItemLink|Bamboo}}{{only|java|short=1}}
+| ''None''
+| ''None''
+| Weak and baby pandas can sneeze, which drops a {{ItemLink|slimeball}}.
+| {{Tc|partial|No{{only|java|short=1}}<br>Yes{{only|bedrock|short=1}}}}
+|-
+| {{EntityLink|Parrot}}
+| style="text-align:center" |1–3
+| 1–2 {{ItemLink|Feather}}
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Polar Bear}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Raw Cod}} ''or'' 0–2 {{ItemLink|Cooked Cod}} ({{frac|3|4}} chance)<br>0–2 {{ItemLink|Raw Salmon}} ''or'' 0–2 {{ItemLink|Cooked Salmon}}({{frac|1|4}} chance)
+| ''None''
+| ''None''
+| Fish is cooked if died while on fire.{{Info needed|Do this work on BE?}}
+| {{Tc|yes}}
+|-
+| {{EntityLink|Pig}}
+| style="text-align:center" |1–3
+| 1–3 {{ItemLink|Raw Porkchop}} ''or'' 1–3 {{ItemLink|Cooked Porkchop}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''
+| Meat is cooked if died while on fire, if sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Pufferfish}}
+| style="text-align:center" |1–3
+| 1 {{ItemLink|link=Pufferfish (item)|Pufferfish}}
+| {{ItemLink|Bone}} (25%) {{only|bedrock|short=1}}<br>{{ItemLink|Bone Meal}} (5%) {{only|java|short=1}}
+| ''None''
+|
+| {{Tc|partial|bone and bone meal drops only}}
+|-
+| {{EntityLink|Rabbit}}
+| style="text-align:center" |1–3
+| 1 {{ItemLink|Raw Rabbit}} ''or'' 1 {{ItemLink|Cooked Rabbit}}<br>0–1 {{ItemLink|Rabbit Hide}}
+| {{ItemLink|Rabbit's Foot}} (10%)
+| ''None''
+| Meat is cooked if died while on fire.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Salmon}}
+| style="text-align:center" |1–3
+| 1 {{ItemLink|Raw Salmon}} ''or'' 1 {{ItemLink|Cooked Salmon}}{{only|java|short=1}}
+| {{ItemLink|Bone}} (25%) {{only|bedrock|short=1}}<br>{{ItemLink|Bone Meal}} (5%) {{only|java|short=1}}
+| ''None''
+| Small and normal salmon drop 0–2 bone while large salmon drop 1–2 bones.{{only|bedrock|short=1}}<br> Fish is cooked if died while on fire.{{only|java|short=1}}
+| {{Tc|partial|bone and bone meal drops only}}
+|-
+| {{EntityLink|Sheep}}
+| style="text-align:center" |1–3
+| 1 {{BlockLink|Wool}} ''if not sheared''<br>1–2 {{ItemLink|Raw Mutton}} ''or'' 1–2 {{ItemLink|Cooked Mutton}}
+| ''None''
+| ''None''
+| Shearing drops 1–3 {{BlockLink|Wool}}.<br>Wool is colored if the sheep was spawned colored or dyed.<br>Meat is cooked if died while on fire.
+| {{Tc|partial|Meat drop only}}
+|-
+| {{EntityLink|Sniffer}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| ''None''
+| Digs up {{ItemLink|torchflower seeds}} and {{ItemLink|pitcher pod|pitcher pods}}.
+| {{Tc|no}}
+|-
+| {{EntityLink|Snow Golem}}
+| style="text-align:center" |0
+| 0–15 {{ItemLink|Snowball}}
+| ''None''
+| ''None''
+| Shearing the snow golem that has carved pumpkin drops 1 {{BlockLink|carved pumpkin}}.
+| {{Tc|no}}
+|-
+| {{EntityLink|Squid}}
+| style="text-align:center" |1–3
+| 1–3 {{ItemLink|Ink Sac}}
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Strider}}
+| style="text-align:center" |1–3
+| 0–5 {{ItemLink|String}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|partial|Yes{{only|java|short=1}}<br>No{{only|bedrock|short=1}}}}
+|-
+| {{EntityLink|Tadpole}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Tropical Fish}}
+| style="text-align:center" |1–3
+| 1 {{ItemLink|link=Tropical Fish (item)|Tropical Fish}}
+| {{ItemLink|Bone}} (25%) {{only|bedrock|short=1}}<br>{{ItemLink|Bone Meal}} (5%) {{only|java|short=1}}
+| ''None''
+|
+| {{Tc|partial|bone and bone meal drops only}}
+|-
+| {{EntityLink|Turtle}}
+| style="text-align:center" |1–3
+| 0–2 {{BlockLink|Seagrass}}<br> 1 {{itemLink|bowl}} if killed by [[lightning bolt|lightning]].
+| ''None''
+| ''None''
+| Drops a single {{ItemLink|turtle scute}} when grows up to an adult.
+| {{Tc|partial|Seagrass only}}
+|-
+| {{EntityLink|Villager}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+| A villager can throw food to other villagers when sharing, which can be picked up:
+{{ItemLink|Bread}}, {{ItemLink|Carrot}}, {{ItemLink|Potato}}, {{ItemLink|Beetroot}}<br>
+Also {{in|je}}, villagers give player gift after completing [[raid]]s with possible drops depend on profession<br>
+{{Hidden begin|View possible drops}}
+{{EntitySprite|villager-armorer}} armorer:<br>
+
+* {{ItemLink|Chainmail Helmet}}
+* {{ItemLink|Chainmail Chestplate}}
+* {{ItemLink|Chainmail Leggings}}
+* {{ItemLink|Chainmail Boots}}
+
+{{EntitySprite|villager-butcher}} butcher:<br>
+
+* {{ItemLink|Cooked Chicken}}
+* {{ItemLink|Cooked Mutton}}
+* {{ItemLink|Cooked Porkchop}}
+* {{ItemLink|Cooked Rabbit}}
+* {{ItemLink|Steak}}
+
+{{EntitySprite|villager-cartographer}} cartographer:<br>	
+
+* {{ItemLink|Paper}}
+* {{ItemLink|Empty Map}}
+
+{{EntitySprite|villager-cleric}} cleric:<br>
+
+* {{ItemLink|Lapis Lazuli}}
+* {{ItemLink|Redstone Dust}}
+
+{{EntitySprite|villager-farmer}} farmer:<br>
+
+* {{ItemLink|Bread}}
+* {{ItemLink|Cookie}}
+* {{ItemLink|Pumpkin Pie}}
+
+{{EntitySprite|villager-fisherman}} fisherman:<br>
+
+* {{ItemLink|Raw Cod}}
+* {{ItemLink|Raw Salmon}}
+
+{{EntitySprite|villager-fletcher}} fletcher:<br>
+
+* {{ItemLink|Arrow}}
+* {{ItemLink|Arrow of Fire Resistance}}
+* {{ItemLink|Arrow of Harming}}
+* {{ItemLink|Arrow of Healing}}
+* {{ItemLink|Arrow of Invisibility}}
+* {{ItemLink|Arrow of Leaping}}
+* {{ItemLink|Arrow of Night Vision}}
+* {{ItemLink|Arrow of Poison}}
+* {{ItemLink|Arrow of Regeneration}}
+* {{ItemLink|Arrow of Slowness}}
+* {{ItemLink|Arrow of Strength}}
+* {{ItemLink|Arrow of Swiftness}}
+* {{ItemLink|Arrow of Water Breathing}}
+* {{ItemLink|Arrow of Weakness}}
+
+{{EntitySprite|villager-leatherworker}} leatherworker:<br>
+
+* {{ItemLink|Leather}}
+
+{{EntitySprite|villager-librarian}} librarian:<br>
+
+* {{ItemLink|Book}}
+
+{{EntitySprite|villager-mason}} mason:<br>
+
+* {{BlockLink|Clay}}
+
+{{EntitySprite|villager-shepherd}} shepherd:<br>
+
+* {{BlockLink|Wool}}
+
+{{EntitySprite|villager-toolsmith}} toolsmith:<br>
+
+* {{ItemLink|Stone Axe}}
+* {{ItemLink|Stone Hoe}}
+* {{ItemLink|Stone Pickaxe}}
+* {{ItemLink|Stone Shovel}}
+
+{{EntitySprite|villager-weaponsmith}} weaponsmith:<br>
+
+* {{ItemLink|Stone Axe}}
+* {{ItemLink|Iron Axe}}
+* {{ItemLink|Golden Axe}}
+
+{{EntitySprite|villager}} baby:<br>
+
+* {{BlockLink|Poppy}}
+
+{{EntitySprite|villager-nitwit}} nitwit:<br>
+
+* {{ItemLink|Wheat Seeds}}
+
+{{EntitySprite|villager}} unemployed:<br>
+
+* {{ItemLink|Wheat Seeds}}
+{{Hidden end}}
+| {{Tc|no}}
+|-
+| {{EntityLink|Wandering Trader}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| {{ItemLink|Potion of Invisibility}},<br>{{ItemLink|Milk Bucket}}, [[Wandering Trader#Trade offers|any tradable item]]{{Only|bedrock|short=1}}<br> (8.5% chance of dropping if drinking when killed) 
+| Potion of Invisibility, milk, and tradable items can be obtained only by killing the wandering trader while it is drinking the potion or milk.<br>Also drops 2 {{ItemLink|lead}} when killed or if detached from [[trader llama]].
+| {{Tc|yes|Increases chance of drop}}
+|-
+| {{EntityLink|Wolf}}
+| style="text-align:center" |1–3
+| ''None''
+| ''None''
+| 1 {{ItemLink|Wolf Armor}} ''if equipped''
+| If sheared when it has the wolf armor, its wolf armor drops.
+| {{Tc|no}}
+|}
+
+=== Monsters ===
+Weapons, tools, and armor dropped by mobs have at least 25 durability remaining, which is also the most common. Less-damaged items are increasingly rare.
+
+Except for gold swords and tools, items always have at least 26 points of damage taken. Gold items can be dropped un-damaged.
+{| class="wikitable" data-description="Mob drops"
+|-
+! Mob
+! Exp
+! Common drops
+! Rare drops
+! Equipped and worn items
+! Notes
+! Affected by the [[Looting]] enchantment
+|-
+| {{EntityLink|Blaze}}
+| style="text-align:center" |10
+| 0–1 {{ItemLink|Blaze Rod}} ''if killed by a player or a tamed [[wolf]]''
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Breeze}}
+| style="text-align:center" |10
+| 1–2 {{ItemLink|Breeze Rod}} ''if killed by a player or a tamed wolf''
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Camel Husk}}
+| style="text-align:center" |1–3
+| 2–3 {{ItemLink|Rotten Flesh}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Cave Spider}}<br>{{EntityLink|Spider}}
+| style="text-align:center" |5
+| 0–2 {{ItemLink|String}}<br>0–1 {{ItemLink|Spider Eye}} ''if killed by a player''
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Creaking}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|N/A}}
+|-
+| {{EntityLink|Creeper}}
+| style="text-align:center" |5
+| 0–2 {{ItemLink|Gunpowder}}<br>1 {{ItemLink|Music Discs}} ''if killed by any [[skeleton]]-type mob''<br>1 {{BlockLink|Creeper Head}} ''if killed by a [[charged creeper]]'s explosion''
+| ''None''
+| ''None''
+| Creepers never drop {{ItemLink|Music Disc Pigstep}}, {{ItemLink|Music Disc Otherside}}, {{ItemLink|Music Disc 5}}, {{ItemLink|Music Disc Relic}}, {{ItemLink|Music Disc Creator}}, {{ItemLink|id=music-disc-creator-music-box|Music Disc Creator (Music Box)}}, {{ItemLink|Music Disc Precipice}}, {{ItemLink|Music Disc Tears}}, {{ItemLink|Music Disc Lava Chicken}}.
+| {{Tc|partial|Gunpowder only}}
+|-
+| {{EntityLink|Drowned}}
+| style="text-align: center" |5<br>+ 1–3 ''if has equipment''<br>+ 7 ''if is a baby''
+| 0–2 {{ItemLink|Rotten Flesh}}
+| 11% chance to drop:<br>{{ItemLink|Copper Ingot}}
+| {{ItemLink|Trident}} ''if equipped and killed by a player''<br>{{ItemLink|Fishing Rod}}<br>{{ItemLink|Nautilus Shell}} (offhand only)<br>{{ItemLink|id=iron-chestplate|Armor|Random Armor}}<br>{{ItemLink|Diamond Sword}} if a zombie spawns from a trial spawner and it drowns.
+| Random armor dropped only if converted from zombies.<br>Always drop nautilus shell in offhand.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Elder Guardian}}
+| style="text-align:center" |10
+| 0–2 {{ItemLink|Prismarine Shard}}<br>0–1 {{ItemLink|Prismarine Crystals}}({{frac|1|3}} chance)<br>0–1 {{ItemLink|Raw Cod}} ({{frac|1|2}} chance) ''or''<br>0–1 {{ItemLink|Cooked Cod}} ({{frac|1|2}} chance) ''if killed by fire''{{only|java|short=1}}<br>1 {{BlockLink|Wet Sponge}} ''if killed by the player''<br>0–1 {{ItemLink|Tide Armor Trim}}
+| {{ItemLink|Raw Cod}} (1.5%) ''or''
+{{ItemLink|Cooked Cod}} (1.5%) ''if killed by fire''{{Only|Java|short=1}}<br>{{ItemLink|Raw Salmon}}(0.625%) ''or''
+{{ItemLink|Cooked Salmon}}(0.625%) if kill by fire{{Only|Java|short=1}}<br>{{ItemLink|Pufferfish}} (0.325%)<br>{{ItemLink|Tropical fish}} (0.05%) ''if killed by the player''
+<br/>
+| ''None''
+| Prismarine crystals drop only if raw cod fails.<br>Raw cod is both a common drop and a rare drop.<br>Raw cod common drop is cooked if died while on fire.{{only|java|short=1}}
+| {{Tc|partial|All except the sponge and armor trim}}
+|-
+| {{EntityLink|Elder Guardian Ghost}}{{only|bedrock|short=1}}
+| style="text-align:center" |0
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Ender Dragon}}
+| style="text-align:center" |12,000 or 500
+| ''None''
+| ''None''
+| ''None''
+| 12000 experience is dropped ''if it's the first ender dragon''.<br>Only 500 experience drops for subsequent ender dragons.<br>Activates portal in [[exit portal]]:<br>Generates 4 {{BlockLink|torch}}, 16 {{BlockLink|end stone}} at [[exit portal]] and <br>1 {{BlockLink|Dragon Egg}} ''if it's the first (or second{{only|BE|short=1}}) ender dragon''.<br> Generates an [[end gateway]] ''if it's one of the first 20 ender dragons''.
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Enderman}}
+| style="text-align:center" |5
+| 0–1 {{ItemLink|Ender Pearl}}
+| ''None''
+| ''None''
+| Also drops the block it is holding.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Endermite}}
+| style="text-align:center" |3
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Evoker}}
+| style="text-align:center" |10
+| {{ItemLink|Totem of Undying}} <br>0–1 {{ItemLink|Emerald}} if killed by the player
+| ''None''
+| 1 [[File:Illager Banner.png|x16px]] [[Ominous Banner]] ''if a [[raid captain]]''{{only|java|short=1}}<!-- evoker in Bedrock Edition never spawns as raid captain -->
+| A totem of undying is always dropped by evokers when killed.<br>An ominous banner is always dropped by the evoker when killed, but only if a raid captain.
+| {{Tc|partial|Emeralds only}}
+|-
+| {{EntityLink|Ghast}}
+| style="text-align:center" |5
+| 0–1 {{ItemLink|Ghast Tear}}<br>0–2 {{ItemLink|Gunpowder}}<br>1 {{ItemLink|Music Disc Tears}} ''if killed by a deflected fireball''
+| ''None''
+| ''None''
+|
+| {{Tc|partial|All except music disc}}
+|-
+| {{EntityLink|Giant}}{{only|java|short=1}}
+| style="text-align:center" |5
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Guardian}}
+| style="text-align:center" |10
+| 0–2 {{ItemLink|Prismarine Shard}}<br>0–1 {{ItemLink|Prismarine Crystals}}({{frac|2|5}} chance)<br>0–1 {{ItemLink|Raw Cod}} ({{frac|2|5}} chance) ''or''<br>0–1 {{ItemLink|Cooked Cod}} ({{frac|2|5}} chance) ''if killed by fire''{{Only|Java|short=1}} or ''if killed by the player''
+| {{ItemLink|Raw Cod}} (1.5%) ''or''
+{{ItemLink|Cooked Cod}} (1.5%) ''if killed by fire''{{Only|Java|short=1}}<br>{{ItemLink|Raw Salmon}}(0.625%) ''or''
+{{ItemLink|Cooked Salmon}}(0.625%) if kill by fire{{Only|Java|short=1}}<br>{{ItemLink|Pufferfish}} (0.325%)<br>{{ItemLink|Tropical fish}} (0.05%) ''if killed by the player''
+| ''None''
+| Prismarine crystals drop only if raw fish fails.<br>Raw cod is both a common drop and a rare drop.<br>Raw cod common drop is cooked if died while on fire.{{only|java|short=1}}
+| {{Tc|yes}}
+|-
+|{{EntityLink|Hoglin}}
+| style="text-align:center" |5
+| 2–4 {{ItemLink|Raw Porkchop}} or {{ItemLink|Cooked Porkchop}}<br>0–1 {{ItemLink|Leather}}
+| ''None''
+| ''None''
+| Meat is cooked if died while on fire.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Illusioner}}<br>{{only|java|short=1}}
+| style="text-align:center" |5
+| ''None''
+| ''None''
+| {{ItemLink|Bow}}<br>{{BlockLink|Ominous Banner}}''if a [[raid captain]]''
+| An ominous banner is always dropped by the illusioner when killed, but only if a raid captain.
+| {{Tc|partial|Increases chance for dropping bow only}}
+|-
+| {{EntityLink|Magma Cube}}
+| style="text-align:center" |1, 2, or 4
+| 0–1 {{ItemLink|Magma Cream}} if ''size > 1''<br> 1 {{BlockLink|Froglights|text=Froglight|link=Froglight}} ''if killed by a frog''
+| ''None''
+| ''None''
+|
+| {{Tc|partial|Magma cream only}}
+|-
+| {{EntityLink|Phantom}}
+| style="text-align:center" |5
+| 0–1 {{ItemLink|Phantom Membrane}} ''if killed by a player''
+| ''None''
+| ''None''
+|
+| {{Tc|Yes}}
+|-
+| {{EntityLink|Piglin}}
+| style="text-align:center" |5
+| 1 {{BlockLink|Piglin Head}} ''if killed by a charged creeper's explosion''
+| ''None''
+|{{ItemLink|Golden Sword}}<br>{{ItemLink|Crossbow}}<br>{{ItemLink|Golden Spear}}<br>{{ItemLink|id=golden-chestplate|Armor|Golden Armor}}
+| Piglins always drop [[Piglin#Picking_up_items|picked-up equipment and golden items]] (except gold ingots) upon death.
+| {{Tc|partial|All except piglin head}}
+|-
+| {{EntityLink|Piglin Brute}}
+| style="text-align:center" |20
+| ''None''
+| ''None''
+| {{ItemLink|Golden Axe}}
+| Axe may be enchanted.{{only|je|short=1}}.
+| {{Tc|Yes}}
+|-
+| {{EntityLink|Pillager}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| 0–2 {{ItemLink|Arrow}}{{only|bedrock|short=1}}<br>1 {{ItemLink|Ominous Bottle}} ''if a raid captain''
+| ''None''
+| {{ItemLink|Crossbow}}<br>1 [[File:Illager Banner.png|x16px]] [[Ominous Banner]] ''if a [[raid captain]]''
+| Crossbow may be enchanted.<br>An ominous banner is always dropped by the pillager when killed, but only if a raid captain.<br>Looting enchantment increase chance of dropping crossbow by 12% per level.<br> {{IN|be}} pillager spawn from raids can drop:<br>
+{{past|illager|copy={{Collapse|content=
+* 0–1 {{ItemLink|Emerald}}
+
+And an additional drop depends on difficulty, 65% chance of dropping on Easy and Normal, while 80% chance of dropping on Hard:
+* 0–1 {{ItemLink|Emerald}} ({{frac|10|39}} chance)<!-- or {{frac|20|78}} -->
+* 2–3 {{ItemLink|Emerald}} ({{frac|5|39}} chance)<!-- or {{frac|10|78}}-->
+* 4–5 {{ItemLink|Emerald}} ({{frac|2|39}} chance)<!-- or {{frac|4|78}}-->
+* 1 {{ItemLink|Enchanted Book}} ({{frac|2|39}} chance)<!-- or {{frac|4|78}} --><!-- empty {{frac|5|78}} (actually an iron_pick(not iron_pickaxe) but due the name is invalid causing to drop nothing)-->
+* 1 {{ItemLink|Iron Axe}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Shovel}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Sword}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Helmet}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Chestplate}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Leggings}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Boots}} ({{frac|5|78}} chance)
+
+Iron equipment from raider drops has 50% chance of being enchanted with random enchantment, and are always badly damaged. An emerald is both a regular raider drop and an additional raider drop. Looting increases the amount of emerald or chance for drop equipment. An additional emerald drops only if the drop of an enchanted book or iron equipment fails.}}}}{{Past|illager}} 
+| {{Tc|partial|all including raider drops{{only|bedrock|short=1}}, but not for ominous banner and ominous bottle}}
+|-
+| {{EntityLink|Ravager}}
+| style="text-align:center" |20
+| 1 {{ItemLink|Saddle}} ''if killed by a player''
+| ''None''
+| ''None''
+|
+| {{Tc|No}}
+|-
+| {{EntityLink|Shulker}}
+| style="text-align:center" |5
+| 0–1 {{ItemLink|Shulker Shell}}{{Only|BE}}
+| {{ItemLink|Shulker Shell}} (50%){{Only|Java}}
+| ''None''
+|On ''Java edition'' the shulker shell drop is rare, with looting increasing the chance of a drop. 
+On ''Bedrock edition'' 0–1 shells are dropped, with looting increasing the number of shells dropped. 
+| {{Tc|partial|Increases chance of dropping{{only|java|short=1}}<br>Increases quantity of shells dropped{{only|bedrock|short=1}}}}
+|-
+| {{EntityLink|Silverfish}}
+| style="text-align:center" |5
+| ''None''
+| ''None''
+| ''None''
+|
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Skeleton}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Bogged}}<br>{{EntityLink|Parched}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| 0–2 {{ItemLink|Arrow}}<br>0–2 {{ItemLink|Bone}}<br>1 {{BlockLink|Skeleton Skull}} ''if killed by a charged creeper's explosion (normal skeleton only)''<br>0–1 {{ItemLink|Arrow of Slowness}} ''if a Stray''<br>0–1 {{ItemLink|Arrow of Poison}} ''if a Bogged''<br>0–1 {{ItemLink|Arrow of Weakness}} ''if a Parched''
+| ''None''
+| {{ItemLink|Bow}}<br>{{ItemLink|id=iron-chestplate|Armor|Random Armor}}
+| Gear may be enchanted.<br>A bogged drops 2 {{BlockLink|id=mushrooms|Mushroom}} (either both red/brown or one of each) when sheared.
+| {{Tc|partial|bone and arrow drops only}}
+|-
+| {{EntityLink|Skeleton Horse}}
+| style="text-align:center" |1–3
+| 0–2 {{ItemLink|Bone}}
+| ''None''
+| 1 {{ItemLink|Saddle}} if saddled {{only|java|short=1}}
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Slime}}
+| style="text-align:center" |1, 2, or 4
+| 0–2 {{ItemLink|Slimeball}} if size = 1<br>1 {{ItemLink|Slimeball}} ''if killed by a frog''
+| ''None''
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Vex}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| ''None''
+| ''None''
+| ''None''
+| Iron sword never drops, even with Looting.
+| {{Tc|n/a}}
+|-
+| {{EntityLink|Vindicator}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| 0–1 {{ItemLink|Emerald}}
+| ''None''
+| {{ItemLink|Iron Axe}}<br>[[File:Illager Banner.png|x16px]] [[Ominous Banner]] ''if a [[raid captain]]''
+| Drops loot only if killed by the player.<br>Iron axe may be enchanted.<br>An ominous banner is always dropped by the vindicator when killed, but only if a raid captain.<br>{{IN|be}}, vindicators spawn from raids can drop:
+{{Past|illager}}
+| {{Tc|partial|all including from raider drops{{only|bedrock|short=1}}, but not for ominous banner}}
+|-
+| {{EntityLink|Warden}}
+| style="text-align:center" |5
+| 1 {{BlockLink|Sculk Catalyst}}
+| ''None''
+| ''None''
+|
+| {{Tc|no}}
+|-
+| {{EntityLink|Witch}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| 0–6 {{ItemLink|Glass Bottle}}<br>0–6 {{ItemLink|Glowstone Dust}}<br>0–6 {{ItemLink|Gunpowder}}<br>
+4–8 {{ItemLink|Redstone Dust}}<br>
+0–6 {{ItemLink|Spider Eye}}<br>0–6 {{ItemLink|Stick}}<br>0–6 {{ItemLink|Sugar}}
+| ''None''
+| {{ItemLink|id=Potion-of-Healing|Potions|Potion of Healing}}<br>{{ItemLink|id=Potion-of-Fire-Resistance|Potions|Potion of Fire Resistance}}<br>{{ItemLink|id=Potion-of-Swiftness|Potions|Potion of Swiftness}}<br>{{ItemLink|id=Potion-of-Water-Breathing|Potions|Potion of Water Breathing}}<br> (Have a 8.5% chance of dropping if drinking when killed)
+| On death, witches drop redstone and 1–3 other item types, each 0–2 times. The same type can be chosen multiple times, therefore it is possible to get 6 of one item. Sticks are twice as likely to be dropped as the other common drops. Potions can be obtained only by killing the witch while it is drinking the potion.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Wither}}
+| style="text-align:center" |50
+| 1 {{ItemLink|Nether Star}}
+| ''None''
+| ''None''
+|
+The Nether Star takes 10 minutes (as opposed to 5 minutes normally) to [[Item#Behavior|despawn]]{{only|java|short=1}} <Br> The Nether Star never [[Item#behavior|despawns]]{{only|bedrock|short=1}}
+| {{Tc|no}}
+|-
+| {{EntityLink|Wither Skeleton}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''
+| 0–1 {{ItemLink|Coal}}<br>0–2 {{ItemLink|Bone}}<br> {{BlockLink|Wither Skeleton Skull}} ''if killed by a charged creeper's explosion''
+| {{BlockLink|Wither Skeleton Skull}} (2.5%) ''if killed by player''
+| {{ItemLink|Stone Sword}}
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Zoglin}}
+| style="text-align:center" |5
+| 1–3 {{ItemLink|Rotten Flesh}}
+|
+| ''None''
+|
+| {{Tc|yes}}
+|-
+| {{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}<br>{{EntityLink|Husk}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment''<br>+ 7 ''if is a baby''
+| 0–2 {{ItemLink|Rotten Flesh}}<br>1 {{BlockLink|Zombie Head}} ''if killed by a charged creeper's explosion'' (normal zombie only)<br>1 {{ItemLink|Music Disc Lava Chicken}} ''if killed by a player, the zombie is a baby, and it is riding a chicken'' (normal zombie only)<br>0–1 {{BlockLink|Red Mushroom}} ''Only if riding a zombie horse'' (normal zombie only)<br>0–1 {{ItemLink|Rabbit's Foot}} ''Only if riding a camel husk'' (husk only)
+| 2.5% chance to drop;<br>{{ItemLink|Iron Ingot}} ''or''<br>{{ItemLink|Carrot}} ''or''<br>{{ItemLink|Potato}} ({{ItemLink|Baked Potato}} if killed by fire) {{only|java|short=1}}
+| {{ItemLink|Iron Shovel}}<br>{{ItemLink|Iron Sword}}<br>{{ItemLink|Iron Spear}} (occasionally or always being part of [[zombie horsemen]], and [[camel husk jockey]])<br>{{ItemLink|id=iron-chestplate|Armor|Random Armor}}<br>{{ItemLink|Diamond Sword}} if spawned from a trial spawner.
+| Gear may be enchanted. Zombie villagers do not spawn with equipment {{in|BE}}.
+| {{Tc|partial|All except music disc and zombie head}}
+|-
+| {{EntityLink|Zombie Horse}}
+| style="text-align:center" |1–3
+| 2–3 {{ItemLink|Rotten Flesh}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''<br>1 {{ItemLink|id=iron-horse-armor|Horse Armor}} ''if equipped''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|yes}}
+|-
+| {{EntityLink|Zombie Nautilus}}
+| style="text-align:center" |1–3
+| 0–3 {{ItemLink|Rotten Flesh}}
+| ''None''
+| 1 {{ItemLink|Saddle}} ''if saddled''<br>1 {{ItemLink|id=iron-nautilus-armor|Nautilus Armor}} ''if equipped''
+| If sheared when it has the saddle, the saddle drops.
+| {{Tc|Yes}}
+|-
+| {{EntityLink|Zombified Piglin}}
+| style="text-align:center" |5<br>+ 1–3 ''if has equipment'' <br>+ 7 ''if is a baby''
+| 0–1 {{ItemLink|Rotten Flesh}}<br>0–1 {{ItemLink|Gold Nugget}}
+| {{ItemLink|Gold Ingot}} (2.5%) ''if killed by player''
+| {{ItemLink|Golden Sword}}<br>{{ItemLink|Golden Spear}}<br>{{ItemLink|Crossbow}} if zombified from a [[piglin]] with [[crossbow]]<br>{{ItemLink|Golden Axe}} if zombified from a piglin brute<br>{{ItemLink|Warped Fungus on a Stick}} if a strider jockey<br>{{ItemLink|id=golden-chestplate|Golden Armor}} if zombified from a piglin with armor.
+| Golden sword may be enchanted.
+| {{Tc|yes}}
+|}
+
+=== Player kills ===
+
+For most mobs, only one of the items below can drop in a single death. With the exception of items that have a 100% drop chance, the sponge of an elder guardian and the music disc lava chicken of a baby zombie rinding a chicken, in these cases there the item drops always and has a chance of at least one additional different item dropping. Another exception is the poisonous potato zombie, which has a chance of dropping simultaneously the poision potato plant and the poisonous potato headpiece.
+
+{{#invoke:Drop sources of type|main|player_only,player_or_pet}}
+
+== Entity drops ==
+=== Projectiles ===
+{| class="wikitable" data-description="Entity drops"
+|-
+! Entity
+! Drops
+! Notes
+|-
+| {{ItemLink|Bottle o' Enchanting}}
+| 3–11 {{EntityLink|id=experience-orb|Experience}}
+|
+|-
+| {{EntityLink|Egg}}
+| 0–4 {{EntityLink|Chicken|Baby Chicken}} ''spawned''
+| Eggs have a {{fraction|1|8}} chance of spawning one baby chicken. If that were to happen, there is an additional {{fraction|1|32}} chance of the egg spawning four baby chickens instead of one.
+|-
+| {{ItemLink|Ender Pearl}}
+| 0–1 {{EntityLink|Endermite}}
+| Ender pearls have a 5% chance of spawning endermite.
+|}
+
+=== Stationary ===
+{| class="wikitable" data-description="Entity drops"
+|-
+! Entity
+! Drops
+! Notes
+|-
+| {{EntityLink|Armor Stand}}
+| 0–1 {{ItemLink|Armor Stand}}
+| Drops itself, armor it wears, and the item it holds. In Bedrock Edition, if destroyed by fire, lava, campfires or the Instant Damage or Wither status effect, it yields no armor stand item and any equipped items are counted as 'naturally-spawned equipment' and have a 8.5% chance of dropping and if the equipped item is a weapon, tool, or armor piece, it is badly damaged.<ref>{{Bug|MCPE-24341}}</ref>
+|- 
+| {{EntityLink|End Crystal}}
+| ''None''
+| Creates an explosion when destroyed, 50% more powerful than TNT.<!-- equal to charged creeper explosion -->
+|-
+| {{EntityLink|Item Frame}}<br>{{only|java|short=1}}<!-- item frame isn't an entity in bedrock -->
+| 1 {{ItemLink|Item Frame}}
+| Drops itself and the item it contains.
+|-
+| {{EntityLink|Glow Item Frame}}<br>{{only|java|short=1}}<!-- glow item frame isn't an entity in bedrock -->
+| 1 {{ItemLink|Glow Item Frame}}
+| Drops itself and the item it contains.
+|-
+| {{EntityLink|Painting}}
+| 1 {{ItemLink|Painting}}
+|
+|-
+| {{EntityLink|Player}}
+| The player's inventory and experience
+| Only {{xp|7}} experience points are dropped per level, and a maximum of {{xp|100}} can be dropped.
+|}
+
+=== Vehicles ===
+{| class="wikitable" data-description="Entity drops"
+|-
+! Entity
+! Drops
+! Notes
+|-
+| {{EntityLink|Boat}}
+| 1 {{ItemSprite|oak-boat}}{{ItemSprite|spruce-boat}}{{ItemSprite|birch-boat}}{{ItemSprite|jungle-boat}}{{ItemSprite|acacia-boat}}{{ItemSprite|dark-oak-boat}}{{ItemSprite|mangrove-boat}}{{ItemSprite|cherry-boat}}{{ItemSprite|pale-oak-boat}}{{ItemSprite|bamboo-raft}} Boat or raft of the corresponding type
+|
+|-
+| {{EntityLink|Boat with Chest}}
+| (1 {{ItemSprite|oak-boat}}{{ItemSprite|spruce-boat}}{{ItemSprite|birch-boat}}{{ItemSprite|jungle-boat}}{{ItemSprite|acacia-boat}}{{ItemSprite|dark-oak-boat}}{{ItemSprite|mangrove-boat}}{{ItemSprite|cherry-boat}}{{ItemSprite|pale-oak-boat}}{{ItemSprite|bamboo-raft}} Boat or raft of the corresponding type<br> 1 {{BlockLink|Chest}}{{only|BE|short=1}})<br> 1 {{ItemSprite|oak-boat-with-chest}}{{ItemSprite|spruce-boat-with-chest}}{{ItemSprite|birch-boat-with-chest}}{{ItemSprite|jungle-boat-with-chest}}{{ItemSprite|acacia-boat-with-chest}}{{ItemSprite|dark-oak-boat-with-chest}}{{ItemSprite|mangrove-boat-with-chest}}{{ItemSprite|cherry-boat-with-chest}}{{ItemSprite|pale-oak-boat-with-chest}}{{ItemSprite|bamboo-raft-with-chest}} Boat or raft of the corresponding type{{only|JE|short=1}}
+| Also drops all of the chest's contents.
+|-
+| {{EntityLink|Minecart}}
+| 1 {{ItemLink|Minecart}}
+|
+|-
+| {{EntityLink|Minecart with Chest}}
+| 1 {{ItemLink|Minecart with Chest}}
+| Also drops all of the chest's contents.
+|-
+| {{EntityLink|Minecart with Command Block}}
+| 1 {{ItemLink|Minecart}}
+|
+|-
+| {{EntityLink|Minecart with Furnace}}<br>{{only|JE|short=1}}
+| 1 {{ItemLink|Minecart with Furnace}}
+|
+|-
+| {{EntityLink|Minecart with Hopper}}
+| 1 {{ItemLink|Minecart with Hopper}}
+| Also drops all of its contents.
+|-
+| {{EntityLink|Minecart with Monster Spawner}}<br>{{only|JE|short=1}}
+| 1 {{ItemLink|Minecart}}
+|
+|-
+| {{EntityLink|Minecart with TNT}}
+| 1 {{ItemLink|Minecart with TNT}}
+| Drops nothing when activated or destroyed by an explosion.
+|}
+{{notelist|n}}
+
+== Block drops ==
+Most blocks drop themselves when broken - sometimes [[Silk Touch]] enchantment or a specific [[tool]] is required. All other cases, when blocks drop something different (or don't drop anything), are listed below. Unbreakable blocks, like [[bedrock]], are not listed. "Obtainable with Silk Touch" column indicates if the block can be collected using the Silk Touch enchantment. See [[Silk Touch#Obtainable blocks]] for more information. [[Fortune]] enchantment can affect number of block drops and probabilities (but not the type) as well, see [[Fortune#Usage]] for more information.
+
+=== Materials and building blocks ===
+{| class="wikitable" data-description="Block drops"
+|-
+! Block
+! Exp
+! Normal drops
+! Obtainable with [[Silk Touch]]
+! Affected by the [[Fortune]] enchantment
+! Notes
+|-
+| {{BlockLink|Amethyst Cluster}}
+| style="text-align:center" |—
+| 4 {{ItemLink|Amethyst Shard}} ''if broken with pickaxe''.<br> 2 {{ItemLink|Amethyst Shard}} ''if broken with hand or other tool''.
+| {{tc|yes}}
+| {{tc|yes}}
+|
+|-
+| {{BlockLink|Small Amethyst Bud}}<br>{{BlockLink|Medium Amethyst Bud}}<br>{{BlockLink|Large Amethyst Bud}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|yes}}
+| {{tc|no}}
+|
+|-
+| {{BlockLink|Bookshelf}}
+| style="text-align:center" |—
+| 3 {{ItemLink|Book}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Budding Amethyst}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Calibrated Sculk Sensor}}
+| style="text-align:center" |5
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Campfire}}
+| style="text-align:center" |—
+| 2 {{ItemLink|Charcoal}}
+| {{tc|yes}}
+| {{Tc|no}}
+| Also drops the [[food]] on the campfire.
+|-
+| {{BlockLink|Clay}}
+| style="text-align:center" |—
+| 4 {{ItemLink|Clay Ball}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Chiseled Bookshelf}}
+| style="text-align:center" |—
+|''None''
+| {{tc|yes}}
+| {{Tc|no}}
+| Also drops the [[book]]s in the chiseled bookshelf.
+|-
+| {{BlockLink|Cobweb}}
+| style="text-align:center" |—
+| 1 {{ItemLink|String}} ''if broken with a sword, affected by water, or pushed by a piston''<br>1 {{BlockLink|Cobweb}} ''if broken with shears''
+| {{tc|partial}}
+| {{Tc|no}}
+| Cobweb drops itself when broken with [[shears]] or a [[Silk Touch]] sword.
+|-
+| {{BlockLink|Composter}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Composter}} +<br>1 {{ItemLink|Bone Meal}} ''if composter was at'' <code>level=8</code>
+| {{Tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Creaking Heart}}
+| style="text-align:center" |20–24
+| 1–3 {{BlockLink|Resin Clump}}
+| {{tc|yes}}
+| {{Tc|yes}}
+| The [[Fortune]] enchantment increases the maximum by 1 per level up to a maximum of 6, with Fortune III increasing the chance of larger drops.<br>Natural-generated Creaking Heart always drops 20–24 experience points, even when mined with a [[Silk Touch]] tool.
+|-
+| {{BlockLink|Decorated Pot}}
+| style="text-align:center" |—
+| 4 {{ItemLink|id=all pottery sherds|Pottery Sherd}}(s)/{{ItemLink|Brick}}(s) ''if mined with a non-[[Silk Touch]] tool or hit by [[projectiles]]'' <br> 1{{BlockLink|Decorated Pot}} otherwise
+| {{tc|yes}}
+| {{Tc|no}}
+| Also drops its contents.
+|-
+| {{BlockLink|Deepslate}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{BlockLink|Cobbled Deepslate}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| rowspan="2" |{{BlockLink|Dirt Path}}
+| rowspan="2" style="text-align:center" |—
+| rowspan="2" | 1 {{BlockLink|Dirt}}
+| {{tc|no}}
+| {{Tc|no}}
+| rowspan="2" |
+|-
+| {{Tc|yes}}{{only|BE|short=1}}
+| {{tc|no}}
+|-
+| {{BlockLink|id=double-smooth-stone-slab|Slabs|Double Slab}}
+| style="text-align:center" |—
+| 2 {{BlockLink|id=smooth-stone-slab|Slabs|Slab}}
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Farmland}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Dirt}}
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Frosted Ice}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+| If there is another (solid or liquid) block directly underneath the block, it reverts to water when broken. This doesn't work in [[the Nether]].
+|-
+| {{BlockLink|Gilded Blackstone}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{BlockLink|Gilded Blackstone}} ''or'' 2–5 {{ItemLink|Gold Nugget}}
+| {{tc|yes}}
+| {{Tc|partial|Increases chance of dropping [[gold nugget]]}}
+| Gold nugget is dropped with 10% chance without [[Fortune]].<br>The Fortune enchantment increases this chance to 14.29% at Fortune I, 25% at Fortune II, and 100% at Fortune III.<br>Using Silk Touch gets 100% chance of dropping gilded blackstone.
+|-
+| {{BlockLink|Glowstone}}
+| style="text-align:center" |—
+| 2–4 {{ItemLink|Glowstone Dust}}
+| {{tc|yes}}
+| {{Tc|yes|yes, capped at 4}}
+|
+|-
+| {{BlockLink|Glass}}<br>{{BlockLink|Stained Glass}}<br>{{BlockLink|Glass Pane}}<br>{{BlockLink|id=Stained Glass Panes|Stained Glass Pane}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Grass Block}}<br>{{BlockLink|Mycelium}}<br>{{BlockLink|Podzol}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Dirt}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Gravel}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Gravel}} ''or'' 1 {{ItemLink|Flint}}
+| {{tc|yes}}
+| {{Tc|partial|Increases chance of dropping [[flint]] instead of gravel}}
+| Flint is dropped with 10% chance without [[Fortune]].<br>The Fortune enchantment increases this chance to 14% (or 1/7) at Fortune I, 25% at Fortune II, and 100% at Fortune III.<br>Using Silk Touch gets 100% chance of dropping gravel.
+|-
+| {{BlockSprite|Crimson Nylium}}{{BlockSprite|Warped Nylium}}Crimson/Warped [[Nylium]]<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{BlockLink|Netherrack}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Reinforced Deepslate}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Sea Lantern}}
+| style="text-align:center" |—
+| 2–3 {{ItemLink|Prismarine Crystals}}
+| {{tc|yes}}
+| {{Tc|yes}}
+| The Fortune enchantment increases the maximum by 1 per level up to a maximum of 5, with Fortune III increasing the chance of larger drops.
+|-
+| {{BlockLink|Sculk}}
+| style="text-align:center" |1
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Sculk Catalyst}}
+| style="text-align:center" |5
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Sculk Sensor}}
+| style="text-align:center" |5
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Sculk Shrieker}}
+| style="text-align:center" |5
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+| When broken, it loses the ability to summon the [[warden]], even if mined with [[Silk Touch]].
+|-
+| {{BlockLink|Sculk Vein}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Snow}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1–8 {{ItemLink|Snowball}} ''if broken by a [[shovel]]''
+| {{tc|partial}}
+| {{Tc|no}}
+| 1 {{ItemLink|Snowball}} per layer without Silk Touch.<br>1 {{BlockLink|Snow}} per layers in layer(s) 1–7 with Silk Touch.<br>1 {{BlockLink|Snow block}} in layers 8 with Silk Touch.
+|-
+| {{BlockLink|Snow Block}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 4 {{ItemLink|Snowball}} ''if broken by a [[shovel]]''
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Soul Campfire}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Soul Soil}}
+| {{tc|yes}}
+| {{Tc|no}}
+|Also drops the [[food]] on campfire.
+|-
+| {{BlockLink|Stone}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{BlockLink|Cobblestone}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|}
+
+=== Ores ===
+{| class="wikitable" data-description="Block drops"
+|-
+! Block
+! Exp
+! Normal drops
+! Obtainable with [[Silk Touch]]
+! Affected by the [[Fortune]] enchantment
+|-
+| {{BlockLink|Coal Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Coal Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |0–2
+| 1 {{ItemLink|Coal}}
+| {{tc|yes}}
+| {{Tc|yes}}
+|-
+| {{BlockLink|Copper Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Copper Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 2–5 {{ItemLink|Raw Copper}}
+| {{tc|yes}}
+| {{Tc|yes}}
+|-
+| {{BlockLink|Diamond Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Diamond Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |3–7
+| 1 {{ItemLink|Diamond}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Emerald Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Emerald Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |3–7
+| 1 {{ItemLink|Emerald}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Iron Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Iron Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{ItemLink|Raw Iron}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Gold Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Gold Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{ItemLink|Raw Gold}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Lapis Lazuli Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Lapis Lazuli Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |2–5
+| 4–9 {{ItemLink|Lapis Lazuli}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Nether Quartz Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |2–5
+| 1 {{ItemLink|Nether Quartz}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Nether Gold Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |0–1
+| 2–6 {{ItemLink|Gold Nugget}}
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| {{BlockLink|Redstone Ore}}<sup>[[#notes|T]]</sup>, {{BlockLink|Deepslate Redstone Ore}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |1–5
+| 4–5 {{ItemLink|Redstone Dust}}
+| {{tc|yes}}
+| {{tc|yes}}
+|}
+
+=== Plants, corals and mushrooms ===
+{| class="wikitable" data-description="Block drops"
+|-
+! Block
+! Exp
+! Normal drops
+! Obtainable with [[Silk Touch]]
+! Affected by the [[Fortune]] enchantment
+! Notes
+|-
+| {{BlockLink|Beetroots|link=Beetroot Seeds}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Beetroot Seeds}} ''if premature''<br>0–3 {{ItemLink|Beetroot Seeds}} ''if fully grown''<br>1 {{ItemLink|Beetroot}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|partial|Affects seeds only if fully grown}}
+|
+|-
+| {{BlockLink|Carrots}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Carrot}} ''if premature''<br>1–4 {{ItemLink|Carrot}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|partial|Affects only if fully grown}}
+|
+|-
+| {{BlockLink|id=lit-cave-vines|Cave Vines}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Glow Berries}} if have berries
+| {{Tc|partial}}{{only|BE|short=1}}
+| {{tc|no}}
+| Also, {{control|using}} the cave vines or [[fox]] harvest yield same amount.<br>{{IN|Bedrock}}, using a tool with Silk Touch on cave vines always yields a glow berry, even if the vine appears empty.
+|-
+| {{BlockLink|Chorus Plant}}
+| style="text-align:center" |—
+| 0–1 {{ItemLink|Chorus Fruit}}
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Cocoa}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Cocoa Beans}} ''if premature''<br>3 {{ItemLink|Cocoa Beans}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Coral Blocks}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |—
+| 1 {{BlockLink|Dead Coral Block}}
+| {{tc|yes}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Dead Bush}}
+| style="text-align:center" |—
+| 0–2 {{ItemLink|Stick}}
+| {{tc|no}}
+| {{Tc|no}}
+| An original block is dropped when broken using [[shears]].
+|-
+| {{BlockLink|Short Grass}}<br>{{BlockLink|Tall Grass}}<br>{{BlockLink|Fern}}<br>{{BlockLink|Large Fern}}
+| style="text-align:center" |—
+| 0–1 {{ItemLink|Wheat Seeds}}
+| {{tc|no}}
+| {{Tc|yes}}
+| In case of grass and ferns, an original block is dropped instead when broken using [[shears]]. Tall grass and large fern drop their respective smaller variant. <br>Seeds are dropped with 12.5% chance. [[Fortune]] increases drop by 2 per level.
+|-
+| {{BlockLink|id=mushroom-blocks|Mushroom Block}}
+| style="text-align:center" |—
+| 0–2 {{BlockLink|Mushrooms}}
+| {{tc|partial}}
+| {{Tc|no}}
+| There is 80% chance that no mushroom is dropped, and 10% for both one and two mushrooms. On average that gives 0.3 mushrooms per block.<br>Silk Touch drops a block with all sides the default mushroom face, red with spots or brown.
+|-
+| {{BlockLink|Mushroom Stem}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|partial}}
+| {{Tc|no}}
+| Silk Touch drops a block with all sides the default mushroom stem face.
+|-
+| {{BlockLink|Leaves}}
+| style="text-align:center" |—
+| 0–1 {{BlockLink|Saplings}}<br>0–1 {{BlockLink|Azalea}} ''from azalea leaves''<br>0–2 {{ItemLink|Stick}}<br>0–1 {{ItemLink|Apple}} ''from oak and dark oak leaves''<br>0–1 {{BlockLink|Mangrove Propagule}} ''from mangrove leaves''
+| {{tc|yes}}
+| {{Tc|yes}}
+| When broken using [[shears]], the original block is dropped along with the normal drops.<br>Jungle sapling is dropped with 2.5% chance; all other saplings and azalea are dropped with 5% chance.<br>An apple is dropped with 0.5% chance.<br>
+|-
+| {{BlockLink|Melon}}
+| style="text-align:center" |—
+| 9 {{ItemLink|Melon Slice}} ''if broken with [[shears]]''{{Only|bedrock|short=1}}''<br>3–7 {{ItemLink|Melon Slice}} ''otherwise
+| {{tc|yes}}
+| {{Tc|yes|yes, capped at 9}}
+|
+|-
+| {{BlockLink|Melon Stem}}
+| style="text-align:center" |—
+| 0–3 {{ItemLink|Melon Seeds}}
+| {{tc|no}}
+| {{Tc|no}}
+| Every one of three possible seeds is dropped with a chance dependent on growth stage, ranging from 7% (just planted) to 53% (fully grown).
+|-
+| {{BlockLink|Pitcher Crop}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Pitcher Pod}} ''if premature''<br>1 {{BlockLink|Pitcher Plant}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Potatoes}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Potato}} ''if premature''<br>1–4 {{ItemLink|Potato}} ''if fully grown''<br>0–1 {{ItemLink|Poisonous Potato}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|partial|Affects only if fully grown}}
+| Poisonous potato is dropped with 2% chance.
+|-
+| {{BlockLink|Pumpkin Stem}}
+| style="text-align:center" |—
+| 0–3 {{ItemLink|Pumpkin Seeds}}
+| {{tc|no}}
+| {{Tc|yes}}
+| Every one of three possible seeds is dropped with a chance dependent on growth stage, ranging from 7% (just planted) to 53% (fully grown).
+|-
+| {{BlockLink|id=sweet berry bush|Sweet Berries}}
+| style="text-align:center" |—
+| 1–2 {{ItemLink|Sweet Berries}} ''if at'' <code>age=3</code> <br>1–2 {{ItemLink|Sweet Berries}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|partial|Affects only if third or fully grown}}
+| Also, {{control|using}} the cave vines or fox harvest yield same amount.<br>Each Fortune level can increase the amount of drops by 1.
+|-
+| {{BlockLink|Torchflower Crop}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Torchflower Seeds}} ''if premature''<br>1 {{BlockLink|Torchflower}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Wheat}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Wheat Seeds}} ''if premature''<br>0–4 {{ItemLink|Wheat Seeds}} ''if fully grown''<br>1 {{ItemLink|Wheat}} ''if fully grown''
+| {{tc|no}}
+| {{Tc|partial|Affects seeds only if fully grown}}
+|
+|}
+
+=== Other ===
+{| class="wikitable" data-description="Block drops"
+|-
+! Block
+! Exp
+! Normal drops
+! Obtainable with [[Silk Touch]]
+! Affected by the [[Fortune]] enchantment
+! Notes
+|-
+| {{BlockLink|Cake}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Candle Cake}}
+| style="text-align:center" |—
+| 1 {{ItemLink|Candle}}
+| {{tc|no}}
+| {{tc|no}}
+|
+|-
+| {{BlockLink|Ender Chest}}
+| style="text-align:center" |—
+| 8 {{BlockLink|Obsidian}}
+| {{tc|yes}}
+| {{Tc|no}}
+| Does not drop its contents when broken.
+|-
+| {{BlockLink|Fire}}<br>{{BlockLink|Soul Fire}}
+| style="text-align:center" |—
+|''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Frogspawn}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Infested Blocks}}
+| style="text-align:center" |—
+| 1 {{EntityLink|Silverfish}}
+| {{tc|partial}}
+| {{Tc|no}}
+| When an infested block is destroyed by a tool with [[Silk Touch]] enchantment, it drops the type of block that the infested block is disguised as (i.e. stone, cobblestone, stone brick...), and [[silverfish]] does not spawn.
+|-
+| {{BlockLink|Inverted Daylight Detector}}
+| style="text-align:center" |—
+| 1 {{BlockLink|Daylight Detector}}
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Monster Spawner}}<sup>[[#notes|T]]</sup>
+| style="text-align:center" |15–43
+| ''None''
+| {{tc|no}}
+| {{Tc|no}}
+|
+|-
+| {{BlockLink|Powder Snow}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{tc|no}}
+|Can get it only with a [[bucket]], but not in block form.
+|-
+| {{BlockLink|Suspicious Gravel}}<br>{{BlockLink|Suspicious Sand}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{tc|no}}
+| Drop itself if it falls for more than 30 seconds, which can be achieved by falling into an upward [[bubble column]], or through two [[cobweb]]s stacked on top of each other {{only|java|short=1}}. Items in suspicious gravel and suspicious sand don't drop when being broken even with Silk Touch. Instead, a [[brush]] is needed to get those items.
+|-
+| {{BlockLink|Trial Spawner}}<br>{{BlockLink|Ominous Trial Spawner}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{tc|no}}
+|
+|-
+| {{BlockLink|Vault}}<br>{{BlockLink|Ominous Vault}}
+| style="text-align:center" |—
+| ''None''
+| {{tc|no}}
+| {{tc|no}}
+|
+|-
+|}
+{{notelist}}
+<span id="notes">Notes:</span>
+* Blocks marked with "T" need to be broken with a specific tool to drop anything (including [[experience]]). The [[Silk Touch]] enchantment doesn't remove this requirement.
+* Where noted, [[Fortune]] can increase the number of dropped items or multiply it. Increase simply gives 0-lvl extra items. Multiplication happen with the following chances:
+** Fortune I: 33% * 2 (33% more on average)
+** Fortune II: 25% * 2, 25% * 3 (75% more on average)
+** Fortune III: 20% * 2, 20% * 3, 20% * 4 (120% more on average)
+* Container blocks ([[barrel]]s, [[blast furnace]]s, [[brewing stand]]s, [[campfire]]s, [[chest]]s, [[chiseled bookshelves]], [[decorated pot]]s, [[dispenser]]s, [[dropper]]s, [[flower pot]]s, [[furnace]]s, [[glow item frame]]s{{only|BE|short=1}}, [[hopper]]s, [[item frame]]s{{only|BE|short=1}}, [[jukebox]]es, [[lectern]]s, [[smoker]]s, [[soul campfire]]s, and [[trapped chest]]s) drop themselves when broken along with their content.
+
+== Videos ==
+<div style="text-align:center">{{Video note|This video is from [[Java Edition 1.5]], so not all changes apply.}}{{yt|8VSG8c0TVUA}}</div>
+
+== History ==
+{{update|Please update the Bedrock Edition part of this section}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.25 SURVIVAL TEST|[[Pig]]s drop [[mushroom]]s.
+|Killing [[skeleton]]s made [[arrow]]s drop.}}
+|{{HistoryLine||0.28|Added [[sheep]], which drop red cloth and mushrooms.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||20100219|[[Sheep]] now drop nothing.
+|[[Pig]]s drop [[raw porkchop]]s instead of mushrooms.
+|[[Creeper]]s drop [[gunpowder]].
+|[[Spider]]s drop [[string]].
+|[[Zombie]]s drop [[feather]]s.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.0|Sheep now drop between 1–3 cloth instead of always dropping 2.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[Bone]]s drop from skeletons.
+|New gray, light gray, and black sheep drop the correspondingly colored [[wool]].
+|[[Squid]] added, which drops the new item [[ink sac]].}}
+|{{HistoryLine||1.5|Pigs that die by burning now drop cooked porkchops upon death.}}
+|{{HistoryLine||1.7|Sheep no longer drop wool from being punched. Sheep now have to be sheared with [[shears]] or killed to obtain wool.}}
+|{{HistoryLine||1.8|dev=Pre-release|Zombies drop [[rotten flesh]] instead of feathers.
+|Mobs killed by players drop tiny flashing experience orbs that add to your experience bar.
+|Added [[ender pearl]]s along with [[endermen]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[Blaze rod]]s have been added as a drop from [[blaze]]s.
+|[[Ghast tear]]s have been added, which drop from [[ghast]]s.
+|[[Gold nugget]]s have been added as a drop from [[zombie pigmen]].
+|[[Snow golem]]s added, which drop snowballs.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Spiders now drop [[spider eye]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Looting, Fortune, and Silk Touch enchantments added, increasing the amount dropped when killing mobs, breaking blocks, or dropping the block itself, respectively.}}
+|{{HistoryLine||1.1|dev=11w50a|All music discs except for ''11'' can be obtained if a skeleton kills a creeper. Before that, it was just ''13'' and ''cat''.}}
+|{{HistoryLine|||dev=release|[[Magma cube]]s can now drop [[magma cream]] on death.}}
+|{{HistoryLine||1.2.1|dev=12w06a|Zombies have a rare chance to drop an [[iron ingot]], iron [[helmet]], [[iron shovel]], or [[iron sword]].
+|Skeletons have a rare chance to drop a [[bow]], which may be [[enchanted]].
+|Zombie pigmen have a rare chance to drop a golden helmet, [[gold ingot]], or a golden [[sword]], which may be enchanted.}}
+|{{HistoryLine|||dev=12w08a|[[Iron golem]]s added, which dropped iron ingots and [[rose]]s.}}
+|{{HistoryLine||1.3.1|dev=12w25a|Pigs now drop 1–3 porkchops instead of 0–2.}}
+|{{HistoryLine||1.4.2|dev=12w32a|New {{Command|gamerule}} command allows toggling whether or not mobs drop loot with the {{cd|doMobLoot}} game rule.
+|Zombies, skeletons, and zombie pigmen can sometimes wear armor, which has a rare chance of being dropped.}}
+|{{HistoryLine|||dev=12w34a|Zombies have a chance to drop [[carrot]]s and [[potato]]es.}}
+|{{HistoryLine|||dev=12w36a|The [[wither]] drops a [[nether star]] on death.
+|[[Wither skeleton]]s added, which drop bones, [[coal]] and rarely stone swords and [[wither skeleton skull]]s when killed by players.
+|Saddled pigs now always drop [[saddle]]s on death.}}
+|{{HistoryLine|||dev=12w38a|[[Witch]]es added, which rarely drop potions of Instant Health and Fire Resistance.}}
+|{{HistoryLine|||dev=12w38b|Witches can now drop potion ingredients, sticks and have a chance of dropping what they're holding at the time of death.}}
+|{{HistoryLine||1.4.4|dev=1.4.3-pre|The music disc ''11'' is now dropped by creepers in the same way as the other discs.}}
+|{{HistoryLine||1.8|dev=14w04a|The Looting enchantment now increases the chance of rare drops by 1% per level instead of 0.5%.}}
+|{{HistoryLine|||dev=14w25a|Added [[guardian]]s and [[elder guardian]]s, which drop prismarine shards and prismarine crystals, and rarely drop fish and wet sponges.}}
+|{{HistoryLine|||dev=14w27a|Added [[rabbit]]s, which have a chance of dropping rabbit hide, raw rabbit (cooked rabbit when on fire) and rarely rabbit feet.
+|Sheep now drop raw mutton on death (cooked mutton if on fire) along with wool.}}
+|{{HistoryLine||1.9|dev=15w47a|[[Shulker]]s now drop experience.}}
+|{{HistoryLine||1.10|dev=16w20a|Added [[polar bear]]s, which drop raw fish and raw salmon.
+|Added [[stray]]s. In addition to normal skeleton drops, strays have a 50% chance to drop a tipped arrow of Slowness.}}
+|{{HistoryLine||1.11|dev=16w39a|Added [[llama]]s, which drop leather, and anything they have equipped.
+|Added [[vindicator]]s, which rarely drop emeralds, and sometimes their iron axe.
+|Added [[evoker]]s, which always drop a [[totem of undying]], and rarely emeralds.
+|Added [[vex]]es, which have a small chance of dropping their iron sword if the player uses the Looting enchantment.
+|Shulkers can now drop [[shulker shell]]s upon death.}}
+|{{HistoryLine||1.12|dev=17w13a|Added [[parrot]]s, which drop 1 or 2 feathers.}}
+|{{HistoryLine|||dev=17w16a|Added the [[illusioner]], which has a small chance of dropping their bow.}}
+|{{HistoryLine||1.13|dev=18w07a|Added [[turtle]]s, which drop [[seagrass]] upon death and also drop a [[turtle scute|scute]] when a baby grows into an adult.
+|Added [[phantom]]s, which drop leather upon death.}}
+|{{HistoryLine|||dev=18w08b|Added 3 [[fish mob]]s: cod, salmon and puffer fish. They drop [[raw cod]], [[raw salmon]] and [[pufferfish]] upon death, respectively.}}
+|{{HistoryLine|||dev=18w10a|Added [[tropical fish]]. They drop [[tropical fish (item)|tropical fish]] upon death, respectively.}}
+|{{HistoryLine|||dev=18w14a|Phantoms now may drop a [[phantom membrane]] upon death, and no longer drop leather.}}
+|{{HistoryLine|||dev=18w15a|Added [[dolphin]]s, which may drop [[raw cod]] upon death.}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[panda]]s, which drop [[bamboo]] upon death.
+|Added [[pillager]]s, which drop [[crossbow]]s and [[emerald]]s upon death.
+|Added [[ravager]]s, which drop a [[saddle]] upon death.
+|[[Creeper]]s now drop [[music disc]]s when killed by [[stray]]s.}}
+|{{HistoryLine|||dev=18w46a|[[Pillager]]s no longer drop [[emerald]]s.}}
+|{{HistoryLine|||dev=19w05a|Added [[wandering trader]]s, which have a chance of dropping a [[milk bucket]] or a [[potion of Invisibility]] if killed while holding or before finishing drinking.}}
+|{{HistoryLine||1.16|dev=20w06a|Added [[hoglin]]s, which drop [[rotten flesh]] upon death.}}
+|{{HistoryLine|||dev=20w07a|[[Hoglin]]s now drop [[raw porkchop]]s and [[leather]] upon death.
+|Added [[piglin]]s, which have a chance of dropping naturally-spawning equipment including a [[golden sword]], a [[crossbow]] and random golden [[armor]] upon death.}}
+|{{HistoryLine|||dev=20w13a|Added [[strider]]s, which drop [[string]] upon death.}}
+|{{HistoryLine||1.16.2|dev=20w27a|Added [[piglin brute]]s, which may drop a [[golden axe]] upon death.}}
+|{{HistoryLine||1.17|dev=21w03a|Added [[glow squid]]s, which drop [[glow ink sac]]s upon death.}}
+|{{HistoryLine|||dev=21w05a|[[Drowned]] now drop [[copper ingot]]s instead of [[gold ingot]]s.}}
+|{{HistoryLine|||dev=21w13a|Added [[goat]]s, which don’t drop anything.
+|[[Zombie]]s now drop [[baked potato]]es when on [[fire]].}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added [[warden]]s, which don’t drop anything.
+|[[Sculk sensor]]s now drop experience when broken without Silk Touch.}}
+|{{HistoryLine|||dev=22w11a|Removed wardens.
+|[[Magma cube]]s now drop [[froglight]]s if killed by a [[frog]].}}
+|{{HistoryLine|||dev=22w12a|Re-added wardens, they still don’t drop anything.}}
+|{{HistoryLine|||dev=22w17a|Wardens now drop [[sculk catalyst]]s upon death.
+|Goats now drop [[goat horn]]s if they ram into {{BlockLink|coal ore}}, {{BlockLink|emerald ore}}, {{BlockLink|iron ore}}, {{BlockLink|id=oak log|logs}}, {{BlockLink|packed ice}}, or {{BlockLink|stone}}.}}
+|{{HistoryLine|||dev=Pre-release 2|Goat horns now drop when goats ram into {{BlockLink|copper ore}}.}}
+|{{HistoryLine||1.19.1|dev=Pre-release 6|[[Sculk catalyst]]s now drop 5 experience instead of 20 when broken without Silk Touch.}}
+|{{HistoryLine||1.19.3|dev=22w42a|[[Rabbit]]s now have a 100% chance to drop [[raw rabbit]] when killed.<ref>{{bug|MC-96449|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|Elder guardians now drop 0–1 tide armor trim [[smithing template]]s upon death.}}
+|{{HistoryLine|||dev=23w07a|Sniffers now drop 0–1 [[moss block]](s) upon death.
+|Bricks and [[pottery shard]]s now drop when mining a [[decorated pot]] with a tool on the main hand.}}
+|{{HistoryLine||1.20|dev=23w13a|Sniffers no longer drop moss blocks upon death.}}
+|{{HistoryLine||1.20.3|dev=23w41a|[[Decorated pot]]s now also drop their contents.
+|Decorated pots now drop bricks, [[pottery sherd]]s, and pots' contents when hit by [[projectile]]s.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Added [[breeze]]s, which drop nothing upon death.}}
+|{{HistoryLine||1.20.5|dev=23w51a|Added [[armadillo]]s, which drop 1–3 experience upon death, 1 [[armadillo scute]] when brushed, 1 [[armadillo scute]] every 5 to 10 minutes.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w06a|Breezes now drop 4–6 [[wind charge]]s upon death.}}
+|{{HistoryLine|||dev=24w07a|Added [[bogged]], which drop 0–2 [[bone]], 0–2 [[arrow]]s on death, 0–1 [[arrow of poison]] when killed by a player.}}
+|{{HistoryLine|||dev=24w09a|Bogged now drop 2 [[mushroom]]s (either both red/brown or one of each) when sheared.}}
+|{{HistoryLine|||dev=24w11a|Breezes no longer drop wind charges, and instead drop 1–2 [[breeze rod]]s upon death.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|Added [[creaking heart]]s, which drop nothing without [[Silk Touch]].}}
+|{{HistoryLine||1.21.4|dev=24w44a|Naturally generated [[creaking heart]]s now drop 20 to 24 experience when broken by a player, with or without Silk Touch.
+|Breaking a creaking heart without [[Silk Touch]] now drops 1 to 3 [[resin clump]]s.
+|[[Ender chest]]s now drop 8 [[obsidian]] with incorrect tool.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added all mobs from and prior to [[Java Edition Beta 1.6.6]] with all of their drops.}}
+|{{HistoryLine||xbox=TU3|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Sheep no longer drop wool from being punched. Sheep now have to be sheared with [[shears]] or killed to obtain wool.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[ender pearl]]s along with [[endermen]].|Zombies drop [[rotten flesh]] instead of feathers.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[Blaze rod]]s have been added as a drop from [[blaze]]s.|[[Magma cube]]s can now drop [[magma cream]] on death.|[[Snow golem]]s added, which drop snowballs.}}
+|{{HistoryLine||xbox=TU8|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|Blazes now [[drop]] 0–2 [[glowstone dust]] when killed.}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[Iron golem]]s added, which dropped iron ingots and [[rose]]s.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added [[rabbit]]s, which have a chance of dropping rabbit hide, raw rabbit (cooked rabbit when on fire) and rarely rabbit feet.|Sheep now drop raw mutton on death (cooked mutton if on fire) along with wool.|Added [[guardian]]s and [[elder guardian]]s, which drop prismarine shards and prismarine crystals, and rarely drop fish and wet sponges.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added [[polar bear]]s, which drop raw fish and raw salmon.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added [[stray]]s. In addition to normal skeleton drops, strays have a 50% chance to drop a tipped arrow of Slowness.|Added [[Shulker]]s, which currently only drop experience.|Blazes no longer drop 0–2 [[glowstone dust]] when killed.}}
+|{{HistoryLine||xbox=TU48|xbone=CU38|ps3=1.41|psvita=1.41|ps4=1.41|wiiu=Patch 17|Blazes drop 0–2 [[glowstone dust]] when killed again.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Shulkers can now drop [[shulker shell]]s upon death.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added [[llama]]s, which drop leather, and anything they have equipped.|Added [[vindicator]]s, which rarely drop emeralds, and sometimes their iron axe.|Added [[evoker]]s, which always drop a [[totem of undying]], and rarely emeralds.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Added [[turtle]]s, which drop [[seagrass]] upon death and also drop a [[turtle scute|scute]] when a baby grows into an adult.|Added [[phantom]]s, which drop [[phantom membrane]] upon death.|Added 4 [[fish mob]]s: cod, salmon, puffer fish, and tropical fish. They drop [[raw cod]], [[raw salmon]], [[pufferfish]], and [[tropical fish]] upon death, respectively.|Added [[dolphin]]s, which may drop [[raw cod]] upon death.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.83|wiiu=none|switch=none|Added [[panda]]s, which drop [[bamboo]] upon death.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Added [[pillager]]s, which drop [[crossbow]]s and [[arrow]]s upon death.|[[Creeper]]s now drop [[music disc]]s when killed by [[stray]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Added [[ravager]]s, which drop a [[saddle]] upon death.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Added all mobs with all of their drops from and prior to [[Pocket Edition Alpha 0.15.0]].}}
+|{{HistoryLine||1.3.12|Added [[guardians]], [[elder guardians]], which drop prismarine shards and prismarine crystals, and drop fish and sponges|Added the [[wither]], which drops a [[nether star]].}}
+|{{HistoryLine||1.7.10|Added polar bears, which drop [[fish]] shulkers, which drop [[shulker shell]]s.}}
+|{{HistoryLine||1.9.19|Added [[llama]]s, which drop leather.|Added [[vindicator]]s, which drop emeralds, and sometimes their iron axe.|Added [[evoker]]s, which always drop a [[totem of undying]], and sometimes emeralds.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== See also ==
+* {{EntityLink|id=item|Item (entity)}}
+* [[Chest loot]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+[[de:Drop]]
+[[es:Recompensas]]
+[[fr:Récompenses]]
+[[it:Rilasci]]
+[[ja:ドロップ]]
+[[nl:Drops]]
+[[pl:Łupy]]
+[[pt:Drops]]
+[[ru:Дроп]]
+[[th:ดรอป]]
+[[uk:Дроп]]
+[[zh:掉落物]]
+
+[[ko:노획물]]

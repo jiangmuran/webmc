@@ -1,0 +1,192 @@
+{{about|the general overview of fences|the fence-like barrier made out of stone types|Wall|the openable fence|Fence Gate|other uses|}}
+[[File:All Fences.png|thumb|All fences]]
+A '''fence''' is a barrier block that cannot normally be jumped over, similar to a [[wall]]. Unlike a wall, a player (but not [[mobs]]) can see through the openings in a fence.
+
+== Variants ==
+* [[Wooden Fence]]
+** {{BlockLink|Oak Fence}}
+** {{BlockLink|Spruce Fence}}
+** {{BlockLink|Birch Fence}}
+** {{BlockLink|Jungle Fence}}
+** {{BlockLink|Acacia Fence}}
+** {{BlockLink|Dark Oak Fence}}
+** {{BlockLink|Mangrove Fence}}
+** {{BlockLink|Cherry Fence}}
+** {{BlockLink|Pale Oak Fence}}
+** {{BlockLink|Bamboo Fence}}
+** {{BlockLink|Crimson Fence}}
+** {{BlockLink|Warped Fence}}
+* {{BlockLink|Nether Brick Fence}}
+
+== Obtaining ==
+=== Crafting ===
+All types of fences can be obtained through crafting.
+{{Crafting
+|head=1
+|ignoreusage=1
+|name=[[Wooden Fence]]
+|ingredients=Matching [[Planks]] +<br>[[Stick]]
+|A2=Matching Planks
+|B2=Stick 
+|C2=Matching Planks
+|A3=Matching Planks
+|B3=Stick
+|C3=Matching Planks
+|Output=Matching Wooden Fence,3
+}}
+{{crafting
+|ignoreusage=1
+|A2=Nether Bricks
+|B2=Nether Brick
+|C2=Nether Bricks
+|A3=Nether Bricks
+|B3=Nether Brick
+|C3=Nether Bricks
+|Output=Nether Brick Fence,6
+|type=Decoration block
+|foot=1
+}}
+
+== Usage ==
+=== Barrier ===
+[[File:FenceConnectivity.png|thumb|right|Wooden fences and Nether brick fences connected by fence gates. Notice that they do not form a connection directly between the two types of fences (in the middle).]]
+While fences appear to be a single block tall and have a hitbox height of one block, their collision box (for entities) is 1.5 [[blocks tall]], meaning most mobs cannot jump over them without the [[Jump Boost]] status effect. They are transparent to light and have visual gaps in the model. [[Spider]]s can climb over a fence, just like any other vertical object. [[Camel]]s can walk over fences.
+
+A fence occupies the center space of blocks and automatically connects to any [[solid block]] that is placed next to it. Wooden fences connect to other wooden fences, but do not connect to Nether brick fences. However, Nether brick fences connect to wooden [[Fence Gate|fence gate]]s.<ref>{{bug|MC-197992}}</ref> Mobs cannot pass between Nether brick fences and wooden fences, although players can.
+
+Additionally, if a [[carpet]], [[trapdoor]], [[moss carpet]] or [[pale moss carpet]] is placed above a fence, players are able to jump over the fence while other mobs are unable to, including mobs like zombies with similar attributes to players.
+
+=== Leads ===
+[[File:HorseLeashedOnAFence.png|thumb|right|A horse tied to a tall fence post with a [[lead]]]]
+Fences can be used to attach mobs with a [[lead]].
+
+== Block states ==
+{{see also|Block states}}
+
+<section begin="block states"/>{{edition|java}}:
+{{bst|east|false|false,true|When true, the fence extends from the center post to the east.}}
+{{bst|north|false|false,true|When true, the fence extends from the center post to the north.}}
+{{bst|south|false|false,true|When true, the fence extends from the center post to the south.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this fence.}}
+{{bst|west|false|false,true|When true, the fence extends from the center post to the west.|foot=1}}<section end="block states"/>
+
+== Videos ==
+{{yt|y4NuuXH1VFM}}
+{{yt|gmYXI7tTcfA}}
+
+== History ==
+This table list changes affecting both wooden and Nether brick fences.
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.17|Added oak fences, the first kind of fence.
+|Fences can only be placed on top of a solid block
+|The player spawns with 64 oak fences.}}
+|{{HistoryLine||v1.0.17_01|The player no longer spawns with 64 oak fences.}}
+|{{HistoryLine||v1.0.17_02|Added a crafting recipe for oak fences{{verify|was it added earlier?}}. It requires 6 sticks.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|Fences can now be placed below [[farmland]] to prevent it from decaying.}}
+|{{HistoryLine||1.7|Fences can now be placed on top of other fences, but still cannot be placed on top of air or any non-solid block}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Added Nether brick fences.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|The collision boxes of fences have been reduced.
+|Fences now connect to solid [[block]]s.
+|Fences no longer require a solid block or fence underneath to be placed.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|Fence selection area has been changed to match its collision box.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Fences no longer prevent [[farmland]] from decaying when placed below farmland.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|[[Mob]]s no longer try to jump over Nether brick fences.
+|The texture of fences has been fixed. There was a problem with attached single [[slabs]] or [[stairs]], as the connected face was not rendered when attached to other [[block]]s.<ref>{{bug|MC-38}}</ref>}}
+|{{HistoryLine||1.5|dev=13w06a|Fence corners now have a smaller collision box, allowing [[player]]s to fall through the gap in the middle of four fences placed in a square.}}
+|{{HistoryLine||1.6.1|dev=13w16a|[[Mobs]] can now be tied to fences.}}
+|{{HistoryLine|||dev=1.6|Fences now display a useless hand animation when right clicked.}}
+|{{HistoryLine||1.8|dev=14w32b|Added fences for spruce, birch, jungle, acacia and dark oak wood.
+|Fences are now crafted with 4 [[planks]] of uniform type and 2 [[stick]]s, as to accommodate for the new types of fences.}}|{{HistoryLine||1.9|dev=15w44b|Fences now show glitchy elongated textures when connecting to other fences.<ref>{{bug|MC-91715}}</ref> These may be GPU dependent.}}
+|{{HistoryLine|||dev=15w45a|Fences no longer show a bugged texture, however they appear different to how they did prior to 15w44b.}}
+|{{HistoryLine||1.11|dev=16w39c|Fences no longer show a useless hand animation when right clicked.}}
+|{{HistoryLine||1.12|dev=17w15a|Fences now connect to the solid back sides of [[stairs]].}}
+|{{HistoryLine||1.13|dev=17w47a|It is now possible to place a fence when the [[player]] is within a corner of three fences to form a ring of four, provided the space is sufficient.}}
+|{{HistoryLine|||dev=18w10c|[[Water]] can now be placed on the same block as fences.}}
+|{{HistoryLine||1.16|dev=20w06a|Added crimson and warped fences.}}
+|{{HistoryLine||1.19|dev=22w11a|Added mangrove fences.}}
+|{{HistoryLine|||dev=22w14a|Due to the addition of [[mangrove tree]]s and [[mangrove swamp]]s, mangrove fences are now obtainable and renewable.}}
+|{{HistoryLine||1.19.3|dev=22w42a|exp=Update 1.20|Added bamboo fences.}}
+|{{HistoryLine||1.19.4|dev=23w07a|exp=Update 1.20|Added cherry fences.}}
+|{{HistoryLine||1.21.2|dev=24w40a|exp=Winter Drop|Added pale oak fences.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|There are now two types of fences: wooden and Nether brick fences.}}
+|{{HistoryLine|bedrock edition}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.22|Added all the wooden fences to [[Block tag (Bedrock Edition)|tag]] {{cd|minecraft:has_fence_connections}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU0|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Oak_Fence_(EW)_JE2_BE1.png|32px]] Added [[wooden fence]]s.}}
+|{{HistoryLine||xbox=TU3|Fences can now be placed directly onto other fences.}}
+|{{HistoryLine||xbox=TU5|[[Pressure plate]]s are now placeable on fences.}}
+|{{HistoryLine||xbox=TU6|Fence collision box decreased to size of fence block.}}
+|{{HistoryLine||xbox=TU7|[[File:Nether_Brick_Fence_(EW)_JE1.png|32px]]Added [[nether brick fence]]s.|Fences now attach to adjacent blocks.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|Moved both types of fences from the ''Miscellaneous'' tab, to the ''Building Blocks'' tab, in the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Fences now connect to the solid back sides of [[stairs]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added two types of fences: wooden and Nether brick fences.}}
+}}
+
+<gallery>
+Sea base fences.png|Underwater buildings with walls composed of stacked fences, before [[waterlogging]].
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*If a [[carpet]] is placed on top of a fence, a player can jump onto the carpet, while mobs cannot (except [[rabbit]]s).
+**Placing a carpet on top of a fence does not reduce the fence or wall collision box down to one block, it just provides a platform one block high around the fence/wall to make it easier for climbing on the top of the fence.
+*Getting hit by someone else (or shooting themselves with a Punch enchanted bow while sprinting forward) while in midair can cause the knockback to propel the player over a fence they would not be able to jump over normally.
+*Projectiles get stuck in the collision box of the fence and remain there if shot from above.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Pressure plate.png|[[Pressure plate]]s on fences, which are used to create tables
+All fences and fence gates.png|All fence types
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-month--fence Block of the Month: Fence] – Minecraft.net on December 1, 2022
+
+== Navigation ==
+{{Navbox blocks|decoration}}
+
+[[Category:Generated structure blocks]]
+[[Category:Nether blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Flammable blocks]]
+
+[[cs:Plot]]
+[[de:Zaun]]
+[[es:Valla]]
+[[fr:Barrière]]
+[[hu:Kerítés]]
+[[it:Staccionata]]
+[[ja:フェンス]]
+[[ko:울타리]]
+[[nl:Hek]]
+[[pl:Płot]]
+[[pt:Cerca]]
+[[ru:Забор]]
+[[th:รั้ว]]
+[[uk:Паркан]]
+[[zh:栅栏]]

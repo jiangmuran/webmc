@@ -1,0 +1,329 @@
+{{Redirect|Cave Vines|the feature|Cave Vines (feature)}}
+{{for||Berries}}
+{{Infobox block
+| group = Without berries
+| 1-1 = Cave Vines (head).png
+| group2 = With berries
+| 2-1 = Cave Vines (berries).png
+| *-1class = notpageimage
+| image2 = Glow Berries.png
+| invimage = Glow Berries
+| extratext = [[#Gallery|View all renders]]
+| consumptiontime = {{convert|32|ticks|seconds}}
+| hunger = 2
+| saturation = 0.4
+| saturationboost = <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|0.267}}<br/><abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 0.133 seconds
+| alwaysconsumable = No
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Any
+| light = Yes (14) (when with berries)
+| transparent = Yes
+| flammable = Yes
+| lavasusceptible = No
+}}
+'''Glow berries''' are a [[food]] item obtained from cave vines and can be used to plant them.
+
+'''Cave vines''' are a climbable plant that hangs off ceilings and grows glow berries. Cave vines with glow berries produce [[light]].
+
+== Obtaining ==
+=== Breaking ===
+A cave vine can be broken by hand or with any tool, yielding one unit of glow berries if the vine is bearing berries or nothing when it is not. This is ''not'' affected by [[Fortune]]. A cave vine also breaks if its support block is removed, if [[water]] runs over its location, or if a [[piston]] extends or pushes a block into its location, yielding the same drops as if broken by a player.
+
+{{Breaking row|Cave Vines, Cave Vines Plant|link=none|horizontal=1}}
+
+=== Harvesting ===
+One unit of glow berries can also be collected from cave vines bearing berries without breaking the plant. This is done by pressing the {{control|use}} control on the vine, either by hand or while holding any item.
+
+=== Natural generation ===
+{{main|Cave vines (feature)}}
+Cave vines can be found in [[lush caves]], hanging from the ceilings of the caves.
+
+{{block distribution}}
+
+=== Generated loot ===
+{{LootChestItem|glow-berries}}
+
+== Usage ==
+=== Placement ===
+Glow berries can be placed on and grown from the bottom of most blocks (any block whose bottom face covers the bottom of the entire block). They can also be placed on the bottom of a cave vine, extending the stack of vines by 1 block. They have no specific lighting requirements.
+
+=== Growth ===
+Placing glow berries on the bottom of a block creates a cave vine that grows downward one block at a time when [[Random tick|random-ticked]]. There is a 10% chance of growing on random tick. At default random tick speed, a cave vine grows approximately every {{convert|13653|tick|minute}}. When the vine grows, the <code>age</code> value of the bottom-most block is increased by 1. Cave vines stop growing once they reach the floor (any non-[[air]] block) or when the bottom-most block reaches an <code>age</code> block state of 25, whichever is first, so a new vine block can grow up to <code>25 - age</code> blocks further. Cave vines also stop growing if [[shears]] are {{control|used}} on the bottom block of the stack.
+
+Using [[bone meal]] on a cave vine block does not grow a new vine block, unlike kelp, twisting vines or weeping vines.
+
+Normally, glow berries placed on the underside of a block will grow downwards, with the chance of the new block being a glow berry (vs. just another vine block). The block placed under the block is always a vine block. However, occasionally, these vine blocks (attached to the underside of other blocks) will convert to being a glow berry block. It is unknown whether this effect requires that there is no vine segments attached to the underside of this top-level vine block.
+
+=== Farming ===
+Each newly-grown cave vine block has an 11% chance of bearing glow berries. Therefore, cave vines have a 1.1% chance of growing a berry-bearing vine when random-ticked, at an interval of approximately 124121 game ticks (103.434 minutes) at default random tick speed. Glow berries naturally grow only on a newly produced cave vine; existing cave vines blocks do not naturally grow berries over time, unlike [[sweet berry bush]]es.
+
+{{control|Using}} [[bone meal]] on any block of a cave vine causes it to grow glow berries, if it was not already bearing them. [[Bee]]s that carry pollen can also fertilize a cave vine block and grow berries in the block they fly over.
+
+=== Food ===
+To eat glow berries, press and hold {{control|use}} while it is selected in the hotbar. Eating one restores {{hunger|2}} [[hunger]] and 0.4{{only|je|short=1}} / 1.2{{only|be|short=1}} hunger [[saturation]], like [[sweet berries]].
+
+=== Climbing ===
+Cave vines can be climbed by standing in them and holding the {{control|jump}} key. If there is a solid block behind the cave vines, the {{control|walk forwards}} key can also be used.
+
+=== Light ===
+When bearing glow berries, cave vines give off a [[light]] level of 14.
+
+=== Composting ===
+Placing glow berries into a [[composter]] by {{control|using}} them on it has a 30% chance of raising the compost level by 1.
+
+=== Breeding ===
+Glow berries can be fed to [[fox]]es to [[breed]] them.
+
+Glow berries can be {{control|used}} on baby foxes to reduce the time until they grow by 10%.
+
+== Sounds ==
+=== Glow berries ===
+{{Sound table/Entity/Food}}
+
+=== Cave vines ===
+==== Generic ====
+{{Sound table/Block/Cave vines}}
+
+==== Unique ====
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Berries pick1.ogg
+|sound2=Berries pick2.ogg
+|subtitle=Berries pop
+|source=block
+|description=When glow berries are picked
+|id=block.cave_vines.pick_berries
+|translationkey=subtitles.item.berries.pick
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shear.ogg
+|subtitle=Plant cropped
+|source=block
+|description=When the tip of cave vines are cropped with [[Shears#Cropping growing plants|shears]]
+|id=block.growing_plant.crop
+|translationkey=subtitles.block.growing_plant.crop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Berries pick1.ogg
+|sound2=Berries pick2.ogg
+|source=block
+|description=When glow berries are picked
+|id=pick_berries.cave_vines
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cave Vines
+|spritetype=block
+|nameid=cave_vines
+|blocktags=mineable/axe,bee_growables,cave_vines,climbable,sword_efficient
+|form=block
+}}
+{{ID table
+|displayname=Cave Vines Plant
+|spritetype=block
+|nameid=cave_vines_plant
+|blocktags=mineable/axe,bee_growables,cave_vines,climbable,sword_efficient
+|form=block
+}}
+{{ID table
+|displayname=Glow Berries
+|spritetype=item
+|nameid=glow_berries
+|itemtags=fox_food
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|numericonlybedrock=y
+|displayname=Cave Vines
+|nameid=cave_vines
+|form=block
+|spritetype=block
+|id=577
+}}
+{{ID table2
+|edition=bedrock
+|displayname=Cave Vines Body With Berries
+|nameid=cave_vines_body_with_berries
+|spritename=lit-cave-vines-plant
+|spritetype=block
+|form=block
+|id=630
+}}
+{{ID table2
+|edition=bedrock
+|displayname=Cave Vines Head With Berries 
+|spritename=lit-cave-vines
+|nameid=cave_vines_head_with_berries
+|spritetype=block
+|form=block
+|id=631
+}}
+{{ID table
+|edition=bedrock
+|numericonlybedrock=0
+|displayname=Glow Berries
+|spritetype=item
+|nameid=glow_berries
+|form=item
+|id=825
+|foot=1
+}}
+
+=== Block states ===
+{{See also|Block states}}
+
+{{edition|java}}:<br>
+Cave Vines:
+{{bst|berries|false|false,true|Whether this cave vine has berries.}}
+{{bst|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25|How old this cave vine is.|foot=1}}
+
+Cave Vines Plant:
+{{bst|berries|false|false,true|Whether this cave vine has berries.|foot=1}}
+
+{{edition|bedrock}}:<br>
+Cave Vines, Cave Vines Body With Berries, Cave Vines Head With Berries:
+{{bst|showaux=1|growing_plant_age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25|How old this cave vine is.|Unsupported|foot=1}}
+
+== Advancements ==
+{{load advancements|Husbandry;A Balanced Diet}}
+
+== History ==
+{{See technical block|Cave Vines}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=1781}}|[[File:Cave Vines Plant JE1 BE1.png|32px]] [[File:Cave Vines Plant (berries) JE1 BE1.png|32px]] [[File:Cave Vines (head) JE1 BE1.png|32px]] [[File:Cave Vines (berries) JE1 BE1.png|32px]] Cave vines (named as glow berries) are shown as part of lush caves at [[Minecraft Live 2020]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w05a|[[File:Glow Berries JE1 BE1.png|32px]] Added glow berries.
+|[[File:Cave Vines Plant JE1 BE1.png|32px]] [[File:Cave Vines Plant (berries) JE1 BE1.png|32px]] [[File:Cave Vines (head) JE1 BE1.png|32px]] [[File:Cave Vines (berries) JE1 BE1.png|32px]] Added cave vines.
+|[[File:Root Vines (recreated model).png|32px]] Added the texture for [[History of textures/Unused textures#Root vines|root vines]] in the game files, an early design for cave vines.<ref>{{tweet|JasperBoerstra|1464675027228442626|root_vines_head.png was just a prototype texture that we forgot to remove :) Was a placeholder for glowberry vines|November 27, 2021}}</ref>
+}}
+|{{HistoryLine|||dev=21w11a|Renamed from "cave vines head" and "cave vines body" to "cave vines" and "cave vines plant", respectively.
+|The IDs have also changed.
+|Cave vines now always give 14 light, regardless of the type of part.
+|Now slow down the player.
+|Can now be climbed.}}
+|{{HistoryLine|||dev=21w13a|Glow berries now generate as loot in [[mineshaft]] [[chest minecart]]s.}}
+|{{HistoryLine|||dev=21w16a|Removed the texture for root vines.<ref>{{bug|MC-213998}}</ref>}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|With the implementation of cave biomes including lush caves, caves vines can now generate in normal worlds.}}
+|{{HistoryLine|||dev=21w37a|Cave vines stop growing if [[shears]] are used on the tip.}}
+|{{HistoryLine|||dev=21w41a|[[File:Cave Vines Plant JE2.png|32px]] [[File:Cave Vines Plant (berries) JE2.png|32px]] Changed cave vines plant texture.}}
+|{{HistoryLine||1.19|dev=22w13a|Glow berries may now be found in [[ancient city]] chests.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Glow berries can now be found in [[trial chamber]] supply chests and obtained from [[trial spawner]]s.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Glow berries can no longer be obtained from trial spawners.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.52|[[File:Glow Berries JE1 BE1.png|32px]] Added glow berries behind the "Caves and Cliffs" [[experimental]] toggle.
+|[[File:Cave Vines Plant JE1 BE1.png|32px]] [[File:Cave Vines Plant (berries) JE1 BE1.png|32px]] [[File:Cave Vines (head) JE1 BE1.png|32px]] [[File:Cave Vines (berries) JE1 BE1.png|32px]] Added cave vines.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.54|Glow berries now generate as loot in [[mineshaft]] [[chest minecart]]s.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Glow berries are now available without enabling [[experimental gameplay]].}}
+|{{HistoryLine||1.17.20|dev=beta 1.17.20.20|Cave Vines can now be pollinated by [[bee]]s.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.20|[[File:Cave Vines Plant JE2.png|32px]] [[File:Cave Vines Plant (berries) JE2.png|32px]] Changed cave vines plant texture.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.20|Cave vines can now be destroyed by [[ravager]]s.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|Cave vines that are not currently bearing berries no long drop glow berries when mined using [[Silk Touch]].}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Glow berries can now be found in [[trial chamber]] supply chests and obtained from [[trial spawner]]s.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Glow berries can no longer be obtained from trial spawners.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Cave vines now stop growing if [[shears]] are used on the tip.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w19a|<code>minecraft:cave_vines</code> and <code>minecraft:cave_vines_plant</code> have been added to the newly-implemented <code>#minecraft:mineable/axe</code> [[block tag]]. This, however, has no effect in-game, since the block breaks instantly anyway regardless of tool used or active effects.{{check the code|Prior to this version, assigned tools were presumably hardcoded; were cave vines also coded to have axes as their "preferred" tool before this version?}}}}
+|{{HistoryLine||1.21.5|dev=25w10a|<code>minecraft:cave_vines</code> and <code>minecraft:cave_vines_plant</code> have been removed from the block tags <code>#minecraft:mineable/axe</code> and <code>#minecraft:sword_efficient</code>.}}
+}}
+
+== Issues ==
+{{Issue list|Glow Berries|Cave Vines}}
+
+== Gallery ==
+
+=== Renders ===
+<gallery>
+Cave Vines (plant).png
+Cave Vines (berries, plant).png
+Cave Vines (head).png
+Cave Vines (berries).png
+Cave Vines Age2 (Possibility pattern 1) JE1.png|A possible pattern of the cave vines at age 2.
+Cave Vines Age2 (Possibility pattern 2) JE1.png|Another pattern of the cave vines at age 2.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Lush caves overview concept art.jpg|Concept art for the lush caves and vegetation including glow berries.
+JE 1.17 Development Lush Caves.jpg|A view of the lush caves with glow berries from Minecraft Live 2020.
+Lushcaves minecon.png|Lush cave in MINECON.
+Cavesworkinprogress.jpg|A view of the lush caves with glow berries, tweeted by LadyAgnes.
+Livestream lush cave.jpg|Another view of the lush caves with glow berries, in an interview with LadyAgnes.
+Glow Berry Fox.jpg|A fox under a glow berry vine.
+Blue glow berries.png|[[Blue Berries]].
+</gallery>
+
+=== In other media ===
+<gallery>
+File:AmcmoviePots.png|A glow berry illustration on a pot in [[A Minecraft Movie]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+{{Navbox items|food}}
+
+[[Category:Food]]
+[[Category:Plants]]
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+[[Category:Flammable blocks]]
+[[Category:Climbable blocks]]
+
+[[de:Leuchtbeeren]]
+[[es:Bayas luminosas]]
+[[fr:Baies lumineuses]]
+[[it:Bacche luminose]]
+[[ja:グロウベリー]]
+[[ko:발광 열매]]
+[[lzh:爍莓]]
+[[pl:Świecące jagody]]
+[[pt:Bagas Brilhantes]]
+[[ru:Светящиеся ягоды]]
+[[uk:Сяйні ягоди]]
+[[zh:发光浆果]]

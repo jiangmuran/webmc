@@ -1,0 +1,317 @@
+{{Redirect|Milk|the action|Cow#Milking}}
+{{Infobox item
+| title=Milk Bucket
+| image = Milk Bucket.png
+| renewable = Yes
+| consumptiontime = {{convert|32|ticks|seconds}}
+| effects = Clears all
+| alwaysconsumable = Yes
+| stackable = No
+}}
+A '''milk bucket''' is a [[drink]] obtained from {{Control|using}} a [[bucket]] on [[cow]]s, [[mooshroom]]s and [[goat]]s that can be consumed to clear all [[effect]]s.
+
+== Obtaining ==
+=== Harvesting ===
+Milk buckets can be obtained from [[cow]]s, [[mooshroom]]s, and [[goat]]s by pressing {{control|use}} while looking at them with an empty [[bucket]].
+
+=== Generated loot ===
+{{LootChestItem|milk-bucket}}
+
+=== Mob loot ===
+A milk bucket has an 8.5% chance of dropping from a [[wandering trader]], if the trader is killed while holding it. The drop chance increases by 1% per level of [[Looting]] used (max chance 11.5% with [[Looting|Looting III]]).  
+
+== Usage ==
+To drink milk, press and hold {{control|use}} while it is selected in the hotbar. Drinking it immediately removes all status [[effect]]s from the [[player]] and returns an empty [[bucket]]. Note that [[fire]] is not a status effect; therefore, drinking milk doesn't extinguish a burning player.
+
+{{IN|je}}, the drinking animation for milk is shown only in first-person camera mode.
+
+The benefits of area status effects granted by [[beacon]]s and [[conduit]]s are restored almost immediately {{in|be}} and after a few seconds {{in|je}}.
+
+=== Crafting ingredient ===
+{{crafting usage|Milk Bucket}}
+
+=== Trading ===
+[[Wandering trader]]s occasionally purchase a milk bucket for 2 [[emerald]]s.
+{{Trade uses|Milk Bucket}}
+
+== Sounds ==
+{{el|je}}:
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Drink.ogg
+|subtitle=Sipping
+|source=player
+|description=While a player is drinking milk
+|id=entity.generic.drink
+|translationkey=subtitles.entity.generic.drink
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|source=player
+|subtitle=Cow gets milked
+|description=When a cow is milked
+|id=entity.cow.milk
+|translationkey=subtitles.entity.cow.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Goat gets milked
+|description=When a regular goat is milked
+|source=neutral
+|id=entity.goat.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|subtitle=Goat gets milked
+|description=When a screaming goat is milked
+|source=neutral
+|id=entity.goat.screaming.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader drink milk1.ogg
+|sound2=Wandering trader drink milk2.ogg
+|sound3=Wandering trader drink milk3.ogg
+|sound4=Wandering trader drink milk4.ogg
+|sound5=Wandering trader drink milk5.ogg
+|subtitle=Wandering Trader drinks milk
+|source=neutral
+|description=While a wandering trader is drinking milk to become visible during daytime
+|id=entity.wandering_trader.drink_milk
+|translationkey=subtitles.entity.wandering_trader.drink_milk
+|volume=0.5
+|pitch=0.9-1.0
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Drink.ogg
+|source=player
+|description=While a player is drinking milk
+|id=random.drink
+|volume=0.35
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|source=neutral
+|description=When a cow is milked
+|id=mob.cow.milk
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|description=When a regular goat is milked
+|source=neutral
+|id=mob.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=1.0/0.9/1.1}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|description=When a screaming goat is milked
+|source=neutral
+|id=mob.goat.milk.screamer
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Wandering trader drink milk1.ogg
+|sound2=Wandering trader drink milk2.ogg
+|sound3=Wandering trader drink milk3.ogg
+|sound4=Wandering trader drink milk4.ogg
+|sound5=Wandering trader drink milk5.ogg
+|source=neutral
+|description=While a wandering trader is drinking milk to become visible during daytime
+|id=mob.wanderingtrader.drink_milk
+|volume=1.0
+|pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Milk Bucket
+|spritetype=item
+|nameid=milk_bucket
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Milk Bucket
+|spritetype=item
+|nameid=milk_bucket
+|aliasid=bucket / 1
+|id=361
+|form=item
+|translationkey=item.milk.name
+|foot=1}}
+
+== Achievements ==
+{{load achievements|The Lie}}
+
+== Advancements ==
+{{Load advancements|Husbandry}}
+
+== Videos ==
+<div style="text-align:center">{{yt|eyxea_d0b3s}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.8|[[File:Milk Bucket JE1 BE1.png|32px]] Milk has been introduced, but it has no purpose and is obtainable only through inventory editing.}}
+|{{HistoryLine||v1.0.11|Milk can now be obtained by {{control|use|text=milking}} a [[cow]] with a [[bucket]]. However, it is not yet drinkable.}}
+|{{HistoryLine||v1.0.17|Milk buckets can now be emptied.}}
+|{{HistoryLine||v1.0.17_02|Milk buckets are no longer stackable; they previously stacked up to 64.{{note|It is possible that this change occurred in 1.0.17 or 1.0.17_01, but these versions cannot be checked since they are currently lost.}}}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Milk has been incorporated into the [[crafting]] recipe of [[cake]].
+|[[Squid]] can now be milked by right-clicking on their mouth if part of their body was exposed to [[air]] or if they were not touching another [[block]]. An easy way to accomplish this is to pull a squid with a [[fishing rod]] away from other blocks and then milk it.}}
+|{{HistoryLine||1.3|Squid milking has been removed.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Milk can now be obtained by milking [[mooshroom]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Milk has been made drinkable.
+|According to a tweet by [[Jeb]] on September 30th 2011, milk was made a cure for all status effects.<ref>{{tweet|jeb_|119842906528944129|@Nexusdog_UK I haven't! In beta 1.9 pre2 milk works like a clear-everything drink|September 30, 2011}}</ref>
+|Milk is no longer emptiable.}}
+|{{HistoryLine||1.8|dev=14w25a|Drinking immediately after attacking no longer continues the swinging animation.<ref>{{bug|MC-201394}}</ref>}}
+|{{HistoryLine|||dev=14w30a|Milk is now positioned a little higher and further left during the drinking animation in first person view.<ref>{{bug|MC-273056|||WAI}}</ref>}}
+|{{HistoryLine||1.9|dev=15w50a|Milking a cow now makes a sound.}}
+|{{HistoryLine||1.13|dev=18w20a|"Milk" has been renamed to "Milk Bucket".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Milk Bucket JE2 BE2.png|32px]] The texture of milk buckets has been changed.}}
+|{{HistoryLine|||dev=19w06a|[[Wandering trader]]s now drink from milk buckets at dawn, and have a change to drop them.}}
+|{{HistoryLine||1.17|dev=21w13a|Milk can now be obtained by milking [[goat]]s.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=23w31a|Wander traders now have a chance to [[trading|buy]] a milk bucket from the player.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Milk buckets can now be obtained from [[trial chambers]] supply chests.}}
+|{{HistoryLine||1.21|dev=24w19a|Drinking a milk bucket in creative mode now gives the player an empty bucket.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Drinking a milk bucket in creative mode no longer gives the player an empty bucket.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.7.0|[[File:Milk Bucket JE1 BE1.png|32px]] Added milk buckets. 
+|Milk buckets are not yet drinkable.}}
+|{{HistoryLine||v0.11.0|dev=build 4|Drinking milk now removes [[status effects]].
+|Added milk buckets to the Creative inventory.{{verify|type=update}}{{info needed}}<!---same update?--->}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Moved all bucket items, including milk, from the Equipment tab to the Items tab in the [[Creative inventory]].{{verify|type=update}}{{info needed}}<!---please check snapshots, only 1 major release version was checked each--->}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Milk Bucket JE2 BE2.png|32px]] The texture of milk buckets has been changed.}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.52|Milk can now be obtained by milking [[goat]]s.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Milk buckets can now be obtained from [[trial chambers]] supply chests.}}
+|{{HistoryLine||1.21.0|dev=?|A milk bucket now has a chance of dropping from a [[wandering trader]], if the trader is killed while holding it.{{check version}}}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Milk" to "Milk Bucket" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Milk Bucket JE1 BE1.png|32px]] Added milk buckets.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Drinking immediately after attacking no longer continues the swinging animation.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Milking a cow now makes a sound.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Milk bucket is now positioned a little higher and further left during the drinking animation in first person view.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Milk Bucket JE2 BE2.png|32px]] The texture of milk buckets has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Milk Bucket JE1 BE1.png|32px]] Added milk buckets.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this [[item]]'s numeral ID was 335.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The ID of milk has been changed from <code>bucket/1</code> to <code>milk_bucket</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== See also ==
+*[[Water Bucket]]
+*[[Lava]]
+*[[Food]]
+*[[Cake]]
+*[[Honey Bottle]] (alternative to remove Poison effect)
+*[[Medicine]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--milk-bucket|Taking Inventory: Milk Bucket|October 8, 2019|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox items|utilities}}
+{{Navbox combat|general}}
+
+[[Category:Drinks]]
+[[Category:Utilities]]
+
+[[cs:Mléko]]
+[[de:Milcheimer]]
+[[es:Cubo con leche]]
+[[fr:Seau de lait]]
+[[hu:Tej]]
+[[it:Secchio di latte]]
+[[ja:ミルク入りバケツ]]
+[[ko:우유 양동이]]
+[[lzh:乳桶]]
+[[nl:Emmer melk]]
+[[pl:Wiadro mleka]]
+[[pt:Balde de Leite]]
+[[ru:Ведро с молоком]]
+[[th:ถังนม]]
+[[uk:Відро молока]]
+[[zh:奶桶]]

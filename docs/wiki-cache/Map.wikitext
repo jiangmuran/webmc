@@ -1,0 +1,839 @@
+{{about|the craftable map|maps showing the locations of certain structures|Explorer Map|other uses|Map (disambiguation)}}
+{{distinguish|World}}
+{{Infobox item
+| image = Map Zoom 4.png
+| invimage1 = Empty Map
+| invimage2 = Empty Locator Map
+| invimage3 = Map
+| invimage4 = Map BE
+| invimage5 = Locator Map
+| invimage6 = Locked Map
+| renewable = Yes
+| stackable = Yes (64)
+}}
+A '''map''' is an [[item]] used to view explored surface [[Chunk|terrain]] and, {{in|java}}, [[player]]s. Maps can be cloned, zoomed out and locked using a [[cartography table]].
+A '''locator map''' is a variant {{in|BE}} which shows player locations.
+
+== Obtaining ==
+
+=== Crafting ===
+{{crafting
+|head=1
+|showdescription=1
+|name = {{jebe|[[Map|Empty Map]]|[[Map|Empty Locator Map]]}}
+|A1= Paper
+|B1= Paper
+|C1= Paper
+|A2= Paper
+|B2= Compass
+|C2= Paper
+|A3= Paper
+|B3= Paper
+|C3= Paper
+|Output= Empty Locator Map; Empty Map
+|type= Miscellaneous
+|description=This map records terrain and displays a marker showing the player's location.
+}}
+
+{{crafting
+|name=[[Map|Empty Map]]{{only|BE|short=1}}
+|A1= Paper
+|B1= Paper
+|C1= Paper
+|A2= Paper
+|B2= Paper
+|C2= Paper
+|A3= Paper
+|B3= Paper
+|C3= Paper
+|Output= Empty Map
+|type= Miscellaneous
+|description={{only|bedrock}}
+
+This map only records terrain and does not show the player's location.
+|foot=1
+}}
+
+=== Cartography table ===
+{{exclusive|bedrock|section=1}}
+
+{{IN|bedrock}}, a map can also be created using a single [[paper]] in a [[cartography table]] to create an empty map, or a paper and a [[compass]] for an empty locator map.
+
+{{Cartography
+|head=1
+|showdescription=1
+|name=[[Map|Empty Map]]
+|Paper
+|
+|Empty Map
+|description=This map only records terrain and does not show the player's location.
+}}
+{{Cartography
+|name=[[Map|Empty Locator Map]]
+|Paper
+|Compass
+|Empty Locator Map
+|description=This map records terrain and displays a marker showing the player's location.
+|foot=1
+}}
+
+=== Starting map ===
+{{exclusive|bedrock|section=1}}
+When creating a new world {{in|bedrock}}, the player can enable the "Starting Map" option to spawn with an empty locator map in the hotbar. This option is not available in [[Hardcore]] mode. The map's zoom scale is 1:8.
+
+=== Generated loot ===
+{{LootChestItem|empty-map,map}}
+
+=== Trading ===
+{{Trade sources|Empty Map}}
+
+=== Villager gifts ===
+{{IN|java}}, cartographer villagers may give players with the [[Hero of the Village]] effect an empty map.
+
+== Usage ==
+=== Mapping ===
+Crafting a map creates an empty map. The map is drawn for the first time when it is held and used (by pressing the {{control|use item}} control). After conversion to a drawn map item, it starts to draw a top-down view of the player's surroundings, with North pointing to the top of the map. A pointed oval pointer indicates the player's position on the map, and moves in real-time as the player moves across the terrain shown on the map. {{IN|Bedrock}}, this pointer is displayed exclusively on locator maps.
+
+[[File:Map18zooms.png|thumb|200px|The map grid at different zoom levels]]
+
+The map does ''not'' center on the player when created; rather, the world is broken up into large invisible grid squares, and the map displays the area of whichever grid square it was in when it was first used. For example, if a player uses a new map in a certain grid square, then moves a distance away and uses another fresh map within the same grid square, both maps still have the exact same boundary. To make a map with different bounds than the first one, the player would have to move outside of the edges of the first map to enter a new grid square. This way, no two maps of the same size can ever partially overlap. However, by externally editing a map's NBT file, the center coordinate of a map ''can'' be changed to aribitrary X and Z integer coordinates, and it will work correctly. So, technically, this restriction on possible center positions only applies to map ''creation''.
+
+To record the world on a map, that specific map must be held in either of the player's hands while the player moves around the world. The map records terrain within a 64 block radius (4 chunks) from a player in the [[Overworld]] or [[the End]], or 32 blocks in [[the Nether]]. The map only records the surface even if the player is underground. The world is recorded as-is during exploration, meaning that if the world is modified, a player must revisit the area while holding the map to update the map.
+
+Maps display as a mini-map when held in the [[off-hand]], or if the off-hand slot is occupied; the map is full-sized only when held in the dominant hand with both hands free.
+
+Maps can be [[Map#Cloning|cloned]] to synchronize them or [[Map#Framing|framed]] for display.
+
+To create a custom picture, a player can make a large piece of pixel art (128×128) facing upward, center a map on it, and place that map in an [[item frame]]. Locking is recommended. See {{section link|Map item format|Map pixel art}} for details on the techniques.
+
+==== Map content ====
+{{Main|Map item format}}
+
+Maps consist of square pixels arranged in a 128×128 square grid, with each pixel representing a square portion of land. A standard map represents 128×128 blocks (1 block per pixel, 8×8 [[chunk]]s), but it can be [[#Zooming out|zoomed out]] to represent up to 2048×2048 blocks (16 square blocks per pixel, 128×128 chunks).
+
+{{IN|java}}, the [[Map item format#Color table|color of a map pixel]] generally matches the color of the most common [[opaque]] block in the corresponding area, as seen from a bird's-eye view. 'Minority blocks' in the target area have no effect on the color of the pixel, thus small features tend to be undetectable on zoomed-out maps.
+
+{{IN|bedrock}}, the [[Map item format#Color table|color of a map pixel]] instead matches the single top-most opaque block in a grid sized by the map's [[#Zoom details|scale factor]]. For example, a map with zoom level 3/4 has a pixel size of 8×8 blocks; this means the map reads only the top-most opaque blocks at the 0,0 coordinate, the 8,0 coordinate, the 0,8 coordinate, etcetera, ignoring all other blocks in the area. This means that {{in|bedrock}}, map pixel art requires only one block per pixel regardless of map magnification.
+
+{{IN|bedrock}}, grass, foliage and water colors that are biome-dependent are represented accurately on a map.
+
+{| class="wikitable"
+|-
+! style="width: 300px;" | {{el|je}}
+! style="width: 300px;" | {{el|be}}
+|-
+| style="text-align: center;" | [[File:Map Zoom 4.png|216px]]
+| style="text-align: center;" | [[File:Map item BE.png|216px]]
+|-
+| Biome colors in ''Java Edition''.
+| Biome colors in ''Bedrock Edition''.
+|-
+|}
+
+On land above water, a block's color is darker if placed at a lower elevation than the block north of it, or brighter if placed at a higher elevation than the block north of it. Maps also show ground up to about 15 blocks below the surface of the water as slightly lighter blue, to show where the ground rises.
+
+==== Other dimensions ====
+While maps in [[the Nether]] work, they show only a red-and-gray pattern, regardless of the blocks placed. The only useful function is finding where the player is in relation to framed copies, which show as green pointers. Additionally, the player pointer rapidly spins and is not a good indicator of direction. {{IN|java}}, [[banner]] markers placed in the Nether still show on the map as usual. Despite its unreliability, having a mapped trail can still be useful in some cases, such as while riding a [[strider]] over [[lava]]. Maps in [[the End]] work as usual, mapping the terrain and showing the accurate location and direction of the player.
+
+{{IN|java}}, holding a map from the [[Overworld]] in a different dimension shows the player's last position and direction in the Overworld. This effect is temporary, and the marker disappears after quitting and joining the world/server again.
+
+{{IN|bedrock}}, an Overworld locator map in the Nether shows the player's relative location and direction in the Overworld. Similarly, a Nether locator map in the Overworld shows the player's relative location in the Nether, but the place marker spins. An Overworld locator map in the End shows the world spawn. A Nether locator map cannot be used in the End — the map appears, but the place marker is not shown anywhere — and similarly, an End locator map cannot be used in the Overworld or the Nether. The place marker changes color depending on the dimension that the player is currently in (white for the Overworld, red for the Nether, and magenta for the End).
+
+=== Zooming out ===
+A map can be zoomed out up to 4 times, increasing the covered area from 128×128 blocks up to a maximum of 2048×2048 blocks. An empty map cannot be zoomed out; it needs to be activated for the zooming to be possible. Changing the zoom level of a map resets its contents, and terrain needs to be explored again to be drawn on the zoomed out map.
+
+Locked maps cannot be zoomed out.
+
+{{Cartography
+|showdescription = 1
+|name=Map<br>(zoomed out)
+|ingredients = '''Map''' or '''Locator Map''' + [[Paper]]
+|Map; Map BE; Locator Map
+|Paper
+|Map; Map BE; Locator Map
+|description = Locked maps cannot be zoomed out.
+}}
+
+{{Crafting
+  |name=[[Map]]<br>(zoomed out)
+  |ingredients = [[Map]] or [[Map|Locator Map]] + [[Paper]]
+  |A1= Paper |B1= Paper |C1= Paper
+  |A2= Paper |B2= Map; Map BE; Locator Map   |C2= Paper
+  |A3= Paper |B3= Paper |C3= Paper
+  |Output= Map; Map BE; Locator Map
+  |type=Miscellaneous
+  |description=Locked maps cannot be zoomed out.
+  |showdescription=1
+}}
+{{/BE|zoom}}
+==== Zoom details ====
+The zooming function starts from when the map is created (zoom level 0/4) up to its fourth zoom step (zoom level 4/4).
+
+{| class="wikitable" style="text-align: center" data-description="Zoom levels"
+! colspan="2" | 
+! Zoom step 0
+! Zoom step 1
+! Zoom step 2 
+! Zoom step 3 
+! Zoom step 4
+|-
+! colspan="2" |
+| [[File:Map Zoom 0.png|116px|Zoom step 0, 1:1]]
+| [[File:Map Zoom 1.png|116px|Zoom step 1, 1:2]]
+| [[File:Map Zoom 2.png|116px|Zoom step 2, 1:4]]
+| [[File:Map Zoom 3.png|116px|Zoom step 3, 1:8]]
+| [[File:Map Zoom 4.png|116px|Zoom step 4, 1:16]]
+|-
+! colspan="2" | Zoom level
+| 0/4
+| 1/4
+| 2/4
+| 3/4
+| 4/4
+|-
+! colspan="2" | 1 map pixel represents
+| 1 block
+| 4 blocks
+2×2 blocks
+| 16 blocks
+4×4 blocks
+| 64 blocks
+8×8 blocks
+| 256 blocks (1 chunk)
+16×16 blocks
+|-
+! colspan="2" | Scaling ratio
+| 1:1
+| 1:2
+| 1:4
+| 1:8
+| 1:16
+|-
+! rowspan="2" colspan="2" | Map covers an area of
+| 128×128 blocks
+| 256×256 blocks
+| 512×512 blocks
+| 1024×1024 blocks
+| 2048×2048 blocks
+|-
+| 8×8 chunks
+| 16×16 chunks
+| 32×32 chunks
+| 64×64 chunks
+| 128×128 chunks
+|-
+! rowspan="2" | Total paper needed to zoom out from Level 0
+! in anvil{{only|bedrock|short=1}} or crafting table
+| -
+| {{ItemSprite|Paper}} 8
+| {{ItemSprite|Paper}} 16
+| {{ItemSprite|Paper}} 24
+| {{ItemSprite|Paper}} 32
+|-
+! in cartography table
+| -
+| {{ItemSprite|Paper}} 1
+| {{ItemSprite|Paper}} 2
+| {{ItemSprite|Paper}} 3
+| {{ItemSprite|Paper}} 4
+|}
+
+Maps are always aligned to a grid at all zoom levels. That means zooming out any different map in a specific area covered by that map always has the same center. As such, maps are aligned by map width (1024 blocks for a level 3 map) minus 64. A level 3 map generated at X=0 Z=0 covers X and Z coordinates from -64 to 959. All maps generated in this area zoom out to the same coordinates, guaranteeing that they are always 'aligned' on a map wall. For a zoomed-out map to cover a new area, it must start with a base (level 0) map that is in that new area.
+
+At zoom level 0, a map created on the point (0,0) has (0,0) at the center of the map. At higher zoom levels of the same map, the coordinate (0,0) is in the top left square of the map.
+
+{{IN|java}}, the zoom level and the scaling factor are displayed in the tooltip of a map by turning on advanced tooltips (a [[Debug screen#More debug keys|debug]] option that can be toggled by using the key combination {{key|F3+H}}). {{IN|bedrock}}, the zoom level of a map is always displayed in its tooltip.
+
+=== Cloning ===
+A map can be cloned to create multiple synchronized copies linked to the same map data. Multiple players can hold clones of the same map to record different parts of the world simultaneously.
+
+Upon cloning a map, the parts of the world that have already been explored and mapped are copied; thereafter, newly explored areas appear on all cloned instances automatically. The resulting copies have the same zoom level as the starting map. If one of the maps is later zoomed out, then that map loses its connection to the original and functions as a completely separate map that has to be individually filled by exploring.
+
+All cloned maps stack with each other, unless renamed. Even if renamed, the mapped areas continue to remain in sync.
+
+{{IN|bedrock}}, both empty maps and empty locator maps may be used to clone a map. Whether the cloned maps show position markers is dependent only on the input map. For this reason, using an empty locator map instead of an empty map for cloning is a waste of a compass.
+
+{{Cartography
+|showdescription = 1
+|name=Map<br>(cloned)
+|ingredients = '''Map''' + '''Empty Map'''
+|Map; Map BE; Locator Map; Locked Map
+|Empty Map
+|Map, 2; Map BE, 2; Locator Map, 2; Locked Map, 2
+|description = Cloned maps are stackable.
+}}
+{{Crafting
+|showdescription=1
+|shapeless=1
+|name=[[Map]]<br>(cloned)
+|ingredients = [[Map]] + [[Map|Empty Map]]
+|;;;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map 
+|;;;;Empty Map;Empty Map;Empty Map;Empty Map
+|;;;;;Empty Map;Empty Map;Empty Map
+|Map; Map BE; Locator Map; Locked Map
+|Empty Map
+|;;;;;;Empty Map;Empty Map 
+|;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map 
+|;;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map;Empty Map
+|;;;;;;;Empty Map
+|Output= Map, 2; Map BE, 3; Locator Map, 4; Locked Map, 5; Map, 6; Map BE, 7; Locator Map, 8; Locked Map, 9
+|type= Miscellaneous
+|description=Cloned maps are stackable.
+}}
+{{/BE|clone}}
+In [[Creative]] mode, a map in an item frame may be cloned by using {{control|pick block}} on it, as long as that map is not also in the player's inventory.
+
+=== Player markers ===
+
+Holding any map {{in|java}}, or a locator map {{in|bedrock}}, displays a white pointer that marks the position of the player and points in the same direction as the player. When a player moves out of a map, the pointer turns into a white dot which moves along the edge relative to the player's position. The marker disappears if the player is too far from the mapped area; in [[explorer map]]s, the dot becomes smaller instead of fully disappearing. The distance on the X or Z axis from the map's edge required for the dot to vanish (regular maps) or to turn smaller (explorer maps) depends on the zoom level of the map:
+
+* '''Level 0/4 :''' more than 256 blocks away
+* '''Level 1/4 :''' more than 512 blocks away
+* '''Level 2/4 :''' more than 1024 blocks away
+* '''Level 3/4 :''' more than 2048 blocks away
+* '''Level 4/4 :''' more than 4096 blocks away
+
+==== ''Java Edition'' ====
+In multiplayer, other players are displayed on the map only if they have a map in their inventory cloned from the one being looked at. Other players are marked using white pointers. Players wearing a [[carved pumpkin]] are not marked on other players' maps.
+
+==== ''Bedrock Edition'' ====
+{{IN|bedrock}}, position markers are displayed exclusively on locator maps. A map without position markers can be turned into a locator map at a later time by combining it with a [[compass]] on the [[crafting]] grid, on an [[anvil]], or at a [[cartography table]].
+
+{{Cartography
+|name=Map<br>(with marker)
+|ingredients='''Map''' or '''Empty Map''' +<br>[[Compass]]
+|Map BE; Empty Map
+|Compass
+|Locator Map; Empty Locator Map
+|showdescription=1
+|description={{only|be}}
+Maps crafted from only paper do not show the location marker; to add it, a compass must be added to the map. The map keeps its current zoom level, and remembers all of the terrain it has mapped out.
+}}
+{{crafting
+|name=[[Map]]<br>(with marker)
+|ingredients=[[Map]] or [[Map|Empty Map]] +<br>[[Compass]]
+|showdescription=1
+|Map BE;Empty Map 
+|Compass
+|Output= Locator Map;Empty Locator Map
+|type= Miscellaneous
+|description={{only|be}}
+Maps crafted from only paper do not show the location marker; to add it, a compass must be added to the map. The map keeps its current zoom level, and remembers all of the terrain it has mapped out.
+}}
+{{/BE|position}}
+[[File:Bedrock multiplayer map.png|thumb|150px|Player markers in multiplayer]]
+
+In multiplayer, a locator map contains markers for all players who are not in [[Spectator]] mode and are not wearing a [[head]] or a [[carved pumpkin]], even if they don't have any maps in their inventory. In the Overworld, players see themselves as a white pointer, and other players are displayed in different colors depending on the order in which they joined: the first player who joined - or the host - is light gray (looking almost identical to the regular white pointer), the second player is cyan, the third player is orange, the fourth player is light green, and so on. All players in the Nether are displayed with a red pointer, and all players in the End use a magenta pointer.
+
+If other players have a map in their inventory cloned from the one being looked at, they are displayed using white pointers. This also includes players wearing a head or a carved pumpkin, and players in Spectator mode.
+
+Players who are between 10 to 80 blocks away are displayed using the face of their skin instead of the pointer, with a border colored as described above.
+
+=== Framing ===
+When a map is placed into an [[item frame]], the map displays a green pointer at the location of the item frame (it must be a locator map {{in|bedrock}}). If the player leaves a map in an item frame and then views a clone of it, the green pointer is displayed on both copies. This can be used to track waypoints. If a player holds a map whose clone is on display in an item frame, then the map in the item frame updates along with the held map.
+
+These markers work only on clones of the same map. Other maps of the same area do not show the existing markers that the player(s) had placed.
+
+The size of the item frame expands when displaying a map. This allows for combining multiple maps side-by-side to create a much larger map display that visually appears to be one continuous map. For example, a player could display four maps in a 2x2 grid on a wall; if each map is zoom level 2, the total area displayed would be 1024×1024 blocks (the same as a zoom level 3 map) but with a scaling ratio of 1:4 (the same as a zoom level 2 map), depicting much more detail than a zoom level 3 map.
+
+Unexplored areas of a framed map are transparent, making the item frame visible.
+
+<gallery>
+Item Frame (map filled partial).png|An item frame with a partially filled map
+Tracking map with markers bedrock.png|Item frame markers on a held map
+</gallery>
+
+=== Banner markers ===
+{{exclusive|java|section=1}}
+[[File:Banner marked map.png|thumb|150px|All banners marked on a map, alongside a named banner.]]
+{{IN|java}}, the player can also mark spots on a map by {{control|using}} a map on a placed-down [[banner]]. The mark takes the color of whatever the base color is for the banner, and if the banner was given a name using an [[anvil]], the mark shows that name. Banner marks on a map are always oriented with their top facing north, regardless of the banner's actual orientation. If the banner is destroyed, the mark of the banner remains at first, but if the player gets closer to where the banner previously was, it disappears as the area is updated on the map.
+
+=== Locking ===
+Maps can be locked when using a [[glass pane]] in a [[cartography table]]. This creates a new map containing the same data and locks it. All ''new'' copies of this new map are also locked. A locked map never changes, even when the depicted terrain changes. {{IN|bedrock}}, locked maps have a unique texture.
+
+[[Stained glass pane]]s cannot be used to lock maps.
+
+{{Cartography
+|head=1
+|foot=1
+|name=Locked Map
+|ingredients = '''Map''' + [[Glass Pane]]
+|Map; Map BE; Locator Map
+|Glass Pane
+|Map[&7Locked];Locked Map;Locked Map
+}}
+
+{| class="wikitable" style="text-align: center;"
+|-
+! Condition
+! style="width: 200px;" | Newly created map
+! style="width: 200px;" | Map after terrain alteration
+|-
+! Unlocked map
+| [[File:Map Zoom 0.png|174px]] || [[File:Unlocked Map.png|174px]]
+|-
+! Locked map
+| [[File:Map Zoom 0.png|174px]] || [[File:Map Zoom 0.png|174px]]
+|-
+|}
+
+=== Renaming ===
+{{exclusive|bedrock|section=1}}
+[[File:Cartography table map rename.png|thumb|Renaming a map in a cartography table]]
+{{IN|bedrock}}, a map or an empty map can be renamed at a [[cartography table]]. A renamed empty map keeps its name when activated. Unlike renaming items at an [[anvil]], this does not cost any [[experience]].
+
+{{-}}
+
+== Sounds ==
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Drawmap1.ogg
+|sound2=Drawmap2.ogg
+|sound3=Drawmap3.ogg
+|subtitle=Map drawn
+|source=player
+|description=When a map is drawn
+|id=ui.cartography_table.take_result
+|translationkey=subtitles.ui.cartography_table.take_result
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Map drawn
+|source=block
+|description=When a map is edited using a cartography table
+|id=ui.cartography_table.take_result
+|translationkey=subtitles.ui.cartography_table.take_result
+|volume=1.0
+|pitch=1.0
+|distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Drawmap1.ogg
+|sound2=Drawmap2.ogg
+|sound3=Drawmap3.ogg
+|source=block
+|description=When a map is drawn
+|id=ui.cartography_table.take_result|idnote={{Verify|Could be block.cartography_table.use}}
+|volume=0.8
+|pitch=1.0}}
+| {{SoundLine
+|type=bedrock
+|source=block
+|description=When a map is edited using a cartography table
+|id=ui.cartography_table.take_result
+|volume=0.8
+|pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Empty Map
+|spritetype=item
+|nameid=map
+|form=item}}
+{{ID table
+|displayname=Map
+|spritetype=item
+|nameid=filled_map
+|form=item
+|translationkey=item.minecraft.filled_map, filled_map.buried_treasure, filled_map.explorer_jungle, filled_map.explorer_swamp, filled_map.mansion, filled_map.monument, filled_map.unknown, filled_map.village_desert, filled_map.village_plains, filled_map.village_savanna, filled_map.village_snowy, filled_map.village_taiga
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Empty Map
+|spritetype=item
+|nameid=empty_map
+|aliasid=emptymap
+|id=515
+|form=item
+|translationkey=item.emptyMap.name, item.emptyLocatorMap.name}}
+{{ID table
+|displayname=Map
+|spritetype=item
+|spritename=map-be
+|nameid=filled_map
+|aliasid=map
+|id=420
+|form=item
+|translationkey=item.map.name, item.map.exploration.mansion.name, item.map.exploration.monument.name, item.map.exploration.treasure.name
+|foot=1}}
+
+=== Metadata ===
+{{see also|Bedrock Edition data values}}
+{{IN|bedrock}}, maps use the following data values:
+<section begin="metadata"/>
+{{#ifeq: {{PAGENAME}} | Explorer Map ||Empty map:
+{{dvt|spritetype=item|sprite=empty-map|Empty Map}}
+{{dvt|spritetype=item|sprite=empty-map|Empty Locator Map|dv=2|foot=1}}
+
+Filled map:}}
+{{dvt|spritetype=item|sprite=filled-map-be|Map}}
+{{dvt|spritetype=item|sprite=ocean-explorer-map-be|Map (locator)|dv=2}}
+{{dvt|spritetype=item|sprite=ocean-explorer-map-be|Ocean Explorer Map}}
+{{dvt|spritetype=item|sprite=woodland-explorer-map-be|Woodland Explorer Map}}
+{{dvt|spritetype=item|sprite=buried-treasure-map-be|Treasure Map}}
+{{dvt|spritetype=item|sprite=locked-map|Locked Map}}
+{{dvt|spritetype=item|sprite=snowy-village-map-be|Snowy Village Map}}
+{{dvt|spritetype=item|sprite=taiga-village-map-be|Taiga Village Map}}
+{{dvt|spritetype=item|sprite=plains-village-map-be|Plains Village Map}}
+{{dvt|spritetype=item|sprite=savanna-village-map-be|Savanna Village Map}}
+{{dvt|spritetype=item|sprite=desert-village-map-be|Desert Village Map}}
+{{dvt|spritetype=item|sprite=jungle-explorer-map-be|Jungle Explorer Map}}
+{{dvt|spritetype=item|sprite=swamp-explorer-map-be|Swamp Explorer Map}}
+{{dvt|spritetype=item|sprite=trial-explorer-map-be|Trial Explorer Map|foot=1}}<section end="metadata"/>
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/map_color}}
+{{:Data component format/map_decorations}}
+{{:Data component format/map_id}}
+</div>
+
+{{Calculator|decimalColor}}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+=== Map icons ===
+{{see also|Player.dat format|Map item format|map_icons.png}}
+Map icons are 8×8 in ''Java Edition'', but 16×16 in Bedrock Edition. As such, there are minor misalignment issues in ''Java Edition''.<ref>{{bug|MC-214649|||WF}}</ref>
+[[File:Map icons BE.png|thumb|128px|Map icons texture {{in|Bedrock}}]]
+
+{| class="wikitable"
+|-
+! Java ID !! Bedrock ID !! Text ID !! Appearance !! Purpose !! Shown in item frames?
+|-
+| 0 ||  ||<code>player</code> || [[File:Player (texture) JE1 BE1.png|16px|class=pixel-image]] [[File:Player (texture) BE2.png|16px|class=pixel-image]] White marker || Players (on map); {{in|bedrock}}, dynamically recolored for other players or players in the Nether or End || No
+|-
+| 1 || 1 ||<code>frame</code> || [[File:Green Marker (texture) JE1 BE1.png|16px|class=pixel-image]] [[File:Green Marker (texture) BE2.png|16px|class=pixel-image]] Green marker || The current map in an item frame || Yes
+|-
+| 2 ||  ||<code>red_marker</code> || [[File:Red Marker (texture) JE1 BE1.png|16px|class=pixel-image]] [[File:Red Marker (texture) BE2.png|16px|class=pixel-image]] Red marker || Unused || No
+|-
+| 3 ||  ||<code>blue_marker</code> || [[File:Blue Marker (texture) JE1 BE1.png|16px|class=pixel-image]] [[File:Blue Marker (texture) BE2.png|16px|class=pixel-image]] Blue marker || Unused || No
+|-
+| 4 ||  ||<code>target_x</code> || [[File:Target X (texture) JE1 BE1.png|16px|class=pixel-image]] White X || Unused || Yes
+|-
+| 5 ||5
+|<code>target_point</code> || [[File:Target Point (texture) JE1 BE1.png|16px|class=pixel-image]] [[File:Target Point (texture) BE2.png|16px|class=pixel-image]] Red triangle || Unused || Yes
+|-
+| 6 || 6 ||<code>player_off_map</code> || [[File:Player Off Map (texture) JE1 BE1.png|16px|class=pixel-image]] Large white dot || Players off map, nearby || No
+|-
+| 7 || 13 ||<code>player_off_limits</code> || [[File:Player Off Limits (texture) JE1.png|16px|class=pixel-image]] Small white dot || Players off map, far away || No
+|-
+| 8 ||14
+|<code>mansion</code> || [[File:Mansion (texture) JE2.png|16px|class=pixel-image]]<!-- [[File:Mansion (Texture) BE2.png|frameless|16x16px]]--> Woodland mansion || Woodland mansion || Yes
+|-
+| 9 || 15 ||<code>monument</code> || [[File:Monument (texture) JE2.png|16px|class=pixel-image]]<!-- [[File:Monument Texture BE2.png|frameless|16x16px]]--> Ocean monument || Ocean monument || Yes
+|-
+| 10 - 25 ||  ||<code>{{tooltip|banner_*|banner_white, banner_orange, banner_magenta, banner_light_blue, banner_yellow, banner_lime, banner_pink, banner_gray, banner_light_gray, banner_cyan, banner_purple, banner_blue, banner_brown, banner_green, banner_red, banner_black}}</code> || [[File:Banner White (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Light Gray (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Gray (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Black (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Brown (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Red (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Orange (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Yellow (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Lime (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Green (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Cyan (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Light Blue (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Blue (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Purple (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Magenta (texture) JE1.png|16px|class=pixel-image]] [[File:Banner Pink (texture) JE1.png|16px|class=pixel-image]]<br>Banners in all 16 wool colors{{only|java}}|| Banner markers || Yes
+|-
+| 26 ||4
+|<code>red_x</code> || [[File:Red X (texture) JE1.png|16px|class=pixel-image]] [[File:Target X (texture) BE2.png|16px|class=pixel-image]] Red X || Buried treasure || Yes
+|-
+| || 8 || || [[File:Magenta Marker (texture) BE1.png|16px|class=pixel-image]] Magenta marker
+| Unused || No 
+|-
+| || 9 || || [[File:Orange Marker (texture) BE1.png|16px|class=pixel-image]] Orange marker
+| Unused || Yes
+|-
+| || 10 || || [[File:Yellow Marker (texture) BE1.png|16px|class=pixel-image]] Yellow marker
+| Unused || No
+|-
+| || 11 || || [[File:Cyan Marker (texture) BE1.png|16px|class=pixel-image]] Cyan marker
+| Unused || No
+|- 
+| -
+|12
+| || [[File:Green Point (texture) BE1.png|16px|class=pixel-image]] Green triangle
+| Other structure such as stronghold, fortress, End city, etc. when used as explorer map destination{{Only|bedrock}} || Yes
+|-
+| 27 || 17 || <code>desert_village</code> || [[File:Desert Village (texture) JE1 BE1.png|16px|class=pixel-image]] Desert village || Desert village || Yes
+|-
+| 28 || 18 || <code>plains_village</code> || [[File:Plains Village (texture) JE1 BE1.png|16px|class=pixel-image]] Plains village || Plains village || Yes
+|-
+| 29 || 19 || <code>savanna_village</code> || [[File:Savanna Village (texture) JE1 BE1.png|16px|class=pixel-image]] Savanna village || Savanna village || Yes
+|-
+| 30 || 20 || <code>snowy_village</code> || [[File:Snowy Village (texture) JE1 BE1.png|16px|class=pixel-image]] Snowy village || Snowy village || Yes
+|-
+| 31 || 21 || <code>taiga_village</code> || [[File:Taiga Village (texture) JE1 BE1.png|16px|class=pixel-image]] Taiga village || Taiga village || Yes
+|-
+| 32 || 22 || <code>jungle_pyramid</code> || [[File:Jungle Pyramid (texture) JE1 BE1.png|16px|class=pixel-image]] Jungle pyramid || Jungle pyramid || Yes
+|-
+| 33 || 23 || <code>swamp_hut</code> || [[File:Swamp Hut (texture) JE1 BE1.png|16px|class=pixel-image]] Swamp hut || Swamp hut || Yes
+|-
+| 34 || 24 || <code>trial_chambers</code> || [[File:Trial Chambers (texture) JE1.png|16px|class=pixel-image]] Trial chambers || Trial chambers || Yes
+|}
+It should be noted that even if the player used a NBT editor to add an additional icon on the map, ''Minecraft'' shows only the first one listed when the player loads up their world.
+
+== Achievements ==
+{{load achievements|Map Room}}
+
+== History ==
+{{see also|section=24|map_icons.png|Java Edition history of textures#Map icons}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||April 27, 2011|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/4988431144/the-maps|[[Notch]] unveiled screenshots of the map.}}
+|{{HistoryLine||April 28, 2011|link={{tweet|notch|63500114005721088}}|[[Notch]] said that he would try to make maps place-able on [[wall]]s.<ref>{{tweet|notch|63500114005721088|Being able to place maps on walls WOULD be cool.. but.. hmmm.. maybe, I'll try to solve it.|April 28, 2011}}</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|[[File:Map (item) JE1 BE1.png|32px]] Added maps.}}
+|{{HistoryLine||1.6.6|The ability to auto-craft maps using shift-click has been disabled.}}
+|{{HistoryLine||1.8|dev=Pre-release|Maps can now be found in library chests in the brand-new [[stronghold]]s.
+|Auto crafting maps has been restored. Map cloning, therefore, is unavailable for a period of time.}}
+|{{HistoryLine||1.8.1|Maps now work both while walking and flying.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|Prior to this update, the [[sun]] in ''[[Minecraft]]'' rose in the North, which threw off many [[player]]s and led to a common misconception that ''Minecraft'' maps/[[world]]s were oriented with East at the top.<ref>{{Tweet|RustyDagger1|87815572993228800|@jeb_ it's pretty easy for most of us we have server mods with a /compass command.|July 4, 2011}}<br>{{Tweet|jeb_|87815841160237056|@RustyDagger1 But in Minecraft, the sun rises in the north. Everybody knows that!|July 4, 2011}}</ref><ref>{{Tweet|notch|88155424880201728|@Weird_Notch yes :(|July 5, 2011}}</ref> The sun now rises in the east and sets in the west, making navigation much more intuitive.}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Empty Map JE1 BE1.png|32px]] [[Crafting]] a map now creates an empty map. The map is drawn for the first time when it is held and right clicked, and is centered near the location of the [[player]] when clicked (not as before where it was centered on the location it was crafted.)
+|Previously, in order to map a new area, the map had to be ''crafted'' in that area (rather than carrying a previously-crafted map to the new area). The point where a map is crafted becomes its permanent center, and could never be changed. 
+|The pointer no longer disappears when leaving the map, but transforms into a white dot, indicating on what side of the map the player is located.
+|Maps now align to a grid, making it easier to create adjacent maps.
+|Maps can now be zoomed out (but not zoomed in).
+|Maps can now be cloned and scaled.}}
+|{{HistoryLine|||dev=12w34b|Maps now have a ''zoom level'', which was fixed at 1:8 prior to snapshot [[Java Edition 12w34a|12w34a]],<ref name="mapinfo">https://web.archive.org/web/0/http://notch.tumblr.com/post/4988431144/the-maps</ref> but  now starts at 1:1 and can be increased up to 1:16 by re-crafting an existing map.
+|Maps are no longer numbered on the top-left corner and is labeled through the tooltip.}}
+|{{HistoryLine|||dev=12w36a|New maps are now crafted at a scale factor of 1:1. A zoomed in map can be zoomed out by re-crafting it with another 8 sheets of [[paper]] on a [[crafting table]]. Each time this is done, the scale increases - 1:1, 1:2, 1:4, 1:8, 1:16 with a map scale of 1:16 being the current maximum.}}
+|{{HistoryLine||1.7.2|dev=13w38a|The map size has been increased when placed on a [[wall]] using the [[item frame]].
+|More colors have been added to maps for different [[block]]s.<ref name="infodump2">https://web.archive.org/web/0/https://www.mojang.com/2013/10/minecraft-1-7-the-update-that-changed-the-world</ref>}}
+|{{HistoryLine||1.8|dev=14w31a|Zoomed maps now conform to an expanded grid based on their zoom level. Previously, careful considerations would need to be taken to create a wall of adjoining maps.}}
+|{{HistoryLine||1.8.1|dev=pre1|Some colors have been changed on maps to more accurately represent these respective blocks.{{info needed|which blocks?}}}}
+|{{HistoryLine||1.9|dev=15w31a|Maps now display as a mini-map when held in the off-hand, or if the off-hand slot is occupied; the (old) large version is visible only when held in the dominant hand with the secondary hand free.|The hand animation in first person for the big map has been changed to be symmetrical.}}
+|{{HistoryLine|||dev=15w34a|New maps can now be [[crafting|crafted]] at a scale factor of 1:4.
+|A crafting recipe has been added for zooming in maps.}}
+|{{HistoryLine|||dev=15w43a|The average yield of empty maps from [[stronghold]] library [[chest]]s has been doubled.}}
+|{{HistoryLine|||dev=15w45a|New maps are once again [[crafting|crafted]] at a scale factor of 1:1, as they had been before snapshot [[15w34a]].
+|The [[crafting]] recipe, that was introduced in 15w34a, for zooming in maps has been removed.}}
+|{{HistoryLine|||dev=15w49a|Map making now uses armor equipping sounds.}}
+|{{HistoryLine||1.11|dev=16w39a|Maps now work in [[the End]].
+|Empty maps are now [[trading|sold]] by cartographer [[villager]]s as their tier 3 [[trading|trade]].
+|Added [[explorer map]]s, sold by cartographers as their tier 4 trades.
+|The texture for filled maps has been split into a base layer and a tinted overlay layer.}}
+|{{HistoryLine|||dev=16w39c|[[File:Empty Map JE2.png|32px]] The texture for empty maps has been moved slightly to the bottom left to match with filled maps and paper.<ref>{{bug|MC-72962}}</ref>}}
+|{{HistoryLine||1.12|dev=17w17a|Maps now have separate colors for [[stained terracotta]] blocks from other colored blocks.}}
+|{{HistoryLine||1.13|dev=17w47a|More than 32,768 maps can now be created per world.}}
+|{{HistoryLine|||dev=17w50a|Maps can now be placed on floor and ceiling [[item frame]]s.}}
+|{{HistoryLine|||dev=18w10a|Spots on maps can now be marked using [[banner]]s.}}
+|{{HistoryLine|||dev=18w11a|Empty maps can now generate in [[shipwreck]] [[chest]]s.}}
+|{{HistoryLine|||dev=pre7|Maps have been changed slightly, in regard to which [[block]]s are shown and which blocks are not.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Empty Map JE3 BE2.png|32px]] [[File:Map (item) JE2.png|32px]] The textures of maps have been changed.}}
+|{{HistoryLine|||dev=18w48a|Empty maps can now be found in chests in [[village]] cartographer houses.}}
+|{{HistoryLine|||dev=19w02a|Maps can now be cloned and zoomed out (extended) by using a [[cartography table]].
+|Maps can now be locked by using a [[glass pane]] with a cartography table.
+}}
+|{{HistoryLine|||dev=19w06a|Map making is now silent again.}}
+|{{HistoryLine|||dev=19w11a|Cartographer villagers now sell empty maps for 7 emeralds.}}
+|{{HistoryLine|||dev=19w13a|Cartographer villagers now give empty maps to players under the [[Hero of the Village]] effect.}}
+|{{HistoryLine||1.16|dev=20w21a|Map making sounds are now the same as when using a cartography table.}}
+|{{HistoryLine||1.20.6|dev=?|Filled map data format has changed.}}
+|{{HistoryLine||1.21.2|dev=24w39a|Players wearing a [[carved pumpkin]] are no longer marked on other players' maps.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Empty Map JE1 BE1.png|32px]] [[File:Map (item) JE1 BE1.png|32px]] Added maps.
+|Maps are crafted using nine [[paper]], one for every slot of the [[crafting]] grid.
+|Maps must be combined with a [[compass]] using an [[anvil]] in order to show the [[player]]'s position.
+|Maps can be zoomed using an anvil.}}
+|{{HistoryLine|||dev=build 3|New maps are now [[crafting|crafted]] at full zoom.
+|Empty maps now have a "Create Map" button to initialize them.}}
+|{{HistoryLine|||dev=build 7|New maps are now crafted at a scale factor of 1:1.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Maps can now be crafted either with 8 pieces of [[paper]] and a [[compass]] ''or'' 9 pieces of paper, to get a map with or without a position marker.}}
+|{{HistoryLine||v0.16.0|dev=build 1|Different colors have been added to maps for different [[biome]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Maps can now be found inside [[stronghold]] library [[chest]]s.}}
+|{{HistoryLine|||dev=release|[[Windows 10 Edition]] can now use the [[anvil]] as well as the [[crafting table]] to clone, zoom and apply markers, just as [[Pocket Edition]] in general could.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Empty maps with direction markers built-in are now called "locator maps".
+|Changed the displayed name of filled maps from "Map" to "Map #", with # being dependent on the order in which maps have been created. Maps created before this version, as well as maps that generate in loot chests, have the display name "Map 0".}}
+|{{HistoryLine|||dev=alpha 1.1.0.3|"Locator maps" are now called "empty locator maps".
+|Empty maps are now [[trading|sold]] by cartographer [[villager]]s for 7-11 [[emerald]]s as their tier 3 [[trading|trade]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.5.12|Players outside of a locator map's area are no longer displayed using a dot and instead stay a pointer.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Maps can now be found inside map room [[chest]]s in [[shipwreck]]s.}}
+|{{HistoryLine||?|The texture of the filled map overlay has been changed.}}
+|{{HistoryLine||?|Maps now function in dimensions other than the dimension in which they were created.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Maps can now be found in cartographer house [[chest]]s in [[village]]s.
+|[[File:Empty Map JE3 BE2.png|32px]] [[File:Map (item) BE2.png|32px]] The textures of maps have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Empty maps can now be created from 1 [[paper]] in [[cartography table]]s.
+|Maps can now be zoomed, cloned, renamed, and have pointers added in cartography tables.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Cartographer [[villager]]s now [[trading|sell]] empty map for an [[emerald]] as their first tier [[trading|trades]].
+|Empty locator maps can now be [[trading|bought]] from cartographer villagers.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|[[File:Locked Map (item) BE2.png|32px]] Locked maps now have unique inventory icons.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Trading has been changed, novice-level cartographer now sell an empty map for 7 emeralds. Cartographer villager no longer sell empty locator map.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|Players outside of a locator map's area are displayed using a dot instead of a pointer again, matching {{el|java}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Map (item) JE1 BE1.png|32px]] Added maps. 
+|The [[player]] spawns with a free map. 
+|Maps are available only as zoom step 3 maps centered at [[coordinates]] 0,0.}}
+|{{HistoryLine||xbox=TU2|Added a coordinate display to the in-game map.}}
+|{{HistoryLine||xbox=TU5|Added map icons to the in-game player list to match their color in the map.}}
+|{{HistoryLine||xbox=TU9|Maps now show an X at the location of the [[End portal]] if someone is in [[the End]].|[[File:Green Point (texture) BE1.png|32px]] Maps in [[item frame]]s have their position represented by a green triangle.}}
+|{{HistoryLine||xbone=CU1|ps4=1.00|Larger sized worlds on Xbox One and Playstation 4 have zoom step 3 maps aligned to a grid with maps centered at 0, 1024, or 2048 on the X or Z coordinates.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|[[File:Empty Map JE1 BE1.png|32px]] Added [[empty map]]s to the creative inventory.}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|[[Crafting]] a map now produces an empty map.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|The [[player]] now starts with an [[empty map]] instead of an already drawn map.|Some colors have been changed on maps to more accurately represent their respective [[block]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|The outer End islands appear on different maps; even on Xbox 360, Playstation 3, Vita, and Wii U editions.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|The hand animation in first person for maps has been changed to be symmetrical.}}
+|{{HistoryLine||switch=1.0.1|Larger sized worlds on Nintendo Switch have zoom step 3 maps aligned to a grid with maps centered at 0, 1024, or 2048 on the X or Z coordinates.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Maps now display as a mini-map when held in the off-hand, or if the off-hand slot is occupied; the (old) large version is visible only when held in the dominant hand with the secondary hand free.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Frame (texture) BE1.png|32px]] Maps in [[item frame]]s  now have their position represented by an item frame icon.|Empty maps are now [[trading|sold]] by cartographer [[villager]]s as their tier 3 [[trading|trade]].|Added [[explorer map]]s, sold by [[cartographer]]s as their tier 4 trades.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Coordinate display of maps no longer has spaces.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Maps and empty maps can now be found inside map room [[chest]]s in [[shipwreck]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Empty Map JE3 BE2.png|32px]] [[File:Map (item) BE2.png|32px]] The textures of maps have been changed.}}
+|{{HistoryLine||ps3=none|psvita=none|ps4=1.91|Maps can now be created and used in [[cartography table]]s.|Maps can now be cloned and zoomed out (extended) by using a [[cartography table]].|[[File:Locked Map (item) LCE1.png|32px]] Maps can now be locked by using a [[glass pane]] with a cartography table.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], the numeral ID of filled maps was 358 and the numeral ID of empty maps was 395.
+|Maps now use additional NBT to specify which map they contain. Prior to this version, they used item damage instead.
+|Map IDs are no longer limited to 32,768.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The ID of maps have been changed from <code>emptymap</code> to <code>empty_map</code> and <code>map</code> to <code>filled_map</code>.}}
+}}
+<gallery>
+Zoomed Map.png|A map edited to the scale of 1.
+Sky Map.png|A map mapping the [[Sky Dimension]].
+Large Biome Map.png|A map of a [[Large Biomes]] world.
+Map0140-0160.png|A comparison of maps between versions in Pocket Edition Alpha [[Pocket Edition Alpha 0.14.0|0.14.0]] and [[Pocket Edition Alpha 0.16.0|0.16.0]].
+Map_LCE.png|Maps in {{el|LCE}}, showing coordinates at the top left corner.
+FramedMap.png|A map displayed on an item frame, as it looked before [[Java Edition 1.7.2]].
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* {{IN|je}}, a map created using {{cmd|give}} can be any map by using the Map parameter to specify the map number desired. E.g. {{cmd|give [player] <nowiki>minecraft:filled_map[minecraft:map_id=5]</nowiki>}} gives the specified player map_5. If no data value is supplied it defaults to map_0. If map_0 has not ever been crafted, it is centered on x=0, z=0.
+* The maps are stored separately as their own data (<code>.dat</code>) file as <code>map_x.dat</code> with (x) being the map number, see [[map item format]] for more info. By manipulating this number, players can organize their maps to suit them, or if they accidentally create a map in the same location, they can delete their extra map so as to save the number they make.
+* Certain programs can be used to make customized maps with images or text on them instead of actual maps.
+* Since all copies of a map are links to the same file, copying an unfinished map keeps it synchronized with the copy as the player fills it in. Thus, a copy stored in a chest can act as a remote backup.
+* A map that is in an item frame does not update itself until a player picks it up, lets it reload, and places it back again. However, if a player holds a clone of the map, both maps update.
+* Filled maps are the only items that make 90 degree rotations in item frames, and also the only items that can expand the item frame into full block wide.
+* {{IN|console}}, the player always spawns with a map in their inventory after creating a world. This was later added to {{el|Bedrock}} as an optional feature in the world creation menu.
+* Maps {{in|console}} always show the player's current coordinates at the player's eye level, as a substitute for the optional [[Coordinates|coordinate display]] in other editions.
+* A map cannot be created {{in|3ds}}. Instead, the map is always displayed on the bottom screen along with the coordinates. Biome colors do not appear on maps.
+* {{IN|je}}, player pointer rotation in [[the Nether]] is determined by in-game daytime. You could set {{cmd|gamerule doDaylightCycle false}} to freeze it and adjust the angle by changing time, e.g. {{cmd|/time add 1}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Complete Map.png|A completely explored map.
+Partly filled treasure map.png|Partly filled treasure map with an odd area at the bottom left. 
+Partly filled ocean explorer map.png|Partly filled ocean explorer map.
+Minecraft maps 3by3.png|A collection of 9 connected full maps.
+Full Map.png|A combination of 25 maps pasted together as one map.
+Map wall BE.png|A map wall, showing large areas of biome colors for each biome.
+Endmap.png|A map in the End.
+</gallery>
+=== Screenshots ===
+<gallery>
+2x2 Map Item Frames - Zoom 4 Zoom 2.jpg|Two 2x2 [[item frame|item frames]] displaying maps, each showing the same center point (-64, -64) at two different zoom levels: 2 and 4.
+MapRotation.png|Having a map in hand does not stop the ability to see ahead.
+Mcmap4.png|Nearly fully explored map.
+MapOfVillage.png|A village and how it is represented on a map.
+Pumpkin map.png|A map containing a custom image made by placing a large number of blocks.
+Mycelium Map.png|A map view of a mushroom biome, showing that mycelium appears purple on a map.
+MiniMap.png|Maps held in the off-hand or in either hand while [[dual wielding]] appear as mini-maps.
+Nethermap.png|A map in [[the Nether]].
+Maponnether.png|A map in the Nether; the arrow turns around itself, like in [[compass]].
+
+Structure Map Collection.png|Multiple maps in item frames. Notice a [[village]], two [[desert pyramid]]s and a lava lake.
+Map's in item frames.png|Maps can be placed into [[item frame]]s so they can be viewed together.
+Comparing Maps.png|The comparison between 3 zooms of maps.
+SuperflatMap.png|A map in a [[Superflat]] world, with some [[village]]s.
+MapWallWithMarkers.png|A 3×3 map wall with banner markers.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:MapItem1.png|A fully zoomed map.
+File:MapItem2.png|Demonstration of maps not obstructing the player's view when looking forward.
+File:MapItem3.png|A world being recorded onto a map.
+File:Map screenshot PC Gamer.png|Screenshot of a map in early development.
+File:Map Stained Glass 1.png|Stained glasses' appearances on maps before and after 1.13.
+File:Map Stained Glass 2.png|Ditto.
+File:Map Various Blocks 1.png|Various blocks' appearances on maps before and after 1.13.
+File:Map Various Blocks 2.png|Ditto.
+File:Better Together Map.jpg|Holding a map in the offhand in ''Bedrock Edition''.
+File:Better Together Map Icon.jpg|Holding a map in both hands in ''Bedrock Edition''.
+File:Jeb End Map.png|The first image of a map in [[the End]].
+File:HEYYEYAAEYAAAEYAEYAA.png|He-Man map art.
+File:Map Player Icons 1.png|First image of player icons on maps.
+File:Map Player Icons 2.png|Second image of player icons on maps.
+File:Way to the desert.jpeg
+</gallery>
+
+=== In other media ===
+<gallery>
+File:MapZooms.png|A diagram showing how maps zoomed out before [[Java Edition 1.8]]. Notice how the larger maps have borders made of half and quarter small maps.
+File:Map18zooms.png|From 1.8, zoomed maps are aligned to this grid exactly.
+File:AYIB Filled.jpeg|[[Efe]] placing a map of a [[pale garden]].
+File:AYIB Discover.jpeg|[[Kai]] holding a trial chamber map.
+File:Geography Terms.jpeg|A stylized map of different physical geography, based off a meme.<ref>{{Citation|url=https://www.trendenterprises.com/products/t38118|title=Geography Terms Learning Chart|website=TREND enterprises, Inc.|date=2003}}</ref><ref>{{Tweet|AMAZlNGNATURE|1970596368579199106|Here is a visual of every major geography term}}</ref>
+File:Cow and map.jpeg|A [[cow]] holding a map.
+</gallery>
+
+== See also ==
+* [[Explorer Map]]
+* [[Clock]]
+* [[Tutorial:Navigation|Navigation]]
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+
+[[cs:Mapa]]
+[[de:Karte]]
+[[es:Mapa]]
+[[fr:Carte (objet)]]
+[[hu:Térkép (tárgy)]]
+[[it:Mappa]]
+[[ja:地図]]
+[[ko:지도]]
+[[nl:Kaart]]
+[[pl:Mapa]]
+[[pt:Mapa]]
+[[ru:Карта]]
+[[th:แผนที่]]
+[[uk:Мапа]]
+[[zh:地图]]

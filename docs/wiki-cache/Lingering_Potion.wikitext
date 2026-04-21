@@ -1,0 +1,486 @@
+{{about|throwable potions that leave a lingering area of effect|the throwable potions without a lingering effect|Splash Potion|the drinkable potions|Potion}}
+{{Infobox item
+| image = Lingering Water Bottle.png
+| invimage = Lingering Water Bottle
+| invimage2 = Awkward Lingering Potion
+| invimage3 = Thick Lingering Potion
+| invimage4 = Mundane Lingering Potion
+| invimage5 = Lingering Long Mundane Potion
+| invimage6 = Uncraftable Lingering Potion
+| invimage7 = ----
+| invimage8 = Lingering Potion of Night Vision
+| invimage9 = Lingering Potion of Invisibility
+| invimage10 = Lingering Potion of Leaping
+| invimage11 = Lingering Potion of Fire Resistance
+| invimage12 = Lingering Potion of Swiftness
+| invimage13 = Lingering Potion of Slowness
+| invimage14 = Lingering Potion of the Turtle Master
+| invimage15 = Lingering Potion of Water Breathing
+| invimage16 = Lingering Potion of Healing
+| invimage17 = Lingering Potion of Harming
+| invimage18 = Lingering Potion of Poison
+| invimage19 = Lingering Potion of Regeneration
+| invimage20 = Lingering Potion of Strength
+| invimage21 = Lingering Potion of Weakness
+| invimage22 = Lingering Potion of Slow Falling
+| invimage23 = Lingering Potion of Wind Charging
+| invimage24 = Lingering Potion of Weaving
+| invimage25 = Lingering Potion of Oozing
+| invimage26 = Lingering Potion of Infestation
+| invimage27 = Lingering Potion of Luck
+| invimage28 = Lingering Potion of Decay
+| extratext = View [[#Gallery|all renders]]
+| renewable = '''Luck''' and '''Uncraftable'''{{only|je|short=1}}, '''Decay'''{{only|be|short=1}}: No<br>
+'''All others''': Yes
+| stackable = No
+}}
+
+'''Lingering potions''' are variants of [[splash potion]]s that can be thrown to leave clouds with [[status effect]]s that linger on the ground in an area.
+
+== Variants ==
+'''Base potions'''
+* {{ItemLink|Lingering Water Bottle}}
+* {{ItemLink|Lingering Awkward Potion}}
+* {{ItemLink|Lingering Mundane Potion}}
+* {{ItemLink|Lingering Thick Potion}}
+
+'''Effect potions'''
+* {{ItemLink|Lingering Potion of Night Vision}}
+* {{ItemLink|Lingering Potion of Invisibility}}
+* {{ItemLink|Lingering Potion of Leaping}}
+* {{ItemLink|Lingering Potion of Fire Resistance}}
+* {{ItemLink|Lingering Potion of Swiftness}}
+* {{ItemLink|Lingering Potion of Slowness}}
+* {{ItemLink|Lingering Potion of the Turtle Master}}
+* {{ItemLink|Lingering Potion of Water Breathing}}
+* {{ItemLink|Lingering Potion of Healing}}
+* {{ItemLink|Lingering Potion of Harming}}
+* {{ItemLink|Lingering Potion of Poison}}
+* {{ItemLink|Lingering Potion of Regeneration}}
+* {{ItemLink|Lingering Potion of Strength}}
+* {{ItemLink|Lingering Potion of Weakness}}
+* {{ItemLink|Lingering Potion of Slow Falling}}
+* {{ItemLink|Lingering Potion of Wind Charging}}
+* {{ItemLink|Lingering Potion of Weaving}}
+* {{ItemLink|Lingering Potion of Oozing}}
+* {{ItemLink|Lingering Potion of Infestation}}
+* {{ItemLink|Lingering Potion of Luck}}{{only|je}}
+* {{ItemLink|Lingering Potion of Decay}}{{only|be}}
+
+== Obtaining ==
+=== Brewing ===
+{{main|Brewing}}
+
+{{brewing
+  |Dragon's Breath
+  |Matching Lingering Potion
+  |base=Matching Splash Potion
+  |ingredients=[[Dragon's Breath]] + <br>Matching [[Splash Potion]]
+}}
+
+=== Generated loot ===
+{{LootChestItem|lingering-potion-of-healing,lingering-potion-of-poison,lingering-potion-of-slowness,lingering-potion-of-weakness}}
+
+=== Natural occurrence ===
+{{main|Ominous Trial Spawner#Projectile spawning}}
+During [[ominous trial]]s, each [[ominous trial spawner]] has an equal chance to randomly dispense one of these lingering potions on top of either a player or a mob it spawns:
+* {{EffectLink|Wind Charged}}
+* {{EffectLink|Oozing}}
+* {{EffectLink|Weaving}}
+* {{EffectLink|Infested}}
+* {{EffectLink|Strength}}
+* {{EffectLink|Speed}}
+* {{EffectLink|Slow Falling}}
+These lingering potions are directly dispensed into the world and cannot be obtained in the inventory.
+
+== Usage ==
+=== Creating area effect clouds ===
+{{Infobox entity
+| title = Area Effect Cloud
+| image = Area Effect Cloud.png
+| size = Height: 0.5 blocks<br>Width: Varies
+| imagesize = 290px
+}}
+
+Lingering potions are thrown, like [[splash potion]]s, by {{control|using}} them. On impact they break, and after a second they create a lingering cloud with their effect. The cloud is made of the potion particles corresponding to the potion that was thrown. Unlike splash potions, lingering potions do not activate their effect immediately on impact.
+
+The cloud starts with a radius of 3 blocks, decreasing to 0 over the course of 30 seconds. During the cloud's existence, any player or mob that walks into it after the first second gets the corresponding status effect; this decreases the radius by a {{frac|1|2}} block immediately, reducing the cloud's lifespan by 5 seconds.
+
+For effects with duration, the duration applied by the cloud is {{frac|1|4}} that of the corresponding [[potion]]. For effects without duration such as healing or harming, the potency of the effect is {{frac|1|2}} that of the corresponding potion.
+
+The effect may be applied consecutively if the player or mob remains in the cloud. For example, a player throwing the Lingering Potion of Healing II straight down consumes the cloud within a few seconds while being healed 5 times for a total of {{hp|20}} health. As far as healing is concerned, this makes the lingering potion much more powerful than the regular or splash potion, provided that the player is away from other mobs or players.
+
+Lingering potions can also be thrown out of [[dispenser]]s like splash potions.
+
+In ''[[Java Edition]]'', [[creeper]]s with potion effects will explode with their effect dropped as if a lingering potion was thrown.
+
+=== Lingering water bottle ===
+Like the [[Splash potion#Splash water bottles|splash water bottle]], a lingering water bottle puts out fire, damages [[endermen]], [[blaze]]s, [[strider]]s, and [[snow golem]]s by {{hp|1}}, and restores {{convert|1800|tick|second}} of air to [[axolotl]]s. {{IN|java}}, it creates no effect cloud, while {{in|bedrock}} it creates an effect cloud that extinguishes burning entities that walk into it. {{IN|bedrock}}, a lingering awkward, mundane, or thick potion acts similar to the lingering water bottle, being able to extinguish burning entities and damage endermen, blazes, and snow golems, but without the ability to put out fires.
+
+==== Mud ====
+Lingering water bottles can be {{control|used}} on [[dirt]], [[coarse dirt]], or [[rooted dirt]] to turn it into [[mud]].<ref>{{bug|MC-249250}}</ref>
+
+=== Crafting ingredient ===
+{{crafting usage|Matching Lingering Potion}}
+
+=== Filling cauldrons ===
+{{IN|bedrock}}, using a lingering potion on a cauldron adds one level of that potion to the cauldron. Attempting to add a lingering potion to a cauldron with water, dyed water or a non-matching potion empties the cauldron and creates an explosion sound (but no actual explosion).
+
+=== Uncraftable lingering potion ===
+In [[Java Edition|''Java Edition'']], the uncraftable lingering potion is a lingering potion with no effect that is unobtainable in [[Survival|survival mode]]. It is also available in potion and splash potion forms, as well as for tipped arrows.
+
+It can be obtained using the following command: <code>/[[Commands/give|give]] @s minecraft:lingering_potion</code>. It is also obtained when a lingering potion has invalid or missing potion effect tags, and thus serves as a placeholder.
+
+== Behavior ==
+{{#lst:Splash Potion|thrownpotion}}
+
+== Custom effects ==
+{{Main|Data component format#potion contents}}
+{{IN|java}}, lingering potions can be obtained with any status effect using {{cmd|give}} and the <code>potion_contents</code> data component.
+
+== Sounds ==
+{{edition|java}}:<br>
+Lingering potions use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Glass dig1.ogg
+|sound2=Glass dig2.ogg
+|sound3=Glass dig3.ogg
+|subtitle=Bottle smashes
+|source=neutral
+|description=When a lingering potion impacts something
+|id=entity.splash_potion.break
+|translationkey=subtitles.entity.potion.splash
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Bow shoot.ogg
+|subtitle=Bottle thrown
+|source=neutral
+|description=When a lingering potion is thrown by a player
+|id=entity.lingering_potion.throw
+|translationkey=subtitles.entity.potion.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Dispensed item
+|source=block
+|description=When a lingering potion is dispensed by a [[dispenser]]
+|id=block.dispenser.launch
+|translationkey=subtitles.block.dispenser.dispense
+|volume=1.0
+|pitch=1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Glass dig1.ogg
+|sound2=Glass dig2.ogg
+|sound3=Glass dig3.ogg
+|source=block
+|description=When a lingering potion impacts something
+|id=random.glass
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Bow shoot.ogg
+|source=player
+|description=When a lingering potion is thrown by a player
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+| {{SoundLine
+|source=player
+|description=When a lingering potion is dispensed from a dispenser
+|id=random.bow
+|volume=1.0
+| pitch = 0.83-1.25
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion
+|spritetype=item
+|nameid=lingering_potion
+|form=item
+|translationkey=item.minecraft.lingering_potion,item.minecraft.lingering_potion.effect.empty,item.minecraft.lingering_potion.effect.water,item.minecraft.lingering_potion.effect.mundane,item.minecraft.lingering_potion.effect.thick,item.minecraft.lingering_potion.effect.awkward,item.minecraft.lingering_potion.effect.night_vision,item.minecraft.lingering_potion.effect.invisibility,item.minecraft.lingering_potion.effect.leaping,item.minecraft.lingering_potion.effect.fire_resistance,item.minecraft.lingering_potion.effect.swiftness,item.minecraft.lingering_potion.effect.slowness,item.minecraft.lingering_potion.effect.water_breathing,item.minecraft.lingering_potion.effect.healing,item.minecraft.lingering_potion.effect.harming,item.minecraft.lingering_potion.effect.poison,item.minecraft.lingering_potion.effect.regeneration,item.minecraft.lingering_potion.effect.strength,item.minecraft.lingering_potion.effect.weakness,item.minecraft.lingering_potion.effect.levitation,item.minecraft.lingering_potion.effect.luck,item.minecraft.lingering_potion.effect.turtle_master,item.minecraft.lingering_potion.effect.slow_falling
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion
+|spritetype=item
+|nameid=lingering_potion
+|id=562
+|form=item
+|translationkey=potion.emptyPotion.linger.name,potion.mundane.linger.name,potion.mundane.extended.linger.name,potion.thick.linger.name,potion.awkward.linger.name,potion.nightVision.linger.name,potion.invisibility.linger.name,potion.jump.linger.name,potion.fireResistance.linger.name,potion.moveSpeed.linger.name,potion.moveSlowdown.linger.name,potion.heal.linger.name,potion.harm.linger.name,potion.poison.linger.name,potion.regeneration.linger.name,potion.damageBoost.linger.name,potion.weakness.linger.name,potion.wither.linger.name,potion.turtleMaster.linger.name,potion.slowFalling.linger.name
+|foot=1}}
+
+=== Metadata ===
+{{IN|bedrock}}, lingering potions use the following item data values to indicate the kind of potion:
+
+{{#lst:Potion|metadata}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/potion_contents}}
+</div>
+
+{{Calculator|decimalColor}}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+=== Thrown potion ===
+==== ID ====
+{{edition|java}}:
+
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Lingering Potion
+|spritetype=entity
+|nameid=lingering_potion
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion
+|spritetype=entity
+|nameid=lingering_potion
+|id=101
+|foot=1}}
+
+==== Entity data ====
+{{see also|Chunk format|Potions#Data values|title2=Potion data values}}
+Lingering potions when thrown have entity data that define various properties of the entity.
+
+{{#lst:Splash Potion|entity data}}
+
+=== Area effect cloud ===
+==== ID ====
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Area Effect Cloud
+|spritetype=entity
+|nameid=area_effect_cloud
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Area Effect Cloud
+|spritetype=entity
+|nameid=area_effect_cloud
+|id=95
+|foot=1}}
+
+==== Entity data ====
+{{see also|Chunk format}}
+
+The cloud that is created when: lingering potions are thrown; [[creeper]]s with potion effects explode; [[Ender Dragon#Dragon_Fireball|dragon fireballs]] hit the ground, is an entity, which has entity data that defines the properties of the entity.
+
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt|int|Age}}: Age of the field. Increases by 1 every tick. When this is bigger than <code>Duration</code> + <code>WaitTime</code> the area effect cloud dissipates.
+** {{nbt|int|Color}}: The color of the displayed particle. Uses the same format as the '''color''' tag from [[Player.dat format#Display Properties|Display Properties]].
+** {{nbt|int|Duration}}: The maximum age of the field after <code>WaitTime</code>.
+** {{nbt|int|DurationOnUse}}: The amount the duration of the field changes upon applying the effect.
+** {{nbt|string}}{{Nbt|compound|potion_contents}}: The potion and custom effects contained in this area effect cloud. Represents the {{DCL|minecraft:potion_contents}} component. If set to a string, it is converted to a compound, with the string corresponding to {{nbt|string|potion}}.
+*** {{Nbt inherit/potion_contents}}
+** {{nbt|int-array|Owner}}: The [[UUID]] of the entity who created the cloud, stored as four ints. Is not preserved when removed.
+** {{Nbt|compound|custom_particle}}: The [[particle]] displayed by the field.
+*** {{Nbt|string|type}}: The id of the particle type, see [[Particles (Java Edition)]] for valid options.
+*** Additional fields based on the type, see [[Particle format#Configurations of particle types|Particle format]].
+** {{nbt|float|potion_duration_scale}}: The duration of the potion effect applied is scaled by this factor. (defaults to 1.0). Area Effect Clouds created by Lingering Potions will have a scale of 0.25. Represents the {{DCL|minecraft:potion_duration_scale}} component.
+** {{nbt|float|Radius}}: The field's radius.
+** {{nbt|float|RadiusOnUse}}: The amount the radius changes upon applying the effect. Normally negative.
+** {{nbt|float|RadiusPerTick}}: The amount the radius changes per tick. Normally negative.
+** {{nbt|int|ReapplicationDelay}}: The number of ticks before reapplying the effect.
+** {{nbt|int|WaitTime}}: The time before deploying the field. The <code>Radius</code> is ignored, meaning that any specified effects is not applied and specified particles appear only at the center of the field, until <code>Age</code> hits this number.
+</div><section end="entity data"/>
+
+== Advancements ==
+{{Load advancements|Zombie Doctor;A Furious Cocktail;How Did We Get Here?;Bullseye}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w33a|[[File:Lingering Potion of Night Vision JE1 BE1.png|32px]] [[File:Lingering Potion of Invisibility JE1 BE1.png|32px]] [[File:Lingering Potion of Leaping JE1 BE1.png|32px]] [[File:Lingering Potion of Fire Resistance JE1 BE1.png|32px]] [[File:Lingering Potion of Swiftness JE1 BE1.png|32px]] [[File:Lingering Potion of Slowness JE1 BE1.png|32px]] [[File:Lingering Potion of Water Breathing JE1 BE1.png|32px]] [[File:Lingering Potion of Healing JE1 BE1.png|32px]] [[File:Lingering Potion of Harming JE1 BE1.png|32px]] [[File:Lingering Potion of Poison JE1 BE1.png|32px]] [[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] [[File:Lingering Potion of Strength JE1 BE1.png|32px]] [[File:Lingering Potion of Weakness JE1 BE1.png|32px]] Added lingering potions.
+|[[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Water Bottle JE1 BE1.png|32px]] Added lingering water bottle, and Mundane, Thick, and Awkward lingering potions.}}
+|{{HistoryLine|||dev=15w33c|The bug where the [[player]] could not place [[splash potion]]s in the [[brewing stand]] has been fixed. This now allows for easier creation of lingering potions.}}
+|{{HistoryLine|||dev=15w44b|[[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Potion of Luck JE1.png|32px]] Added uncraftable lingering potions and [[lingering potions of Luck]]. Uncraftable lingering potions currently look identical to lingering water bottles.}} 
+|{{HistoryLine|||dev=16w06a|Lingering potions can now be used to craft [[tipped arrow]]s.}}
+|{{HistoryLine||1.11|dev=16w35a|Lingering water bottles now deal {{hp|1}} [[damage]] to [[endermen]] and [[blaze]]s.}}
+|{{HistoryLine|||dev=16w38a|[[File:Uncraftable Lingering Potion JE1.png|32px]] The uncraftable lingering potion is now magenta, has no glint, and is now obtained anytime a lingering potion is specified with invalid or missing potion effect tags.
+|The uncraftable lingering potion has been removed from the [[Creative inventory]].}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Lingering Potion of the Turtle Master JE1 BE1.png|32px]] Added the [[lingering potions of the Turtle Master]].}}
+|{{HistoryLine|||dev=18w14a|[[File:Lingering Potion of Slow Falling JE1.png|32px]] Added [[lingering potions of Slow Falling]].}}
+|{{HistoryLine|||dev=18w19a|[[File:Lingering Potion of Slow Falling JE2 BE1.png|32px]] Changed the effect color of Slow Falling.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Uncraftable Lingering Potion JE2.png|32px]] [[File:Lingering Water Bottle JE2 BE2.png|32px]] [[File:Lingering Potion of Night Vision JE2 BE2.png|32px]] [[File:Lingering Potion of Invisibility JE2 BE2.png|32px]] [[File:Lingering Potion of Leaping JE2 BE2.png|32px]] [[File:Lingering Potion of Fire Resistance JE2 BE2.png|32px]] [[File:Lingering Potion of Swiftness JE2 BE2.png|32px]] [[File:Lingering Potion of Slowness JE2 BE2.png|32px]] [[File:Lingering Potion of the Turtle Master JE2 BE2.png|32px]] [[File:Lingering Potion of Water Breathing JE2 BE2.png|32px]] [[File:Lingering Potion of Healing JE2 BE2.png|32px]] [[File:Lingering Potion of Harming JE2 BE2.png|32px]] [[File:Lingering Potion of Poison JE2 BE2.png|32px]] [[File:Lingering Potion of Regeneration JE2 BE2.png|32px]] [[File:Lingering Potion of Strength JE2 BE2.png|32px]] [[File:Lingering Potion of Weakness JE2 BE2.png|32px]] [[File:Lingering Potion of Luck JE2.png|32px]] [[File:Lingering Potion of Slow Falling JE3 BE2.png|32px]] The textures of lingering potions have been changed.}}
+|{{HistoryLine||1.14.3|dev=pre3|Lingering water bottles now inflict [[knockback (mechanic)|knockback]] away from their owner when damaging blazes.|Damage caused by lingering water bottles now counts as being caused by the player who threw it.<ref>{{bug|MC-110004||Enderman/blaze don't drop experience when hit with splash/lingering potion|Fixed}}</ref>|Lingering water bottles no longer deal damage to endermen.<ref>{{bug|MC-166423}}</ref>}}
+|{{HistoryLine||1.16|dev=pre1|Lingering water bottles now deal {{hp|1}} [[damage]] to [[snow golem]]s and [[strider]]s.<ref>{{bug|MC-106968}}</ref>}}
+|{{HistoryLine||1.18|dev=21w37a|Endermen now take damage when hit by a lingering water bottle again.}}
+|{{HistoryLine||1.19|dev=22w11a|Lingering water bottles can be {{control|used}} on [[dirt]], [[coarse dirt]], or [[rooted dirt]] to turn it into [[mud]].}}
+|{{HistoryLine||1.19.3|dev=22w43a|Lingering water bottles can now extinguish burning entities.<ref>{{bug|MC-189911|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.4|dev=pre1|Lingering potions no longer have an enchantment glint.}}
+|{{HistoryLine|||dev=pre3|[[File:Lingering Potion of Night Vision JE3.png|32px]] [[File:Lingering Potion of Invisibility JE3.png|32px]] [[File:Lingering Potion of Leaping JE3.png|32px]] [[File:Lingering Potion of Fire Resistance JE3.png|32px]] [[File:Lingering Potion of Swiftness JE3.png|32px]] [[File:Lingering Potion of Slowness JE3.png|32px]] [[File:Lingering Potion of the Turtle Master JE3.png|32px]] [[File:Lingering Potion of Water Breathing JE3.png|32px]] [[File:Lingering Potion of Harming JE3.png|32px]] [[File:Lingering Potion of Poison JE3.png|32px]] [[File:Lingering Potion of Strength JE3.png|32px]] Changed colors of the following lingering potions: Night Vision, Invisibility, Leaping, Fire Resistance, Swiftness, Slowness, Turtle Master, Water Breathing, Harming, Poison, Strength.}}
+|{{HistoryLine||1.20|dev=23w12a|[[File:Lingering Potion of Slow Falling JE4 BE3.png|32px]] The [[lingering potion of Slow Falling]] has had its color tweaked to make it more distinguishable from the [[lingering potion of Invisibility]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Lingering potions can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Lingering Potion of Infestation.png|32px]][[File:Lingering Potion of Oozing.png|32px]][[File:Lingering Potion of Weaving.png|32px]][[File:Lingering Potion of Wind Charging.png|32px]] Added lingering potions of [[Infestation]], [[Oozing]], [[Weaving]], and [[Wind Charging]].
+|Lingering potions can now be dispensed by [[ominous trial spawner]]s.}}
+|{{HistoryLine||1.21|dev=24w18a|[[File:Lingering Water Bottle JE2 BE2.png|32px]] Uncraftable lingering potions now use the lingering water bottle color instead of their own distinct color.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Thrown lingering potions no longer go through the [[world border]] if hit.}}
+|{{HistoryLine|||dev=24w36a|If a lingering potion hits an entity, the area effect cloud now spawns at the target's feet, making it easier for lingering potions to apply their effects.<ref>{{Bug|MC-207101|||Fixed}}</ref><ref>{{Bug|MC-270183|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.5|dev=25w02a|Area Effect Clouds have a new field: <code>potion_duration_scale</code>.}}
+|{{HistoryLine|||dev=25w04a|The entity type has been changed from <code>potion</code> to <code>lingering_potion</code>.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Potion of Night Vision JE1 BE1.png|32px]] [[File:Lingering Potion of Invisibility JE1 BE1.png|32px]] [[File:Lingering Potion of Leaping JE1 BE1.png|32px]] [[File:Lingering Potion of Fire Resistance JE1 BE1.png|32px]] [[File:Lingering Potion of Swiftness JE1 BE1.png|32px]] [[File:Lingering Potion of Slowness JE1 BE1.png|32px]] [[File:Lingering Potion of Water Breathing JE1 BE1.png|32px]] [[File:Lingering Potion of Healing JE1 BE1.png|32px]] [[File:Lingering Potion of Harming JE1 BE1.png|32px]] [[File:Lingering Potion of Poison JE1 BE1.png|32px]] [[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] [[File:Lingering Potion of Strength JE1 BE1.png|32px]] [[File:Lingering Potion of Weakness JE1 BE1.png|32px]] [[File:Lingering Potion of Decay BE1.png|32px]] Added lingering potions.
+|Lingering water bottles, mundane, long mundane, thick, and awkward lingering potions are all available in the Creative inventory.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|[[File:Lingering Potion of the Turtle Master JE1 BE1.png|32px]] Added [[lingering potions of the Turtle Master]].}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.5|[[File:Lingering Potion of Slow Falling JE1 BE1.png|32px]] Added [[lingering potions of Slow Falling]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Lingering Water Bottle BE2.png|32px]] [[File:Lingering Potion of Night Vision BE2.png|32px]] [[File:Lingering Potion of Invisibility BE2.png|32px]] [[File:Lingering Potion of Leaping BE2.png|32px]] [[File:Lingering Potion of Fire Resistance BE2.png|32px]] [[File:Lingering Potion of Swiftness BE2.png|32px]] [[File:Lingering Potion of Slowness BE2.png|32px]] [[File:Lingering Potion of Water Breathing BE2.png|32px]] [[File:Lingering Potion of Healing BE2.png|32px]] [[File:Lingering Potion of Harming BE2.png|32px]] [[File:Lingering Potion of Poison BE2.png|32px]] [[File:Lingering Potion of Regeneration BE2.png|32px]] [[File:Lingering Potion of Strength BE2.png|32px]] [[File:Lingering Potion of Weakness BE2.png|32px]] [[File:Lingering Potion of Decay BE2.png|32px]] [[File:Lingering Potion of the Turtle Master BE2.png|32px]] [[File:Lingering Potion of Slow Falling BE2.png|32px]] The textures of lingering potions have been changed.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|Lingering water bottles can now be used on [[dirt]], [[coarse dirt]], or [[rooted dirt]] to turn it into [[mud]].}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|Removed the [[enchantment glint]] from lingering potions.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Lingering Water Bottle BE3.png|32px]] [[File:Lingering Potion of Night Vision BE3.png|32px]] [[File:Lingering Potion of Invisibility BE3.png|32px]] [[File:Lingering Potion of Leaping BE3.png|32px]] [[File:Lingering Potion of Fire Resistance BE3.png|32px]] [[File:Lingering Potion of Swiftness BE3.png|32px]] [[File:Lingering Potion of Slowness BE3.png|32px]] [[File:Lingering Potion of Water Breathing BE3.png|32px]] [[File:Lingering Potion of Healing BE3.png|32px]] [[File:Lingering Potion of Harming BE3.png|32px]] [[File:Lingering Potion of Poison BE3.png|32px]] [[File:Lingering Potion of Regeneration BE3.png|32px]] [[File:Lingering Potion of Strength BE3.png|32px]] [[File:Lingering Potion of Weakness BE3.png|32px]] [[File:Lingering Potion of Decay BE3.png|32px]] [[File:Lingering Potion of the Turtle Master BE3.png|32px]] [[File:Lingering Potion of Slow Falling JE4 BE3.png|32px]] The textures for potions have been changed.<ref>{{bug|MCPE-168357||Potions and tipped arrow colors don't match the particles|Fixed}}</ref>}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Lingering potions can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Lingering Potion of Wind Charging BE1.png|32px]] [[File:Lingering Potion of Weaving BE1.png|32px]] [[File:Lingering Potion of Oozing BE1.png|32px]] [[File:Lingering Potion of Infestation BE1.png|32px]] Added lingering [[potions of Wind Charging]], [[potions of Weaving]], [[potions of Oozing]], and [[potions of Infestation]]
+|Lingering potions can now be dispensed by [[ominous trial spawner]]s.}}
+|{{HistoryLine||1.21.0|Lingering potions of Wind Charging, potions of Weaving, potions of Oozing, and potions of Infestation are now obtainable without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The sprite of lingering potions, when rendered in the world, now have the correct scaling and positional offset.|They now match {{JE}}, and also match better with their collider.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Potion of Night Vision JE1 BE1.png|32px]] [[File:Lingering Potion of Invisibility JE1 BE1.png|32px]] [[File:Lingering Potion of Leaping JE1 BE1.png|32px]] [[File:Lingering Potion of Fire Resistance JE1 BE1.png|32px]] [[File:Lingering Potion of Swiftness JE1 BE1.png|32px]] [[File:Lingering Potion of Slowness JE1 BE1.png|32px]] [[File:Lingering Potion of Water Breathing JE1 BE1.png|32px]] [[File:Lingering Potion of Healing JE1 BE1.png|32px]] [[File:Lingering Potion of Harming JE1 BE1.png|32px]] [[File:Lingering Potion of Poison JE1 BE1.png|32px]] [[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] [[File:Lingering Potion of Strength JE1 BE1.png|32px]] [[File:Lingering Potion of Weakness JE1 BE1.png|32px]] [[File:Lingering Potion of Luck JE1.png|32px]] Added lingering potions.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Lingering water bottles now deal {{hp|1}} [[damage]] to [[endermen]] and [[blaze]]s.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Lingering potions can now be put into a [[cauldron]]. This can be used to obtain tipped arrows of that potion.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[File:Lingering Potion of Decay BE1.png|32px]] [[File:Lingering Potion of the Turtle Master JE1 BE1.png|32px]] [[File:Lingering Potion of Slow Falling JE2 BE1.png|32px]] Added [[lingering potions of Decay]], [[Potion of the Turtle Master#Lingering Potion|Turtle Master]], and [[Potion of Slow Falling#Lingering Potion|Slow Falling]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Lingering Water Bottle JE2 BE2.png|32px]] [[File:Lingering Potion of Night Vision JE2 BE2.png|32px]] [[File:Lingering Potion of Invisibility JE2 BE2.png|32px]] [[File:Lingering Potion of Leaping JE2 BE2.png|32px]] [[File:Lingering Potion of Fire Resistance JE2 BE2.png|32px]] [[File:Lingering Potion of Swiftness JE2 BE2.png|32px]] [[File:Lingering Potion of Slowness JE2 BE2.png|32px]] [[File:Lingering Potion of Water Breathing JE2 BE2.png|32px]] [[File:Lingering Potion of Healing JE2 BE2.png|32px]] [[File:Lingering Potion of Harming JE2 BE2.png|32px]] [[File:Lingering Potion of Poison JE2 BE2.png|32px]] [[File:Lingering Potion of Regeneration JE2 BE2.png|32px]] [[File:Lingering Potion of Strength JE2 BE2.png|32px]] [[File:Lingering Potion of Weakness JE2 BE2.png|32px]] [[File:Lingering Potion of Luck JE2.png|32px]] [[File:Lingering Potion of Decay BE2.png|32px]] [[File:Lingering Potion of the Turtle Master JE2 BE2.png|32px]] [[File:Lingering Potion of Slow Falling JE3 BE2.png|32px]] The textures of lingering potions have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Lingering Water Bottle JE1 BE1.png|32px]] [[File:Lingering Potion of Night Vision JE1 BE1.png|32px]] [[File:Lingering Potion of Invisibility JE1 BE1.png|32px]] [[File:Lingering Potion of Leaping JE1 BE1.png|32px]] [[File:Lingering Potion of Fire Resistance JE1 BE1.png|32px]] [[File:Lingering Potion of Swiftness JE1 BE1.png|32px]] [[File:Lingering Potion of Slowness JE1 BE1.png|32px]] [[File:Lingering Potion of Water Breathing JE1 BE1.png|32px]] [[File:Lingering Potion of Healing JE1 BE1.png|32px]] [[File:Lingering Potion of Harming JE1 BE1.png|32px]] [[File:Lingering Potion of Poison JE1 BE1.png|32px]] [[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] [[File:Lingering Potion of Strength JE1 BE1.png|32px]] [[File:Lingering Potion of Weakness JE1 BE1.png|32px]] [[File:Lingering Potion of Decay BE1.png|32px]] Added lingering potions.
+|Lingering water bottles, mundane, long mundane, thick, and awkward lingering potions are all available in the Creative inventory.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed from {{code|AreaEffectCloud}} to {{code|area_effect_cloud}}.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 441.{{info needed|what entity IDs were used for thrown lingering potions and area effect clouds?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* A thrown lingering potion faces toward the [[player]] in first-person view while it appears rotated horizontally in third-person view. This is the case for all throwable [[item]]s ([[ender pearl]]s, [[egg]]s, [[snowball]]s, and all throwable potions).
+* The [[Lingering Potion of the Turtle Master]] has the longest item name in the game.
+** It's also composed of 6 words, more than any other item in the game other than items and books named through an anvil.
+** "[[Polished Blackstone Pressure Plate]]" is the current longest name for a block tied with "[[Cracked Polished Blackstone Bricks]]" (34 characters with spaces, 31 without) and "[[Copper Chest|Waxed Weathered Large Copper Chest]]" (34 characters with spaces, 30 without)
+** The record holders in ''[[Minecraft Education]]'' are "[[Hardened Light Blue Stained Glass Pane]]" and "[[Hardened Light Gray Stained Glass Pane]]" (both at 38 with spaces, 33 without).
+** Throughout Minecraft's history, the longest named block is the [[Quadruple Compressed Poisonous Potato Block]] in the [[Java Edition 24w14potato]] snapshot with a length of 43 characters with spaces and 39 without.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Lingering Water Bottle.png|Water Bottle
+File:Lingering Potion of Night Vision.png|Night Vision
+File:Lingering Potion of Invisibility.png|Invisibility
+File:Lingering Potion of Leaping.png|Leaping
+File:Lingering Potion of Fire Resistance.png|Fire Resistance
+File:Lingering Potion of Swiftness.png|Swiftness
+File:Lingering Potion of Slowness.png|Slowness
+File:Lingering Potion of the Turtle Master.png|Turtle Master
+File:Lingering Potion of Water Breathing.png|Water Breathing
+File:Lingering Potion of Healing.png|Healing
+File:Lingering Potion of Harming.png|Harming
+File:Lingering Potion of Poison.png|Poison
+File:Lingering Potion of Regeneration.png|Regeneration
+File:Lingering Potion of Strength.png|Strength
+File:Lingering Potion of Weakness.png|Weakness
+File:Lingering Potion of Slow Falling.png|Slow Falling
+File:Lingering Potion of Wind Charging.png|Wind Charging
+File:Lingering Potion of Weaving.png|Weaving
+File:Lingering Potion of Oozing.png|Oozing
+File:Lingering Potion of Infestation.png|Infestation
+File:Lingering Potion of Luck.png|Luck
+File:Lingering Potion of Decay.png|Decay
+File:Uncraftable Lingering Potion.png|Old texture file for the uncraftable lingering potion on ''Java Edition''.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Transparent Area Effect Cloud Image.png|Just area affect cloud particles
+</gallery>
+
+== See also ==
+*{{ItemSprite|Brewing Stand}} [[Brewing]]
+*{{ItemLink|Glass Bottle}}
+*{{ItemLink|Potion}}
+*{{ItemLink|Splash Potion}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox brewing}}
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[de:Verweiltrank]]
+[[es:Poción persistente]]
+[[fr:Potion persistante]]
+[[ja:残留ポーション]]
+[[ko:잔류형 물약]]
+[[pl:Trwałe miotane mikstury]]
+[[pt:Poção Prolongada]]
+[[ru:Оседающие зелья]]
+[[uk:Осідальне зілля]]
+[[zh:滞留药水]]

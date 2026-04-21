@@ -1,0 +1,786 @@
+{{For}}
+{{Distinguish|Bow}}
+{{Infobox item
+| title = Crossbow
+| group = Crossbow
+| 1-1 = Crossbow.png 
+| group2 = Pull state 0
+| 2-1 = Crossbow Pull 0.png 
+| group3 = Pull state 1
+| 3-1 = Crossbow Pull 1.png 
+| group4 = Pull state 2
+| 4-1 = Crossbow Pull 2.png 
+| group5 = Crossbow loaded (Arrow)
+| 5-1 = Arrow Loaded Crossbow.png 
+| group6 = Crossbow loaded (Firework)
+| 6-1 = Firework Loaded Crossbow.png
+|invimage2 = [Crossbow]Arrow Loaded Crossbow
+|invimage3= [Crossbow]Firework Loaded Crossbow
+| projectiledamage = '''{{ItemSprite|Arrow|text=Arrow}}:'''<br>{{jebe|{{hp|7}} to {{hp|11}}|{{hp|9}}}}<br>'''{{ItemSprite|Firework Rocket|text=Firework rocket}}:'''<br>'''1{{ItemSprite|Firework Star}}:''' {{hp|5}} to {{hp|6}}<br>'''2{{ItemSprite|Firework Star}}:''' {{hp|6}} to {{hp|8}}<br>'''3{{ItemSprite|Firework Star}}:''' {{hp|7}} to {{hp|10}}<br>'''4{{ItemSprite|Firework Star}}:''' {{hp|8}} to {{hp|12}}<br>'''5{{ItemSprite|Firework Star}}:''' {{hp|9}} to {{hp|14}}<br>'''6{{ItemSprite|Firework Star}}:''' {{hp|10}} to {{hp|16}}<br>'''7{{ItemSprite|Firework Star}}:''' {{hp|11}} to {{hp|18}}
+| chargetime = 1.25s<ref group="note">Due to a server-client desync bug, crossbows can occasionally be fired 1 tick earlier than their programmed 1.25 second charge time.</ref><ref>{{bug|MC-302165||Bows/tridents/crossbows are able to be charged earlier than should be possible on a singleplayer world|Unresolved}}</ref><br>1s ([[Quick Charge]] I)<br>0.75s ([[Quick Charge]] II)<br>0.5s ([[Quick Charge]] III)
+| inaccuracy = 1
+| durability = {{jebe|465|466}}
+| enchantability = 1
+| renewable = Yes
+| stackable = No
+}}
+A '''crossbow''' is a [[Ranged attack|ranged]] [[weapon]] that can load and fire [[arrow]]s, arrow variants, and [[firework rockets]]. Holding {{Control|use|text=use}} will load it and it will remain loaded until it is {{Control|use|text=fired}}, after which it can be loaded again.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|A1=Stick
+|B1=Iron Ingot
+|C1=Stick
+|A2=String
+|B2=Tripwire Hook
+|C2=String
+|B3=Stick
+|Output=Crossbow
+|type=Combat
+}}
+
+=== Generated loot ===
+{{LootChestItem|crossbow,damaged-level-enchanted-crossbow,damaged-random-enchanted-crossbow,damaged-random-enchanted-crossbow-2,level-enchanted-crossbow}}
+
+=== Mob loot ===
+==== Pillagers ====
+When killed, a [[pillager]] has a small chance (8.5%) of dropping a loaded or unloaded crossbow with random [[durability]]; the [[Drops|drop]] rate increases by 1% per [[Experience|level]] of [[Looting]]: 9.5% with Looting I, 10.5% with Looting II and 11.5% with Looting III. The dropped crossbow can rarely (10% chance) be [[Enchanting|enchant]]ed at level 5&ndash;19 regardless of being enchanted when it [[Mob spawning|spawned]].
+
+==== Piglins ====
+[[Piglin]]s have a chance of wielding a crossbow upon spawning, and they also have a small chance (8.5%) of dropping a loaded or unloaded crossbow of random durability when killed; this rate increases by 1% per level of [[Looting]]: 9.5% with Looting I, 10.5% with Looting II and 11.5% with Looting III. It can rarely (10% chance) be enchanted at level 5&ndash;19 regardless of being enchanted when spawned.
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+=== Attacking ===
+[[File:Crossbow shooting.gif|thumb|right|Shooting a crossbow {{in|java}}.]]
+
+Crossbows are similar to [[bow]]s, but can be charged in advance for use at any time. They take longer to charge than a bow, are slightly more powerful, and shoot farther with slightly higher accuracy. 
+
+Crossbows can be loaded with arrows of any type. Like the bow, arrows shot by crossbows can be blocked by [[shield]]s. A crossbow enchanted with [[Piercing]] fires arrows that ignore blocking shields, allowing them to pass through and still hit their target. Arrows shot from a crossbow enchanted with [[Piercing]] can be picked up and used again, creating an effect similar to the bow-exclusive [[Infinity]] enchantment. When an arrow hits another player, the player that fired the arrow will hear a high-pitched "ding" sound to indicate the successful shot.{{only|je}}
+
+Alternatively, they can be loaded with a firework rocket, which flies in a straight line at 32 m/s and, in {{JE}}, explodes on contact with blocks and entities.<ref>{{bug|MCPE-52675||Fireworks do not explode on impact with entity and blocks}}</ref> If the firework rocket has no firework stars, it deals no [[damage]]. In order to use a firework rocket with a crossbow, at least one firework rocket must be present in the player's [[offhand]]. Using a firework rocket uses 3 [[durability]] per shot, and fireworks with higher flight duration travel farther when fired. When a crossbow has the [[Multishot]] enchantment, the increased durability usage stacks, resulting in 9 durability being consumed with each shot. [[Piercing]] does not work with firework rockets, and firework rocket explosions have a radius of roughly 4 blocks.
+
+A crossbow can first be loaded by {{control|using}} it, which starts charging it. While charging the crossbow, the [[player]] moves at sneaking speed. When the crossbow finishes charging, the arrow or firework rocket is then loaded into it and the player’s speed returns to normal. At this point, the crossbow ''must be used a second time'' to fire its projectile. Shooting a loaded crossbow does not delay any of the player's current actions like [[sprinting]] or [[swimming]]. Both arrows and firework rockets launched by crossbows are not augmented by the [[Strength]] effect.
+
+A loaded crossbow keeps its projectile when placed in another [[inventory]] slot or into an [[item frame]] without the projectile being unloaded or fired. A loaded crossbow also remains charged after repairing or enchanting it using a grindstone, anvil, or enchanting table. {{IN|je}}, the crossbow’s tooltip also lists the loaded projectile and its effect, if any. Like with bows, the player can choose the type of arrow to fire based on its location in their [[inventory]]:
+* Arrows in the off-hand, or the selected [[hotbar]] slot if the crossbow is in the off-hand, are prioritized first. 
+* If there are no arrows in the off-hand or selected hotbar slot, the arrow closest to slot 0 is selected.
+
+A select few mobs cannot be shot using an arrow, because the arrow either disappears or it gets deflected. However, by use of the explosion from an indirect firework rocket, arrow-immune mobs can be damaged.  The list of arrow-immune mobs include:
+* [[Endermen]] - even while immobile, the enderman is immune to damage from arrows;
+* [[Breeze]];
+* [[Wither]] under half health, when it gains wither armor;
+* Closed [[shulker]]s;
+* [[Ender dragon]], while sitting on top of the [[exit portal]].
+
+=== Statistics ===
+{| class="wikitable" data-description="Crossbow arrow statistics" style="text-align:center;"
+|-
+!colspan=4 |{{ItemSprite|Arrow|text=Arrow}}
+|-
+!colspan=4 |{{JE}}
+|-
+!scope="col" | Projectile damage
+!scope="col" | Enchantment
+!scope="col" | Charge time
+!scope="col" | Damage/second (DPS)
+|-
+|rowspan="4" | {{hp|7}} to {{hp|11}}
+| Unenchanted
+| 1.25 s
+| 5.25 to 8.25
+|-
+| Quick Charge I
+| 1 s
+| 7 to 11
+|-
+| Quick Charge II
+| 0.75 s
+| 8.75 to 13.75
+|-
+| Quick Charge III
+| 0.5 s
+| 10.5 to 16.5
+|-
+!colspan=4 |{{BE}}
+|-
+!scope="col" | Projectile damage
+!scope="col" | Enchantment
+!scope="col" | Charge time
+!scope="col" | Damage/second (DPS)
+|-
+|rowspan="4" | {{hp|9}}
+| Unenchanted
+| 1.25 s
+| 6.75
+|-
+| Quick Charge I
+| 1 s
+| 9
+|-
+| Quick Charge II
+| 0.75 s
+| 11.25
+|-
+| Quick Charge III
+| 0.5 s
+| 13.5
+|-
+|}
+
+{| class="wikitable" data-description="Crossbow firework statistics" style="text-align:center;"
+|-
+!colspan=5 |{{ItemSprite|Firework Rocket|text=Firework Rocket}}
+|-
+!scope="col" | Firework stars
+!scope="col" | Projectile damage
+!scope="col" | Enchantment
+!scope="col" | Charge time
+!scope="col" | Damage/second (DPS)
+|-
+|rowspan="4" | 1 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|5}} to {{hp|6}}
+| No enchantment
+| 1.25 s
+| 3.75 to 4.5
+|-
+| Quick Charge I
+| 1 s
+| 5 to 6
+|-
+| Quick Charge II
+| 0.75 s
+| 6.25 to 7.5
+|-
+| Quick Charge III
+| 0.5 s
+| 7.5 to 9
+|-
+|rowspan="4" | 2 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|6}} to {{hp|8}}
+| No enchantment
+| 1.25 s
+| 4.5 to 6
+|-
+| Quick Charge I
+| 1 s
+| 6 to 8
+|-
+| Quick Charge II
+| 0.75 s
+| 7.5 to 10
+|-
+| Quick Charge III
+| 0.5 s
+| 9 to 12
+|-
+|rowspan="4" | 3 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|7}} to {{hp|10}}
+| No enchantment
+| 1.25 s
+| 5.25 to 7.5
+|-
+| Quick Charge I
+| 1 s
+| 7 to 10
+|-
+| Quick Charge II
+| 0.75 s
+| 8.75 to 12.5
+|-
+| Quick Charge III
+| 0.5 s
+| 10.5 to 15
+|-
+|rowspan="4" | 4 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|8}} to {{hp|12}}
+| No enchantment
+| 1.25 s
+| 6 to 9
+|-
+| Quick Charge I
+| 1 s
+| 8 to 12
+|-
+| Quick Charge II
+| 0.75 s
+| 10 to 15
+|-
+| Quick Charge III
+| 0.5 s
+| 12 to 18
+|-
+|rowspan="4" | 5 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|9}} to {{hp|14}}
+| No enchantment
+| 1.25 s
+| 6.75 to 10.5
+|-
+| Quick Charge I
+| 1 s
+| 9 to 14
+|-
+| Quick Charge II
+| 0.75 s
+| 11.25 to 17.5
+|-
+| Quick Charge III
+| 0.5 s
+| 13.5 to 21
+|-
+|rowspan="4" | 6 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|10}} to {{hp|16}}
+| No enchantment
+| 1.25 s
+| 7.5 to 12
+|-
+| Quick Charge I
+| 1 s
+| 10 to 16
+|-
+| Quick Charge II
+| 0.75 s
+| 12.5 to 20
+|-
+| Quick Charge III
+| 0.5 s
+| 15 to 24
+|-
+|rowspan="4" | 7 {{ItemSprite|Firework Star}}
+|rowspan="4" | {{hp|11}} to {{hp|18}}
+| No enchantment
+| 1.25 s
+| 8.25 to 13.5
+|-
+| Quick Charge I
+| 1 s
+| 11 to 18
+|-
+| Quick Charge II
+| 0.75 s
+| 13.75 to 22.5
+|-
+| Quick Charge III
+| 0.5 s
+| 16.5 to 27
+|-
+|}
+
+=== Projectile motion ===
+The projectile motion of an arrow fired from a crossbow is dependent on the angle the user is facing, as well as the user's movement speed.
+{{:Calculators/Projectile motion|type=1|name=Arrow|gravity=-0.05|dragx=0.99|dragy=0.99|speed=3.15|level=0|crit=1|hideproperties=1|hidedynamics=1|hidelevel=1}}
+
+The distance a launched firework rocket can travel is dependent on the rocket's [[flight duration]]. The amount of gunpowder used when crafting the firework rocket changes its flight duration.
+{| class="wikitable" style="text-align:center"
+! colspan="4" |Firework rocket range
+|-
+|Minimum
+|Average
+|Maximum
+|Gunpowder
+|-
+|32m (20 ticks)
+|40.8m (25.5 ticks)
+|49.6m (31 ticks)
+|1 {{ItemSprite|Gunpowder}}
+|-
+|48m (30 ticks)
+|56.8m (35.5 ticks)
+|65.6m (41 ticks)
+| 2 {{ItemSprite|Gunpowder}}
+|-
+|64m (40 ticks)
+|72.8m (45.5 ticks)
+|81.6m (51 ticks)
+|3 {{ItemSprite|Gunpowder}}
+|}
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|ingredients=Damaged Crossbow or<br>Damaged Arrow Loaded Crossbow or<br>Damaged Firework Loaded Crossbow
+|Damaged Crossbow;Damaged Arrow Loaded Crossbow;Damaged Firework Loaded Crossbow
+|Damaged Crossbow;Damaged Arrow Loaded Crossbow;Damaged Firework Loaded Crossbow
+|Output=Crossbow
+|type=Combat
+|ignoreusage=1
+|showdescription=1
+|description=The [[durability]] of the two crossbows is added together, plus an extra 5% durability. Any loaded ammunition is lost.
+}}
+{{Grinding
+|ingredients=Damaged Crossbow or<br>Damaged Arrow Loaded Crossbow or<br>Damaged Firework Loaded Crossbow
+|Damaged Crossbow; Damaged Arrow Loaded Crossbow; Damaged Firework Loaded Crossbow
+|Damaged Crossbow; Damaged Arrow Loaded Crossbow; Damaged Firework Loaded Crossbow
+|Crossbow; Arrow Loaded Crossbow; Firework Loaded Crossbow
+|showdescription=1
+|description=The durability of the two crossbows is added together, plus an extra 5% durability. Any loaded ammunition is kept.
+}}
+
+==== Unit repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|head=1
+|Damaged Crossbow; Damaged Arrow Loaded Crossbow; Damaged Firework Loaded Crossbow
+|Damaged Crossbow; Damaged Arrow Loaded Crossbow; Damaged Firework Loaded Crossbow
+|Crossbow; Arrow Loaded Crossbow; Firework Loaded Crossbow
+|tail=1
+}}
+
+A crossbow can be combined with another crossbow in an [[anvil]], preserving the [[Enchanting|enchantment]]s of both and the projectile of the ''target'' item.
+
+=== Enchantments ===
+A crossbow can receive the following enchantments:
+
+{| class="wikitable col-3-center"
+|+
+!Name
+!Description
+!Max Level
+![[Enchanting|Method]]
+!Weight
+|-
+|[[Quick Charge]]
+|Decreases the reloading time.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Multishot]]<ref group=note name=note1>Multishot and Piercing are mutually exclusive.</ref>
+|Makes the crossbow fire a spread of 3 projectiles at once instead of a single projectile.
+|I
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Piercing]]<ref group=note name=note1/>
+|Causes crossbow-shot arrows to pierce through targets.
+|IV
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|10
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]
+|Repairs the crossbow when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The crossbow vanishes on death, not dropping as an item.	
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+A crossbow cannot be enchanted with Power, Punch, Flame, or Infinity in Survival mode. However, they can be applied via [[anvil]] in Creative mode {{in|java}} or by using commands. When applied, each enchantment functions the same for the crossbow as it would for a [[bow]].
+{{Notelist}}
+
+=== Fuel ===
+Crossbows can be used as [[fuel]] in [[furnace]]s, [[smelting]] 1.5 [[item]]s per crossbow.
+
+Despite using [[iron ingot]]s in their crafting recipe, crossbows cannot be smelted into [[iron nugget]]s.<ref>{{bug|MC-111738}}</ref>
+
+== Sounds ==
+{{el|je}}:
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Crossbow loading start.ogg
+|subtitle=Crossbow charges up
+|source=player
+|description=When a crossbow starts to load
+|id=item.crossbow.loading_start
+|translationkey=subtitles.item.crossbow.charge
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow quick charge one1.ogg
+|sound2=Crossbow quick charge one2.ogg
+|sound3=Crossbow quick charge one3.ogg
+|subtitle=Crossbow charges up
+|source=player
+|description=When a Quick Charge I crossbow starts to load <ref group=sound><code>quick1_3</code> occurs at half the frequency as the other sounds</ref>
+|id=item.crossbow.quick_charge_1
+|translationkey=subtitles.item.crossbow.charge
+|volume=''varies'' <ref group=sound>0.325 for all except <code>quick1_1</code> (pitch=0.9), which is 0.25</ref>
+|pitch=''varies'' <ref group=sound><code>quick1_1</code> can be 1.0 or 0.9; <code>quick1_2</code> can be 1.0 or 0.95; <code>quick1_3</code> can be 1.0</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow quick charge two1.ogg
+|sound2=Crossbow quick charge two2.ogg
+|sound3=Crossbow quick charge two3.ogg
+|subtitle=Crossbow charges up
+|source=player
+|description=When a Quick Charge II crossbow starts to load <ref group=sound name=quickchargefrequency><code>_1</code> occurs at {{frac|2|3}} the frequency as the other sounds</ref>
+|id=item.crossbow.quick_charge_2
+|translationkey=subtitles.item.crossbow.charge
+|pitch=''varies'' <ref group=sound name=quickchargevolume />
+|volume=''varies'' <ref group=sound name=quickchargepitch />
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow quick charge three1.ogg
+|sound2=Crossbow quick charge three2.ogg
+|sound3=Crossbow quick charge three3.ogg
+|subtitle=Crossbow charges up
+|source=player
+|description=When a Quick Charge III crossbow starts to load <ref group=sound name=quickchargefrequency />
+|id=item.crossbow.quick_charge_3
+|translationkey=subtitles.item.crossbow.charge
+|volume=''varies'' <ref group=sound name=quickchargevolume>0.325 for all except <code>_1</code> (pitch=0.95), which is 0.25</ref>
+|pitch=''varies'' <ref group=sound name=quickchargepitch><code>_1</code> can be 1.0 or 0.95; <code>_2</code> can be 1.0, 0.95, or 1.05; <code>_3</code> can be 1.0, 0.9, or 1.05</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow loading middle1.ogg
+|sound2=Crossbow loading middle2.ogg
+|sound3=Crossbow loading middle3.ogg
+|sound4=Crossbow loading middle4.ogg
+|subtitle=Crossbow charges up<ref group=sound>{{Bug|MC-203146}}</ref>
+|source=player
+|description=While a crossbow is loading <ref group=sound><code>loading_middle4</code> occurs at {{frac|1|4}} the frequency as the other sounds</ref>
+|id=item.crossbow.loading_middle
+|translationkey=subtitles.item.crossbow.charge
+|volume=0.325
+|pitch=''varies'' <ref group=sound><code>loading_middle1</code> can be 1.0, 0.95, or 1.2; <code>loading_middle2</code> and <code>loading_middle3</code> can be 1.0, 0.9, or 1.05; <code>loading_middle4</code> can be 1.0</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow loading end.ogg
+|subtitle=Crossbow loads
+|source=dependent
+|description=When a crossbow stops loading
+|id=item.crossbow.loading_end
+|translationkey=subtitles.item.crossbow.load
+|volume=1.0
+|pitch={{frac|13|15}}-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Crossbow shoot1.ogg
+|sound2=Crossbow shoot2.ogg
+|sound3=Crossbow shoot3.ogg
+|subtitle=Crossbow fires
+|source=dependent
+|description=When a crossbow fires
+|id=item.crossbow.shoot
+|translationkey=subtitles.item.crossbow.shoot
+|volume=0.8/0.9/0.9
+|pitch=1.0/1.0/0.9 <ref group=sound>Multiplied by the loading percentage of the crossbow</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Arrow hit1.ogg
+|sound2=Arrow hit2.ogg
+|sound3=Arrow hit3.ogg
+|sound4=Arrow hit4.ogg
+|subtitle=Arrow hits
+|source=neutral
+|description=When an arrow hits a block or entity
+|id=item.crossbow.hit
+|translationkey=subtitles.item.crossbow.hit
+|volume=1.0
+|pitch={{frac|12|11}}-{{frac|4|3}}
+|distance=16}}
+| {{SoundLine
+|sound=Succesfull Hit.ogg
+|subtitle=Player hit
+|source=player
+|description=When an arrow shot by a player hits another player
+|id=entity.arrow.hit_player
+|translationkey=subtitles.entity.arrow.hit_player
+|volume=0.18
+|pitch=0.45
+|distance=16}}
+| {{SoundLine
+|sound=Firework launch.ogg
+|subtitle=Firework launches
+|source=ambient
+|description=When a crossbow fires a firework rocket
+|id=entity.firework_rocket.launch
+|translationkey=subtitles.entity.firework_rocket.launch
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Random break.ogg
+|subtitle=Item breaks
+|source=dependent
+|description=When a crossbow's durability is exhausted
+|id=entity.item.break
+|translationkey=subtitles.entity.item.break
+|volume=0.8
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Crossbow loading start.ogg
+|source=player
+|description=When a crossbow starts to load
+|id=crossbow.loading.start
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow loading middle1.ogg
+|sound2=Crossbow loading middle2.ogg
+|sound3=Crossbow loading middle3.ogg
+|sound4=Crossbow loading middle4.ogg
+|source=player
+|description=While a crossbow is loading and when a crossbow stops loading
+|id=crossbow.loading.middle
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow loading end.ogg
+|source=player
+|description=''Unused sound event''
+|id=crossbow.loading.end
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow quick charge one1.ogg
+|sound2=Crossbow quick charge two1.ogg
+|sound3=Crossbow quick charge three1.ogg
+|source=player
+|description=When a crossbow with Quick Charge starts to load
+|id=crossbow.quick_charge.start
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow quick charge one2.ogg
+|sound2=Crossbow quick charge two2.ogg
+|sound3=Crossbow quick charge three2.ogg
+|source=player
+|description=While a crossbow with Quick Charge is loading
+|id=crossbow.quick_charge.middle
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow quick charge one3.ogg
+|sound2=Crossbow quick charge two3.ogg
+|sound3=Crossbow quick charge three3.ogg
+|source=player
+|description=When a crossbow with Quick Charge stops loading
+|id=crossbow.quick_charge.end
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Crossbow shoot1.ogg
+|sound2=Crossbow shoot2.ogg
+|sound3=Crossbow shoot3.ogg
+|source=player
+|description=When a crossbow fires
+|id=crossbow.shoot
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Arrow hit1.ogg
+|sound2=Arrow hit2.ogg
+|sound3=Arrow hit3.ogg
+|sound4=Arrow hit4.ogg
+|source=player
+|description=When an arrow hits a block or entity
+|id=random.bowhit
+|volume=1.0
+|pitch=1.09-1.3}}
+| {{SoundLine
+|sound=Firework launch.ogg
+|source=ambient
+|description=When a crossbow fires a firework rocket
+|id=firework.launch
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Random break.ogg
+|source=player
+|description=When a crossbow's durability is exhausted
+|id=random.break
+|volume=1.0
+| pitch = 0.9
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Crossbow
+|spritetype=item
+|nameid=crossbow
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Crossbow
+|spritetype=item
+|nameid=crossbow
+|id=575
+|form=item
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/charged_projectiles}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Sniper Duel;Archer;Bullseye}}
+
+== Advancements ==
+{{load advancements|Take Aim;Bullseye;Sniper Duel;Ol' Betsy;Who's the Pillager Now;Two Birds, One Arrow;Arbalistic}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 29, 2018|link={{tweet|Minecraft|1046094916902965249}}|Crossbows are announced at [[MINECON Earth 2018]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Crossbow.png|32px]] [[File:Crossbow Pull 0.png|32px]] [[File:Crossbow Pull 1.png|32px]] [[File:Crossbow Pull 2.png|32px]] [[File:Arrow Loaded Crossbow.png|32px]] [[File:Firework Loaded Crossbow.png|32px]] Added crossbows.
+|[[File:Pillager JE1.png|35px]] Added [[pillager]]s, which can also spawn with and drop crossbows.
+|Crossbows can be enchanted with either the [[Quick Charge]] (Highest Level III), [[Piercing]] (Highest Level IV) or [[Multishot]] (Highest Level I).}}
+|{{HistoryLine|||dev=18w47a|Crossbows can now be found inside loot [[chest]]s at the top of [[pillager outpost]]s.}}
+|{{HistoryLine|||dev=19w11a|Fletcher [[villager]]s now [[Trading|sell]] crossbows and [[Enchanting|enchant]]ed crossbows.}}
+|{{HistoryLine||1.16|dev=20w07a|[[File:Piglin with Crossbow.png|35px]] [[File:Piglin left handed with Crossbow.png|35px]] [[File:Piglin using one hand to hold a loaded crossbow JE1.png|35px]] Added [[piglin]]s, which can spawn with and [[Drops|drop]] crossbows.}}
+|{{HistoryLine|||dev=20w16a|Crossbows now generate randomly enchanted in [[bastion remnant]]s chests.}}
+|{{HistoryLine||1.18|dev=21w37a|Crossbow durability is increased to 465 to match {{edition|BE}}.}}
+|{{HistoryLine||1.19.4|dev=23w07a|The crossbow recipes are no longer unlocked by [[stick]]s.}}
+|{{HistoryLine||1.20.2|exp=Villager Trade Rebalance|dev=23w31a|Enchantments exclusive to crossbows are no longer obtainable from villager [[trading]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Enchanted crossbows can now generate in reward chests inside [[trial chambers]].}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w05a|Enchanted crossbows can now be ejected as loot from [[vault]]s.}}
+|{{HistoryLine||1.20.5|dev=24w09a|[[Infinity]], [[Flame]], [[Punch]], and [[Power]] enchantments now work on crossbows.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Enchanted crossbows can now be ejected as loot from [[ominous vault]]s.}}
+|{{HistoryLine||1.21.5|dev=25w04a|Crossbows will now show all charged projectiles in their tooltip instead of just the first.}}
+|{{HistoryLine|||dev=25w06a|[[Tooltip]]s for crossbows now show a compact form of multiple repeated projectiles that are identical.}}
+|{{HistoryLine|combat java}}
+|{{HistoryLine||3|Arrows no longer trigger the attack [[invulnerability timer]], allowing multiple crossbow arrows to connect even if the entity is invulnerable.|This also allows all three arrows from a [[Multishot]] crossbow to connect against a single entity.}}
+|{{HistoryLine||4|Crossbow [[inaccuracy]] has been lessened from 1 to 0.25, increasing the accuracy of fired arrows.}}
+|{{HistoryLine||6|Vertical momentum no longer influences the flight path of arrows fired from crossbows.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.10|exp=Experimental Gameplay|[[File:Crossbow.png|32px]] [[File: Crossbow Pull 0.png|32px]] [[File: Crossbow Pull 1.png|32px]] [[File: Crossbow Pull 2.png|32px]] [[File:Arrow Loaded Crossbow.png|32px]] [[File:Firework Loaded Crossbow.png|32px]] Added crossbows.
+|Crossbows are currently part of [[Experimental Gameplay]].}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|exp=Experimental Gameplay|Added [[pillager]]s, which use and [[Drops|drop]] crossbows.}}
+|{{HistoryLine|||dev=beta 1.9.0.3|Crossbows now appear bigger in a pillager's hand.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Crossbows are now fully implemented and separate from [[Experiments|Experimental Gameplay]].
+|Crossbows can now be found in [[pillager outpost]] [[chest]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Unenchanted and [[Enchanting|enchant]]ed crossbows can now be [[Trading|bought]] from fletcher [[villager]]s.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.3|Journeyman-level fletcher villagers now have 100% chance to [[Trading|sell]] unenchanted crossbow, rather than 50% chance.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|[[File:Piglin with Crossbow BE.png|32px]] Added [[piglin]]s, which can spawn with and [[drop]] crossbows.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Crossbows now generate randomly enchanted in [[bastion remnant]]s chests.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Enchanted crossbows can now generate in reward chests inside [[trial chambers]].}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.21|Enchanted crossbows can now be ejected as loot from [[vault]]s.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Enchanted crossbows can now be ejected as loot from [[ominous vault]]s.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.90|[[File:Crossbow.png|32px]] [[File: Crossbow Pull 0.png|32px]] [[File: Crossbow Pull 1.png|32px]] [[File: Crossbow Pull 2.png|32px]] [[File:Arrow Loaded Crossbow.png|32px]] [[File:Firework Loaded Crossbow.png|32px]] Added crossbows.}}
+|{{HistoryLine||1.91|Crossbows can now be found inside loot [[chest]]s at the top of [[pillager outpost]]s.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Alongside [[pillager]]s, crossbows were inspired by ''[[Minecraft Dungeons]]'', even though they were added in the base game first.<ref>{{cite Discord|url=https://discord.com/channels/579770991056519194/818903542139453480/819631528593588244| title = March 2021 developper Q&A|date=March 11, 2021}}</ref>
+* Crossbows [[Enchanting|enchant]]ed with [[Quick Charge]] VI and above get stuck on the first frame on the recharging animation because the resulting charge time is negative, and the game never reaches the time markers that tell it to advance the animation or the reloading procedure itself. It is technically possible to charge such crossbows, but this would require overflowing the value that determines how long the crossbow has been charged. This takes such an amount of time that this is practically impossible: for example, charging a crossbow with Quick Charge VI would take 69.4 years to complete.
+* Although Piercing allows arrows to bypass [[shield]]s, they cannot get through the [[wither]]'s projectile armor or a [[shulker]]'s shell.
+* The crossbow's first-person loading animation {{in|Bedrock}} is different from {{JE}}.
+* In real life, [[wikipedia:Crossbow|crossbow]]s do not shoot the same arrows as bows, rather they shoot shorter, thicker, and oftentimes fletchless arrows (usually called "bolts") made to withstand the crossbow's increased power, which can shatter conventional arrows.
+
+== Gallery ==
+=== Icons ===
+<gallery>
+Enchanted Crossbow.gif|An [[Enchanting|enchant]]ed crossbow.
+</gallery>
+
+=== Renders ===
+<gallery>
+Steve Charging Crossbow.gif|[[Player#Steve|Steve]] charging a crossbow {{in|Java}}.
+Alex Charging Crossbow.gif|[[Player#Alex|Alex]] charging a crossbow in ''Java Edition''.
+Pillager Charging Crossbow.gif|A [[pillager]] charging a crossbow.
+Piglin Charging Crossbow.gif|A [[piglin]] charging a crossbow. 
+Steve aiming with Crossbow.png|Steve aiming a crossbow.
+Alex aiming with Crossbow.png|Alex aiming a crossbow.
+Pillager Aiming with Crossbow BE.png|A pillager aiming a crossbow {{in|Bedrock}}.
+Piglin with Crossbow targeting BE.png|A piglin aiming a crossbow in ''Bedrock Edition''.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+EquippingCrossbow.png|How the crossbow is equipped.
+Zombie piglin with a crossbow.jpg|A [[zombified piglin]] with a crossbow<br>(It will not shoot, only melee attack).</br>
+Pillager who broke his crossbow.png|Pillager who broke its crossbow.
+Noor's Fireworks.jpg|[[Noor]] firing a crossbow.
+</gallery>
+
+=== Development images ===
+<gallery>
+CrossbowMinecon.png|A crossbow shown at [[MINECON Earth 2018]].
+PillagerMinecon.png|A [[pillager]] armed with a crossbow, shown at [[MINECON Earth 2018]].
+Piercing Crossbow.jpg|First image of a crossbow with the piercing enchantment.
+</gallery>
+
+===In other media===
+<gallery>
+AMCMEventCrossbow.png|A crossbow as it appeared in [[A Minecraft Movie Live Event]]
+V&P Promo 10.jpg|A firework crossbow in [[Village & Pillage: Official Trailer]]
+Crossbow (MCD).png|A {{MCD|crossbow}} as it appears in {{MCD}}
+AMCM-FBTBC-bow-and-crossbow.jpg|A [[Movie:Crossbow|crossbow]] as seen in {{amcm}}. 
+</gallery>
+
+== References ==
+<references />
+
+== External links ==
+*{{Mcnet|taking-inventory--crossbow|Taking Inventory: Crossbow|October 20, 2022|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox weapons}}
+{{Navbox items|Tools}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+
+[[de:Armbrust]]
+[[es:Ballesta]]
+[[fr:Arbalète]]
+[[it:Balestra]]
+[[ja:クロスボウ]]
+[[ko:쇠뇌]]
+[[pl:Kusza]]
+[[pt:Besta]]
+[[ru:Арбалет]]
+[[th:หน้าไม้]]
+[[uk:Арбалет]]
+[[zh:弩]]

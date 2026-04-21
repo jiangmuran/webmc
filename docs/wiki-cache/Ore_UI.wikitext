@@ -1,0 +1,1024 @@
+{{Exclusive|Bedrock|Education|China}}
+{{Infobox program
+| image = Ore UI.png
+| imagesize = 200px
+| author =
+| developer = Paulo Ragonha, Fernando Vía Canel, Marlon Huber-Smith, Anna Päärni, [[Oleg Kozitsyn]], Danila Dergachev, Omar ElGaml, James Nicholls
+| publisher = [[Mojang Studios]]
+| platform = Same as in {{BE}}, {{Edu}}, and ''[[China Edition]]''
+| engine = [https://coherent-labs.com/products/coherent-gameface/ Coherent Gameface]
+| programming language = {{w|TypeScript}} and {{w|JavaScript}}
+| version = React Facet: [https://github.com/Mojang/ore-ui/releases/tag/v18.6.0 v18.6.0]
+| date = First commit on October 11, 2021<ref>{{cite|url=https://github.com/Mojang/ore-ui/commit/a899c6ac2d3935556e38befd5a350127f8114284|title=first commit · Mojang/ore-ui@a899c6a|website=GitHub}}</ref>
+| size = 1.57MB
+| license = {{w|MIT License}}
+| source available = Yes
+| website = https://github.com/Mojang/ore-ui
+}}
+'''Ore UI''' is a collection of open source packages designed for building interactive {{w|video game}} {{w|user interface}}s using {{w|web technology}}, written in the {{w|TypeScript}} programming language and utilizing the {{w|React (software)|React}} library. It provides reusable building blocks for {{w|video game development}} and general-purpose {{w|web application}}s.<ref name="ore-ui-github">{{cite|url=https://github.com/Mojang/ore-ui|title=Mojang/ore-ui: 💎 Building blocks to construct game UIs using web tech.|website=GitHub}}</ref> Ore UI is currently used in Minecraft games such as {{BE}}, ''[[Bedrock Editor]]'', {{Edu}}, ''[[China Edition]]'', and {{MCL}}.
+
+[[File:Ore UI Design System.png|thumb|''Bedrock Edition'''s new UI design system overhaul<ref>{{tweet|pirelenito|1452914034605494277|Thanks for everyone that attended my talk live at @ReactAdvanced. For anyone that couldn't attend, I'll post a link here once it is available for everyone. It was a developer conference, but if you were waiting for a sneak peek on the new UI components... here it is ☺️}}</ref>]]
+[[File:Ore UI Design System Updated.png|thumb|Th<nowiki/>e new UI design system overhaul (Updated version)<ref>{{cite|url=https://sebmelchor.com/#:~:text=creating%20and%20building.-,Mojang%202022%20%2D%20Now,-Design%20lead|title=Mojang 2022 - Now|website=Design lead}}</ref>]]
+
+{{IN|bedrock}}, a new UI design system is being developed using the Gameface engine (formerly Hummingbird<ref name="gameface-former-hummingbird">{{cite|url=https://wiki.bedrock.dev/meta/gametest-qna.html#hummingbird-ui|title=GameTest Q&A 2021/08/06|website=Bedrock Wiki}}</ref>) by Coherent Labs,<ref name="react-advanced-2021-ore-ui"/><ref name="dotjs-hummingbird-tech-preview">{{ytl|qDevZETe8OE|dotJS 2018 - Tobias Ahlin - Adding JavaScript to Minecraft|March 4, 2019}}</ref><ref name="powered-by-coherent-labs">{{cite|url=https://www.coherent-labs.com/powered-by-coherent-labs/|title=Powered by Coherent Labs|website=Coherent Labs}}</ref> which made it possible to run modern web technology such as {{w|JavaScript}}, {{w|HTML}} and {{w|CSS}}.<ref name="coherent-gameface-product">{{cite|url=https://www.coherent-labs.com/products/coherent-gameface/|title=Coherent Gameface|website=Coherent Labs}}</ref>
+
+== Development ==
+=== ''Bedrock Edition''{{'}}s UI redesign tech preview ===
+On November 9, 2018, [[Tobias Ahlin]], the lead experience designer at Mojang Studios, announced a UI overhaul coming to {{BE}} built on Hummingbird engine, which runs a subset of {{w|HTML}} and {{w|CSS}}, and a design system built with {{w|React}}.<ref name="dotjs-hummingbird-tech-preview"/> A tech preview for the title screen redesign featuring a user-friendly input for touch, controller, and keyboard was shown at the dotJS 2018 developer conference.
+
+[[File:DotJS 2018 Bedrock's UI redesign tech preview.png|thumb|The UI redesign tech preview, shown in dotJS 2018 developer conference]]
+The new title screen from the tech preview features two pages. The top page shows the player's last played world, with the background UI that changes to match the world's thumbnail. The bottom page shows five interactable buttons and their actions possibly:
+* "Play" which lets the player navigate to the [[Select World]] screen.
+* "Store" which lets the player navigate to the store (similar to the modern [[Marketplace]]).
+* "Skins" which lets the player change their [[skin]] (similar to the modern [[Character Creator]]).
+* "Achievements" and "Settings" which let the player view their [[achievement]]s and [[setting]]s.
+
+There is also a profile button (with the player's profile picture) on the top right corner, which likely lets the player navigate to their [[Social#Profile|profile]] screen.
+
+The website for ''Minecraft'' JavaScript API documentation was once available through a link which can be seen near the end of the talk; the documentation provides the page to the tech preview where users could freely interact with the redesigned user interface.<ref name="dotjs-hummingbird-tech-preview"/> The original link for the documentation now redirects to a completely different website, making the documentation inaccessible; it is now considered {{w|lost media}} as it has not been archived elsewhere.
+
+In [[Bedrock Edition beta 1.16.100.50|beta 1.16.100.50]], released on July 31, 2020, the new [[achievement]]s screen was added. It was rolled out initially for 5 percent of the player base.<ref name="achievement-new-ui-rollout">{{tweet|Volgar|1289257749751058432|Uh-oh! I think I pressed something, and now 5% of #Minecraft beta users will see the new achievements screen. Well, might as well ask for feedback here: https://aka.ms/mcAchievementBeta.|July 31, 2020}}</ref> For the next 9 weeks, the number of players who could access the new achievement UI gradually increased from 5% to 75%.<ref name="achievement-new-ui-rollut-75">{{tweet|Volgar|1337166293431169024|I'll provide more context later, but... jam. It gets everywhere. Hence, a whopping 75% of #Minecraft players have a chance to see the new achievements screen both in the latest release and the latest beta. Stay tuned! Ta-tah!}}</ref>
+
+In the following years, more JSON UI [[Menu screen|menu screens]] were gradually refreshed with Ore UI, with design previews available in ''[[Minecraft Preview]]'' before full release in usually a few months. The internal resources for Ore UI include a texture atlas containing revamped textures for in-game GUIs, such as the [[inventory]]. These have been teased to be in early development.
+
+=== React Facet ===
+On October 18, 2021, the React Facet source code was published on [https://github.com/Mojang/ore-ui Ore UI GitHub repository] under the {{w|MIT License}}.<ref name="github-ore-ui-react-facet">{{cite|url=https://github.com/Mojang/ore-ui/commit/96c107cea826379efbd76342fdf1e37789b53b36|title=Importing codebase from internal repository (#1) · Mojang/ore-ui@96c107c|website=GitHub}}</ref>
+
+On October 25, 2021,<ref name="react-advanced-ragonha-talk-date">{{cite|url=https://reactadvanced.com/2021/#schedule|title=Schedule|website=React Advanced}}</ref> Paulo Ragonha, a tech lead at Mojang Studios, introduced React Facet, an {{w|Observer pattern|observable}}-based state management for video game user interface built in React.<ref name="react-advanced-2021-ore-ui">{{ytl|Vyg1oQI1VaA|Using React to Build Performant Game UIs in Minecraft - Paulo Ragonha, React Advanced 2021|December 27, 2021}}</ref> This was announced at the React Advanced 2021 developer conference. In the talk, Ragonha showcases how React Facet bridges game data by introducing a system that connects the {{w|Frontend and backend|backend}} C++ game engine (where the game's states reside) with the {{w|Frontend and backend|frontend}} JavaScript UI. This connection relies on a concept called "facets", which are lightweight observable objects representing slices of the game's state. These facets allow the UI to subscribe to specific pieces of data from the game engine, such as player health, inventory, or environmental changes, and receive real-time updates as the state changes in the game.
+
+== Design system ==
+The Ore UI design system can be found inside the Ore UI Developer Page section in the Minecraft Bedrock Developer Mode. For all texture elements, see {{slink|Bedrock Edition GUI, UI, and Ore UI textures|Ore UI}}.
+<gallery>
+Ore UI Developer Pages.png|Ore UI Developer Pages section
+Ore UI Design System - Hero Button State.png|Hero (green w/ different font) button states
+Ore UI Design System - Primary Button State.png|Primary (green w/ Mojangles font) button states
+Ore UI Design System - Secondary Button State.png|Secondary (white) button states
+Ore UI Design System - Destructive Button State.png|Destructive (red) button states
+Ore UI Design System - Modal With Placeholder Content.png|Modal with placeholder content
+Ore UI Design System - Announcement Contact.png|A dummy modal
+Ore UI Design System - Checkboxes In Action.png|Checkboxes in action
+Ore UI Design System - Checkbox State.png|Checkbox states
+Ore UI Design System - Dropdown Button State.png|Dropdown button states
+Ore UI Design System - Radio Button State.png|Radio button states
+Ore UI Design System - Slider State.png|Slider states
+Ore UI Design System - Toggle State.png|Toggle states
+Ore UI Design System - Text Field State.png|Text field states
+Ore UI Design System - Toggle Button.png|Toggle button states
+Ore UI Design System - First Tab Button State.png|Tab button states
+Ore UI Design System - Tag Variant.png|All tag variants
+</gallery>
+
+== Usage ==
+The menu screens updated with Ore UI implemented new features using the design system, such as informative (and sometimes humorous) descriptions, smaller fonts for readability, clearer and modern layouts, more responsive sliders, more different types of elements, and tags. The buttons are styled similarly to JSON UI, with updated looks, pressing animations, and exclusive sounds for progressive buttons. Certain menus have received additional animations and images, and all UI textures have been updated, including controller hints.
+
+Unlike JSON UI, Ore UI menus are separated into sections containing the elements. Depending on the UI scaling, each section is individually scaled, leaving gaps for the [[panorama]] in smaller scales, while some elements like the top navigation bar remain responsive. Dropdown buttons, which open an options pop-up, are replaced with always visible toggle buttons on smaller UI scales. Ore UI supports an additional accessibility scaling option to increase the scaling.
+
+Ore UI is currently used in the following [[menu screen]]s (including sub-menus):
+
+=== ''Bedrock Edition'' ===
+==== Release ====
+* [[Tutorial:Menu screen/Bedrock Edition#Sign In|Sign in]]
+* [[Title Screen#Quick world creation|Quick world creation]]
+* Pop-ups on the [[Title Screen#Bedrock Edition|Main menu]]
+* [[Select World#Bedrock Edition|Play]]
+* [[Create New World#Bedrock Edition|Create new world]]
+* [[World Options#Bedrock Edition|Edit world]] (except [[Realms]])
+* All [[settings]] tabs & main settings UI except for Creator, Global Resources, Party, Storage, Resource Packs, and Behavior Packs. [[Realms]] uses the old UI for all settings.
+* [[Title Screen#Inbox|Inbox]]
+* [[Social|Social]] drawer
+* [[Tutorial:Menu screen/Bedrock Edition#Search for players|Search for players]]
+* [[Social#Profile|Profile]]
+* [[Social#Reporting|Report bad behavior]]
+* [[Screenshot#Bedrock Edition|Screenshot gallery]]
+* [[Achievement]]s
+* [[Permission level#Player Permissions|Player permissions]] (except [[Realms]])
+* [[Realms]] information & purchase screens
+* [[Realms Stories|Realms stories]]
+* [[Death#Player effects|Death]]
+* [[Bed#Sleeping|Sleep]]
+Additionally, the [[Toasts|toast]] that appears after 15 minutes of inactivity, along with the overlay, is based on Ore UI.
+
+==== ''Preview'' ====
+* [[Realms Hub]]
+* [[World Options#Bedrock Edition|Edit world Realms]]
+* [[Party]]
+* World and Realm selection for local uploading to [[Realms]].
+
+=== ''Bedrock Editor''===
+==== Release ====
+* [[Bedrock Editor#Create new project|Create new project]] 
+* [[Bedrock Editor#Projects tool mode|Projects tool mode]]
+
+==== ''Preview'' ====
+* [[Select World|Main menu]]
+
+=== ''Minecraft Education'' ===
+==== Release ====
+* [[Create New World#Minecraft Education 2|Create new world]]
+* [[World Options#Minecraft Education 2|Edit world]]
+* [[Death#Player effects|Death]]
+* [[Bed#Sleeping|Sleep]]
+
+=== ''China Edition''===
+==== Release ====
+* Skin store
+* Mod store
+* Play
+* Create new world
+* Mini map
+
+== Differences with JSON UI ==
+{| class="wikitable" style="text-align:center;"
+! Features
+! JSON UI<br><small>(Legacy)</small>
+! Ore UI<br><small>(Modern)</small>
+|-
+! Creator customization
+| style="text-align:left;" |
+* Can be modified by [[Resource pack#Bedrock Edition|resource pack]]s to change layout and behavior.
+* Allows creating complex UI by directly modifying or defining UI controls and other elements through the [[JSON]] files.
+| style="text-align:left;" |
+* Hard-coded and cannot be modified by resource packs<ref>{{tweet|Volgar|1866176785815392544|No. Allowing directly changing screens is what made improving the UI design of Minecraft impossible: any change breaks existing mods. It's the same reason why there is a graveyard of abandoned mods for Java Minecraft – not every modder has time to make updates for every release.}}</ref><ref name="bedrock-wiki-json-ui-intro">{{cite|url=https://wiki.bedrock.dev/json-ui/json-ui-intro.html#introduction|title=Intro to JSON UI|website=Bedrock Wiki|date=April 1, 2024}}</ref><ref>{{bug|MCPE-180757|MCPE-180757|HBUI texture files are not in the "resource_packs" folder|WAI}}</ref>.
+* Creation of custom form UIs is possible on [[server]] side using {{cd|@minecraft/server-ui}} [[scripting]] module, though it does not directly interface with the HTML UI, and allowing few basic UI elements.
+|-
+! [[Formatting codes|Color codes]] and [[Mojangles|emoji]]s
+| Supports specific layout properties, [[Formatting codes#Color codes|color codes]], and [[Mojangles#Emoji|emoji]]s.
+| Does not support color codes<ref>{{tweet|Volgar|1867216296821370992|It probably won't be supported in the new screens, but it certainly shouldn't look like this, just plain text. Thanks, I'll pass it to the team.}}</ref><ref>{{bug|MCPE-174371|MCPE-174371|The new "Play screen" UI doesn't support colored characters|WAI}}</ref><ref>{{bug|MCPE-152246|MCPE-152246|New Create New World UI doesn't support text formatting codes|WAI}}</ref> on various screens, however, on the [[death screen]] in the name of the player or item or [[mob]] that killed them, and on the new forms screen in the label it is supported, not understanding emojis<ref>{{cite|url=https://wiki.bedrock.dev/text/emojis|title=Emojis & Symbols|website=Bedrock Wiki|date=April 1, 2024}}</ref><ref>{{bug|MCPE-185774|MCPE-185774|New server UI does not show some characters|WF}}</ref> they are not supported natively in text fields.
+|-
+! Status
+| Planned to be removed on [[Planned versions|future updates]].{{citation needed}}
+| Currently in active development.
+|-
+! Performance
+| Can be unoptimized, leading to lower {{W|FPS}}, long loading times, and general poor user experience, especially with a lot of custom UI.{{citation needed}}
+| Aims for better performance, though some users have reported micro-freezes and lag issues, particularly on consoles.
+|-
+! Availability
+| Available by default on screens that are not yet migrated to Ore UI.
+| Available on few select screens ([[Select World#Bedrock Edition|Play]], [[Settings]], [[Create New World#Bedrock Edition|Create World]], and [[Achievement]]s). Though it may fallback to legacy JSON UI on specific cases.{{info needed}}
+|-
+! Accessibility
+| Limited built-in scaling.
+| Better support for different screen sizes.
+|-
+! Visuals
+| Pixel-perfect scaling; classic layout.
+| Modern visuals, but cited for blurry text and clunky button spacing.
+|-
+! Technology
+| Data-driven using [[JSON]] files.
+| Developed using modern web technology ({{w|JavaScript}}, {{w|HTML}}, {{w|CSS}}) and the Gameface engine by Coherent Labs.
+|-
+! Technical details
+| UI elements are defined in resource packs, specifically under {{cd|<resource pack>/ui}} directory.
+| UI elements are defined internally in the {{w|Content|game's installation files}}, specifically under {{cd|Content/data/gui/dist/hbui}}.
+|}
+
+== Control icons ==
+{{main|Controls}}
+=== Keyboard and mouse controls ===
+{{columns-list|colwidth=19em|
+*[[File:Ore UI - Control Icon - Keyboard A (Bedrock).png|30px]] Key A
+*[[File:Ore UI - Control Icon - Keyboard B (Bedrock).png|30px]] Key B
+*[[File:Ore UI - Control Icon - Keyboard C (Bedrock).png|30px]] Key C
+*[[File:Ore UI - Control Icon - Keyboard D (Bedrock).png|30px]] Key D
+*[[File:Ore UI - Control Icon - Keyboard E (Bedrock).png|30px]] Key E
+*[[File:Ore UI - Control Icon - Keyboard F (Bedrock).png|30px]] Key F
+*[[File:Ore UI - Control Icon - Keyboard G (Bedrock).png|30px]] Key G
+*[[File:Ore UI - Control Icon - Keyboard H (Bedrock).png|30px]] Key H
+*[[File:Ore UI - Control Icon - Keyboard I (Bedrock).png|30px]] Key I
+*[[File:Ore UI - Control Icon - Keyboard J (Bedrock).png|30px]] Key J
+*[[File:Ore UI - Control Icon - Keyboard K (Bedrock).png|30px]] Key K
+*[[File:Ore UI - Control Icon - Keyboard L (Bedrock).png|30px]] Key L
+*[[File:Ore UI - Control Icon - Keyboard M (Bedrock).png|30px]] Key M
+*[[File:Ore UI - Control Icon - Keyboard N (Bedrock).png|30px]] Key N
+*[[File:Ore UI - Control Icon - Keyboard O (Bedrock).png|30px]] Key O
+*[[File:Ore UI - Control Icon - Keyboard P (Bedrock).png|30px]] Key P
+*[[File:Ore UI - Control Icon - Keyboard Q (Bedrock).png|30px]] Key Q
+*[[File:Ore UI - Control Icon - Keyboard R (Bedrock).png|30px]] Key R
+*[[File:Ore UI - Control Icon - Keyboard S (Bedrock).png|30px]] Key S
+*[[File:Ore UI - Control Icon - Keyboard T (Bedrock).png|30px]] Key T
+*[[File:Ore UI - Control Icon - Keyboard U (Bedrock).png|30px]] Key U
+*[[File:Ore UI - Control Icon - Keyboard V (Bedrock).png|30px]] Key V
+*[[File:Ore UI - Control Icon - Keyboard W (Bedrock).png|30px]] Key W
+*[[File:Ore UI - Control Icon - Keyboard X (Bedrock).png|30px]] Key X
+*[[File:Ore UI - Control Icon - Keyboard Y (Bedrock).png|30px]] Key Y
+*[[File:Ore UI - Control Icon - Keyboard Z (Bedrock).png|30px]] Key Z
+*[[File:Ore UI - Control Icon - Keyboard F2 (Bedrock).png|30px]] Key F2
+*[[File:Ore UI - Control Icon - Keyboard Arrow Up (Bedrock).png|30px]] Key arrow up
+*[[File:Ore UI - Control Icon - Keyboard Arrow Right (Bedrock).png|30px]] Key arrow right
+*[[File:Ore UI - Control Icon - Keyboard Arrow Down (Bedrock).png|30px]] Key arrow down
+*[[File:Ore UI - Control Icon - Keyboard Arrow Left (Bedrock).png|30px]] Key arrow left
+*[[File:Ore UI - Control Icon - Keyboard Bracket Close (Bedrock).png|30px]] Key bracket close
+*[[File:Ore UI - Control Icon - Keyboard Bracket Close Small (Bedrock).png|30px]] Key bracket close small
+*[[File:Ore UI - Control Icon - Keyboard Bracket Open (Bedrock).png|30px]] Key bracket open
+*[[File:Ore UI - Control Icon - Keyboard Bracket Open Small (Bedrock).png|30px]] Key bracket open small
+*[[File:Ore UI - Control Icon - Keyboard Special Character (Bedrock).png|30px]] Key /
+*[[File:Ore UI - Control Icon - Keyboard Alt (Bedrock).png|30px]] Key alt
+*[[File:Ore UI - Control Icon - Keyboard Ctrl (Bedrock).png|30px]] Key ctrl
+*[[File:Ore UI - Control Icon - Keyboard Ctrl Small (Bedrock).png|30px]] Key ctrl small
+*[[File:Ore UI - Control Icon - Keyboard Enter (Bedrock).png|30px]] Key enter
+*[[File:Ore UI - Control Icon - Keyboard Esc (Bedrock).png|30px]] Key esc
+*[[File:Ore UI - Control Icon - Keyboard Shift (Bedrock).png|30px]] Key shift
+*[[File:Ore UI - Control Icon - Keyboard Space (Bedrock).png|30px]] Key space
+*[[File:Ore UI - Control Icon - Keyboard Tab (Bedrock).png|30px]] Key tab
+*[[File:Ore UI - Control Icon - Mouse (Bedrock).png|30px]] Mouse
+*[[File:Ore UI - Control Icon - Mouse Left Click (Bedrock).png|30px]] Mouse left click
+*[[File:Ore UI - Control Icon - Mouse Right Click (Bedrock).png|30px]] Mouse right click
+*[[File:Ore UI - Control Icon - Mouse Scroll Click (Bedrock).png|30px]] Mouse scroll click
+*[[File:Ore UI - Control Icon - Mouse Scroll Wheel (Bedrock).png|30px]] Mouse scroll wheel
+}}
+
+=== Controller controls ===
+{{Tabber
+|tabname1=Nintendo Switch
+|tabcontent1=
+{{columns-list|colwidth=19em|
+*[[File:Ore UI - Control Icon - Nintendo Switch X Button (Bedrock).png|30px]] X button
+*[[File:Ore UI - Control Icon - Nintendo Switch A Button (Bedrock).png|30px]] A button
+*[[File:Ore UI - Control Icon - Nintendo Switch B Button (Bedrock).png|30px]] B button
+*[[File:Ore UI - Control Icon - Nintendo Switch Y Button (Bedrock).png|30px]] Y button
+*[[File:Ore UI - Control Icon - Nintendo Switch Arrow Up (Bedrock).png|30px]] Up button
+*[[File:Ore UI - Control Icon - Nintendo Switch Arrow Right (Bedrock).png|30px]] Right button
+*[[File:Ore UI - Control Icon - Nintendo Switch Arrow Down (Bedrock).png|30px]] Down button
+*[[File:Ore UI - Control Icon - Nintendo Switch Arrow Left (Bedrock).png|30px]] Left button
+*[[File:Ore UI - Control Icon - Nintendo Switch D-Pad Menu (Bedrock).png|30px]] Menu button, d-pad
+*[[File:Ore UI - Control Icon - Nintendo Switch Select (Bedrock).png|30px]] Select button
+*[[File:Ore UI - Control Icon - Nintendo Switch Right Stick R (Bedrock).png|30px]] Right stick
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Up (Bedrock).png|30px]] Right stick arrow up
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Right (Bedrock).png|30px]] Right stick arrow right
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Down (Bedrock).png|30px]] Right stick arrow down
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Left (Bedrock).png|30px]] Right stick arrow left
+*[[File:Ore UI - Control Icon - Nintendo Switch Right Bumper R (Bedrock).png|30px]] Right bumper
+*[[File:Ore UI - Control Icon - Nintendo Switch Right Trigger ZR (Bedrock).png|30px]] Right trigger
+*[[File:Ore UI - Control Icon - Nintendo Switch Right Stick Click R (Bedrock).png|30px]] Right stick click
+*[[File:Ore UI - Control Icon - Nintendo Switch Left Stick L (Bedrock).png|30px]] Left stick
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Up (Bedrock).png|30px]] Left stick arrow up
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Right (Bedrock).png|30px]] Left stick arrow right
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Down (Bedrock).png|30px]] Left stick arrow down
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Left (Bedrock).png|30px]] Left stick arrow left
+*[[File:Ore UI - Control Icon - Nintendo Switch Left Bumper L (Bedrock).png|30px]] Left bumper
+*[[File:Ore UI - Control Icon - Nintendo Switch Left Trigger ZL (Bedrock).png|30px]] Left trigger
+*[[File:Ore UI - Control Icon - Nintendo Switch Left Stick Click L (Bedrock).png|30px]] Left stick click
+}}
+|tabname2=PlayStation 4
+|tabcontent2=
+{{columns-list|colwidth=19em|
+*[[File:Ore UI - Control Icon - PlayStation 4 Triangle Button (Bedrock).png|30px]] Triangle button
+*[[File:Ore UI - Control Icon - PlayStation 4 O Button (Bedrock).png|30px]] O button
+*[[File:Ore UI - Control Icon - PlayStation 4 X Button (Bedrock).png|30px]] X button
+*[[File:Ore UI - Control Icon - PlayStation 4 Square Button (Bedrock).png|30px]] Square button
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Up (Bedrock).png|30px]] Up, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Right (Bedrock).png|30px]] Right, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Down (Bedrock).png|30px]] Down, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Left (Bedrock).png|30px]] Left, d-pad
+*[[File:Ore UI - Control Icon - PlayStation 4 Menu-Select (Bedrock).png|30px]] Menu / select buttons
+*[[File:Ore UI - Control Icon - PlayStation 4 Touch Pad (Bedrock).png|30px]] Touch pad
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Right Stick RS (Bedrock).png|30px]] Right stick
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Up (Bedrock).png|30px]] Right stick arrow up
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Right (Bedrock).png|30px]] Right stick arrow right
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Down (Bedrock).png|30px]] Right stick arrow down
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Left (Bedrock).png|30px]] Right stick arrow left
+*[[File:Ore UI - Control Icon - PlayStation Right Bumper R1 (Bedrock).png|30px]] Right bumper
+*[[File:Ore UI - Control Icon - PlayStation Right Trigger R2 (Bedrock).png|30px]] Right trigger
+*[[File:Ore UI - Control Icon - PlayStation Right Stick Click R3 (Bedrock).png|30px]] Right stick click
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Left Stick LS (Bedrock).png|30px]] Left stick
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Up (Bedrock).png|30px]] Left stick arrow up
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Right (Bedrock).png|30px]] Left stick arrow right
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Down (Bedrock).png|30px]] Left stick arrow down
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Left (Bedrock).png|30px]] Left stick arrow left
+*[[File:Ore UI - Control Icon - PlayStation Left Bumper L1 (Bedrock).png|30px]] Left bumper
+*[[File:Ore UI - Control Icon - PlayStation Left Trigger L2 (Bedrock).png|30px]] Left trigger
+*[[File:Ore UI - Control Icon - PlayStation Left Stick Click L3 (Bedrock).png|30px]] Left stick click
+}}
+|tabname3=PlayStation 5
+|tabcontent3=
+{{columns-list|colwidth=19em|
+*[[File:Ore UI - Control Icon - PlayStation 5 Triangle Button (Bedrock).png|30px]] Triangle button
+*[[File:Ore UI - Control Icon - PlayStation 5 O Button (Bedrock).png|30px]] O button
+*[[File:Ore UI - Control Icon - PlayStation 5 X Button (Bedrock).png|30px]] X button
+*[[File:Ore UI - Control Icon - PlayStation 5 Square Button (Bedrock).png|30px]] Square button
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Up (Bedrock).png|30px]] Up, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Right (Bedrock).png|30px]] Right, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Down (Bedrock).png|30px]] Down, d-pad
+*[[File:Ore UI - Control Icon - PlayStation D-Pad Arrow Left (Bedrock).png|30px]] Left, d-pad
+*[[File:Ore UI - Control Icon - PlayStation 5 Menu (Bedrock).png|30px]] Menu buttons
+*[[File:Ore UI - Control Icon - PlayStation 5 Touch Pad (Bedrock).png|30px]] Touch pad
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Right Stick RS (Bedrock).png|30px]] Right stick
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Up (Bedrock).png|30px]] Right stick arrow up
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Right (Bedrock).png|30px]] Right stick arrow right
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Down (Bedrock).png|30px]] Right stick arrow down
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Left (Bedrock).png|30px]] Right stick arrow left
+*[[File:Ore UI - Control Icon - PlayStation Right Bumper R1 (Bedrock).png|30px]] Right bumper
+*[[File:Ore UI - Control Icon - PlayStation Right Trigger R2 (Bedrock).png|30px]] Right trigger
+*[[File:Ore UI - Control Icon - PlayStation Right Stick Click R3 (Bedrock).png|30px]] Right stick click
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Left Stick LS (Bedrock).png|30px]] Left stick
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Up (Bedrock).png|30px]] Left stick arrow up
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Right (Bedrock).png|30px]] Left stick arrow right
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Down (Bedrock).png|30px]] Left stick arrow down
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Left (Bedrock).png|30px]] Left stick arrow left
+*[[File:Ore UI - Control Icon - PlayStation Left Bumper L1 (Bedrock).png|30px]] Left bumper
+*[[File:Ore UI - Control Icon - PlayStation Left Trigger L2 (Bedrock).png|30px]] Left trigger
+*[[File:Ore UI - Control Icon - PlayStation Left Stick Click L3 (Bedrock).png|30px]] Left stick click
+}}
+|tabname4=Xbox
+|tabcontent4=
+{{columns-list|colwidth=19em|
+*[[File:Ore UI - Control Icon - Xbox Y Button (Bedrock).png|30px]] Y button
+*[[File:Ore UI - Control Icon - Xbox B Button (Bedrock).png|30px]] B button
+*[[File:Ore UI - Control Icon - Xbox A Button (Bedrock).png|30px]] A button
+*[[File:Ore UI - Control Icon - Xbox X Button (Bedrock).png|30px]] X button
+*[[File:Ore UI - Control Icon - Xbox D-Pad Arrow Up (Bedrock).png|30px]] Up, d-pad
+*[[File:Ore UI - Control Icon - Xbox D-Pad Arrow Right (Bedrock).png|30px]] Right, d-pad
+*[[File:Ore UI - Control Icon - Xbox D-Pad Arrow Down (Bedrock).png|30px]] Down, d-pad
+*[[File:Ore UI - Control Icon - Xbox D-Pad Arrow Left (Bedrock).png|30px]] Left, d-pad
+*[[File:Ore UI - Control Icon - Xbox Menu (Bedrock).png|30px]] Menu button
+*[[File:Ore UI - Control Icon - Xbox Select (Bedrock).png|30px]] Select button
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Right Stick RS (Bedrock).png|30px]] Right stick
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Up (Bedrock).png|30px]] Right stick arrow up
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Right (Bedrock).png|30px]] Right stick arrow right
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Down (Bedrock).png|30px]] Right stick arrow down
+*[[File:Ore UI - Control Icon - Controller Right Stick RS Arrow Left (Bedrock).png|30px]] Right stick arrow left
+*[[File:Ore UI - Control Icon - Xbox Right Bumper RB (Bedrock).png|30px]] Right bumper
+*[[File:Ore UI - Control Icon - Xbox Right Trigger RT (Bedrock).png|30px]] Right trigger
+*[[File:Ore UI - Control Icon - Xbox Right Stick Click RS (Bedrock).png|30px]] Right stick click
+*[[File:Ore UI - Control Icon - PlayStation and Xbox Left Stick LS (Bedrock).png|30px]] Left stick
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Up (Bedrock).png|30px]] Left stick arrow up
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Right (Bedrock).png|30px]] Left stick arrow right
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Down (Bedrock).png|30px]] Left stick arrow down
+*[[File:Ore UI - Control Icon - Controller Left Stick LS Arrow Left (Bedrock).png|30px]] Left stick arrow left
+*[[File:Ore UI - Control Icon - Xbox Left Bumper LB (Bedrock).png|30px]] Left bumper
+*[[File:Ore UI - Control Icon - Xbox Left Trigger LT (Bedrock).png|30px]] Left trigger
+*[[File:Ore UI - Control Icon - Xbox Left Stick Click LS (Bedrock).png|30px]] Left stick click
+}}
+}}
+
+== Sounds ==
+{{expand section|Missing technical information and some sounds like the hardcore toggle.}}
+{{SoundTable
+|{{SoundLine
+|sound=Click stereo.ogg
+|source=sound
+|subtitle=Pressure Plate clicks<ref name=bug>Although there is a subtitle and a translation key assigned to this sound, the subtitle only appears if the sound is played directly in-game.</ref>
+|description=When a menu button is clicked
+|id=random.click
+|translationkey=subtitles.block.pressure_plate.click<ref name=bug/>
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Release.ogg
+|source=sound
+|subtitle=
+|description=When a progressive button gets clicked
+|id=
+|translationkey=
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Drawer open.wav
+|source=sound
+|subtitle=
+|description=When the [[social]] drawer gets opened
+|id=
+|translationkey=
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Drawer close.wav
+|source=sound
+|subtitle=
+|description=When the [[social]] drawer gets closed
+|id=
+|translationkey=
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Toast.ogg
+|source=sound
+|subtitle=
+|description=When a notification pops up
+|id=
+|translationkey=
+|volume=1.0
+|pitch=1.0
+}}
+|type=bedrock}}
+== History ==
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.50|[[File:New UI - Achievements Screen Menu (Bedrock Beta 1.16.100.50).png|45px]] [[Achievement]] screen has been updated to match Ore UI, rolled out gradually for 5% players<ref name="achievement-new-ui-rollout"/>.}}
+|{{HistoryLine||beta 1.18.20.21|[[File:New UI - Create New World Screen Menu (Bedrock Beta 1.18.20.21).png|53px]] [[Create New World]] screen has been updated to match Ore UI, available in beta only.}}
+|{{HistoryLine||1.19.20|Create New World screen is released to the public and no longer in [[Minecraft Preview|''Preview'']] only.}}
+|{{HistoryLine||Preview 1.19.40.20|[[File:New UI - Control Mode Screen Menu (Bedrock Preview 1.19.40.20).png|53px]] [[Settings#Touch|Control mode]] screen has been added to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.19.40.22|[[File:New UI - Report Screen Menu (Bedrock Preview 1.19.40.22).png|53px]] [[Social#Reporting|Report]] screen in [[Social#Other players|profile]]s from other players has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.23|[[File:New UI - Notification Screen Menu (Bedrock Preview 1.19.40.23).png|53px]] Notification screen has been updated to match Ore UI.}}
+|{{HistoryLine||1.19.50|Control mode screen is released to the public and no longer in ''Preview'' only.
+|Report screen in profiles from other players is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.19.80.20|[[File:New UI - Death Screen Menu - Efe Died (Bedrock Preview 1.19.80.20).png|53px]] Experimental [[Death#Player effects|Death]] screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|{{animate|New UI - Sign In Screen Menu - Welcome to Minecraft (Bedrock Preview 1.19.80.21).png;New UI - Sign In Screen Menu - Sign In to Earn Achievements (Bedrock Preview 1.19.80.21).png;New UI - Sign In Screen Menu - Sign In to Start Playing with Cross-Platform Friends (Bedrock Preview 1.19.80.21).png;New UI - Sign In Screen Menu - Sign In to Save Purchases (Bedrock Preview 1.19.80.21).png|53px}} Sign in screen has been updated to match Ore UI.}}
+|{{HistoryLine||Preview 1.20.30.22|[[File:New UI - Play Screen Menu "Worlds" Tab (Bedrock Preview 1.20.30.22).png|53px]] "[[Select World#Worlds|Worlds]]" tab in [[Select World#Bedrock Edition|Play]] screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.20.30|[[File:New UI - Death Screen Menu - Steve Died (Bedrock 1.20.30).png|53px]] Experimental [[Death#Player effects|Death]] screen is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.20.60.21|[[File:New UI - Play Screen Menu "Friends" Tab (Bedrock Preview 1.20.60.21).png|53px]] A "[[Social#Friends|Friends]]" tab has been added to the Play screen with Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.23|[[File:New UI - Inbox Screen Menu (Bedrock Preview 1.20.60.23).png|53px]] [[Title Screen#Inbox|Inbox]] screen has been added with Ore UI.<ref>{{tweet|Volgar|1735001079153045667|Howdy, my dears! In case you missed it, there is now new Inbox screen built with Ore UI available in #Minecraft preview builds. It's a work in progress, but hopefully it'd be a hub for release notes, invitations etc}}</ref>|[[File:New UI - Edit World Screen Menu (Bedrock Preview 1.20.60.23).png|53px]] [[World Options#Bedrock Edition|Edit World]] screen has been updated to match Ore UI, available in ''Preview'' only.<ref>{{tweet|Volgar|1735022317124665569|Well, actually, that's not all, my dears. In today's preview the new Edit World screen is rolling out too! Check it out, and use the feedback button on the screen to tell us what you think.}}</ref>
+|[[Realms Stories]] screen has been added with Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine|||dev=Preview 1.20.60.25|[[File:New UI - Quick World Creation - Game Mode Screen Menu (Bedrock Preview 1.20.60.25).png|53px]] [[File:New UI - Quick World Creation - Survival Difficulty Screen Menu (Bedrock Preview 1.20.60.25).png|53px]] [[Title Screen#Quick world creation|Quick World Creation]] has been added with Ore UI.}}
+|{{HistoryLine||Preview 1.20.80.21|[[File:New UI - Play Screen Menu "Servers" Tab (Bedrock Preview 1.20.80.21).png|53px]] "[[Select World#Servers|Servers]]" tab in the Play screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.23|[[File:New UI - Search for Players Screen Menu (Bedrock Preview 1.20.80.23).png|53px]] [[Social#Friends|Search for players]] screen has been updated to match Ore UI.|Death screen is no longer experimental.}}
+|{{HistoryLine|||dev=Release|Realms Stories screen is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.20|[[File:New UI - Profile Screen Menu (Bedrock Preview 1.21.0.20).png|53px]] [[Social#Profile|Profile]] screen has been updated to match Ore UI.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.21|[[File:New UI - Updated Control Mode Screen Menu (Bedrock Preview 1.21.10.21).png|53px]] Changed the appearance of the Control mode screen.}}
+|{{HistoryLine|||dev=Preview 1.21.20.21|[[File:New UI - Sleep Screen Menu (Bedrock Preview 1.21.20.21).png|53px]] Experimental [[Bed#Sleeping|Sleep]] screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine|||dev=Release|Achievement button in [[Title Screen#Bedrock Edition|main menu]] and [[Game Menu#Bedrock Edition|game menu]] has been replaced with the profile button, along with the new profile screen, showing the player's statistics and achievements.{{verify|Somehow reverted / associated with [[Bedrock Edition Preview 1.21.30.22]]}}}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|[[File:New UI - Screenshot Gallery Screen Menu (Bedrock Preview 1.21.30.22).png|53px]] [[Screenshot#Bedrock Edition|Screenshot Gallery]] screen in profile screen has been added with Ore UI.}}
+|{{HistoryLine||Preview 1.21.30.24|[[File:New UI - Play Screen "Worlds" Tab - Create From Template Button Screen Menu (Bedrock Preview 1.21.30.24).png|53px]] [[Select World#Create new world|Create from template]] screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.21.40.22|[[File:New UI - Play Screen Menu "Realms" Tab (Bedrock Preview 1.21.40.22).png|53px]] "[[Select World#Realms|Realms]]" tab in the Play screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Sleep screen is released to the public and no longer experimental or in ''Preview'' only.}}
+|{{HistoryLine||December 28, 2024|link=https://x.com/Volgar/status/1872771566146338897?t=181j8xNYHPvkQgK0P4T3Ng&s=19|Edit World screen is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine||1.21.60|Play screen is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.22|[[File:New UI - Player Permissions Screen Menu (Bedrock Preview 1.21.70.22).png|53px]] [[Permission level#Player Permissions|Player Permissions]] screen in the [[Game Menu#Bedrock Edition|game menu]] has been updated to match Ore UI.}}
+|{{HistoryLine|||dev=Preview 1.21.70.23|[[File:New UI - Updated Report Bad Behavior Screen Menu (Bedrock Preview 1.21.70.23).png|53px]] The Report Bad Behavior (previously Report) screen has been updated.}}
+|{{HistoryLine|||dev=Release|[[File:New UI - Main Menu - Multiplayer Screen Menu "Friends" Tab (Bedrock 1.21.70).png|43px]] The "[[Social#Friends|Friends]]" drawer is now accessible from the [[Title Screen#Bedrock Edition|main menu]] and the [[Game Menu|game menu]], only for some players and not for long.}}
+|{{HistoryLine||Preview 1.21.80.25|[[File:New UI - Disconnected Screen Menu (Bedrock Preview 1.21.80.25).png|53px]] Error screen on world load has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.25|[[File:New UI - Quick World Creation - Select Character Screen Menu (Bedrock Preview 1.21.90.25).png|53px]] [[File:New UI - Quick World Creation - Ready To Play Screen Menu (Bedrock Preview 1.21.90.25).png|53px]] Quick world creation has been expanded with character selection and ready to play screens.}}
+|{{HistoryLine||Preview 1.21.100.20|[[File:New UI - Audio Settings Screen Menu (Bedrock Preview 1.21.100.20).png|53px]] [[Settings#Audio|Audio]] settings screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.22|[[File:New UI - Updated Disconnected Screen Menu - Show Details Button (Bedrock Preview 1.21.100.22).png|53px]] [[File:New UI - Disconnected Screen - Show Details Button - Error Details Screen Menu (Bedrock Preview 1.21.100.22).png|53px]] Added Error Details screen to the error screen on world load.|Error screen on world load is released to the public and no longer ''Preview'' only.}}
+|{{HistoryLine||Preview 1.21.110.20|[[File:New UI - Edit World Realms Screen Menu (Bedrock Preview 1.21.110.20).png|45px]] The Edit World screen for [[Realms]] has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.21.110.25|[[File:New UI - Pause Menu "Social" Tab - People Screen Menu (Bedrock Preview 1.21.110.25).png|53px]] An updated "Social" tab has been added to the game menu, available in ''Preview'' only.|"Friends" tab has been renamed to "Social" tab, available in ''Preview'' only.}}
+|{{HistoryLine||1.21.111|[[File:New UI - Updated Achievements Screen Menu (Bedrock 1.21.111).png|45px]] Achievement screen has been redesigned.}}
+|{{HistoryLine||Preview 1.21.120.22|[[File:New UI - Accessibility Settings Screen Menu (Bedrock Preview 1.21.120.22).png|53px]] [[File:New UI - Language Settings Screen Menu (Bedrock Preview 1.21.120.22).png|53px]] [[Settings#Accessibility|Accessibility]] and [[Settings#Language|Language]] settings screens have been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.23|[[File:New UI - Updated Disconnected Screen Menu - Learn More Button (Bedrock Preview 1.21.120.23).png|53px]] Added a Learn more button to the error screen on world load.}}
+|{{HistoryLine|||dev=Preview 1.21.120.24|[[File:New UI - General Settings Screen Menu (Bedrock Preview 1.21.120.24).png|53px]] [[Settings#General 2|General]] settings screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine|||dev=Release|"Social" tab in the game menu is released to the public and no longer in ''Preview'' only.|"Friends" tab has been renamed to "Social" tab, no longer in ''Preview'' only.}}
+|{{HistoryLine||Preview 1.21.130.24|[[File:New UI - Video Settings Screen Menu (Bedrock Preview 1.21.130.24).png|53px]] [[Settings#Video|Video]] settings screen has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||Preview 26.0.25|[[File:New UI - Keyboard & Mouse Settings Screen Menu (Bedrock Preview 26.0.25).png|53px]] [[File:New UI - Account Settings Screen Menu (Bedrock Preview 26.0.25).png|53px]] [[Settings#Keyboard & Mouse|Keyboard & Mouse]] and [[Settings#Account|Account]] settings screen have been updated to match Ore UI, available in ''Preview'' only.|[[File:New UI - Social Tab Screen Menu - Party Tab (Bedrock Preview 26.0.25).png|45px]] [[Party]] tab has been added to the updated Social drawer, available in ''Preview'' only.|[[File:New UI - Create Party Screen Menu (Bedrock Preview 26.0.25).png|45px]] Create party screen has been added with Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||Preview 26.0.28|{{Animate|New UI - Settings Screen Menu (Bedrock Preview 26.0.28).png;New UI - Pause Menu - Settings Screen Menu (Bedrock Preview 26.0.28).png|53px}} [[Settings]] screen in main menu or game menu has been updated to match Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||26.10|The settings screen is released to the public and no longer in ''Preview'' only.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.22|[[File:New UI - Updated Realms Hub Screen Menu "Community" Tab - Story Feed (Bedrock Preview 26.20.22).png|45px]] [[Realms Hub]] screen have been updated to match Ore UI, available in ''Preview'' only.|"Realms Stories" screen has been renamed to "Realms Hub" screen, available in ''Preview'' only.}}
+}}
+
+=== ''Bedrock Editor'' ===
+{| class="wikitable collapsible" style="text-align:center;"
+! colspan="4" |''[[Bedrock Editor]]''
+|-
+! Version
+! Preview version
+! Release version
+! Changelogs
+|-
+! rowspan="2" |[[Bedrock Editor 0.3|0.3]]
+| rowspan="2" |[[Bedrock Edition Preview 1.19.80.20|Preview 1.19.80.20]]
+| rowspan="2" |–
+|[[Bedrock Editor#Create new project|Create New Project]] screen has been added with Ore UI, available in ''Preview'' only.
+|-
+|[[Bedrock Editor#Projects tool mode|Project Tool Mode]] screen has been added with Ore UI, available in ''Preview'' only.
+|-
+! [[Bedrock Editor 0.8.0|0.8.0]]
+| –
+! [[Bedrock Edition 1.21.50|1.21.50]]
+|''Editor'' is released to the public and no longer in ''Preview'' only.
+|-
+! [[Bedrock Editor 1.3.1|1.3.1]]
+| [[Bedrock Edition Preview 26.20.20|Preview 26.20.20]]
+| -
+|{{Animate|New UI - Play Screen Menu "Projects" Tab (Bedrock Editor Preview 26.20.20).png;New UI - Play Screen Menu "Project Servers" Tab (Bedrock Editor Preview 26.20.20).png|45px}} [[Select World|Main menu]] screen has been updated to match Ore UI, available in Preview only.
+|}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.21.03|dev=Preview 1.21.01.0|[[Death#Player effects|Death]] screen has been updated to match Ore UI.}}
+|{{HistoryLine||1.21.91|dev=Preview 1.21.50.1|[[Bed#Sleeping|Sleep]] screen has been updated to match Ore UI.}}
+|{{HistoryLine|||dev=Preview 1.21.90.1|Added Ore UI for new world screen.|{{animate|New UI - Create New World Screen Menu (Education 1.21.91).png;New UI - Edit World Screen Menu (Education 1.21.91).png|45px}} [[Create New World]] and [[World Options|Edit World]] screen have been updated to match Ore UI.}}
+}}
+
+=== Control ===
+<!-- TODO: Make a template for each change note here -->
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.50|[[File:New UI - Control Icon - Xbox A Button (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox B Button (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox X Button (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Y Button (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Menu (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Right Bumper RB (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Right Trigger RT (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Left Bumper LB (Bedrock Beta 1.16.100.50).png|30px]] [[File:New UI - Control Icon - Xbox Left Trigger LT (Bedrock Beta 1.16.100.50).png|30px]] New textures have been added for Xbox controller buttons to match Ore UI.}}
+|{{HistoryLine|||dev=beta 1.16.100.56|[[File:New UI - Control Icon - Nintendo Switch A Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch B Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch X Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Y Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Menu (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Bumper R (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Trigger ZR (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Bumper L (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Trigger ZL (Bedrock Beta 1.16.100.56).png|30px]] New textures have been added for Nintendo Switch controller buttons to match Ore UI.|[[File:New UI - Control Icon - PlayStation 4 X Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 O Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Square Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Triangle Button (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Menu (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Right Bumper R1 (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Right Trigger R2 (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Left Bumper L1 (Bedrock Beta 1.16.100.56).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Left Trigger L2 (Bedrock Beta 1.16.100.56).png|30px]] New textures have been added for PlayStation controller buttons to match Ore UI.}}
+|{{HistoryLine||1.16.210|dev=beta 1.16.210.50|[[File:New UI - Control Icon - Nintendo Switch Arrow Up (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Right (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Down (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Left (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 D-Pad Arrow Up (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 D-Pad Arrow Right (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 D-Pad Arrow Down (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 D-Pad Arrow Left (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Up (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Right (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Down (Bedrock Beta 1.16.210.50).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Left (Bedrock Beta 1.16.210.50).png|30px]] New textures have been added for directional pad buttons to match Ore UI.}}
+|{{HistoryLine||1.16.220|dev=beta 1.16.220.50|[[File:New UI - Control Icon - Keyboard 0 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 0 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 4 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 4 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 5 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 5 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 6 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 6 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 7 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 7 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 8 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 8 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 9 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 9 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard A (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark A (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard C (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard D (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark D (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard E (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark E (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard F (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark F (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard M (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark M (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Q (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Q (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard S (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark S (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard W (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark W (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard X (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark X (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Z (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Z (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Enter (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Enter (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Esc (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Esc (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Shift (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Shift (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Space (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Space (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Tab (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Tab (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Left Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Left Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Right Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Right Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Scroll Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Wheel (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Scroll Wheel (Bedrock Beta 1.16.220.50).png|30px]] New textures have been added for keyboard and mouse controls to match Ore UI.|[[File:New UI - Control Icon - Nintendo Switch Dark A Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark B Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Y Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Bumper R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Trigger ZR (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick Click R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Stick Click R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Bumper L (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Trigger ZL (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick Click L (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Stick Click L (Bedrock Beta 1.16.220.50).png|30px]] New textures have been added for Nintendo Switch and dark controls to match Ore UI.|[[File:New UI - Control Icon - PlayStation 4 Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark O Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Square Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Triangle Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Bumper R1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Trigger R2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Right Stick Click R3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Stick Click R3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Bumper L1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Trigger L2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Left Stick Click L3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Stick Click L3 (Bedrock Beta 1.16.220.50).png|30px]] New textures have been added for PlayStation 4 and dark controls to match Ore UI.|[[File:New UI - Control Icon - Xbox Dark A Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark B Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Y Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Bumper RB (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Trigger RT (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Right Stick Click RS (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Stick Click RS (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Bumper LB (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Trigger LT (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Left Stick Click LS (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Stick Click LS (Bedrock Beta 1.16.220.50).png|30px]] New textures have been added for Xbox and dark controls to match Ore UI.}}
+|{{HistoryLine|||dev=beta 1.16.220.52|[[File:New UI - Control Icon - Nintendo Switch Right Stick R (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Stick R (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Stick L (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] New textures have been added for controller controls to match Ore UI.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.56|[[File:New UI - Control Icon - Mouse (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for mouse controls to match Ore UI.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.20|[[File:New UI - Control Icon - PlayStation 4 Touch Pad (Bedrock Beta 1.17.20.20).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Touch Pad (Bedrock Beta 1.17.20.20).png|30px]] New textures have been added for PlayStation  4 controls to match Ore UI.|[[File:New UI - Control Icon - PlayStation 4 Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Select (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for select on PlayStation 4 controls to match Ore UI.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.20.24|[[File:New UI - Control Icon - Keyboard V (Bedrock Preview 1.18.20.24).png|30px]] New textures have been added for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.31|[[File:New UI - Control Icon - Keyboard Bracket Close (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Close Small (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open Small (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Placeholder (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Placeholder (Bedrock Preview 1.19.0.31).png|30px]] New textures have been added for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.21|[[File:New UI - Control Icon - Keyboard Ctrl (Bedrock Preview 1.19.10.21).png|30px]] [[File:New UI - Control Icon - Keyboard Ctrl Small (Bedrock Preview 1.19.10.21).png|30px]] New textures have been added for keyboard controls to match Ore UI.|[[File:New UI - Control Icon - Keyboard Dark 0 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 4 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 5 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 6 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 7 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 8 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark 9 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark A (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark D (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark E (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark F (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark M (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Q (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark S (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark W (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark X (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Z (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Placeholder (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Enter (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Esc (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Shift (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Space (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Dark Tab (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Left Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Right Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Scroll Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Dark Scroll Wheel (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for keyboard, mouse, and dark controls to match Ore UI.|[[File:New UI - Control Icon - Nintendo Switch Dark A Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark B Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Y Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Stick R (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Bumper R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Trigger ZR (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Right Stick Click R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Stick L (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Bumper L (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Trigger ZL (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Dark Left Stick Click L (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for Nintendo Switch and dark controls to match Ore UI.|[[File:New UI - Control Icon - PlayStation 4 Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark O Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Square Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Triangle Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Bumper R1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Trigger R2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Right Stick Click R3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Bumper L1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Trigger L2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Dark Left Stick Click L3 (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for PlayStation 4 and dark controls to match Ore UI.|[[File:New UI - Control Icon - Xbox Dark A Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark B Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark X Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Y Button (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Menu (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Select (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Stick RS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Bumper RB (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Trigger RT (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Right Stick Click RS (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Stick LS (Bedrock Beta 1.16.220.52).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Bumper LB (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Trigger LT (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Xbox Dark Left Stick Click LS (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for Xbox and dark controls to match Ore UI.}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.22|[[File:New UI - Control Icon - Keyboard Enter (Bedrock Preview 1.19.60.22).png|30px]] New textures have been added for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.19.70|dev=Preview 1.19.70.23|[[File:New UI - Control Icon - Keyboard Enter (Bedrock Preview 1.19.60.22).png|30px]] Textures have been removed for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.21|[[File:New UI - Control Icon - Xbox Menu (Bedrock Preview 1.20.30.21).png|30px]] Textures have been re-added for Xbox controls to match Ore UI.|[[File:New UI - Control Icon - Xbox Menu (Bedrock Beta 1.16.100.50).png|30px]] Textures have been removed for Xbox controls to match Ore UI.}}
+|{{HistoryLine|||dev=Preview 1.20.30.24|[[File:New UI - Control Icon - Nintendo Switch Menu (Bedrock Preview 1.20.30.24).png|30px]] New textures have been added for Nintendo Switch controls to match Ore UI.|[[File:New UI - Control Icon - Nintendo Switch Menu (Bedrock Beta 1.16.100.56).png|30px]] Textures have been removed for Nintendo Switch controls to match Ore UI.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.20|[[File:New UI - Control Icon - Nintendo Switch Menu (Bedrock Preview 1.20.50.20).png|30px]] Textures have been changed for Nintendo Switch controls to match Ore UI.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|[[File:New UI - Control Icon - PlayStation 5 X Button (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 O Button (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Square Button (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Triangle Button (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 D-Pad Arrow Up (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 D-Pad Arrow Right (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 D-Pad Arrow Down (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 D-Pad Arrow Left (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Menu (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Touch Pad (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Right Stick RS (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Right Bumper R1 (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Right Trigger R2 (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Right Stick Click R3 (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Left Stick LS (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Left Bumper L1 (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Left Trigger L2 (Bedrock Preview 1.21.10.20).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Left Stick Click L3 (Bedrock Preview 1.21.10.20).png|30px]] New textures have been added for PlayStation 5 controls to match Ore UI.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.23|[[File:New UI - Control Icon - keyboard F2 (Bedrock Preview 1.21.30.23).png|30px]] New textures have been added for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.23|[[File:New UI - Control Icon - Keyboard Bracket Close (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Close Small (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open Small (Bedrock Preview 1.21.90.23).png|30px]] Textures have been changed for keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|[[File:New UI - Control Icon - Keyboard Bracket Close Small (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open Small (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Ctrl Small (Bedrock Preview 1.19.10.21).png|30px]] Textures have been removed for small on keyboard controls to match Ore UI.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.20|[[File:New UI - Control Icon - Keyboard Button Fill Default (Bedrock Preview 1.21.110.20).png|30px]] [[File:New UI - Control Icon - Mouse Directional (Bedrock Preview 1.21.110.20).png|30px]] [[File:New UI - Control Icon - Mouse Left Click (Bedrock Preview 1.21.110.20).png|30px]] [[File:New UI - Control Icon - Mouse Right Click (Bedrock Preview 1.21.110.20).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Click (Bedrock Preview 1.21.110.20).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Wheel (Bedrock Preview 1.21.110.20).png|30px]] New textures have been added for keyboard and mouse controls to match Ore UI.|[[File:New UI - Control Icon - Keyboard 0 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 1 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 2 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 3 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 4 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 5 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 6 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 7 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 8 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard 9 (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard A (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard C (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard D (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard E (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard F (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard M (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Q (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard R (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard S (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard V (Bedrock Preview 1.18.20.24).png|30px]] [[File:New UI - Control Icon - Keyboard W (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard X (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Z (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Placeholder (Bedrock Preview 1.19.0.31).png|30px]] [[File:New UI - Control Icon - Keyboard Ctrl (Bedrock Preview 1.19.10.21).png|30px]] [[File:New UI - Control Icon - Keyboard Enter (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Esc (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Shift (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Space (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Keyboard Tab (Bedrock Beta 1.16.220.50).png|30px]][[File:New UI - Control Icon - Mouse Left Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Right Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Click (Bedrock Beta 1.16.220.50).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Wheel (Bedrock Beta 1.16.220.50).png|30px]] Textures have been removed for keyboard and mouse controls to match Ore UI.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|[[File:New UI - Control Icon - Keyboard A (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard B (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard C (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard D (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard E (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard F (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard G (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard H (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard I (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard J (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard K (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard L (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard M (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard N (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard O (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard P (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Q (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard R (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard S (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard T (Bedrock Preview 1.21.130.20).png|30px]]  [[File:New UI - Control Icon - Keyboard U (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard V (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard W (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard X (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Y (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Z (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Alt (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Arrow Down (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Arrow Left (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Arrow Right (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Arrow Up (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Ctrl Small (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Esc (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Mouse (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Mouse Left Click (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Mouse Right Click (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Click (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Mouse Scroll Wheel (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Shift (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Space (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Special Character (Bedrock Preview 1.21.130.20).png|30px]] [[File:New UI - Control Icon - Keyboard Tab (Bedrock Preview 1.21.130.20).png|30px]]<br /> New textures have been added for keyboard and mouse controls to match Ore UI.|[[File:New UI - Control Icon - Keyboard Bracket Close Small (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Bracket Open Small (Bedrock Preview 1.21.90.23).png|30px]] [[File:New UI - Control Icon - Keyboard Enter (Bedrock Preview 1.21.130.20).png|30px]] Textures have been re-added for keyboard controls to match Ore UI.|[[File:New UI - Control Icon - Keyboard F2 (Bedrock Preview 1.21.130.20).png|30px]] Textures have been changed for keyboard controls to match Ore UI.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.23|[[File:New UI - Control Icon - Controller Right Stick RS Arrow Up (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Right Stick RS Arrow Right (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Right Stick RS Arrow Down (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Right Stick RS Arrow Left (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Left Stick LS Arrow Up (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Left Stick LS Arrow Right (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Left Stick LS Arrow Down (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Controller Left Stick LS Arrow Left (Bedrock Preview 26.10.23).png|30px]] New textures have been added for controller controls to match Ore UI.|[[File:New UI - Control Icon - Nintendo Switch Arrow Up (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Right (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Down (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Arrow Left (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick R (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Bumper R (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Trigger ZR (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick Click R (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Bumper L (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Trigger ZL (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick Click L (Bedrock Preview 26.10.23).png|30px]] Textures have been changed for Nintendo Switch controls to match Ore UI.|[[File:New UI - Control Icon - PlayStation D-Pad Arrow Up (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation D-Pad Arrow Right (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation D-Pad Arrow Down (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation D-Pad Arrow Left (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Menu (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Menu (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation 4 Touch Pad (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation 5 Touch Pad (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation and Xbox Right Stick RS (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Right Bumper R1 (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Right Trigger R2 (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Right Stick Click R3 (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation and Xbox Left Stick LS (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Left Bumper L1 (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Left Trigger L2 (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation Left Stick Click L3 (Bedrock Preview 26.10.23).png|30px]] Textures have been changed for PlayStation controls to match Ore UI.|[[File:New UI - Control Icon - Xbox D-Pad Arrow Up (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Right (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Down (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox D-Pad Arrow Left (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Menu (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation and Xbox Right Stick RS (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Right Bumper RB (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Right Trigger RT (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Right Stick Click RS (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - PlayStation and Xbox Left Stick LS (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Left Bumper LB (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Left Trigger LT (Bedrock Preview 26.10.23).png|30px]] [[File:New UI - Control Icon - Xbox Left Stick Click LS (Bedrock Preview 26.10.23).png|30px]] Textures have been changed for Xbox controls to match Ore UI.}}
+|{{HistoryLine|upcoming bedrock}}
+|{{HistoryLine||26.20|dev=Preview 26.20.27|[[File:New UI - Control Icon - Nintendo Switch Right Stick R Arrow Up (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick R Arrow Right (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick R Arrow Down (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Right Stick R Arrow Left (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L Arrow Up (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L Arrow Right (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L Arrow Down (Bedrock Preview 26.20.27).png|30px]] [[File:New UI - Control Icon - Nintendo Switch Left Stick L Arrow Left (Bedrock Preview 26.20.27).png|30px]] New textures have been added for Nintendo Switch controls to match Ore UI.}}
+}}
+
+=== Ore UI releases ===
+These are standalone Ore UI releases on GitHub.
+
+{| class="wikitable collapsible" style="text-align:center;"
+! colspan="4" |[https://github.com/Mojang/ore-ui/releases Ore UI GitHub releases]
+|-
+! Version
+! What's changed
+! Internal changes
+! Date
+|-
+! rowspan="3" |[https://github.com/Mojang/ore-ui/releases/tag/v0.1.2 0.1.2]
+|Stabilize automated performance tests.
+| rowspan="16" |–
+| rowspan="3" |November 4, 2021
+|-
+|Add ESLint checks.
+|-
+|Fix Style updates not properly cleaning previous subscriptions.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.1.3 0.1.3]
+|Fix unmount cleanup of Facets.
+|November 5, 2021
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.1.4 0.1.4]
+|Separate {{cd|setWithCallback}} support from set in facet.
+|November 17, 2021
+|-
+! rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.2.0 0.2.0]
+|Add support for null values on some built-in equality checks.
+| rowspan="2" |December 10, 2021
+|-
+|Add support for multiple facets in {{cd|useFacetCallback}} and {{cd|useFacetEffect}}.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.2.1 0.2.1]
+|Add "contribute" file with publishing documentation.
+| rowspan="2" |December 15,2021
+|-
+|Fix {{cd|useFacetCallback}} return type.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.2.2 0.2.2]
+|Add login instructions to {{cd|CONTRIBUTING.md}}.
+| rowspan="2" |December 20, 2021
+|-
+|{{cd|useFacetState}} setter memoized.
+|-
+| rowspan="5" |[https://github.com/Mojang/ore-ui/releases/tag/v0.2.3 0.2.3]
+|Add index to Map tests.
+| rowspan="5" |February 8, 2022
+|-
+|Add a condition property to the Mount component.
+|-
+|Rename {{cd|useFacetEffect}} to {{cd|useFacetLayoutEffect}} and add a new {{cd|useFacetEffect}}.
+|-
+|Add With component to refine mounted components Facet type.
+|-
+|Deferred Mount feature: {{cd|DeferredMountWithCallback}}.
+|-
+! rowspan="4" |[https://github.com/Mojang/ore-ui/releases/tag/v0.3.0 0.3.0]
+|Add support for id attribute.
+|Update {{cd|README.md}}.
+| rowspan="4" |April 11, 2022
+|-
+|Fix missing public APIs from published npm package.
+|Make the types defined in the hooks more dynamic.
+|-
+|Rename {{cd|RemoteFacet}} to {{cd|SharedFacet}}.
+|Add tscompiler paths for our packages.
+|-
+|Rename shared to shared-facet.
+|Adding pr as a trigger of actions.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.2 0.3.2]
+|Introduce {{cd|multiObserve}} and {{cd|hasDefinedValue}} helpers.
+| rowspan="65" |–
+|June 28, 2022
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.3.3 0.3.3]
+|Update the types of the {{cd|useFacetCallback}} function.
+| rowspan="2" |June 29, 2022
+|-
+|Fix circular dependency.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.3.4 0.3.4]
+|Fix line endings settings for prettier.
+| rowspan="2" |July 14, 2022
+|-
+|Allow null as return value of the mount components.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.5 0.3.5]
+|Added a deferred mount config provider.
+|July 25, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.6 0.3.6]
+|Support {{cd|onMouseMove}} handler.
+|August 2, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.7 0.3.7]
+|Fix memory leak caused by not removing child from parent.
+|August 16, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.8 0.3.8]
+|Fix {{cd|createFacet}} {{cd|equalityCheck}} to not fire for undefined or null.
+|August 18, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.9 0.3.9]
+|Added {{cd|createFacetContext}}.
+|August 24, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.10 0.3.10]
+|Added {{cd|defaultEqualityCheck}} to {{cd|createFacet}}, and introduced {{cd|createStaticFacet}}.
+|August 31, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.11 0.3.11]
+|Support data- properties related to narration.
+|September 14, 2022
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.3.12 0.3.12]
+|Upgrade TypeScript version + tie VSCode TS version to workspace.
+|September 21, 2022
+|-
+! rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.4.0 0.4.0]
+|Convert some key null coalescing operators into explicit ternaries.
+| rowspan="2" |October 24, 2022
+|-
+|Move responsibility of cleaning up effects from facets to {{cd|useEffect()}} / {{cd|useFacetEffect()}}.
+|-
+| rowspan="3" |[https://github.com/Mojang/ore-ui/releases/tag/v0.4.1 0.4.1]
+|Upgrade Yarn to 3.2.4.
+| rowspan="3" |November 3, 2022
+|-
+|Turn off static access logs in test environment.
+|-
+|Added improved logging to static facet context.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.4.2 0.4.2]
+|Make it possible to supply an initial value for {{cd|useFacetRef}}.
+| rowspan="3" |December 6, 2022
+|-
+|Support {{cd|defaultReturnValue}} in {{cd|useFacetCallback}}.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.4.3 0.4.3]
+|New linting rule to detect import issues.
+|-
+| rowspan="4" |[https://github.com/Mojang/ore-ui/releases/tag/v0.4.4 0.4.4]
+|Lock nodejs version.
+| rowspan="4" |March 3, 2023
+|-
+|Fix {{cd|useFacetCallback}} having outdated values.
+|-
+|Fix {{cd|useFacetCallback}} mismatch subscriptions.
+|-
+|Only accept numerical characters if the input type is number.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.4.5 0.4.5]
+|Update the list of maintainers in the {{cd|README.md}} file.
+| rowspan="2" |March 24, 2023
+|-
+|Keep {{cd|useFacetCallback}} instance same even if facets instances change.
+|-
+! rowspan="3" |[https://github.com/Mojang/ore-ui/releases/tag/v0.5.0 0.5.0]
+|Tweak {{cd|hasDefinedValue}} typing.
+| rowspan="3" |June 15, 2023
+|-
+|Adds support for custom equality checks on unwrap.
+|-
+|Batching support.
+|-
+| rowspan="4" |[https://github.com/Mojang/ore-ui/releases/tag/v0.5.1 0.5.1]
+|Add support for Gameface's cohinline attribute in dom-fiber.
+| rowspan="4" |September 14, 2023
+|-
+|Update the list of maintainers in the {{cd|README.md}} file.
+|-
+|Force strict comparison {{cd|eqeqeq eslint rule}}.
+|-
+|Revert to using void as cleanup type for {{cd|useFacetEffect}}.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.5.2 0.5.2]
+|Adding bigint to Value type.
+|September 25, 2023
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.5.3 0.5.3]
+|Fix children being called with null and undefined.
+|October 27, 2023
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.5.4 0.5.4]
+|Added support for {{cd|foreignObject}} in our custom renderer.
+|January 31, 2024
+|-
+! rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.6.0 0.6.0]
+|Added property count to Map to make length of provided array available.
+| rowspan="3" |July 25, 2024
+|-
+|Cached maps {{cd|useFacetMemo}} can return values before any subscription.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.6.1 0.6.1]
+|Fix {{cd|useFacetUnwrap}} support for custom equality check.
+|-
+| rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v0.6.2 0.6.2]
+|Updated puppeteer to the latest version.
+| rowspan="2" |March 12, 2025
+|-
+|Update the {{cd|useSharedFacet}} typing.
+|-
+|[https://github.com/Mojang/ore-ui/releases/tag/v0.6.4 0.6.4]
+|Correctly export {{cd|fireEvent}} from {{cd|renderer.ts}}.
+|April 3, 2025
+|-
+![https://github.com/Mojang/ore-ui/releases/tag/v18.0.0 18.0.0]
+|Update to React 18.
+|September 4, 2025
+|-
+![https://github.com/Mojang/ore-ui/releases/tag/v18.1.0 18.1.0]
+|Support for React 18's {{cd|useTransition}} and {{cd|startTransition}}.
+|September 17, 2025
+|-
+! rowspan="4" |[https://github.com/Mojang/ore-ui/releases/tag/v18.2.0 18.2.0]
+|Move documentation from separate branch to main branch.
+| rowspan="4" |October 16, 2025
+|-
+|Added comment for code smell using {{cd|useFacetCallback}}.
+|-
+|Fix issue with incorrect typing for {{cd|StrictReactNode}}.
+|-
+|New Unwrap and Times helper components.
+|-
+! rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v18.3.0 18.3.0]
+|Documentation improvements & spring cleaning.
+| rowspan="2" |October 28, 2025
+|-
+|Fix support for updating equality checks of {{cd|useFacetWrapMemo}}.
+|-
+! rowspan="3" |[https://github.com/Mojang/ore-ui/releases/tag/v18.4.0 18.4.0]
+|Fix {{cd|createStaticFacet}} triggering {{cd|NO_VALUE}}.
+| rowspan="3" |November 14, 2025
+|-
+|Fix edge case of effects without facets not running.
+|-
+|Fix external types of {{cd|mapFacets}} helper functions.
+|-
+! rowspan="2" |[https://github.com/Mojang/ore-ui/releases/tag/v18.5.0 18.5.0]
+|Copilot support.
+| rowspan="2" |February 18, 2026
+|-
+|Support for new auxclick event.
+|-
+![https://github.com/Mojang/ore-ui/releases/tag/v18.6.0 18.6.0]
+|Allow facets to be used as an initial value of {{cd|useFacetState}}.
+|March 23, 2026
+|}
+
+== Issues ==
+{{issue list|projects=MCPE|Ore UI|OreUI|New UI|NewUI|New design}}
+
+== Trivia ==
+* The in-game descriptions of features are sometimes remarkable or humorous. Notable quotes are:
+** ''Explore a mysterious world where you build, collect, craft, and fight monsters.''
+** ''Whatever the default game mode is... that's what you get.''
+** ''You can't respawn if you die. Good luck! You'll need it.''
+** ''A mysterious series of numbers used to create your world''
+** ''Might want to build with stone''
+** ''Red box goes boom''
+** ''Enjoy Minecraft with friends''
+** ''Minecraft is for everyone, including you''
+** ''Shiny glint for enchanted items''
+** ''Reverses up and down when looking around. A less common option for keyboard and mouse users, but you do you.''
+** ''We didn't know where else to put these settings''
+** ''Technical info that's not relevant to players. Feel free to have a look if you're curious!''
+** ''Not a trick question. How smooth do you like your blocks?''
+** ''Happy little clouds in the sky''
+** ''Leaves but better''
+** ''Bubbles with style''
+** ''Minecraft, in full screen''
+
+== Gallery ==
+=== Screenshots ===
+==== ''Bedrock Edition'' ====
+<gallery>
+File:Ore UI - Play Screen Menu "Worlds" Tab - Grid Mode (Bedrock).png|"Worlds" tab in the [[Play]] screen (grid view)
+File:Ore UI - Play Screen Menu "Worlds" Tab - List Mode (Bedrock).png|"Worlds" tab in the Play screen (list view)
+File:Ore UI - Play Screen Menu "Realms" Tab (Bedrock).png|"Realms" tab in the Play screen, when not owning a Realm
+File:Ore UI - Play Screen Menu "Realms" Tab - Your Realms (Bedrock).png|"Realms" tab in the Play screen, on an owned Realm
+File:Ore UI - Play Screen Menu "Servers" Tab - Featured Servers (Bedrock).png|"Servers" tab in the Play screen
+File:Ore UI - Play Screen "Worlds" Tab - Create From Template Button Screen Menu (Bedrock).png|"Create from..." screen, showing [[World#World template|world templates]]
+File:Ore UI - Create New World Screen Menu "General" Tab Settings (Bedrock).png|[[Create New World|Create new world]] screen
+File:Ore UI - Edit World Screen Menu "General" Tab Settings (Bedrock).png|[[World Options#Bedrock Edition|Edit world]] screen
+File:Ore UI - Settings Screen Menu "Accessibility" Tab (Bedrock).png|[[Settings]] screen
+File:Ore UI - Inbox Screen Menu (Bedrock).png|[[Title Screen#Inbox|Inbox]] screen
+File:Ore UI - Game Menu - Player Permissions Screen Menu (Bedrock).png|[[Permission level#Player Permissions|Player permissions]] screen in the [[Game Menu|game menu]]
+File:Ore UI - Sleep Screen Menu (Bedrock).png|[[Bed#Sleeping|Sleeping]] screen
+File:Ore UI - Death Screen Menu - Survival and Adventure Mode - You Died (Bedrock).png|[[Death#Player effects|Death]] screen in [[Survival]] or [[Adventure]] mode
+File:Ore UI - Death Screen Menu - Hardcore Mode - Game Over (Bedrock).png|[[Death#Player effects|Death]] screen in [[Hardcore]] mode
+File:Ore UI - Multiplayer Screen Menu "Social" Tab - Friends Screen Menu (Bedrock).png|[[Social]] drawer in the Play screen
+File:Ore UI - Profile Screen Menu "Overview" Tab (Bedrock).png|[[Social#Profile|Profile]] screen
+File:Ore UI - Search for Players Screen Menu (Bedrock).png|[[Social#Friends|Search for players]] screen
+File:Ore UI - Report Bad Behavior Screen Menu (Bedrock).png|[[Social#Reporting|Report bad behavior]] screen
+File:Ore UI - Profile Screen - Screenshot Gallery Button Screen Menu (Bedrock).png|[[Screenshot|Screenshot gallery]] in the Profile screen
+File:Ore UI - Achievements Screen Menu - Filter & Sort Menu - "Default Sorting" Tab (Bedrock).png|[[Achievement]]s screen
+</gallery>
+
+==== ''Bedrock Editor'' ====
+<gallery>
+New UI - Play Screen Menu "Projects" Tab (Bedrock Editor Preview 26.20.20).png|[[Select World|Main menu]] screen
+Ore UI - Create New Project Screen Menu "General" Tab Settings (Bedrock Editor).png|[[Create New World|Create new project]] screen
+Ore UI - Project Tool Mode - Theme Dark Screen Menu (Bedrock Editor).png|A project in [[Bedrock Editor#GUI|tool mode]]
+</gallery>
+
+==== ''Minecraft Education'' ====
+<gallery>
+File:Ore UI - Create New World Screen Menu "General" Tab Settings (Education).png|[[Create New World|Create new world]] screen
+File:Ore UI - Edit World Screen Menu "General" Tab Settings (Education).png|[[Edit world]] screen
+</gallery>
+
+==== ''Minecraft China Edition'' ====
+<gallery>
+File:Ore UI - Skin Store Screen Menu (China).png|Skin Store screen
+File:Ore UI - Mod Store Screen Menu (China).png|Mod Store screen
+File:Ore UI - Play Screen Menu (China).png|Play screen
+File:Ore UI - Create New World Screen Menu (China).png|Create new world screen
+File:Ore UI - Mini Map Screen Menu (China).png|Mini-map screen
+</gallery>
+
+=== Development screenshots ===
+==== Atlas ====
+<gallery>
+Ore UI - Gameplay Atlas Revision 1.png|An older version of the atlas file.
+Ore UI - Gameplay Atlas Revision 2.png|An older version of the atlas file.
+Ore UI - Gameplay Atlas Revision 4.png|An older version of the atlas file.
+Ore UI - Gameplay Atlas Revision 6.png|An older version of the atlas file.
+Ore UI - Gameplay Atlas Revision 7.png|The current version of the atlas file.
+</gallery>
+
+==== Achievement ====
+<gallery>
+Ore UI development achievement screen.png|A sneak peek of the [[achievement]] screen.
+Ore UI development achievement details screen.jpg|A sneak peek of the [[achievement]] details screen.
+</gallery>
+
+==== Create new world ====
+<gallery>
+Ore UI development create new world screen 1.png|A sneak peek of the create new world screen,  showing a part of the '''"Create"''' button.
+Ore UI development create new world screen 2.png|Another sneak peek of the create new world screen, showing the world's difficulty selector.
+Ore UI development create new world screen 3.png|A sneak peek of the [[Create New World|create new world]] screen, showing active [[Resource pack|resource packs]] section.
+</gallery>
+
+==== Gameplay ====
+<gallery>
+Ore UI development old hotbar.jpg|An early look of the old [[hotbar]].<ref>{{tweet|xKingDarkYT|1873038723509829786|So far the HUD only has the hotbar.}}</ref>
+Ore UI development hotbar.jpg|An early look of the new [[hotbar]].<ref>{{tweet|nipitare_|2046637363904827518|They have yea, it basically looks like the current one we have}}</ref>
+Ore UI development inventory.jpg|An early look of the [[inventory]] screen.<ref name="ore-ui-inventory-and-dropper/dispenser-and-hopper-sneak-peek">{{tweet|nipitare_|1963591339670491225|New inventory, dropper/dispenser and hopper OreUI screens.}}</ref>
+Ore UI development crafting table.jpg|An early look of the [[crafting table]] screen.<ref name="ore-ui-anvil-and-crafting-table-sneak-peek" />
+Ore UI development crafting recipe.jpg|An early look of the [[crafting recipe]] screen.<ref name="ore-ui-crafting-recipe-screen-sneak-peek">{{tweet|nipitare_|1965473597306323066|New OreUI crafting recipe screen in #Minecraft<br>First image is unlocked recipes, second one locked ones<br>Note: Amount of rows might be inaccurate and don't worry about bread.}}</ref>
+Ore UI development crafting recipe locked.jpg|An early look of the locked [[crafting recipe]] screen.<ref name="ore-ui-crafting-recipe-screen-sneak-peek" />
+Ore UI development old furnace.jpg|An early look of the old [[furnace]] screen.<ref>{{tweet|xKingDarkYT|1859299649817018775|Looks still early wip but could be soon... maybe as soon as next year?}}</ref>
+Ore UI development furnace.jpg|An early look of the new [[furnace]] screen.<ref name="ore-ui-furnace-sneak-peek">{{tweet|nipitare_|1996278135625855144|Furnace screen in OreUI has recived some major updates}}</ref>
+Ore UI development lit furnace 100%.jpg|An early look of the [[lit furnace]] (100%) screen.<ref name="ore-ui-furnace-sneak-peek" />
+Ore UI development lit furnace 50%.jpg|An early look of the [[lit furnace]] (50%) screen.<ref name="ore-ui-furnace-sneak-peek" />
+Ore UI development smoker.jpg|An early look of the [[smoker]] screen.<ref name="ore-ui-smoker-and-blast-furnace-sneak-peek">{{tweet|nipitare_|2031460847592013963|New OreUI smoker and blast furnace screens (first image smoker other blast furnace)}}</ref>
+Ore UI development blast furnace.jpg|An early look of the [[blast furnace]] screen.<ref name="ore-ui-smoker-and-blast-furnace-sneak-peek" />
+Ore UI development old anvil.jpg|An early look of the old [[anvil]] screen.<ref name="ore-ui-anvil-and-crafting-table-sneak-peek">{{tweet|SmokeyStack_|1955306916168470791|Anvil and the Crafting Table screens in OreUI}}</ref>
+Ore UI development anvil.jpg|An early look of the new [[anvil]] screen.<ref name="ore-ui-anvil-sneak-peek">{{tweet|nipitare_|2046625877870411858|New OreUI anvil screens. The text input will change to a more darker one when there is an input item (3rd image). The texture should change based on damage state but all 3 have the same texture currently (Undamaged).}}</ref>
+Ore UI development anvil 1.jpg|An early look of the [[anvil]] screen.<ref name="ore-ui-anvil-sneak-peek" />
+Ore UI development anvil 2.jpg|An early look of the [[anvil]] screen.<ref name="ore-ui-anvil-sneak-peek" />
+Ore UI development grindstone.jpg|An early look of the [[grindstone]] screen.<ref name="ore-ui-grindstone-and-brewing-stand-sneak-peek">{{tweet|nipitare_|2016205574346523133|New OreUI grindstone and brewing stand screens (white bars are progress bar both at 50%)}}</ref>
+Ore UI development dropper and dispenser.jpg|An early look of the [[dropper]] and [[dispenser]] screen.<ref name="ore-ui-inventory-and-dropper/dispenser-and-hopper-sneak-peek" />
+Ore UI development hopper.jpg|An early look of the [[hopper]] screen.<ref name="ore-ui-inventory-and-dropper/dispenser-and-hopper-sneak-peek" />
+Ore UI development brewing stand.jpg|An early look of the [[brewing stand]] screen.<ref name="ore-ui-grindstone-and-brewing-stand-sneak-peek" />
+Ore UI development trading.jpg|An early look of the [[trading]] screen.<ref>{{tweet|nipitare_|1970535094512427177|Some part of new trading screen in OreUI. Code wise trade offers seem to be implemented but cannot get them to work.}}</ref>
+Ore UI development bundle.jpg|An early look of the [[bundle]] tooltip.<ref name="ore-ui-bundle-sneak-peek">{{tweet|nipitare_|2036927310243279194|New OreUI bundle screens (4 slots is an placeholder)}}</ref>
+Ore UI development bundle 50%.jpg|An early look of the [[bundle]] (50%) tooltip.<ref name="ore-ui-bundle-sneak-peek" />
+Ore UI development bundle 100%.jpg|An early look of the [[bundle]] (100%) tooltip.<ref name="ore-ui-bundle-sneak-peek" />
+Ore UI development magenta bundle.jpg|An early look of the magenta [[bundle]] tooltip.<ref name="ore-ui-magenta-bundle-sneak-peek">{{tweet|nipitare_|2040559262439551203|It turns out that the bundle screen does not show item amount, it shows Empty, Full or nothing instead. As to why the numbers got there is because i made an mistake in data input. (Images of magenta bundle)}}</ref>
+Ore UI development magenta bundle 50%.jpg|An early look of the magenta [[bundle]] (50%) tooltip.<ref name="ore-ui-magenta-bundle-sneak-peek" />
+Ore UI development magenta bundle 100%.jpg|An early look of the magenta [[bundle]] (100%) tooltip.<ref name="ore-ui-magenta-bundle-sneak-peek" />
+Ore UI development chest container.jpg|An early look of the [[chest]] container screen.<ref name="ore-ui-containers-sneak-peek">{{tweet|xKingDarkYT|1873038637899890855|OreUI versions of the container screens}}</ref>
+Ore UI development barrel container.jpg|An early look of the [[barrel]] container screen.<ref name="ore-ui-containers-sneak-peek" />
+Ore UI development ender chest container.jpg|An early look of the [[ender chest]] container screen.<ref name="ore-ui-containers-sneak-peek" />
+Ore UI development shulker box container.jpg|An early look of the [[shulker box]] container screen.<ref name="ore-ui-containers-sneak-peek" />
+Ore UI development unoxidized copper chest container.jpg|An early look of the [[copper chest]] container screen.<ref name="ore-ui-copper-chests-containers-sneak-peek">{{tweet|nipitare_|2039017318810820722|New OreUI copper chests in #minecraft. Go in order from least to most oxidised}}</ref>
+Ore UI development exposed copper chest container.jpg|An early look of the exposed [[copper chest]] container screen.<ref name="ore-ui-copper-chests-containers-sneak-peek" />
+Ore UI development weathered copper chest container.jpg|An early look of the weathered [[copper chest]] container screen.<ref name="ore-ui-copper-chests-containers-sneak-peek" />
+Ore UI development oxidized copper chest container.jpg|An early look of the oxidized [[copper chest]] container screen.<ref name="ore-ui-copper-chests-containers-sneak-peek" />
+Ore UI development default shulker box container.jpg|An early look of the [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek">{{tweet|nipitare_|2039020195700683048|New OreUI dyed shulker screens in #minecraft. First is undyed, then red, green, blue. Replies will also have white and black}}</ref>
+Ore UI development red shulker box container.jpg|An early look of the red [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek" />
+Ore UI development green shulker box container.jpg|An early look of the green [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek" />
+Ore UI development blue shulker box container.jpg|An early look of the blue [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek" />
+Ore UI development white shulker box container.jpg|An early look of the white [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek" />
+Ore UI development black shulker box container.jpg|An early look of the black [[shulker box]] container screen.<ref name="ore-ui-shulker-box-dye-containers-sneak-peek" />
+Ore UI development shulker box container - pocket UI profile.jpg|An early look of the pocket UI profile of [[shulker box]] container screen.<ref name="ore-ui-shulker-box-container-and-anvil-for-pocket-and-classic-ui-profile-sneak-peek">{{tweet|nipitare_|1968732265992564887|Apparently OreUI screens are side by side if you use pocket ui profile. This applies to all OreUI container screens, shulker box and anvil are just examples.}}</ref>
+Ore UI development shulker box container - classic UI profile.jpg|An early look of the classic UI profile of [[shulker box]] container screen.<ref name="ore-ui-shulker-box-container-and-anvil-for-pocket-and-classic-ui-profile-sneak-peek" />
+Ore UI development anvil - pocket UI profile.jpg|An early look of the pocket UI profile of [[anvil]] screen.<ref name="ore-ui-shulker-box-container-and-anvil-for-pocket-and-classic-ui-profile-sneak-peek" />
+Ore UI development anvil - classic UI profile.jpg|An early look of the classic UI profile of [[anvil]] screen.<ref name="ore-ui-shulker-box-container-and-anvil-for-pocket-and-classic-ui-profile-sneak-peek" />
+</gallery>
+
+==== Player permission ====
+<gallery>
+Ore UI development player permissions.jpg|An early look of the [[Permission level#Player Permissions|player permissions]] screen.<ref name="ore-ui-player-permissions-sneak-peek">{{tweet|xKingDarkYT|1877126947471278563|An OreUI version of the player permissions screen was added in today's Preview (1.21.60.25)}}</ref>
+Ore UI development player permissions (Kick Other Player).jpg|An early look of the Player Permissions screen.<ref name="ore-ui-player-permissions-sneak-peek" /> (kick players confirmation dialog)
+</gallery>
+
+==== Party ====
+<gallery>
+Ore UI development create party.jpg|An early look of the create [[party]] screen.<ref>{{tweet|xKingDarkYT|1895532902609535440|Seems like Mojang is working on a party system?}}</ref>
+</gallery>
+
+==== Disconnected ====
+<gallery>
+Ore UI development disconnected.jpg|An early look of the disconnection screen.<ref>{{tweet|xKingDarkYT|1895532779775148441|New disconnection screen.}}</ref>
+</gallery>
+
+==== Quick world creation ====
+<gallery>
+Ore UI development quick world creation - select character screen.jpg|A sneak peek of the quick world creation in select character screen.<ref>{{tweet|inotflying|1920264762513903999|New Character Selector screen in #Minecraft Bedrock|May 8, 2025}}</ref>
+</gallery>
+
+==== Realms ====
+<gallery>
+Ore UI development realms stories in "timeline" tab - opt in to timeline message.jpg|A sneak peek of the [[Realms Stories]] in "Timeline" tab opt in to timeline message.<ref>{{tweet|CornerHardMC|1923155920114036930|Realms upcoming feature sneak peek 👀<br><br>Bedrock Realm owners will have the option to require that players opt-in to the Realm's Timeline if they want to play on the Realm.|May 16, 2025}}</ref>
+Ore UI development play screen in "realms" tab - "Add Members" button.jpg|A sneak peek of the [[Select World#Realms|Play]] screen in "Realms" tab - "Add Members" button.<ref>{{tweet|CornerHardMC|1926167751371989414|Small Realms improvement coming in 1.21.90: there's a new "Add Members" button that takes you directly to the screen that allows you to add members to your Realm}}</ref>
+Ore UI development realms owner screen.jpg|A sneak peek of the Realms owner screen.<ref>{{tweet|CornerHardMC|2029950087338881494|Realms sneak peek 👀<br><br>Bedrock Realms will have a new "Administrator" role that the Realm Owner can grant to other trusted players, allowing them to add members, change settings, manage worlds, and other non-billing details of the Realm.}}</ref>
+Ore UI development realms hub screen.jpg|A sneak peek of the realms hub screen.<ref>{{tweet|CornerHardMC|2032540836240728444|Realms sneak peek 👀<br><br>Soon in Preview you'll get to try our new user interface for Bedrock Realms - Realm Hub! It's everything from Realms settings, world slots, and Realms Stories, all in one place, easy to navigate. <br><br>Both Realm Owner and Administrators can make changes 🔧}}</ref>
+Ore UI development realms hub screen "community" tab.jpg|A sneak peek of the realms hub screen "community" tab.<ref>{{tweet|CornerHardMC|2032547506421469483|When you're playing on the Realm, if you do something significant, like defeat the wither, Realms will make a new Realm Event in that Realm's story feed. It's like news stories about exciting stuff players are doing 😀}}</ref>
+</gallery>
+
+=== dotJS 2018 ===
+<gallery>
+DotJS 2018 Bedrock's UI redesign early prototype.jpg|Early prototype of {{BE}}'s title screen UI redesign
+DotJS 2018 Bedrock's UI redesign tech preview.png|Tech preview of {{BE}}'s title screen UI redesign.
+dotJS 2018 Bedrock's UI redesign tech preview, improved 2020.jpg|An improved version of the tech preview with the panorama updated to match [[Update Aquatic]] from 2020.<ref>{{tweet|xKingDarkYT|1650311684630642689|A look at early abandoned designs of the Start Screen (Main Menu)<br>Left image is from 2019<br>Right image is from 2020}}</ref>
+DotJS_2018_Bedrock's_UI_redesign_achievement.jpg|{{BE}}'s achievement UI redesign.<ref>{{tweet|xKingDarkTV|1650372641637687296}}</ref>
+</gallery>
+
+=== Ore UI-styled screenshots ===
+These UIs take design inspiration from ''[[Bedrock Edition]]''<nowiki/>'s UI redesign, and are not really implemented through Ore UI framework, instead they may use [[resource pack]] or different implementation based on JSON UI.
+<gallery>
+Movie1.png|'''Quests''' '''screen''' in the [[A Minecraft Movie Live Event|Minecraft Movie Live Event]].
+Movie2.png|'''Map''' '''screen''' in the [[A Minecraft Movie Live Event|Minecraft Movie Live Event]].
+Movie3.png|'''Return to Lobby''' confirmation dialog in the [[A Minecraft Movie Live Event|Minecraft Movie Live Event]].
+15 npc.png|'''NPC conversation''' '''screen''' in the [[15 Year Journey]].
+15 Collected.png|'''Sticker collected''' screen in the [[15 Year Journey]].
+15 confirmation.png|'''Return to Hub''' confirmation dialog in the [[15 Year Journey]].
+</gallery>
+
+== Videos ==
+; Ore UI Documentation
+This screen can only be access in Minecraft Bedrock Edition 1.20.0 (Dev).{{YT|1=v=NplrB97rKfM&t}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+=== GitHub ===
+* [https://github.com/Mojang/ore-ui Ore UI]
+----
+=== Feedback ===
+* [[Achievement]] in [[Bedrock Edition beta 1.16.100.50|beta 1.16.100.50]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/360071961451 Achievement Screen Beta Thread] on July 30, 2020
+* [[Create New World#Bedrock Edition|Create new world]] in [[Bedrock Edition beta 1.18.20.21|beta 1.18.20.21]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/4423171722381 Updated “Create New World” experience in Bedrock Beta] on January 27, 2022
+* [[Death#Player effects|Death]] in [[Bedrock Edition Preview 1.19.80.20|Preview 1.19.80.20]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/13779339662861 Updated "You Died" Screen Experience] on March 8, 2023
+* [[Realms Stories|Realms stories]] in [[Bedrock Edition Preview 1.20.60.23|Preview 1.20.60.23]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/22282667227533 Let's talk about Realms Stories] on December 13, 2023
+* [[Select World#Servers|Servers]] in [[Bedrock Edition Preview 1.20.80.21|Preview 1.20.80.21]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/23680677871757 Updated 'Servers Tab' Experience in Bedrock Preview] on February 23, 2024
+* [[Social interactions#Bedrock Edition|Search for players]] in [[Bedrock Edition Preview 1.20.80.23|Preview 1.20.80.23]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/25102463668493 Enhancements to finding friends in Bedrock Preview] on March 18, 2024
+* [[Social interactions#Bedrock Edition|Profile]] in [[Bedrock Edition Preview 1.21.0.20|Preview 1.21.0.20]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/25583213328397 Updated Player Profile in Bedrock Preview!] on April 3, 2024
+* [[Select World#Realms|Realms]] in [[Bedrock Edition Preview 1.21.20.21|Preview 1.21.20.21]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/26127964229389 Updated Realms Tab Experience in Bedrock Preview] on April 23, 2024
+* [[Screenshot#Bedrock Edition|Screenshots]] in [[Bedrock Edition Preview 1.21.30.22|Preview 1.21.30.22]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/29066915138189 Screenshots available in Bedrock Preview!] on August 7, 2024
+* [[Select World#Create new world|Create from template]] in [[Bedrock Edition Preview 1.21.30.24|Preview 1.21.30.24]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/25812443852557 Updated Template Screen Experience in Bedrock Preview!] on April 11, 2024
+* [[Select World#Bedrock_Edition|Play]] in [[Bedrock Edition 1.21.60|1.21.60]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/32645625859085 Let’s talk about the new Bedrock Edition Play screen!] on December 12, 2024
+* [[Permission level#Player Permissions|Player permissions]] in [[Bedrock Edition Preview 1.21.70.22|Preview 1.21.70.22]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/34055435415821 Improvements to the Player Permissions screen in Bedrock] on February 5, 2025
+* [[Social]] drawer on Party system in [[Bedrock Edition Preview 26.0.25|Preview 26.0.25]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/41820240085261 New Party System (Bedrock Preview)] on December 10, 2025
+* [[Settings]] in [[Bedrock Edition Preview 26.0.28|Preview 26.0.28]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/36960637452557 Let’s talk about our updated settings! (Bedrock)] on January 12, 2026
+* [[Realms Hub|Realms hub]] in [[Bedrock Edition Preview 26.20.22|Preview 26.20.22]]
+** [https://feedback.minecraft.net/hc/en-us/community/posts/43272707219853 Bedrock Realms Hub] on March 25, 2026
+
+== Navigation ==
+{{Navbox Bedrock Edition}}
+{{Navbox Education|exclusive}}
+
+[[Category:UI]]
+
+[[pt:Ore UI]]
+[[zh:Ore UI]]

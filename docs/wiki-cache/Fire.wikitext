@@ -1,0 +1,505 @@
+{{For}}
+{{Infobox block
+| image = Fire.gif
+| invimage = none
+| renewable = Yes
+| transparent = Yes
+| light = Yes (15)
+| tool = Any
+| flammable = No
+| lavasusceptible = No
+| stackable = Yes (64)
+}}
+'''Fire''' is a [[Opacity#Types of transparent blocks|non-solid block]] that can spread to nearby flammable blocks and destroy them.
+
+== Obtaining ==
+Fire cannot be obtained as an item under any circumstances {{in|java}}, though {{in|bedrock}} fire may be obtained as an item via inventory editing.
+
+=== Natural generation ===
+Fire naturally generates in [[fire patch]]es across the terrain of [[the Nether]]. 
+
+Fire also generates on top of netherrack in some treasure room [[bastion remnant]]s.
+
+In [[the End]], fire generates on [[bedrock]] blocks on top of [[End spike]]s, at the same location as the [[End crystal]]s.
+
+{{block distribution}}
+
+=== Post-generation ===
+[[Lava]] generated next to flammable blocks can naturally cause fires.
+
+Fire spreads quickly across flammable blocks, and can spontaneously ignite when flammable blocks are near lava, even though many blocks that should be flammable cannot catch fire from nearby lava.
+
+[[Lightning]] strikes can also set fires, regardless of whether they are created naturally, redirected to [[lightning rod]]s, summoned by a [[trident]] enchanted with [[Channeling]], or created using the {{cmd|summon}} command.
+
+Placing an End crystal on bedrock or [[obsidian]] in the End causes fire to appear at the End crystal's location.
+
+The [[explosion]] from sleeping in a [[bed]] in the Nether or the End creates fire, as does the explosion of a [[ghast fireball]] or the impact of a [[blaze fireball]]. Using a charged [[respawn anchor]] in the [[Overworld]] or the End also creates fire from the explosion.
+
+Certain invalid recipes of a [[lab table]] can cause it to be set on fire.{{only|Bedrock|Education}}
+
+== Breaking ==
+Fire is immediately destroyed when broken. When the [[shears]] are used to break fire, it doesn't lose [[durability]].
+{{breaking row|horizontal=1|Fire|any|drop=0|foot=1}}
+Fire drops nothing when it's destroyed.
+
+== Usage ==
+=== Placement ===
+[[File:SWPE fire1.png|thumb|Before a fire.]]
+[[File:SWPE fire3.png|thumb|During the fire.]]
+[[File:SWPE fire5.png|thumb|After the fire.]]
+Fire can be placed using [[flint and steel]] or a [[fire charge]]. Fire created on [[soul sand]] or [[soul soil]] becomes [[soul fire]].
+
+When placed, a fire burns for a short and randomly determined amount of time. If nothing flammable is adjacent to it, the flames die out. [[Water]] that touches fire extinguishes it.
+
+It cannot be placed suspended in midair, even with commands.<ref>{{bug|MC-182709}}</ref>
+
+=== Burning ===
+{{redirect|Burning|the enchantment in ''Minecraft Dungeons''|MCD:Burning}}
+[[Player]]s and many [[mob]]s burn when exposed to fire or lava, represented by them being on fire. Burning obstructs the player's view slightly with the flames. While inside a fire block, the fire inflicts [[damage]] at a rate of {{hp|1}} per tick (although [[damage immunity]] reduces this to once every half-second) unless the player or mob has [[Fire Resistance]] or a total [[Fire Protection]] of 7 or higher.{{only|bedrock|short=1}} When the player is on fire outside the fire block, they take damage at {{hp|1}} per second. This is the same rate that the player gains health in Peaceful [[difficulty]], so burning alone cannot kill the player in this difficulty. [[Soul fire]] deals [[damage]] at a rate of {{hp|2}} per half-second, making it more dangerous than normal fire. After leaving a fire source, the player or mob continues burning for some time depending on how long it was exposed to the fire (stored in a <code>Fire</code> tag shared by all [[entities]], representing the remaining number of [[Tick|game ticks]] the entity will be on fire, decrementing each tick). Players and mobs that are burning can be extinguished by [[powder snow]], [[rain]], [[water]] or a [[cauldron]]. Mobs that are burning will also be illuminated by the flames in dark areas.
+
+For mobs, as soon as the mob is exposed to fire, its <code>Fire</code> tag will jump from 0 ticks (not on fire) to 160 ticks. This value does not increase the longer the entity spends inside the fire, meaning all mobs will always burn for exactly 160 ticks after leaving the fire.
+
+Players start with a <code>Fire</code> value of -20 ticks, meaning they can spend up to 20 ticks (1 second) inside a fire, leave, and immediately stop taking damage. If the value becomes greater than 0, however, it will be immediately set to 160 ticks, and incremented indefinitely (once every few ticks) the longer the player spends inside the fire. For players in [[Creative|Creative mode]], the value will instead be set to 1 tick, and does not increase over time.
+
+Most [[Item (entity)|dropped items]] that are in fire briefly catch fire and disappear. This includes the item forms of blocks that would not be flammable if placed, including [[obsidian]]. The only exceptions are these netherite-related items: netherite [[tools]] and [[weapon]]s, netherite [[armor]], [[blocks of netherite]], [[netherite scrap]], [[netherite ingot]]s, and [[ancient debris]].
+
+If a mob able to drop [[Drops#Mob drops|meat]] dies while on fire, it drops the cooked version of it, with the exception of [[fish]] that is dropped by [[polar bear]]s{{only|JE|short=1}}. This also applies to the [[zombie]]'s uncommon potato drop; if a zombie dies while on fire and should drop a [[potato]], it becomes a [[baked potato]].{{only|je|short=1}}
+
+Most [[Nether]] mobs are invulnerable to fire and cannot burn. Exceptions include [[skeleton]]s, [[endermen]], [[piglin]]s, [[piglin brute]]s, and [[hoglin]]s. 
+
+[[Zoglin]]s, [[vex]]es, [[agent]]s, [[NPC]]s, [[End crystal]]s, [[warden]]s, and [[wither]]s are also invulnerable to fire.
+
+Burning is not considered a [[status effect]] and therefore cannot be cured by [[milk]].
+
+=== Spread ===
+[[File:Fire-safe-building.png|right|thumb|Safe building area around a fire. All of the planks here are flammable, but they are far enough away to be safe from the fire. Any flammable block placed inside this structure can catch fire.]]
+Fire spreads over flammable surfaces and can climb up walls, across floors and ceilings, and over small gaps, if a [[player]] is within 8 [[chunk]]s of the fire. More precisely, a fire block can turn any [[air]] block that is adjacent to a flammable block into a fire block. This can happen at a distance of up to one block downward, one block sideways (including diagonals), and four blocks upward of the original fire block (not the block the fire is on/next to). Therefore, if the player is using fire to build a fireplace, caution is needed. Blocks in the way do not prevent fire from igniting blocks above it—so even if the player protects a wooden roof with cobblestone between it and the fire, the fire ignores that cobblestone.
+
+Fire spreads from a still [[lava]] block similarly: any air block one above and up to one block sideways (including diagonals) or two above and two blocks sideways (including diagonals) that is adjacent to a flammable block may be turned into a fire block.
+
+Fire that naturally spreads into a valid [[Nether portal]] frame activates the portal.
+
+==== {{anchor|Burning blocks}} Flammable blocks ====
+Fire can spread onto and burn away any flammable block (or in the case of [[TNT]], ignite it). On the other hand, a fire that is not adjacent to any flammable block and not on top of a forever-burning block does not spread, even to another flammable block within the normal range.
+
+In the following table, the higher the ''ignite odds'', the more quickly a block catches fire if the fire is available to spread there. The higher the ''burn odds'', the more quickly a block on fire burns away. These are relative values; actual ignite odds and burn time depends not only on these values, but on [[difficulty]], [[rain]], the age of the fire, the direction of the block relative to the fire, and multiple random values including how long the fire waits between [[block tick]]s and further checks based on the previous factors. Fire spread is reduced if it tries to spread to a block more two blocks higher than itself. Fire spread is further reduced by 50% if the flammable blocks are in a humid biome ([[jungle]], [[bamboo jungle]], [[swamp]], [[mangrove swamp]], [[snowy slopes]], [[frozen peaks]], [[jagged peaks]], and [[mushroom fields]]; {{in|java}}, these are defined in the <code>increased_fire_burnout</code> [[biome tag]]).
+
+{| class="wikitable sortable" data-description="Flammable blocks"
+|-
+! Block !! colspan="2" | Ignite odds !! Burn odds !! style="white-space:nowrap" | Can catch fire<br/>from [[lava]]
+|-
+| {{BlockLink|id=oak log|Logs}}<br/>{{BlockLink|id=stripped oak log|Stripped Logs}}<br/>{{BlockLink|id=oak wood|Wood}}<br/>{{BlockLink|id=stripped oak wood|Stripped Wood}}<br />{{BlockLink|Block of Bamboo}}<br/>{{BlockLink|Block of Stripped Bamboo}}<br/>{{BlockLink|Block of Coal}}|| colspan="2" | 5 || 5 || {{tc|yes}}
+|-
+| {{BlockLink|id=oak planks|Overworld Planks}}<br />{{BlockLink|id=oak slab|Wooden Slab|Overworld Wooden Slabs}}<br />{{BlockLink|id=oak fence gate|Fence Gate|Overworld Fence Gates}}<br />{{BlockLink|id=oak fence|Wooden Fence|Overworld Fences}}<br />{{BlockLink|id=oak stairs|Wooden Stairs|Overworld Wooden Stairs}}<br />{{BlockLink|Composter}}<br />{{BlockLink|Beehive}}<br />{{BlockLink|Mangrove Roots}}<br />{{BlockLink|Bamboo Mosaic}}<br />{{BlockLink|Bamboo Mosaic Slab}}<br />{{BlockLink|Bamboo Mosaic Stairs}}|| colspan="2" | 5 || 20 || colspan="2" {{tc|yes}}
+|-
+| {{BlockLink|Pale Moss Block}}<br/>{{BlockLink|Pale Moss Carpet}}<br/>{{BlockLink|Pale Hanging Moss}} || colspan="2" | 5 || 100 || colspan="2" {{tc|yes}}
+|-
+| {{BlockLink|Target}}{{only|java|short=1}}|| colspan="2" | 15 || 20 || {{tc|yes}}
+|-
+| {{BlockLink|Cave Vines}}<br>{{BlockLink|Cave Vines Plant}}|| colspan="2" | 15 || 60 || {{tc|no}}
+|-
+| {{BlockLink|TNT}} ([[TNT#Behavior|ignites]] instead of vanishing)<br />{{BlockLink|Vines}}<br />{{BlockLink|Glow Lichen}}
+| colspan="2" | 15 || 100 || {{tc|yes}}
+|-
+| {{BlockLink|Bookshelf}}<br />{{BlockLink|Lectern}}<br />{{BlockLink|Bee Nest}}|| colspan="2" | 30 || 20 || {{tc|yes}}
+|-
+| {{BlockLink|Leaves|id=oak leaves}}<br />{{BlockLink|Wool}}<br />{{BlockLink|Hanging Roots}}|| colspan="2" | 30 || 60 || {{tc|yes}}
+|-
+| {{BlockLink|Azalea}}<br/>{{BlockLink|Flowering Azalea}}<br/>{{BlockLink|Dried Kelp Block}}|| colspan="2" | 30 || 60 || {{tc|no}}
+|-
+| rowspan="2" |{{BlockLink|id=carpets|Wool Carpets|link=Carpet}}|| '''[[JE]]'''|| 60 || 20 || rowspan=2 {{tc|yes}}
+|-
+|'''[[BE]]''' || 30 || 60
+|-
+| {{BlockLink|Hay Bale}} || colspan=2 | 60 || 20 || {{tc|No}}
+|-
+| {{BlockLink|Bamboo}}<br>{{BlockLink|Bamboo Shoot}}{{only|bedrock|short=1}}|| colspan="2" | 60 || 60 || {{tc|yes}}
+|-
+| {{BlockLink|Scaffolding}}|| colspan="2" | 60 || 60 || {{tc|no}}
+|-
+| rowspan="2" | {{BlockLink|Flowers|link=Flower}}, 1-block<br />{{BlockLink|Sweet Berry Bush}}<th style="text-align: left; width: 1px">'''[[JE]]'''</th> <td>60</td> || rowspan="2" | 100 || rowspan=2 {{tc|no}}
+|-
+<th style="text-align: left; width: 1px">'''[[BE]]'''</th> <td>30</td>
+|-
+| {{BlockLink|Peony|text=Flowers|link=Flower}}, 2-block<br/>{{BlockLink|Short Grass}}<br />{{BlockLink|Tall Grass}}<br />{{BlockLink|Fern}}<br />{{BlockLink|Large Fern}}<br />{{BlockLink|Short Dry Grass}}<br/>{{BlockLink|Tall Dry Grass}}<br/>{{BlockLink|Dead Bush}}<br />{{BlockLink|Pitcher Plant}}<br />{{BlockLink|Cactus Flower}}<br />{{BlockLink|Firefly Bush}}<br />{{BlockLink|Bush}}|| colspan="2" | 60 || 100 || {{tc|yes}}
+|-
+| {{BlockLink|Big Dripleaf}}<br>{{BlockLink|Big Dripleaf Stem}}<br>{{BlockLink|Small Dripleaf}}<br>{{BlockLink|Spore Blossom}}<br />{{BlockLink|Pink Petals}}<br />{{BlockLink|Wildflowers}}<br />{{BlockLink|Leaf Litter}}|| colspan="2" | 60 || 100 || {{tc|no}}
+|}
+
+==== Non-flammable blocks ====
+Non-flammable blocks can be lit but do not burn away, and such fire does not spread. Non-flammable blocks other than [[netherrack]], [[magma block]]s, [[soul sand]], or [[soul soil]] extinguish themselves quickly. In the End, [[bedrock]] also does not extinguish itself.
+
+If a block is flammable, it catches fire from lava. However, certain blocks do not burn away:
+
+{| class="wikitable" data-description="Non-flammable blocks"
+|-
+! Block !! colspan=2 style="white-space:nowrap;" | Can catch fire<br/>from [[lava]] !! colspan=2 | Can burn away
+|-
+| rowspan=2 | {{BlockLink|Bamboo Shoot}} </td><th style="text-align: left; width: 1px">'''[[JE]]'''</th> || {{tc|yes}} || {{tc|no}} </tr><tr><th style="text-align: left; width: 1px">'''[[BE]]'''</th> || {{tc|no}} || {{tc|yes}}
+|-
+| rowspan=2 | {{BlockLink|Target}} </td><th style="text-align: left; width: 1px">'''[[JE]]'''</th> || {{tc|yes}} || {{tc|yes}} </tr><tr><th style="text-align: left; width: 1px">'''[[BE]]'''</th> || {{tc|no}} || {{tc|no}}
+|-
+| {{BlockLink|Banners}}<br/>{{BlockLink|Barrel}}<br/>{{BlockLink|Campfire}}<br/>{{BlockLink|Cartography Table}}<br/>{{BlockLink|Chest}}<br/>{{BlockLink|Chiseled Bookshelf}}<br/>{{BlockLink|Crafting Table}}<br/>{{BlockLink|Daylight Detector}}<br/>{{BlockLink|Fletching Table}}<br/>{{BlockLink|Jukebox}}<br/>{{BlockLink|Loom}}<br/>{{BlockLink|Mushroom Blocks}}<br/>{{BlockLink|Nether Sprouts}}<br/>{{BlockLink|Note Block}}<br/>{{BlockLink|Smithing Table}}<br/>{{BlockLink|Soul Campfire}}<br/>{{BlockLink|Trapped Chest}}<br/>{{BlockLink|id=oak door|link=Wooden Door|Overworld Wooden Doors}}<br/>{{BlockLink|id=oak pressure plate|Overworld Wooden Pressure Plates|link=Wooden Pressure Plate}}<br/>{{BlockLink|id=oak sign|Overworld Signs|link=Sign}}<br/>{{BlockLink|id=oak trapdoor|Overworld Wooden Trapdoors|link=Wooden Trapdoor}}|| colspan=2 {{tc|yes}} || colspan=2 {{tc|no}}
+|-
+| rowspan=2 | {{BlockLink|id=oak-button|Wooden Buttons|link=Wooden Button}} of all types<br/>{{BlockLink|id=stem|link=log|Stems}}<br/>{{BlockLink|Stripped Stems}}<br/>{{BlockLink|Hyphae}}<br/>{{BlockLink|Stripped Hyphae}}<br/>{{BlockSprite|Crimson Planks}} {{BlockLink|Warped Planks|Nether Planks}}<br/>{{BlockSprite|Crimson Slab}} {{BlockLink|Warped Slab|Nether Wooden Slabs}}<br/>{{BlockSprite|Crimson Fence Gate}} {{BlockLink|Warped Fence Gate|Nether Fence Gates}}<br/>{{BlockSprite|Crimson Fence}} {{BlockLink|Warped Fence|Nether Fences}}<br/>{{BlockSprite|Crimson Stairs}} {{BlockLink|Warped Stairs|Nether Wooden Stairs}}<br/>{{BlockSprite|Crimson Door}} {{BlockLink|Warped Door|Nether Doors|link=Wooden Door}}<br/>{{BlockSprite|Crimson Pressure Plate}} {{BlockLink|Warped Pressure Plate|Nether Pressure Plates|link=Wooden Pressure Plate}}<br/>{{BlockSprite|Crimson Sign}} {{BlockLink|Warped Sign|Nether Signs|link=Sign}}<br/>{{BlockSprite|Crimson Trapdoor}} {{BlockLink|Warped Trapdoor|Nether Trapdoors|link=Wooden Trapdoor}} </td><th style="text-align: left; width: 1px">'''[[JE]]'''</th> || {{tc|no}} || rowspan=2 colspan=2 {{tc|no}} </tr><tr><th style="text-align: left; width: 1px">'''[[BE]]'''</th> || {{tc|yes}}<ref>{{bug|MCPE-73085||Nether wood catches fire}}</ref>
+|-
+| rowspan=2 | {{BlockLink|id=red-bed|Bed}}<br/>{{BlockLink|id=oak hanging sign|Overworld Hanging Signs|link=Hanging Sign}}<br/>{{BlockLink|Resin Clump}} </td><th style="text-align: left; width: 1px">'''[[JE]]'''</th> || {{tc|yes}} || rowspan=2 colspan=2 {{tc|no}} </tr><tr><th style="text-align: left; width: 1px">'''[[BE]]'''</th> || {{tc|no}}
+|-
+| Wood- and other flammable material-like blocks such as:<br/>{{BlockLink|Cobweb}}<br/>{{BlockLink|Grindstone}}<br/>{{BlockLink|Ladder}}<br/>{{BlockLink|Lever}}<br/>{{BlockLink|Moss Block}}<br/>{{BlockLink|Moss Carpet}}<br/>{{BlockSprite|Crimson Hanging Sign}} {{BlockLink|Warped Hanging Sign|Nether Hanging Signs|link=Hanging Sign}}<br/>{{BlockLink|Piston}}<br/>{{BlockLink|Rail|Rails}} of all types<br/>{{BlockLink|Redstone Torch}}<br/>{{BlockLink|Saplings}}<br/>{{BlockLink|Smoker}}<br/>{{BlockLink|Torch}}<br/>{{BlockLink|Tripwire}}<br/>{{BlockLink|Tripwire Hook}}<br/>and all other non-flammable blocks...|| colspan=2 {{tc|no}} || colspan=2 {{tc|no}}
+|}
+
+=== Extinguishing ===
+Fire burns out after a while when on a non-flammable block other than [[netherrack]] or [[magma block]]s; however, punching or hitting the side of a burning block extinguishes the fire on that side, making the ''Fire extinguished'' sound (see below). Hitting fire while holding a tool does not reduce the tool's durability. Placing blocks on the fire also extinguishes it. Water and lava extinguish fires that they flow into, and thrown [[Splash Potion#Splash water bottles|splash]] and [[Lingering Potion|lingering]] water bottles extinguish fires in the block hit and the four blocks horizontally surrounding it.
+
+Mobs on fire are extinguished when in water or in a [[cauldron]] containing it. In the latter case, one layer of water disappears.
+
+Fire extinguishes more quickly if nothing flammable is present, and soon after it consumes a flammable block immediately beneath it.
+* Fire has an ''age'' property that determines how it extinguishes, ranging from age 0 when the fire is set, and growing to age 15. For fire older than age 3, if nothing flammable is adjacent to the fire, or if the block below doesn't have a solid top surface, the fire is extinguished by the next [[block tick]]. At age 15, as long as there isn't a flammable block below the fire, a block tick has a {{frac|1|4}} chance to extinguish the fire.
+
+If a fire is exposed to [[rain]], it extinguishes quickly.
+* Rain affects fire if it falls directly onto the fire, or into the four adjacent blocks. Specifically, no matter the age, any block tick has a 20–65% chance of rain extinguishing the fire, depending on the fire's age: 20 percent plus 3 percentage points per age of the fire.
+[[File:Infinite Fire.png|thumb|251x251px|Fire burning on netherrack creates a perpetually burning fire.]]
+
+=== Eternal fire ===
+When lit, [[netherrack]], [[magma block]]s, [[soul sand]], and [[soul soil]] maintain fire forever, unless extinguished by any method except [[rain]]. Bedrock in [[the End]] also burns eternally. Eternal fire cannot exist on the sides of these blocks.
+
+The blocks that can support eternal fire are defined per-dimension, in the [[Tag#blocks_infiniburn_overworld|#infiniburn_overworld]], [[Tag#blocks_infiniburn_nether|#infiniburn_nether]], and [[Tag#blocks_infiniburn_end|#infiniburn_end]] block [[tag]]s.
+
+If <code>/gamerule fire_spread_radius_around_player</code> is set to 0, fire lasts forever until it is put out by the player, and does not spread or affect flammable blocks.
+
+=== Bees ===
+Setting fire to a [[beehive]] or [[bee nest]] causes the contained bees to be ejected from the block.
+
+== Sounds ==
+=== Generic ===
+{{edition|java}}: <ref group=sound>{{Bug|MC-171366}}</ref>
+{{Sound table/Block/Wool/JE}}
+
+{{edition|bedrock}}:
+{{Sound table/Block/Wood/BE}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Fire.ogg
+|subtitle=Fire crackles
+|source=block
+|description=Randomly
+|id=block.fire.ambient
+|translationkey=subtitles.block.fire.ambient
+|volume=1.0-2.0
+|pitch=0.3-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Fizz.ogg
+|subtitle=Fire extinguished
+|source=block
+|description=When a fire is put out by hitting
+|id=block.fire.extinguish
+|translationkey=subtitles.block.fire.extinguish
+|volume=0.5
+|pitch=1.8-3.4
+|distance=16}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|subtitle=Fireball whooshes
+|source=block
+|description=When fire is created using a fire charge
+|id=item.firecharge.use|idnote=<ref group=sound name=nounderscore>{{bug|MC-177457}}</ref>
+|translationkey=subtitles.item.firecharge.use|translationkeynote=<ref group=sound name=nounderscore/>
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Flint and steel click.ogg
+|subtitle=Flint and Steel click
+|source=block
+|description=When fire is created using a flint and steel
+|id=item.flintandsteel.use|idnote=<ref group=sound name=nounderscore/>
+|translationkey=subtitles.item.flintandsteel.use|translationkeynote=<ref group=sound name=nounderscore/>
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Fire.ogg
+|source=block
+|description=Randomly
+|id=fire.fire
+|volume=1.0-2.0
+|pitch=0.3-1.0}}
+| {{SoundLine
+|sound=Fizz.ogg
+|source=block
+|description=When a fire is put out by hitting
+|id=random.fizz
+|volume=0.5
+|pitch=1.8-2.4}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|subtitle=Fireball whooshes
+|source=hostile
+|description=When fire is created using a fire charge
+|id=mob.ghast.fireball
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Flint and steel click.ogg
+|source=block
+|description=When fire is created using a flint and steel
+|id=fire.ignite
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|je}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Fire
+|spritetype=block
+|nameid=fire
+|blocktags=fire
+|form=block
+|foot=1}}
+
+{{edition|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Fire
+|spritetype=block
+|nameid=fire
+|id=51
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{el|je}}:<br>
+{{bst|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Newly placed fire has an age of 0, and has a {{frac|1|3}} chance of incrementing with each [[block tick]].<br>This factor affects how the fire extinguishes.}}
+{{bst|east|false|false,true|When true, fire texture shows on that face of the block to the east; false if there's a block below this fire.}}
+{{bst|north|false|false,true|When true, fire texture shows on that face of the block to the north; false if there's a block below this fire.}}
+{{bst|south|false|false,true|When true, fire texture shows on that face of the block to the south; false if there's a block below this fire.}}
+{{bst|up|false|false,true|When true, fire texture shows on that face of the block above; false if there's a block below this fire.}}
+{{bst|west|false|false,true|When true, fire texture shows on that face of the block to the west; false if there's a block below this fire.|foot=1}}
+
+{{el|be}}:<br>
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Newly placed fire has an age of 0.<br>This factor affects how the fire extinguishes.|foot=1}}<section end="block states"/>
+
+== Videos ==
+{{yt|kJLoViAIJWg}}
+
+== History ==
+{{info needed section|
+* Closely inspect fire before and after 13w02a - pixels may have become stretched
+* place an [[End crystal]] on [[bedrock]] or [[obsidian]] in [[the End]] creates the fire in the End crystal location}}
+{{more sounds|section=1|type=old|Sounds before 14w31a}}
+{{See technical block}}
+{{See texture generation|Fire|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100109-1939|[[File:Fire JE1.png|32px]] Added fire.
+|The [[model]] of fire currently does not render the back faces; faces have to be seen from the front to be rendered.
+|Fire is placed directly like a [[block]]. It is not known if its texture was any different.}}
+|{{HistoryLine|||dev=?|Fire has the "wood" material assigned to it for sound playback, which could be encountered by placing it with its item form, or by walking on top of it in certain cases or setups.{{cn}}}}
+|{{HistoryLine|||dev=20100110|[[Lava]] now sets fire to flammable materials.
+|All [[item]]s and [[mob]]s can now catch fire.
+|Fire is now placed by [[flint and steel]].}}
+|{{HistoryLine|||dev=20100125|Fire now has [[particle]] effects.}}
+|{{HistoryLine|||dev=20100129-1447|[[Ore]]s can now be [[smelt]]ed by using fire on [[dropped item]]s.}}
+|{{HistoryLine||20100212-1210|{{Crafting table
+|Output=Chainmail Helmet;Chainmail Chestplate;Chainmail Leggings;Chainmail Boots
+|A1=Fire;Fire;Fire;       |B1=Fire;;Fire;  |C1=Fire;Fire;Fire;
+|A2=Fire;Fire;Fire;Fire   |B2=;Fire;;      |C2=Fire;Fire;Fire;Fire
+|A3=;Fire;Fire;Fire       |B3=;Fire;;      |C3=;Fire;Fire;Fire
+}} Fire can now be used to craft chain armor.}}
+|{{HistoryLine||20100219|[[Ore]]s can no longer be smelted by using fire on [[dropped item]]s with the introduction of [[furnace]]s.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100617-1531|[[File:Fire (placeholder texture) JE1.png|32px]] Added a backup fire texture for if the animation could not be loaded.}}
+|{{HistoryLine||20100624|[[File:Fire (placeholder texture) JE2.png|32px]] Changed the fire backup texture to read "FIRE TEX! HNST", which means "Fire texture! Honest".}}
+|{{HistoryLine|unknown}}
+|{{HistoryLine||?|Previously, it was possible for fire to exist without any real attachments to any blocks, resulting in it being completely invisible but still being a danger. This has been fixed such that it can no longer be placed in these positions nor come to be in one via changes to surrounding blocks, as it immediately disappears upon finding itself in such a situation.{{cn}}}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=preview|Fire now generates as [[fire patch]]es in [[the Nether]].}}
+|{{HistoryLine||v1.2.6|[[Lava]] can now cause surrounding flammable [[block]]s to burn. [[Forest]] fires may start spontaneously if an above-ground lava pool is generated among [[tree]]s during a [[biome]]'s creation.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Fire now uses two similar textures, rather than just one.
+|[[File:Fire (placeholder texture) JE2.png|32px]] A second placeholder texture for fire has been added to <samp>[[terrain.png]]</samp> corresponding to the second fire texture.}}
+|{{HistoryLine||1.2_02|The ability for [[block]]s to burn forever has been removed. Previously, a non-[[netherrack]] flammable block, like [[wood]], may burn continuously when its sides are surrounded by nonflammable blocks, like [[stone]] or [[dirt]].}}
+|{{HistoryLine||1.6|dev=Test Build 3|Fire spreading has been severely nerfed — infinite fire spread has been disabled.<ref>{{tweet|notch|72582596294483969|Aaaand I just nerfed fire. It no longer spreads infinitely.|May 23, 2011}}</ref>|In this build only, fire is an obtainable item that can be used to craft [[chain armor]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Fire above bedrock in [[the End]] now burns forever.}}
+|{{HistoryLine||1.2.1|dev=12w06a|When the [[player]] hits fire in [[Creative]], the block under the fire is no longer removed.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added the [[game rule]] <code>doFireTick</code>.}}
+|{{HistoryLine|||dev=12w34a|Fire now spreads differently based on [[difficulty]].}}
+|{{HistoryLine|||dev=12w40a|Firespread has been slightly nerfed again to prevent infinitely spreading fires.}}
+|{{HistoryLine||1.5|dev=13w02a|The texture of fire is no longer procedurally generated and now has its own texture files}}
+|{{HistoryLine||1.6.1|dev=1.6|[[Zombie pigmen]] and [[ghast]]s no longer appear to be on fire in cases where mobs susceptible to fire would be.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Fire (in minecart) 14w04a.png|32px]] If fire is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine|||dev=14w17a|[[File:Fire JE2.png|32px]] The [[model]] of fire has been changed slightly &ndash; the sides are completely erect rather than slanted inward, however, the back faces of fire are still not visible.}}
+|{{HistoryLine|||dev=14w25a|[[File:Fire JE3.png|32px]] The model of fire is now incorrectly affected by directional shading. One of the inner planes (furthest to the south) is now also missing.
+|[[Wither skeleton]]s no longer appear to be on fire in cases where mobs susceptible to fire would be.
+|Removed the item form of fire, therefore removing its [[Crafting#Removed_recipes|crafting recipes]] (chain armor) as well.}}
+|{{HistoryLine|||dev=14w28b|[[File:Fire JE4.png|32px]] The model of fire has been changed, fixing the missing internal plane. However, it is still less symmetrical overall than it was prior to [[Java Edition 14w25a|14w25a]], which is best seen looking from directly above.}}
+|{{HistoryLine|||dev=14w31a|[[File:Fire JE5.png|32px]] Fire is no longer affected by directional shading.
+|Fire now uses the wool sound rather than the wood sound if broken through certain means or stepped on.}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Fire JE6.png|32px]] Extra planes have been added to the [[model]] of fire in the back. However, the outer texture planes appear to foot by a pixel.}}
+|{{HistoryLine|||dev=15w33c|[[File:Fire JE7.png|32px]] The positioning of the outer planes of fire has been fixed.}}
+|{{HistoryLine|||dev=15w38a|Fire's chance of extinguishing in the [[rain]] on its [[block tick]] has been decreased from 100% to a chance from 0–45% depending on its ''age'' state.}}
+|{{HistoryLine|||dev=15w49a|Fire's chance of extinguishing in the rain on its block tick has been increased to 20–65% depending on its ''age'' state.}}
+|{{HistoryLine||1.12|dev=17w06a|Fire now burns indefinitely on [[magma block]]s.}}
+|{{HistoryLine||1.16|dev=20w06a|Fire no longer burns [[item]]s.<ref>{{bug|MC-170881}}</ref>}}
+|{{HistoryLine|||dev=20w07a|Fire burns [[item]]s again.}}
+|{{HistoryLine|||dev=20w10a|Fire now has a proper [[hitbox]] like all other [[block]]s.
+|Fire now produces fire [[particles]] when destroyed.
+|Fire can no longer be put out with [[sword]]s or [[trident]]s in [[Creative]] mode.
+|The blockstates and info of fire can now be properly read via F3.
+|Fire can now be modified using [[debug stick]]s.}}
+|{{HistoryLine|||dev=20w11a|Fire no longer produces [[particles]] when destroyed.}}
+|{{HistoryLine|||dev=20w12a|Added [[respawn anchor]], which creates fire in an explosion when {{control|using}} the respawn anchor in a dimension other than the [[Nether]].}} 
+|{{HistoryLine|||dev=20w16a|Fire now generates in some [[bastion remnant]]s.}}
+|{{HistoryLine|||dev=pre7|Creative players inside of fire now permanently are displayed as being in fire for the period spent within it rather than it intermittently flashing.}}
+|{{HistoryLine||?|Fire no longer produces wool sounds; it now no longer appears to produce any sounds at all.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Fire being doused by splash water bottles now emits a <code>block_destroy</code> [[vibration]] of frequency <code>12</code>.}}
+|{{HistoryLine||1.21.5|dev=25w06a|Fire no longer burns or spreads if no player is within 8 chunks.
+|Added game rule {{cd|allowFireTicksAwayFromPlayer}} to toggle this behavior.}}
+|{{HistoryLine||1.21.11|dev=25w44a|Added the game rule {{cd|fire_spread_radius_around_player}}.
+|Removed the game rules {{cd|doFireTick}} and {{cd|allowFireTicksAwayFromPlayer}}.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Added fire.
+|Fire currently has no texture associated with it, and thus appears invisible.
+|Fire spreading mechanics are very buggy, allowing fire to spread to any [[block]].<ref>https://youtu.be/3hrz7KK2EJs</ref>}}
+|{{HistoryLine||v0.3.3|Fire spreading has been disabled as a temporary fix to the aforementioned spreading bug.}}
+<!-- Do not add information about reserved6 here. Reserved6 did not replace fire blocks in v0.3.3, that is a common misconception. -->
+|{{HistoryLine||v0.7.0|Fire can now spread again and spreading mechanics have been improved.
+|Fire can now be created using [[flint and steel]].
+|[[File:Fire BE1.png|32px]] Fire now has a texture, but it currently renders incorrectly.<ref>{{bug|MCPE-2458}}</ref>}}
+|{{HistoryLine||v0.7.1|[[File:Fire BE.png|32px]] Fire now renders correctly.
+|Fire now burns indefinitely on [[netherrack]].}}
+|{{HistoryLine||v0.7.3|Undead [[mob]]s now actually catch fire in [[sun]]light, rather than just taking [[damage]].}}
+|{{HistoryLine||v0.8.0|dev=build 1|Burning [[mob]]s now turn orange and emit large fire [[particles]].}}
+|{{HistoryLine|||dev=build 4|Fire now ignites [[TNT]] more aggressively.}}
+|{{HistoryLine||v0.9.0|dev=build 2|Fire now burns out faster in [[jungle]] and [[roofed forest]] biomes.}}
+|{{HistoryLine||v0.11.0|dev=build 9|Attacks from burning mobs can now catch fire to the victim.}}
+|{{HistoryLine|||dev=build 14|The burning animation has been removed from [[Creative]] mode completely.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Burning [[mob]]s now have a sizzling [[particle]] effect once extinguished.}}
+|{{HistoryLine|unknown}}
+|{{HistoryLine||?|Fire has the "wood" material assigned to it for sound playback, which could be encountered by placing it with its item form, or by walking on top of it in certain cases or setups.<ref>{{bug|MCPE-29998}}</ref>}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Added the [[game rule]] {{cd|doFireTick}}.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|The unique fire animation has been removed from burning [[mob]]s (excluding [[blaze]]s), and replaced with a stretched burning animation like that on {{el|je}}.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.20|Some blocks that could catch fire with [[flint and steel]], like the top [[stone slab]] or [[wood stair]], will now also catch fire during fire explosion, such as those from [[fireball]]s.
+|[[Glass]] blocks will now catch fire with flint and steel or fire explosion.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Fire.png|32px]] Added fire.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[Zombie pigmen]] and [[ghast]]s no longer appear to be on fire in cases where mobs susceptible to fire would be.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[Wither skeleton]]s no longer appear to be on fire in cases where mobs susceptible to fire would be.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Fire now burns indefinitely on [[magma block]]s.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|The animation of burning [[mob]]s has been changed to match {{BE}}.
+|Players who have been standing in fire for less 1 second no longer immediately stop burning after leaving the fire just like in {{BE}} and the burning duration is now always 8 seconds after leaving the fire.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|[[File:Fire BE.png|32px]] Added fire.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|The block states ''alt'' and ''flip'' of fire have been removed, and the state ''upper'' has been changed to the byte state ''up''. However, the behavior of fire has remained unchanged.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 51.}}
+|{{HistoryLine||1.16|dev=20w11a|Fire now has an associated [[loot table]], which is empty by default.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*Sometimes, in [[Survival]], when the [[player]] walks into a fire briefly and walks out quickly enough, the player takes minor [[damage]], but does not stay on fire.
+*Fire uses two texture files, one for the inner fire and one for the outer fire.
+*Each [[End crystal]] continuously generates a block of fire at its location, if the crystal is placed or generated in [[the End]].
+*Fire has the third highest number of possible block state combinations, at 512, behind [[Note Block|note block]]'s 1150 and [[Redstone Dust|redstone dust]]'s 1296.
+
+=== ''Bedrock Edition'' ===
+*Burning mobs have the same animation as Java, yet differently scaled.
+*The fire spreading mechanic is based on how it would be prior to [[Beta 1.6|''Java Edition'' Beta 1.6]].
+*The sides of the fire model in this edition are rotated like in versions before [[Java Edition 1.8|''Java Edition'' 1.8]].
+*When the player is on fire, there is a different burning animation on the screen than {{in|je}} (it partially obstructs view when looking downward).
+*Players with [[Fire Resistance]] do not visibly burn when in fire sources.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Mobflame Emitter.gif|Animated render of the mob burning fire.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:A bad house.png|A house that has caught fire because it was too close to a [[lava]] lake, and made out of [[wood]].
+File:Burning Zombie Pocket.jpg|A burning zombie {{in|be}} emitting unique fire particles.
+File:Lava Tree.png|A natural fire started by [[lava]] flowing into [[tree]]s.
+File:Wildfire.png|A fire spreading across several trees.
+File:Forestfire.png|Fire as seen in a burning forest.
+File:Fire in 0.3.0.png|Invisible fire as seen in early ''Pocket Edition'', and could burn up non-flammable blocks such as stone and dirt.
+File:Before.png|Forest and lava lake before the fire.
+File:During.png|Forest and lava lake during the fire.
+File:After.png|Forest and lava lake after the fire.
+File:Jeb Fire.png|Lots of fire.
+File:Zombie Burns Before Sunny.jpeg|A zombie approaching a [[player]] while burning from daylight.<ref>https://twitter.com/minecraftjapan/status/1723958882694045854</ref>
+File:Chained-fire.png|The old chainmail recipe as seen in [[Java Edition Beta 1.6 Test Build 3|Java Edition Beta 1.6 Test Build 3.]] However, this recipe is patched. Uses the obtainable ''Fire'' item.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+[[Category:Hazardous blocks]]
+
+[[cs:Oheň]]
+[[de:Feuer]]
+[[es:Fuego]]
+[[fr:Feu]]
+[[hu:Tűz]]
+[[it:Fuoco]]
+[[ja:炎]]
+[[ko:불]]
+[[nl:Vuur]]
+[[pl:Ogień]]
+[[pt:Fogo]]
+[[ru:Огонь]]
+[[th:ไฟ]]
+[[uk:Вогонь]]
+[[zh:火]]

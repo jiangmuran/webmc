@@ -1,0 +1,173 @@
+{{Distinguish|Bad Luck}}
+{{About|the base effect|the [[raid]] variant|Raid Omen|the [[ominous trial]] variant|Trial Omen}}
+{{Infobox effect
+|image = Bad Omen.png
+|invimage = Ominous Bottle
+|invimage2 = Ominous Bottle II
+|invimage3 = Ominous Bottle III
+|invimage4 = Ominous Bottle IV
+|invimage5 = Ominous Bottle V
+|sources = See {{Slink||Causes}}
+|particle = {{EffectSprite|particle-bad-omen}} #0b6138 (dark green)
+|type = Neutral
+}}
+'''Bad Omen''' is a [[status effect]] only obtainable from consuming an [[ominous bottle]]. It can transform into [[Raid Omen]] in a [[village]] to start a [[raid]], or into [[Trial Omen]] when seen by a non-ominous [[trial spawner]], to start an [[ominous trial]]. 
+
+== Effect ==
+Bad Omen can be obtained by consuming an [[ominous bottle]], obtained from either killing [[raid captain]]s outside of a raid or from [[vault]]s. Being affected by Bad Omen allows players to initiate [[ominous event]]s.
+
+If a player enters a village with Bad Omen, it transforms into [[Raid Omen]], which triggers a [[raid]] after 30 seconds. {{IN|java}}, if the omen level is above 2, an extra wave of raiders will occur after the final wave. Each level after the second will increase the enchantment level of the incoming raiders' equipment, and the resulting [[Hero of the Village]] effect will match the level of the omen, if all raiders have been defeated with villagers still alive. {{IN|bedrock}}, the level of Bad Omen has no effect on raids, and only affects trial spawners (see below).
+
+If the player has the Bad Omen effect and goes near a non-ominous [[trial spawner]], it transforms into [[Trial Omen]], which converts all nearby [[trial spawner]]s into [[ominous trial spawner]]s that are significantly harder to deal with and also have better loot. The omen lasts for 15 minutes multiplied by the level of the Bad Omen. Defeating an ominous trial spawner allows the player to obtain [[ominous trial key]]s, which in turn open [[ominous vault]]s that can drop loot of significantly higher quality, including one of two [[Trial Chambers|trial chamber]] exclusive [[smithing template]]s and the [[heavy core]] needed to craft the [[mace]].
+
+Bad Omen is a [[status effect]] and can be removed through all conventional methods, such as drinking [[milk]] or dying.
+
+The player can still receive the Bad Omen effect in Peaceful difficulty via [[vault]]s (all pillager captains despawn in Peaceful), but does not transform into [[Raid Omen]] if in a village.
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+ !Cause
+ !Potency
+ !Length
+ 
+|-
+ |{{ItemLink|Ominous bottle}}
+ |I–V
+ |1:40:00
+ |}
+
+== Immune mobs ==
+
+*[[Wither]]s and [[ender dragon]]s are immune to Bad Omen.
+*All [[mob]]s are unaffected by Bad Omen.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+|type = java
+|{{SoundLine
+|sound =Bad omen.ogg
+|subtitle=Omen takes hold
+|source=dependent
+|description=When Bad Omen is granted to a mob<wbr>
+|id=event.mob_effect.bad_omen
+|translationkey=subtitles.event.mob_effect.bad_omen
+|volume=1.0
+|pitch=1.0
+|distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+|type = bedrock
+|{{SoundLine
+|sound =Bad omen BE2.wav
+|source=player
+|description=When Bad Omen is granted to a mob<wbr>
+|id=apply_effect.bad_omen
+|volume=1.0
+|pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Bad Omen
+|spritetype=effect
+|nameid=bad_omen
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Bad Omen
+|spritetype=effect
+|nameid=bad_omen
+|id=28
+|translationkey=effect.badOmen
+|foot=1}}
+
+== Achievements ==
+{{load achievements|We're being attacked!}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here?}}
+
+== History ==
+{{see also|Bad Omen/Before 1.21}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w47a|[[File:Bad Omen JE1 BE1.png|18px]] Added Bad Omen.
+|[[File:Placeholder Effect (texture) JE2.png|18px]] In Programmer Art, Bad Omen uses a placeholder texture from <samp>[[inventory.png]]</samp>.}}
+|{{HistoryLine|||dev=19w08a|[[File:Bad Omen JE2 BE2.png|18px]] The Bad Omen icon texture has now been changed.
+|Programmer Art now uses this icon.<ref>{{bug|MC-139739|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=19w11a|Bad Omen is now needed for the "How Did We Get Here?" advancement.}}
+|{{HistoryLine|||dev=19w13a|The maximum potency of Bad Omen has now been increased from three to six.
+|Bad Omen now doesn´t disappear after entering the village in [[Spectator]] mode.<ref>{{bug|MC-139798|||Fixed}}</ref>}}
+|{{HistoryLine||1.16|dev=20w18a|The maximum potency of Bad Omen has now been decreased to five.}}
+|{{HistoryLine||1.19.3|dev=22w46a|The inventory now correctly shows the remaining time on the Bad Omen effect, instead of <code>**:**</code>.<ref>{{bug|MC-121865|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Bad Omen JE3 BE3.png|18px]] The Bad Omen icon texture has been changed.
+|Bad Omen is no longer automatically granted when killing a raid captain.
+|Bad Omen can now be caused by drinking an [[ominous bottle]].
+|Bad Omen becomes [[Raid Omen]] if in a [[village]] or [[Trial Omen]] if near a non-ominous [[trial spawner]].}}
+|{{HistoryLine||1.21|dev=24w18a|The new Bad Omen mechanic and icon is now available without using the "Update 1.21" experimental data pack.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|exp=Experimental Gameplay|[[File:Bad Omen JE1 BE1.png|18px]] Added Bad Omen.}}
+|{{HistoryLine|||dev=beta 1.11.0.3|[[File:Bad Omen JE2 BE2.png|18px]] The Bad Omen icon texture has now been changed.
+|Bad Omen now triggers a raid.}}
+|{{HistoryLine|||dev=beta 1.11.0.5|If all [[village]]s are no longer registered as villages during a [[raid]], a nearby [[player]] is now affected with Bad Omen.}}
+|{{HistoryLine|||dev=beta 1.11.0.7|[[File:Bad Omen Bedrock Animation.gif|32px]] A [[screen effect]] now plays on-screen when a player gets Bad Omen.}}
+|{{HistoryLine||1.11.0|dev=release|Bad Omen is now available outside of Experimental Gameplay.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|The player no longer gets Bad Omen when all villagers die or all [[bed]]s are destroyed during a raid.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|The color of Bad Omen [[particles]] has now been changed from {{EffectSprite|particle-bad-omen-be}}tan to {{EffectSprite|particle-bad-omen}}dark green.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.24|Removed the particle effect that appeared when obtaining Bad Omen.}}
+|{{HistoryLine||?|Re-added the particle effect when obtaining Bad Omen.{{verify}}}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Bad Omen JE3 BE3.png|18px]] The Bad Omen icon texture has been changed.
+|Bad Omen is no longer automatically granted when killing a raid captain.
+|Bad Omen can now be caused by drinking an [[ominous bottle]].
+|Bad Omen becomes [[Trial Omen]] if near a non-ominous [[trial spawner]].
+|A [[screen effect]] no longer plays on-screen when a player gets Bad Omen.|If a world was imported from the [[Marketplace]], then its screen effect would look like this:[[File:Bad Omen Bedrock Animation (1.21 icon).gif|64x64px]]}}
+|{{HistoryLine|||dev=Preview 1.21.0.21|Bad Omen becomes [[Raid Omen]] if in a [[village]].}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|The new Bad Omen mechanics and icon are now available without using the "Update 1.21" experimental toggle.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Bad Omen JE2 BE2.png|18px]] Added Bad Omen.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*If the player leaves a village during a raid, receives Bad Omen, and returns to the village, the effect transforms into Raid Omen, but does not affect the current raid.
+*If the player kills a captain while in a [[village]] {{in|Bedrock}}, the raid bar and Bad Omen effect appear simultaneously. The effect disappears immediately after, then "flashes" again approximately 1 second later.{{Verify|edition=bedrock|Does this still work with the new Bad Omen mechanics in 1.21.0?}}
+
+== References ==
+{{Reflist}}<references group="note" />
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Drohendes Unheil]]
+[[es:Mal presagio]]
+[[fr:Mauvais présage]]
+[[it:Malaugurio]]
+[[ja:不吉な予感]]
+[[pt:Mau Presságio]]
+[[ru:Дурной знак]]
+[[zh:不祥之兆]]

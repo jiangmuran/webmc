@@ -1,0 +1,292 @@
+{{Redirect|Column|the feature|Basalt Columns|the underwater structure in ''Minecraft Dungeons''|MCD:Bubble Column}}
+{{Infobox block
+| image = Bubble Column.png
+| image2 = <gallery>
+Bubble Column Upwards (non-fancy).png | Upwards
+Bubble Column Whirlpool (non-fancy).png | Whirlpool
+</gallery>
+| renewable = Yes
+| stackable = Yes (64){{only|BE|short=1}}<br>N/A{{only|JE|short=1}}
+| tool = none
+| light = No
+| transparent = Yes
+| flammable = No
+| lavasusceptible = No
+}}
+A '''bubble column''' is an [[Drowning|air]]-providing vertical [[water]] current. It is created by [[magma block]]s and [[soul sand]] and, depending on the [[block]] used, will either pull [[entities]] downward or push them upward, respectively.
+
+== Obtaining ==
+{{IN|java}}, bubble columns cannot be obtained as an [[item]], and can only be placed by a [[block]]-placement [[command]] such as {{cmd|setblock}}.
+
+{{IN|bedrock}}, it may be obtained as an item via inventory editing, add-ons, or bugs.
+
+=== Natural generation ===
+[[File:Bubble_columns.gif|thumb|245px|''Java Edition'' bubble column. (Click to see the animation)]]
+Whirlpool bubble columns may appear naturally when [[magma block]]s generate underwater, in [[Underwater magma|clusters]] on the floor of [[aquifer]]s, or as part of [[ocean ruins]] and [[ruined portal]]s generated below the [[water]] surface.
+
+=== Post-generation ===
+When a [[magma block]] is placed underwater, a whirlpool bubble column is generated. 
+
+When [[soul sand]] is placed under source water blocks, an upward bubble column is generated.
+
+A bubble column is created 20 game ticks after placing a magma block or soul sand, and is destroyed 5 game ticks after destroying the magma block or soul sand. A bubble column is created or destroyed in all water source blocks of the bubble column simultaneously.
+
+== Usage ==
+[[Player]]s and air-breathing [[mob]]s can enter a bubble column to replenish their [[Drowning|air supply]] at the same speed that they would when they leave the water entirely. However, the [[Water#Slower mining speed|slower mining speed]] when underwater still applies to players inside bubble columns. Water-breathing mobs avoid bubble columns because they suffocate if trapped in one. A bubble column is destroyed when moved by a [[piston]]. Bubble columns propagate only through water source blocks, stopping at any flowing water or [[waterlogged]] block. The height of a bubble column is limited only by the water's surface or by any obstructing blocks underwater. {{IN|Bedrock}}, using [[powder snow]] to remove water sources from a bubble column and destroying the powder snow with flowing water creates a bubble column without water.<ref>{{bug|MCPE-128305}}</ref>
+
+Bubble columns cannot be created in downward flowing water.<ref>{{bug|MCPE-85448|||WAI}}</ref> This can be circumvented by placing [[kelp]] in downward-flowing water, which converts it into a source block.
+
+=== Whirlpool ===
+A whirlpool, or downward bubble column, is the only type that naturally generates in the Overworld, often originating from [[magma]] at the bottom of underwater [[canyon]]s. A whirlpool can be identified by the presence of air bubbles wandering downward. They drag [[entities]] downward. A [[boat]] ridden over a whirlpool shakes and eventually sinks if kept above the whirlpool for too long.
+
+=== Upward ===
+Upward bubble columns can be identified by the presence of vertically rising air bubbles. An upward bubble column accelerates entities upward. The longer an object rises through the bubble column, the faster it travels. At high enough speeds, players and entities can be launched out of water by several blocks. Sitting on the surface above a rising bubble column causes entities to bounce upward repeatedly by about 1 block.
+
+=== Transport ===
+In {{JE}}, entities move at a speed of approximately 11 blocks per second when in an upward bubble column, or 4.9 blocks per second when in a downward bubble column. 
+
+In {{BE}}, entities move at a speed of approximately 8 blocks per second when in an upward bubble column, or 6 blocks per second when in a downward bubble column.
+
+=== Redstone component ===
+An [[observer]] can detect when a bubble column is created or destroyed in a water source block.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Bubble column bubble1.ogg
+|sound2=Bubble column bubble2.ogg
+|sound3=Bubble column bubble3.ogg
+|subtitle=Bubbles pop
+|source=none
+|description=''Unused sound event''<ref group=sound>{{Bug|MC-132067}}</ref>
+|id=block.bubble_column.bubble_pop
+|translationkey=subtitles.block.bubble_column.bubble_pop
+|volume=0.1
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bubble column upwards ambient1.ogg
+|sound2=Bubble column upwards ambient2.ogg
+|sound3=Bubble column upwards ambient3.ogg
+|sound4=Bubble column upwards ambient4.ogg
+|sound5=Bubble column upwards ambient5.ogg
+|subtitle=Bubbles flow
+|source=block
+|description=Randomly from an upward bubble column
+|id=block.bubble_column.upwards_ambient
+|translationkey=subtitles.block.bubble_column.upwards_ambient
+|volume=0.12-0.24
+|pitch=0.9-1.05
+|distance=16}}
+| {{SoundLine
+|sound=Bubble column upwards inside.ogg
+|subtitle=Bubbles woosh
+|source=player
+|description=When a player enters an upward bubble column
+|id=block.bubble_column.upwards_inside
+|translationkey=subtitles.block.bubble_column.upwards_inside
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bubble column whirlpool ambient1.ogg
+|sound2=Bubble column whirlpool ambient2.ogg
+|sound3=Bubble column whirlpool ambient3.ogg
+|sound4=Bubble column whirlpool ambient4.ogg
+|sound5=Bubble column whirlpool ambient5.ogg
+|subtitle=Bubbles whirl
+|source=block
+|description=Randomly from a downward bubble column
+|id=block.bubble_column.whirlpool_ambient
+|translationkey=subtitles.block.bubble_column.whirlpool_ambient
+|volume=0.12-0.25
+|pitch=0.9-1.05
+|distance=16}}
+| {{SoundLine
+|sound=Bubble column whirlpool inside.ogg
+|subtitle=Bubbles zoom
+|source=player
+|description=When a player enters a downward bubble column
+|id=block.bubble_column.whirlpool_inside
+|translationkey=subtitles.block.bubble_column.whirlpool_inside
+|volume=0.7
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bubble column bubble1.ogg
+|sound2=Bubble column bubble2.ogg
+|sound3=Bubble column bubble3.ogg
+|source=block
+|description=Soul sand creates an upward bubble column that pushes entities and players upwards.
+|id=bubble.pop
+|translationkey=subtitles.ui.hud.bubble_pop
+|subtitle=Breath meter dropping
+|volume=0.4-0.6
+|pitch=0.9-1.05}}
+| {{SoundLine
+|sound=Bubble column upwards ambient1.ogg
+|sound2=Bubble column upwards ambient2.ogg
+|sound3=Bubble column upwards ambient3.ogg
+|sound4=Bubble column upwards ambient4.ogg
+|sound5=Bubble column upwards ambient5.ogg
+|source=block
+|description=Randomly from an upward bubble column
+|id=bubble.up
+|translationkey=subtitles.ui.hud.bubble_pop
+|subtitle=Breath meter dropping
+|volume=0.4-0.6
+|pitch=0.9-1.05}}
+| {{SoundLine
+|sound=Bubble column upwards inside.ogg
+|source=block
+|description=When a player enters an upward bubble column
+|id=bubble.upinside
+|translationkey=subtitles.block.bubble_column.upwards_inside
+|subtitle=Bubbles woosh
+|volume=1.0-1.5
+|pitch=0.9-1.05}}
+| {{SoundLine
+|sound=Bubble column whirlpool ambient1.ogg
+|sound2=Bubble column whirlpool ambient2.ogg
+|sound3=Bubble column whirlpool ambient3.ogg
+|sound4=Bubble column whirlpool ambient4.ogg
+|sound5=Bubble column whirlpool ambient5.ogg
+|source=block
+|description=Randomly from a downward bubble column
+|id=bubble.down
+|translationkey=-
+|subtitle=-
+|volume=0.4-0.6
+|pitch=0.9-1.05}}
+| {{SoundLine
+|sound=Bubble column whirlpool inside.ogg
+|source=block
+|description=When a player enters a downward bubble column
+|id=bubble.downinside
+|translationkey=subtitles.block.bubble_column.whirlpool_inside
+|subtitle=Bubbles zoom
+|volume=1.0-1.5
+| pitch = 0.9-1.05
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bubble Column
+|spritetype=block
+|nameid=bubble_column
+|form=block
+|foot=1|showblocktags=y|blocktags=replaceable}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bubble Column
+|spritetype=block
+|nameid=bubble_column
+|id=415
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|drag|true|false,true|True if the bubble column drags you down (is a whirlpool).|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1|drag_down|false|false,true|Determines whether the bubble column is upward or whirlpool.|0,1|foot=1}}
+
+== History ==
+{{See technical block}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||November 18, 2017|link={{YouTubeLink|mAapz_nIC_Y}}|Bubble columns were shown in a video clip during [[MINECON Earth 2017]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Bubble Column JE1 BE1.png|32px]] Added bubble columns.}}
+|{{HistoryLine|||dev=18w08a|Bubble columns now generate in underwater [[ravine]]s.}}
+|{{HistoryLine|||dev=18w09a|Bubble columns now generate in [[ocean ruins]].}}
+|{{HistoryLine|||dev=18w16a|Bubble columns can no longer be pushed by [[piston]]s.}}
+|{{HistoryLine|||dev=pre3|Bubble pop particle and sound effects no longer occur, presumably due to a bug.}}
+|{{HistoryLine||1.21.5|dev=25w02a|Bubble columns produce less particles and sounds when entities that are unaffected by them are inside them.
+|Some entity interaction and acceleration with bubble columns slightly changed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|[[File:Bubble Column Upwards (non-fancy) BE1.png|32px]] [[File:Bubble Column Whirlpool (non-fancy) BE1.png|32px]] Added bubble columns.}}
+|{{HistoryLine|||dev=beta 1.5.0.7|[[File:Bubble Column JE1 BE1.png|32px]] Bubble columns can now be toggled to look similar to {{el|je}}, but only for devices that can handle them.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Bubble Column JE1 BE1.png|32px]] Added bubble columns.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+<gallery>
+Coral reef at night.png|Bubble columns naturally generated as part of an [[underwater ruin]]. 
+Bubble column.jpg|Bubble columns created by placing [[magma block]]s under [[water]].
+Upward bubble column.png|A [[player]] inside of an upward bubble column.
+Boat Shaking.gif|A bubble column shaking a boat ridden by the player. (Click image to view the animation)
+Sinking Boat.gif|A bubble column sinking a boat ridden by the player.
+</gallery>
+
+=== Java Edition ===
+<gallery>
+NaturalUpwardsColumn.png|A naturally occurring upward bubble column, generated using [[Single biome]] mode. The [[soul sand]] generated underwater.
+</gallery>
+
+=== Bedrock Edition ===
+<gallery>
+Bubble Column Dev Screenshot.jpg|First image of bubble columns {{in|be}}.
+BedrockEd Fancy Bubbles disabled.png|An upward bubble column in ''Bedrock Edition'' with fancy bubbles disabled.
+BedrockBubbleColumnsNoFancy.jpg|Bubble columns seen in an underwater ruin in ''Bedrock Edition'' with fancy bubbles disabled. 
+Soulsand and magmablock water.png|Bubble columns created by [[soul sand]] and [[magma block]] in ''Bedrock Edition'' with fancy bubbles disabled. 
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+
+[[de:Blasensäule]]
+[[es:Columna de burbujas]]
+[[fr:Colonne de bulles]]
+[[ja:気泡柱]]
+[[ko:거품 기둥]]
+[[pl:Kolumna bąbelkowa]]
+[[pt:Coluna de Bolhas]]
+[[ru:Столб пузырей]]
+[[th:ฟองแนวตั้ง]]
+[[zh:气泡柱]]

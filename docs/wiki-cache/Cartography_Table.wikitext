@@ -1,0 +1,280 @@
+{{for|other uses|Table}}
+{{Infobox block
+|transparent=No
+|light=No
+|tool=Axe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=Yes
+}}
+A '''cartography table''' is a utility [[block]] used for cloning, zooming out, and locking [[map]]s. It also serves as a [[cartographer]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+A cartography table can be obtained using any [[tool]] or by hand, although using an [[axe]] is the fastest.
+{{Breaking row|Cartography Table|Axe|horizontal=1}}
+
+=== Natural generation ===
+Cartography tables can generate naturally inside cartographer houses in [[village]]s. They can also generate in the [[trail ruins]] structure.
+
+=== Crafting ===
+{{Crafting
+|A1=Paper
+|B1=Paper
+|A2=Any Planks
+|B2=Any Planks
+|A3=Any Planks
+|B3=Any Planks
+|Output=Cartography Table
+|type= Decoration block
+}}
+
+== Usage ==
+=== Placement ===
+Regardless of the player's [[position]] during placement, the different textures of the block are always facing the same direction (the texture with the globe in the right corner always faces west, while the one with the [[compass]] and map faces up).
+
+=== Map functions ===
+[[File:Cartography Table GUI.png|thumb|176px|The GUI of cartography table {{in|je}}.]]
+[[File:Cartography Table GUI BE.png|thumb|176px|The GUI of cartography table {{in|be}}.]]
+
+Cartography tables are used for zooming out, cloning, and locking maps (making them unable to be altered). {{IN|bedrock}}, they can also be used for adding pointers to maps, creating empty maps, and renaming maps.
+
+Below is a list of brief descriptions of all available functions of the cartography table:
+
+For more detailed information of each of these functions, see [[Map#Usage|Map § Usage]].
+
+{{Cartography
+|head=1
+|showdescription=1
+|name=[[Map#Zooming out|Zoomed out map]]<br>(1 level higher)
+|Map
+|Paper
+|Map
+}}
+{{Cartography
+|name=[[Map#Cloning|Cloned map]]
+|Map
+|Empty Map
+|Map, 2
+}}
+{{Cartography
+|name=[[Map#Locking|Locked map]]
+|Map
+|Glass Pane
+|Locked Map
+}}
+{{Cartography
+|name=Empty map
+|Paper
+|
+|Empty Map
+|description={{only|bedrock}}<br>This map only records terrain and does not show the player's location.
+}}
+{{Cartography
+|name=Empty locator map
+|Paper
+|Compass
+|Empty Locator Map
+|description={{only|bedrock}}<br>This map records terrain and displays a marker showing the player's location.
+}}
+{{Cartography
+|name=[[Map#Bedrock Edition|Locator map or empty locator map]]
+|ingredients=[[Map]] or [[Empty Map]] +<br>[[Compass]]
+|Map BE; Empty Map
+|Compass
+|Locator Map; Empty Locator Map
+|description={{only|bedrock}}
+|foot=1
+}}
+
+Zooming out a map always starts with an existing map, not a blank map. Zooming it out makes the map aligned to the grid that would include the area of the original map. To build a set of maps such as for a map wall, a player cannot create several level 0 (base) maps at one location then zoom them out before going out into the world to fill them in; the player must start with a base map created in each area to be covered by the zoomed out map. See more discussion of map alignment at [[Map]].
+
+[[File:Cartography table map rename.png|thumb|176px|Renaming a map]]
+{{IN|bedrock}}, the cartography table UI features a text field which can be used to rename a map or empty map. Unlike renaming items at an [[anvil]], this does not cost any [[experience]].
+
+=== Profession ===
+{{main|Job site block}}
+If a cartography table has not been claimed by a [[villager]], any nearby unemployed villager may become a cartographer and claim it as their [[job site block]].
+
+=== Fuel ===
+A cartography table can be used as fuel in a [[furnace]], smelting 1.5 items per block.
+
+=== Note blocks ===
+Cartography tables can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Drawmap1.ogg
+|sound2=Drawmap2.ogg
+|sound3=Drawmap3.ogg
+|subtitle=Map drawn
+|source=block
+|description=When a map is edited using a cartography table
+|id=ui.cartography_table.take_result
+|translationkey=subtitles.ui.cartography_table.take_result
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Cartographer works
+|source=neutral
+|description=Randomly while a cartographer is working
+|id=entity.villager.work_cartographer
+|translationkey=subtitles.entity.villager.work_cartographer
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|rowspan=2
+|sound=Drawmap1.ogg
+|sound2=Drawmap2.ogg
+|sound3=Drawmap3.ogg
+|type=bedrock
+|source=block
+|description=When a map is edited using a cartography table
+|id=ui.cartography_table.take_result
+|volume=0.8
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=Randomly while a cartographer is working
+|id=block.cartography_table.use
+|volume=0.8
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cartography Table
+|spritetype=block
+|nameid=cartography_table
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cartography Table
+|spritetype=block
+|nameid=cartography_table
+|id=455
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Cartography Table JE1.png|32px]] Added cartography tables.
+|Cartography tables are currently obtainable only from the [[Creative inventory]] and do not have any functionality.}}
+|{{HistoryLine|||dev=18w46a|[[File:Cartography Table JE2 BE1.png|32px]] The texture of cartography tables has been changed.}}
+|{{HistoryLine|||dev=18w48a|Cartography tables now generate in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Cartography tables now generate in the updated [[savanna]] villages and the new [[Snowy Tundra|snowy]] villages.}}
+|{{HistoryLine|||dev=18w50a|Cartography tables now generate in the updated [[desert]] and [[taiga]] villages.}}
+|{{HistoryLine|||dev=19w02a|Cartography tables are now functional and [[craft]]able.
+|Cartography tables can now be used to clone, extend, and lock [[map]]s.}}
+|{{HistoryLine|||dev=19w06a|Block [[sound]]s have been added for cartography tables.}}
+|{{HistoryLine|||dev=19w11a|The [[crafting]] recipe of cartography tables now requires four [[planks]] instead of only two.
+|This also means cartography tables no longer can craft in [[2×2 grid]].
+|Cartography tables now serve as cartographer [[villager]]s' job site block.}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft cartography tables.}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Cartography Table JE3.png|32px]] The texture of cartography tables has been changed.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove planks]] can now be used to craft cartography tables.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft cartography tables.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft cartography tables.}}
+|{{HistoryLine||1.20|dev=23w16a|Cartography tables now generate in [[trail ruin]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|exp=Experimental Gameplay|[[File:Cartography Table JE2 BE1.png|32px]] Added cartography tables which are currently locked behind [[Experimental Gameplay]].
+|Cartography tables can be used to [[smelt]] 1.5 [[item]]s in a [[furnace]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|Cartography tables are now [[craft]]able, but with a different recipe than {{in|Java}}.
+|Cartography tables can now generate in cartographer houses in [[village]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Cartography tables are now functional.
+|Cartography tables are now available outside of Experimental gameplay.
+|Cartography tables can now be used to create, clone, extend, mark, and rename [[map]]s.
+|The [[crafting]] recipe of cartography tables has been changed to {{el|je}}'s recipe.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Cartography tables can now be used to lock [[map]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.7|The [[crafting]] recipe of cartography tables now requires four [[planks]] instead of only two.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|[[File:Cartography Table JE3.png|32px]] The texture of cartography tables has been changed.}}
+|{{HistoryLine||1.20.0|dev=beta 1.20.0.22|Cartography tables now generate in [[trail ruin]]s.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Cartography Table JE2 BE1.png|32px]] Added cartography tables.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Cartography table UI zoom.png|{{IN|java}}, cartography table's UI, showing the map is being zoomed out.
+Cartography table UI clone.png|Cartography table's UI, showing the map is being cloned.
+Cartography table UI lock.png|Cartography table's UI, showing the map is being locked.
+Cartography table village.png|Cartography table in a village.
+Cartography Table Screenshot.jpg|Cartography table on the ground.
+</gallery>
+
+=== Render ===
+<gallery>
+File:Cartography Table (facing NED).png|Cartography table viewed from another angle.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:AMCM Cartography Table.jpeg|A cartography table in ''[[A Minecraft Movie]]''.
+File:BlockWeek cartography table.png|Artwork of a cartography table from [[Block of the Week]]
+File:LEGO Minecraft Pirate with Frog, Slime and Cartography Table Boxed.jpg|[[Lego Minecraft]] cartography table
+</gallery>
+
+== External links ==
+*{{Mcnet|block-week--cartography-table|Block of the Week: Cartography Table|July 22, 2021|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Blocks with GUI]]
+
+[[de:Kartentisch]]
+[[es:Mesa de cartografía]]
+[[fr:Table de cartographie]]
+[[ja:製図台]]
+[[ko:지도 제작대]]
+[[lzh:輿圖案]]
+[[pl:Stół kartograficzny]]
+[[pt:Bancada de Cartografia]]
+[[ru:Стол картографа]]
+[[th:โต๊ะทำแผนที่]]
+[[uk:Картографічний стіл]]
+[[zh:制图台]]

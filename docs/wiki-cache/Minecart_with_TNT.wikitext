@@ -1,0 +1,283 @@
+{{For||Minecart (disambiguation)|TNT (disambiguation)}}
+{{Infobox item entity
+| image = Minecart with TNT.png
+| invimage = Minecart with TNT
+| renewable = Yes
+| stackable = No
+| size = Height: 0.7 blocks<br>Width: 0.98 blocks
+| networkid = 
+| drops = 
+; If not exploded
+: 1 {{ItemLink|Minecart with TNT}}
+| health = {{hp|6}}
+}}
+A '''minecart with TNT''' is a [[minecart]] with [[TNT]] inside. Unlike normal TNT, it can detonate instantly, and its blast radius and damage is increased by its speed at detonation.
+
+== Obtaining ==
+Minecarts with TNT can be retrieved by attacking them, and doing so drops them as an [[item]]. [[Critical hits]] are not applied to them, although the particles suggest otherwise.
+
+=== Crafting ===
+{{Crafting
+|TNT
+|Minecart
+|Output= Minecart with TNT
+|type= Transportation
+}}
+
+== Usage ==
+[[File:TNT minecart and powered activator rail.png|thumb|right|When the minecart with TNT passes over the powered activator rail, it explodes after four seconds.]]
+[[File:Simple TNT minecart detonator setup.png|thumb|right|{{IN|je}}, placing two minecarts with TNT on the rail and powering it (here, by flicking the lever) creates an instant explosion.]]
+[[File:TNT minecart roof trap.png|thumb|right|Destroying the block of gold causes the minecart with TNT to fall down and instantly explode.]]
+
+A minecart with TNT detonates after a delay on these conditions:
+* It moves over a powered [[activator rail]].
+* It is destroyed while in motion (except by a player in Creative mode).
+* It is destroyed by fire, lava, or an explosion.
+* It is hit by a [[fire charge]] projectile.
+* Using a [[flint and steel]], [[fire charge]], or any [[item]] enchanted with [[Fire Aspect]].{{Only|BE}}
+
+The delay is {{convert|4|seconds|ticks}} for an activator rail, like the TNT block. For other causes there is a random delay between 0 and 1.95 seconds.
+
+It detonates instantly on these conditions:
+
+* It hits the ground with a downward velocity of it falling more than three blocks, unless landing on any form of rail.
+* It turns on a curved track too fast, with a solid block or entity located beside the track (in the previous movement direction). {{only|je}}
+* It is hit by a flaming projectile.
+* It is pressed into a block or entity and has velocity.{{only|je}}
+
+Upon detonation it acts as normal TNT, [[exploding]] and damaging nearby blocks, players, and entities. Upon detonation after activating on activator rail, it does not destroy its rails and the blocks the rail is on, however other nearby minecarts can.{{only|java}} More than one minecart can be placed on the same rail block, allowing many of them to fit into a single block. {{IN|je}} they explode when touched, dealing large amounts of damage.
+
+The explosion has a base [[Explosion#Explosion strength|power]] of 4, the same as regular TNT, but the game also adds a random bonus value up to 1.5 times velocity, but no higher than 7.5. This means that with a speed of 5 or higher the power is a random value between 4 and 11.5. When triggered by an activator rail or by damage, the bonus value is calculated using the horizontal velocity of the minecart. When hit by a flaming arrow the velocity of the arrow is used instead. When triggered by fall damage, the fall distance divided by 10 is used.
+
+Minecarts with TNT bounce off of other minecarts and cannot be linked to [[minecarts with furnace]]s.
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Minecarts with TNT use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].<ref group=sound name=rollsource>{{bug|MC-42132}}</ref>
+
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|subtitle=Minecart rolls
+|source=Friendly Mobs <ref group=sound name=rollsource/>
+|overridesource=1
+|description=While a minecart with TNT is moving
+|id=entity.minecart.riding
+|translationkey=subtitles.entity.minecart.riding
+|volume=0.0-0.35 <ref group=sound>Relates linearly with horizontal velocity (max 0.5)</ref>
+|pitch=0.0-1.0 <ref group=sound>Increases by 0.0025 per tick if the minecart's horizontal velocity is more than 0.01</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Fuse.ogg
+|subtitle=TNT fizzes
+|source=block
+|description=When a minecart with TNT is primed
+|id=entity.tnt.primed
+|translationkey=subtitles.entity.tnt.primed
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|subtitle=Explosion
+|source=block
+|description=When a minecart with TNT explodes
+|id=entity.generic.explode
+|translationkey=subtitles.entity.generic.explode
+|volume=4.0
+|pitch=0.56-0.84
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:<ref group=sound>{{Bug|MCPE-35778||Minecart with tnt does not have the sound of tnt being ignited when we use flint and steel, fire charge or activator rail}}</ref>
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|source=neutral
+|description=While a minecart with TNT is moving
+|id=minecart.base}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|source=block
+|description=When a minecart with TNT explodes
+|id=random.explode
+|volume=4.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with TNT
+|spritetype=item
+|nameid=tnt_minecart
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Minecart with TNT
+|spritetype=entity
+|nameid=tnt_minecart
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Minecart with TNT
+|spritetype=item
+|nameid=tnt_minecart
+|id=525
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Minecart with TNT
+|spritetype=entity
+|nameid=tnt_minecart
+|showentityfamily=y
+|entityfamily=inanimate,minecart
+|id=97
+|foot=1}}
+
+=== Entity data ===
+Minecarts with TNT have entity data associated with them that contain various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/vehicle}}
+** {{nbt|int|fuse}}: Time until explosion or -1 if not activated.
+** {{nbt|float|explosion_power}}: A value from 0 to 128. Additional [[Explosion#Block_destruction|explosion power]], which is added to the speed-based explosion power. Defaults to 4.0. If set to the default value, this field is not saved to the entity's NBT.
+** {{nbt|float|explosion_speed_factor}}: Controls the amount of added damage depending on the speed of the Minecart. Defaults to 1.0. If set to the default value, this field is not saved to the entity's NBT.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Videos ==
+<div style="text-align:center">{{yt|1yNgY913tps}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w02a|[[File:Minecart_with_TNT_JE1_BE1.png|32px]] [[File:Minecart_with_TNT_(item)_JE1_BE1.png|32px]] Added minecart with TNT.}}
+|{{HistoryLine|||dev=13w03a|Minecart with TNT no longer destroys nearby [[rail]]s and rail supports during [[explosion]].<ref>{{bug|MC-6833}}</ref>}}
+|{{HistoryLine||1.8|dev=14w11a|Minecart with TNT explosions no longer stack.<!--reverted in 17a like other changes in 11a?-->}}
+|{{HistoryLine|||dev=14w26a|Minecart with TNT can now be detonated using [[arrow]]s on fire.}}
+|{{HistoryLine||1.12|dev=pre6|No longer instantly explode when hit with [[fire charge]]s; instead, they explode as if primed by an [[activator rail]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Minecart with TNT JE2 BE2.png|32px]] [[File:Minecart with TNT (item) JE2 BE2.png|32px]] The textures of minecart with TNT have been updated.}}
+|{{HistoryLine|||dev=19w11a|Minecart with TNT explosions now have a 100% drop rate.}}
+|{{HistoryLine||1.15|dev=19w38a|[[File:Minecart with TNT 19w38a.png|32px]] Due to a bug, the TNT part now appears dark, similar to suffocating mobs.}}
+|{{HistoryLine|||dev=19w39a|The TNT texture is now colored correctly.}}
+|{{HistoryLine|||dev=pre1|[[File:Minecart with TNT JE3.png|32px]] The [[model]] of minecart with TNT has been changed.<ref>{{bug|MC-165971}}</ref>}}
+|{{HistoryLine|||dev=pre3|[[File:Minecart with TNT JE2 BE2.png|32px]] The model of minecart with TNT has been changed back to the [[18w43a]] model.}}
+|{{HistoryLine||1.16|dev=pre6|Fixed the explosion origin, previously causing nearby entities to not take much damage when the minecart with TNT exploded.}}
+|{{HistoryLine||1.19|dev=22w13a|The crafting recipe for a minecart with TNT is now shapeless.
+|Breaking a minecart with TNT now drops the item instead of the minecart and TNT separately.<ref>{{bug|MC-249493|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|Added optional field <code>explosion_power</code>.}}
+|{{HistoryLine||1.21.5|dev=pre1|Minecarts with TNT no longer explode when [[game rule]] <code>tntExplodes</code> is turned off.<ref>{{bug|MC-280474||TNT minecarts explode regardless of tntExplodes gamerule}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Minecart with TNT JE1 BE1.png|32px]] [[File:Minecart with TNT (item) JE1 BE1.png|32px]] Added minecart with TNT.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Minecart with TNT JE2 BE2.png|32px]] [[File:Minecart with TNT (item) JE2 BE2.png|32px]] The texture of minecart with TNT has been changed.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.31|Breaking a minecart with TNT now drops the item instead of the minecart and TNT separately.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Minecart with TNT JE1 BE1.png|32px]] [[File:Minecart with TNT (item) JE1 BE1.png|32px]] Added minecart with TNT.}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|The minecart [[spawn limit|limit]] has been increased.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Minecart with TNT JE2 BE2.png|32px]] [[File:Minecart with TNT (item) JE2 BE2.png|32px]] The texture of minecart with TNT have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Minecart with TNT JE1 BE1.png|32px]] [[File:Minecart with TNT (item) JE1 BE1.png|32px]] Added minecart with TNT.
+|Minecart with TNT emits smoke [[particle]]s when destroyed.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID for minecart with TNT has been changed from <code>MinecartTNT</code> to <code>tnt_minecart</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 407.{{info needed|and what was the entity ID?}}}}
+}}
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID has been changed from <code>minecarttnt</code> to <code>tnt_minecart</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+First TNT Minecart Image.jpg|The first image of minecarts with TNT, released by Dinnerbone.<ref>{{tweet|dinner|288302629803683840|Those blasted pigs have taken the village. We've ran out of options; we must stop them from spreading further!|January 7, 2013}}</ref><ref>{{tweet|dinner|288304442560880643|(Mirror: <nowiki>[imgur link]</nowiki>)|January 7, 2013}}</ref> (One can be seen in the lower-left corner.)
+First TNT Minecart Image ZOOM.jpg|A more zoomed in image.
+Minecart-with-tnt.png|Minecart with TNT and activator rail for detonation.
+13w02a Banner.png|The 13w02a banner, with a minecart with TNT and a [[hopper]].
+Dinnerbone safe boom1.jpg|Dinnerbone showing how minecarts with TNT have controlled explosions.<ref>{{tweet|dinner|291212723755307009|What's the point of properly activating TNT carts if they just blow up your tracks? Let me answer that with an album!|January 15, 2013}}</ref>
+Dinnerbone safe boom 2.png|Primed minecart with TNT.
+Dinnerbone safe boom 3.jpg|Explosion from a minecart with TNT. (The "bridge" of rails is left undestroyed by the explosion.)
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Vehicles]]
+
+[[cs:Vozík s TNT]]
+[[de:TNT-Lore]]
+[[es:Vagoneta con dinamita]]
+[[fr:Wagonnet à TNT]]
+[[it:Vagonetto con TNT]]
+[[ja:TNT付きのトロッコ]]
+[[ko:TNT가 실린 광산 수레]]
+[[nl:Mijnkar met TNT]]
+[[pl:Wagonik z TNT]]
+[[pt:Carrinho de mina com dinamite]]
+[[ru:Вагонетка с ТНТ]]
+[[uk:Вагонетка з динамітом]]
+[[zh:TNT矿车]]

@@ -1,0 +1,350 @@
+{{Infobox item
+| title = Potion of Regeneration
+| group = Potion
+| 1-1 = Potion of Regeneration.png
+| group2 = Splash Potion
+| 2-1 = Splash Potion of Regeneration.png
+| group3 = Lingering Potion
+| 3-1 = Lingering Potion of Regeneration.png
+| invimage = Potion of Regeneration
+| invimage2 = Splash Potion of Regeneration
+| invimage3 = Lingering Potion of Regeneration
+| invimage4 = ----
+| invimage5 = Potion of Regeneration Extended
+| invimage6 = Splash Potion of Regeneration Extended
+| invimage7 = Lingering Potion of Regeneration Extended
+| invimage8 = ----
+| invimage9 = Potion of Regeneration Enhanced
+| invimage10 = Splash Potion of Regeneration Enhanced
+| invimage11 = Lingering Potion of Regeneration Enhanced
+| consumptiontime = {{convert|32|ticks|seconds}}
+| alwaysconsumable = Yes
+| renewable = Yes
+| stackable = No
+}}
+A '''potion of Regeneration''' is a [[potion]] that provides [[Regeneration]] when used.
+
+== Obtaining ==
+=== Brewing ===
+{{Brewing
+|head = 1
+|Ghast Tear
+|base = Awkward Potion
+|Potion of Regeneration
+|showvariants=1
+}}
+{{Brewing
+|Redstone Dust
+|base = Potion of Regeneration
+|Potion of Regeneration Extended
+|name = Potion of Regeneration +
+|showvariants=1
+}}
+{{Brewing
+|Glowstone Dust
+|base = Potion of Regeneration
+|Potion of Regeneration Enhanced
+|name = Potion of Regeneration II
+|showvariants=1
+}}
+{{Brewing
+|Gunpowder
+|base2=Potion of Regeneration
+|base1=Potion of Regeneration Extended
+|base3= Potion of Regeneration Enhanced
+|Splash Potion of Regeneration Extended
+|Splash Potion of Regeneration
+|Splash Potion of Regeneration Enhanced
+|name = Splash Potion of Regeneration
+|ingredients = [[Gunpowder]] +<br> '''Potion of Regeneration'''
+}}
+{{Brewing
+|Dragon's Breath
+|base2=Splash Potion of Regeneration
+|base1=Splash Potion of Regeneration Extended
+|base3=Splash Potion of Regeneration Enhanced
+|Lingering Potion of Regeneration Extended
+|Lingering Potion of Regeneration
+|Lingering Potion of Regeneration Enhanced
+|name = Lingering Potion of Regeneration
+|ingredients = [[Dragon's Breath]] +<br> '''Splash Potion of Regeneration'''
+|foot=1
+}}
+
+=== Mob loot ===
+A [[witch]] has an 8.5% chance to drop a potion of Regeneration if it dies while drinking the potion.
+
+=== Generated loot ===
+Each [[Trial Chambers#Supply|trial chambers supply]] chest can [[Generated loot|generate]] with 2 to 10 potions of Regeneration  in it.
+{| class="wikitable collapsible collapsed"
+|+ Exact chances
+|-
+! # of potions !! Chance
+|-<!--
+-->{{#vardefine:p|(1/18)}}<!--
+-->{{#vardefine:q|(1-{{#var:p}})}}
+|  0 ||      {{#expr:({{#var:p}}^0*{{#var:q}}^3*1 + {{#var:p}}^0*{{#var:q}}^4*1 + {{#var:p}}^0*{{#var:q}}^5*1 ) / 3}}
+|-
+|  2 ||      {{#expr:({{#var:p}}^1*{{#var:q}}^2*3 + {{#var:p}}^1*{{#var:q}}^3*4 + {{#var:p}}^1*{{#var:q}}^4*5 ) / 3}}
+|-
+|  4 ||      {{#expr:({{#var:p}}^2*{{#var:q}}^1*3 + {{#var:p}}^2*{{#var:q}}^0*6 + {{#var:p}}^2*{{#var:q}}^3*10) / 3}}
+|-
+|  6 ||      {{#expr:({{#var:p}}^3*{{#var:q}}^0*1 + {{#var:p}}^3*{{#var:q}}^1*4 + {{#var:p}}^3*{{#var:q}}^2*10) / 3}}
+|-
+|  8 || 1 in {{#expr:(                              {{#var:p}}^4*{{#var:q}}^0*1 + {{#var:p}}^4*{{#var:q}}^1*5 )^-1 * 3}}
+|-
+| 10 || 1 in {{#expr:(                                                            {{#var:p}}^5*{{#var:q}}^0*1 )^-1 * 3}}
+|}<!--
+-->{{LootChestItem|potion-of-regeneration}}
+
+== Usage ==
+Potions of Renegeration allow the [[player]] to quickly regenerate [[health]]. Splash and lingering potions of Regeneration work on most mobs and heal those mobs just as much as they heal players.
+
+=== Effect ===
+{| class="wikitable"
+! Potion type
+! Tier
+! Duration
+! Effect
+! Description
+|-
+| rowspan="3" |Potion
+| rowspan="2" |1
+| 0:45
+| rowspan="9" |{{EffectLink|Regeneration}}
+| Restores {{hp|18}} health over time, {{hp|1}} every 50 [[tick]]s (2.5 seconds).
+|-
+| 1:30{{only|java|short=1}}<br>2:00{{only|bedrock|short=1}}
+| Restores {{hp|36}}{{only|java|short=1}} or {{hp|48}}{{only|bedrock|short=1}} health over time, {{hp|1}} every 50 ticks (2.5 seconds).
+|-
+| 2
+| 0:22
+| Restores {{hp|18}} health over time, {{hp|1}} every 25 ticks (1.25 seconds).
+|-
+| rowspan="3" |Splash Potion
+| rowspan="2" |1
+| 0:45
+| Restores {{hp|18}} health over time, {{hp|1}} every 50 ticks (2.5 seconds).
+|-
+| 1:30{{only|java|short=1}}<br>2:00{{only|bedrock|short=1}}
+| Restores {{hp|36}}{{only|java|short=1}} or {{hp|48}}{{only|bedrock|short=1}} health over time, {{hp|1}} every 50 ticks (2.5 seconds).
+|-
+| 2
+| 0:22
+| Restores {{hp|18}} health over time, {{hp|1}} every 25 ticks (1.25 seconds).
+|-
+| rowspan="3" |Lingering Potion
+| rowspan="2" |1
+| 0:11
+| rowspan="3"  |The amount of health regenerated depends how long the entity is in the cloud.
+|-
+| 0:22{{only|java|short=1}}<br>0:30{{only|bedrock|short=1}}
+|-
+| 2
+| 0:05
+|}
+
+=== Crafting ingredient ===
+{{Crafting
+|head = 1
+|ignoreusage = 1
+|showname = 1
+|name = [[Arrow of Regeneration]]
+|ingredients = [[Arrow]] +<br>'''Lingering Potion of Regeneration'''
+|A1 = Arrow
+|A2 = Arrow
+|A3 = Arrow
+|B1 = Arrow
+|B2 = Lingering Potion of Regeneration; Lingering Potion of Regeneration Enhanced; Lingering Potion of Regeneration Extended
+|B3 = Arrow
+|C1 = Arrow
+|C2 = Arrow
+|C3 = Arrow
+|Output = Arrow of Regeneration, 8; Arrow of Regeneration Enhanced, 8; Arrow of Regeneration Extended, 8
+|foot = 1
+}}
+
+== Sounds ==
+{{Main|Potion#Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition = java
+|showforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Regeneration
+|spritetype = item
+|nameid = potion
+|form = item
+|translationkey = item.minecraft.potion.effect.regeneration
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Regeneration
+|spritetype=item
+|nameid=splash_potion
+|form=item
+|translationkey=item.minecraft.splash_potion.effect.regeneration
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Regeneration
+|spritetype=item
+|nameid=lingering_potion
+|form=item
+|translationkey=item.minecraft.lingering_potion.effect.regeneration
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition = bedrock
+|shownumericids = y
+|showforms = y
+|notshowbeitemforms = y
+|generatetranslationkeys = y
+|displayname = Potion of Regeneration
+|spritetype = item
+|nameid = potion
+|id = 426
+|form = item
+|translationkey = potion.regeneration.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Splash Potion of Regeneration
+|spritetype=item
+|nameid=splash_potion
+|id=561
+|form=item
+|translationkey=potion.regeneration.splash.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Potion of Regeneration
+|spritetype=item
+|nameid=lingering_potion
+|id=562
+|form=item
+|translationkey=potion.regeneration.linger.name
+|foot=1
+}}
+
+=== Metadata ===
+{{see also|Potion#Metadata}}
+{{edition|bedrock}}:
+{| class="wikitable"
+|-
+! Potion !! Regular !! Extended !! Level II
+|-
+| Potion of Regeneration || 14 || 15 || 16
+|}
+
+=== Item data ===
+{{see also|Potion#Item data}}
+{{edition|je}}:
+{{see also|Data component format}}
+Regular, splash, and lingering potions all use a "{{cd|potion}}" tag inside "{{cd|potion_contents}}" component to indicate the potion type.
+{| class=wikitable
+!Potion
+!Regular
+!Level II
+!Extended
+|-|
+| Potion of Regeneration || <code>regeneration</code> || <code>strong_regeneration</code> || <code>long_regeneration</code>
+|}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Local Brewery}}
+
+== Advancements ==
+{{Load advancements|Local Brewery;A Furious Cocktail;How Did We Get Here?;Husbandry}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|[[File:Potion of Regeneration JE1 BE1.png|32px]] [[File:Splash Potion of Regeneration JE1 BE1.png|32px]] Added the potion of Regeneration, along with its splash variant.}}
+|{{HistoryLine||1.3.1|dev=12w22a|Potions of Regeneration are added to the [[Creative inventory]]. The extended-enhanced version (both extended time and level II) also exists in the inventory.}}
+|{{HistoryLine||1.5|dev=13w09c|Extended-enhanced potions of Regeneration no longer exist in the Creative inventory.}}
+<!-- the following line is contradictory.
+|{{HistoryLine|||dev=14w27a|[[File:Potion of Regeneration JE1 BE1.png|32px]] Added potions of [[Regeneration]].}}
+also bookmark -->
+|{{HistoryLine||1.8.1|dev=pre1|Potion of Regeneration can now be extended.}}
+|{{HistoryLine||1.9|dev=15w31a|Changed position of potions of Regeneration in the Creative inventory.
+|Potions of Regeneration can no longer be brewed into [[potions of Weakness]] with a fermented spider eye.
+|Removed extended-enhanced potions of Regeneration.{{verify}}}}
+|{{HistoryLine|||dev=15w33a|[[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] Added lingering potions of [[Regeneration]].
+|The duration of extended potions of Regeneration has been reduced from 2:00 to 1:30.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Potion of Regeneration JE2 BE2.png|32px]] [[File:Potion of Regeneration.gif|32px]] [[File:Splash Potion of Regeneration JE2 BE2.png|32px]] [[File:Lingering Potion of Regeneration JE2 BE2.png|32px]] Changed the textures of potions of Regeneration.}}
+|{{HistoryLine||1.19|dev=22w13a|Potions of Regeneration may now be found in [[ancient city]] chests instead of potions of Healing.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Potions of Regeneration can now be ejected as loot from [[trial spawner]]s and [[ominous trial spawner]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Potion of Regeneration JE1 BE1.png|32px]] [[File:Splash Potion of Regeneration JE1 BE1.png|32px]] Added potions of Regeneration with its splash variant.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Potions of [[Regeneration]] are now obtainable in [[Survival]].}}
+|{{HistoryLine||v0.14.0|dev=build 1|Potions of Regeneration can now be obtained by killing [[witch]]es while they're drinking potions.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Lingering Potion of Regeneration JE1 BE1.png|32px]] Added lingering potions of Regeneration.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Potions of Regeneration can now be found inside [[buried treasure]] chests.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Potion of Regeneration BE2.png|32px]] [[File:Splash Potion of Regeneration BE2.png|32px]] [[File:Lingering Potion of Regeneration BE2.png|32px]] The textures for potions of Regeneration have been changed.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.27|Potions of Regeneration may now be found in [[ancient city]] chests instead of potions of Healing.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|Removed the [[enchantment glint]] from potions of Regeneration.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Potion of Regeneration JE2 BE2.png|32px]] [[File:Splash Potion of Regeneration JE2 BE2.png|32px]] [[File:Lingering Potion of Regeneration JE2 BE2.png|32px]] The textures for potions of Regeneration have been changed.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Potions of Regeneration can now be ejected as loot from [[trial spawner]]s and [[ominous trial spawner]]s.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Potions of Regeneration can no longer be found inside buried treasure chests.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Potion of Regeneration JE1 BE1.png|32px]] Added potions of Regeneration.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|The duration of extended potions of Regeneration has been reduced from 2:00 to 1:30.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|The duration of extended potions of Regeneration has been increased from 1:30 back to 2:00.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Potions of [[Regeneration]] can now be found inside [[buried treasure]] chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Potion of Regeneration JE2 BE2.png|32px]] [[File:Potion of Regeneration.gif|32px]] [[File:Splash Potion of Regeneration JE2 BE2.png|32px]] [[File:Lingering Potion of Regeneration JE2 BE2.png|32px]] Changed the textures of potions of Regeneration.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Potion of Regeneration JE1 BE1.png|32px]] Added potions of Regeneration.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/taking-inventory--potion Taking Inventory: Potion] – Minecraft.net on May 11, 2022
+*[https://potioncraft.net Minecraft Potions - A Visual Guide] (version 1.9)
+
+== Navigation ==
+{{Navbox brewing}}
+{{Navbox items|Utilities}}
+
+[[Category:Potions]]
+
+[[fr:Potion de régénération]]
+[[pt:Poção de Regeneração]]
+[[zh:再生药水]]

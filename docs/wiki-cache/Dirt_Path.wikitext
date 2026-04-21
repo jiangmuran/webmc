@@ -1,0 +1,211 @@
+{{redirect|Grass Path|the full block|Grass Block}}
+{{Redirect|Path|the format used by NBT paths|NBT path format}}
+{{Infobox block
+| image = Dirt Path.png
+| transparent = {{jebe|Yes|Partial (allows light to pass through)}}
+| light = No
+| tool = Shovel
+| renewable = {{jebe|No|Yes}}
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+'''Dirt paths''' are decorative blocks. They are mainly found in [[village]]s as a path for the villagers.
+
+== Obtaining ==
+=== Breaking ===
+A [[shovel]] is the most efficient [[tool]] for mining dirt paths.
+
+{{IN|Bedrock}}, a dirt path block can be directly obtained with a [[Silk Touch]] tool.<ref>{{bug|MCPE-10482}}</ref>
+
+{{IN|Java}}, dirt paths always drop [[dirt]] when broken. Dirt path blocks can be obtained only via the [[Creative inventory]], [[commands]], or {{control|pick block}}. They can still be created from placed dirt, however, by {{control|using}} a [[shovel]] on dirt, as described in {{Section link||Post-generation}} below.
+
+{{breaking row|horizontal=1|Dirt Path|Shovel|drop=0}}
+
+=== Natural generation ===
+Dirt paths are naturally generated in [[village]]s when pathways replace [[grass block]]s.
+Their purpose is aesthetics, and additionally {{in|Bedrock}}, [[Villager#Preferred path|pathfinding]] for villagers. Most dirt paths connect to village structures and houses.
+
+Dirt paths also generate as part of some village structures.
+
+Although they can't be placed that way by the player, village generation can cause them to appear under other blocks.
+
+=== Post-generation ===
+Dirt paths can be created by {{control|using}} any type of [[shovel]] on the side or top of [[dirt]], [[grass block]], [[coarse dirt]], [[mycelium]], [[podzol]], or [[rooted dirt]] that has air above it. The shovel then loses one [[durability]].
+
+== Usage ==
+Dirt paths are primarily used for decoration, although they also prevent hostile mobs from spawning. They are a similar color to grass blocks placed in a desert or savanna biome. They are only {{frac|15|16}} of a block high, therefore items that require a full block like [[torch]]es and [[button]]s cannot be placed on them. [[Villager]]s and [[iron golem]]s prefer to use dirt paths the most when routing compared to any other block.{{only|be}}
+
+A dirt path block converts to dirt instantly if a block with a solid [[material]] is placed on top of it.
+
+Using a [[hoe]] on dirt path converts it to [[farmland]]. Since dirt paths can be created with any variant of dirt, it can be used as an intermediate step to convert [[podzol]] and [[mycelium]], which cannot be tilled directly, into farmland.
+
+{{IN|BE}}, using a [[flint and steel]] on a dirt path places [[fire]] on it. Doing this does not convert the path to dirt.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Grass}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Shovel flatten1.ogg
+|sound2=Shovel flatten2.ogg
+|sound3=Shovel flatten3.ogg
+|sound4=Shovel flatten4.ogg
+|subtitle=Shovel flattens
+|source=block
+|description=When a shovel creates a dirt path
+|id=item.shovel.flatten
+|translationkey=subtitles.item.shovel.flatten
+|volume=1.0
+|pitch=1.0
+|distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+|{{SoundLine
+|sound =Shovel flatten1.ogg
+|sound2=Shovel flatten2.ogg
+|sound3=Shovel flatten3.ogg
+|sound4=Shovel flatten4.ogg
+|source=block
+|description=When a shovel creates a dirt path
+|id=use.grass
+|volume=1.0
+|pitch = 0.8
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dirt Path
+|spritetype=block
+|nameid=dirt_path
+|foot=1|showblocktags=y|blocktags=mineable/shovel}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dirt Path
+|spritetype=block
+|nameid=grass_path
+|id=198
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Grass Path JE1 BE1.png|32px]] Added grass paths.
+|Grass paths are unobtainable within the Creative inventory.}}
+|{{HistoryLine|||dev=15w31c|The collision height of grass paths has changed to {{frac|15|16}} of a [[block]].}}
+|{{HistoryLine||1.10|dev=16w20a|Grass paths now generate when [[village]] paths replace [[grass block]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|Grass path is now available in the [[Creative inventory]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Grass Path JE2 BE2.png|32px]] The texture of grass paths has been slightly changed.}}
+|{{HistoryLine|||dev=19w05a|Added [[wandering trader]]s, which sell podzol, making it a [[renewable resource]].}}
+|{{HistoryLine|||dev=19w12a|Grass paths now have random orientations when placed, similar to [[grass block]]s.}}
+|{{HistoryLine||1.15|dev=pre2|Grass paths now suffocate mobs.}}
+|{{HistoryLine|||dev=pre3|Grass paths no longer suffocate mobs.}}
+|{{HistoryLine||1.17|dev=20w45a|"Grass Path" was renamed to "Dirt Path".
+|Dirt paths can now be made on top of dirt, coarse dirt, mycelium, and podzol.}}
+|{{HistoryLine|||dev=21w13a|Dirt paths can now be made on top of [[rooted dirt]].}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Dirt Path JE3.png|32px]] The texture of dirt paths has been changed.}}
+|{{HistoryLine|||dev=pre7|[[File:Dirt Path JE4 BE3.png|32px]] Slightly changed the side texture by moving up 1 pixel of the dirt part.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Grass Path JE1 BE1.png|32px]] Added grass paths.|Grass paths replace [[gravel]] as paths in [[village]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 2|The texture of grass paths has been slightly changed.}}
+|{{HistoryLine||v0.16.0|dev=build 1|Added [[sound]]s for when grass paths are made.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Grass Path JE2 BE2.png|32px]] The texture of grass paths has been slightly changed again.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Grass paths are now available in the [[Creative inventory]].}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.52|"Grass Path" was renamed to "Dirt Path".
+|Dirt paths can now be made on top of [[dirt]], [[coarse dirt]], [[mycelium]], and [[podzol]].}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.50|Dirt paths can now be made on top of [[rooted dirt]].}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|[[File:Dirt Path JE4 BE3.png|32px]] The texture of dirt paths has been changed.}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.21|The collision height of dirt paths has reduced from a full block to {{frac|15|16}} of a block.}}
+|{{HistoryLine|||dev=Preview 1.19.40.24|The collision height of dirt paths has returned to {{frac|16|16}} of a block.}}
+|{{HistoryLine||1.19.50|dev=Preview 1.19.50.20|The collision height of dirt paths has been changed back to {{frac|15|16}} of a block.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.27|Creating a dirt path now makes a unique sound instead of the grass step sound.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|[[File:Grass Path JE1 BE1.png|32px]] Added grass paths.
+|Grass paths are available in the Creative inventory.}}
+|{{HistoryLine||xbox=TU63|xbone=CU53|ps3=1.67|psvita=1.67|ps4=1.67|wiiu=Patch 32|switch=1.0.13|Grass path can now be obtained with [[Silk Touch]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Grass Path JE2 BE2.png|32px]] The texture of grass paths has been slightly changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Grass Path JE1 BE1.png|32px]] Added grass paths.
+|Grass paths are unobtainable within the Creative inventory.}}
+}}
+
+=== Data history ===
+{{info needed section|Did 20w45a change the ID?}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 208.}}
+}}
+
+== Issues ==
+{{Issue list|Grass Path|Dirt Path}}
+
+== Trivia ==
+* If aimed correctly, an [[arrow]] can fly past the gap between a [[block]] and a dirt path placed below using [[commands]].
+* The idea of dirt paths came from [http://www.reddit.com/r/Minecraft/comments/2sqwu6/i_made_a_road_simple_yet_so_much_nicer_than/ a suggestion post in /r/Minecraft].<ref>{{tweet|jeb_|557538265419759616|Popular suggestion by /u/LupusX added, ... also for MC:PE|January 20, 2015}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Path Suggestion.png|The original suggestion image for dirt paths.
+Grum Path.png|The first image of dirt paths released.
+Pressed Dirt.png|The second image of dirt paths released.
+GrassPath2.jpg|The third image of dirt paths released.
+V0.11.0 Dev Village.png|First image of dirt paths generated in a [[village]], tweeted by [[Tommaso Checchi]].
+GrassBlockGrassPath.png|The {{frac|1|16}} of a block height difference between grass blocks and dirt paths.
+Glitchlol.png|[[Wheat seeds]] growing from dirt paths due to a glitch.
+Dirt Path Update.jpg|[[Dirt]], [[coarse dirt]], [[podzol]], and [[mycelium]] being turned into dirt paths.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Decoration}}
+
+[[Category:Generated structure blocks]]
+[[Category:Createable blocks]]
+
+[[de:Trampelpfad]]
+[[es:Camino de tierra]]
+[[fr:Chemin de terre]]
+[[it:Sentiero sterrato]]
+[[ja:土の道]]
+[[ko:흙 길]]
+[[nl:Graspad]]
+[[pl:Ścieżka]]
+[[pt:Caminho de Terra]]
+[[ru:Травяная тропинка]]
+[[uk:Ґрунтова стежка]]
+[[zh:土径]]

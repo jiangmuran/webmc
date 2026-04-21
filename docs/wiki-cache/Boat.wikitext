@@ -1,0 +1,938 @@
+{{For}}
+{{Infobox item entity
+| group = Oak
+| 1-1 = Oak Boat.png
+| invimage = Oak Boat
+| group2 = Spruce
+| 2-1 = Spruce Boat.png
+| invimage2 = Spruce Boat
+| group3 = Birch
+| 3-1 = Birch Boat.png
+| invimage3 = Birch Boat
+| group4 = Jungle
+| 4-1 = Jungle Boat.png
+| invimage4 = Jungle Boat
+| group5 = Acacia
+| 5-1 = Acacia Boat.png
+| invimage5 = Acacia Boat
+| group6 = Dark Oak
+| 6-1 = Dark Oak Boat.png
+| invimage6 = Dark Oak Boat
+| group7 = Mangrove
+| 7-1 = Mangrove Boat.png
+| invimage7 = Mangrove Boat
+| group8 = Cherry
+| 8-1 = Cherry Boat.png
+| invimage8 = Cherry Boat
+| group9 = Pale Oak
+| 9-1 = Pale Oak Boat.png
+| invimage9 = Pale Oak Boat
+| group10 = Bamboo
+| 10-1 = Bamboo Raft.png
+| invimage10 = Bamboo Raft
+| stackable = No
+| renewable = Yes
+| flammable = Yes
+| size = '''{{IN|Java}}:'''<br>
+Height: 0.5625 blocks<br>Width: 1.375 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+Height: 0.455 blocks<br>Width: 1.4 blocks
+| networkid =
+| health = {{jebe|Just over {{hp|4}}{{note|Exactly 4 damage is not enough to destroy it.}}|{{hp|40}}}}
+}}
+'''Boats''' (including '''bamboo rafts''') are drivable vehicle [[entities]] that can be ridden through [[water]] or at high speeds across all types of [[Ice (disambiguation)#Blocks|ice]]. Most [[mob]]s will ride nearby boats, which they cannot control or exit on their own.
+
+== Obtaining ==
+Boats can be crafted with any Overworld planks; crimson and warped planks cannot be used to make boats.<ref>{{bug|MC-170868|||Invalid}}</ref>
+
+Boats can be retrieved by repeatedly hitting them until they drop as an item. In ''Java Edition'', [[tool]]s and [[weapon]]s that deal more than {{Health|4}} damage can destroy a boat in one hit.
+
+=== Crafting ===
+{{Crafting
+|showname=0
+|A2= Matching Overworld Planks
+|C2= Matching Overworld Planks
+|A3= Matching Overworld Planks
+|B3= Matching Overworld Planks
+|C3= Matching Overworld Planks
+|Output= Matching Boat
+|type= Transportation
+}}
+
+== Usage ==
+Boats can be used for the transportation of [[player]]s and [[mob]]s, sold for emeralds, or used as [[fuel]].
+
+=== Crafting ===
+{{Crafting usage|Any Boat}}
+
+=== Trading ===
+{{Trade uses}}
+
+=== Fuel ===
+A boat used as fuel in a [[furnace]] lasts 60 seconds, smelting up to 6 items.
+
+=== Transportation ===
+{{see also|Transportation|Riding}}
+
+==== Entering ====
+A player enters a boat by {{control|using}} it, if the boat is not fully occupied (boats can hold two entities). Unlike [[bed]]s, there is no message above the hotbar for attempting to enter a fully occupied boat.<ref>{{bug|MC-161251|||WAI}}</ref>
+
+==== Exiting ====
+A boat can be exited by {{control|sneaking}} or {{in|BE}}, pressing down the right analog stick on a controller, tapping the "Leave Boat" button when using touch controls, or {{control|jumping}}. When exiting a boat, the player is placed in the direction the player is facing, or, if facing directly up or down, the player is placed in front of the boat. The exiting player is placed on land if possible from the dismounting position.
+
+==== Motion ====
+Boats do not turn with mouse-look. 
+
+With a keyboard or gamepad, boats are controlled using the {{control|forward}}, {{control|left}} (turns left), {{control|right}} (turns right), and {{control|backward}} keys. Using the {{control|sprint}} key increases the field of vision, but does not increase speed as if [[sprinting]].
+
+With touchscreen controls, two buttons for steering appear. The right button or key steers to the left, and the left button or key steers to the right. Pressing both buttons or keys moves the boat forward.
+
+{{IN|Java}}, boats can be ridden against a current, but cannot be ridden upstream to a higher elevation. A boat lift, usually made from tripwire, pistons, and optionally a slime block, can be used to move a boat up. Bubble columns created with soul sand can also be used to push boats upward. These mechanisms can also be used {{in|bedrock}} but are usually unnecessary because boats can be ridden upward in descending water, as well as [[Tutorials/Water-powered boat transportation|follow upward stair-step currents]].
+
+== Behavior ==
+
+=== Speed ===
+Boats move according to the player's control or water currents, with speed affected by the surface traversed.
+
+When the forward or backward command is issued, a constant thrust is applied relative to the boat's facing direction, exponentially approaching the top speed at which thrust balances drag. The backward thrust is one-eighth of the forward thrust’s strength.
+
+When strafe commands are issued, a constant torque is applied to increase the boat's rotation speed, with the same drag mechanism limiting the maximum rate of rotation. 
+
+{{IN|be}}, boats do not have air resistance, meaning that if a boat is launched off a cliff at a certain speed, it will continue flying at that speed until it touches the ground.
+
+===== Motion details =====
+<span id=Speed></span>
+<!-- Function updateMotion -->
+Regardless of controls, the boat applies a friction that is proportional to the current horizontal velocity ''v'' by multiplying it with a coefficient ''c'' at the beginning of every tick: in water, air, or under flowing water, this value is 0.9; underwater, this value is 0.45; on land, this value is the average ''c'' (slipperiness) of all solid blocks underneath the boat (e.g. 0.6 for most blocks, 0.98 for [[ice]] and 0.989 for [[blue ice]]). The same is applied to rotational (angular) velocity. This is equivalent to applying a deceleration <math>a_f = -\mu v</math>, where ''v'' is the current horizontal velocity and <math display="inline">\mu = (1-c)\,\text{tick}^{-1} = 20(1-c)\,\text{s}^{-1}</math> is a friction coefficient. As a result, when controls are not pressed, the boat slows to a stop quadratically.
+
+[[Slime block]]s, [[honey block]]s, and [[soul sand]] each apply their special entity-slowing logic to boats on top of this.
+
+<!-- Function controlBoat -->
+{{IN|Java}}, When the forward key is pressed, the boat accelerate at 0.04&nbsp;m/tick<sup>2</sup>, for a real-time acceleration of 16&nbsp;ms<sup>-2</sup> forward assuming no lag. The reverse acceleration is 0.005&nbsp;m/tick<sup>2</sup> for a real-time acceleration of 2&nbsp;ms<sup>-2</sup>. When {{ctrl|strafe}} keys are pressed, the boat is given a rotation acceleration of 1&deg;/tick<sup>2</sup> (400&deg;/s<sup>2</sup>), which is so high that no gradual change of turning rate is usually felt.
+
+The above gives us a way to calculate the maximum speed of a boat on a surface because maximum speed is reached when the player's acceleration <math>a_p</math> cancels out with the friction <math>a_f</math>, <math display="inline">v_\text{max} = \frac{a_p}{\mu}</math>.
+{| class="wikitable"
+|+
+!rowspan=2|Block
+!rowspan=2|''c''
+!rowspan=2|''&mu;'' (tick<sup>&minus;1</sup>)
+!colspan=2|Top Speed
+!colspan=2|Max Yaw Rate
+!rowspan=2|Notes
+|-
+! (block/tick) !! (block/s) !! (block/tick) !! (block/s)
+|-
+|[[Water]]
+|0.9
+|0.1
+|0.4
+|8.0
+|10
+|200
+|
+|-
+|[[Ice]], [[Frosted Ice]], [[Packed Ice]]
+|0.98
+|0.02
+|2
+|40
+|50
+|1000
+|rowspan=2|Boats move extremely quickly on ice,<ref name="MC-97803">{{bug|MC-97803||Boats going faster on ice than in water|WAI}}</ref> allowing for the construction of fast transportation systems in any dimension.
+|-
+|[[Blue Ice]]
+|0.989
+|0.011
+|<math>3.\overline{63}</math>
+|<math>72.\overline{72}</math>
+|<math>90.\overline{90}</math>
+|<math>1818.\overline{18}</math>
+|-
+|Land
+|0.6
+|0.4
+|0.1
+|2.0
+|2.5
+|50
+|
+|-
+|[[Slime Block]]
+|0.8
+|0.2
+|0.0588<!--0.04/(1-0.32)-->
+|1.176
+|5
+|100
+|Real ''c'' is 0.8, but onEntityWalk logic reduces it to 0.32 (0.8&times;0.4) for horizontal motion, with some increase if vertical velocity is nonzero.
+|-
+|[[Honey Block]], [[Soul Sand]]
+|0.6
+|0.4
+|0.0526<!--0.04/(1-0.24)-->
+|1.053
+|2.5
+|50
+|Real ''c'' is 0.6, but onEntityWalk logic reduces it to 0.24 (0.6&times;0.4) for horizontal motion.
+|}
+
+The torque and thrust values differ between Java and Bedrock edition, as do the linear drag coefficients of various surfaces, which are proportionally scaled to produce the same top speed/max yaw rate between two editions. 
+{| class="wikitable"
+|+
+!
+!Front Thrust
+!Back Thrust
+!Torque
+!Blue Ice
+!Pack/Frost/Ice
+!Water
+!Slime
+!Land
+|-
+|Java Edition
+|16 blocks/s<sup>2</sup>
+|2 blocks/s<sup>2</sup>
+|400 deg/s<sup>2</sup>
+|0.22 s<sup>-1</sup>
+|0.4 s<sup>-1</sup>
+|2 s<sup>-1</sup>
+|4 s<sup>-1</sup>
+|8 s<sup>-1</sup>
+|-
+|Bedrock Edition
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|{{Info needed|short=1}}
+|}
+
+=== Flotation ===
+[[File:Oak Boat shake.gif|thumb|right|The animation of an oak boat when atop a [[bubble column]].]]
+A boat floats atop still or flowing water. {{IN|java}}, a boat sinks if it enters water flowing downward.<ref>{{bug|MC-91206|||WAI}}</ref> {{IN|bedrock}}, a boat does not sink when submerged but floats up. This feature lets a player contrive stepped uphill water flows to [[Tutorials/Water-powered boat transportation#Floating uphill|propel a boat uphill]] using only flowing water.
+
+When a boat moves over a bubble column, it begins to shake. If the bubbles are caused by a [[magma block]], all passengers are expelled and the boat sinks.
+
+{{IN|java}}, a sunken boat cannot be re-floated until a bubble column pushes it up or it is broken by the player. {{IN|bedrock}}, a boat resumes floating when it emerges from the currents keeping it down, or when the bubble column is blocked or removed.
+
+[[Dolphin]]s chase players riding a boat in motion, occasionally bumping the boat, causing it to shake briefly.
+
+=== Destruction ===
+As boats are [[entities]], they have [[health]]. {{IN|je}}, boats effectively have just over {{hp|4}} (exactly 4 damage is not enough to destroy a boat), and regenerate {{frac|1|10}} per game tick. Boats {{in|be}} have {{hp|40}} health.<ref>{{bug|MCPE-62683}}</ref>
+
+Boats can be destroyed by explosions, fire and lava (but not magma blocks), cactus, and by being punched/shot by mobs, such as [[drowned]]. Boats made invulnerable with commands cannot be broken by any of these, but they still cannot be used to travel on lava because they sink.
+
+When a boat is destroyed, it drops itself in item form.
+
+=== Passengers ===
+[[File:Multiple mobs in 2 boats.png|alt=|thumb|Multiple mobs in 2 types of boats.]]
+Boats can support two riders, including [[mob]]s. A mob cannot exit a boat and is trapped until the boat gets destroyed, or until the player uses a [[fishing rod]] or [[lead]] to remove the mob. This can be used to transport mobs, although hostile mobs still attack while in boats. Mobs riding a boat don't despawn{{only|java}} and don't count toward the mob cap.<ref>{{bug|MC-182897|resolution=WAI}}</ref>
+
+{{IN|java}}, a player cannot both move (row) and use items at the same time. It is still possible to initialize item use (e.g. start eating) and row the boat while the item is still in the middle of the use animation. Although the rowing animation overrides the item use animation, the item can still be successfully consumed.
+
+Being in a boat limits the player's mouse-look to the forward 210° arc {{in|java}} and 180° {{in|bedrock}}.
+
+Underwater boats cannot be ridden. When the boat is underwater, all passengers in it are expelled.
+
+=== Damage prevention ===
+Riding a boat does not deplete [[hunger]], making it an efficient way to travel.
+
+Boats can completely nullify [[fall damage]] for themselves and any players/mobs inside, making them useful for travel through mountains or through the Nether<ref>{{bug|MC-105103|resolution=WAI}}</ref><ref>{{bug|MCPE-149490|||WAI}}</ref>.
+
+=== Collision ===
+A boat has a solid collision box, which means players and other entities can't go through it even at high speeds. Falling blocks are also blocked by boats.
+
+{{IN|java}}, a boat falling on top of an entity stops on top of the entity. {{IN|bedrock}}, a falling boat can go through other entities.
+
+Riding a boat over a [[lily pad]] causes the lily pad to drop, and causes the boat's speed to stutter a bit.
+
+=== Mobs ===
+Most mobs can ride boats. Mobs cannot exit the boat unless the boat is destroyed, sinks, or moves over a bubble column.
+
+Mobs can be picked up into the boat when they collide with the side of the boat. A mob cannot control the boat. {{IN|java}}, a boat being ridden by a player cannot pick up a mob, but in {{BE}}, they can. {{IN|Education}}, even [[tripod camera]]s can ride boats.
+
+A mob can ride a boat if it is narrower than a boat, and is neither an aquatic<ref group="note">Despite this, turtles are allowed to ride in boats because they are internally a part of the creature's group.</ref> nor ambient animal. The following mobs are ''unable'' to ride in a boat:
+
+{{columns-list|colwidth=20em|
+* {{EntityLink|Agent}}
+* {{EntityLink|Bat}}
+* {{EntityLink|Cod}}
+* {{EntityLink|Creaking}}
+* {{EntityLink|Dolphin}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Ghast}}
+* {{EntityLink|Giant}}
+* {{EntityLink|Glow Squid}}
+* {{EntityLink|Happy Ghast}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Nautilus}}
+* {{EntityLink|NPC}}
+* {{EntityLink|Pufferfish}}
+* {{EntityLink|Ravager}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Spider}}
+* {{EntityLink|Squid}}
+* {{EntityLink|Tadpole}}
+* {{EntityLink|Tropical Fish}}
+* {{EntityLink|Warden}}<ref group="note" name="why">Even though its width is smaller than a boat, and is neither an aquatic or an ambient mob, it is specifically coded to disallow it from riding.</ref>
+* {{EntityLink|Wither}}<ref group="note" name="why"/>
+* {{EntityLink|Zombie Nautilus}}
+* 0.75% of {{EntityLink|Zombified Piglin|Zombified Piglins}}{{only|bedrock|short=1}}{{note|See {{slink|Zombified Piglin|Mounting}}}}
+}}
+
+The baby counterparts of these mobs can ride in boats, but not the adult versions. If a baby grows up, the adult form is dismounted. Additionally, the adult versions of these mobs can still ride boats manually using the {{cmd|ride}} command:
+{{columns-list|colwidth=20em|
+* {{EntityLink|Camel}}
+* {{EntityLink|Camel Husk}}
+* {{EntityLink|Donkey}}
+* {{EntityLink|Hoglin}}<ref group="note">{{IN|java}}, hoglins are not dismounted if they grow up while in a boat. They can then be zombified to obtain an adult zoglin in a boat.</ref><ref>{{bug|MC-188617}}</ref>
+* {{EntityLink|Horse}}
+* {{EntityLink|Mule}}
+* {{EntityLink|Polar Bear}}
+* {{EntityLink|Skeleton Horse}}
+* {{EntityLink|Sniffer}}
+* {{EntityLink|Zoglin}}
+* {{EntityLink|Zombie Horse}}
+}}
+
+Additionally, few types of mobs can have various <code>Size</code> values, which can prevent them from riding boats:
+{{columns-list|colwidth=20em|
+* {{EntityLink|Slime}} above size 1
+* {{EntityLink|Magma cube}} above size 1
+* {{EntityLink|Phantom}} above size 3
+}}
+
+=== Lead ===
+Leads can be attached to boats and can break when stretched too far due to boats moving much more slowly on land. 
+
+The lead has no effect if a player is riding the boat. However, if any mob is riding the boat, the boat can be tugged along. This includes villagers, making transportation easier in early game with just a few boats and leads.
+
+== Sounds ==
+{{JE}}:<br>
+Boats use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+Despite being a solid surface, walking on boats is completely silent and does not produce footstep sounds.<ref>{{bug|MC-101950}}</ref>
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Boat paddle land1.ogg
+|sound2=Boat paddle land2.ogg
+|sound3=Boat paddle land3.ogg
+|sound4=Boat paddle land4.ogg
+|sound5=Boat paddle land5.ogg
+|sound6=Boat paddle land6.ogg
+|subtitle=Rowing
+|source=neutral
+|description=While a boat is rowed on land
+|id=entity.boat.paddle_land
+|translationkey=subtitles.entity.boat.paddle_land
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Boat paddle water1.ogg
+|sound2=Boat paddle water2.ogg
+|sound3=Boat paddle water3.ogg
+|sound4=Boat paddle water4.ogg
+|sound5=Boat paddle water5.ogg
+|sound6=Boat paddle water6.ogg
+|sound7=Boat paddle water7.ogg
+|sound8=Boat paddle water8.ogg
+|subtitle=Rowing
+|source=neutral
+|description=While a boat is rowed in water
+|id=entity.boat.paddle_water
+|translationkey=subtitles.entity.boat.paddle_water
+|volume=0.8
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Swim1.ogg
+|sound2=Swim2.ogg
+|sound3=Swim3.ogg
+|sound4=Swim4.ogg
+|source=player
+|description=While a boat is rowed in water
+|id=random.swim
+| pitch = 0.6-1.4
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oak Boat
+|spritetype=item
+|nameid=oak_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Spruce Boat
+|spritetype=item
+|nameid=spruce_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Birch Boat
+|spritetype=item
+|nameid=birch_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Jungle Boat
+|spritetype=item
+|nameid=jungle_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Acacia Boat
+|spritetype=item
+|nameid=acacia_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Dark Oak Boat
+|spritetype=item
+|nameid=dark_oak_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Mangrove Boat
+|spritetype=item
+|nameid=mangrove_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Cherry Boat
+|spritetype=item
+|nameid=cherry_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Pale Oak Boat
+|spritetype=item
+|nameid=pale_oak_boat
+|itemtags=boats
+|form=item}}
+{{ID table
+|displayname=Bamboo Raft
+|spritetype=item
+|nameid=bamboo_raft
+|itemtags=boats
+|form=item
+|foot=1}}
+{{ID table
+|displayname=Oak Boat
+|spritetype=entity
+|nameid=oak_boat
+|spritename=oak-boat}}
+{{ID table
+|displayname=Spruce Boat
+|spritetype=entity
+|nameid=spruce_boat
+|spritename=spruce-boat}}
+{{ID table
+|displayname=Birch Boat
+|spritetype=entity
+|nameid=birch_boat
+|spritename=birch-boat}}
+{{ID table
+|displayname=Jungle Boat
+|spritetype=entity
+|nameid=jungle_boat
+|spritename=jungle-boat}}
+{{ID table
+|displayname=Acacia Boat
+|spritetype=entity
+|nameid=acacia_boat
+|spritename=acacia-boat}}
+{{ID table
+|displayname=Dark Oak Boat
+|spritetype=entity
+|nameid=dark_oak_boat
+|spritename=dark-oak-boat}}
+{{ID table
+|displayname=Mangrove Boat
+|spritetype=entity
+|nameid=mangrove_boat
+|spritename=mangrove-boat}}
+{{ID table
+|displayname=Cherry Boat
+|spritetype=entity
+|nameid=cherry_boat
+|spritename=cherry-boat}}
+{{ID table
+|displayname=Pale Oak Boat
+|spritetype=entity
+|nameid=pale_oak_boat
+|spritename=pale-oak-boat}}
+{{ID table
+|displayname=Bamboo Raft
+|spritetype=entity
+|nameid=bamboo_raft
+|spritename=bamboo-raft
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|showitemtags=y
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Oak Boat
+|spritetype=item
+|nameid=oak_boat
+|aliasid=boat / 0
+|id=375
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.oak.name}}
+{{ID table
+|displayname=Spruce Boat
+|spritetype=item
+|nameid=spruce_boat
+|aliasid=boat / 1
+|id=378
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.spruce.name}}
+{{ID table
+|displayname=Birch Boat
+|spritetype=item
+|nameid=birch_boat
+|aliasid=boat / 2
+|id=376
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.birch.name}}
+{{ID table
+|displayname=Jungle Boat
+|spritetype=item
+|nameid=jungle_boat
+|aliasid=boat / 3
+|id=377
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.jungle.name}}
+{{ID table
+|displayname=Acacia Boat
+|spritetype=item
+|nameid=acacia_boat
+|aliasid=boat / 4
+|id=379
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.acacia.name}}
+{{ID table
+|displayname=Dark Oak Boat
+|spritetype=item
+|nameid=dark_oak_boat
+|aliasid=boat / 5
+|id=380
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.big_oak.name}}
+{{ID table
+|displayname=Mangrove Boat
+|spritetype=item
+|nameid=mangrove_boat
+|aliasid=boat / 6
+|id=643
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.mangrove.name}}
+{{ID table
+|displayname=Cherry Boat
+|spritetype=item
+|nameid=cherry_boat
+|aliasid=boat / 8
+|id=657
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.cherry.name}}
+{{ID table
+|displayname=Pale Oak Boat
+|spritetype=item
+|nameid=pale_oak_boat
+|aliasid=boat / 9
+|id=722
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.pale_oak.name}}
+{{ID table
+|displayname=Bamboo Raft
+|spritetype=item
+|nameid=bamboo_raft
+|aliasid=boat / 7
+|id=661
+|form=item
+|itemtags=minecraft:boats
+|translationkey=item.boat.bamboo.name
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Boat
+|spritetype=entity
+|spritename=boats
+|nameid=boat
+|showentityfamily=y
+|entityfamily=boat,inanimate
+|id=90
+|foot=1}}
+
+=== Entity data ===
+Boats have entity data associated with them that contain various properties of the entity.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+</div><section end="entity data" />
+
+{{BE}}: 
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Whatever Floats Your Goat}}
+
+== Advancements ==
+{{load advancements|Whatever Floats Your Goat!}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.6|[[File:Oak Boat JE1.png|32px]] [[File:Oak Boat (item) JE1.png|32px]] Added boats. 
+|Initially, boats broke upon being placed outside water, and on impact with land.
+|{{Crafting table|nocat=y
+|A2= Oak Planks                    |C2= Oak Planks
+|A3= Oak Planks |B3= Oak Planks    |C3= Oak Planks
+|Output= Oak Boat
+}} Boats are crafted using 5 planks in a U shape.}}
+|{{HistoryLine||v1.0.6_01|Boats now only break on impact with land at high speeds.
+|Boats no longer break upon being placed outside water.
+|Boat turning has been made smoother.}}
+|{{HistoryLine||v1.2.3|Players in boats and [[minecart]]s now receive terrain updates.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|Submerged boats no longer rise very fast.}}
+|{{HistoryLine||1.8|dev=Pre-release|It is now possible to score a [[critical hit]] against a boat.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w15a|Boats can now be shot out from [[dispenser]]s.}}
+|{{HistoryLine|||dev=12w17a|Boats can now be destroyed in one hit in Creative mode.}}
+|{{HistoryLine|||dev=12w21a|Boats no longer take [[damage]] when colliding with [[lily pad]]s. Instead, the lily pads themselves break.}}
+|{{HistoryLine|||dev=12w23a|Boats can now accelerate to faster than previous speeds, and are now easier to control.}}
+|{{HistoryLine|||dev=12w27a|Boats now drop their [[item]] instead of 3 [[oak planks]] and 2 [[stick]]s if broken by a [[player]].|Instead, it needs to fall certain heights to drop 3 oak wood planks and 2 sticks.}}
+|{{HistoryLine|||dev=1.3|[[File:Oak Boat (item) JE2 BE1.png|32px]] The texture of the oak boat [[item]] has been changed.}}
+|{{HistoryLine||1.6.1|dev=13w16a|Boats are now dismounted using the sneak key; previously, this was achieved by right clicking on the boat a second time.}}
+|{{HistoryLine|||dev=13w16b|New boat physics with lower inertia, but {{control|left}}, {{control|back}} and {{control|right}} controls have been removed.
+|Boats now take [[damage]] and break when colliding with many lily pads in a short time.}}
+|{{HistoryLine||1.7.2|dev=13w36a|[[Player]]s can now {{cmd|summon}} [[mob]]s riding boats, though mobs cannot control boats.}}
+|{{HistoryLine|||dev=13w43a|Boats no longer inflict fall [[damage]] when running aground.
+|Boats being broken by lily pads has been slightly improved.
+|{{control|Left}}, {{control|back}} and {{control|right}} controls added again.}}
+|{{HistoryLine||1.8|dev=14w06a|[[Mob]]s riding boats can now control them, so that they can chase or flee enemies, move toward food, move about randomly, or whatever they would do on land. The exceptions are the [[ghast]] and [[bat]], both of which cannot control boats.}}
+|{{HistoryLine||1.8.2|dev=pre2|Boats can now survive crashes at higher speeds.<!-- They have to be going 0.2975 now, rather than only 0.2. -->}}
+|{{HistoryLine||1.9|dev=15w41a|[[File:Oak Boat JE2 BE1.png|32px]] [[File:Spruce Boat JE1 BE1.png|32px]] [[File:Birch Boat JE1 BE1.png|32px]] [[File:Jungle Boat JE1 BE1.png|32px]] [[File:Acacia Boat JE1 BE1.png|32px]] [[File:Dark Oak Boat JE1 BE1.png|32px]]<br>
+[[File:Oak Boat (item) JE3 BE2.png|32px]] [[File:Spruce Boat (item) JE1 BE2.png|32px]] [[File:Birch Boat (item) JE1 BE2.png|32px]] [[File:Jungle Boat (item) JE1 BE2.png|32px]] [[File:Acacia Boat (item) JE1 BE2.png|32px]] [[File:Dark Oak Boat (item) JE1 BE2.png|32px]] Boats have been overhauled to match the boats from [[Pocket Edition v0.11.0 alpha|Pocket Edition Alpha 0.11.0]]. They now have oars for paddling and are more durable and now allows passengers to board.
+|[[Mob]]s can now board boats, though they can no longer control them.
+|A new set of controls have been introduced: it includes holding down the {{control|right}} and {{control|left}} keys to move forward, and using the {{control|right}} key to move the right oar, turning the boat to the left (and vice-versa). Mouse movement no longer turns boats, and the {{control|forward}} and {{control|back}} keys no longer have any effect. 
+|[[Player]]s can no longer {{control|use}} [[item]]s or {{control|attack}} from boats unless they were at a complete stop.
+|The [[crafting]] recipe for boats has been changed to require a wooden [[shovel]] as shown below.
+{{Crafting table|nocat=y
+|A2= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks |B2= Wooden Shovel |C2= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks
+|A3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks |B3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks    |C3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks
+|Output= Oak Boat; Spruce Boat; Birch Boat; Jungle Boat; Acacia Boat; Dark Oak Boat
+}}
+|Boats no longer break [[snow layer]]s they run into.}}
+|{{HistoryLine|||dev=15w42a|The new boats are now comparable in speed to the old boats (slightly faster than sprinting), though with less momentum.
+|Players can now {{control|use}} items and {{control|attack}} immediately after they stop rowing.
+|Non-oak boats are now craftable, except for dark oak boats.}}
+|{{HistoryLine|||dev=15w43c|The texture of boats has been remapped, so that they now have a separate texture per oar and per side of the boat.}}
+|{{HistoryLine|||dev=15w45a|Dark oak boats are now craftable.}}
+|{{HistoryLine|||dev=15w51a|Boats now [[drop]] their corresponding [[planks]] when broken.}}
+|{{HistoryLine|||dev=16w04a|Boats are now faster and now move forward and backward using the {{control|forward}} and {{control|backward}} keys respectively, and steer left and right using the {{control|left}} and {{control|right}} keys respectively. The rowing mechanism introduced in [[15w41a]], holding the {{control|right}} and {{control|left}} keys, is removed and no longer moves the boat forward. The controls are now more similar to boats before the overhaul.
+|Boats now sink when underwater, or within flowing water of any depth.
+|{{Crafting table|nocat=y
+|A2= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks                    |C2= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks
+|A3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks |B3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks    |C3= Oak Planks; Spruce Planks; Birch Planks; Jungle Planks; Acacia Planks; Dark Oak Planks
+|Output= Oak Boat; Spruce Boat; Birch Boat; Jungle Boat; Acacia Boat; Dark Oak Boat
+}} The crafting recipe of boats has been restored to the original recipe, no longer requiring a [[wooden shovel]] as it has since 15w41a (though matching wood [[planks]] is still required).
+|Riding a boat no longer subjects [[water]]-sensitive [[mob]]s to being damaged by water, and no longer protects sunlight-sensitive mobs from being damaged by sunlight.
+|Dismounting in a boat now attempts to place the [[player]] on land.}}
+|{{HistoryLine|||dev=16w05a|Boats now travel extremely fast on [[ice]], [[packed ice]] and [[frosted ice]].<ref>{{bug|MC-97803}}</ref>}}
+|{{HistoryLine|||dev=16w06a|Riding [[entities]] such as boats are now run by the client rather than by the server.}}
+|{{HistoryLine||1.11|dev=16w32a|The player's [[hunger]] bar is now visible when riding in a boat.}}
+|{{HistoryLine|||dev=16w33a|Boats can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine|||dev=16w39c|Boats placed by dispensers now face the same way as the dispenser, instead of toward the dispenser.<ref>{{bug|MC-90074|||Fixed}}</ref>}}
+|{{HistoryLine||1.12|dev=17w17a|Boat paddling [[sound]]s have been added.}}
+|{{HistoryLine||1.13|dev=18w06a|Boats as fuel now [[smelt]] 1 [[item]] in a [[furnace]] instead of 2.}}
+|{{HistoryLine|||dev=18w15a|Added [[blue ice]], which allows boats to travel even faster on it.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Oak Boat JE3.png|32px]] [[File:Spruce Boat JE2.png|32px]] [[File:Birch Boat JE2.png|32px]] [[File:Jungle Boat JE2.png|32px]] [[File:Acacia Boat JE2.png|32px]] [[File:Dark Oak Boat JE2.png|32px]]<br>
+[[File:Oak Boat (item) JE4 BE3.png|32px]] [[File:Spruce Boat (item) JE2 BE3.png|32px]] [[File:Birch Boat (item) JE2 BE3.png|32px]] [[File:Jungle Boat (item) JE2 BE3.png|32px]] [[File:Acacia Boat (item) JE2 BE3.png|32px]] [[File:Dark Oak Boat (item) JE2 BE3.png|32px]] The textures of all boats have been changed.}}
+|{{HistoryLine|||dev=18w50a|[[File:Oak Boat JE4 BE2.png|32px]] [[File:Spruce Boat JE3 BE2.png|32px]] [[File:Birch Boat JE3 BE2.png|32px]] [[File:Jungle Boat JE3 BE2.png|32px]] [[File:Acacia Boat JE3 BE2.png|32px]] [[File:Dark Oak Boat JE3 BE2.png|32px]] The textures of all boats have been changed to match the new [[planks]].}}
+|{{HistoryLine|||dev=19w11a|Fisherman [[villager]]s now [[trading|buy]] boats for 1 emerald.}}
+|{{HistoryLine||1.15|dev=19w37a|Boats as fuel now [[smelt]] 6 [[item]]s in a [[furnace]] instead of 1.}}
+|{{HistoryLine||1.16|dev=20w18a|Mobs in boats no longer [[despawn]].}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Mangrove Boat JE1 BE1.png|32px]] [[File:Mangrove Boat (item) JE1 BE1.png|32px]] Added mangrove boats.}}
+|{{HistoryLine|||dev=22w12a|Boats can now be used to craft boats with chests.
+|[[File:Oak Boat (item) JE5.png|32px]] [[File:Spruce Boat (item) JE3 BE5.png|32px]] [[File:Birch Boat (item) JE3 BE4.png|32px]] [[File:Jungle Boat (item) JE3 BE4.png|32px]] [[File:Acacia Boat (item) JE3 BE4.png|32px]] [[File:Dark Oak Boat (item) JE3 BE4.png|32px]] The textures of all boat items (except mangrove) have been changed.<ref>{{bug|MC-94161|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w14a|Due to the addition of the [[mangrove tree]] and [[mangrove swamp]], mangrove boats are now obtainable and renewable.}}
+|{{HistoryLine|||dev=22w15a|[[File:Oak Boat (item) JE6.png|32px]] [[File:Spruce Boat (item) JE4.png|32px]] [[File:Birch Boat (item) JE4.png|32px]] [[File:Jungle Boat (item) JE4.png|32px]] [[File:Acacia Boat (item) JE4.png|32px]] [[File:Dark Oak Boat (item) JE4.png|32px]] [[File:Mangrove Boat (item) JE2.png|32px]] The textures of all boat item textures have been changed.}}
+|{{HistoryLine||October 15, 2022|link={{ytl|yZRXmHiEh7U&t}}|[[File:Bamboo Raft JE1 BE1.png|32px]] Bamboo rafts were announced at [[Minecraft Live 2022]].}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[File:Bamboo Raft JE1 BE1.png|32px]] [[File:Bamboo Raft (item) JE1.png|32px]] Added bamboo rafts.}}
+|{{HistoryLine|||dev=22w45a|[[File:Bamboo Raft (item) JE2 BE2.png|32px]] The item texture of the bamboo raft has been changed.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Cherry Boat JE1 BE1.png|32px]] [[File:Cherry Boat (item) JE1 BE1.png|32px]] Added cherry boats.}}
+|{{HistoryLine||1.20|dev=23w12a|Bamboo rafts and cherry boats are now available without using the "Update 1.20" experimental data pack.}}
+|{{HistoryLine||1.21|dev=pre1|Boats are now [[leash]]able.}}
+|{{HistoryLine||1.21.2|dev=24w37a|Boats no longer drop planks and sticks when crashed, which at this point was only ever possible due to a rare bug.
+|The remaining code for boats that caused them to be destroyed like in pre-1.9 has been removed.<ref>{{bug|MC-119369}}</ref> Prior to this point, falling from very specific heights would destroy the boat and damage the rider.}}
+|{{HistoryLine|||dev=24w39a|Boat entities now have different identifiers for each wood type, instead of all types being <code>boat</code>.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Pale Oak Boat JE1 BE1.png|32px]] [[File:Pale Oak Boat (item) JE1 BE1.png|32px]] Added pale oak boats.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Pale oak boats are now available without using the "Winter Drop" experimental data pack.}}
+|{{HistoryLine||1.21.6|dev=25w20a|[[File:Pale Oak Boat (item) JE2.png|32px]] The texture of the pale oak boat item has been tweaked.<ref>{{bug|MC-277991|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||September 19, 2014|link={{tweet|_tomcc|512935629026770944}}|[[Tommaso Checchi]] tweeted a picture of a [[player]] riding a boat, stating that the most important thing is to "get the paddling right."
+|[[File:Minecart JE2 BE1.png|32px]] The model used by boats is currently a [[minecart]].}}
+|{{HistoryLine||January 26, 2015|link={{tweet|_tomcc|559697958728654848}}|Tommaso Checchi tweets a screenshot of multiple riders in a single boat.
+|[[File:Boat (pre-release).png|32px]] The model used by boats is now a minecart which has been squished vertically, and tinted brown.}}
+|{{HistoryLine||February 20, 2015|link={{tweet|_tomcc|568844305491730432}}|Tommaso Checchi tweets a screenshot of multiple boats with only mobs in them.
+|Boats now have a proper model with paddles.}} 
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Oak Boat JE2 BE1.png|32px]] [[File:Spruce Boat JE1 BE1.png|32px]] [[File:Birch Boat JE1 BE1.png|32px]] [[File:Jungle Boat JE1 BE1.png|32px]] [[File:Acacia Boat JE1 BE1.png|32px]] [[File:Dark Oak Boat JE1 BE1.png|32px]]<br>
+[[File:Oak Boat (item) JE2 BE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] Added boats. Each wood type has its own respective variant, though they share the same sprite as [[item]]s.
+|Boats can support two riders, including [[mob]]s.
+|Boats are larger in size than {{in|java}}.
+|Boats are more resistant to crashing against land than {{in|java}}.}}
+|{{HistoryLine|||dev=build 12|Projectiles can now be shot from boats.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added all boat variants to the [[Creative inventory]].
+|[[File:Oak Boat (item) JE3 BE2.png|32px]] [[File:Spruce Boat (item) JE1 BE2.png|32px]] [[File:Birch Boat (item) JE1 BE2.png|32px]] [[File:Jungle Boat (item) JE1 BE2.png|32px]] [[File:Acacia Boat (item) JE1 BE2.png|32px]] [[File:Dark Oak Boat (item) JE1 BE2.png|32px]] New [[inventory]] icons for boats have been added. The sprite now includes paddles and represents their respective wood color.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Boats are now slightly faster than sprinting, and no longer deplete [[hunger]].
+|[[Player]]s can now {{control|use}} [[item]]s and {{control|attack}} immediately after they stop rowing.}}
+|{{HistoryLine|||dev=build 3|Boats now stack on top of each other.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.22|Boats now move faster on [[ice]].}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|The steering of boats has been changed when using keyboard and mouse - W now moves the boat forward and S reverses it.}}
+|{{HistoryLine|||dev=beta 1.5.0.4|Boats can now sink or float on [[bubble column]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Oak Boat JE4 BE2.png|32px]] [[File:Spruce Boat JE3 BE2.png|32px]] [[File:Birch Boat JE3 BE2.png|32px]] [[File:Jungle Boat JE3 BE2.png|32px]] [[File:Acacia Boat JE3 BE2.png|32px]] [[File:Dark Oak Boat JE3 BE2.png|32px]]<br>
+[[File:Oak Boat (item) JE4 BE3.png|32px]] [[File:Spruce Boat (item) JE2 BE3.png|32px]] [[File:Birch Boat (item) JE2 BE3.png|32px]] [[File:Jungle Boat (item) JE2 BE3.png|32px]] [[File:Acacia Boat (item) JE2 BE3.png|32px]] [[File:Dark Oak Boat (item) JE2 BE3.png|32px]] The textures of all boats have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Boats can now be [[trading|bought]] from fisherman [[villager]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[Trading]] has been changed, master-level fisherman villagers now offer to buy boats based on their villager [[biome]] outfit.
+|Due to trading changes, birch boats can no longer be [[trading|sold]] to fisherman villagers.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|Custom named boats now save their name after placing and breaking.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.27|[[File:Oak Boat (item) BE4.png|32px]] [[File:Spruce Boat (item) BE4.png|32px]] [[File:Birch Boat (item) JE3 BE4.png|32px]] [[File:Jungle Boat (item) JE3 BE4.png|32px]] [[File:Acacia Boat (item) JE3 BE4.png|32px]] The item sprites of all boats have been changed. The paddles now represent their respective wood color (except spruce) and the inside rims of the boats are darker.
+|[[File:Dark Oak Boat (item) JE3 BE4.png|32px]] An updated item sprite for dark oak boat has been added to the game files, but it's currently unused.<ref>{{bug|MCPE-151667}}</ref>}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.20.26|[[File:Spruce Boat (item) JE3 BE5.png|32px]] An updated item sprite for spruce boat has been added to the game files, but it's currently unused.<ref>{{bug|MCPE-152262}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.18.20.28|Spruce and dark oak boats now correctly use their updated item sprites.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.29|Boats can now be used to craft boats with chests.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|[[File:Mangrove Boat JE1 BE1.png|32px]] [[File:Mangrove Boat (item) JE1 BE1.png|32px]] Added mangrove boats.}}
+|{{HistoryLine|||dev=Preview 1.19.0.27|[[File:Oak Boat (item) JE6.png|32px]] [[File:Spruce Boat (item) JE4.png|32px]] [[File:Birch Boat (item) JE4.png|32px]] [[File:Jungle Boat (item) JE4.png|32px]] [[File:Acacia Boat (item) JE4.png|32px]] [[File:Dark Oak Boat (item) JE4.png|32px]] [[File:Mangrove Boat (item) JE2.png|32px]] Changed all boat item textures.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|[[File:Bamboo Raft JE1 BE1.png|32px]] [[File:Bamboo Raft (item) BE1.png|32px]] Added bamboo rafts behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[File:Bamboo Raft (item) JE2 BE2.png|32px]] The item texture of the bamboo raft has been changed to match ''[[Java Edition]]''.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[File:Cherry Boat JE1 BE1.png|32px]] [[File:Cherry Boat (item) JE1 BE1.png|32px]] Added cherry boats behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.20|Turtles can now ride boats, to match Java Edition.
+|Spiders, adult polar bears, adult hoglins and zoglins can no longer ride boats. However polar bears, hoglins and zoglins can still ride them manually using the {{cmd|ride}} command.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Bamboo rafts and cherry boats are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|The [[wooden shovel]] in the crafting recipe has been removed for all boat types except the bamboo raft.}}
+|{{HistoryLine|||dev=Preview 1.20.10.21|The bamboo raft recipe no longer needs a wooden shovel.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Pale Oak Boat JE1 BE1.png|32px]] [[File:Pale Oak Boat (item) JE1 BE1.png|32px]] Added pale oak boats.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|The second [[passenger]] of a boat no longer has large camera twitches when rotating toward the west direction.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.26|Boats are now able to be pulled out of water using a lead.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Oak Boat JE1.png|32px]] [[File:Oak Boat (item) JE2 BE1.png|32px]] Added boats.}}
+|{{HistoryLine||xbox=TU12|The [[spawn limit|maximum number]] of boats in a world has been increased from 20 to 40.
+|Boats now break when they hit land hard.|Boats can now be placed by [[dispenser]]s.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Boats are no longer broken by [[lily pad]]s anymore, instead they run straight through the lily pad now, breaking and sometimes dropping it.
+|When boats crash, they can now sometimes [[drop]] themselves as [[item]]s.
+|Boats are now less glitchy and more responsive now.
+|The maximum speed of boats has been increased.
+|When exiting, [[player]]s now move from the boat.
+|When broken by a player, they drop a boat now.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Boats are now dismounted using the sneak key; previously, this was achieved by pressing {{ctrl|use}} on the boat a second time.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Oak Boat JE2 BE1.png|32px]] [[File:Spruce Boat JE1 BE1.png|32px]] [[File:Birch Boat JE1 BE1.png|32px]] [[File:Jungle Boat JE1 BE1.png|32px]] [[File:Acacia Boat JE1 BE1.png|32px]] [[File:Dark Oak Boat JE1 BE1.png|32px]]<br>
+[[File:Oak Boat (item) JE3 BE2.png|32px]] [[File:Spruce Boat (item) JE1 BE2.png|32px]] [[File:Birch Boat (item) JE1 BE2.png|32px]] [[File:Jungle Boat (item) JE1 BE2.png|32px]] [[File:Acacia Boat (item) JE1 BE2.png|32px]] [[File:Dark Oak Boat (item) JE1 BE2.png|32px]] Boats have been overhauled to match [[Pocket Edition v0.11.0 alpha]] boats.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Boats can now be used to fuel [[furnace]]s.|Boat paddling [[sound]]s have been added.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|The [[crafting]] recipe of boats has been changed to require a wooden [[shovel]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Oak Boat JE4 BE2.png|32px]] [[File:Spruce Boat JE3 BE2.png|32px]] [[File:Birch Boat JE3 BE2.png|32px]] [[File:Jungle Boat JE3 BE2.png|32px]] [[File:Acacia Boat JE3 BE2.png|32px]] [[File:Dark Oak Boat JE3 BE2.png|32px]]<br>
+[[File:Oak Boat (item) JE4 BE3.png|32px]] [[File:Spruce Boat (item) JE2 BE3.png|32px]] [[File:Birch Boat (item) JE2 BE3.png|32px]] [[File:Jungle Boat (item) JE2 BE3.png|32px]] [[File:Acacia Boat (item) JE2 BE3.png|32px]] [[File:Dark Oak Boat (item) JE2 BE3.png|32px]] The textures of all boats have been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Boats can now be sold to fisherman villagers.{{info needed|Does the type of boat depend on the biome outfit of the villager?}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Oak Boat JE2 BE1.png|32px]] [[File:Spruce Boat JE1 BE1.png|32px]] [[File:Birch Boat JE1 BE1.png|32px]] [[File:Jungle Boat JE1 BE1.png|32px]] [[File:Acacia Boat JE1 BE1.png|32px]] [[File:Dark Oak Boat JE1 BE1.png|32px]]<br>
+[[File:Oak Boat (item) JE3 BE2.png|32px]] [[File:Spruce Boat (item) JE1 BE2.png|32px]] [[File:Birch Boat (item) JE1 BE2.png|32px]] [[File:Jungle Boat (item) JE1 BE2.png|32px]] [[File:Acacia Boat (item) JE1 BE2.png|32px]] [[File:Dark Oak Boat (item) JE1 BE2.png|32px]] Added boats.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w41a|The NBT [[tag]]{{verify|is this a correct link? the tags the linked page talks about didn't exist until 1.13}} {{code|Type}} (string) have now added for the boat [[entity]], taking values {{code|oak}}, {{code|spruce}}, {{code|birch}}, {{code|jungle}}, {{code|acacia}} and {{code|dark_oak}}.}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed from <code>Boat</code> to <code>boat</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|The oak boat ID has been changed from <code>boat</code> to <code>oak_boat</code>.
+|Prior to [[Java Edition 1.13/Flattening|''The Flattening'']], these items' numeral IDs were 333, 444, 445, 446, 447 and 448.{{info needed|what was the numeric entity ID?}}}}
+|{{HistoryLine||1.21.2|dev=24w39a|The entity IDs for boats have been split into separate types, one per existing variant.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The item ID <code>boat</code> has been split up into <code><type>_boat</code>.{{info needed|How were they distinguished previously?}}}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|Due to {{bug|MCPE-163346}}, the bamboo raft uses the namespaced ID <code>bamboo_boat</code>.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.22|The namespaced ID of the bamboo raft has been corrected to <code>bamboo_raft</code>.}}
+}}
+
+=== Historical screenshots ===
+<gallery>
+Screenboat.png|The old boat floating.
+BoatStackingFun.png|A bunch of pre-1.9 boats stacked up.
+Boats boats boats boats!!.jpg|First image of boats in BE development.
+I guess it's getting there.png|Second image of boats in BE development.
+All aboard the hype boat!.png|Image of the completed Bedrock Edition boats.
+Boatglitche.png|A trail of boats after a game crash while riding a boat.
+Minescape.png|A third-person perspective of a boat in [[Java Edition Alpha v1.0.6]].
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* {{IN|be}}, [[Sand]], [[red sand]], [[concrete powder]], [[gravel]], [[anvil]]s, and [[dragon egg]]s drop as [[Item (entity)|items]] when they fall onto a boat that is in water.
+* A [[chest]] is short enough that a boat falls onto it rather than crashes into it.
+* {{IN|console}}, holding the movement stick to the side in a boat on [[blue ice]] causes the player to spin quickly. If a passenger is in the boat while this occurs, when the player exits the boat after it reaches maximum velocity (attained after about three seconds), for most mobs, the mob's head may spin uncontrollably. For some mobs, however, nothing happens (such as [[slime]]s and [[ghast]]s). The mob may also get its head stuck at an angle. Thorough testing was done on ''Wii U Edition'', although the glitch was originally discovered on the ''Xbox 360 Edition''.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+AllBoats.png|All types of boats next to each other.
+BoatDock.png|A dock with many boats.
+CameraMob in a boat.png|A [[camera]] in a boat.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Nether Ice Boat.png|A boat on ice in the Nether.
+Leashed boat.jpg|[[Steve]] leashing boats to a pier.<ref>{{mcnet|minecraft-java-edition-1-21|Minecraft Java Edition 1.21|June 13, 2024}}</ref>
+Blocked Canal.jpg|Boats blocking a river.
+</gallery>
+
+=== Development images ===
+<gallery>
+Jappa Boat.jpg|Jappa texturing a boat.
+Nekofresa Making Bamboo Raft in Blockbench.png|Nekofresa making the bamboo raft in Blockbench.
+Chiwi Boats 1.png|Boat item textures from Bedrock Edition beta 1.18.10.27.
+Chiwi Boats 2.png|Boat item textures from Bedrock Edition 1.18.10.
+Chiwi Boats 3.png|Boat item textures from Bedrock Edition beta 1.19.0.21.
+Chiwi Boats 4.png|Boat item textures from Bedrock Edition beta 1.19.0.27.
+Leashed Boats.jpg|Boats attached to leads.
+Sunny and Noor head into the Nether.jpg|"[[Sunny]] and [[Noor]] are next to a fully rebuilt [[Ruined Portal]]. The brave Sunny throws an [[Ender Pearl]] toward the lit [[Nether Portal]]. Noor is to the side holding a [[Leash]] tied to a Boat with a [[Sheep]] in it."
+Jappa Makeing the New Texture For a boat.png|alt=|Boat model without texture.
+Particle Boat.jpg|A boat emitting lots of particles.
+Llama Boat.jpg|A boat with llamas in it and a lead attached.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Bamboo Raft Concept Art.png|Bamboo raft concept art.
+Bamboo Raft and Raft with Chest Concept Art.png|Ditto.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Sunny-boat.gif|Official artwork of Sunny riding a mangrove boat.
+File:Boat Floating Sticker.gif|Sticker of [[Zuri]] on a bamboo raft with a [[Camel|camel calf]].
+File:Mobile Adventure 640x960.png|Official artwork of [[Alex]] in a boat at sea with an [[allay]].
+File:Zuri Raft.jpg|Zuri on a bamboo raft.
+File:Zuri on Bamboo Raft Pixel Art.png|Pixel art of Zuri on a bamboo raft with a baby [[panda]].
+File:Cutout Blossom (Trails & Tales Event).png|Cutout of Zuri and [[Efe]] on bamboo rafts, featured in the [[Trails & Tales Event]].
+File:Play With Friends Local 672x360.png|Alex in a boat with a goat.<ref>https://www.minecraft.net/en-us/about-minecraft</ref>
+File:This or That.jpg|A social media post about a bamboo raft and cherry boat.
+File:Croc Ad 1.jpg|Noor in an oak boat in an advertisement for ''[[Crocs]]''.<ref>{{ytl|e1AJo7jU5MI|Minecraft x Crocs|crocsinc|February 16, 2023}}</ref>
+File:CommuniKate's boat.png|[[CommuniKate]] on a boat
+File:Ice Cube in a boat.jpeg|[[Ice Cube]] in a boat
+File:Happi noodle, grim noodle, and PlayPoppyTim3.jpeg|[[Poppy Playtime]] in a boat
+File:Brown cat in boat.jpeg|A cat in a boat
+</gallery>
+
+===Textures===
+<gallery class="pixel-image">
+Oak_Boat_(texture).png|Texture of oak boats as entities
+Spruce_Boat_(texture).png|Texture of spruce boats as entities
+Birch_Boat_(texture).png|Texture of birch boats as entities
+Jungle_Boat_(texture).png|Texture of jungle boats as entities
+Acacia_Boat_(texture).png|Texture of acacia boats as entities
+Dark_Oak_Boat_(texture).png|Texture of dark oak boats as entities
+Bamboo_Raft_(texture).png|Texture of bamboo rafts as entities
+Cherry_Boat_(texture).png|Texture of cherry boats as entities
+Pale_Oak_Boat_(texture).png|Texture of pale oak boats as entities
+</gallery>
+
+== See also ==
+* {{EntityLink|Minecart}}
+* {{EntityLink|Strider}}
+* [[Transportation]]
+
+== References ==
+{{reflist}}
+
+== Notes ==
+{{notelist}}
+
+== External links ==
+* {{Mcnet|taking-inventory--boat|Taking Inventory: Boat|October 4, 2019|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox wood}}
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Transport]]
+[[Category:Vehicles]]
+
+[[cs:Člun]]
+[[de:Boot]]
+[[es:Barca]]
+[[fr:Bateau]]
+[[hu:Csónak]]
+[[it:Barca]]
+[[ja:ボート]]
+[[ko:보트]]
+[[lzh:舟]]
+[[nl:Boot]]
+[[pl:Łódka]]
+[[pt:Bote]]
+[[ru:Лодка]]
+[[th:เรือ]]
+[[uk:Човен]]
+[[zh:船]]

@@ -1,0 +1,1013 @@
+{{about||options {{in|BE}}|Settings|the options related to worlds|Create New World|world options|World Options}}
+{{exclusive|Java}}
+{{needs update|[[Java Edition 1.21.11]] and [[Java Edition 26.1|26.1]]}}
+
+{{JE}}{{'}}s user environment can be configured through the '''Options''' menus. A few additional options can be changed only by editing the [[options.txt]] file in a text editor.
+
+== Options ==
+Selecting "Options" brings up the main options page:
+
+{| class="wikitable" border="1" width="100%" data-description="Main page options"
+|-
+! width="125" | Setting
+! Description
+! Default
+|-
+| FOV
+| A value that controls how much of the game world is visible on the screen. Also known as Field of View.
+In Minecraft, the FOV value represents how many degrees of vertical vision the player gets without modifying effects such as sprinting, flying or status effects. Note that other games' FOV setting might represent different angles, meaning that using the same FOV value across different games can yield different results. The table below shows how Minecraft's FOV setting affects horizontal field of view in different display aspect ratios.
+{| class="wikitable"
+|+
+! rowspan="2" |Setting<br />name
+! rowspan="2" |Setting value<br />(vertical FOV)
+! colspan="2" |Resulting horizontal field of view
+|-
+!4:3<br />aspect ratio
+!16:9<br />aspect ratio
+|-
+| rowspan="4" |
+|30°
+|39.3°
+|50.9°
+|-
+|40°
+|51.8°
+|65.8°
+|-
+|50°
+|63.7°
+|79.3°
+|-
+|60°
+|75.2°
+|91.5°
+|-
+|'''Normal'''
+|'''70°'''
+|'''86.1°'''
+|'''102.4°'''
+|-
+| rowspan="3" |
+|80°
+|96.4°
+|112.3°
+|-
+|90°
+|106.3°
+|121.3°
+|-
+|100°
+|115.6°
+|129.5°
+|-
+|'''Quake Pro'''
+|'''110°'''
+|'''124.6°'''
+|'''137.0°'''
+|}
+| style="text-align: center;" | 70<ref name="default" group="note">Displays as "Normal" in-game.</ref>
+|-
+| Difficulty
+| Set the [[difficulty]] level from the choice of Peaceful, Easy, Normal, and Hard. If the padlock is clicked and confirmed, the difficulty on that world cannot be changed without [[commands]]. (Note that the difficulty cannot be changed if playing [[Hardcore]] mode. On a server, difficulty can be changed only by commands or editing the [[server.properties]] file.)
+| style="text-align: center;" | Varies on difficulty set on current [[world]] or [[server]]; defaults to Normal on [[Create New World]] screen. 
+|}
+
+== World Options ==
+This is visible only when in a [[world]] with [[cheats]] enabled.
+{| class="wikitable" border="1" width="100%" data-description="Main page options"
+|-
+| Difficulty
+| Set the [[difficulty]] level from the choice of Peaceful, Easy, Normal, and Hard. If the padlock is clicked and confirmed, the difficulty on that world cannot be changed without [[commands]]. (Note that the difficulty cannot be changed if playing [[Hardcore]] mode. On a server, difficulty can be changed only by commands or editing the [[server.properties]] file.)<br />
+Only visible when in a [[world]].
+| style="text-align: center;" | Varies on difficulty set on current [[world]] or [[server]]; defaults to Normal on [[Create New World]] screen. 
+|-
+| Edit Gamerules
+| Brings up the Edit Game Rules menu from the [[Create New World]] screen.
+| style="text-align: center;" | N/A
+|-
+| Restrictions 
+| Shows current restrictions, namely related to sending chat messages, sending commands, receiving system messages, and receiving messages from players.
+| style="text-align: center;" | N/A
+|}
+
+== Online ==
+This is visible only in the main menu or when on a server.
+
+{| class="wikitable" border="1" width="100%" data-description="Skin customization page options"
+|-
+! width="125" | Online Options
+! Description
+! Default
+|-
+| Realms Notifications
+| Toggles [[Realms]] notifications.
+| style="text-align: center;" | ON
+|-
+| Allow Server Listings
+| Toggles whether the player name appears in [[Server list#Java Edition|server listings]].
+| style="text-align: center;" | ON
+|-
+| Server Difficulty
+| Shows the [[difficulty]] of the server.
+| style="text-align: center;" | N/A
+|}
+
+== Skin Customization ==
+{| class="wikitable" border="1" width="100%" data-description="Skin customization page options"
+|-
+! width="125" | Skin customization setting
+! Description
+! Default
+|-
+| Cape
+| Toggles the [[cape]]. If set to off, the cape texture for wearing [[elytra]] would also be deactivated.
+| style="text-align: center;" rowspan="7" | ON
+|-
+| Jacket
+| Toggles the body second layer.
+|-
+| Left Sleeve
+| Toggles the left arm second layer.
+|-
+| Right Sleeve
+| Toggles the right arm second layer.
+|-
+| Left Pants Leg
+| Toggles the left leg second layer.
+|-
+| Right Pants Leg
+| Toggles the right leg second layer.
+|-
+| Hat
+| Toggles the head second layer.
+|-
+| Main Hand
+| Switches the main hand, between left and right.
+| style="text-align: center;" | Right
+|}
+
+== Music & Sounds ==
+{| class="wikitable" border="1" width="100%" data-description="Music and sound page options"
+|-
+! width="125" | Sound setting
+! Description
+! Default
+|-
+| Master Volume
+| The volume of all [[sound]]s.
+| style="text-align: center;" rowspan="11" | 100%
+|-
+| Music
+| The volume of [[Music|gameplay music]]; setting it to 0% (displayed as ''OFF'' in-game) disables gameplay music entirely.
+|-
+| Jukebox/Noteblocks
+| The volume of music and sounds played from [[jukebox]]es and [[note block]]s.
+|-
+| Weather
+| The volume of [[rain]] and [[thunder]].
+|-
+| Blocks
+| The volume of blocks ([[piston]]s, [[chest]]s, [[door]]s, etc.).
+|-
+| Hostile Mobs
+| The volume of [[monster]]s.
+|-
+| Friendly Mobs
+| The volume of [[animal]]s (except [[hoglin]]s) and non-mob [[entities]] like [[minecart]]s<ref>{{bug|MC-42132||The sounds of minecarts aren't controlled by the correct sound slider}}</ref>
+|-
+| Players
+| The volume of players (item plops, hurt sounds, etc.)
+|-
+| Ambient/Environment
+| The volume of [[ambience]], sound of entering/exiting [[water]] and [[fireworks]]
+|-
+| Voice/Speech
+| The volume of speech in ''Minecraft'' (for map makers)
+|-
+| UI
+| The volume of sounds for UI elements, like button clicks.
+|-
+| Device
+| Switch audio device.
+| style="text-align: center;" | System Default
+|-
+| Closed Captions
+| Toggles [[subtitles]].
+| style="text-align: center;" | OFF
+|-
+| Directional Audio
+| ''OFF'' defaults to stereo sound.<br />
+'''ON''' uses [[w:Head-related transfer function|head-related transfer function]] (HRTF) based directional audio to improve simulation of 3D sound, which requires HRTF-compatible hardware and is best experienced when using headphones.
+| style="text-align: center;" | OFF
+|-
+| Music Frequency
+| Changes how frequently music plays. 
+Default is the normal delay between 10 - 20 minutes, 
+Frequent halves the delay to 5 minutes, and Constant sets the delay to 5 seconds.
+| style="text-align: center;" | Default
+|-
+| Show Music Toast
+| Shows a toast with the name of the currently playing music track.
+| style="text-align: center;" | OFF
+|}
+
+== Video Settings ==
+
+=== Display ===
+
+{| class="wikitable list-style-none" border="1" width="100%" data-description="Display settings"
+|-
+! width="125" | Display setting
+! Description
+! Default
+|-
+| Fullscreen Resolution
+| Sets the resolution and framerate of the game when playing in fullscreen.
+| style="text-align: center;" | Current
+|-
+| Max Framerate
+| Limits the frame rate (in frames per second). Limiting the frame rate to a multiple of the [[player]] monitor's refresh rate can save processing power.
+| style="text-align: center;" | 120 fps
+|-
+| VSync
+| Limits the player's frames per second to the screen's refresh rate, which is usually 50&nbsp;Hz, 60&nbsp;Hz, 75&nbsp;Hz, or 120 to 240&nbsp;Hz on some gaming-targeted screens. Enabling VSync fixes tearing, but increases input latency and causes stuttering if one's computer cannot draw enough frames per second.
+| style="text-align: center;" | ON
+|-
+| Reduce FPS when
+|Limits FPS to a certain amount whether the player is AFK (away from keyboard) or the game window is minimized.
+AFK: If there is no [[player]] movement for 1 minute, the frame rate will be capped at 30 FPS. When there is no movement for a total of 10 minutes, the frame rate will be capped at 10 FPS.
+
+Minimized: When the game window is minimized, the frame rate will be capped at 10 FPS.
+| style="text-align: center;" | AFK 
+|-
+| GUI Scale
+| Controls the GUI (graphical user interface) scale. This also controls the HUD ([[heads-up display]]) size. Note that the options available to the player depends on the game resolution. The number of available GUI scales for a specific resolution can be calculated using this formula: {{code|max(1, min(floor(width / 320), floor(height / 240)))}}. A GUI scale of 1 is properly scaled using a resolution of 320×240, but smaller resolutions might cause elements to run offscreen. A GUI scale of ''n'' is available at a resolution equal to or higher than (320 * ''n'')x(240 * ''n''), so a GUI scale of 2 is available at resolution 640×480 or higher, a GUI scale of 3 is available at resolution 960×720 or higher, and so on. There is no technical limit to how many GUI scales can be available. Auto sets the GUI scale to the highest value available for the current resolution.
+
+The GUI scale can also be changed by holding {{key|Ctrl}} and scrolling the mouse wheel in the Video Settings screen.
+| style="text-align: center;" | Auto
+|-
+| Fullscreen
+| Puts the game into fullscreen mode; keeping it off keeps it in a window. This can also be changed with {{key|F11}}.
+| style="text-align: center;" | OFF
+|-
+|Exclusive Fullscreen
+|
+| style="text-align: center;" |OFF
+|-
+| Brightness
+| Dims down or [[light]]s up the game's surfaces, even if fully dark. It has no effect on gameplay, it is a visual effect. Works in any dimension and affects the [[Night Vision]] status effect.
+| style="text-align: center;" | 50<ref name="brightness" group="note">Displays as "Default" in-game.</ref>
+|}
+
+=== Quality & Performance ===
+
+{| class="wikitable list-style-none" border="1" width="100%" data-description="Quality and performance settings"
+|-
+! width="125" | Setting
+! Description
+! width="80" | Fast
+! width="80" | Fancy
+! width="80" | Fabulous!
+|-
+| [[Graphics settings|Preset]]
+|Sets the quality & performance settings according to the preset.
+*'''Fabulous!''' graphics uses screen shaders for drawing weather, clouds and particles behind translucent blocks and water. This may severely impact performance for portable devices (e.g. laptops) and 4K displays.
+*'''Fancy''' enables higher quality graphic effects. Graphic effects include transparent [[leaves]], increased [[rain]] particles, a black vignette around the screen in darker areas, and the [[world border]] red warning vignette effect.
+*'''Fast''' disables these effects for better performance.
+*'''Custom''' when any of the settings are manually changed from their preset values.
+| colspan="3" style="text-align: center;" | Defaults to Fancy
+|-
+| Biome Blend
+| Sets the distance of color transitions between [[biome]]s.
+| style="text-align: center;" | 3×3 (fast)
+| colspan="2" style="text-align: center;" | 5×5 (normal)
+|-
+| Render Distance
+| The render distance controls how many [[chunk]]s of the world are visible at once. The fewer chunks that are included, the faster each frame can be rendered, resulting in higher [[w:Frame rate|frame rate]].
+
+The most distant terrain is faded into the sky color as if by fog, to avoid a sharp edge to the visible world; therefore, this option is also known as "fog".
+
+The maximum value is 32 for 64-bit Java installs with at least 1 gigabyte of memory, and 16 in all other cases.
+
+'''Note: ''diameter'' = ''radius × 2 + 1'' '''
+{| class="wikitable collapsible collapsed" style="text-align:center" data-description="Render distance"
+! rowspan="2" | Name
+! View distance (radius)
+! colspan="2" | Total count
+|-
+! Blocks !! Chunks !! Sections
+|-
+| 32 chunks ("Extreme") || 512 || 4225 || 67,600
+|-
+| 31 chunks || 496 || 3969 || 63,504
+|-
+| 30 chunks || 480 || 3721 || 59,536
+|-
+| 29 chunks || 464 || 3481 || 55,696
+|-
+| 28 chunks || 448 || 3249 || 51,984
+|-
+| 27 chunks || 432 || 3025 || 48,400
+|-
+| 26 chunks || 416 || 2809 || 44,944
+|-
+| 25 chunks || 400 || 2601 || 41,616
+|-
+| 24 chunks || 384 || 2401 || 38,416
+|-
+| 23 chunks || 368 || 2209 || 35,344
+|-
+| 22 chunks || 352 || 2025 || 32,400
+|-
+| 21 chunks || 336 || 1849 || 29,584
+|-
+| 20 chunks || 320 || 1681 || 26,896
+|-
+| 19 chunks || 304 || 1521 || 24,336
+|-
+| 18 chunks || 288 || 1369 || 21,904
+|-
+| 17 chunks || 272 || 1225 || 19,600
+|-
+| 16 chunks ("Far") || 256 || 1089 || 17,424
+|-
+| 15 chunks || 240 || 961 || 15,376
+|-
+| 14 chunks || 224 || 841 || 13,456
+|-
+| 13 chunks || 208 || 729 || 11,664
+|-
+| 12 chunks<br />(default for 64-bit) || 192 || 625 || 10,000
+|-
+| 11 chunks || 176 || 529 || 8464
+|-
+| 10 chunks || 160 || 441 || 7056
+|-
+| 9 chunks || 144 || 361 || 5776
+|-
+| 8 chunks<br />("Normal",<br />default for 32-bit) || 128 || 289 || 4624
+|-
+| 7 chunks || 112 || 225 || 3600
+|-
+| 6 chunks || 96 || 169 || 2704
+|-
+| 5 chunks || 80 || 121 || 1936
+|-
+| 4 chunks ("Short") || 64 || 81 || 1296
+|-
+| 3 chunks || 48 || 49 || 784
+|-
+| 2 chunks ("Tiny") || 32 || 25 || 400
+|}
+| style="text-align: center;" | 8 chunks
+| style="text-align: center;" | 16 chunks
+| style="text-align: center;" | 32 chunks
+|-
+| Chunk Builder
+| Determines which chunk sections are updated synchronously during a single frame.
+
+* '''Threaded''' has nearby chunks compiled in parallel threads, which may result in visual holes when blocks are destroyed.
+* '''Semi Blocking''' has chunks recompile immediately when some actions occur, including placing or destroying blocks.
+* '''Fully Blocking''' defaults to the behavior used prior to [[Java Edition 1.18|1.18]], in which chunks always compile immediately, which may affect performance when placing or destroying blocks.
+| style="text-align: center;" | Threaded
+| colspan="2" style="text-align: center;" | Semi Blocking
+|-
+| [[Simulation Distance]]
+| [[Simulation distance]] is similar to render distance, but affects the number of chunks in which entities are updated, and blocks and fluids are ticked. Simulation distance is more taxing on performance than the equivalent level of render distance. The available values are the same as render distance, except the minimum value is 5 chunks.
+| style="text-align: center;" | 6 chunks
+| colspan="2" style="text-align: center;" | 12 chunks
+|-
+| Smooth Lighting
+| [[Light]]ing is smoothed across the blocks (ambient occlusion) or each block has a distinctive [[light]] level. This setting does not change the gameplay in any way, but it has a minor effect on performance.
+| style="text-align: center;" | OFF
+| colspan="2" style="text-align: center;" | ON
+|-
+| Clouds
+|
+* '''Fancy''' causes the clouds to be rendered in 3D.
+* '''Fast''' causes the clouds to be rendered flat.
+* '''OFF''' causes no clouds to be rendered.
+| style="text-align: center;" |Fast
+| colspan="2" style="text-align: center;" | Fancy
+|-
+| Particles
+|
+* '''All''' allows all particles.
+* '''Decreased''' reduces the amount of particles for some particle events.
+* '''Minimal''' reduces particles further and disables some non-essential particles.
+|Decreased
+| colspan="2" style="text-align: center;" | All
+|-
+| Mipmap Levels
+| The higher the level, the more the textures look "smooth". See [[:File:Mipmap comparison.png]] for a comparison of the four mipmap levels and without mipmap.
+| style="text-align: center;" | 2
+| colspan="2" style="text-align: center;" | 4
+|-
+| Entity Shadows
+| Determines whether entities display simple shadows.
+| style="text-align: center;" | OFF
+| colspan="2" style="text-align: center;" | ON
+|-
+| Entity Distance
+| Adjusts the distance that entities can be seen. Entities not within render distance can't be seen.  At 100% entities are visible up to 160 blocks away.  (Unless render distance is lower.)
+| style="text-align: center;" | 75%
+| style="text-align: center;" | 100%
+| style="text-align: center;" | 125%
+|-
+| Menu Background Blur
+| Changes the blurriness of menu background.
+| style="text-align: center;" | 2
+| colspan="2" style="text-align: center;" | 5
+|-
+| Cloud Distance
+| Changes the render distance of clouds.
+| style="text-align: center;" | 32 chunks
+| style="text-align: center;" | 64 chunks
+| style="text-align: center;" | 128 chunks
+|-
+|See-Through Leaves
+|
+| style="text-align: center;" | OFF
+| colspan="2" style="text-align: center;" |ON
+|-
+|Improved Transparency
+|
+| colspan="2" style="text-align: center;" | OFF
+| style="text-align: center;" | ON
+|-
+|Texture Filtering
+|
+| style="text-align: center;" | None
+| colspan="2" style="text-align: center;" | RGSS
+|-
+|Anisotropic Filtering
+|Only works if texture filtering is set to anisotropic.
+| colspan="2" style="text-align: center;" | Disabled (2× if enabled)
+| style="text-align: center;" | Disabled (4× if enabled)
+|-
+|Weather Effect Radius
+|
+| style="text-align: center;" | 5 blocks
+| colspan="2" style="text-align: center;" | 10 blocks
+|}
+
+=== Preferences ===
+
+{| class="wikitable list-style-none" border="1" width="100%" data-description="Preferences"
+|-
+! width="125" | Preference
+! Description
+! Default
+|-
+| Autosave Indicator
+| Toggles the [[autosave]] indicator.
+| style="text-align: center;" | ON
+|-
+|Show Vignette
+|
+| style="text-align: center;" |ON
+|-
+| Attack Indicator
+|
+*'''OFF''' No attack indicator renders.
+*'''Crosshair''' A little gray translucent bar appears below the crosshair displaying attack power.
+*'''Hotbar''' A little gray sword bar appears on the side of the hotbar (on the same side as the player's main hand) displaying attack power.
+| style="text-align: center;" | Crosshair
+|-
+|Chunk Fade
+|
+| style="text-align: center;" |0.75 seconds
+|}
+
+== Controls ==
+{{Main|Controls#Java Edition}}
+From the main Options page, one can click down to Controls for these additional settings:
+
+{| class="wikitable" border="1" width="100%" data-description="Controls"
+|-
+! width="125" | Control Setting
+! Description
+! Default
+|-
+| Sneak
+| Enables players to stay [[sneak]]ed.
+| style="text-align: center;" | Hold
+|-
+| Sprint
+| Enables players to stay [[sprinting]].
+| style="text-align: center;" | Hold
+|-
+| Auto-Jump
+| Enables automatic jumping when the player walks near a block with a block of air above.
+| style="text-align: center;" |OFF
+|-
+| Operator Items Tab
+| Enables the "Operator Utilities" tab in the [[Creative inventory]] if the player has the appropriate [[Permission level|permissions]].
+| style="text-align: center;" | OFF
+|-
+| Key Binds
+| Configuring keyboard [[controls]].
+| style="text-align: center;" | N/A
+|}
+
+== Mouse Settings ==
+{| class="wikitable" border="1" width="100%" data-description="Mouse settings"
+|-
+! width="125" | Mouse setting
+! Description
+! Default
+|-
+| Sensitivity
+| Changes the sensitivity of the mouse when looking in-game.
+| style="text-align: center;" | 100%
+|-
+| Invert Mouse
+| Inverts vertical axis of the mouse when looking in-game.
+| style="text-align: center;" | OFF
+|-
+| Scroll Sensitivity
+| Changes the sensitivity of the scroll wheel in-game. Values above 1 do not affect selecting items in the Hotbar.
+| style="text-align: center;" | 1.00
+|-
+| Discrete Scrolling
+| Tells the game to ignore scroll magnitude values given by the operating system and instead to act as if the operating system supplied −1 or +1.
+| style="text-align: center;" | OFF
+|-
+| Touchscreen Mode
+| Toggles touchscreen mode, intended for touchscreen devices.
+| style="text-align: center;" | OFF
+|-
+| Raw Input
+| Takes the mouse input directly, instead of from the mouse cursor. This means that mouse movement is not affected by cursor acceleration or scaling, such as Windows' built in "Enhance pointer precision" and "Pointer speed".
+| style="text-align: center;" | ON
+|}
+
+== Language ==
+{{main|Language}}
+Allows players to change the language that is viewed by their client.
+
+== Font Settings ==
+{| class="wikitable list-style-none" border="1" width="100%" data-description="Font options"
+! width="125" | Font settings
+! Description
+! Default
+|-
+| Force Unicode Font
+|
+* '''ON''' Unicode Font
+* '''OFF''' ASCII Font, with Unicode Font as a fallback
+| style="text-align: center;" | OFF
+|-
+| Japanese Glyph Variants
+| Uses Japanese variants of CJK (Chinese, Japanese, and Korean) characters in the default font
+| style="text-align: center;" | Based on system locale language setting
+|}
+
+== Chat Settings ==
+{| class="wikitable list-style-none" border="1" width="100%" data-description="Chat options"
+|-
+! width="125" | Chat setting
+! Description
+! Default
+|-
+| Chat
+|
+* '''Shown''' enables the player's ability to see the [[chat]] on a server.
+* '''Commands Only''' allows the player to see only the output of commands in the chat.
+* '''Hidden''' hides the chat on all servers.
+| style="text-align: center;" | Shown
+|-
+| Colors
+|
+* '''ON''' allows the player to see the chat in many different colors.
+* '''OFF''' disables this function and allows the player to see the chat only in a white color.
+| style="text-align: center;" rowspan=3 | ON
+|-
+| Web Links
+|
+* '''ON''' allows the player to see URLs and other links in the chat.
+* '''OFF''' disables this function and blocks all URLs and other links.
+|-
+| Prompt on Links
+|
+* '''ON''' forces a prompt to appear on the player's screen whenever they click on a URL to makes sure that they wish to exit Minecraft and head to the website.
+* '''OFF''' turns the prompt off.
+|-
+| Chat Text Opacity
+| Changes the opacity of the chat text.
+| style="text-align: center;" | 100%
+|-
+| Text Background Opacity
+| Changes the opacity of the text background.
+| style="text-align: center;" | 50%
+|-
+| Chat Text Size
+| Changes how large the chat is shown.
+| style="text-align: center;" | 100%
+|-
+| Line Spacing
+| Changes the amount of spacing between chat messages.
+| style="text-align: center;" | 0%
+|-
+| Chat Delay
+| Changes the delay between chat messages.
+| style="text-align: center;" | None
+|-
+| Width
+| Changes the maximum width that the chat may appear.
+| style="text-align: center;" | 320px
+|-
+| Focused Height
+| Changes the maximum height that the chat is allowed to appear when in focus (chat input and history open).
+| style="text-align: center;" | 180px
+|-
+| Unfocused Height
+| Changes the maximum height that the chat is allowed to appear normally (chat input and history closed).
+| style="text-align: center;" | 90px
+|-
+| Narrator
+|
+* '''All''' narrates all text.
+* '''Chat''' narrates chat and system text.
+* '''System''' narrates system text.
+* '''OFF''' narrates nothing.
+| style="text-align: center;" | OFF
+|-
+| Command Suggestions
+| Toggles if command suggestions show up or not, if off the player has to press tab to bring them up.
+| style="text-align: center;" rowspan=2 | ON
+|-
+| Hide Matched Names
+| Toggles if the game attempts to apply chat hiding by matching the text in messages.
+|-
+| Reduced Debug Info
+| Toggles [[Game Rule#reducedDebugInfo|reduced information]] on the [[debug screen]].
+| style="text-align: center;" | OFF
+|-
+| Only Show Secure Chat
+| Only display messages from other players that can be verified to have been sent by that player, and have not been modified.
+| style="text-align: center;" | OFF
+|-
+| Save Unsent Chats
+| Unsent messages will always get saved as chat drafts, even if the player intentionally closed their chat.
+| style="text-align: center;" | ON
+|}
+
+== Resource Packs ==
+Allows the player to change their [[resource pack]] settings.
+
+== Accessibility Settings ==
+{| class="wikitable" border="1" width="100%" data-description="Accessibility settings"
+|-
+! width="125" | Accessibility setting
+! Description
+! Default
+|-
+| Narrator
+| Toggles whether the narrator narrates all text, text in chat only, or text in menus only.
+| style="text-align: center;" | OFF
+|-
+| Closed Captions
+| Toggles whether closed captions are shown.
+| style="text-align: center;" | OFF
+|-
+| Text Background Opacity
+| Changes the opacity of the background behind text.
+| style="text-align: center;" | 50%
+|-
+| Text Background
+| Toggles whether the background behind text is restricted to chat or used everywhere.
+| style="text-align: center;" | Chat
+|-
+| Chat Text Opacity
+| Changes the opacity of the chat.
+| style="text-align: center;" | 100%
+|-
+| Line Spacing
+| Changes the amount of spacing between chat messages.
+| style="text-align: center;" | 0%
+|-
+| Chat Delay
+| Changes the delay between chat messages.
+| style="text-align: center;" | None
+|-
+| Auto-Jump
+| Enables automatically jumping when the player passes near a one block high wall.
+| style="text-align: center;" | OFF
+|-
+| Menu Background Blur
+| Changes the blurriness of menu background.
+| style="text-align: center;" | 50%
+|-
+| Sneak
+| Enables players to stay sneaking without holding the assigned key down.
+| style="text-align: center;" | Hold
+|-
+| Sprint
+| Enables players to stay sprinting without holding the assigned key down.
+| style="text-align: center;" | Hold
+|-
+| Distortion Effects
+| Changes the distortion effects (e.g. [[Nausea]] and [[nether portal]] distortion).
+| style="text-align: center;" | 100%
+|-
+| FOV Effects
+| Changes the FOV effects of anything affecting them.
+| style="text-align: center;" | 100%
+|-
+| Monochrome Logo
+| Changes the Mojang Studios loading screen color from red to black.
+| style="text-align: center;" | OFF
+|-
+| Hide Sky Flashes
+| Prevents the screen from flashing when [[lightning]] strikes. The lightning bolts themselves are still visible. Also prevents [[End flash]]es from making the ground glow purple in [[the End]].
+| style="text-align: center;" | OFF
+|-
+| Darkness Pulsing
+| Changes how dark the Darkness effect gets when a warden or sculk shrieker gives it to the player. Fog distance remains unaffected.
+| style="text-align: center;" | 100%
+|-
+| Panorama Scroll Speed
+| Changes the scrolling speed of the panorama in the main menu.
+| style="text-align: center;" | 100%
+|-
+| Notification Time
+| Changes how long toast notifications (advancements, new recipes, etc.) display on screen.
+| style="text-align: center;" | 1.0x
+|-
+|View Bobbing
+|Toggles the "bobbing" motion of the camera as the player is walking.
+|ON
+|-
+| Glint Speed
+| Controls how fast the visual glint shimmers across enchanted items.
+| style="text-align: center;" | 50%
+|-
+| Glint Strength
+| Controls the transparency of the visual glint across enchanted items.
+| style="text-align: center;" | 75%
+|-
+| Damage Tilt
+| Controls the amount of camera shake caused by being hurt.
+| style="text-align: center;" | 100%
+|-
+| High Contrast
+| Enhances the contrast of UI elements.
+| style="text-align: center;" | OFF
+|-
+| Narrator Hotkey
+| Toggles the ability to turn the narrator on and off with {{key|Ctrl + B}} ({{key|Cmd + B}} on Mac).
+| style="text-align: center;" | ON
+|-
+| Hide Splash Texts
+| Toggles the ability to show or hide [[splash text]] on the main menu.
+| style="text-align: center;" | OFF
+|-
+| Rotate with Minecarts
+|When toggled, the [[player]] will change direction alongside the [[minecart]] they are in.
+| style="text-align: center;" | OFF
+|-
+| High Contrast Block Outlines
+|Makes the targeted [[block]] outlines more visible.
+| style="text-align: center;" | OFF
+|}
+
+== Server Options ==
+{| class="wikitable" border="1" width="100%" data-description="Server options"
+|-
+! width="125" | Server setting
+! Description
+! Default
+|-
+| Server Resource Packs
+| Allows the game to download resource packs from the server.
+| style="text-align: center;" | Prompt
+|}
+
+== Telemetry Data ==
+{{main|Telemetry}}
+This option shows information on what data the game can send to Mojang, stating that it helps Mojang improve ''Minecraft'' based on info relevant to players. The "Give Feedback" button opens a link to the [[feedback site]] while "Open My Data" shows the player information on telemetry data that is sent to Mojang, with the files removed after seven days. A link to the Microsoft privacy statement can be found on this page as well. A toggle for data collection is also available, though it is impossible to disable telemetry completely without client modifications.
+
+{| class="wikitable" border="1" width="100%" data-description="Telemetry data"
+|-
+! width="125" | Telemetry data collection setting
+! Description
+! Default
+|-
+| Data Collection<br />
+| Toggles between two options:
+* '''Minimal''' includes only the required data.
+* '''All''' includes both required and optional data.
+Additionally, when in an offline game, this option is forced to be '''None'''.
+| style="text-align: center;" | Minimal
+|}
+
+== Credits & Attribution ==
+{| class="wikitable" border="1" width="100%" data-description="Credits & attribution"
+|-
+! width="125" | Option
+! Description
+|-
+| Credits
+| Opens the [[credits]].
+|-
+| Attribution
+| Opens a link to [https://aka.ms/MinecraftJavaAttribution Minecraft Attributions].
+|-
+| Licensing
+| Opens a link to [https://aka.ms/MinecraftJavaLicenses Third Party Software Notices and Information].
+|}
+
+== History ==
+===''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.12a|New fog distance option.|Pressing {{key|F}} cycles between four levels of render distance.}}
+|{{HistoryLine||0.0.23a|Added the options page.|New custom keymappings.|The FPS and chunk updates can now be toggled via the Show FPS button.|Can now toggle fog distance from the options.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added view bobbing button, and 3D anaglyph button.}}
+|{{HistoryLine||0.26 SURVIVAL TEST|Added Limit framerate button.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100205-1558|Added difficulty button. <br />Can change the difficulty to Peaceful, Easy, Normal, or Hard.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100615|Added fancy/fast graphics toggle button.|Only the clouds could be toggled via the button.}}
+|{{HistoryLine||20100616-1808|Leaves are now affected by fancy/fast graphics.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.1|Removed Show FPS button.|The music and sound buttons became sliders.|Can now change mouse sensitivity with a slider.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Smooth lighting was added.}}
+|{{HistoryLine||1.5|Added GUI size and Advanced OpenGL settings.}}
+|{{HistoryLine||1.6.6|Added the "Performance" option in Video Settings.}}
+|{{HistoryLine||1.8|dev=Pre-release|The Brightness setting was added, teased earlier that July.<ref>{{tweet|notch|88364022612758528|1.8 has a brightness slider. Real miners play on the darkest setting, though.|July 5, 2011}}</ref> Options for remapping block place/use and block destroy/attack were added.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|The Clouds setting was added (however, [[texture pack]]s were able to remove them before this option was introduced).}}
+|{{HistoryLine||1.3.1|dev=12w17a|The options menu was improved with a new "Chat Options" menu.}}
+|{{HistoryLine||1.4.2|dev=12w34a|Added new Full-screen toggle to the Video settings.|Added new "Use VSync" toggle in the Video settings.}}
+|{{HistoryLine|||dev=12w41a|Renamed "Chat Settings" to "Multiplayer Settings".|Added an option to hide capes.}}
+|{{HistoryLine||1.4.6|dev=pre|Added an option to toggle touchscreen mode.}}
+|{{HistoryLine||1.5|dev=13w09b|Moved Texture Packs setting from the [[Title Screen|main menu]] to the options menu.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The options menu was revamped, including a brand new layout, new key binds and a "Super Secret Settings" button in the menu.}}
+|{{HistoryLine|||dev=13w36b|The "Super Secret Settings" button now plays a random sound when clicked.}}
+|{{HistoryLine|||dev=13w38a|The "Super Secret Settings" button now creates a shader effect on the game's display, in the following order:  FXAA, Art, Bumpy, Blobs_2, Pencil, Color_Convolve, Deconverge, Flip, Invert, NTSC, Outline, Phosphor, Scan_Pincushion, Sobel, Bits, Desaturate, Green, Blur, Wobble, Blobs, Antialias, Default.|Replaced the render distance "cycle" button with a slider ranging from 2 to 16 chunks.|Added a max framerate slider option.|Added mipmapping and anisotropic filtering.}}
+|{{HistoryLine||1.7.4|dev=13w47a|Added "Twitch Broadcast Settings" and "Twitch Chat Settings" buttons.}}
+|{{HistoryLine||1.7.6|dev=pre1|Server Resource Packs option is now per-server, and has three settings: Prompt, Enabled, and Disabled.|The minimum FOV setting is now 30 rather than 70.}}
+|{{HistoryLine||1.8|dev=14w05a|[[Item (entity)|Dropped items]] on Fast graphics now face the player on all three axes, rather than just xz.}}
+|{{HistoryLine|||dev=14w25a|Due to the introduction of proper [[model|item models]], dropped items now always render in 3D, rather then just while on fancy graphics.|Removed anisotropic filtering.|Grass blocks now always use the side overlay regardless of graphics setting.}}
+|{{HistoryLine|||dev=14w28a|Added the Alternate Blocks setting.}}
+|{{HistoryLine|||dev=14w29a|Added VBOs setting.}}
+|{{HistoryLine|||dev=14w30a|The render distance slider now goes to 32 on machines running 64-bit Java with at least 1 gigabyte of available memory.}}
+|{{HistoryLine|||dev=14w30b|Changed the 3D anaglyph effect to look more accurate close up.}}
+|{{HistoryLine||1.8.1|dev=pre1|Renamed "Multiplayer Settings" back to "Chat Settings".}}
+|{{HistoryLine|||dev=pre4|The option to enable entity shadows is now controlled separately from the standard fast and fancy graphics.|The cloud's "fast" and "fancy" shape are controlled by the same option that enables clouds, rather than by the standard fast and fancy graphics.}}
+|{{HistoryLine||1.9|dev=15w31a|Removed "Super Secret Settings" and "Broadcast Settings".|Removed Alternate Blocks from video settings.|Added "Main Hand" to the skin settings.}}
+|{{HistoryLine|||dev=15w34a|Added "Attack Indicator" to the video settings.}}
+|{{HistoryLine|||dev=16w02a|Added "Voice/Speech" to the music & sound settings.}}
+|{{HistoryLine||1.10|dev=16w20a|Added "Auto-Jump" to controls.}}
+|{{HistoryLine||May 30, 2018|link=https://twitter.com/docm77/status/1001763772111958016|"Super Fancy" graphic setting were mentioned at Minecraft Creator Summit 2018.}}|{{HistoryLine||1.13|dev=17w43a|Removed "3D Anaglyph" option.|Added an option to change the full-screen resolution.}}
+|{{HistoryLine|||dev=17w47a|Options when editing a world to make a backup and open the backups folder.|An option in chat settings to toggle automatic command suggestions (defaults on, otherwise hit tab to bring them up).}}
+|{{HistoryLine|||dev=18w21a|Disabled the "Allow Snooper" button in Snooper Settings, defaulting to being off. Was done to comply with the [[wikipedia:General Data Protection Regulation|General Data Protection Regulation]] (GDPR).<ref>https://bugs.mojang.com/browse/MC-130179?focusedCommentId=455305&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-455305</ref>|Along with Snooper Settings getting disabled, the list of data shown is shortened drastically.}}
+|{{HistoryLine|||dev=pre6|Removed "force unicode font" option.}}
+|{{HistoryLine|||dev=pre8|Re-added "force unicode font" option.}}
+|{{HistoryLine|||dev=pre10|Option <code>Fullscreen resolution</code> capitalization changed to <code>Fullscreen Resolution</code>.}}
+|{{HistoryLine||1.14|dev=18w44a|Removed "Use VBOs" from video settings. VBOs are now always used.}}
+|{{HistoryLine|||dev=19w11a|Removed "Snooper Settings" after not being able to enable it since [[18w21a]]. Configurable only in [[options.txt]].|Added "Accessibility Settings".|The {{key|Tab}} key now cycles through the options.}}
+|{{HistoryLine|||dev=19w11b|Moved "Auto-Jump" to accessibility settings.}}
+|{{HistoryLine|||dev=pre2|Added a new section called "Mouse Settings", located under controls.|Moved "Sensitivity", "Invert Mouse", and "Touchscreen Mode" to the mouse settings.|Added "Scroll Sensitivity" and "Discrete Scrolling" to the mouse settings.}}
+|{{HistoryLine||1.14.4|dev=pre2|Added "Raw Input" to the mouse settings.}}
+|{{HistoryLine||1.15|dev=19w41a|Added "Sprint" and "Sneak" toggles to accessibility settings.}}
+|{{HistoryLine||1.16|dev=20w17a|Added "Entity Distance" to video settings.}}
+|{{HistoryLine|||dev=20w21a|Added functionality to import/export world settings.}}
+|{{HistoryLine|||dev=pre1|Added new "''Fabulous!''" graphics option.}}
+|{{HistoryLine|||dev=pre3|Changed tooltip description for the "''Fabulous!''" graphics option from {{cd|"Fabulous" graphics enables screen shaders to draw translucent objects per-pixel.<br />This may severely impact performance for portable devices and 4k displays.}} to {{cd|''Fabulous!'' graphics uses screen shaders for drawing weather, clouds and particles behind translucent blocks and water.<br />This may severely impact performance for portable devices and 4K displays.}}|Changed tooltip description for the "Fancy" graphics option from: {{cd|"Fancy" graphics balances performance and quality for the majority of machines.}} to {{cd|Fancy graphics balances performance and quality for the majority of machines.<br />Weather, clouds, and particles may not appear behind translucent blocks or water.}}|Removed quotations from "Fast" and changed "tree-leaves" to "leaves" from the tooltip description for the "Fast" graphics option.}}
+|{{HistoryLine||1.16.2|dev=pre1|Added "Distortion Effects" and "FOV effects" sliders to video and accessibility settings.|"Chat Delay" is now also available in chat settings.}}
+|{{HistoryLine||1.16.4|dev=Release Candidate 1|Added new "Hide Matched Names" to chat settings.}}
+|{{HistoryLine||1.17|dev=21w13a|Added "Monochrome Logo" to accessibility settings.}}
+|{{HistoryLine||1.18|dev=21w37a|Added "Priority updates" to video settings.|Added "Hide Lightning Flashes" to accessibility settings.|Added "Sneak" and "Sprint" to controls.|Moved keyboard controls into "Key Binds", which remain under controls.|Added "Device" to music & sounds settings.}}
+|{{HistoryLine|||dev=21w38a|Added "Simulation Distance" to video settings. This setting affects the entity update distance that was previously determined by "Render Distance".}}|{{HistoryLine|||dev=21w39a|The default brightness has been changed from "Moody" to 50.}}
+|{{HistoryLine|||dev=21w42a|Added "Autosave Indicator" to video settings.}}
+|{{HistoryLine|||dev=21w43a|Renamed "Priority updates" to "Chunk Builder".}}
+|{{HistoryLine|||dev=21w44a|Block and fluid ticking distance moved from "Render Distance" to "Simulation Distance". The minimum simulation distance is raised from 2 to 5 chunks.|Added Online Options as a separate screen, with the "Realms Notifications" option being moved to this screen.|Added "Allow Server Listings" and "Server Difficulty" to online options.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added "Darkness Effect" to accessibility settings.}}
+|{{HistoryLine|||dev=22w11a|Added "Directional Audio" to music & sounds settings.|"Darkness Effect" setting is not added yet in this non-experimental snapshot.}}
+|{{HistoryLine|||dev=22w12a|Re-added "Darkness Effect" to accessibility settings under the name “Darkness Pulsing”.|The brightness can no longer be set to excessive values by editing the [[options.txt]] file.<ref>{{bug|MC-51418|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w16a|The {{key|Caps Lock}} key can now be bound in controls settings.<ref>{{bug|MC-121376|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w19a|Added "Chat Preview" and "Only Show Signed Chat" to chat settings.}}
+|{{HistoryLine||1.19.1|dev=pre5|Added an "On Send" option for the Chat Preview setting.|The previous "ON" chat preview option is now "On Modified".}}
+|{{HistoryLine|||dev=Release Candidate 2|The "On Send" and "On Modified" Chat Preview options are now called "When Sending" and "While Typing", respectively.}}
+|{{HistoryLine||1.19.3|dev=22w42a|Removed "Chat Preview" from chat settings.|Added "Panorama Scroll Speed" to accessibility settings.}}
+|{{HistoryLine|||dev=22w45a|Added "Operator Items Tab" to controls menu.}}
+|{{HistoryLine|||dev=22w46a|Added "Telemetry Data" screen.}}
+|{{HistoryLine|||dev=Release Candidate 1|Removed the "Minimum" option from "Smooth Lighting" in video settings. The "Maximum" option under this setting has been renamed to "ON".}}
+|{{HistoryLine||1.19.4|dev=23w03a|Added "Notification Display Time" to accessibility settings.|"Auto-Jump" is now off by default.}}
+|{{HistoryLine|||dev=23w05a|Added "Glint Speed" and "Glint Strength" to video settings and accessibility settings.}}|{{HistoryLine|||dev=23w06a|Added "Damage Tilt" to accessibility settings.|Added a tooltip in the Key Binds screen that specifies which keybinds are conflicting.|Renamed "Notification Display Time" accessibility option to "Notification Time".|Texts in options buttons now have a scrolling animation whenever they are too large to fit.}}
+|{{HistoryLine|||dev=pre1|Added "High Contrast" to accessibility settings.|"Glint Strength" is now 75% by default.|The scrolling animation for text too large for options buttons is now slower.}}
+|{{HistoryLine|||dev=pre2|It is now possible to scroll using the arrow keys in the telemetry screen.}}
+|{{HistoryLine|||dev=pre4|Added "Credits & Attribution" button in the Options menu.| ''Minecraft''<nowiki>'</nowiki>s [[Credits]], [https://aka.ms/MinecraftJavaAttribution Attribution], and [https://aka.ms/MinecraftJavaLicenses Licenses] can be accessed.}}
+|{{HistoryLine||1.20|dev=23w13a|The GUI can now be scaled in the Video Settings screen by holding {{key|Ctrl}} and scrolling the mouse wheel.}}
+|{{HistoryLine||1.20.2|dev=23w31a|Added a link to the Microsoft privacy statement in the Telemetry Data menu.}}
+|{{HistoryLine|||dev=23w33a|Added "Narrator Hotkey" to accessibility settings.}}
+|{{HistoryLine||1.20.3|dev=23w42a|Added "Hide Splash Texts" to accessibility settings.}}
+|{{HistoryLine|||dev=23w43a|Reorganized the telemetry data menu.|The “Data Collection” option has been changed to a checkbox.}}
+|{{HistoryLine||1.20.5|dev=24w06a|Added "Font Settings" to the language menu.|Moved "Force Unicode Font" under font settings.|Added "Japanese Glyph Variants" to font settings.}}
+|{{HistoryLine|||dev=24w09a|Added "Menu Background Blurriness" in accessibility and video settings.}}
+|{{HistoryLine||1.21.2|dev=24w33a|exp=Minecart Improvements|Added a new accessibility setting that makes players follow the rotation of Minecarts they ride.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Added new video setting "Reduce FPS when".}}
+|{{HistoryLine|||dev=24w40a|Added the High Contrast Block Outlines accessibility option, to make targeted block's outlines more visible.}}
+|{{HistoryLine||1.21.6|dev=25w17a|Added "Cloud Distance" to video settings to reduce the cloud range.}}
+|{{HistoryLine|||dev=25w20a|Added "Music Frequency" and "Show Music Toast" to Music & Sound settings.}}
+|{{HistoryLine|||dev=pre2|slink=Java Edition 1.21.6 Pre-Release 2|The volume slider "Friendly Creatures" has been renamed to "Friendly Mobs".|The volume slider "Hostile Creatures" has been renamed to "Hostile Mobs".}}
+|{{HistoryLine|||dev=pre3|Added the "UI" volume slider in Music & Sounds settings.}}
+|{{HistoryLine||1.21.9|dev=25w31a|Added "Invert Mouse X" option to the Mouse Settings screen|Added "Sprint Window" option to the Controls screen.|A button leading to the Controls screen has been added to the Accessibility Settings screen.|The "Auto-Jump" option, as well as the "Sneak" and "Sprint" toggles have been removed from the Accessibility Settings screen.|The "Show Subtitles" option has been renamed to "Closed Captions".|The "Attack/Destroy" and "Use Item/Place Block" keybinds are now toggleable.}}
+|{{HistoryLine|||dev=25w33a|Added an option to the Chat Settings menu that enables saving unsent chat messages by default.}}
+|{{HistoryLine|||dev=25w34a|The "Hide Lightning Flashes" accessibility setting has been renamed to "Hide Sky Flashes" and now also disables the [[End Flash|End flashes]].}}
+|{{HistoryLine|||dev=25w35a|Added "Allow Cursor Changes" option in "Mouse Settings" menu.}}
+|{{HistoryLine|||dev=25w36a|Multiple key binds that have the same key assigned to them can now work together, while before only one would work.|Added a Spectator category in the key binds screen, alongside the pre-existing Highlight Players key bind.|The spectator hotbar menu key can now be rebound.}}
+|{{HistoryLine|||dev=25w37a|Some sound sliders in the Music & Sound options now play a preview sound when adjusting the setting outside a world.|The Resource Pack and Data Pack selection screens now have a search box.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added a "Debug" category in the key binds screen.|Graphics modes "Fast", "Fancy", and "Fabulous!" have been replaced with graphics presets with the same names.|Settings on the Video Settings screen have been reordered and split into 3 sections: "Display", "Quality & Performance", and "Interface".|Some settings have been removed from the Video Settings screen, because they were duplicating accessibility settings.|Tweaks that were previously hidden behind the "Graphics" setting have been split out to be configurable independently.|A new "Preset" slider was added to the top of the "Quality & Performance" section.|Menu sliders will now "stick" to the closest available value when releasing them after dragging with a mouse.|When using the keyboard to change slider values, arrow keys will now move the slider to the next available value, not by one pixel as before.|The inF3 button in the Debug Option screen has been renamed to inOverlay.}}
+|{{HistoryLine|||dev=25w44a|Added the "Anisotropic Filtering" and "Chunk Fade" options to the video settings.|The “Interface” section in the video settings has been renamed to “Preferences”.}}
+|{{HistoryLine|||dev=25w46a|Renamed the "Show Music Toast" option to "Music Toast".|Added a third state to the "Music Toast" option, allowing it to only be shown in the pause menu.}}
+|{{HistoryLine|||dev=pre1|Added texture filtering in video settings.}}
+|{{HistoryLine||26.1|dev=snap3|The difficulty button in the pause menu has been replaced with a button leading to a new screen - World Options.|The world options screen contains the difficulty button as well as a button for changing game rules.|The game rules screen is available for all operators and otherwise disabled.}}
+|{{HistoryLine|||dev=pre2|Added a new display option called "Exclusive Fullscreen" which controls if fullscreen mode should take full control of a monitor.<ref group="note">Defaults to false. In previous version, fullscreen would always use exclusive mode.</ref>}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Added the ability to choose between OpenGL and Vulkan in the video settings.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU0|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the settings menu.}}
+|{{HistoryLine||xbox=TU2|Added the ability to turn [[autosave]] off or set it from 15 minutes up to 2 hours in 15 minute steps.|Split the sensitivity controls into an in-game sensitivity and an in-menu sensitivity.|Added an "Interface Opacity" slider for plasma screen users.|Added the ability to enable/disable gamertag display in [[splitscreen]].|Added an option to enable/disable in-game hints.|Added an option to enable/disable [[tooltip]]s.|Added new sections in the "How To Play" menu on [[multiplayer]], sharing [[screenshot]]s and recent news.}}
+|{{HistoryLine||xbox=TU3|Added the [[crosshair]] to the list of things affected by the opacity slider.|On using the quick-select bar, the opacity of the quick-select, [[tooltip]]s, [[splitscreen]] [[gamertag]] display and [[crosshair]] will be set to 80 and will fade back down to the user opacity setting after 6 seconds of no quick-select bar use.}}
+|{{HistoryLine||xbox=TU5|Updated the "How to Play" menu with food bar information.|Added descriptions for [[Creative mode]] and [[sprinting]] to the "How to Play" menu.|Updated the "Download Content" menu with pictures of the DLC available.}}
+|{{HistoryLine||xbox=TU6|Updated the "How to Play" menu with information about Host and Player options.}}
+|{{HistoryLine||xbox=TU7|Updated the "How to Play" menu with new sections for [[brewing]], [[enchanting]] and [[breeding]].|Added a new option to disable skin animations.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Options menus ===
+<gallery>
+Settings Screen.png|The default main options menu.
+Online Options.png|The default online options menu.
+Skin Customization.png|The default [[skin]] customization options menu.
+Music & Sound Options.png|The default [[music]] and [[sound]] options menu.
+Video Settings.png|The default video options menu.
+Controls.png|The default [[controls]] menu.
+Language settings.png|The default language options menu.
+Chat Settings.png|The default [[Multiplayer#Chat|chat]] options menu.
+Select Resource Packs.png|The default [[resource pack]]s menu.
+Accessibility Settings.png|The default accessibility options menu.
+Key Binds.png|The default key binds menu.
+Mouse Settings.png|The default mouse settings menu.
+</gallery>
+
+=== Development images ===
+<gallery>
+Dinnerbone Vsync.png|First screenshot of the VSync option.
+Dinnerbone Options.png|First screenshot teasing the super secret settings button.
+New Option 1.10.png|First screenshot of the auto jump option.
+Audio Device Option.png|First screenshot of the audio device option.
+Keybind Options.png|First screenshot of the revamped controls menu in [[Java Edition 1.7.2|1.7.2]].
+Sound Options.png|First screenshot of the revamped sound options in 1.7.2.
+</gallery>
+
+=== Other ===
+<gallery>
+Mipmap comparison.png|A comparison between the five mipmap levels. Enlarge to view animation.
+Biome blend anim.gif|A comparison between no biome blending and 5×5 biome blending.
+SmoothLighting.gif|A comparison between a cave with smooth lighting enabled and the same cave without it.
+</gallery>
+
+== See also ==
+* [[Settings]]
+* [[Heads-up display]]
+* [[Third person view]]
+* [[Debug screen]]
+* [[Host privileges]]
+* [[options.txt]]
+* [[Menu screen]]
+* [[World Options]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+[[Category:Menu screens]]
+
+[[de:Menü/Optionen]]
+[[es:Opciones]]
+[[fr:Options]]
+[[ja:設定]]
+[[ko:설정]]
+[[nl:Instellingen]]
+[[pl:Ustawienia]]
+[[pt:Opções]]
+[[ru:Настройки]]
+[[uk:Налаштування]]
+[[zh:选项]]

@@ -1,0 +1,125 @@
+{{Infobox structure
+| image = Forest rock.png
+| biome = {{BiomeLink|Old Growth Pine Taiga}}<br>{{BiomeLink|Old Growth Spruce Taiga}}
+| blocks =
+* {{BlockLink|Mossy Cobblestone}}
+|canspawn=No
+}}
+A '''forest rock''' is a [[feature]] found throughout [[old growth taiga]] biomes. They are made of [[mossy cobblestone]] and are randomly generated.
+
+== Generation ==
+A forest rock is a feature that represents a boulder, made entirely of [[mossy cobblestone]]. They can be found dotted around areas of the old growth taiga [[biome]]s at the surface.
+
+== Construction ==
+Forest rocks represent fairly large rocks, varying in size and shape, and usually half-buried in the ground. Their shapes are overall similar, although some are smaller or larger depending on generation and whether they join with a nearby forest rock. Each face tends to have a cross shape or square shape, possibly missing a corner or two.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=forest-rock
+|spritetype=env
+|nameid=block_blob
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=forest-rock
+|spritetype=env
+|nameid=minecraft:forest_rock_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=forest-rock
+|spritetype=env
+|nameid=minecraft:legacy:forest_rock_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state}}: The block state to use.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|can_place_on}}: The block predicate that defines which blocks the rock can be placed on.
+*** {{nbt inherit/block predicate}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:forest_rock",
+  "config": {
+    "state": {
+      "Name": "minecraft:mossy_cobblestone"
+    }
+	"can_replace": {
+	  "type": "true"
+	}
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w36a|Added forest rocks.}}
+|{{HistoryLine||1.14|dev=19w12a|Forest rocks have been made smaller.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added forest rocks.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|ps4=1.22|psvita=1.22|wiiu=Patch 3|switch=1.0.1|Added forest rocks.}}
+}}
+
+==Issues==
+{{issue list|Forest Rock|Boulder}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Forest rocks in a cave.png|A forest rock generated in a ravine.
+File:Forest rocks in water.png|Many forest rocks in water.
+File:Forest rocks.png|Forest rocks.
+File:Forest rocks spawned on spikes.png|Forest rocks generated on terrain spikes.
+File:Tiny forest rock.png|A forest rock that only generated with 3 [[mossy cobblestone]].
+File:Uncovered tiny forest rock.png|The same tiny forest rock, uncovered.
+File:Floating forest rock.png|A naturally generated forest rock floating in mid-air
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+RedwoodBiome.jpg|The first image of the old growth taiga featuring forest rocks.
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Roca de bosque]]
+[[fr:Rocher de forêt]]
+[[ja:苔石の岩]]
+[[ko:이끼 낀 바위]]
+[[lzh:苔巖]]
+[[pl:Otoczak]]
+[[pt:Rocha da floresta]]
+[[ru:Замшелый валун]]
+[[uk:Лісовий камінь]]
+[[zh:生苔的巨石]]

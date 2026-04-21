@@ -1,0 +1,264 @@
+{{For|the normal sculk sensor|Sculk Sensor}}
+{{Infobox block
+| title = Calibrated Sculk Sensor
+| image = Calibrated Sculk Sensor.gif
+| imagecaption = ''[[Java Edition]]''
+| image2 = Calibrated Sculk Sensor BE.gif
+| image2caption = ''[[Bedrock Edition]]''
+| renewable = Yes
+| stackable = Yes (64)
+| tool = hoe
+| transparent = Yes
+| light = Yes (1)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+A '''calibrated sculk sensor''' is a [[craftable]] type of [[sculk sensor]] that functions similarly, but detects [[vibration]]s more quickly and from further away. Its [[amethyst]]-covered input side can be [[redstone|powered]] to make the sensor only detect vibrations from specific sources, depending on the signal strength used. Placing an [[Block of Amethyst|amethyst block]] next to a sculk sensor allows it to "relay" detected vibrations to other sculk sensors.
+
+== Obtaining ==
+=== Breaking ===
+A calibrated sculk sensor can be broken with any tool, but [[hoe]]s are the quickest. It drops itself only if mined with any tool enchanted with [[Silk Touch]]. If mined with a non-Silk Touch tool, it drops 5 [[experience]] instead.
+
+{{Breaking row|Calibrated Sculk Sensor|Hoe|drop=0|horizontal=1}}
+
+=== Crafting ===
+{{Crafting
+|B1=Amethyst Shard
+|A2=Amethyst Shard
+|B2=Sculk Sensor
+|C2=Amethyst Shard
+|Output=Calibrated Sculk Sensor
+|type=Redstone
+}}
+
+== Usage ==
+When a calibrated sculk sensor detects a vibration, it is activated and emits redstone signal in every direction (including top and bottom), except the side with the amethyst stripe. The redstone signal emitted from the bottom will [[Redstone mechanics#Powered blocks|strongly power]] the block below the sensor, whereas in all other directions (excluding the side with the amethyst stripe) it is as though the sensor itself is the strongly powered block. 
+[[File:CalibratedSculkSensorPower.png|thumb|An activated calibrated sculk sensor. Only the block ''below'' the sensor is strongly powered. All other sides react as if the sensor itself is strongly powered, excluding the side with the amethyst stripe. ]]
+
+The calibrated sculk sensor is different from the basic [[sculk sensor]] in multiple ways:
+* can detect vibrations within a [[distance]] of 16 blocks, instead of 8.
+* is activated for 10 game ticks after detecting a vibration instead of 30 game ticks
+* can be filtered (see below) to react only to some sounds.
+* one side does not emit a redstone signal when activated (the side with the amethyst stripe).
+
+When a calibrated sculk sensor detects a vibration, it is activated for 10 game ticks, then has a 10 game tick cooldown before it can detect another vibration. This means that a calibrated sculk sensor can detect a vibration once every 1.05 seconds, as opposed to once every 2.05 seconds for a regular sculk sensor. (Plus 0.05 for every block of distance from the vibration past the first.)
+
+=== Filtering ===
+When a [[Redstone mechanics#Signal strength|redstone signal]] powers a calibrated sculk sensor on its crystalized side, the sensor is filtered to respond only to vibrations that match the strength of that signal. Every vibration in the game has a frequency associated with it, and every vibration frequency directly matches a specific redstone signal strength. For example, a vibration with a frequency of 5 matches the redstone signal with a strength of 5.
+
+Some events can create multiple vibrations simultaneously. For example, eating most food items creates vibrations of frequency 3 (item interaction) and 8 (entity eats). Hitting the ground and taking fall damage creates vibrations of frequency 2 (hit ground) and 7 (entity damage). Using a redstone signal, the sensor can be filtered to detect either frequency. If no redstone signal is provided, the sensor detects the highest frequency.
+
+==== Vibration frequency ====
+{{main|Vibration}}
+{{:Vibration}}
+
+=== Piston interactivity ===
+Calibrated sculk sensors cannot be moved by [[piston]]s or [[sticky pistons]].
+
+=== Vibration resonance ===
+When a calibrated sculk sensor detects a vibration, any adjacent [[block of amethyst]] re-emits a vibration of the same frequency that the calibrated sculk sensor detected, which can be detected by [[sculk sensor|sculk sensors]] and other calibrated sculk sensors.
+If the calibrated sculk sensor is filtered, the block of amethyst re-emits only the vibrations matching the filtered redstone signal strength.
+
+== Sounds ==
+A calibrated sculk sensor is silent if [[Waterlogging|waterlog]]ged. It can still detect vibration, but does not produce sounds itself.
+
+=== Generic ===
+{{Sound table/Block/Sculk sensor}}
+
+=== Unique ===
+{{:Sculk Sensor/Sounds|a calibrated sculk sensor}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Calibrated Sculk Sensor
+|spritetype=block
+|nameid=calibrated_sculk_sensor
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=calibrated-sculk-sensor
+|spritetype=block
+|nameid=calibrated_sculk_sensor
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Calibrated Sculk Sensor
+|spritetype=block
+|nameid=calibrated_sculk_sensor
+|blocktags=minecraft:is_hoe_item_destructible
+|id=-580
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=calibrated-sculk-sensor
+|spritetype=block
+|nameid=CalibratedSculkSensor
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+{{/BS}}
+
+=== Block data ===
+A calibrated sculk sensor has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+{{#lst:Sculk Sensor|block data}}
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+{{yt|6dZ-kQXrxYg}}
+
+== History ==
+=== Mention ===
+{{HistoryTable
+|{{HistoryLine||October 12, 2020|link=https://twitter.com/kingbdogz/status/1315607422162079744|[[Brandon Pearce]] mentioned adding "habituation" to the [[sculk sensor]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w49a|[[File:Sculk Sensor (calibrated side texture) JE1.png|32px]] [[File:Sculk Sensor (calibrated top texture) JE1.png|32px]] Added unused textures for calibrated sculk sensor to the game files (specifically to the <samp>assets/minecraft/textures/blocks</samp> directory).
+|The top texture is a translucent version of the [[block of amethyst]] texture, where the side texture is composed of the [[sculk sensor]]'s side texture overlaid on the amethyst texture.
+| However, the sculk sensor side texture used is actually the pre-release one shown in Minecraft Live 2020.
+|The amethyst textures are based on those from 20w45a, despite these textures being added after the amethyst block textures were redone twice, implying these textures come from a scrapped functionality of the sculk sensor coupled with amethyst.}}
+|{{HistoryLine|||dev=21w13a|Removed texture files from the game files.<ref>{{bug|MC-208551||Calibrated Sculk Sensor are unused in-game files|Fixed}}</ref>}}
+|{{HistoryLine||1.20|dev=23w12a|[[File:Calibrated Sculk Sensor JE1.gif|32px]] Added calibrated sculk sensors.}}
+|{{HistoryLine|||dev=23w14a|Calibrated sculk sensors now detect vibrations up to 16 blocks radius instead of 8 blocks.
+|Calibrated sculk sensors now have 1 second active cooldown instead of 2 seconds.
+|Calibrated sculk sensors now accept signals into the calibration input side more consistently with other redstone components.
+|Calibrated sculk sensors can now be activated by sniffer digging.
+|Calibrated sculk sensors can now glow when they trigger, just like a regular sculk sensor.
+|Default redstone output has been modified to be more reliable for distance calculations.
+|Calibrated sculk sensors can now strongly power the block they are placed on.}}
+|{{HistoryLine|||dev=23w16a|[[File:Calibrated Sculk Sensor JE2.gif|32px]] The model of the calibrated sculk sensor have been changed. The amethyst is now stretched to match the model of the [[amethyst cluster]].}}
+|{{HistoryLine|||dev=23w17a|Now lasts 10 game ticks when in "Active" phase instead of 20.
+|Now lasts 10 game ticks when in "Cooldown" phase instead of 1.}}
+|{{HistoryLine|||dev=23w18a|Landing or jumping on the edge of wool no longer triggers calibrated sculk sensors.<ref name="MC-252389">{{bug|MC-252389||When landing (or jumping) on wool with your hitbox over the edge, it produces a vibration|Fixed}}</ref>
+|Walking on the edge of blocks now properly triggers sculk sensors.<ref>{{bug|MC-207290||Calibrated sculk sensors don't detect vibrations while walking on the edge of a block|Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|Calibrated sculk sensors can now detect [[totems of undying]] activating.
+|Calibrated sculk sensors can now detect [[witch]]es drinking a potion.
+|Calibrated sculk sensors can now detect [[turtle]]s clearing away sand.
+|Calibrated sculk sensors can now detect [[camel]]s standing up, sitting down, or dashing.}}
+|{{HistoryLine|||dev=23w32a|Vibrations no longer risk being lost on simulation distance limit.
+|Unequipping items emits a new <code>unequip</code> vibration of frequency <code>4</code>.
+|[[Chiseled bookshelves]] emit a <code>block_change</code> vibration of frequency <code>11</code> when receiving books from [[hopper]]s.
+|[[Turtle egg]]s cracking emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|Turtle eggs hatching emit a <code>block_destroy</code> vibration of frequency <code>12</code>.
+|Using [[bone meal]] emits an <code>item_interact_finish</code> vibration of frequency <code>3</code>.
+|[[Fire]] being doused by water potion emits a <code>block_destroy</code> vibration of frequency <code>12</code>.
+|[[Evoker]]s evoking [[vex]]es or fangs emit an <code>entity_place</code> vibration of frequency <code>14</code>.
+|[[Carrot]]s being eaten by [[rabbit]]s emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|[[Sweet berries]] being eaten by [[fox]] emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|[[Camel]]s eating cactus emit an <code>eat</code> vibration of frequency <code>8</code>.}}
+|{{HistoryLine||1.21|dev=24w19a|[[Frosted ice]] being placed by [[Frost Walker]] emits a <code>block_place</code> vibration of frequency <code>13</code>.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Entities bouncing off of blocks or a collidable entity will emit a vibration frequency of {{cd|2}}.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.22|[[File:Calibrated Sculk Sensor BE1.gif|32px]] Added calibrated sculk sensors behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Calibrated sculk sensors are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|Calibrated sculk sensors can now detect the following events:
+* Placing, rotating, or removing an item in an [[item frame]] or a [[glow item frame]].
+* Charging a [[respawn anchor]].
+* Scraping or applying wax to blocks of the copper block set.
+* Switching a [[daylight detector]] to an inverted daylight detector or vice-versa.
+* Adding food to a [[campfire]].
+* Adding or removing a [[music disc]] to a [[jukebox]].
+* [[Mud]] turning into [[clay]].
+* Harvesting [[sweet berries]].
+* Placing an [[eye of ender]] in an [[end portal frame]].
+* [[Bee]]s entering or exiting a [[beehive]] or a [[bee nest]].
+* Interacting with [[composter]].
+* Attaching or detaching a [[lead]] from a [[fence]].
+* Attaching or detaching a lead from a mob.
+* Dying a [[sheep]].
+* Picking [[glow berries]].
+* [[Farmland]] turning into [[dirt]].
+* Using a [[spawn egg]] on a [[monster spawner]].
+* [[Silverfish]] merging with blocks.
+* Using a [[hoe]] on [[rooted dirt]].
+* Using a [[shovel]] to create [[dirt path]]s.
+* Placing a [[door]].
+* Planting seeds in [[farmland]].}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Calibrated sculk sensors can now detect the following events:
+* Throwing an [[eye of ender]].
+* [[Minecart]]s, consistently when moving on [[rail]]s while empty.
+* Collecting [[fish]], [[axolotl]]s, and [[tadpole]]s with [[bucket]]s.
+* Cleaning items in [[cauldron]]s.
+* Dying leather [[armor]] in cauldrons.
+* [[Tipped Arrow|Tipping arrows]] in cauldrons.
+* Using [[dye]]s to change cauldrons' water color.
+* Non-player actors event when equipping [[shield]]s in their off-hand slot.}}
+|{{HistoryLine|||dev=Preview 1.20.30.21|Calibrated sculk sensors can now detect the following events:
+* Applying a [[nametag]].
+* [[Evoker]]s summoning [[vex]]es or fangs.
+* [[Chicken]]s, [[frog]]s, and [[turtle]]s laying eggs.
+* Using [[bone meal]].
+* [[Chiseled bookshelves]] when [[book]]s are inserted into them using [[hopper]]s.
+* Extinguishing [[fire]].
+* Mounting or dismounting a [[vehicle]].
+* [[Rabbit]]s eating [[carrot]] crops.
+* [[Fox]]es eating [[sweet berry]] bushes.
+* Unequipping [[armor]].
+* Placing a [[banner]], [[bamboo sapling]], [[lily pad]], or a [[head]].
+* Placing [[frogspawn]]s.
+* Placing or adding [[sea pickle]]s.
+* Adding/destroying a [[turtle egg]].
+* [[Turtle egg]]s cracking.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Calibrated sculk sensors now use the <code>minecraft:cardinal_direction</code> [[block state]] instead of <code>direction</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+Calibrated Sculk Sensor (recreated model).gif|One interpretation of how the old texture could have looked.
+Calibrated Sculk Sensor (recreated model).png|Another interpretation.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox redstone|Components}}
+{{Navbox blocks|Vegetation}}
+
+[[Category:Utility blocks]]
+[[Category:Mechanisms]]
+[[Category:Light sources]]
+[[Category:Block entities]]
+
+[[es:Sensor de sculk calibrado]]
+[[fr:Capteur sculk calibré]]
+[[ja:調律されたスカルクセンサー]]
+[[ko:조율한 스컬크 감지체]]
+[[pt:Sensor de Sculk Calibrado]]
+[[ru:Откалиброванный скалк-сенсор]]
+[[uk:Відкалібрований скалковий сенсор]]
+[[zh:校频幽匿感测体]]

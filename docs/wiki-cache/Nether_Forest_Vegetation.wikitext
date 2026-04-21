@@ -1,0 +1,191 @@
+{{Infobox structure
+| title = Nether Forest Vegetation
+| image = Nether veggies.png
+| canspawn = No
+| biome =
+* {{BiomeLink|Crimson Forest}}
+* {{BiomeLink|Warped Forest}}
+| blocks =
+* {{BlockLink|Crimson Roots}}
+* {{BlockLink|Crimson Fungus}}
+* {{BlockLink|Warped Roots}}
+* {{BlockLink|Warped Fungus}}
+* {{BlockLink|Nether Sprouts}}
+}}
+'''Nether forest vegetation''' is a [[feature]] that generates patches of surface vegetation in the [[crimson forest]] and [[warped forest]] biomes.
+
+== Generation ==
+{{Incomplete section|Technical generation details}}
+[[File:Nether vegetation patch.png|thumb|All nether vegetation on the border of a crimson forest and warped forest]]
+Nether forest vegetation takes one of 5 possible blocks:
+
+* {{BlockLink|Crimson Roots}}
+* {{BlockLink|Crimson Fungus}}
+* {{BlockLink|Warped Roots}}
+* {{BlockLink|Warped Fungus}}
+* {{BlockLink|Nether Sprouts}}
+
+The spread (size) of the patch, the number of blocks in the patch, and the rarity depends on the biome.
+
+=== Crimson Forest ===
+In [[crimson forest]]s, these patches are usually [[crimson roots]] and [[crimson fungus]]. Uncommonly, [[warped fungus]] will also generate, scaring away [[hoglin]]s that happen to wander nearby.
+
+=== Warped Forest ===
+Unlike crimson forests, [[warped forest]]s generate with all possible types of nether forest vegetation. Commonly, these are [[warped roots]], [[nether sprouts]], and warped fungus. Crimson roots and crimson fungus will uncommonly appear in this biome.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=all-nether-roots
+|spritetype=block
+|nameid=nether_forest_vegetation
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=crimson-roots
+|spritetype=block
+|nameid=crimson_forest_vegetation
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=crimson-roots
+|spritetype=block
+|nameid=crimson_forest_vegetation_bonemeal
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-roots
+|spritetype=block
+|nameid=warped_forest_vegetation
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-roots
+|spritetype=block
+|nameid=warped_forest_vegetation_bonemeal
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=nether-sprouts
+|spritetype=block
+|nameid=nether_sprouts
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=nether-sprouts
+|spritetype=block
+|nameid=nether_sprouts_bonemeal
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=crimson-fungus
+|spritetype=block
+|nameid=crimson_fungus_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-fungus
+|spritetype=block
+|nameid=warped_fungus_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-roots
+|spritetype=block
+|nameid=warped_roots_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=nether-sprouts
+|spritetype=block
+|nameid=nether_sprouts_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=crimson-fungus
+|spritetype=block
+|nameid=crimson_fungus_scatter_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-fungus
+|spritetype=block
+|nameid=warped_fungus_scatter_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=warped-roots
+|spritetype=block
+|nameid=warped_roots_scatter_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=nether-sprouts
+|spritetype=block
+|nameid=nether_sprouts_scatter_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config" /><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state_provider}} The block to use.
+*** {{nbt inherit/block_state_provider}}
+** {{nbt|int|spread_width}} The horizonal distance to spread to. The max width is <code>spread_width * 2 -1</code>. Must be a positive integer.
+** {{nbt|int|spread_height}} The vertical distance to spread. The max height is <code>spread_height * 2 -1</code>. Must be a positive integer.
+</div><section end="config" />
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:nether_forest_vegetation",
+  "config": {
+    "spread_height": 4,
+    "spread_width": 8,
+    "state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:nether_sprouts"
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{expand section}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w06a|Added nether forest vegetation.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Added nether forest vegetation.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[Category:Generated features]]
+
+[[fr:Végétation de forêt du Nether]]
+[[pt:Vegetação florestal do nether]]

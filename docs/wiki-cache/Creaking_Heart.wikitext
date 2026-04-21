@@ -1,0 +1,344 @@
+{{About|the block|the mob|Creaking}}
+{{Infobox block
+| group = Uprooted
+| group2 = Dormant
+| group3 = Awake
+| 1-1 = Creaking Heart.png
+| 2-1 = Dormant Creaking Heart JE1 BE1.png
+| 3-1 = Active Creaking Heart.png
+| invimage = 
+| rarity = common
+| renewable = Yes
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+| stackable = Yes (64)
+| tool = axe
+}}
+A '''creaking heart''' is a living [[block]]<ref name="pale">{{Citation|author=Sophie Austin |title=The Pale Garden |url=https://www.minecraft.net/en-us/article/the-pale-garden |website=minecraft.net |date=2 October 2024 |quote=While creaking hearts might look like wood, these are actually living blocks}}</ref><ref name="snap">{{snap|24w40a|October 2, 2024}}</ref> that can be [[crafted]] or found in [[pale oak]] trees in [[pale garden]]s. It activates if placed in a line between two [[pale oak log]]s; then, during [[Daylight cycle|nighttime]], it spawns a [[creaking]] and protects it from all [[damage]]. [[Breaking]] a creaking heart that is protecting a creaking instantly kills it. Hitting a protected creaking causes [[resin clump]]s to grow on [[pale oak log]]s near its linked creaking heart.
+
+== Obtaining ==
+=== Breaking ===
+Creaking hearts drop as an item only when mined by a tool enchanted with [[Silk Touch]]. Otherwise, they drop 1–3 [[resin clump]]s; [[Fortune]] can increase the maximum drops by 1 per level (up to 6 with Fortune III).
+
+Destroying a naturally-generated creaking heart also drops 20–24 [[experience]], only in [[Survival]] mode.
+
+Creaking heart has the highest [[hardness]] value of all blocks having the axe as the suitable tool.
+
+{{Breaking row|horizontal=1|Creaking Heart|link=none|Axe|drop=0}}
+
+=== Natural generation ===
+Creaking hearts have a 10% chance to generate inside the top trunks of [[pale oak]] trees in the [[pale garden]]. They are always completely covered by other [[pale oak log]]s and are never exposed to the air. Pale oaks grown from [[pale oak sapling]]s do not generate with hearts.
+
+{{Block distribution}}
+
+=== Crafting ===
+{{Crafting
+|B1=Pale Oak Log
+|B2=Block of Resin
+|B3=Pale Oak Log
+|Output=Creaking Heart 
+|type=Decoration block}}
+
+== Usage ==
+A creaking heart can be placed in different orientations, similar to [[log]]s. It has three states: uprooted, dormant, and awake. The creaking heart is uprooted by default, but it becomes dormant during the day and awake at night when placed between two [[pale oak log]]s, [[stripped pale oak log]]s, [[pale oak wood]], or [[stripped pale oak wood]] with the same orientation. The texture of a creaking heart changes depending on its state, with the "core" appearing dark when uprooted, brighter when dormant and orange when awake. If the creaking heart hasn't already spawned a [[creaking]], removing one of the surrounding aligned logs reverts it to the uprooted state.
+
+Creaking hearts generate [[resin clump]]s on nearby pale oak logs when its linked creaking is attacked by a [[player]] or tamed [[wolf]] at night. There is a 5-second cooldown between each resin clump generation.
+
+=== Spawning mechanics ===
+{{Main|Creaking#Spawning}}
+[[File:Creaking Heart In Java Edition.png|right|thumb|A disabled creaking heart (left) and an active creaking heart (right)]]
+If a creaking heart is properly aligned between two pale oak logs and is located in the [[Overworld]], it becomes awake at [[night]] (between 12600 and 23400 ticks). An awake creaking heart waits 2 [[tick]]s (0.1 seconds) and checks if the matching logs are in place. If so and it detects no linked creaking, it tries to find a valid location in a 33&times;17&times;33 box centered at that creaking heart to spawn one until successful, interrupted by getting destroyed or disabled. If found, it waits 20 ticks (1 second) before checking again if the matching logs are in place. If successful, it spawns a creaking after 2 extra ticks, otherwise it uproots. While a creaking heart is awake and has a linked creaking, it does not uproot until broken, even if any of the matching blocks are removed.
+
+[[File:Creaking Heart Spawning Box.png|alt=The 33×17×33 box in which a Creaking Heart is able to spawn its Creaking.|thumb|Creaking can spawn in yellow or brown regions when provided with a valid spawning space by a spawnable block placed in yellow or orange regions and three blocks of air above it.]]
+
+Valid locations for creakings to spawn at follow these criteria:
+* The block below must have a solid top surface.
+* The block below is not [[leaves]].
+* The location is any non-solid block. This means blocks like [[carpet]] can spawn-proof creakings, but not [[button]]s.
+* The location is where there would be no [[liquid]] or other entities' [[hitbox]]es within a creaking's hitbox.
+** Due to a bug {{note|{{bug|MCPE-189513}}}}, creakings can be spawned in water {{in|Bedrock}}.
+
+[[Creaking]]s ignore solid blocks within its hitbox that are 2+ blocks above the ground while spawning.
+
+Creaking hearts never spawn creakings in [[the Nether]] nor [[the End]].
+
+=== Despawning creakings ===
+Breaking the heart kills its linked creaking and attributes the kill to the [[player]] who broke it, adding the kill to their [[statistics]] and triggering the Monster Hunter and Monsters Hunted [[advancement]]s.
+
+During daytime (starting at 23401 ticks), an awake creaking heart becomes dormant and despawns its linked creakings, unless it has been named using a [[name tag]].
+
+If the heart's linked creaking is too far away (more than 34 blocks away), that creaking despawns, and the heart spawns another one if conditions are met.
+
+=== Redstone component ===
+A [[redstone comparator]] connected to a creaking heart outputs a signal if the heart has a linked creaking. The strength of the signal depends on the [[Euclidean distance]] between the heart and its creaking, and is calculated as follows: 
+
+<math>\text{output} = 15 - \left\lfloor \frac{\text{distance}}{32} \times15 \right\rfloor</math>
+
+In other words, the closer a creaking is to its heart, the stronger the signal.
+
+Additionally, a creaking itself can be used to detect when a [[player]] is looking at it. An observed creaking sinks in [[water]] (or [[lava]]) instead of swimming upward, which can cause it to activate a [[pressure plate]] or similar means. An unobserved creaking bobs up and down in liquid, which can cause it to activate a pressure plate even if not being looked at. Giving a creaking enough space to bob prevents this.
+
+[[Piston]]s of any kind cannot move creaking hearts.
+
+=== Ambient sounds ===
+A creaking heart emits subtle [[#Unique|eerie sounds]] when it is awake and surrounded by any types of [[log]]s, [[stripped log]]s, [[wood]], or [[stripped wood]] in all 6 directions.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Creaking heart}}
+
+=== Unique ===
+{{Edition|Java}}:
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Creaking heart trail1.ogg
+|sound2=Creaking heart trail2.ogg
+|sound3=Creaking heart trail3.ogg
+|sound4=Creaking heart trail4.ogg
+|sound5=Creaking heart trail5.ogg
+|sound6=Creaking heart trail6.ogg
+|sound7=Creaking heart trail7.ogg
+|subtitle=Creaking Heart grumbles
+|source=block
+|description=When a creaking heart's creaking is attacked by a player
+|id=block.creaking_heart.hurt
+|translationkey=subtitles.block.creaking_heart.hurt
+|volume=''Varies''<ref group=sound>Plays ten times with an interval of 10 ticks starting at 1 and linearly interpolating to 0.55. Follows the equation <math>\frac{\text{emitter}}{200}+0.5</math>.</ref>
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking spawn.ogg
+|subtitle=Creaking manifests
+|source=hostile
+|description=When a creaking heart summons a creaking
+|id=entity.creaking.spawn
+|translationkey=subtitles.entity.creaking.spawn
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking heart spawnmob.ogg
+|subtitle=Creaking Heart awakens
+|source=block
+|description=When a creaking heart summons a creaking
+|id=block.creaking_heart.spawn
+|translationkey=subtitles.block.creaking_heart.spawn
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking heart idle1.ogg
+|sound2=Creaking heart idle2.ogg
+|sound3=Creaking heart idle3.ogg
+|sound4=Creaking heart idle4.ogg
+|subtitle=Eerie noise
+|source=block
+|description=Randomly while active<ref group=sound>In a 33×17×33 box centered six blocks beneath the creaking heart</ref>
+|id=block.creaking_heart.idle
+|translationkey=subtitles.block.creaking_heart.idle
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Creaking heart trail1.ogg
+|sound2=Creaking heart trail2.ogg
+|sound3=Creaking heart trail3.ogg
+|sound4=Creaking heart trail4.ogg
+|sound5=Creaking heart trail5.ogg
+|sound6=Creaking heart trail6.ogg
+|sound7=Creaking heart trail7.ogg
+|source=block
+|description=When a creaking heart's creaking is attacked by a player
+|id=block.creaking_heart.trail
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking spawn.ogg
+|source=hostile
+|description=When a creaking heart summons a creaking
+|id=mob.creaking.spawn
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking heart spawnmob.ogg
+|source=block
+|description=When a creaking heart summons a creaking
+|id=block.creaking_heart.spawn_mob
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking heart idle1.ogg
+|sound2=Creaking heart idle2.ogg
+|sound3=Creaking heart idle3.ogg
+|sound4=Creaking heart idle4.ogg
+|source=block
+|description=Randomly while active
+|id=block.creaking_heart.ambient
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{el|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Creaking Heart
+|spritetype=block
+|nameid=creaking_heart
+|foot=1}}
+
+{{el|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Creaking Heart
+|nameid=creaking_heart
+|spritetype=block
+|id=-1012
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|creaking_heart_state|uprooted
+|uprooted|When the creaking heart is not aligned between two pale oak logs and doesn't project a creaking.
+|dormant|When the creaking heart is aligned between two pale oak logs during the day, or projects a creaking during the day.
+|awake|When the creaking heart is aligned between two pale oak logs at night, or projects a creaking at night.}}
+{{bst|axis|y
+|x|The creaking heart is oriented east–west.
+|y|The creaking heart is oriented vertically.
+|z|The creaking heart is oriented north–south.}}
+{{bst|natural|false
+|false|The creaking heart does not drop experience when broken.
+|true|The creaking heart drops experience when broken.
+|foot=1}}
+
+=== Block data ===
+A creaking heart has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|int-array|creaking}}: The [[UUID]] of the transient [[creaking]] associated with this creaking heart, stored as four ints.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{Load achievements|Heart Transplanter;Monster Hunter}}
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;Heart Transplanter}}<!-- these require the creaking heart to be destroyed -->
+
+== History ==
+=== Showcase ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2024|link={{ytl|qnX6sPFjXnA}}|[[File:Creaking Heart JE1 BE1.png|32px]] [[File:Active Creaking Heart JE1 BE1.png|32px]] Creaking hearts were showcased on [[Minecraft Live 2024]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Creaking Heart JE1 BE1.png|32px]] [[File:Active Creaking Heart JE1 BE1.png|32px]] Added creaking hearts.}}
+|{{HistoryLine|||dev=pre1|[[Redstone comparator]]s connected to creaking hearts now output a signal strength dependent on the distance to the connected [[creaking]].}}
+|{{HistoryLine||1.21.4|dev=24w44a|Creaking hearts are now available without using the "Winter Drop" experimental data pack.
+|[[File:Creaking Heart JE2 BE2.png|32px]] Updated the texture of the inactive creaking heart to be more consistent with its active state.
+|Naturally generated creaking hearts now drop 20 to 24 experience when broken by a player, with or without Silk Touch.
+|Breaking a creaking heart block without Silk Touch now drops 1 to 3 [[resin clump]]s.
+|Creaking hearts can now be crafted with two [[pale oak log]]s and a [[block of resin]].
+|Added the <code>natural</code> block state and replaced <code>creaking</code> with a boolean <code>active</code> state.
+|Changed the placing sounds from {{Sound||Wood dig1.ogg|Wood dig2.ogg|Wood dig3.ogg|Wood dig4.ogg}} to {{Sound||Creaking heart place1.ogg|Creaking heart place2.ogg|Creaking heart place3.ogg|Creaking heart place4.ogg}}.
+}}
+|{{HistoryLine|||dev=24w45a|A naturally spawned creaking heart no longer drops experience when broken in Creative mode.
+|The subtitle for <code>hurt</code> has been changed.}}
+|{{HistoryLine|||dev=24w46a|Mining speed and blast resistance are doubled.|Introduced a variation in how long time it takes for each creaking heart to spawn a creaking.}}
+|{{HistoryLine||1.21.5|dev=25w02a|[[File:Dormant Creaking Heart JE1 BE1.png|32px]] Creaking hearts correctly placed between logs have a new dormant texture during the day.
+|The transition between the awake and dormant states of creaking hearts is now based on the fixed day time.}}
+|{{HistoryLine||1.21.6|dev=25w15a|Added the [[advancement]] "Heart Transplanter".}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Creaking Heart JE1 BE1.png|32px]] [[File:Active Creaking Heart JE1 BE1.png|32px]] Added creaking hearts.}}
+|{{HistoryLine|||dev=Preview 1.21.50.25|[[File:Creaking Heart JE2 BE2.png|32px]] Updated the texture of the inactive creaking heart to be more consistent with its active state.
+|Creaking hearts can now be crafted with two [[pale oak log]]s and a [[block of resin]].
+|Naturally generating creaking hearts now drop 20 to 24 experience when mined.
+|Increased the frequency of the creaking heart's ambience sound.}}
+|{{HistoryLine|||dev=Preview 1.21.50.26|Reduced the distance by which the creaking heart can spread resin clumps by one block.}}
+|{{HistoryLine|||dev=Preview 1.21.50.28|Adjusted the frequency of ambient sounds emitted by creaking hearts to better align with [[Java Edition]].|Creaking heart breaking and placing sounds are now quieter.}}
+|{{HistoryLine|||dev=Preview 1.21.50.29|Increased the base amount of time it takes to destroy a creaking heart with no tool to 15 seconds.}}
+|{{HistoryLine|||dev=release|Added the [[achievement]] "Heart Transplanter".}}
+|{{HistoryLine||1.21.51|Creaking hearts now generate more often in naturally generated pale oaks.<ref>{{bug|MCPE-187337||Generated Pale Oak trees with Creaking Hearts are rarer than in Java Edition|Fixed}}</ref>}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|The fix for the creaking hearts' generation has been implemented in the Preview version.
+|Destroying a creaking heart while it has a spawned creaking now grants the [[Achievement#Monster Hunter|Monster Hunter achievement]].}}
+|{{HistoryLine|||dev=Preview 1.21.60.25|[[File:Dormant Creaking Heart JE1 BE1.png|32px]] Creaking hearts correctly placed between logs have a new dormant texture during the day.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Unlike destroying any other block, destroying a creaking heart triggers monster-related [[advancement]]s.
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+Creaking Heart and Creaking.jpg|Creaking hearts and [[creaking]]s in a minigame set-up.
+</gallery>
+
+=== In other media ===
+<gallery>
+15's creaking heart.png|[[Villager No. 15]] placing a creaking heart.
+The Garden Awakens Pre-Release Tertiary Key Art.jpg|A creaking heart in a [[Pale Garden|pale garden]] on the key art for [[The Garden Awakens]].
+</gallery>
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Natural}}
+
+[[Category:Block entities]]
+[[category:Hazardous blocks]]
+[[category:Natural blocks]]
+[[category:Readable by comparators]]
+
+[[de:Knarzherz]]
+[[es:Corazón de crepitante]]
+[[fr:Coeur de grinceur]]
+[[ja:クリーキングの心臓]]
+[[ko:크리킹 심장]]
+[[pl:Trzeszczące serce]]
+[[pt:Coração de Rangente]]
+[[ru:Скрипцевина]]
+[[uk:Серце скрипня]]
+[[zh:嘎枝之心]]

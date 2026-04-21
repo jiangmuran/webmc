@@ -1,0 +1,568 @@
+{{For}}
+{{Infobox block
+| group1 = Chest
+| 1-1 = Chest.gif
+| group2 = Large Chest
+| 2-1 = Large Chest.gif
+| transparent = Yes
+| light = No
+| tool = axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+A '''chest''' is a [[block]] used to store [[item]]s.
+
+A '''large chest''' is the combination of two adjacent chests, and can store twice as many items.
+
+== Obtaining ==
+=== Breaking ===
+A chest can be broken using anything, but an [[axe]] is the fastest. Chests always drop themselves when mined. If the chest contains items, the items are also dropped when the chest is broken. If one half of a large chest is destroyed, the corresponding items from the destroyed chest ({{in|Java}}, the top three rows for the left-hand chest or the bottom three for the chest on the right; {{in|Bedrock}}, the top three for whichever half was placed first or the bottom three for whichever half was placed last) are dropped and the remaining half continues to function as a small chest.
+
+{{breaking row|horizontal=1|Chest|Axe|foot=1}}
+
+{{IN|Java}}, a chest produces oak plank particles when breaking, walking or falling on this block;<ref>{{bug|MC-2614||All kinds of chests produce wrong particles when ran on/punched|WAI}}</ref> {{in|Bedrock}}, a chest produces particles of the block itself.
+
+=== Natural generation ===
+{{see also|Chest loot}}
+Chests generate naturally in all three dimensions. They can generate in [[monster room]]s, [[stronghold]]s, [[village]]s, [[jungle pyramid]]s, [[desert pyramid]]s, [[nether fortress]]es, [[end cities]], [[igloo]] basements, [[woodland mansion]]s, [[shipwreck]]s, [[ocean ruins]], [[buried treasure]], [[pillager outpost]]s, [[bastion remnant]]s, [[ruined portal]]s, [[ancient cities]] and [[trial chamber]]s.
+
+Large chests can occasionally generate in [[monster room]]s by one single chest generating next to the other. They can also generate in certain types of [[bastion remnant]]s.
+
+==== Bonus chest ====
+{{main|Bonus chest}}
+The bonus chest is a chest that appears near the player's spawn if the "Bonus chest" option is toggled on the [[world creation]] screen. It generates with a semi-random collection of basic items to help the player survive early on and gather necessary resources, including wood, tools, blocks, and food.
+
+=== Crafting ===
+{{Crafting
+|A1=Any Planks
+|B1=Any Planks
+|C1=Any Planks
+|A2=Any Planks
+|C2=Any Planks
+|A3=Any Planks
+|B3=Any Planks
+|C3=Any Planks
+|Output=Chest
+|type=Decoration block
+}}
+
+== Usage ==
+Chests can be used as containers and are an ingredient in some crafting recipes.
+
+A chest placed adjacent to another chest joins to create a large chest. A player can prevent this, and place two small chests side by side, by {{control|sneaking|sneak}} while placing the second chest {{in|java}}, pushing a chest into place with a [[piston]] {{in|bedrock}}, or placing the second chest facing a different direction from the first chest. Alternatively, [[trapped chest]]s do not combine with normal chests.
+
+{{IN|bedrock}}, chests can be moved by pistons. [[Water]] and [[lava]] flow around chests without affecting them. Lava can create fire in air blocks next to chests as if the chests were flammable, but the chests do not actually catch fire and cannot be burned.
+
+=== Container ===
+[[File:Chest GUI.png|thumb|right|176px|The GUI of a chest.]]
+[[File:Large Chest GUI.png|thumb|right|176px|The GUI of a large chest.]]
+
+A small chest has 27 slots of inventory space, and a large chest has twice that amount, at 54 slots. In the ''Java Edition'' interface, the top three rows for a large chest correspond to the left half of the chest when facing it, and the bottom three rows correspond to the right half. In Bedrock Edition, the top three rows correspond to whichever half was placed first and the bottom three to the other half.
+
+Chests open when {{ctrl|used}}. To move items between the chest inventory and the player inventory or hotbar while the chest GUI is open, drag or shift-click the items. {{IN|java}}, holding {{key|Shift}} and double-clicking while holding an item moves all items of the type clicked on in or out of the chest, to the extent that space is available for them. To exit the chest GUI, use the {{key|Esc}} control.
+
+A chest cannot be opened if there is a [[conductive]] block above it ({{in|bedrock|lc=}}, bottom slabs prevent chests from being opened). Solid faces do not prevent chests from opening, so the lid of the chest can phase through blocks such as bottom-half [[slab]]s, [[stairs]], and [[non-conductive]] full cubes such as [[glass]] and [[ice]]. [[Cat]]s sitting on chests prevent them from opening. Because chests themselves are non-conductive, two chests can be stacked on top of one another while still allowing the lower chest to be opened. Players can open chests when they are being hurt ([[effect]] of Instant Damage, Poison, Wither, on fire, damaged by other [[player]]s or [[mob]]s, etc.).
+
+By default, the GUI of a chest is labeled "Chest" and the GUI of a large chest is labeled "Large Chest". A chest's GUI label can be changed by naming the chest in an [[anvil]] before placing it, or, {{in|java}}, by using the {{cmd|data}} command (for example, to label a chest at (0,64,0) as "Bonus Chest!", use {{cmd|data modify block 0 64 0 CustomName set value "Bonus Chest!"}}). If half of a large chest is renamed, that name is used to label the GUI of the entire large chest, but if the named half is destroyed the other half reverts to the default label. If both halves of a large chest have different names, the GUI uses the name of the northernmost or westernmost half.
+
+{{IN|java}}, a chest can be "locked" by setting its {{nbt|compound|lock}} tag using the {{cmd|data}} command. If a chest's {{nbt|compound|lock}} tag is not blank, the chest cannot be opened unless the player is holding an item that matches the item predicate in the <code>lock</code> tag. For example, to lock a chest at (0,64,0) so that the chest cannot be opened unless the player is holding an item named "Chest Key", use {{cmd|data modify block 0 64 0 lock set value <nowiki>{components:{"minecraft:custom_name":"Chest Key"}}</nowiki>}}.
+
+The capacity of a chest varies greatly, depending on its size, whether the items inside it are stackable, and whether [[shulker box]]es are used. The minimum capacity is obtained when storing only non-stackable items while the maximum capacity can be achieved when storing items that stack to 64. Filled shulker boxes are not stackable, but each can hold 27 stacks of up to 64 items (excluding other shulker boxes), so filling a chest with them increases the maximum by a factor of 27.
+{| class="wikitable"
+! rowspan="2" |Chest size
+! rowspan="2" |Slots
+! colspan="2" |Maximum number of items
+|-
+!Without shulker boxes||With shulker boxes
+|-
+|Small||27||1,728||46,656
+|-
+|Large||54||3,456||93,312
+|}
+
+=== Donkey, mule, or llama pack ===
+A chest can be added to a [[donkey]], a [[mule]], or a [[llama]] by pressing {{control|use}} on the animal.
+
+A chest attached to a donkey or mule has only 15 slots. A chest attached to a llama has anywhere from 3 to 15 slots depending on its "Strength" value (see {{Section link|Llama|Data values}}). The chest cannot be removed except by killing the carrier. The chest can be opened by holding {{control|sneak}} and pressing {{control|use}}, or by riding the carrier and pressing {{control|inventory}}.
+
+If shulker boxes are again used, each donkey, mule or strength value 5 llamas with a chest attached to it can carry up to 405 stacks of items (up to 25920 items), and with strength value 5 llamas, each caravan of 10 llamas with inventories full of shulker boxes can carry up to 4050 stacks of items (up to 259200 items).
+
+=== Copper golems===
+[[Copper golem]]s can sort items into chests. If a copper golem is holding an item, it visits the nearest chest within 32 blocks horizontally and 8 blocks vertically to try to place the item in. It takes 3 seconds to stop at each chest it visits.
+
+A copper golem places the item it is holding either if the chest is empty, or if the chest contains the same type of item. {{IN|java}}, a copper golem cannot distinguish between different [[potion]] contents or [[suspicious stew]] types, but it can {{in|bedrock}}. In both editions, a copper golem ignores durability, enchantments, shulker box contents, custom names, or any other data.
+
+If it cannot place the item in, the copper golem moves on to the nearest chest it hasn't visited. The copper golem can remember up to 10 chests it has visited. If it has already visited 10 chests and still cannot place the item, it wanders around for 7 seconds, forgets which chests it has visited, and continues searching for a chest to place the item in.
+
+If the chest a copper golem is walking towards can no longer be opened (e.g. a chest has a cat sitting on it) or is destroyed, the copper golem marks the position as visited and move on. This occupies one of their 10-chest memory.
+
+Copper golems do not simultaneously open a chest that another non-player entity is already interacting with.
+
+=== Piglins ===
+[[Piglin]]s become hostile toward [[player]]s who open or mine chests.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Fuel ===
+Chests can be used as [[fuel]] in [[furnace]]s, smelting 1.5 items per chest.
+
+=== Note blocks ===
+Chests can be placed under [[note block]]s to produce the "bass" sound.
+
+== {{anchor|Xmas chest}} Christmas chest ==
+{{exclusive|Java|section=1}}
+
+From December 24 to 26, chests, large chests, their trapped chest counterparts, and copper chests have their textures changed to "Christmas chests", which look like wrapped Christmas presents. Since the game uses the date stored on the player's computer, players can apply the Christmas chest textures at any time by changing the date on their computer to December 24, 25, or 26.
+<gallery mode="packed">
+Xmas Chest.gif
+Xmas Large Chest.gif
+</gallery>
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Chest close1.ogg
+|sound2=Chest close2.ogg
+|sound3=Chest close3.ogg
+|subtitle=Chest closes
+|source=block
+|description=When a chest closes
+|id=block.chest.close
+|translationkey=subtitles.block.chest.close
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Chest open.ogg
+|subtitle=Chest opens
+|source=block
+|description=When a chest opens
+|id=block.chest.open
+|translationkey=subtitles.block.chest.open
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked
+|source=block
+|description=When a player attempts to open a chest locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked
+|translationkey=subtitles.block.chest.locked
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Chest close1.ogg
+|source=block
+|description=When a chest closes
+|id=random.chestclosed
+|volume=0.5
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Chest open.ogg
+|source=block
+|description=When a chest opens
+|id=random.chestopen
+|volume=0.5
+| pitch = 0.9-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chest
+|spritetype=block
+|nameid=chest
+|blocktags=guarded_by_piglins
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=chest
+|spritetype=block
+|nameid=chest
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chest
+|spritetype=block
+|nameid=chest
+|blocktags=minecraft:is_axe_item_destructible,not_feature_replaceable
+|id=54
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=chest
+|spritetype=block
+|nameid=Chest
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{JE}}:
+{{bst|facing|north|east,north,south,west|The direction the chest's latch is on.<br>The opposite from the direction the player faces when placing a chest.}}
+{{bst|type|single|left,right,single|The direction the chest has a connection with.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this chest.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=|minecraft:cardinal_direction|north|east,north,south,west|The direction the chest's latch is on.<br>The opposite from the direction the player faces when placing a chest.|Unsupported|foot=1}}<section end="block states"/>
+
+=== Block data ===
+A chest has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable|indent=**}}
+** {{nbt inherit/lockable|indent=**}}
+** {{nbt inherit/lootable|indent=**}}
+** {{nbt|list|Items}}: List of items in this container. Represents the {{DCL|minecraft:container}} component. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt|compound}}: An item, including the slot tag. Chest slots are numbered 0-26, 0 starts in the top left corner.
+**** {{nbt inherit/item|indent=****}}
+</div><section end="block data"/>
+
+{{BE}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/block_entity_data}}
+{{:Data component format/container}}
+{{:Data component format/container_loot}}
+{{:Data component format/custom_name}}
+{{:Data component format/lock}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Chestful of Cobblestone;Freight Station;Smelt Everything}}
+
+== Advancements ==
+{{load advancements|War Pigs}}
+
+== Videos ==
+{{yt|lOhiOaimsmY}}
+
+== History ==
+''For a more in-depth breakdown of changes to textures and models, including a set of renders for each state combination, see [[/Asset history]]''
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100124-2119|[[File:Chest (S) JE1.png|32px]] [[File:Large Chest JE1.png|52px]] Added chests and large chests.
+|Chests are considered a solid [[block]].
+|The front of the chest (with the latch) faces away from any adjacent solid blocks, or faces west if placed independent of other blocks.
+|[[File:Quintuple_Chest.png|52px]] If a chest is placed next to a large chest, it attempts to "connect" with the large one, changing its texture to that of half a large chest. However, this is purely visual; they still act like two separate chests. Additionally, if the [[player]] attempts to open a chest connected on all four sides, the game freezes and the client crashes.}}
+|{{HistoryLine|||dev=20100129-2332|Chests can now be [[crafted]].}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100625-1917|Chests now generate in the newly added [[monster room]]s.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.14|Chests are now used to craft [[minecarts with chest]]s.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|Moving too far away from a chest, or having it blow up, closes the inventory screen.}}
+|{{HistoryLine||1.1_02|The placement of chests has been partially fixed. It is still possible to create triple chests, if the chest was not placed horizontally adjacent to a large chest or if placed in the location of a [[fluid]].
+|The game no longer freezes, but instead displays a graphically glitched, fully functional chest screen.}}
+|{{HistoryLine||1.5|Chests can no longer be placed to create a triple chest; however, any chest previously created in this way still functions in that manner.
+|{{key|Shift}} + clicking on an [[item]] or a stack while the chest is opened moves it between the chest and the [[inventory]].}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Chest.gif|40px]] [[File:Large Chest.gif|52px]] [[File:Chest (S) JE2.png|40px]] [[File:Large Chest (S) JE5.png|52px]] The chest's model has been redone. Rather than a usual cube, it uses an [[entity]] model, which allows for an opening and closing animation, and is also smaller.
+|Added chest opening and closing sounds, which used the door sounds.
+|This conversion to an entity model resulted in anomalies with the chest's item form. When held (in both first person and in third person/by other players) [[File:Chest (first person, right hand) b1.8-pre1.png|32px]] [[File:Chest (third person, right hand) b1.8-pre1.png|32px]], it is shown at a different angle from other blocks, and when dropped on the ground [[File:Chest (dropped) b1.8-pre1.png|32px]], it rotates around one of its corners rather than its center, with its shadow also centered on this corner.
+|Chests now use textures in the "item" folder; "chest.png" is used for single chests and "chestlarge.png" is used for large chests.
+|The [[particles]] for chests (when [[sprint]]ed on, broken, or later when walked on by an [[iron golem]]) use the top texture of chests before this version.
+|Chests now change the direction they face based on the viewpoint of the [[player]] that places them, rather than adjusting by themselves based on adjacent blocks.
+|Chests no longer show the block [[breaking]] animation.
+|Chests can now be found in [[mineshaft]]s, as well as the libraries and storerooms of [[stronghold]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|The opening and closing [[sound]]s were removed.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Chests now generate in the corridor altars of [[stronghold]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Chests do not prevent other chests underneath from opening.}}
+|{{HistoryLine|||dev=RC1|The opening and closing [[sound]]s of chests have been changed.}}
+|{{HistoryLine||1.1|dev=12w01a|Chests can now be found in blacksmiths in [[village]]s.}}
+|{{HistoryLine||1.2.4|dev=release|[[Cat]]s now try to sit on chests, making them unopenable.
+|[[Spruce planks]], [[birch planks]], and [[jungle planks]] can now be used to craft chests.}}
+|{{HistoryLine||1.3.1|dev=12w16a|The '[[bonus chest]]' option has now added to the [[Create New World]] menu.}}
+|{{HistoryLine|||dev=12w21a|The textures which the chest used prior to their model update in Beta 1.8 have been removed from <samp>terrain.png</samp>, being replaced with the [[Placeholder texture#Texture atlas blank spaces|placeholder block texture]] [[File:Placeholder Texture JE1 BE1.png|32px]].
+|The old chest top texture was still used for the block particles up until this version, even after the model change. As the texture has been removed in this version, the oak planks texture is now used for the chest's particles.<ref>{{bug|MC-2614}}</ref>
+|Chests can now be found in [[desert pyramid]]s.}}
+|{{HistoryLine|||dev=12w22a|The chest item is now aligned more like other item forms of blocks, resulting in a more natural first-person holding position as well as the item form appearing properly aligned in third person as well as when dropped.
+|Chests can now be found in [[jungle pyramid]]s.}}
+|{{HistoryLine|||dev=12w24a|Large chest inventory titles have changed from "Large chest" to "Large Chest".}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Chests now have a smaller [[hitbox]]. Previously, the hitbox was that of a full cube; it now fits the newer size and shape of the chest.}}
+|{{HistoryLine||1.4.6|dev=12w50a|[[File:Xmas Chest.gif|40px]] [[File:Xmas Large Chest.gif|52px]] Added alternate chest textures into the game files. They are for a future "[[wikipedia:Christmas|Christmas]] chest" [[Easter eggs#Christmas|easter egg]].}}
+|{{HistoryLine|||dev=12w50b|The server/client desync of chests has been fixed.}}
+|{{HistoryLine||1.5|dev=13w01a|Chests can now be used to craft [[hopper]]s and [[trapped chest]]s. 
+|Chests can now be used in conjunction with [[hopper]]s.}}
+|{{HistoryLine|||dev=13w02a|Chests no longer generate naturally in [[mineshaft]]s, and [[minecarts with chest]]s are generated instead.}}
+|{{HistoryLine||1.6.1|dev=13w18a|Chests are now found in [[nether fortress]]es.}}
+|{{HistoryLine|||dev=13w19a|Chests can now be put on [[donkey]]s and [[mule]]s.}}
+|{{HistoryLine||1.7.2|dev=1.7.1|[[Acacia planks]] and [[dark oak planks]] can now be used to craft chests.}}
+|{{HistoryLine||1.8|dev=14w29a|Chests now display the cracking animation.}}
+|{{HistoryLine||1.9|dev=15w31a|Chests now naturally generate in [[end cities]].
+|Chests now have their [[item]] model rotated, to have the front face in view of the [[player]].}}
+|{{HistoryLine|||dev=15w43a|A chest now generates within [[igloo]] basements.
+|[[Loot table]]s have been added; chests can now use loot tables.
+|All chests generated with the world now make use of loot tables.
+|The chests opening and closing [[sound]]s has been changed.}}
+|{{HistoryLine|||dev=15w44a|Bonus chest loot has been changed.
+|[[Raw salmon]] is now possible to find in bonus chests.
+|The average supply of [[stick]]s and [[planks]] have been nearly doubled in bonus chests.
+|The average supply of [[wood]] has been decreased, and that of stone [[tool]]s have been nearly halved in bonus chests.}}
+|{{HistoryLine||1.9.1|dev=pre1|A [[hopper]] can now push into and pull [[item]]s from a blocked chest.}}
+|{{HistoryLine||1.11|dev=16w39a|Chests now generate in [[woodland mansion]]s.
+|Chests are now used to craft [[shulker box]]es.
+|Chests can now be put on [[llama]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|Chests and [[trapped chest]]s can now be put directly next to their large variants, instead of requiring one [[block]] between them.
+|Crouching while placing the chest now makes it try to connect to the clicked block.}}
+|{{HistoryLine|||dev=18w09a|Chests now generate in [[ocean ruins]].}}
+|{{HistoryLine|||dev=18w10a|Chests now generate as [[buried treasure]] structures.}}
+|{{HistoryLine|||dev=18w10c|[[Water]] can now be placed on the same [[block]] as chests.}}
+|{{HistoryLine|||dev=18w11a|Chests can now be found in [[shipwreck]]s.}}
+|{{HistoryLine||1.14|dev=18w47a|Chests can now be found in [[pillager outpost]]s.}}
+|{{HistoryLine|||dev=18w48a|Chests now generate in many houses in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Chests now generate in many houses in the updated [[savanna]] villages and the new [[snowy plains|snowy]] villages.}}
+|{{HistoryLine|||dev=18w50a|Chests now generate in many houses in the updated [[desert]] and [[taiga]] villages.}}
+|{{HistoryLine||1.15|dev=19w39a|The chest texture layout has been changed. The layout has been changed from [[File:Chest texture layout old.gif|64px]] to [[File:Chest texture layout.gif|64px]].{{check version|according to textures-atlas this happened in 19w38a at the latest}}}}
+|{{HistoryLine|||dev=?|Before this point, chests with one-half blockstate would be completely invisible, whereas the other half displayed the whole chest. From this point on, each blockstate correctly displays the associated half, although still, only one displays an opening/closing animation.{{check version|most likely 19w42a, confirmation required}}}}
+|{{HistoryLine|||dev=19w42a|Individual halves of large chests now use separate texture files; previously there was a single texture file used for each type of large chest.{{info needed|can we have a mapping comparison gif like for 19w39a?}}}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft chests.}}
+|{{HistoryLine|||dev=20w07a|Added [[piglin]]s, which turn hostile to players opening and [[breaking]] chests.}}
+|{{HistoryLine|||dev=20w15a|Chests placed in a dispenser can now be put on tamed [[llama]]s, [[donkey]]s and [[mule]]s.}}
+|{{HistoryLine|||dev=20w16a|Chests now generate as part of [[bastion remnant]]s and [[ruined portal]]s.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Chests now generate as part of [[ancient cities]].}}
+|{{HistoryLine|||dev=22w11a|[[Mangrove planks]] can now be used to craft chests.}}
+|{{HistoryLine|||dev=22w12a|Chests can now be used to craft [[boats with chests]].}}
+|{{HistoryLine|||dev=22w13a|Chests no longer drop when breaking a [[minecart with chest]].}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft chests.
+|Chests can now be used to craft a [[bamboo raft with chest]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft chests.
+|Chests can now be used to craft a [[cherry boat with chest]].}}
+|{{HistoryLine||1.20|dev=23w14a|[[File:Large Chest (S) JE6.png|52px]] Changed texture for large chest to move the black pixel to slightly bottom.<ref>{{bug|MC-241850||Miscolored pixels on double chest|Fixed}}</ref>}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Chests now generate as part of [[trial chambers]].}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[Pale oak planks]] can now be used to craft chests.
+|Chests can now be used to craft a [[pale oak boat with chest]].}}
+|{{HistoryLine||1.21.9|dev=25w31a|Chests can now be used to craft [[copper chest]]s.|Sounds for chests now plays at a lower volume.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.3.2|[[File:Chest (S) BE1.png|32px]] Added chests. They were currently unobtainable.
+|Only single chests have been added.
+|Chests are considered a non-full-solid [[block]].}}
+|{{HistoryLine||v0.4.0|Chests are now available in both Survival and Creative mode.
+|Chests are now functional in Survival mode.}}
+|{{HistoryLine||v0.7.3|[[File:Large Chest.gif|52px]] Added large chests.
+|[[File:Chest.gif|40px]] The texture and [[model]] of single chests has been changed to match {{JE}}.
+|An animation and [[sound]] have been added for chests.
+|Chests can now be placed adjacent to large chests or other chests facing in a different direction.
+|However, chests still use old texture and model inside the [[inventory]] and side texture for [[particles]].}}
+|{{HistoryLine||v0.7.4|Large chests can be created vertically.}}
+|{{HistoryLine||v0.7.5|Large chests can no longer be created vertically.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Chests now naturally generate in [[mineshaft]]s, [[village]]s, [[stronghold]]s and [[monster room]]s.
+|[[Smooth lighting]] has been added to chests.}}
+|{{HistoryLine||v0.10.0|dev=build 1|Chests now have a selection overlay.}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[Cat]]s now try to sit on chests, making them unopenable.
+|Chests now naturally generate in [[nether fortress]]es.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Chests are now used to craft [[trapped chest]]s.
+|Chests now naturally generate in [[desert pyramid]]s.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Chests are now used to craft [[hopper]]s and [[chest minecarts]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Chests can now be put on [[donkey]]s and [[mule]]s.
+|[[Piston]]s and [[sticky piston]]s can now move chests.
+|Chests now naturally generate in [[jungle pyramid]]s.}}
+|{{HistoryLine||v0.16.0|dev=build 1|Custom names in chests no longer appear in GUI.}}
+|{{HistoryLine|||dev=build 5|A chest containing [[farming]] loot can now naturally generate in large houses in [[village]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Chests can now generate in [[end cities]] and [[igloo]]s.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Chests now generate in [[woodland mansion]]s.
+|Chests are now used to craft [[shulker box]]es.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|The 'bonus chest' option has been added, which can be toggled in World Options.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Chests can now naturally generate in [[shipwreck]]s.
+|Chests now generate as [[buried treasure]] structures.}}
+|{{HistoryLine|||dev=beta 1.2.20.1|Chests now naturally generate in [[ocean ruins]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Chests are now found in [[pillager outpost]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Added [[piglin]]s, which turn hostile to [[player]]s opening and [[breaking]] chests.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Chests now generate as part of [[bastion remnants]] and [[ruined portal]]s.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=beta 1.18.30.28|Chests can now be used to craft boats with chests.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|Chests can now be used to craft a [[bamboo raft with chest]].}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Chests now generate as part of [[trial chambers]].}}
+|{{HistoryLine||1.21.100|exp=Drop 3 2025|dev=Preview 1.21.100.23|Chests can now be used to craft [[copper chest]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Chest JE1.png|32px]] [[File:Large Chest JE1.png|52px]] Added chests.}}
+|{{HistoryLine||xbox=TU5|[[File:Chest.gif|40px]] [[File:Large Chest.gif|52px]] The [[model]] of chests has been changed to have a 3D lock, opening and closing animations, and a smaller block model. However, the hitbox size is still a full block.|The '[[bonus chest]]' option has now added to the [[Options]] menu.}}
+|{{HistoryLine||xbox=TU9|Chests can now be found in blacksmiths in [[village]]s.|[[Spruce planks]] and [[birch planks]] can now be used to craft chests.|The textures which the chest used prior to their model update in TU5 have been removed from <samp>terrain.png</samp>, being replaced with the [[Placeholder texture#Texture atlas blank spaces|placeholder block texture]] [[File:Placeholder Texture JE1 BE1.png|32px]].}}
+|{{HistoryLine||xbox=TU12|[[Cat]]s now try to sit on chests, making them unopenable.|[[Jungle planks]] can now be used to craft chests.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Chest [[particles]] are no longer based on [[terrain.png]] and for the [[locked chest]] texture.
+|Chests can now be found in [[desert pyramid]]s.
+|Chests can now be found in [[jungle pyramid]]s.
+|Chests now have a smaller [[hitbox]]. Previously, the hitbox was that of a full cube; it now fits the newer size and shape of the chest.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|Chests can now be used to craft [[hopper]]s and [[trapped chest]]s. 
+|Chests can now be used in conjunction with [[hopper]]s.|Chests are now found in [[nether fortress]]es.|Chests can now be put on [[donkey]]s and [[mule]]s.}}
+|{{HistoryLine||xbox=TU32|xbone=CU20|ps3=1.23|psvita=1.23|ps4=1.23|wiiu=Patch 3|Chests now display a cracking animation.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|A chest now generates within [[igloo]] basements.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Chests now naturally generate in [[end cities]].}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Chests are now used to craft [[shulker box]]es.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Chests now generate in [[woodland mansion]]s.|Chests can now be put on [[llama]]s.}}
+|{{HistoryLine||xbox=TU62|xbone=CU52|ps3=1.66|psvita=1.66|ps4=1.66|wiiu=Patch 31|switch=1.0.12|[[Piston]]s can now move small chests but only if the new position would have been valid for players to place a new chest. This limitation can however be bypassed by moving the chests simultaniously.}}
+|{{HistoryLine||xbox=TU63|xbone=CU53|ps3=1.67|psvita=1.67|ps4=1.67|wiiu=Patch 32|switch=1.0.13|Chests can no longer be opened when an entity is standing on top of it.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Chests now generate in [[ocean ruins]].|Chests can now be found in [[shipwreck]]s.|Chests now generate as [[buried treasure]] structures.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Chests can now be found in [[pillager outpost]]s.|Chests now generate in many houses in the updated [[village]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Chest.gif|40px]] [[File:Large Chest.gif|52px]] Added chests and large chests.}}
+|{{HistoryLine||1.9.19|Chests now generate in [[woodland mansion]]s.}}
+}}
+
+<gallery>
+8KbSs.png|First picture released of the new chest animation, also displaying the ability to have chests facing directions other than west.
+Torches on a chest.png|Torches could previously be placed on chests.
+Pocket edition 0.4.0 chest.png|A chest in early [[Pocket Edition]].
+Breaking Chest.png|A chest being broken.
+Grum Chests.png|Multiple chests placed next to each other.
+MCPE 0.7.3 Chest Orientations.png|Chests placed adjacent to one another in Pocket Edition.
+</gallery>
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w02a|Chests can now have a {{nbt|string|Lock}} tag. When set, players must have an item with a matching custom name to open that chest.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[Java Edition 1.13/Flattening|''The Flattening'']], this block's numeral ID was 54.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Chests now use the <code>minecraft:cardinal_direction</code> [[block state]] instead of <code>facing_direction</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+*The chest recipe is not unlocked by any specific item, but rather, having enough slots in the inventory occupied by any item.
+*In Pocket Edition, a player who leaves the game while standing on a chest rejoins the game with legs inside the chest.
+*If the tick speed is set to "freeze" through [[Commands/tick|/tick]], the chest does not show opening or closing animations but it still makes sounds.
+*{{IN|java}}, when in [[Creative]] mode, if pick block + ctrl is used on a naturally generated [[Generated loot|loot chest]] (or by modifying the data of a normal chest using {{command|/data}}), instead of displaying the first few items inside like a [[shulker box]], it will just display "???????" due to the loot not being generated yet. Placing the chest and opening it will result in a different loot table every time. The same thing also happens with [[barrel]]s and [[shulker box]]es.
+*The number of items a single chest can hold without using shulker boxes, 64 * 27 = 1728, actually has a name: a "great gross", or cubic dozen.
+*With shulker boxes with blocks inside inside chests, these chests would be so dense in real life they (and the things in them) would turn into other elements and/or explode because of nuclear fusion. 
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Chest close.png|A screenshot of a chest opening and closing.
+File:Custom Chest Names.png|Custom chest name obtained by using [[anvil]] naming or commands.
+File:Christmas chests.png|An in-game screenshot of chests during Christmas time.
+File:Large chest.png|Large chest placed in a player´s base.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Steve opening gifts.png|[[Steve]] opening Christmas chests under a [[spruce]] (Minecraft.net).
+File:Ari opens chest.png|[[Ari]] opening a chest in the  [[Bundles of Bravery - Official Trailer|Bundles of Bravery trailer]].
+File:SF Screenshot 3.jpg|Ari opening a large chest in the [[Scary Furniture Add-On]].
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Scared Hide.gif|Ari hiding behind a chest in the [[Trails & Tales Update: Official Launch Trailer|Trails & Tales Update trailer]].
+File:Minecoins 2.png|A chest as it appears on [[Minecraft Marketplace|Minecoin]] gift cards,
+File:Pot Chest Armor.jpeg|Pixel artwork of a chest in between [[iron armor]] on an [[armor stand]] and a [[decorated pot]].
+File:Sword in Chest.jpeg|A [[diamond sword]] in a chest.
+File:Alex Retrieving Diamond Sword.jpeg|[[Alex]] retrieving the sword from the chest.
+File:Alex with Allay - Block Friday.png|Pixel art of Alex and several [[allay]]s with Christmas chests.
+File:Villager Spirit's Chest.png|A ginormous chest as it appears in [[The Traveling Trader]].
+File:Timeless Treasure.png|A chest as it appears in the [[Timeless Trails]] DLC.
+File:MCWSC-DD 26-27.png|A chest as it appears in [[Deep Dive!]]
+File:Paladone Chest.jpeg|Officially licensed recreation of a chest, by ''Paladone''.
+File:Chest flippin fig.jpg|Chest figure of Flippin' Figs
+File:Minecraft Limited Loot Water Cave Oversized Adult T-Shirt Back.png
+File:MCSM Chest.png|A chest as it appears in {{MCSM}}.
+File:A Chest.png|A chest as it appears in {{AMCM}}.
+File:PlayStation chest.jpg
+</gallery>
+
+== See also ==
+* [[Trapped chest]], a variant of the chest that interacts with redstone
+* [[Copper chest]], a variant of the chest that interacts with copper golems
+* [[Locked chest]], a joke block from an [[April Fools' Day jokes|April Fools' Day joke]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|block-week-chest|Block of the Week: Chest|July 28, 2017|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Natural blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Storage]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Bedrock Edition specific information]]
+[[Category:Redstone]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[de:Truhe]]
+[[es:Cofre]]
+[[fr:Coffre]]
+[[hu:Láda]]
+[[it:Baule]]
+[[ja:チェスト]]
+[[ko:상자]]
+[[lzh:箱]]
+[[nl:Kist]]
+[[pl:Skrzynia]]
+[[pt:Baú]]
+[[ru:Сундук]]
+[[th:หีบ]]
+[[uk:Скриня]]
+[[zh:箱子]]

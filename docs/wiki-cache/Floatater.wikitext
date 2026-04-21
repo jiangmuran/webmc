@@ -1,0 +1,104 @@
+{{Joke feature}}
+{{Infobox block
+| image = Floatater (S).png
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Wooden Pickaxe
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+A '''floatater''' is a block added in [[24w14potato]] used to move large amounts of blocks.
+
+== Obtaining ==
+=== Breaking ===
+A floatater drops itself only when mined with a pickaxe; otherwise, it drops nothing.
+{{Breaking row|horizontal=1|Floatater|pickaxe|wood|hidecopper=1}}
+
+=== Crafting ===
+{{Crafting
+|A1 = Poisonous Potato
+|A2 = Floatato
+|A3 = Floatato
+|B1 = Poisonous Potato
+|B2 = Hot potato
+|B3 = Floatato
+|C1 = Poisonous Potato
+|C2 = Floatato
+|C3 = Floatato
+|Output = Floatater
+|ignoreusage=1
+}}
+
+== Usage ==
+When receiving a [[redstone signal]], the floatater adjusts its triggered state immediately. 1 gametick after becoming triggered, it pushes all blocks connected via its sticky side. It does not check redstone signals when placed by a player.
+
+=== Floating ===
+[[File:Pillager_outpost_flying.gif|thumb|Floatater pushing a [[pillager outpost]]]]
+Unlike pistons, it does not have a standard max-number of pushable blocks, but rather a distance limit of 30 blocks (cubic range rather than spherical). If the stickied blocks are connected to a block that is 31 or more blocks from the floatater, the structure does not move. This means the maximum number of blocks moveable by the Floatater is 32,768 (including itself), as long as it's built in a 32×32×32 cube with the Floatater itself at any place inside that area. An activated floatater structure can be prevented from taking off by "grounding" it, or connecting enough length of blocks to it.
+
+Floataters can move blocks normally broken by piston pushing or cannot be moved, i.e., melons and redstone dust not inclusive of tile entities such as shulker boxes and [[comparator]]s, which break off when pushed. Blocks can be connected with floataters in the following ways:
+* An [[materials|irreplaceable]] block is pushed if it is in front of another block being pushed by the floatater.
+* A block is considered connected if its [[hitbox#interaction box|interaction box]] is touching that of a block being pushed, ''neither'' being a floatater unless the other's on the sticky side. A [[piston]] and its head are not connected in this way, but a sticky piston is connected with its head through its sticky side.
+* On their sticky sides, [[sticky piston]]s (on the front, whether extended or not, excluding piston heads), [[slime block]]s (all sides), [[honey block]]s (all sides) and floataters (on the back) are always connected with their adjacent blocks, including air and fluids.
+
+A floatater creates a "super extra magic" entity (<code>minecraft:grid_carrier</code>) storing moved blocks when starting to float. [[Block entities]] placed as a part of the floatater structure break off when the floatater begins moving, even if not pushed by anything, and blocks connected to them are still moved. [[Waterlogged]] blocks are pushed without water.
+
+Moved blocks are deleted after the "super extra magic" is created. [[Fluid]]s are not deleted. When waterlogged blocks are deleted, water is kept. Deletion of [[tripwire]] may be rolled back if its [[hook]] is notified to update the attached state of the tripwire. Blocks in a floatater structure are stored in order, but the order in which moved blocks are deleted depends on location. This process sends general [[block update#neighbor changed update|neighbor changed updates]] after all blocks are deleted and no post placement updates. Additional updates are sent immediately after deletion of each block. Updates from a block deleted earlier can cause attached blocks to drop, even if they have been stored in the "super extra magic" and should be deleted later. A floatater structure, when moving, cannot be destroyed.
+
+When multiple floatater blocks facing the same direction are connected together, and all are powered simultaneously, the floatater moves faster.
+
+It can transport redstone contraptions, including extended pistons, but freezes all redstone activity until it comes to a stop.
+
+A floatater structure floats until a block in it collides with another block, where both blocks must be irreplaceable, and the one in the floatater structure must be behind a replaceable block or at the front of the floatater structure. Non air blocks in the floatater structure replace existing blocks, sending neighbor changed updates and no post placement updates (those from the floatater may be detected as it becomes unactivated), which can be rolled back by tripwire notifying its hook to update its attached state.
+
+== Sounds ==
+{{info needed section|{{bug|MC-177082}} was only fixed considerably after the version containing this block was released, so I have strong reason to believe the provided table is inaccurate due to it listing a subtitle for .fall that does not exist in this specific version}}
+{{Sound table/Block/Stone/JE}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|spritetype=block
+|displayname=Floatater
+|nameid=floatater
+|generatetranslationkeys=1
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{bst|facing|north|east,north,south,west|The direction this floatater is facing.}}
+{{bst|triggered|false|false,true|True if this block is activated.|foot=1}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Floatater (S).png|Facing south
+Triggered Floatater (S).png|Facing south, triggered
+Floatater (W).png|Facing west
+Floatater (N).png|Facing north
+Floatater (E).png|Facing east
+Triggered Floatater (E).png|Facing east, triggered
+Floatater (U).png|Facing up
+Triggered Floatater (U).png|Facing up, triggered
+Floatater (D).png|Facing down
+</gallery>
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|24w14potato}}
+
+[[Category:Joke blocks]]
+[[Category:Utility blocks]]
+[[Category:Redstone]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+
+[[ja:Floatater]]
+[[zh:悬浮马铃薯推进器]]

@@ -1,0 +1,218 @@
+{{About|the unobtainable block|the block that grows to become an amethyst cluster|Amethyst Bud}}{{Infobox block
+|image=Budding Amethyst.png
+|invimage=Budding Amethyst
+|renewable=No
+|stackable=Yes (64)
+|tool=Wooden Pickaxe
+|light=No
+|transparent=Partial <small>(blocks light)</small>
+|flammable=No
+|lavasusceptible=No
+}}
+
+'''Budding amethyst''' is a fragile block found in [[amethyst geode]]s that grows [[amethyst cluster]]s over time. It drops nothing if it breaks, and cannot be moved from where it is found. 
+
+== Obtaining ==
+Budding amethyst can only be obtained via the [[Creative inventory]] or with [[commands]].<br>It is unobtainable in [[Survival]], using a tool enchanted with [[Silk Touch]] doesn't drop anything.
+
+=== Breaking ===
+The suitable tool to break budding amethyst is a [[pickaxe]]. Budding amethyst needs to be broken using a pickaxe, otherwise the breaking time will increase.
+{{Breaking row|Budding Amethyst|Pickaxe|Wooden|drop=0|horizontal=1}}
+Budding amethyst drops nothing when it's destroyed.
+
+=== Natural generation ===
+Budding amethyst generates naturally as part of [[amethyst geode]]s, replacing 8.3% of the [[blocks of amethyst]] in the innermost layer of the geode.
+
+{{block distribution}}
+
+== Usage ==
+=== Growing into amethyst clusters ===
+An amethyst bud placed on a budding amethyst (rather than any other block) grows over time, regardless whether it was placed by the player or spawned by the budding amethyst itself. That bud goes through three growth stages – small, medium, and large – before reaching its 4th and final growth stage as an amethyst cluster, which drops [[amethyst shard]]s when mined.
+
+{{IN|Java}}, the below logic can be applied:
+#Per [[random tick]], updates will occur to any given block in the loaded chunk every '''68.27''' seconds on average.
+#Choose ''one'' randomly-selected side of the  six-sided block. This random choice is done without considering if growth is possible, so if a direction is chosen that cannot grow an amethyst bud, the random tick does not perform any work.
+#There is a 20% chance to either create a new amethyst bud in air or [[Water#Source_blocks|still water]], or to increment the growth stage of an existing amethyst bud, if that bud is attached directly to this block (two adjacent budding amethysts do not speed up growth of a bud between them, as each bud is attached to just one block).
+#There are 4 growth stages.
+As such, the math can be applied as:
+
+(68.27 seconds average for random ticks) x (20% chance of growth for any given single side) x (6 sides) x (4 growth stages) = 68.27×5×6×4 = 8192 seconds average, also 2 hours 16 minutes 32 seconds, also 6.827 in-game days.
+
+{{IN|Bedrock}} a new amethyst bud can also form in [[flowing water]], removing the water block in the process.
+
+=== Sound ===
+Uniquely among other blocks a budding amethyst makes a quiet overlay sound when generally interacted with as well as its block breaking sound when hit with a projectile.
+
+=== Piston interactivity ===
+Budding amethyst is destroyed when pushed by a [[piston]]. It cannot be pulled by a [[sticky piston]], or slime and honey blocks.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Amethyst block}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Amethyst shimmer.ogg
+|subtitle=Amethyst chimes
+|source=block
+|description=Walking on the block
+|id=block.amethyst_block.chime
+|translationkey=subtitles.block.amethyst_block.chime
+|volume=0.26-0.2768
+|pitch=0.5-1.784
+|distance=16}}
+| {{SoundLine
+|subtitle=Amethyst chimes
+|source=block
+|description=When a projectile collides with the block
+|id=block.amethyst_block.chime
+|translationkey=subtitles.block.amethyst_block.chime
+|volume=0.2
+|pitch=0.5-1.7
+|distance=16}}
+| {{SoundLine
+|sound=Amethyst step1.ogg
+|sound2=Amethyst step2.ogg
+|sound3=Amethyst step3.ogg
+|sound4=Amethyst step4.ogg
+|sound5=Amethyst step5.ogg
+|sound6=Amethyst step6.ogg
+|sound7=Amethyst step7.ogg
+|sound8=Amethyst step8.ogg
+|sound9=Amethyst step9.ogg
+|sound10=Amethyst step10.ogg
+|sound11=Amethyst step11.ogg
+|sound12=Amethyst step12.ogg
+|subtitle=Block breaking<ref group="sound">This is due to it using the exact same sound event as the one used for breaking - see {{bug|MC-204050}}</ref>
+|source=block
+|description=When a projectile collides with the block
+|id=block.amethyst_block.hit
+|translationkey=subtitles.block.generic.hit
+|volume=0.2
+|pitch=0.5-1.7
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Amethyst shimmer.ogg
+|source=block
+|description=When stepped on, or when a projectile collides with it
+|id=chime.amethyst_block
+|volume=1.0
+|pitch=0.5-1.7}}
+| {{SoundLine
+|sound=Amethyst step1.ogg
+|sound2=Amethyst step2.ogg
+|sound3=Amethyst step3.ogg
+|sound4=Amethyst step4.ogg
+|sound5=Amethyst step5.ogg
+|sound6=Amethyst step6.ogg
+|sound7=Amethyst step7.ogg
+|sound8=Amethyst step8.ogg
+|sound9=Amethyst step9.ogg
+|sound10=Amethyst step10.ogg
+|sound11=Amethyst step11.ogg
+|sound12=Amethyst step12.ogg
+|description=When a projectile collides with the block
+|source=Blocks
+|id=hit.amethyst_block
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Budding Amethyst
+|spritetype=block
+|nameid=budding_amethyst
+|blocktags=crystal_sound_blocks, mineable/pickaxe
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Budding Amethyst
+|spritetype=block
+|nameid=budding_amethyst
+|id=583
+|foot=1}}
+
+== History ==
+=== Early mentions ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] mentioned crystal blocks as a potential block type that can be found in the underground.}}
+}}
+
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=23m14s}}|Amethyst-related blocks are mentioned at [[Minecraft Live 2020]]. It was mentioned that, like with [[monster spawner]]s, blocks that generate amethysts would not be movable by survival means, forcing players to build farms ''in situ'' for these resources.}}
+|{{HistoryLine||October 6, 2020|link={{tweet|Cojomax99|1313397269476061184}}|[[File:Budding Amethyst JE1.png|32px]] [[Cory Scheviak]] tweeted a screenshot where budding amethyst was seen, unnamed at the moment.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Budding Amethyst JE1.png|32px]] Added budding amethyst.}}
+|{{HistoryLine|||dev=20w46a|[[File:Budding Amethyst JE2.png|32px]] The texture of budding amethyst has been changed.}}
+|{{HistoryLine|||dev=20w48a|[[File:Budding Amethyst JE3.png|32px]] The texture of budding amethyst has been changed again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|[[File:Budding Amethyst JE3.png|32px]] Added budding amethyst.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Budding amethyst are no longer available only in [[experimental gameplay]].}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Budding amethyst is now slower to mine when using an improper tool, matching {{JE}}.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* [[JAPPA]] has said the reasoning for the 'x' pattern on the block is because "the plane-crystals grow out of it."<ref>https://twitter.com/JasperBoerstra/status/1331669460126740480</ref>
+* According to [[Agnes Larsson]], budding amethyst cannot be obtained without commands in Survival mode because the developers wanted to encourage players to return to the same amethyst geode repeatedly, rather than mining away the budding amethyst and farming it at their home. This functions in a similar way to the [[monster spawner]].<ref>https://www.minecraft.net/en-us/article/taking-inventory--amethyst-shard</ref>
+* According to [[Cory Scheviak]], budding amethysts were inspired by [https://coppermind.net/wiki/Atium atium] from the fantasy novel series ''{{w|Mistborn}}''.<ref>https://www.youtube.com/watch?v=bHTuSFeGGhI&t=1953s</ref>
+
+== Gallery ==
+<gallery>
+File:Budding Amethyst Farm.jpg|Budding amethyst with the surrounding amethyst mined away.
+File:Blazing the Game Trail.png|Budding amethyst on artwork for International Women's Day.<ref>https://www.minecraft.net/sv-se/article/blazing-game-trail?fbclid=IwAR1lAHmZiSGRSgplJqS0rIcnOvs8HlVddaPfdZgDiRiSUpEanxUZG1fAz6g</ref>
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+
+[[de:Amethystknospenblock]]
+[[es:Brotador de amatista]]
+[[fr:Druse d'améthyste]]
+[[it:Ametista gemmante]]
+[[ja:芽生えたアメジスト]]
+[[ko:싹 틔우는 자수정]]
+[[lzh:蘊芽紫水玉]]
+[[pl:Kiełkujący ametyst]]
+[[pt:Drusa de Ametista]]
+[[ru:Расцветающий аметист]]
+[[uk:Родючий аметист]]
+[[zh:紫水晶母岩]]

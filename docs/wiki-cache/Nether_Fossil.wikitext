@@ -1,0 +1,214 @@
+{{about|fossils found in soul sand valley|the similar features generated in the Overworld|Fossil|other uses|Bone (disambiguation)}}
+{{Infobox structure
+|image = Nether fossil 1.png
+|biome={{BiomeLink|Soul Sand Valley}}
+|blocks=*{{BlockLink|Bone Block}}
+*{{BlockLink|Dried Ghast}}
+}}
+
+'''Nether fossils''' are fossils that generate in [[soul sand valley]]s that can sometimes contain [[dried ghast]]s.
+
+== Generation ==
+Nether fossils generate randomly throughout the Nether in [[soul sand valley]]s.
+
+Due to a bug, Nether fossils in ''Bedrock Edition'' have been seen generating in existing chunks.{{cn|Needs bug tracker or video reports}}
+
+== Structure == 
+{{Main|/Structure}}
+Nether fossils are composed of 5 to 27 [[bone block]]s. Unlike regular [[fossil]]s, they do not have a lowered [[Structure Block#Load|structure integrity]] and no blocks are replaced with [[Coal Ore|coal]] or [[diamond ore]]. They are made with the NBT [[structure block]] format and the NBT files for each fossil are stored in the folder {{code|[[minecraft.jar]]/data/minecraft/structures/nether_fossils}}.
+
+Nether fossils have a <sup>1</sup>⁄<sub>3</sub> (~33.3%) chance of generating a [[dried ghast]] adjacent to them.
+
+There are 14 different variants of Nether fossils:
+
+{| class="wikitable collapsible"
+! scope="col" style="width: 200px" | Structure name
+! scope="col" style="width: 200px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 250px" | Images
+|-
+|<code>nether_fossils/fossil_1</code>
+|Small ribs.
+|
+10 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 1.png|center|220px]]
+|-
+|<code>nether_fossils/fossil_2</code>
+|A horizontal sternum.
+|
+10 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 2.png|center|200px]]
+|-
+|<code>nether_fossils/fossil_3</code>
+|Small partial ribcage.
+|
+6 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 3.png|center|120px]]
+|-
+|<code>nether_fossils/fossil_4</code>
+|Small ribcage structure.
+|
+6 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 4.png|center|100px]]
+|-
+|<code>nether_fossils/fossil_5</code>
+|One medium rib.
+|
+5 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 5.png|center|80px]]
+|-
+|<code>nether_fossils/fossil_6</code>
+|Large ribcage structure.
+|
+21 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 6.png|center|220px]]
+|-
+|<code>nether_fossils/fossil_7</code>
+|Three sets of large ribs.
+|
+18 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 7.png|center|200px]]
+|-
+|<code>nether_fossils/fossil_8</code>
+|One large rib.
+|
+6 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 8.png|center|100px]]
+|-
+|<code>nether_fossils/fossil_9</code>
+|Three ascending sets of medium ribs.
+|
+15 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 9.png|center|200px]]
+|-
+|<code>nether_fossils/fossil_10</code>
+|One large rib.
+|
+8 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 10.png|center|100px]]
+|-
+|<code>nether_fossils/fossil_11</code>
+| Medium ribcage structure.
+|
+24 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 11.png|center|220px]]
+|-
+|<code>nether_fossils/fossil_12</code>
+|Medium ribcage structure.
+|
+11 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 12.png|center|180px]]
+|-
+|<code>nether_fossils/fossil_13</code>
+|Three large ribs.
+|
+17 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 13.png|center|180px]]
+|-
+|<code>nether_fossils/fossil_14</code>
+|Large ribcage structure.
+|
+26 {{BlockLink|Bone Block}}
+|
+[[File:Nether fossil 14.png|center|220px]]
+|}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Nether Fossil
+|spritetype=env
+|nameid=nether_fossil
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Nether Fossil
+|spritetype=env
+|nameid=nether_fossil
+|foot=1}}
+
+{{IN|be}}, Nether fossils are not a structure.
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:nether_fossil}}
+** {{Nbt inherit/structure}}
+**{{nbt|int}}{{nbt|compound|start_height}}: The y-value where the structure starts.
+*** {{Nbt inherit/height provider}}
+</div><section end="config"/>
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208&t|t=2h13m39s}}|Nether fossils shown unnamed as part of [[soul sand valley]] biome at [[Minecon 2019]].}}
+|{{HistoryLine||March 22, 2025|link=https://www.youtube.com/watch?v=Fvtl6VXzCtE|[[Dried Ghast|Dried ghasts]] are shown to generate as part of Nether fossils at [[Minecraft LIVE - March 2025]]}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w06a|Added Nether fossils.}}
+|{{HistoryLine|||dev=20w11a|Nether fossils can now be located with {{cmd|locate}}.}}
+|{{HistoryLine||1.21.6|dev=25w15a|Nether fossils can now contain [[dried ghast]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added Nether fossils.}}
+}}
+
+== Issues ==
+{{Issue list}}
+== Trivia ==
+* Nether fossils are one of the 3 [[generated structures]] that never generate with loot chests (the others being [[swamp hut]]s and [[ocean monument]]s).
+* Nether fossils do not have [[coal ore]], [[deepslate diamond ore]], or [[diamond ore]], like their counterparts (Overworld [[fossil]]s).
+*While Overworld fossils are considered [[feature]]s like trees, Nether fossils are considered [[structure]]s instead.
+
+== Gallery ==
+<gallery>
+File:Nether Fossil Vibrant Visuals.png|Nether fossils with a [[Dried Ghast|dried ghast]]
+File:Soul sand valley fossil.png|A fossil in a soul sand valley
+File:Fossils on fortress.png|Fossils on a Nether fortress
+File:Soul Sand Valley Vibrant Visuals.png|Fossils in the soul sand valley biome
+</gallery>
+
+== See also ==
+
+* [[Generated structures]]
+* {{EnvLink|Fossil}}
+
+== Navigation ==
+{{Navbox generated structures}}
+[[Category:The Nether|F]]
+
+[[de:Netherfossil]]
+[[es:Fósil del Nether]]
+[[fr:Fossile du Nether]]
+[[ja:ネザーの化石]]
+[[ko:네더 화석]]
+[[lzh:焱界龍骨]]
+[[pl:Netherowa skamielina]]
+[[pt:Fóssil do Nether]]
+[[ru:Ископаемые останки Нижнего мира]]
+[[uk:Незерські скам'янілості]]
+[[zh:下界化石]]

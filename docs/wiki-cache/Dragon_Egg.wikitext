@@ -1,0 +1,227 @@
+{{distinguish|Ender Dragon Spawn Egg}}
+{{Infobox block
+| image = Dragon Egg.png
+| imagecaption = {{JE}}
+| image2 = Dragon Egg BE.png
+| image2caption = {{BE}}
+| invimage2 = ----
+| invimage3 = Dragon Egg BE
+| transparent = Yes
+| light = Yes (1)
+| tool = any
+| waterloggable = {{jebe|No|Yes}}
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| rarity = Epic
+}}
+The '''dragon egg''' is a gravity-affected [[block]] that can be obtained only once per [[world]] (or twice {{in|Bedrock}}<ref name=TwoEggs>{{bug|MCPE-51345}}</ref>) by defeating the [[ender dragon]]. It [[teleport]]s to avoid being {{Control|mined}}, but drops as an [[item]] if it falls onto a non-full block such as a [[torch]] or is pushed by a [[piston]].
+
+== Obtaining ==
+The dragon egg is available in the Creative inventory. It can be obtained with {{control|pick block}} or the {{cmd|give}} command, or placed in the world with commands such as {{cmd|setblock}} and {{cmd|fill}}.
+
+=== Breaking ===
+The dragon egg usually cannot be mined directly, as trying to do so causes it to [[Teleportation|teleport]] within a 31×15×31 volume centered on the egg, with locations toward the center more likely. If all air blocks in that area are filled so there is nowhere for the egg to teleport to, or if it fails to find an air block after 1,000 attempts at teleporting, it can be mined. 
+
+The dragon egg is a gravity-affected block, and drops as an [[item (entity)|item]] when pushed by a [[piston]] or when it falls onto a block [[Solid block#Height|less than a full block tall]], such as a [[torch]] or a bottom [[slab]].
+
+When destroyed by an [[explosion]], the block always drops as an item.
+
+The dragon egg is not immune to destruction by the ender dragon, despite being produced by it.<ref name=":0">{{bug|MC-165218}}</ref>
+{{breaking row|horizontal=1|Dragon Egg}}
+
+=== Post-generation ===
+{{IN|Java}}, a single dragon egg is generated on top of the [[exit portal]] when the first [[ender dragon]] is defeated. {{IN|Bedrock}}, two dragon eggs generate on top of the exit portal; one generates when the first ender dragon is defeated, while the other generates when the second ender dragon is defeated.<ref name=TwoEggs/>
+
+== Usage ==
+{{see also|Falling Block#Behavior}}
+[[File:Dragon Egg Heatmap.png|right|thumb|250px|Heatmap of where a dragon egg lands after trying to mine it.]]
+[[File:Particles of a dragon egg.png|thumb|Particles of a dragon egg.]]
+
+The dragon egg, if there is no block below it, falls until it lands on the next available block. When it is being affected by gravity and falling, it exhibits a smooth falling animation.
+
+It does not [[suffocate]] mobs or players when it falls and covers them, nor does it squash mobs or players like [[anvil]]s and [[stalactite]]s do.
+
+The dragon egg can be placed on a non-solid block without falling.
+
+Like other falling blocks, when the dragon egg is floating, it has black particles falling from it.
+
+=== Light source ===
+The dragon egg emits a [[light level]] of 1.
+
+=== Teleporting ===
+To cause the egg to teleport, press {{control|attack}} or {{control|use}} while in Survival or Adventure mode (or only {{control|use}} in Creative). It teleports to an air block nearby (up to seven blocks vertically and fifteen blocks horizontally), creating the same particles as an [[enderman]]. It may teleport into the air and subsequently fall to the ground since it forcefully obeys gravity. However, it always checks if there is ground beneath the teleport destination.
+
+When the egg teleports, it creates a particle trail that, {{in|BE}}, leads from its prior location to where it has teleported to; however, {{in|JE}}, a bug<ref name="MC-2157" /> causes the particles not to point correctly to the egg's new location.
+
+If all available air blocks are filled, it is possible to break the block.
+
+Dragon egg teleportation lacks teleportation sounds.<ref>{{bug|MC-166291|||Invalid}}</ref>
+
+If egg teleportation finds an invalid location (such as below the world), it makes an additional attempt to find a valid location centered on the invalid location rather than the original position.
+
+== Sounds ==
+{{Sound table/Block/Stone}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dragon Egg
+|spritetype=block
+|nameid=dragon_egg
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dragon Egg
+|spritetype=block
+|nameid=dragon_egg
+|id=122
+|foot=1}}
+
+=== Falling block entity ===
+{{Infobox entity
+| title = Falling Dragon Egg
+| group = Java Current
+| 1-1 = Dragon Egg.png
+| group3 = Bedrock
+| 3-1 = Dragon Egg BE.png
+| size = Height: 0.98 Blocks<br>Width: 0.98 Blocks
+}}
+{{main|Falling Block}}
+{{#lst:Falling Block|entity data}}
+
+== Advancements ==
+{{load advancements|The Next Generation}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 26, 2011|link={{tweet|notch|129448393880780800}}|The dragon egg is first mentioned by [[Notch]], supposedly before there was the feature freeze,<ref>{{Tweet|notch|129448393880780800| There isn't a lot of interesting minecraft news these days because of the feature freeze, so I will just say one thing: egg.|October 27, 2011}}</ref><ref>{{Tweet|notch|129450909775314944| I was talking about ender dragon eggs.|October 27, 2011}}</ref> though it seems to have been worked on during it.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|[[File:Dragon Egg JE1.png|32px]] Added the dragon egg.
+|Dragon eggs cannot be obtained within the [[Creative inventory]].}}
+|{{HistoryLine||1.3.1|dev=12w17a|[[Pick Block]] no longer works on the dragon egg.}}
+|{{HistoryLine|||dev=12w18a|As a result of singleplayer being changed to an internal server, the dragon egg no longer produces particles when teleporting, alongside [[Java Edition 1.3.1/List of broken features|many other features this version broke]].}}
+|{{HistoryLine|||dev=12w30c|[[File:Dragon Egg (falling) JE1.png|32px]] The dragon egg renders as [[lava]] with the cube model when falling.}}
+|{{HistoryLine|||dev=12w30d|[[File:Dragon Egg JE1.png|32px]] The dragon egg uses its own model again when falling.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|[[File:Dragon Egg (falling) JE2.png|32px]] The dragon egg uses cube model when falling.<ref>{{bug|MC-1688}}</ref>
+|The dragon egg once again produces particles; however, it does not actually point to the location it teleports to as it did previously. This error continues into the present day.<ref name="MC-2157">{{bug|MC-2157}}</ref>}}
+|{{HistoryLine||1.4.6|[[File:Dragon Egg JE1.png|32px]] The dragon egg uses its own model when falling, once again.}}
+|{{HistoryLine||1.8|dev=14w07a|[[File:Dragon Egg JE2.png|32px]] The dragon egg is among the earliest of many blocks to be converted to custom block [[model]]s, deprecating hardcoded block rendering. The conversion, however, is flawed, as the third "tier" from the top is the same size as the second, resulting in an incorrectly shaped model as well as inconsistently sized pixels.<ref>{{bug|MC-120417}}</ref>}}
+|{{HistoryLine||1.9|dev=15w49a|Pick Block now works on the dragon egg again.<ref>{{bug|MC-76975}}</ref>}}
+|{{HistoryLine||1.12|dev=17w17a|The advancement [[The Next Generation]] has been added, which is unlocked from obtaining a dragon egg.}}
+|{{HistoryLine||1.13|dev=17w47a|Floating dragon eggs now make falling dust [[particles]].<ref>{{bug|MC-103035}}</ref>}}
+|{{HistoryLine|||dev=18w21a|The [[rarity]] of dragon eggs has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.17|dev=21w11a|[[File:Dragon Egg JE3.png|32px]] Changed lighting.}}
+|{{HistoryLine||1.19.3|dev=22w43a|The dragon egg is now available in the Creative inventory.<ref>{{bug|MC-55718|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Dragon Egg JE5.png|32px]] The broken model and UV mapping of the dragon egg have been fixed.<ref>{{bug|MC-120417|||Fixed}}</ref>}}
+|{{HistoryLine||26.1|dev=snap11|Dragon eggs now check if there is a block beneath the teleport destination.<ref>{{bug|231663}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Dragon Egg BE1.png|32px]] Added the dragon egg.
+|Dragon eggs are available in the Creative inventory.{{verify|Is this the correct update it is in the Creative menu?}}}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Two dragon eggs now spawn, only when the first and second dragons are defeated.<ref name=TwoEggs/>}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.56|The dragon egg now always drops as an item when it's destroyed by an explosion.<ref>{{Bug|MCPE-52632}}</ref>}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of dragon eggs from 3 to 9.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of dragon eggs has been changed from "Common" to "Epic" to match {{JE}}.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Dragon eggs no longer require a pickaxe to mine, and are equally quick to mine with any tool.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Dragon Egg JE1.png|32px]] Added the dragon egg.
+|Dragon eggs cannot be obtained within the Creative inventory.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|An option to reset [[the End]] has been added, making dragon eggs [[renewable]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Dragon Egg BE1.png|32px]] Added the dragon egg.
+|Dragon eggs are available in the Creative inventory.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 122.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Developer [[Ulraf]] in a livestream expressed the idea of giving the dragon egg the use of modifying the [[world spawn]], because there is only one dragon egg per world. He clarified that he experimented with this idea using [[command]]s, and that there weren't plans to add this function to vanilla.<ref> https://youtu.be/2cxUNoWNy50?t=11284</ref>
+* The writer of the ''Minecraft'' comic ''WonderCraft'', Samcube, was requested by [[Mojang Studios]] to create official ''Minecraft'' posters. In a part of these works, one can see an area with an ender dragon and a [[chicken]] on top of a [[huge mushroom]]. In the same scene, the dragon egg is visible near the chicken.
+* If the dragon egg teleports and falls into the portal, it spawns in the Overworld at the world spawn.
+* [[Mojang Studios]] is aware that the dragon egg generates twice per world in {{BE}} in an official video.<ref>https://youtu.be/xPOZqNjOMpA?t=43</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Egg teleporting distance.png|The teleporting distance of a dragon egg.
+File:Dragon egg piston.png|An example of using a [[piston]] and a [[lever]] to obtain the dragon egg.
+File:Dragon Egg on Snow.png|A dragon egg on a [[snow layer]].
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Ender egg.jpg|Samcube's [[Minecraft]] poster showing the dragon egg.
+File:Dragon Egg MCSM.png|The Model and Texture used in Minecraft: Story Mode
+File:Dragon Egg Remodel.png|A developer concept for a remodeled dragon egg.
+File:Draagon egg.jpg|Dragon egg in ''A Minecraft Movie'' McDonald's commercial. 
+</gallery>
+
+== See also ==
+* {{EnvLink|The End}}
+* {{EntityLink|Ender Dragon}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|dragon-egg|Block of the Month: Dragon Egg|October 10, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|Vegetation}}
+{{Navbox entities|Other}}
+{{Navbox The End}}
+
+[[Category:End blocks]]
+[[Category:Animal blocks]]
+[[Category:Light sources]]
+[[Category:Createable blocks]]
+[[Category:Falling blocks]]
+
+[[de:Drachenei]]
+[[es:Huevo de dragón]]
+[[fr:Oeuf de dragon]]
+[[it:Uovo di drago]]
+[[ja:ドラゴンの卵]]
+[[ko:드래곤 알]]
+[[lzh:龍卵]]
+[[nl:Drakenei]]
+[[pl:Smocze jajo]]
+[[pt:Ovo do Dragão]]
+[[ru:Яйцо дракона]]
+[[uk:Яйце дракона]]
+[[zh:龙蛋]]

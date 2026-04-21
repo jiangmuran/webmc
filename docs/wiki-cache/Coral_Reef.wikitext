@@ -1,0 +1,246 @@
+{{Infobox structure
+| biome =
+* {{BiomeLink|Warm Ocean}}
+* {{BiomeLink|Deep Warm Ocean}}{{only|bedrock|short=1}}(Unused)
+| image = Coral Reef.png
+| blocks =
+* {{BlockLink|Coral Blocks|link=Coral Block}}
+* {{BlockLink|Coral}}
+* {{BlockLink|Coral Fans|link=Coral Fan}}
+* {{BlockLink|Sea Pickle}} {{only|java|short=1}}
+* {{BlockLink|Dead Coral Blocks}} {{only|bedrock|short=1}}
+* {{BlockLink|Dead Coral Fans}} {{only|bedrock|short=1}}
+* {{BlockLink|Granite}} {{only|bedrock|short=1}}
+* {{BlockLink|Diorite}} {{only|bedrock|short=1}}
+* {{BlockLink|Andesite}} {{only|bedrock|short=1}}
+* {{BlockLink|Sand}} {{only|bedrock|short=1}}
+| canspawn = No
+}}
+'''Coral reefs''' are [[feature]]s that generate in [[warm ocean]] [[biome]]s. They consist of multiple clusters of [[coral block]]s, [[coral]], and [[coral fan]]s. These clusters come in a wide variety of shapes, sizes, and colors.
+
+== Generation ==
+[[File:Coral Reef 18w14b.png|thumb|240x240px|Coral reefs]]
+=== ''Java Edition'' ===
+The distribution of coral reefs is noise-based, which means that in some places of [[warm ocean]] floor, the reefs are distributed densely, and in other places there's no coral reef at all.{{info needed|How does this noise work? Is there a visualizer for this like with Chunkbase?}}
+
+There are three types of coral reefs: coral tree, coral claw, and coral mushroom. Coral tree has a main trunk and two to four branches that tend to point upward. Coral claw has two to three branches that tend to point horizontally. Coral mushroom looks like a small hut or a domed building.
+
+All these three types consist of [[coral block]]s, [[coral]], [[coral fan]]s and [[sea pickle]]s.
+
+[[Seagrass]] and [[sea pickle]]s can generate on coral blocks because they are generated later than coral reefs. Coral reefs may have several sea pickles on them, but not all sea pickles on them belong to the coral reef feature.
+
+=== ''Bedrock Edition'' ===
+{{IN|be}}, coral features densely cover [[warm ocean]]'s floor, and there are two types of coral features: huge coral and small coral.
+
+There are two types of huge coral: coral (coral reefs) feature and coral crust feature. Coral feature comes in four varieties of shapes, including small clump, tree-like coral, craw-like coral, and coral spire. Coral crust feature is a huge pile of blocks including [[coral block]]s, [[dead coral block]]s, [[andesite]]s, [[diorite]]s, [[granite]]s and [[sand]]s. Both types of huge coral have some [[coral fan]]s attached to them. Unlike {{el|je}}, there are no sea pickles in these features; however, [[Vegetation#Underwater|seagrass feature]] and [[Vegetation#Underwater|sea pickle feature]] can also generate on them.
+
+There are two types of small coral: sea anemone feature and coral hang feature. Sea anemone feature consists of [[coral]] and [[coral fan]]s, generating attached to the top surface of blocks that are not lower than 16 blocks below the sea level (Y>=48). Coral hang feature consists of [[coral fan]]s, generating attached to a side surface of blocks that are not lower than 14 blocks below the sea level (Y>=50).
+
+== Structure ==
+{{exclusive|bedrock|section=4}}
+{{IN|bedrock}}, coral crusts are generated with structure files, which are stored in the <code>behavior_packs/vanilla/structures/coralcrust</code> folder.
+
+''The [[Structure Block|structure blocks]] do not appear in the final generation.''
+{| class="wikitable"
+|+
+!Structure name
+!Consists of
+!Image
+|-
+|{{Cd|coralcrust/crust1}}
+|31{{BlockLink|Sand}}
+20 {{BlockLink|Diorite}}
+
+10 {{BlockLink|Andesite}}
+
+12 {{BlockLink|Granite}}
+|[[File:Coralcrust Crust1.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/crust2}}
+|22 {{BlockLink|Granite}}
+19 {{BlockLink|Diorite}}
+
+16 {{BlockLink|Andesite}}
+
+11 {{BlockLink|Sand}}
+|[[File:Coralcrust Crust2.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/crust3}}
+|17 {{BlockLink|Sand}}
+14 {{BlockLink|Diorite}}
+
+13 {{BlockLink|Granite}}
+|[[File:Coralcrust Crust3.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/crust4}}
+|16 {{BlockLink|Andesite}}
+11 {{BlockLink|Granite}}
+
+9 {{BlockLink|Sand}}
+|[[File:Coralcrust Crust4.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/crust5}}
+|33 {{BlockLink|Andesite}}
+15 {{BlockLink|Diorite}}
+
+10 {{BlockLink|Sand}}
+|[[File:Coralcrust Crust5.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping1}}
+|9 {{BlockLink|Diorite}}
+8 {{BlockLink|Andesite}}
+|[[File:Coralcrust Outcropping1.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping2}}
+|12 {{BlockLink|Granite}}
+11 {{BlockLink|Andesite}}
+
+8 {{BlockLink|Diorite}}
+|[[File:Coralcrust Outcropping2.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping3}}
+|14 {{BlockLink|Diorite}}
+|[[File:Coralcrust Outcropping3.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping4}}
+|14 {{BlockLink|Granite}}
+|[[File:Coralcrust Outcropping4.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping5}}
+|12 {{BlockLink|Andesite}}
+|[[File:Coralcrust Outcropping5.png|center|width=250x250]]
+|-
+|{{Cd|coralcrust/outcropping6}}
+|28 {{BlockLink|Granite}}
+|[[File:Coralcrust Outcropping6.png|center|width=250x250]]
+|}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=coral_claw
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=coral_mushroom
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=coral_tree
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=warm_ocean_vegetation
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=coral_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=coral-reef
+|spritetype=env
+|nameid=coral_crust_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=coral-fans
+|spritetype=block
+|nameid=coral_hang_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=coral
+|spritetype=block
+|nameid=sea_anemone_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:coral_claw",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w10d|Added coral reefs, previously teased at MINECON Earth 2017.}}
+|{{HistoryLine|||dev=18w16a|[[Coral fan]]s now generate in coral reefs.}}
+|{{HistoryLine|||dev=pre1|The title screen panorama now showcases a coral reef.}}
+|{{HistoryLine||1.14|dev=18w48a|A hotfix for 1.14 snapshots replaces the title screen panorama, which no longer shows a coral reef.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added coral reefs.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|The title screen panorama now showcases a coral reef.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|The title screen no longer showcases a coral reef.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.26|Coral reef now generates in the deeper depths of Warm Oceans.<ref>{{bug|MCPE-147399}}</ref>}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Coral reef from above.png|A coral reef viewed from above.
+Ravine reef.png|A coral reef that generated in a canyon.
+Coral reefs.png|A view of coral reefs.
+A view of Coral reef.png|A view of a coral reef close-up.
+Coral Reef 18w14b.png|A coral reef as of snapshot [[18w14b]].
+ProfMobius Coral Reef.jpg|Coral reefs and aquatic mobs.
+Coral Reef Ruined Portal.jpg|A [[ruined portal]] generated near a coral reef.
+Coral Reefs.jpg|A coral reef underwater.
+Bedrock Coral Reef.jpg|Coral reef structures as they appear in bedrock edition.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Coral Reef Artwork.png|Official coral reef artwork.
+File:Aquaman.jpg|{{w|Arthur Curry (DC Extended Universe)|Aquaman}} in a coral reef.
+</gallery>
+
+== References ==
+<references/>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Arrecife de coral]]
+[[fr:Récif corallien]]
+[[ja:サンゴ礁]]
+[[ko:산호초]]
+[[pt:Recife de corais]]
+[[zh:珊瑚礁]]

@@ -1,0 +1,223 @@
+{{About|the detector rail|other types of rails|Rail (disambiguation)}}
+{{Infobox block
+| image = Detector Rail.png
+| image2 = Powered Detector Rail.png
+| transparent = Yes
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+The '''detector rail''' is a type of [[rail]] that produces a [[redstone]] signal while a [[minecart]] is on it.
+
+== Obtaining ==
+=== Breaking ===
+The suitable tool to break detector rail is [[pickaxe]].
+{{breaking row|horizontal=1|Detector Rail|Pickaxe}}
+Detector rail drops itself when it's destroyed.
+
+=== Generated loot ===
+{{LootChestItem|detector-rail}}
+
+=== Crafting ===
+{{Crafting
+|A1= Iron Ingot
+|C1= Iron Ingot
+|A2= Iron Ingot
+|B2= Stone Pressure Plate
+|C2= Iron Ingot
+|A3= Iron Ingot
+|B3= Redstone Dust
+|C3= Iron Ingot
+|Output= Detector Rail,6
+|type= Transportation
+}}
+
+== Usage ==
+To place a detector rail, {{control|use}} a detector rail item while pointing at a surface facing the space the detector rail should occupy.
+
+A detector rail can be placed on top of any block whose top face has a rim around the edge, such as any [[full block]], [[hopper]], top [[Slab#Placement|slab]], upside-down [[Stairs#Placement|stairs]], or top [[Trapdoor#Properties|trapdoor]]. A full list of compatible blocks can be found [https://joakimthorsen.github.io/MCPropertyEncyclopedia/?selection=variants,top_face_has_rim&filter=(top_face_has_rim:No)# here].
+
+If a detector rail is [[Block update|updated]] while on an opened top trapdoor, the rail breaks and drops as an item. Placing a minecart on a detector rail on top of a closed and unpowered trapdoor opens the trapdoor and updates the rail, causing the detector rail to break. If the top trapdoor is powered and closed when the minecart is placed, the trapdoor does not open so the rail does not break. The minecart on the detector rail then powers the trapdoor, meaning the external power source can be removed without causing the trapdoor to change state and break the rail.
+
+When placed, a detector rail configures itself to line up with any adjacent [[rail]]s (including [[activator rail]]s, [[powered rail]]s, and other [[detector rail]]s), as well as adjacent rails one block up. If there are two adjacent rails on non-opposite sides, or three or more adjacent rails, a detector rail lines up in the east-west direction. If there are no adjacent rails, a detector rail lines up in the north-south direction (but if a rail is later placed to the east or west, the detector rail re-orients itself in the east-west direction even if it is already connected to another rail to the north or south). If a rail it would line up with is one block up, a detector rail slants upward toward it (with multiple options to slant upward to, a detector rail "prefers", in order: west, east, south, and north). Other configurations can be created by placing and removing various rails.
+
+[[Mob]]s avoid walking across a detector rail (or other rails), but can be pushed onto them.
+
+It cannot be placed suspended in midair, even with commands.<ref>{{bug|MC-182709|||Invalid}}</ref>
+
+=== Rail ===
+{{main|Rail}}
+
+Detector rails (and other rails) act as "roads" for [[minecart]]s. A minecart that enters a detector rail's space from either end of the detector rail continues to move, losing only a little velocity (which can then be increased again with [[powered rail]]s). A minecart that enters a detector rail's space from the side turns east or south (depending on the detector rail's orientation), or in the downward direction for a slanted detector rail.
+
+=== Redstone component ===
+[[File:Comparitor signal strength minecart.png|thumb|Example for signal strength of a full minecart (right) and a half-full one (left)]]
+{{see also|Redstone circuit}}
+
+A detector rail becomes [[Detector Rail#Block states|powered]] when any part of any minecart's [[bounding box]] comes into contact with it. Every 20th [[Tick|game tick]] after the rail first becomes powered, it checks whether any minecart is still present and depowers if there are none in contact at that time. This means that the duration of the signal is always a multiple of 20 game ticks (10 redstone ticks). While powered, a detector rail:
+* sets adjacent '''[[redstone dust]]''' to [[power level]] 15 
+* activates adjacent '''[[redstone repeater]]s''' facing away from the detector rail
+* activates adjacent '''[[redstone comparator]]s''' facing away from the detector rail to a level corresponding to the fullness of the minecart if it is a [[Minecart with Chest|minecart with chest]] or a [[Minecart with Hopper|minecart with hopper]]
+* strongly powers the block supporting the detector rail if that block is [[conductive]]
+* activates any adjacent '''[[Redstone components#Mechanism components|mechanism components]]''', including above or below, such as [[piston]]s, [[redstone lamp]]s, [[powered rail]]s, [[hopper]]s, etc.
+
+[[File:Detector-comparator-diff.png|thumbnail|right|Comparators give a signal for a minecart with chest or a minecart with hopper]]
+If the minecart on the detector rail is a [[minecart with chest]] or [[minecart with hopper]], an adjacent redstone comparator facing away from the detector rail outputs a power level proportional to the [[Redstone Comparator#Measure block state|container's fullness]], possibly power level 0. For any other type of minecart (including a regular minecart with a mob riding it) the comparator's output is zero. If multiple minecarts are on the detector rail, the comparator reads only the minecart that was placed first.
+
+A comparator can read the contents of a minecart with hopper or with chest on a detector rail through a solid opaque block, as it can with other container blocks.
+{{-}}
+
+=== Mob interaction ===
+Like other types of rails, [[spider]]s, [[cave spider]]s, and [[warden]]s are the only land mobs that can walk onto detector rails.
+
+=== Piston interactivity ===
+Detector rail can be pushed by the [[piston]], and can be pulled by the [[sticky piston]]. However, detector rail breaks and drops as an item when it is unsupported because of being moved.
+
+== Sounds ==
+{{Sound table/Block/Metal}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Detector Rail
+|spritetype=block
+|nameid=detector_rail
+|blocktags=prevent_mob_spawning_inside, rails
+|itemtags=rails
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Detector Rail
+|spritetype=block
+|nameid=detector_rail
+|id=28
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Powered Rail|block states}}
+
+== Videos ==
+<div style="text-align:center">{{yt|bxVOSJGSDlA}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|[[File:Detector Rail (NS) JE1 BE1.png|32px]] [[File:Detector Rail (EW) JE1 BE1.png|32px]] [[File:Detector Rail (nS) JE1 BE1.png|32px]] [[File:Detector Rail (Ew) JE1 BE1.png|32px]] [[File:Detector Rail (Ns) JE1 BE1.png|32px]] [[File:Detector  Rail (eW) JE1 BE1.png|32px]]<br>Added detector rails.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Detector rails are now broken faster using a [[pickaxe]].}}
+|{{HistoryLine||1.3.1|dev=12w21a|Detector rails are now [[renewable]], due to redstone dust being obtainable from [[trading]].}}
+|{{HistoryLine||1.5|dev=13w10a|[[File:Powered Detector Rail (NS) JE1 BE1.png|32px]] [[File:Powered Detector Rail (EW) JE1 BE1.png|32px]] [[File:Powered Detector Rail (nS) JE1 BE1.png|32px]] [[File:Powered Detector Rail (Ew) JE1 BE1.png|32px]] [[File:Powered Detector Rail (Ns) JE1 BE1.png|32px]] [[File:Powered Detector Rail (eW) JE1 BE1.png|32px]]<br>A distinct texture for active detector rails has now been added.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Detector Rail (in minecart) 14w04a.png|32px]] [[File:Powered Detector Rail (in minecart) 14w04a.png|32px]] If a detector rail is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine|||dev=14w28a|Sloped detector rails no longer decrease their hitbox to 2 pixels of a block when activated.}}
+|{{HistoryLine||1.9|dev=15w38a|All sloped rail types' hitbox heights have been decreased from 10 pixels of a block to about 2.5 pixels of a block.}}
+|{{HistoryLine|||dev=15w44a|Detector rails can now be found in [[chest minecart]]s in [[mineshaft]]s.}}
+|{{HistoryLine|||dev=15w46a|Mobs no longer spawn on detector rails.}}
+|{{HistoryLine||1.10|dev=16w21a|All sloped rail types' hitbox heights have been increased from about 2.5 pixels of a  block to a full block.}}
+|{{HistoryLine||1.11|dev=16w32b|All sloped rail types' hitbox heights have now been decreased from a full block to a half block.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Detector Rail (NS) JE2 BE2.png|32px]] [[File:Detector Rail (EW) JE2 BE2.png|32px]] [[File:Detector Rail (nS) JE2 BE2.png|32px]] [[File:Detector Rail (Ew) JE2 BE2.png|32px]] [[File:Detector Rail (Ns) JE2 BE2.png|32px]] [[File:Detector Rail (eW) JE2 BE2.png|32px]]<br>[[File:Powered Detector Rail (NS) JE2 BE2.png|32px]] [[File:Powered Detector Rail (EW) JE2 BE2.png|32px]] [[File:Powered Detector Rail (nS) JE2 BE2.png|32px]] [[File:Powered Detector Rail (Ew) JE2 BE2.png|32px]] [[File:Powered Detector Rail (Ns) JE2 BE2.png|32px]] [[File:Powered Detector Rail (eW) JE2 BE2.png|32px]]<br>The textures of detector rails have now been changed.}}
+|{{HistoryLine|||dev=19w12b|Detector rails can now be placed on [[glass]], [[ice]], [[glowstone]] and [[sea lantern]]s.}}
+|{{HistoryLine||1.17|dev=20w45a|All rail types can now be waterlogged.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Detector Rail (NS) JE1 BE1.png|32px]] [[File:Powered Detector Rail (NS) JE1 BE1.png|32px]] Added detector rails.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Detector rails can now be found inside [[minecarts with chests]] in [[mineshaft]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Rails are once again broken by flowing water. Previously it flowed through the rails.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Detector Rail (NS) JE2 BE2.png|32px]] [[File:Powered Detector Rail (NS) JE2 BE2.png|32px]] The textures of detector rails have now been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Detector Rail (NS) JE1 BE1.png|32px]] [[File:Powered Detector Rail (NS) JE1 BE1.png|32px]]{{verify|Did detector rails really have a texture for being activated in TU1 or was it later added in TU19/TU12?}} Added detector rails.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|All sloped rail types' hitbox heights have been increased from 10 pixels of a block to a full block.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|All sloped rail types' hitbox heights have now been decreased from a full block to a half block.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|All types of rails can now be [[waterlogged]] and are no longer destroyed by flowing water. Instead it flows right through them.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Detector Rail (NS) JE2 BE2.png|32px]] [[File:Powered Detector Rail (NS) JE2 BE2.png|32px]] The textures of detector rails have now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Detector Rail (NS) JE1 BE1.png|32px]] [[File:Powered Detector Rail (NS) JE1 BE1.png|32px]] Added detector rails.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w10a|Detector rails with [[Java Edition data values/Pre-flattening/Block IDs/Before 14w25a|numerical metadata variants]] 6, 7, 14 and 15, which are inaccessible through normal gameplay or even commands and as such require the use of external editors to exist, now have [[Missing model|no model]] [[File:Missing Model JE2.png|32px]]. Their appearances prior to this point were unknown.}}
+|{{HistoryLine|||dev=14w25a|Detector rails are now defined via [[block states]] rather than by numerical metadata. Prior to this version, the numerical metadata variants of the detector rail were as follows:
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered north-south}}
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered east-west}}
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered ascending east}}
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered ascending west}}
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered ascending north}}
+{{dvt|spritetype=block|sprite=detector-rail|Unpowered ascending south}}
+{{dvt|spritetype=block|sprite=missingno|dv=6-7|[[Java Edition removed blocks/Metadata variants#Boring variants|Inaccessible - behavior unknown]]}}
+{{dvt|spritetype=block|sprite=detector-rail|dv=8|Powered north-south}}
+{{dvt|spritetype=block|sprite=detector-rail|Powered east-west}}
+{{dvt|spritetype=block|sprite=detector-rail|Powered ascending east}}
+{{dvt|spritetype=block|sprite=detector-rail|Powered ascending west}}
+{{dvt|spritetype=block|sprite=detector-rail|Powered ascending north}}
+{{dvt|spritetype=block|sprite=detector-rail|Powered ascending south}}
+{{dvt|spritetype=block|sprite=missingno|dv=14-15|[[Java Edition removed blocks/Metadata variants#Boring variants|Inaccessible - behavior unknown]]|foot=1}}}}
+|{{HistoryLine|||dev=14w26a|Detector rails with metadata values 6, 7, 14 and 15 have now been completely removed from the game.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[Java Edition 1.13/Flattening|''The Flattening'']], this block's numeral ID was 28.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Detector Rail Teaser.jpg|Image from Notch’s twitter teasing detector rails.
+</gallery>
+
+== See also ==
+*{{BlockLink|Rail}}
+*{{BlockLink|Activator Rail}}
+*{{BlockLink|Powered Rail}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Non-solid blocks]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Readable by comparators]]
+
+[[de:Sensorschiene]]
+[[es:Raíl detector]]
+[[fr:Rails détecteurs]]
+[[it:Binario]]
+[[ja:ディテクターレール]]
+[[ko:감지 레일]]
+[[nl:Detectiespoor]]
+[[pl:Tory z czujnikiem]]
+[[pt:Trilho detector]]
+[[ru:Нажимные рельсы]]
+[[uk:Детекторні рейки]]
+[[zh:探测铁轨]]

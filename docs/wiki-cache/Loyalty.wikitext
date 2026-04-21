@@ -1,0 +1,139 @@
+{{Infobox enchantment
+| maxlevel = III
+| primaryitems = {{ItemSprite|Trident}}
+| weight = 5
+| id = loyalty
+| incompat = [[Riptide]]
+}}
+'''Loyalty''' is an [[enchantment]] applied to [[trident]]s that causes a thrown trident to fly back to the [[player]] who threw it after it lands.
+
+== Obtaining ==
+Loyalty can be obtained from [[enchanting tables]], drops from mobs that have spawned in a [[raid]],{{only|bedrock}} books obtained by [[fishing]], [[monster room]] chests, librarian [[villager]]s, and non-village [[structure]] loot.
+
+== Behavior ==
+[[File:Trident with loyalty III.gif|thumb|A trident with Loyalty III.]]
+The speed of returning depends on the level. When the trident hits an entity or 5 ticks (0.25 seconds) after hitting a block, the trident will begin returning. Once activated, it travels at a maximum speed of ~0.83 blocks per tick (~16.67 blocks per second) at level I, ~1.67 blocks per tick (~33.33 blocks per second) at level II, and 2.5 blocks per tick (50 blocks per second) at level III. Each level afterwards increases the trident's speed by ~0.83 blocks per tick (~16.67 blocks per second).
+
+When the player is traveling between dimensions, the trident attempts to return to the player but stays in the current dimension. For example, if a player throws a Loyalty-enchanted trident while in [[the Nether]] and goes to the [[Overworld]] before the trident returns, the trident stays in the Nether and does not despawn. As soon as the player returns to the Nether, the trident resumes returning to the player.
+
+A returning trident travels to its owner in a straight line, and can phase through all blocks and entities without hitting them. If the trident attempts to return to the player while their inventory is full, it starts circling around the player indefinitely, until an inventory slot is freed up. Multiple returning tridents can circle around a player simultaneously.
+
+If the player dies or goes into spectator mode while the trident is returning, the trident then drops in item form and is susceptible to [[Item (entity)#Despawning|despawning]]. If the trident was thrown in Creative mode when this happens, it disappears entirely.
+
+== Usage ==
+When a trident enchanted with Loyalty is thrown and comes into contact with any block or entity, it returns after a time interval to the player who threw it. Higher enchantments decrease the waiting time to return.
+
+{{IN|java}}, throwing a trident into the [[void]] effectively destroys the trident;<ref>{{bug|MC-125755|||WAI}}</ref> it never returns because there are no blocks or entities for it to hit.{{until|Java Edition Combat Tests|nocat=1}} {{IN|bedrock}}, the trident returns after traveling around 15 blocks in the void. A Loyalty-enchanted trident does not return when thrown by a dispenser.{{only|be|short=1}} If a Loyalty-enchanted trident is shot into the void by a dispenser, it does not despawn immediately like a normal trident would.
+
+Loyalty functions normally up to level 95. However, in some scenarios, higher levels of Loyalty will cause tridents to overshoot, increasing the time it takes for the trident to return and even preventing them from completing the return at all.
+
+== Incompatibilities ==
+Loyalty and [[Riptide]] are mutually exclusive. If the two are combined via [[commands]], Riptide takes priority and Loyalty is negated.
+
+== Sounds ==
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trident return1.ogg
+|sound2=Trident return2.ogg
+|sound3=Trident return3.ogg
+|subtitle=Trident returns
+|source=neutral
+|description=When a trident starts returning <ref group=sound>The first sound is played {{frac|1|9}} of the time, while the others are played {{frac|4|9}} of the time</ref>
+|id=item.trident.return
+|translationkey=subtitles.item.trident.return
+|volume=8.0
+|pitch=''varies'' <ref group=sound>1.0 for <code>return1</code>, 1.0/0.8/1.2/1.2 for <code>return2</code>, and 1.0/0.8/0.8/1.2 for <code>return3</code></ref>
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Trident return1.ogg
+|sound2=Trident return2.ogg
+|sound3=Trident return3.ogg
+|source=player
+|description=When a trident starts returning <ref group=sound>The first sound is played {{frac|1|9}} of the time, while the others are played {{frac|4|9}} of the time</ref>
+|id=item.trident.return
+|volume=8.0
+| pitch = ''varies'' <ref group=sound>1.0 for <code>return1</code>, 1.0/0.8/1.2/1.2 for <code>return2</code>, and 1.0/0.8/0.8/1.2 for <code>return3</code></ref>
+}}
+}}
+
+== Data values ==
+
+=== ID ===
+
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=loyalty
+|displayname=Loyalty
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=loyalty
+|displayname=Loyalty
+|id=31
+|translationkey=enchantment.tridentLoyalty
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|Added tridents along with Loyalty and [[Impaling]], [[Riptide]], and [[Channeling]].}}
+|{{HistoryLine|||dev=18w14a|Loyalty is no longer compatible with Riptide.}}
+|{{HistoryLine||1.13.1|dev=18w30a|Loyalty tridents no longer have a rope while returning.<ref>{{bug|MC-136136}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[Drowned]] can now use the Loyalty enchantment.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|exp=Experimental Gameplay|Added tridents along with Loyalty and Impaling, Riptide, and Channeling as part of Experimental Gameplay.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Fully implemented the Loyalty enchantment.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Tridents with Loyalty that fall into the void return to their owner upon breaking in the void.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|Added tridents along with Loyalty and Impaling, Riptide, and Channeling.}}
+|{{HistoryLine||xbox=?|ps3=?|psvita=?|ps4=?|wiiu=?|Tridents with Loyalty that fall into the void return to their owner upon breaking in the void.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||4|Tridents with Loyalty that fall into the void return to their owner upon breaking in the void.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee-ranged}}
+
+[[de:Treue]]
+[[es:Lealtad]]
+[[fr:Loyauté]]
+[[ja:忠誠]]
+[[ko:충성]]
+[[pt:Lealdade]]
+[[th:ซื่อสัตย์]]
+[[zh:忠诚]]

@@ -1,0 +1,129 @@
+{{distinguish|Ominous Trial Spawner|Trial Omen|Tricky Trials}}
+{{for|other uses|Ominous}}
+[[File:Ominous Trial.png|thumb|[[Trial chambers]] during an ominous trial]]
+
+An '''ominous trial''' is an [[ominous event]] in which [[trial chambers]] become more challenging.<ref>{{Mcnet|introducing-mace-and-ominous-events|Introducing the mace and ominous events|March 27, 2024|Cristina Anderca}}</ref>
+
+== Behavior ==
+=== Initiation ===
+When a player with [[Bad Omen]] is '''seen''' by a (non-ominous) [[trial spawner]], the player's Bad Omen is replaced with [[Trial Omen]]. The duration of the Trial Omen is always 15 minutes multiplied by the level of Bad Omen, regardless of the remaining duration on the Bad Omen effect. If the player already has the Trial Omen effect, with T minutes remaining, and also has Bad Omen level X (with any amount of time remaining), and is seen by a trial spawner, the player will lose the Bad Omen effect (regardless of the values of T and X), and the time remaining on the Trial Omen will be set to <code>max(T, 15*X)</code>. If <code>T > 15*X</code>, then the Bad Omen is effectively wasted. Notice that the player cannot stack lower levels of Bad Omen to increase the time remaining.
+
+When a trial spawner sees a player with Trial Omen or Bad Omen, it becomes ominous.
+
+=== Time and place ===
+The ominous trial is controlled by the [[ominous trial spawner]]s. The challenge is provided by the mobs and projectiles spawned by the spawners (more info in {{Slink||Challenge}}). Therefore, the ominous trial is located where the ominous trial spawners are, and the duration of the trial is the duration of time that the spawners are both active and ominous. Non-ominous trial spawners also become part of the trial if a player with Bad Omen or Trial Omen is nearby, since the spawners become active and ominous when they see the player.
+
+In summary, an ominous trial
+* Lasts as long as either:
+** There are active ominous trial spawners in the location.
+** There is a player with Trial Omen and there are trial spawners in the location.
+* Takes place in:
+** Any location where there are active ominous trial spawners nearby.
+
+=== Spawner conversion ===
+{{Main|Trial Spawner#Usage}}
+When an active trial spawner becomes ominous, it despawns its current mobs and resets its total mobs spawned counter.{{Info needed|What is the name of this in the game's code?}}<!-- The spawner pages need to be updated to explain this --> An inactive trial spawner can also become ominous if it was not previously ominous before going on cooldown, in which case it skips the rest of its cooldown period and immediately becomes active again.
+
+The Trial Omen effect is not removed upon a trial spawner becoming ominous. Therefore, the ominous trial lasts until the effect runs out or is cleared.
+
+=== Challenge ===
+{{Main|Ominous Trial Spawner#Usage}}
+An [[ominous trial spawner]] spawns more difficult mobs and also hazardous projectiles.
+
+==== Mobs ====
+Ominous trial spawners converted from trial spawners that generate naturally in [[trial chambers]] spawn applicable mobs with (better) weapons and wearing armor.
+
+Each armor set consists of only a [[chestplate]] and [[helmet]] with each piece having a 50% chance of being missing. All armor is enchanted with [[Fire Protection]] IV, [[Projectile Protection]] IV, and{{verify|Drowning zombies spawned from ominous trial spawners on Bedrock Edition doesn't produce armor with multiple Protection enchantments, only armor with Protection IV.}} [[Protection]] IV. {{IN|JE}}<ref>{{bug|MCPE-189946||Ominous Trial mobs drop equipped armor and weapons on death}}</ref>, mobs don't drop the armor on death or upon conversion to a drowned. The armor is selected from:
+* {{ItemLink|Chainmail armor}} with {{ItemLink|bolt armor trim}} in {{ItemLink|id=copper-ingot|link=copper ingot|copper}} (4 in 7)
+* {{ItemLink|Iron armor}} with {{ItemLink|flow armor trim}} in {{ItemLink|id=copper-ingot|link=none|copper}} (2 in 7)
+* {{ItemLink|Diamond armor}} with {{ItemLink|flow armor trim}} in {{ItemLink|id=copper-ingot|link=none|copper}} (1 in 7).
+
+Melee mobs spawn with a weapon selected from:
+* {{ItemLink|Iron sword}} (4 in 7)
+* {{ItemLink|Iron sword}} with [[Sharpness]] I (1 in 7)
+* {{ItemLink|Iron sword}} with [[Knockback]] I (1 in 7)
+* {{ItemLink|Diamond sword}} (1 in 7).
+
+Ranged mobs spawn with a {{ItemLink|bow}} with:
+* no enchantment (2 in 4)
+* [[Power]] I (1 in 4)
+* [[Punch]] I (1 in 4).
+
+Ominous trial spawners with mobs that are unable to wear equipment, such as [[spider]]s or [[silverfish]], spawn double the total mob count over the course of the challenge. These spawners also allow an additional mob to be all out at once during their challenge.
+
+==== Projectile spawning ====
+When at least one player is within the activation range of an ominous trial spawner, every 8 seconds it spawns [[ominous item spawner]]s above any player or any mob that was spawned by the ominous trial spawner spawner within 14 blocks. The location where it should spawn is determined by first performing a raycast from the feet of the entity to a random height between 2 and 6 blocks above the entity. If it hits a block, this block is used, otherwise the end of the line is used. Which block can be hit is determined by the same algorithm as the 3rd person camera. The item spawns in the center of the block below it, unless the block has a collision box. The ominous item spawner displays a projectile for 3 to 6 seconds before shooting that projectile downwards.
+
+Each ominous trial spawner has a set of 2 [[projectile]]s it spawns, one of which is a [[lingering potion]]. The lingering potion effect is selected randomly from one of the following (all with equal chance):
+* {{EffectLink|Wind Charged}}
+* {{EffectLink|Oozing}}
+* {{EffectLink|Weaving}}
+* {{EffectLink|Infested}}
+* {{EffectLink|Strength}}
+* {{EffectLink|Speed}}
+* {{EffectLink|Slow Falling}}
+
+The second projectile is randomly selected from one of the following (again, all with equal chance):
+* {{ItemLink|Arrow}}
+* {{ItemLink|Arrow}} with {{EffectLink|Poison}} (0:45)<ref name="arrow">{{bug|MC-296111||Tipped arrows from ominous trial spawners use standard potion duration instead of tipped arrow duration}}</ref>
+* {{ItemLink|Arrow}} with {{EffectLink|Slowness}} IV (0:20)<ref name="arrow"/>
+* {{ItemLink|Fire charge|text=Small fireball}}
+* {{ItemLink|Wind charge}}
+The potions and projectiles chosen will not change between trials and are based on location, so it is likely that spawners very close to each other will have the same projectiles.
+
+=== Rewards ===
+{{Main|Ominous Trial Spawner#Loot}}
+Like its non-ominous variant, an ominous trial spawner ejects loot when it has spawned the total amount of mobs it is able to spawn during a period of activity, and all of those mobs have been [[Health#Death|defeated]]. The ominous trial spawner uses a different loot table and gives much better loot than a non-ominous trial spawner would. The ominous trial spawner's loot table includes items such as [[ominous trial key]]s. This is currently the only method of obtaining ominous trial keys.
+
+{{Main|Ominous Vault#Loot}}
+The ominous trial keys can then be used at any time to open [[ominous vault]]s. Each ominous vault can only be opened 1 time by each player. A player can open an ominous vault by {{control|using}} an ominous trial key on it.
+
+{{LootChest|trial-chambers-reward-ominous}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here?; Over-Overkill; Revaulting}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Added ominous trials.}}
+|{{HistoryLine||1.21|dev=24w18a|Ominous trials are now available without using the "Update 1.21" experimental data pack.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Added ominous trials.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Ominous trials are now available without using the "Update 1.21" experimental toggle.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:Stray Squad.jpg|Several strays spawning during an ominous trial
+File:Makena vs. Bogged.jpg|[[Makena]] fighting several bogged during an ominous trial
+File:Noor's Ominous Trial.jpg|[[Noor]] fighting in the Trial Chambers with the Trial Omen effect.
+</gallery>
+
+== See also ==
+* [[Raid]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Gameplay]]
+
+[[de:Unheilvolle Prüfung]]
+[[es:Desafío ominoso]]
+[[fr:Épreuve funeste]]
+[[ja:不吉な試練]]
+[[pt:Desafio sombrio]]
+[[ru:Зловещее испытание]]
+[[uk:Зловісне випробування]]

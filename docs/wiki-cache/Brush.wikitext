@@ -1,0 +1,382 @@
+{{Infobox item
+| image = Brush.png
+| durability = {{jebe|64|65}}
+| renewable = Yes
+| stackable = No
+}}
+A '''brush''' is a [[tool]] used in [[archaeology]] to excavate [[suspicious sand]] and [[suspicious gravel]] for different items. Brushes also can be used on [[armadillo]]s to get [[armadillo scute]]s.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|B1=Feather
+|B2=Copper Ingot
+|B3=Stick
+|Output=Brush
+|type=Tool
+}}
+
+== Usage ==
+=== Brushing ===
+{{Control|Using}} the brush on any block (apart from suspicious blocks) displays a brushing animation, slowing down the player and creating breaking [[particles]], but not actually damaging the block or brush.
+
+==== Suspicious blocks ====
+{{Main|Suspicious Sand|Suspicious Gravel}}
+When continuously brushing [[suspicious sand]] or [[suspicious gravel]], an item dependent on the [[structure]]'s loot table slowly emerges from it until it drops out, and the block turns into regular [[sand]] or regular [[gravel]], depleting 1 [[durability]] point on the brush. It takes 96 [[game tick]]s (4.8 seconds) to brush a single suspicious block.
+
+If the player stops brushing a suspicious block, the block remains in its half-excavated state for a few seconds, before gradually returning to its unexcavated state one stage at a time.
+
+==== Armadillos ====
+When {{Control|using}} the brush on an [[armadillo]], it drops a single [[armadillo scute]]. Brushing an armadillo removes 16 points of durability from the brush. A brush with full durability and no enchantments can brush an armadillo four times {{in|java}} or five times {{in|bedrock}} before breaking.
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|ingredients=Damaged Brush
+|Damaged Brush
+|Damaged Brush
+|Output=Brush
+|type=Tool
+|ignoreusage=1
+|showdescription=1
+|description=The [[durability]] of the two brushes is added together, plus an extra 3 points of durability.
+}}
+{{Grinding
+|ingredients=Damaged Brush
+|Damaged Brush
+|Damaged Brush
+|Brush
+|showdescription=1
+|description=The durability of the two brushes is added together, plus an extra 3 points of durability.
+}}
+
+==== Anvil repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|head=1
+|Damaged Brush
+|Damaged Brush
+|Brush
+|tail=1
+}}
+A brush can be combined with another brush in an [[anvil]], preserving the [[enchantment]]s of both.
+
+=== Enchantments ===
+A brush can receive the following [[enchantment]]s:
+{| class="wikitable col-3-center col-5-center"
+! Name
+! Description
+! Max Level
+! [[Enchantment#Obtaining|Method]]
+! Weight
+|-
+| [[Unbreaking]]
+| Grants a chance to negate durability consumption.
+| III
+| {{BlockLink|Anvil}}
+| 5
+|-
+| [[Mending]]
+| Repairs the brush when obtaining [[experience]].
+| I
+| {{BlockLink|Anvil}}
+| 2
+|-
+| [[Curse of Vanishing]]
+| The brush vanishes on death, not dropping as an item.
+| I
+| {{BlockLink|Anvil}}
+| 1
+|}
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+<!--All of these sounds are, in fact, different-->
+| {{SoundLine
+| sound = Brushing sand1.ogg
+| sound2 = Brushing sand2.ogg
+| sound3 = Brushing sand3.ogg
+| sound4 = Brushing sand4.ogg
+| subtitle = Brushing Sand
+| source = block
+| description = While a brush is brushing suspicious sand
+| id = item.brush.brushing.sand
+| translationkey = subtitles.item.brush.brushing.sand
+| volume = 0.6
+| pitch = 0.6
+| distance = 16
+}}
+| {{SoundLine
+| sound = Brushing gravel1.ogg
+| sound2 = Brushing gravel2.ogg
+| sound3 = Brushing gravel3.ogg
+| sound4 = Brushing gravel4.ogg
+| subtitle = Brushing Gravel
+| source = block
+| description = While a brush is brushing suspicious gravel
+| id = item.brush.brushing.gravel
+| translationkey = subtitles.item.brush.brushing.gravel
+| volume = 0.6
+| pitch = 0.6
+| distance = 16
+}}
+| {{SoundLine
+| sound = Brushing generic1.ogg
+| sound2 = Brushing generic2.ogg
+| sound3 = Brushing generic3.ogg
+| sound4 = Brushing generic4.ogg
+| subtitle = Brushing
+| source = block
+| description = While a brush is brushing any other block
+| id = item.brush.brushing.generic
+| translationkey = subtitles.item.brush.brushing.generic
+| volume = 0.6
+| pitch = 0.6
+| distance=16}}
+| {{SoundLine
+| sound = Brushing sand completed1.ogg
+| sound2 = Brushing sand completed2.ogg
+| sound3 = Brushing sand completed3.ogg
+| sound4 = Brushing sand completed4.ogg
+| sound5 = Brushing sand completed5.ogg
+| subtitle = Brushing Sand completed
+| source = Players<ref group=sound name=badsource>{{Bug|MC-260202}}</ref>|overridesource=1
+| description = When a brush finishes brushing suspicious sand
+| id=item.brush.brushing.sand.complete
+| translationkey = subtitles.item.brush.brushing.sand.complete
+| volume=1.0
+| pitch = 1.0
+| distance = 16}}
+| {{SoundLine
+| sound = Brushing gravel completed1.ogg
+| sound2 = Brushing gravel completed2.ogg
+| sound3 = Brushing gravel completed3.ogg
+| sound4 = Brushing gravel completed4.ogg
+| subtitle = Brushing Gravel completed
+| source = Players<ref group=sound name=badsource/>|overridesource=1
+| description = When a brush finishes brushing suspicious gravel
+| id = item.brush.brushing.gravel.complete
+| translationkey = subtitles.item.brush.brushing.gravel.complete
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound = Brushing sand1.ogg
+| sound2 = Brushing sand2.ogg
+| sound3 = Brushing sand3.ogg
+| sound4 = Brushing sand4.ogg
+| source = player
+| description = While a brush is brushing suspicious sand
+| id = brush.suspicious_sand
+| volume = 1.0
+| pitch = 0.8-1.0}}
+| {{SoundLine
+| sound = Brushing gravel1.ogg
+| sound2 = Brushing gravel2.ogg
+| sound3 = Brushing gravel3.ogg
+| sound4 = Brushing gravel4.ogg
+| source = player
+| description = While a brush is brushing suspicious gravel
+| id = brush.suspicious_gravel
+| volume = 1.0
+| pitch = 0.8-1.0}}
+| {{SoundLine
+| sound = Brushing generic1.ogg
+| sound2 = Brushing generic2.ogg
+| sound3 = Brushing generic3.ogg
+| sound4 = Brushing generic4.ogg
+| source = player
+| description = While a brush is brushing any other block
+| id = brush.generic
+| volume = 1.0
+| pitch = 0.8-1.0}}
+| {{SoundLine
+| sound = Brushing sand completed1.ogg
+| sound2 = Brushing sand completed2.ogg
+| sound3 = Brushing sand completed3.ogg
+| sound4 = Brushing sand completed4.ogg
+| sound5 = Brushing sand completed5.ogg
+| source = player
+| description = When a brush finishes brushing suspicious sand
+| id = brush_completed.suspicious_sand
+| volume = 1.0
+| pitch = 0.8-1.0}}
+| {{SoundLine
+| sound = Brushing gravel completed1.ogg
+| sound2 = Brushing gravel completed2.ogg
+| sound3 = Brushing gravel completed3.ogg
+| sound4 = Brushing gravel completed4.ogg
+| source = player
+| description = When a brush finishes brushing suspicious gravel
+| id = brush_completed.suspicious_gravel
+| volume = 1.0
+| pitch = 0.8-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Brush
+|spritetype=item
+|nameid=brush
+|form=item
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Brush
+|spritetype=item
+|nameid=brush
+|id=684
+|form=item
+|foot=1}}
+
+== Advancements ==
+{{load advancements|Respecting the Remnants;Isn't it Scute?}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link=https://youtu.be/DBvZ2Iqmm3M?t=2178|[[File:Brush (pre-release 1).png|32px]][[File:Brush 2.png|32px]] Brushes were announced at [[Minecraft Live 2020]] with two variants.}}
+|{{HistoryLine||February 10, 2023|[[File:Brush JE1 BE1.png|32px]] [[Sofia Dankis]] posted an article about upcoming archaeology features, including brushes.|link=https://www.minecraft.net/en-us/article/archeology-coming-minecraft-120}}
+|{{HistoryLine||June 4, 2023|link=https://youtu.be/klP9SrJFDU8?t=206|[[File:Brush (pre-release 2).png|32px]] Changed the brush's item texture.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Brush JE1 BE1.png|32px]] Added brushes with an updated texture behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].
+|The crafting recipe was originally three [[string]] and two [[stick]]s.
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1 = String
+|B1 = String
+|C1 = String
+|B2 = Stick
+|B3 = Stick
+|Output = Brush
+|type = Tool
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=pre1|The crafting recipe for brushes has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|B1 = Feather
+|B2 = Copper Ingot
+|B3 = Stick
+|Output = Brush
+|type = Tool
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine||1.20|dev=23w12a|Brushes are now available without using the "Update 1.20" experimental data pack.
+|Brushes can now brush [[suspicious gravel]].}}
+|{{HistoryLine|||dev=23w14a|The brushing sound of brush is now controlled by the "Blocks" sound slider instead of the "Players" sound slider.}}
+|{{HistoryLine|||dev=23w17a|The player now gets the [[advancement]] "Respecting the Remnants" when they use a brush on a [[suspicious sand]] or [[suspicious gravel]] to obtain a [[pottery sherd]].}}
+|{{HistoryLine||1.20.5|dev=23w51a|Brushes can be now used to brush [[armadillo]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|[[File:Brush JE1 BE1.png|32px]] Added brushes behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.
+|The crafting recipe is originally three [[string]] and two [[stick]]s.
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1 = String
+|B1 = String
+|C1 = String
+|B2 = Stick
+|B3 = Stick
+|Output = Brush
+|type = Tool
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|The crafting recipe for brushes has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|B1 = Feather
+|B2 = Copper Ingot
+|B3 = Stick
+|Output = Brush
+|type = Tool
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|Brushes can now be enchanted with [[Mending]], [[Unbreaking]], and [[Curse of Vanishing]].|Added new sounds for brushing a block other than [[suspicious sand]] or [[suspicious gravel]].}}
+|{{HistoryLine|||dev=Preview 1.20.0.21|Brushes are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.20.60|exp=Armadillo and Wolf Armor|dev=Preview 1.20.60.23|Brushes can be now used to brush [[armadillo]]s.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Improved the Brush's performance along with additional features.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Trivia ==
+
+* During animatics for the [[Trails & Tales Update: Official Launch Trailer|Trails & Tales trailer]], [[Ari]] can be seen holding what appears to be the original design of the brush.<ref>{{tweet|Brikk_Animation|1688566474191839232|Working with the annual #Minecraft vanilla trailer, we made all of the key decisions during the #animatic phase, giving us more time to focus on polishing the look and #animation after each shot got approved.|August 7, 2023}}</ref><ref>{{Cite Instagram|brikktv|CvzwNByIkYf|During the scene down the archeology dig site, the sun's direction became substantially important for dictating the design and camera angles. Apart from wanting our main character, Ari, to be nicely lit in each shot, we also learned that Skeletons and Zombies apparently turn ablaze when in direct sunlight. IF they are not wearing a helmet. And Husks won’t spawn underground.|August 11, 2023}}</ref>
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+More to Discover.jpg|[[Teaser]] of [[Alex]] holding a brush
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Brushing Suspicious Sand Pixel Art.png|[[Ari]] using a brush
+File:Ari builds a sand castle.jpg|Ari building a sandcastle with a brush.
+File:Crafting a brush.png|Tutorial for crafting a brush in [[Timeless Trails]]
+File:15 Year Journey Brush Sticker.png|Sticker of a brush from [[15 Year Journey]] 
+</gallery>
+
+== External links ==
+* {{Mcnet|brush|Taking Inventory: Brush|July 6, 2023|[[Duncan Geere]]}}
+
+== References ==
+<references />
+
+== Navigation ==
+{{navbox tools}}
+{{Navbox items|tools}}
+
+[[Category:Tools]]
+
+[[de:Pinsel]]
+[[es:Pincel]]
+[[fr:Pinceau]]
+[[it:Spazzola]]
+[[ja:ブラシ]]
+[[ko:솔]]
+[[pl:Pędzel]]
+[[pt:Pincel]]
+[[ru:Кисть]]
+[[uk:Щітка]]
+[[zh:刷子]]

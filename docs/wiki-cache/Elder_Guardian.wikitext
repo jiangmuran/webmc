@@ -1,0 +1,466 @@
+{{about|the mob in the base game|the joke mob|Plaguewhale Slab|other uses|Guardian (disambiguation)}}
+{{Infobox entity
+| imagesize = 260px
+| image = Elder Guardian.gif
+| invimage = Elder Guardian Spawn Egg
+| health = {{hp|80}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Aquatic}}
+| damage = '''Laser:''' <br>Easy: {{hp|5}}<br>Normal: {{hp|8}}<br>Hard: {{hp|12}}<br>
+<hr>
+'''Spikes:'''<br>Easy and Normal: {{hp|2}}<br>Hard: {{hp|3}}
+| size = Height: 1.9975 blocks<br>Width: 1.9975 blocks
+| spawn = {{EnvLink|Ocean Monument}}
+}}
+An '''elder guardian''' is a large [[hostile mob]] and a variant of the [[guardian]]. It is the largest and strongest [[aquatic]] mob. It attacks the same way as a normal guardian, and it also applies [[Mining Fatigue]] to [[player]]s in a large radius around itself. They are only found in [[ocean monument]]s; three of them generate in each one.
+
+== Spawning ==
+Three elder guardians spawn naturally during the generation of each [[ocean monument]]:
+* One in the top room of the monument.
+* One in each of the two wings of the monument.
+
+They are spawned ''with'' the ocean monument and thus they do not respawn.
+
+== Drops ==
+{{bug|MCPE-57215}} causes the elder guardian not to drop random fish {{in|bedrock}}.
+{{DropTable
+|{{DropLine|name=Wet Sponge|notes=player}}
+|{{DropLine|name=Tide Armor Trim|multiplychance=1/5}}
+|{{DropLine|name=Prismarine Shard|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Prismarine Crystals|lootingquantity=0-1|multiplychance=2/6}}
+|{{DropLine|name=Raw Cod|notes=je_not_player,je_not_burn|lootingquantity=0-1|multiplychance=3/6}}
+|{{DropLine|name=Raw Cod|edition=java|notes=player,je_not_burn|lootingquantity=0-1|multiplychance=3/6
+|independent={{DropLine|dropchance=2.5%|lootingchance=1%|multiplychance=60%}}}}
+|{{DropLine|name=Cooked Cod|edition=java|notes=je_not_player,burn|lootingquantity=0-1|multiplychance=3/6}}
+|{{DropLine|name=Cooked Cod|edition=java|notes=player,burn|lootingquantity=0-1|multiplychance=3/6
+|independent={{DropLine|dropchance=2.5%|lootingchance=1%|multiplychance=60%}}}}
+|{{DropLine|name=Raw Salmon|edition=java|notes=player,je_not_burn|dropchance=2.5%|lootingchance=1%|multiplychance=25%}}
+|{{DropLine|name=Cooked Salmon|edition=java|notes=player,burn|dropchance=2.5%|lootingchance=1%|multiplychance=25%}}
+|{{DropLine|name=Pufferfish|edition=java|notes=player|multiplychance=13%|dropchance=2.5%|lootingchance=1%}}
+|{{DropLine|name=Tropical Fish|link=Tropical Fish (item)|edition=java|notes=player|dropchance=2.5%|lootingchance=1%|multiplychance=2%}}
+|notes=
+je_not_player.java = Only dropped when ''not'' killed by a [[player]] or a tamed [[wolf]].
+je_not_burn.java => not_burn_or_fire_aspect
+je_not_burn.bedrock = {{bug|MCPE-122487||Killing guardians on fire/lava does not drop cooked fish}}
+}}
+* {{xp|10}} –  when killed by a player or tamed wolf. 
+
+
+[[File:Guardian laser.png|thumb|Laser]]
+
+== Behavior ==
+Elder guardians do not swim around as much as normal guardians, and they do not swim away when approached by a player they are targeting, unlike regular guardians. Like normal guardians, elder guardians attempt to attack the player, [[squid]], [[glow squid]], and [[Axolotl|axolotls]].
+
+The elder guardian's eye follows and stares at any nearby players and always looks directly at its target. The eye still follows a player under the effects of [[Invisibility]] or in [[Spectator]] mode, though the elder guardian does not attack.
+
+Elder guardians are considered [[aquatic]] mobs, and thus are affected by the [[Impaling]] enchantment.{{only|java}}{{until|Java Combat Tests|nocat=1}}
+
+The elder guardian has three methods of attacking, including firing its laser, inflicting [[Mining Fatigue]], and a defensive thorn-like attack. 
+
+The elder guardian pathfinds toward an ocean monument if it is not within one. 
+
+An elder guardian attacks [[axolotl]]s that are not playing dead. Otherwise, an elder guardian does not attack mobs that attack it, although the attacking mob takes damage from the elder guardian's natural spikes defense.
+
+The elder guardian, like a normal guardian, does not take suffocation damage when out of the water for a prolonged period of time.
+
+Elder guardians cannot ride [[Boat|boats]].[[File:ElderGuardianCurseJava.gif|alt=Clip of player in boat being cursed with mining fatigue by elder guardian in java.|thumb|Cursing player in Java Edition.]]
+=== Laser ===
+The laser takes 3 seconds to charge, doing no damage and allowing the player to move away in the meantime. As it charges, it changes from purple to bright yellow. Once charged, the beam flashes green, abruptly disappears, and deals {{hp|8}} damage plus another {{hp|4}} magic damage on Normal difficulty. The magic damage is increased by another {{hp|2}} in Hard difficulty after its usual scaling factor of 1.5x, meaning an elder guardian can deal up to {{hp|8}} magic damage on Hard difficulty with a single beam attack. The elder guardian swims around for a few seconds before firing again. The beam cannot be dodged and has a maximum range of approximately 14 blocks. Once the player is out of range, if the beam is obstructed by solid blocks, or if the player has a shield, the guardian's beam disengages from the player and deals no damage.
+
+=== Inflicting Mining Fatigue ===
+{{IN|java}}, immediately after spawning and once each minute thereafter, the elder guardian searches for any player within a spherical radius of 50 blocks to afflict with [[Mining Fatigue]] III. {{IN|bedrock}}, the elder guardian inflicts any unafflicted player within range immediately.
+
+When afflicted, the player sees a ghostly image of the elder guardian and hears a bell-like sound. The effect decreases a player's attack speed by 30% and decreases mining speed even more for 5 minutes. The attack targets players through blocks, even underground, and a potion of [[Invisibility]] offers no defense. This is not considered an attack in regards to the [[Thorns]] enchantment.[[File:ElderGuardianCurseBedrock.gif|alt=Clip of player in boat being cursed with mining fatigue by elder guardian in bedrock.|thumb|Cursing player in Bedrock Edition.]]
+
+The image of the elder guardian is a particle effect that can be recreated by issuing the command {{cmd|particle minecraft:elder_guardian}}.{{only|java}}
+=== Spikes defense ===
+An elder guardian deals {{hp|2}} ({{hp|3}} on Hard mode) damage every time it is hit while its spikes are extended, similar to the [[Thorns]] enchantment on armor. If cornered by a player or axolotl, the elder guardian usually extends its spikes and fires at point-blank range.
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Elder guardian idle1.ogg
+|sound2=Elder guardian idle2.ogg
+|sound3=Elder guardian idle3.ogg
+|sound4=Elder guardian idle4.ogg
+|subtitle=Elder Guardian moans
+|source=hostile
+|description=Randomly while in water
+|id=entity.elder_guardian.ambient
+|translationkey=subtitles.entity.elder_guardian.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land idle1.ogg
+|sound2=Guardian land idle2.ogg
+|sound3=Guardian land idle3.ogg
+|sound4=Guardian land idle4.ogg
+|subtitle=Elder Guardian flaps
+|source=hostile
+|description=Randomly while out of water
+|id=entity.elder_guardian.ambient_land
+|translationkey=subtitles.entity.elder_guardian.ambient.land
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Curse.ogg
+|subtitle=Elder Guardian curses
+|source=hostile
+|description=When an elder guardian inflicts Mining Fatigue on a player
+|id=entity.elder_guardian.curse
+|translationkey=subtitles.entity.elder_guardian.curse
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Guardian attack loop.ogg
+|subtitle=Guardian shoots
+|source=hostile
+|description=While an elder guardian uses its laser attack
+|id=entity.guardian.attack
+|translationkey=subtitles.entity.guardian.attack
+|volume=0.0-1.0 <ref group=sound>Increases quadratically from minimum to maximum as the attack goes on</ref>
+|pitch=0.7-1.2 <ref group=sound>Increases linearly from minimum to maximum as the attack goes on</ref>
+|distance=16 (technical) / ∞ (effective)<ref group=sound>{{bug|MC-57057||Guardian laser attack sound ignores distance}}</ref>}}
+| {{SoundLine
+|sound=Elder guardian death.ogg
+|subtitle=Elder Guardian dies
+|source=hostile
+|description=When an elder guardian dies while in water
+|id=entity.elder_guardian.death
+|translationkey=subtitles.entity.elder_guardian.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land death.ogg
+|subtitle=Elder Guardian dies
+|source=hostile
+|description=When an elder guardian dies while out of water
+|id=entity.elder_guardian.death_land
+|translationkey=subtitles.entity.elder_guardian.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Elder guardian hurt1.ogg
+|sound2=Elder guardian hurt2.ogg
+|sound3=Elder guardian hurt3.ogg
+|sound4=Elder guardian hurt4.ogg
+|subtitle=Elder Guardian hurts
+|source=hostile
+|description=When an elder guardian is damaged while in water
+|id=entity.elder_guardian.hurt
+|translationkey=subtitles.entity.elder_guardian.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land hurt1.ogg
+|sound2=Guardian land hurt2.ogg
+|sound3=Guardian land hurt3.ogg
+|sound4=Guardian land hurt4.ogg
+|subtitle=Elder Guardian hurts
+|source=hostile
+|description=When an elder guardian is damaged while out of water
+|id=entity.elder_guardian.hurt_land
+|translationkey=subtitles.entity.elder_guardian.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian flop1.ogg
+|sound2=Guardian flop2.ogg
+|sound3=Guardian flop3.ogg
+|sound4=Guardian flop4.ogg
+|subtitle=Elder Guardian flops
+|source=hostile
+|description=While an elder guardian is on land
+|id=entity.elder_guardian.flop
+|translationkey=subtitles.entity.elder_guardian.flop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Elder guardian idle1.ogg
+|sound2=Elder guardian idle2.ogg
+|sound3=Elder guardian idle3.ogg
+|sound4=Elder guardian idle4.ogg
+|source=hostile
+|description=Randomly while in water
+|id=mob.elderguardian.idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian land idle1.ogg
+|sound2=Guardian land idle2.ogg
+|sound3=Guardian land idle3.ogg
+|sound4=Guardian land idle4.ogg
+|source=hostile
+|description=Randomly while out of water
+|id=mob.guardian.land_idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Curse.ogg
+|source=hostile
+|description=When an elder guardian inflicts Mining Fatigue on a player
+|id=mob.elderguardian.curse
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Guardian attack loop.ogg
+|source=hostile
+|description=While an elder guardian uses its laser attack
+|id=mob.guardian.attack_loop}}
+| {{SoundLine
+|sound=Elder guardian death.ogg
+|source=hostile
+|description=When an elder guardian dies
+|id=mob.elderguardian.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Elder guardian hurt1.ogg
+|sound2=Elder guardian hurt2.ogg
+|sound3=Elder guardian hurt3.ogg
+|sound4=Elder guardian hurt4.ogg
+|source=hostile
+|description=When an elder guardian is damaged while in water
+|id=mob.elderguardian.hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian land hurt1.ogg
+|sound2=Guardian land hurt2.ogg
+|sound3=Guardian land hurt3.ogg
+|sound4=Guardian land hurt4.ogg
+|source=hostile
+|description=When an elder guardian is damaged while out of water
+|id=mob.guardian.land_hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian flop1.ogg
+|sound2=Guardian flop2.ogg
+|sound3=Guardian flop3.ogg
+|sound4=Guardian flop4.ogg
+|source=hostile
+|description=While an elder guardian is on land
+|id=mob.guardian.flop
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|showentitytags=y
+|displayname=Elder Guardian
+|spritetype=entity
+|nameid=elder_guardian
+|entitytags=aquatic, axolotl_always_hostiles, can_breathe_under_water, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Elder Guardian
+|spritetype=entity
+|nameid=elder_guardian
+|showentityfamily=y
+|entityfamily=aquatic,guardian_elder,mob,monster
+|id=50
+|foot=1}}
+
+=== Entity data ===
+Elder guardians have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;The Deep End;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;How Did We Get Here;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|YlEp6q0Y5lw}}
+{{yt|gs-rMm5luB8}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:Elder Guardian Revision 1.png|42px]] Added elder guardians.}}
+|{{HistoryLine|||dev=14w26a|[[Guardian]]s and elder guardians are no longer immune to [[lava]] and [[fire]].}}
+|{{HistoryLine||1.9|dev=15w43a|The [[drop]] chances for [[raw fish]] and [[prismarine crystal]]s have been changed for elder guardians. Instead of a 33% chance of fish then a 33% chance of crystals only if the fish drop failed with both percentages adjusted by [[Looting]], it's 40% fish, 40% crystals, and 20% neither, with the amount increased by Looting.
+|Elder guardians now drop dry [[sponge]]s (on any kill).}}
+|{{HistoryLine|||dev=15w43b|The drop chances for raw fish and prismarine crystals have been changed again for guardians. Now, the drop chances are 50% fish, 33% crystals, and 16.7% neither.}}
+|{{HistoryLine|||dev=15w43c|The [[sponge]] drop of elder guardians has been restored to requiring a [[player]] kill, but is still dry rather than wet.}}
+|{{HistoryLine||1.10|dev=16w20a|An elder guardian [[spawn egg]] has been added.}}
+|{{HistoryLine|||dev=pre2|The elder guardian spawn egg has been removed.}}
+|{{HistoryLine||1.11|dev=16w32a|The elder guardian spawn egg has been re-added.
+|The in-game name of elder guardians is now "Elder Guardian" instead of "Guardian".}}
+|{{HistoryLine|||dev=16w33a|Elder guardians now [[drop]] wet [[sponge]]s on [[player]] kills, rather than dry sponges.<ref>{{Bug|MC-92294}}</ref>}}
+|{{HistoryLine|||dev=16w38a|Elder guardian's common drop of [[raw cod|raw fish]] now drop as cooked fish, if killed while on [[fire]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Elder Guardian.png|42px]] The texture of elder guardians has been changed.}}
+|{{HistoryLine||1.15|dev=19w34a|Elder guardians now take damage on [[magma block]]s.}}
+|{{HistoryLine||1.16|dev=20w14a|Elder guardians are now required for the "Monsters Hunted" [[advancement]].}}
+|{{HistoryLine||1.17|dev=21w11a|[[File:Elder Guardian tailfin change 21w11a.gif|42px]] The texture of the elder guardian has been tweaked, so that a floating pixel present in the tailfin no longer exists. }}
+|{{HistoryLine|||dev=21w13a|Now drop [[cooked cod]] or [[salmon]] instead of [[raw cod]] or [[salmon]] if on [[fire]] when killed or killed by a [[fire]] source.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|Elder guardians now drop 0–1 [[tide armor trim]] smithing templates upon death.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:Elder Guardian Revision 1.png|42px]] Added elder guardians.
+|Elder guardians are considered boss [[mob]]s in the blog post for this update,<ref>{{citation|url=https://www.mojang.com/2016/08/sneak-peek-boss-update-is-coming-to-pocket-and-windows-10/|title=SNEAK PEEK: BOSS UPDATE COMING TO POCKET & WIN 10|section=|website=[https://www.mojang.com/ mojang.com]|author=Owen Hill|date=August 29, 2016|quote=|archive-url=https://web.archive.org/web/20190710073327/https://www.mojang.com/2016/08/sneak-peek-boss-update-is-coming-to-pocket-and-windows-10/}}</ref> but in-game they behave the same as their [[Java]] counterparts.}}
+|{{HistoryLine|||dev=build 5|An elder guardian [[spawn egg]] has been added.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID has been changed from <code>guardian.elder</code> to <code>elder_guardian</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=?|Elder guardians no longer play flopping sounds when on land.}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.5|Elder guardians now drop wet [[sponge]]s rather than dry.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Elder Guardian.png|42px]] The texture of elder guardians has been changed.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.4|Added the [[elder guardian ghost]], currently unused.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|[[File:Elder Guardian tailfin change 21w11a.gif|42px]] The texture of the elder guardian has been tweaked, so that a floating pixel present in the tailfin no longer exists. }}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|Elder guardians now drop 0–1 [[tide armor trim]] smithing templates upon death.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Elder guardians once again play flopping sounds when on land.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[File:Elder Guardian Revision 1.png|42px]] Added elder guardians.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Elder guardians now drop dry [[sponge]]s rather than wet.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Elder guardians now have their own [[spawn egg]].|Elder guardians now drop wet [[sponge]]s again rather than dry.|Elder guardian's common drop of [[raw cod|raw fish]] now drop as cooked fish, if killed while on [[fire]].}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|Elder guardians now drop dry [[sponge]]s again rather than wet.|Elder guardian's common drop of [[raw cod|raw fish]] no longer drop as cooked fish, if killed while on [[fire]].{{check version}}}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Elder guardians now drop wet [[sponge]]s again rather than dry.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.3.12|[[File:Elder Guardian Revision 1.png|42px]] Added elder guardians.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from <code>Guardian</code> to <code>elder_guardian</code> and the <code>Elder</code> [[Entity_format|tag]] has been removed.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The elder guardian's status as a boss or simply a powerful mob was historically ambiguous. While it lacks important characteristics of a boss, chiefly a health bar, it has been grouped with boss mobs and addressed as one by Mojang before.<ref>{{tweet|kingbdogz|1248264777924775938|What do you think are the greatest weaknesses and strengths of Minecraft's bosses from a design perspective?|April 9, 2020}}</ref><ref name=":0">{{mcnet|meet-elder-guardian|Meet the Elder Guardian|November 6, 2017|Emily Richardson}}</ref> The elder guardian was also marketed as a boss {{in|pe}}, having been introduced in the [[Boss Update]]. Jeb later stated that it is intended as a miniboss rather than a full boss and that this is why it does not have a health bar.<ref name="miniboss">{{ytl|gs-rMm5luB8|Why are their eyes so big? <nowiki>|</nowiki> The Story Of The Elder Guardian|Minecraft|August 24, 2025|t=278s}}</ref>
+* The elder guardian's eye is the "head" part of the [[mob]]'s [[model]], giving the illusion of a dynamic eye.
+* According to [[Jeb]], elder guardians were introduced to encourage [[player]]s to solve the temple maze rather than dig through it easily. He acknowledges there are ways around it, but players still have to solve the challenge in a different way.<ref name=":0" />
+** Also according to Jeb, the "jumpscare" by an elder guardian is unintentional; instead, he added it to provide a visual cue as to why players get slowed down by [[Mining Fatigue]].<ref name=":0" />
+* {{IN|bedrock}}, elder guardians make their underwater death sounds if killed on land.
+* According to a post Jeb made on Bluesky, the elder guardian drops a sponge to make sure a player can get at least three from an ocean monument without a sponge room.<ref>{{bluesky|camcamburger.bsky.social|3lqxwreiins25|@jebox.bsky.social hello, was the sponge drop from elder guardians meant to be a placeholder? a few famous people have been saying so but i couldn't find a source for it. keep up the good work, loved your cameo!|June 6, 2025}}<br>{{bluesky|jebox.bsky.social|3lrb26wj5fc2w|No? The sponge drop was added to them to make sure that even if a monument doesn't have a sponge room, you will at least get 3 of them.|userlink=[[Jens Bergensten]]|June 10, 2025}}</ref>
+* Despite being classified as only a [[monster]], the elder guardian was referred to as an "[[animal]] of the deep" in a ''Minecraft'' video about them.<ref>{{ytl|gs-rMm5luB8|Why are their eyes so big? <nowiki>|</nowiki> The Story Of The Elder Guardian|Minecraft|August 24, 2025|t=56s}}</ref>
+
+== Gallery ==
+=== Render ===
+<gallery>
+Elder Guardian (Retracted).png|Elder guardian's spikes retracted.
+</gallery>
+=== Screenshots ===
+<gallery>
+Elder guardian screen effect.png|A special effect of the elder guardian, which gives [[Mining Fatigue]] III for 5 minutes.
+Elder guardian curse.gif|The elder guardian's Mining Fatigue effect.
+Bigger Elder Guardian.png|An elder guardian spawned inside an [[ocean monument]].
+Elder Guardian In Monument.png|An elder guardian spreading its spikes.
+GaurdianAttack.png|An elder guardian's laser.
+Guardian In Full View.png|An elder guardian in full view.
+ElderGuardianInside.png|The inside of an elder guardian (spikes retracted).
+Guardian Size.png|Size comparison between an elder and a normal [[guardian]].
+ElderGuardainCurseShowsFullModel.png|The elder guardian curse ghastly image shows the elder guardian's full [[model]].
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Invisibility Elder Guardian 1.jpg|A player avoiding an elder guardian by using the [[Invisibility]] effect.
+Invisibility Elder Guardian 2.jpg|A player avoiding an elder guardian by using the [[Invisibility]] effect.
+JE 1.17 Development Axolotl attack 2.jpg|A group of [[axolotl]]s attacking an elder guardian on [[Minecraft Live 2020]].
+Mm-elderguardian-ingame.png|An elder guardian in a monument.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Guardian Elder (texture).png|Elder guardian texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:15th Anniversary Elder Guardian.png|Official artwork of an elder guardian.
+File:BossUpdatePE.png|An elder guardian in promotional artwork for the [[Boss Update]].
+File:Elder Guardian Mobestiary.jpg|[[Minecraft Books#Minecraft Mobestiary|Minecraft Mobestiary]]'s page about elder guardians.
+File:LEGO Elder Guardian.png|[[Lego Minecraft]] elder guardian.
+File:Elder Guardian Battle.jpeg|[[Narrator (YouTube)|Narrator]] and [[MARILLA]] attempting to battle an elder guardian.
+File:Steve vs. Elder Guardian animatic.mp4|Animatic of [[Steve]] fighting an elder guardian, from the [[Trails & Tales Update: Official Launch Trailer|Trails & Tales trailer]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|meet-elder-guardian|Meet the Elder Guardian|November 6, 2017|Emily Richardson}}
+* {{mcnet|elder-guardian|Mob Menagerie: Elder Guardian|June 26, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Aquatic mobs]]
+
+[[de:Großwächter]]
+[[es:Guardián anciano]]
+[[fr:Grand gardien]]
+[[it:Guardiano antico]]
+[[ja:エルダーガーディアン]]
+[[ko:엘더 가디언]]
+[[nl:Oude bewaker]]
+[[pl:Prastrażnik]]
+[[pt:Guardião-Mestre]]
+[[ru:Древний страж]]
+[[uk:Стародавній вартовий]]
+[[zh:远古守卫者]]

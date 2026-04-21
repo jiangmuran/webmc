@@ -1,0 +1,537 @@
+{{distinguish|Crossbow|Bowl}}
+{{For}}
+{{Infobox item
+| group = Bow
+| 1-1 = Bow.png 
+| group2 = Pulled (state 0)
+| 2-1 = Bow (Pull 0).png 
+| group3 = Pulled (state 1)
+| 3-1 = Bow (Pull 1).png 
+| group4 = Pulled (state 2)
+| 4-1 = Bow (Pull 2).png
+| projectiledamage = {{hp|1}} (0.1s)<br/>{{hp|5}} (0.2s - 0.8s)<br/>{{hp|6}} (0.9s)<br/>{{hp|6}} to {{hp|11}} (1s)
+| chargetime = 0.1s (no charge)<br/>0.2s - 0.8s (medium charge)<br/>0.9s (full charge)<br/>1s (critical charge)<ref group="note">Due to a server-client desync bug, bows can occasionally reach critical charge 1 tick earlier than their programmed 1 second charge time.</ref><ref>{{bug|MC-302165||Bows/tridents/crossbows are able to be charged earlier than should be possible on a singleplayer world|Unresolved}}</ref>
+| inaccuracy = 1
+| durability = {{jebe|384|385}}
+| enchantability = 1
+| renewable = Yes
+| stackable = No
+}}
+A '''bow''' is a [[Ranged attack|ranged]] [[weapon]] that can fire [[arrow]]s, [[tipped arrow]]s, and [[Spectral Arrow|spectral arrows]]{{Only|java}}. The damage and range of fired arrows depends on the arrow type, [[enchantment]]s on the bow, and how long the {{Control|use|text=use button}} was held before releasing.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|B1= Stick
+|C1= String
+|A2= Stick
+|C2= String
+|B3= Stick
+|C3= String
+|Output=Bow
+|type=Combat
+}}
+
+=== Generated loot ===
+{{LootChestItem|level-enchanted-bow,level-enchanted-bow-2}}
+
+=== Mob loot ===
+==== Skeletons, strays, bogged, parched and illusioners ====
+[[Skeleton]]s, [[stray]]s, [[bogged]], [[parched]] and [[illusioner]]s{{only|je|short=1}} have an 8.5% chance of dropping a normal or enchanted bow on death when killed by a [[player]] or a tamed [[wolf]].
+
+The chance of dropping a bow is increased by 1% per level of [[Looting]], allowing up to an 11.5% chance of dropping. 
+
+The chance of being enchanted depends on the [[difficulty]] level, but the random enchantment level (5–22) does not. 
+
+Bows of [[skeleton horsemen]] are always enchanted at a random level from 5 to 23. The exact level depends on [[regional difficulty]], as on Easy it is always a level-5 enchantment.
+
+=== Trading ===
+{{Trade sources}}
+
+===Fishing===
+{{Main|Fishing}}
+Enchanted bows are obtainable through fishing, with a 0.8% chance per attempt. See [[fishing]] for more details.  When caught, the bow may be damaged and contain random [[enchantment]]s equivalent to a level 30 enchantment from an [[enchanting table]], including treasure enchantments like [[Mending]].
+
+== Usage ==
+=== Attacking ===
+[[File:Steve aiming with Bow.png|150px|right]]
+[[File:Alex aiming with Bow.png|150px|right]]
+Bows can be drawn back by {{control|using}} them. The player must have at least one [[arrow]] in their [[inventory]] or be in [[Creative]] mode in order to use a bow. When drawing a bow, the display zooms in slightly. Charging the bow to critical charge causes it to visually bob up and down, and causes the fired arrow to have a trail of critical hit [[particle]]s. Releasing the button shoots an [[arrow]]. Drawing a bow can be canceled by switching to another hotbar slot while holding use. Arrows shot by bows are blocked by shields.
+
+[[File:Bow shooting.gif|thumb|right|Shooting a bow {{in|java}}.]]
+
+While the bow is being charged or remains fully charged, the player is forced to move at [[sneaking]] speed, unless they are riding a [[horse]], [[minecart]] or [[boat]], or flying with [[elytra]]. When an arrow hits another player, the player that fired the arrow will hear a high-pitched "ding" sound to indicate the successful shot.{{only|je}} Fired arrows are not affected by the [[Strength]] or [[Weakness]] effects.
+
+Shots at critical charge deal <math display="inline">\left ( \frac{3x}{2} \right ) + 2</math> damage, where <math>x</math> is the damage after any enchantments. The listed values below describe maximum damage from a bow with no [[Power]] enchantments, assuming the target is at a distance where drag and gravity are negligible. The average damage of a shot at critical charge is around 9, as damage is dealt at a random value between {{hp|6}} and {{hp|11}}, using the formula <math>x</math> and <math display="inline">\left ( \frac{3x}{2} \right ) + 2</math>, and it is rare to have minimum or maximum values. The damage dealt can ultimately be less than the maximum damage if the arrow slows down after being shot. The game stores the damage of arrows even in values with a decimal point. For example, it is possible for a critical arrow shot to cause damage values such as 6.4. In this case, the game can round up or down and store the amount for subsequent damage sources. Holding the bow at maximum charge for more than 72000 ticks (1 hour) results in the charge being reset without shooting an arrow.
+
+A few mobs cannot be shot using an arrow, because the arrow either disappears or it gets deflected. This includes:
+* [[Endermen]] - even while immobile, the enderman is immune to damage from arrows;
+* [[Breeze]];
+* [[Wither]] under half health, when it gains wither armor;
+* Closed [[shulker]]s;
+* [[Ender dragon]], while sitting on top of the [[exit portal]].
+
+=== Statistics ===
+==== ''Java Edition'' ====
+{{IN|java}}, bows have the following statistics:
+
+{| class="wikitable"
+!colspan=8 |Unenchanted
+|-
+!Type!!Projectile damage!!Charge time!!<abbr title="Damage/Second">DPS</abbr>!!Inaccuracy!!Lifetime damage inflicted!!Durability!!Enchantability
+|-
+|{{ItemSprite|Bow}} (no charge)||{{hp|1}}||0.1s||2||rowspan=4 |1||{{hp|384}}||rowspan=4 |384||rowspan=4 |1
+|-
+|{{ItemSprite|Bow}} (medium charge)||{{hp|5}}||0.2s - 0.8s||5.5||{{hp|1920}}
+|-
+|{{ItemSprite|Bow}} (full charge)||{{hp|6}}||0.9s||6||{{hp|2304}}
+|-
+|{{ItemSprite|Bow}} (critical charge)||{{hp|6}} to {{hp|11}}||1s||5.4 to 9.9||{{hp|2304}} to {{hp|4224}}
+|}
+
+{| class="wikitable"
+!colspan=6 |Enchanted
+|-
+!Type!!Power I!!Power II!!Power III!!Power IV!!Power V
+|-
+|rowspan=2 |{{ItemSprite|Enchanted Bow}} (no charge)||{{hp|2}}||{{hp|2}}||{{hp|2}}||{{hp|3}}||{{hp|3}}
+|-
+|4 <abbr title="Damage/Second">DPS</abbr>||4 <abbr title="Damage/Second">DPS</abbr>||4 <abbr title="Damage/Second">DPS</abbr>||6 <abbr title="Damage/Second">DPS</abbr>||6 <abbr title="Damage/Second">DPS</abbr>
+|-
+|rowspan=2 |{{ItemSprite|Enchanted Bow}} (medium charge)||{{hp|8}}||{{hp|9}}||{{hp|10}}||{{hp|12}}||{{hp|13}}
+|-
+|8.8 <abbr title="Damage/Second">DPS</abbr>||9.9 <abbr title="Damage/Second">DPS</abbr>||11 <abbr title="Damage/Second">DPS</abbr>||13.2 <abbr title="Damage/Second">DPS</abbr>||14.3 <abbr title="Damage/Second">DPS</abbr>
+|-
+|rowspan=2 |{{ItemSprite|Enchanted Bow}} (full charge)||{{hp|9}}||{{hp|11}}||{{hp|12}}||{{hp|14}}||{{hp|15}}
+|-
+|9 <abbr title="Damage/Second">DPS</abbr>||11 <abbr title="Damage/Second">DPS</abbr>||12 <abbr title="Damage/Second">DPS</abbr>||14 <abbr title="Damage/Second">DPS</abbr>||15 <abbr title="Damage/Second">DPS</abbr>
+|-
+|rowspan=2 |{{ItemSprite|Enchanted Bow}} (critical charge)||{{hp|9}} to {{hp|16}}||{{hp|11}} to {{hp|19}}||{{hp|12}} to {{hp|20}}||{{hp|14}} to {{hp|23}}||{{hp|15}} to {{hp|25}}
+|-
+|8.1 to 14.4 <abbr title="Damage/Second">DPS</abbr>||9.9 to 17.1 <abbr title="Damage/Second">DPS</abbr>||10.8 to 18 <abbr title="Damage/Second">DPS</abbr>||12.6 to 20.7 <abbr title="Damage/Second">DPS</abbr>||13.5 to 22.5 <abbr title="Damage/Second">DPS</abbr>
+|}
+
+==== ''Bedrock Edition'' ====
+{{IN|bedrock}}, bows have the following statistics:
+
+{| class="wikitable"
+!colspan=8 |Unenchanted
+|-
+!Type!!Projectile damage!!Charge time!!<abbr title="Damage/Second">DPS</abbr>!!Inaccuracy!!Lifetime damage inflicted!!Durability!!Enchantability
+|-
+|{{ItemSprite|Bow}} (no charge)||{{hp|1}}||0.1s||2||rowspan=4 |1||{{hp|385}}||rowspan=4 |385||rowspan=4 |1
+|-
+|{{ItemSprite|Bow}} (medium charge)||{{hp|5}}||0.2s - 0.8s||5.5||{{hp|1925}}
+|-
+|{{ItemSprite|Bow}} (full charge)||{{hp|6}}||0.9s||6||{{hp|2310}}
+|-
+|{{ItemSprite|Bow}} (critical charge)||{{hp|6}} to {{hp|11}}||1s||5.4 to 9.9||{{hp|2310}} to {{hp|4235}}
+|}
+
+=== Projectile motion ===
+The projectile motion of an arrow fired from a bow is dependent on the angle the user is facing, as well as the user's movement speed.
+{{:Calculators/Projectile motion|type=1|name=Arrow|gravity=-0.05|dragx=0.99|dragy=0.99|speed=3|crit=1|hideproperties=1|hidedynamics=1}}
+
+=== Crafting ingredient ===
+{{crafting usage|Bow, Damaged Bow}}
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|ingredients = 2× Damaged Bow|Damaged Bow|Damaged Bow
+|Output = Bow
+|type = Combat
+|ignoreusage = 1
+|showdescription = 1
+|description = The durability of the two bows is added together, plus an extra 5% durability.
+}}
+{{Grinding
+|ingredients=2× Damaged Bow
+|Damaged Bow
+|Damaged Bow
+|Bow
+|showdescription=1
+|description=The durability of the two bows is added together, plus an extra 5% durability.
+}}
+
+==== Unit repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|head=1
+|Damaged Bow
+|Damaged Bow
+|Bow
+|tail=1
+}}
+
+A bow can be combined with another bow in an [[anvil]], preserving the [[enchantment]]s of both.
+
+=== Enchantments ===
+Bows can receive several different [[enchantment]]s and have a base enchantability of 1. Bow enchantments have no effect on [[arrow]] speed or the distance it travels. {{IN|BE}} if a bow is enchanted with any level 1 enchantment, it always gets Power I.
+
+{| class="wikitable col-3-center"
+|+
+!Name
+!Description
+!Max Level
+![[Enchantment#Obtaining|Method]]
+!Weight
+|-
+|[[Power]]
+|Increases the damage dealt by bow-shot arrows.
+|V
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|10
+|-
+|[[Punch]]
+|Increases the knockback dealt by bow-shot arrows.
+|II
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Flame]]
+|Ignites arrows, dealing fire damage to targets hit as well as igniting TNT and campfires.
+|I
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Infinity]]<ref group=note name=note1>Mending and Infinity are mutually exclusive.</ref>
+|Stops the bow from consuming regular arrows when shot.
+|I
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|1
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]<ref group=note name=note1/>
+|Repairs the bow when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The bow vanishes on death, not dropping as an item.	
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+A bow cannot be enchanted with Multishot in survival mode. However, when using commands to apply Multishot, the enchantment behaves as expected, allowing the bow to fire more arrows at once.{{Notelist}}
+
+=== Fuel ===
+A bow can be used as [[fuel]] in [[furnace]]s, smelting 1.5 items per bow {{in|java}} or 1 item per bow {{in|bedrock}}.
+
+== Arrows ==
+{{main|Arrow}}
+
+As in real life, a flying [[arrow]] in ''Minecraft'' is affected by gravity. Its vertical speed is modified by one block downward every second, resulting in a {{w|Parabola|parabolic}} flight path. An arrow slows down if shot through water, reducing its damage to near zero unless brought back into the air or otherwise given momentum.{{Only|Java}}
+
+Arrows that hit solid [[block]]s become stuck and can be retrieved, unless the arrow was shot by a bow [[enchant]]ed with [[Infinity]], a player in Creative mode, or a mob.
+
+An arrow shot through [[lava]] ignites, giving it the effect of the [[Flame]] enchantment, igniting any entity it hits. If not extinguished, the fire inflicts up to {{hp|4}} damage. Although a [[wither skeleton]] does not spawn naturally with a bow, it shoots flaming arrows if given a bow using commands.
+
+On impact, an arrow can trigger a wooden [[pressure plate]], [[target]] block, [[wooden button]], or [[tripwire]]. Arrows cannot trigger stone pressure plates or stone buttons.
+
+The player can choose the type of arrow to shoot based on its location in the inventory. Arrows in the off-hand, or the selected hotbar slot if the bow is in the off-hand, are prioritized first. If there are no arrows in the off-hand or selected hotbar slot then the arrow closest to [[Inventory#Slots|slot 0]] is selected.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Arrow hit1.ogg
+|sound2=Arrow hit2.ogg
+|sound3=Arrow hit3.ogg
+|sound4=Arrow hit4.ogg
+|subtitle=Arrow hits
+|source=neutral
+|description=When an arrow impacts something
+|id=entity.arrow.hit
+|translationkey=subtitles.entity.arrow.hit
+|volume=1.0
+|pitch={{frac|12|11}}-{{frac|4|3}}
+|distance=16}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|subtitle=Arrow fired
+|source=player
+|description=When a bow shoots an arrow
+|id=entity.arrow.shoot
+|translationkey=subtitles.entity.arrow.shoot
+|volume=1.0
+|pitch={{frac|4|3}}-1.125 <ref group=sound>Depends on how long the bow has been charging. uncharged bows give {{frac|5|6}}-0.625</ref> 
+|distance=16}}
+| {{SoundLine
+|sound=Succesfull Hit.ogg
+|subtitle=Player hit
+|source=player
+|description=When an arrow shot by a player hits another player
+|id=entity.arrow.hit_player
+|translationkey=subtitles.entity.arrow.hit_player
+|volume=0.18
+|pitch=0.45
+|distance=16}}
+| {{SoundLine
+|sound=Random break.ogg
+|subtitle=Item breaks
+|source=player
+|description=When a bow's durability is exhausted
+|id=entity.item.break
+|translationkey=subtitles.entity.item.break
+|volume=0.8
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Arrow hit1.ogg
+|sound2=Arrow hit2.ogg
+|sound3=Arrow hit3.ogg
+|sound4=Arrow hit4.ogg
+|source=player
+|description=When an arrow impacts something
+|id=random.bowhit
+|volume=1.0
+|pitch=1.09-1.3}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|source=player
+|description=When a bow shoots an arrow
+|id=random.bow
+|volume=1.0
+|pitch=0.83-1.25}}
+| {{SoundLine
+|sound=Random break.ogg
+|source=player
+|description=When a bow's durability is exhausted
+|id=random.break
+|volume=1.0
+| pitch = 0.9
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bow
+|spritetype=item
+|nameid=bow
+|form=item
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Bow
+|spritetype=item
+|nameid=bow
+|id=300
+|form=item
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Sniper Duel;Archer;Dispense with this;Bullseye}}
+
+== Advancements ==
+{{load advancements|Take Aim;Sniper Duel;Bullseye}}
+
+== Videos ==
+{{yt|orNlaO12EQg|align=center}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||June 14, 2009|link=https://web.archive.org/web/20090622125511/https://notch.tumblr.com/post/123343045/my-vision-for-survival|[[Notch]] discussed how bows and [[arrow]]s would work in [[Survival]] mode: "Bows and arrows can be made out of wood. To use it, select the bow from your inventory and make sure you’ve got some arrows. Click in front of you, and an arrow goes flying using real physics. To actually HIT something, aim above it."}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24 SURVIVAL TEST|The [[player]] did not need a bow to shoot arrows. Instead, {{Key|Tab}} was used to fire arrows. However, arrows still had to be collected to shoot. Launching arrows this way was much slower than the bow that now fires them.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100110|[[File:Bow JE1.png|32px]] Added bow texture to [[items.png]].}}
+|{{HistoryLine|||dev=20100122-2251|[[File:Bow JE2 BE1.png|32px]] Added bows as item with changed texture. The right mouse button can be held down to fire in rapid succession. Each [[arrow]] deals {{hp|4}} for each hit. They fly in a [[wikipedia:Trajectory of a projectile|ballistic trajectory]] affected by gravity and drag in air or water. They travel approximately 15 [[block]]s when fired parallel to a flat plane. Arrows also have a maximum range of around 52 blocks when fired at a 38 degree angle on a flat plane.
+|Bows often fail to interact with objects, but instead shoot. This is due to the fact that shooting arrows is an instantaneous action.
+|At this point, bows have no durability, and can essentially be used infinitely.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.6|Interacting with objects (door, chest, etc.) while holding a bow no longer shoots the arrow.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Bows are now used to craft [[dispenser]]s.}}
+|{{HistoryLine||1.8|dev=July 8, 2011|slink={{tweet|notch|89414265441763328}}|[[Notch]] teased hold-to-charge bows.}}
+|{{HistoryLine|||dev=July 13, 2011|slink={{tweet|notch|91250232981061632}}|Notch indicated that along with bow charging, he would add an [[achievement]] based around shooting a [[skeleton]] at 50 meters, eventually to be known as ''Sniper Duel''.}}
+|{{HistoryLine|||dev=Pre-release|Bow behavior has been overhauled; they now need to be charged to fire.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=RC1|A fully charged [[arrow]] from a bow now consistently deals {{hp|9}} damage, with a rare chance of dealing {{hp|10}}.
+|Bows now have a [[durability]] of 385 uses.
+|Bows no longer need arrows for ammo in [[Creative]] mode.
+|The bow can now be [[enchanted]] via console commands, but no enchantment affects it.}}
+|{{HistoryLine||1.1|dev=release|Bows can now be legitimately enchanted. Four enchantments have been added: [[Flame]], [[Punch]], [[Power]], and [[Infinity]].}}
+|{{HistoryLine||1.2.1|dev=12w06a|[[Skeleton]]s now have a 2.5% chance of dropping a bow. One fifth of the time, this bow is enchanted with Power I (20%).}}
+|{{HistoryLine||1.4.6|dev=12w50a|Bows can now be enchanted with [[Unbreaking]] using an [[anvil]] and an appropriate [[enchanted book]].}}
+|{{HistoryLine|||dev=pre|When a [[player]] hits another player from far away with a bow it makes a high pitched "dinging" sound.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Bows can now be obtained as a "treasure" [[item]] from [[fishing]].
+|Bows can now be [[enchanted]] with [[Unbreaking]] directly in an [[enchantment table]] without the use of an [[anvil]].}}
+|{{HistoryLine||1.8|dev=14w02a|Fletcher [[villager]]s now [[trading|sell]] 1 bow for 2–3 [[emerald]]s.}}
+|{{HistoryLine|||dev=14w25a|Drawing a bow immediately after hitting no longer continues the swinging animation.<ref>{{bug|MC-201394}}</ref>}}
+|{{HistoryLine|||dev=14w30a|Bow placement when drawing back has been slightly changed.}}
+|{{HistoryLine||1.9|dev=15w31a|When shooting, the arrows are no longer offset to the right of the crosshair.
+|The bow in the hotbar now shows an [[arrow]] when being drawn.
+|Bows can now shoot an additional 14 types of arrows, selected based on the arrow type held in the off-hand or closest to slot 0.
+|Bows cannot be used in the off-hand.}}
+|{{HistoryLine|||dev=15w37a|The bow can now be used in the off-hand.
+|Bows now prioritize the selected hotbar slot for [[arrow]]s if the bow is in the off hand.
+|When using the bow in the off-hand, the bow does do the animation, but does not aim at the target.}}
+|{{HistoryLine|||dev=?|Momentum now affects the physics of arrows fired from bows.}}
+|{{HistoryLine||1.10|dev=16w20a|Bows are now used by [[stray]]s and can now sometimes be obtained as a rare [[drop]].}}
+|{{HistoryLine||1.11|dev=16w33a|Bows can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine||1.11.1|dev=16w50a|[[Infinity]] and [[Mending]] are now mutually exclusive for bows.}}
+|{{HistoryLine||1.12|dev=17w16a|Bows are now used by [[illusioner]]s and can now sometimes be obtained as a rare [[drop]], although unenchanted.}}
+|{{HistoryLine||1.13.1|dev=18w30a|{{bug|MC-88356}}: Fixed a bug: When using the bow in the off-hand, the bow does do the animation, but does not aim at the target.}}
+|{{HistoryLine||1.14|dev=19w11a|Fletcher [[villager]]s now [[trading|sell]] enchanted bows for 7-21 emeralds, and unenchanted bows for 2 emeralds.}}
+|{{HistoryLine||1.16|dev=20w12a|Enchanted bows can now only be caught when fishing in open water like any other treasure item.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Enchanted bows now generate in [[trial chambers]] in reward chests.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w05a|Enchanted bows can now be ejected as loot from [[vault]]s.}}
+|{{HistoryLine||1.20.5|dev=24w09a|[[Multishot]] and [[Piercing]] enchantments now work on bows.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.3.3|[[File:Bow JE2 BE1.png|32px]] Added bows.}}
+|{{HistoryLine||v0.4.0|Bows now have a durability of 385 uses.
+|Bows also now slow down the player while aiming.}}
+|{{HistoryLine||v0.5.0|Bows are now obtainable after activating the [[nether reactor]].}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Bow BE2.png|32px]] The texture of bows has been changed.}}
+|{{HistoryLine|||dev=build 7|Bows can now be used as fuel in a [[furnace]].}}
+|{{HistoryLine||v0.11.0|dev=build 1|Bows can now be obtained as a "treasure" [[item]] from [[fishing]].}}
+|{{HistoryLine||v0.12.1|dev=build 1|Fully charged bows now cause [[particle]]s.
+|Bows can now be [[enchanted]].
+|Bows obtained by [[fishing]] can now be caught enchanted.
+|Bows are no longer available from the [[nether reactor]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added [[stray]]s, which are equipped with a bow that can rarely be dropped by them.
+|Bows can now shoot an additional 14 types of [[arrow]]s, selected based on the arrow type closest to slot 0.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Bows can now be obtained by [[trading]] with a fletcher [[villager]].}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Added the [[Mending]] enchantment, which can now be applied to bows and is mutually exclusive to the [[Infinity]] enchantment.
+|[[Arrow]]s can now be placed in the offhand slot and bows now prioritize the arrows in that slot.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Momentum now affects the physics of arrows fired from bows.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.10|Bows in the hotbar now show an [[arrow]] when being drawn.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3| [[File:Bow JE2 BE1.png|32px]] The texture of bows has been changed to match {{el|je}}'s texture.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Fletcher villagers now sell unenchanted bows for 2 emeralds, and enchanted bows for 8 emeralds.}}
+|{{HistoryLine||1.16.210|dev=beta 1.16.210.58|Bows in first-person view is now held differently.<ref name="incorrect-pos">{{bug|MCPE-116741||Holding and shooting bow position are incorrect|Fixed}}</ref>}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Bows are now held like it was before [[Bedrock Edition beta 1.16.210.58|1.16.210.58 beta]].<ref name="incorrect-pos"/>}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Enchanted bows now generate in [[trial chambers]] in reward chests.}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.21|Enchanted bows can now be ejected as loot from [[vault]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Bow JE2 BE1.png|32px]] Added bows.}}
+|{{HistoryLine||xbox=TU5|Bow behavior is overhauled; they now need to be charged to fire.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Bows can now be [[enchanted]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Bows can now be obtained as a "treasure" [[item]] from [[fishing]].|Bows can now be obtained by [[trading]] with a fletcher [[villager]].|Drawing a bow immediately after hitting no longer continues the swinging animation.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Bows can now shoot an additional 14 types of [[arrow]]s, selected based on arrow type held closest to slot 0.|Bows are now used by [[stray]]s and can now sometimes be obtained as a rare [[drop]].|Bows can also be drawn while holding [[arrow]]s or [[tipped arrow]]s. The bow is selected based on the closest bow to slot 0.|The bow in the hotbar now shows an [[arrow]] when being drawn.|Momentum now affects the physics of arrows fired from bows.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Bows can no longer be drawn while holding an [[arrow]] or [[tipped arrow]].|Bows can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Infinity]] and [[Mending]] are now mutually exclusive for bows.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||3|Arrows no longer trigger the attack [[invulnerability timer]], allowing multiple bow arrows to connect even if the entity is invulnerable.}}
+|{{HistoryLine||4|Bow [[inaccuracy]] has been lessened from 1 to 0.25, increasing the accuracy of fired arrows.}}
+|{{HistoryLine||6|Bows now increase [[inaccuracy]] and lose [[critical charge]] if held drawn for longer than 3 seconds, a mechanic called bow fatigue. This is visually indicated by the bow beginning to shake more violently after 3 seconds.<ref group="note"> The formula for fatigue is <math>\min(10.5,\max(0.5,0.5+\frac{10\times(ticksCharged-60)}{140}))</math></ref>|Vertical momentum no longer influences the flight path of arrows fired from bows.}}
+|{{HistoryLine||7c|Bow fatigue has been removed.}}
+|{{HistoryLine||8b|Bow fatigue has been reintroduced once again.}}
+}}
+
+=== Historical sounds ===
+{| class="wikitable"
+! Sound
+! From
+! to
+! Pitch
+|-
+| {{sound||Bow Shooting Old.ogg}}
+| 0.31
+| Sound Update
+| 1.0
+|}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 261.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*Bows were left unchanged in the [[Texture Update]].<ref>{{bug|MC-168156||Bow texture not changed in Texture Update and looks inconsistent with crossbow|WAI}}</ref>
+*Dinnerbone got the idea for the high-pitched "ding" sound from playing on a former PvP server called Project Ares.<ref>{{tweet|Dinnerbone|280044119345229826|Also things I learnt from pvping today: Bows need to ding when you hit people (it's so much fun/rewarding!) & arrows don't render far enough|December 15, 2012}}</ref><ref>{{ytl|-b5aXYacYsk|Minecraft PvP with Dinnerbone & Docm77 - Team DocBone @ 11:52|docm77|December 7, 2013|t=712s}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Enchanted Bow.gif|An enchanted bow.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Ranged attack.gif|Using the bow.
+1.9bow.gif|Drawback animation.
+Hunting Wabbits.jpg|Using a bow to hunt rabbits.
+</gallery>
+
+=== In other media ===
+<gallery>
+Bow SDGP.png|Bow in the [[Super Duper Graphics Pack]].
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/taking-inventory--bow Taking Inventory: Bow] – Minecraft.net on April 13, 2023
+
+== Navigation ==
+{{Navbox weapons}}
+{{Navbox items|tools}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+
+[[de:Bogen]]
+[[es:Arco]]
+[[fr:Arc]]
+[[it:Arco]]
+[[ja:弓]]
+[[ko:활]]
+[[lzh:弓]]
+[[nl:Boog]]
+[[pl:Łuk]]
+[[pt:Arco]]
+[[ru:Лук]]
+[[uk:Лук]]
+[[zh:弓]]

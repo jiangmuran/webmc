@@ -1,0 +1,335 @@
+{{About||the block for manual crafting|Crafting Table|other blocks that can be used to combine items|Workstation}}
+{{Infobox block
+| group1 = Normal
+| 1-1 = Crafter.png
+| group2 = Powered
+| 2-1 = Crafter Triggered.png
+| group3 = Crafting
+| 3-1 = Crafter Crafting.png
+| renewable = Yes
+| stackable = Yes (64)
+| tool = pickaxe
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+A [[crafter]] is a low-capacity storage [[block]] that can use its contents to [[craft]] items when given a [[redstone]] signal, ejecting the results [[Item (entity)|into the world]] or into a container it is facing. Its inventory slots can be individually locked so [[hopper]]s and similar blocks cannot fill them, while not affecting [[crafting recipes]].
+
+== Obtaining ==
+=== Breaking ===
+Crafters can be mined with anything, but [[pickaxe]]s are the quickest.
+{{breaking row|horizontal=1|Crafter|Pickaxe}}
+
+=== Crafting ===
+{{Crafting
+|A1=Iron Ingot
+|A2=Iron Ingot
+|A3=Redstone Dust
+|B1=Iron Ingot
+|B2=Crafting Table
+|B3=Dropper
+|C1=Iron Ingot
+|C2=Iron Ingot
+|C3=Redstone Dust
+|Output=Crafter
+|type=Redstone
+}}
+
+== Usage ==
+{{IN|je}}, crafters cannot be moved by [[piston]]s.
+[[File:Crafter GUI.png|thumb|right|The crafter's GUI {{in|je}}.]]
+[[File:Crafter cake contraption.png|thumb|right|A simple contraption for crafting [[cake]] using the crafter]]
+
+=== Container ===
+A crafter has nine slots of inventory space, arranged in a 3-by-3 grid like a [[crafting table]]. Its GUI can be accessed by {{control|using}} it.
+
+A slot can be enabled or disabled, which can be toggled by clicking on it when empty. Disabled slots cannot have items put in them.
+
+[[Hopper]]s, [[dropper]]s and other crafters interact with crafters by inserting items into its inventory. Hoppers can remove ingredients as well. When an item is added:
+* The crafter will look for an empty slot to insert that item into. It searches in standard reading order.
+* It searches the slots row by row, from left to right.
+* Only enabled slots are checked.
+* If the crafter has all enabled item slots filled, then the item is added to the lowest count item stack of the same type. If there is a tie, it uses the same reading order described before.<ref>{{mcnet|minecraft-snapshot-23w42a|Minecraft Snapshot 23w42a|October 18, 2023}}</ref>
+
+Hoppers and droppers can interact with all sides of the crafter, and added items follow the rules described above.
+
+=== Redstone component ===
+{{See also|Tutorial:Crafter}}
+
+When a crafter receives a redstone signal, it waits for {{convert|4|game tick|second}} before ejecting one crafted item using the ingredients from the nine inventory slots. The crafted items are subsequently ejected from the front of the crafter. If the front of a crafter is facing a container (including another crafter), the crafted items are transferred into the container. If the container it is facing is full, or the item cannot be inserted into the container, the crafter ejects the item instead. Crafters interact with containers [[Dropper#Container interactions|similar to droppers]]. If a recipe has byproducts (e.g. empty bottles for honey blocks or empty buckets for cake) those are ejected after the crafted item.
+
+For shaped recipes, the position of the items in the inventory matters. Because disabled slots prevent items from entering the slot, crafters can be used to craft any item in the game automatically without any input from the player, using a series of hoppers and/or droppers and the correct configuration of disabled slots for the recipe.
+
+A hopper placed below a crafter collects the ingredients from the crafting grid, not the resulting item.
+
+{{IN|java}}, unlike [[dispenser]]s and [[dropper]]s, crafters aren't affected by [[quasi-connectivity]].<ref>{{bug|MC-265943||Crafter cannot be powered above through an air block like dispensers/droppers/pistons|WAI}}</ref>
+
+[[Comparator]]s can emit a redstone signal when reading from a crafter. The signal strength is equal to the number of crafting slots that are either disabled or occupied by an item. <ref>{{ytl|8jwAtfyxhlk|Minecraft Live 2023: Discovering the trial chambers! @ 9:31|Minecraft|October 15, 2023|t=571}}</ref> The stack size of the item has no effect on the comparators output signal e.g. having 1 stick in a slot vs having 64 sticks in that same slot both output the same comparator signal. An empty crafter with no disabled slots does not output any signal through a comparator. A crafter with every slot being disabled or containing an item (of any stack size) outputs a signal strength of nine through a comparator.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{info needed section|sound when clicking on slots for enabling and disabling}}
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Crafter craft.ogg
+|subtitle=Crafter crafts
+|source=block
+|description=When a crafter crafts something
+|id=block.crafter.craft
+|translationkey=subtitles.block.crafter.craft
+|volume=1.0
+|pitch=1.0/0.96/1.04
+|distance=5}}
+| {{SoundLine
+|sound=Crafter fail.ogg
+|subtitle=Crafter fails crafting
+|source=block
+|description=When a crafter fails to craft
+|id=block.crafter.fail
+|translationkey=subtitles.block.crafter.fail
+|volume=1.0
+|pitch=1.0/0.96/1.04
+|distance=3}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=lock>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=block
+|description=When a player attempts to open a crafter locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=lock/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=lock/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Crafter craft.ogg
+|source=block
+|description=When a crafter crafts something
+|id=crafter.craft
+|volume=1.0
+|pitch=0.96-1.04}}
+| {{SoundLine
+|sound=Crafter fail.ogg
+|source=block
+|description=When a crafter fails to craft
+|id=crafter.fail
+|volume=1.0
+|pitch=0.96-1.04}}
+| {{SoundLine
+|rowspan=2
+|sound=Click.ogg
+|source=sound
+|description=When a slot is enabled in a crafter
+|id=random.click
+|volume=0.4
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a slot is disabled in a crafter
+|id=crafter.disable_slot
+|volume=0.4
+| pitch = 0.75
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Crafter
+|spritetype=block
+|nameid=crafter
+|blocktags=mineable/pickaxe, needs_stone_tool
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=crafter
+|spritetype=block
+|nameid=crafter
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Crafter
+|spritetype=block
+|nameid=crafter
+|id=-313
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=crafter
+|spritetype=block
+|nameid=Crafter
+|foot=1}}
+
+=== Block states ===
+{{See also|Block states}}
+
+{{edition|java}}:
+{{bst|crafting|false|false, true|Whether the crafter's mouth is open and top is glowing.}}
+{{bst|orientation|north_up|down_east, down_north, down_south, down_west, east_up, north_up, south_up, up_east, up_north, up_south, up_west, west_up|The direction the crafter's ''face'' is facing and which way it is rotated.}}
+{{bst|triggered|false|false, true|Whether the crafter is activated.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|crafting|false|false, true|Whether the crafter's mouth is open and top is glowing.|Unsupported}}
+{{bst|orientation|down_east|down_east, down_north, down_south, down_west, east_up, north_up, south_up, up_east, up_north, up_south, up_west, west_up|The direction the crafter's ''face'' is facing and which way it is rotated.|Unsupported}}
+{{bst|triggered_bit|false|false, true|Whether the crafter is activated.|Unsupported|foot=1}}
+
+=== Block data ===
+A crafter has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable}}
+** {{nbt inherit/lockable}}
+** {{nbt inherit/lootable}}
+** {{nbt|list|Items}}: List of items in this container. Represents the {{DCL|minecraft:container}} component. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt|compound}}: An item in the crafter, including the slot tag. Crafter slots are numbered 0-8. 0 starts in the top left corner.
+**** {{nbt inherit/item|indent=****}}
+** {{nbt|int-array|disabled_slots}}: Indexes of slots that are disabled.
+** {{nbt|bool|triggered}}: Set to 1 when it is powered. It is otherwise 0.
+** {{nbt|int|crafting_ticks_remaining}}: Set to 6 when the crafter crafts something.{{more info|What does it do?}}
+</div><section end="block data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Crafters Crafting Crafters}}
+
+== Advancements ==
+{{load advancements|Crafters Crafting Crafters}}
+
+== Videos ==
+{{yt|QSxnhnHWOiM}}
+{{yt|22j-oBdqgYc}}
+{{yt|0yXEhvqwoH4}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|[[File:Crafter JE1.png|32px]] [[File:Crafter Triggered JE1.png|32px]] [[File:Crafter Crafting JE1.png|32px]] Crafters were announced at [[Minecraft Live 2023]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w42a|[[File:Crafter JE1.png|32px]] [[File:Crafter Triggered JE1.png|32px]] [[File:Crafter Crafting JE1.png|32px]] Added crafters behind the "[[Java Edition 1.21|Update 1.21]]" experimental [[data pack]].
+|Crafters currently activate after one [[game tick]].}}
+|{{HistoryLine|||dev=23w43a|[[File:Crafter JE2.png|32px]] [[File:Crafter Triggered JE2.png|32px]] [[File:Crafter Crafting JE2.png|32px]] The textures of the crafter have been changed.
+|Slots can no longer be toggled by hotkeys; instead, hotkeys place items into the crafter normally.}}
+|{{HistoryLine|||dev=23w46a|[[File:Crafter JE3.png|32px]] [[File:Crafter Triggered JE3.png|32px]] [[File:Crafter Crafting JE3.png|32px]] The textures of the crafter have been changed again.
+|Crafters now activate after 2 [[redstone tick]]s (4 game ticks), like [[dispenser]]s.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w03a|[[File:Crafter JE4 BE3.png|32px]] [[File:Crafter Triggered JE4 BE3.png|32px]] [[File:Crafter Crafting JE4 BE3.png|32px]] The top face of the crafter is no longer mirrored.<ref>{{Bug|MC-267149||Crafter top face has an inverted UV texture map|Fixed}}</ref>}}
+|{{HistoryLine||1.21|dev=24w18a|Crafters are now available without using the "Update 1.21" experimental data pack.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.21|[[File:Crafter BE1.png|32px]] [[File:Crafter Triggered BE1.png|32px]] [[File:Crafter Crafting BE1.png|32px]] Added crafters behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.50.23|[[File:Crafter BE2.png|32px]] [[File:Crafter Triggered BE2.png|32px]] [[File:Crafter Crafting BE2.png|32px]] The textures of the crafter have been changed.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|[[File:Crafter JE4 BE3.png|32px]] [[File:Crafter Triggered JE4 BE3.png|32px]] [[File:Crafter Crafting JE4 BE3.png|32px]] The textures of the crafter have been changed again.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Crafters are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.20.21|Crafter craft and fail sounds now have a random pitch offset.
+|Crafter fail sound now has a max distance of 3 blocks instead of 5.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Crafters are now mined quickly when using any pickaxe.}}
+|{{HistoryLine|||dev=Preview 1.21.50.24|Crafters are mined faster when using an improper tool.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+Crafter teaser 01.jpg|A crafter activating and ejecting a [[cherry hanging sign]].
+Crafter Crafting Crafter.jpg|Two crafters in a [[Trial Chambers|Trial Chamber]] hallway, with one of the crafters being freshly mined and floating as an [[item]].
+Sunny using the Crafter in the Jungle.jpeg|[[Sunny]] using a crafter in a [[jungle]].
+Farmer stands by a Crafter.jpeg|A [[villager]] [[farmer]] stands by a crafter.
+Crafter Automation.jpeg|Crafter automation.
+Crafters at work.png|"A Redstone contraption in a Village made of Glass and Crafters that turn Gold Nuggets into Gold Ingots, which are then turned into Gold Blocks. These Gold blocks are then broken down again, feeding into another crafter, that perpetually continues the cycle."<ref>{{mcnet|minecraft-java-edition-1-20-3|Minecraft Java Edition 1.20.3|December 5, 2023}}</ref>
+Makena and Noor's crafter.jpg|"An automated rail Crafter is producing rails. [[Makena]] is collecting the rails and [[Noor]] is building a railway."<ref>{{mcnet|minecraft-java-edition-1-21|Minecraft Java Edition 1.21|June 13, 2024}}</ref>
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Crafter GUI Triggered Slots Disabled.png|The crafter's GUI {{in|je}} when it is triggered and with all of its slots disabled.
+</gallery>
+
+=== Development images ===
+<gallery>
+Crafter UI Developement.png|Crafter UI being developed.
+Crafter UI Developement2.png|Different angle.
+Crafter UI Developement3.png|Crafter UI tested with different items.
+MCLive Crafter.png|A crafter as seen in its reveal.
+Slot Disabling.png|Slots may be disabled by clicking on them, which is useful for automating shaped recipes.
+Crafters Kissing.png|A screenshot of two crafters facing each other posted by a developer, using their old textures.
+</gallery>
+
+=== In other media ===
+<gallery>
+Efe Crafter Cakes Artwork.jpg|Efe crafting cakes with a crafter.
+Getting ready for the chambers.png|[[Alex]] using various crafters.
+AYIB Useful.jpeg|An [[armadillo]] passing by several crafters, in [[A year in blocks|''A year in blocks'']].
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Crafter Concept art.png|Crafter concept art.
+Crafter Concept Art.png|Crafter concept art.
+Crafter concept art.png|Early crafter texture.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|crafting-crafter|Crafting with the crafter|June 6, 2024|Duncan Geere}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|utility}}
+
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+[[Category:Blocks with GUI]]
+[[Category:Mechanisms]]
+[[Category:Readable by comparators]]
+
+[[de:Werker]]
+[[es:Fabricador]]
+[[fr:Fabricateur]]
+[[ja:自動作業台]]
+[[ko:제작기]]
+[[lzh:製械]]
+[[pl:Wytwarzacz]]
+[[pt:Bancada Automática]]
+[[ru:Сборщик]]
+[[uk:Майструвач]]
+[[zh:合成器]]

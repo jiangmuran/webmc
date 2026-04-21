@@ -1,0 +1,681 @@
+The damage [[mob]]s deal to players is affected by the [[difficulty]] setting of the [[world]] they are in. The values below represent the amount of damage taken per hit.
+* For most attacks, the damage is scaled as follows: if a mob deals ''D'' damage on Normal difficulty, then it deals 1.5''D'' on Hard difficulty and min(''D'', 0.5''D''+1) on Easy difficulty.
+* A mob attacking ''another mob'' always deals its Normal difficulty damage regardless of the current difficulty setting.
+* The values for a [[creeper]], [[ghast]], and [[wither]] assume the player is directly adjacent to the respective [[explosion]].
+* The damage of [[slime]]s and [[Magma Cube|magma cubes]] depends on their size. Tiny slimes, while hostile, are unable to inflict damage directly.
+* Mobs deal no damage to players on Peaceful difficulty.
+* The [[warden]] gives [[Darkness]] to nearby players, and [[elder guardian]]s give [[Mining Fatigue]], but these are not attacks. Players simply receive these effects when in range of the mobs.
+
+{| class="wikitable sortable" style="text-align: center;" data-description="Mob damage by difficulty"
+! rowspan="2" | Mob
+! colspan="3" | Difficulty
+! rowspan="2" | [[Status effect]]s and special effects
+|-
+! data-sort-type="number" | Easy
+! data-sort-type="number" | Normal
+! data-sort-type="number" | Hard
+|-
+! style="text-align:left" | {{EntityLink|Agent}}{{only|be|short=1}}
+| colspan="3" |{{hp|5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Axolotl}}
+| colspan="3" |{{hp|2}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|id=angry-bee|Bee}}
+|{{hp|2}} 
+|{{hp|2|poisoned=1}}
+|{{hp|3|poisoned=1}}
+|{{Tc|yes|}}{{EffectLink|Poison}} for 10 seconds on Normal difficulty and for 18 seconds on Hard difficulty
+|- 
+! style="text-align:left" | {{EntityLink|Blaze}} (melee)
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|blaze|link=Blaze#Blaze_fireball}} {{EntityLink|id=fireball|Blaze#Blaze_fireball|Blaze fireball}}
+| colspan="3" | {{hp|5}}
+|{{Tc|yes|{{BlockLink|Fire}} for 5 seconds}}
+|-
+! style="text-align:left" | {{EntitySprite|bogged|link=Bogged}} {{EntityLink|id=arrow-poison|Bogged|Bogged arrow}}{{only|java|short=1}}
+| colspan="1" | {{hp|2|poisoned=1}} to {{hp|4|poisoned=1}}
+|{{hp|3|poisoned=1}} to {{hp|5|poisoned=1}}
+|{{hp|4|poisoned=1}} to {{hp|8|poisoned=1}}
+|{{Tc|yes|Normally:}} {{EffectLink|Poison}} for 4 seconds
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|-
+! style="text-align:left" | {{EntitySprite|bogged|link=Bogged}} {{EntityLink|id=arrow-poison|Bogged|Bogged arrow}}{{only|bedrock|short=1}}
+| colspan="2" | {{hp|1|poisoned=1}} to {{hp|4|poisoned=1}}
+|{{hp|1|poisoned=1}} to {{hp|5|poisoned=1}}
+|{{Tc|yes|}} {{EffectLink|Poison}} for 4 seconds
+|-
+! style="text-align:left" | {{EntityLink|Bogged}} (melee)
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|breeze|link=Breeze}} {{EntityLink|id=wind-charge|Breeze|Breeze wind charge}}
+| colspan="2" | {{hp|1}}
+|{{hp|1.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Cat}}
+| colspan="3" | {{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Cave Spider}}
+|{{hp|2}}
+|{{hp|2|poisoned=1}}
+|{{hp|3|poisoned=1}}
+|{{Tc|yes|}}{{EffectLink|Poison}} for 7 seconds on Normal difficulty and for 15 seconds on Hard difficulty
+|-
+! style="text-align:left" | {{EntityLink|Creaking}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Creeper|Creeper explosion}} (normal) {{only|java|short=1}}
+|{{hp|22.5}}
+|{{hp|43}}
+|{{hp|64.5}}
+|{{Tc|partial|When|rowspan=2}} exploding: No
+If having a potion effect when exploding, it leaves an [[area effect cloud|effect cloud]] with the effect, like a [[lingering potion]].
+|-
+! style="text-align:left" | {{EntityLink|Charged Creeper|Creeper explosion}} (charged) {{only|java|short=1}}
+|{{hp|43.5}}
+|{{hp|85}}
+|{{hp|127.5}}
+|-
+! style="text-align:left" | {{EntityLink|Creeper|Creeper explosion}} (normal) {{only|bedrock|short=1}}
+|{{hp|14.75}}
+|{{hp|27.5}}
+|{{hp|41.25}}
+|{{Tc|no|rowspan=2}}
+|-
+! style="text-align:left" | {{EntityLink|Charged Creeper|Creeper explosion}} (charged) {{only|bedrock|short=1}}
+|{{hp|35.25}}
+|{{hp|68.5}}
+|{{hp|102.75}}
+|-
+! style="text-align:left" | {{EntityLink|Dolphin}}
+| rowspan="2" | {{hp|2.5}}
+| rowspan="2" | {{hp|3}}
+| rowspan="2" | {{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Drowned}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Drowned|link=Drowned}} {{EntityLink|id=trident|Drowned|Drowned trident}} (ranged){{only|java|short=1}}
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Drowned|link=Drowned}} {{EntityLink|id=trident|Drowned|Drowned trident}} (ranged){{only|bedrock|short=1}}
+| colspan="3" |{{hp|8}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Drowned|link=Drowned}} {{EntityLink|id=trident|Drowned|Drowned trident}} (melee){{only|bedrock|short=1}}
+|{{hp|6.5}}
+|{{hp|11}}
+|{{hp|16.5}}
+|{{Tc|no}}
+|- 
+! style="text-align:left" | {{EntityLink|Elder Guardian}} (laser)
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|yes||rowspan=3}}{{EffectLink|Mining Fatigue}} III for 5 minutes on nearby players
+|-
+! style="text-align:left" | {{EntityLink|Elder Guardian}} (spikes)
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|-
+! style="text-align:left" | {{EntityLink|Elder Guardian Ghost}} (spikes)
+| colspan="3" | {{hp|2}}
+|-
+! style="text-align:left" | {{EntityLink|Ender Dragon}} (melee)
+|{{hp|6}}
+|{{hp|10}}
+|{{hp|15}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Ender Dragon}} (wings)
+|{{hp|3.5}}
+|{{hp|5}}
+|{{hp|7.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Ender Dragon}} (breath)
+| colspan="3" | {{hp|3}} per second
+|{{Tc|yes||rowspan=2}} [[Area effect cloud]] of {{EffectLink|Instant Damage}}
+|-
+! style="text-align:left" | {{EntityLink|Ender Dragon}} {{EntityLink|Dragon Fireball}}
+| colspan="3" | {{hp|6}} per second
+|-
+! style="text-align:left" | {{EntityLink|Enderman}}
+|{{hp|4.5}}
+|{{hp|7}}
+|{{hp|10.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Endermite}}
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Evoker|link=Evoker#Evoker_Fangs}} {{EntityLink|id=evoker-fangs|Evoker#Evoker_Fangs|Evoker fangs}}{{only|java|short=1}}
+| {{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Evoker|link=Evoker#Evoker_Fangs}} {{EntityLink|id=evoker-fangs|Evoker#Evoker_Fangs|Evoker fangs}}{{only|bedrock|short=1}}
+| colspan="3" |{{hp|6}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Fox}}
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Frog}}
+| colspan="3" |Target despawns after being pulled
+| {{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Ghast|link=Ghast#Ghast_fireball}} {{EntityLink|id=fireball|Ghast#Ghast_fireball|Ghast fireball}} (impact)
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Ghast|link=Ghast#Ghast_fireball}} {{EntityLink|id=fireball|Ghast#Ghast_fireball|Ghast fireball}} (explosion)
+|{{hp|9.5}}
+|{{hp|17}}
+|{{hp|25.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Giant}}{{only|java|short=1}}
+|{{hp|26}}
+|{{hp|50}}
+|{{hp|75}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Goat}}
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Goat}} (baby)
+| colspan="2" | {{hp|1}}
+|{{hp|1.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Guardian}} (laser)
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Guardian}} (spikes)
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Hoglin}}{{only|java|short=1}}
+|{{hp|2.5}} to {{hp|5}}
+|{{hp|3}} to {{hp|8}}
+|{{hp|4.5}} to {{hp|12}} 
+|{{tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Hoglin}}{{only|bedrock|short=1}}
+|{{hp|3}}
+|{{hp|6}}
+|{{hp|9}}
+|{{tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Hoglin}} (baby)
+| colspan="2" | {{hp|0.5}}
+|{{hp|0.75}}
+|{{tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Husk}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|yes|}}{{EffectLink|Hunger}} when attacking any mob for 7 × floor of {{Tooltip|RD|Regional difficulty}} seconds
+|-
+! style="text-align:left" | {{EntitySprite|Illusioner|link=Illusioner}} {{EntityLink|id=arrow|Illusioner|Illusioner arrow}}{{only|java|short=0}}
+| colspan="2" | {{hp|2}} to {{hp|5}}
+|{{hp|3}} to {{hp|5}}
+|{{Tc|yes|Casts}} {{EffectLink|Blindness}} spells on the player, if [[regional difficulty]] is 2 or greater
+|-
+! style="text-align:left" | {{EntityLink|Iron Golem}}
+|{{hp|4.75}} to {{hp|11.75}}
+|{{hp|7.5}} to {{hp|21.5}}
+|{{hp|11.25}} to {{hp|32.25}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|The Killer Bunny}}{{only|java|short=1}}
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Llama|link=Llama#Spit}} {{EntityLink|Llama spit|link=Llama}}
+| colspan="2" | {{hp|1}}
+|{{hp|1.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Magma Cube}} (big)
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Magma Cube}} (medium)
+|{{hp|3}}
+|{{hp|4}}
+|{{hp|6}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Magma Cube}} (small)
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Nautilus}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Ocelot}}
+| colspan="3" | {{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Old Zombie Villager}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}} 
+|-
+! style="text-align:left" | {{EntityLink|Panda}}
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Parched|link=Parched}} [[File:Arrow of Weakness.png|16px]] [[Parched|Parched arrow]]{{only|java|short=1}}
+| colspan="3" |{{hp|2}} to {{hp|4}}
+|{{Tc|yes|Normally:}} {{EffectLink|Weakness}} for 30 seconds when their tipped arrow hits any mob (including another parched)
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|- 
+! style="text-align:left" | {{EntitySprite|Parched|link=Parched}} [[File:Arrow of Weakness.png|16px]] [[Parched|Parched arrow]]{{only|bedrock|short=1}}
+| colspan="2" | {{hp|1}} to {{hp|4}}, varies with proximity
+|{{hp|1}} to {{hp|5}}, varies with proximity
+|{{Tc|yes|}} {{EffectLink|Weakness}} for 30 seconds when their tipped arrow hits any mob (including another parched)
+|- 
+! style="text-align:left" | {{EntityLink|Parched}} (melee)
+| {{hp|2}}
+| {{hp|2}}
+| {{hp|3}}
+| {{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Phantom}}{{only|java|short=1}}
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Phantom}}{{only|bedrock|short=1}}
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Piglin|link=Piglin}} {{EntityLink|id=arrow|Piglin|Piglin arrow}}{{only|java|short=1}}
+| colspan="2" | {{hp|2}} to {{hp|5}}
+|{{hp|3}} to {{hp|5}}
+|{{tc|no}} 
+|-
+! style="text-align:left" | {{EntitySprite|Piglin|link=Piglin}} {{EntityLink|id=arrow|Piglin|Piglin arrow}}{{only|bedrock|short=1}}
+| colspan="2" | {{hp|2}} to {{hp|4}}
+|{{hp|2}} to {{hp|5}}
+|{{tc|no}} 
+|-
+! style="text-alig:left" | {{EntityLink|Piglin}} (melee with sword){{only|java|short=1}}
+| colspan="1" | {{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Piglin}} (melee with sword){{only|bedrock|short=1}}
+| colspan="1" | {{hp|5.5}}
+|{{hp|9}}
+|{{hp|13.5}}
+|{{tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Piglin}} (melee without sword){{only|java|short=1}}
+|{{hp|3.5}}
+|{{hp|5}}
+|{{hp|7.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Piglin Brute}}{{only|java|short=1}}
+|{{hp|7.5}}
+|{{hp|13}}
+|{{hp|19.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Piglin Brute}}{{only|bedrock|short=1}}
+|{{hp|6}}
+|{{hp|10}}
+|{{hp|15}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Piglin Brute}} (unarmed)
+|{{hp|4.5}}
+|{{hp|7}}
+|{{hp|10.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Pillager|link=Pillager}} {{EntityLink|id=arrow|Pillager|Pillager arrow}} {{only|bedrock|short=1}}
+|{{hp|2}} to {{hp|3}}
+|{{hp|3}} to {{hp|5}}
+|{{hp|5}} to {{hp|7}}
+|{{Tc|no}}
+|-
+! style="text-align:left" |
+{{EntitySprite|Pillager|link=Pillager}}
+{{EntityLink|id=arrow|Pillager|Pillager Arrow}} {{only|java|short=1}}
+|{{hp|2}} to {{hp|3}}
+|{{hp|3}} to {{hp|5}}
+|{{hp|5}} to {{hp|7}}
+|{{Tc|No|Normally: No}}
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|-
+! style="text-align:left" | {{EntityLink|Pillager}} (melee){{only|bedrock|short=1}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|- 
+! style="text-align:left" | {{EntityLink|Polar Bear}}
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|- 
+! style="text-align:left" | {{EntityLink|Pufferfish}} (semi-puffed)
+| colspan="2" | {{hp|2|poisoned=1}}
+|{{hp|3|poisoned=1}}
+|{{Tc|yes|}}{{EffectLink|Poison}} for 3 seconds
+|- 
+! style="text-align:left" | {{EntityLink|Pufferfish}} (fully puffed){{only|java|short=1}}
+|{{hp|2.5|poisoned=1}}
+|{{hp|3|poisoned=1}}
+|{{hp|4.5|poisoned=1}}
+|{{Tc|yes|}}{{EffectLink|Poison}} for 6 seconds
+|- 
+! style="text-align:left" | {{EntityLink|Pufferfish}} (fully puffed){{only|bedrock|short=1}}
+| colspan="2" | {{hp|2|poisoned=1}}
+|{{hp|3|poisoned=1}}
+|{{Tc|yes|}}{{EffectLink|Poison}} for 10 seconds
+|-
+! style="text-align:left" | {{EntityLink|Ravager}} (melee)
+| {{hp|7}}||{{hp|12}}||{{hp|18}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Ravager}} (roar)
+|{{hp|4}}
+|{{hp|6}}
+|{{hp|9}}
+|{{Tc|no}}
+|- 
+! style="text-align:left" | {{EntitySprite|Shulker|link=Shulker#Shulker_bullet}} {{EntityLink|Shulker bullet|link=Shulker#Shulker_bullet}}
+|{{hp|3}}
+|{{hp|4}}
+|{{hp|6}}
+|{{Tc|yes|}}{{EffectLink|Levitation}} for 10 seconds
+|-
+! style="text-align:left" | {{EntityLink|Silverfish}}
+| colspan="2" | {{hp|1}}
+|{{hp|1.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Skeleton|link=Skeleton}} {{EntityLink|id=arrow|Skeleton|Skeleton arrow}}{{only|java|short=1}}
+|{{hp|2}} to {{hp|4}}
+|{{hp|3}} to {{hp|5}}
+|{{hp|4}} to {{hp|8}}
+|{{Tc|No|Normally: No}}
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|-
+! style="text-align:left" | {{EntitySprite|Skeleton|link=Skeleton}} {{EntityLink|id=arrow|Skeleton|Skeleton arrow}}{{only|bedrock|short=1}}
+| colspan="2" | {{hp|1}} to {{hp|4}}, varies with proximity
+|{{hp|1}} to {{hp|5}}, varies with proximity
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Skeleton}} (melee)
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Slime}} (big)
+| {{hp|3}}
+|{{hp|4}}
+|{{hp|6}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Slime}} (medium)
+| colspan="2" | {{hp|2}}
+|{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Slime}} (small)
+| colspan="3" | {{hp|0}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|snow golem|link=Snow Golem}} {{EntityLink|id=Snowball|Snow Golem|Snow Golem snowball}}
+| colspan="3" |{{hp|3}} to [[blaze]]s
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Spider}}
+| colspan="2" | {{hp|2}}||{{hp|3}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|Stray|link=Stray}} {{EntityLink|id=arrow-slowness|Stray|Stray arrow}}{{only|java|short=1}}
+| colspan="3" |{{hp|3}} to {{hp|5}}
+|{{Tc|yes|Normally:}} {{EffectLink|Slowness}} for 30 seconds when their tipped arrow hits any mob (including another stray)
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|- 
+! style="text-align:left" | {{EntitySprite|Stray|link=Stray}} {{EntityLink|id=arrow-slowness|Stray|Stray arrow}}{{only|bedrock|short=1}}
+| colspan="2" | {{hp|1}} to {{hp|4}}, varies with proximity
+|{{hp|1}} to {{hp|5}}, varies with proximity
+|{{Tc|yes|}} {{EffectLink|Slowness}} for 30 seconds when their tipped arrow hits any mob (including another stray)
+|- 
+! style="text-align:left" | {{EntityLink|Stray}} (melee){{only|java|short=1}}
+| rowspan="2" | {{hp|2}}
+| rowspan="2" | {{hp|2}}
+| rowspan="2" | {{hp|3}}
+|{{Tc|no}}
+|- 
+! style="text-align:left" | {{EntityLink|Stray}} (melee){{only|bedrock|short=1}}
+|{{Tc|yes|}}{{EffectLink|Slowness}} for 9 seconds
+|-
+! style="text-align:left" | {{EntitySprite|Trader Llama|link=Llama}} {{EntityLink|Llama spit|Trader Llama spit|link=Llama}}
+| colspan="2" | {{hp|1}}
+|{{hp|1.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vex}}
+|{{hp|5.5}}
+|{{hp|9}}
+|{{hp|13.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vex}} (unarmed) {{Only|java|short=1}}
+|{{hp|3}}
+|{{hp|4}}
+|{{hp|6}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vex}} (unarmed) {{Only|bedrock|short=1}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|villager|link=Villager}} {{EntityLink|id=Firework Rocket|Villager|Villager's firework rocket}}
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vindicator}}
+|{{hp|7.5}}
+|{{hp|13}}
+|{{hp|19.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vindicator}} (unarmed){{Only|java|short=1}}
+|{{hp|3.5}}
+|{{hp|5}}
+|{{hp|7.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Vindicator}} (unarmed){{Only|bedrock|short=1}}
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Warden}} (melee)
+|{{hp|16}}
+|{{hp|30}}
+|{{hp|45}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Warden}} (ranged)
+|{{hp|6}}
+|{{hp|10}}
+|{{hp|15}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Witch}}
+| colspan="3" |Deals damage by throwing [[potion]]s
+|{{Tc|yes|Throws}} [[splash potion]]s of {{EffectLink|Poison}}, {{EffectLink|Instant Damage}}, {{EffectLink|Slowness}}, and {{EffectLink|Weakness}}
+|-
+! style="text-align:left" | {{EntityLink|Wither Skeleton}}{{Only|java|short=1}}
+|{{hp|5|withered=1}}
+|{{hp|8|withered=1}}
+|{{hp|12|withered=1}}
+|{{Tc|yes|}} {{EffectLink|Wither|link=Wither (effect)}} for 10 seconds
+|-
+! style="text-align:left" | {{EntityLink|Wither Skeleton}}{{Only|bedrock|short=1}}
+|{{hp|5.5|withered=1}}
+|{{hp|9|withered=1}}
+|{{hp|13.5|withered=1}}
+|{{Tc|yes|}} {{EffectLink|Wither|link=Wither (effect)}} for 10 seconds
+|-
+! style="text-align:left" | {{EntityLink|Wither Skeleton}} (unarmed)
+|{{hp|3|withered=1}}
+|{{hp|4|withered=1}}
+|{{hp|6|withered=1}}
+|{{Tc|yes|}}{{EffectLink|Wither|link=Wither (effect)}} for 10 seconds
+|-
+! style="text-align:left" | {{EntitySprite|Wither Skeleton}} {{EntityLink|id=arrow|Wither Skeleton|Wither Skeleton arrow}}{{only|java|short=1}}
+|{{hp|2}} to {{hp|4}} + [[fire]] for 5 seconds
+|{{hp|3}} to {{hp|5}} + [[fire]] for 5 seconds
+|{{hp|4}} to {{hp|8}} + [[fire]] for 5 seconds
+|{{Tc|No|Normally:}} No
+If holding a [[tipped arrow]] or a [[spectral arrow]] in its off-hand: The effect of the arrow
+|-
+! style="text-align:left" | {{EntityLink|Wither}} (birth explosion)
+|{{hp|35.5}}
+|{{hp|69}}
+|{{hp|103.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Wither Skull|link=Wither#Wither_skull}}
+|{{hp|5}}
+|{{hp|8|withered=1}}
+|{{hp|12|withered=1}}
+|{{Tc|yes|}}{{EffectLink|Wither|link=Wither (effect)}} II for 10 seconds on Normal difficulty and 40 seconds on Hard difficulty
+|-
+! style="text-align:left" | {{EntityLink|Wither Skull|link=Wither#Wither_skull}} (explosion)
+| colspan="3" | {{hp|5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Wither}} (dash attack){{Only|bedrock|short=1}}
+| colspan="3" | {{Hp|15}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntitySprite|angry-wolf}} [[Wolf]]
+|{{hp|3}}
+|{{hp|4}}
+|{{hp|6}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zoglin}}
+|{{hp|2.5}} to {{hp|5}}
+|{{hp|3}} to {{hp|8}}
+|{{hp|4.5}} to {{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zoglin}} (baby)
+| colspan="2" | {{hp|0.5}}
+|{{hp|0.75}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zombie}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zombie Nautilus}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zombie Villager}}
+|{{hp|2.5}}
+|{{hp|3}}
+|{{hp|4.5}}
+|{{Tc|no}} 
+|-
+! style="text-align:left" | {{EntityLink|Zombified Piglin}}{{Only|java|short=1}}
+|{{hp|5}}
+|{{hp|8}}
+|{{hp|12}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zombified Piglin}}{{Only|bedrock|short=1}}
+|{{hp|5.5}}
+|{{hp|9}}
+|{{hp|13.5}}
+|{{Tc|no}}
+|-
+! style="text-align:left" | {{EntityLink|Zombified Piglin}} (unarmed)
+|{{hp|3.5}}
+|{{hp|5}}
+|{{hp|7.5}}
+|{{Tc|no}}
+|}
+<noinclude>
+[[Category:Gameplay]]
+
+[[es:Daño/Criaturas]]
+[[ja:ダメージ/Mob]]
+[[ko:피해/몹]]
+[[pt:Dano/Criaturas]]
+[[ru:Моб/Урон]]
+[[th:Damage/Mobs]]
+[[uk:Моб/Шкода]]
+</noinclude>

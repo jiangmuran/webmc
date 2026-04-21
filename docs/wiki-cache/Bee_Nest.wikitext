@@ -1,0 +1,251 @@
+{{for|the crafted block|Beehive}}
+{{Infobox block
+| group = Empty
+| 1-1 = Bee Nest.png
+| group2 = Full
+| 2-1 = Bee Nest Honey.png
+| invimage = Bee Nest
+| extratext = [[#Gallery|View all images]]
+| transparent = No
+| light = No
+| tool = Axe
+| stackable = Yes (64) without bees inside<br>No with bee(s) inside
+| renewable = Yes
+| flammable = Yes (30)
+| lavasusceptible = Yes
+}}
+'''Bee nests''' are [[block]]s found attached to certain [[tree]]s. They house [[bee]]s, which fill their homes with honey made from gathered [[flower]] nectar. Full bee nests can be harvested for [[honeycomb]]s (using [[shears]]) or [[honey bottle]]s (using [[glass bottle]]s). Bees will attack [[player]]s who harvest or break their homes without utilizing [[campfire]]s or [[Silk Touch]], respectively.
+
+== Obtaining ==
+=== Breaking ===
+{{See also|Tutorial:Honey farming#Avoiding bee anger}}
+Bee nests can be broken by any [[tool]] or by the [[player]]'s fist, though they break faster with an [[axe]]. 
+
+If a bee nest is broken with a tool not enchanted with [[Silk Touch]], it drops nothing and any bees inside [[Bee#Attacking|emerge angry at the player]], attempting to sting them, which causes [[Poison]] on success. Nearby bees will also become angry and attack. If a Silk Touch tool is used, the bee nest drops itself and any bees inside remain inside, and any bees nearby do not become angry. 
+
+If broken in [[Creative]] mode with bees inside, the bee nest drops itself and bees inside remain inside.
+{{breaking row|horizontal=1|Bee Nest|Axe|Any|link=none|drop=0}}
+
+=== Natural generation ===
+[[File:Bee nest in superflat village.png|thumb|A naturally generated bee nest in a [[village]] in a [[Superflat]] world.]]
+Naturally generated bee nests generate with 2-3 bees in them, and always face south.
+
+Bee nests generate in the following biomes with different chances:
+{| class="wikitable"
+|-
+! rowspan="2" | Biome
+! colspan="3" | Chance<ref group="note">The chance for each naturally-generated oak, birch, mangrove tree, or cherry tree to have a bee nest.</ref>
+|-
+! {{JE}}
+! {{BE}}
+|-
+| {{BiomeLink|Meadow}}
+| colspan="2" | <div style="text-align: center;">100%</div>
+|-
+| {{BiomeLink|Plains}}<br>{{BiomeLink|Sunflower plains}}<br>{{BiomeLink|Cherry grove}}
+| colspan="3" | <div style="text-align: center;">5%</div>
+|-
+| {{BiomeLink|Mangrove swamp}}
+| colspan="2" | <div style="text-align: center;">1%</div>
+|-
+| {{BiomeLink|Flower forest}}
+| 2%
+| 3%
+|-
+| {{BiomeLink|Forest}}<br>{{BiomeLink|Birch forest}}<br>{{BiomeLink|Old growth birch forest}}
+| 0.2%
+| 0.035%
+|}<references group="note" />
+
+{{block distribution|Bee Nest}}
+
+=== Post-generation ===
+[[Oak]], [[birch]], and [[cherry]] trees grown from [[sapling]]s that are within 2 blocks (including diagonally) of a [[flower]] on the same Y-level have a 5% chance to grow with a bee nest containing 2–3 [[bee]]s. This holds true in any biome in any dimension, and for any flower including [[wither rose]]s and [[flowering azalea]]s.
+
+[[Mangrove]]s grown from [[mangrove propagule]]s have a 1% chance of having a bee nest containing 2-3 bees. Unlike birch, cherry, and oak trees, no flowers are required for a bee nest to generate.<ref>{{bug|MC-249937||Propagules grown without a flower nearby can generate bee nests in the mangrove tree|WAI}}</ref>
+
+In [[Bedrock Edition]], oak trees grown in plains have a chance to grow with a bee nest regardless of the quantity of flowers nearby. It is not known if this behavior is intended.
+
+== Usage ==
+{{:Beehive/Usage}}
+
+== Sounds ==
+=== Generic ===
+{{edition|java}}:
+{{Sound table/Block/Wood/JE}}
+{{edition|bedrock}}:
+{{Sound table/Block/Normal/BE}}
+
+=== Unique ===
+{{:Beehive/Sounds|a bee nest}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bee Nest
+|spritetype=block
+|nameid=bee_nest
+|blocktags=beehives
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=beehives
+|spritetype=block
+|nameid=beehive
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Bee Nest
+|spritetype=block
+|nameid=bee_nest
+|id=473
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=beehives
+|spritetype=block
+|nameid=Beehive
+|foot=1}}
+
+=== Block states ===
+{{#lst:Beehive|block states}}
+
+=== Block data ===
+A bee nest has a [[block entity]] associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Beehive|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/bees}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|Total Beelocation}}
+
+== Advancements ==
+{{load advancements|Bee Our Guest;Total Beelocation}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.15|dev=19w34a|[[File:Bee Nest (N) JE1 BE1.png|32px]] [[File:Bee Nest (E) JE1.png|32px]] [[File:Bee Nest (S) JE1.png|32px]] [[File:Bee Nest (W) JE1.png|32px]] [[File:Bee Nest (N) JE1 BE1.png|32px]] [[File:Bee Nest Honey (E) JE1.png|32px]] [[File:Bee Nest Honey (S) JE1.png|32px]] [[File:Bee Nest (W) JE1.png|32px]] Added bee nests.}}
+|{{HistoryLine|||dev=19w35a|Oak and birch [[tree]]s generated from [[sapling]]s can no longer have bee nests.
+|Bee nests now cannot generate unless there is [[air]] in front of the front side of the nest.
+|Bee nests are now flammable.}}
+|{{HistoryLine|||dev=19w42a|"Bee nest" has been renamed to "Bee Nest".}}
+|{{HistoryLine||1.15.2|dev=pre1|Oak and birch [[sapling]]s grown within 2 [[block]]s of a [[flower]] on the same Y-level have a 5% chance to have a bee nest, making bee nests a [[renewable resource]].
+|Bee nests now have a 2% chance to spawn in [[flower forest]]s.
+|Bee nests now have a 0.2% chance to spawn in [[forest]], [[wooded hills]], [[birch forest]], [[tall birch forest]], [[birch forest hills]], and [[tall birch hills]] biomes.}}
+|{{HistoryLine||1.16|dev=20w13a|Bee nests now appear yellow on [[maps]].}}
+|{{HistoryLine||1.18|dev=experimental snapshot 2|Bee nests now have a high chance to spawn in [[meadow]]s.{{info needed|exact percentage}}}}
+|{{HistoryLine|||dev=21w39a|Bee nests now have a 100% chance to spawn in meadows.}}|{{HistoryLine||1.19|dev=22w14a|Bee nests now have a 5% chance to spawn in [[mangrove tree]]s as well as inside [[mangrove swamp]]s.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Bee nests now have a 5% chance to spawn in [[cherry tree]]s as well as inside [[cherry grove]]s.}}
+|{{HistoryLine||1.21.2|dev=24w35a|Now show information about their level of honey and number of bees in their tooltip.|Now use their "full" texture when held or in the inventory, and they are at max level of honey.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[File:Bee Nest (N) JE1 BE1.png|32px]] [[File:Bee Nest (E) BE1.png|32px]] [[File:Bee Nest (S) BE1.png|32px]] [[File:Bee Nest (N) JE1 BE1.png|32px]] [[File:Bee Nest (N) JE1 BE1.png|32px]] [[File:Bee Nest Honey (E) BE1.png|32px]] [[File:Bee Nest Honey (S) BE1.png|32px]] [[File:Bee Nest (N) JE1 BE1.png|32px]] Added bee nests.}}
+|{{HistoryLine|||dev=beta 1.14.0.3|"Bee nest" has been renamed to "Bee Nest".}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|Oak and birch [[sapling]]s grown within 2 [[block]]s of a [[flower]] on the same y-level now have a 5% chance to have a bee nest.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Bee nests now have a 3% chance to generate in [[flower forest]].
+|Bee nests now have a 5% chance to generate in [[plains]] and [[sunflower plains]].
+|Bee nests now have a 0.035% chance to generate in [[forest]], [[wooded hills]], [[birch forest]], [[tall birch forest]], [[birch forest hills]], and [[tall birch hills]] biomes.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Now appear yellow on [[maps]].}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.20.27|Breaking a bee nest with Silk Touch no longer angers bees.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|Bee nests now have a chance to spawn in [[mangrove tree]]s as well as inside [[mangrove swamp]]s.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Decreased the blast resistance of bee nests from 2.7 to 0.3.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|Bee nests can no longer be used as fuel in a furnace.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|Java}}
+|{{HistoryLine||1.20.5|dev=24w06a|{{cd|FlowerPos}} in beenest has been renamed to {{cd|flower_pos}}.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== See also ==
+* [[Beehive]]
+* [[Tutorial:Honey farming]]
+
+== Gallery ==
+=== Renders ===
+==== Bee nest ====
+<gallery perrow="4">
+File:Bee Nest (S).png|Facing south
+File:Bee Nest (W).png|Facing west
+File:Bee Nest (N).png|Facing north
+File:Bee Nest (E).png|Facing east
+File:Bee Nest Honey (S).png|Facing south, with honey
+File:Bee Nest Honey (W).png|Facing west, with honey
+File:Bee Nest Honey (N).png|Facing north, with honey
+File:Bee Nest Honey (E).png|Facing east, with honey
+</gallery>
+
+==== On tree ====
+<gallery>
+Oak Tree with Bee nest.png|An oak tree with a bee nest.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Bee and bee nest.png|A bee flying next to a bee nest.
+3 Hives close.png|3 beehives generated close to each other.
+2 beehives in birch forest.png|2 bee nests found close together, found in birch forest.
+</gallery>
+
+=== In other media ===
+<gallery>
+Bee Nest Artwork.png|Artwork of several bees near a bee nest.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Natural blocks]]
+[[Category:Animal blocks]]
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Flammable blocks]]
+[[Category:Readable by comparators]]
+
+[[de:Bienennest]]
+[[es:Colmena]]
+[[fr:Nid d'abeilles]]
+[[ja:ミツバチの巣]]
+[[ko:벌집]]
+[[pt:Colmeia]]
+[[ru:Улей]]
+[[uk:Бджолине гніздо]]
+[[zh:蜂巢（方块）]]

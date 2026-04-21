@@ -1,0 +1,808 @@
+[[File:Enchanting Table.gif|thumb]]
+
+This article is about the '''mechanics''' of [[enchanting]] with [[enchanting table]]s.
+
+== Basic mechanics ==
+Whenever the player places an eligible item on the [[enchanting table]], the enchantment levels available are randomly generated for each slot using the formula below. The enchantment level is dependent upon the number of nearby [[bookshelves]] (capped at 15) and which slot position it is in.
+
+:Base enchantment level available (''base'') = (randomInt(1,8)&nbsp;+ floor(''b'' / 2)&nbsp;+ randomInt(0,''b'')),
+
+where ''b'' is the number of nearby bookshelves (maximum of 15) and randomInt(x,y) generates a uniformly distributed random integer between ''x'' and ''y'', inclusive. This is then modified according to the slot position:
+
+:Top slot enchantment level = floor(max(''base'' / 3, 1))
+:Middle slot enchantment level = floor((''base'' &times; 2) / 3 + 1)
+:Bottom slot enchantment level = floor(max(''base'',''b'' &times; 2))
+where max(x,y) returns the greater of two values x and y. 
+{| class="center small wikitable" data-description="Bookshelf usage"
+|-
+! # of bookshelves
+| 0
+| 1
+| 2
+| 3
+| 4
+| 5
+| 6
+| 7
+| 8
+| 9
+| 10
+| 11
+| 12
+| 13
+| 14
+| 15
+|-
+! Min level (in top slot)
+| 1
+| 1
+| 1
+| 1
+| 1
+| 1
+| 1
+| 1
+| 1
+| 1
+| 2
+| 2
+| 2
+| 2
+| 2
+| 2
+|-
+! Max level (in bottom slot)
+| 8
+| 9
+| 11
+| 12
+| 14
+| 15
+| 17
+| 18
+| 20
+| 21
+| 23
+| 24
+| 26
+| 27
+| 29
+| 30
+
+|}
+
+{| class="center small wikitable" data-description="Bookshelf usage"
+|-
+! # of bookshelves
+| 0
+| 1
+| 2
+| 3
+| 4
+| 5
+| 6
+| 7
+| 8
+| 9
+| 10
+| 11
+| 12
+| 13
+| 14
+| 15
+|-
+! Level range of top slot
+| 1–2
+| 1–3
+| 1–3
+| 1–4
+| 1–4
+| 1–5
+| 1–5
+| 1–6
+| 1–6
+| 1–7
+| 2–7
+| 2–8
+| 2–8
+| 2–9
+| 2–9
+| 2–10
+|-
+! Level range of middle slot
+| 1–6
+| 1–7
+| 2–8
+| 2–9
+| 3–10
+| 3–11
+| 3–12
+| 3–13
+| 4–14
+| 4–15
+| 5–16
+| 5–17
+| 5–18
+| 5–19
+| 6–20
+| 6–21
+|-
+! Level range of bottom slot
+| 1–8
+| 2–9
+| 4–11
+| 6–12
+| 8–14
+| 10–15
+| 12–17
+| 14–18
+| 16–20
+| 18–21
+| 20–23
+| 22–24
+| 24–26
+| 26–27
+| 28–29
+| 30
+|}
+
+Note that a higher experience cost for a specific slot does not necessarily mean that the enchantments from that slot are better than the others with less cost.
+
+In Creative mode, no experience or lapis is needed.
+
+== Bookshelf placement ==
+Nearby [[bookshelves]] raise the available enchantment levels; without any bookshelves, the [[Experience|experience level]] requirement never exceeds 8. The maximum number of bookshelves affecting enchantment level is 15.
+
+In order to have an effect, a [[bookshelf]] must be placed exactly 2 blocks, laterally, off the enchanting table and be on the same level or one block height above the table. Additionally, the bookshelf must not be blocked. The meaning of "blocked" differs in both {{els|java|bedrock}}.
+
+=== ''Bedrock Edition'' ===
+The 2-high space between the bookshelf and table must be [[air]] (even a torch, snow cover or carpet blocks the effect), where "between" is as shown in the following diagrams (the blank spaces are air, and the {{BlockSprite|beacon-revision-1}} do not matter):
+
+{| data-description="Bookshelf placement schematics"
+|-
+! Like this from the top:
+|
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+top
+|bb.
+|b .
+|..E
+}}
+</div>
+!or|| 
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+top
+|.b.
+|. .
+|.E.
+}}
+</div>
+|-
+! and like this from the side:
+| 
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+side
+|. .
+|E b
+}}
+</div>
+!or||
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+side
+|. b
+|E .
+}}
+</div>
+|}
+
+=== ''Java Edition'' ===
+The space between the bookshelf and table at the height of the bookshelf must be [[air]] or a replaceable block like snow or grass. For corner bookshelves, the space between is 1 block diagonal from the enchanting table; for all other bookshelves, the gap must be to the side of the enchanting table. This is illustrated in the following diagrams (the blank spaces are air, and the {{BlockSprite|beacon-revision-1}} do not matter):
+
+{| data-description="Bookshelf placement schematics"
+|-
+!Like this from the top:
+|
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+top
+|b..
+|. .
+|..E
+}}
+</div>
+!or||
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+top
+|bbb
+|. .
+|.E.
+}}
+</div>
+|-
+!and like this from the side:
+|
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+side
+|...
+|E b
+}}
+</div>
+!or||
+<div style="border:16px solid gray;">{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+side
+|. b
+|E..
+}}
+</div>
+|}
+
+The glyph particles, which fly from bookshelves, follow different rules and may appear even if the bookshelves are not enhancing the table.
+
+There are many possible bookshelf arrangements that can reach the enchantment limit. A simple method is to surround the enchanting table with a 1-block high square of bookshelves with an empty space anywhere on the perimeter:
+{{BlockGrid
+|b=bookshelf|E=Enchanting Table+top
+|bbbbb
+|b   b
+|b E b
+|b   b
+|bb bb
+}}
+Another alternative that is now available is to build a 'library corner' where each bookshelf is two blocks high, as in the plan below. This arrangement gives space for 16 shelves, which is one more than needed, so if the corner bookshelf column cannot be seen, removing one of the two bookshelves in that does not have any effect, either technically or visually.
+{{BlockGrid
+|.=beacon-revision-1?none|b=bookshelf|E=Enchanting Table+top
+|bbbbb
+|.   b
+|. E b
+|.   b
+|.....
+}}
+
+=== Selecting an enchantment level ===
+As enchantments offered depend on the enchantment level and the enchantment level depends on the number of active bookshelves, an easy way to change the enchantments offered is to disable bookshelves by placing torches between them and the enchanting table. That way one can still have the entire 'ring' of bookshelves around the table but get lower-level enchantments. Breaking the torches restores the effect of the bookshelves.
+
+==== ''Bedrock Edition'' ====
+[[File:Enchantment table bookshelf placement.png|thumb|right]]
+
+With the layout shown here, enchantments with any number of bookshelves from 0 to 15 may be easily obtained:
+{| class="wikitable collapsible collapsed" style="text-align:center" data-description="Torch placement vs. active bookshelves"
+!{{BlockSprite|black-wool}}!!{{BlockSprite|blue-wool}}!!{{BlockSprite|red-wool}}!!{{BlockSprite|white-wool}}!! class="collapse-button" |Active bookshelves
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||0
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||1
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||2
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|air}}||3
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||4
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||5
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||6
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|air}}||7
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||8
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||{{BlockSprite|air}}|| 9
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||10
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|air}}||11
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||12
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||13
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||14
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|air}}||15
+|}
+
+==== ''Java Edition'' ====
+[[File:Enchantment table bookshelf placement 1.18.2.png|alt=|thumb]]
+
+With the layout shown here, enchantments with any number of bookshelves from 0 to 15 may be easily obtained:
+{| class="wikitable collapsible collapsed" style="text-align:center" data-description="Torch placement vs. active bookshelves"
+!{{BlockSprite|black-wool}}!!{{BlockSprite|blue-wool}}!!{{BlockSprite|red-wool}}!! class="collapse-button" |Active bookshelves
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||0
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||1
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||2
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}||3
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}||4
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}||5
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}||6
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}||7
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|torch}}||8
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}{{BlockSprite|torch}}||{{BlockSprite|air}}||9
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||10
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|torch}}||11
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|torch}}||12
+|-
+|{{BlockSprite|torch}}||{{BlockSprite|air}}||{{BlockSprite|air}}||13
+|-
+|{{BlockSprite|air}}||{{BlockSprite|torch}}||{{BlockSprite|air}}||14
+|-
+|{{BlockSprite|air}}||{{BlockSprite|air}}||{{BlockSprite|air}}||15
+|}
+
+== How enchantments are chosen ==
+"Enchantment level" is the required experience level (the green number on the bottom-right).
+"Enchantment power" is the strength of the particular enchantment. For example, "Sharpness IV" has a power of 4.
+The enchantment algorithm uses a three-step process.
+
+=== Step one – Applying modifiers to the enchantment level ===
+The first thing that ''Minecraft'' does is apply two modifiers to the base enchantment level. Each modifier is restricted to a certain range, with numbers close to the middle of the range more common than those near the ends.
+
+==== Enchantability ====
+The first modifier is based on the item's "enchantability," which depends on the material and the type of the item (see the table below). Other enchantable items such as books, bows, crossbows, tridents, and fishing rods have an enchantability of 1 for this purpose. {{IN|java}}, an item's enchantability is stored in the [[Data component format#enchantable|'''minecraft:enchantable''' item component]] and can be changed with commands. ''Minecraft'' picks a number between 0 and ''half'' the enchantability, then adds that number plus one to the enchantment level. This random value follows a [[wikipedia:Triangular_distribution|triangular distribution]] (like rolling a pair of dice and adding) so results close to a quarter of the enchantability are much more likely than results at the extremes.
+
+{{For|a list of which enchantments can be obtained through enchanting|#List of enchantments}}
+
+{| class="wikitable" style="text-align: center;" data-description="Material enchantability"
+|-
+!Material/Item
+!Enchantability
+!Armor enchantability (if different)
+|-
+| style="text-align: left"|{{ItemLink|Book}}<br>{{ItemLink|Bow}}<br>{{ItemLink|Crossbow}}<br>{{ItemLink|Fishing Rod}}<br>{{ItemLink|Trident}}
+| style="background: light-dark(#ffc7ce, #533b3b);text-align: center" colspan="2" |1
+|-
+| style="text-align: left"|{{BlockLink|text=Stone|Cobblestone}}
+| style="background: light-dark(#ffd5d2, #55423c);text-align: center" colspan="2" |5
+|-
+| style="text-align: left"|{{ItemLink|Turtle Shell}}
+| style="background: light-dark(#ffe3d6, #57493d);text-align: center" colspan="2" |9
+|-
+| style="text-align: left"|{{ItemLink|Diamond}}
+| style="background: light-dark(#fff1d9, #59503e);text-align: center" colspan="2" |10
+|-
+| style="text-align: left"|{{ItemSprite|Chainmail Chestplate}} Chainmail
+| style="background: light-dark(#ffffdd, #5b573f);text-align: center" colspan="2" |12
+|-
+| style="text-align: left"|{{ItemLink|text=Copper|Copper Ingot}}
+| style="background: light-dark(#f1fbd9, #53563e);text-align: center" |13
+| style="background: light-dark(#f1fbd9, #53563e);text-align: center"  |8
+|-
+| style="text-align: left"|{{ItemLink|text=Iron|Iron Ingot}}
+| style="background: light-dark(#e2f7d6, #4b553e);text-align: center" |14
+| style="background: light-dark(#e2f7d6, #4b553e);text-align: center" |9
+|-
+| style="text-align: left"|{{BlockLink|id=Oak Planks|link=Planks|Wooden}}<br>{{ItemLink|Leather}}<br>{{ItemLink|text=Netherite|Netherite Ingot}}<br>{{ItemLink|Mace}}
+| style="background: light-dark(#d4f3d2, #43543d);text-align: center" colspan="2" |15
+|-
+| style="text-align: left"|{{ItemLink|text=Golden|Gold Ingot}}
+| style="background: light-dark(#c6efce, #3b533c);text-align: center" |22
+| style="background: light-dark(#c6efce, #3b533c);text-align: center" |25
+|}
+
+The modified enchantment level is calculated with the following formula:
+
+{{anchor|Modified enchantment level formula}}
+:Modified enchantment level = ''B'' + ''R''<sub>1</sub> + ''R''<sub>2</sub> + 1
+
+Where:
+
+*''R''<sub>1</sub> and ''R''<sub>2</sub> are two individual randomly generated integers:
+**''R''<sub>1</sub> = a random integer between 0, and {{frac|E|4}} (rounded down)
+**''R''<sub>2</sub> = a random integer between 0, and {{frac|E|4}} (rounded down)
+*''B'' is the base enchantment level.
+*''E'' is the enchantability of the item.
+
+See [[#Step one pseudocode|pseudocode]] below.
+
+Next, ''Minecraft'' picks a value between 0.85 and 1.15, again with a triangular distribution. The modified enchantment level is multiplied by this value (so it could increase or decrease by up to 15%) and then rounded to the nearest integer.
+
+==== Step one pseudocode ====
+<pre>// Returns a uniformly distributed random integer between 0 and n–1, inclusive
+function randomInt(n);
+
+// Returns a uniformly distributed random real (fractional) number between 0 (inclusive) and 1 (exclusive)
+function randomFloat();
+
+// Returns the real number n rounded to the nearest integer.
+function round(n);
+
+
+// Generate a random number between 1 and 1+(enchantability/2), with a triangular distribution
+int rand_enchantability = 1 + randomInt(enchantability / 4 + 1) + randomInt(enchantability / 4 + 1);
+
+// Choose the enchantment level
+int k = chosen_enchantment_level + rand_enchantability;
+
+// A random bonus, between .85 and 1.15
+float rand_bonus_percent = 1 + (randomFloat() + randomFloat() - 1) * 0.15;
+
+// Finally, we calculate the level
+int final_level = round((float)k * rand_bonus_percent);
+if ( final_level < 1 ) final_level = 1
+</pre>
+This pseudocode is based on ''Minecraft'' 1.8 source code, but still matches the 1.21 behavior. Note that all operations not explicitly executed as floating-point calculations round their result ''down'' to the nearest integer, e.g. <code>3 / 4</code> becomes 0. The <code>round</code> method used to calculate the final level rounds values both ways, i.e. below .5 it rounds down and at or above .5 it rounds up.
+
+A modified experience level probability calculator based on the pseudocode above can be found in this Desmos graph: https://www.desmos.com/calculator/iyvmjs3qfw.
+
+==== Affecting offered enchantments ====
+Enchanting any item at any enchantment level changes the player's enchantment seed, which changes the possible enchantments for every item at every enchantment level (since the random number generating functions above are actually [[w:Pseudorandomness|pseudorandom]]). Thus, if none of the available enchantments for a tool are desired, 1 lapis lazuli and 1 [[experience|level]] could be spent to enchant a book or a different [[tool]] to refresh the list.
+
+The possible enchantments depend on the player's enchantment seed, the item type, and material, and the enchantment level (1–30). The following actions do '''not''' affect the possible enchantments:
+* removing the item and putting it back in
+* clicking on the item slot with a different item
+* using a different item of the same type and material
+* replacing or moving the table (but keeping the same number of bookshelves)
+* using a different table with the same number of bookshelves, or
+* replacing or rearranging the bookshelves without changing their total number.
+
+Changing the enchantment levels offered by adding, removing, or blocking bookshelves alters the enchantments shown, but does not change possible enchantments; using another enchanting table with the previous bookshelf number still shows the previous enchantments. The enchantments for a particular enchantment level (with the same seed and item) do also differ depending on which row they appear in, but they are not "better" or "worse" based on the row despite the different resource costs.
+
+=== Step two – Find possible enchantments ===
+[[File:powersword.png|thumb|260px|A sword with several enchantments.]]
+
+Now, based on the modified level, ''Minecraft'' makes a list of all enchantment types that can be applied to the target item along with the power that each enchantment has.
+
+The power of each enchantment type is determined by the level and the values in the [[Enchanting/Levels|enchantments levels table]]. For each power value of an enchantment type, there is a minimum and maximum modified level that can produce the enchantment at that power. If the modified enchantment level (calculated at the first step) is within the range of an enchantment's possible power values, then the enchantment is assigned the modified enchantment level as power. If the modified level is within two overlapping ranges for the same enchantment type, the higher power value is used.
+
+==== Treasure ====
+Some enchantments are "treasure enchantments" (shown in the table below), meaning they can never be created by an enchanting table, and can be discovered only in certain situations: when generating [[chest loot]] (equipment and books), when [[fishing]], when generating enchanted book [[trading|trades]], when [[bartering]], and when an enchanted book is dropped by a raiding [[illager]].{{only|bedrock}}
+
+{{-|left}}
+
+=== Step three – Select a set of enchantments from the list ===
+Now that it has a list of the possible enchantments for the item, ''Minecraft'' must pick some of them to apply. Each enchantment has a statistical "weight". Enchantments with higher weights have a higher chance of being selected.
+
+''Minecraft'' uses the following weighted random selection algorithm:
+
+#Calculate the total weight of all enchantments in the list (''T''). The total of every enchantment is 146.
+#Pick a random integer from 0 to ''T'' – 1 as a number ''w''.
+#Iterate through each enchantment in the list, subtracting its weight from ''w''. If ''w'' is now negative, select the current enchantment.
+
+This algorithm produces the same results as listing each enchantment the number of times given by its weight, then choosing a random entry from the combined list.
+
+So, for each enchantment in the list, the probability of it being selected is:
+<dl><dd>
+''P'' = {{sfrac|''w''|''T''}}
+<br>
+Where:
+*''w'' is the enchantment's weight.
+*''T'' is the total weight of all enchantments in the list.
+</dd></dl>
+
+== List of enchantments ==
+{{for|a summary of all enchantments in the game|Enchanting#Summary of enchantments}}
+The following table lists every enchantment that can be obtained from an enchanting table.
+
+{| class="wikitable" style="text-align: center;" data-description="Enchantment weights"
+!Item type
+!Total weight
+!Mutual exclusivity
+!Enchantment
+!Weight
+!Maximum level
+|-
+| rowspan="6" |[[Armor]]<br>[[Helmet]]<br>[[Chestplate]]<br>[[Leggings]]<br>[[Boots]]
+| rowspan="6" |28
+| rowspan="4" |with each other
+|[[Protection]]
+|10
+|IV
+|-
+|[[Fire Protection]]
+|5
+|IV
+|-
+|[[Projectile Protection]]
+|5
+|IV
+|-
+|[[Blast Protection]]
+|2
+|IV
+|-
+|
+|[[Thorns]]
+| 1
+|III
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="2" | Boots
+| rowspan="2" | 35
+|
+|[[Feather Falling]]
+| 5
+|IV
+|-
+|with [[Frost Walker]]
+|[[Depth Strider]]
+|2
+|III
+|-
+| rowspan="2" | Helmet
+| rowspan="2" | 32
+|
+|[[Aqua Affinity]]
+|2
+|I
+|-
+|
+|[[Respiration]]
+|2
+|III
+|-
+| rowspan="8" |[[Sword]]
+| rowspan="8" | 36
+| rowspan="3" | with each other
+|[[Sharpness]]
+| 10
+|V
+|-
+|[[Bane of Arthropods]]
+| 5
+|V
+|-
+|[[Smite]]
+|5
+|V
+|-
+|
+|[[Knockback]]
+|5
+|II
+|-
+|
+|[[Fire Aspect]]
+|2
+|II
+|-
+|
+|[[Looting]]
+|2
+|III
+|-
+|
+|[[Sweeping Edge]]
+|2
+|III
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="4" |[[Pickaxe]]<br>[[Shovel]]<br>[[Axe]]<br>[[Hoe]]<br>[[Shears]]
+| rowspan="4" | 18
+| rowspan="2" | with each other
+|[[Fortune]]
+| 2
+|III
+|-
+|[[Silk Touch]]
+|1
+|I
+|-
+|
+|[[Efficiency]]
+|10
+|V
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="5" |[[Bow]]
+| rowspan="5" | 20
+|
+|[[Power]]
+|10
+|V
+|-
+|
+|[[Flame]]
+|2
+|I
+|-
+|
+|[[Punch]]
+|2
+|II
+|-
+|with [[Mending]]
+|[[Infinity]]
+|1
+|I
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="3" |[[Fishing rod]]
+| rowspan="3" | 9
+|
+|[[Luck of the Sea]]
+|2
+|III
+|-
+|
+|[[Lure]]
+|2
+|III
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="5" |[[Trident]]
+| rowspan="5" | 15
+|
+|[[Loyalty]]
+|5
+|III
+|-
+|
+|[[Impaling]]
+|2
+|V
+|-
+| rowspan="2" | with each other
+|[[Riptide]]
+|2
+|III
+|-
+|[[Channeling]]
+|1
+|I
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="4" |[[Crossbow]]
+| rowspan="4" |22
+|
+|[[Piercing]]
+|10
+|IV
+|-
+|
+|[[Quick Charge]]
+|5
+|III
+|-
+|
+|[[Multishot]]
+| 2
+|I
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|- 
+| rowspan="3" |[[Mace]]
+| rowspan="3" |12
+|
+|[[Density]]
+|5
+|V
+|-
+|
+|[[Breach]]
+|2
+|IV
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|-
+| rowspan="2" |[[Spear]]
+| rowspan="2" |10
+|
+|[[Lunge]]
+|5
+|III
+|-
+|
+|[[Unbreaking]]
+|5
+|III
+|}
+The player always gets at least one enchantment on an item, and there is a chance of receiving more. Additional enchantments are chosen by this algorithm:
+#With a <math>(\mathsf{modified\ level} + 1) / 50</math> probability, pick an extra enchantment. Otherwise, stop.
+#Remove from the list of possible enchantments anything that conflicts with previously-chosen enchantments.
+#Pick one enchantment from the remaining possible enchantments (based on the weights, as before) and apply it to the item.
+#Divide the modified level in half, rounded down (this does not affect the possible enchantments themselves, because they were all pre-calculated in Step Two).
+#Repeat from the beginning.
+
+When enchanting books using an enchanting table, if multiple enchantments were generated, then one selected at random is removed from the final list. This does not apply to other sources of enchanted books that use enchantment mechanics, such as [[fishing]] or chests in generated structures.
+
+=== Conflicting enchantments ===
+Some enchantments conflict with other enchantments and thus both can't be enchanted into the same item, whether for balance or logistical reasons.
+
+The rules for enchantment conflicts are:
+*Every enchantment conflicts with itself. (The player can't get a tool with two copies of the Efficiency enchantment)
+*All melee damage enchantments ([[Sharpness]], [[Smite]], [[Bane of Arthropods]], [[Impaling]], [[Breach]], and [[Density]]) conflict with each other.
+*All protection enchantments ([[Protection]], [[Blast Protection]], [[Fire Protection]], [[Projectile Protection]]) conflict with each other.
+*[[Silk Touch]] and [[Fortune]] conflict with each other.
+*[[Depth Strider]] and [[Frost Walker]] conflict with each other.
+*[[Mending]] and [[Infinity]] conflict with each other.
+*[[Riptide]] conflicts with [[Loyalty]] and [[Channeling]], but Loyalty does not conflict with Channeling.
+*[[Multishot]] and [[Piercing]] conflict with each other.
+
+Conflicting enchantments may appear on an item with specially-crafted {{cmd|give}} commands. The behavior of such items should not be relied upon, but in general:
+*An item with multiple copies of the same enchantment uses the level of the first copy of that enchantment in the list.
+*For armor with conflicting protection enchantments, all enchantments take effect individually.
+*For weapons with conflicting damage enchantments, all enchantments take effect individually.
+*For tools with both Silk Touch and Fortune, Silk Touch takes priority over Fortune on blocks affected by both enchantments. Fortune still applies to blocks such as crops that are not affected by Silk Touch.
+*For bows with both Mending and Infinity, both enchantments work individually.
+*For tridents with both Loyalty and Riptide, Riptide still functions normally but the trident can no longer be thrown by the player. However, tridents can still be thrown using dispensers.{{only|bedrock}}
+*For crossbows with both Multishot and Piercing, both enchantments work individually.
+
+[[File:Image005.png|400px|thumb|right|A chart showing all possible enchantments on diamond tools.{{Update|tag=1}}]]
+
+== Enchanting seed ==
+The enchantments that the enchanting table offers to a player do not usually change until the player enchants an item.
+After each applied enchant, the player gets offered different enchantments for any type of enchantable item.
+
+This is controlled by the enchanting seed ''XpSeed'' in the [[player.dat format|player data]].
+
+=== Deterministic initial enchantment ===
+This enchantment seed is initialized to 0 on world creation, and whenever the last enchantment seed was 0 on loading into a world it is re-rolled.<ref>{{bug|MC-92803}}</ref>
+Hence, when a new world is played until the player performs their first enchant without closing and re-joining the world in between, the offered enchantments are always the same.
+They still depend on the enchanted item and the enchantment level.
+
+These deterministic enchantments with the ''XpSeed'' equal to 0, colloquially known as ''first enchants'', can be used to guarantee certain enchantments, e.g. a diamond sword enchanted with 3 lapis lazuli and 15 bookshelves always gets Unbreaking 3 and Looting 2.
+
+Due to the fact that enchanting an item changes the enchanting seed, only one such first enchant can be chosen per world.
+
+=== Note for tools ===
+All tools (axe, hoe, pickaxe, and shovel) will always offer the same enchantments for any given seed. For example, if a diamond hoe is offered Unbreaking I at level 1, Efficiency II at level 2, and Fortune II at level 3, then diamond shovels, axes, and pickaxes will also offer the same enchantments.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.18.2|dev=22w07a|Bookshelf detection method changed. Previously, both the block at the level of the enchanting table and the layer above needed to be air, or the enchanting table was blocked. Additionally, bookshelves 2 across 1 over changed from being blocked by the corner block to being blocked by the edge block.}}
+}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*https://github.com/SeeYou-Man/Minecraft-Enchantment-Probabilities – A GitHub project currently in progress to calculate the probability to get specific enchantments, Feel free help out. Probability for 1.21 enchants are generated with 100k enchants for Item and material combo. Host your own server for now (Should work with a maybe 70+% functionality as of 22/11/2025 - SeeYouMan).
+*https://web.archive.org/web/20181019012113/http://minecraftenchantmentcalculator.com/rev6/ <small>(archived)</small> – Tests enchantments by simulating probability of getting specific enchantments on a tool based on level and (optionally) the "clue" shown
+*https://minecraft.tools/en/enchant.php – Provides some ability to test enchantments, although its interface is significantly less verbose on the specifics
+*https://github.com/Earthcomputer/EnchantmentCracker – Cracks the XP seed and lets you choose the exact enchantments you want, though the process is highly tedious and error-prone. Deprecated in favor of [https://github.com/Earthcomputer/clientcommands clientcommands]
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Gameplay]]
+
+[[cs:Princip očarování]]
+[[es:Mecánicas de encantamiento]]
+[[it:Meccaniche di incantamento]]
+[[ja:エンチャントの仕組み]]
+[[ko:마법 작동 원리]]
+[[lzh:淬靈]]
+[[pt:Mecânica de encantamento]]
+[[th:กลไกการร่ายมนตร์]]
+[[zh:附魔（物品修饰）]]

@@ -1,0 +1,106 @@
+{{distinguish|Ice Spikes}}
+{{Infobox structure
+| title = Ice spike
+| image = Ice_World_Spikes.png
+| image2 = Ice_World_Spikes_Large.png
+| image2size = 50px
+| biome = {{BiomeLink|Ice Spikes}}
+| blocks =
+* {{BlockLink|Packed Ice}}
+| canspawn = No
+}}
+'''Ice spikes''' are common [[feature]]s made of [[packed ice]]. Ice spikes only generate in the [[ice spikes]] biome.
+
+== Generation ==
+Ice spikes are tall spires comprised of packed ice that can be found only in the ice spikes variant of [[snowy plains]] biomes. They are randomly generated beginning at ground level and tower upward.
+
+== Construction ==
+There are two types of ice spikes: one is short and thick, and the other is tall and thin. The short spikes generate more often than the tall spikes. Short spikes are about 15 blocks tall, while tall spikes can be over 50 blocks tall.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=ice-spike
+|spritetype=env
+|nameid=spike
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=ice-spike
+|spritetype=env
+|nameid=ice_spike_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|can_place_on}}: The block predicate that defines which blocks the spike can be placed on.
+** {{nbt|compound|can_replace}}: The block predicate that defines which blocks the spike can replace.
+** {{nbt|compound|state}}: The block state to use.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:spike",
+  "config": {
+    "can_place_on": {
+      "type": "minecraft:matching_blocks",
+      "blocks": "minecraft:snow_block"
+    },
+    "can_replace": {
+      "type": "minecraft:matching_block_tag",
+      "tag": "minecraft:ice_spike_replaceable"
+    },
+    "state": {
+      "Name": "minecraft:packed_ice"
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w36a|Added ice spikes.}}
+|{{HistoryLine||1.18|dev=?|Features now use a different pseudorandom number generator when generating.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added ice spikes.}}
+}}
+
+== Trivia ==
+* Excluding [[amplified]] generation, ice spikes are one of the only world features able to naturally extend above Y=300.
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Ice Spikes.png|An area largely covered by ice spikes. Both types of ice spikes are visible.
+Ice plains spikes.png|A small group containing only short spikes.
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Pico de hielo]]
+[[fr:Stalagmite de glace]]
+[[ja:樹氷]]
+[[pl:Lodowy kolec]]
+[[pt:Pico de gelo]]
+[[zh:冰刺]]

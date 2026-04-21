@@ -1,0 +1,104 @@
+{{wip}}
+
+In ''[[Minecraft]]'', '''mob fleeing''' is a mechanic in which [[mob]]s will attempt to avoid or flee from sources that they are fearful of.
+
+== Overview == 
+When a [[mob]] is in close enough proximity to something that it is fearful of (referred to as a "fear source" in this article), it attempts to move away from that source (usually through moving quickly such as [[sprinting]]) until it is a reasonable distance away. 
+
+All mobs will check for fear sources in the surrounding area every 5 [[tick]]s when there is a line of sight. The radius in which a mob detects a fear source can vary depending on the specific fear source {{in|Java}} or simply 3×3×3 for every mob {{in|Bedrock}}.<ref>{{Bug|MCPE-182041|MCPE-182041|behavior.avoid_mob_type not respecting max_dist and max_flee}}</ref> For example: a mob may detect a certain fear source within a radius of 8 blocks, whereas it may detect a different fear source within a larger radius of 15 blocks.
+
+When fleeing, a mob moves to a location 4-15 blocks away from the feared source and then return to its regular behavior.
+
+Usually, fleeing from a fear source becomes a mob’s top priority, meaning it will stop whatever action it was doing in favor of fleeing. As such, fleeing can interrupt mobs from doing many actions such as interacting or attacking. In most cases, the mob will return to what it was previously doing when it is no longer fleeing.
+
+A mob's fear source can be in the form of a block, another mob, or a [[player]].
+
+== Fleeing interactions == 
+{| class="wikitable collapsible" data-description="Fleeing interactions"
+! width="20%" |Mob
+!Fear Source
+!Details
+|-
+|{{EntityLink|Bogged}}<br>{{EntityLink|Parched}}<br>{{EntityLink|Skeleton}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Wither Skeleton}}{{only|JE}}
+|{{EntityLink|Wolf}}
+|Skeletons, strays, bogged, and parched flee from a wolf until they are attacked, after which they begin retaliating against the wolf. Wither skeletons alternate between fleeing and retaliating against the wolf.
+|-
+|{{EntityLink|Cat}}<br>{{EntityLink|Ocelot}}
+|{{EntityLink|Player}}
+|Stray cats and untrusting ocelots avoid being near and flee from players.
+|-
+|{{EntityLink|Cave Spider}}<br>{{EntityLink|Spider}}
+|{{EntityLink|Armadillo}}
+|Spiders and cave spiders will only flee from armadillos which are not rolled up in their shell.
+|-
+|{{EntityLink|Cod}}<br>{{EntityLink|Pufferfish}}<br>{{EntityLink|Salmon}}<br>{{EntityLink|Tropical Fish}}
+|{{EntityLink|Player}}
+|
+|-
+|{{EntityLink|Creeper}}
+|{{EntityLink|Cat}}<br>{{EntityLink|Ocelot}}
+|
+|-
+|{{EntityLink|Dolphin}}
+|{{EntityLink|Elder Guardian}}<br>{{EntityLink|Guardian}}
+|
+|-
+|{{EntityLink|Evoker}}
+|{{EntityLink|Player}}<br>{{EntityLink|Creaking}}
+|
+|-
+|{{EntityLink|Fox}}
+|{{EntityLink|Player}}<br>{{EntityLink|Polar Bear}}<br>{{EntityLink|Wolf}}
+|Foxes flee from players that they are not trusting towards.
+|-
+|{{EntityLink|Hoglin}}
+|{{EntityLink|Player}}<br>{{EntityLink|Piglin}}<br>{{BlockLink|Nether Portal}}<br>{{BlockLink|Respawn Anchor}}<br>{{BlockLink|Warped Fungus}}
+|Hoglins flee from piglins when outnumbered during a hunt.<br>Baby hoglins flee when attacked by a player.
+|-
+|{{EntityLink|Illusioner}}{{only|java|short=1}}<br>{{EntityLink|Pillager}}<br>{{EntityLink|Vindicator}}
+|{{EntityLink|Creaking}}
+|A vindicator that is named "Johnny" alternates between fleeing from the creaking and attempting to attack it.
+|-
+|{{EntityLink|Worried Panda|Panda}} (Worried)
+|{{EntityLink|Player}}<br>Most [[monster]]s{{only|java|short=1}}<br>All non-panda mobs{{only|bedrock|short=1}}
+|{{IN|je}}, worried pandas flee from most monsters except [[ghast]]s, [[hoglin]]s, [[magma cube]]s, undead mounts ([[skeleton horse]]s, [[zombie horse]]s, [[zombie nautilus]]es, [[camel husk]]s) [[phantom]]s, [[shulker]]s, [[slime]]s, and the [[ender dragon]].<ref>{{bug|MC-304377||Worried Pandas are not scared of certain monsters}}</ref><br>{{IN|be}}, worried pandas flee from all non-panda mobs.
+|-
+|{{EntityLink|Phantom}}
+|{{EntityLink|Cat}}<br>{{EntityLink|Ocelot}}{{only|bedrock|short=1}}
+|
+|- 
+|{{EntityLink|Piglin}}
+|{{EntityLink|Hoglin}}<br>{{EntityLink|Wither}}<br>{{EntityLink|Wither Skeleton}}<br>
+{{EntityLink|Zoglin}}<br>
+{{EntityLink|Zombified Piglin}}<br>{{BlockLink|Soul Campfire}} (lit)<br>{{BlockLink|Soul Fire}}<br>{{BlockLink|Soul Lantern}}<br>{{BlockLink|Soul Torch}}
+|Piglins flee from hoglins when outnumbered during a hunt.<br>Only baby piglins flee from wither skeletons and withers.<br>Piglins only flee from lit soul campfires.
+|-
+|{{EntityLink|Rabbit}} (except Killer Bunny{{only|java|short=1}})
+|{{EntityLink|Player}}<br>{{EntityLink|Wolf}}<br>Most [[monster]]s
+|{{IN|je}}, rabbits flee from most monsters except [[ghast]]s, [[hoglin]]s, [[magma cube]]s, undead mounts ([[skeleton horse]]s, [[zombie horse]]s, [[zombie nautilus]]es, [[camel husk]]s), [[phantom]]s, [[shulker]]s, [[slime]]s, and the [[ender dragon]].<ref>{{bug|MC-304535||Rabbits are not scared of certain monsters}}</ref><br>{{IN|be}}, rabbits flee from all monsters except hoglins and the ender dragon. 
+|-
+|{{EntityLink|Villager}}
+|{{EntityLink|Drowned}}<br>{{EntityLink|Evoker}}<br>{{EntityLink|Husk}}<br>{{EntityLink|Illusioner}}{{only|java|short=1}}<br>{{EntityLink|Pillager}}<br>{{EntityLink|Ravager}}<br>{{EntityLink|Vex}}<br>{{EntityLink|Vindicator}}<br>{{EntityLink|Zoglin}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}
+|-
+|{{EntityLink|Wandering Trader}}
+|{{EntityLink|Drowned}}<br>{{EntityLink|Evoker}}<br>{{EntityLink|Husk}}<br>{{EntityLink|Illusioner}}{{only|java|short=1}}<br>{{EntityLink|Pillager}}<br>{{EntityLink|Ravager}}<br>{{EntityLink|Vex}}<br>{{EntityLink|Vindicator}}<br>{{EntityLink|Zoglin}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}<br>{{EntityLink|Zombified Piglin}}{{only|bedrock|short=1}}
+|
+|-
+|{{EntityLink|Wolf}}
+|{{EntityLink|Llama}}<br>{{EntityLink|Trader Llama}}
+|How easily the wolf is deterred is determined by the llama's/trader llama's [[Llama #Data values|strength]].
+|}
+
+== See also ==
+* [[Mob AI]]
+* [[Mob infighting]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+
+[[pt:Fuga de criaturas]]
+[[ru:Бегство мобов]]

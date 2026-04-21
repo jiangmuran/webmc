@@ -1,0 +1,621 @@
+[[File:Zombie chasing villager with hitboxes.png|thumb|right|A [[zombie]] chasing a [[villager]] with their hitboxes visible by using {{Keys|F3 + B}} debug hotkey.]]
+
+A '''hitbox''' defines the physical boundary (or an approximation) of a [[block]] or [[entity]]. Hitboxes are used in the calculations of collisions and targeting.
+
+Unlike with block models, all hitboxes' sizes are hard-coded and cannot be changed independently without modification.
+
+{{IN|je}}, hitboxes can be seen through the {{Keys|F3 + B}} [[debug hotkey]].
+
+== Entity hitboxes ==
+=== Bounding box ===
+[[File:Entities' hitboxes comparison.png|thumb|right|Several entities with different bounding box sizes next to each other. From left to right, the shortest to tallest: [[chicken]], [[pig]], [[cow]], [[creeper]], [[zombie]], and [[enderman]].]]
+
+An entity's bounding box manages their collision with blocks and other entities. It's also used for detecting hits and other interactions from [[player]]s, [[villager]]s, [[arrow]]s, and other entities. {{IN|JE}}, it's shown as a white color coded hitbox around the entities' [[model]], and moves with the entity but maintains a static orientation without rotating.
+
+When the bounding boxes between two entities overlap, a small force is applied to each entity proportional to the distance between them to push them away from each other horizontally. Because there is no vertical collision, it is possible to put multiple entities in the same block by dropping them in from above.
+
+An entity's bounding box can transform into different shapes depending on certain situations, typically unique to the entity itself. For instance, a [[pufferfish]] when approached by players gradually expands its shape, from unpuffed, to semi-puffed, then to fully puffed. It instantly shrinks its shape back to normal once it cools down. Players can also change their bounding box by [[sneaking]], [[crawl]]ing, [[swim]]ming, [[gliding]], or any other means.
+
+Bounding boxes can be scaled by {{attr|minecraft:scale}} attribute, or for specific entities, like [[interaction]], it can be changed by modifying [[Interaction#Entity data|their entity data]].
+
+=== Eye height ===
+[[File:Wither skeleton and villager eye height.png|thumb|right|A [[wither skeleton]] has a taller eye height hitbox (red) than a [[villager]], making it suffocate in the barrier block above it.|alt=]]
+
+The eye height shows an entity's eyes placement. It's used for detecting when an entity is submerged in a [[fluid]] or phasing through a solid block. In this state, the game usually times the entity [[drowning]] or [[suffocating]]. In ''Java Edition'', it's shown as red box typically appearing on entities' eyes or head.
+
+The eye height is also used to determine if two [[entities]] can see and follow each other by their eye contact.<ref name="eye-contact">{{mcnet|how-crawling-came-minecraft|How crawling came to Minecraft|July 21, 2020|Henrik Kniberg}}</ref>
+
+==== View vector ====
+A blue arrow starting from the eye position and sticking forward 2 blocks shows the orientation the entities are facing, this is called the '''view vector'''.<ref>{{jcp|net.minecraft.client.renderer.debug.EntityHitboxDebugRenderer#showHitboxes()}} defines the end position of this arrow as the "viewVector".</ref> This arrow does not indicate a hit-scan or line of sight test, instead, the mechanic is handled as a part of the [[mob AI]] and a different method<ref>{{jcp|net.minecraft.world.entity.LivingEntity#hasLineOfSight()}} method is primarily used in detecting if the target is looking at an entity.</ref>.
+
+=== Passenger attachment point ===
+The passenger attachment point is a hitbox that shows the point where an entity passenger is attached on a [[Transportation|mountable entity]]. It's shown as a small green hitbox. It appears on a mountable entity when it is [[Riding|mounted]] by another entity, and aligns precisely with the bottom side of the hitbox.
+
+== Block hitboxes ==
+=== Collision box ===
+{{Anchor|Block collision}}
+{{FakeImage|<nowiki/>
+<div style{{=}}"display:flex"><div>[[File:Fence and gate interaction box.png|200px]]</div>
+<div>[[File:Fence and gate collision box.png|200px]]</div></div>
+|[[Fence]]s and [[gate]]s have a one [[blocks tall]] interaction box (left), but with 1.5 blocks tall collision box (right). They are rendered via {{cd|visualize_collision_boxes}} [[debug renderer]].
+|class=nomobile}}
+<div class="mobileonly">[[File:Fences_hitboxes_height.png|thumb|[[Fence]]s have a one [[blocks tall]] interaction box, but with 1.5 blocks tall collision box.]]</div>
+The collision box manages a block's collision with entities. They are usually shaped in cubes, but some may have different shapes, like [[slab]]s, [[lectern]]s, [[lily pad]]s, [[fence]]s, [[wall]]s, and [[stair]]s.
+
+A collision box may not be present for all blocks; [[non-solid block]]s such as [[grass]], [[sign]], [[button]], [[lever]], and [[torch]] have no collision box.  
+{{Collapse
+|title=
+The list below shows all blocks defined as {{cd|noCollision}} {{in|JE}}{{Note|This is not exactly a list of all blocks without collision. It's possible for a block to have no collision because it has an empty interaction box (e.g., [[light (block)|light]]). It is also possible that blocks in the list have a collision box, in case the collision box was created later (e.g., [[scaffolding]] and [[Hanging Signs|wall hanging signs]]). In the [[Tutorial:See Minecraft's code|game's code]], these blocks are defined in the {{jcp|net.minecraft.world.level.block.Blocks}} class.}}:
+|content={{flatlist|
+*{{BlockLink|Activator Rail}}
+*{{BlockLink|Air}} 
+**{{BlockLink|Cave Air}} 
+**{{BlockLink|Void Air}}
+*{{BlockLink|Allium}}
+*{{BlockLink|Azure Bluet}}
+*{{BlockLink|Bamboo Shoot}}
+*{{BlockLink|Banners}} 
+**{{BlockLink|Wall Banners|link=Banner}}
+*{{BlockLink|Beetroots|link=Beetroot Seeds}}
+*{{BlockLink|Big Dripleaf Stem}}
+*{{BlockLink|Blue Orchid}}
+*{{BlockLink|Bubble Column}}
+*{{BlockLink|Bush}}
+*{{BlockLink|Buttons}}
+*{{BlockLink|Cactus Flower}}
+*{{BlockLink|Carrots}}
+*{{BlockLink|Cave Vines}} 
+**{{BlockLink|Cave Vines Plant}}
+*{{BlockLink|Closed Eyeblossom}}
+*{{BlockLink|Cobweb}}
+*{{BlockLink|Coral}}
+*{{BlockLink|Coral Fans}} 
+**{{BlockLink|Coral Fans|Coral Wall Fans}}
+*{{BlockLink|Cornflower}}
+*{{BlockLink|Crimson Fungus}}
+*{{BlockLink|Crimson Roots}}
+*{{BlockLink|Dandelion}}
+*{{BlockLink|Dead Bush}}
+*{{BlockLink|Dead Coral}}
+*{{BlockLink|Dead Coral Fans}} 
+**{{BlockLink|Dead Coral Fans|Dead Coral Wall Fans}}
+*{{BlockLink|Detector Rail}}
+*{{BlockLink|End Gateway}}
+*{{BlockLink|End Portal}}
+*{{BlockLink|Fern}}
+*{{BlockLink|Fire}}
+*{{BlockLink|Firefly Bush}}
+*{{BlockLink|Frogspawn}}
+*{{BlockLink|Glow Lichen}}
+*{{BlockLink|Golden Dandelion}}
+*{{BlockLink|Hanging Roots}}
+*{{BlockLink|Hanging Signs}} 
+**{{BlockLink|Wall Hanging Signs|link=Hanging Sign}}
+*{{BlockLink|Kelp}}
+*{{BlockLink|Kelp Plant}}
+*{{BlockLink|Large Fern}}
+*{{BlockLink|Lava}}
+*{{BlockLink|Leaf Litter}}
+*{{BlockLink|Lever}}
+*{{BlockLink|Lilac}}
+*{{BlockLink|Lily of the Valley}}
+*{{BlockLink|Mangrove Propagule}}
+*{{BlockLink|Melon Stem}} 
+**{{BlockLink|Attached Melon Stem}}
+*{{BlockLink|Mushrooms}}
+*{{BlockLink|Nether Portal}}
+*{{BlockLink|Nether Sprouts}}
+*{{BlockLink|Nether Wart}}
+*{{BlockLink|Open Eyeblossom}}
+*{{BlockLink|Oxeye Daisy}}
+*{{BlockLink|Pale Hanging Moss}}
+*{{BlockLink|Peony}}
+*{{BlockLink|Pink Petals}}
+*{{BlockLink|Pitcher Crop}}
+*{{BlockLink|Pitcher Plant}}
+*{{BlockLink|Poppy}}
+*{{BlockLink|Potatoes}}
+*{{BlockLink|Powered Rail}}
+*{{BlockLink|Pressure Plates}}
+*{{BlockLink|Pumpkin Stem}} 
+**{{BlockLink|Attached Pumpkin Stem}}
+*{{BlockLink|Rail}}
+*{{BlockLink|Redstone Torch}} 
+**{{BlockLink|Redstone Torch |Wall Redstone Torch}}
+*{{BlockLink|Redstone Wire}}
+*{{BlockLink|Resin Clump}}
+*{{BlockLink|Rose Bush}}
+*{{BlockLink|Saplings}}
+*{{BlockLink|Scaffolding}}
+*{{BlockLink|Sculk Vein}}
+*{{BlockLink|Seagrass}}
+*{{BlockLink|Short Dry Grass}}
+*{{BlockLink|Short Grass}}
+*{{BlockLink|Signs}} 
+**{{BlockLink|Wall Signs|link=Sign}}
+*{{BlockLink|Small Dripleaf}}
+*{{BlockLink|Soul Fire}}
+*{{BlockLink|Spore Blossom}}
+*{{BlockLink|Structure Void}}
+*{{BlockLink|Sugar Cane}}
+*{{BlockLink|Sunflower}}
+*{{BlockLink|Sweet Berry Bush}}
+*{{BlockLink|Tall Dry Grass}}
+*{{BlockLink|Tall Grass}}
+*{{BlockLink|Tall Seagrass}}
+*{{BlockLink|Torchflower}}
+*{{BlockLink|Torchflower Crop}}
+*{{BlockLink|Torches}} 
+**{{BlockLink|Torches|Wall Torches}}
+*{{BlockLink|Tripwire}}
+*{{BlockLink|Tripwire Hook}}
+*{{BlockLink|Tulips}}
+*{{BlockLink|Twisting Vines}} 
+**{{BlockLink|Twisting Vines Plant}}
+*{{BlockLink|Vines}}
+*{{BlockLink|Warped Fungus}}
+*{{BlockLink|Warped Roots}}
+*{{BlockLink|Water}}
+*{{BlockLink|Weeping Vines}} 
+**{{BlockLink|Weeping Vines Plant}}
+*{{BlockLink|Wheat|link=Wheat Seeds}}
+*{{BlockLink|Wildflowers}}
+*{{BlockLink|Wither Rose}}
+}}
+}}
+
+While most blocks have their collision box identical to their interaction box{{Note|The interaction box is considered with an empty context. Thus, for example, [[light (block)|light]] will always have an empty collision box, even when the entity is holding the light item. However, [[block states]] are still considered}} or an empty collision box if it is a non-solid block, some may have a different collision box compared to their interaction box counterpart. For instance, a [[lectern]]'s collision box does not extend into the upper part of their interaction box, and a [[fence]]'s collision box is a bit taller than their interaction box. The table below shows all the exceptions {{in|JE}}:{{note|In the table, trios like 1×2×3 represent a box in the shape of a cuboid with 1 pixel in X, 2 pixels in Y, and 3 pixels in Z. If the note column is empty, the center of XZ-plane is the same as the center of the block and starts at the base. For example, 16×16×16 is a full block.}}
+{{Clear}}
+{| class="wikitable sortable collapsed collapsible"
+!Block !! Collision box
+!Interaction box
+!Notes
+|-
+|{{BlockLink|Bamboo}} ||
+{{BlockSprite|Bamboo}} All: 3×16×3
+|
+{{BlockSprite|bamboo-stalk}} {{BlockSprite|bamboo-leaves-small}} Non-large leaves: 6×16×6 
+
+{{BlockSprite|bamboo-leaves-large}} Leaves large: 10×16×10
+|
+Bamboos have a random center, and the same center for collision and interaction box.
+|-
+|{{BlockLink|Big Dripleaf}} ||
+{{BlockSprite|Big Dripleaf}}  None/unstable tilt: 16×4×16  
+
+[[File:Big_Dripleaf_(partial_tilt).png|16px]] Partial tilt: 16×2×16
+
+[[File:Big_Dripleaf_(full_tilt).png|16px]] Full tilt: Empty
+
+|
+The collision box plus a 6×11×6 column centered 4 pixels opposite from the face.
+|The collision box is counted from 1 pixel below the top of the block.
+|-
+|{{BlockLink|Cactus}} || 15×15×15
+| 15×16×15
+|
+|-
+|{{BlockLink|Composter}} || Same as visual model when {{cd|level}} is set to 0.
+|Same as visual model, changing according to the {{code|level}}.
+|-
+|{{BlockLink|Fences}} || 4×24×4
+Additionally, for all sides set to {{Cd|true}}:
+Facing east/west: 6×24×4
+Facing north/south: 4×24×6
+|4×16×4
+Additionally, for all sides set to {{Cd|true}}:
+Facing east/west: 6×16×4
+Facing north/south: 4×16×6
+|Centered on the block's center. The additional boxes for sides set to {{Cd|true}} face the respective direction.
+|-
+|{{BlockLink|Fence Gates}} 
+|| 
+Closed: Empty 
+
+Open, facing is {{cd|east}}/{{cd|west}}: 16×24×4
+
+Open, facing is {{cd|north}}/{{cd|south}}: 4×24×16
+
+|
+Not in wall, facing is {{cd|east}}/{{cd|west}}: 16×16×4
+
+Not in wall, facing is {{cd|north}}/{{cd|south}}: 4×16×16
+
+In wall, facing is {{cd|east}}/{{cd|west}}: 16×13×4
+
+In wall, facing is {{cd|north}}/{{cd|south}}: 4×13×16
+
+|
+|-
+|{{BlockLink|Honey Block}} || 15×15×15
+|Full block (16×16×16)
+|
+|-
+|{{BlockLink|Lectern}} 
+|| 16×2×16, with an 8x12x8 column above 
+| The collision box plus two 16x4x4.333333 boxes and a 16x4x4.333334 box. 
+| The additional boxes of the interaction box are positioned diagonally, approaching the visual model. They are also rotated according to the facing.
+|-
+|
+{{flatlist| 
+*{{BlockLink|Lava}} 
+*{{BlockLink|Water}}
+}}
+|| 
+By default empty, but it can change depending on the context.
+
+In internal tests for player spawn finder, when a location without collision is being found: Full block (16×16×16).
+
+If is a source lava, for a [[strider]] that is above half of the block and not directly below another lava: 16×8×16
+|Empty
+|
+|-
+|{{BlockLink|Pale Moss Carpet}} 
+||
+{{BlockSprite|Pale Moss Carpet}} [[File:Pale Moss Carpet (low).png|16px]] [[File:Pale Moss Carpet (tall).png|16px]] Bottom true: 16×1×16
+
+[[File:Pale Moss Carpet (small side texture).png|class=pixel-image|16px]] [[File:Pale Moss Carpet (tall side texture).png|class=pixel-image|16px]] Bottom false: Empty
+|
+The collision box together with a side-column, for all sides not set to {{Cd|none}}: 
+
+[[File:Pale Moss Carpet (small side texture).png|class=pixel-image|16px]] Low: 16×10×1
+
+[[File:Pale Moss Carpet (tall side texture).png|class=pixel-image|16px]] Tall: 16×16×1
+
+When the button is false and all sides are none: Full block (16×16×16)
+
+|
+
+
+|-
+|{{BlockLink|Mud}} || 16×14×16
+| Full block (16×16×16)
+|
+|-
+|{{BlockLink|Pitcher Crop}} || 
+Half {{Cd|lower}}, age {{Cd|0}}: 6×4×6
+
+Half {{Cd|lower}}, age {{Cd|≥1}}: 10×6×10
+
+Half {{Cd|upper}}: Empty
+
+|
+Half {{Cd|lower}}, age {{Cd|0}}: 6×4×6
+
+Half {{Cd|lower}}, age {{Cd|1}}: 6×15×6
+
+Half {{Cd|lower}}, age {{Cd|≥2}}: 6×17×6
+
+Half {{Cd|upper}}, age {{Cd|≤2}}: Empty
+
+Half {{Cd|upper}}, age {{Cd|3}}: 6×11×6
+
+Half {{Cd|upper}}, age {{Cd|4}}: 6×15×6
+
+|
+For all boxes, if half is {{Cd|lower}}, the box starts 1 pixel below the base of the block.
+
+|-
+|{{BlockLink|Powder Snow}} || 
+By default empty, but it can change depending on the context.
+
+If it is being placed or the context does not have an entity: 
+empty
+
+If the entity is falling for more than 2.5 blocks:
+16×14.4×16
+
+If the entity is a [[falling block]]: 
+Full block (16×16×16)
+
+If the entity is above the block, isn't [[sneaking]] and uses a [[leather boots]] or is in the tag [[Entity_type_tag_(Java_Edition)#powder_snow_walkable_mobs|#powder_snow_walkable_mobs]]:
+Full block (16×16×16)
+|Full block (16×16×16)
+|
+If more than one context is valid, the first one prevails. For example, a [[rabbit]] falling more than 2.5 blocks is considered an incomplete collision box.
+
+
+
+|-
+|{{BlockLink|Scaffolding}} ||
+When it is being placed: Empty 
+
+When the entity is '''not''' above the block or the player is [[sneaking]]:
+* If bottom is {{Cd|true}}, distance isn't {{Cd|0}} and the entity is above from the block below: 16×2×16
+* Otherwise: Empty
+
+If none of the above contexts occur, or if there is no entity in the context: ''Shape stable''
+| If the entity is holding (in mainhand) a scaffolding: Full block (16×16×16)
+
+Bottom is {{Cd|false}}: ''Shape stable''
+
+Bottom is {{Cd|true}}: ''Shape stable'', with an additional 16×2×16 box 
+
+| The ''shape stable'' is a 16×2×16 platform on top, plus four 2×16×2 column, one on each vertical edge of the block
+|-
+|{{BlockLink|Sculk Shrieker}} || 16×8×16
+|Full block (16×16×16)
+|
+|-
+|{{BlockLink|Snow}} || 16×(2''L''-2)×16
+| 16×2''L''×16
+| ''L'' is the number of layers.
+|-
+|{{BlockLink|Soul Sand}} || 16×14×16
+|Full block (16×16×16)
+|
+|-
+|{{BlockLink|Walls}} || Same as visual model, but 24 pixels high
+|Same as visual model
+|
+|-
+|{{BlockLink|Wall Hanging Signs |link = Hanging Sign}} || 
+Facing is {{cd|east}}/{{cd|west}}: 16×2×4
+
+Facing is {{cd|north}}/{{cd|south}}: 4×2×16
+|
+The collision box plus:
+
+Facing is {{cd|east}}/{{cd|west}}: 14×10×2
+
+Facing is {{cd|north}}/{{cd|south}}: 2×10×14
+|
+The collision box is counted from the top of the block.
+|-
+|{{BlockLink|Moving Piston}} 
+|| The collision box depends on the collision box of the block that is extending/withdrawing, the progress, the facing, and the piston head. 
+| Empty
+|
+|}
+
+{{IN|JE}}, it is possible to visualize the collision boxes by enabling {{cd|[[Debug_renderer#visualize_collision_boxes|visualize_collision_boxes]]}} in the debug renderer. It is also possible to see when the [[debug property]] {{cd|SHAPES}} is enabled, indicated by a dark gray outline.
+
+=== Interaction box ===
+<!-- [[Interaction box]] redirects here. -->
+[[File:Barrier_Outline_Box_(held).png|thumb|200px|A [[barrier]] block's interaction box is shown when hovered by the [[crosshair]].]]
+The interaction box manages block interactions with [[players]], such as block placement, destruction, {{control|use}} actions, etc. When looking at the given block, the interaction box is shown as a black outline around the block's edges; this is especially visible in the [[barrier]] block. The interaction box appears only if the block the player is looking at is inside of the [[interaction range]].
+
+A block's interaction box is usually contained within its own 1×1×1 cube space. However, some blocks, such as the ones reported below, are capable of extending outside of this space.
+
+*The arm of an extended [[piston]] &ndash; specifically the part that protrudes into the piston's block space.<ref>{{bug|MC-124459}}</ref>
+
+* The very top part of a [[lectern]]'s head.{{only|je}} This is particularly noticeable when a block is placed above the lectern, making the lectern's outline overlap with the block.
+
+* The extended top of an opened [[shulker box]].
+
+The interaction box isn't visible when aiming the [[crosshair]] at the part that extends outside of the cube.<ref>{{bug|MC-158827}}</ref>
+
+{{IN|je}}, the interaction box outline is cyan ({{color|#57ffe1}}) with a small black outline if {{UI|Options|Accessibility Settings|High Contrast Block Outlines}} is enabled. When the [[debug property]] {{cd|SHAPES}} is enabled, the interaction box outline is white.
+
+== Miscellaneous hitboxes ==
+<!--[[File:Campfire's smoke particles colliding with barrier block.png|thumb|right|160px|Smoke particles passes through [[glass block]], but collides with [[barrier block]].]]
+Incorrect. It could collide with the glass!
+-->
+
+=== Blocks visual box ===
+
+In most instances where ''Minecraft'' uses [[w:line_clipping|line clipping]] for detection, it utilizes the collision box or the interaction box of the blocks. For example, when a player tries to interact with a block, the game draws a line from it to the [[interaction range]] and looks for the first block whose interaction box the line intersects with. In the case of movement, the game draws a line in the direction of movement to find the first collision box to limit movement instead of crossing it.
+
+However, there are five situations in the game where line clipping uses neither the interaction box nor the collision box, instead, the game uses the ''visual box''. The visual box attempts to simulate what a sight would look like; however, most game sight simulations, such as a [[mob AI]] searching for a target, use line clipping with a collision box.
+
+For [[fence]]s, [[mud]], [[snow]], and [[soul sand]] the visual box and the interaction box are identical. For [[copper bars|all copper bars]], [[copper grate]]s, [[glass]], [[glass pane]], [[iron bars]], [[powder snow]], [[stained glass]], [[stained glass pane]], and [[tinted glass]] the visual box are empty. For all other blocks, the visual box and the collision box are identical.
+
+Note that many [[transparent blocks]] have an empty visual box; this is so they can be ignored when drawing a line of sight, because they are transparent. However, not all transparent blocks are ignored; for example, the [[barrier]], [[ice]], and [[leaves]] have a full visual box.
+
+Below are all the uses of the visual box {{in|JE}}:
+
+* '''Third-person view camera:''' To position the [[third-person view]] camera, the game calculates the distance from the player based on the visual box, using it to avoid collisions.
+
+* '''Looking at the creaking:''' Visual boxes are used by the [[creaking]] to know if it is in a player's line of sight; if so, it stops. This is different from [[endermen]], which use the collision box to detect when a player is looking at them.
+
+* '''Trial spawner detecting a player:'''  When the [[trial spawner]] attempts to detect a player in order to activate, or detect a player with [[Trial Omen]], the player needs to be looking at the spawner, and for that, a visual box is used. However, if the spawner already has a player in its list of detected players, new players will not need to look at the spawner unless they want to use the Trial Omen effect to convert the spawner into an [[ominous trial spawner]].
+
+* '''Trial spawner mob spawning:''' When attempting to spawn a mob, the trial spawner checks if the position where it will spawn is visible starting from the center of the block where it is located. For this, it uses the visual box.
+
+* '''Ominous item spawner:''' When an [[ominous item spawner]] spawns above an entity, it first defines a point between 2 and 5 blocks above the top of the entity's hitbox. Then, it draws a line from the entity to that point, stopping at the chosen point or one block below the first collision found by the visual box. Note that this means that if an entity is directly below, for example, a glass block, the ominous item spawner will be spawned above the glass.
+
+=== Particle collision box ===
+Some [[Particles_(Java_Edition)|particles]] have physics: for example, the [[Campfire#Particles_and_smoke_signals|smoke particles from campfires]]. Particles with physics have a collision box that collides with collision box of blocks. Upon collision, the particle's motion is brought to zero along one of the axes, depending on the direction of the collision.
+
+However, particles are generated even if their collision box intersects the collision box of a block. When this happens, the particle ignores the collision box. 
+
+A lit [[campfire]] creates smoke particles between 0 and 2 blocks above it, with a [[w:Triangular_distribution#Symmetric_triangular_distribution|symmetric triangular distribution]], by the formula {{cd|pos.getY() + random.nextDouble() + random.nextDouble()}}, when {{cd|pos.getY()}} is the Y coordinates of the campfire and {{cd|random.nextDouble()}} is a random number between 0 and 1. Each particle has a 4×4×4 pixels (0.25×0.25×0.25 blocks) collision box. Therefore, the closer a collision box is above the campfire, the more likely a smoke particle is to pass through it, and when the collision box is at 2.25 blocks or more, no particle will pass through it. 
+
+For example, 71.9% of smoke particles pass through a [[Solid block|full collidable block]] one block above the campfire, 28.1% pass through a top [[slab]] one block above the campfire, 3.13% pass through a full collidable block two blocks above the campfire, only 0.195% pass through a [[cauldron]] two blocks above the campfire, and no particle passes through a top slab two block above the campfire.{{note|1=This calculation was performed using the formula {{math|1-F_X(x-0.25)}}, where {{math|F_X}} is the [[w:Cumulative_distribution_function|cumulative distribution function]] of {{math|X}}, {{math|X}} is the random variable with a triangular distribution with parameters a=0, b=2, c=1, and {{math|x}} is the vertical distance between the campfire and the block collision box. Thus, the probability of a smoke particle passing through a collision box that starts {{math|x>1}} blocks above the campfire is {{math|1-(x-0.25)^2 / 2}} if {{math|x ≤ 1.25}}, {{math|(2.25-x)^2 / 2}} if {{math|1.25 < x < 2.25}}, or 0 if {{math|x ≥ 2.25}}}}
+
+== List of entities' hitbox sizes ==
+{{Anchor|List of entities' hitboxes}}
+
+Most [[entities]]' bounding boxes are shaped in {{w|cuboid}}s, and do not always overlap with the [[model]]s of the entities. For example, the [[witch]]'s bounding box does not include the upper part of its hat, and the [[wither]]'s bounding box does not include the two heads on its sides. Because most bounding boxes are cuboids, it is standard to measure them by their '''width''' and '''height''', with both being measured in [[blocks tall]].
+
+=== Base hitbox size ===
+
+Below is a table of every entities' hitboxes, mainly sourced from ''Java Edition'', unless stated otherwise. The list shows sizes of the entities' '''base bounding box''' size; other hitboxes may be noted.<ref group="note">In the game's code, most entities bounding boxes are defined in {{jcp|net.minecraft.world.entity.EntityType}} class. Baby variant of mobs are not defined there, instead typically in [[Entity format#Entity inheritance|each individual mob class]].</ref>
+
+Some entities' hitbox size is marked with "'''Varies'''", this indicates that the entity has variable hitbox sizes, see {{slink||Variable hitbox size}}. For others, "'''None'''" marks that the entity does not have hitbox, and "'''N/A'''" indicates no data is available yet for the entity in the wiki. An empty cell indicates that the entity may not have hitbox or no data is available yet ("'''None'''" or "'''N/A'''").
+
+{{hatnote|Hitbox data are sourced either from in-game or the [[:Category:Entities|entities' articles]].}}
+
+<!-- Go to [[Hitbox/Entities' hitboxes]] page to update the hitbox table data -->
+{{/Entities' hitboxes}}
+{{clear}}
+
+=== Variable hitbox size ===
+{{Anchor|Variable hitbox sizes}}
+
+The size of an entity's hitbox is not necessarily static and may change depending on certain situations. For instance, a player's hitbox gets smaller while crouching, and a pufferfish's hitbox changes while its puffing. Some entities may also spawn in different sizes, like [[slime]], [[magma cube]], and [[salmon]]{{only|be}}.
+
+Below is the list of entities whose hitbox can change sizes given specific situations or states:
+
+{| class="wikitable sortable collapsible"
+! Entity !! States !! Height !! Width <!-- needs separate baby height / width column for Camel, Goat, Polar Bear -->
+|-
+| rowspan="3" | {{EntityLink|Camel}}
+| Normal || 2.375 || 1.7
+|-
+| Sitting || 0.945 || 1.0
+|-
+| Sitting (Baby) || 0.945 || 0.45
+|-
+| rowspan="2" | {{EntityLink|Goat}}
+| Normal || 1.3 || 0.9
+|-
+| Jumping || 0.91 || 0.63
+|-
+| rowspan="3" | {{EntityLink|Magma Cube}}
+| Small || 0.52 || 0.5202
+|-
+| Medium || 1.04 || 1.0404
+|-
+| Big || 2.08 || 2.0808
+|-
+| rowspan="4" | {{EntityLink|Player}}
+| Normal || 1.8 || 0.6
+|-
+| Sneaking || 1.5 || 0.6
+|-
+| Gliding/Swimming || 0.6 || 0.6
+|-
+| Sleeping || 0.2 || 0.2
+|-
+| rowspan="2" | {{EntityLink|Polar Bear}}
+| Normal || 1.4 || 1.4
+|-
+| Attacking || 2.0 || 1.0
+|-
+| rowspan="3" | {{EntityLink|Pufferfish}}
+| Unpuffed || 0.35 || 0.35
+|-
+| Semi-puffed || 0.49 || 0.49
+|-
+| Fully Puffed || 0.7 || 0.7
+|-
+| rowspan="3" | {{EntityLink|Salmon}}{{only|be|short=1}}
+| Small || 0.25 || 0.25
+|-
+| Medium || 0.5 || 0.5
+|-
+| Large || 0.75 || 0.75
+|-
+|-
+| rowspan="3" | {{EntityLink|Shulker}}
+| Closed || 1 || 1
+|-
+| Peeking || 1.2 || 1
+|-
+| Open || 2 || 1
+|-
+| rowspan="3" | {{EntityLink|Slime}}
+| Small || 0.52 || 0.5202
+|-
+| Medium || 1.04 || 1.0404
+|-
+| Big || 2.08 || 2.0808
+|-
+| rowspan="2" | {{EntityLink|Warden}}
+| Normal || 2.9 || 0.9
+|-
+| Digging/Emerging || 1 || 0.9
+|}
+
+== History ==
+=== ''Java Edition'' ===
+==== Block hitboxes ====
+{{info needed section|{{bug|MC-1635}}, {{bug|MC-73302}}, {{bug|MC-1720}}, and b1.9pre2: did the wireframe also change?}}
+
+{{HistoryTable
+|{{HistoryLine|java pre-classic}}
+|{{HistoryLine||rd-132211|Targeted blocks now have a visual indicator in which they alternate between bright and dark continuously.}}
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.13a|Targeted blocks also have a thin outline box.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|The holographic pulsating hitbox displayed when able to place or break a block has been removed, leaving just the wireframe hitbox.}}
+|{{HistoryLine||?|The hitboxes for some blocks (flowers, mushrooms, torches) are no longer full cubes, and are more fitting for the size of the block.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||Minecraft Infdev|dev=20100313|link=Minecraft Infdev|slink=Java Edition Infdev 20100313|Prior to this version, the wireframe hitbox for highlighting blocks would behave increasingly incorrectly [[Java Edition distance effects#History|at far distances from the world origin]]. On all supported hardware, its position would jitter erratically with small shifts in camera rotation. On some GPUs/graphics cards, the geometry of the box would also distort, resulting in non-cubic shapes.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.11|The hitbox of cacti at far distances became greater than a full block.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|The hitbox of cakes at far distances became greater than a full block.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||?|[[Stairs]] cannot be targeted at angles where the crosshair does not point at a solid feature of the block. However, the wireframe outline still displays as a full cube regardless.}}
+|{{HistoryLine||?|The hitboxes for randomly misaligned blocks such as tall grass are now themselves randomly offset as well to accommodate them.}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[Fence]]s no longer have a full block hitbox on the xz plane, and instead more closely match their shape.}}
+|{{HistoryLine||1.1|dev=12w01a|The [[fence gate]] hitbox has changed to match the changes made to fence hitboxes.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|[[Wall]]s now have their own collision box size - previously they shared their size with fences.<ref>{{bug|MC-1332|||Fixed}}</ref>
+|The above change also fixed [[Java Edition distance effects#Fences, fence gates and walls|a bug causing their hitboxes to distort and stop working correctly at far distances from the world origin]].}}
+|{{HistoryLine||1.5|dev=13w06a|Fence hitboxes have been changed - concave corners now have their collision boxes respect that rather than always using its effective convex hull, resulting in an invisible portion of collision box there.
+|The above change also fixed [[Java Edition distance effects#Fences, fence gates and walls|a bug causing their hitboxes to distort and stop working correctly at far distances from the world origin]].}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:JE 1.7.10 Pumpkin stems aged 15 clipping.png|60px]] {{Anchor|Stems clipping}}The hitboxes of [[melon stem]]s and [[pumpkin stem]]s with ages &ge;8 could visually extend into the block space above them while they existed (from Beta 1.8 Pre-release up to the removal of the last four in 14w10a and the remaining four in 14w25a).}}
+|{{HistoryLine||1.9|dev=15w38a|The hitboxes of cakes and [[cacti]] [[Java Edition distance effects|at far distances]] could become greater than a full block, allowing this to be seen (from Beta 1.2 and Alpha v1.0.11 respectively up to their fixing, although it became unobservable for cake from 15w38a onward due to fixed bug {{bug|MC-106300}}).|[[Cake]]'s wireframe hitbox now always appears at (0,0,0) regardless of where the targeted cake actually is. This also masks a distance issue fixed in 15w49a{{info needed|this might be a conflicting information with the previous statement}}; see below.}}
+|{{HistoryLine|||dev=15w46a|The hitbox of [[redstone wire]] now covers only part of the surface of the [[block]] below, based on the orientation of the redstone.}}
+|{{HistoryLine|||dev=15w49a|Prior to this snapshot, the wireframe hitboxes used for cake and cactus would appear stretched and misshapen [[Java Edition distance effects#History|at far distances from spawn]].}}
+|{{HistoryLine|||dev=15w49b|The hitbox height of the [[end portal block]] has been increased from {{frac|1|16}} of a block to {{frac|3|4}} of a block.}}
+|{{HistoryLine||1.11|dev=16w35a|Cake's hitbox now appears at the right position again.<ref>{{bug|MC-106300|||Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|The hitbox of [[brewing stand]]s now takes into account the central rod as well.<ref>{{bug|MC-4504|||Fixed}}</ref>{{verify|is this actually an entity collision thing?}}
+|The collision box of [[wall]]s has been made to be correctly concave.<ref>{{bug|MC-2666|||Fixed}}</ref>{{verify|is this also an entity collision thing?}}|The outline boxes of [[anvil]]s and [[hopper]]s now much more closely fit the model shape of these blocks.
+|The outline boxes of [[fence]]s is now correctly L-shaped, T-shaped or +-shaped when branching in perpendicular directions.<ref>{{bug|MC-12000|||Fixed}}</ref>
+|[[Cactus]] now has a correct cuboid outline box.<ref>{{bug|MC-59610|||Fixed}}</ref>
+|Blocks containing multiple [[vines]] now have better outline boxes.
+|[[Glass pane]]s and [[iron bars]] have cleaner outline boxes when branching.
+|[[End portal frame]] outline boxes now properly account for the eye.
+|[[Piston]] and [[lily pad]] outline boxes were changed.}}
+|{{HistoryLine||1.14|dev=18w48a|The outline boxes of [[bed]]s now match better the visual shape of the bed.}}
+|{{HistoryLine|||dev=19w13a|The outline boxes of [[cauldron]]s now fit the model better, allowing for blocks beneath it to be targeted.<ref>{{bug|MC-129205|||Fixed}}</ref>{{verify|is this actually an entity collision thing?}}}}
+|{{HistoryLine||1.16|dev=20w10a|[[Fire]] now has an outline box (alongside [[soul fire]]),<ref>{{bug|MC-163655|||Fixed}}</ref> bringing it more in line with other blocks. Previously, fire had no outline box at all, and breaking it required targeting underlying blocks, which also allowed it to be put out in [[Creative mode]] when holding a [[sword]] or [[trident]], which were programmed to not break blocks. It also prevented its block states from being read in the [[debug screen]] or modified via [[debug stick]].}}
+|{{HistoryLine|||dev=20w18a|The outline box of [[redstone wire]] has been changed to much more closely the visual shape of the block. For example, redstone wire branching in different directions causes its outline box to itself branch in said directions,<ref>{{bug|MC-137336|||Fixed}}</ref> mirroring the behavior of fences, glass panes, iron bars and walls, and, if traveling up the side of a block, the vertical portion of the dust can now also be targeted.<ref>{{bug|MC-153508|||Fixed}}</ref>}}
+|{{HistoryLine||1.17|dev=20w48a|The hitboxes of [[pointed dripstone]] can sometimes also be randomly extended into adjacent blocks.<ref>{{bug|MC-205543|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=20w49a|The hitboxes of pointed dripstone no longer sometimes extend into adjacent blocks.<ref>{{bug|MC-205543|||Fixed}}</ref>|The overall width of the outline box of the pointed dripstone is reduced by {{frac|1|8}} of a block.}}
+}}
+
+==== Entity hitboxes ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.4|dev=1.4.3|{{keys|F3+|B}} now enables a [[debug renderer]] which visually displays entity hitboxes.}}
+|{{HistoryLine||1.14|dev=19w08a|Changed bounding box and eye height of foxes (prevents them from drowning when swimming).}}
+|{{HistoryLine||1.20.2|dev=23w33a|Changed mob attack reach calculation.|In horizontal directions, mobs' attack reach are now their bounding box extended in horizontal directions, instead of using horizontal width to determine.|In vertical directions, mobs' attack reach are now the exact vertical range of their bounding box. When there's no overlap between their bounding box and their target's bounding box in vertical direction, they can not attack.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Fixed an issue where wither skull's bounding box is wrongly positioned in the first tick, and cannot be selected with volume checks in commands.<ref>{{bug|MC-262112|resolution=Fixed}}</ref>}}
+|{{HistoryLine||26.1|dev=snap2|Changed [[rabbit]] hitbox sizes to match the new model (adult and baby variants).|Baby [[chicken]]'s bounding box was tweaked to correctly align with their new model.{{info needed|to what sizes precisely?}}}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{expand section}}
+==== Entity hitboxes ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Mob effect [[Particles (Bedrock Edition)|particles]] can now appear slightly outside of the mob's bounding box.}}
+}}
+
+== Issues ==
+{{issue list|hitbox}}
+
+== Trivia ==
+* {{IN|je}}, the visually shown entity hitboxes that appear when {{keys|F3+B}} sometimes do not render where the hitbox actually is, as it is just highlighting the area relative to the position of the entity that has the hitbox. This can be quite prominent if the player runs {{cmd|tick freeze}} when a mob is moving.
+* {{IN|je}}, if an entity has the [[Invisibility]] effect, its hitbox is not visually shown when {{keys|F3+B}} is pressed.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Ender dragon green hitboxes.png|[[Ender dragon]] has nine distinct hitboxes.
+Wither hitbox.png|Wither heads don't have a hitbox of their own.
+Player hitbox while gliding using elytra.png|[[Player]]s' small hitbox while [[gliding]] using an elytra.
+Sheep upside down hitbox.png|Sheep has the same hitboxes despite being [[Name_Tag#Easter_eggs|upside down]].
+Items having entity hitboxes.png|Items also have entity hitboxes.
+Item frames and painting having entity hitboxes.png|Pseudo-blocks like item frame and painting have entity hitboxes.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[de:Hitbox]]
+[[es:Caja de colisión]]
+[[ja:当たり判定]]
+[[pl:Hitbox]]
+[[pt:Caixa de colisão]]
+[[ru:Хитбокс]]
+[[zh:判定箱]]

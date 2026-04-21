@@ -1,0 +1,247 @@
+{{Infobox block
+| image = Jigsaw Block.png
+| extratext = View [[#Gallery|all renders]]
+| transparent = No
+| waterloggable = yes
+| light = No
+| tool = None
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| rarity = * Epic {{only|java|short=1}}
+* Common {{only|bedrock|short=1}}
+}}
+
+'''Jigsaw blocks''' are technical [[block]]s commonly used as a way to construct large structures from smaller sections.
+
+== Obtaining ==
+Jigsaw blocks can be obtained by using the {{control|pick block}} [[control]], or by using various [[commands]] such as {{cmd|give @s jigsaw}}. {{IN|Java}}, jigsaw blocks are also available in the [[Creative inventory]] when operator items is turned on.
+
+{{IN|java}}, structure pieces of [[jigsaw structure]]s loaded using [[structure block]]s or {{cmd|place template}} include jigsaw blocks. Structures generated from clicking the "Generate" button in the Jigsaw block interface with the "Keep Jigsaw" setting turned on will also include jigsaw blocks.
+
+{{IN|bedrock}}, structures placed using {{cmd|place jigsaw}} or {{cmd|place structure}} with <code>keepJigsaws</code> set to <code>true</code> include jigsaw blocks.
+
+=== Natural generation ===
+Jigsaw blocks do not naturally generate. Some [[structure]]s rely on jigsaw blocks for generation (e.g. [[pillager outpost]]s, [[village]]s, and [[ancient cities]]), but these jigsaw blocks are replaced by other blocks during generation.
+
+== Usage ==
+[[File:Jigsaw interface 1 20 3.png|thumb|250px|Jigsaw block interface in ''Java Edition'']]
+[[File:BEJigsaw Interface.png|thumb|250px|Jigsaw block interface in ''Bedrock Edition'']]
+
+Players in [[Survival]] mode cannot place jigsaw blocks.
+
+=== Jigsaw connections ===
+{{main|Jigsaw structure}}
+
+Jigsaw blocks are function blocks used for the generation of [[jigsaw structure]]s out of smaller templates.<ref>{{cite|url=https://crowdin.com/translate/minecraft/9412/enus-engb#5201242|title=Minecraft Game}}</ref> Jigsaw structures are used for the generation of [[pillager outpost]]s, [[village]]s, [[bastion remnant]]s, [[Ancient City|ancient cities]], [[trail ruins]], and [[trial chambers]]; other structures use hardcoded generation. The GUI of a jigsaw block can be used to configure its generation settings. Those are:
+
+; Target Pool
+: Refers to a [[template pool]]; or an [[pool aliases|alias]] of a template pool. The template pool is used to select the connecting structure piece.
+
+; Name
+: Name of the jigsaw block.
+: Defaults to {{code|minecraft:empty}}.
+
+; Target name
+: The desired name of the jigsaw block in the connecting piece to connect to this jigsaw block.
+: Defaults to {{code|minecraft:empty}}.
+
+; Turns into
+: What the jigsaw block turns into once the whole feature is generated. 
+: Defaults to <code>minecraft:air</code>.
+
+; Selection Priority
+: Defines the order of jigsaw blocks in a template to generate the connecting piece. If the piece being generated contains multiple jigsaw blocks that are all valid connections to the parent block, the game tries to connect to the one with the highest Selection Priority first. In the case of a tie, the connecting block is selected randomly.
+
+; Placement Priority
+: Defines the order of in which the connecting piece is processed to handle its jigsaw blocks during the wider structure generation.
+
+; Joint type
+: Appears only when jigsaw block is placed facing up or down.
+: Contains two types of joints: Rollable and Aligned
+:* Rollable: The connecting piece is placed with a random rotation. Defaults to this.
+:* Aligned: The connecting piece is rotated such that the rotations of the jigsaw blocks match (marked by the white bar on the jigsaw block)
+
+=== Debug generation ===
+{{see also|Commands/place}}
+{{exclusive|java|section=1}}
+Jigsaw blocks can also be used to generate multiple levels of jigsaw blocks in the world. The settings in the 2nd to last row are only used for this purpose and are not saved when leaving the UI.
+
+; Levels
+: Determines how many jigsaw block "levels" it goes through. (ex. Piece>[Layer 1]>[Layer 2]).
+: Can be set to an integer from 0 to 20. Defaults to 0.
+
+; Keep Jigsaw
+: Determines if the placed pieces includes the jigsaw blocks it contains or become what its "Turns into" field is set to.
+: Defaults to ON
+
+; Generate
+: The button to start the generation.
+
+=== Piston interactivity ===
+Jigsaw blocks cannot be pushed by [[piston]]s. They also cannot be pushed nor pulled by [[sticky piston]]s.
+
+== Sounds ==
+{{Sound table/Block/Normal}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Jigsaw Block
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=jigsaw-block
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Jigsaw Block
+|spritetype=block
+|nameid=jigsaw
+|id=466
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=jigsaw-block
+|spritetype=block
+|nameid=JigsawBlock
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|orientation|north_up|down_east,down_north,down_south,down_west,east_up,north_up,south_up,up_east,up_north,up_south,up_west,west_up|The direction the jigsaw block is facing.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|facing_direction|0|0,1,2,3,4,5|The direction the jigsaw block is facing.|Unsupported}}
+{{bst|rotation|0|0,1,2,3|The rotation around the axis.|Unsupported|foot=1}}
+
+=== Block data ===
+A jigsaw block has a [[block entity]] associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|string|final_state}}: The block that this jigsaw block becomes.
+** {{nbt|string|joint}}: The joint option value, either "rollable" or "aligned".
+** {{nbt|string|name}}: The jigsaw block's name. This jigsaw block gets aligned with another structure's jigsaw block that has this value in the target tag.
+** {{nbt|string|pool}}: The jigsaw block's target pool to select a structure from.
+** {{nbt|string|target}}: The jigsaw block's target name. This jigsaw block gets aligned with another structure's jigsaw block that has this value in the name tag.
+** {{nbt|int|selection_priority}}: Priority of this jigsaw block being selected for generation. Jigsaw blocks with higher selection priority get selected first.
+** {{nbt|int|placement_priority}}: Priority of the piece generated by this jigsaw block to place its children. Pieces with higher placement priority generate their children first.
+</div><section end="block data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+Video by [[slicedlime]] on how jigsaw blocks are used to generate [[village]]s in the 1.14 ([[Village %26 Pillage]] update):
+{{yt|b6eBndQ_jK0}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w46a|[[File:Jigsaw Block JE1 BE1.png|32px]] Added the jigsaw block. It has a GUI, however, they are useless for players at the moment and are used only during world generation (similar to Structure Blocks in data mode).
+|Jigsaw blocks use the [[Missing textures and models#Missing texture|missing texture]] particle when broken.}}
+|{{HistoryLine|||dev=18w47a|Jigsaw blocks are now used in the generation of [[pillager outpost]] structures.}}
+|{{HistoryLine|||dev=18w48a|Jigsaw blocks are now used in the generation of [[plains]] [[village]] structures.}}
+|{{HistoryLine|||dev=18w49a|Jigsaw blocks are now used in the generation of [[snowy taiga|snowy]] and [[savanna]] village structures.}}
+|{{HistoryLine|||dev=18w50a|Jigsaw blocks are now used in the generation of [[taiga]] and [[desert]] village structures.
+|[[File:Jigsaw Block JE2.png|32px]] The texture of the jigsaw block has been changed.}}
+|{{HistoryLine||1.16|dev=20w13a|[[File:Jigsaw Block (S) JE3 BE2.png|32px]] A locked texture to the jigsaw block has been added.
+|The interface of the jigsaw block has been changed.}}
+|{{HistoryLine|||dev=20w16a|A button in the GUI that generates a jigsaw structure starting from the jigsaw block, using a given generation depth has been added. This makes jigsaw blocks now usuable by players.
+|Jigsaw blocks are now used in the generation of [[bastion remnant]]s.}}
+|{{HistoryLine|||dev=20w22a|A new "Keep Jigsaws" option that controls whether jigsaw blocks in the resulting structure after using "Generate" remain jigsaw blocks or be replaced by their "Turns Into" block, which defaults to "on" has been added.}}
+|{{HistoryLine||1.19|dev=?|Jigsaw blocks are now used in the generation of [[ancient city]] structures.}}
+|{{HistoryLine||1.19.3|dev=22w44a|Jigsaw blocks are now available in the creative inventory, but only if cheats are enabled.}}
+|{{HistoryLine|||dev=22w45a|Moved jigsaw blocks behind the "Operator Utilities" tab in the creative inventory. The tab is available only if cheats are enabled and the "Operator Items Tab" option in the controls menu is turned on.}}
+|{{HistoryLine||1.20.3|dev=23w43a|Added "Selection Priority" and "Placement Priority" options.}}
+|{{HistoryLine|||dev=23w45a|"Levels" increased from 7 to 20.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Jigsaw Block JE1 BE1.png|32px]] Added the jigsaw block.
+|The jigsaw block is currently available only by using [[inventory]] editors.
+|It is unknown whether jigsaw blocks are used for [[pillager outpost]] and new [[village]] generation or not.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Jigsaw Block (S) JE3 BE2.png|32px]] The texture of the jigsaw block has been changed.
+|Jigsaw blocks are now functional in game.
+|Jigsaw blocks can now be obtained using the {{cmd|give <player> jigsaw}} [[command]].}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.22|Jigsaw block has had its interface changed.}}
+|{{HistoryLine||1.21.50|exp=Data-Driven Jigsaw Structures|dev=Preview 1.21.50.26|With the new experimental option it is possible to use the jigsaw block for structures.}}
+}}
+
+== Issues ==
+{{issue list|jigsaw|jigsaw block}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Jigsaw (Xray).png|A translucent image of a jigsaw block, showing all of its faces.
+Jigsaw Block.png | South
+Jigsaw Block (E) JE3.png | East
+Jigsaw Block (N) JE3.png | North
+Jigsaw Block (W) JE3.png | West
+Jigsaw Block (UW).png | 
+Jigsaw Block (US).png | 
+Jigsaw Block (UN).png | 
+Jigsaw Block (UE).png | 
+Jigsaw Block (DW).png | 
+Jigsaw Block (DS).png | 
+Jigsaw Block (DN).png | 
+Jigsaw Block (DE).png |
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Jigsaw interface 1 20 3.png|The interface of a jigsaw block.
+Jigsaw interface.png|The current interface of a jigsaw block until [[Java Edition 1.20.2]].
+Jigsaw interface old.png|The interface of a jigsaw block before [[Java Edition 1.16]].
+Pillager outpost base plate.png|Jigsaw blocks used in the generation of a [[pillager outpost]] watchtower.
+Pillager outpost feature plate.png|Jigsaw blocks are used to generate the outer [[structures]] in a pillager outpost.
+BEJigsaw Interface old.png|The old UI before [[Bedrock Edition Preview 1.21.40.22]] (Classic UI).
+BEJigsaw Interface.png|The current interface for Bedrock Edition (Classic UI).
+</gallery>
+
+== See also ==
+* [[Structure Block]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|creative}}
+
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+[[Category:Creative or commands only blocks]]
+
+[[de:Verbundblock]]
+[[fr:Bloc de puzzle]]
+[[ja:ジグソーブロック]]
+[[ko:직소 블록]]
+[[pl:Blok konstrukcyjny]]
+[[pt:Bloco-Quebra-Cabeça]]
+[[ru:Пазл]]
+[[zh:拼图方块]]

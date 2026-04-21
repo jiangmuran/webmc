@@ -1,0 +1,533 @@
+{{About|the item in game|DLC packs that are sold together|Content bundles}}
+{{Infobox item
+|group = Plain
+|1-1 = Bundle.png
+|1-3 = Bundle Open.png
+| group2 = White
+| 2-1 = White Bundle.png
+| 2-2 = White Bundle Open.png
+| group3 = Light Gray
+| 3-1 = Light Gray Bundle.png
+| 3-2 = Light Gray Bundle Open.png
+| group4 = Gray
+| 4-1 = Gray Bundle.png
+| 4-2 = Gray Bundle Open.png
+| group5 = Black
+| 5-1 = Black Bundle.png
+| 5-2 = Black Bundle Open.png
+| group6 = Brown
+| 6-1 = Brown Bundle.png
+| 6-2 = Brown Bundle Open.png
+| group7 = Red
+| 7-1 = Red Bundle.png
+| 7-2 = Red Bundle Open.png
+| group8 = Orange
+| 8-1 = Orange Bundle.png
+| 8-2 = Orange Bundle Open.png
+| group9 = Yellow
+| 9-1 = Yellow Bundle.png
+| 9-2 = Yellow Bundle Open.png
+| group10 = Lime
+| 10-1 = Lime Bundle.png
+| 10-2 = Lime Bundle Open.png
+| group11 = Green
+| 11-1 = Green Bundle.png
+| 11-2 = Green Bundle Open.png
+| group12 = Cyan
+| 12-1 = Cyan Bundle.png
+| 12-2 = Cyan Bundle Open.png
+| group13 = Light Blue
+| 13-1 = Light Blue Bundle.png
+| 13-2 = Light Blue Bundle Open.png
+| group14 = Blue
+| 14-1 = Blue Bundle.png
+| 14-2 = Blue Bundle Open.png
+| group15 = Purple
+| 15-1 = Purple Bundle.png
+| 15-2 = Purple Bundle Open.png
+| group16 = Magenta
+| 16-1 = Magenta Bundle.png
+| 16-2 = Magenta Bundle Open.png
+| group17 = Pink
+| 17-1 = Pink Bundle.png
+| 17-2 = Pink Bundle Open.png
+| invimage = Bundle
+| invimage2 = ----
+| invimage3 = White Bundle
+| invimage4 = Light Gray Bundle
+| invimage5 = Gray Bundle
+| invimage6 = Black Bundle
+| invimage7 = Brown Bundle
+| invimage8 = Red Bundle
+| invimage9 = Orange Bundle
+| invimage10 = Yellow Bundle
+| invimage11 = Lime Bundle
+| invimage12 = Green Bundle
+| invimage13 = Cyan Bundle
+| invimage14 = Light Blue Bundle
+| invimage15 = Blue Bundle
+| invimage16 = Purple Bundle
+| invimage17 = Magenta Bundle
+| invimage18 = Pink Bundle
+| rarity = Common
+| renewable = Yes
+| stackable = No
+}}
+
+A '''bundle''' is an [[item]] that can store up to a stack's worth of mixed item types within itself in a single [[inventory]] slot. Items can be individually selected and taken out of the bundle via the inventory menu.
+
+'''Dyed bundles''' are the [[dye]]d variants of bundles.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|head = 1
+|B1 = String
+|B2 = Leather
+|Output = Bundle
+|type = Utility
+}}
+{{Crafting
+|ingredients = Any [[Bundle]] +<br />Matching [[Dye]]
+|shapeless = 1
+|A2 = Bundle; Any Bundle
+|B2 = Matching Dye; Bone Meal; Lapis Lazuli; Cocoa Beans
+|Output = Matching Dyed Bundle
+|type = Utility
+|foot = 1
+}}
+
+=== Generated loot ===
+{{LootChestItem|bundle}}
+
+== Usage ==
+<!-- The tooltip does not reflect the current bundle "tooltip" -->{{FakeImage|{{Slot|Stick,64}}{{Slot|Ender Pearl,16}}{{Slot|Iron Sword}}<br>{{Slot|Stick,1}}{{Slot|Ender Pearl,4}}{{Slot|Iron Sword,64}}<br>{{Slot|Filled Bundle[Stick x32/Ender Pearl x8]| title = Bundle|link=none}}|2=Item stack sizes (top row) and the number of bundle slots they take up (middle row). Sticks stack to 64, so they take up one bundle slot; ender pearls stack to 16, so they take up four; and swords do not stack, so they take up the whole bundle. So, for instance, a bundle may have 32 sticks and 8 ender pearls inside, which take up a total of {{Tooltip|(32&times;1)|32 Sticks}}+{{Tooltip|(8&times;4)|8 Ender Pearls}}=64 bundle slots.|style=max-width:250px;}}Bundles are used to store different [[item]] types in the same [[inventory]] slot. This does not however increase the total capacity of the slot, as bundles can store only what would otherwise  add up to a single slot. Items that can normally stack up to 64 take up {{frac|1|64}} of a bundle, items that can normally stack up to 16 (e.g. [[egg]]s, [[ender pearl]]s) take up {{frac|1|16}} of a bundle, and items that do not stack take up the entirety of a bundle (e.g. [[sword]]s with an exception of bundles themselves). {{IN|Java}}, the space that an item takes up in a bundle is equal to the reciprocal of its <code>[[Data component format#max stack size|max_stack_size]]</code> component, even if it is different from the standard 1, 16, and 64.
+
+Bundles are not stackable, but they are able to be placed (nested) inside another.<ref>{{bug|MC-203567||Bundles can be placed inside of bundles|WAI}}</ref> Each bundle placed inside another bundle consumes {{frac|1|16}} of the space of the outer bundle plus the space occupied by the inner bundle's contents. {{IN|java}}, the space taken up by a bundle is not affected by its <code>max_stack_size</code> component.
+
+[[Shulker box]]es cannot be placed inside of bundles. However, bundles ''can'' be placed inside of shulker boxes.
+
+=== Inserting items ===
+While in an inventory screen, items are inserted into bundles by pressing the "Take" inventory control (left click, or {{xbtn|A}} (Xbox) / {{nsbtn|A}} (Switch) / {{psbtn|X}} (PlayStation) on a controller, or tapping on a touch screen). This can be done in the following ways:
+
+* Picking up the bundle and left-clicking/pressing "Take"/tapping on the item(s) to be placed inside. This allows storing other bundles into a bundle.
+* Picking up item(s) and left-clicking/pressing "Take"/tapping on the bundle.
+
+=== Retrieving items ===
+When using a mouse or a controller, items are retrieved from bundles by pressing the "Take half" inventory control (right click, or {{xbtn|X}} (Xbox) / {{nsbtn|Y}} (Switch) / {{psbtn|square}} (PlayStation) on a controller):
+
+* When hovering over a bundle with an empty cursor, right-clicking/pressing "Take half" causes the cursor to hold the item from the most recently added slot of the bundle.
+* When hovering over a bundle with an empty cursor, scrolling the mouse wheel or moving the right stick allows for scrolling through the bundle's slots, starting from the most recently added item. The selected item slot is displayed with a bright underlay behind that item. During this process, the bundle's inventory icon appears open, and the selected slot's item icon appears within the bundle's icon. By right-clicking/pressing "Take half", the currently selected item moves to the cursor and the bundle closes. The bundle also closes when the cursor is moved off the bundle while it's still open, without retrieving any item.
+* When a bundle is held in the cursor and the cursor is hovering over an empty slot, right-clicking/pressing "Take half" causes the most recently added item to be placed in that slot. If the item cannot be placed into that slot (e.g. a dirt block in the helmet slot), the item is not retrieved.
+
+When using touch controls, items can be retrieved by tapping on a bundle in the inventory, then tapping on an item to take out, and lastly tapping on an empty slot. If the item cannot be placed into that slot (e.g. a dirt block in the helmet slot), the item is not retrieved.
+
+{{Ctrl|Using}} a bundle while it is selected in the hotbar causes the contents of the most recently added slot to be thrown out in the direction the player is facing.
+
+When a bundle [[item entity]] is destroyed (e.g. thrown onto fire or into a cactus), the contents of the bundle are dropped as items, similar to when a [[shulker box]] is destroyed.
+
+=== GUI ===
+[[File:Bundle usage.png|thumb|Hovering over a quarter-full bundle with 16 items.]]
+Hovering over a bundle reveals its blue fullness bar. When the bundle is empty, the fullness bar says "Empty" and shows the description, "Can hold a mixed stack of items". If it's completely full, the fullness bar turns red and says "Full". When there is at least one item in a bundle, space opens up above the bar, which displays the items in the bundle's slots, sorted by how recently they were added, from right to left. The space where the slots are shown is wide enough for four slots, so additional space opens up for new rows. When there are more than three rows, only the top three are displayed, and the bottom-right slot is replaced by text that says, +<number of slots hidden>, where the slot replaced by the text counts toward that number.
+
+Bundles show an additional fullness bar on their icons, similarly to how items that are damaged show their durability. Bundle fullness bars are blue, or red when full, and appear when the bundle contains at least one item.
+
+== Sounds ==
+{{/Sounds}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Bundle
+|spritetype=item
+|nameid=bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=White Bundle
+|spritetype=item
+|nameid=white_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Orange Bundle
+|spritetype=item
+|nameid=orange_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Magenta Bundle
+|spritetype=item
+|nameid=magenta_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Light Blue Bundle
+|spritetype=item
+|nameid=light_blue_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Yellow Bundle
+|spritetype=item
+|nameid=yellow_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Lime Bundle
+|spritetype=item
+|nameid=lime_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Pink Bundle
+|spritetype=item
+|nameid=pink_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Gray Bundle
+|spritetype=item
+|nameid=gray_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Light Gray Bundle
+|spritetype=item
+|nameid=light_gray_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Cyan Bundle
+|spritetype=item
+|nameid=cyan_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Purple Bundle
+|spritetype=item
+|nameid=purple_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Blue Bundle
+|spritetype=item
+|nameid=blue_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Brown Bundle
+|spritetype=item
+|nameid=brown_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Green Bundle
+|spritetype=item
+|nameid=green_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Red Bundle
+|spritetype=item
+|nameid=red_bundle
+|form=item
+|itemtags=bundles}}
+{{ID table
+|displayname=Black Bundle
+|spritetype=item
+|nameid=black_bundle
+|form=item
+|itemtags=bundles
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Bundle
+|spritetype=item
+|nameid=bundle
+|id=260
+|form=item
+|translationkey=item.bundle}}
+{{ID table
+|displayname=White Bundle
+|spritetype=item
+|nameid=white_bundle
+|id=272
+|form=item
+|translationkey=item.white_bundle}}
+{{ID table
+|displayname=Orange Bundle
+|spritetype=item
+|nameid=orange_bundle
+|id=268
+|form=item
+|translationkey=item.orange_bundle}}
+{{ID table
+|displayname=Magenta Bundle
+|spritetype=item
+|nameid=magenta_bundle
+|id=267
+|form=item
+|translationkey=item.magenta_bundle}}
+{{ID table
+|displayname=Light Blue Bundle
+|spritetype=item
+|nameid=light_blue_bundle
+|id=264
+|form=item
+|translationkey=item.light_blue_bundle}}
+{{ID table
+|displayname=Yellow Bundle
+|spritetype=item
+|nameid=yellow_bundle
+|id=273
+|form=item
+|translationkey=item.yellow_bundle}}
+{{ID table
+|displayname=Lime Bundle
+|spritetype=item
+|nameid=lime_bundle
+|id=266
+|form=item
+|translationkey=item.lime_bundle}}
+{{ID table
+|displayname=Pink Bundle
+|spritetype=item
+|nameid=pink_bundle
+|id=269
+|form=item
+|translationkey=item.pink_bundle}}
+{{ID table
+|displayname=Gray Bundle
+|spritetype=item
+|nameid=gray_bundle
+|id=262
+|form=item
+|translationkey=item.gray_bundle}}
+{{ID table
+|displayname=Light Gray Bundle
+|spritetype=item
+|nameid=light_gray_bundle
+|id=265
+|form=item
+|translationkey=item.light_gray_bundle}}
+{{ID table
+|displayname=Cyan Bundle
+|spritetype=item
+|nameid=cyan_bundle
+|id=261
+|form=item
+|translationkey=item.cyan_bundle}}
+{{ID table
+|displayname=Purple Bundle
+|spritetype=item
+|nameid=purple_bundle
+|id=270
+|form=item
+|translationkey=item.purple_bundle}}
+{{ID table
+|displayname=Blue Bundle
+|spritetype=item
+|nameid=blue_bundle
+|id=258
+|form=item
+|translationkey=item.blue_bundle}}
+{{ID table
+|displayname=Brown Bundle
+|spritetype=item
+|nameid=brown_bundle
+|id=259
+|form=item
+|translationkey=item.brown_bundle}}
+{{ID table
+|displayname=Green Bundle
+|spritetype=item
+|nameid=green_bundle
+|id=263
+|form=item
+|translationkey=item.green_bundle}}
+{{ID table
+|displayname=Red Bundle
+|spritetype=item
+|nameid=red_bundle
+|id=271
+|form=item
+|translationkey=item.red_bundle}}
+{{ID table
+|displayname=Black Bundle
+|spritetype=item
+|nameid=black_bundle
+|id=257
+|form=item
+|translationkey=item.black_bundle
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/bundle_contents}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Videos ==
+{{yt|ocayRQ-JwHw}}
+{{yt|2AiaJ2TjgBM}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=1846s}}|[[File:Bundle Empty JE1.png|32px]][[File:Bundle JE1.png|32px]] Bundles are revealed at [[Minecraft Live 2020]]. Hovering over them shows all items inside scattered around a large area, and incomplete bundles have the empty texture.}}
+|{{HistoryLine||October 16, 2021|link=https://clips.twitch.tv/AffluentEncouragingOryxPeteZaroll-cd8pIapkfD4PRHxO|[[Ulraf]] states that bundles are not included in [[Caves & Cliffs]].}}
+|{{HistoryLine||November 17, 2021|link=https://www.minecraft.net/en-us/article/caves---cliffs-update-part-ii-coming|Bundles are announced to be added after [[The Wild Update]].}}
+|{{HistoryLine||September 28, 2024|link=https://www.youtube.com/live/qnX6sPFjXnA|Bundles are announced to be added in the [[Bundles of Bravery]] drop.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Bundle Empty JE1.png|32px]] [[File:Bundle Filled JE1.png|32px]] Added bundles. Hovering over them shows some of the items contained and their quantities, much like the tooltip of a [[shulker box]]. Incomplete bundles have the full texture.
+|The crafting recipe was originally 2 strings and 6 rabbit hides.
+{<!---->{{!}} class{{=}}"collapsible" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1=String
+|A2=Rabbit Hide
+|A3=Rabbit Hide
+|B1=Rabbit Hide
+|B3=Rabbit Hide
+|C1=String
+|C2=Rabbit Hide
+|C3=Rabbit Hide
+|Output=Bundle
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=20w46a|[[File:Bundle Empty JE2.png|32px]] [[File:Bundle JE2 BE2.png|32px]] The textures of bundles have been changed.
+|Hovering over bundles now shows its contained items in special slots, similar to slots in the [[inventory]]. If the bundle is not full, it also has an empty slot with a plus on it.}}
+|{{HistoryLine|||dev=20w48a|Bundles now show fullness as a number when [[advanced tooltips]] are enabled.
+|{{ctrl|Using}} a bundle in the inventory now empties the last item inserted in the bundle instead of emptying all the contents out to the [[inventory]].
+|{{ctrl|Using}} a bundle now throws out its entire content into the world.}}
+|{{HistoryLine|||dev=20w49a|Bundle fullness is now always shown.
+|Full bundles now show the blue bar instead of hiding it, to distinguish from empty bundles.}}
+|{{HistoryLine|||dev=20w51a|Bundles now drop its contents when destroyed as an [[item entity]].
+|Bundle fullness has been changed from <code>Fullness: ''<fullness>'' / 64</code> to <code>''<fullness>''/64</code>
+|The slots in the tooltip when hovering over bundles have changed to have a border, and rows of slot have a thicker edge between them.
+|When the bundle is not full, it instead shows empty slots instead of one slot with a plus. When it is full, those empty slots become greyed out with an X.}}
+|{{HistoryLine|||dev=21w05a|The player now receives a tutorial when first having a bundle in the inventory.}}
+|{{HistoryLine|||dev=21w19a|Bundles are now accessible only through commands.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Bundles are now available in the creative inventory and can be crafted once again.}}
+|{{HistoryLine|||dev=21w37a|Bundles are once again accessible only through commands.}}
+|{{HistoryLine||1.19.3|dev=22w42a|exp=Bundles|Bundles have been made available once again, and have been moved behind their own data pack.}}
+|{{HistoryLine||1.21.2|dev=24w33a|exp=Bundles|Bundles are now crafted with one [[string]] and one [[leather]] instead of two string and six [[rabbit hide]].
+{<!---->{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|B1=String
+|B2=Leather
+|Output=Bundle
+|ignoreusage=1}}
+{{!}}}
+|[[File:Bundle Open JE1 BE1.png|32px]] [[File:Bundle Open (front) JE1 BE1.png|32px]] [[File:Bundle Open (back) JE1 BE1.png|32px]] The open texture, now split into front and back textures, was updated and is now used whenever an item is selected, with said item being displayed within the bundle item texture.
+|The closed texture is now used as the default instead of the open texture.
+|The tooltip now acts as a sub-menu, wherein the player can now use the scroll wheel or press the number keys to select a specific item to take out. If no items are selected, the game takes out the last item inserted in the bundle.}}
+|{{HistoryLine|||dev=24w34a|The bundle's tooltip now fits 3 rows and can always show at least 8 item types.}}
+|{{HistoryLine|||dev=24w35a|The number keys can no longer be used to select items in a bundle.}}
+|{{HistoryLine|||dev=24w36a|When a bundle is used in the hotbar, one group of items is emptied at a time instead of everything being emptied at once.}}
+|{{HistoryLine|||dev=24w38a|[[File:White Bundle JE1 BE1.png|32px]] [[File:Light Gray Bundle JE1 BE1.png|32px]] [[File:Gray Bundle JE1 BE1.png|32px]] [[File:Black Bundle JE1 BE1.png|32px]] [[File:Brown Bundle JE1 BE1.png|32px]] [[File:Red Bundle JE1 BE1.png|32px]] [[File:Orange Bundle JE1 BE1.png|32px]] [[File:Yellow Bundle JE1 BE1.png|32px]] [[File:Lime Bundle JE1 BE1.png|32px]] [[File:Green Bundle JE1 BE1.png|32px]] [[File:Cyan Bundle JE1 BE1.png|32px]] [[File:Light Blue Bundle JE1 BE1.png|32px]] [[File:Blue Bundle JE1 BE1.png|32px]] [[File:Purple Bundle JE1 BE1.png|32px]] [[File:Magenta Bundle JE1 BE1.png|32px]] [[File:Pink Bundle JE1 BE1.png|32px]]<br>[[File:White Bundle Open JE1 BE1.png|32px]] [[File:Light Gray Bundle Open JE1 BE1.png|32px]] [[File:Gray Bundle Open JE1 BE1.png|32px]] [[File:Black Bundle Open JE1 BE1.png|32px]] [[File:Brown Bundle Open JE1 BE1.png|32px]] [[File:Red Bundle Open JE1 BE1.png|32px]] [[File:Orange Bundle Open JE1 BE1.png|32px]] [[File:Yellow Bundle Open JE1 BE1.png|32px]] [[File:Lime Bundle Open JE1 BE1.png|32px]] [[File:Green Bundle Open JE1 BE1.png|32px]] [[File:Cyan Bundle Open JE1 BE1.png|32px]] [[File:Light Blue Bundle Open JE1 BE1.png|32px]] [[File:Blue Bundle Open JE1 BE1.png|32px]] [[File:Purple Bundle Open JE1 BE1.png|32px]] [[File:Magenta Bundle Open JE1 BE1.png|32px]] [[File:Pink Bundle Open JE1 BE1.png|32px]] Bundles can now be [[dye]]d in 16 different colors.}}
+|{{HistoryLine||1.21.2|dev=24w39a|Bundles are now available without toggling its respective data pack.}}
+|{{HistoryLine|||dev=24w40a|Bundles can no longer be dyed the same color they already are.}}
+|{{HistoryLine||1.21.4|dev=24w46a|Items in the bundle tooltip now have a gray background.
+|[[File:Bundle Open JE2 BE2.png|32px]] [[File:White Bundle Open JE2 BE2.png|32px]] [[File:Light Gray Bundle Open JE2 BE2.png|32px]] [[File:Gray Bundle Open JE2 BE2.png|32px]] [[File:Black Bundle Open JE2 BE2.png|32px]] [[File:Brown Bundle Open JE2 BE2.png|32px]] [[File:Red Bundle Open JE2 BE2.png|32px]] [[File:Orange Bundle Open JE2 BE2.png|32px]] [[File:Yellow Bundle Open JE2 BE2.png|32px]] [[File:Lime Bundle Open JE2 BE2.png|32px]] [[File:Green Bundle Open JE2 BE2.png|32px]] [[File:Cyan Bundle Open JE2 BE2.png|32px]] [[File:Light Blue Bundle Open JE2 BE2.png|32px]] [[File:Blue Bundle Open JE2 BE2.png|32px]] [[File:Purple Bundle Open JE2 BE2.png|32px]] [[File:Magenta Bundle Open JE2 BE2.png|32px]] [[File:Pink Bundle Open JE2 BE2.png|32px]] All bundles have had their open textures updated.}}
+|{{HistoryLine||1.21.5|dev=25w07a|Bundles can now be found in some [[village]] chests.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||June 29, 2024|link=https://youtu.be/weJ9ghpYbGI|[[File:Bundle Filled BE1.png|32px]] Bundles are announced to soon be added in an upcoming beta/Preview.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.23|exp=Bundles|[[File:Bundle Filled BE1.png|32px]] [[File:Bundle Open JE1 BE1.png|32px]] [[File:Bundle Open (front) JE1 BE1.png|32px]] [[File:Bundle Open (back) JE1 BE1.png|32px]] Added bundles.}}
+|{{HistoryLine|||dev=Preview 1.21.30.24|The bundle's tooltip now fits 3 rows and can always show at least 8 item types.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|exp=Bundles|When a bundle is used in the hotbar, one group of items is emptied at a time instead of everything being emptied at once.}}
+|{{HistoryLine|||dev=Preview 1.21.40.22|[[File:White Bundle JE1 BE1.png|32px]] [[File:Light Gray Bundle JE1 BE1.png|32px]] [[File:Gray Bundle JE1 BE1.png|32px]] [[File:Black Bundle JE1 BE1.png|32px]] [[File:Brown Bundle JE1 BE1.png|32px]] [[File:Red Bundle JE1 BE1.png|32px]] [[File:Orange Bundle JE1 BE1.png|32px]] [[File:Yellow Bundle JE1 BE1.png|32px]] [[File:Lime Bundle JE1 BE1.png|32px]] [[File:Green Bundle JE1 BE1.png|32px]] [[File:Cyan Bundle JE1 BE1.png|32px]] [[File:Light Blue Bundle JE1 BE1.png|32px]] [[File:Blue Bundle JE1 BE1.png|32px]] [[File:Purple Bundle JE1 BE1.png|32px]] [[File:Magenta Bundle JE1 BE1.png|32px]] [[File:Pink Bundle JE1 BE1.png|32px]]<br>[[File:White Bundle Open JE1 BE1.png|32px]] [[File:Light Gray Bundle Open JE1 BE1.png|32px]] [[File:Gray Bundle Open JE1 BE1.png|32px]] [[File:Black Bundle Open JE1 BE1.png|32px]] [[File:Brown Bundle Open JE1 BE1.png|32px]] [[File:Red Bundle Open JE1 BE1.png|32px]] [[File:Orange Bundle Open JE1 BE1.png|32px]] [[File:Yellow Bundle Open JE1 BE1.png|32px]] [[File:Lime Bundle Open JE1 BE1.png|32px]] [[File:Green Bundle Open JE1 BE1.png|32px]] [[File:Cyan Bundle Open JE1 BE1.png|32px]] [[File:Light Blue Bundle Open JE1 BE1.png|32px]] [[File:Blue Bundle Open JE1 BE1.png|32px]] [[File:Purple Bundle Open JE1 BE1.png|32px]] [[File:Magenta Bundle Open JE1 BE1.png|32px]] [[File:Pink Bundle Open JE1 BE1.png|32px]] Bundles can now be [[dye]]d in 16 different colors.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.23|[[File:Bundle JE2 BE2.png|32px]] The bundle texture now matches {{JE}}.
+|Bundles are now available without toggling its respective experimental toggle.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.28|Items in the bundle tooltip now have a gray background.}}
+|{{HistoryLine|||dev=Preview 1.21.50.29|Using the scroll wheel when hovering a bundle placed in [[hotbar]] with creative inventory search tab active now selects an item in the bundle.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|[[File:Bundle Open JE2 BE2.png|32px]] [[File:White Bundle Open JE2 BE2.png|32px]] [[File:Light Gray Bundle Open JE2 BE2.png|32px]] [[File:Gray Bundle Open JE2 BE2.png|32px]] [[File:Black Bundle Open JE2 BE2.png|32px]] [[File:Brown Bundle Open JE2 BE2.png|32px]] [[File:Red Bundle Open JE2 BE2.png|32px]] [[File:Orange Bundle Open JE2 BE2.png|32px]] [[File:Yellow Bundle Open JE2 BE2.png|32px]] [[File:Lime Bundle Open JE2 BE2.png|32px]] [[File:Green Bundle Open JE2 BE2.png|32px]] [[File:Cyan Bundle Open JE2 BE2.png|32px]] [[File:Light Blue Bundle Open JE2 BE2.png|32px]] [[File:Blue Bundle Open JE2 BE2.png|32px]] [[File:Purple Bundle Open JE2 BE2.png|32px]] [[File:Magenta Bundle Open JE2 BE2.png|32px]] [[File:Pink Bundle Open JE2 BE2.png|32px]] All bundles have had their open textures updated.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|Bundles can now be found in some [[village]] chests.}}
+}}
+
+== Issues ==
+{{Issue list|-marketplace|-price|-purchase|-minecoins}}
+
+== Trivia ==
+* Bundles are inspired by the ancient Roman {{w|coin purse}}, which have been used for thousands of years.<ref>{{ytl|ocayRQ-JwHw|BUNDLES ARE FINALLY IN MINECRAFT!|Minecraft|Oct 23, 2024|t=1m12s}}</ref>
+* The reason for why bundles can be dyed in 16 colors rather than a combination of multiple colors (like [[leather armor]]) is that Mojang considered it more important for players to be able to quickly identify the color of the bundle rather than being able to fully customize the color.<ref name=tweet>{{Tweet|Xilefian|1840085235586966013|Implementing Bundles has been quite the journey, and I'm extremely proud of the team for where they've gotten the feature at this point|September 29, 2024}}<br>{{Tweet|Xilefian|1840372062382100709|For leather armours the dye system is part of the self expression of wearing the armour (which is a primary feature of those items)<br><br>Bundles are closer to Shulker Boxes: It is more important a player can quickly see a colour and judge the contents of the container<br>(1/2)|September 29, 2024}}<br>{{Tweet|Xilefian|1840372450648830080|And to make sure players can quickly see and judge a colour it's best we have artists pick the ideal set of colours<br>We can tweak each of those 16 bundle textures, versus having artists trying to tweak the visibility of 16,777,216 colours that the leather dye system provides<br>(2/2)|September 29, 2024}}<br>{{Tweet|Xilefian|1840373462663053419|For context I asked the team the same question when I was reviewing the Bedrock code because - by chance - Bundles are the first non-block item that uses the 16 colour dyes versus the 2^24 leather dye system (which non-block items have used up until Bundles)|September 29, 2024}}</ref>
+* Bundles are the first non-block item that uses the 16 color dyes versus the 2^24 leather dye system<ref>{{Tweet|Xilefian|1840373462663053419|For context I asked the team the same question when I was reviewing the Bedrock code because - by chance - Bundles are the first non-block item that uses the 16 colour dyes versus the 2^24 leather dye system (which non-block items have used up until Bundles)|September 29, 2024}}</ref> (besides dyes themselves).
+* Bundle is the last feature announced at [[Minecraft Live 2020]] to be released. Minecraft Live 2020 took place on October 3, 2020, with the bundles announced for the [[Caves & Cliffs]] update while [[Bundles of Bravery]] was not released until 4 years and 19 days later on October 22, 2024.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:JE 1.17 Development Bundle.png|The old bundle UI shown at [[Minecraft Live 2020]].
+File:Bundle in Inventory.jpg|The old bundle UI.
+File:A bundle of bundles on the beach.jpeg|A bundle of bundles on the [[beach]].
+File:Ari using a bundle.jpeg|Some items being put into a bundle.
+File:Bundle being used for food.jpeg|A bundle being used to store [[food]].
+File:Bundle in hand.jpeg|Bundle in hand.
+File:Test the newest version of bundles today.webp|Some bundles floating next to a [[jungle]].
+File:A bundle hovering near a rabbit!.jpg|A bundle hovering near a [[rabbit]].
+File:A player harvesting beetroots for the bundle!.jpg|A [[player]] harvesting [[beetroot]]s for the bundle.
+File:Makena holding a bundle.jpg|[[Makena]] holding a bundle.
+File:Ari with a collection of dyed bundles.jpeg|[[Ari]] with a collection of dyed bundles.
+File:A fox hanging out with dyed bundles.jpeg|A [[fox]] hanging out with dyed bundles.
+File:A sheep and rows of dyed bundles.jpeg|A [[sheep]] and rows of dyed bundles.
+File:Sunny in front of a collection of dyed bundles.jpeg|[[Sunny]] in front of a collection of dyed bundles.
+File:Colorful bundles.jpg|Several dyed bundles.
+File:Kai's bundles.jpg|Several bundles in [[Kai]]'s inventory.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Alex with bundles on head.jpeg|[[Alex]] with bundles on head.
+File:Ari with bundle.png|Ari using a bundle in the [[Bundles of Bravery - Official Trailer]].
+File:Bundles.png|Bundles as seen in ''[[A Minecraft Movie]]''.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox dyed block}}{{Navbox items|utilities}}
+
+[[Category:Storage]]
+[[Category:Utilities]]
+
+[[de:Bündel]]
+[[es:Saco]]
+[[fr:Sac]]
+[[it:Sacchetto]]
+[[ja:バンドル]]
+[[lzh:皮囊]]
+[[pl:Sakwa]]
+[[pt:Trouxa]]
+[[ru:Мешок]]
+[[uk:Мішечок]]
+[[zh:收纳袋]]

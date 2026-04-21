@@ -1,0 +1,396 @@
+{{for|the allied unit in {{MCL}}|MCL:Grindstone Golem}}
+{{Infobox block
+|image=Grindstone.png
+|invimage=Grindstone
+|transparent=Yes
+|light=No
+|tool=Wooden Pickaxe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+A '''grindstone''' is a [[block]] used to remove all [[enchantment]]s (except for [[curse#Enchantments|curse]]s) from [[item]]s, refunding some [[experience orb]]s. Additionally, it can  repair [[tool]]s, [[weapon]]s, and [[armor]]. It also serves as a [[weaponsmith]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+Grindstones can be obtained using any [[pickaxe]]. If mined without a pickaxe, it drops nothing.
+
+{{breaking row|horizontal=1|Grindstone|pickaxe|wood}}
+
+=== Natural generation ===
+[[File:Weaponsmith shelter.jpg|thumb|right|A grindstone generated inside a weaponsmith shelter structure.]]
+Grindstones naturally generate at [[village]] weaponsmiths. Grindstones can also generate in [[trail ruins]].
+
+=== Crafting ===
+{{Crafting
+|A1= Stick
+|B1= Stone Slab
+|C1= Stick
+|A2= Any Planks
+|C2= Any Planks
+|Output= Grindstone
+|type= Decoration block
+}}
+
+== Usage ==
+A grindstone can be oriented in different directions. {{IN|Java}}, it doesn't need a supporting block. {{IN|Bedrock}}, it breaks if unsupported and/or inside of water.
+
+=== Repairing and disenchanting ===
+[[File:Grindstone GUI.png|thumb|right|250px|Interface for the grindstone]]
+
+{{Redirect|Grinder|information about the grinder of mobs|Tutorial:Mob grinder}}
+
+When {{control|used}}, an interface is displayed with two input slots and one output slot.
+
+It resets the [[Anvil mechanics|repair cost]] for items.
+
+When one [[enchanted]] item is placed in either input slot, a disenchanted copy of the item appears in the output slot. The output item has the same durability for a piece of armor or a tool. If an [[enchanted book]] is placed in the input, a normal [[book]] appears in the output. Removing the item from the output slot deletes the input item and causes the grindstone to drop some [[experience]]. If the input item has a custom name, given by [[Anvil mechanics#Renaming|renaming]] it, the output item will adopt the name.
+
+Placing two [[tool]]s or pieces of [[armor]] (enchanted or not) of the same type in the input slots causes a non-enchanted item of the same type to appear in the output slot. The output item has the same durability as what the player would get from using the [[item repair]] crafting recipe if the 2 input items were unenchanted. This means the output durability is the sum of the durabilities of the two input items, plus 5% of the maximum durability of the output item (rounded down), capped so it does not exceed the maximum durability of the output item. Both input items are deleted in this process of disenchanting them and repairing them. If either input item was enchanted, then removing the output item drops some [[experience]]. The output item has the same [[armor trim]] (if any) and name (if any) as the input item in the top slot.
+
+As with all non-enchanted items, the output item has no [[Anvil mechanics#Anvil uses|prior work penalty]], even if it is cursed. Disenchanting an item in the grindstone cannot remove a [[curse]], and cannot remove an item's custom name.
+
+If the action is not applicable (e.g. only one non-enchanted item, or the two inputs are different items), the arrow displays a red cross like that of an [[anvil]] and no item appears in the output slot.
+
+The amount of experience dropped by the grindstone is a uniformly distributed pseudorandom number between 50% and 100% (rounded up) of all the non-curse enchantments' minimum [[Enchanting/Levels|modified enchantment levels]] combined. For example, Sharpness V on average gives 35 XP, because that is 75% of 45. The following table shows the ranges of possible obtained XP from each enchantment and level.
+
+{{Collapse
+|head=1
+|title='''XP Drops'''
+}}
+
+{| class="wikitable" style="text-align: center;"
+|-
+! rowspan="2" | Armor enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Protection]] | 4 | 1|1 | 6|11 | 12|23 | 17|33 | 0|0 }}
+{{EnchantlevelsTableRow | [[Fire Protection]] | 4 | 5|9 | 9|17 | 13|25 | 17|33 | 0|0 }}
+{{EnchantlevelsTableRow | [[Feather Falling]] | 4 | 3|5 | 6|11 | 9|17 | 12|23 | 0|0 }}
+{{EnchantlevelsTableRow | [[Blast Protection]] | 4 | 3|5 | 7|13 | 11|21 | 15|29 | 0|0 }}
+{{EnchantlevelsTableRow | [[Projectile Protection]] | 4 | 2|3 | 5|9 | 8|15 | 11|21 | 0|0 }}
+{{EnchantlevelsTableRow | [[Respiration]] | 3 | 5|9 | 10|19 | 15|29 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Aqua Affinity]] | 1 |1|1 | 0|0 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Thorns]] | 3 | 5|9 | 15|29 | 25|49 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Depth Strider]] | 3 | 5|9 | 10|19 | 15|29 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Frost Walker]] | 2 | 5|9 | 10|19 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Soul Speed]] | 3 | 5|9 | 10|19 | 15|29 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Swift Sneak]] | 3 | 13|25 | 25|49 | 38|75 | 0|0 | 0|0 }}
+
+! rowspan="2" | Sword enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Sharpness]] | 5 | 1|1 | 6|11 | 12|23 | 17|33 | 23|45 }}
+{{EnchantlevelsTableRow | [[Smite]] | 5 | 3|5 | 7|13 | 11|21 | 15|29 | 19|37 }}
+{{EnchantlevelsTableRow | [[Bane of Arthropods]] | 5 | 3|5 | 7|13 | 11|21 | 15|29 | 19|37 }}
+{{EnchantlevelsTableRow | [[Knockback]] | 2 | 3|5 | 13|25 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Fire Aspect]] | 2 | 5|9 | 15|29 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Looting]] | 3 | 8|15 | 12|23 | | | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Sweeping Edge]] | 3 | 3|5 | 7|13 | 12|23 | 0|0 | 0|0 }}
+
+! rowspan="2" | Bow enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Power]] | 5 | 1|1 | 6|11 | 11|21 | 16|31 | 21|41 }}
+{{EnchantlevelsTableRow | [[Punch]] | 2 | 6|11 | 16|31 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Flame]] | 1 | 10|19 | 0|0 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Infinity]] | 1 | 10|19 | 0|0 | 0|0 | 0|0 | 0|0 }}
+
+! rowspan="2" | Tool enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Efficiency]] | 5 | 1|1 | 6|11 | 11|21 | 16|31 | 21|41 }}
+{{EnchantlevelsTableRow | [[Silk Touch]] | 1 | 8|15 | 0|0 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Fortune]] | 3 | 8|15 | 12|23 | 17|33 | 0|0 | 0|0 }}
+
+! rowspan="2" | Fishing rod enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Luck of the Sea]] | 3 | 8|15 | 12|23 | 17|33 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Lure]] | 3 | 8|15 | 12|23 | 17|33 | 0|0 | 0|0 }}
+
+! rowspan="2" | "Anything" enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+
+{{EnchantlevelsTableRow | [[Unbreaking]] | 3 | 3|5 | 7|13 | 11|21 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Mending]] | 1 | 13|25 | 0|0 | 0|0 | 0|0 | 0|0 }}
+
+! rowspan="2" | Trident enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+
+{{EnchantlevelsTableRow | [[Channeling]] | 1 | 13|25 | 0|0 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Impaling]] | 5 | 1|1 | 5|9 | 9|17 | 13|25 | 17|33 }}
+{{EnchantlevelsTableRow | [[Loyalty]] | 3 | 6|11 | 10|19 | 13|25 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Riptide]] | 3 | 9|17 | 12|23 | 16|31 | 0|0 | 0|0 }}
+
+! rowspan="2" | Crossbow enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Multishot]] | 1 | 10|19 | 0|0 | 0|0 | 0|0 | 0|0 }}
+{{EnchantlevelsTableRow | [[Piercing]] | 4 | 1|1 | 6|11 | 11|21 | 16|31 | 0|0 }}
+{{EnchantlevelsTableRow | [[Quick Charge]] | 3 | 6|11 | 16|31 | 26|51 | 0|0 | 0|0 }}
+
+! rowspan="2" | Mace enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Breach]] | 4 | 8|15 | 12|23 | 17|33 | 21|41 | 0|0 }}
+{{EnchantlevelsTableRow | [[Density]] | 5 | 3|5 | 7|13 | 11|21 | 15|29 | 19|37 }}
+{{EnchantlevelsTableRow | [[Wind Burst]] | 3 | 8|15 | 12|23 | 17|33 | 0|0 | 0|0 }}
+
+! rowspan="2" | Spear enchantment
+! colspan="5" | XP
+|-
+! I
+! II
+! III
+! IV
+! V
+|-
+{{EnchantlevelsTableRow | [[Lunge]] | 3 | 3|5 | 7|13 | 11|21 |0|0 |0|0}}
+|}
+
+{{Collapse
+|tail=1}}
+
+=== Profession ===
+{{main|Job site block}}
+If a grindstone has not been claimed by a [[villager]], any nearby unemployed villager has a chance to change their profession to weaponsmith and claim the grindstone as their [[job site block]].
+
+=== Piston interactivity ===
+Grindstones cannot be pushed by [[piston]]s or pulled by [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Grindstone use1.ogg
+|sound2=Grindstone use2.ogg
+|sound3=Grindstone use3.ogg
+|subtitle=Grindstone used
+|source=block
+|description=When a grindstone is used
+|id=block.grindstone.use
+|translationkey=subtitles.block.grindstone.use
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Weaponsmith works
+|source=neutral
+|description=Randomly while a weaponsmith is working
+|id=entity.villager.work_weaponsmith
+|translationkey=subtitles.entity.villager.work_weaponsmith
+|volume=0.5
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Grindstone use1.ogg
+|sound2=Grindstone use2.ogg
+|sound3=Grindstone use3.ogg
+|source=block
+|description=When a grindstone is used
+|id=block.grindstone.use
+|volume=0.5
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=Randomly while a weaponsmith is working
+|id=block.grindstone.use
+|volume=0.5
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Grindstone
+|spritetype=block
+|nameid=grindstone
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Grindstone
+|spritetype=block
+|nameid=grindstone
+|id=450
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|face|wall|ceiling,floor,wall|What the grindstone is attached to.}}
+{{bst|facing|north|east,north,south,west|The direction the grindstone is facing.<br>Opposite from the direction the player faces when placing a grindstone on the floor or ceiling.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x4,0x8|attachment|standing|standing,hanging,side,multiple|What the grindstone is attached to.|0,1,2,3}}
+{{bst|bits=0x1,0x2|direction|0|0,1,2,3|The direction the grindstone is facing. Opposite from the direction a player faces when placing the block.
+*0: South facing 
+*1: West facing 
+*2: North facing
+*3: East facing
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Disenchanted}}
+
+== Videos ==
+{{yt|BM6IKUa7aU4}}
+
+== History ==
+''For a more in-depth breakdown of changes to textures and models, including a set of renders for each state combination, see [[/Asset history]]''
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Grindstone JE1 BE1.png|32px]] Added grindstones.
+|Grindstones are currently obtainable only from the [[Creative inventory]] and do not have any functionality.}}
+|{{HistoryLine|||dev=18w45a|Added cullface argument to the feet of the grindstone.}}
+|{{HistoryLine|||dev=18w48a|[[File:Grindstone JE2 BE2.png|32px]] The texture of grindstones has been changed.
+|Added a [[crafting]] recipe for grindstones.
+|Grindstones are now functional and used to repair [[item]]s and [[tool]]s.
+|Grindstones can now remove all non-curse [[enchantment]]s from an item, in which [[experience]] is reimbursed to the [[player]].
+|Grindstones now generate in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Grindstones now generate in the updated [[savanna]] villages and the new [[snowy tundra]] villages.}}
+|{{HistoryLine|||dev=18w50a|Grindstones now generate in the updated [[desert]] and [[taiga]] villages.}}
+|{{HistoryLine|||dev=19w03a|Added [[sound]]s for grindstones.}}
+|{{HistoryLine|||dev=19w11a|Grindstones now serve as weaponsmith [[villager]]s' job site block.}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft grindstones.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove planks]] can now be used to craft grindstones.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft grindstones.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft grindstones.}}
+|{{HistoryLine||1.20.5|dev=24w10a|No longer accepts items with {{nbt|compound|unbreakable}} component but do not have an enchantment.|No longer disenchants two [[enchanted books]] at the same time.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[Pale oak planks]] can now be used to craft grindstones.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|exp=Experimental Gameplay|[[File:Grindstone JE1 BE1.png|32px]] Added grindstones, but they have no functionality.|They are currently only available if [[Experimental Gameplay]] is enabled.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|Grindstones can now generate in village weaponsmith houses.
+|[[File:Grindstone JE2 BE2.png|32px]] The texture of grindstones has been changed.
+|Added a [[crafting]] recipe for grindstones.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Grindstones are now functional.
+|Grindstones are no longer immune from explosions.|They are now available outside of Experimental Gameplay.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Grindstone JE1 BE1.png|32px]] Added grindstones.}}
+|{{HistoryLine||1.92|[[File:Grindstone JE2 BE2.png|32px]] The texture of grindstones has been changed.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Before the grindstone was added, a different method to remove enchantments was floated for [[Update Aquatic]], which would have been by means of feeding items to a mob known as "[[The Great Hunger]]", but the mob lost the [[MINECON Earth 2017]] mob vote to the [[phantom]].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:PlacedGrindstones.png|Grindstones on a wall, floor and ceiling.
+File:Grindstone at blacksmith.png|A grindstone at a blacksmith.
+</gallery>
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Blocks with GUI]]
+
+[[cs:Brusný kámen]]
+[[de:Schleifstein]]
+[[es:Afiladora]]
+[[fr:Meule]]
+[[it:Mola]]
+[[ja:砥石]]
+[[ko:숫돌]]
+[[lzh:礪]]
+[[pl:Kamień szlifierski]]
+[[pt:Rebolo]]
+[[ru:Точило]]
+[[th:หินลับมีด]]
+[[uk:Точило]]
+[[zh:砂轮]]

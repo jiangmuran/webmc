@@ -1,0 +1,343 @@
+{{About|chicken eggs|other uses}}
+{{Infobox item entity
+| group1 = Normal
+| 1-1 = Egg.png
+| group2 = Blue
+| 2-1 = Blue Egg.png
+| group3 = Brown
+| 3-1 = Brown Egg.png
+| group1class = pixel-image
+| group2class = pixel-image
+| group3class = pixel-image
+| invimage = Egg
+| invimage2 = Blue Egg
+| invimage3 = Brown Egg
+| renewable = Yes
+| stackable = Yes (16)
+| size = Height: 0.25 blocks<br>Width: 0.25 blocks
+}}
+An '''egg''' is an [[item]] that is dropped by [[chicken]]s and can be used to craft [[food]] items, such as [[cake]], and can be thrown for a chance to spawn baby chickens on impact. They have three variants based on the variant of the corresponding chicken: the standard egg for temperate chickens, '''brown egg''' for warm chickens, and '''blue egg''' for cold chickens.
+
+== Obtaining ==
+=== Mob loot ===
+{{see also|Tutorial:Egg farming}}
+Every adult [[chicken]] lays an egg item every 5–10 minutes, except for those that are or were part of [[chicken jockey]]s. The theoretical average would be expected at 1 egg every 7.5 minutes (9000 game ticks). The type of egg being laid depends on the chicken variant; temperate chickens lay normal eggs, cold chickens lay blue eggs, and warm chickens lay brown eggs.
+
+A [[fox]] has a 3% chance of spawning with a normal egg in its mouth, which it drops upon death. Alternatively, a player dropping a food item causes the fox to drop the egg.
+
+=== Generated loot ===
+{{LootChestItem|egg}}
+
+== Usage ==
+=== Crafting ingredient ===
+{{crafting usage|Any Egg, Egg}}
+
+=== Combat ===
+Players are able to throw eggs and deal knockback to [[mob]]s (but not other players{{only|JE|short=1}}<ref>{{bug|MC-3179|||WAI}}</ref>), but no damage is dealt, similar to a [[snowball]]. Likewise, throwing eggs at [[neutral mobs]] provokes them. Eggs can also be fired from [[dispenser]]s and are affected by gravity. Eggs thrown through fire or lava {{in|BE}} catch fire, and set fire to entities they hit.
+
+=== Spawning chickens ===
+When thrown by a dispenser or by pressing the {{control|use}} button, an egg has a {{fraction|1|8}} (12.5%) chance of spawning a [[chick]]. If this occurs, there is a {{fraction|1|32}} (3.125%) chance of spawning three additional chicks (on average, 1 out of every 256 eggs spawns 4 chicks). In other words, whenever an egg is thrown, there is a {{fraction|31|256}} chance of spawning 1 chick and a {{fraction|1|256}} chance of spawning four chicks.
+
+The chick variant depends on which egg variant was thrown; regular eggs hatch temperate chicks, blue eggs hatch cold chicks, while brown eggs hatch warm chicks.
+
+The expected value of the number of chicks an egg produces is {{fraction|35|256}} or 13.7%. This means that on average, a chick is spawned every 7.3 eggs, a stack of 16 eggs spawns 2.188 chicks, and a full inventory including the hotbar and off-hand (37 &times; 16 = 592 eggs) is expected to spawn approximately 81 chicks.
+
+== Behavior ==
+{{#lst:Ender Pearl|thrownball}}
+
+== Sounds ==
+{{JE}}:<br>
+Thrown eggs use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Bow shoot.ogg
+|subtitle=Egg flies
+|source=player
+|description=When an egg is thrown
+|id=entity.egg.throw
+|translationkey=subtitles.entity.egg.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Dispensed item
+|source=block
+|description=When a dispenser shoots an egg
+|id=block.dispenser.launch
+|translationkey=subtitles.block.dispenser.dispense
+|volume=1.0
+|pitch=1.2
+|distance=16}}
+| {{SoundLine
+|sound=Chicken plop.ogg
+|subtitle=Chicken plops
+|source=Friendly Creatures
+|description=When an egg is laid by a chicken
+|id=entity.chicken.egg
+|translationkey=subtitles.entity.chicken.egg
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bow shoot.ogg
+|source=player
+|description=When an egg is thrown
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+| {{SoundLine
+|source=player
+|description=When a dispenser shoots an egg
+|id=random.bow
+|volume=1.0
+|pitch=0.83-1.25}}
+| {{SoundLine
+|sound=Chicken plop.ogg
+|source=neutral
+|description=When an egg is laid by a chicken
+|id=mob.chicken.plop
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Egg
+|spritetype=item
+|nameid=egg
+|form=item}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Blue Egg
+|spritetype=item
+|nameid=blue_egg
+|form=item}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Brown Egg
+|spritetype=item
+|nameid=brown_egg
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Thrown Egg
+|spritetype=entity
+|spritename=Egg
+|nameid=egg
+|entitytags=impact_projectiles
+|foot=1}}
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Egg
+|spritetype=item
+|nameid=egg
+|id=390
+|form=item}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Blue Egg
+|spritetype=item
+|nameid=blue_egg
+|id=749
+|form=item}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Brown Egg
+|spritetype=item
+|nameid=brown_egg
+|id=750
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Egg
+|spritetype=entity
+|nameid=egg
+|id=82
+|foot=1}}
+
+=== Entity data ===
+Thrown eggs have entity data that define various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|compound|Item}}: The item to render as, may be absent.
+*** {{nbt inherit/itemnoslot|indent=***}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|The Lie}}
+
+== Advancements ==
+{{Load advancements|Bullseye}}
+
+== Videos ==
+{{Video note|This video does not mention blue or brown eggs.|minor}}
+{{yt|8rDbF8UYuTc}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before RC1}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.14|[[File:Egg JE1 BE1.png|32px]] Added eggs.
+|Eggs currently have no purpose and cannot be thrown.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|Eggs now stack to 16 instead of 64.|Eggs are now throwable at the request of a fan as the result of a [[wikipedia:Twitter|Twitter]] conversation about a man eating his [[wikipedia:USB|USB]], if [[Notch]] added egg throwing.<ref>{{tweet|Wyld|11772816642805760|@notch Proof .. http://i.imgur.com/AXblZ.jpg .. Now, where's my throwing eggs ..|December 6, 2010}}<br>http://i.imgur.com/AXblZ.jpg<br>{{tweet|notch|11773078791000065|@Wyld Adding them right now! They have an 1/8 chance of spawning a chicken when they hit something.|December 6, 2010}}</ref>}}
+|{{HistoryLine||1.2|Eggs are now used to craft [[cake]]s.
+|Eggs can now be launched by [[dispenser]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[Breeding]] has been added, making eggs easier to obtain.}}
+|{{HistoryLine|||dev=RC1|Thrown eggs now hatch chicks instead of adult chickens.
+|The egg's throw [[sound]] has been changed.}}
+|{{HistoryLine||1.4.2|dev=12w37a|Eggs are now used to craft [[pumpkin pie]]s.}}
+|{{HistoryLine||1.9|dev=15w32a|Eggs no longer [[damage]] the [[ender dragon]].}}
+|{{HistoryLine|||dev=15w36b|Eggs now produce particles when thrown at an entity.}}
+|{{HistoryLine|||dev=15w49a|Eggs, like all throwable projectiles, now take the thrower's motion into account when fired.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Egg JE2 BE2.png|32px]] The texture of eggs has been changed.}}
+|{{HistoryLine|||dev=18w50a|Eggs can now be found in [[chest]]s in [[village]] fletcher houses.
+|Therefore, chickens are no longer the only source of eggs.
+|Thrown egg now have an optional <code>Item</code> tag that can specify a different item stack to render.}}
+|{{HistoryLine|||dev=19w07a|Added [[fox]]es, which sometimes spawn with eggs in their mouths.}}
+|{{HistoryLine||1.16|dev=20w09a|Thrown eggs can now break [[chorus flower]]s.}}
+|{{HistoryLine||1.16.2|dev=pre1|Eggs are now affected by [[bubble column]]s.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Eggs can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Thrown eggs no longer go through the [[world border]] if hit.}}
+|{{HistoryLine||1.21.5|dev=25w06a|[[File:Blue Egg JE1 BE1.png|32px]] [[File:Brown Egg JE1 BE1.png|32px]] Added blue and brown eggs alongside the chicken variants they come from.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.4.0|[[File:Egg JE1 BE1.png|32px]] Added eggs. They are only obtainable through inventory editors.
+|Eggs are throwable, but are unable to spawn chickens.}}
+|{{HistoryLine||v0.7.0|[[Chicken]]s now occasionally lay eggs.
+|Eggs can be used to craft a [[cake]].
+|Thrown eggs now have a chance of spawning adult chickens.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Eggs are now used to craft [[pumpkin pie]]s.}}
+|{{HistoryLine|||dev=build 3|Thrown eggs now have a chance of spawning chicks instead of adult chickens.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID has now been changed from <code>thrownegg</code> to <code>egg</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|Eggs now deal knockback to [[player]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Egg.png|32px]] The texture of eggs has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Eggs can now be found in [[village]] fletcher [[chest]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Eggs can now be [[trading|sold]] to farmer [[villager]]s.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Added [[fox]]es, which can [[drop]] eggs.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[Trading]] has now been changed, eggs can no longer be sold to farmer [[villager]]s.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Eggs can now generate in [[trial chambers]] dispensers.}}
+|{{HistoryLine||1.21.70|exp=Drop 1 2025|dev=Preview 1.21.70.22|[[File:Blue Egg JE1 BE1.png|32px]] [[File:Brown Egg JE1 BE1.png|32px]] Added blue and brown eggs.|Added item tag {{cd|minecraft:egg}} for use in recipes.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|All features behind the "Drop 1 2025" experimental toggle have now been fully implemented.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Egg JE1 BE1.png|32px]] Added eggs.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Thrown eggs now hatch chicks instead of adult chickens.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Eggs are now used to craft [[pumpkin pie]]s.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Eggs, like all throwable projectiles, now take the thrower's motion into account when fired.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Egg JE2 BE2.png|32px]] The texture of eggs has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Eggs can now be [[trading|sold]] to farmer [[villager]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Egg JE1 BE1.png|32px]] Added eggs.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||4|Eggs are no longer rendered for the first 2 ticks to prevent screen flickering.}}
+|{{HistoryLine||5|Eggs now do [[Knockback (mechanic)|knockback]] to players.|Eggs now have a 4-tick [[use cooldown]], now matching the same change made to [[snowball]]s in [[Combat Test 4]].}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has now been changed from <code>ThrownEgg</code> to <code>egg</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 344.{{info needed|and what was the entity's?}}}}
+}}
+
+== Issues ==
+{{issue list|-spawn egg|-dragon egg|-turtle egg|-sniffer egg|-frog}}
+
+== Trivia ==
+* Eggs break mid-fall if hit by another projectile; the chance of spawning a chick is not affected.
+* A thrown egg faces toward the [[player]] in first-person view, while it appears rotated horizontally in third-person view. This is the case for all throwable [[item]]s such as [[ender pearl]]s, [[snowball]]s, and all throwable [[potion]]s.
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox items|ingredients}}
+{{Navbox entities|Other}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[cs:Vajíčko]]
+[[de:Ei]]
+[[es:Huevo]]
+[[fr:Oeuf]]
+[[hu:Tojás]]
+[[it:Uovo]]
+[[ja:卵]]
+[[ko:달걀]]
+[[lzh:雞卵]]
+[[nl:Ei]]
+[[pl:Jajko]]
+[[pt:Ovo]]
+[[ru:Яйцо]]
+[[th:ไข่]]
+[[uk:Яйце]]
+[[zh:鸡蛋]]

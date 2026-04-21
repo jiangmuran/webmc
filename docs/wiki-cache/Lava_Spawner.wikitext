@@ -1,0 +1,91 @@
+{{for|a renewable source of lava|Pointed Dripstone}}
+{{outdated feature|edition=java}}
+{{Conjecture}}
+{{Infobox block
+|image=Lava Spawner JE1.gif
+|renewable=No
+|tool=any
+|light=No
+|transparent=No
+|flammable=No
+|lavasusceptible=No
+}}
+The '''lava spawner''' was a block that would repeatedly create [[lava]] on each of its four orthogonal sides.
+
+== Obtaining ==
+
+=== Breaking ===
+Lava spawners can be broken instantly, regardless of held items.
+
+{{Breaking row|Lava Spawner|horizontal=1|foot=1}}
+
+=== Generated loot ===
+Lava spawners could be found in [[starting house]] [[chest]]s in stacks of 99 in [[Indev 0.31 20100124-2310]], and stacks of 100 in [[Indev 0.31 20100128-2200]]. Prior to this, they were added to the player's [[inventory]] by default in a stack of 5.
+
+== Usage ==
+[[File:Gears on infinite sources.png|thumb|right|As lava spawners are full solid cubes, placed [[gear]]s render on their sides.]]
+The lava spawner has many visual and functional differences from normal lava:
+* It is a full, solid cube block with full block collision.
+* It does not damage entities.
+* It does not emit light.
+* All sides use the same still lava texture.
+
+=== Creating liquids ===
+Immediately after placement, the lava spawner creates blocks of lava on each of its four orthogonal sides. If these created blocks are removed, they get regenerated after enough time.
+
+=== Sponges ===
+Unlike with normal lava, lava spawners are deleted by [[sponge]]s.
+
+== Sounds ==
+{{empty section}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|shownumericids=y
+|nonameid=y
+|showforms=y
+|displayname=[No displayed name]
+|spritename=infinite-lava
+|spritetype=block
+|id=53
+|foot=1
+}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100122-2251|[[File:Lava Spawner.png|32px]] Added lava spawner.
+|The block is referred to as a "volcano block".<ref name="notchblog1">{{twon|347976621|Indev's been updated with a bunch of goodies|January 22, 2010}}</ref>
+|It appears in the player's inventory in a stack of 5.}}
+|{{HistoryLine|||dev=20100124-2310|Lava spawners can now be found in starting house chests in a stack of 99.}}
+|{{HistoryLine|||dev=20100128-2200|Lava spawners can now be found in starting house chests in a stack of 100.}}
+|{{HistoryLine|||dev=20100129-1447|Lava spawners can no longer be found in starting house chests.}}
+|{{HistoryLine|||dev=20100131-2156|Lava spawners now periodically generate lava around themselves even if said lava was previously removed.}}
+|{{HistoryLine|||dev=20100201-2227|Lava spawners are now deleted by sponges.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100624|The lava spawner has been removed. As the ID is now empty, it now crashes the game with a NullPointerException if a chunk containing said block is loaded or an inventory containing one opened.}}
+|{{HistoryLine||20100629|[[File:Oak Stairs (N) JE1 BE1.png|32px]] The numeric ID which lava spawners used is now used by [[oak stairs]], and as such all existing lava spawners seamlessly convert into oak stairs instead of causing the game to crash.}}
+}}
+
+== Issues ==
+{{removed block issues}}
+
+== See also ==
+* [[Water Spawner]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|removed}}
+{{Navbox removed features}}
+
+[[Category:Removed blocks]]
+
+[[es:Generador de lava]]
+[[fr:Générateur de lave]]
+[[ja:無限の溶岩]]
+[[pt:Gerador de Lava]]
+[[zh:无限熔岩源]]

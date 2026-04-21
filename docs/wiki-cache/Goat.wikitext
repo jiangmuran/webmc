@@ -1,0 +1,796 @@
+{{For}}
+{{Infobox entity
+| group = Normal
+| 1-1caption = Adult
+| 1-2caption = Baby
+| 1-1 = Goat.png
+| *-1size = 190px
+| 1-2 = Baby Goat JE2 BE3.png
+| 1-2size = 100px
+| group2 = One horn
+| 2-1 = Goat (one horn).png
+| *-1caption = Adult only
+| group3 = Hornless
+| 3-1 = Goat (no horns).png
+| invimage = Goat Spawn Egg
+| health = {{hp|10}}
+| behavior = Neutral
+| mobtype = {{EntityLink|Animal}}
+| damage = '''Adult:'''<br>
+Easy and Normal: {{hp|2}}<br>
+Hard: {{hp|3}}<br>
+'''Baby:'''<br>
+Easy and Normal: {{hp|1}}<br>
+Hard: {{hp|1.5}}<br>
+| size = '''Adult:'''<br>Height: 1.3 blocks<br>Width: 0.9 blocks<br>
+'''Baby:'''<br>Height: 0.65 blocks<br>Width: 0.45 blocks<br>
+'''While jumping:'''{{needs testing|Does this hitbox change exist in Bedrock Edition?|bedrock=1}}<br>
+'''Adult:'''<br>Height: 0.91 blocks<br>Width: 0.63 blocks<br>
+'''Baby:'''<br>Height: 0.455 blocks<br>Width: 0.315 blocks<br>
+| speed = 0.2
+| knockbackresistance = 
+| spawn = {{BiomeLink|Frozen Peaks}} <br> {{BiomeLink|Jagged Peaks}} <br> {{BiomeLink|Snowy Slopes}}
+| usableitems = {{drop|Item|Bucket}}
+{{drop|Item|Wheat}}
+{{drop|Item|Lead}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+{{drop|Item|Name Tag}}
+}}
+A '''goat''' is a [[neutral mob]] found in certain [[mountain]]ous [[biome]]s. It can jump especially high and is [[milk]]able. Goats occasionally ram other [[mob]]s and [[player]]s, and cannot be provoked. Ramming into certain [[block]]s causes a [[goat horn]] to drop from an adult goat if it has any.
+
+== Spawning ==
+Groups of two to three goats spawn above [[stone]], [[gravel]], [[packed ice]] or [[snow blocks]] on snowy slopes, jagged peaks, and frozen peaks at the surface. Goats spawn individually and more uncommonly after the world generation. 5% of all goats spawn as babies.
+
+When a goat is spawned naturally, or through breeding normal goats, it has a 2% chance of being a '''screaming'''{{only|je|short=1}}'''goat''' or a '''screamer'''{{only|be|short=1}} '''goat'''. They look identical to all other goats, but they make different sounds and ram more often.
+
+Screaming{{only|JE|short=1}}/screamer{{only|BE|short=1}} goats can also be obtained with the following commands:
+
+In ''Java Edition'': {{Cmd|summon minecraft:goat ~ ~ ~ {IsScreamingGoat:1b<nowiki>}</nowiki>}}
+
+In ''Bedrock Edition'': it requires two commands if spawned as a normal goat:
+# {{Cmd|/summon goat}}
+# {{cmd|/event entity @e[type{{=}}goat] minecraft:born_screamer}}
+
+Adult goats have a 10% chance to be missing one of their horns upon spawning. If this chance succeeds, either the left or the right horn is removed (chosen randomly with an equal chance for each).
+
+{{Mob spawn table|Goat}}
+
+== Drops ==
+=== On death ===
+Adult goats drop {{xp|1|3}} when killed by a [[player]] or tamed [[wolf]]. Killing a baby goat yields no [[item]]s or [[experience]].
+
+=== Breeding ===
+{{xp|1|7}} is dropped upon successful [[breeding]].
+
+=== Goat horns ===
+[[File:A goat with a bald head.png|thumb|right|A goat when both horns are knocked off.]]
+An adult goat that has at least one horn on its head will lose one of them and drop a [[goat horn]] if it charges into any of the following [[solid block]]s: [[stone]], [[coal ore]], [[copper ore]], [[iron ore]], [[emerald ore]], [[log]]s, or [[packed ice]]. {{IN|java}}, these blocks are listed under the {{cd|snaps_goat_horn}} [[block tag (Java Edition)|tag]], and can be modified using a [[data pack]]. 
+
+Baby goats never drop goat horns. However, {{in|JE}}, it's possible to remove a baby's horns using a command, like {{cmd|summon minecraft:goat ~ ~ ~ {Age:-1,HasLeftHorn:0b,HasRightHorn:0b,AgeLocked:1} }}. 
+
+There are four horn variants for normal goats ("Ponder", "Sing", "Seek", and "Feel"), and four horn variants that only screaming goats drop ("Admire", "Call", "Yearn", and "Dream"). Goats do not regrow their horns; therefore, up to two horns can be dropped per goat, or one horn if the goat spawned with only one horn. The two horns of the same goat are always of the same variant.
+
+== Behavior ==
+When left to wander, goats tend to ascend hills and mountains rather than keep to lowlands. Their behavior is marked by jumping high and by opportunistically ramming non-moving mobs.
+
+Goats take {{hp|10}} less [[fall damage]] and avoid walking into powder snow. Goats do not get hurt by [[pointed dripstone]] if they fall on it from a minimum of six blocks, and don't die from pointed dripstone if they fall on it from a minimum of ten.
+
+=== Jumping ===
+A goat usually jumps when trying to cross an obstacle like a small hole in the ground or [[powder snow]]. It lowers its head, then it leaps up to 10 blocks vertically and up to 5 blocks laterally. Once a goat jumps this way, it cannot do it again for 30 to 60 seconds. A goat also never voluntarily jumps more than 5 blocks down, although a goat can be pushed off a higher cliff by another mob or a [[piston]].
+
+=== Ramming ===
+
+[[File:Goat Stand Ram.jpg|alt=Goat Charge|thumb|A goat speeding at an armor stand.]]
+
+Every 30 seconds to 5 minutes, a goat tries to ram a single unmoving target it can see within a range of 4–16 blocks. They can target players, [[armor stand]]s{{only|JE|short=1}}, [[camera]]s{{only|bedrock|education|short=1}}, and any mob except for [[ghast]]s and other goats. A charging goat locks on to its target's position, lowers its head, stomps, and speeds toward the target. If the charge connects, it deals {{hp|1}} to {{hp|3}} damage (depending on difficulty) and 9 blocks of [[Damage#Knockback|knockback]] to its target, possibly resulting in a damaging or even fatal fall.
+
+As a goat lowers its head, its target has the chance to move out of the way. If a goat misses, it stops itself within a couple blocks, unless it hits a solid block first. If a goat rams a solid block that [[Block tag (Java Edition)#snaps goat horn|occurs naturally in its environment]], it can drop one of its [[goat Horn|horn]]s.
+
+Mobs do not retaliate to being rammed, except for [[piglin]]s, [[piglin brute]]s, [[hoglin]]s, [[zoglin]]s, "Johnny" [[vindicator]]s and [[warden]]s.<ref>{{bug|MC-227625}}</ref>
+
+If a goat rams against a [[zombified piglin]], all nearby other zombified piglins will come to its aid to help it and will attack the goat who impacted the zombified piglin.
+
+Goats don't target players in [[Creative]] mode or any players in Peaceful [[difficulty]]. However, they still attempt to ram players in Creative if they switched from [[Survival]] mode when the ram cooldown has ended and were already targeted before the switch.{{check the code}}{{cn|Is there a bug report about this to be cited?}} Unlike most neutral mobs, goats do not attack the player if the player attacks it and do not call for backup if harmed.
+
+Baby goats deal a knockback of 4.5 blocks. A screaming goat tries to ram a valid target every 5 to 15 seconds.
+
+When the player holds wheat in their hand, the goat that was preparing to ram something stops preparing to ram and starts walking up to the player.
+
+=== Milking ===
+An adult goat can be milked by {{Control|using}} a [[bucket]] on it, yielding a [[milk bucket]]. Screaming goats make a distinct sound when this happens. 
+
+=== Breeding ===
+{{Main|Breeding}}
+
+Goats follow players that are within ten blocks who are holding [[wheat]]. If adult goats are fed wheat, they enter love mode and breed, granting one to seven [[experience]] orbs. The growth time of a baby goat can be accelerated by 10% each time it is fed wheat.
+
+If a standard goat is bred with a screaming goat, there is approximately a 50% chance the resulting baby is a screaming goat. If both goats are screaming, there is a 100% chance in ''Java Edition'' and a 98% chance in ''Bedrock Edition'' that the baby is a screamer goat. With two normal parents, there is a 2% chance of a baby goat being a screaming goat.
+
+== Sounds == 
+=== Generic ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Goat idle1.ogg
+|sound2=Goat idle2.ogg
+|sound3=Goat idle3.ogg
+|sound4=Goat idle4.ogg
+|sound5=Goat idle5.ogg
+|sound6=Goat idle6.ogg
+|sound7=Goat idle7.ogg
+|sound8=Goat idle8.ogg
+|subtitle=Goat bleats
+|source=neutral
+|description=Randomly
+|id=entity.goat.ambient
+|translationkey=subtitles.entity.goat.ambient
+|volume=''varies'' <ref group=sound>0.84 for all except {{cd|idle1}} and {{cd|idle2}}, which are 0.82, and {{cd|idle7}}, which is 0.83</ref>
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat step1.ogg
+|sound2=Goat step2.ogg
+|sound3=Goat step3.ogg
+|sound4=Goat step4.ogg
+|sound5=Goat step5.ogg
+|sound6=Goat step6.ogg
+|subtitle=Footsteps
+|description=While a goat is walking
+|source=neutral
+|id=entity.goat.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Goat horn break1.ogg
+|sound2=Goat horn break2.ogg
+|sound3=Goat horn break3.ogg
+|sound4=Goat horn break4.ogg
+|subtitle=Goat Horn breaks off
+|source=neutral
+|description=When a goat's horn breaks off
+|id=entity.goat.horn_break
+|translationkey=subtitles.entity.goat.horn_break
+|volume=0.9
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock
+| {{SoundLine
+|sound=Goat idle1.ogg
+|sound2=Goat idle2.ogg
+|sound3=Goat idle3.ogg
+|sound4=Goat idle4.ogg
+|sound5=Goat idle5.ogg
+|sound6=Goat idle6.ogg
+|sound7=Goat idle7.ogg
+|sound8=Goat idle8.ogg
+|description=Randomly
+|source=neutral
+|id=mob.goat.ambient
+|volume=''varies'' <ref group=sound><code>idle1</code> and <code>idle2</code> are 0.82, <code>idle7</code> is 0.83, and <code>idle</code> <code>3</code> through <code>8</code> (excluding <code>7</code>) are 0.84</ref>
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat jump1.ogg
+|sound2=Goat jump2.ogg
+|description=When a goat long jumps
+|source=neutral
+|id=component.jump_to_block
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Goat eat1.ogg
+|sound2=Goat eat2.ogg
+|sound3=Goat eat3.ogg
+|description=When a goat eats wheat
+|source=neutral
+|id=mob.goat.eat
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Goat step1.ogg
+|sound2=Goat step2.ogg
+|sound3=Goat step3.ogg
+|sound4=Goat step4.ogg
+|sound5=Goat step5.ogg
+|sound6=Goat step6.ogg
+|description=While a goat is walking
+|source=neutral
+|id=mob.goat.step
+|volume=1.0
+|pitch=0.8-1.2 (1.3-1.7)}}
+| {{SoundLine
+|sound=Goat horn break1.ogg
+|sound2=Goat horn break2.ogg
+|sound3=Goat horn break3.ogg
+|sound4=Goat horn break4.ogg
+|description=When a goat's horn breaks off
+|source=neutral
+|id=mob.goat.horn_break
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+=== Normal ===
+*The goat's fourth death sound is its first ambient sound but lower pitched.
+*The goat's first and third ramming preparation sounds (both for screaming goats) are its first ramming preparation sound but heavily edited.
+*The goat's fourth ramming preparation sound was originally used for the [[Earth:Horned Sheep|Horned Sheep]]'s third ramming sound but was edited to remove footstep sound effects.
+
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Goat death1.ogg
+|sound2=Goat death2.ogg
+|sound3=Goat death3.ogg
+|sound4=Goat death4.ogg
+|sound5=Goat death5.ogg
+|subtitle=Goat dies
+|source=neutral
+|description=When a regular goat dies
+|id=entity.goat.death
+|translationkey=subtitles.entity.goat.death
+|volume=0.65
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat hurt1.ogg
+|sound2=Goat hurt2.ogg
+|sound3=Goat hurt3.ogg
+|sound4=Goat hurt4.ogg
+|subtitle=Goat hurts
+|description=When a regular goat is damaged
+|source=neutral
+|id=entity.goat.hurt
+|translationkey=subtitles.entity.goat.hurt
+|volume=0.65
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat jump1.ogg
+|sound2=Goat jump2.ogg
+|subtitle=Goat leaps
+|description=When a regular goat long jumps
+|source=neutral
+|id=entity.goat.long_jump
+|translationkey=subtitles.entity.goat.long_jump
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=jumppitch>Can be 1.0 or 0.8 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Goat gets milked
+|description=When a regular goat is milked
+|source=neutral
+|id=entity.goat.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Goat eat1.ogg
+|sound2=Goat eat2.ogg
+|sound3=Goat eat3.ogg
+|subtitle=Goat eats
+|description=When a regular goat eats [[wheat]]
+|source=neutral
+|id=entity.goat.eat
+|translationkey=subtitles.entity.goat.eat
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Goat pre ram1.ogg
+|sound2=Goat pre ram2.ogg
+|sound3=Goat pre ram3.ogg
+|sound4=Goat pre ram4.ogg
+|subtitle=Goat stomps
+|description=When a regular goat prepares to ram
+|source=neutral
+|id=entity.goat.prepare_ram
+|translationkey=subtitles.entity.goat.prepare_ram
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat impact1.ogg
+|sound2=Goat impact2.ogg
+|sound3=Goat impact3.ogg
+|subtitle=Goat rams
+|description=When a regular goat impacts a mob after ramming
+|source=neutral
+|id=entity.goat.ram_impact
+|translationkey=subtitles.entity.goat.ram_impact
+|volume=0.8
+|pitch=1.0
+|distance=16}} 
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock
+| {{SoundLine
+|sound=Goat death1.ogg
+|sound2=Goat death2.ogg
+|sound3=Goat death3.ogg
+|sound4=Goat death4.ogg
+|sound5=Goat death5.ogg
+|description=When a regular goat dies
+|source=neutral
+|id=mob.goat.death
+|volume=0.65
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat hurt1.ogg
+|sound2=Goat hurt2.ogg
+|sound3=Goat hurt3.ogg
+|sound4=Goat hurt4.ogg
+|description=When a regular goat is damaged
+|source=neutral
+|id=mob.goat.hurt
+|volume=0.65
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|description=When a regular goat is milked
+|source=neutral
+|id=mob.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.9, or 1.1 for each sound</ref>}}
+| {{SoundLine
+|sound=Goat pre ram1.ogg
+|sound2=Goat pre ram2.ogg
+|sound3=Goat pre ram3.ogg
+|sound4=Goat pre ram4.ogg
+|source=neutral
+|description=When a regular goat prepares to ram
+|id=mob.goat.prepare_ram
+|volume=0.8
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat impact1.ogg
+|sound2=Goat impact2.ogg
+|sound3=Goat impact3.ogg
+|source=neutral
+|description=When a regular goat impacts a mob after ramming
+|id=mob.goat.ram_impact
+|volume=0.8
+|pitch=1.0}}
+}}
+
+=== Screaming/Screamer ===
+*The goat's third hurt sound and its first ramming preparation sound are the same, but pitched differently; the former is pitched higher than the latter.
+*The goat's second ramming preparation sound is its fifth ambient sound but higher pitched.
+*The goat's fourth ramming preparation sound is its second ramming preparation sound (regular goats) but heavily edited.
+*The goat's fifth ramming preparation sound is its fourth ramming preparation sound (regular goats), but heavily edited.
+*The goat's first idle sound is its third death sound but slightly edited.
+*The goat's second death sound is its second death sound (regular goat), but heavily edited.
+
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Goat scream1.ogg
+|sound2=Goat scream2.ogg
+|sound3=Goat scream3.ogg
+|sound4=Goat scream4.ogg
+|sound5=Goat scream5.ogg
+|sound6=Goat scream6.ogg
+|sound7=Goat scream7.ogg
+|sound8=Goat scream8.ogg
+|sound9=Goat scream9.ogg
+|subtitle=Goat bellows
+|source=neutral
+|description=Randomly
+|id=entity.goat.screaming.ambient
+|translationkey=subtitles.entity.goat.screaming.ambient
+|volume=''varies'' <ref group=sound>0.9 for all screaming sounds; 0.84 for all idle sounds except {{cd|idle1}} and {{cd|idle2}}, which are 0.82, and {{cd|idle7}}, which is 0.83</ref>
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming death1.ogg
+|sound2=Goat screaming death2.ogg
+|sound3=Goat screaming death3.ogg
+|subtitle=Goat dies
+|source=neutral
+|description=When a screaming goat dies
+|id=entity.goat.screaming.death
+|translationkey=subtitles.entity.goat.death
+|volume=0.65
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming hurt1.ogg
+|sound2=Goat screaming hurt2.ogg
+|sound3=Goat screaming hurt3.ogg
+|subtitle=Goat hurts
+|description=When a screaming goat is damaged
+|source=neutral
+|id=entity.goat.screaming.hurt
+|translationkey=subtitles.entity.goat.hurt
+|volume=0.65
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat jump1.ogg
+|sound2=Goat jump2.ogg
+|subtitle=Goat leaps
+|description=When a screaming goat long jumps
+|source=neutral
+|id=entity.goat.screaming.long_jump
+|translationkey=subtitles.entity.goat.long_jump
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=jumppitch>Can be 1.0 or 0.8 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|subtitle=Goat gets milked
+|description=When a screaming goat is milked
+|source=neutral
+|id=entity.goat.screaming.milk
+|translationkey=subtitles.entity.goat.milk
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Goat eat1.ogg
+|sound2=Goat eat2.ogg
+|sound3=Goat eat3.ogg
+|subtitle=Goat eats
+|description=When a screaming goat eats wheat
+|source=neutral
+|id=entity.goat.screaming.eat
+|translationkey=subtitles.entity.goat.eat
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Goat screaming pre ram1.ogg
+|sound2=Goat screaming pre ram2.ogg
+|sound3=Goat screaming pre ram3.ogg
+|sound4=Goat screaming pre ram4.ogg
+|sound5=Goat screaming pre ram5.ogg
+|subtitle=Goat stomps
+|description=When a screaming goat prepares to ram
+|source=neutral
+|id=entity.goat.screaming.prepare_ram
+|translationkey=subtitles.entity.goat.prepare_ram
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Goat impact1.ogg
+|sound2=Goat impact2.ogg
+|sound3=Goat impact3.ogg
+|subtitle=Goat rams
+|description=When a screaming goat impacts a mob after ramming
+|source=neutral
+|id=entity.goat.screaming.ram_impact
+|translationkey=subtitles.entity.goat.ram_impact
+|volume=0.8
+|pitch=1.0
+|distance=16}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock
+| {{SoundLine
+|sound=Goat idle1.ogg
+|sound2=Goat idle2.ogg
+|sound3=Goat idle3.ogg
+|sound4=Goat idle4.ogg
+|sound5=Goat idle5.ogg
+|sound6=Goat idle6.ogg
+|sound7=Goat idle7.ogg
+|sound8=Goat idle8.ogg
+|sound9=Goat scream1.ogg
+|sound10=Goat scream2.ogg
+|sound11=Goat scream3.ogg
+|sound12=Goat scream4.ogg
+|sound13=Goat scream5.ogg
+|sound14=Goat scream6.ogg
+|sound15=Goat scream7.ogg
+|sound16=Goat scream8.ogg
+|sound17=Goat scream9.ogg
+|description=Randomly
+|source=neutral
+|id=mob.goat.ambient.screamer
+|volume=''varies''<ref group=sound><code>idle1</code> and <code>idle2</code> are 0.82, <code>idle7</code> is 0.83, and <code>idle</code> <code>3</code> through <code>8</code> (excluding <code>7</code>) are 0.84. All <code>scream</code> sounds are 0.9</ref>
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat screaming death1.ogg
+|sound2=Goat screaming death2.ogg
+|sound3=Goat screaming death3.ogg
+|description=When a screamer goat dies
+|source=neutral
+|id=mob.goat.death.screamer
+|volume=0.65
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat screaming hurt1.ogg
+|sound2=Goat screaming hurt2.ogg
+|sound3=Goat screaming hurt3.ogg
+|description=When a screamer goat is damaged
+|source=neutral
+|id=mob.goat.hurt.screamer
+|volume=0.65
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Goat screaming milk1.ogg
+|sound2=Goat screaming milk2.ogg
+|sound3=Goat screaming milk3.ogg
+|sound4=Goat screaming milk4.ogg
+|sound5=Goat screaming milk5.ogg
+|description=When a screamer goat is milked
+|source=neutral
+|id=mob.goat.milk.screamer
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Goat screaming pre ram1.ogg
+|sound2=Goat screaming pre ram2.ogg
+|sound3=Goat screaming pre ram3.ogg
+|sound4=Goat screaming pre ram4.ogg
+|sound5=Goat screaming pre ram5.ogg
+|description=When a screamer goat prepares to ram
+|source=neutral
+|id=mob.goat.prepare_ram.screamer
+|volume=0.8
+|pitch=1.0}}
+| {{SoundLine
+|sound=Goat impact1.ogg
+|sound2=Goat impact2.ogg
+|sound3=Goat impact3.ogg
+|description=When a screamer goat impacts a mob after ramming
+|source=neutral
+|id=mob.goat.ram_impact.screamer
+|volume=0.8
+|pitch=1.0}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Goat
+|spritetype=entity
+|nameid=goat
+|showentitytags=y
+|entitytags=followable_friendly_mobs
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showentityfamily=y
+|entityfamily=animal,goat
+|generatetranslationkeys=y
+|displayname=Goat
+|spritetype=entity
+|nameid=goat
+|id=128
+|foot=1}}
+
+=== Entity data ===
+Goats have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|HasLeftHorn}}: 1 or 0 (true/false) – if true, indicates this goat has the left horn.
+** {{nbt|byte|HasRightHorn}}: 1 or 0 (true/false) – if true, indicates this goat has the right horn.
+** {{nbt|byte|IsScreamingGoat}}: 1 or 0 (true/false) – if true, indicates this is a screaming goat.
+</div><section end="entity data" />
+
+{{el|bedrock}}: 
+:See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Whatever Floats Your Goat;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Whatever Floats Your Goat!;The Parrots and the Bats;Two by Two;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|UHoz0Q-LwUU}}|[[File:GoatPixel.png|32px]] Goats are announced to be part of the [[mountains]] biome in the biome vote at [[MINECON Live 2019]].
+|[[Mountains]] wins the biome vote, including goats in the planned biome.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=2869}}|[[File:Goat BE1.png|32px]] [[File:Goat BE1.png|25px]] In-game footage of goats are shown at [[Minecraft Live 2020]], to be released in the [[Caves & Cliffs]] update.}}
+|{{HistoryLine||March 31, 2021|link={{tweet|henrikkniberg|1377301836324028418}}|Goat was shown off on a tweet by [[Henrik Kniberg]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w13a|[[File:Goat JE1.png|32px]] [[File:Baby Goat JE1.png|25px]] Added goats.
+|Goats have a 2% chance of spawning as a screaming goat, they are visually indistinguishable from regular goats, but make different sounds. 
+|Goats are completely passive.
+|Goats currently do not drop any items.
+|Goats currently spawn in the [[Windswept Hills|mountains]] biome, a placeholder until the new mountains are added.}}
+|{{HistoryLine|||dev=21w15a|Goats now ram other mobs as well as [[armor stand]]s.
+|Creepers rammed by goats don't retaliate.
+|Goats now avoid [[powder snow]].}}
+|{{HistoryLine|||dev=21w18a|Screaming goats use their ram attack more often than regular goats.
+|Two ear textures have been changed to mirror properly.
+|Pitch for the sound of baby goats ramming into stuff has been increased.
+|Baby goats now follow their parents.
+|Goats can no longer make long jumps on [[honey block]]s.}}
+|{{HistoryLine|||dev=pre3|[[Mob]]s rammed by goats no longer retaliate.}}
+|{{HistoryLine||1.17.1|dev=pre1|Breeding common goats now have a 2% chance to produce screaming goats.
+|Status effects on goats now also apply when the goat is jumping or ramming.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Goats now spawn only in the added [[snowy slopes]], [[jagged peaks]], and [[frozen peaks]] biomes.
+|Goats no longer spawn in the mountains biome.}}
+|{{HistoryLine|||dev=experimental snapshot 3|Added the [[stony peaks]] biome, where goats can also spawn.}}
+|{{HistoryLine|||dev=21w40a|Goats no longer spawn in the [[stony peaks]] biome.}}
+|{{HistoryLine||1.19|dev=22w17a|Goats can now drop [[goat horn]]s.}}
+|{{HistoryLine|||dev=pre2|Goat Horns now snap when a goat rams into [[copper ore]].<ref>{{bug|MC-250941|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.3|dev=22w43a|Goat ramming sounds have been switched to ''Friendly Creatures'' in the sound settings.<ref>{{bug|MC-244694|||Fixed}}</ref>}}
+|{{HistoryLine||26.1|dev=snap5 |Added [[golden dandelion]]s, which can be used to prevent baby goats from growing up.}}
+|{{HistoryLine|||dev=snap6|[[File:Baby Goat JE2.png|32px]] The model and texture of baby goats have been changed.
+|Baby goats now have horns.}}
+|{{HistoryLine|||dev=snap11|Baby goats now rotate their head when ramming.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.200|exp=Caves and Cliffs|dev=beta 1.16.200.52|[[File:Goat BE1.png|32px]] [[File:Goat BE1.png|25px]] Added goats and baby goats behind the "Caves and Cliffs" experimental toggle.
+|Goats make the sound of a player being hit.
+|Goats currently use the [[vex]]'s charging sound as a placeholder when preparing to ram charge.<ref>{{bug|MCPE-104156}}</ref>}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.51|Goats now drop 2 [[goat horn]]s each.
+|Goats now drop 1-2 [[raw mutton]].
+|[[File:Goat (left horn) BE1.png|32px]] [[File:Goat (right horn) BE1.png|32px]] [[File:Goat (no horns) BE1.png|32px]] Goats now show missing goat horns in the model.
+|Baby goats now have half knockback when using a ram attack.
+|Goats no longer attack [[armor stand]]s.<ref>{{bug|MCPE-104159||Goat attacks armor stands|Fixed}}</ref>
+|Goats now attack [[shulker]]s.
+|Goats now produce one baby goat at a time when breeding.}}
+|{{HistoryLine|||dev=beta 1.16.210.53|Goats now avoid walking onto powder snow while path-finding.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.50|Goats now spawn only in the snowy slopes mountain biome.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.54|Goats now spawn in the extreme hills biome instead of the snowy slopes biome.<ref>{{bug|MCPE-124286}}</ref>}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Goats are now available without enabling [[experimental gameplay]].}}
+|{{HistoryLine|||dev=beta 1.17.0.54|Goats now have sounds.
+|Added screamer goats.
+|Increased chances of getting screamer goat by breeding screamer goat with non-screamer goat.
+|Goats no longer drop mutton when killed.}}
+|{{HistoryLine||1.17.10|dev=beta 1.17.10.22|[[Mob]]s rammed by goats no longer retaliate.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.20|[[File:Baby Goat JE1 BE2.png|25px]] Baby goats no longer have horns.}}
+|{{HistoryLine||1.17.30|exp=Caves and Cliffs|dev=beta 1.17.20.22|Goats now spawn only in [[mountain meadow]]s.}}
+|{{HistoryLine||1.17.40|exp=Caves and Cliffs|dev=beta 1.17.40.20|Goats now spawn only in [[snowy slopes]], [[stony peaks]], [[lofty peaks]], and [[snow capped peaks]] biome.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.21|Goats no longer spawn in the [[stony peaks]] biome.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.20.26|Added a sound effect when a goat rams into a block and a goat horn breaks off.}}
+|{{HistoryLine|||dev=Preview 1.18.30.27|[[File:Goat (right horn) BE2.png|32px]] Goats now have a chance of spawning with only one horn.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21|[[File:Baby Goat JE2 BE3.png|32px]] The model and texture of baby goats have been changed.
+|Baby goats now have horns again.
+|Added [[golden dandelion]]s, which can be used to prevent baby goats from growing up.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Real-life goats cannot have their horns break off without sustaining significant cranial damage. The behavior of ''Minecraft''<nowiki/>'s goat horns more closely resemble real-life deer antlers, which, unlike goat horns, are not part of the animal's skull.
+* The model for goats was made in Blockbench.<ref>{{Tweet|blockbench|1321900157592576004|Goats, made in Blockbench:}}</ref><ref>{{YouTube link|HaGdVUcHIbE|Minecraft Live 2021: Minecraft Marketplace|Minecraft|October 22, 2021}}</ref>
+* While named goats, they most closely resemble {{W|Mountain goat|mountain goats|newtab=1}}, relatives that aren't true goats. The sounds for ''Minecraft'' goats were, however, recorded from real domestic goats.<ref>{{tweet|slamp0000|1377316464018001923|Getrud and her bröther.}}</ref>
+* In early development versions of [[Bedrock Edition 1.19.0]], goats could be eaten by [[frogs]].<ref>{{YouTube link|3Tcd_ZjMBvE|Changing Minecraft 1.19's Frog AI…|doctor4t|January 27, 2022}}</ref>
+
+== Gallery ==
+=== Renders ===
+These states can only be obtained via command. 
+<gallery>
+File:Goat (right horn) BE2.png|One right horned goat
+File:Baby Goat (left horn) JE2 BE3.png|One left horned baby goat
+File:Baby Goat (right horn) JE2 BE3.png|One right horned baby goat
+File:Baby Goat (no horns) JE2 BE3.png|Hornless baby goat
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Oh so many goats.png|A [[player]] stumbling upon a tribe of goats.
+File:Goat Outlook.png|A goat looking down upon a [[meadow]] from a cliff.
+File:Introducing baby goats.jpg
+File:Greatest GOAT of all time.jpg
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Goat idle.animation (pixel art).gif|Goat Idle animation.
+Screaming goat animation (pixel art).gif|animation of the screaming goat.
+Jumping goat animation (pixel art).gif|Jumping goat animation
+Goat celebrate.gif|The goat victory animation seen at [[MINECON Live 2019]].
+GoatPixel.png|Goat from the Biome Vote video.
+Goat Vote.png|Goat from the Biome Vote video.
+Blockbench Goat.png|Render of a goat made in Blockbench.<ref>{{Citation|url=https://www.blockbench.net/gallery/|title=Minecraft Goat|author=[[Mojang Studios]]|website=blockbench.net|date=October 2020}}  </ref>
+Scale of cuteness concept art.jpg|Goat concept art. pictured with an [[axolotl]] and [[warden]].  
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Goat (texture).png|Goat texture file.
+Baby Goat (texture).png|Baby goat texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Caves & Cliffs cover art.png|A goat in promotional artwork for the first [[Caves & Cliffs]] update
+File:Caves & Cliffs (Part II) Artwork.jpg|Goats in promotional artwork for the second Caves & Cliffs update
+File:GOAT Update.jpg|A goat in promotional artwork for the [[GOAT Update]]
+File:Mobile, Multiplayer & More.png|A goat in promotional artwork for ''[[Mobile, Multiplayer & More]]''
+File:MC-Caves-and-Cliffs Media-Block-Goat 475x322.png|Artwork of a goat with a snow block
+File:GoatArtwork.png|Artwork of a goat jumping
+File:Galloping Goat.png|Artwork of a goat running or jumping
+File:Goat artwork launcher.png|Front-facing artwork of a goat jumping
+File:No New Messages.png|Pixel art of [[Alex]] near a goat, using one of its horns
+File:Goat Stare.gif|A goat doing a dramatic stare
+File:Live2023-05.jpeg|Two goats, a [[horse]], and a [[sniffer]]
+File:Zombie chases goat.gif|A zombie chasing a goat
+File:Live2023-08.jpeg|Several goats following [[Kai]], [[Makena]], and [[Steve]] into a [[cherry grove]]
+File:Goat (Trails & Tales Event).png|The Secret Goat, featured in the [[Trails & Tales Event]]
+File:Dark Baby Goat.png|The [[MCD:Dark Baby Goat|Dark Baby Goat]], a unique variation featured in ''[[Minecraft Dungeons]]''
+File:CCGift-guide plushie goat.jpg|A goat plush
+File:LEGO Goat.png|[[Lego Minecraft]] goat
+File:Goat Word Shirt.png|An official crewneck sweatshirt labeled "GOAT!"
+File:Goat Cliff Shirt.png|An official T-Shirt depicting the same phrase, alongside several actual goats
+File:Goat irl.png|A goat in a commercial for the ''Nintendo Switch''
+File:Goat but with pants on.jpeg|Goat but with pants on
+File:A goat in a coat.jpeg|A goat in a coat
+File:Eggman vs. Goat.jpeg|[[Doctor Eggman]] chasing a goat
+File:Miniverse Goat.jpg
+File:Goat Plastic.png|A goat in the [[Plastic Texture Pack]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links==
+*{{Mcnet|mob-menagerie--goat|Mob Menagerie: Goat|August 29, 2022|Duncan Geere}}
+*{{Mcnet|the-legend-screaming-goat|The Legend of the Screaming Goat|May 25, 2021|Sofia Dankis}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Neutral mobs]]
+[[Category:Animal mobs]]
+
+[[de:Ziege]]
+[[es:Cabra]]
+[[fr:Chèvre]]
+[[it:Capra]]
+[[ja:ヤギ]]
+[[ko:염소]]
+[[pl:Koza]]
+[[pt:Cabra]]
+[[ru:Коза]]
+[[uk:Коза]]
+[[zh:山羊]]

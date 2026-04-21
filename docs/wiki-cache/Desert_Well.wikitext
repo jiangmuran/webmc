@@ -1,0 +1,148 @@
+{{for|other uses|Well}}
+{{Infobox structure
+| image = Desert Well.png
+| biome = {{BiomeLink|Desert}}
+| blocks =
+* {{BlockLink|Sand}}
+* {{BlockLink|Sandstone}}
+* {{BlockLink|Sandstone Slab}}
+* {{BlockLink|Suspicious Sand}}
+* {{BlockLink|Water}}
+|canspawn=No
+}}
+'''Desert wells''' are structure-like [[feature]]s consisting mostly of [[sandstone]].
+
+== Generation ==
+Desert wells generate in [[desert]] biomes. They have a {{frac|1|1000}}{{only|java|short=1}} or {{frac|1|500}}{{only|bedrock|short=1}} chance to be generated in the given chunk. It is possible for a well to generate around a [[cactus]]. The well is considered a [[feature]] rather than a [[structure]], and therefore it generates with the "Generate Structures" option disabled.<ref>{{bug|MC-143151}}</ref>
+
+The game always tries to place the desert well on top of the first non-air block at a given position. For the generation to succeed, said block must be sand<!-- only regular sand is allowed, i.e., no sandstone & also no red sand --> situated on solid ground in a 5-by-5 radius. In practice, none of the 25 positions in the radius are allowed to be only air on the two y-levels below the central sand block.<!-- cf. "DesertWellFeature.class" -->
+
+The same requirements apply for {{cmd|place feature minecraft:desert_well}} to succeed.
+
+{{Calculator|chunkbase|pois=Dw|zoom=0.25}}
+
+== Construction ==
+{{main|Desert Well/Structure}}
+Desert wells are built of [[sandstone]] blocks and [[slab]]s with a [[water]] source inside. Underneath the water source are two [[suspicious sand]] blocks that can be [[brush]]ed to get various items. The first suspicious sand generates directly below the water source blocks, and the second generates below that layer.
+
+== Loot ==
+{{LootChest|brushable-desert-well}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=desert-well
+|spritetype=env
+|nameid=desert_well
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=desert-well
+|spritetype=env
+|nameid=desert_well
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=desert-well
+|spritetype=env
+|nameid=desert_well_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:desert_well",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w04a|[[File:Desert Well JE1 BE1.png|50px]] Added desert wells.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Desert wells now include [[sand]] and [[suspicious sand]] under its [[water]].
+|The suspicious sand may contain arms up [[pottery sherd]]s, [[brick]], [[stick]]s, [[suspicious stew]], and [[emerald]]s.}}
+|{{HistoryLine||1.20|dev=23w12a|The loot of the suspicious sand in desert wells has been changed.
+|[[Brewer pottery sherd]]s now spawn in desert wells with the probability of 1/4.
+|The probability of arms up pottery sherds spawning in desert wells is now 1/4, and the probability of other items spawning in desert wells is now 1/8.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Desert Well JE1 BE1.png|50px]] Desert wells were intended to be added in this version, but they did not generate at all.<ref>{{citation|url=https://mojang.com/2014/06/pocket-edition-0-9-0-snapshot-biggest-update-ever/|title=Pocket Edition 0.9.0 Snapshot. Biggest update ever!|archive-url=https://web.archive.org/web/20140610064558/https://mojang.com/2014/06/pocket-edition-0-9-0-snapshot-biggest-update-ever/|website=Mojang.com|date=June 9, 2014}}</ref>}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Desert Well JE2 BE2.png|50px]] The textures of desert wells has been changed.}}
+|{{HistoryLine||1.18.0|dev=?|Desert wells can now generate on terrain higher than Y{{=}}128.}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|Desert wells now include [[suspicious sand]] under its [[water]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Desert Well JE1 BE1.png|50px]] Added desert wells.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Desert Well by Ocean.png|A desert well
+DeadBushWell.png|Another desert well
+WellAndDungeon.png|The well feature found near a caved-in dungeon
+Excavated desert well.png|An excavated well
+Buried Well.png|A well partially buried in sand
+Two Wells Separated by a Hill.png|Two desert wells generated close to each other
+Desert Well by River.jpg|Another example of a desert well
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Peter-sheff-03-zombie.jpg|A [[zombie villager]] chasing a [[baby villager]] by a well
+</gallery>
+
+== See also == 
+* [[Feature]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|desert-well|Building Blocks: Desert Well|September 16, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox desert}}
+{{Navbox generated features}}
+{{Mojang featured|https://www.minecraft.net/en-us/article/desert-pyramid}}
+
+[[de:Wüstenbrunnen]]
+[[es:Fuente del desierto]]
+[[fr:Puits du désert]]
+[[it:Pozzo del deserto]]
+[[ja:砂漠の井戸]]
+[[lzh:漠井]]
+[[pl:Pustynna studnia]]
+[[pt:Poço do Deserto]]
+[[ru:Колодец]]
+[[th:บ่อน้ำทะเลทราย]]
+[[uk:Пустельний колодязь]]
+[[zh:沙漠水井]]

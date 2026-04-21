@@ -1,0 +1,350 @@
+{{For}}
+[[File:Spider Jockey at night.png|260px|right|thumb|A spider jockey.]]
+[[File:SkeletonRiderGroup.png|260px|right|thumb|A group of skeleton horsemen.]]
+
+A '''jockey''' refers to a naturally-spawned [[mob]] [[riding]] another mob. The mob on the top often controls the mob on the bottom {{in|java}}, but sometimes does not control it {{in|bedrock}}.
+
+Most jockeys are named based on the mob being ridden. The exceptions to the "jockey" naming scheme are the [[skeleton horseman]] and [[zombie horseman]].
+
+== List of jockeys ==
+* {{EntityLink|Camel Husk Jockey}}; a [[camel husk]] ridden by a [[husk]] wielding a [[spear]] and a [[parched]] passenger.
+* {{EntityLink|Chicken Jockey}}; a baby [[zombie]], [[zombie villager]], [[drowned]], [[husk]], or [[zombified piglin]] riding a [[chicken]] or most adult mobs{{only|bedrock|short=1}}
+* {{EntityLink|Hoglin Jockey}}; a baby [[hoglin]] ridden by one to three baby [[piglins]].
+* {{EntityLink|Ravager Jockey}}; a [[ravager]] ridden by an [[illager]], most commonly being a [[pillager]].
+* {{EntityLink|Skeleton Horseman}}; a [[skeleton horse]] ridden by a [[skeleton]] with an enchanted iron helmet.
+* {{EntityLink|Spider Jockey}}; a [[spider]] ridden by a [[skeleton]], [[stray]], [[bogged]], [[parched]], or [[wither skeleton]].{{only|bedrock|short=1}}
+** {{EntityLink|Cave Spider Jockey}}; a [[cave spider]] ridden by said skeletons.{{only|bedrock|short=1}}
+* {{EntityLink|Strider Jockey}}; a [[strider]] ridden by a [[zombified piglin]] or baby strider.
+* {{EntityLink|Zombie Horseman}}; a [[zombie horse]] ridden by a [[zombie]] wielding a spear.
+* {{EntityLink|Zombie Nautilus Jockey}}; a [[zombie nautilus]] ridden by a [[drowned]] wielding a [[trident]].
+
+=== Removed ===
+* {{EntityLink|id=chicken-jockey|Giant jockey}}; a chicken ridden by a [[giant]].{{only|je|short=1}}
+
+Most jockeys spawn in similar conditions to their respective mobs, except for baby zombie (variant) riders {{in|bedrock}}, which can [[Jockey#Mounts|mount]] any mob.
+
+== Mounting ==
+{{exclusive|bedrock|section=1}}
+{{IN|bedrock}}, 15% of naturally spawned baby zombies, baby husks, and baby drowned can mount other mobs when spawned. This includes baby zombies summoned by [[monster spawner]]s and [[spawn eggs]]. Such a mob can be [[summoned]] with the <code>minecraft:as_baby_jockey</code> [[spawn event]]. 
+
+The following mobs can be mounted:
+
+{{columns-list|colwidth=20em|
+* {{EntitySprite|Chicken}} Adult [[chicken]]s
+* {{EntityLink|Cow|Cows}}
+* {{EntitySprite|Pig}} Adult unsaddled [[pig]]s
+* {{EntityLink|Sheep}}
+* {{EntityLink|Mooshroom|Mooshrooms}}
+* {{EntitySprite|Ocelot}} Wild [[ocelot]]s
+* {{EntitySprite|Cat}} Stray [[cat]]s
+* {{EntitySprite|Angry Wolf}} Wild [[wolves]]
+* {{EntitySprite|Horse}} Wild adult [[horse]]s
+* {{EntitySprite|Donkey}} Wild adult [[donkey]]s
+* {{EntitySprite|Mule}} Untamed adult [[mule]]s
+* {{EntitySprite|Skeleton Horse}} Adult [[skeleton horse]]s
+* {{EntitySprite|Zombie Horse}} Wild adult [[zombie horse]]s
+* {{EntitySprite|Zombie Nautilus}} Wild [[zombie nautilus]]es (only [[drowned]])
+* {{EntityLink|Panda|Pandas}}
+* {{EntitySprite|Zombie}} Adult [[zombie]]s
+* {{EntitySprite|Husk}} Adult [[husk]]s
+* {{EntitySprite|Zombie Villager}} Adult [[zombie villager]]s
+* {{EntitySprite|Zombified Piglin}} Adult [[zombified piglin]]s that were not spawned from a [[strider jockey]]<ref>{{bug|MCPE-183642}}</ref>
+* {{EntityLink|Spider|Spiders}} that were not spawned as a [[spider jockey]]
+* {{EntityLink|Cave Spider|Cave spiders}} that were not spawned as a spider jockey
+}}
+
+Due to a bug, baby zombified piglins jockeys don't spawn properly.<ref>They don't spawn due to {{bug|MCPE-235955}}, as the {{cd|spawn_baby_jockey}} [[spawn event]] does not exist. </ref>
+
+Due to another bug, baby zombie villagers cannot mount mobs as jockeys.<ref>{{bug|MCPE-234690}}</ref>
+
+== Summoning ==
+{{main|Tutorial:Summoning jockeys}}
+Jockeys can also be manually summoned using [[command]]s:
+
+'''Chicken Jockey'''<br>
+In ''Java Edition'': {{cmd|/summon minecraft:chicken ~ ~ ~ {IsChickenJockey:1,Passengers:[{id:"minecraft:zombie",IsBaby:1}]}<nowiki/>}}
+
+In ''Bedrock Edition'', it requires two commands: 
+# {{cmd|/summon chicken ~ ~ ~ ~ ~ minecraft:spawn_adult}}
+# {{cmd|/ride @e[type{{=}}chicken] summon_rider zombie minecraft:as_baby}}
+Variants of zombies or ridden mobs can be summoned by replacing <code>chicken</code> and <code>zombie</code> respectively.
+
+'''Camel Husk Jockey'''<br>
+* In ''Java Edition'': {{cmd|/summon minecraft:camel_husk ~ ~ ~ {Passengers:[{id:"minecraft:husk",equipment:{mainhand:{id:"minecraft:iron_spear",count:1<nowiki>}}}</nowiki>,{id:"minecraft:parched",equipment:{mainhand:{id:"minecraft:bow",count:1<nowiki>}}}]}</nowiki>}}
+* In ''Bedrock Edition'': {{cmd|/summon camel_husk ~ ~ ~ ~ ~ minecraft:spawn_with_rider}}
+
+'''Cave Spider Jockey'''
+* In ''Java Edition'': {{cmd|/summon minecraft:cave_spider ~ ~ ~ {Passengers:[{id:"minecraft:skeleton",HandItems:[{id:"minecraft:bow",count:1}]}]<nowiki>}</nowiki>}}
+* In ''Bedrock Edition'': {{cmd|/summon cave_spider ~ ~ ~ ~  ~ minecraft:entity_spawned_with_default_jockey}}
+
+'''Hoglin Jockey'''<br>
+* In ''Java Edition'': {{cmd|/summon minecraft:hoglin ~ ~ ~ {Age:-12000,Passengers:[{id:"minecraft:piglin",IsBaby:1}]<nowiki>}</nowiki>}}
+
+* In ''Bedrock Edition'', it requires two commands:
+# {{cmd|/summon hoglin ~ ~ ~ ~ ~ spawn_baby}}
+# {{cmd|/ride @e[family{{=}}hoglin_baby] summon_rider piglin spawn_baby}}
+
+'''Ravager Jockey'''<br>
+In ''Java Edition'': 
+{{cmd|/summon minecraft:ravager ~ ~ ~ {Passengers:[{id:minecraft:pillager,HandItems:[{id:crossbow,Count:1b}]}]<nowiki>}</nowiki>}}
+* This command summons a ravager with a pillager rider.
+
+{{cmd|/summon minecraft:ravager ~ ~ ~ {Passengers:[{id:minecraft:vindicator,HandItems:[{id:iron_axe,Count:2b}]}]<nowiki>}</nowiki>}}
+* This command summons a ravager with a vindicator rider.
+
+{{cmd|/summon minecraft:ravager ~ ~ ~ {Passengers:[{id:minecraft:evoker}]<nowiki>}</nowiki>}}
+* This command summons a ravager with an evoker rider.
+
+In ''Bedrock Edition'':
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_with_pillager_rider}}
+* This command summons a ravager with a pillager rider.
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_with_vindicator_rider}}
+* This command summons a ravager with a vindicator rider.
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_for_raid_with_evoker_rider}}
+* This command summons a ravager with an evoker rider.
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_for_raid_with_pillager_rider}}
+* This command summons a ravager with a pillager rider, but the pillager drops special loot upon death.
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_for_raid_with_vindicator_rider}}
+* This command summons a ravager with a vindicator rider, but the vindicator drops special loot upon death.
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_with_pillager_captain_rider}}
+* This command summons a ravager with a pillager rider, but the pillager is a [[raid captain]].
+
+{{cmd|/summon ravager ~ ~ ~ ~ ~ minecraft:spawn_with_vindicator_captain_rider}}
+* This command summons a ravager with a vindicator rider, but the vindicator is a raid captain.
+
+'''Skeleton Horseman'''<br>
+Skeleton horsemen can be manually summoned by both the regular method and by spawning a [[skeleton trap]].
+
+A skeleton trap spawns 4 skeleton horsemen.
+
+* In ''Java Edition'': {{cmd|/summon minecraft:skeleton_horse ~ ~ ~ {SkeletonTrap:1<nowiki>}</nowiki>}}
+
+* In ''Bedrock Edition'': {{cmd|/summon skeleton_horse ~ ~ ~ ~ ~ minecraft:set_trap}}
+
+'''Spider Jockey'''<br> 
+* In ''Java Edition'': {{cmd|/summon minecraft:spider ~ ~ ~ {Passengers:[{id:"minecraft:skeleton",HandItems:[{id:"minecraft:bow",count:1}]}]<nowiki>}</nowiki>}}
+
+* In ''Bedrock Edition'': {{cmd|/summon spider ~ ~ ~ ~ ~ minecraft:entity_spawned_with_default_jockey}}. Note: It only works during nighttime or underground.
+** The following command summons a skeleton variant 80% of the time when in a biome with skeleton variants: {{cmd|/summon spider ~ ~ ~ ~ ~ minecraft:entity_spawned_with_biome_specific_jockey}}
+
+'''Strider Jockey'''<br>
+* Zombified piglin riding strider:<br>
+** In ''Java Edition'': {{cmd|/summon minecraft:strider ~ ~ ~ {Saddle:1,Passengers:[{id:"minecraft:zombified_piglin",HandItems:[{id:"minecraft:warped_fungus_on_a_stick",count:1}]}]<nowiki>}</nowiki>}}
+
+** In ''Bedrock Edition'': {{cmd|/summon strider ~ ~ ~ ~ ~ spawn_adult_piglin_jockey}}
+
+* Baby strider riding adult strider:<br>
+** In ''Java Edition'': {{cmd|/summon minecraft:strider ~ ~ ~ {Passengers:[{id:"minecraft:strider",Age:-1200}]<nowiki>}</nowiki>}}
+
+** In ''Bedrock Edition'': {{cmd|/summon strider ~ ~ ~ ~ ~ spawn_adult_parent_jockey}}
+
+'''Zombie Horseman'''<br>
+* In ''Java Edition'': {{cmd|/summon minecraft:zombie_horse ~ ~ ~ {Passengers: [{id:"minecraft:zombie",equipment: {mainhand:{id:"minecraft:iron_spear",count:1}}<nowiki>}}}]</nowiki>}
+* In ''Bedrock Edition'': {{cmd|/summon zombie_horse ~ ~ ~ ~ ~ minecraft:spawn_adult_with_rider}}
+
+'''Zombie Nautilus Jockey'''<br>
+* In ''Java Edition'': {{cmd|/summon minecraft:zombie_nautilus ~ ~ ~ {Passengers: [{id:"minecraft:drowned",equipment:{mainhand:{id:"minecraft:trident",count:1}}<nowiki>}}}]}</nowiki>
+* In ''Bedrock Edition'': {{cmd|/summon drowned ~ ~ ~ ~ ~ minecraft:as_rider}}
+
+== History ==
+{{expand section|missing jockeys other than chicken and ravager. changes after 1.14, if there were}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||August 16, 2010|link=https://forums.tigsource.com/index.php?topic=6273.msg418236#msg418236|[[Notch]] mentions the concept of spider jockeys in a [https://www.tigsource.com/ TIGSource] forum post.}}
+|{{HistoryLine||November 29, 2013|link=https://web.archive.org/web/20221008212237/https://imgur.com/a/PbRh1|A two-image gallery was uploaded to [[wikipedia:Imgur|Imgur]], and showed a baby [[zombie]] ''inside'' a [[chicken]]. It was also posted to [[wikipedia:Reddit|Reddit]].}}
+|{{HistoryLine||November 30, 2013|link={{tweet|Dinnerbone|406775245765619712}}|[[Dinnerbone]] tweeted the link to an image of chicken jockeys, after seeing the image on Reddit.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.17|[[File:Spider Jockey a1.0.17.png|48px]] Added spider jockeys.}}
+|{{HistoryLine||v1.2.0|slink=:Category:Information needed requiring unarchived version|[[File:Spider Jockey a1.2.0.png|48px]] Spider jockey [[skeleton]] riders now hold a [[bow]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|As with [[spider]]s, spider jockeys can now climb vertically up walls.}}
+|{{HistoryLine||1.5|Spider jockeys can now be "neutral-hostile" with the addition of [[rain]]. The [[light]] level is low enough in a rainstorm for the skeleton to not combust, but high enough for the spider to not be actively hunting. In this state, the [[skeleton]] shoots the [[player]] with [[arrow]]s, but the spider does not give chase (unless the spider jockey wanders into a shady area) because movement is controlled by the spider. The player can safely observe this kind of spider jockey from a distance of 16 or more [[block]]s away.}}
+|{{HistoryLine||1.8|[[File:Spider Jockey Beta v1.8.png|48px]] Skeleton riders' [[bow]]s are now larger and held more realistically (full-sized bows, two-handed, and pulling the [[arrow]] back) than in previous versions (in one hand).
+|Skeleton riders now fire [[arrow]]s slightly slower. Their arrows, however, are shot with more force.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|[[File:Spider Jockey v1.0.0.png|48px]] Skeleton riders now hold their [[bow]] with one hand again, but they still have the larger and held realistically bow.}}
+|{{HistoryLine||1.4.2|dev=12w34a|Spider [[spawn egg]]s now have a chance to spawn a spider jockey.}}
+|{{HistoryLine|||dev=12w36a|[[File:Spider Wither Jockey Revision 1.png|48px]] [[Spider]] spawn eggs used in [[nether fortress]]es now have a chance to spawn a spider jockey with a [[wither skeleton]] rider.}}
+|{{HistoryLine||1.5|dev=13w09a|Spider jockey riders no longer dismount the spider when the world is reloaded.}}
+|{{HistoryLine||1.7.4|dev=13w49a|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]] Added chicken jockeys.}}
+|{{HistoryLine||1.7.5|Chickens that are part of chicken jockeys can now despawn when no longer ridden.}}
+|{{HistoryLine||1.8|dev=14w02a|Chicken jockeys no longer lay eggs. <!-- January 9, 2014 -->}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Spider Jockey v1.9 15w31a.png|48px]] [[File:Spider Wither Jockey Revision 2.png|48px]] Skeleton riders now lower their arms when idle and their sitting position has been shifted a bit lower.}}
+|{{HistoryLine|||dev=15w35a|[[File:Chicken Zombie Farmer Jockey.png|32px]] [[File:Chicken Zombie Librarian Jockey.png|32px]] [[File:Chicken Zombie Priest Jockey.png|32px]] [[File:Chicken Zombie Smith Jockey.png|32px]] [[File:Chicken Zombie Butcher Jockey.png|32px]] [[File:Chicken Zombie Nitwit Jockey.png|32px]] [[Zombie villager]]s now retain their professions and clothes, which have a tattered appearance. This has caused [[zombie villager]] chicken jockeys to have a changed appearance, as well.}}
+|{{HistoryLine|||dev=15w38a|[[File:Skeleton Trap Revision 1.png|50px]] Added [[skeleton horsemen]].}}
+|{{HistoryLine||1.9.4|dev=?|Spider jockeys no longer spawn properly due to a bug.<ref>{{bug|MC-103516|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.10|dev=16w20a|[[File:Chicken Husk Jockey Revision 1.png|32px]] Added [[husk]]s, which also creates husk chicken jockeys.|[[File:Stray Spider Jockey Revision 1.png|48px]] Spider jockeys spawned in cold [[biome]]s can now have a [[stray]] rider.}}
+|{{HistoryLine||1.11|dev=16w32a|Spider jockeys no longer naturally spawn with a stray rider or wither skeleton rider.<ref>{{bug|MC-109415|resolution=wai}}</ref>}}
+|{{HistoryLine||1.13|dev=18w11a|[[File:Chicken Drowned Jockey Revision 1.png|32px]] Added [[drowned]], which also creates drowned chicken jockeys.}}
+|{{HistoryLine|||dev=pre5|Spider jockeys now properly spawn again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Chicken Jockey.png|32px]] [[File:Chicken Husk Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey.png|32px]] [[File:Chicken Drowned Jockey.png|32px]] The textures of chicken jockeys have been changed.
+|[[File:Spider Jockey JE6.png|48px]] [[File:Spider Wither Jockey.png|48px]] [[File:Stray Spider Jockey.png|48px]]The textures of spider jockeys have been changed.
+|The movement of a spider jockey is now controlled by the skeleton. The spider in a spider jockey no longer performs melee attacks on the player.<ref>{{bug|MC-236303|resolution=Won't Fix}}</ref>
+|[[File:Ravager.png|50px]] Added illager beasts, therefore adding illager beast jockeys. At the time, they can be ridden only via [[commands]].}}
+|{{HistoryLine|||dev=18w45a|Illager beast jockeys now can spawn in the new patrols, with a pillager / vindicator captain rider.}}
+|{{HistoryLine|||dev=18w47a|Illager beast jockeys now spawn in the new [[raid]]s, which makes them findable in [[Survival]] without commands.}}
+|{{HistoryLine|||dev=18w50a|[[File:Chicken Desert Zombie Jockey.png|32px]] [[File:Chicken Jungle Zombie Jockey.png|32px]] [[File:Chicken Plains Zombie Jockey.png|32px]] [[File:Chicken Savanna Zombie Jockey.png|32px]] [[File:Chicken Snowy Zombie Jockey.png|32px]] [[File:Chicken Swamp Zombie Jockey.png|32px]] [[File:Chicken Taiga Zombie Jockey.png|32px]] Zombie villager chicken jockeys now have different clothes in [[desert]], [[jungle]], [[plains]], [[savanna]], snowy, [[swamp]] and [[taiga]] biomes.
+|Zombie villager chicken jockeys no longer have a profession.}}
+|{{HistoryLine|||dev=19w05a|"Illager Beast" has now been renamed to "Ravager". This now makes it a ravager jockey, no longer an illager beast jockey.}}
+|{{HistoryLine|||dev=19w08a|[[File:Skeleton Horseman.png|50px]] The textures of skeleton horsemen have been changed.}}
+|{{HistoryLine|||dev=19w13a|Ravagers can now be ridden by [[evoker]]s.}}
+|{{HistoryLine||1.16|dev=20w13a|Added strider jockeys, which can either be a strider ridden by baby striders or a strider ridden by a zombified piglin.}}
+|{{HistoryLine|||dev=20w18a|Strider jockeys can no longer spawn in stacks of 3 or higher; only an adult and baby strider or an adult strider and a [[zombified piglin]].
+|Zombified piglins that spawn riding striders no longer despawn.
+|[[File:Chicken Zombified Piglin Jockey JE1.png|32px]] The [[model]] and texture of zombified piglin chicken jockeys have been changed.}}
+|{{HistoryLine|||dev=20w22a|[[File:Chicken Zombified Piglin Jockey JE4.png|32px]] The model of the zombified piglin chicken jockey has been changed.}}
+|{{HistoryLine|||dev=pre4|[[File:Baby Zombified Piglin Jockey MC-188880.png|32px]] The model of the zombified piglin chicken jockey wasn't positioned properly due to a bug.}}
+|{{HistoryLine||1.16.2|dev=20w30a|[[File:Chicken Zombified Piglin Jockey JE4.png|32px]] The model of the zombified piglin chicken jockey got fixed.<ref>{{bug|MC-188880||Baby zombified piglins riding on chickens aren't positioned properly|Fixed}}</ref>}}
+|{{HistoryLine|||dev=Pre-Release 1|[[Zombified piglin]]s now hold a [[warped fungus on a stick]] when spawned as a strider jockey.}}
+|{{HistoryLine||1.21.5|dev=25w06a|[[File:Cold Chicken Jockey.png|32px]] [[File:Warm Chicken Jockey.png|32px]] Chicken jockeys now spawn as cold or warm chicken variants in their respective biomes.}}
+|{{HistoryLine||1.21.7|dev=Release Candidate 1|Baby zombies riding chickens now drop the new "Lava Chicken" [[music disc]] when killed by a player or tamed wolf.}}
+|{{HistoryLine||1.21.11|dev=25w41a|[[File:Zombie Nautilus Jockey JE1.png|48px]] Added zombie nautilus jockeys.
+|[[File:Zombie Horseman JE1.png|48px]] Added zombie horsemen.}}
+|{{HistoryLine|||dev=25w42a|Zombie horsemen no longer spawn with weapons other than [[iron spear]]s.}}
+|{{HistoryLine|||dev=25w44a|[[File:Camel Husk Jockey JE1.png|58px]] Added camel husk jockeys.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Chicken Jockey JE1 BE1.png|32px]] Added baby zombies and chicken jockeys.|[[File:Spider Jockey v1.0.0.png|48px]] [[File:Cave Spider Jockey Revision 1.png|48px]] Added spider jockeys. [[Cave spider]]s also have a chance to spawn with a skeleton rider.}}
+|{{HistoryLine|||dev=build 2|[[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]] Added baby zombie pigmen and their chicken jockeys.}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Chicken Zombie Farmer Jockey.png|32px]] [[File:Chicken Zombie Librarian Jockey.png|32px]] [[File:Chicken Zombie Priest Jockey.png|32px]] [[File:Chicken Zombie Smith Jockey.png|32px]] [[File:Chicken Zombie Butcher Jockey.png|32px]] [[File:Chicken Zombie Nitwit Jockey.png|32px]] Added baby zombie villagers and their chicken jockey.|[[File:Spider Wither Jockey Revision 1.png|48px]] [[File:Cave Spider Wither Skeleton Jockey Revision 1.png|48px]] Added [[wither skeleton]] spider jockeys with a cave spider variant.
+|Spider jockeys have an 80% chance to spawn with a wither skeleton rider when spawned in [[the Nether]] (via spawn eggs, monster spawners, etc).}}
+|{{HistoryLine||v0.14.0|dev=build 1|Overhauled the jockey mechanics. Baby zombies, baby zombie villagers, and baby zombie pigmen that are not jockeys already now have a 15% chance of becoming able to mount certain mobs, including chickens, when angered.}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses.|[[File:Stray Spider Jockey Revision 1.png|48px]] [[File:Stray Cave Spider Jockey Revision 1.png|48px]] Spider jockeys now have a 80% chance to spawn with a [[stray]] rider in snowy [[biome]]s.
+|[[File:Spider Jockey v1.9 15w31a.png|48px]] [[File:Cave Spider Jockey Revision 2.png|48px]] [[File:Spider Wither Jockey Revision 2.png|48px]] [[File:Cave Spider Wither Jockey Revision 2.png|48px]] [[Skeleton]]s and wither skeletons that ride spider jockeys now lower their arms when idle.}}
+|{{HistoryLine||v0.16.0|dev=?|Baby zombie pigmen can no longer mount [[mob]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Due to an identifier change, spider jockeys can no longer naturally spawn with a stray rider or wither skeleton rider.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Skeleton Trap.png|50px]] The textures of [[#Spawning|"skeleton trap"]] horses have been changed.
+|[[File:Ravager.png|50px]] Added illager beasts, therefore adding illager beast jockeys. At the time, they can be ridden only via [[commands]].
+|Illager beast jockeys are currently available only through [[Experimental Gameplay (Option)|Experimental Gameplay]].|[[File:Spider Jockey BE3.png|64px]] [[File:Spider Wither Skeleton Jockey BE.png|64px]] [[File:Spider Stray Jockey BE.png|64px]] [[File:Cave Spider Jockey BE.png|64px]] [[File:Cave Spider Wither Skeleton Jockey BE.png|64px]] [[File:Cave Spider Stray Jockey BE.png|64px]] The textures of spider jockeys have now been changed.
+}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added strider jockeys.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|[[Zombified piglin]]s now hold a [[warped fungus on a stick]] when spawned as a strider jockey.}}
+|{{HistoryLine||1.21.93|Baby zombies riding chickens now drop the new Lava Chicken Music Disc when killed by a player.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|[[File:Zombie Nautilus Jockey BE1.png|48px]] Added zombie nautilus jockeys.
+|[[File:Zombie Horseman BE1.png|48px]] Added zombie horsemen.}}
+|{{HistoryLine|||dev=Preview 1.21.130.24|[[File:Camel Husk Jockey JE1.png|58px]] Added camel husk jockeys.}}
+|{{HistoryLine|||dev=Preview 1.21.130.26|Baby zombie villagers can no longer mount [[mob]]s.
+|[[Husk]], [[parched]], and [[zombie]] riders no longer look for a mount if they are dismounted.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.27|Baby zombie villagers can once again mount mobs, and baby [[drowned]] and [[zombified piglin]]s can now also mount mobs.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=none|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey LCE1.png|32px]] Added chicken jockeys.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Baby zombies can now ride most mobs, that match as bedrock edition's. However, normal chicken jockeys are still spawned.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Chicken Jockey JE2 BE2.png|32px]] The texture of chicken jockeys has been changed.
+|[[File:Chicken Zombie Pigman Jockey LCE2.png|32px]] The texture of baby zombie pigman jockeys has been changed.
+|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Chicken Jockey JE1 BE1.png|32px]] [[File:Chicken Zombie Villager Jockey.png|32px]] [[File:Chicken Zombie Pigman Jockey JE1 BE1.png|32px]] Added chicken jockeys.
+|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+SkeletonvsSpiderJockeySkeleton.png|A skeleton in a [[boat]] fighting a spider jockey in water
+Villager riding a chicken.png|A baby villager after being cured while being a jockey
+</gallery>
+
+=== Renders ===
+<gallery>
+File:Chicken Jockey.png|A chicken jockey
+File:Chicken Plains Zombie Villager Jockey.png|A zombie villager chicken jockey
+File:Warm Chicken Husk Jockey.png|A husk chicken jockey
+File:Chicken Gurgle Jockey.png|A drowned chicken jockey
+File:Warm Chicken Zombified Piglin Jockey.png|A zombified piglin chicken jockey
+File:Hoglin Jockey JE7.png|A hoglin jockey
+File:Hoglin Jockey (3) JE7.png|A hoglin jockey with multiple piglins
+File:Ravager Jockey (Pillager).png|A pillager ravager jockey
+File:Ravager Jockey (Vindicator).png|A vindicator ravager jockey
+File:Ravager Jockey (Evoker).png|An evoker ravager jockey
+File:Ravager Jockey (Illusioner).png|An illusioner ravager jockey{{only|je}}
+File:Skeleton Horseman.png|A skeleton horseman
+File:Spider Jockey.png|A spider jockey
+File:Spider Jockey (Stray).png|A stray spider jockey
+File:Spider Jockey (Bogged) BE.png|A bogged spider jockey{{only|be}}
+File:Spider Jockey (Parched) BE.png|A parched spider jockey{{only|be}}
+File:Spider Jockey (Wither Skeleton) BE4.png|A wither skeleton spider jockey{{only|be}}
+File:Cave Spider Jockey BE3.png|A cave spider jockey{{only|be}}
+File:Cave Spider Jockey (Stray) BE2.png|A stray cave spider jockey{{only|be}}
+File:Cave Spider Jockey (Bogged) BE.png|A bogged cave spider jockey{{only|be}}
+File:Cave Spider Jockey (Parched) BE.jpg|A parched cave spider jockey{{only|be}}
+File:Cave Spider Jockey (Wither Skeleton) BE3.png|A wither skeleton cave spider jockey{{only|be}}
+File:Strider Jockey JE5.png|A strider jockey
+File:Baby Strider riding Strider JE4 BE4.png|A baby strider riding an adult strider
+File:Zombie Horseman JE1.png|A zombie horseman
+File:Zombie Nautilus Jockey JE1.png|A zombie nautilus jockey
+File:Camel Husk Jockey.png|A camel husk jockey
+</gallery>
+
+==== Mounts ====
+{{Exclusive|Bedrock|section=1}}<gallery>
+File:Baby Zombie Riding Zombie.png|Adult zombie jockey
+File:Baby Zombie Riding Zombie Butcher.png|Adult zombie villager jockey
+File:Baby Zombie Riding Husk.png|Adult husk jockey
+File:Baby Zombie Riding Zombified Piglin.png|Adult zombified piglin jockey
+File:Baby Zombie Riding Pig.png|Pig jockey
+File:Baby Zombie Riding Cow.png|Cow jockey
+File:Baby Zombie Riding Mooshroom.png|Mooshroom jockey
+File:Baby Zombie Riding Sheep.png|Sheep jockey
+File:Baby Zombie Riding Wolf.png|Wolf jockey
+File:Baby Zombie Riding Ocelot.png|Ocelot jockey
+File:Baby Zombie Riding Tuxedo Cat.png|Stray cat jockey
+File:Baby Zombie Riding Horse.png|Horse jockey
+File:Baby Zombie Riding Panda.png|Panda jockey
+File:Baby Zombie Riding Spider.png|Baby zombie spider jockey
+File:Baby Zombie Riding Cave Spider.png|Baby zombie cave spider jockey
+File:Baby Drowned Zombie Nautilus Jockey BE.png|Baby drowned zombie nautilus jockey
+</gallery>
+
+== See also ==
+* [[Mob]]
+* {{EntityLink|Animal}}
+* {{EntityLink|Aquatic}}
+* {{EntityLink|Arthropod}}
+* {{EntityLink|Illager}}
+* {{EntityLink|id=monster-mob-type|Monster}}
+* {{EntityLink|Undead}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Mobs]]
+[[Category:Jockeys| ]]
+
+[[de:Reiter (Begriffsklärung)]]
+[[es:Jinete]]
+[[fr:Cavalier]]
+[[it:Cavalcatore]]
+[[ja:ジョッキー]]
+[[ko:조키]]
+[[pt:Jockey]]
+[[ru:Наездники]]
+[[zh:骑士]]

@@ -1,0 +1,91 @@
+{{for|the similar effect|Wither (effect)}}
+{{exclusive|bedrock|education}}
+
+{{Infobox effect
+|image = Poison.png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-poison}} #4E9331 (green)
+|type=Negative
+}}
+
+'''Fatal Poison''' inflicts [[damage]] to entities over time, and can kill both undead and non-undead mobs, similar to [[Wither (effect)|Wither]]. The effect is actually called "Poison," but its ID distinguishes it from the other [[Poison]] effect, which cannot kill. In Survival mode, the effect applies only to [[Parrot|parrots]] (when feeding them a cookie) and is not obtainable by players.
+
+== Effect ==
+The amount of [[damage]] inflicted on the affected entity is shown in the table below:{{verify|edition=bedrock|type=current|This info was most likely calculated for Java Edition and regular Poison; is it also the case for Fatal Poison?}}
+
+{| class="wikitable" style="text-align:center"
+ ! Level !! Ticks per {{hp|1|notag=1}} !! {{hp|2|notag=1}} per second
+ |-
+ | 1 || 25 || 0.4
+ |-
+ | 2 || 12 || 0.8
+ |-
+ | 3 || 6<ref group=note name=immunity>Due to [[damage immunity]], the effective rate is 12 ticks ({{hp|2|notag=1}} × 0.8 per second) at levels 3 and 4 and 10 ticks ({{hp|2|notag=1}} × 1 per second) at level 5.</ref> || 1.66<ref group=note name=immunity/>
+ |-
+ | 4 || 3<ref group=note name=immunity/> || 3.33<ref group=note name=immunity/>
+ |-
+ | 5+ || 1<ref group=note name=immunity/> || 10<ref group=note name=immunity/>
+ |}
+{{notelist}}
+
+The player's hearts turn yellow-green ({{hp|20|poisoned=1|notag=1}}).
+Amplifiers outside the range 0–31 (corresponding to levels 1–32) are treated {{w|modulo operation|modulo}} 32 (as though reduced by 32 until they are within the range, or as the remainder from division by 32, i.e. 33 is treated as 1.)
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+ ! Cause
+ ! Potency
+ ! Length
+ ! Notes
+ |-
+ | {{ItemLink|Cookie}}
+ | I
+ | 16:40
+ | Recipient must be a {{EntityLink|parrot}}
+ |}
+
+== Immune mobs ==
+*[[Wither]]s and [[ender dragon]] are immune to fatal poison.
+*[[Witch]]es are 95% resistant to damage from fatal poison.
+
+== Death message ==
+If the player is killed by Fatal Poison, the [[death message]] "<player> was killed by magic" appears, as when killed by a potion of Harming.
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|displayname=Poison
+|spritetype=effect
+|nameid=fatal_poison
+|id=25
+|translationkey=potion.poison
+|foot=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev= beta 1.2.0.2|[[File:Poison JE1 BE1.png|18px]] Added Fatal Poison.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.5|[[File:Poison JE3 BE2.png|18px]] Changed effect icon texture.}} 
+}}
+
+== Issues ==
+{{issue list|projects=mcpe}}
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Tödliche Vergiftung]]
+[[es:Veneno fatal]]
+[[fr:Poison fatal]]
+[[it:Avvelenamento fatale]]
+[[ja:致死毒]]
+[[ko:맹독]]
+[[lzh:烈毒]]
+[[pt:Veneno Fatal]]
+[[ru:Смертельное отравление]]
+[[th:ติดพิษถึงตาย]]
+[[uk:Смертельна отрута]]
+[[zh:中毒（致命）]]

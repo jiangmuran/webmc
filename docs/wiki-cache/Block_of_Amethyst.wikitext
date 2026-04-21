@@ -1,0 +1,241 @@
+{{About|the block crafted from amethyst shards|the block that grows amethyst clusters|Budding Amethyst|other uses|Amethyst}}
+{{Infobox block
+| image = Block of Amethyst.png
+| invimage = Block of Amethyst
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Wooden Pickaxe
+| light = No
+| transparent = Partial <small>(blocks light)</small>
+| flammable = No
+| lavasusceptible = No
+| rarity = Common
+}}
+A '''block of amethyst''', known internally as an '''amethyst block''', is a block found in [[amethyst geode]]s or crafted from [[amethyst shard]]s. It can be placed next to a [[sculk sensor]] to "relay" received [[vibration]]s to other sculk sensors.
+
+== Obtaining ==
+=== Breaking ===
+A block of amethyst can be obtained by mining it with any [[pickaxe]]. When mined using any other [[tool]], it drops nothing.
+
+{{Breaking row|Block of Amethyst|Pickaxe|Wooden|horizontal=1|foot=1}}
+
+=== Natural generation ===
+Blocks of amethyst generate naturally on the inner wall of [[amethyst geode]]s, with [[calcite]] and [[smooth basalt]] making up the next two outer layers.
+
+{{block distribution}}
+
+=== Crafting ===
+{{Crafting
+  |A2=Amethyst Shard
+  |B2=Amethyst Shard
+  |A3=Amethyst Shard
+  |B3=Amethyst Shard
+  |Output=Block of Amethyst
+  |type=Building block
+}}
+
+== Usage ==
+=== Sound ===
+A block of amethyst makes a quiet overlay sound when generally interacted with, and makes louder sounds when hit by projectiles.
+
+=== Vibration resonance ===
+When a block of amethyst is placed adjacent to a [[sculk sensor]] or a [[calibrated sculk sensor]], if that sculk sensor receives a [[vibration]], the block of amethyst re-emits its frequency as a separate vibration at its location. This vibration can then be detected by another sculk sensor, allowing a chain of sculk sensors and amethyst blocks to be created, transmitting a signal wirelessly.
+
+=== Sulfur cube ===
+{{In development|section=1|drop=Chaos Cubed}}
+[[Sulfur cube]]s have the ability to absorb blocks of amethyst, either through picking them up or being interacted with them. This provides the regular/football effect to the mob when hitting it.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Amethyst block}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Amethyst shimmer.ogg
+|subtitle=Amethyst chimes
+|source=block
+|description=Walking on the block
+|id=block.amethyst_block.chime
+|translationkey=subtitles.block.amethyst_block.chime
+|volume=0.0368-0.26
+|pitch=0.5-1.7
+|distance=16}}
+| {{SoundLine
+|subtitle=Amethyst chimes
+|source=block
+|description=When a projectile collides with the block
+|id=block.amethyst_block.chime
+|translationkey=subtitles.block.amethyst_block.chime
+|volume=0.2
+|pitch=0.5-1.7
+|distance=16}}
+| {{SoundLine
+|sound=Amethyst resonate1.ogg
+|sound2=Amethyst resonate2.ogg
+|sound3=Amethyst resonate3.ogg
+|sound4=Amethyst resonate4.ogg
+|subtitle=Amethyst resonates
+|source=block
+|description=When an amethyst block re-emits a vibration
+|id=block.amethyst_block.resonate
+|translationkey=subtitles.block.amethyst_block.resonate
+|volume=1.0
+|pitch=''varies''<ref group=sound>Picks number from 0, 0, 2, 4, 6, 7, 9, 10, 12, 14, 15, 18, 19, 21, 22, or 24 using the vibration's signal strength, and applies <math>2^\frac{n-12}{12}</math>. It uses the same equation that [[note blocks]] do.</ref>
+|distance=48}}
+| {{SoundLine
+|sound=Amethyst step1.ogg
+|sound2=Amethyst step2.ogg
+|sound3=Amethyst step3.ogg
+|sound4=Amethyst step4.ogg
+|sound5=Amethyst step5.ogg
+|sound6=Amethyst step6.ogg
+|sound7=Amethyst step7.ogg
+|sound8=Amethyst step8.ogg
+|sound9=Amethyst step9.ogg
+|sound10=Amethyst step10.ogg
+|sound11=Amethyst step11.ogg
+|sound12=Amethyst step12.ogg
+|subtitle=Block breaking<ref group="sound">This is due to it using the exact same sound event as the one used for breaking - see {{bug|MC-204050}}</ref>
+|source=block
+|description=When a projectile collides with the block
+|id=block.amethyst_block.hit
+|translationkey=subtitles.block.generic.hit
+|volume=0.2
+|pitch=0.5-1.7
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Amethyst shimmer.ogg
+|source=block
+|description=When stepped on, or when a projectile collides with it
+|id=chime.amethyst_block
+|translationkey=subtitles.block.amethyst_block.chinme
+|subtitle=Amethyst chimes
+|volume=1.0
+|pitch=0.5-1.7}}
+| {{SoundLine
+|sound=Amethyst resonate1.ogg
+|sound2=Amethyst resonate2.ogg
+|sound3=Amethyst resonate3.ogg
+|sound4=Amethyst resonate4.ogg
+|source=block
+|description=When an amethyst block re-emits a vibration
+|id=resonate.amethyst_block
+|translationkey=subtitles.block.amethyst_block.resonate
+|subtitle=Amethyst resonates
+|volume=3.0
+|pitch=''varies''<ref group=sound>Uses the same system as ''Java Edition''.{{verify}}</ref>}}
+| {{SoundLine
+|sound=Amethyst step1.ogg
+|sound2=Amethyst step2.ogg
+|sound3=Amethyst step3.ogg
+|sound4=Amethyst step4.ogg
+|sound5=Amethyst step5.ogg
+|sound6=Amethyst step6.ogg
+|sound7=Amethyst step7.ogg
+|sound8=Amethyst step8.ogg
+|sound9=Amethyst step9.ogg
+|sound10=Amethyst step10.ogg
+|sound11=Amethyst step11.ogg
+|sound12=Amethyst step12.ogg
+|source=block
+|description=When a projectile collides with the block
+|id=hit.amethyst_block
+|translationkey=subtitles.block.generic.hit
+|subtitle=Block breaking
+|volume=1.0
+| pitch = 0.5-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Block of Amethyst
+|spritetype=block
+|nameid=amethyst_block
+|blocktags=crystal_sound_blocks, mineable/pickaxe
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Block of Amethyst
+|spritetype=block
+|nameid=amethyst_block
+|id=582
+|foot=1}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Markus Persson|Notch]] mentioned crystal blocks as a potential block type that can be found in the underground.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=23m14s}}|[[File:Block of Amethyst JE1.png|32px]] Amethyst blocks are shown at [[Minecraft Live 2020]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Block of Amethyst JE1.png|32px]] Added blocks of amethyst.}}
+|{{HistoryLine|||dev=20w46a|[[File:Block of Amethyst JE2.png|32px]] The texture of blocks of amethyst has been changed.}}
+|{{HistoryLine|||dev=20w48a|[[File:Block of Amethyst JE3.png|32px]] The texture of blocks of amethyst has been changed again.}}
+|{{HistoryLine||1.20|dev=23w12a|Block of amethyst now have a new behavior called vibration resonance when it is placed adjacent to [[sculk sensor]]s.}}
+|{{HistoryLine|||dev=23w14a|[[Sculk shrieker]]s and [[warden]]s are now triggered by vibrations emitted by a resonating amethyst block.
+|Block of amethyst are now in the "Redstone Blocks" tab in the Creative inventory.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[sulfur cube]]s, which have the ability to absorb blocks of amethyst, providing the football/regular effect to the mob.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|[[File:Block of Amethyst JE3.png|32px]] Added amethyst blocks.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Amethyst blocks are now available outside of [[Experiments|Experimental Gameplay]].}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.22|Renamed "Amethyst Block" to "Block of Amethyst".}}
+|{{HistoryLine||1.19.70|The pitch for {{cd|hit.amethyst_block}} has been changed from 1 to 0.5-1.2.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb blocks of amethyst, providing the football/regular effect to the mob.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Development images ===
+<gallery>
+Jappa Amethyst.jpg|Comparison between two versions of the block of amethyst texture between [[Java Edition 20w45a]] and [[Java Edition 20w46a]].
+</gallery>
+
+== Navigation ==
+{{Navbox blocks|Building}}
+
+[[Category:Natural blocks]]
+
+[[de:Amethystblock]]
+[[es:Bloque de amatista]]
+[[fr:Bloc d'améthyste]]
+[[it:Blocco di ametista]]
+[[ja:アメジストブロック]]
+[[ko:자수정 블록]]
+[[lzh:紫水玉塊]]
+[[pl:Blok ametystu]]
+[[pt:Bloco de Ametista]]
+[[ru:Аметистовый блок]]
+[[uk:Блок аметиста]]
+[[zh:紫水晶块]]

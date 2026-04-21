@@ -1,0 +1,129 @@
+{{Joke feature}}
+{{Infobox block
+| image = Potato Refinery (S).png
+| renewable = Yes
+| stackable = Yes (64)
+| tool = None
+| light = Yes (13) <small>(when active)</small>
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+A '''potato refinery''' is a [[block]] used for extracting oil from [[potato]]es and [[poisonous potato]]es as well as lubricating items in [[24w14potato]].
+
+== Obtaining ==
+=== Breaking ===
+Potato refineries have no assigned [[tool]] and never drop as an [[item]], even with Silk Touch.
+{{Breaking row|horizontal=1|Potato Refinery|none}}
+
+=== Crafting ===
+{{Crafting
+|A1 = Baked Potato Bricks
+|A2 = Baked Potato Bricks
+|A3 = Baked Potato Bricks
+|B1 = Baked Potato Bricks
+|B3 = Baked Potato Bricks
+|C1 = Baked Potato Bricks
+|C2 = Baked Potato Bricks
+|C3 = Baked Potato Bricks
+|Output = Potato Refinery
+|ignoreusage=1
+}}
+
+== Usage ==
+=== Refining ===
+[[File:Potato Refinery interface.png|thumb|alt=A interface with 4 slots and a title "Potato Refinery" at the top, one in the top right has a bottle icon. Above the icon in the bottom left there are lines depicting heat.|The interface in-game]]
+A potato refinery has four slots: a fuel slot, two item slots, and an output slot. In the fuel slot, up to a stack of any [[fuel]] can be placed. The two item slots can hold up to a stack of any item.
+
+Like [[furnace]]s, different types of fuel smelt a different number of items. If the refinery is not currently using a piece of fuel and is ready to refine, a new piece of fuel is used.
+
+==== Oil extraction ====
+If the refinery has fuel, nothing in the output slot, a potato in the first item slot, and at least one empty [[glass bottle]] in the second item slot, the refining process begins. After {{convert|100|ticks|seconds}}, a potato and glass bottle are used, and a bottle of [[potato oil]] is produced. If a poisonous potato was used in the first item slot, a bottle of [[poisonous potato oil]] is created.
+
+==== Lubrication ====
+If the refinery has fuel, nothing in the output slot, a bottle of regular (non-poisonous) potato oil in the first item slot, and any item in the second item slot, the refinery is activated. After {{convert|125|ticks|seconds}}, the bottle of potato oil and the item are used. The output is an item with a lubrication factor. The higher the lubrication factor, the more the item slides around when on the ground. An item can be lubricated multiple times, but with diminishing returns.
+
+=== Piston interactivity ===
+Potato refineries cannot be pushed or pulled by [[piston]]s.
+
+=== Note blocks ===
+Potato refineries can be placed under [[note block]]s to produce "bass drum" sounds.
+
+== Sounds ==
+=== Generic ===
+{{info needed section|{{bug|MC-177082}} was only fixed considerably after the version containing this block was released, so I have strong reason to believe the provided table is inaccurate due to it listing a subtitle for .fall that does not exist in this specific version}}
+{{Sound table/Block/Stone/JE}}
+
+=== Unique ===
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked
+|source=block
+|description=When a player attempts to open a potato refinery locked using the {{nbt|string|Lock}} tag
+|id=block.chest.locked
+|translationkey=subtitles.block.chest.locked
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|displayname=Potato Refinery
+|spritetype=block
+|nameid=potato_refinery
+|generatetranslationkeys=1
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{bst|facing|north|east,north,south,west|The direction the potato refinery's opening faces.<br>The opposite from the direction the player faces while placing the potato refinery.}}
+{{bst|lit|false|false,true|If the potato refinery is lit.|foot=1}}
+
+=== Block data ===
+A potato refinery has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|short|BurnTime}}: Number of ticks left before the current fuel runs out.
+** {{nbt|short|CookTime}}: Number of ticks the item has been refining for. An item being lubricated finishes when CookTime reaches 20 ticks (1 second), while oil extraction takes 100 ticks (5 seconds). Is reset to 0 if BurnTime reaches 0.
+** {{nbt|short|CookTimeTotal}}: Number of ticks It takes for the item to be cooked.
+** {{nbt inherit/nameable|indent=**}}
+** {{nbt|list|Items}}: List of items in this container.
+*** {{nbt|compound}}: An item in the potato refinery, including the slot tag:<br>Slot 0: The item(s) in the top left slot.<br>Slot 1: The item(s) to use as the next fuel source.<br>Slot 2: The item(s) in the top right slot.<br>Slot 3: The item(s) in the output slot.
+**** {{nbt inherit/item|indent=****}}
+** {{nbt inherit/lockable|indent=**}}
+</div>
+
+== Advancements ==
+{{Load advancements|page=Java Edition 24w14potato|Get oily;So slippery;These boots were made for…;Whee;Lubrication Bonanza;WHEEEEEEEEE}}
+
+== Issues ==
+Potato refinery is an unsupported block due to being an [[Wikipedia:April Fools' Day|April Fools']] joke; therefore, related issues are not expected to be fixed.
+
+== Trivia ==
+*Despite being made out of [[baked potato bricks]], potato refineries use the <code>stone</code> sound type intead of the <code>potone</code> [[Block sound type|sound type]].
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|24w14potato}}
+
+[[Category:Joke blocks]]
+[[Category:Blocks with GUI]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Light sources]]
+[[Category:Readable by comparators]]
+
+[[ja:Potato Refinery]]
+[[zh:马铃薯精炼炉]]

@@ -1,0 +1,111 @@
+{{wip}}
+[[File:Enchanted Iron Pickaxe.gif|thumb|The glint animation applied to an enchanted [[iron pickaxe]].]]
+'''Enchantment glint''' is a visual effect applied most often to [[enchanted]] items and equipment, as well as other important items such as the [[End crystal]] and [[Nether star]].
+
+== Summary ==
+Important items such as the [[enchanted golden apple]] (which is not actually an item with enchantments), [[Nether star]], [[End crystal]], [[bottle o' enchanting]], [[lodestone compass]], [[written book]], and [[debug stick]], as well as any item with an enchantment, will display a glint effect.
+
+Equipped enchanted [[armor]] and [[carved pumpkin]]s also display a glint when equipped.
+
+While not enchantable in normal survival gameplay, [[horse armor]], [[nautilus armor]], [[wolf armor]], llama [[carpet]]s, [[saddle]]s, and [[harness]]es when equipped by their respective [[mob]](s) will also display the glint effect.
+
+[[Chest]]s on [[donkey]]s, [[mule]]s, and [[llama]]s do not display the glint effect.<ref>{{bug|MC-279564}}</ref> Held or framed [[map]]s also do not display it.<ref>{{bug|MC-298757}}</ref>
+
+=== Animation generation ===
+{{info needed section|explain how the animation works}}
+Unlike most animations in the game, which are defined through mcmeta files, the enchantment glint's generation is hardcoded and cannot be fully modified.
+
+Interestingly, the enchantment glint's rendering is tied to the size of the atlas.<ref>{{Cite bug|MC|276841|Enchantment glint rendering depends on the current size of the texture atlas|date=September 19, 2024|resolution=Unresolved}}</ref> This causes interesting visual effects, for example, if all of the game's textures are unloaded:
+{| class="wikitable" style="text-align:center"
+!
+! Unenchanted
+! Normal
+! Default
+! Minimal
+|-
+! JE1
+| [[File:Missing Model (dropped) JE1.gif|128px]]
+| [[File:Enchanted Missing Model (512×512) (dropped) JE1.gif|128px]]
+| [[File:Enchanted Missing Model (512×512) (missing glint) (dropped) JE1.gif|128px]]
+| ?
+|-
+! JE2
+| [[File:Missing Model (dropped) JE2.gif|128px]]
+| [[File:Enchanted Missing Model (1024×512) (dropped) JE2.gif|128px]]
+| [[File:Enchanted Missing Model (1024×512) (missing glint) (dropped) JE2.gif|128px]]
+| ?
+|-
+! JE3
+| [[File:Missing Model (dropped) JE3.gif|128px]]
+| [[File:Enchanted Missing Model (1024×512) (dropped) JE3.gif|128px]]
+| [[File:Enchanted Missing Model (1024×512) (missing glint) (dropped) JE3.gif|128px]]
+| [[File:Enchanted Missing Model (16×16) (missing glint) (dropped) JE3.gif|128px]]
+|}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2011|link={{tweet|notch|120859830339637249}}|First look at the glint on equipped armor.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Added the glint effect.
+|[[File:Item glint (texture) JE1.png|32px]] It used this grayscale texture file.{{info needed|How did it become purple in-game? Was it multiplied by a color value? If so, what value? Also, how many copies of the texture were used?}}}}
+|{{HistoryLine||1.3.1|dev=12w23a|Now visible on enchanted tools and armor on [[multiplayer]].}}
+|{{HistoryLine||1.8|dev=14w25b|Thrown [[bottles o' enchanting]] now show the enchantment glint applied to them.}}
+|{{HistoryLine|||dev=pre2|Thrown [[potion]]s now show the enchantment glint applied to them.}}
+|{{HistoryLine||1.13|dev=pre6|Enchanted [[shield]]s now show the enchantment glint applied to them.}}
+|{{HistoryLine||1.14|dev=18w50a|Thrown or fired enchanted [[egg]]s, [[ender pearl]]s, [[eyes of ender]], [[fire charge]]s, [[firework rocket]]s, and [[snowball]]s now show the enchantment glint applied to them.<ref>{{bug|MC-138660}}</ref>}}
+|{{HistoryLine|||dev=19w12a|Enchanted [[totems of undying]] now show the enchantment glint applied to them in the animation when they are consumed.<ref>{{bug|MC-138659}}</ref>}}
+|{{HistoryLine||1.15|dev=19w39a|Due to a rewrite of the rendering engine, the enchanting animation was changed.
+|[[File:Item glint (texture) JE2.png|32px]] The texture used has also changed.{{info needed|Is it still multiplied by a color, or now? How many copies are now used?}}
+|Enchanted [[trident]]s now show the enchantment glint applied to them.<ref>{{bug|MC-125360}}</ref>}}
+|{{HistoryLine|||dev=19w42a|Enchanted items now glow in the dark.}}
+|{{HistoryLine|||dev=19w45a|Thrown enchanted [[trident]]s now show the enchantment glint applied to them.<ref>{{bug|MC-161976}}</ref>}}
+|{{HistoryLine|||dev=Pre-release 1|[[File:Item glint (texture) JE3.png|32px]] The texture has been changed very subtly for unknown reasons.}}
+|{{HistoryLine||1.19.4|dev=23w04a|[[File:Item glint (texture) JE4.png|32px]] The enchantment glint texture has been moderately darkened.}}
+|{{HistoryLine|||dev=23w05a|[[File:Item glint (texture) JE5.png|32px]] The glint texture has been considerably darkened.
+|There are now accessibility options for controlling the intensity and speed of the enchantment glint.}}
+|{{HistoryLine|||dev=Pre-release 1|There are now two enchantment glint textures:
+* [[File:Item glint (texture) JE6.png|32px]] one for items (which uses the texture used from 1.15-pre1 to 23w03a)
+* [[File:Armor glint (texture) JE1.png|32px]] one for armor (which uses the texture from 23w05a onwards).
+|Potions no longer have an enchantment glint.}}
+|{{HistoryLine||1.20.5|dev=24w09a|The enchantment glint is now controlled by the {{code|enchantment_glint_override}} [[item component]].}}
+|{{HistoryLine||1.21.2|dev=24w36a|Enchanted [[horse armor]] now shows the enchantment glint on horses which are wearing them.}}
+|{{HistoryLine|||dev=pre1|Enchanted [[carpet]]s and [[wolf armor]] now shows the enchantment glint on mobs which are wearing them.}}
+|{{HistoryLine||1.21.5|dev=25w03a|Enchanted [[saddle]]s now show the enchantment glint on mobs which are wearing them.}}
+|{{HistoryLine||1.21.6|dev=25w15a|Enchanted [[harness]]es now show the enchantment glint on happy ghasts which are wearing them.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Enchanted [[nautilus armor]] now shows the enchantment glint on mobs which are wearing them.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added the glint effect.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.21|Potions no longer have an enchantment glint.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the glint effect.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|Added the glint effect.}}
+}}
+
+== Issues ==
+{{issue list|glint|enchantment glint}}
+
+== References ==
+{{reflist}}
+==Navigation==
+{{Navbox gameplay}}
+[[fr:Scintillement d'enchantement]]
+[[zh:光效]]

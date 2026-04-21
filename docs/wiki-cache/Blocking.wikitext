@@ -1,0 +1,148 @@
+'''Blocking''' is a [[gameplay]] mechanic that allows players to block several forms of damage using a [[shield]].[[File:Blocking Steve (shield).png|thumb|right|150px]]
+[[File:Blocking Alex (shield).png|thumb|right|150px]]
+
+== Usage ==
+
+===''Java Edition''===
+[[Shield]]s are used for blocking incoming attacks. {{control|Using}} one causes the player to slow to a [[sneaking]] pace, and after 5 [[tick]]s (0.25 seconds)<ref>{{bug|MC-100949||Shield blocking is delayed}}</ref>, blockable attacks and knockback coming from the front of the player are negated. Any effects from the attacker (e.g. wither or fire) do not afflict the defender. A successful block is indicated by a sound and the shield taking damage.
+
+Blockable attacks include melee attacks, all non-magical projectiles, damage from [[Thorns]], and all explosions. Shields have no effect on other types of damage, such as fall damage, drowning or splash potions. Shields partially block the laser attack from [[guardians]] and [[elder guardians]] by negating the direct damage.
+
+In [[25w04a]], blocking was introduced as an [[item component]] named <code>blocks_attacks</code> for all items, not exclusively shields.<ref name="25w04a">[https://www.minecraft.net/en-us/article/minecraft-snapshot-25w04a Minecraft Snapshot 25w04a]</ref>
+
+===''Bedrock Edition''===
+Shields are used for blocking incoming attacks.
+[[Crouching]] (sneaking, flying downward, or moving downward in water) activates the shield. Shields also automatically activate when riding mobs, and there is no way to prevent the shield from being activated when riding mobs.
+
+Blockable attacks include melee attacks, all non magic projectiles, damage from [[Thorns]], and all explosions except TNT lit by the player or from a redstone mechanism. Shields have no effect on other types of damage, such as fall damage, freezing or burning in lava. Shields partially block the laser attack from [[guardians]] and [[elder guardians]] by negating the direct damage.
+
+== Weaknesses ==
+
+=== Axes ===
+Using an [[axe]] on a [[shield]] that is being used will cause that shield, as well as any of the target's other shields, to be disabled for five seconds. However, disabling shields will not do any damage to the target. Note that mobs which wield axes ([[Vindicator|Vindicators]] and [[Piglin Brute|Piglin Brutes]]) can disable shields in the same way players can.
+
+== Sounds ==
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Shield block1.ogg
+|sound2=Shield block2.ogg
+|sound3=Shield block3.ogg
+|sound4=Shield block4.ogg
+|sound5=Shield block5.ogg
+|subtitle=Shield blocks
+|source=player
+|description=When an attack is blocked using a shield
+|id=item.shield.block
+|translationkey=subtitles.item.shield.block
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Shield block1.ogg
+|sound2=Shield block2.ogg
+|sound3=Shield block3.ogg
+|sound4=Shield block4.ogg
+|sound5=Shield block5.ogg
+|source=player
+|description=When an attack is blocked using a shield
+|id=item.shield.block
+|volume=0.7
+| pitch = 1.0
+}}
+}}
+
+== Advancements ==
+{{Load advancements|Not today, Thank You}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Added [[sword blocking]], which at the time could be activated by {{control|using}} a sword. Also, blocking negated only 50% of incoming damage, rather than 100%.}}
+|{{HistoryLine|||dev=Pre-release 2 ;)|Blocking now correctly reduces damage in [[multiplayer]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Blocking now moves the player's hand, unlike previous versions, in which blocking moved just the sword.
+|The player no longer rises faster underwater when blocking.
+|Blocking no longer decreases fall damage. Blocking previously allowed the player to fall 42 blocks without dying, instead of 22.}}
+|{{HistoryLine||1.8|dev=14w30a|Third person blocking position tweaked.
+|Blocking while mining has been made impossible.
+|Blocking immediately after attacking no longer continues the swing animation.}}
+|{{HistoryLine||1.9|dev=15w33c|The [[File:Blocking Steve (sword).png|32px]] [[File:Blocking Alex (sword).png|32px]] blocking functionality of swords was removed and is replaced with the [[File:Blocking Steve (shield).png|32px]] [[File:Blocking Alex (shield).png|32px]] functionality of [[shield]]s.}}
+|{{HistoryLine|||dev=15w34c|When an attack is blocked by a shield, the attacker is knocked back.
+|Being attacked with an axe may disable the shield for 5 seconds.}}
+|{{HistoryLine|||dev=15w37a|Start up delay has been reduced from 0.5 seconds to 0.25 seconds.
+|Blocking now prevents some side effects like being set on fire when being hit by a mob that's on fire.
+|Arrows now ricochet off shields.}}
+|{{HistoryLine|||dev=15w47b|Added shield blocking sounds.}}
+|{{HistoryLine|||dev=16w07a|Added more variation of shield blocking sounds.}}
+|{{HistoryLine||1.11|dev=16w35a|Shields now block 100% damage/knockback/debuff.|Shields are now stunned 100% of the time, and the chance of stunning is no longer influenced by the [[Efficiency]] enchantment or whether or not the attacker is [[sprinting]].}}
+|{{HistoryLine||1.14|dev=18w43a|Shields no longer repel attackers when blocking.<ref>{{bug|MC-147694}}</ref>}}
+|{{HistoryLine||1.19.3|dev=22w43a|Shields can now properly block all explosions.}}
+|{{HistoryLine||1.21.5|dev=25w04a|Blocking is introduced to all items through the [[Data component format]]. Shields are still the only item capable of blocking by default.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Added the ability to block with shields, which can be activated by crouching or riding mobs.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.22|Shields can now partially block damage from [[guardian]]s and [[elder guardian]]s laser beams.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the ability to block with swords.}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|Third person blocking position tweaked.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Blocking while mining has been made impossible.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Taking damage that is reduced by unenchanted armor while blocking with a sword now makes the shield blocking sound.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Added the ability to block with shields.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Removed the ability to block with swords.}}
+}}
+
+== Issues ==
+{{issue list|Blocking|-\"block\"|-\"blocks\"|-\"blocked\"|-\"block's\"|-breaking}}
+
+== Trivia ==
+* Blocking allows for the slowest movements possible. This can occur when the player blocks, [[sneak]]s, and moves backward while under the effect of [[Slowness]] while going through [[cobweb]]s placed above still water on top of [[soul sand]] that is placed on top of [[ice]]. This causes the player to move at about 1/200 blocks a second, or 2/25 pixel a second (1 pixel every 12-13s) on a default 16×16 texture pack. Blocking while sneaking and with the additional events (but without slowness potion) allows the player go at roughly 0.023854961832 blocks per second (1 block every 41.92 seconds).{{only|java}}<!-- In Bedrock Edition, blocking cannot be combined with sneaking, since sneaking automatically activates the shield, and shields cannot be activated without sneaking (crouching). However, in Bedrock, it is possible to pull back a bow at the same time resulting in the same speed. -->
+* In older versions and ports of Minecraft, you were able to block using a sword, which would reduce damage taken. This mechanic has since been removed.
+* It is impossible to block attacks on the ''[[New Nintendo 3DS Edition]]'', as both [[shield]]s and [[sword]] blocking are absent from the game.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Shield Block.png|A player holding a shield while blocking.
+</gallery>
+
+== See also ==
+* [[Sprinting]]
+* [[Damage#Critical_hits|Critical hit]]
+* [[Sword blocking]]
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+
+[[de:Blocken]]
+[[es:Bloquear ataque]]
+[[fr:Blocage]]
+[[it:Blocco (azione)]]
+[[ja:防御]]
+[[ko:방어]]
+[[nl:Blokkeren]]
+[[pl:Blokowanie]]
+[[pt:Bloquear]]
+[[ru:Блокирование]]
+[[th:การบล็อก]]
+[[uk:Блокування]]
+[[zh:格挡]]

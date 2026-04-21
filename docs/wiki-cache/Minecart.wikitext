@@ -1,0 +1,461 @@
+{{for}}
+{{distinguish|Minecraft}}
+{{Infobox item entity
+| image = Minecart.png
+| invimage = Minecart
+| renewable = Yes
+| stackable = No
+| size = Height: 0.7 blocks<br>Width: 0.98 blocks
+| networkid = 
+| drops = {{ItemLink|Minecart}} (1)
+| health = {{hp|6}}
+}}
+{{relevant tutorial|Minecarts}}
+A '''minecart''' is a ridable vehicle [[entity]] that runs on [[Rail (disambiguation)|rail]]s and can be used to transport both [[player]]s and [[mob]]s.
+
+== Obtaining ==
+Once placed, minecarts can be retrieved by {{control|attacking}} them for some time. One attack from a [[pickaxe]], [[sword]] or [[axe]] is enough for a minecart to drop in item form, provided the player's attack cooldown is reset{{only|java}}. A minecart is also destroyed if it makes contact with a [[cactus]], or if shot with a [[bow]]/[[crossbow]]. [[Critical hits]] are not applied to minecarts, although the particles suggest otherwise.
+
+=== Crafting ===
+{{Crafting
+|A2= Iron Ingot
+|C2= Iron Ingot
+|A3= Iron Ingot
+|B3= Iron Ingot
+|C3= Iron Ingot
+|Output= Minecart
+|type= Transportation
+}}
+
+=== Entity loot ===
+[[Minecarts with command blocks]] can be given to the player with the {{cmd|give}} command or through the [[Creative inventory]] under certain conditions{{only|je}}; [[minecarts with spawners]]{{only|je}} are available only via the {{cmd|summon}} command. Each drop 1 minecart when broken.
+
+== Usage ==
+[[File:RideableMinecart.png|thumb|right|A rideable minecart on rails surrounded by wooden slabs]]
+
+A minecart can be placed in the same manner as most blocks, but only on top of a [[rail]]. Once placed, it may be derailed by pushing it off the end of the track. After this, it can be railed again by placing a rail directly below it or pushing it onto a track.
+
+=== Crafting ingredient ===
+Anything crafted with the minecart functions similar to a regular minecart, but cannot be ridden.
+{{crafting usage}}
+
+=== Transportation ===
+[[File:Steve Riding a Minecart.png|thumb|right|upright|[[Steve]] riding a minecart]]
+{{see also|Transportation|Riding}}
+
+Minecarts can be ridden by {{control|use|text=pressing the "use" control}} on them. Once inside, an external impulse may be needed to make the minecart start moving. The player can slowly move the minecart forward at about 8 [[block]]s per second while riding it, by pressing {{control|forward}}. If the [[Minecart Experiments]] experiment is enabled, the game rule {{gmr|max_minecart_speed}} can be used to change the max minecart speed. If a mob walks in front of a moving empty minecart, it is pulled into the cart.
+
+After rolling off of the end of a track, a minecart can be pushed around on open blocks. If a minecart is pushed onto or falls onto tracks, it "snaps" to those tracks. When riding a minecart, if the minecart lands on a rail, the player does not take any fall damage. <!--Minecarts and arrows don't interact anymore.-->
+
+Unlike with [[bed]]s, there is no message above the hotbar{{only|Java}} or in [[chat]]{{only|Bedrock}} for attempting to enter a fully occupied minecart.<ref>{{bug|MC-161251||Attempting to enter an occupied bed displays a message over the hotbar, but attempting to enter an occupied vehicle does not|WAI}}</ref>
+
+=== Dismounting ===
+Players can exit the minecart by {{control|sneaking}} while riding it. When a player or mob dismounts a minecart, either by choice, by breaking the minecart, or by passing over a powered [[activator rail]], the minecart tries to find a safe ejection destination for the player one block away. First it checks the eight horizontally adjacent blocks in the following order of priority relative to direction of travel: right, left, rear right, rear left, front right, front left, rear, front. A valid destination has a block underneath with a solid (not necessarily full) top surface and a space with enough headroom and width for the passenger to fit in when standing at the center. The space can even contain liquid or have open trapdoors if the mob is slim enough, and presence of other mobs doesn't matter. If no valid destination exists on same horizontal level, the minecart then checks the blocks one above, then one below. For a player, the minecart also checks for crawlable destinations. If still none, the minecart chooses its own location. Once the minecart picks a destination, it actually ejects the passenger one block up in the air and the passenger settles down on its own. Under a low ceiling this may cause one tick of suffocation damage. The air drop exists to allow passengers to land on carpet or bottom slabs.
+
+== Behavior ==
+=== Speed ===
+Minecarts have a predefined speed limit of exactly 8 blocks per second ''per axis of travel''. A minecart traveling diagonally can, therefore, travel up to 11.314 blocks per second.<ref group="note">The square root of 8<sup>2</sup> + 8<sup>2</sup>. See [[wikipedia:Pythagorean theorem|Pythagorean theorem]].</ref> When a minecart comes to a turn it moves diagonally across that turn.
+
+[[Powered rail]]s powered by redstone give minecarts a boost of speed. Speed is gradually decreased if there are no powered rails to assist its movement, and an unpowered powered rail slows down a minecart rapidly and can stop minecarts even on slopes.{{Only|be|short=1}} The speed decreases at a faster rate when going uphill, compared to when moving horizontally, but a riding player can still move it uphill at the lowest speed {{In|be}}. A minecart does not need powered rails to assist its movement down a hill.
+
+Anything in the way of the minecart brings it to a stop. Once a minecart has left the track, it rapidly decelerates within one or two blocks. When mobs touch a minecart, they affect it in the same way a player would, i.e. mobs that move up against a still cart set it in motion.
+
+If a minecart is moving fast enough, it can skip across one block without a track and reattach to a track on the other side, at significantly reduced energy and speed. A minecart's hitbox can skip turns if the minecart is boosted using enough powered rails.<ref>{{bug|MC-179971||Minecart skips turns if too fast}}</ref>
+
+The speed and momentum of a minecart can differ depending on whether or not it is empty, and in the case where a minecart has a container, the speed can differ depending on the quantity and type of items inside.
+
+Moving minecarts become frozen when more than one chunk beyond the [[simulation distance]] of the nearest player, but resume their motion when a player comes within range.
+
+=== Merged minecarts ===
+{{IN|je}}, two or more minecarts can be merged by pushing them into each other so that they overlap. Merged minecarts move as a collective, like a train, and can be useful for long-distance transport because while moving in a straight line, they ''do not need powered rails to keep their speed''.
+
+To summarize:
+* Minecarts can also be merged by ''dropping'' a minecart on another minecart, but only if that minecart is on a rail.
+* Merged minecarts do not lose speed while traveling on straight rails.
+* ''Corners'' in the rails might cause merged minecarts to unmerge.
+* Minecarts with ''chest'' (even fully filled) can also be merged and also do ''not'' require powered rails.
+* Merged minecarts can travel off-rail at half-speed (4 blocks/second). They can travel diagonally if the last rail is a turned rail.
+
+=== Distance traveled by empty carts starting on a downward slope ===
+This table shows the distance traveled by an unoccupied minecart, in meters, on a downward slope, with a boost (or no boost). The most efficient way is to use only 1 boost at the bottom of the incline on the flat surface. Using 2 increases distance by about 20% or 1.5 blocks. All distance trends based on the height seem to be logarithmic.
+The carts started from rest, on a slope Height blocks up.
+
+{| class="wikitable" data-description="Distance traveled"
+|-
+! Height !! No boost !! Bottom !! Bottom and top !! All boosts on incline and bottom
+|-
+| 1 || 2.77m || 8.77 || 10.8 || 10.8
+|-
+| 2 || 4.59m || 9.59 || 10.83 || 13.37
+|-
+| 3 || 5.81m || 9.81 || 11.66 || 15.12
+|-
+| 4 || 7.04m || 10.04 || 12.46 || 16.95
+|-
+| 5 || 7.87m || 10.87 || 12.29<!--(Yes, it did actually travel less)--> || 17.95
+|-
+| 10 || 11.65m || 13.38 || 15.12 || 21.68
+|-
+| 100 || 15.87m || 17.05 || 17.54 || 25.34
+|}
+
+=== Collision ===
+Minecarts are about the same size as a block (1×1). Because of this, a ladder, door, or trapdoor prevents it from falling down a 1×1 hole. Carts on [[rail]]s also ignore collision in certain situations. A cart traveling uphill, downhill, or on a curve with a block placed in front of it, goes through the block.<ref>{{bug|MC-8004||Minecarts glitch through the stop block of a track that ends with a turn or a downward slope}}</ref>
+
+A minecart that reaches the end of a rail up against an opaque solid block bounces back, but if the block is transparent then it stops. The minecart can even bounce against an opaque block from a standstill if the rail underneath is powered. A player or mob riding in a minecart does not collide with or suffocate in any transparent blocks but suffocates inside opaque blocks.
+
+Minecarts are completely unaffected by [[ice]], [[packed ice]], and [[blue ice]]<ref>{{bug|MC-8265||Minecarts don't slide on any sort of ice}}</ref>; they can also be destroyed by coming in contact with [[lava]], [[fire]] and [[cactus]], causing it to drop itself as an item. The last block can be used to automatically destroy the cart and collect it (with a [[hopper]]) at the end of a track.
+
+=== Uphill and downhill movement ===
+{{Development|java|section=13|experimental-je=Minecart Improvements|removed=done}}{{Schematic|caption=The cart collides with A instead of B.|
+|AB+A|-|mc-$ew+ra-$wu|AB+B}}
+A cart on an ascending rail performs its horizontal movement at a higher position, with the following effects:
+* A cart traveling downhill does not collide with a block in front of it, but collides with a block one block higher.
+* A cart can trigger a [[pressure plate]] or [[tripwire]] above its bounding box in this process, which can't detect the cart when checking for entities. If deactivated when the cart has not moved away, the pressure plate or tripwire is immediately retriggered.
+** If updates originating from the pressure plate or tripwire break the rail, the cart appears at the higher position.
+
+=== Mobs ===
+[[File:Minecart shake.gif|150px|thumb|Minecart shaking due to being on top of an activator rail.]]
+Most [[mob]]s can be picked up when a minecart collides with them. The following mobs, however, cannot be picked up:
+* [[Bat]]s, [[ender dragon]]s, [[warden]]s, and [[wither]]s in both {{JE}} and {{BE}};
+* [[Iron golem]]s {{in|java}}
+* [[Creaking]]s, [[NPC]]s, [[agent]]s, and 0.75% of [[zombified piglin]]s{{Note|See {{slink|Zombified Piglin|Mounting}}.}} {{in|be}}
+This is much different from boats, which can be entered only by mobs smaller than the boats; even large mobs like [[ghast]]s can enter minecarts. In addition to mobs, minecarts can also pick up [[boat]]s {{in|je}},<ref>{{bug|MC-113871||Boats and rafts can ride minecarts}}</ref> and [[armor stand]]s and [[camera]]s {{in|be}}.
+
+A mob is picked up when a moving minecart on rails collides with the mob, or if the mob walks into a minecart on rails. Additionally, {{in|be}}, a minecart can pick up a mob even if stationary or off-rails. It is easier to pick up a mob when a minecart is turning.{{verify|is this true or just placebo? Does this apply to both Java and Bedrock?}} For the purposes of picking up mobs, the bounding box of a minecart is extended by 0.2 (approx. {{frac|3|16}}) blocks on each direction on the X and Z axes. This means that a minecart can pick up a mob even if the mob is not intersecting the minecart's hitbox. 
+
+{{IN|je}}, mobs in minecarts (except unnamed [[endermite]]s) don't despawn, and don't count toward the mob cap.<ref>{{bug|MC-182897||Some passenger mobs don't count to the mob cap|WAI}}</ref>
+
+Mobs cannot control the minecart, unless they are a [[jockey]] {{in|je}},<ref>{{bug|MC-71998||Minecarts that have passengers within them riding mobs can move automatically when not on rails}}</ref> and cannot exit the minecart unless the minecart is destroyed or moves onto an active [[activator rail]]. {{IN|be}}, it is also possible to force a mob out of a minecart by reeling it in using a [[fishing rod]].
+
+Tamed [[pet]]s, as well as [[endermen]], cannot teleport out of minecarts.<ref>{{bug|MC-3866||Endermen, Tamed Wolves and Ocelots cannot teleport when in a Minecart|WAI}}</ref>
+
+== Sounds ==
+{{JE}}:<br>
+Minecarts use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].<ref group="sound" name="oddcats" />
+
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Minecart inside.ogg
+|subtitle=''Minecart jangles''<ref group=sound name=subtitles>Not displayed in-game due to {{bug|MC-278135}}, but exist as translation strings on [[Crowdin]].</ref>
+|source=Friendly Mobs <ref group="sound" name="oddcats">{{Cite bug|MC|42132|The sounds of minecarts aren't controlled by the correct sound slider|date=December 13, 2013}}</ref>
+|overridesource=1
+|description=While the player or mob is inside of a moving minecart 
+|id=entity.minecart.inside
+|translationkey=''subtitles.entity.minecart.inside''
+|translationkeynote=<ref group=sound name=subtitles/>
+|volume=0.0-0.75 <ref group=sound name=insidevolume>Based on horizontal speed; it is clamped between 0.0 and 0.75 and does not play if speed is less than 0.01</ref>
+|pitch=1.0
+|distance=16 (technical) / rider only (effective)}}
+| {{SoundLine
+|sound=Minecart inside underwater1.ogg
+|sound2=Minecart inside underwater2.ogg
+|sound3=Minecart inside underwater3.ogg
+|subtitle=''Minecart jangles underwater''<ref group=sound name=subtitles/>
+|source=Friendly Mobs <ref group="sound" name="oddcats"/>
+|overridesource=1
+|description=While inside of a moving minecart when the player's eye level is underwater 
+|id=entity.minecart.inside.underwater
+|translationkey=''subtitles.entity.minecart.inside_underwater''
+|translationkeynote= <ref group=sound name=subtitles/>
+|volume=0.0-0.75 <ref group=sound name=insidevolume/>
+|pitch=1.0
+|distance=16 (technical) / rider only (effective)}}
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|subtitle=Minecart rolls <ref group="sound">Shows far less often than it should - see {{bug|MC-181831}}</ref>
+|source=Friendly Mobs <ref group="sound" name="oddcats"/>
+|overridesource=1
+|description=While a minecart is moving
+|id=entity.minecart.riding
+|translationkey=subtitles.entity.minecart.riding
+|volume=0.0-0.35 <ref group=sound>Relates linearly with horizontal velocity (max 0.5)</ref>
+|pitch=0.0-1.0 <ref group=sound>Increases by 0.0025 per tick if the minecart's horizontal velocity is more than 0.01{{verify|did this not break in 1.7?}}</ref>
+|distance=16
+}}
+
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Minecart inside.ogg
+|source=neutral
+|description=While the player or mob is inside of a moving minecart
+|id=minecart.inside}}
+| {{SoundLine
+|sound=Minecart rolling.ogg
+|source=neutral
+|description=While a minecart is moving
+|id=minecart.base
+}}
+
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Minecart
+|spritetype=item
+|nameid=minecart
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|firstcolumnname=Entity
+|displayname=Minecart
+|spritetype=entity
+|nameid=minecart
+|foot=1
+}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Minecart
+|spritetype=item
+|nameid=minecart
+|id=370
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Minecart
+|spritetype=entity
+|nameid=minecart
+|showentityfamily=y
+|entityfamily=inanimate,minecart
+|id=84
+|foot=1
+}}
+
+=== Entity data ===
+Minecarts have entity data associated with them that contain various properties of the entity.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/vehicle}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]]
+
+== Achievements ==
+{{load achievements|On A Rail}}
+
+== Videos ==
+{{yt|tJd57j_KObs}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100618|[[File:Minecart JE1.png|32px]] [[File:Minecart (item) JE1.png|32px]] Added minecarts. 
+|Minecarts are not rideable but instead are used to store things in.
+|Right-clicking minecarts opens them like a [[chest]] (with the container called "Minecart"). Filling them up makes the [[dirt]] layer inside them rise.}}
+|{{HistoryLine||20100624|[[File:Minecart JE2.png|32px]] [[File:Minecart (item) JE2 BE1.png|32px]] The entity model and item texture of minecarts have been changed.
+|The minecart mechanics have been changed to being rideable, removing their ability to store items.
+|Minecarts now render a chest inside for unknown reasons.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.4|[[File:Minecart JE3 BE1.png|32px]] Removed the phantom chest from minecarts.
+|A [[sitting]] animation for riding minecarts has been added.}}
+|{{HistoryLine||v1.0.14|Minecarts are now used to craft [[minecart with furnace]] and [[minecart with chest]].
+|A glitch creates a new method of speeding up minecarts, known as "Boosting." Placing two minecarts parallel to each other and moving in the same direction increases the speed of both carts.}}
+|{{HistoryLine||v1.2.2|Minecarts now appear to other players and can be ridden in multiplayer.
+|Minecarts are no longer fully solid - they no longer block movement, and can no longer be stood on top of.}}
+|{{HistoryLine||v1.2.3|Players in minecarts and [[boat]]s now receive terrain updates.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|Minecarts now break faster with hands.
+|[[Powered rail]]s have been introduced, which enables minecarts to move automatically, although previous methods of boosting no longer work or do not work as effectively.
+|The [[detector rail]]s have been introduced for use in detecting minecarts. Prior to this update, minecarts were detected by using [[pressure plate]]s in line with cart tracks. This had the often undesirable effect of dramatically slowing or even stopping the minecart, which limited the use of this design mostly to boosters.}}
+|{{HistoryLine||1.6|dev=Test Build 3|A minecart now transfers any [[fall damage]] it suffers onto its rider and is not destroyed upon impact.}}
+|{{HistoryLine||1.8|dev=Pre-release|If the [[player]] punches a minecart when descending from a jump, it shows the [[critical hit]] animation. This also happens if the player punches the cart while still in it.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[C418]] posted a [[sound]] showing the sound that minecarts make.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|The texture of minecarts has changed slightly.}}
+|{{HistoryLine||1.3.1|dev=12w15a|Minecarts can now be shot out from [[dispenser]]s.}}
+|{{HistoryLine|||dev=12w21a|While sitting inside of a minecart, pushing the directional keys makes it move the direction player is pressing. This only works while the minecart is sitting on rails.}}
+|{{HistoryLine|||dev=12w21b|Minecarts can now be destroyed in one hit in Creative mode.
+|The [[player]] no longer spawns on top/inside of the minecart after getting out. Instead, the player gets out a few [[block]]s away. Also, the player can nudge a stationary minecart while inside it to move onto a [[powered rail]], etc.}}
+|{{HistoryLine||?|The camera no longer rotates with a mounted minecart as it moves.}}
+|{{HistoryLine||1.5|dev=13w02a|Minecarts can now be edited with a third-party program to show any [[block]] inside of it (it does not take on the characteristics of this block), as well as make it take on the characteristics of any cart.
+|Minecarts are now used to craft [[TNT minecart]]s.}}
+|{{HistoryLine|||dev=13w03a|Minecarts are now used to craft [[hopper minecart]]s.}}
+|{{HistoryLine|||dev=13w06a|Added [[minecart with spawner]].}}
+|{{HistoryLine||1.6.1|dev=13w16a|Minecarts are now dismounted using the sneak key; previously, this was achieved by right clicking on the minecart a second time.}}
+|{{HistoryLine||1.6.2|dev=release|A [[player]] in a moving minecart no longer turns with the minecart.}}
+|{{HistoryLine||1.7.2|dev=13w39a|Added [[minecart with command block]].}}
+|{{HistoryLine||1.8|dev=14w11a|Minecart physics have been changed - they now go faster and further, can derail at corners if going too fast and refuse to go uphill and they can also (if going fast enough) go over 1 [[block]].
+|The collision and position handling of minecarts have been improved.}}
+|{{HistoryLine|||dev=14w17a|All changes to old minecart physics used before 14w11a have been reverted.}}
+|{{HistoryLine||1.9.1|dev=pre2|Extreme typos in minecarts with hoppers and chests,{{verify|are we sure they're typos and not better referred to as something else?}} reading "''container.minecart'''' have been fixed.}}
+|{{HistoryLine||1.11|dev=16w32a|The player's [[hunger]] bar is now visible when riding in a minecart.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Minecart JE4 BE2.png|32px]] [[File:Minecart (item) JE3 BE2.png|32px]] The textures of minecarts have been changed.}}
+|{{HistoryLine|||dev=19w13a|Minecarts now move much slower when pushed along standard [[rail]]s using the W key, even slower on unpowered powered rails, and cannot be pushed off of unpowered powered rails without the [[player]] looking at a certain angle.}}
+|{{HistoryLine||1.16|dev=20w09a|Minecart now checks dismount position height against entity height.}}
+|{{HistoryLine|||dev=20w16a<!--cannot confirm due to how assets are handled - assuming this due to MC-91163 fix version-->|Minecarts no longer have subtitles for movement.}}
+|{{HistoryLine|||dev=20w18a|Mobs in minecarts no longer [[despawn]].}}
+|{{HistoryLine||1.17|dev=20w45a|Minecarts can now move in [[water]].}}
+|{{HistoryLine||1.18|dev=pre2|Minecarts no longer contain the hidden dirt layer left over from their introduction in Infdev.<ref>{{bug|MC-206303||Minecarts have old textures on the bottom|Fixed}}</ref>}}
+|{{HistoryLine||1.19|dev=22w13a|Minecarts no longer drop when breaking a [[minecart with chest]], [[Minecart with Hopper|hopper]], [[Minecart with Furnace|furnace]], or [[Minecart with TNT|TNT]].<ref>{{bug|MC-249493||Breaking a minecart with chest/furnace/TNT/hopper separates the minecart and the block it contains|Fixed}}</ref>}}
+|{{HistoryLine||1.20|dev=23w16a|Sniffers can now enter minecarts.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Pressing the movement controls while riding a boat or a saddled pig that has been picked up by a minecart no longer moves the minecart at a high speed.<ref>{{bug|MC-200318||Pigs can be controlled without carrot on a stick when in a minecart|Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|exp=Minecart Improvements|The speed of minecarts is now determined by the game rule {{cd|minecartMaxSpeed}}, which is set to a default of 8.
+|Whether or not the player follows the rotation of minecarts is now controlled by the accessibility setting "Rotate with Minecarts".
+|Minecarts can no longer be placed by players or dispensers if the spot is already occupied by another minecart. Dispensers simply drop the minecart as an item if this is the case.
+|Minecarts now retain their vertical momentum when its track ends with a slope, and now visually correspond to it by tilting while in the air.
+|Minecarts no longer make any movement noise while in the air.
+}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.8.0|dev=build 2|[[File:Minecart JE3 BE1.png|32px]] [[File:Minecart (item) JE2 BE1.png|32px]] Added minecarts.}}
+|{{HistoryLine|||dev=build 3|Minecarts now ride smoother.}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[Sound]]s for minecarts have been added.}}
+|{{HistoryLine|||dev=build 2|Minecarts now stack on top of each other.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Minecarts can now be used to craft [[Minecart with Chest|storage]], [[Minecart with TNT|TNT]], and [[hopper minecart]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Minecart JE4 BE2.png|32px]] [[File:Minecart (item) JE3 BE2.png|32px]] The textures of minecarts have been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Minecart JE3 BE1.png|32px]] [[File:Minecart (item) JE2 BE1.png|32px]] Added minecarts.}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|Minecarts are now twice the speed than in other editions, with a maximum speed of 16 blocks per second.}}
+|{{HistoryLine||xbox=TU12|Minecarts are now slower.|Minecarts can now be placed by [[dispenser]]s.}}
+|{{HistoryLine||xbox=TU13|ps3=1.00|psvita=1.00|ps4=1.00|Minecarts have had their speed increased again.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Minecarts are now used to craft [[TNT minecart]]s and [[hopper minecart]]s.|A [[player]] in a moving minecart no longer turns with the minecart.|Minecarts are now dismounted using the sneak key; previously, this was achieved by pressing {{ctrl|use}} on the minecart a second time.}}
+|{{HistoryLine||xbox=TU20|xbone=CU8|ps3=1.13|psvita=1.13|ps4=1.13|wiiu=Patch 1|switch=1.0.1|A [[player]] in a moving minecart once again turns with the minecart.}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|wiiu=Patch 1|switch=1.0.1|The minecart [[spawn limit|limit]] has been increased.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Minecart [[sound]]s have been updated.}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|An option to enable or disable minecart sounds has been added to the audio settings.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Minecart JE4 BE2.png|32px]] [[File:Minecart (item) JE3 BE2.png|32px]] The texture of minecarts has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3DS}}
+|{{HistoryLine||0.1.0|[[File:Minecart JE3 BE1.png|32px]] [[File:Minecart_(item)_JE2_BE1.png|32px]] Added minecarts.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w02a|Minecart types no longer all share the same [[entity]] ID – <code>Minecart</code> – and are no longer distinguished by a <code>Type</code> field. They have been given separate entity IDs.}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from <code>MinecartRideable</code> to <code>minecart</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to ''[[The Flattening]]'', this [[item]]'s numeral ID was 328.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Minecarts appear to float above the track, as their model has no wheels.
+* If the player views their inventory while riding in a minecart, they appear sitting down in mid-air.
+* The player can teleport to another minecart while sitting in a minecart by right-clicking a minecart in their range. This can be used as an elevator to quickly rise up when minecarts are placed on top of each other.
+* If the sound is muted in the options while riding a minecart, and then turned back up, the minecart no longer makes noise in the client until the player exits the minecart.
+* A minecart (alongside rails and powered rails) are used as Steve's Side-Special in the crossover fighting game ''[[Super Smash Bros. Ultimate]]''.
+* Minecart are twice as fast in Legacy Console Edition.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:MinecartInfdev1.png|A minecart opened in Minecraft Infdev.
+File:MinecartInfdev2.png|A minecart filled in Minecraft Infdev.
+File:Minecart fire pig.png|A pig inside a burning minecart.
+Minecart dirt.png|The removed hidden dirt texture inside the bed of the minecart.
+File:Minecart Booster.png|Minecart booster.
+File:MinecartStack.png|Minecarts being stacked on each other.
+File:Villager minecart.png|Villager in a minecart.
+File:Minecartride.jpg|[[Ari]] in a minecart.
+File:CameraMob in a minecart.png|A [[camera]] in a minecart.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Minecart with chest and head thing.png|The first image [[Jeb]] released.<ref>{{tweet|jeb_|289000646210904064|Haha =) i.imgur.com/IwoW6.png|January 9, 2013}}</ref>
+File:Pocket Edition v0.8.0 alpha Development minecarts.png|The first image of minecarts in {{edition|PE}}.
+File:2ed Spawner Minecart Image and 1st Dispenser cart image.jpg|An image of two [[minecarts with spawners]] and unimplemented minecarts with dispensers.
+File:Blocks in Invisible Minecarts.png|Minecarts can be edited to show any block inside, and can also be edited to be invisible.
+File:Sunny rides into the Nether.jpg|[[Sunny]] riding a minecart into a [[Nether portal]].
+</gallery>
+
+=== In other media ===
+<gallery class="pixel-image">
+File:Diamond Minecart.png|The [[Minecraft Story Mode:Diamond Minecart|diamond minecart]], a unique minecart featured in ''[[Minecraft: Story Mode]]''.
+File:StoryModeItemSprite diamond-minecart.png|Ditto
+File:Minecart with Redstone (Dungeons).png|A {{MCD|minecart}} as it appears in {{MCD}}.
+File:Minecart with Ice Cubes (Dungeons).png|Minecart with Ice Cubes
+File:Stone Minecart (Dungeons).png|Minecart with Stone
+File:Warden Minecart.png|Several mobs, most notably a [[warden]] and the {{MCD|Arch-Illager}}, riding minecarts.
+File:Wait up, lets go.gif|A [[chicken jockey]] trying to keep up with the aforementioned train.
+File:Oh no OMG.gif|Several frogs grimacing in a minecart.
+File:Good Morning, Yes!.gif|A [[skeleton]], [[axolotl]], [[strider]], and the {{MCD|Arch-Illager}} riding together.
+File:Snifflet Minecart.png|A [[sniffer|snifflet]] in a minecart.
+File:Minecoins 5.png|Two minecarts, as depicted on [[Minecraft Marketplace|Minecoin]] gift cards.
+File:Minecart (Trails and Tales Summer Event) Render.png|A wooden minecart, featured in the [[Trails & Tales Event]].
+File:Race Along the Rails.png|A functional minecart in the ''[[LEGO Minecraft|Lego]]'' set, ''The Badlands Mineshaft''.
+File:Minecraft Movie Minecart Concept Art.jpg|Minecart concept art for {{AMCM}}.
+File:AMCM Minecart.png|Minecarts in {{AMCM}}.
+File:SRC Minecart.png|Official artwork of a Minecart in ''[[Sonic Racing: CrossWorlds]]''.
+File:Minecart Mayhem.jpg
+</gallery>
+
+== See also ==
+* [[Boat]]
+* [[Transportation]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|taking-inventory--minecart|Taking Inventory: Minecart|September 6, 2019|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Transport]]
+[[Category:Vehicles]]
+
+[[cs:Vozík]]
+[[de:Lore]]
+[[es:Vagoneta]]
+[[fr:Wagonnet]]
+[[hu:Csille]]
+[[it:Vagonetto]]
+[[ja:トロッコ]]
+[[ko:광산 수레]]
+[[lzh:礦車]]
+[[nl:Mijnkar]]
+[[pl:Wagonik]]
+[[pt:Carrinho de Mina]]
+[[ru:Вагонетка]]
+[[th:รถราง]]
+[[uk:Вагонетка]]
+[[zh:矿车]]

@@ -1,0 +1,604 @@
+{{About||the living variant|Camel|other uses|Husk (disambiguation)}}
+{{Needs render|type=animated|Camel husk with saddle animations, baby husk jockey}}
+{{Infobox entity
+| group = Normal
+| group2 = Saddled
+| groupsize = 230px
+| 1-1 = Camel Husk Idle JE1.gif
+| 2-1 = Saddled Camel Husk.png
+| extratext = [[#Animations|View all renders]]
+| invimage = Camel Husk Spawn Egg
+| health = {{hp|32|mob=1}}
+| behavior = Passive<ref group="note" name="behavior">Passive by itself, but hostile as a jockey, as the two riders control its [[pathfinding]], therefore making it hostile, despite camel husks not actually damaging players, like small [[slime]]s.</ref>
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}<br>{{EntityLink|Animal}}
+| size = '''Standing:'''<br>Height: 2.375 blocks<br>Width: 1.7 blocks<br>
+'''Sitting:'''<br>Height: 0.945 blocks<br>Width: 1.7 blocks
+| speed = 
+| spawn = *{{BiomeLink|Desert}} at night or during thunderstorms.
+| usableitems = {{drop|Item|Saddle}}
+{{drop|Item|Shears}}<small>(when equipped with a saddle)</small>
+{{drop|Item|Lead}}<small>(only when dismounted)</small>
+{{drop|Item|Name Tag}}
+{{drop|Item|Rabbit's Foot}}
+| tickingorder = 
+| gravity = 
+}} 
+A '''camel husk''' is an [[undead]] variant of the [[camel]] that rarely spawns at [[night]] or during [[thunderstorm]]s in [[desert]]s as a [[hostile mob]], being ridden and controlled by an [[iron spear]]-wielding [[husk]] with a [[parched]] passenger, known as a '''camel husk jockey'''. It does not burn in [[sun]]light, and is [[passive]] once separated from its riders.
+
+== Spawning ==
+{{anchor|Camel husk jockey}}
+In {{JE}}, when a [[husk]] spawns [[spawn cycle|naturally]] and spawns in a space that does not block the collision box required for a camel husk, it has a 10% chance to spawn as a '''camel husk jockey''', i.e. riding a camel husk, and spawning a [[parched]] as the second passenger. Within a spawning pack of husks, only one of them can spawn as a camel husk jockey. If the husk is a baby husk and was supposed to spawn as [[chicken jockey]], the [[chicken]] will be spawned (and can despawn), but the baby husk will ride the camel husk.
+
+In this state, the camel husk's movement is controlled by the front passenger. This will initially be the husk; if the husk dismounts or is killed, the parched will instead take control. When both passengers are killed or dismount the camel husk, it becomes passive. It can then subsequently be ridden by players like a regular [[camel]].
+
+Camel husks count towards the "monster" [[mob cap]] and can despawn like most hostile mobs until the first time any player interacts with it. At that point it becomes persistent and no longer counts towards any mob cap either.  
+
+Camel husks do not spawn in [[Peaceful]] difficulty, like other [[monster]]s.
+
+In {{BE}}, camel husks spawn by weight on their own, and like {{in|java}}, never by itself:
+{| class="wikitable"
+! Category: Monster
+! colspan="3" | {{BE|nl=1}}
+|-
+! Spawn area
+! {{Tooltip|Spawn weight|Weight relative to other spawn entries in this category}}
+! {{Tooltip|Group size|Number of mobs the game tries to spawn per attempt}}
+|-
+| {{BiomeLink|Desert}}
+| style="text-align:center;" | 25
+| style="text-align:center;" | 1
+|}
+
+== Drops ==
+
+=== On death ===
+{{DropTable
+|{{DropLine|edition=java|name=Rotten Flesh|quantity=2-3|lootingquantity=0-1}}
+|{{DropLine|edition=bedrock|name=Rotten Flesh|quantity=2-3}}
+}}
+* {{xp|1|3}} when killed by a [[player]] or tamed [[wolf]].
+* These are the drops for the camel husk. Any passengers need to die separately, and drop items separately, like other [[jockey]]s.
+
+== Behavior ==
+{{Infobox entity
+| title = Camel Husk Jockey
+| image = Camel Husk Jockey.png
+| health = '''Husk:'''&nbsp;{{hp|20}}<br>  '''Parched:'''&nbsp;{{hp|16}}<br> '''Camel Husk:'''&nbsp;{{hp|32|mob=1}}
+| behavior = Hostile
+| equipment = '''Husk:'''{{drop|Item|Iron Spear}} (may be enchanted)<br>{{drop|Item|id=chestplate|Armor|text=Armor}} (occasionally, may be enchanted)<br>
+'''Parched:'''{{drop|Item|Bow}} (may be enchanted)<br>{{drop|Item|id=chestplate|Armor|text=Armor}} (occasionally, may be enchanted)
+}}
+
+Camel husks spawn as hostile mobs due to being ridden by hostile mobs, targeting the player as its pathfinding is controlled by the riders. However, they will become passive once the riders are killed, behaving similarly to regular camels, but cannot breed. They are under two other different categories, [[monster]] and [[undead]], rather than just [[animal]] for regular camels. {{IN|be}}, camel husks get up immediately once the player rides them with a [[saddle]] while sitting; {{in|je}}, they get up once the player moves {{ctrl|forwards}}.
+
+Camel husks can safely fall 6 blocks before they begin to accumulate [[Damage#Fall damage|fall damage]], unlike most mobs, which can safely fall 3 blocks. Camel husks also take half of the normal fall damage (rounded up) that most other mobs take ({{hp|0.5}} damage per block over the safe distance instead of {{hp|1}}). If an entity is riding a camel husk, they receive the same fall damage as the camel husk.
+
+Camel husks have a {{frac|1|900}} chance to regenerate {{hp|1}} health point each game tick.
+
+[[Rabbit's feet]] can be used to tempt and heal camel husks.
+
+{{IN|BE}}, camel husks don't panic when damaged.
+
+{{IN|Java}}, camel husks are never spawned as part of a [[zombie siege]], but if a camel husk jockey naturally spawns nearby, it will join the siege and behave like all other zombies.
+
+=== Mob type ===
+Being an [[undead]] mob, they are: 
+* Damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* Unaffected by the status effects [[Regeneration]] and [[Poison]].
+* Ignored by the [[wither]].
+* Affected by the [[Smite]] enchantment.
+* A threat to [[armadillo]]s, causing them to hide in their shell.
+
+Unlike most undead mobs, camel husks do not burn in sunlight.
+
+As they are also [[monsters]], camel husks count towards the hostile mob cap. However, once a player gets onto a camel husk for the first time, it stops counting towards any mob cap and will no longer despawn, similar to having a [[name tag]] applied.
+
+As they are considered monsters, [[parrot]]s can imitate them.
+
+=== Riding ===
+{{main|Riding}}
+Camel husks can be ridden as long as there are not already two riders. The riding behavior of camel husks is identical to regular camels.
+
+Camel husks have one slot in their inventory for equipping a [[saddle]]. A saddle can be placed on a camel husk by holding it and then {{control|using}} it on the camel, or by accessing its inventory. A camel husk's inventory can be accessed by mounting the camel husk and using {{control|inventory}} control, or by {{control|sneaking}} and then {{control|using}} or pressing the "open inventory" button{{only|bedrock}} on the camel husk.
+
+Once a camel husk is saddled, the player can control it with standard directional controls, {{control|jump}}, and the mouse. The player dismounts using the {{control|dismount}} control. A second player can then ride as a passenger. If the controlling passenger disembarks, then the second passenger takes control of the camel husk.
+
+Camel husks move at the same speed as regular camels. They gradually gain speed while moving in a straight line, up to a walking speed of 3.885 blocks/s, and can also manually [[sprint]] at a speed of 8.203 blocks/s by double tapping {{control|forward}} or by holding the {{control|sprint}} control while moving forward.
+
+{{anchor|Dashing|Dash}}Saddled camel husks also have the ability of "dashing". When the player rides them, the experience bar on the [[HUD]] is replaced by a dash charging bar, similar to the jump charging bar for horses. Dashing is done using the jump control, and holding the control charges for a longer dashing. Camel husks can dash every 2.75 seconds. When dashing, the camel husk launches up to 12 blocks forward and one block upward. For a short time after dashing, the camel husk cannot sprint.  
+
+{{-}}
+
+== Sounds ==
+Despite being monsters, camel husks use the "Friendly Mobs" sound category.<ref>{{bug|MC-304386||Undead mounts use the friendly mobs sound category, which is inconsistent|WAI}}</ref>
+
+{{JE}}:
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Camel Husk ambient1.ogg
+|sound2=Camel Husk ambient2.ogg
+|sound3=Camel Husk ambient3.ogg
+|sound4=Camel Husk ambient4.ogg
+|sound5=Camel Husk ambient5.ogg
+|sound6=Camel Husk ambient6.ogg
+|sound7=Camel Husk ambient7.ogg
+|sound8=Camel Husk ambient8.ogg
+|subtitle=Camel Husk grumphs
+|source=neutral
+|description=Randomly
+|id=entity.camel_husk.ambient
+|translationkey=subtitles.entity.camel_husk.ambient
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk hurt1.ogg
+|sound2=Camel Husk hurt2.ogg
+|sound3=Camel Husk hurt3.ogg
+|sound4=Camel Husk hurt4.ogg
+|subtitle=Camel Husk hurts
+|source=neutral
+|description=When a camel husk is damaged
+|id=entity.camel_husk.hurt
+|translationkey=subtitles.entity.camel_husk.hurt
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk death1.ogg
+|sound2=Camel Husk death2.ogg
+|subtitle=Camel Husk dies
+|source=neutral
+|description=When a camel husk dies
+|id=entity.camel_husk.death
+|translationkey=subtitles.entity.camel_husk.death
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk sit1.ogg
+|sound2=Camel Husk sit2.ogg
+|sound3=Camel Husk sit3.ogg
+|sound4=Camel Husk sit4.ogg
+|subtitle=Camel Husk sits down
+|source=neutral
+|description=When a camel husk sits
+|id=entity.entity.camel_husk.sit
+|translationkey=subtitles.entity.camel_husk.sit
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk stand1.ogg
+|sound2=Camel Husk stand2.ogg
+|sound3=Camel Husk stand3.ogg
+|sound4=Camel Husk stand4.ogg
+|sound5=Camel Husk stand5.ogg
+|subtitle=Camel Husk stands up
+|source=neutral
+|description=When a camel husk stands
+|id=entity.entity.camel_husk.stand
+|translationkey=subtitles.entity.camel_husk.stand
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk eat1.ogg
+|sound2=Camel Husk eat2.ogg
+|sound3=Camel Husk eat3.ogg
+|subtitle=Camel Husk eats
+|source=neutral
+|description=When a camel husk eats
+|id=entity.camel_husk.eat
+|translationkey=subtitles.entity.camel_husk.eat
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk dash1.ogg
+|sound2=Camel Husk dash2.ogg
+|sound3=Camel Husk dash3.ogg
+|sound4=Camel Husk dash4.ogg
+|sound5=Camel Husk dash5.ogg
+|sound6=Camel Husk dash6.ogg
+|subtitle=Camel Husk yeets
+|source=neutral
+|description=When a camel husk dashes
+|id=entity.camel_husk.dash
+|translationkey=subtitles.entity.camel_husk.dash
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk dash ready.ogg
+|subtitle=Camel Husk recovers
+|source=neutral
+|description=When a camel husk's dash ability resets
+|id=entity.camel_husk.dash_ready
+|translationkey=subtitles.entity.camel_husk.dash_ready
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Horse land.ogg
+|subtitle=Something fell
+|source=neutral
+|description=When a camel husk falls from more than 1 block
+|id=entity.horse.land
+|translationkey=subtitles.entity.generic.big_fall
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk step1.ogg
+|sound2=Camel Husk step2.ogg
+|sound3=Camel Husk step3.ogg
+|sound4=Camel Husk step4.ogg
+|sound5=Camel Husk step5.ogg
+|sound6=Camel Husk step6.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While a camel husk is walking
+|id=entity.camel_husk.step
+|translationkey=subtitles.block.generic.footsteps​
+|volume=0.3
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Camel Husk step sand1.ogg
+|sound2=Camel Husk step sand2.ogg
+|sound3=Camel Husk step sand3.ogg
+|sound4=Camel Husk step sand4.ogg
+|sound5=Camel Husk step sand5.ogg
+|sound6=Camel Husk step sand6.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While a camel is walking on sand, red sand, concrete powder, or suspicious sand<ref group=sound>Blocks in the {{cd|#camel_sand_step_sound_blocks}} tag.</ref>
+|id=entity.camel_husk.step_sand
+|translationkey=subtitles.block.generic.footsteps​
+|volume=0.3
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Saddle equip.ogg
+|subtitle=Saddle equips
+|source=neutral
+|description=When a saddle is equipped to a camel husk
+|id=entity.camel_husk.saddle
+|translationkey=subtitles.entity.camel_husk.saddle
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Saddle unequip.ogg
+|subtitle=Saddle snips away
+|source=neutral
+|description=When a saddle is removed from a camel husk using shears
+|id=item.saddle.unequip
+|translationkey=subtitles.item.saddle.unequip
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Camel Husk ambient1.ogg
+|sound2=Camel Husk ambient2.ogg
+|sound3=Camel Husk ambient3.ogg
+|sound4=Camel Husk ambient4.ogg
+|sound5=Camel Husk ambient5.ogg
+|sound6=Camel Husk ambient6.ogg
+|sound7=Camel Husk ambient7.ogg
+|sound8=Camel Husk ambient8.ogg
+|source=neutral
+|description=Randomly
+|id=mob.camel_husk.ambient
+|volume=0.90
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Camel Husk hurt1.ogg
+|sound2=Camel Husk hurt2.ogg
+|sound3=Camel Husk hurt3.ogg
+|sound4=Camel Husk hurt4.ogg
+|source=neutral
+|description=When a camel husk is damaged
+|id=mob.camel_husk.hurt
+|volume=1.0
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Camel Husk death1.ogg
+|sound2=Camel Husk death2.ogg
+|source=neutral
+|description=When a camel husk dies
+|id=mob.camel_husk.death
+|volume=1.0
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Camel Husk sit1.ogg
+|sound2=Camel Husk sit2.ogg
+|sound3=Camel Husk sit3.ogg
+|sound4=Camel Husk sit4.ogg
+|source=neutral
+|description=When a camel husk sits
+|id=mob.entity.camel_husk.sit
+|volume=0.60
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Camel Husk stand1.ogg
+|sound2=Camel Husk stand2.ogg
+|sound3=Camel Husk stand3.ogg
+|sound4=Camel Husk stand4.ogg
+|sound5=Camel Husk stand5.ogg
+|source=neutral
+|description=When a camel husk stands
+|id=mob.entity.camel_husk.stand
+|volume=0.60
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Camel Husk eat1.ogg
+|sound2=Camel Husk eat2.ogg
+|sound3=Camel Husk eat3.ogg
+|source=neutral
+|description=When a camel husk eats
+|id=mob.camel_husk.eat
+|volume=0.20
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Camel Husk dash1.ogg
+|sound2=Camel Husk dash2.ogg
+|sound3=Camel Husk dash3.ogg
+|sound4=Camel Husk dash4.ogg
+|sound5=Camel Husk dash5.ogg
+|sound6=Camel Husk dash6.ogg
+|source=neutral
+|description=When a camel husk dashes
+|id=mob.camel_husk.dash
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Camel Husk dash ready.ogg
+|source=neutral
+|description=When a camel husk's dash ability resets
+|id=mob.camel_husk.dash_ready
+|volume=0.250
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Horse land.ogg
+|source=neutral
+|description=When a camel husk falls from more than 1 block
+|id=mob.horse.land
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Camel Husk step1.ogg
+|sound2=Camel Husk step2.ogg
+|sound3=Camel Husk step3.ogg
+|sound4=Camel Husk step4.ogg
+|sound5=Camel Husk step5.ogg
+|sound6=Camel Husk step6.ogg
+|source=neutral
+|description=While a camel husk is walking
+|id=mob.camel_husk.step
+|volume=0.70
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Camel Husk step sand1.ogg
+|sound2=Camel Husk step sand2.ogg
+|sound3=Camel Husk step sand3.ogg
+|sound4=Camel Husk step sand4.ogg
+|sound5=Camel Husk step sand5.ogg
+|sound6=Camel Husk step sand6.ogg
+|source=neutral
+|description=While a camel is walking on sand, red sand, concrete powder, or suspicious sand
+|id=mob.camel_husk.step_sand
+|volume=0.60
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Saddle equip.ogg
+|source=neutral
+|description=When a saddle is equipped to a camel husk
+|id=mob.horse.leather
+|volume=1.0
+|pitch=0.80-1.20
+}}
+|{{SoundLine
+|sound=Saddle unequip.ogg
+|source=neutral
+|description=When a saddle is removed from a camel husk using shears
+|id=mob.unsaddle
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Camel Husk
+|spritetype=entity
+|nameid=camel_husk
+|showentitytags=y
+|entitytags=can_breathe_under_water, can_equip_saddle, ignores_poison_and_regen, inverted_healing_and_harm, sensitive_to_smite, undead, wither_friends, zombies
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Camel Husk
+|spritetype=entity
+|nameid=camel_husk
+|showentityfamily=y
+|entityfamily=camel_husk,mob,undead
+|id=152
+|foot=1
+}}
+
+=== Entity data ===
+{{info needed section|Is the breedable nbt inherit no longer a thing after 26.1, given that babies are removed?}}
+Camel husks have entity data associated with them that contain various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{#lst:Horse|horse base data}}
+** {{nbt|long|LastPoseTick}}: The tick when the camel husk started changing its pose.
+</div><section end="entity data" />
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.11|dev=25w44a|[[File:Camel Husk JE1 BE1.png|32px]] [[File:Camel Husk JE1 BE1.png|20px]] [[File:Camel Husk Jockey.png|32px]] Added adult and baby camel husks, along with camel husk jockeys.}}
+|{{HistoryLine|||dev=25w45a|The camel husk's [[rotten flesh]] drop is now affected by [[Looting]].|Now becomes [[persistent]] with any interaction from a player, not just riding them.}}
+|{{HistoryLine|||dev=25w46a|Camel husks no longer panic if controlled by other mobs.}}
+|{{HistoryLine|||dev=pre1|Camel husks can no longer be ridden underwater, making their riding functionality identical to normal [[camel]]s.}}
+|{{HistoryLine||26.1|dev=snap6|Baby camel husks have been partially removed: they now appear identical to adults, but still behave as babies (have a smaller hitbox, move faster, follow adults, do not drop anything, cannot be equipped or ridden, can have their age accelerated by 10 seconds with rabbit's feet).<ref>{{bug|MC-306195||Camel husks with the "Age" tag set below -24000 use their removed baby variant's hitbox size and animation speed|Fixed}}</ref>}}
+|{{HistoryLine|||dev=snap7|Baby camel husks have been completely removed on the server-side. Existing babies are automatically converted into adults. Modified servers can still send baby camel husks to vanilla clients, though the aforementioned issues persist.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.24|[[File:Camel Husk JE1 BE1.png|32px]] [[File:Camel Husk Jockey.png|32px]] Added camel husks, along with camel husk jockeys.}}
+|{{HistoryLine|||dev=Preview 1.21.130.27|A [[husk]] that spawns riding a camel husk now has a 50% chance of dropping a [[rabbit foot]].|Camel husks can no longer be [[leashed]] while being ridden by a [[hostile mob]] and can no longer enter a panicked state while it is being [[ridden]].}}
+|{{HistoryLine||26.0|dev=Preview 26.0.25|Camel husks no longer panic when hit.}}
+|{{HistoryLine|||dev=Preview 26.0.27|Camel husks are no longer damaged by the [[conduit]].
+|Camel husks no longer prevent the player from sleeping when nearby.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21|Camel husks now try to avoid water, dangerous blocks, and do not try to avoid rails.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Camel husks are referred to by Mojang as neutral mobs, due to their behavior as a hostile mob when ridden by husks and parched.<ref name="neutral">{{ytl|BL1oYVfNMNY|TWO NEW MOBS INCOMING! {{!}} MINECRAFT MONTHLY|Minecraft|October 28, 2025|t=247s}}</ref>
+
+== Gallery ==
+=== Animations ===
+<gallery>
+Camel Husk Idle JE1.gif|A camel husk idling
+Camel Husk Sitdown JE1.gif|A camel husk sitting
+Camel Husk Sitting.png|Camel husk sit
+Camel Husk Standup JE1.gif|A camel husk standing up
+Camel Husk Walk JE1.gif|A camel husk walking
+Camel Husk Dash JE1.gif|A camel husk dashing
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:Mounts of Mayhem Camel Husk B.jpg|Two jockeys riding a camel husk
+File:Mounts of Mayhem Camel Husk C.jpg|Ditto
+File:Mounts of Mayhem Narrative-Taming.jpg|[[Ari]] riding a camel husk
+File:Mounts of Mayhem Camel Husk in a sandstone cave.jpg|Camel husk in a sandstone cave
+File:Two camel husk patrols.jpg|Two sets of jockeys
+File:Efe and Sunny vs camel husk jockey.jpg|A jockey fighting against [[Efe]] and [[Sunny]]
+File:Camel husk jockey at sunset.jpg|A jockey at sunset
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Camel and camel husk.png|Comparison between a [[camel]] and a camel husk.
+Baby Camel Husk.png|An unused baby camel husk spawned with commands.(Before [[Tiny Takeover]])
+Sitting Camel Husk Jockey.jpg|A sitting camel husk jockey.
+Camel Husk in Desert VV.png|A camel husk in a desert with [[Vibrant Visuals]].
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Camel Husk (texture).png|Camel husk texture file
+Camel husk saddle (texture).png|Camel husk saddle texture file
+</gallery>
+
+===In other media===
+<gallery>
+Mounts of Mayhem Key Art.png|Two camel husks seen in the [[Mounts of Mayhem]] artwork.
+Mounts of Mayhem Date Announce Artwork.png|Artwork used for the release date reveal showing camel husks as enemies.
+Mounts of Mayhem player vs camel husk jockey artwork.jpg|Artwork of [[Sunny]] battling a camel husk jockey.
+</gallery>
+
+== See also ==
+* {{EntityLink|Camel}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Parched}}
+
+== References ==
+{{Reflist}}
+
+== Notes ==
+{{Notelist}}
+
+== Navigation ==
+{{Navbox desert}}
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Hostile mobs]]
+[[Category:Undead mobs]]
+[[Category:Monster mobs]]
+[[Category:Animal mobs]]
+[[Category:Transport]]
+
+[[de:Zombiedromedar]]
+[[es:Camello disecado]]
+[[fr:Dromadaire momifié]]
+[[ja:ラクダハスク]]
+[[ko:낙타 허스크]]
+[[lzh:枯橐駝]]
+[[pt:Camelo-Múmia]]
+[[ru:Верблюд-кадавр]]
+[[uk:Верблюд-висушень]]
+[[zh:骆驼尸壳]]

@@ -1,0 +1,191 @@
+{{Infobox item
+| title = Honey Bottle
+| image = Honey Bottle.png
+| consumptiontime = {{convert|40|ticks|seconds}}
+| hunger = 6
+| saturation = 1.2
+| saturationboost = <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|0.8}}<br/><abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 0.4 seconds
+| effects=Clears {{EffectLink|Poison}}
+| alwaysconsumable = Yes
+| renewable = Yes
+| stackable = Yes (16)
+}}
+A '''honey bottle''' is a consumable [[drink]] item obtainable by using a [[glass bottle]] on a full [[beehive]] or [[bee nest]]. Honey bottles remove [[Poison]] when drunk and can be used to craft [[honey block]]s and [[sugar]].
+
+== Obtaining ==
+{{See also|Tutorial:Honey farming}}
+
+=== Generated loot ===
+{{LootChestItem|honey-bottle}}
+
+=== Crafting ===
+{{Crafting
+|Glass Bottle
+|Glass Bottle
+|Honey Block
+|Glass Bottle 
+|Glass Bottle
+|Output=Honey Bottle, 4
+|type=Foodstuff
+}}
+
+=== Harvesting ===
+A honey bottle can be obtained by {{Control|using}} a [[glass bottle]] on either a [[beehive]] or [[bee nest]] with a honey level of 5. Doing this angers any [[bee]]s inside, causing them to attack the player, unless there is a [[campfire]] or another block on fire within 5 blocks below the nest or hive. Using normal fire would likely cause the nest, bees, and flowers around it to burn.
+
+A [[dispenser]] with glass bottles can be used to collect the honey without angering the bees. The honey bottle appears as an item in the dispenser's inventory. If the dispenser is full, the honey bottle is shot out.
+
+== Usage ==
+To drink a honey bottle, press and hold {{control|use}} while it is selected in the hotbar. Drinking one restores {{hunger|6}} [[hunger]] and 1.2 hunger [[Hunger#Mechanics|saturation]] and returns a [[glass bottle]]. Consuming the item also has the benefit of removing any [[Poison]] effect applied to the player. Unlike drinking [[milk]], other applied effects are not removed upon drinking a honey bottle.
+
+Honey bottles can be drunk even with a full hunger bar. Drinking a honey bottle takes 25% longer than eating other food - 2 seconds - and has a unique sound.
+
+=== Crafting ingredient ===
+{{Crafting usage}}
+
+== Sounds ==
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Drink honey1.ogg
+|sound2=Drink honey2.ogg
+|sound3=Drink honey3.ogg
+|sound4=Drink honey3.ogg
+|subtitle=Gulping
+|source=player
+|description=While a player is drinking a honey bottle
+|id=item.honey_bottle.drink
+|translationkey=subtitles.item.honey_bottle.drink
+|volume=0.5
+|pitch=''varies'' <ref group=sound>0.9-1.0 for <code>drink_honey1</code> and <code>drink_honey2</code>, 0.315-0.35 for <code>drink_honey3</code>, and 0.675-0.75 for the second copy of <code>drink_honey3</code></ref>
+|distance=16}}
+| {{SoundLine
+|sound=Bottle fill water1.ogg
+|sound2=Bottle fill water2.ogg
+|sound3=Bottle fill water3.ogg
+|sound4=Bottle fill water4.ogg
+|subtitle=Bottle fills
+|source=block
+|description=When a bottle is filled with honey
+|id=item.bottle.fill
+|translationkey = subtitles.item.bottle.fill
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Drink honey1.ogg
+|sound2=Drink honey2.ogg
+|sound3=Drink honey3.ogg
+|sound4=Drink honey3.ogg<!--This is duplicated intentionally, see below-->
+|source=player
+|description=While a player is drinking a honey bottle
+|id=random.drink_honey
+|volume=''varies''<ref group="sound" name="bevarieshoney">0.5 for <code>drink_honey1</code> and <code>drink_honey2</code>, but <code>drink_honey3</code> is 0.175 or 0.375</ref>
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|source=block
+|description=When a bottle is filled with honey<wbr><ref group=sound>{{Bug|MCPE-53881}}</ref>
+|id=bucket.fill_water
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Honey Bottle
+|spritetype=item
+|nameid=honey_bottle
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Honey Bottle
+|spritetype=item
+|nameid=honey_bottle
+|id=592
+|form=item
+|foot=1}}
+
+== Achievements ==
+{{Load achievements|Bee Our Guest}}
+
+== Advancements ==
+{{Load advancements|Husbandry;A Balanced Diet;Bee Our Guest}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.15|dev=19w34a|[[File:Honey Bottle JE1.png|32px]] Added honey bottles.}}
+|{{HistoryLine|||dev=19w35a|Honey bottles now remove the [[Poison]] effect when consumed.
+|Honey bottles are now included in the "A Balanced Diet" [[advancement]].}}
+|{{HistoryLine|||dev=19w36a|Honey bottles are now less filling, restoring 1.2 [[Hunger#Mechanics|saturation]] instead of 9.6.}}
+|{{HistoryLine|||dev=19w41a|Honey bottles can now be used to craft [[honey block]]s.}}
+|{{HistoryLine|||dev=19w44a|Honey bottles can now be [[craft]]ed with four [[glass bottle]]s and one [[honey block]].
+|Honey bottles are now stackable to 16.}}
+|{{HistoryLine|||dev=19w46a|Using [[glass bottle]]s to collect honey now unlocks the [[Bee Our Guest]] advancement.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w11a|Honey bottles can now be obtained from [[vault]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[File:Honey Bottle BE1.png|32px]] Added honey bottles.}}
+|{{HistoryLine|||dev=beta 1.14.0.4|[[File:Honey Bottle BE2.png|32px]] The texture of honey bottles has been changed to match {{el|je}}'s.
+|Honey bottles can now be crafted with four [[glass bottle]]s and one [[honey block]].
+|Honey bottles are now stackable to 16.}}
+|{{HistoryLine|||dev={{tooltip|release|Changes between the last pre-release and the full release}}|slink=none|Using [[glass bottle]]s to collect honey now unlocks the [[Bee our guest]] achievement.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.22|Honey bottles can now be obtained from [[vault]]s.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Honey bottles are the only drinkable items that can restore hunger.
+
+== External links ==
+*{{Mcnet|taking-inventory--honey-bottle|Taking Inventory: Honey Bottle|July 16, 2020|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox items|utilities}}
+
+[[Category:Drinks]]
+[[Category:Food]]
+
+[[cs:Lahvička medu]]
+[[de:Honigflasche]]
+[[es:Frasco con miel]]
+[[fr:Fiole de miel]]
+[[it:Ampolla di miele]]
+[[ja:ハチミツ入りの瓶]]
+[[ko:꿀이 든 병]]
+[[lzh:蜜甁]]
+[[pl:Butelka miodu]]
+[[pt:Frasco de Mel]]
+[[ru:Бутылочка мёда]]
+[[th:ขวดน้ำผึ้ง]]
+[[uk:Пляшка меду]]
+[[zh:蜂蜜瓶]]

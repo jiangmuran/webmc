@@ -1,0 +1,90 @@
+{{About|the bar|the map|Locator map|the game rule|Game rule#locator_bar}}
+[[File:Survival Locator Bar.png|thumb|class=pixel-image|Locator bar in [[Survival]] mode, showing orange and blue waypoints.]]
+The '''locator bar''' is a UI element on the player's [[HUD]] which shows the [[position]] of other [[player]]s in [[multiplayer]].
+
+== Usage ==
+The locator bar shows the position of other players in [[multiplayer]] as colored indicators, known as '''waypoints'''. It takes the place of the [[experience]] bar on the player [[HUD]], except when gaining or losing [[XP]], or the [[anvil]] or [[enchanting table]] GUI is opened, in which the locator bar will be hidden for 100 [[tick]]s (5 seconds) after the XP is updated, or the GUI is closed. It can be enabled or disabled by the {{gmr|locator_bar|locatorbar}} game rule, which is set to <code>true</code> by default.
+
+Each target is assigned a waypoint, and appears on the locator bar horizontally within 120 degrees of the camera's view. If the waypoint is above or below the player's camera [[Rotation|pitch angle]], a visual pointer appears on the indicator, showing the target's vertical direction from the camera's view. The [[color code|color]] of a waypoint is randomly assigned to the player when they join a multiplayer game, or an entity when tracked in the locator bar; {{in|java}}, it may also be assigned by their [[team]] color, or using the {{cmd|waypoint}} command.
+
+Players can prevent their positions from being shown in the locator bar by [[crouch|sneaking]], wearing a [[Head|mob head]] or [[carved pumpkin]], or being under the [[Invisibility]] effect. Additionally, players in [[Spectator]] mode are only visible to other spectators in the locator bar.
+
+The waypoint's icon changes based on the player's distance to its location. The further the player is from the waypoint, the smaller the icon visually shown on the locator bar. Several sprites of the icon can be observed based on the distance: [[File:Locator Bar icon default_0.png|class=pixel-image|16px]] square (0&ndash;179 blocks), [[File:Locator Bar icon default_1.png|class=pixel-image|16px]] circle (179&ndash;230 blocks), [[File:Locator Bar icon default_2.png|class=pixel-image|16px]] small square (230&ndash;281 blocks), and [[File:Locator Bar icon default_3.png|class=pixel-image|16px]] small circle (281+ blocks). {{IN|java}}, these sprites can be changed by setting the waypoint's style using the {{cmd|waypoint}} command; multiple [[waypoint style]]s can be defined in a [[resource pack]].
+
+{{IN|je}}, the waypoint's visibility range is controlled by the {{attr|waypoint_transmit_range}} and {{attr|waypoint_receive_range}} attributes; transmission range can be used for players and entities, while receive range applies only to players. A player with a receive range set to zero will not receive any waypoint information.<ref>{{snap|25w17a|April 22, 2025}}</ref> An entity which can transmit a waypoint is called a ''waypoint transmitter''; only [[living entities]], which are [[armor stand]]s, [[mob]]s, and [[player]]s, can transmit waypoints.<ref>The implementation is from {{jcp|net.minecraft.world.waypoints.WaypointTransmitter}} interface in the game's source code. Additionally, {{jcp|net.minecraft.world.entity.LivingEntity}} implements this interface. ([[Obfuscation map|Mojang mapping]])</ref>
+
+Entities' waypoints are tracked by the game when their transmission range is set to greater than zero. They can also be tracked when setting their waypoints' color using {{cmd|waypoint}} command, but they don't appear on the locator bar, removed when the entity is despawned by the game, or when the player exits the world. {{IN|be}}, only players are tracked in multiplayer mode, other entities are not tracked by the game.
+
+== NBT format ==
+{{exclusive|java|section=1}}
+
+The following [[NBT]] data are stored on [[entity data|living entities' data]] about the waypoint's icon visual information:
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+<!-- See also [[Chunk_format/Mob]] -->** {{nbt|compound|locator_bar_icon}}: The waypoint's icon visual data in the locator bar.
+*** {{nbt|int|color}}: The waypoint's color stored as 32-bit signed integer using {{w|two's complement}}, assuming the color is fully opaque.<ref>{{jcp|net.minecraft.world.waypoints.Waypoint#Icon}} static class sets color from {{jcp|net.minecraft.ChatFormatting}} enum. (Mojang mapping)</ref>
+*** {{nbt|string|style}}: The waypoint's style name from {{cd|[[waypoint_style]]}} directory in a [[resource pack]].
+</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.6|dev=25w15a|exp=Locator Bar|Added the locator bar behind its own experimental data pack.}}
+|{{HistoryLine||1.21.6|dev=25w17a
+ |The locator bar is now available without its experimental data pack.
+ |Added [[waypoint style]] for customizing waypoints' icon in [[resource pack]]s.
+ |Removed waypoint fade effects.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.20|exp=Locator Bar|Added the locator bar behind its own experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.80.21|Player dots on the locator bar now show correctly regardless of [[simulation distance]].}} 
+|{{HistoryLine|||dev=Preview 1.21.80.22|Dots are now shown representing players in spectator mode to other players also in spectator mode on the locator bar.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.23|The locator bar is now available without its experimental toggle.}}
+}}
+
+== See also ==
+*[[Banner marker]]s can be used for marking locations on a [[map]] using a placed-down [[banner]].
+
+== Issues ==
+{{issue list|Locator Bar|Waypoint}}
+
+== Trivia ==
+* There exists a secret waypoint icon [[File:Locator Bar icon bowtie.png|class=pixel-image|16px]] {{cd|bowtie.png}} in the game's texture files. It can be enabled by using [[command]] {{cmd|waypoint modify <target> style set bowtie}}.
+* The "Locator Bar" [[experimental]] toggle on ''Java Edition'' is the shortest-lived experimental toggle in any ''Minecraft'' version, being removed just 14 days after it was added, existing only in snapshot versions and never released.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:SummerDrop LocatorBar A.jpeg|Three players appear as colored icons on the locator bar.
+File:SummerDrop LocatorBar B.jpeg|[[Player]]s in a [[Cherry Grove|cherry grove]] appearing on the locator bar.
+File:SummerDrop LocatorBar C.jpeg|[[Sunny]] avoids being seen on the locator bar.
+File:SummerDrop LocatorBar 1.jpeg|The locator bar correlating with a [[Locator map|map's player markers]].
+File:Player Locator bar.jpeg|Locator bar in Creative mode with three players, [[Efe]], [[Sunny]], and [[Zuri]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox experiments}}
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[de:Ortungsleiste]]
+[[es:Barra localizadora]]
+[[fr:Barre de localisation]]
+[[it:Barra localizzatrice]]
+[[ja:方向バー]]
+[[lzh:尋蹤欄]]
+[[pl:Pasek nawigacyjny]]
+[[pt:Barra Localizadora]]
+[[ru:Локатор игроков]]
+[[uk:Панель локатора]]
+[[zh:定位栏]]

@@ -1,0 +1,167 @@
+{{for|other uses|Torch (disambiguation)}}
+{{Infobox block
+| image = Copper Torch.gif
+| invimage = Copper Torch
+| transparent = Yes
+| light = Yes (14)
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''copper torch''' is a non-solid block that emits light. Copper torches can also be used to craft [[copper lantern]]s.
+
+== Obtaining ==
+=== Breaking ===
+Copper torches can be [[instant mining|broken instantly]] using anything, and drop themselves as an item.
+{{breaking row|Copper Torch|horizontal=1}}
+A copper torch is removed and drops itself as an item if:
+*Its attachment block is moved, removed, or destroyed
+*[[Water]] or [[lava]] flows into its space
+*A [[piston]] pushes it or moves a block into its space
+
+=== Crafting ===
+{{Crafting
+|B1= Copper Nugget
+|B2= Coal; Charcoal
+|B3= Stick
+|Output= Copper Torch, 4
+|type= Decoration block
+|foot=1}}
+
+== Usage ==
+Copper torches can be placed on the top or the sides of most solid blocks, although some blocks require {{control|sneaking}}. Being non-solid, copper torches have no collision box. More information about placement can be found at [[Opacity/Placement]].
+
+Gravity-affected blocks like [[sand]] and [[gravel]] do not start falling if the space immediately beneath is occupied by a copper torch. Falling blocks break if they fall onto a solid block with a copper torch above it. If there is an [[air]] block under the copper torch, the falling blocks fall through the copper torch onto the surface below.<ref>{{bug|MC-3262|||WAI}}</ref>
+
+Copper torches do not [[oxidize]]. The copper is being used as part of the torch's fuel and not the base.
+
+=== Light ===
+Copper torches give off a light level of 14. Copper torches also melt [[snow layer]]s within 2 blocks and [[ice]] within 3 blocks ([[taxicab distance]]).
+
+When the [[Render Dragon Features for Creators]] experiment is enabled in ''[[Minecraft Preview]]'', the top part of copper torches emits colored [[Vibrant Visuals#Point lighting|point lighting]] with {{Color|#86ca59}}. This causes the bottom part of the copper torch to render a small square shadow.
+
+=== Crafting ingredient ===
+{{crafting usage|Copper Torch}}
+
+== Sounds ==
+{{Sound table/Block/Wood}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Torch
+|spritetype=block
+|nameid=copper_torch
+|blocktags=wall_post_override}}
+{{ID table
+|displayname=Copper Wall Torch
+|spritetype=block
+|nameid=copper_wall_torch
+|form=block
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Torch
+|spritetype=block
+|nameid=copper_torch
+|id=-1082
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>
+{{el|je}}:<br>
+Wall
+{{bst|facing|north|east,north,south,west|The direction the top of the copper torch is facing.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|torch_facing_direction|west
+|west,east,north,south,top|The face of the block that the torch is attached to. If the torch is a wall torch, the top of the torch faces opposite to this direction.<ref>{{bug|MCPE-152036}}</ref>|1,2,3,4,5
+|unknown|Unused|0|foot=1}}<section end="block states"/>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.9|dev=25w32a|[[File:Copper Torch JE1.png|32px]] [[File:Copper Wall Torch (N) JE1.png|32px]] [[File:Copper Wall Torch (E) JE1.png|32px]] [[File:Copper Wall Torch (S) JE1.png|32px]] [[File:Copper Wall Torch (W) JE1.png|32px]] [[File:Invicon Copper Torch JE1 BE1.png|32px]] Added copper torches.}}
+|{{HistoryLine|||dev=25w36a|[[File:Copper Torch JE2.png|32px]] [[File:Copper Wall Torch (N) JE2.png|32px]] [[File:Copper Wall Torch (E) JE2.png|32px]] [[File:Copper Wall Torch (S) JE2.png|32px]] [[File:Copper Wall Torch (W) JE2.png|32px]] [[File:Invicon Copper Torch JE2 BE2.png|32px]] The texture of the copper torch has been changed to make them more discernible to color blind players.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.23|[[File:Copper Torch JE1 BE1.png|32px]] [[File:Copper Wall Torch (N) BE1.png|32px]] [[File:Copper Wall Torch (E) BE1.png|32px]] [[File:Copper Wall Torch (S) BE1.png|32px]] [[File:Copper Wall Torch (W) BE1.png|32px]] [[File:Invicon Copper Torch JE1 BE1.png|32px]] Added copper torches.|The crafting recipe originally produced 1 copper torch.
+{{pipe escape|{| class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+|-
+|{{Crafting Table
+|B1= Copper Nugget
+|B2= Coal; Charcoal
+|B3= Stick
+|Output = Copper Torch
+|ignoreusage=1}}
+|}}}
+}}
+|{{HistoryLine|||dev=Preview 1.21.110.24|The crafting recipe has been changed to produce 4 copper torches instead of 1.
+{{pipe escape|{| class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+|-
+|{{Crafting Table
+|B1= Copper Nugget
+|B2= Coal; Charcoal
+|B3= Stick
+|Output = Copper Torch, 4
+|ignoreusage=1}}
+|}}}
+}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.21|[[File:Copper Torch JE2 BE2.png|32px]] [[File:Copper Wall Torch (N) BE2.png|32px]] [[File:Copper Wall Torch (E) BE2.png|32px]] [[File:Copper Wall Torch (S) BE2.png|32px]] [[File:Copper Wall Torch (W) BE2.png|32px]] [[File:Invicon Copper Torch JE2 BE2.png|32px]] The texture of the copper torch has been changed to make them more discernible to color blind players.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* In real life, green fire can be produced by introducing copper(II) salts such as {{w|copper(II) sulfate}} and {{w|copper(II) chloride}} into a flame, in a process called {{w|flame test}}.
+** Copper in its metal form does not reliably work for this purpose, as the flame color is produced by metal ions.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:Four types of torches.jpeg|Four torch variants, including the copper torch.
+File:Copper torch in lush buffet.jpeg|A copper torch in an exposed [[lush cave]].
+File:Sunny strip mines.jpeg|[[Sunny]] lining stripmines with copper torches
+File:Wall of copper torches.jpg|A wall of copper torches
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox blocks|ornamental}}
+
+[[Category:Light sources]]
+
+[[de:Kupferfackel]]
+[[fr:Torche de cuivre]]
+[[ja:銅の松明]]
+[[ko:구리 횃불]]
+[[lzh:銅炬]]
+[[pt:Tocha de Cobre]]
+[[ru:Медный факел]]
+[[uk:Мідний смолоскип]]
+[[zh:铜火把]]

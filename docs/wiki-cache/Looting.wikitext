@@ -1,0 +1,123 @@
+{{Dungeons hatnote|type=enchantment}}
+{{distinguish|Fortune}}
+{{Infobox enchantment
+| maxlevel = III
+| primaryitems = {{ItemSprite|Sword|link=Sword}}<br/>{{ItemSprite|Spear|link=Spear}}
+| secondaryitems = {{ItemSprite|Axe|link=Axe}}{{upcoming|java Combat Tests|nocat=1}}
+| weight = 2
+| id = looting
+}}
+'''Looting''' is an [[enchantment]] applied to [[sword]]s and [[spear]]s  that gives a chance to receive more item drops from certain mobs.
+
+== Obtaining ==
+Looting can be obtained from [[enchanting tables]], drops from mobs that have spawned in a [[raid]],{{only|bedrock}} books obtained by [[fishing]], [[monster room]] chests, librarian [[villager]]s, and non-village [[structure]] loot.
+
+== Usage ==
+Looting increases the maximum number of items for most [[Drops#Common drops|common drops]] by 1 per level. Looting also increases the chance of [[rare drops]] and [[Drops#Equipped items|equipment drops]] by 1 percentage point per level.
+
+Looting affects any kill that happens while holding the enchanted item in the ''main'' hand, not just any kill by the enchanted item.<ref>{{bug|MC-3304}}</ref> For example, a player can fire a projectile then switch to the enchanted item before the projectile reaches the target to get the Looting effect, hold the enchanted item while killing a mob with a ghast fireball, or fire a projectile from the off-hand{{only|java}} while holding the enchanted item in the main hand. This allows Looting to work on [[arrow]]s or thrown [[trident]]s, as long as the player is holding the Looting item when the arrow or trident lands.
+
+Looting applies to mobs killed with a [[sweep attack]].{{only|java}}
+
+Using [[commands]] to get higher levels than III works as expected, adding higher numbers with a weight of 1. A mob always drops its naturally-spawned equipment at Looting level 92.
+
+Looting has no effect on certain sources:
+* Kills by tamed [[wolves]] are not affected by this enchantment, even if the target is struck first.
+* Mobs with no drops, such as [[bat]]s, [[bee]]s, or [[endermite]]s, are not affected by this enchantment.
+* [[Wither]]s, [[iron golem]]s<ref name="MC-200707">{{bug|MC-200707}}</ref>, [[cat]]s<ref name="MC-200707"/> and [[snow golem]]s are not affected by this enchantment.
+* Looting does not increase the amount of fish dropped by [[fish]] mobs.<ref>{{bug|MC-212795}}</ref>
+** [[Guardian]]s and elder guardians are not considered fish mobs, and Looting does cause them to drop more fish.
+* {{IN|java}}, Looting does not increase the drop of [[bamboo]] from [[panda]]s.<ref>{{bug|MC-160006}}</ref>
+* It does not affect the amount of [[wool]] dropped by [[sheep]].
+* It does not affect [[sponge]]s or [[tide armor trim]]s dropped by [[elder guardian]]s.
+* It does not affect [[totems of undying]] dropped by [[evoker]]s.
+* It does not affect the amount of [[skull]]s dropped by [[wither skeleton]]s, but does increase the chance for them to drop one.
+* It does not affect the amount of [[sculk catalyst]]s dropped by [[warden]]s.
+* Mobs killed by fire damage from the [[Fire Aspect]] enchantment will not apply Looting to the resulting drops.
+
+=== Specific cases ===
+If Looting is applied to a [[bow]] by use of [[command]]s or an [[anvil]] in Creative, the enchantment applies to mobs killed by the weapon's [[arrow]]s. If Looting is applied to a [[crossbow]] by use of [[command]]s or an [[anvil]] in Creative, the enchantment applies to mobs killed by the weapon's arrows but not its [[firework rocket]]s. If Looting is applied to a [[trident]] by use of [[command]]s or an [[anvil]] in Creative, the enchantment applies to mobs killed by the weapon melee attack, but not its ranged attack.
+
+== Data values ==
+
+=== ID ===
+
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=looting
+|displayname=Looting
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=looting
+|displayname=Looting
+|id=14
+|translationkey=enchantment.lootBonus
+|foot=1}}
+
+== History ==
+{{info needed section|Mob drops affected by Looting}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Added Looting, which can be applied to [[sword]]s.}}
+|{{HistoryLine||1.8|dev=14w04a|Looting now gives a 1 percentage point increase per level to the chance of getting rare [[drops]].}}
+|{{HistoryLine||1.11.1|dev=release|Looting can no longer be combined with [[Silk Touch]] at all.<ref>{{bug|MC-116643}}</ref> Previously it could be combined if the item with Silk Touch was put into the second slot.}}
+|{{HistoryLine||1.21|dev=24w18a|Looting is now compatible with [[Silk Touch]].}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added [[spear]]s, which Looting can be applied to.}}
+|{{HistoryLine|||dev=pre1|The [[nautilus shell]] drop of [[nautilus]]es is now affected by Looting.}}
+|{{HistoryLine|||dev=pre4|The [[rotten flesh]] drop of [[zombie nautilus]]es is now affected by Looting.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added Looting.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.130|dev=?|Added spears, which can be enchanted with Looting.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|ps4=1.00|psvita=1.00|wiiu=Patch 1|switch=1.0.1|Added Looting.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Added Looting.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||4|Looting can now be applied to [[axe]]s.|Looting can be received by axes directly through the [[enchanting table]], rather than requiring an [[anvil]].}}
+|{{HistoryLine||7c|Looting now requires an [[anvil]] to be applied to axes.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee}}
+
+[[de:Plünderung]]
+[[es:Botín]]
+[[fr:Butin (enchantement)]]
+[[ja:ドロップ増加]]
+[[pt:Saque]]
+[[th:ฉกชิง]]
+[[zh:抢夺]]

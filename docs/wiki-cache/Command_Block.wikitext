@@ -1,0 +1,459 @@
+{{For||Command (disambiguation)}}
+{{Infobox block
+|image=
+|invimage = Command Block
+|invimage2 = Chain Command Block
+|invimage3 = Repeating Command Block
+|transparent = No
+|light=No
+|tool=None
+|renewable = No
+|stackable = Yes (64)
+|flammable = No
+|lavasusceptible = No
+|rarity =
+* Epic {{only|java|short=1}}
+* Common {{only|bedrock|short=1}}
+|group = Impulse
+|group2 = Chain
+|group3 = Repeat
+|1-1 = Impulse Command Block.gif
+|1-2 = Conditional Impulse Command Block.gif
+|2-1 = Chain Command Block.gif
+|2-2 = Conditional Chain Command Block.gif
+|3-1 = Repeating Command Block.gif
+|3-2 = Conditional Repeating Command Block.gif
+|*-1caption = '''Unconditional'''
+|*-2caption = '''Conditional'''
+| mapcolor = 
+* {{TooltipSprite||Command Block}} {{Map color|Command Block}}
+* {{TooltipSprite||Chain Command Block}} {{Map color|Chain Command Block}}
+* {{TooltipSprite||Repeating Command Block}} {{Map color|Repeating Command Block}}
+}}
+A '''command block''' is an [[indestructible]] [[block]] that can execute [[commands]]. Because it cannot be obtained, destroyed or used in [[Survival]] mode without cheats, it is primarily used in multiplayer servers, [[Creative]] worlds, and custom maps. There are 3 types of these blocks.
+
+An '''impulse command block''' is the default block type; it executes only once when activated.
+
+A '''chain command block''' executes every time when [[#Trigger and chaining|triggered]].
+
+A '''repeating command block''' executes every game [[tick]] as long as it is activated.
+
+== Obtaining ==
+{{IN|Java}}, command blocks are available in the [[Creative inventory]] under the "Operator Utilities" tab, if the "Operator Items Tab" setting in the [[Options#Controls|"Controls" Options tab]] is set to "ON". Across both ''Java'' and ''Bedrock'' editions, they can either be obtained by using various [[commands]], such as {{cmd|give @s minecraft:command_block}} or {{cmd|setblock ~ ~ ~ command_block}}, or by pressing the {{control|pick block}} [[control]] on an existing command block.
+Just like other blocks that can store [[NBT]] data, using {{control|pick block}} + {{key|CTRL}} copies the command and options inside the command block. This allows it to be placed elsewhere without having to re-enter the data inside.
+
+Command blocks are not flammable, and have the same [[blast resistance]] as [[bedrock]]. Command blocks, [[structure block]]s, and [[jigsaw block]]s cannot be mined in [[Survival]].
+
+== Usage ==
+{{see also|Commands|Tutorials/Command blocks and functions}}
+
+A command block can execute commands when [[#Activation|activated]] by [[Redstone circuit|redstone power]]. It always has permissions of level 2{{only|java}}/level 1{{only|bedrock}}, so it can be used to allow a specific use of a command by players who can't use that command in general (for example, allowing anyone to obtain a specific item with {{cmd|give}} without allowing everyone to /give themselves whatever they want).
+
+A command block has an orientation that determines the chain command block to activate, and the blocks to be checked to see if a command block in "Conditional" mode executes.
+
+To execute the command, {{In|java}} the [[game rule]] <code>command_blocks_work</code> must be set to <code>true</code>; {{In|bedrock}} "Command Blocks Enabled" in [[world options]] must be enabled.
+
+Command blocks can only be placed or broken by an [[operator]] player in [[Creative mode]].
+
+=== Modification ===
+[[File:Command Block GUI.png|thumb|''Java Edition'' command block GUI|alt=]]
+
+To enter command or modify the command block, use the {{control|Use Item}} [[control]] on the command block to open the '''command block GUI''' (graphical user interface). The GUI opens only if the player is in [[Creative]] mode, and has the proper permissions. That means, in [[singleplayer]], "Allow Cheats"{{only|java|short=1}} or "Activate Cheats"{{only|bedrock|short=1}} in [[world options]] must be enabled. In [[multiplayer]], GUI can be opened only by [[operator]]s in Creative mode, and {{In|java}} <code>op-permission-level</code> in the [[server.properties]] file must be set to <code>2</code> or above (default is 4).
+
+{{IN|java}} to enter command or modify the command block, <code>enable-command-block</code> in the [[server.properties]] file must be set to <code>true</code> (default is <code>false</code>).
+[[File:Bedrock Command Block GUI.png|thumb|''Bedrock Edition'' command block GUI]]
+{{IN|java}}, opening the GUI in [[singleplayer]] pauses the game.
+
+;Console Command{{only|java|short=1}}/Command Input{{only|bedrock|short=1}}
+
+:Commands can be entered in the top text pane. The text limit for commands in a command block is 32,500<!-- The input limit is 32500, even if the TagString limit is 32767 --> characters, but the text pane can show only a small portion of this amount at a time.
+
+:Commands in a command block do ''not'' need to be prefixed with the forward-slash (<code>/</code>) as they do in the chat window, but doing so still works.
+
+:Press {{key|tab}} to complete words or cycle through options.
+
+:{{IN|bedrock}}, below the console command text pane are some reminder tips about how to use [[target selectors]]. 
+
+;Previous Output
+
+:The bottom text pane displays the output message (success or failure) of the last executed command (it is blank{{only|java|short=1}} or "<code> - </code>"{{only|bedrock|short=1}} initially). Its text is not editable.
+
+:A button to the right of the Previous Output text pane{{only|java|short=1}} or the left of the "Previous Output"{{only|bedrock|short=1}} specifies whether the last output should be stored and displayed. It is <code>O</code>{{only|java|short=1}}/enabled{{only|bedrock|short=1}} when the output text should be stored and <code>X</code>{{only|java|short=1}}/disabled{{only|bedrock|short=1}} when the output text should not be stored. For worlds with many command blocks, especially command blocks running on fast clocks, not storing the output text can reduce memory and storage requirements.
+
+:If gamerule <code>sendCommandFeedback</code> is true (the default), default to <code>O</code>{{only|java|short=1}}/enabled{{only|bedrock|short=1}}. Otherwise defaults to <code>X</code>{{only|java|short=1}}/disabled{{only|bedrock|short=1}}.
+
+;Block Type
+[[File:Command block textures.png|thumb|''Left:'' "Impulse" block type.<br>''Middle:'' "Chain" block type.<br>''Right:'' "Repeating" block type.<br>''Top:'' "Unconditional" mode.<br>''Bottom:'' "Conditional" mode.]]
+
+:Click the "Impulse/Chain/Repeat" button{{only|java|short=1}}/"Block Type:" dropdown menu{{only|bedrock|short=1}} to change the command block's type. The default state is "Impulse", but non-default command blocks can be obtained and placed. The command block also changes color when changing its command block type:
+
+:* "Impulse" command blocks are orange. They execute once every time they are [[#Activation|activated]].
+:* "Chain" command blocks are cyan. They execute once every time they are [[#Trigger and chaining|triggered]] if they have been activated.
+:* "Repeat" command blocks are purple. They execute their commands once every one game [[tick]] (or more{{only|bedrock|short=1}}) as long as they are activated.
+
+;Condition
+
+:Click the "Conditional/Unconditional" button{{only|java|short=1}}/"Condition:" dropdown menu{{only|bedrock|short=1}} to change the command block's conditional behavior:
+:* "Conditional": A command block in conditional mode executes its command only when the command block behind it has executed successfully ([[#Success count|"Success count"]] is greater than 0).
+:* "Unconditional" (default): A command block in unconditional mode executes its command even if there's a command block behind it that didn't execute its command successfully.
+:"Behind it" in the sense of opposite to the direction the command block is facing, regardless of chain direction or even if chaining is occurring.
+
+;Redstone
+
+:Click the "Always Active/Needs Redstone" button{{only|java|short=1}}/"Redstone:" dropdown menu{{only|bedrock|short=1}} to change the command block's activation requirements:
+:* "Needs Redstone" (the default for impulse and repeat command blocks): A command block in the "Needs Redstone" setting can be [[#Activation|activated]] only with redstone.
+:* "Always Active" (the default for chain command blocks): The command block is activated when set to "Always Active". Then it is always active even without redstone activation.
+
+;Execute on First Tick{{only|bedrock|short=1}}
+
+:Specifies whether a repeat command block executes its command as soon as it is [[#Activation|activated]]. If it's disabled, executes the first time after the delay from the time when it is activated.
+
+;Delay in Ticks{{only|bedrock|short=1}}
+
+:For impulse or chain command block, specifies how many game ticks it delays before executing a command after it is activated or triggered.
+:For repeat command block, specifies how many game ticks it delays to execute again.
+
+:Note that for impulse or repeat command block, 0 and 1 work the same; the game takes 0 as 1. However, For chain command block, 0 and 1 are different.
+
+;Hover Note{{only|bedrock|short=1}}
+
+:Specifies the name of the command block, which can be seen when you point to the block. It is also used for [[#Message|message commands]]. If the command block had been named in an anvil before placement, that name is used as well. If it is empty, defaults to <code>!</code>.
+
+;Done
+
+:{{IN|java}}, click the "Done" button or {{key|Enter}} to save the command and leave the command block GUI.
+:{{IN|bedrock}}, close the GUI to save the command and changes.
+
+;Cancel
+
+:Click the "Cancel" button or {{key|Esc}}{{only|java|short=1}}to leave the command block GUI without saving any changes.
+
+=== Activation ===
+Command blocks are [[Redstone components#Mechanism components|redstone mechanisms]] and can be activated by:
+* An adjacent active '''[[Redstone components#Power components|power component]]''': for example, a [[lever]], a [[block of redstone]], a [[daylight sensor]], a [[button]] etc.
+* An adjacent ''' powered block''' (for example, an opaque block with an active redstone torch under it)
+* A powered '''[[redstone comparator]]''' or '''[[redstone repeater]]''' facing the mechanism component
+* Powered '''[[redstone dust]]''' configured to point at the command block (or on top of it) or directionless; a command block is ''not'' activated by adjacent powered redstone dust that is configured to point away from it.
+
+A command block can also be activated by setting it to "Always Active" mode.
+
+When activated, a command block executes its command, depending on the command block's type:
+* An impulse command block executes its command once.
+* A chain command block does not execute its command until it is triggered.
+* A repeat command block executes its command once every one game tick (or more{{only|bedrock|short=1}}) until no longer activated.
+
+=== Execution ===
+An impulse command block, when it is activated, checks whether the command block behind it has executed successfully (if in conditional mode). After the delay of 1 game tick (or more{{only|bedrock|short=1}}), if the condition is met before the delay (if in "Conditional" mode), it executes its command once and triggers the chain command block it is pointing to.
+
+A repeat command block, when it is activated, after 1 game tick (always 1 no matter how many "Delay in Ticks" is), checks whether the command block behind it has executed successfully (if in conditional mode). If the condition is met, and if "Execute on First Tick" is enabled {{in|bedrock}}, it executes its command once and triggers the chain command block it is pointing to. If it is still activated, it then checks, executes, and triggers the chain command block again after 1 game tick (or more{{only|bedrock|short=1}}).
+
+When executing a command, it also updates its [[#Success count|success count]]: If in "Conditional" mode, if the command block behind it didn't execute successfully, it sets its success count to 0. Otherwise, it sets it to the success count of the command.
+
+Also:
+* When an impulse or repeat command block in "Needs Redstone" mode with a command is placed or is cloned by a command to a powered location, the new command block executes its command only if it hasn't been activated with redstone. {{IN|java}}, it also needs a block update to execute its command.
+* When an impulse or repeat command block in "Always Active" mode with a command is placed or is cloned by a command to a powered location, the new command block executes its command only if it hasn't been activated with redstone.
+* When an impulse or chain command block is set to "Repeat", if it has been activated, checks whether the command block behind it has executed successfully (if in conditional mode). After 1 game tick (always 1 no matter how many "Delay in Ticks" is), if the condition is met, it executes its command once and triggers the chain command block it is pointing to. Then it checks, executes, and triggers the chain command block again after 1 game tick (or more{{only|bedrock|short=1}}).
+
+==== Trigger and chaining ====
+If any command block having [[#Execution|executed its command]] (whether successfully or unsuccessfully) faces a chain command block, it triggers the chain command block to also attempt execution.
+
+When a chain command block is triggered,
+* If it has been activated,
+** It checks whether it is in "Conditional" mode and the command block behind it hasn't executed successfully (behind in the sense of the direction it is facing, not in the sense of which command block chained to it),
+*** If true, it triggers another chain command block it is facing, without executing the command.
+*** If false, it checks whether it has been already executed in this game tick. If false, it executes the command and triggers another chain command block it is facing. If true, it does nothing. That means that chained execution cannot be passed to a command block that has already executed in that game tick (loops execute only once).
+* If it has not been activated, it triggers the chain command block it is facing to attempt execution.
+
+Chained command blocks execute simultaneously in the same game tick in the order they are chained.
+
+{{IN|bedrock}}, it can also delay before executing commands if "Delay in Ticks" is not 0:
+:When it is triggered,
+:* If it has been activated, the chain command block checks whether the command block behind it has executed successfully (if in conditional mode), then it delays.
+:** After a delay, if the condition is met before the delay (if in "Conditional" mode), it executes its command once and triggers the chain command block it is pointing to no matter whether the condition met.
+:* If it has not been activated, it triggers (without delay) the chain command block it is facing to attempt execution.
+
+{{IN|java}}, it can execute multiple times in the same game tick if "UpdateLastExecution" is set to false. In this case, it does not check whether it has already executed in this game tick.
+
+If the chain command block has been activated when triggered, it also updates its [[#Success count|success count]]: If in "Conditional" mode, if the command block behind it didn't execute successfully, it sets its success count to 0. Otherwise, it sets it to the success count of the command.
+
+=== Output ===
+When activated, a command block can produce multiple types of output:
+
+==== Success count ====
+:A command block can power a redstone comparator facing away from it (possibly separated by a block) with signal strength specific to the success count. Success count is an integer between 0 to 2,147,483,647 (inclusive).
+
+:The signal strength always reflects the last command executed, even after the command block is deactivated.
+
+:{{IN|java}}, success count is usually 0 or 1, except for {{cmd|function}} and {{cmd|execute}}.
+
+:{{IN|bedrock}}, success count is an integer related to the command (e.g., the number of players affected by the command, the number of blocks that were altered, the value returned by the command, etc.)
+
+:{{IN|java}}, leaving the command block GUI by clicking "Done" or pressing {{key|Enter}} resets the success count to 0, regardless of whether changes were made in the GUI. {{IN|bedrock}}, leaving the GUI with changes resets the success count to 0.
+
+==== Message ====
+:The output message describes the success or failure of the executed command, and may be written to multiple destinations:
+
+:''Previous Output:'' The output message is always written to the "Previous Output" text pane of the command block GUI.
+
+:''Chat:'' The output message is written to the chat text in singleplayer mode, or broadcast to all other [[op]]s in multiplayer mode, unless it has been suppressed with {{cmd|gamerule commandBlockOutput false}}. Some commands may write additional text to the chat as their normal function, which won't be suppressed (for example, the {{cmd|say}} command writes a message to the chat of all players), separate from the output message. Chat messages that would usually be prefaced by a player's name (such as from the {{cmd|me}}, {{cmd|say}} and {{cmd|tell}} commands) use <code>@</code> {{Only|JE}} / <code>!</code> {{Only|BE}} as the player name. If the command block had been named in an [[anvil]] before placement, that name is used instead. {{IN|bedrock}}, it can also modified in the GUI.
+
+: ''Logs:'' The output message is written to multiplayer server logs unless it has been suppressed with {{cmd|gamerule logAdminCommands false}}.
+
+=== {{anchor|Unusable commands}} Notes ===
+Command blocks execute commands with OP level 2. The following commands cannot be used in a command block: {{cmd|ban}}, {{cmd|banlist}}, {{cmd|ban-ip}}, {{cmd|debug}}, {{cmd|deop}}, {{cmd|kick}}{{only|java|short=1}}, {{cmd|op}}, {{cmd|pardon}}, {{cmd|pardon-ip}}, {{cmd|publish}}, {{cmd|reload}}{{only|bedrock|short=1}}, {{cmd|save-all}}, {{cmd|save-off}}, {{cmd|save-on}}, {{cmd|stop}}, {{cmd|tick}}, and {{cmd|whitelist}} (i.e., {{cmd|debug}}, {{cmd|tick}}, {{cmd|publish}}, and all of the multiplayer-only commands except {{cmd|list}}).
+
+==== Easter eggs ====
+{{main|Easter eggs#Command blocks}} 
+
+Running "[[Easter eggs#Searge|Searge]]" (case insensitive) as the command in the command block without a preceding "<code>/</code>" will set the previous output to "#itzlipofutzli". Its success count is 1.
+
+=== Piston interactivity ===
+Command blocks cannot be pushed by [[piston]]s. They also cannot be pushed or pulled by [[sticky piston]]s.
+
+== Sounds ==
+{{Sound table/Block/Metal}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Command Block
+|spritetype=block
+|nameid=command_block
+|blocktags=dragon_immune, wither_immune}}
+{{ID table
+|displayname=Chain Command Block
+|spritetype=block
+|nameid=chain_command_block
+|blocktags=dragon_immune, wither_immune}}
+{{ID table
+|displayname=Repeating Command Block
+|spritetype=block
+|nameid=repeating_command_block
+|blocktags=dragon_immune, wither_immune
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=command-blocks
+|spritetype=block
+|nameid=command_block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Command Block
+|spritetype=block
+|nameid=command_block
+|id=137}}
+{{ID table
+|displayname=Chain Command Block
+|spritetype=block
+|nameid=chain_command_block
+|id=189}}
+{{ID table
+|displayname=Repeating Command Block
+|spritetype=block
+|nameid=repeating_command_block
+|id=188
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=command-blocks
+|spritetype=block
+|nameid=CommandBlock
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|conditional|false|false,true|True if the command block is in conditional mode.}}
+{{bst|facing|north|down,east,north,south,up,west|The direction the command block is pointing.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x8|conditional_bit|false|false,true|True if the command block is in conditional mode.|0,1}}
+{{bst|bits=0x1,0x2,0x4|facing_direction|0|0,1,2,3,4,5|The direction the command block is pointing.
+*0: facing down
+*1: facing up
+*2: facing north
+*3: facing south
+*4: facing west
+*5: facing east
+|foot=1}}
+
+=== Block data ===
+A command block has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable}}
+*** Replaces the usual '@' when using commands such as {{cmd|say}} and {{cmd|tell}}.
+** {{nbt|byte|auto}}: 1 or 0 (true/false) - Allows to activate the command without the requirement of a redstone signal.
+** {{nbt|string|Command}}: The command to issue to the server.
+** {{nbt|byte|conditionMet}}: 1 or 0 (true/false) - Indicates whether a conditional command block had its condition met when last activated. True if not a conditional command block.
+** {{nbt|long|LastExecution}}: stores the tick a chain command block was last executed in.
+** {{nbt|string|LastOutput}}: The last line of output generated by the command block. Still stored even if the [[game rule]] {{cd|commandBlockOutput}} is {{cd|false}}. Appears in the GUI of the block when right-clicked, and includes a timestamp of when the output was produced.
+** {{nbt|byte|powered}}: 1 or 0 (true/false) - States whether or not the command block is powered by redstone or not.
+** {{nbt|int|SuccessCount}}: Represents the strength of the analog signal output by redstone comparators attached to this command block.
+** {{nbt|byte|TrackOutput}}: 1 or 0 (true/false) - Determines whether the LastOutput is stored. Can be toggled in the GUI by clicking a button near the "Previous Output" textbox. Caption on the button indicates current state: "O" if true, "X" if false.
+** {{nbt|byte|UpdateLastExecution}}: 1 or 0 (true/false) - Defaults to true. If set to false, loops can be created where the same command block can run multiple times in one tick.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+{{See also|Commands#History}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||July 27, 2012|link={{tweet|jeb|228811183107493888}}|[[Jeb]] began tweeting of a new [[block]] he had created to start expanding [[Adventure]] mode. He began posting pictures, ideas and hints of what the block can do.}}
+|{{HistoryLine||July 31, 2012|link=http://www.reddit.com/r/Minecraft/comments/xfzdg/i_am_markus_persson_aka_notch_creator_of/c5m0a79|During [[Notch]]'s AMA on [[wikipedia:Reddit|Reddit]], he hinted the block may be in [[Java Edition 1.4]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w32a|[[File:Impulse Command Block JE1.png|32px]] Added command blocks.}}
+|{{HistoryLine|||dev=12w38a|Added the [[game rule]] {{cd|commandBlockOutput}}.}}
+|{{HistoryLine||1.5|dev=13w03a|Command block success can now power a [[redstone comparator]].}}
+|{{HistoryLine|||dev=13w04a|Command blocks renamed with an [[anvil]] now use their name instead of @ in the [[chat]].}}
+|{{HistoryLine|||dev=13w10a|Pressing {{Keys|Esc}} in a command block will exit its GUI.}}
+|{{HistoryLine||1.6.1|dev=13w19a|Command blocks are no longer [[breaking|mineable]] in [[Survival]].
+|Command blocks are no longer damaged by [[explosion]]s, except by blue [[Wither#Wither Skull|wither skull]]s.}}
+|{{HistoryLine||1.7.2|dev=13w37a|A bar that shows the previous output of command blocks has been added.
+|The character limit when inserting a [[command]] in a command block has been increased from 256 to 16,369. Using a third-party editor allows the [[player]] to reach 32,767 characters.}}
+|{{HistoryLine||1.8|dev=14w07a|[[Dispenser]]s now place command blocks, instead of shooting them out.}}
+|{{HistoryLine|||dev=14w20a|The in-game character limit of 16,369 has been removed, allowing access to the full 32,767 characters.}}
+|{{HistoryLine|||dev=14w27a|Added CommandStats NBT [[tag]] to command blocks.}}
+|{{HistoryLine||1.8.6|[[Dispenser]]s no longer place command blocks, due to security concerns.<ref>https://bugs.mojang.com/browse/MC-80671?focusedCommentId=228546&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-228546</ref>}}
+|{{HistoryLine||1.9|dev=15w33a|The character limit for command blocks is now 32,500 instead of 32,767.}}
+|{{HistoryLine|||dev=15w34a|[[File:Chain Command Block JE1.png|32px]] [[File:Repeating Command Block JE1.png|32px]] Added the chain command block and the repeating command block.
+|Added block facing for command blocks.
+|[[File:Impulse Command Block JE2.png|32px]] The texture of command blocks has been changed.}}
+|{{HistoryLine|||dev=15w34b|Added Conditional mode within command blocks.
+|Added tab completion support within command blocks.}}
+|{{HistoryLine|||dev=15w35a|[[File:Impulse Command Block JE3 BE1.png|32px]] [[File:Chain Command Block JE2 BE1.png|32px]] [[File:Repeating Command Block JE2 BE1.png|32px]] The textures of all three command blocks have been changed.
+|[[File:Conditional Impulse Command Block JE1 BE1.png|32px]] [[File:Conditional Chain Command Block JE1 BE1.png|32px]] [[File:Conditional Repeating Command Block JE1 BE1.png|32px]] When command blocks are set to conditional, the back of the arrow texture is now curved.
+|Added Always active and needs [[redstone]] options for command blocks.
+|Added <code>auto</code> NBT tag to control [[redstone]] options within command blocks.}}
+|{{HistoryLine|||dev=15w36a|[[Player]]s are now unable to use [[commands]], such as {{cmd|give}}, within command blocks.
+|Players, who are unable to use commands, can no longer place command blocks.}}
+|{{HistoryLine|||dev=15w36d|Each command block type now appears with different colors on [[map]]s.}}
+|{{HistoryLine|||dev=16w02a|Running {{cmd|help}} in a command block now randomly uses one of various different humorous phrases as the previous output.}}
+|{{HistoryLine|||dev=16w04a|Running "[[Searge]]" as the command in the command block without a preceding "<code>/</code>" now sets the previous output to "#itzlipofutzli".}}
+|{{HistoryLine||1.12|dev=17w16a|Chains of command blocks no longer schedule their [[commands]] to be run in the ''next'' [[tick]]. Instead, they now execute all in the same tick they are read. This allows later [[block]]s in a chain to be modified via earlier blocks, allowing techniques like branching and looping, all in the same tick.}}
+|{{HistoryLine|||dev=17w16b|Added the game rule {{cd|maxCommandChainLength}} to control the max length of a command block chain.}}
+|{{HistoryLine|||dev=17w17a|Added <code>UpdateLastExecution</code> and <code>LastExecution</code> NBT tags, which control the tracking of which tick a chain command block was last executed in.}}
+|{{HistoryLine|||dev=pre6|Tab-completing [[command]] names in command blocks no longer add a <code>/</code> prefix.}}
+|{{HistoryLine||1.13|dev=18w21a|The rarity of command blocks, chain command blocks and repeating command blocks has been changed from "Common" to "Epic".}}
+|{{HistoryLine|||dev=pre1|The [[player]] can now tab-complete in command blocks again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Impulse Command Block JE4.png|32px]] [[File:Chain Command Block JE3 BE2.png|32px]] [[File:Repeating Command Block JE3.png|32px]] The textures of command blocks have been changed.}}
+|{{HistoryLine|||dev=18w47b|[[File:Impulse Command Block JE5 BE2.png|32px]] [[File:Repeating Command Block JE4 BE2.png|32px]] The textures of impulse and repeating command blocks have been changed.}}
+|{{HistoryLine||1.19.3|dev=22w44a|Command blocks are now available in the creative inventory, but only if cheats are enabled.}}
+|{{HistoryLine|||dev=22w45a|Moved command blocks behind the Operator Utilities tab in the creative inventory. The tab is only available if cheats are enabled and the "Operator Items Tab" option in the controls menu is turned on.}}
+|{{HistoryLine||1.20.2|dev=23w31a|The text in command blocks now scrolls when selected using {{key|shift}} and arrow keys.<ref>{{bug|MC-140646|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.9|dev=25w35a|Added [[game rule]] <code>enableCommandBlocks</code>, which replaces <code>enable-command-block</code> in [[server.properties]].}}
+|{{HistoryLine|||dev=25w37a|Renamed game rule <code>enableCommandBlocks</code> to <code>commandBlocksEnabled</code>.}}
+|{{HistoryLine||1.21.11|dev=25w44a|Renamed game rule <code>commandBlocksEnabled</code> to <code>command_blocks_work</code>.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.5|dev=alpha 1.0.5.0|[[File:Impulse Command Block JE3 BE1.png|32px]] [[File:Chain Command Block JE2 BE1.png|32px]] [[File:Repeating Command Block JE2 BE1.png|32px]] Added all types of command blocks.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Command blocks now have a default name of <code>!</code> instead of <code>@</code>.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Impulse Command Block JE5 BE2.png|32px]] [[File:Chain Command Block JE3 BE2.png|32px]] [[File:Repeating Command Block JE4 BE2.png|32px]] The textures of command blocks have been changed.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|Tab-complete has been added to command blocks.
+|Added a delay option to command blocks, which allows a delay to be added to a [[redstone tick]] delay field.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|Command Block no longer drops itself when breaking.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Impulse Command Block JE1.png|32px]] Added command blocks.
+|Command blocks do not have any functionality and can be obtained only with mods.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|Added chain and repeating command blocks. These are completely unobtainable without inventory editing with an external editor, but can be modded into the game. They do not have any functionality.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[block entity]] ID has been changed from <code>Control</code> to <code>command_block</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], the numeral IDs for the command block, repeating command block, and chain command block were 137, 210, and 211, respectively.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+Command Block GUI (Bedrock Edition).png|The command block GUI {{in|be}} pre 1.12.0
+1.4.2 Dev Command Block.png|The first image released by [[jeb_]] of the command block.
+1.4.2 Dev Command Block 2.png|The second image released by jeb_ showing the block giving [[glass]] to the player.
+Command Block Recursion.gif|Command blocks creating more command blocks.
+Command Block Particles.png|A command block summoning block breaking particles.
+Command Block Cube.png|Command blocks in a terracotta cube.
+Command Block Texture Reveal.png|The new command block texture as revealed by [[Searge]] on twitter.
+Command Block Ultra High Resolution Screenshot.png|"Ultra high resolution" teaser image from Searge showing new command blocks.
+New Command Blocks.png|The back of each command block type in 12w32a. 
+New Command Blocks Screenshot.png|Each command block type placed in a wall.
+Too Many Eggs.png|A bunch of eggs being summoned with a command block.
+New Command Block Variants.png|Each of the command block types in each mode of operation.
+Searge Command Block.jpg|[[Michael Stoyke|Searge]] holding a command block in front of a command block.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Command Block IRL.jpg|A command block hooked up to real circuit boards
+File:MCSM Command Block.webp|A [[MCSM:Command Block|command block]] as it appears in [[Minecraft: Story Mode|''Minecraft: Story Mode'']]
+File:CommuniKate's command block.png|[[CommuniKate]] with a [[Command Block (Mini-Series)|command block]] 
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|block-week-command-block|Block of the Week: Command Block|April 27, 2018|[[Duncan Geere]]}}
+*{{Mcnet|exploring-commands|Exploring Minecraft Commands|September 11, 2021|[[Riley Manns]]}}
+*{{Mcnet|minecraft-commands|How to Use Commands in Minecraft|September 22, 2023|[[Duncan Geere]]}}
+*[https://help.minecraft.net/hc/en-us/articles/360058742632-What-are-Command-Blocks-in-Minecraft What are Command Blocks in Minecraft?] – [[Minecraft Help Center]]
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|creative}}
+
+[[Category:Mechanisms]]
+[[Category:Block entities]]
+[[Category:Creative or commands only blocks]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[cs:Příkazový blok]]
+[[de:Befehlsblock]]
+[[es:Bloque de comandos]]
+[[fr:Bloc de commande]]
+[[it:Blocco comandi]]
+[[ja:コマンドブロック]]
+[[ko:명령 블록]]
+[[nl:Opdrachtblok]]
+[[pl:Blok poleceń]]
+[[pt:Bloco de Comando]]
+[[ru:Командный блок]]
+[[th:บล็อกคำสั่ง]]
+[[uk:Командний блок]]
+[[zh:命令方块]]

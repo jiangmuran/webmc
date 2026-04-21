@@ -1,0 +1,155 @@
+{{About|the world generation bug|other uses|Distance effects|the main page|Far Lands|the world generation bug {{in|BE}}|Far Lands (Bedrock Edition)}}
+{{Wip}}
+
+The history of the '''Far Lands in ''Java Edition''''' can be split into three main sections:
+
+* [[Far Lands (Java Edition)/Up to Infdev 20100325-1640|Before Infdev 2010-03-25]]
+* [[Far Lands (Java Edition)/Infdev 20100327 to Beta 1.7.3|From Infdev 2010-03-27 to Beta 1.7.3]]
+* [[Far Lands (Java Edition)/After Beta 1.8|Beta 1.8 and onwards]]
+
+== Types of Far Lands ==
+=== Combination types ===
+A world with Far Lands can be divided into multiple parts depending on how many axes one given noise generator is overflowing on at a given time at that position. In the diagrams below, normal terrain where nothing is overflowing is marked in gray, one overflow in light blue, two overflows in magenta and three overflows in lime. This can be extended to an arbitrary whole number of dimensions, although there are currently no modifications that allow for 4D or above terrain generation.
+<gallery>
+2D world diagram.png|A 2D diagram of the world, for 2D noise maps or 2D slices of 3D noise.
+3D world diagram.png|A 3D diagram of the world, for 3D noise maps.
+</gallery>
+
+==== <span class="anchor" id="Edge"></span><span class="anchor" id="Loop"></span>Facial cuboid ====
+The most commonly depicted form, this is the result of an overflow on only one axis. It's known as the '''edge Far Lands''' or the '''loop'''. In this form, it generates long spongy-like holes on the walls of Far Lands.
+
+On a 2D plane, there are four different overflows possible, corresponding to the four edges of a rectangle. In 3D space, there are six different overflows possible, corresponding to the faces of a cuboid.
+
+<gallery>
+Combination type face.png
+2D edges diagram.png
+3D faces diagram.png
+</gallery>
+
+==== <span class="anchor" id="Corner"></span><span class="anchor" id="Stack"></span>Edge cuboid ====
+These are the result of an overflow on two axes. It's known as the '''corner Far Lands''' or the '''stack'''. In this form, layers of terrain stack on top of another repeatedly until it reaches the [[height limit]].
+
+On a 2D plane, four cases of this are possible, corresponding to the vertices of a rectangle. In 3D space, there are twelve such possible intersections, corresponding to the edges of a cuboid.
+
+<gallery>
+Combination type edge.png
+2D corners diagram.png
+3D edges diagram.png
+</gallery>
+
+==== <span class="anchor" id="Vertex"></span>Vertex cuboid ====
+A rarely encountered type, this is the result of an overflow on every axis. It's known as the '''vertex Far Lands''' or the '''abyss'''. This form seems to vary throughout worlds, and can only be encountered with three axes overflowing at once, which is effectively impossible in any version without mods. There are eight possible regions for this case, corresponding to the vertices of a cuboid.
+<gallery>
+Combination type vertex.png
+3D corners diagram.png
+</gallery>
+
+=== Noise generator overflows ===
+''Java Edition'' employs a variety of different [[noise generator]]s for shaping several aspects of terrain. These noise generators experiencing an integer overflow is what results in a set of "Far Lands".
+
+==== Low noise and high noise overflows ====
+"Low noise" and "high noise" are two extremely similar noise generators used for generating the fundamental shape of terrain itself. As a result, if either of these overflows, the fundamental shape of terrain sees drastic changes. The simultaneous overflowing of these is what results in the conventional Far Lands generating. The overflow of low and high noise happens at X/Z ±12,550,824 blocks away from the center.
+<gallery>
+Low and high noise overflow.png
+High noise overflow first.png|World generation set such that high noise overflows before low noise does. Note the clearly Far Lands terrain corresponding to the overflowed high noise, but also the presence of normal terrain within this overflowed region, corresponding to low noise, which is not overflowing.
+</gallery>
+
+Whether low noise or high noise is used for generating terrain at a given position is determined by a third noise generator, referred to as selector noise.
+<gallery>
+Low and high noise overflow after selector.png|Low and high noise overflowing after selector noise had. Note the more chaotic part in the middle, which directly corresponds to the closer grouping of overflowed stripes in pre-low/high overflowed terrain.
+High noise overflow after selector.png|High noise overflowing after selector noise has. Note the much more blocky appearance of the Far Lands, with clear, abrupt alternation between normal terrain and overflowed terrain.
+</gallery>
+
+==== Selector noise overflows ====
+Selector noise is a noise generator used to determine whether low noise or high noise is used to generate terrain at a given point. Once overflowed, where low and high noise are used becomes quite visually obvious, due to its now abrupt changes.
+<gallery>
+Selector noise overflow.png|Selector noise overflowing in otherwise normal terrain, with the normal terrain at the bottom. Note how the lower terrain uses low noise and the higher terrain uses high noise. After overflowing, the low terrain stays constant where low noise is selected, and the same can roughly be said for the higher area on the right.
+Selector noise overflow after low and high.png|Selector noise overflowing in the Corner Far Lands. Note how some of the stripes correspond to the higher areas in the Corner Far Lands, and the other stripes correspond directly to the lower areas.
+</gallery>
+
+==== Depth noise overflows ====
+Depth noise is responsible for minor variations in the terrain. Since depth noise overflows within the normal Far Lands, its effects are not visible. However, if depth noise is made to overflow before low and high noise, then the terrain jumps up a few blocks. This happens at X/Z ±42,949,672 blocks away from the center of the world. After the overflow, terrain is mostly normal. However, long rifts or ridges can be seen in the terrain. These can be seen by changing depth noise scales so it overflows closer, or changing low/high noise to overflow farther away.
+
+==== Scale noise overflows ====
+Scale noise overflows occur when procedural gerneration algorithms, commonly use for terrain like Minecraft's Perlin noise, exceed the maximun value allowed by their data type (e.g., 32-bit integer limit), resulting in chaotic, broken terrain generation. These overflows, often causing Far Lands-type glitches, appear around X/Z ±34,359,738,368 blocks.
+
+==== Biome fill noise overflows ====
+The depth of the surface block corresponding to each biome is determined by a noise generator known as biome fill noise. Biome fill noise increments by 0.0625 units each block, or 1 unit every chunk, and thus overflows at or around X/Z ±34,359,738,368. Overflowing is not visible without either extensive modding or manipulating the noise scale, as the overflow occurs well beyond the block render limit (±2,147,483,647) and coincides almost exactly with the chunk overwrite limit.
+
+The biome fill noise overflow generates long strips of stone, with grass in between. The stone layers generate only stone. On the grass strips, the dirt actually extends down all the bedrock floor. 
+
+In modern versions, simplex noise is used for the fill noise instead of Perlin noise; as a result, the overflow now causes the fill depth to stay constant rather than being variable.
+<gallery>
+Biome fill noise overflow.png
+</gallery>
+
+==== Sand/gravel noise overflows ====
+These noise generators existed before [[Beta 1.8]] and determined whether beaches used sand or gravel as their material. They overflow after ±68,719,476,736 blocks. After overflow, the terrain has stripes of sand/gravel that are clearly visible.
+
+==== Old heightmap noise overflows ====
+Used for terrain generation before [[Java Edition Infdev 20100327|inf-20100327]], it overflows at X/Z ±33,554,432. After overflow the entire terrain is made of stone, up to the height limit.
+
+==== Island carver noise overflows ====
+Used in Indev versions for the Floating world type. Due to the limited terrain size the noise breaks far beyond the world boundary.
+
+== History ==
+{| class="wikitable"
+! colspan="3" |[[Java Edition Infdev]]
+|-
+! colspan="2" rowspan="2" |[[Java Edition Infdev 20100227-1414|20100227-1414]]
+|All generation past ±33,554,432 blocks would be solid stone, extending vertically from the bottom of the world to the height limit, continuing out to the 32-bit limit.
+|-
+|These are the first truly visible appearance of the Far Lands, although very visually distinct from convention.
+|-
+! colspan="2" |[[Java Edition Infdev 20100313|20100313]]
+|A world boundary has been added at ±32,000,000 blocks. The Far Lands can no longer be seen without modifying the game.
+|-
+! colspan="2" |[[Java Edition Infdev 20100320|20100320]]
+|Reimplemented [[Ore (feature)|ores]], which can generate in the Far Lands.
+|-
+! colspan="2" |[[Java Edition Infdev 20100325-1545|20100325-1545]]
+|Reimplemented [[Cave|caves]], which can carve into the Far Lands.
+|-
+! colspan="2" rowspan="2" |[[Java Edition Infdev 20100327|20100327]]
+|The rewrite of world generation caused the Far Lands to take on a [[Far Lands (Java Edition)/Infdev 20100327 to Beta 1.7.3|more familiar form]].
+|-
+|First confirmed appearance of the true Far Lands.
+|-
+! colspan="2" |[[Java Edition Infdev 20100611|20100611]]
+|The shape of the Far Lands now more closely resembles what they do in Alpha/Beta, with a subtle vertical stretching.
+|-
+! colspan="3" |[[Java Edition Beta]]
+|-
+![[Java Edition Beta 1.6|1.6]]
+![[Java Edition Beta 1.6 Test Build 3|Test Build 3]]
+|The Far Lands ceiling is unchanged as Beta 1.6 eliminates ability to normally place blocks at Y of 127.
+|-
+![[Java Edition Beta 1.8|1.8]]
+![[Java Edition Beta 1.8 Pre-release|Pre-release]]
+|The Far Lands, as well as several floating point precision errors (notably the [[Java Edition distance effects/Historical effects|world render jitter/offset]]) no longer occur within vanilla bounds, effectively patching them out of the game.
+|-
+! colspan="3" |[[Java Edition version history|''Java Edition'']]
+|-
+![[Java Edition 1.2.1|1.2.1]]
+![[Java Edition 12w07a|12w07a]]
+|The height limit has been increased to 255, however the height limit of terrain generation didn't change, so the Far Lands still generate at 127.
+|-
+![[Java Edition 1.7.2|1.7.2]]
+![[Java Edition 13w36a|13w36a]]
+|The height limit of terrain generation to 255, and as such the Far Lands now generate to that height.
+|-
+![[Java Edition 1.8|1.8]]
+![[Java Edition 14w17a|14w17a]]
+|Added [[Old Customized|customized]] world generation. This made it possible to create the Sky and Ground Far Lands without mods.
+|-
+![[Java Edition 1.13|1.13]]
+![[Java Edition 18w06a|18w06a]]
+|Removed customized worlds. The Sky and Ground Far Lands can no longer be created without mods.
+|-
+! colspan="2" |?
+|The Far Lands now begin at ~1.8 septillion blocks instead of ~53.9 quadrillion blocks due to world generation changes.<sup>[''[[Talk:Far Lands (Java Edition)/After Beta 1.8|is this the correct version?]]'']</sup>
+|}
+[[es:Tierras lejanas de Java Edition]]
+[[pt:Far Lands (Edição Java)]]
+[[zh:边境之地/Java版]]
+[[Category:Far Lands]]

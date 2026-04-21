@@ -1,0 +1,113 @@
+{{Infobox structure
+| image = Obsidian platform.png
+| biome = {{BiomeLink|The End}}
+| blocks =
+* {{BlockLink|Obsidian}}
+| canspawn = Yes, gets replaced upon dimension re-entry
+}}
+The '''End platform''' is a 5×1×5 square of [[obsidian]] that generates when an [[entity]] enters [[the End]] through an [[End Portal (block)|End portal block]].
+
+== Generation ==
+[[File:Obsidian portal blocks broken item forms.png|thumb|Blocks are broken as if mined by the player when the End platform is regenerated.]]
+
+The End platform always generates at [[coordinates]] (100, 48, 0), mostly far away from the island, which may make it difficult to get there. [[Player]]s who enter the End spawn at coordinates (100, 49, 0), facing west toward the main island; other entities that enter the End spawn at coordinates (100.5, 50, 0.5), in the middle of and 1 block higher than the platform. Whenever a new entity enters the End, the platform is regenerated, and all blocks within 3 blocks above the platform are destroyed and dropped as items.{{verify|edition=bedrock}} Sometimes the platform generates inside a case of [[End stone]]; enough End stone is broken in this case so that the player can walk around, with 3 blocks high of breathing space. Occasionally the platform may generate in midair, forcing the player to bridge or throw an [[ender pearl]] toward the main island.
+
+{{IN|java}}, The End platform generates as part of the world generation, but {{in|bedrock}}, it generates only when an entity uses an [[End Portal (block)|End portal block]], not when teleporting with {{cmd|execute in minecraft:the_end}}. [[End gateway]]s on the outer End islands also teleport entities to the platform, but do not cause the platform to regenerate.
+
+{{IN|bedrock}}, the End platform is regenerated at the position where a player enters a [[Nether Portal (block)|Nether portal]] in the End.
+
+== Data values ==
+=== ID ===
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=obsidian-platform
+|spritetype=env
+|nameid=end_platform
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=obsidian-platform
+|spritetype=env
+|nameid=end_platform
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:end_platform",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Added the obsidian platform. It generates at coordinates (0, 71, 0).}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|The obsidian platform now generates at (180, 51, 0).}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|The obsidian platform now generates at (100, 51, 0).}}
+|{{HistoryLine||1.3.1|dev=12w18a|The obsidian platform does not generate anymore.{{verify|It seems the End as a whole doesn't generate terrain.}}}}
+|{{HistoryLine|||dev=12w23a|The obsidian platform now generates at (100, 48, 0).}}
+|{{HistoryLine||1.9|dev=15w33c|Non-player entities no longer regenerate the obsidian platform when entering an End portal.}}
+|{{HistoryLine||1.16|dev=20w21a|Non-player entities now regenerate the obsidian platform when entering an End portal again.}}
+|{{HistoryLine||1.16.2|dev=20w28a|The player now spawns centered on the End platform. Previously the player spawned at X{{=}}100.0, Y{{=}}49, Z{{=}}0.0 instead of X{{=}}100.5, Y{{=}}49, Z{{=}}0.5.}}
+|{{HistoryLine||1.20.5|dev=24w03a|When [[entities]] arrive in the End, the area around the End platform remains loaded for 15 seconds, matching the behavior of [[Nether portal]]s.}}
+|{{HistoryLine||1.21|dev=pre1|When the End platform is re-generated, instead of deleting the blocks above it, the blocks are instead broken as if mined by a player, dropping the item and (if a container) all its contents.}}
+|{{HistoryLine|||dev=pre2|The End platform is now generated as a feature during [[world generation]], instead of only on use of an End portal.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added the obsidian platform.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the obsidian platform.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Non-player entities no longer regenerate the obsidian platform when entering an End portal.{{check version}}|The position of the obsidian platform has been changed to X{{=}}60, Y{{=}}49, Z{{=}}60. Due to the downscaling of the [[Terrain features#Central island|central island]], the previous location would now be outside of the border.}}
+|{{HistoryLine||xbox=TU48|xbone=CU38|ps3=1.41|psvita=1.41|ps4=1.41|wiiu=Patch 17|The End platform is now generated at X{{=}}100, Y{{=}}49, Z{{=}}0 if the End was generated before TU46 and not reset.{{check version}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+End-Platform-inGround.png|An End platform that generated underground.
+Platformoutside.png|An End platform that generated outside and beneath a cliff.
+</gallery>
+
+== See also ==
+* {{EnvLink|Void start platform}}
+
+== Navigation ==
+{{Navbox generated features}}
+[[Category:The End|P]]
+
+[[de:Obsidianplattform]]
+[[es:Plataforma del End]]
+[[fr:Plateforme de l'End]]
+[[it:Piattaforma dell'end]]
+[[ja:黒曜石の土台]]
+[[ko:흑요석 플랫폼]]
+[[lzh:終界臺]]
+[[pl:End#Obsydianowa platforma]]
+[[pt:Plataforma do End]]
+[[ru:Обсидиановая платформа]]
+[[zh:末地平台]]

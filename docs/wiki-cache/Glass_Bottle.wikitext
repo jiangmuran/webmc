@@ -1,0 +1,296 @@
+{{Infobox item
+| image = Glass Bottle.png
+| renewable = Yes
+| stackable = Yes (64)
+}}
+A '''glass bottle''' is an [[item]] that can hold [[water]], [[potion]]s, [[Honey Bottle|honey]], or [[dragon's breath]].
+
+== Obtaining ==
+Glass bottles can be obtained by crafting, drinking from bottles, or from [[witch]] drops.
+
+=== Mob loot ===
+{{Drop sources|Glass Bottle}}
+
+=== Crafting ===
+{{Crafting
+|A2= Glass
+|C2= Glass
+|B3= Glass
+|Output= Glass Bottle,3
+|type= Brewing
+}}
+
+=== Drinking ===
+Drinking a [[potion]] or [[honey bottle]] returns the empty glass bottle. Throwing a splash potion or a lingering potion does not return a glass bottle, but brewing a lingering potion gives back a glass bottle.
+
+=== Mud ===
+{{control|Using}} a [[water bottle]], [[splash water bottle]] or [[lingering water bottle]] on [[dirt]], [[coarse dirt]], or [[rooted dirt]] transform it into a [[mud]] block, at the same time leaving the player with an empty glass bottle.
+
+=== Cauldrons ===
+{{control|Using}} a water bottle (or, {{in|bedrock}}, a potion, splash potion, or lingering potion) on a [[cauldron]] that is not yet full adds that liquid to the cauldron, leaving the player with an empty glass bottle.
+
+== Usage ==
+Glass bottles can be filled to make [[water bottle]]s, which can then be [[brewed]] into [[potion]]s in a [[brewing stand]].
+
+=== Collecting liquids ===
+==== Water ====
+A bottle may be filled with water by holding it in the hand and {{control|using}} it on a [[water]] source block or a [[cauldron]] that has water in it. It can also be filled using a waterlogged block.{{only|java}}<ref>{{bug|MCPE-83420}}</ref>
+
+Also, a bottle may be filled by powering a [[dispenser]] containing a bottle and pointed at a water source block. This does not work with cauldrons.<ref>{{bug|MC-165196|||Invalid}}</ref>
+
+If filled via a water source, the water is unaffected. If filled via a cauldron, {{frac|1|3}} of the water in the cauldron is removed. Therefore, using a cauldron to fill water bottles is inefficient, except in [[the Nether]] where it is normally the only way to fill bottles.
+
+==== Potion ====
+{{IN|bedrock}}, a bottle may be filled with potion by {{control|using}} it on a [[cauldron]] containing potion. When the bottle is filled, {{frac|1|3}} of the cauldron's potion is removed.
+
+==== Honey ====
+If a [[bee nest]] or [[beehive]] is full, the player can {{control|use}} a glass bottle on the block, or may power a [[dispenser]] that contains a bottle and is pointed at the block, which empties the block and creates a [[honey bottle]]. Honey bottles can also be emptied by using them in crafting recipes (such as [[sugar]] or [[honey block]]). However, a lingering potion use on tipped arrow recipe does not give the bottle back.
+
+==== Dragon's breath ====
+{{control|Using}} a glass bottle in cloud emitted when the [[ender dragon]] breathes or shoots a [[dragon fireball]] fills the bottle with [[dragon's breath]].
+
+When put 2 or more dragon's breath in the brewing stand, after the brewing process, a glass bottle drops as an [[Item (entity)|entity]]. However, if put only 1 dragon's breath in the brewing stand, after the brewing process, the glass bottle is consumed and cannot be retrieved.<ref>{{bug|MC-259583}}</ref>
+
+=== Trading ===
+{{Trade uses}}
+
+=== Crafting ingredients ===
+{{Crafting usage|Glass Bottle}}
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Bottle fill water1.ogg
+|sound2=Bottle fill water2.ogg
+|sound3=Bottle fill water3.ogg
+|sound4=Bottle fill water4.ogg
+|subtitle=Bottle fills
+|source=block
+|description=When a bottle is filled with a liquid from a cauldron, or honey from a bee nest or beehive
+|id=item.bottle.fill
+|translationkey=subtitles.item.bottle.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Bottle fills
+|source=neutral
+|description=When a bottle is filled with water from a water source
+|id=item.bottle.fill
+|translationkey=subtitles.item.bottle.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bottle empty1.ogg
+|sound2=Bottle empty2.ogg
+|subtitle=Bottle empties
+|source=block
+|description=When a water bottle is emptied
+|id=item.bottle.empty
+|translationkey=subtitles.item.bottle.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bottle fill dragon breath1.ogg
+|sound2=Bottle fill dragon breath2.ogg
+|subtitle=Bottle fills
+|source=neutral
+|description=When a bottle is filled with dragon's breath
+|id=item.bottle.fill_dragonbreath
+|translationkey=subtitles.item.bottle.fill
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type=bedrock
+| {{SoundLine
+|sound=Water Splash Old.ogg
+|source=block
+|description=When water from a bottle is placed in a cauldron<wbr><ref group=sound name=potionsplash>{{Bug|MCPE-174867}}</ref>
+|id=cauldron.fillwater
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When water from a bottle is taken from a cauldron<wbr><ref group=sound name=potionsplash/>
+|id=cauldron.takewater
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a bottle is filled with a potion from a cauldron<wbr><ref group=sound name=potionsplash/>
+|id=cauldron.fillpotion
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a potion bottle is emptied into a cauldron<wbr><ref group=sound name=potionsplash/>
+|id=cauldron.takepotion
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|sound=Bottle empty1.ogg
+|sound2=Bottle empty2.ogg
+|source=sound<!--bottle-->
+|description=When a bottle is emptied
+|id=bottle.empty
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Bottle fill water1.ogg
+|sound2=Bottle fill water2.ogg
+|sound3=Bottle fill water3.ogg
+|sound4=Bottle fill water4.ogg
+|source=sound<!--bottle-->
+|description=When a bottle is filled
+|id=bottle.fill
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|source=block
+|description=When a bottle is filled with honey from a bee nest or beehive<wbr><ref group=sound>{{Bug|MCPE-53881}}</ref>
+|id=bucket.fill_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Bottle fill dragon breath1.ogg
+|sound2=Bottle fill dragon breath2.ogg
+|source=sound
+|description=When a bottle is filled with dragon's breath
+|id=bottle.dragonbreath
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Glass Bottle
+|spritetype=item
+|nameid=glass_bottle
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Glass Bottle
+|spritetype=item
+|id=427
+|nameid=glass_bottle
+|form=item
+|foot=1}}
+
+== Achievements ==
+{{Load achievements|You Need a Mint;Local Brewery;Bee Our guest}}
+
+== Advancements ==
+{{load advancements|Local Brewery;You Need a Mint;Bee Our Guest}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[File:Glass Bottle JE1 BE1.png|32px]] Added glass bottles.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|[[File:Water Bottle JE1 BE1.png|32px]] Glass bottles have been given their sole function of picking up [[water]] for the [[brewing]] of [[potion]]s.}}
+|{{HistoryLine||1.4.2|dev=12w38b|[[Witch]]es now have a chance of [[drop]]ping glass bottles upon [[death]].}}
+|{{HistoryLine||1.9|dev=15w33a|[[File:Dragon's Breath JE1 BE1.png|32px]] Glass bottles can now be used to obtain [[dragon's breath]].}}
+|{{HistoryLine|||dev=15w43a|A glass bottle can be found in the [[brewing stand]] in an [[igloo]] basement.}}
+|{{HistoryLine|||dev=15w43c|The glass bottle has been removed from igloo basements.}}
+|{{HistoryLine|||dev=15w50a|Added [[sound]]s: <code>item.bottle.fill</code> and <code>item.bottle.fill_dragonbreath</code>.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Glass Bottle JE2 BE2.png|32px]] [[File:Water Bottle JE2 BE2.png|32px]] [[File:Dragon's Breath JE2 BE2.png|32px]] The textures of glass bottles, [[water bottle]]s and [[dragon's breath]] have been changed.}}
+|{{HistoryLine|||dev=19w11a|Cleric [[villager]]s now [[trading|buy]] 9 glass bottles for 1 emerald.}}
+|{{HistoryLine||1.15|dev=19w34a|[[File:Honey Bottle JE1.png|32px]] Glass bottles can now be used to collect [[Honey Bottle|honey]].
+|[[Dispenser]]s may now use glass bottles to collect [[water]] and honey.}}
+|{{HistoryLine|||dev=19w46a|Using glass bottles to collect honey now unlocks the Bee Our Guest [[advancement]].}}
+|{{HistoryLine||1.19|dev=22w11a|Converting [[dirt]], [[coarse dirt]] or [[rooted dirt]] into [[mud]] using a [[water bottle]], [[splash water bottle]] or [[lingering water bottle]] now leaves the player with an empty glass bottle.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Glass Bottle JE1 BE1.png|32px]] Added glass bottles.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Glass bottles can now be used to empty [[cauldron]]s filled with [[water]] or [[potion]]s.
+|Glass bottles can now be dropped by [[witch]]es.
+|Potions and [[splash potion]]s can now be used to fill cauldrons, which turns them into glass bottles.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Dragon's Breath JE1 BE1.png|32px]] Glass bottles can now be used to obtain [[dragon's breath]].
+|[[Lingering potion]]s can now be used to fill [[cauldron]]s, which turns them into glass bottles.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Glass Bottle JE2 BE2.png|32px]] The texture of glass bottles has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Glass bottles can now be [[trading|sold]] to cleric [[villager]]s.}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[File:Honey Bottle BE1.png|32px]] Glass bottles can now be used to collect [[Honey Bottle|honey]].
+|[[Dispenser]]s may now use glass bottles to collect [[water]] and honey.}}
+|{{HistoryLine|||dev=beta 1.14.0.4|Glass bottles can now be used to craft honey bottles.}}
+|{{HistoryLine|||dev=release|Using bottles to collect honey without angering [[bee]]s now unlocks the "Bee our guest" [[achievement]].}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|Converting [[dirt]], [[coarse dirt]] or [[rooted dirt]] into [[mud]] using a [[water bottle]], [[splash water bottle]] or [[lingering water bottle]] now leaves the player with an empty glass bottle.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Added sounds for filling bottles from a [[water]] block.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Glass Bottle JE1 BE1.png|32px]] Added glass bottles.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added [[witch]]es, which have a chance to drop glass bottles upon death.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Dragon's Breath JE1 BE1.png|32px]] Glass bottles can now be used to obtain [[dragon's breath]].|Added [[sound]]s for filling glass bottles with water and dragon's breath.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Glass Bottle JE2 BE2.png|32px]] The texture of glass bottles has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Glass bottles can now be [[trading|sold]] to cleric [[villager]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Glass Bottle JE1 BE1.png|32px]] Added glass bottles.}}
+|{{HistoryLine||1.7.10|[[File:Dragon's Breath JE1 BE1.png|32px]] Glass bottles can now be used to obtain [[dragon's breath]].}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 374.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+
+[[cs:Lahvička]]
+[[de:Glasflasche]]
+[[es:Frasco de cristal]]
+[[fr:Fiole]]
+[[hu:Üvegpalack]]
+[[it:Ampolla di vetro]]
+[[ja:ガラス瓶]]
+[[ko:유리병]]
+[[lzh:琉璃瓶]]
+[[nl:Glazen fles]]
+[[pl:Szklana butelka]]
+[[pt:Frasco de Vidro]]
+[[ru:Пузырёк]]
+[[uk:Скляна пляшка]]
+[[zh:玻璃瓶]]

@@ -1,0 +1,166 @@
+{{distinguish|Toxifin Slab}}{{Joke feature|update=24w14potato}}
+{{Infobox entity
+| image = Plague Whale Slab.gif
+| invimage = Plaguewhale Slab Spawn Egg
+| behavior = Hostile
+| health = {{hp|80}}
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Aquatic}}
+| damage = '''Laser:''' <br>
+{{EffectLink|Poison}} for 1 second with a maximum of {{hp|2|poisoned=1}}<br> {{EffectLink|Wither}} for 4 seconds when fully charged with a maximum of {{hp|2|withered=1}} <br>
+'''Spikes:''' <br> {{EffectLink|Wither}} for 2 seconds ({{hp|1|withered=1|notag=1}})
+| spawn = * {{EnvLink|Colosseum}}
+* When a [[Megaspud]] enters his ninth phase
+}}
+A '''plaguewhale slab''', also known as simply '''plaguewhale''', is a modified version of the [[elder guardian]] with a purple body and a green eye found in April Fools' snapshot [[24w14potato]]. It has the same width and length, but half the height as the elder guardian.
+
+== Spawning ==
+Around 15 plaguewhale slabs spawn upon the generation of a [[colosseum]]. These plaguewhales can despawn under the same conditions as most hostile mobs.
+
+An additional 9 are spawned by the [[mega spud]] when it enters its ninth phase.
+
+== Drops ==
+=== On death ===
+{{DropTable|edition=java
+|{{DropLine|name=Dent}}
+}}
+
+==Behavior==
+Plaugewhale slabs do not inflict Mining Fatigue. Their laser does not cause any direct damage, but it inflicts the [[Poison]] effect for 1 second constantly while hitting its target, and if fully charged, it adds the [[Wither (effect)|Wither]] effect for 4 seconds. Attacking the plaguewhale causes the player to gain Wither effect for 2 second.
+
+=== Stacking ===
+Sometimes a plaguewhale decides to [[Riding|ride]] another nearby plaguewhale, similar to how baby [[piglin]]s ride baby [[hoglin]]s. Two mobs stacked on top of each other closely resemble a single elder guardian, but their hitbox is still a bit smaller than that of elder guardian. <!-- I was not able to observer more than two stacked on top of each other, which is different from toxifins. -->
+
+== Sounds ==
+Plaguewhale slabs use the Hostile Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Plaguewhale Slab idle1.ogg
+|sound2=Plaguewhale Slab idle2.ogg
+|sound3=Plaguewhale Slab idle3.ogg
+|sound4=Plaguewhale Slab idle4.ogg
+|subtitle=Plaguewhale Slab zooms
+|source=hostile
+|description=Randomly while in water
+|id=entity.plaguewhale.ambient
+|translationkey=subtitles.entity.plaguewhale.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land idle1.ogg
+|sound2=Toxifin Slab land idle2.ogg
+|sound3=Toxifin Slab land idle3.ogg
+|sound4=Toxifin Slab land idle4.ogg
+|subtitle=Plaguewhale Slab slaps
+|source=hostile
+|description=Randomly while out of water
+|id=entity.plaguewhale.ambient_land
+|translationkey=subtitles.entity.plaguewhale.ambient_land
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab attack loop.ogg
+|subtitle=Toxifin Slab zaps
+|source=hostile
+|description=When a plaguewhale slab uses its laser attack
+|id=entity.toxifin.attack
+|translationkey=subtitles.entity.toxifin.attack
+|volume=0.0-1.0 <ref group=sound>Increases quadratically from minimum to maximum as the attack goes on</ref>
+|pitch=0.7-1.2 <ref group=sound>Increases linearly from minimum to maximum as the attack goes on</ref>
+|distance=16 (technical) / ∞ (effective)<ref group=sound>{{bug|MC-57057||Guardian laser attack sound ignores distance}}</ref>}}
+| {{SoundLine
+|sound=Plaguewhale Slab death.ogg
+|subtitle=Plaguewhale Slab dies
+|source=hostile
+|description=When a plaguewhale slab dies while in water
+|id=entity.plaguewhale.death
+|translationkey=subtitles.entity.plaguewhale.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land death.ogg
+|subtitle=Plaguewhale Slab dies
+|source=hostile
+|description=When a plaguewhale slab dies while out of water
+|id=entity.plaguewhale.death_land
+|translationkey=subtitles.entity.plaguewhale.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Plaguewhale Slab hit1.ogg
+|sound2=Plaguewhale Slab hit2.ogg
+|sound3=Plaguewhale Slab hit3.ogg
+|sound4=Plaguewhale Slab hit4.ogg
+|subtitle=Plaguewhale Slab hurts
+|source=hostile
+|description=When a plaguewhale slab is damaged while in water
+|id=entity.plaguewhale.hurt
+|translationkey=subtitles.entity.plaguewhale.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land hit1.ogg
+|sound2=Toxifin Slab land hit2.ogg
+|sound3=Toxifin Slab land hit3.ogg
+|sound4=Toxifin Slab land hit4.ogg
+|source=hostile
+|subtitle=Plaguewhale Slab hurts
+|description=When a plaguewhale slab is damaged while out of water
+|id=entity.plaguewhale.hurt_land
+|translationkey=subtitles.entity.plaguewhale.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab flop1.ogg
+|sound2=Toxifin Slab flop2.ogg
+|sound3=Toxifin Slab flop3.ogg
+|sound4=Toxifin Slab flop4.ogg
+|subtitle=Plaguewhale Slab flips
+|source=hostile
+|description=While a plaguewhale slab is on land
+|id=entity.plaguewhale.flop
+|translationkey=subtitles.entity.plaguewhale.flop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+== Data values ==
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|showentitytags=y
+|displayname=Plaguewhale Slab
+|spritetype=entity
+|nameid=plaguewhale
+|entitytags=aquatic, axolotl_always_hostiles, can_breathe_under_water, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+== Issues ==
+{{April Fools issue list}}
+
+==Gallery==
+=== Screenshots ===
+<gallery>
+Plaguewhale Slab.png|A plaguewhale slab
+Inside colosseum.png|Several plaguewhales spawned inside of a [[colosseum]], together with [[mega spud]]
+Plaguewhale stack.png|Two plaguewhales stacked on top of each other
+</gallery>
+
+[[Category:Joke mobs]]
+[[Category:Joke entities]]
+
+== Navigation ==
+{{Navbox entities|joke}}
+{{Navbox jokes|24w14potato}}
+
+[[ja:Plaguewhale Slab]]
+[[ru:Чумная плита]]
+[[zh:瘟疫鲸台阶]]

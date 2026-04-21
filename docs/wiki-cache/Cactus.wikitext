@@ -1,0 +1,314 @@
+{{for|the removed variants with no model|Invalid data value Cactus}}
+{{Infobox block
+|image = Cactus.png
+|imagecaption = {{JE}}
+|image2 = Cactus BE.png
+|image2caption = {{BE}}
+|transparent=Yes
+|light=No
+|tool=any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+{{relevant tutorial|Cactus farming}}
+A '''cactus''' is a [[plant]] block found in [[desert]]s and [[badlands]]. It grows over time and can sprout [[cactus flower]]s. It damages [[mob]]s and destroys [[minecart]]s and [[Item (entity)|dropped items]] that touch it.
+
+== Obtaining ==
+=== Breaking ===
+A cactus can be mined by hand without taking damage. The [[tool]] used to mine the cactus does not affect mining speed.<ref>{{bug|MC-175179||Cactus blocks do not have an assigned tool}}</ref>
+{{breaking row|horizontal=1|Cactus}}
+If a cactus becomes unsupported (e.g., due to a [[block]] being placed next to it or its base removed), it breaks and drops as an [[item]]. 
+
+A cactus also removes and drops itself as an item if a [[piston]] tries to push it, or moves a block into its space. Trying to pull it with a sticky piston does nothing. 
+
+Using a [[sign]] on the side of a cactus causes both the sign and the cactus to drop as items.
+
+=== Natural generation ===
+Cacti naturally generate in [[desert]] and [[badlands]] biomes (twice more common in desert than in badlands). They generate as one ({{frac|11|18}} chance), two ({{frac|5|18}} chance), or three ({{frac|2|18}} chance) blocks tall. Rarely taller cacti can be found if generation chooses to generate another on top of one already generated (although not as commonly as [[sugar cane]]).
+
+A [[potted cactus]] can also be found in an [[igloo]] with a basement.
+Potted cacti and 3 block cactus can also be found in some desert village buildings.
+
+Cacti also have a {{frac|2|9}} (22.2%) chance to generate in the entrance chamber of [[trial chambers]].
+
+{{block distribution}}
+
+=== Mob loot ===
+[[Endermen]] can pick up cacti. If an enderman is holding a cactus when it dies, the cactus will be dropped.
+
+=== Generated loot ===
+{{LootChestItem|cactus}}
+
+=== Trading ===
+[[Wandering trader]]s may sell 1 cactus for 3 [[emerald]]s.
+{{Trade sources}}
+
+=== Mob loot ===
+{{IN|bedrock}}, [[wandering traders]] have a chance of 8.5% (increased by 1% per level of [[Looting]]) to drop 1 cactus when killed while showing the item as trade offer, if the player holds an [[emerald]].
+
+== Usage ==
+A cactus block can be placed only on [[sand]], [[red sand]], [[suspicious sand]], or another cactus block. A cactus breaks itself (and drops as an item) if any [[block]] with the [[legacy solid]] property, or [[lava]], occupies any of the 4 horizontally adjacent blocks. It also breaks if on the sand and the block above is [[water]] or lava.
+
+When most [[entities]], including [[player]]s and [[mob]]s, touch a cactus, it deals {{hp|1}} [[damage]] every tick (although [[damage immunity]] reduces this to once every half-second). Damage from touching a cactus is reduced by [[armor]], and touching it also damages the armor. Mobs do not avoid cactus when they pathfind. Notably, [[armor stand]]s are exempt from this.
+
+A cactus destroys any [[item]]s that come into contact with it, including other cactus in item form. [[Falling block]]s such as [[sand]] and [[gravel]] are not destroyed when falling onto cactus; instead, they are transformed into item form (as happens when it falls into any block with a hitbox that has a height less than 1, such as [[slab]]s or [[button]]s). The item created in this case is sometimes (though not always) destroyed by the cactus. The conversion to an item applies even when the falling block is a cactus (which is possible with {{cmd|summon}}).<!-- example: /summon minecraft:falling_block ~4 ~4 ~ {BlockState:{Name:"minecraft:cactus"},Time:1} -->
+
+When a [[minecart]] hits a cactus block, the minecart drops as an item and is often destroyed, although a [[hopper]] can pick it up faster.
+
+A cactus can also be placed in a [[flower pot]], where it is harmless.
+
+A cactus (excluding its spikes) is {{frac|7|8}} of a block in width (the same as [[chest]]s) and a full block in height, however the [[Solid block|collision box]] is {{frac|15|16}} of a block high.
+
+=== Farming ===
+{{main|Tutorial:Cactus farming}}
+
+Cacti naturally grow to a height of three blocks, adding a block of height when the top cactus block has received 16 random [[tick]]s (i.e. on average every 18 minutes<!-- Average 68.27 seconds/tick * 16 ticks/growth = 18.2 minutes -->, but the actual rate can vary very widely). [[Bone meal]] does not work on cacti to speed their growth.<ref>{{bug|MC-73963||Can't use bone meal on cacti or sugar cane|WAI}}</ref><ref>{{bug|MCPE-73214||Cactus cannot be bone meal|WAI}}</ref> A cactus does not need [[light]] to grow and is non-flammable. If a cactus has space directly above it, it grows even if the newly-grown block would immediately break due to adjacent blocks.
+
+A cactus also has a chance to grow a [[cactus flower]] at any height. This happens after a cactus block has received exactly 9 random [[tick]]s (i.e. earlier than growing another cactus block){{verify|edition=bedrock}}. If the cactus is 1 or 2 blocks tall the chance is 10%, at 3 or more blocks tall the chance is 25%. A cactus flower can only grow if there are no blocks in any cardinal direction adjacent to it. A cactus with a cactus flower can no longer grow. When the cactus flower is broken by a player, the cactus may grow taller but can't generate another cactus flower until it has grown at least 1 cactus block.
+
+=== Smelting ingredient ===
+Cactus provides the highest [[smelting]] XP of any farmable block in ''Java Edition''. 
+{{Smelting
+|head=1
+|showdescription=1
+|Cactus
+|Green Dye
+|1
+|description=1 XP{{only|Java}}<ref name="MC-210211">{{bug|MC-210211||Smelting cactus gives too much experience since 1.13}}</ref>
+}}
+{{Smelting
+|showdescription=1
+|Cactus
+|Green Dye
+|0,2
+|description=0.2 XP{{only|Bedrock}}
+|foot=1
+}}
+
+=== Breeding ===
+Cacti can be used to breed [[camel]]s and reduce the remaining growth duration of baby camels by 10%. Camels also follow a player holding a cactus.
+
+=== Composting ===
+Placing a cactus into a [[composter]] has a 50% chance of raising the compost level by 1.
+
+== Sounds ==
+{{Sound table/Block/Wool}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cactus
+|spritetype=block
+|nameid=cactus
+|blocktags=enderman_holdable
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Cactus
+|spritetype=block
+|nameid=cactus
+|id=81
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}
+{{bst|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|A freshly-planted cactus – and a cactus that has just grown cactus above it – each have an age of 0.<br>The age is incremented at random intervals.<br>At age 15, a cactus may try to grow more cactus above it.|foot=1}}
+
+{{el|be}}
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|A freshly-planted cactus – and a cactus that has just grown cactus above it – each have an age of 0.<br>The age is incremented at random intervals.<br>At age 15, a cactus may try to grow more cactus above it.|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.6|[[File:Cactus JE1.png|32px]] Added cacti. It currently renders as a full [[block]].
+|[[File:Cactus (item) JE1.png|32px]] [[File:Cactus (inventory) JE1.png|32px]] The cactus item model uses its side texture on all six faces.
+|[[Player]] receives {{hp|1}} damage when punching them, right clicking on them, or walking on them.}}
+|{{HistoryLine||v1.0.11|Cacti can now be placed only on [[sand]], and now have the requirement that the space around it has to be empty. Previously, cacti could be placed to form a [[damage|damaging]] floor: both [[player]]s and [[mob]]s would take half a heart of [[damage]] when they walk on a cactus block. This made it useful for traps, such as a hallway with a cactus block floor that would kill all mobs that walked on it.
+|Collecting cacti no longer hurts the [[player]].
+|[[File:Cactus JE2 BE1.png|32px]] [[File:Cactus (inventory) JE2.png|32px]] The [[model]] and texture have been updated to have spines around the [[block]].}}
+|{{HistoryLine||v1.0.14|Cactus blocks now can grow to a height of three blocks, allowing for farming. Prior to this update, cacti would not grow.}}
+|{{HistoryLine||v1.2.0|dev=preview|Cacti now only generates in the new [[desert]] biome, instead of anywhere with sand.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Cacti can now be [[smelt]]ed, giving [[cactus green]].}}
+|{{HistoryLine||1.8|dev=Pre-release|Cactus items are no longer slightly larger than other blocks when dropped.}}
+|{{HistoryLine||1.8|dev=Pre-release 2 <!-- September 13 version -->|[[Endermen]] now pick up cacti.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Potted Cactus JE1.png|32px]] The ability to place cacti in [[flower pot]]s has been added.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Cacti now generate in the new [[mesa]] biomes.}}
+|{{HistoryLine|||dev=13w39a|Added [[red sand]], which cacti can also grow on.}}
+|{{HistoryLine||1.9|dev=15w31a|Endermen now drop cacti if killed when holding one. In most cases this results in an [[Invalid data value Cactus]].}}
+|{{HistoryLine|||dev=15w43a|A [[Flower Pot|potted]] cactus can now be found in the basement of the newly added [[igloo]].}}
+|{{HistoryLine|||dev=15w49a|Cacti now break if adjacent to [[lava]], or if on any block except cactus and the [[block]] above is [[water]] or lava.}}
+|{{HistoryLine||1.10|dev=pre1|Endermen now only drop valid cacti.}}
+|{{HistoryLine||1.13|dev=17w47a|[[Banner]]s and [[sign]]s can be placed horizontally adjacent to cacti, immediately breaking the cactus. This action was historically disabled.}}
+|{{HistoryLine|||dev=17w50a|Cacti now always break when the block is water, even if the cactus is placed on top of another cactus.}}
+|{{HistoryLine|||dev=18w06a|Cacti can no longer be [[smelt]]ed.<ref>{{bug|MC-124923||Smelting a cactus to produce cactus green doesn't work}}</ref>}}
+|{{HistoryLine|||dev=18w14b|Cacti can be smelted again, now yielding 1 experience instead of 0.2 per smelting operation.<ref name="MC-210211"/>}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Cactus JE3.png|32px]] The texture of cacti has been changed.}}
+|{{HistoryLine|||dev=18w44a|[[File:Cactus JE4.png|32px]] [[File:Potted Cactus JE6.png|32px]] The texture of cacti has been changed, once again.}}
+|{{HistoryLine|||dev=18w50a|[[Flower Pot|Potted]] cacti can now be found in [[desert]] [[village]]s.
+|Cactus items can now be found in [[chest]]s in desert village houses.}}
+|{{HistoryLine|||dev=19w03a|Placing a cactus into the new [[composter]] has a 20% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Cacti now have a 50% chance of increasing the compost level in a composter by 1.
+|Added [[wandering trader]]s, which sell cacti.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|Cacti can now be used to breed [[camel]]s.}}
+|{{HistoryLine||1.20|dev=23w14a|Cacti can now be planted on [[suspicious sand]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Cacti can now be found in [[trial chambers]].}}
+|{{HistoryLine||1.21.5|dev=25w06a|Cacti can now grow [[cactus flower]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.3|[[File:Cactus JE2 BE1.png|32px]] Added cacti.}}
+|{{HistoryLine||v0.2.0|[[File:Cactus (inventory) BE1.png|32px]] Cacti are now available in the [[Creative inventory]].}}
+|{{HistoryLine||v0.4.0|[[File:Cactus JE2 BE1.png|32px]] Cacti now appear 3D in the [[inventory]] and when dropped; previously they used a completely 2D item texture like many other plants.
+|Cacti now obey regular placement exceptions when being placed underwater or on [[snow]].}}
+|{{HistoryLine||v0.5.0|Cacti are now available from the [[nether reactor]].}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Cactus BE2.png|32px]] The top texture of cacti has been changed.}}
+|{{HistoryLine|||dev=build 4|[[File:Cactus JE2 BE1.png|32px]] The top texture of cacti has been reverted.}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Cactus BE3.png|32px]] The model of cacti has been changed. The spines behind cacti now render regardless of where viewed from.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Cacti are no longer available from the nether reactor.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||?|Cacti no longer deal damage to entities on top of them.}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[Flower Pot|Potted]] cacti now generate in the basements of [[igloo]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Cacti are now found inside [[bonus chest]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Cactus BE4.png|32px]] The texture of cacti has been changed.
+|A 3 [[block]] tall cactus and potted cactus now generate in new [[desert]] [[village]] houses.
+|Cacti can now be [[trading|bought]] from [[wandering trader]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Cacti can now be found desert village house [[chest]]s.
+|Cacti can now be used to fill [[composter]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|Cacti once again deal damage to mobs and items standing on top of them.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|Cacti can now be used to breed [[camel]]s.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Cacti can now generate in [[trial chambers]].}}
+|{{HistoryLine||1.21.70|exp=Drop 1 2025|dev=Preview 1.21.70.22|Cacti can now grow [[cactus flower]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Cactus JE2 BE1.png|32px]] Added cacti.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Cactus items are no longer slightly larger than other blocks when dropped.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The ability to place cacti in [[flower pot]]s has been added.{{check version}}}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Cacti now generate in the new [[mesa]] biomes.|Added [[red sand]], which cacti can also grow on.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|A [[Flower Pot|potted]] cactus can now be found in the basement of the newly added [[igloo]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=?|wiiu=none|switch=none|Cacti no longer deal damage to entities on top of them.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Cactus JE4.png|32px]] The texture of cacti has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Added [[wandering trader]]s, which sell cacti.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Cactus JE2 BE1.png|32px]] Added cacti.}}
+}}
+
+<gallery>
+Oversized items.png|Until [[Beta 1.8]], cacti were somewhat larger than other [[block]]s when [[drop]]ped.
+Grass cactus.png|In older versions, [[endermen]] could place cacti on any block.
+Lava cactus.png|A cactus can survive in unusual locations using {{cmd|setblock}}). However, this no longer works since [[1.16]].{{verify|so this was a change for both java and bedrock at the same time?}}
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Cactus now has a dedicated model json file ({{code|models/block/cactus.json}}); previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 81.}}
+}}
+
+== Issues ==
+{{issue list|Cactus|Cacti}}
+
+== Trivia ==
+* Cacti can be placed in 1 block deep [[water]], provided they are placed on [[sand]], and they grow if they break the surface.
+* Cacti can be placed next to [[sapling]]s, but the cactus breaks when the [[tree]] grows.
+* [[Endermen]] could move and place cacti. Thus, they can increase the cactus population in [[desert]]s by moving cactus blocks as they grow.
+* [[Sign]]s and [[painting]]s can be placed on the sides of cacti and behave as non-blocks, making them cause damage even though they are covering cacti.
+* It is possible for cacti to generate on blocks other than sand due to [[generated structures|terrain generation]]; refer to the gallery for examples.
+* Cactus can be used in the desert to see if the [[player]] is in a newly generated area. If most of the cacti around the player is only one block high, then it is most likely new land.
+* Dying from touching a cactus displays "[playername] was pricked to death" in the chat messages.
+* [[Block]]s can be placed on top of a cactus, including other cactus blocks.
+* It is possible to place [[redstone]] next to a cactus block without destroying it.
+* A 20 block tall cactus can be found on the seed 43931985876593125 at coordinates (-9711824 , ~ , 7726416) and more recently a 22 block tall one on seed 11343195073417814 at coordinates (14955936 , ~ , -3750655) and even a 23 block tall one on the seed 184693195438010998 and coordinates (16274576 ~ 10230656). All these seeds, found by the Minecraft@home research project, work on Java Edition 1.14.4.<ref>{{Tweet|minecraftathome|1275401340731232256|With data generated from volunteer computers on our BOINC network, the tallest known cactus in #Minecraft was discovered yesterday at the 20 blocks high.<br><br>Seed: 43931985876593125<br>Position: -9711824 7726416}}</ref>
+* Top snow can be placed next to cacti without breaking the cacti, no matter how many top snow layers stack.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Cactus Near Snow.png|Naturally generated cacti.
+Common Cacti.png|Naturally occurring cacti in a badlands biome.
+Cactus underside.png|The bottom of a cactus seen with the "floating cactus" bug.
+Floating cacti.png|Cacti floating in village garden.
+Babycactus.png|A natural one block tall cactus.
+Kidcactus.png|A natural two block tall cactus.
+4blocktallcactus.png|A naturally occurring unusual four-block tall cactus.
+Pentacactus.png|A natural five block tall cactus.
+6blocktallcactus.png|A naturally occurring rare six-block tall cactus.
+8blocktallcactus.png|A natural eight block tall cactus, extremely rare.
+12 Tall Cactus.jpg|A twelve-block tall cactus, extraordinarily rare.
+19blocktallcactus1.png|A natural nineteen-block tall cactus.<ref>{{Reddit2|sub=minecraftseeds|id=g7u4ld|author=KaptainWutax|date=April 25, 2020|text=A year of brute force work to find a 19 tall cacti seed}}</ref>
+20BlockCactus.png|A natural twenty block tall cactus.<ref>{{Reddit2|text=Record-breaking 20 block tall cactus found by Minecraft@Home, a research project powered by BOINC (seed + location in comments)|id=henko3|sub=minecraftseeds|author=ChipIsTheName}}</ref>
+22block cactus.png|A natural twenty-two block tall cactus, the second tallest known cactus.<ref>{{Citation|url=https://minecraftathome.com/minecrafthome/forum_thread.php?id=4|title=Record breaking cactus #2|author=chip|website=Minecraft@Home|date=June 27, 2020}}</ref>
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Cactus Perimeter.jpg|A village surrounded by cacti.
+Tall Cactus.jpg|Another five block cactus.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:LEGO Cactus Knight.png|A [[LEGO]] Cactus Knight minifigure.
+File:Three cacti, one real.png|Unique cacti in [[15 Year Journey]]
+File:AMCM live event cactus ball.png|A cactus ball as it appears in [[A Minecraft Movie Live Event]]
+File:MCWSC-GITM 26-27.png|Cacti as it appears in [[Ghast in the Machine!]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|block-week-cactus|Block of the Week: Cactus|February 10, 2017|[[Tom Stone]]}}
+
+== Navigation ==
+{{Navbox desert}}
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Natural blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Hazardous blocks]]
+
+[[cs:Kaktus]]
+[[de:Kaktus]]
+[[es:Cactus]]
+[[fr:Cactus]]
+[[hu:Kaktusz]]
+[[it:Cactus]]
+[[ja:サボテン]]
+[[ko:선인장]]
+[[lzh:仙人掌]]
+[[nl:Cactus]]
+[[pl:Kaktus]]
+[[pt:Cacto]]
+[[ru:Кактус]]
+[[th:กระบองเพชร]]
+[[uk:Кактус]]
+[[zh:仙人掌]]

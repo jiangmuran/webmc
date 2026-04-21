@@ -1,0 +1,402 @@
+{{For}}
+{{Distinguish|Breeze}}
+{{Infobox entity
+| image = Blaze.gif
+| imagecaption = {{JE}}
+| image2 = Blaze BE.gif
+| image2caption = {{BE}}
+| invimage = Blaze Spawn Egg
+| health = {{hp|20}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| damage = '''{{EntityLink|Small Fireball}}:''' <br>Easy: {{hp|3.5}}<br>Normal: {{hp|5}}<br>Hard: {{hp|7.5}}<br> '''{{BlockLink|Fire}}:''' <br> {{hp|1}} per sec for 5 sec ({{hp|4|notag=1}}) <br>'''Contact:'''<br>Easy: {{hp|4}}<br>Normal: {{hp|6}}<br>Hard: {{hp|9}}
+| size = Height: 1.8 Blocks<br>Width: 0.6 Blocks<br>
+| spawn = * {{EnvLink|Nether Fortress}}: 
+* Light level of 11 or less.
+* From [[monster spawner]]s.
+| leashable = No
+| boat = Yes
+| minecart = Yes
+}}
+{{relevant tutorial|Blaze farming}}
+A '''blaze''' is a fiery [[hostile mob]] found in [[Nether fortress]]es and is the only source of [[blaze rod]]s. A blaze attacks by floating upward and shooting [[Small Fireball|fireballs]] at its target in volleys of three at a time. It can also attack its target in melee range with its spinning rods.
+
+== Spawning ==
+Blazes may spawn naturally in [[Nether fortress]]es in groups of 2 or 3{{Only|Java|short=JE}} and from 1 to 3{{Only|Bedrock|short=BE}} at a [[light level]] of 11 or less. 
+
+Blazes may also spawn from [[monster spawner]]s in Nether fortresses. Two spawners generate in every Nether fortress and are located on small platforms surrounded by Nether brick fences with a three-block staircase leading up to it. 
+
+Spawning conditions for blazes: 
+* In the structure bounding box of any single piece of the [[Nether fortress]], they can spawn on any block
+* In the larger area bounding box of the entire [[Nether fortress]], they can spawn exclusively on [[Nether bricks]]
+
+{{Mob spawn table}}
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Blaze Rod|notes=player_or_pet|quantity=0-1|lootingquantity=0-1}}
+}}
+{{xp|10}} [[experience]] orbs are dropped if killed by a player or tamed wolf.
+<!-- Do not add glowstone dust as it is in violation of MCW:UPTODATE due to the Legacy Console Edition being discontinued. Any edit that adds glowstone dust to this section will be immediately reverted. -->
+
+== Behavior ==
+Blazes can fly and are immune to damage from fire and lava. When not attacking, they stay on the ground or slowly sink through the air. When idle, blazes attempt to swim upward in [[lava]] or [[water]] {{in|bedrock}} but sink {{in|java}}. Despite taking damage from water, blazes make no attempt to protect themselves if pushed or dropped into water. Their pathfinding does not avoid [[fire]] or lava but does avoid water.
+
+Blazes take {{hp|5}} freezing damage from [[powder snow]].
+
+Blazes take {{hp|3}} damage when hit by a [[snowball]] and {{hp|1}} damage when hit by a [[splash water bottle]].
+
+Like [[endermen]], blazes are damaged by [[rain]] by {{hp|1}} every half second.
+
+The entire blaze texture appears brighter {{in|bedrock}}, similar to the [[drowned]]'s eyes. With [[Vibrant Visuals]], blazes and their fire are actually emissive and glowing, with the side-effect that the environment around a blaze darkens when looking at it.
+
+=== Attacking ===
+{{see also|Tutorial:Combat#Blaze}}
+Blazes target players within 48 blocks. If a blaze is damaged by a player or another mob, it alerts other blazes within 48 blocks to target the attacker. A blaze flies when it acquires a target, slowly approaching while attempting to remain from 0.5 to 3.5 blocks above the target.
+[[File:Blaze Shooting.gif|thumb|150px|left|A blaze attacking]]
+A blaze's normal attack is a trio of [[small fireball]]s, shot from up to 48 blocks. Unlike with the [[ghast]] or [[breeze]], a blaze's projectiles ''cannot'' be deflected, but can be [[blocking|blocked]] with a [[shield]]. A blaze shoots only when it has a clear line of sight to its target. If line of sight is broken in the middle of its volley, the blaze suspends the remainder of its volley until line of sight returns. When using this attack, the blaze burns with fire for 3 seconds, shoots 3 small fireballs over the course of 0.9 seconds, then extinguishes its flames and waits for 5 seconds before attacking again. A blaze shoots its small fireballs with roughly the same lack of accuracy as a [[dispenser]]; however, the blaze's shots maintain the same speed all the way to the target, unlike the dispenser's, which start slow and accelerate. If a neutral or hostile mob is accidentally hit by a fireball, the mob will retaliate against the blaze.
+
+A blaze that touches its target performs a melee attack once per second that does {{hp|4}} damage on Easy [[difficulty]], {{hp|6}} on Normal, and {{hp|9}} on Hard. This attack is not considered fire damage and does not ignite the target, and as such cannot be prevented by the [[Fire Resistance]] status effect.
+{{clear|left}}
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Blaze idle1.ogg
+|sound2=Blaze idle2.ogg
+|sound3=Blaze idle3.ogg
+|sound4=Blaze idle4.ogg
+|subtitle=Blaze breathes
+|source=hostile
+|description=Randomly
+|id=entity.blaze.ambient
+|translationkey=subtitles.entity.blaze.ambient
+|volume=1.0
+|pitch=0.8–1.2
+|distance=16}}
+| {{SoundLine
+|sound=Fire.ogg
+|subtitle=Blaze crackles
+|source=hostile
+|description=Randomly
+|id=entity.blaze.burn
+|translationkey=subtitles.entity.blaze.burn
+|volume=1.0–2.0
+|pitch=0.3-1.0
+|distance=32}}
+| {{SoundLine
+|sound=Blaze death.ogg
+|subtitle=Blaze dies
+|source=hostile
+|description=When a blaze dies
+|id=entity.blaze.death
+|translationkey=subtitles.entity.blaze.death
+|volume=1.0
+|pitch=0.8–1.2
+|distance=16}}
+| {{SoundLine
+|sound=Blaze hurt1.ogg
+|sound2=Blaze hurt2.ogg
+|sound3=Blaze hurt3.ogg
+|sound4=Blaze hurt4.ogg
+|subtitle=Blaze hurts
+|source=hostile
+|description=When a blaze is damaged
+|id=entity.blaze.hurt
+|translationkey=subtitles.entity.blaze.hurt
+|volume=1.0
+|pitch=0.8–1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|subtitle=Blaze shoots
+|source=hostile
+|description=When a blaze shoots a fireball
+|id=entity.blaze.shoot
+|translationkey=subtitles.entity.blaze.shoot
+|volume=2.0
+|pitch=0.8–1.2
+| distance = 32
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Blaze idle1.ogg
+|sound2=Blaze idle2.ogg
+|sound3=Blaze idle3.ogg
+|sound4=Blaze idle4.ogg
+|subtitle=Blaze breathes
+|source=hostile
+|description=Randomly
+|id=mob.blaze.breathe
+|translationkey=subtitles.entity.blaze.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Fire.ogg
+|subtitle=Fire crackles
+|source=hostile
+|description=Randomly
+|id=fire.fire
+|translationkey=subtitles.block.fire.ambient
+|volume=1.0–2.0
+|pitch=0.3-1.0
+}}
+| {{SoundLine
+|sound=Blaze death.ogg
+|subtitle=Blaze dies
+|source=hostile
+|description=When a blaze dies
+|id=mob.blaze.death
+|translationkey=subtitles.entity.blaze.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Blaze hurt1.ogg
+|sound2=Blaze hurt2.ogg
+|sound3=Blaze hurt3.ogg
+|sound4=Blaze hurt4.ogg
+|subtitle=Blaze hurts
+|source=hostile
+|description=When a blaze is damaged
+|id=mob.blaze.hit
+|translationkey=subtitles.entity.blaze.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|subtitle=Blaze shoots
+|source=hostile
+|description=When a blaze shoots a fireball
+|id=mob.blaze.shoot
+|translationkey=subtitles.entity.blaze.shoot
+|volume=3.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Blaze
+|spritetype=entity
+|nameid=blaze
+|showentitytags=y
+|entitytags=fall_damage_immune, freeze_hurts_extra_types
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Blaze
+|spritetype=entity
+|nameid=blaze
+|showentityfamily=y
+|entityfamily=blaze,mob,monster
+|id=43
+|foot=1}}
+
+=== Entity data ===
+{{el|java}}:
+{{main|Entity format}}
+Blazes have entity data associated with them that contains various properties.
+
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Into Fire;Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;Into Fire;It Spreads;Not Today, Thank You}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{for|information specifically pertaining to small fireballs|Small Fireball#History}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Blaze JE1 BE1.gif|32px]] Added blazes.
+|[[File:Fire Charge JE1 BE1.png|32px]] Blazes shoot [[small fireball]]s when attacking the [[player]].}} 
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Blazes now drop [[item]]s only when they aren't on [[fire]] (about to attack); this has since been fixed, and they now have a chance to drop [[blaze rod]]s any time they are killed.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|Blazes now drop a blaze rod only when killed by the [[player]].}}
+|{{HistoryLine|||dev=RC1|[[Sound]]s specific to blazes have been added. They make "breath" sounds and make metallic clunks when [[damage|hurt]].}}
+|{{HistoryLine||1.4.2|dev=12w36a|Due to the addition of [[wither skeleton]]s, blazes now spawn less often in [[Nether fortress]]es (the chance has been decreased from 43.5% to 35.7%).}}
+|{{HistoryLine||1.7.2|dev=1.7|Blazes are no longer provoked when attacked by the [[player]] in [[Creative]] mode.}}
+|{{HistoryLine||1.8|dev=14w06a|The blaze's AI has been altered. Blazes now attempt to attack the [[player]] even if there are [[block]]s between them. 
+|A blaze now alerts other blazes in a staggering 50 block radius around itself of the player's presence upon being hit, causing all blazes within the wide radius to swarm the player, if they have a clear path. 
+|Blazes now have a decreased firing distance: previously, blazes would shoot at the player from about 32 blocks away once angered, but they now shoot from only 16 blocks. When the player moves out of their radius, they slowly "walk" over to the player, flying over obstructions in the way. When within melee range, the blaze now actively rushes toward the [[player]] and attempts to hit the player out of melee range, and shoots small fireballs once the player is out. 
+|Blazes no longer attempt to swim in [[water]] or [[lava]], instead sinking to the bottom.}}
+|{{HistoryLine||1.11|dev=16w35a|Blazes are now dealt {{hp|1}} [[damage]] by [[splash water bottle]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Blaze JE2.gif|32px]] The texture of blazes has been changed.}}
+|{{HistoryLine||1.14.3|dev=pre3|Blazes now take [[knockback (mechanic)|knockback]] from damage from splash water bottles and lingering water bottles, which is applied away from the player.|Blazes now drop experience when killed by splash or lingering water bottles thrown by players.<ref>{{bug|MC-110004}}</ref>}}
+|{{HistoryLine||1.16|dev=20w06a|Blazes no longer take damage from snowy weather.<ref>{{bug|MC-194697}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Blazes now take extra damage when [[freezing]].}}
+|{{HistoryLine||1.19.4|dev=pre2|Blazes now have a weakness to freezing damage for the {{cmd|damage}} command.}}
+|{{HistoryLine||1.21.2|dev=24w34a|The texture for the bottom face of a blaze's rods were changed from [[File:Blaze rods_JE1_(facing_NWU).png|32px]] to [[File:Blaze rods_JE2_(facing_NWU).png|32px]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Blaze JE1 BE1.gif|32px]] Added blazes.}}
+|{{HistoryLine|||dev=build 12|Blazes are now [[Mob#Neutral mobs|neutral]] in [[Creative]] mode.
+|Blazes now have [[sound]]s.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Blazes are now [[Mob#Passive mobs|passive]] in Creative mode.}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Blaze BE2.png|32px]] The blaze texture now glows.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Blazes are now dealt {{hp|1}} [[damage]] by [[splash water bottle]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Blaze BE3.gif|32px]] The texture of blazes has been changed.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Blazes now take extra [[damage]] from powder snow.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.21|Increased blaze attack sound distance to 32 to match {{JE}}.
+|Blaze's attack distance has been increased from 16 to 48 blocks to match its target detection range.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Blaze JE1 BE1.gif|32px]] Added blazes.}}
+|{{HistoryLine||xbox=TU8|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|Blazes now [[drop]] 0–2 [[glowstone dust]] when killed.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Blazes no longer drop 0-2 [[glowstone dust]] when killed.}}
+|{{HistoryLine||xbox=TU48|xbone=CU38|ps3=1.41|psvita=1.41|ps4=1.41|wiiu=Patch 17|Blazes drop 0-2 [[glowstone dust]] when killed again.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Blazes are now dealt {{hp|1}} [[damage]] by [[splash water bottle]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Blaze JE1 BE1.gif|32px]] Added blazes.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of the blaze has been changed from <code>Blaze</code> to <code>blaze</code>.}}
+|{{HistoryLine|||dev=16w40a|The blaze's <code>life</code> tag is no longer used for anything, but still saved/read.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* When throwing a [[potion]] of [[Invisibility]] on a blaze, the smoke remains visible.
+* According to [[Jens Bergensten]], blazes look the way they do because all mobs in ''Minecraft'' are cuboid-shape, so to make them flame-like and magical, he created them as a core surrounded by rotating rods.<ref>{{Mcnet|meet-blaze|Meet the Blaze|December 20, 2016|Marsh Davies}}</ref>
+* Blazes originally didn't have eyes when Jens Bergensten was first creating them and "just looked like a yellow rock". Eyes were added to give it more personality.<ref>{{YouTube link|v3TXUTLClb0|Ask Mojang Midsummer Special with Jeb|Minecraft|June 18, 2020}}</ref>
+* Despite not having visible feet, blazes are still capable of making footstep sounds.<ref>{{Cite bug|MC|92623|Certain mobs play footstep sounds and subtitles when they shouldn't|date=November 13, 2015}}</ref>
+* According to Minecraft's "Visit the Nether!" blazes are sentient beings made of pure lava. The article theorizes they were created by the original inhabitants of Nether fortresses to serve as guards, but their creators lost control over the blazes and were subsequently destroyed by them.<ref>{{Mcnet|visit-nether-|Visit the Nether!|November 10, 2019|[[Duncan Geere]]}}</ref>
+
+=== Publicity ===
+* On the official T-shirt "Alchemy" by JINX, the blaze is in the form of the {{Wikipedia|Vitruvian Man}} and the text uses the [[Standard Galactic Alphabet]]. The words on the outside of the ring translate to: "nigredo", "albedo", "citrinitas", and "rubedo",{{Note|There is a nether track titled [[Rubedo]].}} which are all relating to {{Wikipedia|Magnum opus (alchemy)|magnum opus}}. The words on the ring translate to (starting from the top): "B * Crowmer", "poison * speed", "strenth * resist" {{sic}}, "vision * heal", and "regeneration" relating to [[potions]] and probably the artist's name. On the connecting lines the words translate to: "potln of thickness" {{sic}}, "potln of awkward" {{sic}}, "weakness potion" and "mundane potion" relating to [[Potion#Base potions|base potions]].
+* As part of an official collaboration, blazes are included as monsters in a free add-on for the roleplaying game {{wikipedia|Dungeons & Dragons|''Dungeons & Dragons''}}.<ref>{{Citation|url=https://www.dndbeyond.com/claim/source/minecraft-creatures-monstrous-compendium|title=Minecraft x D&D|website=D&D Beyond}}</ref> In the game, they are "Elementals" and have the alignment "Typically Neutral Evil."
+* In [[Minecraft: Mobspotter's Encyclopedia]], blazes are depicted using the smoke particles used for [[campfires]] instead of their traditional ones.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+BlazeNoParticles.png|A blaze without particles.
+Blaze without particles.gif|Animated version
+Nether Fortress Blaze Spawner.png|A blaze spawner platform with blazes.
+Blaze Spawner.png|Blaze spawner
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Blaze-spawner.png|A close up look at a blaze spawner in a [[Nether fortress]].
+NetherAndFortressBlazeAccidentalSkeletonMIME.png|Zoomed out view of the blaze spawner, showing the spawner area and a spawned blaze.
+Blaze attack.jpg|Multiple blazes shooting small fireballs at the player as they hover around their spawner.
+BlazeHarmedBySnowWeather.png|A Blaze that was spawned in the Overworld is taking damage from snowy weather. (Before [[Java Edition 20w06a|20w06a]])
+BlazeDisableGrid.png|Disabling a blaze spawner with 9 [[glowstone]] blocks. Glowstone can be replaced with other light sources of light level 15.
+Blaze preparing to attack.png|A triggered blaze preparing to attack who still hasn't flown.
+Blaze flying preparing to attack.png|A triggered blaze preparing to attack with fire around it, floating on the wall of a [[Nether fortress]].
+Wither Skeleton and Blaze.png|A blaze and a [[wither skeleton]] idling in a [[Nether fortress]].
+Blazes and Wither Skeleton near a Spawner.png|Two blazes spawned near a blaze [[spawner]] and a [[wither skeleton]].
+Crimson forest blaze spawner.png|Blazes spawned by a spawner.
+Breeze and blaze.png|A comparison of a blaze and a [[breeze]].
+</gallery>
+
+=== Mojang images ===
+<gallery>
+Kai fights a blaze with a shield.png|"[[Kai]] fighting off Blazes in a Basalt Delta, aiming their shield up toward a Blaze to block their projectile."<ref>{{Mcnet|minecraft-java-edition-1-20-3|Minecraft Java Edition 1.20.3|December 5, 2023|Java Team}}</ref>
+Blaze-ingame.jpeg|Screenshot of blazes.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Blaze (texture).png|Blaze texture file.
+</gallery>
+
+=== Other ===
+<gallery>
+Blazehidden bodytextureRender.png|A blaze with hidden pixels revealed by disabling the alpha channel.{{verify}}
+Blazehidden bodytexture.png|The old texture if the hidden pixels are revealed by disabling the alpha channel
+</gallery>
+
+=== In other media ===
+<gallery>
+Mm-blaze-header.png|Artwork of a blaze
+BlazeParkour5.png|Blaze Parkour, an attraction set on a giant blaze in [[Realms Celebration]].
+Blaze action figure JINX.jpeg|An official blaze [[Action figures|action figure]].
+LEGO Blaze.png|Official [[LEGO]] Blaze minifigure.
+Alchemy JINX.jpg|Official T-shirt artwork "Alchemy" featuring a blaze. Made by [https://www.jinx.com JINX].
+Blaze Statblock.png|Official blaze statistics for ''D&D''.
+Xbox-360-avatar-minecraft-blaze-head.png|A Blaze Head for the Xbox 360 avatar.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|meet-blaze|Meet the Blaze|December 20, 2016|Marsh Davies}}
+* {{mcnet|blaze|Mob Menagerie: Blaze|March 6, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Nether mobs]]
+[[Category:Flying mobs]]
+
+[[cs:Ohnivák]]
+[[de:Lohe]]
+[[es:Blaze]]
+[[fr:Blaze]]
+[[hu:Őrláng]]
+[[it:Blaze]]
+[[ja:ブレイズ]]
+[[ko:블레이즈]]
+[[nl:Blaze]]
+[[pl:Płomyk]]
+[[pt:Blaze]]
+[[ru:Ифрит]]
+[[uk:Пломінь]]
+[[zh:烈焰人]]

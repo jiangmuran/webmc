@@ -1,0 +1,352 @@
+{{About||the feature in {{MCD}}|MCD:Heads-up display|the feature in {{MCL}}|MCL:Heads-up display}}
+{{redirect|HUD|the command that changes the visibility of its elements|Commands/hud}}
+[[File:HUD example.png|thumb|350px|The HUD as seen in Survival mode.]]
+
+The '''heads-up display (HUD)''' is a system showing the [[player]]'s conditions. It is superimposed on their view of the game world.
+
+== Display ==
+[[File:HUD.png|thumb|class=pixel-image|The most common bars in the HUD. Clockwise starting from the bottom left: the experience bar, the health bar, the armor bar, the oxygen bar, and the hunger bar.]]
+The HUD typically consists of the user's [[health]], [[hunger]] and [[experience]] bars, the hotbar, as well as a crosshair that designates the currently focused on block or entity if the player is not playing on a mobile device and has not enabled split controls. The [[armor]] condition bar appears above the health bar if the player is wearing armor, and the [[Damage#Drowning|oxygen]] bar displays above the hunger bar if the player's air supply unit is below 300.{{note|Represented in {{nbt|short|Air}} NBT tag on [[entity format]].}} Note that in the mobile versions of ''Bedrock Edition'', the health and armor bars are on the top left and the hunger and oxygen bars are on the top right. The "[[Settings#Video|UI Profile]]" option under the video settings can be set to "Classic" mode to match ''Java Edition'' style.
+
+In [[Creative]] mode, the health, hunger, oxygen, experience and armor bars are hidden.
+
+{{notelist}}
+=== Hotbar ===
+[[File:Hotbar.png|thumb|class=pixel-image|The hotbar.]]
+[[File:Hotbar (BE).png|thumb|class=pixel-image|The hotbar {{in|be}} when using touch controls.]]
+The hotbar is a selection bar that appears on the bottom of the screen. It is where the player stores and selects commonly used [[items]]. It consists of the bottom nine slots within the player's inventory. When the player switches an item in hand by mouse wheel or {{key|1-9}}, its name is shown above the experience level for a short period of time. {{IN|je}}, this name appears in italics, while {{In|be}}, the text has a black background and also shows [[enchantments]] of the selected item, and contents of a [[Shulker Box|shulker box]]. The background opacity can be adjusted with the "Text Background Opacity" option in the [[Settings#Accessibility|accessibility settings]]. The slots of the hotbar are the programmer art sand texture slightly darkened.
+
+Players can [[dual wield]] allowing a second item to be shown on the other side, along with an additional hotbar slot on the same side.{{Only|je|short=1}} Both the slot and the item are shown only if it contains an item, which can either be added using the [[GUI]] or by pressing "{{control|swap items}}".
+
+{{IN|bedrock}}, the hotbar has an additional button for the inventory when using touch controls. On the [[New Nintendo 3DS Edition]], the hotbar is located on the "Touch Screen" and is slightly different.
+
+=== Hand ===
+The player's hand is always shown on the right side of the screen (left side if the player's main hand is set to "left"),{{only|java|short=1}} and corresponds to the player's hand in the [[skin]]. {{IN|bedrock}}, all animations from the hand as seen in third person are also seen on the HUD, including the breathing animation and eating/drinking. When an item in the hotbar is selected, it shows in place of the hand rotated similarly to held items in third-person, with a switching animation. Some held items can show animations, and when charging a [[crossbow]] in ''Bedrock Edition'', the left hand can also be seen. Items can also be held in the [[offhand]] slot, which will show on the other side, but an empty hand is not shown. With [[Vibrant Visuals]], directional light effects (shadows, caustics, light) are also visible on the hand, and held items apply their texture sets.
+
+The hand can be toggled independently from the HUD in ''Bedrock Edition'', meaning that it can be shown standalone without other HUD elements. However, pressing {{key|F1}} still hides the hand. 
+
+=== Locator bar ===
+{{main|Locator Bar}}
+[[File:Survival Locator Bar.png|thumb|class=pixel-image|Locator bar in [[Survival]] mode.]]
+The locator bar appears in place of the experience bar, except when gaining [[XP]]. It shows the position of other [[player]]s in [[multiplayer]] as colored square indicators, often referred to as waypoints. They appear approximately within 120° of the camera facing towards the target. If the target is on a significantly different Y-level, an arrow pointing to the target vertically appears over the square indicator.
+
+The [[color code|color]] of a waypoint is randomly assigned to a player when they join a multiplayer game, or when a waypoint is tracked for the entity; it may also be assigned by their [[team]] color. In ''Java Edition'', it can be customized using the {{cmd|waypoint}} command.
+
+The locator bar can be toggled by the {{cd|[[Game rule#locatorBar|locatorBar]]}} game rule. In ''Java Edition'', entities in the locator bar may be tracked if {{cd|[[Attribute#waypoint_transmit_range|waypoint_transmit_range]]}} attribute is set.
+
+=== Crosshair ===
+The crosshair is a small cross in the middle of the screen. It shows the aim point of the [[tool]] or [[item]] being held to entities or blocks for attacking or any interactions within a specific [[Interaction range|range]] from the player. The crosshair inverts the colors of the area it is upon, which can result in a nearly invisible crosshair if the area is a medium gray. The crosshair is only shown on touch devices when the control mode is set to "Joystick & aim crosshair", or when the "Split Controls" option is enabled.
+
+=== Chat ===
+{{Main|Chat}}
+Chat messages are also shown on the HUD, in the bottom left corner{{only|java}}/top left corner{{only|bedrock}}, showing anything recently spoken or commands recently executed. {{IN|je}}, this can be expanded with {{key|T}}, allowing the player to enter chat messages or commands, and view the full chat history. {{IN|be}}, pressing {{key|T}} opens the chat menu, which is not part of the HUD but a separate [[menu screen]].
+
+Elements such as the chat size, background opacity, its visibility in general, font, text color, and more can be changed in the [[options]]{{only|java}}/[[Chat#Chat settings|chat settings]].{{only|be}}
+
+=== Closed captions ===
+{{Main|Closed captions}}
+
+Closed captions display text for [[sounds]] in-game. When turned on, this lists sounds in the world that are nearby to the player on the right of the screen. If the sounds are offscreen, "<" or ">" point in the direction the sound is coming from. As the sound fades away, the text also fades, becoming less white.
+
+Subtitles can be enabled in the "Music & Sounds" or "Accessibility Settings" sections of the [[options]] menu,{{only|je}} or in [[options.txt]].{{only|be}}
+
+=== Effects ===
+{{Main|Effect}}
+All [[effect]]s (other than effects with <code>hideParticles</code>, including [[Darkness]] from the warden<ref>{{bug|MC-249416|||WAI}}</ref>) the player currently has are shown on the top-right of the screen. Effects that run out sooner appear farther to the left, and effects that are about to run out start to flash. Additionally, positive effects are shown on the top, and other effects (neutral or negative) are shown on the bottom. Beacon effects have a blue (instead of gray) outline, and effects with particles hidden are not indicated in the HUD.
+
+=== Riding mobs ===
+{{fakeImage|{{healthbar|20|mob=1}}|A mob health bar}}
+[[File:Horse jump bar empty.png|thumb|class=pixel-image|The empty jump bar/dash bar.]] 
+[[File:Horse jump bar full.png|thumb|class=pixel-image|The full jump bar/dash bar.]]
+
+Upon mounting a [[horse]], [[donkey]], [[mule]], [[llama]], [[pig]], [[strider]], [[camel]], [[happy ghast]], [[nautilus]] or [[zombie nautilus]], the ridden mob's health bar appears above the hunger bar. It uses a slightly different heart texture than the player's health bar, with them made to resemble saddles.
+
+Also, upon mounting a horse, camel, nautilus or zombie nautilus, the jump bar (for horses) or the dash bar (for camels, nautiluses and zombie nautiluses) also appears above the experience bar. When riding a [[skeleton horse]] underwater, the oxygen bar, if necessary, appears above the mob health bar.
+
+=== Action bar ===
+{{Main|Action bar}}
+The action bar is a space just above the player's hotbar where text can be displayed. Some gameplay elements, such as [[jukeboxes]], use this to give contextual hints to the player. Text can also be displayed here using the {{cmd|title}} command. {{IN|be}}, the opacity of the black background of the action bar can be adjusted with the "Action Bar Background Opacity" option in the [[Settings#Accessibility|accessibility settings]].
+
+=== Autosave indicator ===
+{{Main|Autosave}}
+[[File:Auto save.png|thumb|The autosave indicator in [[Bedrock Edition|''Bedrock Edition'']].]]
+The autosave indicator indicates when the game is autosaving. In ''[[Java Edition]]'', this is turned on by default and shows "Saving world" in the bottom-right of the screen. In ''[[Bedrock Edition]]'', this is turned off by default and shows an animation of an arrow pointing into a [[chest]] in the top-right of the screen.
+
+Whether or not this appears can be toggled in the [[options]].
+
+=== Bossbar ===
+{{Main|Bossbar}}
+[[File:Bossbar enderdragon.png|thumb|The bossbar for the [[Ender Dragon|ender dragon]].]]
+A bossbar is a bar at the top of the screen that can track [[health]] of a [[Mob#Boss mobs|boss mob]] or the total health of [[raid]] mobs. The bossbar appears naturally in the game through three means: during a [[raid]], after constructing a [[wither]], and upon entering [[the End]] if the [[ender dragon]] has not yet been defeated. In [[Java Edition|''Java Edition'']], a bossbar can be created manually using the <code>/[[Commands/bossbar|bossbar]]</code> command. There is a limit to the number of bars shown.
+
+=== Screen effects and overlays ===
+{{Main|Screen effects}}
+Screen effects encompass a variety of effects applied alongside or beneath the heads-up display as augmentations to the [[player]]'s point of view as a method of conveying further information about a player's current state.
+
+=== Screen title ===
+{{Main|Commands/title}}
+A screen title is displayed to players as a single line of large center-aligned text in the middle of their displays, and can include a subtitle; a second, separate line of text displayed just below the title. It is controlled with the <code>/title</code> and <code>/titleraw</code> commands. {{IN|be}}, the opacity of the black background of the screen title can be adjusted with the "Text Background Opacity" option in the [[Settings#Accessibility|accessibility settings]].
+
+=== Scoreboard ===
+{{Main|Scoreboard}}
+[[File:Scoreboard BE.png|thumb|The scoreboard on the HUD]]
+The scoreboard system is a complex gameplay mechanic utilized through [[commands]]. Mainly intended for mapmakers and [[server]] operators, scoreboards are used to track, set, and list the scores of [[entities]] in a myriad of different ways. It is displayed on the right side of the screen.
+
+=== Toasts ===
+{{Main|Toasts|Tutorial hints}}
+Toasts are text boxes shown when the player unlocks new [[Recipe|crafting recipes]]. Additionally, {{In|je}}, exclusive toasts show when a new music track starts playing, or the player obtains [[Advancement|advancements]]. Most of them show up in the top right corner of the screen, and are displayed in front of effect icons. Music toasts appear in the top left of the screen instead.
+
+Tutorial hints (also known as game tips in ''[[Bedrock Edition]]'') are toasts which show up when a player starts a world in [[Survival mode]] for the first time on a device. They are meant to guide new players who may not know the controls. These can be turned off in the [[settings]].{{only|be}}
+
+If multiple recipes are unlocked at once, they all use the same toast. If multiple advancements are unlocked at once, they appear listed one under the other. Up to five toasts can be displayed at once.
+
+{{IN|be}}, the duration of toast messages can be adjusted in the [[Settings#Accessibility|accessibility settings]].
+
+=== Demo timer ===
+In the [[Demo Mode|demo mode]], a timer shows on the top-right indicating the remaining free playtime for that world.
+
+== ''Bedrock Edition'' exclusive elements ==
+=== Controller hints ===
+When using a controller, available actions the player can take are listed on the bottom left and right of the screen, alongside the icon of the button to press to perform that action.
+
+=== Mobile controller ===
+{{Main|Controls#Touch}}<div style="display: flex; align-items: center; float: right;">
+[[File:Joystick_control_mode.png|thumb|246px|Joystick control mode|class=pixel-image]]
+[[File:HUD-Bedrock-D_Pad_buttons.png|thumb|260px|D-Pad control mode|class=pixel-image]]
+</div>
+
+These buttons are present only in mobile and desktop versions with a touchscreen, and they are used to control the player. Players can [[sneak]], fly and jump using the mobile controller.
+
+In the settings under {{UI|Controls|Touch}}, players can choose between D-Pad, normal joystick (touch control mode), and joystick with crosshair aim control mode. D-Pad crosshair aim is available separate using "Split Controls" setting.
+[[File:Customize Touch Controls (Bedrock).png|thumb|The control customization interface. Note that this does not show the top buttons.]]
+The position, scale, and opacity of individual controls can be customized in the touch settings.
+
+In addition to control buttons, there is a row of static buttons at the top of the screen, allowing to change perspective (if enabled), open the [[Game Menu|game menu]], open the [[chat]], and access [[emotes]]. The size of these buttons can be adjusted.
+
+An independent action button sometimes appears above the hotbar when a unique action can be performed.
+
+=== Paper doll ===
+The paper doll is a side-view of the player displayed in the top-left corner of the screen. It shows the player's [[skin]] and any [[armor]] worn. If the player is walking, the paper doll shows the player's legs moving. If the player is [[sneaking]], sprint-[[swimming]], [[Emotes|emoting]], or flying with [[elytra]], this can also be seen.
+
+The paper doll can be toggled by pressing {{key|F8}} on keyboard, or in the [[settings]]. This can be done independently from hiding the HUD, although pressing {{key|F1}} also disables the paper doll.
+
+=== Position and Days Played ===
+If enabled in the [[world options]], the player's [[coordinates]] and/or days played will be displayed in a box in the top left of the screen. If both are enabled at the same time, the position is listed above the number of days played. Both are shown below the paper doll, and above the chat. The background opacity of this text is affected by the "Text Background Opacity" accessibility setting.
+
+=== Identify ===
+[[File:Describe.png|thumb|A mob described above the hotbar after the button has been pressed.]]
+In the [[controls]] menu, a keybind can be assigned to Identify for keyboard & mouse or controller modes. Once pressed in-game, this shows above the hotbar (as an item tooltip) the name of the [[block]] or [[entity]] the player currently faces. If an entity has been renamed, the custom name will display instead. This is only shown when an object in front of the player can be interacted with (usually hitting or breaking), so [[water]] or objects far away are not described.
+
+=== Splitscreen ===
+[[Splitscreen]] mode on consoles divides the screen into sections for each player, each having its own HUD. The gamertag of the respective player is shown on the top-right of the HUD for each section, which can be toggled in the video settings.
+
+=== Compass ===
+[[File:Directional Compass.mp4|thumb|The ''Editor''<nowiki/>'s compass on the top-right]]
+Available in the ''[[Editor]]'' only, a compass shows on the top-right of the world viewer in tool mode. This rotates accordingly with the player's view, showing the increasing or decreasing directions of X and Z [[coordinates]]. Clicking on a direction of the compass turns the camera into that direction. It shows as part of the HUD in the actual world viewer; not as part of the GUI overlay from tool mode. It can be toggled in the settings.
+
+== ''Java Edition'' exclusive elements ==
+[[File:AttackIndicatorCrosshair.png|thumb|Attack indicator (below the crosshair), empty and full]][[File:AttackIndicatorHotbar.png|thumb|Attack indicator (next to the hotbar), empty and full]]
+
+=== Attack indicator ===
+{{Main|Melee attack#Attack cooldown}}
+
+The attack indicator represents the attack cooldown timer. It can be displayed next the the crosshair, beside the hotbar, or be hidden completely. This disappears when the cooldown is full. If the [[option]] for the attack indicator is set to "Crosshair" mode, a fully cooled weapon is being held, and a mob or player is in range, the sword icon and an additional plus-sign (+) indicator is shown below the crosshair, indicating that the weapon is in range to land a full-damage blow.
+
+If the option for the attack indicator is set to "Hotbar" mode, the attack cooldown timer is indicated by a sword icon near the crosshair that fills, representing the cooldown progress. This sword icon disappears once the item is fully charged.
+
+In the [[Java Edition Combat Tests|combat tests]], a shield indicator can also be enabled in the same locations.
+
+=== Debug screen ===
+{{Main|Debug screen}}
+The debug screen (also commonly referred to as the "F3 screen") is triggered when <kbd>F3</kbd> is pressed. It functions as a menu for accessing debugging information, but it also provides useful in-game information like [[Coordinates|player coordinates]].
+
+The debug screen consists of info text lines and five toggleable graphs: profiler, frame rate, [[tick]] rate, bandwidth, and ping time graphs. These graphs can be toggled with specific key combinations.
+
+=== List Players ===
+{{Main|Multiplayer#Player list}}
+In multiplayer, holding the key bound to List Players (default: {{key|tab}}) will show a list of players at the middle of the top of the screen, including their [[username]], the front face of their [[skin]]'s head, and their signal strength.
+
+== Options ==
+In the [[options]] menu, the GUI scale option changes the size of the HUD and GUI. The default setting, "auto", changes the size of the HUD and GUI depending on the size of the game window.{{only|java}}
+
+There is an option to hide the HUD. If the player is using keyboard controls, this can also be done with {{key|F1}}. {{IN|bedrock}}, the "Hide HUD" option toggles the hotbar, crosshair, and if using touch controls, buttons. The hand, paper doll, and coordinates are separate options.
+
+{{IN|be}}, the {{cmd|hud}} command can toggle the visibility of each HUD element.
+
+Players can toggle the HUD, the [[wikipedia:Vignetting|vignette]] effect on fancy graphics, some screen effects and overlays, and the block hitbox by pressing the {{key|F1}} key.
+
+The player can choose whether to use their right or left hand. This option also moves the off-hand slot to the opposite side {{In|je}}, and mirrors the touch controls {{In|be}}.
+
+In ''[[Java Edition]]'', the [[Melee attack#Attack cooldown|attack indicator]] can be set to show by the crosshair, beside the hotbar, or to have it hidden. In the [[Java Edition Combat Tests|combat tests]], a shield indicator can also be enabled in the same locations.
+
+In ''Java Edition'', [[subtitles]] can be enabled in the "Music & Sounds" or "Accessibility Settings" sections of the [[options]] menu.
+
+In ''Java Edition'', [[Toasts|music toasts]] can be disabled in "Music & Sounds".
+
+The [[autosave]] indicator can be toggled in the video settings.
+
+In ''Java Edition'', various settings related to the [[chat]] can be modified in [[options]]. {{IN|be}}, these settings can only be changed in the [[Chat#Chat settings|chat settings]] accessible from the chat menu, except for the opacity and message duration, which can be changed in the [[Settings#Accessibility|accessibility settings]].
+
+In ''Bedrock Edition'', the opacity of several HUD elements can be changed in the accessibility settings, as well as toast notification duration.
+
+In ''Bedrock Edition'', the UI style can be toggled between Classic and Pocket. Pocket UI (default on mobile) moves certain objects such as the health and hunger bar to the top corners of the screen.
+
+== ''China Edition'' ==
+{{Exclusive|China|section=1}}
+[[File:ChinaVersionScreenshot.png|thumb|The HUD in ''[[China Edition]]''.]]
+In ''[[China Edition]]'', a "2 button" can be seen at the top of the screen. There is also a button to allow the player to take a screenshot or switch the camera and change voice settings.
+
+At the right of the screen, a button can be seen that is used to lock walking, sprinting or sneaking. It can be useful in some situations.
+
+== Sounds ==
+{{el|je}}:
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Hud bubble.wav
+|subtitle=Breath meter dropping
+|source=player
+|description=When a UI bubble pops
+|id=ui.hud.bubble_pop
+|translationkey=subtitles.ui.hud.bubble_pop
+|volume=''Varies''<ref group=sound>0.5 for the first three bubbles; increases by 0.1 per bubble for remaining bubbles.</ref>
+|pitch=''Varies''<ref group=sound>1.0 for first five bubbles, increases by 0.1 per bubble for remaining bubbles.</ref>
+|distance=16
+}}
+}}
+
+{{el|be}}: 
+
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Hud bubble.wav
+|source=sound
+|description=When a UI bubble pops
+|id=hud.bubble.pop
+}}
+}}
+
+== Videos ==
+{{yt|SnZf-U37lwk}}
+
+== History ==
+=== ''Java Edition'' ===
+[[File:Pre-Beta-1.8-HUD.png|thumb|200px|The HUD (with original [[armor]] bar position) as it appeared before the [[Adventure Update]].]]
+[[File:Classic 0.30 Survival.png|thumb|200px|The arrow count used to be to the right of the player's [[health]], before [[Indev]].]]
+{{HistoryTable
+|{{HistoryLine|java pre-classic}}
+|{{HistoryLine||rd-20090515|Added crosshair, it was very thin.|Preview of currently selected block can now be seen in the top right corner.}}
+|{{HistoryLine||rd-161348|Made crosshair thicker.|Block preview is now flipped.}}
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.2a|Added a version number to the top-left corner.
+|FPS and chunk updates display below the version number.}}
+|{{HistoryLine||0.0.19a|[[File:Hotbar.png|200px]] Added hotbar.
+|Removed block preview.}}
+|{{HistoryLine||0.0.23a|FPS and chunk updates no longer display by default.
+|Now toggled via Show FPS button in the options.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|[[File:SURVIVAL TEST gui hand.png|100px]] Added health bar and a hand, with its front facing toward the camera.
+|Held blocks appear in the hand's place when selected.
+|Added oxygen bar, which appears when underwater.
+|The hand animation was seen while walking when view bobbing is set to on (this has preset by default.)}}
+|{{HistoryLine|java Indev}}
+|{{HistoryLine||0.31|dev=20091231-1856|The player's hand is no longer visible.}}
+|{{HistoryLine|||dev=20100122-2251|Removed arrow counter.}}
+|{{HistoryLine|||dev=20100128-2200|Non-block items are now rendered in 3D when held in hand.}}
+|{{HistoryLine||20100212-1622|The crosshair now turns the opposite color of what it is covering.}}
+|{{HistoryLine||20100214|[[File:Indev 20100214.png|100px]] Changed hand position, with the front facing left.}}
+|{{HistoryLine||20100218-0011|Added armor bar. It appeared next to health bar when any armor is worn.}}
+|{{HistoryLine|java Infdev}}|{{HistoryLine||20100611|link=Java Edition Infdev 20100611|[[File:Infdev 20100611.png|100px]] Due to a bug, the hand was not visible. However, that was fixed in 20100617-1531.}}
+|{{HistoryLine||20100617-1531|link=Java Edition Infdev 20100617-1531|[[File:Infdev_20100617-1531.png|100px]] Changed hand position, and the invisible hand glitch has been fixed.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.13|The hand no longer animates alongside the player model when the inventory is opened.
+|The hand no longer gets stuck when leaving third-person view while walking.}}
+|{{HistoryLine||v1.0.17|The hand animation is now present when interacting with items like doors.}}
+|{{HistoryLine||v1.2.0|dev=preview|Added function of hiding the HUD from view by pressing {{key|F1}}.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6.5|Version number in top-left corner is now displayed only in the [[debug screen]].}}
+|{{HistoryLine||1.8|dev=1.8 (PAX Prime)|Added experience bar.|On top of the [[experience]] bar, if the player has attained at least one level, the player's "skill points" are displayed. These are simply three times the amount of levels that the player has.}}
+|{{HistoryLine|||dev=preview|Armor bar is now positioned above the health bar.}}
+|{{HistoryLine|||dev=?|Skill points no longer displayed.}}
+|{{HistoryLine|||dev=Pre-release|Version number is displayed even if not in the debug screen.
+|Added hunger bar.|Oxygen bar is now positioned above the hunger bar.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Added level number to experience bar.}}|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Version number in top-left corner is displayed only in the debug screen again.}}|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|The version number is again always displayed.}}|{{HistoryLine|||dev=release|Version number in top-left corner is displayed only in the debug screen again.}}|{{HistoryLine||1.4.6|dev=12w50a|When switching items in the hotbar, its name is shown on the HUD.}}|{{HistoryLine||1.6.1|dev=13w16a|When the player rides a [[horse]], its health is shown on the HUD. Instead of it, the hunger bar disappears while riding, and the experience bar is replaced with the jump bar.}}|{{HistoryLine|||dev=13w21a|Experience levels no longer appear in [[Creative]]. Previously, the experience bar would be hidden, but experience levels would show.}}|{{HistoryLine||1.9|dev=15w31a|When an item or block is held in the off hand, a slot appears on the left of the hotbar (on the right for left-handers)
+|When an [[effect]] is active on the player, it appears on the top-right corner of the screen. It blinks when about to run out.
+|The player can now change whether their main hand is the right or left.
+|Crosshairs no longer show in 3rd person view.}}|{{HistoryLine||1.9|dev=15w44b|The hand no longer gets stuck when leaving third-person view while riding an entity.}}|{{HistoryLine||1.11|dev=16w32a|The hunger bar is now visible when riding a [[minecart]] or a [[boat]].}}|{{HistoryLine||1.21.2|dev=pre1|[[File:Empty Bubble (icon).png|16px]] Added an empty state for air bubbles along with a wobble when the player is drowning.
+|Added a popping sound when bubbles pop on the oxygen bar.}} | {{HistoryLine||1.21.6|dev=25w15a| The player locator bar now replaces the experience bar when the player hasn’t collected any experience in the last 5 seconds.}}}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|Added health and oxygen bars.}}
+|{{HistoryLine||v0.5.0|HUD bars moved from above the hotbar to the top left of the screen.|Name of items appear over hotbar when selected.}}
+|{{HistoryLine||v0.6.0|Armor bar added along with armor.}}
+|{{HistoryLine||v0.7.0|Added option to edit D-pad size.|Added option to hide GUI|Added Chat Screen button on HUD.}}
+|{{HistoryLine||v0.8.0|dev=build 1|The hotbar is now transparent.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added an interaction button that appears when placing finger/crosshair over certain entities for actions other than placing, mining and hitting.}}
+|{{HistoryLine||v0.11.0|dev= build 6|Positions of items in the hotbar can now be swapped.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added hunger and experience bars.}}
+|{{HistoryLine|||dev=build 3|The hotbar now has 9 slots instead of 7.}}
+|{{HistoryLine||v0.14.2|Changed texture of inventory button.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The HUD can now be set to display the same way as it does in the Java and Legacy Console Editions, when "Classic UI" is toggled on.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added a Hide Hand option and replaced Hide GUI with Hide HUD.|Added paper doll.}}
+|{{HistoryLine||1.2.1|The crosshair no longer appears in 3rd person view.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.63|Held item [[tooltip]]s now have a dark background.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.24|[[File:Empty Bubble (icon).png|16px]] Added an empty state for air bubbles along with a wobble when the player is drowning.|Added a popping sound when bubbles pop on the oxygen bar.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.26|Added a new joystick for touch [[controls]] when using the control schemes {{cd|'player_relative_strafe'}} or {{cd|'camera_relative_strafe'}}.
+* The new joystick is only available with "Joystick & tap to interact" and "Joystick & aim crosshair" control modes.
+* Players who are using "D-Pad & tap to interact" when entering into one of the two control schemes will be put into "Joystick & tap to interact" and then returned to "D-Pad & tap to interact" after they stop using one of the two control schemes.|Implemented the same HUD icon for ambient mob [[effect]]s as {{JE}}.|All items now show the "Hit" attack prompt when aiming at a mob.|Items with dedicated interaction prompts now show when aiming at a mob if there is no other special mob interaction prompt.|[[Camel husks]] are now the appropriate size in their Pocket UI screen.|The mob's inventory panel is now hidden for all unchested mobs in the default UI.}}
+|{{HistoryLine|||dev=Preview 1.21.130.27|The interface windows will now close when hurt by a [[mob]].}}
+|{{HistoryLine||Preview 26.0.23|Added closed captions, in ''Preview'' only.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.23|Added the Describe feature.}}
+|{{HistoryLine|||dev=Preview 26.10.25|Renamed Describe to Identify.}}
+|{{HistoryLine|||dev=release|Closed captions are no longer ''Preview'' only, but can only be toggled from [[options.txt]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU3|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Tooltips always display in menus.|Added the crosshair to the list of things affected by the opacity slider.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the hunger bar.|Added the animated character, which activates when the player is [[sprinting]] or [[flying]].}}
+|{{HistoryLine||xbox=TU6|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added option to disable HUD and appearance of player hand in graphics settings.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the experience bar.|When switching items in the hotbar, its name is shown on the HUD.}}
+|{{HistoryLine||xbox=TU9|Added HUD size options for both splitscreen and full-screen modes. Individual splitscreen users can have their own settings for HUD.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|When the player rides a [[horse]], its health is shown on the HUD. Instead of it, the hunger bar disappears while riding, and the experience bar is replaced with the jump bar.}}
+|{{HistoryLine||xbox=TU36|xbone=CU25|ps3=1.28|psvita=1.28|ps4=1.28|wiiu=Patch 7|switch=1.0.1|When switching items in the hotbar, the first 3 lines of the item's lore such as [[enchantment]]s, [[attribute]]s and effects from potions are now shown on the HUD in addition to the item name.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Crosshairs no longer show in 3rd person view.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|When an item is held in the off hand, a slot appears on the left of the hotbar (on the right for left-handers).}}
+}}
+
+== Issues ==
+{{Issue list|HUD}}
+
+== Trivia ==
+* The player's hand does not disappear in first person mode after death.{{only|je}}<ref>{{bug|MC-88781}} – "Hand visible in death screen after player entity despawns" resolved as "Won't Fix"</ref>
+* The hearts on a mounted mob's health bar resemble [[saddle]]s.
+* The background of each hotbar slot uses a unique texture that resembles [[sand]] blocks when darkened
+* The crosshair is not centered.
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[de:Head-up-Display]]
+[[es:Interfaz de usuario]]
+[[fr:Interface utilisateur]]
+[[ja:HUD]]
+[[ko:HUD]]
+[[lzh:昂首]]
+[[nl:Heads-up display]]
+[[pl:HUD]]
+[[pt:Interface de usuário]]
+[[ru:HUD]]
+[[uk:HUD]]
+[[zh:平视显示器]]

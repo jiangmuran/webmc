@@ -1,0 +1,1422 @@
+{{about|the act of breaking|the mechanic about items breaking|Durability|what is informally known as "breaking a shield"|Melee attack#Crushing blow}}
+{{Redirect|Punching|the bow enchantment|Punch}}
+{{Wip|reason=The "Best tools" table should be reorganized to: block {{!}} tools in order of best to worst with fist being a tool.
+Also, check for blocks in all versions, like MinecraftEdu, Pi Edition, 3DS Edition, etc. and place them all here. If there are blocks marked with hardness value of ?, find the value...}}
+[[File:PunchTrees-GetWood.gif|thumb|upright=1.4|A [[player]] mines a [[tree]] and obtains a [[log]].]]
+'''Breaking''', '''digging''', '''punching''', or '''mining''' is a common activity in ''[[Minecraft]]'', performed (by default) by holding the left mouse button or right trigger while the cursor is pointing at a [[block]], or by long-pressing on the block on touch screens. Breaking is the primary way to remove unwanted blocks and acquire blocks for future placement or [[crafting]].
+
+== Basics of breaking ==
+{{anchor|reach|Reach}}
+
+By holding down the {{control|destroy}} button while looking at a block within range, the player's hand begins swinging, making a repetitive "thump" sound as the player hits the block. Cracks appear on the block, which show that it is being broken.
+
+{{IN|je}}, this range is 5.2 blocks in [[Creative]] mode, and 4.5 blocks otherwise. {{IN|bedrock}}, the range is 5 blocks when using a keyboard/mouse or controller input; when using touch input, the range is 12 blocks in Creative mode and 6 blocks otherwise.
+
+Targeted blocks are marked with a wireframe cube outline; {{in|bedrock}}, this can be changed to a white highlight by disabling the "Outline Selection" option in video settings. After the cracking animation is finished and completely covers the block, it breaks and depending on the type of block and the [[tool]] used to do so, it may drop an [[item]].
+
+Although many blocks can be harvested with bare hands, certain ones require the use of a [[tool]]. In particular, to obtain resources from stone or metal-type blocks, the player must use a [[pickaxe]]. For harder blocks like [[iron ore]] or [[obsidian]], a pickaxe made from a higher-tier material is required. 
+
+The player can use [[shovel]]s, [[axe]]s and [[hoe]]s to speed up the breaking of dirt-type blocks, wood, and plant-type blocks, respectively. However, tools are not required to get the resource drop (with the exception of [[snow]] and [[snow block]]s, which require a shovel to get a drop). A downside to this is that tools also have [[durability]], so they eventually wear out.
+
+The progress for breaking a block is reset if the target block changes while breaking. Progress is also reset whenever the {{control|breaking}} control is released. The player can move freely while breaking blocks. The player can even dig while jumping, swimming, or riding, although this reduces the breaking speed.
+
+In [[Survival]] mode, however, some blocks are unbreakable, like [[bedrock]], and in [[Adventure]] mode all blocks are unbreakable unless the player has an item or a tool with the <code>can_destroy</code> tag. In [[Spectator]] mode a player can't break blocks in any way, and in [[Creative]] mode all blocks are breakable unless the player is holding a [[sword]], [[spear]], [[debug stick]], [[trident]], or [[mace]].
+
+== Mining efficiency ==
+The player's mining efficiency (digging speed) is controlled by three factors: the block being broken, the item the player is currently wielding, and the mining penalties affecting the player. Every block has a hardness value, which determines the base amount of breaking time if the player hits it with their bare hands.
+
+The base time in seconds is the block's hardness multiplied by:
+* 1.5 if the player can harvest the block with the current tool;
+* 5 if the player cannot.
+
+Assuming that the player can harvest the block, the next check is whether the player's tool increases the breaking speed for the block. See [[#Best tools|Best tools]] for a full list.
+
+If the [[tool]] helps, then it increases digging speed by a constant multiplier, given in the following table:
+
+{| class="wikitable" style="text-align: center" data-description="Speed multipliers"
+! !! Block !! Tool Speed
+|-
+! No tool ||
+| 1
+|-
+! {{ItemSprite|Wooden Pickaxe}} Wood ||
+| 2
+|-
+! {{ItemSprite|Stone Pickaxe}} Stone ||
+| 4
+|-
+! {{ItemSprite|Copper Pickaxe}} Copper ||
+| 5
+|-
+! {{ItemSprite|Iron Pickaxe}} Iron ||
+| 6
+|-
+! {{ItemSprite|Diamond Pickaxe}} Diamond ||
+| 8
+|-
+! {{ItemSprite|Netherite Pickaxe}} Netherite ||
+| 9
+|-
+! {{ItemSprite|Golden Pickaxe}} Gold ||
+| 12
+|-
+! rowspan="4" | {{ItemSprite|Shears}} Shears ||
+| 2
+|-
+! {{BlockSprite|Wool}} Wool
+| 5
+|-
+! {{BlockSprite|Leaves}} Leaves
+| 15
+|-
+! {{BlockSprite|Cobweb}} Cobweb
+| 15
+|-
+! rowspan=3" |  {{ItemSprite|Sword}} Sword ||
+| 1.5
+|-
+! {{BlockSprite|Cobweb}} Cobweb
+| 15
+|-
+! {{BlockSprite|Bamboo}} Bamboo
+| 30
+|-
+|}
+
+If a proper tool is used, the tool speed is further increased by the [[Efficiency]] enchantment. If the level of Efficiency is not 0, then the level squared plus 1 is added to the tool speed. For example, Efficiency I adds 2 to the value, while Efficiency V adds 26. The speed is also increased by (20×level)% of [[Haste]] {{in|java}} or multiplied by (0.2×level+1)×(1.2<sup>level</sup>) {{in|bedrock}}.
+
+[[Mining Fatigue]] decreases the speed by multiplying by (0.3<sup>min(level,4)</sup>) {{in|java}} or by (0.3<sup>level</sup>)×(0.7<sup>level</sup>) {{in|bedrock}}. {{IN|java}}, increasing the effect level from II to III reduces the mining speed by a factor of 0.03 rather than 0.3.<ref name="MC-279819">{{Bug|MC-279819}}</ref> Therefore, with level III the speed is reduced to 0.0027× of normal speed instead.
+
+If the player's head is underwater and they are not wearing a helmet with the [[Aqua Affinity]] enchantment, breaking a block takes 5 times as long. If the player's feet are not touching the ground, an additional 5× penalty is added; this causes players floating in water to break blocks 25× slower than if they had been standing on land.
+
+The total time to break a block is always a multiple of {{frac|1|20}} of a second, or 1 game tick; any remainder is rounded up to the next tick.
+
+=== Instant breaking ===
+{{Main|Instant mining}}
+
+When breaking a block, a tool and its enchantments do its speed value as "damage" to a block every game tick, and when that value exceeds the block's hardness times 30, the block breaks. If the tool and enchantments immediately exceed the hardness times 30, the block breaks with no delay; otherwise a 6 tick ({{frac|3|10}} second) delay occurs before the next block begins to break.
+<!--Somehow a golden pickaxe with efficiency V and haste I doesn't break stone instantly in Bedrock Edition, although (12+26)*(1+0.2)=45.6, which is more than 1.5×30, and (1.5*1.5)/((12+26)*(1+0.2)) is approximately 0.049, which is below 0.05-->
+
+For example, a player with [[Haste]] II holding an [[Efficiency]] V [[diamond pickaxe]] (or [[netherite pickaxe]]) can break stone instantly, as the damage is ({{tooltip|8|A diamond pickaxe's base speed}}+{{tooltip|26|The boost from the efficiency enchantment.}})&times;{{tooltip|(1+0.4)|The Haste II multiplier}}=47.6, which is greater than the base hardness of stone (1.5) times 30 (which is 45). Players in [[Creative]] mode always break blocks instantly regardless of tools or status effects, except for when wielding a [[sword]], [[spear]], [[debug stick]], [[trident]] or a [[mace]], in which case the player is unable to break anything.
+
+=== Calculation ===
+Combining all of the information above yields the following pseudo-code to calculate how long in seconds a player takes to mine a certain block. All operations are floating-point, not integer.
+<pre<!--html pre-->>
+if (isBedrockEdition):
+  if (isBestTool):
+    speedMultiplier = toolMultiplier
+    if (not canHarvest):
+      speedMultiplier = 1
+    else if (toolEfficiency):
+      speedMultiplier += efficiencyLevel ^ 2 + 1
+  else:
+    speedMultiplier = 1
+else:
+  speedMultiplier = ''mining speed for block determined by the [[Data component format#tool|tool]] item component''
+  if (speedMultiplier > 1):
+    speedMultiplier += [[attribute]](mining_efficiency) # normally efficiencyLevel ^ 2 + 1
+
+if (haste or conduitPower):
+  speedMultiplier *= 0.2 * max(hasteLevel, conduitPowerLevel) + 1
+
+if (miningFatigue):
+  # In Java Edition, Mining Fatigue actually follows hardcoded values for levels I, II, III, and IV. They are 0.3, 0.09, 0.0027, and 0.00081 respectively.<ref name="MC-279819" />
+  speedMultiplier *= 0.3 ^ min(miningFatigueLevel, 4){{only|je}}
+  speedMultiplier *= 0.3 ^ miningFatigueLevel{{only|be}}
+
+speedMultiplier *= [[attribute]](block_break_speed){{only|je}} # normally 1
+
+if (inWater):
+  speedMultiplier *= [[attribute]](submerged_mining_speed){{only|je}} # normally 0.2, or 1 with aqua affinity
+   if (not hasAquaAffinity):
+     speedMultiplier /= 5{{only|be}}
+
+if (not onGround):
+  speedMultiplier /= 5
+
+damage = speedMultiplier / blockHardness
+
+if (canHarvest):
+  damage /= 30
+else:
+  damage /= 100
+
+if (haste or conduitPower):
+  damage *= 1.2 ^ max(hasteLevel, conduitPowerLevel){{only|be}}
+
+if (miningFatigue):
+  damage *= 0.7 ^ miningFatigueLevel{{only|be}}
+
+# Instant breaking
+if (damage >= 1):
+  return 0
+
+ticks = roundup(1 / damage)
+
+seconds = ticks / 20
+
+return seconds
+</pre<!-- Avoid parsoid lint error-->>
+
+=== Calculator ===
+The {{JE}} values follow hardcoded values for levels I, II, III, and IV.<ref name="MC-279819" />
+{{:Calculators/Breaking speed}}
+
+=== Best tools ===
+The following table shows the most efficient tools to break specific blocks.
+
+{| class="wikitable" data-description="Fastest tools"
+|-
+!width="10%"| Tool 
+!width="10%"| Material 
+!width="40%"| Blocks 
+!width="40%"| Notes
+|-
+| rowspan="2"|{{ItemLink|Bucket}}{{anchor|Bucket}}
+| Liquid{{anchor|Liquid}}
+|
+<div class="hlist">
+* {{BlockLink|Lava}}
+* {{BlockLink|Water}}
+</div>
+| Not actually broken. Liquids cannot be targeted at all.
+|-
+| Snow{{Anchor|Snow|Powder Snow|Snow (bucket)}}
+|
+<div class="hlist">
+* {{BlockLink|Powder Snow}}
+</div>
+| Can only be obtained with a bucket.
+|-
+| rowspan="3"| {{ItemLink|Axe}}{{anchor|Axe}}
+| Plants and fungi{{Anchor|Plants|Fungi}}
+|
+<div class="hlist">
+* {{BlockLink|Carved Pumpkin}}
+* {{BlockLink|Cocoa}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Jack o'Lantern}}
+* {{BlockLink|Melon}}
+* {{BlockLink|Mushroom Blocks|link=Mushroom Block}}
+* {{BlockLink|Pumpkin}}
+* {{BlockLink|Vines}}
+</div>
+| Shears are required to collect vines and glow lichen. Silk Touch is required for whole melons without crafting, and giant mushroom blocks.
+|-
+| Wood{{Anchor|Wood}}
+|
+<div class="hlist">
+* {{BlockLink|Block of Bamboo}}
+* {{BlockLink|Bamboo Mosaic}}
+* {{BlockLink|Banners}}
+* {{BlockLink|Barrel}}
+* {{BlockLink|Beehive}}
+* {{BlockLink|Bookshelf}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Cartography Table}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Chiseled Bookshelf}}
+* {{BlockLink|Composter}}
+* {{BlockLink|Crafting Table}}
+* {{BlockLink|Creaking Heart}}
+* {{BlockLink|Daylight Detector}}
+* {{BlockLink|id=oak fence|Fences}}
+* {{BlockLink|id=oak fence gate|Fence Gates}}
+* {{BlockLink|Fletching Table}}
+* {{BlockLink|id=oak-hanging-sign|Hanging Sign}}
+* {{BlockLink|Jukebox}}
+* {{BlockLink|Hyphae}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|id=oak log|Logs}}
+* {{BlockLink|Loom}}
+* {{BlockLink|Mangrove Roots}}
+* {{BlockLink|Note Block}}
+* {{BlockLink|id=oak planks|Planks}}
+* {{BlockLink|id=oak-sign|Sign}}
+* {{BlockLink|Soul Campfire}}
+* {{BlockLink|id=stem|Log|Stems}}
+* {{BlockLink|Smithing Table}}
+* {{BlockLink|Trapped Chest}}
+* {{BlockLink|id=oak wood|Wood}}
+* {{BlockLink|id=oak-button|Wooden Button|Wooden Buttons}}
+* {{ItemLink|id=oak-door|Wooden Door|Wooden Doors}}
+* {{BlockLink|id=oak pressure plate|Wooden Pressure Plate|Wooden Pressure Plates}}
+* {{BlockLink|id=oak-slab|Slabs|Wooden Slabs}}
+* {{BlockLink|id=oak-stairs|Wooden Stairs}}
+* {{BlockLink|id=oak trapdoor|Wooden Trapdoor|Wooden Trapdoors}}
+</div>
+| Bookshelves, campfires, soul campfires, chiseled bookshelves and creaking hearts require Silk Touch to drop as an item.
+|-
+| Bees{{anchor|Bees}}
+|
+<div class="hlist">
+* {{BlockLink|Bee Nest}}
+* {{BlockLink|Beehive}}
+</div>
+| Nests require Silk Touch to drop as an item.
+|-
+| rowspan="12" |{{ItemLink|Pickaxe}}{{anchor|Pickaxe}}
+| Ice{{anchor|Ice}}
+|
+<div class="hlist">
+* {{BlockLink|Ice}}
+* {{BlockLink|Packed Ice}}
+* {{BlockLink|Blue Ice}}
+</div>
+| All require Silk Touch to drop as an item.
+|-
+| Metal I{{anchor|Metal I|Metal}}
+|
+<div class="hlist">
+* {{BlockLink|Anvil}}
+* {{BlockLink|Bell}}
+* {{BlockLink|Block of Redstone}}
+* {{BlockLink|Brewing Stand}}
+* {{BlockLink|Cauldron}}
+* {{BlockLink|Deprecated Anvil}}{{only|bedrock|short=1}}
+* {{BlockLink|Hopper}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Iron Chain}}
+* {{BlockLink|Iron Door}}
+* {{BlockLink|Iron Trapdoor}}
+* {{BlockLink|Lantern}}
+* {{BlockLink|Soul Lantern}}
+* {{BlockLink|Light Weighted Pressure Plate}}
+* {{BlockLink|Heavy Weighted Pressure Plate}}
+</div>
+| Any pickaxe is required to collect a block.
+|-
+| Metal II{{anchor|Metal II}}
+|
+<div class="hlist">
+* {{BlockLink|id=copper-blocks|Block of Copper}}
+* {{BlockLink|Block of Iron}}
+* {{BlockLink|Block of Lapis Lazuli}}
+* {{BlockLink|id=all-cut-copper|Cut Copper}}
+* {{BlockLink|id=cut-copper-slabs|Cut Copper Slab}}
+* {{BlockLink|id=all-cut-copper-stairs|Cut Copper Stairs}}
+* {{BlockLink|Lightning Rod}}
+* {{BlockLink|Copper Chest}}
+</div>
+| Stone, copper, iron, diamond, or netherite pickaxe is required to collect a block.
+|-
+| Metal III{{anchor|Metal III}}
+|
+<div class="hlist">
+* {{BlockLink|Block of Diamond}}
+* {{BlockLink|Block of Emerald}}
+* {{BlockLink|Block of Gold}}
+</div>
+| Iron, diamond, or netherite pickaxe is required to collect a block.
+|-
+| Metal IV{{anchor|Metal IV}}
+|
+<div class="hlist">
+* {{BlockLink|Block of Netherite}}
+</div>
+| Diamond or netherite pickaxe is required to collect a block.
+|-
+| Chemistry equipment {{only|bedrock|education|short=0}}{{anchor|Chemistry equipment|Chemistry}}
+|
+<div class="hlist">
+* {{BlockLink|Compound Creator}}
+* {{BlockLink|Element Constructor}}
+* {{BlockLink|Material Reducer}}
+* {{BlockLink|Lab Table}}
+</div>
+| These blocks, except lab table, can be mined without a pickaxe, but it takes a long time.
+|-
+| Rails{{anchor|Rail|Rails}}
+|
+<div class="hlist">
+* {{BlockLink|Activator Rail}}
+* {{BlockLink|Detector Rail}}
+* {{BlockLink|Powered Rail}}
+* {{BlockLink|Rail}}
+</div>
+| 
+|-
+| Rock I{{anchor|Rock|Rock I}}
+|
+<div class="hlist">
+* {{BlockLink|Amethyst Bud}}
+* {{BlockLink|Amethyst Cluster}}
+* {{BlockLink|Andesite}}
+* {{BlockLink|Basalt}}
+* {{BlockLink|Polished Basalt}}
+* {{BlockLink|Smooth Basalt}}
+* {{BlockLink|Blackstone}}
+* {{BlockLink|Blast Furnace}}
+* {{BlockLink|Block of Amethyst}}
+* {{BlockLink|Block of Coal}}
+* {{BlockLink|Block of Quartz}}
+* {{BlockLink|Bone Block}}
+* {{BlockLink|Bricks}}
+* {{BlockLink|Budding Amethyst}}
+* {{BlockLink|Chiseled Purpur}}{{only|bedrock|short=1}}
+* {{BlockLink|Coal Ore}}
+* {{BlockLink|Cobbled Deepslate}}
+* {{BlockLink|Cobblestone}}
+* {{BlockLink|Concrete}}
+* {{BlockLink|Coral Blocks}}
+* {{BlockLink|Dark Prismarine}}
+* {{BlockLink|Dead Coral Blocks}}
+* {{BlockLink|Deepslate}}
+* {{BlockLink|Deepslate Coal Ore}}
+* {{BlockLink|id=Deprecated purpur block 2|tile.deprecated_purpur_block_2.name}}{{only|bedrock|short=1}}
+* {{BlockLink|Diorite}}
+* {{BlockLink|Dispenser}}
+* {{BlockLink|Dripstone Block}}
+* {{BlockLink|Dropper}}
+* {{BlockLink|Enchanting Table}}
+* {{BlockLink|End Stone}}
+* {{BlockLink|Ender Chest}}
+* {{BlockLink|Furnace}}
+* {{BlockLink|Gilded Blackstone}}
+* {{BlockLink|Glazed Terracotta}}
+* {{BlockLink|Granite}}
+* {{BlockLink|Grindstone}}
+* {{BlockLink|Heat Block}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Lodestone}}
+* {{BlockLink|Monster Spawner}}
+* {{BlockLink|Mossy Cobblestone}}
+* {{BlockLink|Mossy Stone Bricks}}
+* {{BlockLink|Mud Bricks}}
+* {{BlockLink|Nether Bricks}}
+* {{BlockLink|Nether Brick Fence}}
+* {{BlockLink|Nether Gold Ore}}
+* {{BlockLink|Nether Quartz Ore}}
+* {{BlockLink|Netherrack}}
+* {{BlockLink|Observer}}
+* {{BlockLink|Packed Mud}}
+* {{BlockLink|Prismarine}}
+* {{BlockLink|Prismarine Bricks}}
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Polished Andesite}}
+* {{BlockLink|Polished Blackstone}}
+* {{BlockLink|Polished Blackstone Bricks}}
+* {{BlockLink|Polished Blackstone Button}}
+* {{BlockLink|Polished Blackstone Pressure Plate}}
+* {{BlockLink|Polished Diorite}}
+* {{BlockLink|Polished Granite}}
+* {{BlockLink|Purpur Block}}
+* {{BlockLink|Red Sandstone}}
+* {{BlockLink|Resin Bricks}}
+* {{BlockLink|Sandstone}}
+* {{BlockLink|Smoker}}
+* {{BlockLink|Stonecutter}}
+* {{BlockLink|id=slabs|Slabs}} (non-wooden)
+* {{BlockLink|Smooth Stone}}
+* {{BlockLink|Smooth Stone Bricks}}{{only|bedrock|short=1}}
+* {{BlockLink|Stained Terracotta}}
+* {{BlockLink|Stairs}} (non-wooden)
+* {{BlockLink|Stone}}
+* {{BlockLink|Stone Bricks}}
+* {{BlockLink|Stone Button}}
+* {{BlockLink|Stone Pressure Plate}}
+* {{BlockLink|Terracotta}}
+* {{BlockLink|Walls}}
+</div>
+| Pickaxe is required to collect a block, except for buttons, packed mud, and pointed dripstone.<br>Mining a monster spawner with a pickaxe drops 15-43 experience, but the monster spawner itself does not drop, even with Silk Touch. <br>[[Budding amethyst]] cannot be collected, even with Silk Touch.<br>For amethyst buds, amethyst clusters, ender chests, coral blocks, coal ore, deepslate coal ore, nether quartz ore, nether gold ore, deepslate, and stone to drop themselves, they must be mined with a pickaxe enchanted with Silk Touch.<br>Gilded blackstone has a chance to drop [[golden nugget]]s.
+|-
+| Rock II{{anchor|Rock II}}
+|
+<div class="hlist">
+* {{BlockLink|Block of Raw Copper}}
+* {{BlockLink|Block of Raw Iron}}
+* {{BlockLink|Copper Ore}}
+* {{BlockLink|Deepslate Copper Ore}}
+* {{BlockLink|Deepslate Iron Ore}}
+* {{BlockLink|Deepslate Lapis Lazuli Ore}}
+* {{BlockLink|Iron Ore}}
+* {{BlockLink|Lapis Lazuli Ore}}
+</div>
+| Stone, copper, iron, diamond, or netherite pickaxe is required to collect a block.<br>For the copper ore, deepslate copper ore, lapis lazuli ore, deepslate lapis lazuli ore, iron ore, and deepslate iron ore, Silk Touch is needed to collect the blocks themselves, or they drop their respective minerals.
+|-
+| Rock III{{anchor|Rock III}}
+|
+<div class="hlist">
+* {{BlockLink|Block of Raw Gold}}
+* {{BlockLink|Deepslate Diamond Ore}}
+* {{BlockLink|Deepslate Emerald Ore}}
+* {{BlockLink|Deepslate Gold Ore}}
+* {{BlockLink|Deepslate Redstone Ore}}
+* {{BlockLink|Diamond Ore}}
+* {{BlockLink|Emerald Ore}}
+* {{BlockLink|Gold Ore}}
+* {{BlockLink|Redstone Ore}}
+</div>
+| Iron, diamond, or netherite pickaxe is required to obtain drops. With the exception of the block of raw gold, a Silk Touch pickaxe is required to collect the ores themselves, or they drop their respective minerals.
+|-
+| Rock IV{{anchor|Rock IV}}
+|
+<div class="hlist">
+* {{BlockLink|Ancient Debris}}
+* {{BlockLink|Crying Obsidian}}
+* {{BlockLink|Glowing Obsidian}}{{only|bedrock|short=1}}
+* {{BlockLink|Obsidian}}
+* {{BlockLink|Respawn Anchor}}
+</div>
+| Diamond or netherite pickaxe is required to collect a block. For glowing obsidian, Silk Touch is needed to collect the block, or it drops regular obsidian.
+|-
+| Other
+|
+<div class="hlist">
+* {{BlockLink|Piston}}
+* {{BlockLink|Sticky Piston}}
+* {{BlockLink|Conduit}}
+* {{BlockLink|Shulker Box}}
+* {{BlockLink|id=shulker boxes|Dyed Shulker Box}}
+</div>
+| These can be collected without a tool, but pickaxes mine faster.
+|-
+| rowspan="3" |{{ItemLink|Shears}}{{anchor|Shears}}
+| Leaves{{anchor|Leaves}}
+| {{BlockLink|id=oak leaves|Leaves}}
+|
+<div class="hlist">
+* Shears or any Silk Touch-enchanted tools are required to collect leaves.<br>Leaves drop their alternative items if any other tool is used.
+</div>
+|-
+| Cobweb{{anchor|Cobweb|Cobweb (shears)}}
+|
+<div class="hlist">
+* {{BlockLink|Cobweb}}
+</div>
+| Can also be washed away by water.<br>Sword or water is required to collect string. Shears or Silk Touch enchantment are required to collect cobweb.
+|-
+|Wool{{anchor|Wool}}
+|
+<div class="hlist">
+* {{BlockLink|Wool}}
+</div>
+|
+|-
+|rowspan="2"| {{ItemLink|Shovel}}{{anchor|Shovel}}
+| Ground{{anchor|Ground}}
+|
+<div class="hlist">
+* {{BlockLink|Clay}}
+* {{BlockLink|Coarse Dirt}}
+* {{BlockLink|Concrete Powder}}
+* {{BlockLink|Dirt}}
+* {{BlockLink|Dirt Path}}
+* {{BlockLink|Farmland}}
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Gravel}}
+* {{BlockLink|Mud}}
+* {{BlockLink|Muddy Mangrove Roots}}
+* {{BlockLink|Mycelium}}
+* {{BlockLink|Podzol}}
+* {{BlockLink|Red Sand}}
+* {{BlockLink|Rooted Dirt}}
+* {{BlockLink|Sand}}
+* {{BlockLink|Soul Sand}}
+* {{BlockLink|Soul Soil}}
+* {{BlockLink|Suspicious Gravel}}
+* {{BlockLink|Suspicious Sand}}
+</div>
+| Silk Touch-enchanted tools are required to collect clay, grass blocks, mycelium and podzol; otherwise it drops 4 clay balls for clay and dirt for the rest. Silk Touch-enchanted tools are also required to collect dirt path blocks, otherwise it drops dirt.{{only|bedrock|education|short=1}}Dirt path always drop dirt {{in|java}}, even with Silk Touch-enchanted tools.<br>Farmland always drop dirt when mined, even with Silk Touch.<br>Suspicious sand and suspicious gravel cannot be obtained through mining, even with Silk Touch.
+|- 
+| Snow{{anchor|Snow 2|Snow (shovel)}}
+|
+<div class="hlist">
+* {{BlockLink|Snow}}
+* {{BlockLink|Snow Block}}
+</div>
+| Shovel is required to collect snowballs from snow-type blocks, and Silk Touch-enchanted shovels are required to collect the block themselves. {{only|java|short=1}}<br>Snow always drop snowballs in ''Bedrock Edition'', even with Silk Touch-enchanted tools.<br>
+|-
+|rowspan="3"| {{ItemLink|Sword}}{{anchor|Sword}}
+| Cobweb{{anchor|Cobweb 2|Cobweb (sword}}
+|
+<div class="hlist">
+* {{BlockLink|Cobweb}}
+</div>
+| Can also be washed away by water.<br>Sword or water is required to collect string. Shears or Silk Touch enchantment are required to collect cobweb.
+|-
+| Plants{{anchor|Plants (sword)}}
+|
+<div class="hlist">
+* {{BlockLink|Bamboo}}
+</div>
+| Damages the sword twice per bamboo broken.
+|-
+| Other
+|
+<div class="hlist">
+* {{BlockLink|id=infested-blocks|Infested Block}}{{only|bedrock|short=1}}
+</div>
+| Infested blocks cannot be obtained in Survival, even with [[Silk Touch]].
+|-
+|{{ItemLink|Hoe}}{{anchor|Hoe}}
+| Plants, sponges and fungi{{anchor|Plants 2|Plants (hoe)|Sponges}}
+|
+<div class="hlist">
+* {{BlockLink|Calibrated Sculk Sensor}}
+* {{BlockLink|Hay Bale}}
+* {{BlockLink|id=oak leaves|Leaves}}
+* {{BlockLink|Moss Block}}
+* {{BlockLink|Moss Carpet}}
+* {{BlockLink|Nether Wart Block}}
+* {{BlockLink|Pale Moss Block}}
+* {{BlockLink|Sculk}}
+* {{BlockLink|Sculk Catalyst}}
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Sculk Shrieker}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Shroomlight}}
+* {{BlockLink|Sponge}}
+* {{BlockLink|Target}}
+* {{BlockLink|Warped Wart Block}}
+* {{BlockLink|Wet Sponge}}
+</div>
+| Shears or any Silk Touch enchanted tool are required to collect leaves.<br>Silk Touch is required to mine sculk-related blocks, or they drop experience. Sculk veins drop no experience.
+|-
+| rowspan="4" |''Any'' (all tools are equally efficient){{anchor|Any}}
+| Circuits{{anchor|Circuits}}
+|
+<div class="hlist">
+* {{BlockLink|Lever}}
+</div>
+| Can also be destroyed by liquids.
+|-
+| Glass{{anchor|Glass}}
+|
+<div class="hlist">
+* {{BlockLink|Beacon}}
+* {{BlockLink|Glass}}
+* {{BlockLink|Glass Pane}}
+* {{BlockLink|Glowstone}}
+* {{BlockLink|Hardened Glass}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Hardened Glass Pane}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Hardened Stained Glass}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Hardened Stained Glass Panes|link=Hardened Stained Glass Pane}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Redstone Lamp}}
+* {{BlockLink|Sea Lantern}}
+* {{BlockLink|Stained Glass}}
+* {{BlockLink|Stained Glass Panes|link=Stained Glass Pane}}
+</div>
+| For glass, glass panes, glowstone, sea lanterns, stained glass and stained glass panes to drop themselves, they must be mined with a tool enchanted with Silk Touch.
+|-
+| Plants{{Anchor|Plants 3|Plants (any)}}
+|
+<div class="hlist">
+* {{BlockLink|Cactus}}
+</div>
+| In [[Adventure]] mode, the [[sand]] block underneath the cactus is required to be broken with a shovel for the cactus to be broken.
+|-
+| Other
+|
+<div class="hlist">
+* {{BlockLink|id=beds|Bed}}
+* {{BlockLink|Cake}}
+* {{BlockLink|Carpets|link=Carpet}}
+* {{BlockLink|Dragon Egg}}
+* {{BlockLink|Froglight}}
+* {{BlockLink|Frosted Ice}}
+* {{BlockLink|Heads}}
+* {{BlockLink|Honeycomb Block}}
+* {{BlockLink|info_update}}{{only|bedrock|short=1}}
+* {{BlockLink|info_update2}}{{only|bedrock|short=1}}
+* {{BlockLink|Reinforced Deepslate}}
+* {{BlockLink|Sniffer Egg}}
+* {{BlockLink|Turtle Egg}}
+* {{BlockLink|Trial Spawner}}
+* {{BlockLink|Ominous Trial Spawner}}
+* {{BlockLink|Vault}}
+* {{BlockLink|Ominous Vault}}
+</div>
+| Carpet can also be washed away by water.<br>Dragon eggs cannot usually be mined directly because hitting it causes it to teleport. Mining is possible only if its entire teleportation radius is filled with blocks.<br>Turtle eggs must be mined with Silk Touch.<br>Frosted ice, reinforced deepslate, trial spawners and vaults never drop as an item, even with Silk Touch.<br>Cake cannot be obtained after being placed, even with Silk Touch.
+|-
+| rowspan="3" |''Any'' (instantly breaks; doesn't make tools lose durability){{anchor|Any 2|Instant|Insta-mine|Instamine}}
+| Redstone components
+|
+<div class="hlist">
+* {{BlockLink|Redstone Comparator}}
+* {{BlockLink|Redstone Repeater}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Redstone Dust}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Tripwire Hook}}
+</div>
+| These blocks can also be washed away by [[liquids]].{{only|java|short=1}}<br />Breaking tripwire without shears causes the mechanism to turn on and off quickly.
+|-
+| Plants, corals and fungi
+|
+<div class="hlist">
+* {{BlockLink|Azalea}}
+* {{BlockLink|Beetroots}}
+* {{BlockLink|Bush}}
+* {{BlockLink|Cactus Flower}}
+* {{BlockLink|Carrots}}
+* {{BlockLink|Coral}}
+* {{BlockLink|Coral Fans}}
+* {{BlockLink|Dead Bush}}
+* {{BlockLink|Dead Coral}}
+* {{BlockLink|Dead Coral Fans}}
+* {{BlockLink|id=fern|Grass|Fern}}
+* {{BlockLink|Firefly Bush}}
+* {{BlockLink|Flowers}}
+* {{BlockLink|Hanging Roots}}
+* {{BlockLink|Kelp}}
+* {{BlockLink|Leaf Litter}}
+* {{BlockLink|Lily Pad}}
+* {{BlockLink|Mangrove Propagule}}
+* {{BlockLink|Melon Stem}}
+* {{BlockLink|Mushrooms}}
+* {{BlockLink|Nether Sprouts}}
+* {{BlockLink|Nether Fungi|link=Nether Fungus}}
+* {{BlockLink|Nether Wart}}
+* {{BlockLink|Pink Petals}}
+* {{BlockLink|Pitcher Plant}}
+* {{BlockLink|Potatoes}}
+* {{BlockLink|Pumpkin Stem}}
+* {{BlockLink|Crimson Roots}}
+* {{BlockLink|Warped Roots}}
+* {{BlockLink|Saplings}}
+* {{BlockLink|Seagrass}}
+* {{BlockLink|Sea Pickle}}
+* {{BlockLink|Short Dry Grass}}
+* {{BlockLink|Short Grass}}
+* {{BlockLink|Spore Blossom}}
+* {{BlockLink|Sugar Cane}}
+* {{BlockLink|Sweet Berry Bush}}
+* {{BlockLink|Tall Dry Grass}}
+* {{BlockLink|Tall Grass}}
+* {{BlockLink|Tall Seagrass}}
+* {{BlockLink|Large Fern}}
+* {{BlockLink|id=twisting-vines-plant|Twisting Vines}}
+* {{BlockLink|id=weeping-vines-plant|Weeping Vines}}
+* {{BlockLink|Wheat|link=Wheat Seeds}}
+* {{BlockLink|Wildflowers}}
+</div>
+| These blocks, except sugar cane, mangrove propagules, kelp, seagrass, tall seagrass, sea pickles, and non-solid coral blocks, can be washed out by [[water]].<br>Ferns, large ferns, grass and tall grass must be mined with shears; or they randomly drop seeds.
+Seagrass, bushes, short dry grass, tall dry grass and nether sprouts drop nothing when mined without shears. 
+Tall grass, tall seagrass, and large ferns drop two of their respective plant when mined with shears.<br>Dead bushes must be mined with shears to drop themselves; if anything else is used, only sticks drop.<br>Hanging roots can only be obtained with Silk Touch{{only|bedrock|short=1}} or shears.<br>Twisting vines and weeping vines have a 2/3 chance to drop nothing if mined without Silk Touch, shears, or [[Fortune]].<br>Wheat, carrots, potatoes, beetroot, melon stem, and pumpkin stem are [[technical blocks]], and cannot be obtained in the inventory at all.{{only|java|short=1}}
+|-
+| Other
+|
+<div class="hlist">
+* {{BlockLink|Colored Torch|Colored Torches|id=colored-torches}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Decorated Pot}}
+* {{BlockLink|Elements|Element|id=unknown-element}}{{only|bedrock|education|short=1}}
+* {{BlockLink|End Rod}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Flower Pot}}
+* {{BlockLink|Frogspawn}}
+* {{BlockLink|Honey Block}}
+* {{BlockLink|id=infested-blocks|Infested Block}}{{only|java|short=1}}
+* {{BlockLink|Reserved6}}{{only|bedrock|short=1}}
+* {{BlockLink|Scaffolding}}{{only|java|short=1}}
+* {{BlockLink|Slime Block}}
+* {{BlockLink|Soul Fire}}
+* {{BlockLink|Soul Torch}}
+* {{BlockLink|Structure Void}}
+* {{BlockLink|TNT}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Underwater TNT}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Underwater Torch}}{{only|bedrock|education|short=1}}
+* {{BlockLink|id=reserved6|Unknown}}{{only|bedrock|short=1}}
+</div>
+| Flower pots, torches, soul torches, colored torches, underwater torches, and frogspawn can be washed out by water.<br>Infested blocks and frogspawn cannot be obtained in Survival, even with Silk Touch.<br>Decorated pots drop their respective sherds and bricks when mined with a tool not enchanted with Silk Touch, but not by any other method.<br>Fire and soul fire are technical blocks, and cannot be obtained in the inventory at all.{{only|java|short=1}}
+|-
+|rowspan="2"|''None'' (unbreakable)
+{{Anchor|Unbreakable|Indestructible}}
+| Commands only
+|
+<div class="hlist">
+* {{BlockLink|Allow}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Barrier}}
+* {{BlockLink|Border}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Chain Command Block}}
+* {{BlockLink|Command Block}}
+* {{BlockLink|Deny}}{{only|bedrock|education|short=1}}
+* {{BlockLink|Jigsaw Block}}
+* {{BlockLink|Light Block}}
+* {{BlockLink|Repeating Command Block}}
+* {{BlockLink|Structure Block}}
+* {{BlockLink|Test Block}}{{only|java|short=1}}
+* {{BlockLink|Test Instance Block}}{{only|java|short=1}}
+</div>
+| Light blocks cannot be targeted if a light block is not held.
+|-
+| Other
+|
+<div class="hlist">
+* {{BlockLink|Air}}
+* {{BlockLink|Bedrock}}
+* {{BlockLink|Bubble Column}}
+* {{BlockLink|Cave Air}}{{only|java|short=1}}
+* {{BlockLink|Client Request Placeholder Block}}{{only|bedrock|short=1}}
+* {{BlockLink|End Gateway}}
+* {{BlockLink|id=end-portal|link=End Portal (block)|End Portal}}
+* {{BlockLink|End Portal Frame}}
+* {{BlockLink|Invisible Bedrock}}{{only|bedrock|education|short=1}}
+* {{BlockLink|link=Nether Portal (block)|Nether Portal}}
+* {{BlockLink|Void Air}}{{only|java|short=1}}
+</div>
+| Nether portal can be broken by placing water or lava in place of it, or by [[explosion]]s. Air, bubble column, cave air, end gateway, end portal, nether portal, and void air are technical blocks, and cannot be obtained in the inventory at all.{{Only|Java|short=1}}
+|}
+
+== Blocks by hardness ==
+{{info needed section|the table is missing some seemingly arbitrary blocks}}
+{{Hatnote|"Hardness" redirects here. Not to be confused with [[Harness]].}}
+The following table shows the time it takes to break each type of block. If there is no tool that helps speed up mining that block, the "tool" column is left empty. A few blocks are harvested faster with shears or a sword; these speeds are listed in the last two columns if different than "nothing". Any blocks with a breaking time of 0.05 seconds or less can be broken without the {{frac|3|10}} second (or 6 ticks) delay that occurs between each broken block; see [[#Instant breaking|instant breaking]] above. Any block that has a hardness of infinity ∞ actually has a hardness of -1. However, the breaking ticks start from 0, which means that effectively it can never break. 
+
+'''Legend''':
+* {{legend|#ffc7ce|incorrect tool, drops nothing}}
+* {{legend|#ffffde|correct tool, drops nothing or something other than the block itself}}
+* {{legend|#c6efce|correct tool, drops the block itself}}
+* ''italicized'' can be [[instant mined]]
+
+<!-- Is this what it means?--> <!--According to a video by AntVenom, -1 is interpreted fundamentally differently from this in the code.-->
+<!--can someone please move some of the ones at the top to more fitting places?-->
+[<nowiki/>[[Special:Edit/Module:Hardness values|edit values]]]
+<div style="overflow: auto">
+<!-- -1 -->
+{{breaking row|Allow|sort=1}}
+{{breaking row|Barrier}}
+{{breaking row|Bedrock}}
+{{breaking row|Border}}
+{{breaking row|Client_request_placeholder_block|sprite=Air}}
+{{breaking row|Command Block}}
+{{breaking row|Chain Command Block}}
+{{breaking row|Deny}}
+{{breaking row|End Gateway|link=End Gateway (block)}}
+{{breaking row|End Portal|link=End Portal (block)}}
+{{breaking row|End Portal Frame}}
+{{breaking row|Invisible Bedrock}}
+{{breaking row|Jigsaw Block}}
+{{breaking row|Light|link=Light (block)}}
+{{breaking row|Moving Piston}}
+{{breaking row|Nether Portal|link=Nether Portal (block)}}
+{{breaking row|Repeating Command Block}}
+{{breaking row|Structure Block}}
+{{breaking row|Test Block}}
+{{breaking row|Test Instance Block}}
+<!-- 100 -->
+{{breaking row|Lava|note={{note|name=untargetable|These blocks cannot be targeted (the block behind them is mined instead), so they cannot be broken, even though in code they have a finite hardness.}}}}
+{{breaking row|Water|note={{note|name=untargetable}}}}
+<!-- 55 -->
+{{breaking row|Reinforced Deepslate|drop=0}}
+<!-- 50 -->
+{{breaking row|Block of Netherite|Pickaxe|Diamond}}
+{{breaking row|Crying Obsidian|Pickaxe|Diamond}}
+{{breaking row|Obsidian|Pickaxe|Diamond}}
+{{breaking row|Respawn Anchor|Pickaxe|Diamond}}
+{{breaking row|Trial Spawner|drop=0}}
+{{breaking row|Vault|drop=0}}
+<!-- 35 -->
+{{breaking row|Glowing Obsidian|Pickaxe|Diamond}}
+<!-- 30 -->
+{{breaking row|Ancient Debris|Pickaxe|Diamond}}
+<!-- 22.5 -->
+{{breaking row|Ender Chest|Pickaxe|drop=0}}
+<!-- 10 -->
+{{breaking row|Creaking Heart|Axe|drop=0}}
+{{breaking row|Hardened Glass}}
+{{breaking row|Hardened Glass Pane}}
+{{breaking row|Hardened Stained Glass}}
+{{breaking row|Hardened Stained Glass Pane|sprite=hardened stained glass panes}}
+{{breaking row|Heavy Core|Pickaxe}}
+<!-- 5 -->
+{{breaking row|Anvil|Pickaxe|Wood}}
+{{breaking row|Bell|Pickaxe}}
+{{breaking row|Block of Coal|Pickaxe|Wood}}
+{{breaking row|Block of Diamond|Pickaxe|Iron}}
+{{breaking row|Block of Emerald|Pickaxe|Iron}}
+{{breaking row|Block of Iron|Pickaxe|Stone}}
+{{breaking row|Block of Raw Copper|Pickaxe|Stone}}
+{{breaking row|Block of Raw Iron|Pickaxe|Stone}}
+{{breaking row|Block of Raw Gold|Pickaxe|Iron}}
+{{breaking row|Block of Redstone|Pickaxe|Wood}}
+{{breaking row|Copper Bars|Pickaxe|Wood}}
+{{breaking row|Copper Chain|Pickaxe|Wood}}
+{{breaking row|Deprecated Anvil|Pickaxe|Wood}}
+{{breaking row|Enchanting Table|Pickaxe|Wood}}
+{{breaking row|Iron Bars|Pickaxe|Wood}}
+{{breaking row|Iron Chain|Pickaxe|Wood}}
+{{breaking row|Iron Door|Pickaxe|item=1}}
+{{breaking row|Iron Trapdoor|Pickaxe|Wood}}
+{{breaking row|Monster Spawner|Pickaxe|Wood|drop=0}}
+<!-- 4.5 -->
+{{breaking row|Deepslate Coal Ore|Pickaxe|Wood|drop=0}}
+{{breaking row|Deepslate Copper Ore|Pickaxe|Stone|drop=0}}
+{{breaking row|Deepslate Diamond Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Deepslate Emerald Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Deepslate Gold Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Deepslate Iron Ore|Pickaxe|Stone|drop=0}}
+{{breaking row|Deepslate Lapis Lazuli Ore|Pickaxe|Stone|drop=0}}
+{{breaking row|Deepslate Redstone Ore|Pickaxe|Iron|drop=0}}
+<!-- 4 -->
+{{breaking row|Cobweb|None|shears=1|sword=1}}
+<!-- 3.5 -->
+{{breaking row|Blast Furnace|Pickaxe|Wood}}
+{{breaking row|Chiseled Deepslate|Pickaxe|Wood}}
+{{breaking row|Cobbled Deepslate|Pickaxe|Wood}}
+{{breaking row|Cobbled Deepslate Slab|Pickaxe|Wood}}
+{{breaking row|Cobbled Deepslate Stairs|Pickaxe|Wood}}
+{{breaking row|Cobbled Deepslate Wall|Pickaxe|Wood}}
+{{breaking row|Copper Lantern|Pickaxe}}
+{{breaking row|Cracked Deepslate Bricks|Pickaxe|Wood}}
+{{breaking row|Cracked Deepslate Tiles|Pickaxe|Wood}}
+{{breaking row|Deepslate Brick Slab|Pickaxe|Wood}}
+{{breaking row|Deepslate Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Deepslate Brick Wall|Pickaxe|Wood}}
+{{breaking row|Deepslate Bricks|Pickaxe|Wood}}
+{{breaking row|Deepslate Tiles|Pickaxe|Wood}}
+{{breaking row|Deepslate Tile Slab|Pickaxe|Wood}}
+{{breaking row|Deepslate Tile Stairs|Pickaxe|Wood}}
+{{breaking row|Deepslate Tile Wall|Pickaxe|Wood}}
+{{breaking row|Dispenser|Pickaxe|Wood}}
+{{breaking row|Dropper|Pickaxe|Wood}}
+{{breaking row|Furnace|Pickaxe|Wood}}
+{{breaking row|Lantern|Pickaxe}}
+{{breaking row|Lodestone|Pickaxe|Wood}}
+{{breaking row|Polished Deepslate|Pickaxe|Wood}}
+{{breaking row|Polished Deepslate Slab|Pickaxe|Wood}}
+{{breaking row|Polished Deepslate Stairs|Pickaxe|Wood}}
+{{breaking row|Polished Deepslate Wall|Pickaxe|Wood}}
+{{breaking row|Smoker|Pickaxe|Wood}}
+{{breaking row|Soul Lantern|Pickaxe}}
+{{breaking row|Stonecutter|Pickaxe|Wood}}
+<!-- 3 -->
+{{breaking row|Beacon}}
+{{breaking row|Block of Copper|sprite=all-copper-blocks|Pickaxe|Stone}}
+{{breaking row|Block of Gold|Pickaxe|Iron}}
+{{breaking row|Block of Lapis Lazuli|Pickaxe|Stone}}
+{{breaking row|Chiseled Copper|Pickaxe|Stone}}
+{{breaking row|Coal Ore|Pickaxe|Wood|drop=0}}
+{{breaking row|Conduit|Pickaxe}}
+{{breaking row|Copper Bulb|Pickaxe|Stone}}
+{{breaking row|Copper Chest|Pickaxe|Stone}}
+{{breaking row|Copper Door|Pickaxe}}
+{{breaking row|Copper Grate|Pickaxe|Stone}}
+{{breaking row|Copper Golem Statue|Pickaxe}}
+{{breaking row|Copper Ore|Pickaxe|Stone|drop=0}}
+{{breaking row|Copper Trapdoor|Pickaxe|Stone}}
+{{breaking row|Cut Copper|sprite=all-cut-copper|Pickaxe|Stone}}
+{{breaking row|Cut Copper Slab|sprite=all-cut-copper-slabs|Pickaxe|Stone}}
+{{breaking row|Cut Copper Stairs|sprite=all-cut-copper-stairs|Pickaxe|Stone}}
+{{breaking row|Deepslate|Pickaxe|Wood|drop=0}}
+{{breaking row|Diamond Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Dragon Egg
+ |note={{note|The dragon egg can be broken directly only when there aren't any air blocks available for it to teleport to. However, the dragon egg can be collected by other means.}}}}
+{{breaking row|Emerald Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|End Stone|Pickaxe|Wood}}
+{{breaking row|End Stone Brick Slab|Pickaxe|Wood}}
+{{breaking row|End Stone Brick Stairs|Pickaxe|Wood}}
+{{breaking row|End Stone Brick Wall|Pickaxe|Wood}}
+{{breaking row|End Stone Bricks|Pickaxe|Wood}}
+{{breaking row|Gold Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Hopper|Pickaxe|Wood}}
+{{breaking row|Iron Ore|Pickaxe|Stone}}
+{{breaking row|Lapis Lazuli Ore|Pickaxe|Stone|drop=0}}
+{{breaking row|Lightning Rod|Pickaxe|Stone}}
+{{breaking row|Nether Gold Ore|Pickaxe|drop=0|Wood}}
+{{breaking row|Nether Quartz Ore|Pickaxe|drop=0|Wood}}
+{{breaking row|Nether Reactor Core|Pickaxe|Wood}}
+{{breaking row|Observer|Pickaxe|Wood}}
+{{breaking row|Redstone Ore|Pickaxe|Iron|drop=0}}
+{{breaking row|Sculk Catalyst|Hoe|drop=0}}
+{{breaking row|Sculk Shrieker|Hoe|drop=0}}
+{{breaking row|Wooden Door|Axe|item=1|sprite=oak door}}
+{{breaking row|Wooden Trapdoor|Axe|sprite=oak trapdoor}}
+<!-- 2.8 -->
+{{breaking row|Blue Ice|Pickaxe|drop=0}}
+<!-- 2.5 -->
+{{breaking row|Barrel|Axe}}
+{{breaking row|Cartography Table|Axe}}
+{{breaking row|Chest|Axe}}
+{{breaking row|Compound Creator|Pickaxe}}
+{{breaking row|Crafting Table|Axe}}
+{{breaking row|Element Constructor|Pickaxe}}
+{{breaking row|Fletching Table|Axe}}
+{{breaking row|Heat Block|Pickaxe|Wood}}
+{{breaking row|Lab Table|Pickaxe}}
+{{breaking row|Lectern|Axe}}
+{{breaking row|Loom|Axe}}
+{{breaking row|Material Reducer|Pickaxe}}
+{{breaking row|Smithing Table|Axe}}
+{{breaking row|Trapped Chest|Axe}}
+<!-- 2 -->
+{{breaking row|Bamboo Mosaic|Axe}}
+{{breaking row|Bamboo Mosaic Stairs|Axe}}
+{{breaking row|Bamboo Mosaic Slab|Axe}}
+{{breaking row|Blackstone Slab|Pickaxe|Wood}}
+{{breaking row|Block of Bamboo|Axe}}
+{{breaking row|Block of Stripped Bamboo|Axe}}
+{{breaking row|Bone Block|Pickaxe|Wood}}
+{{breaking row|Brick Slab|Pickaxe|Wood}}
+{{breaking row|Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Brick Wall|Pickaxe|Wood}}
+{{breaking row|Bricks|Pickaxe|Wood}}
+{{breaking row|Campfire|Axe|drop=0}}
+{{breaking row|Cauldron|Pickaxe|Wood}}
+{{breaking row|Chiseled Nether Bricks|Pickaxe|Wood}}
+{{breaking row|Cobblestone|Pickaxe|Wood}}
+{{breaking row|Cobblestone Slab|Pickaxe|Wood}}
+{{breaking row|Cobblestone Stairs|Pickaxe|Wood}}
+{{breaking row|Cobblestone Wall|Pickaxe|Wood}}
+{{breaking row|Copper Sink|None}}
+{{breaking row|Cut Red Sandstone Slab|Pickaxe|Wood|None}}
+{{breaking row|Cut Sandstone Slab|Pickaxe|Wood|None}}
+{{breaking row|Dyed Shulker Box|Pickaxe|sprite=shulker boxes}}
+{{breaking row|Fence Gates|Axe|sprite=fence-gates}}
+{{breaking row|Grindstone|Pickaxe|Wood}}
+{{breaking row|Jukebox|Axe}}
+{{breaking row|Logs|Axe|sprite=oak log}}
+{{breaking row|Mossy Cobblestone|Pickaxe|Wood}}
+{{breaking row|Mossy Cobblestone Slab|Pickaxe|Wood}}
+{{breaking row|Mossy Cobblestone Stairs|Pickaxe|Wood}}
+{{breaking row|Mossy Cobblestone Wall|Pickaxe|Wood}}
+{{breaking row|Nether Brick Fence|Pickaxe|Wood}}
+{{breaking row|Nether Brick Slab|Pickaxe|Wood}}
+{{breaking row|Nether Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Nether Brick Wall|Pickaxe|Wood}}
+{{breaking row|Nether Bricks|Pickaxe|Wood}}
+{{breaking row|Petrified Oak Slab|Pickaxe|Wood}}
+{{breaking row|Planks|Axe}}
+{{breaking row|Polished Blackstone|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Slab|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Brick Slab|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Stairs|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Wall|Pickaxe|Wood}}
+{{breaking row|Purpur Slab|Pickaxe|Wood}}
+{{breaking row|Quartz Slab|Pickaxe|Wood}}
+{{breaking row|Red Nether Brick Slab|Pickaxe|Wood}}
+{{breaking row|Red Nether Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Red Nether Brick Wall|Pickaxe|Wood}}
+{{breaking row|Red Nether Bricks|Pickaxe|Wood}}
+{{breaking row|Red Sandstone Slab|Pickaxe|Wood|None}}
+{{breaking row|Sandstone Slab|Pickaxe|Wood|None}}
+{{breaking row|Shulker Box|Pickaxe}}
+{{breaking row|Shelf|Axe}}
+{{breaking row|Smooth Quartz Block|Pickaxe|Wood}}
+{{breaking row|Smooth Quartz Slab|Pickaxe|Wood}}
+{{breaking row|Smooth Quartz Stairs|Pickaxe|Wood}}
+{{breaking row|Smooth Red Sandstone|Pickaxe|Wood}}
+{{breaking row|Smooth Red Sandstone Slab|Pickaxe|Wood}}
+{{breaking row|Smooth Red Sandstone Stairs|Pickaxe|Wood}}
+{{breaking row|Smooth Stone|Pickaxe|Wood}}
+{{breaking row|Smooth Stone Slab|Pickaxe|Wood}}
+{{breaking row|Soul Campfire|Axe|drop=0}}
+{{breaking row|Stems|Axe|link=log}}
+{{breaking row|Stone Slab|Pickaxe|Wood}}
+{{breaking row|Stone Brick Slab|Pickaxe|Wood}}
+{{breaking row|Stripped Log|sprite=Stripped Logs|Axe}}
+{{breaking row|Stripped Wood|Axe}}
+{{breaking row|Wood|Axe|sprite=oak wood}}
+{{breaking row|Wooden Fences|Axe|sprite=wooden-fences}}
+{{breaking row|Wooden Slab|Axe|sprite=oak slab}}
+{{breaking row|Wooden Stairs|Axe|sprite=oak stairs}}
+<!-- 1.8 -->
+{{breaking row|Concrete|Pickaxe|Wood}}
+<!-- 1.5 -->
+{{breaking row|Amethyst Bud|Pickaxe|drop=0}}
+{{breaking row|Amethyst Cluster|Pickaxe|drop=0}}
+{{breaking row|Andesite|Pickaxe|Wood}}
+{{breaking row|Andesite Slab|Pickaxe|Wood}}
+{{breaking row|Andesite Stairs|Pickaxe|Wood}}
+{{breaking row|Andesite Wall|Pickaxe|Wood}}
+{{breaking row|Blackstone|Pickaxe|Wood}}
+{{breaking row|Blackstone Stairs|Pickaxe|Wood}}
+{{breaking row|Blackstone Wall|Pickaxe|Wood}}
+{{breaking row|Block of Amethyst|Pickaxe|Wood}}
+{{breaking row|Bookshelf|Axe|drop=0}}
+{{breaking row|Budding Amethyst|Pickaxe|Wood|drop=0}}
+{{breaking row|Calibrated Sculk Sensor|Hoe|drop=0}}
+{{breaking row|Chiseled Bookshelf|Axe|drop=0}}
+{{Breaking_row|Chiseled Cinnabar|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Chiseled Polished Blackstone|Pickaxe|Wood}}
+{{breaking row|Chiseled Purpur|Pickaxe|Wood}}
+{{breaking row|Chiseled Resin Bricks|Pickaxe|Wood}}
+{{breaking row|Chiseled Stone Bricks|Pickaxe|Wood}}
+{{Breaking_row|Chiseled Sulfur|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking row|Chiseled Tuff|Pickaxe|Wood}}
+{{Breaking row|Chiseled Tuff Bricks|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Brick Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Brick Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Brick Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Bricks|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Cinnabar Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Coral Block|Pickaxe|drop=0|sprite=Coral Blocks}}
+{{breaking row|Cracked Polished Blackstone Bricks|Pickaxe|Wood}}
+{{breaking row|Cracked Stone Bricks|Pickaxe|Wood}}
+{{breaking row|Crafter|Pickaxe}}
+{{breaking row|Dark Prismarine|Pickaxe|Wood}}
+{{breaking row|Dark Prismarine Slab|Pickaxe|Wood}}
+{{breaking row|Dark Prismarine Stairs|Pickaxe|Wood}}
+{{breaking row|Dead Coral Block|Pickaxe|sprite=Dead Coral Blocks}}
+{{breaking row|Deprecated Purpur Block 2|Pickaxe|Wood}}
+{{breaking row|Diorite|Pickaxe|Wood}}
+{{breaking row|Diorite Slab|Pickaxe|Wood}}
+{{breaking row|Diorite Stairs|Pickaxe|Wood}}
+{{breaking row|Diorite Wall|Pickaxe|Wood}}
+{{breaking row|Dripstone Block|Pickaxe|Wood}}
+{{breaking row|Gilded Blackstone|Pickaxe|Wood|note={{note|name=9/10|These blocks have a {{frac|9|10}} chance of dropping themselves.}}}}
+{{breaking row|Granite|Pickaxe|Wood}}
+{{breaking row|Granite Slab|Pickaxe|Wood}}
+{{breaking row|Granite Stairs|Pickaxe|Wood}}
+{{breaking row|Granite Wall|Pickaxe|Wood}}
+{{breaking row|Infested Deepslate|Pickaxe|drop=0}}
+{{breaking row|Mossy Stone Brick Slab|Pickaxe|Wooden}}
+{{breaking row|Mossy Stone Brick Stairs|Pickaxe|Wooden}}
+{{breaking row|Mossy Stone Brick Wall|Pickaxe|Wooden}}
+{{breaking row|Mossy Stone Bricks|Pickaxe|Wooden}}
+{{breaking row|Mud Brick Slab|Pickaxe|Wooden}}
+{{breaking row|Mud Brick Stairs|Pickaxe|Wooden}}
+{{breaking row|Mud Brick Wall|Pickaxe|Wooden}}
+{{breaking row|Mud Bricks|Pickaxe|Wooden}}
+{{breaking row|Piston|Pickaxe}}
+{{breaking row|Piston Head}}
+{{breaking row|Pointed Dripstone|Pickaxe}}
+{{breaking row|Polished Andesite|Pickaxe|Wood}}
+{{breaking row|Polished Andesite Slab|Pickaxe|Wood}}
+{{breaking row|Polished Andesite Stairs|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Polished Blackstone Brick Wall|Pickaxe|Wood}}
+{{Breaking_row|Polished Cinnabar|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Cinnabar Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Cinnabar Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Cinnabar Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Polished Diorite|Pickaxe|Wood}}
+{{breaking row|Polished Diorite Slab|Pickaxe|Wood}}
+{{breaking row|Polished Diorite Stairs|Pickaxe|Wood}}
+{{breaking row|Polished Granite|Pickaxe|Wood}}
+{{breaking row|Polished Granite Slab|Pickaxe|Wood}}
+{{breaking row|Polished Granite Stairs|Pickaxe|Wood}}
+{{Breaking_row|Polished Sulfur|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Sulfur Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Sulfur Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Polished Sulfur Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Polished Tuff|Pickaxe|Wood}}
+{{breaking row|Polished Tuff Slab|Pickaxe|Wood}}
+{{breaking row|Polished Tuff Stairs|Pickaxe|Wood}}
+{{Breaking row|Potent Sulfur|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Prismarine|Pickaxe|Wood}}
+{{breaking row|Prismarine Brick Slab|Pickaxe|Wood}}
+{{breaking row|Prismarine Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Prismarine Bricks|Pickaxe|Wood}}
+{{breaking row|Prismarine Slab|Pickaxe|Wood}}
+{{breaking row|Prismarine Stairs|Pickaxe|Wood}}
+{{breaking row|Prismarine Wall|Pickaxe|Wood}}
+{{breaking row|Purpur Block|Pickaxe|Wood}}
+{{breaking row|Purpur Pillar|Pickaxe|Wood}}
+{{breaking row|Purpur Stairs|Pickaxe|Wood}}
+{{breaking row|Resin Brick Slab|Pickaxe|Wood}}
+{{breaking row|Resin Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Resin Brick Wall|Pickaxe|Wood}}
+{{breaking row|Resin Bricks|Pickaxe|Wood}}
+{{breaking row|Sculk Sensor|Hoe|drop=0}}
+{{breaking row|Smooth Stone Bricks|Pickaxe|Wood|drop=0}}
+{{breaking row|Sticky Piston|Pickaxe}}
+{{breaking row|Stone|Pickaxe|Wood|drop=0}}
+{{breaking row|Stone Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Stone Brick Wall|Pickaxe|Wood}}
+{{breaking row|Stone Bricks|Pickaxe|Wood}}
+{{breaking row|Stone Stairs|Pickaxe|Wood}}
+{{Breaking_row|Sulfur|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Brick Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Brick Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Brick Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Bricks|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Slab|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Stairs|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{Breaking_row|Sulfur Wall|note={{Upcoming|Chaos Cubed}}|Pickaxe|Wood}}
+{{breaking row|Tuff|Pickaxe|Wood}}
+{{breaking row|Tuff Bricks|Pickaxe|Wood}}
+{{breaking row|Tuff Brick Slab|Pickaxe|Wood}}
+{{breaking row|Tuff Brick Stairs|Pickaxe|Wood}}
+{{breaking row|Tuff Brick Wall|Pickaxe|Wood}}
+{{breaking row|Tuff Slab|Pickaxe|Wood}}
+{{breaking row|Tuff Stairs|Pickaxe|Wood}}
+{{breaking row|Tuff Wall|Pickaxe|Wood}}
+<!-- 1.4 -->
+{{breaking row|Glazed Terracotta|Pickaxe|Wood}}
+<!-- 1.25 -->
+{{breaking row|Basalt|Pickaxe|Wood}}
+{{breaking row|Polished Basalt|Pickaxe|Wood}}
+{{breaking row|Smooth Basalt|Pickaxe|Wood}}
+{{breaking row|Stained Terracotta|Pickaxe|Wood}}
+{{breaking row|Terracotta|Pickaxe|Wood}}
+<!-- 1 -->
+{{breaking row|Bamboo|Axe|sword=1}}
+{{breaking row|Banners|Axe}}
+{{breaking row|Carved Pumpkin|Axe|sword=1}}
+{{breaking row|Chalkboard|Axe}}
+{{breaking row|Hanging Signs|Axe}}
+{{breaking row|info_update}}
+{{breaking row|info_update2}}
+{{breaking row|Infested Cobblestone|Pickaxe|drop=0}}
+{{breaking row|Jack o'Lantern|Axe|sword=1}}
+{{breaking row|Melon|Axe|sword=0|drop=0}}
+{{breaking row|Mob Head|sprite=Heads}}
+{{breaking row|Ominous Banner|Axe}}
+{{breaking row|Packed Mud|Pickaxe}}
+{{breaking row|Player Head}}
+{{breaking row|Pumpkin|Axe|sword=1}}
+{{breaking row|Shroomlight|Hoe}}
+{{breaking row|Signs|Axe|sprite=oak sign}}
+{{breaking row|Wart Block|Hoe|sprite=all wart blocks}}
+<!-- 0.8 -->
+{{breaking row|Block of Quartz|Pickaxe|Wood}}
+{{breaking row|Note Block|Axe}}
+{{breaking row|Quartz Stairs|Pickaxe|Wood}}
+{{breaking row|Red Sandstone|Pickaxe|Wood}}
+{{breaking row|Red Sandstone Stairs|Pickaxe|Wood}}
+{{breaking row|Sandstone|Pickaxe|Wood}}
+{{breaking row|Sandstone Stairs|Pickaxe|Wood}}
+{{breaking row|Wool|shears=1}}
+<!-- 0.75 -->
+{{breaking row|Calcite|Pickaxe|Wood}}
+{{breaking row|Infested Stone|Pickaxe|drop=0}}
+{{breaking row|Infested Stone Bricks|Pickaxe|drop=0}}
+<!-- 0.7 -->
+{{breaking row|Activator Rail|Pickaxe}}
+{{breaking row|Detector Rail|Pickaxe}}
+{{breaking row|Mangrove Roots|Axe}}
+{{breaking row|Muddy Mangrove Roots|Shovel}}
+{{breaking row|Powered Rail|Pickaxe}}
+{{breaking row|Rail|Pickaxe}}
+<!-- 0.65 -->
+{{breaking row|Dirt Path|Shovel|drop=0}}
+<!-- 0.6 -->
+{{breaking row|Beehive|Axe}}
+{{breaking row|Clay|Shovel|drop=0}}
+{{breaking row|Composter|Axe}}
+{{breaking row|Farmland|Shovel|drop=0}}
+{{breaking row|Grass Block|Shovel|drop=0}}
+{{breaking row|Gravel|Shovel|note={{note|name=9/10}}}}
+{{breaking row|Honeycomb Block}}
+{{breaking row|Mycelium|Shovel|drop=0}}
+{{breaking row|Sponge|Hoe}}
+{{breaking row|Wet Sponge|Hoe}}
+<!-- 0.5 -->
+{{breaking row|Brewing Stand|Pickaxe}}
+{{breaking row|Stone Button|pickaxe}}
+{{breaking row|Cake|drop=0}}
+{{breaking row|Coarse Dirt|Shovel}}
+{{breaking row|Concrete Powder|Shovel}}
+{{breaking row|Dirt|Shovel}}
+{{breaking row|Dried Kelp Block|Hoe}}
+{{breaking row|Hay Bale|Hoe}}
+{{breaking row|Ice|Pickaxe|drop=0}}
+{{breaking row|Packed Ice|Pickaxe|drop=0}}
+{{breaking row|Frosted Ice|drop=0}}
+{{breaking row|Lever}}
+{{breaking row|Magma Block|Pickaxe|Wood}}
+{{breaking row|Mud|Shovel}}
+{{breaking row|Target|Hoe}}
+{{breaking row|Turtle Egg|drop=0}}
+{{breaking row|Sniffer Egg}}
+{{breaking row|Podzol|Shovel|drop=0}}
+{{breaking row|Rooted Dirt|Shovel}}
+{{breaking row|Sand|Shovel}}
+{{breaking row|Soul Sand|Shovel}}
+{{breaking row|Soul Soil|Shovel}}
+{{breaking row|Stone Pressure Plate|Pickaxe}}
+{{breaking row|Heavy Weighted Pressure Plate|Pickaxe}}
+{{breaking row|Light Weighted Pressure Plate|Pickaxe}}
+{{breaking row|Wooden Pressure Plate|Axe|sprite=oak pressure plate}}
+<!-- 0.4 -->
+{{breaking row|Cactus}}
+{{breaking row|Ladder|Axe}}
+{{breaking row|Chorus Flower|Axe}}
+{{breaking row|Chorus Plant|Axe}}
+{{breaking row|Netherrack|Pickaxe|Wood}}
+{{breaking row|Nylium|Pickaxe|drop=0|Wood}}
+<!-- 0.3 -->
+{{breaking row|Bee Nest|Axe|drop=0}}
+{{breaking row|Froglight}}
+{{breaking row|Glass|drop=0}}
+{{breaking row|Glass Pane|drop=0}}
+{{breaking row|Glowstone|drop=0}}
+{{breaking row|Redstone Lamp}}
+{{breaking row|Sea Lantern|drop=0}}
+{{breaking row|Stained Glass|drop=0}}
+{{breaking row|Stained Glass Panes|link=Stained Glass Pane|drop=0}}
+{{breaking row|Tinted Glass}}
+<!-- 0.25 -->
+{{breaking row|Glow Item Frame|note={{note|name=itemframe|Item frames and glow item frames are blocks only {{in|bedrock}}. {{IN|java}}, they are entities and are broken instantly.}}}}
+{{breaking row|Item Frame|note={{note|name=itemframe}}}}
+{{breaking row|Powder Snow|drop=0}}
+{{breaking row|Suspicious Gravel|Shovel|drop=0}}
+{{breaking row|Suspicious Sand|Shovel|drop=0}}
+<!-- 0.2 -->
+{{breaking row|Bed|sprite=red-bed}}
+{{breaking row|Cocoa|Axe|sword=1}}
+{{breaking row|Daylight Detector|Axe}}
+{{breaking row|Glow Lichen|Axe|drop=0|shears=1|sword=0}}
+{{breaking row|Mushroom Blocks|Axe|drop=0|link=Mushroom Block}}
+{{breaking row|Leaves|Hoe|drop=0|shears=1|sword=0|sprite=oak leaves
+ |note={{note|Leaves drop themselves only if destroyed via a silk touch-enchanted tool or shears; otherwise, they drop saplings and sticks, or apples if it is an oak tree.}}}}
+{{breaking row|Sculk|Hoe|drop=0}}
+{{breaking row|Sculk Vein|Hoe|drop=0}}
+{{breaking row|Snow Block|Shovel|Wood|drop=0}}
+{{breaking row|Vines|Axe|drop=0|shears=1|sword=0}}
+<!-- 0.1 -->
+{{breaking row|Big Dripleaf|Axe}}
+{{breaking row|Candle}}
+{{breaking row|Carpet|sprite=carpets}}
+{{breaking row|Dyed Candle|sprite=candles}}
+{{breaking row|Moss Block|Hoe}}
+{{breaking row|Moss Carpet|Hoe}}
+{{breaking row|Pale Moss Block|Hoe}}
+{{breaking row|Pale Moss Carpet|Hoe}}
+{{breaking row|Snow|Shovel|Wood}}
+<!-- 0 -->
+{{breaking row|Air|note={{note|name=untargetable}}}}
+{{breaking row|Azalea}}
+{{breaking row|Beetroots}}
+{{breaking row|Block of Resin}}
+{{breaking row|Bubble Column|note={{note|name=untargetable}}}}
+{{breaking row|Bush|drop=0|shears=1}}
+{{breaking row|Cactus Flower}}
+{{breaking row|Camera|note={{Verify|Does this block drop the item?}}}}
+{{breaking row|Carrots|link=Carrot}}
+{{breaking row|Cave Air|note={{note|name=untargetable}}}}
+{{breaking row|Cave Vines|drop=0|shears=1}}
+{{breaking row|Colored Torch|sprite=Colored Torches}}
+{{breaking row|Copper Torch}}
+{{breaking row|Coral|drop=0}}
+{{breaking row|Coral Fan|drop=0|sprite=coral-fans}}
+{{breaking row|Dead Coral Fan|drop=0|sprite=dead-coral-fans}}
+{{breaking row|Dead Bush|drop=0|shears=1}}
+{{breaking row|Dead Coral|drop=0}}
+{{breaking row|Decorated Pot}}
+{{breaking row|Dried Ghast}}
+{{breaking row|Element|sprite=unknown-element}}
+{{breaking row|End Rod}}
+{{breaking row|Eyeblossom}}
+{{breaking row|Fire|drop=0}}
+{{breaking row|Flower Pot}}
+{{breaking row|Flowering Azalea}}
+{{breaking row|Flowers|link=Flower}}
+{{breaking row|Frogspawn|drop=0}}
+{{breaking row|Fern|Shears=1}}
+{{breaking row|Large Fern|Shears=1}}
+{{breaking row|Hanging Roots|drop=0|shears=1}}
+{{breaking row|Honey Block}}
+{{breaking row|Kelp}}
+{{breaking row|Lava Spawner}}
+{{breaking row|Lily Pad}}
+{{breaking row|Melon Stem|link=Melon Seeds}}
+{{breaking row|Mushrooms}}
+{{breaking row|Nether Fungi|link=Nether Fungus}}
+{{breaking row|Nether Sprouts|drop=0|shears=1}}
+{{breaking row|Nether Wart}}
+{{breaking row|Pale Hanging Moss}}
+{{breaking row|Pink Petals}}
+{{breaking row|Pitcher Plant}}
+{{breaking row|Potatoes|link=Potato}}
+{{breaking row|Pumpkin Stem|link=Pumpkin Seeds}}
+{{breaking row|Redstone Comparator}}
+{{breaking row|Redstone Repeater}}
+{{breaking row|Redstone Torch}}
+{{breaking row|Redstone Dust}}
+{{breaking row|reserved6}}
+{{breaking row|Crimson Roots}}
+{{breaking row|Warped Roots}}
+{{breaking row|Saplings|link=Sapling}}
+{{breaking row|Seagrass|None|drop=0|shears=1}}
+{{breaking row|Scaffolding}}
+{{breaking row|Sea Pickle}}
+{{breaking row|Short Grass|drop=0|shears=1}}
+{{breaking row|Slime Block}}
+{{breaking row|Small Dripleaf|None|drop=0|shears=1}}
+{{breaking row|Spore Blossom}}
+{{breaking row|Structure Void}}
+{{breaking row|Sugar Cane}}
+{{breaking row|Sweet Berries|sprite=sweet berry bush}}
+{{breaking row|TNT}}
+{{breaking row|Torch}}
+{{breaking row|Tripwire|link=String}}
+{{breaking row|Tripwire Hook}}
+{{breaking row|Twisting Vines|note={{note|name=vines|These blocks have a {{frac|1|3}} chance of dropping themselves.}}}}
+{{breaking row|Underwater TNT}}
+{{breaking row|Underwater Torch}}
+{{breaking row|Unknown|sprite=unknown-block}}
+{{breaking row|Void Air|note={{note|name=untargetable}}}}
+{{breaking row|Water Spawner}}
+{{breaking row|Weeping Vines|note={{note|name=vines}}}}
+{{breaking row|Wheat|link=Wheat Seeds}}
+{{Breaking row|Locked chest}}
+{{breaking row|leaves_carried|sprite=oak-leaves|foot=1}}
+</div>
+
+== Videos ==
+<div style="text-align:center">{{yt|4plPFFnCtio}}</div>
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||June 14, 2009|link=https://notch.tumblr.com/post/123343045/my-vision-for-survival|[[Notch]] discussed how breaking blocks would work in [[Survival]] mode: "Selecting the pickaxe and clicking on a tile will destroy it, but different tiles will take differently long to remove. Stone will be tougher than dirt, and so. Either way, the delay won't be long. Perhaps one full second for stone."}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Efficiency enchantment added, which mines blocks faster.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|The mining time of many blocks has been decreased, including [[redstone ore]], [[stone bricks]], [[nether bricks]], [[iron bars]], [[door]]s, [[monster spawner]]s and [[obsidian]].
+|Before this update, some of these blocks either had no preferred [[tool]] ([[soul sand]], [[fence]]), or a [[pickaxe]] was required, sometimes with [[tier]] requirements, but the breaking time was consistent regardless of tier. For instance, it always took about 5.5 seconds to mine a [[furnace]] with any type of pickaxe. 
+|Several blocks' tool weaknesses have been fixed, such as crafting tables now mining faster with an axe and rails now mining faster with a pickaxe.
+|Mined stairs of any materials drop a stair block now instead of a block form of its material.}}
+|{{HistoryLine||1.3.1|dev=12w18a|The 6-tick (3⁄10 second) delay between block breaking is now removed if a block takes less than 1 tick (1⁄20 second) to break in Survival. The player can now [[Instant mining|instantly mine]] a large amount of blocks in Survival simply by holding {{control|destroy}} if conditions are met.}}
+|{{HistoryLine|||dev=12w22a|Mining ores (except gold ore and iron ore) rewards the player with [[experience orb]]s.}}
+|{{HistoryLine|||dev=12w23a|The block breaking animation can be seen when other players break blocks.}}
+|{{HistoryLine|||dev=12w24a|While holding a tool, breaking a block that can be instantly mined by hand no longer reduces the tool's [[durability]].}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Switching tools resets a block's brokenness.}}
+|{{HistoryLine||1.4.6|dev=12w50a|The Efficiency enchantment no longer applies when mining blocks of the wrong type (ex: Efficiency pickaxes don't increase the mining speed of dirt). This is a consequence of the new rule "the mining speed of a block is increased only when it is mined with the correct tool".}}
+|{{HistoryLine||1.5|dev=13w09b|The proper tool now increases the breaking speed of a block even if it is not the correct grade.}}
+|{{HistoryLine||1.20.5|dev=23w51a|The <code>generic.block_interaction_range</code> attribute now allows the block break reach to be customized.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||unknown<!--between 0.2.1 and 0.5.0-->|Breaking sounds of blocks drastically changed, from being identical to those of Alpha-esque updates to sounds that were much different depending on if the game was being played on iOS or Android.}}
+|{{HistoryLine||v0.7.4|Buckets can no longer be used to literally mine water and lava.<ref>{{bug|MCPE-3857}}</ref>}}
+|{{HistoryLine||v0.12.1|dev=build 12|Breaking sounds are now the same as on PC. Prior to this update, the breaking sounds of most blocks differed greatly on iOS and Android.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=patch 1|switch=1.0.1|The mining time of many blocks has been decreased, including [[redstone ore]], [[stone bricks]], [[nether bricks]], [[iron bars]], [[door]]s, [[monster spawner]]s and [[obsidian]].
+|Before this update, some of these blocks either had no preferred [[tool]] ([[soul sand]], [[fence]]), or a [[pickaxe]] was required, sometimes with [[tier]] requirements, but the breaking time was consistent regardless of tier. For instance, it always took about 5.5 seconds to mine a [[furnace]] with any type of pickaxe. 
+|Several blocks' tool weaknesses have been fixed, such as crafting tables now mining faster with an axe and rails now mining faster with a pickaxe.
+|Mined stairs of any materials drop a stair block now instead of a block form of its material.}}
+}}
+
+== Issues ==
+{{Issue list|Breaking|Mining}}
+
+== Trivia ==
+* In the code, unbreakable blocks use a hardness value of -1.
+* Mining an ender chest with a wooden pickaxe takes the longest time in the game (16.9 seconds) to mine a block with the correct tool, without the effect of [[Mining Fatigue]] and other mining speed reduction events.
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[de:Abbauen]]
+[[es:Rotura]]
+[[fr:Minage]]
+[[it:Distruzione]]
+[[ja:採掘]]
+[[ko:채굴]]
+[[nl:Breken]]
+[[pt:Quebrar]]
+[[ru:Добывание]]
+[[uk:Добування]]
+[[zh:挖掘]]

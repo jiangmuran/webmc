@@ -1,0 +1,257 @@
+{{about|the block that teleports the player|blocks that make up the portal frame|End Portal Frame|other uses|End Portal (disambiguation)}}
+{{needs render|{{BE}} has a different end portal texture.|single=1}}
+{{Infobox block
+|title=End Portal
+|image=End Portal (block).gif
+|invimage=End Portal BE
+|renewable=Yes
+|tool=None
+|transparent=Yes
+|light=Yes (15)
+|flammable=No
+|lavasusceptible=No
+|stackable=Yes (64){{only|be}}<br>N/A{{only|je}}
+}}
+The '''End portal''' block is a block generated when an [[End portal]] or [[exit portal]] is activated, which teleports the player between the [[Overworld]] and [[the End]].
+
+== Obtaining ==
+The End portal block cannot be obtained as an item even by using the {{cmd|give}} command. The item form is non-existent {{in|java}}, but it can be obtained through [[add-on]]s, external editors or by using bugs {{in|bedrock}}.
+
+The End portal block can be placed using commands such as {{cmd|fill}} or {{cmd|setblock}} or simply by [[End Portal#Creation|building End portals]].
+
+== Usage ==
+End portal blocks can be used to teleport into and out of [[the End]]. When a player or other entity in the [[Overworld]] or the End touches an End portal block, it is instantly taken to the other dimension. If a single portal block is placed using commands, it can still be used to travel between dimensions.
+
+All entities traveling to the End appear on the [[obsidian platform]], recreating it if necessary. Players traveling to the Overworld appear at their [[individual spawn point]], while other entities appear at the [[world spawn point]].
+
+=== Properties ===
+*[[Entities]] which touch the End portal (who have already seen the [[credits]]) are teleported to another dimension:
+** If the block is in the [[Overworld]], [[the Nether]], or in a [[custom dimension]], the entity is teleported to the [[obsidian platform]] in the End.
+** If the block is in [[the End]], they are teleported to their spawn point:
+*** Players with an unobstructed [[individual spawn point|respawn location]] (set by using a [[bed]] or [[respawn anchor]]) are teleported to that location.
+*** Players whose respawn location is unset or obstructed are teleported to a small area centered on the [[world spawn]] point.
+*** All other entities (aside from the exceptions listed below) are teleported exactly to the world spawn point.
+** {{IN|Java}}, ridden entities and their passengers can use End portals (and [[nether portal (block)|Nether portal]]s); {{In|Bedrock}}, they cannot.
+*** However, {{in|Java}}, if an entity ridden by a player who has not yet seen the [[credits]] enters an End portal in the End, the entity will not be teleported to the world spawn.
+** [[Ender dragon]]s cannot use End portals.
+** [[Wither]]s can use End portals only {{in|Bedrock}}.
+*End portal blocks can be destroyed in [[Creative]] mode. This does not affect adjacent End portal blocks.
+*The top surface of an End portal is {{frac|3|4}} the height of a full block.{{verify|still the case 21w13a+?}}
+*The End portal is one of the only blocks without a conventional texture or entity texture; it instead duplicates and layers a star-field pattern that follows the player's cursor.
+*If [[TNT]] is detonated on an End portal, no blocks in its blast radius are destroyed.
+*If the End portal block is generated in the block grid using the [[debug mode]] world type, it teleports the player to the Overworld regardless of which dimension it is in.
+*{{IN|be}}, it's impossible to see the texture of the End portal block when the player is under it.
+If a player has not seen the [[credits]] yet, they are unloaded, and shown the credits sequence. Then, they are teleported following the steps above.
+
+=== Piston interactivity ===
+End portal blocks cannot be pushed by [[piston]]s. They also cannot be pushed nor pulled by [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Normal}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =End portal activation.ogg
+|subtitle=End Portal opens
+|source=hostile
+|description=When an End portal opens <ref group=sound>Does not trigger at all if the [[gamerule]] {{cd|globalSoundEvents}} is {{cd|false}}</ref>
+|id=block.end_portal.spawn
+|translationkey=subtitles.block.end_portal.spawn
+|volume=1.0
+|pitch=1.0
+|distance=16 (technical) / ∞ (effective)}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|subtitle=Portal noise fades
+|source=ambient
+|description=After the player is teleported through an End portal
+|id=block.portal.travel
+|translationkey=subtitles.block.portal.travel
+|translationkeynote=
+|volume=0.8-1.2
+|pitch=0.25
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =End portal activation.ogg
+|source=block
+|description=When an End portal opens
+|id=block.end_portal.spawn
+|volume=0.7
+|pitch=1.0}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|source=ambient
+|description=After the player is teleported through an End portal
+|id=portal.travel
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+{{Info needed section|block tags}}
+
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=End Portal
+|spritetype=block
+|nameid=end_portal
+|blocktags=dragon_immune, portals, wither_immune, invalid_spawn_inside
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=end-portal
+|spritetype=block
+|nameid=end_portal
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=End Portal
+|spritetype=block
+|nameid=end_portal
+|id=119
+|form=block
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=end-portal
+|spritetype=block
+|nameid=EndPortal
+|foot=1}}
+
+=== Block data ===
+An End portal block has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+{{See technical block|End Portal}}
+=== Teaser ===
+{{HistoryTable
+|{{HistoryLine||October 5, 2011|link={{tweet|notch|121664078308577280}}|The End portal block is teased by [[Notch]] in a screenshot.}}
+}}
+<gallery>
+End Portal block first image.jpg|The first image of an End portal block
+</gallery>
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|The End portal block is introduced, but is nonfunctional in terms of teleportation.
+|The End portal block can currently be broken using [[TNT]].
+|It uses the untinted grass block texture on the bottom face of its hitbox.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|The End portal now teleports the player into [[the End]].
+|The texture of the End portal block has been changed.{{verify}}
+|The End portal block is now TNT immune.{{verify}}
+|The End portal no longer uses the grass block texture underneath.}}
+|{{HistoryLine||1.4.2|dev=12w36a|All{{verify}} [[entities]] can now travel through End portals.}}
+|{{HistoryLine||1.5|dev=13w02a| Changed texture in the inventory from [[File:Oldendportaliventory.png|32px]] to [[File:Nether Portal (texture) JE2-a1.gif|32px]].}}
+|{{HistoryLine||1.9|dev=15w49b|The [[hitbox]] height of the End portal block has been increased from {{frac|1|16}} of a block to {{frac|3|4}} of a block.
+|End portal blocks now only teleport entities that intersect with its hitbox. Previously it acted like a full block.
+|The [[wither]] and [[ender dragon]]{{verify|I believe this was never possible in the first place}} can no longer travel through portals, including the End portal.}}
+|{{HistoryLine||1.11|dev=16w40a|[[File:End Portal.png|32px]] The starfield effect has been changed to match that of the [[End gateway block]]. It no longer changes perspective with respect to the [[player]], but now remains static with respect to the game screen.}}
+|{{HistoryLine||1.16.2|dev=20w28a|End portals now teleport the player centered on the obsidian platform instead of at the north-west corner of the block.}}
+|{{HistoryLine||1.17|dev=21w13a|End portals now render on the bottom face.<ref>{{bug|MC-3366}}</ref>
+|The wireframe hitbox of the End portal has changed once more, to no longer stretch to the bottom of the block. Whether the actual entity collision box also changed is unknown.}}
+|{{HistoryLine||1.21|dev=24w21a|Added [[game rule]] {{cd|entitiesWithPassengersCanUsePortals}}, allowing entities with passengers to travel through End portals.<ref>{{bug|MC-67||Entities with passengers cannot travel through portals|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre1|Removed game rule {{cd|entitiesWithPassengersCanUsePortals}}. Entities with passengers can now use End portals by default.}}
+}}
+
+<gallery>
+End portal block b1.9pre3.png|In Beta 1.9 Prerelease 3
+End portal block 13w02a.png|In 13w02a
+End portal block 16w39c.png|In 16w39c
+End portal block 16w40a.png|In 16w40a
+</gallery>
+
+=== ''Bedrock Edition'' ===
+{{Needs render|section=true|type=old|Add textures to Pocket and console histories.}}
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added the End portal block.}}
+
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|It is now impossible to destroy the End portal block by placing [[liquids]] in its location.<ref>{{bug|MCPE-48264|||Fixed}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|switch=1.0.1|wiiu=Patch 1|Added the End portal block. It is non-functional and it can be obtained only through external editors, as [[eyes of ender]] cannot be placed into [[End portal frame]]s.}}
+|{{HistoryLine||xbox=TU9|End portal blocks are now functional.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|The [[hitbox]] height of the End portal block has been increased from {{frac|1|16}} of a block to {{frac|3|4}} of a block.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:End Portal.png|32px]] The starfield effect has been changed to match that of the [[End gateway block]]. It no longer changes perspective with respect to the [[player]], but now remains static with respect to the game screen.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:End Portal N3DSE.png|30px]] Added the End portal block.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[block entity]] ID of the End portal block has been changed from <code>AirPortal</code> to <code>end_portal</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 119.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+<gallery>
+Two end portal blocks.png|Two End portals placed above each other
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:End blocks]]
+[[Category:Block entities]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+[[Category:Createable blocks]]
+
+[[es:Portal del End (bloque)]]
+[[fr:Portail de l'End (bloc)]]
+[[it:Portale dell'End (blocco)]]
+[[ja:エンドポータル (ブロック)]]
+[[ko:엔드 차원문 (블록)]]
+[[pt:Portal do End (bloco)]]
+[[ru:Блок портала Края]]
+[[zh:末地传送门（方块）]]

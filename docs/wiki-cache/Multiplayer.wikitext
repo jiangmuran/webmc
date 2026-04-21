@@ -1,0 +1,303 @@
+[[File:Multiplayer_preview.png|thumb|From left to right: [[Kai]], [[Steve]], [[Efe]], and [[Zuri]] playing together.]]
+'''Multiplayer''' is the style of playing ''[[Minecraft]]'' that involves multiple [[player]]s interacting on a single [[world]] hosted by a player or an external [[server]], allowing them to work together to mine [[ores]], build structures, and fight [[mobs]] (or [[PvP|each other]]), or to simply play together.
+
+== Gameplay ==
+{{See also|Server#Archetypes}}
+The [[gameplay]] of a multiplayer game still retains the same structure as the singleplayer counterpart. Take for example, in a [[Survival]] multiplayer game, players advance by gathering [[resource]]s, fighting [[monster]]s, exploring the [[world]], and reaching [[the End]]. However, multiplayer puts more emphasis on collaboration between players. Tasks such as resource gathering, [[farming]], and building [[structure]]s can be divided among players, making progression much faster compared to a singleplayer game.
+
+Multiplayer allows for [[player]]-driven activities beyond the main game objectives. Players often establish [[w:Virtual economy|in-game economy]] by building shops to trade valuable resources like [[diamond]]s and [[enchanted]] items. They can also engage in elaborate building for their homes and structures, such as {{w|house}}s, {{w|bridge}}s, {{w|castle}}s, {{w|pixel art}}s, {{w|statue}}s, and more &ndash; usually forming into {{w|town}}s or {{w|cities}}.
+
+Multiplayer games can also deviate from the base game experience; competitive games like [[player versus player]] (PvP) and many [[Server#Minigame|minigame]]s are heavily community-based. In addition, most custom adventure [[World|map]]s are also playable in multiplayer. These activities often rely on the [[chat]] system for communication between players, which can be managed on the [[Social interactions]] screen.{{Only|java}} There are various communication tools within the multiplayer chat using commands such as {{Cmd|msg}} for private messaging, and the host of the world can change multiplayer settings.
+
+=== Differences from singleplayer ===
+The game runs an internal [[server]] for singleplayer mode, allowing for better parity between the multiplayer and singleplayer experience. However, there are still some differences between a multiplayer and singleplayer game, one being that the game cannot be [[pause]]d by a player.
+
+Opening the pause menu in multiplayer does not pause the game. For example, if the player has items being [[smelt]]ed in a furnace, pressing the pause button ({{key|Esc}} by default) does not stop the smelting process. [[Mob]]s and entities don't pause and continue to work regardless, and even attacking the player. Although, in {{JE}}, server [[operator]]s can simulate pausing by using {{cmd|tick freeze}} command. In this state, non-player characters and interactions such as [[physics]], [[Daylight cycle|daylight]] and [[weather]] cycle, [[mob AI]] and movements, item [[smelting]], certain [[animation]]s, and other [[Tick#Game process|actions]] are frozen. Players and player-ridden entities are still able to continue play, regardless if they are operator status or not.
+
+In multiplayer mode, the [[locator bar]] is enabled and keeps track of other players' waypoints. This is absent in singleplayer, though {{in|JE}}, it can be enabled manually for tracking [[entities]] using {{cmd|waypoint}} command and {{attr|waypoint_transmit_range}} attribute.
+
+== Multiplayer worlds ==
+{{see also|Tutorial:Setting up a LAN world}}
+===''Java Edition''===
+[[File:Open to LAN.jpg|thumbnail|right|300px|Settings for a multiplayer game on local area network (LAN).]]
+{{IN|JE}}, singleplayer worlds can be hosted as multiplayer games on the {{w|local area network}} (LAN), usually connected by {{w|Wi-Fi}} or {{w|Router (computing)|router}}. LAN is not enabled by default, and must be activated on "Open to LAN" menu under the [[pause menu]]. Upon activation, the multiplayer game provides additional settings:
+* "Game Mode", which sets the [[game mode]] of other players once they join the world for the first time. Once a player rejoins, they retain their previous game mode even if the game mode on join was changed. 
+* "Allow Commands", which allows or denies other players access to execute [[command]]s depending on the selected option. Once a player rejoins, they do not retain their cheats permissions unless enabled again.
+* "Port Number", which specifies the port number for the LAN-based server. If not specified, the game randomizes the server port. The port is automatically shown on the chat when the LAN game is activated.
+
+Players can also open their game to LAN by using {{cmd|publish}} command, which provide arguments to configure the same settings.
+
+Once published, the host's game sends a UDP multicast to the {{w|multicast address}} <code>224.0.2.60:4445</code> every 1.5 seconds, notifying other players of the host's presence, and making their LAN world pop up automatically in the [[server list]].
+
+===''Bedrock Edition''===
+[[File:Ore UI - Create New World Screen Menu "Multiplayer" Tab Settings (Bedrock).png|thumbnail|right|380px|"Multiplayer" section of [[Create New World#Multiplayer|Create New World]] or [[Edit World#Multiplayer|Edit World]] which lets player customize their multiplayer game.]]
+{{IN|BE}}, the game features multiplayer connections using local area network (LAN) and ''Minecraft''<nowiki/>'s [[social]] system within the {{w|Xbox network}}. When signed in with a Microsoft account and connected to the internet, the host can let players join their game by invites or their friend status in the Xbox network. Multiplayer game is enabled by default upon a [[world creation]], which can be changed in the [[edit world]] screen.
+
+The multiplayer game visibility in the Xbox network can be changed in {{UI|Edit World|Multiplayer|Player access}}, which provides following options:
+
+* "Invited players", which allows some Xbox friends that the host invites to join.
+* "Friends", which allows any Xbox friends of the host to join them. This is the default option.
+* "Friends of friends", which allows the host's Xbox friends and their friends to join them.
+
+A friend's multiplayer game in the Xbox network appears on the "Worlds" tab of the [[play]] screen, showing the world name and amount of active players. Individual players can also be joined through the [[Friends sidebar|social drawer]] or the player's [[profile screen]]. Friends can be invited to a world with the "Invite to play" button in the social drawer in the [[pause menu]], who will get a notification (even when not in-game), and the option to join the world.
+
+The host can set specific [[permissions]] for each player in the game. By default, a player upon joining gets "Member" role, which enables mining, building, and interacting with the world and entities. This can be set in the multiplayer settings, which provides "Visitor" and "Operator" roles, and further more on the player permissions screen in the pause menu, which provides more granular and custom permissions. The host can also kick active players from the multiplayer world, or ban them to hide the world for them.
+
+The "Visible to LAN Players" option allows anyone (except Nintendo Switch players) on the same local network (either by {{w|Wi-Fi hotspot}} or [[w:Router (computing)|router]]) as the host to join them, regardless if they are an Xbox friend of the host or not, and does not require any internet connection.
+
+On console versions, playing a multiplayer game requires an online subscription of either {{w|Xbox Game Pass}}, {{w|Nintendo Switch Online}}, or {{w|PlayStation Plus}}.<ref>{{cite|title=How to Join a Friend’s Online World in Minecraft: Bedrock Edition|website=Minecraft Help Center|url=https://help.minecraft.net/hc/en-us/articles/24122512131213}}</ref> This includes joining a LAN multiplayer game; hosting it however, does not.
+
+There can be a maximum of 5 or 8 players at a time in a world, depending on the host's system, and can be set using {{cmd|setmaxplayers}} up to 40 players.
+
+== Servers ==
+{{Main|Server list}}
+{{tabber
+|class=tabber-images thumb-right tabber-italic
+|tabname1=Java Edition
+|tabcontent1=[[File:Multiplayer_Screen.png|thumb|The multiplayer screen {{in|JE}} allows the player to add a new server or join them.]]
+|tabname2=Bedrock Edition
+|tabcontent2=
+[[File:Ore UI - Play Screen Menu "Servers" Tab - Featured Servers (Bedrock).png|thumb|right|The server list in ''Bedrock Edition'', which [[Featured servers|features partnered servers]].]]
+}}
+[[Server]] is a standalone software that allows players to host a ''Minecraft'' world outside the normal [[Client software|game software]]. In order to join a ''Minecraft'' server, the game includes a menu where players can join a server, and save the ones they've visited. This feature is called the '''server list''', and it's available inside the Multiplayer menu,{{only|JE|short=1}} or the Servers tab on the [[Play menu]].{{only|BE|short=1}} From the list, players can check if a server is online, check their {{w|Ping (video games)|ping time}} to the server, and see how many players are in the game. {{IN|BE}}, the server list includes [[featured servers]] which are partnered with [[Mojang Studios]]. In the console versions, the featured servers are the only servers available to the players, and external servers cannot be added or accessed.
+
+Worlds hosted on servers can also be joined through LAN play as described above. Servers cannot be joined through the Xbox network in ''Bedrock Edition''.
+
+The [[Official Minecraft Server List]] by GamerSafer and Mojang features a variety of servers for the player to choose, which are categorized into options such as [[minigame]]s, [[SMP]]s, and [[creative]] builds.<!-- Copy from [[Official Minecraft Server List#Servers]] --> All servers listed on the website are required to comply with [https://aka.ms/MCUsageGuidelines Minecraft Usage Guidelines] (MUG) and [https://www.minecraft.net/en-us/eula End-user license agreement] (EULA), and have been vetted by both GamerSafer and the [https://x.com/IP_Justice Mojang Enforcement Team].<!-- Copy from [[Server list#Official Minecraft Server List]] -->
+
+== Realms ==
+{{Main|Realms}}
+Players can pay a subscription service to create their own private ''Minecraft'' server which is always online. This service is called ''Realms'', and it is provided by [[Mojang Studios]] on {{els|je|be}}. Realms are not available in the server list, players can join Realms only if they're invited by the Realm owner. Realms provides several exclusive features included in the subscription.
+
+== Player list ==
+=== ''Java Edition'' ===
+Players can see a list of players in the server by holding down {{key|Tab}} key, which is [[Controls|bound]] to List Players by default. For each player, the face part of their [[skin]] is shown alongside their [[username]], and on the right, a network bar indicator that shows how good the player's connection to the server; when more green bar is filled in the indicator, the lower [[w:Lag_(video_games)#Ping_time|ping time]] the player has. If a scoreboard objective is set to the {{cd|list}} [[Scoreboard#Display_slots|display slot]], the player's score for that objective is shown to the left of the network indicator. Players in spectator mode have a grayed out and italicised username.
+
+{| class="wikitable pixel-image"
+|+ Meaning of ping icons<ref>The player list implementation can be seen on {{jcp|net.minecraft.client.gui.components.PlayerTabOverlay}} class in the game's code. ([[Obfuscation map|Mojang mapping]])</ref>
+|-
+! Icon !! Player's ping time
+|-
+| [[File:ping_unknown.png|20px]] || Below 0ms{{Note|Unlikely to ever happen. The game's code does not have any case where the ping (or latency) is set to less than zero.}}
+|-
+| [[File:ping_5.png|20px]] || Between 0 and 150ms
+|-
+| [[File:ping_4.png|20px]] || Between 150 and 300ms
+|-
+| [[File:ping_3.png|20px]] || Between 300 and 600ms
+|-
+| [[File:ping_2.png|20px]] || Between 600 and 1000ms
+|-
+| [[File:ping_1.png|20px]] || Above 1000ms
+|}
+
+The ping time (or latency) is calculated by {{math|(previous latency * 3 + client round trip time) / 4}}, which the ''client round trip time'' is calculated from subtracting the current system time by milliseconds with the [[Java Edition protocol/Packets#Clientbound Keep Alive (configuration)|client keep alive time]].<ref>The calculation can be checked on {{jcp|net.minecraft.server.network.ServerCommonPacketListenerImpl#handleKeepAlive()}} method. (Mojang mapping)</ref> If no previous latency is set, then the initial latency is zero.
+
+{{notelist}}
+
+=== ''Bedrock Edition'' ===
+[[File:Ore UI - Game Menu - Social Drawer Screen Menu (Bedrock).png|thumb|The social drawer in the game menu]]
+Online players in the server can be seen in [[social drawer]] in the [[Game Menu|game menu]] (opened with {{Keys|F4}} or the bound key). Each player is shown with their [[player permission]], and their Xbox profile picture, allowing to open the [[profile]] and change social settings. If a scoreboard objective is set to the {{cd|list}} [[Scoreboard#Display_slots|display slot]], the player's score for that objective is shown here.
+
+== Parties ==
+{{Main|Social#Parties}}{{In development|bedrock|section=1}}
+Players can join and create parties within the friends system, and connect with up to 15 people in the menus. When the leader joins a multiplayer world or Realm, all members automatically join the leader and can quickly hop from world to world. Parties also have a chat feature which allows members to communicate even if they are not in the same world, or in the menus.
+
+== Videos ==
+{{yt|CpYXJ1j46HI|align=center}}
+
+== History ==
+{{About|general multiplayer server history|''Bedrock Edition'' server software history|Bedrock Dedicated Server#History|''Java Edition'' server software history|server.jar#History}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.12a|dev=May 18, 2009|slink=Java Edition Classic 0.0.12a/Development#Multiplayer test (May 18, 2009)|Began work on the implementation of multiplayer.}}
+|{{HistoryLine||0.0.15a (Multiplayer Test 1)|Multiplayer is first tested.}}
+|{{HistoryLine||0.0.15a (Multiplayer Test 4)|Players' names now appear above their heads.}}
+|{{HistoryLine||0.0.15a (Multiplayer Test 5)|Added the chat system.
+|Due to a bug, attempting to send a message in the chat in a singleplayer world crashes the game.}}
+|{{HistoryLine||?|The default port has been changed to 25565}}
+|{{HistoryLine||0.0.16a|Reduced bandwidth usage.
+|Multiplayer has been released after many beta trials.{{verify|Could be released in c0.0.16a_02}}
+|Added commands for admins such as {{cmd|kick}} and {{cmd|ban}}.
+}}
+|{{HistoryLine||0.0.17a|Players can now see the chat log when typing.
+|Added the ability to see the list of players logged in by pressing {{key|Tab}}.
+|Custom player skin test.
+|The chat can no longer be accessed in singleplayer.}}
+|{{HistoryLine||0.0.18a|Custom skins have been released.}}
+|{{HistoryLine||0.0.18a_02|Added support in chat for characters <nowiki>|</nowiki>, @, and $.}}
+|{{HistoryLine||0.0.23a|Clicking a player's name under the player list pastes their username into the chat.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Removed multiplayer.}}
+|{{HistoryLine||0.28|Readded multiplayer.
+|Other players can be killed in multiplayer.}}
+|{{HistoryLine||0.28_01|Other players can no longer be killed in multiplayer.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-0040|Multiplayer has been made partially inaccessible (although the multiplayer code still exists and can be re-enabled).
+|Connecting to a multiplayer server causes players to spawn in a bedrock cube.{{citation needed}}
+|The game acts as if it is in singleplayer – the chat is inaccessible and the player list cannot be opened.}}
+|{{HistoryLine|||dev=20100110|Multiplayer no longer works.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.10|Mojang hosts a private Survival multiplayer server that requires invitation to join.}}
+|{{HistoryLine||v1.0.12|Survival multiplayer testing begins.}}
+|{{HistoryLine||v1.0.15|Survival multiplayer is released.}}
+|{{HistoryLine||v1.0.16|Added {{cmd|ban}}, {{cmd|pardon}}, {{cmd|ban-ip}}, {{cmd|pardon-ip}}, {{cmd|op}} and {{cmd|deop}} commands.
+|Added server operators.}}
+|{{HistoryLine||v1.0.16_01|Added {{cmd|tp <player1> <player2>}}, {{cmd|save-all}}, {{cmd|save-off}} and {{cmd|save-on}} commands.}}
+|{{HistoryLine||v1.0.16_02|Added {{cmd|tell}} and {{cmd|list}} commands.
+|Operators can now build in the spawn area.
+|The server now logs what admin does what and broadcasts any admin events to all connected ops.
+|{{cmd|save-off}} now works.}}
+|{{HistoryLine||v1.0.17|[[Chicken]]s, [[pig]]s and [[slime]]s can now spawn.
+|The daylight cycle now works.}}
+|{{HistoryLine||v1.1.0|Added a shared client-server inventory.|[[Chest]]s, [[sign]]s and [[furnace]]s now work.}}
+|{{HistoryLine||v1.2.1|Music now plays in multiplayer.}}
+|{{HistoryLine||v1.2.2|Vehicles are now functional.}}
+|{{HistoryLine||v1.2.3|[[Health]] and [[damage]] are now functional.}}
+|{{HistoryLine||v1.2.3_05|Other players are shown as [[sneaking]] when they are [[sneaking]].
+|Names of sneaking players are now fainter and visible at shorter distances, and are not visible through solid blocks.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|Inventory is now server-side (fixes disappearing items and duplication as a result).}}
+|{{HistoryLine||1.2|Worn [[armor]] is now visible on other players.
+|[[Painting]]s now work.}}
+|{{HistoryLine||1.3|Players standing on [[fence]]s no longer get stuck.}}
+|{{HistoryLine||1.4|"Ghost" client-sided [[slime]]s no longer spawn.}}
+|{{HistoryLine||1.5|[[Wolves]] no longer constantly whimper when they have full health.}}
+|{{HistoryLine||1.6|dev=Test Build 3|[[The Nether]] now works in multiplayer.
+|[[Dispenser]]s now emit smoke and play sounds when used.
+|Fixed fake client-sided [[music discs]] spawned when ejecting them from a [[jukebox]].
+|New settings in Server.properties: <code>view-distance</code> and <code>allow-nether</code>.}}
+|{{HistoryLine||1.7.3|Modded clients can no longer edit text of placed [[sign]]s.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[Ghast]] attack sounds in multiplayer have been fixed.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.1|dev=release|Fixed "Invalid server key" error when attempting to log into server.
+|Fixed  "Null pointer exception" error when logging into server.}}
+|{{HistoryLine||1.1|dev=11w49a|Corrected a {{cd|setTileEntity}} multiplayer bug.}}
+|{{HistoryLine|||dev=?|It is now possible to enter colored text in the chat.}}
+|{{HistoryLine||1.2.1|dev=12w06a|It is no longer possible to enter colored text in multiplayer's chat with the vanilla [[Stand alone client|client]].
+|[[Monster spawners]] now show the correct mob inside them.
+|[[Mob]] hitboxes have been fixed (it is now possible to hit their legs).}}
+|{{HistoryLine||1.2.4|Added a chat history.
+|Added the ability to complete usernames using the {{key|Tab}} key.
+|Added the ability to copy-paste text.}}
+|{{HistoryLine||1.3.1|dev=12w23a|Players can now see the cracking effect when other players mine blocks.
+|Multiplayer now scans for local games.}}
+|{{HistoryLine||1.8|dev=14w02a|Improved chat communication.{{more info}}
+|Messages are now either chat, system, or action bar messages.
+|Action bar messages are always shown. Chat and system messages are now only shown if chat settings are configured that way.
+|Some instances of usernames in the chat do now show the player's UUID when hovered on when debug tooltips are enabled.}}
+|{{HistoryLine||1.9|dev=15w37a|Previously, [[Hardcore]] mode kicked players when they died with "'''You have died. Game over, man, it's game over!'''" [[disconnect message]]. This is no longer the case, and instead players may enter [[Spectator]] mode.}}
+|{{HistoryLine|||dev=15w43a|Chat now supports Chinese, Japanese and Korean, and probably other IME entered languages.{{verify}}}}
+|{{HistoryLine||1.11|dev=16w38a|Chat messages can now be 256 characters long instead of 100.}}
+|{{HistoryLine||1.12|dev=17w13a|Added the narrator, which can read chat messages aloud.}}
+|{{HistoryLine|||dev=17w15a|Added a toast notification for toggling the narrator.
+|The narrator now has four settings: "off", "all", "chat", and "system".}}
+|{{HistoryLine|||dev=17w18b|Made the narrator work on nearly all systems (Linux requires Flite for it to work).}}
+|{{HistoryLine||1.16|dev=20w15a|Chat line spacing can be adjusted.
+|A chat delay can be set between 0 (default) and 6 seconds.}}
+|{{HistoryLine||1.19.1|dev=22w24a|Added the player reporting system, only accessible in multiplayer worlds.}}
+|{{HistoryLine||1.20.5|dev=24w04a|Renamed "Allow cheats" to "Allow commands" on the Open to LAN screen.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|The first public version of ''Pocket Edition'' have multiplayer support in a form of wireless local area network.|Multiplayer worlds can be saved for offline use with the "Copy World" button in the [[pause menu]].}}
+|{{HistoryLine||v0.7.0|Added the [[chat]] system.|Added Pocket [[Realms]], accessible only to the testers of the ''Java Edition'' Realms.}}
+|{{HistoryLine||v0.7.4|Added an "External" button in the edit section of world create menu, for connecting to servers by IP address.|Added support for [[commands]], however no commands have been implemented yet.}}
+|{{HistoryLine||v0.7.6|Realms are shut down for maintenance.}}
+|{{HistoryLine||v0.11.0|Added custom kick and ban messages.|Added server status and [[message of the day]] on the server entries screen.|Added ability for players to choose "Steve" and "Alex" models, and apply their own custom [[skin]].}}
+|{{HistoryLine||v0.12.0|The fist public release of ''Windows 10 Edition'' being able to cross-play with players of [[Pocket Edition v0.12.1 alpha]] up to five players.}}
+|{{HistoryLine||v0.15.0|Updated Realms with cross-play between mobile and Windows platforms.{{verify}}}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.18|Added cross-play support for Xbox One players. Previously, Xbox One ran the [[Legacy Console Edition]], and ''Bedrock Edition'' only had cross-play between mobile, Windows, and VR platforms.}}
+|{{HistoryLine||1.6.0|An unreleased Bedrock Dedicated Server version has been shown.}}
+|{{HistoryLine||1.6.1|The first public [[Bedrock Dedicated Server]] (BDS) release.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|Removed debug symbols (<code>bedrock_server.pdb</code> file) from Bedrock Dedicated Server.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|Console}}
+|{{HistoryLine||xbox=TU3|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added ban list functionality to allow players to self-ban from levels they feel contain offensive content.|Added an option for the host to limit online games to only players in their friends list (no friends of friends).}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3ds}}
+|{{HistoryLine||1.4.23|Added support for 2-player multiplayer using Local Play.}}
+}}
+
+== Issues ==
+
+{{issue list|Multiplayer|Server}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Multiplayer Group.png|A multiplayer group
+File:Looking back at the product.png|Two players look towards a massive build they made.
+File:Ancient dwellers.png|Three players in a cave, stumbling on an Ancient city.
+File:Boatingplayers.png|Two players in boats heading towards a shipwreck. A base can be seen above.
+File:Cliffyhouse.png|Three players building a house on a cliffside.
+File:Doom guy and creeper mining.png|Two players mining.
+File:Multiplayer with chats.png|Four players in multiplayer, with the chat open.
+File:FIIIIGHT.png|Two players fighting near a cliff.
+</gallery>
+
+=== User interface ===
+<gallery>
+File:Multiplayer disclaimer.png|The disclaimer that appears {{in|java}} before going to the multiplayer menu screen.
+File:Ore UI - Play Screen - Third-Party Online Play Warning Pop-Ups (Bedrock).png|The same disclaimer {{In|be}}
+File:Banned.png|Banned from a Minecraft server.
+File:Account permanently banned disclaimer.png|Banned from online play and [[Realms]].
+File:Account permanently suspended title screen.png|[[Title screen]] with inaccessible multiplayer and Realms buttons when banned from online play.
+File:MCBE Friends List Error Message.jpg|An error message which can appear on the Friends list in [[Bedrock Edition]]. 
+</gallery>
+
+=== Historical screenshots ===
+{{see also|Category:Ez screenshots}}
+<gallery>
+Beta Multiplayer Group.png|A multiplayer group taken in [[Java Edition Beta]].
+Beta Creeper Statue.jpg|A player-made [[creeper]] structure in multiplayer [[Java Edition Beta]].
+Moria.jpg|A player-made great pillars, assuming to be a massive castle.
+Mojang Statues.jpg|Player {{w|statue}}s, a common trait of [[creative]] multiplayer servers.
+PE Multiplayer.png|Numerous players on a ''[[Pocket Edition]]'' server in 2014.
+Alpha Server.jpg|An early multiplayer game on [[Java Edition Alpha]].
+Spleef Arena.jpg|An early [[Spleef]] [[Server#Minigame|minigame]] on [[Java Edition Classic]].
+Multiplayer Chaos.jpg|An early [[Server#Creative|Creative mode server]] on [[Java Edition Classic]].
+</gallery>
+
+=== Development images ===
+<gallery>
+Alpha v1.0.5 01 Multiplayer Testing.png|[[Notch]] testing multiplayer.
+EarlySMP.png|Early multiplayer.
+Alpha v1.0.10 Multiplayer 2.jpg|Early multiplayer.
+Alpha v1.0.10 Multiplayer 3.png|Early multiplayer.
+</gallery>
+
+=== In other media ===
+<gallery>
+Rainy Minecraft multiplayer.jpeg|A multiplayer game on a rainy night.
+MC AddOnAchievements.jpeg|Players gaining [[achievement]]s with [[add-on]]s enabled.
+</gallery>
+
+== References ==
+<references/>
+
+== Navigation ==
+{{Navbox gameplay}}
+{{Navbox Bedrock Edition}}
+
+[[cs:Hra více hráčů]]
+[[de:Mehrspieler]]
+[[es:Multijugador]]
+[[fr:Multijoueur]]
+[[it:Multigiocatore]]
+[[ja:マルチプレイ]]
+[[nl:Multiplayer]]
+[[pl:Gra wieloosobowa]]
+[[pt:Multijogador]]
+[[ru:Сетевая игра]]
+[[uk:Гра в мережі]]
+[[zh:多人游戏]]

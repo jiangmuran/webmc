@@ -1,0 +1,280 @@
+{{About|the interactive mob in ''Bedrock Edition'' and ''Minecraft Education''|the fake player in ''Java Edition''|Mannequin}}
+{{Hatnote|For the mobs classified as "NPC" in the game's code, see [[Villager]] and [[Wandering Trader]].}}
+{{Exclusive|bedrock|education}}
+{{Infobox entity
+| image = NPC1pre.png
+| extratext = View [[#Gallery|all renders]]
+| behavior = Passive
+| health = &infin; (Minecraft Education)<br>0 (Bedrock Edition)
+| invimage = NPC Spawn Egg
+| size = Height: 2.1 Blocks<br>Width: 0.6 Blocks
+| spawn = See [[#Spawning|Spawning]]
+}}
+
+'''Non player characters''' (abbreviated as '''NPCs''') are interactive [[passive mob]]s that have models similar to [[villager]]s.<ref>{{cite|url=https://education.minecraft.net/support/knowledge-base/using-npcs/| title = Using NPCs - Education Edition Knowledge Base}}</ref>
+
+== Spawning ==
+Unlike other entities, NPCs do not spawn naturally; they can be spawned using the [[Spawn NPC|NPC spawn egg]] (it can be obtained with the following command: <code>/give @s spawn_egg 1 51</code>), or by using the command <code>/summon npc</code>. When spawned, an NPC displays a name hovering over its head. The default name is "NPC" with a [[Formatting codes|color code]] of <code>§e</code>, resulting in the name being yellow.
+
+To spawn an NPC with its [[spawn egg]], the player must have the Worldbuilder authorization, automatically granted to players in Creative mode, or by using the {{cmd|worldbuilder}} command.
+
+== Behavior ==
+NPCs have no basic AI. They can neither move nor be pushed by most entities, but they can be pushed by the [[breeze]]'s [[wind charge]], and by [[explosion]]s, [[water]], [[lava]], by [[sticky piston]]s from below or sides with a [[slime block]] attached and they can slide on [[ice]] when pushed. They cannot take damage nor be affected by [[potion]]s. Nevertheless, the NPCs can still turn their body and stare at the nearest [[player]] if close enough. 
+NPCs can also never ride [[minecart]]s or [[boat]]s, and the [[vehicle]]s go through NPCs. The player cannot use a [[lead]] on them.
+
+NPCs are invulnerable to attacks. An NPC is attacked by [[zoglin]]s, [[wither]]s, [[warden]]s, [[goat]]s, and [[vindicator]]s named Johnny, but the NPC remains undamaged. [[Pufferfish]] also inflate when an NPC is nearby. [[Fox]]es don't sleep near NPCs as well. Projectiles pass through them. However, an NPC dies when going below Y=-64, and despawns if it falls into the void.
+
+== Interface ==
+[[File:Npcpet.png|thumb|NPC interface without world builder permission.]]
+[[File:NPCs Talk page in pe.png|thumb|NPC interface with world builder permission.]]
+Right-clicking an NPC displays the interface. It can be edited only as long as the [[player]] has the world builder permission. The interface allows the player to edit the dialog, name, appearance and advanced settings. When the player doesn't have the world builder permission, it shows only the dialog and buttons.
+
+=== Customization ===
+;Name
+: The name of an NPC can be entered in the top text pane titled "Name". The text limit for the name is 32, and the color can be changed by using the [[color codes]] as by default the color is yellow (§e). This does not set the custom name given by [[name tag]], renamed [[spawn egg]], or {{cmd|summon}} command; as the name set by the menu is different and cannot be selected by {{cd|[[Target selectors#Selecting targets by name|name{{=}}]]}} target selector argument.
+; Dialog
+: The dialog box located right below the "Name" and often used as a tool for guiding. The text limit for the dialog is 256, although in some cases it appears as 337.
+; Appearance
+: NPCs appearance are selectable, to change the skin simply just by left clicking on the preferred skin.
+: There are currently 60 skins available for the NPCs and defaults to the yellow-robed NPC. {{IN|ee}}, there are only 35 available to choose from.
+; Advanced Settings
+: The advanced NPC settings consists of URLs and commands. They are used to create interactive buttons. The current maximum advanced settings that can be added is 6.
+:; URL{{only|ee}}
+:: The URL feature allows the [[player]] to add a hyperlink button. The URL can be entered at the first input box below the title up to 1024 letters.
+:: To change the button name or label can be proceeded by filling the input box titled "Button Name", the current text limit for the label is 16 letters.
+:: When added, the button appears only if the player has the world builder permission disabled. The button label defaults to "Learn More" and the color defaults to blue, it can be changed by using the color codes.
+:; Command 
+::* The command feature allows the player to add one or more executable [[command]]s in the NPC. The command can be entered at the first input box below the title, unlike the [[command block]] wherein multiple commands can be executed in one window. The current maximum characters for the command is 1024. The command(s) get executed when the dialogue with the NPC is closed. 
+::* The command can be presented either as a button or a direct command. As a button, the button name or label can be changed by filling the input box titled "Button Name", the text limit for the label is 16 letters. It can be executed only if the player has the world builder permission disabled.
+::* When not added as a button, the command is executed after the dialogue with the NPC, visible by right clicking the NPC, has closed. In contrariwise, the button is displayed and has a label color defaults to light gray, and can be changed by using the color codes. (the default name of the NPC is NPC)
+::* <code>@initiator</code>{{only|be}} is a specialized [[target selector]] that targets the player that has interacted with the NPC, distinguishing them from other players that may interact later. This is useful for running commands on a per-player basis.
+
+== Sounds ==
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Villager idle1.ogg
+|sound2=Villager idle2.ogg
+|sound3=Villager idle3.ogg
+|source=neutral
+|description=When an NPC is spawned
+|id=mob.villager.idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Villager death.ogg
+|source=neutral
+|description=When a NPC dies
+|id=mob.villager.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wood dig1.ogg
+|sound2=Wood dig2.ogg
+|sound3=Wood dig3.ogg
+|sound4=Wood dig4.ogg
+|source=block
+|description=When an NPC despawns in the void.
+|id=dig.wood
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=NPC
+|spritetype=entity
+|nameid=npc
+|showentityfamily=y
+|entityfamily=mob,npc
+|id=51
+|foot=1}}
+
+=== Entity data ===
+NPCs have entity data associated with them that contain various properties.
+: See [[Bedrock Edition level format/Entity format]].
+
+== History ==
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:NPC1pre.png|32px]] [[File:NPC2pre.png|32px]] [[File:NPC3pre.png|32px]] [[File:NPC4pre.png|32px]] [[File:NPC5pre.png|32px]] [[File:NPC6pre.png|32px]] [[File:NPC7pre.png|32px]] [[File:NPC8pre.png|32px]] [[File:NPC9pre.png|32px]] [[File:NPC10pre.png|32px]]<br>[[File:Scientist1pre.png|32px]] [[File:Scientist2pre.png|32px]] [[File:Scientist3pre.png|32px]] [[File:Scientist4pre.png|32px]] [[File:Scientist5pre.png|32px]] [[File:Scientist6pre.png|32px]] [[File:Scientist7pre.png|32px]][[File:Scientist8pre.png|32px]] [[File:Scientist9pre.png|32px]] [[File:Scientist10pre.png|32px]] Added NPCs.}}
+|{{HistoryLine|||dev=build 4|The NPC [[spawn egg]] has been removed.}}
+|{{HistoryLine|||dev=build 5|NPCs now have a behavior file in: 'server/entities/npc.json'.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|NPCs have been re-added.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|NPCs currently have no functionality.{{verify|Needs verification in this entity.}}
+|NPCs can now be summoned only using the {{cmd|summon}} [[command]] while having {{el|ee}} mode enabled.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.4|NPCs are no longer summonnable using {{cmd|summon}}, but can still be spawned via [[mob]] editing, and still available in a world if one was spawned in a previous version.
+|NPCs now have a dialog GUI and changeable skins.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|Dialog and changeable skins have been removed from NPCs.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|Dialog and changeable skins for NPCs have been added back into the game.
+|NPC [[spawn egg]]s can now be obtained using {{cmd|give <player> spawn_egg 1 51}}.}}
+|{{HistoryLine|||dev=beta 1.16.0.51|NPCs can now be summoned using the {{cmd|summon}} [[command]] again.}}
+|{{HistoryLine|||dev=beta 1.16.0.60|NPCs no longer have a [[health]] value.}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.20.21|[[File:Apiary1pre.png|32px]] [[File:Apiary2pre.png|32px]] [[File:Apiary3pre.png|32px]] [[File:Apiary4pre.png|32px]] [[File:Apiary5pre.png|32px]] Added 5 bee-themed NPC skins.
+|[[File:Teacher1NPC.png|32px]] [[File:Teacher2NPC.png|32px]] [[File:Teacher3NPC.png|32px]] [[File:Teacher4NPC.png|32px]] [[File:Teacher5NPC.png|32px]] Added 5 educator-themed skins.
+|[[File:Construction1pre.png|32px]] [[File:Construction2pre.png|32px]] [[File:Construction3pre.png|32px]] [[File:Construction4pre.png|32px]] [[File:Construction5pre.png|32px]] Added 5 constructor-themed skins.}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.21|[[File:Agriculture1pre.png|32px]] [[File:Agriculture2pre.png|32px]] [[File:Agriculture3pre.png|32px]] [[File:Agriculture4pre.png|32px]] [[File:Agriculture5pre.png|32px]] [[File:Agriculture6pre.png|32px]] [[File:Agriculture7pre.png|32px]] [[File:Agriculture8pre.png|32px]] [[File:Agriculture9pre.png|32px]] [[File:Agriculture10pre.png|32px]] Added 10 agriculture-themed skins.
+|[[File:BusinessMob1pre.png|32px]] [[File:BusinessMob2pre.png|32px]] [[File:BusinessMob3pre.png|32px]] [[File:BusinessMob4pre.png|32px]] [[File:BusinessMob5pre.png|32px]] Added 5 business mob-themed skins.
+|[[File:EverydayBusiness1pre.png|32px]] [[File:EverydayBusiness2pre.png|32px]] [[File:EverydayBusiness3pre.png|32px]] [[File:EverydayBusiness4pre.png|32px]] [[File:EverydayBusiness5pre.png|32px]] Added 5 everyday business-themed skins.
+|[[File:Kiosk1pre.png|32px]] [[File:Kiosk2pre.png|32px]] [[File:Kiosk3pre.png|32px]] [[File:Kiosk4pre.png|32px]] [[File:Kiosk5pre.png|32px]] Added 5 kiosk-themed skins.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.0|[[File:NPC1pre.png|32px]] [[File:NPC2pre.png|32px]] [[File:NPC3pre.png|32px]] [[File:NPC4pre.png|32px]] [[File:NPC5pre.png|32px]] [[File:NPC6pre.png|32px]] [[File:NPC7pre.png|32px]] [[File:NPC8pre.png|32px]] [[File:NPC9pre.png|32px]] [[File:NPC10pre.png|32px]]<br>[[File:Scientist1pre.png|32px]] [[File:Scientist2pre.png|32px]] [[File:Scientist3pre.png|32px]] [[File:Scientist4pre.png|32px]] [[File:Scientist5pre.png|32px]] [[File:Scientist6pre.png|32px]] [[File:Scientist7pre.png|32px]][[File:Scientist8pre.png|32px]] [[File:Scientist9pre.png|32px]] [[File:Scientist10pre.png|32px]] Added NPCs.
+|NPCs are editable and can be given [[commands]] to do certain actions.}}
+|{{HistoryLine||1.0.2|NPC interface page is now more advanced.
+|Added button mode for the URL and commands.}}
+|{{HistoryLine||1.14.31|[[File:Apiary1pre.png|32px]] [[File:Apiary2pre.png|32px]] [[File:Apiary3pre.png|32px]] [[File:Apiary4pre.png|32px]] [[File:Apiary5pre.png|32px]] Added 5 bee-themed NPC skins.}}
+|{{HistoryLine||1.14.70|dev=1.14.60|[[File:Teacher1NPC.png|32px]] [[File:Teacher2NPC.png|32px]] [[File:Teacher3NPC.png|32px]] [[File:Teacher4NPC.png|32px]] [[File:Teacher5NPC.png|32px]] Added 5 educator-themed skins.|[[File:Construction1pre.png|32px]] [[File:Construction2pre.png|32px]] [[File:Construction3pre.png|32px]] [[File:Construction4pre.png|32px]] [[File:Construction5pre.png|32px]] Added 5 constructor-themed skins.}}
+|{{HistoryLine||1.18.32|dev=?|[[File:Agriculture1pre.png|32px]] [[File:Agriculture2pre.png|32px]] [[File:Agriculture3pre.png|32px]] [[File:Agriculture4pre.png|32px]] [[File:Agriculture5pre.png|32px]] [[File:Agriculture6pre.png|32px]] [[File:Agriculture7pre.png|32px]] [[File:Agriculture8pre.png|32px]] [[File:Agriculture9pre.png|32px]] [[File:Agriculture10pre.png|32px]] Added 10 agriculture-themed skins.
+|[[File:BusinessMob1pre.png|32px]] [[File:BusinessMob2pre.png|32px]] [[File:BusinessMob3pre.png|32px]] [[File:BusinessMob4pre.png|32px]] [[File:BusinessMob5pre.png|32px]] Added 5 business mob-themed skins.
+|[[File:EverydayBusiness1pre.png|32px]] [[File:EverydayBusiness2pre.png|32px]] [[File:EverydayBusiness3pre.png|32px]] [[File:EverydayBusiness4pre.png|32px]] [[File:EverydayBusiness5pre.png|32px]] Added 5 everyday business-themed skins.
+|[[File:Kiosk1pre.png|32px]] [[File:Kiosk2pre.png|32px]] [[File:Kiosk3pre.png|32px]] [[File:Kiosk4pre.png|32px]] [[File:Kiosk5pre.png|32px]] Added 5 kiosk-themed skins.}}
+}}
+
+== Issues ==
+{{issue list|projects=mcpe}}
+
+== Trivia ==
+*The NPC is the only mob in {{BE}}  to not have its spawn egg changed yet.
+*The NPC addition in Pocket Edition alpha was likely accidental due to Pocket Edition sharing the same codebase as Education Edition likely in an [[agent]].
+
+== Gallery ==
+=== Renders ===
+<gallery>
+NPC1pre.png|NPC
+NPC2pre.png|NPC
+NPC3pre.png|NPC
+NPC4pre.png|NPC
+NPC5pre.png|NPC
+NPC6pre.png|NPC
+NPC7pre.png|NPC
+NPC8pre.png|NPC
+NPC9pre.png|NPC
+NPC10pre.png|NPC
+Scientist1pre.png|Scientist
+Scientist2pre.png|Scientist
+Scientist3pre.png|Scientist
+Scientist4pre.png|Scientist
+Scientist5pre.png|Scientist
+Scientist6pre.png|Scientist
+Scientist7pre.png|Scientist
+Scientist8pre.png|Scientist
+Scientist9pre.png|Scientist
+Scientist10pre.png|Scientist
+Apiary1pre.png|{{va|Apiary}}
+Apiary2pre.png|Apiary
+Apiary3pre.png|Apiary
+Apiary4pre.png|Apiary
+Apiary5pre.png|Apiary
+Teacher1NPC.png|Teacher
+Teacher2NPC.png|Teacher
+Teacher3NPC.png|Teacher
+Teacher4NPC.png|Teacher
+Teacher5NPC.png|Teacher
+Construction1pre.png|Constructor
+Construction2pre.png|Constructor
+Construction3pre.png|Constructor
+Construction4pre.png|Constructor
+Construction5pre.png|Constructor
+Agriculture1pre.png|Agriculture
+Agriculture2pre.png|Agriculture
+Agriculture3pre.png|Agriculture
+Agriculture4pre.png|Agriculture
+Agriculture5pre.png|Agriculture
+Agriculture6pre.png|Agriculture
+Agriculture7pre.png|Agriculture
+Agriculture8pre.png|Agriculture
+Agriculture9pre.png|Agriculture
+Agriculture10pre.png|Agriculture
+BusinessMob1pre.png|Business Mob
+BusinessMob2pre.png|Business Mob
+BusinessMob3pre.png|Business Mob
+BusinessMob4pre.png|Business Mob
+BusinessMob5pre.png|Business Mob
+EverydayBusiness1pre.png|Everyday Business
+EverydayBusiness2pre.png|Everyday Business
+EverydayBusiness3pre.png|Everyday Business
+EverydayBusiness4pre.png|Everyday Business
+EverydayBusiness5pre.png|Everyday Business
+Kiosk1pre.png|Kiosk
+Kiosk2pre.png|Kiosk
+Kiosk3pre.png|Kiosk
+Kiosk4pre.png|Kiosk
+Kiosk5pre.png|Kiosk
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Education Edition Exclusive Features.png|The NPC placed in a world along with other Education Edition features.
+NPC.jpg|NPC.
+Npcpe.png|Example of a spawned NPC named <code>§eNPC</code>.
+Many NPCs.png|Several NPCs looking at the player.
+Dinnerbone NPC.png|NPC named [[Dinnerbone]].
+Npcskinsinpe.png|NPC skins.
+Education Edition mobs.png|A NPC alongside a [[camera]] and an agent in a tutorial world.
+</gallery>
+
+=== Development images ===
+<gallery>
+Early NPCs.png|Early NPCs used [[player]] model and skins.
+MC EE Multiplayer 1-1.png|NPCs in town
+</gallery>
+
+=== In other media ===
+<gallery>
+Biome Labs Diamond Biome Dome (Eerie Mojang Office Party).png|An NPC making an appearance in [[Eerie Mojang Office Party]].
+Chemistry Update.png|NPCs in promotional artwork for the [[Chemistry Update]].
+Library Update Banner.png|NPC in promotional artwork for the [[Library Update]].
+Chromebook Release.png|NPCs in promotional artwork for the [[Chromebook Release]].
+Mobile, Multiplayer & More.png|NPC in promotional artwork for [[Mobile, Multiplayer & More]].
+Education Poster.png|NPCs in a promotional artwork for the game.
+NPC Artwork.png|Two NPCs in a official artwork.
+NPC MinecraftNet.png|The NPC menu in a promotional image.
+NPCBeeKeepers.png|The Beekeeper NPCs.
+NPCConstructionWorkers.png|The Construction Worker NPCs.
+NPCTeachers.png|The Teacher NPCs.
+NPCAgriculture.png|The Agriculture NPCs.
+NPCBusinessMobs.png|The Business Mob NPCs.
+NPCEverydayBusiness.png|The Everyday Business NPCs.
+NPCKiosk.png|The Kiosk NPCs.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/creator/article/beginners-guide-adding-npcs Beginners Guide to Adding NPCS] – Minecraft.net on November 09, 2021
+
+== Navigation ==
+{{Navbox entities|mobs}}
+{{Navbox Education|exclusive}}
+
+[[Category:Passive mobs]]
+[[Category:Humanoid mobs]]
+[[Category:Minecraft Education mobs]]
+
+[[de:NPC]]
+[[es:NPC]]
+[[fr:PNJ]]
+[[it:PNG]]
+[[ja:NPC]]
+[[ko:NPC]]
+[[pl:NPC]]
+[[pt:NPC]]
+[[ru:Неигровой персонаж]]
+[[th:NPC]]
+[[tr:NPC]]
+[[uk:Неігровий персонаж]]
+[[zh:NPC]]
+[[Category:NPCs| ]]

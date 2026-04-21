@@ -1,0 +1,218 @@
+{{about|the feature|the item that can be used to play music|Music Disc|disk-like ice feature|Ice patch}}
+{{Infobox structure
+| title = Disk
+| image = <gallery>
+Clay Disk 3.png|Clay
+Grass Disk 4.png|Grass
+Gravel Disk 4.png|Gravel
+Sand Disk 4.png|Sand
+</gallery>
+| biome = Depends
+| blocks = 
+* {{BlockLink|Clay}}
+Or
+* {{BlockLink|Gravel}}
+Or
+* {{BlockLink|Sand}}
+* {{BlockLink|Sandstone}}
+Or
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Dirt}}
+|canspawn=No
+}}
+A '''disk''' is a [[feature]] consisting of a naturally generated roughly circular deposit of a soil-like block under or next to bodies of [[water]].
+
+== Description ==
+Disks are generated at the Euclidean distance ''n'' (i.e. x<sup>2</sup>+y<sup>2</sup>=''n''<sup>2</sup>) from a given central block, creating a circular-looking pattern of the given block with a radius of ''n''. They are commonly seen throughout [[river]]s, shallow [[ocean]]s, [[swamp]]s, and [[mangrove swamp]]s.
+
+== List ==
+{| class="wikitable" style="min-width:calc(min(35rem, 100%))" data-description="Overworld patches"
+|-
+! Block
+! Replaces blocks
+! Minimum size (''n'')
+! Maximum size (''n'')
+! Biomes
+|-
+! {{BlockLink|Sand}},<br>{{BlockLink|Sandstone}} (When above air)
+| {{BlockLink|Dirt}}, {{BlockLink|Grass Block}}
+| 2
+| 6
+| All Overworld biomes except {{biomeLink|swamp}}, {{biomeLink|mangrove swamp}}, and {{BiomeLink|swamp hills}}{{only|be|short=1}}(Unused)
+|-
+! {{BlockLink|Gravel}}
+| {{BlockLink|Dirt}}, {{BlockLink|Grass Block}}
+| 2
+| 5
+| All Overworld biomes except {{biomeLink|swamp}}, {{biomeLink|mangrove swamp}}, and {{BiomeLink|swamp hills}}{{only|be|short=1}}(Unused)
+|-
+! {{BlockLink|Clay}}
+| {{BlockLink|Dirt}}, {{BlockLink|Clay}}
+| 2
+| 3
+| All Overworld biomes
+|-
+! {{BlockLink|Grass Block}},<br>{{BlockLink|Dirt}} (when under [[material|solid-material block]] or {{BlockLink|Water}})
+| {{BlockLink|Dirt}}, {{BlockLink|Mud}}
+| 2
+| 6
+| {{biomeLink|mangrove swamp}}
+|}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=disk
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=disk_clay
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=disk_grass
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=disk_gravel
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|nameid=disk_sand
+|spritetype=env
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=clay_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=gravel_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=sand_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=disk
+|spritetype=env
+|nameid=grass_disc_feature<!--sic-->
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{Nbt|compound|state_provider}} A rule-based block state provider.
+*** {{Nbt inherit/rule-based block state provider}}
+** {{Nbt|int}}{{Nbt|compound|radius}} The radius of this disk. Value between 0 and 8 (inclusive).
+*** {{Nbt inherit/int provider}}
+** {{Nbt|int|half_height}} Half of the height of this disk. Value between 0 and 4 (inclusive).
+** {{Nbt|compound|target}} A [[block predicate]] that must be passed to generate this feature.
+*** {{list indent|*|{{#lst:block predicate|json format}}}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:disk",
+  "config": {
+    "half_height": 1,
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 3,
+        "min_inclusive": 2
+      }
+    },
+    "state_provider": {
+      "fallback": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "minecraft:clay"
+        }
+      },
+      "rules": []
+    },
+    "target": {
+      "type": "minecraft:matching_blocks",
+      "blocks": [
+        "minecraft:dirt",
+        "minecraft:clay"
+      ]
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Added disks.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w06a|Disks no longer generate in and around [[water lake]]s.<ref>{{bug|MC-169523||As of 18w06a, the sand, clay and gravel blocks no longer generate around small lakes|Fixed}}</ref>}}
+|{{HistoryLine||1.19|dev=22w14a|Added grass disk in mangrove swamp.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added disks.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|Added grass disk in mangrove swamp.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Large lake.png|A lake in a flower forest with overlapping disks of sand, clay, gravel, and dirt.
+Clay in Swampland.png|A disk generated in a [[swamp]] biome.
+Gravel Beach.png|A gravel disk next to a [[river]].
+</gallery>
+
+== See also ==
+* [[Clay blob]], a terrain feature before [[Beta 1.8 Pre-release]].
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[de:Blockscheibe (Merkmal)]]
+[[es:Disco]]
+[[fr:Disque (élément du terrain)]]
+[[ja:ディスク]]
+[[ko:디스크]]
+[[pt:Disco]]
+[[zh:圆盘]]

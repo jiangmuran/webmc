@@ -1,0 +1,92 @@
+{{Joke feature}}
+{{Wip}}
+{{More images|The cage of iron bars}}
+{{Infobox block
+| image = Iron Trap.png
+| renewable = Yes
+| stackable = Yes (64)
+| transparent = Yes
+| tool = None
+| light = No
+| lavasusceptible = No
+| flammable = No
+| Transparent = Yes
+| rarity = Common
+}}
+An '''iron trap''' is a block found in [[26w14a]].
+
+== Obtaining ==
+
+=== Breaking ===
+
+Although the iron trap has a drop, no vanilla tool is suitable for breaking it, so breaking it with any tool will have no effect. Furthermore, attempting to use [[Attack / Mine]] to order a tool to mine it will not happen, as tools only mine blocks that they can break.
+
+However, it is still possible to make an iron trap block drop a living iron trap with an explosion.
+
+Using cheats, it's possible to create a tool capable of mining it by modifying {{DCL|minecraft:tool.rules}} data component. Can be add this block in {{Tag link|block|mineable/pickaxe}} so that it can be mined by any pickaxe (additionally, adding a tag like {{tag link|block|needs_iron_tool}} prevents it from being mined by some pickaxes.)
+
+{{breaking row|horizontal=1|Iron Trap|none}}
+
+=== Post-generation ===
+
+If at least eight [[Living Block|living]] [[iron bars]] come close together, a living iron trap will form.
+
+It can be placed as an item in a container by approaching an alive container or using a hopper.
+
+It can be placed as a block with [[Build (item)|build]], or somehow remove the action items from the hotbar.
+
+== Usage ==
+[[Living Block|Living]] attempt to pathfind towards the nearest player. When coming in contact with a player, it will spawn a cage of iron bars around them, trapping them.
+
+The copper cage has 25 iron bars (17 more than that used to produce the copper trap) and removing all the blocks that were previously in the iron bars' position, including blocks like [[bedrock]].
+
+'''Cage render''' 
+{{Block structure renderer|
+Z=iron_bars[north=true,south=true]
+|X=iron_bars[east=true,west=true]
+|a=iron_bars[east=true,south=true]
+|b=iron_bars[west=true,south=true]
+|c=iron_bars[east=true,north=true]
+|d=iron_bars[west=true,north=true]
+|Y=iron_bars[north=true,south=true,east=true,west=true]
+|W=iron_bars[north=true,south=true,east=true]
+|N=iron_bars[south=true,east=true,west=true]
+|S=iron_bars[north=true,east=true,west=true]
+|E=iron_bars[north=true,south=true,west=true]
+|aXb,Z+Z,cXd;aXb,Z+Z,cXd;aNb,WYE,cSd
+|marks=1,0,1#114514}}
+
+== Sounds ==
+{{Sound table/Block/Iron/JE}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Iron Trap
+|spritetype=block
+|nameid=iron_trap
+|foot=1}}
+
+== Advancements ==
+{{load advancements|You Played Yourself|page=Java Edition 26w14a}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== Trivia ==
+*According to one of the developers, iron and [[copper trap]]s are a reference to the [[mod]] SecurityCraft.<ref>{{Tweet|bl4ckscor3|2040056700078555477|Fun fact for those of you who played the April Fools' Day snapshot 26w14a and got imprisoned by an iron or copper trap: Those are a reference to the Cage Trap in the mod SecurityCraft that I've been a part of the dev team of since long before I joined Mojang. Did you notice it?}}</ref>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|26w14a}}
+
+[[pt:Edição Java 26w14a/Iron Trap]]
+[[zh:铁陷阱]]

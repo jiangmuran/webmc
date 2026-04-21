@@ -1,0 +1,212 @@
+{{Infobox structure
+| image = Ocean Monument.png
+| biome = {{BiomeLink|Deep Ocean}}<br>{{BiomeLink|Deep Frozen Ocean}}<br>{{BiomeLink|Deep Cold Ocean}}<br>{{BiomeLink|Deep Lukewarm Ocean}}
+| mobs = {{EntityLink|Elder Guardian}}<br>{{EntityLink|Guardian}}
+| blocks = 
+* {{BlockLink|Block of Gold}}
+* {{BlockLink|Dark Prismarine}}
+* {{BlockLink|Kelp}}
+* {{BlockLink|Kelp Plant}}
+* {{BlockLink|Prismarine}}
+* {{BlockLink|Prismarine Bricks}}
+* {{BlockLink|Sea Lantern}}
+* {{BlockLink|Seagrass}}
+* {{BlockLink|Tall Seagrass}}
+* {{BlockLink|Water}}
+* {{BlockLink|Wet Sponge}}
+| canspawn = No
+}}
+{{relevant tutorial|Defeating an ocean monument}}
+'''Ocean monuments''', also known as simply '''monuments''', are rare underwater [[structure]]s found in [[deep ocean]] [[biome]]s and variants. They are inhabited by [[guardian]]s and [[elder guardian]]s. They are the only place where [[sponge]]s can be found and one of the two places where [[prismarine]] can be found; the other being [[ocean ruins]].
+
+== Generation ==
+Ocean monuments generate in areas with deep ocean biome variants everywhere within a 16 block square radius around the center point, and an aquatic biome (regular/deep/frozen ocean or regular/frozen river) everywhere within a 29 block square radius around the center point. In order to prevent air pockets, water generates around the monument as a part of the structure. The four blocks in the exact middle always generate each in a different chunk. It is the largest structure that does not contain a loot [[chest]] and the largest  structure found underwater. An ocean monument can also overwrite other structures like [[stronghold]]s during generation. A maximum of one ocean monument may generate in every 512×512 block area.
+
+{{IN|Bedrock}}, ocean monuments always generate at the same [[Altitude|Y-level]], with the top of the roof always at Y=56. Seafloor surrounding the monument is cut off if it is higher than the monument's base.
+
+They can be located with ocean [[explorer map]]s, which are bought from apprentice-level cartographer [[villager]]s with [[emerald]]s.
+
+{{Calculator|chunkbase|pois=Om|zoom=0.25}}
+
+=== Mobs ===
+{| style="text-align:center"
+|-
+| scope="col" style="width:70px" | [[File:ElderGuardianFace.png|link=Elder Guardian]]
+| scope="col" style="width:70px" | [[File:GuardianFace.png|link=Guardian]]
+|-
+| style="vertical-align:top" | [[Elder Guardian]]
+| style="vertical-align:top" | [[Guardian]]
+|}
+
+The area of the ocean monument spawns only guardians after generating, also being the only location they spawn. Ocean monuments always contain three elder guardians – one at the top and one in each wing.
+
+{{In|Bedrock}}, the [[particle]] of the elder guardian inflicting [[Mining Fatigue]] III is a separate entity, the [[elder guardian ghost]].
+
+== Structure ==
+{{main|Ocean Monument/Structure}}
+
+[[File:Sponge and treasure.png|thumb|right|The treasure chamber with a sponge room (smaller dark prismarine room) to its left.]]
+
+The monument is constructed entirely from variants of [[prismarine]] and lit by [[sea lantern]]s. It includes a large central section flanked by two wings. Under the monument are 23 giant pillars that stretch to the ocean floor. The main entrance is located at the front of the central section. The base size of the structure is 58×58 blocks. Thus, the ocean monument (the location where [[guardian]]s and [[elder guardian]]s spawn) area is 3,364 square blocks.
+
+[[File:MonumentOcean3.png|thumb|left|Certain rooms in the monument contain wet sponges.]]
+
+The central section consists of various types of chambers. The chambers are randomly generated; each monument has a different number of rooms (at least six) arranged in a unique manner. The chambers connect vertically and horizontally to the different parts of the monument, including the left and right wings. At the topmost room resides an elder guardian. Around the center of the central section lies the treasure chamber, a tall room with eight [[blocks of gold]] encased in [[dark prismarine]].
+
+Occasionally, monuments contain one or more rooms with approximately 30 [[wet sponge]]s on the ceiling. Sponge rooms have an opening only in the floor. Ocean monuments are not guaranteed to generate sponge rooms.
+
+One of the wings contains a large room with a small pillar at the center. The room contains a second elder guardian. The other wing consists of a large open space with a large, square-shaped platform, containing another elder guardian. A long hallway that arcs around the wings and the back portion of the monument connects the two wings together.
+{{clear}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Ocean Monument
+|spritetype=env
+|nameid=ocean_monument
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Ocean Monument
+|spritetype=env
+|nameid=monument
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Ocean Monument
+|spritetype=env
+|nameid=monument
+|translationkey=feature.monument
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:ocean_monument}}
+** {{Nbt inherit/structure}}
+</div><section end="config"/>
+
+== Achievements ==
+{{load achievements|The Deep End; Treasure Hunter}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w25a|Added ocean monuments.<ref>{{tweet|cptnbarbedouce1|479630945604366337|@jeb_ I think you (Mojang) should edit the temples and dungeons, more impressive : More adventures ! Just a suggestion .. :) Nice work #Btw|June 19, 2014}}<br>{{tweet|jeb_|479631410316447744|@WTheFranck Sure, but the ocean monument took me over two weeks to make... I need better tools :)|June 19, 2014}}</ref>
+|At their addition, ocean monuments may generate in existing [[chunk]]s with an {{cd|InhabitedTime}} (i.e. the amount of time players have been in the chunk) of less than 3 minutes. They generate in locations that they would have generated in the current version of ''Minecraft'', regardless of what terrain was originally there,<ref>{{bug|MC-239870||Large gap around Ocean Monuments if spawned in the area where old and new chunks smooth out}}</ref> meaning they may generate inside large square pools of water surrounded by land, causing the terrain to be harshly cut off.<ref>{{bug|MC-237145||Ocean monuments can cause nearby terrain to be harshly cut off}}</ref>}}
+|{{HistoryLine||1.8.2|dev=pre7|Ocean monuments now generate correctly in [[Old Customized|customized]] worlds.<ref>{{bug|MC-57691}}, {{bug|MC-67150}}</ref>}}
+|{{HistoryLine||1.9|dev=15w46a|Ocean monuments now require a larger area of deep ocean at the center to generate.}}
+|{{HistoryLine||1.11|dev=16w39a|Added ocean [[explorer map]]s, which guide players to ocean monuments.}}
+|{{HistoryLine||1.13|dev=pre10|Ocean monuments no longer generates in existing chunks.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|Added ocean monuments.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Added ocean [[explorer map]]s, which guide players to ocean monuments.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Ocean monuments can now generate in frozen deep oceans, lukewarm deep oceans, and cold deep oceans.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added ocean monuments.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added ocean [[explorer map]]s, which guide players to ocean monuments.|Improved spawn chances of ocean monuments.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.3.12|Added ocean monuments.}}
+}}
+
+== Issues ==
+{{Issue list|Ocean monument|Water dungeon|Water temple}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:MonumentOcean1.png|A view of an ocean monument from above
+File:Monument Shadow.png|A view of an ocean monument from a distance
+File:MonumentOcean2.png|The treasure chamber
+File:OceanMonument GoldBlocks.png|The treasure (8 [[blocks of gold]]) uncovered
+File:Ocean Monument with water.png|The ocean monument generates with [[water]] around it, separate from the world generation
+File:LavaOceanMonument.png|An ocean monument that spawned in a [[lava]] [[ocean]]
+File:Elder Guardian In Monument.png|An [[elder guardian]] spreading its spikes
+File:Liveguardian.png|An elder guardian found somewhere in the ocean monument
+File:MonumentMapLarge.png|A map of an ocean monument
+File:Ice Monument.png|An ocean monument in a deep-frozen ocean, below the [[ice]] {{in|Bedrock}}
+File:Underground ocean monument.png|An ocean monument that has generated underground in an amplified world
+File:Ocean monument odd generation.png|An ocean monument truncated by overlapping pre-existing chunks during generation
+File:Geode monument.png|An [[amethyst geode]] intersecting an ocean monument
+File:Carved Out Monument.png|An ocean monument from the inside, drained and with only the outer walls left
+File:Ocean Monument Ahead.png|The Ocean Monument Ahead [[seed template]] thumbnail
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:DesertTemple JungeTemple OceanMonument.png|A comparison between a [[desert pyramid]], [[jungle pyramid]], and an ocean monument
+File:Custom World Monument 1.png|An ocean monument in a customized world before [[Java Edition 1.8.2|1.8.2]]
+File:Custom World Monument 2.png|An ocean monument in a customized world after 1.8.2
+File:Monument Water Removal.jpg|Using [[sand]] to remove the water around an ocean monument
+File:Monument Sunset.jpg|An ocean monument in the distance at sunset
+File:Oceanmonument-ingame.webp|An ocean monument below the surface
+File:Zuri at an ocean monument.jpeg|[[Zuri]] leaving an ocean monument
+</gallery>
+
+=== Development images ===
+<gallery>
+JE 1.8 Dev Ocean monument.jpg|The first released image of the ocean monument in development (ocean monuments do not have a room that resembles the one in the picture)
+The World of Minecraft Bountiful Update.jpg|Concept art seen in ''[[The World of Minecraft]]''
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Wallpapers minecraft ocean monument .png|[[Steve]] and [[Alex]] rowing to an ocean monument
+File:Elder Guardian floats about.png|An ocean monument as it appears in [[Trails & Tales Update: Official Launch Trailer]]
+File:Abyssal Monument.png|{{MCD|Abyssal Monument}}, an ocean monument featured {{in|Dungeons}}
+File:LEGO Minecraft Ocean Monument Boxed.png|A [[LEGO Minecraft|LEGO ''Minecraft'']] ocean monument
+File:Woodsword Chronicles ocean monument.jpg|A monument as it appears in {{WSC|3|1}}
+</gallery>
+
+== See also ==
+* [[Tutorial:Defeating an ocean monument|Defeating an ocean monument]]
+* [[Tutorial:Guardian farming|Guardian farming]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|ocean-monument|Building Blocks: Ocean Monument|February 16, 2025|[[Duncan Geere]]}}
+* {{Mcnet|temples-beneath-sea|Temples beneath the sea|November 28, 2016|[[Marsh Davies]]}}
+
+== Navigation ==
+{{Navbox ocean}}
+{{Navbox generated structures}}
+
+[[Category:Temples]]
+
+[[de:Ozeanmonument]]
+[[es:Monumento oceánico]]
+[[fr:Monument océanique]]
+[[it:Monumento oceanico]]
+[[ja:海底神殿]]
+[[ko:바다 유적]]
+[[pl:Podwodna świątynia]]
+[[pt:Monumento Oceânico]]
+[[ru:Подводная крепость]]
+[[uk:Океанічний монумент]]
+[[zh:海底神殿]]

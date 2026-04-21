@@ -1,0 +1,322 @@
+{{For}}
+{{Infobox item
+| image = Compass.gif
+| image2 = Lodestone Compass.gif
+| invimage = Compass
+| invimage2 = Lodestone Compass
+| renewable = Yes
+| stackable = Yes (64)
+}}
+A '''compass''' is an [[item]] that points in the horizontal direction of the [[Overworld]]'s spawn point. 
+
+A '''lodestone compass''' is a compass variant that is obtained by {{Control|use|text=using}} a compass or lodestone compass on a [[lodestone]], and instead points toward that lodestone's horizontal position.
+
+If the target position of either type of compass is in a different dimension, or is a lodestone that has been broken, it spins in random directions.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|B1= Iron Ingot
+|A2= Iron Ingot
+|B2= Redstone Dust
+|C2= Iron Ingot
+|B3= Iron Ingot
+|Output= Compass
+|type= Utility
+}}
+=== Generated loot ===
+{{LootChestItem|compass}}
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+Both types of compass normally point in the horizontal direction of a specific position in the world and do so when viewed in most ways; including in the inventory, when held by any [[player]] or [[entity]] or displayed in an [[item frame]]. They also point toward their target position when viewed in the [[crafting table]] preview menu, even without being crafted.{{Only|Bedrock}} The direction of the needle is relative to the player viewing it.
+
+Normal compasses point toward the [[world spawn]] point in the [[Overworld]]. Using the {{cmd|setworldspawn}} command to change the world spawn can change where normal compasses point.
+
+If a compass or lodestone compass is {{Control|use|text=used}} on a [[lodestone]], it becomes a lodestone compass that points toward that lodestone. All lodestone compasses have an [[enchantment glint]] to distinguish them from normal compasses.
+
+A compass or lodestone compass spins and points in random directions if it cannot find its target position. There are two causes for this:
+
+* If the compass is in a different dimension to its target position (e.g. a lodestone compass is in the Overworld but its target lodestone is in [[the Nether]]), its needle spins randomly. Because of this, normal compasses only work in the Overworld (as their target position is the Overworld spawn point) and always spin randomly in the Nether and [[the End]].
+* If a lodestone compass's target lodestone is broken, it becomes 'disconnected' and its needle spins in random directions. A disconnected lodestone compass can be manually re-connected to any lodestone by {{Control|use|text=using}} the compass on the lodestone. It will not re-connect automatically.
+
+Compasses and lodestone compasses do not [[stack]] with each other, and only lodestone compasses that point toward the same lodestone may stack together. {{IN|JE}}, all disconnected lodestone compasses can stack with each other, regardless of which lodestones they originally pointed to. {{IN|BE}}, disconnected lodestone compasses can only stack together if they stacked together before they became disconnected, such as if they pointed to the same lodestone. 
+
+{{IN|JE}}, if a lodestone compass is placed in a storage block, the lodestone can be broken and replaced without disconnecting the compass, as long as the compass remains in storage while the lodestone is missing. {{IN|BE}}, lodestone compasses in storage disconnect instantly when the lodestone is broken.
+
+{{IN|JE}}, uncrafted compasses viewed in the crafting table preview always point straight forward and never at any particular position in the world.
+
+=== Crafting ingredient ===
+{{crafting usage|Compass, Compass.gif}}
+
+=== Trading ===
+{{Trade uses}}
+
+=== Enchantments ===
+A compass can receive the following [[enchantment]]:
+{|class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max Level
+![[Enchantment#Obtaining|Method]]
+|-
+|[[Curse of Vanishing]]
+|I
+|{{Inventory slot|Anvil}}
+|-
+|}
+
+=== Cartography table usage ===
+{{exclusive|bedrock|section=1}}
+
+{{Cartography
+|head=1
+|showdescription=1
+|name=Empty locator map
+|Paper
+|Compass
+|Empty Locator Map
+|description={{only|bedrock}}<br>This map records terrain and displays a marker showing the player's location.
+}}
+{{Cartography
+|name=[[Map#Bedrock Edition|Locator map or empty locator map]]
+|ingredients=[[Map]] or [[Empty Map]] +<br>[[Compass]]
+|Map BE; Empty Map
+|Compass
+|Locator Map; Empty Locator Map
+|description={{only|bedrock}}<br>Maps crafted with only paper do not show the location marker; to add it, a compass must be added to the map. 
+|foot=1
+}}
+
+=== Anvil usage ===
+{{exclusive|bedrock|section=1}}
+{{:Map/BE|position}}
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Lodestone lock1.ogg
+|sound2=Lodestone lock2.ogg
+|source=player
+|subtitle=Lodestone Compass locks onto Lodestone
+|description=When a compass is used on a lodestone
+|id=item.lodestone_compass.lock
+|translationkey=subtitles.item.lodestone_compass.lock
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 0.85 or 0.95 for each sound</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Lodestone lock1.ogg
+|sound2=Lodestone lock2.ogg
+|source=block
+|description=When a compass is used on a lodestone
+|id=lodestone_compass.link_compass_to_lodestone
+|volume=1.0
+| pitch = 0.85-0.95
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Compass
+|spritetype=item
+|nameid=compass
+|form=item
+|translationkey=item.minecraft.compass,item.minecraft.lodestone_compass
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Compass
+|spritetype=item
+|nameid=compass
+|id=391
+|form=item}}
+{{ID table
+|displayname=Lodestone Compass
+|spritename=lodestone-compass-be
+|spritetype=item
+|nameid=lodestone_compass
+|aliasid=lodestonecompass
+|id=602
+|form=item
+|translationkey=item.lodestonecompass.name
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/lodestone_tracker}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Advancements ==
+{{load advancements|Country Lode, Take Me Home}}
+
+== History ==
+=== ''Java Edition'' ===
+{{See texture generation|Compasses|type=item}}
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.0|[[File:Compass JE1.gif|32px]] Added compasses.
+|They use a procedurally generated texture with 102 visually distinct frames.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Compasses can now be found in library [[chest]]s in the new [[stronghold]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w21a|Librarian [[villager]]s now [[trading|sell]] 1 compass for 10–11 [[emerald]]s, making them [[renewable]].}}
+|{{HistoryLine||1.4.2|dev=12w34a|Since the mapping system has been changed, a compass can now be used to [[craft]] an empty [[map]].}}
+|{{HistoryLine||1.5|dev=13w02a|[[File:Compass JE2 BE2.gif|32px]] Compasses now use the new animation feature included in texture packs instead of a dynamically generated sprite. As a result, they are considerably less precise, having only 29 visually distinct frames. Shading has also been added to the needle.}}
+|{{HistoryLine||1.8|dev=14w02a|Librarian villagers now sell 1 compass for 10–12 emeralds.}}
+|{{HistoryLine||1.9|dev=15w31a|Compasses are now broken up into individual textures, instead of having every individual frame on one vertical strip like with animated textures.}}
+|{{HistoryLine|||dev=15w43a|The average yield of compasses in [[stronghold]] library [[chest]]s has been increased.}}
+|{{HistoryLine||1.11|dev=16w39a|Cartographer [[villager]]s have been added, who [[trading|buy]] compasses as their tier 2 trade. Additionally they buy them as their tier 4 trade for explorer maps.}}
+|{{HistoryLine||1.13|dev=18w11a|Compasses can now generate in [[shipwreck]] chests.}}
+|{{HistoryLine||1.14|dev=18w48a|Compasses can now generate in chests in [[village]] cartographer houses.}}
+|{{HistoryLine|||dev=19w11a|Cartographer villagers now buy compasses for 1 emerald.
+|Librarian villagers now sell compasses for 4 emeralds.}}
+|{{HistoryLine||1.16|dev=20w13a|[[File:Lodestone Compass JE1.gif|32px]] Added lodestone compasses alongside [[lodestone]]s.
+|Compasses now point to the center of the spawn point block, instead of its north-west corner.}}
+|{{HistoryLine|||dev=20w14a|Compasses can now have the [[Curse of Vanishing]] enchantment on them.}}
+|{{HistoryLine|||dev=20w19a|Compasses no longer work in the [[recipe book]].<ref>{{bug|MC-116293}}</ref>}}
+|{{HistoryLine|||dev=20w22a|Compasses no longer work in the villager trading GUI.<ref>{{bug|MC-182888}}</ref>}}
+|{{HistoryLine||1.17|dev=20w48a|[[File:Compass JE3.gif|32px]] [[File:Lodestone Compass JE2.gif|32px]] The textures of compasses and lodestone compasses have been changed.}}
+|{{HistoryLine||1.19|dev=22w13a|Compasses may now be found in [[ancient city]] chests.}}
+|{{HistoryLine|||dev=22w14a|Compasses can now be used to craft [[recovery compass]]es.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Compasses can now be found in [[trial chambers]] intersection barrels.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|[[File:Compass BE1.png|32px]] Added compasses.
+|Compasses currently have no function or legitimate method of obtaining them.}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Compass JE2 BE2.gif|32px]] Added actual functionality to compasses.
+|Compasses are now functional and [[craft]]able. They have been added into the Creative Inventory.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Compasses must now be added to a [[map]] using an [[anvil]] to add the location marker.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=release|[[Windows 10 Edition]] can now use the [[anvil]], as well as the [[crafting table]], to apply position markers, with compasses just as [[Pocket Edition]] can in general.}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Librarian [[villager]]s now [[trading|sell]] 1 compass for 10–12 [[emerald]]s.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.3|Cartographer villagers have been added, who [[trading|buy]] compasses as part of their tier 2 trade.
+|Compasses used with emeralds can be used to buy explorer maps as part of cartographer villagers' fourth tiers trade.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Compasses can now be found inside map room [[chest]]s in [[shipwreck]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Compasses can now be found in [[village]] cartographer house chests.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|[[Trading]] has been changed, cartographer [[villager]]s now [[trading|buy]] compassess as part of their fourth tier trades.
+|Compasses used with [[emerald]]s can now be used to buy explorer maps as part of cartographer and fletcher villagers' third tier trades.
+|Librarian villagers now have a {{frac|1|3}} chance to [[trading|sell]] compasses for 4 emeralds as part of their fourth tier trades.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Lodestone Compass BE1.gif|32px]] Added lodestone compasses alongside [[lodestone|lodestones]].
+|Compasses now have the <code>LodestonePos</code>, <code>LodestoneDimension</code>, and <code>LodestoneTracked</code> data fields. If <code>LodestoneTracked</code> is zero, the game skips checking for a lodestone in the specified position.
+|Compasses can now have the [[Curse of Vanishing]] enchantment on them.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|Changed the ID {{code|lodestonecompass}} to {{code|lodestone_compass}}.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.54|[[File:Compass JE3.gif|32px]] The textures of compasses have been changed.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.20|[[File:Lodestone Compass JE2.gif|32px]] The textures of lodestone compasses have been changed.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Compasses can now be found in [[trial chambers]] intersection barrels.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Compass JE1.gif|32px]] Added compasses.
+|Like in old versions of Java Edition, they use a dynamically generated texture with 102 visually distinct frames.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Compasses can now be found in library [[chest]]s in the new [[stronghold]]s.}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Compass JE2 BE2.gif|32px]] Alongside the addition of [[Texture Pack/DLC|texture packs]], compasses have been changed to use pre-rendered sprites. As a result, they are considerably less precise, having only 29 visually distinct frames. Shading has also been added to the needle.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Librarian [[villager]]s now [[trading|sell]] 1 compass for 10–11 [[emerald]]s, making them [[renewable]].}}
+|{{HistoryLine||xbox=TU21|xbone=CU9|ps3=1.14|psvita=1.14|ps4=1.14|wiiu=Patch 1|switch=1.0.1|Since the mapping system has been changed, a compass can now be used to [[craft]] an empty [[map]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Librarian villagers now sell 1 compass for 10–12 emeralds.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Cartographer [[villager]]s have been added, who [[trading|buy]] compasses as their tier 2 trade. Additionally they buy them as their tier 4 trade for explorer maps.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Compasses can now be found inside map room [[chest]]s in [[shipwreck]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Librarian villagers now have a chance to [[trading|sell]] compasses for 4 emeralds as part of their fourth tier trades.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New Nintendo 3DS Edition}}
+|{{HistoryLine||0.1.0|[[File:Compass JE2 BE2.gif|32px]] Added compasses.}}
+|{{HistoryLine||1.9.19|Cartographer [[villager]]s have been added, who [[trading|buy]] compasses as their tier 2 trade. Additionally they buy them as their tier 4 trade for explorer maps.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 345.}}
+|{{HistoryLine||1.16|dev=20w14a|Compasses can now have the [[Curse of Vanishing]] enchantment on them.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+12w21a CompassPurchase.png|Purchasing a compass from a librarian [[villager]].
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Ti-compass-header.jpeg
+File:Ti-compass-ingame.jpeg
+</gallery>
+
+=== In other media ===
+<gallery>
+File:MCSM Compass.png|A 3D render of a [[MCSM:Compass|Compass]] from [[Minecraft: Story Mode]].
+File:AMCM live event compass.png|A render of a compass from [[A Minecraft Movie Live Event]].
+File:Woodsword Chronicles Map and Compass.jpg|A compass as it appears in {{Woodsword Chronicle|5|1}}
+</gallery>
+
+== See also ==
+*{{ItemLink|Clock}}
+*[[Tutorial:Navigation|Navigation]]
+
+== External links ==
+* {{mcnet|taking-inventory--compass|Taking Inventory: Compass|August 15, 2019|[[Duncan Geere]]}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+
+[[Category:Utilities]]
+
+[[cs:Kompas]]
+[[de:Kompass]]
+[[es:Brújula]]
+[[fr:Boussole]]
+[[hu:Iránytű]]
+[[it:Bussola]]
+[[ja:コンパス]]
+[[ko:나침반]]
+[[lzh:司南]]
+[[nl:Kompas]]
+[[pl:Kompas]]
+[[pt:Bússola]]
+[[ru:Компас]]
+[[th:เข็มทิศ]]
+[[uk:Компас]]
+[[zh:指南针]]

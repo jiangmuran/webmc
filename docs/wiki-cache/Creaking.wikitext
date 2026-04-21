@@ -1,0 +1,574 @@
+{{About|the mob|the block|Creaking Heart}}
+{{Infobox entity
+| defaultimagesize = 100px
+| image = Creaking JE1 BE1.png
+| invimage = Creaking Spawn Egg
+| health = {{hp|1}} (immune to damage when naturally spawned)
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| damage = Easy: {{hp|2.5}}<br> Normal: {{hp|3}}<br> Hard: {{hp|4.5}}
+| size = Height: 2.7 blocks<br>Width: 0.9 blocks<br>
+| speed = 0.3
+| spawn = At night by an activated [[creaking heart]]
+}}
+A '''creaking''' is a [[hostile mob]] spawned by active [[creaking heart]]s at [[night]]. It moves to attack [[Player|players]] with melee headbutts, but cannot move at all while any players in [[Survival]] or [[Adventure]] mode can see it. It is protected from all damage by the creaking heart that spawned it; breaking the creaking heart instantly kills the creaking. Hitting a protected creaking causes [[resin clump]]s to grow on [[pale oak log]]s near its linked creaking heart.
+
+== Spawning ==
+{{See also|Creaking Heart#Spawning mechanics}}
+Creakings spawn when an activated [[creaking heart]] is triggered at nighttime. To activate the heart, it must be placed between two pale oak blocks ([[pale oak log]]s, [[pale oak wood]], [[stripped pale oak log]]s, or [[stripped pale oak wood]]) with the same orientation as the heart and along the same axis (for example, all three oriented along the Y axis, stacked on top of each other). When these conditions are met and the creaking heart is within the [[Overworld]], a creaking spawns within 16 blocks horizontally and 8 blocks vertically of the creaking heart. The spawned creaking is linked to this creaking heart. The creaking heart does not deactivate even if its surrounding logs are broken or moved via pistons when the creaking is out.
+
+Unlike most [[monster]]s, a creaking can spawn on some blocks that prevent other mobs from spawning. Items that can be placed but do not have a collision box ([[button]]s, [[glow lichen]], [[lever]]s, [[rail]]s, [[redstone dust]], [[pressure plate]]s, [[torch]]es and its variants) and full blocks that are transparent ([[glass]], [[ice]], [[scaffolding]]) that normally prevent mob spawns do not prevent creakings from spawning. However, blocks with a hitbox that is not a full block, such as [[carpet]]s, do prevent creakings from spawning.
+
+If a creaking linked to a creaking heart is killed with a command during night, or moves more than 32 blocks away from its creaking heart, the creaking heart attempts to spawn a new creaking.
+
+The creaking can also be spawned using its [[spawn egg]] or [[command]]s. Creakings spawned by these methods do not vanish during the day, are not linked to any creaking heart, can take damage normally, and can go through portals without dying.
+
+== Drops ==
+=== On death ===
+Creakings do not drop any items or [[experience]] on death.
+
+== Behavior == 
+=== Unalerted or idle ===
+Newly spawned creakings begin in an unalerted state. While in this state, their eyes are dimly lit and they walk around aimlessly.
+
+Idle creakings are not immediately hostile to the player, but become hostile once they enter the player’s field of vision.
+
+=== Alerted or attacking ===
+[[File:Creaking Chasing Player.gif|thumb|A creaking chasing the player when they look away from it.]]
+When a creaking within approximately 12 blocks enters a player's field of vision, it becomes alerted. This is signified by an “activation” sound and its eyes glowing a brighter orange. While alerted, the creaking attempts to move toward and attack the player, moving only when outside of the player's field of vision (such as behind the player or hidden behind blocks). An alerted creaking moves quickly, faster than an attacking [[vindicator]], able to close distances in a matter of seconds.
+
+When within a player's field of vision, the creaking becomes completely immobile and can no longer attack, nor can it be pushed or knocked back by player attacks. If all nearby players leave the creaking's detection range (or enter [[Creative]] or [[Spectator]] mode), the creaking returns to its unalerted state.
+
+Creakings inflict {{hp|2.5}} melee damage in Easy difficulty, {{hp|3}} in Normal difficulty, and {{hp|4}} in Hard difficulty.
+
+=== Field of view detection === 
+If a Survival or Adventure mode<ref>{{bug|MCPE-187328|||WAI}}</ref> player's facing direction (both pitch and yaw) is within 60° of the creaking without blocks obstructing, the creaking becomes immobile. Changing the [[field of view]] (FOV) or entering [[third person view]] does not affect this detection. [[Glass]], [[stained glass]], [[tinted glass]], [[iron bars]], [[copper bars]], and [[powder snow]] do not count toward the obstruction.
+
+If a player is wearing a [[carved pumpkin]], any creakings within their first-person FOV can still move. Wearing a carved pumpkin does not prevent an unalerted creaking from becoming alerted.
+
+=== Linked to a creaking heart ===
+{{see also|Resin Clump#Post-generation}}
+A creaking spawned by a [[creaking heart]] is linked to it and becomes completely invulnerable to all sources of [[damage]] (except for the [[void]] and {{cmd|kill}}). If necessary, it safely navigates on or through hazardous blocks such as [[magma block]]s, [[powder snow]], and [[lava]]. When the creaking is hit by a player-caused source, it sways and produces a trail of orange and gray [[particle]]s that move in the direction of its connected creaking heart, and [[Resin Clump|resin clumps]] grow on pale oak logs near the creaking heart during night-time. Hitting a named creaking during the day does not place resin clumps near its heart.
+
+Each creaking heart has a 32-block Euclidean radius surrounding it, where its linked creaking resides in. The creaking never intentionally moves beyond this radius from its creaking heart, even when pursuing a player. If it is pushed out of this radius, such as with pistons or knockback, it dies.
+
+=== Other attributes ===
+Creakings cannot enter [[minecart]]s{{only|be}} or [[boat]]s.
+
+While an immobilized creaking cannot be moved or pushed directly by players, it can still be moved via other methods. This includes [[water]], [[lava]], explosions, pistons, falling blocks, [[wind charge]]s and attacks from some mobs. [[Iron golem]]s, [[hoglin]]s, [[zoglin]]s, [[ravager]]s and [[warden]]s are able to fling the creaking into the air, and [[shulker bullet]]s can give creakings the [[Levitation]] effect.
+
+Creakings can naturally swim and float on the surface of water or lava, but sink when they are immobilized from being observed.
+
+Creakings spawned from creaking hearts are not subject to the [[Infested]], [[Oozing]], [[Wind Charged]] or [[Weaving]] status effects. However, creakings spawned using a spawn egg or commands are affected by these status effects as expected.
+
+[[Pillager]]s, [[evoker]]s, [[vindicator]]s, and [[illusioner]]s{{only|java|short=1}} flee from creakings when within 8 blocks. Vindicators with the name tag "Johnny" alternate between fleeing from creakings and attempting to attack them. [[Ravager]]s do not flee from creakings.
+
+With [[Vibrant Visuals]], the eyes of creakings are emissive similar to [[eyeblossoms]]. Combined with the dense fog in the pale garden and nighttime, the emissive eyes are often the only part visible from a distance.
+
+=== Redstone component === 
+Because a creaking sinks in water (or lava) while being observed, but float while not being observed, a [[pressure plate]] or similar means can be used to produce a [[redstone signal]] while a creaking is being looked at, due to it sinking down and activating it. An unobserved creaking bobs up and down in liquid, which can cause it to activate a pressure plate even if not being looked at. Giving a creaking enough space to bob prevents this.
+
+Additionally, a [[redstone comparator]] can produce a signal by reading a creaking heart linked to a currently-spawned creaking. The produced signal strength is based on the [[Euclidean distance]] between the creaking and its heart, which is calculated as follows: 
+
+<math>\text{output} = 15 - \left\lfloor \frac{\text{distance}}{32} \times15 \right\rfloor</math>
+
+In other words, the closer a creaking is to its heart, the stronger the signal.
+
+=== Despawning ===
+Naturally-spawned creakings despawn during daytime, unless they have been named with a [[name tag]]. They also despawn if they are outside the 32-block radius around their linked [[creaking heart]], or if they remain within the same block as a player for longer than 5 seconds, immediately respawning near the heart in both cases.
+
+=== Death ===
+[[File:Creaking_BE1_JE1_Twitch_Animation.gif|thumb|right|200px|A creaking twitches before dying.]]
+Being invulnerable, naturally-spawned creakings cannot be killed by normal means. To kill a creaking, the player must destroy the creaking heart block it is linked to. Once the linked creaking heart is destroyed, the creaking twitches briefly before dying. This counts as the player who mined the block killing the creaking with regard to [[advancement]]s and [[statistic]]s.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Creaking activate.ogg
+|subtitle=Creaking watches
+|source=hostile
+|description=When a creaking sees a player
+|id=entity.creaking.activate
+|translationkey=subtitles.entity.creaking.activate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking deactivate.ogg
+|subtitle=Creaking calms
+|source=hostile
+|description=When a creaking stops seeing any players
+|id=entity.creaking.deactivate
+|translationkey=subtitles.entity.creaking.deactivate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking unfreeze1.ogg
+|sound2=Creaking unfreeze2.ogg
+|sound3=Creaking unfreeze3.ogg
+|subtitle=Creaking moves
+|source=hostile
+|description=When a creaking becomes able to move
+|id=entity.creaking.unfreeze
+|translationkey=subtitles.entity.creaking.unfreeze
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking freeze1.ogg
+|sound2=Creaking freeze2.ogg
+|sound3=Creaking freeze3.ogg
+|sound4=Creaking freeze4.ogg
+|subtitle=Creaking stops
+|source=hostile
+|description=When a creaking becomes unable to move
+|id=entity.creaking.freeze
+|translationkey=subtitles.entity.creaking.freeze
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking idle1.ogg
+|sound2=Creaking idle2.ogg
+|sound3=Creaking idle3.ogg
+|sound4=Creaking idle4.ogg
+|sound5=Creaking idle5.ogg
+|sound6=Creaking idle6.ogg
+|subtitle=Creaking creaks
+|source=hostile
+|description=Randomly while active
+|id=entity.creaking.ambient
+|translationkey=subtitles.entity.creaking.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking attack1.ogg
+|sound2=Creaking attack2.ogg
+|sound3=Creaking attack3.ogg
+|sound4=Creaking attack4.ogg
+|subtitle=Creaking attacks
+|source=hostile
+|description=When a creaking attacks something
+|id=entity.creaking.attack
+|translationkey=subtitles.entity.creaking.attack
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking death JE2.ogg
+|subtitle=Creaking crumbles
+|source=hostile
+|description=When a creaking dies
+|id=entity.creaking.death
+|translationkey=subtitles.entity.creaking.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking spawn.ogg
+|subtitle=Creaking manifests
+|source=hostile
+|description=When a creaking is summoned by a creaking heart
+|id=entity.creaking.spawn
+|translationkey=subtitles.entity.creaking.spawn
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking sway1.ogg
+|sound2=Creaking sway2.ogg
+|sound3=Creaking sway3.ogg
+|sound4=Creaking sway4.ogg
+|subtitle=Creaking is hit
+|source=hostile
+|description=When something attempts to damage a creaking
+|id=entity.creaking.sway
+|translationkey=subtitles.entity.creaking.sway
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking twitch.ogg
+|subtitle=Creaking twitches
+|source=hostile
+|description=When a creaking twitches after its creaking heart is destroyed
+|id=entity.creaking.twitch
+|translationkey=subtitles.entity.creaking.twitch
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16
+}}
+|{{SoundLine
+|sound=Creaking step1.ogg
+|sound2=Creaking step2.ogg
+|sound3=Creaking step3.ogg
+|sound4=Creaking step4.ogg
+|sound5=Creaking step5.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=While a creaking is walking
+|id=entity.creaking.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16
+}}
+| {{SoundLine
+| sound =Player hurt1.ogg
+|sound2=Player hurt2.ogg
+|sound3=Player hurt3.ogg
+|subtitle=Something hurts
+|source=hostile
+|description=When a creaking is damaged
+|id=entity.hostile.death
+|translationkey=subtitles.entity.generic.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Creaking activate.ogg
+|source=hostile
+|description=When a creaking sees a player
+|id=mob.creaking.activate
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking deactivate.ogg
+|source=hostile
+|description=When a creaking stops seeing any players
+|id=mob.creaking.deactivate
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking unfreeze1.ogg
+|sound2=Creaking unfreeze2.ogg
+|sound3=Creaking unfreeze3.ogg
+|source=hostile
+|description=When a creaking becomes able to move
+|id=mob.creaking.unfreeze
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking freeze1.ogg
+|sound2=Creaking freeze2.ogg
+|sound3=Creaking freeze3.ogg
+|sound4=Creaking freeze4.ogg
+|source=hostile
+|description=When a creaking becomes unable to move
+|id=mob.creaking.freeze
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking idle1.ogg
+|sound2=Creaking idle2.ogg
+|sound3=Creaking idle3.ogg
+|sound4=Creaking idle4.ogg
+|sound5=Creaking idle5.ogg
+|sound6=Creaking idle6.ogg
+|source=hostile
+|description=Randomly while active
+|id=mob.creaking.ambient
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking attack1.ogg
+|sound2=Creaking attack2.ogg
+|sound3=Creaking attack3.ogg
+|sound4=Creaking attack4.ogg
+|source=hostile
+|description=When a creaking attacks something
+|id=mob.creaking.attack
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking death JE2.ogg
+|source=hostile
+|description=When a creaking dies
+|id=mob.creaking.death
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking spawn.ogg
+|source=hostile
+|description=When a creaking is summoned by a creaking heart
+|id=mob.creaking.spawn
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking sway1.ogg
+|sound2=Creaking sway2.ogg
+|sound3=Creaking sway3.ogg
+|sound4=Creaking sway4.ogg
+|source=hostile
+|description=When something attempts to damage a creaking
+|id=mob.creaking.sway
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking twitch.ogg
+|source=hostile
+|description=When a creaking twitches after its creaking heart is destroyed
+|id=mob.creaking.twitch
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Creaking step1.ogg
+|sound2=Creaking step2.ogg
+|sound3=Creaking step3.ogg
+|sound4=Creaking step4.ogg
+|sound5=Creaking step5.ogg
+|source=hostile
+|description=While a creaking is walking
+|id=mob.creaking.step
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Creaking
+|spritetype=entity
+|nameid=creaking
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Creaking
+|spritetype=entity
+|nameid=creaking
+|showentityfamily=y
+|entityfamily=creaking,mob,monster
+|id=146
+|foot=1}}
+
+=== Entity data ===
+Creakings have entity data associated with them that contains various properties.
+
+{{el|java}}{{verify}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{Load achievements|Monster Hunter;Heart Transplanter}}
+
+== Advancements ==
+{{load advancements|Heart Transplanter;Monster Hunter;Monsters Hunted}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Adventure}}
+}}
+
+Advancements that apply to non-[[creaking heart]] creakings:
+{{collapse|content={{load advancements|Take Aim;A Throwaway Joke;Over-Overkill;Arbalistic;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|eHEQY3ua_uY}}
+{{yt|GKBMNxHED-g}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 24, 2024|link=https://web.archive.org/web/20240924180401/https://www.minecraft.net/en-us/live|A version of the ''Minecraft Live'' page announcing the [[pale garden]]s and creaking is published, by mistake. It is taken down in the following minutes.}}
+|{{HistoryLine||September 28, 2024|link=Minecraft Live 2024|[[File:Creaking (pre-release).png|20px]] Creakings are officially announced at [[Minecraft Live 2024]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Creaking JE1 BE1.png|20px]] Added creakings.
+|Creakings spawned by [[creaking heart]]s use a separate entity type known as <code>creaking_transient</code>. These creakings are not saved to file and disappear when the world is reloaded. Using {{control|pick block}} on them in Creative doesn't give the player a spawn egg.}}
+|{{HistoryLine|||dev=pre1|Creakings no longer freeze or activate around players in [[Creative]] mode.
+|Creakings can no longer be named with a [[name tag]] if summoned via a creaking heart.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Creakings now deal {{hp|3}} damage.
+|Creakings now ignore [[cacti]], [[sweet berry bush]]es, and [[powder snow]] and can walk through those blocks.
+|[[File:Creaking_BE1_JE1_Twitch_Animation.gif|32px]] Creakings now have a twitching animation when its creaking heart is destroyed.
+|Creakings are now fire resistant.
+|[[File:Creaking_BE2_JE2_Walk_Animation.gif|32px]] [[File:Creaking_BE2_JE2_Attack_Animation.gif|32px]] Changed walking and attacking animations.}}
+|{{HistoryLine|||dev=24w45a|Creakings now don't move only if a player in [[Survival]] or [[Adventure]] mode is looking at it, meaning the [[Creative]] players can look at creakings and it would still move.
+|The eyes of creakings are now visible when they have the [[Invisibility]] effect.
+|The subtitles for <code>activate</code>, <code>deactivate</code>, <code>death</code>, <code>spawn</code> & <code>sway</code> have been changed.}}
+|{{HistoryLine|||dev=24w46a|The <code>creaking_transient</code> entity type is removed.|The statistics screen now shows correct stats from creakings, both produced by a [[spawn egg]] and from a [[creaking heart]].|Creakings now persist when the world is reloaded.|Using {{control|pick block}} on a naturally-spawned creaking in Creative mode now gives a spawn egg.|The attack sounds have been updated.|The entity shadows of creakings are now more appropriate for their size.}}
+|{{HistoryLine||1.21.5|dev=25w02a|Naturally spawned creakings can now be named with name tags again.
+|Named naturally spawned creakings persist through the day.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Creaking JE1 BE1.png|20px]] Added creakings.|[[File:Creaking_BE1_Walk_Animation.gif|32px]] [[File:Creaking_BE1_Attack_Animation.gif|32px]] They have different walk and attack animations to {{JE}}.}}
+|{{HistoryLine|||dev=Preview 1.21.50.25|Increased speed when aggravated.
+|Increased damage dealt.
+|[[File:Creaking_BE1_JE1_Twitch_Animation.gif|32px]] When a creaking heart is destroyed, its creaking now twitches for a few seconds before dying.
+|Creakings spawned by a creaking heart now crumble when in a small space with a player for more than five seconds.
+|Creakings dying now activates [[sculk catalyst]]s, but [[sculk]] does not spread.
+|[[File:Creaking_BE2_JE2_Walk_Animation.gif|32px]] [[File:Creaking_BE3_Attack_Animation.gif|32px]] Changed walking and attacking animations.
+|Creakings spawned by creaking hearts no longer avoid damaging blocks.
+|Creakings spawned by a command or spawn egg now avoid damaging blocks.
+|Creakings spawned by a command or [[spawn egg]] are no longer invulnerable to fire and lava.
+|Decreased attack speed to match {{JE}}.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Creakings now crumble if their [[creaking heart]] is forcibly deactivated through [[commands]].}}
+|{{HistoryLine|||dev=Preview 1.21.60.23|The eyes of creakings are now visible when they have the [[Invisibility]] effect and are targeting a player.<ref>{{bug|MCPE-188259||The eyes of creakings aren't visible when creakings have the invisibility effect|Fixed}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.60.24|Creaking's eyes now properly flicker when its creaking heart is destroyed.
+|Creakings spawned from creaking hearts now always persist upon reloading the world.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.21.91|dev=Preview 1.21.50.1|[[File:Creaking JE1 BE1.png|20px]] Added creakings.}}
+|{{HistoryLine|||dev=Preview 1.21.80.1|Creakings now crumble if their [[creaking heart]] is forcibly deactivated through [[commands]].|The eyes of creakings are now visible when they have the [[Invisibility]] effect and are targeting a player.|Creaking's eyes now properly flicker when its creaking heart is destroyed.
+|Creakings spawned from creaking hearts now always persist upon reloading the world.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The creaking is actually rooted to the ground and cannot be pushed as a result; this is seen in animations of the creaking in which it moves only one leg at a time.<ref>{{ytl|rez5M40j5fg|t=3m57s|Minecraft Live 2024: Developer After-Show|Minecraft|September 28, 2024}}</ref> A creaking connected to a creaking heart is also connected to the pale tree roots.<ref>{{ytl|rez5M40j5fg|t=4m10s|Minecraft Live 2024: Developer After-Show|Minecraft|September 28, 2024}}</ref> 
+* The creaking was made asymmetrical to emphasize its contrast with the rest of the Overworld and make it different from other mobs.<ref>{{ytl|qnX6sPFjXnA|t=1548s|Minecraft Live 2024|Minecraft|September 28, 2024}}</ref>
+* Some of the sounds used for the creaking are made using teeth, dead sticks and leaves, a creaky chair, a table, and pretzel sticks,<ref>{{ytl|qnX6sPFjXnA|t=1635s|Minecraft Live 2024|Minecraft|September 28, 2024}}</ref> as well as ''Minecraft'' Social Lead Anthony Toczek's knuckles cracking.<ref>{{tweet|Anthony_Toczek|1944792298388103241|Sounds of my knuckles cracking were recorded and incorporated into the creaking sound effects in Minecraft.|July 14, 2025}}</ref>
+* During the Minecraft Live 2024 Developer after-show, Marco Ballabio jokingly claims that a group of creakings is called a crunch.<ref name="aftershow">{{ytl|rez5M40j5fg|t=20m40s|Minecraft Live 2024: Developer After-Show|Minecraft|September 28, 2024}}</ref>
+* In a photo tweeted by the official ''Minecraft'' Twitter account, the creaking's body appears reversed, with the eyes mirrored.<ref>{{tweet|Minecraft|1863614797989761298|Get ready|December 2, 2024}}</ref> Its body also appears reversed in the [[key art]] of [[The Garden Awakens]].
+* During the Minecraft Live 2024 event, in which they were introduced, their texture was much darker and their eyes were more yellowish.
+* Toward the end of the second ''[[Villager News]]'' segment in this livestream, when a [[villager]] places a creaking heart, the particles that appear when the creaking is summoned resemble those that appear when hitting a creaking in-game. This, however, does not occur in-game.
+
+== Gallery ==
+=== Textures ===
+<gallery class="pixel-image">
+Creaking (texture).png|The creaking texture file
+</gallery>
+
+=== Animations === 
+<gallery>
+Creaking_BE2_JE2_Walk_Animation.gif|Creaking walking 
+Creaking_BE1_JE2_Sway_Animation.gif|Creaking swaying 
+Creaking_BE2_JE2_Attack_Animation.gif|Creaking attacking {{in|JE}}
+Creaking_BE3_Attack_Animation.gif|Creaking attacking {{in|BE}}
+Creaking_BE1_JE1_Twitch_Animation.gif|Creaking twitching 
+</gallery>
+
+=== Development renders ===
+<gallery>
+Creaking_BE1_Walk_Animation.gif|Creaking walking (animation used in Bedrock Edition from Preview 1.21.50.20 to 1.21.50.24)
+Creaking_BE1_Attack_Animation.gif|Creaking attacking (animation used in Bedrock Edition from Preview 1.21.50.20 to 1.21.50.24)
+Creaking_BE2_JE2_Attack_Animation.gif|Creaking attacking (animation used in Bedrock Edition from unknown Preview)
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Creaking concept art.png|Different concepts for the creaking.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Invisible creaking.png|A creaking with the [[Invisibility]] effect. 
+File:Creaking at night.jpg|A creaking at night staying still after it noticed a [[player]].
+</gallery>
+
+=== Mojang images ===
+<gallery>
+The Creaking in Minecraft Live.png|The creaking in Minecraft Live.
+File:Minecraft Live 2024 Creaking showcase 3.jpeg|A creaking above a pale garden tree leaves in the sunlight.
+File:MCL24 Recap article Creaking1.jpg|A creaking standing on a pale oak tree.
+File:Creaking Heart and Creaking.jpg|Creaking hearts and creakings in a mini-game setup.
+File:Creaking in pale garden at night.jpg|A creaking at night.
+File:Creaking Mob.webp|A creaking by a creaking heart.
+File:Sunny stalked by Creakings.png|[[Sunny]] being chased by a crunch of creakings.
+File:Creakings assemble.png|Several creakings assembled together.
+File:Creaking through a peephole.jpeg|A creaking through a peephole.
+File:The Copper Age copper armor.jpeg|Efe facing a creaking while wearing copper armor.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Minecraft Live 2024 conspiracy teaser.jpeg|A whiteboard teasing the creaking.
+File:Minecraft Live 2024 photographic teaser.png|A frame from a Minecraft official TikTok video teasing the creaking.
+File:Steve death screen teaser.jpg|A teaser image of the creaking killing the player near a [[pale garden]].
+File:Creaking in Villager News.jpg|The creaking as it appears in the ''[[Villager News]]'' segment of Minecraft Live 2024.
+File:Pale garden biome.jpeg|Creakings lurking in a pale garden while [[Steve]], [[Ari]], and [[Zuri]] hide.
+File:A creaking standing in a doorway.jpeg|A creaking standing in a doorway.
+File:Creaking in the hallway.jpg|Ditto, but cropped to a square format.
+File:Mobs in a pumpkin patch.jpeg|A creaking, along with other mobs in a [[pumpkin]] patch.
+File:The Garden Awakens Pre-Release Key Art.jpg|A creaking as it appears in the official update art.
+File:The Garden Awakens Key Art.png|A creaking as it appears in the key art.
+File:The Garden Awakens Secondary Key Art.jpg|Cropped format.
+File:Creaking Artwork.png|Creaking from alternate [[The Garden Awakens]] key art.
+File:Creaking creeping in the pale garden.jpeg|"Creaking creeping in the [[pale garden]]."
+File:The Garden Awakens Instagram teaser 1.jpg|A creaking slowly approaching in a 1 day out teaser for its release.
+File:The Garden Awakens Instagram teaser 2.jpg|A creaking silhouette in the fog.
+File:The Garden Awakens Instagram teaser 3.jpg|A creaking lurking in grass.
+File:The Garden Awakens Instagram teaser 4.jpg|A creaking closeup to the camera, right before its official launch.
+File:The Creaking wearing a Pale Garden Hoodie.jpeg|A creaking wearing a pale garden hoodie.
+File:Creaking in the mob vote-biome vote art style.png|Creaking in the mob vote/biome vote pixel art style.
+File:Creaking action figure.png|Offical Creaking [[Action figures|action figure]]
+File:Creaking action figure (Unboxed).png|Offical Creaking action figure unboxed.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox wood}}
+{{Navbox entities|mobs}}
+{{featured}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Constructible mobs]]
+
+[[de:Knarz]]
+[[es:Crepitante]]
+[[fr:Grinceur]]
+[[it:Scricchio]]
+[[ja:クリーキング]]
+[[ko:크리킹]]
+[[lzh:䦪鬼]]
+[[pl:Trzeszcz]]
+[[pt:Rangente]]
+[[ru:Скрипун]]
+[[uk:Скрипень]]
+[[zh:嘎枝]]

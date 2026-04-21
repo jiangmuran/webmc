@@ -1,0 +1,289 @@
+{{For|the sub dungeon in ''[[Minecraft Dungeons]]''|MCD:Igloo}}
+{{Infobox structure
+| defaultimagesize = 200px
+| image1 = Igloo top.png
+| image2 = Igloo bottom.png
+| biome = * {{BiomeLink|Snowy Plains}}
+* {{BiomeLink|Snowy Taiga}}
+* {{BiomeLink|Snowy Slopes}}
+| mobs = {{EntityLink|Villager}}<br>{{EntityLink|Zombie Villager}}<br>{{EntityLink|Silverfish}} (from [[infested block]]s)
+| blocks = 
+All igloos:
+* {{BlockLink|Snow Block}}
+* {{BlockLink|White Carpet}}
+* {{BlockLink|Light Gray Carpet}}
+* {{BlockLink|Ice}}{{only|JE|short=1}}<br>{{BlockLink|Packed Ice}}{{only|BE|short=1}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Furnace}}
+* {{BlockLink|Red Bed}}
+* {{BlockLink|Crafting Table}}
+Some igloos (50% chance):
+* {{BlockLink|Oak Trapdoor}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Stone}}
+* {{BlockLink|Stone Bricks}}
+* {{BlockLink|Cracked Stone Bricks}}
+* {{BlockLink|Mossy Stone Bricks}} 
+* {{BlockLink|Chiseled Stone Bricks}}
+* {{BlockSprite|Infested Stone Bricks}} {{BlockSprite|Infested Mossy Stone Bricks}} {{BlockLink|id=Infested Chiseled Stone Bricks|Infested Stone Bricks}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Red Carpet}}
+* {{BlockLink|Polished Andesite}}
+* {{BlockLink|Cobweb}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Oak Wall Sign}}
+* {{BlockLink|Water Cauldron}}, {{frac|2|3}} full
+* {{BlockLink|Spruce Stairs}}
+* {{BlockLink|Spruce Slab}}
+* {{BlockLink|Brewing Stand}} (contains a {{ItemLink|id=Splash Potion|link=Splash Potion|Splash Potion of Weakness}})
+* {{BlockLink|Potted Cactus|link=Flower Pot}}
+|image=igloo top.png}}
+An '''igloo''' is a [[structure]] sometimes generated in [[snowy taiga]]s, [[snowy plains]], or [[snowy slopes]] and built mainly of [[snow block]]s.
+
+== Generation ==
+Igloos generate uncommonly in [[snowy taiga]]s, [[snowy plains]], and rarely in [[snowy slopes]].
+
+{{Calculator|chunkbase|pois=I|zoom=0.25}}
+
+== Structure ==
+{{main|/Structure}}
+
+An igloo is shaped like a small dwelling made of snow blocks. It has an entrance without a door and a [[carpet]]ed interior containing a [[bed]], [[furnace]], and [[crafting table]]. There are two windows made of ice blocks{{Only|JE|short=JE}}/packed ice{{Only|BE|short=BE}}<ref>{{Bug|MCPE-146636|3=Igloos spawn with packed ice}}</ref> and one [[redstone torch]] as a light source.
+
+Half of all igloos have an oak [[trapdoor]] under the third carpet from the doorway, leading down a long [[ladder]] shaft to a basement. This passageway and the basement are built from [[stone bricks]], some of which are [[infested block]]s with [[silverfish]]. To the left of the ladder is a table made of stairs blocks, with a [[brewing stand]] containing one [[splash potion]] of [[weakness]] and a [[flower pot]] holding a [[cactus]]. Beside the table is a [[cauldron]] two-thirds full of water. To the right is a [[chest]] that contains a [[golden apple]]. Beyond the far wall, behind [[iron bars]] in two different cages, are a [[villager]] and a [[zombie villager]].
+
+Igloos that generate without a basement have a snow block in place of the trapdoor. The villagers, the brewing stand, and the chest are absent in this case.
+
+If an igloo with a basement forms partially above open-air{{verify|Clarify—Does this mean that the basement is partially aboveground? Or that part of the structure is above air blocks?}}, the shaft with the ladder still generates.
+
+;Mobs
+{| style="text-align:center"
+|-
+| scope="col" style="width:70px" |
+[[File:VillagerFace.png|link=Villager]]
+| scope="col" style="width:70px" |
+[[File:ZombieVillagerFace.png|link=Zombie Villager]]
+|-
+| style="vertical-align:top" | [[Villager]]
+| style="vertical-align:top" | [[Zombie villager]]
+|}
+
+{{IN|java}}, the generated villager is always unemployed and is a plains biome type.<ref>{{bug|MC-150296|||WAI}}</ref> The villager cannot pathfind to the [[brewing stand]] or [[cauldron]] to take on a profession unless some of the blocks confining it are broken. The generated zombie villager always has the profession of cleric and becomes unemployed if cured.
+
+{{IN|Bedrock}}, the villager is the snowy type with a random profession. The zombie villager is unemployed but can change its profession to cleric or leatherworker after being cured because it can claim either the brewing stand or the cauldron.
+
+One may access the individual structures of an igloo by using [[structure block]]s to manually load them from the {{code|/data/minecraft/structures/igloo}} folder in [[version.jar]]. To do so, set a structure block to Load mode, enter {{code|igloo/''structure name''}}, and press {{code|[LOAD]}}.  The individual structures are {{code|bottom|middle|top|delimiter=,}}.
+
+{| class="wikitable collapsible"
+! scope="col" style="width: 200px" |Structure name
+! scope="col" style="width: 300px" |Description
+! scope="col" style="width: 250px" |Consists of
+! scope="col" style="width: 250px" |Images
+|-
+|<code>igloo/top</code>
+| The above-ground room of the igloo, made of snow blocks.
+|
+94 {{BlockLink|Snow Block}}<br>
+9 {{BlockLink|White Carpet}}<br>
+3 {{BlockLink|Light Gray Carpet}}<br>
+2 {{BlockLink|Ice}}{{Only|JE|short=JE}}
+
+2 {{BlockLink|Packed Ice}}{{Only|BE|short=BE}}<br>
+1 {{BlockLink|Crafting Table}}<br>
+1 {{BlockLink|Furnace}}<br>
+1 {{BlockLink|Oak Trapdoor}}<br>
+1 {{BlockLink|Red Bed}}<br>
+1 {{BlockLink|Redstone Torch}}
+|
+[[File:Igloo top.png|center|220px]]
+|-
+|<code>igloo/middle</code>
+|The stone tunnel that connects the room above with the basement.
+|
+12 {{BlockLink|Stone Bricks}}<br>
+3 {{BlockLink|Ladder}}
+|
+[[File:Igloo middle.png|center|80px]]
+|-
+|<code>igloo/bottom</code>
+|The basement, made of various stone blocks and infested stone blocks, containing a villager and a zombie villager.
+|
+104 {{BlockLink|Stone Bricks}}<br>
+17 {{BlockLink|Mossy Stone Bricks}}<br>
+11 {{BlockLink|Stone}}<br>
+8 {{BlockLink|Cracked Stone Bricks}}<br>
+7 {{BlockLink|Chiseled Stone Bricks}}<br>
+6 {{BlockLink|Infested Stone Bricks}}<br>
+4 {{BlockLink|Iron Bars}}<br>
+4 {{BlockLink|Ladder}}<br>
+3 {{BlockLink|Torch}}<br>
+2 {{BlockLink|Infested Chiseled Stone Bricks}}<br>
+2 {{BlockLink|Red Carpet}}<br>
+2 {{BlockLink|Spruce Stairs}}<br>
+1 {{BlockLink|Infested Mossy Stone Bricks}}<br>
+1 {{BlockLink|Polished Andesite}}<br>
+1 {{BlockLink|Cauldron}}<br>
+1 {{BlockLink|Chest}} (1 {{ItemLink|Golden Apple}})<br>
+1 {{BlockLink|Cobweb}}<br>
+1 {{BlockLink|Potted Cactus}}<br>
+1 {{BlockLink|Oak Sign}}<br>
+1 {{BlockLink|Spruce Slab}}<br>
+1 {{BlockLink|Brewing Stand}} with a {{ItemLink|Splash Potion of Weakness}}<br>
+1 {{EntityLink|Villager}}<br>
+1 {{EntityLink|Zombie Villager}}
+|
+[[File:Igloo bottom.png|center|220px]]
+|}
+
+== Loot ==
+{{seealso|Chest loot}}
+{{LootChest|igloo}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Igloo
+|spritetype=env
+|nameid=igloo
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Igloo
+|spritetype=env
+|nameid=igloo
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Temple
+|spritename=igloo
+|spritetype=env
+|nameid=temple
+|translationkey=feature.temple
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config" /><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:igloo}}
+** {{Nbt inherit/structure}}
+</div><section end="config" />
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 20, 2015|link=https://twitter.com/SeargeDP/status/656485535108714500|[[Michael Stoyke]] reveals he is working on a new structure to showcase the new 'loot table' feature.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w43a|Added igloos. Igloos may be found in a few snow-covered biomes.}}
+|{{HistoryLine|||dev=15w43b|Golden apples in the igloo chests now have a 100% chance of appearing, where previously they would often not appear – it was moved from the structure file to the loot table.
+|Golden apples originally would always be found in the central slot when they were found at all; now they can be found in any slot.}}
+|{{HistoryLine|||dev=15w43c|The glass bottle has been removed from the igloo’s brewing stand.
+|Cobweb is now found in the basement.
+|Sign in the basement previously read: <pre style="font-size:smaller; margin: 0px; padding: 0.5em;">--->
+<---</pre>
+and now reads: <pre style="font-size:smaller; margin: 0px; padding: 0.5em;">××××- ×××--
+ --×× ×-×
+ ×-×× -××
+--××× ×××--</pre>}}
+|{{HistoryLine|||dev=15w44a|The red carpet in the basement now hides a block of polished andesite.
+|Sign in the basement is tweaked, near to old form: <pre style="font-size:smaller; margin: 0px; padding: 0.5em;"><----
+----></pre>}}
+|{{HistoryLine||1.13|dev=18w06a|The structure ID of igloos have been changed from {{cd|temple}} to {{cd|igloo}}, allowing them to be located independently via the {{cmd|locate}} command.
+|Changed generation locations of igloos.}}
+|{{HistoryLine|||dev=18w20a|In the [[structure block]]'s data folder for the igloo the names of the parts of the structure <code>igloo_bottom</code>, <code>igloo_middle</code> and <code>igloo_top</code> have been changed to <code>bottom</code>, <code>middle</code> and <code>top</code>.}}
+|{{HistoryLine||1.17|dev=20w45a|Due to the empty and water [[cauldron]]s being split into different blocks, cauldrons no longer generate in igloos, with water cauldrons taking their place.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added igloos.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Igloos generated in ice plains now have a white bed instead of a red bed and those generated in cold taiga have a brown bed.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Igloos now generate with a red bed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added igloos.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Due to the addition of the new zombie villager skins the zombie villager in the basement is now a cleric rather than getting a random profession when cured.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*{{IN|Java}}, if a number of items in the igloo [[furnace]] are smelted, the light generated melts the igloo window, turning the [[ice]] into a [[water]] source block.<ref>{{bug|MC-100036|||WAI}}</ref> If the igloo has a basement, this can reveal the trapdoor leading to it.
+*An igloo with a basement qualifies as a [[Village mechanics|village]] {{in|be}} due to having a [[villager]], a [[bed]], a [[brewing stand]], and a [[cauldron]], with the last 2 blocks counting as job sites. {{IN|je}}, however, the villager (or the zombie villager, if cured) must have a path to access either job site, which must be claimed in order for the igloo to register as a village. This means a [[raid]] can be triggered in an igloo.
+*An igloo can sometimes generate on a cliff, on a mountain, over a cave, or on a floating island, causing its basement to be exposed.
+*Igloos can generate deep down due to generation bugs, causing the basement ladder to lead to the [[void]], without generating a proper basement.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Igloooutside.png|The igloo from the outside.
+Iglooinside.png|Inside.
+Iglooinside2.png|Inside, facing the exit.
+Igloobasement.png|Inside an igloo's basement.
+RevealedTrapdoorInIgloo.png|The [[trapdoor]] revealed in an igloo; get in by taking out carpet.
+IglooInTheAir.png|An igloo generated above a river.
+IglooBasementInRiver.png|An igloo's basement passageway in a river.
+CaveIgloo.png|An igloo that generated inside of a cave.
+Igloo On the cliff.png|An igloo on a cliff.
+An igloo in superflat desert.png|alt=An igloo in a superflat desert|A naturally generated igloo in a [[superflat]] desert world.
+BrewingBasement.png|Igloo basement.
+IglooInVillage.png|An igloo structure which generated in a snowy plains village.
+Igloo on river.png|Igloo generated on frozen river.
+Undrground igloo.png|Igloo generated inside a hill.
+Broken igloo.png|An igloo with part of its bottom cut out by a [[water lake]].
+Amethyst geode generated in an igloo.png|An [[amethyst geode]] generated inside of an igloo basement.
+Monster_room_in_igloo_basement.png|The igloo basement intersecting a [[monster room]], missing one of the jail cells.
+Tree igloo.png|An igloo that generated in a tree, with a trapdoor but no basement.
+Igloo in a hot biome.png|Found this igloo on the border of pre-1.18 and 1.18 chunks.
+No basement.png|Igloo with trapdoor, but no basement generated.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Igloo Teaser.png|Teaser from [[Searge]] showing an igloo in the distance.
+Tree Igloo.jpg|An igloo on a mountain with a tree on top.
+Igloo-header.jpeg|Exterior of an igloo.
+Igloo-ingame.jpeg|Interior of an igloo.
+</gallery>
+
+== External links ==
+*{{mcnet|igloo|Building Blocks: Igloo|January 14, 2025|Duncan Geere}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox villagers}}
+{{Navbox generated structures}}
+
+[[de:Iglu]]
+[[es:Iglú]]
+[[fr:Igloo]]
+[[it:Iglù]]
+[[ja:イグルー]]
+[[ko:이글루]]
+[[lzh:雪屋]]
+[[pl:Igloo]]
+[[pt:Iglu]]
+[[ru:Иглу]]
+[[uk:Іглу]]
+[[zh:雪屋]]

@@ -1,0 +1,522 @@
+{{Infobox block
+| group1 = Unoxidized
+| 1-1 = Copper Door.png
+| invimage = Copper Door
+| group2 = Exposed
+| 2-1 = Exposed Copper Door.png
+| invimage2 = Exposed Copper Door
+| group3 = Weathered
+| 3-1 = Weathered Copper Door.png
+| invimage3 = Weathered Copper Door
+| group4 = Oxidized
+| 4-1 = Oxidized Copper Door.png
+| invimage4 = Oxidized Copper Door
+| invimage5 = Waxed Copper Door
+| invimage6 = Waxed Exposed Copper Door
+| invimage7 = Waxed Weathered Copper Door
+| invimage8 = Waxed Oxidized Copper Door
+| transparent = Partial
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = No ({{JE}})<br>Yes ({{BE}})
+|mapcolor = 
+* {{TooltipSprite||Copper Door}} {{Map color|Block of Copper}}
+* {{TooltipSprite||Exposed Copper Door}} {{Color|rgb({{Map color/data|block=Exposed Copper}})|44 <small><small>TERRACOTTA_LIGHT_GRAY</small></small>}}
+* {{TooltipSprite||Weathered Copper Door}} {{Map color|Weathered Copper}}
+* {{TooltipSprite||Oxidized Copper Door}} {{Map color|Oxidized Copper}}
+}}
+The '''copper door''' is a type of [[door]] made of copper that can be opened and closed by the player without [[redstone]].
+
+== Obtaining ==
+=== Breaking ===
+A copper door can be mined with anything, but [[Pickaxe|pickaxes]] allow for faster mining.
+
+{{Breaking row
+|Copper Door|sprite=all-copper-doors
+|Pickaxe
+|horizontal=1
+}}
+Copper door drops itself when it's destroyed.
+
+Copper door also drops itself when its supporting block is moved or removed.
+=== Crafting ===
+{{Crafting
+|head=1
+|A1= Copper Ingot
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B1 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Door, 3
+|type= Redstone
+}}
+{{Crafting
+|Matching Unwaxed Copper Door
+|Honeycomb
+|Output=Matching Waxed Copper Door
+|type= Redstone
+|foot=1
+}}
+
+=== Natural generation ===
+Copper doors generate naturally between the rooms of [[trial chambers]].
+
+== Usage ==
+{{main|Door#Usage}}
+
+Copper doors can be opened and closed using a [[redstone signal]], or by players, [[villager]]s<ref>{{bug|MC-266155||Villagers and vindicators can open copper doors|WAI}}</ref>, [[piglin]]s, [[vindicator]]s{{only|java|short=1}}, and [[copper golems]]. Copper doors are also affected by the wind burst of thrown [[wind charge]]s, causing them to open if closed, or vice versa.
+
+In Hard [[difficulty]], copper doors can be broken by [[vindicator]]s and all variants of [[zombie]]s, including sometimes [[drowned]].
+
+=== Barrier ===
+[[File:Vindicator breaking copper door that doesn't block access.png|thumb|A vindicator breaking a closed copper door placed sideways, even though it allows passage]]
+A copper door can be opened or closed by pressing the {{control|use|text=Use Item/Place Block}} [[control]]. When a door opens or closes, it immediately changes its orientation without affecting anything in the space it "swings through".
+
+Some [[zombie]]s can break copper doors in Hard [[difficulty]]. Zombies have a 5% chance to spawn with the ability to break doors. Vindicators spawned from a [[raid]] in [[Normal]] and Hard difficulty can also break copper doors, but they do so only to reach targeted players, villagers, or wandering traders. {{IN|Java}}, some vindicators may sometimes open a copper door instead of breaking it. Both zombies and vindicators attempt to break a copper door only when the door is in its "closed" state; this is the case even when the door is placed in such a way as to allow passage in its "closed" state and block passage in its "open" state (for example, by facing sideways when placing the door).
+
+=== Redstone component ===
+{{see also|Redstone circuit}}
+
+Copper doors can be controlled with redstone power.
+
+A copper door is a redstone [[Redstone components#Mechanism components|mechanism component]] and can be activated by [[Redstone mechanics#Power|weakly powering]] any cardinally adjacent block.
+
+When activated, the copper door immediately opens. When deactivated, it immediately closes. [[Player]]s and [[mob]]s can still open and close a door that is controlled by a redstone signal.
+
+All methods of activating a door can be applied to either the top or bottom parts of a door.
+
+=== Oxidation ===
+{{main|Oxidation}}
+Non-waxed copper doors have four stages of oxidation (including the initial normal state).<ref>{{mcnet|test-new-decorative-blocks|Test new decorative blocks|October 24, 2023|Sophie Austin}}</ref> [[Lightning bolt]]s and [[axe]]s can remove the oxidation on copper doors. They can be waxed with [[honeycomb]] to prevent oxidation from progressing.
+
+As the block begins to oxidize (exposed), it gets discolored and green spots begin to appear. As the oxidation continues (weathered), the block is a green color with brown spots. In the last stage (oxidized), the block is teal with several green spots.
+
+=== Air pockets ===
+Copper doors can be used as air pockets [[Water|underwater]] {{in|Java}}. They can also be used as air pockets in lava in both [[Java Edition|''Java'']] and [[Bedrock Edition|''Bedrock'']] editions, similar to [[iron door]]s.
+
+=== Piston interactivity ===
+Copper door is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Copper}}
+
+=== Unique ===
+==== Waxing ====
+{{:Block of Copper/Sounds|a copper door}}
+
+==== Other ====
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle2.ogg<!--Duplicated on purpose-->
+|sound4=Copper Door toggle3.ogg
+|sound5=Copper Door toggle3.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a copper door opens
+|id=block.copper_door.open
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=''Varies''<wbr><ref group=sound>0.9-1.0 for <code>toggle1</code>, the first <code>toggle2</code>, and the first <code>toggle3</code>, and 0.99-1.1 for the second <code>toggle2</code> and the second <code>toggle3</code></ref>
+|distance=16}}
+| {{SoundLine
+|sound=Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle3.ogg
+|subtitle=Door creaks
+|source=block
+|description=When a copper door closes
+|id=block.copper_door.close
+|translationkey=subtitles.block.door.toggle
+|volume=1.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Zombie hit wood1.ogg
+|sound2=Zombie hit wood2.ogg
+|sound3=Zombie hit wood3.ogg
+|sound4=Zombie hit wood4.ogg
+|subtitle=Door shakes
+|source=hostile
+|description=When a [[zombie]] attacks a copper door<wbr><ref group=sound name=zombiesound>{{Bug|MC-270960||Zombies play wooden door breaking sounds when attacking copper doors}}</ref>
+|id=entity.zombie.attack_wooden_door
+|translationkey=subtitles.entity.zombie.attack_wooden_door
+|volume=2.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Zombie breaks door.ogg
+|subtitle=Door breaks
+|source=hostile
+|description=When a zombie breaks a copper door<wbr><ref group=sound name=zombiesound/>
+|id=entity.zombie.break_wooden_door
+|translationkey=subtitles.entity.zombie.break_wooden_door
+|volume=2.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Copper Door toggle1.ogg
+|sound2=Copper Door toggle2.ogg
+|sound3=Copper Door toggle3.ogg
+|source=block
+|description=When a copper door opens
+|id=open_door.copper
+|volume=1.0
+|pitch=1.0-1.1}}
+| {{SoundLine
+|source=block
+|description=When a copper door closes
+|id=close_door.copper
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Zombie hit wood1.ogg
+|sound2=Zombie hit wood2.ogg
+|sound3=Zombie hit wood3.ogg
+|sound4=Zombie hit wood4.ogg
+|source=hostile
+|description=While a zombie is breaking a copper door<ref group=sound name=zombiesound>{{Bug|MCPE-186407||Zombies play wooden door breaking sounds when attacking copper doors}}</ref>
+|id=mob.zombie.wood
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Zombie breaks door.ogg
+|source=hostile
+|description=When a zombie breaks a copper door<ref group=sound name=zombiesound>{{Bug|MCPE-186407||Zombies play wooden door breaking sounds when attacking copper doors}}</ref>
+|id=mob.zombie.woodbreak
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Door
+|spritetype=block
+|nameid=copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Door
+|spritetype=block
+|nameid=exposed_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Door
+|spritetype=block
+|nameid=weathered_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Door
+|spritetype=block
+|nameid=oxidized_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Door
+|spritetype=block
+|spritename=Copper Door
+|nameid=waxed_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Door
+|spritetype=block
+|nameid=waxed_exposed_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Door
+|spritetype=block
+|nameid=waxed_weathered_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Door
+|spritetype=block
+|nameid=waxed_oxidized_copper_door
+|blocktags=doors, mob_interactable_doors, mineable/pickaxe
+|itemtags=doors
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Door
+|spritetype=block
+|nameid=copper_door
+|id=-784
+|translationkey=tile.copper_door.name, item.copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Door
+|spritetype=block
+|nameid=exposed_copper_door
+|id=-785
+|translationkey=tile.exposed_copper_door.name, item.exposed_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Door
+|spritetype=block
+|nameid=weathered_copper_door
+|id=-786
+|translationkey=tile.weathered_copper_door.name, item.weathered_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Door
+|spritetype=block
+|nameid=oxidized_copper_door
+|id=-787
+|translationkey=tile.oxidized_copper_door.name, item.oxidized_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Door
+|spritetype=block
+|spritename=Copper Door
+|nameid=waxed_copper_door
+|id=-788
+|translationkey=tile.waxed_copper_door.name, item.waxed_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Door
+|spritetype=block
+|nameid=waxed_exposed_copper_door
+|id=-789
+|translationkey=tile.waxed_exposed_copper_door.name, item.waxed_exposed_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Door
+|spritetype=block
+|nameid=waxed_weathered_copper_door
+|id=-790
+|translationkey=tile.waxed_weathered_copper_door.name, item.waxed_weathered_copper_door.name}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Door
+|spritetype=block
+|nameid=waxed_oxidized_copper_door
+|id=-791
+|translationkey=tile.waxed_oxidized_copper_door.name, item.waxed_oxidized_copper_door.name
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Door|block states}}
+
+== Achievements ==
+{{load achievements|Wax on, Wax off}}
+
+== Advancements==
+{{load advancements|Wax on;Wax off}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|Copper doors were announced at [[Minecraft Live 2023]].}}
+|{{HistoryLine||October 24, 2023|More oxidized variants of the copper door were shown off.|link=https://www.minecraft.net/en-us/article/test-new-decorative-blocks}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w43a|[[File:Copper Door JE1 BE1.png|32px]] [[File:Exposed Copper Door JE1 BE1.png|32px]] [[File:Weathered Copper Door JE1 BE1.png|32px]] [[File:Oxidized Copper Door JE1 BE1.png|32px]] [[File:Copper Door (item) JE1 BE1.png|32px]] [[File:Exposed Copper Door (item) JE1 BE1.png|32px]] [[File:Weathered Copper Door (item) JE1 BE1.png|32px]] [[File:Oxidized Copper Door (item) JE1 BE1.png|32px]] Added copper doors behind the "[[Java Edition 1.21|Update 1.21]]" [[experimental]] [[data pack]].
+|The crafting recipe was originally six matching [[blocks of copper]].
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B1=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|Output=Matching Unwaxed Copper Door, 3; Matching Waxed Copper Door, 3
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=23w44a|[[File:Copper Door JE2 BE2.png|32px]] [[File:Exposed Copper Door JE2 BE2.png|32px]] [[File:Weathered Copper Door JE2 BE2.png|32px]] [[File:Oxidized Copper Door JE2 BE2.png|32px]] [[File:Copper Door (item) JE2 BE2.png|32px]] [[File:Exposed Copper Door (item) JE2 BE2.png|32px]] [[File:Weathered Copper Door (item) JE2 BE2.png|32px]] [[File:Oxidized Copper Door (item) JE2 BE2.png|32px]] The block and item textures have been changed.}}
+|{{HistoryLine|||dev=23w45a|Copper doors now generate naturally within [[trial chambers]].}}
+|{{HistoryLine|||dev=pre3|[[File:Copper Door JE3 BE3.png|32px]] [[File:Exposed Copper Door JE3 BE3.png|32px]] [[File:Weathered Copper Door JE3 BE3.png|32px]] [[File:Oxidized Copper Door JE3 BE3.png|32px]] The block textures have been slightly changed, again.}}
+|{{HistoryLine||1.21|dev=24w18a|Copper doors are now available without using the "Update 1.21" experimental data pack.|
+The crafting recipe for copper doors has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1= Copper Ingot
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B1 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Door, 3
+|ignoreusage=1}}
+{{!}}}
+|Crafting recipes for all other variants of copper doors have been removed.}}
+|{{HistoryLine|||dev=pre2|Copper doors are no longer part of the <code>#wooden_doors</code> block and item [[tag]]s.<ref>{{bug|MC-266113||Copper Doors are in the #minecraft:wooden_doors tag|Fixed}}</ref>
+|Because of this, copper doors can no longer be broken with an [[axe]] or be used as [[fuel]] in a [[furnace]].
+|Copper doors are instead part of the newly introduced <code>#mob_interactable_doors</code> block tag.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Now drop when broken with any tool.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.50|exp=Update 1.21|dev=Preview 1.20.50.22|[[File:Copper Door JE1 BE1.png|32px]][[File:Exposed Copper Door JE1 BE1.png|32px]] [[File:Weathered Copper Door JE1 BE1.png|32px]] [[File:Oxidized Copper Door JE1 BE1.png|32px]] [[File:Copper Door (item) JE1 BE1.png|32px]] [[File:Exposed Copper Door (item) JE1 BE1.png|32px]] [[File:Weathered Copper Door (item) JE1 BE1.png|32px]] [[File:Oxidized Copper Door (item) JE1 BE1.png|32px]] Added copper doors behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.
+|The crafting recipe was originally six matching [[blocks of copper]].
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|A3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B1=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B2=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|B3=Matching Unwaxed Block of Copper; Matching Waxed Block of Copper
+|Output=Matching Unwaxed Copper Door, 3; Matching Waxed Copper Door, 3
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=Preview 1.20.50.23|[[File:Copper Door JE2 BE2.png|32px]] [[File:Exposed Copper Door JE2 BE2.png|32px]] [[File:Weathered Copper Door JE2 BE2.png|32px]] [[File:Oxidized Copper Door JE2 BE2.png|32px]] [[File:Copper Door (item) JE2 BE2.png|32px]] [[File:Exposed Copper Door (item) JE2 BE2.png|32px]] [[File:Weathered Copper Door (item) JE2 BE2.png|32px]] [[File:Oxidized Copper Door (item) JE2 BE2.png|32px]] The block and item textures have been changed.
+|Added crafting table recipes for all oxidization levels of waxed copper doors.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Copper doors now generate naturally within [[trial chambers]].}}
+|{{HistoryLine|||dev=Preview 1.20.60.22|[[File:Copper Door JE3 BE3.png|32px]] [[File:Exposed Copper Door JE3 BE3.png|32px]] [[File:Weathered Copper Door JE3 BE3.png|32px]] [[File:Oxidized Copper Door JE3 BE3.png|32px]] The block textures have been slightly changed, again.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Copper doors are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|The crafting recipe for copper doors has been changed:
+{{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1= Copper Ingot
+|A2 = Copper Ingot
+|A3 = Copper Ingot
+|B1 = Copper Ingot
+|B2 = Copper Ingot
+|B3 = Copper Ingot
+|Output = Copper Door, 3
+|ignoreusage=1}}
+{{!}}}
+|Crafting recipes for all other variants of copper doors have been removed.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|All types of copper doors no longer require a stone pickaxe to drop themselves, and are mined faster when using an improper tool.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|Doors now use the block state <code>cardinal_direction</code> (uses string values) instead of <code>direction</code> (uses integer values).}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+All Oxidizing Blocks.png|All blocks that can oxidize, including copper doors.
+</gallery>
+
+=== In other media ===
+<gallery>
+Tuff And Copper Blocks Artwork.jpg|Artwork featuring a copper door.
+</gallery>
+
+== References ==
+<references />
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Double blocks]]
+
+[[de:Kupfertür]]
+[[es:Puerta de cobre]]
+[[fr:Porte en cuivre]]
+[[ja:銅のドア]]
+[[ko:구리 문]]
+[[pt:Porta de Cobre]]
+[[ru:Медная дверь]]
+[[uk:Мідні двері]]
+[[zh:铜门]]

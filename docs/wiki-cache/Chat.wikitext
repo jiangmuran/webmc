@@ -1,0 +1,254 @@
+{{about|the local chat on one world|the upcoming cross-world chat features|Social#Party}}[[File:Multiplayer Chat.png|thumb|A multiplayer chat snippet.]]
+[[File:Chat BE.png|thumb|The chat menu {{in|BE}}.]]
+
+'''Chat''' is a built-in messaging system used to communicate with other players, or to execute [[commands]]. {{IN|be}}, the chat is a [[menu screen]] that darkens the background.
+
+== Usage ==
+By default, players can press {{key|T}} or {{key|Enter}} for keyboards, [[File:Chat button.png|25px]] for touchscreens, or {{Xbutton|onedpad-right}} for controllers to open the chat menu. Recent chat messages are shown on the left side of the [[HUD]] for 3 seconds by default.
+
+=== Communication ===
+The primary purpose of the chat is for player communication. Generally, the player simply types out their message and presses {{key|Enter}}, or the send button.{{only|be|short=1}}
+
+If the player wishes to privately message another player, they can use the {{cmd|msg}} command.
+==== Mentioning ====
+{{IN|bedrock}}, the at symbol (<code>@</code>) can be used to autocomplete and highlight a player name in chat. Entering <code>@here</code> mentions all players. When mentioning players in a message, the name can be highlighted in a different color from the rest of chat. The color is yellow by default, but can be changed in the chat settings. While mentioning is not present in ''Java Edition'', {{key|Tab}} can be used to autocomplete a player's username.
+
+==== Formatting ====
+[[File:Textformatting.png|thumb|Shows (from up to down) bold, strikethrough, underlined, italicized, and reset (§r) text (also default)]]
+Players can use {{cmd|tellraw}} command to send stylized texts on the chat using [[text component]]. They may apply various text styles, such as custom colors, bold, italic, underline, strikethrough, and more. In ''Bedrock Edition'', the section symbol (<code>§</code>) also allows players to change the style of the text with [[formatting codes]]. 
+
+In ''Java Edition'', 43 emojis are supported by the game's default font, Mojangles (see {{slink|Mojangles|Emoji}}). They are shown as pixelated icons on text fields, including the chat. In ''Bedrock Edition'', certain characters in the Unicode {{w|code point}}s or shortcodes (such as :furnace:) are reserved for [[Emoji|private-area emojis]] in the game, such as the hunger and armor icons, controller icons, and more.<ref>https://github.com/TwistedAsylumMC/bedrock-unicode-characters</ref><ref>https://wiki.bedrock.dev/text/emojis</ref> Other emojis and unknown characters appear as a question mark (<code>?</code>).
+
+=== Commands ===
+{{main|Commands}}
+
+Players can also type commands into the chat. Commands are identified by the use of a forward slash ({{key|/}}) at the beginning of the message. By default, the {{key|/}} key opens the chat with a <code>/</code> already present to easily run commands.
+
+While typing, pressing {{key|TAB}} autocompletes the first possible command or username starting with the letter(s) typed. If there are multiple usernames or commands beginning with the letter(s), a list of possibilities is displayed; pressing  {{key|TAB}}  again scrolls through the list.
+*Some commands may also have additional parameters that may be auto-completed by pressing {{key|TAB}} at that point.
+**Certain commands that handle blocks (ex. {{cmd|fill}}) have parameters that need the [[coordinates]] of the target block(s). Pressing {{key|TAB}} when these coordinates are needed automatically adds the coordinates of the block the player is looking at.
+
+==== Quick commands ====
+{{IN|be}}, there are a few buttons in the chat to execute commands without having to type them in. These commands include {{cmd|setworldspawn}}, {{cmd|teleport}}, {{cmd|time}}, and {{cmd|weather}}. Pressing a command opens a list of arguments. For {{cmd|teleport}}, all players are shown in both the {{cd|<victim>}} and {{cd|<destination>}} arguments. Pressing an argument instantly executes the command.
+
+=== Coordinates ===
+{{IN|be}}, the chat also shows the player's coordinates when Copy Coordinate UI in the Creator settings tab is enabled. The player can view and copy both the player's current coordinates and the coordinates of the block the player is facing.
+The button next to the copy button pastes any copied text into the text box.
+
+=== Informational messages ===
+{{Expand section|There are many more informational messages. See [[Action bar]] for certain messages in Bedrock Edition and the [[Talk:Chat#Feedback (Fri, 04 Jul 2025 06:32:42 UTC)|talk page]].|section=1}}
+There are several informational messages shown on the chat when specific actions happen in the [[world]]:
+* If a player or a [[Name tag|named]] tamed [[pet]] dies in the world, a [[death message]] is announced to the chat.
+* When a player joins or leaves the game, they are announced to the chat.
+* When {{gmr|command_block_output|commandblockoutput}} is enabled, all [[command blocks]] when executing a command notify the admin through the chat.
+* In ''Bedrock Edition'', when a player uses an [[emote]], it is announced to the chat with the emote's name.
+* In ''Bedrock Edition'', when a player changes their character in the [[Character Creator]], it is announced to the chat after the character changed.
+* In ''Bedrock Edition'', when a player joins a world or travels between [[dimensions]], the "Open Chat Message" is shown exclusively to that player, which shows the [[keys]] to open the chat and to open the [[Emotes|emote]] GUI. The message can be toggled in the [[Settings#Accessibility|accessibility settings]] and is not shown when using touch controls.
+
+=== Chat settings ===
+[[File:Chat Settings BE.png|thumb|The chat settings.]]
+{{IN|be}}, a chat settings menu can be opened from the chat menu. Options such as the [[font]], text color and size, and line spacing can be changed here. For an overview of the chat settings {{In|je}} configurable through the main options screen, see {{Slink|Options|Chat Settings}}.
+{| class="wikitable" width="100%" border="1"
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| style="font-size: large;" | Mute All Chat
+| Toggles to mute all new chat messages.
+| style="text-align: center; | OFF
+|-
+| style="font-size: large;" | Mute Emote Chat
+| Toggles to mute chat messages from players executing [[emotes]].
+| style="text-align: center; | OFF
+|-
+| style="font-size: large;" | Text To Speech For Chat
+| Toggles to read new chat messages that appear in the [[HUD]].
+| style="text-align: center; | OFF
+|-
+| style="font-size: large;" | Font
+| The font used in the chat window. Can be set to [[Mojangles]] or [[Noto Sans]]
+| style="text-align: center; | Mojangles
+|-
+| style="font-size: large;" | Size
+| Adjusts the size of text shown in the chat window. Slider can be set between 10-20. Only available when Noto Sans is selected as font.
+| style="text-align: center; | 12
+|-
+| style="font-size: large;" | Line Spacing
+| Adjusts the space between lines in the chat window. Slider can be set between x1.0-x10.0.
+| style="text-align: center; | x1.0
+|-
+| style="font-size: large;" | Chat Color
+| The color of all text shown in the chat window. Available options are '''White''', <span style="color:green">'''Green'''</span>, <span style="color:aqua">'''Aqua'''</span>, <span style="color:red">'''Red'''</span>, <span style="color:purple">'''Light Purple'''</span>, <span style="color:yellow">'''Yellow'''</span>, and <span style="color:gold">'''Gold'''</span>.
+| style="text-align: center; | '''White'''
+|-
+| style="font-size: large;" | My Mentions Color
+| The color of mentions to the player. Available options are '''White''', <span style="color:green">'''Green'''</span>, <span style="color:aqua">'''Aqua'''</span>, <span style="color:red">'''Red'''</span>, <span style="color:purple">'''Light Purple'''</span>, <span style="color:yellow">'''Yellow'''</span>, and <span style="color:gold">'''Gold'''</span>.
+| style="text-align: center; | <span style="color:yellow">'''Yellow'''</span>
+|-
+|}
+
+== Message history ==
+A player can access the message history via a small scroll bar is on the side of the chat. The player can also scroll using the mouse wheel or {{key|PgUp}} and {{key|PgDn}}. The last 100 chat messages are stored. Holding down {{key|LSHIFT}} or {{Key|RSHIFT}} and attempting to scroll up or down slows down scrolling. The player can paste their own recently sent messages by pressing the {{key|UP}} and {{key|DOWN}} keys while typing.
+[[File:New messages tooltip.png|thumb|New messages tooltip]]
+{{IN|be}}, when a new message appears while scrolled up in the chat history, a green styled [[tooltip]] appears informing there are new messages.
+
+== Drafts ==
+{{Exclusive|Java|section=1}}
+[[File:Chat draft.png|thumb|right|Chat draft in gray.]]
+Unsent chat messages will be saved as drafts when chat is forcibly closed from external sources such as dying or opening dialog. When chat is opened next time, the draft is visible in gray and italic. It can be converted to a normal message by typing more text, using arrow keys, clicking the chat or selecting it by using {{key|SHIFT+LEFT}} or {{key|SHIFT+RIGHT}}.
+
+== Text filtering and restrictions ==
+{{IN|bedrock}}, any inappropriate word or phrase typed in the chat is censored and replaced by number signs (<code>#</code>). This can be turned off with the "Profanity Filter" option in the [[settings]], but only if the player is signed in with a verified Microsoft account; otherwise, the option is greyed out and cannot be disabled. The list of censored phrases can be found internally under <code>[[Microsoft.MinecraftUWP|Content]]/data/profanity_filter.wlist</code> (where the content is encoded in {{w|Base64}}). A similar feature is available in ''Java Edition'''s [[server.jar]] by configuring undocumented <code>text-filtering-config</code> and <code>text-filtering-version</code> options from [[server.properties]].<ref>https://walshy.dev/blog/21_03_16-mc-new-text-filtering</ref> They are used internally by [[Realms]].
+
+In the United Kingdom, chat is restricted if players did not verify their age for their Xbox account. This effect is different from each edition:
+* In ''Java Edition'', this restricts sending chat messages in a [[multiplayer]] world and receiving them.
+* In ''Bedrock Edition'', this blocks communication only between players that are not mutual Xbox [[friends]].
+
+In ''Bedrock Edition'', [[servers]] may disable the in-game chat using <code>chat-restriction</code> in [[server.properties]]. This can either drop chat messages and not send them to any clients, informed with a warning, or completely disable the chat UI.
+
+== Notes ==
+* {{IN|bedrock}}, the chat background opacity and chat message duration for chat messages shown on the [[HUD]] can't be adjusted from the chat settings menu, but can be found in the [[Settings#Accessibility|accessibility settings]].
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.15a (Multiplayer Test 5)|Added the chat system.
+|Chat is available in singleplayer, though attempting to send any messages crashes the game.}}
+|{{HistoryLine||0.0.17a|A chat log now appears when typing.
+|Chat is no longer available in singleplayer.}}
+|{{HistoryLine||0.0.18a_02|The characters {{code|\|{{!}}|@|$|d=and}} can now be entered into chat.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-0040|Chat is no longer available due to multiplayer being made partially inaccessible in this version.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.9|In private multiplayer testing, the chat system has been reintroduced along with Unicode support.<ref>https://web.archive.org/web/20140427012559/http://notch.tumblr.com/post/844565199/i-forgot-to-update-you-on-mp-status-yesterday</ref>}}
+|{{HistoryLine||v1.0.12|Chat now has word wrapping.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.4|Added chat history and improved chat editing.
+|Links are now clickable in chat.
+|Text can now be copied and pasted.
+|When typing a player's name, pressing {{key|Tab}} automatically fills in the rest of the username.
+|The chat edit box is no longer prefixed with a greater-than sign ({{key|>}}).}}
+|{{HistoryLine||1.3.1|dev=12w16a|Chat can now be used to enter [[command]]s in singleplayer.}}
+|{{HistoryLine||1.7.2|dev=13w37a|"Saved screenshot as" messages can now be clicked to open the [[screenshot]].
+|Added the ability to open a URL from the chat by clicking on it.
+|Names can now be clicked to send people private messages.
+|Added support for both hover and click events in the chat through {{cmd|tellraw <player> <raw json message>}}.}}
+|{{HistoryLine||1.8|dev=14w02a|Messages are now either chat, system, or action bar messages. Action bar messages are always shown, while chat and system messages are shown only if chat settings are configured to show them.
+|Some instances of usernames in the chat now shows the player's UUID when hovered on when debug tooltips are enabled.}}
+|{{HistoryLine|||dev=14w03a|Chat communication has been improved.
+|Entities now have tooltips in certain chat instances when hovered over.
+|<!-- Likely added in 14w04a based on the revision history of [[debug screen]] -->{{key|F3+D}} now clears the chat history, including previously typed commands.}}
+|{{HistoryLine||1.11|dev=16w32a|Some warnings now appear above the [[hotbar]] instead of in the chat, like "Press [key] to dismount" had.}}
+|{{HistoryLine|||dev=16w38a|Chat messages can now be 256 characters long instead of 100.}}
+|{{HistoryLine||1.16|dev=20w15a|Chat line spacing can now be adjusted.
+|A chat delay can be set between 0 (default) and 6 seconds.}}
+|{{HistoryLine||1.16.4|dev=Pre-release 1|Added the [[social interactions]] screen, which can be used to disable chatting with certain players.}}
+|{{HistoryLine|||dev=Release Candidate 1|Added an option to hide matched names in chat.}}
+|{{HistoryLine||1.19|dev=22w17a|Chat messages between players are now cryptographically signed.
+|Players are given a Mojang provided key-pair on startup.
+|Chat styling is now handled via server resource packs with the translation key {{cd|chat.type.text}}.}}
+|{{HistoryLine|||dev=22w18a|Chat from the {{cmd|say}}, {{cmd|msg}}, {{cmd|teammsg}}, and {{cmd|me}} commands are now all also cryptographically signed.
+|Servers can now define different chat style formats for clients, which can now be controlled by the server through the {{cd|chat_type}} registry (found under the worldgen folder in the vanilla report).}}
+|{{HistoryLine|||dev=22w19a|Servers can now enable chat preview, which displays a server-controlled preview above the chat edit box, showing how the message appears when sent.}}
+|{{HistoryLine|||dev=Pre-release 1|A chat preview is now also shown for chat-related commands, such as {{cmd|say}} and {{cmd|msg}}.}}
+|{{HistoryLine||1.19.1|dev=22w24a|It is now possible to report a player for sending abusive messages in the chat via the social interactions screen.}}
+|{{HistoryLine|||dev=Pre-release 2|Messages that are not signed with the Secure Chat system, or have been tampered with by the server is now marked.
+|The trust status of messages are displayed with both a colored indicator and an icon - red {{cd|(!)}} for unsigned messages and yellow {{cd|(?)}} for server-modified messages. Hovering over the icon provides more information about the trust status.
+|Chat signing is now enforced on new servers by default.}}
+|{{HistoryLine|||dev=Pre-release 3|Moved the chat scrollbar to the right of the chat window.
+|System messages are now displayed with a gray color indicator.
+|The {{cd|msg_command}} chat type has been split apart into {{cd|msg_command_incoming}} and {{cd|msg_command_outgoing}}.
+|The {{cd|team_name}} chat type parameter has been renamed to {{cd|target}}.}}
+|{{HistoryLine|||dev=Pre-release 4|Insecure chat messages logged in the server are prefixed with a {{cd|[Not Secure]}} tag.
+|The order of chat messages is now cryptographically verified.
+|Servers can now delete messages from clients after they have been sent.}}
+|{{HistoryLine|||dev=Pre-release 5|When writing chat messages, the signing status of the displayed chat messages is shown with a colored indicator.
+|The background of the chat preview also displays as slightly faded when a preview is waiting to be signed.
+|The {{cd|team_msg_command}} chat type has been split apart into {{cd|team_msg_command_incoming}} and {{cd|team_msg_command_outgoing}}.}}
+|{{HistoryLine|||dev=Pre-release 6|The colors of the signing indicators for sending a message have been adjusted for improved accessiblity.}}
+|{{HistoryLine|||dev=Release Candidate 2|Introduced a warning toast to clients on servers that don't enforce chat signing.}}
+|{{HistoryLine|||dev=Release Candidate 3|The chat input box no longer applies custom font glyphs with negative advances or glyphs with advances greater than 32.}}
+|{{HistoryLine||1.19.3|dev=22w42a|Removed Chat Preview.|Removed red {{cd|(!)}} indicators on unsigned messages and made the bar gray. Modified messages changed the {{cd|(?)}} indicator to gray, and it is no longer displayed if only the style was changed.
+|Deleted messages are now displayed for 3 seconds, then are replaced by a system message.
+|If the server requires chat signing, clients who have not signed their messages can now join and use most commands. Trying to enter messages and chat-related commands shows an error in the chat, and it is not transmitted to others. Previously, such clients could not even join the servers that required signing.}}
+|{{HistoryLine||1.19.4|dev=23w03a|Clients attempt to sign the messages on server join, if it didn't already happen on client startup.}}
+|{{HistoryLine||1.20.2|dev=23w31a|The text in the chat box now scrolls when selected using {{key|shift}} and arrow keys.<ref>{{bug|MC-140646|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=23w32a|Clients no longer disconnect themselves when receiving an invalid chat message. Instead, a placeholder message is shown in chat.}}
+|{{HistoryLine||1.21.9|dev=25w33a|Added chat drafts.
+|Unsent chat messages now get saved as chat drafts if the chat was forcibly closed.
+|It is now possible to start chatting while standing inside a [[Nether portal]].
+|The chat will now remain open and unchanged if the player was chatting before being transferred to another dimension.}}
+|{{HistoryLine||Circa January 16, 2026|link=https://help.minecraft.net/hc/en-us/articles/43413776295437-Troubleshoot-Minecraft-Java-Edition-Chat-Access|It has been announced that players in the {{w|United Kingdom}} will have to verify their age in order to chat in multiplayer. If not, they will not be able to use it. This is to comply with the {{w|2023 Online Safety Act}}.<ref>https://twitter.com/ibxtoycat/status/2012299474761040001</ref><ref>https://help.minecraft.net/hc/en-us/articles/43413776295437-Troubleshoot-Minecraft-Java-Edition-Chat-Access</ref><ref>https://www.biometricupdate.com/202601/age-verification-expands-in-gaming-minecraft-selects-yoti-discord-tests-persona</ref>}}
+|{{HistoryLine||26.1|dev=snap7|The chat screen can now always be opened, even when chatting is restricted by settings.|Chat entries from client actions like taking screenshots will now be displayed even when messages from players and servers are restricted.|Changing chat settings will now hide all messages of restricted types and discard any new ones.|The handling of chat messages on a published local server is now more consistent with dedicated servers in regard to chat settings.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.7.0|Added the chat system.}}
+|{{HistoryLine||v0.7.2|Made some changes to the chat GUI, including making the "Done" button smaller, adding a button to show/hide the keyboard, and making the chat log visible when entering a message.
+|Added Unicode support to chat.}}
+|{{HistoryLine||v0.7.4|Support for entering [[commands]] into chat has been added. No commands have been implemented, however.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Text being entered into chat no longer extends outside the chat screen.}}
+|{{HistoryLine||v0.9.0|dev=build 1|It is no longer possible to interact with the world when tapping on the chat button.}}
+|{{HistoryLine||v0.10.0|dev=build 1|The outline of chat messages ends where the message ends and is no longer the width of the entire screen.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Added [[formatting codes]], which can be used in chat messages.
+|Added a "hide" button to the chat screen.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Relocated the chat button to the top-middle of the screen in [[Survival]] mode.}}
+|{{HistoryLine|||dev=build 7|The player can now use chat while in a bed.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 1.0.0.0|Moved the position of chat messages so they no longer cover life points, armor, etc.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|The chat screen can now be closed by pressing Enter when no text is present.
+|Chat messages can now be muted.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Mentions of player names are now highlighted yellow in chat.
+|Typing {{key|@}} in chat now shows an autocomplete list of player names.}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|A notification is now sent to chat when a tamed animal dies.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|The message "Press {{key|T}}, {{key|RETURN}}, or {{key|Gamepad Button8}} to open chat" is now sent when the player opens a world.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.2|Added the ability to disable the chat prompt after entering the world.}}
+|{{HistoryLine|||dev=?|Added the ability to change chat color and font.}}
+|{{HistoryLine||1.18.30|dev=release|When entering a message in chat, {{key|Control+Backspace}} now erases the whole word before the caret, {{key|Control+Delete}} erases the whole word after the caret, {{key|Control+Left}} moves the caret to the beginning of the word before the caret, and {{key|Control+Right}} moves the caret to the beginning of the next word after the caret.}}
+|{{HistoryLine||1.21.20|dev=beta 1.21.20.23|The chat quick access history no longer stores duplicate chat entries.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.24|Added a tooltip to indicate when there are new messages if scrolled up in the chat history.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU0|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the chat system. This is only used by the game and players cannot type messages.}}
+|{{HistoryLine||xbox=TU1|Changed the chat message background.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+File:Sound of Awesome.png|First image of chat hover text.
+File:Chat with coordinates BE.png|The chat menu with the copy coordinate UI in ''[[Bedrock Edition]]''.
+File:Chat Settings.png|The chat settings in ''[[Java Edition]]''.
+File:Better Together Commands 1.jpg|An example of using the {{cmd|weather}} command with quick commands {{in|be}}.
+File:Better Together Commands 2.jpg
+File:Better Together Commands 3.jpg
+File:Better Together Commands 4.jpg
+</gallery>
+
+== See also ==
+* [[Social interactions]], the way to report players.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+[[Category:Menu screens]]
+
+[[ja:チャット]]
+[[pt:Chat]]
+[[ru:Чат]]
+[[uk:Чат]]
+[[zh:聊天]]

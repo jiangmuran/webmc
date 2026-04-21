@@ -1,0 +1,127 @@
+{{Joke feature}}
+{{Infobox block
+| title = Golden Chest
+| image = Golden Chest.gif
+| transparent = Partially
+| light = No
+| tool = Axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = Yes
+| waterloggable = Yes
+}}
+A '''golden chest''' is a joke variant of the [[chest]] present in snapshot [[23w13a_or_b]]. It is created by opening a normal or [[trapped chest]] while the <code>minecraft:midas_touch</code> vote rule is activated. [[Ender chest]]s are unaffected.
+
+== Obtaining ==
+Golden chests are not a separate block and thus cannot be obtained with the [[Commands|command]] {{cmd|give}} or through the [[Creative inventory]]. To create a golden chest without <code>minecraft:midas_touch</code> activated, the player can use the {{cmd|setblock}} command with a regular or trapped chest and the tag "gold": {{cmd|setblock ~ ~ ~ minecraft:chest{gold:1b{{)}}}}, or {{cmd|setblock ~ ~ ~ minecraft:trapped_chest{gold:1b{{)}}}}.
+
+Opening a large chest with midas_touch changes the chest visually, but the texture is glitched. Large golden chests do not change the items inside into gold.
+
+=== Breaking ===
+Golden chests only drop normal chests and cannot be obtained when mined, even when using a tool enchanted with [[Silk Touch]].
+{{Breaking row|Golden Chest|Axe|horizontal=1|drop=0|hidecopper=1}}
+
+== Usage ==
+Golden chests function similarly to normal chests. Golden trapped chests still function as trapped chests but have no red-tinted latch like regular ones. 
+
+Both types of golden chests have a random chance on every item in the chest turning into a golden item, according to the <code>minecraft:midas_touch</code> vote rule:
+
+* [[Iron nugget]]s become [[gold nugget]]s.
+* [[Raw copper]] and [[raw iron]] become [[raw gold]].
+* [[Raw copper block]]s and [[raw iron block]]s become [[raw gold block]]s.
+* Normal ore blocks become [[gold ore]].
+* Deepslate ore blocks become [[Gold Ore|deepslate gold ore]].
+* [[Nether quartz ore]] becomes [[nether gold ore]].
+* [[Sword]]s, [[axe]]s, [[pickaxe]]s, [[shovel]]s, [[hoe]]s, [[armor]], and [[horse armor]] become golden.
+* [[Apple]]s become [[golden apple]]s and golden apples become [[enchanted golden apple]]s.
+* [[Carrot]]s become [[golden carrot]]s.
+* [[Melon slice]]s become [[glistering melon slice]]s.
+* [[Rail]]s become [[powered rail]]s.
+* [[Arrow]]s become [[spectral arrow]]s.
+* Other [[item]]s and [[block]]s become [[gold ingot]]s and [[gold block]]s.
+
+=== Container ===
+{{Main|Chest#Container}}
+
+A golden chest has 27 slots of inventory space.
+
+Golden chests open when {{ctrl|used}}. To move items between the golden chest inventory and the player inventory or hotbar while the golden chest GUI is open, drag or shift-click the items. Holding {{key|Shift}} and double-clicking while holding an item moves all items of the type clicked on in or out of the golden chest, to the extent that space is available for them. To exit the golden chest GUI, use the {{key|Esc}} control.
+
+=== Redstone component ===
+{{Main|Trapped Chest#Redstone component}}
+
+Golden trapped chests can be used to detect when their inventory is accessed by players.
+
+A golden trapped chest is inactive while not being accessed, but activates when accessed by a player. [[Mob]]s cannot access/activate a golden trapped chest, and a golden trapped chest is not activated by items moving into or out of it by [[dropper]]s or [[hopper]]s.
+
+While active, a golden trapped chest:
+
+* powers any adjacent [[redstone dust]], including beneath the golden trapped chest, to a [[Redstone circuit#Power|power level]] equal to the number of players accessing the golden trapped chest (maximum 15);
+* powers any adjacent [[redstone repeater]]s facing away from the golden trapped chest to power level 15;
+* strongly powers any full solid opaque block (stone, dirt, block of gold, etc.) beneath the golden trapped chest to a power level equal to the number of players accessing the golden trapped chest (maximum 15);
+* activates any adjacent [[Redstone components#Mechanism components|mechanism components]], including above or below, such as [[piston]]s, [[redstone lamp]]s, etc. Due to hoppers being locked by redstone activation, hoppers below a golden trapped chest do not take items from it while it is open.
+
+An active golden trapped chest does ''not'' power any adjacent [[redstone comparator]]s facing away from it. Redstone comparators can [[Redstone comparator#Measure block state|measure]] the block state of the golden trapped chest, producing a power level from 0 to 15 proportional to how full the golden trapped chest is. Anything else powered by an active trapped chest (including a block beneath it) can power redstone comparators normally.
+
+== Sounds ==
+=== Generic ===
+{{info needed section|Did the .fall sound event have a subtitle in the version this block existed in, or not? A modified version of the table may be needed.}}
+{{Sound table/Block/Wood/JE}}
+
+=== Unique ===
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Chest close1.ogg
+|sound2=Chest close2.ogg
+|sound3=Chest close3.ogg
+|subtitle=Chest closes
+|source=block
+|description=When a golden chest closes
+|id=block.chest.close
+|translationkey=subtitles.block.chest.close
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Chest open.ogg
+|subtitle=Chest opens
+|source=block
+|description=When a golden chest opens
+|id=block.chest.open
+|translationkey=subtitles.block.chest.open
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked
+|source=block
+|description=When a player attempts to open a golden chest locked using the {{nbt|string|Lock}} tag
+|id=block.chest.locked
+|translationkey=subtitles.block.chest.locked
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== Navigation ==
+{{Navbox gold}}{{Navbox blocks|Joke}}
+{{Navbox jokes|23w13a or b}}
+
+[[Category:Joke blocks]]
+[[Category:Storage]]
+[[Category:Blocks with GUI]]
+[[Category:Redstone]]
+[[Category:Readable by comparators]]
+
+[[fr:Coffre en or]]
+[[ja:Golden Chest]]
+[[pt:Baú de ouro]]
+[[zh:金箱子]]

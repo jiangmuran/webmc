@@ -1,0 +1,451 @@
+{{For|the artifact in {{MCD}}|MCD:Lightning Rod}}{{For|the object in ''[[Minecraft: The Manga]]''|Deca-Lightning Rod}}{{Infobox block
+| group = Unoxidized
+| 1-1 = Lightning Rod (U).png
+| 1-2 = Lightning Rod (U) BE.png
+| group2 = Exposed
+| 2-1 = Exposed Lightning Rod (U).png
+| 2-2 = Exposed Lightning Rod BE1.png
+| group3 = Weathered
+| 3-1 = Weathered Lightning Rod (U).png
+| 3-2 = Weathered Lightning Rod BE1.png
+| group4 = Oxidized
+| 4-1 = Oxidized Lightning Rod (U).png
+| 4-2 = Oxidized Lightning Rod BE1.png
+| group5 = Powered
+| 5-1 = Powered Lightning Rod (U).png
+| 5-2 = Powered Lightning Rod (U) BE.png
+| *-1caption = {{JE}}
+| *-2caption = {{BE}}
+| 5-2class = drop-shadow-light
+| invimage = Lightning Rod
+| invimage2 = Exposed Lightning Rod
+| invimage3 = Weathered Lightning Rod
+| invimage4 = Oxidized Lightning Rod
+| invimage5 = Waxed Lightning Rod
+| invimage6 = Waxed Exposed Lightning Rod
+| invimage7 = Waxed Weathered Lightning Rod
+| invimage8 = Waxed Oxidized Lightning Rod
+| invimage9 = Lightning Rod BE
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Stone Pickaxe
+| light = No
+| transparent = Yes
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+|mapcolor = 
+* {{TooltipSprite||Lightning Rod}} {{Map color|Block of Copper}}
+* {{TooltipSprite||Exposed Lightning Rod}} {{Map color|Exposed Copper}}
+* {{TooltipSprite||Weathered Lightning Rod}} {{Map color|Weathered Copper}}
+* {{TooltipSprite||Oxidized Lightning Rod}} {{Map color|Oxidized Copper}}
+}}
+A '''lightning rod''' is a [[block]] that diverts [[lightning]] strikes. Getting struck by lightning causes it to emit a [[redstone signal]] and, if it is not [[waxed]], also reduces its level of [[oxidation]].
+
+== Obtaining ==
+=== Breaking ===
+A lightning rod must be mined with a stone pickaxe or better, or else it drops nothing.
+{{breaking row|Lightning Rod|Pickaxe|Stone|horizontal=1}}
+
+=== Crafting ===
+{{Crafting
+|head=1
+|B1=Copper Ingot
+|B2=Copper Ingot
+|B3=Copper Ingot
+|Output=Lightning Rod
+|type=Redstone
+}}
+{{Crafting
+|Matching Unwaxed Lightning Rod
+|Honeycomb
+|Output=Matching Waxed Lightning Rod
+|type=Redstone
+|foot=1
+}}
+
+== Usage ==
+=== Diverting lightning ===
+Lightning rods can be oriented in different directions. Lightning rods that are the highest block in the column redirect lightning strikes within a spherical volume, having a radius of 128 blocks in ''Java Edition'' and 64 blocks in ''Bedrock Edition''. The block emits particles during thunderstorms as an indicator. If multiple lightning rods are in range, the closest to the original location of the strike is chosen.
+
+In order to divert [[lightning bolt]]s, a lightning rod cannot have any block (excluding [[air]]){{only|je|short=1}} or blocks with a [[collision box]]{{only|be|short=1}} at any position above its own.
+
+A lightning rod can be struck by lightning when hit by a [[trident]] enchanted with [[Channeling]] during [[thunderstorm]]s. This can happen as long as the blocks above the lightning rod are fully [[transparent]] (do not block [[sky light]]).
+
+Lightning rods ''do not'' divert lightning created by a Channeling trident thrown at an entity, or lightning summoned by commands.
+
+Unlike in real life, a lightning rod doesn't require a direct connection to ground in order to work.
+
+Lightning strikes on lightning rods cannot summon [[skeleton trap]] horses.
+[[File:Fire spread area around a lightning rod.png|alt=The area where the lightning rod spreads fire is a 2-block radius sphere.The middle of the sphere is the air block right on top of the lightning rod. Inside the sphere, only two blocks never catch on fire - the lightning rod itself and the block on which it's placed. A flammable block placed anywhere else within the sphere has a chance to catch on fire.|thumb|A Cross-section wool block model showing safe flammable block placement around the lightning rod. Java Edition 1.21.5]]
+A lightning rod emits a redstone pulse, and strongly powers the block it's attached to, at level 15 for 8 game ticks (0.4 seconds) when struck by lightning. 
+
+Lightning diverted by a lightning rod inflicts lightning damage on mobs within a 6×12×6 volume centered 4 blocks above the bottom center of the lightning rod block (that is, extending 2 below and 9 above). 
+
+When a lightning rod is struck by lightning, the lightning has a chance to set [[fire]] to the surrounding blocks. In ''Java Edition'', the lightning tries to set fire to a 3×3×3 volume around the air block directly above the lightning rod. Then, fire spawning conditions apply: The block itself must be air ''and'' is either on top of a block with a solid full top or is adjacent to a flammable block. 
+
+This creates a danger zone of a 2-block radius sphere around the air block directly above the lightning rod (this sphere is all the blocks adjacent to the 3×3×3 volume and the volume itself). However, two blocks within this sphere are never set on fire by the lightning - the lightning rod itself and the block on which it's placed.
+
+=== Oxidation ===
+{{main|Oxidation}}
+Non-waxed lightning rods have four stages of oxidation (including the initial normal state). [[Lightning bolt]]s and [[axe]]s can remove the oxidation on lightning rods. They can be waxed with [[honeycomb]] to prevent oxidation from progressing.
+
+As the block begins to oxidize (exposed), it gets discolored and green spots begin to appear. As the oxidation continues (weathered), the block is a green color with brown spots. In the last stage (oxidized), the block is teal with several green spots.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Copper}}
+
+=== Unique ===
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|subtitle=Trident thunder cracks
+|source=weather
+|description=When a trident with Channeling strikes a lightning rod
+|id=item.trident.thunder
+|translationkey=subtitles.item.trident.thunder
+|volume=5.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}: ''None''<ref>{{bug|MCPE-173931||Tridents don't make channeling sounds when striking a lightning rod}}</ref>
+<!--
+{{Sound table
+|type=bedrock
+|sound=Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|source=player
+|description=''Unused sound event''<ref group="sound">{{Bug|MCPE-173931}}</ref>
+|id=item.trident.thunder
+|volume=1.0
+|pitch=1.0
+|foot=1}}
+-->
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Lightning Rod
+|spritetype=block
+|nameid=lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Exposed Lightning Rod
+|spritetype=block
+|nameid=exposed_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Weathered Lightning Rod
+|spritetype=block
+|nameid=weathered_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Oxidized Lightning Rod
+|spritetype=block
+|nameid=oxidized_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Waxed Lightning Rod
+|spritetype=block
+|nameid=waxed_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Lightning Rod
+|spritetype=block
+|nameid=waxed_exposed_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Lightning Rod
+|spritetype=block
+|nameid=waxed_weathered_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+}}
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Lightning Rod
+|spritetype=block
+|nameid=waxed_oxidized_lightning_rod
+|blocktags=lightning_rods,mineable/pickaxe,needs_stone_tool
+|itemtags=lightning_rods
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Lightning Rod
+|spritetype=block
+|nameid=lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=567}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Lightning Rod
+|spritetype=block
+|nameid=exposed_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1314}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Lightning Rod
+|spritetype=block
+|nameid=weathered_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1315}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Lightning Rod
+|spritetype=block
+|nameid=oxidized_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1316}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Lightning Rod
+|spritetype=block
+|spritename=Lightning Rod
+|nameid=waxed_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1317}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Lightning Rod
+|spritetype=block
+|spritename=Exposed Lightning Rod
+|nameid=waxed_exposed_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1318}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Lightning Rod
+|spritetype=block
+|spritename=Weathered Lightning Rod
+|nameid=waxed_weathered_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1319}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Lightning Rod
+|spritetype=block
+|spritename=Oxidized Lightning Rod
+|nameid=waxed_oxidized_lightning_rod
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible
+|id=1320
+|foot=1}}
+
+<!--=== Metadata ===
+{{see also|Data values}}
+{{IN|be}}, lightning rods use the following data values:
+
+{{/DV}}
+It seems bedrock data values malfunction, as setting lightning rod with data values always placed value 0
+-->
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|up|up,down,north,south,east,west|The direction that the lightning rod is facing, determined by its anchoring.}}
+{{bst|powered|false|false,true|Whether or not the lightning rod is powered.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this lightning rod.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|facing_direction|0|0,1,2,3,4,5|The direction the lightning rod faces.
+*0: Down
+*1: Up
+*2: North
+*3: South
+*4: West
+*5: East
+}}
+{{bst|powered_bit|false|false,true|Whether or not the lightning rod is powered.|foot=1}}
+
+== Advancements ==
+{{load advancements|Surge Protector;Wax On;Wax Off}}
+
+== History ==
+{{See asset history|type=block}}
+
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=28m55s}}|[[File:Lightning Rod (U) JE1.png|32px]] Lightning rods are revealed at [[Minecraft Live 2020]].
+|[[File:Lightning Rod (inventory) pre-release.png|32px]] Inventory model was different.}}
+|{{HistoryLine||October 20, 2020|link={{tweet|_LadyAgnes|1318545266811817986}}|[[File:Lightning Rod (S) JE1.png|32px]] [[LadyAgnes]] shows a lightning rod can be placed in different positions, and can emit a redstone signal.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Lightning Rod (U) JE1.png|32px]] Added lightning rods.}}
+|{{HistoryLine|||dev=20w46a|[[File:Lightning Rod (U) JE2 BE1.png|32px]] The texture of lightning rods has been changed to match [[copper block]]s.
+|The range of lightning rods has been increased from 16 blocks to 32 blocks.}}
+|{{HistoryLine|||dev=21w05a|[[File:Lightning Rod (U) JE3.png|32px]] Lightning rods are now shaded properly.<ref>{{bug|MC-204446}} - fixed in 21w05a despite that being an affects version; see comments</ref>}}
+|{{HistoryLine|||dev=21w10a|Changelog states they can now be [[waterlogged]], though this is not the case.}}
+|{{HistoryLine|||dev=21w11a|{{Darkbg|[[File:Powered Lightning Rod (U) JE1.png|32px]]}} When lightning strikes, the lightning rod turns white.
+|Lightning rods can now be waterlogged.
+|Lightning rods now emit particles during thunderstorms as an indicator.}}
+|{{HistoryLine|||dev=21w13a|[[File:Lightning Rod (D) JE4.png|32px]] The model of the lightning rod has been changed that the underside texture is corrected.}}
+|{{HistoryLine||1.21.9|dev=25w31a|Lightning rods now [[oxidize]].
+|[[File:Exposed Lightning Rod (U) JE1.png|32px]] [[File:Weathered Lightning Rod (U) JE1.png|32px]] [[File:Oxidized Lightning Rod (U) JE1.png|32px]] Added exposed, weathered and oxidized variants of lightning rods.
+|Lightning rods can be waxed by {{Control|using}} honeycomb, producing yellow particles.
+|Axes can scrape off wax and oxidation of lightning rods, producing white particles.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.57|[[File:Lightning Rod (U) JE2 BE1.png|32px]] Added lightning rods under the Caves and Cliffs [[experimental gameplay]] toggle.
+|[[File:Invicon_Lightning_Rod_BE.png|32px]] It also has a broken texture in the inventory.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.52|Lightning rods can now be waterlogged.
+|Now emits particles when in contact with rain.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|Blocks connected to a lightning rod now correctly conduct redstone signal when the rod is hit by lightning.}} 
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Lightning rods are no longer available only through [[experimental gameplay]].}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of lightning rods from 3.6 to 6.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.22|Lightning rods now [[oxidize]].
+|[[File:Exposed Lightning Rod BE1.png|32px]]  [[File:Weathered Lightning Rod BE1.png|32px]] [[File:Oxidized Lightning Rod BE1.png|32px]] Added exposed, weathered and oxidized variants of lightning rods.
+|Lightning rods can be waxed by {{Control|using}} honeycomb, producing yellow particles.
+|Axes can scrape off wax and oxidation of lightning rods, producing white particles.}}
+|{{HistoryLine|||dev=Preview 1.21.110.23|{{Darkbg|[[File:Powered Lightning Rod (U) JE1.png|32px]]}} Lightning rods now turn white when hit by lightning.
+|Lightning rods now have the <code>powered_bit</code> block state.
+|Lightning rods can now be crafted into waxed variants.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+[[File:Lightning Rod Head Replace.png|thumb|200px|Lightning rod placed on a player's head using {{cmd|item replace}}.]]
+* According to [[Minecraft Live 2020]], [[Mojang Studios#Game developers|Ulraf]] had the idea of lightning rods when a [[lightning]] strike burned down his [[wood]]en house.<ref>{{ytl|DBvZ2Iqmm3M|Minecraft Live: Caves & Cliffs - First Look @ 29:53|Minecraft|October 3, 2020|t=1793}}</ref>
+* In {{MCD}}, lightning rods can be found atop {{MCD|Roof}} of {{MCD|Woodland Mansion}} being used to create [[MCD:Charged Creeper|charged creepers]].
+* If {{command|item replace}} is used to place a lightning rod on a player's head, the item appears upside-down and to the right of their head, somewhat resembling a robot's antenna.{{only|JE}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Lightning Rod Range.png|Range testing in Java 1.17.1. Glowstone marks where lightning struck.
+Lightning distribution BE.png|Range testing in Bedrock 1.17.34, simulation distance 12. Sea lanterns mark lightning strikes.
+lightning_redstone_anim.gif|Lightning hitting a lightning rod and sending a redstone signal.
+lightning_oxidizing_anim.gif|A lightning-struck lightning rod decreasing the oxidizing level of nearby blocks of copper.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Too Much Lightning.jpg
+File:Four lightning rods.jpeg|Four stages of lightning rods.
+File:Copper spire.jpg|A lightning rod on top of a copper building
+</gallery>
+
+=== Development images ===
+<gallery>
+Lightning Rod Strike.png
+JE 1.17 Development Lightning Rod.jpg
+JE 1.17 Dev Lightning rod testing.jpg
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox redstone|components}}
+{{Navbox blocks|utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Mechanisms]]
+[[Category:Hazardous blocks]]
+
+[[de:Blitzableiter]]
+[[es:Pararrayos]]
+[[fr:Paratonnerre]]
+[[it:Parafulmine]]
+[[ja:避雷針]]
+[[ko:피뢰침]]
+[[pl:Piorunochron]]
+[[pt:Para-Raios]]
+[[ru:Громоотвод]]
+[[uk:Блискавковідвід]]
+[[zh:避雷针]]

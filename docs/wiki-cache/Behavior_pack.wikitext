@@ -1,0 +1,218 @@
+{{For|the similar system in ''Java Edition''|Data pack}}{{Exclusive|bedrock}}
+
+The '''behavior pack''' system is a data-driven framework used to define behaviors, characteristics, and logic of various things in a ''Minecraft'' [[world]].
+
+== Overview ==
+Behavior pack serves as the foundational layer for many aspects of the game, dictating [[Mob AI|entity behaviors]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/entitybehaviorintroduction?view=minecraft-bedrock-stable|title=Entity Behavior Introduction|website=Microsoft Learn|date=September 19, 2023}}</ref> [[Loot table|loot tables]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoloottables?view=minecraft-bedrock-stable|title=Introduction to Loot Tables|website=Microsoft Learn|date=March 6, 2025}}</ref> [[Mob spawning|spawn rules]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/examples/cliententitydocumentation/datadrivenspawning?view=minecraft-bedrock-stable|title=Data-Driven Spawn Rules|website=Microsoft Learn|date=November 8, 2023}}</ref> [[item]] behaviors,<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/addcustomitems?view=minecraft-bedrock-stable|title=Custom Items|website=Microsoft Learn|date=September 18, 2024}}</ref> item [[Recipe|recipes]],<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/recipeintroduction?view=minecraft-bedrock-stable|title=Recipe Introduction|website=Microsoft Learn|date=April 19, 2024}}</ref> biome characteristics,<ref name="biome-component-list">{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/biomes/biomeoverview?view=minecraft-bedrock-stable|title=Biome JSON and Overview|website=Microsoft Learn|date=April 10, 2025}}</ref> [[world generation]], and much more. These definitions are written in [[JSON]] files, which are organized in multiple folders by their features. This system allows users to override and modify certain features in the base game, or add unique features with their own behavior pack. Behavior packs are often used in conjunction with [[Resource pack|resource packs]] as part of an [[add-on]], which enable them to use custom resources, such as [[Model|models]], [[Animation|animations]], [[Texture|textures]], [[Sound|sounds]], and more.
+
+Behavior pack provides a [[w:Entity component system|component-based system]] that makes up most entities in the game by describing their unique properties and behaviors &#x2014; like [[health]], [[Bounding box|collision box]], [[movement]], [[Mob AI|mob behaviors]], and [[physics]] &#x2014; through multiple components.<ref>{{citation|url=https://wiki.bedrock.dev/entities/entity-intro-bp#components|title=Intro to Entities BP|section=Components|website=Bedrock Wiki|date=June 8, 2025}}</ref> These components are hard coded in the game, but are commonly shared among entities, and can be used extensively to create or modify existing entities in a behavior pack. A similar feature in ''Java Edition'' would be entity [[Attribute|attributes]], but are very limited in terms of features compared to components. The component-based system is also used to define custom items, blocks, and [[Biome|biomes]].<ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/examples/itemcomponentlist?view=minecraft-bedrock-stable|title=Item Documentation - Item Components|website=Microsoft Learn|date=October 10, 2024}}</ref><ref>{{citation|url=https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/examples/blockcomponents/blockcomponentslist?view=minecraft-bedrock-stable|title=Block Documentation - Block Components|website=Microsoft Learn|date=November 22, 2024}}</ref><ref name="biome-component-list" />
+
+== Usage ==
+[[File:Ore UI - Create New World Screen Menu "Behavior Packs" Tab Settings (Bedrock).png|thumb|The behavior packs tab in the Create New World screen.]]
+Similar to [[resource pack]]s, behavior packs can be created and imported {{in|be}}. Users can download external behavior packs with the {{cd|.mcpack}} [[File extensions|file extension]], if the game's platform allows file import feature. When these files are opened, they are automatically imported into the {{code|behavior_packs}} folder in {{code|[[com.mojang]]}} without accessing the file system. Behavior packs can also be placed manually in the {{code|development_behavior_packs}} folder. Each behavior pack must either be a sub-folder or a {{code|.zip}} file.
+
+One or more behavior packs can be applied to a world from the [[Create New World]] and [[Edit World]] screens. These behavior packs will be imported into the world files, and are kept when exporting the world. Players joining a [[multiplayer]] world with behavior packs get an option to download only the required assets from the behavior pack, or all assets. The game loads behavior packs based on the order of the packs on the list. The bottom-most pack loads first, then each pack placed above are loaded sequentially.
+
+Custom behavior packs permanently disable [[achievement]] unlocking for the world. Custom behavior packs cannot be applied to worlds on [[Realms]], but worlds uploaded to Realms or [[Bedrock Dedicated Server]] keep the behavior packs applied to the world.
+
+In Bedrock Dedicated Server, behavior packs also can be stored outside of worlds. Packs need to be enabled in the {{Cd|world_behavior_packs.json}} file in a world file.
+
+Behavior packs cannot be edited while the game is active, except for the packs in the {{code|development_behavior_packs}} folder. They will update themselves when joining a world or changing active behavior packs.
+
+=== Settings ===
+Behavior packs and resource packs can contain custom settings that affect features in the pack.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/addons/custompacksettings?view=minecraft-bedrock-stable|title=Creating a Pack with Custom Settings|website=Microsoft Learn|date=August 1, 2025}}</ref> Settings need to be specified in {{Cd|[[manifest.json]]}}, with the options to create an on/off toggle, or a slider with specific values. The settings menu for custom and Marketplace behavior packs can be opened with a button next to the pack button in the edit world screen, and all settings affect the whole world. Custom labels for each setting can be applied, which support text [[Formatting codes|formatting]].
+
+How each setting affects the behavior pack can be modified with [[scripting]].
+
+The settings menu can also be used to change the memory tier, which affects the [[Add-on#Sub-packs|sub-packs]] being used.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/buildingsubpacks?view=minecraft-bedrock-stable|title=Building Sub-Packs|website=Microsoft Learn|date=August 28, 2025}}</ref> The memory tier can be set to any specified value from the device's memory tier and lower. Sub-packs are behavior packs within the root of the behavior pack, with the same directory structure. They can be added to the pack in {{Cd|manifest.json}}.
+
+=== Marketplace behavior packs ===
+[[Add-ons]] and worlds from the [[Marketplace]] often contain or consist entirely of a behavior pack. These packs are stored internally and can't be accessed from {{code|[[com.mojang]]}}. Players can only access Marketplace behavior packs or play on worlds with behavior packs applied when they own the pack, by purchasing it in the Marketplace or by owning the [[Marketplace Pass]]. Which packs a player owns is stored in the online player profile, so behavior packs can only be accessed when signed in. Marketplace packs can be applied the same way as custom resource packs, and also to Realms, but not to worlds in external servers.
+
+When a player joins a multiplayer world or Realm with Marketplace packs, the player is offered to download these packs to apply them, even when the player does not own the pack.
+
+Marketplace behavior packs update automatically depending on the "Auto Update Unlocked Packs" settings, or can be updated manually from the purchase screen.
+
+== Contents ==
+{{Expand section}}
+
+=== Directory structure ===
+<div class="treeview">
+*{{File|directory|''name''}} or {{File|archive|''name''.zip}}
+** {{File|file|[[manifest.json]]}}
+** {{File|file|pack_icon.png}}: The picture to display next to the behavior pack in-game.
+** {{File|directory|''sub-pack''}}: A behavior pack with the same directory structure inside the behavior pack. Multiple sub-packs can be used, and need to be specified in {{File|file|[[manifest.json]]}}.
+** {{File|directory|animation_controllers}}
+*** {{File|directory|''entity''}}
+**** {{File|file|''entity''_animation_controller.json}}
+*** {{File|file|entity_controller.json}}
+** {{File|directory|animations}}
+*** {{File|file|''entity''_animations.json}}{{fn|File may be inside a directory.|name=May be inside a directory}}
+** {{File|directory|[[Block definition|blocks]]}}
+*** {{File|file|''block''.json}}
+** {{File|directory|[[Biome definition#Bedrock Edition|biomes]]}}
+*** {{File|file|''biome''.biome.json}}
+** {{File|directory|cameras}}
+*** {{File|directory|presets}}
+**** {{File|file|''identifier''.json}}
+** {{File|directory|entities}}
+*** {{File|directory|''entity''}}
+**** {{File|file|''entity''_animation_controller.json}}
+*** {{File|file|''entity''.json}}
+** {{File|directory|features}}
+*** {{File|file|''feature''.json}}
+** {{File|directory|feature_rules}}
+*** {{File|file|''feature''_rules.json}}
+** {{File|directory|dialogue}}
+*** {{File|directory|''scene_dialogue''}}
+**** {{File|file|''scene''.json}}
+*** {{File|file|[[manifest.json]]}}
+** {{File|directory|functions}}
+*** {{File|directory|''entity''}}
+**** {{File|file|''entity''_function.mcfunction}}
+*** {{File|file|tick.json}}
+** {{File|directory|item_catalog}}
+*** {{File|file|crafting_item_catalog.json}}
+** {{File|directory|items}}
+*** {{File|file|''item''.json}}
+** {{File|directory|loot_tables}}
+*** {{File|directory|entities}}
+**** {{File|file|''entity''.json}}
+*** {{File|file|''loot_table''.json}}{{fn|File may be inside a directory.|name=May be inside a directory}}
+** {{File|directory|[[recipe (Bedrock Edition)|recipes]]}}
+*** {{File|file|''recipe''.recipe.json}}
+** {{File|directory|spawn_rules}}
+*** {{File|file|''entity''_spawn_rules.json}}
+** {{File|directory|[[structure file|structures]]}}
+*** {{File|file|''structure''.mcstructure}}
+** {{File|directory|texts}}
+*** {{File|file|languages.json}}
+*** {{File|file|en_US.lang}}
+*** {{File|file|''languagecode''_''COUNTRYCODE''.lang}}
+** {{File|directory|trading}}
+*** {{File|file|''villager''_trades.json}}
+** {{File|directory|worldgen}}
+*** {{File|directory|[[Processor list|processors]]}}
+**** {{File|file|''processor''.json}}{{fn|File may be inside a directory.|name=May be inside a directory}}
+*** {{File|directory|[[Structure set|structure_sets]]}}
+**** {{File|file|''structure_set''.json}}
+*** {{File|directory|[[Jigsaw structure#Config|structures]]}}
+**** {{File|file|''structure''.json}}
+*** {{File|directory|[[Template pool|template_pools]]}}
+**** {{File|file|''template_pool''.json}}{{fn|File may be inside a directory.|name=May be inside a directory}}
+</div>
+
+{{fnlist}}
+
+== Internal behavior packs ==
+Most entities, biomes, loot tables, and various things from the base game are defined by the vanilla behavior pack, which is built inside the game itself and can be found at {{Cd|[[Microsoft.MinecraftUWP|''game directory'']]\data\behavior_packs}}. Mojang Studios releases the [https://github.com/Mojang/bedrock-samples Bedrock Add-On Sample Files] with every new [[update]] of ''Bedrock Edition'', which provide the latest vanilla behavior and resource packs from the game.
+
+Multiple internal behavior packs exist for different situations. Each [[Experiments|experiment]] has its own behavior pack, in addition to ''[[Minecraft Education]]'' features and ''[[Minecraft Preview]]''. Each behavior pack contains the same structure and assets as custom behavior packs, defined for the whole game. Some packs also have an icon or description, which is not visible in-game.
+
+''Bedrock Editon'' supports {{w|backward compatibility}} for add-ons and old worlds. This is done for the {{Cd|vanilla}} and {{Cd|chemistry}} behavior packs since [[Bedrock Edition 1.14.0|1.14]] and [[Bedrock Edition 1.20.50|1.20.50]] respectively, with the regular behavior pack supporting the latest version before. Each update with changes to features defined in behavior packs has its own behavior pack, with all the features that changed. Some Marketplace add-ons can lock a world in an older version by disabling internal behavior packs from higher versions.
+{| class="wikitable"
+!File name
+!Pack icon, name, and description
+!Description
+|-
+|chemistry
+|[[File:Chemistry_Pack_icon.png|width=32x32]]
+|Resources for the "Minecraft Education features" [[World Options#Cheats|cheat setting]]. Includes several features from the [[Chemistry Update]] in ''[[Minecraft Education]]''. Multiple versions of this pack are available to support backwards-compatibility.
+|-
+|editor
+|[[File:Editor_pack_icon.png|width=32x32]]
+|Resources for ''[[Bedrock Editor]]'', applied when the Editor is enabled upon launch. Contains five unique [[entities]] exclusive to the Editor, some textures for the GUI, and the main script file which can be customized.
+|-
+|experimental_creator_cameras
+|Experimental Creator Cameras
+|Contains a camera preset for the "Experimental Creator Cameras" [[Experiments|experiment]].
+|-
+|experimental_vanilla_shapes
+|Vanilla Voxel Shapes
+Experimental behavior pack for vanilla voxel shapes
+|Contains vanilla voxel shapes for the experiment, at this point nothing.
+|-
+|experimental_villager_trade
+|Villager Trade Rebalancing
+|Contains trade tables for the [[Villager Trade Rebalancing]] experiment, as well as different loot tables for mineshafts, ancient cities, desert pyramids, jungle pyramids, and pillager outposts.
+|-
+|experimental_y_2026_drop_1
+|Drop 1 of 2026<br>Experimental behavior pack for Drop 1 of 2026 content
+|Adds features for the [[Tiny Takeover]], including a [[name tag]] recipe and some changes to baby mobs.
+|-
+|experimental_y_2026_drop_2
+|Drop 2 of 2026<br>Experimental behavior pack for Drop 2 of 2026 content
+|Adds features for Chaos Cubed, including the [[Sulfur Caves|sulfur caves]], [[Sulfur Cube|sulfur cube]], [[cinnabar]], and [[sulfur]].
+|-
+|server_editor_library
+|[[File:Editor_pack_icon.png|width=32x32]] Server Editor Library
+Library for building server driven Editor UI
+|Contains scripts for the Editor when used on [[Bedrock Dedicated Server]].
+|-
+|server_library
+|[[File:Editor_pack_icon.png|width=32x32]] @minecraft/server TS Library
+A BP containing all the @minecraft/server typescript code.
+|Contains typescript code for the Editor. Only available in ''Minecraft Preview''.
+|-
+|server_ui_library
+|[[File:Editor_pack_icon.png|width=32x32]] @minecraft/server-ui TS Library
+A BP containing all the @minecraft/server-ui typescript code.
+|Contains scripts for the UI in the Editor. Only available in ''Minecraft Preview''.
+|-
+|vanilla
+|[[File:Default_pack.png|width=32x32]]
+|All resources for the default ''Minecraft'' game. Multiple versions of this pack are available to support backwards-compatibility.
+|}
+
+== Videos ==
+Tutorials from the official [https://www.youtube.com/@MinecraftCreatorChannel Minecraft Creator Channel]{{yt|OdZlKpLOkj4}}{{yt|TUFeM5P4IwM}}{{yt|kkm8xxqGVvs}}{{yt|bCU8UxIZ-U4}}{{yt|kzWSItyz5Pk}}{{yt|zMF3JPahrPQ}}
+
+== History ==
+{{See also|Add-on#History}}
+{{Expand section}}
+
+== See also ==
+* [[Mod]]
+* [[Commands]]
+* [[Data pack]]
+* [[Resource pack]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+=== Official documentation ===<!--NOTE: ONLY OFFICIAL DOCUMENTATION PROVIDED BY MOJANG SHOULD BE LINKED IN THIS SECTION-->
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/addonsreference/ Addons JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/animationsreference/ Animation JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/biomereference/examples/biomeoverview Biome Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/blockreference/ Block JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/entityreference/ Entity JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/featuresreference/ Features JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/itemreference/ Item JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/ Molang Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/recipereference/ Recipe JSON Documentation]
+* [https://learn.microsoft.com/en-us/minecraft/creator/reference/content/schemasreference/ Schema Documentation]
+
+=== Official tutorials ===<!--NOTE: ONLY OFFICIAL TUTORIALS PROVIDED BY MOJANG SHOULD BE LINKED IN THIS SECTION-->
+* [https://learn.microsoft.com/en-us/minecraft/creator/documents/gettingstarted Getting Started With Minecraft Add-Ons]
+* [https://learn.microsoft.com/en-us/minecraft/creator/documents/behaviorpack Introduction to Behavior Packs]
+
+=== Tools and libraries ===
+* [https://learn.microsoft.com/en-us/minecraft/creator/documents/commonlyusedtools Commonly Used Tools]
+* [https://learn.microsoft.com/en-us/minecraft/creator/documents/mctoolsoverview Minecraft Creator Tools]
+
+=== Unofficial resources ===
+* [https://wiki.bedrock.dev/ Bedrock Wiki]
+
+=== Templates ===
+* [https://github.com/Mojang/bedrock-samples Bedrock Add-On Sample Files]
+
+== Navigation ==
+{{Navbox Bedrock Edition}}{{Navbox Minecraft|general}}
+
+[[Category:Add-ons]]
+[[Category:Game customization]]
+
+[[de:Verhaltenspaket]]
+[[pt:Pacote de comportamento]]
+[[ru:Пакет поведения]]

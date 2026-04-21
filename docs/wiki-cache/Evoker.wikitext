@@ -1,0 +1,595 @@
+{{distinguish|Illusioner|Pillager|4=Vindicator|5=MCL:Warrior}}
+{{about|the mob in the base game|the powerful mob in {{MCD}}|Dungeons:Evoker|the mob in {{AMCM}}|Movie:Evoker}}
+{{Infobox entity
+| defaultimagesize = 100px
+| group = Idle
+| 1-2 = Evoker.png
+| group2 = Casting
+| 2-1size = 150px
+| 2-1 = Evoker Summoning Vexes.png
+| invimage = Evoker Spawn Egg
+| health = {{hp|24}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Illager}}<br>{{EntityLink|Monster}}
+| damage = '''{{EntitySprite|Evoker Fang}} Evoker Fang:'''<br>
+{{JE}}:<br>
+Easy: {{hp|4}}<br>Normal: {{hp|6}}<br>Hard: {{hp|9}}<br>
+{{BE}}:<br>
+{{hp|6}}<br>
+<hr>
+'''{{EntityLink|Vex}}:'''<br>
+Easy: {{hp|5.5}}<br>
+Normal: {{hp|9}}<br>
+Hard: {{hp|13.5}}
+| armor = {{armor|2}}{{only|be|short=1}}
+| size = '''{{JE}}:'''<br>
+Height: 1.95 blocks<br>Width: 0.6 blocks
+
+'''{{BE}}:'''<br>
+Height: 1.9 blocks<br>Width: 0.6 blocks
+<!-- | speed = 0.5 -->| spawn = {{EnvLink|Woodland Mansion}}<br>
+[[Raid]]s
+}}
+An '''evoker''' is a spell-casting [[illager]] that can be found in [[woodland mansion]]s and as part of [[raid]]s. They are the only source of [[totems of undying]]. Evokers use two spells to attack: one that summons armor-piercing fangs and one that summons [[vex]]es. This is the only way for vexes to spawn (without using [[Creative]] mode or [[commands]]).
+
+== Spawning ==
+=== Woodland mansions ===
+Evokers [[Mob spawning|spawn]] during the generation of particular [[woodland mansion]] rooms. They only spawn on floor 2 and 3. They do not respawn after their initial spawn.
+
+Evokers spawned with mansions do not naturally despawn (unless the world [[difficulty]] is switched to Peaceful).
+
+=== Raids ===
+In Normal and Hard [[difficulty]], evokers can spawn during [[raid]]s by themselves or riding [[ravager]]s.
+
+==== ''Java Edition'' ====
+Evokers spawn during raids starting at wave 5 (wave 3 on Easy difficulty). On Hard difficulty, evokers can also spawn riding a ravager at wave 7. Up to five evokers spawn on Hard difficulty. During these events, they may also spawn as a [[raid captain]].
+
+==== ''Bedrock Edition'' ====
+Up to five evokers spawn during raids, with one evoker spawning during waves five and six, and three evokers spawning during wave seven. One of them rides a ravager during wave seven.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Totem of Undying}}
+|{{DropLine|name=Emerald|notes=je_player|quantity=0-1|lootingquantity=0-1}}
+|notes=
+je_player.java => player_or_pet
+}}
+*{{xp|10}} [[experience]] when killed by a player or tamed [[wolf]].
+*When an evoker spawns as a raid captain, it always drops its {{ItemLink|ominous banner}} on death, while equipped.
+
+== Behavior ==
+An evoker moves at the [[player]]'s [[sprinting]] speed, crosses its arms and does not show its hands. 
+
+Evokers attack [[player]]s, adult [[villager]]s, [[iron golem]]s, [[snow golem]]s,{{only|bedrock|short=y}} and [[wandering trader]]s within 12 blocks by raising and waving both of their arms while looking at their target and summoning magical fangs or [[vex]]es, creating different colored [[particle]]s for the different attacks.
+
+If the player is within a ten [[block]] radius and the evoker is not in the middle of summoning an attack, the evoker flees from the player to avoid being attacked.
+
+If an evoker is attacked, all evokers in a twelve [[block]] radius become alerted and start attacking the player, even if they are behind walls. {{IN|java}}, the alerted evokers can attack the player from an infinite distance away, even if the player switches to [[Creative]] or [[Spectator]] mode<ref>{{bug|MC-147574||Attacking a group of evokers gives nearby evokers infinite detection range and broken attack behavior}}</ref>; this can be fixed by relogging the world, or by setting the [[game rule]] <code>universalAnger</code> to <code>True</code>. This is only true for the alerted evokers, not the initially attacked evoker.
+
+An evoker is passive to other [[illager]]s even if it is harmed. Any evoker can search for and join a [[patrol]] if sufficiently near a [[patrol captain]].
+
+{{IN|JE}}, evokers and [[illusioner]]s are faster without any [[effect]]s during raids.
+
+{{IN|JE}}, evokers are given three seconds of the [[Glowing]] effect if a [[bell]] is rung within 32 blocks of them. This applies to both evokers spawned in raids and evokers spawned in woodland mansions.
+
+Evokers flee from [[creaking]]s when within 8 blocks of them.
+
+=== Fang attack ===
+The evoker signals this attack by producing purplish-grey [[particle]]s ({{EffectSprite|particle-evoker-attack}}) and a low-pitched [[sound]]. 
+
+A number of fangs rise out of the ground around the player, then snap shut and vanish. The fangs also produce brown particle effects when they close. 
+
+[[Player]]s or [[mob]]s caught in the attack are dealt {{hp|6}} [[damage]], regardless of difficulty{{only|be}}. This harm is not mitigated by [[armor]] but is mitigated by [[enchantment]]s such as [[Protection]]. Any evoker-summoned fangs do not deal damage to any illagers, although fangs summoned or spawned by the player do. When a neutral or hostile mob (except illagers and [[goat]]s) is caught in the attack, the mob retaliates and attacks the evoker.
+
+Fangs appear no lower than the feet of the lowest combatant and no higher than one [[block]] above the feet of the highest combatant. Fangs attempt to appear on the highest [[opaque]] block between those two extremes, but fail to spawn if they are obstructed by a [[solid block]]. In practice, this means that fangs cannot spawn inside deep pits or on top of high walls, but may, for example, go up a staircase if the target is at the top and the evoker at the bottom, or vice versa. Likewise, an evoker floating in a boat on [[water]] cannot summon fangs against a player [[swimming]] or floating in a boat because there are no opaque blocks from which the fangs can appear.
+
+The evoker typically summons sixteen fangs in a straight line toward the target. However, if the target is within three blocks of the evoker, the evoker summons the fangs in two circles around itself: the smaller circle has five fangs and the larger has eight. The fangs do not seek the player, thus the player is able to dodge them. Summoning fangs resets the evoker's spell cooldown to two seconds and resets the cooldown for summoning fangs to five seconds.
+
+<gallery>
+Evoker fang attack.gif|An evoker attacking with its fangs in a straight line
+Evoker fang attack2.gif|An evoker summoning fangs in two circles around it
+</gallery>
+
+=== Summoning vexes ===
+The evoker signals this attack by producing purplish-white [[particle]]s ({{EffectSprite|particle-evoker-summon}}) for two seconds and a higher-pitched [[sound]]. After that, three [[vex]]es appear nearby. The evoker can summon vexes as long as there are fewer than eight vexes within sixteen [[block]]s centered on the evoker. 
+
+This spell resets the evoker's spell cooldown to five seconds and resets the cooldown for summoning vexes to seventeen seconds.
+
+Non-air blocks that obstruct a vex's attempted spawning point will prevent it from spawning, meaning it is possible that a summoning can result in only one or two vexes spawning.{{Verify}}
+
+<gallery>
+EvokerSummonsVexes.png|An evoker summoning [[vex]]es
+</gallery>
+
+=== Combo attack ===
+{{Expand section}}
+{{IN|JE}}, evokers may summon two circle fangs while summoning vexes, without any cooldown. It usually happens when a player melee attacks an evoker while it is summoning vexes.
+
+=== Sheep color conversion spell ===
+While the evoker is not engaged in combat and {{gmr|mob_griefing|mobgriefing}} is set to <code>true</code>, it changes the [[wool]] color of any blue [[sheep]] within sixteen [[block]]s from blue to red. 
+
+The evoker signals this spell by producing brownish-orange [[particles]] ({{EffectSprite|particle-evoker-wololo}}) and making a "''wololo''" sound. 
+
+This spell resets the evoker's spell cooldown to three seconds and resets the cooldown for the sheep color conversion spell to seven seconds. Evokers look at the sheep they are using the spell on while they are doing the spell until they finish the spell. 
+
+{{IN|bedrock}}, evokers can still change a sheep's color, even when <code>mobgriefing</code> is set to <code>false</code>.
+
+<gallery>
+After the spell.png|An evoker using its sheep color conversion spell
+Sheep conversion spell.png|After the spell, the sheep is red.
+</gallery>
+
+=== Attack pattern data ===
+==== ''Java Edition'' ====
+{{empty section}}
+
+==== ''Bedrock Edition'' ====
+{| class="wikitable" style="text-align: center;"
+|+ Data
+! Type
+! Weight
+! Min activation range (distance)
+! Max activation range (distance)
+! Entities spawned (amount)
+! Size
+! Summon cap
+! Summon cap radius
+|-
+! style="text-align:left;" | Fangs attack (line)
+| 3 || 3.0 || colspan=1 | ''N/A''|| 16 Fangs || 20 || colspan=2 | ''N/A''
+|-
+! style="text-align:left;" | Fangs attack (inside circle)
+| 3 || 0.0 || 3.0 || 5 Fangs || 1.5 || colspan=2 | ''N/A''
+|-
+! style="text-align:left;" | Fangs attack (outside circle)
+| 3 || 0.0 || 3.0 || 8 Fangs || 2.5 || colspan=2 | ''N/A''
+|-
+! style="text-align:left;" |Summoning vexes
+| 1 || colspan=2 | ''N/A'' || 3 Vexes || 1.0 || 8 || 16.0
+|-
+! style="text-align:left;" |Color conversion spell
+| 3 || 0.0 || 16.0 || colspan=4 | ''N/A''
+|}
+
+{| class="wikitable" style="text-align: center;"
+|+ Timer (seconds)
+! Type
+! Base delay
+! Delay per summon
+! Cooldown time
+! Cast duration
+! Entity lifespan
+|-
+! style="text-align:left;" | Fangs attack (line)
+| 1.0 || 0.05 || 5.0 || 2.0 || 1.1
+|-
+! style="text-align:left;" | Fangs attack (inside circle)
+| 1.0 || 0.0 || 5.0 || 2.0 || 1.1
+|-
+! style="text-align:left;" | Fangs attack (outside circle)
+| 0.15 || 0.0 || 5.0 || 2.0 || 1.1
+|-
+! style="text-align:left;" |Summoning vexes
+| 2.0 || colspan=1 | ''N/A'' || 17.0 || 5.0 ||colspan=1 | ''N/A''
+|-
+! style="text-align:left;" |Sheep color conversion spell
+| colspan=2 | ''N/A'' || 5.0 || 3.0 || colspan=1 | ''N/A''
+|}
+
+== Evoker fangs ==
+{{About|the evoker fangs in {{MC}}|evoker fangs in {{MCD}}|MCD:Evoker Fang}}
+{{Infobox entity
+| title = Evoker Fangs
+| image = Evoker Fangs.png
+| imagesize = 85px
+| size = Height: 0.8 blocks<br>Width: 0.5 blocks
+| networkid = {{jebe|79|33}}
+}}
+'''Evoker fangs''' are entities that evokers use to attack the player (or adult villagers, iron golems, snow golems, and wandering traders) with their fang attack.
+
+The individual fangs in an evoker's fang attacks each have a delay. Before the delay is over, the fangs cannot be seen, although unlike truly [[invisible]] entities, fangs in warmup still have a visible [[Debug hotkey#List of debug hotkeys|debug hitbox]]. After the delay, the fangs expand into existence, snap shut, make critical hit particles and shrink out of sight again, dealing {{hp|6}} magic damage to all mobs standing on the spot.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Evoker idle1.ogg
+|sound2=Evoker idle2.ogg
+|sound3=Evoker idle3.ogg
+|sound4=Evoker idle4.ogg
+|subtitle=Evoker murmurs
+|source=hostile
+|description=Randomly
+|id=entity.evoker.ambient
+|translationkey=subtitles.entity.evoker.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Evoker cast1.ogg
+|sound2=Evoker cast2.ogg
+|subtitle=Evoker casts spell
+|source=hostile
+|description=When an evoker attacks
+|id=entity.evoker.cast_spell
+|translationkey=subtitles.entity.evoker.cast_spell
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Evoker celebrate.ogg
+|sound2=Evoker idle1.ogg
+|sound3=Evoker idle2.ogg
+|subtitle=Evoker cheers
+|source=hostile
+|description=When an evoker has won a raid
+|id=entity.evoker.celebrate
+|translationkey=subtitles.entity.evoker.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Evoker death1.ogg
+|sound2=Evoker death2.ogg
+|subtitle=Evoker dies
+|source=hostile
+|description=When an evoker dies
+|id=entity.evoker.death
+|translationkey=subtitles.entity.evoker.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Evoker hurt1.ogg
+|sound2=Evoker hurt2.ogg
+|subtitle=Evoker hurts
+|source=hostile
+|description=When an evoker is damaged
+|id=entity.evoker.hurt
+|translationkey=subtitles.entity.evoker.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Evoker prepare summon.ogg
+|subtitle=Evoker prepares summoning
+|source=hostile
+|description=When an evoker signals to summon [[vex]]es
+|id=entity.evoker.prepare_summon
+|translationkey=subtitles.entity.evoker.prepare_summon
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Evoker prepare attack1.ogg
+|sound2=Evoker prepare attack2.ogg
+|subtitle=Evoker prepares attack
+|source=hostile
+|description=When an evoker signals to use a fang attack
+|id=entity.evoker.prepare_attack
+|translationkey=subtitles.entity.evoker.prepare_attack
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Evoker prepare wololo.ogg
+|subtitle=Evoker prepares charming
+|source=hostile
+|description=When an evoker converts a [[sheep]]'s color
+|id=entity.evoker.prepare_wololo
+|translationkey=subtitles.entity.evoker.prepare_wololo
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Evoker fangs.ogg
+|subtitle=Fangs snap
+|source=neutral
+|description=When an evoker fang is summoned
+|id=entity.evoker_fangs.attack
+|translationkey=subtitles.entity.evoker_fangs.attack
+|volume=1.0
+|pitch=0.85-1.05
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Evoker idle1.ogg
+|sound2=Evoker idle2.ogg
+|sound3=Evoker idle3.ogg
+|sound4=Evoker idle4.ogg
+|source=hostile
+|description=Randomly
+|id=mob.evocation_illager.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|source=hostile
+|description=Randomly while in a raid
+|id=mob.evocation_illager.ambient
+|volume=3.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound = Evoker cast1.ogg
+|sound2 = Evoker cast2.ogg
+|source=hostile
+|description=When an evoker attacks
+|id=mob.evocation_illager.cast_spell
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker celebrate.ogg
+|sound2=Evoker idle1.ogg
+|sound3=Evoker idle2.ogg
+|source=hostile
+|description=When an evoker has won a raid
+|id=mob.evocation_illager.celebrate
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker death1.ogg
+|sound2=Evoker death2.ogg
+|source=hostile
+|description=When an evoker dies
+|id=mob.evocation_illager.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker hurt1.ogg
+|sound2=Evoker hurt2.ogg
+|source=hostile
+|description=When an evoker is damaged
+|id=mob.evocation_illager.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker prepare summon.ogg
+|source=hostile
+|description=When an evoker signals to summon vexes
+|id=mob.evocation_illager.prepare_summon
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker prepare attack1.ogg
+|sound2=Evoker prepare attack2.ogg
+|source=hostile
+|description=When an evoker signals to use a fang attack
+|id=mob.evocation_illager.prepare_attack
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker prepare wololo.ogg
+|subtitle=Evoker prepares charming
+|source=hostile
+|description=When an evoker converts a sheep's color
+|id=mob.evocation_illager.prepare_wololo
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker fangs.ogg
+|source=hostile
+|description=When an evoker fang is summoned
+|id=mob.evocation_fangs.attack
+|volume=0.8
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Evoker
+|spritetype=entity
+|nameid=evoker
+|entitytags=illager, illager_friends, raiders}}
+{{ID table
+|displayname=Evoker Fangs
+|spritetype=entity
+|nameid=evoker_fangs
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Evoker
+|spritetype=entity
+|nameid=evocation_illager
+|showentityfamily=y
+|entityfamily=evocation_illager,illager,mob,monster
+|id=104}}
+{{ID table
+|displayname=Evoker Fang
+|spritetype=entity
+|nameid=evocation_fang
+|id=103
+|foot=1}}
+
+=== Entity data ===
+{{JE}}:
+{{main|Entity format}}
+Evokers have entity data associated with them that contains various properties.
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt inherit/raidable}}
+** {{nbt|int|SpellTicks}}: Number of ticks until a spell can be cast. Set to a positive value when a spell is cast, and decreases by 1 per tick.
+</div><section end="entity data"/>
+
+Evoker fangs have entity data associated with them that contains various properties.
+<section begin="fang entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt|int-array|Owner}}: The [[UUID]] of the entity that that fired the fangs, stored as four ints. If the entity is an [[Illager]], the fangs do not damage other Illagers. Is not preserved when removed.
+** {{nbt|int|Warmup}}: Time in ticks until the fangs appear. The fangs appear and begin to close as soon as this value becomes zero or less; negative values simply result in no delay. The value continues ticking down while the closing animation is playing, reaching -20 on naturally spawned fangs.
+</div><section end="fang entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;Feeling Ill;It Spreads;Sound the Alarm!;We're being attacked!}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads;Voluntary Exile;Hero of the Village}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w39a|[[File:Evoker JE1 BE1.png|32px]] [[File:Evoker Fangs JE1 BE1.png|22px]] Added evokers and evocation fangs.}}
+|{{HistoryLine|||dev=16w43a|Added the {{nbt|compound|Owner}} tag to evocation fangs.}}
+|{{HistoryLine||1.13|dev=pre5|The name of "Evocation Fangs" have been changed to "Evoker Fangs".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Evoker JE2 BE2.png|32px]] [[File:Evoker Fangs JE2 BE2.png|22px]] The textures of evokers and evocation fangs have been changed.}}
+|{{HistoryLine|||dev=18w47a|Evokers can now spawn in [[raid]]s.}}
+|{{HistoryLine|||dev=19w05a|Evokers are now hostile toward the new [[wandering trader]]s.}}
+|{{HistoryLine|||dev=19w13a|Evokers can now open [[door]]s during raids.
+|[[File:Evoker celebrating.gif|40px]] If [[raid]]ing evokers killed all the [[villager]]s in the [[village]] or the [[bed]]s were destroyed, evokers celebrate their victory by laughing and raising their arms in the [[air]].}}
+|{{HistoryLine|||dev=19w14a|Evokers can no longer open doors during raids.}}
+|{{HistoryLine||1.18|dev=21w37a|Evokers no longer attack baby villagers.}}
+|{{HistoryLine|||dev=pre5|Changed the texture to remove its hood.}}
+|{{HistoryLine||1.19|dev=22w17a|[[File:Evoker JE3.png|32px]] Changed its models, now the last two rows of pixels on its robes can render.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Evokers evoking vexes or fangs now emit an <code>entity_place</code> [[vibration]] of frequency <code>14</code>.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|[[File:Evoker JE1 BE1.png|32px]] [[File:Evoker Fangs JE1 BE1.png|22px]] Added evokers and evocation fangs.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Evoker JE2 BE2.png|32px]] [[File:Evoker Fangs JE2 BE2.png|22px]] The textures of evokers and evocation fangs have been changed.
+|Evokers are now hostile to the new [[wandering trader]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Evokers can now spawn during [[raid]]s.
+|Evokers are no longer hostile to baby [[villager]]s.}}
+|{{HistoryLine||1.13.0|dev=?|Evokers now have smoother casting animations.}}
+|{{HistoryLine|||dev=beta 1.13.0.9|[[File:Evoker celebrating.gif|40px]] If [[raid]]ing evokers killed all the [[villager]]s in the [[village]] or the [[bed]]s were destroyed, evokers celebrate their victory by laughing and raising their arms in the [[air]].}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|Changed the texture by removing the hood.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.20|Evokers no longer spawn in Peaceful difficulty.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Evoker JE1 BE1.png|32px]] [[File:Evoker Fangs JE1 BE1.png|22px]] Added evokers and evocation fangs.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|The size of evocation fangs has been increased to be about 2 blocks high.{{info needed|Changed between TU56 and TU64.}}}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Evokers can now spawn in [[raid]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.9.19|[[File:Evoker JE1 BE1.png|32px]] [[File:Evoker Fangs JE1 BE1.png|22px]] Added evokers and evocation fangs.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine|||dev=pre5|The entity ID has been changed from <code>evocation_illager</code> to <code>evoker</code>.
+|The ID of "Evocation Fangs" have been changed to "Evoker Fangs".}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The sheep color conversion spell is a reference to the priest units from [[wikipedia:Age of Empires (video game)|''Age of Empires'']], where they can turn enemy units into friendly units (changing the unit's color in the process) after making a "wololo" sound.
+** Because Microsoft controls the copyrights for both ''Age of Empires'' and ''[[Minecraft]]'', [[Mojang Studios]] was able to get the actual "wololo" sound effect to use in the conversion sound effect.
+* Evokers are referred to as 'evocation illagers' in the code for {{BE}}.
+* Hitting an evoker in survival mode and converting the gamemode into creative mode still causes the evoker to summon fangs and vexes at the player, although they deal no damage.
+* [[Vex Armor Trim]] is based on the cloak and eyebrows of the evoker.
+* The texture for evokers includes a white hood. Although never used in-game, it ended up used in the book ''[[Minecraft: Maps]]'',<ref>{{Citation|url=https://www.amazon.com/Minecraft-Maps-Mojang-Ab/dp/1101966440|title=Minecraft: Maps: An Explorer's Guide to Minecraft|author=[[Mojang Studios]]|website=Amazon|date=October 8, 2019}}</ref> as well as an article on [[Minecraft.net]].<ref>{{Mcnet|meet-evoker|Meet the Evoker|May 1, 2017|[[Marsh Davies]]}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Evoker JE1 BE1.png|The old version of the evoker.
+Evoker Summoning Vexes.png|Evoker summoning vexes.
+Evoker Summoning Fangs.png|Evoker summoning fangs.
+Sitting Evoker.png|An evoker sitting.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+EvokerPreparing.png|An evoker preparing to summon its fangs.
+EvokerFangsAttack.png|An evoker attacking with its fangs.
+EvokerDefending.png|An evoker summoning fangs in 2 circles around it.
+EvokerAndVexAttack.png|An evoker summons fangs while its [[vex]]es attack.
+AngryVexes.png|An evoker looks on as its vexes lunge toward its target.
+Evoker Sheep.png|An evoker using its [[sheep]] color conversion spell.
+Illager overflow.png|An excessive amount of [[illager]]s, including several hundred evokers and [[vindicator]]s spawned by [[command block]]s. Note the abundance of vexes that originate from the evokers.
+Leader Evoker.png|Evoker with an illager [[banner]].
+Pocket Edition Evoker.jpg|An evoker casting in a mansion.
+Evoker Riding Ravager.png|An evoker riding a ravager
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Evoker (texture).png|Evoker texture file.
+Evoker (2).png|Evoker with wig texture file.
+Evoker Fangs (texture).png|Evoker fangs texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:MEET THE EVOKER.png|An evoker wearing a wig from "Meet the evoker" Minecraft's blog post, as a reference to the game [[wikipedia:Age of Empires|''Age of Empires'']].
+File:Evoker (Dungeons).png|An [[MCD:Evoker|evoker]] within ''[[Minecraft Dungeons]]''.
+File:Evoker Minecraft Instagram.jpg|Artwork of an evoker.
+File:Action Figure Photo Evoker.jpg|Evoker [[action figure]].
+File:ExplorationUpdateFull.jpg|An evoker in promotional artwork for the [[Exploration Update]].
+File:Village and Pillage banner.png|Multiple evokers in promotional artwork for the [[Village & Pillage]] Update.
+File:Caves & Cliffs cover art.png|An evoker in promotional artwork for the first [[Caves & Cliffs]] update.
+File:Evoker Imposter.jpg|An evoker intimidating [[Kai]], clad in the [[vex armor trim]].<ref> https://www.instagram.com/p/CteqmbHJy6Q/</ref>
+File:Bad Omen shirt.png|"Bad Omen", an official T-Shirt design featuring an evoker.
+File:EvokerFangsFace.png|The evoker fang icon.
+File:AMCM evoker.png|An {{AMCM|evoker}} as seen in {{AMCM}}.
+File:Paolo-giandoso-minecraft-evoker-pog-002-02.jpeg|Concept art of an evoker from the movie.
+File:Evoker Plastic.png|An evoker in the [[Plastic Texture Pack]]
+File:MobestiaryEvoker.jpg|An evoker in the [[Minecraft: Mobestiary|Mobestiary]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+{{Navbox villagers}}
+
+[[Category:Hostile mobs]]
+[[Category:Illagers]]
+[[Category:Monster mobs]]
+[[Category:Humanoid mobs]]
+
+[[cs:Mág]]
+[[de:Magier]]
+[[es:Evocador]]
+[[fr:Évocateur]]
+[[it:Evocatore]]
+[[ja:エヴォーカー]]
+[[ko:소환사]]
+[[nl:Oproeper]]
+[[pl:Przywoływacz]]
+[[pt:Invocador]]
+[[ru:Вызыватель]]
+[[uk:Заклинач]]
+[[zh:唤魔者]]

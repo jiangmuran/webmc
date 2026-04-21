@@ -1,0 +1,98 @@
+{{about|the terrain feature|the noise parameter that controls terrain height|World generation#Biomes}}
+{{conjecture}}
+{{infobox structure
+| title = Erosion
+| image1 = Erosion overworld.png
+| image1caption = Overworld erosion
+| image1size = 200px
+| image2 = Erosion nether.png
+| image2caption = Nether erosion
+| image2size = 200px
+| image3 = Erosion end.png
+| image3caption = End erosion
+| image3size = 200px
+| biome =
+* {{EnvLink|Overworld}}
+* {{EnvLink|The Nether}}
+* {{EnvLink|The End}}
+| blocks = {{BlockLink|Air}}
+{{-}}
+With one of:
+{{-}}
+{{BlockLink|Stone}}
+{{-}}
+{{BlockLink|Netherrack}}
+{{-}}
+{{BlockLink|End stone}}
+| canspawn = No
+}}
+'''Erosions''', also known as '''basins''', are rare [[terrain feature]]s that strip away the top layer of a [[biome]]'s surface, leaving a one-block deep hole with a stony floor. They can generate in all three [[dimension]]s, and are intentional.<ref>{{bug|MC-1242||randomly missing topmost layers of the landscape|WAI}}</ref><ref>{{bug|MC-212606||Weird Grass Generation|WAI}}</ref><ref>{{bug|MC-229112||strange bug regarding spots where dirt blocks are missing in a random formation|WAI}}</ref>
+
+== Description ==
+[[File:Oak on erosion.png|thumb|right|A large [[plains]] erosion.]]
+=== Overworld ===
+In the [[Overworld]], the floors of erosions are always replaced with [[stone]]. They expose ores such as [[coal ore]], [[copper ore]] and [[iron ore]]. In [[badlands]] erosions, [[gold ore]] can also be seen.
+
+=== The Nether ===
+Erosions in [[The Nether]] replace the floor with [[netherrack]]. Nether erosions can expose ore such as [[nether gold ore]] and [[nether quartz ore]]. Because erosions generate independent of the y-axis, if an erosion generates in an overhang in the Nether, an identical erosion is guaranteed to generate at the exact same x and z coordinates on the ground below such an overhang.
+=== The End ===
+Since erosions generate before features, [[chorus plant]]s can take root in [[End]] erosions. The floor of End erosions is always [[end stone]].
+
+== Generation ==
+{{see also|Surface rule#Surface depth|Tutorial:Custom_world_generation#Erosion}}
+When the game generates new chunks, the <code>surface depth</code> is calculated for every column inside the chunk based on the <code>minecraft:surface</code> [[noise]]. This value is an integer, and when it is less than or equal to 0, the top block from the surface is replaced with [[air]]. Note that because surface depth is calculated per-column, every surface in the column is removed; that is, an identical erosion appears above or below another one if there is an overhang. The surface depth rarely reaches these values, eliciting the rarity of erosions. After the hole is generated, the floor is replaced with a stone block of the respective dimension, and the hole is flooded with [[water]] if it is at or below [[sea level]].<ref>{{bug|MC-130788||"Basin" structure is flooded since part of it generates below sea level}}</ref>
+
+Erosion generation occurs before [[carver]] creation in the [[terrain generation]] process, meaning that [[cave]]s, [[features]], and [[structures]] can disrupt or even completely conceal them. As a consequence, [[ore blob]]s are commonly found in erosions, making ore more accessible to players on the surface.
+
+=== Accidental removal ===
+Currently, erosions have stopped generating in all biomes except [[Frozen Ocean|frozen oceans]] and [[Deep Frozen Ocean|deep frozen oceans]] since the addition of [[surface rule]]s, which is unintentional behavior.{{only|java}}<ref>{{bug|MC-264579||Basins are missing in most biomes}}</ref>
+
+{{-}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100413-1951|Added erosions.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|Surface layer world generation produces chunk-aligned artifacts, which affects erosions.<ref name="bugged erosions">{{Bug|MC-6820}}</ref>}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w36a|Surface artifacting has been fixed in the overworld.<ref name="bugged erosions"></ref>}}
+|{{HistoryLine||1.13|dev=18w16a|Surface artifacting has been fixed in the nether.<ref>{{bug|MC-7192}}</ref>}}
+|{{HistoryLine||1.18|dev=21w41a|Due to an oversight with surface rules, erosions no longer generate as intended.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Added erosions.}}
+}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery widths="240px">
+Erosion Infdev 20100413.png|An erosion in [[Java Edition Infdev 20100413-1953]]
+Erosion in forest.png|A naturally generated erosion
+Desert erosion.png|A desert erosion
+Taiga erosion new.png|A taiga erosion
+Tundra erosion new.png|A snow-covered tundra erosion
+Crimson Forest erosion.png|An erosion in a [[crimson forest]], exposing nether quartz ore blob
+Nether Wastes erosion.png|An erosion in a [[nether wastes]]
+End erosion.png|An erosion generated on an outer End island
+</gallery>
+
+== Trivia ==
+* The End has few surface features, and no carvers, making End erosions easy to spot.
+* This is the only [[terrain feature]] that generates in all three [[dimension]]s.
+
+== Issues ==
+{{issue list|Erosion|Basin}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox terrain features}}
+
+[[es:Erosión]]
+[[ru:Эрозия]]

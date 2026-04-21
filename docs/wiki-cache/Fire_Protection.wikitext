@@ -1,0 +1,104 @@
+{{about|the enchantment|the status effect|Fire Resistance}}
+{{for||Protection (disambiguation)}}
+{{Infobox enchantment
+| versionAdded = {{Verlink|Beta 1.9 Prerelease 3}}
+| dateAdded = October 6, 2011
+| maxlevel = IV
+| primaryitems = {{ItemSprite|Helmet|link=Helmet}}{{ItemSprite|Chestplate|link=Chestplate}}{{ItemSprite|Leggings|link=Leggings}}{{ItemSprite|Boots|link=Boots}}{{ItemSprite|Turtle Shell|link=Turtle shell}}
+| weight = 5
+| id = fire_protection
+| incompat =
+* [[Blast Protection]]
+* [[Projectile Protection]]
+* [[Protection]]
+}}
+'''Fire Protection''' is an [[enchantment]] applied to [[armor]] that reduces [[damage]] received from [[fire]] and reduces [[burning time]].
+
+== Obtaining ==
+Fire Protection can be obtained from [[enchanting tables]], drops from mobs that have spawned in a [[raid]],{{only|bedrock}} books obtained by [[fishing]], librarian [[villager]]s, and in the following structure loot chests: [[desert pyramid]]s, [[stronghold]]s, [[ocean ruins]], [[ancient cities]], [[mansion]]s, [[pillager outpost]]s, [[mineshaft]]s, [[monster room]]s, [[jungle pyramid]]s, and from vaults in [[trial chambers]].
+
+== Usage ==
+Fire Protection reduces all sources of fire damage the user takes, including, but not limited to: [[fire]], [[lava]], [[magma block]]s, lit [[campfire]]s, and from [[mob]]s that deal fire damage ([[blaze]]'s projectile, flaming [[arrow]]s, burning [[zombie]]s). This enchantment is capable of reducing any fire damage that would normally be ignored by [[armor]].
+
+Damage caused by close contact from [[blaze]]s and [[magma cube]]s is considered to be melee damage and therefore cannot be reduced by Fire Protection. Fire Protection doesn't reduce damage from a [[ghast]]'s fireball (contact is considered projectile damage and the resulting blast is considered explosive damage), though it does mitigate effects from the leftover blocks of fire from the blast.
+
+<i>Fire damage</i> is defined by the game as any [[damage type]] in the <code>minecraft/tags/damage_type/is_fire</code> [[tag]]. Custom damage types defined by [[data packs]] can be added to this tag to allow damage dealt with the damage type through the {{cmd|damage}} command to be reduced by Fire Protection.
+
+Damage reduction from [[Protection]], Fire Protection, [[Feather Falling]], [[Blast Protection]], and [[Projectile Protection]] stacks up to an upper limit cap of 80% (see [[Armor#Enchantments|armor enchantments]]). Any further damage that would have been reduced is instead ignored. This cap can be reached with a total of 10 combined levels of Fire Protection, or by combining 12 levels of Protection with 4 levels of Fire Protection.
+
+The formula for fire damage reduction <code>(8 × ''level'')%</code>, up to a maximum 32% reduction on a single item with Fire Protection IV. The reduction stacks with multiple pieces of armor enchanted with Fire Protection.
+
+Fire Protection has the side effect of reducing burn time when set on fire by <code>(15 × ''level'')%</code>, up to a maximum 60% reduction on a single item with Fire Protection IV. This effect can stack on multiple armor pieces. This means that if the wearer is currently wearing armor with a total Fire Protection level of at least 7, then the total burning time reduction is 100%, effectively making the wearer fireproof.
+
+== Incompatibilities ==
+[[Protection]], Fire Protection, [[Blast Protection]], and [[Projectile Protection]] are mutually exclusive. Attempting to combine these enchantments with an [[anvil]] deletes the enchantment in the upgrade slot and replace it with the enchantment in the sacrifice slot. However, if [[commands]] are used to force two or more of these enchantments on the same item, the effects stack. But when the total of the [[Armor#Enchantments|EPF]] provided by the protection enchantments surpasses 20, the rest of these enchantments will no longer directly reduce the damage.
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=fire_protection
+|displayname=Fire Protection
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=fire_protection
+|displayname=Fire Protection
+|id=1
+|translationkey=enchantment.protect.fire
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Added Fire Protection.}}
+|{{HistoryLine||1.14|dev=19w02a|Protection enchantments are no longer mutually exclusive.}}
+|{{HistoryLine||1.14|dev=19w08a|Fire Protection enchantment is now functional for horses when added to horse armor in creative mode.}}
+|{{HistoryLine||1.14.3|dev=Pre-Release 2|Protection enchantments are again mutually exclusive.}}
+|{{HistoryLine||1.21|dev=24w18a|The [[burning time]] decrease from Fire Protection is now displayed as a tooltip.}}
+|{{HistoryLine|||dev=24w21a|Burning time now stacks when on multiple armor pieces.}}
+|{{HistoryLine|||dev=Pre-Release 4|Burning time decrease reduced to 3.75% per level, was previously 15% per level.}}
+|{{HistoryLine|||dev=Release Candidate 1|Reverted burning time decrease back to 15% per level.}}
+|{{HistoryLine|||dev=June 10, 2024|slink=https://www.minecraft.net/en-us/article/minecraft-1-21-release-candidate-1|[[Mojang Studios]] confirmed both Fire Protection and Blast Protection are to be rebalanced in the future.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added Fire Protection.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added Fire Protection.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Added Fire Protection.}}
+}}
+
+== Issues ==
+{{issue list|-\"spawn protection\"}}
+
+== Navigation ==
+{{Navbox enchantments}}
+
+[[de:Feuerschutz]]
+[[es:Protección contra el fuego]]
+[[fr:Protection contre le feu]]
+[[ja:火炎耐性 (エンチャント)]]
+[[pt:Proteção contra Fogo]]
+[[th:ทนไฟ]]
+[[uk:Захист від вогню]]
+[[zh:火焰保护]]

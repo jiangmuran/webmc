@@ -1,0 +1,166 @@
+{{Infobox enchantment
+| othernames = '''Channelling''' {{evb|au|ca|gb|nz}}
+| versionAdded = {{Verlink|18w07a}}
+| dateAdded = February 14, 2018
+| maxlevel = I
+| primaryitems = {{ItemSprite|Trident|link=Trident}}
+| weight = 1
+| id = channeling
+| incompat = [[Riptide]]
+}}
+'''Channeling'''{{fn|Also known as '''Channelling''' in [[Language#Differences between English variants|other variants of English]].}} is an [[enchantment]] applied to [[trident]]s that causes a [[lightning]] strike when thrown at an [[entity]] or [[lightning rod]] during a [[thunderstorm]] ({{in|JE}}) or at a lightning rod during any type of [[rain]] ({{in|BE}}).
+
+== Obtaining ==
+Channeling on enchanted books can be obtained from [[enchanting table]]s, drops from mobs spawned in a [[raid]],{{only|bedrock}} [[fishing]], librarian [[villager]]s, and in the following structures' loot chests: [[desert pyramid]], [[stronghold]], [[ocean ruins]], [[woodland mansion]], [[pillager outpost]], [[ancient city]], [[mineshaft]], [[dungeon]], [[jungle pyramid]]s, and from [[vault]]s in [[trial chambers]].
+
+== Usage ==
+Channeling summons a [[lightning bolt]] when an entity or lightning rod is hit by a thrown [[trident]], if there is currently a [[thunderstorm]] occurring. This applies to most entities that the trident can collide with: [[mob]]s, [[player]]s, [[armor stand]]s, [[boat]]s, [[minecart]]s, [[end crystal]]s, [[item frame]]s, [[painting]]s, [[leash knot]]s, and even [[shulker bullet]]s. It does not apply to ghast [[fireball]]s and [[wind charge]]s, and to entities that the trident can't collide with ([[small fireball]]s, [[arrow]]s, [[experience orb]]s, thrown [[item entities]], primed [[TNT]], [[falling block]]s, [[wither]] projectiles, and so on).
+
+Channeling effectively increases [[projectile damage]] through its lightning bolt damage. Due to a bug regarding the duration of the lightning damage hitbox, the lightning from Channeling will occasionally not deal damage after the initial projectile hits.<ref>{{bug|305643||Lightning occasionally fails to deal its double damage tick correctly|Unresolved}}</ref>
+{| class="wikitable"
+!Type!! colspan=3 |Base damage!! colspan=3 |Channeling
+|-
+|{{ItemSprite|Enchanted Trident}} Ranged|| colspan=3 |{{hp|8}}|| colspan=3 |{{hp|13}}
+|}
+
+For the enchantment to work, there must not be [[opaque]] or partially transparent blocks at any position above the target entity. This enchantment allows the [[player]] to transform some mobs into different mobs.
+
+Mobs struck by lightning summoned by this enchantment react in the same way as they would if struck by [[lightning]] normally. The following mobs transform into another mob when hit:
+* {{EntityLink|Creeper}} into {{EntityLink|Charged Creeper}}
+* {{EntityLink|Pig}} into {{EntityLink|Zombified Piglin}}
+* {{EntityLink|Villager}} into {{EntityLink|Witch}}
+* {{EntityLink|Mooshroom}} into {{EntityLink|Brown Mooshroom}}
+
+As with a regular lightning strike, [[turtle]]s are instantly killed and drop a [[bowl]].
+
+{{IN|java}}, Channeling doesn't affect mobs in some circumstances<ref>{{bug|MC-125773}}</ref><ref>{{bug|MC-134920}}</ref><ref>{{bug|MC-217528}}</ref>. A mob cannot be: in [[water]], [[lava]], [[powder snow]], [[cobweb]], on [[soul sand]], [[honey block]], [[mud]], or [[snow]] (if snow layer is 8) while being hit with this enchantment. Humanoid mobs in a [[minecart]] or in a [[boat]] which have the "riding" posture (see {{slink|Riding|Posture}}) also can't be struck with lightning, but other mobs in vehicles can be struck.
+
+However, it should be noted that in the circumstances stated above, even though lightning cannot be summoned if the mob itself is hit by a Channeling trident, they are still ''affected'' by the lightning if it strikes nearby. For instance, if a Channeling trident hits an [[armor stand]] next to a creeper in water, the lightning is summoned as normal, and the creeper becomes charged from being in the affected radius of the lightning.
+
+{{IN|bedrock}}, Channeling tridents thrown at [[lightning rod]]s during rain create lightning without the need for a thunderstorm.
+
+Lightning bolts summoned by Channeling tridents are not redirected by lightning rods.
+
+Lightning from a Channeling trident never spawns a [[skeleton trap]].
+
+== Incompatibilities ==
+Channeling and [[Riptide]] are mutually exclusive. If combined using commands, Riptide supersedes Channeling.
+
+== Sounds ==
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|subtitle=Trident thunder cracks
+|source=weather
+|description=When a trident with Channeling strikes a lightning rod
+|id=item.trident.thunder
+|translationkey=subtitles.item.trident.thunder
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Trident thunder cracks
+|source=neutral
+|description=When a Channeling trident hits a mob
+|id=item.trident.thunder
+|translationkey=subtitles.item.trident.thunder
+|volume=5.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|source=player
+|description=When a trident with Channeling strikes a mob<wbr><ref group=sound>{{bug|MCPE-173931||Tridents don't make channeling sounds when striking a lightning rod}}</ref>
+|id=item.trident.thunder
+|volume=1.0<wbr><ref group=sound>{{Bug|MCPE-178265||Trident thunder sound definition schema error}}</ref>
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=channeling
+|displayname=Channeling
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=channeling
+|displayname=Channeling
+|id=32
+|translationkey=enchantment.tridentChanneling
+|foot=1}}
+
+== Advancements ==
+{{Load advancements|Very Very Frightening;Surge Protector}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|Channeling is added alongside [[trident]]s.}}
+|{{HistoryLine|||dev=18w14a|Channeling is no longer compatible with [[Riptide]].}}
+|{{HistoryLine||1.17|dev=20w45a|Channeling can now be triggered by hitting [[lightning rod]]s.}}
+|{{HistoryLine||1.21|dev=24w18a|[[Drowned]] can now use the Channeling enchantment.<ref>{{bug|MC-271629}}</ref>}}
+|{{HistoryLine|||dev=24w20a|[[Drowned]] can no longer use the Channeling enchantment.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[Drowned]] can now use the Channeling enchantment again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|exp=Experimental Gameplay|Added Channeling as part of [[Experimental Gameplay]], able to be applied to the new [[trident]]s.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Channeling has been fully implemented and is no longer part of Experimental Gameplay.
+|[[Trident]]s are now fully implemented and can now be enchanted with Channeling.}}
+}}
+
+=== Legacy Console Edition ===
+
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Channeling is added alongside tridents.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*The ''Very Very Frightening'' achievement title is a reference to the song ''{{Wikipedia|Bohemian Rhapsody}}''.
+
+== Notes ==
+{{Fnlist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee-ranged}}
+
+[[de:Entladung]]
+[[es:Conductividad]]
+[[fr:Canalisation]]
+[[ja:召雷]]
+[[pt:Condutividade]]
+[[ru:Громовержец]]
+[[th:สายฟ้าพิฆาต]]
+[[zh:引雷]]

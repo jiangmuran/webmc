@@ -1,0 +1,176 @@
+{{Distinguish|Bleach|Beach}}
+{{Infobox enchantment
+| maxlevel = IV
+| primaryitems = {{ItemSprite|Mace|link=Mace}}
+| weight = 2
+| id = breach
+| incompat = * [[Smite]]
+* [[Bane of Arthropods]]
+* [[Density]]
+* [[Sharpness]]<ref group=note name=creativeincompatible>This incompatibility cannot be encountered in Survival, as no weapon types have access to both Breach and Sharpness.</ref>
+* [[Impaling]]<ref group=note name=creativeincompatible2>This incompatibility cannot be encountered in Survival, as no weapon types have access to both Breach and Impaling.</ref>
+}}
+'''Breach''' is an enchantment applied to [[mace]]s that causes melee attacks to partially ignore [[armor]], increasing damage against armored targets. It also affects the [[natural armor points]] that certain [[mob]]s have innately.
+
+== Obtaining ==
+Breach can be obtained through an [[enchanting table]] by enchanting a mace or a [[book]], or by [[trading]] with a librarian of any level{{until|Villager Trade Rebalance|nocat=1}}, or from [[fishing]]. Its enchanted book form can also be found from [[ominous vault]]s, as well as any other structures that generate enchanted books.
+
+== Usage ==
+{{see also|Armor#Damage_protection}}
+Breach reduces the effectiveness of the target's armor points and armor toughness by 15% per level. Specifically, Breach deals damage as though the enemy's damage reduction from armor was 15 percentage points lower per level. For example, if the enemy's armor reduces damage by 50%, and they are hit with a mace with Breach I, their armor reduces the damage by 50% - 15% = 35%. However, this reduces the effectiveness of only the ''armor'' itself, which does ''not'' include damage reduction from enchantments such as [[Protection]] or the [[Resistance]] effect.
+
+Breach works according to this formula:
+:<math>\mathsf{damage\ taken}=\mathsf{weapon\ damage}\times\left(1-\max\left(0%, \mathsf{armor\ effectiveness}-\mathsf{level}\times 15%\right)\right)</math>
+
+{| class="wikitable"
+!colspan=7 |Breach extra damage
+|-
+!Type!!Armor type!!Unenchanted!!Breach I!!Breach II!!Breach III!!Breach IV
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Leather Cap}}{{ItemSprite|Leather Tunic}}{{ItemSprite|Leather Pants}}{{ItemSprite|Leather Boots}} Leather Armor||{{hp|5.04}}||{{hp|5.94}}||{{hp|6}}||{{hp|6}}||{{hp|6}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|7.65}}||{{hp|9}}||{{hp|9}}||{{hp|9}}||{{hp|9}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Copper Helmet}}{{ItemSprite|Copper Chestplate}}{{ItemSprite|Copper Leggings}}{{ItemSprite|Copper Boots}} Copper Armor||{{hp|4.32}}||{{hp|5.22}}||{{hp|6}}||{{hp|6}}||{{hp|6}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|6.48}}||{{hp|7.83}}||{{hp|9}}||{{hp|9}}||{{hp|9}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Golden Helmet}}{{ItemSprite|Golden Chestplate}}{{ItemSprite|Golden Leggings}}{{ItemSprite|Golden Boots}} Golden Armor||{{hp|4.08}}||{{hp|4.98}}||{{hp|5.88}}||{{hp|6}}||{{hp|6}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|6.21}}||{{hp|7.56}}||{{hp|8.91}}||{{hp|9}}||{{hp|9}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Chainmail Helmet}}{{ItemSprite|Chainmail Chestplate}}{{ItemSprite|Chainmail Leggings}}{{ItemSprite|Chainmail Boots}} Chainmail Armor||{{hp|3.84}}||{{hp|4.74}}||{{hp|5.64}}||{{hp|6}}||{{hp|6}}
+|-
+|{{ItemSprite|Mace}}(critical)||{{hp|5.85}}||{{hp|7.2}}||{{hp|8.55}}||{{hp|9}}||{{hp|9}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Iron Helmet}}{{ItemSprite|Iron Chestplate}}{{ItemSprite|Iron Leggings}}{{ItemSprite|Iron Boots}} Iron Armor||{{hp|3.12}}||{{hp|4.02}}||{{hp|4.92}}||{{hp|5.82}}||{{hp|6}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|4.77}}||{{hp|6.12}}||{{hp|7.47}}||{{hp|8.82}}||{{hp|9}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Diamond Helmet}}{{ItemSprite|Diamond Chestplate}}{{ItemSprite|Diamond Leggings}}{{ItemSprite|Diamond Boots}} Diamond Armor||{{hp|1.56}}||{{hp|2.46}}||{{hp|3.36}}||{{hp|4.26}}||{{hp|5.16}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|2.34}}||{{hp|3.69}}||{{hp|4.95}}||{{hp|6.39}}||{{hp|7.74}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Netherite Helmet}}{{ItemSprite|Netherite Chestplate}}{{ItemSprite|Netherite Leggings}}{{ItemSprite|Netherite Boots}} Netherite Armor||{{hp|1.488}}||{{hp|2.388}}||{{hp|3.288}}||{{hp|4.188}}||{{hp|5.088}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|2.219}}||{{hp|3.589}}||{{hp|4.959}}||{{hp|6.329}}||{{hp|7.699}}
+|}
+
+{| class="wikitable"
+!colspan=7 |<abbr title="The effective attack damage of a Breach mace against the given armor type.">Breach effective attack damage</abbr>
+|-
+!Type!!Armor type!!Unenchanted!!Breach I!!Breach II!!Breach III!!Breach IV
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Leather Cap}}{{ItemSprite|Leather Tunic}}{{ItemSprite|Leather Pants}}{{ItemSprite|Leather Boots}} Leather Armor||{{hp|6}}||{{hp|6.919872}}||{{hp|6.979992}}||{{hp|6.979992}}||{{hp|6.979992}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|9.617929}}||{{hp|9.739863}}||{{hp|9.780389}}||{{hp|9.780389}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Copper Helmet}}{{ItemSprite|Copper Chestplate}}{{ItemSprite|Copper Leggings}}{{ItemSprite|Copper Boots}} Copper Armor||{{hp|6}}||{{hp|7.045408}}||{{hp|7.912878}}||{{hp|7.912878}}||{{hp|7.912878}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|9.964975}}||{{hp|10.3673}}||{{hp|10.58808}}||{{hp|10.67586}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Golden Helmet}}{{ItemSprite|Golden Chestplate}}{{ItemSprite|Golden Leggings}}{{ItemSprite|Golden Boots}} Golden Armor||{{hp|6}}||{{hp|7.095023}}||{{hp|8.135944}}||{{hp|8.271057}}||{{hp|8.271057}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|10.00521}}||{{hp|10.42335}}||{{hp|10.87971}}||{{hp|10.96998}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Chainmail Helmet}}{{ItemSprite|Chainmail Chestplate}}{{ItemSprite|Chainmail Leggings}}{{ItemSprite|Chainmail Boots}} Chainmail Armor||{{hp|6}}||{{hp|7.149442}}||{{hp|8.236761}}||{{hp|8.656408}}||{{hp|8.656408}}
+|-
+|{{ItemSprite|Mace}}(critical)||{{hp|9}}||{{hp|10.04886}}||{{hp|10.76973}}||{{hp|11.05203}}||{{hp|11.09876}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Iron Helmet}}{{ItemSprite|Iron Chestplate}}{{ItemSprite|Iron Leggings}}{{ItemSprite|Iron Boots}} Iron Armor||{{hp|6}}||{{hp|7.349352}}||{{hp|8.601075}}||{{hp|9.77372}}||{{hp|10}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|10.4267}}||{{hp|11.44761}}||{{hp|12.06808}}||{{hp|12.22049}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Diamond Helmet}}{{ItemSprite|Diamond Chestplate}}{{ItemSprite|Diamond Leggings}}{{ItemSprite|Diamond Boots}} Diamond Armor||{{hp|6}}||{{hp|8.601075}}||{{hp|10.88061}}||{{hp|12.93469}}||{{hp|14.81935}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|11.65641}}||{{hp|14.57641}}||{{hp|17.2672}}||{{hp|19.56349}}
+|-
+|{{ItemSprite|Mace}}|| rowspan=2 |{{ItemSprite|Netherite Helmet}}{{ItemSprite|Netherite Chestplate}}{{ItemSprite|Netherite Leggings}}{{ItemSprite|Netherite Boots}} Netherite Armor||{{hp|6}}||{{hp|8.824868}}||{{hp|11.31701}}||{{hp|13.57202}}||{{hp|15.64694}}
+|-
+|{{ItemSprite|Mace}} (critical)||{{hp|9}}||{{hp|12.09675}}||{{hp|15.31636}}||{{hp|18.20016}}||{{hp|20.83542}}
+|}
+
+The strength of -60% armor effectiveness at level 4 Breach is significant enough to make full [[Protection]] IV [[netherite armor]] and full Protection IV [[leather armor]] protect nearly the same amount. Without a smash attack, it takes the same amount of critical hits with a Breach IV mace and [[Strength]] II to defeat a player wearing either armor set (4), while without Strength II it takes 7 critical hits to defeat a player wearing the leather set and 8 to defeat a player wearing the netherite set.
+
+In ''Bedrock Edition'', a Breach IV [[mace]] has higher DPS than a [[Sharpness]] V netherite [[sword]] against targets wearing [[diamond armor]] or better. This is due to the absence of the [[attack cooldown]], and it leads to maces outclassing netherite swords in damage for [[PvP]] in ''Bedrock Edition'' that features diamond or netherite [[armor]].
+
+=== Damage comparisons ===
+The amount of hits needed to defeat a player wearing full [[Protection]] IV [[netherite armor]] from full health are the following:
+* Breach I mace with [[Strength]] 2: 7 critical hits.
+* [[Sharpness]] V netherite [[sword]] with Strength 2: 6 critical hits.
+* Sharpness V netherite [[axe]] with Strength 2: 5 critical hits.
+* Breach II mace with Strength 2: 5 critical hits.
+* Breach III mace with Strength 2: 4 critical hits.
+* Breach IV mace with Strength 2: 4 critical hits.
+
+The amount of hits needed to defeat a player wearing full Protection IV [[iron armor]] from full health are the following:
+* Breach I mace with Strength 2: 4 critical hits.
+* Breach II mace with Strength 2: 4 critical hits.
+* Breach III mace with Strength 2: 4 critical hits.
+* Breach IV mace with Strength 2: 4 critical hits.
+* Sharpness V netherite sword with Strength 2: 3 critical hits.
+* Sharpness V netherite axe with Strength 2: 3 critical hits.
+
+=== Usecases in singleplayer ===
+The Breach enchantment is far more suited for a [[PvP]] environment than it is for singleplayer [[Survival]]. This is because the only mobs other than [[piglin]]s that can naturally wear armor are [[undead]] mobs like [[zombies]] and [[skeletons]], causing a [[Smite]] or [[Density]] mace to largely outclass a Breach mace for singleplayer Survival. Additionally, because Breach has no effect against the [[Protection]] enchantment, it also increases damage less than Smite would against the mobs in [[ominous event]]s within [[trial chambers]] that wear enchanted armor. In terms of effect against natural mob armor points, [[shulker]]s that have their shells closed are the most noticeably impacted by the Breach enchantment.
+
+==Incompatibilities==
+Breach is incompatible with [[Density]], [[Smite]], and [[Bane of Arthropods]]. It is also incompatible with [[Sharpness]] and [[Impaling]], however in Survival these incompatibilities cannot be encountered, as no weapon types have access to both Breach and Sharpness/Impaling. If [[command]]s are used to have two or more of these enchantments on the same item, their effects stack.{{only|java}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=breach
+|displayname=Breach
+|translationtype=enchantment
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Breach
+|nameid=breach
+|id=40
+|translationkey=enchantment.heavy_weapon.breach
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Added the Breach enchantment.}}
+|{{HistoryLine||1.21|dev=24w18a|Breach is now available without using the "Update 1.21" experimental data pack.|
+Breach is now incompatible with [[Smite]] and [[Bane of Arthropods]].}}
+|{{HistoryLine|||dev=24w19a|Breach is now incompatible with [[Density]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.21|Added the Breach enchantment.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Breach is now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Breach is now incompatible with [[Density]], [[Smite]], and [[Bane of Arthropods]].}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee}}
+
+[[de:Durchbruch]]
+[[es:Fisura]]
+[[fr:Brèche]]
+[[ja:防具貫通]]
+[[pt:Ruptura]]
+[[uk:Пробивання]]
+[[zh:破甲]]

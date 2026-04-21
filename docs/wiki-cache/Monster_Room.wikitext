@@ -1,0 +1,222 @@
+{{for||Dungeon}}
+{{Infobox structure
+| image = Monster Room (Dungeon).png
+| biome = All biomes in the Overworld
+| mobs = 
+* {{EntityLink|Zombie}} (from [[monster spawner]])
+* {{EntityLink|Skeleton}} (from [[monster spawner]])
+* {{EntityLink|Spider}} (from [[monster spawner]])
+| blocks = * {{BlockSprite|cobblestone}} [[Cobblestone]]
+* {{BlockSprite|mossy cobblestone}} [[Mossy cobblestone]]
+* {{BlockSprite|monster spawner}} [[Monster spawner]]
+* {{BlockSprite|chest}} Loot [[chest]]
+|canspawn=No
+}}
+{{relevant tutorial|Defeating a monster room}}
+
+A '''monster room''', commonly known as a '''dungeon''',<ref group="note">This name is still used to describe it in official media.{{cn}} </ref> is a [[structure]]-like [[feature]] found underground in the [[Overworld]]. It consists of a room with [[cobblestone]] walls and a floor made of cobblestone mixed with [[mossy cobblestone]]. A [[monster spawner]] that produces either [[zombie]]s, [[skeleton]]s, or [[spider]]s is found in the middle.
+
+== Generation ==
+Monster rooms generate uncommonly in the [[Overworld]] in any [[biome]] and always nearby [[carver cave]]s, [[canyon]]s, [[mineshaft]]s, and [[stronghold]]s. Each [[chunk]] has fourteen attempts to generate monster rooms underground within y-coordinates 0 to 320 or -58 to -1, each [[altitude]] range with different uniformity. For the higher altitude Y levels 0 to 320, up to 10 monster rooms can generate, while up to 4 monster rooms can generate in lower altitude Y levels -58 to -1. It is possible, though unlikely, for multiple attempts to succeed. {{IN|bedrock}}, monster rooms can generate as underground structures above sea level.
+
+Monster rooms are a [[feature]] instead of a [[structure]], so they generate regardless of whether the "Generate structures" world creation option has been toggled off for said world.<ref>{{bug|MC-77787||Dungeons still generate when generate structures option is turned off|WF}}</ref> They also cannot be searched by the {{cmd|locate}} command,<ref>{{bug|MC-107829|||WAI}}</ref> but they are very common and can be found without much difficulty in spectator mode.
+
+For each attempt, a location (the position for monster spawner) and size (an open area with a width and length of 7 or 9 and a height of 6) is chosen. The attempt succeeds if the following conditions are met:
+* Blocks in the floor area (including under the walls) of the potential monster room must be [[legacy solid|solid]].
+* Blocks in the ceiling area (including over the walls) of the potential monster room must be solid. The ceiling blocks may be gravity-affected such as [[gravel]] or [[sand]], which fall if disturbed by the player.
+* The walls of the potential monster room must have 1–5 openings (2-high air blocks) at floor level. Monster rooms are always connected to a [[carver cave]] or other hollow structure, although it is possible for the monster room itself to overwrite most of a tiny cave.
+
+If the location passes, [[air]] and [[cobblestone]] are placed, then 3 attempts are made to generate each of two [[chest]]s. To generate a chest, the chosen block must be empty and must have a solid block on exactly one of its four sides. The [[monster spawner]] is placed at the center of the monster room.
+
+The monster spawner has a 50% chance of producing [[zombie]]s, a 25% chance of producing [[skeleton]]s, and a 25% chance of producing [[spider]]s. A zombie monster spawner {{in|bedrock}} also has the same chance (5%) of producing [[zombie villager]]s as in natural generation.
+
+Cobblestone has a 75% chance to be [[mossy cobblestone|mossy]] when it is on the floor of the monster room.
+
+The [[command]] <code>/place feature minecraft:monster_room ~ ~ ~</code> can be used to generate a monster room only when the player is under the specific location where the monster room could be found naturally.
+
+{{Calculator|chunkbase|pois=D|zoom=0.75}}
+
+== Construction ==
+{{main|Monster Room/Structure}}
+
+Monster rooms are small rooms made of [[cobblestone]] and [[mossy cobblestone]] that contain a [[monster spawner]] and up to 2 [[chest]]s. Finding a monster room without a chest is unlikely but possible. Additionally, there is a rare chance of a monster room being found without a monster spawner. Occasionally, a monster room generates with its chests in such a way as to create a double chest. Monster rooms generate with either a [[zombie]] (50% chance), [[skeleton]] (25% chance), or [[spider]] (25% chance) monster spawner. The monster spawner is always in the center of the monster room, with chests located around the walls of the room (large chests can connect with the short side against the wall). Each block of the floor has a 25% chance of being cobblestone and a 75% chance of being mossy cobblestone.
+
+Because the horizontal range for spawning mobs is 4 blocks from the monster spawner, it is possible for mobs to be spawned outside the walls of a 5×5 monster room that is surrounded by air outside the walls.
+
+== Loot ==
+[[File:Example monster room loot.png|thumb|An example of monster room chest loot in ''Java Edition''.]]
+{{see also|Chest loot}}
+{{LootChest|monster room}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=monster room
+|spritetype=env
+|nameid=monster_room
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=monster room
+|spritetype=env
+|nameid=monster_room
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=monster room
+|spritetype=env
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:monster_room",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100625-1917|[[File:Monster Room JE1.png|50px]] Added monster rooms. The chests may contain [[Gunpowder|sulphur]], [[string]], [[wheat]], [[bread]], [[iron ingot]]s, [[bucket]]s, [[saddle]]s and rarely [[golden apple]]s.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1_01|Added [[redstone dust]] to monster room [[chest]]s.{{check version|It could be Alpha v1.0.1, but that version is currently lost}}}}
+|{{HistoryLine||v1.0.14|Added the newly introduced ''13'' and ''cat'' [[music disc]]s to monster room chests.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4|Added [[cocoa beans]] to monster room [[chest]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.6|dev=12w49a|Added [[enchanted book]]s to monster room [[chest]]s.}}
+|{{HistoryLine||1.6.1|dev=13w16b|Added [[name tag]]s to monster room chests.}}
+|{{HistoryLine|||dev=13w18a|Added [[horse armor]] to monster room chests and removed cocoa beans. Probabilities have now also been adjusted.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Changes in [[carver cave]] generation now make monster rooms considerably rarer.<ref>{{citation|url=http://www.minecraftforum.net/topic/1981051-it-seems-that-the-underground-is-no-longer-swiss-cheese-anymore/page__view__findpost__p__25366047|title=It seems that the underground is no longer swiss cheese anymore.|section=|website=[https://www.minecraftforum.net/ Minecraft Forum]|author=[https://www.minecraftforum.net/members/TheMasterCaver TheMasterCaver]|date=October 26, 2013|quote=Dungeons require an air space underground in order to generate, so fewer caves = fewer chances of a dungeon generating|archive-url}}</ref>}}
+|{{HistoryLine||1.8|dev=14w30a|The chances of [[music disc]]s in monster room [[chest]]s have been reduced.}}
+|{{HistoryLine||1.9|dev=15w44a|Added [[bone]]s, [[coal]], [[rotten flesh]], [[enchanted golden apple]]s, [[melon slice]]s, [[pumpkin]]s and [[beetroot seeds]] to monster room [[chest]]s.
+|The average yield of [[music disc]]s in monster room chests has been increased.
+|The average yield of [[enchanted book]]s, [[gunpowder]] and [[string]] in monster room chests have been doubled.
+|The average yield of normal [[golden apple]]s in monster room [[chest]]s has been substantially increased.
+|The average yield of iron [[horse armor]] in monster room chests has been decreased.
+|The average yields of [[name tag]]s, [[saddle]]s, [[wheat]] and [[bread]] in monster room chests have been nearly halved.
+|The average yields of [[iron ingot]]s and [[bucket]]s in monster room [[chest]]s have been substantially decreased.}}
+|{{HistoryLine||1.16|dev=20w22a|As a result of a world generation bug fix, monster room positions have been shifted.}}
+|{{HistoryLine||1.17|dev=?|Monster room generation has changed – it appears they are again capable of generating in open-air areas such as cliffsides like they were prior to 1.7.2.}}
+|{{HistoryLine||1.18|dev=21w40a|Monster rooms now generate more frequently, especially below Y{{=}}0.}}
+|{{HistoryLine|||dev=21w42a|The "otherside" [[music disc]] can now be found in monster room chests.}}
+|{{HistoryLine||1.18.2|dev=22w03a|Monster rooms can now be placed using {{cmd|placefeature}}.}}
+|{{HistoryLine||1.19|dev=22w18a|Due to the removal of {{cmd|placefeature}} command, monster rooms are now placed using {{cmd|place}}.}}
+|{{HistoryLine||1.19.4|dev=23w05a|Removed mentioning of monster rooms from the [[Create New World]] screen. Before this snapshot, a contradiction existed in ''Java Edition'' that even though the "Generate Structures" world creation option listed "dungeons" as an example structures that were supposed to generate only when the option was turned "ON", monster rooms generated even if the option was set to "OFF".}}
+|{{HistoryLine||1.21.6|dev=25w20a|Removed saddles from loot tables, replaced with 1–5 leather.}}
+|{{HistoryLine||1.21.9|dev=25w31a|[[Copper horse armor]] now generates in monster room chests.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added dungeons.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added [[name tag]]s, [[enchanted book]]s and [[horse armor]] to dungeon [[chest]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added [[music disc]]s to dungeon [[chest]]s.}}
+|{{HistoryLine||1.17.0|dev=?|The probability of dungeons had been changed to less common to match ''Java Edition''.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.21|Dungeons now generate more frequently, especially below Y{{=}}0.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added dungeons.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added dungeons.}}
+}}
+
+== Issues ==
+{{issue list|Monster Room|Dungeon}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Gravel fallen into monster room.png|A [[gravel]] [[Ore (feature)|ore feature]] fallen into a monster room.
+File:Spider monster room.png|A [[spider]] monster room.
+File:Carrot in a monster room.jpg|A [[zombie]] monster room.
+File:Monster room in a cave.png|A monster room next to a cave.
+File:Skeleton spawner in badlands mineshaft.png|Skeleton monster spawner in badlands mineshaft.
+File:Caved-in monster room.png|A caved-in surface monster room.
+File:Monster room on the surface.png|Monster rooms can rarely be found open to the surface.
+File:Zombie monster room at ground level.png|A zombie monster room at ground level.
+File:Two Spawners.png|A double monster room, the wall of the first acting as the entrance of the second.
+File:Monster room in a stronghold.png|A monster room intersecting with a [[stronghold]]
+File:Monster room in desert pyramid main room.png|A monster room in the upper room of a desert pyramid.
+File:Monster room in igloo basement.png|A monster room partially replacing the basement section of an [[igloo]].
+File:Monster room at bedrock level.png|A monster room intersecting with a [[mineshaft]] at [[bedrock]] level.
+File:Monster room with no chests.png|A monster room with no chests.
+File:Monster room sculk.jpg|A monster room covered with [[sculk vein]].
+File:Monster room in an ancient city.png|A zombie monster room intersecting with an [[ancient city]].
+File:Monster room in Dripstone Caves.jpg|A partial monster room in a [[dripstone cave]].
+File:Monsterroomtrailruin.png|A monster room generated within a [[trail ruin]].
+File:Monster room intersected with a Trial Chamber.png|A monster room intersected with a [[trial chamber]].
+</gallery>
+
+=== Historical screenshots ===
+<gallery>
+File:Monster room generated in midair.png|A rare instance of a monster room generating in midair.
+File:Underwater monster room.png|A monster room found underneath [[water]].
+File:PCG excavated monster room.png|A surface monster room in the [[PC Gamer Demo]].
+File:Triple monster room.png|A triple monster room.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Unarmed Skeletons.png|A monster room full of skeletons without bows.
+File:Ulraf spawner example.jpg|A monster room with a torch.
+File:Ulraf lit spawner example.jpg|A monster room with zombies.
+File:monsterroom-header.jpg|alt=A Minecraft screenshot of a spider standing in a darkly lit environment.|A spider standing in a monster room.
+File:monsterroom-ingame2.jpg|alt=A Minecraft screenshot, depicting a zombie creeper in a monster room together with two chests and a mob spawner.|A baby zombie in a monster room.
+File:monsterroom-ingame.jpg|alt=A close-up screenshot of a mob spawner in Minecraft, flanked by two spiders.|A close-up of a mob spawner, flanked by two spiders.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+
+* {{Mcnet|monster-room|Building Blocks: Monster Room|February 26, 2026|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[de:Verlies]]
+[[es:Sala de monstruos]]
+[[fr:Salle de monstres]]
+[[it:Stanza dei mostri]]
+[[ja:ダンジョン]]
+[[ko:몬스터 방]]
+[[lzh:地牢]]
+[[nl:Kerker]]
+[[pl:Lochy]]
+[[pt:Sala de monstros]]
+[[ru:Сокровищница]]
+[[uk:Скарбниця]]
+[[zh:地牢]]

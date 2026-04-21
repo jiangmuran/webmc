@@ -1,0 +1,511 @@
+{{For}}
+{{distinguish|Blaze}}
+{{Infobox entity
+| image1 = Breeze.gif
+| image1caption = {{JE}}
+| image2 = Breeze BE.gif
+| image2caption = {{BE}}
+| defaultimageclass = drop-shadow-light
+| invimage = Breeze Spawn Egg
+| health = {{hp|30}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| damage = {{EntityLink|Wind Charge}}:<br>
+Easy and Normal: {{hp|1}}<br>
+Hard: {{hp|1.5}}
+| size = Height: 1.77 blocks<br>Width: 0.6 blocks
+| spawn = * {{EnvLink|Trial Chambers}}: from [[trial spawner]]s.
+}} 
+A '''breeze''' is a [[hostile mob]] spawned by certain [[trial spawner]]s found in [[trial chambers]]. It moves via jumping large distances when attacking, attacks by firing [[wind charge]]s, and deflects all projectiles that hit it except wind charges. Breezes are the only source of [[breeze rod]]s, which are dropped upon death.
+
+== Spawning ==
+Breezes [[Mob spawning|spawn]] from [[trial spawner]]s that generate surrounded by [[chiseled tuff]] in [[trial chambers]]. These trial spawners only generate in combat chambers, and never in the corridors. Only one breeze spawner can generate in each combat chamber, and it is usually in the center of the room.
+
+Breezes can spawn only in places with line of sight to the trial spawner that spawns them.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Breeze Rod|notes=player_or_pet|quantity=1-2|lootingquantity=1-2}}
+}}
+
+{{xp|10}} [[experience]] orbs are dropped if killed by a player or tamed [[wolf]].
+
+== Behavior ==
+[[File:Breeze in the Air.png|thumb|A breeze jumping through the air.]]
+A breeze leaps around between firing [[wind charge]]s at its target. Before jumping, it compresses itself like a spring and can jump up to 15 blocks horizontally and 5 blocks vertically. If the breeze is in [[lava]], it can jump only one block into the air. Breezes are immune to all [[fall damage]].
+
+Breezes automatically deflect all projectiles that hit them except [[wind charge]]s. Unlike [[shield]]s, deflected projectiles maintain the same velocity, and can potentially harm the attacker or other [[entities]]. Breezes are unable to deflect the blast radius of [[splash potion]]s or [[firework rocket]]s, which affect them like any other mob if they are in range of the blast.
+
+Breezes are partially unaffected by the [[Invisibility]] effect. The eyebrows and surrounding wind remain visible.{{Only|Java}}
+
+Breezes do not retaliate if attacked by mobs that can spawn from trial spawners ([[zombie]]s, [[husk]]s, [[skeleton]]s, [[bogged]], [[stray]]s, [[spider]]s, [[cave spider]]s, and [[slime]]s{{Note|{{IN|BE}}, breezes also do not retaliate against [[zombie villager]]s, [[drowned]], [[wither]]s, or [[wither skeleton]]s. This is because in the {{cd|breeze.json}} file, in the {{cd|minecraft:behavior.hurt_by_target}} component, breezes do not retaliate against mobs in the {{cd|skeleton}} or {{cd|zombie}} [[family]], and those mobs are in the corresponding families. However, these mobs can retaliate against breezes.}}). These mobs also do not retaliate if hit by a breeze's wind charge.
+
+Breezes actively pursue and attack [[iron golem]]s.
+
+Breezes can rotate themselves while in a boat. They are the only mobs that can do this.
+
+Breezes float upwards in [[water]] and [[lava]] exceptionally faster than all other mobs.{{Only|Java}} 
+
+Breezes produce [[particles]] on the ground. The particles that are produced will depend on the block that they are standing on. For example, a breeze standing on a sandstone block will produce sandstone particles. The particle amount increases if the breeze is in an aggressive state towards another mob, such as an [[iron golem]] or [[player]]. 
+
+=== Wind charge ===
+{{main|Wind Charge}}
+Breezes attempt to shoot a [[wind charge]] at a player or enemy within a distance of 16 blocks, with a cooldown of 32 game ticks (1.6 seconds) between attempts. When a breeze's wind charge attack directly hits an [[entity]], the entity takes [[damage]], and a burst of wind appears. If a wind charge hits a [[block]], only a burst of wind appears. This wind burst deals [[Knockback_(mechanic)|knockback]] but does not deal any damage by itself; instead, it often deals damage by making the [[entity]] fall a high distance. The wind burst can also interact with blocks, toggling block states of ''non-iron'' [[door]]s and [[trapdoor]]s, [[button]]s, [[lever]]s, and [[fence gate]]s, as well as extinguishing lit [[candle]]s. Such block interactions are potential threats in [[trial chambers]], but can be controlled by the <code>mobGriefing</code> [[game rule]]. [[Bell]]s can also be rung if hit by the wind burst, which is not affected by the <code>mobGriefing</code> game rule.
+
+Wind charges can be deflected if hit with another projectile or a melee attack, similar to ghast [[fireball]]s.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Breeze idle1 JE2 BE2.ogg
+|sound2=Breeze idle2 JE2 BE2.ogg
+|sound3=Breeze idle3 JE2 BE2.ogg
+|sound4=Breeze idle4 JE2 BE2.ogg
+|subtitle=Breeze whirs
+|source=hostile
+|description=Randomly while on ground
+|id=entity.breeze.idle_ground
+|translationkey=subtitles.entity.breeze.idle_ground
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Breeze idle air1 JE2 BE2.ogg
+|sound2=Breeze idle air2 JE2 BE2.ogg
+|sound3=Breeze idle air3 JE2 BE2.ogg
+|sound4=Breeze idle air4 JE2 BE2.ogg
+|subtitle=Breeze flies
+|source=hostile
+|description=Randomly while not on ground
+|id=entity.breeze.idle_air
+|translationkey=subtitles.entity.breeze.idle_air
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Breeze whirl JE1.ogg
+|subtitle=Breeze whirls
+|source=hostile
+|description=Randomly
+|id=entity.breeze.whirl
+|translationkey=subtitles.entity.breeze.whirl
+|volume=0.8-1.0
+|pitch=0.7-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Breeze death1 JE2 BE2.ogg
+|sound2=Breeze death2 JE2 BE2.ogg
+|subtitle=Breeze dies
+|source=hostile
+|description=When a breeze dies
+|id=entity.breeze.death
+|translationkey=subtitles.entity.breeze.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Breeze hurt1 JE1 BE1.ogg
+|sound2=Breeze hurt2 JE1 BE1.ogg
+|sound3=Breeze hurt3 JE1 BE1.ogg
+|subtitle=Breeze hurts
+|source=hostile
+|description=When a breeze is damaged
+|id=entity.breeze.hurt
+|translationkey=subtitles.entity.breeze.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Breeze inhale1 JE1 BE1.ogg
+|sound2=Breeze inhale2 JE1 BE1.ogg
+|subtitle=Breeze inhales
+|source=hostile
+|description=When a breeze prepares to shoot a wind charge
+|id=entity.breeze.inhale
+|translationkey=subtitles.entity.breeze.inhale
+|volume=1.0
+|pitch=1.0. 1.1
+|distance=16}}
+| {{SoundLine
+|sound=Breeze charge1 JE1 BE1.ogg
+|sound2=Breeze charge2 JE1 BE1.ogg
+|sound3=Breeze charge3 JE1 BE1.ogg
+|subtitle=Breeze charges
+|source=hostile
+|description=When a breeze prepares to jump
+|id=entity.breeze.charge
+|translationkey=subtitles.entity.breeze.charge
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Breeze shoot JE1 BE1.ogg
+|subtitle=Breeze shoots
+|source=hostile
+|description=When a breeze shoots a wind charge
+|id=entity.breeze.shoot
+|translationkey=subtitles.entity.breeze.shoot
+|volume=1.5
+|pitch=1.0, 1.1, 1.2
+|distance=16}}
+| {{SoundLine
+|sound=Breeze deflect1 JE1 BE1.ogg
+|sound2=Breeze deflect2 JE1 BE1.ogg
+|sound3=Breeze deflect3 JE1 BE1.ogg
+|subtitle=Breeze deflects
+|source=hostile
+|description=When a breeze deflects an arrow or a trident
+|id=entity.breeze.deflect
+|translationkey=subtitles.entity.breeze.deflect
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Breeze jump1 JE2 BE2.ogg
+|sound2=Breeze jump2 JE2 BE2.ogg
+|subtitle=Breeze jumps
+|source=hostile
+|description=When a breeze makes a long jump
+|id=entity.breeze.jump
+|translationkey=subtitles.entity.breeze.jump
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Breeze land1 JE1 BE1.ogg
+|sound2=Breeze land2 JE1 BE1.ogg
+|subtitle=Breeze lands
+|source=hostile
+|description=When a breeze lands from a long jump or from a fall greater than three blocks
+|id=entity.breeze.land
+|translationkey=subtitles.entity.breeze.land
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Breeze slide1 JE2 BE2.ogg
+|sound2=Breeze slide2 JE2 BE2.ogg
+|sound3=Breeze slide3 JE2 BE2.ogg
+|sound4=Breeze slide4 JE2 BE2.ogg
+|subtitle=Breeze slides
+|source=hostile
+|description=When a breeze slides
+|id=entity.breeze.slide
+|translationkey=subtitles.entity.breeze.slide
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Breeze idle1 JE2 BE2.ogg
+|sound2=Breeze idle2 JE2 BE2.ogg
+|sound3=Breeze idle3 JE2 BE2.ogg
+|sound4=Breeze idle4 JE2 BE2.ogg
+|source=hostile
+|description=Randomly while on ground
+|id=mob.breeze.idle_ground
+|volume=0.8-1.0
+|pitch=0.7-1.1}}
+| {{SoundLine
+|sound=Breeze idle air1 JE2 BE2.ogg
+|sound2=Breeze idle air2 JE2 BE2.ogg
+|sound3=Breeze idle air3 JE2 BE2.ogg
+|sound4=Breeze idle air4 JE2 BE2.ogg
+|source=hostile
+|description=Randomly while not on ground
+|id=mob.breeze.idle_air
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze whirl1 BE1.wav
+|sound2=Breeze whirl2 BE1.wav
+|sound3=Breeze whirl3 BE1.wav
+|sound4=Breeze whirl4 BE1.wav
+|sound5=Breeze whirl5 BE1.wav
+|source=hostile
+|description=Randomly
+|id=mob.breeze.whirl
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze death1 JE2 BE2.ogg
+|sound2=Breeze death2 JE2 BE2.ogg
+|source=hostile
+|description=When a breeze dies
+|id=mob.breeze.death
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze hurt1 JE1 BE1.ogg
+|sound2=Breeze hurt2 JE1 BE1.ogg
+|sound3=Breeze hurt3 JE1 BE1.ogg
+|source=hostile
+|description=When a breeze is damaged
+|id=mob.breeze.hurt
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze inhale1 JE1 BE1.ogg
+|sound2=Breeze inhale2 JE1 BE1.ogg
+|source=hostile
+|description=When a breeze prepares to shoot a wind charge
+|id=mob.breeze.inhale
+|volume=1.0
+|pitch=1.0/1.1}}
+| {{SoundLine
+|sound=Breeze charge1 JE1 BE1.ogg
+|sound2=Breeze charge2 JE1 BE1.ogg
+|sound3=Breeze charge3 JE1 BE1.ogg
+|source=hostile
+|description=When a breeze prepares to jump
+|id=mob.breeze.charge
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze shoot JE1 BE1.ogg
+|source=hostile
+|description=When a breeze shoots a wind charge
+|id=mob.breeze.shoot
+|volume=1.5
+|pitch=1.0-1.2}}
+| {{SoundLine
+|sound=Breeze deflect1 JE1 BE1.ogg
+|sound2=Breeze deflect2 JE1 BE1.ogg
+|sound3=Breeze deflect3 JE1 BE1.ogg
+|source=hostile
+|description=When a breeze deflects an arrow or a trident
+|id=mob.breeze.deflect
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze jump1 JE2 BE2.ogg
+|sound2=Breeze jump2 JE2 BE2.ogg
+|source=hostile
+|description=When a breeze makes a long jump
+|id=mob.breeze.jump
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze land1 JE1 BE1.ogg
+|sound2=Breeze land2 JE1 BE1.ogg
+|source=hostile
+|description=When a breeze lands from a long jump<br>or from a fall greater than three blocks
+|id=mob.breeze.land
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze slide1 JE2 BE2.ogg
+|sound2=Breeze slide2 JE2 BE2.ogg
+|sound3=Breeze slide3 JE2 BE2.ogg
+|sound4=Breeze slide4 JE2 BE2.ogg
+|source=hostile
+|description=When a breeze slides<wbr>{{Verify}}
+|id=mob.breeze.slide
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Breeze
+|spritetype=entity
+|nameid=breeze
+|showentitytags=y
+|entitytags=can_turn_in_boats, deflects_arrows, deflects_tridents, fall_damage_immune, no_anger_from_wind_charge
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Breeze
+|spritetype=entity
+|nameid=breeze
+|showentityfamily=y
+|entityfamily=breeze,mob,monster
+|id=140
+|foot=1}}
+
+=== Entity data ===
+Breezes have entity data associated with them that contains various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Not today, Thank You;It Spreads;Monster Hunter;Monsters Hunted;Blowback}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|0Cbw1b2mkGk}}
+{{yt|Auc3DwWpEuQ}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|Breezes are announced at [[Minecraft Live 2023]].}}}}
+=== ''Java Edition'' ===
+{{HistoryTable|
+{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|[[File:Breeze JE1.png|32px]] Added breezes behind the "[[Java Edition 1.21|Update 1.21]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine|||dev=23w46a|Now counts for the "Monster Hunter" and is required for the "Monsters Hunted" [[advancement]]s.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=23w51a|Added new breeze sounds.
+|Changed the sounds of breezes.
+|The texture of the breeze have been changed. Separate eyes textures have been merged into the head.}}
+|{{HistoryLine|||dev=24w03a|Breezes can now deflect any projectile, except for their own wind charges.
+|Deflected projectiles now deflect in the direction of the shooter.
+|The texture for the bottom faces of breeze's rods were changed from [[File:Breeze rods_JE1_(facing_NWU).png|32px]] to [[File:Breeze rods_JE2_(facing_NWU).png|32px]].}}
+|{{HistoryLine|||dev=24w04a|Breezes are now aggressive toward [[iron golem]]s in addition to players.
+|Breezes no longer retaliate against attacks from [[skeleton]]s, [[stray]]s, [[bogged]]s, [[zombie]]s, [[husk]]s, [[spider]]s, [[cave spider]]s, or [[slime]]s.}}
+|{{HistoryLine|||dev=24w06a|Breezes now drop 4-6 [[wind charge]]s upon death.}}
+|{{HistoryLine|||dev=24w07a|Breezes now deflect wind charge projectiles thrown by players.<ref>{{bug|MC-268342||Breeze can be damaged by wind charge|Fixed}}</ref>}}
+|{{HistoryLine|||dev=24w11a|Breezes no longer drop wind charges, and instead drop 1-2 [[breeze rod]]s upon death.}}
+|{{HistoryLine|||dev=24w13a|Now avoids jumping into dangerous blocks or air.}}
+|{{HistoryLine|||dev=24w14a|Breezes no longer deflect wind charge projectiles thrown by players.<ref>{{bug|MC-268601||Breezes can deflect player-thrown wind charges|Fixed}}</ref>}}
+|{{HistoryLine||1.21|dev=24w18a|Breezes are now available without using the "Update 1.21" experimental data pack.
+|Breezes can no longer toggle blockstates of redstone components nor extinguish lit candles if <code>mobGriefing</code> game rule is <code>false</code>.<ref>{{bug|MC-270849||Breeze can extinguish lit candles when mobGriefing is false|Fixed}}</ref><ref>{{bug|MC-270974||Breeze wind charges can change activation blockstates of redstone components when mobGriefing is disabled|Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|No longer have a minimum distance required to attack a target.}}
+|{{HistoryLine|||dev=pre2|The idle animation now matches Bedrock Edition.<ref>{{bug|MC-269851|Breeze idle animations are different than Bedrock Edition|Fixed}}</ref>}}}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|[[File:Breeze BE1.png|32px]] Added breezes behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.60.21|Breezes can now reflect [[arrow]]s.}}
+|{{HistoryLine|||dev=Preview 1.20.60.23|Changed the sounds of breezes.}}
+|{{HistoryLine|||dev=Preview 1.20.60.24|Breezes can now reflect [[trident]]s.}}
+|{{HistoryLine|||dev=Preview 1.20.60.25|Breezes can now reflect [[ice bomb]]s{{only|education}}, [[egg]]s, [[llama spit]]s, [[shulker bullet]]s, and [[snowball]]s.
+|The pixels at the bottom of breezes' torso rods now match with their surrounding colors.}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.21|Breezes are now aggressive toward [[iron golem]]s in addition to players.
+|Breezes no longer retaliate against attacks from [[skeleton]]s, [[stray]]s, [[zombie]]s, [[husk]]s, [[spider]]s, [[cave spider]]s, or [[slime]]s.}}
+|{{HistoryLine|||dev=Preview 1.20.70.24|Breezes now drop 4-6 [[wind charge]]s upon death.
+|Breezes now take damage when hit by wind charge projectiles.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.22|Breezes no longer drop wind charges, and instead drop 1-2 [[breeze rod]]s upon death.|Breezes now must be submerged up to their eyes to drown, rather than only their base.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Breezes are now available without using the "Update 1.21" experimental toggle.
+|The breeze now slides during combat.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|Breezes can no longer toggle blockstates of redstone components if <code>mobGriefing</code> game rule is <code>false</code><ref>{{bug|MCPE-181211||Breeze wind charges can change activation blockstates of redstone components when mobGriefing gamerule is disabled|Fixed}}</ref>.}}
+}}
+
+== Trivia ==
+* Regarding a change made to prevent breezes from drowning while swimming, a changelog for a ''Bedrock Edition'' Preview said that breezes breathe through their eyes rather than their "feet".<ref name=lore>{{mcnet|minecraft-preview-1-20-80-22|Minecraft Preview 1.20.80.22|March 14, 2024|Matt Gartzke}}</ref> This is referring to how eye height defines drowning height for most [[mob]]s.
+* During the design process to determine how the breeze would look, the developers reportedly sat in a room for half a day sketching and throwing out designs.<ref>{{ytl|1CPKe6ynKE4|ALL ABOUT TRICKY TRIALS MOBS & ITEMS @ 0:44|Minecraft|June 11, 2024|t=44}}</ref> One of the designs they came up with was a "strider with really long legs wearing cowboy pants".<ref>{{ytl|1CPKe6ynKE4|ALL ABOUT TRICKY TRIALS MOBS & ITEMS @ 0:53|Minecraft|June 11, 2024|t=53}}</ref>
+* While Tom Olovsson was designing the breeze's sounds he tried using {{w|granular synthesis|newtab=1}} to create the whoosh sounds, but mis-clicked while trying to load in a specific file and loaded in a bunch of different "whoosh" sounds instead, and he felt this was actually the right sound for the breeze.<ref>{{ytl|1CPKe6ynKE4|ALL ABOUT TRICKY TRIALS MOBS & ITEMS @ 1:20|Minecraft|June 11, 2024|t=80}}</ref>
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery class="drop-shadow-light">
+Breeze without Wind.png|A breeze without its wind armor.
+Wind Charge.png|A breeze's wind charge.
+</gallery>
+
+=== Animations ===
+<gallery>
+Breeze shoot.webp|Animation for firing wind charges.
+Breeze jump.webp|Animation for jumping.
+Breeze slide.webp|Animation for sliding on the ground.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Breeze (texture).png|Breeze
+Breeze (eyes texture).png|Breeze eyes
+Breeze (wind texture) JE1.png|Breeze overlay
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Breeze and blaze.png|A comparison of a breeze and a [[blaze]].
+Breeze on spawner.png|A recently spawned breeze on top of a [[trial spawner]].
+Breeze fight.png|A fight with a breeze.
+Breeze on Fire.png|A breeze on fire.
+Breeze in Assembly.png|A breeze in the assembly chamber.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+Breeze Standing.png|A breeze rushing toward the camera.
+Breeze teaser 01.jpg|A breeze firing a [[wind charge]] at a player during the "upcoming features" presentation at ''Minecraft'' Live 2023.
+The breeze.png|The breeze.
+The breeze in combat.jpeg|The breeze in combat.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Breeze concept art.png|Sketch of a breeze that resembles a strider with cowboy pants.
+Breeze concept art 2.png|Various concepts of the breeze.
+Breeze concept art 3.png|Sketch of a breeze.
+</gallery>
+
+=== In other media ===
+<gallery>
+The Breeze emerges.png|[[Steve]] and [[Kai]] reacting to the appearance of a breeze.
+Spotify Banner May 2024.jpg|Artwork featuring a breeze.
+Trial Chamber Legends key art.jpg|A breeze as it appears on the key art for [[Trial Chamber Legends]].
+Minecraft Trial Chamber Legends spritework.jpg|Pixel art of a breeze used in Trial Chamber Legends.
+Trial Chamber Legends Screenshot 5.jpg|[[Noor]] fighting a breeze in Trial Chamber Legends.
+Alex faces the breeze.jpeg|[[Alex]] facing a breeze.
+Alex falls.jpeg|Alex falling off a platform while a breeze watches.
+Breeze Jumping Artwork.jpg|A breeze jumping.
+Breeze artwork.png|Official artwork of a breeze.
+Breeze artwork 2.png|Ditto.
+</gallery>
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+
+[[de:Böe]]
+[[es:Breeze]]
+[[fr:Breeze]]
+[[it:Brezza]]
+[[ja:ブリーズ]]
+[[ko:브리즈]]
+[[pl:Wichrzyk]]
+[[pt:Vórtice]]
+[[ru:Вихрь]]
+[[th:บรีซ]]
+[[uk:Вітрень]]
+[[zh:旋风人]]

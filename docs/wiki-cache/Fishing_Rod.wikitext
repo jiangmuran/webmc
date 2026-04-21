@@ -1,0 +1,516 @@
+{{Dungeons hatnote|type=artifact}}
+{{About|the item used to fish|the mechanic|Fishing}}
+{{Infobox item
+| image = Fishing Rod.png
+| image2 = Cast Fishing Rod.png
+| invimage = Fishing Rod
+| durability = {{jebe|64|385}}
+| enchantability = 1
+| renewable = Yes
+| stackable = No
+}}
+A '''fishing rod''' is a [[tool]] that casts a bobber used to [[Fishing|fish]] in [[water]] or to hook and pull [[mob]]s, [[Item (entity)|items]]{{only|java|short=1}}, and some other [[entities]] towards the player.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|C1= Stick
+|B2= Stick
+|C2= String
+|A3= Stick
+|C3= String
+|Output= Fishing Rod
+|type= Tool
+}}
+
+===Fishing===
+{{Main|Fishing}}
+Enchanted fishing rods are obtainable through fishing, with a 0.8% chance per attempt, while unenchanted ones are obtainable with a 0.2% chance per attempt. See [[fishing]] for more details.
+
+=== Mob loot ===
+[[Drowned]] have a 3.75% chance of spawning holding a fishing rod in their main hand, and {{in|bedrock}}, a converted drowned has a 1% chance to spawn with a fishing rod. If killed, they have an 8.5% chance of dropping this fishing rod. That chance increases by 1% for each level of Looting applied to a weapon (up to 11.5% chance). The dropped item is damaged and never enchanted.
+
+=== Generated loot ===
+{{LootChestItem|enchanted-fishing-rod}} 
+{{notelist}}
+
+=== Trading ===
+{{Trade sources|Enchanted Fishing Rod}}
+
+=== Carrot/warped fungus on a stick ===
+If a [[carrot on a stick]] or a [[warped fungus on a stick]] is used to the point of zero durability, it becomes a fishing rod again.
+
+== Usage ==
+=== Fishing ===
+{{main|Fishing}}
+
+Fishing rods can be cast into water. After a short period of time, a stream of bubble particles approaches the fishing rod. If the rod is reeled in once the particles "bite" the bobber, the player obtains a fish, junk, or possibly a treasure item. If the fishing rod was in the player's hand and is no longer, the fishing bobber [[entity]] despawns, unless the fishing rod is moved to the off-hand or it has been swapped with another fishing rod.{{Cn|Cn=Research on the way fishing rods behave when you swap rod or have two equipped (one in the main and one in the off hand) needs to be done}}
+
+=== Crafting ingredient ===
+{{crafting usage|Fishing Rod, Damaged Fishing Rod}}
+
+=== Hooking mobs and other entities ===
+{{see also|Fishing#Fishing rod durability}}
+
+The fishing rod can be used to hook [[mob]]s and some other [[entities]], including [[item (entity)|items]]{{only|java}} and [[player]]s. The fishing rod can then be reeled in, dragging the hooked object toward the player without dealing damage. Reeling in a [[mob]] or entity costs 5 points of durability, and reeling in an item costs 3 points. Reeling a mob pulls it toward the player with a speed of {{frac|1|10}} the distance between the mob and the player. Hooking entities {{in|BE}} with a flaming bobber cast through fire or lava can ignite the entity.
+
+The maximum distance the [[player]] can get between the bobber and themselves is 33 blocks. A hooked entity that exceeds this distance detaches from the bobber.
+
+{{:Calculators/Projectile motion|name=Bobber|type=3|gravity=-0.03|dragx=0.92|dragy=0.92|hideproperties=1|hidedynamics=1}}
+
+Multiple players can hook the same entity, and when multiple players reel in the entity at the same time, it flies a larger distance than normal.
+
+Besides mobs and items, entities that can be reeled in include:
+* {{ItemLink|id=oak boat|Boats}}
+* {{ItemLink|id=oak boat with chest|Boat with Chest|Boat with Chests}}
+* {{ItemLink|Minecart|Minecarts}} of any type
+* {{ItemLink|Armor Stand|Armor Stands}}
+* {{EntityLink|Shulker Bullet|Shulker Bullets}}
+* {{EntityLink|Fireball|Fireballs}}
+* {{EntityLink|Wind Charge|Wind Charges}}
+* {{BlockSprite|TNT}} Primed [[TNT]]
+* Any [[falling block]] such as:
+** {{BlockLink|Sand}}
+** {{BlockLink|Gravel}}
+** {{BlockLink|Dragon Egg|Dragon Eggs}}
+** {{BlockLink|Concrete Powder}}
+** {{BlockLink|Scaffolding}}
+** {{BlockLink|Snow}} {{only|BE}}
+** {{BlockLink|Anvil|Anvils}}
+
+Some entities can be hooked, but cannot be reeled in: 
+* {{EntitySprite|Horse}} Players or mobs riding vehicles or other mobs {{only|java}}
+* {{EntityLink|Painting|Paintings}}
+* {{EntityLink|Item Frame|Item Frames}} {{only|JE}}
+* {{EntityLink|id=leash-knot|Lead#Leash Knot|Lead knots}}
+* {{EntityLink|End Crystal|End Crystals}}
+* {{EntityLink|Shulker|Shulkers}}
+
+Attempting to reel in said entities still costs durability to the rod.
+
+Any other entities cannot be hooked at all.
+
+==== Dismounting entities ====
+{{exclusive|bedrock|section=1}}
+{{IN|be}}, a mob or a player riding a [[minecart]], a [[boat]], or a mob can be dismounted by reeling it in.
+
+=== Fuel ===
+A fishing rod can be used as fuel in [[furnace]]s, smelting 1.5 items per fishing rod, regardless of its durability.
+
+=== Redstone ===
+The hook can also be used to activate [[wooden pressure plate]]s or [[weighted pressure plate]]s.
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|Damaged Fishing Rod
+|Damaged Fishing Rod
+|Output=Fishing Rod
+|type=Combat
+|ignoreusage=1
+|showdescription=1
+|description=The durability of the two fishing rods is added together, plus an extra 5% durability.
+}}
+{{Grinding
+|showdescription=1
+|ingredients=2× Damaged [[Fishing Rod]]
+|Damaged Fishing Rod
+|Damaged Fishing Rod
+|Fishing Rod
+|description=The [[durability]] of the two fishing rods is added together, plus an extra 5% durability.
+}}
+
+==== Unit repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|head=1
+|Damaged Fishing Rod
+|Damaged Fishing Rod
+|Fishing Rod
+|tail=1}}
+A fishing rod can be combined with another fishing rod in an [[anvil]], preserving the [[enchantment]]s of both.
+
+=== Enchantments ===
+A fishing rod can receive the following enchantments:
+{| class="wikitable col-2-center"
+|+
+!Name
+!Description
+!Max level
+![[Enchanting|Method]]
+!Weight
+|-
+|[[Lure]]
+|Decreases the wait time for hooking.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Luck of the Sea]]
+|Increases fishing luck.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]
+|Repairs the fishing rod when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The fishing rod vanishes on death, not dropping as an item.
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+
+== Fishing bobber ==
+{{Infobox entity
+| title = Fishing Bobber
+| image = Fishing Bobber.png
+| defaultimageclass = pixel-image
+| image2 = Fishing Bobber BE.png
+| imagesize = 100px
+| size = Height: 0.25 blocks<br>Width: 0.25 blocks
+| networkid = '''[[JE]]:''' 90
+}}
+{{see also|Entity format}}
+'''Fishing bobbers''' have entity data associated with them that contain various properties of the entity. {{IN|je}}, they despawn after being on ground for more than 1200 ticks. When fishing bobber enters water ({{nbt|bool|OnGround}} becomes {{cd|false}}), despawn timer resets. {{info needed|How long it takes to despawn on BE?}}
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Fishing bobbers use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].<ref group="sound" name="oddcats" />
+
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Fishing rod cast.ogg
+|subtitle=Bobber thrown
+|source=Friendly Creatures <ref group="sound" name="oddcats">{{bug|MC-139041||The sounds of fishing bobbers aren't controlled by the "Players" sound slider}}</ref>
+|overridesource=1
+|description=When a fishing rod is cast
+|id=entity.fishing_bobber.throw
+|translationkey=subtitles.entity.fishing_bobber.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|sound=Fishing rod reel in1.ogg
+|sound2=Fishing rod reel in2.ogg
+|subtitle=Bobber retrieved
+|source=Friendly Creatures <ref group="sound" name="oddcats"/>
+|overridesource=1
+|description=When a fishing rod is reeled in
+|id=entity.fishing_bobber.retrieve
+|translationkey=subtitles.entity.fishing_bobber.retrieve
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Water Splash Old.ogg
+|subtitle=Fishing Bobber splashes
+|description=When a fishing bobber is bitten by something
+|source=Friendly Creatures <ref group="sound" name="oddcats"/>
+|overridesource=1
+|id=entity.fishing_bobber.splash
+|translationkey=subtitles.entity.fishing_bobber.splash
+|volume=0.25
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Random break.ogg
+|subtitle=Item breaks
+|source=player
+|description=When a fishing rod's durability is exhausted
+|id=entity.item.break
+|translationkey=subtitles.entity.item.break
+|volume=0.8
+|pitch=0.8-1.2
+|distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound =Bow shoot.ogg
+|source=player
+|description=When a fishing rod is cast
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+<!--There is no reel in sound on Bedrock Edition, it seems.-->
+| {{SoundLine
+|sound=Water Splash Old.ogg
+|source=player
+|description=When a fishing bobber is bitten by something
+|id=random.splash
+|volume=0.25
+|pitch=0.6-1.4}}
+| {{SoundLine
+|sound=Random break.ogg
+|source=player
+|description=When a fishing rod's durability is exhausted
+|id=random.break
+|volume=1.0
+|pitch = 0.9
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Fishing Rod
+|spritetype=item
+|nameid=fishing_rod
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Fishing Bobber
+|spritetype=entity
+|nameid=fishing_bobber
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Fishing Rod
+|spritetype=item
+|nameid=fishing_rod
+|id=392
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Fishing Hook
+|spritetype=entity
+|nameid=fishing_hook
+|id=77
+|foot=1}}
+
+=== Entity data ===
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Cow Tipper}}
+
+== Advancements ==
+{{load advancements|Fishy Business}}
+
+== History ==
+{{more sounds|section=1|type=old|Old throwing sound (pre-Sound Update), which was used for fishing rods}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.1|[[File:Fishing Rod JE1 BE1.png|32px]] Added fishing rods.
+|Fishing rods currently have no function.
+|Fishing rods are stackable.}}
+|{{HistoryLine||v1.2.0|dev=<nowiki>?</nowiki>|slink=:Category:Information needed requiring unarchived version|Fishing rods have been updated to be able to [[fishing|catch fish]] from any body of [[water]].
+|In first and third person view, fishing rods are now held more realistically, similarly to other [[tool]]s, and they now also use the [[File:Stick JE1 BE1.png|32px]] [[stick]] texture when cast. However, a normal fishing rod is still always shown in the hotbar.
+|Fishing rods now have a durability of 64 uses.}}
+|{{HistoryLine||v1.2.2|Fishing rods now work in [[multiplayer]]. Previously, fishing rods could be used in multiplayer, but would produce fake client-side fish that could not be picked up.
+|Fishing rods in multiplayer repeat the cast sound when reeling in, do not render the line, and do not switch textures when cast.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|Fishing rods are no longer stackable, stacking rods would allow the player to change the damage values of any rods stacked to the first rod. This could be exploited to have fishing rods that lasted forever.
+|[[File:Cast Fishing Rod JE2 BE1.png|32px]] In first person, cast fishing rods now use a texture without the line to show that it is no longer on the rod. The stick texture is still used in third person, however.}}
+|{{HistoryLine||Sound Update|The fishing rod cast [[sound]] has been changed.{{check version|Other pages list the change version as RC1. Which is more accurate, and which should we go with?}}}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w17a|Fishing rods now have infinite [[durability]] in [[Creative]] mode.}}
+|{{HistoryLine|||dev=12w18a|Fishing rods in multiplayer no longer repeat the cast sound when reeling in, now properly render the line, and now switch textures when cast.}}
+|{{HistoryLine||1.4.2|dev=12w36a|Added the [[carrot on a stick]], which can be [[craft]]ed using a fishing rod and a [[carrot]].}}
+|{{HistoryLine|||dev=12w37a|Fishing now gives the player [[experience]] with each [[fish]] caught.}}
+|{{HistoryLine||1.4.6|dev=12w49a|Fishing rods can now be [[enchanted]] with [[Unbreaking]] using [[enchanted book]]s.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Fishing rods now have 2 new [[enchantments]]: [[Lure]] and [[Luck of the Sea]].
+|Fishing rods can now be [[enchanted]] in an [[enchantment table]].
+|Enchanted fishing rods can now be obtained as a "treasure" item from [[fishing]], and unenchanted ones as a "junk" item.}}
+|{{HistoryLine||1.8|dev=14w02a|Fisherman [[villager]]s now [[trading|sell]] enchanted fishing rods for 7–8 [[emerald]]s.}}
+|{{HistoryLine|||dev=14w30a|Fishing rods are now rendered bigger and backwards in first person view.}}
+|{{HistoryLine|||dev=14w31a|Fishing rods are no longer rendered backwards in first person, but are still rendered bigger.}}
+|{{HistoryLine|||dev=14w33b|Cast fishing rods now use the cast texture in third person, rather than the stick texture.}}
+|{{HistoryLine||1.9|dev=15w31a|Cast fishing rods now use the cast texture in the [[hotbar]] and [[inventory]].}}
+|{{HistoryLine|||dev=15w32a|Fishing rods no longer [[damage]] the [[ender dragon]].}}
+|{{HistoryLine|||dev=15w36a|Fishing rods now properly hook [[entities]].
+|Fishing rods no longer cause knockback and pseudo-damage when hooking an entity.
+|Reeling in while hooked to a non-item entity now costs 5 [[durability]] (was 3) to the fishing rod.}}
+|{{HistoryLine||1.10|dev=16w21a|Fishing rods now hook [[item (entity)|item]]s, which costs 3 durability.}}
+|{{HistoryLine||1.11|dev=16w33a|Fishing rods can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine||1.12|dev=17w13a|The [[sound]] of the bobbers of fishing rods being thrown has been changed.}}
+|{{HistoryLine|||dev=17w16a|Added sounds for reeling in fishing bobbers.}}
+|{{HistoryLine||1.13|dev=17w50a|[[Crafting]] a [[carrot on a stick]] no longer requires the fishing rod to be at full [[durability]].<ref>{{bug|MC-123196||Carrot on a stick can be crafted using damaged fishing rod|WAI}}</ref>}}
+|{{HistoryLine|||dev=18w09a|[[Enchanted]] fishing rods now generate in the [[chest]]s of [[underwater ruins]].}}
+|{{HistoryLine|||dev=18w11a|Added [[drowned]], which have a chance to spawn [[drop]] fishing rods upon [[death]].}}
+|{{HistoryLine|||dev=18w14a|Catching a [[fish]] with the fishing rod now grants the "Fishy Business" [[advancement]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Fishing Rod JE2 BE2.png|32px]] [[File:Cast Fishing Rod JE3 BE2.png|32px]] The textures of fishing rods have been changed.}}
+|{{HistoryLine|||dev=19w11a|Fisherman villagers now sell enchanted fishing rods for 8-22 emeralds.}}
+|{{HistoryLine||1.16|dev=20w12a|Enchanted fishing rods can now only be caught when fishing in open water like any other treasure item.}}
+|{{HistoryLine|||dev=20w13a|Fishing rod is now used to craft [[warped fungus on a stick]].}}
+|{{HistoryLine|||dev=20w14a|The bobber of fishing rods is now considered a projectile and can ignite (if on [[fire]]) [[TNT]], activate [[target]]s and ring [[bell]]s.}}
+|{{HistoryLine||1.20.2|exp=Villager Trade Rebalance|dev=23w31a|Enchantments exclusive to fishing rods are no longer obtainable from villager [[trading]].}}
+|{{HistoryLine||1.21.2|dev=24w34a|The bobber of fishing rods can now bounce on the [[world border]] if hit.<ref group="note">Although claimed by [https://www.minecraft.net/en-us/article/minecraft-snapshot-24w34a minecraft.net] that fishing bobbers bounce on the world border, they don't and instead behave the same way as they did before.</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Fishing Rod JE1 BE1.png|32px]] [[File:Cast Fishing Rod JE2 BE1.png|32px]] Added fishing rods.}}
+|{{HistoryLine|||dev=build 8|If an [[entity]] is mounted on another entity, reeling it in with a fishing rod now pulls it off its ride.}}
+|{{HistoryLine|||dev=build 11|Fishing rods are now functional in [[third person view]].}}
+|{{HistoryLine||v0.12.1|dev=build 12|Fishing rods now make a less repetitive [[sound]].
+|Fishing rods now grant [[experience]] when successful.
+|Fishing rods can now be [[enchanted]].
+|Enchanted fishing rods can now be found as "treasure" from [[fishing]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added the [[carrot on a stick]], which can be [[craft]]ed using a fishing rod and a [[carrot]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Fisherman [[villager]]s now [[trading|sell]] enchanted fishing rods.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|Added [[drowned]], which can spawn with and [[drop]] fishing rods.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Fishing rods and [[enchanted]] fishing rods can now be found in [[underwater ruins]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Fishing Rod JE2 BE2.png|32px]] [[File:Cast Fishing Rod JE3 BE2.png|32px]] The textures of fishing rods have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Fisherman [[villager]]s now [[trading|sell]] enchanted fishing rods for 6 [[emerald]]s as part of their third tier trade.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.22|Increased thickness of fishing line in [[Vibrant Visuals]] mode so it does not disappear from TAA.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Fishing Rod JE1 BE1.png|32px]] Added fishing rods.
+|As a result of Legacy Console Edition using an internal server, fishing rods repeat the cast sound when reeling in, do not render the line, and do not switch textures when cast.}}
+|{{HistoryLine||xbox=TU7|[[File:Cast Fishing Rod JE2 BE1.png|32px]] [[File:Stick JE1 BE1.png|32px]] Fishing rods no longer repeat the cast sound when reeling in, now properly render the line, and now switch textures when cast.
+|The cast fishing rod texture appears in first person, while the stick texture is used instead in third person.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the [[carrot on a stick]], which can be [[craft]]ed using a fishing rod and a [[carrot]].}}
+|{{HistoryLine||xbox=TU27|xbone=CU15|ps3=1.18|psvita=1.18|ps4=1.18|Cast fishing rods now use the cast texture in third person, rather than the stick texture.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Fishing rods now have 2 new [[enchantments]]: [[Lure]] and [[Luck of the Sea]].
+|Fishing rods can now be [[enchanted]] in an [[enchantment table]].
+|Enchanted fishing rods can now be obtained as a "treasure" item from [[fishing]], and unenchanted ones as a "junk" item.|Fisherman [[villager]]s now [[trading|sell]] enchanted fishing rods for 7–8 [[emerald]]s.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Fishing rods now hook [[item (entity)|item]]s, which costs 3 durability.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|The fishing rod's holding position in first person view has been updated to match with their Java 1.8 counterpart.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|The [[sound]] of the bobbers of fishing rods being thrown has been changed.|Added sounds for reeling in fishing bobbers.|Fishing rods no longer cause knockback and pseudo-damage when hooking an entity.|Fishing rods can now be used to fuel [[furnace]]s.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Fishing rods once again cause knockback and pseudo-damage when hooking an entity.{{check version}}}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[Enchanted]] fishing rods now generate in the [[chest]]s of [[underwater ruins]].
+|Added [[drowned]], which have a chance to spawn [[drop]] fishing rods upon [[death]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Fishing Rod JE2 BE2.png|32px]] [[File:Cast Fishing Rod JE3 BE2.png|32px]] The textures of fishing rods have been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Fisherman [[villager]]s now [[trading|sell]] enchanted fishing rods for 6 [[emerald]]s as part of their third tier trade.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Fishing Rod JE1 BE1.png|32px]] [[File:Cast Fishing Rod JE2 BE1.png|32px]] Added fishing rods.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 346.{{info needed|and what was the entity's?}}}}
+|{{HistoryLine|||dev=18w02a|The bobber of fishing rods now has its own [[entity]] ID (<code>fishing_bobber</code>), although summoning the bobber alone is still not possible. This allows players to properly select fishing bobbers in commands via the <code>type</code> [[target selector argument]], instead of using <code><nowiki>[name=unknown]</nowiki></code>.|The bobber of fishing rods now has its own translation string ("Fishing Bobber"), and no longer displays as "unknown" in command output strings when called by a target selector.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID of fishing rods has been changed from <code>fishinghook</code> to <code>fishing_hook</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*[[Skeleton]]s can be pulled into their own [[arrow]]s.
+*When casting the rod into a [[Nether Portal (block)|Nether portal]], the bobber may stick to it like a normal [[block]], go through and travel in [[the Nether]], or stop on the next block behind the portal.
+*If the player stands directly in front of a [[bubble column]] and casts the line onto a block above the player, the line falls downward, if it is a downwards one.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Enchanted Fishing Rod.gif|An enchanted fishing rod.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+13w36a banner.png|[[13w36a]] snapshot banner
+Bobber and bubbles.png|Trail of bubbles indicating that a [[fish]] is about to bite
+Bobber2D.png|Two-dimensional bobber {{in|je}}
+Bobber3D.png|Three-dimensional bobber {{in|be}}
+Enderman Fishing.png|Bobbers can be attached to [[mobs]], like this [[enderman]]
+Drowned with Fishing rod.png|A [[drowned]] holding a fishing rod.
+Firebobber.png|A bobber cast in fire
+Fishingbobber.png|Fishing in 2010
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Fishing Rod Hooking Teaser.png|Image from [[dinnerbone]] teasing the addition of fishing rods hooking entities
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Sunny Fishing.jpg|[[Sunny]] reeling back a fishing rod
+File:Croc Ad 1.jpg|[[Noor]] catching a [[salmon]]<ref>{{ytl|e1AJo7jU5MI|Minecraft x Crocs|crocs|February 16, 2023}}</ref>
+File:Fishing Rod SDGP.png|Fishing rod in the [[Super Duper Graphics Pack]]
+File:Warden Fishing Rod.png|A [[warden]] holding a fishing rod, jokingly suggested by [[Chi Wong]] to be “scarier” as a reference to 1.8 PvP<ref>{{Tweet|wChiwi|1494616239041355787|I've made the Warden scarier|February 18,2022}}</ref>
+File:happi_noodle, grim_noodle, and PlayPoppyTim3.jpeg|[[Kissy Missy]] using a fishing rod
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{navbox tools}}
+{{Navbox items|Tools}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Tools]]
+
+[[cs:Rybářský prut]]
+[[de:Angel]]
+[[es:Caña de pescar]]
+[[fr:Canne à pêche]]
+[[hu:Horgászbot]]
+[[it:Canna da pesca]]
+[[ja:釣竿]]
+[[ko:낚싯대]]
+[[lzh:漁竿]]
+[[nl:Vishengel]]
+[[pl:Wędka]]
+[[pt:Vara de Pesca]]
+[[ru:Удочка]]
+[[uk:Вудка]]
+[[zh:钓鱼竿]]

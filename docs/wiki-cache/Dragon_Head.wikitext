@@ -1,0 +1,323 @@
+{{Infobox block
+| othernames = Ender Dragon Head ({{tooltip|NZ|New Zealand}})
+| image = Dragon Head.png
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = {{jebe|No|Yes}}
+| rarity = Epic
+}}
+A '''dragon head'''{{fn|'''Ender Dragon Head''' in New Zealand English.}} is a [[block]] that resembles a smaller version of the [[ender dragon]]'s [[head]]. It can only be obtained from [[End ship]]s.
+
+== Obtaining ==
+Unlike other [[mob heads]] obtainable in survival, the dragon head does not drop when [[Ender Dragon|its corresponding mob]] is killed by a [[charged creeper]].<ref>{{bug|MC-132933||Inconsistency: Player, Ender Dragon, and Wither don't drop their heads when killed by charged creeper|WAI}}</ref>
+
+=== Breaking ===
+No tool can accelerate the breaking process of dragon head.<ref>{{bug|MC-192905||Heads & Skulls have no assigned tool}}</ref>
+{{breaking row|horizontal=1|Dragon Head}}
+Dragon head drops itself when it's destroyed.
+When destroyed by an [[explosion]], the dragon head will always drop as an item.
+
+=== Natural generation ===
+Dragon heads generate on [[End ship]]s found in [[End cities]].
+
+== Usage ==
+=== Decoration ===
+Dragon heads can be oriented in 16 different directions on top of a block, and 4 directions on the sides of blocks, similar to [[sign]]s. They can be placed on top of, or beside each other by shift clicking.
+
+When placed and powered by redstone, the dragon head opens and closes its mouth repeatedly (2 times per second). The same animation occurs when worn by a (horizontally) moving player, zombie, skeleton, or [[armor stand]] (note: the animation does not play if the <code>NoGravity</code> tag is set to 1).
+
+=== Wearing ===
+{{See also|#Renders}}
+The player can wear dragon heads, similarly to [[pumpkin]]s or helmets. This overlays the second layer of the player's [[skin]].
+
+==== Disguise ====
+Unlike most other heads, wearing a dragon head does ''not'' impact the behavior of a corresponding mob: the [[ender dragon]] attacks the player as usual.
+
+Wearing a dragon head makes the player invisible to other players on a [[locator map]] and the [[locator bar]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a dragon head on a player, mob, or armor stand with an empty helmet slot, within the block the dispenser is facing.
+
+=== Crafting ingredient===
+{{Crafting
+|ignoreusage=1
+|ingredients=Dragon Head +<br>[[Gunpowder]] +<br>Any [[Dye]]
+|Gunpowder
+|Dragon Head
+|Matching Dye
+|Output=Matching Firework Star
+|description=Forms Creeper shape
+|showdescription=1
+}}
+
+=== Enchantments ===
+Dragon heads can receive the following [[enchantment]]s, but only through an [[anvil]].
+
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchanting|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Note blocks ===
+Placing a dragon head above a [[note block]] causes the note block to play the [[ender dragon]]'s {{cd|ambient}} sound when activated.
+
+The block below the note block does not affect the mob sound it creates.
+
+=== Piston interactivity ===
+Dragon head is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Ender dragon idle1.ogg
+|sound2=Ender dragon idle2.ogg
+|sound3=Ender dragon idle3.ogg
+|sound4=Ender dragon idle4.ogg
+|subtitle=Dragon roars
+|source=record
+|description=When an ender dragon head is played using a note block
+|id=block.note_block.imitate.ender_dragon
+|translationkey=subtitles.entity.ender_dragon.ambient
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a dragon head is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+<!--volumes and pitches seem to be approximately v=0.9 p=0.84, but those values are approximate and are not in the files. They are probably inside of the code.-->
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Ender dragon idle1.ogg
+|sound2=Ender dragon idle2.ogg
+|sound3=Ender dragon idle3.ogg
+|sound4=Ender dragon idle4.ogg
+|source=record
+|description=When a dragon head is played using a note block
+|id=note.enderdragon
+|pitch=0.84 <ref group=sound name=pitch>Actually equal to <math>\frac{1}{\sqrt[4]{2}}</math>, which is about 0.8409</ref>}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a dragon head is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Dragon Head
+|spritetype=block
+|nameid=dragon_head
+|itemtags=skulls}}
+{{ID table
+|displayname=Dragon Wall Head
+|spritetype=block
+|nameid=dragon_wall_head
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=dragon-head
+|spritetype=block
+|nameid=skull
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Dragon Head
+|spritetype=block
+|nameid=dragon_head
+|aliasid=skull / 5
+|id=-969
+|translationkey=item.skull.dragon.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=dragon-head
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Head|block states}}
+
+=== Block data ===
+A dragon head has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Head|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+{{See asset history|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Dragon Head (S) JE1.png|32px]] Added dragon heads.
+|Dragon heads are currently available only in [[Creative]] mode.}}
+|{{HistoryLine|||dev=15w32c|Dragon heads now generate on [[End ship]]s, meaning they are now obtainable in [[Survival]].}}
+|{{HistoryLine|||dev=15w39a|[[Dispenser]]s can now equip dragon heads onto [[player]]s, [[mob]]s, and [[armor stand]]s.}}
+|{{HistoryLine|||dev=15w49a|Dragon heads no longer turn red when the player or mob takes damage.<ref>{{bug|MC-85756}}</ref>}}
+|{{HistoryLine||1.11|dev=pre1|The hand animation when holding a dragon head in first person has been changed to block the player's view very much.<ref>{{bug|MC-164679}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Dragon heads now play a sound when placed.
+|Dragon heads can no longer be placed inside entities.<ref>{{bug|MC-2208}}</ref>}}
+|{{HistoryLine|||dev=18w21a|The [[rarity]] of dragon heads has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w03a|Dragon heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.19.4|dev=23w05a|Dragon heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|The rarity of dragon heads has been changed from "Uncommon" to "Epic".}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Dragon Head (item) BE1.png|32px]] Added dragon heads. 
+|Dragon heads use a two-dimensional sprite, unlike [[Java]] does.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Dragon heads can now be used to craft [[firework star]]s.}}
+|{{HistoryLine|||dev=beta 1.2.0.11|[[File:Dragon Head (item) BE2.png|32px]] Dragon heads in [[inventories]] and when held by mobs/players now display as [[block]]s.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.25|Dragon heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of dragon heads has been changed from "Common" to "Epic".}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Dragon Head (item) JE1.png|32px]] Added dragon heads.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Dragon heads are now held the same way as on ''Java Edition'' in first person.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|The hand animation when holding a dragon head in first person has been changed to block the player's view very much.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Dragon Head (item) BE1.png|32px]] Added dragon heads.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|The ID of heads have been split into 12; one of each available standard head, as well as a wall counterpart of each.}}
+|{{HistoryLine||?|Added a "powered" block state.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The separate and direct item forms of the <code>skull</code> block ID have been merged and its [[Bedrock Edition data values|data values]] have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+
+<gallery>
+File:Dragon Head.gif|An animation of the dragon head when redstone power is supplied.
+File:Alex wearing Dragon Head.png|[[Player|Alex]] wearing a dragon head.
+File:Ari wearing Dragon Head.png|[[Ari]] wearing a dragon head.
+File:Efe wearing Dragon Head.png|[[Efe]] wearing a dragon head.
+File:Kai wearing Dragon Head.png|[[Kai]] wearing a dragon head.
+File:Makena wearing Dragon Head.png|[[Makena]] wearing a dragon head.
+File:Noor wearing Dragon Head.png|[[Noor]] wearing a dragon head.
+File:Steve wearing Dragon Head.png|[[Player|Steve]] wearing a dragon head.
+File:Sunny wearing Dragon Head.png|[[Sunny]] wearing a dragon head.
+File:Zuri wearing Dragon Head.png|[[Zuri]] wearing a dragon head.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:EndShipBow.png|A dragon head found at the bow of an End ship.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Dragon Helmet.png|[[LEGO Minecraft|Lego]] dragon head, referred to as the "dragon helmet."<ref>{{Citation|url=https://www.lego.com/en-us/product/the-ender-dragon-and-end-ship-21264|title=The Ender Dragon and End Ship|website=LEGO}}</ref>
+</gallery>
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox combat|armor}}
+{{Navbox The End}}
+
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+
+[[Category:Renewable resources]]
+
+[[es:Cabeza#Dragón]]
+[[ko:드래곤 머리]]
+[[lzh:龍首]]
+[[pt:Cabeça do Dragão]]
+[[zh:龙首]]

@@ -1,0 +1,168 @@
+{{About||the removed water lakes|Water Lake|lava aquifers|Cave|lava in basalt deltas|Delta|"lava lakes" in the Nether|Lava sea}}
+{{Infobox structure
+| title = Lava lake
+| image = LavaLake.png
+| biome = Any biomes in the Overworld except [[deep dark]]
+| blocks =
+* {{BlockLink|Cave Air}}{{only|java}}
+* {{BlockLink|Air}}{{only|bedrock}}
+* {{BlockLink|Stone}}
+* {{BlockLink|Lava}}
+|canspawn=No
+}}
+
+A '''lava lake''' is a small, widespread, naturally-generated [[feature]] in the [[Overworld]] that contains a volume of [[lava]].
+
+== Description ==
+Lava lakes are shallow and often small bodies of liquid. Lava lakes found at the surface are surrounded by [[stone]], which can be replaced by other features such as [[ore feature]]s of blocks. These ore features are made of blocks like [[dirt]], [[gravel]], and [[coal ore]].
+
+Lava lakes generate with a small [[air]] pocket above them, which may result in floating [[sand]], floating [[snow]] cover, or even floating [[tree]]s above<ref>{{bug|MC-225839}}</ref>. Lava lakes that spawn on ground level may cause nearby trees to catch on [[fire]] and burn away.
+
+{{Calculator|chunkbase|pois=Lp|zoom=0.75}}
+
+== Generation ==
+Lava lakes are rare on the surface but often found underground above Y=0, and replace blocks around them with stone. They can generate in any biomes in Overworld except the [[deep dark]].
+
+{{IN|java}}, the air pockets above lakes are generated with [[cave air]] instead of normal air. This is true even for lakes that are exposed to the open sky.
+
+== Data values ==
+
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=lava-lake
+|spritetype=env
+|nameid=lake
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=lava-lake
+|spritetype=env
+|nameid=lake_lava
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=lava-lake
+|spritetype=env
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|fluid}} The block to use for the fluid of the lake.
+*** {{nbt inherit/block state provider}}
+** {{nbt|compound|barrier}} The block to use for the barrier of the lake. If 'air' is specified, the barrier remains unchanged instead of overwriting any existing blocks.
+*** {{nbt inherit/block state provider}}
+** {{nbt|string|can_place_feature}}{{upcoming|JE 26.2}} Describes the block that the feature can be placed on.
+** {{nbt|string|can_replace_with_air_or_fluid}}{{upcoming|JE 26.2}} Describes the block that the feature can replace with air or the provided {{cd|fluid}} block.
+** {{nbt|string|can_replace_with_barrier}}{{upcoming|JE 26.2}} Describes the block that the feature can replace with the provided {{cd|barrier}} block.
+</div><section end="config"/>
+
+Note that lake features are generated on their northwest corner, with the actual center of the lake being offset from the placement position by +8 blocks on both the X and Z axes. It's recommended to counteract this by applying an [[Placed feature#:~:text=noise based count|xz_spread offset]] of -8 blocks to placed lake features before performing any additional checks such as block predicate filters.
+
+Lake features require a sufficient amount of solid blocks in order to generate, including (but not limited to) a solid base at least 3 blocks thick (starting from one block below the placement position). The fluid level of generated lake features is always one block below the placement position.
+
+Noise-type blockstate providers apply a single blockstate for the entire lake based on its placement position rather than the position of the lake's individual constituent blocks.
+
+Lake features exhibit a bug in which the [[freeze top layer]] feature type is applied only to portions of the lake that are within the chunk from which the lake feature originates. In effect, this means that usually only the north-west corner of water lakes are iced over in snowy biomes.
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:lake",
+  "config": {
+    "barrier": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:stone"
+      }
+    },
+    "fluid": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:lava",
+        "Properties": {
+          "level": "0"
+        }
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.6|Added lava lakes.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|Lava lakes now replace blocks around them with stone.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.18|dev=Pre-release 1|Underground lava lakes now generate only above Y{{=}}0.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap3|Added the {{cd|can_place_feature}}, {{cd|can_replace_with_air_or_fluid}}, and {{cd|can_replace_with_barrier}} fields.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added lava lakes.}}
+|{{HistoryLine||v0.12.3|Lava lakes are no longer generated independently of the [[world seed]].}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Badlands Lava Lake.png|A lava lake in a badlands biome.
+ObsidianLake.png|A waterfall naturally generated on top of a lava lake, turning it into obsidian.
+Plains Lava Lake.png|A lava lake in plains biome.
+snowy Lava Lake.png|A lava lake found directly on the surface of the world.
+Two Lava Lakes.png|2 naturally-occurring lava lakes next to each other. Note the forest fire the lake on the left is not starting.
+Lava Lake w forest fire.png|A lava lake spawned naturally, note the forest fire nearby.
+GiantBurning.png|A [[giant]] burning in a lava lake.
+Desert Lava Lake.png|A lava lake in a desert.
+Desert Lava Lake 2.png|Another lava lake in a desert.
+Swamp Lava Lake.png|A lava lake in a swamp.
+Cave Lava Lake.png|This cave intersected a lava lake, rather than hitting the lava level like is more commonly seen.
+A fern next to lava.png|A fern next to an underground lava lake.
+Snow on lava.png|Snow layer generated on top of lava lake.
+Surface lava.jpg|A lava lake near a ravine in a desert.
+Snowlava.png|Lava lake in [[Snowy Taiga|snowy taiga]] biome.
+Lavalakeburninggrass.png|A lava lake that is burning grass.
+Village lava lake.png|A lava lake in a village.
+Amethyst geode lava lake.png|A lava lake that is intersecting with an amethyst geode.
+Snow over lava.png|A lava lake with some snow floating over it.
+Heart Lava Lake.jpg|An allegedly naturally created heart-shaped lava lake.
+Fiery Forest.jpg|A lava lake setting fire to a forest.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Lago de lava]]
+[[fr:Lac de lave]]
+[[ja:溶岩湖]]
+[[ko:용암 호수]]
+[[lzh:熔石湖]]
+[[pt:Lago de lava]]
+[[ru:Лавовое озеро]]
+[[uk:Озеро лави]]
+[[zh:熔岩湖]]

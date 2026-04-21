@@ -1,0 +1,669 @@
+{{about|the screen|debug hotkeys|Debug hotkey|other uses|Debug}}
+{{exclusive|java}}
+[[File:Default Debug Menu.png|thumb|Screenshot of the debug menu in ''[[Java Edition]]'' with default settings.]]
+[[File:DebugScreen.png|thumb|Screenshot showing detailed debug information.]]
+
+The '''debug screen''', '''debug overlay''' or '''F3 screen''' functions as a menu for accessing debugging information, but it also provides useful in-game information like [[Coordinates|player coordinates]]. It is triggered when {{key|F3}} is pressed. 
+
+The debug screen consists of info text lines and five toggleable graphs: profiler, frame rate, [[tick]] rate, bandwidth, and [[w:Lag (video games)#Ping time|ping time]] graphs.
+
+== Information lines ==
+[[File:Debug Options.png|thumb|The debug options menu, used to toggle debug screen text and [[debug renderer]]s.]]
+
+The debug screen consists of 28 elements (referred to as "debug screen text" in the debug options menu). Each of these elements can be individually disabled through the debug options menu, which is accessed by pressing {{key|F3+F6}}:
+* "OFF" removes the given element from the debug overlay.
+* "In Overlay" adds the given element to the debug overlay.
+* "Always" causes the element to display on-screen even when the debug overlay is not open.
+
+There are 2 built-in configurations: "Default Profile" and "Performance Profile".
+
+Setting the {{gmr|reduced_debug_info}} game rule to true prevents some elements from being displayed, even if the player has toggled them to "In Overlay" or "Always".
+{{-}}
+{| class="wikitable sortable stikitable"
+! rowspan="2" | Name
+! rowspan="2" | Line syntax
+! rowspan="2" | Description
+! colspan="2" | Built-in profiles
+! rowspan="2" | Visible when {{nowrap|<code>reduced_debug_info</code>}} is set to true
+|-
+! Default<br>profile
+! Performance<br>profile
+|-
+| biome
+| style="white-space:nowrap;" | Biome: <code>biome</code>
+| Displays in which [[biome]] the player is.
+* <code>biome</code>: the biome [[identifier]].
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| chunk_generation_stats
+| style="white-space:nowrap;" | NoiseRouter T: <code>T</code> V: <code>V</code> C: <code>C</code> E: <code>E</code> D: <code>D</code> W: <code>W</code> PV: <code>PV</code> PS: <code>PS</code> N: <code>N</code><br>Biome builder PV: <code>PV</code> C: <code>C</code> E: <code>E</code> T: <code>T</code> H: <code>H</code>
+| The NoiseRouter line displays the noise values used to generate the terrain.
+* <code>T</code>: the [[temperature]] value.
+* <code>V</code>: the [[humidity]] value.
+* <code>C</code>: the [[continentalness]] value.
+* <code>E</code>: the [[erosion]] value.
+* <code>D</code>: the [[depth]] value.
+* <code>W</code>: the [[weirdness]] (or ridges) value.
+* <code>PV</code>: the peaks and valleys (or ridges folded) value (<math>1-\vert (3 \vert weirdness \vert) - 2 \vert</math>).
+* <code>PS</code>: the initial density without jaggedness value.
+* <code>N</code>: the final density value.
+The Biome builder line displays categories for the noise values.
+* <code>PV</code>:
+** "Valley" if <math>PV < 0.05</math>.
+** "Low" if <math>0.05 \le PV < \tfrac{4}{15}</math>.
+** "Mid" if <math>\tfrac{4}{15} \le PV < 0.4</math>.
+** "High" if <math>0.4 \le PV < \tfrac{17}{30}</math>.
+** "Peak" if <math>PV \ge \tfrac{17}{30}</math>.
+* <code>C</code>:
+** "Mushroom fields" if <math>C < -1.05</math>.
+** "Deep ocean" if <math>-1.05 \le C < -0.455</math>.
+** "Ocean" if <math>-0.455 \le C < -0.19</math>.
+** "Coast" if <math>-0.19 \le C < -0.11</math>.
+** "Near inland" if <math>-0.11 \le C < 0.03</math>.
+** "Mid inland" if <math>0.03 \le C < 0.3</math>.
+** "Far inland" if <math>C \ge 0.3</math>.
+* <code>E</code>: a number between 0 and 6 (both included), where a lower number corresponds to a lower corresponding value.
+* <code>T</code>: a number between 0 and 4 (both included), where a lower number corresponds to a lower corresponding value.
+* <code>H</code>: a number between 0 and 4 (both included), where a lower number corresponds to a lower corresponding value.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| chunk_render_stats
+| style="white-space:nowrap;" | C: <code>C</code> (s) D: <code>D</code>, pC: <code>pC</code>, pU: <code>pU</code>, aB: <code>aB</code>
+| Displays information about loaded [[chunk]]s.
+* <code>C</code>: the number of chunks rendered over the total number of chunks in the loaded area.
+* <code>D</code>: the effective client-side [[render distance]].
+* <code>pC</code>: the number of pending chunks to be batched.
+* <code>pU</code>: the number of pending uploads to the video card.
+* <code>aB</code>: the number of available buffers to use in the batching process.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| chunk_source_stats
+| style="white-space:nowrap;" | Chunks[C] W: <code>W1</code>, <code>W2</code> E: <code>E1</code>,<code>E2</code>,<code>E3</code>
+| Displays information about client-side chunks.
+* <code>W1</code>: the number of cached chunks.{{verify|See net.minecraft.client.multiplayer.ClientChunkCache#gatherStats}}
+* <code>W2</code>: the number of loaded chunks.
+* <code>E1</code>: the number of loaded entities.
+* <code>E2</code>: the number of entity sections.{{verify|See net.minecraft.world.level.entity.TransientEntitySectionManager#sectionStorage}}
+* <code>E3</code>: the number of entity ticking chunks.{{verify}}
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| day_count
+| style="white-space:nowrap;" | Day #<code>DAY</code>
+| Displays the number of days that have elapsed in the world.
+* <code>DAY</code>: the number of in-game whole days the player has been in the world.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| entity_render_stats
+| style="white-space:nowrap;" | E: <code>E</code>/<code>T</code>, SD: <code>SD</code>
+| Displays information about loaded [[entities]].
+* <code>E</code>: the number of entities in the player's [[FOV]].
+* <code>T</code>: the number of entities in the loaded area.
+* <code>SD</code>: the [[simulation distance]].
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| entity_spawn_counts
+| style="white-space:nowrap;" | SC: <code>SC</code>, M: <code>M</code>, C: <code>C</code>, A: <code>A1</code>, A: <code>A2</code>, U: <code>U</code>, W: <code>W1</code>, W: <code>W2</code>, M: <code>M</code>{{until|JE 26.2}}<br>SC: <code>SC</code>, M: <code>M</code>, C: <code>C</code>, AM: <code>A1</code>, AX: <code>A2</code>, U: <code>U</code>, W: <code>W1</code>, W: <code>W2</code>, M: <code>M</code>{{upcoming|JE 26.2}}
+| Displays the amount of entities that count toward the [[mob cap]].
+* <code>SC</code>: the total amount of loaded mob-spawning chunks (usually 289).
+* <code>M</code>: the total amount of monsters (hostile mobs).
+* <code>C</code>: the total amount of creatures (passive mobs).
+* <code>A1</code>: the total amount of ambient mobs ([[bat]]s).
+* <code>A2</code>: the total amount of [[axolotl]]s.
+* <code>U</code>: the total amount of underground water mobs ([[glow squid]]s).
+* <code>W1</code>: the total amount of water mobs ([[squid]]s, [[dolphin]]s and [[nautilus]]es).
+* <code>W2</code>: the total amount of water ambient mobs ([[fishes]]).
+* <code>M</code>: the total amount of miscellaneous entities.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| fps
+| style="white-space:nowrap;" | <code>FPS</code> fps T: <code>T</code> <code>vsync</code>{{Until|JE 26.2}}
+<code>FPS</code> fps T: <code>T</code> (<code>present mode</code>){{Upcoming|JE 26.2}}
+| Displays the framerate.
+* <code>FPS</code>: the current framerate.
+* <code>T</code>: the max framerate value ("inf" if set to unlimited).
+* <code>vsync</code>:{{Until|JE 26.2}}
+** "vsync" if VSync is turned on.
+** else nothing.
+* <code>present mode</code>: the current presentation mode, this can vary depending on vsync, the renderer and hardware support{{Upcoming|JE 26.2}}
+** immediate
+** mailbox
+** fifo
+** fifo relaxed
+| {{tc|yes|In overlay}}
+| {{tc|always|Always}}
+| {{tc|yes}}
+|-
+| game_version
+| style="white-space:nowrap;" | Minecraft <code>V</code> (<code>V</code>/<code>M</code>/<code>S</code>)
+| Displays the game version.
+* <code>V</code>: the game version.
+* <code>M</code>:
+** "vanilla" if using a vanilla version.
+** the [[mod]] or mod loader name if using a modded version.
+* <code>S</code>:
+** "snapshot" if playing in a [[snapshot]], [[pre-release]], or [[release candidate]].
+** else nothing.
+| {{tc|yes|In overlay}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| gpu_utilization
+| style="white-space:nowrap;" | GPU: <code>GPU</code>%
+| Displays the {{w|GPU}} utilization.
+* <code>GPU</code>: the percentage of GPUs' processing power being used.
+| {{tc|no|OFF}}
+| {{tc|yes|In overlay}}
+| {{tc|yes}}
+|-
+| heightmap
+| style="white-space:nowrap;" | CH S: <code>S</code> M: <code>M</code> ML: <code>ML</code><br>SH S: <code>S</code> O: <code>O</code> M: <code>M</code> ML: <code>ML</code>
+| The CH line displays values of the corresponding client-side [[heightmap]]s at the player's position.<br>The SH line displays values of the corresponding server-side heightmaps at the player's position.
+* <code>S</code>: the [[heightmap#WORLD_SURFACE|WORLD_SURFACE]] value.
+* <code>M</code>: the [[heightmap#MOTION_BLOCKING|MOTION_BLOCKING]] value.
+* <code>ML</code>: the [[heightmap#MOTION_BLOCKING_NO_LEAVES|MOTION_BLOCKING_NO_LEAVES]] value.
+* <code>O</code>: the [[heightmap#OCEAN_FLOOR|OCEAN_FLOOR]] value.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| light_levels
+| style="white-space:nowrap;" | Client Light: <code>L</code> (<code>S</code> sky, <code>B</code> block)
+| Displays the client-side [[light]] values at the player's feet.
+* <code>L</code>: the total light level (<math>\max(S,B)</math>, not to be confused with the [[internal light level]]).
+* <code>S</code>: the [[sky light]] level.
+* <code>B</code>: the [[block light]] level.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| local_difficulty
+| style="white-space:nowrap;" | Local Difficulty: <code>D</code> // <code>C</code>
+| Displays [[local difficulty]]-related values.
+* <code>D</code>: the [[local difficulty]] of the chunk the player is in.
+* <code>C</code>: the [[clamped local difficulty]]
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_block_state
+| style="white-space:nowrap;" | Targeted Block: <code>C</code><br><code>B</code><br><code>S</code>
+| Displays information about the targeted [[block]].
+* <code>C</code>: the coordinates of the block.
+* <code>B</code>: the [[identifier]] of the block.
+* <code>S</code>: the list of [[block states]] of the block (one line per state property).
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_block_tags
+| style="white-space:nowrap;" | <code>T</code>
+| Displays the list of [[Tag (Java Edition)|tags]] containing the targeted block (one line per tag).
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_entity
+| style="white-space:nowrap;" | Targeted Entity<br><code>E</code>
+| Displays the [[identifier]] of the targeted [[entity]].
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_entity_tags
+| style="white-space:nowrap;" | <code>T</code>
+| Displays the list of [[Tag (Java Edition)|tags]] containing the targeted entity (one line per tag).
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_fluid_state
+| style="white-space:nowrap;" | Targeted Fluid: <code>C</code><br><code>B</code><br><code>S</code>
+| Displays information about the targeted [[fluid]].
+* <code>C</code>: the coordinates of the fluid.
+* <code>B</code>: the [[identifier]] of the fluid.
+* <code>S</code>: the list of [[block states]] of the fluid (one line per state property).
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| looking_at_fluid_tags
+| style="white-space:nowrap;" | <code>T</code>
+| Displays the list of [[Tag (Java Edition)|tags]] containing the targeted fluid (one line per tag).
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| memory
+| style="white-space:nowrap;" | Mem: <code>P</code>% <code>R</code>MB<br>Allocation rate: <code>A</code>MB/s<br>Allocated: <code>AP</code>% <code>AR</code>MB
+| Displays information about the memory being actively used by ''Minecraft'' and the allocated memory to ''Minecraft''.
+* <code>P</code>: the percentage of used memory.
+* <code>R</code>: the amount of used of memory over the total amount of memory, in {{W|Mebibyte|{{abbr|MiB|Mebibytes}}}}.{{note|name=MB|Displayed as "MB" in the game instead of "MiB"}}
+* <code>A</code>: the rate of heap memory that the game allocates, in {{abbr|MiB|Mebibyte}}/{{abbr|s|Second}}.{{note|name=MB}}
+* <code>AP</code>: the percentage of memory the game has allocated from the maximum it can use.
+* <code>AR</code>: the amount of allocated memory, in {{abbr|MiB|Mebibyte}}.{{note|name=MB}}
+| {{tc|yes|In overlay}}
+| {{tc|yes|In overlay}}
+| {{tc|yes}}
+|-
+| particle_render_stats
+| style="white-space:nowrap;" | P: <code>P</code>
+| Displays the number of [[Particles (Java Edition)|particles]] in the loaded area.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| player_position
+| style="white-space:nowrap;" | XYZ: <code>PX</code> / <code>PY</code> / <code>PZ</code><br>Block: <code>BX</code> <code>BY</code> <code>BZ</code><br>Chunk: <code>CX</code> <code>CY</code> <code>CZ</code> [<code>RX</code> <code>RZ</code> in <code>F</code>]<br>Facing: <code>D</code> (Towards <code>T</code>) (<code>Y</code> <code>P</code>)<br><code>DIM</code> FC: <code>FC</code>
+|
+* <code>PX</code>, <code>PY</code>, <code>PZ</code>: the [[coordinates]] of the player's feet (respectively X, Y Z).
+* <code>BX</code>, <code>BY</code>, <code>BZ</code>: the coordinates of the block the player's feet are in (respectively X, Y Z).
+* <code>CX</code>, <code>CY</code>, <code>CZ</code>: the [[chunk coordinates]] of the chunk the player is in (respectively X, Y Z).
+* <code>RX</code>, <code>RZ</code>: the coordinates of the chunk within the file it is stored in.
+* <code>F</code>: the name of the file the chunk is stored in.
+* <code>D</code>: the cardinal direction the player is facing.
+* <code>T</code>:
+** "negative Z" if the player is facing north.
+** "positive Z" if the player is facing south.
+** "positive X" if the player is facing east.
+** "negative X" if the player is facing west.
+* <code>Y</code>, <code>P</code>: the player's {{w|Aircraft principal axes|yaw and pitch}}.
+* <code>DIM</code>: the [[identifier]] of the [[dimension]] the player is in.
+* <code>FC</code>: the amount of [[forceload|force loaded]] chunks.
+| {{tc|yes|In overlay}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| player_section_position
+| style="white-space:nowrap;" | Section-relative: <code>X</code> <code>Y</code> <code>Z</code>
+| Displays the relative coordinates of the block the player's feet are in within the chunk.
+| {{tc|yes|In overlay}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| post_effect
+| {{info needed}}
+| {{info needed}}
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| simple_performance_impactors
+| style="white-space:nowrap;" | <code>C</code> B: <code>B</code><br>Filtering: <code>F</code>
+| Displays various [[Options#Video Settings|video setting]] options.
+* <code>C</code>: the way [[cloud]]s are rendered.
+** "fancy-clouds" if set to fancy.
+** "fast-clouds" if set to fast.
+** else nothing.
+* <code>B</code>: the [[biome blend]] value.
+* <code>F</code>: the [[texture filtering]] option.
+** "None".
+** "RGSS".
+** "Anisotropic 2x".
+** "Anisotropic 4x".
+** "Anisotropic 8x".
+| {{tc|yes|In overlay}}
+| {{tc|yes|In overlay}}
+| {{tc|yes}}
+|-
+| sound_mood
+| style="white-space:nowrap;" | Sounds: <code>S1</code> + <code>S2</code> (Mood <code>M</code>%) 
+| Displays how many [[sound]]s are being played and the [[mood]] value.
+* <code>S1</code>: the number of "static" sounds (e.g. breaking or placing a block, moving or burning fire) playing over the maximum number of static sounds that can be played (usually 247).
+* <code>S2</code>: the number of "streaming" sounds (i.e. music, music from music discs, and ambience sounds) playing over the maximum number of streaming sounds that can be played (usually 8).
+* <code>M</code>: the mood value.
+| {{tc|no|OFF}}
+| {{tc|no|OFF}}
+| {{tc|no}}
+|-
+| system_specs
+| style="white-space:nowrap;" | Java: <code>JAVA VERSION</code><br>CPU: <code>THREAD</code> <code>NAME</code> <code>CORES</code> <code>SPEED</code><br>Display: <code>RES</code> (<code>VENDOR</code>)<br><code>GRAPHICS CARD</code> <code>GRAPHICS CARD INFO</code><br>OpenGL <code>OPENGL VERSION</code> <code>RENDERER</code>
+| Displays various computer specifications.
+* <code>JAVA VERSION</code>: the {{w|Java (programming language)|Java}} version currently being used.
+* <code>THREAD</code>: the amount of threads on the player's CPU.
+* <code>NAME</code>: the name of the CPU, including its brand.
+* <code>CORES</code>: the amount of cores on the player's CPU. This appears only with [https://www.amd.com/en/products/processors/desktops/ryzen.html AMD CPU]'s.
+* <code>SPEED</code>: the base clock speed of the player's CPU (in GHz). This appears only with [https://www.intel.com/content/www/us/en/products/details/processors/core.html Intel CPU]'s.
+* <code>RES</code>: the resolution of ''Minecraft''.
+* <code>VENDOR</code>: the display vendor.
+* <code>GRAPHICS CARD</code>: the {{w|graphics card}} name, including its brand.
+* <code>GRAPHICS CARD INFO</code>: additional information if the players has an AMD GPU.
+* <code>OPENGL VERSION</code>: the {{w|OpenGL}} version currently being used.
+* <code>RENDERER</code>: information about the renderer.
+| {{tc|yes|In overlay}}
+| {{tc|no|OFF}}
+| {{tc|yes}}
+|-
+| tps
+| style="white-space:nowrap;" | <code>BRAND</code> server @ <code>MST</code> ms, <code>UP</code> tx, <code>DOWN</code> rx
+| Displays information about the [[server]].
+* <code>BRAND</code>: the server brand ("Integrated" when in singleplayer).
+* <code>MST</code>: the time it takes for a [[game tick]] to be processed (only in singleplayer)
+* <code>UP</code>: the average number of packets sent by the client during a game tick.
+* <code>DOWN</code>: the average number of packets received by the client during a game tick.
+| {{tc|yes|In overlay}}
+| {{tc|yes|In overlay}}
+| {{tc|yes}}
+|}
+
+== Graphs ==
+=== Profiler graph ===
+[[File:F3 Profiler Graph.png|right|frameless|width=200]]
+{{info needed section|section=2|the chart contents; decription of colors}}
+The '''profiler graph''', known informally as the '''pie chart''', can be toggled using {{key|F3+1}} (previously {{key|Shift+F3}}) and displays profiling information. To access a sub-section, press {{key|Shift}} + {{key|''N''}}, which ''N'' is the section number within square brackets under the pie chart.
+
+While the profiler graph is open, clicking a number on the keyboard results in going into that profiler category. Where <code>0</code> is used to traverse back. It's currently impossible to navigate to numbers past <code>9</code>. Traversal is limited to KeyCode <code>48</code> to <code>57</code>, where <code>input -- 48</code> results into the number category to traverse into.
+
+While the chart is open, any entry that gets added into the chart may not disappear unless the chart is reopened by re-toggling <code>F3</code>, thus giving the player a refreshed result. For instance, if inspecting the <code>blockRenderer</code>, if the player were in the range of a specific block and went out of it, the block may still be visible in the chart while actually not being rendered anymore; to have better results, the player would have to open the Debug Screen.
+
+=== FPS graph ===
+[[File:F3 Frametime Graph.png|right|frameless|width=200]]
+The '''frame rate graph''' (or simply '''FPS graph''') displays on the left side of the screen when enabled with {{key|F3+2}} (previously {{key|Alt+F3}}). It shows the last 240 frames of gameplay. The height of each bar is proportional to the time a frame took to generate.
+
+The minimum, average, and maximum {{w|frame time}}s for the last 240 frames are shown on top.
+
+The colors are on a gradient from neon green (good) ({{color|#00FF00}}) through yellow ({{color|#FFFF00}}) to neon red (bad) ({{color|#FF0000}}).
+
+=== TPS graph ===
+[[File:TPS.png|right|frameless|width=200]]
+The '''tick rate graph''' (or simply '''TPS graph''') displays on the right side of the screen when enabled with {{key|F3+2}} if in [[singleplayer]] or playing as an [[operator]] on a server. It shows the last 240 [[tick]]s of gameplay. The height of each bar is proportional to the time a tick took to process.
+
+The minimum, average, and maximum tick times for the last 240 ticks are shown on top.
+
+The colors stack. From top to bottom<ref>https://www.minecraft.net/en-us/article/minecraft-snapshot-24w04a</ref>:
+
+* Light green/yellow/red: Idling, waiting for next tick (color gradient like the FPS graph above)
+* Purple: Miscellaneous (all other code during the tick)
+* Light brown: Scheduled tasks
+* Dark red: Main logic of the server tick
+
+=== Bandwidth graph ===
+[[File:F3 Bandwith Graph.png|right|frameless|width=200]]
+The '''bandwidth graph''' displays on the left side of the screen when enabled with {{key|F3+3}}. It shows the last 240 packets. Higher the bar is, the higher the bandwidth it uses. The minimum, average, and maximum size is shown on top, typically in KiB.
+
+The colors are cyan for small-sized packets and light purple for larger ones.
+
+=== Ping graph ===
+[[File:F3 Ping Graph.png|right|frameless|width=200]]
+The '''ping graph''' displays on the right side of the screen when enabled with {{key|F3+3}}. It shows the last 240 [[w:Lag (video games)#Ping time|ping time]]s. Higher is longer time. The minimum, average and maximum are shown on top.
+
+The colors are on a gradient from neon green (good) ({{color|#00FF00}}) through yellow ({{color|#FFFF00}}) to neon red (bad) ({{color|#FF0000}}).
+
+== History ==
+[[File:DebugScreenAlpha.png|200px|thumb|The debug information from Indev, Infdev, and early Alpha.]]
+
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.2a|The version number is now displayed in the top-left corner.
+|Includes the fps and chunk updates.}}
+|{{HistoryLine||0.0.23a|Added a Show FPS option to toggle current framerate being displayed. It is on by default.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100202|Added "E" entities value, "P" particles value, and "LT" value.
+|Upon placing chests, the second value of "LT" would go up upon every chest placed.
+|The first value seemingly is unaffected by this.}}
+|{{HistoryLine||20100206-2034|Removed "LT" value.
+|FPS and chunk updates have been moved next to the version number and are now contained within parentheses.
+|Moved "E" value below "C" value, and moved "P" value below "E" value.
+|"C", "F", "O", "B", "I", and "T" values have been added.
+|"C" values cover rendered/total chunks, "F" values are chunks outside the field of view, "O" values are chunks culled by occlusion culling, "B" values are culled entities that are hidden in a chunk and can't be seen, "I" values are individually culled entities, and "T" values are terrain and lighting data.}}
+|{{HistoryLine||20100212-1210|Added "L" lighting updates value.}}
+|{{HistoryLine||20100212-1622|Added Free memory and Allocated memory.
+|Displayed in §8 (dark gray) color code.
+|It always displays even when the option to turn on the debug screen is disabled.}}
+|{{HistoryLine||20100213|Free memory and Allocated memory now display in §7 (light gray) color code.
+|Displays only when the option is enabled.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Removed "L" value.
+|"T" value no longer displays a value.
+|"O", "E", "B", and "I" values no longer function.}}
+|{{HistoryLine||20100316|"E" and "I" values now function again.}}
+|{{HistoryLine||20100413-1951|Added "All" and "Counted" values.
+|"All" displays the total number of loaded entities.
+|"Counted" seemingly serves the same function as "All".}}
+|{{HistoryLine||20100420|Removed slash from "All" value.
+|Removed "Counted" value.}}
+|{{HistoryLine||20100624|Added second "E" value.
+|Second "E" is located right next to "O" value.
+|Second "E" displays number of empty chunk sections that may be skipped due to not yet being loaded and rendered, or has nothing to draw in the current render pass; all render passes are counted.
+|Lagometer added (initially separate, requires {{key|F6}}).}}
+|{{HistoryLine||20100627|Changed Free memory to Used memory.
+|Now displays MB in parentheses right next to the value percentage.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.1|The debug screen is no longer listed as an option and now requires {{key|F3}} to be held down to activate.}}
+|{{HistoryLine||v1.2.0|dev=?|The lagometer is now part of the debug screen.}}
+|{{HistoryLine||v1.2.3|The coordinates have been added to the debug screen.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|The debug screen, along with other function key controls, has now become a toggle.
+|When the debug screen is open, it now shows numbers above every [[mob]]; these numbers being the mob's Entity ID. These numbers are visible through [[block]]s.}}
+|{{HistoryLine||1.7|The "f" coordinate has been made visible in the debug screen (facing direction).}}
+|{{HistoryLine||1.8|dev=Pre-release|The ability to see the level's [[Seed (world generation)|seed]] has been added to the debug screen.
+|Entity numbers being shown above a [[mob]]'s head have been removed from the debug screen.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=October 2, 2011|slink={{tweet|notch|120525867045765120}}|The first images of a runtime performance profiler with a pie chart is revealed.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|The profiler has been added to the debug screen.}}
+|{{HistoryLine||1.2.1|dev=1.2|Information about the [[biome]] and light level of the [[player]]'s location have been added to the debug screen. 
+|The seed in [[multiplayer]] has been made hidden from the debug screen and now shows as "0".}}
+|{{HistoryLine||1.2.4|Pressing {{key|F3}} ({{key|Fn+F3}} on Mac and some laptops) brings up the debug screen, but without the graphs. The graph appears upon pressing {{key|Shift+F3}} ({{key|Fn+Shift+F3}} on Mac and some laptops).}}
+|{{HistoryLine||1.3.1|dev=12w18a|Information about the player's speed and whether the player is touching the ground have added to the debug screen.
+|Coordinates within the debug screen are now rounded to 5 digits.}}
+|{{HistoryLine|||dev=12w21a|Information about the world's seed has been removed from the debug screen, seen instead by pressing the chat key and typing {{cmd|seed}}.
+|The frame time graph has been removed from the debug screen.}}
+|{{HistoryLine|||dev=12w30a|The y coordinate now shows both the feet level and the eye level.}}
+|{{HistoryLine||1.4.2|dev=12w39a|Fl, x and z chunk coordinates, and more rotation (f) information have been added to the debug screen.}}
+|{{HistoryLine|||dev=12w41a|{{key|Shift+F3}} now shows the profiler graph in the debug screen.}}
+|{{HistoryLine||1.8|dev=14w02a|The debug screen now shows which axis the [[player]] is facing after the cardinal direction: "Toward positive/negative X/Z".}}
+|{{HistoryLine|||dev=14w04a|The x coordinate line in the debug screen now appears bold when looking east/west, similarly the z coordinate line now appears bold when looking south/north.
+|The {{cd|3d_crosshair}} [[debug renderer]] is now active when the debug screen is open.}}
+|{{HistoryLine|||dev=14w05a|Text within the debug screen now has a background.
+|X, y, z, b, bl and other labels within the debug screen have been replaced with more understandable labels.
+|"Light" is now the light levels at feet, not eyes.}}
+|{{HistoryLine|||dev=14w06a|X, Y, and Z title in the debug screen has been changed from 'Feet' in the previous snapshot, to 'XYZ'.
+|A day counter, which increases by 1 every dawn, has been added to the debug screen.
+|The debug screen now displays [[regional difficulty]]: Peaceful starts at 0.00, Easy starts at 0.75, Normal starts at 1.50, and Hard starts at 2.25.
+|The debug screen now displays player rotation in degrees and quadrants.}}
+|{{HistoryLine|||dev=14w11a|On the right-hand side of the debug screen, a display now shows up if the [[player]] is looking at a [[block]], showing its ID and block states.}}
+|{{HistoryLine|||dev=14w17a|All [[block]]s now have their info displayed on the right-hand side of the debug screen.
+|The "Facing negative/positive x/z" from the debug screen has been removed.}}
+|{{HistoryLine|||dev=14w20a|The "Facing negative/positive x/z" has been readded to the debug screen.}}
+|{{HistoryLine|||dev=14w25b|The line on the right-hand side that had displayed the name of the block [[model]] the [[player]] was looking at has been removed from the debug screen.}}
+|{{HistoryLine|||dev=14w29a|A 'Reduced Debug Info' toggle now exists within multiplayer settings to enable/disable reduced information on the debug screen.
+|The <code>reducedDebugInfo</code> gamerule allows the [[player]] to enable/disable reduced information on the debug screen. This overrides all 'reduced debug info' settings in clients.}}
+|{{HistoryLine|||dev=14w30a|The debug screen now displays how many [[chunk]] sections are being rendered currently and how many chunk sections are out of view in percent, the OpenGL version, display size, vendor and GPU.
+|"Vanilla" has been added to the version number within the debug screen.}}
+|{{HistoryLine||1.8.2|dev=pre1|The frame time graph within the debug screen has been readded and redesigned, so that it can now be activated using {{key|Alt+F3}}.}}
+|{{HistoryLine||1.9|dev=15w43a|The debug screen now shows more information.
+|The debug screen now shows if the pie chart and fps chart are shown on screen.
+|The debug screen now shows text in chat when the [[player]] reloads [[chunk]]s, [[sound]]s, etc. using other F3 hotkeys.
+|The debug screen is now toggled when the {{key|F3}} key is released, instead of when it is pressed.}}
+|{{HistoryLine||1.13|dev=18w22c|The debug overlay now shows the [[fluid]] the [[player]] is looking at, separately from [[block]]s.}}
+|{{HistoryLine|||dev=pre6|Added information about the time it takes for a tick on the integrated server, number of packets sent by the client (tx), and number of packets received by the client (rx).}}
+|{{HistoryLine|||dev=pre7|Added "Looking at liquid" row, which displays the targeted fluid's coordinates.
+|"Looking at" row within the debug screen has been renamed to "Looking at block".
+|"Targeted Block" information now targets through [[fluid]]s. It displays information for [[block]]s up to 16 blocks away.
+|Added "Targeted Entity", which displays information for [[entities]] up to 16 blocks away.}}
+|{{HistoryLine||1.13.1|dev=18w31a|Added new fields for the current dimension and the related force loaded chunks.}}
+|{{HistoryLine||1.14|dev=18w43c|Pressing {{key|Alt+F3}} now shows TPS (ticks per second).
+|Added {{code|delimiter=/|min|avg|max}} tick times to help find stutters.}}
+|{{HistoryLine||1.15|dev=19w38a|The chunk update counter has been removed from the debug screen.}}
+|{{HistoryLine||1.16|dev=20w18a|The "Looking at block" and "Looking at fluid" were integrated into "Targeted block" and "Targeted fluid" located on the right side of the debug screen.
+|Added a new line detailing mob spawning in different categories.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Added two new lines: Multinoise and Terrain.}}
+|{{HistoryLine||1.18.2|dev=22w03a|Now contains the chunk position in the region file, and the name of this region file that player is currently in, in the end of the "Chunk" row.
+|Moved the location of the player within a chunk from "Chunk" row, into the new square brackets at the end of the "Block" row.}}
+|{{HistoryLine|||dev=22w07a|Merged the "Terrain" and "Multinoise" row into the "NoiseRouter" row.}}
+|{{HistoryLine||1.19|dev=22w11a|Added estimated GPU utilization percentage to performance profiling metrics and F3 debug screen, available only for graphics devices that support GPU timer queries.
+|Added "Blending" row, above the "Noise Router" row.
+|The H for "humidity" has been changed for a V for "vegetation".}}
+|{{HistoryLine|||dev=22w16a|Added "Allocation Rate" row, which shows heap memory allocation rate.}}
+|{{HistoryLine||1.19.1|dev=Release Candidate 1|The "Blending" row now disappears when the chunk that the player is in uses the new method, instead of displaying "Blending: New".}}
+|{{HistoryLine||1.20.2|dev=23w31a|Values in the {{cd|SH}} row now appear as question marks when playing on a server, instead of wrong values.}}
+|{{HistoryLine|||dev=23w32a|Opening it with {{key|Ctrl+F3}} now shows charts for ping and received network traffic.}}
+|{{HistoryLine|||dev=23w33a|The hotkeys for debug charts have changed. <br> 
+*  Profiler graph: {{key|Shift+F3}} <big>→</big> {{key|F3+1}} 
+*  FPS/TPS graph: {{key|Alt+F3}} <big>→</big> {{key|F3+2}}
+*  Bandwidth/ping: {{key|Ctrl+F3}} <big>→</big> {{key|F3+3}}
+ }}
+|{{HistoryLine||1.20.5|dev=24w04a|Updated the TPS graph (bottom right graph) shown via {{key|F3+2}}.}}
+|{{HistoryLine||1.21.2|dev=24w33a|The unused value "B" in the row "E" has been removed as being redundant.}}
+|{{HistoryLine||1.21.9|dev=25w31a|The player can now use {{key|F3}} when in menus. |Minimized default debug screen to display less information.
+|Added debug screen configure menu shown via {{key|F3+F5}} with separation of debug information into parts that can be individually configured to display in debug screen and are classified into two categories: {{tooltip|Debug Screen Text|Contains 24 parts: biome, chunk_generation_stats, chunk_render_stats, chunk_source_stats, entity_render_stats, entity_spawn_counts, fps, game_version, gpu_utilization, heightmap, light_levels, local_difficulty, looking_at_block, looking_at_entity, looking_at_fluid, memory, particle_render_stats, player_position, player_section_position, post_effect, simple_performance_impactors, sound_mood, system_specs, tps}} and {{tooltip|Debug Renderers|Contains 6 parts: 3d_crosshair, chunk_borders, chunk_section_octree, chunk_section_paths, chunk_section_visibility, entity_hitboxes}}.
+|"Biome: ''biome''" changed to "Biome:''biome''" (biome) as the space between title and displayed biome name disappeared.
+|"Chunk-relative: ''relative''" renamed to "Section-relative: ''relative''" (player_section_position) with the ''relative'' 3-integer coordinates being fixed to always show 2 digits. It can now be showned on screen even without [[reducedDebugInfo]] enabled, therefore replacing "[''relative'']" section in Block line, making the line changed from "Block: ''coordinates'' [''relative'']" to "Block: coordinates".
+|Removed redundant total entities attribute from (particle_render_stats), changing "P: ''particles''. T: ''total entities''" to "P: particles".
+|"Chunks[S] W: ''chunks'' E: ''entities'',''visible'',''sections'',''chunks'',''ticking'',''load'',''unload''" line is now merged with "Chunks[C] W: ''cached'', ''loadedC'' E: ''loadedE'',''sections'',''ticking''" under (chunk_source_stats), making information about server-side chunks available with reducedDebugInfo enabled.
+|particle_render_stats is no longer available with reducedDebugInfo enabled.
+|Help line text changed from "For help: press F3 + Q" to "For help: press F3 + Q. To edit: press F3 + F5". Debug charts with help information becomes visible when debug screen is opened and has at least one text part not turned off in configuration options.}}
+|{{HistoryLine|||dev=Pre-Release 4|The Debug Options screen is now accessible using {{key|F3}} + {{key|F6}} instead of {{key|F3}} + {{key|F5}}.}}
+|{{HistoryLine||26.1|dev=snap1|The {{cd|looking_at_block}} and {{cd|looking_at_fluid}} debug entries no longer show tags.|New debug entries have been added: {{cd|looking_at_block_tags}}, {{cd|looking_at_fluid_tags}}, and {{cd|looking_at_entity_tags}}.|Renamed debug entries: {{cd|looking_at_block}} -> {{cd|looking_at_block_state}}, {{cd|looking_at_fluid}} -> {{cd|looking_at_fluid_state}}.}}
+|{{HistoryLine|||dev=snap3|The {{cd|local_difficulty}} debug entry no longer shows the day count.|Added the {{cd|day_count}} debug entry.}}
+|{{HistoryLine|||dev=snap8|Added the {{cd|detailed_memory}} debug entry.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|The {{cd|entity_spawn_counts}} debug entry now refers to the ambient mob count as {{cd|AM}} and the axolotl mob count as {{cd|AX}} instead of referring to both as {{cd|A}}.}}
+|{{HistoryLine|||dev=snap2|The{{cd|fps}} entry now reports which type of present mode is used, as opposed to just {{cd|vsync}}.}}
+}}
+
+=== Pre-1.8 legend ===
+{{Outdated feature|section=1}}
+{| class="wikitable" data-description="Pre-1.8 legend"
+! Name
+! Description<ref>http://gaming.stackexchange.com/questions/14990/minecraft-debug-screen</ref><ref>http://www.minecraftforum.net/viewtopic.php?f=35&t=13231</ref>
+|-
+| C
+| Number of chunk sections rendered over total number of chunks. Counts all render passes: if a chunk section is rendered twice (because it contains both water and normal blocks, for example) then it is counted twice. 
+|-
+| F
+| Number of chunk sections loaded outside the viewing distance. Counts all render passes.
+|-
+| O
+| Number of chunk sections removed through [[wikipedia:Hidden surface determination|occlusion culling]]. Counts all render passes.
+|-
+| E (first row)
+| Number of empty chunk sections. These sections are skipped for one of two reasons: Either the chunk has not yet been loaded and rendered into polygons, or the section has nothing to draw in the current render pass. Counts all render passes.
+|-
+| E (second row)
+| Number of rendered entities over total entities
+|-
+| ''B''
+| Unused, always 0.<ref group="note">Previously used as the number of entities removed due to hidden chunks during [[Indev]]. It was removed in snapshot [[24w33a]] as being considered to be completely redundant.</ref>
+|-
+| I
+| Number of invisible entities
+|-
+| P
+| Number of particles on screen
+|-
+| T
+| Displays the player's max framerate
+|-
+| ALL
+| Displays the total number of loaded entities (including mobs and dropped items)
+|-
+| ServerChunkCache<br> ChunkCache
+| The most chunks that can be loaded
+|-
+| x
+| Player's location in blocks East of 0,0 (negative values are to the West) and after the // is the player's chunk number with the block within the chunk in ()
+|-
+| y
+| Player's altitude in blocks (63 (62.9) is [[Overworld]] sea level, 11 (10.9) is Overworld lava flood level, 32 (31.9) is [[Nether]] lava sea).
+|-
+| z
+| Player's location in blocks South of 0,0 (negative values are to the North) and after the // is the player's chunk number with the block within the chunk in ()
+|-
+| f
+| The direction in which a player is facing (south=0, west=1, north=2, east=3) and if the player walks toward x or z respectively
+|-
+| lc
+| Max section height for the [[chunk]] the player is in (uses cubic chunk sections, so heights display in multiples of 16 minus 1).
+|-
+| b
+| Shows the player what [[biome]] they are in.
+|-
+| bl
+| (for "'''b'''lock '''l'''ight") The amount of [[light]] from other [[block]]s (e.g. [[torch]]es) at the block the player's head is in. If the player stands on top of a torch, this field shows a light level of 13 instead of the expected 14, due to the player's head being one block away from it.
+|-
+| sl
+| (for '''s'''ky '''l'''ight) The amount of light from the sky at the block the player's head is in. Note that the number shown here is accurate only during the day. It shows the light level the block would get from the sun in full daylight, but does not account for the lower light levels at night or during a storm.
+|-
+| rl
+| (for '''r'''aw''' l'''ight) The total light level where the player's head is, equal to max (bl,sl). Note that because the "sl" field is factored in here, this field has the same caveats as that one.
+|-
+| ws
+| Walking speed.
+|-
+| fs
+| Flying speed.
+|-
+| g
+| On ground, Boolean value, true if the player touches the ground.
+|-
+| fl
+| The y-coordinate of the highest block where the player is able to stand, rounded up when standing on half-blocks, such as [[slab]]s. When above the void (where there is no block), it equals 0.
+|-
+| shader
+| The file path of the currently-active [[shader]] (within the "assets" directory of [[minecraft.jar]]). Displayed only if a shader is active.
+|}
+
+== Issues ==
+{{issue list|debug screen|F3|projects=MC}}
+
+== Trivia ==
+* The biome and lighting values do not display when the player is outside of the build limits.
+* Deeper into the profiler ({{key|Shift+F3}}), some tasks have numbers higher than 9 and can't be accessed. Pressing the two keys simultaneously does not open the task.
+* The warning stating that the Debug Options is for testing purposes contains a joke possibility as the last item in the list. This joke is changed depending on the game language.
+
+== Gallery ==
+=== Historical screenshots ===
+Most of these screenshots show debug screen exclusively used by the [[developer]]s of ''Minecraft''.
+<gallery>
+File:Notch DRM.png|Image from Notch showing an "unlicensed copy" message on the top corner of the screen.
+File:Debug Screen Performance Profiler Sneak Peek.png|A sneak peek of the performance profiler shown on Notch's Twitter on October 2, 2011<ref>{{tweet|notch|120525867045765120|Very useful runtime performance profiling with PIE CHARTS: http://i.imgur.com/ZuJXC.png|October 2, 2011}}</ref>
+File:Jeb Debug 1.png|Jeb using the debug screen.
+File:Jeb Debug 2.png|Ditto.
+File:Dinnerbone Render Distance.png|Dinnerbone using the debug screen.
+File:Rockenroll4life Debug 1.jpg|Rockenroll4life using the debug screen.
+File:Rockenroll4life Debug 2.jpg|Ditto.
+File:Dinnerbone Debug 1.png|Door block data in the debug screen.
+File:Dinnerbone Debug 2.png|Redstone block data in the debug screen.
+File:Dinnerbone Debug 3.png|Tripwire hook block data in the debug screen.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://help.minecraft.net/hc/en-us/articles/360059146051-What-is-in-the-Debug-Menu-in-Minecraft-Java-Edition What is in the Debug Menu in ''Minecraft: Java Edition''?] – [[Minecraft Help Center]]
+
+== Navigation ==
+{{Navbox Java Edition technical|general}}
+
+[[Category:Development]]
+[[Category:UI]]
+
+[[de:Debug-Bildschirm]]
+[[es:Pantalla de desarrollo]]
+[[fr:Écran de débogage]]
+[[ja:デバッグ画面]]
+[[ko:디버그 화면]]
+[[nl:Debug-scherm]]
+[[pl:Ekran debugowania]]
+[[pt:Tela de depuração]]
+[[ru:Экран отладки]]
+[[uk:Екран налагодження]]
+[[zh:调试屏幕]]

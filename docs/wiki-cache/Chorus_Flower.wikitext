@@ -1,0 +1,265 @@
+{{Infobox block
+| group = Age 0-4
+| 1-1 = Chorus Flower.png
+| group2 = Age 5
+| 2-1 = Chorus Flower Dead.png
+| transparent = Yes
+| light = No
+| tool = axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+
+'''Chorus flowers''' are plant [[block]]s harvested from [[chorus plant]]s, and can be placed on [[End stone]] to grow more chorus plants. A chorus flower will only drop as an [[item]] if broken directly or shot with a [[projectile]].
+
+== Obtaining ==
+=== Breaking ===
+Chorus flowers can be mined with any tool and drop themselves when broken, but an [[axe]] is the quickest. They do not drop anything when pushed by a piston or water, when destroyed by a [[ravager]],{{only|bedrock}} or when their supporting block (the [[chorus plant]] block or [[End stone]]) is destroyed.
+
+{{breaking row|horizontal=1|Chorus Flower|Axe|sword=1}}
+
+They drop themselves when broken by [[explosion]]s, with the applicable drop chance for the various explosion types, or when hit by a wide variety of projectiles:
+* [[Arrow]]
+* [[Tipped arrow]]
+* [[Spectral arrow]]
+* [[Trident]]
+* [[Firework rocket]] (including players boosting [[elytra]] flight with rockets)
+* [[Snowball]]
+* [[Egg]]
+* [[Fireball]]
+* [[Small fireball]]
+* [[Dragon fireball]]
+* [[Wither#Wither Skull|Wither skull]]
+* [[Wind charge]]
+
+=== Natural generation ===
+Chorus flowers are naturally generated in [[the End]] at the top of [[chorus tree]]s, in their fully-grown state.
+
+{{block distribution}}
+
+== Usage ==
+Chorus flowers are used to grow [[chorus plant]]s. They can be planted on [[End stone]] in any dimension.
+
+Chorus flowers can be pollinated by [[bee]]s.
+
+=== Farming ===
+Chorus flowers can be planted on [[End stone]] and grow in any dimension, regardless of light level. A flower stops growing once it has reached age 5 (appearing purple rather than white), but may be harvested and replanted to reset the age. Chorus flowers do not grow if planted 1 block below the surface of the ground.
+
+=== Placement and growth ===
+[[File:Chorus Flower Height Distribution.png|right|thumb|300px|Final heights of 500,000 chorus plants (blue) and heights of 500,000 chorus flowers from full-grown plants (orange).]]
+
+; Placement
+Chorus flowers must be above [[End stone]] or [[chorus plant]], or be above air and horizontally adjacent to exactly one chorus plant. If these conditions are not met, the block breaks without dropping anything.
+
+; Growth conditions and algorithm
+Each block tick until the flower reaches age 5, the flower attempts to grow if the block above is air. The flower does not age if growth is not attempted due to lack of an air block above. [[Bone meal]] has no effect on growth.<ref>{{bug|MC-190586||Unable to bonemeal chorus flower|Invalid}}</ref>
+
+The flower may attempt to grow upward depending on the structure of chorus plant blocks directly beneath:
+* 100% chance if zero or one plant block is directly beneath
+* 60% if the flower is above a two-block unbranched plant (i.e. two plant blocks over [[End stone]])
+* 50% if above a two-block high branch (i.e. two plant blocks over air)
+* 40% if above a three-block unbranched plant
+* 25% if above a three-block high branch
+* 20% if above a four-block unbranched plant
+The growth attempt succeeds if the blocks horizontally adjacent to and above the target block above are all air, and results in the target block becoming a flower block with the same age while the existing flower block turns to chorus plant.
+
+If upward growth does not occur and the flower's age is less than 4, the flower may attempt to branch horizontally. 1–4 branches are attempted on an unbranched plant or 0–3 on a branched plant. For each branch a horizontal direction is chosen at random, and if the block in that direction is an air block with more air blocks on all other horizontal sides and an air block below, it is replaced with a flower with age incremented by 1. If at least one branch succeeds, the original flower block is turned to chorus plant.
+
+Upon a successful growth attempt, the chorus flower emits a low-pitched sound, similar to the sound [[endermen]] emit when teleporting.
+
+If no growth occurs on a growth attempt, the flower's age is set to 5.
+
+; Flowers and plant height
+
+The amount of chorus flowers a player gets from a fully and unrestricted grown chorus plant ranges from 1 to 8, averaging at around 3.7 flowers per plant. 
+
+Plant heights range from 5 to (rarely) 22 above the [[End stone]] block on which the original chorus flower was planted, with over half falling in the range 13–16. Flower heights range from 3 to (rarely) 22, with over half falling in the range 11–16 above the End stone block.
+
+=== Bee nests ===
+[[Oak]], [[birch]], and [[cherry]] trees grown from [[sapling]]s that are within 2 blocks of a chorus flower have a 5% chance to generate with a [[bee nest]] containing 2–3 [[bee]]s.
+
+== Sounds ==
+
+=== Generic ===
+{{Edition|Java}}:
+{{Sound table/Block/Wood/JE}}
+{{Edition|Bedrock}}:
+{{Sound table/Block/Stone/BE}}
+
+=== Unique ===
+{{el|je}}:
+{{SoundTable
+|type=java
+| {{SoundLine
+|sound=Chorus Flower death1.ogg
+|sound2=Chorus Flower death2.ogg
+|sound3=Chorus Flower death3.ogg
+|subtitle=Chorus Flower withers
+|source=block
+|description=When a chorus flower dies
+|id=block.chorus_flower.death
+|translationkey=subtitles.block.chorus_flower.death
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Chorus Flower grow1.ogg
+|sound2=Chorus Flower grow2.ogg
+|sound3=Chorus Flower grow3.ogg
+|sound4=Chorus Flower grow4.ogg
+|subtitle=Chorus Flower grows
+|source=block
+|description=When a chorus flower successfully grows
+|id=block.chorus_flower.grow
+|translationkey=subtitles.block.chorus_flower.grow
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Chorus Flower death1.ogg
+|sound2=Chorus Flower death2.ogg
+|sound3=Chorus Flower death3.ogg
+|source=block
+|description=When a chorus flower dies
+|id=block.chorusflower.death
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Chorus Flower grow1.ogg
+|sound2=Chorus Flower grow2.ogg
+|sound3=Chorus Flower grow3.ogg
+|sound4=Chorus Flower grow4.ogg
+|source=block
+|description=When a chorus flower successfully grows
+|id=block.chorusflower.grow
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chorus Flower
+|spritetype=block
+|nameid=chorus_flower
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chorus Flower
+|spritetype=block
+|nameid=chorus_flower
+|id=200
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|age|0
+|0,1,2,3,4|{{BlockSprite|chorus-flower}} A freshly planted chorus flower starts at age 0. The age is incremented when a chorus flower turns horizontally and/or generates additional chorus flowers on the same plant.
+|5|{{BlockSprite|dead-chorus-flower}} At age 5, the chorus flower does not grow further. A chorus flower can become age 5 at any time.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|age|0
+|0,1,2,3,4|{{BlockSprite|chorus-flower}} A freshly planted chorus flower starts at age 0. The age is incremented when a chorus flower turns horizontally and/or generates additional chorus flowers on the same plant.|
+|5|{{BlockSprite|dead-chorus-flower}} At age 5, the chorus flower does not grow further. A chorus flower can become age 5 at any time.|
+|6,7,8,9,10,11,12,13,14,15|Unused|Unsupported|foot=1}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||June 22, 2015|link=https://instagram.com/p/4ObC5EpMOO/|[[Jeb]] reveals chorus flowers on [[wikipedia:Instagram|Instagram]], with the caption "[[MINECON 2015]] HYPE!"}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Chorus Flower JE1 BE1.png|32px]][[File:Chorus Flower Dead JE1 BE1.png|32px]] Added chorus flowers.}}
+|{{HistoryLine|||dev=pre1|Chorus flowers in the top of the world no longer try to grow anymore.}}
+|{{HistoryLine||1.14|dev=18w43a|Chorus flowers can now be broken by [[arrow]]s and [[trident]]s.
+|[[File:Chorus Flower JE2 BE2.png|32px]][[File:Chorus Flower Dead JE2 BE2.png|32px]] The textures of chorus flowers have been changed.}}
+|{{HistoryLine||1.16|dev=20w09a|Chorus flowers can now be broken by [[snowball]]s and [[egg]]s.}}
+|{{HistoryLine||1.19.3|dev=22w42a|Mobs no longer spawn on chorus flowers.<ref>{{bug|MC-160610||Mobs are able to spawn on Chorus Flowers|Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|Chorus flower no longer provides support for hanging or standing blocks.}}
+|{{HistoryLine|||dev=23w33a|Chorus flower can now be pollinated by [[bee]]s.<ref>{{bug|MC-214126||Bees don't pollinate themselves with spore blossoms or chorus flowers|Fixed}}</ref>}}
+|{{HistoryLine||1.20.3|dev=23w42a|Chorus flowers can now be broken by [[firework rocket]]s.<ref>{{bug|MC-223774||Firework Rockets can't be used to break Chorus Flowers|Fixed}}</ref>
+|Added the [[game rule]] <code>projectilesCanBreakBlocks</code>, which can control whether impact projectiles will destroy chorus flowers.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Chorus Flower JE1 BE1.png|32px]][[File:Chorus Flower Dead JE1 BE1.png|32px]] Added chorus flowers.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Chorus flowers can now be broken by [[arrow]]s.
+|[[File:Chorus Flower JE2 BE2.png|32px]][[File:Chorus Flower Dead JE2 BE2.png|32px]] The textures of chorus flowers have been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Chorus Flower JE1 BE1.png|32px]][[File:Chorus Flower Dead JE1 BE1.png|32px]] Added chorus flowers.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Chorus Flower JE2 BE2.png|32px]][[File:Chorus Flower Dead JE2 BE2.png|32px]] The textures of chorus flowers have been changed.
+|Chorus flowers are now broken when struck by an [[arrow]].}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Chorus Flower JE1 BE1.png|32px]][[File:Chorus Flower Dead JE1 BE1.png|32px]] Added chorus flowers.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 200.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The smallest possible fully-grown chorus tree (assuming the growth is not disturbed) would have only 5 [[chorus plant]] blocks, and the tree (including the flower) would be 5 blocks high. The largest possible tree would be 22 blocks high.
+* When flowers reach age five, breaking them and replanting them on the same chorus plant block (even on a different face) can allow the plant to grow further.
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox flower}}
+{{Navbox The End}}
+{{Navbox blocks|vegetation}}
+
+[[Category:End blocks]]
+[[Category:Plants]]
+[[Category:Natural blocks]]
+[[Category:Flowers]]
+
+[[de:Chorusblüte]]
+[[es:Flor chorus]]
+[[fr:Fleur de chorus]]
+[[ja:コーラスフラワー]]
+[[ko:후렴화]]
+[[nl:Chorusbloem]]
+[[pl:Kwiat refrenusu]]
+[[pt:Flor do coro]]
+[[ru:Цветок хоруса]]
+[[zh:紫颂花]]

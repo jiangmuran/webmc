@@ -1,0 +1,143 @@
+{{about|the enchantment|repairing items via [[grindstone]]s or [[crafting]]|Item Repair|repair via anvils|Anvil#Repairing}}
+{{distinguish|Wending}}
+{{Infobox enchantment
+| maxlevel = I (1)
+| secondaryitems = <!--
+-->{{ItemSprite|Helmet|link=Helmet}}<!--
+-->{{ItemSprite|Chestplate|link=Chestplate}}<!--
+-->{{ItemSprite|Leggings|link=Leggings}}<!--
+-->{{ItemSprite|Boots|link=Boots}}<!--
+-->{{ItemSprite|Pickaxe|link=Pickaxe}}<!--
+-->{{ItemSprite|Shovel|link=Shovel}}<!--
+-->{{ItemSprite|Axe|link=Axe}}<!--
+-->{{ItemSprite|Sword|link=Sword}}<!--
+-->{{ItemSprite|Hoe|link=Hoe}}<!--
+-->{{ItemSprite|Fishing Rod|link=Fishing Rod}}<!--
+-->{{ItemSprite|Bow|link=Bow}}<!--
+-->{{ItemSprite|Shears|link=Shears}}<!--
+-->{{ItemSprite|Flint and Steel|link=Flint and Steel}}<!--
+-->{{ItemSprite|Carrot on a Stick|link=Carrot on a Stick}}<!--
+-->{{ItemSprite|Warped Fungus on a Stick|link=Warped Fungus on a Stick}}<!--
+-->{{ItemSprite|Shield|link=Shield}}<!--
+-->{{ItemSprite|Elytra|link=Elytra}}<!--
+-->{{ItemSprite|Trident|link=Trident}}<!--
+-->{{ItemSprite|Turtle Shell|link=Turtle Shell}}<!--
+-->{{ItemSprite|Crossbow|link=Crossbow}}<!--
+-->{{ItemSprite|Brush|link=Brush}}<!--
+-->{{ItemSprite|Mace|link=Mace}}<!--
+-->{{ItemSprite|Spear|link=Spear}}
+| weight = 2
+| incompat = * [[Infinity]]
+| overleveling = No change<ref>https://docs.google.com/spreadsheets/d/1Am8CRblXJ-RvhTszEJ_WovdmNaw2HKk3pbSvc5uQwYI/htmlview</ref>
+| id = mending
+}}
+'''Mending''' is an [[enchantment]] that restores an item's [[durability]] when a player collects [[experience orbs]].
+
+== Obtaining ==
+Mending is a [[treasure enchantment]]; it can be obtained from a [[mineshaft]], [[jungle pyramid]], [[bastion remnant]], [[stronghold]], [[End city]], [[ancient city]] [[chest loot]], [[vault]]s, [[fishing]], [[raid]] drops,{{only|bedrock|short=1}} or by [[trading]] with a [[librarian]] of any level (or if the "[[Villager Trade Rebalance]]" experimental datapack is enabled, a master level swamp librarian).
+
+== Usage ==
+* Any items with Mending in the player's main hand, offhand, or armor slots that are not at maximum durability are repaired by [[experience orb]]s collected from any source. The rate of repair is two durability per point of experience contained in the orb.
+** Experience in the orb is deducted by one point for every two durability points repaired. 
+** Experience left in the orb is added to the player's total experience gauge as normal, but prioritizes mending items. You can't pick up exp when you hold/wear items with mending enchantment and with not full durability.
+* If multiple equipped items have the enchantment and need to be repaired, one is randomly selected for each experience orb collected. No item or location has priority for repair.
+** Mending does not select items that are already fully repaired. For example, if the player has a fully repaired helmet and a damaged chestplate, leggings, and boots, only the latter 3 are considered in the random chance to be repaired.
+** Durability doesn't affect which item is chosen at random. For example, a sword that is one durability point away from being fully repaired has an equal chance of being chosen as a pickaxe that is almost broken, even if this means less experience would be used to repair the sword.
+** Only one of these items is repaired for each experience orb collected. This means that any experience left on the orb is not used to repair other items and is instead added to the player's total experience gauge as normal.
+
+== Incompatibilities ==
+Mending is incompatible with [[Infinity]]. If [[commands]] are used to have two or more of these enchantments on the same item, their effects stack.
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=mending
+|displayname=Mending
+|translationtype=enchantment
+|foot=1
+}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=mending
+|displayname=Mending
+|id=26
+|translationtype=enchantment
+|foot=1
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w42a|Added Mending.}}
+|{{HistoryLine|||dev=15w44a|Mending is now available at lower enchantment levels.}}
+|{{HistoryLine||1.11|dev=pre1|Mending and Unbreaking III enchanted books now appear in the combat tab in addition to the tools tab in the Creative inventory.<ref name="mending category>http://bugs.mojang.com/browse/MC-109577</ref>}}
+|{{HistoryLine||1.11.1|dev=16w50a|Mending is now incompatible with [[Infinity]], but currently only if Mending is in the first slot of the anvil.}}
+|{{HistoryLine|||dev=release|Mending is now always incompatible with Infinity, regardless of the order in the anvil UI.}}
+|{{HistoryLine||1.16|dev=20w06a|Mending now repairs only items that are damaged instead of picking items at random.<ref>{{bug|MC-92889|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=23w31a|Mending enchanted books are now exclusively obtained from master-level librarians in the [[swamp]] outfit.}}
+|{{HistoryLine|||dev=Pre-release 1|Mending enchanted books now have a higher chance of generating in [[ancient city]] chest loot.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Mending is now incompatible with the new enchantment [[Lunge]].}}
+|{{HistoryLine|||dev=25w42a|Mending is no longer incompatible with Lunge.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Added Mending.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|Mending now repairs only items that are damaged instead of picking items at random.}}
+|{{HistoryLine||1.20.30|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.30.20|Mending enchanted books are now exclusively obtained from master-level librarians in the [[swamp]] outfit.}}
+|{{HistoryLine||1.20.40|exp=Villager Trade Rebalancing|dev=Preview 1.20.40.20|Mending enchanted books now have a higher chance of generating in [[ancient city]] chest loot.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|"Mending I" has been changed to simply "Mending" for parity with {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|Legacy Console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added Mending.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Infinity]] and Mending are now mutually exclusive.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.9.19|Added Mending.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.0.18|Added Mending.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Mending is tied with [[Unbreaking]] for the second-highest number of items it can be applied to, after the [[Curse of Vanishing]].
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|general}}
+
+[[de:Reparatur]]
+[[es:Reparación]]
+[[fr:Raccommodage]]
+[[it:Ripristino]]
+[[ja:修繕]]
+[[ko:수선]]
+[[pt:Remendo]]
+[[th:ซ่อมแซม]]
+[[uk:Лагодження]]
+[[zh:经验修补]]

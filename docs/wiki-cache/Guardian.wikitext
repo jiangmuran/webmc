@@ -1,0 +1,451 @@
+{{about|the normal guardian|its larger, more powerful variant|Elder Guardian|other uses|Guardian (disambiguation)|the joke mob|Toxifin Slab}}
+
+{{Infobox entity
+| image = Guardian.gif
+| invimage = Guardian Spawn Egg
+| health = {{hp|30}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Aquatic}}
+| damage = '''Laser:'''<br>Easy: {{hp|4}} <br>Normal: {{hp|6}}<br>Hard: {{hp|9}} <br>
+<hr>
+'''Spikes:'''<br>Easy and Normal: {{hp|2}}<br>Hard: {{hp|3}}
+| size = Height: 0.85 blocks<br>Width: 0.85 blocks
+| spawn = {{EnvLink|Ocean Monument}}
+}}
+'''Guardians''' are [[aquatic]] [[hostile mob]]s that spawn in [[ocean monument]]s. They attack with a slow-charging laser beam, and [[Thorns|inflict retaliatory damage]] when damaged by a melee attack.
+
+== Spawning ==
+Guardians spawn naturally in [[ocean monument]]s. They require [[water]], flowing or stationary, to spawn. 
+
+=== Java Edition ===
+{{IN|java}} guardians spawn less often in [[ocean]] open to the [[sky]] than they do in covered areas (such as inside or underneath the monument). Specifically, spawning fails 95% of the time if the spawning water block is below sea level (Y=63 by default), all blocks between the spawning water block and sea level are [[liquid]] or fully transparent, and the block at sea level has a view of the sky. They can spawn only if the spawning [[block]] and the block below the spawning block are both water. The block above the spawning block also cannot be solid and has to be transparent, air, or water. 
+
+=== Bedrock Edition ===
+{{IN|bedrock}}, guardians are structure spawns, spawning in water source blocks in 25 pre-determined spawning columns. Guardians usually do not (or possibly never) spawn near a player, and their continued spawning is not affected by removal of the monument, except through the creation of extra space in which to spawn.
+
+==== Y Coordinates ====
+For a given column, the spawn will initially be attempted at Y=61, but if this is not a spawnable block, the game will traverse down the column until it finds the first water source block. Once found, if the block below is a valid spawn location, a guardian will spawn there. If it's not a valid spawn location, the column will not spawn a guardian, meaning that columns can be disabled by a block at Y=61 and a block at Y=59 only. If no water source blocks are found by Y=40, the column will not spawn a guardian. Guardians will therefore not spawn inside the monument unless the entire column above is blocked either with solid blocks or air.
+
+==== X and Z Coordinates ====
+To find the X and Z coordinates of the columns, start counting from the northwest corner of the monument. That is, standing on the furthest corner prismarine block with the smallest X and Z coordinates, let's say (X, 41, Z). The coordinates of each spawning spot are in a grid at X+2, X+13, X+29, X+45, and X+55, combined with Z+2, Z+13, Z+29, Z+45, and Z+55. For example, the bottom of the most northwest column is at (X+2, 39, Z+2) and the top block belonging to the southeast corner column is at (X+55, 61, Z+55). The guardians spawn at the northwest corner of a spawning column block, which can be helpful for some guardian farming mechanics such as causing them to spawn inside of a portal where they are immediately sent to the nether.
+
+== Drops ==
+{{see also|Tutorial:Guardian farming|title1=Guardian farming}}
+Due to {{bug|MCPE-57215}}, the guardian won't drop random fish {{in|bedrock}}.
+
+{{DropTable
+|{{DropLine|name=Prismarine Shard|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Prismarine Crystals|lootingquantity=0-1|multiplychance=2/5}}
+|{{DropLine|name=Raw Cod|notes=je_not_player,je_not_burn|lootingquantity=0-1|multiplychance=2/5}}
+|{{DropLine|name=Raw Cod|edition=java|notes=player,je_not_burn|lootingquantity=0-1|multiplychance=2/5
+|independent={{DropLine|dropchance=2.5%|lootingchance=1%|multiplychance=60%}}}}
+|{{DropLine|name=Cooked Cod|edition=java|notes=je_not_player,burn|lootingquantity=0-1|multiplychance=2/5}}
+|{{DropLine|name=Cooked Cod|edition=java|notes=player,burn|lootingquantity=0-1|multiplychance=2/5
+|independent={{DropLine|dropchance=2.5%|lootingchance=1%|multiplychance=60%}}}}
+|{{DropLine|name=Raw Salmon|edition=java|notes=player,je_not_burn|dropchance=2.5%|lootingchance=1%|multiplychance=25%}}
+|{{DropLine|name=Cooked Salmon|edition=java|notes=player,burn|dropchance=2.5%|lootingchance=1%|multiplychance=25%}}
+|{{DropLine|name=Pufferfish|link=Pufferfish_(item)|edition=java|notes=player|multiplychance=13%|dropchance=2.5%|lootingchance=1%}}
+|{{DropLine|name=Tropical Fish|link=Tropical Fish (item)|edition=java|notes=player|dropchance=2.5%|lootingchance=1%|multiplychance=2%}}
+|notes=
+je_not_player.java = Only dropped when ''not'' killed by a [[player]] or a tamed [[wolf]].
+je_not_burn.java => not_burn_or_fire_aspect
+je_not_burn.bedrock = {{bug|MCPE-122487||Killing guardians on fire/lava does not drop cooked fish}}
+}}
+
+Guardians also drop {{xp|10}} when killed by a [[player]] or tamed [[wolf]].
+
+== Behavior ==
+Guardians swim around in [[water]], attacking any [[player]]s, [[squid]], [[glow squid]], or [[axolotl]]s that come into range of its laser. They swim in abrupt charges, moving their tail rapidly when doing so. When swimming, their spikes retract. When not swimming, they sink slowly and their spikes extend and quiver.
+
+During idle swimming, a guardian chooses a water or waterlogged block within a 9×9×9 area centered on itself as the destination to pathfind toward. If unreachable, they still swim directly toward the target despite any blocks in the way. They attempt to cross air blocks and do not try to prevent fall damage.
+
+Stationary guardians are pushed much faster horizontally by flowing water than other mobs, but when swimming they are completely unimpeded; however, they are affected by [[bubble column]]s.
+
+When swimming, guardians have a slight bias toward selecting destination blocks with a higher light level. If undisturbed, guardians can be seen loosely congregating around the [[sea lantern]] blocks of their ocean structure.
+
+When out of water, they abandon any previous pathfinding target; they squeak loudly and hop erratically, uninfluenced by nearby water or players. They still use their laser and have their spikes extended. Guardians do not suffocate and survive indefinitely without water unlike other aquatic mobs.
+
+The guardian's eye follows and stares at any nearby players, and always looks directly at its target. {{IN|JE}}, the eye does not follow unarmored players under the effects of a [[potion of Invisibility]] and the guardians cannot attack them. A player can wear one piece of [[armor]] while under the effects of Invisibility and not be attacked.
+
+Guardians, as aquatic mobs, are affected by the [[Impaling]] enchantment.{{only|java|short=1}}
+
+=== Combat ===
+{{see also|Tutorial:Combat#Guardians}}
+
+Guardians have two methods of attack: a laser and a defensive attack analogous to the [[Thorns]] enchantment. Unlike most other hostile mobs, a guardian does not follow a player who moves out of sight. Instead, it simply continues swimming until the player becomes visible again to start charging its laser.
+
+Guardians attack players, axolotls, and squid. Otherwise, a guardian does not retaliate against mobs (such as iron golems) that attack it, other than damaging the attacking mob with its natural thorns defense.
+
+;Laser
+
+The laser takes 4 seconds to charge, causing no damage in the meantime. It starts out purple and fades to yellow. Once charged, the laser flashes green before disappearing and deals {{hp|6}} damage plus another {{hp|2}} magic damage on Normal difficulty. The magic damage is increased by another {{hp|2}} on Hard difficulty, after adding the usual difficulty scaling factor of 1.5x, meaning a guardian can deal up to {{hp|5}} magic damage through this attack on Hard difficulty. Guardians swim around for 3 seconds before firing again. If the target approaches while the guardian is loading its laser, it stops firing and swims away until it is at a comfortable range, at which point it continues attacking. The laser has a maximum range of 15 blocks and cannot be dodged. However, a [[shield]] reduces its damage by 50%.
+
+Once the target is out of range, or if the laser is obstructed by solid blocks (including transparent blocks like glass), the guardian's laser disengages and the shooting sound stops.
+
+;Spikes defense
+
+A guardian deals damage each time it is hit with a melee attack while its spikes are extended, similar to the [[Thorns]] armor enchantment. If cornered, a guardian usually extends its spikes and fires at the player, even at point-blank range.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Guardian idle1.ogg
+|sound2=Guardian idle2.ogg
+|sound3=Guardian idle3.ogg
+|sound4=Guardian idle4.ogg
+|subtitle=Guardian moans
+|source=hostile
+|description=Randomly while in water
+|id=entity.guardian.ambient
+|translationkey=subtitles.entity.guardian.ambient
+|volume=0.1
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land idle1.ogg
+|sound2=Guardian land idle2.ogg
+|sound3=Guardian land idle3.ogg
+|sound4=Guardian land idle4.ogg
+|subtitle=Guardian flaps
+|source=hostile
+|description=Randomly while out of water
+|id=entity.guardian.ambient_land
+|translationkey=subtitles.entity.guardian.ambient.land
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian attack loop.ogg
+|subtitle=Guardian shoots
+|source=hostile
+|description=While a guardian uses its laser attack
+|id=entity.guardian.attack
+|translationkey=subtitles.entity.guardian.attack
+|volume=0.0-1.0 <ref group=sound>Increases quadratically from minimum to maximum as the attack goes on</ref>
+|pitch=0.7-1.2 <ref group=sound>Increases linearly from minimum to maximum as the attack goes on</ref>
+|distance=16 (technical) / ∞ (effective)<ref group=sound>{{bug|MC-57057||Guardian laser attack sound ignores distance}}</ref>}}
+| {{SoundLine
+|sound=Guardian death.ogg
+|subtitle=Guardian dies
+|source=hostile
+|description=When a guardian dies while in water
+|id=entity.guardian.death
+|translationkey=subtitles.entity.guardian.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land death.ogg
+|subtitle=Guardian dies
+|source=hostile
+|description=When a guardian dies while out of water
+|id=entity.guardian.death_land
+|translationkey=subtitles.entity.guardian.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian hurt1.ogg
+|sound2=Guardian hurt2.ogg
+|sound3=Guardian hurt3.ogg
+|sound4=Guardian hurt4.ogg
+|subtitle=Guardian hurts
+|source=hostile
+|description=When a guardian is damaged while in water
+|id=entity.guardian.hurt
+|translationkey=subtitles.entity.guardian.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian land hurt1.ogg
+|sound2=Guardian land hurt2.ogg
+|sound3=Guardian land hurt3.ogg
+|sound4=Guardian land hurt4.ogg
+|subtitle=Guardian hurts
+|source=hostile
+|description=When a guardian is damaged while out of water
+|id=entity.guardian.hurt_land
+|translationkey=subtitles.entity.guardian.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Guardian flop1.ogg
+|sound2=Guardian flop2.ogg
+|sound3=Guardian flop3.ogg
+|sound4=Guardian flop4.ogg
+|subtitle=Guardian flops
+|source=hostile
+|description=While a guardian is on land
+|id=entity.guardian.flop
+|translationkey=subtitles.entity.guardian.flop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Guardian idle1.ogg
+|sound2=Guardian idle2.ogg
+|sound3=Guardian idle3.ogg
+|sound4=Guardian idle4.ogg
+|source=hostile
+|description=Randomly while in water
+|id=mob.guardian.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian land idle1.ogg
+|sound2=Guardian land idle2.ogg
+|sound3=Guardian land idle3.ogg
+|sound4=Guardian land idle4.ogg
+|source=hostile
+|description=Randomly while out of water
+|id=mob.guardian.land_idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian attack loop.ogg
+|source=hostile
+|id=mob.guardian.attack_loop
+|description=While a guardian uses its laser attack}}
+| {{SoundLine
+|sound=Guardian death.ogg
+|source=hostile
+|description=When a guardian dies while in water
+|id=mob.guardian.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian land death.ogg
+|source=hostile
+|description=When a guardian dies while out of water
+|id=mob.guardian.land_death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian hurt1.ogg
+|sound2=Guardian hurt2.ogg
+|sound3=Guardian hurt3.ogg
+|sound4=Guardian hurt4.ogg
+|source=hostile
+|description=When a guardian is damaged while in water
+|id=mob.guardian.hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian land hurt1.ogg
+|sound2=Guardian land hurt2.ogg
+|sound3=Guardian land hurt3.ogg
+|sound4=Guardian land hurt4.ogg
+|source=hostile
+|description=When a guardian is damaged while out of water
+|id=mob.guardian.land_hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Guardian flop1.ogg
+|sound2=Guardian flop2.ogg
+|sound3=Guardian flop3.ogg
+|sound4=Guardian flop4.ogg
+|source=hostile
+|description=While a guardian is on land
+|id=mob.guardian.flop
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Guardian
+|spritetype=entity
+|nameid=guardian
+|entitytags=aquatic, axolotl_always_hostiles, can_breathe_under_water, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Guardian
+|spritetype=entity
+|nameid=guardian
+|showentityfamily=y
+|entityfamily=aquatic,guardian,mob,monster
+|id=49
+|foot=1}}
+
+=== Entity data ===
+Guardians have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{video note|This video is outdated in Java Edition, as raw fish, cooked fish and clownfish are now called raw cod, cooked cod, and tropical fish as of 1.13.}}
+<div style="text-align:center">{{yt|YrlS2ISHMrw}}</div>
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||June 3, 2014|link={{tweet|jeb_|473854701554135041}}|[[Jeb]] announces he is working on a [[hostile]] [[mob]] that lives underwater, though currently doesn't do much.}}
+|{{HistoryLine||June 8, 2014|link={{tweet|jeb_|475573277835165696}}|Jeb provides more details into the upcoming [[mob]] - it has a ranged attack and is hostile to [[squid]] as well as the [[player]]. He recommended using a full set of [[diamond armor]], [[potion of Water Breathing]] and [[Respiration]] enchantment on Hard [[difficulty]].}}
+|{{HistoryLine||June 9, 2014|link=http://www.reddit.com/r/Minecraft/comments/27om1c/heres_another_teaser_of_the_new_mob/|Jeb posted a stylized guardian image to [[wikipedia:Reddit|Reddit]] for use as a user flair. This was the first indication of how the guardian would look.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:Guardian Revision 1.png|42px]] Added guardians.}}
+|{{HistoryLine||1.9|dev=15w43a|The [[drop]] chances of guardians for [[raw fish]] and [[prismarine crystal]]s have been changed. Instead of a 33% chance of [[fish]] and a 33% chance of crystals (only if the fish drop failed with both percentages adjusted by [[Looting]]), the percentages have been changed to 40% fish, 40% crystals, and 20% neither, with the amount increased by Looting.}}
+|{{HistoryLine|||dev=15w47b|[[Sound]]s for guardians' defensive [[Thorns]] attack have now been added.}}
+|{{HistoryLine||1.11|dev=16w38a|The common [[drop]] of guardians, [[raw fish]], now drops as [[cooked fish]], if killed while on [[fire]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Guardian.png|42px]] The texture of guardians has been changed.}}
+|{{HistoryLine||1.15|dev=19w34a|Guardians now take damage on [[magma block]]s.}}
+|{{HistoryLine||1.17|dev=21w11a|[[File:Guardian tailfin change 21w11a.gif|42px]] The texture of the guardian has been tweaked, so that a floating pixel present in the tailfin no longer exists.}}
+|{{HistoryLine|||dev=21w13a|Now drop [[cooked cod]] or [[salmon]] instead of [[raw cod]] or [[salmon]] if on [[fire]] when killed or killed by a [[fire]] source.}}
+|{{HistoryLine||1.21.9|dev=25w33a|Guardians are no longer able to board [[boat]]s.}}
+|{{HistoryLine||1.21.9|dev=25w34a|Guardians are once again able to board [[boat]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:Guardian Revision 1.png|42px]] Added guardians.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=?|Guardians no longer play flopping sounds when on land.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.2|Guardians now attack [[fish]].}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.5|Guardians no longer attack [[fish]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Guardian.png|42px]] The texture of guardians has been changed.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|[[File:Guardian tailfin change 21w11a.gif|42px]] The texture of the guardian now have been tweaked that a floating pixel in the tailfin have now removed.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Guardians once again play flopping sounds when on land.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Guardian Revision 1.png|42px]] Added guardians.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[Sound]]s for guardians' defensive [[Thorns]] attack have now been added.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|The common [[drop]] of guardians, [[raw fish]], now drops as [[cooked fish]], if killed while on [[fire]].}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|The common drop of guardians, raw fish, no longer drops as cooked fish, if killed while on [[fire]].{{check version}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New Nintendo 3DS Edition}}
+|{{HistoryLine||1.3.12|[[File:Guardian Revision 1.png|42px]] Added guardians.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from <code>Guardian</code> to <code>guardian</code>. The <code>Elder</code> [[tag]]{{verify|is this supposed to be linked, or did the person who added this link not know what a tag actually is?}} has been removed.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* A guardian's eye is actually the "head" part of the mob's [[model]]. This gives the illusion of a dynamic eye.
+* Guardians' laser-beam attacks are affected by the [[potion of Strength]], which normally affects only melee attacks.
+* When placed or spawned on a [[slime block]], guardians start bouncing and continue and each bounce higher than the last, until each bounce brings the guardian to 17 [[block]]s height.
+* In the texture file for the guardian, "jeb" is written in the bottom right corner.
+* Despite being classified as only a [[monster]], the guardian was referred to as an [[animal]] in a ''Minecraft'' video about the [[elder guardian]]s.<ref>{{ytl|gs-rMm5luB8|Why are their eyes so big? <nowiki>|</nowiki> The Story Of The Elder Guardian|Minecraft|August 24, 2025|t=64s}}</ref>
+
+== Gallery ==
+=== Render ===
+<gallery>
+Guardian (Retracted).png|Guardian's spikes retracted.
+</gallery>
+=== Screenshots ===
+<gallery>
+File:Underwater mob jeb instagram.png|[[Jeb]]'s [[wikipedia:Instagram|Instagram]] [[mob]] reveal.
+File:Jeb Guardians.jpg|Jeb's Instagram mob reveal.
+File:GuardianInside.png|The inside of a guardian (with their spikes extended).
+GuardianInsideOld.png|The old inside of a guardian.
+File:Guardian Beach.jpg|A guardian's "eye" follows [[player]]s at any position.
+File:Guardian Squid.jpg|A guardian attacking a [[squid]].
+File:Guardians Attack.png|A group of guardians defending their [[ocean monument|monument]].
+File:Guardian Size.png|Size comparison between a guardian and its [[elder guardian|elder]] variant.
+File:Guardian in Boat.png|A guardian in a [[boat]].
+File:21w20a.jpg|Axolotls attacking a group of guardians.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Guardian (texture) JE1.png|Guardian texture file, with "jeb" written in the corner.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Guardian Face Reveal.png|The guardian face texture as revealed by Jeb on reddit.
+File:BossUpdatePE.png|Guardians in promotional artwork for the [[Boss Update]].
+File:LEGO Guardian.png|[[Lego Minecraft]] Guardian.
+File:Steve Swimming Art.jpg|Guardian artwork.
+File:Steve Swimming Art guardian cutout.png|Ditto but cut-out
+File:AMCM Guardian face.png|A statue of a guardian from {{AMCM|A Minecraft Movie Live Event}}. 
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/meet-guardian Meet the Guardian] – Minecraft.net on September 25, 2017
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Aquatic mobs]]
+
+[[de:Wächter]]
+[[es:Guardián]]
+[[fr:Gardien]]
+[[hu:Őrszem]]
+[[it:Guardiano]]
+[[ja:ガーディアン]]
+[[ko:가디언]]
+[[nl:Bewaker]]
+[[pl:Strażnik]]
+[[pt:Guardião]]
+[[ru:Страж]]
+[[uk:Вартовий]]
+[[zh:守卫者]]

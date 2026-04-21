@@ -1,0 +1,393 @@
+{{Infobox block
+| group = Closed
+| 1-1 = Barrel.png
+| group2 = Open
+| 2-1 = Open_Barrel.png
+| transparent = No
+| light = No
+| tool = Axe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = Yes
+}}
+A '''barrel''' is a solid [[block]] used to store [[item]]s. Unlike a [[chest]], it cannot connect to other barrels. It also serves as a [[fisherman]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+Barrels can be mined with or without any [[tool]], but [[axe]]s are the quickest.
+
+{{breaking row|horizontal=1|Barrel|Axe}}
+
+=== Natural generation ===
+Empty barrels can generate naturally in fisher cottages in [[village]]s. Up to 3 barrels can generate in a village fisher cottage.
+
+In [[trial chambers]], barrels containing loot can be found in the corridors, while empty barrels generate beneath [[hopper]]s at chamber entrances.
+
+=== Generated loot ===
+{{LootChestItem|barrel}}
+
+=== Crafting ===
+{{-}}
+{{Crafting
+|head=1
+|A1= Any Planks
+|B1= Any Wooden Slab
+|C1= Any Planks
+|A2= Any Planks
+|C2= Any Planks
+|A3= Any Planks
+|B3= Any Wooden Slab
+|C3= Any Planks
+|Output= Barrel
+|type= Decoration block
+|foot=1
+}}
+
+== Usage ==
+Barrels can be moved by [[piston]]s.{{only|bedrock}} [[Water]] and [[lava]] flow around barrels without affecting them. Lava can create [[fire]] in air blocks next to barrels as if the barrel was flammable, but the barrel does not actually catch fire and can't burn away.
+
+=== Container ===
+[[File:Barrel GUI.png|thumb|right|176px|The GUI of the barrel.]]
+
+Barrels have a container inventory with 27 slots, which is the same as a single [[chest]]. Unlike chests, the action of opening a barrel is never prevented.
+They can be filled by [[dropper]]s and both filled and emptied by [[hopper]]s. When broken, barrels drop the contents of the container and the barrel item itself. 
+
+To open the barrel interface, use the {{control|Use Item}} control. To move items between the barrel inventory and the player inventory or hotbar while the barrel interface is open, drag or shift-click the items. Holding {{key|Shift}} and double-clicking while holding an item moves all items of the type clicked on in or out of the barrel to the extent that space is available for them.{{only|Java}} To exit the barrel interface, use the {{key|Esc}} control.
+
+By default, the interface of a barrel is labeled "Barrel". A barrel's GUI label can be changed by naming the barrel in an [[anvil]] before placing it or by using the {{cmd|data}} command{{only|Java}} (for example, to label a barrel at (0,64,0) as "Bonus Barrel!", use {{cmd|data merge block 0 64 0 <nowiki>{CustomName:'"Bonus Barrel!"'}</nowiki>}}).
+
+{{IN|je}}, a barrel can be "locked" by setting its <code>lock</code> tag using the {{cmd|data}} command. If a barrel's <code>lock</code> tag is not blank, the barrel cannot be opened unless the player is holding an item that matches the item predicate in the <code>lock</code> tag. For example, to lock a barrel at (0,64,0) so that the barrel cannot be opened unless the player is holding an item named "Barrel Key", use {{cmd|data merge block 0 64 0 <nowiki>{lock:{components:{"custom_name":"Barrel Key"}}}</nowiki>}}.
+
+=== Profession ===
+{{main|Job site block}}
+If a barrel has not been claimed by a [[villager]], any nearby unemployed villager has a chance to change their profession to fisherman and claim the barrel as their [[job site block]].
+
+=== Fuel ===
+Barrels can be used as a fuel in [[furnace]]s, smelting 1.5 items per block.
+
+=== Note blocks ===
+Barrels can be placed under [[note block]]s to produce "bass" sounds.
+
+=== Piglins ===
+[[Piglin]]s become hostile toward players who open or break barrels.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Barrel close.ogg
+|subtitle=Barrel closes
+|source=Blocks
+|description=When a barrel closes
+|id=block.barrel.close
+|translationkey=subtitles.block.barrel.close
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Barrel open1.ogg
+|sound2=Barrel open2.ogg
+|subtitle=Barrel opens
+|source=Blocks
+|description=When a barrel opens
+|id=block.barrel.open
+|translationkey=subtitles.block.barrel.open
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Fisherman works
+|source=neutral
+|description=Randomly while a fisherman is working
+|id=entity.villager.work_fisherman
+|translationkey=subtitles.entity.villager.work_fisherman
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=lock>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=block
+|description=When a player attempts to open a barrel locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=lock/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=lock/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Barrel close.ogg
+|source=block
+|description=When a barrel closes
+|id=block.barrel.close
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Barrel open1.ogg
+|sound2=Barrel open2.ogg
+|source=block
+|description=When a barrel opens
+|id=block.barrel.open
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=Randomly while a fisherman is working
+|id=block.barrel.open
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Barrel
+|spritetype=block
+|nameid=barrel
+|blocktags=guarded_by_piglins
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=Barrel
+|spritetype=block
+|nameid=barrel
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Barrel
+|spritetype=block
+|nameid=barrel
+|blocktags=minecraft:is_axe_item_destructible,wood
+|id=458
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=Barrel
+|spritetype=block
+|nameid=Barrel
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|facing|north|down,east,north,south,up,west|The direction the barrel is facing.}}
+{{bst|open|false|false,true|Whether the barrel is currently being looked at by a player; changes the texture on the top face.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|facing_direction|0|0,1,2,3,4,5|The direction the barrel is facing.
+*0:Down facing barrel
+*1:Up facing barrel
+*2:East facing barrel
+*3:West facing barrel
+*4:South facing barrel
+*5:North facing barrel}}
+{{bst|bits=0x8|open_bit|0|0,1|Whether the barrel is currently being looked at by a player; changes the texture on the top face.|foot=1}}
+
+=== Block data ===
+A barrel has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/nameable|indent=**}}
+** {{nbt inherit/lockable|indent=**}}
+** {{nbt inherit/lootable|indent=**}}
+** {{nbt|list|Items}}: List of items in the container. Represents the {{DCL|minecraft:container}} component. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt|compound}}: An item, including the slot tag. Barrel slots are numbered 0-26, 0 starts in the top left corner.
+**** {{nbt inherit/item|indent=****}}
+</div><section end="block data" />
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+{{yt|di1fNQ94fcM}}
+
+== History ==
+{{See asset history|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Barrel (U) JE1 BE1.png|32px]] [[File:Barrel (D) JE1 BE1.png|32px]] [[File:Barrel (S) JE1 BE1.png|32px]] [[File:Barrel (W) JE1 BE1.png|32px]] [[File:Barrel (N) JE1 BE1.png|32px]] [[File:Barrel (E) JE1.png|32px]] Added barrels.
+|Barrels have been added to the [[Creative inventory]].
+|Barrels currently have the inventory of a [[chest]], but there is no way to view this in-game.
+|Barrels can currently be filled only by [[hopper]]s and [[dropper]]s.
+|Barrels can currently be emptied only by hoppers.
+|Barrels currently do not drop the [[item]]s they contain when broken.}}
+	|{{HistoryLine|||dev=18w47b|[[File:Barrel_(S)_JE2.png|32px]] The {{cd|1=facing=south}} [[block state]] texture of barrels has been changed.}}
+|{{HistoryLine|||dev=18w48a|Barrel items are now found in chests in village fisher cottages.
+|Barrels can now generate naturally in [[village]]s in [[plains]].}}
+|{{HistoryLine|||dev=18w49a|Barrels can now generate naturally in [[savanna]] and [[Snowy Tundra|snowy]] villages.}}
+|{{HistoryLine|||dev=18w50a|Barrels can now generate naturally in [[desert]] and [[taiga]] villages.
+|Barrels now act as a storage unit.
+|Barrels can now be used in tight spaces, even if there is a [[block]] above it, unlike a [[chest]].
+|Barrels can now be crafted using 6 wood [[planks]] and 2 wood [[slab]]s.}}
+|{{HistoryLine|||dev=19w03a|[[Sound]]s have been added for barrels.}}
+|{{HistoryLine|||dev=19w07a|[[File:Open Barrel (U) JE1 BE1.png|32px]] [[File:Open Barrel (D) JE1 BE1.png|32px]] [[File:Open Barrel (S) JE1.png|32px]] [[File:Open Barrel (W) JE1 BE1.png|32px]] [[File:Open Barrel (N) JE1 BE1.png|32px]] [[File:Open Barrel (E) JE1.png|32px]] An {{cd|open}} block state has been added to barrels.}}
+|{{HistoryLine|||dev=19w11a|Barrels now serve as fisherman [[villager]]s' job site block.}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft barrels.}}
+|{{HistoryLine|||dev=20w15a|[[Piglin]]s now become hostile toward [[player]]s who open or [[Breaking|break]] barrels.}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Barrel (D) JE2 BE2.png|32px]] [[File:Barrel (W) JE2 BE2.png|32px]] [[File:Barrel (N) JE2 BE2.png|32px]] Bottom texture was changed.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove planks]] can now be used to craft barrels.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft barrels.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft barrels.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Barrels containing loot now generate in [[trial chambers]].}}
+|{{HistoryLine||1.21.2|dev=24w33a|Empty barrels now generate beneath [[hopper]]s at chamber entrances in trial chambers.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0
+|[[File:Fish Barrel (texture) BE1.png|32px]] [[File:Empty Barrel (texture) BE1.png|32px]] Unused barrel textures are added, including textures titled "fish barrel" and "empty barrel." {{Verify|Textures have so far only been found in an official resource pack template for beta 1.9.0.0}}}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|exp=Experimental Gameplay|[[File:Barrel (U) JE1 BE1.png|32px]] [[File:Barrel (D) JE1 BE1.png|32px]] [[File:Barrel (S) JE1 BE1.png|32px]] [[File:Barrel (W) JE1 BE1.png|32px]] [[File:Barrel (N) JE1 BE1.png|32px]] [[File:Barrel (E) BE1.png|32px]]<br>[[File:Open Barrel (U) JE1 BE1.png|32px]] [[File:Open Barrel (D) JE1 BE1.png|32px]] [[File:Open Barrel (S) BE1.png|32px]] [[File:Open Barrel (W) JE1 BE1.png|32px]] [[File:Open Barrel (N) JE1 BE1.png|32px]] [[File:Open Barrel (E) BE1.png|32px]] <br>Added barrels which are currently behind [[Experimental Gameplay]].
+|A barrel can be used to [[smelt]] 1.5 [[item]]s in a [[furnace]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|A [[crafting]] recipe has been added to barrels, which is different compared from {{el|je}}'s crafting recipe.
+|Barrels now generate in fisher cottages in [[village]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|The functionality of barrels has been added.|Barrels are now available outside of Experimental Gameplay.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|[[File:Barrel (D) JE2 BE2.png|32px]] [[File:Barrel (W) JE2 BE2.png|32px]] [[File:Barrel (N) JE2 BE2.png|32px]] Changed the bottom texture to match the spruce planks.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|The crafting recipe for barrels now uses [[planks]] instead of [[stick]]s to match {{JE}}.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Barrel JE1 BE1.png|32px]] [[File:Open Barrel JE1 BE1.png|32px]] Added barrels.}}
+}}
+<gallery>
+File:LadyAgnes savanna village barrels.png|A close up of barrels.
+File:Fish Barrel (texture) BE1.png|An unused texture of a barrel of fish, found in a {{BE}} [[resource pack]] template.
+File:Fish Barrel.png|How a barrel would look if the unused texture was on its top.
+File:Ore UI development barrel container.jpg|Prototype of a barrel menu in [[Ore UI]].
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+[[File:Alex wearing Barrel.png|thumb|right|upright=0.5|[[Alex]] wearing a barrel]]
+* In the 2022's [[Java Edition 22w13oneBlockAtATime|April Fool's update]], a barrel can be thrown onto a [[player]] and make them appear as if they were "wearing" or "hiding" under the block.
+{{-}}
+
+== Gallery ==
+=== Render ===
+====Close====
+'''{{JE}} '''
+<gallery>
+Barrel (U).png|Up
+Barrel (D).png|Down
+Barrel (S).png|South
+Barrel (W).png|West
+Barrel (N).png|North
+Barrel (E).png|East
+</gallery>
+
+'''{{BE}}'''
+<gallery>
+Barrel (U) BE.png|Up
+Barrel (D) BE.png|Down
+Barrel (S) BE.png|South
+Barrel (W) BE.png|West
+Barrel (N) BE.png|North
+Barrel (E) BE.png|East
+</gallery>
+
+==== Open ====
+'''{{JE}} '''
+<gallery>
+Open Barrel (U).png|Up
+Open Barrel (D).png|Down
+Open Barrel (S).png|South
+Open Barrel (W).png|West
+Open Barrel (N).png|North
+Open Barrel (E).png|East
+</gallery>
+
+'''{{BE}}'''
+<gallery>
+Open Barrel (U) BE.png|Up
+Open Barrel (D) BE.png|Down
+Open Barrel (S) BE.png|South
+Open Barrel (W) BE.png|West
+Open Barrel (N) BE.png|North
+Open Barrel (E) BE.png|East
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:LadyAgnes savanna village.jpg|First image of barrels in a [[savanna]] [[village]].
+File:Barrel Alignment.jpg|Barrels placed next to each other facing opposite directions.
+File:Blast Furnace Smoker & Barrel.jpg|A [[blast furnace]], [[smoker]], and a barrel.
+File:Barrel-ingame.jpeg
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Barrel-header.jpeg|A stack of barrels.
+File:Barrel 3DShareware.gif|A [[bonus barrel]], which randomly generates throughout the world in the [[Java Edition 3D Shareware v1.34|April Fool's update]] 2019.
+File:Vision in Barrel.png|Player's vision while hiding inside a barrel in the [[Java Edition 22w13oneBlockAtATime|April Fool's update]] 2022.
+File:MCD Barrels.png|Barrels as they appear in {{MCD}}, even including a fish barrel.
+File:Barrel MV.png|A barrel as it appeared on the [[2022 Mob Vote Event]].
+File:Barrel MCC Event.png|A barrel as it appeared in the [[MCC x Minecraft 15th Anniversary Party]].
+File:Cubeez 2025 Barrel.png|[[Cubeez]] of a barrel.
+File:A Barrel.png|Barrels as they appear in {{AMCM}}.
+</gallery>
+
+== External links ==
+* {{Mcnet|block-week--barrel|Block of the Week: Barrel|December 23, 2021|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Storage]]
+[[Category:Generated structure blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[cs:Sud]]
+[[de:Fass]]
+[[es:Barril]]
+[[fr:Tonneau]]
+[[it:Barile]]
+[[ja:樽]]
+[[ko:통]]
+[[lzh:木桶]]
+[[pl:Beczka]]
+[[pt:Barril]]
+[[ru:Бочка]]
+[[uk:Діжка]]
+[[zh:木桶]]

@@ -1,0 +1,98 @@
+{{about|the [[status effect]] exclusive to [[Java Edition]]|the NBT tag|Entity format#Entity format}}
+{{exclusive|java}}
+{{Infobox effect
+|image = Glowing.png
+|imageclass = drop-shadow-light pixel-image
+|invimage = Spectral Arrow
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-glowing}} #94A061 (olive)
+|type=Neutral
+}}
+'''Glowing''' is a [[status effect]] that shows entity positions through blocks.
+
+== Effect ==
+[[File:Glowing Effect.png|thumb|The glowing effect added to entities using {{Command|effect}}]] 
+The Glowing effect causes [[entities]] to glow with an outline that can be seen through [[block]]s and entities. This outline is white by default, but can be set to display other colors if the entity is part of a [[team]] (the color being the color of the team). The outline displays around any holes in a mob's texture or model, though only when that part of the model can be seen all the way through. If multiple entities with glowing are near each other, the outlines merge to prevent overlapping/Z-Fighting.
+
+This does not affect mob models as seen in the inventory, of either the player or ridden mobs.<ref>{{bug|MC-84377|||WAI}}</ref>
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+ ! Cause
+ ! Potency
+ ! Length
+ ! Notes
+ |-
+ | {{ItemLink|Spectral Arrow}}
+ | I
+ | 0:10
+ | When shot by it.
+ |-
+ | {{BlockLink|Bell}}
+ | I
+ | 0:03
+ | Hitting a bell applies the effect to any [[illager]]s, [[ravager]]s or [[witch]]es within 32 blocks of the bell.
+ |}
+
+== Immune mobs ==
+[[Wither]]s, [[ender dragon]]s, dropped items, [[interaction]]s, and [[display entities]] are immune to Glowing.
+
+== Advancements ==
+{{load advancements|How Did We Get Here?}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=glowing
+|displayname=Glowing
+|spritetype=effect
+|id=24
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Glowing JE1.png|32px]] Added Glowing effect.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Glowing JE2.png|32px]] The effect icon texture of Glowing has been changed.}}
+|{{HistoryLine|||dev=19w13b|Hitting a [[bell]] now gives the glowing effect to raiders within a 32-block-radius of the bell.}}
+|{{HistoryLine||1.17|dev=21w10a|Glowing is now based on the outline of all layers on an entity, not just the base layer.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Glowing JE1.png|32px]] Added the Glowing effect, but is only obtainable via inventory editing.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[File:Glowing JE2.png|32px]] The effect icon texture of glowing has been changed.}}
+}}
+
+== Issues ==
+{{issue list|glowing|-squid|-squids|-frame|-frames|-signs|-lichen|-torch|-lava|-berry|projects=MC}}
+
+== Gallery ==
+<gallery>
+Glowing Teaser.png|First screenshot of the glowing effect.
+Glowing Outline Merge.png|The Glowing outlines on the [[husk]] and [[spider]] merged into one.
+Glowing Skeleton.png|The Glowing effect outlines holes in the [[skeleton]]'s rib cage only if they go all the way through.
+Glowing Illagers During Raid.png|[[Pillager]]s with glowing effect, as caused by a [[bell]].
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Leuchten]]
+[[es:Luminiscencia]]
+[[fr:Surbrillance]]
+[[it:Luminescenza]]
+[[ja:発光]]
+[[ko:발광]]
+[[lzh:耀]]
+[[pt:Brilho]]
+[[ru:Свечение]]
+[[zh:发光]]

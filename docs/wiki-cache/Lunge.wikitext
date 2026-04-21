@@ -1,0 +1,160 @@
+{{Infobox enchantment
+| maxlevel = III
+| primaryitems = {{ItemSprite|Spear|link=Spear}}
+| weight = 5
+| id = lunge
+}}
+
+'''Lunge''' is an [[enchantment]] applied to [[spear]]s that causes jab attacks to propel the wielder forward horizontally. When used, Lunge consumes [[saturation]] and [[hunger]] at an amount dependent on the enchantment level, as well as 1 durability. The distance gained from Lunge is increased when in midair.
+
+== Obtaining ==
+Lunge can be directly applied to a spear or book using an [[enchanting table]]. Enchanted books with Lunge can also be obtained by [[trading]] with a librarian of any level{{until|Villager Trade Rebalance|nocat=1}}, from [[fishing]], or from [[structure]] loot. An enchanted book can be used to apply Lunge to a spear using an [[anvil]].
+
+== Usage ==
+Lunge propels the wielder forward, providing an instant momentum boost of <math>0.458\times level</math> blocks per tick in the direction they are facing whenever they perform a jab attack, at the cost of causing <math>4\times level</math> [[exhaustion]] gained (for [[player]]s only) and 1 additional durability loss. This equates to:
+* Level I: 0.458 blocks per tick (9.16 blocks per second), at the cost of {{hunger|1}} and 1 durability.
+* Level II: 0.916 blocks per tick (18.32 blocks per second), at the cost of {{hunger|2}} and 1 durability.
+* Level III: 1.374 blocks per tick (27.48 blocks per second), at the cost of {{hunger|3}} and 1 durability.
+
+For players, Lunge consumes saturation points first, and then hunger points after. Lunge can only be activated if the wielder has {{hunger|7}} or more hunger points in their hunger bar (i.e. they can [[sprint]]). This equates to:
+* 34 lunges with max saturation<ref group="note">Max saturation can be reached by eating two instances of golden carrots, steak, cooked porkchops, or rabbit stew, or {{in|java}}, by eating a single suspicious stew with the Saturation effect.</ref> at level I.
+* 17 lunges with max saturation at level II.
+* 12 lunges with max saturation at level III.
+
+Non-player [[mob]]s do not have hunger, so Lunge will always activate whenever they perform jab attacks, with the only cost being durability. However, [[zombie]]s, [[zombie villager]]s, [[husk]]s, [[piglin]]s, and [[zombified piglin]]s only perform charge attacks, and therefore will never activate Lunge. Mobs use Lunge-enchanted spears in exactly the same way they use non-Lunge spears; i.e. only in melee range and never for mobility.
+
+The distance traveled using Lunge is maximized if the wielder looks directly horizontal when they activate it, as the vertical component of Lunge's momentum boost is cancelled before it is applied to the wielder. Additionally, using Lunge midair propels the wielder significantly farther than on the ground. Lunge will not activate if the wielder is riding a mount or vehicle, gliding with [[elytra]], touching [[water]] or, if the wielder is a [[player]], has 5 or fewer hunger points.
+
+=== Charge attack ===
+[[File:Lunge charge attack synergy.gif|thumb|Starting a charge attack immediately after doing a jab attack with a Lunge spear.]]
+Lunge does not activate when doing a charge attack, and instead activates when doing a jab attack. However, by initiating a charge attack directly after jabbing, the charge attack can be connected using the velocity gained with Lunge. There must be significant distance between the user and the target to give time for the charge attack's activation delay to fully finish after jabbing. The following table shows the damage of charge attacks when done using the speed from different levels of Lunge.
+
+{|class="wikitable"
+! rowspan="2" |Travel method
+! rowspan="2" |Blocks traveled per second
+! colspan="7" |Charge attack damage
+|-
+! {{ItemSprite|Wooden Spear}}{{ItemSprite|Golden Spear}}
+! {{ItemSprite|Stone Spear}}{{ItemSprite|Copper Spear}}
+! {{ItemSprite|Iron Spear}}
+! {{ItemSprite|Diamond Spear}}
+! {{ItemSprite|Netherite Spear}}
+|-
+| {{ItemLink|Enchanted Book|text=Lunge|link=Lunge}} I
+| 9.16
+| {{hp|7}}
+| {{hp|8}}
+| {{hp|9}}
+| {{hp|10}}
+| {{hp|11}}
+|-
+| {{ItemLink|Enchanted Book|text=Lunge|link=Lunge}} II
+| 18.32
+| {{hp|13}}
+| {{hp|16}}
+| {{hp|18}}
+| {{hp|20}}
+| {{hp|22}}
+|-
+| {{ItemLink|Enchanted Book|text=Lunge|link=Lunge}} III
+| 27.48
+| {{hp|20}}
+| {{hp|23}}
+| {{hp|27}}
+| {{hp|30}}
+| {{hp|33}}
+|}
+
+== Sounds ==
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Spear lunge1.ogg
+|sound2=Spear lunge2.ogg
+|sound3=Spear lunge3.ogg
+|subtitle=Spear lunges
+|source=dependent
+|description=When a spear enchanted with Lunge is used to perform a jab attack
+|id=item.spear.lunge
+|translationkey=subtitles.item.spear.lunge
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=lunge
+|displayname=Lunge
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=lunge
+|displayname=Lunge
+|id=41
+|translationkey=enchantment.lunge
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added Lunge.
+|Lunge is currently incompatible with [[Mending]].
+|Lunge currently causes no exhaustion and <math>2\times 4^{level}</math> [[durability]] loss upon use.
+|8 durability is lost at level I, 32 durability at level II, and 128 durability at level III.}}
+|{{HistoryLine|||dev=25w42a|Lunge is no longer incompatible with Mending.}}
+|{{HistoryLine|||dev=25w43a|Lunge no longer causes durability loss on use, and instead now consumes hunger and saturation using the formula <math>8+4\times level</math> [[exhaustion]].|{{hunger|4}} is consumed at level I, {{hunger|5}} at level II, and {{hunger|6}} at level III.}}
+|{{HistoryLine|||dev=25w44a|The hunger and saturation loss when using Lunge has been lessened, now using the formula <math>4\times level</math> exhaustion.|{{hunger|1}} is consumed at level I, {{hunger|2}} at level II, and {{hunger|3}} at level III.|Lunge now once again causes durability damage when used, but is now only 1 durability regardless of enchantment level.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added Lunge.
+|Lunge is currently incompatible with [[Mending]].
+|Lunge currently causes no exhaustion and <math>2\times 4^{level}</math> [[durability]] loss upon use.
+|8 durability is lost at level I, 32 durability at level II, and 128 durability at level III.}}
+|{{HistoryLine|||dev=Preview 1.21.130.24|Lunge no longer causes durability loss on use, and instead now consumes hunger and saturation using the formula <math>4\times level</math> exhaustion.|{{hunger|1}} is consumed at level I, {{hunger|2}} at level II, and {{hunger|3}} at level III.|Lunge now only causes 1 durability damage regardless of enchantment level.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Because hunger cannot be depleted in [[Peaceful]] difficulty, the Lunge enchantment can be used infinitely as long as it has sufficient durability.
+
+== Gallery ==
+<gallery>
+Mounts of Mayhem Lunge.jpg|A player holding a [[netherite spear]] with Lunge.
+</gallery>
+
+== See also ==
+* [[Riptide]]
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee}}
+
+[[de:Ausfallschritt]]
+[[es:Estocada]]
+[[fr:Élan]]
+[[ja:突進]]
+[[lzh:揕]]
+[[pt:Estocada]]
+[[ru:Рывок]]
+[[zh:突进]]

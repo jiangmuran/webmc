@@ -1,0 +1,337 @@
+{{For|the item produced after a book and quill is signed|Written Book}}
+{{Infobox item
+| image = Book and Quill.png
+| renewable = Yes 
+| stackable = No
+}}
+
+A '''book and quill''' is an [[item]] that can be {{control|used}} to write and edit text, with up to 100 pages available. [[written book|Signing it]] allows it to be named for free and prevents further edits. It can also be displayed on a [[lectern]].
+
+==Obtaining==
+
+===Crafting===
+{{Crafting
+|Book
+|Ink Sac
+|Feather
+|Output= Book and Quill
+|type= Miscellaneous
+}}
+
+==Usage==
+===Crafting ingredient===
+{{crafting usage}}
+
+===Writing===
+[[File:Book&QuillPixelCounting.png|thumb|The width of a line of text is determined by the number of pixels, not characters. The first line depicts 61 pixels made up by apostrophes and commas (one pixel each) as well as 60 pixels of gap in between to add up to 121 pixels. Changing the final apostrophe to a lowercase L (2 pixels, adding up to 122 pixels) cause the line to create a new line underneath it.]]
+
+By pressing {{control|use item}} or long tapping screen anywhere{{only|bedrock}} while holding a book and quill in their hand, the [[player]] can open a text editor GUI. This shows one{{only|java|short=1}} or two{{only|be|short=1}} pages with a text box. The top of each page indicates its number and the total number of pages, and buttons at the bottom allow to flip through pages.
+
+{{IN|JE}}, the player can write a single book up to 100 pages, with up to 1023 characters per page, and up to 102,300 characters inside the entire book. No page may be longer than 14 lines, and each line can have a width of 114 pixels.
+
+{{IN|BE}}, the player can write a single book up to 50 pages long, with up to 256 characters per page, and up to 12,800 characters inside the entire book. No page may be longer than 14 lines and may have a width of up to 121 pixels each. Formatting codes apply to the character limit but do not apply to the pixel limit. 
+
+The player has the ability to copy and paste into books. However, the paste does not work if the text being pasted is longer than a single page. Most Unicode characters are available in books, and they may be pasted in without issue.
+
+In singleplayer, the world pauses while a book is being edited.{{only|java}}
+
+Pressing the "next" button on the last page automatically creates the page and increases the page count. {{IN|BE}}, the edit button allows to swap the page with the previous or next page, delete the page, or insert a new page before the selected page.
+
+{{IN|JE}}, the book writing interface must be closed by pressing the Done button. Any other way of closing it (such as by pressing the Escape key) causes all work from the session to be lost. {{IN|BE}}, the player can use the exit keybinds or X button like any other GUI.
+{{-}}
+
+===Lecterns===
+A book and quill (as well as a [[written book]]) can be placed on an empty [[lectern]].
+
+The lectern then emits a redstone signal depending on the displayed page in the book. On the last page, the lectern emits a signal strength of 15.
+
+===Formatting codes===
+{{Exclusive|bedrock|section=1}}{{main|Formatting codes}}
+
+Text in a book can be styled using codes starting with the <code>§</code> character (section sign).
+*<code>§k</code> creates randomly changing characters.
+*<code>§l</code> creates bold text.
+*<code>§o</code> creates italic text.
+*[[Formatting codes#Color codes|Most other numbers and letters]] create colored text.
+*<code>§r</code> resets any of the previous styles so text after it appears normally.
+
+If the player uses multiple codes, and continue typing past the end of a line, the next line exhibits only the last formatting code used.
+
+===Signing===
+[[File:Bedrock Book & Quill Signing.png|thumb|Signing a book]]
+Books can be signed by pressing the "Sign" button while in the interface. {{IN|java}}, when signed, a book bears the name of the player who wrote it and a title chosen upon signing. {{IN|bedrock}}, the book doesn't display the name of the player as the author; instead, the author can be any text the player wants. After it has been signed, it cannot be edited again – it has turned into a [[written book]].
+
+Special characters can be used in the title, although alt codes do not work and text cannot be pasted {{In|je}}. Also, on Linux, using the compose key to produce special characters does work. The title and author can be formatted in-game with the <code>§</code> character {{In|be}}.
+
+The title of the book and author can be up to 15{{Only|je|short=1}}/16{{only|be|short=1}} characters long.<ref name="bug">{{bug|MC-210318}}</ref> If a custom name is removed from a written book, it reverts to the title it was given during the signing process.
+
+===Chiseled bookshelf===
+{{control|Use|text=Using}} the [[chiseled bookshelf]] while having a book and quill in the main hand puts the book inside the chiseled bookshelf.
+
+===Trading===
+{{Trade uses}}
+
+===Inserting screenshots===
+{{exclusive|Education|section=1}}
+
+Screenshots in the [[portfolio]] can be inserted into book and quill.<ref>https://aka.ms/MEEBookAndQuill</ref> This can be done by clicking the pencil button on the bottom of the page, and clicking the photo button (shown as an icon that looks like a photo with a plus next to it).
+
+The photo button brings up the portfolio menu, where players can select which screenshot to be inserted into the book and quill page. Each screenshot takes up one page.
+
+Players can export their books and quills photos and written texts as a {{w|PDF}} file. The default name for the file is formatted "(Book Name) (Author Name)".
+
+==Sounds==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|subtitle=Page rustles
+|source=ui
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|translationkey=subtitles.item.book.page_turn
+|volume=2.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Page rustles
+|source=block
+|description=When the page of a book is turned on a lectern
+|id=item.book.page_turn
+|translationkey=subtitles.item.book.page_turn
+|volume=2.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|subtitle=Book thumps
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|translationkey=subtitles.item.book.put
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|subtitle=Book placed
+|source=block
+|description=When a book and quill is placed in a chiseled bookshelf
+|id=block.chiseled_bookshelf.insert
+|translationkey=subtitles.chiseled_bookshelf.insert
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.85, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|subtitle=Book taken
+|source=block
+|description=When a book and quill is removed from a chiseled bookshelf
+|id=block.chiseled_bookshelf.pickup
+|translationkey=subtitles.chiseled_bookshelf.take
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|source=sound
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|volume=2.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|volume=4.8
+|pitch=1.0}}
+| {{SoundLine
+|type=bedrock
+|sound=Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|source=block
+|description=When a book and quill is placed in a chiseled bookshelf
+|id=insert.chiseled_bookshelf
+|volume=0.8
+|pitch=''varies'' <ref group=sound name=insertvaries>Can be 1.0, 0.85, or 1.1 for each sound</ref>}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|source=block
+|description=When a book and quill is removed from a chiseled bookshelf
+|id=pickup.chiseled_bookshelf
+|volume=0.8
+| pitch = ''varies'' <ref group=sound name=pickupvaries>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+}}
+}}
+
+== Data values ==
+===ID===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Book and Quill
+|spritetype=item
+|nameid=writable_book
+|itemtags=bookshelf_books, lectern_books
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showitemtags=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Book and Quill
+|spritetype=item
+|nameid=writable_book
+|id=510
+|itemtags=minecraft:bookshelf_books, minecraft:lectern_books
+|form=item
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/writable_book_content}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Videos ==
+<div style="text-align:center">{{yt|DD_Z82wmGZA}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w17a|[[File:Book and Quill JE1 BE1.png|32px]] Added books and quills.}}
+|{{HistoryLine|||dev=12w18a|The game no longer pauses when writing in a book and quill.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Books and quills can now be crafted with a [[written book]] to clone the written book.}}
+|{{HistoryLine||1.8|dev=14w05a|Copying written books now marks them as "Copy of Original" or "Copy of Copy".
+|The copying status of a book is now denoted in a separate line in the tooltip, beneath the author's name.
+|Copies of copies cannot be copied.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Book and Quill JE2 BE2.png|32px]] The texture of books and quills has now been changed.
+|Added support for editing anywhere in the book and quill.<ref name="MC-1578">{{bug|MC-1578}}</ref>
+|Books and quills now permit copying and pasting text.<ref name="MC-1578"></ref>
+|The page limit of books and quills has now been increased from 50 to 100 pages.}}
+|{{HistoryLine|||dev=19w02a|Books and quills can now be put onto [[lectern]]s.}}
+|{{HistoryLine|||dev=19w11a|Librarian [[villager]]s now [[trading|buy]] books and quills instead of written books.}}
+|{{HistoryLine||1.16|dev=20w17a|The character limit for book titles has been decreased from 16 to 15 characters.<ref name=bug/>}}
+|{{HistoryLine||1.19.3|dev=22w42a|exp=Update 1.20|Books and quills can now interact with [[chiseled bookshelves]].}}
+|{{HistoryLine||1.21.6|dev=pre3|The turn page sound is now controlled by the "UI" source.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Book and Quill JE1 BE1.png|32px]] Added books and quills.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Books and quills can now be found inside [[buried treasure]] [[chest]]s.}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.1|Pages within books and quills can now be turned using the controller bumper buttons.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Book and Quill JE2 BE2.png|32px]] The texture of books and quills has now been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Books and quills can now be [[trading|sold]] to librarian [[villager]]s.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Book & Quill" to "Book and Quill" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|wiiu=Patch 1|switch=1.0.1|[[File:Book and Quill JE1 BE1.png|32px]] Added books and quills.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Books and quills can now be crafted with a [[written book]] to clone the written book.{{check version}}|Copying written books marks them as "Copy of Original" or "Copy of Copy".{{check version}}|The copying status of a book is denoted in a separate line in the tooltip, beneath the author's name.{{check version}}|Copies of copies cannot be copied.{{check version}}}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Books and quills can now be found inside [[buried treasure]] [[chest]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Book and Quill JE2 BE2.png|32px]] The texture of books and quills has now been changed.|Books and quills can now be put onto [[lectern]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Books and quills can now be [[trading|sold]] to librarian [[villager]]s.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w25a|Books and quills now use JSON text components instead of plain text with the new <code>pages</code> tag
+|Book and quills are now capable of using the <code>clickEvent</code> and <code>hoverEvent</code> tags.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 386.}}
+}}
+
+==Issues==
+{{issue list}}
+
+==Trivia==
+*The in-game restrictions on books are not hard limits. Third party editors or commands can make books have more than 100 pages{{only|java}} (2,147,483,639 pages), more than 256 characters per page (32,767 characters per page), can change author names, and can have colored titles, among other things. These books still function properly in vanilla ''Minecraft'', meaning the [[player]] may encounter such books on adventure maps or multiplayer servers.<ref>http://www.minecraftforum.net/topic/1189266-hacking-books</ref>
+*If the player renames a book and quill in an anvil before signing it, it retains the name from the anvil instead of taking the name from signing.
+
+==Gallery==
+===Screenshots===
+<gallery>
+File:Jeb book.png|The first image of a book seen.<ref>https://web.archive.org/web/20120427014334/https://www.mojang.com/2012/04/minecraft-snapshot-12w17a/</ref>
+File:Book and Quill Writing.png|The GUI of writing a book.
+File:Bedrock Book & Quill.png|Writing in a book & quill {{In|be}}.
+File:Book and Quill Signing.png|The GUI of signing a book {{In|je}}.
+File:Emojis in book.png|Private-area [[emojis]] typed in a book.
+File:Written Book tooltip.png|A signed book.
+File:Java book and quill example with text.png|An example of text in a book and quill in [[Java Edition]].
+File:BookandQuillOperators12w17a.png|Display of styles used in a book in older {{JE}} versions.
+</gallery>
+
+==References==
+{{Reflist}}
+
+==External links==
+*[http://www.minecraftforum.net/topic/1498339-132ssp-bookshop-your-books-anywhere/ Bookshop - Book Sharing And Editing Tool]
+*[http://fsymbols.com/generators/wide/ Full-Width Text Generator]
+*[http://fsymbols.com/generators/smallcaps/ Small Caps Text Generator]
+*[http://www.minecraftforum.net/topic/1202590-revise-edit-signed-books-w-more-options-all-os-12w17a/ Revise - External Book Editor]
+* {{mcnet|book-and-quill|Taking Inventory: Book and Quill|July 11, 2025|[[Duncan Geere]]}}
+
+==See also==
+* {{ItemLink|Book}}
+* {{BlockLink|Bookshelf}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+
+[[cs:Rozepsaná kniha s brkem]]
+[[de:Buch und Feder]]
+[[el:Βιβλίο και Πένα]]
+[[es:Libro y pluma]]
+[[fr:Livre et plume]]
+[[hu:Könyv és toll]]
+[[it:Libro e penna]]
+[[ja:本と羽根ペン]]
+[[ko:책과 깃펜]]
+[[nl:Boek en veer]]
+[[pl:Książka z piórem]]
+[[pt:Livro e Pena]]
+[[ru:Книга с пером]]
+[[th:หนังสือกับปากกาขนนก]]
+[[uk:Книга й перо]]
+[[zh:书与笔]]

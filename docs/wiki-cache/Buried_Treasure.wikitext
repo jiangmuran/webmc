@@ -1,0 +1,159 @@
+{{Infobox structure
+| defaultimagesize = 150px
+| image = Chest.png
+| biome = *{{BiomeLink|Beach}}
+*{{BiomeLink|Snowy Beach}}
+*{{BiomeLink|Stony Shore}}{{only|bedrock|short=1}}
+| blocks = 
+* {{BlockLink|Chest}}{{fn|Random loot; described in {{slink||Loot}}}}
+* {{BlockLink|Gravel}}{{fn|If the chest generates under a cold ocean floor/beach.}}
+* {{BlockLink|Sand}}{{fn|If the chest generates under a warm ocean floor/beach.}}
+* {{BlockLink|Sandstone}}{{fn|If the chest generates under a warm ocean floor/beach under sand layer and above stone layer.}}
+* {{BlockLink|Stone}}{{fn|If the chest generates in an underwater windswept hills.}}
+* {{BlockLink|Water}}{{fn|A generated chest exposed to water is always waterlogged.}}
+* Other terrain-generated blocks may be used to bury the chest (e.g. {{BlockLink|Diorite}})
+* For more information, see {{slink||Generation}}
+|canspawn=No
+}}
+'''Buried treasure''' is a naturally generated [[structure]] that consists of a buried loot [[chest]]. The chest is buried primarily in [[beach]]es, and rarely in the [[ocean]] floor. Buried treasure is the only source of the [[heart of the sea]], which can be used to craft a [[conduit]]. Buried treasure can be located using [[explorer map]]s.
+
+== Generation ==
+Buried treasures generate in beach biomes, and can also generate underwater.
+
+The treasure [[chest]] is almost always buried by some material. Most of the time the chest generates buried in a beach, so it has a [[sand]] or [[gravel]] block covering it. Sometimes, if generated on the side of an underwater hill, it spawns with [[stone]] blocks covering it. If it generates on the surface of the ocean floor, a [[gravel]] or [[sand]] block covers it. Nonetheless, terrain generation can cause the [[chest]] to be buried by any suitable terrain-generated blocks, such as [[coal ore]] and [[diorite]].
+
+{{IN|java}}, buried treasure always generates at [[chunk]] section relative 9 (out of 0 through 15) on both the X and Z axis<ref>{{bug|MC-227443}}</ref>, and are always facing east.
+
+{{IN|bedrock}}, buried treasure always generates at [[chunk]] section relative 8 (out of 0 through 15) on the X and Z axis.
+
+=== Location per seed ===
+A preview of buried treasure generation is shown below:{{Calculator|chunkbase|pois=Bt|zoom=0.25}}
+
+== Structure ==
+Buried treasures contain a single chest full of various loot. If the chest is exposed to water, it generates [[Waterlogging|waterlogged]].
+
+== Loot ==
+{{see also|Chest loot}}
+A [[heart of the sea]] is always present in every buried treasure.
+
+{{LootChest|buried-treasure}}
+{{notelist}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Buried Treasure
+|spritetype=env
+|nameid=buried_treasure
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Buried Treasure
+|spritetype=env
+|nameid=buried_treasure
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Buried Treasure
+|spritetype=env
+|nameid=buried_treasure
+|aliasid=buriedtreasure
+|translationkey=feature.buried_treasure
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:buried_treasure}}
+** {{Nbt inherit/structure}}
+</div><section end="config"/>
+
+== Achievements ==
+{{load achievements|Me Gold!;Treasure Hunter}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w10a|Added buried treasures.}}
+|{{HistoryLine|||dev=18w19a|A [[heart of the sea]] now generates in all buried treasure chests.}}
+|{{HistoryLine||1.18|dev=21w39a|Buried treasure chests now have a chance of containing [[potions of Water Breathing]].}}
+|{{HistoryLine||1.21.11|dev=25w41a|Buried treasure chests can now contain [[iron spear]]s.|Buried treasure chests can now contain copper, iron, golden and diamond [[nautilus armor]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added buried treasures.}}
+|{{HistoryLine|||dev=beta 1.2.20.1|A [[heart of the sea]] now generates in all buried treasure chests.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|The loot of buried treasure chests has been overhauled to match {{JE}}.|Buried treasure chests can now contain [[iron spear]]s and copper, iron, golden, and diamond [[nautilus armor]].|Buried treasure chests can now contain [[cooked cod]], [[cooked salmon]], [[emerald]]s, [[leather tunic]]s, and [[iron sword]]s.|Buried treasure chests can no longer contain music discs "[[mellohi]]" and "[[wait]]", [[name tag]]s, [[chainmail armor]], [[book and quill]]s, [[lead]]s, [[bottles o' enchanting]], [[potions of Regeneration]], or [[cake]].}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.4.0|Added buried treasures, with a [[heart of the sea]] being able to generate in them.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|Added buried treasures, with a [[heart of the sea]] being able to generate in them.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Buried treasures are the smallest naturally generated structure in the game.
+* In ''Java Edition'', the player arrow is shown under the X of the treasure, but in ''Bedrock Edition'', the player arrow is shown on top of the X.
+* In ''Java Edition'', the buried treasure contains the highest number of diamonds per chest among all structures, at an average of 1.25 diamonds per chest, while the end city only has an average of 1.06 diamonds per chest.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Buried Treasure Chest.png|A dug-up [[chest]] in a buried treasure that barely generated on land.
+File:Open Buried Chest.png|An open buried treasure chest, revealing lots of loot.
+File:Buried Treasure on Village.png|Buried treasure generated on land under a [[village]].
+File:Buriedtreasure.jpg|A buried treasure dug up from the [[sand]].
+File:Treasure Digging Location.png|Ideal positioning of the player on the X to find the treasure.
+File:5 pig spawner glitch.png|A glitched structure consisting of 5 pig spawners and a buried treasure chest.
+File:Treasure on land.png|A buried treasure chest generated naturally on land above the ground, close to a [[shipwreck]].
+File:Buried Treasure Mountain.png|A buried treasure chest generated naturally exposed in a [[windswept hills]] {{in|be}}.
+File:Buried Treasure exposed.png|A buried treasure chest generated exposed in an [[ocean]]ic [[beach|hillside]] {{in|be}}.
+File:Buriedtreasurejavaeditionwall.png|A buried treasure chest generated naturally exposed in an oceanic hillside {{in|je}}.
+File:Treasure on Mansion.jpg|A buried treasure chest generated naturally on a [[woodland mansion]].
+File:Buried treasure on hill.png|A buried treasure chest generated naturally exposed in a hill {{in|je}}.
+</gallery>
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated structures}}
+
+[[de:Vergrabener Schatz]]
+[[es:Tesoro enterrado]]
+[[fr:Trésor enfoui]]
+[[it:Tesoro sepolto]]
+[[ja:埋もれた宝]]
+[[ko:땅에 묻힌 보물]]
+[[lzh:湮寶]]
+[[pl:Zakopany skarb]]
+[[pt:Tesouro Enterrado]]
+[[ru:Клад]]
+[[uk:Закопаний скарб]]
+[[zh:埋藏的宝藏]]

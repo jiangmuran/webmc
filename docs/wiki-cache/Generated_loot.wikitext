@@ -1,0 +1,191 @@
+{{see also|Drops}}
+
+'''Generated loot''' is a common way of finding naturally generated items. Generated loot occurs in naturally spawning [[structures]], when a chest or another container is randomly generated to contain items from that structure’s [[loot table]].
+
+== Locations ==
+The following locations only generate {{BlockLink|chest|chests}} containing loot:
+* {{EnvLink|Bonus chest}}
+* {{EnvLink|Monster room}}
+* {{EnvLink|Stronghold}}
+* {{EnvLink|Village}}
+* {{EnvLink|Nether fortress}}
+* {{EnvLink|End city}}
+* {{EnvLink|Igloo}}
+* {{EnvLink|Woodland mansion}}
+* {{EnvLink|Shipwreck}}
+* {{EnvLink|Buried treasure}}
+* {{EnvLink|Pillager outpost}}
+* {{EnvLink|Bastion remnant}}
+* {{EnvLink|Ruined portal}}
+* {{EnvLink|Ancient city}}
+
+The following locations generate loot in other blocks or entities:
+{| class="wikitable"
+| {{EnvLink|mineshaft|&zwj;}} {{EnvLink|badlands mineshaft|Mineshaft}}
+| {{EntityLink|Minecart with Chest|Minecarts with chests}}
+|-
+| {{EnvLink|Jungle pyramid}}
+| {{BlockLink|Chest|Chests}}, {{BlockLink|Dispenser|Dispensers}}
+|-
+| {{EnvLink|Desert pyramid}}
+| {{BlockLink|Chest|Chests}}, {{BlockLink|Suspicious sand}}
+|-
+| {{EnvLink|Desert well}}
+| {{BlockLink|Suspicious sand}}
+|-
+| {{EnvLink|Ocean ruins}}
+| {{BlockLink|Chest|Chests}}, {{BlockLink|Suspicious sand}}, {{BlockLink|Suspicious gravel}}
+|-
+| {{EnvLink|Trail ruins}}
+| {{BlockLink|Suspicious gravel}}
+|-
+| {{EnvLink|Trial chambers}}
+|<!--
+-->{{BlockLink|Chest|Chests}}, {{BlockLink|Barrel|Barrels}}, {{BlockLink|Dispenser|Dispensers}}, {{BlockLink|Decorated pot|Decorated pots}}<br><!--
+-->{{BlockLink|Vault|Vaults}}, {{BlockLink|Ominous vault|Ominous vaults}}, {{BlockLink|Trial spawner|Trial spawners}}, {{BlockLink|Ominous trial spawner|Ominous trial spawners}}
+|}
+
+Structures appearing in April Fools updates that generate loot:
+{| class="wikitable"
+| {{EnvLink|Bonus barrel|Bonus barrels}}
+| {{BlockLink|Barrel|Barrel}}
+|-
+| {{EnvLink|Ruined Portatol}}
+| {{BlockLink|Chest|Chests}}
+|-
+| {{EnvLink|Potato Mineshaft}}
+| {{EntityLink|Minecart with chest|Minecart with chests}}
+|-
+| {{EnvLink|Lunar base}}
+| {{BlockLink|Chest|Chest}}, {{BlockLink|Shulker box|Shulker boxes}}
+|}
+
+== Behavior ==
+The loot in naturally-generated containers is not determined upon the container's generation. The contents generate when a player interacts with the containers by opening it, placing a [[hopper]] under it, inserting an item using a hopper, or destroying it. ([[Trial spawner]]s and [[vault]]s work differently; for their mechanics, see the respective pages).
+
+This also means that if a loot container is generated in an older version of the game but has never been interacted with, it can still generate with new loot if it's opened for the first time in a newer version.
+
+There are different kinds of loot tables, for example a desert temple or a stronghold. There can also be different loot tables for a certain structure, such as those in bastion remnants and shipwrecks.
+
+== Commands ==
+In [[Java Edition 1.12]] and below, the {{cmd|setblock}} command can be used to place a chest.
+The command {{cmd|/setblock ~ ~ ~ minecraft:chest 2 replace {LootTable:"chests/simple_dungeon"} }} sets the chest to a dungeon chest. For a minecart chest, use {{cmd|/summon chest_minecart ~ ~ ~ {LootTable:"chests/simple_dungeon"} }} instead.
+
+In [[Java Edition 1.13]] and above, the syntax has changed to e.g. {{cmd|/setblock ~ ~ ~ chest{LootTable:"chests/simple_dungeon"} replace}}
+
+Such artificial chest is random every time player places one, no matter the location. That is a difference between normal natural chests and artificial loot tables chests. One can set the seed of the loot table using LootTableSeed, by default it is the world seed.
+
+In [[Bedrock Edition]], the {{cmd|/loot}} command can be used to give loot, spawn loot or place loot in a container.
+The command {{cmd|/loot give @s loot "chests/simple_dungeon"}} can be used to give yourself loot in your inventory
+
+You can use {{cmd|/loot replace block ~ ~ ~ slot.container 0 loot "chests/simple_dungeon"}} to place loot inside a container if you input the right coordinates of the container.
+
+== History ==
+{{info needed section|Pocket/Console/Bedrock history}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100625-1917|Added dungeons ([[monster room]]s), which generate with two chests each.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.4|Added [[redstone dust]] to dungeon chests, sometime between its introduction in [[Alpha v1.0.1]] and 1.0.4.}}
+|{{HistoryLine||v1.0.14|Added [[music disc 13]] and [[music disc cat]] to dungeon chests.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4|Added [[cocoa beans]] to dungeon chests.}}
+|{{HistoryLine||1.8|dev=Pre-release|Added [[mineshaft]]s, which can generate with loot chests.
+|Added [[stronghold]]s, which can generate with library and storeroom chests.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|Strongholds now also have loot chests in corridor altars.}}
+|{{HistoryLine||1.1|dev=12w01a|[[Village]] blacksmith houses now generate with loot chests.}}
+|{{HistoryLine||1.3.1|dev=12w16a|[[Bonus chest]]s introduced.}}
+|{{HistoryLine|||dev=12w21a|Added [[jungle pyramid]]s and [[desert pyramid]]s, which have loot chests.}}
+|{{HistoryLine||1.4.6|dev=12w50a|Added [[enchanted book]]s to dungeon, pyramid, mineshaft and stronghold chests.}}
+|{{HistoryLine||1.6.1|dev=13w16b|Added [[name tag]]s to dungeon chests.}}
+|{{HistoryLine|||dev=13w18a|Removed [[cocoa bean]]s from dungeon chests.
+|Adjusted loot tables of dungeon chests.
+|Loot chests now generate in [[Nether fortress]]es.
+|Added [[horse armor]] to the loot chests in jungle & desert pyramids, dungeons, Nether fortress, stronghold altars, and village chests{{info needed|The blacksmith?}}. Iron horse armor can also be found in mineshaft chests.}}
+|{{HistoryLine||1.7.2|dev=1.7-pre|Added [[acacia wood]] to bonus chests.}}
+|{{HistoryLine||1.8|dev=14w30a|Added [[obsidian]] to nether fortress loot chests.
+|Made [[music disc]]s more rare in dungeon chests.}}
+|{{HistoryLine||1.9|dev=15w31a|Added [[end cities]], which generate with loot chests.}}
+|{{HistoryLine|||dev=15w43a|Added [[igloo]]s, which generate with loot chests.
+|Reduced loot found in nether fortress loot chests from 2–5 stacks to 2–4.
+|Increased loot found in stronghold library chests from 1–4 stacks to 2–10.
+|Changed the rate at which [[enchanted book]]s are found in stronghold library chests, from groups of 1–5 with a weight of 2, to single books with a weight of 10.
+|[[Log]]s found in bonus chests can now be of any type, rather than just acacia and oak.
+|[[Plank]]s found in bonus chests can now be of any type, rather than just oak.}}
+|{{HistoryLine|||dev=15w43b|[[Golden apple]]s now generate in igloo chests 100% of the time.}}
+|{{HistoryLine|||dev=15w44a|Loot chests in mineshafts, desert pyramids, monster rooms, and bonus chests now pull loot from multiple pools, and their items are significantly rebalanced.
+|Removed [[saddle]]s and iron horse armor from mineshaft chests. Added [[name tag]]s, [[torch]]es, [[golden apple]]s, [[enchanted golden apple]]s, [[powered rail]]s, [[detector rail]]s, and [[activator rail]]s to mineshaft chests.
+|Added [[spider eye]]s, [[gunpowder]], [[string]], [[sand]], [[golden apple]]s, and [[enchanted golden apple]]s to [[desert pyramid]] chests.
+|Added [[salmon]] to [[bonus chest]]s. Each [[bonus chest]] now always contains one [[axe]], one [[pickaxe]], some [[food]], and some [[Wood (disambiguation)|wood]] items. [[Stick]]s and [[planks]] are now more plentiful.
+|Added [[bone]]s, [[rotten flesh]], [[gold ingot]]s, [[coal]], [[enchanted golden apple]]s, [[melon seeds]], [[pumpkin seeds]], and [[beetroot seeds]] to [[monster room]] chests.}}
+|{{HistoryLine||1.11|dev=16w39a|Added [[woodland mansion]]s, which generate with loot chests.}}
+|{{HistoryLine||1.13|dev=18w09a|Added [[ocean ruins]], which generate with loot chests.}}
+|{{HistoryLine|||dev=18w10a|Added [[buried treasure]], which is a loot chest.}}
+|{{HistoryLine|||dev=18w11a|Added [[shipwreck]]s, which generate with loot chests.}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[bamboo]] and [[suspicious stew]] to shipwreck chests. (Verify)}} 
+|{{HistoryLine|||dev=18w47a|Added [[pillager outposts]], which generate with loot chests.}}
+|{{HistoryLine||1.16|dev=20w16a|Added [[bastion remnants]] and [[ruined portal]]s, which generate with loot chests.}}
+|{{HistoryLine|||dev=20w17a|Removed [[netherite]] gear from bastion remnants loot chests. Made [[ancient debris]] and [[netherite scrap]] less common, and added enchanted [[crossbow]]s to bastion remnant chests.}}
+|{{HistoryLine|||dev=20w18a|Decreased weight of [[golden apple]]s in [[ruined portal]] chests from 40 to 15.}}
+|{{HistoryLine||1.17|dev=21w13a|Added [[moss block]]s to shipwreck supply chests.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added [[ancient cities]], which generate with loot chests.}}
+|{{HistoryLine|||dev=22w14a|Added [[echo shard]]s to ancient city loot chests.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|Added [[smithing template]]s, which generate in various loot chests throughout the world.}}
+|{{HistoryLine|||dev=23w05a|The [[Dune Armor Trim|dune]], [[Coast Armor Trim|coast]], [[Wild Armor Trim|wild]], and [[sentry armor trim]]s now always generate in pairs when found in chests (i.e. two will generate in the chest, if any generate at all).
+|Increased the chances for all smithing templates that generate in chest loot to be found:
+*[[Netherite upgrade]]: increased chance from 3.2% to 10%.
+*[[Coast armor trim]]: increased chance from 11.1% to 16.7%.
+*[[Dune armor trim]]: increased chance from 11.1% to 14.3%.
+*[[Eye armor trim]]: increased chance from 4.7% to 10% in [[stronghold]] altar chests, and to 100% in stronghold library chests.
+*[[Rib armor trim]]: increased chance from 4.7% to 6.7%.
+*[[Sentry armor trim]]: increased chance from 20% to 25%.
+*[[Snout armor trim]]: increased chance from 4.7% to 8.3%.
+*[[Spire armor trim]]: increased chance from 4.7% to 6.7%.
+*[[Vex armor trim]]: increased chance from 4.7% to 50%.
+*[[Ward armor trim]]: increased chance from 4.7% to 5%.
+*[[Wild armor trim]]: increased chance from 20% to 33%.}}
+|{{HistoryLine||1.20|dev=23w12a|Added [[silence armor trim]]s to [[ancient city]] loot chests.}}
+|{{HistoryLine||1.21.4|dev=24w44a|[[Resin clump]]s and [[resin brick]]s are now found in [[woodland mansion]] chests.}}
+|{{HistoryLine|||dev=24w45a|Loot chests in woodland mansions can now contain only resin clumps, not resin bricks.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Saddles no longer found in chests in [[monster room]]s, [[ancient cities]], [[desert temple]]s, [[jungle temple]]s and in [[stronghold]] altar chests, replaced with 1–5 [[leather]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU3|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added all generated loot from and prior to [[Java Edition Beta 1.6.6]].}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added mineshafts with their chests.{{check version}}
+|Added strongholds with library and storeroom chests.{{check version}}|Bonus chests introduced.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Strongholds now also have chests in corridor altars.{{check version}}}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Village blacksmith houses now generate with chests.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added jungle and desert temples with their chests.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Enchanted books added to dungeon, temple, mineshaft and stronghold chests.{{check version}}|Name tags are added to dungeon chests.{{check version}}}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Obsidian can now be found in nether fortress chests.
+{{check version}}|Music discs are made more rare in dungeon chests.{{verify}}{{check version}}}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added igloos with their chests.|Reduced nether fortress loot from 2–5 stacks to 2–4.{{verify}}
+|Increased stronghold library loot from 1–4 stacks to 2–10.{{verify}}
+|Changed enchanted books rate in stronghold libraries, from groups of 1–5 with weight 2, to single books with weight 10.{{verify}}
+|Wood in bonus chests can now be of any type, rather than just acacia and oak.{{verify}}
+|Planks in bonus chests can now be of any type, rather than just oak.{{verify}}|Chests in mineshafts, desert pyramids, simple dungeons and bonus chests pull loot from multiple pools, and their items are significantly rebalanced.{{verify}}
+|Saddle and iron horse armor are removed from mineshaft chests; name tag, torch, golden apple, enchanted golden apple, powered rail, detector rail, and activator rail are added.{{verify}}
+|Spider eye, gunpowder, string, sand, golden apple, and enchanted golden apple are added to desert chests.{{verify}}
+|Salmon is added to bonus chests. This chest now always contains one [[axe]], one [[pickaxe]], some food, and some [[wood]] items. Sticks and [[planks]] are made more plentiful.{{verify}}
+|[[Bone]], [[rotten flesh]], [[gold ingot]], [[coal]], [[enchanted golden apple]], [[melon]], [[pumpkin]] and [[beetroot seeds]] are added to simple dungeon chests.{{verify}}}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added woodland mansions with their chests.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Stronghold chests can now generate [[emerald]]s and [[ink sac]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Added underwater ruins, shipwrecks and buried treasure with their chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Added pillager outposts with their chests.}}
+}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[es:Botín de cofres]]
+[[fr:Butin de structure]]
+[[ja:チェストの戦利品]]
+[[ko:생성된 노획물]]
+[[pt:Saque gerado]]
+[[zh:箱子战利品（结构索引）]]

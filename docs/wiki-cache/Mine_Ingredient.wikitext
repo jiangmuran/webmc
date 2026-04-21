@@ -1,0 +1,916 @@
+{{joke feature}}
+{{Infobox item
+| rarity = Uncommon
+| renewable = No
+| stackable = Yes (64)
+}}
+The '''mine ingredient''' is an item introduced in [[25w14craftmine]] that can be used to create a [[Mine (item) (April Fools' joke)|mine]] and add effects and features to it.
+
+== Obtaining ==
+Mine Ingredients can be obtained in Survival mode by doing certain tasks. Exiting a mine with a Mine Ingredient in the inventory unlocks it in the [[mine crafter]] menu.
+
+If a Mine Ingredient is obtained in the [[Hub]] (through commands or using the rooms behind [[shimmering door]]s), it can be obtained by right-clicking the Mine Crafter while holding an ingredient.
+
+The mine crafter interface shows a list of all the ingredients that the player hasn’t unlocked, labeled “Undiscovered,” and every ingredient shows a hint on how to obtain them.
+
+Specific ingredients can be obtained with this command: 
+
+{{Cmd|1=/give @s minecraft:mine_ingredient[minecraft:world_modifiers={effects : [<mine_ingredient_identifier>], include_description:1b}, minecraft:world_effect_unlock={}]}} 
+
+where <code><mine_ingredient_identifier></code> is the identifier of the desired ingredient.
+
+== Usage ==
+The mine ingredient is used as an ingredient in the [[mine crafter]]. Each ingredient added to a mine using the Mine Crafter will alter the generation of the mine in the described way.
+
+It is not possible to add mine ingredients to special event mines.
+
+== Types ==
+=== World Terrain Type ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!scope="row" | [[File:Surface world.png]]
+| Surface World
+|<code>surface_world</code>
+| World above the Mines. Like... an aboveworld
+| Default overworld terrain generator.
+| N/A
+| Unlocked by default
+|-
+![[File:Floating islands world.png]]
+|Floating Islands
+|<code>floating_islands_world</code>
+|How can it be Mine if it's not even solid?
+|Floating Islands terrain generator.
+|Win a Mine
+|Win a Mine
+|-
+![[File:Amplified.png]]
+|Amplified World
+|<code>amplified</code>
+|What... up THERE?
+|[[Amplified]] terrain generator.
+|Place a block high up in the world
+|Place any block; the block's location has to be at Y=100 or above
+|-
+![[File:Cave world.png]]
+|Cave World
+|<code>cave_world</code>
+|And they call it a Mine?  A Mine!
+|Cave World terrain generator. Similar to [[The Nether]].
+|Break a block deep down in the world
+|Mine any block; the block's location has to be at Y=-1 or below
+|-
+![[File:Shattered blocks.png]]
+|Shattered Blocks World
+|<code>shattered_blocks_world</code>
+|Shattered world made of big blocks with large gaps
+|Shattered terrain generator. Similar to floating islands, but some terrain generates in cuboid formations. Includes lava layer.
+|Win a Special Encounter Mine
+|Win a Special Encounter Mine
+|-
+![[File:Grid world.png]]
+|Grid World
+|<code>grid_world</code>
+|Linear. Orderly.
+|Grid terrain generator. Generates one block thick flat world with a grid of holes.
+|Win a Special Encounter Mine
+|Win a Special Encounter Mine
+|-
+![[File:Dark cave world.png]]
+|Dark Cave World
+|<code>dark_cave_world</code>
+|Hello? Who turned off the lights?
+|Cave World terrain generator. Similar to [[The Nether]]. Ambient light is set to 0, significantly impacting vision.
+|Win a Special Encounter Mine
+|Win a Special Encounter Mine
+|}
+
+=== Mine Exit Type ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!scope="row" | [[File:Surface exits.png]]
+| Surface Exits
+|<code>surface_exits</code>
+| Mine Exits are found on the surface
+| Mine Exits are found on the surface
+| N/A
+| Unlocked by default
+|-
+! [[File:Cave exits.png]]
+|Cave Exits
+|<code>cave_exits</code>
+|Mine Exits are found in caves
+|Mine Exits are found in caves
+|Unlock Cave Mines or test your luck with Deepslate
+|Unlock the Cave Mines Mine Ingredient or 1% chance of dropping from breaking deepslate blocks
+|-
+! [[File:Rare surface exits.png]]
+|Rare Surface Exits
+|<code>rare_surface_exits</code>
+|Mine Exits are found on the surface, but it might be a trek to get to one
+|Mine Exits generate more rarely on the surface
+|Craft an item that helps you locate Mine Exits
+|Craft an [[eye of exit]], and manually drag it out of the crafting menu
+|}
+
+=== Passive Mob Ingredients ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s) (if different)
+|-
+!{{inventory icon|Sheep Spawn Egg}}
+|Sheep
+|<code>sheep</code>
+|Fluffy mine
+|[[Sheep]] spawn in the mine
+|N/A
+|Unlocked by default
+|-
+!{{inventory icon|Cow Spawn Egg}}
+|Cows
+|<code>cows</code>
+|Moo
+|[[Cows]] spawn in the mine
+|N/A
+|Unlocked by default
+|-
+!{{inventory icon|Pig Spawn Egg}}
+|Pigs
+|<code>pigs</code>
+|Pork-u-pines, but maybe not the pines?
+|[[Pigs]] spawn in the mine
+|N/A
+|Unlocked by default
+|-
+!{{inventory icon|Chicken Spawn Egg}}
+|Chickens
+|<code>chickens</code>
+|Who came first? Clearly the chicken, in this mine
+|[[Chicken]]s spawn in the mine
+|N/A
+|Unlocked by default
+|-
+!{{inventory icon|Frog Spawn Egg}}
+|Frogs
+|<code>frogs</code>
+|Heralds of change
+|[[Frog]]s spawn in the mine
+|N/A
+|Unlocked by default
+|-
+!scope="row" | {{inventory icon|Fox Spawn Egg}}
+|[[Fox]]es
+|<code>foxes</code>
+| What does the fox say?
+| [[Fox]]es spawn in the mine
+| Berries
+| Collect [[sweet berries]]
+|-
+! scope="row" | {{inventory icon|Goat Spawn Egg}}
+| Goats
+|<code>goats</code>
+| Mischevious {{sic}} horned menace of the mountain
+| [[Goat]]s spawn in the mine
+| Go mining in the mountains
+| 10% chance of obtaining when a block is broken above a Y level of 128
+|-
+! scope="row" | {{inventory icon|Ocelot Spawn Egg}}
+| Ocelots
+|<code>ocelots</code>
+| Kitty!
+| [[Ocelot]]s spawn in the mine
+| Whiskers!
+| Collect [[string]]
+|-
+! scope="row" | {{inventory icon|Axolotl Spawn Egg}}
+| Axolotls
+|<code>axolotls</code>
+| Anybody got a bucket?
+| [[Axolotl]]s spawn in the mine
+[[Lush Caves]] generate in the mine
+| Slippery
+| Collect a [[bucket of axolotl]]
+|-
+! scope="row" | {{inventory icon|Armadillo Spawn Egg}}
+| Armadillos
+|<code>armadillos</code>
+| Careful, you might scare them
+| [[Armadillo]]s spawn in the mine
+| They like being brushed
+| Craft a brush, and manually drag it out of the crafting menu
+|-
+! scope="row" | {{inventory icon|Mooshroom Spawn Egg}}
+| Mooshrooms
+|<code>mooshrooms</code>
+| These mushrooms moo
+| [[Mooshroom]]s spawn in the mine
+| Go Pick mushrooms
+| 10% chance of dropping when breaking a [[mushroom]], either red or brown
+|-
+! scope="row" | {{inventory icon|Panda Spawn Egg}}
+| Pandas
+|<code>pandas</code>
+| Cute and clumsy
+| [[Panda]]s spawn in the mine
+| Eat some Bamboo
+| Eat Bamboo
+|-
+! scope="row" | {{inventory icon|Parrot Spawn Egg}}
+| Parrots
+|<code>parrots</code>
+| Tssssss Sharp
+| [[Parrot]]s spawn in the mine
+| Eat a cookie, the parrot doesn't want it anyway
+| Eat a cookie
+|-
+!scope="row" | {{inventory icon|Rabbit Spawn Egg}}
+| Rabbits
+|<code>rabbits</code>
+| Jumpy meals
+| [[Parrot]]s spawn in the mine{{note|Bugged; should spawn rabbits, but parrots spawn instead.}}
+| Jump... from really high up
+| Naturally take more than ten points of fall damage
+|-
+!scope="row" | {{inventory icon|Sniffer Spawn Egg}}
+| Sniffers
+|<code>sniffers</code>
+| Let the gentle giants roam the Mines once more
+| [[Sniffer]]s spawn in the mine
+| They like flowers
+| 5% chance of dropping from breaking flowers, or when cherry leaves block decay
+|-
+!scope="row" | {{inventory icon|Strider Spawn Egg}}
+| Striders
+|<code>striders</code>
+| You better make the mine have some warm cozy lava
+| [[Strider]]s spawn in the mine
+| Prepare to go riding
+| Collect a [[saddle]]
+|}
+
+=== Hostile Mob Ingredients ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!scope="row" | {{inventory icon|Zombie Spawn Egg}}
+| Zombies
+|<code>zombies</code>
+| Braaaaaiiiinsss
+| [[Zombies]] spawn in the mine
+| Go on a monster hunt!
+| 5% chance of dropping from killing any hostile mob
+|-
+!scope="row" | {{inventory icon|Skeleton Spawn Egg}}
+| Skeletons
+|<code>skeletons</code>
+| Feel it in my bones
+| [[Skeletons]] spawn in the mine
+| A chance while slaying monsters
+| 5% chance of dropping from killing any hostile mob
+|-
+!scope="row" | {{inventory icon|Spider Spawn Egg}}
+| Spiders
+|<code>spiders</code>
+| So many years of bad luck from this one
+| [[Spiders]] spawn in the mine
+| Slay Slay, slay...
+| 5% chance of dropping from killing any hostile mob
+|-
+!scope="row" | {{inventory icon|Cave Spider Spawn Egg}}
+| Cave Spiders
+|<code>cave_spiders</code>
+| Perilous Poisonous Pests
+| [[Cave spider]]s spawn in the mine
+| From Spiders
+| 20% chance of dropping from killing [[spiders]] or [[cave spider]]s
+|-
+!scope="row" | {{inventory icon|Creeper Spawn Egg}}
+| Creepers
+|<code>creepers</code>
+| Tssssssssss
+| [[Creepers]] spawn in the mine
+| I sense a theme, found while slaying monsters
+| 5% chance of dropping from killing any hostile mobs
+|-
+!scope="row" | {{inventory icon|Slime Spawn Egg}}
+| Slimes
+|<code>slimes</code>
+| Get Slimed!
+| [[Slimes]] spawn in the mine
+| You guessed it - Slay monsters!
+| 5% chance of dropping from killing any hostile mob
+|-
+!scope="row" | {{inventory icon|Enderman Spawn Egg}}
+| Endermen
+|<code>endermen</code>
+| Look at me when I'm talking to you! Actually, wait ...
+| [[Endermen]] spawn in the mine
+| How many monsters do you have to slay!?
+| 5% chance of dropping from killing any hostile mob. The 'Zombies', 'Skeletons', 'Creepers', and 'Spiders' unlocks must be obtained first.
+|-
+!scope="row" | {{inventory icon|Witch Spawn Egg}}
+| Witches
+|<code>witches</code>
+| Double, double toil and trouble
+| [[Witches]] spawn in the mine
+| You would have never guessed it! Slay monsters to find this one! :D
+| 5% chance of dropping from killing any hostile mob. The 'Zombies', 'Skeletons', 'Creepers', and 'Spiders' unlocks must be obtained first.
+|-
+!scope="row" | {{inventory icon|Magma Cube Spawn Egg}}
+| Magma Cubes
+|<code>magma_cubes</code>
+| Squishy and stompy and hot at the same time
+| [[Magma cubes]] spawn in the mine
+| Get some magma
+| Collect [[magma cream]] or [[magma block]]
+|-
+!scope="row" | {{inventory icon|Blaze Spawn Egg}}
+| Blazes
+|<code>blazes</code>
+| They're all the hotness right now
+| [[Blazes]] spawn in the mine
+| Go mining in a Nether biome
+| Break one [[nether quartz ore]] or [[nether gold ore]]
+|-
+!scope="row" | {{inventory icon|Breeze Spawn Egg}}
+| Breezes
+|<code>breezes</code>
+| These ones should be a breeze!
+| [[Breezes]] spawn in the mine
+| Trial spawners might have something to unlock this
+| Collect a [[trial key]]
+|-
+! scope="row" | {{inventory icon|Pillager Spawn Egg}}
+| Pillagers
+|<code>pillagers</code>
+| Villager, Illager, Pillager - what's the difference?
+| [[Pillagers]] spawn in the mine
+| Buy it from a villager. The Lodestone will guide your way!
+| Turn a [[villager]] into a [[traitor]] by placing a [[lodestone]] by an unemployed villager and then trade with it. Required trade level: Novice
+|-
+! scope="row" | {{inventory icon|Vindicator Spawn Egg}}
+| Vindicators
+|<code>vindicators</code>
+| Here's Johnny!
+| [[Vindicators]] spawn in the mine
+| Buy it from a villager. The Lodestone will guide your way!
+| Turn a [[villager]] into a [[traitor]] by placing a [[lodestone]] by an unemployed villager and then trade with it. Required trade level: Apprentice
+|-
+! scope="row" | {{inventory icon|Evoker Spawn Egg}}
+| Evokers
+|<code>evokers</code>
+| Wololo
+| [[Evokers]] spawn in the mine
+| Buy it from a villager. The Lodestone will guide your way!
+| Turn a [[villager]] into a [[traitor]] by placing a [[lodestone]] by an unemployed villager and then trade with it. Required trade level: Journeyman
+|-
+! scope="row" | {{inventory icon|Ravager Spawn Egg}}
+| Ravagers
+|<code>ravagers</code>
+| Rawr
+| [[Ravagers]] spawn in raids
+| Buy it from a villager. The Lodestone will guide your way!
+| Turn a [[villager]] into a [[traitor]] by placing a [[lodestone]] by an unemployed villager and then trade with it. Required trade level: Expert
+|-
+! scope="row" | {{inventory icon|illusioners}}
+| Illusioners
+|<code>illusioners</code>
+| It's not even in the game
+| [[Illusioners]] spawn in the world
+| Buy it from a villager. The Lodestone will guide your way!
+| Turn a [[villager]] into a [[traitor]] by placing a [[lodestone]] by an unemployed villager and then trade with it. Required trade level: Master
+|-
+!scope="row" | {{inventory icon|Guardian Spawn Egg}}
+| Guardians
+|<code>guardians</code>
+| Protectors of the deep
+| [[Guardians]] spawn in the mine
+| Slaying creatures of the water will anger the Guardians
+| Kill an aquatic mob (e.g. [[dolphin]]s, [[axolotl]]s, any [[fish]], ...)
+|-
+!scope="row" | {{inventory icon|Endermite Spawn Egg}}
+| Endermites
+|<code>endermites</code>
+| Literally bugs in the game
+| [[Endermites]] spawn in the mine
+| Found in the End Stone
+| 10% chance of dropping from breaking [[end stone]] blocks
+|-
+!scope="row" | {{inventory icon|Shulker Spawn Egg}}
+| Shulkers
+|<code>shulkers</code>
+| Box Material
+| [[Shulkers]] spawn in the mine
+| Stomp out bugs from their natural environment
+| 10% chance of dropping when killing [[endermites]]
+|-
+!scope="row" | {{inventory icon|Ghast Spawn Egg}}
+| Ghasts
+|<code>ghasts</code>
+| No they're not happy
+| [[Ghasts]] spawn in the mine
+| Probably dried out among fossils
+| Break one [[bone block]]
+|-
+!scope="row" | {{inventory icon|Zombified Piglin Spawn Egg}}
+| Zombified Piglins
+|<code>zombified_piglins</code>
+| These pigs seem quite easily angered
+| [[Zombified piglins]] spawn in the mine
+| Somehow related to pigs in the fires of the nether
+| Kill a [[pig]] while it's on [[fire]]
+|-
+!scope="row" | {{inventory icon|Piglin Spawn Egg}}
+| Piglins
+|<code>piglins</code>
+| Pigs that love gold... and violence
+| [[Piglins]] spawn in the mine
+| Feed some gold to a pig
+| Feed a [[golden Carrot]] to a [[pig]]
+|-
+!scope="row" | {{inventory icon|Zombified Piglin Spawn Egg}} {{note|Bugged: Icon of Zombified Piglin Spawn Egg is used for wither skeletons}}
+| Wither Skeleton
+|<code>wither_skeletons</code>
+| Wither, Blister, Burn & Peel
+| [[Wither skeletons]] spawn in the mine
+| Hidden among the regular Skeletons
+| 10% chance of dropping from killing [[skeletons]]
+|-
+!scope="row" | {{inventory icon|Bee Spawn Egg}}
+| Bees
+|<code>bees</code>
+| No, not the Bees! NOT THE BEES!
+| Hostile [[bees]] spawn in the mine
+| You've killed there brother. Now they're out for revenge.
+| Kill a [[bee]]
+|-
+!scope="row" | {{inventory icon|Hoglin Spawn Egg}}
+| Hoglins
+|<code>hoglins</code>
+| The whole hog
+| [[Hoglins]] spawn in the mine
+| Through the death of many pigs
+| Rare (1%) chance of dropping from [[pigs]]
+|-
+!scope="row" | {{inventory icon|Zoglin Spawn Egg}}
+| Zoglins
+|<code>zoglins</code>
+| So angry
+| [[Zoglins]] spawn in the mine
+| Kill a zombie on the turf of the Piglins
+| Kill a [[zombie]] on [[crimson nylium]] or [[warped nylium]]
+|}
+
+=== Block Ingredients ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!{{Inventory icon|Stone}}
+|Base rock type: Stone
+|<code>base_stone</code>
+|The mountains are made of Stone
+|World base material is [[Stone]]
+|N/A
+|Unlocked by default.
+|-
+! scope="row" | {{inventory icon|Blackstone}}
+| Base rock type: Blackstone
+|<code>base_blackstone</code>
+| The mountains are made of Blackstone
+| World base material is [[Blackstone]]
+| Mine Blackstone
+| 10% chance of dropping from breaking blackstone blocks
+|-
+! scope="row" | {{inventory icon|Diorite}}
+| Base rock type: Diorite
+|<code>base_diorite</code>
+| The mountains are made of Diorite
+| World base material is [[Diorite]]
+| Mine Diorite
+| 10% chance of dropping from breaking Diorite blocks
+|-
+! scope="row" | {{inventory icon|Andesite}}
+| Base rock type: Andesite
+|<code>base_andesite</code>
+| The mountains are made of Andesite
+| World base material is [[Andesite]]
+| Mine Andesite
+| 10% chance of dropping from breaking andesite blocks
+|-
+!scope="row" | {{inventory icon|Granite}}
+| Base rock type: Granite
+|<code>base_granite</code>
+| The mountains are made of Granite
+| World base material is [[Granite]]
+| Mine Granite
+| 10% chance of dropping from breaking granite blocks
+|-
+!scope="row" | {{inventory icon|Tuff}}
+| Base rock type: Tuff
+|<code>base_tuff</code>
+| The mountains are made of Tuff
+| World base material is [[Tuff]]
+| Mine Tuff
+| 10% chance of dropping from breaking tuff blocks
+|-
+!scope="row" | {{inventory icon|Deepslate}}
+| Base rock type: Deepslate
+|<code>base_deepslate</code>
+| The mountains are made of Deepslate
+| World base material is [[Deepslate]]
+| Mine Deepslate
+| 10% chance of dropping from breaking deepslate blocks
+|-
+!scope="row" | {{inventory icon|End Stone}}
+| Base rock type: End Stone
+|<code>base_end_stone</code>
+| The mountains are made of End Stone
+| World base material is [[End Stone]]
+| Mine End Stone
+| 10% chance of dropping from breaking end stone blocks
+|}
+=== Biomes ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!{{inventory icon|Grass Block}}
+|Plains Biomes
+|<code>plains</code>
+|Quite plain
+|[[Plains]], [[Meadow]] and [[Sunflower Plains]] generate in the mine
+|N/A
+|Unlocked by default
+|-
+!{{inventory icon|Acacia Sapling}}
+|Savanna Biomes
+|<code>savannas</code>
+|On the great wide savanna steppes...
+|[[Savanna]] and its variants generate in the mine
+|N/A
+|Unlocked by default
+|-
+! scope="row" | {{inventory icon|Oak Sapling}}
+| Forest Biomes
+|<code>forests</code>
+| Now with raised trees
+| [[Forest]], [[Flower Forest]], [[Birch Forest]], [[Old Growth Birch Forest]], [[Grove]] and [[Cherry Grove]] generate in the mine
+| Search among the Leaves
+| 1% chance of obtaining from breaking [[leaves]]
+|-
+! scope="row" | {{inventory icon|Spruce Sapling}}
+| Taiga Biomes
+|<code>taigas</code>
+| Don't step on the pine cones
+| [[Taiga]], [[Old Growth Pine Taiga]] and [[Old Growth Spruce Taiga]] generate in the mine
+| Found somewhere in the leaves
+| 1% chance of obtaining from breaking [[leaves]]
+|-
+! scope="row" | {{inventory icon|Jungle Sapling}}
+| Jungle Biomes
+|<code>jungles</code>
+| In the Jungle, the Miney Jungle
+| [[Jungle]], [[Sparse Jungle]] and [[Bamboo Jungle]] generate in the mine
+| Don't leave the leaves alone!
+| 1% chance of obtaining from breaking [[leaves]]
+|-
+! scope="row" | {{inventory icon|Snowball}}
+| Snowy Biomes
+|<code>snowy</code>
+| Let it snow, let it snow, let it snow
+| [[Snowy Plains]] generate in the mine
+When paired with another biome ingredient, [[Snowy Taiga]], [[Frozen Peaks]], [[Frozen River]], [[Snowy Beach]], [[Frozen Ocean]], [[Deep Frozen Ocean]], [[Cold Ocean]], and [[Deep Cold Ocean]] also generate in the mine
+| Break cold blocks
+| 5% chance of obtaining from breaking [[snow]] and [[ice]]
+|-
+! scope="row" | {{inventory icon|Sand}}
+| Desert Biome
+|<code>desert</code>
+| It's getting hot in here
+| [[Deserts]] generate in the mine
+| Play in the sand
+| 1% chance of dropping from breaking [[sand]]
+|-
+! scope="row" | {{inventory icon|Brown Terracotta}}
+| Badlands Biomes
+|<code>badlands</code>
+| Lands took a turn for the bad
+| [[Badlands]] and [[Dripstone Caves]] biomes generate in the mine
+| Play in the mud
+| 5% chance of dropping from breaking [[terracotta]] and [[clay]] 
+|-
+! scope="row" | {{inventory icon|Mangrove Roots}}
+| Swamp Biomes
+|<code>swamps</code>
+| Get ready to get your boots wet
+| [[Swamp]] and [[Lush Caves]] biomes generate in the mine
+| Find the source of the smallest creature
+| Drops when breaking a [[firefly bush]]
+|-
+! scope="row" | {{inventory icon|Creaking Heart}}
+| Dark Forest Biomes
+|<code>dark_forests</code>
+| Can't see the forests for all the trees
+| [[Dark Forest]] and [[Pale Garden]] biomes generate in the mine
+| Again!? Search among the leaves!
+| 1% chance of obtaining from breaking [[leaves]]
+|-
+! scope="row" | {{inventory icon|Packed Ice}}
+| Ice Spikes Biome
+|<code>ice_spikes</code>
+| Cool
+| The [[Ice Spikes]] biome generates in the mine
+| Win a snowy Mine
+| Win a mine with the Snowy Biomes effect enabled
+|-
+! scope="row" | {{inventory icon|Red Mushroom}}
+| Mushroom Fields Biome
+|<code>mushroom_fields</code>
+| Mushroom islands, except not only islands
+| [[Mushroom Fields]] generate in the mine
+| Collect mushrooms and you might get lucky
+| 10% chance of obtaining from breaking [[mushroom]]s
+|-
+!scope="row" | {{inventory icon|Netherrack}}
+| Barren nether Biomes
+|<code>nether_barrens</code>
+| Things are heating up!
+| [[Nether Wastes]], [[Basalt Deltas]] and [[Soul Sand Valley]] generate in the mine
+| The Ice Bucket Challenge
+| Collect [[obsidian]]
+|-
+!scope="row" | {{inventory icon|Warped Fungus}}
+| Nether Forest Biomes
+|<code>nether_forests</code>
+| Can't see the forest for the... fungi?
+| [[Crimson Forest|Crimson Forests]] and [[Warped Forest|warped forests]] generate in the mine
+| Found while slaying endermen
+| 20% chance of dropping from killing [[Endermen]]
+|-
+! scope="row" | {{inventory icon|Sculk}}
+| Deep Dark Biome
+|<code>deep_dark</code>
+| The (maybe not so) Deep (and also maybe not entirely) Dark
+| The [[Deep Dark]] biome generates in the mine
+| Search among blocks in a dark place...
+| 10% chance of dropping from breaking blocks in a low [[light level]]
+|-
+!scope="row" | {{inventory icon|End Stone}}
+| End Biomes
+|<code>end</code>
+| How did we End up here?
+| [[End]] biomes generate in the mine
+| What creatures do you usually kill to get to the end?
+| 50% chance of dropping from killing [[blazes]]
+|}
+
+=== World Types ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+! scope="row" | {{inventory icon|Bucket}}
+| Dry Land
+|<code>dry_land</code>
+| Gronk thirsty. Gronk drink all water
+| Mine generates no water{{note|Water can still be generated in certain features, such as [[spring]]s}}
+| Try to get even warmer in the Badlands
+| Collect a [[Lava Bucket]] in a [[Badlands]] biome (bugged){{note|
+To obtain this without commands, the player must visit a special event with random biomes. The Mine Ingredient requires any biome with the {{cd|#minecraft:is_badlands}} tag, which includes only three biomes: {{cd|minecraft:badlands|minecraft:eroded_badlands|minecraft:wooded_badlands|delim=and}} but mines other than special events can only generate with {{cd|minecraft:levelN/badlands}} biomes, which are not included in the tag.}}
+|-
+! scope="row" | {{inventory icon|Water Bucket}}
+| Water World
+|<code>water_world</code>
+| Like the hit film from Cavin' Costner
+| Floods the mine
+| Win a dry mine
+| Win a Mine with the Dry Land Mine Effect
+|-
+!scope="row" | {{inventory icon|Lava Bucket}}
+| Ultrawarm
+|<code>ultrawarm</code>
+| It's getting hot in here
+| Mine behaves like the [[Nether]] (E.g. water evaporates, sponges dry, lava flows faster)
+| Stand in lava... if you dare
+| Take damage from [[Lava]]
+|}
+
+=== Challenges ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+!XP
+Multiplier 
+|-
+! scope="row" | {{inventory icon|Blue Ice}}
+|Icy Surfaces
+|<code>icy</code>
+|Might be a little slippery...
+|All blocks act like ice blocks and allow the player to slide across them
+|Take a boat ride
+|Place a [[Boat]]
+|x2.0
+|-
+! scope="row" | {{inventory icon|Slime Block}}
+|Bouncy Blocks
+|<code>bouncy</code>
+|Release your inner slime
+|All blocks act like slime blocks and allow the player to bounce on them
+|Find and kill some slime
+|Kill [[Slimes]] or [[Magma Cubes]]
+|x2.0
+|-
+! scope="row" | {{inventory icon|Water Bottle}}
+|One HP
+|<code>one_hp</code>
+|There is only one heart.
+|Set the Player's health to half a heart at the start of mine
+|Kill something while having only one heart
+|Kill any [[mob]] with half a [[heart]]
+|x4.0
+|-
+!{{inventory icon|Frog Spawn Egg}}
+|Wednesday Frogs
+|<code>wednesday_frogs</code>
+|Heralds of doom
+|Frogs can eat you
+|Might be trickier to find than you might think
+|Kill [[Frogs]]
+|x1.2
+|-
+! scope="row" | {{inventory icon|Rotten Flesh}}
+|(Near) Universal Anger
+|<code>universal_anger</code>
+|Every neutral mob is hostile
+|Every neutral mob attacks Players (unless the [[difficulty]] is set to [[peaceful]])
+|Win a mine with the Bees ingredient
+|Win a mine with the Bees ingredient
+|x2.0
+|-
+! scope="row" | {{inventory icon|Blue Dye}}
+|Eternal Night
+|<code>eternal_night</code>
+|It's dark in here isn't it?
+|The mine is permanently night
+|Unlocked after a while, I guess?
+|Win the [[Enderman]] Special Encounter Mine
+|x5.0
+|-
+! scope="row" | {{inventory icon|Black Dye}}
+|Eternal Rain
+|<code>eternal_rain</code>
+|Blimey rainy innit?!
+|The mine is permanently raining
+|Win an eternally dark Mine
+|Win an Eternal Night Mine
+|x2.0
+|-
+! scope="row" | {{inventory icon|Yellow Dye}}
+|Eternal Lightning
+|<code>eternal_lightning</code>
+|Very, very frightening!
+|The mine is constantly summoning lightning
+|Escape a Mine that will just not stop raining.
+|Win an Eternal Rain Mine
+|x5.0
+|-
+! scope="row" | {{inventory icon|Phantom Spawn Egg}}
+|Insomniacs
+|<code>insomniacs</code>
+|No rest, no respite
+|Phantoms will constantly surround the player
+|Win a Mine that never sees the light of day
+|Win an Eternal Night mine
+|x2.0
+|-
+!{{inventory icon|Dirt}}
+|No Drops?
+|<code>no_drops</code>
+|Who needs it?
+|Mobs don't drop any items
+|Found by chance
+|Impossible to obtain{{note|As a reference to itself, it is unobtainable (bugged) due to having no<code>.unlockedByCondition(...)</code>, however this ingredient is still counted among the requirements for The Ultimate Miner advancement. The advancement is therefore unobtainable without use of commands.}}
+|x5.0
+|-
+! scope="row" | {{inventory icon|TNT}}
+|Explosive Traps
+|<code>explosive_traps</code>
+|Watch your step
+|[[TNT]] randomly ignites under the Player's foot (unless if they're mid air)
+|Play a while..
+|Win a mine after having attempted at least 10 mines
+|x1.5
+|-
+!scope="row" | {{inventory icon|Tropical Fish}}
+| Fish Out of Water
+|<code>fish_out_of_water</code>
+| Just keep swimming
+| Makes the player drown when out of water.
+| Fish
+| Go fishing with [[fishing rod]]
+|x5.0
+|-
+!{{inventory icon|Lead}}
+|Soul Link{{note|This ingredient does not show up in the [[Mine Crafter]] in singleplayer. Even though it is not shown, it can still be obtained; when a player unlocks it, a message confirming that will still be displayed in the chat. It is also required for The Ultimate Miner advancement, making the advancement unable to be completed in singleplayer without use of commands.}}
+|<code>soul_link</code>
+|Every player takes damage if one player is hurt
+|Any damage taken by a player is shared between all players in a world (bugged){{note|When the server-side function <code>hurtServer</code> is called on a player and Soul Link is active, it will call all other players' <code>hurtServer</code> functions as well. However, an oversight means that these calls to <code>hurtServer</code> ''also'' call all other players' <code>hurtServer</code> functions (and so on to infinity), which quickly causes a [[w:Stack_overflow|stack overflow]]; this means the server crashes if any player takes damage while Soul Link is active.}}
+|Win a mine with the "One HP" ingredient
+|—
+|x2.0
+|}
+
+=== Special Events ===
+{| class="wikitable" data-description="Mine ingredients" style="text-align:center;"
+|-
+!scope="col" | Icon
+!scope="col" | Name
+!Identifier
+! scope="col" | In-game description
+!scope="col" | Effect
+!scope="col" | Requirement description
+!scope="col" | Actual requirement(s)
+|-
+!scope="row" | {{inventory icon|Warden Spawn Egg}}
+| Warden Boss Fight
+|<code>warden_boss_fight</code>
+| Warden wards of the competition
+| Special Warden Event
+| Walk on this block and give of a chime, it's a nice crystal but not even worth a dime
+| Break [[Amethyst Block]] or an [[Amethyst Cluster]]
+|}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Mine Ingredient
+|spritetype=item
+|form=item
+|nameid=mine_ingredient
+|foot=1}}
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox items|Joke}}
+{{Navbox jokes|25w14craftmine}}
+
+[[zh:矿境原料]]

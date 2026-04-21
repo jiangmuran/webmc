@@ -1,0 +1,755 @@
+{{About|the block that produces single musical notes|the block that plays music discs|Jukebox}}
+{{Infobox block
+|image=Note Block.png
+|transparent=No
+|light=No
+|tool=Axe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=Yes
+}}
+A '''note block''' is a [[block]] that emits sounds when {{Control|attacked}}, {{Control|used}}, or [[powered]]. The sound produced can be altered in various ways by using it or putting certain blocks directly above or below it. [[Allay]]s are affected by note blocks, staying nearby and dropping held items next to it for a short while upon hearing its sound.
+
+== Obtaining ==
+=== Breaking ===
+Note blocks are most quickly broken with an [[axe]].
+{{breaking row|horizontal=1|Note Block|Axe|Any|foot=1}}
+
+=== Natural generation ===
+Note blocks can generate in [[ancient cities]].
+
+=== Crafting ===
+{{Crafting
+|A1= Any Planks
+|B1= Any Planks
+|C1= Any Planks
+|A2= Any Planks
+|B2= Redstone Dust
+|C2= Any Planks
+|A3= Any Planks
+|B3= Any Planks
+|C3= Any Planks
+|Output= Note Block
+|type= Redstone
+}}
+
+== Usage ==
+=== Playing music ===
+==== Notes ====
+[[File:Note-Block.png|thumb|right|upright|A note block being triggered and playing a note]]
+
+A note block will produce a sound and spawn a colored musical note [[particle]] whenever any of the following conditions are met: 
+
+* It is {{Control|attack|text=attacked}} by a [[player]] in [[Survival mode]]
+* It receives a [[redstone signal]]
+* It is {{Control|use|text=used}} by a player. {{Control|use|text=Using}} a note block also changes its pitch.
+
+A note block must have either [[air]] or a [[mob head]] in the space directly above it to play a sound, though {{Control|use|text=using}} a silenced note block will still change its pitch. Note block sounds can be heard from up to 48 blocks away, and can be independently controlled by the [[Jukebox]]/Note Blocks slider in the audio [[settings]].
+
+Each time a note block plays a sound, a note [[particle]] will appear from the top. The color of the particle depends on the pitch of the note block. Note particles do not appear for silenced note blocks or mob head instruments.
+
+Excluding mob heads, there are 16 different instruments and 25 different pitches per instrument (a total of 400 notes with different sounds). {{control|use|text=Using}} a note block increases the instrument's pitch up a [[Wikipedia:Semitone|semitone]], with a total of two full [[Wikipedia:Octave|octaves]] (24 semitones in total) being available for each instrument. The standard range (for harp and pling instruments) of notes span from F♯<sub>3</sub> to F♯<sub>5</sub>. After reaching the highest note (24 presses of the {{control|use|text=use button}}), pressing use again (25th press of the {{control|use|text=use button}}) resets the pitch back to F♯<sub>3</sub>, as does breaking the block. The note block's pitch is ignored for [[Player Head|player heads]] and the six [[mob heads]].
+
+The string bass and didgeridoo are two octaves (24 semitones) lower than the standard range, the guitar is one octave (12 semitones) lower than the standard range, the flute is one octave above the standard range, and the bell, chime, and xylophone are 2 octaves above the standard range. This gives six octaves (72 semitones) of effective range to combine instruments for greater pitch coverage.
+
+The exact pitch can be found from its {{control|use}}-count by using the following formula: <code>2 ^ ((use count - 12) / 12)</code>.
+
+The exact pitch to {{control|use}}-count assignment is shown below,<ref>[http://www.minecraftforum.net/viewtopic.php?f=1020&t=136347 Original chart by cookingfat]</ref><ref>[http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/resource-pack-discussion/1255570 Original /playsound pitch chart by kwerti]</ref> along with the note's color, which is rendered with shading using the particle's texture.
+
+{| data-description="Pitch reference"
+|-
+|
+{| class="wikitable"
+|-
+!Pitch
+(Octave 1)
+!Use count
+!Pitch ({{Cmd|playsound}})
+!Color (<abbr title="Hexadecimal color code">hex</abbr>)
+|-
+|F♯/G♭- Fi/Se
+|0
+|0.5
+|{{color|#77D700}}
+|-
+|G - Sol
+|1
+|2^(-11/12) ≈ 0.529732
+|{{color|#95C000}}
+|-
+|G♯/A♭- Si/Le
+|2
+|2^(-10/12) ≈ 0.561231
+|{{color|#B2A500}}
+|-
+|A - La
+|3
+|2^(-9/12) ≈ 0.594604
+|{{color|#CC8600}}
+|-
+|A♯/B♭- Li/Te
+|4
+|2^(-8/12) ≈ 0.629961
+|{{color|#E26500}}
+|-
+|B - Ti
+|5
+| 2^(-7/12) ≈ 0.667420
+|{{color|#F34100}}
+|-
+|C - Do
+|6
+|2^(-6/12) ≈ 0.707107
+|{{color|#FC1E00}}
+|-
+|C♯/D♭- Di/Ra
+|7
+|2^(-5/12) ≈ 0.749154
+|{{color|#FE000F}}
+|-
+|D - Re
+|8
+|2^(-4/12) ≈ 0.793701
+|{{color|#F70033}}
+|-
+|D♯/E♭- Ri/Me
+|9
+|2^(-3/12) ≈ 0.840896
+|{{color|#E8005A}}
+|-
+|E - Mi
+|10
+|2^(-2/12) ≈ 0.890899
+|{{color|#CF0083}}
+|-
+|F - Fa
+|11
+|2^(-1/12) ≈ 0.943874
+|{{color|#AE00A9}}
+|-
+|F♯/G♭- Fi/Se
+|12
+|1.0
+|{{color|#8600CC}}
+|}
+|
+{| class="wikitable"
+|-
+!Pitch
+(Octave 2)
+!Use count
+!Pitch ({{Cmd|playsound}})
+!Color (<abbr title="Hexadecimal color code">hex</abbr>)
+|-
+|F♯/G♭- Fi/Se
+|12
+|1.0
+|{{color|#8600CC}}
+|-
+|G - Sol
+|13
+|2^(1/12) ≈ 1.059463
+|{{color|#5B00E7}}
+|-
+|G♯/A♭- Si/Le
+|14
+|2^(2/12) ≈ 1.122462
+|{{color|#2D00F9}}
+|-
+|A - La
+|15
+|2^(3/12) ≈ 1.189207
+|{{color|#020AFE}}
+|-
+|A♯/B♭- Li/Te
+|16
+|2^(4/12) ≈ 1.259921
+|{{color|#0037F6}}
+|-
+|B - Ti
+|17
+|2^(5/12) ≈ 1.334840
+|{{color|#0068E0}}
+|-
+|C - Do
+|18
+|2^(6/12) ≈ 1.414214
+|{{color|#009ABC}}
+|-
+|C♯/D♭- Di/Ra
+|19
+|2^(7/12) ≈ 1.498307
+|{{color|#00C68D}}
+|-
+|D - Re
+|20
+|2^(8/12) ≈ 1.587401
+|{{color|#00E958}}
+|-
+|D♯/E♭- Ri/Me
+|21
+|2^(9/12) ≈ 1.681793
+|{{color|#00FC21}}
+|-
+|E - Mi
+|22
+|2^(10/12) ≈ 1.781797
+|{{color|#1FFC00}}
+|-
+|F - Fa
+|23
+|2^(11/12) ≈ 1.887749
+|{{color|#59E800}}
+|-
+|F♯/G♭- Fi/Se
+|24
+|2.0
+|{{color|#94C100}}
+|}
+|}
+
+Alternatively, there is a graphical version available:
+[[File:Noteblock reference.png|class=pixel-image]]
+
+The current pitch of a note block can be roughly estimated by {{Control|attack|text=attacking}} it and looking at the color of the note particle.
+[[File:Note colors.png|class=pixel-image]]
+
+{{IN|java}}, the tuning can also be checked by looking at the [[debug screen]] (accessed by pressing {{key|F3}}). It is denoted as "note:" followed by a number from 0 to 24.
+
+==== Instruments ====
+The instrument played depends on the block placed directly underneath the note block. Mob heads must instead be placed on top of the note block. 
+
+Mob head instruments take priority over block instruments, and play the corresponding mob's {{cd|ambient}} sound, except for creeper heads, which instead trigger the {{cd|primed}} sound. Mob head sounds are not affected by the note block's pitch.
+
+{{needs update|section=1|The current block list shown below may not be comprehensive, especially for Bass Drum.
+For anyone experienced with brass instruments: please check if the listed brass instruments are accurate.}}
+{| class="sortable wikitable" data-description="Instruments & block materials"
+ !Block
+ !Instrument
+ !{{tooltip|Range|in scientific pitch notation}}
+ !Sound event names (Java)
+ !Sound event names (Bedrock)
+ |-
+ |<div class="mw-collapsible mw-collapsed">
+{{flatlist|
+*{{BlockLink|Logs}}
+**{{BlockLink|Stripped Logs|Stripped}}
+*{{BlockLink|Wood}}
+**{{BlockLink|Stripped Wood|Stripped}}
+*{{BlockLink|Mangrove Roots}}
+*{{BlockLink|Stem|Stem}}
+**{{BlockLink|Stripped Stems|Stripped}}
+*{{BlockLink|Hyphae}}
+**{{BlockLink|Stripped Hyphae|Stripped}}
+*{{BlockLink|Block of Bamboo|Bamboo}}
+**{{BlockLink|Block of Stripped Bamboo|Stripped}}
+*{{BlockLink|Mushroom Blocks}}
+*{{BlockLink|Mushroom Stem}}
+*{{BlockLink|Bee Nest}}
+*{{BlockLink|Planks}}
+*{{BlockLink|Wooden Stairs}}
+*{{BlockLink|Wooden Slabs}}
+*{{BlockLink|Wooden Fences}}
+*{{BlockLink|Fence Gates}}
+*{{BlockLink|Wooden Pressure Plates}}
+*{{BlockLink|Signs}}
+**{{BlockLink|Hanging Signs|Hanging}}
+*{{BlockLink|Wooden Doors}}
+*{{BlockLink|Shelves}}
+*{{BlockLink|Chest}}
+**{{BlockLink|Trapped Chest|Trapped}}
+*{{BlockLink|Barrel}}
+*{{BlockLink|Banners}}
+*{{BlockLink|Beehive}}
+*{{BlockLink|Bookshelf}}
+*{{BlockLink|Chiseled Bookshelf}}
+*{{BlockLink|Campfire}}
+**{{BlockLink|Soul Campfire|Soul}}
+*{{BlockLink|Composter}}
+*{{BlockLink|Note Block}}
+*{{BlockLink|Jukebox}}
+*{{BlockLink|Crafting Table}}
+*{{BlockLink|Cartography Table}}
+*{{BlockLink|Lectern}}
+*{{BlockLink|Loom}}
+*{{BlockLink|Smithing Table}}
+*{{BlockLink|Daylight Detector}}
+}}</div>
+ |{{sound|Bass (Upright bass)|Note block bass scale.ogg}}
+ | style="text-align:center" |F♯<sub>1</sub>–F♯<sub>3</sub>
+ |{{code|block.note_block.bass}}
+ |{{code|note.bass}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Sand}}
+*{{BlockLink|Gravel}}
+*{{BlockLink|Concrete Powder}}
+*{{BlockLink|Heavy Core}}
+}}
+ |{{sound|Snare Drum|Note block snare scale.ogg}}
+ | style="text-align:center" |—
+ |{{code|block.note_block.snare}}
+ |{{code|note.snare}}
+ |-   
+ |{{flatlist|
+*{{BlockLink|Glass}}
+**{{BlockLink|Glass Pane|Pane}}
+**{{BlockLink|Tinted Glass|Tinted}}
+*{{BlockLink|Stained Glass}}
+**{{BlockLink|id=Stained Glass Panes|Stained Glass Pane|Pane}}
+*{{BlockLink|Sea Lantern}}
+*{{BlockLink|Beacon}}
+*{{BlockLink|Conduit}}
+}}
+ |{{sound|Hat (Hi-hat click)|Note block click scale.ogg}}
+ | style="text-align:center" |—
+ |{{code|block.note_block.hat}}
+ |{{code|note.hat}}
+ |-
+ |<div class="mw-collapsible mw-collapsed">
+{{flatlist|
+*{{BlockLink|Stone}}
+*{{BlockLink|Deepslate}}
+*{{BlockLink|Blackstone}}
+*{{BlockLink|Netherrack}}
+*{{BlockLink|Nylium}}
+*{{BlockLink|Obsidian}}
+*{{BlockLink|Block of Quartz}}
+**{{BlockLink|Quartz Bricks|Bricks}}
+**{{BlockLink|Chiseled Quartz Block|Chiseled}}
+**{{BlockLink|Quartz Pillar|Pillar}}
+**{{BlockLink|Smooth Quartz Block|Smooth}}
+*{{BlockLink|Sandstone}}
+*{{BlockLink|Coal Ore}}
+**{{BlockLink|Deepslate Coal Ore|Deepslate}}
+*{{BlockLink|Copper Ore}}
+**{{BlockLink|Deepslate Copper Ore|Deepslate}}
+**{{BlockLink|Block of Raw Copper|Raw Block}}
+*{{BlockLink|Diamond Ore}}
+**{{BlockLink|Deepslate Diamond Ore|Deepslate}}
+*{{BlockLink|Emerald Ore}}
+**{{BlockLink|Deepslate Emerald Ore|Deepslate}}
+*{{BlockLink|Gold Ore}}
+**{{BlockLink|Deepslate Gold Ore|Deepslate}}
+**{{BlockLink|Nether Gold Ore|Nether}}
+**{{BlockLink|Block of Raw Gold|Raw Block}}
+*{{BlockLink|Iron Ore}}
+**{{BlockLink|Deepslate Iron Ore|Deepslate}}
+**{{BlockLink|Block of Raw Iron|Raw Block}}
+*{{BlockLink|Lapis Lazuli Ore}}
+**{{BlockLink|Deepslate Lapis Lazuli Ore|Deepslate}}
+*{{BlockLink|Nether Quartz Ore}}
+*{{BlockLink|Redstone Ore}}
+**{{BlockLink|Deepslate Redstone Ore|Deepslate}}
+*{{BlockLink|Bricks}}
+*{{BlockLink|Mud Bricks}}
+*{{BlockLink|Block of Resin}}
+*{{BlockLink|Resin Bricks}}
+**{{BlockLink|Chiseled Resin Bricks|Chiseled}}
+*{{BlockLink|Dead Coral}}
+*{{BlockLink|Coral Blocks|link=Coral Block}}
+**{{BlockLink|id=Dead Coral Blocks|Dead Coral Block|Dead}}
+*{{BlockLink|id=Dead Coral Fans|Dead Coral Fan}}
+*{{BlockLink|Respawn anchor}}
+*{{BlockLink|Bedrock}}
+*{{BlockLink|Concrete}}
+*{{BlockLink|Stonecutter}}
+*{{BlockLink|Furnace}}
+*{{BlockLink|Smoker}}
+*{{BlockLink|Observer}}
+*{{BlockLink|Terracotta}}
+**{{BlockLink|Stained Terracotta|Stained}}
+**{{BlockLink|Glazed Terracotta|Glazed}}
+*{{BlockLink|Prismarine}}
+*{{BlockLink|Prismarine Bricks}}
+*{{BlockLink|Dark Prismarine}}
+*{{BlockLink|Purpur Block}}
+*{{BlockLink|Purpur Pillar}}
+*{{BlockLink|Monster Spawner}}
+*{{BlockLink|Trial Spawner}}
+*{{BlockLink|Vault}}
+ }}
+</div>
+ |{{sound|Bass Drum|Note block bass drum scale.ogg}}
+ | style="text-align:center" |—
+ |{{code|block.note_block.basedrum}}
+ |{{code|note.bd}}
+ |-
+ |{{BlockLink|Block of gold}}
+ |{{sound|Bell (Glockenspiel)|Note block bell scale.ogg}}
+ | style="text-align:center" |F♯<sub>5</sub>–F♯<sub>7</sub>
+ |{{code|block.note_block.bell}}
+ |{{code|note.bell}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Clay}}
+*{{BlockLink|Honeycomb Block}}{{only|bedrock|short=1}} <ref>{{bug|MC-212976||Parity issue: Note blocks placed above honeycomb blocks don't play the flute instrument}}</ref>
+*{{BlockLink|Infested Stone|text=Infested block}}{{only|bedrock|short=1}}
+*{{BlockLink|Block of Resin}}{{only|bedrock|short=1}}
+}}
+ |{{sound|Flute|Note block flute scale.ogg}}
+ | style="text-align:center" |F♯<sub>4</sub>–F♯<sub>6</sub>
+ |{{code|block.note_block.flute}}
+ |{{code|note.flute}}
+ |-
+ |{{BlockLink|Packed ice}}
+ |{{sound|Chime|Note block chime scale.ogg}}
+ | style="text-align:center" |F♯<sub>5</sub>–F♯<sub>7</sub>
+ |{{code|block.note_block.chime}}
+ |{{code|note.chime}}
+ |-
+ |{{BlockLink|Wool}}
+ |{{sound|Guitar|Note block guitar scale.ogg}}
+ | style="text-align:center" |F♯<sub>2</sub>–F♯<sub>4</sub>
+ |{{code|block.note_block.guitar}}
+ |{{code|note.guitar}}
+ |-
+ |{{BlockLink|Bone block}}
+ |{{sound|Xylophone|Note block xylophone scale.ogg}}
+ | style="text-align:center" |F♯<sub>5</sub>–F♯<sub>7</sub>
+ |{{code|block.note_block.xylophone}}
+ |{{code|note.xylophone}}
+ |-
+ |{{BlockLink|Block of iron}}
+ |{{sound|Iron Xylophone (Vibraphone)|Note block iron xylophone scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.iron_xylophone}}
+ |{{code|note.iron_xylophone}}
+ |-
+ |{{BlockLink|Soul sand}}
+ |{{sound|Cow Bell|Note block cow bell scale.ogg}}
+ | style="text-align:center" |F♯<sub>4</sub>–F♯<sub>6</sub>
+ |{{code|block.note_block.cow_bell}}
+ |{{code|note.cow_bell}}
+ |-
+ |{{BlockLink|Pumpkin}}
+ |{{sound|Didgeridoo|Note block didgeridoo scale.ogg}}
+ | style="text-align:center" |F♯<sub>1</sub>–F♯<sub>3</sub>
+ |{{code|block.note_block.didgeridoo}}
+ |{{code|note.didgeridoo}}
+ |-
+ |{{BlockLink|Block of emerald}}
+ |{{sound|Bit (Clarinet/Synthesizer)|Note block bit scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.bit}}
+ |{{code|note.bit}}
+ |-
+ |{{BlockLink|Hay bale}}
+ |{{sound|Banjo|Note block banjo scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.banjo}}
+ |{{code|note.banjo}}
+ |-
+ |{{BlockLink|Glowstone}}
+ |{{sound|Pling (Electric piano)|Note block pling scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.pling}}
+ |{{code|note.pling}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Block of copper}}
+*{{BlockLink|Cut copper}}
+*{{BlockLink|Chiseled copper}}
+ }}
+ |{{sound|Trumpet|Note block trumpet scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.trumpet}}
+ |{{code|note.trumpet}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Exposed copper}}
+*{{BlockLink|Exposed cut copper}}
+*{{BlockLink|Exposed chiseled copper}}
+ }}
+ |{{sound|Exposed Trumpet (Distorted Trumpet)|Note block trumpet exposed scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.trumpet_exposed}}
+ |{{code|note.trumpet_exposed}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Weathered copper}}
+*{{BlockLink|Weathered cut copper}}
+*{{BlockLink|Weathered chiseled copper}}
+ }}
+ |{{sound|Weathered Trumpet (Trombone)|Note block trumpet weathered scale.ogg}}
+ | style="text-align:center" |F♯<sub>2</sub>–F♯<sub>4</sub>
+ |{{code|block.note_block.trumpet_weathered}}
+ |{{code|note.trumpet_weathered}}
+ |-
+ |{{flatlist|
+*{{BlockLink|Oxidized copper}}
+*{{BlockLink|Oxidized cut copper}}
+*{{BlockLink|Oxidized chiseled copper}}
+ }}
+ |{{sound|Oxidized Trumpet (Distorted Trombone)|Note block trumpet oxidized scale.ogg}}
+ | style="text-align:center" |F♯<sub>2</sub>–F♯<sub>4</sub>
+ |{{code|block.note_block.trumpet_oxidized}}
+ |{{code|note.trumpet_oxidized}}
+ |-
+ |{{BlockLink|Skeleton skull}}
+ |{{sound|Sound effect: Skeleton rattle|skeleton idle1.ogg|skeleton idle2.ogg|skeleton idle3.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.skeleton}}
+ |{{code|note.skeleton}}
+ |-
+ |{{BlockLink|Wither skeleton skull}}
+ |{{sound|Sound effect: Wither skeleton rattle|wither skeleton idle1.ogg|wither skeleton idle2.ogg|wither skeleton idle3.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.wither_skeleton}}
+ |{{code|note.witherskeleton}}
+ |-
+ |{{BlockLink|Player head}}
+ | Sound effect set in {{nbt|string|note_block_sound}}, silent by default
+ | style="text-align:center" | — 
+ | ''Dependent''
+ | ''Dependent''
+ |-
+ |{{BlockLink|Zombie head}}
+ |{{Sound|Sound effect: Zombie moan|Zombie idle1.ogg|Zombie idle2.ogg|Zombie idle3.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.zombie}}
+ |{{code|note.zombie}}
+ |-
+ |{{BlockLink|Creeper head}}
+ |{{Sound|Sound effect: Creeper hiss|fuse.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.creeper}}
+ |{{code|note.creeper}}
+ |-
+ |{{BlockLink|Piglin head}}
+ |{{Sound|Sound effect: Piglin snort|piglin idle1.ogg|piglin idle2.ogg|piglin idle3.ogg|piglin idle4.ogg|piglin idle5.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.piglin}}
+ |{{code|note.piglin}}
+ |-
+ |{{BlockLink|Dragon head}}
+ |{{Sound|Sound effect: Ender dragon roar|ender dragon idle1.ogg|ender dragon idle2.ogg|ender dragon idle3.ogg|ender dragon idle4.ogg}}
+ | style="text-align:center" | — 
+ |{{code|block.note_block.imitate.ender_dragon}}
+ |{{code|note.enderdragon}}
+|-
+ |{{BlockSprite|Air}} ''Any other blocks''
+ |{{sound|Harp|Note block harp scale.ogg}}
+ | style="text-align:center" |F♯<sub>3</sub>–F♯<sub>5</sub>
+ |{{code|block.note_block.harp}}
+ |{{code|note.harp}}
+|}
+
+==== Activating note blocks ====
+[[File:NoteBlockRedstone.png|thumb|A pair of note blocks wired to a [[clock circuit]] to play alternately]]
+
+Note blocks can be activated in a variety of different ways following normal redstone principles. Note blocks [[conductive block|conduct]] redstone power, which means they activate blocks next to them when directly powered, including other note blocks. 
+
+{{IN|je}} after activating the note block, or changing the note block's pitch (via {{control|use}}) is treated as a block state change, which successfully generates a block update and plays a sound after a [[Piston/Usage#Start delay|start delay]]. This update is detectable by both [[observer]]s and traditional piston-based [[block update detector]]s (BUDs).
+
+{{IN|je}}, an [[observer]] facing a note block will trigger whenever the note block is {{Control|use|text=used}}, activated with redstone power or the note block's instrument changes. This makes note blocks very flexible when used with observers, especially since note blocks can conduct power to other redstone devices. They can serve as activation switches or a means to control how and when observers are triggered in circuits. 
+
+{{IN|be}}, the musical pitch and instrument data are handled on a separate process (tile entity data) that is independent of the main world update loop. As a result, right-clicking to change the note does not trigger a block update. Because no update signal is generated, neither [[observer]]s nor [[BUD]]s can detect the change. This is a known bug.<ref>{{bug|MCPE-53919}}</ref>
+
+==== Sculk detection ====
+[[Sculk sensors]] and [[calibrated sculk sensors]] can detect both note block activations and pitch changes because these actions generate vibration events. {{IN|be}}, sculk sensors provide the only reliable method to detect both note block activations and pitch changes for redstone, since observers and BUDs cannot register these events.
+
+==== Interaction with allays ====
+If an [[allay]] hears a note block play within 16 blocks of its location, it tries to pathfind to it. It will then spend 30 seconds near that particular note block, seeking items around it and dropping them near the note block instead of its player. After 30 seconds, the allay returns to targeting its player unless the note block is played again. A [[Particles#vibration|vibration particle]] emanates from the note block and reaches the allay to indicate the allay has locked on to the note block. Because the allay and the note block interact via a vibration particle, placing [[wool]] between the note block and the allay can prevent this [[Sculk Sensor#Vibration detection|interaction]]. Allays ignore note blocks which do not make sounds, with the exception of note blocks with [[Player Head|player heads]] on top.
+
+=== Fuel ===
+Note blocks can be used as [[fuel]] in [[furnace]]s, smelting 1.5 items per block.
+
+== Sounds ==
+{{Sound table/Block/Wood}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Note Block
+|spritetype=block
+|nameid=note_block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Note Block
+|spritetype=block
+|nameid=noteblock
+|id=25
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=note-block
+|spritetype=block
+|nameid=Music
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|instrument|harp|banjo,basedrum,bass,bell,bit,chime,cow_bell,creeper,custom_head,didgeridoo,dragon,flute,guitar,harp,hat,iron_xylophone,piglin,pling,skeleton,snare,wither_skeleton,xylophone,zombie|The instrument of the note block.}}
+{{bst|note|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 |The pitch of the note block}}
+{{bst|powered|false|false,true|True if the note block is currently activated.|foot=1}}
+
+=== Block data ===
+{{IN|bedrock}}, a note block has a block entity associated with it that holds additional data about the block.
+
+See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Birthday Song}}
+
+== Advancements ==
+{{load advancements|Birthday Song}}
+
+== Videos ==
+{{yt|50lMIiQNfI4}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 1.9}}
+=== ''Java Edition'' ===
+{{more sounds|section=1|trumpet before and after snapshot 11}}
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[File:Note Block JE1 BE1.png|32px]] Added note blocks.
+|Note blocks have 5 instruments: "Harp", "Bass", "Bass drum", "Snare drum", "Click".
+|"Pling" is also added in the sound files, but is currently unused.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Note blocks are now broken faster using an [[axe]].}}
+|{{HistoryLine||1.2.4|dev=release|[[Spruce planks]], [[birch planks]], and [[jungle planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||1.7.2|dev=1.7.1|[[Acacia planks]] and [[dark oak planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||1.9|dev=?|Note blocks now use wood sounds rather than stone sounds.}}
+|{{HistoryLine||1.12|dev=17w16a|Added sound events (but not the sounds themselves) for additional instruments  (bell, chime, flute, guitar, xylophone) to note blocks.}}
+|{{HistoryLine|||dev=17w17a|Added sounds for additional instruments to note blocks.}}
+|{{HistoryLine||1.13|dev=17w47a|Note blocks can now be pushed by [[piston]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Note Block JE2 BE2.png|32px]] The texture of note blocks has been changed.}}
+|{{HistoryLine|||dev=19w09a|Added [[sound]]s to note blocks for additional instruments (iron xylophone, cow bell, didgeridoo, bit, banjo), and implemented the "Pling" instrument into the game.}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove planks]] can now be used to craft note blocks.}}
+|{{HistoryLine|||dev=22w13a|Note blocks now generate as part of [[ancient cities]].
+|Note blocks can now be silenced only with [[wool]] or [[carpet]]s on top.}}
+|{{HistoryLine|||dev=22w15a|The change to note block silencing mentioned above for 22w13a has now been reverted.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||1.20|dev=23w07a|[[Cherry planks]] can now be used to craft note blocks.}}
+|{{HistoryLine|||dev=23w12a|[[Head]]s can now be placed on note blocks to play the respective mob sound.
+|Heads can now be placed on note blocks without sneaking.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[Pale oak planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||26.1|dev=snap7|Added the "Trumpet", "Exposed Trumpet (Distorted Trumpet)", "Weathered Trumpet (Trombone)", and "Oxidized Trumpet (Distorted Trombone)" instruments.}}
+|{{HistoryLine|||dev=snap11|Updated the trumpet note block sound assets.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Note Block JE1 BE1.png|32px]] Added note blocks.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Note blocks can now be moved by [[piston]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Note Block JE2 BE2.png|32px]] The texture of note blocks has been changed.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Added all new note block [[sound]]s from [[Java Edition 1.12]] and [[Java Edition 1.14|1.14]].
+|Note blocks with [[glowstone]] underneath now produce the "pling" sound instead of "hat".}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.23|A note block played near an [[allay]] becomes its favorite note block for 30 seconds.
+|Placing a block on top of a note block no longer mutes it, with the exception of [[wool]] blocks.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.27|The previous change has been reverted.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[Head]]s can now be placed on note blocks to play the respective mob sound.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|Note blocks with [[soul soil]] underneath now produces the "harp" sound instead of "snare".}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[Pale oak planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.23|Added the "Trumpet", "Exposed Trumpet (Distorted Trumpet)", "Weathered Trumpet (Trombone)", and "Oxidized Trumpet (Distorted Trombone)" instruments.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Note Block JE1 BE1.png|32px]] Added note blocks.}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[Spruce planks]] and [[birch planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||xbox=TU12|[[Jungle planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|[[Acacia planks]] and [[dark oak planks]] can now be used to craft note blocks.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Added new note block [[sound]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Note Block JE2 BE2.png|32px]] The texture of note blocks has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Note Block JE1 BE1.png|32px]] Added note blocks.}}
+}}
+
+=== Data history ===
+{{info needed section|Info on the block entity used before 17w47a}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Note blocks now use the newly-implemented model json file {{code|models/block/cube.json}}; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.9|dev=15w34a|The power state of note blocks is now controlled through the <code>powered</code> tag, and therefore can now be controlled independently of any [[redstone signal]].}}
+|{{HistoryLine||1.11|dev=16w32a|The [[block entity]] ID of note blocks has been changed from <code>Music</code> to <code>noteblock</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|The ID has been changed from <code>noteblock</code> to <code>note_block</code>.
+|Note blocks are no longer block entities and instead are defined by the <code>note</code>, <code>powered</code>, and <code>instrument</code> block states.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 25.}}
+}}
+
+== Issues ==
+{{issue list|note block|noteblock}}
+
+== Trivia ==
+* Because a note block is a wooden-type block, a note block directly on top of another one produces a string bass sound when playing notes.
+* {{IN|java}}, note blocks have the highest number of possible block state combinations, at 1350, beating [[fire]]'s 512 and [[redstone dust]]'s 1296.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Note block redstone.png|Redstone linked to note blocks, playing a simple melody when the button is pressed
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Note Block Concept Art.png|A concept sketch tweeted by Notch depicting what would eventually become the note block
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Piglin Head Animation.jpg|[[Sunny]] using a [[piglin head]] on a note block
+File:Efe Looking at Makena Napping on a Note Block.jpg|[[Efe]] looking at [[Makena]] napping on a note block
+File:Efe Placing a Zombie Head on a Note Block.jpg|Efe placing a [[zombie head]] sneakily on the note block
+File:Makena Waking up Startled by the Zombie Noise.jpg|Makena waking up startled at the sound of zombies being played on the note block
+</gallery>
+
+== See also ==
+* [[Tutorial:Redstone music]]
+* [[Tutorial:Redstone music/Doorbell]]
+* {{BlockLink|Jukebox}}
+* [[Programs and editors/Minecraft Note Block Studio|Minecraft Note Block Studio]] – A music editor for ''Minecraft''.
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week-note-block Block of the Week: Note Block] – Minecraft.net on June 1, 2018
+*[http://www.youtube.com/results?search_query=Minecraft+songs+note+blocks&aq=f Search YouTube for the many songs played on note blocks]
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+
+[[de:Notenblock]]
+[[es:Bloque musical]]
+[[fr:Bloc musical]]
+[[hu:Hangdoboz]]
+[[it:Blocco sonoro]]
+[[ja:音符ブロック]]
+[[ko:소리 블록]]
+[[lzh:絲竹匣]]
+[[nl:Nootblok]]
+[[pl:Blok dźwiękowy]]
+[[pt:Bloco Musical]]
+[[ru:Музыкальный блок]]
+[[uk:Нотний блок]]
+[[zh:音符盒]]

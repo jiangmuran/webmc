@@ -1,0 +1,144 @@
+{{Joke feature}}
+{{Infobox block
+| title = Funky Portal
+| image = Funky Portal (animated) (white).png
+| invimage = none
+| extratext = View [[#Gallery|all renders]]
+| transparent=Yes
+| light=Yes (11)
+| tool=None
+| flammable=No
+| lavasusceptible=No
+}}
+The '''funky portal''' is a joke [[block]] introduced in [[Java Edition 20w14∞]] that allows entry into randomly generated [[Java_Edition_20w14∞#Dimensions|dimensions]]. It is a colored variant of the [[Nether portal block]] with the color being determined by the destination dimension.
+
+== Obtaining ==
+The funky portal block cannot be obtained as an item even by using the {{cmd|give}} command. The funky portal block can be placed using commands such as {{cmd|fill}} or {{cmd|setblock}} and is generated when throwing a [[written book]] into a [[Nether portal]]. After throwing the book into the portal, the book is destroyed. It does not go through the portal after having changed it. The generated portal has a random destination, unless the text leads to an Easter Egg dimension. Rarely, when throwing the book into the portal, the Nether portal turns into multiple funky portal colors. Each book generates its own dimension, and books with the same page content generate the same dimension. Using {{cmd|setblock ~ ~ ~ neither_portal}} sets the block and give it randomized block data as to its destination dimension. The color of a funky portal is determined by its destination dimension. The color of any portal can be found by converting its dimension ID into hexadecimal. The last six digits of that number is the RGB color.
+
+=== Breaking ===
+Funky portal blocks cannot be broken by tools except in creative mode, but can be destroyed by breaking the portal frame, by explosions, or by placing a liquid inside the portal.
+
+== Usage ==
+Running {{cmd|/data get block}} on funky portal blocks returns the data that includes the name of the dimension.
+
+== Sounds ==
+=== Generic ===
+{{info needed section|Did the .fall sound event have a subtitle in the version this block existed in, or not? A modified version of the table may be needed.}}
+{{Sound table/Block/Glass/JE}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Nether portal ambient.ogg
+|subtitle=Portal whooshes
+|source=block
+|description=Randomly
+|id=block.portal.ambient
+|translationkey=subtitles.block.portal.ambient
+|volume=0.5
+|pitch=0.8-1.2
+|distance=10}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|subtitle=MC-184622
+|source=ambient
+|description=After the player is teleported through a funky portal
+|id=block.portal.travel
+|translationkey=-
+|volume=0.25
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Nether portal trigger.ogg
+|subtitle=''None''
+|source=ambient
+|description=While the player is standing in a funky portal
+|id=block.portal.trigger
+|translationkey=subtitles.block.portal.trigger
+|volume=0.25
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Funky Portal
+|spritetype=block
+|nameid=neither_portal
+|id=
+|translationkey=
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{bst|axis|x
+|x|The portal's long edge runs east–west.
+|z|The portal's long edge runs north–south.|foot=1}}
+
+=== Block data ===
+A funky portal has a block entity associated with it that holds additional data about the block.
+{{see also|Block entity format}}
+<div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|int|Dimension}}: The ID of the dimension the portal links to.
+</div>
+
+== Issues ==
+{{April Fools issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Funky Portal (orange).png|
+Funky Portal (magenta).png|
+Funky Portal (light blue).png|
+Funky Portal (yellow).png|
+Funky Portal (lime).png|
+Funky Portal (pink).png|
+Funky Portal (gray).png|
+Funky Portal (light gray).png|
+Funky Portal (cyan).png|
+Funky Portal (purple).png|
+Funky Portal (blue).png|
+Funky Portal (brown).png|
+Funky Portal (green).png|
+Funky Portal (red).png|
+Funky Portal (black).png|
+</gallery>
+
+=== Textures ===
+<gallery>
+Funky Portal (texture) JE1.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Creeper_funky_portal_pixel_art.png|RGB pixel art of a [[creeper]] using funky portals' deterministic color.
+</gallery>
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|20w14infinite}}
+
+[[Category:Joke blocks]]
+[[Category:Block entities]]
+[[Category:Non-solid blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+[[Category:Portals]]
+
+[[fr:Portail cool]]
+[[ja:Funky Portal (ブロック)]]
+[[pt:Edição Java 20w14∞/Funky Portal]]
+[[uk:Прикольний портал]]
+[[zh:时髦的传送门（方块）]]

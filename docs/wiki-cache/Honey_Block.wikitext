@@ -1,0 +1,239 @@
+{{For||Honey}}
+{{Infobox block
+| image = Honey Block.png
+| transparent = {{jebe|Partial <small> (diffuses sky light) </small>|Yes}}
+| invimage2 = Honey Block BE
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''honey block''' is a storage [[block]] equivalent to the contents of four [[honey bottle]]s. It is sticky, can prevent [[jump]]ing, and can be used in conjunction with [[piston]]s to move blocks and adhered entities.
+
+== Obtaining ==
+=== Breaking ===
+Honey blocks can be [[instant mining|broken instantly]], regardless of held items, or when under the [[Mining Fatigue]] effect.
+{{breaking row|Honey Block|horizontal=1}}
+
+=== Crafting ===
+{{Crafting
+|A1= Honey Bottle 
+|B1= Honey Bottle
+|A2= Honey Bottle
+|B2= Honey Bottle
+|Output= Honey Block
+|type= Redstone
+|showdescription=1
+|description= Empty [[glass bottle|bottle]]s remain in the crafting grid after [[crafting]] the honey block.
+}}
+
+== Usage ==
+=== Redstone ===
+Unlike [[slime block]]s, honey blocks {{in|java}} are non-[[conductive]] and cannot have a [[redstone]] signal sent through them (including via a [[repeater]] or an [[observer]], etc). {{IN|bedrock}}, honey blocks are conductive, though mobs and players will not suffocate while they are inside of it.
+
+When being moved by a [[piston]], entities on a honey block's top surface move with it. They are not launched in the direction of the push, as a slime block would do. Honey blocks moved by pistons do not move entities that are touching the side or bottom of the block.<ref>{{bug|MC-163122||Honey blocks don't move entities from the side|WAI}}</ref>
+
+When a honey block is moved by a piston, it attempts to move all adjacent blocks in the same direction. A honey block can move any block a [[sticky piston]] can ''pull'' except for [[slime block]]s, as slime blocks and honey blocks never "stick" to each other. The blocks that are moved may, in turn, push other blocks, as if they were being pushed by a piston. For example, a honey block sitting on the ground attempts to move the ground block underneath itself, which pushes additional ground blocks in the direction of motion.
+
+When the adjacent block that is moved is also a honey block, that block ''also'' attempts to move all its adjacent blocks. For example, a 2×2×2 cube of honey blocks may be pushed or pulled as a unit by a single piston acting on any of the blocks in the cube.
+
+A honey block adjacent to a block that cannot be moved by pistons ignores the immobile block. However, if an adjacent block ''could'' be moved but is prevented by the presence of an immobile block, the honey block is also prevented from moving. [[Liquid]]s are an exception: they are not moved, but neither do they stop a piston from pushing or pulling blocks into their space (usually destroying the liquid, and in a rare case displacing it through the piston).<ref>{{bug|MC-75581||Water and lava teleport or disappear when moved via slime blocks|WAI}}</ref> 
+
+Honey blocks are not pulled by a non-sticky piston, nor are they moved if an adjacent (non-honey) block is moved by a piston.
+
+The maximum of 12 blocks moved by a piston still applies. For example, a 2×2×3 of honey blocks may be pushed or pulled by a sticky piston as long as no other movable blocks are adjacent to it. However, the platform in which a honey block shifts is entirely dependent on the placement of the sticky piston, as well as placement of blocks too.
+
+=== Slowing down entities ===
+Honey blocks slow down [[entities]] walking on top of them and prevent them from jumping. Players walking on honey blocks move at 2.508 m/s, about a 60% reduction from the normal walking speed. {{IN|bedrock}}, players also slow down slightly if walking up against the side of it. Players, who can ordinarily [[jump]] about {{frac|1|1|4}} [[block]]s high, can jump about {{frac|3|16}} blocks high on honey; this is an 85% reduction. They can more easily step up onto other blocks than jump up onto them.
+
+This effect applies even through other blocks on top of honey blocks as long as they are half-block or less in height, which means entities cannot jump off of [[carpet]]s, bottom [[slab]]s or [[daylight detector]]s that are placed on honey blocks.
+
+This effect also applies regardless of a player's mode of movement, such as flying with [[elytra]] or [[swimming]].
+
+=== Sliding ===
+Entities pressed against the sides of a honey block slide down at a slow speed and do not take fall [[damage]], similar to going down a [[ladder]]. {{IN|java}}, the entity's horizontal momentum gradually decreases; this allows players to jump 2 blocks further by holding on to the walls. {{IN|bedrock}}, the entity's horizontal momentum resets instead. The slowdown induced by honey blocks stacks with the [[Slow Falling]] status effect.
+
+=== Falling ===
+As with [[hay bale]]s, falling onto a honey block reduces fall damage by 80%. For example, if a [[player]] or mob falls from a height that would normally cause {{hp|10}} fall damage, the fall causes {{hp|2}} damage instead.
+
+=== Bees ===
+When a honey block is near [[bee]]s and a [[beehive]] or [[bee nest]], bees occasionally fly close and attach to it for a few seconds, resembling an action of eating honey. When doing this, the bee stops fluttering its wings, and firmly attaches its face to the honey block regardless of whether flowers are nearby.
+
+=== Crafting ingredient ===
+Although the 2×2 inventory crafting grid is sufficient to craft a honey block, a 3×3 crafting table grid is required to convert a honey block back into four honey bottles.
+{{Crafting usage|Honey Block}}
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb honey blocks, either through picking them up or being interacted with them. This provides the golf ball/fast flat effect to the mob when hitting it. Plus, it will also cling onto ceilings.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Honey block}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Honey Block slide1.ogg
+|sound2=Honey Block slide2.ogg
+|sound3=Honey Block slide3.ogg
+|sound4=Honey Block slide4.ogg
+|subtitle=Sliding down a honey block<ref>{{bug|MC-206779}}</ref>
+|source=dependent
+|description=While something is sliding down a honey block
+|id=block.honey_block.slide
+|translationkey=subtitles.block.honey_block.slide
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0 or 0.8 for each sound, except {{cd|slide1}}, which can be 1.0 or 0.9</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound=Honey Block hit1.ogg
+|sound2=Honey Block hit2.ogg
+|sound3=Honey Block hit3.ogg
+|sound4=Honey Block hit4.ogg
+|sound5=Honey Block hit5.ogg
+|source=player
+|description=While something is sliding down a honey block
+|id=step.honey_block|idnote={{verify|Could also be jump.honey_block, land.honey_block, or fall.honey_block and sound the same}}
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Honey Block
+|spritetype=block
+|nameid=honey_block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Honey Block
+|spritetype=block
+|nameid=honey_block
+|id=473
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Sticky Situation}}
+
+== Advancements ==
+{{load advancements|Sticky Situation}}
+
+== Videos ==
+{{yt|B2026xiVyZM}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208&t|t=42m24s}}|[[File:Honey Block pJE20190928.png|32px]] Honey blocks are announced at [[MINECON Live 2019]].}}
+|{{HistoryLine||September 28, 2019|link={{Mcnet|everything-we-announced-minecon-live-2019}}|[[File:Honey Block pJE20190928-2.png|32px]] In official article about all content announced at [[Minecon 2019]] was shown another honey block texture, which wasn't shown on live.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.15|dev=19w41a|[[File:Honey Block JE1.png|32px]] Added honey blocks.}}
+|{{HistoryLine|||dev=19w42a|Honey blocks no longer stick to [[slime block]]s when pushed by [[piston]]s.}}
+|{{HistoryLine|||dev=19w44a|Honey blocks can now be used to craft [[honey bottle]]s.
+|The [[inventory]] icon of honey blocks has been slightly changed from {{InvSprite|Honey Block BE}} to [[File:Honey Block (inventory) JE2.png]].}}
+|{{HistoryLine|||dev=pre1|The sliding [[sound]] event for honey blocks no longer uses the same [[subtitles]] as footsteps.}}
+|{{HistoryLine||1.17|dev=21w08a|Honey block have been moved to the "Redstone Blocks" tab of the [[Creative inventory]].}}
+|{{HistoryLine|||dev=21w18a|[[Goat]]s can no longer make long jumps on honey blocks.}}
+|{{HistoryLine||1.20|dev=23w12a|The inventory icon of the honey block has been changed from [[File:Honey Block (inventory) JE2.png]] to {{InvSprite|Honey Block}}.}}
+|{{HistoryLine|||dev=23w18a|Entities touching the edge of a honey block now properly get affected by the stickiness.<ref name="MC-1133">{{bug|MC-1133||Whether or not a player experiences some effect is calculated based on the block under the center of the player|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[File:Honey Block BE1.png|32px]] Added honey blocks.}}
+|{{HistoryLine|||dev=beta 1.14.0.2|[[File:Honey Block BE2.png|32px]] The [[model]] of honey blocks has been changed to match {{el|je}}'s.
+|Honey blocks no longer stick to [[slime block]]s when pushed by [[piston]]s.}}
+|{{HistoryLine|||dev=beta 1.14.0.4|Honey blocks can now be used to craft [[honey bottle]]s.}}
+|{{HistoryLine||1.14.20|dev=beta 1.14.2.50|Projectiles can now be shot through the gap between two honey blocks.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|New [[sound]]s have been added for honey blocks.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb honey blocks, providing the golf ball/fast flat effect to the mob.}}	
+|{{HistoryLine||26.30|dev=Preview 26.30.20|Implemented all features from the "Drop 2 of 2026" experiment in vanilla gameplay.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Honey blocks are not full [[block]]s: despite taking up 16{{^|3}} pixels, the collision box is only 14×14×15 pixels. 
+** The bottom face of a honey block is the same depth as a full block, though it is only 14×14 pixels.
+** Small [[entities]] such as [[arrow]]s are free to move through the gap between honey blocks as they are under 2 pixels wide.
+** Only when entities are partially "in" a honey block (i.e., they are touching the 14{{^|3}}-pixel hitbox) can they slide down against it.
+* In real life, bees eat honey when the temperature is low and flowers are difficult to find. Otherwise, pollen and nectar are their primary food sources.
+* The bottom surface of a honey block does not slow down entities.
+* It takes 1 minute and 14 seconds to slide down 256 honey blocks.
+* [[Player]]s cannot place some [[block]]s on honey blocks, such as [[vine]]s, [[ladder]]s and [[torch]]es.{{only|java}}<ref>{{bug|MC-131115||Torches, levers, buttons, tripwire hooks, coral fans, vines, ladders and bells cannot be placed on the sides of farmland or grass paths|WAI}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Bee nom.png|A [[bee]] "eating" from a honey block
+Bee Eating Honey.png|A pollen-loaded bee stopping by, having some honey
+</gallery>
+
+=== Development images ===
+<gallery>
+Dev Sliding Down Honey Blocks.png|A player sliding down a stack of honey blocks, as seen in the reveal
+Dev Honey Block.png|Early honey block without the inner block
+</gallery>
+
+=== In other media ===
+<gallery>
+File:BlockWeek honey.png|Artwork of honey blocks used in [[Block of the Week]]
+File:Honey Block Exhibit.png|Honey Block display in [[15 Year Journey]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|block-week--honey|Block of the Week: Honey|May 21, 2020|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+{{Mojang featured|https://www.minecraft.net/en-us/article/honey-block-machines}}
+
+[[Category:Manufactured blocks]]
+[[Category:Compacted blocks]]
+[[Category:Utility blocks]]
+
+[[de:Honigblock]]
+[[es:Bloque de miel]]
+[[fr:Bloc de miel]]
+[[it:Blocco di miele]]
+[[ja:ハチミツブロック]]
+[[ko:꿀 블록]]
+[[pl:Blok miodu]]
+[[pt:Bloco de Mel]]
+[[ru:Блок мёда]]
+[[th:บล็อกน้ำผึ้ง]]
+[[uk:Медовий блок]]
+[[zh:蜂蜜块]]

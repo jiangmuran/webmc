@@ -1,0 +1,381 @@
+{{for|other options which change visuals|Options#Video Settings|Settings#Video}}
+{{wip}}
+'''Graphics''' is one of the game's many visual settings, which allows for the game's rendering of an assortment of features to be adjusted to match computer specifications.
+
+There are currently three{{Only|je|short=y}}/four{{Only|be|short=y}} different options for graphics to be set to, in order of computing expense: Fast, Fancy and ''Fabulous!''{{only|java}}, or Simple, Fancy, Ray Traced, and Vibrant Visuals{{only|be}}, each bringing their own dedicated visual improvements.
+
+== Differences between settings ==
+{{info needed section|
+* Currently, Java Edition-centric - Bedrock Edition differences need to be researched.
+* "Reduces the amount of visible rain or snow" according to its description as of 1.18.1 -demonstrate?
+* Darkness vignette presence - {{bug|MC-241321}}
+* World border vignette presence - {{bug|MC-54988}}
+* It's been heard that it affects fog rendering, but it isn't exactly known how.
+* It may affect or have affected rain in some way.(https://twitter.com/Dinnerbone/status/527075906595340288)
+* Any other differences that have been missed.
+* Possibly the fabulous world border bug. ({{bug|MC-187669}})
+* Analysis of each individual option
+}}
+
+=== Summary ===
+====''Java Edition''====
+{| class="wikitable" style="text-align:center"
+!Setting
+!Leaves
+!Translucency
+|-
+!Fast
+| {{tc|No|Opaque}}
+| {{tc|No|Flawed}}
+|-
+!Fancy
+| {{tc|Yes|Transparent}}
+| {{tc|No|Flawed}}
+|-
+!''Fabulous!''
+| {{tc|Yes|Transparent}}
+| {{tc|Yes|Correct}}
+|}
+
+<div style="text-align: center">
+<gallery>
+Fast graphics.png|Fast
+Fancy graphics.png|Fancy
+Fabulous graphics.png|''Fabulous!''
+</gallery>
+</div>
+
+====''Bedrock Edition''====
+{{IN|be}}, there are 4 graphics modes: Simple, Fancy, Vibrant Visuals, and Ray Traced. [[Vibrant Visuals]] and [[ray tracing]] have additional minimum requirements, and ray tracing requires a compatible [[resource pack]]. In general, the Simple and Fancy graphics modes are equivalent to ''Java Edition''<nowiki/>'s ''Fabulous!'' graphics and do not make compromises, while still providing a better performance. Most graphical features, such as transparent [[leaves]], are controlled by their own [[Settings#Video|settings]]. There are a few differences between Simple and Fancy graphics modes, but Vibrant Visuals and ray tracing enable advanced rendering techniques with far more graphical features.
+
+The graphics mode cannot be switched in-game by default and requires the "In-Game Graphics Mode Switching" option to be enabled. This is not available on lower-end devices, because especially switching from/to/between Vibrant Visuals and ray tracing requires high performance and memory.
+
+===Detailed analysis===
+
+====''Java Edition''====
+
+=====Leaves=====
+[[File:Graphic.gif|thumb|The difference between fast graphics leaves and fancy graphics leaves.]]
+When graphics are set to ''Fast'', leaves are rendered as completely opaque blocks when placed in the world. (In item form, they still appear transparent.) This is likely meant to improve framerates by treating leaves more like full, solid cubes, and allowing their faces to be culled by each other, resulting in the game having to render fewer faces in forested areas; this, however, does not happen.<ref>{{bug|MC-179383}}</ref>
+
+Leaves do not use a separate texture file for their appearance in Fast graphics - rather, all transparent regions in the texture are set to fully opaque, and appear black.{{info needed|If a texture region has colors in transparent regions but still an alpha of 0, do they still appear black in-game in Fast?}}
+
+Leaves are the only block subject to this - other transparent cubes, such as [[monster spawner]]s are still rendered transparent, likely due to their comparative rarity.
+
+=====Translucency=====
+When graphics are set to ''Fast'' or ''Fancy'', the game makes compromises on the rendering of many translucent elements of the game.
+
+A notable example of this involves viewing the world through translucent blocks such as [[stained glass]], [[tinted glass]], and [[ice]]. When this is done, the game does not attempt to render [[particles]], [[rain]], [[snow]], or [[clouds]] behind the block.
+
+There are also many, much more subtle cases which can be seen. [[Experience orb]]s have many associated cases - for example, they can block the rendering of their own shadows, as well as of other entities, including entity-rendered blocks such as [[chest]]s, as well as non-entity-rendered translucent blocks such as stained glass, and other things like the [[Hitbox|outlines]] of targeted blocks.
+
+The effects seem to be time-specific, and often differ depending on the age of the entities in question - different effects can be seen for experience orbs that existed in the world before the entity behind them than experience orbs that came into existence afterward.
+
+More obscure cases can be sighted as well, such as with the dying animation of the [[ender dragon]], the [[world border]], and [[structure block]] annotations. Untested cases involve F3+G chunk borders and [[shulker bullet]]s. Blocks such as tripwire, slime blocks, and honey blocks may cause even more strange effects.
+
+====''Bedrock Edition''====
+{{Expand section|Add comparison images, expand section in general}}
+The following table lists the main differences between graphics modes. Unknown differences or graphical features controlled by their own settings are not included.
+{| class="wikitable"
+|+
+!
+!Simple
+!Fancy
+![[Vibrant Visuals]]
+!Ray Traced
+|-
+!Availability
+|All
+|All
+|
+* Platforms: {{OS|win}} {{OS|and}} {{OS|ios}} {{OS|ipad}} {{OS|xb1}} {{OS|xsx}} {{OS|ps4}} {{OS|ps5}}
+* [[Vibrant Visuals#Availability|Additional minimum requirements]] for {{OS|win}} {{OS|and}} {{OS|ios}} {{OS|ipad}}
+* Not in [[splitscreen]]
+* Not with incompatible [[resource packs]] and on certain [[servers]]
+|
+* {{OS|win}} with [[RenderDragon#Ray tracing|compatible graphics cards]]
+* Requires compatible [[resource pack]]
+|-
+!Performance cost
+|Very low
+|Low
+|Medium
+|High
+|-
+!Rendering
+|
+* 5-96 chunks{{note|Limit in [[options.txt]], capped in the in-game settings screen to lower values depending on the device. See {{Slink|Settings|Video}} for more information|name=render}}
+* Chunks fade in
+* Smooth rendering in facing direction
+|
+* 5-96 chunks{{note|name=render}}
+* Chunks fade in
+* Smooth rendering in facing direction
+|
+* 0-128 chunks{{note|name=render}}
+* Chunks appear instantly
+* Instant rendering directly around crosshair
+|
+* 0-128 chunks{{note|name=render}}
+* Chunks appear instantly
+* Instant rendering directly around crosshair
+* Limited loading memory
+|-
+!Static [[lighting]]
+|Yes
+|Yes
+|
+* Yes
+* [[Vibrant Visuals#Colored lighting|Colored]] with Render Dragon Features for Creators [[Experiments|experiment]]
+|No
+|-
+![[Smooth lighting]]
+|Yes
+|Yes
+|Yes
+|No; ambient occlusion with directional lighting
+|-
+!Directional lighting
+|No
+|No
+|
+* [[Sun]], [[moon]], [[End flash]]
+* [[Vibrant Visuals#Colored lighting|Point light]] blocks with Render Dragon Features for Creators
+|
+* [[Sun]], [[moon]]
+* Limited point light blocks
+* Emissive textures
+|-
+![[Texture set|Texture sets]]
+|RGBA
+|RGBA
+|
+* RGBA; MERS; Normal/Heightmap (unused)
+* Vanilla MERS textures for each block, entity, particle and item
+* Pixelated reflections from emissive light on metallic surfaces, subsurface scattering for directional lighting on certain blocks, smooth reflections from directional lighting on smooth surfaces.
+|
+* RGBA; MER (unused); Normal/Heightmap (unused)
+* All objects are reflective by default, with high-quality reflections of all rendered objects.
+|-
+!Light coloration/strength
+|Ambient lighting varies with [[daylight cycle]] or [[dimensions]]
+|Ambient lighting varies with daylight cycle or dimensions
+|
+* Ambient lighting varies with daylight cycle or dimensions
+* Directional lighting varies with daylight cycle or [[biome]]
+* Sky lighting
+* Emissive desaturation
+|
+* Ambient lighting varies with daylight cycle or dimensions
+* Directional lighting varies with daylight cycle
+|-
+!Atmospherics
+|
+* Varying [[sky]] color per Overworld [[biome]] and set daylight cycle colors
+* Beautiful Skies toggle
+|
+* Varying sky color per Overworld biome and set daylight cycle colors
+* Beautiful Skies toggle
+|
+* Different colors for horizon and zenith with blending
+* Unique colors for certain biomes and dimensions
+* Varying colors depending on daylight cycle
+|
+* Hard-coded colors for each part of the sky
+* Varying colors depending on daylight cycle
+|-
+![[Fog]]
+|Default fog types; different water fog colors
+|Default fog types; different water fog colors
+|
+* Default fog types; different water fog colors
+* Configurable [[volumetric fog]]; varying colors and densities per biome
+* Light shafts; varying strengths per biome
+|
+* Default fog types
+* [[Volumetric fog]]
+* Light shafts
+|-
+!Shadows
+|No
+|Static round shadows below [[entities]]
+|Pixelated shadows from all objects created by directional lighting
+|Soft shadows from all objects created by directional lighting
+|-
+![[Water]] effects
+|
+* Biome-colored surface texture
+* Slightly transparent
+|
+* Biome-colored surface texture
+* Slightly transparent
+|
+* Fully transparent
+* Light scattering in deeper water bodies
+* Screen-space reflections
+* Pixelated reflections
+* Cubemap reflections
+|
+* Semi-transparent
+* Distortion effects
+* Fully reflective from underwater; slightly reflective from above
+* Smooth light reflections
+|-
+!Water caustics
+|No
+|No
+|Pixelated
+|Soft
+|-
+![[Clouds]]
+|
+* Opaque
+* Colored with daylight cycle
+* Limited to render distance
+* Are not faded by [[fog]]
+|
+* Varying transparencies
+* Colored with daylight cycle
+* Limited to render distance
+|
+* Volumetric lighting model
+* Colored with atmospheric and lighting settings, dynamic scattering
+* Custom cloud distance up to 128 chunks
+|
+* Semi-transperent; directional light sources are visible but dimmed
+* Have refraction
+* Colored with atmosphere colors and dynamic scattering
+* Limited to render distance
+|-
+!Translucency
+|Correct translucency through all transparent objects
+|Correct translucency through all transparent objects
+|
+* Correct translucency through all transparent objects
+* Directional lighting, shadows, and light shafts visible through transparent objects
+|
+* Correct translucency through all transparent objects
+* Directional lighting, shadows, and light shafts visible through transparent objects
+* Advanced refraction
+|-
+!Post processing effects
+|No
+|No
+|
+* Light bloom
+* Configurable upscaling
+* Biome-configured color grading
+* Tone mapping
+|
+* Light bloom
+* Toggleable upscaling on Nvidia graphics cards
+|-
+![[Screen effects]]
+|No [[vignette]]
+|All
+|All
+|All
+|-
+!Settings
+|
+* Brightness
+|
+* Brightness
+|
+* Gamma calibration
+* Reflections
+* Shadows
+* Volumetric fog
+* Point lighting
+* Point light shadows
+* Bloom
+* Graphics presets
+|
+* Brightness
+|-
+!Customization in [[resource packs]]
+|Sky colors, water colors, [[Fog definition|fog settings]]
+|Sky colors, water colors, [[Fog definition|fog settings]]
+|
+* [[Vibrant Visuals#Atmospherics 2|Atmospherics]]
+* [[Vibrant Visuals#Color grading|Color grading]]/tone mapping
+* [[Vibrant Visuals#Cubemaps|Cubemaps]]
+* [[Vibrant Visuals#Lighting|Lighting]]
+* [[Vibrant Visuals#Shadows|Shadows]]
+* [[Texture set|Texture sets]] for blocks, entities, particles, items
+* [[Fog definition|Fog settings]] with volumetric fog/light shafts
+* [[Vibrant Visuals#Water|Water]]
+* Editable in ''[[Bedrock Editor]]''
+|
+* [[Texture set|Texture sets]] for blocks
+* [[Fog definition|Fog settings]] with volumetric fog
+|}
+{{notelist}}
+
+== History ==
+{{info needed section|
+* Ice, water used to render weird in fast graphics around 1.2.5 ({{Bug|MC-8082}})
+* {{bug|MC-29432}}}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100615|Added the graphics setting, with "fast" and "fancy" options.
+|Currently, clouds and entity shadows are affected.}}
+|{{HistoryLine||20100616-1808|Leaves are now affected by the graphics setting.}}
+|{{HistoryLine||20100624|A viginette now appears on the screen when fancy graphics are enabled.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|Added an overlay texture for the sides of [[grass block]]s to make their side texture appear colored identically to their top texture. This overlay is used only in fancy graphics, and fast graphics ignores it.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.6|dev=12w50a|[[Item (entity)|Dropped item]]s which are 2D now use a three-dimensional model in fancy graphics mode, compared to the flat 2D shape they used previously (and still use in fast graphics).}}
+|{{HistoryLine||1.8|dev=14w04a|Items no longer rotate at all due to a bug. This makes items visible only when facing north when fast graphics are enabled.}}
+|{{HistoryLine|||dev=14w04b|Items are no longer visible at all on Fast graphics.}}
+|{{HistoryLine|||dev=14w05a|Items are once again visible on fast graphics. They now face the player on all three axes, rather than only the horizontal axes, making them clearly visible from above.}}
+|{{HistoryLine|||dev=14w25a|Grass blocks now always use the side overlay, regardless of graphics setting. This is without a doubt due to the overlay section being made to be its own model element in the model file, rather than a setting for each face, possibly also making it less expensive to render.
+|"2D" items now always appear 3D, regardless of graphics setting. This must be due to the introduction of proper, customizable item models in this version, as opposed to being auto-generated by the game in previous versions.
+|However, said "2D" items still do not rotate on Fast graphics - only on Fancy graphics do they rotate.
+|Leaves no longer have different texture files for fast and fancy graphics - rather, the transparent texture is always used, and blank regions are filled in with an average color.{{info needed|what color is used? is it the most common color in the texture? or were these regions always colroed that and with an alpha of 0 and 14w25b changes their texture so these regions are black?}}
+|Leaves now appear transparent on Fast graphics in item form (held, dropped, framed or worn on a player's head),{{info needed|held by a command-summoned enderman?}} and their particles also have transparency. Graphics settings only affect them when placed.}}
+|{{HistoryLine|||dev=14w25b|Leaves now render black in their transparent regions in fast graphics.{{info needed|Again, is this a rendering change, or a texture change which affected only translucent regions? And are they forced to render black - if you put a yellow pixel in there with alpha 0, would it still render black, or yellow?}}}}
+|{{HistoryLine||1.8.1|dev=pre4|Dropped items now rotate on fast graphics.
+|Entity shadows are no longer controlled by fast/fancy graphics - they now have their own setting.
+|Clouds are no longer controlled by fast/fancy graphics - this has been merged into the clouds on/off option, which has become off/fast/fancy itself.}}
+|{{HistoryLine||1.16|dev=Pre-release 1|Added the Fabulous! graphics setting,}}
+|{{HistoryLine||1.21.11|dev=25w41a|"See-Through Leaves", "Show Vignette", "Weather Effect Radius", and "Improved Transparency" visual effects, which were previously only controlled by the graphics setting, have been split into independent settings.
+|Graphics modes "Fast", "Fancy", and "Fabulous!" have been replaced with graphics presets with the same names. Graphics presets control the default values of the "Quality & Performance" video settings.}}
+|{{HistoryLine|||dev=pre2|Disabling the "See-Through Leaves" video setting now improves performance more than before because leaves occluded faces are now culled.}}
+|{{HistoryLine|||dev=pre3|The "See-Through Leaves" video setting is now turned off on the "Fast" graphics preset.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|The game has two toggles for graphics settings: "Fancy graphics" and "Lower graphics quality." Both toggles are off by default.
+|"Fancy graphics" currently affects only the rendering of leaves.
+|"Lower graphics quality" decreases the [[render distance]] from four chunks to two chunks and prevents the "Fancy graphics" toggle from being enabled.}}
+|{{HistoryLine||v0.6.0|Added [[cloud]]s, which are visible only if "Fancy graphics" is enabled.}}
+|{{HistoryLine||v0.7.0|Render distance is now controlled independently of other graphics settings, and the "Lower graphics quality" toggle has been removed.
+|Cloud visibility is now controlled by the "Beautiful skies" toggle instead of fancy graphics.}}
+|{{HistoryLine||v0.8.0|dev=build 1|The fancy graphics toggle is now enabled by default.
+|Clouds now appear opaque if fancy graphics is off.
+|The following changes have been made to entity lighting in fancy graphics:
+* All entities now produce circular stencil shadows on blocks below them.
+* Lighting on entities is now dynamic and is no longer the same light level on all sides.
+* Lighting on each entity is now tinted based on how much sky light and block light is on it.
+* Light direction on entities now depends on the position of the sun. This does not affect stencil shadows.
+|When the [[inventory]] screen is open, the background is now a dirt texture instead of the world if fancy graphics is off.
+|Any [[Procedural animated texture generation|procedurally-generated animations]] are paused while the player has their inventory open if fancy graphics is off.}}
+|{{HistoryLine||v0.10.0|dev=build 1|Water is now significantly more transparent near the player when fancy graphics is off.}}
+|{{HistoryLine|||dev=build 2|[[Fog]] is now spherical instead of a flat plane when fancy graphics is on.}}
+|{{HistoryLine|||dev=build 6|Fog is no longer applied to clouds when fancy graphics is off.}}
+}}
+
+==References==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+
+[[Category:UI]]
+
+[[pt:Ajustes gráficos]]

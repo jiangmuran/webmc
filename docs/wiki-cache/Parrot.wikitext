@@ -1,0 +1,461 @@
+{{For}}
+{{Infobox entity
+| group1 = Red
+| 1-1 = Red Parrot.png
+| group2 = Blue
+| 2-1 = Blue Parrot.png
+| group3 = Green
+| 3-1 = Green Parrot.png
+| group4 = Cyan
+| 4-1 = Cyan Parrot.png
+| group5 = Gray
+| 5-1 = Gray Parrot.png
+| extratext = [[#Gallery|View other renders]]
+| invimage = Parrot Spawn Egg
+| health = {{hp|6}}
+| speed = 0.2<!--Fly speed is 0.4, but it doesn't seem to be used ingame.-->
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| spawn = {{BiomeLink|Jungle}}<br>{{BiomeLink|Bamboo Jungle}}<br>{{BiomeLink|Sparse Jungle}}{{only|be|short=1}}
+| size = '''{{IN|Java}}:'''<br>
+Height: 0.9 blocks<br>Width: 0.5 blocks<br>'''{{IN|Bedrock}}:'''<br>
+Height: 1.0 blocks<br>Width: 0.5 blocks
+| usableitems = {{drop|Item|Wheat Seeds}}<br>{{drop|Item|Beetroot Seeds}}<br>{{drop|Item|Melon Seeds}}<br>{{drop|Item|Pumpkin Seeds}}<br>{{drop|Item|Torchflower Seeds}}<br>
+{{drop|Item|Pitcher Pod}}<br>
+{{drop|Item|Cookie}}(Toxic)<br>{{drop|Item|Lead}}<br>{{drop|item|Name tag}}
+}}
+
+A '''parrot''' is a [[tame]]able [[passive mob]] that spawns in jungle [[biome]]s. Parrots imitate [[sound]]s of nearby monsters and can perch on the [[player]]'s shoulders.
+
+== Spawning ==
+Parrots naturally spawn in groups of 1–2 in [[jungle]]s, [[bamboo jungle]]s, and [[sparse jungle]]s{{only|bedrock|short=1}} above [[log]]s, [[leaves]], [[grass block]]s, or [[air]].
+
+Unlike most passive mobs, parrots cannot be [[bred]].
+
+{{Mob spawn table}}
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Feather|edition=java|quantity=1-2|lootingquantity=0-1}}
+|{{DropLine|name=Feather|edition=bedrock|quantity=1-2}}
+}}
+{{xp|1|3}} [[experience]] orbs are dropped when parrots are killed by a player or a tamed [[wolf]].
+
+== Behavior ==
+Parrots fly around idly under normal circumstances, landing frequently to rest.<ref>{{tweet|MiaLem_n|846995981208096768|Yes they fly, as high as they want to. :) But they do get tired and prefer to have somewhere to land.|March 29, 2017}}</ref> They take interest in any nearby [[mob]]s, including those that are hostile to them, and follow them around closely. When attacked, they rapidly fly upward several blocks to flee.
+
+Parrots also flap their wings to [[swim]], slow their falls, and prevent [[fall damage]].
+
+Parrots can be [[tame]]d by feeding them [[wheat seeds]], [[melon seeds]], [[pumpkin seeds]], [[beetroot seeds]], [[torchflower seeds]], or [[Pitcher Pod|pitcher pods]]. Each item fed has a {{frac|1|10}} chance of successfully taming them. Once tamed, {{control|interacting}} with a parrot makes it sit down and stand up.
+
+Unless told to sit, a tamed parrot follows the [[player]] and teleports if there is a distance of 12 blocks between it and the player.
+
+A [[death message]] is displayed to a parrot's owner upon its death. 
+
+{{IN|java}}, attempting to feed a parrot a [[cookie]] deals {{^|2|128}} damage to it, emitting [[Poison]] particles as it dies. {{IN|bedrock}}, attempting to feed a parrot a cookie does not instantly kill it, but [[Fatal Poison]] is emitted instead. This is a reference to the fact that chocolate is toxic to parrots.
+
+Unlike most [[animal]] mobs, parrots cannot [[breed]] and baby parrots do not exist.
+
+=== Sitting on a shoulder ===
+[[File:Parrot Shoulder.png|thumb|A [[player]] with a parrot on their shoulder.]]
+
+A tamed parrot on the ground can be made to perch on its [[player]]'s shoulder by moving through the parrot. On its own, a tamed parrot can also fly to and perch on the player's shoulder, unless it has been told to sit. A player can have one parrot on each shoulder. Parrots always prefer a player's left shoulder first, if it is empty.
+
+A parrot dismounts its player when the player:
+* Lands on a higher surface ({{frac|1|2}} block up or higher)
+* drops off a ledge of higher than {{frac|3|4}} of a block
+* takes damage
+* touches [[water]]
+* touches [[powder snow]]
+* is in creative [[flying]] mode
+* starts gliding with an [[elytra]]<ref>{{bug|MC-118003}}</ref>
+* sleeps on a [[bed]]
+* submerges the player's head in [[lava]] (the parrot dismounts and burns even if the player has [[Fire Resistance]])
+
+Parrots on a shoulder always look in the same direction the player's head is looking.
+
+A parrot riding on an [[entity]] cannot take any [[damage]] (except [[void]] and {{cmd|kill}}).{{only|be}} 
+
+But it may get hurt as soon as it dismounts, as when dismounting a player submerged in [[lava]].
+
+A parrot sitting on the shoulder appears in the [[inventory]] interface.
+
+{{IN|be}}, a parrot sitting on a shoulder prevents the player from entering a [[nether portal]].<ref>{{bug|MCPE-27950}}</ref>
+
+If a player uses an [[ender pearl]] while parrots are on their shoulder, the parrots teleport with the player.
+
+=== Imitating sounds ===
+Parrots imitate the idle [[sound]]s of nearby [[monster]]s and {{in|bedrock}}, a few neutral [[animal]]s as well; they have a detection range of 20 blocks. The sound produced by the parrots is the same sound as the mob being mimicked at a higher pitch, the same pitch as the mob's baby variant. Occasionally, a parrot may imitate sounds of mobs that are not in the area.<ref>{{bug|MC-115509|resolution=Works as Intended}}</ref>
+
+{{IN|be}}, they can also imitate neutral mobs such as [[endermen]], [[polar bear]]s, [[wolves]] and [[zombified piglins]]. {{IN|je}}, they can also imitate [[piglin]]s, [[hoglin]]s and [[piglin brute]]s. 
+
+{{IN|java}}, parrots attempt to imitate [[happy ghast]]s, but without using the corresponding sound event.
+
+Parrots don't imitate the sounds of [[skeleton horse]]s.<ref name="skelly">{{bug|MC-304373||Parrots don't imitate skeleton horses, endermen and zombified piglins}}</ref>
+
+Mobs that are imitated by parrots:
+
+{{columns-list|colwidth=20em|
+*{{EntityLink|Blaze}}
+*{{EntityLink|Bogged}}
+*{{EntityLink|Breeze}}
+*{{EntityLink|Camel Husk}}
+*{{EntityLink|Cave Spider}}
+*{{EntityLink|Creaking}}
+*{{EntityLink|Creeper}}
+*{{EntityLink|Drowned}}
+*{{EntityLink|Elder Guardian}}
+*{{EntityLink|Ender Dragon}}
+*{{EntityLink|Enderman}}{{only|bedrock|short=1}}
+*{{EntityLink|Endermite}}
+*{{EntityLink|Evoker}}
+*{{EntityLink|Ghast}}
+*{{EntityLink|Guardian}}
+*{{EntityLink|Hoglin}}{{only|java|short=1}}
+*{{EntityLink|Husk}}
+*{{EntityLink|Illusioner}}{{only|java|short=1}}
+*{{EntityLink|Magma Cube}}
+*{{EntityLink|Parched}}
+*{{EntityLink|Phantom}}
+*{{EntityLink|Piglin}}{{only|java|short=1}}
+*{{EntityLink|Piglin Brute}}{{only|java|short=1}}
+*{{EntityLink|Pillager}}
+*{{EntityLink|Polar Bear}}{{only|bedrock|short=1}}
+*{{EntityLink|Ravager}}
+*{{EntityLink|Shulker}}
+*{{EntityLink|Silverfish}}
+*{{EntityLink|Skeleton}}
+*{{EntityLink|Slime}}
+*{{EntityLink|Spider}}
+*{{EntityLink|Stray}}
+*{{EntityLink|Vex}}
+*{{EntityLink|Vindicator}}
+*{{EntityLink|Warden}}
+*{{EntityLink|Witch}}
+*{{EntityLink|Wither}}
+*{{EntityLink|Wither Skeleton}}
+*{{EntityLink|Wolf}}{{only|bedrock|short=1}}
+*{{EntityLink|Zoglin}}
+*{{EntityLink|Zombie}}
+*{{EntityLink|Zombie Horse}}{{only|java|short=1}}
+*{{EntityLink|Zombie Nautilus}}{{only|java|short=1}}
+*{{EntityLink|Zombie Villager}}
+*{{EntityLink|Zombified Piglin}}{{only|bedrock|short=1}}
+}}
+
+=== Dancing ===
+Parrots dance near a [[jukebox]] if a [[music disc]] is inside it. Parrots even have the ability to dance while on a [[player]]'s shoulder.{{only|bedrock|short=y}} This is a reference to the Party Parrot meme.<ref>{{tweet|MiaLem_n|849665440733429761|It took you no time at all to find the party parrot easter egg! But there is one more you haven't found...|April 5, 2017}}</ref> They stop dancing when the track ends.<ref>{{bug|MC-157412|||F}}</ref>
+
+The dancing radius is 3 blocks from the jukebox. If they dance and then fly beyond this radius, they stop dancing. A parrot does not dance if the music disc was inserted prior to it spawning, dismounting, or being within the 3 blocks range.<ref>{{bug|MC-115446|||WF}}</ref>
+
+== Sounds ==
+{{/Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Parrot
+|spritetype=entity
+|nameid=parrot
+|showentitytags=y
+|entitytags=fall_damage_immune, followable_friendly_mobs
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Parrot
+|spritetype=entity
+|nameid=parrot
+|showentityfamily=y
+|entityfamily=mob,parrot_tame,parrot_wild
+|id=30
+|foot=1}}
+
+=== Entity data ===
+Parrots have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/tameable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|integer|Variant}}: Specifies the color variant of the parrot, default is 0. Represents the {{DCL|minecraft:parrot/variant}} component.
+</div>
+{|class="wikitable mw-collapsible mw-collapsed"
+! Variant
+! Numerical ID
+! Identifier
+|-
+| [[File:Red Parrot.png|32px]] Red
+| <code>0</code>
+| <code>red_blue</code>
+|-
+| [[File:Blue Parrot.png|32px]] Blue
+| <code>1</code>
+| <code>blue</code>
+|-
+| [[File:Green Parrot.png|32px]] Green
+| <code>2</code>
+| <code>green</code>
+|-
+| [[File:Cyan Parrot.png|32px]] Cyan
+| <code>3</code>
+| <code>yellow_blue</code>
+|-
+| [[File:Gray Parrot.png|32px]] Gray
+| <code>4</code>
+| <code>gray</code>
+|}<section end="entity data" />
+
+When a parrot is resting on the player's shoulder, it ceases to be a distinct entity and its entity data is stored in the player's <code>ShoulderEntityLeft</code> or <code>ShoulderEntityRight</code> NBT. See also [[Player.dat format]].
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Is It a Bird?;Best Friends Forever;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||March 23, 2017|link={{tweet|MiaLem_n|844829306685554688}}|[[Maria Lemón]] tweets that her new [[mob]], created with the help of [[RazzleberryFox]], will be showcased in the next snapshot. "It's flytastic!"
+|Later the same day, she revealed that the new mob is the parrot.<ref>{{tweet|MiaLem_n|844888692699385856|Let me present the newest member of the Minecraft world! The parrot! Model by @RazzleberryFox|March 23, 2017}}</ref>}}
+|{{HistoryLine||March 26, 2017|link={{tweet|MiaLem_n|846006386517520385}}|Maria reveals that parrots can copy the [[sound]]s of other [[mob]]s around it.
+|Later the same day, she tweets an image of Steve "the parrot king" carrying parrots on his shoulder.<ref>{{tweet|MiaLem_n|846247154217877504|Steve is the parrot king!|March 26, 2017}}</ref>}}
+|{{HistoryLine||March 28, 2017|link={{tweet|MiaLem_n|846974672663130113}}|Maria tweets another image of parrots, showcasing their ability to fly and slowly drift downward.}}
+|{{HistoryLine||March 30, 2017|link={{tweet|MiaLem_n|847371388641923072}}|Shortly before the snapshot was released, Maria revealed that parrots are attracted to [[cookie]]s. This is a reference to the popular phrase "Polly wants a cracker".<ref>[https://www.youtube.com/watch?v=DA2pi7Kx9gQ&lc=z12ji5nibweehptw504cd3sikmqstlxa324.1490938502421634 "+Michael sheehan it's just a reference to "Polly wants a cracker"."] – [http://www.youtube.com/user/slicedlime slicedlime], March 31, 2017</ref> In real life, parrots should ''not'' be fed chocolate chip cookies, as chocolate is toxic to parrots.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.12|dev=17w13a|[[File:Red Parrot.png|32px]] [[File:Blue Parrot.png|32px]] [[File:Green Parrot.png|32px]] [[File:Cyan Parrot.png|32px]] Added parrots.}}
+|{{HistoryLine|||dev=17w13b|[[File:Gray Parrot.png|32px]] Added gray-yellow parrot.}}
+|{{HistoryLine|||dev=17w14a|The right-click action has been changed: right-clicking on a tamed parrot now tells it to sit.
+|Having a parrot sit on the [[player]]'s shoulders now require the player to walk through the parrot.
+|[[File:Fever parrot.gif|48px]] Parrots now dance and cycle through the variants if [[music]] is playing on a nearby [[jukebox]].
+|Parrots now make [[sound]]s when sitting on the [[player]]'s shoulders.}}
+|{{HistoryLine|||dev=17w15a|[[File:Dancing Red Parrot.gif|48px]] [[File:Dancing Blue Parrot.gif|48px]] [[File:Dancing Green Parrot.gif|48px]] [[File:Dancing Cyan Parrot.gif|48px]] [[File:Dancing Gray Parrot.gif|48px]] Parrots no longer cycle through the variants while dancing.}}
+|{{HistoryLine|||dev=17w16a|Parrots now dismount whenever the player is not touching the ground. This makes it impossible to keep the parrots on the shoulder while gliding.<ref>{{bug|MC-118003}}</ref> Previously they only dismounted when moving upwards.}}
+|{{HistoryLine|||dev=pre3|Parrots are now tamed with [[seeds]], instead of [[cookie]]s, after [https://web.archive.org/web/20170518214733/https://www.reddit.com/r/Minecraft/comments/6b0fkh/dear_mojang_please_remove_feeding_chocolate_to/ a post on Reddit].
+|Attempting to feed [[cookie]]s to a parrot now instantly kills the parrot, causing it to emit [[poison]] [[particle]]s. In an e-mail to [[wikipedia:Motherboard (website)|Motherboard]], [[Jens Bergensten]] explained: "Our reasoning for originally using cookies was twofold; it gave cookies a reason to exist within ''Minecraft'', and it was a subtle reference to the Nirvana song 'Polly.' However, we didn't consider what the chocolate ingredient would mean to real life parrots!"<ref>[https://motherboard.vice.com/en_us/article/minecraft-parrots-patch 'Minecraft' Is Patching the Game So Kids Won’t Poison Their Pet Birds]; Motherboard; May 16, 2017</ref>}}
+|{{HistoryLine|||dev=pre5|Killing a parrot by feeding it a [[cookie]] now counts as if the parrot was killed by the player who fed it. This affects [[death messages]], causes the parrot to drop [[experience]], take knockback and causes the [[looting]] enchantment to take affect.}}
+|{{HistoryLine|||dev=pre6|Parrots no longer dismount the player when simply not touching the ground. Now the player needs to fall at least about 0.75 blocks.{{info needed|Check code}}}}
+|{{HistoryLine||1.13|dev=18w19a|Parrots now imitate [[phantom]]s and [[drowned]].}}
+|{{HistoryLine||1.14|dev=19w11a|Parrots can now imitate [[ravager]]s, [[pillager]]s and [[panda]]s.}}
+|{{HistoryLine||1.14.2|dev=pre1|Parrots no longer spawn on [[grass]], but on [[grass block]]s instead.}}
+|{{HistoryLine||1.15|dev=19w40a|Parrots can now sit on a [[player]]'s shoulder even while the player is riding something.}}
+|{{HistoryLine|||dev=19w41a|Parrots no longer imitate [[panda]]s.}}
+|{{HistoryLine|||dev=19w44a|Parrots no longer imitate [[polar bear]]s, [[wolves]], and [[zombie pigmen]].}}
+|{{HistoryLine|||dev=19w45a|Parrots no longer imitate [[endermen]].}}
+|{{HistoryLine||1.16|dev=20w12a|Parrots now imitate hostile mobs less often.
+|Parrots no longer imitate hostile mobs when the difficulty is on [[Peaceful]].}}
+|{{HistoryLine||1.18|dev=pre5|The bottom texture of all parrots' wings has been flipped.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Parrots can now imitate [[warden]]s.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=pre1|Parrots can now be fed using [[torchflower seeds]].<ref>{{bug|MC-260035|||Fixed}}</ref>}}
+|{{HistoryLine||1.20|dev=15w31a|Parrots can now be fed using [[pitcher pod]]s.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w07a|Parrots can now imitate [[bogged]].}}
+|{{HistoryLine||1.20.5|dev=24w11a|Adjusted their flying behavior to keep them from overshooting their position when flying up and down.}}
+|{{HistoryLine||1.21.2|dev=24w40a|exp=Winter Drop|Parrots can now imitate [[creaking]]s.}}
+|{{HistoryLine||1.21.11|dev=25w44a|Parrots can now imitate [[camel husk]]s, [[parched]], [[zombie horse]]s and [[zombie nautilus]]es.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Red Parrot.png|32px]] [[File:Blue Parrot.png|32px]] [[File:Green Parrot.png|32px]] [[File:Cyan Parrot.png|32px]] [[File:Gray Parrot.png|32px]] Added parrots.}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|Parrots can now imitate [[drowned]] [[sound]]s.}}
+|{{HistoryLine||?|The sounds of the parrots have been changed to match [[Java Edition]]'s.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Parrots can now imitate [[warden]]s.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|Parrots can now imitate [[bogged]].}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.23|Parrots no longer imitate [[pandas]].}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.20|Parrots can now imitate [[guardian]]s, [[phantom]]s, [[pillager]]s, [[ravager]]s, [[zoglin]]s, and [[blaze]]s.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.23|Parrots imitating [[wither skeleton]]s now make wither skeleton sounds instead of skeleton sounds.|Parrots imitating [[drowned]] now make drowned sounds instead of zombie sounds.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Red Parrot.png|32px]] [[File:Blue Parrot.png|32px]] [[File:Green Parrot.png|32px]] [[File:Cyan Parrot.png|32px]] [[File:Gray Parrot.png|32px]] Added parrots.}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|Players can no longer attack tamed parrots with player versus player disabled.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Looking at a parrot while holding a [[cookie]] now shows the "feed" tooltip.}}
+|{{HistoryLine||xbox=TU62|xbone=CU52|ps3=1.66|psvita=1.66|ps4=1.66|wiiu=Patch 31|switch=1.0.12|Looking at a parrot while holding a [[cookie]] no longer shows the "feed" tooltip.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.88|wiiu=none|switch=none|All parrots – even unnamed parrots – now display [[death messages]] to their owner.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Red parrots are based on the real-life {{W|scarlet macaw|newtab=1}} "with a little Minecraft twist".<ref>{{tweet|MiaLem_n|844956044170285057|Macaws with a little Minecraft twist.|March 23, 2017}}</ref> Similarly, blue parrots are based on {{W|Hyacinth macaw|hyacinth macaws|newtab=1}}, cyan parrots are based on {{W|Blue-and-yellow macaw|blue-and-yellow macaws|newtab=1}}, green parrots are based on {{W|Black-billed amazon|black-billed amazon parrots|newtab=1}},<ref>{{tweet|RazzleberryFox|1816092906492400037|I based it off a black-billed amazon parrot! :)|July 24th, 2024}}</ref> and gray parrots are based on {{W|cockatiel|cockatiels|newtab=1}}.
+*The [[Minecraft]] team uses various party parrot emojis when communicating with each other on discord.<ref>[[Special:Diff/1080413|"Really. We have over 20 different party parrot emojis. :D"]] – HelenAngel, April 5, 2017</ref>
+*The [[advancement]] obtained for breeding two animals is called "The Parrots and the Bats", even though neither parrots nor bats can breed.
+*The parrot's dancing animation is based on the [https://knowyourmeme.com/memes/party-parrot party parrot emojis], that are in turn, based on the [https://www.youtube.com/watch?v=9T1vfsHYiKY|Sirocco kākāpō].
+*The "idle6" sound of the parrot is the English word "hello".<ref>{{ytl|f0k7JNFGhms|t=6m|Growth & Evolution - Part 3 - 15 Years of Minecraft|Minecraft|June 5, 2024}}</ref>
+[[File:Parrot idle6.ogg]]
+* The artist and modeller for parrots, [[RazzleberryFox]], originally designed ten parrots.<ref>{{Tweet|razz|2045188674459988418|So... I did not make 16, I only made 10 because I was told not to even bother with more. So there is only the 5 that you saw in the video! White, purple, grey, black and brown are missing.<br><br>Maybe I can make the rest haha and release all the extras in a little resource pack!|April 17, 2026}}</ref>
+** Sixteen parrots were supposed to be concepted representing one of each [[dye]].<ref>{{Ytl|EMlP6WsWtU|¿Cuánto sabes de Minecraft? RazzleberryFox y ElRichMC|ElRichMC - Minecraft & Gaming a otro nivel|April 10, 2026|t=15m52s}}</ref>
+
+== Gallery ==
+=== Renders ===
+====Sitting====
+<gallery>
+Sitting Red Parrot.png|A sitting red parrot.
+Sitting Blue Parrot.png|A sitting blue parrot.
+Sitting Green Parrot.png|A sitting green parrot.
+Sitting Cyan Parrot.png|A sitting cyan parrot.
+Sitting Gray Parrot.png|A sitting gray parrot.
+</gallery>
+
+==== Dancing ====
+<gallery>
+Dancing Red Parrot.gif|A dancing red parrot.
+Dancing Blue Parrot.gif|A dancing blue parrot.
+Dancing Green Parrot.gif|A dancing green parrot.
+Dancing Cyan Parrot.gif|A dancing cyan parrot.
+Dancing Gray Parrot.gif|A dancing gray parrot.
+Dancing Parrot JE1.gif|A dancing parrot in [[17w14a]].
+</gallery>
+
+==== Sitting on the player ====
+<gallery>
+Red Parrot on Alex.png|[[Alex]] with a red parrot on their left shoulder.
+Blue Parrot on Alex.png|Alex with a blue parrot on their left shoulder.
+Green Parrot on Alex.png|Alex with a green parrot on their left shoulder.
+Cyan Parrot on Alex.png|Alex with a cyan parrot on their left shoulder.
+Gray Parrot on Alex.png|Alex with a grey parrot on their left shoulder.
+Red Parrot on Ari.png|[[Ari]] with a red parrot on their left shoulder.
+Blue Parrot on Ari.png|Ari with a blue parrot on their left shoulder.
+Green Parrot on Ari.png|Ari with a green parrot on their left shoulder.
+Cyan Parrot on Ari.png|Ari with a cyan parrot on their left shoulder.
+Gray Parrot on Ari.png|Ari with a grey parrot on their left shoulder.
+Red Parrot on Efe.png|[[Efe]] with a red parrot on their left shoulder.
+Blue Parrot on Efe.png|Efe with a blue parrot on their left shoulder.
+Green Parrot on Efe.png|Efe with a green parrot on their left shoulder.
+Cyan Parrot on Efe.png|Efe with a cyan parrot on their left shoulder.
+Gray Parrot on Efe.png|Efe with a grey parrot on their left shoulder.
+Red Parrot on Kai.png|[[Kai]] with a red parrot on their left shoulder.
+Blue Parrot on Kai.png|Kai with a blue parrot on their left shoulder.
+Green Parrot on Kai.png|Kai with a green parrot on their left shoulder.
+Cyan Parrot on Kai.png|Kai with a cyan parrot on their left shoulder.
+Gray Parrot on Kai.png|Kai with a grey parrot on their left shoulder.
+Red Parrot on Makena.png|[[Makena]] with a red parrot on their left shoulder.
+Blue Parrot on Makena.png|Makena with a blue parrot on their left shoulder.
+Green Parrot on Makena.png|Makena with a green parrot on their left shoulder.
+Cyan Parrot on Makena.png|Makena with a cyan parrot on their left shoulder.
+Gray Parrot on Makena.png|Makena with a grey parrot on their left shoulder.
+Red Parrot on Noor.png|[[Noor]] with a red parrot on their left shoulder.
+Blue Parrot on Noor.png|Noor with a blue parrot on their left shoulder.
+Green Parrot on Noor.png|Noor with a green parrot on their left shoulder.
+Cyan Parrot on Noor.png|Noor with a cyan parrot on their left shoulder.
+Gray Parrot on Noor.png|Noor with a grey parrot on their left shoulder.
+Red Parrot on Steve.png|[[Steve]] with a red parrot on their left shoulder.
+Blue Parrot on Steve.png|Steve with a blue parrot on their left shoulder.
+Green Parrot on Steve.png|Steve with a green parrot on their left shoulder.
+Cyan Parrot on Steve.png|Steve with a cyan parrot on their left shoulder.
+Gray Parrot on Steve.png|Steve with a grey parrot on their left shoulder.
+Red Parrot on Sunny.png|[[Sunny]] with a red parrot on their left shoulder.
+Blue Parrot on Sunny.png|Sunny with a blue parrot on their left shoulder.
+Green Parrot on Sunny.png|Sunny with a green parrot on their left shoulder.
+Cyan Parrot on Sunny.png|Sunny with a cyan parrot on their left shoulder.
+Gray Parrot on Sunny.png|Sunny with a grey parrot on their left shoulder.
+Red Parrot on Zuri.png|[[Zuri]] with a red parrot on their left shoulder.
+Blue Parrot on Zuri.png|Zuri with a blue parrot on their left shoulder.
+Green Parrot on Zuri.png|Zuri with a green parrot on their left shoulder.
+Cyan Parrot on Zuri.png|Zuri with a cyan parrot on their left shoulder.
+Gray Parrot on Zuri.png|Zuri with a grey parrot on their left shoulder.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Parrots Lemon.gif|The first image of parrots, tweeted by [[Maria Lemón]].
+ParrotsInJungle.gif|Another image of parrots tweeted by [[Maria Lemón]].
+ParrotsOnShoulders.gif|Parrots riding on the shoulders of Steve, "the parrot king", tweeted by [[Maria Lemón]].
+ParrotsCrowdVillager.png|Note how the parrots crowd around the [[villager]] in a tight circle.
+ParrotsCrowdCreeper.png|Parrots also crowd around hostile [[mob]]s, such as [[creeper]]s.
+FeedingParrotCookie.png|[[Poison]] [[particle]]s appear if the [[player]] feeds [[cookie]]s to parrots.
+Better Together Parrots.jpg|Parrots in ''Bedrock Edition''.
+Parrot Through Spyglass.png|A parrot seen through a spyglass.
+Parrot face.gif|A gif of all parrot faces.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Parrot Red Blue (texture).png|Red parrot texture file.
+Parrot Blue (texture).png|Blue parrot texture file.
+Parrot Green (texture).png|Green parrot texture file.
+Parrot Yellow Blue (texture).png|Cyan parrot texture file.
+Parrot Grey (texture).png|Gray parrot texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:World of Color Update.png|Parrots as shown in the [[World of Color Update]] artwork.
+File:Parrot Minecraft Instagram.jpg|Artwork of a parrot.
+File:Parrot Minecraft Instagram cutout.png|Ditto but cut-out
+File:Caves & Cliffs cover art.png|A Parrot in promotional artwork for the first [[Caves & Cliffs]] update.
+File:Summer Sale Marketplace artwork.jpg|Parrots in official artwork.
+File:Parrot Sticker.gif|Animated parrot sticker from an official [[Wild Update]] stickerpack.
+File:Redstone Parrots Art.png|Artwork of parrots with [[redstone]].
+File:15th Anniversary Parrots.png|Artwork of every parrot, used for the 15th anniversary of ''Minecraft''.
+File:Wallpaper minecraft 15th-anniversary-left 1080x1920.png|Artwork of a red parrot with a [[turtle]].
+File:Ari flies with parrots.png|[[Ari]] flying with several parrots.
+File:Play With Friends Local 672x360.png|Pixel artwork of [[Noor]] fishing with several parrots.
+File:LEGO Parrot.png|[[Lego Minecraft]] parrot.
+File:Golden Parrot T Pose (Dungeons).png|A {{MCD|golden parrot}} as it appears {{in|MCD}}
+File:Woodsword Chronicles parrot.jpg|A parrot as it appears in {{WSC|4|1}} 
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|parrot|Mob Menagerie: Parrot|February 2, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Tameable mobs]]
+[[Category:Animal mobs]]
+[[Category:Flying mobs]]
+
+[[de:Papagei]]
+[[es:Loro]]
+[[fr:Perroquet]]
+[[it:Pappagallo]]
+[[ja:オウム]]
+[[ko:앵무새]]
+[[nl:Papegaai]]
+[[pl:Papuga]]
+[[pt:Papagaio]]
+[[ru:Попугай]]
+[[th:นกแก้ว]]
+[[uk:Папуга]]
+[[zh:鹦鹉]]

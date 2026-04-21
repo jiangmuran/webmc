@@ -1,0 +1,244 @@
+{{For}}
+{{distinguish|Commands/help}}
+{{Infobox block
+|image=Kelp.gif
+|invimage=Kelp
+|transparent=Yes
+|tool=Any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+|light=No
+}}
+
+'''Kelp''' is aquatic algae found in most [[ocean]]s. It can be planted [[water|underwater]] and grows over time (though not forever) or from [[bone meal]] usage. [[Smelting]] it results in [[dried kelp]], which is [[Food|edible]] and [[craft]]able into [[dried kelp block]]s.
+
+== Obtaining ==
+=== Breaking ===
+Kelp can be mined instantly with any [[tool]] or with the player's fist. Removing water from the kelp block destroys the kelp. Breaking one part of a kelp stalk destroys all kelp [[block]]s above it. Each block drops a kelp [[item (entity)|item]].
+{{breaking row|Kelp|horizontal=1}}
+
+=== Natural generation ===
+{{main|Kelp (feature)}}
+Kelp naturally generates in any [[ocean]] biomes (except in [[Frozen Ocean|frozen]], [[Deep Frozen Ocean|deep frozen]] and [[Warm Ocean|warm]]), near and around [[seagrass]]. Each chunk has {{frac|1|18}} chance to generate a [[vegetation]] of kelp.
+
+{{block distribution}}
+
+=== Trading ===
+[[Wandering trader]]s may sell 1 kelp for 3 [[emerald]]s.
+{{Trade sources}}
+
+=== Mob loot ===
+{{IN|bedrock}}, [[wandering traders]] have a chance of 8.5% (increased by 1% per level of [[Looting]]) to drop 1 kelp when killed while showing the item as trade offer, if the player holds an [[emerald]].
+
+== Usage ==
+Kelp can be placed underwater by hand, or anywhere by the use of [[commands]] such as {{cmd|setblock}}. Placing it by hand gives it a random {{code|age}} value between 0 and 24. Kelp can be placed only in [[water]] source blocks or downward-flowing water, not horizontally flowing water.
+
+When placed in downward-flowing water, the kelp becomes waterlogged, transforming the flowing water into a water source block,<ref>{{bug|MC-133814}}</ref> which is useful for faster [[bubble column]] elevator creation.
+
+Any building block can be placed on top of a kelp plant, which is useful for building structures over a deep ocean without needing to build from the ocean floor (see also [[lily pad]]).
+
+=== Cooking ingredient ===
+{{smelting
+| showname = 1
+| Kelp
+| Dried Kelp
+| 0.1
+}}
+
+=== Composting ===
+Placing kelp into a [[composter]] has a 30% chance of raising the compost level by 1.
+
+=== Growth mechanics ===
+Kelp can be planted on a broad variety of blocks. It grows underwater if it has either a source block of water or flowing water above it.<ref>{{bug|MC-133354}}</ref> Neither [[player]]s nor [[dispenser]]s can remove the water source block that kelp grows in without breaking the kelp first.
+
+Kelp does not require any [[light]] level to grow. Kelp also grows without having [[sky]] access. [[Bone meal]] can be used to grow kelp by 1 block on each use.
+
+When kelp is planted, it is generated with a randomly chosen age value, which can be checked when pressing [[Debug screen|<kbd>F3</kbd>]]{{only|java}}. The age value of a newly planted kelp plant varies randomly from 0 to 24. Each time the kelp grows in height by one block, the newly generated top of the kelp plant increases its age by 1. When the top block of the kelp plant reaches an age of 25, it stops growing. This means that kelp can naturally grow to a height between 2 (if the first kelp plant had an age of 24) and 26 blocks (if the first kelp plant had an age of 0). 
+
+When a kelp plant block is broken, the age of the kelp plant block underneath is randomized to a value from 0 to 24 and the kelp continues growing until it reaches age 25. It is possible to use this mechanic to cultivate a kelp plant to increase its growth height beyond its natural maximum height of 26 blocks. This can be done by breaking the top-most block of the kelp plant each time it reaches age 25. A kelp plant cultivated by a player in this way repeatedly grows until it reaches the water surface.
+
+Each time it receives a [[random tick]], kelp has a 14% chance of growing. At default random tick speed (3), each plant grows on average every 9752 game ticks (487.6 seconds).
+
+Using [[shears]] on the topmost block of kelp prevents further growth by setting its <code>age</code> value to <code>25</code>.
+
+=== Farming ===
+{{Main|Tutorial:Kelp farming}}
+Kelp farming is similar to farming [[sugar cane]], although kelp must be placed underwater. Automation of harvest is easier because items float up in water source blocks.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wet grass}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Shear.ogg
+|subtitle=Plant cropped
+|source=block
+|description=When the tip of kelp is cropped with [[Shears#Cropping growing plants|shears]]
+|id=block.growing_plant.crop
+|translationkey=subtitles.block.growing_plant.crop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}: ''None''
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Kelp
+|spritetype=block
+|nameid=kelp}}
+{{ID table
+|displayname=Kelp Plant
+|spritetype=block
+|nameid=kelp_plant
+|form=block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Kelp
+|shownumericids=y
+|showforms=y 
+|generatetranslationkeys=y
+|displayname=Item
+|spritename=kelp
+|spritetype=item
+|nameid=kelp
+|id=382
+|form=item}}
+{{ID table2
+|displayname=Block
+|spritename=kelp
+|spritetype=block
+|nameid=kelp
+|id=393
+|form=block
+|itemform=item.kelp
+|translationkey=-
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:<br>
+Top kelp block:
+{{bst|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25|A freshly planted kelp starts with a random age between 0 and 24.<br>Below age 25, a kelp may try go grow more kelp above it with the same age value incremented by one.<br>Kelp stops growing at age 25.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|kelp_age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|The age of the kelp. The kelp renders as a non-top piece if there's another kelp above it.|
+|16,17,18,19,20,21,22,23,24,25|Unused|Unsupported|foot=1}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 1.13-pre6}}
+{{See technical block}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] shows interest in adding a "[[seaweed]]" [[block]].}}
+|{{HistoryLine||November 18, 2017|link={{YouTubeLink|mAapz_nIC_Y}}|Kelp plants were shown in a clip of [[MineCon Earth]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Kelp JE1 BE1.gif|32px]] [[File:Kelp (item) JE1 BE2.png|32px]] Added kelp.}}
+|{{HistoryLine|||dev=18w07b|Kelp now behaves more like [[water]], meaning [[mob]]s can no longer spawn within the plant under water nor can they replenish their breath by [[swimming]] through it.}}
+|{{HistoryLine|||dev=18w10a|[[File:Kelp JE2.gif|32px]] The texture of kelp has been changed.}}
+|{{HistoryLine|||dev=18w14a|[[File:Kelp.gif|32px]] Top of the kelp textures have been shifted slightly downward.
+|The generation rules for kelp have been changed, it now mainly generates in [[cold ocean]] biomes and can no longer generate in [[warm ocean]]s.}}
+|{{HistoryLine|||dev=18w20a|The {{cd|kelp_top}} has been changed ID to {{cd|kelp}} and {{cd|kelp}} has been changed to {{cd|kelp_plant}}, for both the [[block]] and [[item]] forms.}}
+|{{HistoryLine|||dev=pre2|Kelp is now destroyed by [[sponge]]s.<ref>{{bug|MC-127111}}</ref>}}
+|{{HistoryLine|||dev=pre6|Added 5 new [[sound]] events that apply to kelp: {{cd|block.wet_grass.break|block.wet_grass.fall|block.wet_grass.hit|block.wet_grass.place|block.wet_grass.step|d=and}}.}}
+|{{HistoryLine||1.14|dev=19w03a|Placing kelp into a [[composter]] now has a 10% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Kelp now has a 30% chance of increasing the compost level in a composter by 1.
+|Added [[wandering trader]]s, which can sell kelp for 3 [[emerald]]s.}}
+|{{HistoryLine||1.16|dev=20w11a|Kelp can now be grown with [[bone meal]].}}
+|{{HistoryLine|||dev=20w13a|Kelp has been moved from the "Miscellaneous" tab to the "Decoration Blocks" tab in the [[Creative inventory]].<ref name="misc decoration">{{bug|MC-174434|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.17|dev=20w46a|Kelp no longer generates on magma blocks.<ref>{{Bug|MC-185605|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.18|dev=21w37a|Kelp now stops growing if [[shears]] are used on the tip.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[File:Kelp JE1 BE1.gif|32px]] [[File:Kelp (item) BE1.png|32px]] Added kelp.}}
+|{{HistoryLine|||dev=beta 1.2.20.1|[[File:Kelp (item) JE1 BE2.png|32px]] The kelp [[item]] texture has been updated to the {{JE}}'s.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|[[File:Kelp.gif|32px]] The texture of the kelp plant has been updated.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Kelp can now be bought from [[wandering trader]]s for 3 [[emerald]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Kelp can now be used to fill [[composter]]s.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.25|Removed the unintended darker tinting of kelp.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Kelp now stops growing if [[shears]] are used on the tip.}}
+|{{HistoryLine|||dev=Preview 1.21.60.23|Kelp generates more frequently and in denser patches in [[ocean]] biomes (except for [[frozen ocean]]).}}
+|{{HistoryLine|||dev=Preview 1.21.60.27|Kelp can now generate at any depth, leading to increased overall generation.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Kelp.gif|32px]] [[File:Kelp (item) JE1 BE2.png|32px]] Added kelp.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Kelp can now be bought from [[wandering trader]]s for 3 [[emerald]]s.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* In real life, {{w|kelp}} is not considered a {{w|plant}}. It is classified by scientists as a {{w|brown algae}}.
+** Kelp in real life absorbs nutrients directly from the water, instead of through its root-like structure, [[wikipedia:Holdfast (biology)|holdfast]], which merely attaches it to the seabed. This is in accordance with kelp being able to grow on almost any solid block in ''Minecraft''.
+
+== Gallery ==
+=== Screenshots ===
+<gallery heights="60">
+File:SeaPlantsMineConEarth2017.jpg|Kelp shown in a clip from MINECON Earth 2017.
+File:Kelp in ocean with Jappa textures.jpg|Naturally generated kelp in an [[ocean]] biome.
+File:Kelp on shoreline.png|Naturally generated kelp near the shore.
+File:Ocean life.png|An ocean with kelp visible in the far distance.
+File:Kelp on Land.png|Kelp placed outside of [[water]] using the {{cmd|setblock}} command before 18w07b.
+File:Waterless kelp.png|What kelp looks like without water (water removed using a [[resource pack]]).
+File:Floating Kelp.png|Kelp that generated in mid-air due to an [[ocean monument]]'s water cutting through it.
+File:Kelp in ocean.jpg|Multiple kelps.
+File:Kelp 255 blocks tall.png|Without obstacles, kelp can grow all the way to building limit.
+File:ArgoMajor Kelp.jpg|First image of kelp in ''Bedrock Edition''.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--kelp|Taking Inventory: Kelp|August 27, 2020|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox items|ingredients}}
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+
+[[de:Seetang]]
+[[es:Alga]]
+[[fr:Algue]]
+[[it:Alga]]
+[[ja:コンブ]]
+[[ko:켈프]]
+[[nl:Kelp]]
+[[pl:Wodorost]]
+[[pt:Alga]]
+[[ru:Ламинария]]
+[[th:สาหร่ายทะเล]]
+[[uk:Ламінарія]]
+[[zh:海带]]

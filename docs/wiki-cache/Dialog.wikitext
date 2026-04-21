@@ -1,0 +1,329 @@
+{{About|dialog format specification|the command|Commands/dialog|other uses|Dialog (disambiguation)}}{{Exclusive|Java}}{{Page image|File:Dialog_list_dialog.png}}
+'''Dialogs''' are simple {{w|modal window}}s that can display information and receive [[player]] input.
+
+== Usage ==
+Dialogs can be displayed to [[player]]s using the {{cmd|dialog}} command by server [[operator]]s while in gameplay. Additionally, they can be displayed through a {{cd|show_dialog}} action in a [[text component]] or another dialog (see {{slink||Action format}}). They can also be configured for the [[pause menu]] and when pressing the {{control|quick actions}} hotkey (see {{slink||Dialog tag}}).
+
+Dialogs enable various forms of interaction with the game, including:
+* Sending messages or information using [[text component]]s, including rich text formatting and clickable links (excluding type nbt, score and selector<ref name="no-component-resolution">{{bug|MC-297871||Text component content types "score, selector, and NBT" do not get resolved for dialogs|Invalid}}</ref>);
+* Receiving player input through [[#Input control format|input control fields]] such as textbox, toggle, slider, and option selection;
+* Executing [[command]]s via action buttons ([[Permission_level|privileged commands]] can only be executed by server operators); and
+* Navigating between multiple dialogs using nested structures.
+
+Dialogs mostly comprise of these three elements, however their exact contents are dependent of the type:
+* '''Header''', which contains the title and warning button;
+* '''Body elements''', which may be labels, inputs, buttons, and submit actions (scrollable if needed); and
+* '''Optional footer''', which may contain confirmation buttons and submit actions.
+
+When a dialog window opens, player [[controls]] are disabled temporarily until the user exits the window through an ''exit action'' button, the {{w|escape key}} ({{key|Esc}}), or the warning button next to the dialog's title (which returns the user back to the [[title screen]]). In [[singleplayer]], a dialog can be configured to pause the game, in which case the game also [[autosave]]s.
+
+== Definition ==
+Dialog can be defined in [[data pack]]s, as part of the directory structure below.
+
+{{Data pack directory|dialog|{{ph|name}}.json}}
+
+== Dialog format{{anchor|JSON format}} ==
+Dialogs have different structure depending on their type, which is specified by {{nbt|string|type}} tag. The structure below applies to every dialog types:
+
+* <span style="color:red;">*</span>: If parent field is written, this field is required.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: One of dialog types from the <code>minecraft:dialog_type</code> registry:
+***<code>minecraft:notice</code>
+***<code>minecraft:confirmation</code>
+***<code>minecraft:multi_action</code>
+***<code>minecraft:server_links</code>
+***<code>minecraft:dialog_list</code><section begin="json format common" />
+**{{Nbt|string}}{{Nbt|list}}{{Nbt|compound|title}}<span style="color:red;">*</span>: Screen title, text component. Should be always visible on screen, no matter the specific type.
+**{{Nbt|string}}{{Nbt|list}}{{Nbt|compound|external_title}}: Name to be used for a button leading to this dialog (for example, on the [[pause menu]]), optional text component. If not present, title will be used instead.
+**{{nbt|list}}{{nbt|compound|body}}: Optional list of body elements or a single body element. See {{slink|Dialog|Body format}}.
+**{{nbt|list|inputs}}: Optional list of input controls. See {{slink|Dialog|Input control format}}.
+**{{nbt|bool|can_close_with_escape}}: Can dialog be dismissed with Escape key. Defaults to <code>true</code>.
+**{{nbt|bool|pause}}: If the dialog screen should pause the game in single-player mode. Defaults to <code>true</code>.
+**{{nbt|string|after_action}}: An additional operation performed on the dialog after click or submit actions. Defaults to <code>close</code>. Can be one of the following:
+***<code>close</code>: Closes the dialog and returns to the previous non-dialog screen (if any).
+***<code>none</code>: Does nothing, i.e. keeps the current dialog screen open (only available if {{nbt|bool|pause}} is <code>false</code> to avoid locking the game in single-player mode).
+***<code>wait_for_response</code>: Replace the current dialog with a "Waiting for Response" screen.<section end="json format common" />
+** Other fields depending on {{nbt|string|type}}, see below.
+</div>
+
+=== notice ===
+[[File:Notice dialog.png|thumb|right|A {{cd|minecraft:notice}} dialog type.]]
+
+A dialog screen with a single action button in footer, specified by {{nbt|compound|action}}. By default, the exit action (which returns the player back to gameplay) is the same {{nbt|compound|action}} button.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:notice</code>.
+**{{nbt inherit/dialog}}
+**{{nbt|compound|action}}: Click action. Defaults to button with <code>gui.ok</code> label and no action or tooltip.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150. 
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+</div>
+
+=== confirmation ===
+[[File:Confirmation dialog.png|thumb|right|A {{cd|minecraft:confirmation}} dialog type.]]
+
+A dialog screen with two action buttons in footer, specified by {{nbt|compound|yes}} and {{nbt|compound|no}}. By default, the exit action is {{nbt|compound|no}} button.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:confirmation</code>.
+**{{nbt inherit/dialog}}
+**{{nbt|compound|yes}}<span style="color:red;">*</span>: Click action for positive outcome.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150.
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+**{{nbt|compound|no}}<span style="color:red;">*</span>: Click action for negative outcome.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150.
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+</div>
+
+=== multi_action ===
+[[File:Multi action dialog.png|thumb|right|A {{cd|minecraft:multi_action}} dialog type.]]
+
+A dialog screen with a scrollable list of action buttons arranged in columns. If {{nbt|compound|exit_action}} is present, a button for it will appear in the footer, otherwise the footer is not present. {{nbt|compound|exit_action}} is also used for the Escape action.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:multi_action</code>.
+**{{nbt inherit/dialog}}
+**{{nbt|list|actions}}<span style="color:red;">*</span>: Non-empty list of click actions.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150.
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+**{{nbt|int|columns}}: Positive integer describing number of columns. Defaults to 2.
+**{{nbt|compound|exit_action}}: Action for leaving the dialog.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150. 
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+</div>
+
+=== server_links ===
+[[File:Server links dialog.png|thumb|right|An empty {{cd|minecraft:server_links}} dialog type.]]
+
+A dialog screen with scrollable list of [[server links]], arranged in columns. If {{nbt|compound|exit_action}} is present, a button for it will appear in the footer, otherwise the footer is not present. {{nbt|compound|exit_action}} is also used for the Escape action.
+
+<div class="treeview">
+*{{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:server_links</code>.
+**{{nbt inherit/dialog}}
+**{{nbt|compound|exit_action}}: Action for leaving the dialog.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150. 
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+**{{nbt|int|columns}}: Positive integer describing number of columns. Defaults to 2.
+**{{nbt|int|button_width}}: Value between 1 and 1024 — Width of the button. Defaults to 150.
+</div>
+
+=== dialog_list ===
+[[File:Dialog list dialog.png|thumb|right|A {{cd|minecraft:dialog_list}} type dialog with all dialog types.]]
+
+A dialog screen with scrollable list of buttons leading directly to other dialogs, arranged in columns. Titles of those buttons will be taken from {{nbt|string|external_title}} fields of targeted dialogs. If {{nbt|compound|exit_action}} is present, a button for it will appear in the footer, otherwise the footer is not present. {{nbt|compound|exit_action}} is also used for the Escape action.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:dialog_list</code>.
+**{{nbt inherit/dialog}}
+**{{nbt|string}}{{nbt|compound}}{{nbt|list|dialogs}}<span style="color:red;">*</span>: {{json ref|dialog|tag=1|inline=1|tag_link=dialog tag (Java Edition)}} to show in the list.
+**{{nbt|compound|exit_action}}: Action for leaving the dialog.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: Text component.
+***{{nbt|string}}{{nbt|list}}{{nbt|compound|tooltip}}: Optional text component to display when button is highlighted or hovered over.
+***{{nbt|int|width}}: Value between 1 and 1024 — Width of the button. Defaults to 150. 
+***{{nbt|compound|action}}: An action to perform when button is clicked. See {{slink|Dialog|Action format}}
+**{{nbt|int|columns}}: Positive integer describing number of columns. Defaults to 2.
+**{{nbt|int|button_width}}: Value between 1 and 1024 — Width of the button. Defaults to 150.
+</div>
+
+== Body format{{anchor|dialog_body_types}} ==
+All dialogs have a list of body elements describing contents between title and actions or inputs.
+
+=== plain_message ===
+A multiline label.
+
+<div class="treeview">
+* {{nbt|compound}}: The body element
+** {{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:plain_message</code>
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|contents}}<span style="color:red;">*</span>: Text component. Does not support nbt, score and selector components.<ref name="no-component-resolution"/>
+** {{nbt|int|width}}: Value between 1 and 1024 — Maximum width of message. Defaults to 200.
+</div>
+
+=== item ===
+An item with optional description. It appears like it is in the [[inventory]] slot when the mouse hovers over the item. The size does not scale even if width and height are set to other values than the default. If the description is present, then it appears next to the right side of the item.
+
+<div class="treeview">
+* {{nbt|compound}}: The body element
+** {{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:item</code>
+** {{nbt|compound|item}}<span style="color:red;">*</span>: Item stack with count.
+*** {{nbt|string|id}}<span style="color:red;">*</span>: Item identifier.
+*** {{nbt|int|count}}: Item count.
+*** {{nbt|compound|components}}: Optional. Additional information about the item. See [[Data component format|item components]].
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|description}}: A compound or a text component (does not support nbt, score and selector components.<ref name="no-component-resolution"/>)
+*** {{nbt|string}}{{nbt|list}}{{nbt|compound|contents}}: Text component (does not support nbt, score and selector components.<ref name="no-component-resolution"/>)
+*** {{nbt|int|width}}: Value between 1 and 1024 — Maximum width of message. Defaults to 200.
+** {{nbt|bool|show_decoration}}: If true, count and damage bar will be rendered over the item. Defaults to <code>true</code>.
+** {{nbt|bool|show_tooltip}}: If true, item tooltip will show up when item is hovered. Defaults to <code>true</code>.
+** {{nbt|int|width}}: Value between 1 and 256 — Horizontal size of element. Defaults to 16.
+** {{nbt|int|height}}: Value between 1 and 256 — Vertical size of element. Defaults to 16.
+</div>
+
+== Input control format{{anchor|input_control_type}} ==
+[[File:Input controls dialog.png|thumb|right|All input controls on a dialog.]]
+
+Input controls are used to receive certain information from the players. These information can be used with the associated {{nbt|string|key}} tag, for example, when an action button is clicked, the {{nbt|string|key}} can be used to reference information stored on that input control, either when running a command with [[macro]] substitution, or a custom NBT tag sent to the [[server]] (see {{slink||Dynamic action types}}).
+
+All input control types have a label field. 
+
+<div class=treeview>
+*{{nbt|compound}}: The input control
+**{{nbt|string|type}}<span style="color:red;">*</span>: One of dialog types from the <code>minecraft:input_control_type</code> registry:
+***<code>minecraft:text</code>
+***<code>minecraft:boolean</code>
+***<code>minecraft:single_option</code>
+***<code>minecraft:number_range</code>
+<section begin="input control common" />**{{nbt|string|key}}<span style="color:red;">*</span>: String identifier of value used when submitting data, must be a valid template argument (letters, digits and <code>_</code>).
+**{{nbt|string}}{{nbt|list}}{{nbt|compound|label}}<span style="color:red;">*</span>: A [[text component]] to be displayed to the left of the input.<section end="input control common" />
+** Additional fields based on {{nbt|string|type}}, see below.
+</div>
+
+=== text ===
+A basic, single line, text input.
+
+Output values:
+* As template substitution: contents with special characters escaped using [[NBT_format#Escape_sequences|escape sequences]] to fit into an [[SNBT]] string.
+* As tag: a string tag with contents without modification.
+<div class=treeview>
+*{{nbt|compound}}: The input control
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:text</code>
+** {{Nbt inherit/dialog/input control}}
+** {{nbt|int|width}}: Value between 1 and 1024 — The width of the input. Defaults to 200.
+** {{nbt|bool|label_visible}}: Controls if the label is visible. Defaults to <code>true</code>.
+** {{nbt|string|initial}}: The initial value of the text input.
+** {{nbt|int|max_length}}: Maximum length of input. Defaults to 32.
+** {{nbt|compound|multiline}}: If present, allows users to input multiple lines, optional object with fields:
+*** {{nbt|int|max_lines}}: Optional positive integer. If present, limits maximum lines.
+*** {{nbt|int|height}}: Value between 1 and 512 — Height of input.
+</div>
+
+=== boolean ===
+A checkbox.
+
+Output values:
+* As template substitution: {{nbt|string|on_true}} when checked, {{nbt|string|on_false}} when unchecked.
+* As tag: <code>1b</code> when checked, <code>0b</code> when unchecked.
+<div class="treeview">
+*{{nbt|compound}}: The input control
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:boolean</code>
+** {{Nbt inherit/dialog/input control}}
+** {{nbt|bool|initial}}: The initial value of the checkbox. Defaults to <code>false</code> (unchecked).
+** {{nbt|string|on_true}}: The string value to send when true. Defaults to 'true'.
+** {{nbt|string|on_false}}: The string value to send when false. Defaults to 'false'.
+</div>
+
+=== single_option ===
+A preset option selection.
+<div class="treeview">
+*{{nbt|compound}}: The input control
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:single_option</code>
+** {{Nbt inherit/dialog/input control}}
+** {{nbt|bool|label_visible}}: Controls if the label is visible. Defaults to <code>true</code>.
+** {{nbt|int|width}}: Value between 1 and 1024 — The width of the input. Defaults to 200.
+** {{nbt|list|options}}<span style="color:red;">*</span>: A non-empty list of options to be selected from:
+*** {{nbt|compound|option}}: An option compound.
+**** {{nbt|string|id}}<span style="color:red;">*</span>: The value to be sent on submit.
+**** {{nbt|string}}{{nbt|list}}{{nbt|compound|display}}: A text component for what the option is displayed as.
+**** {{nbt|bool|initial}}: Only one option can have this set to <code>true</code>. If <code>true</code>, the option chosen will be the initial one. Defaults to the first option being <code>true</code>, and all others <code>false</code>.
+</div>
+
+=== number_range ===
+A number slider.
+
+Output values:
+* As template substitution: text representation of current value.
+** Whole numbers will be sent without decimal point.
+* As tag: a float tag with current value.
+<div class="treeview">
+*{{nbt|compound}}: The input control
+**{{nbt|string|type}}<span style="color:red;">*</span>: <code>minecraft:number_range</code>
+**{{Nbt inherit/dialog/input control}}
+** {{nbt|string|label_format}}: A translation key to be used for building label (first argument is contents of label field, second argument is current value). Defaults to <code>options.generic_value</code>.
+** {{nbt|int|width}}: Value between 1 and 1024 — The width of the input. Defaults to 200.
+** {{nbt|float|start}}<span style="color:red;">*</span>: The minimum number of the slider.
+** {{nbt|float|end}}<span style="color:red;">*</span>: The maximum number of the slider.
+** {{nbt|float|step}}: Step size (If present, only values of <math>initial + <any integer> * step</math> will be allowed. If absent, any value from the range is allowed).
+** {{nbt|float|initial}}: The initial increment value of the slider. Defaults to the middle of the range.
+</div>
+
+== Action format{{anchor|action_format}} ==
+=== Static action types ===
+Static actions are actions that don't depend on the value of an input field. They are identical to [[Text component format#Click events|text component events]] (except for <code>open_file</code>). They use the same format but with the <code>action</code> tag replaced with <code>type</code>.
+
+For example, when using <code>show_dialog</code>, entry for action button will look like:
+<syntaxhighlight lang="json">
+{
+    "label": "Show dialog label",
+    "action": {
+        "type": "show_dialog",
+        "dialog": "custom:my_dialog"
+    }
+}
+</syntaxhighlight>
+{{#lst:Text component format|click_events}}
+
+=== Dynamic action types ===
+Can be used in conjunction with input controls.
+==== dynamic/run_command ====
+This action will build a <code>run_command</code> event using a provided macro template (example: <code>/say $(message)</code> if you have a text input with an ID <code>message</code>)
+<div class=treeview>
+* {{nbt|compound|action}}
+** {{nbt|string|type}}: <code>dynamic/run_command</code>
+** {{nbt|string|template}}: A string with a macro template to be interpreted as a command.
+</div>
+
+==== dynamic/custom ====
+This method will build a <code>minecraft:custom</code> event using all input values.
+
+All input contents will be sent together inside a {{nbt|compound}} compound tag, with tag value of each input put under id from key field of that input.
+
+Additional static fields can be added to payload.
+<div class=treeview>
+* {{nbt|compound|action}}
+** {{nbt|string|type}}: <code>dynamic/custom</code>
+** {{nbt|compound|additions}}: Fields to be added to payload.
+** {{nbt|string|id}}: Namespaced ID.
+</div>
+
+== Dialog tag ==
+{{main|Dialog tag (Java Edition)}}
+A [[data pack]] can apply one or more dialogs to the [[pause screen]] and the {{control|quick actions}} hotkey using the {{tag link|dialog|minecraft:pause_screen_additions}} and {{tag_link|dialog|minecraft:quick_actions}} tags. If multiple dialogs are applied to the same method, the built-in <code>minecraft:custom_options</code> or <code>minecraft:quick_actions</code> dialog is shown instead which by default feature a list of all dialogs in the respective tags, using the {{nbt|string|external_title}} tag in the dialogs.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.6|dev=25w20a|Dialogs were introduced.}}
+|{{HistoryLine|||dev=25w21a|{{cd|run_command}} click actions now correctly close dialogs even if the command does not require elevated permissions.|Dialogs should now correctly return to the previous non-dialog screen on close in all cases.|If a new dialog is received by the client while warning screen is visible, it will not replace it, but when user clicks the "Back" button, the new dialog will be restored instead.|The sizes of elements in dialogs are now restricted.}}
+|{{HistoryLine|||dev=Pre-Release 1|Dialogs can now configure if they pause the game and if they close after an action is taken.|Every dialog can now have inputs and can submit information.|The {{cd|minecraft:custom}} click event has been expanded to carry full a NBT tag.|A new keybind called "Quick Actions" has been added to allow accessing content-configured dialogs.|{{cd|simple_input_form}} and {{cd|multi_action_input_form}} were removed}}
+|{{HistoryLine|||dev=Pre-Release 2|The {{cd|minecraft:text}} input control now escapes special characters in the input when used in template substitution.}}
+}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Java Edition technical|datapack}}
+[[Category:UI]]
+
+[[de:Dialogdefinition]]
+[[ja:ダイアログ]]
+[[pt:Diálogo]]
+[[ru:Диалог]]
+[[zh:对话框定义格式]]

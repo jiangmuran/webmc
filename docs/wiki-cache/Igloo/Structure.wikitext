@@ -1,0 +1,376 @@
+{{structure info}}
+==Materials==
+{| class="wikitable" data-description="Materials" style="float:left; margin-right:1em;"
+|-
+! rowspan="2" | Name
+! colspan="2" | Total
+! colspan="2" | Stack
+|-
+! with<br>basement
+! without<br>basement
+! with<br>basement
+! without<br>basement
+|-
+| {{BlockLink|Red Bed}}
+| colspan="2" | 1
+| colspan="2" |
+|-
+| {{BlockLink|Brewing Stand}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Cauldron}}
+| 1
+| 0
+|
+|
+|-
+| {{ItemLink|Water Bottle}} (to fill the cauldron)
+| 2
+| 0
+|
+|
+|-
+| {{BlockLink|Chest}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Chiseled Stone Bricks}}
+| 7
+| 0
+|
+|
+|-
+| {{BlockLink|Infested Chiseled Stone Bricks}}
+| 2
+| 0
+|
+|
+|-
+| {{BlockLink|Cobweb}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Cracked Stone Bricks}}
+| 8
+| 0
+|
+|
+|-
+| {{BlockLink|Crafting Table}}
+| colspan="2" | 1
+| colspan="2" |
+|-
+| {{BlockLink|Potted Cactus}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Furnace}}
+| colspan="2" | 1
+| colspan="2" |
+|-
+| {{BlockLink|Light Gray Carpet}}
+| colspan="2" | 3
+| colspan="2" |
+|-
+| {{BlockLink|Ice}}{{only|JE|short=1}}<br>{{BlockLink|Packed Ice}}{{only|BE|short=1}}
+| colspan="2" | 2
+| colspan="2" |
+|-
+| {{BlockLink|Iron Bars}}
+| 4
+| 0
+|
+|
+|-
+| {{BlockLink|Ladder}}
+| 22
+| 0
+|
+|
+|-
+| {{BlockLink|Mossy Stone Bricks}}
+| 17
+| 0
+|
+|
+|-
+| {{BlockLink|Infested Mossy Stone Bricks}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Polished Andesite}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Red Carpet}}
+| 2
+| 0
+|
+|
+|-
+| {{BlockLink|Redstone Torch}}
+| colspan="2" | 1
+|
+|
+|-
+| {{BlockLink|id=oak-sign|Sign}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Snow Block}}
+| 94
+| 95
+| 1 + 30 blocks
+| 1 + 31 blocks
+|-
+| {{BlockLink|Spruce Slab|title=Spruce Slab|link=Slab}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Spruce Stairs|link=Stairs}}
+| 2
+| 0
+|
+|
+|-
+| {{BlockLink|Stone}}
+| 11
+| 0
+| 
+| 
+|-
+| {{BlockLink|Stone Bricks}}
+| 176
+| 0
+| 2 + 48 blocks
+| 
+|-
+| {{BlockLink|Infested Stone Bricks}}
+| 6
+| 0
+|
+|
+|-
+|{{BlockLink|Cracked Stone Bricks}}
+| 8
+| 0
+|
+|
+|-
+| {{BlockLink|Oak Trapdoor}}
+| 1
+| 0
+|
+|
+|-
+| {{BlockLink|Torch}}
+| 3
+| 0
+|
+|
+|-
+| {{BlockLink|White Carpet}}
+| colspan="2" | 9
+|
+|
+|-
+| {{EntityLink|Villager Cleric|link=Villager}}
+| 1
+| 0
+|
+|
+|-
+| {{EntityLink|Zombie Villager Cleric|link=Zombie Villager}}
+| 1
+| 0
+| colspan="2" |
+|-
+|}
+{{-}}
+
+==Blueprint==
+{| class="wikitable"
+|-
+! Layer !! Block !! Coords !! Facing
+|-
+| -22
+| {{BlockLink|Chest}}
+| 
+| West
+|-
+| -22
+| {{BlockLink|Spruce Stairs}}
+| 
+| Flipped and Facing Slab
+|-
+| 1
+| {{BlockLink|Red Bed}}
+| 
+| South
+|-
+| 1
+| {{BlockLink|Furnace}}
+| 
+| West
+|-
+|}
+* {{IN|BE}}, 2 packed ices will generate as window instead of ice in [[Java Edition]].
+* {{IN|BE}}, the sign has nothing written on it due to a bug
+* The villager and zombie villager are both clerics.
+* Igloos without basements do not generate layer -23 to -1, and generate a snow block instead of the trapdoor in the ground layer (0).
+The sign reads:
+{{sign
+|
+|<----
+|---->
+|
+}}
+<table><tr><td style="width:250px;">
+{{layered blueprint|name=Igloo|default=Layer 1
+|A=Brewing Stand|a=EntitySprite:Zombie Villager+cleric|B=Red Bed+top foot-rot270|b=Red Bed+top head-rot270|C=Chest|D=Cauldron|E=Ice|F=Furnace|G=Light Gray Carpet|H=Chiseled Stone Bricks|I=Iron Bars|J=Cracked Stone Bricks|K=Cobweb|L=Ladder|M=Mossy Stone Bricks|N=Crafting Table|O=Stone|P=Polished Andesite|p=Potted Cactus|Q=Stone Bricks|R=Spruce Stairs|S=Snow Block|s=Oak Wall Sign|T=Torch|t=Torch-rot180|U=Oak Trapdoor|V=Redstone Torch|W=White Carpet|X=Spruce Slab|Y=Red Carpet|Z=EntitySprite:Villager+cleric
+|----Layer -23|
+       
+       
+ HQHQH 
+ QQQQQ 
+ HQHQH 
+ QQQQQ 
+ HQHQP 
+ OQOQO 
+ OJOJO 
+ OOOOO 
+|----Layer -22|
+       
+ MMMMM 
+MR    M
+MX   CM
+MR    M
+MD   YM
+M    YM
+ MIMIM 
+ QaQZQ 
+ QQQQQ 
+|----Layer -21|
+       
+ JQJQQ
+Qp L  Q
+QA    J
+J     Q
+Q     Q
+Q  s  J
+ QIJIQ 
+ Q Q Q 
+ QQQQQ 
+|----Layer -20|
+       
+ QQQQQ 
+Q tLt Q
+Q     Q
+Q     Q
+Q     Q
+Q  T KQ
+ QQQQQ 
+ Q Q Q 
+ QQQQQ 
+|----Layer -19|
+       
+  QQQ  
+ QQLQQ
+ QQQQQ
+ QQHQQ
+ QQQQQ
+ QQQQQ
+  QQQ  
+  QQQ  
+       
+|----Layer -1 to -18|
+       
+   Q   
+  QLQ
+   Q
+
+
+
+
+
+ 
+|----Layer 0 (Ground)|
+  SSS  
+ SSSSS
+SSSUSSS
+SSSSSSS
+SSSSSSS
+ SSSSS
+  SSS
+  SSS
+ 
+|----Layer 1|
+  SSS
+ SGGGS
+SbWWWNS
+EBWWWVE
+S WWWFS
+ S   S
+  S S
+  S S
+ 
+|----Layer 2|
+  SSS
+ S   S
+S     S
+S     S
+S     S
+ S   S
+  S S
+  S S
+ 
+|----Layer 3|
+   
+  SSS
+ S   S
+ S   S
+ S   S
+  SSS
+   S
+   S
+ 
+|----Layer 4|
+   
+
+  SSS
+  SSS
+  SSS
+
+
+
+ 
+}}
+</td><td style="vertical-align:top;">
+[[File:Igloo top.png|200px|right]]
+</td></tr></table>
+
+[[Category:Structure blueprints]]
+
+[[de:Anleitungen/Iglu]]
+[[fr:Igloo/Structure]]
+[[ja:イグルー/構造]]
+[[pt:Iglu/Estrutura]]
+[[uk:Іглу/Структура]]
+[[zh:雪屋/结构]]

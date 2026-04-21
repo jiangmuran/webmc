@@ -1,0 +1,377 @@
+{{outdated|edition=java}}
+{{Infobox item
+| image = Missing Model JE3.png
+| renewable = No
+| stackable = Yes (64)
+}}
+'''Invalid data value logs''' are item forms of the primary [[log]] block with damage values outside of the usual range which logs can usually be obtained in.
+
+== Obtaining ==
+Without the use of [[commands]], invalid data value logs are unobtainable in the last versions in which they existed without inheriting them from a prior version in which they were obtainable.
+
+=== Breaking ===
+Prior to 12w30d (the first version in which logs could be placed sideways), if a log block with an invalid data value exists inside of the world, it can be broken to obtain a log item of that data value.{{verify|does this work in versions before distinct log variants existed?}} Such blocks can be obtained through block transmutation, with [[mcdf:Java Edition:Block Transmutation#Liquid Transmutation|liquid transmutation]] being the most versatile.
+
+In 12w30d and 12w30e, a tool enchanted with [[Silk Touch]] can be used to obtain an invalid data value log item if a sideways log is broken with it.
+
+== Usage ==
+
+=== Placement ===
+From 12w30d{{verify}} to 14w21b, invalid data value log items will place the log corresponding to their species. The directionality of the item is ignored; the item will be placed as if it were a normal log item. This also means that "wood" items will place a log rather than wood.
+
+Attempting to place any log, regardless of data value, will immediately crash the game in 14w25a.<ref>{{bug|MC-56893}}</ref>
+
+From 14w25b to 17w46a, the pre-14w25a behavior can be seen again.
+
+=== Conversion to future versions ===
+In 1.13 (17w47a) onwards, distinguishing between block and item variants using metadata and damage was formally abolished. As a result of this, existing items would be converted over to the new ID system automatically. Invalid data value logs behave anomalously in that instead of converting to their respective parent species, they all convert to oak logs instead. In addition, items with data values 12 to 15, which represent wood rather than logs, still become logs.<ref>{{bug|MC-249700}}</ref>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100131-2156|[[Durability]] has been introduced. It can be assigned to log items via an inventory editor, but is functionally meaningless in this case.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Log items with a nonzero value set for damage now process this as a variant form of the item, rather than literal damage, resulting in the item forms now appearing distinct. The durability bar has also been removed from logs with higher damage values.}}
+|{{HistoryLine||1.7|Block transmutation is now possible, allowing for invalid data value logs to be obtained.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=?|Logs now have different tooltips for each species. All invalid data value item forms of logs are named "Oak Wood", regardless of species.}}
+|{{HistoryLine|||dev=12w30d|The block forms of invalid data value logs are now all occupied, with 4-11 representing sideways logs and 12-15 representing what would later become [[wood]]. Breaking any of these normally will now yield normal log items, however Silk Touch can still be used to access the items.}}
+|{{HistoryLine|||dev=1.3|Silk Touch can no longer be used to obtain invalid data value logs as items,<ref>Old issues page on the wiki: [[Minecraft Wiki:Issues/Weekly 12w30e#Bugs 3]]</ref> making them unobtainable in survival from this point onwards.}}
+|{{HistoryLine||1.8|dev=14w17a|Invalid data value logs with damage value 4 are now named "Acacia Wood", and damage value 5 is now named "Dark Oak Wood", despite the real blocks these are named after using a completely separate ID.}}
+|{{HistoryLine|||dev=14w25a|{{pximg|Missing Model (inventory) JE1.png|32px}} With the introduction of data-driven item models, any item with a data value outside of what is accepted by the game has no model to point to, resulting in use of the [[Missing textures and models|missing item model]].}}
+|{{HistoryLine|||dev=14w30a|Invalid data value logs, alongside other invalid data value items, now appear the size of a full block when held in third person or by another player or mob.}}
+|{{HistoryLine||1.9|dev=15w31a|{{pximg|Missing Model (inventory) JE2.png|32px}} The missing model's inventory appearance has changed, resulting in the appearance of invalid data value logs also changing.
+|The items also appear the size of a full block when held in first person and when dropped on the ground, and also appear larger than before in an [[item frame]].}}
+|{{HistoryLine||1.13|dev=17w43a|{{pximg|Missing Model (inventory) JE3.png|32px}} The missing texture has changed, resulting in the appearance of invalid data value logs also changing.}}
+|{{HistoryLine|||dev=17w47a|Numeric IDs for blocks and items have been completely removed from the game, with different species of logs being given their own string IDs. As a result, invalid data value logs have been "removed" as any such item now converts cleanly into oak logs.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{info needed section|If placed log blocks with metadata 7, 11, 12, 13, 14 or 15 were brought into existence, then broken, would they also drop their direct item equivalent, even if the blocks were not normally obtainable?}}
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.8.0|dev=build 1|With the introduction of rotatable logs, damage values 4–6 and 8–10 were legitimately obtainable by mining their respective block forms.<ref>{{bug|MCPE-5781||When you place a sideways wood block, destroy, and pick it up, it shows up as its own item. When you try to craft with it, it crashes the game. (Survival only)|Fixed}}</ref>}}
+|{{HistoryLine|||dev=build 3|Mining invalid data value logs now yields normal log items.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||?|Invalid data value log items can be obtained through block transmutation.}}
+|{{HistoryLine||?<!--most likely TU12/1.00-->|Invalid data value logs in item form now appear "rotated" like in Java Edition between 12w30d and 14w08a. In Xbox 360 Edition, this is the appearance that is adopted in placed form; PlayStation 3 Edition instead has glitchy textures for the placed variants. See [[Log/Asset history#Legacy Console Edition]] and [[Wood/Asset history#Legacy Console Edition]] for more information.}}
+|{{HistoryLine||?<!--most likely TU14/1.04-->|Rotated logs have now been properly implemented; invalid data value log items are no longer dropped when breaking blocks corresponding to those data values.}}
+}}
+; Inventory appearances
+{| class="wikitable pixel-image" style="text-align:center"
+! colspan="2" rowspan="2" | From version
+! colspan="12" | Damage value
+! rowspan="2" | Notes
+|-
+! 4
+! 5
+! 6
+! 7
+! 8
+! 9
+! 10
+! 11
+! 12
+! 13
+! 14 
+! 15
+|-
+! rowspan="3" | [[Java Edition Indev 0.31|0.31]]
+! [[Java Edition Indev 0.31 20100131|20100131]]{{verify|we know more about version gaps now}}
+| [[File:Log 4 (inventory) JE1.png|32px]]
+| [[File:Log 5 (inventory) JE1.png|32px]]
+| [[File:Log 6 (inventory) JE1.png|32px]]
+| [[File:Log 7 (inventory) JE1.png|32px]]
+| [[File:Log 8 (inventory) JE1.png|32px]]
+| [[File:Log 9 (inventory) JE1.png|32px]]
+| [[File:Log 10 (inventory) JE1.png|32px]]
+| [[File:Log 11 (inventory) JE1.png|32px]]
+| [[File:Log 12 (inventory) JE1.png|32px]]
+| [[File:Log 13 (inventory) JE1.png|32px]]
+| [[File:Log 14 (inventory) JE1.png|32px]]
+| [[File:Log 15 (inventory) JE1.png|32px]]
+| style="text-align:left" | Durability introduced. Currently meaningless for logs.
+|-
+! [[Java Edition Indev 0.31 20100201-2227|20100201-2227]]{{verify|we know more about version gaps now}}
+| [[File:Log 4 (inventory) JE2.png|32px]]
+| [[File:Log 5 (inventory) JE2.png|32px]]
+| [[File:Log 6 (inventory) JE2.png|32px]]
+| [[File:Log 7 (inventory) JE2.png|32px]]
+| [[File:Log 8 (inventory) JE2.png|32px]]
+| [[File:Log 9 (inventory) JE2.png|32px]]
+| [[File:Log 10 (inventory) JE2.png|32px]]
+| [[File:Log 11 (inventory) JE2.png|32px]]
+| [[File:Log 12 (inventory) JE2.png|32px]]
+| [[File:Log 13 (inventory) JE2.png|32px]]
+| [[File:Log 14 (inventory) JE2.png|32px]]
+| [[File:Log 15 (inventory) JE2.png|32px]]
+| style="text-align:left" | All 3D items now appear slightly darker on the left.
+|-
+! {{info needed|it's before 0206 but after 0202}}
+| [[File:Log 4 (inventory) JE3.png|32px]]
+| [[File:Log 5 (inventory) JE3.png|32px]]
+| [[File:Log 6 (inventory) JE3.png|32px]]
+| [[File:Log 7 (inventory) JE3.png|32px]]
+| [[File:Log 8 (inventory) JE3.png|32px]]
+| [[File:Log 9 (inventory) JE3.png|32px]]
+| [[File:Log 10 (inventory) JE3.png|32px]]
+| [[File:Log 11 (inventory) JE3.png|32px]]
+| [[File:Log 12 (inventory) JE3.png|32px]]
+| [[File:Log 13 (inventory) JE3.png|32px]]
+| [[File:Log 14 (inventory) JE3.png|32px]]
+| [[File:Log 15 (inventory) JE3.png|32px]]
+| style="text-align:left" | All 3D items now appear much brighter.
+|-
+! [[Minecraft Infdev]]
+! [[Java Edition Infdev 20100611|20100611]]
+| [[File:Log 4 (inventory) JE4.png|32px]]
+| [[File:Log 5 (inventory) JE4.png|32px]]
+| [[File:Log 6 (inventory) JE4.png|32px]]
+| [[File:Log 7 (inventory) JE4.png|32px]]
+| [[File:Log 8 (inventory) JE4.png|32px]]
+| [[File:Log 9 (inventory) JE4.png|32px]]
+| [[File:Log 10 (inventory) JE4.png|32px]]
+| [[File:Log 11 (inventory) JE4.png|32px]]
+| [[File:Log 12 (inventory) JE4.png|32px]]
+| [[File:Log 13 (inventory) JE4.png|32px]]
+| [[File:Log 14 (inventory) JE4.png|32px]]
+| [[File:Log 15 (inventory) JE4.png|32px]]
+| style="text-align:left" | All 3D items now appear slightly darker.
+|-
+! colspan="2" | [[Java Edition Alpha v1.0.1|Alpha v1.0.1]]
+| [[File:Log 4 (inventory) JE5.png|32px]]
+| [[File:Log 5 (inventory) JE5.png|32px]]
+| [[File:Log 6 (inventory) JE5.png|32px]]
+| [[File:Log 7 (inventory) JE5.png|32px]]
+| [[File:Log 8 (inventory) JE5.png|32px]]
+| [[File:Log 9 (inventory) JE5.png|32px]]
+| [[File:Log 10 (inventory) JE5.png|32px]]
+| [[File:Log 11 (inventory) JE5.png|32px]]
+| [[File:Log 12 (inventory) JE5.png|32px]]
+| [[File:Log 13 (inventory) JE5.png|32px]]
+| [[File:Log 14 (inventory) JE5.png|32px]]
+| [[File:Log 15 (inventory) JE5.png|32px]]
+| style="text-align:left" | All 3D items now appear very slightly darker.
+|-
+! colspan="2" | [[Java Edition Beta 1.2|Beta 1.2]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| [[File:Oak Log (inventory) JE8.png|32px]]
+| style="text-align:left" | Values for damage on logs are now processed as variants. The durability bar has been removed.
+|-
+! [[Java Edition Beta 1.6|Beta 1.6]]
+! [[Java Edition Beta 1.6 Test Build 3|Test Build 3]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| [[File:Oak Log (inventory) JE9.png|32px]]
+| style="text-align:left" | All 3D items now appear much brighter and are rotated 90 degrees clockwise from their previous positions.
+|-
+! [[Java Edition Beta 1.8|Beta 1.8]]
+! [[Java Edition Beta 1.8 Pre-release|Pre-release]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| [[File:Oak Log (inventory) JE10.png|32px]]
+| style="text-align:left" | All 3D items now appear even brighter than previously, with almost no shading.
+|-
+! [[Java Edition 1.0.0|1.0.0]]
+! [[Java Edition RC2|RC2]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| [[File:Oak Log (inventory) JE11.png|32px]]
+| style="text-align:left" | All 3D items are now shaded more reasonably.
+|-
+! rowspan="2" | [[Java Edition 1.3.1|1.3.1]]
+! [[Java Edition 12w22a|12w22a]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| [[File:Oak Log (inventory) JE12.png|32px]]
+| style="text-align:left" | Most 3D items in the inventory have been rotated 90 degrees anti-clockwise.
+|-
+! [[Java Edition 12w30d|12w30d]]
+| [[File:Log 4 (inventory) JE11.png|32px]]
+| [[File:Log 5 (inventory) JE11.png|32px]]
+| [[File:Log 6 (inventory) JE11.png|32px]]
+| [[File:Log 7 (inventory) JE11.png|32px]]
+| [[File:Log 8 (inventory) JE11.png|32px]]
+| [[File:Log 9 (inventory) JE11.png|32px]]
+| [[File:Log 10 (inventory) JE11.png|32px]]
+| [[File:Log 11 (inventory) JE11.png|32px]]
+| [[File:Log 12 (inventory) JE11.png|32px]]
+| [[File:Log 13 (inventory) JE11.png|32px]]
+| [[File:Log 14 (inventory) JE11.png|32px]]
+| [[File:Log 15 (inventory) JE11.png|32px]]
+| style="text-align:left" | Log items now represent their rotation. The individual textures do not appear rotated.
+|-
+! [[Java Edition 1.4.2|1.4.2]]
+! [[Java Edition 12w34a|12w34a]]
+| [[File:Log 4 (inventory) JE12.png|32px]]
+| [[File:Log 5 (inventory) JE12.png|32px]]
+| [[File:Log 6 (inventory) JE12.png|32px]]
+| [[File:Log 7 (inventory) JE12.png|32px]]
+| [[File:Log 8 (inventory) JE12.png|32px]]
+| [[File:Log 9 (inventory) JE12.png|32px]]
+| [[File:Log 10 (inventory) JE12.png|32px]]
+| [[File:Log 11 (inventory) JE12.png|32px]]
+| [[File:Log 12 (inventory) JE12.png|32px]]
+| [[File:Log 13 (inventory) JE12.png|32px]]
+| [[File:Log 14 (inventory) JE12.png|32px]]
+| [[File:Log 15 (inventory) JE12.png|32px]]
+| style="text-align:left" | Items appeared slightly darker in the player's inventory than in chests prior to this version.
+|-
+! [[Java Edition 1.7.2|1.7.2]]
+! [[Java Edition 1.7|1.7]]
+| [[File:Log 4 (inventory) JE12.png|32px]]
+| [[File:Log 5 (inventory) JE13.png|32px]]
+| [[File:Log 6 (inventory) JE13.png|32px]]
+| [[File:Log 7 (inventory) JE13.png|32px]]
+| [[File:Log 8 (inventory) JE12.png|32px]]
+| [[File:Log 9 (inventory) JE13.png|32px]]
+| [[File:Log 10 (inventory) JE13.png|32px]]
+| [[File:Log 11 (inventory) JE13.png|32px]]
+| [[File:Log 12 (inventory) JE12.png|32px]]
+| [[File:Log 13 (inventory) JE12.png|32px]]
+| [[File:Log 14 (inventory) JE12.png|32px]]
+| [[File:Log 15 (inventory) JE12.png|32px]]
+| style="text-align:left" | Birch, spruce and jungle logs have now been given unique inside textures.
+|-
+! rowspan="3" | [[Java Edition 1.8|1.8]]
+! [[Java Edition 14w10a|14w10a]]
+| [[File:Log 4 (inventory) JE13.png|32px]]
+| [[File:Log 5 (inventory) JE14.png|32px]]
+| [[File:Log 6 (inventory) JE14.png|32px]]
+| [[File:Log 7 (inventory) JE14.png|32px]]
+| [[File:Log 8 (inventory) JE13.png|32px]]
+| [[File:Log 9 (inventory) JE14.png|32px]]
+| [[File:Log 10 (inventory) JE14.png|32px]]
+| [[File:Log 11 (inventory) JE14.png|32px]]
+| [[File:Oak Log (texture) JE2 BE1.png|32px]]
+| [[File:Spruce Log (texture) JE1 BE1.png|32px]]
+| [[File:Birch Log (texture) JE1 BE1.png|32px]]
+| [[File:Jungle Log (texture) JE1 BE1.png|32px]]
+| style="text-align:left" | Logs appear properly rotated, however the lighting is also rotated. 12-15 are now 2D.
+|-
+! [[Java Edition 14w10b|14w10b]]
+| [[File:Log 4 (inventory) JE13.png|32px]]
+| [[File:Log 5 (inventory) JE14.png|32px]]
+| [[File:Log 6 (inventory) JE14.png|32px]]
+| [[File:Log 7 (inventory) JE14.png|32px]]
+| [[File:Log 8 (inventory) JE13.png|32px]]
+| [[File:Log 9 (inventory) JE14.png|32px]]
+| [[File:Log 10 (inventory) JE14.png|32px]]
+| [[File:Log 11 (inventory) JE14.png|32px]]
+| [[File:Log 12 (inventory) JE12.png|32px]]
+| [[File:Log 13 (inventory) JE12.png|32px]]
+| [[File:Log 14 (inventory) JE12.png|32px]]
+| [[File:Log 15 (inventory) JE12.png|32px]]
+| style="text-align:left" | 12-15 now appear 3D again.
+|-
+! [[Java Edition 14w25a|14w25a]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| [[File:Missing Model (inventory) JE1.png|32px]]
+| style="text-align:left" | [[Missing model|Model no longer exists]]
+|-
+! [[Java Edition 1.9|1.9]]
+! [[Java Edition 15w31a|15w31a]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| [[File:Missing Model (inventory) JE2.png|32px]]
+| style="text-align:left" | The missing model is no longer rotated or downscaled.
+|-
+! [[Java Edition 1.13|1.13]]
+! [[Java Edition 17w43a|17w43a]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| [[File:Missing Model (inventory) JE3.png|32px]]
+| style="text-align:left" | The missing texture has changed.
+|}
+
+== Issues ==
+Invalid data value logs ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [[mcdf:Java Edition:Invalid Data Value Log (Item)|Invalid Data Value Log]] at the ''Minecraft Discontinued Features'' wiki
+
+
+== Navigation ==
+{{Navbox IDV items}}

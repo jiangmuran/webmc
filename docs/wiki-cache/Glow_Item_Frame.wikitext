@@ -1,0 +1,221 @@
+{{for|the normal variant|Item Frame}}
+{{infobox
+| image = Glow Item Frame.png
+| invimage = Glow Item Frame
+| extratext = [[#Renders|View all renders]]
+| rows = 
+{{infobox row|[[Rarity|Rarity tier]]|Common}}
+{{infobox row|[[Renewable resource|Renewable]]|Yes}}
+{{infobox row|Stackable|Yes (64)}}
+{{infobox row|Tool|Any{{only|be|short=1}}}}
+{{infobox row|Drops|{{ItemLink|Glow Item Frame}} (1)<br>{{EnvSprite|items}} The item it contains.}}
+{{infobox row|[[Explosion#Blast resistance|Blast resistance]]|0.25{{only|be|short=1}}}}
+{{infobox row|[[Breaking#Blocks by hardness|Hardness]]|0.25{{only|be|short=1}}}}
+{{infobox row|[[Light|Luminous]]|No{{only|be|short=1}}}}
+{{infobox row|[[Opacity|Transparent]]|Yes{{only|be|short=1}}}}
+{{infobox row|[[Waterlogging|Waterloggable]]|Yes{{only|be|short=1}}}}
+{{infobox row|[[Flammable]]|No{{only|be|short=1}}}}
+{{infobox row|Catches fire from [[lava]]|No{{only|be|short=1}}}}
+}}
+A '''glow item frame''' is an [[entity]]{{only|JE}} or [[block]]{{only|Bedrock}} that keeps itself and the item inside it, illuminated, even in the dark.
+
+== Obtaining ==
+=== Breaking ===
+{{IN|java}}, because the glow item frame is an [[entity]], it can be broken by simply punching it, even in [[Adventure]] mode. It is also targeted by commands using the {{cd|@e}} selector.
+{{IN|bedrock}}, no tool can accelerate the breaking process of the glow item frame.
+{{breaking row|Glow Item Frame|horizontal=1}}
+Glow item frame drops itself when it's destroyed.
+If the glow item frame contains an item, punching it drops the item, leaving the frame.
+
+=== Crafting ===
+{{Crafting
+| Glow Ink Sac
+| Item Frame
+| Output = Glow Item Frame
+| type = Decoration block
+}}
+
+== Usage ==
+{{main|Item Frame#Usage}}
+Glow item frames have the same properties, usage, and rotation functionalities as regular [[item frame]]s. 
+<!--{{:Item Frame}}-->
+
+=== Unique properties ===
+[[File:Item Frames Comparison.png|thumb|260px|Comparison between ordinary item frame and glow item frame in the dark.]]
+
+When an item is placed inside a glow item frame, it appears to glow, though it does not emit any [[light level]].
+
+== Sounds ==
+Glow item frames share the same sounds as item frames.
+
+=== Generic ===
+{{Edition|Bedrock}}:<!--Item frames are blocks in BE, so they get the generic section.-->
+{{Sound table/Block/Item frame/BE}}
+
+=== Unique ===
+{{:Item Frame/Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Glow Item Frame
+|spritetype=item
+|nameid=glow_item_frame
+|form=item
+|foot=1
+}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Glow Item Frame
+|spritetype=entity
+|nameid=glow_item_frame
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Glow Item Frame
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Item
+|spritename=glow-item-frame
+|spritetype=item
+|nameid=glow_frame
+|id=623
+|form=item
+}}
+{{ID table2
+|displayname=Block
+|spritename=glow-item-frame
+|spritetype=block
+|nameid=glow_frame
+|form=block
+|id=594
+|itemform=item.glow_frame
+|foot=1
+}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=glow-item-frame
+|spritetype=block
+|nameid=GlowItemFrame
+|foot=1
+}}
+
+=== Block states ===
+{{see also|Block states}}
+{{info needed section|{{IN|Java}}, there appears to be some internal block states for glow item frames, as suggested by the contents of {{code|assets/minecraft/blockstates/glow_item_frame.json}}}}
+
+{{el|je}}:<br>
+Despite being an [[entity]] in ''Java Edition'', item frames utilize block states internally.
+{{bst|map|false|false,true|If this item frame contains a map.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|facing_direction|0
+|5|East facing item frame|Unsupported
+|4|West facing item frame|Unsupported
+|3|South facing item frame|Unsupported
+|2|North facing item frame|Unsupported
+|1|Up facing item frame|Unsupported
+|0|Down facing item frame|Unsupported}}
+{{bst|item_frame_map_bit|false|false,true|If this item frame contains a map.|Unsupported}}
+{{bst|item_frame_photo_bit|false|false,true|If this item frame contains a [[photo]].|Unsupported|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/entity_data}} Unlike spawn eggs, cannot change the type of entity created using the <code>id</code> tag. Data that item frames do not normally use (see below) has no effect.
+</div>
+
+=== Entity data ===
+{{main|Entity format}}
+
+{{IN|java}}, glow item frames have entity data that define various properties of the entity.
+
+{{#lst:Item Frame|entity data}}
+
+=== Block data ===
+{{IN|bedrock}}, a glow item frame has a block entity associated with it that holds additional data about the block.
+
+See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+{{See technical block}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w03a|[[File:Glow Item Frame JE1 BE3.png|32px]] [[File:Glow Item Frame (map) JE1 BE3.png|32px]] [[File:Glow Item Frame (item) JE1 BE1.png|32px]] Added glow item frames.}}
+|{{HistoryLine|||dev=21w10a|Added new [[subtitles]] for glow item frames.}}
+|{{HistoryLine||1.18|dev=21w41a|[[File:Glow Item Frame (item) JE2.png|32px]] The textures of glow item frames as item have been changed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.59|[[File:Glow Item Frame (item) JE1 BE1.png|32px]] Added glow item frames.
+|Has the default item frame block texture.}}
+|{{HistoryLine|||dev=beta 1.16.210.60|Temporarily removed glow item frames due to a crash.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.50|[[File:Glow Item Frame (item) JE1 BE1.png|32px]] Re-added glow item frames.}}
+|{{HistoryLine|||dev=beta 1.16.220.52|[[File:Glow Item Frame BE2.png|32px]] [[File:Glow Item Frame (map) BE2.png|32px]] Glow item frame block texture uses update block texture due to a bug.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.52|[[File:Item Frame.png|32px]] [[File:Item Frame (map) JE2 BE2.png|32px]] The glow item frame block textures have been reverted back to the previous one.}}
+|{{HistoryLine|||dev=beta 1.17.0.50|[[File:Glow Item Frame JE1 BE3.png|32px]] [[File:Glow Item Frame (map) JE1 BE3.png|32px]] The textures of glow item frames have been changed to match ''Java Edition''.
+|Now produces [[redstone]] signals.}}
+|{{HistoryLine|||dev=beta 1.17.0.52|Maps now glow in glow item frames.
+|Glow Item Frames are no longer available only through [[Experimental Gameplay]].}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.20|[[File:Glow Item Frame (item) JE2.png|32px]] The textures of glow item frames as item have been changed.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Glow Item Frame.png|Glow item frame.
+Glow Item Frame (map).png|Glow item frame texture, used when there is a map inside.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Big skills right there.png|A glow item frame inside a glow item frame.
+</gallery>
+
+== See also ==
+* {{ItemLink|Item Frame}}
+* {{ItemLink|Painting}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Storage]]
+[[Category:Readable by comparators]]
+[[Category:Stationary entities]]
+[[Category:Renewable resources]]
+[[Category:Stackable resources]]
+[[Category:Non-solid blocks]]
+[[Category:Missing blast resistance]]
+[[Category:Missing hardness]]
+
+[[es:Marco luminoso]]
+[[fr:Cadre luisant]]
+[[ko:발광 아이템 액자]]
+[[pt:Moldura Brilhante]]
+[[uk:Сяйна рамка для предметів]]

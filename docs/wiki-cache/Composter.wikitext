@@ -1,0 +1,556 @@
+{{Infobox block
+| group = Empty
+| 1-1= Composter (level 0).png
+| 1-2= Composter (level 0) BE.png
+| group2 = Full
+| 2-1= Composter (level 8).png
+| 2-2= Composter (level 8) BE.png
+| *-1caption={{JE}}
+| *-2caption={{BE}}
+| extratext = [[#Renders|View all renders]]
+| transparent = Yes
+| light = No
+| tool = Axe
+| renewable = Yes
+|waterloggable = {{jebe|No|Yes}}
+| stackable = Yes (64)
+| flammable = Yes (5)
+| lavasusceptible = Yes
+}}
+A '''composter''' is a [[block]] that converts some biological material into [[bone meal]]. It also serves as a [[farmer]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+Composters can be broken using any [[tool]], though an [[axe]] is the fastest. The composter does not retain the compost inside; instead, it drops empty.
+{{breaking row|horizontal=1|Composter|axe}}
+
+=== Natural generation ===
+Composters generate in [[village]] farms. They can also generate in [[trail ruins]].
+
+=== Crafting ===
+{{Crafting
+|A1=Any Wooden Slab
+|A2=Any Wooden Slab
+|C1=Any Wooden Slab
+|C2=Any Wooden Slab
+|A3=Any Wooden Slab
+|B3=Any Wooden Slab
+|C3=Any Wooden Slab
+|Output = Composter
+|type = Decoration block
+}}
+
+== Usage ==
+Composters can be used to recycle a selection of [[food]] and plant [[item]]s into [[bone meal]]. To do so, the [[player]] must {{ctrl|use}} any of a selection of items on the composter. When an adjacent [[comparator]] is facing away from the composter, a comparator signal strength of up to 8 is emitted depending on the fullness of the [[block]].
+
+Composters appear to have an empty interior. As such, [[entities]] can enter and exit a composter through the top, but not the sides or bottom. The composter has a "floor", whose height depends on the fullness. When the composter is completely empty, this floor is slightly above the block below, and when it is completely full, there is a slight dip on top. {{IN|be}}, when the composter’s fullness increases, any [[Entity|entities]] inside are pushed up accordingly.
+
+=== Composting ===
+The composter can be filled with compost, which is done by adding compostable [[item]]s to it. When successfully adding an item, a green [[particle]] ([[File:Glint (texture) JE1 BE1.png|25px]]) appears. The table below lists supported items, which have different composting chances. The higher the percentage of an item, the more likely it is for it to add another layer of compost. However, when the composter is empty, any compostable item added always creates the first layer of compost, regardless of its usual composting chance.<ref>{{bug|MC-196452}}</ref> Each layer of compost has a [[podzol]]-like appearance. When the composter reaches the 7th layer of compost and once {{convert|20|gt|s}} have passed, the compost changes appearance indicating that [[bone meal]] can be collected by {{ctrl|using}} the composter a final time or by breaking the composter.
+
+The following table shows the [[item]]s that can be used in a composter, the percent chance for an item to add a level of compost, and the average number of items needed to fill a composter. Smaller pieces (individual pieces of wheat, melon slices, etc.) produce more compost than the blocks or other items that can be made from them. The exception is cookies, because each recipe produces 8 cookies, and together those give more than 3 times the compost.
+
+Despite being plants, it is not possible to compost [[bamboo]],<ref>{{bug|MC-142452|||WAI}}</ref> [[dead bush]]es,<ref>{{bug|MC-219904}}</ref> [[poisonous potato]]es,<ref>{{bug|MC-142373|||WAI}}</ref> [[chorus plant]] products,<ref>{{bug|MC-182287|||WAI}}</ref> and [[golden]] plant items.<ref>{{bug|MC-306023|||WAI}}</ref> [[Meat]] items, [[fish]], and [[bone]]s are also not compostable.<ref>{{citation|author=Duncan Geere |date=23 March 2023 |title=Block of the Month: Composter |url=https://www.minecraft.net/en-us/article/block-month--composter |website=Minecraft.net |quote=Most food and plant-based items can be composted, with the notable exception of bamboo (too fibrous), poisonous potatoes (too poisonous), dead bushes (too dead), and meat and fish (too stinky as it rots).}}</ref>
+
+{{ctrl|Using}} with a composter while holding a [[debug stick]] will raise the level by 1, and the debug stick is not consumed.
+
+{| class="wikitable"
+! colspan="6" | Composting chance (per item)
+|-
+| style="text-align:center" | 30%
+| style="text-align:center" | 50%
+| style="text-align:center" | 65%
+| style="text-align:center" | 85%
+| style="text-align:center" | 100%
+|-
+! colspan="6" | Items
+|-
+| style="vertical-align:top" |
+* {{ItemLink|Beetroot Seeds}}
+* {{BlockLink|Bush}}
+* {{BlockLink|Cactus Flower}}
+* {{ItemLink|Dried Kelp}}
+* {{BlockLink|Firefly Bush}}
+* {{ItemLink|Glow Berries}}
+* {{BlockLink|Grass Block}}{{only|bedrock|short=1}}<ref>{{bug|MCPE-140266}}</ref>
+* {{BlockLink|Hanging Roots}}
+* {{ItemLink|Kelp}}
+* {{BlockLink|Leaves|id=oak leaves}}
+* {{BlockLink|Leaf Litter|id=leaf litter}}
+* {{BlockLink|Mangrove Propagule}}
+* {{BlockLink|Mangrove Roots}}
+* {{ItemLink|Melon Seeds}}
+* {{BlockLink|Moss Carpet}}
+* {{BlockLink|Pale Hanging Moss}}
+* {{BlockLink|Pale Moss Carpet}}
+* {{BlockLink|Pink Petals}}
+* {{ItemLink|Pitcher Pod}}
+* {{ItemLink|Pumpkin Seeds}}
+* {{BlockLink|Saplings}}
+* {{BlockLink|Seagrass}}
+* {{BlockLink|Short Grass}}
+* {{BlockLink|Short Dry Grass}}
+* {{BlockLink|Small Dripleaf}}
+* {{ItemLink|Sweet Berries}}
+* {{BlockLink|Tall Dry Grass}}
+* {{ItemLink|Torchflower Seeds}}
+* {{ItemLink|Wheat Seeds}}
+* {{BlockLink|Wildflowers}}
+
+| style="vertical-align:top" |
+* {{BlockLink|Cactus}}
+* {{BlockLink|Dried Kelp Block}}
+* {{BlockLink|Flowering Azalea Leaves}}
+* {{BlockLink|Glow Lichen}}
+* {{ItemLink|Melon Slice}}
+* {{BlockLink|Nether Sprouts}}
+* {{ItemLink|Sugar Cane}}
+* {{BlockLink|Tall Grass}}
+* {{BlockLink|id=twisting-vines-plant|Twisting Vines}}
+* {{BlockLink|Vines}}
+* {{BlockLink|id=weeping-vines-plant|Weeping Vines}}
+
+| style="vertical-align:top" |
+* {{ItemLink|Apple}}
+* {{BlockLink|Azalea}}
+* {{ItemLink|Beetroot}}
+* {{BlockLink|Big Dripleaf}}
+* {{ItemLink|Carrot}}
+* {{ItemLink|Cocoa Beans}}
+* {{BlockLink|Fern}}
+* {{BlockLink|Flowers}}
+* {{BlockLink|Large Fern}}
+* {{BlockLink|Lily Pad}}
+* {{BlockLink|Melon}}
+* {{BlockLink|Moss Block}}
+* {{BlockLink|Mushrooms}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Nether Fungi}}
+* {{ItemLink|Nether Wart}}
+* {{BlockLink|Pale Moss Block}}
+* {{ItemLink|Potato}}
+* {{BlockSprite|pumpkin|link=Pumpkin}} {{BlockLink|id=carved-pumpkin|Pumpkin|Pumpkins}}
+* {{BlockLink|Crimson Roots}}
+* {{BlockLink|Warped Roots}}
+* {{BlockLink|Sea Pickle}}
+* {{BlockLink|Shroomlight}}
+* {{BlockLink|Spore Blossom}}
+* {{ItemLink|Wheat}}
+* {{BlockLink|Wither Rose}}
+
+| style="vertical-align:top" |
+* {{ItemLink|Baked Potato}}
+* {{ItemLink|Bread}}
+* {{ItemLink|Cookie}}
+* {{BlockLink|Flowering Azalea}}
+* {{BlockLink|Hay Bale}}
+* {{BlockLink|Mushroom Blocks|link=Mushroom Block}}
+* {{BlockLink|Nether Wart Block}}
+* {{BlockLink|Pitcher Plant}}
+* {{BlockLink|Torchflower}}
+* {{BlockLink|Warped Wart Block}}
+
+| style="vertical-align:top" |
+* {{BlockLink|Cake}}
+* {{ItemLink|Pumpkin Pie}}
+|-
+! colspan="6" | Average number of items to complete compost<ref group="note" name=":0">Values for "average number of items to complete compost" and "average compost yield" do not align with composting chance because the first layer always fills ({{bug|MC-196452}}).</ref>
+|-
+| style="text-align:center" | 21.00
+| style="text-align:center" | 13.00
+| style="text-align:center" | 10.23 ({{frac|133|13}})
+| style="text-align:center" | 8.06 ({{frac|137|17}})
+| style="text-align:center" | 7.00
+|-
+! colspan="6" | Average compost yield (per stack of 64)<ref name=":0" group="note" />
+|-
+| style="text-align:center" | 3.05 ({{frac|64|21}}) {{ItemSprite|Bone Meal|link=Bone Meal}}
+| style="text-align:center" | 4.92 ({{frac|64|13}}) {{ItemSprite|Bone Meal|link=Bone Meal}}
+| style="text-align:center" | 6.26 ({{frac|832|133}}) {{ItemSprite|Bone Meal|link=Bone Meal}}
+| style="text-align:center" | 7.94 ({{frac|1088|137}}) {{ItemSprite|Bone Meal|link=Bone Meal}}
+| style="text-align:center" | 9.14 ({{frac|64|7}}) {{ItemSprite|Bone Meal|link=Bone Meal}}
+|}
+
+=== Profession ===
+{{main|Job site block}}
+If a composter has not been claimed by a [[villager]], any nearby unemployed villager has a chance to change their profession to farmer and claim the composter as their [[job site block]]. Also, [[farmer]]s can use composter to compost, and use the derived [[bone meal]] to grow crops.
+
+=== Redstone component ===
+{{see also|Redstone circuit}}
+
+A composter can act as a power source for a [[redstone comparator]]. With a composter behind it (either directly, or separated by an unpowered solid [[block]]), a comparator outputs a signal strength between 0 and 8, proportional to how full the composter is: 0 for empty, 1 for {{frac|1|7}} full, 2 for {{frac|2|7}} full, and so on to 6. 7 is for completely full but the [[bone meal]] is not ready to collect, and 8 for completely full and the bone meal is ready to collect.
+
+=== Hoppers ===
+Composters can interact with [[hopper]]s. A hopper directly below a composter pulls [[bone meal]] from it. A hopper or dropper facing downward directly above a composter pushes [[item]]s into it. See {{slink|Hopper|Redstone component}} for more details.
+
+Hoppers cannot interact with the sides of a composter.
+
+=== Fuel ===
+A composter can be used as [[fuel]] in a [[furnace]] to smelt 1.5 [[item]]s.
+
+=== Note blocks ===
+Composters can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{el|je}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Composter empty1.ogg
+|sound2=Composter empty2.ogg
+|sound3=Composter empty3.ogg
+|subtitle=Composter empties
+|source=block
+|description=When a composter is emptied
+|id=block.composter.empty
+|translationkey=subtitles.block.composter.empty
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Composter fill1.ogg
+|sound2=Composter fill2.ogg
+|sound3=Composter fill3.ogg
+|sound4=Composter fill4.ogg
+|subtitle=Composter filled
+|source=block
+|description=When adding to a composter
+|id=block.composter.fill
+|translationkey=subtitles.block.composter.fill
+|volume=0.3
+|pitch=0.8
+|distance=16}}
+| {{SoundLine
+|sound=Composter fill success1.ogg
+|sound2=Composter fill success2.ogg
+|sound3=Composter fill success3.ogg
+|sound4=Composter fill success4.ogg
+|subtitle=Composter filled
+|source=block
+|description=When successfully adding to a composter
+|id=block.composter.fill_success
+|translationkey=subtitles.block.composter.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Composter ready1.ogg
+|sound2=Composter ready2.ogg
+|sound3=Composter ready3.ogg
+|sound4=Composter ready4.ogg
+|subtitle=Composter composts
+|source=block
+|description=When composting completes
+|id=block.composter.ready
+|translationkey=subtitles.block.composter.ready
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Composter fill1.ogg
+|sound2=Composter fill2.ogg
+|sound3=Composter fill3.ogg
+|sound4=Composter fill4.ogg
+|subtitle=Farmer works
+|source=neutral
+|description=Randomly while a farmer is working
+|id=entity.villager.work_farmer
+|translationkey=subtitles.entity.villager.work_farmer
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Composter empty1.ogg
+|sound2=Composter empty2.ogg
+|sound3=Composter empty3.ogg
+|source=block
+|description=When a composter is emptied
+|id=block.composter.empty
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Composter fill1.ogg
+|sound2=Composter fill2.ogg
+|sound3=Composter fill3.ogg
+|sound4=Composter fill4.ogg
+|source=block
+|description=When adding to a composter
+|id=block.composter.fill
+|volume=1.3
+|pitch=0.8}}
+| {{SoundLine
+|sound=Bonemeal1.ogg
+|sound2=Bonemeal2.ogg
+|sound3=Bonemeal3.ogg
+|sound4=Bonemeal4.ogg
+|sound5=Bonemeal5.ogg
+|source=block
+|description=When adding to a composter <ref group=sound>{{Bug|MCPE-143005}}</ref>
+|id=item.bone_meal.use
+|volume=1.0
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Composter fill success1.ogg
+|sound2=Composter fill success2.ogg
+|sound3=Composter fill success3.ogg
+|sound4=Composter fill success4.ogg
+|source=block
+|description=When successfully adding to a composter
+|id=block.composter.fill_success
+|volume=1.3
+|pitch=1.0}}
+| {{SoundLine
+|sound=Composter ready1.ogg
+|sound2=Composter ready2.ogg
+|sound3=Composter ready3.ogg
+|sound4=Composter ready4.ogg
+|source=block
+|description=When composting completes
+|id=block.composter.ready
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Composter fill1.ogg
+|sound2=Composter fill2.ogg
+|sound3=Composter fill3.ogg
+|sound4=Composter fill4.ogg
+|source=block
+|description=Randomly while a farmer is working
+|id=block.composter.fill
+|volume=1.3
+| pitch = 0.8
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Composter
+|spritetype=block
+|nameid=composter
+|foot=1}}
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Composter
+|spritetype=block
+|nameid=composter
+|id=468
+|foot=1}}
+
+=== Block states ===
+; Composter with different compost levels
+<gallery>
+Composter (compost level 0 Xray).png|
+Composter (compost level 1 Xray).png|
+Composter (compost level 2 Xray).png|
+Composter (compost level 3 Xray).png|
+Composter (compost level 4 Xray).png|
+Composter (compost level 5 Xray).png|
+Composter (compost level 6 Xray).png|
+Composter (compost level 7 Xray).png|
+Composter (compost level 8 Xray).png|
+</gallery>
+{{el|je}}:
+{{bst|level|0|0,1,2,3,4,5,6,7,8|When at level 8, bone meal is able to be collected from the composter.|foot=1}}
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|composter_fill_level|0|0,1,2,3,4,5,6,7,8|When at level 8, bone meal is able to be collected from the composter.|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=19w03a|[[File:Composter (level 0) JE1.png|32px]] [[File:Composter (level 1) JE1.png|32px]] [[File:Composter (level 2) JE1.png|32px]] [[File:Composter (level 3) JE1.png|32px]] [[File:Composter (level 4) JE1.png|32px]] [[File:Composter (level 5) JE1.png|32px]] [[File:Composter (level 6) JE1.png|32px]] [[File:Composter (level 7) JE1.png|32px]] [[File:Composter (level 8) JE1.png|32px]] Added composters.
+|Composter blocks are found in the "Miscellaneous" tab in the [[Creative inventory]].<ref name="composter tab">{{bug|MC-150020}}</ref>
+|The [[crafting]] recipe of composters is 4 [[fence]]s and 3 [[planks]].
+{<!---->{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1 = Oak Fence;Spruce Fence;Acacia Fence;Dark Oak Fence;Birch Fence;Jungle Fence
+|A2 = Spruce Fence;Acacia Fence;Dark Oak Fence;Oak Fence;Jungle Fence;Oak Fence
+|C1 = Acacia Fence;Dark Oak Fence;Birch Fence;Birch Fence;Oak Fence;Spruce Fence
+|C2 = Dark Oak Fence;Birch Fence;Jungle Fence;Jungle Fence;Spruce Fence;Acacia Fence
+|A3 = Birch Planks;Jungle Planks;Oak Planks;Spruce Planks;Acacia Planks;Jungle Planks
+|B3 = Jungle Planks;Oak Planks;Spruce Planks;Acacia Planks;Dark Oak Planks;Dark Oak Planks
+|C3 = Oak Planks;Spruce Planks;Acacia Planks;Dark Oak Planks;Birch Planks;Birch Planks
+|Output = Composter
+|type = Miscellaneous
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine|||dev=19w03b|All [[mushroom block]]s can now be used in composters.}}
+|{{HistoryLine|||dev=19w04a|Composters now spawn in [[village]] farms.}}
+|{{HistoryLine|||dev=19w05a|The chances of composters have been changed from 10/20/50/80/100% to 30/50/65/85/100%.}}
+|{{HistoryLine|||dev=19w11a|Composters now serve as farmer [[villager]]s' job site block.}}
+|{{HistoryLine||1.15|dev=19w45a|The [[crafting]] recipe of composters has been changed to match {{el|be}}.
+{<!---->{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1 = Spruce Slab;Oak Slab;Dark Oak Slab;Birch Slab;Jungle Slab;Acacia Slab
+|A2 = Jungle Slab;Spruce Slab;Jungle Slab;Acacia Slab;Birch Slab;Jungle Slab
+|C1 = Oak Slab;Dark Oak Slab;Birch Slab;Oak Slab;Birch Slab;Oak Slab
+|C2 = Dark Oak Slab;Jungle Slab;Oak Slab;Dark Oak Slab;Jungle Slab;Dark Oak Slab
+|A3 = Birch Slab;Acacia Slab;Spruce Slab;Spruce Slab;Oak Slab;Birch Slab
+|B3 = Acacia Slab;Spruce Slab;Jungle Slab;Jungle Slab;Dark Oak Slab;Spruce Slab
+|C3 = Spruce Slab;Oak Slab;Dark Oak Slab;Dark Oak Slab;Birch Slab;Jungle Slab
+|Output = Composter
+|type = Miscellaneous
+|ignoreusage=1}}
+{{!}}}
+}}
+|{{HistoryLine||1.16|dev=20w06a|Moved composter blocks to the "Decoration Blocks" tab from the "Miscellaneous" tab in the [[Creative inventory]].<ref name="composter tab"></ref>}}
+|{{HistoryLine|||dev=20w15a|[[Weeping vines]], [[twisting vines]], [[crimson roots]], [[warped roots]], [[nether sprouts]], [[Nether fungi]], [[nether wart]], [[nether wart block]]s, and [[warped wart block]]s can now be composted.}}
+|{{HistoryLine|||dev=pre3|[[Shroomlight]]s can now be composted.<ref>{{bug|MC-177863}}</ref>}}
+|{{HistoryLine||1.17|dev=21w05a|[[Azalea]], [[dripleaves]], [[hanging roots]], [[glow berries]], [[moss block]]s, [[moss carpet]]s and [[spore blossom]]s can now be composted.}}
+|{{HistoryLine|||dev=21w11a|[[Glow lichen]] can now be composted.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove propagule]] can now be composted.}}
+|{{HistoryLine|||dev=22w12a|[[Mangrove leaves]] can now be composted.<ref>{{bug|MC-249303}}</ref>}}
+|{{HistoryLine|||dev=22w15a|[[Mangrove roots]] can now be composted.<ref>{{bug|MC-249315}}</ref>}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Torchflower]]s, [[torchflower seeds]], [[pink petals]], [[cherry sapling]]s, and [[cherry leaves]] can now be composted.}}
+|{{HistoryLine||1.21.2|dev=24w40a|exp=Winter Drop|[[Pale moss blocks]], [[pale moss carpet]]s, [[pale hanging moss]], [[pale oak sapling]]s, and [[pale oak leaves]] can now be composted.}}
+|{{HistoryLine||1.21.5|dev=25w03a|[[Leaf litter]]  and [[wildflowers]] can now be composted.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|[[File:Composter (level 0) BE1.png|32px]] [[File:Composter (level 1) BE1.png|32px]] [[File:Composter (level 2) BE1.png|32px]] [[File:Composter (level 3) BE1.png|32px]] [[File:Composter (level 4) BE1.png|32px]] [[File:Composter (level 5) BE1.png|32px]] [[File:Composter (level 6) BE1.png|32px]] [[File:Composter (level 7) BE1.png|32px]] Added composters.
+|Composters are currently available only through [[Experimental Gameplay]].
+|The [[crafting]] recipe of composters is 7 wooden [[slab]]s.
+
+{<!---->{{!}} class{{=}}"collapsible collapsed" data-description{{=}}"Recipe"
+! Recipe
+{{!}}-
+{{!}}{{Crafting Table
+|A1 = Spruce Slab;Oak Slab;Dark Oak Slab;Birch Slab;Jungle Slab;Acacia Slab
+|A2 = Jungle Slab;Spruce Slab;Jungle Slab;Acacia Slab;Birch Slab;Jungle Slab
+|C1 = Oak Slab;Dark Oak Slab;Birch Slab;Oak Slab;Birch Slab;Oak Slab
+|C2 = Dark Oak Slab;Jungle Slab;Oak Slab;Dark Oak Slab;Jungle Slab;Dark Oak Slab
+|A3 = Birch Slab;Acacia Slab;Spruce Slab;Spruce Slab;Oak Slab;Birch Slab
+|B3 = Acacia Slab;Spruce Slab;Jungle Slab;Jungle Slab;Dark Oak Slab;Spruce Slab
+|C3 = Spruce Slab;Oak Slab;Dark Oak Slab;Dark Oak Slab;Birch Slab;Jungle Slab
+|Output = Composter
+|type = Miscellaneous
+|ignoreusage=1}}
+{{!}}}
+
+}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Added functionality like in Java Edition.
+|[[File:Composter (level 8) BE1.png|32px]] Added level 8 "content ready" state.
+|[[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 3) BE2.png|32px]] [[File:Composter (level 4) BE2.png|32px]] [[File:Composter (level 5) BE2.png|32px]] [[File:Composter (level 6) BE2.png|32px]] [[File:Composter (level 7) BE2.png|32px]] Changed models of level 0-7.|Composters are available outside of Experimental Gameplay.}}
+|{{HistoryLine|||dev=beta 1.11.0.3|Composters now support [[hopper]] placement.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[Weeping vines]], [[twisting vines]], [[crimson roots]], [[warped roots]], [[nether sprouts]], [[Nether fungi]], [[nether wart]], [[nether wart block]]s, and [[warped wart block]]s can now be composted.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.55|[[Shroomlight]] can now be composted.}}
+|{{HistoryLine||1.16.220|dev=beta 1.16.220.52|[[Azalea]], [[dripleaves]], [[glow berries]], [[moss block]]s, [[moss carpet]] and [[spore blossom]]s can now be composted.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.50|[[Hanging roots]] and [[glow lichen]] can now be composted.}}
+|{{HistoryLine|||dev=beta 1.16.230.54|[[Small dripleaf]] can now be composted.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|[[Mangrove propagules]], [[mangrove leaves]], and [[mangrove roots]] can now be composted}}
+|{{HistoryLine||1.19.70|exp=Sniffer|dev=Preview 1.19.70.23|[[Torchflower seeds]] can now be composted}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[Pink petals]] and [[cherry sapling]]s, and [[cherry leaves]] can now be composted}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[Torchflower]]s can now be composted}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Decreased the hardness and blast resistance of composters from 2 to 0.6.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[Pale moss blocks]], [[pale moss carpet]]s, [[pale hanging moss]], [[pale oak sapling]]s, and [[pale oak leaves]] are now compostable}}
+|{{HistoryLine||1.21.50|exp=Upcoming Creator Features|dev=Preview 1.21.50.26|Added the {{cd|minecraft:compostable}} item component that allows custom items to be composted.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.27|Moved the {{cd|minecraft:compostable}} item component out of experimental.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.20|[[Leaf litter]] and [[wildflowers]] can now be composted}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 0) BE2.png|32px]] [[File:Composter (level 3) BE2.png|32px]] [[File:Composter (level 4) BE2.png|32px]] [[File:Composter (level 5) BE2.png|32px]] [[File:Composter (level 6) BE2.png|32px]] [[File:Composter (level 7) BE2.png|32px]] [[File:Composter (level 8) BE1.png|32px]] Added composters.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The compost texture is based on the [[podzol]] texture.
+* If planting crops specifically for composting, potatoes produce somewhat more than beets, carrots, or wheat. However, melons offer nearly the same yield per field space, and do not require replanting after harvest.
+
+== Gallery ==
+=== Renders ===
+==== {{JE}} ====
+<gallery>
+Composter (level 0).png
+Composter (level 1).png
+Composter (level 2).png
+Composter (level 3).png
+Composter (level 4).png
+Composter (level 5).png
+Composter (level 6).png
+Composter (level 7).png
+Composter (level 8).png
+</gallery>
+
+==== {{BE}} ====
+<gallery>
+Composter (level 0) BE.png
+Composter (level 1) BE.png
+Composter (level 2) BE.png
+Composter (level 3) BE.png
+Composter (level 4) BE.png
+Composter (level 5) BE.png
+Composter (level 6) BE.png
+Composter (level 7) BE.png
+Composter (level 8) BE.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Village Wheat Beetroot Farm.png| A composter generated in a village
+Composter farm 2.jpg| A full and partially filled composter in a farm
+BotM Composter.jpg|An official screenshot of a composter used on Minecraft.net.<ref>{{mcnet|block-month--composter|Block of the Month: Composter|March 23, 2023|Duncan Geere}}</ref>
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-month--composter Block of the Week: Composter] – Minecraft.net on March 23, 2023
+
+== Navigation ==
+{{Navbox blocks|utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Flammable blocks]]
+[[Category:Readable by comparators]]
+
+[[cs:Kompostér]]
+[[de:Komposter]]
+[[es:Compostador]]
+[[fr:Composteur]]
+[[ja:コンポスター]]
+[[ko:퇴비통]]
+[[lzh:肥箱]]
+[[pl:Kompostownik]]
+[[pt:Composteira]]
+[[ru:Компостер]]
+[[th:ถังหมักปุ๋ย]]
+[[uk:Компостер]]
+[[zh:堆肥桶]]

@@ -1,0 +1,121 @@
+{{About|the portal used to return to the Overworld||End Portal (disambiguation)}}
+<!--{{move|Exit Portal|reason=[[MCW:TITLE]], all features should have title case title, as shown in the "Desert Well" example|admin=1|discussPage=MCW:ANB|discussAnchor=Recapitalize feature pages}}-->
+{{conjecture|type=feature}}
+{{Infobox structure
+| title = Exit portal
+| image = Exit portal (empty).png
+| imagecaption = Inactive
+| image2 = EnderDragonPortal.png
+|image2caption = Active
+| biome = {{BiomeLink|The End|The End|link=The End (biome)}}
+| blocks = 
+* {{BlockLink|Bedrock}}
+* {{BlockLink|End Stone}}
+* {{BlockLink|End Portal|link=End Portal (block)|text=End Portal}} (appears only after the ender dragon is defeated)
+* {{BlockLink|Torch}}
+* {{BlockLink|Dragon Egg}} (appears only after the '''first/second{{only|bedrock}}''' ender dragon is defeated, respawned ones never generate another egg)
+| canspawn = Yes
+}}
+The '''exit portal''' (also known as the '''End podium''' or '''End fountain''') is a portal that enables the player to return to their [[spawn point]], activating upon each defeat of the [[ender dragon]]. It is the only way for entities to leave [[the End]] dimension.
+
+== Generation ==
+The exit portal always generates at the [[coordinates]] <code>0,0</code> in [[the End]], and is de-activated whenever an ender dragon fight is in progress. The [[Altitude|y-level]] of the exit portal is determined by the height of the terrain, placing the [[End Portal (block)|End portal block]]s at the y-level of the highest block found at <code>0,0</code>. If the exit portal spawns at the height limit, the portal blocks are the highest blocks generated, with the top 3 blocks of the bedrock pillar failing to generate due to the maximum build height having been reached. If there are no blocks at <code>0,0</code>, the portal generates with the base at Y=0.
+
+== Construction ==
+{{main|Exit portal/Structure}}
+
+{{FakeImage|align=left|{{BlockGrid|scale=2|b=Bedrock|x=End Portal Top?End Portal (block)|  bbb  | bxxxb |bxxxxxb|bxxbxxb|bxxxxxb| bxxxb |  bbb  }}|Activated exit portal (top view).}}
+The exit portal looks similar to the [[End portal]] but differs in its design. Instead of a frame of [[End portal frame]] blocks, it has a 7-block wide bowl-shaped frame of [[bedrock]], and a central pillar of bedrock with a torch on each side. A [[dragon egg]] generates atop the pillar upon defeating the ender dragon for the first time (and the second time {{in|be}}<ref>{{bug|MCPE-51345}}</ref>).
+
+There are 16 [[End stone]] blocks, one under each outer bedrock block, as well as four [[torch]]es. If any of the blocks other than the dragon egg are removed, they regenerate when the [[ender dragon]] is defeated or respawned, making it the only [[Renewable resource|renewable]] source of End stone.
+
+{{-}}
+
+== Behavior ==
+The portal returns the player to their [[individual spawn point]]. The [[credits]] roll when a player enters the exit portal for the first time. If the player doesn't have a spawn point or it is obstructed, they return to the world spawn. If the player's respawn point is set with a [[respawn anchor]], the charge will not be used upon returning.
+
+If an entity other than a player goes through, like a [[falling block]] or a [[item (entity)|thrown item]], it is sent to the [[world spawn]]. The area it arrives in remains loaded for 15 seconds,{{only|je|short=1}} similar to the behavior of [[Nether portal]]s.  
+
+<!-- Kind of redundant, just a special case.
+If a player dies above the portal (for example by flying into the bedrock column with enough momentum) the player goes through. If this happens, the player's items return to the world spawn point.
+-->
+
+== Achievements ==
+{{load achievements|The End}}
+
+== Data values ==
+{{empty section}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 6|Added the exit portal.}}
+|{{HistoryLine||1.9|dev=15w31a|The exit portal no longer generates after the [[ender dragon]] is killed. It is now pre-generated, but without the [[dragon egg]] and [[End Portal (block)|End portal block]]s, and it is inactive while the ender dragon lives.}}
+|{{HistoryLine|||dev=15w44a|[[End crystal]]s on the exit portal in a specific arrangement can now respawn the dragon.}}
+|{{HistoryLine||1.10.1|dev=release|End crystals on a pre-1.9 exit portal can no longer respawn the dragon. Previously it would also create a new exit portal at X{{=}}0, Z{{=}}0 and replace the blocks from the old exit portal with [[End stone]].}}
+|{{HistoryLine||1.17|dev=Pre-release 1|End crystals on a pre-1.9 exit portal can now respawn the dragon again.<ref>{{bug|MC-104897||End crystals placed on exit portals generated before 1.9 do not respawn the ender dragon|Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w03a|When [[entities]] leave the End, the area where they arrive remains loaded for 15 seconds, matching the behavior of [[Nether portal]]s.}}
+|{{HistoryLine||1.21|dev=24w20a|The [[player]] now keeps [[effect]]s upon respawning.<ref>{{bug|MC-6431||Status effects are lost when returning to the [[Overworld]] from the exit end portal|Fixed}}</ref>}}
+|{{HistoryLine||1.21.5|dev=25w03a|When changing state, any blocks that are in its radius are dropped as items and also make breaking sounds, rather than outright overwritten.}}
+|{{HistoryLine|||dev=25w09a|The exit portal now generates properly when there are no blocks at 0, 0.
+|Previously, the portal would try to generate out of bounds, making the seed unbeatable.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added the exit portal.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the exit portal.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[End crystal]]s on the exit portal in a specific arrangement can now respawn the dragon.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|Added the exit portal.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* {{IN|bedrock}}, if the player manages to break all of the [[End Portal (block)|End portal block]]s in the exit portal, the entire structure regenerates after 5 seconds. If all of the portal blocks have [[End crystal]]s above (so the fire constantly eliminates the portal), this regeneration process repeats until a portal block successfully regenerates.
+* If the exit portal generates at the tallest possible height and the [[ender dragon]] is defeated, the portal blocks generate in the exit portal as normal, but the [[dragon egg]] does not spawn due to its intended location surpassing the build [[Altitude|height limit]].
+* {{IN|bedrock}}, if there are other End portal blocks in [[the End]] and the exit portal structure is completely destroyed, it does not regenerate until the other end portal blocks are removed.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:A lit end portal.png|A lit exit portal.
+File:An unlit end portal.png|An unlit exit portal.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:SRCW SGA 6.png|The portal as it appears in [[Sonic Racing: CrossWorlds|''Sonic Racing: CrossWorlds'']].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+[[Category:The End|P]]
+
+[[de:Endbrunnen]]
+[[es:Portal de salida]]
+[[fr:Portail de sortie]]
+[[it:Portale di uscita]]
+[[ja:出口ポータル]]
+[[ko:출구 차원문]]
+[[nl:Endportaal]]
+[[pl:Fontanna Endu]]
+[[pt:Portal de saída]]
+[[zh:返回传送门]]
+[[Category:Portals]]

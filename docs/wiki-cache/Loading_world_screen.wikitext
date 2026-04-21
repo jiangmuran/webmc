@@ -1,0 +1,180 @@
+The '''loading world screen''' is a screen displayed when generating or loading a [[world]]. It shows the percentage of the loading progress.
+
+== ''Java Edition'' ==
+{{Update|Spawn chunks have been removed, update this section accordingly|section=1}}[[File:Chunk colormap.gif|thumb|Chunk colormap of [[Seed (world generation)|seed]] 0.]]
+
+The loading screen {{in|Java}} shows a chunk '''colormap''', which is a square that visualizes the rendering of the initial chunks, the radius of which is equal to the value of {{cd|[[Game rule|spawnChunkRadius]]}} + 13. It populates with colored pixels that change color and expand as chunks load. Each pixel represents a chunk, and the color represents the chunk status. Like on other menu screens in ''Java Edition'', a blurred and darkened view of the [[panorama]] is shown in the background.
+
+{| class="wikitable" data-description="Color codes" style="text-align:center;"
+|-
+!Chunk Status
+!R!!G!!B
+!<abbr title="Hexadecimal color code">Hex</abbr><abbr title="Hexadecimal color code"></abbr>
+|- style="background-color: #545454; color: #FFF"
+|Empty
+|84
+|84
+|84
+|545454
+|- style="background-color: #999; color: #FFF"
+|Structure Starts
+|153
+|153
+|153
+|999999
+|- style="background-color: #5F6191; color: #FFF"
+|Structure References
+|95
+|97
+|145
+|5F6191
+|- style="background-color: #80B252; color: #FFF"
+|Biomes
+|128
+|178
+|82
+|80B252
+|- style="background-color: #D1D1D1; color: #000"
+|Noise
+|209
+|209
+|209
+|D1D1D1
+|- style="background-color: #726809; color: #FFF"
+|Surface
+|114
+|104
+|9
+|726809
+|- style="background-color: #303572; color: #FFF"
+|Carvers
+|48
+|53
+|114
+|303572
+|- style="background-color: #21C600; color: #FFF"
+|Features
+|33
+|198
+|0
+|21C600
+|- style="background-color: #CCC; color: #000"
+|Initialize Light
+|204
+|204
+|204
+|CCCCCC
+|- style="background-color: #FFE0A0; color: #000"
+|Light
+|255
+|224
+|160
+|FFE0A0
+|- style="background-color: #F26060; color: #fff"
+|Spawn
+|242
+|96
+|96
+|F26060
+|- style="background-color: #FFF; color: #000"
+|Full
+|255
+|255
+|255
+|FFFFFF
+|}
+
+== ''Bedrock Edition'' ==
+[[File:Bedrock Loading Screen.png|alt=|thumb|The loading screen in ''Bedrock Edition''.]]
+The loading screen {{in|bedrock}} shows the menu screen [[panorama]] in the background with an [[experience]] progress bar, and [[loading tips]]. Unlike in ''Java Edition'', menu [[music]] continues playing until the player spawns, where it will fade out.
+
+Depending on the game's world options, specific loading tips will appear, for example when the world has [[add-on]]s or [[Creative]] mode. The loading sequence is always ended with "[[Survival|Survive]]", "[[Creative|Create]]", or "[[Adventure|Let's Go!]]" depending on the game mode, and some other messages may appear depending on the situation.
+
+When connecting to a world in ''Minecraft'' [[Realms]], a unique background is shown. Furthermore, the current server region for the Realm and the ping are shown below the loading tips.
+
+When playing on [[servers]] or [[multiplayer]] worlds, the loading screen shows when it is connecting to the server with a button to cancel the progress. This may happen during play in [[Gathering|gatherings]] as the player travels between internal servers.
+
+When connecting to a multiplayer game using mobile data, if enabled in the [[settings]], an indicator is shown on the top-right.<gallery>
+File:BE Saving world screen.png|The saving world screen
+File:Realms loading screen BE.png|The Minecraft [[Realms]] loading world screen
+File:Overworld loading screen.png|The loading screen when teleporting to the [[Overworld]]
+File:Nether loading screen.png|The loading screen when teleporting to the [[Nether]]
+File:End loading screen.png|The loading screen when teleporting to the [[End]]
+File:Marketplace loading screen.png|The [[Marketplace]] loading screen
+</gallery>
+
+== History ==
+{{info needed section|Each named generation stage in Classic's world generation screen and what they actually mean}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.12a|Added a "Generating level" screen.}}
+|{{HistoryLine||0.0.13a_03|The dirt background is now darker.|The loading level screen now displays a progress bar.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w18a|The progress bar in the loading screen in singleplayer has been removed; it is part of the many features that were [[Java Edition 1.3.1/List of broken features|broken]] in this version due to the use of an internal server for singleplayer.}}
+|{{HistoryLine|||dev=12w21a|Removed all texts on the loading screen.}}
+|{{HistoryLine|||dev=12w25a|The texts on the loading screen have been re-added; the progress bar is still missing.}}
+|{{HistoryLine||1.13|dev=17w43a|Added percentages to status texts.}}
+|{{HistoryLine|||dev=17w45a|Removed all percentages in status texts, except for the "Preparing spawn area" stage.}}
+|{{HistoryLine||1.14|dev=18w43a|Added more detailed information for "Preparing spawn area".}}
+|{{HistoryLine|||dev=19w02a|Added a chunk colormap when loading a [[world]], replaced detailed text which shown since 18w43a.}}
+|{{HistoryLine||1.14.1|dev=Pre-Release 1|Changed chunk colormap to show 43&times;43 chunks instead of 45&times;45, creating a black border around the finished colormap.}}
+|{{HistoryLine||1.20|dev=23w16a|Added new "Initialize Light" chunk status and removed "Liquid Carvers" and "Heightmaps" statuses. Also added a new color for "Light" chunk status, while "Carvers" will now use the "Liquid Carvers" color.}}
+|{{HistoryLine||1.20.5|dev=24w03a|Due to the reduced default spawn chunk radius, the chunk colormap is now smaller by default.}}
+|{{HistoryLine|||dev=24w09a|The dirt [[background]] is replaced by a blurred and darkened view of the [[panorama]]. The dirt background is still available in the [[Programmer Art]] resource pack.}}
+|{{HistoryLine||1.21|dev=24w19a|The chunk colormap no longer has a black border.}}
+|{{HistoryLine||1.21.9|dev=25w31a|The world loading screen now shows the chunks that the player is about to be placed into, rather than chunks loaded around world spawn.|The loading screen additionally now reincludes a progress bar from pre-1.3.1.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|Added loading screen.<ref>{{ytl|s2YszTdZ6Ac|Notch Plays Minecraft PE (Pocket Edition) At E3 2011 With Minecraft Chick @ 1:03|projectrooster|June 8, 2011|t=63}}</ref>}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added gameplay tips to the loading screen.
+|Changed the style of progress bar when loading world, make it more similar the boss bar in Java Edition.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.22|The loading world screen now displays 3 categories of [[Loading tips|tips]] based on player progression.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch= 1.0.1|Added loading screen.
+|Added gameplay tips to the loading screen.}}
+}}
+
+<gallery>
+File:Progress bar.png|Loading screen in Java Edition before 1.3.1 update
+File:Loading Screen Legacy Console Edition.png|The loading screen in Legacy Console Edition.
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+<gallery>
+File:LoadingScreen-MCClassicRemake.png|World generation loading screen in the Minecraft Classic remake.
+File:Reading world data... screen.png|Old "Reading world data..." screen.
+File:Joining world... screen.png|Old "Joining world..." screen.
+File:Saving world screen.png|Old "Saving world" screen.
+File:VideoEditor 20250722 022955.mp4|The [[Java Edition 17w43a|17w43a]] "Loading world", "Building terrain", "Preparing spawn area" and "Loading terrain" [[loading world screen]] and [[animation]] with "0%, 7%, 10%, 15%, 22%, 32%, 41%, 50%, 60%, 71%, 82%, and 93% loading percentages.
+File:VideoEditor 20250722 023156.mp4|The [[Java Edition 17w45a|17w45a]] "Loading world", "Preparing spawn area", "Loading world" (again), and "Joining world..." [[loading world screen]] and [[animation]] with 4%, 12%, 16%, 24%, 28%, 32%, 36%, 40%, 44%, 48%, 52%, 56%, 60%, 64%, 68%, 72%, 76%, 80%, 84%, 88%, 92%, and 96% loading percentages.
+File:VideoEditor 20250722 023318.mp4|The [[Java Edition 18w43a|18w43a]] "Loading world", "Building terrain", "Preparing spawn area" and "Joining world... progress.working" [[loading world screen]] and [[animation]] with "60%, 61%, 63%, 68%, 72%, 76%, 82%, 84%, 86%, 87%, 89%, 91%, 93%, 95%, 97%, 99%, (left side), 0%, 2%, 5%, 7%, 12%, 18%, 35%, (right side), and 100% loading percentages; (both sides); as well as the numbers: 5352, 5612, 6185, 6894, 7374, 7774, 8088, 8197, 8536, (row 1) 2101, 2056, 1957, 1912, 1736, 1340, 1282, 1123, 1055, 873, 704, 551, 379, 223, 57, (row 2), 256, 253, 203, 209, 148, 185, 256 (again), 238, 256 (3rd time), 237, 254, 252, 255, 256 (4th time there again), 195, 99, and 0 (other 3 rows; 2, 3, 4). (could be [[Coordinates|X: 0 Y: 0 Z:]] 441 ([[Coordinates]]) (the [[Spawn chunk|spawn area]]?) (Can also redirect [[X y z|X: 0 Y: 0 Z: 441]] to [[X y z]]) )
+</gallery>
+
+== References ==
+
+{{Reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+
+[[Category:Menu screens]]
+[[Category:UI]]
+
+[[de:Welt-Ladebildschirm]]
+[[es:Pantalla de carga de mundo]]
+[[fr:Écran de chargement du monde]]
+[[ja:ワールド読み込み画面]]
+[[pt:Tela de carregamento do mundo]]
+[[zh:世界加载屏幕]]

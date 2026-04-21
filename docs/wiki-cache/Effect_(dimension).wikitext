@@ -1,0 +1,106 @@
+{{For|other uses about "effect"|Effect (disambiguation)}}
+{{wip}}
+{{outdated}}
+
+In [[custom dimension]]s, an '''effect''' was a set of rendering features utilised for defining a dimension's atmosphere and visuals.
+
+== Elements ==
+The dimension effect governs the following things:
+
+* Whether the dimension has ground
+* The sky type to be used
+* Whether to always use a bright lightmap
+* Whether the ambient light level is constant
+* Fog color
+
+== Examples ==
+{{info needed section|Descriptions}}
+Note that as of [[Java Edition 1.16.5]], all effect features are hardcoded, and new ones cannot be created without mods. Dimensions created using effects from existing modded dimensions tend to carry dimension effects to the respective dimension as expected.
+
+=== minecraft:overworld ===
+The [[Overworld]] has the following effect elements:
+
+* Cloud level: 192{{verify|does 25w15a decouple this from the effect?}}
+* Has ground: {{cd|true}}
+* Sky type: {{cd|NORMAL}} ([[sun]], [[moon]], stars etc.)
+* Force bright lightmap: {{cd|false}}
+* Constant ambient light level: {{cd|false}}
+* No fog apart from view distance fog
+The fog color is affected by the time of day. The new color <math display="inline">
+C</math> can be calculated using the following formula, where <math display="inline">T</math> is the time of day and <math display="inline">
+\left[ {\begin{array}{c}
+ a\\
+ b\\
+ c\\
+\end{array} } \right]</math> is the existing color.
+
+<math>A=\max(0,\min(\frac{1}{2}+2\cos(T\times2\pi),1))</math>
+
+<math>
+C=
+\left[ {\begin{array}{cc}
+ a(0.94A+0.06)\\
+ b(0.94A+0.06)\\
+ c(0.91A+0.09)\\
+\end{array} } \right]</math>
+<gallery>
+Overworld sky effect.png
+Overworld block effect.png
+</gallery>
+
+=== minecraft:the_nether ===
+[[The Nether]] has the following effect elements:
+
+* No clouds (cloud level: {{cd|NaN}}){{verify|does 25w15a decouple this from the effect?}}
+* Has ground: {{cd|true}}
+* Sky type: {{cd|NONE}} (no celestial bodies)
+* Force bright lightmap: {{cd|false}}
+* Constant ambient light level: {{cd|false}}
+* Has fog{{info needed|25w42a: is this still controlled by effects, or does the extra_fog field replace it?}}
+
+The fog color is not affected by the time of day as the nether has no daylight cycle.
+<gallery>
+Nether sky effect.png
+Nether block effect.png
+</gallery>
+
+=== minecraft:the_end ===
+[[The End]] has the following effect elements:
+
+* No clouds (cloud level: {{cd|NaN}}){{verify|does 25w15a decouple this from the effect?}}
+* Has ground: {{cd|false}}
+* Sky type: {{cd|END}} (no celestial bodies, purple spotted sky texture)
+* Force bright lightmap: {{cd|true}}
+* Constant ambient light level: {{cd|false}}
+* No fog apart from view distance fog
+The fog color is not affected by the time of day as the end has no daylight cycle, however each RGB component is multiplied by 0.15.
+<gallery>
+End sky effect.png
+End block effect.png
+</gallery>
+
+== Overview ==
+{| class="wikitable" style="text-align:center"
+! <samp>minecraft:overworld</samp>
+|Celestial bodies; clouds;{{verify}} no extra fog; fog color depends on time of day
+|-
+! <samp>minecraft:the_nether</samp>
+|No celestial bodies; extra fog; no clouds
+|-
+! <samp>minecraft:the_end</samp>
+|No celestial bodies; no clouds; purple spotted sky texture
+|}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=Pre-release 1|Presumably this is when dimension effects became customizable.{{check version}}}}
+|{{HistoryLine||1.21.6|dev=25w15a|Clouds presence is no longer controlled by the dimension effect and is now its own, separate field.}}
+|{{HistoryLine||1.21.11|dev=25w45a|Dimension effects have been removed entirely with their aspects split into other controllable settings.}}
+}}
+
+== Navigation ==
+{{Navbox dimension effects}}
+{{Navbox gameplay}}
+
+[[pt:Efeito (dimensão)]]

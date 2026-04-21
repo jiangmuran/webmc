@@ -1,0 +1,182 @@
+{{Infobox block
+| image1 = Mangrove Propagule.png
+| image1caption = Propagule
+| image2 = Hanging Mangrove Propagule 4 JE1.png
+| image2caption = Hanging propagule (fully grown)
+| extratext = [[#Renders|View all images]]
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''mangrove propagule''' is a [[block]] that can be grown into a [[mangrove tree]], similar to a [[sapling]].
+
+== Obtaining ==
+=== Breaking ===
+Mangrove propagules can be broken instantly with any tool or by hand. Only blocks with [[block states]] <code>hanging=false</code> or with <code>age=4</code> drop themselves.
+
+{{Breaking row|Mangrove Propagule|horizontal=1}}
+
+=== Natural generation ===
+Hanging mangrove propagules generate under leaf blocks of mangrove trees that spawn in [[mangrove swamp]]s.
+
+{{Block distribution}}
+
+=== Trading ===
+[[Wandering trader]]s may sell 1 mangrove propagule for 5 [[emerald]]s.
+{{Trade sources}}
+
+=== Mob loot ===
+{{IN|bedrock}}, [[wandering traders]] have a chance of 8.5% (increased by 1% per level of [[Looting]]) to drop 1 mangrove propagule when killed while showing the item as trade offer, if the player holds an [[emerald]].
+
+=== Post-generation ===
+Applying [[bone meal]] to a block of [[mangrove leaves]] with a space underneath produces a hanging mangrove propagule with <code>age=0</code>. [[Bone meal]] can then be applied to the propagule itself to increase its age by 1.
+
+== Usage ==
+=== Growing trees ===
+{{see also|Tree}}
+
+A hanging mangrove propagule cannot grow into a tree.
+
+Like saplings, non-hanging mangrove propagules have two growth stages (with no visible difference between them) before growing into trees. When a tree is to be grown, a height is chosen and then the ground and space are checked; if the ground is bad or there is not space for the chosen height, the tree does not grow. [[Bone meal]] can be used to speed up the growth of the propagule, even to grow the tree without sufficient light.
+
+Also like saplings, mangrove propagules can grow only if a player is within a certain radius, even in loaded chunks.
+
+Mangrove propagules can be placed on all variants of [[dirt]] (except [[dirt path]]s), [[moss block]]s, [[mud]], and [[clay]]. It requires a [[light]] level of at least 9 to grow. A mangrove also requires at least 6 empty spaces above the propagule. The height of the tree depends on how far the roots can spread horizontally. The roots can spread up to 5 blocks away from the propagule. It requires at least one solid block within the 9×9×9 cube centered on and directly underneath the propagule outside the column where the sapling is, and solid blocks for the bottoms of the roots to land on within 11 blocks below the sapling in a 9×9 area. The farther the solid blocks are below the propagule, the more attempts it takes to generate a suitable tree shape. Mud does not count as a solid block.
+
+Dirt blocks in the space above the propagule are an exception. Dirt blocks do not stop the tree from growing. The dirt remains in place and the rest of the tree generates normally around it (it is possible to grow a tree that contains only one [[log]] block at the original propagule location, with a column of dirt above where the rest of the trunk should be and leaves spreading out from it). {{IN|java}}, all types of log block and wood block and their stripped versions are also treated like dirt blocks (they don't stop growth). {{IN|bedrock}}, log and wood blocks are treated like other block types and stop the tree from growing if they are above it.
+
+When a propagule on a [[grass block]] grows into a tree, the grass block becomes a dirt block.
+
+When a mangrove grows from a propagule, it has a 1% chance of generating a [[bee nest]] containing 2-3 [[bee]]s. Unlike other tree types, this does ''not'' require the propagule to be placed next to flowers.<ref>{{bug|MC-249937||Propagules grown without a flower nearby can generate bee nests in the mangrove tree|WAI}}</ref>
+
+Mangrove propagules can also be placed and grown underwater.
+
+=== Bees ===
+[[Bee]]s engage in a pollinating behavior with mangrove propagules, increasing the honey level in [[beehive]]s and [[bee nest]]s by 1.
+
+=== Breeding ===
+Mangrove propagules can be fed to bees for breeding, and reduce the remaining growth duration of baby bees by 10%. Bees also follow a player holding a mangrove propagule.
+
+=== Bee nests ===
+[[Oak]], [[birch]], and [[cherry]] trees grown from [[sapling]]s that are within 2 blocks of a mangrove propagule have a 5% chance to grow with a [[bee nest]] and 2-3 [[bee]]s in it.
+
+=== Decoration ===
+Mangrove propagules can be placed in a [[flower pot]].
+
+=== Fuel ===
+Mangrove propagules can be used as a fuel in [[furnace]]s, smelting 0.5 items per propagule.
+
+=== Composting ===
+Placing a mangrove propagule into a [[composter]] has a 30% chance of raising the compost level by 1. A stack of saplings yields an average of 2.74 [[bone meal]].
+
+== Sounds ==
+{{Sound table/Block/Grass}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Mangrove Propagule
+|spritetype=block
+|nameid=mangrove_propagule
+|blocktags=flowers, saplings
+|itemtags=flowers, saplings
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Mangrove Propagule
+|spritetype=block
+|nameid=mangrove_propagule
+|id=-474
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|age|0|0,1,2,3,4|The age of a hanging propagule. This has no meaning for non-hanging propagules.}}
+{{bst|hanging|false|false,true|If the mangrove propagule is hanging from a mangrove leaves block.}}
+{{bst|stage|0|0,1|Specifies a non-hanging propagule's growth stage.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this mangrove propagule.|foot=1}}
+
+{{el|be}}:
+{{bst|propagule_stage|0|0,1,2,3,4|Specifies the growth stage. Apparently used only for hanging propagules.{{info_needed}}}}
+{{bst|hanging|false|false,true|If the mangrove propagule is hanging from a mangrove leaves block.|foot=1}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 16, 2021|link={{ytl|or1DfXdqu3U|t=821}}|[[File:Mangrove Propagule (pre-release).png|32px]] Mangrove propagules are shown at [[Minecraft Live 2021]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Mangrove Propagule JE1 BE1.png|32px]] [[File:Mangrove Propagule (item) JE1 BE1.png|32px]] Added mangrove propagules.}}
+|{{HistoryLine|||dev=22w14a|Due to the addition of the [[mangrove tree]] and [[mangrove swamp]], mangrove propagules are now obtainable and renewable.}}
+|{{HistoryLine|||dev=22w15a|[[Wandering trader]]s now sell mangrove propagules.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|[[File:Mangrove Propagule JE1 BE1.png|32px]] [[File:Mangrove Propagule (item) JE1 BE1.png|32px]] Added mangrove propagules.
+|[[File:Mangrove Propagule (hanging texture) JE1 BE1.png|32px]] Added hanging mangrove propagule. It has the item ID <code>-476</code> and the namespaced ID <code>mangrove_propagule_hanging</code>. It displays the in-game name <code>tile.mangrove_propagule_hanging.name</code>.}}
+|{{HistoryLine|||dev=Preview 1.19.0.25|Changed model to match ''Java Edition''.}}
+|{{HistoryLine|||dev=Preview 1.19.0.29|Hanging mangrove propagule has been removed from the game.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=22w11a|<code>minecraft:mangrove_propagule</code> has been added to the <code>#minecraft:mineable/axe</code> [[block tag]]. This, however, has no effect in-game, since the block breaks instantly anyway regardless of tool used or active effects.}}
+|{{HistoryLine||1.21.5|dev=25w10a|<code>minecraft:mangrove_propagule</code> has been removed from the block tags <code>#minecraft:mineable/axe</code> and <code>#minecraft:sword_efficient</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== See also ==
+{{BiomeLink|Mangrove Swamp}}
+
+{{EnvLink|Mangrove Tree}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Mangrove Propagule.png|Mangrove propagule
+Hanging Mangrove Propagule 0 JE1.png|Hanging propagule (age 0)
+Hanging Mangrove Propagule 1 JE1.png|Hanging propagule (age 1)
+Hanging Mangrove Propagule 2 JE1.png|Hanging propagule (age 2)
+Hanging Mangrove Propagule 3 JE1.png|Hanging propagule (age 3)
+Hanging Mangrove Propagule 4 JE1.png|Hanging propagule (age 4)
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox flower}}
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Non-solid blocks]]
+[[Category:Natural blocks]]
+
+[[ko:맹그로브나무 주아]]
+[[pt:Propágulo de Mangue]]
+[[zh:红树胎生苗]]

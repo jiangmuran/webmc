@@ -1,0 +1,141 @@
+{{Infobox block
+| image = Polished Blackstone Button.png
+| transparent = Yes
+| light = No
+| tool = Pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+|waterloggable = {{jebe|No|Yes}}
+| lavasusceptible = No
+}}
+A '''polished blackstone button''' is a variant of the [[button]] that shares many common properties with [[stone button]]s. Like stone buttons, a polished blackstone button is a non-solid [[block]] that produces a temporary [[redstone]] signal when pressed.
+
+== Obtaining ==
+=== Breaking ===
+A polished blackstone button is most easily broken with a [[pickaxe]]. It drops itself as an item when broken using any [[tool]].
+{{breaking row
+|horizontal=1
+|Polished Blackstone Button
+|Pickaxe
+|link=none}}
+
+A button is removed and drops as an item if:
+* its attachment block is moved, removed, or destroyed.
+* [[water]] or [[lava]] flows into its space.{{only|java}}
+* a [[piston]] tries to push it or moves a block into its space.
+
+=== Crafting ===
+{{Crafting
+|Polished Blackstone
+|Output=Polished Blackstone Button
+|type=Redstone
+}}
+
+== Usage ==
+{{see also|Redstone circuit}}
+
+=== Placement ===
+Buttons can be placed by {{control|using}} it on a surface.
+
+They can be attached to the side, bottom and top of any full opaque block.
+
+If placed on the top or bottom of a block, the button can face any direction.{{only|java}}
+
+It can also be attached to the top of a fence {{in|be}}.
+
+More information about placement on transparent blocks can be found at [[Opacity/Placement]].
+
+=== Redstone power ===
+A button can be used as a [[monostable]] redstone [[Redstone components#Power components|power source]] (it automatically deactivates shortly after being activated).
+
+Buttons are usually in an inactive state, but can be temporarily activated by players. A polished blackstone button can be activated by a player {{control|using}} it or when hit by a [[Wind Charge|wind charge]]. [[Mob]]s cannot activate buttons directly.
+
+When activated, a polished blackstone button remains active for exactly {{convert|1|second|redstone tick|game tick}}.
+
+While active, a button:
+* powers any adjacent [[redstone dust]] to [[Redstone circuit#Power|power level]] 15, including beneath the button
+* powers any adjacent [[redstone comparator]]s or [[redstone repeater]]s facing away from the button to power level 15
+* strongly powers its attachment block to power level 15
+* activates any adjacent [[Redstone components#Mechanism components|mechanism components]], including above or below, such as [[piston]]s, [[redstone lamp]]s, etc.
+
+When a button changes state it provides a [[Redstone circuit#Redstone update|redstone update]] to all redstone components adjacent to itself (including above and below), and to all redstone components adjacent to its attachment block.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{:Stone Button/Sounds|a polished blackstone button}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Polished Blackstone Button
+|spritetype=block
+|nameid=polished_blackstone_button
+|blocktags=buttons
+|itemtags=buttons
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Polished Blackstone Button
+|spritetype=block
+|nameid=polished_blackstone_button
+|id=551
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Button|block states}}
+
+== Videos ==
+{{yt|n7BP3NDpHtA}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w15a|[[File:Polished Blackstone Button JE1 BE1.png|32px]] Added polished blackstone buttons.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Polished blackstone buttons are now [[renewable]] as [[piglin]]s have an 8.71% chance to give 8-16 blackstone during [[bartering]].}}
+|{{HistoryLine||1.20|dev=23w14a|[[File:Polished Blackstone Button JE2.png|32px]] UV texture map of polished blackstone button has been changed, the front texture of polished blackstone button is no longer mirrored.}}
+|{{HistoryLine|||dev=23w16a|Polished blackstone button now breaks in the same time as other buttons.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Polished Blackstone Button JE1 BE1.png|32px]] Added polished blackstone buttons.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Polished blackstone buttons no longer require a pickaxe to drop themselves and are faster to mine with any improper tool.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox blackstone}}
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Non-solid blocks]]
+
+[[fr:Bouton en pierre noire]]
+[[ja:磨かれたブラックストーンのボタン]]
+[[ko:윤나는 흑암 버튼]]
+[[pt:Botão de Pedra-Negra Polida]]
+[[uk:Кнопка з полірованого чорнокаменю]]
+[[zh:磨制黑石按钮]]

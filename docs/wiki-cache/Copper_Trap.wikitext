@@ -1,0 +1,245 @@
+{{Joke feature}}
+{{Wip}}
+{{Infobox block
+| group = Unoxidized
+| group2 = Exposed
+| group3 = Weathered
+| group4 = Oxidized
+| 1-1 = Copper Trap.png
+| 2-1 = Exposed Copper Trap.png
+| 3-1 = Weathered Copper Trap.png
+| 4-1 = Oxidized Copper Trap.png
+| invimage = Copper Trap
+| invimage2 = Exposed Copper Trap
+| invimage3 = Weathered Copper Trap
+| invimage4 = Oxidized Copper Trap
+| invimage5 = Waxed Copper Trap
+| invimage6 = Waxed Exposed Copper Trap
+| invimage7 = Waxed Weathered Copper Trap
+| invimage8 = Waxed Oxidized Copper Trap
+| renewable = Yes
+| stackable = Yes (64)
+| transparent = Yes
+| tool = None
+| light = No
+| lavasusceptible = No
+| flammable = No
+| Transparent = Yes
+| rarity = Common
+}}
+A '''copper trap''' is a block found in [[26w14a]].
+
+== Obtaining ==
+
+=== Breaking ===
+
+Although the copper trap has a drop, no vanilla tool is suitable for breaking it, so breaking it with any tool will have no effect. Furthermore, attempting to use [[Attack / Mine]] to order a tool to mine it will not happen, as tools only break blocks that they can mine.
+
+However, it is still possible to make a copper trap block drop a living copper trap with an explosion.
+
+Using cheats, it's possible to create a tool capable of mining it by modifying {{DCL|minecraft:tool.rules}} data component. Can be add this block in {{Tag link|block|mineable/pickaxe}} so that it can be mined by any pickaxe (additionally, adding a tag like {{tag link|block|needs_iron_tool}} prevents it from being mined by some pickaxes.)
+
+{{breaking row|horizontal=1|Copper Trap|None}}
+
+=== Post-generation ===
+
+If at least eight [[Living Block|living]] [[copper bars]] of the same variant come close together, a living copper trap of that variant will form.
+
+It can be placed as an item in a container by approaching an alive container or using a hopper.
+
+It can be placed as a block with [[Build (item)|build]], or somehow remove the action items from the hotbar.
+
+== Usage ==
+
+=== Retard and prevent oxidation ===
+
+Unlike most copper blocks, copper traps do not change their [[oxidation]] or wax state. This includes not being able to be deoxidized by [[axes]], oxidizing naturally, waxing with [[honeycomb]] (neither by {{Control|using}} nor by [[crafting]]), or deoxidation by lightning.
+
+However, the non-waxed copper traps can still retard the oxidation of nearby copper blocks with the same level of oxidation. And it can also prevent oxidation at a higher oxidation level, that is, unpxidized copper trap prefers the oxidation of exposed and weathered copper, and exposed copper trap prefers the oxidation of weathered copper.
+
+Although this behavior of retard and prevent oxidation is common to all non-waxed copper blocks (see {{Slink|Oxidation|Blocks}}), while a group of non-waxed copper blocks that does not have a copper trap will all oxidize completely at some point, however slowly (given that even if one copper block precedes the oxidation of another, the first will oxidize at some point), groups of copper blocks that have a copper trap will have blocks of color that will not oxidize to a certain level.
+
+Like other waxed blocks of cooper, waxed copper trap do not retard or prevent the oxidation of nearby copper blocks.
+
+=== Trap ===
+[[Living Block|Living]] copper traps, will attempt to pathfind towards the nearest player. When coming in contact with a player, it will spawn a cage of copper bars of the same variant of the copper trap around them, trapping them.
+
+The copper cage has 25 copper bars (17 more than that used to produce the copper trap) and removing all the blocks that were previously in the copper bars' position, including blocks like [[bedrock]].
+
+'''Cage render''' 
+{{Tabber|
+tabname1=Unoxidized copper trap
+|tabcontent1=
+{{Block structure renderer|
+Z=copper_bars[north=true,south=true]
+|X=copper_bars[east=true,west=true]
+|a=copper_bars[east=true,south=true]
+|b=copper_bars[west=true,south=true]
+|c=copper_bars[east=true,north=true]
+|d=copper_bars[west=true,north=true]
+|Y=copper_bars[north=true,south=true,east=true,west=true]
+|W=copper_bars[north=true,south=true,east=true]
+|N=copper_bars[south=true,east=true,west=true]
+|S=copper_bars[north=true,east=true,west=true]
+|E=copper_bars[north=true,south=true,west=true]
+|aXb,Z+Z,cXd;aXb,Z+Z,cXd;aNb,WYE,cSd
+|marks=1,0,1#114514}}
+|tabname2=Exposed copper trap
+|tabcontent2=
+{{Block structure renderer|
+Z=exposed_copper_bars[north=true,south=true]
+|X=exposed_copper_bars[east=true,west=true]
+|a=exposed_copper_bars[east=true,south=true]
+|b=exposed_copper_bars[west=true,south=true]
+|c=exposed_copper_bars[east=true,north=true]
+|d=exposed_copper_bars[west=true,north=true]
+|Y=exposed_copper_bars[north=true,south=true,east=true,west=true]
+|W=exposed_copper_bars[north=true,south=true,east=true]
+|N=exposed_copper_bars[south=true,east=true,west=true]
+|S=exposed_copper_bars[north=true,east=true,west=true]
+|E=exposed_copper_bars[north=true,south=true,west=true]
+|aXb,Z+Z,cXd;aXb,Z+Z,cXd;aNb,WYE,cSd
+|marks=1,0,1#114514}}
+|tabname3=Weathered copper trap
+|tabcontent3={{Block structure renderer|
+Z=weathered_copper_bars[north=true,south=true]
+|X=weathered_copper_bars[east=true,west=true]
+|a=weathered_copper_bars[east=true,south=true]
+|b=weathered_copper_bars[west=true,south=true]
+|c=weathered_copper_bars[east=true,north=true]
+|d=weathered_copper_bars[west=true,north=true]
+|Y=weathered_copper_bars[north=true,south=true,east=true,west=true]
+|W=weathered_copper_bars[north=true,south=true,east=true]
+|N=weathered_copper_bars[south=true,east=true,west=true]
+|S=weathered_copper_bars[north=true,east=true,west=true]
+|E=weathered_copper_bars[north=true,south=true,west=true]
+|aXb,Z+Z,cXd;aXb,Z+Z,cXd;aNb,WYE,cSd
+|marks=1,0,1#114514}}
+|tabname4=Oxidized copper trap
+|tabcontent4={{Block structure renderer|
+Z=oxidized_copper_bars[north=true,south=true]
+|X=oxidized_copper_bars[east=true,west=true]
+|a=oxidized_copper_bars[east=true,south=true]
+|b=oxidized_copper_bars[west=true,south=true]
+|c=oxidized_copper_bars[east=true,north=true]
+|d=oxidized_copper_bars[west=true,north=true]
+|Y=oxidized_copper_bars[north=true,south=true,east=true,west=true]
+|W=oxidized_copper_bars[north=true,south=true,east=true]
+|N=oxidized_copper_bars[south=true,east=true,west=true]
+|S=oxidized_copper_bars[north=true,east=true,west=true]
+|E=oxidized_copper_bars[north=true,south=true,west=true]
+|aXb,Z+Z,cXd;aXb,Z+Z,cXd;aNb,WYE,cSd
+|marks=1,0,1#114514}}
+
+}}
+
+== Sounds ==
+{{Sound table/Block/Copper/JE}}
+<!--Apparently, this behavior doesn't exist with this block.
+=== Unique ===
+{{:Block of Copper/Sounds|copper trap|JE=1}}-->
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Trap
+|spritetype=block
+|nameid=copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Trap
+|spritetype=block
+|nameid=exposed_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Trap
+|spritetype=block
+|nameid=weathered_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Trap
+|spritetype=block
+|nameid=oxidized_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Trap
+|spritetype=block
+|nameid=waxed_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Trap
+|spritetype=block
+|nameid=waxed_exposed_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Trap
+|spritetype=block
+|nameid=waxed_weathered_copper_trap
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Trap
+|spritetype=block
+|nameid=waxed_oxidized_copper_trap
+|foot=1
+}}
+
+== Advancements ==
+{{load advancements|You Played Yourself|page=Java Edition 26w14a}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== Trivia ==
+* According to one of the developers, copper and [[iron trap]]s are a reference to the [[mod]] SecurityCraft.<ref>{{Tweet|bl4ckscor3|2040056700078555477|Fun fact for those of you who played the April Fools' Day snapshot 26w14a and got imprisoned by an iron or copper trap: Those are a reference to the Cage Trap in the mod SecurityCraft that I've been a part of the dev team of since long before I joined Mojang. Did you notice it?}}</ref>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Joke}}
+{{Navbox jokes|26w14a}}
+
+[[lzh:銅阱]]
+[[pt:Edição Java 26w14a/Copper Trap]]
+[[zh:铜陷阱]]

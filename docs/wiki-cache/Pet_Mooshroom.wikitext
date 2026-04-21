@@ -1,0 +1,163 @@
+{{about|the joke mob|the normal variant|Mooshroom|other uses|Pet (disambiguation)}}
+{{joke feature}}
+{{Infobox entity
+|group1=Red
+|1-1=Mooshroom.png
+|group2=Brown
+|2-1=Brown Mooshroom.png
+| health = {{Hp|8}}
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| size = Height: 1.4 blocks<br>Width: 0.9 blocks
+| speed = ?
+| spawn = On mine start when "Pet Mooshroom" unlock is active
+| usableitems = {{drop|Item|Lead}}<br>{{drop|Item|Name Tag}}
+}}
+
+The '''pet mooshroom''' is a pet variant of the [[mooshroom]] introduced in [[25w14craftmine]].
+
+== Spawning ==
+A pet mooshroom spawns next to the player on [[Mine (dimension)|mine]] start when the "Pet Mooshroom" [[Player Unlock]] is active.
+
+== Drops ==
+Pet mooshroom drops nothing when it's killed.
+
+== Behavior ==
+The pet mooshroom is similar to the regular [[mooshroom]], but there are still some differences:
+*The [[player]]'s [[melee attack]] cannot damage the pet mooshroom.
+*The player cannot obtain [[milk bucket]] by {{control|using}} a [[bucket]] on a pet mooshroom.
+*The player cannot obtain [[mushroom stew]] by {{control|using}} a [[bowl]] on a pet mooshroom.
+*The brown variant of pet mooshroom cannot be [[fed]] [[flower]]s.
+
+== Sounds ==
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Cow idle1.ogg
+|sound2=Cow idle2.ogg
+|sound3=Cow idle3.ogg
+|sound4=Cow idle4.ogg
+|subtitle=Cow moos <ref group=sound name=LousyEvents>The mooshroom reuses many of the cow's sound events instead of having its own, resulting in these unintuitive subtitles - see {{bug|MC-98316}}</ref>
+|source=neutral
+|description=Randomly
+|id=entity.cow.ambient|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.ambient|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Cow hurt1.ogg
+|sound2=Cow hurt2.ogg
+|sound3=Cow hurt3.ogg
+|subtitle=Cow dies<ref group=sound name=LousyEvents/> 
+|source=neutral
+|description=When a mooshroom dies
+|id=entity.cow.death|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.death|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|subtitle=Cow hurts<ref group=sound name=LousyEvents/>
+|source=neutral
+|description=When a mooshroom is damaged
+|id=entity.cow.hurt|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.hurt|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=0.4
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Cow step1.ogg
+|sound2=Cow step2.ogg
+|sound3=Cow step3.ogg
+|sound4=Cow step4.ogg
+|subtitle=Footsteps 
+|source=neutral
+|description=While a mooshroom is walking
+|id=entity.cow.step|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom convert1.ogg
+|sound2=Mooshroom convert2.ogg
+|subtitle=Mooshroom transforms 
+|source=neutral
+|description=When a mooshroom is struck by lightning
+|id=entity.mooshroom.convert
+|translationkey=subtitles.entity.mooshroom.convert
+|volume=1.5
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom eat1.ogg
+|sound2=Mooshroom eat2.ogg
+|sound3=Mooshroom eat3.ogg
+|sound4=Mooshroom eat4.ogg
+|subtitle=Mooshroom eats 
+|source=neutral
+|description=When a brown mooshroom is fed a flower
+|id=entity.mooshroom.eat
+|translationkey=subtitles.entity.mooshroom.eat
+|volume=2.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.95, or 1.05 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Cow milk1.ogg
+|sound2=Cow milk2.ogg
+|sound3=Cow milk3.ogg
+|subtitle=Cow gets milked<ref group=sound name=LousyEvents/>
+|source=neutral
+|description=When a mooshroom is milked
+|id=entity.cow.milk|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.cow.milk|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Mooshroom gets milked 
+|source=neutral
+|description=When a mooshroom is milked with a bowl
+|id=entity.mooshroom.milk
+|translationkey=subtitles.entity.mooshroom.milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound name=milkpitch>Can be 1.0, 0.9, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|subtitle=Mooshroom gets milked suspiciously
+|source=neutral
+|description=When a brown mooshroom is milked with a bowl after being fed a flower
+|id=entity.mooshroom.suspicious_milk
+|translationkey=subtitles.entity.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound name=milkpitch/>
+|distance=16}}
+| {{SoundLine
+|sound=Shear.ogg
+|subtitle=Shears click 
+|source=neutral
+|description=When a mooshroom is sheared
+|id=entity.mooshroom.shear
+|translationkey=subtitles.item.shears.shear
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+== Issues ==
+{{April Fools issue list}}
+
+== Navigation ==
+{{Navbox entities|joke}}
+{{Navbox jokes|25w14craftmine}}
+
+[[Category:Joke mobs]]
+
+[[ja:Pet Mooshroom]]
+[[zh:宠物哞菇]]

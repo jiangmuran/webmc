@@ -1,0 +1,423 @@
+{{For}}
+{{Infobox entity
+| image1 = Phantom.gif
+| image1caption = {{JE}}
+| image2 = Phantom BE.gif
+| image2caption = {{BE}}
+| invimage2 = Phantom Spawn Egg
+| health = {{hp|20}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}
+| damage = '''{{IN|Java}}:'''<br>Easy & Normal: {{hp|2}}<br>Hard: {{hp|3}} <br>'''{{IN|Bedrock}}:'''<br>Easy: {{hp|4}}<br>Normal: {{hp|6}}<br>Hard: {{hp|9}}
+| spawn = In the [[Overworld]] at nighttime or during thunderstorms, when player has not entered a bed or died for ≥3 ingame days
+| size = '''Height:''' 0.5 Blocks <br> '''Width:''' 0.9 Blocks
+| speed = 0.7
+}}
+'''Phantoms''' are flying [[undead]] [[hostile mob]]s that spawn in the night sky when the [[player]] has not lain in a [[bed]] or died for three or more in-game days. They attack by diving at the player from the sky to bite them.
+
+== Spawning ==
+[[File:Phantom at night.png|thumb|Two phantoms at night.]]
+Phantoms spawn unless the [[game rule]] <code>spawn_phantoms</code>{{only|je|short=1}} or <code>doInsomnia</code>{{only|be|short=1}} is set to <code>false</code>. The spawning mechanics differ between ''[[Java]]'' and [[Bedrock Edition|''Bedrock'']] editions. In both editions, they spawn in the [[Overworld]] above a [[player]] whose "Time Since Last Rest" [[statistic]] is at least 1 hour (72000 ticks or 3 in-game days).{{verify|It seems to be longer in Bedrock}} This statistic is reset when the player dies or enters a [[bed]]. This does not require skipping the night. <!--confusing statement, multiplayer phantom spawning is still dependent per-playerPhantoms may still spawn in multiplayer if there are any players who have not slept for 3 in-game days.--> Furthermore, the player must not have a block overhead that [[opacity|blocks light]] in any way; for example, leaves prevent phantoms from spawning as they have a light opacity of 2, but [[glass]] does not, as its light opacity is 0. Phantoms do not spawn above players in [[Spectator]] mode, but they do spawn above players in [[Creative]] mode.<ref>{{bug|MC-145177|||WAI}}</ref>
+
+=== ''Bedrock Edition'' ===
+Phantom spawning is similar to other monsters spawning: the spawn location must have a light level of 7 or less, and spawns are limited by the monster population cap. Phantoms are also subject to a density cap of 5. Phantom spawn attempts are made on surface blocks throughout the same spawn radius as other monsters. However, when a phantom spawn attempt succeeds, the phantom appears somewhere in a 21×15×21 cube centered 28 blocks above the player instead of at the block where the spawn attempt occurred.
+
+This means phantoms can also spawn during daytime as long as there are suitable blocks around players who are directly below the sky. The number of phantoms spawned is 1-2 in [[Easy]] difficulty, 1-3 in [[Normal]], and 1-4 in [[Hard]]. Blocks that can spawn phantoms needs to count as surface, that is, they have to be the highest spawnable block having no solid blocks directly above them. A solid floor under a roof of leaves, with at least 8 air blocks in between, meets this criteria.
+
+=== ''Java Edition'' ===
+[[File:PhantomSpawnRange.png|thumb|The phantom's spawn range in ''Java Edition''. The glass at the bottom indicates the player's position, the red stained glass indicates phantom spawning locations, and the blue stained glass indicates the bounding box of the spawn range.]]
+Phantoms attempt to spawn every {{tooltip|1–2 minutes|1200–2400 ticks}}. They spawn only if it is night or a thunderstorm is happening, the player is above sea level (y=64) with sky visible directly above (cobwebs do not block this), and the [[local difficulty]] is greater than a randomly chosen value between 0.0 and 3.0. The formula {{fraction|''x''−72000|''x''}} represents the chance of a successful spawn, where ''x'' is the number of ticks since the player last entered a bed or died. This roughly comes to a {{fraction|1|4}} (25.0%) chance on day 4, a {{fraction|2|5}} (40.0%) chance on day 5, a {{fraction|3|6}} ({{fraction|1|2}}) (50.0%) chance on day 6, {{fraction|4|7}} (about 57.1%) chance on day 7, and so on.
+
+If all conditions are met, a group of phantoms attempts to spawn 20–34 blocks above the player, and off to the side by a [[Chebyshev distance]] of up to 10 blocks. The number of phantoms spawned is 1-2 in [[Easy]] difficulty, 1-3 in [[Normal]], and 1-4 in [[Hard]]. Phantoms can spawn inside buildings, if the player is outside and the building is both near enough and the building has a large enough cavity for them to spawn inside.
+
+Phantoms count toward the hostile [[mob]] cap, but they do not adhere to it when spawning.<ref>{{bug|MC-198101}}</ref> Their spawning mechanic is based on the location of players in the world rather than by chance, unlike regular [[mob spawning]]. Phantom spawning is completely independent of biome, meaning they can spawn in biomes that normally prevent hostile mob spawning such as [[mushroom fields]]<ref>{{bug|MC-126778}}</ref>, [[Deep Dark|deep dark]]<ref>[[bugtracker:MC/issues/MC-305640|MC-305640]]</ref> and [[the void]].<ref>{{bug|MC-127599}}</ref> The number of phantoms that spawn indirectly increase in number every consecutive night a player has not entered a bed, as there is a higher chance that phantoms spawn every time there is a spawn attempt. They then stop spawning when the player lies down in bed.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Phantom Membrane|notes=player|quantity=0-1|lootingquantity=0-1}}
+}}
+* {{xp|5}} when killed by the player or a tamed wolf.
+
+== Behavior ==
+[[File:Phantom 2.0.png|thumb|right|A phantom swooping at the [[player]]. In addition, a [[spider]] is stalking the player and a [[sheep]], a [[plains village]], and some [[pig]]s can be seen in the background.]]
+When idle, phantoms fly around in a roughly circular pattern within 15 to 25 blocks of a [[player]] horizontally and within 24 to 35 blocks of a player vertically. They leave a trail of gray smoke while they fly. Their [[movement speed]] is one of the fastest of any mob, up to 20 blocks per second. They have a large search radius, targeting and following players from 64 blocks away. Once every 10-20 seconds{{only|bedrock|short=1}} or every 8-12 seconds{{only|je|short=1}}, they swoop in to attack. If stopped or hurt during this action, the phantom retreats back to its original elevation with sky visibility. When a path to its original elevation is obstructed by a block, the phantom continues attempting to return to its original elevation until it either attacks or moves out from under the block. In the case of spawning under a high glass ceiling, phantoms spawn, immediately attack, and then fly up to the glass (even despawning in the process if they get far enough). Phantoms attack exposed players in beds, but do not attack players in [[Creative|creative mode]]. Phantoms switch targets if a player has spawned them but another player qualifies to be attacked, however they are neutralized if the spawning or targeted player resets their timer.
+
+Phantoms can move through water at their normal speed and do not drown.
+
+A phantom's body disappears when under the [[Invisibility]] effect, but its eyes and smoke [[particle]]s are still visible.
+
+[[Cat]]s hiss at phantoms that are currently attacking players, and phantoms try to stay at least 16 blocks away from them, ignoring blocks obstructing line of sight. {{IN|bedrock}}, phantoms also avoid [[ocelot]]s in the same manner.
+
+Being an [[undead]] mob, they are: 
+* damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* unaffected by the status effects [[Regeneration]] and [[Poison]].
+* ignored by the [[wither]].
+* affected by the [[Smite]] enchantment.
+* unable to swim in [[water]], but do not drown.
+* a threat to [[armadillo]]s, causing them to hide in their shell.
+
+Like [[zombie]]s and [[skeleton]]s, phantoms burn in sunlight. They burn even when equipped with [[helmet]]s through commands.<ref>{{bug|MC-146985||Helmeted phantoms still burn under the sunlight}}</ref> Phantoms leave a trail of [[particles]] behind each wing.
+
+The eyes of phantoms are emissive with [[Vibrant Visuals]].
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Phantom idle1.ogg
+|sound2=Phantom idle2.ogg
+|sound3=Phantom idle3.ogg
+|sound4=Phantom idle4.ogg
+|sound5=Phantom idle5.ogg
+|subtitle=Phantom screeches
+|source=hostile
+|description=Randomly
+|id=entity.phantom.ambient
+|translationkey=subtitles.entity.phantom.ambient
+|volume=0.8
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Phantom flap1.ogg
+|sound2=Phantom flap2.ogg
+|sound3=Phantom flap3.ogg
+|sound4=Phantom flap4.ogg
+|sound5=Phantom flap5.ogg
+|sound6=Phantom flap6.ogg
+|subtitle=Phantom flaps
+|source=hostile
+|description=Periodically
+|id=entity.phantom.flap
+|translationkey=subtitles.entity.phantom.flap
+|volume=0.95-1.0
+|pitch=0.95-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Phantom hurt1.ogg
+|sound2=Phantom hurt2.ogg
+|sound3=Phantom hurt3.ogg
+|subtitle=Phantom hurts
+|source=hostile
+|description=When a phantom is damaged
+|id=entity.phantom.hurt
+|translationkey=subtitles.entity.phantom.hurt
+|volume=0.75
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Phantom death1.ogg
+|sound2=Phantom death2.ogg
+|sound3=Phantom death3.ogg
+|subtitle=Phantom dies
+|source=hostile
+|description=When a phantom dies
+|id=entity.phantom.death
+|translationkey=subtitles.entity.phantom.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Phantom swoop1.ogg
+|sound2=Phantom swoop2.ogg
+|sound3=Phantom swoop3.ogg
+|sound4=Phantom swoop4.ogg
+|subtitle=Phantom swoops
+|source=hostile
+|description=When a phantom dives down to attack
+|id=entity.phantom.swoop
+|translationkey=subtitles.entity.phantom.swoop
+|volume=7.0
+|pitch=0.95-1.05
+|distance=16}}
+| {{SoundLine
+|sound=Phantom bite1.ogg
+|sound2=Phantom bite2.ogg
+|subtitle=Phantom bites
+|source=hostile
+|description=When a phantom attacks something
+|id=entity.phantom.bite
+|translationkey=subtitles.entity.phantom.bite
+|volume=0.3
+|pitch=0.9-1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Phantom idle1.ogg
+|sound2=Phantom idle2.ogg
+|sound3=Phantom idle3.ogg
+|sound4=Phantom idle4.ogg
+|sound5=Phantom idle5.ogg
+|source=hostile
+|description=Randomly
+|id=mob.phantom.idle
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Phantom flap1.ogg
+|sound2=Phantom flap2.ogg
+|sound3=Phantom flap3.ogg
+|sound4=Phantom flap4.ogg
+|sound5=Phantom flap5.ogg
+|sound6=Phantom flap6.ogg
+|source=hostile
+|description=Periodically
+|id=mob.phantom.flap
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Phantom hurt1.ogg
+|sound2=Phantom hurt2.ogg
+|sound3=Phantom hurt3.ogg
+|source=hostile
+|description=When a phantom is damaged
+|id=mob.phantom.hurt
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Phantom death1.ogg
+|sound2=Phantom death2.ogg
+|sound3=Phantom death3.ogg
+|source=hostile
+|description=When a phantom dies
+|id=mob.phantom.death
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Phantom swoop1.ogg
+|sound2=Phantom swoop2.ogg
+|sound3=Phantom swoop3.ogg
+|sound4=Phantom swoop4.ogg
+|source=hostile
+|description=When a phantom dives down to attack
+|id=mob.phantom.swoop
+|volume=10.0
+|pitch=0.95-1.05}}
+| {{SoundLine
+|sound=Phantom bite1.ogg
+|sound2=Phantom bite2.ogg
+|source=hostile
+|description=When a phantom attacks something
+|id=mob.phantom.bite
+|volume=10.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Phantom
+|spritetype=entity
+|nameid=phantom
+|entitytags=burn_in_daylight,can_breathe_under_water, fall_damage_immune, ignores_poison_and_regen, inverted_healing_and_harm, undead, wither_friends, sensitive_to_smite 
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Phantom
+|spritetype=entity
+|nameid=phantom
+|showentityfamily=y
+|entityfamily=mob,monster,phantom,undead
+|id=58
+|foot=1}}
+
+=== Entity data ===
+Phantoms have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|size}}: The size of the phantom. Ranges from {{cd|0}} to {{cd|64}}, similar to [[slime]]s. Unlike slimes, phantoms always have a constant {{health|20}} HP, and deal {{health|6}}+{{cd|Size}} damage. Naturally spawned phantoms are always size 0.  
+** {{nbt|int-array|anchor_pos}}: The phantom, when not actively attacking, attempts to circle around X,Y,Z. Appears to reset to a point above the target player every time the phantom flies up after a swoop. Set to spawn location if not specified.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;Two Birds, One Arrow;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|VNoCDrDMnyc}}
+
+== History ==
+=== Development ===
+{{HistoryTable|{{HistoryLine||November 1, 2017|link=https://www.youtube.com/watch?v=Cf9-ngK-LgM|[[File:Unused Phantom Design (3).png|48px]] Phantoms are first shown on [[wikipedia:Youtube|YouTube]] (back then known only as '''Mob B''' and '''The Monster of the Night Skies'''). The colored version later appeared after it won the vote.}}|{{HistoryLine||November 14, 2017|link=https://minecraft.net/en-us/article/meet-mob-b|The article about the phantom was published, which introduced a community vote option for the phantom at [[MINECON Earth 2017]].}}|{{HistoryLine||November 18, 2017|link={{tweet|minecraft|931953200625840132}}|The phantom wins the vote at MINECON Earth. It is the second of mobs that were added as a result of the community voting for it.}}|{{HistoryLine||December 13, 2017|link={{tweet|jeb_|940891459812720640}}| 
+[[File:Unused Phantom Design (2).png|48px]] A newer version of the model is shown by jeb. Adrian Östergård jokingly refers to it as a Raybow.}}|{{HistoryLine||December 13, 2017|link={{tweet|jeb_|940955214810615808}}| 
+[[File:Unused Phantom Design (1).png|48px]] Another version of the model is shown by jeb later that day with another model and a missing texture.}}|{{HistoryLine||?| 
+[[File:EarlIsh_Phantom.png|48px]] At some point in development, the phantoms model and texture resembled the final design.}}|{{HistoryLine||?| 
+[[File:RedPhantomRenderDifTextFromMCD.png|48px]] A texture almost identical to the final design with a red color.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|Java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Phantom JE1.png|48px]] Added phantoms with a placeholder drop of 1-4 [[leather]].}}|{{HistoryLine|||dev=18w09a|Phantoms no longer spawn in [[the End]].
+|Phantoms now [[despawn]] at daytime.}}
+|{{HistoryLine|||dev=18w10a|[[File:Phantom JE2.gif|48px]] The phantom's model and texture have been changed.}}
+|{{HistoryLine|||dev=18w10c|Phantoms are now considered [[undead]].}}
+|{{HistoryLine|||dev=18w10d|Phantoms now burn in [[sunlight]] like most undead [[mob]]s.
+|Phantoms no longer [[despawn]] at daytime.}}
+|{{HistoryLine|||dev=18w14a|Phantoms now drop 0-1 [[phantom membrane]], instead of [[leather]].}}
+|{{HistoryLine|||dev=18w19a|The phantom's animation has been changed to have the wings flap quicker and smoother.
+|Phantoms now drop [[experience]].<ref>{{bug|MC-128712}}</ref>}}
+|{{HistoryLine|||dev=pre1|Phantoms now have new flapping [[sound]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|Phantoms are now required for the "[[Two Birds, One Arrow]]" advancement.}}
+|{{HistoryLine|||dev=18w44a|Phantoms are now afraid of [[cat]]s.}}
+|{{HistoryLine|||dev=pre3|The damage of phantoms has been reduced from {{hp|6}} to {{hp|2}}.<ref>{{bug|MC-154372|resolution=WAI}}</ref>}}
+|{{HistoryLine||1.15|dev=19w36a|Phantom spawning can now be toggled with the [[game rule]] {{cd|doInsomnia}}.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.1|[[File:Phantom BE1.gif|48px]] Added phantoms with the health of {{hp|10}}, with a placeholder drop of 1-4 [[leather]].{{verify}}}}|{{HistoryLine|||dev=beta 1.6.0.5|Phantoms now drop [[phantom membrane]]s.
+|The phantom's health has been increased from {{hp|10}} to {{hp|20}}.
+|Phantoms now burn in direct sunlight.
+|Due to a bug, phantoms are now able to [[Damage#Drowning|drown]].<ref>{{bug|MCPE-101541}}</ref>}}
+|{{HistoryLine|||dev=beta 1.6.0.6|Phantom spawning can now be toggled with the [[game rule]] {{cd|doInsomnia}}.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Phantoms are now afraid of [[cat]]s.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.22|Phantoms are no longer able to drown.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Phantom BE1.gif|48px]] Added phantoms.
+|Phantoms only have 10 health.
+|The [[spawn limit|maximum number]] of phantoms in a world is 5.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.83|wiiu=none|switch=none|Phantoms are now afraid of [[cat]]s.}}}}
+
+=== Data history ===
+
+{{HistoryTable
+|{{HistoryLine|Java}}
+|{{HistoryLine||1.20.3|dev=23w40a|Phantoms are now part of the {{cd|#can_breathe_under_water}} and {{cd|#undead}} [[Tag|tags]].}}
+|{{HistoryLine||1.21.5|dev=25w07a|The <code>Size</code> field has been renamed to <code>size</code>.|The <code>AX</code>, <code>AY</code>, and <code>AZ</code> fields have been collected into a single <code>anchor_pos</code> field.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:Red Phantom.jpg|thumb|200px|The red phantom design was scrapped because it looked like a [[Nether]] mob.]]
+* At one point before the release of [[Java Edition 18w10a|18w10a]], the phantom texture was made red, but it was decided that it appeared too much like a [[Nether]] mob.<ref name="meetphantom">{{Mcnet|meet-phantom|Meet the Phantom|March 12, 2018|[[Tom Stone]]}}</ref>
+* The unused red design was used later {{in|dungeons}} as a [[Dungeons:Phantom Familiar|pet phantom]].
+* The phantom was originally going to have a mouth, like the drawing shown during [[MINECON Earth 2017|MINECON Earth]], but it was eventually scrapped because "it looked so much like a [[muppet]]".<ref name="meetphantom" /> Earlier designs can be seen on [[Minecraft]]'s [[wikipedia:Instagram|Instagram]] account.<ref>{{Cite Instagram|minecraft|BkdvBUXjqcD|The first mob to ever be voted into Minecraft by the community! Originally known as ‘Mob B - The Monster Of The Night Skies’, this creature won your heart - and your vote! And so it is that we now present you with the many development phases of the Phantom!|June 25, 2018}}</ref>
+* The sounds of the phantom were taken from [[Samuel Åberg]]'s son screaming.<ref>{{Citation|url=https://www.asoundeffect.com/minecraft-dungeons-game-audio/|title=Spoopy and Serene - Making The Sound of 'Minecraft Dungeons' With Mojang's Audio Team|author=Adriane Kuzminski|website=A Sound Effect|date=July 15, 2020}}</ref><ref>{{ytl|f0k7JNFGhms|Growth & Evolution - Part 3: 15 Years of Minecraft|Minecraft|June 5, 2024|t=492s}}</ref>
+* Despite being flying mobs, phantoms can destroy [[turtle egg]]s when on top of them.<ref>{{bug|MC-248332|3=Bees, ghasts, phantoms, and allays can destroy turtle eggs}}</ref>
+* In its [[Mob Menagerie]], phantoms real-world parallel was stated to be [[bat]]s, as well as mentions of the extinct pterosaur, {{Wikipedia|quetzalcoatlus}}.<ref>{{Mcnet|phantom|Mob Menagerie: Phantom|February 16, 2026|[[Duncan Geere]]}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Phantom JE2 BE1.png|Non-moving phantom (this state cannot be seen in-game)
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Invisible Phantom.png|A phantom under the [[Invisibility]] effect.
+Phantoms on fire.png|Phantoms exposed to sunlight and taking [[fire]] [[damage]].
+Phantom Wing Animation 320p.gif|The [[particle]]s produced by the phantom's wings can be clearly seen.
+Phantom swoop.png|A phantom swooping down at a player at night leaving a trail of gray smoke.
+BoatPhantom.png|A phantom stuck in a player's boat, caught in the daylight.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+Invisibility Phantom.jpg|A player avoiding a phantom by using the [[Invisibility]] effect.
+Phantom Swarm.png|A swarm of phantoms.
+Too Many Phantoms.jpg|Another swarm of phantoms.
+Flaming Phantom.jpg|A phantom on fire.
+1.19.4-pre1.jpg|A player riding a phantom.
+</gallery>
+
+=== Development images === 
+<gallery>
+Phantom Colorful.png|A phantom with a model template texture.
+Phantom Missing Texture.png|A phantom with [[Missing texture|no texture]].
+Jeb Phantoms.jpg|Phantoms flying overhead.
+Phantom (pre-release) 1.jpg|A phantom flying high in the air, using its model and texture from 18w07a. 
+Phantom (pre-release) 2.jpg|A phantom flying high in the air, using its model and texture from 18w07a. The smoke particles beside each of its wings can be seen.
+Phantom Poses.jpg|The phantom's poses.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Mob vote 1.jpg|Mob B alongside the other mobs.
+Mob B The Night Skies.gif|Mob B finally wins in Minecon Earth Mob Vote.
+Phantom revisions.png|All the revisions of the phantom design, except for the red revision.
+Red Phantom.jpg|The red phantom revision.
+Phantom Sketches.jpg|Concept sketches.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Phantom (texture).png|Phantom texture file.
+Phantomoldtexture.png|Old texture before 18w10a.
+</gallery>
+
+=== In other media ===
+<gallery>
+15th Anniversary Phantom.png|Artwork of a phantom.
+LEGO Phantom.png|[[LEGO Minecraft]] Phantom.
+Oh My.png|"Phantoms and Witches and Ghasts, Oh My," an officially licensed T-Shirt.
+Phantom plush.jpg|Phantom Plush.
+Phantom demotivational.jpeg|A demotivational poster of a phantom.
+A phantom's kindness.jpeg|World Kindness Day artwork.
+Use extra care and look out for hazards.png|A phantom lunging at the {{MCE|Nitwit}}.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Undead mobs]]
+[[Category:Monster mobs]]
+[[Category:Flying mobs]]
+
+[[de:Phantom]]
+[[es:Fantasma]]
+[[fr:Phantom]]
+[[hu:Fantom]]
+[[it:Fantasma]]
+[[ja:ファントム]]
+[[ko:팬텀]]
+[[pl:Fantom]]
+[[pt:Espectro]]
+[[ru:Фантом]]
+[[th:แฟนท่อม]]
+[[uk:Фантом]]
+[[zh:幻翼]]

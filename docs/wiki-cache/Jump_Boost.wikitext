@@ -1,0 +1,215 @@
+{{About|the effect|the potion|Potion of Leaping}}
+{{Infobox effect
+|image = Jump Boost.png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-jump-boost}} #FDFF84 (light yellow)
+|type=Positive
+| invimage = Potion of Leaping
+| invimage2 = Splash Potion of Leaping
+| invimage3 = Lingering Potion of Leaping
+| invimage4 = Arrow of Leaping
+}}
+'''Jump Boost''' is a [[status effect]] that increases the [[jumping]] height of the bearer.
+
+== Mechanics ==
+{{:Calculators/Jump boost|style=float:right; clear:right;}}
+Jump Boost increases the jump strength of the [[player]] from the base 0.42 blocks/tick (countered by gravity to give the maximum jump height). Each level increases the player's jump velocity by 0.1 blocks/tick. It also reduces one block height in [[fall damage]] calculation each level. 
+
+Arbitrary levels can be set via [[commands]]. {{IN|java}}, negative levels decrease jump height and increase fall damage (which also causes the [[player]] to start taking damage from short falls that would normally do no damage); extreme negative levels eliminate all jumping ability and cause damage even when stepping off a slab.
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+!Cause
+!Potency
+!Length
+!Notes
+|-
+|{{ItemLink|Potion of Leaping}}
+|I
+|3:00
+|Increases jump height to 1{{frac|13|16}} blocks.
+|-
+|{{ItemLink|Potion of Leaping}} (extended)
+|I
+|8:00
+|Increases jump height to 1{{frac|13|16}} blocks, but for a longer duration.
+|-
+|{{ItemLink|Potion of Leaping}} II
+|II
+|1:30
+|Increases jump height to 2{{frac|1|2}} blocks.
+|-
+|{{ItemLink|Splash Potion of Leaping}}
+|I
+|3:00
+|Increases jump height to 1{{frac|13|16}} blocks.
+|-
+|{{ItemLink|Splash Potion of Leaping}} (extended)
+|I
+|8:00
+|Increases jump height to 1{{frac|13|16}} blocks, but for a longer duration.
+|-
+|{{ItemLink|Splash Potion of Leaping}} II
+|II
+|1:30
+|Increases jump height to 2{{frac|1|2}} blocks.
+|-
+|{{ItemLink|Lingering Potion of Leaping}}
+|I
+|0:45
+|Moving into the particle cloud increases jump height to 1{{frac|13|16}} blocks.
+|-
+|{{ItemLink|Lingering Potion of Leaping}} (extended)
+|I
+|2:00
+|Moving into the particle cloud increases jump height to 1{{frac|13|16}} blocks, but for a longer duration.
+|-
+|{{ItemLink|Lingering Potion of Leaping}} II
+|II
+|0:22
+|Moving into the particle cloud increases jump height to 2{{frac|1|2}} blocks.
+|-
+|{{ItemLink|Arrow of Leaping}}
+|I
+|0:22
+|Getting hit by the arrow increases jump height to 1{{frac|13|16}} blocks.
+|-
+|{{ItemLink|Arrow of Leaping}} (extended)
+|I
+|1:00
+|Getting hit by the arrow increases jump height to 1{{frac|13|16}} blocks, but for a longer duration.
+|-
+|{{ItemLink|Arrow of Leaping}} II
+|II
+|0:11
+|Getting hit by the arrow increases jump height to 2{{frac|1|2}} blocks.
+|-
+|{{BlockLink|Beacon}} set to Jump Boost
+|I
+|0:05 – 0:17
+|Replenishes when in range.
+|-
+|{{BlockLink|Beacon}} set to Jump Boost II
+|II
+|0:17
+|Replenishes when in range. Requires beacon pyramid level 4.
+|- 
+|{{ItemLink|Suspicious stew}}
+|I
+|0:05
+|Must be made with a {{BlockLink|cornflower}}.
+|- 
+|{{ItemLink|Suspicious stew}}
+|I
+|0:08
+|[[Trade]]d from expert farmer [[villager]]s.
+|-
+|{{ItemLink|Suspicious stew}}
+|I
+|0:07-0:10
+|Found in [[shipwreck]] supply chests and in [[suspicious sand]] generated in [[desert well]]s.
+|}
+
+== Immune mobs ==
+*[[Wither]]s and [[ender dragon]]s are immune to Jump Boost.
+*Flying mobs, hovering [[blaze]]s, and [[shulker]]s are unaffected by jump boost.
+
+== Data values ==
+=== ID ===
+{{EffectIDLink}}
+{{edition|java}}:
+{{ID table
+|edition=java
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Jump Boost
+|spritetype=effect
+|nameid=jump_boost
+|id=8
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Jump Boost
+|spritetype=effect
+|nameid=jump_boost
+|id=8
+|translationkey=potion.jump
+|foot=1}}
+
+== Advancements ==
+{{load advancements|A Furious Cocktail;How Did We Get Here?}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Jump Boost is added along with 18 other status effects but is currently unobtainable in regular gameplay.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[File:Jump Boost JE1 BE1.png|18px]] The effect sprite for Jump Boost has been added to <samp>[[inventory.png]]</samp>.
+|Jump Boost can now be obtained through [[Java Edition removed features#Potions|potions]].
+|It is also now functional.}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|Jump Boost can no longer be obtained through potions.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added the ability to get Jump Boost from the newly introduced [[beacon]].}}
+|{{HistoryLine||1.8|dev=14w27a|The effect color has been changed from {{color|#786297}} to {{color|#22FF4C}}.
+|Officially added the {{ItemLink|potion of Leaping}}, along with its splash variant. The name was present within the game files prior to this update.}}
+|{{HistoryLine||1.9|dev=15w31a|Added the {{ItemLink|arrow of Leaping}}.
+|Potions no longer use damage values to determine their effect, the effects moved to the <code>Potion</code> NBT.}}
+|{{HistoryLine|||dev=15w33a|Added the [[lingering potion]] of Leaping.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Jump Boost JE2 BE2.png|18px]] Changed effect icon texture.
+|Jump Boost can now be obtained from [[suspicious stew]].}}
+|{{HistoryLine||1.19.4|dev=Pre-release 3|The potion and effect color have been changed from {{color|#22FF4C}} to {{color|#FDFF84}}.}}
+|{{HistoryLine||1.21.4|dev=24w45a|Decreased the duration of Jump Boost obtained from suspicious stew made with a cornflower from 6 seconds to 5 seconds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev= build 1|[[File:Jump Boost JE1 BE1.png|18px]] Added Jump Boost status effect but unobtainable at the time.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added {{ItemLink|potion of Leaping}}, along with its splash potion variants, obtainable only in Creative.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Potion and splash potion of Leaping now obtainable in Survival.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added the {{ItemLink|arrow of Leaping}}.}} 
+|{{HistoryLine||v0.16.0|dev=build 4|Jump Boost can now be obtained from [[beacon]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Jump Boost can now be obtained from lingering potions of Leaping.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.5|[[File:Jump Boost JE2 BE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Jump Boost can now be obtained from [[suspicious stew]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Jump Boost is added along with 18 other status effects but is currently unobtainable in regular gameplay.{{check version}}}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Jump Boost JE1 BE1.png|18px]] The effect sprite for Jump Boost has been added.{{check version}}}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added the ability to get Jump Boost from the newly introduced [[beacon]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added the {{ItemLink|potion of Leaping}} and [[splash potion]] of Leaping.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added the [[lingering potion]] of Leaping.
+|Added the {{ItemLink|arrow of Leaping}}.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[File:Jump Boost JE2 BE2.png|18px]] Changed effect icon texture.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+<gallery>
+Jump Boost Potion Cauldron BE2.png|A cauldron filled with the [[potion of Leaping]] {{in|bedrock}}.
+</gallery>
+
+== Navigation ==
+{{Navbox effects}}
+
+[[Category:Transport]]
+
+[[de:Sprungkraft]]
+[[es:Supersalto]]
+[[fr:Sauts améliorés]]
+[[ja:跳躍力上昇]]
+[[ko:점프 강화]]
+[[pt:Supersalto]]
+[[ru:Прыгучесть]]
+[[zh:跳跃提升]]

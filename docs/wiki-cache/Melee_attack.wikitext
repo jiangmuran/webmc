@@ -1,0 +1,615 @@
+{{For||Attack}}
+[[File:Melee attack.gif|thumb|An example of a melee attack.]]
+A '''melee attack''' is a type of [[attack]] that mobs and players use to cause damage through close contact with a target.
+
+== Attack damage ==
+All entities have a base melee '''attack damage'''. The final attack damage calculation includes the mob's base attack damage, main hand item damage, and [[status effect]]s.
+
+=== Base value ===
+==== ''Java Edition'' ====
+{{IN|je}}, base melee attack damage is the computed value of the [[attribute]] <code>attack_damage</code>. The damage from the main hand item and status effects are essentially Op0 attribute modifiers. Using the {{cmd|attribute}} command to modify the base value or modifiers can change the base melee attack damage for the corresponding entity. For example, the base melee attack damage of a player holding a wooden sword with the Strength II effect would be calculated as:
+
+<pre>
+  1 (Player base attack value)
++ 3 (Wooden sword damage, Op0 modifier, value 3)
++ 6 (Strength II effect, Op0 modifier, value 6)
+= 10
+</pre>
+
+The attack damage of the main hand items is shown in the table below (including the player's {{hp|1}} base attack value, matching the value displayed in the tooltip):
+
+{| class="wikitable"
+! Item !! colspan=7 | Attack damage
+|-
+| [[Sword]] 
+| {{ItemSprite|Wooden Sword}} {{Hp|4}}
+| {{ItemSprite|Golden Sword}} {{Hp|4}}
+| {{ItemSprite|Stone Sword}} {{Hp|5}}
+| {{ItemSprite|Copper Sword}} {{Hp|5}}
+| {{ItemSprite|Iron Sword}} {{Hp|6}}
+| {{ItemSprite|Diamond Sword}} {{Hp|7}}
+| {{ItemSprite|Netherite Sword}} {{Hp|8}}
+|-
+| [[Axe]] 
+| {{ItemSprite|Wooden Axe}} {{Hp|7}}
+| {{ItemSprite|Golden Axe}} {{Hp|7}}
+| {{ItemSprite|Stone Axe}} {{Hp|9}}
+| {{ItemSprite|Copper Axe}} {{Hp|9}}
+| {{ItemSprite|Iron Axe}} {{Hp|9}}
+| {{ItemSprite|Diamond Axe}} {{Hp|9}}
+| {{ItemSprite|Netherite Axe}} {{Hp|10}}
+|-
+| [[Spear]] 
+| {{ItemSprite|Wooden Spear}} {{Hp|1}}
+| {{ItemSprite|Golden Spear}} {{Hp|1}}
+| {{ItemSprite|Stone Spear}} {{Hp|2}}
+| {{ItemSprite|Copper Spear}} {{Hp|2}}
+| {{ItemSprite|Iron Spear}} {{Hp|3}}
+| {{ItemSprite|Diamond Spear}} {{Hp|4}}
+| {{ItemSprite|Netherite Spear}} {{Hp|5}}
+|-
+| [[Pickaxe]] 
+| {{ItemSprite|Wooden Pickaxe}} {{Hp|2}}
+| {{ItemSprite|Golden Pickaxe}} {{Hp|2}}
+| {{ItemSprite|Stone Pickaxe}} {{Hp|3}}
+| {{ItemSprite|Copper Pickaxe}} {{Hp|3}}
+| {{ItemSprite|Iron Pickaxe}} {{Hp|4}}
+| {{ItemSprite|Diamond Pickaxe}} {{Hp|5}}
+| {{ItemSprite|Netherite Pickaxe}} {{Hp|6}}
+|-
+| [[Shovel]] 
+| {{ItemSprite|Wooden Shovel}} {{Hp|2.5}}
+| {{ItemSprite|Golden Shovel}} {{Hp|2.5}}
+| {{ItemSprite|Stone Shovel}} {{Hp|3.5}}
+| {{ItemSprite|Copper Shovel}} {{Hp|3.5}}
+| {{ItemSprite|Iron Shovel}} {{Hp|4.5}}
+| {{ItemSprite|Diamond Shovel}} {{Hp|5.5}}
+| {{ItemSprite|Netherite Shovel}} {{Hp|6.5}}
+|-
+| [[Hoe]] 
+| colspan=7 align=center | {{ItemSprite|Wooden Hoe}} {{ItemSprite|Golden Hoe}} {{ItemSprite|Stone Hoe}} {{ItemSprite|Copper Hoe}} {{ItemSprite|Iron Hoe}} {{ItemSprite|Diamond Hoe}} {{ItemSprite|Netherite Hoe}} {{Hp|1}}
+|-
+| [[Trident]]
+| colspan=7 align=center | {{ItemSprite|Trident}} {{Hp|9}}
+|-
+| [[Mace]]
+| colspan=7 align=center | {{ItemSprite|Mace}} {{Hp|6}}
+|-
+| Other Items
+| colspan=7 align=center | {{Hp|1}}
+|}
+
+The [[Strength]] status effect increases attack damage by {{Hp|3}} per level, while the [[Weakness]] effect reduces it by {{Hp|4}} per level.
+
+==== ''Bedrock Edition'' ====
+{{IN|be}}, the base melee attack damage is calculated differently for different entities:
+
+For [[player]]s, the calculation sequence for base melee attack damage is as follows:
+# Get the player's base attack value.
+# Add the main hand item damage.
+# Calculate the Strength status effect.
+# Calculate the Weakness status effect.
+
+For example, the base melee attack damage of a player holding a wooden sword with both Strength II and Weakness I effects would be calculated as:
+
+<pre>
+1 (Player base attack value) + 4 (Wooden sword damage) = 5
+(5 &times; 1.3 + 1) &times; 1.3 + 1 = 10.75 (Strength II)
+10.75 &times; 0.8 - 0.5 = 8.1 (Weakness I)
+</pre>
+
+For most non-player entities, the calculation sequence for base melee attack damage is as follows:
+# Get the mob's base attack value.
+# Calculate the Strength status effect.
+# Calculate the Weakness status effect.
+# Add the main hand item damage.
+
+For example, the base melee attack damage of a [[zombie]] holding a wooden sword with both Strength II and Weakness I effects would be calculated as:
+
+<pre>
+3 (Zombie base attack value)
+(3 &times; 1.3 + 1) &times; 1.3 + 1 = 7.37 (Strength II)
+7.37 &times; 0.8 - 0.5 = 5.396 (Weakness I)
+5.396 + 4 (Wooden sword damage) = 9.396
+</pre>
+
+The attack damage of the main hand items is shown in the table below (including the player's {{hp|1}} base attack value, so the values are 1 higher than what is displayed in the tooltip):
+
+{| class="wikitable"
+! Item !! colspan=7 | Attack damage
+|-
+| [[Sword]] 
+| {{ItemSprite|Wooden Sword}} {{Hp|5}}
+| {{ItemSprite|Golden Sword}} {{Hp|5}}
+| {{ItemSprite|Stone Sword}} {{Hp|6}}
+| {{ItemSprite|Copper Sword}} {{Hp|6}}
+| {{ItemSprite|Iron Sword}} {{Hp|7}}
+| {{ItemSprite|Diamond Sword}} {{Hp|8}}
+| {{ItemSprite|Netherite Sword}} {{Hp|9}}
+|-
+| [[Axe]] 
+| {{ItemSprite|Wooden Axe}} {{Hp|4}}
+| {{ItemSprite|Golden Axe}} {{Hp|4}}
+| {{ItemSprite|Stone Axe}} {{Hp|5}}
+| {{ItemSprite|Copper Axe}} {{Hp|5}}
+| {{ItemSprite|Iron Axe}} {{Hp|6}}
+| {{ItemSprite|Diamond Axe}} {{Hp|7}}
+| {{ItemSprite|Netherite Axe}} {{Hp|8}}
+|-
+| [[Spear]] 
+| {{ItemSprite|Wooden Spear}} {{Hp|2}}
+| {{ItemSprite|Golden Spear}} {{Hp|2}}
+| {{ItemSprite|Stone Spear}} {{Hp|3}}
+| {{ItemSprite|Copper Spear}} {{Hp|3}}
+| {{ItemSprite|Iron Spear}} {{Hp|4}}
+| {{ItemSprite|Diamond Spear}} {{Hp|5}}
+| {{ItemSprite|Netherite Spear}} {{Hp|6}}
+|-
+| [[Pickaxe]] 
+| {{ItemSprite|Wooden Pickaxe}} {{Hp|3}}
+| {{ItemSprite|Golden Pickaxe}} {{Hp|3}}
+| {{ItemSprite|Stone Pickaxe}} {{Hp|4}}
+| {{ItemSprite|Copper Pickaxe}} {{Hp|4}}
+| {{ItemSprite|Iron Pickaxe}} {{Hp|5}}
+| {{ItemSprite|Diamond Pickaxe}} {{Hp|6}}
+| {{ItemSprite|Netherite Pickaxe}} {{Hp|7}}
+|-
+| [[Shovel]] 
+| {{ItemSprite|Wooden Shovel}} {{Hp|2}}
+| {{ItemSprite|Golden Shovel}} {{Hp|2}}
+| {{ItemSprite|Stone Shovel}} {{Hp|3}}
+| {{ItemSprite|Copper Shovel}} {{Hp|3}}
+| {{ItemSprite|Iron Shovel}} {{Hp|4}}
+| {{ItemSprite|Diamond Shovel}} {{Hp|5}}
+| {{ItemSprite|Netherite Shovel}} {{Hp|6}}
+|-
+| [[Hoe]] 
+| {{ItemSprite|Wooden Hoe}} {{Hp|3}}
+| {{ItemSprite|Golden Hoe}} {{Hp|3}}
+| {{ItemSprite|Stone Hoe}} {{Hp|4}}
+| {{ItemSprite|Copper Hoe}} {{Hp|4}}
+| {{ItemSprite|Iron Hoe}} {{Hp|5}}
+| {{ItemSprite|Diamond Hoe}} {{Hp|6}}
+| {{ItemSprite|Netherite Hoe}} {{Hp|7}}
+|-
+| [[Trident]]
+| colspan=7 align=center | {{ItemSprite|Trident}} {{Hp|9}}
+|-
+| [[Mace]]
+| colspan=7 align=center | {{ItemSprite|Mace}} {{Hp|6}}
+|-
+| Other Items
+| colspan=7 align=center | {{Hp|1}}
+|}
+
+The Strength status effect can be calculated using the recursive formula <math>d_n=1.3d_{n-1}+1</math> or the general formula <math>d_n=1.3^nd_0+\frac{1.3^n-1}{0.3}</math>, where <math>d_0</math> is the input attack damage, <math>d_n</math> is the output attack damage, and <math>n</math> is the level of the Strength status effect.
+
+The Weakness status effect can be calculated using the recursive formula <math>d_n=0.8d_{n-1}-0.5</math> or the general formula <math>d_n=0.8^nd_0+\frac{0.8^n-1}{0.4}</math>, where <math>d_0</math> is the input attack damage, <math>d_n</math> is the output attack damage, and <math>n</math> is the level of the Weakness status effect. If the result is less than 0, the output attack damage is 0.
+
+=== Enchanted values ===
+The [[enchantment]]s on items in the main hand will affect attack damage, referred to here as '''enchantment attack damage'''.
+
+For different entities, enchantments have different attack damage:
+* [[Sharpness]] works on all entities. {{IN|je}}, it is calculated as <math>0.5n+0.5</math>, where <math>n</math> is the level of the Sharpness enchantment; {{IN|be}}, each level generates {{Hp|1.25}} attack damage.
+* [[Smite]] only works on [[undead mob]]s, generating {{Hp|2.5}} attack damage per level.
+* [[Bane of Arthropods]] only works on [[arthropod]]s, generating {{Hp|2.5}} attack damage per level.
+* [[Impaling]] only works on [[aquatic mobs]]{{only|je}} or mobs in [[water]] or touched by [[rain]]{{only|be}}, generating {{Hp|2.5}} attack damage per level.
+
+The total of all enchantment attack damage is the current enchantment attack damage. {{IN|be}}, enchantment attack damage is rounded down after summing, so if Sharpness I and Smite I are both active, the enchantment attack damage would be {{hp|3}} instead of {{hp|3.75}}.
+
+=== Bonus attack damage ===
+{{See also|Mace#Smash attack}}
+After calculating the base melee attack damage and enchantment attack damage, the game also determines whether to add a '''bonus attack damage''' based on the nature of the current main hand item and the state of the attacked entity. Currently, only [[mace]] has bonus attack damage.
+
+The bonus attack damage of the mace only takes effect when the entity falls from a height greater than 1.5 blocks and not gliding{{only|java}}, with the bonus attack damage adjusted according to the fall height:
+* If the fall height ''f'' is greater than 1.5 blocks but not more than 3 blocks, the bonus attack damage is <math>4f</math>.
+* If the fall height ''f'' is greater than 3 blocks but not more than 8 blocks, the bonus attack damage is <math>2f+6</math>.
+* If the fall height ''f'' is greater than 8 blocks, the bonus attack damage is <math>f+14</math>.
+* If the mace has the [[density]] enchantment and the enchantment level is ''I'', an additional <math>0.5lf</math> bonus attack damage is added according to the fall height ''f''.
+
+== Attack cooldown ==
+[[File:Weapon attack speed comparison.gif|thumb|All of the different attack speed values from slowest to fastest.]]
+{{About|the attacking mechanic exclusive to {{JE}}|the mechanic used by certain items|Use cooldown|other uses|Cooldown|section=1}}
+{{exclusive|Java|section=1}}
+[[File:AttackIndicatorCrosshair.png|thumbnail|Attack indicator (below the crosshair), empty and full.]]
+[[File:AttackIndicatorHotbar.png|thumbnail|180px|Attack indicator (next to the hotbar), empty and full]]
+
+The attack cooldown is a meter below the crosshair that reduces damage when attacking before the meter is full. An attack cooldown percentage of 84.8% or above is also required for critical hits, sprint-knockback attacks, and sweep attacks to activate. The indicator can be optionally changed to display next to the hotbar instead of under the crosshair in [[Video Settings]].
+
+Attack speed is controlled by the <code>attack_speed</code> attribute. The default value is 4, meaning that 4 full-damage melee attacks can be performed per {{convert|20|game tick|second}}, however [[damage immunity]] allows only 2 of these attacks to connect against a single target. The [[Haste]] effect increases attack speed by 10% per level, and the [[Mining Fatigue]] effect decreases it by 10% per level. [[Spear]] jab attacks specifically have a forced attack cooldown, meaning they cannot attack at all until they reach 100% cooldown charge.
+
+Tools and weapons have different attack speeds that replace the base value of 4 when held in the mainhand. The following table lists all attack speeds from fastest to slowest:
+
+{| class="wikitable"
+!colspan=9 |Item attack speeds
+|-
+! rowspan=2 |Item type!! colspan=3 |Attack speed
+|-
+!Value!!In seconds!!In ticks
+|-
+|<abbr title="Bare hand">{{EntitySprite|Player}}</abbr>{{ItemSprite|Diamond Hoe}}{{ItemSprite|Netherite Hoe}}||4||0.25 seconds||5 ticks
+|-
+|{{ItemSprite|Iron Hoe}}||3||0.333 seconds||6 ticks
+|-
+|{{ItemSprite|Stone Hoe}}{{ItemSprite|Copper Hoe}}||2||0.5 seconds||10 ticks
+|-
+|{{ItemSprite|Wooden Sword}}{{ItemSprite|Golden Sword}}{{ItemSprite|Stone Sword}}{{ItemSprite|Copper Sword}}{{ItemSprite|Iron Sword}}{{ItemSprite|Diamond Sword}}{{ItemSprite|Netherite Sword}}||1.6||0.625 seconds||12 ticks
+|-
+|{{ItemSprite|Wooden Spear}}||1.54||0.65 seconds||12 ticks
+|-
+|{{ItemSprite|Stone Spear}}||1.33||0.75 seconds||15 ticks
+|-
+|{{ItemSprite|Wooden Pickaxe}}{{ItemSprite|Golden Pickaxe}}{{ItemSprite|Stone Pickaxe}}{{ItemSprite|Copper Pickaxe}}{{ItemSprite|Iron Pickaxe}}{{ItemSprite|Diamond Pickaxe}}{{ItemSprite|Netherite Pickaxe}}||1.2||0.833 seconds||16 ticks
+|-
+|{{ItemSprite|Copper Spear}}||1.18||0.85 seconds||16 ticks
+|-
+|{{ItemSprite|Trident}}||1.1||0.909 seconds||18 ticks
+|-
+|{{ItemSprite|Golden Spear}}{{ItemSprite|Iron Spear}}||1.05||0.95 seconds||19 ticks
+|-
+|{{ItemSprite|Golden Axe}}{{ItemSprite|Diamond Axe}}{{ItemSprite|Netherite Axe}}{{ItemSprite|Wooden Shovel}}{{ItemSprite|Golden Shovel}}{{ItemSprite|Stone Shovel}}{{ItemSprite|Copper Shovel}}{{ItemSprite|Iron Shovel}}{{ItemSprite|Diamond Shovel}}{{ItemSprite|Netherite Shovel}}{{ItemSprite|Wooden Hoe}}{{ItemSprite|Golden Hoe}}||1||1 second||20 ticks
+|-
+|{{ItemSprite|Diamond Spear}}||0.95||1.05 seconds||21 ticks
+|-
+|{{ItemSprite|Iron Axe}}||0.9||1.111 seconds||22 ticks
+|-
+|{{ItemSprite|Netherite Spear}}||0.87||1.15 seconds||22 ticks
+|-
+|{{ItemSprite|Wooden Axe}}{{ItemSprite|Stone Axe}}{{ItemSprite|Copper Axe}}||0.8||1.25 seconds||25 ticks
+|-
+|{{ItemSprite|Mace}}||0.6||1.667 seconds||33 ticks
+|}
+
+The time from one melee attack, breaking a block, or switching the main-hand item to the next melee attack that can deal full damage is called the '''attack cooldown time'''. The ratio of the time elapsed since the above actions to the total attack cooldown time is the '''attack cooldown completion'''. The number of full-damage melee attacks a player can perform per {{convert|20|game tick|second}} is the '''attack speed'''.
+
+Attack cooldown time can be calculated from attack speed. If the attack speed is <math>s</math>, the attack cooldown time <math>T</math> is <math>\frac{20}{s}</math> game ticks. Since game ticks do not have decimal values, the actual attack cooldown time is rounded: if the decimal part is greater than 0.5, it is rounded up; otherwise, it is rounded down.
+
+Attack cooldown completion can also be calculated from these values. If the time since the last melee attack, block break, or main-hand item switch is <math>t</math> game ticks, then the attack cooldown completion <math>p</math> is <math>\text{clamp}(\frac{t+0.5}{T}, 0, 1)</math>. The visual component related to attack cooldown completion is the '''attack indicator''', which has a slight difference in rendering percentage compared to the actual attack cooldown completion: <math>\text{clamp}(\frac{t}{T}, 0, 1)</math>, meaning the displayed value lags by half a game tick.
+
+Attack cooldown affects base melee attack damage, enchanted attack damage, and additional attack damage differently. Given attack cooldown completion <math>p</math>, the base melee attack damage is modified by <math>0.2+0.8p^2</math>, the enchanted attack damage by <math>p</math>, while additional attack damage remains unaffected. The effect on base melee attack damage can stack with critical hits.
+
+=== Calculator ===
+{{Calculator|meleeDamage}}
+
+== Attack range ==
+[[File:Weapon reach comparison.gif|thumb|The attack range of other weapons (3 blocks) compared to the spear (4.5 blocks).]]
+{{main|Interaction range}}
+The reach in blocks of a given player attack is dependent on the player's weapon, and is controlled by the {{attr|entity_interaction_range}} attribute. If the target is outside the reach of the attack range, the melee attack does not connect. For entities, it is instead dependent on the entity's attack bounding box.
+
+=== Spear attacks ===
+For both players using the jab or charge attacks of the [[spear]] and any entity that can use the spear's charge attacks, targets within range are selected by first attempting to find an obstructing block for the attack, which will then become the maximum range, then trying to find all entities within a bounding box representing the range that are directly between the maximum and minimum range (assuming no block intersections, 1-2.25 blocks for most entities, and 2-4.5 blocks for players) in the direction of the view vector (with inflated hitboxes of 0.125 blocks, effectively decreasing minimum range and increasing maximum range by that amount).
+
+=== Player attacks ===
+For players, the attack range is the range they can physically reach with an attack. The default attack range is 3 (3 blocks). {{IN|JE}}, attack range is dependent on the <code>attack_range</code> data component. When in Creative Mode, the attack range increases to 5 blocks when holding any item except a spear, while spears do not change their attack range in Creative Mode.
+
+When {{attr|entity_interaction_range}} and {{cd|attack_range}} are set to different values, {{cd|attack_range}} takes priority.
+
+=== Entity attacks ===
+For most entities, the attack range is defined as a horizontally extended area beyond their collision box, referred to below as the '''attack bounding box'''. Similarly, the attacked entity has a range within which it can be struck, referred to as the '''hit bounding box'''. A melee attack can occur when the attack bounding box intersects with the hit bounding box. Entities performing melee attacks must also maintain a clear line of sight to the attacked entity, preventing attacks through blocks. Since entities cannot see themselves, they cannot perform melee attacks on themselves. In [[Mounts of Mayhem]], there is a second '''minimum bounding box''' representing the minimum reach of the entity, which will prevent the attacker from attacking the attacked entity if it is within its range.
+
+The attack bounding boxes for an entity are obtained for the entity's minimum range (if non-zero) and maximum range boxes as follows: <ref group="note">If holding an item without the "minecraft:attack_range" [[data component]], maximum range is <math>\sqrt{2.04}-0.6</math> (approximately 0.828 blocks).</ref>
+* Get the entity's collision box. If the entity is [[riding]] another entity, use the collision bounding box of both entities, with the height range taken from the entity's collision box.
+* Expand the collision box by the reach for this box (either minimum or maximum).
+* If the entity is a [[ravager]], reduce the attack bounding box by 0.05 blocks horizontally.
+
+The hit bounding box is calculated as follows:
+* If the entity is not riding another entity, the hit bounding box is the entity's collision box.
+* If the entity is riding another entity, the lowest point of the hit bounding box is set to the higher of the entity's collision box bottom and the riding position of the entity.
+
+== Attack knockback ==
+{{main|Knockback (mechanic)}}
+When melee attack damage is dealt, the attacked entity will be pushed backward; this is knockback. The horizontal direction of knockback aligns with the attacker's viewpoint. The knockback of an attack is dependent on the player's weapon, and is controlled by the [[Attribute#Attack knockback|attack knockback]] attribute.
+
+The magnitude of knockback depends on whether the attacker is sprinting and the item in their main hand. This is described using '''knockback strength'''. Knockback strength is 0 by default. If the main-hand item has the [[knockback]] enchantment, the knockback strength increases by the enchantment's level.
+
+{{IN|je}}, only players can knock back non-living entities. Knockback strength determines the '''knockback speed''', which is half of the knockback strength. If the target of the knockback is a non-living entity, it receives a vertical motion of 0.1 blocks per tick (2 blocks per second) and a horizontal knockback speed. If the target is a living entity, the knockback speed is reduced based on its knockback resistance (attribute <code>knockback_resistance</code>). If the knockback resistance is 1, knockback does not occur. Next, the entity's horizontal movement speed is halved, and knockback speed is applied. If the entity is touching the ground, its vertical speed is also halved, and upward knockback speed is applied. However, the final vertical speed does not exceed 0.4 blocks per tick (8 blocks per second). After knockback occurs, the attacking entity immediately stops sprinting, and their horizontal speed is reduced to 60% of its original value.
+
+== Hitbox margin ==
+[[File:Spear hitbox inflation.gif|thumb|The 0.125 hitbox margin on spears.]]
+The hitbox margin increases the distance at which an entity can still be hit when attacking outside of its hitbox. In vanilla this mechanic is only used by spears, with both their jab attack and charge attack having a hitbox margin of 0.125. All other items have a hitbox margin of 0. It is controlled by the <code>attack_range</code> component's <code>hitbox_margin</code> field, and the default value is 0.3 (this value in practice is only used if the component is included but no value is given, as if the component is not included the default value is 0).
+{{-}}
+
+== Special attacks ==
+Melee attacks can be special attacks<ref>{{reddit|c5mqwv||...you can perform special attacks (crits, sweeping, knockback)...|jeb_|June 26, 2019}}</ref> when meeting certain conditions:
+
+=== Critical hit ===
+[[File:Sword critical hit.gif|thumb|Performing a critical hit.]]
+{{For||Critical}}
+All weapons aside from [[spear]]s have the ability to do critical hits, which deal 50% extra damage.
+
+To perform a critical hit, the following conditions must be met:
+* The player must be [[falling]].
+* The player's attack cooldown percentage must be at 84.8% or above.{{only|JE}}
+* The player must not be performing a sprint-knockback attack.{{only|JE}}
+** In {{JE}}, players ordinarily cannot perform critical hits while [[sprinting]], because a sprint-knockback attack is performed instead. However, by continuing to hold down the sprint key after performing a sprint-knockback attack, all successive hits can be critical hits, and sprint-knockback attacks become impossible until the sprint is ended.
+** In {{BE}}, critical hits can be performed simultaneously with sprint-knockback attacks.
+* The player must not be on the ground, meaning they must not be standing on any surface with block collision boxes.
+* The player must not be inside climbable blocks (like [[ladder]]s, [[vines]], [[cobweb]]s, or [[trapdoor]]s that are open on the same side as a ladder).
+* The player must not be in [[water]] (they can be in lava, however).
+* The player must not be riding on a [[mount]] or riding in a [[vehicle]].
+* The player must not have [[Slow Falling]], [[Blindness]], or [[Levitation]] effects.
+
+{{IN|je}}, critical hits increase damage before calculating damage enchantments, while {{in|be}} they increase damage after calculating damage enchantments. When a critical hit is successfully performed, small star-shaped particles will burst out of the hit entity, and a unique sound effect is played. The [[ender dragon]] is immune to critical hits in ''Java Edition''.
+
+=== Sprint-knockback attack ===
+[[File:Sword sprint knockback attack.gif|thumb|Performing a sprint-knockback attack.]]
+{{main|Sprint-knockback attack}}
+All weapons aside from spears have the ability to do [[sprint-knockback attack]]s, which deal extra [[Knockback (mechanic)|knockback]] while sprinting and cancel the sprint. {{IN|JE}}, sprint-knockback attacks play a unique sound when performed, and they require an attack cooldown charge of at least 84.8%. [[Spear]]s are the only item type that cannot do sprint-knockback attacks.
+
+In {{JE}}, sprint-knockback attacks cannot be performed at the same time as critical hits or sweep attacks. If a sprint-knockback attack is performed at the same time as a critical hit, the sprint-knockback attack takes priority. They can however be performed at the same time as [[smash attack]]s and [[crushing blow]]s.
+
+The extra inflicted knockback stacks with the [[Knockback]] enchantment. Like the Knockback enchantment, sprint-knockback attacks do not increase knockback against entities that are immune to knockback, such as [[iron golem]]s or shielding [[player]]s. The only exceptions to this are [[armor stand]]s and [[boat]]s, which ordinarily do not take knockback when hit but do when hit by a sprint-knockback attack.
+{{-}}
+
+=== Sweep attack ===
+[[File:Sword sweep attack.gif|thumb|Performing a sweep attack.]]
+{{exclusive|Java|section=1}}
+{{main|Sword#Sweep attack}}
+[[Sword]]s have the special ability to do [[sweep attack]]s, which damage nearby entities with a gale particle.
+
+A sweep attack occurs only if all of the following conditions are met:
+* The attack cooldown percentage is at 84.8% or above.
+* The player is not performing a critical hit.
+* The player is not performing a sprint-knockback attack.
+* The player is on the ground, meaning they must be standing on any solid surface.
+* The player's mainhand weapon is a sword.
+* The melee attack is able to do damage.
+* The difference in movement distance between the current game tick and the previous tick does not exceed the <code>movement_speed</code> attribute value (default: 0.1 blocks per tick, or 2 blocks per second).
+
+The range of a sweep attack is determined by both the attacked entity and the player's position. Based on the attacked entity's collision box, the range extends 1 block horizontally in all directions and 0.25 blocks vertically both up and down. All entities within 3 blocks of the player (excluding the attacking player themselves, the primary attacked entity, and [[armor stand]]s with the {{nbt|bool|Marker}} tag set to <samp>true</samp>) will be affected by the sweep attack.
+
+By default, a sweep attack deals {{Hp|1}} damage. However, this damage can be increased using the Sweeping Damage Ratio [[attribute]]. If the calculated value of <code>sweeping_damage_ratio</code> is ''r'', and the sum of base melee attack damage and additional attack damage is ''d'', the sweep attack damage is calculated as <math>1+rd</math>.
+
+==== Sweeping damage ratio ====
+The [[Sweeping Edge]] enchantment increases the sweeping damage ratio attribute, which increases the damage of the sweep attack damage to entities close to the attacked entity, but not the attacked entity itself. If the level of Sweeping Edge is ''n'', then the Sweeping Damage Ratio increases by <math>\frac{nd}{n+1}</math>. By default, Sweeping Edge I, II, and III increase sweep attack damage by 50%, 67%, and 75% of the base melee attack damage plus additional attack damage, respectively.
+
+Similar to melee attacks, sweep attacks also apply knockback. However, knockback from sweep attacks is not affected by the knockback enchantment or sprinting. If the affected entity has 0 knockback resistance, the sweep attack applies a knockback speed of 0.4 blocks per tick.
+
+=== Crushing blow ===
+[[File:Crushing blow (inflicting).gif|thumb|Performing a crushing blow.]]
+[[File:Crushing blow (receiving).gif|thumb|Being hit by a crushing blow.]]
+[[Axe]]s have the special ability to do crushing blows<ref>{{citation|url=http://www.mojang.com/2016/02/minecraft-19-combat-update/|archive-url=https://web.archive.org/web/0/http://www.mojang.com/2016/02/minecraft-19-combat-update/|title=Axes have a special crushing blow attack.|author=Searge|website=Mojang.com|date=February 29, 2016}}</ref>, which disable the use of the target's shield for 5 seconds. Crushing blows are triggered only against targets that are actively holding their shield up.
+
+Crushing blows affect all of the target's shields, rather than affecting only the one that was being used. Crushing blows do not trigger against targets whose shields are not yet past their 250ms activation delay. Crushing blows are triggered regardless of attack cooldown percentage and, unlike sweep attacks, they can be triggered at the same time as critical hits and sprint-knockback attacks.
+
+Crushing blows work by inflicting a 5 second [[use cooldown]]. When a shield is stunned, it cannot be used by pressing the {{ctrl|use}} button{{only|je}} or {{ctrl|sneaking}} {{only|be}}. Performing a crushing blow does not consume durability from the axe, in the same way that other attacks do not consume durability when they're blocked by a shield.
+
+[[Mob]]s that wield axes, such as [[vindicators]] or [[piglin brutes]], perform crushing blows should they hit a player's shield. The melee attack of a [[warden]] also performs a crushing blow should it connect against a player's shield.
+
+In the [[Java Edition Combat Tests]], the stun duration from crushing blows is lengthened by the [[Cleaving]] [[enchantment]], at an additional 0.5 seconds per level with a maximum level of III.
+{{-}}
+
+=== Smash attack ===
+[[File:Mace wind charge.gif|thumb|Performing a smash attack.]]
+{{main|Mace#Smash attack}}
+[[Mace]]s have the special ability to do [[smash attack]]s, which cause extra damage depending on how many blocks were fallen prior to attacking. Connecting a smash attack clears all fall damage that was accumulated prior to the attack. All entities within 2.5 blocks of the smash attack are knocked back. Like crushing blows, smash attacks are triggered regardless of attack cooldown percentage,<ref>{{cite bug|MC|270160|Mace Smash Attacks Activate on Cooldown|resolution=Works As Intended}}</ref> and can be triggered at the same time as critical hits and sprint-knockback attacks. Smash attacks trigger the [[Wind Burst]] enchantment.
+
+To perform a smash attack, the player must not be grounded or in elytra flight, and the fall height used in calculation is simply the starting height (Y coordinate) minus the ending height (Y coordinate). Descending with an [[elytra]] counts as blocks fallen for smash attacks.<ref>{{cite bug|MC|270393|Extra mace damage could be accumulated while using the elytra|resolution=Works As Intended}}</ref> In {{JE}}, the elytra must be unequipped before attacking for the smash attack to activate, as being in elytra flight does not activate a smash attack.<ref name="mace-elytra">{{cite bug|MC|269388|Mace falling damage increase is applied while using an elytra|resolution=Fixed}}</ref> In {{BE}}, unequipping the elytra before attacking is not necessary, as smash attacks activate even while the user is in elytra flight.<ref>{{Cite bug|MCPE|179914|Mace can applies falling damage increase while using an elytra}}</ref>
+
+A successful smash attack causes a mace to deal {{hp|4}} extra damage for each of the first 3 blocks fallen, {{hp|2}} extra damage for each of the next 5 blocks fallen, and {{hp|1}} extra damage for each block fallen after that. The damage of smash attacks is increased by the [[Density]] enchantment by an additional {{hp|0.5}} for each block fallen per level of enchantment, at a maximum level of V.
+
+{{Calculator|maceDamage}}
+
+=== Jab attack ===
+{{main|Spear#Jab attack}}
+[[Spear]]s have the special ability to do [[jab attack]]s, which have 4.5 blocks of reach rather than the typical 3 blocks, can hit multiple entities with a single attack, and inflate the hitboxes of targets by 0.125 making attacks easier to land. Jab attacks have a minimum reach requirement however, where they cannot connect hits if the target is within 2 blocks or less of the user. Jab attacks have a forced cooldown effect that cannot be bypassed:
+* In {{JE}}, they use a variant of the attack cooldown where attacking is not possible until 100% charge, unlike other weapons.
+* In {{BE}}, they instead have a [[use cooldown]] like that of an [[ender pearl]], creating a similar forced-cooldown effect. The use cooldown triggers for all spear tiers in the inventory, not only the tier that was jabbed with.
+A spear can still perform a charge attack while the jab attack is on cooldown, and thus by alternating between jab attacks and charge attacks the rate of attacks can be effectively doubled. Attacking with a jab attack and then following it up with a charge attack causes the charge attack to do less damage depending on the attack cooldown percentage of the prior jab attack.
+
+=== Charge attack ===
+{{main|Spear#Charge attack}}
+Spears have the special ability to do [[charge attack]]s by holding the {{ctrl|use}} button, which deal extra damage depending on the velocity of the user and the target. Like jab attacks, charge attacks have a 4.5 block attack reach, 0.125 hitbox inflation, and the 2 block minimum reach requirement, but do not have any sort of cooldown. Charge attacks can hit multiple entities, but only once for each entity.
+
+Charge attacks can still deal damage while the user is standing still, if the target is moving towards the user. The damage done by the charge attack is its [[#Multipliers|damage multiplier]] multiplied by the velocity of the attacker relative to the target in blocks per second. Charge attacks go through three stages when held out, and the [[tier]] of the spear influences the behavior of its charge attacks:
+* Engaged
+** The first state of a charge attack, indicated by the spear being held out steadily.
+** The attack deals [[damage]], inflicts [[Knockback (mechanic)|knockback]], and dismounts attacked targets from their [[mount]]s.
+* Tired
+** The second state of a charge attack, indicated by the spear rotating sideways and shaking.
+** The attack deals damage and inflicts knockback.
+* Disengaged
+** The final state of a charge attack, indicated by the spear being lowered down to the bottom of the screen.
+** The attack only deals damage.
+
+{{:Calculators/Spear damage}}
+
+== Attack scenario ==
+Melee attacks apply mob's base melee attack damage and deal damage to the target entity in <code>mob_attack</code> damage type. Most mobs perform one melee attack per second, targeting a single intended target for the melee attack, without accidentally harming other targets.
+
+Some mobs melee attack in a different way and have special effects:
+* [[Player]]s can perform a melee attack on a mob or another player by clicking the {{Control|attack}} button while holding any item to deal damage. Players have a greater melee attack range than most mobs and an unlimited attack frequency, allowing them to continuously attack targets without being reached by most mobs.
+* When a player uses a [[trident]] enchanted with [[Riptide]] collides with an entity, they will automatically perform a melee attack on the entities they collide with.
+* [[Cave spider]]s, [[husk]]s, [[wither skeleton]]s, and [[bee]]s deal [[status effect]]s to the entities they attack during a melee attack.
+* [[Iron golem]]s, [[hoglin]]s, and [[zoglin]]s knock their targets into the air during melee attacks.
+* [[Polar bear]]s stand on their hind legs and swing their front paws to perform melee attacks.
+* Entities holding an [[axe]], such as [[vindicator]]s and [[piglin brute]]s, as well as [[warden]]s, will disable the target's [[shield]] during a melee attack for {{convert|100|game tick|second}}.
+* When a [[wither]]'s health falls below 50%, it performs melee attacks in the form of a dash, destroying most blocks it touches during the dash.{{Only|bedrock}}
+* [[Slime]]s and [[magma cube]]s attack all entities they push at once rather than focusing on a single target, and their melee attacks have no frequency limit, allowing them to continuously attack. The [[damage immunity]] mechanic means they can only deal damage twice per second to a single target, but {{in|JE}} if a shield blocks their attack, it does not trigger Damage Immunity, rapidly depleting the shield's durability.
+
+== Attack resolution and attack failure ==
+When performing a melee attack, the game first calculates the attack damage the attacker can deal, then applies damage to the attacked entity and attempts to disable the [[shield]]. After damage is dealt, it calculates [[#Knockback|knockback]], [[#Sweep attack|sweep attack]]{{only|je}}, and [[Fire Aspect]], processes the [[Thorns]] enchantment's reflected damage, applies [[Slowness]] effect by the [[Bane of Arthropods]] to arthropods, and may generate critical hit particles. Finally, the player's [[exhaustion]] increases by 0.1 per successful melee attack.
+
+Melee attacks can fail, and failed melee attacks do not deal damage.
+* If an entity's base melee attack damage is {{hp|0}} and enchanted attack damage is {{hp|0}}, the melee attack always fails, making no sound and triggering no damage event. This also prevents players from damaging [[End crystal]]s and [[armor stand]]s with melee attacks in such cases.
+* If an entity can deal more than {{hp|0}} damage but the attacked entity is immune to this damage or is in a dying state, the melee attack fails, producing a special sound different from a successful melee attack.
+* If an entity's attack damage is not greater than the last damage of the attacked entity's [[damage immunity]], the melee attack fails, producing a distinct sound.
+* In all other cases, a melee attack is considered successful, even if the damage is completely negated by the target's defense or damage immunity.
+
+A failed melee attack does not consume item durability, does not apply knockback, sweep attack{{only|je}}, fire aspect, or shield disabling, and does not generate critical hit particles or increase the player's exhaustion.
+
+== Sounds ==
+{{el|je}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Strong attack1.ogg
+|sound2=Strong attack2.ogg
+|sound3=Strong attack3.ogg
+|sound4=Strong attack4.ogg
+|sound5=Strong attack5.ogg
+|sound6=Strong attack6.ogg
+|subtitle=Strong attack
+|source=player
+|description=When a player deals an attack that does not trigger any other attack sounds
+|id=entity.player.attack.strong
+|translationkey=subtitles.entity.player.attack.strong
+|volume=''varies'' <ref group=sound>0.6 for <code>strong1</code> through <code>strong4</code>, and 0.7 for <code>strong5</code> and <code>strong6</code></ref>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Critical attack1.ogg
+|sound2=Critical attack2.ogg
+|sound3=Critical attack3.ogg
+|subtitle=Critical attack
+|source=player
+|description=When a player deals a critical hit
+|id=entity.player.attack.crit
+|translationkey=subtitles.entity.player.attack.crit
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Knockback attack1.ogg
+|sound2=Knockback attack2.ogg
+|sound3=Knockback attack3.ogg
+|sound4=Knockback attack4.ogg
+|subtitle=Knockback attack
+|source=player
+|description=When a player deals a sprint-knockback attack
+|id=entity.player.attack.knockback
+|translationkey=subtitles.entity.player.attack.knockback
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Sweep attack1.ogg
+|sound2=Sweep attack2.ogg
+|sound3=Sweep attack3.ogg
+|sound4=Sweep attack4.ogg
+|sound5=Sweep attack5.ogg
+|sound6=Sweep attack6.ogg
+|sound7=Sweep attack7.ogg
+|subtitle=Sweeping attack
+|source=player
+|description=When a player deals a sweep attack
+|id=entity.player.attack.sweep
+|translationkey=subtitles.entity.player.attack.sweep
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Weak attack1.ogg
+|sound2=Weak attack2.ogg
+|sound3=Weak attack3.ogg
+|sound4=Weak attack4.ogg
+|subtitle=Weak attack
+|source=player
+|description=When a player deals an attack with no damage
+|id=entity.player.attack.nodamage
+|translationkey=subtitles.entity.player.attack.weak
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Weak attack
+|source=player
+|description=When a player attempts to attack without at least 84.8% attack cooldown
+|id=entity.player.attack.weak
+|translationkey=subtitles.entity.player.attack.weak
+|volume=0.7
+|pitch=1.0
+|distance=16}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Strong attack1.ogg
+|sound2=Strong attack2.ogg
+|sound3=Strong attack3.ogg
+|sound4=Strong attack4.ogg
+|sound5=Strong attack5.ogg
+|sound6=Strong attack6.ogg
+|subtitle=Strong attack
+|source=player
+|description=When a player deals an attack that does not trigger any other attack sounds
+|id=game.player.attack.strong
+|volume=0.2
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Critical attack1.ogg
+|sound2=Critical attack2.ogg
+|sound3=Critical attack3.ogg
+|subtitle=Critical attack
+|source=player
+|description=When a player deals a critical hit
+|id=
+|volume=
+|pitch=}}
+| {{SoundLine
+|sound=Weak attack1.ogg
+|sound2=Weak attack2.ogg
+|sound3=Weak attack3.ogg
+|sound4=Weak attack4.ogg
+|subtitle=Weak attack
+|source=player
+|description=When a player deals an attack with no damage
+|id=game.player.attack.nodamage
+|volume=0.2
+|pitch=0.8-1.2}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added the attack knockback mechanic.}}
+|{{HistoryLine|java Beta}}
+|{{HistoryLine||1.5|The player's base attack damage increased from {{hp|1}} to {{hp|2}}.}}
+|{{HistoryLine||1.8|dev=?|The player's base attack damage decreased from {{hp|2}} to {{hp|1}}.}}
+|{{HistoryLine|||dev=Pre-release|Added the critical hit mechanic, which currently adds a random amount of damage using the formula <math>(+0% ~ +100% weapon damage + 2hp</math> and is calculated after enchantments are added.|Added the sprint-knockback attack mechanic.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||?|Melee attacks now fail if the attack damage does not exceed the target's last [[damage immunity]] threshold.<!-- 1.4.7 - 1.8.9 -->}}
+|{{HistoryLine||?|Critical hits now add a flat 50% extra damage, replacing their previous damage formula, and they're now calculated before enchantments are added.{{check version|Was this a 1.6 or 1.7 change?}}}}
+|{{HistoryLine||1.9|dev=15w34b|Added the attack speed mechanic.}}
+|{{HistoryLine|||dev=15w34c|Critical hits and sprint-knockback attacks now require an attack cooldown percentage of 84.8% or greater|Critical hits and sprint-knockback attacks can no longer be activated simultaniously, and instead the sprint-knockback attack takes priority.|Added the sweep attack mechanic for swords, which currently only deals knockback and requires the player to be standing still or be sneaking.|Added the crushing blow mechanic for axes, which is currently affected by random chance, with its likelihood of activation increased by [[Efficiency]] level and whether or not the user is [[sprinting]].}}
+|{{HistoryLine|||dev=15w41a|Sweep attacks no longer require the player to be standing still or be sneaking.}}
+|{{HistoryLine|||dev=15w47b|Critical hits, sprint-knockback attacks, and sweep attacks now all have unique sound effects.}}
+|{{HistoryLine|||dev=15w49a|Sweep attacks now deal {{hp|1}} damage to entities.}}
+|{{HistoryLine||1.11|dev=16w35a|Crushing blows are no longer affected by random chance, instead always activating 100% of the time, and thus the chance is no longer increased by [[Efficiency]] level and whether or not the user is [[sprinting]].}}
+|{{HistoryLine||1.15.2|dev=Pre-Release 1|Removed an extra pixel from the bottom right corner of the critical hit particle texture.}}
+|{{HistoryLine||1.20.2|dev=23w33a|Changed the way melee attack reach is calculated for entities.}}
+|{{HistoryLine||1.20.5|dev=24w11a|experiment=Update 1.21|Added the smash attack mechanic for maces, which currently adds {{hp|3}} for each block fallen.}}
+|{{HistoryLine||1.21|dev=24w18a|Sweep attack damage is now calculated based on base melee damage and additional damage rather than total melee attack damage.|Smash attacks now add {{hp|4}} for the first 3 blocks fallen, {{hp|2}} for the next 5 blocks fallen, and {{hp|1}} for all subsequent blocks fallen, replacing their previous formula.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added the jab attack and charge attack mechanics for spears.}}
+|{{HistoryLine|||dev=25w42a|Charge attacks now have a delay for connecting repeatedly against a single entity, at 0.5 seconds (10 ticks).
+|Both jab and charge attacks no longer hit through solid blocks, but can still attack through non-solid blocks like cobwebs and tall grass.}}
+|{{HistoryLine|||dev=25w43a|The base damage of charge attacks has been increased from {{hp|0}} to {{hp|1}}, making it so charge attacks always deal at least {{hp|1}} damage.<ref group="note">The extra 1 damage comes specifically from the bare hand fist damage now being added to charge attacks.</ref> This also increases the damage of all charge attacks by {{hp|1}}.
+|Charge attacks now show a visual recoil animation in 1st person when successfully connecting.}}
+|{{HistoryLine|||dev=25w45a|The hitbox inflation on spear attacks that made attacks easier to land has been reduced from <code>0.25</code> to <code>0.125</code>.
+|Charge attacks are now affected by the attack cooldown of the jab attack. This makes it so attacking with a jab attack and then following it up with a charge attack causes the charge attack to do less damage depending on the recharge percentage of the jab attack.}}
+|{{HistoryLine|||dev=pre1|Non-players holding an item with the "minecraft:attack_range" [[data component]] now use the minimum reach and maximum reach to produce their attack bounding boxes.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.30.20|Reduced unarmed damage from {{hp|2}} to {{hp|1}} to match {{el|je}}.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.22|Changed the way melee attack reach is calculated for entities.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added the critical hit sound and particles from {{el|je}}.}}}}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox combat|melee}}
+{{Navbox gameplay}}
+
+[[pt:Ataque corpo a corpo]]
+[[zh:近战攻击]]

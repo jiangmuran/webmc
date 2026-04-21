@@ -1,0 +1,190 @@
+{{for|the generated feature|Glow lichen (feature)}}
+{{Infobox block
+| image = Glow Lichen (D).png
+| image2 = Glow Lichen (texture) JE1.png
+| extratext = [[#Gallery|View all renders]]
+| renewable = Yes
+| stackable = Yes (64)
+| tool = Shears
+| tool2 = Axe
+| light = Yes (7)
+| transparent = Yes
+| flammable = Yes
+| lavasusceptible = Yes
+| waterloggable = Yes
+|}}
+A '''glow lichen''' is a non-solid, light-emitting [[block]]. It can generate, or be placed, on any side of a solid block. It primarily generates on the side of blocks in caves.
+
+== Obtaining ==
+=== Breaking ===
+Glow lichen can be destroyed with anything, most efficiently with an [[axe]]. However, using [[shears]] is the only way to obtain glow lichen. [[Enchanting]] shears with [[Efficiency]] II allows for instant mining.
+{{breaking row|horizontal=1|Glow Lichen|Axe|drop=0|shears=1|sword=0}}
+
+=== Natural generation ===
+{{main|Glow lichen (feature)}}
+
+Glow lichen generates naturally in the interior of caves (at any height) on the surface of [[stone]], [[sulfur]], [[cinnabar]], [[andesite]], [[diorite]], [[granite]], [[calcite]], [[tuff]], [[deepslate]], any [[ore]] and [[dripstone block]]s that are exposed to [[air]] or [[water]] sources. As well as within or upon generated structures, or sometimes even exposed to some surface light.  It can be found underwater, but cannot generate in a [[deep dark]] biome. Glow lichen also is noticeably more common in [[sulfur caves]], than in any other cave biome.
+
+{{block distribution}}
+
+=== Post-generation ===
+{{relevant tutorial|Glow Lichen farming}}
+{{Control|Using}} [[bone meal]] causes glow lichen to spread to a random adjacent block if possible, otherwise the bone meal is not consumed. By fertilizing one lichen with bone meal, it is possible to cover the sides and the top of an adjacent block, but not the back. Otherwise, glow lichen does not spread naturally.
+
+== Usage ==
+=== Light ===
+Glow lichen emits a [[light]] level of 7.
+
+=== Placement ===
+Multiple glow lichens can be placed in the area of one solid block, such as covering three sides of a corner. When such glow lichens are mined, all glow lichens occupying the same block are also mined. Mining with [[shears]] causes all glow lichens in the block to drop.
+
+Glow lichens cannot be broken by flowing [[water]] or [[lava]],<ref>{{bug|MC-212116||Flowing water cannot break glow lichen|WAI}}</ref><ref>{{bug|MCPE-133803||Glow Lichen interrupts water flow|WAI}}</ref> similar to [[sign]]s. Therefore, they may be used to control the flow of water, but not lava, as glow lichens are flammable.
+
+=== Composting ===
+Placing a glow lichen into a [[composter]] has a 50% chance of raising the compost level by 1.
+
+== Sounds ==
+<!--Glow lichen does not produce a sound when falling on the block, but does when stepped on.-->
+{{Sound table/Block/Glow lichen}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Glow Lichen
+|spritetype=block
+|nameid=glow_lichen
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Glow Lichen
+|nameid=glow_lichen
+|spritetype=block
+|id=666
+|foot=1}}
+
+=== Block states ===
+{{see also|Block state}}
+
+{{el|je}}:
+{{bst|down|false|false,true|When true, a glow lichen texture is displayed on the bottom.}}
+{{bst|east|false|false,true|When true, a glow lichen texture is displayed on the east.}}
+{{bst|north|false|false,true|When true, a glow lichen texture is displayed on the north.}}
+{{bst|south|false|false,true|When true, a glow lichen texture is displayed on the south.}}
+{{bst|up|false|false,true|When true, a glow lichen texture is displayed on the top.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this glow lichen.}}
+{{bst|west|false|false,true|When true, a glow lichen texture is displayed on the west.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8,0x10,0x20|multi_face_direction_bits|0|0 to 63|The directions the glow lichen exists. Each bit determines one direction:
+*0x1: Down
+*0x2: Up
+*0x4: South
+*0x8: West
+*0x10: North
+*0x20: East
+0 is unused and it behaves like 63.|foot=1}}
+
+== History ==
+{{info needed section|Verify if the models are correct - particularly check the mirroring}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w03a|<!--[[File:Blank.png|32px]] -->[[File:Glow Lichen (D) JE1.png|32px]] [[File:Glow Lichen (texture) JE1.png|32px]]<!--[[File:Glow Lichen (N) JE1.png|32px]] [[File:Glow Lichen (ND) JE1.png|32px]] [[File:Glow Lichen (W) JE1.png|32px]] [[File:Glow Lichen (WD) JE1.png|32px]] [[File:Glow Lichen (NW) JE1.png|32px]] [[File:Glow Lichen (NWD) JE1.png|32px]]<br>[[File:Glow Lichen (S) JE1.png|32px]] [[File:Glow Lichen (SD) JE1.png|32px]] [[File:Glow Lichen (NS) JE1.png|32px]] [[File:Glow Lichen (NSD) JE1.png|32px]] [[File:Glow Lichen (SW) JE1.png|32px]] [[File:Glow Lichen (SWD) JE1.png|32px]] [[File:Glow Lichen (NSW) JE1.png|32px]] [[File:Glow Lichen (NSWD) JE1.png|32px]]<br>[[File:Glow Lichen (E) JE1.png|32px]] [[File:Glow Lichen (ED) JE1.png|32px]] [[File:Glow Lichen (NE) JE1.png|32px]] [[File:Glow Lichen (NED) JE1.png|32px]] [[File:Glow Lichen (EW) JE1.png|32px]] [[File:Glow Lichen (EWD) JE1.png|32px]] [[File:Glow Lichen (NEW) JE1.png|32px]] [[File:Glow Lichen (NEWD) JE1.png|32px]]<br>[[File:Glow Lichen (ES) JE1.png|32px]] [[File:Glow Lichen (ESD) JE1.png|32px]] [[File:Glow Lichen (NES) JE1.png|32px]] [[File:Glow Lichen (NESD) JE1.png|32px]] [[File:Glow Lichen (ESW) JE1.png|32px]] [[File:Glow Lichen (ESWD) JE1.png|32px]] [[File:Glow Lichen (NESW) JE1.png|32px]] [[File:Glow Lichen (NESWD) JE1.png|32px]]<br>[[File:Glow Lichen (U) JE1.png|32px]] [[File:Glow Lichen (UD) JE1.png|32px]] [[File:Glow Lichen (NU) JE1.png|32px]] [[File:Glow Lichen (NUD) JE1.png|32px]] [[File:Glow Lichen (UW) JE1.png|32px]] [[File:Glow Lichen (UWD) JE1.png|32px]] [[File:Glow Lichen (NUW) JE1.png|32px]] [[File:Glow Lichen (NUWD) JE1.png|32px]]<br>[[File:Glow Lichen (SU) JE1.png|32px]] [[File:Glow Lichen (SUD) JE1.png|32px]] [[File:Glow Lichen (NSU) JE1.png|32px]] [[File:Glow Lichen (NSUD) JE1.png|32px]] [[File:Glow Lichen (SWU) JE1.png|32px]] [[File:Glow Lichen (SWUD) JE1.png|32px]] [[File:Glow Lichen (NSWU) JE1.png|32px]] [[File:Glow Lichen (NSWUD) JE1.png|32px]]<br>[[File:Glow Lichen (EU) JE1.png|32px]] [[File:Glow Lichen (EUD) JE1.png|32px]] [[File:Glow Lichen (NEU) JE1.png|32px]] [[File:Glow Lichen (NEUD) JE1.png|32px]] [[File:Glow Lichen (EWU) JE1.png|32px]] [[File:Glow Lichen (EWUD) JE1.png|32px]] [[File:Glow Lichen (NEWU) JE1.png|32px]] [[File:Glow Lichen (NEWUD) JE1.png|32px]]<br>[[File:Glow Lichen (ESU) JE1.png|32px]] [[File:Glow Lichen (ESUD) JE1.png|32px]] [[File:Glow Lichen (NESU) JE1.png|32px]] [[File:Glow Lichen (NESUD) JE1.png|32px]] [[File:Glow Lichen (ESWU) JE1.png|32px]] [[File:Glow Lichen (ESWUD) JE1.png|32px]] [[File:Glow Lichen (NESWU) JE1.png|32px]] [[File:Glow Lichen (NESWUD) JE1.png|32px]]<br> --> Added glow lichen.
+|Glow lichen placed inside lava converts the lava into waterlogged lichen, even in the [[Nether]].<ref name=BugReport>{{bug|MC-212117|resolution=Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w05a|<!--[[File:Blank.png|32px]] -->[[File:Glow Lichen (D) JE2.png|32px]] <!--[[File:Glow Lichen (N) JE2.png|32px]] [[File:Glow Lichen (ND) JE2.png|32px]] [[File:Glow Lichen (W) JE2.png|32px]] [[File:Glow Lichen (WD) JE2.png|32px]] [[File:Glow Lichen (NW) JE2.png|32px]] [[File:Glow Lichen (NWD) JE2.png|32px]]<br>[[File:Glow Lichen (S) JE2.png|32px]] [[File:Glow Lichen (SD) JE2.png|32px]] [[File:Glow Lichen (NS) JE2.png|32px]] [[File:Glow Lichen (NSD) JE2.png|32px]] [[File:Glow Lichen (SW) JE2.png|32px]] [[File:Glow Lichen (SWD) JE2.png|32px]] [[File:Glow Lichen (NSW) JE2.png|32px]] [[File:Glow Lichen (NSWD) JE2.png|32px]]<br>[[File:Glow Lichen (E) JE2.png|32px]] [[File:Glow Lichen (ED) JE2.png|32px]] [[File:Glow Lichen (NE) JE2.png|32px]] [[File:Glow Lichen (NED) JE2.png|32px]] [[File:Glow Lichen (EW) JE2.png|32px]] [[File:Glow Lichen (EWD) JE2.png|32px]] [[File:Glow Lichen (NEW) JE2.png|32px]] [[File:Glow Lichen (NEWD) JE2.png|32px]]<br>[[File:Glow Lichen (ES) JE2.png|32px]] [[File:Glow Lichen (ESD) JE2.png|32px]] [[File:Glow Lichen (NES) JE2.png|32px]] [[File:Glow Lichen (NESD) JE2.png|32px]] [[File:Glow Lichen (ESW) JE2.png|32px]] [[File:Glow Lichen (ESWD) JE2.png|32px]] [[File:Glow Lichen (NESW) JE2.png|32px]] [[File:Glow Lichen (NESWD) JE2.png|32px]]<br>[[File:Glow Lichen (U) JE2.png|32px]] [[File:Glow Lichen (UD) JE2.png|32px]] [[File:Glow Lichen (NU) JE2.png|32px]] [[File:Glow Lichen (NUD) JE2.png|32px]] [[File:Glow Lichen (UW) JE2.png|32px]] [[File:Glow Lichen (UWD) JE2.png|32px]] [[File:Glow Lichen (NUW) JE2.png|32px]] [[File:Glow Lichen (NUWD) JE2.png|32px]]<br>[[File:Glow Lichen (SU) JE2.png|32px]] [[File:Glow Lichen (SUD) JE2.png|32px]] [[File:Glow Lichen (NSU) JE2.png|32px]] [[File:Glow Lichen (NSUD) JE2.png|32px]] [[File:Glow Lichen (SWU) JE2.png|32px]] [[File:Glow Lichen (SWUD) JE2.png|32px]] [[File:Glow Lichen (NSWU) JE2.png|32px]] [[File:Glow Lichen (NSWUD) JE2.png|32px]]<br>[[File:Glow Lichen (EU) JE2.png|32px]] [[File:Glow Lichen (EUD) JE2.png|32px]] [[File:Glow Lichen (NEU) JE2.png|32px]] [[File:Glow Lichen (NEUD) JE2.png|32px]] [[File:Glow Lichen (EWU) JE2.png|32px]] [[File:Glow Lichen (EWUD) JE2.png|32px]] [[File:Glow Lichen (NEWU) JE2.png|32px]] [[File:Glow Lichen (NEWUD) JE2.png|32px]]<br>[[File:Glow Lichen (ESU) JE2.png|32px]] [[File:Glow Lichen (ESUD) JE2.png|32px]] [[File:Glow Lichen (NESU) JE2.png|32px]] [[File:Glow Lichen (NESUD) JE2.png|32px]] [[File:Glow Lichen (ESWU) JE2.png|32px]] [[File:Glow Lichen (ESWUD) JE2.png|32px]] [[File:Glow Lichen (NESWU) JE2.png|32px]] [[File:Glow Lichen (NESWUD) JE2.png|32px]]<br>[[File:Glow Lichen (texture) JE2.png|32px]] -->Changed model of glow lichen. Moved model from 0.01 to 0.1 up.
+|Waterlogged glow lichen no longer forms when placed in lava.}}
+|{{HistoryLine|||dev=February 9, 2021|slink={{FULLURL:File:JE 1.17 Dev Glow Lichen.png}}|[[File:Glow Lichen (pre-release).png|32px]] Showed early design of glow lichen.}}
+|{{HistoryLine|||dev=21w07a|Glow lichen can now be naturally generated on [[deepslate]].}}
+|{{HistoryLine|||dev=21w08a|Glow lichen now generates almost twice as often.}}
+|{{HistoryLine|||dev=21w11a|Bone meal can no longer be used on glow lichen if it has no blocks to spread to.
+|Glow lichen can now be used on a composter.}}
+|{{HistoryLine|||dev=21w13a|The model of glow lichen has been tweaked so that the backside texture is mirrored.}}
+|{{HistoryLine|||dev=21w20a|Glow Lichen now drops the correct amount if there's more than one on a block.}}
+|{{HistoryLine||1.19|dev=22w15a|Can now be placed on the top and sides of [[soul sand]], [[mud]] and maximum height [[snow]].}}
+|{{HistoryLine||1.19.3|dev=22w44a|Glow Lichen now makes a sound when being walked on.<ref>{{bug|MC-171621|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{Needs render|Isometric render of glow lichen in Bedrock Edition prior to 1.18.10.|section=1}}
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.50|<!--[[File:Blank.png|32px]] -->[[File:Glow Lichen (D) BE1.png|32px]] <!--[[File:Glow Lichen (N) BE1.png|32px]] [[File:Glow Lichen (ND) BE1.png|32px]] [[File:Glow Lichen (W) BE1.png|32px]] [[File:Glow Lichen (WD) BE1.png|32px]] [[File:Glow Lichen (NW) BE1.png|32px]] [[File:Glow Lichen (NWD) BE1.png|32px]]<br>[[File:Glow Lichen (S) BE1.png|32px]] [[File:Glow Lichen (SD) BE1.png|32px]] [[File:Glow Lichen (NS) BE1.png|32px]] [[File:Glow Lichen (NSD) BE1.png|32px]] [[File:Glow Lichen (SW) BE1.png|32px]] [[File:Glow Lichen (SWD) BE1.png|32px]] [[File:Glow Lichen (NSW) BE1.png|32px]] [[File:Glow Lichen (NSWD) BE1.png|32px]]<br>[[File:Glow Lichen (E) BE1.png|32px]] [[File:Glow Lichen (ED) BE1.png|32px]] [[File:Glow Lichen (NE) BE1.png|32px]] [[File:Glow Lichen (NED) BE1.png|32px]] [[File:Glow Lichen (EW) BE1.png|32px]] [[File:Glow Lichen (EWD) BE1.png|32px]] [[File:Glow Lichen (NEW) BE1.png|32px]] [[File:Glow Lichen (NEWD) BE1.png|32px]]<br>[[File:Glow Lichen (ES) BE1.png|32px]] [[File:Glow Lichen (ESD) BE1.png|32px]] [[File:Glow Lichen (NES) BE1.png|32px]] [[File:Glow Lichen (NESD) BE1.png|32px]] [[File:Glow Lichen (ESW) BE1.png|32px]] [[File:Glow Lichen (ESWD) BE1.png|32px]] [[File:Glow Lichen (NESW) BE1.png|32px]] [[File:Glow Lichen (NESWD) BE1.png|32px]]<br>[[File:Glow Lichen (U) BE1.png|32px]] [[File:Glow Lichen (UD) BE1.png|32px]] [[File:Glow Lichen (NU) BE1.png|32px]] [[File:Glow Lichen (NUD) BE1.png|32px]] [[File:Glow Lichen (UW) BE1.png|32px]] [[File:Glow Lichen (UWD) BE1.png|32px]] [[File:Glow Lichen (NUW) BE1.png|32px]] [[File:Glow Lichen (NUWD) BE1.png|32px]]<br>[[File:Glow Lichen (SU) BE1.png|32px]] [[File:Glow Lichen (SUD) BE1.png|32px]] [[File:Glow Lichen (NSU) BE1.png|32px]] [[File:Glow Lichen (NSUD) BE1.png|32px]] [[File:Glow Lichen (SWU) BE1.png|32px]] [[File:Glow Lichen (SWUD) BE1.png|32px]] [[File:Glow Lichen (NSWU) BE1.png|32px]] [[File:Glow Lichen (NSWUD) BE1.png|32px]]<br>[[File:Glow Lichen (EU) BE1.png|32px]] [[File:Glow Lichen (EUD) BE1.png|32px]] [[File:Glow Lichen (NEU) BE1.png|32px]] [[File:Glow Lichen (NEUD) BE1.png|32px]] [[File:Glow Lichen (EWU) BE1.png|32px]] [[File:Glow Lichen (EWUD) BE1.png|32px]] [[File:Glow Lichen (NEWU) BE1.png|32px]] [[File:Glow Lichen (NEWUD) BE1.png|32px]]<br>[[File:Glow Lichen (ESU) BE1.png|32px]] [[File:Glow Lichen (ESUD) BE1.png|32px]] [[File:Glow Lichen (NESU) BE1.png|32px]] [[File:Glow Lichen (NESUD) BE1.png|32px]] [[File:Glow Lichen (ESWU) BE1.png|32px]] [[File:Glow Lichen (ESWUD) BE1.png|32px]] [[File:Glow Lichen (NESWU) BE1.png|32px]] [[File:Glow Lichen (NESWUD) BE1.png|32px]]<br>[[File:Glow Lichen (texture) JE1.png|32px]] -->Added glow lichen behind the "Caves and Cliffs" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=beta 1.16.230.54|Glow lichen can now appear on the walls of underground water lakes.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Glow lichen is no longer available only through [[experimental gameplay]].}}
+|{{HistoryLine||1.17.30|exp=Caves and Cliffs|dev=beta 1.17.20.22|Glow lichen can now generate between Y{{=}}-64 and Y{{=}}63.}}
+|{{HistoryLine||1.17.40|exp=Caves and Cliffs|dev=beta 1.17.40.20|The maximum Y-level that glow lichen can generate has been increased to Y{{=}}120.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.22|Glow lichen is no longer able to generate anywhere outside of caves.<ref>{{bug|MCPE-125198||Glow Lichen generates on the bottom of the ocean|Fixed}}</ref><ref>{{bug|MCPE-141412||Glow Lichens generates on the surface|Fixed}}</ref>}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.26|Decreased the light level emitted by glow lichen from 10 to 7 to match {{el|je}}.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.26|Glow lichen now play their step sound when on top of a block an actor is walking on.}}
+}}
+<gallery>
+Glow Lichen path inside of a cave.jpg|Glow lichen in a developer screenshot.
+JE 1.17 Dev Glow Lichen.png|Early design of glow lichen.
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+*This block was hinted at by [[Henrik Kniberg]], who explained that the glowing ores at [[Minecraft Live 2020|''Minecraft Live 2020'']] were prototypes for this.<ref name="glowlichen">{{tweet|henrikkniberg|1351917717754941441|And yes, Glow Lichen is the new cave light source I mentioned in the cave prototype video a while back. We made them mainly for the not-yet-released larger caves. Glow Lichen generate naturally, but you can also grow it yourself and make eerie glowing cave paths :)|January 20, 2021}}</ref><ref name="henriklight">{{ytl|ZN7MnetVmho|Once Upon a Time in the Underground (Minecraft cave prototype) @ 0:27|Henrik Kniberg|10/8/2020|t=27}}</ref>
+*If the player removes all directional states using a [[debug stick]], the block becomes invisible, but the light emission remains, unless another block is placed there.
+*In real life, the [[wikipedia:Lichen|lichen]] is a composite organism that arises from algae or cyanobacteria living among filaments of multiple fungus species in a symbiotic relationship.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Glow Lichen (D).png
+Glow Lichen (E).png
+Glow Lichen (N).png
+Glow Lichen (S).png
+Glow Lichen (U).png
+Glow Lichen (W).png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Lichen under the Sea.png|Glow lichens under the sea.
+Lichen in the Cave.png|Glow lichens in a cave.
+Lichen in the Geode.png|Glow lichens in an [[amethyst geode]].
+GlowLichenUnderwater.png|Another instance of glow lichen underwater.
+Floating Glow Lichen.png|Floating glow lichen in a [[stronghold]].
+Glow lichen next to falling water.png|Glow lichen next to falling [[water]] in a cave near the surface.
+Sculk Vein and Glow Lichen.png|Sculk vein and glow lichen.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+
+* {{Mcnet|taking-inventory--glow-lichen|Taking Inventory: Glow Lichen|June 23, 2022|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Fungi]]
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+[[Category:Flammable blocks]]
+
+[[de:Leuchtflechte]]
+[[es:Liquen luminoso]]
+[[fr:Lichen lumineux]]
+[[it:Lichene luminescente]]
+[[ja:ヒカリゴケ]]
+[[ko:발광 이끼]]
+[[lzh:地踏爍菰]]
+[[pl:Świecący porost]]
+[[pt:Líquen Brilhante]]
+[[ru:Светящийся лишайник]]
+[[uk:Світлолишайник]]
+[[zh:发光地衣]]

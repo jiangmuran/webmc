@@ -1,0 +1,180 @@
+An '''error''' is a piece of text that appears on the screen to alert the player of some form of mistake or complications.
+
+== Command errors ==
+{| class="wikitable"
+!Name
+!Meaning
+!Editions
+|-
+|Syntax error: Unexpected at 
+|A command has been misused.
+|{{BE}} only
+|-
+|Unknown command. Please check that the command exists and that you have permission to use it. {{Only|Bedrock|short=1}}<br/> Unknown or Incomplete command, see below for error {{Only|Java|short=1}}
+|This command does not exist or requires a permission level higher than the player possesses to be used {{only|be|short=1}}.
+|Both
+|-
+|Incorrect Argument
+|Similar to Syntax Error.
+|{{JE}} only
+|-
+|No targets matched selector
+|A target was not specified, like if you use any commands, but you forgot to use @. 
+|{{BE}} only
+|-
+|Too many targets matched selector
+|An attempt to, for example, teleport one entity to multiple. Example: {{cmd|tp @s @e}}
+|{{BE}} only
+|-
+|Cannot place blocks outside world
+|This chunk is not loaded yet.
+|{{BE}} only
+|-
+|Players cannot be killed while they are in creative mode.
+|Players cannot be killed in [[Creative]]. Shows "Removed" in Minecraft Education.
+|{{BE}} only
+|-
+|You do not have permission to use this command
+|The command requires a higher permission level than the player possesses to be used.
+|{{BE}} only
+|-
+|Unable to summon object {{only|bedrock|short=1}}
+Monsters cannot be summoned in Peaceful difficulty {{only|java|short=1}}
+|Players cannot summon hostile mobs in peaceful mode.
+|Both
+|-
+|Failed to place structure
+|The location does not support the structure.
+|{{JE}} only
+|-
+|At least one of your resource or behavior packs failed to load.
+|Any resource or behavior packs cannot be loaded.
+|Both
+|-
+|The number you have entered (<NUMBER>) is too big, it must be at most <NUMBER>
+|Displayed when a player attempts to enter a number over a certain limit.
+|Both
+|-
+|The number you have entered (<NUMBER>) is too small, it must be at least <NUMBER>
+|Displayed when a player attempts to enter a number under a certain limit.
+|Both
+|-
+|<NUMBER> is not a valid number
+|The number entered is not a valid value, like a letter in a text.
+|Both
+|-
+|(enchantment) does not support level (#) {{only|Bedrock|short=1}}
+(#) is higher than the maximum level of (#) which is supported for this enchantment {{only|Java|short=1}}
+|The number of the enchantment level is too high and is over the maximum level.
+|Both
+|}
+
+== Chat errors ==
+These errors appear in the chat,{{only|Bedrock|short=1}} or [[action bar]].{{only|Java|short=1}}
+{| class="wikitable"
+!Name
+!Meaning
+!Editions
+|-
+|Unable to open. Loot not generated yet.
+|The player cannot open a chest that has not been opened yet in spectator mode. 
+|{{JE}} only
+|-
+|You may not rest now, there are monsters nearby
+|There are [[monster]]s near the bed, which prevents sleeping.
+|Both
+|-
+|Bed is too far away
+|You are too far away from the bed to go to bed.
+|Both
+|-
+|You can only sleep at night and during thunderstorms
+|The player cannot sleep during the day, unless there is a thunderstorm.
+|Both
+|-
+|This bed is occupied
+|The player can't sleep, as there is another player in this bed already. 
+|Both
+|-
+|No amount of rest can pass this night
+|The {{gmr|players_sleeping_percentage}} is set higher than 100, which prevents sleeping from passing the night.
+|Both
+|-
+|You have no home bed or charged Respawn Anchor, or it was obstructed
+|When a bed is destroyed, blocked {{Only|Java|short=1}} or placed in the Nether or End.
+|Both
+|-
+|Height limit for building is (128,256,320) blocks
+|When {{control|placing}} on a block above the height limit.
+|Both
+|-
+|Minimum height limit for building is -64 blocks
+|When {{control|placing}} on a block below the height limit.
+|{{BE}} only
+|}
+
+== Errors in Legacy Console Edition ==
+There are errors that appear in the middle of the screen, similar to [[death messages]]. 
+{| class="wikitable"
+!Name
+!Meaning
+|-
+|You may not rest now, there are monsters nearby
+|There are some monsters too close to the bed.
+|-
+|You can only sleep at night
+|Players cannot sleep during the day.
+|-
+|You can't summon enemies in peaceful mode.
+|Players cannot summon hostile mobs in peaceful mode.
+|-
+|This animal can't enter love mode.
+|The maximum animals that can breed has been reached (except for: mooshrooms, chickens, and wolves).
+|-
+|You may not rest now; the bed is too far away
+|The player is not close enough to the bed.
+|}
+
+=== Error hints ===
+These errors appear in boxes similar to the hints found in the tutorial.
+{| class="wikitable"
+!Name
+!Meaning
+|-
+|You cannot do this action until you have completed the tutorial.
+|The player needs to complete the tutorial in order to get access to the other areas in the tutorial.
+|-
+|You do not have all the ingredients to make this item.
+|The player needs more materials to make this item.
+|}
+
+== Special errors ==
+These errors are only found in the menus that indicate the errors, and not while playing the game in a [[world]].
+{| class="wikitable"
+|+
+!Name
+!Meaning
+!Editions
+|-
+|Seed templates couldn't load!
+We have encountred a unknown error. Please try again.
+|This error occurs because you may have a poor network.
+|{{BE}} only
+|-
+|You don't have a Realms Plus subscription.
+|Those who have a Realms Plus subscription that has no Microsoft account, or they do not have the subscription.
+|{{BE}} only.
+|-
+|There was a problem, and multi-player hosting has stopped.
+|This error occurs when there is no connection. Applies in multiplayer only.
+|{{BE}} only
+|-
+|There was a problem loading this world.
+|Worlds from newer versions can't generate in older versions. It also may occur if the world is corrupted.
+|Both
+|}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[ja:エラー]]

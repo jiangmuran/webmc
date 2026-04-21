@@ -1,0 +1,339 @@
+{{For|other uses|Bat (disambiguation)}}
+{{Infobox entity
+| title = Bat
+| image = Bat JE4 BE3.gif
+| invimage = Bat Spawn Egg
+| health = {{hp|6}}
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}-adjacent{{note|Bats are not under the <code>animal</code> class in the [[entity format]], but are under the wild animals section in the [[spawn egg]]s tab in the [[creative inventory]].}}
+| size = Height: 0.9 blocks<br>Width: 0.5 blocks
+| spawn = * Light level of 3 or less in neighboring blocks
+| usableitems = {{drop|Item|Name Tag}}
+}}
+
+A '''bat''' is a flying [[passive mob]] that spawns in dark areas. It is the only ambient mob in the game, intended to complement the game's atmospheric settings.<ref name="bats">{{mcnet|meet-bat|Meet the Bat|March 7, 2017|Tom Stone}}</ref>
+
+== Spawning ==
+Bats can [[Mob spawning|spawn]] in groups of 8{{Only|Java|short=JE}} or 2{{Only|Bedrock|short=BE}} in the [[Overworld]] at a light level of 3 or less at any y-level, on blocks of [[stone]], [[granite]], [[diorite]], [[andesite]], [[tuff]], or [[deepslate]] that are not directly exposed to the sky. They also need at least 1.5 air blocks (with for instance, a top [[trapdoor]] or top [[slab]] in the block above foot level). {{IN|Java}}, they can spawn in any [[Overworld]] biome except the [[deep dark]]. {{IN|Bedrock}}, there are also other specific biomes they cannot spawn in.{{info needed|Which biomes?}}
+
+Bat entities do not count toward the passive [[Mob spawning#Java Edition mob cap|mob cap]], as they are considered ambient creatures in the [[entity inheritance]], and therefore fall into the dedicated ambient category.
+
+{{Mob spawn table}}
+
+== Drops ==
+=== On death ===
+Bats do not drop any [[item]]s or [[experience]] upon death.
+
+== Behavior ==
+Bats often fly around aimlessly, squeaking randomly. Their flight pattern tends to favor the east, and sometimes they may fly into [[lava]] and catch on [[fire]].<ref>{{bug|MC-194|||WAI}}</ref>
+
+Bats hang upside down on the underside of a [[solid block]] when idle, though they cannot hang on transparent or non-solid blocks. During this state, they squeak far less and occasionally turn to face different directions. They remain in this state until they are disturbed; if a player approaches a bat hanging upside down, even if the player is invisible, it flies away. This also happens if the player breaks the block the bat is hanging from. 
+
+Bats [[despawn]] when over 32 blocks away from the player.
+
+Bats' collision boxes do not interact with the player or [[redstone components]]{{only|java}}.
+
+Bats cannot be transported by conventional means. A [[lead]] cannot be attached to a bat, and it cannot be put in a [[minecart]] or [[boat]].
+
+Bats can also get caught in and slowed by [[cobweb]]s.
+
+Bats cannot [[breed]], and baby bats do not exist.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Bat idle1.ogg
+|sound2=Bat idle2.ogg
+|sound3=Bat idle3.ogg
+|sound4=Bat idle4.ogg
+|subtitle=Bat screeches
+|source=neutral
+|description=Randomly while flying
+|id=entity.bat.ambient
+|translationkey=subtitles.entity.bat.ambient
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat death.ogg
+|subtitle=Bat dies
+|source=neutral 
+|description=When a bat dies
+|id=entity.bat.death
+|translationkey=subtitles.entity.bat.death
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat hurt1.ogg
+|sound2=Bat hurt2.ogg
+|sound3=Bat hurt3.ogg
+|sound4=Bat hurt4.ogg
+|subtitle=Bat hurts
+|source=neutral 
+|description=When a bat is damaged
+|id=entity.bat.hurt
+|translationkey=subtitles.entity.bat.hurt
+|volume=0.1
+|pitch=0.76-1.14
+|distance=16}}
+| {{SoundLine
+|sound=Bat loop.ogg
+|subtitle=MC-177087
+|source=-
+|description=''Unused sound event'' <ref group="sound">{{bug|MC-185413}}</ref>
+|id=entity.bat.loop
+|translationkey=- 
+|volume=''None''
+|pitch=''None''
+|distance=''None''}}
+| {{SoundLine
+|sound=Bat takeoff.ogg
+|subtitle=Bat takes off
+|source=neutral 
+|description=When a bat starts flying
+|id=entity.bat.takeoff
+|translationkey=subtitles.entity.bat.takeoff
+|volume=0.05
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bat idle1.ogg
+|sound2=Bat idle2.ogg
+|sound3=Bat idle3.ogg
+|sound4=Bat idle4.ogg
+|source=neutral
+|description=Randomly
+|id=mob.bat.idle
+|volume=0.1
+|pitch=0.76-1.14}}
+| {{SoundLine
+|sound=Bat death.ogg
+|source=Friendly Creatures 
+|description=When a bat dies
+|id=mob.bat.death
+|volume=0.1
+|pitch=0.76-1.14}}
+| {{SoundLine
+|sound=Bat hurt1.ogg
+|sound2=Bat hurt2.ogg
+|sound3=Bat hurt3.ogg
+|sound4=Bat hurt4.ogg
+|source=neutral
+|description=When a bat is damaged
+|id=mob.bat.hurt
+|volume=0.1
+|pitch=0.76-1.14}}
+| {{SoundLine
+|sound=Bat takeoff.ogg
+|source=neutral
+|description=When a bat starts flying
+|id=mob.bat.takeoff
+|volume=0.05
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Bat
+|spritetype=entity
+|nameid=bat
+|showentitytags=y
+|entitytags=fall_damage_immune
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Bat
+|spritetype=entity
+|nameid=bat
+|showentityfamily=y
+|entityfamily=bat,mob
+|id=19
+|foot=1}}
+
+=== Entity data ===
+
+Bats have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|BatFlags}}: 1 or 0 (true/false) - true if the bat is hanging upside-down from a block, false if the bat is flying.
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Entity format]].
+
+==Achievements ==
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 11, 2010|link={{tweet|notch|27027963373}}|[[Notch]] mentioned bats as a potential aggressive mob during the development of the [[Halloween Update]], taking an inspiration from The Elder Scrolls' cliff racers.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w38a|[[File:Bat JE1 BE1.png|32px]] [[File:Bat (Hang) JE1 BE1.png|32px]] [[File:Bat JE1 BE1.gif|32px]] Added bats.}}
+|{{HistoryLine|||dev=12w42a|Bats no longer activate [[pressure plate]]s or "trample" [[crops]].<ref>https://web.archive.org/web/0/https://www.mojang.com/2012/10/minecraft-snapshot-12w42a</ref>}}
+|{{HistoryLine|||dev=1.4|Added [[sound]]s: <code>entity.bat.ambient</code>, <code>entity.bat.hurt</code>, <code>entity.bat.death</code>, <code>entity.bat.takeoff</code>.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Bat JE2 BE2.png|32px]] [[File:Bat (Hang) JE2 BE2.png|32px]] [[File:Bat JE2 BE2.gif|32px]] The texture of bats has been changed.}}
+|{{HistoryLine||1.15|dev=19w34a|Bats now take damage on [[magma block]]s.}}
+|{{HistoryLine||1.20.3|dev=23w43a|[[File:Bat JE3.png|32px]] [[File:Bat (Hang) JE3.png|32px]] [[File:Bat JE3.gif|32px]] The model, texture and animations of bats have been changed.}}
+|{{HistoryLine|||dev=23w44a|[[File:Bat JE4 BE3.png|32px]] [[File:Bat (Hang) JE4 BE3.png|32px]] [[File:Bat JE4 BE3.gif|32px]] The model of bats have been changed to match {{BE}}.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Bats can now spawn at any height, not just below sea level, as long as it is dark enough, not directly exposed to the sky, and there is a solid block to spawn on.}}
+|{{HistoryLine|||dev=24w36a|Bats must spawn on one of the following blocks now: stone, granite, diorite, andesite, tuff, or deepslate.}}
+|{{HistoryLine||1.21.11|dev=25w44a|Bats can no longer spawn in light levels up to 6 between October 20 and November 3.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Bat JE1 BE1.png|32px]] [[File:Bat (Hang) JE1 BE1.png|32px]] [[File:Bat JE1 BE1.gif|32px]] Added bats.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Bat JE2 BE2.png|32px]] [[File:Bat (Hang) JE2 BE2.png|32px]] [[File:Bat JE2 BE2.gif|32px]] Changed texture.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.22|[[File:Bat JE4 BE3.png|32px]] [[File:Bat (Hang) JE4 BE3.png|32px]] [[File:Bat JE4 BE3.gif|32px]] The model, texture and animations of bats have been changed.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.22|Bats can now spawn at any height, not just below sea level, as long as it is dark enough and there is a solid block to spawn on.|Bats must spawn on one of the following blocks now: stone, granite, diorite, andesite, tuff, or deepslate.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Bat JE1 BE1.png|32px]] [[File:Bat (Hang) JE1 BE1.png|32px]] [[File:Bat JE1 BE1.gif|32px]] Added bats.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Bat JE2 BE2.png|32px]] [[File:Bat (Hang) JE2 BE2.png|32px]] [[File:Bat JE2 BE2.gif|32px]] Changed texture.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Bat JE1 BE1.png|32px]] [[File:Bat (Hang) JE1 BE1.png|32px]] [[File:Bat JE1 BE1.gif|32px]] Added bats.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|Changed the entity ID from <code>Bat</code> to <code>bat</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+
+{{issue list}}
+
+== Trivia == 
+
+*According to [[Jens Bergensten]], the bat is an example of an atmospheric/ambient mob, that is, a mob that constantly spawns, similar to the [[squid]], but also constantly despawns because when a player is not around it does not serve any purpose.<ref name="bats" />
+*The updated texture of the bat was created in roughly 2 hours. However, the model and animations took longer.<ref>{{Tweet|JasperBoerstra|1751333853153624256|The bat remodel was made in roughly 2 hours for example.}}</ref>
+*During ''[[Minecraft: The Island]]'', there is a scene where [[Guy]] ends up wasting his final [[arrow]] when it accidentally hit a bat instead of a [[creeper]] during a pivotal moment. According to author [[Max Brooks]], this was something that actually happened to him while playing.<ref>{{Mcnet|the-mountain|The Mountain|March 2, 2021|Alex Wiltshire}}</ref>
+*{{IN|JE}}, bats are the only mob in the "Ambient" [[Mob spawning#Java edition mob cap|mob cap category]].
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Bat JE4 BE3.png
+Bat (Hang) JE4 BE3.png
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Makena peeks at bats.jpg|"A close-up shot of bats flying around a ruined portal, while [[Makena]] hides in a nearby water pool."<ref>{{Mcnet|minecraft-java-edition-1-20-3|Minecraft Java Edition 1.20.3|December 5, 2023|Java Team}}</ref>
+Bats gather around glow berries.png|Bats gathering around glow berries.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Bat in Cave.png|A bat in a [[cave]].
+Bats.png|A colony of bats.
+Deep Dark Bat.png|A bat in the [[deep dark]].
+Batshaft.png|A [[zombie]] and [[creeper]] eyeing a bat.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Bat (texture).png|Bat texture file.
+Bat (texture) JE2 BE2.png|Old bat texture file.
+</gallery>
+
+=== Other ===
+<gallery>
+EarlyBatRendered.png|A recreation of the unused bat on the hidden pixels of the old bat texture revealed by [[Unused textures/Hidden in transparency|disabling the alpha channel.]]
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Minecoin-Bat.png
+File:Pretty Scary Update poster.png|Bat in promotional artwork for the [[Pretty Scary Update]]
+File:Wallpaper minecraft 15th-anniversary-right 1080x1920.png|A bat with [[Sunny]] and a [[zombie]] on artwork for the 15th anniversary of ''Minecraft''. Note the old design.
+File:Mob costumes go trick or treating.jpeg|Several bats flying by [[Minecraft costumes|trick or treaters]]
+File:City Bat.png|A bat as it appears in the [[Texture pack DLC|City]] [[Texture pack DLC|texture pack]]
+File:Greek Bat.png|A bat as it appears in the [[Mash-up pack|Greek Mythology mash-up pack]]
+File:Bat Natural.png|A bat as it appears in the [[Texture pack DLC|Natural texture pack]]
+File:Bat Cloak.png|The [[Character Creator|Bat Cloak]], an item in the [[character creator]]
+File:Bat (Dungeons).png|A {{MCD|bat}} as it appears in {{MCD}}
+File:Bat MCL.png|{{MCL|Bat}} particles as they appear in {{MCL}}
+File:Bat (inventory) MCE.png|A {{MCE|bat}} as it appeared in {{MCE}}
+File:Bat1.jpg|A {{MCSM|bat}} as it appeared in {{MCSM}}
+File:LEGO Bat.png|[[LEGO Minecraft]] Bat
+File:Bat Plush JINX.jpg|Bat plush made by JINX
+File:Bat in Natural Habitat.jpg|The bat plush touching grass
+File:Trick or Treat Bat.jpg|"Bat Trick or Treat," an official Halloween shirt design
+File:MCLabyrinthBoxArt.png|A bat on the cover of ''[[Minecraft Labyrinth]]''. 
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|bat|Mob Menagerie: Bat|August 8, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Flying mobs]]
+[[Category:Animal mobs]]
+
+[[cs:Netopýr]]
+[[de:Fledermaus]]
+[[es:Murciélago]]
+[[fr:Chauve-souris]]
+[[it:Pipistrello]]
+[[ja:コウモリ]]
+[[ko:박쥐]]
+[[lzh:蟙䘃]]
+[[nl:Vleermuis]]
+[[pl:Nietoperz]]
+[[pt:Morcego]]
+[[ru:Летучая мышь]]
+[[th:ค้างคาว]]
+[[uk:Кажан]]
+[[zh:蝙蝠]]

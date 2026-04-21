@@ -1,0 +1,898 @@
+{{For||Golem}}
+{{Infobox entity
+| title = Iron Golem
+| group = Intact
+| 1-1 = Iron Golem.png
+| group2 = Cracked (low)
+| 2-1 = Iron Golem Cracked Low.png
+| group3 = Cracked (medium)
+| 3-1 = Iron Golem Cracked Medium.png
+| group4 = Cracked (high)
+| 4-1 = Iron Golem Cracked High.png
+| invimage = Iron Golem Spawn Egg
+| health = Uncracked: {{hp|100}}<br>Low cracked: {{hp|75}}<br>Half cracked: {{hp|50}}<br>High cracked: {{hp|25}}
+| behavior = Neutral (naturally spawned)<br>Passive (player-built)
+| damage = Easy: {{hp|4.75}} – {{hp|11.75}}<br>
+Normal: {{hp|7.5}} – {{hp|21.5}}<br>
+Hard: {{hp|11.25}} – {{hp|32.25}}
+| size = '''{{IN|Java}}:'''<br>
+Height: 2.7 blocks<br>Width: 1.4 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+Height: 2.9 blocks<br>Width: 1.4 blocks
+| usableitems = {{drop|Item|Iron Ingot}}
+{{drop|Item|Lead}}
+| speed = 0.25
+| knockbackresistance = 100%
+| spawn = Near a {{EnvLink|pillager outpost}}<br>
+In {{EnvLink|Village|villages}}<br>
+When built by the player<br>
+When [[Villager#Iron golem summoning|summoned by villagers]]{{only|je|short=1}}
+| leashable = Yes
+| boat = No
+| minecart = Yes{{only|bedrock|short=1}}<br>No{{only|java|short=1}}
+}}
+An '''iron golem''' is a buildable [[neutral mob]] that attacks monsters with its arms, knocking them into the air. Iron golems are created by [[villager]]s to patrol and protect their [[village]]s. Villager-created iron golems will retaliate against [[player]]s if attacked, and are hostile to players that have low [[Village mechanics|popularity or reputation]] with their village.
+
+== Spawning ==
+=== Villages ===
+==== ''Java Edition'' ====
+{{IN|java}}, [[villager]]s can [[Villager#Iron golem summoning|summon iron golems]], either when they are [[Villager#Gossiping|gossiping]] or every 5 seconds while [[Villager#Panicking|panicking]] and the following criteria are met:
+# The villager has slept in the last 20 minutes
+# The villager has not detected an iron golem in the last 30 seconds
+#* An iron golem is detected when it is within 16 blocks of the villager (±16'''X''' ±16'''Z''' ±16'''Y''' axis), and the villager scans for golems once every 10 seconds
+# The villager has not been near a summoning in the last 30 seconds 
+#* A villager is near a summoning when it is within 10 blocks of a villager (±10'''X''' ±10'''Z''' ±10'''Y''' axis) who successfully summons an iron golem
+# There are enough participants within 10 blocks of the villager, including the villager itself; participating villagers need to fulfill the previous 3 conditions: When [[gossip]]ing, 5 or more participants are needed. When [[Villager#Panicking|panicking]], 3 or more are needed
+# A valid spawn point for the golem is found
+
+Iron golems still spawn even when the [[game rule]] {{cd|doMobSpawning}} is set to {{cd|false}}.<ref>{{bug|MC-111004||Iron golems do not follow the doMobSpawning gamerule}}</ref>
+
+To find a valid spawn point, up to 10 attempts are made to spawn a golem within a 17×13×17 box centered on the villager (villager block position ±8 blocks along x/z axes and ±6 blocks along y axis). A random y column is picked and then the topmost block in that column is selected that is air or liquid and has a "[[Block properties/Solid (legacy)#Iron golem summoning|solid-blocking]]" block underneath. 
+
+The target location is then checked whether the block underneath has a solid top surface (which is not the same as "solid-blocking"). The target block and 2 blocks above must not be a full block, nor be redstone-powered, nor be rails, and the two blocks above must not be water. This means the iron golem can spawn inside 1-deep water or inside blocks like slabs, fences, and carpets (if other checks pass). Adjacent blocks are irrelevant, so golems can spawn partially inside adjacent solid blocks.<ref>{{bug|MC-189332}}</ref> However, the spawning iron golem still must not collide with any existing entities.
+
+==== ''Bedrock Edition'' ====
+{{IN|bedrock}}, an iron golem can spawn naturally when a [[village]] first generates in the world. Iron golems also spawn in villages having at least 20 [[bed]]s and 10 villagers. The golem attempts to spawn in a 17×13×17 volume, ±8 blocks horizontal and ±6 blocks vertical from the village's center block, which can be (but isn't necessarily) a bed pillow or a [[bell]]. 
+
+First, X and Z coordinates are randomly chosen within the spawn volume. Next, the highest block at those coordinates within the spawn volume is found. If it is a block with a full top surface &mdash; including [[glass]], [[Stairs|upside-down stairs]], [[Slab|top slabs]], [[Hopper|hoppers]] (though this has varied with version), and even [[water]] (including source blocks) &mdash; and there is no obstruction above it by a block above the spawn volume, then the golem spawns there. Otherwise, the spawn attempt is canceled. 
+
+For a village to spawn iron golems, 75% of its villagers must have been able to work (reach their linked work block during a working period) in the past day {{Needs testing|last day or last working period? and how are nitwits counted?|bedrock=1}}, and 100% of them must be linked to a bed. Additionally, the village center must be within a player's [[simulation distance]] volume.
+
+The maximum distance the player can be from the village for iron golems to spawn can be calculated with the following formulas. These are approximate because they yield a cuboid volume, but the simulation distance volume is an octahedral shape based on [[taxicab distance]].
+
+:<math>\mathsf{Horizontal} = 8 \times \mathsf{SimulationDistance} + 32</math>
+:<math>\mathsf{Vertical} = 8 \times \mathsf{SimulationDistance} + 12</math>
+
+Iron golems can only spawn within the player's simulation distance volume, so if a village center lies close to the border of said volume, only part of the typical 17x13x17 golem spawn volume will be eligible for spawning.
+
+If the village's original iron golem is killed, a new one cannot spawn unless all of the conditions are met. Therefore, a small village does not regenerate an iron golem unless the village is expanded.
+
+If the spawn conditions are met, then the chance of attempting a spawn is {{frac|1|700}} per game tick, which averages to one spawn attempt every 35 seconds. Iron golems can spawn provided the 2×3×2 space above the spawn point (that is, horizontally centered on the northwest corner of the block it spawns on) contains only non-full blocks, and the block it spawns on is [[Block properties/Solid (legacy)#Iron golem summoning|solid-blocking]].
+
+An additional iron golem spawns for each additional 10 villagers beyond the initial population requirement, provided that the other requirements are met.
+
+=== Creation ===
+{{FakeImage|align=left|{{BlockGrid|scale=2|p=Carved Pumpkin|i=Block of Iron| p |iii| i }}|Iron golem build configuration.}}
+{{FakeImage|align=left|{{BlockGrid|scale=2|p=Jack o'Lantern|i=Block of Iron| p |iii| i }}|Iron golem build configuration with a jack o'lantern.}}
+
+Iron golems are created by placing four [[iron block]]s in a T shape (as shown in the image), and then placing a [[carved pumpkin]] or [[jack o'lantern]] on top of the center upper block. The pumpkin may be placed by the player, a [[dispenser]] or an [[enderman]], but it must be placed last. Alternatively, the blocks can be placed in any order with an uncarved [[pumpkin]]; the player can [[shear]] the pumpkin to spawn the golem.
+
+When successfully created, the iron golem is naturally passive toward all players under all circumstances. It can, however, attack the player’s tamed [[wolves]], if punched accidentally, but it never directly attacks the player. The constructed golem attacks hostile mobs like a naturally spawned iron golem.
+
+The block arrangement can be placed upright, lying down, or upside-down. The four empty spaces in the diagram (above and below each of the arms) must be [[air]] blocks. Any non-air block (including blocks such as [[snow]] layers, [[grass]], and [[water]]) present in any of the empty spaces prevent the golem from spawning. 
+
+Like other constructed [[mob]]s, iron golems always spawn facing south. Their large size may cause them to take suffocation damage from nearby solid [[block]]s at the level of their head.
+
+{{-|left}}
+
+=== Pillager outposts ===
+{{see also|Tutorial:Defeating a pillager outpost}}
+[[File:Pillager outpost feature cage2.png|thumb|An iron golem trapped in a cage at a [[pillager outpost]].]]
+Iron golems can also be found surrounding [[pillager outpost]]s, confined inside dark oak cages. When freed, they can help the player by attacking any nearby [[pillager]]s. Pillagers can technically attack iron golems in cages if they fall in, though it is unlikely that they will succeed on their own. Iron golems can also attack pillagers from within the cage due to being able to attack through 1 block walls, assuming that it sees a pillager through an [[air]] block.
+
+== Drops ==
+{{see also|Tutorial:Iron golem farming}}
+
+=== On death ===
+{{DropTable
+|{{DropLine|name=Poppy|quantity=0-2}}
+|{{DropLine|name=Iron Ingot|quantity=3-5}}
+}}
+
+{{IN|BE}}, [[trading]] prices are unaffected by the killing of iron golems; however, [[Village_mechanics#Popularity|village popularity]] decreases by 10, affecting village iron golem behavior if the popularity ranges below -15.
+
+== Behavior ==
+[[File:Irongolemflower.png|thumb|upright|An iron golem offering a [[poppy]].]]
+Iron golems wander around a [[village]] in a patrol-like fashion, staying close to buildings and other structures. Like [[villager]]s, iron golems do not wander away from a village, regardless of how they were spawned, but sometimes stand at the border of the village. 
+
+An iron golem sometimes faces a villager as if they are conversing. Iron golems can spawn [[poppies]] in their hands and offer them to villagers and [[copper golem]]s. Baby villagers{{only|bedrock}}<ref name="baby-bug">Baby villagers have not accepted poppies {{in|java}} since the [[Village & Pillage]] update due to a bug {{bug|MC-159069}}.</ref> and copper golems accept the poppy offered by the iron golem. A copper golem that accepts a poppy has the poppy on top of the rod on their head. Attacking an iron golem that is not player-built while the iron golem is holding out a poppy causes it to take back the poppy and attack the player instead. If the iron golem sees a target while it is offering the poppy, it runs toward the target and kills the target instead.
+
+{{IN|BE}}, iron golems completely ignore villagers, pushing them aside while walking if a villager is in the iron golem's path, but they still offer poppies if possible.
+
+If not within a village, iron golems slowly wander around attacking hostile mobs, (skeletons, zombies, etc.) usually making their way to a nearby village. If in that village, the iron golem doesn't leave.
+
+Iron golems can walk up a full [[block]] height without jumping and walk over a 1 block wide hole without falling in. They avoid [[water]], [[lava]], [[fire]], and [[cactus]]. Iron golems are immune to both [[drowning]] and [[fall damage]]. When in water they sink to the bottom, but can still move laterally and walk up full blocks as if they were on land.
+
+As with most passive and neutral mobs, iron golems can be [[leash]]ed. The leashed iron golem does not try to break from the lead when it sees a hostile mob, instead looking at the mob while it moves. An iron golem that is leashed in mid-air moves its arms and legs while moving. If an iron golem is leashed to a fence, it attacks hostile mobs, but does not follow them if they leave the leash range as the iron golem cannot break free from fence leads.
+
+{{IN|java}}, Iron golems that aren't provoked move slower. Iron golems move faster {{in|bedrock}}, as its normal walking speed is fast regardless of being provoked.
+
+Iron golems cannot pick up weapons or armor, but the player can use NBT commands {{in|java}} or the [[Commands/replaceitem|/replaceitem]] command {{in|bedrock}} to give the iron golem weapons or armor, although the armor or weapons are not visible.
+
+=== Attacking ===
+When attacking, an iron golem moves quickly toward its target and swings its arms up violently to attack, flinging the target into the air and dealing damage in a random range set by [[difficulty]], between as low as {{hp|4.75}} damage on Easy difficulty and as high as {{hp|32.25}} damage on Hard difficulty. Iron golems cannot attack targets that are 2.75{{only|je}}/3{{only|be}} or more blocks above them. As such, standing on a three block pillar will allow players to attack golems below them without taking damage themselves.
+
+It is possible for multiple golems to hit the same target simultaneously, flinging the victim to a height proportional to the number of golems that attacked.{{only|bedrock}}{{verify}}
+
+If an iron golem attacks a group of mobs, it targets one mob to attack until that mob dies before attacking a different mob, even while being attacked by other mobs.
+
+If the mob is flung out of sight, the iron golem attacks the next mob that attacks it. Sometimes, the iron golem might attack the nearest hostile mob if they are in groups.{{verify}}
+
+When an iron golem kills any mob, the player can obtain items dropped by the mob, but no experience orbs. An iron golem that kills a raid mob {{in|BE}} also causes the mob to drop its raid loot, even when the mob wasn't attacked by the player before it was killed.
+
+Iron golems never attack each other, as iron golems cannot "accidentally" hit another iron golem when attacking.
+
+==== Provocation by players ====
+An iron golem built by a player never attacks players, even when hit or when the player attacks another villager or another golem in front of the player-built golem, though they will attack a player's tamed wolf if the wolf attacks the golem.
+
+{{IN|bedrock}}, a naturally-spawned iron golem immediately becomes hostile toward a player who attacks a villager near an iron golem. 
+
+If a player has -15 [[popularity]] or less in a village, or has -100 or lower reputation with any nearby villager, naturally-spawned iron golems become hostile to that player until the player's popularity climbs above -15 ''and'' reputation with all nearby villagers goes above -100.
+
+A village iron golem retaliates when attacked by a player, even if the attack dealt no damage such as an [[ender pearl]] or [[snowball]]. If a village has more than one naturally-spawned iron golem and a player attacks one in front of the other(s), all iron golems of that type may become hostile to the player.{{only|bedrock}}{{verify|Does not occur on JE outside of regular reputation behaviour, test BE}}
+
+Iron golems are not provoked by players who attack [[wandering trader]]s.<ref>{{bug|MC-153693|||WAI}}</ref>
+
+==== Provocation by other mobs ====
+{{Anchor|Provocation by hostile mobs}}
+
+Although they are guardians of villages, iron golems are not actually provoked when a mob attacks a nearby villager (in contrast to a player attacking a villager{{only|bedrock}}), given that the iron golem is not already hostile to the type of mob by default. With the exception of [[creeper]]s and [[goat]]s, they are provoked when attacked by any mob, and by the ''presence'' of nearby monsters. Even if a witch accidentally throws a positive splash potion at an iron golem during a raid, this does not stop the iron golem from attacking the witch. Iron golems are ineffective against flying hostile mobs that don't venture into the iron golem's reach, such as [[ghast]]s and [[phantom]]s.
+
+The list below contains mobs that can have hostile interactions with iron golems. The iron golem also attacks neutral mobs or hostile mobs that can attack the player, such as piglins or zombified piglins.
+
+<!-- To keep the table concise, DO NOT add mobs here unless mobs can attack iron golems or can be attacked by them. This includes all passive mobs. -->
+{| class="wikitable"
+!Entity
+!Iron golem actively attacks the mob?
+!Actively attacks the iron golem? 
+!Notes<!-- Do not add description that simply repeat the information of either one or both column before it in "note" column. The purpose of this column is to add information that is not fit for the two column before it. -->
+|-
+|{{EntityLink|Axolotl}}
+|{{Tc|No}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Bee}}
+|{{Tc|No}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Blaze}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Blaze retaliates.
+|-
+|{{EntityLink|Breeze}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Camel Husk}}<br>{{EntityLink|Skeleton Horse}}<br>{{EntityLink|Zombie Horse}}
+|{{Tc|No}}
+|{{Tc|No}}
+|-
+|{{EntityLink|Creaking}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Creeper}}
+|{{Tc|No}}
+|{{Tc|No}}
+|Creepers can still unintentionally damage the iron golem.
+|-
+|{{EntityLink|Dolphin}}
+|{{Tc|No}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Drowned}}
+|{{Tc|Yes}}
+|{{Tc|partial}}
+|Drowned do not attack any mob that is not touching water during daytime.
+|-
+|{{EntityLink|Ender Dragon}}
+|{{Tc|partial|Yes{{only|java|short=1}}<br>No{{only|bedrock|short=1}}}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Enderman}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Enderman retaliates.
+|-
+|{{EntityLink|Endermite}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Endermite retaliates {{in|java}}.
+|-
+|{{EntityLink|Evoker}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Fox}}
+|{{Tc|No}}
+|{{Tc|No}}
+|{{IN|bedrock}}, trusting foxes attack the iron golem if it attacks its owner. When attacked by the fox, the golem retaliates.
+|-
+|{{EntityLink|Ghast}}
+|{{Tc|yes}}
+|{{Tc|no}}
+|
+|-
+|{{EntityLink|Giant}}{{only|java|short=1}}
+|{{Tc|yes}}
+|{{Tc|no}}
+|Giants do not have any AI.
+|-
+|{{EntityLink|Goat}}
+|{{Tc|no}}
+|{{Tc|partial|Randomly}}
+|
+|-
+|{{EntityLink|Guardian}}<br>{{EntityLink|Elder Guardian}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Guardians can still damage iron golems with their spikes defense.
+|-
+|{{EntityLink|Hoglin}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Hoglin retaliates.
+|-
+|{{EntityLink|Husk}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Illusioner}}{{only|java|short=1}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Llama}}<br>{{EntityLink|Trader Llama}}
+|{{Tc|No}}
+|{{Tc|No}}
+|An iron golem attacks a llama that accidentally hits the golem with its spit. After being hit by the golem, the llama deliberately attacks the golem.
+|-
+|{{EntityLink|Magma Cube}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Nautilus}}
+|{{Tc|No}}
+|{{Tc|No}}
+|The iron golem retaliates only if the nautilus accidentally hits it with its dash attack.
+|-
+|{{EntityLink|Phantom}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|
+|-
+|{{EntityLink|Pillager}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Piglin}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Piglin retaliates.
+|-
+|{{EntityLink|Piglin Brute}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Piglin brute retaliates.
+|-
+|{{EntityLink|Player}}
+|{{tc|partial|Partial/No}} (player-built, or in peaceful difficulty.)
+|{{tc|partial|At player's discretion}}.
+|An iron golem immediately attacks a player when it attacks a villager.{{only|java|short=1}}
+|-
+|{{EntityLink|Pufferfish}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Iron golems attack pufferfish only if damaged by the pufferfish's defense.
+|-
+|{{EntityLink|Ravager}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Shulker}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Shulker retaliates.
+|-
+|{{EntityLink|Silverfish}}
+|{{Tc|yes}}
+|{{Tc|partial|yes{{only|bedrock|short=y}}<br/>No{{only|java|short=y}}}}
+|Silverfish retaliates.
+|-
+|{{EntityLink|Skeleton}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Wither Skeleton}}<br>
+{{EntityLink|Bogged}}<br>
+{{EntityLink|Parched}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Slime}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Snow Golem}}
+|{{Tc|no}}
+|{{Tc|no}}
+|The iron golem retaliates only if a snow golem accidentally hits it with a snowball. 
+|-
+|{{EntityLink|Spider}}<br>{{EntityLink|Cave Spider}}
+|{{Tc|Yes}}
+|{{Tc|partial}}
+|Spiders are hostile toward iron golems when light level is below 12. Otherwise, they retaliate only if attacked.
+|-
+|{{EntityLink|Vex}}
+|{{Tc|Yes}}
+|{{Tc|partial}}
+|A vex attacks an iron golem rarely when the vex is near the golem. It attacks immediately when an evoker summons three vexes.{{info needed|Clarification needed - What attacks immediately, the vex, all three vexes (use 'They' and not 'It' if so), or the Golem?}}<!-- DO NOT REMOVE THIS LINE WITHOUT PROVIDING A VALID EDIT SUMMARY -->
+|-
+|{{EntityLink|Villager}}
+|{{Tc|no}}
+|{{Tc|no}}
+|The iron golem retaliates only if a villager accidentally hits it with fireworks if a player wins the raid.<ref>{{Bug|MC-213470|3=Iron Golems can retaliate against villagers}}</ref>
+|-
+|{{EntityLink|Vindicator}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Warden}}
+|{{Tc|Yes}}
+|{{Tc|partial}}
+|A warden immediately retaliates when attacked by an iron golem, it also attacks when noticed.
+|-
+|{{EntityLink|Witch}}
+|{{Tc|Yes}}
+|{{Tc|partial|yes{{only|bedrock|short=y}}<br/>Partial{{only|java|short=y}}}}
+|{{IN|Java}}, witches attack iron golems if patrolling in an [[illager patrol]].
+|-
+|{{EntityLink|Wither}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|Iron golems attempt to attack the wither during its spawn animation, but are unable to do so.
+|-
+|{{EntityLink|Wolf}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Tamed wolves attack the iron golem only if it attacks its owner, or the owner attacks the golem. When attacked by the wolf, the golem retaliates. A player-built iron golem attacks the player's wolves if attacked by the wolf. Iron golems and untamed wolves never attack one another.
+|-
+|{{EntityLink|Zoglin}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Zombie Nautilus}}
+|{{Tc|partial|Yes{{only|bedrock|short=1}}<ref>{{bug|MCPE-235914||Iron Golems and Snow Golems attack tamed Zombie Nautili}}</ref>
+<br>No{{only|java|short=1}}}}
+|{{Tc|no}}
+|The iron golem retaliates only if the nautilus accidentally hits it with its dash attack.
+|-
+|{{EntityLink|Zombified Piglin}}
+|{{Tc|partial|Yes, 99.25% of them{{only|bedrock|short=1}}{{note|See {{slink|Zombified Piglin|Mounting}}}}
+<br>Yes, all of them{{only|java|short=1}}}}
+|{{Tc|No}}
+|Zombified piglins retaliate.
+|-
+|All other mobs
+|{{Tc|no}}
+|{{Tc|no}}
+|
+|}
+[[File:Iron Golem Looking Down.png|thumb|An iron golem looks down at a husk, but cannot attack the husk.]]
+A naturally-spawned iron golem knows where raiding [[illager]] locations are from behind solid walls and from underground and attempts to move toward them. An iron golem created by the player or summoned by a [[command]] cannot detect raiders through obstructions. Iron golems also look up or down if the hostile mob is above or below the iron golem.
+
+=== Being attacked===
+[[Zombie]]s (and variants), [[zoglin]]s, [[skeleton]]s (and variants), [[spider]]s, [[cave spider]]s, [[slime]]s, [[magma cube]]s, [[wither]]s, [[ravager]]s and [[illager]]s naturally attack iron golems on sight and may cause major damage, especially if the mobs attack in groups. {{IN|Bedrock}}, [[silverfish]] and [[witch]]es also naturally attack iron golems without provocation.
+
+Iron golems have 100% knockback resistance from normal attacks. However, they can be knocked back by wind charges and the Wind Burst enchantment.
+
+=== Cracking ===
+Iron golems have different stages of being cracked to show their health. When their health is at or above 75%, they do not have any cracks. When their health is at or above 50% but lower than 75%, some cracks appear. When their health is at or above 25% but lower than 50%, they appear more cracked. When their health is lower than 25%, many cracks are visible.
+<gallery>
+Iron Golem.png|No deterioration <br />(75% of health remaining or more)
+Iron Golem Cracked Low.png|Low deterioration <br />(Between 74% and 50%  remaining) 
+Iron Golem Cracked Medium.png|Average deterioration <br />(Between 49% and 25%  remaining) 
+Iron Golem Cracked High.png|Strong deterioration <br />(Less than 25% remaining)
+</gallery>
+
+=== Healing ===
+{{control|Using}} an [[iron ingot]] on an iron golem removes one deterioration level, or in other words, adds {{hp|25}} to its health, consuming the ingot.
+
+== Preferred path ==
+{{see also|Villager#Preferred path}}
+{{Exclusive|Bedrock|section=1}}
+
+Like villagers, iron golems {{in|bedrock}} use a strategy of pathfinding that prioritizes walking on certain "low-cost" blocks.
+{| class="wikitable mw-collapsible" data-description="Preferred blocks"
+|-
+!Preferred path blocks!!Block cost
+|-
+|{{BlockLink|Dirt path}}<br>
+{{BlockLink|Smooth Sandstone}}
+|0
+|-
+|{{BlockLink|Cobblestone}}<br>
+{{BlockLink|Stone}}<br>
+{{BlockLink|Stone Bricks}}<br>
+{{BlockLink|Sandstone}}<br>
+{{BlockLink|Cut Sandstone}}<br>
+{{BlockLink|Chiseled Sandstone}}<br>
+{{BlockLink|Smooth Sandstone}}<br>
+{{BlockLink|Mossy Cobblestone}}<br>
+{{BlockLink|Slabs}}<br>
+{{BlockLink|Planks|id=oak planks}}<br>
+{{BlockLink|Bricks}}<br>
+{{BlockLink|Nether Bricks}}<br>
+{{BlockLink|Red Nether Bricks}}<br>
+{{BlockLink|End Stone Bricks}}<br>
+{{BlockLink|Red Sandstone}}<br>
+{{BlockLink|Cut Red Sandstone}}<br>
+{{BlockLink|Chiseled Red Sandstone}}<br>
+{{BlockLink|Smooth Red Sandstone}}<br>
+{{BlockLink|Stained Glass}}<br>
+{{BlockLink|Glass}}<br>
+{{BlockLink|Glowstone}}<br>
+{{BlockLink|Prismarine}}<br>
+{{BlockLink|Block of Emerald}}<br>
+{{BlockLink|Block of Diamond}}<br>
+{{BlockLink|Block of Lapis Lazuli}}<br>
+{{BlockLink|Block of Gold}}<br>
+{{BlockLink|Block of Redstone}}<br>
+{{BlockLink|Glazed Terracotta}}
+|1
+|-
+|{{BlockLink|Beds}}<br>
+{{BlockLink|Lectern}}<br>
+{{BlockLink|Composter}}<br>
+{{BlockLink|Grindstone}}<br>
+{{BlockLink|Blast Furnace}}<br>
+{{BlockLink|Smoker}}<br>
+{{BlockLink|Fletching Table}}<br>
+{{BlockLink|Cartography Table}}<br>
+{{BlockLink|Brewing Stand}}<br>
+{{BlockLink|Smithing Table}}<br>
+{{BlockLink|Cauldron}}<br>
+{{BlockLink|Barrel}}<br>
+{{BlockLink|Loom}}<br>
+{{BlockLink|Stonecutter}}
+|50 
+|-
+|Other
+|1.5
+|-
+! Jump cost
+|5
+|}
+Iron golems attempt to walk on a one-block-wide path, despite them being two blocks wide. An iron golem favors a wider path if it sees one.
+
+=== Climbing ===
+Iron golems can climb ladders or vines if the ladder or vine is in its path, or if pushed onto a ladder or vine.
+
+== Sounds ==
+<!--READ ME BEFORE YOU CHANGE THE SOUND TABLE. Please do not change "Friendly Mobs" to "Neutral Mobs" or something else. If you don't know, the source in Java Edition is when you go to the pause screen and click options, then go to music and sounds. You can change the volume of "Friendly Mobs," which this mob makes sounds under this group. Calling this mob "Neutral" is technically unofficial as neither the game nor its code calls this mob a neutral creature. Our Minecraft Wiki community calls this mob neutral to draw the line between passive/friendly and hostile, and uses this term despite being unofficial.-->
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Iron golem throw.ogg
+|subtitle=Iron Golem attacks
+|source=neutral
+|description=When an iron golem attacks something
+|id=entity.iron_golem.attack
+|translationkey=subtitles.entity.iron_golem.attack
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Iron golem damage1.ogg
+|sound2=Iron golem damage2.ogg
+|subtitle=Iron Golem breaks
+|source=neutral
+|description=When an iron golem cracks
+|id=entity.iron_golem.damage
+|translationkey=subtitles.entity.iron_golem.damage
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0 or 0.8 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Iron golem death.ogg
+|subtitle=Iron Golem dies
+|source=neutral
+|description=When an iron golem dies
+|id=entity.iron_golem.death
+|translationkey=subtitles.entity.iron_golem.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Iron golem hurt1.ogg
+|sound2=Iron golem hurt2.ogg
+|sound3=Iron golem hurt3.ogg
+|sound4=Iron golem hurt4.ogg
+|subtitle=Iron Golem hurts
+|source=neutral
+|description=When an iron golem is damaged
+|id=entity.iron_golem.hurt
+|translationkey=subtitles.entity.iron_golem.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Iron golem step1.ogg
+|sound2=Iron golem step2.ogg
+|sound3=Iron golem step3.ogg
+|sound4=Iron golem step4.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While an iron golem is walking
+|id=entity.iron_golem.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Iron golem repair.ogg
+|subtitle=Iron Golem repaired
+|source=neutral
+|description=When an iron golem is repaired with an iron ingot
+|id=entity.iron_golem.repair
+|translationkey=subtitles.entity.iron_golem.repair
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =-
+|source=-
+|description=''Unused sound event''{{verify|Does it trigger at all, or is it actually never used?}}
+|id=mob.irongolem.say
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Iron golem throw.ogg
+|source=neutral
+|description=When an iron golem attacks something
+|id=mob.irongolem.throw
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Iron golem damage1.ogg
+|sound2=Iron golem damage2.ogg
+|source=neutral
+|description=When an iron golem cracks
+|id=mob.irongolem.crack
+|volume=0.8
+|pitch=0.8/0.64-1.0/0.8}}
+| {{SoundLine
+|sound=Iron golem death.ogg
+|source=neutral
+|description = When an iron golem dies
+|id=mob.irongolem.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Iron golem hurt1.ogg
+|sound2=Iron golem hurt2.ogg
+|sound3=Iron golem hurt3.ogg
+|sound4=Iron golem hurt4.ogg
+|source=neutral
+|description=When an iron golem is damaged
+|id=mob.irongolem.hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Iron golem step1.ogg
+|sound2=Iron golem step2.ogg
+|sound3=Iron golem step3.ogg
+|sound4=Iron golem step4.ogg
+|source=neutral
+|description=While an iron golem is walking
+|id=mob.irongolem.walk
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Iron golem repair.ogg
+|source=neutral
+|description=When an iron golem is repaired with an iron ingot
+|id=mob.irongolem.repair
+|volume=1.0
+| pitch = 0.8-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Iron Golem
+|spritetype=entity
+|nameid=iron_golem
+|showentitytags=y
+|entitytags=can_breathe_under_water, fall_damage_immune
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Iron Golem
+|spritetype=entity
+|nameid=iron_golem
+|showentityfamily=y
+|entityfamily=irongolem,mob
+|id=20
+|foot=1}}
+
+=== Entity data ===
+Iron golems have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/angerable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|PlayerCreated}}: 1 or 0 (true/false) - if true, this golem is player-created and never attacks players.
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Body Guard}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Hired help;Acquire Hardware}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|gTpKcXUHpUE|caption=The Iron Guardian We (Don't?) Deserve {{!}} The Story Of The Iron Golem}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w08a|[[File:Iron Golem JE1 BE1.png|32px]] Added iron golems.
+|One iron golem may spawn in a [[village]] for every 16 [[villager]]s.
+|In this snapshot iron golems spawn in very large numbers making iron farm be able to yield 76000 iron ingots per hour [https://youtu.be/e99UJG19J6U].}}
+|{{HistoryLine|||dev=1.2|Mechanical and stomping [[sound]]s have been added for the iron golem.
+|Iron golems now spawn a lot less frequently in villages.{{info needed|What was their original spawn rate and what did this version change it to?}}
+|Iron golems no longer [[drown]].}}
+|{{HistoryLine||1.4.2|dev=12w32a|Iron golems now attack [[slime]]s, [[magma cube]]s, and will sometimes attack [[creeper]]s, this is most likely unintended as unlike other hostile mobs they attack immediately, such as [[zombie]]s, creepers are only attacked at random and most often after iron golems have fought other mobs.}}
+|{{HistoryLine|||dev=?|One iron golem can now spawn for every 10 villagers in a village.}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[lead]]s, which can be used to leash iron golems.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Because roses have been replaced with [[poppies]], the iron golem's drop has been changed.}}
+|{{HistoryLine||1.8|dev=14w03a|Iron golems now only drop [[iron ingot]]s when killed by the [[player]], either through combat, [[potion]]s, or player-activated mechanisms such as manually lit [[TNT]]. If killed without player intervention, they now drop only poppies.}}
+|{{HistoryLine|||dev=14w04a|The previous change has been reverted; iron golems always drop iron ingots again.
+|Iron golems can now be spawned by [[dispensing]] a [[pumpkin]].}}
+|{{HistoryLine|||dev=14w25a|Iron golems can now be built sideways and upside-down instead of just upright and require air blocks in the corners of the area.<ref>{{bug|MC-60792}}</ref>}}
+|{{HistoryLine|||dev=14w26c|[[Jack o'lantern]]s can no longer be used to build iron golems.}}
+|{{HistoryLine|||dev=14w33a|[[Zombie]]s, [[skeleton]]s, [[spider]]s, [[cave spider]]s, slimes, magma cubes and [[blaze]]s now attack iron golems, without provocation.}}
+|{{HistoryLine||1.8.1|dev=pre1|Jack o'lanterns can now be used to build iron golems again.
+|Iron golems no longer attack [[creeper]]s since the mob AI overhaul in this update most likely patched out this unintended feature.}}
+|{{HistoryLine||1.9|dev=15w39a|Iron golems are now slightly shorter (2.7 blocks tall rather than 2.9).}}
+|{{HistoryLine|||dev=15w46a|Iron golems now spawn with 100% knockback resistance. Iron golems from previous versions continue to take knockback.<ref>{{bug|MC-271000}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Iron golems can now also{{info needed|were uncarved pumpkins still usable for this purpose in this version?}} use a [[carved pumpkin]] to be created.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Iron Golem JE2 BE2.png|32px]] The texture of iron golems has been updated.}}
+|{{HistoryLine|||dev=18w47a|Iron golems now spawn in cages next to [[pillager outpost]]s.}}
+|{{HistoryLine|||dev=19w08a|A single iron golem now always spawns as part of a village.
+|[[File:Iron Golem texture change 19w08a.gif|128px]] The texture of the iron golem has been tweaked. The bottom of the left arm is now the same as the right arm. The part of the under of the head and the under of the waist has been changed.|Iron golems are now able to step up 1 block just like horses and some other mobs.}}
+|{{HistoryLine||1.14.3|dev=pre1|Panicking villagers now have a higher chance of spawning iron golems.}}
+|{{HistoryLine||1.15|dev=19w41a|[[File:Iron Golem Cracked Low.png|32px]] [[File:Iron Golem Cracked Medium.png|32px]] [[File:Iron Golem Cracked High.png|32px]] Iron golems now crack as they take [[damage]].
+|Iron golems can now be healed with iron ingots.}}
+|{{HistoryLine|||dev=19w44a|Iron golem's damage progress is now based on the ratio of current health to max health.}}
+|{{HistoryLine||1.15.2|dev=pre1|Iron golem's cracks are no longer visible if they have the [[Invisibility]] effect.}}
+|{{HistoryLine||1.16|dev=20w10a|[[Firework]] damage now provokes iron golems.<ref>{{bug|MC-111498||Fireworks and water bottles damage don't make neutral mobs angry or hostile|Fixed}}</ref>}}
+|{{HistoryLine|||dev=20w19a|Villagers can now spawn iron golems regardless of their profession status or latest working time.}}
+|{{HistoryLine||1.19|dev=22w12a|Spawning area changed from 16×13×16 to 17×13×17.|Iron golems now spawn every 35 seconds instead of 30 seconds due to a bug.<ref name="MC-254100">{{bug|MC-254100||Iron golem spawn rate decreased|Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w19a|Iron golems can now spawn on any block with a full top surface.{{verify|type=change|edition=java|Really 22.w.19a? Or was it actually 22w12a?}}}}
+|{{HistoryLine|||dev=pre1|Iron golems now spawn only on blocks with a full top surface and a movement-blocking material.}}
+|{{HistoryLine||1.19.3|dev=22w44a|[[File:Iron Golem Spawn Egg JE1 BE1.png|32px]] Added [[spawn egg]]s for iron golems.<ref>{{bug|MC-189872|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|Iron golems now spawn every 30 seconds again.}}
+|{{HistoryLine|||dev=23w33a|Iron golems now have a lower attack range. They can no longer attack through one-block-thick walls.<ref>{{bug|MC-2310||Wrong attack radius calculation damages/kills entities through blocks and corners|Fixed}}</ref><ref>{{bug|MC-265723||Iron golem reach is too small|WAI}}</ref>}}
+|{{HistoryLine||1.21.9|dev=25w33a|Iron golems now sometimes plant a decorative flower onto a nearby [[copper golem]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Iron Golem JE1 BE1.png|32px]] Added iron golems.}}
+|{{HistoryLine||v0.16.0|dev=build 4|Iron golems now damage [[player]]s in Peaceful difficulty.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.2|Iron golems now spawn with 100% knockback resistance.}}
+|{{HistoryLine|||dev=alpha 1.0.0.0|Iron golems no longer attack players in Peaceful difficulty.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Iron Golem JE2 BE2.png|32px]] The texture of iron golems has been updated.
+|Iron golems now spawn in cages next to [[pillager outpost]]s.|[[Skeleton]]s once again attack iron golems.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|A single iron golem now always spawns as part of a [[village]].}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Iron golems now attack [[hoglin]]s.
+|Iron golems now immediately attack [[zoglin]]s instead of attacking only when the zoglin attacked first.<ref>{{Bug|MCPE-74428|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.26|[[File:Iron Golem Cracked Low.png|32px]] [[File:Iron Golem Cracked Medium.png|32px]] [[File:Iron Golem Cracked High.png|32px]] Iron golems now crack as they take damage.|Iron golems can now be healed with iron ingots.}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.20|[[File:Iron Golem Spawn Egg JE1 BE1.png|32px]] Added [[spawn egg]]s for iron golems.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.22|Iron golems now produce a crumbling particle effect when constructed.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|Iron golems can no longer be created with un-carved pumpkins.<ref>{{bug|MCPE-33801||You can use a pumpkin to spawn an iron golem|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.24| Now sometimes plant a decorative flower onto a nearby [[copper golem]].}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Due to a bug, iron golems now attack [[zombie nautilus]]es, even tamed ones.<ref>{{bug|MCPE-235914}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Iron Golem JE1 BE1.png|32px]] Added iron golems.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Because roses have been replaced with [[poppies]], the iron golem's drop has been changed.|Iron golems can now be spawned by [[dispensing]] a [[pumpkin]].|Iron golems can now be built sideways and upside-down instead of just upright.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Iron golems now spawn with 100% knockback resistance. Iron golems from previous versions continue to take knockback.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|[[Skeleton]]s no longer attack iron golems.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Iron golems now spawn in cages next to [[pillager outpost]]s.
+|A single iron golem now always spawn as part of a [[village]].
+|Panicking [[villager]]s now have a higher chance of spawning iron golems.{{verify|Not the case on bedrock, so this is likely not the case on legacy console either.}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Iron Golem JE1 BE1.png|32px]] Added iron golems.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID of the iron golem has been changed from <code>VillagerGolem</code> to <code>villager_golem</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine|||dev=pre5|The entity ID of the iron golem has been changed from <code>villager_golem</code> to <code>iron_golem</code>.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID of the iron golem has been changed from <code>irongolem</code> to <code>iron_golem</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:Castleintheskyrobot.png|thumb|right|Robot from ''Laputa: Castle in the Sky'']]
+
+*The iron golem's holding out [[flower]]s to [[villager]]s is a reference to the ancient robots in Hayao Miyazaki's animated film {{W|Castle in the Sky|''Laputa: Castle in the Sky''|newtab=1}}.<ref>{{tweet|jonkagstrom|172728720799436801|@scambot Yes, thanks to @pgeuder who sent me inspirational pictures!|February 23, 2012}}</ref> When baby villagers notice the poppy in its hand, they slowly approach, and take the flower eventually.<ref name="baby-bug" /> Iron golems do not actually pick up poppies; they spawn them in their hands.
+*Another inspiration was {{W|The Iron Giant|''The Iron Giant''|newtab=1}}, about an extraterrestrial war machine that crash landed on Earth and found a new life as a pacifist, motivated by {{W|Superman|newtab=1}}.<ref>{{YouTube link|gTpKcXUHpUE|The Iron Guardian We (Don't?) Deserve {{!}} The Story Of The Iron Golem|Minecraft|November 24, 2024}}</ref>
+*Iron golems do not get into boats or minecarts on their own, although {{in|bedrock}}, pushing a minecart on rails into a golem forces it into the minecart.
+*It is possible for an [[enderman]] to cause an iron golem to spawn by placing a pumpkin in the correct position on an arrangement of iron blocks previously placed by the player.
+*The iron golem is a purchasable avatar item on the Xbox 360 Marketplace.
+* It is impossible to spawn an iron golem holding a poppy using a command (such as <code>summon</code> or <code>data</code>). Its NBT matches with a naturally generated golem (<code>equipment:{mainhand:{id:"minecraft:poppy",count:1}}</code>), but does not visually update.
+* The iron golem has a smaller [[LEGO Minecraft|LEGO]] variant exclusive from "Advent Calender 2025", as well as one of the [[warden]].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Iron golem.png|Creation of an iron golem
+IronGolemRose.png|An iron golem offers a [[villager]] a [[poppy]].
+IronGolemHoldingRose.png|An iron golem offers a poppy to several baby villagers.
+IronGolemKillingSpider.png|An iron golem attacking a [[spider]] by throwing it into the air
+Iron golem (2).png|An iron golem attacking a [[witch]]
+Village Golem Attacking.png|An iron golem attacking the [[player]]
+Iron golems doing crazy.png|Iron golems acting strangely in a player-created village, by attempting to cross in a two-block-high gap
+Iron Golem Bumping Heads.png|Two iron golems bump their heads {{in|BE}}.
+Cracked Iron Golem.jpg|A cracked iron golem
+Iron golem Attacks Pillagers.jpg|An iron golem attacking [[pillager]]s
+</gallery>
+
+=== Development images ===
+<gallery>
+File:1.2 Dev Iron Golem.png|First image of iron golem
+File:Iron Golem (texture no alpha) JE1.png|Iron Golem (texture no alpha)
+File:Earlyiron golem.png|A recreation of the unused iron golem on the hidden pixels of the old iron golem texture revealed by [[Unused textures/Hidden in transparency|disabling the alpha channel]]
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Iron Golem (texture).png|Iron golem texture file
+Iron Golem Crackiness Low (texture).png|Low crackiness texture file
+Iron Golem Crackiness Medium (texture).png|Medium crackiness texture file
+Iron Golem Crackiness High (texture).png|High crackiness texture file
+</gallery>
+
+=== Official artwork ===
+<gallery>
+File:Horse Update image.png|An iron golem in promotional artwork for the [[Horse Update]]
+File:MineCon 2015 artwork.jpg|An iron golem in promotional artwork for [[Minecon 2015]]
+File:Village and Pillage banner.png|Iron golems in promotional artwork for the [[Village and Pillage]] Update
+File:Iron Golem Artwork.png|Official iron golem artwork
+File:Iron Golem Art.png|Another official iron golem artwork
+File:Crying Iron Golem.jpg|An iron golem alone in the rain
+File:SSBU spirit Villager & Iron Golem.png|Villager and Iron Golem Spirit from ''[[Super Smash Bros. Ultimate]]''
+File:Iron-Golem-Running.png|Artwork of an iron golem running, from the website for [[Minecraft Experience: Villager Rescue]]
+File:A golem raises up Sunny.jpeg|An iron golem lifting up [[Sunny]] to catch a [[snowball]]
+File:Dinnerbone and copper golem's arm.jpg|A [[Copper Golem|copper golem]] reaching out past an iron golem named [[Dinnerbone]]
+</gallery>
+
+=== In other media ===
+<gallery>
+Iron Golem (Trails & Tales Event).png|The Secret Iron Golem, featured in the [[Trails & Tales Event]]
+Tiny Iron Golem Mob Vote Server.png|Tiny iron golem
+LEGO Iron Golem.png|''[[LEGO Minecraft]]'' iron golem
+LEGO Iron Golem 1.png|Lego Iron golem (old version)
+LEGO MCD Iron Golem.png|Lego iron golem from ''Minecraft Dungeons''
+LEGO AMCM Iron Golem.png|Lego [[Movie:Iron Golem|iron golem]] from ''A Minecraft Movie''
+Iron Golem JINX.jpg|Official T-shirt artwork made by JINX
+Minecraft Heroes Crest JINX.jpg|An official T-shirt artwork "Minecraft Heroes Crest" depicts an iron golem and an [[ender dragon]]. Made by JINX
+Minecraft Movie Iron Golem Concept Art.jpg|Iron golem concept art for the {{AMCM}}
+15 Years Journey End Hub Iron Golem.png|Iron golem security guard featured in [[15 Year Journey]]
+MCD Iron Golem.png|An [[Dungeons:Iron Golem|iron golem]] in ''[[Minecraft Dungeons]]''
+Iron Golem Story Mode.png|An [[Story Mode:Iron Golem|iron golem]] in ''[[Minecraft: Story Mode]]''
+Iron-Golem-Series-1-Mini-Figures-1.jpg|Iron golem minifigure by Mattel
+Billyballong.png|An April Fools' Easter egg with an iron golem named "Billyballong" in [[Java Edition 22w13oneBlockAtATime]]
+Party Iron Golem.png|Skin of humanoid iron golem in [[1st Birthday Skin Pack]]
+Iron Golem SP4.png|Skin of humanoid iron golem in [[Skin Pack 4]]
+AMCM Iron Golem.png|An iron golem in {{AMCM}}
+</gallery>
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|meet-iron-golem|Meet the Iron Golem|February 27, 2017|Tom Stone}}
+*{{Mcnet|iron-golem|Meet the Iron Golem|September 12, 2024|Duncan Geere}}
+
+== Navigation ==
+{{Navbox iron}}
+{{Navbox entities|mobs}}
+
+[[Category:Golem mobs]]
+[[Category:Neutral mobs]]
+
+[[de:Eisengolem]]
+[[es:Gólem de hierro]]
+[[fr:Golem de fer]]
+[[hu:Vasgólem]]
+[[it:Golem di ferro]]
+[[ja:アイアンゴーレム]]
+[[ko:철 골렘]]
+[[lzh:鐵傀儡]]
+[[nl:IJzergolem]]
+[[pl:Żelazny golem]]
+[[pt:Golem de Ferro]]
+[[ru:Железный голем]]
+[[uk:Залізний ґолем]]
+[[zh:铁傀儡]]

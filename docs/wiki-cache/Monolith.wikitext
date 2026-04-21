@@ -1,0 +1,66 @@
+{{outdated|Monoliths can no longer be generated, but existing Monoliths will persist into future versions of Java Edition.}}
+{{conjecture}}
+{{Infobox structure
+| title = Monolith
+| image = Monolith small.png
+| canspawn = No
+| biome = Any
+}}
+'''Monoliths''' were glitched areas of terrain that happened in the later versions of [[Infdev]] and early [[Java Edition Alpha|Alpha]] stages of the game. These monoliths would cause the terrain to abruptly invert, with natural terrain generation replacing the [[air]]/[[water]] up to the height limit and vice versa.
+
+== Generation ==
+Monoliths would generate in seemingly random locations throughout the world. They tended to generate around flattish terrain. They were caused by an error in the Perlin noise generator. Specifically, the hilliness of the terrain (the "terrain scale") was controlled by a noise map. The reciprocal of the value of this noise was then used as the intensity of a gradient applied to the terrain. Because the reciprocal is used, flatter terrain is caused by lower values (where the terrain bias gradient drops off faster), and hillier terrain is caused by higher values. Because the reciprocals of small negative numbers are very large negative numbers, the terrain abruptly changes when zero is crossed, causing the gradient to bias higher elevations toward being ground, and lower elevations toward being air. Thus, when terrain scale becomes negative, terrain generates upside-down, generating monoliths. This was possible in early Alpha because the noise map that determined terrain scale could return a negative value. (This may be the same 2d noise map used in Classic, where adding multiple octaves together could result in unpredictably high or low values.){{info needed|https://kahomayo.github.io/monolith-renderer/ has a more descriptive explanation, which could be referenced here}}
+
+== Structure ==
+The monoliths would cause the terrain to abruptly generate up to the height limit, with natural [[grass block]] and [[ore]] generation. They could theoretically generate arbitrarily tall, being stopped only by the height limit, which - at this point in the game's development - was 128 blocks. The area below the monoliths was completely hollow, except for [[water]] generating at sea level and a layer of [[bedrock]] at the bottom, making the normal terrain seem like inverse monoliths. It is possible to find small crevices in large monoliths, where normal terrain was generated.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100611|link=Java Edition Infdev 20100611|slink=Java Edition Infdev 20100611|A [[History of world generation|rework of terrain generation]] now allows for monoliths to generate, by allowing terrain scale to become negative.}}
+|{{HistoryLine||20100624|slink=Java Edition Infdev 20100624|The underneath of the monoliths no longer generate water, with the bedrock layer being dragged upwards to ground level, directly exposing the void.}}
+|{{HistoryLine||20100630-1340|slink=Java Edition Infdev 20100630|The previous changes have been reverted.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=preview|Monoliths have been patched and no longer generate in the world, due to changes to the way terrain scale is determined.}}
+}}
+
+== Issues ==
+Monoliths ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== Trivia ==
+*By setting "Biome Scale Weight" to negative values in [[old customized]] worlds, they could generate from snapshot [[14w17a]] for [[Java Edition 1.8|1.8]] to snapshot [[18w05a]] for [[Java Edition 1.13|1.13]], but with the removal of the "Customized" world type altogether in snapshot [[18w06a]] for 1.13, this can no longer be recreated. 
+**This works because terrain scale is determined by biomes in those versions, and those biome terrain scale values are affected overall by "biome scale weight".
+**Monoliths could once again be generated from snapshot [[20w28a]] for [[Java Edition 1.16.2|1.16.2]] to [[Java Edition 1.17.1|1.17.1]] using customized worlds by setting a biome's depth value to a negative number.
+**It is not known if the reworked terrain generation in 1.18 is capable of harboring monoliths.
+**Beginning in [[Java Edition 1.19|1.19]], it is once again possible to generate monoliths using customized worlds by multiplying the terrain density function by a negative number. The area underneath is no longer completely flooded with water, and now contains lava at the bottom. The remaining cavity is populated with aquifers, and some noise caves that intersect it invert, becoming solid stone and/or deepslate.
+*In between [[Java Edition Infdev 20100624]] and [[Java Edition Infdev 20100629]] the bedrock layer directly underneath the monolith was raised to sea level, making the void easily accessible underneath the monolith.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Map2-day original.png|An isometric render of a map with many monoliths. (12 total)
+Map1-day.png|Ditto, but brighter.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Monolith small.png|A small monolith.
+Monolith twin.png|A large monolith as seen from atop another large monolith.
+Monolith hole.png|A section of regular terrain inside a monolith.
+Monolith cavernL.png|The area underneath a monolith, next to a beach.
+Monolith cavernR.png|Same position, different angle.
+Monolith insidecave.png|Looking at the beach from directly below the monolith.
+Monolith inverse.png|The previously mentioned regular terrain affects the area underneath the monolith.
+Inf20100611 underneath monolith.png|The underneath of a monolith in early iterations.
+Farlands_Colliding_With_Monoliths.png|A monolith colliding with, and being overwritten by, the [[Far Lands (Java Edition)/Infdev 20100327 to Beta 1.7.3|Far Lands]] in [[Java Edition Infdev 20100611]].
+1.19 monolith under.png|The area underneath a monolith in 1.19+.
+</gallery>
+
+== Navigation ==
+{{Navbox terrain features|removed}}
+{{Navbox removed features}}
+
+[[es:Monolito]]
+[[fr:Monolithe]]
+[[pt:Monólito]]
+[[ru:Монолит]]

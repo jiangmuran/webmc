@@ -1,0 +1,161 @@
+{{Infobox structure
+|group1= Oak
+|1-1= Oak Fallen Log.png
+|group2= Birch
+|2-1= Birch Fallen Log.png
+|group3= Tall Birch
+|3-1= Tall Birch Fallen Log.png
+|group4= Spruce
+|4-1= Spruce Fallen Log.png
+|group5= Jungle
+|5-1= Jungle Fallen Log.png
+|biome= All biomes where the respective standing trees grow, except:
+* {{BiomeLink|Meadow}}
+* {{BiomeLink|Bamboo Jungle}}
+* {{BiomeLink|River}}
+* {{BiomeLink|Grove}}
+* {{BiomeLink|Flower Forest}} (only fallen birches generate)
+|blocks= 
+*{{BlockLink|Oak Log}} (Fallen oak tree)
+*{{BlockLink|Birch Log}} (Fallen birch tree)
+*{{BlockLink|Spruce Log}} (Fallen spruce tree)
+*{{BlockLink|Jungle Log}} (Fallen jungle tree)
+*{{BlockLink|Red mushroom}}
+*{{BlockLink|Brown mushroom}}
+*{{BlockLink|Vines}} (Fallen oak & jungle trees)
+}}
+
+'''Fallen trees''' are [[feature]]s that resemble a [[tree]] lying on the ground after falling over.
+
+== Generation ==
+Fallen trees consist of a single upright [[log]], making the stump, and a log (composed of a row of log blocks) lying on its side, making the trunk. The trunk is often found 1–2 blocks from the stump. 
+
+The stump often has [[vines]] growing on its sides. 1–2 red or brown [[mushroom]]s can sometimes be found growing on the trunk.
+
+Only [[oak]], [[spruce]], [[birch]], tall birch, and [[jungle tree]]s can generate as fallen trees.
+
+Fallen trees can be found in all biomes where their standing tree variants grow, except the following:
+* [[Meadow]]
+* [[Bamboo Jungle]]
+* [[River]]
+* [[Grove]]
+* [[Flower Forest]]
+** Has fallen birch trees but not fallen oak trees.
+
+== Data values ==
+=== ID ===
+{{el|java}}
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=fallen-oak
+|spritetype=env
+|nameid=fallen_tree
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fallen-birch
+|spritetype=env
+|nameid=fallen_birch_tree
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fallen-birch
+|spritetype=env
+|nameid=fallen_super_birch_tree
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fallen-jungle-tree
+|spritetype=env
+|nameid=fallen_jungle_tree
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fallen-oak
+|spritetype=env
+|nameid=fallen_oak_tree
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fallen-spruce
+|spritetype=env
+|nameid=fallen_spruce_tree
+|foot=1
+}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|trunk_provider}} The block to use for the trunk.
+*** {{Nbt inherit/block state provider}}
+** {{Nbt|int}}{{Nbt|compound|log_length}} The length of the fallen log. Value between 0 and 16 (inclusive).
+*** {{Nbt inherit/int provider}}
+**{{nbt|list|log_decorators}} (Required, but can be empty) Decorations to add to fallen log of the tree 
+***{{nbt|compound}} A decorator, see {{slink|Tree definition|Decorator}}
+**{{nbt|list|stump_decorators}} (Required, but can be empty) Decorations to add to the stump.
+***{{nbt|compound}} A decorator, see {{slink|Tree definition|Decorator}}
+</div><section end="config"/>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.5|dev=25w09a|Added fallen trees.}}
+|{{HistoryLine|||dev=Pre-Release 1|The longer versions of fallen birch trees now generate properly.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|Added fallen trees.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Added a taller variant of fallen birch trees.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Mushrooms no longer generate as part of fallen trees.}}
+|{{HistoryLine||?|Mushrooms generate as part of fallen trees again.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Added fallen trees.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Fallen Logs.jpg|The different fallen tree types.
+File:Fallen oak.jpg|A fallen oak tree.
+File:Higher Fallen Tree.png|A fallen birch tree.
+File:Lower Fallen Tree.png|A fallen tree in a cave.
+File:Floating Fallen Tree.png|A partially floating fallen tree.
+File:Tall Birch Hills fallen tree.png|A very long fallen tree in a [[Tall Birch Hills|tall birch hills]] biome.
+File:Fallen Tree on the Water.png|A fallen tree floating on water.
+</gallery>
+
+== Navigation ==
+{{Navbox wood}}
+{{Navbox generated features}}
+
+[[Category:Trees]]
+
+[[es:Árbol caído]]
+[[fr:Arbre renversé]]
+[[ja:倒木]]
+[[ko:쓰러진 나무]]
+[[pl:Przewrócone drzewo]]
+[[pt:Árvore caída]]
+[[ru:Упавшее дерево]]
+[[uk:Повалене дерево]]
+[[zh:倒下的树木]]

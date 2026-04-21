@@ -1,0 +1,340 @@
+{{about|the block|the structure|End portal}}
+{{Infobox block
+| group = Empty
+| 1-1 = End Portal Frame (S).png
+| group2 = Filled
+| 2-1 = Filled End Portal Frame (S).png
+| transparent = Partial <small>(does not block light)</small>
+| light = '''[[JE]]''': Yes (1)<br>'''[[BE]]''': No
+| renewable = No
+| tool = None
+| stackable = Yes (64)
+| waterloggable = {{jebe|No|Yes}}
+| flammable = No
+| lavasusceptible = No
+}}
+An '''End portal frame''' is an [[breaking|indestructible]] [[block]], 12 of which form an [[End portal]]. [[Eyes of ender]] must be {{Control|use|text=inserted}} into all 12 empty frames (if not already present upon generation) for the portal to activate and allow passage into the [[End dimension]].
+
+== Obtaining ==
+End portal frames, like [[bedrock]], are unobtainable in Survival or Adventure mode. It can be obtained only by accessing the [[creative inventory]] or [[commands]].
+
+=== Natural generation ===
+{{FakeImage|align=left|{{BlockGrid|e=End Portal Frame|s=End Portal Frame+sideways| eee |s   s|s   s|s   s| eee }}|End portal generation design}}
+
+12 End portal frames generate naturally to form the [[End portal]] in each [[stronghold]] End portal room, over a pool of [[lava]] with a staircase containing a [[silverfish]] monster spawner. The frames generate in a 5×5 square formation, with 3 frames on each side, without the corners. Each End portal frame generates facing inward, with a 10% chance of containing an [[eye of ender]].
+
+Each stronghold contains an End portal. {{IN|java}}, each world contains exactly 128 strongholds, so a total of 1,536 End portal frames are generated. {{IN|bedrock}}, there are infinitely many strongholds in each world, so the number of End portal frames that may generate is also infinite. {{IN|console}}, there was only one End portal per world, so 12 End portal frames were generated.
+
+{{-|left}}
+
+There is an extremely low chance (10<sup>-12</sup> or 10<sup>-10</sup>% or one in a trillion) for all twelve End portal frames to be filled in strongholds.
+
+The chart below shows the probability of having each number of eyes of ender filled in (some values may be rounded). 
+{| class="wikitable"
+|+End portal frame generation
+!Frames filled
+! colspan="2" | Probability
+! colspan="2" | Probability ≥
+|-
+|0
+|28.24 %
+|1 : 3.54
+|100 %
+|1 : 1
+|-
+|1
+|37.66 %
+|1 : 2.66
+|71.76 %
+|1 : 1.39
+|-
+|2
+|23.01 %
+|1 : 4.35
+|34.10 %
+|1 : 2.93
+|-
+|3
+|8.52 %
+|1 : 11.7
+|11.09 %
+|1 : 9.02
+|-
+|4
+|2.13 %
+|1 : 46.9
+|2.56 %
+|1 : 39
+|-
+|5
+|0.38 %
+|1 : 264
+|0.43 %
+|1 : 231
+|-
+|6
+|4.91⨯10<sup>-4</sup>
+|1 : 2,036
+|5.41⨯10<sup>-4</sup>
+|1 : 1,848
+|-
+|7
+|4.68⨯10<sup>-5</sup>
+|1 : 21,383
+|5.02⨯10<sup>-5</sup>
+|1 : 19,928
+|-
+|8
+|3.25⨯10<sup>-6</sup>
+|1 : 307,911
+|3.41⨯10<sup>-6</sup>
+|1 : 292,952
+|-
+|9
+|1.60⨯10<sup>-7</sup>
+|1 : 6,235,191
+|1.66⨯10<sup>-7</sup>
+|1 : 6,030,090
+|-
+|10
+|5.35⨯10<sup>-9</sup>
+|1 : 187,055,743
+|5.45⨯10<sup>-9</sup>
+|1 : 183,318,064
+|-
+|11
+|1.08⨯10<sup>-10</sup>
+|1 : 9,259,259,259
+|1.09⨯10<sup>-10</sup>
+|1 : 9,174,327,988
+|-
+|12
+|10<sup>-12</sup>
+|1 : 1,000,000,000,000
+|10<sup>-12</sup>
+|1 : 1,000,000,000,000
+|}
+Calculating the chance for a specific amount of eyes generating is done with the probability mass function:
+
+P(X=number of eyes) = <math>\binom{12}{k} \cdot 0.1^k \cdot(1-0.1)^{12-k}</math> with k being the number of eyes.
+
+== Usage ==
+{{control|use|text=Using}} [[eyes of ender]] on End portal frames inserts them to the top of the frame if it is not inserted previously.
+
+An End portal frame has a front face that faces the player when placed. Although the facing is almost invisible (one can distinguish only 2 rotations of End portal frames), all End portal frames must be placed correctly and face inward in order to be able to activate the End portal, and if all of the frames have [[eyes of ender]] inserted, the portal activates, replacing the inner 3×3 space with [[End portal block]]s.
+
+If an End portal is built in [[the End]], entities are teleported back to the world spawn point in the Overworld, similar to the [[exit portal]].
+
+=== Redstone ===
+End portal frames output a [[redstone comparator]] signal of 15 when an eye is present. If there is no eye in the frame, it outputs a signal of 0.
+
+=== Light source ===
+End portals frames emit a light level of 1.
+
+=== Note blocks ===
+End portals frames can be placed under [[note block]]s to produce "bass drum" sounds.
+
+=== Piston interactivity ===
+End portal frames cannot be pushed by [[piston]]s. They also cannot be pushed nor pulled by [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Glass}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =End portal eye place1.ogg
+|sound2=End portal eye place2.ogg
+|sound3=End portal eye place3.ogg
+|subtitle=Eye of Ender attaches
+|source=block
+|description=When an eye of ender is placed in an End portal frame
+|id=block.end_portal_frame.fill
+|translationkey=subtitles.block.end_portal_frame.fill
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =End portal eye place1.ogg
+|sound2=End portal eye place2.ogg
+|sound3=End portal eye place3.ogg
+|source=block
+|description=When an eye of ender is placed in an End portal frame
+|id=block.end_portal_frame.fill
+|volume=0.3
+| pitch = ''varies'' <ref group="sound">Can be 1.0, 0.9, or 1.1</ref>
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=End Portal Frame
+|spritetype=block
+|nameid=end_portal_frame
+|blocktags=dragon_immune, wither_immune
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=End Portal Frame
+|spritetype=block
+|nameid=end_portal_frame
+|id=120
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|eye|false|false,true|If true, the portal frame block contains an [[eye of ender]].}}
+{{bst|facing|north|east,north,south,west|The direction of the end portal frame block.<br>The opposite from the direction the player faces while placing the block.<br>In order to activate a portal, all 12 blocks must be facing inward;<br>for example, the northern three blocks must all face south.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x4|end_portal_eye_bit|false|false,true|If the portal frame block contains an [[eye of ender]].|0,1}}
+{{bst|bits=|minecraft:cardinal_direction|south|east,north,south,west|The direction of the end portal frame block.<br>The opposite from the direction the player faces while placing the block.<br>In order to activate a portal, all 12 blocks must be facing inward;<br>for example, the northern three blocks must all face south.|Unsupported|foot=1}}
+
+== History ==
+{{See asset history|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|[[File:End Portal Frame JE1.png|32px]] [[File:Filled End Portal Frame JE1.png|32px]] Added End portal frames. Frames have a cross model and filled End portal frames have a cube model; both have a full cube hitbox.
+|The block emits a [[light]] at level 15. 
+|It can drop as an item due to [[explosion]]s.
+|[[File:End Portal Frame (texture) JE1.png|32px]] The item form of the End portal is a flat texture of the filled frame, and has an empty tooltip.
+|This item is one of four given to all players upon world creation or respawning in the pre-reupload.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|[[File:End Portal Frame (S) JE2.png|32px]] [[File:Filled End Portal Frame (S) JE2.png|32px]] The End portal now has a dark green and yellow texture. The unrepaired version is visually {{frac|13|16}} of a block high, and the repaired version sits a full block high with the addition of a {{frac|3|16}}-block-high eye of ender in its middle.
+|The End portal now emits its light of level 1.
+|The End portal can no longer be broken by explosions.
+|[[File:End Portal Frame (texture) JE2 BE1.png|32px]] The texture of the End portal item has been changed.}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of singleplayer being changed to an internal server, placing an eye of ender into an end portal frame no longer emits particles.}}
+|{{HistoryLine|||dev=12w23a|The End portal is now available in the [[Creative inventory]] and with the pick block option, with the tooltip 'End Portal'.
+|[[File:End Portal Frame (item) JE3.png|32px]] The End portal now renders correctly as an item.}}
+|{{HistoryLine||1.6.1|dev=13w18a|The End portal now gives off a [[redstone]] signal to [[redstone comparator]]s based on whether there is an eye of ender in it.}}
+|{{HistoryLine||1.8|dev=14w10a|[[File:End Portal Frame (N) JE3.png|32px]] [[File:End Portal Frame (E) JE2.png|32px]] [[File:End Portal Frame (S) JE2.png|32px]] [[File:End Portal Frame (W) JE3.png|32px]] [[File:Filled End Portal Frame (N) JE3.png|32px]] [[File:Filled End Portal Frame (E) JE3.png|32px]] [[File:Filled End Portal Frame (S) JE3.png|32px]] [[File:Filled End Portal Frame (W) JE3.png|32px]] End portal frames now appear to use the incorrect textures in several places.}}
+|{{HistoryLine|||dev=14w10c|[[File:End Portal Frame (N) JE2.png|32px]] [[File:End Portal Frame (E) JE2.png|32px]] [[File:End Portal Frame (S) JE2.png|32px]] [[File:End Portal Frame (W) JE2.png|32px]] [[File:Filled End Portal Frame (N) JE2.png|32px]] [[File:Filled End Portal Frame (E) JE2.png|32px]] [[File:Filled End Portal Frame (S) JE2.png|32px]] [[File:Filled End Portal Frame (W) JE2.png|32px]] End portals now use the right textures again.<ref>{{bug|MC-50235}}</ref>}}
+|{{HistoryLine||1.12|dev=17w17a|Putting an eye of ender in an End portal now plays a dinging sound.}}
+|{{HistoryLine||1.13|dev=17w47a|"End Portal" has now been renamed to "End Portal Frame".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:End Portal Frame (S) JE5.png|32px]] [[File:Filled End Portal Frame (S) JE5.png|32px]] The textures of End portal frames have now been changed.}}
+|{{HistoryLine|||dev=18w50a|The bottom texture has been changed.}}
+|{{HistoryLine|||dev=19w03c|End portal frames now use correct cullface arguments.}}
+|{{HistoryLine|||dev=19w14a|Putting an eye of ender into an End portal frame now emits particles again.<ref>{{bug|MC-10369}}</ref>}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:End Portal Frame (S) JE7.png|32px]] [[File:Filled End Portal Frame (S) JE7.png|32px]] The side texture of an End portal frame has been slightly changed, to make better transition with the [[End stone]] texture.}}
+|{{HistoryLine||1.21.5|dev=25w02a|End portal frames can no longer be destroyed by using [[bone meal]] on nearby [[mushroom]]s, due to addition of the <code>#replaceable_by_mushrooms</code> block tag.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:End Portal Frame (S) JE2.png|32px]] [[File:Filled End Portal Frame (S) JE2.png|32px]] Added End portal frames.
+|End portal frames have no collision box, allowing entities to move through them. They are considered a [[solid block]] in all other aspects.
+|[[File:End Portal Frame (texture) JE2 BE1.png|32px]] The item form of the End portal frame is a flat texture of an unfilled frame, with the tooltip ".name<".}}
+|{{HistoryLine|||dev=build 4|Filled and unfilled End portal frames are now available in the [[Creative inventory]], both with the tooltip "End Portal".
+|End portal frames now have a collision box.
+|End portal frames now render correctly as an item.}}
+|{{HistoryLine|||dev=build 7|The filled End portal frame has been removed from the Creative inventory.}}
+|{{HistoryLine||v0.12.1|dev=build 11|End portals now rotate based on the direction they are placed.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added [[the End]], with some [[eye of ender]]s filling it up.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:End Portal Frame (S) JE5.png|32px]] [[File:Filled End Portal Frame (S) JE5.png|32px]] The textures of End portals have now been changed.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|[[File:End Portal Frame (S) JE7.png|32px]] [[File:Filled End Portal Frame (S) JE7.png|32px]] The side texture of End portal has been changed.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.20|Renamed "End Portal" to "End Portal Frame".}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|End portal frames have been moved from the "Items" to the "Nature" category in the [[Creative inventory]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:End Portal Frame (S) JE2.png|32px]] [[File:Filled End Portal Frame (S) JE2.png|32px]] Added End portal frames. They can't be filled with [[eyes of ender]].}}
+|{{HistoryLine||xbox=TU9|End portal frames can now be used to access [[the End]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|The End portal frame now gives off a [[redstone]] signal to [[redstone comparator]]s based on whether there is an eye of ender in it.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|End portal frames have been added to the custom superflat block selection menu, alongside all types of logs.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Putting an eye of ender into an End portal frame now emits particles.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Removed End portal frames from the custom superflat block selection menu.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Putting an eye of ender in an End portal now plays a dinging sound.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:End Portal Frame (S) JE5.png|32px]] [[File:Filled End Portal Frame (S) JE5.png|32px]] {{verify|Were these the actual models used?}} The textures of End portal frames have now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:End Portal Frame (S) JE2.png|32px]] [[File:Filled End Portal Frame (S) JE2.png|32px]] Added End portal frames.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 120.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|End portal frames now use the <code>minecraft:cardinal_direction</code> [[block state]] instead of <code>facing_direction</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* End portal frames were obtainable and could be placed facing in different directions in the April Fools' snapshot [[22w13oneBlockAtATime]].
+* The End stone portion of the End portal frame side texture does not match up with the [[End stone]] block texture.<!-- should this even be here? -->
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Inactive.png|Inactive End portal.
+Activated.png|End portal, which had been activated by a player.
+Minecartportal.png|[[Minecart with chest]] generated on top of an End portal frame, because there is a [[mineshaft]] behind the wall.
+Beam Goes Through End Portal.png|[[Beacon]] beam going through an End portal frame block.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week--end-portal-frame Block of the Week: End Portal Frame] – Minecraft.net on December 2, 2021
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:End blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+[[Category:Readable by comparators]]
+
+[[de:Endportalrahmen]]
+[[es:Marco del portal del End]]
+[[fr:Cadre de portail de l'End]]
+[[it:Telaio del portale dell'End]]
+[[ja:エンドポータルフレーム]]
+[[ko:엔드 차원문 틀]]
+[[nl:Endportaalframe]]
+[[pl:Rama portalu do Endu]]
+[[pt:Moldura do Portal do End]]
+[[ru:Рамка портала Края]]
+[[th:กรอบประตูมิติเอนด์]]
+[[uk:Рамка порталу Енду]]
+[[zh:末地传送门框架]]

@@ -1,0 +1,140 @@
+{{Outdated|The terrain generation algorithm has since been rewritten, and no longer uses this set of biomes.}}
+[[File:Example of Biomes.png|thumb|500px|Pre-Beta 1.8 example of Biomes]]
+
+In [[Java Edition Beta 1.8]], [[Xbox 360 Edition TU5]], and [[Pocket Edition v0.9.0 alpha]], biomes received a major overhaul, removing and changing many biomes. The old biomes were much smaller, sometimes smaller than a chunk, and less distinct.
+
+Biome generation was controlled in these versions by noise generated temperature and rainfall values, allowing for fully smooth transitions from biome to biome and preventing cold and warm biomes from generating next to one another. The specific biome was determined by where the combination of temperature and rainfall put it. (By modifying the game, it was also possible to create single biome worlds in these versions).
+
+Height variation was entirely independent of biome type, with biomes having no influence on the shape of terrain. This meant things like cliffs and mountains were able to generate up to nearly 128 on the y-axis in any biome. Tall grass was also much less present in pre-1.8 worlds (except in the "Plains" and "Rainforest" biomes).
+
+There were 13 [[biome]] types: 10 in the [[Overworld]], 1 in [[the Nether]], and 2 unused ones that are in the code but aren't encountered in normal play. These biomes were added in [[Java Edition Alpha 1.2.0]], and underwent relatively few changes before their removal in Beta 1.8: birch and spruce trees were added in [[Java Edition Beta 1.2|Beta 1.2]] (which allowed for new chunks to have birch trees generate in forests and spruce to generate in taiga in place of oak trees), desert biome borders were rotated in [[Java Edition Beta 1.3|Beta 1.3]] due to a bug previously causing them to not line up, and tall grass and ferns were introduced in [[Java Edition Beta 1.6|Beta 1.6]]. 
+
+Grass and foliage colors were determined by an algorithm based on the temperature and humidity, rather than from the biomes directly. This means there can be a wide range of different grass and foliage colors for any one biome. Once the game gets the temperature and humidity values by pulling grass and foliage colors, it uses said values to grab colors from /misc/grasscolor.png or /misc/foliagecolor.png, and applies it to the uncolored grass or leaves. The same implementation also existed for water coloration with /misc/watercolor.png. However, this feature wasn't enabled in the code; [[Java Edition 1.13]] would later implement biome-based water coloring, but it does not use the watercolor.png file (which had since been removed).
+
+This same terrain generator and set of biomes was ported almost directly to [[Xbox 360 Edition]], with the only difference being that the terrain transitions to ocean near the edges of the world. Most Java Edition Beta seeds also work in Xbox 360 Edition prior to [[Xbox 360 Edition TU5|TU5]], which rewrote world generation to match Beta 1.8. No other versions of [[Legacy Console Edition]] ever featured this terrain generator, as TU5 predates any ports to other consoles. [[Pocket Edition]] versions prior to [[Pocket Edition v0.9.0 alpha|v0.9.0 alpha]] also use effectively the same method to generate terrain, but the similarity is less noticeable for several reasons: all biomes other than deserts, taigas, and tundras look nearly identical due to the lack of dynamic grass coloration in these versions; tall grass and ferns didn't generate at all; the very small world size means that a single world will usually only contain a few biomes at most; and the underlying random number generator is different, so [[seed]]s do not match up with other editions.
+
+<div style="clear: both"></div>
+
+== List of biome types ==
+{{Info needed section|range of [[tint]] colors in HEX.<br>(Each biome tint was dependant on the temperature, and so they didn't have a specific tint color)}}
+{| class="wikitable" data-description="Pre-Beta 1.8 Biomes"
+! Biome
+! Characteristics
+! Image
+|-
+| {{text anchor|[[Rainforest]]}}
+|Rainforests are very wet biomes with many trees, which have a 1 in 3 chance of being big, instead of 1 in 10 like all other biomes. They are similar to forests, but have a large amount of tall grass, ferns, and lush green grass due to the temperature and rainfall requirements; due to this, consistent and continuous cover of grass can be generated. A biome is classified as a rainforest if the temperature is greater than 97% and the rainfall is more than 90%. This could be the biome with some of the most cliffs and hills, because the world generator reduces height variation at lower rainfalls.
+| [[File:Rainforest.jpg|300px]]
+|-
+| {{text anchor|[[Seasonal Forest]]}}
+|Seasonal Forests spawn with a temperature of 97% or greater, and a rainfall value between 45% and 90%. They are commonly found between forests and rainforests, and near plains biomes. They are identical to forests, except their canopies are lower density and are only capable of spawning oak trees. They have a little bit of tall grass, but sometimes more is present.
+| [[File:SeasonalForest.jpg|300px]]
+|-
+| {{text anchor|[[Forest]]}}
+| A biome with many trees and a bits of tall grass. Wolves can spawn here. Forests are one of the only biomes where birch trees can spawn. They generate when the temperature is between 50% and 97%, and the rainfall is 35% or greater. Due to some forests generating in areas with a temperature of 50%, snow can be present on hilltops. However, it does not regenerate. The grass color can be dull green, lush green, or bluish gray depending on the temperature and rainfall values of the region. They were, and still are, one of the most common biomes in the game.
+| [[File:Forest.jpg|300px]]
+|-
+| {{text anchor|[[Swampland]]}}
+| Identical to shrubland, with only the unused color variables and the biome name differing.<!--What this means:
+
+In Alpha 1.2.0 to Beta 1.7.3, each biome is defined in a singular file, and is assigned an unused decimal color for unknown reasons. This means that the swampland is identical to the shrubland, and only differs in its unused color and name.--> A Swampland generates when the temperature is less than 70%, and the rainfall is greater than 50%. Small portions of [[Snow]] may generate in a swampland, due to the temperature dropping below 50%, though, it would never regenerate. Swamplands alongside the shrublands were often one of the smallest generating biomes at the time, rarely exceeding more than a few chunks in size. The swampland could often be found near the forest, shrubland, taiga, and tundra biomes. 
+| [[File:Swampland.jpg|300px]]
+|-
+| {{text anchor|[[Savanna]]}}
+| A biome with mostly flat terrain and very few trees, although some hills do spawn and can host tall mountains. It seems to be one of the flattest biomes in the game, alongside desert and tundra, due to the game reducing height variation at lower rainfall values. The grass color can range from dull orange to bluish gray. It generates with a temperature between 50% and 95%, and a rainfall value of less than 20%. It was removed in [[Java Edition Beta 1.8]] and was re-added in [[Java Edition 1.7.2]], although it is different from the original [[Savanna]].
+| [[File:Savanna.jpg|300px]]
+|-
+| {{text anchor|[[Shrubland]]}}
+| A biome with few trees and no tall grass. It is identical to the savanna biome, but could generate in lower temperature areas. Like the swampland, it was one of the smallest generating biomes in the game, rarely exceeding a few chunks in size. It only spawns if the temperature was between 50% and 97 and the rainfall value is below 35%, which are similar conditions to a forest except with lower rainfall. It often generated near forests, seasonal forests, and savannas.
+| [[File:Shrubland.jpg|300px]]
+|-
+| {{text anchor|[[Taiga]]}}
+| A snowy biome composed of mostly mountainous terrain and a bit of tall grass. Spruce and pine trees as well as [[ice]] can be found in this region. Wolves also appear more commonly in this biome than others. [[Snowfall]] replaces [[Rain]] in taiga biomes. It generates when the temperature is between 10% and 50% and the rainfall is greater than 20%. This biome was also usually a smaller biome as compared to those from [[Java Edition Beta 1.8]] and after. From [[Java Edition Alpha 1.2]] to [[Java Edition Beta 1.1]], the taiga was arguably a snowy version of the regular forest, as spruce trees were not yet added.
+| [[File:Taiga.jpg|300px]]
+|-
+| {{text anchor|[[Desert]]}}
+| A biome consisting mostly of [[Sand]], [[Sandstone]], [[Dead Bush]]es and [[Cactus]]. Trees do not generate in deserts unless the player brings in dirt. No rain occurs in this biome. It spawns when the rainfall is less than 20% and the temperature is greater than 95%. Since [[Java Edition Beta 1.0]] and before [[Java Edition Beta 1.3]], biome borders were rotated and didn't line up because of a bug, which was more noticeable for deserts due to the fact that they generate different ground blocks than the other biomes. They mostly consist of flat plains but uncommonly hills and mountains can generate, especially if the surrounding biomes are mountainous.
+
+It was possible to find exposed or partially buried dungeons here due to sand being affected by gravity, however it is no longer the case and it is no longer possible in modern versions due to changes made to dungeon generation in 1.7.
+
+| [[File:Old Desert.jpg|300px]]
+|-
+| {{text anchor|[[Plains]]}}
+| A relatively flat with a very large amount of tall grass (more than in any other type of land). The occasional trees do exist, though very rarely. Plains are typically smaller than other biomes because they have an extremely marginal generation range, only occurring if the temperature is greater than 97% and the rainfall is between 45% and 20% (less and it would be a desert, more and it would be a seasonal forest). Despite having a larger rainfall range than rainforest, the rainfall values fall into this range less often because they sometimes go outside of 0%-100% and are capped at those values, and can become "stuck" at 0% or 100% for some time. They can also rarely be mountainous if the plains have a high rainfall (which increases the chance for varied terrain to occur) or if a mountain from a neighboring biome intersects. After [[Java Edition Beta 1.8]], it becomes the second most common [[biome]] in the game.
+| [[File:Plains.jpg|300px]]
+|-
+| {{text anchor|[[Tundra]]}}
+| Snowy, barren terrain consisting of flat plains and sometimes hills and mountains, and with very few trees. The occasional trees<!-- cold-en oak--> do exist, though very rarely. Ice can be found over water, with occasional holes appearing at world generation. [[Snowfall]] replaces [[rain]] in tundra biomes. Tundras generate when the temperature is below 50% and the rainfall is less than 20%.
+In [[Beta 1.8]], Notch stated that this biome would be left out until "Beta 1.9". This is because snow was causing problems with the new biome generator. 
+| [[File:Tundra.jpg|300px]]
+|-
+| {{text anchor|Sky}}
+| A hidden biome before [[Java Edition Beta 1.9 Prerelease 4]], this biome was exclusive to, and the sole biome of the [[Sky Dimension]]. It would generate floating islands with oceans of air surrounding them. Trees were uncommon, no weather occurred here, and the only mob that could spawn naturally were chickens. It had small patches of snow, although it would not accumulate again. It had green with some extra blue hue for foliage colors. 
+
+This biome was introduced in [[Java Edition Beta 1.6]] along with the Sky Dimension itself. It was reintroduced for [[The End]]'s biome.
+| [[File:Sky Dimension 1.jpg|300px]]
+|-
+| {{text anchor|[[Ice Desert]]}} (corner case biome)
+| An unused biome before [[Java Edition Beta 1.8]] that was in the code but never implemented into the temperature/rainfall table and thus did not actually generate. It was a biome of sand with snow on top of it and had [[snowfall]] and [[ice]].
+|[[File:Ice Desert.jpg|300px]]
+|}
+
+== [[Terrain features]] ==
+{| class="wikitable" data-description="Biome-generated structures"
+! Structure
+! Characteristics
+! Image
+|-
+| {{text anchor|Hills}}/{{text anchor|Cliffs}}
+| Mountains are hills with extreme slopes. Prior to the 1.8 update, these highly mountainous landforms were found in every biome type, with the only limiting factor being the rainfall of the biome increasing or decreasing height variation, allowing for high rainfall biomes such as rainforest their unpredictable terrain, and dry biomes like deserts and tundra to be consistently flat or mountainous. But from the Adventure Update onwards, they are very rare outside the [[Mountains|Extreme Hills]], [[Badlands|Modified badlands]], [[shattered savanna]], and [[modified jungle]] biomes, as mountain generation was entirely biome dependent. They were generated as part of the terrain generation algorithm from Infdev to Beta 1.7.3. The idea of biome-independent terrain was re-implemented in [[Java Edition 1.18]].
+
+Cliffs are often carved into hills, and sometimes have caves protruding into them. These caves contain the same blocks which one would find at the same layer in the hill they are carved out of. Sometimes cliffs intersected with hills in strange ways allowing for many chaotic landscapes to generate.
+
+Some of the most famous seeds at the time were notable for the chaotic and unpredictable nature of cliffs and hills.
+| [[File:Beta Mountain.png|300px]]
+[[File:Giant overhang in Beta 1.7.png|300px]]
+|-
+| {{text anchor|Ocean}}
+| Oceans are large bodies of [[water]] with every single water tile being a spring. Prior to the [[Adventure Update]], oceans were generated as part of the terrain generation algorithm, instead of being their [[Ocean|own biome]]. They were also much smaller than the current ocean biomes. The lakebed was almost always consistently dirt, and sometimes gravel depending on if a gravel beach was nearby or not, in contrast to the clay, sand, gravel, and dirt patches from Beta 1.8 onwards.
+| [[File:BetaOcean.png|300px|An open Ocean with a couple islands in the distance.]]
+|-
+| {{text anchor|Beaches}}
+| Beaches were usually generated next to oceans or lakes and covered all nearby [[Altitude|low elevated]] shorelines. They could be found in any biome. They came in two varieties: [[sand]] and [[gravel]]. [[Sandstone]] was located below sand in sand beaches, and occasional patches of [[clay]] could also be found.
+
+Gravel beaches had no such underground border, and thus posed dangers such as falling into caverns located right underneath them. The famous "[https://www.minecraftforum.net/forums/minecraft-java-edition/seeds/298932-ironman-challenge-series-404 404 challenge]" was possible due to this feature.
+
+The block that beaches and ocean floors consist of is determined by the same algorithm. It is determined whether each X-Z coordinate generates with sand, dirt or gravel, and then if the highest terrain block is at [[altitude]] 65 (2 blocks above sea level) or below, the surface is replaced with that material.
+
+Like in deserts, exposed or partially buried [[dungeon]]s could sometimes generate near the surface of beaches. The well known seed "worstseedever" had one in relative close proximity. However, due to changes made to the way dungeons generate in [[Java Edition 1.7.2]], this is no longer the case in modern versions.
+
+When a new world was created in versions prior to Beta 1.8, users would often spawn in beaches, due to the game always spawning the player on sand blocks.
+
+Due to the changes in the terrain generation algorithm in the [[Java Edition Beta 1.8]] update, beaches were removed completely from the game. They later returned with Minecraft [[Java Edition 1.1]] as a [[Beach|separate biome]], but lacked the spaciousness of old beaches from Beta versions, and only came in the sand variety. [[Java Edition 1.7.2]] later added a beach biome that is made of stone and gravel, the [[stone shore]], for when a beach generates next to an extreme hills biome. Spacier beaches were re-added in [[Java Edition 1.18]].
+|[[File:Sand beach 2.png|300px]]
+[[File:Gravel beach.png|300px]]
+|-
+|}
+
+== Gallery ==
+<gallery>
+File:Biomes Example.png|An old image of biomes work-in-progress. "''To the right of the player is a taiga, to the left is either a forest, or woods, I can’t remember. In the distance is probably tundra.''" – Notch
+File:Beta1.7.3_BiomeGraph.png|The biome graph used in Beta 1.7.3.
+File:NotchBiomeGraph.png|The original draft of the biomes graph, drawn by Notch. Notice the chicken scratch handwriting, as Notch was working quick to try to get the biomes added by the [[Halloween Update]].
+File:Huge Beta Overhang.png|A large overhang, a common occurrence in Beta's terrain generation.
+File:Beta Mountains 1.jpg|Mountainous terrain in a rainforest biome.
+File:Beta Mountains 2.png|Mountainous terrain viewed from across water.
+File:Beta Mountains 3.png|Mountainous terrain with many overhangs.
+File:Beta Beaches 1.png|Numerous large flat beaches.
+File:Beta Beaches 2.png|Numerous large flat beaches.
+</gallery>
+
+[[Category:Biomes]]
+
+[[es:Bioma/Antes de Beta 1.8]]
+[[de:Biom/Vor Beta 1.8]]
+[[ja:バイオーム/Beta 1.8以前]]
+[[lzh:生態域/上古]]
+[[pt:Bioma/Antes da Beta 1.8]]
+[[ru:История биомов и натуральных структур]]
+[[uk:Біом/До Beta 1.8]]
+[[zh:生物群系/Beta 1.8前]]

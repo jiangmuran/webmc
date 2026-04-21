@@ -1,0 +1,78 @@
+{{about|the [[feature]] of a small End stone island|the biome|Small End Islands|outer islands in general|Outer islands}}
+{{Infobox structure
+| title = End Island
+| image = Small island.png
+| imagesize = 200px
+| biome = {{BiomeLink|Small End Islands}}{{only|java}}<br>{{BiomeLink|The End}}{{only|bedrock}} 
+| blocks =
+* {{BlockLink|End Stone}}
+| canspawn = Yes, when teleporting to the outer islands using [[End gateway]]s
+}}
+An '''End island''' is a [[terrain feature]] made up of a roughly hemispherical cluster of [[End stone]] blocks found within its respective biome.
+
+== Generation ==
+End island features are generated from Y=55 to Y=70 around the [[Terrain features#Outer islands|outer islands]]. The probability that an End island tries to generate in each chunk is {{frac|1|14}}. It generates successfully when in a [[small End islands]] biome{{only|java}} or at a chunk where the noise value fits{{only|bedrock}}. {{IN|Java}}, if it tries to generate a small island in a chunk, there's an {{frac|1|4}} probability to try to generate another small island in this chunk. The two islands often overlap with each other. {{IN|Bedrock}}, if the chunk's noise value fits, there's also a probability of {{frac|1|4}} to re-generate another island, but at the same position, which makes the two islands look like a single island. 
+
+End island features also generate when an [[End gateway]] spawns on the outer islands if the chunk does not provide any [[End stone]].
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=end-island
+|spritetype=env
+|nameid=end_island
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=end-island
+|spritetype=env
+|nameid=end_island
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=end-island
+|spritetype=env
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:end_island",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Small island.png|32px]] Added End islands.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Îlot de l'End]]
+[[ja:エンドの小島]]
+[[pt:Ilha pequena]]
+[[ru:Малый остров]]
+[[zh:末地浮岛]]

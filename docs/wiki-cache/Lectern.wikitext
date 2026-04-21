@@ -1,0 +1,424 @@
+{{Infobox block
+| image = Lectern (S).png
+| image2 = Lectern with Book (S).png
+| extratext = View [[#Renders|all renders]]
+| transparent = '''[[JE]]''': No<br>'''[[BE]]''': Yes
+| light = No
+| tool = Axe
+| renewable = Yes
+| waterloggable = {{jebe|No|Yes}}
+| stackable = Yes (64)
+| flammable = Yes (30)
+| lavasusceptible = Yes
+}}
+A '''lectern''' is a [[block]] used to display a [[book and quill]] or [[written book]] for reading. Turning a page triggers a [[redstone]] pulse. It also serves as a [[librarian]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+Lecterns can be broken with any [[tool]], but an [[axe]] is the fastest. Lecterns drop themselves and the book they are holding.
+
+{{breaking row|horizontal=1|Lectern|axe}}
+
+=== Natural generation ===
+Empty lecterns can generate naturally in [[village]] libraries, up to two for some library variants.
+
+One lectern generates as part of each [[ancient city]], in the secret room at the city center.
+
+=== Crafting ===
+{{Crafting
+|A1=Any Wooden Slab
+|B1=Any Wooden Slab
+|C1=Any Wooden Slab
+|B2=Bookshelf
+|B3=Any Wooden Slab
+|Output=Lectern
+|type=Redstone
+}}
+
+== Usage ==
+Lecterns are the job site block of [[Trading#Librarian|librarian villagers]].
+
+Librarian villagers do not place books into lecterns. They only stare at the lectern from less than a block away as "working".
+
+=== Holding books ===
+[[File:Lectern GUI.png|thumb|right|The UI when reading a book on a lectern.]]
+
+Lecterns can also hold a single [[book and quill]] or [[written book]] that other players can read at the same time. Right-clicking an empty lectern  with a book and quill or written book places it. Right-clicking a lectern that already has a book opens an interface to read the book. Books occupying a lectern can be retrieved through the interface,{{Only|java}} by punching the lectern,{{Only|bedrock}} or by destroying the lectern, even when the {{gmr|block_drops|dotiledrops}} game rule is false.
+
+Lecterns cannot hold [[enchanted book]]s or normal [[book]]s. Instead, right-clicking the lectern with an enchanted book or a normal book does nothing and the book won't be placed.
+
+=== Profession ===
+{{main|Job site block}}
+If a lectern has not been claimed by a [[villager]], any nearby unemployed villager (excluding nitwits) has a chance to change its profession to librarian and claim the lectern as its [[job site block]].
+
+=== Redstone signal ===
+Lecterns holding a book emit a full-strength [[redstone]] pulse that is 2 game [[ticks]] long when a page is turned. A [[redstone comparator]] also records [[book]] reading and sends a signal, depending on what page the player is currently on. Since {{el|be}} displays two pages of the book at once, the same signal strength increments require double the number of pages.
+
+==== ''Java Edition'' ====
+
+{| class="wikitable floatright" style="margin-left: 0.5em; margin-right: 0; text-align: center;"
+|+ Lectern signal strength by currently open page (''P'') & total book pages (''M'') ({{IN|Java}})
+|-
+!{{diagonal split header|M|P}}!!1!!2!!3!!4!!5!!6!!7!!8!!9!!10!!11!!12!!13!!14!!15
+|-
+!15
+|1||2||3||4||5||6||7||8||9||10||11||12||13||14||15
+|-
+!14
+|1||2||3||4||5||6||7||8||9||10||11||12||13||15
+|-
+!13
+|1||2||3||4||5||6||8||9||10||11||12||13||15
+|-
+!12
+|1||2||3||4||6||7||8||9||11||12||13||15
+|-
+!11
+|1||2||3||5||6||8||9||10||12||13||15
+|-
+!10
+|1||2||4||5||7||8||10||11||13||15
+|-
+!9
+|1||2||4||6||8||9||11||13||15
+|-
+!8
+|1||3||5||7||9||11||13||15
+|-
+!7
+|1||3||5||8||10||12||15
+|-
+!6
+|1||3||6||9||12||15
+|-
+!5
+|1||4||8||11||15
+|-
+!4
+|1||5||10||15
+|-
+!3
+|1||8||15
+|-
+!2
+|1||15
+|-
+!1
+|15
+|}
+
+A book with only 1 page gives maximum signal strength, however page 1 always gives 1 signal strength if the book contains at least 2 pages.
+
+To calculate the signal strength <math>S</math> of a book with more than 1 page, use the following formula: 
+
+<math>S = \left\lfloor 1 + \frac{14(P-1)}{M-1} \right\rfloor</math>
+
+Where <math>\lfloor \, \rfloor</math> is the "floor" operation (round down), <math>M</math> is the maximum number of pages the book on the lectern has, and <math>P</math> is the current page number the lectern is turned to.
+
+This is most noticeable when a book has 2 pages where the signal strength is either 1 on page 1 or 15 on page 2.
+
+A book that would step signal strength up or down in increments of 1 per page would be 15 pages long.
+
+The following Python program prints all possible pairs of two values to achieve a certain signal strength, with the first being the page number to be on and the second being the total number of pages.
+<syntaxhighlight lang="python" line="1" start="1">
+import math
+
+S = int(input('Enter the target signal strength: '))  # Desired signal strength (1-15)
+P = 1  # Actual page number
+M = 2  # Max page number
+
+while M < 25:
+    while S != math.floor(1 + ((14 * (P - 1)) / (M - 1))):  # Strength formula
+        if P == M:
+            M += 1
+            P = 0
+        P += 1
+
+    print('Possible combination (P / M):', P, "/", M)
+    P += 1
+
+</syntaxhighlight>
+
+==== ''Bedrock Edition'' ====
+Odd pages are not taken into account by the game when calculating the [[comparator]] output of a [[book]]: for example, a book with 9 pages has a signal strength of 15 when looking at either pages 7-8 or page 9. Books with 3 pages are treated the same as those with 1 or 2 pages (the same as how ''Java Edition'' would treat a book with just 1 page).
+
+For books that are longer than 1 page, use the following formula to calculate the signal strength:
+
+<math>S = \left\lfloor 1 + \frac{14(P')}{M'} \right\rfloor</math>
+
+In this case <math>M'</math> is the total amount of pages, if it's even—otherwise the total amount of pages ''minus one'' should be used instead. <math>P'</math> is the number of the right page currently displayed on the book interface, if available—otherwise the number of the left page ''minus one'' should be used instead.
+
+A [[book]] that steps signal strength up or down in increments of 1 per page turned must be exactly 30 pages long.
+
+=== Fuel ===
+Lecterns can be used as [[fuel]] in [[furnaces]] to [[smelt]] 1.5 [[items]].
+
+=== Note blocks ===
+Lecterns can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|subtitle=Page rustles
+|source=block
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|translationkey=subtitles.item.book.page_turn
+|volume=2.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|subtitle=Book thumps
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|translationkey=subtitles.item.book.put
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|subtitle=Librarian works
+|source=neutral
+|description=Randomly while a librarian is working
+|id=entity.villager.work_librarian
+|translationkey=subtitles.entity.villager.work_librarian
+|volume=2.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|source=sound
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|volume=2.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|volume=4.8
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=Randomly while a librarian is working
+|id=item.book.put
+|volume=4.8
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lectern
+|spritetype=block
+|nameid=lectern
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=lectern
+|spritetype=block
+|nameid=lectern
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lectern
+|spritetype=block
+|nameid=lectern
+|id=449
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=lectern
+|spritetype=block
+|nameid=Lectern
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the lectern is facing.<br>The opposite from the direction the player faces while placing the lectern.}}
+{{bst|has_book|false|false,true|If the lectern currently has a book.}}
+{{bst|powered|false|false,true|If the lectern is currently outputting a redstone signal.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|minecraft:cardinal_direction|south|east,north,south,west|The direction the lectern is facing.<br>The opposite from the direction the player faces while placing the lectern.|Unsupported}}
+{{bst|bits=0x4|powered_bit|false|false,true|If the lectern is currently outputting a redstone signal.|0,1|foot=1}}
+
+=== Block data ===
+A lectern has a [[block entity]] associated with it that holds additional data about the [[block]].
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|compound|Book}}: The book item, without the slot tag, currently on the lectern, may not exist.
+*** {{nbt inherit/itemnoslot}}
+** {{nbt|integer|Page}}: The page the book is currently on, starting from 0, does not exist if there's no book. Value is clamped between 0 and the last page - 1.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+=== Development and announcement ===
+{{HistoryTable
+|{{HistoryLine||August 18, 2012|link=https://www.reddit.com/r/Minecraft/comments/yf5im/suggestion_storable_books/c5v03bq/?context=1|[[File:Lectern (pre-release).png|32px]] [[File:Lectern Book (pre-release).png|32px]] The lectern was an old project of [[Dinnerbone]]'s. It was meant to be a stand for [[written book]]s, so they could be easily read. He was well on his way to creating it when he encountered problems and scrapped the idea, but mentioned that he might pick up work on the lectern in the near future.}}
+|{{HistoryLine||December 18, 2013|link=https://www.reddit.com/r/Minecraft/comments/1t6qn7/i_am_dinnerbone_a_minecraft_developer_ask_me/ce4z2v5/?context=3|Dinnerbone states in his [[wikipedia:Reddit|Reddit]] AMA that he has revisited lecterns, but scrapped them again as "something about them just didn't feel right".}}
+|{{HistoryLine||October 18, 2018|link=https://twitter.com/Dinnerbone/status/1052917362482122752|[[File:Lectern (pre-release 2).png|32px]] Dinnerbone reveals that the lectern is once again in development.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Lectern JE1.png|32px]] Added lecterns.
+|Lecterns are currently obtainable only from the [[Creative inventory]] and have no functionality.
+|Lecterns currently have a {{code|BookItem}} field, which holds the [[book]] item to be displayed. However, this field cannot be set and is not written to the [[block entity]].
+|There is a file <samp>lectern.png</samp> which has each texture of the lectern on a large sheet. However, this is unused, as separate files are also present.}}
+|{{HistoryLine|||dev=18w45a|The [[inventory]] icon of lecterns has been slightly changed from {{InvSprite|Lectern Revision 1}} to {{InvSprite|Lectern}}.
+|Removed the unused <samp>lectern.png</samp> file.
+|[[File:Lectern JE2 BE1.png|32px]] The texture of lecterns has now been changed.
+|The bottom texture of lecterns has been changed from [[File:Lectern JE1 (facing NWU).png|32px]] to [[File:Lectern JE2 (facing NWU).png|32px]].}}
+|{{HistoryLine|dev=18w47a|||[[File:Lectern JE3 BE1 (facing NWU).png|32px]] The bottom texture of lecterns has been changed, once again.}}
+|{{HistoryLine|||dev=18w48a|Lecterns now generate in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Lecterns now generate in the updated [[savanna]] villages and the new [[snowy tundra]] villages.}}
+|{{HistoryLine|||dev=18w50a|Lecterns now generate in the updated [[desert]] and [[taiga]] villages.}}
+|{{HistoryLine|dev=19w02a|||Lecterns now have a [[crafting]] recipe.
+|[[File:Lectern Book JE1 BE1.png|32px]] Lecterns can now be used to hold [[book]]s.
+|Lecterns now emit a [[redstone]] pulse when a page is changed.
+|Lecterns now use the correct cullface argument for its bottom face.}}
+|{{HistoryLine|||dev=?|Lecterns now use some corrected side cullface arguments for the front and back of their base plate.}}
+|{{HistoryLine|||dev=19w03a|Certain [[block]]s can no longer be supported by the top of a lectern.<ref>{{bug|MC-141991}}</ref>}}
+|{{HistoryLine|||dev=19w03c|Lecterns now use correct cullface arguments on the left and right hand side of their base plate.}}
+|{{HistoryLine|||dev=19w11a|Lecterns now serve as librarian [[villager]]s' job site block.}}
+|{{HistoryLine||1.17|dev=21w08a|Lectern position within the Redstone tab has been moved out of the "essential" group in the [[Creative inventory]].}}
+|{{HistoryLine|dev=21w11a|||Tweaked the lectern model.}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Lectern (S).png|32px]] [[File:Lectern with Book (S).png|32px]] The base texture of lectern has now been changed.}}
+|{{HistoryLine||1.19|dev=22w13a|Lecterns now generate as part of [[ancient cities]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Lectern JE2 BE1.png|32px]] [[File:Lectern Book JE1 BE1.png|32px]] Added lecterns.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Lecterns now emit a [[redstone]] pulse when a page is turned.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|[[File:Lectern (S).png|32px]] [[File:Lectern with Book (S).png|32px]] The base texture for lecterns has been changed.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the hardness and blast resistance of lecterns from 2 to 2.5.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.90|[[File:Lectern JE2 BE1.png|32px]] [[File:Lectern Book JE1 BE1.png|32px]] Added lecterns.}}
+|{{HistoryLine||1.91|Lecterns now emit a [[redstone]] pulse when a page is turned.|Lecterns can now be moved by [[piston]].{{check version|Confirm that they were not movable in 1.90}}}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Lecterns now use the <code>minecraft:cardinal_direction</code> [[block state]] instead of <code>direction</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Lectern (W).png
+Lectern (N).png
+Lectern (E).png
+</gallery>
+
+<gallery>
+Lectern with Book (W).png
+Lectern with Book (N).png
+Lectern with Book (E).png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+DevLectern.png|One of the two first images of the lectern.
+Lectern2.png|The second of the first images of the lectern.
+New Lectern.jpg|The first image of a modern lectern.<ref>{{tweet|Dinnerbone|1052917362482122752|sup|October 18, 2018}}</ref>
+Lectern with book.png|A lectern holding a book and quill.
+Sunny Lectern.jpg|[[Sunny]] using a lectern.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Levtert.png|A lectern as seen in {{AMCM}}.
+File:Steve Lectern Sticker.gif
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|lectern|Taking Inventory: Lectern|November 23, 2023|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Mechanisms]]
+[[Category:Storage]]
+[[Category:Block entities]]
+[[Category:Flammable blocks]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[de:Lesepult]]
+[[es:Atril]]
+[[fr:Pupitre]]
+[[it:Leggio]]
+[[ja:書見台]]
+[[ko:독서대]]
+[[nl:Lessenaar]]
+[[pl:Pulpit]]
+[[pt:Atril]]
+[[ru:Кафедра]]
+[[th:แท่นอ่านหนังสือ]]
+[[uk:Катедра]]
+[[zh:讲台]]

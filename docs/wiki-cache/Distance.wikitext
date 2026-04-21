@@ -1,0 +1,114 @@
+{{see also|Tutorial:Units of measure#Distance|Distance effects}}
+
+[[File:Taxicab vs euclidean.png|thumb|right|350px|Taxicab distance compared to Euclidean distance. The two endpoints are also 3 and 4 blocks Chebyshev distance from the starting point.]]
+{{:Calculators/Distance|style=float:right;clear:right;}}
+
+In ''Minecraft'', the '''distance''' between two points is the measurement of how far apart the two points are. The sides of a [[block]] are considered to be 1 meter (3.28084 feet or {{frac|1250|381}} feet) in length. Distance in the game is measured in one of three ways, '''Euclidean distance''', '''taxicab distance''', or '''Chebyshev distance''', depending on whether geometric accuracy or calculation efficiency is required.
+
+In the following formulas, let two points in three dimensions have [[coordinates]] <math>(x_1, y_1, z_1)</math> and <math>(x_2, y_2, z_2)</math> and let <math>d</math> be the distance between them.
+
+== Euclidean distance ==
+'''Euclidean distance''', also known as straight-line distance, measures the distance between two points using the length of the line segment between them. It is calculated via the {{W|Pythagorean theorem|newtab=1}}:
+:<math>d = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2}</math>
+
+=== Spherical distance ===
+The set of points within a given Euclidian distance, <math>d</math>, of some point, form a sphere with radius <math>d</math> centered at that point. This sphere is also referred to as a Euclidian sphere.
+
+=== Usages ===
+''Minecraft'' uses Euclidean distance calculations in cases that are relatively infrequent or when accuracy is required. This is geometrically the most accurate calculation. However, the square root calculation is processor intensive, particularly on mobile devices that may have slow processors. Too many processor-intensive operations performed during a [[Tick|game tick]] can introduce lag in the game.
+
+Situations in which ''Minecraft'' calculates Euclidean distance:
+* The detection range of most mobs, if they have a line of sight to the target.
+* The attenuation range of most sounds forms a Euclidean sphere with a radius of 16 blocks, centered on the source of the sound.
+* [[Monster spawner]]s activate if a player is within 16 blocks of Euclidean distance.
+* [[Trial spawner]]s detect players within 14 blocks of Euclidean distance.
+* Mob [[Mob spawning#Despawning|despawning range]] in ''Java Edition''.
+* [[Disk]]s in rivers and lakes generate as blocks within a Euclidean distance from a central block. (Small disks with a radius of up to three blocks including the center appear identical to a taxicab diamond, however larger sizes correctly reveal a more circular shape.)
+* Effects of [[explosion]]s.
+* A [[Lightning rod]] redirects lightning within a Euclidean sphere with a radius of 128{{only|java|short=1}}/64{{only|bedrock|short=1}} blocks, centered on the rod.
+* The {{command|locate}} command prints the Euclidian distance from the caller to the located object in chat.
+* [[Nether portal#Portal search|Nether portal]] searches for destination portals.
+* [[Sculk Sensor#Vibration detection|Sculk sensors]] and [[Calibrated Sculk Sensor|calibrated sculk sensors]] detect vibration emission in a spherical region.
+* [[Splash potion#Using|Splash potions]] affect mobs inside a Euclidean sphere with a radius of 4 blocks.
+* [[Target selectors]] used in [[commands]] use Euclidean distances.
+* A [[zombie siege]] is started based on Euclidean distance between a player and the village center.
+
+<gallery>
+Damage from potion.png|Map of silverfish damage from splash potion shows damage in a Euclidean distance from the potion. 
+Mob spawning ranges.png|Visualization in ''Java Edition'' of various ranges related to mob spawning and despawning.
+Line of sight for piglins.png|A piglin's detection range of a player opening a chest.
+Sculkcatalystrange.png|The detection range of a sculk catalyst.
+</gallery>
+
+== Taxicab distance ==
+
+[[File:MinecraftTaxicab.png|thumb|right|Taxicab distance as represented by ''Minecraft'' blocks rather than city streets.]]
+
+'''Taxicab distance''', also known as '''rectilinear distance''', '''city block distance''', '''Manhattan distance''', and other names, is a metric in {{Wikipedia|Taxicab geometry|taxicab geometry|newtab=1}} for measuring distance, as an alternative to Euclidean distance. It eliminates the square root and squaring operations by simply calculating the absolute value (positive value) of the difference between each coordinate value and is defined as:
+:<math>d = \left|x_1 - x_2\right| + \left|y_1 - y_2\right| + \left|z_1 - z_2\right|</math>
+
+=== Usages ===
+''Minecraft'' uses taxicab distance as an efficient range measurement in several elements of the game as it is a less accurate but faster calculation that can be done many times during a [[game tick]]. An obvious consequence of this calculation is that a taxicab "circle" drawn with a constant taxicab radius appears as a square whose vertices are in the directions of the axes (such as torch illumination), in which the taxicab radius equals the Euclidean radius only in the four cardinal directions (north, south, east, west), and the radius is shorter in all other directions. Similarly, in three dimensions, a taxicab "sphere" appears as an {{Wikipedia|octahedron|newtab=1}}.
+
+Situations in which ''Minecraft'' calculates taxicab distance:
+* [[Light]] from light sources such as [[torch]]es, [[campfire]]s, [[lantern]]s, [[glowstone]], etc. illuminate surfaces according to taxicab distance.
+** As a direct result of this, [[torch]]es melt [[snow]] layers within 2 blocks and ice within 3 blocks taxicab distance. Several other light-emitting blocks also melt snow in a taxicab radius; see {{Section link|Snow|Melting}}.
+** [[Heat block]]s{{only|education}} melt snow layers and ice within 2 blocks taxicab distance, but do not emit light.
+* [[Liquid]] ([[water]] or [[lava]]) flowing horizontally on a flat surface flows from the source in taxicab distance. For example, if flowing water is forced into a 1-block-wide stream and turns corners, it travels 7 blocks. If it is allowed to flow freely on a surface, it also travels 7 blocks taxicab distance.
+* [[Redstone wire]] signals spread this way, as can be seen if a large plane of the substance is laid out.
+* [[Lever]]s and [[button]]s emit a redstone signal in a 1-block planar taxicab distance around them.
+* {{iN|BE}}, [[simulation distance]] is the distance from the player at which blocks get tick updates (such as lightning strikes), and beyond which mobs despawn; this also uses taxicab distance.<!-- Simulation distance is also a video setting in Java Edition. Do not add Java Edition simulation distance here without verifying that it also uses taxicab distance. -->
+* {{iN|BE}}, a [[monster spawner]] spawns mobs within a 4-block taxicab horizontal range from the monster spawner.
+* A [[sponge]] absorbs water up to 7 blocks away in taxicab distance (an octahedral volume centered on the sponge).
+* [[Leaves]] and [[scaffolding]] determine their distance from the center via a "distance" block state determined by taxicab distance.
+* Using [[bone meal]] on [[sea pickle]]s that are on [[coral block]]s creates more sea pickles on nearby coral blocks out to a horizontal taxicab distance of 2.
+* A [[block of copper]] is oxidized according to a taxicab distance search for unwaxed copper blocks within 4 blocks of the block being considered for oxidation.
+* [[Shulker]]s can move along only one of the three grid axes at a time and on integer steps, meaning that they move according to taxicab geometry.
+* Some [[redstone]] components produce [[Redstone mechanics#Redstone block updates|block updates]] up to two blocks away by taxicab distance, including up and down.
+* In [[basalt deltas]], [[blob]]s of [[basalt]] and [[blackstone]] propagate from the center within a 3—7 block taxicab distance.
+
+<gallery>
+Water spread v1-13.png|Horizontal spread of water.
+Lava spread v1-13.png|Horizontal spread of lava in the Overworld
+LightEmittingBlocks.png|Taxicab illumination from various light-emitting blocks.
+Lightning distribution BE.png|The effect of simulation distance (the diamond area) on [[lightning]] strikes around a [[lightning rod]].
+Redstone Lamp melt pattern.png|[[Redstone lamp]]s melting [[snow]].
+Basalt_blob.png|A [[blob]] of [[basalt]], shaped as an octahedron due to the taxicab distance used in its generation.
+</gallery>
+
+== Chebyshev distance ==
+'''Chebyshev distance''', also know as the chessboard distance or maximum metric, is the maximum absolute difference between two points in one of three axes:
+:<math>d=\max\left(| x_1-x_2 |, | y_1-y_2 |, | z_1-z_2 |\right)</math>
+A "circle" drawn with a Chebyshev-distance radius would appear as an axis-aligned square, and a "sphere" would appear as a cube.
+
+=== Usages ===
+Computationally, Chebyshev distance is roughly as efficient as taxicab distance, but it is useful for effects that need to happen in a square area or cuboid volume from a center coordinate.
+
+Situations in which ''Minecraft'' calculates Chebyshev distance:
+* Determining whether [[farmland]] is hydrated by a block of [[water]] in range of 4 blocks.
+* A villager in ''Java Edition'' detects an [[iron golem]] within ±16 blocks on any axis.
+* An iron golem in ''Bedrock Edition'' spawns within ±8 blocks horizontally and ±6 blocks vertically from the village center block.
+* The horizontal range of a [[beacon]], which is 20, 30, 40 or 50 blocks depending on the size of the beacon pyramid.
+* [[Phantom]]s in ''Java Edition'' spawn 20–34 blocks above the player, and off to the side by a Chebyshev distance of up to 10 blocks.
+* The spawning range of [[warden]]s from naturally generated [[sculk shrieker]]s is ±5 blocks horizontally and ±6 blocks vertically from the shrieker.
+* {{IN|java}}, the load level of a [[chunk]] decreases in a square pattern.
+
+<gallery>
+Hydrated farmland.png|Farmland gets hydrated within 4 blocks from water, otherwise remains dehydrated.
+Beacon effects distance.png|A beacon's horizontal range is a square centered on the beacon itself.
+</gallery>
+
+== See also ==
+* {{Wikipedia|Taxicab geometry|newtab=1}}, {{Wikipedia|Euclidean distance|newtab=1}}, and {{Wikipedia|Chebyshev distance|newtab=1}} on Wikipedia
+* [[Simulation distance]]
+* [[Distance effects]]
+
+== Navigation ==
+{{Navbox gameplay}}
+[[Category:Game terms]]
+
+[[ko:거리]]
+[[pt:Distância]]
+[[ru:Расстояние]]
+[[uk:Відстань]]
+[[zh:距离]]

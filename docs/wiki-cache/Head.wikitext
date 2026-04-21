@@ -1,0 +1,509 @@
+{{For}}
+[[File:All The Heads.png|thumb|All heads and skulls.]]
+'''Heads''' (including '''skulls''') are a group of 7  [[block]]s based on the heads of [[player]]s and 6 different [[mob]]s. All heads can be [[worn]] as [[helmet]]s and serve as special [[note block]] instruments.
+
+== Variants ==
+There are seven types of entity heads:
+
+* {{ItemLink|Skeleton Skull}}
+* {{ItemLink|Wither Skeleton Skull}}
+* {{ItemLink|Zombie Head}}
+* {{ItemLink|Player Head}}
+* {{ItemLink|Creeper Head}}
+* {{ItemLink|Piglin Head}}
+* {{ItemLink|Dragon Head}}
+
+== Obtaining ==
+=== Mob loot ===
+The following heads drop when the corresponding mob is killed by a [[charged creeper]]'s explosion:
+* {{ItemLink|Skeleton skull}}
+* {{ItemLink|Zombie head}}
+* {{ItemLink|Creeper head}}
+* {{ItemLink|Piglin head}}
+* {{ItemLink|Wither skeleton skull}}
+
+[[Dragon head]]s and [[player head]]s have corresponding mobs, but they don't drop when these mobs are killed by a charged creeper.<ref>{{bug|MC-132933||Inconsistency: Player, Ender Dragon, and Wither don't drop their heads when killed by charged creeper|WAI}}</ref>
+
+If multiple mobs are killed by the explosion of a single charged creeper, only one head will drop from a mob randomly chosen from those killed in this explosion.{{only|je}}
+
+A [[wither skeleton]] sometimes drops a wither skeleton skull when killed.
+
+=== Natural generation ===
+* {{ItemLink|Skeleton skull}}s generate as part of [[ancient cities]].
+* A single {{ItemLink|dragon head}} generates at the front of [[End ship]]s.
+
+=== Player head ===
+The {{ItemLink|Player Head}} is unobtainable in [[Survival]], and can be obtained only by the [[Creative inventory]], using {{Control|pick block}} or executing [[commands]].
+
+== Usage ==
+Heads can be destroyed by [[fluid]]s.
+=== Decoration ===
+Heads can be oriented in 16 different directions on top of a block, and 4 directions on the sides of blocks, similar to [[sign]]s. They can be placed on top of or beside each other by shift-clicking.
+
+When placed and powered by redstone, the piglin and dragon heads play an animation. The piglin head flaps its ears (2 times per second for the right ear and 2.5 times per second for the left ear) while the dragon head opens and closes its mouth repeatedly (2 times per second). The same animation occurs when worn by a (horizontally) moving player, zombie, skeleton, or [[armor stand]] (note: the animation does not play if the <code>NoGravity</code> tag is set to 1).
+
+=== Wearing ===
+The player can wear heads, similarly to [[carved pumpkin]]s or [[helmet]]s. This overlays the second layer of the player's [[skin]].
+
+Wearing the corresponding head reduces the detection range for [[skeleton]]s (but not [[wither skeleton]]s), [[creeper]]s, [[zombie]]s, and [[piglin]]s to 50% of the normal range. This is similar to (and stacks with) the reductions in detection range from [[sneaking]] and from the [[Invisibility]] status effect.
+
+Wearing any head hides the player's waypoint on the [[locator bar]]. {{IN|bedrock}}, wearing any head makes the player invisible to other players on a locator [[map]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a head on a player, mob, or armor stand with an empty helmet slot, within the block the dispenser is facing.
+
+Dispensers can place wither skeleton skulls to complete the construction of a wither unless the [[difficulty]] is set to peaceful.
+
+=== Crafting ingredient ===
+{{crafting usage|Wither Skeleton Skull,Creeper Head|continue=1}}
+{{Crafting
+  |ignoreusage=1
+  |ingredients=Any '''Head''' +<br>[[Gunpowder]] +<br>Any [[Dye]]
+  |Gunpowder
+  |Wither Skeleton Skull;Skeleton Skull;Zombie Head;Head;Creeper Head;Dragon Head;Piglin Head;Player Head
+  |Matching Dye
+  |Output= Matching Firework Star
+  |description=Forms Creeper shape
+  |foot=1
+}}
+
+=== Enchantments ===
+Heads can receive the following enchantments, but only through an [[anvil]].
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchantment#Obtaining|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Note blocks ===
+Placing a head above a [[note block]] causes the note block to play the corresponding mob's {{cd|ambient}} sound when activated. The only exception is the creeper head; as creepers don't make {{cd|ambient}} sounds, the note block plays the {{cd|primed}} (hissing) sound instead.
+
+The block below the note block does not affect the mob sound it creates.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a head is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a head is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Skeleton Skull
+|spritetype=block
+|nameid=skeleton_skull}}
+{{ID table
+|displayname=Wither Skeleton Skull
+|spritetype=block
+|nameid=wither_skeleton_skull}}
+{{ID table
+|displayname=Zombie Head
+|spritetype=block
+|nameid=zombie_head}}
+{{ID table
+|displayname=Player Head
+|spritetype=block
+|nameid=player_head}}
+{{ID table
+|displayname=Creeper Head
+|spritetype=block
+|nameid=creeper_head}}
+{{ID table
+|displayname=Dragon Head
+|spritetype=block
+|nameid=dragon_head}}
+{{ID table
+|displayname=Piglin Head
+|spritetype=block
+|nameid=piglin_head}}
+{{ID table
+|displayname=Skeleton Wall Skull
+|spritetype=block
+|nameid=skeleton_wall_skull
+|form=block}}
+{{ID table
+|displayname=Wither Skeleton Wall Skull
+|spritetype=block
+|nameid=wither_skeleton_wall_skull
+|form=block}}
+{{ID table
+|displayname=Zombie Wall Head
+|spritetype=block
+|nameid=zombie_wall_head
+|form=block}}
+{{ID table
+|displayname=Player Wall Head
+|spritetype=block
+|nameid=player_wall_head
+|form=block}}
+{{ID table
+|displayname=Creeper Wall Head
+|spritetype=block
+|nameid=creeper_wall_head
+|form=block}}
+{{ID table
+|displayname=Dragon Wall Head
+|spritetype=block
+|nameid=dragon_wall_head
+|form=block}}
+{{ID table
+|displayname=Piglin Wall Head
+|spritetype=block
+|nameid=piglin_wall_head
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=heads
+|spritetype=block
+|nameid=skull
+|foot=1}}
+ 
+{{BE}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Skeleton Skull
+|spritetype=block
+|nameid=skeleton_skull
+|aliasid=skull / 0
+|id=144
+|translationkey=item.skull.skeleton.name
+}}
+{{ID table
+|displayname=Wither Skeleton Skull
+|spritetype=block
+|nameid=wither_skeleton_skull
+|aliasid=skull / 1
+|id=-965
+|translationkey=item.skull.wither.name
+}}
+{{ID table
+|displayname=Zombie Head
+|spritetype=block
+|nameid=zombie_head
+|aliasid=skull / 2
+|id=-966
+|translationkey=item.skull.zombie.name
+}}
+{{ID table
+|displayname=Player Head
+|spritetype=block
+|nameid=player_head
+|aliasid=skull / 3
+|id=-967
+|translationkey=item.skull.char.name
+}}
+{{ID table
+|displayname=Creeper Head
+|spritetype=block
+|nameid=creeper_head
+|aliasid=skull / 4
+|id=-968
+|translationkey=item.skull.creeper.name
+}}
+{{ID table
+|displayname=Dragon Head
+|spritetype=block
+|nameid=dragon_head
+|aliasid=skull / 5
+|id=-969
+|translationkey=item.skull.dragon.name
+}}
+{{ID table
+|displayname=Piglin Head
+|spritetype=block
+|nameid=piglin_head
+|aliasid=skull / 6
+|id=-970
+|translationkey=item.skull.piglin.name
+|foot=1}}
+
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=heads
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{edition|java}}:<br>
+Floor
+{{bst|powered|false
+|true|The block receives a redstone signal.
+|false|The block receives no redstone signal.}}
+{{bst|rotation|0
+|0|The block is facing south.
+|1|The block is facing south-southwest.
+|2|The block is facing southwest.
+|3|The block is facing west-southwest.
+|4|The block is facing west.
+|5|The block is facing west-northwest.
+|6|The block is facing northwest.
+|7|The block is facing north-northwest.
+|8|The block is facing north.
+|9|The block is facing north-northeast.
+|10|The block is facing northeast.
+|11|The block is facing east-northeast.
+|12|The block is facing east.
+|13|The block is facing east-southeast.
+|14|The block is facing southeast.
+|15|The block is facing south-southeast.|foot=1}}
+Wall
+{{bst|powered|false
+|true|The block receives a redstone signal.
+|false|The block receives no redstone signal.}}
+{{bst|facing|north|east,north,south,west|The direction the head is facing.<br>Opposite from the direction a player is facing when placing it.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|facing_direction|0
+|1|On the floor (rotation is stored in the tile entity)|
+|2|On a wall, facing north|
+|3|On a wall, facing south|
+|4|On a wall, facing east|
+|5|On a wall, facing west|
+|0|Unused|foot=1}}<section end="block states"/>
+
+=== Block data ===
+A head has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|string|custom_name}}: Optional. The custom name of the head or skull. Represents the {{DCL|minecraft:custom_name}} component.
+** {{nbt|string|note_block_sound}}: Optional. If this block is a ''player head'', this is the [[sound event]] produced by the note block that this head is placed on. Does nothing if present on any other head or skull type. Represents the {{DCL|minecraft:note_block_sound}} component.
+** {{nbt|string}}{{nbt|compound|profile}}: Optional. The textures and/or player profile used to render a ''player'' head. If specified as a string, it corresponds to {{nbt|string|name}} and is always saved as a {{nbt|compound}} compound. If omitted, a the wide [[Steve]] skin is used. Does nothing if present on any other head or skull type. Represents the {{DCL|minecraft:profile}} component.
+*** {{Nbt inherit/profile}}
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Camouflage;The Beginning?}}
+
+== Advancements ==
+{{load advancements|Spooky Scary Skeleton;Withering Heights}}
+
+== History ==
+{{See technical block|Skull}}
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||August 28, 2012|link={{tweet|jeb|240383066831462401}}|[[Jeb]] released images of the skeleton head, hinting of more types to come.}}
+|{{HistoryLine||PAX 2012|link={{ytl|IqciEbjYd-I|t=03m21s}}|At [[wikipedia:PAX (event)|PAX]], [[Dinnerbone]] revealed that there would be rare [[drops]] of these [[mob]]s.<ref>http://www.twitch.tv/pax2/b/330745811 (at 3:59:00)</ref>}}
+|{{HistoryLine||November 7, 2012|link=https://www.reddit.com/r/minecraftsuggestions/comments/12qtbz/killing_other_players_with_a_sword_should_drop/c6xqpym/?context=3|[[Jeb]] states that the official opinion is that "&#91;dropping&#93; player heads &#91;on player kills&#93; are a bit too gory for [[Minecraft]], so it's better suited for a plugin or mod."}}
+|{{HistoryLine||November 14, 2022|link=https://www.minecraft.net/en-us/article/playable-mob-sounds-coming-minecraft-1-20|Piglin heads are announced to be added in [[Java Edition 1.20]] on the Minecraft website.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w36a|[[File:Skeleton Skull (item) JE1.png|32px]] [[File:Wither Skeleton Skull (item) JE1.png|32px]] [[File:Zombie Head (item) JE1.png|32px]] [[File:Player Head (item) JE1.png|32px]] [[File:Creeper Head (item) JE1.png|32px]] Added skeleton, wither skeleton, zombie, player, and creeper heads.
+|Wither skeleton skulls are rarely [[drop]]ped by the [[wither skeleton]] upon [[death]] (2.5% chance), while the other four are obtainable only from the [[creative]] [[inventory]].}}
+|{{HistoryLine|||dev=12w37a|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Wither Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Zombie Head (item) JE1 BE1.png|32px]] [[File:Player Head (item) JE1 BE1.png|32px]] [[File:Creeper Head (item) JE1 BE1.png|32px]] Changed item textures.
+|Added as a hidden and disabled feature, player heads can now have the [[skin]] of a specific [[player]]. A line in the language file implies that there either used to be, or in a future update, the possibility of obtaining a specific player's head.<ref name="en_US 12w21">Snapshot 12w37a {{cd|lang/en_US.lang}}: <code>item.skull.player.name=%s's Head</code></ref> 
+|Player heads do not [[drop]] in vanilla, but mapmakers/modders/etc. can make them by adding an [[NBT format|NBT]] string tag <code>{"SkullOwner":"''player_name''"}</code> on the skull [[item]]s.<ref name="playerheads">{{reddit|zxn7u/its_apparently_my_cakeday_so_lets_cash_in_this}}</ref>}}
+|{{HistoryLine||1.4.6|dev=12w49a|Any kind of [[mob]] head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Custom heads can now be obtained without third party programs via {{cmd|give}}.}}
+|{{HistoryLine||1.8|dev=14w03a|Player heads now show the [[skin]]'s hat layer (this also works when a [[mob]]/player wears the head).}}
+|{{HistoryLine|||dev=14w29a|Heads now display a cracking animation.}}
+|{{HistoryLine|||dev=14w30a|[[File:Skeleton Skull (item) JE2.png|32px]] [[File:Wither Skeleton Skull (item) JE2.png|32px]] [[File:Zombie Head (item) JE2.png|32px]] [[File:Player Head (item) JE2.png|32px]] [[File:Creeper Head (item) JE2.png|32px]] Heads in [[inventories]] and held by entities now display as [[block]]s. 
+|Skulls worn by [[mob]]s and [[player]]s are now displayed on the armor layer. Previously, the skull replaced the mob/player's head texture; the hat layer appeared over the skull.
+|Skeleton, zombie, and creeper heads are now available in [[Survival]]. The player can obtain them by killing the appropriate mob with a charged [[creeper]].
+|Creeper heads and wither skeleton skulls are now used in [[crafting]] specific [[banner]] patterns.}}
+|{{HistoryLine|||dev=14w30b|A single charged creeper explosion no longer yields more than one head. The head that drops is chosen randomly.}}
+|{{HistoryLine||1.8.4|For security reasons, custom heads can now have textures only from [[mojang.com]] and [[minecraft.net]].}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Dragon Head (S) JE1.png|32px]] Added dragon heads.
+|Dragon heads are currently available only in [[creative]] mode.
+|[[Mob]] heads now appear larger in the [[inventory]].}}
+|{{HistoryLine|||dev=15w32a|Creeper, zombie, and skeleton heads can now be worn to reduce detection by the corresponding mobs by 50%.}}
+|{{HistoryLine|||dev=15w32c|Dragon heads now generate on [[end ship]]s, meaning they are now obtainable in [[Survival]].}}
+|{{HistoryLine|||dev=15w33c|The disguise that is given by heads now reduces detection range to 37.5% of normal.}}
+|{{HistoryLine|||dev=15w36a|The disguise that is given by heads now reduces detection range to 50% of normal again.}}
+|{{HistoryLine|||dev=15w39a|[[Dispenser]]s can now equip heads onto [[player]]s, [[mob]]s and [[armor stand]]s.}}
+|{{HistoryLine|||dev=15w49a|Worn heads no longer turn red when the player or mob takes damage.<ref>{{bug|MC-85756}}</ref>}}
+|{{HistoryLine||1.11|dev=pre1|Heads in the inventory now face backwards.<ref>{{bug|MC-109831}}</ref>}}
+|{{HistoryLine||1.11.1|dev=16w50a|Heads in the inventory now face the right way again.}}
+|{{HistoryLine||1.13|dev=17w47a|Dragon heads are now held differently from other heads.
+|Heads now play a sound when placed.
+|Heads can no longer be placed inside entities.<ref>{{bug|MC-2208}}</ref>}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Skeleton skulls now generate as part of [[ancient cities]].}}
+|{{HistoryLine||1.19.3|dev=22w45a|[[File:Player Head (S) JE2.png|32px]] The texture of the player head has been changed.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w46a|[[File:Piglin Head (S) JE1.png|32px]] Added piglin heads behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.19.4|dev=23w05a|Heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+|{{HistoryLine||1.20|dev=23w12a|Piglin heads are now available without using the "Update 1.20" experimental datapack.
+|Heads can now be placed on [[note blocks]] to play the respective mob sound.
+|Heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.20.2|dev=23w35a|No longer check for redstone signals every game tick.}}
+|{{HistoryLine||1.21.6|exp=Locator Bar|dev=25w15a|Will now hide players from the locator bar when worn in the head slot.}}
+|{{HistoryLine||1.21.9|dev=25w31a|Mob heads now preserve any custom name when they are placed and then mined again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Wither Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Zombie Head (item) JE1 BE1.png|32px]] [[File:Player Head (item) JE1 BE1.png|32px]] [[File:Creeper Head (item) JE1 BE1.png|32px]] Added skeleton, wither skeleton, zombie, player, and creeper heads. 
+|The skeleton, wither skeleton, zombie, player and creeper heads use the [[Java]] textures prior to [[14w30a]].}} 
+|{{HistoryLine||v0.14.0|dev=build 1|Heads can now be worn as armor.}}
+|{{HistoryLine||v0.16.0|dev=build 4|Wither skeleton skulls can now be used to spawn the [[wither]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Dragon Head (item) BE1.png|32px]] Added dragon heads. 
+|Dragon heads use a two-dimensional sprite, unlike [[Java]] does.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Heads can now be used to craft [[firework star]]s.
+|Creeper heads and wither skeleton skulls are now used to [[craft]] specific patterns on [[banner]]s.}}
+|{{HistoryLine|||dev=beta 1.2.0.11|[[File:Skeleton Skull (item) BE2.png|32px]] [[File:Wither Skeleton Skull (item) BE2.png|32px]] [[File:Zombie Head (item) BE2.png|32px]] [[File:Head (item) BE2.png|32px]] [[File:Creeper Head (item) BE2.png|32px]] [[File:Dragon Head (item) BE2.png|32px]] [[Player]] and [[mob]] heads in [[inventories]] and when held by mobs/players now display as [[block]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Wither skeleton skulls and creeper heads can now be used to craft [[banner pattern]]s.}}
+|{{HistoryLine||November 14, 2022|link=https://www.minecraft.net/en-us/article/playable-mob-sounds-coming-minecraft-1-20|Piglin heads are announced to be added in [[Bedrock Edition 1.20.0]] on the Minecraft website.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[File:Piglin Head (item) BE1.png|32px]] Added piglin heads behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=Preview 1.19.60.25|Heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Piglin heads are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Wither skeleton skulls now make their respective step sounds when played by a note block.}}
+|{{HistoryLine||1.21.80|exp=Locator Bar|dev=Preview 1.21.80.20|Will now hide players from the locator bar when worn in the head slot.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Wither Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Zombie Head (item) JE1 BE1.png|32px]] [[File:Player Head (item) JE1 BE1.png|32px]] [[File:Creeper Head (item) JE1 BE1.png|32px]] Added skeleton, wither skeleton, zombie, player, and creeper heads to the [[creative inventory]]. 
+|Wither skeleton skulls currently do not have a use.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|Wither skeleton skulls can now be obtained by killing [[wither skeleton]]s.
+|Wither skeleton skulls can now be used to build the [[wither]].|Any kind of [[mob]] head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|Skulls worn by [[mob]]s and [[player]]s are now displayed on the armor layer. Previously, the skull replaced the mob/player's head texture; the hat layer appeared over the skull.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Skeleton Skull (item) JE2.png|32px]] [[File:Wither Skeleton Skull (item) JE2.png|32px]] [[File:Zombie Head (item) JE2.png|32px]] [[File:Player Head (item) JE2.png|32px]] [[File:Creeper Head (item) JE2.png|32px]] Heads in [[inventories]] and held by mobs/players now display as [[block]]s.|Skeleton, zombie, and creeper heads are now available in [[Survival]]. The [[player]] can obtain them by killing the appropriate [[mob]] with a charged [[creeper]].}}
+|{{HistoryLine||xbox=TU32|xbone=CU20|ps3=1.23|psvita=1.23|ps4=1.23|wiiu=Patch 3|Heads now display a cracking animation.}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Creeper heads and wither skeleton skulls are now used in [[crafting]] specific [[banner]] patterns.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Dragon Head (item) JE1.png|32px]] Added dragon heads.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Heads are now held the same way as on ''Java Edition'' in first person.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Wither skeleton skulls and creeper heads can now be used to craft [[banner pattern]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Wither Skeleton Skull (item) JE1 BE1.png|32px]] [[File:Zombie Head (item) JE1 BE1.png|32px]] [[File:Player Head (item) JE1 BE1.png|32px]] [[File:Creeper Head (item) JE1 BE1.png|32px]] Added skeleton, wither skeleton, zombie, player, and creeper heads.}}
+|{{HistoryLine||1.7.10|[[File:Dragon Head (item) BE1.png|32px]] Added dragon heads.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Trivia ==
+* Heads do not have their own textures and take their textures from other objects.
+* When [[breaking]] any head, the particle effect of breaking it is the same as [[soul sand]].
+* Despite there being a default Steve head, heads for the other default skins cannot be obtained without using custom names.
+* {{IN|be}}, the skull variant for the item is stored under the {{cd|damage}} component, normally used for items with [[durability]].
+
+== Gallery ==
+=== Screenshots===
+<gallery>
+Headsrotation.png|Heads oriented in different directions.
+HeadsOnAFence.png|Heads are the same scale as [[cobblestone wall]] posts.
+Playerheads.png|A picture of player heads, including some Mojang characters.
+Timeless Ritual.png|Several heads as they appear during a puzzle in the ''Timeless Trails'' DLC.
+</gallery>
+
+=== Development images ===
+<gallery>
+1st image Mob Head.png|First screenshot released of heads.
+Minecart with chest and head thing.png|Notch's head in a [[minecart with chest]].
+PauseUnpause's Head 1.png|First image of held heads rendering as blocks.
+PauseUnpause's Head 2.png|Second image of held heads rendering as blocks.
+Pocket Edition Heads.jpg|First image of a head being worn in bedrock edition.
+1.16 Dev failed head holding.jpg|First attempt to fix {{bug|MC-91869}} by [[Xilefian]].
+1.16 Dev failed head holding 2.jpg|Second attempt.
+</gallery>
+
+=== In other media ===
+<gallery>
+Efe Placing a Zombie Head on a Note Block.jpg|Efe placing a zombie head sneakily on the note block.
+Makena Waking up Startled by the Zombie Noise.jpg|Makena waking up startled at the sound of zombies being played on the note block.
+Piglin Head Animation.jpg|[[Sunny]] using a piglin head to make noise in a [[Crimson Forest]].<ref>https://www.instagram.com/p/Ct7CfOBplrG/</ref>
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox redstone|Components}}
+{{Navbox blocks|Utility}}
+{{Navbox combat|armor}}
+
+[[Category:Mechanisms]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+
+[[de:Kopf]]
+[[es:Cabeza]]
+[[fr:Tête]]
+[[hu:Mob fejek]]
+[[it:Testa]]
+[[ja:Mobの頭]]
+[[ko:몹 머리]]
+[[lzh:首]]
+[[nl:Wezenhoofd]]
+[[pl:Głowa]]
+[[pt:Cabeça]]
+[[ru:Голова]]
+[[uk:Голова]]
+[[zh:生物头颅]]

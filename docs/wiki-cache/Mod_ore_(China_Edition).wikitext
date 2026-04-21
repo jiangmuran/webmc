@@ -1,0 +1,74 @@
+{{Removed feature|edition=China}}
+{{exclusive|China}}
+{{Infobox block
+| title = <samp>tile.mod_ore.0.name</samp>
+| image = Block of Gold.png
+| invimage = [tile.mod_ore.0.name]Block of Gold
+| renewable = No
+| stackable = Yes (64)
+| tool = None
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+
+'''<samp>tile.mod_ore.0.name</samp>''' is a block used for developing ores, addons, or otherwise used for development purposes.{{more info|Include more examples.}} It uses the same texture as the [[block of gold]].
+
+== Obtaining ==
+<samp>tile.mod_ore.0.name</samp> can only be obtained via [[commands]].
+
+=== Breaking ===
+{{expand section|Add the block's breaking time.}}
+The block takes about 2 seconds to mine by hand.{{More info}}
+
+When mined, <samp>tile.mod_ore.0.name</samp> does not drop anything, regardless of the tool used. The item can only be dropped by [[explosion|exploding]] it or by using the {{cmd|setblock}} command.<ref>{{ytl|GXwLg-vHbdU|Weird features only in Minecraft China Edition|Element X
+|October 20, 2022}}</ref>
+
+== Sounds ==
+{{Sound table/Block/Metal/BE}}
+
+== Data values ==
+
+=== ID ===
+{{edition|china}}:{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=tile.mod_ore.0.name
+|spritetype=block
+|nameid=mod_ore
+|id=230
+|foot=1|spritename=block of gold}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|china}}
+|{{HistoryLine||September 4, 2019|[[File:Block of Gold (texture) JE3 BE2.png|32px]]{{verify}} Added <samp>tile.mod_ore.0.name</samp>.
+It cannot be destroyed or placed.}}
+|{{HistoryLine||February 13, 2020|[[File:Block of Gold JE6 BE3.png|32px]]{{verify}} The texture of <samp>tile.mod_ore.0.name</samp> has been changed.<ref>{{citation|url=https://www.bilibili.com/video/BV1B7411V7Vt|title=隐藏方块?我的世界里原版指令可以获得的隐藏方块!|author=鸽子汤里的懒骨头|website=Bilibili|date=February 12, 2020}}</ref>}}
+|{{HistoryLine||October 10, 2022|{{verify}} <samp>tile.mod_ore.0.name</samp> can now be placed and destroyed.}}
+|{{HistoryLine||June 28, 2024|In singleplayer/multiplayer (except for {{cmd|setblock}}), placing a <samp>tile.mod_ore.0.name</samp> block of the "unknown" type will now cause it to disappear (except for <code>MovingBlock</code>), while servers allow the placement of the "unknown" type.}}
+|{{HistoryLine||January 2, 2026|Removed <samp>tile.mod_ore.0.name</samp>.}}
+}}
+
+== Features ==
+* The "0" in the item's nickname "<samp>tile.mod_ore.0.name</samp>" can be changed depending on the data value.
+** If the item's data value exceeds "<span class="explain" title="(2 ^ 15) - 1">32767 (short type)</span>", it will continue to reset to "0".
+** Using {{cmd|setblock}} and {{cmd|fill}} does not affect the "0" in "<samp>tile.mod_ore.0.name</samp>".
+* When placed in older versions, it may create a transparent black square with other blocks or with that block.<!--
+* In the 1.20 version of the Chinese edition of Minecraft, it emits update block particles when walking, but when mined, it produces golden_block particles.-->
+* When placing the block, the texture of a gold block will appear, but after 0.1 seconds, but after 0.1 seconds, it will change to the <samp>update_block</samp> texture. Using the {{cmd|setblock}} command with <samp>tile.mod_ore.0.name</samp> allows the gold block texture to be displayed. However, when the block is placed normally (not through modpc), the texture displayed is the <samp>update_block</samp> texture.
+* When the block appears with the "unknown" texture and the player moves, the original movement speed is reduced. However, when the block appears with the "<samp>golden_block</samp>" texture and the player moves, the normal movement speed is not affected.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|creative}}
+[[Category:Creative or commands only blocks]]
+
+[[ja:Mod ore]]
+[[ko:Mod ore (China Edition)]]
+[[pt:Mod ore (Edição China)]]

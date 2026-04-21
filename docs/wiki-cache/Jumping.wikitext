@@ -1,0 +1,130 @@
+{{redirect|Hop|the redstone component|Hopper}}
+[[File:Jumping preview.png|150px|right|thumb|Steve jumping.]]'''Jumping''' is a form of [[Transportation|movement]] that elevates the [[player]] by approximately 1.25 blocks into the air. Mobs can also jump, as part of their behavior.
+
+== Mechanic ==
+=== Activation ===
+Jumping is done by pressing the {{control|jump}} key (which defaults to {{key|Spacebar}} on a keyboard) or button (e.g. the {{Xbutton|A}} button on an Xbox controller). When the auto-jump setting is enabled, and the player walks towards the edge of a block, the player automatically jumps.
+
+=== Usage ===
+When the player jumps, a specific upward velocity is added to the player. A player always starts a jump with the same speed moving upward.
+
+[[Sneaking]] and [[crawling]], when activated by suffocation prevention {{in|java}}, prevent players from jumping due to the reduced space. These two actions normally do not prevent players from jumping.
+
+==== Jump height ====
+Jumping normally lets the player climb up 1.2522 blocks. Players with [[Jump Boost]] I can jump 1.8361 blocks, and 2.5168 blocks for level II. 
+
+{{:Calculators/Jump boost}}
+
+==== Sprint-jumping ====
+Jumping can be combined with [[sprinting]] to increase the player's movement speed. A single jump while sprinting costs four times as much hunger as a normal jump.
+
+=== Mobs ===
+Most land-based [[mob]]s are able to jump when they are walking up blocks. However, they only jump when they need to in order to climb hills, except in (but not limited to) these cases:
+* [[Illager]]s and [[witch]]es when celebrating a successful [[raid]]
+* [[Fox]]es, when attacking
+* [[Spider]]s and [[cave spider]]s, when attacking
+* [[Rabbit]]s, as part of their normal movement
+** The [[killer bunny]]{{only|je|short=1}} has the same attack pattern as spiders, and jumps around similarly.
+* [[Frog]]s, as a part of their normal movement
+* [[Slime]]s and [[magma cube]]s, as a part of their normal movement
+* Baby [[villager]]s when playing on [[bed]]s
+* Adult [[panda]]s when a nearby baby panda sneezes
+
+These mobs are able to walk up full-sized blocks without jumping:
+* [[Horse]]s and their variants
+* [[Iron golem]]s
+* [[Endermen]]
+* [[Pig]]s, when controlled by the player
+* [[Strider]]s, when controlled by the player
+* [[Llama]]s
+* [[Ravager]]s
+* [[Drowned]] on land
+* [[Turtle]]s
+
+Flying mobs ([[ghast]]s, [[phantom]]s, etc.) and water mobs (except [[turtle]]s) do not jump.
+* [[Fish]]es, [[guardian]]s and [[elder guardian]]s flop around when out of water, but do not jump.
+
+=== Blocks ===
+; Blocks affected by jumping on or near them
+* [[Farmland]] reverts to a standard [[dirt]] block if an entity jumps and/or lands on it. This also causes any seeds and crops planted in the farmland to pop out. Entities do not need to jump for this to occur, as simply landing on farmland from a fall causes the same effect.
+* [[Turtle egg]]s can be broken by being jumped/landed on enough times.
+* A [[sculk sensor]] is able to detect almost any interaction or movement from an entity. A sculk sensor cannot sense when an entity jumps, but can sense when one lands. Jumping or landing while sneaking cannot be detected by the sensor. Walking or landing on a [[wool]] block nullifies the vibrations, so the sculk sensor cannot detect that either. Wool can also nullify vibrations that are between both the source of the disturbance and the sensor itself.
+** The vibration of an entity hitting the ground causes the sculk sensor to output a [[redstone signal]] with a strength of 5.
+
+; Blocks affecting entities that jump on them
+* [[Soul sand]] causes entities to sink down by 2 pixels, also lowering jump height by that much.
+* [[Honey block]]s make players jump {{frac|3|16}} of a block from them, which is an 85% jump-height reduction.
+* [[Slime block]]s bounce entities back up to a height proportional to their downward velocity. Holding the jump key while falling on a slime block causes the player to jump just at the moment of making contact with the slime block. This can be done without suffering any fall damage. Holding the {{control|sneak}} key while landing on a slime block completely negates the bouncing.
+* A [[pointed dripstone]] that is pointing upward (also known as a stalagmite) hurts any player or mob that falls on it. Standing on a stalagmite and then jumping harms the entity repeatedly. The farther a fall before landing on a stalagmite, the more damage it does even more so than standard [[fall damage]].
+
+; Jumping over walls
+* [[Fence]]s, [[fence gate]]s, and [[wall]]s have hitboxes that are 1.5 blocks tall, which prevents most [[mob]]s from jumping over them. A [[carpet]] can be placed on one of a fence of wall in order to allow a [[player]] to easily climb over it while keeping most mobs trapped since they can't pathfind onto the carpet and over the wall. 
+
+; Jumping in or from blocks
+* [[Water]] or [[lava]] prevents any entity from jumping while in it. However, if a player is above the surface of the liquid, holding the jump key and in tandem with moving up against a block, the player attempts to jump out of the liquid in an effort to land on the block that the player moved toward.
+** Pressing the jump key while submerged in water or lava makes the player ascend in it.
+* [[Ladder]]s and [[vines]] can be climbed by holding the jump key while being close enough to them. Simply moving forward into them achieves the same effect.
+* [[Cobweb]]s and [[sweet berry bush]]es prevent players from jumping from them.
+
+== Trivia ==
+* Jumping was one of the first transportation mechanics added.
+* The longest possible distance a [[player]] can jump without status [[effect]]s is a little over 9 blocks, by sprint-jumping out of a 2-block tall corridor of [[ice]].
+* The longest possible distance a player can jump with obtainable effects in [[Survival]] is over 11 blocks, by using a potion of Leaping, Swiftness and Slow Falling combined with Soul Speed III boots on soul sand.
+* The longest possible distance a player can jump without effects or [[ice]] is 5 blocks by just [[sprinting]].
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java Pre-classic}}
+|{{HistoryLine||Cave game tech test|Added jumping.}}
+|{{HistoryLine|Java Edition Alpha}}
+|{{HistoryLine||1.0.4|As a result of ice's slipperiness, entity physics have changed and jumps are now shorter.}}
+|{{HistoryLine|Java Edition}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|When the player jumps, their [[experience]] increases by a number between 1 and 100.|Continuous jumping by holding down the jump key is no longer possible.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Removed the ability of gaining experience when jumping.}}
+|{{HistoryLine|||dev=?|Holding the jump key now has a delay of half a second before jumping again.<ref>{{bug|MC-184409||Holding the jump key under a two block high space does not cause the player to jump again immediately after hitting the floor|WAI}}</ref>}}
+|{{HistoryLine||1.9|dev=15w45a|Player's jump height is increased from 1.24919 blocks to 1.2522 blocks.}}
+|{{HistoryLine||1.10|dev=16w20a|A new 'Auto-jump' toggle has been added, which automatically makes the player jump when running towards a one block tall obstacle. This option is enabled by default.}}
+|{{HistoryLine||1.11|dev=16w32a|The exhaustion cost per jump has been decreased from 0.2 to 0.05.
+|The exhaustion cost per sprint-jump has been decreased from 0.8 to 0.2.}}
+|{{HistoryLine||1.17|dev=20w49a|Player's jump while sneaking ignores sculk sensors.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|Added jumping.}}
+|{{HistoryLine||v0.1.1|Added Auto-Jump.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added jumping.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|Player's jump height is increased from 1.24919 blocks to 1.2522 blocks.{{check version|Was this change made in TU46?}}}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|The exhaustion cost per jump has been decreased from 0.2 to 0.05.
+|The exhaustion cost per sprint-jump has been decreased from 0.8 to 0.2.
+|A new 'Auto-jump' toggle has been added, which automatically makes the player jump when running towards a one block tall obstacle. This option is disabled by default.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|Added jumping.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Transport]]
+
+[[es:Saltar]]
+[[ja:ジャンプ]]
+[[pt:Saltar]]
+[[zh:跳跃]]

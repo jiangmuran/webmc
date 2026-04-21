@@ -1,0 +1,282 @@
+{{Infobox block
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = {{jebe|No|Yes}}
+| rarity = Uncommon
+}}
+A '''piglin head''' is the [[head]] of a [[piglin]] in the form of a [[block]]. It can only be obtained by killing a piglin using a [[charged creeper]]'s [[explosion]].
+
+== Obtaining ==
+=== Breaking ===
+No tool can accelerate the breaking process of piglin head.<ref>{{bug|MC-192905||Heads & Skulls have no assigned tool}}</ref>
+{{breaking row|horizontal=1|Piglin Head}}
+Piglin head drops itself upon destroyed.
+When destroyed by an [[explosion]], the piglin head always drops as an item.
+
+=== Mob loot ===
+Piglin heads are always dropped by a [[piglin]] if it dies from a [[charged creeper]]'s explosion. {{IN|bedrock}}, if multiple mobs are killed by the same charged creeper, all of them drop their heads; however, {{in|java}}, only one mob selected at random drops its head.<ref>{{bug|MC-63534|||WAI}}</ref>
+{{Drop sources|Piglin Head}}
+
+== Usage ==
+=== Decoration ===
+Piglin heads can be oriented in 16 different directions on top of a block and 4 directions on the sides of blocks, similar to [[sign]]s. They can be placed on top of, or beside each other by shift clicking.
+
+When placed and powered by redstone, the piglin head flaps its ears (2 times per second for the right ear and 2.5 times per second for the left ear). The same animation occurs when worn by a (horizontally) moving player, zombie, skeleton, or [[armor stand]] (note: the animation does not play if the <code>NoGravity</code> tag is set to 1)
+
+=== Wearing ===
+{{See also|#Renders}}
+The player can wear piglin heads, similarly to [[pumpkin]]s or helmets. This overlays the second layer of the player's [[skin]].
+
+==== Disguise ====
+Wearing a piglin head reduces the detection range for [[piglin]]s and [[piglin brutes]] to 50% of the normal range. This is similar to (and stacks with) the reductions in detection range from [[sneaking]] and from the [[Invisibility]] status effect.
+
+{{IN|bedrock}}, wearing a piglin head makes the player invisible to other players on a locator [[map]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a piglin head on a player, mob, or armor stand with an empty helmet slot, within the block the dispenser is facing.
+
+=== Crafting ingredient ===
+{{Crafting
+|ignoreusage=1
+|ingredients=Piglin Head +<br>[[Gunpowder]] +<br>Any [[Dye]]
+|Gunpowder
+|Piglin Head
+|Matching Dye
+|Output= Matching Firework Star
+|description=Forms Creeper shape
+|showdescription=1
+}}
+
+=== Enchantments ===
+Piglin heads can receive the following enchantments, but only through an [[anvil]].
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchanting|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Note blocks ===
+Placing a piglin head above a [[note block]] causes the note block to play the [[piglin]]'s {{cd|ambient}} sound when activated.
+
+The block below the note block does not affect the mob sound it creates.
+
+=== Piston interactivity ===
+A piglin head is destroyed if a [[piston]] tries to push it. It cannot be pulled by a [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Piglin idle1.ogg
+|sound2=Piglin idle2.ogg
+|sound3=Piglin idle3.ogg
+|sound4=Piglin idle4.ogg
+|sound5=Piglin idle5.ogg
+|subtitle=Piglin snorts
+|source=record
+|description=When a piglin head is played using a note block
+|id=block.note_block.imitate.piglin
+|translationkey=subtitles.entity.piglin.ambient
+|volume=1.98
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a piglin head is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+<!--volumes and pitches seem to be approximately v=0.9 p=0.84, but those values are approximate and are not in the files. They are probably inside of the code.-->
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Piglin angry1.ogg
+|sound2=Piglin angry2.ogg
+|sound3=Piglin angry3.ogg
+|sound4=Piglin angry4.ogg
+|source=record
+|description=When a piglin head is played using a note block<wbr><ref group=sound>{{Bug|MCPE-164710}}</ref>
+|id=note.piglin
+|pitch=0.84 <ref group=sound name=pitch>Actually equal to <math>\frac{1}{\sqrt[4]{2}}</math>, which is about 0.8409</ref>}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a piglin head is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Piglin Head
+|spritetype=block
+|nameid=piglin_head
+|itemtags=skulls}}
+{{ID table
+|displayname=Piglin Wall Head
+|spritetype=block
+|nameid=piglin_wall_head
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=piglin-head
+|spritetype=block
+|nameid=skull
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Piglin Head
+|spritetype=block
+|nameid=piglin_head
+|aliasid=skull / 6
+|id=-970
+|translationkey=item.skull.piglin.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=piglin-head
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Head|block states}}
+
+=== Block data ===
+A piglin head has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Head|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Camouflage}}
+
+== History ==
+{{See asset history|type=block}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||November 14, 2022|link=https://www.minecraft.net/en-us/article/playable-mob-sounds-coming-minecraft-1-20|Piglin heads are announced to be added in [[Java Edition 1.20]] and [[Bedrock Edition 1.20.0]] on the Minecraft website.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w46a|[[File:Piglin Head JE1.png|32px]] Added piglin heads behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w03a|Piglin heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine|||dev=23w05a|Piglin heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+|{{HistoryLine||1.20|dev=23w12a|Piglin heads are now available without using the "Update 1.20" experimental datapack.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[File:Piglin Head (item) BE1.png|32px]] Added piglin heads behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=Preview 1.19.60.25|Piglin heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Piglin heads are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of piglin heads has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The separate and direct item forms of the <code>skull</code> block ID have been merged and its [[Bedrock Edition data values|data values]] have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+
+=== Renders ===
+<gallery>
+Alex wearing Piglin Head.png|[[Alex]] wearing a piglin head.
+Ari wearing Piglin Head.png|[[Ari]] wearing a piglin head.
+Efe wearing Piglin Head.png|[[Efe]] wearing a piglin head.
+Kai wearing Piglin Head.png|[[Kai]] wearing a piglin head.
+Makena wearing Piglin Head.png|[[Makena]] wearing a piglin head.
+Noor wearing Piglin Head.png|[[Noor]] wearing a piglin head.
+Steve wearing Piglin Head.png|[[Steve]] wearing a piglin head.
+Sunny wearing Piglin Head.png|[[Sunny]] wearing a piglin head.
+Zuri wearing Piglin Head.png|[[Zuri]] wearing a piglin head.
+</gallery>
+
+=== In other media ===
+<gallery>
+Piglin Head Animation.jpg|[[Sunny]] using a piglin head to make noise in a [[Crimson Forest]].<ref>https://www.instagram.com/p/Ct7CfOBplrG/</ref>
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox combat|armor}}
+
+[[Category:Utility blocks]]
+[[Category:Createable blocks]]
+[[Category:Block entities]]
+
+[[es:Cabeza#Piglin]]
+[[ko:피글린 머리]]
+[[pt:Cabeça de Piglin]]
+[[zh:猪灵的头]]

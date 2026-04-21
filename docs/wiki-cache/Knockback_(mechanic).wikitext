@@ -1,0 +1,183 @@
+{{about|the game mechanic|the enchantment|Knockback}}
+[[File:Knockback (mechanic).png|thumb|An example of a villager taking knockback from a zombie.]]
+
+'''Knockback''' represents the pushback from attacks or natural causes.
+
+== Attack knockback ==
+When receiving damage from players, [[mob]]s, [[explosion]]s, and most [[projectile]]s, entities are also knocked back. The direction of knockback is determined by the direction of the incoming attack.
+
+=== Versus grounded entities ===
+Knockback dealt to grounded entities knocks them into the air and away from the attack.
+
+=== Versus airborne entities ===
+Knockback dealt to airborne entities differs between {{JE}} and {{BE}}. {{IN|JE}}, knockback against airbone entities only knocks them away from the attack and does not knock them further into the air. {{IN|BE}}, knockback against airborne entities is identical to knockback against grounded entities.
+
+=== Versus entities in vehicles ===
+Entities inside [[minecart]]s or [[boat]]s, as well as entities that are riding mountable entities like [[horse]]s and [[camel]]s, never receive any knockback when attacked.
+
+=== Versus entities during attack invulnerability time ===
+Knockback dealt to entities during [[Damage#Invulnerability timer|attack invulnerability time]], the 0.5 seconds (500ms) of invulnerability received after taking [[damage]], differs between {{JE}} and {{BE}}.
+* {{IN|JE}}, knockback against invulnerable entities is completely negated, except for when attacking with a [[sword]] or [[spear]] that has the [[Knockback]] enchantment.
+* {{IN|BE}}, knockback against invulnerable entities is applied in the same way as non-invulnerable entities, which results in high CPS (clicks per second) dealing massive knockback.<ref>{{bug|MCPE-170242||Clicking fast when hitting mobs results in insane knockback}}</ref> Note that certain [[featured servers]] available on Bedrock Edition opt to fix this bug, however the bug is present in a fully vanilla multiplayer setting.
+
+== Knockback sources ==
+=== Natural damage ===
+Most [[Damage#Natural damage|natural damage]] sources, damage sources that are received indirectly, cause a stutter in movement but do not deal any horizontal knockback. Natural damage sources that cause a movement stutter include damage from burning, drowning, lightning, falling, suffocation, entity cramming, starvation, and [[status effect]]s like [[Poison]], [[Wither (effect)|Wither]], and [[Instant Damage]]. Block-inflicted damage from [[fire]], [[cactus]], [[lava]], [[magma]] blocks, [[campfire]]s, and [[sweet berry bush]]es also cause the same movement-stuttering knockback.
+
+Other indirect damage sources deal knockback in the traditional manner rather than causing a movement stutter. This includes the breath attack of the [[ender dragon]], the beam attack of [[guardian]]s and [[elder guardian]]s, the sonic boom attack of [[warden]]s, the roar attack of [[ravager]]s, [[evoker fang]]s, damage from the [[Thorns]] enchantment, and the effect cloud from [[lingering potion]]s of Harming.
+
+Knockback received from players or mobs using a sword enchanted with [[Knockback]] is greater than normal.
+
+=== Damageless attacks ===
+Attacks that deal {{hp|0}} or less fail to deal knockback. The [[Weakness]] status effect can cause attacks that deal {{hp|0}}, causing them to deal no knockback.
+
+=== Snowballs and eggs ===
+Thrown [[egg]]s and [[snowball]]s cause knockback to mobs even if they do not deal any damage. {{IN|BE}}, thrown eggs and snowballs also apply knockback to players.
+
+== Sprint-knockback attack ==
+[[File:Sword sprint knockback attack.gif|thumb|Performing a sprint-knockback attack.]]
+Doing a [[melee attack]] while [[sprinting]] causes a sprint-knockback attack to be performed, inflicting extra knockback. {{IN|JE}}, sprint-knockback attacks play a unique sound when performed, and they require an attack cooldown charge of at least 84.8%. [[Spear]]s are the only item type that cannot do sprint-knockback attacks.
+
+In {{JE}}, sprint-knockback attacks cannot be performed at the same time as critical hits or sweep attacks. If a sprint-knockback attack is performed at the same time as a critical hit, the sprint-knockback attack takes priority. They can however be performed at the same time as [[smash attack]]s and [[crushing blow]]s.
+
+The extra inflicted knockback stacks with the [[Knockback]] enchantment. Like the Knockback enchantment, sprint-knockback attacks do not increase knockback against entities that are immune to knockback, such as [[iron golem]]s or shielding [[player]]s. The only exceptions to this are [[armor stand]] and [[boat]]s, which ordinarily do not take knockback when hit but do when hit by a sprint-knockback attack.
+
+== Knockback resistance ==
+=== Attributes ===
+{{main|Attribute}}
+==== Knockback resistance ====
+Knockback resistance reduces knockback by multiplying the velocity value that a mob receives from an attack's knockback. If the velocity the mob would have without any knockback resistance is <math>v</math>, and the mob has a knockback resistance of <math>r%</math>, then the mob's actual velocity is determined by the formula <math>A = v \times \left(1 - \frac{r}{100} \right)</math>. Each piece of [[netherite armor]] adds 10% knockback resistance to its wearer, giving 40% knockback resistance with a full set.
+
+==== Explosion knockback resistance ====
+{{exclusive|Java|section=1}}
+Explosion knockback resistance reduces knockback from explosions and fireworks. It is received through the [[Blast Protection]] enchantment, and uses the formula {{cd|(15 × ''level'')%}}. The effect stacks with multiple armor pieces, with two pieces of Blast Protection IV armor resulting in 100% explosion knockback resistance. It also reduces the knockback affect of [[wind charge]]s and the [[Wind Burst]] enchantment.
+
+=== Natural knockback resistance ===
+{{main|Mob}}
+[[Mob#Knockback_resistance|Certain mobs]] have natural knockback resistance that causes them to resist knockback from attacks. [[Iron golem]]s, [[shulker]]s, [[agent]]s, [[NPC]]s, [[warden]]s, and [[ender dragon]]s have 100% knockback resistance, while other mobs have varying levels of knockback resistance.
+
+{| class="wikitable sortable"
+! '''Mob'''
+! data-sort-type="number" | '''Knockback resistance'''
+|-
+! {{EntityLink|Agent}}
+| data-sort-value="100" | 100% (are invulnerable)
+|-
+! {{EntityLink|Drowned}}
+| data-sort-value="2.5" | 0%–5% (determined on [[Mob spawning|spawn]])
+|-
+! {{EntityLink|Hoglin}}
+| data-sort-value="60" | 60%
+|-
+! {{EntityLink|id=Husk|Husk}}
+| data-sort-value="2.5" | 0%–5% (determined on spawn)
+|-
+! {{EntityLink|Glow Squid}}
+| data-sort-value="85" | 85%
+|-
+! {{EntityLink|Iron Golem}}
+| data-sort-value="100" | 100%
+|-
+! {{EntityLink|NPC}}
+| data-sort-value="100" | 100% (are invulnerable)
+|-
+! {{EntityLink|Polar Bear}}
+| data-sort-value="60" | 60%{{only|java|short=1}}
+|-
+! {{EntityLink|Ravager}}
+| data-sort-value="70" | 70%{{only|java|short=1}}<br>75%{{only|bedrock|short=1}}
+|-
+! {{EntityLink|Squid}}
+| data-sort-value="85" | 85%
+|-
+! {{EntityLink|Shulker}}
+| data-sort-value="100" | 100%
+|-
+! {{EntityLink|Warden}}
+| data-sort-value="100" | 100%
+|-
+! {{EntityLink|Zoglin}}
+| data-sort-value="60" | 60%
+|-
+! {{EntityLink|Zombie}}
+| data-sort-value="2.5" | 0%–5% (determined on spawn)
+|-
+! {{EntityLink|Zombie Villager}}
+| data-sort-value="2.5" | 0%–5% (determined on spawn)
+|-
+! {{EntityLink|Zombified Piglin}}
+| data-sort-value="2.5" | 0%–5% (determined on spawn)
+|}
+
+== Sounds ==
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Knockback attack1.ogg
+|sound2=Knockback attack2.ogg
+|sound3=Knockback attack3.ogg
+|sound4=Knockback attack4.ogg
+|subtitle=Knockback attack
+|source=player
+|description=When a player deals a sprint-knockback attack
+|id=entity.player.attack.knockback
+|translationkey=subtitles.entity.player.attack.knockback
+|volume=0.7
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added the knockback mechanic.
+|Mobs and the player now take knockback when damage is taken.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||July 26, 2011|link={{tweet|notch|95850815276843008}}|Notch first teased how sprint-knockback attacks would work.}}
+|{{HistoryLine||1.8|dev=Pre-release|Added sprint-knockback attacks.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w25a|Entities no longer receive downwards knockback from drowning damage.}}
+|{{HistoryLine||1.9|dev=15w34c|Sprint-knockback attacks now require an attack cooldown percentage of 84.8% or greater.|Sprint-knockback attacks can no longer be activated simultaniously with critical hits, and instead the sprint-knockback attack takes priority.}}
+|{{HistoryLine|||dev=15w36a|Fishing bobbers no longer inflict knockback when attaching to an entity.}}
+|{{HistoryLine|||dev=15w46a|Iron golems now resist 100% of knockback.}}
+|{{HistoryLine|||dev=15w47a|increased sprint-knockback against living entities by 0.5 instead of 0.1 verticaly (non living entites use the old value of 0.1).}}
+|{{HistoryLine|||dev=15w47b|Added sounds for sprint-knockback attacks.}}
+|{{HistoryLine|||dev=15w49a|Entities that are airborne no longer take vertical knockback when attacked, now only taking horizontal knockback.|Entities that take damage while gliding with elytra no longer take vertical knockback.<ref>{{bug|MC-90549||Taking damage while gliding pushes you upwards}}</ref>}}
+|{{HistoryLine||1.14.3|dev=pre3|Blazes now take knockback when damaged by splash and lingering water bottles.}}
+|{{HistoryLine||1.16|dev=20w06a|The knockback resistance attribute now decreases the knockback taken from attacks, in addition to its existing effect of giving a random chance to ignore all knockback.}}
+|{{HistoryLine||1.18.2|dev=22w03a|The knockback resistance attribute no longer gives a random chance to ignore all knockback.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the knockback mechanic.
+}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Removed the downward knockback while drowning.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Iron golems now resist 100% of knockback.
+|Entities that are airborne no longer take vertical knockback when attacked, now only taking horizontal knockback.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Fishing bobbers no longer inflict knockback when attaching to an entity.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Fishing bobbers once again inflict knockback when attaching to an entity.{{check version}}}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||5|Entities that are airborne now take vertical knockback when attacked, rather than only taking horizontal knockback.}}
+}}
+
+== Issues ==
+{{issue list|Knockback}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+
+[[ja:ノックバック (仕組み)]]
+[[pt:Repulsão (mecânica)]]

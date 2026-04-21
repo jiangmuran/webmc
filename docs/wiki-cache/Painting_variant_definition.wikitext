@@ -1,0 +1,40 @@
+{{see also|Tutorial:Adding custom paintings}}
+{{Exclusive|java}}
+
+A '''painting variant''' consists of a texture and a width and height in blocks.
+
+== Definition ==
+
+Painting variants can be defined in [[data pack]]s, as part of the directory structure below. Until [[Java Edition 1.21.6]] they can also be inlined in the [[Painting#Entity_data|entity data]] and {{cd|[[Data_component_format#painting/variant|painting/variant]]}} data component.
+
+{{Data pack directory|painting_variant|{{ph|name}}.json}}
+
+== JSON Format ==
+Painting variants are defined using the following format:
+<div class="treeview">
+* {{nbt|compound}} The root object. <section begin="json format" />
+** {{nbt|string|asset_id}}: A [[resource location]] of the sprite to use. Has to be in the <code>painting</code> [[atlas]].
+** {{nbt|int|width}}: The width of the painting in blocks, between 1 and 16.
+** {{nbt|int|height}}: The height of the painting in blocks, between 1 and 16.
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|title}}: Text component to use as this painting's title. See [[Text component format]].
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|author}}: Text component to use as this painting's author. See [[Text component format]].<section end="json format" />
+</div>
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21|dev=24w18a|Added painting variants to [[data pack]]s.}}
+|{{HistoryLine|||dev=24w20a|Painting variants can now be inlined in painting entity data.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Added new optional fields <code>author</code> and <code>title</code>, holding text components to be displayed in the creative menu tooltip.|Author tooltip has been removed for <code>earth</code>, <code>wind</code>, <code>fire</code>, <code>water</code> and <code>wither</code> variants.}}
+|{{HistoryLine||1.21.6|dev=25w16a|Painting variants can no longer be inlined in entity NBT or the <code>painting/variant</code> component.}}
+}}
+
+== Navigation ==
+{{Navbox Java Edition technical|datapack}}
+
+[[Category:Paintings]]
+
+[[de:Objektvariantendefinition]]
+[[fr:Définition de variante de tableau]]
+[[pt:Definição de variante de quadro]]
+[[zh:画变种定义格式]]

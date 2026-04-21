@@ -1,0 +1,243 @@
+{{distinguish|Weaving}}
+{{Infobox block
+|image=Loom (S).png
+|extratext = View [[#Gallery|all renders]]
+|transparent=No
+|light=No
+|tool=Axe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=Yes
+}}
+A '''loom''' is a [[block]] used to apply customizable and layerable designs to [[banner]]s using [[dye]]s. Some designs require [[banner pattern]]s to apply. It also serves as a [[shepherd]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+A loom can be mined using any [[tool]] or by hand, but [[axe]]s are the quickest. It always drops as an item.
+
+{{breaking row|horizontal=1|Loom|Axe}}
+
+=== Natural generation ===
+Looms can be found in [[village]] shepherd houses. Looms can also generate in [[trail ruins]].
+
+=== Crafting ===
+{{Crafting
+|A2= String
+|B2= String
+|A3= Any Planks
+|B3= Any Planks
+|Output= Loom
+|type= Decoration block
+}}
+
+== Usage ==
+=== Applying banner patterns ===
+[[File:Loom GUI.png|thumb|176px|Interface for the loom {{in|java}}.]]
+[[File:Loom GUI BE.png|176px|thumb|right|Interface for the loom {{in|bedrock}}.]]
+
+{{control|Using}} on a loom opens its interface. It has three slots for a [[banner]], a [[dye]], and an optional [[banner pattern]] item. When a banner is put in, a list of patterns appears in the center part. Ten patterns require the following banner patterns: Flower Charge, Creeper Charge, Skull Charge, Thing, Snout, Globe, Field Masoned, Bordure Indented, Flow, and Guster. Putting a banner pattern in its respective slot makes the loom show only that pattern.
+
+Selecting a pattern or using a banner pattern on the list shows the preview of the banner after applying, if a dye is present. To finish, the player must take the banner in the slot beneath the preview. The original banner and the dye disappear from their respective slots, but the banner pattern is not consumed.
+
+[[File:Loom GUI with Items.png|thumb|176px|Items being used in the loom interface {{in|java}}.]]
+
+=== Profession ===
+{{main|Job site block}}
+If a loom has not been claimed by a [[villager]], any nearby unemployed villager has a chance to change their profession to shepherd and claim the loom as their [[job site block]].
+
+=== Fuel ===
+A loom can be used as fuel in a [[furnace]] to smelt 1.5 items.
+
+=== Note blocks ===
+Looms can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Select_pattern1.ogg
+|sound2=Select_pattern2.ogg
+|sound3=Select_pattern3.ogg
+|sound4=Select_pattern4.ogg
+|sound5=Select_pattern5.ogg
+|subtitle=MC-238729
+|source=ui
+|description=When a pattern is selected
+|id=ui.loom.select_pattern
+|translationkey=-
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Loom1.ogg
+|sound2=Loom2.ogg
+|subtitle=Loom used
+|source=block
+|description=When a banner is taken from the result
+|id=ui.loom.take_result
+|translationkey=subtitles.ui.loom.take_result
+|volume=0.5
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Shepherd works
+|source=neutral
+|description=Randomly while a shepherd is working
+|id=entity.villager.work_shepherd
+|translationkey=subtitles.entity.villager.work_shepherd
+|volume=0.5
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Select_pattern1.ogg
+|sound2=Select_pattern2.ogg
+|sound3=Select_pattern3.ogg
+|sound4=Select_pattern4.ogg
+|sound5=Select_pattern5.ogg
+|source=block
+|description=When a pattern is selected
+|id=ui.loom.select_pattern
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Loom1.ogg
+|sound2=Loom2.ogg
+|source=block
+|description=When a banner is taken from the result
+|id=ui.loom.take_result
+|volume=0.65
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=Randomly while a shepherd is working
+|id=block.loom.use
+|volume=0.75
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Loom
+|spritetype=block
+|nameid=loom
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Loom
+|spritetype=block
+|nameid=loom
+|id=459
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the loom is facing.<br>Opposite from the direction the player faces when placing a loom.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2|direction|0|0,1,2,3|The direction the loom is facing.
+*0: South facing loom
+*1: West facing loom
+*2: North facing loom
+*3: East facing loom
+|foot=1}}
+
+== History ==
+{{missing|BE history}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Loom (N) JE1 BE1.png|32px]] [[File:Loom (E) JE1 BE1.png|32px]] [[File:Loom (S) JE1 BE1.png|32px]] [[File:Loom (W) JE1 BE1.png|32px]] Added looms.}}
+|{{HistoryLine|||dev=18w48a|Looms now generate in the updated [[plains]] [[village]]s.}}
+|{{HistoryLine|||dev=18w49a|Looms now generate in the updated [[savanna]] villages and the new [[snowy tundra]] villages.}}
+|{{HistoryLine|||dev=18w50a|Looms now generate in the updated [[desert]] and [[taiga]] villages.}}
+|{{HistoryLine|||dev=19w11a|Looms now serve as shepherd [[villager]]s' job site block.}}
+|{{HistoryLine|||dev=pre1|The top texture has flipped.}}
+|{{HistoryLine||1.16|dev=20w06a|[[Crimson planks]] and [[warped planks]] can now be used to craft looms.}}
+|{{HistoryLine||1.19|dev=22w11a|[[Mangrove planks]] can now be used to craft looms.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[Bamboo planks]] can now be used to craft looms.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Cherry planks]] can now be used to craft looms.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Now requires [[Field Masoned Banner Pattern]] and [[Bordure Indented Banner Pattern]] to craft corresponding banners.}}
+|{{HistoryLine||1.21.6|dev=pre3|The pattern selection sound is now controlled by the "UI" source.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Loom (N) JE1 BE1.png|32px]] [[File:Loom (E) JE1 BE1.png|32px]] [[File:Loom (S) JE1 BE1.png|32px]] [[File:Loom (W) JE1 BE1.png|32px]] Added looms.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.90|[[File:Loom (N) JE1 BE1.png|32px]] [[File:Loom (E) JE1 BE1.png|32px]] [[File:Loom (S) JE1 BE1.png|32px]] [[File:Loom (W) JE1 BE1.png|32px]] Added looms.}}
+|{{HistoryLine||1.91|Looms now generate in [[village]]s.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Loom (W).png|A loom facing west.
+Loom (N).png|A loom facing north.
+Loom (E).png|A loom facing east.
+</gallery>
+===In other media===
+<gallery>
+File:Villagers around the loom.jpg
+File:AMCM Jens ruby.jpeg|A loom in {{amcm}}. 
+</gallery>
+
+== External links ==
+*{{Mcnet|block-week--loom|Block of the Week: Loom|December 10, 2020|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Blocks with GUI]]
+
+[[cs:Tkalcovský stav]]
+[[de:Webstuhl]]
+[[es:Telar]]
+[[fr:Métier à tisser]]
+[[it:Telaio]]
+[[ja:機織り機]]
+[[ko:베틀]]
+[[pl:Krosno]]
+[[pt:Tear]]
+[[ru:Ткацкий станок]]
+[[th:เครื่องทอผ้า]]
+[[uk:Ткацький верстат]]
+[[zh:织布机]]

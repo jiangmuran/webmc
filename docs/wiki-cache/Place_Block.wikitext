@@ -1,0 +1,121 @@
+{{About|the block|other uses|Place}}
+{{Joke feature}}
+{{Infobox block
+|group=South
+|1-1=Place Block (S).png
+|group2=West
+|2-1=Place Block (W).png
+|group3=North
+|3-1=Place Block (N).png
+|group4=East
+|4-1=Place Block (E).png
+|group5=Up
+|5-1=Place Block (U).png
+|group6=Down
+|6-1=Place Block (D).png
+|transparent=No
+|light=No
+|tool=Wooden Pickaxe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+The '''place block''' is a joke [[block]] existing only in [[Java Edition 23w13a_or_b]], that takes blocks from a container on its back side and places them in front of it when given a [[redstone]] signal.
+
+== Obtaining ==
+=== Breaking ===
+A place block drops itself when mined with a [[pickaxe]]. If mined without a pickaxe, it drops nothing.
+{{Breaking row|Place Block|Pickaxe|Wooden|horizontal=1|hidecopper=1}}
+
+=== Crafting ===
+{{Crafting
+|A1= Cobblestone
+|B1= Hopper
+|C1= Cobblestone
+|A2= Cobblestone
+|B2= Redstone Dust
+|C2= Cobblestone
+|A3= Cobblestone
+|B3= Bow
+|C3= Cobblestone
+|Output= Place Block
+|type= Redstone
+|ignoreusage=1
+}}
+
+== Usage ==
+The place block can be "used" only when the vote for <code>minecraft:place_block</code> is approved. If this is not the case, the block cannot be:
+* placed (nothing happens)
+* dropped (the block gets removed from the inventory but no item appears)
+* activated (the block does not react to redstone signals)
+* crafted (the output of the crafting table stays empty)
+
+==== Activation ====
+A place block can be activated by:
+* an adjacent active [[power component]] (''Exceptions:'' a redstone torch does not turn ON a place block it is attached to)
+* an adjacent powered opaque block (strongly-powered or weakly-powered)
+* a powered [[redstone repeater]] or [[redstone comparator]] facing the place block
+* powered [[redstone dust]] configured to point at the place block, or on top of it, or a directionless "dot" next to it; a place block is ''not'' activated by adjacent powered redstone dust that is configured to point in another direction.
+
+A place block is ''not'' activated by adjacent powered redstone dust that is configured to point in another direction.
+
+==== Basic utility ====
+A place block can be used to place blocks either from a container (e.g. [[chest]]) behind it, or that were dropped as [[Item (entity)|items]] behind it. A place block can be placed so that its in- and outputs face in any direction, including up or down. When placed, the output faces toward the player. The texture of this side is identical to the output of an [[observer]].
+
+# After being activated, the place block checks the block behind it. If there is a container, the place block pulls one item from the first available slot of that container: there is no check if the item is in fact a placeable block. Valid containers include: chests and [[trapped chest]]s (both small and large), [[barrel]]s, [[shulker box]]es, [[dispenser]]s, [[dropper]]s and [[hopper]]s, as well as [[minecarts with chests]] and [[minecarts with hoppers]]. Only the fuel slot can be accessed from [[furnace]]s, [[blast furnace]]s and [[smoker]]s. In case of [[brewing stand]]s, place block can pull from the blaze powder slot and potion slot, but none of these can actually contain placeable blocks. It can also pull [[music disc]]s out of a [[jukebox]] and books from a [[chiseled bookshelf]], but those items can't be placed either.
+# If there is no container, or if all available slots are empty, the place block next checks if there are any item entities in the 1×1×1 space behind it. If there are, it pulls an item with the largest <code>Age</code>.
+# Immediately after pulling an item, the place block attempts to place the item in front of itself (the place block does not have any storage). If the attempt fails, item is ejected instead, just like from a dropper.
+
+Attempt to place can fail for multiple reasons:
+* The item is not a placeable block.
+* The space on the output side is occupied by another block.
+** However, if the space is occupied by a replaceable block, like [[short grass]] or [[water]], another block can be placed.
+*** In case of water, if a block that is attempted to be placed can be [[waterlogged]], it is then waterlogged.
+* The space on the output side is blocked by an entity.
+** However, non-solid blocks like flowers can be placed.
+* Other conditions do not allow the block to be placed in that space, e.g. attempting to place a flower on stone.
+
+Even though, in theory, a block can be placed, the attempt may still fail because due to the placement block being an unpolished feature: for example, placing a [[hanging sign]] never works, regardless of the number of blocks available to support it.
+
+Place blocks cannot spawn mobs from [[spawn egg]]s, place [[minecart]]s on rails, or perform other similar tasks that usually involve the player right-clicking.
+
+== Sounds ==
+{{info needed section|Did the .fall sound event have a subtitle in the version this block existed in, or not? A modified version of the table may be needed.}}
+{{Sound table/Block/Stone/JE}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Place Block
+|spritetype=block
+|nameid=place_block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+{{/BS}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== See also ==
+* [[Pickaxe block]]
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|joke}}
+{{Navbox jokes|23w13a or b}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Joke blocks]]
+
+[[fr:Bloc de placement]]
+[[ja:Place Block]]
+[[pt:Edição Java 23w13a or b/Place Block]]
+[[zh:放置方块]]

@@ -1,0 +1,253 @@
+{{about||the carpet-like block|Moss Carpet|the pale version|Pale Moss Block|other uses|Moss}}
+{{Infobox block
+| title = Moss Block
+| image = Moss Block.png
+| invimage = 
+| rarity = Common
+| renewable = Yes
+| stackable = Yes (64)
+| tool = hoe
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+
+A '''moss block''' is a natural block that can be spread to other blocks by using [[bone meal]].
+
+== Obtaining ==
+[[File:Moss block range.png|thumb|Farthest range moss spreads from a central moss block in ''Java Edition''. In ''Bedrock Edition'', the source block would be a few blocks above the center.]]
+
+=== Breaking ===
+Moss blocks can be mined using any tool or by hand, but a [[hoe]] is fastest.
+{{breaking row|horizontal=1|Moss Block|link=none|Hoe}}
+
+=== Natural generation ===
+Moss generates on the floor and ceiling within the [[lush caves]] biome. They can also be found in [[trial chambers]] indicating that a [[trial spawner]] can spawn [[slime]]s.
+
+{{block distribution}}
+
+=== Mob loot ===
+An [[enderman]] holding a moss block drops the block upon death.
+
+{{IN|bedrock}}, [[wandering traders]] have a chance of 8.5% (increased by 1% per level of [[Looting]]) to drop 2 moss blocks when killed while showing the item as trade offer, if the player holds an [[emerald]].
+
+=== Generated loot ===
+{{LootChestItem|moss-block}}
+
+=== Trading ===
+[[Wandering trader]]s may sell 2 moss blocks for 1 [[emerald]].
+{{Trade sources}}
+
+=== Post-generation ===
+When [[bone meal]] is {{control|used}} on a moss block, moss spreads to any of the blocks listed below, if they have [[air]] blocks immediately above them, in a cornerless 7×11×7 volume centered on the original moss block. Foliage can replace air on any of these blocks.
+
+The following blocks can be replaced with moss blocks:
+{{columns-list|colwidth=30em|
+* {{BlockLink|Andesite}}
+* {{BlockLink|Coarse Dirt}}
+* {{BlockLink|Deepslate}}
+* {{BlockLink|Diorite}}
+* {{BlockLink|Dirt}}
+* {{BlockLink|Granite}}
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Mud}} {{Only|je|short=1}}
+* {{BlockLink|Muddy Mangrove Roots}} {{Only|je|short=1}}
+* {{BlockLink|Mycelium}}
+* {{BlockLink|Podzol}}
+* {{BlockLink|Polished Andesite}} {{Only|be|short=1}}
+* {{BlockLink|Polished Diorite}} {{Only|be|short=1}}
+* {{BlockLink|Polished Granite}} {{Only|be|short=1}}
+* {{BlockLink|Rooted Dirt}}
+* {{BlockLink|Stone}}
+* {{BlockLink|Tuff}}
+* {{BlockLink|Pale Moss Block}}
+}}
+<!--Blocks not affected by moss (should not be added into the article unless there are too many blocks affected by moss for the sake of brevity)-->
+<!--Bedrock, Obsidian, all precious materials (Diamond, Gold, Netherite, etc), Sands, Gravel, Sandstone variants, Blackstone variants, Farmland, Calcite, Dripstone, Smooth Basalt, cobbled variants, polished variants (except andesite, diorite, and granite in Bedrock Edition), Dirt Path, Command Blocks-->
+
+When a moss block generates with air above it, it has a chance to have [[grass]], an [[azalea]], or a [[moss carpet]] growing on it.
+
+{| class="wikitable"
+|+Bone meal on moss blocks
+!Block!!Chance
+|-
+|{{BlockLink|Short Grass}}||52.08%
+|-
+|{{BlockLink|Moss Carpet}}||26.04%
+|-
+|{{BlockLink|Tall Grass}}||10.42%
+|-
+|{{BlockLink|Azalea}}||7.29%
+|-
+|{{BlockLink|Flowering Azalea}}||4.17%
+|}
+
+==== Spreading specifics ====
+{{IN|java}}, when [[bone meal]] is {{control|used}} on a moss block, first the game checks that the block directly above the moss block is air. If successful, maximum X and Z distances are chosen (independently from each other) with a 50% chance of being either 2 or 3. Then, in a rectangular area centered on the moss block restricted to those maximum distances, the game decides independently for each vertical column whether a block is converted to moss. Each corner has a 0% chance to be selected, each edge has a 75% chance, and the rest of the blocks are always selected. If this check succeeds, a scan is started at a y-level one above the moss block to find a block with [[air]] above it. If the scan starts in an air block, it searches up to 6 blocks downward. If it starts in a non-air block, it searches up to 4 blocks upward. Both scans stop on the first block with air above it, even if it cannot be converted to moss. The chosen block is converted to moss if possible, and if so (or if it already was a moss block) there is a 60% chance that vegetation generates above it.
+
+Each piece of bone meal used on a flat 7×7 grid of convertible blocks yields on average 27 moss blocks (varies widely), which give about 2.5 bone meal when put through a [[composter]].
+
+{| class="wikitable"  style="text-align: right;"
+|+Effective conversion chance as seen from above
+|    0%||18.75%||37.5%||37.5%||37.5%||18.75%||    0%
+|-
+|18.75%|| 62.5%||87.5%||87.5%||87.5%|| 62.5%||18.75%
+|-
+| 37.5%|| 87.5%|| 100%|| 100%|| 100%|| 87.5%|| 37.5%
+|-
+| 37.5%|| 87.5%|| 100%
+| style="background: #5c7524;"| || 100%|| 87.5%|| 37.5%
+|-
+| 37.5%|| 87.5%|| 100%|| 100%|| 100%|| 87.5%|| 37.5%
+|-
+|18.75%|| 62.5%||87.5%||87.5%||87.5%|| 62.5%||18.75%
+|-
+|    0%||18.75%||37.5%||37.5%||37.5%||18.75%||    0%
+|}
+
+{{IN|java}}, blocks that can be replaced by moss are listed in the <code>moss_replaceable</code> block tag, which includes blocks with the <code>base_stone_overworld</code>, <code>cave_vines</code> and <code>dirt</code> tags. This theoretically also includes blocks such as [[cave vines]] and [[dirt path]], which cannot be converted because they do not have a solid top surface aligned with the block grid.{{More info needed|bedrock=behavior in bedrock needs clarification}}
+
+== Usage ==
+All plants can be placed on moss except for [[cacti]]. [[Small dripleaves]] can be placed on moss blocks even outside of [[water]]. [[Nether fungi]] can also be placed on moss, while [[mushroom]]s can be placed only at light level 12 or below. Mushrooms placed on moss blocks can be grown into [[huge mushroom]]s.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Composting ===
+Placing a moss block into a [[composter]] has a 65% chance of raising the compost level by 1.
+
+=== Sniffer eggs ===
+A [[sniffer egg]] hatches twice as fast as normal when on top of a moss block.
+
+=== Piston interactivity ===
+Moss blocks are destroyed and dropped as [[item (entity)|items]] when pushed by [[piston]]s. They do not stick to sticky pistons, [[slime block]]s or [[honey block]]s.
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb moss blocks, either through picking them up or being interacted with them. This provides the golf ball/fast flat effect to the mob when hitting it.
+
+== Sounds ==
+{{Sound table/Block/Moss}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Moss Block
+|spritetype=block
+|nameid=moss_block
+|blocktags=big_dripleaf_placeable,dirt,mineable/hoe,small_dripleaf_placeable,sniffer_diggable_block,sniffer_egg_hatch_boost
+|foot=1
+}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Moss Block
+|nameid=moss_block
+|spritetype=block
+|id=575
+|foot=1}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=1781}}|[[File:Moss Block JE1.png|32px]] Moss blocks are shown unnamed as part of lush caves at [[Minecraft Live 2020]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w05a|[[File:Moss Block JE1.png|32px]] Added moss blocks.}}
+|{{HistoryLine|||dev=21w10a|Moss blocks now naturally generate in the newly added [[lush caves]] biome.}}
+|{{HistoryLine|||dev=21w11a|Moss blocks can now be used to craft mossy cobblestone and mossy stone bricks.
+|[[Hoe]]s are now also the appropriate tool for breaking moss blocks.}}
+|{{HistoryLine|||dev=21w13a|Axes are no longer considered an appropriate tool for breaking moss blocks.<ref>{{bug|MC-219960|resolution=Fixed}}</ref>
+|Moss blocks can now generate as loot in [[shipwreck]] chests.
+|[[Wandering trader]]s can now sell 2 moss blocks for 1 [[emerald]].}}
+|{{HistoryLine|||dev=21w16a|Moss blocks are now in the <code>dirt</code> tag.
+|Moss patches obtained from fertilizing moss blocks contain less vegetation and are now smaller and more irregular in shape.}}
+|{{HistoryLine|||dev=21w17a|[[Small dripleaves]] can now be placed on moss blocks.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Lush caves now generate naturally in default worlds, where moss blocks can be found.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[Sniffer]]s now [[drop]] and dig moss blocks.}}
+|{{HistoryLine||1.20|dev=23w12a|[[Sniffer egg]]s on top of moss blocks now make sniffer eggs hatch 10 minutes - half of the time than on top of other blocks.}}
+|{{HistoryLine|||dev=23w13a|Sniffers no longer drop moss blocks.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Moss blocks can now be found in [[trial chambers]] supply chests or around slime [[trial spawner]]s.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[sulfur cube]]s, which have the ability to absorb moss blocks, providing the golf ball/fast flat effect to the mob.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.52|[[File:Moss Block JE1.png|32px]] Added moss blocks behind the "Caves and Cliffs" experimental toggle.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.54|Moss blocks can now generate as loot in [[shipwreck]] chests.
+|[[Wandering trader]]s can now sell moss blocks.
+|Moss can now also spread vertically when using bone meal.
+|Applying bone meal to a moss block can now also grow vegetation on it.}}
+|{{HistoryLine|||dev=beta 1.17.0.50|Moss blocks can now replace [[dirt]], [[podzol]], [[rooted dirt]], [[stone]], and [[cave vines]].}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Moss blocks are no longer available only through [[experimental gameplay]].}}
+|{{HistoryLine|||dev=release|Cave vines are no longer affected by moss blocks.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.23|Moss blocks now break when moved by [[piston]]s and sticky pistons can no longer pull them.}}
+|{{HistoryLine||1.19.70|exp=Sniffer|dev=Preview 1.19.70.23|[[Sniffer]]s now dig in moss blocks.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.22|Can now have [[dead bush]]es, [[bamboo]] and [[sugar cane]] planted on it.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Moss blocks can now be found in [[trial chambers]] supply chests or around slime [[trial spawner]]s.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb moss blocks, providing the golf ball/fast flat effect to the mob.}}
+}}
+
+== Issues ==
+{{Issue list|Moss Block|Moss|-pale}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+JE_1.17_Development_Lush_Caves.jpg|A preview of the lush caves with moss blocks from Minecraft Live 2020.
+Lushcaves_minecon.png|An additional preview from Minecraft Live.
+Cavesworkinprogress.jpg|A preview of the lush caves with moss blocks, tweeted by LadyAgnes.
+Livestream_lush_cave.jpg|Another preview of the lush caves with moss blocks, in an interview with LadyAgnes.
+</gallery>
+
+=== In other media ===
+<gallery>
+Moss block camel short.png|[[Efe]] approaches a moss block.
+Efe is excited to see snifflet.png|Efe meeting the snifflet that hatched on the aforementioned moss block.
+Moss JA MCD.png|A moss block as it appears in ''[[Minecraft Dungeons]]''.
+</gallery>
+
+== See also ==
+* {{BlockLink|Pale Moss Block}}
+* {{BlockLink|Sculk Catalyst}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week--moss Block of the Week: Moss] – Minecraft.net on July 1, 2021
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Natural blocks]]
+[[Category:Generated structure blocks]]
+
+[[de:Moosblock]]
+[[es:Bloque de musgo]]
+[[fr:Bloc de mousse]]
+[[it:Blocco di muschio]]
+[[ja:苔ブロック]]
+[[ko:이끼 블록]]
+[[pl:Blok mchu]]
+[[pt:Bloco de Musgo]]
+[[ru:Блок мха]]
+[[uk:Моховий блок]]
+[[zh:苔藓块]]

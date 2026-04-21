@@ -1,0 +1,334 @@
+{{outdated|edition=java}}
+{{Infobox item
+| image = Missing Model JE3.png
+| renewable = No
+| stackable = Yes (64)
+}}
+'''Invalid data value stone slabs''' are item forms of the primary [[Smooth Stone Slab|stone slab]] block with damage values outside of the usual range which slabs can usually be obtained in.
+
+== Obtaining ==
+Without the use of [[commands]], invalid data value stone slab items are unobtainable in the last versions in which they existed without inheriting them from a prior version in which they were obtainable.
+
+=== Transmutation ({{JE}}/{{LCE}}) ===
+[[mcdf:Java Edition:Block Transmutation|Several methods of block transmutation]] can be used to obtain invalid data value stone slabs, as well as their double variants, in block form. These blocks can be mined from Beta 1.3{{verify}} to 12w08a{{verify}} to obtain the item corresponding to these blocks.
+
+If a large quantity is desired, transmuting double slabs is recommended as this allows for slabs to be converted twice as fast.
+
+=== Breaking upper slabs ({{BE}}) ===
+In [[Pocket Edition v0.6.0 alpha]], breaking slabs which were placed in the upper half of a block space would drop an invalid data value slab item, corresponding to the top-half slab which had just been broken.<ref>https://youtube.com/watch?v=Hqckf3f8-Hg&t=1m40s</ref>
+
+== Usage ==
+
+=== Placement ===
+{{info needed section|Check how placement behaves in Bedrock Edition and Console Edition}}
+From the January 31, 2010 Indev release up to Beta 1.2_02, damage on slab items would not indicate that the item should place a block with additional metadata, and as such a normal smooth stone slab would be placed regardless of the damage on the item.
+
+From Beta 1.3 up to 14w27b, invalid data value stone slabs would place a slab block with metadata matching the item's damage. From Beta 1.3 up to 12w08a, this would be a lower-half [[seamless stone slab]], as the metadata variants of stone slabs from 8 to 15 were unused, and upper-half slabs were yet to be implemented. From 1.2 up to 14w27b, due to the implementation of upper slabs, this would result in the item placing an upper-half slab, regardless of how the supporting block is targeted.
+
+Invalid data value stone slab items could also be used to create double slab blocks for placed slabs of the same material,{{info needed|when did this start to be possible?}} however were more restricted in their ability to do so; in order to yield a completed double slab, the top face of a lower slab or bottom face of an upper slab must be targeted. Targeting the side or other face of another block in ways that allow for completion when using valid items does not work for invalid data value slabs. In addition, the space above the lower-half slab or under the uper-half slab must be either air or a replaceable block; any block that cannot be directly replaced will block the double slab from being completed.
+
+From 14w28a to 17w46a, invalid data value slabs now place either a bottom-half or top-half slab depending on the targeted half of a block, like valid slab items. However, their behavior with regard to completing double slabs from earlier versions still persists until an unknown version before 17w43a.{{info needed|which?}}
+
+=== Conversion to future versions ===
+In 1.13 (17w47a) onwards, distinguishing between block and item variants using metadata and damage was formally abolished. As a result of this, existing items would be converted over to the new ID system automatically. Invalid data value stone slabs behave anomalously in that instead of converting to their respective materials, they all convert to smooth stone slabs instead.
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100131-2156|[[Durability]] has been introduced. It can be assigned to stone slab items via an inventory editor, but is functionally meaningless in this case.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Slab variants have been added. The durability bar has been removed from stone slabs with higher damage values, and they are now processed as variants.
+|As no name is defined for slabs above the maximum intended damage value, they trigger a game crash when moused over.}}
+|{{HistoryLine||1.7|Block transmutation is now possible, allowing for invalid data value stone slabs to be created, which can be broken to yield their item forms.}}
+|{{HistoryLine||1.8|dev=Pre-release|Invalid data value stone slab items no longer crash the game when moused over, and are now named "Stone Slab". This name will remain constant for all invalid data value stone slabs, regardless of the slab variant they actually represent.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=1.2|Metadata values 8-15 of the slab block now correspond to upper slabs of the first eight materials. As such, the block forms of slabs with these metadata values will not yield invalid data value slabs when broken.}}
+|{{HistoryLine||1.5|dev=13w02a|All seamless stone slabs have been replaced as of this version, meaning that the only obtainable invalid data value slabs that exist from this point onwards are items with damage 8-15, corresponding to upper slabs.}}
+|{{HistoryLine||1.8|dev=14w25a|{{pximg|Missing Model (inventory) JE1.png|32px}} With the introduction of data-driven item models, any item with a data value outside of what is accepted by the game has no model to point to, resulting in use of the [[Missing textures and models|missing item model]].}}
+|{{HistoryLine|||dev=14w30a|Invalid data value stone slabs, alongside other invalid data value items, now appear the size of a full block when held in third person or by another player or mob.}}
+|{{HistoryLine||1.9|dev=15w31a|{{pximg|Missing Model (inventory) JE2.png|32px}} The missing model's inventory appearance has changed, resulting in the appearance of invalid data value stone slabs also changing.
+|The items also appear the size of a full block when held in first person and when dropped on the ground, and also appear larger than before in an [[item frame]].}}
+|{{HistoryLine||1.13|dev=17w43a|{{pximg|Missing Model (inventory) JE3.png|32px}} The missing texture has changed, resulting in the appearance of invalid data value stone slabs also changing.}}
+|{{HistoryLine|||dev=17w47a|Numeric IDs for blocks and items have been completely removed from the game, with different slabs being given their own string IDs. As a result, invalid data value stone slabs have been "removed" as any such item now converts cleanly into smooth stone slabs.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.6.0|With the addition of upper slabs, metadata values 8-13 were legitimately obtainable by mining their respective block forms.}}
+|{{HistoryLine||v0.6.1|Mining an upper slab now drops its corresponding lower slab item.}}
+}}
+
+; Inventory appearances
+{| class="wikitable" style="text-align:center"
+! colspan="2" rowspan="2" | From version
+! colspan="8" | Damage value
+! rowspan="2" | Notes
+|-
+! 8
+! 9
+! 10
+! 11
+! 12
+! 13
+! 14 
+! 15
+|-
+! rowspan="3" | [[Java Edition Indev 0.31|0.31]]
+! [[Java Edition Indev 0.31 20100131|20100131]]
+| {{pximg|Stone Slab 8 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE1.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE1.png|32px}}
+| style="text-align:left" | Durability introduced. Currently meaningless for stone slabs.
+|-
+! [[Java Edition Indev 0.31 20100201-2227|20100201-2227]]
+| {{pximg|Stone Slab 8 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE2.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE2.png|32px}}
+| style="text-align:left" | All 3D items now appear slightly darker on the left.
+|-
+! {{info needed|it's before 0206 but after 0202}}
+| {{pximg|Stone Slab 8 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE3.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE3.png|32px}}
+| style="text-align:left" | All 3D items now appear much brighter.
+|-
+! [[Minecraft Infdev]]
+! [[Java Edition Infdev 20100611|20100611]]
+| {{pximg|Stone Slab 8 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE4.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE4.png|32px}}
+| style="text-align:left" | All 3D items now appear slightly darker.
+|-
+! colspan="2" | [[Java Edition Alpha v1.0.1|Alpha v1.0.1]]
+| {{pximg|Stone Slab 8 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE5.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE5.png|32px}}
+| style="text-align:left" | All 3D items now appear very slightly darker.
+|-
+! colspan="2" | [[Java Edition Beta 1.2|Beta 1.2]]
+| {{pximg|Stone Slab 8 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE6.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE6.png|32px}}
+| style="text-align:left" | The durability bar appears slightly emptier.
+|-
+! colspan="2" | [[Java Edition Beta 1.3|Beta 1.3]]
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE1.png|32px}}
+| style="text-align:left" | Values for damage on stone slabs are now processed as variants. The durability bar is no longer present.
+|-
+! [[Java Edition Beta 1.6|Beta 1.6]]
+! [[Java Edition Beta 1.6 Test Build 3|Test Build 3]]
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE2.png|32px}}
+| style="text-align:left" | All 3D items now appear much brighter and are rotated 90 degrees clockwise from their previous positions.
+|-
+! colspan="2" | [[Java Edition Beta 1.7|Beta 1.7]]
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE3.png|32px}}
+| style="text-align:left" | The sides of non-full blocks now use the bottom half of the texture.
+|-
+! [[Java Edition Beta 1.8|Beta 1.8]]
+! [[Java Edition Beta 1.8 Pre-release|Pre-release]]
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE4.png|32px}}
+| style="text-align:left" | All 3D items now appear even brighter than previously, with almost no shading.
+|-
+! [[Java Edition 1.0.0|1.0.0]]
+! [[Java Edition RC2|RC2]]
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| {{pximg|Seamless Stone Slab (inventory) JE5.png|32px}}
+| style="text-align:left" | All 3D items are now shaded more reasonably.
+|-
+! [[Java Edition 1.2.1|1.2.1]]
+! [[Java Edition 1.2|1.2]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+9.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE11.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE12.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE11.png|32px}}
+| {{pximg|Brick Slab (inventory) JE12.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE11.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE11.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE11.png|32px}}
+| style="text-align:left" | Upper slabs have been implemented. Invalid data value slabs now appear identical to their valid counterparts.
+|-
+! colspan="2" | [[Java Edition 1.2.4|1.2.4]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+9.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE12.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE12.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE11.png|32px}}
+| {{pximg|Brick Slab (inventory) JE12.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE11.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE11.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE11.png|32px}}
+| style="text-align:left" | Sandstone's texture was slightly changed.
+|-
+! [[Java Edition 1.3.1|1.3.1]]
+! [[Java Edition 12w22a|12w22a]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+10.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE13.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE13.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE12.png|32px}}
+| {{pximg|Brick Slab (inventory) JE13.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE12.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE12.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE12.png|32px}}
+| style="text-align:left" | Most 3D items in the inventory have been rotated 90 degrees anti-clockwise.
+|-
+! [[Java Edition 1.4.2|1.4.2]]
+! [[Java Edition 12w34a|12w34a]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+11.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE14.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE14.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE13.png|32px}}
+| {{pximg|Brick Slab (inventory) JE14.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE13.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE13.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE13.png|32px}}
+| style="text-align:left" | Items appeared slightly darker in the player's inventory than in chests prior to this version.
+|-
+! [[Java Edition 1.4.6|1.4.6]]
+! [[Java Edition 12w49a|12w49a]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+11.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE14.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE14.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE13.png|32px}}
+| {{pximg|Brick Slab (inventory) JE14.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE13.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE14.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE13.png|32px}}
+| style="text-align:left" | Nether brick slabs have been implemented.
+|-
+! [[Java Edition 1.5|1.5]]
+! [[Java Edition 13w02a|13w02a]]
+| {{pximg|Smooth Stone Slab (inventory) JEUNK+11.png|32px}}
+| {{pximg|Sandstone Slab (inventory) JE14.png|32px}}
+| {{pximg|Petrified Oak Slab (inventory) JE14.png|32px}}
+| {{pximg|Cobblestone Slab (inventory) JE13.png|32px}}
+| {{pximg|Brick Slab (inventory) JE14.png|32px}}
+| {{pximg|Stone Brick Slab (inventory) JE13.png|32px}}
+| {{pximg|Nether Brick Slab (inventory) JE14.png|32px}}
+| {{pximg|Quartz Slab (inventory) JE14.png|32px}}
+| style="text-align:left" | Quartz slabs have been implemented.
+|-
+! rowspan="2" | [[Java Edition 1.8|1.8]]
+! [[Java Edition 14w10a|14w10a]]
+| {{pximg|Stone Slab 8 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 9 (inventory) JE16.png|32px}}
+| {{pximg|Stone Slab 10 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 11 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 12 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 13 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 14 (inventory) JE15.png|32px}}
+| {{pximg|Stone Slab 15 (inventory) JE15.png|32px}}
+| style="text-align:left" | Invalid stone slab item forms now appear in the top half of the slot.
+|-
+! [[Java Edition 14w25a|14w25a]]
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| style="text-align:left" | [[Missing model|Model no longer exists]]
+|-
+! [[Java Edition 1.9|1.9]]
+! [[Java Edition 15w31a|15w31a]]
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| style="text-align:left" | The missing model is no longer rotated or downscaled.
+|-
+! [[Java Edition 1.13|1.13]]
+! [[Java Edition 17w43a|17w43a]]
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| style="text-align:left" | The missing texture has changed.
+|}
+
+== Issues ==
+Invalid data value stone slabs ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [[mcdf:Java Edition:Invalid Data Value Stone Slab (Item)|Invalid Data Value Stone Slab]] at the ''Minecraft Discontinued Features'' wiki
+
+
+== Navigation ==
+{{Navbox IDV items}}

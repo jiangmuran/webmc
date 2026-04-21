@@ -1,0 +1,128 @@
+{{About|an underground feature in Basalt Deltas|ore blobs|Ore (feature)|glowstone blobs on the Nether roof|Glowstone Blob|the former clay blobs|Clay Blob}}
+{{exclusive|java}}
+{{Infobox structure
+| image1 = Basalt blob.png
+| image1caption = Basalt blob
+| image2 = Blackstone blob feature.png
+| image2caption = Blackstone blob
+| image1size = 150px
+| image2size = 150px
+| biome = {{BiomeLink|Basalt Deltas}} 
+| blocks = {{BlockLink|Basalt}} or {{BlockLink|Blackstone}}
+| canspawn = No
+}}
+
+A '''blob''' is a [[feature]] consisting of [[basalt]] or [[blackstone]] blocks, which replaces [[netherrack]] blocks during world generation. They exclusively generate in [[basalt delta]]s and often overlap with other blobs.
+
+== Types ==
+{| class="wikitable sortable col-1-left col-2-center col-3-center col-4-center col-5-center col-6-center col-7-center" data-description="The Netherrack replace blobs"
+|-
+! Blocks
+! Radius
+! Spawn tries per chunk
+! Minimum height
+! Maximum height
+! Ore concentrate<ref group="note" name="distributionType">Blobs generate using either uniform distribution, or triangle distribution. Uniform distribution have all ores spread in same frequency at any height, while triangle generate more frequent in center height.</ref>
+! Biomes
+|-
+| {{BlockLink|Blackstone}}
+| 3—7
+| 25
+| 0
+| 127
+| {{tc|unknown|uniform}}
+| {{BiomeLink|Basalt Deltas}}
+|-
+| {{BlockLink|Basalt}}
+| 3—7
+| 75
+| 0
+| 127
+| {{tc|unknown|uniform}}
+| {{BiomeLink|Basalt Deltas}}
+|}
+
+<references group="note"/>
+== Data values ==
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=netherrack_replace_blobs
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=blackstone
+|spritetype=block
+|nameid=blackstone_blobs
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=basalt
+|spritetype=block
+|nameid=basalt_blobs
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state}} The block to use.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|target}} The block to replace. Properties here are ignored.
+*** {{nbt inherit/block_state}}
+** {{nbt|int}}{{nbt|compound|radius}} Value between 0 and 12 (inclusive).
+*** {{nbt inherit/int_provider}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:netherrack_replace_blobs",
+  "config": {
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 7,
+        "min_inclusive": 3
+      }
+    },
+    "state": {
+      "Name": "minecraft:basalt",
+      "Properties": {
+        "axis": "y"
+      }
+    },
+    "target": {
+      "Name": "minecraft:netherrack"
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w15a|Added basalt blobs.
+|Added blackstone blobs.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Blackstone Ore and Blackstone Blob.png|[[Blackstone ore]] (left) and blackstone blob (right).
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Filon de roche noire ou de basalte]]
+[[ja:集塊]]
+[[th:บล็อบ]]

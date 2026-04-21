@@ -1,0 +1,166 @@
+{{Infobox item
+| invimage2 = Ominous Bottle II
+| invimage3 = Ominous Bottle III
+| invimage4 = Ominous Bottle IV
+| invimage5 = Ominous Bottle V
+| renewable = Yes
+| stackable = Yes (64)
+| effects = {{EffectLink|id=bad-omen-new|Bad Omen}}
+| rarity = Uncommon
+}}
+An '''ominous bottle''' is an [[item]] that gives a [[player]] the [[Bad Omen]] effect for 100 minutes when {{Control|used|text=drank}}, which can cause an [[ominous event]] to start.
+
+== Obtaining ==
+[[File:Captain pillager dropping an Ominous Bottle.png|thumb|width=295x295|A [[raid captain]] dropping an Ominous Bottle.]]
+=== Mob loot ===
+A [[pillager]] and [[illusioner]] always drops 1 ominous bottle of level I-V upon death as long as it is a [[raid captain]] that is not currently participating in a [[raid]].
+{{Drop sources|Ominous Bottle}}
+
+=== Generated loot ===
+{{LootChestItem|ominous-bottle,ominous-bottle-2}}
+
+== Usage ==
+Consuming an ominous bottle gives a [[player]] the [[Bad Omen]] effect and destroys the bottle, rather than leaving an empty [[glass bottle]] in the player's [[inventory]]. If the player already has the Bad Omen effect, then drinking another ominous bottle resets the effect duration, unless the level of the ominous bottle consumed is lower than the current level of Bad Omen. Consuming an ominous bottle with a higher level than the current effect also increases the level of Bad Omen applied.
+
+=== Bad Omen ===
+{{Main|Bad Omen#Effect}}
+The Bad Omen effect can be "used" immediately after an ominous bottle is consumed. Immediately means 1 [[game tick]] {{in|JE}}, and a few game ticks {{in|BE}} (the exact number of game ticks is unknown).
+
+{{Main|Raid Omen#Effect}}
+When a player with Bad Omen enters a [[village]], the Bad Omen transforms into Raid Omen, which starts a [[raid]] if it is not removed in time. The level of Bad Omen affects the difficulty of the raid, with Bad Omen level II or higher adding an additional wave with the same strength as the final wave. In addition, higher Bad Omen levels increase the chance of raiders spawning with enchanted items.
+
+{{Main|Trial Omen#Effect}}
+When a [[trial spawner]] sees a player with Bad Omen, the Bad Omen transforms into Trial Omen, which causes all nearby trial spawners to become [[ominous trial|ominous]]. The level of Bad Omen does not affect the difficulty of the ominous trial, but higher levels do increase the duration of the Trial Omen effect.
+
+== Sounds ==
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Ominous Bottle dispose.ogg
+|subtitle=Bottle breaks
+|source=dependent
+|description=When a mob or player finishes drinking an ominous bottle
+|id=item.ominous_bottle.dispose
+|translationkey=subtitles.item.ominous_bottle.dispose
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Ominous Bottle dispose BE2.wav
+|source=block
+|description=When a mob or player finishes drinking an ominous bottle
+|id=ominous_bottle.end_use
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Ominous Bottle
+|spritetype=item
+|nameid=ominous_bottle
+|form=item
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Ominous Bottle
+|spritetype=item
+|nameid=ominous_bottle
+|id=608
+|form=item
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/ominous_bottle_amplifier}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Achievements ==
+{{load achievements|I've got a bad feeling about this;We’re being attacked!}}
+
+== Advancements ==
+{{load advancements|Voluntary Exile}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Ominous Bottle JE1 BE1.png|32px]] Added ominous bottles.}}
+|{{HistoryLine||1.21|dev=24w18a|Ominous bottles are now available without using the "Update 1.21" experimental data pack.}}
+|{{HistoryLine||1.21.2|dev=24w33a|The rarity of ominous bottles has been changed from "Common" to "Uncommon".}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Ominous Bottle JE1 BE1.png|32px]] Added ominous bottles.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Ominous bottles are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.23|Changed the sounds when breaking after use.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of ominous bottles has been changed from "Common" to "Uncommon".}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Ominous bottles were added as a way of giving players more control to when and where they want to start a raid, in line with the game's design principle that bad things should be the player's fault.<ref>{{ytl|aBTJIYzJDJw|The Biome that Broke Minecraft|October 12, 2025|t=4m51s}}</ref>
+
+== Gallery ==
+
+=== Screenshots ===
+<gallery>
+File:Ominous Makena.jpg|[[Makena]] drinks an ominous bottle and triggers an ominous trial.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:AYIB Trials.jpeg|[[Steve]] claiming an ominous bottle during a scuffle.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|ominous-bottle|Taking Inventory: Ominous Bottle|December 27, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+
+[[Category:Drinks]]
+
+[[de:Unheilvolle Flasche]]
+[[es:Frasco ominoso]]
+[[fr:Fiole funeste]]
+[[ja:不吉な瓶]]
+[[ko:불길한 병]]
+[[pl:Złowieszcza butelka]]
+[[pt:Frasco Sombrio]]
+[[ru:Зловещая бутылка]]
+[[th:ขวดแห่งลางร้าย]]
+[[uk:Зловісна пляшка]]
+[[zh:不祥之瓶]]

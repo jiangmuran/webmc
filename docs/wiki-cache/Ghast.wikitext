@@ -1,0 +1,489 @@
+{{about|the hostile mob|its passive counterpart|Happy Ghast|the joke mob|Angry Ghast|other namesakes|Ghast (disambiguation)}}
+{{Infobox entity
+|groupsize = 240px
+|group2size = 240px
+|group = Idle
+|group2 = Shooting
+| 1-1 = Ghast.gif
+| 2-1 = Ghast shooting JE3.png
+| 2-1caption = {{JE}}
+| 2-2 = Ghast shooting BE4.png
+| 2-2caption = {{BE}}
+| invimage = Ghast Spawn Egg
+| health = {{hp|10}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| damage = '''{{ItemLink|id=fire-charge|text=Fireball}}:''' <br>
+'''Impact:''' <br/>Easy: {{hp|4}}<br/>Normal: {{hp|6}}<br/>Hard: {{hp|9}}<br/>To itself and other ghasts, when redirected by players: {{hp|1000}}<br/>'''{{EnvLink|Explosion|link=none}}:'''<br/>''varies by proximity, maximum:''<br/>Easy: {{hp|9.5}}<br/>Normal: {{hp|17}}<br/>Hard: {{hp|25.5}}
+| size = Height: 4.0 blocks<br/>Width: 4.0 blocks
+| spawn = {{BiomeLink|Nether Wastes}} <br> {{BiomeLink|Soul Sand Valley}} <br> {{BiomeLink|Basalt Deltas}}
+| speed = 0.7
+}}
+'''Ghasts''' are large, floating, [[ghost]]-like hostile mobs found in [[the Nether]], and are the only source of [[ghast tear]]s. Ghasts wander aimlessly and shoot explosive [[fireball]]s at [[player]]s, which can be hit back to kill them instantly upon direct impact.
+
+== Spawning ==
+To spawn naturally, a ghast requires a solid [[block]] below it and a free space 5×5 blocks wide and 4 blocks high. They spawn in the [[basalt deltas]], [[Nether wastes]], and [[soul sand valley]] biomes in any light level. {{IN|Java}}, ghasts cannot spawn in soul sand valleys if another ghast is within 16 blocks of spherical distance to the intended spawning location. {{iN|Bedrock}}, two ghasts can spawn within any 4 [[chunk]] span.
+
+{{IN|Java}}, ghasts spawn in groups of 4 at both [[Nether wastes]] and [[soul sand valley]]s while they spawn individually in [[basalt deltas]]. {{IN|Bedrock}}, ghasts will always spawn individually.
+
+Ghasts do not spawn in [[Nether fortress]]es, but they can wander nearby. They can, however, spawn in the treasure room variant of [[bastion remnant]]s if the room is in the correct [[biome]].
+
+{{Mob spawn table}}
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Ghast Tear|quantity=0-1|lootingquantity=0-1}}
+|{{DropLine|name=Gunpowder|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Music Disc Tears|notes=player_fireball}}
+|notes=
+player_fireball=Only when killed by a player-deflected [[fireball]].
+}}
+* {{xp|5}} when killed by the player.
+
+== Behavior ==
+Ghasts float around with their eyes and mouth closed and periodically make crying sounds heard from up to 80 blocks away. They have a [[hitbox]] of 4×4×4 blocks. The ghast's nine tentacles are not within their hitbox.
+
+When within range, a ghast faces the player and shoots a [[fireball]] every 3 seconds, opening its eyes and mouth and making a screeching sound. They strafe left to right in the air while targeting. A ghast requires a line of sight to the player before firing, which can be blocked by any solid block, including transparent blocks. {{IN|Java}}, they target players within 64 blocks horizontally and 4 blocks vertically<ref name="MC-49640">{{bug|MC-49640||Ghasts don't aggro unless you're at the exact same height they are flying|WAI}}</ref>, and continue attacking as long as they are within a 64 block sphere and have line of sight. {{IN|Bedrock}}, a ghast normally targets a player within a sphere of 28 blocks, increasing to 64 blocks if the player damages it. {{IN|be}}, a ghast holds its charge like a [[pillager]] when it loses sight of its target and shoots again instantly when in range.<ref>{{bug|MCPE-45311||Ghast holding onto its fire charge till the player re-enters it’s vicinity.}}</ref>
+
+Ghasts do not attempt to approach the player once aggravated, but instead fire at the player from their position within firing range. If a ghast is within close range to its target, it may take damage from the [[explosion]] of its own fireball, regardless of the player hitting the fireball back.
+
+Ghasts can provoke other mobs into targeting them, but {{in|JE}} they do not target other mobs, only the player.
+
+Ghasts are immune to [[fire]] and [[lava]] damage. They are slowed by lava, occasionally sinking into it or passing through lava falls, immobilizing them and making them more vulnerable to ranged attacks for some time.
+
+Despite their ghostly appearance, ghasts are not considered [[undead]] mobs.<ref>{{bug|MC-190140||Ghasts are not considered undead mob|Invalid}}</ref> This means they can drown,<ref>{{bug|MC-238622||Ghasts can drown|WAI}}</ref> are damaged by [[Instant Damage]]<ref>{{bug|MC-200929||Ghast are harmed with potion of harming|WAI}}</ref> and healed by [[Instant Health]], are affected by [[Regeneration]] and [[Poison]],<ref>{{bug|MC-238623||Ghasts are affected by the poison effect|WAI}}</ref> and are not affected by [[Smite]].<ref>{{bug|MC-200937||Ghast are not affected with the smite enchantment|WAI}}</ref> Despite this, [[wither]]s never deliberately target them<ref>{{bug|MC-162557||Withers no longer attack ghasts|WAI}}</ref>, making them the only non-undead mob ignored by withers (excluding [[agent]]s{{only|bedrock|education|short=1}}, and mobs with the <code>invulnerable</code> NBT tag). They are also completely ignored by [[wolves]], "Johnny" [[vindicator]]s, [[goat]]s, [[snow golem]]s, trusting [[fox]]es, and [[zoglin]]s. However, [[iron golem]]s and [[warden]]s attack ghasts, and ghasts do not retaliate.{{only|je}}<ref>{{bug|MC-250234||A ghast which is attacked by another monster doesn't attack the monster|WAI}}</ref>
+
+Despite being flying mobs, ghasts can destroy [[turtle egg]]s when on top of them.<ref>{{bug|MC-248332||Bees, ghasts, phantoms, and allays can destroy turtle eggs}}</ref>
+
+When targeting, the red eyes and mouth of a ghast appears more glowing in ''Bedrock Edition''. With [[Vibrant Visuals]], this texture actually glows.
+
+{{Infobox entity
+| title = Fireball
+| image = Fire Charge.png
+| imagesize = 100px
+| size = '''Height: '''1 Block<br>'''Width: '''1 Block
+| networkid = '''[[JE]]''': 63
+}}
+
+=== Fireball ===
+{{main|Fireball}}
+
+Ghasts shoot fireballs at players, dealing damage to [[entities]] and creating an explosion that sets fire to nearby blocks upon impact. Blocks with [[blast resistance]] as low as 3.5 survive a fireball's explosion; the explosion itself does no damage unless it hits the [[entities]] directly.
+
+Hitting a fireball with another projectile or a melee attack deflects it, dealing {{hp|1000}} damage to any ghast hit directly by it.
+
+All other [[mob]]s retaliate against the [[player]] instead of the ghast if a deflected fireball hits them.
+
+{{-}}
+
+=== Farming ===
+{{main|Tutorial:Ghast farming}}
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Ghast idle1.ogg
+|sound2=Ghast idle2.ogg
+|sound3=Ghast idle3.ogg
+|sound4=Ghast idle4.ogg
+|sound5=Ghast idle5.ogg
+|sound6=Ghast idle6.ogg
+|sound7=Ghast idle7.ogg
+|subtitle=Ghast cries
+|source=hostile
+|description=Randomly
+|id=entity.ghast.ambient
+|translationkey=subtitles.entity.ghast.ambient
+|volume=5.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ghast charge.ogg
+|subtitle=Ghast shoots<ref group=sound name=identical>{{bug|MC-218108}}</ref>
+|source=hostile
+|description=When a ghast signals to shoot a fireball
+|id=entity.ghast.warn
+|translationkey=subtitles.entity.ghast.shoot|translationkeynote=<ref group=sound name=identical/>
+|volume=10.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ghast death.ogg
+|subtitle=Ghast dies
+|source=hostile
+|description=When a ghast dies
+|id=entity.ghast.death
+|translationkey=subtitles.entity.ghast.death
+|volume=5.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ghast hurt1.ogg
+|sound2=Ghast hurt2.ogg
+|sound3=Ghast hurt3.ogg
+|sound4=Ghast hurt4.ogg
+|sound5=Ghast hurt5.ogg
+|subtitle=Ghast hurts
+|source=hostile
+|description=When a ghast is damaged
+|id=entity.ghast.hurt
+|translationkey=subtitles.entity.ghast.hurt
+|volume=5.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ghast affectionate scream.ogg
+|subtitle=MC-177079
+|source=none
+|description=''Unused sound event''<ref group=sound>{{Cite bug|MC|185411|Unused sound event: minecraft:entity.ghast.scream|date=May 23, 2020}}</ref>
+|id=entity.ghast.scream
+|translationkey=-
+|volume=''None''
+|pitch=''None''
+|distance=''None''}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|subtitle=Ghast shoots<ref group=sound name=identical/>
+|source=hostile
+|description=When a ghast shoots a [[fireball]]
+|id=entity.ghast.shoot
+|translationkey=subtitles.entity.ghast.shoot|translationkeynote=<ref group=sound name=identical/>
+|volume=10.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Ghast idle1.ogg
+|sound2=Ghast idle2.ogg
+|sound3=Ghast idle3.ogg
+|sound4=Ghast idle4.ogg
+|sound5=Ghast idle5.ogg
+|sound6=Ghast idle6.ogg
+|sound7=Ghast idle7.ogg
+|source=hostile
+|description=Randomly
+|id=mob.ghast.moan
+|volume=2.5
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast charge.ogg
+|source=hostile
+|description=When a ghast signals to shoot a fireball
+|id=mob.ghast.charge
+|volume=2.5
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast death.ogg
+|source=hostile
+|description=When a ghast dies
+|id=mob.ghast.death
+|volume=2.5
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast hurt1.ogg
+|sound2=Ghast hurt2.ogg
+|sound3=Ghast hurt3.ogg
+|sound4=Ghast hurt4.ogg
+|sound5=Ghast hurt5.ogg
+|source=hostile
+|description=When a ghast is damaged
+|id=mob.ghast.scream
+|volume=2.5
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast affectionate scream.ogg
+|source=hostile
+|description=''Unused sound event''
+|id=mob.ghast.affectionate_scream
+|volume=2.5
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ghast fireball4.ogg
+|source=hostile
+|description=When a ghast shoots a fireball
+|id=mob.ghast.fireball
+|volume=0.7
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Ghast
+|spritetype=entity
+|nameid=ghast
+|entitytags=fall_damage_immune
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Ghast
+|spritetype=entity
+|nameid=ghast
+|showentityfamily=y
+|entityfamily=ghast,mob,monster
+|id=41
+|foot=1
+}}
+
+=== Entity data ===
+{{el|java}}:
+{{main|Entity format}}
+Ghasts have entity data associated with them that contains various properties.
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|ExplosionPower}}: The radius of the explosion created by the fireballs the ghast fires. Default value is 1.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Return to Sender;Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Not Today, Thank You;Monster Hunter;Is it a Balloon?;Monsters Hunted;Return To Sender;Uneasy Alliance;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{for|historical information specifically pertaining to fireballs|Fireball#History}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||October 11, 2010|link=wordofnotch:2705489235|[[Notch]] tweets that he "just made the most unfair [[mob]] ever even more unfair." He then added that "You will hate the Ghast."}}
+|{{HistoryLine||October 22, 2010|link=wordofnotch:28442542287|Originally, ghasts were intended to be able to spawn near [[Nether portal]]s in the [[Overworld]],<ref>{{tweet|notch|28442542287|@jakeyyyboyy if you've got a gate, they can (rarely) spawn there.|October 22, 2010|archive=|archiveid=}}</ref> though they wouldn’t be able to pass through them.<ref>{{tweet|notch|28438762420|@FFFruedy they'll spawn near the portals, yes. Rarely. But they won't actually travel through.|October 22, 2010|archive=|archiveid=}}</ref> However, the ability for ghasts to spawn in the Overworld was never implemented.<ref>{{tweet|jeb|53730464141295616|@BlakesAwesome No it doesn't|April 1, 2011|archive=|archiveid=}}</ref>}}
+|{{HistoryLine||October 29, 2010|link=wordofnotch:1431121056|A preview of the [[Halloween Update]] was sent to two gaming companies; their articles<ref>[http://www.pcgamer.com/minecraft-halloween-update-hands-on/ Minecraft Halloween Update hands-on]; PC Gamer - October 29, 2010</ref><ref>[http://www.indiegames.com/2010/10/handson_with_the_minecraft_hal.html Hands-On With the Minecraft Halloween Update]; Indie Games Plus - October 29, 2010</ref> highlighted the behavior of the upcoming ghast [[mob]]s.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=preview|[[File:Ghast JE1 BE1.gif|32px]] [[File:Ghast shooting JE1 BE1.png|32px]] Added ghasts, along with [[the Nether]].
+|Ghasts appear to expand slightly before shooting a fireball, similarly to a [[creeper]] about to explode.<ref>[https://www.youtube.com/watch?v=Pc2N0wckNn4&t=12 Minecraft Halloween Update - Slipgate Adventures 2.avi]; PC Gamer - October 29, 2010</ref> However, this effect does not work in [[multiplayer]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|Ghasts now aim toward the [[player]] and not the camera. Prior to this, pressing {{key|F5}} (going into [[third person view]]) allowed one to easily send the fireball over their head instead of at the character.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Ghasts now drop [[ghast tear]]s.
+|Ghasts are now affected by [[light]] and no longer appear with the same brightness anywhere.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|Killing ghasts by directly hitting them with a fireball grants the player the [[achievement]] "Return to Sender".}}
+|{{HistoryLine||1.1|dev=?|As heard in <code>.minecraft/resources/newsound/mob/ghast</code>, ghasts now have an unused "affectionate scream", which is a high pitched horn [[sound]] (like the classic cartoon tugboat sounds).}}
+|{{HistoryLine||1.2.1|dev=12w05a|The ghast hitbox has been updated to incorporate their whole body. Prior to this, ghasts could be [[damage|injured]] only by hitting their tentacles and lower body.}}
+|{{HistoryLine|||dev=?|Ghasts now fire fireballs from their eyes instead of mouth.<ref>{{bug|MC-200927}}</ref>}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of [[singleplayer]] being changed to an internal server, ghasts no longer visibly expand before shooting a fireball, alongside [[Java Edition 1.3.1/List of broken features|many other features broken by this change]].}}
+|{{HistoryLine|||dev=12w19a|Ghasts now make their death [[sound]] when killed rather than their hurt sound.}}
+|{{HistoryLine||1.6.1|dev=1.6|Ghasts no longer visibly catch fire when flying into fire or lava.}}
+|{{HistoryLine||1.8|dev=14w06a|The AI of ghasts has slightly changed:
+* They cannot see the [[player]] unless their height comes to almost eye level with the player.<ref name="MC-49640"/>
+* When attacking, ghasts now turn their whole body to face the player's direction, and repeatedly strafe left to right around the player while attacking.
+* They now have perfect accuracy with their fireballs, shooting at the player's head, compared to earlier versions when the fireball was previously aimed slightly above the player's head.
+|The (now broken) code to make ghasts visibly expand while shooting was removed.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Ghast JE2 BE2.gif|32px]] [[File:Ghast shooting JE2.png|32px]] The texture of ghasts has been changed.}}
+|{{HistoryLine||1.16|dev=20w06a|Ghasts now spawn in the [[soul sand valley]] biome in [[the Nether]].
+|Ghasts' sounds are now heard at shorter range.}}
+|{{HistoryLine|||dev=20w15a|Ghasts now spawn in the new [[basalt deltas]] biome.}}
+|{{HistoryLine||1.21.6|dev=25w15a|[[File:Ghast JE3 BE3.gif|32px]] [[File:Ghast shooting JE3.png|32px]] The texture of ghasts has been changed. It is now 32x32 pixels, twice the resolution of the previous texture, to match the [[happy ghast]].}}
+|{{HistoryLine|||dev=25w20a|Ghasts now have a {{cd|flying_speed}} [[attribute]] that affects their flying speed.
+|Ghasts now drop [[Music Disc Tears]] when killed by a player-deflected fireball.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Ghast JE1 BE1.gif|32px]] [[File:Ghast shooting JE1 BE1.png|32px]] Added ghasts.
+|Ghasts are currently unobtainable in-game without editing.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Ghasts can now be spawned using [[spawn egg]]s.
+|Ghasts now spawn naturally in [[the Nether]].}}
+|{{HistoryLine|||dev=build 6|Ghasts now hit the [[player]] more reliably.}}
+|{{HistoryLine|||dev=build 7|Ghasts now drop [[gunpowder]] and [[ghast tear]]s.}}
+|{{HistoryLine|||dev=build 8|The hitbox of ghasts is now bigger.}}
+|{{HistoryLine|||dev=build 13|Ghasts now have [[sound]]s.}}
+|{{HistoryLine||v0.13.0|dev=build 1|The spawn rate of ghasts has been increased.}}
+|{{HistoryLine|||dev=build 4|The spawn rate of ghasts has been increased even more.}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Ghast shooting BE2.png|32px]] Open ghast eyes now glow.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Ghast JE2 BE2.gif|32px]] [[File:Ghast shooting BE3.png|32px]] The texture of ghasts has been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Ghasts now spawn in the [[soul sand valley]] biome.}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.25|exp=Drop 2 2025|[[File:Ghast JE3 BE3.gif|32px]] The texture of ghasts has been changed. It is now 32x32 pixels, twice the resolution of the previous textures to resemble the [[happy ghast]].|Due to a bug, the ghast still uses its old 16x16-pixel shooting texture.<ref>{{bug|MCPE-218741}}</ref>}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.25|Ghasts now drop [[Music Disc Tears]] when killed by a player-deflected fireball.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The ambient sound interval for all ghasts has been adjusted to 4 seconds, matching {{JE}}.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|[[File:Ghast shooting BE4.png|32px]] The texture of shooting ghasts has been changed to match the new texture.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Ghast JE1 BE1.gif|32px]] [[File:Ghast shooting JE1 BE1.png|32px]] Added ghasts.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Ghasts now drop [[ghast tear]]s.}}
+|{{HistoryLine||xbox=TU9|The volume of the ghast [[sound]] effects has been reduced.
+|The distance the ghast's sound effect for shooting a fireball can be heard from has been increased.}}
+|{{HistoryLine||xbox=TU11|The volume of the ghast sound effects has been further reduced.}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Ghasts now fire fireballs from their eyes instead of mouth.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Ghasts no longer visibly catch fire when flying into fire or lava.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Ghast shooting BE2.png|32px]] Open ghast eyes and the mouth now glow if the [[programmer art]] texture pack is enabled.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Ghast JE1 BE1.gif|32px]] [[File:Ghast shooting JE1 BE1.png|32px]] Added ghasts.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of ghasts has been changed from <code>Ghast</code> to <code>ghast</code>.}}
+|{{HistoryLine|||dev=16w40a|The ghast <code>life</code> tag is no longer used for anything, but still saved/read.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+=== Historical screenshots === 
+<gallery class="pixel-image">
+4chan Ghast Texture.png|Ghast texture shared by [[Notch]] on a 4chan thread.
+4chan Ghast Screenshot.png|Screenshot of Notch’s 4chan comment featuring the ghast texture.
+Old Ghast Closeup.png|A ghast up close, shooting a fireball (with the old snowball texture) at the [[player]].
+Killer Ghast.png|A ghast opens its red eyes when it spits out fireballs (note old "expansion" effect).
+Minecraft-Halloween-Update-1-590x409.jpg|Ghasts (note old snowball texture).
+Ghast in fortress.png|A ghast that is in a [[Nether fortress]].
+Expanding Ghast.gif|Prior to 1.3, ghasts would slightly expand when shooting a fireball.
+Burning ghast.png|Prior to [[Java Edition 1.6|1.6]], ghasts would catch fire when flying through lava.
+</gallery>
+
+== Issues ==
+{{issue list|-happy|-ghastling}}
+
+== Trivia ==
+* In English, "[[wiktionary:ghast|ghast]]" is an archaic word meaning "ghastly".<ref>https://www.merriam-webster.com/dictionary/ghast</ref> {{w|H. P. Lovecraft}} first coined its use as the name for a monster (a vaguely humanoid one, in ''{{w|The Dream-Quest of Unknown Kadath}}''), but "ghasts" have appeared in many other fantasy stories and games.
+* Ghasts are considered to be fire-breathing [[ghost]]s in their [[Meet the Mob]] [[Minecraft.net]] article.<ref name="meet ghast">{{Mcnet|meet-ghast|Meet the Ghast|May 22, 2017|Tom Stone|archive-url|archive-time|url-prefix|quote=A ghost that can breathe fireballs - and as scary scenarios go, that's pretty strong.}}</ref>
+** In their [[Mob Menagerie]] article, ghasts were said to be "large, incorporeal beings" whose origins are unclear. The article states that "they tend to avoid the [[Crimson Forest|fungal forests]] where it's harder to track their prey". They are also "immune to heat damage" because they have "spent so long in the Nether" that "they love the warmth of lava" there.<ref name="2024ghast">{{Mcnet|ghast|Mob Menagerie: Ghast|January 4, 2024|Duncan Greere|archive-url|archive-time|url-prefix|quote=Ghasts are large, incorporeal beings that float around the Nether. It’s not clear where they came from, or why, but...they tend to avoid the fungal forests where it’s harder to track their prey. Most of the time they just bob around, with their legs, or tentacles, or whatever they are, dangling below them and their eyes tightly closed.<br><br>...Ghasts are affected by poison, but having spent so long in the Nether they’ve become immune to heat damage. In fact, they love the warmth of lava – and if they pass under a lava fall or sink into a pool of the stuff, they’ll slow down a little to enjoy it.}}</ref>
+** Alternatively, the [[Minecraft: Mobestiary]], their {{AMCM|Ghast|appearance}} in {{AMCM}}, and later merchandise portray ghasts as organic beings with a stomach system resembling a cannon.<ref>{{Citation|url=https://minecraftshop.com/collections/new-arrivals/products/minecraft-ghast-skeleton-unisex-comfort-colors-t-shirt|title=Minecraft Ghast Skeleton Unisex Comfort Colors T-Shirt|website=Minecraft.net}}</ref>
+* The player can go inside of a ghast by falling through the top of it or flying (or jumping while attacking) up underneath it. If the player stands on top of the head, the player sees inside of it.
+* If a ghast is trapped in a 1-thick cube, it shoots fireballs through the cube. This is because all mobs that shoot spawn the projectile one block in front of it to prevent the projectile from hitting the mob.
+* On rare occasions, ghasts spawn in such a way as to see through blocks (usually trapped on all sides in a tight area). When this happens and the ghast has a "line of sight" through those blocks, it launches a fireball in the player's direction. This is reminiscent of a [[blaze]] but with explosive addition.
+* [[C418]] revealed in an AMA on {{Wikipedia|Reddit}} that ghast sounds are taken from his pet cat, who makes them when disturbed while sleeping.<ref>http://www.reddit.com/r/IAmA/comments/nbe2h/i_am_the_composer_and_sound_designer_of_minecraft/c37sjyb</ref>
+* There is an unused ghast sound called {{Sound|"affectionatescream.ogg"|Ghast affectionate scream.ogg}} in the game files. It can be heard in the last scene of the [[Nether Update: Official Trailer]] and during the elytra chase scene of {{AMCM}}.
+* These mobs have been referred to as "angry Ghasts" to distinguish them from happy ghasts and dried ghasts.<ref> {{Mcnet|minecraft-java-edition-1-21-6|Minecraft Java Edition 1.21.6|June 17, 2025|Java Team|archive-url|archive-time|url-prefix|quote=In the background two players are battling angry Ghasts.}}</ref>
+
+=== Publicity ===
+* Two ghasts are featured in the [[Lego Minecraft]] set ''Minecraft Micro World - The Nether'', along with a [[zombified piglin]].
+* In concept art for [[Minecraft Experience: Moonlight Trail]], the side of a ghast is used to represent the Moon.<ref>{{tweet|Minecraft|2035403765591794092|A brand-new Minecraft experience is emerging … and it starts in the forest 🌲🌙<br><br>#MinecraftExperience: Moonlight Trail is an outdoor nighttime experience launching soon in Buenos Aires, with more cities to follow!<br><br>Are you ready to explore?|date=March 21, 2026}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Ghast normal.png|A normal idle ghast.
+File:2025-06-09 11.01.56 - Copy.png|A shooting ghast in ''Java Edition''.
+File:Sad ghast in rain.png|A ghast in the Overworld during rain.
+File:Bedrock ghast.jpg|A ghast preparing to shoot in ''[[Bedrock Edition]]''.
+File:Ghast Scale.png|A ghast in front of [[Sunny]].
+File:Ghast compared to player.jpeg|The size of a ghast compared to [[Steve]].
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Pocket Edition Ghast.jpg|A ghast in ''Pocket Edition''.
+File:Ghast-ingame.jpeg|A ghast flying through the Nether.
+File:Ghast-ingame2.jpeg|A ghast spitting a fireball at a player.
+File:MInecraft-Nether-Soulsand-Valley-02.jpg|A preview of three ghasts in the [[soul sand valley]].
+File:Ari vs Ghast.png|[[Ari]] fighting a ghast in a soul sand valley.
+File:Ghast in a soul sand valley.jpg|A ghast floating.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+File:Ghast Updated Texture.png|Ghast texture file
+File:Ghast Shooting Updated (Texture).png|Shooting ghast texture file{{only|je|short=1}}
+File:Ghast Shooting (texture) BE2.png|Shooting ghast texture file{{only|be|short=1}}
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Mob ghast header.jpeg|Header of the ghast's [[Meet the Mob]] [[Minecraft.net]] article.
+File:Mm-ghast-header.png|Header of the ghast's [[Mob Menagerie]] [[Minecraft.net]] article.
+File:Ghast Minecraft Instagram.jpg|Artwork of a ghast.
+File:NetherUpdateArtwork.png|A ghast in promotional artwork for the [[Nether Update]].
+File:Ghast Art.png|Official ghast artwork.
+File:Ghast Animated Pixel Artwork.gif|Animated official ghast artwork.
+File:SSBU spirit Ghast.png|Ghast Spirit from ''[[Super Smash Bros. Ultimate]]''.
+File:15 Year Journey Baby Ghast.png|A baby ghast in [[15 Year Journey]].
+File:Ghast carries Snifflet while Camel watches in absolute horror and fear.png|A ghast carrying a [[snifflet]].
+File:Ghast intimidates Camel.png|A ghast floating behind a [[camel]].
+File:LEGO Minecraft Micro-Mobs 3.jpg|Ghast micromobs from ''[[LEGO Minecraft]]''.
+File:LEGO Ghast 2.png|LEGO ''Minecraft'' brick-built Ghast.
+File:Ghastbusters JINX.jpg|Official T-shirt artwork "Ghastbusters" made by [https://www.jinx.com JINX].
+File:Glimpse JINX.jpg|Official T-shirt artwork "Glimpse" made by JINX.
+File:Nether Postcard JINX.jpg|Official T-shirt artwork "Postcard" made by JINX.
+File:Rumor Has It JINX.jpg|Official T-shirt artwork "Rumor Has It" made by JINX.
+File:Glow Ghast.png|A glow in the dark ghast T-Shirt.
+File:Ghast Hoodie.png|An officially licensed ghast hoodie.
+File:Ghast Plush JINX.jpg|Ghast plush made by JINX.
+File:Ghast Figure.jpg|An official ghast action figure.
+File:Nether Trick.png|"Never Trick or Treat in the Nether," an official tote bag sold for Halloween.
+File:Ghast Mobestiary.jpg|A Ghast pictured in the [[Minecraft Books#Minecraft Mobestiary|Mobestiary]].
+File:Nerf Ghast.jpg|An officially licensed [[Minecraft x Nerf|''Nerf'']] Ghast gun.
+File:Ghast (Trails & Tales Event).png|The Secret Ghast, featured in the [[Trails & Tales Event]].
+File:Halloween launcher ghast.png|A unique sprite of a crying ghast appearing in the Minecraft launcher on Halloween, 2023.
+File:Ghast riders.png|{{AMCM|Ghast}}s as they appear in {{AMCM}}.
+File:Baby Ghast.png|{{MCD|Baby ghast}}s as they appear in {{MCD}}.
+File:Ghast (Dungeons).png|{{MCD|Ghast}}s as they appear in {{MCD}}.
+File:Ghast (Story Mode).png|{{MCSM|Ghast}}s as they appear in {{MCSM}}
+File:Woodsword Chronicles ghast.jpg|Ghasts as they appear in [[Minecraft: Woodsword Chronicles]]
+File:Acid Ghast.png
+File:Ghast Plastic.png|A ghast in the [[Plastic Texture Pack]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|meet-ghast|Meet the Ghast|May 22, 2017|Tom Stone}}
+* {{Mcnet|ghast|Mob Menagerie: Ghast|January 4, 2024|Duncan Greere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Nether mobs]]
+[[Category:Flying mobs]]
+[[Category:Pages with inaccurate sound pitch value]]
+
+[[cs:Ďas]]
+[[de:Ghast]]
+[[es:Ghast]]
+[[fr:Ghast]]
+[[hu:Ghast]]
+[[it:Ghast]]
+[[ja:ガスト]]
+[[ko:가스트]]
+[[lzh:魄]]
+[[nl:Ghast]]
+[[pl:Ghast]]
+[[pt:Ghast]]
+[[ru:Гаст]]
+[[uk:Ґаст]]
+[[zh:恶魂]]

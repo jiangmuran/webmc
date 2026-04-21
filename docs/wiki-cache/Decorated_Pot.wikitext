@@ -1,0 +1,412 @@
+{{For||Pot}}
+{{Infobox block
+| image = Decorated Pot.png
+| extratext = View [[#Renders|all renders]]
+| renewable = Only bricks: Yes<br>With pottery sherd(s): No
+| stackable = Yes (64)
+| tool = any
+| light = No
+| flammable = No
+| lavasusceptible = No
+| transparent = Yes
+| waterloggable = Yes
+}}
+A '''decorated pot''' is a storage [[block]] crafted from [[brick]]s and/or [[pottery sherd]]s, with the items used individually affecting the appearance of its four side faces. It can store a single inventory slot's worth of [[item]]s, which cannot be seen or retrieved by hand without breaking the pot.
+
+== Obtaining ==
+=== Breaking ===
+Decorated pots can be broken with any tool and are [[Instant mining|mined instantly]], even when under the [[Mining Fatigue]] effect. A decorated pot drops the four [[pottery sherd]]s or [[brick]]s used to craft it when mined with a [[pickaxe]], [[axe]], [[shovel]], [[hoe]] or [[sword]] '''''not''''' enchanted with [[Silk Touch]]. It drops itself when mined with anything else, including tools listed above enchanted with Silk Touch. In either case, the tool does not lose durability.
+{{breaking row|Decorated Pot|horizontal=1}}
+
+A decorated pot breaks when hit by one of the following [[projectile]]s, causing it to shatter into sherds or bricks:
+* [[Arrow]]
+* [[Tipped Arrow]]
+* [[Spectral Arrow]]
+* [[Trident]]
+* [[Firework Rocket]]
+* [[Snowball]]
+* [[Egg]]
+* [[Fireball]]
+* [[Small Fireball]]
+* [[Dragon Fireball]]
+* [[Wither#Wither Skull|Wither Skull]]
+* [[Wind Charge]]
+A decorated pot also shatters if a player collides with it while flying using [[elytra]] boosted by a [[firework rocket]].
+
+A decorated pot drops itself if pushed by a [[piston]]. It also ''always'' drops itself when destroyed by an [[explosion]], similar to other precious blocks such as [[beacon]]s and [[shulker box]]es.<ref>{{bug|MC-263554||Decorated pots always drop when destroyed by explosion, regardless of explosion drop decays|WAI}}</ref>
+
+Stored items are dropped when the decorated pot is broken, regardless of whether the pot shatters into sherds or drops itself. Breaking a pot is the only way to access the stored items without using a hopper.
+
+{{IN|java}}, if the <code>cracked</code> block state is set to <code>true</code>, a decorated pot ''always'' drops sherds or bricks regardless of the breaking method.
+
+=== Crafting ===
+{{Crafting
+| ingredients = Any [[Pottery Sherd]] or [[Brick]]
+| B1 = Any Pottery Sherd;Brick
+| A2 = Any Pottery Sherd;Brick;Brick
+| C2 = Brick;Any Pottery Sherd;Brick
+| B3 = Brick;Brick;Any Pottery Sherd
+| Output = Decorated Pot
+| type = Decoration block
+| description = It is possible to use any combination of bricks and [[pottery sherd]]s.
+| showdescription = 1
+}}
+
+The decorated pot's side textures correspond to the item used in the crafting. If a pottery sherd is used, that side bears the texture of that pottery sherd, if a brick is used, that side bears the default texture.
+
+=== Natural generation ===
+Decorated pots naturally generate in [[trial chambers]], with [[loot]] inside. Decorated pots in the trial chambers are composed of either four bricks ({{frac|10|13}} chance) or three bricks and either one [[flow pottery sherd|flow]], [[guster pottery sherd|guster]], or [[scrape pottery sherd|scrape]] pottery sherd (each of those has {{frac|1|13}} chance).
+
+== Usage ==
+Decorated pots can be used for decoration. Due to the top part of the decorated pot having no collision, other blocks can be placed on top of them, including other decorated pots and regular [[flower pot]]s, which are required to place a flower in the decorated pot.
+
+Pressing the {{control|use}} control on a decorated pot causes it to play a wobble animation, triggering a [[vibration]] frequency of 11.
+
+Decorated pots crafted without sherds can also serve as a temporary building block, similar to [[scaffolding]] and [[slime block]]s, because they are easy to craft, stack to 64, and can be broken instantly by hand.
+
+=== Storage ===
+A decorated pot can store up to a stack of a single type of [[item]]. However, it fills instantly if an unstackable item like a sword, a filled bucket, or potions are stored in it. Unlike other containers, decorated pots have no GUI; items are inserted by {{control|interacting}} with the pot or by using [[dropper]]s, [[hopper]]s or [[crafter]]s. The only way to retrieve stored items is by breaking the pot or by using hoppers or [[minecarts with hopper]]s.
+
+Decorated pots crafted without sherds can also serve as compact storage for [[brick]]s, as they are stackable; each can be crafted from four bricks and can be broken down into four bricks.
+
+A [[redstone comparator]] can be used to measure the number of stored items.
+
+== Sounds ==
+=== Generic ===
+Decorated pots switch to the shattered sounds immediately before breaking when destroyed by a non-Silk Touch tool.
+
+==== Popped ====
+{{Sound table/Block/Decorated pot}}
+
+==== Shattered ====
+{{Sound table/Block/Decorated pot cracked}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Decorated pot insert1.ogg
+|sound2=Decorated pot insert2.ogg
+|sound3=Decorated pot insert3.ogg
+|sound4=Decorated pot insert4.ogg
+|subtitle=Decorated Pot fills
+|source=block
+|description=When an item is inserted into a decorated pot by a player
+|id=block.decorated_pot.insert
+|translationkey=subtitles.block.decorated_pot.insert
+|volume=0.9
+|pitch=0.7-1.2<wbr><ref group=sound>Increasing as the pot becomes more full</ref>
+|distance=16}}
+
+| {{SoundLine
+|sound=Decorated pot insert fail1.ogg
+|sound2=Decorated pot insert fail2.ogg
+|sound3=Decorated pot insert fail3.ogg
+|sound4=Decorated pot insert fail4.ogg
+|sound5=Decorated pot insert fail5.ogg
+|subtitle=Decorated Pot wobbles
+|source=block
+|description=When an item fails to be inserted into a decorated pot by a player 
+|id=block.decorated_pot.insert_fail
+|translationkey=subtitles.block.decorated_pot.insert_fail
+|volume=0.9
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Decorated pot insert1.ogg
+|sound2=Decorated pot insert2.ogg
+|sound3=Decorated pot insert3.ogg
+|sound4=Decorated pot insert4.ogg
+|subtitle=Decorated Pot fills
+|source=block
+|description=When an item is inserted into a decorated pot by a player
+|id=block.decorated_pot.insert
+|translationkey=subtitles.block.decorated_pot.insert
+|volume=0.9
+|pitch=0.7-1.2<wbr><ref group=sound>Increasing as the pot becomes more full</ref>}}
+
+| {{SoundLine
+|sound=Decorated pot insert fail1.ogg
+|sound2=Decorated pot insert fail2.ogg
+|sound3=Decorated pot insert fail3.ogg
+|sound4=Decorated pot insert fail4.ogg
+|sound5=Decorated pot insert fail5.ogg
+|subtitle=Decorated Pot wobbles
+|source=block
+|description=When an item fails to be inserted into a decorated pot by a player 
+|id=block.decorated_pot.insert_fail
+|translationkey=subtitles.block.decorated_pot.insert_fail
+|volume=0.9
+|pitch=1.0}}
+
+| {{SoundLine
+|sound=Decorated pot shatter1 JE2 BE2.ogg
+|sound2=Decorated pot shatter2 JE2 BE2.ogg
+|sound3=Decorated pot shatter3 JE2 BE2.ogg
+|sound4=Decorated pot shatter4 JE2 BE2.ogg
+|sound5=Decorated pot shatter5 JE2 BE2.ogg
+|subtitle=Decorated Pot shatters
+|source=block
+|description=When a decorated pot is shattered using a tool in Survival or Adventure mode
+|id=shatter.decorated_pot
+|translationkey=subtitles.block.decorated_pot.shatter
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Decorated Pot
+|spritetype=block
+|nameid=decorated_pot
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=decorated-pot
+|spritetype=block
+|nameid=decorated_pot
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Decorated Pot
+|spritetype=block
+|nameid=decorated_pot
+|id=-551
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=decorated-pot
+|spritetype=block
+|nameid=DecoratedPot
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/container}}
+{{:Data component format/pot_decorations}}
+</div>
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+<section begin="block states"/>
+{{bst|facing|north|east,north,south,west|The direction a decorated pot faces in.}}
+{{bst|cracked|false|false,true|If true, the pot always shatters, even if the player is not using a tool or using a tool with the "Silk Touch" enchantment.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this decorated pot.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2|direction|0|0,1,2,3|The direction the decorated pot is facing.
+*0: Facing east
+*1: Facing south
+*2: Facing west
+*3: Facing north|foot=1}}<section end="block states" />
+
+=== Block data ===
+A decorated pot has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/lootable|indent=**}}
+** {{nbt|compound|item}}: The single item stack stored in this container. Does not exist if the decorated pot is empty. Represents the {{DCL|minecraft:container}} component. The item is implicitly in slot 0, despite not using the {{nbt|byte|Slot}} tag. The component is still present on the block entity, even if the tag does not exist (due to a loot table existing instead).
+*** {{nbt inherit/itemnoslot|indent=***}}
+** {{nbt|list|sherds}}: List of [[sherd]]s on this decorated pot. Represents the {{DCL|minecraft:pot_decorations}} component.
+*** {{nbt|string}}: [[Data values|Item ID]] of this face. Each value defaults to [[bricks]]'s ID, and can be either a brick or any sherd.
+</div><section end="block data" />
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{Load achievements|Careful Restoration}}
+
+== Advancements ==
+{{load advancements|Careful Restoration}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link=https://www.youtube.com/watch?v=DBvZ2Iqmm3M&t=2366s|[[File:Clay Pot.png|32px]] [[File:Hardened Clay Pot.png|32px]] [[File:Clay Pot with Ceramic Shards (pre-release).png|32px]] [[File:Decorated Pot (pre-release).png|32px]] A clay pot and a painted clay pot were demonstrated at [[Minecraft Live 2020]] as part of a gameplay mechanic that would include archeology.}}
+|{{HistoryLine||February 10, 2023|[[Sofia Dankis]] posts an article about upcoming archaeology features that announces decorated pots.|link=https://www.minecraft.net/en-us/article/archeology-coming-minecraft-120}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Decorated Pot (N) JE1 BE1.png|32px]] Added decorated pots.}}
+|{{HistoryLine|||dev=pre1|The recipe for the decorated pot made of all bricks can now be found in the recipe book.}}
+|{{HistoryLine|||dev=pre2|[[File:Decorated Pot (N) JE2 BE2.png|32px]] Changed the model and texture of decorated pots.}} 
+|{{HistoryLine||1.20|dev=23w12a|Decorated pots are now out of the "Update 1.20" experimental data pack.|Added 16 new side textures corresponding to the 16 new pottery sherds.|<code>cracked</code> [[block state]] has been added, serving as an internal block state that determines the sound upon breaking of this block.}}
+|{{HistoryLine|||dev=23w14a|Decorated pots can now be waterlogged "normally".}}
+|{{HistoryLine|||dev=23w16a|NBT tag for pot decorations renamed from <code>shards</code> to <code>sherds</code> (to match items).}}
+|{{HistoryLine|||dev=23w17a|The materials used when crafting a decorated pot are now listed on its [[tooltip]].
+|The player now gets the [[advancement]] "Careful Restoration" when they craft a decorated pot using 4 pottery sherds.}}
+|{{HistoryLine||1.20.2|dev=23w31a|Decorated pots now have Creative mode tooltips that show what pottery sherds they are made of.<ref>{{bug|MC-260096||Decorated pots don't have creative mode tooltips|Fixed}}</ref>}}
+|{{HistoryLine||1.20.3|dev=23w40a|When block state <code>cracked</code> is set to <code>true</code>, decorated pots now always shatter when broken.}}
+|{{HistoryLine|||dev=23w41a|Decorated pots can now store up to a single stack of items.
+|[[Hopper]]s, [[hopper minecart]]s and [[dropper]]s can now insert and/or extract items from decorated pots.
+|[[Comparator]]s can now read the number of items in decorated pots.
+|Players can interact with pots to insert items into them.
+|Player interactions with decorated pots cause the decorated pot to wobble and trigger the vibration frequency of 11.
+|Decorated pots can be smashed by projectiles, causing them to shatter and drop their content.
+|Decorated pots now stack up to 64.}}
+|{{HistoryLine|||dev=23w42a|Decorated pots now appear in the Redstone tab of the Creative inventory.}}
+|{{HistoryLine|||dev=23w44a|Decorated pots can now utilize loot tables from the <code>LootTable</code> tag key.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Decorated pots now generate naturally within [[trial chambers]].}}
+|{{HistoryLine||1.20.3|dev=23w46a|Changed the shatter, break, and step sounds. The {{Sound|breaking sounds|Decorated pot break1.ogg|Decorated pot break2.ogg|Decorated pot break3.ogg|Decorated pot break4.ogg}} was replaced with {{Sound||Decorated pot break1 JE2 BE2.ogg|Decorated pot break2 JE2 BE2.ogg|Decorated pot break3 JE2 BE2.ogg|Decorated pot break4 JE2 BE2.ogg}}, and the {{Sound|stepping sounds|Decorated pot step1.ogg|Decorated pot step2.ogg|Decorated pot step3.ogg|Decorated pot step4.ogg|Decorated pot step5.ogg}} were replaced with {{Sound||Decorated pot step1 JE2 BE2.ogg|Decorated pot step2 JE2 BE2.ogg|Decorated pot step3 JE2 BE2.ogg|Decorated pot step4 JE2 BE2.ogg|Decorated pot step5 JE2 BE2.ogg}}.}}
+|{{HistoryLine||1.21.11|dev=25w46a|Decorated pots now have a different particle texture upon breaking.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|[[File:Decorated Pot (N) JE1 BE1.png|32px]] Added decorated pots.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[File:Decorated Pot (N) JE2 BE2.png|32px]] Changed the model of decorated pots.
+|Decorated pots can no longer be stacked.
+|The recipe for a decorated pot made only of [[brick]]s can now be found in the recipe book.}}
+|{{HistoryLine|||dev=Preview 1.19.80.22|Added 16 new side textures corresponding to the 16 new pottery sherds.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Decorated pots are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.0.23|Players now get the [[achievement]] "Careful restoration" when crafting a decorated pot out of four pottery sherds.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.20|Decorated pots can now store up to a single stack of items.
+|[[Hopper]]s, [[hopper minecart]]s and [[dropper]]s can now insert and/or extract items from decorated pots.
+|[[Comparator]]s can now read the number of items in decorated pots.
+|Players can interact with pots to insert items into them.
+|Player interactions with decorated pots cause the decorated pot to wobble and trigger a vibration frequency of 11.
+|Decorated pots can be smashed by projectiles, causing them to shatter and drop their contents.
+|Decorated pots now stack up to 64.}}
+|{{HistoryLine|||dev=Preview 1.20.50.22|Changed the shatter, break, and step sounds. The {{Sound|breaking sounds|Decorated pot break1.ogg|Decorated pot break2.ogg|Decorated pot break3.ogg|Decorated pot break4.ogg}} was replaced with {{Sound||Decorated pot break1 JE2 BE2.ogg|Decorated pot break2 JE2 BE2.ogg|Decorated pot break3 JE2 BE2.ogg|Decorated pot break4 JE2 BE2.ogg}}, and the {{Sound|stepping sounds|Decorated pot step1.ogg|Decorated pot step2.ogg|Decorated pot step3.ogg|Decorated pot step4.ogg|Decorated pot step5.ogg}} were replaced with {{Sound||Decorated pot step1 JE2 BE2.ogg|Decorated pot step2 JE2 BE2.ogg|Decorated pot step3 JE2 BE2.ogg|Decorated pot step4 JE2 BE2.ogg|Decorated pot step5 JE2 BE2.ogg}}.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Decorated pots generate naturally within [[trial chambers]].}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Decorated pots were originally planned to generate in [[ancient cities]], but the idea was scrapped. 
+* If an item that is not a [[brick]] or [[pottery sherd]] is applied to the side of a decorated pot using commands, it renders the same pattern as a brick.
+* There are a total of <math>\frac{24^4-24^2}{4}+\frac{24^2-24}{2}+\frac{24}{1} = 83,100</math> unique decorated pots that can be created, because each of the 4 slots used to craft a pot can be any one of the 23 pottery sherds or a brick, and each pot has 4 symmetric rotations, making each pot equivalent to 4, 2, or 1 pots. Although the total number of items is <math>24^4 = 331,776</math>, because items that differ by only one rotation are not considered equal.
+* The developers consider the decorated pots as a sort of {{W|piggy bank|newtab=1}} because recovering any items stored in it requires breaking the decorated pot.<ref>https://youtu.be/0yXEhvqwoH4?t=95</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Decorated Pot.png|Brick decorated pot
+Angler Decorated Pot.png|Angler decorated pot
+Archer Decorated Pot.png|Archer decorated pot
+Arms Up Decorated Pot.png|Arms up decorated pot
+Blade Decorated Pot.png|Blade decorated pot
+Brewer Decorated Pot.png|Brewer decorated pot
+Burn Decorated Pot.png|Burn decorated pot
+Danger Decorated Pot.png|Danger decorated pot
+Explorer Decorated Pot.png|Explorer decorated pot
+Flow Decorated Pot.png|Flow decorated pot
+Friend Decorated Pot.png|Friend decorated pot
+Guster Decorated Pot.png|Guster decorated pot
+Heart Decorated Pot.png|Heart decorated pot
+Heartbreak Decorated Pot.png|Heartbreak decorated pot
+Howl Decorated Pot.png|Howl decorated pot
+Miner Decorated Pot.png|Miner decorated pot
+Mourner Decorated Pot.png|Mourner decorated pot
+Plenty Decorated Pot.png|Plenty decorated pot
+Prize Decorated Pot.png|Prize decorated pot
+Scrape Decorated Pot.png|Scrape decorated pot
+Sheaf Decorated Pot.png|Sheaf decorated pot
+Shelter Decorated Pot.png|Shelter decorated pot
+Skull Decorated Pot.png|Skull decorated pot
+Snort Decorated Pot.png|Snort decorated pot
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Tooltip5.png|An example of a decorated pot tooltip.
+File:DecoratedPotInGame4.png|A decorated pot made with the skull and heartbreak pottery sherds.
+File:DecoratedPotInGame2.png|Another use of decorated pots.
+File:DecoratedPotInGame3.png|Two decorated pots holding [[soul lantern]]s at the entrance to a building.
+File:Decorated pot fountain.png|A fountain created with [[waterlogged]] decorated pot.
+File:Decorated Pot in Trial Chambers.png|A decorated pot in [[trial chambers]].
+</gallery>
+
+=== Promotional images ===
+<gallery>
+1.20 Dev Pot.jpg|A pot.
+1.20 Dev Pots and brush.jpg|Pots and brush.
+1.20 Dev pot designs.jpg|Pot designs.
+Love archer wolf.png|[[Alex]] with a collection of decorated pots.
+Melon pot.png|Alex stuffing a pot with [[melon slice]]s
+Outdoor pots.png|A shattered pot that housed [[Ghast Tear|ghast tears]].<ref>https://www.minecraft.net/en-us/article/bats-pots-and-competitions</ref>
+Sunny and Noor house.jpg|"[[Noor]] is standing on a balcony putting items into Decorated Pots, while [[Sunny]] is interacting with a [[horse]] below."
+Archer Arms Up.jpg|"Ancient decorations for a village?"<ref>https://www.minecraft.net/en-us/article/minecraft-java-edition-1-19-4</ref>
+Decorating monster room.jpg|"Time to decorate the dungeon!"
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Ancient city concept art 3.png|Pots, vases, and stone chests concept art for the ancient cities.
+Ancient city concept art 4.png|Ditto.
+Ancient city concept art 7.png|Ancient city gameplay concept art.
+Ancient city concept art 8.png|More ancient city gameplay of player breaking pots concept art.
+Ancient city concept art 10.png|Ancient city wall with pot concept art.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Decorated Pot Valentines Art.png|Decorated pot valentines artwork.
+File:Ari Admiring Decorated Pots Pixel Art.png|[[Ari]] admiring a group of decorated pots.
+File:Pot Wallpaper.png|Cellphone wallpaper showing an expanded version of the pixel art.
+File:Pots Galore.jpg|[[Efe]] showing Ari a collection of pots.<ref>https://www.instagram.com/p/CtWrJzhgIYa/</ref>
+File:FYJ pots.png|Uniquely shaped pots featured in [[15 Year Journey]].
+File:Gilded pots.png|Golden decorated pots in the same map.
+File:AmcmoviePots.png|Decorated pots as they appear in {{AMCM}}.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/decorated-pot Block of the Month: Decorated Pot]- Minecraft.net on February 19, 2024
+
+== Navigation ==
+{{Navbox blocks|utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Block entities]]
+[[Category:Redstone]]
+[[Category:Storage]]
+[[Category:Readable by comparators]]
+[[Category:Generated structure blocks]]
+
+[[de:Verzierter Krug]]
+[[es:Vasija decorada]]
+[[fr:Vase décoré]]
+[[ja:飾り壺]]
+[[ko:장식된 도자기]]
+[[pl:Dekorowany garniec]]
+[[pt:Vaso Decorado]]
+[[ru:Узорчатая ваза]]
+[[uk:Оздоблений горщик]]
+[[zh:饰纹陶罐]]

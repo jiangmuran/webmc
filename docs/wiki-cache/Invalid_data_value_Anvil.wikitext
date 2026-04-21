@@ -1,0 +1,260 @@
+{{removed feature|edition=java}}
+{{Infobox item
+| image = Missing Model JE3.png
+| renewable = No
+| stackable = Yes (64)
+}}
+'''Invalid data value anvils''' are item forms of the [[anvil]] with damage values outside of the usual range which anvils can usually be obtained in.
+
+== Obtaining ==
+Without the use of [[commands]], invalid data value anvils are unobtainable in the last versions in which they existed without inheriting them from a prior version in which they were obtainable.
+
+Currently, the item form with damage value 3 is the only invalid anvil variant known to be obtainable as an item in Survival with normal techniques.
+
+=== Transmutation ===
+[[mcdf:Java Edition:Block Transmutation#Arrow Transmutation|Block transmutation]] with arrows can be used to obtain anvils with metadata 12, 13, 14 and 15. These blocks can be mined in 14w21b or earlier to obtain the item form with a damage value of 3. The initial block being transmuted must be a south-facing undamaged anvil, i.e. an anvil block with metadata value 0. Chipped and damaged anvils, as well as anvils facing any direction other than south, cannot be transmuted.
+
+== Usage ==
+Only three different types of anvil are intended to be accessible in normal gameplay. The anvil item with a damage value of 3 corresponds to a fourth variant which would theoretically be even more broken than the "damaged" state. This is the type of anvil that the item places from 12w41a up to 14w25b (excluding versions from 13w02a to 13w04a, in which the lack of a defined texture causes the block to crash the game). From 14w26a to 17w46a, due to metadata being superseded by block states, attempting to place this item will cause a game crash due to it not being able to place a valid block state.
+
+=== Conversion to future versions ===
+{{empty section}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w41a|Added anvils. Invalid data variants exist as a consequence of how block and item metadata is handled.
+|The item forms of anvils do not use the correct texture.<ref name="incorrmapping">{{bug|MC-1497}}</ref> The block forms use states 0-3 for undamaged anvils facing in the four possible directions, 4-7 for chipped anvils, 8-11 for damaged anvils, and 12-15 correspond to the "invalid" state. The item forms 0-3 use the undamaged texture, 4-7 the chipped texture and 8-11 the damaged texture. This is despite the fact that the item form with damage 0 corresponds to undamaged anvils, 1 to chipped anvils, 2 to damaged anvils and 3 to the invalid anvil state when placed.}}
+|{{HistoryLine||1.5|dev=13w02a|Texture handling has been overhauled. As invalid data value anvils (items with damage 12-15 and blocks with metadata 12-15) do not have any textures to point to, they cause a game crash immediately when the game attempts to render them.}}
+|{{HistoryLine|||dev=13w05a|The game crash with invalid data value anvils has been fixed. They now render identically to undamaged anvils.}}
+|{{HistoryLine||1.6.1|dev=13w21a|The item forms of anvils now use the correct texture to represent their brokenness. This change has affected the appearances of invalid anvil states 4 and above.}}
+|{{HistoryLine||1.8|dev=14w25a|{{pximg|Missing Model (inventory) JE1.png|32px}} With the introduction of data-driven item models, any item with a data value outside of what is accepted by the game has no model to point to, resulting in use of the [[Missing textures and models|missing item model]].}}
+|{{HistoryLine|||dev=14w30a|Invalid data value anvils, alongside other invalid data value items, now appear the size of a full block when held in third person or by another player or mob.}}
+|{{HistoryLine||1.9|dev=15w31a|{{pximg|Missing Model (inventory) JE2.png|32px}} The missing model's inventory appearance has changed, resulting in the appearance of invalid data value anvils also changing.
+|The items also appear the size of a full block when held in first person and when dropped on the ground, and also appear larger than before in an [[item frame]].}}
+|{{HistoryLine||1.13|dev=17w43a|{{pximg|Missing Model (inventory) JE3.png|32px}} The missing texture has changed, resulting in the appearance of invalid data value anvils also changing.}}
+|{{HistoryLine|||dev=17w47a|Numeric IDs for blocks and items have been completely removed from the game, with different anvil damage levels being given their own string IDs. As a result, invalid data value anvils have been "removed" as they now convert into undamaged anvil items.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|[[File:Deprecated Anvil (N) BE1.png|32px]] Added the [[deprecated anvil]]. Since it has a data value of 12, it can be considered as an invalid data value anvil.}}
+}}
+
+; Inventory appearances ''(values marked in red are not known to be obtainable in survival mode)''
+{| class="wikitable" style="text-align:center"
+! colspan="2" rowspan="2" | From version
+! colspan="13" | Damage value
+! rowspan="2" | Notes
+|-
+! 3
+| class="tc-never" | '''4'''
+| class="tc-never" | '''5'''
+| class="tc-never" | '''6'''
+| class="tc-never" | '''7'''
+| class="tc-never" | '''8'''
+| class="tc-never" | '''9'''
+| class="tc-never" | '''10'''
+| class="tc-never" | '''11'''
+| class="tc-never" | '''12'''
+| class="tc-never" | '''13'''
+| class="tc-never" | '''14'''
+| class="tc-never" | '''15'''
+|-
+! [[Java Edition 1.4.2|1.4.2]]
+! [[Java Edition 12w41a|12w41a]]
+| {{pximg|Anvil 3 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 12 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 13 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 14 (inventory) JE1.png|32px}}
+| {{pximg|Anvil 15 (inventory) JE1.png|32px}}
+|-
+! rowspan="2" | [[Java Edition 1.5|1.5]]
+! [[Java Edition 13w02a|13w02a]]
+| {{pximg|Anvil 3 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE2.png|32px}}
+! style="background-color:#ffa0a0" | -
+! style="background-color:#ffa0a0" | -
+! style="background-color:#ffa0a0" | -
+! style="background-color:#ffa0a0" | -
+| style="text-align:left" | The item forms with damage values 12-15 crash the game due to no texture being defined.
+|-
+! [[Java Edition 13w05b|13w05b]]
+| {{pximg|Anvil 3 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 12 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 13 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 14 (inventory) JE2.png|32px}}
+| {{pximg|Anvil 15 (inventory) JE2.png|32px}}
+| style="text-align:left" | The item forms with damage values 12-15 no longer crash the game.
+|-
+! [[Java Edition 1.5.1|1.5.1]]
+! [[Java Edition 13w11a|13w11a]]
+| {{pximg|Anvil 3 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 12 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 13 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 14 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 15 (inventory) JE3.png|32px}}
+| style="text-align:left" | Incredibly subtle changes
+|-
+! [[Java Edition 1.6.1|1.6.1]]
+! [[Java Edition 13w21a|13w21a]]
+| {{pximg|Anvil 3 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 12 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 13 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 14 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 15 (inventory) JE3.png|32px}}
+| style="text-align:left" | Anvils 0-2 now correctly show their damage states.<ref name="incorrmapping"/> This repeats modulo 3 for higher states.
+|-
+! rowspan="4" | [[Java Edition 1.8|1.8]]
+! [[Java Edition 14w03a|14w03a]]
+| {{pximg|Anvil 3 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 12 (inventory) JE3.png|32px}}
+| {{pximg|Anvil 13 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 14 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 15 (inventory) JE3.png|32px}}
+| style="text-align:left" | Anvils states now repeat modulo 4, with 4n+3 appearing identical to 4n.
+|-
+! [[Java Edition 14w10a|14w10a]]
+| {{pximg|Anvil 3 (inventory) JE4.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE5.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| style="text-align:left" | Anvil items now appear rotated and damaged according to the corresponding block metadata. 12-15 are now 2D.
+|-
+! [[Java Edition 14w10c|14w10c]]
+| {{pximg|Anvil 3 (inventory) JE5.png|32px}}
+| {{pximg|Anvil 4 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 5 (inventory) JE7.png|32px}}
+| {{pximg|Anvil 6 (inventory) JE7.png|32px}}
+| {{pximg|Anvil 7 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 8 (inventory) JE6.png|32px}}
+| {{pximg|Anvil 9 (inventory) JE7.png|32px}}
+| {{pximg|Anvil 10 (inventory) JE7.png|32px}}
+| {{pximg|Anvil 11 (inventory) JE6.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| {{pximg|Anvil (bottom texture) JE1 BE1.png|32px}}
+| style="text-align:left" | Many anvil items now appear as deformed cuboids of varying proportions.
+|-
+! [[Java Edition 14w25a|14w25a]]
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| {{pximg|Missing Model (inventory) JE1.png|32px}}
+| style="text-align:left" | [[Missing model|Model no longer exists]]
+|-
+! [[Java Edition 1.9|1.9]]
+! [[Java Edition 15w31a|15w31a]]
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| {{pximg|Missing Model (inventory) JE2.png|32px}}
+| style="text-align:left" | The missing model is no longer rotated or downscaled.
+|-
+! [[Java Edition 1.13|1.13]]
+! [[Java Edition 17w43a|17w43a]]
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| {{pximg|Missing Model (inventory) JE3.png|32px}}
+| style="text-align:left" | The missing texture has changed.
+|}
+
+== Issues ==
+Invalid data value anvils ''are'' an issue, and due to their removal, can be considered already fixed.
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [[mcdf:Java Edition:Invalid Data Value Anvil|Invalid Data Value Anvil]] at the ''Minecraft Discontinued Features'' wiki
+
+== Navigation ==
+{{Navbox IDV items}}
+[[ja:Invalid Data Value Anvil]]

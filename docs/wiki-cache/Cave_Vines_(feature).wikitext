@@ -1,0 +1,131 @@
+{{for|the block|Glow Berries}}
+{{Infobox structure
+| title=Cave Vines
+| image=Cave vines.png
+| imagesize=75px
+| biome =
+* {{BiomeLink|Lush Caves}}
+| blocks =
+* {{BlockLink|Cave Vines Plant}}
+* {{BlockLink|Cave Vines}}
+| canspawn=Yes
+}}
+
+'''Cave vines''' are a [[feature]] that consists of [[glow berries]], found in the [[lush caves]] biome. Players can use these to climb up and down. They have the same function as [[weeping vines]].
+
+== Generation ==
+Cave vines generate as a block column hanging from the ceiling of caves. Their height varies between 1 and 20 blocks.
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=block_column
+|foot=1}}
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|nameid=cave_vine
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|string|direction}} The direction of the column. One of <code>up</code>, <code>down</code>, <code>north</code>, <code>east</code>, <code>south</code>, or <code>west</code>.
+** {{nbt|compound|allowed_placement}} A [[block predicate]] that must be passed for each position of the column.
+*** {{list indent|*|{{#lst:block predicate|json format}}}}
+** {{nbt|boolean|prioritize_tip}} Determines where to cut off blocks when space is restricted. If <code>true</code>, starts removing layers from the start of the column.
+** {{nbt|list|layers}} (Required, but can be empty) The layers of this column.
+*** {{nbt|compound}} A layer.
+**** {{nbt|int}}{{nbt|compound|height}} Specifying the height of the layer. Must be a non-negative int.
+***** {{nbt inherit/int_provider}}
+**** {{nbt|compound|provider}} The block to use for this layer.
+***** {{nbt inherit/block_state_provider}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:block_column",
+  "config": {
+    "direction": "down",
+    "allowed_placement": {
+      "type": "minecraft:matching_blocks",
+      "blocks": "minecraft:air"
+    },
+    "prioritize_tip": true,
+    "layers": [
+      {
+        "height": {
+          "type": "minecraft:uniform",
+          "value": {
+            "min_inclusive": 2,
+            "max_inclusive": 5
+          }
+        },
+        "provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:cave_vines_plant"
+          }
+        }
+      },
+      {
+        "height": 1,
+        "provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:cave_vines"
+          }
+        }
+      }
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=1781}}|Cave vines are shown as part of lush caves at [[Minecraft Live 2020]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w05a|Added cave vines.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|With the implementation of cave biomes including lush caves, caves vines can now generate in normal worlds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.52|Added cave vines behind the "Caves and Cliffs" [[experimental]] toggle.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Cave vines are now available without enabling [[experimental gameplay]].}}
+}}
+
+== Issues ==
+{{issue list|Cave vines}}
+
+== Gallery ==
+<gallery>
+Lush Caves.png|Many cave vines on the ceiling of a lush cave.
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Lianes des cavernes (élément du terrain)]]
+[[ja:洞窟のツタ (生成物)]]
+[[ko:동굴 덩굴 (지물)]]
+[[pt:Trepadeiras das cavernas (recurso)]]

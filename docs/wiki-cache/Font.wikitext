@@ -1,0 +1,1250 @@
+{{See also|Formatting codes|Text component format}}
+
+'''Fonts''' are used for rendering text in ''Minecraft''. Several fonts are used in the game; the primary font used is known as either [[Mojangles]] or Minecraft Seven.
+
+Multiple fonts can be defined and referenced with [[resource pack]]s.
+
+== Fonts available ==
+=== ''Java Edition'' ===
+In ''[[Java Edition]]'', there are 4 default fonts.
+* [[Mojangles]] – ''Minecraft''{{'}}s pixelated font for most in-game text.
+* [[Standard Galactic Alphabet]] – The glyphs in the [[enchanting table]] GUI.
+* [[GNU Unifont]] – Replaces Mojangles if the text contains unsupported characters.
+* [[Illageralt]] – Unused.
+
+=== ''Bedrock Edition'' ===
+In ''[[Bedrock Edition]]'', there are 6 default fonts. In the [[chat settings]], the font for all text in chat messages (including [[closed captions]]) can be changed between Mojangles and Noto Sans. 
+
+* Mojangles – ''Minecraft''{{'}}s pixelated font for most in-game text.
+* [[Noto Sans]] – Used in some large text bodies like [[Marketplace]] content.
+* [[Minecraft Ten]] – Used for various header texts in menus.
+* GNU Unifont – Replaces Mojangles if the text contains unsupported characters.
+* Standard Galactic Alphabet – The glyphs in the enchanting table GUI.
+* [[Smooth/ (font)|smooth/]] – Unknown.
+
+=== Legacy Console Edition ===
+In [[Legacy Console Edition]], there are 2 default fonts.
+
+* Mojangles – ''Minecraft''{{'}}s pixelated font for most in-game text.
+* [[Mojangles 11]] – Used in various GUIs.
+
+=== Other sources ===
+Some sources, like the Minecraft website, contains different fonts in different pages.
+
+* Minecraft Ten – Used mainly for top-level headers.
+* Mojangles – Used mainly for mid-level headers.
+* [[Minecraft Five]] – Used mainly for top-level headers in the [[Minecraft Dungeons|Dungeons]] page.
+* Noto Sans – Used for main content and descriptions.
+* [[Minecraft Sixteen]] – Used mainly for top-level headers in the [[Minecraft Dungeons II|Dungeons II]] page.
+
+== Display modifications ==
+
+=== Bold text ===
+Bold text is rendered by drawing each character twice: once at its normal position and again one pixel to the right. This technique creates the appearance of thicker, bolder text without modifying the font itself.
+
+=== Experience bar text ===
+The text on the experience bar is bright green [[Mojangles]] with a black outline. This is done by drawing the text in black ({{Color|#000000}}) offset by one scaled unit in each orthogonal direction, then drawing the text in green ({{Color|#80FF20}}) at the original position.
+
+=== Shadow ===
+In most places text is rendered, a shadow appears beneath every character.
+This shadow is a copy of the character's glyph, with the red, green, and blue values divided by 4 and positioned 12.5% south-east of the character, relative to its spacing.
+Regardless of the resolution of the character's texture, the shadow is always moved by 12.5%.
+In the default font ({{code|assets/minecraft/textures/font/ascii.png}}), the shadow position is moved 1 pixel down and to the right.
+
+For pixels where the glyph overlaps with the shadow, the above glyph's channels have 1 subtracted from them. For example, in areas where a white ({{mono|#FFFFFF}}) glyph's pixel overlaps a shadow's, the white pixel becomes {{mono|#FEFEFE}}.
+
+=== Glowing text ===
+[[File:Glow text.gif|right|thumb|Comparison of all the dyed glowing texts.]]
+
+[[Glow Ink Sac|Glow ink sac]] applied on a sign causes a character to create eight copies of itself in all eight directions. This results in the font appearing to have a thick outline. Glowing text always renders with an emissive texture, so it appears bright in darkness. The text takes priority over the outline; outlines appear below a character's pixels if they conflict.  However, it is a rendering effect that does not actually emit any [[light]]. The player can {{Control|use}} a black ink sac on the sign to remove the glow.
+
+In a sign's block data, {{nbt|compound|front_text}} or {{nbt|compound|back_text}}'s {{nbt|bool|has_glowing_text}} controls whether the text glows.
+
+== Emoji support ==
+''Minecraft'' has included textures for a number of emojis. The earliest emoji textures were for {{mono|☺☻}}.
+Since [[Java Edition 1.15|1.15]], this support has expanded. Emojis are monochromatic and behave just as any other character. The game does not support modifiers, such as skin tone, joining, or [[wikipedia:Emoji#Emoji_versus_text_presentation|emoji presentation]]. The skin tone modifiers {{mono|U+1F3FB..U+1F3FF 🏻 🏼 🏽 🏾 🏿}}<!-- Be careful when changing these, as your text input likely treats the skin tone modifiers as 'unselectable' or innately part of the prior space. --> do not apply colored skin tones to their applicable emojis, and instead show tones as their Unifont glyphs. Joining multiple emojis via {{mono|U+200D &zwj; ZERO WIDTH JOINER}} to create 1 single emoji is not supported; multi-sequence emoji such as {{mono|👨‍👩‍👧}} instead show as {{mono|👨&zwnj;👩&zwnj;👧}} with dotted boxes showing {{mono|ZWJ}} between them. Variation selectors, which control presentation, are displayed as dotted boxes with {{mono|VS''number''}}.
+
+For characters supported in the default font, as opposed to the fallback fonts, see [[Mojangles#Emoji]].
+
+''Bedrock Edition'' does not support any character above {{mono|U+FFFF}}, which includes many modern emoji. It does not include any textures for emojis below that either; only those provided by GNU Unifont below {{mono|U+FFFF}} are included and visible.
+
+=== Private-area emojis ===
+{{Exclusive|bedrock|section=1}}{{More images|Add previews from controller emojis|section=1}}Instead of emojis in font files, ''Bedrock Edition'' has several hard-coded {{W|Private Use Areas|Private Use Unicode symbols}} that it automatically converts to emoji-like symbols in any font, which can also be entered with a shortcode (<code>:heart:</code>). These are used in in-game texts including [[How to Play]] and controller hints, but can also be used by the player anywhere where normal letters can, such as in [[signs]], [[books]], [[item]] names, [[chat]], etc. Emojis are not supported by [[Ore UI]] menu screens.<ref>{{cite|url=https://wiki.bedrock.dev/concepts/emojis|title=Emojis & Symbols|website=Bedrock Wiki|date=April 1, 2024}}</ref><ref>{{bug|MCPE-185774|MCPE-185774|New server UI does not show some characters|WF}}</ref>
+
+There exist 2 [[w:Private Use Areas|Private Use Area]] sheets: {{code|glyph_E0.png|glyph_E1.png}}. {{mono|E0}} contains glyphs for control icons, such as {{Xbutton|onea}} and {{Nsbutton|dpad-right}}. {{mono|E1}} contains glyphs for miscellaneous icons, including the minecoin and [[Agent]] icon. E0 characters are categorized in {{cd|emoticons.json}}.<ref>https://github.com/TwistedAsylumMC/bedrock-unicode-characters</ref>
+
+==== Blocks & items ====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Wooden Pickaxe
+|<code>:wood_pickaxe:</code>
+|&#xE108;
+|U+E108
+|[[File:Wooden_Pickaxe_emoji.png]]
+|-
+|Wooden Sword
+|<code>:wood_sword:</code>
+|&#xE109;
+|U+E109
+|[[File:Wooden_Sword_emoji.png]]
+|-
+|Crafting Table
+|<code>:crafting_table:</code>
+|&#xE10A;
+|U+E10A
+|[[File:Crafting_Table_emoji.png]]
+|-
+|Furnace
+|<code>:furnace:</code>
+|&#xE10B;
+|U+E10B
+|[[File:Furnace_emoji.png]]
+|}
+
+==== HUD ====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Armor
+|<code>:armor:</code>
+|&#xE101;
+|U+E101
+|[[File:Armor_emoji.png]]
+|-
+|Crosshair
+|<code>:tip_crosshair:</code>
+|&#xE017;
+|U+E017
+|[[File:Crosshair_emoji.png]]
+|-
+|Food
+|<code>:shank:</code>
+|&#xE100;
+|U+E100
+|[[File:Shank_emoji.png]]
+|-
+|Heart
+|<code>:heart:</code>
+|&#xE10C;
+|U+E10C
+|[[File:Heart_emoji.png]]
+|}
+
+==== Marketplace ====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Minecoin
+|<code>:minecoin:</code>
+<code>:token:</code>
+|&#xE102;
+|U+E102
+|[[File:Minecoin_emoji.png]]
+|-
+|Token
+|<code>:minecoin:</code>
+<code>:token:</code>
+|&#xE105;
+|U+E105
+|[[File:Token_emoji.png]]
+|}
+
+* On non-PlayStation devices, both <code>:minecoin:</code> and <code>:token:</code> will display the Minecoin emoji.
+
+==== Recipe book ====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Craftable Toggle On
+|<code>:craftable_toggle_on:</code>
+|&#xE0A0;
+|U+E0A0
+|[[File:Craftable_Toggle_On_emoji.png]]
+|-
+|Craftable Toggle Off
+|<code>:craftable_toggle_off:</code>
+|&#xE0A1;
+|U+E0A1
+|[[File:Craftable_Toggle_Off_emoji.png]]
+|}
+
+==== Controls ====
+<div class="mw-collapsible mw-collapsed">
+===== Mouse =====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Mouse Left Button
+|<code>:mouse_left_button:</code>
+|&#xE060;
+|U+E060
+|[[File:Left_Button_emoji.png]]
+|-
+|Mouse Right Button
+|<code>:mouse_right_button:</code>
+|&#xE061;
+|U+E061
+|[[File:Right_Button_emoji.png]]
+|-
+|Mouse Middle Button
+|<code>:mouse_middle_button:</code>
+|&#xE062;
+|U+E062
+|[[File:Middle_Button_emoji.png]]
+|-
+|Mouse Button
+|<code>:mouse_button:</code>
+|&#xE063;
+|U+E063
+|[[File:Button_emoji.png]]
+|-
+|Light Mouse Left Button
+|<code>:light_mouse_left_button:</code>
+|&#xE070;
+|U+E070
+|[[File:Light_Left_Button_emoji.png]]
+|-
+|Light Mouse Right Button
+|<code>:light_mouse_right_button:</code>
+|&#xE071;
+|U+E071
+|[[File:Light_Right_Button_emoji.png]]
+|-
+|Light Mouse Middle Button
+|<code>:light_mouse_middle_button:</code>
+|&#xE072;
+|U+E072
+|[[File:Light_Middle_Button_emoji.png]]
+|-
+|Light Mouse Button
+|<code>:light_mouse_button:</code>
+|&#xE073;
+|U+E073
+|[[File:Light_Button_emoji.png]]
+|}
+
+===== Touch =====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Forward
+|<code>:touch_forward:</code>
+|&#xE080;
+|U+E080
+|[[File:Forward_emoji.png]]
+|-
+|Left
+|<code>:touch_left:</code>
+|&#xE081;
+|U+E081
+|[[File:Left_emoji.png]]
+|-
+|Back
+|<code>:touch_back:</code>
+|&#xE082;
+|U+E082
+|[[File:Back_emoji.png]]
+|-
+|Right
+|<code>:touch_right:</code>
+|&#xE083;
+|U+E083
+|[[File:Right_emoji.png]]
+|-
+|Jump
+|<code>:touch_jump:</code>
+|&#xE084;
+|U+E084
+|[[File:Jump_emoji.png]]
+|-
+|Sneak
+|<code>:touch_sneak:</code>
+|&#xE085;
+|U+E085
+|[[File:Sneak_emoji.png]]
+|-
+|Emote
+|?
+|&#xE089;
+|U+E089
+|[[File:Emote_emoji.png]]
+|-
+|Chat
+|<code>:touch_chat:</code>
+|&#xE08A;
+|U+E08A
+|[[File:Chat_emoji.png]]
+|-
+|Pause
+|?
+|&#xE08B;
+|U+E08B
+|[[File:Pause_emoji.png]]
+|-
+|Sprint (Double Tap)
+|<code>:touch_sprint_double_tap:</code>
+|&#xE064;
+|U+E064
+|[[File:Sprint_Double_Tap_emoji.png]]
+|-
+|Jump
+|<code>:tip_virtual_button_jump:</code>
+|&#xE014;
+|U+E014
+|[[File:Jump_emoji.png]]
+|-
+|Attack
+|<code>:tip_virtual_button_action_attack_or_destroy:</code>
+|&#xE015;
+|U+E015
+|[[File:Attack_emoji.png]]
+|-
+|Joystick
+|<code>:tip_virtual_joystick:</code>
+|&#xE016;
+|U+E016
+|[[File:Joystick_emoji.png]]
+|-
+|Joystick Forward
+|<code>:touch_virtual_joystick_forward:</code>
+|&#xE08C;
+|U+E08C
+|[[File:Joystick_Forward_emoji.png]]
+|-
+|Joystick Left
+|<code>:touch_virtual_joystick_left:</code>
+|&#xE08D;
+|U+E08D
+|[[File:Joystick_Left_emoji.png]]
+|-
+|Joystick Back
+|<code>:touch_virtual_joystick_back:</code>
+|&#xE08E;
+|U+E08E
+|[[File:Joystick_Back_emoji.png]]
+|-
+|Joystick Right
+|<code>:touch_virtual_joystick_right:</code>
+|&#xE08F;
+|U+E08F
+|[[File:Joystick_Right_emoji.png]]
+|-
+|Place
+|<code>:tip_virtual_button_action_build_or_use:</code>
+|&#xE018;
+|U+E018
+|[[File:Place_emoji.png]]
+|-
+|Sneak
+|<code>:tip_virtual_button_sneak:</code>
+|&#xE019;
+|U+E019
+|[[File:Sneak_emoji.png]]
+|-
+|Sprint
+|<code>:tip_virtual_button_sprint:</code>
+<code>:touch_sprint:</code>
+|&#xE01A;
+|U+E01A
+|[[File:Sprint_emoji.png]]
+|-
+|Fly Up
+|<code>:tip_virtual_button_fly_up:</code>
+|&#xE01B;
+|U+E01B
+|[[File:Fly_Up_emoji.png]]
+|-
+|Fly Down
+|<code>:tip_virtual_button_fly_down:</code>
+|&#xE01C;
+|U+E01C
+|[[File:Fly_Down_emoji.png]]
+|-
+|Dismount
+|<code>:tip_virtual_button_dismount:</code>
+|&#xE01D;
+|U+E01D
+|[[File:Dismount_emoji.png]]
+|-
+|Fly Up
+|<code>:touch_fly_up:</code>
+|&#xE086;
+|U+E086
+|[[File:Fly_Up_Old_emoji.png]]
+|-
+|Fly Down
+|<code>:touch_fly_down:</code>
+|&#xE087;
+|U+E087
+|[[File:Fly_Down_Old_emoji.png]]
+|-
+|Stop Flying
+|<code>:touch_stop_flying:</code>
+|&#xE088;
+|U+E088
+|[[File:Stop_Flying_emoji.png]]
+|-
+|Small Sneak
+|<code>:tip_touch_sneak:</code>
+|&#xE05A;
+|U+E05A
+|[[File:Small_Sneak_emoji.png]]
+|-
+|Small Jump
+|<code>:tip_touch_jump:</code>
+|&#xE059;
+|U+E059
+|[[File:Small_Jump_emoji.png]]
+|-
+|Small Inventory
+|<code>:tip_touch_inventory:</code>
+|&#xE05B;
+|U+E05B
+|[[File:Small_Inventory_emoji.png]]
+|-
+|Small Fly Up
+|<code>:tip_touch_fly_up:</code>
+|&#xE05C;
+|U+E05C
+|[[File:Small_Fly_Up_emoji.png]]
+|-
+|Small Fly Down
+|<code>:tip_touch_fly_down:</code>
+|&#xE05D;
+|U+E05D
+|[[File:Small_Fly_Down_emoji.png]]
+|-
+|Small Up Arrow
+|<code>:tip_touch_forward:</code>
+|&#xE055;
+|U+E055
+|[[File:Small_Up_Arrow_emoji.png]]
+|-
+|Small Left Arrow
+|<code>:tip_touch_left:</code>
+|&#xE056;
+|U+E056
+|[[File:Small_Left_Arrow_emoji.png]]
+|-
+|Small Down Arrow
+|<code>:tip_touch_back:</code>
+|&#xE057;
+|U+E057
+|[[File:Small_Down_Arrow_emoji.png]]
+|-
+|Small Right Arrow
+|<code>:tip_touch_right:</code>
+|&#xE058;
+|U+E058
+|[[File:Small_Right_Arrow_emoji.png]]
+|}
+
+===== Controller =====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Left Stick Up
+|<code>:ps4_left_stick_up:</code>
+<code>:switch_left_stick_up:</code>
+<code>:xbox_left_stick_up:</code>
+|&#xE0D0;
+|U+E0D0
+|(/assets/images/text/emojis/controller/left_stick_up.png)
+|-
+|Left Stick Left
+|<code>:ps4_left_stick_left:</code>
+<code>:switch_left_stick_left:</code>
+<code>:xbox_left_stick_left:</code>
+|&#xE0D1;
+|U+E0D1
+|(/assets/images/text/emojis/controller/left_stick_left.png)
+|-
+|Left Stick Down
+|<code>:ps4_left_stick_down:</code>
+<code>:switch_left_stick_down:</code>
+<code>:xbox_left_stick_down:</code>
+|&#xE0D2;
+|U+E0D2
+|(/assets/images/text/emojis/controller/left_stick_down.png)
+|-
+|Left Stick Right
+|<code>:ps4_left_stick_right:</code>
+<code>:switch_left_stick_right:</code>
+<code>:xbox_left_stick_right:</code>
+|&#xE0D3;
+|U+E0D3
+|(/assets/images/text/emojis/controller/left_stick_right.png)
+|-
+|Right Stick Up
+|<code>:ps4_right_stick_up:</code>
+<code>:switch_right_stick_up:</code>
+<code>:xbox_right_stick_up:</code>
+|&#xE0D0;
+|U+E0D0
+|(/assets/images/text/emojis/controller/right_stick_up.png)
+|-
+|Right Stick Left
+|<code>:ps4_right_stick_left:</code>
+<code>:switch_right_stick_left:</code>
+<code>:xbox_right_stick_left:</code>
+|&#xE0D1;
+|U+E0D1
+|(/assets/images/text/emojis/controller/right_stick_left.png)
+|-
+|Right Stick Down
+|<code>:ps4_right_stick_down:</code>
+<code>:switch_right_stick_down:</code>
+<code>:xbox_right_stick_down:</code>
+|&#xE0D2;
+|U+E0D2
+|(/assets/images/text/emojis/controller/right_stick_down.png)
+|-
+|Right Stick Right
+|<code>:ps4_right_stick_right:</code>
+<code>:switch_right_stick_right:</code>
+<code>:xbox_right_stick_right:</code>
+|&#xE0D3;
+|U+E0D3
+|(/assets/images/text/emojis/controller/right_stick_right.png)
+|}
+
+====== Nintendo Switch ======
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|A
+|<code>:switch_face_button_down:</code>
+|&#xE040;
+|U+E040
+|![](/assets/images/text/emojis/switch/a_button.png)
+|-
+|B
+|<code>:switch_face_button_right:</code>
+|&#xE041;
+|U+E041
+|![](/assets/images/text/emojis/switch/b_button.png)
+|-
+|X
+|<code>:switch_face_button_left:</code>
+|&#xE042;
+|U+E042
+|![](/assets/images/text/emojis/switch/x_button.png)
+|-
+|Y
+|<code>:switch_face_button_up:</code>
+|&#xE043;
+|U+E043
+|![](/assets/images/text/emojis/switch/y_button.png)
+|-
+|Left Bumper
+|<code>:switch_bumper_left:</code>
+|&#xE044;
+|U+E044
+|![](/assets/images/text/emojis/switch/left_bumper.png)
+|-
+|Right Bumper
+|<code>:switch_bumper_right:</code>
+|&#xE045;
+|U+E045
+|![](/assets/images/text/emojis/switch/right_bumper.png)
+|-
+|Left Trigger
+|<code>:switch_trigger_left:</code>
+|&#xE046;
+|U+E046
+|![](/assets/images/text/emojis/switch/left_trigger.png)
+|-
+|Right Trigger
+|<code>:switch_trigger_right:</code>
+|&#xE047;
+|U+E047
+|![](/assets/images/text/emojis/switch/right_trigger.png)
+|-
+| -
+|<code>:switch_select:</code>
+|&#xE048;
+|U+E048
+|![](/assets/images/text/emojis/switch/minus.png)
+|-
+| +
+|<code>:switch_start:</code>
+|&#xE049;
+|U+E049
+|![](/assets/images/text/emojis/switch/plus.png)
+|-
+|Left Stick
+|<code>:switch_stick_left:</code>
+|&#xE04A;
+|U+E04A
+|![](/assets/images/text/emojis/switch/left_stick.png)
+|-
+|Right Stick
+|<code>:switch_stick_right:</code>
+|&#xE04B;
+|U+E04B
+|![](/assets/images/text/emojis/switch/right_stick.png)
+|-
+|D-pad Up
+|<code>:switch_dpad_up:</code>
+|&#xE04C;
+|U+E04C
+|![](/assets/images/text/emojis/switch/dpad_up.png)
+|-
+|D-pad Left
+|<code>:switch_dpad_left:</code>
+|&#xE04D;
+|U+E04D
+|![](/assets/images/text/emojis/switch/dpad_left.png)
+|-
+|D-pad Down
+|<code>:switch_dpad_down:</code>
+|&#xE04E;
+|U+E04E
+|![](/assets/images/text/emojis/switch/dpad_down.png)
+|-
+|D-pad Right
+|<code>:switch_dpad_right:</code>
+|&#xE04F;
+|U+E04F
+|![](/assets/images/text/emojis/switch/dpad_right.png)
+|}
+
+====== PlayStation ======
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Cross
+|<code>:ps4_face_button_down:</code>
+|&#xE020;
+|U+E020
+|![](/assets/images/text/emojis/playstation/cross.png)
+|-
+|Circle
+|<code>:ps4_face_button_right:</code>
+|&#xE021;
+|U+E021
+|![](/assets/images/text/emojis/playstation/circle.png)
+|-
+|Square
+|<code>:ps4_face_button_left:</code>
+|&#xE022;
+|U+E022
+|![](/assets/images/text/emojis/playstation/square.png)
+|-
+|Triangle
+|<code>:ps4_face_button_up:</code>
+|&#xE023;
+|U+E023
+|![](/assets/images/text/emojis/playstation/triangle.png)
+|-
+|Left Bumper
+|<code>:ps4_bumper_left:</code>
+|&#xE024;
+|U+E024
+|![](/assets/images/text/emojis/playstation/left_bumper.png)
+|-
+|Right Bumper
+|<code>:ps4_bumper_right:</code>
+|&#xE025;
+|U+E025
+|![](/assets/images/text/emojis/playstation/right_bumper.png)
+|-
+|Left Trigger
+|<code>:ps4_trigger_left:</code>
+|&#xE026;
+|U+E026
+|![](/assets/images/text/emojis/playstation/left_trigger.png)
+|-
+|Right Trigger
+|<code>:ps4_trigger_right:</code>
+|&#xE027;
+|U+E027
+|![](/assets/images/text/emojis/playstation/right_trigger.png)
+|-
+|Touch Pad
+|<code>:ps4_select:</code>
+|&#xE028;
+|U+E028
+|![](/assets/images/text/emojis/playstation/touch_pad.png)
+|-
+|Options/Share
+|<code>:ps4_start:</code>
+|&#xE029;
+|U+E029
+|![](/assets/images/text/emojis/playstation/options_share.png)
+|-
+|Left Stick
+|<code>:ps4_stick_left:</code>
+|&#xE02A;
+|U+E02A
+|![](/assets/images/text/emojis/playstation/left_stick.png)
+|-
+|Right Stick
+|<code>:ps4_stick_right:</code>
+|&#xE02B;
+|U+E02B
+|![](/assets/images/text/emojis/playstation/right_stick.png)
+|-
+|D-pad Up
+|<code>:ps4_dpad_up:</code>
+|&#xE02C;
+|U+E02C
+|![](/assets/images/text/emojis/playstation/dpad_up.png)
+|-
+|D-pad Left
+|<code>:ps4_dpad_left:</code>
+|&#xE02D;
+|U+E02D
+|![](/assets/images/text/emojis/playstation/dpad_left.png)
+|-
+|D-pad Down
+|<code>:ps4_dpad_down:</code>
+|&#xE02E;
+|U+E02E
+|![](/assets/images/text/emojis/playstation/dpad_down.png)
+|-
+|D-pad Right
+|<code>:ps4_dpad_right:</code>
+|&#xE02F;
+|U+E02F
+|![](/assets/images/text/emojis/playstation/dpad_right.png)
+|}
+
+====== Oculus (Rift/Rift S) ======
+{| class="wikitable"
+!Name
+!Character
+!Unicode
+!Preview
+|-
+|0
+|&#xE0E0;
+|U+E0E0
+|![](/assets/images/text/emojis/oculus/0_button.png)
+|-
+|B
+|&#xE0E2;
+|U+E0E2
+|![](/assets/images/text/emojis/oculus/b_button.png)
+|-
+|A
+|&#xE0E1;
+|U+E0E1
+|![](/assets/images/text/emojis/oculus/a_button.png)
+|-
+|Y
+|&#xE0EA;
+|U+E0EA
+|![](/assets/images/text/emojis/oculus/y_button.png)
+|-
+|X
+|&#xE0E9;
+|U+E0E9
+|![](/assets/images/text/emojis/oculus/x_button.png)
+|-
+|Left Grip
+|&#xE0E3;
+|U+E0E3
+|![](/assets/images/text/emojis/oculus/left_grip.png)
+|-
+|Right Grip
+|&#xE0E4;
+|U+E0E4
+|![](/assets/images/text/emojis/oculus/right_grip.png)
+|-
+|Left Trigger
+|&#xE0E7;
+|U+E0E7
+|![](/assets/images/text/emojis/oculus/left_trigger.png)
+|-
+|Right Trigger
+|&#xE0E8;
+|U+E0E8
+|![](/assets/images/text/emojis/oculus/right_trigger.png)
+|-
+|Left Stick
+|&#xE0E5;
+|U+E0E5
+|![](/assets/images/text/emojis/oculus/left_stick.png)
+|-
+|Right Stick
+|&#xE0E6;
+|U+E0E6
+|![](/assets/images/text/emojis/oculus/right_stick.png)
+|}
+
+====== Windows MR (Mixed Reality) ======
+{| class="wikitable"
+!Name
+!Character
+!Unicode
+!Preview
+|-
+|Menu
+|&#xE0C2;
+|U+E0C2
+|![](/assets/images/text/emojis/windowsMR/menu.png)
+|-
+|Windows
+|&#xE0CD;
+|U+E0CD
+|![](/assets/images/text/emojis/windowsMR/windows.png)
+|-
+|Left Touchpad
+|&#xE0C5;
+|U+E0C5
+|![](/assets/images/text/emojis/windowsMR/left_touchpad.png)
+|-
+|Left Horizontal Touchpad
+|&#xE0C6;
+|U+E0C6
+|![](/assets/images/text/emojis/windowsMR/left_touchpad_horizontal.png)
+|-
+|Left Vertical Touchpad
+|&#xE0C7;
+|U+E0C7
+|![](/assets/images/text/emojis/windowsMR/left_touchpad_vertical.png)
+|-
+|Right Touchpad
+|&#xE0C8;
+|U+E0C8
+|![](/assets/images/text/emojis/windowsMR/right_touchpad.png)
+|-
+|Right Horizontal Touchpad
+|&#xE0C9;
+|U+E0C9
+|![](/assets/images/text/emojis/windowsMR/right_touchpad_horizontal.png)
+|-
+|Right Vertical Touchpad
+|&#xE0CA;
+|U+E0CA
+|![](/assets/images/text/emojis/windowsMR/right_touchpad_vertical.png)
+|-
+|Left Trigger
+|&#xE0CB;
+|U+E0CB
+|![](/assets/images/text/emojis/windowsMR/left_trigger.png)
+|-
+|Right Trigger
+|&#xE0CC;
+|U+E0CC
+|![](/assets/images/text/emojis/windowsMR/right_trigger.png)
+|-
+|Left Grab
+|&#xE0C0;
+|U+E0C0
+|![](/assets/images/text/emojis/windowsMR/left_grab.png)
+|-
+|Right Grab
+|&#xE0C1;
+|U+E0C1
+|![](/assets/images/text/emojis/windowsMR/right_grab.png)
+|-
+|Left Stick
+|&#xE0C3;
+|U+E0C3
+|![](/assets/images/text/emojis/windowsMR/left_stick.png)
+|-
+|Right Stick
+|&#xE0C4;
+|U+E0C4
+|![](/assets/images/text/emojis/windowsMR/right_stick.png)
+|}
+
+====== Xbox ======
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|A
+|<code>:xbox_face_button_down:</code>
+|&#xE000;
+|U+E000
+|![](/assets/images/text/emojis/xbox/a_button.png)
+|-
+|B
+|<code>:xbox_face_button_right:</code>
+|&#xE001;
+|U+E001
+|![](/assets/images/text/emojis/xbox/b_button.png)
+|-
+|X
+|<code>:xbox_face_button_left:</code>
+|&#xE002;
+|U+E002
+|![](/assets/images/text/emojis/xbox/x_button.png)
+|-
+|Y
+|<code>:xbox_face_button_up:</code>
+|&#xE003;
+|U+E003
+|![](/assets/images/text/emojis/xbox/y_button.png)
+|-
+|Left Bumper
+|<code>:xbox_bumper_left:</code>
+|&#xE004;
+|U+E004
+|![](/assets/images/text/emojis/xbox/left_bumper.png)
+|-
+|Right Bumper
+|<code>:xbox_bumper_right:</code>
+|&#xE005;
+|U+E005
+|![](/assets/images/text/emojis/xbox/right_bumper.png)
+|-
+|Left Trigger
+|<code>:xbox_trigger_left:</code>
+|&#xE006;
+|U+E006
+|![](/assets/images/text/emojis/xbox/left_trigger.png)
+|-
+|Right Trigger
+|<code>:xbox_trigger_right:</code>
+|&#xE007;
+|U+E007
+|![](/assets/images/text/emojis/xbox/right_trigger.png)
+|-
+|Select
+|<code>:xbox_select:</code>
+|&#xE008;
+|U+E008
+|![](/assets/images/text/emojis/xbox/select.png)
+|-
+|Start
+|<code>:xbox_start:</code>
+|&#xE009;
+|U+E009
+|![](/assets/images/text/emojis/xbox/start.png)
+|-
+|Left Stick
+|<code>:xbox_stick_left:</code>
+|&#xE00A;
+|U+E00A
+|![](/assets/images/text/emojis/xbox/left_stick.png)
+|-
+|Right Stick
+|<code>:xbox_stick_right:</code>
+|&#xE00B;
+|U+E00B
+|![](/assets/images/text/emojis/xbox/right_stick.png)
+|-
+|D-Pad Up
+|<code>:xbox_dpad_up:</code>
+|&#xE00C;
+|U+E00C
+|![](/assets/images/text/emojis/xbox/dpad_up.png)
+|-
+|D-Pad Left
+|<code>:xbox_dpad_left:</code>
+|&#xE00D;
+|U+E00D
+|![](/assets/images/text/emojis/xbox/dpad_left.png)
+|-
+|D-Pad Down
+|<code>:xbox_dpad_down:</code>
+|&#xE00E;
+|U+E00E
+|![](/assets/images/text/emojis/xbox/dpad_down.png)
+|-
+|D-Pad Right
+|<code>:xbox_dpad_right:</code>
+|&#xE00F;
+|U+E00F
+|![](/assets/images/text/emojis/xbox/dpad_right.png)
+|}
+}}
+</div>
+
+==== Other ====
+{| class="wikitable"
+!Name
+!Shortcode
+!Character
+!Unicode
+!Preview
+|-
+|Non-Breaking Space
+|<code>:nbsp:</code>
+|&#xE0FF;
+|U+E0FF
+|
+|-
+|Agent
+|<code>:code_builder_button:</code>
+|&#xE103;
+|U+E103
+|![](/assets/images/text/emojis/other/agent.png)
+|-
+|Immersive Reader
+|<code>:immersive_reader_button:</code>
+|&#xE104;
+|U+E104
+|![](/assets/images/text/emojis/other/immersive_reader.png)
+|-
+|Hollow Star
+|<code>:hollow_star:</code>
+|&#xE106;
+|U+E106
+|![](/assets/images/text/emojis/other/hollow_star.png)
+|-
+|Solid Star
+|<code>:solid_star:</code>
+|&#xE107;
+|U+E107
+|![](/assets/images/text/emojis/other/solid_star.png)
+|-
+|Camera
+|<code>:camera:</code>
+|&#xE10D;
+|U+E10D
+|![](/assets/images/text/emojis/other/camera.png)
+|}
+
+== Special characters ==
+{{IN|java}}, there are 2 characters that are accessible only through technical means:
+* The first is {{mono|U+FFFD � REPLACEMENT CHARACTER}}, which appears when either the U+FFFD character is typed, or there is an invalid UTF-8 multi-byte sequence.
+* The second is the "notdef" character,{{fn|Is not an actual Unicode character. "notdef" refers to the name given to it in font formats.}} seen when a character that has no texture in the currently-used font is typed. It is hardcoded and cannot be modified through resource packs. It is sometimes called "tofu" in the typographical community because of it resembles a block of {{w|tofu}}. More information on this character can be found at [[Missing textures and models#Missing font character]].
+
+{{IN|bedrock}}, a character with no texture data appears as a blank space. The {{mono|U+FFFD � REPLACEMENT CHARACTER}} shown belongs to GNU Unifont.
+
+== Providers ==
+{{exclusive|java|section=1}}
+
+A font is constructed from a list of '''providers''', sources that provide characters to use. Different providers use different formats and methods of constructing characters. The default font uses all except for <code>ttf</code>.
+
+A font file uses the following format:
+<div class="treeview">
+* {{nbt|compound}}: The root object.
+** {{nbt|list|providers}}: A list of providers.
+*** {{nbt|compound}}: A provider. Each type of provider is elaborated below.
+**** {{nbt|string|type}}: The type of provider.
+**** {{nbt|compound|filter}}: Options in Language -> Font Settings that must be in the given state for the provider to be used. Right now, these buttons are hardcoded, preventing the extension of these font filtering capabilities beyond the preset options provided.
+***** {{nbt|bool|uniform}}: Optional. The value that the "Force Uniform" option must be for this font provider to be enabled.
+***** {{nbt|bool|jp}}: Optional. The value that the "Japanese Glyph Variants" option must be for this font provider to be enabled.
+</div>
+
+=== Bitmap provider ===
+The <code>bitmap</code> provider defines simple bitmap glyphs &ndash; glyphs from textures.<!--It references a single PNG file, a list of the characters it applies to, an optional height, and an ascent.-->
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>bitmap</code>.
+** {{nbt|int|ascent}}: The amount of vertical shifting is applied to the glyph. In typography, the ascent is the distance above the baseline to the cap height (top of glyph). The baseline in a glyph is the line where the descender begins. For example, in the lowercase letter {{mono|y}}, the bottom end of the {{mono|y}} extends past the baseline. In Vanilla, when the height is 8, the ascent is most often 7, as the descender is 1.
+** {{nbt|list|chars}}: The characters associated with each glyph in the texture file. The characters inside each string entry inside this list are mapped to the corresponding positions in the referenced file. The texture is divided evenly according to the number of strings in the list, and the length of the longest string in that list.
+*** {{nbt|string}}: One line of characters.
+** {{nbt|string|file}}: The PNG file used for the characters of this provider. Textures may be any size, and glyphs may be any color. White glyphs can be colored any other color in-game. Other colors retain that tint when re-colored. Black glyphs always appear black. The glyphs' widths are automatically determined based on the last right-most column of pixels containing any alpha value above 0. Glyphs themselves must not be larger than 256&times;256 pixels.
+** {{nbt|int|height}}: The scale of the resulting glyph. This scale should generally match the glyph's individual height, or be a power of it. While heights outside of this recommended range are allowed and are valid, the resulting glyphs declared inside the provider appears warped when rendered in-game. The height field is optional. When not defined, it defaults to 8, regardless of the underlying texture resolution.
+</div>
+
+UTF-16 codepoints encoded in UTF-8 sequences can be used by use of surrogate pairs. To convert a character into a surrogate pair, one can use the following equations, where ''C'' is the codepoint in '''decimal''':
+
+* High Surrogate (first codepoint): {{math|((C - 65536) - (C % 1024))  ÷  1024 + 55296}}
+* Low Surrogate (second codepoint): {{math|(C % 1024) + 56320}}
+
+When the length of either <code>chars</code> or its strings is ''not'' a divisor of the resource's dimensions, it can result in an unexpected division of glyphs. The Unicode escape {{mono|\u0000}} can be used to add padding in the list. Padding acts as a "dummy character", so that the glyph data at that corresponding position in the file is not assigned a character.
+
+=== Space provider ===
+The <code>space</code> provider defines the width of a character's glyph.
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>space</code>.
+** {{nbt|compound|advances}}: Object that specifies the width of each character. The keys are the characters. The keys must be only 1 grapheme long (multi-byte character still count as one character, like {{mono|U+1F525 🔥 FIRE}}, which is encoded as <code>0xF0 0x9F 0x94 0xA5</code>). Although it is intended to be used for whitespace characters (characters that have "WSpace=Y" in Unicode), it can be used for any character, as long as there is no prior definition of that character's glyph.
+*** {{nbt|int|''<a codepoint>''}}: The width of the character specified by the key. Values must be an integer whose absolute value is less than or equal to 256. Negative values are forced to 0 when typed in [[chat]]. 
+</div>
+
+By default, the game has two widths defined:
+
+* U+0020 &lt;SPACE&gt; SPACE is 4
+* U+200C &lt;ZWNJ&gt; ZERO WIDTH NON-JOINER is 0
+
+=== TTF provider ===
+The <code>ttf</code> provider embeds already-compiled TrueType and OpenType fonts.{{fn|Despite its name, the TTF provider accepts OpenType ("otf") fonts.}}
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>ttf</code>.
+** {{nbt|string|file}}: A [[resource location]] to a file ending in <code>.ttf</code>. Path is relative to the {{code|/assets/<namespace>/font/}} directory.
+** {{nbt|int|oversample}}: The resolution to render at. Values that don't match the glyph's native em sizing division or DPI cause it to be anti-aliased.
+** {{nbt|list|shift}}: An array of two integers. It defines how much each glyph contained in this TrueType font is to be moved horizontally and vertically.
+*** {{nbt|int}}: The horizontal shifting (positive is ''leftward'', negative is ''rightward'').
+*** {{nbt|int}}: The vertical shifting (positive is ''downward'', negative is ''upward'').
+** {{nbt|int|size}}: This field is similar to a bitmap provider's height field. This is a divisor by which the em-size of the font's glyphs are to be divided and then fitted into the bitmap grid. This value can vary greatly across different fonts.
+** {{nbt|string}}{{nbt|list|skip}}: A list of strings or a string of the characters to which this font has no assignment. If it is a list of strings, the strings are concatenated together and then act as if it were originally a string. This allows the same input as a bitmap provider's '''chars'''.
+</div>
+
+=== Unihex provider ===
+The <code>unihex</code> provider is a replacement for the Legacy Unicode provider. It uses the [[wikipedia:GNU_Unifont#.hex_format|GNU Unifont .hex format]]. It references a ZIP archive that contains a number of <code>.hex</code> files.
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>unihex</code>.
+** {{nbt|string|hex_file}}: A [[resource location]] to a .ZIP archive file. It must be openable by Java's [https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/zip/ZipFile.html ZipFile]. Inside, there must be at least 1 <code>.hex</code> file at the root of the archive. Subdirectories are not walked through and filenames with an extension different from <code>.hex</code> are ignored. Filenames must follow normal file resource name rules.
+*** {{nbt|string}}: Each .hex file in the .ZIP archive contains one or more glyph definitions. Each line has one glyph definition, and follows the format <code>&lt;codepoint&gt;:&lt;data&gt;</code>. <code>&lt;codepoint&gt;</code> is the Unicode codepoint, without the U+ or 0x. It must have four, five, or six digits. The <code>&lt;data&gt;</code> is a hexadecimal number that encodes the glyph data. Glyphs are always sixteen pixels high. Glyphs can be eight, sixteen, 24, or 32 pixels wide.{{fn|Because the height is always 16, the width can be calculated. It is always equal to <code>len(data) // 4</code>.}}
+** {{nbt|list|size_overrides}}: Defines custom widths for a range of characters.
+*** {{nbt|compound}}: One range.
+**** {{nbt|string|from}}: The starting character for the range at which this size override applies to.
+**** {{nbt|string|to}}: The ending character for this range. Both <code>from</code> and <code>to</code> must be one character.
+**** {{nbt|int|left}}: The position of the left-most column of glyphs in range.
+**** {{nbt|int|right}}: The position of the right-most column of glyphs in range. Both <code>left</code> and <code>right</code> must be between 0 and 32, inclusive.
+</div>
+
+=== Reference provider ===
+The <code>reference</code> provider serves one purpose: to include another provider only once. It can be used to include providers from other fonts in other resource packs.
+
+Referenced providers are guaranteed to be loaded only once, no matter how many times they are included.
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>reference</code>.
+** {{nbt|string|id}}: A [[resource location]] to another font file.
+</div>
+
+=== Legacy Unicode provider ===
+{{Outdated feature|section=1}}
+
+The <code>legacy_unicode</code> provider is similar to the bitmap provider in that it loads glyphs from only textures. This format is deprecated, and is prioritized only when the "Force Unicode Font" option is turned on. It acts as a "fallback" for glyphs that no other provider has defined a texture for.
+
+<div class="treeview">
+* {{nbt|compound}}: The provider.
+** {{nbt|string|type}}: <code>legacy_unicode</code>.
+** {{nbt|string|template}}: A reference to a set of files. The string <code>%s</code> must be included in this field. <code>%s</code> is replaced with every valid page number, in hexadecimal.
+** {{nbt|string|sizes}}: A reference to a binary resource that contains the widths of each glyph. Most often, this file is called <code>glyph_sizes.bin</code>; this is its default name.
+</div>
+
+Templates, specified by the <code>template</code> field, are name-based, and are all PNG files. Each template file must have equal width and height. The template numbering scheme works based off of the Unicode [[wikipedia:Plane_(Unicode)#Basic_Multilingual_Plane|BMP]]. The number used is equal to a BMP codepoint's high byte.{{fn|"High byte" refers to the first byte in a multi-byte sequence. For example, the high byte of <code>0xABCD</code> is <code>0xAB</code>.}}{{fn|For codepoints with digits less than 4, they are padded with 0. For example, <code>0xF3</code> would be padded to <code>0x00F3</code>: page 00. Likewise, <code>0xFAE</code> is <code>0x0FAE</code>: page 0F.}} These template textures are called "pages". Template page "22" must cover characters {{mono|U+2200}} to {{mono|U+22FF}}. Page numbers go from <code>00</code> to <code>FF</code>. Characters beyond {{mono|U+FFFF}} cannot be changed through this provider. By default, each glyph is 16&times;16 pixels wide, so each individual template page is 256&times;256 pixels (16 glyphs on each line, 16 lines). Its default textures are an outdated version of [https://unifoundry.com/unifont/index.html GNU Unifont].<ref>{{bug|MC-197772||Missing textures in minecraft:uniform font|Fixed}}</ref><!-- The degree of how outdated it is is unknown. -->
+
+The file referenced by the <code>sizes</code> field must have the following format. Each character width is one byte large. The high nibble{{fn|A nibble is "half" of a byte. For example, in the byte {{mono|0xAB}}, {{mono|A}} is the high nibble and {{mono|B}} is the low nibble.}} records the starting position, while the lower nibble records the ending position in the 16&times;16 glyph grid. For this reason, the file must be 0xFFFF bytes long (65535 in decimal).
+
+A specific character's width is determined by finding its codepoints byte. The character 'A' has a codepoint of {{mono|U+0041}}, so byte offset {{mono|0x41}} (65 in decimal) would be addressed. A square character occupying the entire grid (pixel width #1 [0, 0x0] through #16 [15, 0xF]) would have a value of 0x0F (15 in decimal).
+
+Widths cannot extend past 16 pixels, and characters whose codepoints are greater than {{mono|U+FFFF}} are not handled. Some codepoints are invalid on their own. These are the [[wikipedia:UTF-16#U+D800 to U+DFFF (surrogates)|surrogate pairs]]; they are used to encode codepoints higher than {{mono|U+FFFF}} in UTF-16. This means that the template pages {{code|d=and|D8|D9|DA|DB|DC|DD|DE|DF}} are invalid and cannot be used.
+
+== History ==
+{{info needed section|Console Edition font info}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|Java classic}}
+|{{HistoryLine||0.0.2a|Added text to the game, and the default font as a result.}}
+|{{HistoryLine|Java beta}}
+|{{HistoryLine||1.1|The <code>font.txt</code> file was accidentally removed from [[client.jar]], resulting in all in-game text being invisible.}}
+|{{HistoryLine||1.1_01|Readded the <code>font.txt</code> file, which made in-game text display properly again.}}
+|{{HistoryLine|Java}}
+|{{HistoryLine||1.1|dev=11w49a|Added GNU Unifont to fully support multi-[[language]]s.}}
+|{{HistoryLine||1.5|dev=13w09a|The font texture is now able to be changed in a resource pack.
+|Added support for glyph resolutions above 16&times;16.}}
+|{{HistoryLine||1.6.2|dev=reupload|slink=Java Edition 1.6.2#Reuploads|Fixed distorted font when HD font is used.<ref>{{bug|MC-17673||Distorted fonts when using a converted texturepack on startup|Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=pre6|Fonts are now saved as TrueType font files.}}
+|{{HistoryLine|||dev=pre7|Reverted TrueType font.
+|Retroactively removed TrueType font file from pre-6.}}
+|{{HistoryLine||1.16|dev=20w17a|[[Raw JSON text format]] now has a {{cd|font}} key, which defines the font to use for that component. Default is {{cd|minecraft:default}}.
+|Added the {{cd|unihex}} provider.{{verify|this seems misplaced}}
+|The full range of Unicode is now supported in font definitions.{{verify|may also be misplaced}}}}
+|{{HistoryLine|||dev=Pre-release 7|The <code>chars</code> field of the <code>bitmap</code> provider can now specify UTF-16 codepoints.}}
+|{{HistoryLine||1.19|dev=22w11a|Added the {{cd|space}} provider.
+|Rendering of the space glyph is no longer hardcoded; it needs to be declared manually in the font.}}
+|{{HistoryLine||1.20|dev=23w17a|Removed the {{cd|legacy_unicode}} provider.
+|Added the {{cd|unihex}} provider.
+|Added the {{cd|reference}} provider.}}
+|{{HistoryLine||1.20.5|dev=24w06a|Added font variant filters to font providers.}}
+|{{HistoryLine||1.21.4|dev=Pre-Release 1|[[GNU Unifont]] updated to version 16.0.01.}}
+|{{HistoryLine||1.21.6|dev=25w18a|[[GNU Unifont]] updated to version 16.0.03.|Added previously omitted Unifont glyphs for Private Use Areas.|Unihex Font Provider: Field {{cd|size_overrides}} is now optional (defaults to empty list).}}
+|{{HistoryLine||1.21.11|dev=25w41a|{{cd|uniform}} font has been updated to use Unifont 17.0.01.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|Pocket alpha}}
+|{{HistoryLine||v0.1.0|Added the default ASCII font called {{cd|default.png}}.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Added GNU Unifont to fully support multi-languages.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|Console}}
+|{{HistoryLine||xbox=TU0|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added text to the game, and the default font as a result.}}
+|{{HistoryLine||xbox=TU1|Updated the font with a clearer version.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Although not in the changelog or specification, the default copy of the {{cd|unihex}} provider also includes a {{nbt|list|__ranges}} field in the {{nbt|compound}} entries of {{nbt|list|size_overrides}}. It is a list of strings, being the Unicode block names of the applying range.
+* The [[New Nintendo 3DS Edition]]'s font is a combination of the pre-1.12 JE font and some select characters from GNU Unifont. In addition, the {{mono|®}} sign was changed.
+
+== Gallery ==
+<gallery class="pixel-image">
+File:Lit vs unlit signs.png|Side-by-side comparison of glowing text versus normal text on a sign.
+File:Minecraft Formatting.gif|Formatted text in a book.
+File:Textformatting.png|Formatted text in chat.
+File:Font emojis JE1.png|The collection of the emojis in ''Java Edition''.
+File:Font typography diagram JE1.png|A diagram of typography terms and their relation to the font.
+File:Font ZWJ example JE1.png|Example of how multi-sequence emojis do not render correctly. This is the emoji {{mono|👨‍👩‍👧}}. The [ZWJ] are {{mono|U+200D &zwj; ZERO WIDTH JOINER}}
+File:Font U+FFFD and notdef JE1.png|Side-by-side comparison of � and the notdef character.
+File:Emojis.png|The 43 supported emojis as they appear in-game.
+File:Emojis in book.png|Private-area emojis written in a [[book]] in ''Bedrock Edition''.
+</gallery>
+
+== See also ==
+* [[Language]]
+* [[Sign]]
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://unifoundry.com/unifont/index.html GNU Unifont]
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Font| ]]
+
+[[de:Schriftdaten]]
+[[ja:フォント]]
+[[zh:字体]]

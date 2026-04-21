@@ -1,0 +1,203 @@
+{{About|the Nether feature|the mushroom equivalent|Huge Mushroom}}
+{{Infobox structure
+|image= <gallery>
+Huge Crimson fungi.png|Crimson fungi
+Huge Warped fungi.png|Warped fungi
+</gallery>
+|biome=
+* {{BiomeLink|Crimson Forest}}
+* {{BiomeLink|Warped Forest}}
+|surface = 
+* {{BlockLink|Crimson Nylium}} (Crimson fungus)
+* {{BlockLink|Warped Nylium}} (Warped fungus)
+|blocks=
+'''Crimson:'''
+* {{BlockLink|Crimson Stem}}
+* {{BlockLink|Nether Wart Block}}
+* {{BlockLink|Shroomlight}}
+* {{BlockLink|Weeping Vines}}
+'''Warped:'''
+* {{BlockLink|Warped Stem}}
+* {{BlockLink|Warped Wart Block}}
+* {{BlockLink|Shroomlight}}
+|canspawn=Yes, when the player uses [[bone meal]] on [[Nether fungus]].
+}}
+
+A '''huge fungus''' is a large tree-like feature that generates in [[the Nether]]. There are two types of huge fungi: the [[huge crimson fungus]] and the [[huge warped fungus]].
+
+== Variants ==
+There are two variants of huge fungus:
+* {{EnvLink|Huge warped fungus}}
+* {{EnvLink|Huge crimson fungus}}
+
+== Generation ==
+Huge crimson fungi and huge warped fungi generate only in [[crimson forest]]s and [[warped forest]]s, respectively.
+
+== Structure ==
+The trunks of huge fungi are made of either [[warped stem]]s or [[crimson stem]]s depending on the type. Naturally generated huge fungus trunks can be either thick or thin: thick trunks grow up in a 3×3-plus shape, with stray stems sometimes in the corners, while thin trunks grow straight up as a 1×1 column. To determine the size of huge fungi, a random integer is chosen between 4 and 13 [inclusive]. There is then a {{frac|1|12}} chance of that integer doubling. The resulting value is the height of the trunk. A layer of wart blocks and [[shroomlight]]s is then spread around the trunk, being able to generate up to 3 blocks out from the trunk, and are the "leaves" of the fungus. There is a 3×3×2 hollow ring that surrounds the lowest block of a fungus where no blocks generate. Both variants have shroomlights generate inside them, replacing both the wart blocks and stems. Huge crimson fungi may also have [[weeping vines]] growing replacing the same, or from the underside of wart blocks. In this way huge crimson fungi may grow the weeping vines lower than the stems as well as initially generate replacing the stems, when naturally-generated uniquely along the local ceiling.
+
+== Growth ==
+[[File:Small Huge Warped Fungi.png|thumb|The smallest a huge fungus structure can be.]]
+
+When bone meal is used on a [[Nether fungus]] that is planted on matching [[nylium]], this has a 40% chance to grow into its huge equivalent (similar to saplings and mushrooms). Crimson and warped fungi grow into crimson and warped huge fungi, respectively. The stem, shroomlight, or nether wart block do not replace blocks. Unlike a [[sapling]], a fungus does not grow by itself through random ticks.
+
+In [[Bedrock Edition]], growing a huge fungus with bone meal has a 6% chance for it to grow into the thick variant. In [[Java Edition]], its stem will always be the thin 1×1 variant.
+
+Huge fungi grow even with blocks above them,<ref>{{bug|MC-170858||Crimson and Warped trees do not check for empty space when growing|Works as Intended}}</ref> and do not replace any solid blocks when grown; however, they do not grow if blocked by the world height limit, or if situated outside of the world.
+
+Huge fungi can grow up to 27 blocks tall. The maximum space they can take up is 9×27×9 blocks (partially hollow), and the average is 213 blocks of volume.
+
+[[Wart Block|Nether wart blocks]] and [[shroomlight]] persist when the stem of the huge fungus is removed, unlike how [[leaves]] decay when [[log]]s of a tree are removed.
+
+== Data values ==
+=== ID ===
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=huge-fungus
+|spritetype=env
+|nameid=huge_fungus
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=huge-fungus
+|spritetype=env
+|nameid=crimson_fungus
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-fungus
+|spritetype=env
+|nameid=crimson_fungus_planted
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-fungus
+|spritetype=env
+|nameid=warped_fungus
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=huge-fungus
+|spritetype=env
+|nameid=warped_fungus_planted
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|hat_state}} The block to use for the hat.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|decor_state}} The block to use as decoration.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|stem_state}} The block to use for the stem.
+*** {{nbt inherit/block_state}}
+** {{nbt|compound|valid_base_block}} The block to place this feature on.
+*** {{nbt inherit/block_state}}
+** {{nbt|boolean|planted}} (optional, defaults to false) Whether this huge fungus is planted. If false, it can't exceed the world ceiling, can replace blocks whose material is {{cd|plant}}, and doesn't drop items when replaced by other blocks.
+** {{nbt|compound|replaceable_blocks}} A [[block predicate]]. The predicate must pass for a block to be replaced by this feature.
+*** {{list indent|*|{{#lst:block predicate|json format}}}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:huge_fungus",
+  "config": {
+    "decor_state": {
+      "Name": "minecraft:shroomlight"
+    },
+    "hat_state": {
+      "Name": "minecraft:warped_wart_block"
+    },
+    "planted": false,
+    "replaceable_blocks": {
+      "type": "minecraft:matching_blocks",
+      "blocks": [
+        "minecraft:warped_fungus",
+        "minecraft:crimson_fungus",
+        "minecraft:weeping_vines",
+        "minecraft:weeping_vines_plant",
+        "minecraft:twisting_vines",
+        "minecraft:twisting_vines_plant"
+      ]
+    },
+    "stem_state": {
+      "Name": "minecraft:warped_stem",
+      "Properties": {
+        "axis": "y"
+      }
+    },
+    "valid_base_block": {
+      "Name": "minecraft:warped_nylium"
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208&t|t=2h14m52s}}|Huge crimson and warped fungi was shown as part of [[crimson forest]] and [[warped forest]] biome.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w06a|Added huge crimson and warped fungi.}}
+|{{HistoryLine|||dev=20w09a|[[Nether fungi]] must now be placed on the matching [[nylium]] to grow into huge fungi.}}
+|{{HistoryLine||1.20|dev=23w17a|Added <code>replaceable_blocks</code> field to the <code>huge_fungus</code> feature config.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Added both types of huge fungi.}}
+}}
+
+== Issues ==
+{{Issue list|Huge Fungi|Huge Crimson Fungi|Huge Warped Fungi}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Tallest Crimson Fungi Render.png|Tallest crimson fungi found in Minecraft Java 1.21.10 in the seed -5282853790497605121 with the coords: (4299 80 -1197)
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Huge Crimson Fungi.png|A [[huge crimson fungus]] generated on [[netherrack]]
+Tall Crimson Fungi.png|Another huge crimson fungus generated on netherrack
+Huge Warped Fungi.png|A [[huge warped fungus]] in the [[warped forest]]
+Small-3x3-Crimson-Fungi.png|A small huge crimson fungus with a 3×3 stalk that generated on the roof of [[the Nether]]
+Shortest and Tallest Huge Fungi.png|The shortest huge fungi and the tallest huge fungi
+The most shroomlights that can naturally generate in a huge fungus.png|The theoretical maximum amount of shroomlights a huge fungus can generate with
+Nether tree splitter.png|A machine which splits huge fungus into multiple separate block streams
+</gallery>
+
+== See also ==
+*[[Tutorial:Huge fungus generation]]: a more detailed and advanced look on huge fungus generation.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox wood}}{{Navbox crimson}}{{Navbox warped}}{{Navbox generated features}}
+
+[[Category:Fungi]]
+
+[[de:Riesennetherpilz]]
+[[es:Hongo enorme]]
+[[fr:Champignon géant du Nether]]
+[[ja:巨大キノコ (ネザー)]]
+[[ko:거대한 균]]
+[[pl:Wielkie netherowe grzyby]]
+[[pt:Fungos enormes]]
+[[ru:Огромный грибок]]
+[[zh:巨型下界菌]]

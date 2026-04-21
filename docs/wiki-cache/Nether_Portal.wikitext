@@ -1,0 +1,365 @@
+{{For|other uses|Portal}}
+{{Infobox structure
+|image=Nether portal.gif
+|blocks = 
+* {{BlockLink|Obsidian}}
+* {{BlockLink|Nether Portal|link=Nether Portal (block)}}
+|canspawn=Yes, only when an entity goes through a portal and there is no other active portal within 128 blocks of the matching coordinate
+}}
+The '''Nether portal''' is a manufactured structure made of [[obsidian]] that acts as a gateway between the [[Overworld]] and [[the Nether]] [[dimension]]s.
+
+== Creation ==
+{| class="wikitable" style="float:right; margin:0"
+|+ Build schematics
+| align="center" | {{BlockGrid|spacing=1|o=Obsidian|p=Nether portal?Nether Portal (block)
+  |oooo
+  |oppo
+  |oppo
+  |oppo
+  |oooo
+  }}
+| align="center" | {{BlockGrid|spacing=1|o=Obsidian|p=Nether portal?Nether Portal (block)
+  | oo 
+  |oppo
+  |oppo
+  |oppo
+  | oo 
+  }}
+|-
+! Full version !! Minimal version
+|}
+The Nether portal is built as a vertical, rectangular frame of [[obsidian]] (4×5 minimum, 23×23 maximum). The four corners of the frame are not required, but portals created by the game always include them, resulting in 4 free/extra obsidian. The obsidian can be placed in any manner, e.g. by placing mined obsidian, by completing a [[ruined portal]], or by casting it in place using lava and water. Adjacent portals can share obsidian blocks. A Nether portal cannot be built horizontally like an [[end portal]].
+
+Once a frame is constructed, it is activated by [[fire]] placed inside the frame. This creates portal blocks inside the frame, resembling a vortex. The fire can be placed in any manner, including use of [[flint and steel]] or a [[fire charge]], the impact of a [[fireball]] or [[small fireball]], a [[Thunderstorm|lightning]] strike, or natural spread of fire to flammable material adjacent to the portal. Nether portals can be activated only in the Overworld or the Nether; they cannot be activated in [[the End]] and [[custom dimension]]s.
+
+The fire must be the last placed block in the structure—a fire on an incomplete frame does not result in the portal activating upon the placement of the last obsidian block.
+
+If no corresponding portal within range exists in the other dimension when a portal is used by almost any entity except [[wither]]s and the [[ender dragon]]{{only|je}} or by a player{{only|be}}, one is created there; see {{Section link||Portal search}} and {{Section link||Portal creation}}.
+
+== Behavior ==
+{{main|Nether Portal (block)}}
+
+When a player in the [[Overworld]] or [[the Nether]] stands in a Nether portal block for 80 game ticks (4 seconds) in survival mode or 1 game tick ({{frac|1|20}} second) in creative mode, the player is taken to the other dimension (In [[Java Edition]], the teleport delay can be configured by changing the [[gamerule]] <code>playersNetherPortalDefaultDelay</code> and <code>playersNetherPortalCreativeDelay</code> for players in Creative Mode). The player can step out of a portal before it completes its animation to abort the teleport. If there is already an ''active'' portal within range (about 128 blocks) in the other dimension, the player appears in that portal. Otherwise, a portal is created at or near the corresponding coordinates. If a portal is deactivated, and the matching portal in the other dimension is used before it is re-activated, a new portal may be created (unless there is another active portal within range). The usual cause for this is when the player's Nether-side portal is deactivated by a ghast, and then the player dies in the Nether, spawns, and then re-enters the Nether through the Overworld-side portal. However, multiple portals can be exploited to farm obsidian.
+
+Most entities can travel through portals, including mobs (except the [[wither]] and [[ender dragon]]), [[item (entity)|thrown items]], and transportation with passengers{{only|je}}, including [[boat]]s, [[minecart]]s and [[horse]]s.<!--Storage minecarts and powered minecarts can pass through. Thus, inter-dimensional railways are limited to cargo. --> Unlike players, other entities travel through portals instantly, and once they reach the other side, there is a cool-down time for 300 game ticks (15 seconds), in which they cannot go through any Nether portals. Therefore, an entity can travel though Nether portals again after not touching any Nether portal for 15 seconds. An exception are minecarts and boats, which have a 10 tick (0.5 seconds) cooldown. In ''Bedrock Edition'', a parrot on the player's shoulder prevents the player from going through the portal.<ref>{{bug|MCPE-27950}}</ref>
+
+[[Zombified piglin]]s have a chance to spawn on the bottom frame of the portal in the Overworld {{in|je}} if any Nether portal block above receives a [[block tick]]. {{IN|be}} they spawn in certain squares adjacent to the portals in the Overworld, not inside them. Zombified piglins spawned in this way have a full 15-second portal cooldown, meaning they can't go through the portal they are spawned in unless they leave the portal for a while. They spawn twice as often on Normal difficulty as on Easy, and three times as often on Hard difficulty as on Easy. No other mobs can be spawned by Nether portals in this way, in any dimension.
+
+Active portals also repel [[hoglin]]s.
+
+=== Chunk loading ===
+{{Exclusive|Java|section=3}}
+{{Main|Chunk#Chunk loading}}
+
+Whenever an entity is teleported through a Nether portal, the chunk at the linked portal gets load ticked with load level of 30, meaning that it is fully loaded and can process entities. This load level also spreads to adjacent chunks but they get lower for each chunk. This results in 8 more fully loaded "[[Chunk#Level_and_load_type|entity ticking]]" chunks with gradually fewer loaded chunks further out.
+
+These chunks remain loaded for 15 seconds but this timer gets refreshed each time the entity passes through the portal (including mobs wandering through it from either direction). This can be used to permanently load chunks, creating a "chunk loader". Permanently-loaded chunks created using chunk loaders create a measurable amount of lag.{{Citation needed}}
+
+=== Portal linkage between Overworld and Nether ===
+{{see also|Tutorial:Nether portals}}
+{{Calculator|netherCoords}}
+[[File:ClosestPortal.png|thumb|The closest portal to the corresponding location receives the player.]]
+[[File:IfNoPortal.png|thumb|A new portal is generated in the closest empty area if no portal is found in range.]]
+
+==== Coordinate conversion ====
+
+Horizontal coordinates and distances in the Nether are proportional to the Overworld in a 1:8 ratio. That is, by moving 1 block horizontally in the Nether, players have moved the equivalent of 8 blocks on the Overworld. This does not apply to the Y-axis. Thus, for a given location (X, Y, Z) in the Overworld, the corresponding coordinates in the Nether are (floor(X ÷ 8), Y, floor(Z ÷ 8)), and conversely, for a location (X, Y, Z) in the Nether, the matching Overworld coordinates are (X × 8, Y, Z × 8).
+
+The [http://download.oracle.com/javase/6/docs/api/java/lang/Math.html#floor%28double%29 Java floor() method] used in these conversions rounds down to the largest integer less than or equal to the argument (toward smaller positive values and toward larger negative values), so a coordinate of 29.9 rounds to 29, and one of −29.9 to −30.
+
+Both the X and Z coordinates in this conversion are constrained to be within the [[world border]] (29,999,983 and -29,999,984 (inclusive)); this affects travel to the Overworld from the Nether at X or Z beyond ±3,749,998.
+
+==== Portal search ====
+When an entity starts colliding with a [[Nether Portal (block)|Nether portal block]], the game records the coordinates of the entity.
+
+The game then converts those coordinates into destination coordinates as above: The entry X- and Z-coordinates are multiplied by 8 if the entity is in the Nether or divided by 8 if the entity is in the Overworld, while the Y-coordinate is not changed.
+
+Starting at these destination coordinates, the game looks for all nearby portal points of interest. The point of interest can be within a 256×256 square block area (128-block radius) in the Overworld and a 32×32 square block area (16-block radius) in the Nether<ref>{{bug|MC-197538|||WAI}}</ref> centered on the converted coordinate and the full map height.
+
+If any candidate portal point of interest is found, then the game selects the closest one as determined by its [[Tutorial:Units of measure|distance]] in the new coordinate system (including the Y coordinate, which can cause seemingly more distant portals to be selected), and teleports the entity to the location in the new portal calculated by a special algorithm. Note that the calculated distance is [[Euclidean distance]], not [[taxicab distance]]. The distance computation between portals in the range is a straight-line distance calculation, and the shortest path is chosen, counting the Y difference.
+
+The algorithm used for determining the position of the entity inside the destination portal to teleport to is as follows: 
+
+* Portal rectangle dimensions are determined for both source and destination portals. (Not counting the obsidian)
+* Entity [[hitbox]] dimensions are subtracted from those rectangles' width and height, meaning that the entity can now be considered as a point, to avoid problems with preserving the hitbox dimensions in a geometrical transformation.
+* Distance between the bottom of the source portal and the bottom of the entity hitbox is measured, similar is done for distance to one of the sides of the portal.
+* Those offsets are then multiplied by the ratio of the reduced sizes of the portals and used to get the position in the destination portal.
+* If one of the dimensions of entity hitbox is larger than the portal, the corresponing dimension falls back to bottom-middle of the destination portal, the other dimension is still calculated using the algorithm.
+* If the destination portal is at 90° to the source portal, entity yaw and velocity are rotated 90° clockwise, regardless of the direction of travel, meaning that if player travels there and back without touching their mouse, they get rotated 180°, but the coordinates remain the same, making it appear as if the player exited through the wrong side of the portal {{only|je}}.
+
+This way, if source and destination portals are of the same shape, have the same orientation, and no other portals are interfering with the linking, one can safely assume that entities can travel through them as if the portal frames were physically placed behind each other.
+
+==== Portal creation ====
+If no portals exist in the search region, the game creates a new one by looking for the closest suitable location to place a portal, within 16 blocks horizontally (but any distance vertically) of the incoming entity's destination coordinates. A valid location consists of 3×4 buildable blocks{{info needed|what is considered buildable}} with 4 blocks of air above all 12 blocks, with the long axis matching the long axis of the source portal. The closest valid position in the 3D distance is always picked. The incoming entity can be almost any entity except withers and the ender dragon {{in|JE}} or only be a player {{in|be}}.
+
+This means that if a portal constructed in the Nether exceeds 18 blocks wide, each end will connect to two separate Overworld portals.
+
+If the first check for valid locations fails entirely, the check is redone looking for a 1×4 expanse of buildable blocks with air 4 high above each. <!-- Technically it doesn't redo it, it searches for both 3×4 and 1×4 spaces in the first pass but uses the 1×4 result if no 3×4 was found. But it's easier to explain as two passes. -->
+[[File:Floating Nether Portal.png|thumb|A floating Nether portal]]
+If that fails, too, a portal is forced at the target coordinates, but with Y constrained to be between 70 and 10 less than the world height (i.e. 118 for the Nether or 310 for the Overworld). When a portal is forced in this way, a 2×3 platform of obsidian with air 3 high above is created at the target location, overwriting whatever might be there. This provides air space underground or a small platform if floating. {{IN|be}}, these obsidian blocks are flanked by 4 more blocks of [[netherrack]] on each side, which is the only renewable source of netherrack.
+
+Once coordinates are chosen, a portal (always 4×5 and including the corners) including portal blocks is constructed at the target coordinates, replacing anything in the way.
+
+If a portal is forced into water or lava, the liquid immediately flows into the generated air blocks, leaving the player with no airspace. However, a glitch can prevent this water from flowing into the portal: if the liquid would flow both vertically and horizontally into the air pocket, it instead flows only vertically, so the blocks on the platform's outer corners never become water source blocks.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Nether portal ambient.ogg
+|subtitle=Portal whooshes<ref name=GenericPortalVisible group=sound>The subtitle refers to it generically as a portal rather than specifically a Nether portal: see {{bug|MC-218020}}</ref>
+|source=block
+|description=Randomly
+|id=block.portal.ambient|idnote=<ref name=GenericPortal group=sound>The sound event and translation string still refers to this generically as "{{cd|portal}}", despite the block being named "{{cd|nether_portal}}"; see also {{bug|MC-193751}}</ref>
+|translationkey=subtitles.block.portal.ambient|translationkeynote=<ref name=GenericPortal group=sound/>
+|volume=0.5
+|pitch=0.8-1.2
+|distance=10}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|subtitle=Portal noise fades<ref name=GenericPortalVisible group=sound/>
+|source=ambient
+|description=After the player is teleported through a Nether portal
+|id=block.portal.travel|idnote=<ref name=GenericPortal group=sound/>
+|translationkey=subtitles.block.portal.travel
+|translationkeynote=<ref name=GenericPortal group=sound/>
+|volume=0.25
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Nether portal trigger.ogg
+|subtitle=Portal noise intensifies<ref name=GenericPortalVisible group=sound/>
+|source=ambient
+|description=When the player enters a Nether portal
+|id=block.portal.trigger|idnote=<ref name=GenericPortal group=sound/>
+|translationkey=subtitles.block.portal.trigger|translationkeynote=<ref name=GenericPortal group=sound/>
+|volume=0.25
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Nether portal ambient.ogg
+|source=block
+|description=Randomly
+|id=portal.portal
+|volume=0.25
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|source=ambient
+|description=After the player is teleported through a Nether portal
+|id=portal.travel
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Nether portal trigger.ogg
+|source=ambient
+|description=When the player enters a Nether portal
+|id=portal.trigger
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Achievements ==
+{{load achievements|Into the Nether}}
+
+== Advancements ==
+{{load advancements|We Need To Go Deeper;Nether;Subspace Bubble;Uneasy Alliance;Ice Bucket Challenge}}
+
+== Videos ==
+
+{{Video note|These videos are from [[Java Edition 1.5]], so most of the  major features to the Nether were not yet introduced.}}
+{{yt|73PqNKOpX_U|align=inline}}
+{{yt|dnUD4DK3Gqw|align=inline}}
+
+== History ==
+
+=== History of the structure itself ===
+{{MoreImages|Nether portals during a1.2.0-preview, Beta 1.9 Prerelease 4 Nether portals, and Texture Update Nether portals (and Nether portal block).|section=11}} 
+
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=preview|Added Nether portals.}}
+|{{HistoryLine||v1.2.2a|The [[player]] can now create a Nether portal by pressing {{key|F4}} (presumably a developer testing function).}}
+|{{HistoryLine||v1.2.2b|The {{key|F4}} cheat has been removed from Nether portals.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=September 11, 2013|slink={{tweet|Dinnerbone|377794308453437440}}|[[Dinnerbone]] releases images of larger and different shaped Nether portals, also mentions the ability to light a portal from any [[block]], not just the bottom row.<ref>{{tweet|Dinnerbone|377797008981254146|Bunch of other small tweaks to them too; you can light a portal from any block, not just the bottom row. Good for automatic on/off toggling|September 11, 2013}}</ref>
+Both the sign and circular nature of the portal in the second image are references to [[wikipedia:Stargate|Stargate]], [[wikipedia:Jack O'Neill|Col. Jack O'Neill]] was often heard mentioning his hatred for [[wikipedia:Cliché|cliches]].}}
+|{{HistoryLine|||dev=13w37a|Portals can now be activated from any [[block]] within the portal, not just the bottom (when any [[fire]] block appears inside the frame).
+|There are now new Nether portal building rules: portals can now be built at a minimum of 4×5, and a maximum of 23×23.
+|Nether portals now use block data values (later changed to block state) to determine their orientation. Old portals created in [[Java Edition 1.6.4|1.6.4]] and earlier have a tendency to close when upgrading.}}
+|{{HistoryLine||1.16|dev=20w16a|Added [[ruined portal]]s.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added Nether portals.
+|Nether portals can be built at a minimum of 4×5, and a maximum of 23×23.}}
+}}
+
+==== Legacy Console Edition ====
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added Nether portals.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|There are now new Nether portal building rules: Any rectangular shape from 4×5 to 23×23.
+|If the Nether portal in [[the Nether]] is big enough, [[ghast]]s can now travel through.
+|Nether portals can now be activated by any [[fire]] block within the frame.}}
+}}
+
+==== ''New Nintendo 3DS Edition'' ====
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added Nether portals.}}
+}}
+
+=== Other historical info ===
+
+==== Development ====
+{{HistoryTable
+|{{HistoryLine||October 4, 2010|link={{tumblr|notch|1243370641}}|A poster on [[Notch]]'s blog announced a new "hell world," and hinted that it would utilize portals for fast travels.}}
+|{{HistoryLine||October 22, 2010|link={{tweet|notch|28442542287|}}|Originally, [[ghast]]s were intended to spawn from Nether portals (referred to as "gates") in the [[Overworld]]. However, this ability has not yet been implemented.<ref>{{tweet|jeb|53730464141295616|@BlakesAwesome No it doesn't|April 1, 2011}}</ref>}}
+|{{HistoryLine||October 29, 2010|link={{tumblr|notch|1431121056}}|Notch sent a preview of the [[Halloween Update]] to two gaming companies; their articles<ref>{{citation|url=https://www.pcgamer.com/minecraft-halloween-update-hands-on/|title=Minecraft Halloween Update hands-on|author=Tom Francis|website=PC Gamer|date=October 29, 2010}}</ref><ref>{{citation|url=https://indiegamesplus.com/2010/10/handson_with_the_minecraft_hal|title=Hands-On With the Minecraft Halloween Update|author=Michael Rose|website=IndieGames.com|date=October 29, 2010|archive-url=https://web.archive.org/web/20120104084455/http://www.indiegames.com/2010/10/handson_with_the_minecraft_hal.html}}</ref> detailed the usage of Nether portals, used for entering what was then known as "[[The Nether|the Slip]]".}}
+}}
+
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|Nether portals now work in [[multiplayer]]. Before this update, Nether portals could be created on multiplayer servers, but could not teleport [[player]]s to [[the Nether]], thus multiplayer servers required [[modding]] to access the Nether.
+|Compared to singleplayer, nether portals in multiplayer appear noticeably less polished: they do not play the <code>travel.ogg</code> or the screen animation used after traveling, and the loading screen does not display "Entering the Nether" or "Leaving the Nether".
+|Standing in a Nether portal now forces all GUIs to close, including the pause menu and chat.
+|The nausea screen animation shown while entering a nether portal is now slower.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w07a|The [[Overworld]]'s height limit has been raised to 256, but portals from [[the Nether]] cannot find portals above Y{{=}}128.}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of singleplayer being changed to an internal server, all of the aforementioned issues with multiplayer nether portals have been transferred to singleplayer as well.}}
+|{{HistoryLine|||dev=12w22a|[[Zombie pigmen]] now rarely spawn from Nether portals in the Overworld.}}
+|{{HistoryLine|||dev=?|Portals from [[the Nether]] now search the entire height of the Overworld.}}
+|{{HistoryLine||1.4.2|dev=12w34a|Non-player [[Entity|entities]] can now travel through portals.
+|The screen animation and sound used when entering a portal is now replayed after traveling through, rather than having no animation (as before this snapshot) or a unique animation (as before 12w18a).}}
+|{{HistoryLine|||dev=12w38a|The Nether now loads faster when traveling through a Nether portal in [[Survival]] mode and loads immediately when in [[Creative]] mode.}}
+|{{HistoryLine||1.7.2|dev=13w41a|Nether portals, [[water]] and [[ice]] are now visible through each other.}}
+|{{HistoryLine||1.8|dev=14w31a|The pause menu can once again be opened while standing in a Nether portal.}}
+|{{HistoryLine||1.9|dev=15w33c|A non-player entity going through a Nether portal no longer causes a return portal to generate on the other side if none exists already.}}
+|{{HistoryLine|||dev=16w02a|Nether portals now play <code>travel.ogg</code> again.}}
+|{{HistoryLine||1.14|dev=Pre-Release 5|Non-player entities now keep the other side loaded for 15 seconds after an entity goes through if the portal is linked.|Non-player entities no longer travel through non-linked Nether portal instead of appearing on the other side with no portal to come back.}}
+|{{HistoryLine||1.15|dev=19w36a|Nether portals in the [[Overworld]] now correctly link with portals placed in the top half (128–255) of [[the Nether]] dimension.
+|Search for an existing portal to connect to is now chunk based: the searched area is now 17×17 chunks instead of 257×257 blocks.}}
+|{{HistoryLine||1.16|dev=20w06a|Traveling through Nether portals is now almost seamless.}}
+|{{HistoryLine|||dev=20w14a|Hoglins are now scared of active portals.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Reduced the portal search radius when travelling to the Nether from 128 blocks to 16 blocks in order to correctly account for the 1:8 position scale.}}
+|{{HistoryLine||1.20|dev=Pre-release 1|Nether portals once again produce the correct screen animation after changing dimensions.<ref name=standbug>{{Bug|MC-180|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.3|dev=23w42a|Nether portal delay can now be configured with the gamerules <code>playersNetherPortalDefaultDelay</code> and <code>playersNetherPortalCreativeDelay</code>.}}
+|{{HistoryLine||1.21|dev=24w21a|Non-Player entities can once again travel through non-linked Nether portals and generate a portal on the other side.
+|Added game rule {{cd|entitiesWithPassengersCanUsePortals}}, allowing entities with passengers to travel through nether portals.<ref>{{bug|MC-67||Entities with passengers cannot travel through portals|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre1|Removed game rule {{cd|entitiesWithPassengersCanUsePortals}}. Entities with passengers can now use Nether portals by default.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Reduced teleport cooldown for [[minecart]]s and [[boat]]s from 15 seconds to 0.5 seconds.|Reduced teleport cooldown for [[projectile]]s from 15 seconds to 0.1 seconds.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||unknown|The [[sound]]s of Nether portals have been updated to match [[Java Edition|Java]].}}
+}}
+
+==== Legacy Console Edition ====
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Non-player [[Entity|entities]] can now travel through portals.|The screen animation used when entering a portal is now always replayed after traveling through, rather than only sometimes.{{check version}}|Players in creative mode are now teleported into the other dimension instantly.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|If the Nether portal in [[the Nether]] is big enough, [[ghast]]s can now travel through.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|A non-player entity going through a Nether portal no longer causes a return portal to generate one on the other side, if one does not exist already.{{check version}}|Nether portals now play <code>travel.ogg</code>. Unlike in other editions, the sound isn't random pitched.}}
+}}
+
+==== ''New Nintendo 3DS Edition'' ====
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.9.19|The screen animation used when entering a portal is now replayed after traveling through, rather than having a unique animation.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Portals can be placed together in a tunnel-like fashion, though it appears as if the third portal is lit as the first two in a row mimic glass. If more than six portals are connected, the inner portals are completely invisible while in the portal tunnel; however, the particle effects can still be seen throughout. These connected portals also share the 4-second countdown until teleportation, so as long as the [[player]] is within a connected portal, they are sent to another [[dimension]].
+* The [[player]] cannot open their [[inventory]] or the [[chat]] window while standing in an active portal, and any other GUI (such as that of a [[chest]] or [[villager]]) is immediately closed when opened.
+* If two portals intersect and the player lights a fire in the intersection (i.e., in both portals at once), only the portal that lies within the x-axis is activated. Lighting any other [[block]] activates whichever portal it is in.
+* Minecraft's "Visit the Nether!" describes the portal surface as "a translucent, purple, liquid-like substance."<ref>{{Mcnet|visit-nether-|Visit the Nether!|November 10, 2019|Duncan Geere}}</ref>
+* Nether portals can theoretically spawn pre-lit, if two [[ruined portal]]]s or a ruined portal and one of the rooms with obsidian of a [[woodland mansion]] intersect so that a complete obsidian frame is formed, and fire spreads into the middle of the frame through natural means.
+
+=== Publicity ===
+* A [[LEGO Minecraft]] Nether portal was included in the LEGO Minecraft Set: "The Nether".
+* On 29 October 2010, ''PC Gamer'' released [http://www.youtube.com/watch?v=0Um6x9T-yRM this video], showing a portal being constructed and used.
+* On 1 April 2011, ''Think Geek'' released [http://www.youtube.com/watch?v=cLGJ6DzMdqY this video] to advertise one of their annual fake April Fools products: the [https://web.archive.org/web/20170903042358/http://www.thinkgeek.com/product/e8bf/ Minecraft USB Desktop Nether Portal].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Zombie pigman and nether portal.png|A [[zombified piglin]] wandered through a Nether portal and into the Overworld.
+Inside Portal Alpha 1.2.3 01.png|A view of inside a portal.
+Minecraft Portal 23x23 Graduated.png|The biggest Nether portal size (23×23 exterior, 21×21 opening).
+Crimsonportal.png|Nether portal generated on a cliff in crimson forest.
+Nether Portal Cluster.png|A cluster of Nether portal frames generated by repeatedly going through the Nether-side portal, deactivating the Overworld-side portal and teleporting back to the Nether.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Ari and Noor approach the portal.png|[[Ari]] and [[Noor]] entering into a Nether portal.
+File:Efe's blunder.jpg|[[Efe]] failing to construct a Nether portal
+</gallery>
+=== Development images ===
+<gallery>
+Alpha v1.2.0 (preview) Slip gate activated.jpg|Screenshot of a lit Nether portal during a1.2.0-preview.
+4x5-5x7 Nether Portal.png|Image released for 1.7.2 by Dinnerbone on September 11, 2013
+7x7 Nether Portal.png|7×7 portal.
+Portal large.png|Large Portal.
+Nether Portal & Stonecutter.png|A large Nether portal.
+Darngeek Nether Portal.png|[[Darngeek]] standing in front of a Nether portal.
+Searge Nether Portals.png|Two Nether portals next to each other.
+Searge Strange Screenshot.jpg|Screenshot from [[Searge]] showing a 3×4 Nether portal.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Mangrove Portal.jpg|A Nether portal in a [[mangrove swamp]], as shown in the [[Wild Update]] trailer.
+File:Snifflet goes to the Nether.png|A [[snifflet]] wandering into a Nether portal.
+File:Inexplicable jungle portal.png|A Nether portal in the [[jungle]].<ref>https://www.youtube.com/watch?v=j8DVLpUld7E</ref>
+File:Camel peeks out of portal.png|A [[camel]] peeking out of a portal.
+File:LegendsLiveEvent Screenshot 3.png|A Nether portal as it appears in the [[Minecraft Legends Live Event]].
+File:Portal Glitter.jpg|An officially licensed "Nether Portal Glitter Motion Light."
+File:Floating Island Artwork 1.png|Official artwork featuring a Nether portal.
+File:Floating Island Artwork 2.png|Official artwork featuring a Nether portal.
+File:Floating Island Artwork 3.png|Official artwork featuring a nether portal.
+File:Floating Island Artwork 4.png|Official artwork featuring a nether portal.
+File:Play With Friends Realms 672x360.png|Pixel art of [[Zuri]] leaping out of a portal, featured on Minecraft.net.<ref>https://www.minecraft.net/en-us/about-minecraft</ref>
+File:AMCM obsidian gateway.jpeg|A nether portal in {{amcm}}.
+File:Woodsword Chronicles nether portal.jpg|A nether portal as it appears in [[Minecraft: Woodsword Chronicles]]
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox environment}}
+[[Category:The Nether|P]]
+[[Category:Player-built structures]]
+
+[[de:Netherportal]]
+[[es:Portal del Nether]]
+[[fr:Portail du Nether]]
+[[it:Blocco#Blocchi tecnici]]
+[[ja:ネザーポータル]]
+[[ko:네더 차원문]]
+[[nl:Netherportaal]]
+[[pl:Portal Netheru]]
+[[pt:Portal do Nether]]
+[[ru:Портал Нижнего мира]]
+[[uk:Портал Незеру]]
+[[zh:下界传送门]]
+[[Category:Portals]]

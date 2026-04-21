@@ -1,0 +1,235 @@
+{{about|the item that gives names to mobs|the nameplate above a player's head|Player#Username|other uses|Tag}}
+{{Infobox item
+| image = Name Tag.png
+| renewable = Yes
+| stackable = Yes (64)
+}}
+A '''name tag''' is an [[item]] {{ctrl|used}} to give a name to a [[mob]] after writing one on the tag using an [[anvil]]. Most named mobs do not despawn or count towards the mob cap.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|A3=Paper
+|B2=Any Nugget
+|Output=Name Tag
+|type=Utility
+}}
+
+=== Generated loot ===
+{{LootChestItem|name-tag}}
+
+=== Fishing ===
+{{Main|Fishing}}
+Name tags are obtainable through fishing, with a 0.8% chance per attempt. See [[fishing]] for more details.
+
+=== Trading ===
+{{Trade sources}}
+
+== Usage ==
+To use a name tag, it must first be renamed with an [[anvil]], costing 1 [[experience]] level. A stack of up to 64 name tags can be renamed at once, and the cost is still 1 experience level per stack.
+
+If it is not renamed, it has no effect when used on a mob. After the name tag is renamed, the player can {{control|use}} it on a mob to give it the name given to the name tag from the anvil. Mobs and name tags can be renamed any number of times. Name tags with the same name are stackable. 
+
+Once a mob is named, it keeps its name, and the name tag is consumed.
+
+When a mob is named, it becomes [[persistent]] and is excluded from the mob cap count.
+
+Effects on various mobs:
+* A named [[silverfish]] that goes into a block appears to lose its name because it is replaced by a newly generated unnamed silverfish when the block is broken.
+* A [[creaking]] spawned by a [[creaking heart]] can survive during the day if named.
+* A baby (animal or villager) keeps its name when becoming an adult.
+* A named [[villager]] keeps its name when transformed into a [[zombie villager]]. Once transformed, the zombie villager can despawn naturally unless it was transformed by a named zombie.
+* A named zombie villager keeps its name when cured.
+* [[Wandering trader]]s still despawn even if they are named, or in a [[minecart]] or [[boat]].
+* Naming a [[wither]] (or [[ender dragon]] with commands) displays the name in the boss bar instead of the respective mob's name.
+
+=== Limitations ===
+Any mob can be named except for the [[ender dragon]] and the [[agent]]s. Players also cannot be named.
+
+A name tag can be renamed with an [[anvil]] using up to 50 characters{{only|Java|short=1}} or 30 characters{{only|Bedrock|short=1}}.
+
+A name tag can rename an [[armor stand]], though it does not show the nameplate above its head until <code>CustomNameVisible:1b</code> is set as an extra step.
+
+{{control|Using|use}} a name tag on a villager or wandering trader renames the mob instead of opening the trading interface. A rideable mob is renamed instead of being ridden. 
+
+Once a name tag is used on a mob, it is impossible to remove the name of that mob without the use of commands or external modifications.
+
+A mob cannot be named "Name Tag" unless the player gives the tag a new name and then renames it back to "Name Tag" or changes to a [[language]], where the name tag is not called "Name Tag" and then renames it to "Name Tag".
+
+=== Behavior ===
+Renamed mobs have their name displayed over their head in the same fashion as a mob named through a renamed [[spawn egg]]. Their names can be seen only if they are aimed at from 3 or fewer blocks away in Survival, Adventure, and Spectator mode or from 5 or fewer blocks away in Creative mode.
+
+Mobs that are named using the name tag never despawn in the world, similar to tamed mobs.<ref>{{tweet|dinnerbone|327485109940916226|@Random_Guy_32 @Mortalized An item that makes any creature, good or bad, stay in your world forever? Must be entirely decorative ;)|April 25, 2013}}</ref> The exceptions are [[wandering trader]]s or if the mob is hostile and the difficulty is switched to "[[Peaceful]]", causing any hostile mobs or any named hostile mobs to despawn immediately. 
+
+If a renamed mob kills a player, the custom name is used in the death message in place of the mob type name. For instance, if a vindicator named "Johnny" kills a player, the death message is "Player was slain by Johnny". 
+
+A renamed [[wither]] also has a renamed health bar.
+
+The name of a renamed entity is stored in the NBT tag <code>CustomName</code>; editing the string component of the tag is equivalent to renaming the entity via a name tag.{{Only|java}}
+
+=== Easter eggs ===
+* Any mob that receives the name "Dinnerbone" or "Grumm" is [[Easter eggs#Upside-down mobs|rendered upside down]]. This even includes the player {{in|BE}} if the username is set to either of these and the user is not signed into their Microsoft account.
+* Naming a [[sheep]] "jeb_" causes [[Easter eggs#Jeb sheep|its wool to fade between the dye colors, producing a rainbow effect]]. The [[wool]] that drops when the sheep is [[shear]]ed or killed is the original color of the sheep before the sheep was named. A rainbow sheep can never be upside-down as described above, because a mob cannot have multiple names.
+* Naming a [[rabbit]] "[[Rabbit#Toast|Toast]]" causes it to have a special memorial skin of user xyzen420's girlfriend's [http://www.reddit.com/r/minecraftsuggestions/comments/27hjog/to_themogminer_my_bunny_is_missing_please_help_me/ missing rabbit].
+* Naming a [[vindicator]] "Johnny" causes it to be aggressive and attack all [[mob]]s including the wither (except [[ghast]]s and other [[illager]]s). The hostility even extends to [[ravager]]s {{in|je}}, as the "Johnny" vindicator can also attack the ravager while riding it.
+* Each of these effects are case sensitive (e.g. renaming a rabbit to "toast" will not affect its texture)
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Name Tag
+|spritetype=item
+|nameid=name_tag
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Name Tag
+|spritetype=item
+|nameid=name_tag
+|id=548
+|form=item
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.6.1|dev=13w16b|[[File:Name Tag JE1 BE1.png|32px]] Added name tags. They can now be found in [[dungeon]] [[chest]]s.}}
+|{{HistoryLine|||dev=13w25a|A [[mob]] named "Dinnerbone" or "Grumm" now renders upside down.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Name tags can now rarely be acquired by [[fishing]], making them [[renewable resource|renewable]].}}
+|{{HistoryLine||1.7.4|dev=13w48b|A sheep named "jeb_" now fades between the [[dye]] colors.}}
+|{{HistoryLine||1.8|dev=14w03b|Name tags can now be [[trading|bought]] from librarian [[villager]]s, at 20–22 [[emerald]]s for 1 name tag.}}
+|{{HistoryLine|||dev=14w27a|[[Rabbit]]s have been added and naming one "Toast" gives it a special memorial skin.}}
+|{{HistoryLine||1.9|dev=15w44a|Added name tags to [[mineshaft]] [[chest]]s.
+|The average yield of name tags in [[dungeon]] chests has been decreased.}}
+|{{HistoryLine|||dev=15w49a|[[File:Name Tag JE2.png|32px]] The texture of name tags has been slightly changed.}}
+|{{HistoryLine||1.11|dev=16w39a|Name tags can now be found in the new [[woodland mansion]] chests.
+|Added [[vindicator]]s, which attack almost all mobs if named "Johnny".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Name Tag JE3 BE2.png|32px]] The texture of name tags has been changed.}}
+|{{HistoryLine|||dev=19w11a|[[Librarian]] villagers now sell name tags for 20 emeralds.}}
+|{{HistoryLine||1.16|dev=20w12a|Name tags can now only be caught when fishing in open water like any other treasure item.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Name tags now generate in [[ancient city]] chests.}}
+|{{HistoryLine||1.21.2|dev=pre1|exp=Winter Drop|[[Creakings]] spawned from [[creaking heart]]s can no longer be named using name tags.}}
+|{{HistoryLine||1.21.5|dev=25w02a|Naturally spawned creakings can now be named with name tags again.
+|Named naturally spawned creakings will persist through the day.}}
+|{{HistoryLine||1.21.9|dev=Pre-Release 2|Mobs named "deadmau5" no longer render their name tag 10 pixels higher than normal.}}
+|{{HistoryLine||26.1|dev=snap2|Name tags can now be crafted with 1 paper and 1 [[nugget]].}}
+|{{HistoryLine|||dev=snap11|Name tags can no longer be bought from librarian villagers.
+|Name tags no longer generate in ancient city or woodland mansion chests.
+|Name tags can now be bought from [[wandering trader]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Name Tag JE1 BE1.png|32px]]  Added name tags, and a new "Name" Interact button.
+|A [[mob]] named "Dinnerbone" or "Grumm" renders upside down.
+|A [[sheep]] named "jeb_" fades between the [[dye]] colors.
+|Naming a [[rabbit]] "Toast" gives it a special memorial skin.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Name tags can now be [[trading|bought]] from librarian [[villager]]s for 20-22 [[emerald]]s as their last tier trade.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Naming a [[vindicator]] "Johnny" now makes it hostile to any [[mob]], except other [[illager]]s.
+|Name tags can now be found in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Name tags can now be found in buried treasure [[chest]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Name Tag JE3 BE2.png|32px]] The texture of name tags has been changed.
+|[[Wither skeleton]]s and [[vex]]es can now be renamed using a name tag.<ref>{{bug|MCPE-20701}}</ref>}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Name tags [[trading|sold]] by librarian [[villager]]s now cost 20 [[emerald]]s.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.27|exp=Drop 1 of 2026|Name tags can now be crafted with 1 paper and 1 [[nugget]].}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|All features behind the "Drop 1 of 2026" experimetal toggle are fully implemented.}}
+|{{HistoryLine|||dev=Preview 26.10.25|Name tags can no longer be bought from librarian villagers.|Name tags can no longer be found in ancient city or woodland mansion chests.|Name tags can now be bought from wandering traders.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Name Tag JE1 BE1.png|32px]] Added name tags.}}
+|{{HistoryLine||xbox=TU20|xbone=CU8|ps3=1.13|psvita=1.13|ps4=1.13|Name tags can now be [[trading|bought]] from librarian [[villager]]s, at 20–22 [[emerald]]s for 1 name tag.}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|A sheep named "jeb_" now fades between the [[dye]] colors.|Name of renamed mobs is now always displayed like player names.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|Name of renamed mobs is once again only displayed when the mob is being looked at up close.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Name tags can now rarely be acquired by [[fishing]].|[[Rabbit]]s have been added and naming one "Toast" gives it a special memorial skin.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Name tags can now be found in the new [[woodland mansion]] chests.|Added [[vindicator]]s, which attack almost all mobs if named "Johnny".}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Name tags can now be found in buried treasure [[chest]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Name Tag JE3 BE2.png|32px]] The texture of name tags has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Name tags [[trading|sold]] by librarian [[villager]]s now cost 20 [[emerald]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Name Tag JE1 BE1.png|32px]] Added name tags.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 421.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Name tags were added at the request of [https://www.youtube.com/user/paulsoaresjr/ Paulsoaresjr].<ref>{{tweet|paulsoaresjr|326865482839883777|I've been pining for: 1) name tags 2) water-breathing potions 3) lava-safe boats 4) spy-chicken interrogation devices|April 23, 2012}}</ref><ref>{{tweet|Dinnerbone|326812168630722561|Snapshot 13w16b was released in the launcher. Some big crash fixes, and re-enabled crash reporting too. Also, something for @paulsoaresjr !|April 23, 2013}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+NameTag2.png|To use a name tag, the [[player]] must first rename it using an [[anvil]].
+NameTag1.png|A [[wolf]] that has been renamed using a name tag.
+RenamedCreeper.png|A [[creeper]] renamed using the name tag.
+RenamedWither.png|A [[Wither Boss|wither]] renamed using a name tag. The custom name takes place of "Wither" over the [[health bar]] as well.
+YoYo.png|How to use "Grumm" and "Dinnerbone" name tag [[easter egg]] and [[lead]] to make another animal Yo-yo.
+Grumm Horse.png|A [[horse]] using the "Grumm" or "Dinnerbone" easter egg to be rendered upside-down.
+MineshaftNameTag.png|Name Tag found in a mineshaft chest.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Pocket Edition Name Tag.jpg|First image of a name tag in ''Bedrock Edition''
+Ti-nametag-header.jpeg|A slime named Tom
+Ti-nametag-ingame.jpeg|Xavius III
+</gallery>
+
+===In other media===
+<gallery>
+AMCM Dennis Name Tag.png|A name tag in {{amcm}}.
+</gallery>
+
+== See also ==
+* [[Spawn Egg]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--name-tag|Taking Inventory: Name Tag|March 15, 2019|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+{{navbox new content|Tiny Takeover}}
+
+[[de:Namensschild]]
+[[es:Etiqueta]]
+[[fr:Étiquette]]
+[[it:Targhetta]]
+[[ja:名札]]
+[[ko:이름표]]
+[[lzh:名刺]]
+[[nl:Naamkaartje]]
+[[pl:Znacznik]]
+[[pt:Etiqueta]]
+[[ru:Бирка]]
+[[uk:Ярлик]]
+[[zh:命名牌]]

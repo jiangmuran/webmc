@@ -1,0 +1,148 @@
+{{For|the normal vault|Vault}}
+{{Merge|Vault|discussAnchor=Merge request.}}
+{{Infobox block
+| group1 = Normal
+| 1-1 = Ominous Vault (inactive) JE2 BE2.png
+| group2 = Awaiting key
+| 2-1 = Ominous Vault (active) JE2 BE2.png
+| group3 = Unlocking
+| 3-1 = Ominous Vault (unlocking) JE2 BE2.png
+| group4 = Ejecting
+| 4-1 = Ominous Vault (ejecting) JE2 BE2.png
+| invimage = Vault
+| renewable = No
+| stackable = Yes (64)
+| tool = any
+| light = Yes <br> Active or ejecting: 12 <br> Inactive: 6
+| transparent = Partial
+| flammable = No
+| lavasusceptible = No
+| Loot = Diamond axes(enchanted)
+Diamond chest plates(enchanted)
+Diamond blocks
+Diamonds
+Emerald blocks
+Emeralds
+Wind charges
+Banners
+EBooks(enchanted)
+Crossbows(enchanted)
+Gapples
+God apples
+}}
+An '''ominous vault''' is a type of [[vault]] found in [[trial chambers]]. It ejects valuable loot when unlocked using an [[ominous trial key]] and is the only source of [[heavy cores]], among other [[items]].
+
+== Obtaining ==
+Ominous vaults cannot be obtained as items in [[Survival]] or [[Adventure]] mode. They are technically block state variants of normal vaults and can be obtained or created using [[commands]], such as:
+
+{{edition|java}}:
+* {{cmd|give @s minecraft:vault[block_state{{=}}{ominous:"true"},block_entity_data{{=}}{id:"minecraft:vault",config:{key_item:{count:1,id:"minecraft:ominous_trial_key"},loot_table:"minecraft:chests/trial_chambers/reward_ominous"<nowiki>}}</nowiki>]}}
+* {{cmd|setblock x y z minecraft:vault[ominous{{=}}true]{config:{key_item:{count:1,id:"minecraft:ominous_trial_key"},loot_table:"minecraft:chests/trial_chambers/reward_ominous"<nowiki>}}</nowiki>}}
+
+{{edition|bedrock}}:
+* {{cmd|setblock x y z vault ["ominous"{{=}}true]}}
+:: This command does not affect the loot table nor the key item, making it so that a normal trial key can unlock an ominous vault as if it were a normal vault. This is a bug, and can be seen on the bug tracker.<ref>{{bug|MCPE-180338||
+Ominous vault made by /setblock or /fill not taking ominous key}}</ref>
+
+=== Breaking ===
+No tool can accelerate the breaking process of ominous vault.
+{{breaking row|Ominous Vault|drop=0|horizontal=1}}
+An ominous vault drops nothing when it is destroyed.
+
+=== Natural generation ===
+[[File:VaultrenderO2.png|thumb|200px|An ominous vault, as it appears in [[trial chambers]].]]
+Ominous vaults can be found throughout [[trial chambers]]. Each combat chamber always contains one ominous vault, while additional ominous vaults can be found at the end of both corridors and in two of the three types of intersections. There is usually an average of 6 to 8 ominous vaults in each trial chambers structure.
+
+An ominous vault can be distinguished from a normal vault by its texture and location in harder to find places. An ominous vault is always surrounded by an altar-like structure that contains [[red candle]]s and [[red glazed terracotta]].
+
+Unlike [[ominous trial spawner]]s, ominous vaults don't replace normal [[vault]]s when a player with the [[Trial Omen]] effect is nearby.
+
+== Usage ==
+A [[player]] can unlock an ominous vault using an [[ominous trial key]]. Each player can unlock each ominous vault only once, although after the 129th player opens the same vault, the first player in the list is forgotten and can open it again.
+
+=== Piston interactivity ===
+An ominous vault cannot be pushed by a [[piston]] or pulled by a [[sticky piston]].
+
+== Loot ==
+An ominous vault ejects 2 to 5 stacks of loot, like a normal [[vault]]. It ejects a combination of loot from three different loot tables. The ejected loot is dependent on the [[world seed]], and is unaffected by timing. The following information describes the loot ejected for a single [[player]] when a single [[ominous trial key]] is {{control|used}}.
+* Common loot
+** Every ominous vault gives between one and three sets of common loot, corresponding to the third and sixth columns below.
+** An ominous vault that does not give rare loot gives an additional set of common loot, making it possible to get four sets of common loot.
+* Rare loot
+** Every ominous vault has an 80% chance to include a set of rare loot.
+** The loot listed in the second and fifth columns below corresponds with the chance of one set of rare loot, plus the chance of the one set of common loot that can be used in its place.
+* Unique loot
+** Every ominous vault has a 75% chance to include one additional set of unique loot.
+** This loot, and the 25% chance for each ominous vault not to have this loot, corresponds with the fourth and seventh columns below.
+** Unique loot is always the first to drop when an ominous vault is opened.
+
+{{LootChest|trial-chambers-reward-ominous}}
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Vault/JE}}
+=== Unique ===
+{{:Vault/Sounds|an ominous vault}}
+
+== Data values ==
+{{Main|Vault#Data values}}
+An ominous vault is technically a [[block state]] variant of a vault. Therefore, it has the same data value structure.
+
+== Achievements ==
+{{Load achievements|Revaulting}}
+
+== Advancements ==
+{{load advancements|Revaulting}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Ominous Vault (active) JE1 BE1.png|32px]] [[File:Ominous Vault (unlocking) JE1 BE1.png|32px]] [[File:Ominous Vault (ejecting) JE1 BE1.png|32px]] [[File:Ominous Vault (inactive) JE1 BE1.png|32px]] Added ominous vaults.}}
+|{{HistoryLine|||dev=pre1|[[File:Ominous Vault (active) JE2 BE2.png|32px]] [[File:Ominous Vault (unlocking) JE2 BE2.png|32px]] [[File:Ominous Vault (ejecting) JE2 BE2.png|32px]] [[File:Ominous Vault (inactive) JE2 BE2.png|32px]] Updated textures to fix inconsistencies across all states.}}
+|{{HistoryLine||1.21|dev=24w18a|Ominous vaults are now available without using the "Update 1.21" experimental data pack.
+|Increased the chance of obtaining mace enchantments.
+|Ominous vaults can now eject the new "[[Creator]]" music disc.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Ominous Vault (active) JE1 BE1.png|32px]] [[File:Ominous Vault (unlocking) JE1 BE1.png|32px]] [[File:Ominous Vault (ejecting) JE1 BE1.png|32px]] [[File:Ominous Vault (inactive) JE1 BE1.png|32px]] Added ominous vaults.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Ominous vaults are now available without using the "Update 1.21" experimental toggle.|[[File:Ominous Vault (active) JE2 BE2.png|32px]] [[File:Ominous Vault (unlocking) JE2 BE2.png|32px]] [[File:Ominous Vault (ejecting) JE2 BE2.png|32px]] [[File:Ominous Vault (inactive) JE2 BE2.png|32px]] Updated textures to fix inconsistencies across all states.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Ominous vaults can now eject the new "[[Creator]]" music disc.}}
+|{{HistoryLine||1.21.2|The probability of loot in ominous vaults has been changed to match ''Java Edition''.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+File:Vault-header.jpeg|An active ominous vault.
+File:Ominous Tweet Image.jpeg|A naturally spawning ominous vault.<ref>{{tweet|minecraft|1773021151205245321|Ominous Trials are now available on Java Snapshot! 🔑 Drink an ominous bottle to gain the Bad Omen effect 🔑 Head to a village for a Raid Omen and start a pillager raid OR enter a trial chamber to trigger a Trial Omen effect 🔑 Trial Omen effect will spew out tougher mobs with better gear, potions, and projectiles 🔑 Earn the ominous trial key to unlock an ominous vault Read more about the update (coming soon to Beta/Preview): https://minecraft.net/en-us/article/introducing-mace-and-ominous-events|March 27, 2024}}</ref>
+File:Ominous Vault looted.png|[[Ari]] walking away from a looted ominous vault.
+File:Noor opens an ominous vault.jpg|"[[Noor]] is about to open an Ominous Vault with an Ominous Trial Key in Trial Chambers."<ref>{{Mcnet|minecraft-java-edition-1-20-5|Minecraft Java Edition 1.20.5|April 23, 2024|Java Team}}</ref>
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+
+[[de:Unheilvoller Tresor]]
+[[es:Arca ominosa]]
+[[fr:Coffre-fort funeste]]
+[[ja:不吉な宝物庫]]
+[[ko:불길한 금고]]
+[[pt:Cofre Sombrio]]
+[[ru:Зловещее хранилище]]
+[[uk:Зловісне сховище]]
+[[zh:不祥宝库]]

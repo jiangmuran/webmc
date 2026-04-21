@@ -1,0 +1,176 @@
+{{Hatnote|For other blocks that can display text, see [[Sign]] and [[Hanging Sign]].}}
+{{Exclusive|Education}}{{Unobtainable|edition=Bedrock}}
+{{Infobox block
+| group = Slate
+| group2 = Poster
+| group3 = Board
+| 1-1 = Chalkboard Slate.png|Slate
+| 2-1 = Chalkboard Poster.png|Poster
+| 3-1 = Chalkboard Board.png|Board
+| invimage = Slate
+| invimage2 = Poster
+| invimage3 = Board
+| transparent = Yes
+| renewable = No
+| light = No
+| waterloggable = Yes
+| tool = None
+| stackable = Yes (16)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''chalkboard''' is a [[block]] that can display more text than a [[sign]].<ref>{{Citation|url=https://edusupport.minecraft.net/hc/en-us/articles/360047117272-Communicating-With-Boards/|title=Communicating With Boards|author=[https://edusupport.minecraft.net/hc/en-us/profiles/415439408432-Justin Justin]|website=Minecraft Education}}</ref> Three sizes are available: 1×1 (slate), 2×1 (poster), and 3×2 (board).
+
+== Obtaining ==
+{{IN|Education}}, chalkboards can be obtained in the [[Creative inventory]] or through the {{cmd|give}} command.
+{{IN|Bedrock}}, chalkboards cannot be obtained by commands or the Creative inventory, and can only be obtained by using glitches or inventory editors.
+
+=== Breaking ===
+The suitable tool to break chalkboard is [[axe]].
+{{breaking row|horizontal=1|Chalkboard|Axe|foot=1|item=1}}
+Chalkboard drops itself when it's destroyed.
+
+== Usage ==
+A chalkboard can be used similarly to a [[sign]], to display text. Once placed, select the chalkboard and enter the desired text and click the "OK" button. The "×" in the upper right corner of the board closes the edit screen.
+
+=== Placement ===
+Chalkboards may be placed on the top or side of other blocks (including non-solid blocks like [[fence]]s, [[glass]], [[rail]]s, and other chalkboards). To place a chalkboard, {{control|use}} a chalkboard item while pointing at the block the chalkboard should be attached to. To place a chalkboard on a block that can be interacted with by the {{control|use}} control (for example, [[chest]]s, [[note block]]s, etc.), {{control|sneak}} while placing the chalkboard.
+
+1×1 slates placed on the top of a block stand on a short post, facing in the direction of the player who placed it, in any of 16 different directions. 2×1 posters and 2×3 boards can be placed in any of 4 different directions. Chalkboards placed on the side of a block simply float there, even if the block doesn't make contact with the chalkboards.
+
+=== Text ===
+When entering text, six lines of text are available for the slates and posters, while fifteen lines of text are available for the 2×3 boards. To switch between lines, the player can press Enter or the up/down arrow keys. The location of text currently selected has a flashing cursor.
+
+While editing, typing and backspacing can occur at any point in the line by moving the cursor using the left and right arrow keys. Once the end of the line has been reached, the word is hyphenated and is continued on the next line.
+
+After the editing window is closed, right-clicking on a chalkboard reopens the editing menu. Copy and paste can be performed, and no more than the basic/shifted keyboard characters may be entered.
+
+=== Interaction ===
+Chalkboards act as though they have a {{control|use}} action, so {{control|sneaking}} is required to place blocks or use items while the cursor is pointed at them.
+
+Unlike signs, boards block a [[piston]] from moving.
+
+Boards have no collision box (they are completely non-solid), so [[item]]s and [[mob]]s can move through boards blocks. Other blocks (including other boards) can be placed on any edge of a board.
+
+[[Water]] and [[lava]] flow around boards. Lava can create [[fire]] in [[air]] blocks next to boards as if the boards were flammable, but the boards do not burn.
+
+== Sounds ==
+{{Sound table/Block/Normal/BE}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Chalkboard
+|spritename=board
+|spritetype=block
+|nameid=chalkboard
+|id=230
+|form=block}}
+{{ID table
+|displayname=Chalkboard
+|spritename=board
+|spritetype=item
+|nameid=board
+|translationkey=tile.chalkboard.oneByOne.name, tile.chalkboard.twoByOne.name, tile.chalkboard.threeByTwo.name
+|id=454
+|form=item
+|foot=1}}
+
+=== Entity ===
+==== ID ====
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Chalkboard
+|spritetype=block
+|nameid=chalkboard
+|translationkey=-
+|id=78
+|foot=1}}
+
+=== Metadata ===
+{{see also|Data values}}
+Chalkboards uses the following data values:
+*Chalkboard: 0
+*Slate: 1
+*Board: 2
+*Poster: 3
+*Slate: 4 (Visible to the slate) 
+*Slate: 30000 (Invisible and invaild) 
+<!--{{/DV}}-->
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|be}}:<br>
+Note: Chalkboards only use block states if it is on a wall. 
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|direction|0|0,1,2,3|The direction the block is facing. For example, a block facing east is attached to a block to its west.
+*0: south
+*1: west
+*2: north
+*3: east|foot=1}}
+
+== History ==
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:Chalkboard Slate.png|32px]] [[File:Chalkboard Poster.png|32px]] [[File:Chalkboard Board.png|32px]]<br>[[File:Chalkboard Slate (item) BE1.png|32px]] [[File:Chalkboard Poster (item) BE1.png|32px]] [[File:Chalkboard Board (item) BE1.png|32px]] Added chalkboards.
+|Chalkboards can be obtained and placed using the {{cmd|give}} and {{cmd|setblock}} [[commands]] respectively. However, they serve no purpose.|Their addition was likely accidental due to ''Pocket Edition'' sharing the same codebase as ''Education Edition''.}}
+|{{HistoryLine|||dev=build 2|Removed chalkboards. Their textures still exist in the files.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Re-added chalkboards. They still exist as entities, but can't be spawned. The items can't be spawned either.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.30.20|Chalkboards can now be placed consistently.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.25|Slates have been added to the [[Creative inventory]], likely by accident.<ref>{{bug|MCPE-187696|MCPE-187696|Slate appears in Creative Inventory with Education toggle off|Fixed}}</ref>
+|[[File:Missing Tile BE3.png|32px]] Chalkboard models are now masked by [[Unknown|placeholder block models]], even in worlds with the Education edition toggle on.<ref>{{bug|MCPE-187753|MCPE-187753|Slate is covered by missing texture in Education Edition|Won't Fix}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.50.28|Slates have been removed from the Creative inventory.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|[[File:Missing Tile (texture) BE3.png|32px]] Chalkboard items no longer have a texture.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||MinecraftEdu|link=MinecraftEdu|[[File:Oak Sign JE1 BE1.png|30px]] [[MinecraftEdu]], Education Edition's predecessor, had "[[Big Sign]]s", 3 block wide signs that served a similar purpose.}}
+|{{HistoryLine||1.0|[[File:Chalkboard Slate.png|32px]] [[File:Chalkboard Poster.png|32px]] [[File:Chalkboard Board.png|32px]]<br>[[File:Chalkboard Slate (item) BE1.png|32px]] [[File:Chalkboard Poster (item) BE1.png|32px]] [[File:Chalkboard Board (item) BE1.png|32px]] Added chalkboards.}}
+|{{HistoryLine||1.0.2|The UI of chalkboards now has a locked option.
+|[[Player|Students]] now can place their own chalkboards even without a worldbuilder ability.}}
+}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Education Edition Exclusive Features.png|The chalkboard placed in a world along with other ''[[Minecraft Education]]'' features.
+Chalkboardsingamepe.png|The chalkboard in [[Pocket Edition v0.16.0 alpha build 1]].
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Blackboard icon.png|Sprite of a chalkboard
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox unused features}}{{Navbox blocks|Utility}}
+{{Navbox Education|Exclusive}}
+
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Minecraft Education blocks]]
+
+[[de:Tafel]]
+[[es:Pizarra]]
+[[fr:Ardoise]]
+[[ja:黒板]]
+[[ko:칠판]]
+[[pl:Tablica kredowa]]
+[[pt:Lousa]]
+[[ru:Доска]]
+[[uk:Класна дошка]]
+[[zh:黑板]]

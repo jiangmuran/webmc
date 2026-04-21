@@ -1,0 +1,393 @@
+{{Infobox block
+| group1 = Normal
+| group2 = Ejecting
+| group3 = Cooldown
+| 1-1 = Ominous Trial Spawner (active).png
+| 2-1 = Ominous Trial Spawner (ejecting).png
+| 3-1 = Ominous Trial Spawner (inactive).png
+| invimage = Trial Spawner
+| renewable = No
+| stackable = Yes (64)
+| tool = any
+| light = 
+* Yes, when not inactive
+** Waiting for players: 4
+** Active: 8
+| transparent = Partial
+| flammable = No
+| lavasusceptible = No
+}}
+
+An '''ominous trial spawner''' is a [[trial spawner]] that has been altered by a [[Trial Omen]] effect carried by a [[player]] as part of an [[ominous trial]]. It spawns more dangerous mob waves, as well as [[ominous item spawner]]s, but ejects better rewards and is the only source of [[Ominous Trial Key|ominous trial keys]].
+
+== Obtaining ==
+=== Breaking ===
+No tool can accelerate the breaking process of an ominous trial spawner.
+{{breaking row|Ominous Trial Spawner|drop=0|horizontal=1}}
+Ominous trial spawners drop nothing when destroyed.
+
+=== Ominous trial ===
+Trial spawners convert to ominous trial spawners if a [[player]] with the [[Trial Omen]] effect enters the 14 block detection area and is in the line of sight of the [[trial spawner]]. This also happens when the player has the [[Bad Omen]] effect, which gets converted into [[Trial Omen]]. When a trial spawner becomes ominous, all of its existing mobs are despawned. If the spawner was on cooldown and was not ominous before going on cooldown, the cooldown is skipped when becoming ominous. The ominous trial spawner then immediately becomes active. An inactive ominous trial spawner converts back into a regular trial spawner after cooling down for 30 minutes.
+
+Ominous trial spawners cannot be obtained as items in [[Survival]] or [[Adventure]] mode. They are technically block state variants of normal trial spawners and can be obtained or created using [[commands]], such as:
+
+{{edition|java}}:
+* {{cmd|give @s minecraft:trial_spawner[block_state{{=}}{ominous:"true"}]}}
+* {{cmd|setblock x y z minecraft:trial_spawner[ominous{{=}}true]}}
+
+{{edition|bedrock}}:
+* {{cmd|setblock x y z trial_spawner ["ominous"{{=}}true]}}
+
+== Usage ==
+An ominous trial spawner is similar to a normal trial spawner, but spawns more difficult [[mob]]s and ejects more powerful loot.
+
+=== Mob spawning ===
+{{See also|Trial Spawner#Mob spawning|Trial Chambers#Trial spawners}}
+Ominous trial spawners converted from trial spawners that generate naturally in [[trial chambers]] spawn mobs with (better) weapons and wearing armor. Ominous trial spawners with mobs that are unable to wear equipment, such as [[spider]]s or [[silverfish]], spawn double the total mob count over the course of the challenge. These spawners also allow an additional mob to be out all at once during their challenge.
+
+Each armor set consists of only a [[chestplate]] and [[helmet]] with each piece having a 50% chance of being missing. All armor is enchanted with [[Fire Protection]] IV, [[Projectile Protection]] IV, and{{verify|Drowning zombies spawned from ominous trial spawners on Bedrock Edition doesn't produce armor with multiple Protection enchantments, only armor with Protection IV.}} [[Protection]] IV. {{IN|JE}}<ref>{{bug|MCPE-189946||Ominous Trial mobs drop equipped armor and weapons on death}}</ref>, mobs don't drop the armor on death or upon conversion to a drowned In Java Edition. But it will drop when converted to drowned in Bedrock Edition. The armor is selected from:
+* {{ItemLink|Chainmail armor}} with {{ItemLink|bolt armor trim}} in {{ItemLink|id=copper-ingot|link=copper ingot|copper}} (4 in 7)
+* {{ItemLink|Iron armor}} with {{ItemLink|flow armor trim}} in copper (2 in 7)
+* {{ItemLink|Diamond armor}} with {{ItemLink|flow armor trim}} in copper (1 in 7).
+
+Melee mobs spawn with a weapon selected from:
+* {{ItemLink|Iron sword}} (4 in 7)
+* {{ItemLink|Iron sword}} with [[Sharpness]] I (1 in 7)
+* {{ItemLink|Iron sword}} with [[Knockback]] I (1 in 7)
+* {{ItemLink|Diamond sword}} (1 in 7).
+
+Ranged mobs spawn with a {{ItemLink|bow}} with:
+* no enchantment (2 in 4)
+* [[Power]] I (1 in 4)
+* [[Punch]] I (1 in 4).
+
+Ominous trial spawners converted from manually placed trial spawners continue to spawn the same mob as the trial spawner.
+
+=== Projectile spawning ===
+When at least one player is within the activation range of an ominous trial spawner, every 8 seconds it spawns [[ominous item spawner]]s above any player or any mob that was spawned by the ominous trial spawner spawner within 14 blocks. The location where it should spawn is determined by first performing a raycast from the feet of the entity to a random height between 2 and 6 blocks above the entity. If it hits a block, this block is used, otherwise the end of the line is used. Which block can be hit is determined by the same algorithm as the 3rd person camera. The item spawns in the center of the block below it, unless the block has a collision box. The ominous item spawner displays a projectile for 3 to 6 seconds before shooting that projectile downwards.
+
+Each ominous trial spawner has a set of 2 [[projectile]]s it spawns, one of which is a [[lingering potion]]. The lingering potion effect is selected randomly from one of the following (all with equal chance):
+* {{EffectLink|Wind Charged}}
+* {{EffectLink|Oozing}}
+* {{EffectLink|Weaving}}
+* {{EffectLink|Infested}}
+* {{EffectLink|Strength}}
+* {{EffectLink|Speed}}
+* {{EffectLink|Slow Falling}}
+
+The second projectile is randomly selected from one of the following (again, all with equal chance):
+* {{ItemLink|Arrow}}
+* {{ItemLink|Arrow}} with {{EffectLink|Poison}} (0:45)<ref name="arrow">{{bug|MC-296111||Tipped arrows from ominous trial spawners use standard potion duration instead of tipped arrow duration}}</ref>
+* {{ItemLink|Arrow}} with {{EffectLink|Slowness}} IV (0:20)<ref name="arrow"/>
+* {{ItemLink|Fire charge|text=Small fireball}}
+* {{ItemLink|Wind charge}}
+The potions and projectiles chosen will not change between trials and are based on location, so it is likely that spawners very close to each other will have the same projectiles.
+
+=== Loot ===
+Ominous trial spawners in [[trial chambers]] eject different, better, rewards compared to the non-ominous state.
+
+Like a normal trial spawner, it ejects loot once for each detected player. Instead of trial keys, an ominous trial spawner has a 30% chance to eject [[ominous trial key]]s, in which case it drops for all players. The other 70% of the time it drops one of the other items for each player.
+{{LootChest|trial-chambers-trial-spawner-ominous}}
+
+Ominous trial spawners converted from manually placed trial spawners continue to drop the loot of a normal trial spawner (see [[Trial Spawner#Loot]]).
+
+=== Piston interactivity ===
+Ominous trial spawner can't be pushed by the [[piston]], and can't be pulled by the [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Trial spawner}}
+
+=== Unique ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trial Spawner ambient charged1.ogg
+|sound2=Trial Spawner ambient charged2.ogg
+|sound3=Trial Spawner ambient charged3.ogg
+|sound4=Trial Spawner ambient charged4.ogg
+|sound5=Trial Spawner ambient charged5.ogg
+|subtitle=Ominous crackling
+|source=block
+|description=Randomly while active
+|id=block.trial_spawner.ambient_ominous
+|translationkey=subtitles.block.trial_spawner.ambient_ominous
+|volume=0.75-1.0
+|pitch=0.5-1.5
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner detect player1.ogg
+|sound2=Trial Spawner detect player2.ogg
+|sound3=Trial Spawner detect player3.ogg
+|subtitle=Trial Spawner charges up
+|source=block
+|description=When an ominous trial spawner is approached by a valid player
+|id=block.trial_spawner.detect_player
+|translationkey=subtitles.block.trial_spawner.detect_player
+|volume=1.0
+|pitch=''Varies''<wbr><ref group=sound>Can be 0.8-1.2 or 0.76-1.14 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|subtitle=Trial Spawner spawns a mob
+|source=block
+|description=When an ominous trial spawner spawns a mob
+|id=block.trial_spawner.spawn_mob
+|translationkey=subtitles.block.trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner open shutter.ogg
+|subtitle=Trial Spawner opens
+|source=block
+|description=When an ominous trial spawner's shutter opens
+|id=block.trial_spawner.open_shutter
+|translationkey=subtitles.block.trial_spawner.open_shutter
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner close shutter.ogg
+|subtitle=Trial Spawner closes
+|source=block
+|description=When an ominous trial spawner's shutter closes
+|id=block.trial_spawner.close_shutter
+|translationkey=subtitles.block.trial_spawner.close_shutter
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner eject item1.ogg
+|subtitle=Trial Spawner ejects items
+|source=block
+|description=When an ominous trial spawner ejects an item
+|id=block.trial_spawner.eject_item
+|translationkey=subtitles.block.trial_spawner.eject_item
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner about to spawn item.ogg
+|subtitle=Ominous item prepares
+|source=neutral
+|description=When an ominous trial spawner is about to spawn an ominous item spawner
+|id=block.trial_spawner.about_to_spawn_item
+|translationkey=subtitles.block.trial_spawner.about_to_spawn_item
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner spawn item1.ogg
+|sound2=Trial Spawner spawn item2.ogg
+|sound3=Trial Spawner spawn item3.ogg
+|subtitle=Ominous item drops
+|source=block
+|description=When an ominous item spawner summons an item
+|id=block.trial_spawner.spawn_item
+|translationkey=subtitles.block.trial_spawner.spawn_item
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner spawn item begin1.ogg
+|sound2=Trial Spawner spawn item begin2.ogg
+|sound3=Trial Spawner spawn item begin3.ogg
+|subtitle=Ominous item appears
+|source=block
+|description=When an ominous item spawner is summoned
+|id=block.trial_spawner.spawn_item_begin
+|translationkey=subtitles.block.trial_spawner.spawn_item_begin
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner charge activate.ogg
+|subtitle=Omen engulfs Trial Spawner
+|source=neutral
+|description=When a trial spawner becomes ominous
+|id=block.trial_spawner.ominous_activate
+|translationkey=subtitles.block.trial_spawner.charge_activate|translationkeynote=subtitles.block.trial_spawner.ominous_activate
+|volume=''Varies''<wbr><ref group=sound>Plays two sounds of 0.3 and 1.0 simultaneously</ref>
+|pitch=0.8-1.2
+|distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Trial Spawner ambient charged1.ogg
+|sound2=Trial Spawner ambient charged2.ogg
+|sound3=Trial Spawner ambient charged3.ogg
+|sound4=Trial Spawner ambient charged4.ogg
+|sound5=Trial Spawner ambient charged5.ogg
+|source=block
+|description=Randomly while active
+|id=trial_spawner.ambient_ominous
+|volume=0.75-1.0
+|pitch=0.5-1.5}}
+| {{SoundLine
+|sound=Trial Spawner detect player1.ogg
+|sound2=Trial Spawner detect player2.ogg
+|sound3=Trial Spawner detect player3.ogg
+|source=block
+|description=When an ominous trial spawner is approached by a valid player
+|id=trial_spawner.detect_player
+|volume=1.0
+|pitch=0.76-1.14}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|source=block
+|description=When an ominous trial spawner spawns a mob
+|id=trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Trial Spawner open shutter.ogg
+|source=block
+|description=When an ominous trial spawner's shutter opens
+|id=trial_spawner.open_shutter
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trial Spawner close shutter.ogg
+|source=block
+|description=When an ominous trial spawner's shutter closes
+|id=trial_spawner.close_shutter
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trial Spawner eject item1.ogg
+|source=block
+|description=When an ominous trial spawner ejects an item
+|id=trial_spawner.eject_item
+|volume=1.0
+|pitch=0.8-1.1<!--sic-->}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|source=block
+|description=When an ominous trial spawner spawns a mob
+|id=trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Trial Spawner about to spawn item.ogg
+|source=block
+|description=When a trial spawner is about to spawn an ominous item spawner
+|id=ominous_item_spawner.about_to_spawn_item
+|volume=1.0
+|pitch=0.8-1.1}}
+| {{SoundLine
+|sound=Trial Spawner spawn item1.ogg
+|sound2=Trial Spawner spawn item2.ogg
+|sound3=Trial Spawner spawn item3.ogg
+|source=block
+|description=When an ominous item spawner summons an item
+|id=ominous_item_spawner.spawn_item
+|volume=1.0
+|pitch=0.8-1.1}}
+| {{SoundLine
+|sound=Trial Spawner spawn item begin1.ogg
+|sound2=Trial Spawner spawn item begin2.ogg
+|sound3=Trial Spawner spawn item begin3.ogg
+|source=block
+|description=When an ominous item spawner is summoned
+|id=ominous_item_spawner.spawn_item_begin
+|volume=1.0
+|pitch=0.8-1.1}}
+| {{SoundLine
+|sound=Trial Spawner charge activate.ogg
+|source=block
+|description=When a trial spawner becomes ominous
+|id=trial_spawner.charge_activate
+|volume=1.0
+|pitch = 1.0
+}}
+}}
+
+== Data values ==
+{{Main|Trial Spawner#Data values}}
+The ominous trial spawner is technically a [[block state]] of the trial spawner. Therefore, it has the same data value structure.
+
+== Advancements ==
+{{load advancements|How Did We Get Here?}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Ominous Trial Spawner (inactive) JE1 BE1.png|32px]] [[File:Ominous Trial Spawner (active) JE1 BE1.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE1 BE1.png|32px]] Added ominous trial spawners.}}
+|{{HistoryLine|||dev=pre1|[[File:Ominous Trial Spawner (inactive) JE2.png|32px]] [[File:Ominous Trial Spawner (active) JE2.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE2.png|32px]] Updated textures to match [[trial spawner]]s.}}
+|{{HistoryLine||1.21|dev=24w18a|Ominous trial spawners are now available without using the "Update 1.21" experimental data pack.
+|Ominous trial spawners with mobs that are unable to wear equipment now spawn double the total mob count over the course of the challenge.
+|[[Bottle o' enchanting]] is no longer a possible projectile for ominous trial spawners.}}
+|{{HistoryLine|||dev=24w19a|[[File:Ominous Trial Spawner (active) JE3.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE3.png|32px]] Updated active and ejecting textures to be more consistent across all states as well as the [[trial spawner]].}}
+|{{HistoryLine|||dev=pre2|[[File:Ominous Trial Spawner (inactive) JE3 BE2.png|32px]] [[File:Ominous Trial Spawner (active) JE4 BE3.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE4 BE3.png|32px]] Updated bottom texture to match ''Bedrock Edition''.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Ominous Trial Spawner (inactive) JE1 BE1.png|32px]] [[File:Ominous Trial Spawner (active) JE1 BE1.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE1 BE1.png|32px]] Added ominous trial spawners.}}
+|{{HistoryLine|||dev=Preview 1.21.0.21|Ominous trial spawners now show a preview of the item that is about to be ejected.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Ominous trial spawners are now available without using the "Update 1.21" experimental toggle.
+|[[File:Ominous Trial Spawner (inactive) JE3 BE2.png|32px]] [[File:Ominous Trial Spawner (active) BE2.png|32px]] [[File:Ominous Trial Spawner (ejecting) BE2.png|32px]] Updated textures to match [[trial spawner]]s.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|[[File:Ominous Trial Spawner (active) JE4 BE3.png|32px]] [[File:Ominous Trial Spawner (ejecting) JE4 BE3.png|32px]] Updated active and ejecting textures to be more consistent across all states as well as the [[trial spawner]].}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Breeze ominous trial spawner.png|A [[breeze]] ominous trial spawner.
+Slime ominous trial spawner.png|A [[slime]] ominous trial spawner.
+Zombie ominous trial spawner.png|A [[zombie]] ominous trial spawner.
+Baby zombie ominous trial spawner.png|A [[baby zombie]] ominous trial spawner.
+Husk ominous trial spawner.png|A [[husk]] ominous trial spawner.
+Skeleton ominous trial spawner.png|A [[skeleton]] ominous trial spawner.
+Bogged ominous trial spawner.png|A [[bogged]] ominous trial spawner.
+Stray ominous trial spawner.png|A [[stray]] ominous trial spawner.
+Spider ominous trial spawner.png|A [[spider]] ominous trial spawner.
+Cave spider ominous trial spawner.png|A [[cave spider]] ominous trial spawner.
+Silverfish ominous trial spawner.png|A [[silverfish]] ominous trial spawner.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Noor's Reward.jpg|[[Noor]] looking at an [[Ominous Trial Key]].
+File:Ominous silverfish.webp|A [[silverfish]] next to an ominous trial spawner.
+</gallery>
+
+== References ==
+<references />
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+[[Category:Blocks]]
+[[Category:Hazardous blocks]]
+
+[[de:Unheilvoller Prüfungs-Spawner]]
+[[es:Generador de desafío ominoso]]
+[[fr:Générateur des épreuves funeste]]
+[[ja:不吉な試練のスポナー]]
+[[pt:Gerador Sombrio do Desafio]]
+[[ru:Зловещий спаунер испытаний]]
+[[zh:不祥试炼刷怪笼]]

@@ -1,0 +1,263 @@
+{{For|the heavy variant made of iron|Heavy Weighted Pressure Plate}}{{Infobox block
+| image = Light Weighted Pressure Plate.png
+| transparent = Yes
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = No ({{editions|short=1|java}}) <br> Yes ({{edition|short=1|bedrock}})
+}}
+A '''light weighted pressure plate''' is a type of [[pressure plate]] that outputs a variable redstone [[signal strength]] equal to the number of [[entities]] touching it, but no higher than 15.
+
+== Obtaining ==
+=== Breaking ===
+A light weighted pressure plate can be mined with anything, but [[pickaxe]]s are the fastest. A light weighted pressure plate also breaks and drops itself if a [[piston]] extends or pushes a block into its location, or if the block under the pressure plate is moved or destroyed.
+{{breaking row
+| Light Weighted Pressure Plate
+| Pickaxe
+| hideshears = 0
+| hidesword = 0
+| foot = 1
+| horizontal = 1
+}}
+
+=== Generated loot ===
+{{LootChestItem|light-weighted-pressure-plate}}
+
+=== Crafting ===
+{{Crafting
+|A2 = Gold Ingot
+|B2 = Gold Ingot
+|Output = Light Weighted Pressure Plate
+|type = Redstone
+}}
+
+== Usage ==
+{| class="wikitable floatright" id="behavior" style="text-align: center;"
+|+ Light weighted pressure plate
+!Signal strength || Entity count
+|-
+|  0 ||  0
+|-
+|  1 ||  1
+|-
+|  2 ||  2
+|-
+|  3 ||  3
+|-
+|  4 ||  4
+|-
+|  5 ||  5
+|-
+|  6 ||  6
+|-
+|  7 ||  7
+|-
+|  8 ||  8
+|-
+|  9 ||  9
+|-
+| 10 || 10
+|-
+| 11 || 11
+|-
+| 12 || 12
+|-
+| 13 || 13
+|-
+| 14 || 14
+|-
+| 15 || 15+
+|}
+
+=== Placement ===
+{{main|Pressure Plate#Placement}}
+A light weighted pressure plate can only be placed on the top of other blocks with either a full solid block face, a solid center, or a solid rim.
+
+=== Redstone component ===
+{{see also|Redstone circuit}}
+A light weighted pressure plate detects all [[entities]] on top of it, outputting a redstone signal strength of 1 for every entity present, up to the maximum of 15 signal strength with 15 or more entities.
+
+==== Activation ====
+{{main|Pressure Plate#Activation}}
+
+While active, a light weighted pressure plate weakly powers itself, and strongly powers the block it is placed on.
+
+The power level output varies depending on the number of entities colliding with the pressure plate.
+
+The signal strength from a weighted pressure plate does not vary with the type of entity. 15 mobs will produce the same signal strength as 15 different items. Note the light weighted pressure plate counts entities, not quantity of items, generally leading to one entity count per stack of items. For more information see [[Item (entity)#Behavior| item entity behavior]].
+
+=== Behavior ===
+A light weighted pressure plate is a [[non-solid block]], allowing entities to freely pass through it.
+
+The visual height of a pressure plate is 0.0625 ({{frac|1|16}}) blocks when inactive and 0.03125 ({{frac|1|32}}) blocks when active.
+
+[[Fluid]]s flow around a light weighted pressure plate without affecting it.
+
+=== Distracting piglins ===
+[[Piglin]]s are attracted towards light weighted pressure plates, run toward any light weighted pressure plates on the ground, and inspect them for 6 to 8 seconds before putting them in their [[inventory]] slot. During this time, the piglin does not attack nearby players, even if they are not wearing gold armor.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Metal}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Click.ogg
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a weighted pressure plate is deactivated
+|id=block.metal_pressure_plate.click_off
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.65
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a weighted pressure plate is activated
+|id=block.metal_pressure_plate.click_on
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.75
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+|type=bedrock
+| {{SoundLine
+|sound=Click.ogg
+|source=block
+|description=When a weighted pressure plate deactivates
+|id=click_off.metal_pressure_plate
+|volume=0.3
+|pitch=0.65}}
+| {{SoundLine
+|source=block
+|description=When a weighted pressure plate activates
+|id=click_on.metal_pressure_plate
+|volume=0.3
+| pitch = 0.75
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Light Weighted Pressure Plate
+|spritetype=block
+|nameid=light_weighted_pressure_plate
+|blocktags=pressure_plates, wall_post_override
+|foot=1}}
+
+{{edition|bedrock}}:
+
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Light Weighted Pressure Plate
+|spritetype=block
+|nameid=light_weighted_pressure_plate
+|id=147
+|foot=1}}
+
+=== Block states ===
+{{see also|Pressure Plate#Block states}}
+
+<section begin="block states"/>{{edition|java}}:
+{{bst|power|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Specifies the redstone power level currently being produced by the weighted pressure plate.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|redstone_signal|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Specifies the redstone power level currently being produced by the weighted pressure plate.|foot=1}}<section end="block states"/>
+
+== Advancements ==
+{{load advancements|Oh Shiny}}
+
+== Videos ==
+{{yt|zJApINwkCEw}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w01a|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] Added weighted pressure plates.
+|[[File:Light Weighted Pressure Plate (item) JE1.png|32px]] The model of weighted pressure plates in item form is different.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The output strength of weighted pressure plates has been rescaled.
+|All [[entities]] are now allowed to trigger weighted pressure plates.}}
+|{{HistoryLine||1.8|dev=14w10a|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] The model of weighted pressure plates in item form has been changed.}}
+|{{HistoryLine|||dev=14w10c|[[File:Light Weighted Pressure Plate (item) JE2.png|32px]] The model of weighted pressure plates in item form has been changed.<ref>{{bug|MC-50309}}</ref>}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] The model of weighted pressure plates in item form has been changed.}}
+|{{HistoryLine|||dev=15w46a|[[Mob]]s no longer spawn on weighted pressure plates.}}
+|{{HistoryLine||1.13|dev=18w20a|"Weighted Pressure Plate (Light)" has now been renamed to "Light Weighted Pressure Plate".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Light Weighted Pressure Plate JE2.png|32px]] The texture of light weighted pressure plates has been changed.}}
+|{{HistoryLine|||dev=18w47a|[[File:Light Weighted Pressure Plate JE3 BE2.png|32px]] The texture of light weighted pressure plates has been changed.}}
+|{{HistoryLine||1.16|dev=20w16a|Light weighted pressure plates now generate in [[ruined portal]] chests.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Light weighted pressure plates now drop when broken with any tool.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] Added weighted pressure plates.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Light Weighted Pressure Plate.png|32px]] The textures of light weighted pressure plates have been changed.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Light weighted pressure plates can now be found in [[ruined portal]] chests.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Weight Pressure Plate (Light)" to "Light Weighted Pressure Plate" to match {{JE}}.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Light weighted pressure plates no longer require a pickaxe to drop themselves, and are mined faster when using an improper tool.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] Added weighted pressure plates.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Light Weighted Pressure Plate.png|32px]]The textures of light weighted pressure plates have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Light Weighted Pressure Plate JE1 BE1.png|32px]] Added weighted pressure plates.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 147.}}
+}}
+
+== Issues ==
+{{Issue list|Light Weighted Pressure Plate}}
+
+== See also ==
+* [[Heavy Weighted Pressure Plate]]
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Non-solid blocks]]
+
+[[fr:Plaque de pression pondérée légère]]
+[[ja:軽量用感圧板]]
+[[ko:경형 무게 압력판]]
+[[pt:Placa de Pressão de Pesagem Leve]]
+[[zh:轻质测重压力板]]

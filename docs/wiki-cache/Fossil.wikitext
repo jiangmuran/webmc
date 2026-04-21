@@ -1,0 +1,287 @@
+{{distinguish|Minecraft x Fossil}}
+{{about|Overworld fossils|the similar features generated in the [[Soul Sand Valley]]|Nether Fossil|other uses|Bone (disambiguation)}}
+{{Infobox structure
+|title=Fossil
+|image=<gallery>
+Fossil Skull 1.png|Skull
+Fossil Spine 1.png|Spine
+</gallery>
+|biome=
+* {{BiomeLink|Desert}}
+* {{BiomeLink|Swamp}}
+* {{BiomeLink|Mangrove Swamp}}
+|blocks=
+* {{BlockLink|Bone Block}}
+* {{BlockLink|Coal Ore}}
+* {{BlockLink|Diamond Ore}}{{only|java|short=1}}
+* {{BlockLink|Deepslate Diamond Ore}}
+|canspawn=No
+}}
+A '''fossil''' is a rarely-occurring skeletal [[feature]] composed of [[bone block]]s, [[coal ore]] above Y=0, or [[diamond ore]] below Y=-8.
+
+== Generation ==
+Fossils randomly generate only in [[desert]], [[swamp]] and [[mangrove swamp]] biomes. Each chunk has two attempts within Y-coordinates 0 to 320 or -63 to -8 underground to generate a fossil, each with a chance of {{frac|1|64}}. They have an equal chance to generate as any of the four variants of skull or four variants of spine.
+
+Fossils first generate the pure-bone layer with a [[structure integrity]] of 0.9, meaning 10% of the [[bone block]]s are removed and do not override original terrain blocks, leaving 90% [[bone block]]s. Next, the ore layer generates with a structure integrity of 0.1, replacing 10% of the existing fossil with [[coal ore]] for fossils that generate above Y level 0. [[Diamond Ore|Diamond ore]] or [[deepslate diamond ore]] generate below Y level -8. The locations of these ore blocks do not always correspond with the voids generated in the initial bone fossil, so the resulting combination of both generations usually result in an incomplete fossil structure composed of bone blocks and ores.
+
+Because fossils are features instead of [[structure]]s, they generate even when the "Generate Structures" option is turned off.<ref>{{bug|MC-199180||Fossils can generate with structures turned off|WAI}}</ref>
+
+{{Calculator|chunkbase|pois=F|zoom=0.75}}
+
+== Structure ==
+{{main|/Structure}}
+
+Naturally-generated fossils are composed of a mix of bone blocks and coal or diamond ores, as detailed above. They are made with NBT [[structure file]]s and have files for each type of fossil located in the folder <code>[[minecraft.jar]]/data/minecraft/structures/fossil</code>.
+
+There are 4 type of skulls and 4 type of spines.
+
+{| class="wikitable collapsible"
+! scope="col" style="width: 200px" | Structure file
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 200px" | Consists of
+! scope="col" style="width: 250px" | Images
+|-
+|<code>fossil/skull_1</code><br><code>fossil/skull_1_coal</code>
+|The largest skull.
+|86 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Skull 1.png|center|200px]]
+|-
+|<code>fossil/skull_2</code><br><code>fossil/skull_2_coal</code>
+|The second largest skull.
+|75 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Skull 2.png|center|200px]]
+|-
+|<code>fossil/skull_3</code><br><code>fossil/skull_3_coal</code>
+|The second smallest skull.
+|58 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Skull 3.png|center|200px]]
+|-
+|<code>fossil/skull_4</code><br><code>fossil/skull_4_coal</code>
+|The smallest skull, one-eyed.
+|32 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Skull 4.png|center|140px]]
+|-
+|<code>fossil/spine_1</code><br><code>fossil/spine_1_coal</code>
+|The narrowest spine.
+|37 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Spine 1.png|center|160px]]
+|-
+|<code>fossil/spine_2</code><br><code>fossil/spine_2_coal</code>
+|The second narrowest spine.
+|61 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Spine 2.png|center|200px]]
+|-
+|<code>fossil/spine_3</code><br><code>fossil/spine_3_coal</code>
+|The second widest spine.
+|97 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Spine 3.png|center|220px]]
+|-
+|<code>fossil/spine_4</code><br><code>fossil/spine_4_coal</code>
+|The widest spine.
+|121 in total {{BlockLink|Bone Block}}, {{BlockLink|Coal Ore}}, or {{BlockLink|Deepslate Diamond Ore}}
+|[[File:Fossil Spine 4.png|center|220px]]
+|}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=fossil
+|spritetype=env
+|nameid=fossil
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=fossil
+|spritetype=env
+|nameid=fossil_coal
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=fossil
+|spritetype=env
+|nameid=fossil_diamonds
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=fossil
+|spritetype=env
+|nameid=fossil_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=fossil
+|spritetype=env
+|nameid=deepslate_diamond_fossil_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|list|fossil_structures}}: (Cannot be empty) A list of fossil structure templates to choose from.
+*** {{nbt|string}}: {{json ref|structure template}}
+** {{nbt|list|overlay_structures}}: (Cannot be empty) A list of overlay structure templates to choose from. Has to have the same length as {{nbt|list|fossil_structures}}.
+*** {{nbt|string}}: {{json ref|structure template}}
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|fossil_processors}}: {{json ref|processor list|inline=1|inline_type={{nbt|list}}{{nbt|compound}}}} &mdash; The processor for fossil structure templates.
+** {{nbt|string}}{{nbt|list}}{{nbt|compound|overlay_processors}}: {{json ref|processor list|inline=1|inline_type={{nbt|list}}{{nbt|compound}}}} &mdash; The processor for overlay structure templates.
+** {{nbt|int|max_empty_corners_allowed}}: Integer between 0 and 7 &mdash; How many corners of the structure are allowed to be empty for it to generate. Prevents structures floating in the air.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:fossil",
+  "config": {
+    "fossil_processors": "minecraft:fossil_rot",
+    "fossil_structures": [
+      "minecraft:fossil/spine_1",
+      "minecraft:fossil/spine_2",
+      "minecraft:fossil/spine_3",
+      "minecraft:fossil/spine_4",
+      "minecraft:fossil/skull_1",
+      "minecraft:fossil/skull_2",
+      "minecraft:fossil/skull_3",
+      "minecraft:fossil/skull_4"
+    ],
+    "max_empty_corners_allowed": 4,
+    "overlay_processors": "minecraft:fossil_coal",
+    "overlay_structures": [
+      "minecraft:fossil/spine_1_coal",
+      "minecraft:fossil/spine_2_coal",
+      "minecraft:fossil/spine_3_coal",
+      "minecraft:fossil/spine_4_coal",
+      "minecraft:fossil/skull_1_coal",
+      "minecraft:fossil/skull_2_coal",
+      "minecraft:fossil/skull_3_coal",
+      "minecraft:fossil/skull_4_coal"
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+The placement of fossil is hardcoded (for its lowest point) with 2 steps in order:
+# It takes minimum value between <code>OCEAN_FLOOR_WG</code> heightmap and original placement position;
+# It takes maximum value between 10 blocks above bottom of the world and placement position from first step minus 15-24 (randomly).
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||May 13, 2016|link={{tweet|ProfMobius|731048441015631872}}|[[ProfMobius]] tweets an image of the new [[structure block]]s in action, generating what appears to be a fossil made of quartz.}}
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208&t|t=2h13m39s}}|Prerelease footage of the [[soul sand valley]] biome at [[MINECON Live 2019]] appears to have used these fossils (as opposed to the distinct [[nether fossil]]s).}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.10|dev=16w20a|Added fossils.}}
+|{{HistoryLine||1.16|dev=20w22a|Fossils can no longer overwrite [[desert pyramid]]s or the end portal room of [[stronghold]]s.}}
+|{{HistoryLine||1.17|dev=21w06a<!--|Fossil generation was unaccountably changed so that they only generate between Y{{=}}-15 and Y{{=}}-24.-->
+|Fossils can now generate in the air due to a bug.<ref>{{Bug|MC-214784||Fossils can generate floating in caves|Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w10a<!--|Fossils are now able to generate at any Y-level.-->
+|Fossils that generate below Y{{=}}0 now generate with either normal or [[deepslate diamond ore]] instead of [[coal ore]].
+|Fossils can no longer generate in the air.}}
+|{{HistoryLine|||dev=21w15a|Because world generation has been reverted, fossils generate the way they did before the 1.17 snapshots.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|The fossil generation changes in the 1.17 snapshots have been reintroduced.}}
+|{{HistoryLine|||dev=experimental snapshot 5|Fossils with diamond ore no longer generate above the deepslate level.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.3|dev=alpha 1.1.3.0|Added fossils.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.21|Fossils that generate below Y{{=}}0 now generate with either normal or [[deepslate diamond ore]] instead of [[coal ore]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Added fossils.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.9.19|Added fossils.}}
+}}
+
+== Issues ==
+{{issue list|Fossil|-Nether}}
+
+== Trivia ==
+*Hidden in the structure NBT is data that credits [[ProfMobius]] with the creation of the fossils.
+
+== Gallery ==
+=== Renders ===
+==== Skulls ====
+<gallery>
+Fossil Skull 1.png
+Fossil Skull 2.png
+Fossil Skull 3.png
+Fossil Skull 4.png
+</gallery>
+
+==== Spines ====
+<gallery>
+Fossil Spine 1.png
+Fossil Spine 2.png
+Fossil Spine 3.png
+Fossil Spine 4.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+CaveFossil.png|A fossil that generated inside a cave.
+FossilExcavated.png|Excavating the fossil.
+AllBoneFossils.png|All skull and spine structures, excluding those made of coal ore.
+Superflatfossil.png|Fossil generated on a [[superflat]] world. Some bone blocks are removed/replaced with coal ores.
+Excavated Skull Fossil.jpg|A fossil that has been excavated.
+FossilWithCoalAndStone.png|A partially excavated fossil underground.
+Fossil with Diamond.png|A fossil whose bone block is partly replaced by deepslate diamond ore.
+Ender Dragon and Fossil 4 size comparison.jpg|The smallest skull fossil and largest spine fossil together compared to the largest mob, the [[ender dragon]].
+Ender Dragon and Fossil 4 size comparison 2.jpg|The same from above.
+Many fossils in a super flat world.jpg|Many fossils that have generated on a [[superflat]] world in a [[swamp]] biome.
+Underwater Fossil.jpg|A fossil that has generated underwater, inside an underwater [[ravine]].
+Underwater Floating Fossil.png|A fossil that generated mid-air in a flooded cave.
+Skull Fossil that have generated Underwater.jpg|A fossil generated at the bottom of an ocean.
+Fossil in a ocean ravine.png|A fossil generated in an ocean ravine.
+Fossil Floating Underwater.png|Another fossil generated at the bottom of an ocean.
+Fossil Underwater Excavated.png|A fossil that generated just below the seafloor.
+Fossi exposedl.png|A fossil generated partially exposed to air in a desert biome.
+Trial fossil.jpg|A fossil generated in a [[trial chamber]].
+</gallery>
+
+== See also ==
+* [[Feature]]
+* {{EnvLink|Nether fossil}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[de:Fossil]]
+[[es:Fósil]]
+[[fr:Fossile]]
+[[it:Fossile]]
+[[ja:化石]]
+[[ko:화석]]
+[[lzh:龍骨]]
+[[nl:Fossiel]]
+[[pl:Skamielina]]
+[[pt:Fóssil]]
+[[ru:Ископаемые останки]]
+[[th:ฟอสซิล]]
+[[uk:Скам'янілості]]
+[[zh:化石]]

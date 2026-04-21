@@ -1,0 +1,161 @@
+{{Distinguish|Workstation}}
+{{set index}}
+
+'''Interactable blocks''' are blocks with functionalities accessed with pressing {{control|use}} while looking at it.
+
+== Mechanics of use on block ==
+
+When a player is pressing {{control|use}} and is looking at an [[interaction box]] of a block within its [[interaction range]], and there are no mob hitboxes in between, then they attempt to interact with the block.
+
+There are three types of interaction. The first two are defined by the block (although the item in hand can influence the first) and the last is defined by the item (although the interacted block can influence it). In order of attempted interaction:
+
+# Use item on block (focused on the block)
+# Use block without item
+# Use item on block (focused on the item)
+
+If the player {{ctrl|sneaking}} and has an item in hand, the first two uses of the blocks are ignored and the attempt directly goes to the last one. Otherwise, the player attempts use one; if successful, the interaction ends. Otherwise, depending on the result of the use one, they may have to perform use two or skip straight to use three. If they attempt use two, and fail, they will attempt use three, otherwise if successful, the interaction ends.
+
+Only some blocks have a specific effect for use with an item (1) or use without items (2), and only some items have use on blocks (3). If a block does not have a specific interaction for using an item on it (1), using an item on it will simply attempt to use the block without an item (2). For (2) and (3), if a block or item does not have a specific use, attempting to use it will fail.
+
+The swing animation is only applied when there is some success (in any of the use).
+
+Using a block without an item does not necessarily mean the player has no item in hand; instead it simply means using the block without considering the item. Similarly, it is possible to use an item on a block even when the hand is empty.{{note|When there is no item in hand, the item considered is [[air]]; {{in|je}} this can have an effect if {{cd|minicraft:air}} is in certain [[Item_tag_(Java_Edition)|item tag]].}}
+
+{{IN|Java}}, when the first or third attempt is successful, the advancement trigger [[Advancement_definition#minecraft:item_used_on_block|{{cd|minecraft:item_used_on_block}}]] is activated, and if the second case is a success, trigger [[Advancement_definition#minecraft:default_block_use|{{cd|minecraft:default_block_use}}]] is activated. Subsequently, in any successful case, the [[Advancement_definition#minecraft:any_block_use|{{cd|minecraft:any_block_use}}]] trigger is activated.
+
+== Interactable blocks without items ==
+
+=== Blocks with GUI ===
+
+[[:Category:Blocks with GUI|Blocks with GUI]], show a menu that you can use to interact with it. These Interactions include [[crafting]], [[smelting]], [[Inventory#External inventories|storing]], [[brewing]], [[smithing]], [[enchanting]], and other functions. 
+
+Chests only open if there is no [[redstone conductor]] block above them or a cat sitting on top of them{{note|A cat is considered to be on top of a chest if any part of there hitbox is inside a 1×1×1 box above the chest.}}, in the case of a double chest, the same condition is necessary for a connected chest. Shulker boxes only open if their opening (0.5 blocks towards the top) does not have any collision with the collision box of another block. Ender chests only open if there is no redstone conductor block above them.
+
+These, and only these, blocks can be integrated in [[spectator mode]], except for the blocked chests and ender chests.
+
+Open a barrel, any chest (incluid ender chest), or a shulker box also anger nearby [[piglin]]s. {{IN|JE}}, interacting with these blocks also increases the associated [[status]], exect the crafting table and the enchanting table.
+
+'''Blocks whose GUI depends on the [[block entity]]'''
+
+* {{BlockLink|Furnace}}
+** {{BlockLink|Blast Furnace}}
+**{{BlockLink|Smoker}}
+*{{BlockLink|Barrel}}
+*{{BlockLink|Beacon}}
+*{{BlockLink|Brewing Stand}}
+*{{BlockLink|Chest}}
+**{{BlockLink|Copper Chests|link=Copper Chest}}
+**{{BlockLink|Trapped Chest}}
+*{{BlockLink|Crafter}}
+*{{BlockLink|Dispenser}}
+**{{BlockLink|Dropper}}<!--Use the same  useWithoutItem(...) method-->
+*{{BlockLink|Enchanting Table}}
+*{{BlockLink|Hopper}}
+*{{BlockLink|Lectern}}
+*{{BlockLink|Shulker Boxes}}
+
+'''Blocks whose GUI depends on the player'''
+
+*{{BlockLink|Ender Chest}}
+
+'''Other'''
+
+*{{BlockLink|Anvils}}
+*{{BlockLink|Cartography Table}}
+*{{BlockLink|Crafting Table}}
+*{{BlockLink|Grindstone}}
+*{{BlockLink|Loom}}
+*{{BlockLink|Smithing Table}}
+*{{BlockLink|Stonecutter}}
+
+=== Other ===
+
+Interacting blocks without item that don't open a menu. Blocks like signs, command blocks, and structure blocks set a new screen, but these are not considered menus. Unlike menus, they are opened by the local player and not the server player{{More info|If there's a wiki article explaining the difference, please link it here.<!--If it doesn't exist, it's an important article to create.-->}}.
+
+*{{BlockLink|Beds}}
+*{{BlockLink|Bell}}
+*{{BlockLink|Buttons}}
+*{{BlockLink|Cake}}
+*{{BlockLink|Cake with Candle}}
+**{{BlockLink|Cake with Cyan Candle|Cake with Dyed Candles}}
+*{{BlockLink|Cave Vines}}
+**{{BlockLink|Cave Vines Plant|link=Technical_blocks}}
+*{{BlockLink|Chiseled Bookshelf}}
+*{{BlockLink|Command Blocks}}
+*{{BlockLink|Comparator|id=Redstone Comparator}}
+*{{BlockLink|Composter}} (level {{cd|8}})
+*{{BlockLink|Daylight Detector}}
+*{{BlockLink|Decorated Pot}}
+*{{BlockLink|Doors}}
+*{{BlockLink|Dragon Egg}}
+*{{BlockLink|Fences}}{{note|Try binding player leashed mobs}}
+* {{BlockLink|Fence Gates}}
+* {{BlockLink|Potted Acacia Sapling|text=&zwnj;}}{{BlockLink|Potted Poppy|text=&zwnj;}}{{BlockLink|Potted Bamboo|text=&zwnj;}}{{BlockLink|Potted Crimson Fungus|text=&zwnj;}}⋯ [[Flower Pot|All Potted Plants/Fungi]]
+*{{BlockLink|Jigsaw Block}}
+*{{BlockLink|Jukebox}}
+*{{BlockLink|Lever}}
+*{{BlockLink|Light|link=Light (block)}}{{note|Technically, the light is interacting without items; however, its [[interaction box]] is empty when not holding a light, making interaction impossible.}}
+*{{BlockLink|Note Block}}
+*{{BlockLink|Redstone Wire}}
+*{{BlockLink|Repeater|id=Redstone Repeater}}
+*{{BlockLink|Respawn Anchor}}
+<!--*{{BlockLink|Shelves}} only with itens-->
+*{{BlockLink|Signs}} ({{BlockLink|Wall Signs|link=Technical_blocks}}) 
+** {{BlockLink|Hanging Signs}} ({{BlockLink|Wall Hanging Signs|link=Technical_blocks}})
+*{{BlockLink|Structure Block}}
+*{{BlockLink|Sweet Berry Bush}}
+*{{BlockLink|Test Block}}
+*{{BlockLink|Test Instance Block}}
+*{{BlockLink|Wooden Trapdoors|text=&zwnj;}}{{BlockLink|Copper Trapdoors|text=&zwnj;}}[[Trapdoors]] (except iron)
+
+*{{BlockLink|Moving Piston}} (practically never{{Note|When interacting with a moving piston, if there is no [[block entity]] in the position, it is removed. However, its [[interaction box]] is always empty, and it is expected that there will always be a block entity in the position. This interaction is probably only for bug fixes and not for gameplayer functionality.}})
+
+== Interactable blocks with item == 
+Blocks that can be interacted with while holding an item, and the behavior is defined by the block.
+
+Some blocks use a certain item, it doesn't create a specific block behavior, but rather blocks or allows another interaction. For example, using the plant/fungi in a pot already prevents the plant/fungi from being removed from the pot, or uses a block in a redstone ore,  could try placing it beyond the usual interaction (using other items, like a bucket of water, doesn't attempt use 3).
+
+* {{BlockLink|Cauldron}}
+** {{BlockLink|Water Cauldron}}
+** {{BlockLink|Lava Cauldron}}
+** {{BlockLink|Powder Snow Cauldron}}
+* {{BlockLink|Beehive}}
+** {{BlockLink|Bee Nest}}
+* {{BlockLink|Cake}}
+* {{BlockLink|Campfire}}
+** {{BlockLink|Soul Campfire}} 
+* {{BlockLink|Candle}}
+** {{BlockLink|Dyed Candles|id=Candles}}
+* {{BlockLink|Cake with Candle}}
+** {{BlockLink|Cake with Cyan Candle|Cakes with Dyed Candle}}
+* {{BlockLink|Chiseled Bookshelf}}
+* {{BlockLink|Composter}}
+* {{BlockLink|Copper Golem Statues}}
+* {{BlockLink|Decorated Pot}}
+* {{BlockLink|Flower Pot}}
+** {{BlockLink|Potted Acacia Sapling|text=&zwnj;}}{{BlockLink|Potted Poppy|text=&zwnj;}}{{BlockLink|Potted Bamboo|text=&zwnj;}}{{BlockLink|Potted Crimson Fungus|text=&zwnj;}}⋯ [[Flower Pot|All Potted Plants/Fungi]]
+* {{BlockLink|Jukebox}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|Note Block}}
+* {{BlockLink|Pumpkin}}
+* {{BlockLink|all-redstone-ore|Redstone Ores|link=Redstone Ore}}
+* {{BlockLink|Respawn Anchor}}
+* {{BlockLink|Shelves}}
+* {{BlockLink|Signs}} ({{BlockLink|Wall Signs|link=Technical blocks}})
+** {{BlockLink|Hanging Signs}} ({{BlockLink|Wall Hanging Signs|link=Technical blocks}})
+* {{BlockLink|Sweet Berry Bush}}
+* {{BlockLink|TNT}}
+* {{BlockLink|Vault}}
+
+== Items that can be used in blocks ==
+{{Expand section|Probably another article should be created for this, and linked here with {{t|main}}. In a way, it's still within the scope of the article because they are interactable blocks, but in this case almost all blocks fit (except for blocks without an interaction box and without liquid), as they can be interacted with in the positioning of blocks (either to choose or determine the state of the block positioned next to it, or to be replaced) or picked up by bucket.}}
+
+An item that can be interacted with blocks, and whose behavior is determined by the item.
+
+== Notes ==
+{{Notelist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}__DISAMBIG__
+[[ko:상호작용할 수 있는 블록]]
+[[pt:Blocos interativos]]

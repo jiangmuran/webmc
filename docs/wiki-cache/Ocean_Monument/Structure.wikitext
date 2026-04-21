@@ -1,0 +1,67 @@
+{{structure info}}
+[[File:MonumentOcean2.png|thumb|right|The treasure chamber]]
+
+The ocean monument is constructed entirely from variants of [[prismarine]] and lit by [[sea lantern]]s. It includes a large central section flanked between two wings. Under the monument are 23 giant pillars that stretch to the ocean floor. The main entrance is located at the front of the central section. The size of the monument is 58×58 blocks wide and 22 blocks tall (not including the pillars).
+
+The central section consists of various types of chambers forming a randomly-generated maze. The chambers connect vertically and horizontally to the different parts of the monument, including the left and right wings. In the topmost room and in each wing reside [[elder guardian]]s. In the back of the central section lies the treasure chamber, a tall room with eight [[gold block]]s encased in [[dark prismarine]].
+
+== Room types ==
+[[File:MonumentOcean3.png|thumb|right|Certain rooms in the monument contain wet sponges]]
+
+The basic unit in the monument is an 8×8×4 ''small room''. The larger rooms, excluding the penthouse and wings, are made of combinations of these smaller rooms.
+{{LoadPage|{{FULLPAGENAME}}/Wing with room blueprint|'''Wing with room blueprint'''|p}}
+{{LoadPage|{{FULLPAGENAME}}/Wing with open area blueprint|'''Wing with open area blueprint'''|p}}
+* Wings extend from the front of the body of the monument and connect via a passageway around the bottom of the body of the monument. One wing has a large room with a pillar, while the other consists of a large open area. Each wing contains an [[elder guardian]]. <!-- wings are incomplete, will finish later -->
+{{LoadPage|{{FULLPAGENAME}}/Penthouse blueprint|'''Penthouse blueprint'''|p}}
+* The penthouse is the topmost interior space of the monument and contains an [[elder guardian]].
+{{LoadPage|{{FULLPAGENAME}}/Core blueprint|'''Core blueprint'''|p}}
+* The core is made up of 2×2×2 basic units and contains 8 gold blocks wrapped in dark prismarine.
+{{LoadPage|{{FULLPAGENAME}}/Entry room blueprints|'''Entry room blueprints'''|p}}
+* The entry room is always at the bottom front center, opening to the ocean outside the monument.
+{{LoadPage|{{FULLPAGENAME}}/DXY room blueprints|'''DXY room blueprints'''|p}}
+* DXY rooms, 2×1×2 basic units, have two hollow pillars coming up with openings in each facing the top-center and four sea lanterns at corners beneath the openings.
+{{LoadPage|{{FULLPAGENAME}}/DYZ room blueprints|'''DYZ room blueprints'''|p}}
+* DYZ rooms, 1×2×2 basic units, are largely open rooms with a 2×2 pillar made of dark prismarine and sea lanterns in the middle. Openings in the top of the left and right walls have a ledge with a frame around the potential lower openings.
+{{LoadPage|{{FULLPAGENAME}}/DZ room blueprints|'''DZ room blueprints'''|p}}
+* DZ rooms, 1×2×1 basic units, have an open-centered structure made of prismarine bricks in the middle, with sea lanterns on the four corners.
+{{LoadPage|{{FULLPAGENAME}}/DX room blueprints|'''DX room blueprints'''|p}}
+* DX rooms, 2×1×1 basic units, are U-shaped: one wall has an outcropping consisting of a 6×4 rectangle of prismarine bricks on the floor and ceiling with a 4×3 rectangle of prismarine with sea lanterns at the corners in the middle.
+{{LoadPage|{{FULLPAGENAME}}/DY room blueprints|'''DY room blueprints'''|p}}
+* DY rooms, 1×1×2 basic units, are tall rooms with 2×2 corners of prismarine bricks midway up, each with the piece in the corner of the room missing. Open walls have insets in the side such that two of these rooms adjacent have additional 2×1 openings on either side of the usual passageway.
+{{LoadPage|{{FULLPAGENAME}}/Plus-shaped small room blueprints|'''Plus-shaped small room blueprints'''|p}}
+* Small rooms, 1×1×1 basic unit, made plus-shaped by 2×2 prismarine bricks at the floor and ceiling in each corner, with sea lanterns in the four corners at the middle level.
+{{LoadPage|{{FULLPAGENAME}}/Four-pillar small room blueprints|'''Four-pillar small room blueprints'''|p}}
+* Small rooms, 1×1×1 basic unit, with four 1×1 pillars made of prismarine bricks and a sea lantern. If both the top and bottom walls are closed and at least two other walls are open, has a 50% chance of having a 2×2 pillar made of prismarine and prismarine bricks in the middle.
+{{LoadPage|{{FULLPAGENAME}}/Dark prismarine small room blueprints|'''Dark prismarine small room blueprints'''|p}}
+* Small rooms, 1×1×1 basic unit, normally empty with dark prismarine on the walls. If both the top and bottom walls are closed and at least two other walls are open, has a 50% chance of having a 2×2 pillar made of prismarine and prismarine bricks in the middle.
+{{LoadPage|{{FULLPAGENAME}}/Sponge room blueprint|'''Sponge room blueprint'''|p}}
+* Sponge rooms, 1×1×1 basic unit, have openings only in the bottom wall. Each of the 36 columns in the room has a {{frac|1|3}} chance of being empty, a {{frac|1|2}} chance of having one sponge, and a {{frac|1|6}} chance of having two sponges. The walls have dark prismarine.
+
+''All layered blueprints oriented as if player were standing in the entrance of the monument facing in the direction of the rear of the structure.''
+
+== Structure generation ==
+# It starts with 49 basic units: two layers of 20 (5×4) with one layer of 6 (3×2) on top, plus 3 dummy units representing the wings and the penthouse. Every unit connects to all adjacent units (up, down, left, right, forward, and back, including connections with the dummy units), and all the walls between connected units are initially marked as "open". The 46 non-dummy units are marked as "unused", while the dummy units are "used".
+# The core is placed somewhere at the back of the monument. The 8 units taken up by the Core are marked as "used".
+#* If the core is at the far left or far right, it opens into the passage connecting the two wings.
+# The list of units is randomized, and for each unit up to 5 attempts are made to close walls until two closures succeed:
+#* A direction is chosen: up, down, left, right, forward, or back.
+#* If the wall in that direction is already closed, the attempt fails.
+#* The wall is marked as closed.
+#* The two units on either side of the just-closed wall are checked to make sure a path through open walls still exists from each one to the entry unit. If either fails, the wall is re-opened and the attempt fails.
+# Place the entry room, marking that unit as used.
+# The randomized list of units is gone through again to choose what size monument room is to be placed for each one that is still unused. The first option that fits is applied:
+## If the walls between the current unit, the one above, the one to the right, and the one above and to the right are all open and all those units are still unused, place a DXY room (marking the 4 units as used).
+## If the walls between the current unit, the one above, the one to the back, and the one above and to the back are all open and all those units are still unused, place a DYZ room (marking the 4 units as used).
+## If the wall between the current unit and the one behind is open and the one behind is still unused, place a DZ room (marking both units as used).
+## If the wall between the current unit and the one to the right is open and the one to the right is still unused, place a DX room (marking both units as used).
+## If the wall between the current unit and the one above is open and the one above is still unused, place a DY room (marking both units as used).
+## If all walls except the bottom are closed, place a sponge room (marking that unit as used).
+## Otherwise, place one of the three small rooms ({{frac|1|3}} chance of each).
+
+[[Category:Structure blueprints]]
+
+[[fr:Monument océanique/Structure]]
+[[ko:바다 유적/구조]]
+[[pl:Podwodna świątynia/Pokoje]]
+[[uk:Океанічний монумент/Структура]]
+[[zh:海底神殿/结构]]

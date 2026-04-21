@@ -1,0 +1,368 @@
+{{Infobox block
+| image = Player Head.png
+| imagecaption = {{JE}}
+| image2 = Player Head (S) JE1.png
+| image2caption = {{BE}}
+| invimage = Player Head
+| invimage2 = Player Head BE
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = {{jebe|No|Yes}}
+| rarity = Uncommon
+}}
+The '''player head''' is a [[block]] based on the [[head]] of a [[player]]'s [[skin]] ([[Steve]] by default). Player heads cannot be obtained in [[Survival]].
+
+== Obtaining ==
+The player head can be obtained only by using [[Creative inventory]], {{control|picking block}} or executing {{cmd|give}}.
+=== Breaking ===
+No tool can accelerate the breaking process of player head.<ref>{{bug|MC-192905||Heads & Skulls have no assigned tool}}</ref>
+
+{{breaking row|horizontal=1|Player Head}}
+
+Player head drops itself when it's destroyed.
+
+When destroyed by an [[explosion]], the player head always drops as an item.
+
+== Usage ==
+=== Decoration ===
+Player heads can be oriented in 16 different directions when placed on top of a block, and in 4 directions when placed on the sides of blocks, similar to signs. They can be placed either on top of or beside blocks by shift-clicking.
+
+=== Wearing ===
+The player can wear player heads, similarly to [[pumpkin]]s or helmets. This overlays the second layer of the player's [[skin]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a player head on a [[player]], [[mob]], or [[Armor Stand|armor stand]] with an empty helmet slot, within the block the dispenser is facing.
+
+=== Enchantments ===
+Player heads can receive the following [[enchantment]]s, but only through an [[anvil]].
+
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchantment#Obtaining|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Piston interactivity ===
+Player head is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+== Player skins ==
+{{exclusive|java|section=1}}
+Player heads can be given [[Chunk format#Entity Format|NBT data]] so that they appear with the skin of any ''Minecraft'' account. This means if a player knows that a specific account has a head that is desired to display, the NBT data can be edited to make it appear. Commonly, this kind of head is called a custom head.
+
+The command to give the player a head with the skin of another player is {{cmd|1=give @s minecraft:player_head[minecraft:profile={name:PlayerName}]}}. This command will give a dynamic player head, which will update when the player updates their skin. A static player head instead saves the skin of the player from the time it was created, meaning if the player changes their skin, the head still displays the original texture.<ref>{{tweet|Dinnerbone|464414369452142592|Skulls are a snapshot of the skin as it was made; just change your skin, make a skull, and change your skin back. That's intended behaviour.|May 8, 2014}}</ref> The command to get a static player is twofold: first type {{cmd|1=fetchprofile name PlayerName}}, then click on the "Give Item" option to give yourself a static player head of the player named.
+
+Note that it is therefore necessary to be connected to the internet to load the texture of a skin, whatever the property used.
+When they are loaded for the first time by the client, the skins textures are cached in {{code|[[.minecraft]]\assets\skins\(subfolders)\(files)}}.
+If the client does not have access to the internet when it first loads, the player's head displays a regular head (Steve's skin) which is also cached.
+Afterward, even if the client reconnects to the internet, in order to display the skin correctly, it is necessary to clear the cache manually by deleting the recently created files in {{code|[[.minecraft]]\assets\skins\(subfolder)}}, then restarting the game.
+
+=== Marc's Head Format ===
+[[File:Allmobheads.png|thumb|right|All of the MHF mob heads.]]
+
+{{exclusive|Java|section=1}}
+
+[[Marc Watson]] created a number of accounts with specific skins so map makers could use common player heads without the risk of someone changing their skins.<ref>{{reddit|1m0itx/twitter_marc_irl_mapmakers_would_it_be_useful|cc4m1cq|I'm here to make it so that people don't have to worry about having a consistent account whose skin might change.|Marc_IRL|September 9, 2013}}</ref> Nowadays, since heads do not update the skin if a player changes their skin, this is not something map-makers need to worry about, though these skins are still useful. These accounts have names in the format <code>MHF_<''name''></code>, for example <code>MHF_PigZombie</code> is the name of a ''Minecraft'' user with a [[zombified piglin]] head. MHF stands for "Marc's Head Format".<ref>{{tweet|Marc_IRL|377453670410891264|head format. I needed to pick a prefix that was short and not already taken by other usernames.|September 10, 2013}}</ref> There are also a few blocks and "bonus" heads, for more variety. These player heads have not been updated in compliance with the [[Texture Update]], and are outdated.
+
+Because these are names of player accounts, these player heads are obtained or placed using the <code>minecraft:profile</code> component, for instance: {{cmd|1=/give @s minecraft:player_head[minecraft:profile=MHF_<name>]}}.
+
+The following names/heads have been made available:<ref>{{tweet|Marc_IRL|542330244473311232|For those following the MHF list, I have presents for you. Full list of accounts I've made: http://pastebin.com/5mug6EBu|December 9, 2014}}</ref>
+<!--
+
+DO NOT add ANY skull to this list without citing a reliable source proving that it is made by Mojang!
+
+In particular:
+* MHF_Apple, MHF_Wither and MHF_Tree are not made by Mojang, see {{tweet|Marc_IRL|542599419678707714}} and {{tweet|Marc_IRL|590522239616954369}}
+* MHF_Guardian is unofficial, see http://redd.it/3439u0
+
+-->
+;Mobs
+<div class="list-style-none" style="-moz-column-width:15em;-webkit-column-width:15em;column-width:15em">
+* {{InvSprite|MHF Alex}} MHF_Alex
+* {{InvSprite|MHF Blaze}} MHF_Blaze
+* {{InvSprite|MHF CaveSpider}} MHF_CaveSpider
+* {{InvSprite|MHF Chicken}} MHF_Chicken
+* {{InvSprite|MHF Cow}} MHF_Cow
+* {{InvSprite|MHF Creeper}} MHF_Creeper
+* {{InvSprite|MHF Enderman}} MHF_Enderman
+* {{InvSprite|MHF Ghast}} MHF_Ghast
+* {{InvSprite|MHF Golem}} MHF_Golem
+* {{InvSprite|MHF Herobrine}} MHF_Herobrine
+* {{InvSprite|MHF LavaSlime}} MHF_LavaSlime
+* {{InvSprite|MHF MushroomCow}} MHF_MushroomCow
+* {{InvSprite|MHF Ocelot}} MHF_Ocelot
+* {{InvSprite|MHF Pig}} MHF_Pig
+* {{InvSprite|MHF PigZombie}} MHF_PigZombie
+* {{InvSprite|MHF Sheep}} MHF_Sheep
+* {{InvSprite|MHF Skeleton}} MHF_Skeleton
+* {{InvSprite|MHF Slime}} MHF_Slime
+* {{InvSprite|MHF Spider}} MHF_Spider
+* {{InvSprite|MHF Squid}} MHF_Squid
+* {{InvSprite|Player Head}} MHF_Steve
+* {{InvSprite|MHF Villager}} MHF_Villager
+* {{InvSprite|MHF WSkeleton}} MHF_WSkeleton
+* {{InvSprite|MHF Zombie}} MHF_Zombie
+</div>
+
+;Blocks
+<div class="list-style-none" style="-moz-column-width:15em;-webkit-column-width:15em;column-width:15em">
+* {{InvSprite|MHF Cactus}} MHF_Cactus
+* {{InvSprite|MHF Cake}} MHF_Cake
+* {{InvSprite|MHF Chest}} MHF_Chest
+* {{InvSprite|MHF CoconutB}} MHF_CoconutB
+* {{InvSprite|MHF CoconutG}} MHF_CoconutG
+* {{InvSprite|MHF Melon}} MHF_Melon
+* {{InvSprite|MHF OakLog}} MHF_OakLog
+* {{InvSprite|MHF Present1}} MHF_Present1
+* {{InvSprite|MHF Present2}} MHF_Present2
+* {{InvSprite|MHF Pumpkin}} MHF_Pumpkin
+* {{InvSprite|MHF TNT}} MHF_TNT
+* {{InvSprite|MHF TNT2}} MHF_TNT2
+</div>
+
+;Bonus
+<div class="list-style-none" style="-moz-column-width:15em;-webkit-column-width:15em;column-width:15em">
+* {{InvSprite|MHF ArrowUp}} MHF_ArrowUp
+* {{InvSprite|MHF ArrowDown}} MHF_ArrowDown
+* {{InvSprite|MHF ArrowLeft}} MHF_ArrowLeft
+* {{InvSprite|MHF ArrowRight}} MHF_ArrowRight
+* {{InvSprite|MHF Exclamation}} MHF_Exclamation
+* {{InvSprite|MHF Question}} MHF_Question
+</div>
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a player head is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a player head is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Player Head
+|spritetype=block
+|nameid=player_head
+|itemtags=skulls}}
+{{ID table
+|displayname=Player Wall Head
+|spritetype=block
+|nameid=player_wall_head
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=player-head
+|spritetype=block
+|nameid=skull
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Player Head
+|spritetype=block
+|nameid=player_head
+|aliasid=skull / 3
+|id=-967
+|translationkey=item.skull.char.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=player-head
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/custom_name}}
+{{:Data component format/note_block_sound}}
+{{:Data component format/profile}}
+</div>
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Head|block states}}
+
+=== Block data ===
+A player head has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Head|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== History ==
+{{See asset history|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w36a|[[File:Player Head (S) JE1.png|32px]][[File:Player Head (item) JE1.png|32px]] Added heads, obtainable only from the [[Creative inventory]].}}
+|{{HistoryLine|||dev=12w37a|[[File:Player Head (item) JE1 BE1.png|32px]] Changed item textures.
+|Added as a hidden and disabled feature, player heads can now have the [[skin]] of a specific [[player]]. A line in the language file implies that there either used to be, or in a future update, the possibility of obtaining a specific player's head.<ref name="en_US 12w21">Snapshot 12w37a {{cd|lang/en_US.lang}}: <code>item.skull.player.name=%s's Head</code></ref> 
+|Heads do not [[drop]] in vanilla, but mapmakers/modders/etc. can make them by adding an [[NBT format|NBT]] string tag <code>{"SkullOwner":"''player_name''"}</code> on the skull [[item]]s.<ref name="playerheads">{{reddit|zxn7u/its_apparently_my_cakeday_so_lets_cash_in_this}}</ref>}}
+|{{HistoryLine||November 7, 2012|link=https://www.reddit.com/r/minecraftsuggestions/comments/12qtbz/killing_other_players_with_a_sword_should_drop/c6xqpym/?context=3|[[Jeb]] states that the official opinion is that "&#91;dropping&#93; player heads &#91;on player kills&#93; are a bit too gory for ''[[Minecraft]]'', so it's better suited for a plugin or mod."}}
+|{{HistoryLine||1.4.6|dev=12w49a|A head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Custom heads can now be obtained without third party programs via {{cmd|give}}.}}
+|{{HistoryLine||1.8|dev=14w03a|Heads now show the [[skin]]'s hat layer (this also works when a [[mob]]/player wears the head).}}
+|{{HistoryLine|||dev=14w29a|Heads now display a cracking animation.}}
+|{{HistoryLine|||dev=14w30a|[[File:Player Head (item) JE2.png|32px]] Heads in [[inventories]] and held by mobs/players now display as [[block]]s. 
+|Heads worn by [[mob]]s and [[player]]s are now displayed on the armor layer. Previously, the head replaced the mob/player's head texture; the hat layer appeared over the player head.}}
+|{{HistoryLine||1.8.4|dev=release|For security reasons, custom heads can now have textures only from [[mojang.com]] and [[minecraft.net]].}}
+|{{HistoryLine||1.9|dev=15w31a|Heads now appear larger in the [[inventory]].}}
+|{{HistoryLine|||dev=15w39a|[[Dispenser]]s can now equip heads onto [[player]]s, [[mob]]s, and [[armor stand]]s.}}
+|{{HistoryLine|||dev=15w49a|Heads no longer turn red when the player or mob takes damage.<ref>{{bug|MC-85756}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Renamed "Head" to "Player Head".|Player heads now play a sound when placed.
+|Player heads can no longer be placed inside entities.<ref>{{bug|MC-2208}}</ref>}}
+|{{HistoryLine|||dev=18w21a|The rarity of player heads has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.19.3|dev=22w45a|[[File:Player Head (S) JE2.png|32px]] The texture of the player head has been changed.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w03a|Player heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.19.4|dev=23w05a|Player heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Player Head (item) JE1 BE1.png|32px]] Added heads. 
+|They use the [[Java]] textures prior to [[14w30a]].}} 
+|{{HistoryLine||v0.14.0|dev=build 1|Heads can now be worn as armor.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Heads can now be used to craft [[firework star]]s.}}
+|{{HistoryLine|||dev=beta 1.2.0.11|[[File:Head (item) BE2.png|32px]] Heads in [[inventories]] and when held by mobs/players now display as [[block]]s.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.25|Heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Head" to "Player Head" to match {{JE}}.}}
+|{{HistoryLine|||dev=Preview 1.21.30.21|The rarity of player heads has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Player Head (item) JE1 BE1.png|32px]] Added player heads to the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|A player head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Player heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Player heads are now held the same way as on ''Java Edition'' in first person.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Player Head (item) JE1 BE1.png|32px]] Added player heads.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|dev=24w10a|Now stores item name in <code>custom_name</code> tag.
+|NBT tag {{cd|SkullOwner}} and {{cd|ExtraType}} is replaced with <code>profile</code> to keep a consistent format with the item component form.}}
+|{{HistoryLine||1.21.9|dev=25w34a|The {{cd|profile}} field has been changed to match {{cd|minecraft:profile}} component. That means that it also becomes immutable and is resolved only when necessary.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The separate and direct item forms of the <code>skull</code> block ID have been merged and its [[Bedrock Edition data values|data values]] have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* When [[breaking]] a player head, the particle effect of breaking it is the same as [[soul sand]].
+* Despite there being a default Steve head, heads for the other protagonist skins cannot be obtained without using custom names.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Playerheads.png|A picture of player heads, including some Mojang characters.
+</gallery>
+
+=== Development images ===
+<gallery>
+Minecart with chest and head thing.png|Notch's head in a [[minecart with chest]].
+PauseUnpause's Head 1.png|First image of held heads rendering as blocks.
+PauseUnpause's Head 2.png|Second image of held heads rendering as blocks.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Creative}}
+{{Navbox combat|armor}}
+
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Creative or commands only blocks]]
+
+[[es:Cabeza#Jugador]]
+[[ko:플레이어 머리]]
+[[pt:Cabeça de Jogador]]
+[[zh:玩家的头]]

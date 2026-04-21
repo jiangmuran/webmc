@@ -1,0 +1,192 @@
+{{about|a feature named iceberg|a terrain feature called iceberg|Terrain features#Iceberg}}
+{{Infobox structure
+|title=Iceberg
+|image = Iceberg blue 2.png
+|image2 = Iceberg packed 2.png
+|biome = {{BiomeLink|Frozen Ocean}}<br>{{BiomeLink|Deep Frozen Ocean}}
+|blocks = 
+* {{BlockLink|Packed Ice}}
+* {{BlockLink|Blue Ice}}
+* {{BlockLink|Snow Block}}
+|canspawn=No
+}}
+An '''iceberg''' is a [[feature]] composed of [[packed ice]] and/or [[blue ice]].
+
+== Generation ==
+The "iceberg feature" (called a '''cone iceberg''') generates a small iceberg, shaped like a rounded upside-down cone, or an ice cream cone. The "[[Terrain features#Iceberg|iceberg terrain feature]]" (a '''large iceberg''') generates a large, mountainous iceberg.
+
+Cone icebergs generate in [[frozen ocean]]s and [[deep frozen ocean]]s. They can consist of [[packed ice]], [[blue ice]], and [[snow block]]s.
+
+=== Variants ===
+==== Composition ====
+Most cone icebergs are made of packed ice. Each cone iceberg has:
+
+* a 30% probability to be topped with snow (snow-capped). The snow is about 1 block thick
+* an {{frac|1|200}}{{Only|je|short=1}} or {{frac|1|100}}{{only|bedrock|short=1}} [[w:Independence_(probability_theory)|independent]] probability to try be a {{Section link||Blue ice}} iceberg
+
+This means that {{frac|3|2000}} cone icebergs are snow-capped blue ice icebergs {{in|java}}, or {{frac|3|1000}} {{in|bedrock}}.
+
+The iceberg has a 30%{{only|java|short=1}} or 20%{{only|bedrock|short=1}} probability to be elliptic, and is circular otherwise.
+
+==== Shape ====
+Cone icebergs have two types:
+
+* circular (circle-shaped)
+* elliptic (ellipse-shaped)
+
+==== Dimensions ====
+A circular iceberg has a random radius from <code>0-11</code>. Its max height above sea level is:
+* 90% probability:
+** <code>3-17</code>{{only|java|short=1}} or <code>3-13</code>{{only|bedrock|short=1}}
+* 10% probability (mutually exclusive):
+** <code>10-42</code>{{only|java|short=1}} or <code>10-34</code>{{only|bedrock|short=1}}
+
+The max depth below sea level is:
+* <code>3-18</code>
+
+An elliptic iceberg has:
+* a semimajor axis of <code>7-11</code>{{only|java|short=1}} or <code>8-15</code>{{only|bedrock|short=1}}
+* a semiminor axis of <code>3-5</code>
+* a max height above sea level of <code>6-11</code>{{only|java|short=1}} or <code>6-9</code>{{only|bedrock|short=1}}
+* a max depth below sea level of <code>6-18</code>
+
+=== Carving ===
+Carved icebergs are variations of icebergs with a recess or crater on side or bottom of an iceberg. Carvings serve no known purpose but to add character to icebergs.
+
+Each circular iceberg has a 30% probability of being carved.
+
+Each elliptic iceberg  has a 90% chance of being carved.
+
+=== Spacing ===
+Each [[chunk]] (of a valid ocean) has an {{frac|1|16}} {{only|java|short=1}} or {{frac|1|8}} {{only|bedrock|short=1}} probability to try to generate a cone iceberg.
+
+=== Blue ice ===
+Some packed ice icebergs sometimes have [[Blue Ice (feature)|blue ice features]] attached to them. A blue ice feature is a pile of blue ices that generates adjacent to a [[packed ice]], typically at the bottom of the iceberg.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=iceberg
+|spritetype=env
+|nameid=iceberg
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=iceberg
+|spritetype=env
+|nameid=iceberg_blue
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=iceberg
+|spritetype=env
+|nameid=iceberg_packed
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=blue-ice
+|spritetype=block
+|nameid=blue_ice_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=iceberg
+|spritetype=env
+|nameid=iceberg_feature
+|foot=1}}
+Used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=iceberg
+|spritetype=env
+|nameid=minecraft:legacy:ice_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state}} The block to use.
+*** {{nbt inherit/block_state}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:iceberg",
+  "config": {
+    "state": {
+      "Name": "minecraft:packed_ice"
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+Iceberg is hardcoded to generate only on sea level. And will replace only air, water, ice and snow block.
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w15a|Added icebergs.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added icebergs.}}
+}}
+
+==Issues==
+{{issue list|Iceberg}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Iceberg_blue_1.png|A circle-shaped blue iceberg without snow blocks
+Iceberg_blue_2.png|A circle-shaped blue iceberg with snow blocks
+Iceberg_blue_3.png|A carved ellipse-shaped blue iceberg without snow blocks
+Iceberg_blue_4.png|A carved ellipse-shaped blue iceberg with snow blocks
+Iceberg_blue_5.png|A tall circle-shaped blue iceberg without snow blocks
+Iceberg_blue_6.png|A carved circle-shaped blue iceberg with snow blocks
+Iceberg_packed_1.png|A circle-shaped packed iceberg without snow blocks
+Iceberg_packed_2.png|A circle-shaped packed iceberg with snow blocks
+Iceberg_packed_3.png|An uncarved ellipse-shaped packed iceberg without snow blocks
+Iceberg_packed_4.png|An uncarved ellipse-shaped packed iceberg with snow blocks
+Iceberg_packed_5.png|A tall circle-shaped packed iceberg without snow blocks
+A_small_iceberg.png|A tiny iceberg feature
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Snowy iceberg.png|An iceberg feature generated with blue ices
+Top view of small, snowy iceberg.png|The top view of an iceberg feature, with other iceberg terrain features in the background.
+Henrik Iceberg.jpg|Screenshot of lava spring in an iceberg posted by [[Henrik Kniberg]].
+Lava spring in iceberg bug.png|Edited screenshot of lava spring in an iceberg posted by Henrik Kniberg.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Iceberg]]
+[[fr:Iceberg]]
+[[ja:氷山 (生成物)]]
+[[ko:빙산]]
+[[lzh:冰山]]
+[[pt:Iceberg]]
+[[th:ภูเขาน้ำแข็ง]]
+[[zh:冰山]]

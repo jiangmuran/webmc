@@ -1,0 +1,339 @@
+{{about|the item in {{MC}}|the {{MCD|item}} in {{MCD}}|MCD:Eye of Ender|the [[Objects (Mini-Series)|object]] in ''[[Minecraft Mini-Series]]''|Enchanted Ender Eye}}
+{{Infobox item entity
+| image = Eye of Ender.png
+| invimage = Eye of Ender
+| stackable = Yes (64)
+| renewable = Yes
+| size = Height: 0.25 blocks<br>Width: 0.25 blocks
+| networkid = 
+}}
+An '''eye of ender''' is a [[craft]]able [[item]] that can be {{Control|thrown}} in the [[Overworld]] to show the direction of the nearest [[stronghold]], which may break the eye. Up to 12 eyes of ender are required to activate a stronghold's [[End portal]], which leads to the [[End dimension]].
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|Blaze Powder
+|Ender Pearl
+|Output=Eye of Ender
+|type=Miscellaneous
+}}
+
+== Usage ==
+=== Locating strongholds ===
+[[File:Eye of Ender (break).gif|thumb|right|An animation of an eye of ender shattering.]]
+
+To locate [[stronghold]]s (and the [[End portal]]s they house):
+* Pressing {{control|use}} while holding an eye of ender causes it to fly approximately 12 blocks in the direction of the nearest stronghold, traveling through any blocks necessary, and leave a trail of purple particles, the same particle effect used for [[endermen]] and [[ender chests]]. 
+** The eye leads to the [[chunk]] where a spiral staircase, the first room generated in the stronghold, is located.
+** The center of this entrance staircase is always exactly at the chunk coordinates 4, ~, 4, although the eye of ender leads to chunk coordinates 0, ~, 0 (the northwest corner of the chunk).
+* While over 12 blocks away from the northwest corner of the staircase chunk, the eye travels upward to offer an easily-visible indication of the horizontal direction the player must travel.
+* When closer than 12 blocks to the northwest corner of the staircase chunk, the eye travels downward, to indicate the player is above a stronghold and must mine downward.
+* After two or three seconds of travel, the eye floats in the air briefly, then either falls (becoming collectable again) or shatters in mid-air. The eye has a 20% chance of shattering and an 80% chance of surviving per throw. Therefore, throwing it three times has approximately a 50% overall chance to shatter the eye (0.8<sup>3</sup>=51.2%).
+* The eye of ender's flying function works only in the [[Overworld]] and only if a stronghold exists or can generate in the world. It does nothing in [[the Nether]], [[the End]], or [[custom dimension]]s, unless a structure able to generate in that dimension has been added to the <code>#minecraft:eye_of_ender_located</code> [[Structure_tag_(Java_Edition)|structure tag]].
+
+Note that the eyes may point to an incorrect location if the target chunks were generated with a different biomes map in an older version or through different generation settings.<ref>{{bug|MC-135996}}</ref>
+
+=== Activating End portals ===
+[[File:Active End Portal.png|thumb|right|An End portal activated with eyes of ender.]]
+Once an End portal is found, eyes of ender are required to activate it. End portals require a total of 12 eyes of ender in order to activate, though each individual frame-block has a 10% chance of containing an eye of ender when generated. Eyes can be placed in empty [[End portal frame]]s by pressing {{control|use}} on them until the entire ring of 12 is filled, thereby activating the portal. Because there is a 10% chance of for each individual End portal frame to contain an eye, there is a 1 in 1 trillion chance that every frame will have an eye in it, thereby activating the portal automatically.
+{| class="wikitable sortable mw-collapsible"
+|+End portal pre-filled eyes
+!Eyes
+!0
+!1
+!2
+!3
+!4
+!5-12
+|-
+|Exactly
+|28%
+|38%
+|23%
+|9%
+|2%
+|<1%
+|-
+|Or more
+|100%
+|72%
+|34%
+|11%
+|3%
+|<1%
+|}
+The probability that a specific number of eyes are generated was calculated using the probability mass function:
+
+''p''<sub>''X''</sub>(''k'') = ''P''(''X'' = ''k'') = <math>\binom{12}{k} \cdot 0.1^k \cdot(1-0.1)^{12-k}</math>
+
+where ''k'' is the number of eyes and ''p''<sub>''X''</sub>(''k'') is the probability that a particular End portal contains ''k'' eyes when it is generated.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Eyes of ender use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Ender Eye death1.ogg
+|sound2=Ender Eye death2.ogg
+|subtitle=Eye of Ender falls <ref group=sound name=LousyEvents>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=neutral
+|description=When an eye of ender drops or breaks
+|id=entity.ender_eye.death|idnote=<ref group=sound name=LousyEvents/>
+|translationkey=subtitles.entity.ender_eye.death|translationkeynote=<ref group=sound name=LousyEvents/>
+|volume=1.3
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Ender Eye launch1.ogg
+|sound2=Ender Eye launch2.ogg
+|subtitle=Eye of Ender shoots
+|source=neutral
+|description=When an eye of ender is thrown
+|id=entity.ender_eye.launch
+|translationkey=subtitles.entity.ender_eye.launch
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|sound=End portal eye place1.ogg
+|sound2=End portal eye place2.ogg
+|sound3=End portal eye place3.ogg
+|subtitle=Eye of Ender attaches
+|source=block
+|description=When an eye of ender is placed in an End portal frame
+|id=block.end_portal_frame.fill
+|translationkey=subtitles.block.end_portal_frame.fill
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Item Frame break1.ogg
+|sound2=Item Frame break2.ogg
+|sound3=Item Frame break3.ogg
+|source=block
+|description=When an eye of ender breaks <ref group=sound>{{Bug|MCPE-115646}}</ref>
+|id=block.itemframe.break}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|source=player
+|description=When an eye of ender is thrown
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+| {{SoundLine
+|sound=End portal eye place1.ogg
+|sound2=End portal eye place2.ogg
+|sound3=End portal eye place3.ogg
+|source=block
+|description=When an eye of ender is placed in an End portal frame
+|id=block.end_portal_frame.fill
+|volume=0.3
+| pitch = 0.9/1.0/1.1
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Eye of Ender
+|spritetype=item
+|nameid=ender_eye
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|displayname=Eye of Ender
+|spritetype=entity
+|nameid=eye_of_ender
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Eye of Ender
+|spritetype=item
+|nameid=ender_eye
+|id=433
+|form=item
+|foot=1}} 
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Eye of Ender
+|spritetype=entity
+|nameid=eye_of_ender_signal
+|id=70
+|foot=1}}
+
+=== Entity data ===
+The purple particles left by eyes of ender have entity data that define various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt|compound|Item}}: The item to render as, may be absent.
+*** {{nbt inherit/itemnoslot|indent=***}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+
+:See [[Bedrock Edition level format/Entity format]].
+
+== Advancements ==
+{{load advancements|Eye Spy}}
+
+== Videos ==
+{{Video note|This video does not mention that eyes of ender can be used to craft [[ender chest]]s or [[End crystal]]s.}}
+<div style="text-align:center">{{yt|E0AhoxYLomc}}</div>
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before RC1}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|[[File:Eye of Ender JE1 BE1.png|32px]] Added eyes of ender.
+|Eyes of ender can be used on a [[End portal frame|portal block]] to repair them, but repairing them does nothing.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Each eye can now be placed in a [[End portal frame|portal block]] or used to hone in on a [[stronghold]]. [[Jeb]] demonstrated the new uses for an eye in his livestream.<ref>http://www.twitch.tv/jebox/b/297000418</ref> An [[End portal]] within a stronghold could be seen in the stream with two eyes inserted into blocks.
+|In older worlds with chunks generated before [[Java Edition Beta 1.9 Prerelease 3|Beta 1.9 Prerelease 3]], the eyes may mislead the [[player]] to a place where there isn't a [[stronghold]] at all. This happens because the eyes lead to where a stronghold should be based on the world seed in the current version, but before Beta 1.9 Prerelease 3, strongholds generated differently based on the seed. Therefore, if the player saved the coordinates the eye traveled to in an old world and generated a new world with the same seed, the player could travel to those same coordinates and find a stronghold.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Eyes of ender no longer render like a tool in third person.}}
+|{{HistoryLine|||dev=RC1|The throwing sound of eyes of ender has been changed.}}
+|{{HistoryLine||1.3.1|dev=12w21a|Eyes of ender can now be used to craft [[ender chest]]s.
+|Priest [[villager]]s would [[trading|buy]] 2–3 eyes of ender for one [[emerald]].}}
+|{{HistoryLine|||dev=12w22a|Priest villagers no longer buy eyes of ender, instead sell them for 7–10 emeralds.}}
+|{{HistoryLine||1.6.4|dev=1.6.3|Eyes of ender now lead to [[stronghold]]s based on the structure data saved in the world file instead of calculating their approximate location via the [[seed (world generation)|world seed]]. Therefore, strongholds generated in old versions can still be found even if the distribution of strongholds is changed.}}
+|{{HistoryLine||1.7.2|dev=13w41a|Eyes of ender now lead to the entrance of a stronghold instead of the portal room.}}
+|{{HistoryLine||1.8|dev=14w02a|With changes that have been made to villagers and the [[trading]] system, cleric villagers now sell eyes of ender for 7–11 [[emerald]]s, as one of their tier III trades.}}
+|{{HistoryLine|||dev=14w06a|Eyes of ender now spawn at the player's feet when thrown instead of their eyes.<ref>{{bug|MC-51203}}</ref>}}
+|{{HistoryLine||1.9|dev=15w41a|Eyes of ender are no longer [[trading|sold]] by cleric [[villager]]s.}}
+|{{HistoryLine|||dev=15w44b|An eye of ender is now used to craft an [[End crystal]].}}
+|{{HistoryLine|||dev=16w07a|Eyes of ender now spawn at the player's chest when thrown instead of their feet.}}
+|{{HistoryLine|||dev=pre3|Eyes of ender now point to the 125 new strongholds.<ref>{{bug|MC-91173|||Fixed}}</ref>}}
+|{{HistoryLine||1.11|dev=16w35a|Throwing an eye of ender now slows down the player for the time that the {{ctrl|use}} button is held down, similar to eating, drinking etc..<ref>{{bug|MC-107185}}</ref> This was done to prevent it from also causing the item in the offhand to be used.<ref>{{bug|MC-83337}}</ref>}}
+|{{HistoryLine||1.12|dev=17w17a|Added a new sound when placing eyes of ender to the portal frames, and a new ''pop'' sound when a thrown eye of ender bursts.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Eye of Ender JE2 BE2.png|32px]] The texture of eyes of ender has been changed.}}
+|{{HistoryLine||1.19|dev=22w11a|Eyes of ender now lead to the corner of the chunk (0, ~, 0) instead of the center (8, ~, 8).<ref>{{bug|MC-253394}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:Eye of Ender JE1 BE1.png|32px]] Added eyes of ender.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Eye of Ender JE2 BE2.png|32px]] The texture of eyes of ender has been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|The [[particles]] of eyes of ender have been changed to match {{el|je}}.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The sprites of eyes of ender, when rendered in the world, now have the correct scaling and positional offset.|They now match {{JE}} and also match better with their collider.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Eye of Ender JE1 BE1.png|32px]] Added eyes of ender. They can be used to locate stronghold, but cannot be inserted into [[End portal frame]]s.}}
+|{{HistoryLine||xbox=TU9|Eyes of ender can be placed in empty End portal frames.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Eyes of ender can now be used to craft [[ender chest]]s.|Priest villagers now sell eyes of ender for 7–10 emeralds.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|With changes that have been made to villagers and the [[trading]] system, cleric villagers now sell eyes of ender for 7–11 [[emerald]]s, as one of their tier III trades.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Eyes of ender are no longer [[trading|sold]] by cleric [[villager]]s.|An eye of ender is now used to craft an [[End crystal]].|Eyes of enders now spawn at the player's chest when thrown instead of their eyes.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|A new ''pop'' [[sound]] has been added when a thrown eye of ender bursts.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Throwing an eye of ender now slows down the player for the time that the {{ctrl|use}} button is held down, similar to eating, drinking etc..}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Eye of Ender JE2 BE2.png|32px]] The texture of eyes of ender has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Eye of Ender JE1 BE1.png|32px]] Added eyes of ender.}}
+}}
+
+<gallery>
+Held Eye of Ender.png|The eye of ender used to appear large in third-person view.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID has been changed from <code>EyeOfEnderSignal</code> to <code>eye_of_ender_signal</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 381.{{info needed|and what was the numerical entity ID?}}}}
+|{{HistoryLine|||dev=pre5|The [[entity]] ID has been changed to <code>eye_of_ender</code>.}}
+|{{HistoryLine||1.14|dev=18w50a|Now have an optional {{code|Item}} tag that can specify a different item stack to render.}}
+
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*When thrown in third-person view, the eyes of ender fly out from the player's chest instead of their hand.
+*{{IN|bedrock}} the eye of ender flies out of the top right of the screen above the player head.
+*{{IN|bedrock}} if the player travels beyond a certain radius (roughly 740,000 blocks), eyes of ender always point to a stronghold near spawn, even though strongholds continue to generate past this limit. If one travels to this limit, they can see eyes of ender suddenly switching direction. A similar phenomenon occurs with the {{cmd|locate}} command.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Stronghold Portal Room.png|An End portal frame containing a few eyes of ender.
+File:EnderChestexample.png|An [[ender chest]] depicting an eye of ender on the front.
+File:Enchanted Eye of Ender obtained with commands.png|An enchanted eye of ender obtained with commands being thrown. Eyes of ender retain their components, including name and enchantments, when used.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Eye of Ender JINX.jpg|Official T-shirt artwork "Eye of Ender" sold by JINX.
+File:Happy Halloween Eye.jpg|A Halloween T-Shirt design featuring an eye of ender.
+File:MC Vol 1 6.jpg|[[Tyler]] throwing an eye of ender in [[Minecraft: Volume 1]].
+</gallery>
+
+== External links ==
+*[http://jsfiddle.net/42EDX/40/ JSFiddle Eye of Ender triangulator - can guess the location of other 2 strongholds in the first ring]
+*[https://ens-gijs.github.io/minecraft-stronghold-locator/ Minecraft Stronghold Locator Eye of Ender throw plotting visualizer - zoomable to show all possible stronghold rings]
+*[https://github.com/winny-/stronghold Python Eye of Ender throw plotting tool]
+*[http://chunkbase.com/apps/stronghold-finder Chunk Base Stronghold Finder (seed-based)]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+
+[[Category:Projectiles]]
+
+[[cs:Oko z Endu]]
+[[de:Enderauge]]
+[[es:Ojo de ender]]
+[[fr:Oeil de l'Ender]]
+[[hu:Végzet szeme]]
+[[it:Occhio di ender]]
+[[ja:エンダーアイ]]
+[[ko:엔더의 눈]]
+[[nl:Enderoog]]
+[[pl:Oko Endera]]
+[[pt:Olho de Ender]]
+[[ru:Око Края]]
+[[th:ดวงตาแห่งเอนเดอร์]]
+[[uk:Око Енду]]
+[[zh:末影之眼]]

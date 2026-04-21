@@ -1,0 +1,74 @@
+{{outdated}}
+{{exclusive|Java}}
+{{stub}}
+[[File:Eyc0bj7pr4w51.jpg|thumb|The Far Lands as they appeared in Infdev 20100227-1433.]]
+
+== Structure ==
+In the [[Java Edition Infdev 20100227-1414|February 27th build of Infdev]], all generation past 33,554,432 blocks would be solid stone, extending vertically from the bottom of the world to the height limit, continuing out to the 32-bit limit. These are the first truly visible appearance of the Far Lands, although very visually distinct from convention.
+
+This stone wall may not always start at exactly 33,554,432 blocks out - it is not uncommon to see a rough, repetitive boundary at this point, visually resembling the ridges of a radiator or the fins of a heat sink, in a similar way to how the usual Far Lands can generate a few blocks earlier.
+On some seeds, the Far Lands don't have any rough appearance but are rather just smooth. Sometimes Far Lands on one axis can be smooth while on the other axis they're rough.
+
+While occurring at exactly a power of two, this is not a [[Java Edition hard limits|hard limit]], but rather due to the [[noise generator]] settings for these versions themselves also being a power of two, returning this overflow point in the calculations can lead to lag or even a crash on the game.
+
+== Effects ==
+=== Distance effects ===
+{{Main|Java Edition distance effects}}
+
+Walking to these Far Lands is impossible in normal gameplay as the game becomes unplayable well before this point due to a variety of distance effects. Even if a player could overcome the distance effects, beyond 16,777,216 blocks away blocks stop being solid (however, swimming in water is still possible), preventing the player from traveling any further.
+
+* X/Z: 512 - Clouds stop rendering.
+* X/Z: -512 / 1,024 - The skybox stops rendering.
+* X/Z: 2,048 - The first noticeable jitter begins, with the hitbox appearing to flicker slightly around blocks.
+* X/Z: 16,384 - First noticeable world rendering issue begins, with the borders of chunks beginning to become visible and the chunks appearing to shake slightly.
+* X/Z: 32,768 - The world rendering bug present in Infdev 624 through Beta 1.7.3 begins to manifest, with the hitbox being slightly offset from the blocks.
+* X/Z: 65,536 - Particles begin to lose precision, appearing more blocky and stretched.
+* X/Z: 131,072 - Hitbox outline begins to deform and shake visually.
+* X/Z: >1,048,576 - The world rendering fails when looking at certain angles, causing the screen to flicker. It becomes very noticeable beyond X/Z: 2,000,000.
+* X/Z: 16,777,216 - Blocks stop being solid, causing the player to fall into the void. However, the player can still swim through water.
+* X/Z: 268,435,456 - The gaps between chunks start to become multiple blocks long, making the world look like stripes on one axis and a grid pattern on both axis.
+* X/Z: 2,147,483,647 - The world stops generating terrain and the map appears blank from here on out with only the Sun and Moon.
+* X/Z: 1.7976931348623157e+308 - The player's position, represented by double precision floating point arithmetic, overflows to Infinity, causing a total breakdown of gameplay.
+
+=== Intentional limits ===
+{{main|World boundary}}
+In versions after [[Infdev 20100313]], a world boundary was added at X/Z: ±32,000,000. After the boundary at X/Z ±32,000,000 blocks, the terrain no longer generates, and only air blocks that have the same textures as the surrounding terrain generate.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|The Far lands generate unintentionally due to an overflow in the terrain generator.}}
+|{{HistoryLine||20100313|A world boundary has been added at +/-32,000,000 blocks. The Far Lands can no longer be seen without modifying the game.}}
+|{{HistoryLine||20100320|Reimplemented [[Ore (feature)|ores]], which can generate in the Far Lands.}}
+|{{HistoryLine||20100325-1545|Reimplemented [[cave]]s, which can carve into the Far Lands.}}
+|{{HistoryLine||20100327|The rewrite of world generation caused the Far Lands to take on a [[Far Lands (Java Edition)/Infdev 20100327 to Beta 1.7.3|more familiar form]].}}
+}}
+
+== Gallery ==
+{{more images|Add images of the Far Lands with a smooth appearance, as opposed to rough (may this be the case with the Far Lands in negative coordinates) as well as the Far Lands in Infdev 20100313 and 316 (before ores etc were added)}}
+=== Infdev [[Java Edition Infdev 20100227-1414|20100227]] ===
+The Far Lands in this version are difficult to observe due to many distance effects and blocks becoming non-solid at this distance. 
+
+<gallery widths="200">
+The Corner Stone Far Lands.jpg|Corner Stone Wall with one side smooth and the other side rough.
+StonelandsGrass.png|The Far Lands generating with a strip of grass on the inner edge.
+Farlandsnotchededge.png|The point where the Far Lands flatten and lose their notched edge.
+My Project 2.jpg|End of Infdev's world generation seen at X=2,147,483,904.
+</gallery>
+
+=== Infdev [[Java Edition Infdev 20100313|20100313]] through [[Java Edition Infdev 20100325-1640|20100325-1640]] ===
+The Far Lands are no longer able to be viewed without modifying the game, due to the addition of a world barrier at +/- 32,000,000 blocks away from spawn. Most of the distance effects present in [[Infdev 20100227]] have been fixed, so the player is able to walk around and interact with the terrain with little to no issue.
+<gallery>
+Screenshot 2024-12-30 103241.png|Infdev 313 Farlands
+StonelandsOre.png|The 320 Far Lands with ores spotted throughout.
+StonelandsCave.png|The 325 Far Lands with a cave carving through them.
+Brick_Pyramid_Near_Far_Lands.png|The 321 Far Lands with a [[brick pyramid]] in the distance.
+</gallery>
+
+== Navigation ==
+{{Navbox removed features}}
+{{Navbox environment}}
+{{Navbox Java Edition}}
+
+[[zh:边境之地/Java版/Infdev 20100325及之前版本的现象]]
+[[Category:Far Lands]]

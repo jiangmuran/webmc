@@ -1,0 +1,455 @@
+{{Infobox block
+|group=Unoxidized
+|group2=Exposed
+|group3=Weathered
+|group4=Oxidized
+|1-1=Copper Chest.gif
+|1-2=Large Copper Chest.gif
+|2-1=Exposed Copper Chest.gif
+|2-2=Large Exposed Copper Chest.gif
+|3-1=Weathered Copper Chest.gif
+|3-2=Large Weathered Copper Chest.gif
+|4-1=Oxidized Copper Chest.gif
+|4-2=Large Oxidized Copper Chest.gif
+|*-1caption=Single
+|*-2caption=Large
+|invimage=Copper Chest
+|invimage2=Exposed Copper Chest
+|invimage3=Weathered Copper Chest
+|invimage4=Oxidized Copper Chest
+|invimage5=Waxed Copper Chest
+|invimage6=Waxed Exposed Copper Chest
+|invimage7=Waxed Weathered Copper Chest
+|invimage8=Waxed Oxidized Copper Chest
+|transparent=Yes
+|light=No
+|tool=stone pickaxe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+|waterloggable=Yes
+|mapcolor = 
+* {{TooltipSprite||Copper Chest}} {{Map color|Block of Copper}}
+* {{TooltipSprite||Exposed Copper Chest}} {{Map color|Exposed Copper}}
+* {{TooltipSprite||Weathered Copper Chest}} {{Map color|Weathered Copper}}
+* {{TooltipSprite||Oxidized Copper Chest}} {{Map color|Oxidized Copper}}
+}}
+A '''copper chest''' is a type of [[chest]] made of [[copper]]. It functions almost identically to a normal wooden chest, except that it [[oxidize]]s over time, and [[copper golems]] will take items out of it and attempt to store them inside nearby wooden chests.
+
+Like normal chests, two copper chests can merge into a '''large copper chest''' if placed next to each other.
+
+== Obtaining ==
+=== Breaking ===
+A copper chest drops itself only if mined with a [[stone pickaxe]] or better. Using any other item to mine a copper chest drops only its contents.
+{{breaking row|horizontal=1|Copper Chest|Pickaxe|Stone}}
+
+=== Crafting ===
+{{Crafting
+|head=1
+|A1=Copper Ingot
+|A2=Copper Ingot
+|A3=Copper Ingot
+|B1=Copper Ingot
+|B2=Chest
+|B3=Copper Ingot
+|C1=Copper Ingot
+|C2=Copper Ingot
+|C3=Copper Ingot
+|Output=Copper Chest
+|type=Decoration block
+}}
+{{Crafting
+|Matching Unwaxed Copper Chest
+|Honeycomb
+|Output=Matching Waxed Copper Chest
+|type=Decoration block
+|foot=1
+}}
+
+=== Post-generation ===
+{{main|Copper Golem#Spawning}}
+Upon creating a [[copper golem]] by placing a [[carved pumpkin]] or [[jack o'lantern]] next to a [[block of copper]], a copper chest is generated at the location of the copper block. Both the chest and the golem are spawned with their [[oxidation]] state matching that of the block of copper, but do not generate [[waxing|waxed]] even when a waxed block of copper is used.
+
+== Usage ==
+[[File:Copper golem searches copper chest.png|thumb|A copper golem opens a copper chest to search for items to pick up.]]
+
+A copper chest placed adjacent to another copper chest joins to create a large copper chest. Two adjacent copper chests merge into a large copper chest even if the two chests have different oxidization levels or waxed states; in such cases, the resulting large chest takes the oxidization level of the least oxidized half, and is unwaxed if one of the two halves is unwaxed.<ref>{{bug|MC-300050||Placing different copper chests next to each other combines them into a large copper chest|WAI}}</ref>
+
+A player can prevent the formation of a large chest, and place two small copper chests side by side, by {{control|sneaking|sneak}} while placing the second chest {{in|java}}, pushing a copper chest into place with a [[piston]] {{in|bedrock}}, or placing the second chest facing a different direction from the first chest.
+
+{{IN|java}}, copper chests cannot be moved by [[piston]]s.
+
+=== Copper golem ===
+{{main|Copper Golem#Chest interactions and item transportation}}
+
+If a copper golem is not holding an item, it visits up to 10 copper chests (regardless of their oxidization or waxed status) in sequence to try to take out up to 16 of the first item contained within.
+
+The search area for copper chests from the copper golem's position is 32 blocks horizontally and 8 blocks vertically.{{Info needed|Is it taxicab or euclidian?}}
+
+=== Container ===
+A copper chest can be used as a container and has 27 slots of inventory space, and a large copper chest has twice that amount, at 54 slots.
+
+In the ''Java Edition'' interface, the top three rows for a large copper chest correspond to the left half of the copper chest when facing it, and the bottom three rows correspond to the right half. In ''Bedrock Edition'', the top three rows correspond to whichever half was placed first and the bottom three to the other half.
+
+Copper chests open when {{ctrl|used}}. To move items between the copper chest inventory and the player inventory or hotbar while the copper chest GUI is open, drag or shift-click the items. {{IN|java}}, holding {{key|Shift}} and double-clicking while holding an item moves all items of the type clicked on in or out of the copper chest, to the extent that space is available for them. To exit the copper chest GUI, use the {{key|Esc}} control.
+
+A copper chest cannot be opened if there is a [[conductive]] block above it ({{in|bedrock|lc=}}, bottom slabs prevent copper chests from being opened). Solid faces do not prevent copper chests from opening, so the lid of the copper chest can phase through blocks such as bottom-half [[slab]]s{{only|JE}}, [[stairs]], and [[non-conductive]] full cubes such as [[glass]] and [[ice]]. [[Cat]]s sitting on copper chests prevent them from opening. Because copper chests themselves are non-conductive, two copper chests can be stacked on top of one another while still allowing the lower copper chest to be opened. Players can open copper chests when they are being hurt ([[effect]] of Instant Damage, Poison, Wither, on fire, damaged by other [[player]]s or [[mob]]s, etc.).
+
+By default, the GUI of a copper chest is labeled "Copper Chest"{{only|be|short=1}}/"Chest"{{only|je|short=1}} and the GUI of a large copper chest is labeled "Large Copper Chest"{{only|be|short=1}}/"Large Chest".{{only|je|short=1}} A copper chest's GUI label can be changed by naming the chest in an [[anvil]] before placing it, or, {{in|java}}, by using the {{cmd|data}} command (for example, to label a chest at (0,64,0) as "Bonus Chest!", use {{cmd|data merge block 0 64 0 {CustomName:'"Bonus Chest!"'<nowiki>}</nowiki>}}). If half of a large copper chest is renamed, that name is used to label the GUI of the entire large copper chest, but if the named half is destroyed the other half reverts to the default label. If both halves of a large copper chest have different names, the GUI uses the name of the northernmost or westernmost half.
+
+{{IN|java}}, a copper chest can be "locked" by setting its {{nbt|compound|lock}} tag using the {{cmd|data}} command. If a chest's {{nbt|compound|lock}} tag is not blank, the copper chest cannot be opened unless the player is holding an item with the same name as the <code>lock</code> tag's text. For example, to lock a copper chest at (0,64,0) so that the copper chest cannot be opened unless the player is holding an item named "Copper Chest Key", use {{cmd|data merge block 0 64 0 <nowiki>{lock:{components:{"custom_name":"Copper Chest Key"}}}</nowiki>}}.
+
+=== Oxidation ===
+{{main|Oxidation}}
+Non-waxed copper chests have four stages of oxidation (including the initial normal state). [[Lightning bolt]]s, and using an [[axe]] while sneaking can remove the oxidation on copper chests. Using a [[honeycomb]] on a copper chest prevents it from oxidizing.
+
+As the block begins to oxidize (exposed), it gets discolored and green spots begin to appear. As the oxidation continues (weathered), the block is a green color with brown spots. In the last stage (oxidized), the block is teal with several green spots.
+
+=== Piglins ===
+[[Piglin]]s become hostile toward players who open or break a copper chest.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Copper/BE}}
+
+=== Unique ===
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Copper chest close.wav
+|source=block
+|description=When a regular or exposed copper chest closes
+|id=block.copper_chest.closed
+|volume=1.0
+|pitch=0.9-1.0
+}}
+|{{SoundLine
+|sound=Weathered copper chest close.wav
+|source=block
+|description=When a weathered copper chest closes
+|id=block.copper_chest.weathered.closed
+|volume=1.0
+|pitch=0.9-1.0
+}}
+|{{SoundLine
+|sound=Oxidized copper chest close.wav
+|source=block
+|description=When an oxidized copper chest closes
+|id=block.copper_chest.oxidized.closed
+|volume=1.0
+|pitch=0.9-1.0
+}}
+|{{SoundLine
+|sound=Copper chest open.wav
+|source=block
+|description=When a regular or exposed copper chest opens
+|id=block.copper_chest.open
+|volume=1.0
+|pitch=0.9-1.0
+}}
+|{{SoundLine
+|sound=Weathered copper chest open.wav
+|source=block
+|description=When a weathered copper chest opens
+|id=block.copper_chest.weathered.open
+|volume=1.0
+|pitch=0.9-1.0
+}}
+|{{SoundLine
+|sound=Oxidized copper chest open.wav
+|source=block
+|description=When an oxidized copper chest opens
+|id=block.copper_chest.oxidized.open
+|volume=1.0
+|pitch=0.9-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Chest
+|spritetype=block
+|nameid=copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Chest
+|spritetype=block
+|nameid=exposed_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Chest
+|spritetype=block
+|nameid=weathered_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Chest
+|spritetype=block
+|nameid=oxidized_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Chest
+|spritetype=block
+|nameid=waxed_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Chest
+|spritetype=block
+|nameid=waxed_exposed_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Chest
+|spritetype=block
+|nameid=waxed_weathered_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+}}
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Chest
+|spritetype=block
+|nameid=waxed_oxidized_copper_chest
+|blocktags=copper_chests,guarded_by_piglins,mineable/pickaxe,needs_stone_tool
+|itemtags=copper_chests
+|foot=1
+}}
+{{ID table
+|displayname=Block entity
+|spritename=copper-chest
+|spritetype=block
+|nameid=chest
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Copper Chest
+|spritetype=block
+|nameid=copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1031
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Exposed Copper Chest
+|spritetype=block
+|nameid=exposed_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1032
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Weathered Copper Chest
+|spritetype=block
+|nameid=weathered_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1033
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Oxidized Copper Chest
+|spritetype=block
+|nameid=oxidized_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1034
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Waxed Copper Chest
+|spritetype=block
+|nameid=waxed_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1035
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Waxed Exposed Copper Chest
+|spritetype=block
+|nameid=waxed_exposed_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1036
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Waxed Weathered Copper Chest
+|spritetype=block
+|nameid=waxed_weathered_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1037
+}}
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Waxed Oxidized Copper Chest
+|spritetype=block
+|nameid=waxed_oxidized_copper_chest
+|blocktags=minecraft:is_pickaxe_item_destructible,minecraft:stone_tier_destructible,not_feature_replaceable,stone_pick_diggable
+|id=-1038
+|foot=1
+}}
+
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=copper-chest
+|spritetype=block
+|nameid=Chest
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Chest|block states}}
+
+=== Block data ===
+Every copper chest has a [[block entity]] associated with it that holds additional data about the copper chest.
+
+{{JE}}:
+{{see also|Block entity format}}
+{{#lst:Chest|block data}}
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Advancements ==
+{{load advancements|Wax On;Wax Off}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||July 1, 2025|link=https://www.minecraft.net/article/a-new-friend-with-a-familiar-patina|Copper chests were announced as part of the announcement of the yet-to-be-named [[The Copper Age]] drop.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.9|dev=25w31a|[[File:Copper Chest (S) JE1.gif|32px]] [[File: Exposed Copper Chest (S) JE1.gif|32px]] [[File: Weathered Copper Chest (S) JE1.gif|32px]] [[File:Oxidized Copper Chest (S) JE1.gif|32px]]<br>[[File:Large Copper Chest JE1.png|32px]] [[File:Large Exposed Copper Chest JE1.png|32px]] [[File:Large Weathered Copper Chest JE1.png|32px]] [[File:Large Oxidized Copper Chest JE1.png|32px]]<br>Added copper chests.}}
+|{{HistoryLine|||dev=25w34a|Copper chests are now audible from up to 12 blocks away.|The copper sorting sounds have been tweaked to be quieter.}}
+|{{HistoryLine|||dev=25w35a|Copper chests created from spawning a copper golem now correctly connect to nearby copper chests.}}
+|{{HistoryLine||1.21.11|dev=25w42a|[[File:Copper Chest (S) JE2.gif|32px]] [[File:Exposed Copper Chest (S) JE2.gif|32px]] [[File:Weathered Copper Chest (S) JE2.gif|32px]] [[File:Oxidized Copper Chest (S) JE2.gif|32px]] The textures of all copper chests variants have been changed.<ref>{{bug|MC-301557||The shading direction of the bolts on single and large copper chests does not match|resolution=Fixed}}</ref><ref>{{bug|MC-302071||Single and double copper chests have inconsistent side textures|resolution=Fixed}}</ref>}}
+|{{HistoryLine||26.1|dev=snap3|Placed copper chests no longer use the Christmas chest texture from December 24 to 26.<ref>{{bug|MC-305292||Copper chests use the Christmas present texture|resolution=Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.23|exp=Drop 3 2025|[[File:Copper Chest BE1.gif|32px]] [[File: Exposed Copper Chest BE1.gif|32px]] [[File: Weathered Copper Chest BE1.gif|32px]] [[File:Oxidized Copper Chest BE1.gif|32px]]<br>[[File:Large Copper Chest BE1.gif|32px]] [[File:Large Exposed Copper Chest BE1.gif|32px]] [[File:Large Weathered Copper Chest BE1.gif|32px]] [[File:Large Oxidized Copper Chest BE1.gif|32px]] Added copper chests.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.20|Copper chests no longer require the "Drop 3 2025" experiment to be active.
+|[[File:Copper Chest BE2.gif|32px]] [[File: Exposed Copper Chest BE2.gif|32px]] [[File: Weathered Copper Chest BE2.gif|32px]] [[File:Oxidized Copper Chest BE2.gif|32px]]<br>[[File:Large Copper Chest BE2.gif|32px]] [[File:Large Exposed Copper Chest BE2.gif|32px]] [[File:Large Weathered Copper Chest BE2.gif|32px]] [[File:Large Oxidized Copper Chest BE2.gif|32px]]<br>Updated inner textures of all copper chest variants.}}
+|{{HistoryLine|||dev=Preview 1.21.110.22|The default container name for a copper chest is now "Copper Chest".}}
+|{{HistoryLine|||dev=Preview 1.21.110.23|Copper chests can now be crafted into waxed variants.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox copper}}
+{{Navbox blocks|Utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Storage]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Redstone]]
+[[Category:Readable by comparators]]
+[[Category:Blocks with GUI]]
+
+[[de:Kupfertruhe]]
+[[es:Cofre de cobre]]
+[[fr:Coffre en cuivre]]
+[[ja:銅のチェスト]]
+[[ko:구리 상자]]
+[[lzh:銅箱]]
+[[pl:Miedziana skrzynia]]
+[[pt:Baú de Cobre]]
+[[ru:Медный сундук]]
+[[uk:Мідна скриня]]
+[[zh:铜箱子]]

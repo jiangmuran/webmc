@@ -1,0 +1,379 @@
+{{about|repairing via grindstones or crafting|repair via anvils|Anvil#Repairing|repair via the Mending enchantment|Mending}}
+{{FakeImage
+|{{Crafting Table
+ | shapeless = 1
+ | A1 = Damaged Iron Pickaxe
+ | B1 = Damaged Iron Pickaxe
+ | Output = Iron Pickaxe
+ }}
+|An example of item repair using [[crafting]].
+}}
+{{FakeImage
+|{{Grindstone
+ |Input1 = Damaged Iron Pickaxe
+ |Input2 = Damaged Iron Pickaxe
+ |Output = Iron Pickaxe
+ }}
+|Another example of item repair using a [[grindstone]]
+}}
+'''Item repair''' is a feature that allows [[player]]s to repair damaged items with [[durability]] ([[tool]]s, [[armor]], and [[weapon]]s) by combining them in the [[crafting grid]] or a [[grindstone]].
+
+== Usage ==
+Two items of the same type and material can be placed anywhere on the crafting grid or [[grindstone]], which results in a single repaired item. The durability of the repaired item equals the sum of the old items' durability plus a 'repair bonus' of 5% of the item's maximum uses, up to a limit of the maximum durability for that item. Repairing gives a slight benefit in conserving inventory space, as it combines two non-stackable objects into one.<ref>{{tweet|notch|118730403774332928|@CymonsGames If item 1 has 10 uses left, and item 2 has 10 uses left, you'll end up with something like 25 uses in the final product.|September 27, 2011}}</ref>
+
+The repaired object is never enchanted even if both items were to have the exact same enchantments, with the exception of curse enchantments, which are transferred to the repaired item. Therefore, using a "junk" item in a repair may sometimes be useful for removing an unwanted enchantment from an item prior to enchanting it again. Tools made of different materials (for example, a wood and a stone pickaxe) cannot be combined.
+
+All items with durability can be repaired this way.
+
+== Formula for uses restored ==
+The formula for determining how many uses a repaired item can have restored to it in the crafting box, is as follows:
+
+ ''min''('''Item A uses''' + '''Item B uses''' + ''floor''('''Max uses''' / 20), '''Max uses''')
+
+where "floor" means round ''down'' to the smaller integer, and "min(x,y)" means the smallest of x or y.
+
+Example: Two stone axes have 10 and 45 uses. A newly crafted stone axe would have 61 uses.
+
+:10 + 45 + {{frac|131|20}} = 55 + 6.55 = 61
+
+Or, in terms of percentage (approximated):
+
+:7.6% + 34% + 5% = 46.6%
+
+The greatest benefit is gained when the two items have a combined durability of at most approximately 95%, in any combination, such as 47.5% + 47.5%, 94% + 1%, 10% + 10% or any other values that total 95% or less. The order in which items are combined does not matter; one sequence of repairs gives exactly the same durability as any other.
+
+In the example, repairing a stone tool restores a bonus of 6 durability, which is actually only {{frac|6|132}} = 4.5%. The precise combined durability for efficient repairs is shown in the following table.
+
+{| class="wikitable sortable" data-description="Restoring tools and weapons"
+! Item
+! Actual bonus (%)
+! Actual bonus (uses)
+! Combined durability (%)
+! Combined durability (uses)
+|-
+| [[Gold Ingot|Golden tools]]
+| 3%
+| 1
+| 97.0%
+| 31
+|-
+| [[Planks|Wooden tools]]
+| 5%
+| 3
+| 95.0%
+| 56
+|-
+| [[Cobblestone|Stone tools]]
+| 4.5%
+| 6
+| 95.5%
+| 125
+|-
+| [[Iron Ingot|Iron tools]]
+| 4.8%
+| 12
+| 95.2%
+| 238
+|-
+| [[Diamond|Diamond tools]]
+| 5%
+| 78
+| 95.0%
+| 1483
+|-
+| [[Netherite|Netherite tools]]
+| 5%
+| 101
+| 95.0%
+| 1930
+|-
+| [[Carrot on a stick]]
+| 3.8%
+| 1
+| 96.2%
+| 24
+|-
+| [[Flint and steel]]<br>[[Brush]]
+| 4.6%
+| 3
+| 95.4%
+| 61
+|-
+| [[Fishing rod]]
+| 4.6%
+| 3
+| 95.4%
+| 61
+|-
+| [[Warped fungus on a stick]]
+| 5%
+| 5
+| 95%
+| 95
+|-
+| [[Shears]]
+| 4.6%
+| 11
+| 95.4%
+| 227
+|-
+| [[Trident]]
+| 4.8%
+| 12
+| 95.2%
+| 238
+|-
+| [[Shield]]
+| 4.8%
+| 16
+| 95.2%
+| 320
+|-
+| [[Bow]]
+| 4.9%
+| 19
+| 95.1%
+| 365
+|-
+| [[Elytra]]
+| 4.9%
+| 21
+| 95.1%
+| 411
+|-
+| [[Crossbow]]
+| 4.9%
+| 23
+| 95.1%
+| 442
+|-
+| [[Mace]]
+| 5%
+| 25
+| 95%
+| 475
+|}
+
+A perfect repair is theoretically possible, but unlikely in practice. Combining items whose combined durability is more than 100% actually wastes more resources than simply using tools until they break.
+
+The precise combined durability for efficient repairs for all types of armor is shown in the following table.
+
+{| class="wikitable sortable" data-description="Restoring armor"
+! Armor piece
+! Actual bonus (%)
+! Actual bonus (uses)
+! Combined durability (%)
+! Combined durability (uses)
+|-
+| [[Leather helmet]]
+| 3.6%
+| 2
+| 96.4%
+| 53
+|-
+| [[Leather boots]]
+| 4.6%
+| 3
+| 95.4%
+| 59
+|-
+| [[Leather leggings]]
+| 4.0%
+| 3
+| 96.0%
+| 72
+|-
+| [[Leather chestplate]]
+| 4.9%
+| 4
+| 95.1%
+| 77
+|-
+| [[Golden helmet]]
+| 3.9%
+| 3
+| 96.1%
+| 74
+|-
+| [[Golden boots]]
+| 4.4%
+| 4
+| 95.6%
+| 87
+|-
+| [[Golden leggings]]
+| 4.8%
+| 5
+| 95.2%
+| 100
+|-
+| [[Golden chestplate]]
+| 4.4%
+| 5
+| 95.6%
+| 108
+|-
+| [[Iron helmet]]
+| 4.8%
+| 8
+| 95.2%
+| 157
+|-
+| [[Iron boots]]
+| 4.6%
+| 9
+| 95.4%
+| 186
+|-
+| [[Iron leggings]]
+| 4.9%
+| 11
+| 95.1%
+| 214
+|-
+| [[Iron chestplate]]
+| 5.0%
+| 12
+| 95.0%
+| 229
+|-
+| [[Diamond helmet]]
+| 5.0%
+| 18
+| 95.0%
+| 327
+|-
+| [[Diamond boots]]
+| 4.9%
+| 21
+| 95.1%
+| 408
+|-
+| [[Diamond leggings]]
+| 4.8%
+| 24
+| 95.2%
+| 471
+|-
+| [[Diamond chestplate]]
+| 4.9%
+| 26
+| 95.1%
+| 502
+|-
+| [[Netherite helmet]]
+| 4.9%
+| 20
+| 95.1%
+| 387
+|-
+| [[Netherite boots]]
+| 5.0%
+| 24
+| 95.0%
+| 457
+|-
+| [[Netherite leggings]]
+| 4.9%
+| 27
+| 95.1%
+| 528
+|-
+| [[Netherite chestplate]]
+| 4.9%
+| 29
+| 95.1%
+| 563
+|}
+
+== Anvil repair ==
+{{main|Anvil mechanics}}
+
+An [[anvil]] can also repair items in two different ways. This costs experience levels, but unlike the grindstone, the anvil preserves or can even enhance the target's enchantments. The anvil can combine the enchantments on two similar items, or rename any item (not just the ones it can repair). The costs are complex, so a summary is given here.
+
+The repair cost is stored in a {{code|[[Enchanting#Item data|repairCost]]}} value.
+
+=== Combination ===
+Two items of the same type are put into the input slots; the first one is the item to be repaired and the second one is to be merged into the first. The second item's durability is added to the first, and if applicable, some or all enchantments from the second item are added. If two of the same enchantments have the same level and there is a level above that the enchantments will combine increasing the level of the enchantment by one. 
+
+=== Unit repair ===
+Some items can be repaired by "covering" the damage with a specific material. The item to be repaired is put into the first input slot, and the corresponding material is put into the second slot. Each material item (unit) heals the item's durability by 25% its maximum durability, rounded down.
+
+{{:Mechanics/Anvil/Repairable items}}
+
+== Videos ==
+<div style="text-align:center">{{yt|BpkQ7xU_VlY}}</div>
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||September 27, 2011|link=none|[[Notch]] teased that the upcoming prerelease would have item repairing via crafting table,<ref>{{tweet|notch|118711323029811200|The plan now is to do another pre release of 1.9 this week. Yeah, it's a beta of a beta. :D It will have item reparing!|September 27, 2011}}</ref><ref>{{tweet|notch|118712950377820161|"Reparing" is a new thing I just invented. It's like repairing, except cooler.|September 27, 2011}}</ref><ref>{{tweet|notch|118726317247172609|To prevent feeling like you're missing out by not repairing, it's ultra easy. Combine two damaged items to get a new item with less damage.|September 27, 2011}}</ref> and that he had discarded the idea of a dedicated "repair table".<ref>{{tweet|notch|118726804675637248|@C418 Originally, I wanted to have a repair table, but it's too annoying and you end up hoarding damaged items.|September 27, 2011}}</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Added the capability to repair items.}}
+|{{HistoryLine||1.4.2|dev=unknown|Bonus for (traditional) item repairing is reduced to 5%. Prior this update, this bonus was 10% of the max durability.}}
+|{{HistoryLine|||dev=12w41a|Added the [[anvil]]. The original item repair system is unchanged.}}
+|{{HistoryLine||1.14|dev=18w48a|Item repair is now done with the [[grindstone]].}}
+|{{HistoryLine||1.14.3|dev=Pre-Release 3|Item repair can now be done with the crafting grid again in addition to the grindstone.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added the capability to repair items and added the [[anvil]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added the capability to repair items in crafting grid and crafting table using classic UI.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Items can now also be repaired in a grindstone.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the capability to repair items.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the [[anvil]], which can be used to repair items.}}
+|{{HistoryLine||xbox=TU15|ps3=1.05|psvita=1.00|ps4=1.00|Changed repairing tools in the inventory to allow only tools that are not enchanted (because enchantments are lost). This is different to the Java Edition, where repairing enchanted tools in the inventory is possible and results in the loss of the enchantment.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|Added a classic crafting option, which allows players to repair items in the crafting grid like Java Edition and allows repairing enchanted items again, which removes the enchantments.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Items can now also be repaired in a grindstone.}}
+}}
+
+== Issues ==
+{{Issue list|repair}}
+
+== Trivia ==
+* Working on an anvil doesn’t remove enchantments to items, but they can be removed by repairing them on a crafting grid or grindstone.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Anvil1.png|A series of screenshots showing the new item repair interface.<ref>{{tweet|dinnerbone|254689806309797888|Sneak preview of what I started to work on last Friday: http://imgur.com/a/hVqEg Level costs are subject to tweaking, but I want them to be high|October 6, 2012}}</ref>
+Anvil2.png
+Anvil3.png
+Anvil4.png
+Anvil5.png
+Anvil6.png
+Workbenches are evil.png|Attempting to combine two enchanted items in a crafting table always results in an unenchanted item, even if the two items have the same enchantments.
+</gallery>
+
+== See also ==
+* [[Crafting]]
+* [[Tiers]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[de:Reparieren]]
+[[fr:Réparation d'objet]]
+[[ja:アイテム修繕]]
+[[ko:아이템 수리]]
+[[nl:Voorwerpreparatie]]
+[[pl:Naprawa przedmiotów]]
+[[pt:Reparo de itens]]
+[[ru:Починка предметов]]
+[[zh:物品修复]]

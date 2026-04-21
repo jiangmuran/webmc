@@ -1,0 +1,226 @@
+{{split|Piston Head|Moving Piston}}
+Pistons and sticky pistons have 2 technical blocks that cannot be obtained. These include the '''piston head''' and '''moving piston''' blocks.
+
+== Piston head ==
+{{Infobox block
+| title = Piston Head
+| group = Regular
+| group2 = Sticky
+| 1-1 = Piston Head.png
+| 1-2 = Piston Head BE.png
+| 2-1 = Sticky Piston Head.png
+| 2-2 = Sticky Piston Head BE.png
+| renewable = Yes
+| invimage = Piston Arm Collision
+| invimage2 = Sticky Piston Arm Collision
+| light = No
+| transparent = Yes
+| tool = pickaxe
+| flammable = No
+| lavasusceptible = No
+| stackable = No
+}}
+
+The '''piston head''' ({{in|JE}}) or '''(sticky) piston arm collision''' ({{in|BE}}) is a technical block that appears as the front part of an extended piston. It is not available in the Creative inventory and does not drop anything when removed.
+
+Normally, piston heads are created automatically when a piston extends. However, they can also be placed manually using the {{cmd|setblock}} command. Alternatively a [[debug stick]]{{only|je}} can be used to change the facing direction of a piston head that's currently attached to a piston base. Piston heads that do not have a valid support block behind them will be removed when receiving a [[Block_update#Post_placement_update|shape update]] from behind {{in|JE}}, or when receiving a [[block update]] from any direction {{in|BE}}. 
+
+In rare cases, a client-side, duplicate piston head can appear when placing a piston next to a power source {{in|java}}, due to client-server desync issues.<ref>{{bug|MC-254385}}</ref> These client-side piston heads cannot be broken directly but can be removed by placing another block in the same location.
+
+{{IN|java}}, normal and sticky piston heads are distinguished by a block state. {{IN|bedrock}}, they use separate block IDs. The normal and sticky piston heads can be obtained as items {{in|BE}} with the commands <code>/give @s pistonarmcollision</code> and <code>/give @s stickypistonarmcollision</code>. They face down when placed.
+
+{{IN|BE}}, piston head blocks do not actually have a texture, as the piston arm texture is part of the piston [[block entity]], and piston heads that aren't connected to a piston base have neither collisions nor an [[interaction box]].
+
+=== Natural generation ===
+Heads of sticky pistons powered with redstone generate in [[jungle pyramid]] and [[ancient city]].
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|facing|north|down,east,north,south,up,west|The direction the piston head is pointing.}}
+{{bst|short|false|false,true|If true, the piston arm is shorter than usual, by 4 pixels.}}
+{{bst|type|normal|normal,sticky|The type of piston head.|foot=1}}
+
+{{edition|bedrock}}:<br>
+Piston Head:
+{{bst|showaux=1|bits=0x1,0x2,0x4|facing_direction|0|0,1,2,3,4,5|The direction the piston head is pointing.
+*0: facing up
+*1: facing down
+*2: facing south
+*3: facing north
+*4: facing east
+*5: facing west |foot=1}}
+
+Sticky Piston Head:
+{{bst|showaux=1|facing_direction|0|0,1,2,3,4,5|The direction the piston head is pointing.
+*0: facing up
+*1: facing down
+*2: facing south
+*3: facing north
+*4: facing east
+*5: facing west |Unsupported|foot=1}}
+
+== Moving piston ==
+{{Infobox block
+|title=Moving Piston
+|image=none
+|invimage=movingBlock
+|renewable=Yes
+|transparent=Yes
+|light=No
+|tool=None
+|flammable=No
+|lavasusceptible=No
+|stackable=No
+}}
+
+The '''moving piston''' ({{in|JE}}) or '''moving block''' ({{in|BE}}), also known as '''block 36''' due to its [[Java Edition data values/Pre-flattening/Block IDs|pre-flattening block ID]], is an unobtainable technical block that holds a [[block entity]] (unless it was placed with a [[command]]) which contains the block the [[piston]] is currently moving. Since moving blocks vary in how much of each grid cell they occupy, they can't be stored as normal [[block]]s and are instead stored as block entity data. Multiple ''moving piston'' blocks may be used during the extension/retraction process, depending on how many blocks the piston is moving. At the end of the piston stroke, the ''moving piston'' blocks are replaced with either the carried block, the piston head (during extensions), or the piston itself (during retractions); but if it is placed with the use of commands it remains indefinitely.{{only|je}}
+
+When placed by commands, the game does not assign a block entity to the ''moving piston'' block,{{verify|Is this also the case in Bedrock Edition?}} therefore its properties are different than usual: it's invisible, has no collisions, and cannot be broken without the use of [[TNT]], commands, or a structure generating over it (such as the end platform). Although it is non-solid, fluids cannot pass through it. It also prevents players from building at its location. [[Mobs]] can see through it, but cannot walk through it. The game treats the block as a [[stone]] block when it comes to the player's footstep sounds. It is similar to [[invisible bedrock]] in properties with the exception that the player can walk through the moving piston but not invisible bedrock.
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|facing|north|down,east,north,south,up,west|The direction the block is being pushed by the piston.}}
+{{bst|type|normal|normal,sticky|What piston base this has.|foot=1}}
+
+=== Block data ===
+The moving piston has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|compound|blockState}}: The moving block represented by this block entity.
+*** {{nbt inherit/block state}}
+** {{nbt|byte|extending}}: 1 or 0 (true/false) – true if the piston is extending instead of withdrawing.
+** {{nbt|int|facing}}: Direction that the piston pushes (0=down, 1=up, 2=north, 3=south, 4=west, 5=east).
+** {{nbt|float|progress}}: How far the block has been moved. Starts at 0.0, and increments by 0.5 each tick, including the tick on which moving the piston is created. If the value is 1.0 or higher at the ''start'' of a tick of the block entity (before incrementing), then the block transforms into the stored blockState. Negative values can be used to increase the time until transformation.
+** {{nbt|byte|source}}: 1 or 0 (true/false) – true if the block represents the piston head itself, false if it represents a block being pushed.
+</div><section end="block data" />
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+{{-}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Piston Head
+|spritetype=block
+|nameid=piston_head
+|form=block}}
+{{ID table
+|displayname=Moving Piston
+|spritetype=block
+|nameid=moving_piston
+|blocktags=dragon_immune, wither_immune
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=moving-piston
+|spritetype=block
+|nameid=piston
+|foot=1}}
+
+{{BE}}:
+
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showaliasids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Piston Arm Collision
+|spritetype=block
+|nameid=piston_arm_collision
+|aliasid=pistonArmCollision
+|id=34
+|form=block}}
+{{ID table2
+|displayname=Sticky Piston Arm Collision
+|spritename=piston-head
+|spritetype=block
+|nameid=sticky_piston_arm_collision
+|aliasid=stickyPistonArmCollision
+|id=472
+|form=block}}
+{{ID table
+|displayname=Moving Block
+|spritename=Moving Piston
+|spritetype=block
+|nameid=moving_block
+|aliasid=movingBlock
+|translationkey=-
+|id=250
+|form=block
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=moving-piston
+|spritetype=block
+|nameid=MovingBlock
+|foot=1}}
+
+== History ==
+{{See technical block|Pistons}}
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|[[File:Piston Head (U) JE1.png|32px]] [[File:Piston Head (N) JE1.png|32px]] [[File:Piston Head (E) JE1.png|32px]] [[File:Piston Head (S) JE1.png|32px]] [[File:Piston Head (W) JE1.png|32px]] [[File:Piston Head (D) JE1.png|32px]]<br>[[File:Sticky Piston Head (U) JE1.png|32px]] [[File:Sticky Piston Head (N) JE1.png|32px]] [[File:Sticky Piston Head (E) JE1.png|32px]] [[File:Sticky Piston Head (S) JE1.png|32px]] [[File:Sticky Piston Head (W) JE1.png|32px]] [[File:Sticky Piston Head (D) JE1.png|32px]]<br>Added piston head and moving piston blocks.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w17a|[[File:Piston Head (U) JE2.png|32px]] [[File:Piston Head (D) JE2.png|32px]] [[File:Sticky Piston Head (U) JE2.png|32px]] [[File:Sticky Piston Head (D) JE2.png|32px]] The models for piston and related blocks when facing up and down have been changed.}}
+|{{HistoryLine|||dev=14w27b|The moving piston block no longer has a selection outline.}}
+|{{HistoryLine|||dev=14w29a|[[File:Short Piston Head (U) JE1.png|32px]] [[File:Short Piston Head (N) JE1.png|32px]] [[File:Short Piston Head (E) JE1.png|32px]] [[File:Short Piston Head (S) JE1.png|32px]] [[File:Short Piston Head (W) JE1.png|32px]] [[File:Short Piston Head (D) JE1.png|32px]]<br>[[File:Short Sticky Piston Head (U) JE1.png|32px]] [[File:Short Sticky Piston Head (N) JE1.png|32px]] [[File:Short Sticky Piston Head (E) JE1.png|32px]] [[File:Short Sticky Piston Head (S) JE1.png|32px]] [[File:Short Sticky Piston Head (W) JE1.png|32px]] [[File:Short Sticky Piston Head (D) JE1.png|32px]]<br>There are now "short" piston heads. Their model is used during a piston's  extension/retraction to avoid having part of the head's texture poke out of the back of the piston.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Piston Head (U) JE3.png|32px]] [[File:Piston Head (N) JE2.png|32px]] [[File:Piston Head (E) JE2.png|32px]] [[File:Piston Head (S) JE2.png|32px]] [[File:Piston Head (W) JE2.png|32px]] [[File:Piston Head (D) JE3.png|32px]]<br>[[File:Short Piston Head (U) JE2.png|32px]] [[File:Short Piston Head (N) JE2.png|32px]] [[File:Short Piston Head (E) JE2.png|32px]] [[File:Short Piston Head (S) JE2.png|32px]] [[File:Short Piston Head (W) JE2.png|32px]] [[File:Short Piston Head (D) JE2.png|32px]]<br>[[File:Sticky Piston Head (U) JE3.png|32px]] [[File:Sticky Piston Head (N) JE2.png|32px]] [[File:Sticky Piston Head (E) JE2.png|32px]] [[File:Sticky Piston Head (S) JE2.png|32px]] [[File:Sticky Piston Head (W) JE2.png|32px]] [[File:Sticky Piston Head (D) JE3.png|32px]]<br>[[File:Short Sticky Piston Head (U) JE2.png|32px]] [[File:Short Sticky Piston Head (N) JE2.png|32px]] [[File:Short Sticky Piston Head (E) JE2.png|32px]] [[File:Short Sticky Piston Head (S) JE2.png|32px]] [[File:Short Sticky Piston Head (W) JE2.png|32px]] [[File:Short Sticky Piston Head (D) JE2.png|32px]]<br>The textures associated with piston heads have been changed.
+|While the texture for oak planks was later updated in subsequent snapshots, the piston texture is yet to be changed to reflect this.<ref>{{bug|MC-248841|||WAI}}</ref>}}
+|{{HistoryLine||1.19|dev=22w17a|[[File:Piston Head (U) JE4.png|32px]] [[File:Piston Head (N) JE3.png|32px]] [[File:Piston Head (E) JE3.png|32px]] [[File:Piston Head (S) JE3.png|32px]] [[File:Piston Head (W) JE3.png|32px]] [[File:Piston Head (D) JE4.png|32px]]<br>[[File:Short Piston Head (U) JE3.png|32px]] [[File:Short Piston Head (N) JE3.png|32px]] [[File:Short Piston Head (E) JE3.png|32px]] [[File:Short Piston Head (S) JE3.png|32px]] [[File:Short Piston Head (W) JE3.png|32px]] [[File:Short Piston Head (D) JE3.png|32px]]<br>[[File:Sticky Piston Head (U) JE4.png|32px]] [[File:Sticky Piston Head (N) JE3.png|32px]] [[File:Sticky Piston Head (E) JE3.png|32px]] [[File:Sticky Piston Head (S) JE3.png|32px]] [[File:Sticky Piston Head (W) JE3.png|32px]] [[File:Sticky Piston Head (D) JE4.png|32px]]<br>[[File:Short Sticky Piston Head (U) JE3.png|32px]] [[File:Short Sticky Piston Head (N) JE3.png|32px]] [[File:Short Sticky Piston Head (E) JE3.png|32px]] [[File:Short Sticky Piston Head (S) JE3.png|32px]] [[File:Short Sticky Piston Head (W) JE3.png|32px]] [[File:Short Sticky Piston Head (D) JE3.png|32px]]<br>Changed piston textures, to match the color of the oak planks on the piston head.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w29a|Added the "short{{=}}true/false" block state to piston_head.}}
+|{{HistoryLine||1.11.1|dev=16w50a|Added a new byte tag <code>source</code> for the <code>piston_extension</code> block entity, which is true if the block represents the piston head itself, and false if it represents a block being pushed.}}
+|{{HistoryLine||1.13|dev=17w47a|The moving block ID of pistons has been changed from <code>piston_extension</code> to <code>moving_piston</code>.
+|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 34 and 36.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 5|The <code>movingblock</code> block for pistons can no longer be placed using [[commands]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Sticky piston heads are now a separate [[block]] from normal heads, instead of being differentiated by a block state. The namespaced ID is now <code>stickypistonarmcollision</code>, while the numerical ID is 472.}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.30.26|The ID of <code>pistonarmcollision</code> is changed to <code>piston_arm_collision</code>
+|The ID of <code>stickypistonarmcollision</code> is changed to <code>sticky_piston_arm_collision</code>
+|The ID of <code>movingblock</code> is changed to <code>moving_block</code>}}
+}}
+
+== Trivia ==
+* Mobs can spawn inside the piston head block.
+* {{IN|bedrock}}, the piston head is invisible and non-solid when placed with commands. The moving piston disappears shortly after being placed with commands in this edition.
+* The <code>moving_piston</code> is transparent and does not emit light.
+** If a light-emitting block is moved, the player can see it turn dark briefly. If an opaque block is moved, the player may see light passing through it.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox_invisible_block}}
+{{Navbox blocks|utility}}
+
+
+[[ja:ピストン/テクニカルブロック]]
+[[ko:피스톤/기술적 구성 요소]]
+[[pt:Pistão/Componentes técnicos]]
