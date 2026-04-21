@@ -1,3 +1,4 @@
+import type { Chunk } from './Chunk';
 import type { World } from './World';
 import type { WorldGenerator } from './generation/WorldGenerator';
 
@@ -16,21 +17,32 @@ const DEFAULTS: ChunkLoaderOptions = {
 export interface ChunkLoaderStats {
   loaded: number;
   pending: number;
+  generating: boolean;
 }
+
+export type PopulateFn = (chunk: Chunk) => Promise<void> | void;
 
 export class ChunkLoader {
   private readonly opts: ChunkLoaderOptions;
   private readonly pending: { cx: number; cz: number; priority: number }[] = [];
   private lastCx = Number.NaN;
   private lastCz = Number.NaN;
+  private generating = false;
+  private populate: PopulateFn;
 
-  constructor(
-    private readonly world: World,
-    private readonly generator: WorldGenerator,
-    opts: Partial<ChunkLoaderOptions> = {},
-  ) {
+  constructor(world: World, generator: WorldGenerator, opts: Partial<ChunkLoaderOptions> = {}) {
+    this.world = world;
     this.opts = { ...DEFAULTS, ...opts };
+    this.populate = (chunk) => {
+      generator.generateChunk(chunk);
+    };
   }
+
+  setPopulate(fn: PopulateFn): void {
+    this.populate = fn;
+  }
+
+  private readonly world: World;
 
   setViewRadius(r: number): void {
     this.opts.viewRadius = Math.max(1, Math.floor(r));
@@ -58,17 +70,34 @@ export class ChunkLoader {
     }
 
     let generated = 0;
-    while (generated < this.opts.perFrameBudget && this.pending.length > 0) {
+    while (generated < this.opts.perFrameBudget && this.pending.length > 0 && !this.generating) {
       const entry = this.pending.shift();
       if (!entry) break;
       if (this.world.has(entry.cx, entry.cz)) continue;
       const chunk = this.world.ensureChunk(entry.cx, entry.cz);
-      this.generator.generateChunk(chunk);
+      const result = this.populate(chunk);
+      if (result instanceof Promise) {
+        this.generating = true;
+        void result
+          .catch((err: unknown) => {
+            console.error('[ChunkLoader] populate failed', err);
+          })
+          .finally(() => {
+            this.generating = false;
+            onLoad(entry.cx, entry.cz);
+          });
+        generated++;
+        break;
+      }
       onLoad(entry.cx, entry.cz);
       generated++;
     }
 
-    return { loaded: this.world.chunkCount, pending: this.pending.length };
+    return {
+      loaded: this.world.chunkCount,
+      pending: this.pending.length,
+      generating: this.generating,
+    };
   }
 
   private rebuildPending(centerCx: number, centerCz: number): void {

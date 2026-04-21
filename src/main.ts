@@ -19,6 +19,9 @@ import {
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
 import { AudioBus } from './engine/audio/AudioBus';
+import { openIndexedDB } from './persist/db';
+import { ChunkStore } from './persist/ChunkStore';
+import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -66,8 +69,29 @@ const isSolid = (x: number, y: number, z: number): boolean =>
   y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
 
 const world = new World();
-const WORLD_SEED = 0xabc1234;
+const DEFAULT_WORLD_ID = 'default-world';
+const persistDB = await openIndexedDB();
+const lastPlayedId = (await persistDB.getMeta('lastPlayedWorldId')) as string | null;
+const activeWorldId = lastPlayedId ?? DEFAULT_WORLD_ID;
+let worldMeta = await persistDB.getWorld(activeWorldId);
+if (!worldMeta) {
+  worldMeta = {
+    id: activeWorldId,
+    name: 'Default World',
+    seed: 0xabc1234,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    schemaVersion: CURRENT_SCHEMA_VERSION,
+    spawn: { x: 0.5, y: 80, z: 0.5 },
+  } satisfies WorldMeta;
+  await persistDB.putWorld(worldMeta);
+}
+await persistDB.setMeta('lastPlayedWorldId', worldMeta.id);
+
+const WORLD_SEED = worldMeta.seed;
 const generator = new WorldGenerator(WORLD_SEED, registry);
+const chunkStore = new ChunkStore(persistDB, { worldId: worldMeta.id });
+chunkStore.startAutoFlush();
 const loader = new ChunkLoader(world, generator, {
   viewRadius: 6,
   unloadPadding: 2,
@@ -81,9 +105,16 @@ const lightOracle = {
 };
 
 const fp = new FirstPersonCamera(camera);
-const spawnHeight = generator.surfaceAt(0, 0) + 4;
-fp.position.set(0.5, spawnHeight, 0.5);
-fp.yaw = 0;
+const savedPlayer = await persistDB.getPlayer(worldMeta.id);
+if (savedPlayer) {
+  fp.position.set(savedPlayer.position.x, savedPlayer.position.y, savedPlayer.position.z);
+  fp.yaw = savedPlayer.yaw;
+  fp.pitch = savedPlayer.pitch;
+} else {
+  const spawnHeight = generator.surfaceAt(0, 0) + 4;
+  fp.position.set(worldMeta.spawn.x, spawnHeight, worldMeta.spawn.z);
+  fp.yaw = 0;
+}
 fp.input.fly = true;
 fp.attach(canvas);
 
@@ -110,9 +141,11 @@ const interaction = new InteractionController(
   {
     onBreak: (bx, by, bz) => {
       audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+      touchWorldEdit(bx, by, bz);
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
+      touchWorldEdit(bx, by, bz);
     },
   },
 );
@@ -205,6 +238,52 @@ const onUnload = (cx: number, cz: number): void => {
   lightCache.delete(lightKey(cx, cz));
 };
 
+async function savePlayerNow(): Promise<void> {
+  if (!worldMeta) return;
+  await persistDB.putPlayer({
+    worldId: worldMeta.id,
+    position: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+    yaw: fp.yaw,
+    pitch: fp.pitch,
+    hotbarSlots: [],
+    selectedSlot: 0,
+    updatedAt: Date.now(),
+  });
+}
+
+let lastPlayerSaveAt = performance.now();
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    void chunkStore.flush();
+    void savePlayerNow();
+  }
+});
+window.addEventListener('beforeunload', () => {
+  void chunkStore.flush();
+  void savePlayerNow();
+});
+
+const touchWorldEdit = (bx: number, _by: number, bz: number): void => {
+  const cx = Math.floor(bx / 16);
+  const cz = Math.floor(bz / 16);
+  const chunk = world.getChunk(cx, cz);
+  if (chunk) {
+    const light = lightCache.get(lightKey(cx, cz)) ?? null;
+    chunkStore.markDirty(chunk, light);
+  }
+};
+
+const origOnBreak = (bx: number, by: number, bz: number): void => {
+  audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+  touchWorldEdit(bx, by, bz);
+};
+const origOnPlace = (bx: number, by: number, bz: number): void => {
+  audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
+  touchWorldEdit(bx, by, bz);
+};
+void origOnBreak;
+void origOnPlace;
+
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -222,6 +301,28 @@ const rendererInfo = ((): { gl: string; rend: string } => {
   const rend = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) as string) : 'unknown';
   return { gl: api, rend };
 })();
+
+loader.setPopulate(async (chunk) => {
+  const saved = await chunkStore.load(chunk.cx, chunk.cz);
+  if (saved) {
+    for (let cy = 0; cy < 24; cy++) {
+      const src = saved.chunk.section(cy);
+      if (!src) continue;
+      for (let y = 0; y < 16; y++) {
+        for (let z = 0; z < 16; z++) {
+          for (let x = 0; x < 16; x++) {
+            const state = src.get(x, y, z);
+            if (state !== AIR) chunk.set(x, cy * 16 + y, z, state);
+          }
+        }
+      }
+    }
+  } else {
+    generator.generateChunk(chunk);
+    const light = buildLight(chunk, lightOracle);
+    chunkStore.markDirty(chunk, light);
+  }
+});
 
 const onLoad = (cx: number, cz: number): void => {
   const chunk = world.getChunk(cx, cz);
@@ -288,15 +389,20 @@ function frame(): void {
 
   renderer.render(scene, camera);
 
+  if (now - lastPlayerSaveAt > 5000) {
+    lastPlayerSaveAt = now;
+    void savePlayerNow();
+  }
+
   const look = fp.lookVector();
   hud.textContent =
-    `webmc M3\n` +
+    `webmc M5\n` +
     `${rendererInfo.gl}  ${rendererInfo.rend}\n` +
     `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
     `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
-    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}`;
+    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}`;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
