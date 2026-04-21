@@ -37,28 +37,30 @@ function unpackSnapshot(req: MesherRequest): Snapshot {
 
 self.addEventListener('message', (e: MessageEvent<MesherRequest>) => {
   const req = e.data;
+  let snap;
   try {
-    const t0 = performance.now();
-    const snap = unpackSnapshot(req);
-    const out = meshSnapshot(snap, neighborsOf(req));
-    const elapsedMs = performance.now() - t0;
-    const res: FromWorker = {
-      type: 'mesh-result',
-      id: req.id,
-      cx: req.cx,
-      cy: req.cy,
-      cz: req.cz,
-      positions: out.positions,
-      normals: out.normals,
-      colors: out.colors,
-      indices: out.indices,
-      quadCount: out.quadCount,
-      elapsedMs,
-    };
-    (self as unknown as Worker).postMessage(res, transferablesOfResponse(res));
+    snap = unpackSnapshot(req);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     const res: FromWorker = { type: 'mesh-error', id: req.id, message };
     (self as unknown as Worker).postMessage(res);
+    return;
   }
+  const t0 = performance.now();
+  const out = meshSnapshot(snap, neighborsOf(req));
+  const elapsedMs = performance.now() - t0;
+  const res: FromWorker = {
+    type: 'mesh-result',
+    id: req.id,
+    cx: req.cx,
+    cy: req.cy,
+    cz: req.cz,
+    positions: out.positions,
+    normals: out.normals,
+    colors: out.colors,
+    indices: out.indices,
+    quadCount: out.quadCount,
+    elapsedMs,
+  };
+  (self as unknown as Worker).postMessage(res, transferablesOfResponse(res));
 });

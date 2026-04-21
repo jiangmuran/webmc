@@ -47,7 +47,7 @@ export class ChunkRenderer {
     geom.setIndex(new THREE.BufferAttribute(response.indices, 1));
     geom.boundingSphere = new THREE.Sphere(
       new THREE.Vector3(SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2),
-      SUBCHUNK_DIM * Math.sqrt(3),
+      (SUBCHUNK_DIM * Math.sqrt(3)) / 2,
     );
 
     const mesh = new THREE.Mesh(geom, this.material);

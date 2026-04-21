@@ -105,7 +105,6 @@ export class FirstPersonCamera {
   }
 
   private handleKey(code: string, down: boolean): void {
-    const v = down ? 1 : 0;
     switch (code) {
       case 'KeyW':
         this.input.forward = down ? 1 : Math.max(this.input.forward - 1, 0);
@@ -139,7 +138,6 @@ export class FirstPersonCamera {
         this.input.sprint = down;
         break;
       default:
-        void v;
         break;
     }
   }
@@ -194,7 +192,7 @@ export class FirstPersonCamera {
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
-      this.onGround = result.onGround || (this.onGround && !result.hitY && this.velocity.y <= 0);
+      this.onGround = result.onGround;
     }
 
     this.camera.position.set(

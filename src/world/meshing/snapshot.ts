@@ -41,7 +41,10 @@ export function snapshotSubChunk(
       for (let x = 0; x < SUBCHUNK_DIM; x++) {
         const state = self.get(x, y, z);
         const pIdx = palette.indexOf(state);
-        flatIdx[localIndex(x, y, z)] = pIdx < 0 ? 0 : pIdx;
+        if (pIdx < 0) {
+          throw new Error(`snapshotSubChunk: state ${String(state)} not in palette`);
+        }
+        flatIdx[localIndex(x, y, z)] = pIdx;
       }
     }
   }
@@ -83,7 +86,11 @@ export function snapshotFromBlob(blob: PaletteBlob): Snapshot {
   const n = blob.paletteOpaque.length;
   const flatIdx = new Uint16Array(SUBCHUNK_VOLUME);
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
-    flatIdx[i] = readIndex(blob.indices, i, blob.bitsPerIndex);
+    const idx = readIndex(blob.indices, i, blob.bitsPerIndex);
+    if (idx >= n) {
+      throw new Error(`snapshotFromBlob: index ${String(idx)} out of palette range ${String(n)}`);
+    }
+    flatIdx[i] = idx;
   }
   return {
     flatIdx,

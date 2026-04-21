@@ -4,12 +4,11 @@ import { FirstPersonCamera } from './engine/input/FirstPersonCamera';
 import { ChunkRenderer } from './engine/render/ChunkRenderer';
 import { type BlockState, AIR, makeState, stateId } from './blocks/state';
 import { createDefaultRegistry } from './blocks/registry';
-import { World, chunkXOf, chunkZOf, localXOf, localZOf } from './world/World';
-import { CHUNK_HEIGHT, sectionOf } from './world/Chunk';
+import { World } from './world/World';
+import { CHUNK_HEIGHT } from './world/Chunk';
 import { SUBCHUNK_DIM } from './world/SubChunk';
 import {
   type BorderOpacity,
-  EMPTY_BORDERS,
   createMesherClient,
   extractBorderFromSubChunk,
 } from './world/workers/MesherClient';
@@ -132,24 +131,23 @@ function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
 }
 
 async function meshAllDirty(): Promise<void> {
+  const pending: Promise<void>[] = [];
   for (const chunk of world.chunks()) {
     for (const cy of chunk.meshDirty) {
       const section = chunk.section(cy);
       if (!section) continue;
       const borders = borderFor(chunk.cx, cy, chunk.cz);
-      const response = await mesherClient.mesh(
-        chunk.cx,
-        cy,
-        chunk.cz,
-        section,
-        isOpaque,
-        colorOf,
-        borders,
+      pending.push(
+        mesherClient
+          .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, colorOf, borders)
+          .then((response) => {
+            chunkRenderer.apply(response);
+          }),
       );
-      chunkRenderer.apply(response);
     }
     chunk.clearMeshDirty();
   }
+  await Promise.all(pending);
 }
 
 for (const chunk of world.chunks()) {
@@ -159,13 +157,6 @@ for (const chunk of world.chunks()) {
 }
 
 void meshAllDirty();
-
-void EMPTY_BORDERS;
-void chunkXOf;
-void chunkZOf;
-void localXOf;
-void localZOf;
-void sectionOf;
 
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
