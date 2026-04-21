@@ -5,8 +5,9 @@ import { ChunkRenderer } from './engine/render/ChunkRenderer';
 import { type BlockState, AIR, makeState, stateId } from './blocks/state';
 import { createDefaultRegistry } from './blocks/registry';
 import { World } from './world/World';
-import { CHUNK_HEIGHT } from './world/Chunk';
-import { SUBCHUNK_DIM } from './world/SubChunk';
+import { CHUNK_HEIGHT, type Chunk } from './world/Chunk';
+import { WorldGenerator } from './world/generation/WorldGenerator';
+import { ChunkLoader } from './world/ChunkLoader';
 import {
   type BorderOpacity,
   createMesherClient,
@@ -34,7 +35,7 @@ renderer.setSize(window.innerWidth, window.innerHeight, false);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8db5f0);
-scene.fog = new THREE.Fog(0x8db5f0, 60, 220);
+scene.fog = new THREE.Fog(0x8db5f0, 80, 260);
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -45,7 +46,10 @@ const DIRT = nameToState('webmc:dirt');
 const GRASS = nameToState('webmc:grass_block');
 const COBBLE = nameToState('webmc:cobblestone');
 const LOG = nameToState('webmc:oak_log');
+const GLASS = nameToState('webmc:glass');
 const GLOW = nameToState('webmc:glowstone');
+const SAND = nameToState('webmc:sand');
+const PLANKS = nameToState('webmc:oak_planks');
 
 const isOpaque = (state: BlockState): boolean => {
   if (state === AIR) return false;
@@ -58,37 +62,19 @@ const isSolid = (x: number, y: number, z: number): boolean =>
   y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
 
 const world = new World();
-
-function buildFlatDemo(): void {
-  const GRID = 8;
-  for (let cx = 0; cx < GRID; cx++) {
-    for (let cz = 0; cz < GRID; cz++) {
-      for (let lx = 0; lx < SUBCHUNK_DIM; lx++) {
-        for (let lz = 0; lz < SUBCHUNK_DIM; lz++) {
-          const wx = cx * SUBCHUNK_DIM + lx;
-          const wz = cz * SUBCHUNK_DIM + lz;
-          world.set(wx, 30, wz, STONE);
-          world.set(wx, 31, wz, STONE);
-          world.set(wx, 32, wz, DIRT);
-          world.set(wx, 33, wz, DIRT);
-          world.set(wx, 34, wz, GRASS);
-          if ((wx * 31 + wz * 17) % 91 === 0) {
-            world.set(wx, 35, wz, GLOW);
-          } else if ((wx * 7 + wz * 11) % 37 === 0) {
-            for (let h = 35; h < 39; h++) world.set(wx, h, wz, LOG);
-          } else if ((wx * 13 + wz * 29) % 29 === 0) {
-            for (let h = 35; h < 37; h++) world.set(wx, h, wz, COBBLE);
-          }
-        }
-      }
-    }
-  }
-}
-buildFlatDemo();
+const WORLD_SEED = 0xabc1234;
+const generator = new WorldGenerator(WORLD_SEED, registry);
+const loader = new ChunkLoader(world, generator, {
+  viewRadius: 6,
+  unloadPadding: 2,
+  perFrameBudget: 4,
+});
 
 const fp = new FirstPersonCamera(camera);
-fp.position.set(SUBCHUNK_DIM * 4, 40, SUBCHUNK_DIM * 4);
-fp.yaw = Math.PI;
+const spawnHeight = generator.surfaceAt(0, 0) + 4;
+fp.position.set(0.5, spawnHeight, 0.5);
+fp.yaw = 0;
+fp.input.fly = true;
 fp.attach(canvas);
 
 const chunkRenderer = new ChunkRenderer();
@@ -114,6 +100,9 @@ const hotbar = new Hotbar(appEl, registry, [
   { state: GRASS, name: 'grass', color: colorOf(GRASS) },
   { state: COBBLE, name: 'cobble', color: colorOf(COBBLE) },
   { state: LOG, name: 'oak log', color: colorOf(LOG) },
+  { state: PLANKS, name: 'planks', color: colorOf(PLANKS) },
+  { state: GLASS, name: 'glass', color: colorOf(GLASS) },
+  { state: SAND, name: 'sand', color: colorOf(SAND) },
   { state: GLOW, name: 'glow', color: colorOf(GLOW) },
 ]);
 
@@ -154,6 +143,12 @@ function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
   return b;
 }
 
+function markChunkAllDirty(chunk: Chunk): void {
+  for (let cy = 0; cy < 24; cy++) {
+    if (chunk.section(cy)) chunk.markMeshDirty(cy);
+  }
+}
+
 function flushDirty(): void {
   for (const chunk of world.chunks()) {
     if (chunk.meshDirty.size === 0) continue;
@@ -175,12 +170,9 @@ function flushDirty(): void {
   }
 }
 
-for (const chunk of world.chunks()) {
-  for (let cy = 0; cy < 24; cy++) {
-    if (chunk.section(cy)) chunk.markMeshDirty(cy);
-  }
-}
-flushDirty();
+const onUnload = (cx: number, cz: number): void => {
+  for (let cy = 0; cy < 24; cy++) chunkRenderer.remove(cx, cy, cz);
+};
 
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
@@ -200,12 +192,28 @@ const rendererInfo = ((): { gl: string; rend: string } => {
   return { gl: api, rend };
 })();
 
+const onLoad = (cx: number, cz: number): void => {
+  const chunk = world.getChunk(cx, cz);
+  if (chunk) markChunkAllDirty(chunk);
+  for (const [ncx, ncz] of [
+    [cx - 1, cz],
+    [cx + 1, cz],
+    [cx, cz - 1],
+    [cx, cz + 1],
+  ] as const) {
+    const neighbor = world.getChunk(ncx, ncz);
+    if (neighbor) markChunkAllDirty(neighbor);
+  }
+};
+
 function frame(): void {
   const stats = timer.tick();
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
 
   fp.update(dtSec, { isSolid });
+
+  const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad);
 
   const sel = hotbar.selected;
   if (sel) interaction.selectedBlock = sel.state;
@@ -217,13 +225,13 @@ function frame(): void {
 
   const look = fp.lookVector();
   hud.textContent =
-    `webmc M2\n` +
+    `webmc M3\n` +
     `${rendererInfo.gl}  ${rendererInfo.rend}\n` +
     `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
-    `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}\n` +
-    `${fp.input.fly ? 'fly' : 'walk'}  ${fp.onGround ? 'ground' : 'air'}  ${sel?.name ?? '?'}`;
+    `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
+    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}`;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

@@ -45,6 +45,7 @@ export class ChunkLoader {
     playerWx: number,
     playerWz: number,
     onUnload: (cx: number, cz: number) => void,
+    onLoad: (cx: number, cz: number) => void = () => undefined,
   ): ChunkLoaderStats {
     const cx = Math.floor(playerWx / 16);
     const cz = Math.floor(playerWz / 16);
@@ -63,6 +64,7 @@ export class ChunkLoader {
       if (this.world.has(entry.cx, entry.cz)) continue;
       const chunk = this.world.ensureChunk(entry.cx, entry.cz);
       this.generator.generateChunk(chunk);
+      onLoad(entry.cx, entry.cz);
       generated++;
     }
 

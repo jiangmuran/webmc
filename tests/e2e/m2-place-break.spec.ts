@@ -14,9 +14,9 @@ test.describe('M2 place/break', () => {
       () => {
         const hudText = document.querySelector('#hud')?.textContent ?? '';
         const m = /tris\s+(\d+)/.exec(hudText);
-        return m !== null && Number(m[1]) > 0;
+        return m !== null && Number(m[1]) > 100;
       },
-      { timeout: 10_000 },
+      { timeout: 20_000 },
     );
 
     const readTris = async (): Promise<number> => {
