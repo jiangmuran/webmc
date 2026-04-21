@@ -34,7 +34,10 @@ Use OpenSimplex2 (successor to Simplex, Kurt Spencer, public domain). Implementa
 
 ```ts
 class WorldGenerator {
-  constructor(readonly seed: number, readonly registry: BlockRegistry) {}
+  constructor(
+    readonly seed: number,
+    readonly registry: BlockRegistry,
+  ) {}
   generateChunk(cx: number, cz: number, chunk: Chunk): void;
 }
 ```
@@ -79,9 +82,9 @@ Per-vertex ambient-occlusion using the 3-neighbor rule: for a corner, sample the
 ```ts
 class DayNightCycle {
   dayLengthSec: number; // 600 (10 min)
-  angleRad: number;     // derived from (elapsedSec / dayLengthSec) * 2π
-  sunDir: Vector3;      // shader uniform
-  skyColor: Color;      // shader uniform, lerped day↔dusk↔night
+  angleRad: number; // derived from (elapsedSec / dayLengthSec) * 2π
+  sunDir: Vector3; // shader uniform
+  skyColor: Color; // shader uniform, lerped day↔dusk↔night
   fogColor: Color;
   fogNear: number;
   fogFar: number;
