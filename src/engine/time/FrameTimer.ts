@@ -3,6 +3,12 @@ export interface FrameStats {
   frameMs: number;
 }
 
+const FPS_WINDOW_MS = 500;
+// Long gaps are usually tab suspend/resume. Crediting them as real frame time
+// would produce nonsense FPS and, once physics is tick-stepped by dt, would
+// cause teleporting. Cap the reported frame at one display refresh worth.
+const MAX_FRAME_DT_MS = 100;
+
 export class FrameTimer {
   private last = performance.now();
   private acc = 0;
@@ -12,12 +18,13 @@ export class FrameTimer {
 
   tick(): FrameStats {
     const now = performance.now();
-    const dt = now - this.last;
+    const raw = now - this.last;
     this.last = now;
+    const dt = raw < 0 ? 0 : raw > MAX_FRAME_DT_MS ? MAX_FRAME_DT_MS : raw;
     this.frameMs = dt;
     this.acc += dt;
     this.frames += 1;
-    if (this.acc >= 500) {
+    if (this.acc >= FPS_WINDOW_MS) {
       this.fps = (this.frames * 1000) / this.acc;
       this.frames = 0;
       this.acc = 0;

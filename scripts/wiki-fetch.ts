@@ -35,6 +35,7 @@ const SEED_PAGES = [
   'Stone',
   'Dirt',
   'Cobblestone',
+  'Log',
   'Oak Log',
   'Redstone Dust',
   'Piston',
@@ -74,7 +75,10 @@ async function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function fetchRaw(page: string, attempt = 1): Promise<string> {
+const REDIRECT_RE = /^#REDIRECT\s+\[\[([^#\]|]+)/i;
+const MAX_REDIRECTS = 3;
+
+async function fetchRaw(page: string, attempt = 1, hops = 0): Promise<string> {
   const slug = slugify(page);
   const url = `${WIKI_BASE}/w/${encodeURIComponent(slug)}?action=raw`;
   const res = await fetch(url, {
@@ -85,8 +89,25 @@ async function fetchRaw(page: string, attempt = 1): Promise<string> {
     redirect: 'follow',
   });
   if (res.status === 200) {
+    const contentType = res.headers.get('content-type') ?? '';
+    if (
+      !/^text\/(plain|x-wiki|css|javascript)/i.test(contentType) &&
+      !contentType.includes('charset')
+    ) {
+      // Permissive: MediaWiki sometimes returns no CT; reject only on clearly wrong types.
+      if (/^(text\/html|application\/json)/i.test(contentType)) {
+        throw new Error(`unexpected content-type ${contentType} for ${slug}`);
+      }
+    }
     const body = await res.text();
     if (body.length === 0) throw new Error(`empty body for ${slug}`);
+    const redirect = REDIRECT_RE.exec(body.trimStart());
+    if (redirect && hops < MAX_REDIRECTS) {
+      const target = redirect[1]?.trim();
+      if (target && target.toLowerCase() !== page.toLowerCase()) {
+        return fetchRaw(target, 1, hops + 1);
+      }
+    }
     return body;
   }
   if (res.status === 404) {
@@ -95,7 +116,7 @@ async function fetchRaw(page: string, attempt = 1): Promise<string> {
   if ((res.status === 429 || res.status >= 500) && attempt < 4) {
     const backoff = 1000 * 2 ** (attempt - 1) + Math.random() * 250;
     await sleep(backoff);
-    return fetchRaw(page, attempt + 1);
+    return fetchRaw(page, attempt + 1, hops);
   }
   throw new Error(`http ${String(res.status)} fetching ${slug}`);
 }

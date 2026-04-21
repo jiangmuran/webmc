@@ -13,7 +13,10 @@ export default defineConfig({
     host: true,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
+      // `credentialless` still unlocks SharedArrayBuffer (needed for future
+      // shared-memory workers in M16) while allowing user-uploaded resource
+      // packs loaded via blob URLs, which M4's resource-pack sandbox relies on.
+      'Cross-Origin-Embedder-Policy': 'credentialless',
     },
   },
   preview: {

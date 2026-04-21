@@ -43,4 +43,22 @@ describe('FrameTimer', () => {
     const s = t.tick();
     expect(s.fps).toBe(0);
   });
+
+  it('clamps frameMs on tab-suspend-sized gaps', () => {
+    const t = new FrameTimer();
+    now = 16;
+    t.tick();
+    now += 5_000_000;
+    const s = t.tick();
+    expect(s.frameMs).toBeLessThanOrEqual(100);
+  });
+
+  it('treats non-monotonic time as a zero-length frame', () => {
+    const t = new FrameTimer();
+    now = 100;
+    t.tick();
+    now = 50;
+    const s = t.tick();
+    expect(s.frameMs).toBe(0);
+  });
 });

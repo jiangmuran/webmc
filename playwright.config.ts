@@ -8,7 +8,7 @@ const noProxyEnv = {
 };
 
 const browserLaunchOptions = {
-  args: ['--proxy-server=direct://', '--no-sandbox'],
+  args: ['--proxy-server=direct://', ...(isCI ? ['--no-sandbox'] : [])],
   env: {
     ...process.env,
     ...noProxyEnv,

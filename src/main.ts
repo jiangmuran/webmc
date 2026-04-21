@@ -11,6 +11,9 @@ const renderer = new THREE.WebGLRenderer({
   antialias: false,
   powerPreference: 'high-performance',
 });
+if (!renderer.capabilities.isWebGL2) {
+  throw new Error('webmc requires WebGL2; this browser only provides WebGL1.');
+}
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight, false);
 renderer.setClearColor(0x0a0e14);

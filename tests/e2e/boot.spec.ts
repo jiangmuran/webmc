@@ -12,10 +12,12 @@ test.describe('M0 boot smoke', () => {
     await expect(hud).toContainText('webmc M0');
     await expect(hud).toContainText('WebGL2');
 
-    await page.waitForTimeout(1200);
-    const hudText = await hud.textContent();
-    expect(hudText).toMatch(/FPS\s+\d+/);
-    const fpsMatch = /FPS\s+(\d+)/.exec(hudText ?? '');
+    await page.waitForFunction(
+      () => /FPS\s+[1-9]\d*/.test(document.querySelector('#hud')?.textContent ?? ''),
+      { timeout: 8_000 },
+    );
+    const hudText = (await hud.textContent()) ?? '';
+    const fpsMatch = /FPS\s+(\d+)/.exec(hudText);
     expect(fpsMatch).not.toBeNull();
     const fps = Number(fpsMatch?.[1] ?? 0);
     expect(fps).toBeGreaterThan(0);
