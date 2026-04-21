@@ -1,5 +1,6 @@
 import type { BlockState } from '@/blocks/state';
 import { SUBCHUNK_DIM, type SubChunk, localIndex } from '../SubChunk';
+import { type Snapshot, snapshotSubChunk } from './snapshot';
 
 export type OpaqueSampler = (u: number, v: number) => boolean;
 
@@ -36,42 +37,13 @@ export const EMPTY_NEIGHBORS: MesherNeighbors = {
   pz: null,
 };
 
-function decodeFlat(self: SubChunk, out: Uint16Array): void {
-  for (let y = 0; y < SUBCHUNK_DIM; y++) {
-    for (let z = 0; z < SUBCHUNK_DIM; z++) {
-      for (let x = 0; x < SUBCHUNK_DIM; x++) {
-        const i = localIndex(x, y, z);
-        const state = self.get(x, y, z);
-        const pIdx = self.palette.indexOf(state);
-        out[i] = pIdx < 0 ? 0 : pIdx;
-      }
-    }
-  }
-}
-
 // Classical greedy meshing (Mikola-Lysenko style): 2D greedy merge per slice
 // per axis. Neighbor-aware at chunk borders so seams disappear.
 // A future micro-milestone can replace this with binary-bitmask greedy
 // (cgerikj) if perf demands; the output contract is stable.
-export function meshSubChunk(input: MesherInput): MeshOutput {
-  const { self, neighbors, isOpaque, colorOf } = input;
+export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOutput {
+  const { flatIdx, paletteOpaque, paletteColor } = snap;
   const D = SUBCHUNK_DIM;
-
-  const palette = self.palette;
-  const paletteSize = palette.size;
-  const paletteOpaque = new Uint8Array(paletteSize);
-  const paletteColor = new Uint8Array(paletteSize * 3);
-  for (let i = 0; i < paletteSize; i++) {
-    const state = palette.get(i);
-    paletteOpaque[i] = isOpaque(state) ? 1 : 0;
-    const c = colorOf(state);
-    paletteColor[i * 3] = c[0];
-    paletteColor[i * 3 + 1] = c[1];
-    paletteColor[i * 3 + 2] = c[2];
-  }
-
-  const flatIdx = new Uint16Array(D * D * D);
-  decodeFlat(self, flatIdx);
 
   const positions: number[] = [];
   const normals: number[] = [];
@@ -157,18 +129,18 @@ export function meshSubChunk(input: MesherInput): MeshOutput {
             const dvy = v === 1 ? height : 0;
             const dvz = v === 2 ? height : 0;
 
-            const c0x = ox,
-              c0y = oy,
-              c0z = oz;
-            const c1x = ox + dux,
-              c1y = oy + duy,
-              c1z = oz + duz;
-            const c2x = ox + dux + dvx,
-              c2y = oy + duy + dvy,
-              c2z = oz + duz + dvz;
-            const c3x = ox + dvx,
-              c3y = oy + dvy,
-              c3z = oz + dvz;
+            const c0x = ox;
+            const c0y = oy;
+            const c0z = oz;
+            const c1x = ox + dux;
+            const c1y = oy + duy;
+            const c1z = oz + duz;
+            const c2x = ox + dux + dvx;
+            const c2y = oy + duy + dvy;
+            const c2z = oz + duz + dvz;
+            const c3x = ox + dvx;
+            const c3y = oy + dvy;
+            const c3z = oz + dvz;
 
             const r = paletteColor[val * 3] ?? 0;
             const g = paletteColor[val * 3 + 1] ?? 0;
@@ -207,4 +179,9 @@ export function meshSubChunk(input: MesherInput): MeshOutput {
     indices: new Uint32Array(indices),
     quadCount,
   };
+}
+
+export function meshSubChunk(input: MesherInput): MeshOutput {
+  const snap = snapshotSubChunk(input.self, input.isOpaque, input.colorOf);
+  return meshSnapshot(snap, input.neighbors);
 }
