@@ -27,9 +27,15 @@ async function clearIdb(page: Page): Promise<void> {
               return;
             }
             const req = indexedDB.deleteDatabase(d.name);
-            req.onsuccess = (): void => resolve();
-            req.onerror = (): void => resolve();
-            req.onblocked = (): void => resolve();
+            req.onsuccess = (): void => {
+              resolve();
+            };
+            req.onerror = (): void => {
+              resolve();
+            };
+            req.onblocked = (): void => {
+              resolve();
+            };
           }),
       ),
     );
@@ -63,8 +69,9 @@ test.describe('M6 multiplayer', () => {
         await host.waitForTimeout(250);
       }
       expect(code).toMatch(/^[A-Z0-9]{6}$/);
+      if (!code) throw new Error('no room code');
 
-      await guest.goto(`/?mp=${code!}`);
+      await guest.goto(`/?mp=${code}`);
       await waitForTerrain(guest);
 
       let guestCode: string | null = null;

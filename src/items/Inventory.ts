@@ -1,0 +1,115 @@
+import type { ItemRegistry, ItemStack } from './item';
+import { canMerge, isEmpty, stack } from './item';
+
+export const HOTBAR_SIZE = 9;
+export const MAIN_SIZE = 27;
+export const ARMOR_SIZE = 4;
+
+export class Inventory {
+  readonly hotbar: (ItemStack | null)[] = new Array<ItemStack | null>(HOTBAR_SIZE).fill(null);
+  readonly main: (ItemStack | null)[] = new Array<ItemStack | null>(MAIN_SIZE).fill(null);
+  readonly armor: (ItemStack | null)[] = new Array<ItemStack | null>(ARMOR_SIZE).fill(null);
+  offhand: ItemStack | null = null;
+  selectedHotbar = 0;
+
+  constructor(private readonly registry: ItemRegistry) {}
+
+  selected(): ItemStack | null {
+    return this.hotbar[this.selectedHotbar] ?? null;
+  }
+
+  selectSlot(i: number): void {
+    if (i < 0 || i >= HOTBAR_SIZE) return;
+    this.selectedHotbar = i;
+  }
+
+  // Push an ItemStack into the inventory. Merges into existing stacks of the
+  // same item first (hotbar, then main), then finds the first empty slot.
+  // Returns the leftover count that didn't fit (0 if fully consumed).
+  add(input: ItemStack): number {
+    if (isEmpty(input)) return 0;
+    const max = this.registry.maxStack(input.itemId);
+    let remaining = input.count;
+    remaining = this.mergeInto(this.hotbar, input.itemId, input.damage, remaining, max);
+    if (remaining === 0) return 0;
+    remaining = this.mergeInto(this.main, input.itemId, input.damage, remaining, max);
+    if (remaining === 0) return 0;
+    remaining = this.fillEmpty(this.hotbar, input.itemId, input.damage, remaining, max);
+    if (remaining === 0) return 0;
+    remaining = this.fillEmpty(this.main, input.itemId, input.damage, remaining, max);
+    return remaining;
+  }
+
+  private mergeInto(
+    slots: (ItemStack | null)[],
+    itemId: number,
+    damage: number,
+    count: number,
+    max: number,
+  ): number {
+    let remaining = count;
+    for (let i = 0; i < slots.length && remaining > 0; i++) {
+      const s = slots[i];
+      if (!s || !canMerge(s, { itemId, count: 1, damage })) continue;
+      const space = max - s.count;
+      if (space <= 0) continue;
+      const take = Math.min(space, remaining);
+      slots[i] = stack(s.itemId, s.count + take, s.damage);
+      remaining -= take;
+    }
+    return remaining;
+  }
+
+  private fillEmpty(
+    slots: (ItemStack | null)[],
+    itemId: number,
+    damage: number,
+    count: number,
+    max: number,
+  ): number {
+    let remaining = count;
+    for (let i = 0; i < slots.length && remaining > 0; i++) {
+      if (slots[i] !== null) continue;
+      const take = Math.min(max, remaining);
+      slots[i] = stack(itemId, take, damage);
+      remaining -= take;
+    }
+    return remaining;
+  }
+
+  // Remove `count` of itemId from the inventory (hotbar first, then main).
+  // Returns the number actually removed.
+  remove(itemId: number, count: number): number {
+    let removed = 0;
+    for (const slots of [this.hotbar, this.main]) {
+      for (let i = 0; i < slots.length && removed < count; i++) {
+        const s = slots[i];
+        if (s?.itemId !== itemId) continue;
+        const take = Math.min(s.count, count - removed);
+        const next = s.count - take;
+        slots[i] = next > 0 ? stack(s.itemId, next, s.damage) : null;
+        removed += take;
+      }
+    }
+    return removed;
+  }
+
+  count(itemId: number): number {
+    let total = 0;
+    for (const slots of [this.hotbar, this.main]) {
+      for (const s of slots) if (s?.itemId === itemId) total += s.count;
+    }
+    return total;
+  }
+
+  clear(): void {
+    this.hotbar.fill(null);
+    this.main.fill(null);
+    this.armor.fill(null);
+    this.offhand = null;
+  }
+
+  get isFull(): boolean {
+    return this.hotbar.every((s) => s !== null) && this.main.every((s) => s !== null);
+  }
+}
