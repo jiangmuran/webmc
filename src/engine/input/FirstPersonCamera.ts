@@ -1,10 +1,16 @@
 import * as THREE from 'three';
+import { type AABB, type SolidSampler, sweepMove } from '@/physics/collision';
 
 export interface FirstPersonCameraOptions {
   walkSpeed: number;
   flySpeed: number;
   sprintMultiplier: number;
   lookSensitivity: number;
+  gravity: number;
+  jumpVelocity: number;
+  terminalVelocity: number;
+  box: AABB;
+  eyeHeight: number;
 }
 
 const DEFAULTS: FirstPersonCameraOptions = {
@@ -12,10 +18,19 @@ const DEFAULTS: FirstPersonCameraOptions = {
   flySpeed: 10,
   sprintMultiplier: 1.8,
   lookSensitivity: 0.0022,
+  gravity: 32,
+  jumpVelocity: 8.4,
+  terminalVelocity: 78.4,
+  box: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
+  eyeHeight: 1.62,
 };
 
 const UP = new THREE.Vector3(0, 1, 0);
 const PITCH_MAX = Math.PI / 2 - 0.0001;
+
+export interface UpdateOptions {
+  isSolid?: SolidSampler;
+}
 
 export class FirstPersonCamera {
   readonly camera: THREE.PerspectiveCamera;
@@ -31,6 +46,7 @@ export class FirstPersonCamera {
   };
   yaw = 0;
   pitch = 0;
+  onGround = false;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -134,14 +150,13 @@ export class FirstPersonCamera {
     return out;
   }
 
-  update(dtSec: number): void {
+  update(dtSec: number, opts: UpdateOptions = {}): void {
     const fly = this.input.fly;
     const baseSpeed = fly ? this.opts.flySpeed : this.opts.walkSpeed;
     const speed = baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1);
 
     const sinY = Math.sin(this.yaw);
     const cosY = Math.cos(this.yaw);
-
     const fwdX = -sinY;
     const fwdZ = -cosY;
     const rightX = cosY;
@@ -150,19 +165,48 @@ export class FirstPersonCamera {
     const mx = fwdX * this.input.forward + rightX * this.input.strafe;
     const mz = fwdZ * this.input.forward + rightZ * this.input.strafe;
     const len = Math.hypot(mx, mz);
-    const nx = len > 0 ? mx / len : 0;
-    const nz = len > 0 ? mz / len : 0;
+    const hx = len > 0 ? (mx / len) * speed : 0;
+    const hz = len > 0 ? (mz / len) * speed : 0;
 
-    this.position.x += nx * speed * dtSec;
-    this.position.z += nz * speed * dtSec;
-    this.position.y += this.input.vertical * speed * dtSec;
+    if (fly || !opts.isSolid) {
+      this.position.x += hx * dtSec;
+      this.position.z += hz * dtSec;
+      this.position.y += this.input.vertical * speed * dtSec;
+      this.velocity.set(0, 0, 0);
+      this.onGround = false;
+    } else {
+      this.velocity.x = hx;
+      this.velocity.z = hz;
+      if (this.input.jump && this.onGround) {
+        this.velocity.y = this.opts.jumpVelocity;
+        this.onGround = false;
+      }
+      this.velocity.y = Math.max(
+        this.velocity.y - this.opts.gravity * dtSec,
+        -this.opts.terminalVelocity,
+      );
+      const dv = {
+        x: this.velocity.x * dtSec,
+        y: this.velocity.y * dtSec,
+        z: this.velocity.z * dtSec,
+      };
+      const result = sweepMove(this.position, this.opts.box, dv, opts.isSolid);
+      if (result.hitX) this.velocity.x = 0;
+      if (result.hitY) this.velocity.y = 0;
+      if (result.hitZ) this.velocity.z = 0;
+      this.onGround = result.onGround || (this.onGround && !result.hitY && this.velocity.y <= 0);
+    }
 
-    this.camera.position.copy(this.position);
+    this.camera.position.set(
+      this.position.x,
+      this.position.y + this.opts.eyeHeight - this.opts.box.halfY,
+      this.position.z,
+    );
     const look = this.lookVector();
     this.camera.lookAt(
-      this.position.x + look.x,
-      this.position.y + look.y,
-      this.position.z + look.z,
+      this.camera.position.x + look.x,
+      this.camera.position.y + look.y,
+      this.camera.position.z + look.z,
     );
     this.camera.up.copy(UP);
   }
