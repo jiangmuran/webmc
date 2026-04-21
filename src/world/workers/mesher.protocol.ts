@@ -16,6 +16,8 @@ export interface MesherRequest {
   neighborPY: Uint8Array | null;
   neighborNZ: Uint8Array | null;
   neighborPZ: Uint8Array | null;
+  flatSkyLight: Uint8Array | null;
+  flatBlockLight: Uint8Array | null;
 }
 
 export interface MesherResponse {
@@ -57,6 +59,8 @@ export function transferablesOfRequest(req: MesherRequest): ArrayBuffer[] {
     'neighborPY',
     'neighborNZ',
     'neighborPZ',
+    'flatSkyLight',
+    'flatBlockLight',
   ] as const) {
     const n = req[k];
     if (n) out.push(asBuffer(n.buffer));

@@ -8,6 +8,7 @@ import { World } from './world/World';
 import { CHUNK_HEIGHT, type Chunk } from './world/Chunk';
 import { WorldGenerator } from './world/generation/WorldGenerator';
 import { ChunkLoader } from './world/ChunkLoader';
+import { type ChunkLight, buildLight, flatLightForSection } from './world/lighting';
 import {
   type BorderOpacity,
   createMesherClient,
@@ -69,6 +70,12 @@ const loader = new ChunkLoader(world, generator, {
   unloadPadding: 2,
   perFrameBudget: 4,
 });
+const lightCache = new Map<string, ChunkLight>();
+const lightKey = (cx: number, cz: number): string => `${cx.toString()},${cz.toString()}`;
+const lightOracle = {
+  isOpaque,
+  lightEmission: (s: BlockState) => (s === AIR ? 0 : registry.get(stateId(s)).lightEmission),
+};
 
 const fp = new FirstPersonCamera(camera);
 const spawnHeight = generator.surfaceAt(0, 0) + 4;
@@ -161,8 +168,13 @@ function flushDirty(): void {
         continue;
       }
       const borders = borderFor(chunk.cx, cy, chunk.cz);
+      const light = lightCache.get(lightKey(chunk.cx, chunk.cz));
+      const lightSlice = light ? flatLightForSection(light, cy) : { sky: null, block: null };
       void mesherClient
-        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders)
+        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, {
+          flatSkyLight: lightSlice.sky,
+          flatBlockLight: lightSlice.block,
+        })
         .then((response) => {
           chunkRenderer.apply(response);
         });
@@ -172,6 +184,7 @@ function flushDirty(): void {
 
 const onUnload = (cx: number, cz: number): void => {
   for (let cy = 0; cy < 24; cy++) chunkRenderer.remove(cx, cy, cz);
+  lightCache.delete(lightKey(cx, cz));
 };
 
 window.addEventListener('resize', () => {
@@ -194,7 +207,9 @@ const rendererInfo = ((): { gl: string; rend: string } => {
 
 const onLoad = (cx: number, cz: number): void => {
   const chunk = world.getChunk(cx, cz);
-  if (chunk) markChunkAllDirty(chunk);
+  if (!chunk) return;
+  lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
+  markChunkAllDirty(chunk);
   for (const [ncx, ncz] of [
     [cx - 1, cz],
     [cx + 1, cz],

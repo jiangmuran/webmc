@@ -27,11 +27,15 @@ function unpackSnapshot(req: MesherRequest): Snapshot {
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
     flatIdx[i] = readIndex(req.indices, i, req.bitsPerIndex);
   }
+  const flatSkyLight = req.flatSkyLight ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+  const flatBlockLight = req.flatBlockLight ?? new Uint8Array(SUBCHUNK_VOLUME);
   return {
     flatIdx,
     paletteOpaque: req.paletteOpaque,
     paletteColor: req.paletteColor,
     paletteSize: req.paletteOpaque.length,
+    flatSkyLight,
+    flatBlockLight,
   };
 }
 

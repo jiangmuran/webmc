@@ -73,6 +73,11 @@ export function extractBorderFromSubChunk(
   return out;
 }
 
+export interface BuildOptions {
+  flatSkyLight: Uint8Array | null;
+  flatBlockLight: Uint8Array | null;
+}
+
 export function buildMesherRequest(
   id: number,
   cx: number,
@@ -82,6 +87,7 @@ export function buildMesherRequest(
   isOpaque: (s: BlockState) => boolean,
   faceColorsOf: (s: BlockState) => FaceColors,
   borders: BorderOpacity,
+  light: BuildOptions = { flatSkyLight: null, flatBlockLight: null },
 ): MesherRequest {
   const blob = serializePalette(self, isOpaque, faceColorsOf);
   const bitsPerIndex: BitsPerIndex = blob.bitsPerIndex;
@@ -101,6 +107,8 @@ export function buildMesherRequest(
     neighborPY: borders.py,
     neighborNZ: borders.nz,
     neighborPZ: borders.pz,
+    flatSkyLight: light.flatSkyLight,
+    flatBlockLight: light.flatBlockLight,
   };
 }
 
@@ -139,9 +147,10 @@ export class MesherClient {
     isOpaque: (s: BlockState) => boolean,
     faceColorsOf: (s: BlockState) => FaceColors,
     borders: BorderOpacity = EMPTY_BORDERS,
+    light: BuildOptions = { flatSkyLight: null, flatBlockLight: null },
   ): Promise<MesherResponse> {
     const id = this._nextId++;
-    const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, faceColorsOf, borders);
+    const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, faceColorsOf, borders, light);
     return new Promise<MesherResponse>((resolve, reject) => {
       this.jobs.set(id, { id, resolve, reject });
       this.worker.postMessage(req, transferablesOfRequest(req));

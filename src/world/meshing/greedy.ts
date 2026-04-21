@@ -50,8 +50,16 @@ export const EMPTY_NEIGHBORS: MesherNeighbors = {
 // A future micro-milestone can replace this with binary-bitmask greedy
 // (cgerikj) if perf demands; the output contract is stable.
 export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOutput {
-  const { flatIdx, paletteOpaque, paletteColor } = snap;
+  const { flatIdx, paletteOpaque, paletteColor, flatSkyLight, flatBlockLight } = snap;
   const D = SUBCHUNK_DIM;
+
+  const lightAt = (x: number, y: number, z: number): number => {
+    if (x < 0 || x >= D || y < 0 || y >= D || z < 0 || z >= D) return 15;
+    const idx = localIndex(x, y, z);
+    const sky = flatSkyLight[idx] ?? 15;
+    const block = flatBlockLight[idx] ?? 0;
+    return sky > block ? sky : block;
+  };
 
   const positions: number[] = [];
   const normals: number[] = [];
@@ -157,6 +165,13 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             const g = paletteColor[base3 + 1] ?? 0;
             const b = paletteColor[base3 + 2] ?? 0;
 
+            const lightPos = [0, 0, 0];
+            lightPos[d] = w + sign;
+            lightPos[u] = iu;
+            lightPos[v] = iv;
+            const faceLight = lightAt(lightPos[0] ?? 0, lightPos[1] ?? 0, lightPos[2] ?? 0);
+            const lightAlpha = Math.round((faceLight / 15) * 255);
+
             if (s === 1) {
               positions.push(c0x, c0y, c0z, c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
             } else {
@@ -164,7 +179,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             }
             for (let k = 0; k < 4; k++) {
               normals.push(nx, ny, nz);
-              colors.push(r, g, b, 255);
+              colors.push(r, g, b, lightAlpha);
             }
 
             indices.push(base, base + 1, base + 2, base, base + 2, base + 3);

@@ -22,6 +22,8 @@ export interface Snapshot {
   readonly paletteOpaque: Uint8Array;
   readonly paletteColor: Uint8Array;
   readonly paletteSize: number;
+  readonly flatSkyLight: Uint8Array;
+  readonly flatBlockLight: Uint8Array;
 }
 
 export interface PaletteBlob {
@@ -48,6 +50,7 @@ export function snapshotSubChunk(
   self: SubChunk,
   isOpaque: (state: BlockState) => boolean,
   faceColorsOf: (state: BlockState) => FaceColors,
+  light?: { sky: Uint8Array; block: Uint8Array },
 ): Snapshot {
   const palette = self.palette;
   const n = palette.size;
@@ -73,7 +76,10 @@ export function snapshotSubChunk(
     }
   }
 
-  return { flatIdx, paletteOpaque, paletteColor, paletteSize: n };
+  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
+
+  return { flatIdx, paletteOpaque, paletteColor, paletteSize: n, flatSkyLight, flatBlockLight };
 }
 
 export function serializePalette(
@@ -103,7 +109,10 @@ export function serializePalette(
   };
 }
 
-export function snapshotFromBlob(blob: PaletteBlob): Snapshot {
+export function snapshotFromBlob(
+  blob: PaletteBlob,
+  light?: { sky: Uint8Array; block: Uint8Array },
+): Snapshot {
   const n = blob.paletteOpaque.length;
   const flatIdx = new Uint16Array(SUBCHUNK_VOLUME);
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
@@ -113,10 +122,14 @@ export function snapshotFromBlob(blob: PaletteBlob): Snapshot {
     }
     flatIdx[i] = idx;
   }
+  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
   return {
     flatIdx,
     paletteOpaque: blob.paletteOpaque,
     paletteColor: blob.paletteColor,
     paletteSize: n,
+    flatSkyLight,
+    flatBlockLight,
   };
 }
