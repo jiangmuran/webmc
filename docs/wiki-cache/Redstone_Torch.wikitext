@@ -1,0 +1,332 @@
+{{distinguish|Red Torch}}
+{{Infobox block
+| group = Lit
+| 1-1 = Redstone Torch.png
+| *-1caption = {{JE}}
+| 1-2 = Redstone Torch BE.png
+| *-2caption = {{BE}}
+| group2 = Unlit
+| 2-1 = Unlit Redstone Torch.png
+| 2-2 = Unlit Redstone Torch BE.png
+| extratext = View [[#Renders|all renders]]
+|invimage=Redstone Torch
+|invimage2=Redstone Torch BE
+|transparent=Yes
+|light=Yes (7) <small>(when lit)</small>
+|tool=any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+A '''redstone torch''' is a non-solid [[block]] that produces a full-strength [[redstone]] signal on all sides adjacent to it, except for its attached block, and can power the block directly above it. It deactivates while the block it is attached to is powered.
+
+== Obtaining ==
+{{IN|java}}, the inactive redstone torch cannot be obtained as an item without commands. {{IN|bedrock}}, it can be obtained via inventory editing.<ref>In Java it is a block state and in Bedrock it is an entirely separate block.</ref>
+
+=== Breaking ===
+A redstone torch can be [[instant mining|broken instantly]] using any [[tool]], or without a tool, and drops itself as an item.
+{{breaking row|Redstone Torch|horizontal=1}}
+A redstone torch is removed and drops as an item if:
+* its attachment block is moved, removed, or destroyed
+* [[water]] or [[lava]] flows into its space
+* a [[piston]] pushes it or moves a block into its space
+
+=== Natural generation ===
+A single redstone torch is found inside each [[igloo]]. In [[ancient cities]], multiple redstone torches can be found integrated into circuitry.
+
+=== Crafting ===
+{{Crafting
+|B2= Redstone Dust
+|B3= Stick
+|Output= Redstone Torch
+|type= Redstone
+}}
+
+== Usage ==
+
+=== Light ===
+Redstone torches give off a [[light]] level of 7.
+
+When the [[Render Dragon Features for Creators]] experiment is enabled in ''[[Minecraft Preview]]'', the top part of redstone torches emits colored [[Vibrant Visuals#Point lighting|point lighting]] with {{Color|#c32c1f}}. This causes the bottom part of the torch to render a small square shadow, and the surrounding texture to render diagonal lines of shadow in all directions.
+
+=== Crafting ingredient ===
+Redstone torches can be used to craft [[activator rail]]s, [[redstone comparator]]s, and [[redstone repeater]]s.
+{{crafting usage}}
+
+=== Redstone component ===
+{{see also|Redstone circuit}}
+
+Redstone torches can be used to power blocks and [[transmission component]]s such as [[redstone dust]], activate [[mechanism component]]s such as [[piston]]s, or invert redstone signals like a [[Logic circuit#NOT Gate|NOT Gate]]. 
+
+;Placement
+{{see also|Opacity/Placement}}
+
+[[File:Redstone torch as power source.png|thumb|Examples of redstone torch placement and behavior]]
+
+:The placement conditions of a redstone torch are identical to the ones of a normal torch, it can be attached to (some exceptions might apply):
+:* the '''top''' or '''sides''' of any [[conductive]] block (examples: stone, soul sand, slime blocks, dispensers, etc.)
+:* the '''top''' of a non-conductive block that is at least 16 pixels tall and has a 2x2 pixels surface under where the redstone torch would be positioned (examples: glass panes, vertical chains, fences, etc.)
+:* the '''full side surfaces''' of a non-conductive block (examples: glass, stairs, open trapdoors, etc.)
+
+: Redstone torches cannot be attached to the bottoms of any blocks.
+
+: Attempting to attach a redstone torch to an invalid surface can cause it to "snap" to a valid surface adjacent to the same space. For example, if a fence is on the ground, attempting to attach a redstone torch to the ''side'' of the fence causes the redstone torch to be attached to the ''top'' of the ground next to the fence instead.
+
+;Activation
+
+: A redstone torch turns off when it is powered from the back (if placed on the side of a block) or from below (if placed on top of a block) and turns on again upon being depowered. {{IN|BE}}, a redstone torch placed on a (sticky) piston turns off when the piston extends and turns on when the piston retracts: this mechanic is known by the community as "[[soft inversion]]".<ref>{{bug|MCPE-17909|||WF}}</ref>
+: Effectively, a redstone torch [[Logic circuit#NOT Gate|inverts]] the signal applied to its attachment block: power level 0 is changed to 15 and power levels 1 to 15 are changed to 0 (for an alternative that produces a greater range of output power levels, consider a [[redstone comparator]] in subtraction mode).
+
+: Walls, fences, glass, slabs, hoppers,<ref group=note>Redstone torches can be placed on hoppers only {{in|BE}}</ref> and stairs are non-[[conductive]], so redstone torches attached to them cannot be deactivated.
+
+: A redstone torch takes 2 game ticks (0.1 seconds barring lag) to change state. {{IN|JE}}, redstone torches do not respond to all 2 game tick pulses.
+
+;Behavior
+
+:A lit redstone torch strongly powers the block above itself and weakly powers its other direct neighbor blocks, excluding the one it is attached to. It also produces the same [[particles]] as redstone dust.
+
+: A redstone torch experiences "burn-out" when it is forced to turn off more than eight times in 60 game ticks (3 seconds). After burning out, a redstone torch produces a "smoke" [[particle]]{{only|java}} and a hiss similar to an extinguished fire, deactivates, and then ignores attempts to change its state until the number of state changes in the last 60 game ticks drops to fewer than eight.
+
+:{{IN|JE}}, a redstone torch might or might not attempt to turn itself back on after 160 ticks (8 seconds) depending on the update chain that caused it to burn out.<ref>{{bug|MC-120938}}</ref> If the redstone torch ''does'' attempt to turn itself back on, then it is not able change state until that attempt is performed.
+:{{IN|BE}}, each redstone torch can only burn itself out; the redstone torch needs to be in a circuit that causes it to power itself with no delay, otherwise it does not burn out. 
+:A burned-out redstone torch turns back on after receiving a [[block update]]. There is no limit on how often a single redstone torch can burn out.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Wood}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Fizz.ogg
+|subtitle=Torch fizzes
+|source=block
+|description=When a redstone torch burns out
+|id=block.redstone_torch.burnout
+|translationkey=subtitles.block.redstone_torch.burnout
+|volume=0.5
+|pitch=1.8-3.4
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Fizz.ogg
+|source=block
+|description=When a redstone torch burns out
+|id=random.fizz
+|volume=1.0 {{Verify|Estimated value; not present in sounds.json or sound_definitions.json}}
+| pitch = 2.0 {{Verify|Estimated value; not present in sounds.json or sound_definitions.json}}
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Redstone Torch
+|spritetype=block
+|nameid=redstone_torch
+|blocktags=wall_post_override}}
+{{ID table
+|displayname=Redstone Wall Torch
+|spritetype=block
+|nameid=redstone_wall_torch
+|form=block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Redstone Torch
+|spritetype=block
+|nameid=redstone_torch
+|id=76}}
+{{ID table
+|displayname=Unlit Redstone Torch
+|spritename=redstone torch off
+|spritetype=block
+|nameid=unlit_redstone_torch
+|id=75
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:<br>
+Floor:
+{{bst|lit|true|false,true|If the torch is lit.|foot=1}}
+Wall:
+{{bst|facing|north|east,north,south,west|The direction the top of the torch is facing.}}
+{{bst|lit|true|false,true|If the torch is lit.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|torch_facing_direction|west
+|west,east,north,south,top|The face of the block that the torch is attached to. If the torch is a wall torch, the top of the torch faces opposite to this direction.<ref>{{bug|MCPE-152036}}</ref>|1,2,3,4,5
+|unknown|Unused|0|foot=1}}
+
+== Videos ==
+{{yt|JRTHx2_TJuk}}
+
+== History ==
+{{See asset history|type=block}}
+{{See technical block|Unlit Redstone Torch}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Redstone Torch JE1 BE1.png|32px]] [[File:Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (W) JE1 BE1.png|32px]]<br>[[File:Unlit Redstone Torch JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE1 BE1.png|32px]] [[File:On Redstone Torch (texture) JE1 BE1.png|32px]] Added redstone torches.
+|Redstone torches currently emit flame [[particles]] when lit.}}
+|{{HistoryLine||v1.0.2_01|Redstone torches now strongly power only the [[block]] above them.<ref>[[wordofnotch:776447207|I’m considering making the not torches less annoying]] – The Word of Notch, July 6, 2010</ref>
+|Redstone torches now emit redstone dust particles when lit.}}
+|{{HistoryLine||v1.1.0|Redstone torches can no longer be placed on [[leaves]] when the [[graphics]] are set to ''Fancy''.}}
+|{{HistoryLine||v1.2.0_02|Redstone torches no longer duplicate in [[multiplayer]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Redstone torches are now used to craft [[redstone repeater]]s.}}
+|{{HistoryLine||1.6|dev=Test Build 3|Torches can no longer be placed on [[leaves]] in fast graphics.}}
+|{{HistoryLine||1.6.6|Redstone torches can now be placed on [[glowstone]].}}
+|{{HistoryLine||1.7|Redstone torches can now be placed on the top of [[fence]]s.}}
+|{{HistoryLine||1.7.3|A redstone torch duplication bug when using [[piston]]s has been corrected.
+|Redstone torches no longer produce both redstone torch particles and uncolorized (white) redstone dust particles when broken.}}
+|{{HistoryLine||1.8|[[File:Redstone Torch JE2.png|32px]] [[File:Redstone Wall Torch (N) JE2.png|32px]] [[File:Redstone Wall Torch (E) JE2.png|32px]] [[File:Redstone Wall Torch (S) JE2.png|32px]] [[File:Redstone Wall Torch (W) JE2.png|32px]]<br>[[File:Unlit Redstone Torch JE2.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE2.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE2.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE2.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE2.png|32px]] Changed lighting.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=1.2|The requirement for redstone torches to burn out has been changed from being turned off 8 times in the span of 100 game ticks to being turned off 8 times in the span of 60 game ticks. Because of this change, [[Redstone_circuits/Clock|clocks]] that include three redstone torches powering each other in a loop can now be used reliably.}}
+|{{HistoryLine|||dev=12w07a|Redstone torches can now be placed on the top of [[glass]].}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of singleplayer being changed to an internal server, redstone torches no longer produce smoke particles when burning out.}}
+|{{HistoryLine|||dev=12w25a|Redstone torches can now be placed on upside-down [[slab]]s and [[stairs]].}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Redstone torches now have a bottom texture, visible on wall torches or torches placed on top of glass.<ref>{{bug|MC-1153|||Fixed}}</ref>}}
+|{{HistoryLine||1.5|dev=13w01a|The way redstone torches update has been changed. As a result, burn-out [[Redstone_circuits/Clock|clocks]] that use only two redstone torches are now reliable.
+|Redstone torches can now be used to craft [[redstone comparator]]s and [[activator rail]]s.}}
+|{{HistoryLine||1.8|dev=14w07a|[[File:Redstone Wall Torch (N) JE3.png|32px]] [[File:Redstone Wall Torch (E) JE3.png|32px]] [[File:Redstone Wall Torch (S) JE3.png|32px]] [[File:Redstone Wall Torch (W) JE3.png|32px]]<br>[[File:Unlit Redstone Wall Torch (N) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE3.png|32px]] Redstone torches placed on walls are now rotated cuboids rather than a parallelpiped. Their top texture now also rotates accordingly.}}
+|{{HistoryLine|||dev=14w25a|Burned-out redstone torches no longer randomly fix themselves.
+|[[File:Redstone Torch JE3.png|32px]] [[File:Redstone Wall Torch (N) JE4.png|32px]] [[File:Redstone Wall Torch (E) JE4.png|32px]] [[File:Redstone Wall Torch (S) JE4.png|32px]] [[File:Redstone Wall Torch (W) JE4.png|32px]]<br>[[File:Unlit Redstone Torch JE3.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE4.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE4.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE4.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE4.png|32px]] Redstone torches are now incorrectly affected by directional shading.}}
+|{{HistoryLine|||dev=14w33c|[[File:Redstone Torch JE2.png|32px]] [[File:Redstone Wall Torch (N) JE3.png|32px]] [[File:Redstone Wall Torch (E) JE3.png|32px]] [[File:Redstone Wall Torch (S) JE3.png|32px]] [[File:Redstone Wall Torch (W) JE3.png|32px]]<br>[[File:Unlit Redstone Torch JE2.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE3.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE3.png|32px]] Redstone torches are no longer affected by directional shading.}}
+|{{HistoryLine||1.9|dev=15w43a|A redstone torch now generates as part of [[igloo]]s.}}
+|{{HistoryLine|||dev=15w46a|Mobs no longer spawn on redstone torches.}}
+|{{HistoryLine||1.12|dev=pre4|Torches can no longer be placed on top of [[jack o'lantern]]s.<ref>{{bug|MC-118408||Torches and redstone torches cannot be placed on top of a Jack o'Lantern but can be placed on pumpkin|Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=17w48a|Redstone torches can now be placed on the top of jack o'lanterns once again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Redstone Torch JE4.png|32px]] [[File:Redstone Wall Torch (N) JE5.png|32px]] [[File:Redstone Wall Torch (E) JE5.png|32px]] [[File:Redstone Wall Torch (S) JE5.png|32px]] [[File:Redstone Wall Torch (W) JE5.png|32px]]<br>[[File:Unlit Redstone Torch JE4.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE5.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE5.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE5.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE5.png|32px]] [[File:On Redstone Torch (texture) JE2 BE2.png|32px]] The texture of redstone torches has been changed.}}
+|{{HistoryLine|||dev=19w12b|Redstone torches can now be placed on [[ice]], [[glowstone]] and [[sea lantern]]s.}}
+|{{HistoryLine|||dev=19w14a|Redstone torches once again produce smoke particles when burning out.}}
+|{{HistoryLine||1.19|dev=22w13a|Redstone torches now generate in [[ancient cities]].}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Redstone Torch JE5.png|32px]] [[File:Redstone Wall Torch (N) JE6.png|32px]] [[File:Redstone Wall Torch (E) JE6.png|32px]] [[File:Redstone Wall Torch (S) JE6.png|32px]] [[File:Redstone Wall Torch (W) JE6.png|32px]] [[File:On Redstone Torch (texture) JE3.png|32px]]  The item texture and models for redstone torches have changed.}}
+|{{HistoryLine|||dev=24w38a|[[File:Unlit Redstone Torch JE5.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE6.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE6.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE6.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE6.png|32px]] Unlit redstone torches are now affected by directional shading.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Redstone Torch JE1 BE1.png|32px]] [[File:Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (W) JE1 BE1.png|32px]]<br>[[File:Unlit Redstone Torch BE1.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE1 BE1.png|32px]] [[File:On_Redstone_Torch_(texture)_JE1_BE1.png|32px]] Added redstone torches.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|A redstone torch now generates as part of [[igloo]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.5|[[File:Redstone Torch BE2.png|32px]] [[File:Redstone Wall Torch (S) BE2.png|32px]] The back faces of redstone torches now render.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Redstone Torch BE3.png|32px]] [[File:Redstone Wall Torch (N) BE3.png|32px]] [[File:Redstone Wall Torch (E) BE3.png|32px]] [[File:Redstone Wall Torch (S) BE3.png|32px]] [[File:Redstone Wall Torch (W) BE3.png|32px]]<br>[[File:Unlit Redstone Torch BE2.png|32px]] [[File:Unlit Redstone Wall Torch (N) BE2.png|32px]] [[File:Unlit Redstone Wall Torch (E) BE2.png|32px]] [[File:Unlit Redstone Wall Torch (S) BE2.png|32px]] [[File:Unlit Redstone Wall Torch (W) BE2.png|32px]] [[File:On Redstone Torch (texture) JE2 BE2.png|32px]] The texture of redstone torches has been changed.}}
+|{{HistoryLine||1.21.123|dev=release|[[File:Redstone Torch BE4.png|32px]] [[File:Redstone Wall Torch (N) BE4.png|32px]] [[File:Redstone Wall Torch (E) BE4.png|32px]] [[File:Redstone Wall Torch (S) BE4.png|32px]] [[File:Redstone Wall Torch (W) BE4.png|32px]] The back faces of redstone torches no longer render.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Redstone Torch JE1 BE1.png|32px]] [[File:Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (W) JE1 BE1.png|32px]]<br>[[File:Unlit Redstone Torch JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE1 BE1.png|32px]] [[File:On Redstone Torch (texture) JE1 BE1.png|32px]] Added redstone torches.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Redstone torches can now be used to craft [[redstone comparator]]s and [[activator rail]]s.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|A redstone torch now generates as part of [[igloo]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Redstone Torch JE4.png|32px]] [[File:Redstone Wall Torch (S) LCE2.png|32px]] [[File:On Redstone Torch (texture) JE2 BE2.png|32px]] The texture of redstone torches has been changed.{{verify|Did the unlit texture also change?}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Redstone Torch JE1 BE1.png|32px]] [[File:Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Redstone Wall Torch (W) JE1 BE1.png|32px]]<br>[[File:Unlit Redstone Torch JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (N) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (E) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (S) JE1 BE1.png|32px]] [[File:Unlit Redstone Wall Torch (W) JE1 BE1.png|32px]]{{verify|Were these the actually used models?}} [[File:On Redstone Torch (texture) JE1 BE1.png|32px]] Added redstone torches.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||?|At one point, the translation key for Redstone torches were tile.notGate.name.}}
+|{{HistoryLine||1.8|dev=14w06a|Restone torches now have dedicated model json files; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.13|dev=17w47a|The different block IDs have been split up and merged into <code>redstone_torch</code> for on the ground, and <code>redstone_wall_torch</code> for on a wall.
+|A lit block state has been added for redstone torches.
+|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 75 and 76.}}
+}}
+
+== Trivia ==
+* {{IN|earth}}, the icon in the inventory shows an unlit {{MCE|Redstone Torch|redstone torch}}.
+* {{IN|be}}, the unlit redstone torch model has a gap in its texture from above.
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Renders ===
+==== {{JE}} ====
+<gallery>
+File:Redstone Torch JE5.png|Redstone torch
+File:Unlit Redstone Torch.png|Unlit redstone torch
+File:Redstone Wall Torch (S) JE6.png|Redstone wall torch
+File:Unlit Redstone Wall Torch.png|Unlit redstone wall torch
+</gallery>
+
+==== {{BE}} ====
+<gallery>
+File:Redstone Torch BE.png|Redstone torch
+File:Unlit Redstone Torch.png|Unlit redstone torch
+File:Redstone Wall Torch BE.png|Redstone wall torch
+File:Unlit Redstone Wall Torch BE.png|Unlit redstone wall torch
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Noor catches a redstone torch.png|[[Noor]] catching a redstone torch
+File:Redstone Torch Project.jpg|Several [[characters]] carrying redstone torches in [[Introducing New Default Skins!]]
+File:Minecart Steve action figure JINX.jpeg|[[Action figures|Action figure]] of [[Steve]] holding a redstone torch
+File:Minecraft Mini Mode Rise of the Warden Playset.png
+File:Redstone Torch Merch.jpg|Official replica of a redstone torch.
+File:ThinkGeek Redstone Torch.jpg|[[ThinkGeek]] produced redstone torch
+File:ThinkGeek Redstone Torch Charger.jpg|Charger shaped like a redstone torch.
+File:AMCM Creeper cave.jpeg|Redstone torches in {{amcm}}. 
+</gallery>
+
+== Notes ==
+<references group=note/>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+
+[[de:Redstone-Fackel]]
+[[es:Antorcha de redstone]]
+[[fr:Torche de redstone]]
+[[hu:Redstone-fáklya]]
+[[it:Torcia di redstone]]
+[[ja:レッドストーントーチ]]
+[[ko:레드스톤 횃불]]
+[[nl:Redstonefakkel]]
+[[pl:Pochodnia redstone]]
+[[pt:Tocha de Redstone]]
+[[ru:Редстоуновый факел]]
+[[uk:Редстоуновий смолоскип]]
+[[zh:红石火把]]

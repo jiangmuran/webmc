@@ -1,0 +1,937 @@
+{{For}}
+{{Infobox entity
+| *-3size = 100px
+| group = Temperate
+| 1-1 = Temperate Pig.png
+| 1-2 = Saddled Pig.png
+| 1-3 = Baby Pig.png
+| group2 = Cold
+| 2-1 = Cold Pig.png
+| 2-2 = Saddled Cold Pig.png
+| 2-3 = Baby Cold Pig.png
+| group3 = Warm
+| 3-1 = Warm Pig.png
+| 3-2 = Saddled Warm Pig.png
+| 3-3 = Baby Warm Pig.png
+| *-1caption = Adult
+| *-2caption= Saddled 
+| *-3caption = Baby
+| health = {{hp|10|mob=1}}
+| invimage = Pig Spawn Egg
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| size = '''Adult:'''<br>Height: 0.9 blocks<br>Width: 0.9 blocks<br>
+'''Baby:'''<br>Height: 0.45 blocks<br>Width: 0.45 blocks
+| speed = 0.25
+| spawn = {{EnvSprite|Overworld}} [[Grass block]]s with at least two blocks of space above in most [[Overworld]] biomes.
+| usableitems = {{drop|Item|Saddle}}
+{{drop|Item|Shears}}<small>(when equipped with a saddle)</small>
+{{drop|Item|Carrot on a Stick}}
+{{drop|Item|Lead}}
+{{drop|item|Name Tag}}
+{{drop|Item|Carrot}}
+{{drop|Item|Potato}}
+{{drop|Item|Beetroot}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+A '''pig''' is a [[passive mob]] found commonly in most grassy [[biome]]s. Adult pigs are a source of [[porkchop]]s and can be ridden using a [[saddle]] and a [[carrot on a stick]]. They have three variants based on the [[temperature]] of the biome they [[Mob spawning|spawn]] in.
+
+== Spawning ==
+Pigs spawn in the [[Overworld]] in most grassy biomes except for [[snowy plains]], [[meadow]]s, [[mangrove swamp]]s, and [[pale garden]]s.
+
+{{IN|java}}, pigs spawn in groups of 4 on [[grass block]]s. Individual pigs rarely may spawn on grass after world generation.
+
+{{IN|bedrock}}, pigs spawn in groups of 1 to 3 on grass blocks. 
+Individuals regularly spawn on grass after world generation.
+
+Each pig has a 5% chance of spawning as a baby.
+
+Pigs sometimes also spawn in animal pens, stables, and butcher house backyards in [[village]]s upon world generation.
+
+Pigs cannot spawn naturally with a saddle.
+
+{{Mob spawn table}}
+
+=== Variants === 
+{{Redirect|Pig variant|the definition of pig variants in data packs|Mob variant definitions#Pig}}
+Pigs have 3 variants: temperate, cold, and warm. This variant is determined by the biome the pig spawns in and does not impact their behavior.
+
+{{Farm animal variants}}
+
+If a pig spawn egg is used in any biome not listed, a temperate pig is spawned.
+
+=== Sound variants ===
+Pigs have 3 sound variants: Big, Classic, and Mini. 
+
+A sound variant is chosen randomly upon the mob spawning, and is not related to the mob's temperature variant. These sound variants have no effect on the mob's behavior.
+
+For the sounds of each sound variant, see {{Slink|2=Sounds}}.
+
+== Drops ==
+
+=== On death ===
+An adult pig drops:
+{{DropTable
+|{{DropLine|name=Raw Porkchop|notes=not_burn|quantity=1-3|lootingquantity=0-1}}
+|{{DropLine|name=Cooked Porkchop|notes=burn|quantity=1-3|lootingquantity=0-1}}
+}}
+* A {{ItemLink|saddle}} if saddled.
+* {{xp|1|3}} [[experience]] orbs if killed by a player or tamed [[wolf]].
+
+Killing a baby pig yields neither [[item]]s nor [[experience]].
+
+== Behavior ==
+Pigs roam the Overworld avoiding hazards and harmful falls. A pig flees for a short time when harmed.
+
+Pigs follow players holding [[carrot]]s, [[potato]]es, [[beetroot]]s or [[carrots on sticks]] within a radius of six blocks.
+
+=== Breeding ===
+{{main|Breeding}}
+Pigs can be bred using [[carrot]]s, [[potato]]es or [[beetroot]]s. After breeding, the parents have a cooldown of 5 minutes before they can breed again. Baby pigs mature in 20 minutes and stay near their parents. Feeding them reduces the remaining time to maturity by 10%. Feeding baby pigs a golden dandelion will freeze their growth. If they are fed again it will take them 24000 ticks (20 minutes) to grow up.
+
+When two different variants of pigs are bred together, the variant of the baby is randomly selected from one of the parents' variants.
+
+=== Riding ===
+{{main|Riding}}
+[[File:Pigriding.png|thumb|Sunny riding a pig with a [[carrot on a stick]] and a [[saddle]].]]
+It is possible to ride an adult pig by {{control|using}} a [[saddle]] on it. [[Shears]] can be used on a saddled pig to retrieve the saddle. Baby pigs cannot be saddled nor ridden.
+
+Saddled pigs are controllable with a [[carrot on a stick]]. They travel at a default speed of 2.42&nbsp;blocks/s.
+
+{{Control|Using}} the carrot on a stick causes the pig to enter a boost, at the cost of 7 durability. While boosted, the pig gradually accelerates to its peak speed of 5.2&nbsp;blocks/s (6.24&nbsp;blocks/s with [[Speed]] I and 7.28&nbsp;blocks/s with Speed II) until halfway through the boost, and then decelerates to its default speed by the end of the boost. Specifically, the speed of the pig increases by <math>1+1.15\times \sin(\frac{t}{t_0}\pi)</math> times the original speed, where <math>t</math> is the time already passed since the start of the boost, and <math>t_0</math> is the total duration of the boost. No matter how many ticks the boost lasts, the average speed of pig during a full boost cycle is roughly 4.19 m/s. 
+
+Unlike other Overworld mounts,<ref>{{bug|MC-303715||Pigs don't float when ridden in water|WAI}}</ref> pigs cannot float on water or lava (even if they have [[Fire Resistance]]) when being controlled. Pigs can be controlled through 1-block-high bodies of water with a carrot and stick, but deeper water causes the player to dismount. If the pig and rider fall, then fall damage doesn't cause any knockback or slower movement speed.
+
+A player can travel through a space 1 block high by riding a pig. 
+{{-}}
+
+=== Lightning ===
+When a pig or baby pig is struck by [[lightning]], it transforms into a [[zombified piglin]] or baby zombified piglin, respectively. If lightning strikes a pig in [[Peaceful]] difficulty, the pig does not transform but takes normal damage from the strike. If the pig was equipped with a saddle, the saddle is lost. If a player was riding the pig, they are kept mounted on the zombified piglin {{in|java}},<ref>{{bug|MC-276342||Player continues riding on Zombified Piglin after saddled pig is converted|WAI}}</ref> while {{in|bedrock}} they are dismounted.<ref>{{bug|MCPE-186403||Player does not continue riding on the Zombified Piglin you were riding on after saddled pig you were riding on is converted to a zombified piglin}}</ref>
+
+=== Jockey ===
+{{Exclusive|bedrock|section=1}}
+[[File:Baby Zombie Riding Pig.png|thumb|width=165x165|A temperate pig ridden by a baby zombie]]
+15% of nearby baby [[zombies]], [[husks]], or [[drowned]] may ride an adult unsaddled pig to form a [[jockey]].
+
+== Sounds==
+=== Generic ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound = Pig step1.ogg
+| sound2 = Pig step2.ogg
+| sound3 = Pig step3.ogg
+| sound4 = Pig step4.ogg
+| sound5 = Pig step5.ogg
+| subtitle = Footsteps 
+| source = neutral
+| description = While a pig is walking
+| id = entity.pig.step
+| translationkey = subtitles.block.generic.footsteps
+| volume = 0.15
+| pitch = 1.0
+| distance = 16}}
+| {{SoundLine
+| sound = Saddle equip.ogg
+| subtitle = Saddle equips 
+| source = neutral
+| description = When a saddle is equipped to a pig
+| id = entity.pig.saddle
+| translationkey = subtitles.entity.pig.saddle
+| volume = 0.5
+| pitch = 1.0
+| distance = 16}}
+| {{SoundLine
+| sound = Saddle unequip.ogg
+| subtitle = Saddle snips away
+| source = Friendly Creatures
+| description = When a saddle is removed from a pig using shears
+| id = item.saddle.unequip
+| translationkey = subtitles.item.saddle.unequip
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound = Pig step1.ogg
+| sound2 = Pig step2.ogg
+| sound3 = Pig step3.ogg
+| sound4 = Pig step4.ogg
+| sound5 = Pig step5.ogg
+| subtitle = Footsteps
+| source = neutral
+| description = While a pig is walking
+| id = mob.pig.step
+| translationkey = subtitles.block.generic.footsteps
+| volume = 0.2
+| pitch = 1.0}}
+| {{SoundLine
+| sound = Saddle equip.ogg
+| subtitle = Horse breathes
+| source = neutral
+| description = When a saddle is equipped to a pig
+| id = mob.horse.leather
+| translationkey = subtitles.entity.horse.breathe
+| volume = 0.5
+| pitch = 1.0}}
+| {{SoundLine
+| sound = Saddle unequip.ogg
+| subtitle = –
+| source = neutral
+| description = When a saddle is removed from a pig using shears
+| id = mob.unsaddle
+| translationkey = –
+| volume = 1.0
+| pitch = 1.0}}
+| {{SoundLine
+| sound = Pig boost1.wav
+| sound2 = Pig boost2.wav
+| sound3 = Pig boost3.wav
+| sound4 = Pig boost4.wav
+| sound5 = Pig boost5.wav
+| subtitle = –
+| source = neutral
+| description = When a pig is boosted using a carrot on a stick
+| id = mob.pig.boost
+| translationkey = –
+| volume = 1.0
+| pitch = 1.0
+}}
+}}
+
+==== Classic ====
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| rowspan = 2
+| sound = Pig idle1.ogg
+| sound2 = Pig idle2.ogg
+| sound3 = Pig idle3.ogg
+| subtitle = Pig oinks
+| source = neutral
+| description = Randomly
+| id = entity.pig.ambient
+| translationkey = subtitles.entity.pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| subtitle = Pig hurts
+| source = neutral
+| description = When a pig is damaged
+| id = entity.pig.hurt
+| translationkey = subtitles.entity.pig.hurt
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig death.ogg
+| subtitle = Pig dies 
+| source = neutral
+| description = When a pig dies
+| id = entity.pig.death
+| translationkey = subtitles.entity.pig.death
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig eat1.ogg
+| sound2 = Pig eat2.ogg
+| subtitle = Pig eats
+| source = neutral
+| description = When a pig eats
+| id = entity.pig.eat
+| translationkey = subtitles.entity.pig.eat
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| rowspan = 2
+| sound = Pig idle1.ogg
+| sound2 = Pig idle2.ogg
+| sound3 = Pig idle3.ogg
+| subtitle = Pig oinks
+| source = neutral
+| description = Randomly
+| id = mob.pig.say
+| translationkey = subtitles.entity.pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+}}
+| {{SoundLine
+| subtitle = Pig oinks
+| source = neutral
+| description = When a pig is damaged
+| id = mob.pig.say
+| translationkey = subtitles.entity.pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+}}
+| {{SoundLine
+| rowspan = 2
+| sound = Pig death.ogg
+| subtitle = Pig dies
+| source = neutral
+| description = When a pig dies
+| id = mob.pig.death
+| translationkey = subtitles.entity.pig.death
+| volume = 1.0
+| pitch = 0.8–1.2
+}}
+| {{SoundLine
+| subtitle = Pig dies
+| source = neutral
+| description = When a pig is converted to a zombified piglin by being struck by lightning
+| id = mob.pig.death
+| translationkey = subtitles.entity.pig.death
+| volume = 2.0
+| pitch = 0.8–1.2
+}}
+}}
+
+==== Big ====
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound = Pig big ambient1.ogg
+| sound2 = Pig big ambient2.ogg
+| sound3 = Pig big ambient3.ogg
+| sound4 = Pig big ambient4.ogg
+| sound5 = Pig big ambient5.ogg
+| sound6 = Pig big ambient6.ogg
+| sound7 = Pig big ambient7.ogg
+| sound8 = Pig big ambient8.ogg
+| sound9 = Pig big ambient9.ogg
+| subtitle = Pig oinks
+| source = neutral
+| description = Randomly
+| id = entity.pig_big.ambient
+| translationkey = subtitles.entity.pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig big hit1.ogg
+| sound2 = Pig big hit2.ogg
+| sound3 = Pig big hit3.ogg
+| subtitle = Pig hurts
+| source = neutral
+| description = When a pig is damaged
+| id = entity.pig_big.hurt
+| translationkey = subtitles.entity.pig.hurt
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig big death.ogg
+| subtitle = Pig dies 
+| source = neutral
+| description = When a pig dies
+| id = entity.pig_big.death
+| translationkey = subtitles.entity.pig.death
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig big eat1.ogg
+| sound2 = Pig big eat2.ogg
+| subtitle = Pig eats
+| source = neutral
+| description = When a pig eats
+| id = entity.pig_big.eat
+| translationkey = subtitles.entity.pig.eat
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}
+}}
+
+==== Mini ====
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound = Pig mini ambient1.ogg
+| sound2 = Pig mini ambient2.ogg
+| sound3 = Pig mini ambient3.ogg
+| sound4 = Pig mini ambient4.ogg
+| sound5 = Pig mini ambient5.ogg
+| sound6 = Pig mini ambient6.ogg
+| subtitle = Pig oinks
+| source = neutral
+| description = Randomly
+| id = entity.pig_mini.ambient
+| translationkey = subtitles.entity.pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig mini hurt1.ogg
+| sound2 = Pig mini hurt2.ogg
+| sound3 = Pig mini hurt3.ogg
+| subtitle = Pig hurts
+| source = neutral
+| description = When a pig is damaged
+| id = entity.pig_mini.hurt
+| translationkey = subtitles.entity.pig.hurt
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig mini death.ogg
+| subtitle = Pig dies 
+| source = neutral
+| description = When a pig dies
+| id = entity.pig_mini.death
+| translationkey = subtitles.entity.pig.death
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig mini eat1.ogg
+| sound2 = Pig mini eat2.ogg
+| subtitle = Pig eats
+| source = neutral
+| description = When a pig eats
+| id = entity.pig_mini.eat
+| translationkey = subtitles.entity.pig.eat
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}
+}}
+
+=== Baby ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound = Pig baby ambient1.ogg
+| sound2 = Pig baby ambient2.ogg
+| sound3 = Pig baby ambient3.ogg
+| sound4 = Pig baby ambient4.ogg
+| sound5 = Pig baby ambient5.ogg
+| sound6 = Pig baby ambient6.ogg
+| subtitle = Baby Pig oinks
+| source = neutral
+| description = Randomly
+| id = entity.baby_pig.ambient
+| translationkey = subtitles.entity.baby_pig.ambient
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig baby hit1.ogg
+| sound2 = Pig baby hit2.ogg
+| sound3 = Pig baby hit3.ogg
+| subtitle = Baby Pig hurts
+| source = neutral
+| description = When a baby pig is damaged
+| id = entity.baby_pig.hurt
+| translationkey = subtitles.entity.baby_pig.hurt
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig baby death.ogg
+| subtitle = Baby Pig dies
+| source = neutral
+| description = When a baby pig dies
+| id = entity.baby_pig.death
+| translationkey = subtitles.entity.baby_pig.death
+| volume = 1.0
+| pitch = 0.8–1.2
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig baby eat1.ogg
+| sound2 = Pig baby eat2.ogg
+| subtitle = Baby Pig eats
+| source = neutral
+| description = When a baby pig eats
+| id = entity.baby_pig.eat
+| translationkey = subtitles.entity.baby_pig.eat
+| volume = 1.0
+| pitch = 1.0
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig baby step1.ogg
+| sound2 = Pig baby step2.ogg
+| sound3 = Pig baby step3.ogg
+| sound4 = Pig baby step4.ogg
+| sound5 = Pig baby step5.ogg
+| subtitle = Footsteps
+| source = neutral
+| description = When a baby pig is walking
+| id = entity.baby_pig.step
+| translationkey = subtitles.block.generic.footsteps
+| volume = 1.0
+| pitch = 0.75
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound = Pig baby ambient1.ogg
+| sound2 = Pig baby ambient2.ogg
+| sound3 = Pig baby ambient3.ogg
+| sound4 = Pig baby ambient4.ogg
+| sound5 = Pig baby ambient5.ogg
+| sound6 = Pig baby ambient6.ogg
+| subtitle = subtitles.entity.baby_pig.ambient
+| source = neutral
+| description = Randomly
+| id = mob.baby_pig.ambient
+| translationkey = subtitles.entity.baby_pig.ambient
+| volume = 1.0
+| pitch = 1.0
+}}
+| {{SoundLine
+| sound = Pig baby hit1.ogg
+| sound2 = Pig baby hit2.ogg
+| sound3 = Pig baby hit3.ogg
+| subtitle = subtitles.entity.baby_pig.hurt
+| source = neutral
+| description = When a baby pig is damaged
+| id = mob.baby_pig.hurt
+| translationkey = subtitles.entity.baby_pig.hurt
+| volume = 1.0
+| pitch = 0.5
+}}
+| {{SoundLine
+| sound = Pig baby death.ogg
+| subtitle = subtitles.entity.baby_pig.death
+| source = neutral
+| description = When a baby pig dies
+| id = mob.baby_pig.death
+| translationkey = subtitles.entity.baby_pig.death
+| volume = 1.0
+| pitch = 0.5
+}}
+| {{SoundLine
+| sound = Pig baby eat1.ogg
+| sound2 = Pig baby eat2.ogg
+| subtitle = subtitles.entity.baby_pig.eat
+| source = neutral
+| description = When a baby pig eats
+| id = entity.baby_pig.eat
+| translationkey = subtitles.entity.baby_pig.eat
+| volume = 1.0
+| pitch = 0.5
+| distance = 16
+}}
+| {{SoundLine
+| sound = Pig baby step1.ogg
+| sound2 = Pig baby step2.ogg
+| sound3 = Pig baby step3.ogg
+| sound4 = Pig baby step4.ogg
+| sound5 = Pig baby step5.ogg
+| subtitle = Footsteps
+| source = neutral
+| description = When a baby pig is walking
+| id = mob.baby_pig.step
+| translationkey = subtitles.block.generic.footsteps
+| volume = 0.3
+| pitch = 0.5
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{editions|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Pig
+|spritetype=entity
+|nameid=pig
+|showentitytags=y
+|entitytags=can_equip_saddle, dismounts_underwater, followable_friendly_mobs
+|foot=1}}
+
+{{editions|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Pig
+|spritetype=entity
+|nameid=pig
+|showentityfamily=y
+|entityfamily=mob,pig
+|id=12
+|foot=1}}
+
+=== Entity data ===
+Pigs have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|string|variant}}: the variant of the pig. Represents the {{DCL|minecraft:pig/variant}} component.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|When Pigs Fly;It Spreads;Pork Chop}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|The Parrots and the Bats;Two By Two;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{more sounds|Baby sounds from before 26.1|section=1}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||August 20, 2009|link=https://archive.org/download/Minecraft_IRC_Logs_2009/DBN-IRC-Logs/%23minecraft.20090820.log|[[File:Creeper (pre-release).png|24px]] Showed [[creeper|failed pig model]]. [[Notch]] commented, "it looks creepier when animated ... haha, I'll keep it for [[Creeper|a creepy creature]]. {{=}}D".}}
+|{{HistoryLine||August 22, 2009|link=https://web.archive.org/web/20190713211614/https://notch.tumblr.com/post/168543844/pigs|[[File:Pig (pre-release).png|48px]] Pigs are teased on [[The Word of Notch]].}}
+}}
+
+=== ''Java Edition'' ===
+{{more images|
+* 18w43a baby saddled pigs
+* 25w02a baby variant pigs
+* 25w15a baby pig model change|section=1}}
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|[[File:Pig JE1.png|48px]] Added pigs. The eyes on their texture have been slightly changed.}}
+|{{HistoryLine||0.25 SURVIVAL TEST|Pigs now [[drop]] 0–2 [[brown mushroom]]s and award the [[player]] 10 [[score|points]] each when killed.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-0040|Pigs and other mobs now no longer spawn naturally.}}
+|{{HistoryLine|||dev=20100202|Pigs and other mobs now spawn naturally again.}}
+|{{HistoryLine||20100211-2327|Pigs now have unique idle and hurt sounds. Previously, they have no idle sounds, and use the player's hurt sound.}}
+|{{HistoryLine||20100219|Pigs now drop 0–2 [[raw porkchop]]s instead of mushrooms upon death.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100625-1917|[[File:Saddled Pig JE1.png|48px]] [[Saddle]]s have been added along with the ability to ride pigs. However, they currently cannot be controlled.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.4|A sitting animation for riding pigs has now been added.}}
+|{{HistoryLine||v1.0.17|Pigs have now been added to [[multiplayer]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|An [[achievement]] for riding a pig off a cliff has now been added.
+|Pigs struck by [[lightning]] now turn into [[zombie pigmen]].<ref>{{Tweet|notch|57426954093211648|MUOAHAHA! Pigs that get hit by lightning turn into zombie pigmen ;D|April 11, 2011}}</ref>
+|Pigs that die from being set on [[fire]] now drop [[cooked porkchop]]s.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Pig JE2 BE1.png|48px]] Pigs' snouts now protrude from their faces.<ref>{{Tweet|notch|109628703788646400|imgur.com/jYWW1?full|}}</ref><ref>{{Reddit2|sub=r/Minecraft|id=k2gkw|cid=c2h02cp|text=I like to imagine Notch getting drunk while he's coding on Minecraft then comes here to take a break for a bit, then seeing something simple and cool like the Snout idea and drunkenly giggling to himself as he places something so simple and awesome as a nose...for a pig.<br>What I'm trying to say is that I think Notch should code more while he is drunk.|author=AgainstClint|date=September 2, 2011}}</ref><ref>{{Reddit2|sub=r/Minecraft|id=k2bo5|text=Pigs Need Snouts!|author=MinecraftAfterDark|date=September 2, 2011}}</ref>
+|[[File:Saddled Pig JE2.png|48px]] The texture of saddled pigs{{verify|has the saddle texture changed? has the saddle model changed? or is this simply referring to the above change also affecting saddled pigs?}} has been changed.
+|A new [[AI]] system has been added for passive [[mob]]s; they now run away when attacked.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Pigs can now be [[bred]] using [[wheat]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|[[File:Baby Pig JE1 BE1.png|32px]] [[File:Baby Saddled Pig JE1 BE1.png|32px]] Added baby pigs. They may be ridden like adult pigs with a [[saddle]].}}
+|{{HistoryLine||1.2.1|dev=12w06a|Before this update, all [[monster spawner]]s found in multiplayer had the pig [[model]] inside them instead of whatever [[mob]] they actually spawn, with the singular exception of the [[cave spider]].}}
+|{{HistoryLine|||dev=12w07a|Pigs now have a new AI.}}
+|{{HistoryLine||1.2.4|Baby pigs can no longer be [[saddle]]d. However, riding baby pigs that were already saddled is still possible.}}
+|{{HistoryLine||1.3.1|dev=12w25a|Pigs now [[drop]] 1-3 [[porkchop]]s instead of 0-2.}}
+|{{HistoryLine||1.4.2|dev=12w36a|Pigs now drop saddles upon [[death]], only if saddled.
+|Added [[carrot on a stick]] to direct saddled pigs.
+|Pigs can now be [[bred]] only by using [[carrot]]s, not [[wheat]], and follow [[player]]s who hold a carrot or a carrot on a stick.}}
+|{{HistoryLine|||dev=12w37a|Pigs are now able to jump when ridden.
+|Pigs now "eat" the carrot in a span of time shown by a [[durability]] bar of the [[carrot on a stick]].
+|It is no longer necessary to hold the carrot on a stick in the [[player]]'s hand while the pig is having the burst of speed.}}
+|{{HistoryLine|||dev=12w38a|Pigs now have a new step [[sound]].}}
+|{{HistoryLine||1.6.1|dev=13w16a|Pigs now display the mob [[health]] bar when riding.
+|Pigs are now dismounted using the sneak key; previously, this was achieved by right clicking on the pig a second time.
+|Added [[lead]]s, which can be used to leash pigs.}}
+|{{HistoryLine||1.8|dev=14w02a|Baby pigs' growth can now be accelerated using [[carrot]]s.}}
+|{{HistoryLine||1.9|dev=15w31a|Pigs can now also be led and [[bred]] using [[potato]]es and [[beetroot]]s, in addition to carrots.}}
+|{{HistoryLine|||dev=16w05b|The durability of a [[carrot on a stick]] is no longer reduced merely by riding a pig, only by using the speed boost.|Pigs can now step up 1 block when controlled by a player instead of jumping.|Pigs now rotate in sync with the player when holding a carrot on a stick.}}
+|{{HistoryLine||1.10|dev=16w20a|Pigs now no longer spawn in [[ice plains]].}}
+|{{HistoryLine||1.11|dev=16w38a|Saddled pigs now drop their saddle upon death even if the [[gamerule]] doMobLoot is set to false.<ref>{{bug|MC-92772|||Fixed}}</ref>}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Temperate Pig JE3.png|48px]] [[File:Baby Pig JE2 BE2.png|32px]] The texture of pigs has been changed.
+|[[File:Saddled Pig JE3 BE3.png|48px]] The texture of saddled pigs has been changed.}}
+|{{HistoryLine||1.15|dev=19w37a|5% of pigs now spawn as babies.}}
+|{{HistoryLine||1.16|dev=20w06a|A baby pig now becomes a baby [[zombified piglin]] after being hit by [[lightning]].}}
+|{{HistoryLine|||dev=20w15a|Pigs can now be saddled by [[dispenser]]s.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=pre1|Pigs now spawn in [[cherry grove]]s.<ref>{{bug|MC-260059}}</ref>}}
+|{{HistoryLine||1.21.5|dev=25w02a|[[File:Cold Pig JE1 BE1.png|48px]] [[File:Warm Pig JE1 BE1.png|48px]] Added cold and warm pigs.
+|The original pig variant is now considered temperate.
+|Pigs can now spawn in [[wooded badlands]]. Technically, they are also allowed to spawn in [[badlands]] and [[eroded badlands]], but cannot spawn there naturally as these biomes do not generate grass blocks.}}
+|{{HistoryLine|||dev=25w03a|[[Saddle]]s now show the [[enchantment glint]] on the pig when enchanted.}}
+|{{HistoryLine|||dev=25w05a|Warm pigs can now spawn in [[windswept savanna]]s.}}
+|{{HistoryLine|||dev=25w06a|Warm and cold pigs now spawn in more biomes when spawned with unspecified commands or spawn eggs.}}
+|{{HistoryLine||1.21.6|dev=25w15a|[[File:Temperate Pig JE4 BE2.png|48px]] [[File:Cold Pig JE2 BE1.png|48px]] [[File:Warm Pig JE2 BE1.png|48px]] Pigs now have their legs mirrored, to match ''[[Bedrock Edition]]''.}}
+|{{HistoryLine|||dev=25w17a|Mounting saddled baby pigs is no longer possible.}}
+|{{HistoryLine|||dev=25w20a|Saddles can now be removed from pigs using shears.}}
+|{{HistoryLine||26.1|dev=snap2|[[File:Baby Pig JE3 BE3.png|32px]] [[File:Baby Cold Pig JE2 BE2.png|32px]] [[File:Baby Warm Pig JE3 BE2.png|32px]] The model and textures of baby pigs have been changed.|Added new baby sounds for pigs.|Saddles on baby pigs no longer render.}}
+|{{HistoryLine|||dev=snap5 |Added [[golden dandelion]]s, which can be used to prevent baby pigs from growing up.}}
+|{{HistoryLine|||dev=snap7|[[File:Baby Pig JE4 BE4.png|38px]] Slightly changed the texture of baby temperate pigs.
+|Added "mini" and "big" sound variants for adult pigs.}}
+|{{HistoryLine|||dev=snap8|Changed the big ambient sounds from {{sound||Pig big ambient7 JE1.ogg}}{{sound||Pig big ambient8 JE1.ogg}} to {{sound||Pig big ambient7.ogg}}{{sound||Pig big ambient8.ogg}}.
+|Removed one of the big ambient sounds {{sound||Pig big ambient10.ogg}}.
+|Changed the big death sound from {{sound||Pig big death JE1.ogg}} to {{sound||Pig big death.ogg}}.
+|Changed the mini ambient sound from {{sound||Pig mini ambient4 JE1.ogg}} to {{sound||Pig mini ambient4.ogg}}.
+|Changed the mini death sound from {{sound||Pig mini death JE1.ogg}} to {{sound||Pig mini death.ogg}}.}}
+|{{HistoryLine|||dev=snap11|Pigs now have eating sounds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|[[File:Pig JE2 BE1.png|48px]] [[File:Baby Pig JE1 BE1.png|32px]] Added pigs and baby pigs.
+|Pigs currently cannot spawn naturally, unless the [[player]] hacks or edits the [[inventory]].}}
+|{{HistoryLine||v0.2.1|Adult pigs now spawn naturally.}}
+|{{HistoryLine||v0.6.0|Baby pigs now spawn naturally.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Pigs follow players holding [[carrot]]s or [[potato]]es, but cannot be fed yet.
+|Pigs now have a new AI, so they avoid hazards.}}
+|{{HistoryLine|||dev=build 2|Pigs follow players holding [[beetroot]]s.}}
+|{{HistoryLine|||dev=build 4|Pigs can now be fed carrots, potatoes, or beetroots to enter love mode and breed.}}
+|{{HistoryLine||v0.9.2|The [[health]] of pigs has been reduced from {{hp|20}} to {{hp|10}}}}
+|{{HistoryLine||v0.12.1|dev=build 1|Pigs now turn into [[zombie pigmen]] when struck by [[lightning]].}}
+|{{HistoryLine|||dev=build 12|The chance of baby pigs spawning naturally or from a [[spawn egg]] has been reduced from 25% to 5%.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Baby zombie [[jockey]]s now check for nearby pigs to mount prior to attacking the [[player]].
+|Pigs no longer spawn in [[snowy tundra]] biome and variants.
+|Pigs that die from being set on [[fire]] now drop [[cooked porkchop]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Saddled Pig BE1.png|48px]] Added pig riding, and a new "Boost" Interact button.
+|Baby [[husk]]s can now ride pigs.}}
+|{{HistoryLine||v0.16.0|dev=build 4|Pigs now [[drop]] 1-3 [[porkchop]]s instead of 0-2.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Pigs no longer have a 5% chance to spawn already in [[breeding]] mode.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Temperate Pig JE4 BE2.png|48px]] [[File:Baby Pig JE2 BE2.png|32px]] Changed the texture of pigs.
+|[[File:Saddled Pig BE2.png|48px]] Changed the texture of saddled pigs.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Pigs now spawn in [[village]] butcher houses, pens and stables.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.20.28|Pigs no longer spawn in snowy taigas.}}
+|{{HistoryLine|||dev=Release|Reverted the pig spawning change made in Preview 1.18.20.28.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.25|exp=Drop 1 2025|[[File:Cold Pig JE2 BE1.png|48px]] [[File:Warm Pig JE2 BE1.png|48px]] Added cold and warm pigs.|The original pig variant is now considered temperate.|[[File:Saddled Pig JE4 BE3.png|48px]] Pigs' saddles now protrude out of their backs, to match ''[[Java Edition]]''.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|All features behind the "Drop 1 2025" experimental toggle are fully implemented.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.27|exp=Drop 1 of 2026|[[File:Baby Pig JE3 BE3.png|38px]] [[File:Baby Cold Pig JE2 BE2.png|38px]] [[File:Baby Warm Pig JE3 BE2.png|38px]] The model and textures of baby pigs have been changed.|Added new baby sounds for pigs.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|All features behind the "Drop 1 of 2026" experimental toggle are fully implemented.}}
+|{{HistoryLine|||dev=Preview 26.10.21|Added [[golden dandelion]]s, which can be used to prevent baby pigs from growing up.}}
+|{{HistoryLine|||dev=Preview 26.10.23|[[File:Baby Pig JE4 BE4.png|38px]] Slightly changed the texture of baby temperate pigs.}}
+|{{HistoryLine|||dev=Preview 26.10.24|Added "mini" and "big" sound variants for adult pigs.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Pig JE1.png|48px]] Added pigs.}}
+|{{HistoryLine||xbox=TU5|[[File:Pig JE2 BE1.png|48px]] Pigs' snouts now protrude from their faces.
+|Pigs run away when attacked.}}
+|{{HistoryLine||xbox=TU7|[[File:Baby Pig JE1 BE1.png|32px]] Added baby pigs.
+|Pigs can now be bred using [[wheat]].}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Pigs now [[drop]] 1-3 [[porkchop]]s instead of 0-2.
+|[[File:Saddled Pig JE2.png|48px]] Added [[carrot on a stick]] to direct [[saddle]]d pigs.
+|Pigs now drop [[saddle]]s when killed (if equipped with one).
+|Baby pigs can now be spawned by using {{xbtn|lt}}/{{psbtn|l2}}/{{wbtn|zl}} on that [[mob]] using its [[spawn egg]].
+|Pigs can now be [[bred]] only using [[carrot]]s, not [[wheat]], and follow [[player]]s who hold a carrot or a carrot on a stick.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Pigs are now dismounted using the sneak key; previously, this was achieved by pressing {{ctrl|use}} on the pig a second time.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Baby pig growth can now be accelerated using [[carrot]]s.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Pigs can now also be led and [[bred]] using [[potato]]es and [[beetroot]]s, in addition to carrots.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|Saddled pigs now drop their saddle upon death even if the [[gamerule]] doMobLoot is set to false.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Pig JE2 BE1.png|48px]] [[File:Baby Pig JE1 BE1.png|32px]] Added pigs.}}
+}}
+
+<gallery>
+Disturbingpig.jpg|The original pig model before it was made into a [[creeper]].
+Pigs old 2009.jpg|The old "cross-eyed" pig texture.
+Beta 1.8 Dev Snouts.png|The first image of pigs with 3D snouts.
+Pig Snout Suggestion.png|The image suggesting Notch add snouts to pigs.
+Pig Snout Thanks.png|The image thanking Notch for adding snouts to pigs.
+PigControl.png|First image of player-controlled pigs released by [[Nathan Adams]].
+Pig Riding 1.jpg|First image of pig riding in ''Bedrock Edition''.
+Pig Riding 2.jpg|Second image of pig riding in ''Bedrock Edition''.
+Pig Riding 3.jpg|Third image of pig riding in ''Bedrock Edition''.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[namespaced ID]] of pigs have been changed from {{code|Pig}} to {{code|pig}}.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine||1.21.5|dev=25w03a|The NBT boolean <code>Saddle</code> has been removed, in favor of the new equipment field. }}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* A pig appears as a DLC costume for the [https://www.ssbwiki.com/Mii_Brawler_(SSBU) Mii Brawler] in the crossover fighting game ''[[Super Smash Bros. Ultimate]]''.
+* The warm variant of the pig is based on the {{W|red river hog}}, as revealed in Minecraft Live 2025.{{verify|youtube video timestamp?}}
+** However the image that was used is a {{W|Mangalica|mangalica pig}}, likely by mistake.
+<!--*For the upcoming baby pig model, the head is ''slightly'' shifted to the right to avoid planefighting.-->
+* The third hurt sound for the baby pig was reused from the [[Piggy Bank]] from Dungeons.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Saddled Warm Pig.png|A saddled warm pig.
+Saddled Cold Pig.png|A saddled cold pig.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Zuri on a Warm Pig.jpeg|[[Zuri]] riding a warm pig.
+File:Pig variants.jpeg|The two new pig variants.
+File:Warm pig in savanna.jpeg|A warm pig in a [[savanna]].
+File:Cold pig in cold biome.jpeg|A cold pig in a [[snowy taiga]] biome.
+File:A pig looking into the distance.jpeg|A pig looking at the sunset from a [[cherry grove]] biome in [[Vibrant Visuals]].
+File:A pig looking at a sunset.jpeg|Ditto, but from behind the pig.
+File:Adoptable piglet.jpg|A baby pig asking to be adopted
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:Zuri Freefall.jpeg|A pig watching [[Zuri]] doing water bucket clutch.
+File:Pig through a peephole.jpeg|A saddled pig through a peephole.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Pig Death.png|A dying pig.
+Minipig.png|A baby pig compared to an adult pig. Despite the baby pig's body size they have the same head size as an adult pig.
+SaddledBabyPigAndParent.png|A [[saddle]]d baby pig next to its parent. Saddled baby pigs are available only via [[commands]].
+PigSaddleMinecart.png|Zuri riding a pig while the pig is riding a [[minecart]]
+Pigs following beetroot holder.png|Pigs following the [[player]] holding [[beetroot]] {{in|BE}}.
+Three Pigs In Forest.png|Three pigs in a [[forest]]
+PigNipples.png|An upside-down pig, revealing its feet and nipples
+Pig facing player.png|A pig facing the player
+Ravine with pigs in it.png|A [[ravine]] with three pigs in it
+Player on saddled pig in a minecart.png|Steve riding a saddled pig in a minecart
+File:Minecon-Rush-Race screenshot 2.jpg|A player riding a saddled pig during the Ravager Run game from [[Minecon Live: Rush Race!]]
+File:Minecraft Swarovski Crystal Suit.jpeg|A player steering a pig with a [[carrot on a stick]] in a [[cherry grove]]
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Pig (texture).png|Temperate pig texture file.
+Cold Pig (texture) JE1.png|Cold pig texture file
+Warm Pig (texture) JE1.png|Warm pig texture file.
+Baby Cold Pig (texture).png|Baby cold pig texture file.
+Baby Temperate Pig (texture).png|Baby temperate pig texture file.
+Baby Warm Pig (texture).png|Baby warm pig texture file.
+Saddle (pig texture) JE3.png|Pig saddle texture file.
+Pig (Programmer Art texture) 1.21.5.png|[[Programmer Art]] temperate pig texture file.
+Pig (texture) JE4 BE2.png|Old Pig texture file.
+Saddle (pig texture) JE2.png|Old pig saddle texture file.
+Pig (texture) JE3.png|Old [[Programmer Art]] pig texture file.
+Saddle (pig texture) JE1.png|Old [[Programmer Art]] Old saddle texture file.
+</gallery>
+
+=== Official artwork ===
+<gallery>
+File:Animals.png|Artwork of a pig alongside [[Steve]] and a [[sheep]].
+File:Steve Alex Pig.png|Steve and [[Alex]] with a pig.
+File:Pig Artwork.png|Artwork of a pig looking up.
+File:Pig Artwork 2.png|Ditto, but in bright lighting.
+File:Pig Artwork 3.png|A different pig looking up.
+File:Saddled Pig Artwork.png|Saddled pig artwork.
+File:Pig Sticker.gif|A pig as it appears on the banner for the [[The Wild Update|Wild Update]].
+File:Minecraft Spring to life pig rider.gif|[[Makena]] riding a pig
+File:Pig Minecraft Instagram.jpg|Artwork of a pig.
+File:Village and Pillage banner.png|A pig in promotional artwork for the [[Village & Pillage]] Update.
+File:Caves & Cliffs cover art.png|A pig in promotional artwork for the first [[Caves & Cliffs]] update.
+File:Wild key art.png|A pig in official artwork for [[The Wild Update]].
+File:Minecraft Education Edition Key Art.jpg|A pig in official artwork for the [[Education Edition]].
+File:Steve-Alex-Noor-pigs.jpg|Official artwork of [[Alex]], [[Steve]], and [[Noor]] riding pigs.
+File:Linus-chan-nationalpigday-concepttofinal.jpg|Official artwork of [[Alex]], [[Steve]], and [[Noor]] riding pigs.
+File:Akira slide.jpg|[[Alex]] sliding on a road on a pig in reference to a shot in the 1988 animated film ''Akira''.<ref>{{YouTube link|LK3hSoG5foQ|Akira -1988, Akira Drift clip|Senor Corbuiser|March 31st, 2022}}</ref>
+File:Pig Animated Pixel Artwork.gif|Pixel art animation of a pig scampering about.
+File:One more cave.jpeg|[[Efe]] chooses a path while riding a pig. 
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Jens at Telltale.jpg|A pig figure at [[Telltale Games]].
+File:Pig mii fighter costume.jpg|The pig Mii Brawler costume in ''[[Super Smash Bros. Ultimate]]''.
+File:Pigtales.png|Pig sock puppets from the defunct Mojang website [[Pig Tales]].
+File:Croc Ad 3.jpg|[[Sunny]] riding a pig in an advertisement.
+File:Croc Ad 4.jpg|Ditto.
+File:Pig Mobestiary.jpg|The pig as seen in the [[Minecraft: Mobestiary|Mobestiary]]
+File:LEGO Pig.png|Lego Minecraft pig minifigure.
+File:LEGO Minecraft Micro-Mobs 2.jpg|Pig micromob (left) from [[Lego Minecraft]].
+File:Pig Riding JINX.jpg|Official T-shirt artwork "Pig Riding" featuring [[Steve]] and a pig. Made by JINX.
+File:Plush Pig.png|Pig plush made by JINX.
+File:Pig Plush.jpg|Pig plush made by JINX.
+File:Baby Pig Plush JINX.jpg|Baby pig plush made by JINX.
+File:Rubber Ducks.jpeg|Rubber ducks of a pig, creeper, and Steve.
+File:Pig Wheelchair Cover.jpg|An officially licensed pig wheelchair cover.
+File:Pig Potato.png|The poisonous potato pig from [[Java Edition 24w14potato|24w14potato]].
+File:Moltted Pig.png|The [[Earth:Mottled Pig|mottled pig]] from [[Minecraft Earth]].
+File:City Pig.png|A pig as it appears in the [[Texture Pack DLC|City texture pack]].
+File:Greek Pig.png|A pig as it appears in the [[Texture Pack DLC|Greek Mythology texture pack]].
+File:Skeleton Pig.png|The Skeleton Pig, featured in the [[Mash-up pack|Halloween Edition mash-up pack]] and [[Minecraft Mini-Series]].
+File:Pig TP.png|A pig in the [[Plastic Texture Pack]]
+File:Party Pig.png|Party Pig, a skin featured in the [[1st Birthday Skin Pack]].
+File:Pig Whisperer.png|Pig Whisperer, a skin dressed as a pig featured in the [[Builders & Biomes (skin pack)|Builders & Biomes skin pack]].
+File:Pig Whisperer Alternate.png|Alternate design for the Pig Whisperer.
+File:Dancing-piggies-video.mp4|A pig dancing with a [[Angry Birds|bad piggy]].
+File:Movie pig.jpg|A pig as it appears in {{AMCM}}, also a reference to [[Technoblade]].
+File:Cold animals in real life snow.jpeg|alt=Cold animal variants on the side of the road|Cold animal variants in real life snow.
+File:DJ Porky P is calling.jpg
+File:Pig Face Hoodie.png
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[[wikipedia:pig|Pig]] article on Wikipedia
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Animal mobs]]
+[[Category:Transport]]
+
+[[cs:Prase]]
+[[de:Schwein]]
+[[es:Cerdo]]
+[[fr:Cochon]]
+[[hu:Malac]]
+[[it:Maiale]]
+[[ja:ブタ]]
+[[ko:돼지]]
+[[lzh:豕]]
+[[nl:Varken]]
+[[pl:Świnia]]
+[[pt:Porco]]
+[[ru:Свинья]]
+[[th:หมู]]
+[[uk:Свиня]]
+[[zh:猪]]

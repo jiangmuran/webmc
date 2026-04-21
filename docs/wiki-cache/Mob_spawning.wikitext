@@ -1,0 +1,1633 @@
+{{About||the [[item]] used to directly summon mobs|Spawn Egg|[[player]] spawning|World spawn}}
+[[File:Hostile and Peaceful.png|thumb|A naturally spawned [[creeper]] and [[chicken]] at [[night]].]]
+'''Mob spawning''' is how passive, neutral, and hostile [[mob]]s are created in the [[world]].
+
+== Mob spawning on chunk generation ==
+{{Exclusive|Java|section=1}}
+
+As new [[chunk]]s are generated, they have a chance to generate an initial set of [[mob]]s from the "creature" category (i.e. most naturally-occurring land animals<ref group="A">Even though [[ocelot]]s are animals and count against the "creature" mob cap, their spawn in jungle biomes is configured as part of the "monster" category. ({{bug|MC-1788}}) As a result they never spawn on chunk generation.</ref>) along with them, ignoring the [[#Java Edition mob cap|mob cap]], any applicable [[#Spawn costs|spawn costs]], and the setting of {{Cmd|/gamerule doMobSpawning}}. Any randomness affecting this entire process is derived from the [[world seed]] and the position of the chunk that is being generated. Even though biome distribution within the chunk is already known at this point in the generation, the biome of the north west corner of the chunk at the maximum world height is used to make all decisions about this spawning process. As a result, biomes that generate only underground can never affect the initially spawned mobs. Similarly, although structures have been generated already, their potentially configured spawn overrides are ignored. The spawn conditions for most animals prevent them from spawning on "non-terrain blocks", so they won't end up generating on the roofs (or inside) of structures.
+
+The selected biome supplies all relevant mob spawn settings for this process:
+
+* a weighted list of mobs configured for the "creature" category (see below)
+* an overall "creature spawn probability"
+
+{| class="wikitable"
+|+ Biome-specific Creature Spawn Probabilities
+!Biome
+!Probability
+|-
+| {{BiomeLink|Badlands}} || 0.03
+|-
+| {{BiomeLink|Eroded Badlands}} || 0.03
+|-
+| {{BiomeLink|Ice Spikes}} || 0.07
+|-
+| {{BiomeLink|Snowy Plains}} || 0.07
+|-
+| {{BiomeLink|Wooded Badlands}} || 0.04
+|-
+| all others || 0.1
+|}
+
+If creatures are configured for the biome at all (see [[#Spawned Creatures]] for details), the game performs a loop of spawn attempts until it fails the random check against the creature spawn probability before each iteration. (If the very first check fails, no creatures are generated. Subsequent iterations of the loop are increasingly less likely to happen.)
+
+* Each iteration starts by selecting an entry from the weighted list of configured creature spawns. Based on that entry's minimum and maximum group size, a random target pack size (number of creatures to spawn) is determined.
+* A random horizontal position within the chunk is picked as center of the spawn attempts, which is used for the first mob spawn attempt. Subsequent attempts randomly moveaway from the previous position up to 5 blocks in X and Z direction using a triangular distribution. If that position ends up being outside the chunk, a new offset position is determined the same way, but using the initially selected center position. The vertical position of each individual spawn attempts is on top of the highest block with a non-empty collision shape at the selected horizontal position. (This is different from spawn cycle spawns, which happen at the same Y-level for the entire pack.)
+* Up to four attempts to find a valid position are made per pack member, each with a random horizontal offset around the center position as described above. Mobs usually spawn on the center of a block, but if a mob's collision box would be partially outside the chunk this way, e.g. because it is wider than a block, its precise position is adjusted to fits the mob's collision box into the bounds of the chunk. The initial horizontal orientation of the spawned mob is random.
+* The usual spawn conditions (such as [[light level]], valid blocks to spawn on, and absence of obstructions) for the selected mob are validated at the selected position. If those checks succeed, the mob is added to the world and the iteration completes.
+
+=== Spawned monsters ===
+{{Empty section}}
+
+=== Spawned creatures ===
+Most biomes define one or more creature spawn configurations. These spawn configurations also apply if the mobcap is not filled and regular [[#Spawn Cycle|spawn cycle]] spawning of animals happens.
+The following biomes don't spawn any mobs from the "creature" category at all: [[pale garden]], [[river]] and [[frozen river]], [[snowy beach]], [[stony shore]], all [[Ocean (disambiguation)|ocean variants]], all [[cave biomes]], all biomes in [[the End]] dimension, and [[the void]] biome.
+
+{| class="wikitable sortable collapsible"
+|+ Biome-specific creature spawns
+!Mob
+!Group size
+!Weight
+!Biome
+!Conditions
+!Chance
+!Variant chances
+|-
+| rowspan="6" | {{EntityLink|Armadillo}}
+| rowspan="3" | 1-2 || rowspan="3" | 6
+| {{BiomeLink|Badlands}}
+| rowspan="6" | on [[grass block]]s, [[coarse dirt]], [[red sand]], or any [[terracotta]] variants that naturally occur in [[badlands]]
+|
+|
+|-
+| {{BiomeLink|Eroded Badlands}}
+|
+|
+|-
+| {{BiomeLink|Wooded Badlands}}
+|
+|
+|-
+| rowspan="3" | 2-3 || rowspan="3" | 10
+| {{BiomeLink|Savanna}}
+|
+|
+|-
+| {{BiomeLink|Savanna Plateau}}
+|
+|
+|-
+| {{BiomeLink|Windswept Savanna}}
+|
+|
+|-
+| {{EntityLink|Camel}} || 1 || 1 || {{BiomeLink|Desert}} || on any [[sand]] blocks
+|
+|
+|-
+| {{EntityLink|Chicken}} || 4 || 10 || Farm animal biomes<ref name="farm animal biomes" group="A">"Farm animals" spawn with the same group sizes and weights across the following biomes: 
+<div class="hlist">
+* {{BiomeLink|Badlands}} 
+* {{BiomeLink|Bamboo Jungle}}
+* {{BiomeLink|Birch Forest}}
+* {{BiomeLink|Dark Forest}}
+* {{BiomeLink|Eroded Badlands}}
+* {{BiomeLink|Flower Forest}}
+* {{BiomeLink|Forest}}
+* {{BiomeLink|Jungle}}
+* {{BiomeLink|Old Growth Birch Forest}}
+* {{BiomeLink|Old Growth Pine Taiga}}
+* {{BiomeLink|Old Growth Spruce Taiga}}
+* {{BiomeLink|Plains}}
+* {{BiomeLink|Savanna}}
+* {{BiomeLink|Savanna Plateau}}
+* {{BiomeLink|Snowy Taiga}}
+* {{BiomeLink|Sparse Jungle}}
+* {{BiomeLink|Sunflower Plains}}
+* {{BiomeLink|Swamp}}
+* {{BiomeLink|Taiga}}
+* {{BiomeLink|Windswept Forest}}
+* {{BiomeLink|Windswept Gravelly Hills}}
+* {{BiomeLink|Windswept Hills}}
+* {{BiomeLink|Windswept Savanna}}
+* {{BiomeLink|Wooded Badlands}}</div></ref>
+|
+|
+|
+|-
+| {{EntityLink|Cow}} || 4 || 8 || Farm animal biomes<ref name="farm animal biomes" group="A" />
+|
+|
+|
+|-
+| rowspan="6" | {{EntityLink|Donkey}}
+| rowspan="3" | 1 || rowspan="3" | 1
+| {{BiomeLink|Savanna}}
+|
+|
+|
+|-
+| {{BiomeLink|Savanna Plateau}}
+|
+|
+|
+|-
+| {{BiomeLink|Windswept Savanna}}
+|
+|
+|
+|-
+| 1-2 || 1 || {{BiomeLink|Meadow}}
+|
+|
+|
+|-
+| rowspan="2" | 1-3 || rowspan="2" | 1
+| {{BiomeLink|Plains}}
+|
+|
+|
+|-
+| {{BiomeLink|Sunflower Plains}}
+|
+|
+|
+|-
+| rowspan="5" | {{EntityLink|Fox}} || rowspan="5" | 2-4
+| 4 || {{BiomeLink|Grove}}
+| rowspan="5" | on grass blocks, [[snow]], [[snow block]]s, [[podzol]], or coarse dirt
+|
+|
+|-
+| rowspan="4" | 8
+| {{BiomeLink|Old Growth Pine Taiga}}
+|
+|
+|-
+| {{BiomeLink|Old Growth Spruce Taiga}}
+|
+|
+|-
+| {{BiomeLink|Snowy Taiga}}
+|
+|
+|-
+| {{BiomeLink|Taiga}}
+|
+|
+|-
+| rowspan="2" | {{EntityLink|Frog}} || rowspan="2" | 2-5 || rowspan="2" | 10
+| {{BiomeLink|Mangrove Swamp}}
+| rowspan="2" | on grass blocks, [[mud]], [[mangrove roots]], [[muddy mangrove roots]]
+|
+|
+|-
+| {{BiomeLink|Swamp}}
+|
+|
+|-
+| rowspan="3" | {{EntityLink|Goat}} || rowspan="3" | 1-3 || rowspan="3" | 10
+| {{BiomeLink|Frozen Peaks}}
+| rowspan="3" | on grass blocks, [[stone]], snow, snow blocks, [[packed ice]], or [[gravel]]
+|Normal Goat 98% 
+|Screaming Goat 2%
+|-
+| {{BiomeLink|Jagged Peaks}}
+|Normal Goat 98%
+|Screaming Goat 2%
+|-
+| {{BiomeLink|Snowy Slopes}}
+|Normal Goat 98%
+|Screaming Goat 2%
+|-
+| rowspan="5" | {{EntityLink|Horse}} || rowspan="5" | 2-6
+| rowspan="3" | 1
+| {{BiomeLink|Savanna}}
+|
+|
+|
+|-
+| {{BiomeLink|Savanna Plateau}}
+|
+|
+|
+|-
+| {{BiomeLink|Windswept Savanna}}
+|
+|
+|
+|-
+| rowspan="2" | 5
+| {{BiomeLink|Plains}}
+|
+|
+|
+|-
+| {{BiomeLink|Sunflower Plains}}
+|
+|
+|
+|-
+| rowspan="4" | {{EntityLink|Llama}}
+| 4 || 8 || {{BiomeLink|Windswept Savanna}}
+|
+|
+|
+|-
+| rowspan="3" | 4-6 || rowspan="3" | 5
+| {{BiomeLink|Windswept Forest}}
+|
+|
+|
+|-
+| {{BiomeLink|Windswept Gravelly Hills}}
+|
+|
+|
+|-
+| {{BiomeLink|Windswept Hills}}
+|
+|
+|
+|-
+| {{EntityLink|Mooshroom}} || 4 || 8 || {{BiomeLink|Mushroom Fields}} || on [[mycelium]]
+|
+|
+|-
+| rowspan="2" | {{EntityLink|Panda}} || rowspan="2" | 1-2
+| 1 || {{BiomeLink|Jungle}}
+|
+|Normal Panda
+|
+|-
+| 80 || {{BiomeLink|Bamboo Jungle}}
+|
+|Normal Panda 
+|
+|-
+| rowspan="2" | {{EntityLink|Parrot}} || rowspan="2" | 1-2 || rowspan="2" | 1
+| {{BiomeLink|Jungle}}
+| rowspan="2" | on grass blocks, any [[leaves]], or any [[log]]s.
+|
+|
+|-
+| {{BiomeLink|Bamboo Jungle}}
+|
+|
+|-
+| rowspan="2" | {{EntityLink|Pig}}
+| 1-2 || 1 || {{BiomeLink|Cherry Grove}}
+|
+|
+|
+|-
+| 4 || 10 || Farm animal biomes<ref name="farm animal biomes" group="A" />
+|
+|
+|
+|-
+| rowspan="4" | {{EntityLink|Polar Bear}} || rowspan="4" | 1-2 || rowspan="4" | 1
+| {{BiomeLink|Deep Frozen Ocean}}
+| rowspan="2" | only on regular [[ice]]
+|
+|
+|-
+| {{BiomeLink|Frozen Ocean}}
+|
+|
+|-
+| {{BiomeLink|Ice Spikes}}
+|
+|
+|
+|-
+| {{BiomeLink|Snowy Plains}}
+|
+|
+|
+|-
+| rowspan="12" | {{EntityLink|Rabbit}}
+| rowspan="10" | 2-3
+| rowspan="6" | 4
+| {{BiomeLink|Flower Forest}}
+| rowspan="12" | on grass blocks, snow, snow blocks, or regular [[sand]]
+|
+|
+|-
+| {{BiomeLink|Old Growth Pine Taiga}}
+|
+|
+|-
+| {{BiomeLink|Old Growth Spruce Taiga}}
+|
+|
+|-
+| {{BiomeLink|Snowy Slopes}}
+|
+|
+|-
+| {{BiomeLink|Snowy Taiga}}
+|
+|
+|-
+| {{BiomeLink|Taiga}}
+|
+|
+|-
+| 8 || {{BiomeLink|Grove}}
+|
+|
+|-
+| rowspan="2" | 10
+| {{BiomeLink|Ice Spikes}}
+|
+|
+|-
+| {{BiomeLink|Snowy Plains}}
+|
+|
+|-
+| 12 || {{BiomeLink|Desert}}
+|
+|
+|-
+| rowspan="2" | 2-6 || rowspan="2" | 2
+| {{BiomeLink|Cherry Grove}}
+|
+|
+|-
+| {{BiomeLink|Meadow}}
+|
+|
+|-
+| rowspan="3" | {{EntityLink|Sheep}}
+| rowspan="2" | 2-4 || rowspan="2" | 2
+| {{BiomeLink|Cherry Grove}}
+|
+|Adult White Sheep 77.7442%
+|Adult Black Sheep 4.75%
+Adult Gray Sheep 4.75%
+
+Adult Light Gray Sheep 4.75%
+
+Adult Brown Sheep 2.85%
+
+Adult Pink Sheep 0.1558%
+
+White Lamb 4.0918%
+
+Black Lamb 0.25%
+
+Gray Lamb 0.25%
+
+Light Gray Lamb 0.25%
+
+Brown Lamb 0.15%
+
+Pink Lamb 0.0082%
+|-
+| {{BiomeLink|Meadow}}
+|
+|Adult White Sheep 77.7442%
+|Adult Black Sheep 4.75%
+Adult Gray Sheep 4.75%
+
+Adult Light Gray Sheep 4.75%
+
+Adult Brown Sheep 2.85%
+
+Adult Pink Sheep 0.1558%
+
+White Lamb 4.0918%
+
+Black Lamb 0.25%
+
+Brown Lamb 0.15%
+
+Pink Lamb 0.0082%
+|-
+| 4 || 12 || Farm animal biomes<ref name="farm animal biomes" group="A" />
+|
+|Adult White Sheep 77.7442%
+|Adult Black Sheep 4.75%
+Adult Gray Sheep 4.75%
+
+Adult Light Gray Sheep 4.75%
+
+Adult Brown Sheep 2.85%
+
+Adult Pink Sheep 0.1558%
+
+White Lamb 4.0918%
+
+Black Lamb 0.25%
+
+Brown Lamb 0.15%
+
+Pink Lamb 0.0082%
+|-
+| rowspan="5" | {{EntityLink|Strider}}<ref group="A">While striders are configured for natural spawning and will do so as part of the regular spawn cycle, they cannot be generated as part of chunks, since the top block of any chunk in the [[Nether]] is the [[bedrock]] roof.</ref> || rowspan="5" | 1-2 || rowspan="5" | 60
+| {{BiomeLink|Basalt Deltas}}
+| rowspan="5" | in [[lava]] sources with air above, at any light level
+|
+|
+|
+|-
+| {{BiomeLink|Crimson Forest}}
+|
+|
+|-
+| {{BiomeLink|Nether Wastes}}
+|
+|
+|-
+| {{BiomeLink|Soul Sand Valley}}
+|
+|
+|-
+| {{BiomeLink|Warped Forest}}
+|
+|
+|-
+| {{EntityLink|Turtle}} || 2-5 || 5 || {{BiomeLink|Beach}} || on any sand less than four blocks above sea level
+|
+|None
+|-
+| rowspan="9" | {{EntityLink|Wolf}}
+| 1 || 1 || {{BiomeLink|Grove}}
+| rowspan="9" | on grass blocks, snow, snow blocks, coarse dirt, or podzol
+|
+|
+|-
+| 2-4 || 8 || {{BiomeLink|Sparse Jungle}}
+|
+|
+|-
+| rowspan="5" | 4
+| 5 || {{BiomeLink|Forest}}
+|
+|
+|-
+| rowspan="4" | 8
+| {{BiomeLink|Old Growth Pine Taiga}}
+|
+|
+|-
+| {{BiomeLink|Old Growth Spruce Taiga}}
+|
+|
+|-
+| {{BiomeLink|Snowy Taiga}}
+|
+|
+|-
+| {{BiomeLink|Taiga}}
+|
+|
+|-
+| rowspan="2" | 4-8
+| 2 || {{BiomeLink|Wooded Badlands}}
+|
+|
+|-
+| 8 || {{BiomeLink|Savanna Plateau}}
+|
+|
+|}
+
+<references group="A" />
+
+
+== Mob spawning on structure generation ==
+When certain structures are generated, they may also spawn various mobs at specific locations within the structure. These mobs will not despawn on their own, even if their regularly spawned versions would. The only exception is that hostile mobs still despawn if the game [[difficulty]] is set to "Peaceful". This type of mob generation is not to be confused with the special set of mobs that can spawn in certain structures during the regular [[#Spawn Cycle|spawn cycle]].
+
+The following structures generate with mobs:
+
+* [[End City]]– Throughout the various sections there are fixed spots where [[shulker]]s initially generate.
+* [[Igloo]] – If the structure generates with a basement, it will contain a [[villager]] and a [[zombie villager]] in individual cells.
+* [[Ocean Monument]] – A total of three [[elder guardian]]s generate in the wings and "penthouse" of the structure.
+* [[Ocean Ruins]] – Several [[drowned]] generate between the ruins. They can spawn with equipment, in baby form, or as a [[zombie nautilus jockey]] per the usual rules.
+* [[Pillager Outpost]]s – [[Allay]]s and [[iron golem]]s spawn in cages near the tower in pillager outposts.
+* [[Swamp Hut]] – A [[witch]] and a [[black cat]] generate inside the hut.
+* [[Village]] – Villages not only generate a number of [[villager]]s, but also typically come with one or more existing [[iron golem]]s and various animals, such as [[cow]]s, [[horse]]s, [[pig]]s, [[sheep]], and [[stray cat]]s. If the village is abandoned, the villagers instead generate as [[zombie villager]]s and iron golems will not generate at all.
+* [[Woodland Mansion]] – The various rooms can have one or more generated [[vindicator]]s and/or an [[evoker]] in them. [[Allay]]s also spawn in woodland mansions.
+* [[Nether Fortress|Nether fortress]] - [[Blaze|Blazes]] and [[Wither Skeleton|wither skeletons]] can only spawn in nether fortresses.
+
+== Spawn cycle ==
+
+=== ''Java Edition'' ===
+Mobs are broadly divided into seven categories: hostile, passive, water creature ([[squid]], [[dolphin]]s, and [[nautilus]]es), underground water creature ([[glow squid]]), axolotls, water ambient (all 4 types of [[fish]]), and ambient ([[bat]]). Most mobs have a spawning cycle once every game [[tick]] ({{frac|1|20}} of a second), but passive mobs have only one spawning cycle every {{convert|400|game tick|second}}. Because of this, where conditions permit, hostile mobs spawn frequently, but passive mobs (animals) spawn rarely. Most animals spawn within chunks when they are [[#Natural generation|generated]].
+
+Mobs spawn naturally within chunks that have a player horizontally within 128 blocks of the [[chunk]] center, and can only spawn within a 128 block radius sphere centered on the player.<!--1.19.2: ServerChunkCache::tickChunks calls ChunkMap::anyPlayerCloseEnoughForSpawning() before calling NaturalSpawner::spawnForChunk() (and ServerLevel::tickChunk(), for that matter).--> When there are multiple players, mobs can spawn within the given distance of ''any'' of them. Hostile mobs (and some others) that move farther than 128 blocks from the nearest player despawn instantly.
+
+==== ''Java Edition'' mob cap ====
+There are two caps, a global cap and a per-player cap. Note the [[#Spawn costs|spawn density]] mechanism may also be considered a "cap" of sorts, but takes effect later in the spawning process.
+
+The mob caps are checked once for each spawn-eligible chunk. Spawn for the chunk may take the total number of mobs over the cap.
+
+The caps for each mob category are as follows:
+{| class="wikitable"
+!Mob category
+!Cap
+|-
+|Monster
+|70
+|-
+|Creature
+|10
+|-
+|Ambient
+|15
+|-
+|Axolotls
+|5
+|-
+|Underground water creature
+|5
+|-
+|Water creature
+|5
+|-
+|Water ambient
+|20
+|-
+|Misc
+| -1
+|}
+
+The entities included in each mob cap are as follows:
+{| class="wikitable"
+! style="min-width:6em;" | Cap !! Entities
+|-
+| [[Monster]]
+| class="hlist" |
+* {{EntityLink|Blaze}}
+* {{EntityLink|Bogged}}
+* {{EntityLink|Breeze}}
+* {{EntityLink|Camel Husk}}
+* {{EntityLink|Cave Spider}}
+* {{EntityLink|Creaking}}
+* {{EntityLink|Creeper}}
+* {{EntityLink|Drowned}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Enderman}}
+* {{EntityLink|Endermite}}
+* {{EntityLink|Evoker}}
+* {{EntityLink|Ghast}}
+* {{EntityLink|Giant}}
+* {{EntityLink|Guardian}}
+* {{EntityLink|Hoglin}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Illusioner}}
+* {{EntityLink|Magma Cube}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Phantom}}
+* {{EntityLink|Piglin}}
+* {{EntityLink|Piglin Brute}}
+* {{EntityLink|Pillager}}
+* {{EntityLink|Ravager}}
+* {{EntityLink|Shulker}}
+* {{EntityLink|Silverfish}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Slime}}
+* {{EntityLink|Spider}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Sulfur Cube}}{{upcoming}}
+* {{EntityLink|Vex}}
+* {{EntityLink|Vindicator}}
+* {{EntityLink|Warden}}
+* {{EntityLink|Witch}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Zoglin}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Horse}}
+* {{EntityLink|Zombie Nautilus}}
+* {{EntityLink|Zombie Villager}}
+* {{EntityLink|Zombified Piglin}}
+|-
+| [[Animal|Creature]]
+| class="hlist" |
+* {{EntityLink|Allay}}
+* {{EntityLink|Armadillo}}
+* {{EntityLink|Bee}}
+* {{EntityLink|Camel}}
+* {{EntityLink|Cat}}
+* {{EntityLink|Chicken}}
+* {{EntityLink|Cow}}
+* {{EntityLink|Donkey}}
+* {{EntityLink|Fox}}
+* {{EntityLink|Frog}}
+* {{EntityLink|Goat}}
+* {{EntityLink|Happy Ghast}}
+* {{EntityLink|Horse}}
+* {{EntityLink|Llama}}
+* {{EntityLink|Mooshroom}}
+* {{EntityLink|Mule}}
+* {{EntityLink|Ocelot}}
+* {{EntityLink|Panda}}
+* {{EntityLink|Parrot}}
+* {{EntityLink|Pig}}
+* {{EntityLink|Polar Bear}}
+* {{EntityLink|Rabbit}}
+* {{EntityLink|Sheep}}
+* {{EntityLink|Skeleton Horse}}<ref>{{bug|MC-304371||Skeleton horses use the incorrect mob cap}}</ref>
+* {{EntityLink|Sniffer}}
+* {{EntityLink|Strider}}
+* {{EntityLink|Tadpole}}
+* {{EntityLink|Trader Llama}}
+* {{EntityLink|Turtle}}
+* {{EntityLink|Wandering Trader}}
+* {{EntityLink|Wolf}}
+|-
+| Ambient
+| class="hlist" |
+* {{EntityLink|Bat}}
+|-
+| Axolotls
+| class="hlist" |
+* {{EntityLink|Axolotl}}
+|-
+| Underground water creature
+| class="hlist" |
+* {{EntityLink|Glow Squid}}
+|-
+| Water creature
+| class="hlist" |
+* {{EntityLink|Dolphin}}
+* {{EntityLink|Nautilus}}
+* {{EntityLink|Squid}}
+|-
+| Water ambient 
+| class="hlist" |
+* {{EntityLink|Cod}}
+* {{EntityLink|Pufferfish}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Tropical Fish}}
+|-
+| Misc
+| class="hlist" |
+* {{EntityLink|Area Effect Cloud}}
+* {{EntityLink|Armor Stand}}
+* {{EntityLink|Arrow}}
+* {{EntityLink|Block Display}}
+* {{EntityLink|Boat}}
+* {{EntityLink|Boat with Chest}}
+* {{EntityLink|Wind Charge|Breeze Wind Charge}}
+* {{EntityLink|Copper Golem}}
+* {{EntityLink|Dragon Fireball}}
+* {{EntityLink|Egg}}
+* {{EntityLink|End Crystal}}
+* {{EntityLink|Ender Pearl}}
+* {{EntityLink|Evoker Fangs}}
+* {{EntityLink|Bottle o' Enchanting}}
+* {{EntityLink|Experience Orb}}
+* {{EntityLink|Eye of Ender}}
+* {{EntityLink|Falling Block}}
+* {{EntityLink|Fireball}}
+* {{EntityLink|Firework Rocket}}
+* {{EntityLink|Fishing Bobber}}
+* {{EntityLink|Glow Item Frame}}
+* {{EntityLink|Interaction}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Item}}
+* {{EntityLink|Item Display}}
+* {{EntityLink|Item Frame}}
+* {{EntityLink|Leash Knot}}
+* {{EntityLink|Lightning Bolt}}
+* {{EntityLink|Lingering Potion}}
+* {{EntityLink|Llama Spit}}
+* {{EntityLink|Mannequin}}
+* {{EntityLink|Marker}}
+* {{EntityLink|Minecart}}
+* {{EntityLink|Minecart with Chest}}
+* {{EntityLink|Minecart with Command Block}}
+* {{EntityLink|Minecart with Furnace}}
+* {{EntityLink|Minecart with Hopper}}
+* {{EntityLink|Minecart with Spawner}}
+* {{EntityLink|Ominous Item Spawner}}
+* {{EntityLink|Minecart with TNT}}
+* {{EntityLink|Painting}}
+* {{EntityLink|Player}}
+* {{EntityLink|Shulker Bullet}}
+* {{EntityLink|Small Fireball}}
+* {{EntityLink|Snow Golem}}
+* {{EntityLink|Snowball}}
+* {{EntityLink|Spectral Arrow}}
+* {{EntityLink|Splash Potion}}
+* {{EntityLink|Text Display}}
+* {{EntityLink|TNT}}
+* {{EntityLink|Trident}}
+* {{EntityLink|Villager}}
+* {{EntityLink|Wind Charge}}
+* {{EntityLink|Wither Skull}}
+|}
+
+The "misc" category is used only by entities that are not mobs, do not spawn naturally, and/or following different spawning rules than other mobs. As such the mob cap has no bearing on mobs of this category. The global mob cap affects only environmental mob spawning, and does not affect mobs spawned through breeding, spawn eggs, the {{cmd|summon}} command, monster spawners, or any other type of mob spawning.
+
+; Global mob cap
+
+All non-[[Mob spawning#Java persistent mobs|persistent]] loaded mobs are counted against the global cap, including those in chunks not in range of a player or eligible for spawns. The cap is scaled by the total number of chunks within a 17×17 chunk square around any player. The cap is then scaled as <code>globalCap = mobCap &#xD7; chunks ÷ 289</code>. Because chunks that are in the range of multiple players are counted once, more chunks and higher mob caps result from the players spreading out.
+
+; Per-player mob cap
+
+Each non-[[#Java persistent mobs|persistent]] mob in a chunk that has its center within 128 blocks horizontally of a player is counted toward that player's per-player mob cap. For each chunk, spawns are only allowed if at least one player has that chunk in range and has not reached their per-player mob cap.
+
+==== Pack spawning ====
+[[File:Spawning_science.jpg|thumb|Example of a mob pack spawning. The mob spawning area is shaded blue. The yellow figures represent the actual positions that mobs could spawn in after checking the environment. Note that the mobs can spawn inside torch and ladder blocks. The red cube is the center of the pack.]]
+[[File:Spawning_requirements.png|thumb|Requirements for the spawning location of individual mobs. Top slabs, upside-down stairs{{Only|Java}} etc. count as opaque block.]]
+For each spawning cycle, attempts are made to spawn ''packs'' of mobs per ''each'' eligible chunk. An eligible chunk is determined by the same check for which chunks are [[random tick]]ed. A random location in the chunk is chosen to be the center point of the pack. The X and Z coordinates are chosen completely at random, while the Y coordinate is a random coordinate between the block above the highest block in the column and -64. This makes lower maximum elevations a strong way to increase spawn rates and is the reason why perimeters are so effective. If the block in which a pack spawn occurs is an opaque full cube, further pack spawn attempts are canceled. There are a maximum of 3 pack spawn attempts per mob category.
+
+Before the attempt to spawn each mob in the pack, the position is offset by ±5 (triangular distribution) on the X and Z axes. Thus, while the pack can be spread out up to 40 blocks from the initial position for a pack size of 4, it's much more likely they'll be closer to the center. Approximately 85% of spawns are within 5 blocks of the pack center, and 99% within 10 blocks of the center. Mobs spawn with the lowest part of their body ''inside'' this area.
+
+All mobs within a pack are the same species. The species for the entire pack is chosen randomly, but based on a weight system from those eligible to spawn at the location of the first spawn attempt in the pack. For later mob spawn attempts in the pack, if the selected species cannot spawn at the location (e.g. due to being in a different biome or structure) then that attempt fails.
+
+The game checks on each spawn if the number of mobs that have been spawned for the pack is equal to the max spawn attempts, as well as the location's spawn potential.
+
+===== Pack spawn size =====
+
+Pack spawn attempts max out at:
+
+* 8 wolves, cod, and tropical fish
+* 6 horses and donkeys
+* 4 for any other mob
+
+When the max pack size is less than the number of possible spawn attempts, some spawns attempts fail, but are seen more commonly in practice. Based on the number of mobs that have been successfully spawned, if the max pack size is greater than the number of spawn attempts, one gets only the number of spawns from the spawn attempts. Some mobs have a minimum and max pack size, meaning there is an even chance for any number of spawn attempts between them occurring.
+
+* For [[zombie villager]]s, [[drowned]], [[donkey]]s in [[savanna]] biomes, cats in [[swamp hut]]s, [[witch]]es and [[ghast]]s in [[basalt deltas]], it is 1.
+* For [[parrot]]s, [[polar bear]]s, [[squid]] in [[lukewarm ocean]]s, [[panda]]s and [[dolphin]]s, it is 1-2.
+* For donkeys in [[plains]] biomes, ocelots and pufferfish, it is 1-3.
+* For [[endermen]] except in [[the End]] and in [[nether wastes]], and [[squid]] except in [[lukewarm ocean]]s, it is 1-4.
+* For [[rabbit]]s and [[blaze]]s, it is 2-3.
+* For [[guardian]]s, [[fox]]es, [[zombified piglin]]s in [[crimson forest]]s and [[strider]]s, it is 2-4.
+* For [[magma cube]]s in [[basalt deltas]] and [[turtle]]s, it is 2-5.
+* For [[horse]]s, it is 2-6.
+* For [[piglin]]s and [[hoglin]]s in [[crimson forest]]s, it is 3-4.
+* For [[cod]], it is 3-6.
+* For [[llama]]s in [[windswept hills]] biomes and [[glow squid]], it is 4-6.
+* For [[mooshroom]]s, it is 4-8.
+* For [[wither skeleton]]s and [[skeleton]]s, in nether fortresses, it is 5.
+* For [[bat]]s and [[tropical fish]], it is 8.
+* For every other mob, it is 4.
+
+===== Pack spawn location =====
+
+For all dimensions, structure-based spawns take priority over biome for hostile spawns. This means that in a [[swamp hut]], [[pillager outpost]], [[Nether fortress]] (outer bounding box only when there is [[Nether bricks]] below it{{only|java|short=1}}), and [[ocean monument]], one sees only the corresponding hostile mobs for that structure within that structure.
+
+In the [[Overworld]], this depends on the location:<!--Biome specific Animal mobs moved to table above (at #Natural Spawning section)-->
+
+* [[Jungle]] biomes have a higher chance to spawn [[chicken]]s.{{only|java}}
+* [[Badlands]] biomes spawn only hostile mobs, [[armadillo]]s and [[bat]]s.
+* [[River]] and [[frozen river]] can spawn only [[drowned]], squid, and salmon underwater.<!--monsters just spawn from nearby biomes-->
+* [[Ocean]] biomes do not spawn passive mobs. They spawn [[drowned]], and the other hostile mobs. [[Frozen ocean]]s do not spawn dolphins, but do spawn [[polar bear]]s.
+* [[Snowy plains]] biomes do not spawn animals other than [[polar bear]]s and [[rabbit]]s.
+* [[Swamp hut]]s spawn only [[witch]]es, [[cat]]s, and bats.
+* [[Ocean monument]]s spawn [[guardian]]s, other water mobs and bats.
+* [[Pillager outpost]]s spawn [[pillager]]s, other passive mobs and bats.
+* All other Overworld biomes spawns common animals and common monsters, as well as slimes, dependent on spawn conditions.
+
+In [[the Nether]]:
+
+* [[Skeleton]]s, [[wither skeleton]]s, [[magma cube]]s, [[zombified piglin]]s, and [[blaze]]s spawn within [[nether fortress]]es.
+* [[Ghast]]s spawn in [[Nether wastes]], [[soul sand valley]], and [[basalt deltas]].
+* Zombified piglins and piglins can spawn in nether wastes, while magma cubes spawn primarily in [[basalt deltas]] and sometimes in nether wastes.
+* Ghasts, magma cubes and hoglins spawn regardless of light level.
+* [[Hoglin]]s and [[piglin]]s spawn at a higher rate anywhere in the [[crimson forest]] biome.
+* [[Endermen]] spawn more frequently in the [[warped forest]] biome, but not in the crimson forest.
+* [[Skeleton]]s and [[ghast]]s spawn more frequently in the [[soul sand valley]] biome.
+
+==== Spawn conditions ====
+Whether a spawn condition fails differs from the above determination if the game tries to spawn them in that biome. For example, dolphins can have pack spawns that occur inside of frozen ocean and deep frozen ocean biomes, but no other biomes. These rules apply to variants of the same mob, such as baby zombies and jockeys.
+
+Each individual spawn attempt succeeds only if ''all'' of the following conditions are met:
+
+* There must be no players or the world spawn point within a 24 radius block distance (spherical) of the spawning block.
+* The number of loaded mobs of that type must be less than the mob cap for that type (I.e. the corresponding mob cap must not be full).
+* The mob's collision box upon spawning must not collide with another collision box. A mob cannot spawn inside of anything that would collide with it upon spawning.
+* The mob's collision box must not intersect with a solid block.
+* For all mob types excluding passives and fish, spawns fail unless within a 128 radius block sphere around the player. For fish, spawns fail unless within a 64 block radius of the player.<ref name="20w10a">{{snap|20w10a|March 4, 2020}}</ref>
+* {{cmd|gamerule doMobSpawning}} is <code>true</code>.
+* For non-aquatic mobs, the following conditions must be satisfied for the block above the spawning surface:
+** It must not be a block with a full 1x1x1 collision box.
+** It must not be a [[Redstone components#Power components|redstone power component]] or [[Redstone components#Transmission components|transmission component]] like [[Pressure Plate|pressure plates]], [[Button|buttons]], [[Redstone Dust|redstone dust]], etc.
+** It must not be a [[fluid]].
+** It must not be a block inside the block tag <code>prevent_mob_spawning_inside</code>, which currently means it cannot be any type of [[Rail|rails]].
+** It must not damage the mob which is being spawned (this prevents spawning inside [[fire]], [[Wither Rose|wither roses]], [[Sweet Berries|sweet berry bushes]], or [[Powder Snow|powder snow]] for most mobs).
+
+===== Hostile mobs =====
+* The difficulty must not be Peaceful.
+** Piglins, hoglins and zombie nautiluses can spawn in Peaceful, but only as part of structures, not in biomes by themselves.
+** Ocelots cannot spawn in Peaceful due to a bug{{Only|Java}}<ref>{{bug|MC-1788}}</ref>.
+* For all hostiles other than guardians, drowned, and phantoms:
+** the block directly below it must have a solid, complete, top surface (this includes top [[slab]]s, upside-down [[stairs]], and others) or be [[soul sand]] or [[mud]].
+*** Some blocks do not allow mobs to spawn on it:
+**** Every variant of [[glass]] (stained, tinted)
+**** [[Bedrock]]
+**** [[Barrier]]
+**** [[Trapdoor|Trapdoors]]
+**** [[Chorus Flower]]
+**** [[Scaffolding]]
+**** [[Copper Grate]]
+**** [[Leaves]] (only ocelots and parrots can spawn on leaves)
+**** [[Ice]] and [[Frosted Ice|frosted ice]] (only polar bears can spawn on these)
+** The block directly below it must not emit a light level of 14 or higher (this is relevant for slimes).
+*** Exceptions are [[Jack o'Lantern|jack o'lanterns]] and lit [[Redstone Lamp|redstone lamps]].<ref>[[bugtracker:MC/issues/MC-306163|MC-306163]]</ref>
+** The hitbox must not collide with any liquid or collision box of a block. 
+** The mob must be immune to the damaging effects of the spawning block and the block directly below it. For instance, if the block directly below the spawning block is a [[magma block]], the mob must be immune to fire damage. If the spawning block contains a [[wither rose]], the mob must be immune to wither damage (currently, this is only true for wither skeletons).
+
+Regarding a '''[[light level]]''', the basic rules for spawning are as follows (compare it with {{Slink|Light|Mobs}}):
+
+* In the Overworld, if the [[internal sky light]] level is 7 or less (which always occurs inside a cave) and the block level is 0, all Overworld monsters can spawn. On the surface of the Overworld this occurs for [[Light#Internal_sky_light|8 minutes]] of the [[Daylight cycle#Conversions|20 minutes]]. Each Monster has slightly different conditions for spawning though, so check out [[Light#Mobs]]
+* In the Nether, if the block light level is 7 or less, all Nether monsters can spawn. Sky light is always 0 in the Nether.
+* In the End, block light level must be 0. Sky light is similar to the Overworld in The End: 15 on the surface and lower light levels under solid blocks.
+For more specific rules check [[Light#Effects_of_light]].
+
+When doing the light check in the Overworld and End, the spawn chances are randomized and a spawn only occurs if the light level is less than or equal to a random number between 0 and 7. In the Nether, as long as the light level is 11 or below, the spawn is allowed.
+
+Some mobs have some additional rules in addition to the ones above.
+{| class="wikitable"
+! scope="col" |Mob
+! scope="col" |Rules
+|-
+|{{EntityLink|Blaze}}
+|
+* Spawns only in nether fortresses.
+|-
+|{{EntityLink|Drowned}}
+|
+* Spawning block and block below must be water.
+* In rivers, has {{frac|1|15}} chance to spawn.
+* In oceans, has {{frac|1|40}} chance to spawn and must be 5 block below sea level.
+|-
+|{{EntityLink|Ghast}}
+|
+* 95% chance of spawn failure.
+|-
+|{{EntityLink|Guardian}}
+|
+* The spawning block and the block below must be water, including waterlogged blocks and bubble columns.
+* 95% chance of failure if the spawning block has sky exposure ([[Guardian#Spawning|details]]).
+|-
+|{{EntityLink|Hoglin}}
+|
+* Cannot spawn on nether wart block.
+|-
+|{{EntityLink|Husk}}
+|
+* The location of the spawn must have sky access.
+|-
+|{{EntityLink|Magma Cube}}
+|
+* Cannot spawn on liquid.
+|-
+|{{EntityLink|Ocelot}}
+|
+* Spawn has a {{frac|1|3}} chance of failure.
+* Can spawn on leaves.
+|-
+|{{EntityLink|Piglin}}
+|
+* Cannot spawn on nether wart block.
+|-
+|{{EntityLink|Skeleton}} (nether fortress)
+|
+* There is an 80% chance of spawning a [[wither skeleton]] instead.{{verify}}
+|-
+|{{EntityLink|Slime}} (swamp biome)
+|
+* the spawning block must be in a swamp biome.
+* the spawning block be on level 51 through 69 inclusive.
+* chance of failure based on [[Difficulty#Moon phase|the phase of the moon]].
+* 50% chance of failure.
+|-
+|{{EntityLink|Slime}} (slime chunks)
+|
+* the spawning block is below level 40.
+* 90% chance of failure.
+|-
+|{{EntityLink|Stray}}
+|
+* The location of the spawn must have sky access.
+|-
+|{{EntityLink|Wither Skeleton}}
+|
+* Spawns only in nether fortresses.
+|-
+|{{EntityLink|Zombie Horse}}
+|
+* Spawns only in grass blocks.
+|-
+|{{EntityLink|Zombified Piglin}}
+|
+* Cannot spawn on nether wart block.
+|}
+
+===== Passive mobs =====
+
+* The mob's collision box must not collide with any liquid.
+* The spawning block must have a light level of 9 or greater.
+
+* The block directly below the spawning block must be one associated to the mob, as per the table below :
+{| class="wikitable"
+! scope="col" |Mob
+! scope="col" |Spawning Blocks
+|-
+|{{EntityLink|Mooshroom}}
+|
+{{BlockLink|Mycelium}}
+|-
+|{{EntityLink|Turtle}}
+|
+{{BlockLink|Sand}} <br/>
+* the spawning block<ref name="spawning block position"> that is, the block situated one block above the floor block the mob will spawn onto </ref> must be y-level 66 or lower.
+|-
+|{{EntityLink|Parrot}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|id=oak leaves|Leaves}} <br/>
+{{BlockLink|id=oak log|Logs}} <br/>
+{{BlockLink|Air}} <br/>
+|-
+|{{EntityLink|Rabbit}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Sand}} <br/>
+{{BlockLink|Snow Block}} <br/>
+{{BlockLink|Snow}}<ref name="snow"> only 8 levels, since only blocks with solid top surfaces are spawnable. See {{bug|MC-202376}}.</ref><br/>
+
+|-
+|{{EntityLink|Wolf}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Podzol}} <br/>
+{{BlockLink|Coarse Dirt}} <br/>
+{{BlockLink|Snow Block}} <br/>
+{{BlockLink|Snow}}<ref name="snow" /> <br/>
+|-
+|{{EntityLink|Fox}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Podzol}} <br/>
+{{BlockLink|Coarse Dirt}} <br/>
+{{BlockLink|Snow Block}} <br/>
+{{BlockLink|Snow}}<ref name="snow" /> <br/>
+|-
+|{{EntityLink|Polar Bear}} 
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Ice}} <br/>
+|-
+|{{EntityLink|Goat}}
+|
+{{BlockLink|Stone}} <br/>
+{{BlockLink|Gravel}} <br/>
+{{BlockLink|Packed Ice}} <br/>
+{{BlockLink|Snow Block}} <br/>
+{{BlockLink|Snow}}<ref name="snow" /> <br/>
+|-
+|{{EntityLink|Armadillo}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Coarse Dirt}} <br/>
+{{BlockLink|Terracotta}} <br/>
+{{BlockLink|Red Sand}} <br/>
+|-
+|{{EntityLink|Frog}}
+|
+{{BlockLink|Grass Block}} <br/>
+{{BlockLink|Mud}} <br/>
+{{BlockLink|Mangrove Roots}} <br/>
+{{BlockLink|Muddy Mangrove Roots}} <br/>
+|-
+|{{EntityLink|Camel}} 
+|
+{{BlockLink|Sand}} 
+
+{{BlockLink|Red Sand}} 
+|-
+|any other passive mob in this category 
+|
+{{BlockLink|Grass Block}} <br/>
+|}
+
+* [[Strider]]s ignore the precedent requirements. Strider spawning attempts with lava above check upward as long as there is still lava for if they can successfully spawn in a lava block with air on top.
+
+===== Aquatic mobs =====
+
+* The spawning block must be water.
+The mobs have some additional rules in addition to the one above.
+{| class="wikitable"
+! scope = "col" | Mob
+! scope = "col" | Rules
+
+|-
+|
+{{EntityLink|Cod}} <br/>
+{{EntityLink|Salmon}} <br/>
+{{EntityLink|Pufferfish}} <br/>
+{{EntityLink|Tropical Fish}} <br/> 
+{{EntityLink|Squid}} <br/>
+{{EntityLink|Dolphin}} <br/>
+|
+* the block directly below the spawning block must be water.
+* the block directly above the spawning block must be water and cannot be waterlogged.
+* the spawning block must be between level 50 and 63, inclusive. This does not apply to [[tropical fish]] spawning in lush caves.
+
+|-
+| {{EntityLink|Glow Squid}} 
+|
+* the light level must be 0.
+* the spawning block must be level 30 or lower.
+
+|-
+| {{EntityLink|Axolotl}}
+|
+* the block directly above the spawning block must not be a solid block.
+* the block directly below the spawning block must be [[clay]].
+
+|}
+
+===== Ambient mobs =====
+
+* The mob's collision box must not collide with any liquid.
+The [[bat]] is currently the only mob in this category, which has some additional rules in addition to the one above.
+{| class="wikitable"
+! scope = "col" | Mob
+! scope = "col" | Rules
+
+|-
+| {{EntityLink|Bat}}
+|
+* the bat mainly spawns inside blocks like air, but can also spawn inside other blocks like mushrooms, just like other mobs. 
+* the block directly below the spawning block must be [[stone]], [[granite]], [[diorite]], [[andesite]], [[tuff]], or [[deepslate]] ([[Block tag (Java Edition)|block tag]] <code>block tag bats_spawnable_on</code>), and the spawning block should not be exposed to the sky. 
+* The light level must be 4 or darker.
+|}
+
+===== Spawn costs =====
+
+[[File:Spawning_potential_as_visualized_with_minecraft.png|thumb|Locations that do not have spawning potential reliant spawns are marked by wart blocks or netherrack.]]
+The [[warped forest]] and [[soul sand valley]] biomes introduced a new mechanic to limit the amount of mobs that naturally spawn in them. The spawn cost (also called '''spawn potential''' or '''spawn density''') takes on a value for each block in the biome. Certain mobs increase that value by some number ("charge") divided by their distance to the block. If a new spawn attempt would bring the "potential" of the spawning block above a certain threshold, the spawn attempt is canceled. This results in mobs not spawning too close to one another in these biomes, and new spawns in the area are completely blocked long before the full mobcap of 70 hostile mobs is ever reached.
+
+More specifically, a mob may be spawned at a location if <code>sum( existing mob's charge ÷ distance to mob ) × new mob's charge < new mob's maximum potential</code>.<!--See net.minecraft.world.level.PotentialCalculator--> While the code allows for different mobs to have different charges and maximum potential, all checked mobs have the same charge and maximum potential within both the [[warped forest]] and the [[soul sand valley]].
+
+Which mobs contribute to the charge, how much they add, and what the maximum potential is are all biome-specific. Mobs carry charge according to their current biome, and affect spawning in an adjacent biome even if they would not contribute a charge if in that biome. For example, striders in a soul sand valley affect enderman spawns in an adjacent warped forest, even though striders in the warped forest itself do not.
+
+Due to the limited total number of mobs in soul sand valleys and warped forests, a larger-than-usual amount of mobs spawn in any space outside of these biomes, including in nether fortresses.
+
+; Notes
+
+* Buildings surrounded by air spawn more mobs inside than underground rooms because packs that spawn outside of the building can spawn mobs inside it. The mob caps tend to be reached in seconds.
+* If the player's view distance or the server view distance in multiplayer is at 9 or below, mob spawning is severely reduced (or they despawn too quickly), and may result in the player encountering no mobs at all. Set the view distance to 10 or higher to ensure mobs spawn correctly.
+
+=== ''Bedrock Edition'' ===
+Environmental spawning {{in|be}} shares broad similarities to natural spawning in ''[[Java Edition]]'': Mobs spawn in a radius around the player subject to block conditions, lighting conditions, biome conditions, naturally generated structure conditions, and caps. Many mobs spawn in groups (called "packs" in Java and "herds" in Bedrock). One notable difference from ''Java Edition'' is that most animals can spawn at light level 7 or higher rather than 9 or higher.
+
+There are two types of environmental spawns: cluster spawns and structure spawns. Structure spawns reproduce specific types of mobs at specific locations within certain naturally generated structures, such as nether fortresses, swamp huts, etc. Cluster spawns account for all other types of environmental spawns, including mobs that spawn individually (i.e. not in a herd of 2 or more). Both types of environmental spawns follow the same rules for spawn conditions and mob caps, except that structure spawns can exceed the monster population cap by 1 (see below).
+
+Mob spawning in ''Bedrock Edition'' happens within a spherical shell 24-44 blocks away from the player on [[simulation distance]] 4. It happens in a quasi-spherical shell 24-128 blocks away from the player, restricted by a simulation distance and/or to roughly 96 blocks horizontally, on simulation distances 6 and higher. This means that mobs can spawn directly above or below the player (for example, phantoms in the sky or zombies underground). Mobs can only spawn in chunks that are being ticked. There is a {{frac|11|2000}} chance of the mob spawning algorithm attempting to run per chunk, per tick.
+
+==== ''Bedrock Edition'' mob cap ====
+There are three mob caps that affect environmental spawning: a global mob cap, population control caps for general mob types, and density caps for specific mob types. The global mob cap is set at 200 regardless of difficulty. The global mob cap affects only environmental mob spawning, and does not affect mobs spawned through [[breeding]], [[spawn egg]]s, the {{cmd|summon}} command, [[monster spawner]]s, or any other type of mob spawning. Chickens created by thrown or dispensed eggs are counted in the global mob cap. Only mobs that have spawn rules count toward the global cap (i.e. armor stands and minecarts do not take up cap space). In addition, mobs that are within ticking areas (both those around players and those set manually using the {{cmd|tickingarea}} command) count toward the global mob cap; mobs not ticked do not count toward the global mob cap.
+
+The population control caps limit how many mobs of each type and category can spawn within a 9 chunk by 9 chunk square region surrounding the chunk in which the spawn attempt is made. Mobs in chunks outside a ticking area still count toward population control counts as long as they were previously loaded (i.e. within [[simulation distance]] at some time) after relogging. The population control caps are split up into two distinct categories: a cap for surface mobs, and a cap for cave mobs. Cave mobs do not count toward the surface mob cap, and surface mobs do not count toward the cave mob cap. Whether a mob counts as a surface mob or a cave mob is determined by where or how it spawned, not where it happens to be at the moment. For cluster spawns, those that spawn on the highest spawnable block at a given coordinate count toward the surface cap, and any that spawn below the highest solid ''or'' non-solid but spawnable (e.g. ice or upper slab with air above) block count toward the cave cap. Structure-spawned mobs and converted mobs (i.e. drowned converted from zombies, witches from villagers, zombified piglins from pigs, and medium and small slimes from killed larger slimes) always count toward the cave cap, and monster-spawner-spawned mobs always count toward the surface cap.
+
+There are five categories of mobs: ambient, animal, monster, pillager, and water_animal. The population control cap for each category and location of mob in each dimension is as follows (* denotes values that are coded in the game but not actually used by any mobs):
+{| class="wikitable list-style-none" data-description="Mob Density Caps"
+|+Population control caps
+!Category
+!Location
+!Overworld
+!Nether
+!The End
+|-
+! rowspan="2" |Ambient
+!Surface
+|0
+|0
+|0
+|-
+!Cave
+|2
+|0
+|2*
+|-
+! rowspan="2" |Animal
+!Surface
+|4
+|0
+|4*
+|-
+!Cave
+|0
+|4
+|0
+|-
+! rowspan="2" |Monster
+!Surface
+|8
+|0
+|10
+|-
+!Cave
+|16
+|16
+|8*
+|-
+! rowspan="2" |Pillager
+!Surface
+|8
+|0
+|8*
+|-
+!Cave
+|8
+|0
+|8*
+|-
+! rowspan="2" |Water_Animal
+!Surface
+|36
+|0
+|36*
+|-
+!Cave
+|0
+|0
+|0
+|}
+
+The entities included in each population control caps are as follows:
+{| class="wikitable"
+! style="min-width:6em;" | Population Control !! Entities
+|-
+| Ambient
+| class="hlist" |
+* {{EntityLink|Bat}}
+|-
+| [[Animal]]
+| class="hlist" |
+*{{EntityLink|Armadillo}}
+*{{EntityLink|Bee}}
+*{{EntityLink|Camel}}
+*{{EntityLink|Chicken}}
+*{{EntityLink|Cow}}
+*{{EntityLink|Dolphin}}
+*{{EntityLink|Donkey}}
+*{{EntityLink|Fox}}
+*{{EntityLink|Frog}}
+*{{EntityLink|Glow Squid}}
+*{{EntityLink|Goat}}
+*{{EntityLink|Hoglin}}
+*{{EntityLink|Horse}}
+*{{EntityLink|Llama}}
+*{{EntityLink|Mooshroom}}
+*{{EntityLink|Nautilus}}
+*{{EntityLink|Ocelot}}
+*{{EntityLink|Panda}}
+*{{EntityLink|Parrot}}
+*{{EntityLink|Pig}}
+*{{EntityLink|Polar Bear}}
+*{{EntityLink|Rabbit}}
+*{{EntityLink|Sheep}}
+*{{EntityLink|Squid}}
+*{{EntityLink|Strider}}
+*{{EntityLink|Turtle}}
+*{{EntityLink|Wolf}}
+|-
+|Cat
+| class="hlist" |
+* {{EntityLink|Cat}}
+|-
+| [[Monster]]
+| class="hlist" |
+*{{EntityLink|Blaze}}
+*{{EntityLink|Bogged}}
+*{{EntityLink|Camel Husk}}
+*{{EntityLink|Creeper}}
+*{{EntityLink|Drowned}}
+*{{EntityLink|Enderman}}
+*{{EntityLink|Ghast}}
+*{{EntityLink|Guardian}}
+*{{EntityLink|Husk}}
+*{{EntityLink|Magma Cube}}
+*{{EntityLink|Parched}}
+*{{EntityLink|Phantom}}
+*{{EntityLink|Piglin}}
+*{{EntityLink|Skeleton}}
+*{{EntityLink|Slime}}
+*{{EntityLink|Spider}}
+*{{EntityLink|Stray}}
+*{{EntityLink|Sulfur Cube}}{{upcoming}}
+*{{EntityLink|Witch}}
+*{{EntityLink|Wither Skeleton}}
+*{{EntityLink|Zombie}}
+*{{EntityLink|Zombie Horse}}
+*{{EntityLink|Zombified Piglin}}
+|-
+| Pillager
+| class="hlist" |
+*{{EntityLink|Pillager}}
+*[[Patrol|Pillager Patrol]]
+|-
+| Water Animal
+| class="hlist" |
+*{{EntityLink|Axolotl}}
+*{{EntityLink|Cod}}
+*{{EntityLink|Pufferfish}}
+*{{EntityLink|Salmon}}
+*{{EntityLink|Tropical Fish}}
+|}
+
+Some specific mobs types also have their own density caps. The density caps limit the number of those mobs to some amount below the applicable population control cap. Density caps are checked in the same manner as the population control caps. Caps are below (n/a indicates that the mob does not spawn in that environment at all).
+{| class="wikitable list-style-none" data-description="Individual mob caps"
+|+Mob density caps
+!Mob
+!Surface cap
+!Cave cap
+|-
+!{{EntityLink|Cod}}
+|20
+|n/a
+|-
+!{{EntityLink|Creeper}}
+|5
+|unlimited (population control cap still applies)
+|-
+!{{EntityLink|Dolphin}}
+|5
+|n/a
+|-
+!{{EntityLink|Drowned}}
+|5 in ocean
+2 in river
+|n/a
+|-
+!{{EntityLink|Ghast}}
+|n/a
+|2
+|-
+!{{EntityLink|Phantom}}
+|5
+|n/a
+|-
+!{{EntityLink|Pufferfish}}
+|3
+|n/a
+|-
+!{{EntityLink|Salmon}}
+|10 in ocean
+4 in river
+|n/a
+|-
+!{{EntityLink|Squid}}
+|4 in ocean
+2 in river
+|n/a
+|-
+!{{EntityLink|Tropical Fish}}
+|20 for preset pattern
+20 for random pattern
+|n/a
+|}
+
+==== Bedrock spawn conditions ====
+{{see also|Simulation Distance}}The following rules apply to most mobs:
+
+* Mobs spawn at a distance from the player that depends on the world's [[simulation distance]]:
+** Simulation distance 4: between 24 and 44 blocks spherical radius from the player.
+** Simulation distance 6 and up: between 24 and 128 blocks spherical radius from the player, but limited horizontally by simulation distance and coding that restricts the spawning algorithm from running in chunks whose center exceeds 96 blocks from the player.<ref>The 96-block horizontal limit is reported as a bug at [[bugtracker:MCPE-102197|MCPE-102197]]</ref>
+* The bottom part of the mob (i.e. the feet of a standing mob) can spawn only ''in'' an air block, or for water mobs ''in'' a water block. A few naturally-generated, non-motion-blocking blocks such as grass and flowers are ignored for this rule. If the mob spawns in a flower the block above the flower must be air.
+* The bounding box of the mob must not intersect any solid blocks. Mobs can spawn intersecting leaves, glass, and other transparent blocks.
+* There must be a block with a full, solid top surface under the spawn location for the mob to spawn ''on''. (I.e. mobs cannot spawn on carpets, lower slabs, fences, right-side-up stairs, upside-down stairs{{Only|Bedrock|short=BE}}, redstone repeaters, chests, etc.)
+* Mobs cannot spawn on transparent full blocks like glass and leaves.{{Verify}}<!-- Exceptions to this on Java edition include mangrove roots and slime blocks. -->
+* For mobs that can spawn floating in water or flying in air, the block that is checked for spawning is the water or air block immediately above the first solid top surface block below the spot where the mob would spawn. (So for example, phantoms cannot spawn over a field covered in carpet, and fish cannot spawn in an ocean where bottom slabs cover the ocean floor.)
+* Most Overworld monsters cannot spawn if the sky light level is greater than or equal to 7 or the block light level is greater than 0.
+* Most Overworld animals cannot spawn if the (combined) light level is less than 7.
+
+==== Cluster spawning ====
+Cluster spawning happens in two stages: first attempt to spawn surface mobs, then attempt to spawn cave mobs. Before spawning, the population control cap is calculated based on the 9 chunks × 9 chunks square area surrounding the current chunk. Spawning begins by picking a random X and Z location within the chunk currently being evaluated. The Y coordinate is determined by starting at the world height and searching downward for a solid-top-surface block with a non-spawn-blocking block above it. The first such block that is found is considered to be the surface, and the algorithm attempts to spawn a surface mob herd. However, if the algorithm finds a solid block before finding a spawnable solid-top-block (e.g. if it finds a tree trunk directly under leaves), it does not make any surface spawn attempt. The algorithm then continues to search downward for the next suitable block with a non-spawn-blocking block above it. When a block meeting the criteria is found, the algorithm attempts to spawn a cave mob herd at that block location. Cave spawn attempts continue until the Y coordinate reaches the world bottom, and do not stop even if a cave herd was spawned.
+
+Surface and cave cluster spawn attempts then go through the following steps to figure out what mob to spawn and how many:
+
+# Picks a random mob.
+#* If the current spawn location is in a liquid, pick a random water mob.
+#* If the light level is 7 or higher, there are no other blocks above the current location, and the current location is a grass block, pick a random animal mob.
+#* Otherwise, spawn a monster mob.
+# Picks a random number of mobs to spawn in the herd. Each mob can have its own min and max herd size, and the herd size can depend on difficulty and biome.
+# Make sure the spawn location has suitable [[#Spawn Conditions 2|spawn conditions]].
+# Limit the number of mobs spawning based on the global mob cap. No mobs spawn if the mob count already meets or exceeds the mob cap.
+# For each mob to spawn, check that spawning it would not exceed the population control cap or mob density cap.
+#* If spawning the mob would not exceed the population control or mob density caps, then the probability of a mob spawning can be calculated using the formula: <code>(mob density cap - current mob density count) / mob density cap</code>
+# Finally, attempt to spawn the mob in the world.
+#* Spawning the mob can fail; for example, if spawning it would cause it to spawn inside of a block or part of a wall.
+
+==== Structure spawning ====
+Structure spawn attempts occur at specific relative X and Z coordinates in naturally generated structures, known as "hard-coded spawn spots". The structures that have hard-coded spawn spots include swamp huts, ocean monuments, pillager outposts, and nether fortresses. Whenever a successful cluster spawn attempt occurs within a chunk that contains a hard-coded spawn spot, the environmental spawning algorithm also attempts a structure spawn. (Note that a "successful attempt" here means that a spawnable block was found, even if the spawn was then blocked by light level check or mob cap check.) The structure spawn attempt follows the same rules and steps described above for cluster spawning, with the following changes:
+
+* Instead of starting at world height and searching down to bedrock at the specific X and Z location, the search begins and ends at a specific Y values determined by the type of structure. Structure spawn attempts occur only on the first spawnable block found (i.e. the highest spawnable block) within that range.
+* The mob picked depends on the structure: swamp huts spawn witches, ocean monuments spawn guardians, pillager outposts spawn pillagers (including patrol captains), and nether fortresses spawn skeletons, wither skeletons, blazes, and magma cubes.
+* The population control caps are effectively 1 higher for structure spawn attempts.
+
+== Other types of spawning ==
+
+=== General ===
+
+* In [[Creative]] or via a dispenser, the player can use [[spawn egg]]s to spawn most mobs. When mobs are spawned this way, all normal spawning requirements, such as light level and block type, are ignored (though monsters other than shulkers and the ender dragon still cannot be spawned in peaceful).
+* Any [[entity]] can be spawned using the {{cmd|summon}} command.
+* A rider mob can be spawned on a mob, or a ride can be spawned for a mob using {{Cmd|ride}} {{In|be}}, provided that both mobs allow riding.
+
+=== Passive mobs ===
+{| class="wikitable" data-description="Animals"
+!Mob
+!Spawning
+|-
+|{{EntityLink|Agent}}
+|An agent spawns when using a code connection.{{only|bedrock|education}}
+|-
+|{{EntityLink|Axolotl}}<br>{{EntityLink|Cod}}<br>{{EntityLink|Salmon}}<br>{{EntityLink|Pufferfish}}<br>{{EntityLink|Tadpole}}<br>{{EntityLink|Tropical Fish}}
+|Spawn when using the corresponding [[bucket of aquatic mob]].
+|-
+|{{EntityLink|Bee}}
+|Spawn when a [[bee nest]] or beehive is broken without [[Silk Touch]].
+|-
+|{{EntityLink|Cat}}
+|Spawns in the vicinity of a player near a village.
+|-
+|{{EntityLink|Chicken}}
+|A thrown [[egg]] spawns baby chickens.
+|-
+|{{EntityLink|Iron Golem}}<br>{{EntityLink|Snow Golem}}<br>{{EntityLink|Copper Golem}}
+|Can be made to spawn if a player builds the proper structure out of blocks. They can also be created by an enderman. Copper golems can also spawn when scraping a non-waxed, non-oxidized [[copper golem statue]].
+|-
+|{{EntityLink|id=brown-mooshroom|Mooshroom}} (brown)
+|Spawns when a [[red mooshroom]] is struck by lightning, and vice-versa.
+|-
+|{{EntityLink|Mule}}
+|Spawn when breeding a horse and a donkey.
+|-
+|{{EntityLink|NPC}}
+|Are part of Tutorial Worlds.{{only|education}}
+|-
+|{{EntityLink|Skeleton Horse}}
+|Can spawn during thunderstorms, trigger a skeleton trap.
+|-
+|{{EntityLink|Sniffer}}
+|[[Sniffer egg]]s hatch and spawn snifflets.
+|-
+|{{EntityLink|Turtle}}
+|[[Turtle egg]]s hatch and spawn baby turtles.
+|-
+|{{EntityLink|Happy Ghast}}
+|Hydrated [[dried ghast]]s spawn ghastlings.
+|}
+
+=== Hostile mobs ===
+{| class="wikitable" data-description="Monsters"
+!Mob
+!Spawning
+|-
+|{{EntityLink|Blaze}}<br>{{EntityLink|Cave Spider}}<br>{{EntityLink|Magma Cube}}<br>{{EntityLink|Silverfish}}<br>{{EntityLink|Skeleton}}<br>{{EntityLink|Spider}}<br>{{EntityLink|Zombie}}
+|A [[monster spawner]] causes mobs to spawn constantly in the area around it.
+|-
+|{{EntityLink|Bogged}}<br>{{EntityLink|Breeze}}<br>{{EntityLink|Cave Spider}}<br>{{EntityLink|Husk}}<br>{{EntityLink|Skeleton}}<br>{{EntityLink|Silverfish}}<br>{{EntityLink|Slime}}<br>{{EntityLink|Spider}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie}} (baby)
+|A [[trial spawner]] or [[ominous trial spawner]] causes their respective mob to spawn during a normal Trial or an [[ominous trial]].
+|-
+|{{EntityLink|id=charged-creeper|Creeper}} (charged)
+|If a [[creeper]] gets struck by [[lightning]], it becomes [[Creeper#Charged Creepers|charged]].
+|-
+|{{EntityLink|Creaking}}
+|A [[creaking heart]] found in the [[pale garden]] needs to be placed by 2 correctly orientated pale oak logs. When met these conditions, they will activate and spawn a creaking during the night.
+|-
+|{{EntityLink|Endermite}}
+|Can spawn randomly when a player uses an [[ender pearl]].
+|-
+|{{EntityLink|Evoker}}<br>{{EntityLink|Pillager}}<br>{{EntityLink|Ravager}}<br>{{EntityLink|Vindicator}}<br>{{EntityLink|Witch}}
+|Can spawn as part of [[raid]]s or [[patrol]]s.
+|-
+|{{EntityLink|Phantom}}
+|Can spawn [[Phantom#Spawning|after player does not sleep or die for at least 3 days]]. ({{IN|bedrock}} phantoms are spawned by the environmental spawning algorithm like other monsters. They are subject to the monster cap, and they count toward the monster cap).
+|-
+|{{EntityLink|Magma Cube}}<br>{{EntityLink|Slime}}
+|Killing medium and large [[slime]]s or [[magma cube]]s spawns 2-4 more, but in a smaller size.
+|-
+|{{EntityLink|Silverfish}} (effect)
+|Entities with the [[status effect]] [[Infested]] have a 10% chance to spawn 1-2 silverfish when hurt.
+|-
+|{{EntityLink|Silverfish}} (block)
+|An [[infested block]] spawns a silverfish if broken, or if a nearby silverfish is attacked.
+|-
+|{{EntityLink|Slime}}
+|Entities with the [[status effect]] [[Oozing]] will spawn 2 medium slimes on [[death]].
+|-
+|{{EntityLink|Skeleton}}
+|Skeletons spawn as 20% of naturally-spawning strays<br>Can also spawn from skeleton traps.
+|-
+|{{EntityLink|Warden}}
+|When a player activates a naturally generated sculk shrieker four times or more.
+|-
+|{{EntityLink|Witch}}
+|When a [[villager]] gets struck by lightning, it is replaced by a newly spawned [[witch]].
+|-
+|{{EntityLink|Wither}}
+|Can be made to spawn if a player builds the proper structure out of blocks.
+|-
+|{{EntityLink|Zombie}}
+|Zombies spawn as 20% of naturally-spawning husks.{{only|java|short=1}}
+|-
+|{{EntityLink|Zombie}}<br>{{EntityLink|Zombified Piglin}}<br>{{EntityLink|Illager|id=Evoker}}
+|Can spawn reinforcement when hurt.{{only|java|short=1}}
+|-
+|{{EntityLink|Zombie Villager}}
+|Zombie villagers spawn as 5% of naturally-spawning zombies.
+A villager killed by a zombie has a 50% chance of becoming a zombie villager in normal difficulty, and 100% chance in hard difficulty.
+|-
+|{{EntityLink|Zombified Piglin}}
+|Can spawn from [[nether portal]]s in the Overworld. Lighting and player proximity don't prevent this.
+When a [[pig]] gets struck by [[lightning]], it is replaced by a newly spawned [[zombified piglin]].
+|-
+|{{EntityLink|Zoglin}}<br>{{EntityLink|Zombified Piglin}}
+|If a [[piglin]] or [[hoglin]] is transported to the [[Overworld]] or [[the End]], after 15 seconds they transform into [[zombified piglin]]s or [[zoglin]]s, respectively.
+|}
+
+== Despawning ==
+{{Redirect|Disappear|the enchantment|Curse of Vanishing|item despawning|Item#Behavior}}
+
+=== ''Java Edition'' ===
+[[File:Mob_spawning_ranges.png|thumb|Various mob spawning ranges, illustrated.]]
+All monster, ambient, and aquatic mobs excluding [[shulker]]s, [[wither]]s, [[elder guardian]]s, and [[ender dragon]]s despawn unless they have been marked persistent. Other mobs that are not hostile, ambient, or aquatic that do despawn include [[ocelot]]s, stray [[cat]]s, [[wandering trader]]s, and untamed [[trader llama]]s.
+
+* A mob that has had no player within 32 blocks of it for more than 30 seconds, or 10 seconds if in high light levels (over 12) for monsters, has a {{frac|1|800}} chance of despawning on each game [[tick]] ({{frac|1|20}} of a second), which is a 2.47% chance per second. Therefore, the mob population declines so that half remains after 27.75 seconds, and the average lifetime of monsters not within 32 blocks of a player is 40 seconds (after the initial 30 seconds have elapsed). The game uses an inactivity counter to tell whether a mob should be despawned or not.
+** The inactivity counter is used to track how long a mob has not taken any action. It also controls whether certain monsters can walk randomly. When the inactivity counter is over 100, all mobs except [[iron golem]]s, [[villager]]s, [[axolotl]]s, [[camel]]s, [[frog]]s, [[goat]]s, [[sniffer]]s, [[hoglin]]s, [[zoglin]]s, [[piglin]]s, [[piglin brute]]s, [[warden]]s, and [[breeze]]s will not walk randomly.
+*** The inactivity counter increases by 1 per game tick for all monsters, plus an additional 2 per game tick for mobs with an [[internal light level]] over 12, and an additional 2 per game tick for all [[Illagers|illagers and their allies]]. The inactivity counter is reset if one of the following conditions is met:
+**** The mob is less than 32 blocks from the nearest player.
+**** The mob is damaged, regardless of the damage type, which resets the counter.
+**** The mob is the [[wither]].
+**** [[Pillager]]s and [[piglin]]s pull their crossbows.
+**** [[Illager]]s target [[iron golem]]s and players during [[raid]]s.
+**** Illagers sweep through villages during raids.
+**** [[Vindicator]]s break down doors.
+*** Due to the existence of the inactivity counter, mobs outside 32 blocks but within 128 blocks have a minimum survival time. For normal mobs that can be despawned, they can only be despawned after being 32 blocks away from the player for 600 game ticks (30 seconds), and will be despawned after an average of 1400 game ticks (70 seconds); for [[Illager|illagers]], [[Ravager|ravagers]], [[Vex|vexes]], [[Witch|witches]], and monsters in bright places that can be despawned, they can only be despawned after being 32 blocks away from the player for at least 200 game ticks (10 seconds), and will be despawned after an average of 1000 game ticks (50 seconds).
+* Mobs other than fish despawn immediately if no player is within 128 blocks of it, while fish despawn if no player is within 64 blocks.<ref name="20w10a" />
+** This is a Euclidean sphere, not a cylinder from map top to bottom and not a [[Taxicab distance|taxicab]] sphere (an octahedron). Example: A mob at 0/y/0 remains at least 10 seconds (as above) if the player moves to 65/y/65 (real distance 91.9), but despawns immediately if the player moves to 91/y/91 (real distance 128.7).
+** The [[chunk]] the mob is in must still be loaded for the mob to despawn. Otherwise, the mob is saved until the [[Chunk#Chunk loading|chunk is loaded]] again. For example, if a player enters a [[nether portal]] while being chased by a spider, the spider is saved, and it resumes chasing the player coming back through the same portal. In the case of a player reloading chunks, the loading happens before the player is added, meaning they may despawn.
+* All mobs (including persistent mobs) despawn immediately at Y=-128 and below.
+* Ocelots and most monster mobs (including those that are holding items) despawn if the difficulty is set to [[Peaceful]], regardless of where the player is located. Monster mobs that do not despawn include hoglins, piglins, and shulkers in all editions.
+* For despawning to occur, there must be at least one non-spectator player in the dimension.
+* Chickens that originally spawned as [[chicken jockey]]s follow zombie despawn rules, rather than chicken despawn rules.
+* Wandering traders and trader llamas despawn after 40-60 minutes (2-3 in game days). They also despawn sooner if all the trades are locked.{{only|bedrock}}{{verify|This is not true in Java 1.19.2. Is it in Bedrock, or is this outdated or made up?|edition=bedrock}}
+* Endermites despawn after 2 minutes unless named with a name tag or have persistent tag.
+* Wardens despawn after 1 minute if they couldn't detect a vibration or smell by any mob or player.
+
+{{Anchor|Java persistent mobs}}
+Mobs are persistent, meaning they do not despawn and do not count toward the respective mob caps, when they:
+* are a passenger to another mob, a [[boat]] or a [[minecart]].<ref>{{bug|MC-182897||Some passenger mobs don't count to the mob cap|WAI}}</ref>
+* spawned as part of a [[generated structure]].
+* have had something added to their [[inventory]], including having something [[Dispense|dispensed]] upon them (such as a [[saddle]]) or something they have picked up, but never for anything they spawn with. This includes dolphins playing with items{{verify}}.
+* have been named with a [[name tag]]. However, one created from a renamed [[spawn egg]] does despawn as normal.
+* have had the NBT tag <code>{PersistenceRequired: 1b}</code> set on them, whether by being summoned with it, or by being set manually with {{cmd|data merge}} or {{cmd|data modify}}. This is also the only way to prevent wandering traders from despawning.
+
+The following mobs have their despawning prevented{{info needed|Does this mean they are marked as persistent in the game's code, or is there some other rule in the game's code that specifically prevents them from despawning?}}, and do not count towards their respective mob caps:
+
+* [[Enderman]]: During the time that they hold a block<ref>{{bug|MC-124812}}</ref>
+* [[Fish]] (all variants), [[axolotl]]s and [[tadpole]]s: Spawned as a result of placing out of a [[bucket of mob]].
+* [[Zombie villager]]s: If they were converted from a [[villager]] that has been traded with. This still counts toward the hostile mob cap.<ref>{{bug|MC-182304}}</ref>
+* [[Zombified piglin]]s and [[witch]]es: If they were converted from a [[pig]] or [[villager]] struck by lightning.
+* [[Hoglin]]s: If a [[crimson fungus]] is {{control|used}} on them. [[Zoglin]]s as a result of hoglins have crimson fungus {{control|used}} on them before they zombify also do not despawn.
+
+=== ''Bedrock Edition'' ===
+{{IN|be}}, like Java, despawning occurs based on distance and chance.
+
+* On simulation distances 6 and higher, almost all environmentally spawned mobs immediately despawn when they are either (1) in a chunk at the edge of the simulation distance (technically, a chunk not fully surrounded by 8 chunks that were simulated on the last game tick), or (2) more than 128 blocks from the nearest player.
+* On simulation distance 4, mobs immediately despawn when they are more than 44 blocks from the nearest player.
+* [[Fish]] despawn at a shorter distance, when they are more than 40 blocks from the nearest player on all simulation distances.
+* Mobs more than 32 blocks from the nearest player have a 1 in 800 chance to despawn on each game tick if they have not taken damage for 30 seconds.
+* All mobs (including persistent mobs) despawn immediately at Y=-128 and below.
+
+Mobs with persistence do not despawn. Mobs gain persistence in the following ways:
+
+* The entity interacts with a player (except for attacking, which does not count as a persistence-inducing interaction):
+** Is ridden by the player.
+** Is named with a [[name tag]].
+** Is tempted with [[food]].
+** Is [[bred]], or born as a result of breeding (except for turtles hatched from eggs before 1.17.10 <ref>{{bug|MCPE-70664}}</ref>).
+** Is tamed by the player.
+** Is summoned using the {{cmd|summon}} command or a spawn egg.
+** Is [[Zombie Villager#Curing|cured from being a zombie villager]].
+** Is spawned by the player triggering a [[skeleton trap]] (spawns [[skeleton]]s and [[skeleton horse]]s).
+** Is leashed to a [[lead]] by the player.
+*** If the mob is unleashed, it will remain persistent.
+* The entity picks up an item.
+**However, equipping a piece of armor onto a mob using a [[dispenser]] does not give it persistence.
+* The entity is spawned during the generation of a certain kind of [[structure]]:
+** [[Shulker]] spawned in an [[end city]].
+** [[Witch]] spawned in a [[swamp hut]].
+** [[Villager]] or [[zombie villager]] spawned in an [[igloo]].
+** Villager or animals spawned in a village.
+** Zombie villager or animals spawned in a [[abandoned village]].
+** [[Vindicator]], [[evoker]] or [[allay]] spawned in a [[woodland mansion]].
+** [[Piglin brute]] spawned in [[bastion remnant]].
+* The entity is spawned in a raid.
+
+The following entities always have persistence:
+{{columns-list|
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Item Frame}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Piglin Brute}}
+* {{EntityLink|Evoker}}
+* {{EntityLink|Vindicator}}
+* {{EntityLink|Allay}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Snow Golem}}
+* {{EntityLink|Villager}}
+* {{EntityLink|Armor Stand}}
+* {{EntityLink|Sniffer}}
+* {{EntityLink|Ghastling}}
+* {{EntityLink|Happy Ghast}}
+* {{EntityLink|Minecart}}
+* {{EntityLink|Painting}}
+* {{EntityLink|Shulker}}
+* {{EntityLink|Agent}}{{only|bedrock|education|short=1}}
+* {{EntityLink|Camera}}{{only|bedrock|education|short=1}}
+* {{EntityLink|NPC}}{{only|bedrock|education|short=1}}
+}}
+
+== History ==
+{{missing info|section|''Bedrock Edition'' history}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||August 25, 2009|link=https://notch.tumblr.com/post/170887079/survival-mode-status-update-video-with-plenty-of|Mobs shown to spawn in groups.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added mob spawning, alongside mobs.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100204-2027|Mob spawning is now determined by [[light]] level. Hostile mobs spawn only in dark areas, and passive mobs spawn only in bright areas.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Mobs no longer spawn naturally.}}
+|{{HistoryLine||20100316|Mobs are spawned by an arrow hitting a block.}}
+|{{HistoryLine||20100413-1951|Mobs can no longer be spawned by an arrow hitting a block.}}
+|{{HistoryLine||20100415|Mobs spawn naturally again.}}
+|{{HistoryLine||20100420|Mobs now spawn less frequently.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=<nowiki>?</nowiki>|slink=:Category:Information needed requiring unarchived version|The mob spawning algorithm has been changed. Trying to spawn mobs inside a solid block no longer causes that entire spawn cycle to bail out.
+|The chunk 0,0 (X 0-15 and Z 0-15) is no longer always the first chunk evaluated for mob spawning. Previously, if one built a dark room inside that chunk, almost all mobs would spawn there as there was no chance of the algorithm bailing out before reaching that chunk.
+|Hostile mobs can now spawn in higher light levels at lower depths, using the formula 16 − (Layer / 8). At level 8 and below, mobs could spawn even in sunlight.}}
+|{{HistoryLine||v1.2.1|Hostile mobs can no longer spawn in higher light levels at lower depths.}}
+|{{HistoryLine||unknown|The spawning area used to be 17x17 chunks rather than 15x15. The area was reduced, but the old size is still used to calculate mob caps.
+|It is no longer possible to funnel mobs into a spawning room by preventing them from spawning elsewhere. Some older sources of information about spawning make reference to the old behavior.
+|Large amounts of empty space used to encourage spawning in the general area. This remains true on a smaller scale, and only horizontally, due to pack spawning.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Previously, mob spawning was determined by light level rather than the current chunk properties. This was no longer the case in Beta 1.8. In a pre-Beta 1.8 world, hostile mobs would spawn in light level 7 or lower while friendly mobs would spawn in light levels 9 or higher. Because of this, hostile mobs had a slight chance of spawning even though it was light due to them spawning in the air where there was little light. If you had a lot of torches down, go down to your mine, then return, you would have a tendency to find your house having some cows, pigs, chickens or sheep running about.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added the [[game rule]] <code>doMobSpawning</code> to toggle mob spawning.}}
+|{{HistoryLine||1.8|dev=14w25a|Most restrictions on the pack location are removed. Formerly it had to be an air block, now any non-opaque block suffices.}}
+|{{HistoryLine||1.9|dev=15w46a|When spawning mobs, the spawning block cannot block movement (formerly just had to be non-opaque) and cannot be any type of [[rail]]. Also the block above can no longer be liquid. Mobs can no longer spawn in blocks containing any type of rails, buttons, tripwire hooks, pressure plates, levers, redstone torches, redstone repeaters, comparators, or redstone dust.}}
+|{{HistoryLine|||dev=pre2|Pack spawning mechanics adjusted, "12 attempts" is now "up to 12 attempts" and is even more heavily weighted toward the center.}}
+|{{HistoryLine||1.15|dev=19w37a|When breedable mobs spawn naturally in a group, the group now sometimes includes babies. (Has a 5% or 10% chance depending on the animal.)}}
+|{{HistoryLine||1.16|dev=20w18a|Mobs that are riders of other mobs and entities (like [[boat]]s and [[minecart]]s) no longer despawn.
+|Added the spawn cost/charge system that reduces hostile mob spawn rates in [[soul sand valley]] and [[warped forest]].
+|Added a new section to the [[debug screen]], which covers the spawning of mobs in each category.}}
+|{{HistoryLine||1.17|dev=21w13a|Added a new mob cap category for [[axolotl]]s and [[glow squid]].}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|[[Block light]] level now must be 0 for [[Light#Mobs|many hostile mobs]] to spawn (the [[sky light]] can still prevent these mobs from spawning like before).}}
+|{{HistoryLine|||dev=experimental snapshot 3|Mob spawning is now consistent at all [[altitude]]s, making spawn rates at all Y-levels approximately equal to the previous spawn rate at Y{{=}}64.
+|Added per-player mob caps.}}
+|{{HistoryLine|||dev=experimental snapshot 5|The spawn rate changes in experimental snapshot 3 have been reverted.}}
+|{{HistoryLine|||dev=21w37a|[[Axolotl]]s now have their own mob cap, separate from [[glow squid]].}}
+|{{HistoryLine|||dev=21w40a|Axolotls now spawn only when there is a clay block less than five blocks below the spawning space.}}
+|{{HistoryLine||1.18.2|dev=22w07a|Aquatic mobs now spawn only if the block above is a non-waterlogged water block, preventing fish from spawning inside bubble elevators.}}
+|{{HistoryLine||1.21.9|dev=25w35a|Added the game rule {{cd|spawnMonsters}}, which toggles natural monster spawning only.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added mob spawning.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added a mob spawning [[host options|host option]]}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Mobs no longer spawn on rails.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+
+* In ''Bedrock Edition'', an opaque block normally causes all blocks below it to spawn cave mobs, but not if a transparent block is placed on top.
+
+== Notes ==
+{{notelist}}
+
+== References ==
+<references/>
+
+== External links ==
+
+* [http://www.minecraftforum.net/topic/136723-mob-spawning-algorithm-in-12-01-analyzed/ Forum thread by Marglyph] about the spawning algorithm in [[Java Edition Beta 1.2|Beta 1.2]]
+* [http://www.minecraftforum.net/topic/37979-mob-spawning-science/ Forum thread by fr0stbyte124] on mob spawning in [[Java Edition Alpha v1.1.2 01|Alpha v1.1.2_01]] from before the [[Halloween Update]] changes
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[pt:Geração de criaturas]]

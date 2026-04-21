@@ -1,0 +1,262 @@
+{{Distinguish|Level}}
+{{Infobox block
+|image=Lever.png
+|image2=Powered Lever.png
+|transparent=Yes
+|light=No
+| waterloggable = {{jebe|No|Yes}}
+|tool=any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No}}
+The '''lever''' is a non-solid [[block]] that can be [[Redstone components|switched]] to provide [[Redstone circuit|redstone power]].
+
+== Obtaining ==
+=== Breaking ===
+No tool can accelerate the breaking process of levers.
+{{breaking row|horizontal=1|Lever}}
+Levers drop themselves when destroyed, and when their attachment block is moved or removed.
+
+=== Natural generation ===
+Three levers generate naturally in each [[jungle temple]]. They also generate in [[woodland mansion]]s and [[ancient cities]].
+
+=== Crafting ===
+{{Crafting
+|B2= Stick
+|B3= Cobblestone
+|Output= Lever
+|type= Redstone
+}}
+
+== Usage ==
+{{See also|Redstone circuits}}
+{{IN|java}}, lever can be destroyed by [[fluid]]s.
+[[File:Lever positions.png|thumb|Five of the eight possible orientations, levers off.]]
+A lever can be used as a player-switchable redstone [[Redstone components#Power components|power source]].
+
+=== Placement ===
+A lever can be attached to the '''top''', '''side''', or '''bottom''' of any full solid [[opaque]] block (stone, dirt, blocks of gold, etc.), or to the '''top''' of an upside-down [[slab]] or upside-down [[stairs]] (but not to the bottom of a right-side-up slab or stairs). When placed on the top or bottom of a block, the lever orients itself in-line with the placing player.
+
+{{IN|bedrock}}, it can additionally be placed on the top of a fence, stone wall or hopper, and can be [[waterlogging|placed underwater]].
+
+When placed on the side of blocks, down is ''on'' and up is ''off''. On the top or bottom of blocks, ''off'' is north or west, ''on'' is south or east.
+
+=== Activation ===
+To activate or deactivate a lever, use the "Use Item/Place Block" control (right-click, by default). A lever can be turned on and off as fast as it can be clicked.
+
+[[Mob]]s cannot turn a lever on or off, except accidentally by a [[wind charge]] shot from a [[breeze]].
+
+=== Behavior ===
+While active, a lever:
+* powers any adjacent [[redstone dust]] (including beneath the lever) to [[Redstone circuit#Power|power level]] 15
+* powers any adjacent [[redstone comparator]] or [[redstone repeater]] facing away from the lever to power level 15
+* strongly powers its attachment block to power level 15 (only if the attachment block is a full solid opaque block)
+* activates any adjacent [[Redstone components#Mechanism components|mechanism components]], including above or below, such as [[piston]]s, [[redstone lamp]]s, etc.
+* emits redstone particles to indicate that it is active ({{in|java}}).
+
+=== Piston interactivity ===
+Lever is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Lever}}
+
+=== Unique ===
+{{el|je}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Click.ogg
+|subtitle=Lever clicks
+|source=block
+|description=When a lever deactivates <ref group=sound name=same>The lever uses the same sound event for both turning on and off. This has been reported on mojira: {{bug|MC-177454}}.</ref>
+|id=block.lever.click
+|translationkey=subtitles.block.lever.click
+|volume=0.3
+|pitch=0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Lever clicks
+|source=block
+|description=When a lever activates <ref group=sound name=same/>
+|id=block.lever.click
+|translationkey=subtitles.block.lever.click
+|volume=0.3
+|pitch=0.6
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}
+{{SoundTable
+|type=bedrock
+| {{SoundLine
+|sound=Click.ogg
+|source=block
+|description=When a lever deactivates
+|id=random.lever_click
+|volume=0.3
+|pitch=0.5}}
+| {{SoundLine
+|source=block
+|description=When a lever activates
+|id=random.lever_click
+|volume=0.3
+| pitch = 0.6
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lever
+|spritetype=block
+|nameid=lever
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lever
+|spritetype=block
+|nameid=lever
+|id=69
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|face|wall|ceiling,floor,wall|The face of the block the lever placed on.<br>Floor is on top of a block, ceiling is on the bottom, and wall is on one of its sides.}}
+{{bst|facing|north|east,north,south,west|The direction the lever is facing.<br>Opposite to the direction the player is facing if placed on the side of a block.}}
+{{bst|powered|false|false,true|If true, the lever is currently activated.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x8|open_bit|false|false,true|If the lever is currently activated.|0,1}}
+{{bst|bits=0x1,0x2,0x4|lever_direction|down_east_west
+|down_east_west|Lever on block bottom points east when off|0
+|east|Lever on block side facing east|1
+|west|Lever on block side facing west|2
+|south|Lever on block side facing south|3
+|north|Lever on block side facing north|4
+|up_north_south|Lever on block top points south when off.|5
+|up_east_west|Lever on block top points east when off.|6
+|down_north_south|Lever on block bottom points south when off.|7|foot=1}}
+
+== Videos ==
+<div style="text-align:center">{{yt|sw2IV7nL5nk}}{{yt|aMit1sra8VY}}</div>
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 23w33a}}
+{{See asset history|type=block}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] shows interest in adding levers.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Wall Lever (S) JE1.png|32px]] [[File:Powered Wall Lever (S) JE1.png|32px]] Added levers.
+|[[File:Ceiling Lever (N) JE1.png|32px]] [[File:Powered Ceiling Lever (N) JE1.png|32px]] The data values which would in future be used for ceiling levers had a large cobblestone cuboid in the middle, and floor and "ceiling" levers only existed in north- and west-facing forms.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|[[File:Wall Lever (S) JE2-L1.png|32px]] [[File:Powered Wall Lever (S) JE2-L1.png|32px]] Due to the change of the [[cobblestone]] texture, the texture of levers has been updated.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w22a|Levers now generate in [[jungle temple]]s.}}
+|{{HistoryLine|||dev=12w24a|[[File:Ceiling Lever (N) JE3.png|32px]] [[File:Ceiling Lever (W) JE3.png|32px]] [[File:Powered Ceiling Lever (N) JE3.png|32px]] [[File:Powered Ceiling Lever (W) JE3.png|32px]] Levers can now be placed upside down (on the underside of a block), changing those data values of levers accordingly.}}
+|{{HistoryLine||1.5|dev=13w03a|Lever orientation is no longer random.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Lever (in minecart) 14w04a.png|32px]] If a lever is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine|||dev=14w10a|[[File:Wall Lever (S) JE3.png|32px]] [[File:Powered Wall Lever (S) JE3.png|32px]] Lever models have changed - the UV is now different.}}
+|{{HistoryLine||1.9|dev=15w46a|Mobs no longer spawn on levers.}}
+|{{HistoryLine||1.11|dev=16w39a|Levers now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|[[File:Floor Lever (E) JE1.png|32px]] [[File:Floor Lever (S) JE1.png|32px]] [[File:Ceiling Lever (E) JE1.png|32px]] [[File:Ceiling Lever (S) JE1.png|32px]] [[File:Powered Floor Lever (E) JE1.png|32px]] [[File:Powered Floor Lever (S) JE1.png|32px]] [[File:Powered Ceiling Lever (E) JE1.png|32px]] [[File:Powered Ceiling Lever (S) JE1.png|32px]] Floor and ceiling levers can now be placed facing east or south. This changes the texture rotation.
+|Flicking a lever on now displays redstone [[particles]].
+|Levers can no longer be placed on top of [[piston]]s.}}
+|{{HistoryLine|||dev=pre2|The hitbox height of levers placed on the ceiling or floor has been decreased.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Wall Lever (S) JE4.png|32px]] [[File:Powered Wall Lever (S) JE4.png|32px]] The textures used by levers have changed.}}
+|{{HistoryLine|||dev=18w50a|[[File:Wall Lever (S) JE5-L1.png|32px]] [[File:Powered Wall Lever (S) JE5-L1.png|32px]] The cobblestone texture has changed, changing levers as well.}}
+|{{HistoryLine|||dev=19w03c|Levers now use correct cullface arguments, and a redundant face (internal end of the handle; visible only from within) was deleted.}}
+|{{HistoryLine||1.19|dev=22w13a|Levers now generate in [[ancient cities]].}}
+|{{HistoryLine||1.20.2|dev=23w33a|Levers now use stone sounds instead of wood sounds.<ref>{{bug|MC-217628||Levers use wood sounds rather than stone|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Wall Lever (S) JE2-L2.png|32px]]{{verify|Was this exact model used?}} Added levers.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Levers now generate in [[jungle temple]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Levers now generate in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Wall Lever (S) JE5-L3.png|32px]]{{verify|Is this exact model used?}} The texture of levers has been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Wall Lever (S) JE2-L2.png|32px]]{{verify|Was this exact model used?}} Added levers.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Levers can now be placed upside down (on the underside of a [[block]]).}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Levers now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Wall Lever (S) JE5-L3.png|32px]]{{verify|Was this exact model used?}} The texture of levers has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Wall Lever (S) JE2-L2.png|32px]]{{verify|Was this exact model used?}} Added levers.}}
+|{{HistoryLine||1.9.19|Levers now generate in [[woodland mansion]]s.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 69.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+File:Alex pulls a lever.png|[[Alex]] pulling a lever.
+File:AYIB Lever.jpeg|[[Kai]] pulling a lever.
+Henry lever.png|A lever in {{amcm}}.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--lever|Taking Inventory: Lever|November 29, 2019|Duncan Geere}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+
+[[cs:Páka]]
+[[de:Hebel]]
+[[es:Palanca]]
+[[fr:Levier]]
+[[hu:Kar]]
+[[it:Leva]]
+[[ja:レバー]]
+[[ko:레버]]
+[[nl:Hendel]]
+[[pl:Dźwignia]]
+[[pt:Alavanca]]
+[[ru:Рычаг]]
+[[th:คันโยก]]
+[[uk:Важіль]]
+[[zh:拉杆]]

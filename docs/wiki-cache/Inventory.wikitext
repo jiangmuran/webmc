@@ -1,0 +1,352 @@
+{{About||the menu in Creative mode|Creative inventory|the inventory in {{MCE}}|MCE:Inventory|the inventory in {{MCD}}|MCD:Inventory}}
+{{redirect|GUI|the screen with [[health bar]]s and [[crosshair]]s|Heads-up display|the textures|GUI and UI textures}}
+
+[[File:Inventory.png|thumb|class=pixel-image|176px|A [[survival]] inventory pop-up screen {{in|Java}}. ]]
+The '''inventory''' is the pop-up menu that the player uses to manage items they carry. From this screen a player can equip [[armor]], [[craft]] items on a 2×2 grid, and equip [[tool]]s, [[block]]s, and [[item]]s. The [[player]]'s [[skin]] is also displayed here.
+
+== Overview ==
+The inventory is opened and closed by pressing {{key|E}} ({{xbtn|Y}} on the Xbox 360 & Xbox One, {{psbtn|tr}}/{{psbtn|5tr}} on the PlayStation 3, PlayStation Vita, PlayStation 4 and PlayStation 5, {{wbtn|x}} on the Wii U & Nintendo Switch, and ••• on mobile devices). This key can be changed from the in-game [[Controls|options]] menu. The inventory can also be closed with {{key|Esc}} ({{xbtn|B}} on the Xbox 360, Xbox One, Wii U, and Nintendo Switch, {{psbtn|o}}/{{psbtn|5o}} on the PlayStation 3, PlayStation Vita, PlayStation 4 and PlayStation 5, and &times; on mobile devices).
+
+The inventory is saved upon exiting a world or server, so the player retains exactly the same items upon re-entering the world or server. 
+
+=== Slots ===
+{{see also|Slot}}
+The inventory consists of 4 armor slots, 27 storage slots, 9 hotbar slots, and an [[off-hand]] slot. Items in the hotbar slots can be selected using the keyboard keys ({{key|1}}–{{key|9}}) or by scrolling through the mouse wheel. Pressing the {{key|F}}{{only|java|short=1}} key moves the selected item to and from the hotbar slot and the [[off-hand]] slot.
+
+Most items stack up to 64, while some items stack to 16, like many [[projectiles]], or do not stack at all, like items with [[durability]]. All items can stack up to 99{{Only|JE|short=JE}} or 127{{Only|BE|short=BE}} using [[Data component format|components]]{{Only|JE|short=JE}} or commands.
+
+{{:Calculators/Item stack}}
+
+There is also a 2×2 [[crafting]] grid, which allows any recipe that fits to be crafted but does not offer item storage. This is not available in Creative or Spectator mode {{In|je}}.
+
+Armor is considered equipped only when it is in an armor slot; when in any of the regular inventory slots, it is not considered "worn" and does not offer protection. Held armor can be equipped by {{control|using}} it, exchanging it with any armor already occupying that slot.
+
+Items have tooltips if the cursor is hovered over them, displaying their name, [[enchantment]]s, lore, and some item-specific information such as the version of a [[written book]]. [[Debug screen#More debug-keys|Pressing {{key|F3+H}}]]{{only|java|short=1}} causes items to display additional information, such as their ID, [[data values]], and some item specific information.
+
+Pressing {{control|use}} on a block with an inventory, such as a [[chest]], [[crafting table]], or a [[furnace]] opens its GUI and allow items to be transferred between the 27 main slots, the 9 hotbar slots, and the block's GUI.
+
+The only available slots for setting attributes are "mainhand", "offhand", "head", "chest", "legs", and "feet".
+
+=== Recipe book ===
+{{main|Recipe book}}
+The recipe book has a catalog of all the [[recipe]]s in the game and serves as a [[crafting]] guide. It shows every crafting recipe that the player has had materials for.
+
+Crafting recipes are organized into different categories in the recipe book through the different tabs. In ''Java Edition'', the categories are:
+*{{InvSprite|Compass|scale=0.5}} All recipes
+*{{InvSprite|Iron Axe|scale=0.5}} [[Tool]]s, [[weapon]]s, and [[armor]]
+*{{InvSprite|Bricks|scale=0.5}} Building materials
+*{{InvSprite|Lava Bucket|scale=0.5}} [[Food]] and miscellaneous items
+*{{InvSprite|Redstone Dust|scale=0.5}} [[Redstone]] components
+
+In ''Bedrock Edition'', the categories are:
+*{{InvSprite|Compass|scale=0.5|text=All}} recipes
+*{{InvSprite|Bricks|scale=0.5|text=Construction}} 
+*{{InvSprite|Diamond Sword|scale=0.5|text=Equipment}} 
+*{{InvSprite|Red Bed|scale=0.5|text=Items}} 
+*{{InvSprite|Grass Block|scale=0.5|text=Nature}} 
+
+== Managing inventory ==
+Stacks can be grabbed as a whole by pressing left-click on the stack and can be split in two by pressing right-click. If the stack is an odd quantity, then it leaves the smaller half behind (for example, a stack of 7 grabs 4 items and leaves 3 in the slot). Conversely, holding a stack of items in the player's cursor and left-clicking in an inventory slot places the full stack into the slot and right-clicking places items one at a time. If there is already a stack in that slot, it gets swapped with the grabbed stack. Double-clicking an item grabs up to a full stack from all the items within the inventory.
+
+Holding {{key|shift}} and clicking on a stack sends the stack from the [[player]]'s hotbar to the player's 27 inventory slots or vice versa, in order from left to right, then top to bottom. Doing so while an external inventory (chest boat, dispenser, etc.) is open sends the item stack from the player's inventory into the external inventory (from left to right, top to bottom) or vice versa (from bottom to top, right to left, starting with hotbar slot 9). Holding {{key|Shift}} and double-clicking a stack while having an external inventory open and holding another stack moves all items that are identical to the clicked stack between the player's inventory and the external one (in the same order as regular shift-clicking). Doing so with only the internal inventory open instead collects all items of that type in the top-left most available inventory slot (not hotbar, so doing this with 0 free inventory slots leaves the items where they are). Left and right mouse button and Shift in all of these controls are independent of the keybinds menu and cannot be changed.
+
+Hovering over an inventory slot and pressing (by default) {{key|1}}–{{key|9}} switches the item in that inventory slot with the item in that slot of the hotbar, or moves the item from one to the other if either slot is empty. {{IN|JE}}, pressing {{key|F}} behaves similarly, but with the [[off-hand]] slot.
+
+Dragging a stack of items with the cursor over an inventory using the left mouse button divides the stack equally over the dragged-over slots (with the remainder staying on the cursor), whereas dragging the stack around using the right mouse button places one item of that stack in each dragged-over slot. Regardless of which mouse button is used (left or right), this occurs only with slots that are empty or contain identical items. If this amount of items does not fit onto the stack anymore, the rest stays on the cursor.
+
+In [[Creative]] mode, (by default) middle-clicking a slot in an inventory grabs a full stack of the item while leaving the item in the slot. Dragging items with the cursor while holding the middle mouse button places a full stack of the item in each dragged-over slot.{{only|java}} This dragging action does not work if the "pick block" key is rebound.<ref>{{bug|MC-577}}</ref>
+
+Pressing (by default) {{key|C}}+{{key|1&ndash;9}} (hold down {{key|C}} while pressing {{key|1-9}}) in Creative mode saves the current toolbar in the [[Saved hotbars]] tab. It can be loaded (by default) with {{key|X}}+{{key|1-9}}.
+
+Pressing {{control|drop}} while the cursor is hovering over a slot in the player's inventory or a container's inventory drops one item. Holding {{key|Ctrl}} and pressing {{control|drop}} while hovering over a slot in the player's inventory or container's inventory that has one or more items drops the entire stack of items. Without an inventory open, the same can be applied for the selected item(s) from the hotbar. The Ctrl key is not rebindable for these actions. Items can also be dropped into the world by clicking outside the inventory window while holding an item with the cursor.
+
+== Creative inventory ==
+{{main|Creative inventory}}
+[[File:Minecraft Creative.png|thumb|195px|Creative mode item selection screen {{in|Java}} (opened to the search tab)]]
+
+In [[Creative]] mode, the inventory contains a block selection menu containing all blocks and items found in survival, plus a few additional items not obtainable in Survival. The blocks and items are organized into various tabs that differ slightly between ''Java'' and ''Bedrock''.
+<div style="clear: both"></div>
+
+== External inventories ==
+{{Redirect|Container|the item component {{in|java}}|Data component format#container}}
+Many blocks and some non-player entities have their own inventory-like menus that pop up to allow manipulation of items.
+
+'''Note:''' Despite the fact that ender chest, crafting table, beacon, anvil, enchanting table, and villager inventories are actually internal behind the scenes, they are listed here as external because they require clicking on something external.
+
+=== ''Java Edition'' ===
+<gallery>
+Inventory.png|Inventory
+Survival Inventory.png|Survival Inventory tab in Creative inventory.
+Search Items.png|Search Items tab in Creative inventory.
+Chest GUI.png|{{BlockLink|Barrel}}<br>{{BlockLink|Chest}}<br>{{BlockLink|Ender Chest}}<br>{{EntityLink|Minecart with Chest}}<br>{{BlockLink|Shulker Box}}<br>{{BlockLink|id=Shulker Boxes|Dyed Shulker Box}}<br>{{BlockLink|Trapped Chest}}<br>{{EntityLink|id=boat with chest|Boat with Chest}}<br>{{BlockLink|Copper Chest}}
+Large Chest GUI.png|{{BlockSprite|chest left}}{{BlockSprite|chest right}} Large [[Chest]]<br>{{BlockSprite|chest left}}{{BlockSprite|chest right}} Large [[Trapped Chest]]<br>{{BlockSprite|copper chest left}}{{BlockSprite|copper chest right}} Large [[Copper Chest]]
+Crafting Table GUI.png|{{BlockLink|Crafting Table}}
+Furnace GUI.png|{{BlockLink|Furnace}}<br>{{BlockLink|Blast Furnace}}<br />{{BlockLink|Smoker}}
+Dispenser GUI.png|{{BlockLink|Dispenser}}<br>{{BlockLink|Dropper}}
+Enchanting Table GUI.png|{{BlockLink|Enchanting Table}}
+Brewing Stand GUI.png|{{BlockLink|Brewing Stand}}
+Villager GUI Master.png|{{EntityLink|Villager}} (master level)
+Wandering Trader GUI.png|{{EntityLink|Wandering Trader}}
+Beacon GUI.png|{{BlockLink|Beacon}}
+Anvil GUI.png|{{BlockLink|Anvil}}
+Hopper GUI.png|{{BlockLink|Hopper}}<br>{{EntityLink|Minecart with Hopper}}
+Horse GUI.png|{{EntityLink|Horse}}
+Skeleton Horse GUI.png|{{EntityLink|Skeleton Horse}}{{only|JE|short=1}}
+Zombie Horse GUI.png|{{EntityLink|Zombie Horse}}
+Donkey GUI Chest.png|{{EntityLink|Donkey}} (wearing chest)<br>{{EntityLink|Mule}} (wearing chest)
+Llama Strength 5 GUI.png|{{EntityLink|Llama}} (wearing chest, strength 5)
+Trader Llama GUI.png|{{EntityLink|Trader Llama}}
+Camel GUI.png|{{EntityLink|Camel}}<br>{{EntityLink|Camel Husk}}
+Nautilus GUI.png|{{EntityLink|Nautilus}}<br>{{EntityLink|Zombie Nautilus}}
+Grindstone GUI.png|{{BlockLink|Grindstone}}
+Cartography Table GUI.png|{{BlockLink|Cartography Table}}
+Loom GUI.png|{{BlockLink|Loom}}
+Stonecutter GUI.png|{{BlockLink|Stonecutter}}
+Smithing Table GUI 1.20.png|{{BlockLink|Smithing Table}}
+Crafter GUI.png|{{BlockLink|Crafter}}
+</gallery>
+
+=== ''Bedrock Edition'' ===
+<gallery>
+Inventory BE.png|Inventory
+Survival inventory tab in Creative inventory BE.png|Survival inventory tab in Creative inventory.
+Search items tab in Creative inventory BE.png|Search items tab in Creative inventory.
+Storage inventory BE.png|{{BlockLink|Barrel}}<br>{{BlockLink|Chest}}<br>{{BlockLink|Ender Chest}}<br>{{EntityLink|Minecart with Chest}}<br>{{BlockLink|Shulker Box}}<br>{{BlockLink|id=Shulker Boxes|Dyed Shulker Box}}<br>{{BlockLink|Trapped Chest}}<br>{{EntityLink|id=boat with chest|Boat with Chest}}<br>{{BlockLink|Copper Chest}}
+Large storage inventory BE.png|{{BlockSprite|chest left}}{{BlockSprite|chest right}} Large [[Chest]]<br>{{BlockSprite|chest left}}{{BlockSprite|chest right}} Large [[Trapped Chest]]<br>{{BlockSprite|copper chest left}}{{BlockSprite|copper chest right}} Large [[Copper Chest]]
+Crafting table inventory BE.png|{{BlockLink|Crafting Table}}
+Smelting inventory BE.png|{{BlockLink|Furnace}}<br>{{BlockLink|Blast Furnace}}<br>{{BlockLink|Smoker}}
+Dispenser inventory BE.png|{{BlockLink|Dispenser}}<br>{{BlockLink|Dropper}}
+Enchanting Table inventory BE.png|{{BlockLink|Enchanting Table}}
+Brewing stand inventory BE.png|{{BlockLink|Brewing Stand}}
+Weaponsmith master level inventory BE.png|{{EntityLink|Villager}} (master level)
+Wandering trader inventory BE.png|{{EntityLink|Wandering Trader}}
+Beacon inventory BE.png|{{BlockLink|Beacon}}
+Anvil inventory BE.png|{{BlockLink|Anvil}}
+Hopper inventory BE.png|{{BlockLink|Hopper}}<br>{{EntityLink|Minecart with Hopper}}
+Horse inventory BE.png|{{EntityLink|Horse}}
+Donkey inventory BE.png|{{EntityLink|Donkey}} (wearing chest)<br>{{EntityLink|Mule}} (wearing chest)
+Llama inventory BE.png|{{EntityLink|Llama}} (wearing chest, strength 5)
+Camel inventory BE.png|{{EntityLink|Camel}}<br>{{EntityLink|Camel Husk}}
+Nautilus inventory BE.png|{{EntityLink|Nautilus}}<br>{{EntityLink|Zombie Nautilus}}
+Grindstone inventory BE.png|{{BlockLink|Grindstone}}
+Cartography table inventory BE.png|{{BlockLink|Cartography Table}}
+Loom GUI BE.png|{{BlockLink|Loom}}
+Stonecutter inventory BE.png|{{BlockLink|Stonecutter}}
+Smithing Table inventory BE.png|{{BlockLink|Smithing Table}}
+Crafter inventory BE.png|{{BlockLink|Crafter}}
+</gallery>
+
+'''''Minecraft Education'' exclusives'''
+<gallery>
+Compound_Creator_GUI.png|{{BlockLink|Compound Creator}}<ref group="note" name="bedrock">These blocks also exist {{in|bedrock}}, but only in worlds with "Minecraft Education features" enabled.</ref>
+Element constructor gui.png|{{BlockLink|Element Constructor}}<ref group="note" name="bedrock"/>
+Lab_table_gui.png|{{BlockLink|Lab Table}}<ref group="note" name="bedrock"/>
+Material_Reducer_GUI.png|{{BlockLink|Material Reducer}}<ref group="note" name="bedrock"/>
+</gallery>
+
+== Mob inventory ==
+Certain [[mob]]s have inventory slots, used for various purposes.
+* [[Villager]]s have 8 slots, not accessible to the player, which they use to collect various [[Villager#Picking up items|farming-related seeds and foods]].
+* [[Piglin]]s have 8 slots, not accessible to the player, which they use to collect various [[Piglin#Picking up items|items]].
+* [[Pillager|Pillagers]] have 5 slots, not accessible to the player, which goes unused, as pillagers don't change their inventory automatically or drop items from it upon death.<sup>[''[[Talk:Pillager|more information needed]]'']</sup>
+* [[Agent]]s{{only|Education}} have 27 slots that are accessible to the player by a GUI, and can be accessed by the agent according to its programming.
+* [[Donkey#Equipment|Donkeys]] and mules, when equipped with a [[chest]], have 15 inventory slots accessible to the player.
+* [[Llama]]s and [[trader llama]]s, when equipped with a chest, have 3, 6, 9, 12 or 15 inventory slots, corresponding to their <code>Strength</code> stat.
+* [[Allay]]s have 1 inventory slot, not accessible to the player, which they use to collect items that match a [[Allay#Behavior|player given held item]].
+
+== Achievements ==
+{{load achievements|Taking Inventory}}
+
+== History ==
+{{for|Creative inventory changes|Creative inventory#History|Creative inventory/history}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.20a|Added Creative inventory. It can be accessed by pressing {{key|B}}.}}
+|{{HistoryLine||August 4, 2009|link=https://web.archive.org/web/20090808093608/https://notch.tumblr.com/post/155882307/a-video-showing-what-i-did-today-are-vids-like|Breaking [[block]]s were shown by [[Notch]] to allow the player to pick them up and place them, thus adding and removing them from the [[hotbar]].}}
+|{{HistoryLine||August 25, 2009|link=https://web.archive.org/web/20090828041746/https://notch.tumblr.com/post/170887079/survival-mode-status-update-video-with-plenty-of|Showed the currently selected [[block]] in the hotbar now appears in view.}}
+|{{HistoryLine||August 28, 2009|link=https://web.archive.org/web/20090909033021/https://notch.tumblr.com/post/173890253/what-i-did-today|Showed that when no [[item]] is selected in the hotbar, the player's arm now shows.}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Implemented those above features.}}
+|{{HistoryLine||October 23, 2009|link=https://web.archive.org/web/20110302153247/https://notch.tumblr.com/post/220323641/mockup-of-a-potential-inventory-screen-do-we|Showed the mockup of a supposed Survival inventory. It was made over the screenshot in a graphics editor.<ref name="Mockup">{{tumblr|notch|220248282||October 22, 2009}}</ref>}}
+|{{HistoryLine||October 23, 2009|link=https://web.archive.org/web/20110302153313/https://notch.tumblr.com/post/220369246/about-the-inventory-screen|Notch mentioned what the actual slots in mockup were copied from his never finished game ''[[Legend of the Chambered]]'' and would be changed to fit ''Minecraft''.
+|He also mentioned: "I’m not entirely sure yet how this would fit in with crafting. I’d rather not have crafting take place in the inventory view, as then you’d spend too much time in there. It should just be for checking stats, checking what your character looks like, and modifying your kit."}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091231-1856|Added Survival inventory. It can be accessed by pressing {{key|I}}.
+|Removed Creative inventory until [[Java Edition Beta 1.8|Beta 1.8]].}}
+|{{HistoryLine|||dev=20091231-2147|All items currently in-game (four tiers of armor, apple, iron sword, shovel, quiver) and also 99 torches, TNT, and bookshelves can be found in the hotbar and inventory.
+|[[Rana]] is shown in the inventory screen as a placeholder model.}}
+|{{HistoryLine|||dev=20100113-2015|Rana is no longer the player model in the inventory.}}
+|{{HistoryLine|||dev=20100128-2200|Items now show as 3D voxel sprites.}}
+|{{HistoryLine|||dev=20100129-1447|Opening the inventory now shows a crafting menu.<ref name="Nizzotch">{{ytl|OpmK7rDU5bA|Crafting and Mining in Minecraft|Nizzotch|January 29, 2010|t=2m26s}} ([https://www.youtube.com/watch?v=nlZR7_nKMaI Reupload])</ref>
+|The [[crafting]] menu can now be opened by pressing a hotkey.<ref name="Nizzotch"/>
+|The player can now [[walk]] around while having the inventory open.
+|Right-clicking while holding a stack of item now places a single item.}}
+|{{HistoryLine|||dev=20100130|[[Crafting table]] has been added, and the [[crafting]] grid in the inventory has been replaced with a 2×2 one.
+|The player can now place [[item]]s in the 2×2 crafting grid and they stay there when the inventory was closed (internally slots number 80 to 83).}}
+|{{HistoryLine|||dev=20100205-1558|The [[player]] model is now shown in the inventory GUI.
+|Right-clicking a stack of item in the inventory now picks up half of the stack.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|The [[player]] now starts out with a stack of 999 [[glass]] and 990 [[oak planks]].}}
+|{{HistoryLine||20100313|The player now starts with more [[item]]s (every item is in a stack of 999).}}
+|{{HistoryLine||20100320|The player now starts with a stack of 64 of every item.}}
+|{{HistoryLine||20100327|The player no longer starts with certain items.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.15|The [[player]] can no longer [[walk]] while the inventory is open.
+|Items placed in the crafting grid now stays there instead of dropping to the ground, allowing to store items in it.}}
+|{{HistoryLine||v1.1.0|The inventory is now saved on [[multiplayer]] servers.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.0|[[Item]]s now have tooltips displaying their name, if the cursor is hovered over items in the inventory.
+|Multiplayer now uses a proper server-side inventory, fixing a number of bugs.
+|Items placed in the [[crafting]] grid are now dropped simultaneously when the inventory is closed.
+|Removed icons from the empty [[armor]] slots, likely as a result of the server-side inventory rewrite.}}
+|{{HistoryLine||1.4|The default key for opening the inventory is now {{key|E}} instead of {{key|I}} because [[Notch]] found it to be much more efficient.<ref>{{tweet|notch|50500645144375296|(I changed the default from "I" to "E", which is five times better)|March 23, 2011}}</ref>}}
+|{{HistoryLine||1.5|{{key|Shift}} + clicking on an item or a stack while a [[chest]] is opened moves it between the chest and the inventory.}}
+|{{HistoryLine||1.6|{{key|Shift}} + clicking on an item or a stack immediately moves it between the inventory and the hotbar.
+|{{key|Shift}} + clicking while [[crafting]] makes the maximum amount possible of that item and moves it straight to the inventory.}}
+|{{HistoryLine||1.6.5|{{key|Shift}} + clicking the crafting output performs a single crafting action, instead of the maximum possible amount.}}
+|{{HistoryLine||1.8|dev=1.8 (PAX Prime)|{{Hotbar
+|Diamond Pickaxe, 1
+|Diamond Axe, 1
+|Torch, 64
+|Cooked Porkchop, 4
+|Bow, 1
+|Arrow, 64
+}}
+In this version only the player spawns with various tools and items when creating a world in [[Survival mode]].}}
+|{{HistoryLine||1.8|dev=Pre-release|The Creative inventory has been readded.}}
+|{{HistoryLine|||dev=Pre-release 2 ;)|{{key|Shift}} + clicking now crafts the maximum amount possible again, reverting to the Beta 1.6 behavior.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=RC2|The lighting of blocks in inventory has been adjusted.}}
+|{{HistoryLine||1.2.4|dev=release|Re-added icons for the empty armor slots.
+|Text color lightened from {{color|#404040}} to {{color|#565656}}.}}
+|{{HistoryLine||1.3.1|dev=12w15a|{{key|Shift}} + clicking an [[armor]] item in the inventory automatically moves it to the corresponding armor slot.}}
+|{{HistoryLine|||dev=12w21b|The inventory button no longer closes the inventory and instead opens search tab, so the [[player]] now must press {{key|Esc}} instead.}}
+|{{HistoryLine|||dev=12w22a|The orientation of [[tool]]s, [[weapon]]s and [[item]]s have been changed from being oriented toward the left to being oriented toward the right.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added the [[game rule]] <code>keepInventory</code>, allowing for the retention of player inventory upon death when set to <code>true</code>.}}
+|{{HistoryLine|||dev=12w40a|Improves inventory management.
+* {{control|Pick block}} now works on blocks represented as items in the inventory (e.g. repeater, redstone dust, tripwire, etc).
+* Pressing keys {{key|1}}-{{key|9}} while hovering over an item transfers it into the corresponding hotbar slot.
+** if there is already an item in the assigned hotbar slot, the hotbar item and the selected item swap position.
+** {{control|pick block}} on an item clones and picks up a stack of that item.}}
+|{{HistoryLine||1.4.6|dev=12w50a|{{Ctrl|Dropping}} items while holding {{key|Ctrl}} now drops the whole stack.}}<!--- This is a duplicate entry, I could not decide if this belongs in Creative-only changes or general changes --->
+|{{HistoryLine||1.5|dev=13w01a|Improved inventory management. Players can now:
+* Double click items to fill the stack up as much as possible.
+* Drag item stacks around to divide them up over the dragged-over slots.
+* Drag item stacks around with the right mouse button to place one of that stack in each dragged-over slot, if that slot is not occupied already.
+* {{key|Shift}} + double click items in a crafting area to place all items in the inventory.
+* {{key|Shift}} + double click an item stack to move all other item stacks of that kind to that part of the inventory.
+* Press {{key|Q}} while the mouse is over an item in the inventory or a container to drop it.
+* Equip held armor by pressing {{ctrl|use}}.}}
+|{{HistoryLine||1.8|dev=14w25a|Text color darkened to {{color|#404040}}, the same color as before 1.2.4.}}
+|{{HistoryLine||1.9|dev=15w31a|The [[Survival]] inventory has been rearranged to accommodate the new off-hand slot.
+|The orientation of many [[item]]s in the inventory have been unified.}}
+|{{HistoryLine||1.11|dev=16w32a|The message "Unable to open. Loot not generated yet." now appears on top of the hotbar. 
+|The message "Press {{key|LSHIFT}} to dismount" now appears on the top of the hotbar when the [[player]] is riding a [[mob]].}}
+|{{HistoryLine||1.12|dev=17w13a|Added recipe book button to the Survival inventory.}}
+|{{HistoryLine|||dev=17w14a|Changed the icon on the trigger button from a standard book to a [[knowledge book]].}}
+|{{HistoryLine||1.16|dev=pre3|{{Control|Swap item in hand}} now works while hovering over an item in inventory.<ref name="MC-84610">{{Bug|MC-84610||Off-hand hotkey doesn't work in inventories|Fixed}}</ref>}}
+|{{HistoryLine||?<!--after 19w08a but before 24w05a-->|The "Crafting" text has been moved upwards.}}
+|{{HistoryLine||1.20.5|dev=24w09a|{{key|Ctrl}}+{{control|pick blocking}} a renamed block (such as a chest) in Creative mode now gives a renamed item.
+|Stack size is now limited to the maximum stack size of the item.}}
+|{{HistoryLine|||dev=24w12a|Added {{cd|max_stack_size}} component.}}
+|{{HistoryLine||1.21.2|dev=24w38a|Throwing items out of the inventory very quickly in creative mode is now throttled.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Unlimited [[block]]s can now be placed from the [[player]]'s inventory.}}
+|{{HistoryLine||v0.2.0|The previous inventory is now used in [[Creative]] mode.
+|Added the [[Survival]] inventory. The player can still see the blocks as though in Creative mode, but cannot use them unless they have gathered the respective material.
+|As [[crafting]] has not yet been implemented, the player now spawns with infinite quantities of normally craftable [[item]]s.}}
+|{{HistoryLine||v0.3.0|The Survival mode inventory now includes a 2×2 crafting grid.}}
+|{{HistoryLine||v0.6.0|Armor tab has been added into the Survival inventory.}}
+|{{HistoryLine||v0.9.0|dev=build 1|The [[Survival]] inventory has been redesigned to match it to the Creative inventory.
+|[[Crafting]] grids now show craftable recipes, with the 2&times;2 or 3&times;3 grid showing the recipe.}}
+|{{HistoryLine||v0.11.0|dev=build 1|The inventory texture in the [[Survival]] inventory has been changed from a [[brick]] to a [[chest]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added Profile UI option to change between Inventory UI "Pocket" and "Classic (like in [[Windows 10 Edition]])".}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Off-hand slot added.
+|Added the [[game rule]] <code>keepInventory</code>, allowing for the retention of player inventory upon death when set to <code>true</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Changed the general look and layout of the inventory, in regards of the [[recipe book]].}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.23|When using keyboard controls, it is now possible to move items from/to the hotbar slots using the corresponding hotkeys (by default, {{key|1}} to {{key|9}}.)}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|legacy console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added Inventory for [[Survival]] mode with [[crafting]] menu.}} 
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the [[creative inventory]].|Added quick equip for [[armor]] to the inventory interface.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|Added Inventory for [[Survival]] mode. A [[crafting]] menu is also available in Survival mode.}} 
+}}
+<gallery>
+Mockup of a survival inventory.png|Mockup of a supposed Survival inventory. It was made over the screenshot in a graphics editor.<ref name="Mockup"/>
+</gallery>
+
+== Issues ==
+{{issue list|Inventory|GUI}}
+
+== Trivia ==
+*When [[sleeping]] or riding a [[pig]], [[horse]], [[boat]], or [[minecart]] and the inventory screen is accessed, the avatar is shown in the respective position. However, only the player is displayed.{{verify|does this apply to mounted mobs?}}
+*The avatar always looks at the pointer while in the inventory.
+
+== Gallery ==
+
+=== Development images ===
+==== ''Java Edition'' ====
+<gallery>
+0105inventory.png|Inventory in [[Java Edition Indev 0.31 20100104-2258]]
+Indev011101inventory.png|Inventory in [[Java Edition Indev 0.31 20100110]]
+</gallery>
+
+==== ''Bedrock Edition'' ====
+<gallery>
+Pocket Edition Offhand Slot.jpg|First image of the offhand slot
+Ore UI development inventory.jpg|An early look of the inventory screen.<ref>{{tweet|nipitare_|1963591339670491225|New inventory, dropper/dispenser and hopper OreUI screens.}}</ref>
+</gallery>
+
+=== In other media ===
+<gallery>
+File:How to Play Recipe Book BE.png|Pixel art of [[Makena]] in the inventory.
+</gallery>
+
+== See also ==
+*[[Crafting]]
+*[[Smelting]]
+*[[Item repair]]
+*[[Items]]
+*[[Item durability]]
+*[[Blocks]]
+*[[Entity]]
+*[[Recipe book]]
+
+== Notes ==
+<references group="note"/>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+[[nl:Inventaris]]
+[[pl:Ekwipunek]]
+[[tr:Envanter]]
+
+[[Category:UI]]
+
+[[de:Inventar]]
+[[es:Inventario]]
+[[fr:Inventaire]]
+[[ja:インベントリ]]
+[[ko:보관함]]
+[[pt:Inventário]]
+[[ru:Инвентарь]]
+[[uk:Інвентар]]
+[[zh:物品栏]]

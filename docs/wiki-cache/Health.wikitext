@@ -1,0 +1,307 @@
+{{For}}
+[[File:Hotbar with xp.png|thumb|class=pixel-image|350px|The health bar is shown above the hotbar, to the other side of the hunger bar.]]
+
+'''Health''' is the fundamental condition that an [[entity]] needs to survive. Health can be recovered by [[healing]], through natural regeneration, or by using [[status effect]]s.
+
+== Regaining health ==
+Players can recover health naturally by having their hunger at least {{hunger|18}} and the gamerule {{code|naturalRegeneration}} is set to {{code|true}}, or through [[status effect]]s.
+=== Mobs ===
+[[Horse]]s, [[donkey]]s, [[mule]]s, [[skeleton horse]]s, [[zombie horse]]s, [[llama]]s, [[trader llama]]s, [[camel]]s, [[camel husk]]s, [[allay]]s, [[happy ghast]]s, and the [[wither]]{{only|je}} are the only mobs that regenerate health naturally over time.
+
+== Health bar ==
+The '''health bar''' displays how much health the player has left, rounded up to the nearest {{hp|1}} health point. It is usually based on a single row of 10 heart icons. Each full heart contains two halves, one health point each (the player normally has 20 maximum health points).
+
+The [[Regeneration]] effect makes health regenerate fairly quickly, and the hearts of the health bar bounce in a wave.
+
+If the health bar shows {{Hp|4|notag=1|total=20}} or less, it begins to shake violently, warning that the player is low on health.
+
+The player's health bar is invisible while holding or wearing an item that gives negative health points that exceed the player's current health points. For example, the player's default health is 20, and if holding an item with the attribute &minus;21 health, the player can take two hits before dying, regardless of how much damage these hits inflict. The first one deals enough damage to reduce health to {{hp|1}}, and the second one kills the player. If the player uses a modified item to reduce health, sometimes the death screen appears. After clicking respawn, the player would shake in the death position and this can be fixed by ceasing to use the modified item.
+
+If a player is [[riding]] a mob, the health of that mob is shown in place of{{only|je}} or on top of{{only|be}} the hunger bar, using {{healthbar|2|mob=1}} as the texture for hearts.
+
+=== Hearts ===
+[[File:Healthbar.png|thumb|class=pixel-image|The healthbar on Survival and Adventure.]]
+[[File:Healthbar Hardcore.png|thumb|class=pixel-image|The healthbar on Hardcore.]]
+[[File:Shaking hearts.gif|thumb|class=pixel-image|Shaking hearts when the player is at {{hp|4}} or less.]]
+
+'''Hearts''' make up the health bar for the player in the [[Survival]], [[Hardcore]] (different texture), and [[Adventure]] modes.
+
+The player's hearts have a different texture depending on the various condition. Also, all hearts have different textures in [[Hardcore]] mode.
+{| class="wikitable"
+|-
+! Type       !! Color  !! Icon !! Hardcore Icon !! Condition
+|-
+| Poison     || Green  || {{healthbar|2|notag=1|poisoned=1}} || {{healthbar|2|notag=1|poisoned=1|hardcore=1}} || [[Poison]] effect
+|-
+| Wither     || Black  || {{healthbar|2|notag=1|withered=1}} || {{healthbar|2|notag=1|withered=1|hardcore=1}} || [[Wither (effect)|Wither]] effect
+|-
+| Absorption || Yellow || {{healthbar|2|notag=1|absorption=1}} || {{healthbar|2|notag=1|absorption=1|hardcore=1}} || [[Absorption]] effect (only additional hearts)
+|-
+| Freezing   || Cyan   || {{healthbar|2|notag=1|freezing=1}} || {{healthbar|2|notag=1|freezing=1|hardcore=1}} || Freezing in [[powder snow]]
+|-
+| Normal     || Red    || {{healthbar|2|notag=1}} || {{healthbar|2|notag=1|hardcore=1}} || Otherwise
+|}
+* Hearts take the highest applicable texture in this list; poison overrides wither, which overrides absorption, which overrides freezing.
+* Only hearts given by the [[Absorption]] effect will be absorption hearts.
+* For all of the other conditions, the entire health bar (including absorption hearts, except freezing which does not change absorption hearts) will change texture.
+
+== Entities' health ==
+{| class="wikitable sortable mw-collapsible" style="text-align: center;" data-description="Mob health"
+|-
+! [[Entity]]
+! colspan="6" |Health
+|- 
+! Playable
+| {{EntitySprite|Steve|link=Player}} {{EntitySprite|Alex|link=Player}} [[Player]]<br>{{hp|20}}
+| colspan="5" |
+|-
+! rowspan="8" |{{EntityLink|Animal|Animals}} and<br>miscellaneous
+| {{EntityLink|Allay}}<br>{{hp|20}}
+| {{EntityLink|Armadillo}}<br>{{hp|12}}
+| {{EntityLink|Axolotl}}<br>{{hp|14}}
+| {{EntityLink|Bat}}<br>{{hp|6}}
+| {{EntityLink|Bee}}<br>{{hp|10}}
+| {{EntityLink|Camel}}<br>{{hp|32}}
+|-
+| {{EntityLink|Cat}}{{only|java|short=1}}<br>{{hp|10}}
+| {{EntityLink|Cat}}{{only|bedrock|short=1}}<br>Wild: {{hp|10}}<br>Tamed: {{hp|20}}
+| {{EntityLink|Chicken}}<br>{{hp|4}}
+| {{EntityLink|Cod}}<br>{{hp|3}}
+| {{EntityLink|Copper Golem}}<br>{{hp|12}}
+| {{EntityLink|Cow}}<br>{{hp|10}}
+|-
+| {{EntityLink|Dolphin}}<br>{{hp|10}}
+| {{EntityLink|Donkey}}<br>{{hp|15}} to {{hp|30}}
+| {{EntityLink|Fox}}<br>{{hp|10}}
+| {{EntityLink|Frog}}<br>{{hp|10}}
+| {{EntityLink|Glow Squid}}<br>{{hp|10}}
+| {{EntityLink|Goat}}<br>{{hp|10}}
+|-
+| {{EntityLink|Happy Ghast}}<br>{{hp|20}}
+| {{EntityLink|Horse}}<br>{{hp|15}} to {{hp|30}}
+| {{EntityLink|Iron Golem}}<br>{{hp|100}}
+| {{EntityLink|Llama}}<br>{{hp|15}} to {{hp|30}}
+| {{EntityLink|Mooshroom}}<br>{{hp|10}}
+| {{EntityLink|Mule}}<br>{{hp|15}} to {{hp|30}}
+|-
+| {{EntityLink|Nautilus}}<br>{{hp|15}}
+| {{EntityLink|Ocelot}}<br>{{hp|10}}
+| {{EntityLink|Panda}}<br>Weak variant: {{hp|10}}<br>Other variants: {{hp|20}}
+| {{EntityLink|Parrot}}<br>{{hp|6}}
+| {{EntityLink|Pig}}<br>{{hp|10}}
+| {{EntityLink|Polar Bear}}<br>{{hp|30}}
+|-
+| {{EntityLink|Pufferfish}}<br>{{hp|3}}
+| {{EntityLink|Rabbit}}<br>{{hp|3}}
+| {{EntityLink|Salmon}}<br>{{hp|3}}
+| {{EntityLink|Sheep}}<br>{{hp|8}}
+| {{EntityLink|Sniffer}}<br>{{hp|14}}
+| {{EntityLink|Snow Golem}}<br>{{hp|4}}
+|-
+| {{EntityLink|Squid}}<br>{{hp|10}}
+| {{EntityLink|Strider}}<br>{{hp|20}}
+| {{EntityLink|Tadpole}}<br>{{hp|6}}
+| {{EntityLink|Trader Llama}}<br>{{hp|15}} to {{hp|30}}
+| {{EntityLink|Tropical Fish}}<br>{{hp|3}}
+| {{EntityLink|Turtle}}<br>{{hp|30}}
+|-
+| {{EntityLink|Villager}}<br>{{hp|20}}
+| {{EntityLink|Wandering Trader}}<br>{{hp|20}}
+| {{EntityLink|Wolf}}<br>Wild: {{hp|8}}<br>Tamed: {{hp|40}}
+| colspan="4" |
+|-
+! rowspan="7" |{{EntityLink|Monster|Monsters}}
+| {{EntityLink|Blaze}}<br>{{hp|20}}
+| {{EntityLink|Bogged}}<br>{{hp|16}}
+| {{EntityLink|Breeze}}<br>{{hp|30}}
+| {{EntityLink|Camel Husk}}<br>{{hp|32}}
+| {{EntityLink|Cave Spider}}<br>{{hp|12}}
+| {{EntityLink|Creaking}}<br>{{hp|1}} <br> (invulnerable if natural)
+|-
+| {{EntityLink|Creeper}}<br>{{hp|20}}
+| {{EntityLink|Drowned}}<br>{{hp|20}}
+| {{EntityLink|Elder Guardian}}<br>{{hp|80}}
+| {{EntityLink|Enderman}}<br>{{hp|40}}
+| {{EntityLink|Endermite}}<br>{{hp|8}}
+| {{EntityLink|Evoker}}<br>{{hp|24}}
+|-
+| {{EntityLink|Ghast}}<br>{{hp|10}}
+| {{EntityLink|Guardian}}<br>{{hp|30}}
+| {{EntityLink|Hoglin}}<br>{{hp|40}}
+| {{EntityLink|Husk}}<br>{{hp|20}}
+| {{EntityLink|Magma Cube}}<br>Big: {{hp|16}}<br>Medium: {{hp|4}}<br>Small: {{hp|1}}
+| {{EntityLink|Parched}}<br>{{hp|16}}
+|-
+| {{EntityLink|Phantom}}<br>{{hp|20}}
+| {{EntityLink|Piglin}}<br>{{hp|16}}
+| {{EntityLink|Piglin Brute}}<br>{{hp|50}}
+| {{EntityLink|Pillager}}<br>{{hp|24}}
+| {{EntityLink|Ravager}}<br>{{hp|100}}
+| {{EntityLink|Shulker}}<br>{{hp|30}}
+|-
+| {{EntityLink|Silverfish}}<br>{{hp|8}}
+| {{EntityLink|Skeleton}}<br>{{hp|20}}
+| {{EntityLink|Skeleton Horse}}<br>{{hp|15}}
+| {{EntityLink|Slime}}<br>Big {{hp|16}}<br>Medium: {{hp|4}}<br>Small: {{hp|1}}
+| {{EntityLink|Spider}}<br>{{hp|16}}
+| {{EntityLink|Stray}}<br>{{hp|20}}
+|-
+| {{EntityLink|Vex}}<br>{{hp|14}}
+| {{EntityLink|Vindicator}}<br>{{hp|24}}
+| {{EntityLink|Warden}}<br>{{hp|500}}
+| {{EntityLink|Witch}}<br>{{hp|26}}
+| {{EntityLink|Wither Skeleton}}<br>{{hp|20}}
+| {{EntityLink|Zoglin}}<br>{{hp|40}}
+|-
+| {{EntityLink|Zombie}}<br>{{hp|20}}
+| {{EntityLink|Zombie Horse}}<br>{{hp|25}}
+| {{EntityLink|Zombie Nautilus}}<br>{{hp|15}}
+| {{EntityLink|Zombie Villager}}<br>{{hp|20}}
+| {{EntityLink|Zombified Piglin}}<br>{{hp|20}}
+|-
+! [[Boss]]es
+| {{EntityLink|Ender Dragon}}<br>{{hp|200}}
+| {{EntityLink|Wither}}{{only|java|short=1}}<br>{{hp|300}}
+| {{EntityLink|Wither}}{{only|bedrock|short=1}}<br>Easy: {{hp|300}}<br>Normal: {{hp|450}}<br>Hard: {{hp|600}}
+| colspan="3" |
+|-
+! [[Unused]]
+| {{EntityLink|Giant}}{{only|java|short=1}}<br>{{hp|100}}
+| {{EntityLink|Elder Guardian Ghost}}{{only|bedrock|short=1}}<br>{{hp|20}}
+| {{EntityLink|Illusioner}}{{only|java|short=1}}<br>{{hp|32}}
+| {{EntityLink|Old Villager}}{{only|bedrock|short=1}}<br>{{hp|20}}
+| {{EntityLink|Old Zombie Villager}}{{only|bedrock|short=1}}<br>{{hp|20}}
+|-
+! [[Minecraft Education|Education]]
+| {{EntityLink|Agent}}<br>∞ ({{healthbar|2|9px}} × ∞)
+| {{EntityLink|Camera}}<br>{{hp|4}}
+| {{EntityLink|NPC}}<br>∞ ({{healthbar|2|9px}} × ∞)
+| colspan="3" |
+|-
+! rowspan="3" |Inanimate
+| {{EntityLink|Armor Stand}}<br>{{hp|20}}{{only|java|short=yes}}<br>{{hp|6}}{{only|bedrock|short=yes}}
+| {{EntityLink|Boat}}<br>{{hp|6}}
+| {{EntityLink|Boat with Chest}}<br>{{hp|6}}
+| {{EntityLink|End Crystal}}<br>{{hp|5}}
+| {{EntityLink|Experience Orb}}<br>{{hp|5}}
+| {{EntityLink|Item}}<br>{{hp|5}}
+|-
+| {{EntityLink|Mannequin}}{{only|java|short=1}}<br>{{hp|20}}
+| {{EntityLink|Minecart}}<br>{{hp|6}}
+| {{EntityLink|Minecart with Chest}}<br>{{hp|6}}
+| {{EntityLink|Minecart with Command Block}}<br>{{hp|6}}
+| {{EntityLink|Minecart with Furnace}}{{only|java|short=1}}<br>{{hp|6}}
+| {{EntityLink|Minecart with Hopper}}<br>{{hp|6}}
+|-
+| {{EntityLink|Minecart with Monster Spawner}}{{only|java|short=1}}<br>{{hp|6}}
+| {{EntityLink|Minecart with TNT}}<br>{{hp|6}}
+|}
+
+== Achievements ==
+{{load achievements|Overkill;Over-overkill}}
+
+== Advancements ==
+{{load advancements|Adventure;Over-overkill}}
+
+== Videos ==
+
+<div style="text-align:center">{{Video note|This Video is from [[Java Edition 1.5]], so the changes were not applied yet.}}{{yt|lOR3ecPgAas}}</div>
+
+== History ==
+{{missing information|section|actually earlier stuff as well like trident death|type=old}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 20, 2009|link=https://web.archive.org/web/20110302004111/http://notch.tumblr.com/post/110459630/health-and-food|Notch mentions plans to add a health bar.}}
+|{{HistoryLine||August 18, 2009|link=https://notch.tumblr.com/post/165713706/each-player-has-10-hearts-of-health-you-can-lose|Health bar and fall damage teased.}}
+|{{HistoryLine||August 20, 2009|link=https://notch.tumblr.com/post/167380207/signs-up-to-four-lines-of-15-characters-each-i|Health bar blinking when damaged, damage invulnerability, and health bar shaking teased.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added all of the above.
+|Mushrooms now regain health.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||unknown|Dead mobs would fall on their left side instead of other random directions. 
+|Before suffocation was implemented, players that were covered by blocks could see through [[dirt]] and [[stone]]. Suffocation was added after Notch discovered that players were abusing this exploit to find underground caves and hollowed carvings. The patch added suffocation damage and making the player unable to see anything when experiencing it. However, this glitch is not completely fixed and is still possible to be done even in the existing version of the game.
+|In [[Survival]] mode, eating a [[red mushroom]] would deal the player {{hp|3}} of damage because they were poisonous.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.4|Players no longer suffocate when riding in a [[minecart]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|Unarmed damage is increased from {{hp|1}} to {{hp|2}}.}}
+|{{HistoryLine||1.8|dev=Pre-release|Unarmed damage is decreased from {{hp|2}} to {{hp|1}}.
+|[[Regeneration]] effect added, increasing health.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[Mobs]] can now have armor points.<ref>{{tweet|jeb|119377281796935680|I've added some armor points to the zombies, so they're slightly tougher now|September 29, 2011}}</ref>
+|Hearts now look different in Hardcore mode.}}
+|{{HistoryLine|||dev=RC1|The sound of the player taking damage is changed from a man's grunt to be more gender-neutral.}}
+|{{HistoryLine||1.3.1|dev=12w25a|Removed the downward knockback while drowning, which essentially trapped drowning players in multiplayer underwater.}}
+|{{HistoryLine|||dev=?|The health bar no longer has an animation for [[damage]] that shows how many hearts are lost.}}
+|{{HistoryLine||1.4.2|dev=12w38a|Changed hurt sounds for player again.}}
+|{{HistoryLine||1.6.1|dev=13w23a|Natural health regeneration can now be toggled with the [[game rule]] {{cd|naturalRegeneration}}.}}
+|{{HistoryLine||1.8|dev=14w32a|The health bar has an animation for [[damage]] that shows how many hearts are lost again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|Health bar added.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Regeneration effect is added that increases health.}}
+|{{HistoryLine|||dev=build 10|The sound of the player taking damage is changed from a man's grunt to be more gender-neutral.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.22|Reduced the alpha value from 60% to 25% for hurt color overlay on entities to aid in accessibility, matching {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the health bar.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The sound of the player taking damage is changed from a man's grunt to be more gender-neutral.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Changed hurt sounds for player again.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+SurvivalTestHealthPreview.png|A preview of the health system seen on Notch's blog. Note how the sprite for the half-heart has a black line in the middle.
+Dinnerbone Health.png|Health displayed in the tab menu.
+</gallery>
+
+=== In other media ===
+<gallery>
+Pride Hearts.jpg|"Rainbow Life Bar," an official T-Shirt design made to celebrate {{w|Pride Month}}.
+Pride2025.jpeg|alt=A collection of colorful Minecraft hearts sitting on top of a cherry blossom background.|Some hearts in a cherry blossom biome.
+Pride2025 1.jpeg|alt=A collection of colorful Minecraft hearts sitting on top of a background depicting a forest at dawn.|Some hearts in a forest biome.
+Pride2025 2.jpeg|Some hearts in a plains biome.
+</gallery>
+
+== See also ==
+* [[Death]], the result of an entity's health reaching {{hp|0}}.
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/health-minecraft Everything you need to know about health in Minecraft] – Minecraft.net 
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[de:Gesundheit]]
+[[es:Salud]]
+[[fr:Santé]]
+[[it:Salute]]
+[[ja:体力]]
+[[ko:생명력]]
+[[lzh:命數]]
+[[nl:Gezondheid]]
+[[pl:Życie]]
+[[pt:Vida]]
+[[ru:Здоровье]]
+[[zh:生命]]

@@ -1,0 +1,668 @@
+{{About|food items for players in the main game|items used for breeding|Breeding|items used for taming|Taming|food in {{MCD}}|MCD:Food}}
+[[File:Efe eats porkchop.gif|thumb|[[Efe]] eating a [[cooked porkchop]] {{in|bedrock}} (third-person front view).]]
+[[File:Player eating bread FirstPOV.gif|thumb|[[Steve]] eating [[bread]] {{in|java}} (first-person view).]]
+
+'''Food''' refers to consumable [[item]]s that, when eaten, restore hunger and saturation points, sometimes giving [[status effect]]s.
+
+== Eating ==
+[[File:Consumption time.gif|thumb|The consumption time difference between a honey bottle (2 seconds), bread (1.6 seconds), and dried kelp (0.8 seconds).]]
+Eating is the process of consuming food items. Eating a food item requires holding {{control|use}}, and takes an amount of time dependent on the food's consumption time value.
+
+=== Consumption time ===
+Eating (or drinking) a consumable takes {{convert|32|gt|s}}, with the exceptions of [[dried kelp]] which takes half of the time ({{convert|16|gt|s}}), and [[honey bottle]]s which take 25% longer ({{convert|40|gt|s}}). [[Cake]] is a [[block]] and thus cannot be eaten in the hand, requiring the player to place it down and then {{control|use}} it.
+
+=== Eating while at full hunger ===
+In [[Survival]], food cannot be eaten while already at full hunger, with the exception of [[chorus fruit]], [[golden apple]]s, [[enchanted golden apple]]s, [[honey bottle]]s, and [[suspicious stew]]. This also applies to [[potion]]s, [[water bottle]]s, and [[milk bucket]]s. In [[Creative]] mode and Peaceful [[difficulty]]{{only|be}}, any food can be consumed at any time.
+
+== Hunger ==
+[[File:Hotbar with xp.png|thumb|350px|The hunger bar is shown above the hotbar to the right of the health bar.]]
+{{Redirect|Hunger|the status effect|Hunger (effect)}}
+Hunger is a value that determines [[healing]], whether or not the player can [[sprint]], and whether or not the player is starving. Hunger is restored by eating food items. Hunger is lost by healing or by performing [[#Energy-intensive actions|energy-intensive actions]] that exhaust the player, and is the second value to be consumed by it, after [[#Saturation|saturation]].
+
+The player's current hunger value is represented by the hunger bar ({{hunger|bar=20}}), which displays above the [[hotbar]] on the right side, opposite of the [[health bar]]. Each hunger point is represented by half a hunger icon ({{hunger|1|notag=1}}), and the maximum hunger value is 20. Hunger points can also be restored by applying the [[Saturation (effect)|Saturation]] status effect. The hunger value does not drain on [[Peaceful]] difficulty, and always remains at the maximum value of 20.
+
+=== Natural regeneration ===
+[[File:Natural regeneration.gif|thumb|Gaining natural regeneration by being at {{hunger|bar=18}} or above.]]
+If the hunger value is at 18 ({{hunger|bar=18}}) or above, or the saturation value is non-zero, the player's health naturally regenerates every 4 seconds (80 ticks). Saturation is used first, and then once fully drained, hunger is used instead. When the hunger value drops to 17 ({{hunger|bar=17}}) or below, natural regeneration stops.
+
+=== Sprinting ===
+{{main|Sprinting#Activating}}
+If the hunger value is at 6 ({{hunger|bar=6}}) or below, the player loses the ability to [[sprint]].
+
+=== Starvation ===
+[[File:Starvation.gif|thumb|Taking starvation damage due to being at {{hunger|bar=0}}.]]
+If the hunger value reaches 0 ({{hunger|bar=0}}), the player will begin to lose health due to starvation. Starvation damages the player by {{hp|1}} every 4 seconds (80 ticks). Starvation damage ignores [[armor]] and [[armor toughness]], the [[Protection]] enchantment, and the [[Resistance]] effect.<ref>{{tweet|jeb_|111047534318858240|If the the food bar is empty in MC 1.8, it will slowly drop your health to 5 hearts on easy, to 0.5 hearts on normal, and kill you on hard|September 6, 2011}}</ref> Starvation damage stops taking effect when reaching certain health thresholds on certain [[difficulties]].
+* On Easy difficulty, starvation damage stops when the player's health is at {{hp|10|total=20}} or below.
+* On Normal difficulty, starvation damage stops when the player's health is at {{hp|1|total=20}} or below.
+* On Hard difficulty, starvation damage does not stop at any health threshold, and will kill the player by bringing them to {{hp|0|total=20}}.
+
+=== Food hunger values ===
+{| class="wikitable"
+!colspan=2 |Hunger values
+|-
+!Food type!!Hunger restored
+|-
+|{{Slot|Cake.png}}<ref group="note">All slices together.</ref>||{{hunger|14}}
+|-
+|{{Slot|Suspicious Stew.png}}<ref group="note">The variant with the [[Saturation (effect)|Saturation]] status effect.</ref>||{{hunger|13}}
+|-
+|{{Slot|Rabbit Stew.png}}||{{hunger|10}}
+|-
+|{{Slot|Cooked Porkchop.png}}{{Slot|Pumpkin Pie.png}}{{Slot|Steak.png}}||{{hunger|8}}
+|-
+|{{Slot|Beetroot Soup.png}}{{Slot|Cooked Chicken.png}}{{Slot|Cooked Mutton.png}}{{Slot|Cooked Salmon.png}}{{Slot|Golden Carrot.png}}{{Slot|Honey Bottle.png}}{{Slot|Mushroom Stew.png}}{{Slot|Suspicious Stew.png}}||{{hunger|6}}
+|-
+|{{Slot|Baked Potato.png}}{{Slot|Bread.png}}{{Slot|Cooked Cod.png}}{{Slot|Cooked Rabbit.png}}||{{hunger|5}}
+|-
+|{{Slot|Apple.png}}{{Slot|Chorus Fruit.png}}{{Slot|Enchanted Golden Apple.png}}{{Slot|Golden Apple.png}}{{Slot|Rotten Flesh.png}}||{{hunger|4}}
+|-
+|{{Slot|Carrot.png}}{{Slot|Raw Beef.png}}{{Slot|Raw Porkchop.png}}{{Slot|Raw Rabbit.png}}||{{hunger|3}}
+|-
+|{{Slot|Cookie.png}}{{Slot|Glow Berries.png}}{{Slot|Melon Slice.png}}{{Slot|Poisonous Potato.png}}{{Slot|Raw Chicken.png}}{{Slot|Raw Cod.png}}{{Slot|Raw Mutton.png}}{{Slot|Raw Salmon.png}}{{Slot|Spider Eye.png}}{{Slot|Sweet Berries.png}}{{Slot|Cake.png}}<ref group="note">Single slice.</ref>|||{{hunger|2}}
+|-
+|{{Slot|Beetroot.png}}{{Slot|Dried Kelp.png}}{{Slot|Potato.png}}{{Slot|Pufferfish.png}}{{Slot|Tropical Fish.png}}||{{hunger|1}}
+|}
+
+== Saturation ==
+{{Redirect|Saturation|the status effect|Saturation (effect)}}
+Saturation is a value that determines healing, as well as the time until hunger begins to deplete. Saturation is lost by healing or performing [[energy-intensive actions]] that exhaust the player, and is the first value to be consumed by it, before [[Food#Hunger|hunger]].
+
+The player's current saturation value is not visually displayed as a bar, unlike the hunger value. Instead, when saturation reaches zero, the hunger bar starts to shake or jitter periodically.
+
+=== Saturation boost ===
+[[File:Saturation boost.gif|thumb|Gaining saturation boost from reaching full hunger, consuming the saturation gained from the [[cooked porkchop]] to heal.]]
+{{exclusive|java|section=1}}
+Saturation boost<ref>{{citation|url=https://www.reddit.com/r/Minecraft/comments/epy4hv/experimental_combat_snapshot_version_5/|title=Experimental Combat Snapshot - version 5|section=|website=[https://www.reddit.com/ Reddit]|author=[[Jeb]]|date=January 16, 2020|quote=…food rebalance: Saturation boost…|archive-url=}}</ref>, also known as saturation healing, is a mechanic exclusive to {{JE}} that regenerates health when the player's hunger bar is full ({{Hungerbar|20|9px}}). Saturation boost heals {{hp|1}} by consuming {{hunger|1.5}} saturation, and activates every 0.5 seconds (10 ticks) when at full hunger. The saturation mechanic as a whole is in both {{BE}} and {{JE}}, it's specifically saturation boost that is only in ''Java Edition''.
+
+=== Food saturation values ===
+{| class="wikitable sortable"
+!colspan=5 |Saturation values
+|-
+! rowspan=2 |Food type!! rowspan=2 |Saturation restored!! colspan=2 |Saturation boost{{only|java}}
+|-
+!<abbr title="The amount of health restored from the saturation boost, ignoring any effects from the food. Assumes saturation is 0 before eating.">Health restored</abbr>!!<abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">Duration</abbr>
+|-
+|{{Slot|Suspicious Stew.png}}<ref group="note">The variant with the [[Saturation (effect)|Saturation]] status effect.</ref>||{{hunger|21.2}}||{{hp|14.133}}||7.067 seconds (141 ticks)
+|-
+|{{Slot|Golden Carrot.png}}||{{hunger|14.4}}||{{hp|9.6}}||4.8 seconds (96 ticks)
+|-
+|{{Slot|Cooked Porkchop.png}}{{Slot|Steak.png}}||{{hunger|12.8}}||{{hp|8.533}}||4.267 seconds (85 ticks)
+|-
+|{{Slot|Rabbit Stew.png}}||{{hunger|12}}||{{hp|8}}||4 seconds (80 ticks)
+|-
+|{{Slot|Cooked Mutton.png}}{{Slot|Cooked Salmon.png}}{{Slot|Enchanted Golden Apple.png}}{{Slot|Golden Apple.png}}||{{hunger|9.6}}||{{hp|6.4}}||3.2 seconds (64 ticks)
+|-
+|{{Slot|Beetroot Soup.png}}{{Slot|Cooked Chicken.png}}{{Slot|Mushroom Stew.png}}{{Slot|Suspicious Stew.png}}||{{hunger|7.2}}||{{hp|4.8}}||2.4 seconds (48 ticks)
+|-
+|{{Slot|Baked Potato.png}}{{Slot|Bread.png}}{{Slot|Cooked Cod.png}}{{Slot|Cooked Rabbit.png}}||{{hunger|6}}||{{hp|4}}||2 seconds (40 ticks)
+|-
+|{{Slot|Pumpkin Pie.png}}||{{hunger|4.8}}||{{hp|3.2}}||1.6 seconds (32 ticks)
+|-
+|{{Slot|Carrot.png}}||{{hunger|3.6}}||{{hp|2.4}}||1.2 seconds (24 ticks)
+|-
+|{{Slot|Spider Eye.png}}||{{hunger|3.2}}||{{hp|2.133}}||1.067 seconds (21 ticks)
+|-
+|{{Slot|Cake.png}}<ref group="note">All slices together.</ref>||{{hunger|2.8}}||{{hp|1.867}}||0.933 seconds (19 ticks)
+|-
+|{{Slot|Apple.png}}{{Slot|Chorus Fruit.png}}||{{hunger|2.4}}||{{hp|1.6}}||0.8 seconds (16 ticks)
+|-
+|{{Slot|Raw Beef.png}}{{Slot|Raw Porkchop.png}}{{Slot|Raw Rabbit.png}}||{{hunger|1.8}}||{{hp|1.2}}||0.6 seconds (12 ticks)
+|-
+|{{Slot|Beetroot.png}}{{Slot|Honey Bottle.png}}{{Slot|Melon Slice.png}}{{Slot|Poisonous Potato.png}}{{Slot|Raw Chicken.png}}{{Slot|Raw Mutton.png}}{{Slot|Sweet Berries.png}}{{only|bedrock}}||{{hunger|1.2}}||{{hp|0.8}}||0.4 seconds (8 ticks)
+|-
+|{{Slot|Rotten Flesh.png}}||{{hunger|0.8}}||{{hp|0.533}}||0.267 seconds (5 ticks)
+|-
+|{{Slot|Potato.png}}{{Slot|Dried Kelp.png}}{{only|java}}||{{hunger|0.6}}||{{hp|0.4}}||0.2 seconds (4 ticks)
+|-
+|{{Slot|Cookie.png}}{{Slot|Glow Berries.png}}{{Slot|Raw Cod.png}}{{Slot|Raw Salmon.png}}{{Slot|Sweet Berries.png}}{{only|java}}{{Slot|Cake.png}}<ref group="note">Single slice.</ref>||{{hunger|0.4}}||{{hp|0.267}}||0.133 seconds (3 ticks)
+|-
+|{{Slot|Pufferfish.png}}{{Slot|Tropical Fish.png}}{{Slot|Dried Kelp.png}}{{only|bedrock}}||{{hunger|0.2}}||{{hp|0.133}}||0.067 seconds (2 ticks)
+|}
+
+== Exhaustion ==
+Exhaustion is incurred from doing certain energy-intensive actions, and certain actions exhaust the player more than others. Exhaustion first reduces saturation, and then reduces hunger.
+
+Once the exhaustion level reaches 4.0, it resets to 0.0 and reduces the saturation by {{hunger|1}} if there is any saturation remaining. If the saturation is 0, it reduces the hunger by {{hunger|1}} instead.
+
+=== Energy-intensive actions ===
+{| class="sortable mw-collapsible wikitable" data-description="Exhaustion"
+! class="unsortable" |Action
+!Exhaustion<br>level increase
+!Units
+|-
+|[[Swimming]]
+| style="text-align: center;" |0.01
+|per meter
+|-
+|[[Breaking]] a block
+| style="text-align: center;" |0.005
+|per block broken
+|-
+|[[Sprinting]]
+| style="text-align: center;" |0.1
+|per meter
+|-
+|[[Jumping]]
+| style="text-align: center;" |0.05
+|per jump
+|-
+|Attacking an [[entity]]
+| style="text-align: center;" |0.1
+|per attack landed
+|-
+|Attacking with a [[spear]] enchanted with [[Lunge]]
+| style="text-align: center;" |4.0 &times; (level)
+|per lunge attack, regardless whether it hits
+|-
+|Taking [[damage]] that is normally [[Armor#Damage types|protected by armor]]
+| style="text-align: center;" |0.1
+|per distinct instance of damage being received
+|-
+|{{EffectLink|link=Hunger (status effect)|Hunger}}
+| style="text-align: center;" |0.005
+|per tick, per Hunger status effect level
+|-
+|Jumping while sprinting
+| style="text-align: center;" |0.2
+|per jump
+|-
+|Natural regeneration (requires {{hunger|18|notag=1}} or higher and having the [[gamerule]] <code>naturalRegeneration</code> set to <code>true</code>)
+| style="text-align: center;" |6.0
+|per {{hp|1}} healed
+|-
+|{{EffectLink|link=Hunger (status effect)|Hunger}} from [[raw chicken]], [[rotten flesh]], or taking damage from [[husk]]s.
+| style="text-align: center;" |3.0
+|full 0:30 duration of Hunger I, at 0.1 per second
+|-
+|{{EffectLink|link=Hunger (status effect)|Hunger}} from [[Pufferfish (item)|pufferfish]]
+| style="text-align: center;" |4.5
+|full 0:15 duration of Hunger III, at 0.3 per second
+|-
+|Getting pushed by other means (except flowing water, which counts as swimming)
+| style="text-align: center;" | -
+| -
+|}
+
+== Effects ==
+[[File:Eating Rotten Flesh.png|thumb|right|Getting the [[Hunger (effect)|Hunger]] effect from eating [[rotten flesh]].]]
+Certain foods provide additional effects when eaten, both helpful and harmful. This can come in the form of gaining [[status effect]]s, clearing status effects, or teleportation.
+
+=== Food effects ===
+{| class="wikitable"
+!colspan=2 |Effects
+|-
+!Food type!!Applied effects
+|-
+|{{Slot|Chorus Fruit.png}}||Teleports the user [[Enderman#Teleportation|randomly]]
+|-
+|{{Slot|Enchanted Golden Apple.png}}||0:20 {{EffectLink|Regeneration}} II{{only|java}}<br/>0:30 {{EffectLink|Regeneration}} II{{only|bedrock}}<br/>2:00 {{EffectLink|Absorption}} IV<br/>5:00 {{EffectLink|Resistance}} I<br/>5:00 {{EffectLink|Fire Resistance}}
+|-
+|{{Slot|Golden Apple.png}}||0:05 {{EffectLink|Regeneration}} II<br/>2:00 {{EffectLink|Absorption}} I
+|-
+|{{Slot|Honey Bottle.png}}||Clears {{EffectLink|Poison}}
+|-
+|{{Slot|Milk Bucket.png}}||Clears all [[status effect]]s
+|-
+|{{Slot|Poisonous Potato.png}}||0:05 {{EffectLink|Poison}} (60% chance)
+|-
+|{{Slot|Pufferfish.png}}||0:15 {{EffectLink|Hunger}} III<br/>0:15 {{EffectLink|Nausea}}<br/>1:00 {{EffectLink|Poison}} II
+|-
+|{{Slot|Raw Chicken.png}}||0:30 {{EffectLink|Hunger}} I (30% chance)
+|-
+|{{Slot|Rotten Flesh.png}}||0:30 {{EffectLink|Hunger}} I (80% chance)
+|-
+|{{Slot|Spider Eye.png}}||0:05 {{EffectLink|Poison}} I
+|-
+|{{Slot|Suspicious Stew.png}}||0:03 {{EffectLink|Fire Resistance}} ({{BlockLink|Allium}})<br/>
+<hr>
+0:11 {{EffectLink|Blindness}} ({{BlockLink|Azure Bluet}} / {{BlockLink|Open Eyeblossom}}){{only|java}}<br/>0:07 {{EffectLink|Blindness}} ({{BlockLink|Azure Bluet}} / {{BlockLink|Open Eyeblossom}}){{only|bedrock}}<br/>
+<hr>
+0.35s {{EffectLink|Saturation}} ({{BlockLink|Blue Orchid}} / {{BlockLink|Dandelion}} / {{BlockLink|Golden Dandelion}}){{only|java}}<br/>0.3s {{EffectLink|Saturation}} ({{BlockLink|Blue Orchid}} / {{BlockLink|Dandelion}} / {{BlockLink|Golden Dandelion}}){{only|bedrock}}<br/>
+<hr>
+0:07 {{EffectLink|Nausea}} ({{BlockLink|Closed Eyeblossom}})<br/>
+<hr>
+0:05 {{EffectLink|Jump Boost}} ({{BlockLink|Cornflower}})<br/>
+<hr>
+0:11 {{EffectLink|Poison}} ({{BlockLink|Lily of the Valley}})<br/>
+<hr>
+0:07 {{EffectLink|Regeneration}} ({{BlockLink|Oxeye Daisy}})<br/>
+<hr>
+0:05 {{EffectLink|Night Vision}} ({{BlockLink|Poppy}} / {{BlockLink|Torchflower}})<br/>
+<hr>
+0:07 {{EffectLink|Weakness}} ({{BlockLink|Red Tulip}} / {{BlockLink|Orange Tulip}} / {{BlockLink|Pink Tulip}} / {{BlockLink|White Tulip}})<br/>
+<hr>
+0:07 {{EffectLink|Wither}} ({{BlockLink|Wither Rose}})
+|}
+
+=== Hunger effect ===
+{{main|Hunger (effect)}}
+The [[Hunger (effect)|Hunger]] effect removes {{hunger|1}} hunger or {{hunger|1}} saturation point every <math>\frac{40}\text{level}</math> seconds, and turns the hunger bar to a green color ({{hungerbar|20|9px|poisoned=1}}). It is inflicted by being attacked by a [[husk]], or by eating [[Pufferfish (item)|pufferfish]], [[rotten flesh]], or [[raw chicken]].
+
+=== Saturation effect ===
+{{main|Saturation (effect)}}
+The [[Saturation (effect)|Saturation]] effect replenishes {{hunger|1}} hunger point and {{hunger|2}} saturation points every 0.05 seconds (1 tick){{only|java}}<ref>{{bug|MCPE-52353||Saturation status effect does not restore saturation points}}</ref> per level. It is applied exclusively through [[suspicious stew]] crafted with a [[blue orchid]] or [[dandelion]].
+
+== Food sources ==
+{| class="wikitable"
+!colspan=2 |Sources
+|-
+!Food type!!Food source
+|-
+|{{Slot|Apple.png}}||Destroyed/despawned oak or dark oak [[leaves]]<br/>[[Stronghold#Loot|Stronghold]] altar and storeroom, [[Village#Loot|village]] weaponsmith and plains house, [[Igloo#Loot|igloo]] and [[Chest#Bonus chest|bonus]] chests<br/>Receive 4 for 1 [[emerald]] at apprentice-level [[trade]] of farmer [[villager]]
+|-
+|{{Slot|Baked Potato.png}}||[[Trial Spawner#Loot|Trial Spawners]] and [[Ominous Trial Spawner#Loot| ominous trial spawners]] in [[Trial Chambers]]<br/>[[Ancient city#Loot|Ancient city]] ice box and [[Trial Chambers#Loot|trial chambers]] supply chests<br/>[[Trial Chambers#Loot| Trial chambers]] intersection barrels
+|-
+|{{Slot|Beetroot.png}}||Harvesting [[Beetroot Seeds|beetroot crops]]<br/>Farmer villager who drop beetroot after harvesting beetroot crop
+|-
+|{{Slot|Beetroot Soup.png}}||[[Beetroot soup#Crafting|Crafting]] a [[bowl]] together with [[beetroot]]s<br/>[[Village#Loot|Snowy village house]] chests
+|-
+|{{Slot|Bread.png}}||[[Bread#Crafting|Crafting]] from [[wheat]]<br/>[[Monster Room#Loot|Monster room]], [[Stronghold#Loot|stronghold]] altar and storeroom, [[Village#Loot|village]], [[Mineshaft#Loot|mineshaft]], [[Woodland mansion#Loot|woodland mansion]] and [[Chest#Bonus chest|bonus]] chests<br/>Receive 6 for 1 [[emerald]] at novice-level [[trade]] of [[Trading#Villager|farmer]] villager<br/>Farmer villager who drop bread after harvesting [[wheat]]<br/>Raid gift from farmer villager{{only|wrap=1|java}}<br/>[[Trial Spawner#Loot|Trial spawners]] in [[trial chambers]].
+|-
+|{{Slot|Cake.png}}||[[Cake#Crafting|Crafting]] from [[wheat]], [[egg]]s, [[sugar]], and [[milk]]<br/>Receive 1 for 1 [[emerald]] at expert-level [[trade]] of [[Trading#Villager|farmer]] villager<br/>[[Buried treasure#Loot|Buried treasure]] chest{{only|wrap=1|bedrock}}<br/>[[Trial chamber]] intersection chests
+|-
+|{{Slot|Carrot.png}}||Killing [[zombie]]s<br/>Harvesting [[Carrot|carrot crops]]<br/>[[Pillager outpost#Loot|pillager outpost]] and [[Shipwreck#Loot|Shipwreck]] supply chest<br/>[[Chest#Bonus chest|bonus chest]]{{only|wrap=1|bedrock}}<br/>Farmer villagers which drop carrots after harvesting a carrot crop
+|-
+|{{Slot|Chorus Fruit.png}}||Breaking [[chorus plant]]s in [[The End]]
+|-
+|{{Slot|Cooked Chicken.png}}||[[Smelting#Food|Cooking]] a [[raw chicken]]<br/>Killing [[chicken]]s with [[fire]]<br/>Receive 8 for 1 [[emerald]] at novice-level [[trade]] from [[Trading#Villager|Butcher]] villager<br/>Raid gift from butcher villager{{only|wrap=1|java}}<br/>[[Trial Spawner#Loot|Trial spawners]] in [[trial chambers]]
+|-
+|{{Slot|Cooked Cod.png}}||[[Smelting#Food|Cooking]] a [[raw cod]]<br/>Killing [[cod]] with [[fire]]{{only|wrap=1|java}}<br/>Killing [[dolphin]] with fire<br/>Rare drop from [[guardian]]s and [[elder guardian]]s when killed with [[fire]]{{only|wrap=1|java}}<br/>Receive 6 for 1 [[emerald]] + 6 [[raw cod]] at novice-level [[trade]] from [[Trading#Villager|fisherman]] villager<br/>[[Buried treasure#Loot|Buried treasure chests]]{{only|wrap=1|java}}
+|-
+|{{Slot|Cooked Mutton.png}}||[[Smelting#Food|Cooking]] [[raw mutton]]<br/>Killing [[sheep]] with [[fire]]<br/>Raid gift from butcher villager{{only|wrap=1|java}}
+|-
+|{{Slot|Cooked Porkchop.png}}||[[Smelting#Food|Cooking]] a [[raw porkchop]]<br/>Killing [[pig]]s or [[hoglin]]s with [[fire]]<br/>Receive 5 for 1 [[emerald]] at apprentice-level [[trade]] from [[Trading#Villager|butcher]] villager<br/>Raid gift from butcher villager{{only|wrap=1|java}}<br/>[[Bastion remnant#Loot|Bastion remnant]] chests
+|-
+|{{Slot|Cooked Rabbit.png}}||[[Smelting#Food|Cooking]] [[raw rabbit]]<br/>Killing [[rabbit]]s with [[fire]]<br/>Raid gift from butcher villager{{only|wrap=1|java}} 
+|-
+|{{Slot|Cooked Salmon.png}}||[[Smelting#Food|Cooking]] a [[raw salmon]]<br/>Killing [[salmon]] with [[fire]]{{only|wrap=1|java}}<br/>[[Buried treasure#Loot|buried treasure chest]]{{only|wrap=1|java}}<br/>Receive 6 for 1 [[emerald]] + 1 [[raw salmon]] at apprentice-level [[trade]] from [[Trading#Villager|fisherman]] villager
+|-
+|{{Slot|Cookie.png}}||[[Cookie#Crafting|Crafting]] from [[wheat]] and [[cocoa beans]]<br/>Receive 18 for 3 [[emerald]] at journeyman-level [[trade]] from [[Trading#Villager|farmer]] villager<br/>Raid gift from farmer villager{{only|wrap=1|java}} 
+|-
+|{{Slot|Dried Kelp.png}}||Cooking [[kelp]] in a [[furnace]], [[smoker]], or [[campfire]]<br/>Crafting from [[dried kelp block]]<br/>Raid gift from farmer villager{{only|wrap=1|java}} 
+|-
+|{{Slot|Enchanted Golden Apple.png}}||[[Desert temple#Loot|Desert pyramid]], [[Monster Room#Loot|monster room]], [[Woodland mansion#Loot|woodland mansion]], [[Mineshaft#Loot|mineshaft]], [[Ruined Portal#Loot|ruined portal]] and [[Ancient City#Loot|ancient city]] chests<br/>[[Ominous Vault#Loot|Ominous vaults]] in [[trial chambers]]
+|-
+|{{Slot|Golden Apple.png}}||[[Golden Apple|Crafting]] from an [[apple]] and [[gold ingot]]s.<br/>[[Desert temple#Loot|Desert pyramid]], [[Monster Room#Loot|monster room]], [[Mineshaft#Loot|mineshaft]], [[Stronghold#Loot|stronghold]] altar, [[Woodland mansion#Loot|woodland mansion]], [[Igloo#Loot|igloo]], big [[Ocean Ruins#Loot|ocean ruins]], [[Ruined Portal#Loot|ruined portal]] and [[Ancient City#Components|ancient city center]] chests<br/>[[Ominous Vault#Loot|Ominous vaults]] in [[trial chambers]]
+|-
+|{{Slot|Glow Berries.png}}||Collected from cave vines<br/>[[Ancient City#Loot|Ancient city]] and [[Trial Chambers#Loot|trial chambers]] supply chests
+|-
+|{{Slot|Golden Carrot.png}}||[[Golden Carrot#Crafting|Crafting]] a [[carrot]] with [[gold nugget]]s<br/>Receive 3 for 3 [[emerald]] at master-level [[trade]] from [[Trading#Villager|farmer]] villager<br/>[[Bastion Remnant#Loot|Bastion remnant]], [[Ruined Portal#Loot| ruined portal]] and [[Ancient City#Loot| ancient city ice box]] chests<br/>[[Vault#Loot|Vaults]] in [[trial chambers]]<br/>[[Ominous Trial Spawner#Loot|Ominous trial spawners]] in [[trial chambers]]
+|-
+|{{Slot|Honey Bottle.png}}||Crafting from [[honey block]]<br/>Collecting from [[beehive]]s or [[bee nest]]s<br/>[[Vault#Loot|Vaults]] in [[trial chambers]]
+|-
+|{{Slot|Melon Slice.png}}||Harvesting a [[melon]] block
+|-
+|{{Slot|Mushroom Stew.png}}||[[Mushroom Stew#Crafting|Crafting]] with a [[bowl]] and one of each [[mushroom]]<br/>{{Control|Using}} a [[bowl]] on a [[mooshroom]]
+|-
+|{{Slot|Poisonous Potato.png}}||Harvesting [[Potato|potato crops]]<br/>[[Shipwreck#Loot|Shipwreck]] supply chest
+|-
+|{{Slot|Potato.png}}||Killing [[zombie]]s<br/>Harvesting [[Potato|potato crops]]<br/>Farmer villager who drop potato after harvesting potato crop<br/>[[Chest#Bonus chest|bonus chest]]{{only|wrap=1|bedrock}}<br/>[[Village#Loot| Plains and taiga village]], [[pillager outpost#loot|pillager outpost]], and [[shipwreck#loot|shipwreck]] supply chest
+|-
+|{{Slot|Pufferfish.png}}||[[Fishing]]<br/>Killing [[pufferfish]]<br/>Rare drop from [[guardian]]s and [[elder guardian]]
+|-
+|{{Slot|Pumpkin Pie.png}}||[[Pumpkin Pie|Crafting]] with a [[pumpkin]], an [[egg]], and [[sugar]]<br/>Receive 4 for 1 [[emerald]] at apprentice-level [[trade]] from [[Trading#Villager|farmer]] villager<br/>[[Village#Loot|village]] taiga house chest<br/>Raid gift from farmer villager{{only|wrap=1|java}} 
+|-
+|{{Slot|Rabbit Stew.png}}||[[Rabbit Stew#Crafting|Crafting]] with a [[bowl]], [[carrot]], [[baked potato]], [[mushroom]], and [[cooked rabbit]]<br/>Receive 1 for 1 [[emerald]] at novice-level [[trade]] from [[Trading#Villager|butcher]] villager 
+|-
+|{{Slot|Raw Beef.png}}||Killing [[cow]]s, [[red mooshroom]]s, and [[brown mooshroom]]<br/>[[Village#Loot|village]] butcher chest 
+|-
+|{{Slot|Raw Chicken.png}}||Killing [[chicken]]s<br/>[[Cat]] gift
+|-
+|{{Slot|Raw Cod.png}}||[[Fishing]]<br/>Killing [[cod]], [[guardian]]s, [[elder guardian]]s, [[dolphin]]s, [[polar bear]]s<br/>Rare drop from [[guardian]]s and [[elder guardian]]s<br/>[[Village#Loot|village]] fisher [[barrel]]<br/>Raid gift from fisherman villager{{only|wrap=1|java}}
+|-
+|{{Slot|Raw Mutton.png}}||Killing [[sheep]]<br/>[[Village#Loot|village]] butcher chest
+|-
+|{{Slot|Raw Porkchop.png}}||Killing [[pig]]s or [[hoglin]]s<br/>[[Village#Loot|Village]] butcher and [[Bastion Remnant#Loot|bastion remnant stable]] chests
+|-
+|{{Slot|Raw Rabbit.png}}||Killing [[rabbit]]s
+|-
+|{{Slot|Raw Salmon.png}}||[[Fishing]]<br/>Killing [[salmon]] and [[polar bear]]s<br/>Rare drop from [[guardian]]s and [[elder guardian]]s<br/>Raid gift from fisherman villager{{only|wrap=1|java}}<br/>[[Village#Loot|village]] fisher barrel{{only|wrap=1|java}}<br/>[[Chest#Bonus chest|bonus chest]] 
+|-
+|{{Slot|Rotten Flesh.png}}||Killing [[zombie]]s, [[zombified piglin]]s, [[zombie villager]]s, [[husk]]s, [[drowned]], and [[zombie horse]]s<br/>[[Monster Room#Loot|monster room]], [[Igloo#Loot|igloo]], [[Woodland mansion#Loot|woodland mansion]], small [[Ocean Ruins#Loot|ocean ruins]], [[Village#Loot|village]] temple, [[Shipwreck#Loot|shipwreck]] supply, [[Desert temple#Loot|desert]], and [[jungle temple#Loot|jungle]] pyramid chests<br/>Caught as junk from [[fishing]]<br/>[[Cat]] gift
+|-
+|{{Slot|Spider Eye.png}}||Killing [[spider]]s, [[cave spider]]s and [[witch]]es.<br/>[[Desert pyramid#Loot|Desert pyramid]] chests.
+|-
+|{{Slot|Steak.png}}||[[Smelting#Food|Cooking]] [[raw beef]]<br/>Killing [[cow]]s, [[red mooshroom]]s, or [[brown mooshroom]]s with [[fire]]<br/>Raid gift from butcher villager{{only|wrap=1|java}}<br/>[[Ominous Trial Spawner#Loot|Ominous trial spawners]] in [[trial chambers]].
+|-
+|{{Slot|Suspicious Stew.png}}||[[Suspicious Stew#Crafting|Crafting]] with a [[bowl]], [[red mushroom]], [[brown mushroom]], and any [[flower]]<br/>Feed [[brown mooshroom]] any flower then {{Control|using}} a [[bowl]] on brown mooshroom<br/>Receive 1 for 1 [[emerald]] at expert-level [[trade]] of farmer [[villager]], excluding [[Fire Resistance]], [[Regeneration]], and [[Wither (effect)|Wither]]<br/>[[Ancient City#Loot| Ancient city ice box]] chests.<ref group="note">The stew will always grant either 5-7 seconds of Blindness, or 7-10 seconds of Night Vision</ref>
+|-
+|{{Slot|Sweet Berries.png}}||Breaking [[sweet berry bush]]es<br/>Picking ripe berries from [[sweet berry bush]]es (right-click)<br/>Taiga [[Village#Loot|village]] house chests.{{only|wrap=1|java}}
+|-
+|{{Slot|Tropical Fish.png}}||[[Fishing]]<br/>Killing [[tropical fish]]<br/>Rare drop from [[guardian]]s and [[elder guardian]]s
+|}
+
+=== Ingredients ===
+The following items cannot be eaten on their own. Instead, they are used to craft consumable food items.
+<!--
+Please leave spaces between each row in the table - this has no effect on the appearance of the table, but it makes it a lot easier on future wiki editors!
+-->
+
+{| class="sortable wikitable collapsible list-style-none" data-description="Ingredients"
+|-
+! Ingredient(s)
+! Used to make
+! Source(s)
+|-
+| {{ItemLink|Bowl}}
+| {{ItemLink|Mushroom Stew}}
+* {{ItemLink|Beetroot Soup}}
+* {{ItemLink|Rabbit Stew}}
+* {{ItemLink|Suspicious Stew}}
+|
+* [[Crafting]] from [[planks]]
+* [[Fishing]]
+* [[Turtle]] killed by [[lightning]]
+* Eating food made with them
+|
+|-
+| {{ItemLink|Cocoa Beans}}
+| {{ItemLink|Cookie|Cookies}}
+|
+* Breaking [[cocoa plant]]s
+|
+|-
+| {{ItemLink|Egg}}
+|
+* {{ItemLink|Cake}}
+* {{ItemLink|Pumpkin Pie}}
+|
+* Laid by [[chicken]]s
+* Found in village fletcher chests
+|
+|-
+| {{ItemLink|Milk Bucket}}
+| {{ItemLink|Cake}}
+|
+* Milking a [[cow]], [[mooshroom]] or a [[goat]]
+* Killing a [[wandering trader]] drinking it
+|-
+| {{BlockLink|Brown Mushroom}} or {{BlockLink|Red Mushroom}}
+| {{ItemLink|Mushroom Stew}}
+* {{ItemLink|Rabbit Stew}}
+* {{ItemLink|Suspicious Stew}}
+| {{anchor|Brown Mushroom|Red Mushroom}}
+* Breaking naturally generated mushrooms in:
+** Dark/shady areas
+** [[Swamp]] and [[mushroom fields]] biomes
+** [[The Nether]]
+* Breaking [[Huge Mushroom|huge brown or red mushrooms]]
+* Using [[shears]] on a [[mooshroom|brown mooshroom or red mushroom]]
+* Bought from [[wandering trader]]
+|
+|-
+| {{BlockLink|Any small flower|id=Flowers|link=Flower}}
+| {{ItemLink|Suspicious stew}}
+|
+* Breaking naturally generated flowers
+* Using [[bone meal]] on a [[grass block]]
+* Bought from [[wandering trader]]
+* Killing [[iron golem]] (poppy)
+|
+|-
+| {{BlockLink|Pumpkin}}
+| {{ItemLink|Pumpkin pie}}
+|
+* Harvesting mature [[pumpkin]]s grown from [[pumpkin seeds]]
+* Naturally occurring [[pumpkin]]s
+* Taiga and snowy taiga [[village]]s
+* Bought from [[wandering trader]]
+|
+|-
+| {{ItemLink|Sugar}}
+|
+* {{ItemLink|Cake}}
+* {{ItemLink|Pumpkin pie}}
+|
+* Crafting from [[sugar cane]] or [[honey bottle]]
+* Dropped by [[witch]]es
+* Creating from its base [[element]]s {{only|bedrock|education}}
+|
+|-
+| {{ItemLink|Wheat}}
+|
+* {{ItemLink|Bread}}
+* {{ItemLink|Cake}}
+* {{ItemLink|Cookie}}
+|
+* Harvesting mature [[wheat seeds]]
+* Found in [[Monster Room#Loot|monster room]], [[Woodland Mansion#Loot|woodland mansion]], [[Shipwreck#Loot|shipwreck]], [[Igloo#Loot|igloo]], [[Village#Loot|village]], [[Ocean Ruins#Loot|ocean ruins]], and [[Pillager Outpost#Loot|pillager outpost]] chest
+* Crafting from [[hay bale]]s
+|
+|-
+| {{ItemLink|Gold Nugget}}
+| {{ItemLink|Golden Carrot}}
+|
+* Crafting from [[gold ingot]]s
+* Dropped by [[zombified piglin]]s
+* Found in [[Shipwreck#Loot|shipwreck]], [[Igloo#Loot|igloo]], [[Village#Loot|village]], and [[Ocean Ruins#Loot|ocean ruins]] chest
+* Smelting golden armor or tools
+* Mining [[nether gold ore]] without [[Silk Touch]]
+|
+|-
+| {{ItemLink|Gold Ingot}}
+| {{ItemLink|Golden Apple}}
+|
+* Crafting from [[gold block]]s or [[gold nugget]]s
+* Rarely dropped by [[zombified piglin]]s
+* Smelting [[gold ore]] or [[nether gold ore]]
+* Found in [[Shipwreck#Loot|shipwreck]], [[Jungle Pyramid#Structure:Loot|jungle pyramid]], [[Monster Room#Loot|monster room]], [[Woodland Mansion#Loot|woodland mansion]], [[Nether Fortress#Loot|nether fortress]], [[End city#Loot|end city]], [[Mineshaft#Loot|mineshaft]], [[Village#Structure:Loot|village]], [[Stronghold#Loot|stronghold]], [[Buried Treasure#Loot|buried treasure]] and [[Desert pyramid#Structure:Loot|desert pyramid]] chest
+|
+|-
+| {{BlockLink|Honey Block}}
+| {{ItemLink|Honey Bottle}}
+|
+* Crafting from [[honey bottle]]s
+|
+|}
+
+== Internal variables ==
+Food uses four variables, the values of which are stored in the [[player.dat format]]. Variables can be queried in-game with the following command: {{cmd|data get entity <player's name> <variable>}}{{only|je}}.
+*<code>foodLevel</code>: The player's current hunger level, shown on the hunger bar. Its initial value on [[world]] creation or respawn is {{hunger|20}}.
+*<code>foodSaturationLevel</code>: The player's current saturation level, which determines how fast <code>foodLevel</code> depletes and is controlled by the kinds of food the player has eaten. Its maximum value always equals <code>foodLevel</code>'s value and decreases with <code>foodLevel</code>. Its initial value on world creation or respawn is 5.
+*<code>foodTickTimer</code>: This variable is used when <code>foodLevel</code> either exceeds 17 ({{hunger|bar=17}}), or is at zero. It increases on every [[tick]], and whenever it reaches 80 (4 seconds), it resets to zero and {{hp|1}} is added or deducted, depending on whether the player is saturated or starving. If the player has a full {{hunger|20}}, {{frac|1|6}} of {{hp|1}} times the player's <code>foodSaturationLevel</code> is restored, up to a maximum of {{hp|1}}, when <code>foodTickTimer</code> reaches 10 ({{frac|1|2}} second), and <code>foodTickTimer</code> is reset to zero.
+*<code>foodExhaustionLevel</code>: The player's current exhaustion level, which determines how fast the <code>foodSaturationLevel</code> depletes. Its value is increased by the player's actions (see [[#Exhaustion level increase|Exhaustion level increase]] for specific values). The initial value is zero. When it reaches a value of at least 4, the total value is decreased by 4 and one point is subtracted from <code>foodSaturationLevel</code>, or <code>foodLevel</code> if <code>foodSaturationLevel</code> is at zero.
+
+== Sounds ==
+{{Sound table/Entity/Food}}
+
+== Achievements ==
+{{load achievements|Pork Chop;Iron Belly;Rabbit Season;Overpowered;Castaway;Delicious Fish;The Lie;Bake Bread;Time For Stew}}
+
+== Advancements ==
+{{load advancements|Husbandry;A Balanced Diet;A Furious Cocktail;How Did We Get Here;Fishy Business}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 20, 2009|link=https://web.archive.org/web/20110302004111/http://notch.tumblr.com/post/110459630/health-and-food|[[Notch]] mentions adding food, which would be used to heal the player, and could be obtained by farming or hunting.}}
+|{{HistoryLine||June 14, 2009|link=https://notch.tumblr.com/post/123343045/my-vision-for-survival|[[Notch]] discussed how food would work in [[Survival]] mode: "Monsters will hurt you and take away from your health. The only way to regain health is to eat food. You get food from either hunting or from farming."}}
+|{{HistoryLine||July 19, 2011|link={{tweet|notch|93305042941132801}}|The hunger bar is first seen in an image Notch posted to Twitter that showcases his experimentation with world height.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|[[Mushroom]]s are now edible, making them the first food to be added in the game. At the time, food restores [[health]] instead of [[hunger]], and are eaten instantly without sound or animation.
+|Brown mushrooms restore {{hp|5}} and red mushrooms take {{hp|3}} hearts.}}
+|{{HistoryLine||0.25 SURVIVAL TEST|Pigs now drop 0-2 brown mushrooms upon death.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091231-1856|Mushrooms are no longer edible.{{check version}}}}
+|{{HistoryLine|||dev=20091231-2147|Added [[apple]]s, which are currently non-functional.}}
+|{{HistoryLine|||dev=20100110|Apples are now edible, and restore {{hp|4}} each.}}
+|{{HistoryLine|||dev=20100130|Added [[mushroom stew]], which restores {{hp|8}} health.}}
+|{{HistoryLine||20100206-2034|Added [[bread]] which restores {{hp|5}}.
+|Mushroom stew now restores {{hp|10}} health.}}
+|{{HistoryLine||20100219|[[Pig]]s now drop [[raw porkchop]]s, which restore {{hp|3}} and can be [[smelt]]ed to become [[cooked porkchop]]s, which restore {{hp|8}}.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Added [[golden apple]]s. At the time, they were crafted with [[blocks of gold]], and restored {{hp|20}}, but internally {{hp|42}}.}}
+|{{HistoryLine||20100625-1917|Golden apples can now be found in dungeons, making the item obtainable.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=<nowiki>?</nowiki>|slink=:Category:Information needed requiring unarchived version|Added [[raw fish]] which restores {{hp|2}} and [[cooked fish]] which restores {{hp|5}}, obtainable through [[fishing]].}}
+|{{HistoryLine||v1.2.3|Eating food now functions correctly in multiplayer.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Added [[cake]], with its slice restoring {{hp|3}} and a full cake restoring {{hp|18}}.}}
+|{{HistoryLine||1.4|Added [[cookie]]s which restore {{hp|1}}.}}
+|{{HistoryLine||1.5|Pigs now drop cooked porkchops if killed while on fire.}}
+|{{HistoryLine||1.8|dev=Pre-release|Hunger was introduced. Food no longer restores health directly, but the player can regenerate if the hunger meter is 90% or over.
+|Added [[melon slice|melon]]s, [[raw chicken]] as a drop from chickens, which can be smelted into [[cooked chicken]], [[raw beef]] as a drop from cows, which can be smelted into [[steak]], and [[rotten flesh]] as a new drop from [[zombie]]s.
+|Added an eating animation, instead of food simply disappearing from the player's hand as if a block had been placed.
+|Added [[hunger bar]]. Food now restores hunger instead of health.
+|Food now stacks in the inventory, with the exception of cake and mushroom stew.
+|With the addition of the hunger bar, all foods restore the same amount of hunger as hearts, except for mushroom stew, which restores {{hunger|8}}, golden apples, which restore {{Hunger|10}} and give 30 seconds of [[Regeneration]] and cake, with its slice restoring {{hunger|2}} and the whole cake restoring {{hunger|12}}.
+|Apples now generate in the new [[stronghold]] storeroom chests, making them obtainable.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Added [[spider eye]]s, as a drop from spiders.}}
+|{{HistoryLine||1.1|dev=release|Golden apples are now made with [[gold nugget]]s instead of blocks of gold, restore {{Hunger|4}} and give 4 seconds of Regeneration.}}
+|{{HistoryLine||1.3.1|dev=12w18a|The exhaustion cost of sprint jumping is now 0.2 from 0.8, meaning that constant sprint jumping is a viable means of fast long-distance travel in most situations.
+|Cocoa beans now drop rarely from jungle leaves, making all food renewable.}}
+|{{HistoryLine|||dev=12w19a|Cookies now restore {{hunger|2}}.}}
+|{{HistoryLine|||dev=12w21a|Added [[enchanted golden apple]]s, which functioned like golden apples prior to 1.1 and had the same crafting recipe, but also gave resistance and fire resistance for 5 minutes each.}}
+|{{HistoryLine||1.4.2|dev=12w34a|Added [[potato]]es and [[carrot]]s, which can be obtained from zombies as a rare drop.
+|Potatoes can be cooked to make [[baked potato]]es.
+|Harvesting potatoes may give 0–2 [[poisonous potato]]es.
+|Carrots can be crafted into [[golden carrot]]s.}}
+|{{HistoryLine|||dev=12w37a|Added [[pumpkin pie]]s.
+|Mushroom stew now restores {{hunger|6}}.}}
+|{{HistoryLine||1.6.1|dev=13w23a|Natural health regeneration now increases the food exhaustion level.
+|Golden apples are now crafted with 8 [[golden ingot]]s.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The exhaustion cost of sprint jumping is now 0.8 (up from 0.2), meaning that constant sprint jumping is no longer viable as a means of fast long-distance travel in most situations.
+|Added [[Tropical Fish (item)|clownfish]], [[raw salmon]], [[cooked salmon]], and [[Pufferfish (item)|pufferfish]].}}
+|{{HistoryLine||1.8|dev=14w02a|Baked potatoes now restore {{Hunger|5}} hunger points instead of 6, with a corresponding reduction in saturation restored.
+|Carrots now restore {{Hunger|3}} hunger points instead of 4, with a corresponding reduction in saturation restored.}}
+|{{HistoryLine|||dev=14w25a|Eating immediately after attacking no longer continues the swinging animation.<ref>{{bug|MC-201394}}</ref>}}
+|{{HistoryLine|||dev=14w27a|Added [[raw mutton]], [[cooked mutton]], [[raw rabbit]], [[cooked rabbit]], and [[rabbit stew]].}}
+|{{HistoryLine|||dev=14w28a|Cake now has one more slice.}}
+|{{HistoryLine|||dev=14w29a|Hunger now regenerates when depleted if the [[difficulty]] is set to Peaceful.}}
+|{{HistoryLine|||dev=14w30a|Food is now positioned a little higher and further left during the eating animation in first person view.<ref>{{bug|MC-273056}}</ref>}}
+|{{HistoryLine||1.9|dev=15w31a|Added [[chorus fruit]], [[beetroot]] and [[beetroot soup]].}}
+|{{HistoryLine|||dev=15w40a|Added saturation boost, where saturation is consumed to heal faster.
+|Regenerating health now increases exhaustion more.}}
+|{{HistoryLine|||dev=15w44a|Saturation boost now only takes effect when reaching full hunger ({{hunger|20}}).
+|Enchanted golden apples are no longer craftable, making them no longer renewable.}}
+|{{HistoryLine|||dev=15w49a|Sneaking now increases exhaustion by 0.005/m, decreased from 0.01/m.}}
+|{{HistoryLine||1.11|dev=16w32a|Exhaustion rates decreased across the board: Swimming decreased from 0.015/m to 0.01/m, breaking blocks decreased from 0.025/block to 0.005/block, jumping decreased from 0.2/jump to 0.05/jump, sprint jumping decreased from 0.8/jump to 0.2/jump, attacking and taking damage both decreased from 0.3/attack to 0.1/attack, Hunger status effect decreased from 0.5/s to 0.1/s.
+|Sneaking and walking no longer affect exhaustion.
+|Exhaustion rate from regeneration is increased from 4.0/half-heart to 6.0/half-heart.
+|The hunger bar is now visible when riding a [[boat]] or a [[minecart]].}}
+|{{HistoryLine||1.13|dev=18w07a|Added [[dried kelp]].}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[suspicious stew]].}}
+|{{HistoryLine|||dev=18w49a|Added [[sweet berries]].}}
+|{{HistoryLine||1.15|dev=19w34a|Added [[honey bottle]]s.}}
+|{{HistoryLine|||dev=19w35a|[[Honey bottle]]s now remove [[Poison]] effect when consumed.}}
+|{{HistoryLine|||dev=19w44a|Honey bottles can now be crafted with 4 [[bottle]]s and 1 honey block.}}
+|{{HistoryLine|||dev=19w46a|All foods can now be consumed in Creative mode.}}
+|{{HistoryLine||1.17|dev=21w05a|Added [[glow berries]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.4.0|Added the first food items: [[apple]]s, [[bread]], [[mushroom stew]], [[raw beef]], [[steak]], [[raw chicken]], [[cooked chicken]], [[raw porkchop]]s, and [[cooked porkchop]].}}
+|{{HistoryLine||v0.5.0|Added [[melon]]s, [[melon slice]]s, and [[melon seeds]].}}
+|{{HistoryLine||v0.7.0|Added [[cake]]s.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Added [[pumpkin pie]], [[carrot]]s, [[potato]]es, and [[baked potato]]es.}}
+|{{HistoryLine|||dev=build 2|Added [[beetroot]]s and [[beetroot soup]].}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[Potato]]es and [[carrot]]s can be obtainable from zombies (rare drop) or harvested.
+|Added [[cookie]]s.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Added [[rotten flesh]] as a new drop from [[zombie]]s. It [[Poison]]s the player when eaten.{{Info needed|When was this changed to give Hunger instead?}}
+|Added [[Raw Salmon|raw fish]], [[Cooked Salmon|cooked fish]], [[tropical fish (item)|clownfish]], and [[pufferfish (item)|pufferfish]].}}
+|{{HistoryLine||v0.12.1|dev=build 1|Hunger was introduced. Food no longer restores health directly, but the player can regenerate if the hunger meter is 90% or over.
+|Eating food now restores hunger.
+|[[Spider]]s now drop [[spider eye]]s.
+|Added [[poisonous potato]]es, [[golden apple]]s, [[enchanted golden apple]]s and [[golden carrot]]s.}}
+|{{HistoryLine||v0.13.0|dev=build 1|The amount of Hunger restored by food is now the same as {{in|Java}}.
+|Added [[raw rabbit]], [[cooked rabbit]], and [[rabbit stew]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added [[raw mutton]] and [[cooked mutton]].}}
+
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added [[chorus fruit]].}}
+
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added [[dried kelp]], which is the first food item that restores a different amount of hunger than {{in|Java}}.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Food can now be eaten in Creative mode and on Peaceful difficulty.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Added [[sweet berries]], which is the second food item that restores a different amount of hunger than {{in|Java}}.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Added [[suspicious stew]].}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|Added [[honey bottle]].}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.220.52|Added [[glow berries]].}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.20.26|The rate that hunger decreases has been changed to better match ''[[Java Edition]]'' and can now be changed with behavior packs ([[add-on]]s).<ref>{{cite bug|MCPE|56031|Hunger bar depletes too fast|date=November 7, 2019|resolution=Fixed}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added all food from and prior to [[Java Edition Beta 1.6.6]].}}
+|{{HistoryLine||xbox=TU5|Added the food bar and hunger.|Added an eating animation and [[sound]]s.|Changed all the text descriptions for food to show how much they refill the food bar.|Food items are now stackable, except [[mushroom stew]] and [[cake]].|Added [[raw chicken]], [[cooked chicken]], [[raw beef]], [[steak]], [[melon slice|melon]]s, and [[rotten flesh]].}}
+|{{HistoryLine||xbox=TU7|Added [[spider eye]]s.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Added [[enchanted golden apple]]s, [[potato]]es, [[baked potato]]es, [[poisonous potato]]es, [[carrot]]s, [[golden carrot]]s, and [[pumpkin pie]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Added [[clownfish]], [[raw salmon]], [[cooked salmon]], [[pufferfish (item)|pufferfish]], [[raw mutton]], [[cooked mutton]], [[raw rabbit]], [[cooked rabbit]], and [[rabbit stew]].|Eating immediately after attacking no longer continues the swinging animation.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Food now regenerates health.|Added [[beetroot]]s and [[beetroot soup]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|Added [[chorus fruit]].|Chorus fruits, [[golden apple]]s and [[enchanted golden apple]]s can now be eaten in creative mode.}}
+|{{HistoryLine||xbox=TU48|xbone=CU38|ps3=1.41|psvita=1.41|ps4=1.41|wiiu=Patch 17|Chorus fruits, golden apples and enchanted golden apples are no longer consumed when eaten in creative mode.{{check version}}}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Food is now positioned a little higher and further left during the eating animation in first person view.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Exhaustion rates decreased across the board: Swimming decreased from 0.015/m to 0.01/m, breaking blocks decreased from 0.025/block to 0.005/block, jumping decreased from 0.2/jump to 0.05/jump, sprint jumping decreased from 0.8/jump to 0.2/jump, attacking and taking damage both decreased from 0.3/attack to 0.1/attack, Hunger status effect decreased from 0.5/s to 0.1/s.
+|Sneaking and walking no longer affect exhaustion.
+|Exhaustion rate from regeneration is increased from 0.4/half-heart to 0.6/half-heart.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Added [[dried kelp]].}}
+|{{HistoryLine||xbox=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|Added [[sweet berries]].}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||5|Saturation is no longer capped by the hunger level of the player.
+|Upon eating food, the player's saturation is always set to the food's provided saturation amount unless their current saturation level exceeds what is obtainable from the food.
+|Removed saturation boost.
+|Changed food consumption time from {{convert|32|ticks|seconds}} to {{convert|40|ticks|seconds}}.
+|The player now received natural regeneration when above a hunger level of {{hunger|7|total=20}} rather than {{hunger|18|total=2}}
+|Natural regeneration now heals every {{convert|60|ticks|seconds}} instead of every {{convert|80|ticks|seconds}}.
+|The player now takes damage from starvation every {{convert|60|ticks|seconds}} instead of every {{convert|80|ticks|seconds}} when the hunger bar is empty.
+|Natural regeneration now always drains food points.
+|The player can now [[sprint]] at any hunger value.}}
+|{{HistoryLine||6|Reverted food consumption time to 32 ticks (1.6 seconds).
+|Eating is now interrupted if something hits the [[player]].
+|Natural regeneration now occurs every {{convert|40|ticks|seconds}} instead of every {{convert|60|ticks|seconds}}.
+|The player now takes damage from starvation every {{convert|40|ticks|seconds}} instead of every {{convert|60|ticks|seconds}} when the hunger bar is empty.
+|Natural regeneration now drains [[food]] points randomly, at a 50% chance.
+|Reintroduced the rule that [[sprint]]ing requires more than 6 points of food.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+Food being cooked over a fire.jpeg|Food being cooked over a [[campfire]].
+</gallery>
+
+== Trivia ==
+* {{IN|Java}}, a player cannot see their own eating animation while in [[third-person view]].<ref>{{bug|MC-77962||Eating / drinking animation does not work in third person mode|Invalid}}</ref>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|food}}
+{{Navbox combat|food}}
+
+[[Category:Food| ]]
+
+[[cs:Potraviny]]
+[[de:Hunger]]
+[[es:Comida]]
+[[fr:Nourriture]]
+[[hu:Étel]]
+[[it:Cibo]]
+[[ja:食料]]
+[[ko:식료품]]
+[[lzh:食]]
+[[nl:Voedsel]]
+[[pl:Jedzenie]]
+[[pt:Alimento]]
+[[ru:Еда]]
+[[th:อาหาร]]
+[[uk:Їжа]]
+[[zh:食物]]

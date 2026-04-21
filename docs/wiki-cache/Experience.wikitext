@@ -1,0 +1,758 @@
+{{About|the experience system|the command|Commands/xp|the in-person interactive event|Minecraft Experience: Villager Rescue}}
+{{redirect|Experience bar|the UI element that sometimes takes its place|Locator Bar}}
+{{Infobox entity
+| title = Experience Orb
+| image = Experience Orb Value 3-6.png
+| extratext = View [[#Gallery|all renders]]
+| durability = N/A
+| stackable = N/A
+| health = {{hp|5}}<ref>Experience orbs cannot be damaged by attacking them but can be damaged via commands.</ref>
+| size = '''{{IN|Java}}:'''<br>
+Height: 0.5 blocks<br>Width: 0.5 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+Height: 0.25 blocks<br>Width: 0.25 blocks<br>
+}}
+
+[[File:Hotbar with xp.png|thumb|The XP bar is beneath the health and hunger indicators {{in|JE}}, and {{in|BE}} only while using classic UI.]]
+'''Experience''' ('''EXP''' or '''XP''' for short) can be gained from defeating [[mob]]s or performing many kinds of other actions. Experience has no direct effect on the player character, but it can be used to enhance their equipment through [[enchanting]], or by using an [[anvil]] to repair, rename, or combine enchantments on equipment. Most sources of experience are produced in the form of '''experience orbs'''. {{IN|java}}, experience gained affects the player's '''score''' on the [[death screen]].
+
+Experience orbs also recover durability on items with [[Mending]] that are being worn or are in-hand.
+
+== Sources ==
+Experience can be gained from several different sources. Most sources drop experience in the form of orbs, which can be claimed by any player, while a few methods directly award the player experience upon completing the action.
+
+* From killing most mobs, which drop experience orbs along with any other items. However, mobs will only drop experience points if they are killed by a player, and not, for example, falling off a cliff.
+** A mob does not drop experience orbs unless it dies within five seconds (100 game ticks) of an attack registered as a player hit (including tamed [[wolves]], player thrown fireballs, and TNT). This allows gaining experience orbs from, say, knocking a monster off a cliff, lighting a mob on fire, etc. (fetching the orbs might be another question). The [[player]] can also try to "claim" a burning monster by hitting or shooting it once—even if the blow doesn't kill it, if the mob dies within 5 seconds, it drops experience orbs.
+** Mobs killed by [[TNT]] activated by a player using [[flint and steel]] or a flaming arrow drop XP as usual; however, mobs killed by TNT that was activated by fire, [[redstone]], or an explosion that wasn't [[player]] activated does not drop any experience orbs.
+** [[Mob]]s drop a random number of experience orbs, which can have different values. However, the total value always remains within the values given below, regardless of [[difficulty]] setting.
+** Hostile mobs give more experience orbs than passive ones. Baby animals, [[bat]]s, [[golem]]s, and [[villager]]s give no experience orbs at all. The [[ender dragon]] gives experience orbs totaling 12,000 XP the first time a [[player]] kills it—12 times more than anything else in the game—and 500 XP in subsequent defeats.
+*** Some hostile [[mob]]s spawn with weapons, or ''can'' spawn with weapons and/or [[armor]]. These mobs give an extra 1–3 points (randomly) per piece of equipment that they spawned with if the piece is not dropped. Equipment picked up after spawning doesn't count.
+** [[Mining]] a [[monster spawner]] block gives 15–43 points of experience orbs.
+** Mining a naturally-generated [[creaking heart]] drops 20–24 experience.
+** While they do not drop experience orbs normally, baby mobs as well as mobs killed by non-player means are accepted by the [[sculk catalyst]], allowing for experience orbs to be obtained in a more indirect way.
+* From [[mining]] any ore that drops a resource, rather than raw metals or themselves. The experience orbs are produced along with the mineral item(s). If a [[Silk Touch]] pickaxe is used to mine the ore block, the experience is not dropped, but the block can later be placed and mined normally to release the mineral and the experience.
+** The ore still produces orbs if destroyed by an explosion, whether or not it was caused by player activated TNT.
+* From mining [[sculk]], [[sculk sensor]]s, [[sculk shrieker]]s, and [[sculk catalyst]]s. If a [[Silk Touch]] tool is used to mine it, the experience is not dropped, but it can later be placed and mined normally to release the experience.
+* From [[smelting]] any of various items.
+** Smelting any ore yields some experience, but normally only [[nether gold ore]] and [[ancient debris]] are worthwhile. For all other ores, [[Smelting#Wasting ores|mining them is better]].
+** Moderate amounts are gained by smelting/cooking other materials: food, clay balls or blocks, [[cactus]], wood logs, sand, or cobblestone, cactus giving the most.{{only|Java|short=1}}
+** The smelted material must be taken from the furnace through its GUI window. If the player uses a hopper to unload the furnace, it is possible to retrieve all experience produced by the furnace by smelting an extra item and taking it from the GUI. Breaking the furnace drops all stored experience as collectable experience orbs.
+* From [[breeding]] animals.
+** Orbs are produced where the parents are, along with the baby animal. Breaking [[egg]]s does not give experience.
+* From [[fishing]]. 
+**The experience is awarded directly upon reeling in the fish, even if the fish itself is not picked up.
+* From [[trading]] with villagers.
+* A [[bottle o' enchanting]] releases orbs when broken.
+* From the {{cmd|experience}} command.
+* From disenchanting items in a [[grindstone]].
+* From completing a challenge [[advancement]].{{only|Java|short=1}}
+
+Gathering experience points increases the player's experience level by gradually filling a bar on the bottom of the screen until a new level is achieved when the bar is full. When the player dies, they drop experience orbs worth ''7 * current level'' experience points, up to a maximum of 100 points<!-- confirmed from a source --> (enough to reach approximately 7.5 levels), and all of the other experience vanishes. If the gamerule <code>keepInventory</code> is set to true, the experience is kept even if the player dies.
+
+== Experience orbs ==
+Most experience sources drop experience in the form of '''experience orbs''', which can then be claimed by any player.
+
+Experience orbs fade between green and yellow colors and float or glide toward the player up to a distance of 7.25 blocks (calculated from the center of player's feet and the center of the experience orb), speeding up as they get nearer to the player. Experience orbs pulled toward a player are slowed by cobwebs. Experience orbs can also be pulled around or away from the player by running water currents.
+
+When collected, experience orbs make a bell-like sound for a split second. Unlike [[item]]s, experience points are picked up gradually: no matter how many orbs are in the range of the player, they are added to the player's experience one at a time (10 orbs/second). In extreme cases, this can result in the player being followed by a swarm of orbs for many seconds. If an experience orb isn't collected within 5 minutes of its appearance, it despawns.
+
+=== Orb sizes ===
+Experience orbs vary in value. The general worth of an orb is reflected by its size, with eleven possible sizes corresponding to specific values. The three smallest sizes are the most commonly encountered, as the majority of experience dropped by mobs and blocks is less than ten. Dense experience orbs with values 17 or higher have orange "eyes" or "cores", and are less frequently encountered, most commonly from defeating the [[ender dragon]], [[wither]] and other [[player]]s, disenchanting objects on a [[grindstone]], breaking [[spawners]], and collecting items from high-traffic [[furnace]]s. For performance improvement, experience orbs of the same value can merge into a single entity, but they do not create a higher value orb.
+
+{| class="wikitable"
+|-
+! Orb !! Minimum value !! Maximum value
+|-
+| {{Sprite|pos=1|classname=xp-2 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 1*<ref>Any orb whose value is < 3 gets this orb, even if the experience value is negative. See the information below the table for more on negative value treatment.</ref>
+| 2
+|-
+| {{Sprite|pos=1|classname=xp-6 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 3
+| 6
+|-
+| {{Sprite|pos=1|classname=xp-16 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 7
+| 16
+|-
+| {{Sprite|pos=1|classname=xp-36 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 17
+| 36
+|-
+| {{Sprite|pos=1|classname=xp-72 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 37
+| 72
+|-
+| {{Sprite|pos=1|classname=xp-148 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 73
+| 148
+|-
+| {{Sprite|pos=1|classname=xp-306 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 149
+| 306
+|-
+| {{Sprite|pos=1|classname=xp-616 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 307
+| 616
+|-
+| {{Sprite|pos=1|classname=xp-1236 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 617
+| 1236
+|-
+| {{Sprite|pos=1|classname=xp-2476 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 1237
+| 2476
+|-
+| {{Sprite|pos=1|classname=xp-32767 pixel-image|size=150|sheetsize=150|align=middle|scale=0.25}}
+| 2477
+| 32767
+|}
+
+=== Dropping orbs ===
+
+Naturally spawned orbs always have an integer value of 1–11, 17, 37, 73, 149, 307, 617, 1237, or 2477. Fishing, breeding, and trading drop a single orb with a random value in the appropriate range. Breaking blocks, killing mobs and players, smelting items, and bottles o' enchanting calculate their total experience amount and then split it into the base values of orbs by size (1, 3, 7, 17, 37, 73, 149, 307, 617, 1237, and 2477). 
+
+Higher values are chosen first, so, for example, a total value of 1000 would be dropped as orbs with values 617, 307, 73, and 3. While the first ender dragon in a world drops 12,000 experience, it is dropped in 10 waves of 1000 and one of 2000, so no orbs of value 2477 are dropped. Such orbs can exist in the world via furnaces that have had a lot of traffic.
+
+Like [[item]]s, experience orbs float when on water. Experience orbs can be destroyed by fire, lava, explosions, and cacti, and can trigger pressure plates and tripwires. 
+
+{{IN|bedrock}}, although mob [[drops]] spawn the instant the final blow is dealt to the mob, experience orbs do not appear until the mob entity disappears and the smoke appears. {{IN|java}}, experience orbs appear in the same spatial and temporal location as loot when an [[entity]] is killed.
+
+=== Negative orbs ===
+Orbs with negative values can be created using the {{cmd|summon}} command, either using values below 0 or above 32767 due to 16-bit [[wikipedia:Integer overflow|integer overflow]]. They use the smallest texture of experience orb. 
+
+Negative orbs behave differently from positive orbs, namely that they ''do not'' deduct experience when collected by the player.
+
+They deduct durability from a tool enchanted with [[Mending]], provided the tool is already damaged prior to collection of the orbs.<ref>{{ytl|k-ip4iRccvE}}</ref>
+
+=== Experience amounts by source ===
+{| class="wikitable collapsible col-2-center" data-description="Experience amounts by source"
+! Source
+! class="collapse-button" | Experience
+|-
+! colspan="2" | Killing [[mob]]s
+|-
+| {{EntityLink|Baby Piglin}}
+| 1{{only|bedrock|short=1}}
+|-
+| {{EntityLink|Armadillo}}<br>{{EntityLink|Axolotl}}<br>{{EntityLink|Bee}}<br>{{EntityLink|Camel}}<br>{{EntityLink|Camel Husk}}<br>{{EntityLink|Cat}}<br>{{EntityLink|Chicken}}<br>{{EntityLink|Cod}}<br>{{EntityLink|Cow}}<br>{{EntityLink|Dolphin}}<br>{{EntityLink|Donkey}}<br>{{EntityLink|Fox}}<br>{{EntityLink|Frog}}<br>{{EntityLink|Glow Squid}}<br>{{EntityLink|Goat}}<br>{{EntityLink|Happy Ghast}}<br>{{EntityLink|Horse}}<br>{{EntityLink|Llama}}<br>{{EntityLink|Mooshroom}}<br>{{EntityLink|Nautilus}}<br>{{EntityLink|Ocelot}}<br>{{EntityLink|Panda}}<br>{{EntityLink|Parrot}}<br>{{EntityLink|Pig}}<br>{{EntityLink|Polar Bear}}<br>{{EntityLink|Pufferfish}}<br>{{EntityLink|Rabbit}}<br>{{EntityLink|Salmon}}<br>{{EntityLink|Sheep}}<br>{{EntityLink|Skeleton Horse}}<br>{{EntityLink|Sniffer}}<br>{{EntityLink|Squid}}<br>{{EntityLink|Strider}}<br>{{EntityLink|Trader Llama}}<br>{{EntityLink|Tropical Fish}}<br>{{EntityLink|Turtle}}<br>{{EntityLink|Wolf}}<br>{{EntityLink|Zombie Horse}}<br>{{EntityLink|Zombie Nautilus}}
+| 1–3
+|-
+| {{EntityLink|Endermite}}
+| 3
+|-
+| {{EntityLink|Magma Cube}}<br>{{EntityLink|Slime}}
+| 4 (large)<br>2 (medium)<br>1 (small)
+|-
+| {{EntityLink|Bogged}}<br>{{EntityLink|Cave Spider}}<br>{{EntityLink|Creeper}}<br>{{EntityLink|Drowned}}<br>{{EntityLink|Enderman}}<br>{{EntityLink|Giant}}{{only|java|lce|short=1}}<br>{{EntityLink|Ghast}}<br>{{EntityLink|Hoglin}}<br>{{EntityLink|Husk}}<br>{{EntityLink|Illusioner}}{{only|java|short=1}}<br>{{EntityLink|Parched}}<br>{{EntityLink|Phantom}}<br>{{EntityLink|Piglin}}<br>{{EntityLink|Pillager}}<br>{{EntityLink|Shulker}}<br>{{EntityLink|Silverfish}}<br>{{EntityLink|Skeleton}}<br>{{EntityLink|Spider}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Vex}}<br>{{EntityLink|Vindicator}}<br>{{EntityLink|Warden}}<br>{{EntityLink|Witch}}<br>{{EntityLink|Wither Skeleton}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}<br>{{EntityLink|Zoglin}}<br>{{EntityLink|Zombified Piglin}}
+| 5 + 1–3 (per equipment)
+|-
+| {{EntityLink|Blaze}}<br>{{EntityLink|Breeze}}<br>{{EntityLink|Chicken}} <small>(spawned as a [[chicken jockey|jockey]]{{only|java|short=1}})</small><br>{{EntityLink|Elder Guardian}}<br>{{EntityLink|Evoker}}<br>{{EntityLink|Guardian}}
+| 10
+|-
+|{{EntityLink|Baby Drowned}}<br>{{EntityLink|Baby Husk}}<br>{{EntityLink|Baby Zombie}}<br>{{EntityLink|Baby Zombie Villager}}<br>{{EntityLink|Baby Zombified Piglin}}
+| 12 + 1–3 (per equipment)
+|-
+| {{EntityLink|Ravager}}<br>{{EntityLink|Piglin Brute}}
+| 20 + 1–3 (per equipment)
+|-
+| {{EntityLink|Creaking}}
+| 20–24 (via destroying the creaking heart)
+|-
+| {{EntityLink|Wither}}
+| 50
+|-
+! colspan="2" | Entity dying (no requirement for player involvement)
+|-
+| {{EntityLink|Player}}
+| 7 per level, up to 100
+|-
+| {{EntityLink|Ender Dragon}}
+| 12,000 (500 if respawned with [[end crystal]]s)
+|-
+! colspan="2" | Mining blocks
+|-
+| {{BlockLink|Nether Gold Ore}}
+| 0–1
+|-
+| {{BlockLink|Coal Ore}}
+| 0–2
+|-
+| {{BlockLink|Sculk}}
+| 1
+|-
+| {{BlockLink|Redstone Ore}}
+| 1–5
+|-
+| {{BlockLink|Lapis Lazuli Ore}}<br>{{BlockLink|Nether Quartz Ore}}
+| 2–5
+|-
+| {{BlockLink|Diamond Ore}}<br>{{BlockLink|Emerald Ore}}
+| 3–7
+|-
+| {{BlockLink|Sculk Sensor}}<br>{{BlockLink|Sculk Shrieker}}<br>{{BlockLink|Sculk Catalyst}}
+| 5
+|-
+| {{BlockLink|Creaking Heart}} <small>(naturally generated)</small>
+| 20–24
+|-
+| {{BlockLink|Monster Spawner}}
+| 15–43
+|-
+! colspan="2" | [[Smelting|Smelting/Cooking]]
+|-
+| {{BlockLink|Ancient Debris}}
+| 2
+|-
+| {{BlockLink|Cactus}}{{only|java|short=1}}<ref>{{bug|MC-210211||Smelting cactus gives too much experience since 1.13}}</ref><br>{{BlockLink|Diamond Ore}}<br>{{BlockLink|Emerald Ore}}<br>{{BlockLink|Gold Ore}}<br>{{BlockLink|Nether Gold Ore}}<br>{{ItemLink|Raw Gold}}
+| 1
+|-
+| {{BlockLink|Copper Ore}}<br>{{BlockLink|Iron Ore}}<br>{{ItemLink|Raw Iron}}<br>{{ItemLink|Raw Copper}}<br>{{BlockLink|Redstone Ore}}
+| 0.7<ref group="note" name="fractional">For fractional values, first multiply this value by the number of smelted items removed from the furnace, then award the player the whole-number part, and if there is a fractional part remaining, this represents the ''chance'' of an additional experience point.
+
+*For example, when smelting 1 coal ore and removing the coal, the value is 0.1, so this grants a 10% chance of getting 1 experience point.
+*Or, when smelting 64 cobblestone and removing all 64 stone, the value is 0.1 * 64 = 6.4, so this grants 6 experience points, plus a 40% chance of getting 1 additional experience point.</ref>
+|-
+| {{BlockLink|Clay}}<br>{{ItemLink|Potato}}<br>{{ItemLink|Raw Beef}}<br>{{ItemLink|Raw Chicken}}<br>{{ItemLink|Raw Cod}}<br>{{ItemLink|Raw Mutton}}<br>{{ItemLink|Raw Porkchop}}<br>{{ItemLink|Raw Rabbit}}<br>{{ItemLink|Raw Salmon}}
+| 0.35<ref group="note" name="fractional" />
+|-
+| {{ItemLink|Clay Ball}}
+| 0.3<ref group="note" name="fractional" />
+|-
+| {{BlockLink|Lapis Lazuli Ore}}<br>{{BlockLink|Nether Quartz Ore}}<br>{{BlockLink|Cactus}}{{only|bedrock|short=1}}
+| 0.2<ref group="note" name="fractional" />
+|-
+| {{BlockLink|Log|id=oak log}}<br>{{BlockLink|Wet Sponge}}<br>{{BlockLink|Wood|id=oak wood}}
+| 0.15<ref group="note" name="fractional" />
+|-
+| {{ItemLink|Resin Clump}}<br>{{ItemLink|Chorus Fruit}}<br>{{BlockLink|Coal Ore}}<br>{{BlockLink|Cobblestone}}<br>{{BlockLink|Stone}}<br>{{BlockLink|White Terracotta|Stained Terracotta}}<br>{{BlockLink|Netherrack}}<br>{{BlockLink|Sand}}<br>{{BlockLink|Stone Bricks}}<br>{{BlockLink|Basalt}}<br>{{ItemLink|Iron Sword}}<br>{{ItemLink|Golden Sword}}<br>{{ItemLink|Iron Pickaxe}}<br>{{ItemLink|Iron Axe}}<br>{{ItemLink|Iron Shovel}}<br>{{ItemLink|Iron Hoe}}<br>{{ItemLink|Golden Pickaxe}}<br>{{ItemLink|Golden Axe}}<br>{{ItemLink|Golden Shovel}}<br>{{ItemLink|Golden Hoe}}<br>{{ItemLink|Iron Helmet}}<br>{{ItemLink|Iron Chestplate}}<br>{{ItemLink|Iron Leggings}}<br>{{ItemLink|Iron Boots}}<br>{{ItemLink|Golden Helmet}}<br>{{ItemLink|Golden Chestplate}}<br>{{ItemLink|Golden Leggings}}<br>{{ItemLink|Golden Boots}}<br>{{ItemLink|Chainmail Helmet}}<br>{{ItemLink|Chainmail Chestplate}}<br>{{ItemLink|Chainmail Leggings}}<br>{{ItemLink|Chainmail Boots}}<br>{{ItemLink|Iron Horse Armor}}<br>{{ItemLink|Golden Horse Armor}}<br>{{ItemLink|Kelp}}<br>{{BlockLink|Sea Pickle}}
+| 0.1<ref group="note" name="fractional" />
+|-
+! colspan="2" | Completing [[advancement|Challenges]]{{only|java}}
+|-
+| {{ItemSprite|Wind Charge}} ''[[Advancement#Blowback|Blowback]]''
+| 40
+|-
+| {{ItemSprite|fire-charge}} ''[[Advancement#Return to Sender|Return to Sender]]''<br>{{ItemSprite|shulker-shell}} ''[[Advancement#Great View From Up Here|Great View From Up Here]]''<br>{{ItemSprite|arrow}} ''[[Advancement#Sniper Duel|Sniper Duel]]''<br>{{BlockSprite|target}} ''[[Advancement#Bullseye|Bullseye]]''<br>{{ItemSprite|raw-cod}} ''[[Advancement#A Complete Catalogue|A Complete Catalogue]]''<br>{{ItemSprite|mace}} ''[[Advancement#Over-Overkill|Over-Overkill]]''<br>{{ItemSprite|bone}} ''[[Advancement#The Whole Pack|The Whole Pack]]''
+| 50
+|-
+| {{ItemSprite|crossbow}} ''[[Advancement#Two Birds, One Arrow|Two Birds, One Arrow]]''
+| 65
+|-
+| {{ItemSprite|crossbow}} ''[[Advancement#Arbalistic|Arbalistic]]''
+| 85
+|-
+| {{ItemSprite|empty-map}} ''[[Advancement#Subspace Bubble|Subspace Bubble]]''<br>{{ItemSprite|ghast-tear}} ''[[Advancement#Uneasy Alliance|Uneasy Alliance]]''<br>{{ItemSprite|netherite-chestplate}} ''[[Advancement#Cover Me in Debris|Cover Me in Debris]]''<br>{{ItemSprite|milk-bucket}} ''[[Advancement#A Furious Cocktail|A Furious Cocktail]]''<br>{{BlockSprite|ominous-banner}} ''[[Advancement#Hero of the Village|Hero of the Village]]''<br>{{ItemSprite|diamond-sword}} ''[[Advancement#Monsters Hunted|Monsters Hunted]]''<br>{{ItemSprite|golden-carrot}} ''[[Advancement#Two by Two|Two by Two]]''<br>{{ItemSprite|apple}} ''[[Advancement#A Balanced Diet|A Balanced Diet]]''<br>{{ItemSprite|netherite-hoe}} ''[[Advancement#Serious Dedication|Serious Dedication]]''
+| 100
+|-
+| {{ItemSprite|silence-armor-trim}} ''[[Advancement#Smithing with Style|Smithing with Style]]''
+| 150
+|-
+| {{ItemSprite|netherite-boots}} ''[[Advancement#Hot Tourist Destinations|Hot Tourist Destinations]]''<br>{{ItemSprite|diamond-boots}} ''[[Advancement#Adventuring Time|Adventuring Time]]''
+| 500
+|-
+| {{ItemSprite|bucket}} ''[[Advancement#How Did We Get Here?|How Did We Get Here?]]''
+| 1,000
+|-
+! colspan="2" | Other
+|-
+| {{ItemLink|Bottle o' Enchanting}}
+| 3–11
+|-
+| {{EntityLink|id=villager|Trading|Trading with villagers}}
+| 3–6 (8–11 if the villagers are willing to breed; not working since 1.14) 
+|-
+| [[File:HeartParticle.png|link=Breeding]] [[Breeding|Breeding animals]]
+| 1–7
+|-
+| {{ItemLink|id=Raw Cod|Fishing Rod#Usage|Catching Fish}}
+| 1–6
+|}
+
+The following mobs and similar entities do not drop experience when killed:
+{{columns-list|colwidth=20em|
+*Baby [[animal]]s (except for the hoglin)
+*{{EntityLink|Agent}}{{only|be|edu|short=1}}
+*{{EntityLink|Allay}}
+*{{EntityLink|Armor Stand}}
+*{{EntityLink|Bat}}
+*{{EntityLink|Camera}}{{only|be|edu|short=1}}
+*{{EntityLink|Copper Golem}}
+*{{EntityLink|Elder Guardian Ghost}}{{only|be|short=1}}
+*{{EntityLink|Iron Golem}}
+*{{EntityLink|NPC}}{{only |be|edu|short=1}}
+*{{EntityLink|Snow Golem}}
+*{{EntityLink|Tadpole}}
+*{{EntityLink|Villager}}
+*{{EntityLink|Wandering Trader}}
+}}
+
+{{notelist}}
+
+== Leveling up ==
+{| class="wikitable mw-collapsible" style="text-align: right;" data-description="Leveling up"
+! rowspan="2" | Level
+! colspan="2" | Experience
+|-
+! Total
+! Diff.
+|-
+| 1 || 7 || 7
+|-
+| 2 || 16 || 9
+|-
+| 3 || 27 || 11
+|-
+| 4 || 40 || 13
+|-
+| 5 || 55 || 15
+|-
+| 6 || 72 || 17
+|-
+| 7 || 91 || 19
+|-
+| 8 || 112 || 21
+|-
+| 9 || 135 || 23
+|-
+| 10 || 160 || 25
+|-
+| 11 || 187 || 27
+|-
+| 12 || 216 || 29
+|-
+| 13 || 247 || 31
+|-
+| 14 || 280 || 33
+|-
+| 15 || 315 || 35
+|-
+| 16 || 352 || 37
+|-
+| 17 || 394 || 42
+|-
+| 18 || 441 || 47
+|-
+| 19 || 493 || 52
+|-
+| 20 || 550 || 57
+|-
+| 21 || 612 || 62
+|-
+| 22 || 679 || 67
+|-
+| 23 || 751 || 72
+|-
+| 24 || 828 || 77
+|-
+| 25 || 910 || 82
+|-
+| 26 || 997 || 87
+|-
+| 27 || 1089 || 92
+|-
+| 28 || 1186 || 97
+|-
+| 29 || 1288 || 102
+|-
+| 30 || 1395 || 107
+|-
+| 31 || 1507 || 112
+|-
+| 32 || 1628 || 121
+|-
+| 33 || 1758 || 130
+|-
+| 34 || 1897 || 139
+|-
+| 35 || 2045 || 148
+|-
+| 36 || 2202 || 157
+|-
+| 37 || 2368 || 166
+|-
+| 38 || 2543 || 175
+|-
+| 39 || 2727 || 184
+|-
+| 40 || 2920 || 193
+|-
+| 41 || 3122 || 202
+|-
+| 42 || 3333 || 211
+|-
+| 43 || 3553 || 220
+|-
+| 44 || 3782 || 229
+|-
+| 45 || 4020 || 238
+|-
+| 46 || 4267 || 247
+|-
+| 47 || 4523 || 256
+|-
+| 48 || 4788 || 265
+|-
+| 49 || 5062 || 274
+|-
+| 50 || 5345 || 283
+|-
+| 51 || 5637 || 292
+|-
+| 52 || 5938 || 301
+|-
+| 53 || 6248 || 310
+|-
+| 54 || 6567 || 319
+|-
+| 55 || 6895 || 328
+|-
+| 56 || 7232 || 337
+|-
+| 57 || 7578 || 346
+|-
+| 58 || 7933 || 355
+|-
+| 59 || 8297 || 364
+|-
+| 60 || 8670 || 373
+|-
+| 61 || 9052 || 382
+|-
+| 62 || 9443 || 391
+|-
+| 63 || 9843 || 400
+|-
+| 64 || 10252 || 409
+|-
+|65
+|10540
+|418
+|}
+{{-}}
+
+[[File:XP Per Level 14w02a.svg|850px]]
+
+The formulas for figuring out how many experience orbs needed to get to the next level are as follows:
+
+:'''Experience required ='''
+::'''2 × ''current_level'' + 7''' (for levels 0–15)
+::'''5 × ''current_level'' – 38''' (for levels 16–30)
+::'''9 × ''current_level'' – 158''' (for levels 31+)
+
+One can determine how much experience has been collected to reach a level using the equations:
+:'''Total experience ='''
+::'''''level''<sup>2</sup> + 6 × ''level''''' (at levels 0–16)
+::'''2.5 × ''level''<sup>2</sup> – 40.5 × ''level'' + 360''' (at levels 17–31)
+::'''4.5 × ''level''<sup>2</sup> – 162.5 × ''level'' + 2220''' (at levels 32+)
+
+Likewise, to get the number of levels from the total experience value, one can utilize the following inverse equations:
+:'''Total Levels ='''
+::At levels 0-16 (totals 0 to 352): <math>\sqrt{\mathsf{total}+9}-3</math>
+::At levels 17–31 (totals 353 to 1507): <math>\frac{81}{10} + \sqrt{\frac{2}{5} \left( \mathsf{total} - \frac{7839}{40} \right)}</math>
+::At levels 32+ (totals 1508+): <math>\frac{325}{18} + \sqrt{\frac{2}{9} \left( \mathsf{total} - \frac{54215}{72} \right) }</math>
+
+=== Useful numbers ===
+* {{:Calculators/Required experience}}
+* Getting from level 0 to level 30 requires 1395 experience.
+* Getting from level 27 to level 30 requires 306 experience.
+* Killing one large [[slime]] and all the slimes that split from it yield from 12 to 28 experience, with an average of 19.
+* Killing a slime of the largest size that can be spawned using the {{cmd|summon}} command and all slimes that split from it yield 448 to 8128 experience, with an average of 3025.
+* The maximum level required for using an enchanting table is level 30, while the anvil accepts jobs up to level 39 (in creative mode the anvil limit is removed).
+* Level 16 is a quarter of the way to level 30, while level 22 is about halfway there. Level 30, in turn, is halfway to level 39.
+* Killing the ender dragon the first time gives approximately 68 XP levels. The ender dragon actually drops 10 waves of orbs worth a total of 1,000 experience points per wave, and another worth a total of 2,000. Taken separately, the smaller waves could take a player from zero to level 26, while the big wave would take a player from zero to level 34. The largest orb dropped has a value of 1237 experience points, and can take a player from zero to level 28 all by itself.
+** However, it is practically impossible to collect all of the experience points as some of it will fall into the return portal, requiring you to go to the world origin to collect the remaining experience.
+* The maximum XP-level that players can get legitimately {{in|be}} is 24,791.<ref>[https://youtu.be/ZOL468JSy3U YouTube - Max XP level reached in Minecraft]</ref>
+* The maximum XP that players can get legitimately {{in|je}} is 238,609,312, and at this level the experience bar disappears, because reaching the next level would require more XP than the 32-bit integer limit (2,147,483,647, which is {{sup|2|31}} - 1). However, it is possible to reach level 2,147,483,647 using commands. In this case, the experience bar may disappear and reappear.<ref>{{bug|MC-3266}}</ref>
+
+== Score ==
+{{Redirect|Score|the similar mechanic controlled by [[command]]s|Scoreboard}}
+{{exclusive|java|section=1}}
+[[File:Hardcore Death.png|thumb|right|Example of the score in [[Hardcore]] mode.]]
+
+The score is the number of experience the player has collected since their last death. This number is the total experience the player has collected, rather than the amount of experience they had upon death. When the player dies, the score is displayed on the death screen.
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Experience orbs do not use entity-dependent sound events.
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Succesfull Hit.ogg
+|subtitle=Experience gained
+|source=player
+|description=When a player collects an experience orb
+|id=entity.experience_orb.pickup
+|translationkey=subtitles.entity.experience_orb.pickup
+|volume=0.1
+|pitch=0.55-1.25
+|distance=16}}
+| {{SoundLine
+|sound=Random levelup.ogg
+|subtitle=Player dings
+|source=player
+|description=When a player levels up to a multiple of 5 <ref group=sound>And more than five seconds have passed since the last time this sound played</ref>
+|id=entity.player.levelup
+|translationkey=subtitles.entity.player.levelup
+|volume=0.75 <ref group=sound>Is 0.75 for all levels over 30, and is <math>\frac{\text{level}}{30}\times0.75</math> when below 30</ref>
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Succesfull Hit.ogg
+|source=player
+|description=When a player collects an experience orb
+|id=random.orb
+|volume={{checkthecode}} |pitch=0.55-1.25 {{checkthecode|these values were found through experimentation involving resource packs}}}}
+| {{SoundLine
+|sound=Random levelup.ogg
+|source=player
+|description=When a player reaches a level multiple of 5
+|id=random.levelup
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Experience Orb
+|spritetype=entity
+|nameid=experience_orb
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Experience Orb
+|spritetype=entity
+|nameid=xp_orb
+|id=69
+|foot=1}}
+
+=== Entity data ===
+Experience orbs have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt|short|Age}}: The number of ticks the XP orb has been "untouched". After 6000 ticks (5 minutes) the orb despawns.
+** {{nbt|int|Count}}: The remaining number of times that the orb can be picked up. When the orb is picked up, the value decreases by 1. When multiple orbs are merged, their values are added up to result orb. When the value reaches 0, the orb is depleted.
+** {{nbt|short|Health}}: The health of XP orbs. XP orbs take damage from fire, lava, falling anvils, and explosions. The orb is destroyed when its health reaches 0.
+** {{nbt|short|Value}}: The amount of experience the orb gives when picked up.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Videos ==
+{{yt|Zd09tNDZ084|align=inline}}
+
+== History ==
+{{info needed section|
+* Add the initial pickup sound (was similar to picking up items)
+* When was the above changed?
+* When did [[:File:XP Old.ogg]] start and stop being used?}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||February 17, 2010|link = https://notch.tumblr.com/post/395114400/ok-heres-what-i-was-thinking-for-the-xplevels|XP levels are mentioned by [[Notch]].}}
+|{{HistoryLine||June 11, 2011|link={{tweet|notch|79633246920507392}}|In an image of the new lighting system, a small spherical shape can be seen on the left side of the screen. The orb was yellow due to a warm light from a torch.}}
+|{{HistoryLine||June 12, 2011|link={{tweet|notch|79987828938903552}}|Notch claimed the previous image had an error and posted a new one, this time, without a yellow sphere.}}
+|{{HistoryLine||June 14, 2011|link={{tweet|notch|80654817512525825}}|In a later tweet, Notch showed a picture of a [[Beta 1.7]] change-list. Although it was completely blurred out and was, at first, thought of as a joke,<ref>{{tweet|notch|79992486977748992|And here's a heavily censored changelist for 1.7 so far: http://i.imgur.com/AQXoh.png (does not include Jens's stuff)|June 12, 2011}}</ref> Notch later stated that one of the pictures with the new [[light]]ing system and the change list had a secret in them.
+|One place that people discussed it was on the [[Minecraft Forum]]s, where it was discovered that the tabs at the top of the change list that were partly covered, could be decoded based on the two-pixel tall pattern available in the image.<ref>http://www.minecraftforum.net/topic/379958-secret-information-about-17/</ref>
+|After a user named "tmcaffeine" successfully decoded it, the tabs read: {{cd|ExperienceOrb.java|changelist.txt|Level.java|Tile.java|HugeMushroomTile.java|HugeMushroomFeature.java|d=,}}, and RandomLevelSource(cut).<ref>http://www.minecraftforum.net/topic/380498-</ref>}}
+|{{HistoryLine||September 6, 2011|link={{ytl|tYoO9XkCCHg|t=47s}}|The experience bar was displayed as "Skill points" in the [[Java Edition Beta 1.8 (preview)|Beta 1.8]] development trailer.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|A precursor to the experience system was the point system added in this version.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Experience was originally revealed by [[Jeb]] during an interview with [[Minecraft Forum]].<ref>https://web.archive.org/web/20140620184443/http://www.minecraftforum.net:80/news/192-an-interview-with-jeb/</ref> Jeb released a picture of the [[Java Edition Beta 1.8|1.8]] GUI list, which shows the experience bar, among other things.
+|[[File:Experience Orb (sprite) Revision 3.png]]{{verify|experience orb file does not have these sprites in this version}} Added experience. It can currently only be obtained from killing mobs and has no use.
+|Picking up experience orbs plays the same sound as picking up items, although in singleplayer it is played at a lower pitch.
+|Experience levels are hidden from the HUD in singleplayer creative mode, but are still shown in multiplayer.}}
+|{{HistoryLine|||dev=Pre-release 2 ;)|[[File:Experience Orb (sprite) Revision 1.gif]] Experience orbs no longer render as translucent.<ref>{{bug|MC-163034}}</ref>}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|For this version only, as a test, experience is gained when the [[player]] is jumping. However, experience still does not do anything.|The amount of experience orbs dropped by a [[player]] on [[death]] is now limited.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Removed the ability of gaining experience when jumping.|The score the player gains now appears correctly on "Game over!" screen. Each experience orb is worth one Score Point.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|The ability to spend experience levels for [[enchanting]] [[item]]s has been added.
+|The experience level number is now shown, and each level is harder to get to than the previous one.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|Added the {{cmd|xp}} command.}}
+|{{HistoryLine|||dev=RC1|Experience orbs now make a twinkling [[sound]] when collected in singleplayer. In multiplayer, they continue to use the item pickup sound.}}
+|{{HistoryLine||1.2.1|dev=12w04a|Added [[bottles o' enchanting]], an [[item]] that the player can gain experience from.}}
+|{{HistoryLine|||dev=12w05a|The need for experience when enchanting in creative mode has been removed. Due to this, bottles o' enchanting are now useful only in adventure maps. 
+|Experience requirements have been changed, in this update.
+|Experience orbs now make the correct twinkling sound when picked up in multiplayer, however it is played at a higher pitch.}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of singleplayer being changed to an internal server, the player's experience level is now shown in singleplayer creative mode.
+|The pitch of the experience orb pickup sound in multiplayer has been lowered to match the singleplayer pitch.}}
+|{{HistoryLine|||dev=12w22a|[[Player]]s can now get experience from [[mining]], breaking [[mob spawners]] and [[smelting]] in a [[furnace]]. A very large amount of experience can be collected while mining, sometimes into the hundreds of levels. 
+|[[Coal ore|Coal]], [[lapis lazuli ore|lapis lazuli]], [[redstone ore|redstone]], [[diamond ore|diamond]] and [[emerald ore]] now give players experience points. 
+|[[Iron ore|Iron]] and [[gold ore]] now instead give experience when they are smelted.
+|[[Breeding]] also gives experience.
+|The cost to gain each level has been made constant, at 17 experience points per level.
+|Only level 30 is required to get the maximum level of enchanting.}}
+|{{HistoryLine|||dev=12w23a|XP levels now cost 17 experience orbs each until level 16, after which the cost per level grows linearly, and the total XP grows quadratically (incorrectly stated "exponentially" by [[Mojang Studios]]). However, it is easier to get to 30 levels than it was before [[12w22a]].}}
+|{{HistoryLine||1.4.2|dev=12w37a|[[Fishing]] now gives experience.}}
+|{{HistoryLine|||dev=12w38a|Leveling up now makes a twinkly bell [[sound]], similar to, but longer than the experience orb sound.}}
+|{{HistoryLine|||dev=12w39a|Experience levels can now be used in [[commands]] by typing, for example, @a[lm{{=}}4,l{{=}}7], choosing everyone between 4 and 7 levels inclusive. This is normally used in a [[command block]].}}
+|{{HistoryLine|||dev=12w41a|Added [[anvil]]s, which allows for the repairing and combining of [[item]]s, at the cost of experience levels.
+|The level-up [[sound]] from collecting experience now plays every 5 levels.}}
+|{{HistoryLine||1.6.1|dev=13w21a|Experience levels no longer appear in [[creative]] mode. Previously, experience would be hidden, but experience levels would show.}}
+|{{HistoryLine|||dev=13w24a|The level-up [[sound]] is shortened from {{Sound||XP_Old.ogg}} to {{Sound||Random levelup.ogg}}.}}|{{HistoryLine||1.8|dev=14w02a|The changes to the [[enchanting]] system mean that leveling up now requires more experience.
+|[[Trading]] now gives experience.
+|[[File:Experience Orb (sprite) Revision 2.gif]] The texture of experience orbs has been changed.}}
+|{{HistoryLine||1.9|dev=15w46a|Experience is now collected at the feet, meaning that if a large amount of experience is collected, it no longer blocks the [[player]]'s view.<ref>{{bug|MC-11519}}</ref>}}
+|{{HistoryLine||1.12|dev=1.12-pre3|The "How Did We Get Here?" [[advancement]] is the first one to give experience as a reward, when player completes it.}}
+|{{HistoryLine|||dev=1.12-pre7|Ten other advancements also give experience as a reward.}}
+|{{HistoryLine||1.13|dev=18w19a|Experience orbs now float up in [[water]].<ref>{{bug|MC-125550}}</ref>}}
+|{{HistoryLine||1.14|dev=18w48a|[[Grindstone]] now removes enchantments from items and produces experience from that.}}
+|{{HistoryLine||1.15|dev=19w39a|Experience orbs now appear translucent again.}}
+|{{HistoryLine|||dev=19w41a|Experience orbs no longer appear translucent.}}
+|{{HistoryLine|||dev=19w46a|Experience orbs now appear immediately when a [[mob]] is killed (similar to loot), instead of when its corpse disappears.
+|[[File:Experience Orb (sprite) Revision 3.png]] The rendering of experience orbs has been changed. They have become translucent again.}}
+|{{HistoryLine||1.17|dev=20w45a|Experience orbs now sometimes merge when in large quantities.
+|Experience orbs no longer follow dead players.}}
+|{{HistoryLine||1.21.4|dev=24w45a|Experience orbs are now bouncy when falling from a height.<ref>This was added alongside a fix for a bug that unintentionally made them bouncy several versions earlier. {{bug|MC-277961}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Experience Orb (sprite) Revision 2.gif]] Added experience.}}
+|{{HistoryLine|||dev=build 8|Experience orbs now burn in [[fire]] or [[lava]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The [[entity]] ID of experience orbs has been changed from <code>xporb</code> to <code>xp_orb</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|The amount of experience [[drop]]ped by [[animal]]s now matches {{el|je}}.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|Experience orbs now float up in [[water]].<ref>{{bug|MCPE-64039}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Experience Orb (sprite) Revision 1.gif]] Added experience. 
+|Experience is collectable from [[smelting]] and/or [[mining]] [[ore]]s, [[breeding]] and killing [[mob]]s.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[anvil]]s, which allows for the repairing and combining of [[item]]s, at the cost of experience levels.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Experience levels no longer appear in [[creative]] mode. Previously, experience would be hidden, but experience levels would show.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|[[File:Experience Orb (sprite) Revision 2.gif]] Added experience.}}
+|{{HistoryLine||1.1.06|Experience is now collectable from [[smelting]] and/or [[mining]] [[ore]]s, as well as [[trading]].}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of experience orbs has been changed from <code>XPOrb</code> to <code>xp_orb</code>}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine|||dev=pre5|The experience orb ID has been changed to <code>experience_orb</code>.}}
+}}
+
+=== Other ===
+[[File:DeathScore&e0.png|thumb]]
+
+* Before [[Beta 1.9 Prerelease 2]], the score on the death screen always read &e0.
+** This was caused by an error with coloring the text. In [[Java Edition Classic]] (including the [[Survival Test]] versions that featured the original score system), the '&' character was used to color text, so '&e0' would produce '0' in bright yellow. This was later changed to instead use the '§' character for colored text, but because the death screen hadn't been updated with this, the raw formatting code was shown.
+
+[[File:ExcessiveExperienceOrbs.png|thumb|An example of the excessive amount of experience orbs [[drop]]ped upon [[death]] in [[Beta 1.8]], causing extreme performance drops.]]
+
+The experience level costs were heavily revised in snapshot [[12w22a]] and [[12w23a]], and again in version 1.8. Before these, reaching level 50 (the maximum usable on a single enchantment) required 4625 experience, corresponding to defeating 925 hostile [[mob]]s (assuming the "common" ones.) Afterward, considerably less experience is needed to get into higher levels. Higher levels cost more experience than lower ones, but the levels are still easier to get than in [[Java Edition 1.2.5|1.2.5]]. Now, level 30 is the maximum for [[enchantments]], and that cost is equivalent of 279 "common" enemies, less than 1/3 the old price.
+
+A player dropping excessive experience orbs upon death may cause performance degradation in the game.
+
+{{loadPage|Experience/Before 12w23a|Values from Java Edition Beta 1.8 to 1.3.1 (12w23a)|h3}}
+
+{{loadPage|Experience/Before 14w02a|Values from Java Edition 1.3.1 to 1.8 (14w02a)|h3}}
+
+== Issues ==
+
+{{issue list|Experience|Orb}}
+
+== Trivia ==
+* It was mentioned by [[Jeb]] in ''[[The World of Minecraft]]'' that he would have preferred the name "'''enchantment orbs'''" even though it is not in the code.<ref>''[[The World of Minecraft]]'', Chapter Four, Taste for Adventure, Food Items</ref>
+* If a player kills a mob by firing [[potion]]s out of a [[dispenser]], no experience is dropped.
+* Using experience on [[enchanting]] or [[repairing]] does not decrease the [[score]] that is shown upon [[death]].
+* If the player gains experience points exceeding 238,609,311, the experience bar and level counter completely disappear from the [[HUD]].<ref>{{bug|MC-79545}}</ref>
+* The maximum XP that can be gained from the {{cmd|xp}} command is 2,147,483,647 levels or 2<sup>31</sup>&minus;1, the largest value representable by a 32-bit signed integer.
+* The texture file for experience orbs contains an additional five orb sprites that are all identical to the size 3 sprite.
+* The process of dropping orbs by base value prioritizing the highest applicable sizes is an example of the {{W|Change-making problem|change-making problem|newtab=1}}. The coin system is the set of base values of orbs by size. It is the set {1, 3, 7, 17, 37, 73, 149, 307, 617, 1237, 2477}. It is not a canonical coin system.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Experience Orb Value -32768-2.png|-32768–2
+File:Experience Orb Value 3-6.png|3–6
+File:Experience Orb Value 7-16.png|7–16
+File:Experience Orb Value 17-36.png|17–36
+File:Experience Orb Value 37-72.png|37–72
+File:Experience Orb Value 73-148.png|73–148
+File:Experience Orb Value 149-306.png|149–306
+File:Experience Orb Value 307-616.png|307–616
+File:Experience Orb Value 617-1236.png|617–1236
+File:Experience Orb Value 1237-2476.png|1237–2476
+File:Experience Orb Value 2477-32767.png|2477–32767
+File:Experience bar background.png|Experience bar background
+File:Experience bar progress.png|Experience bar progress
+</gallery>
+
+=== Textures ===
+<gallery>
+File:Experience Orb (texture).png|Raw file of the experience orb texture. Note the white sections, which are tinted accordingly green/yellow, the orange sections, which are tinted to a lesser degree, and the five unused orb sprites beyond size 11.
+</gallery>
+
+=== Images ===
+<gallery>
+New light with orb.png|The first picture of the Orb. Notice, it is on the very left side of the page not the [[torch]] in the middle.
+New light no orbjpg.jpg|Notch later uploaded another version of the image, claiming the Orb was a "small error".
+Light orb big.png|Orb in the first picture, enlarged.
+Skeleton drops.png|Different sized experience orbs dropped by a skeleton upon death.
+Too Much Experience.jpg|Lots of experience orbs blocking the player's view.
+Coin change orbs 12000.png|Coin change problem for orbs up to 12000 XP.
+Coin change orbs 2500.png|Coin change problem for orbs up to 2500XP.
+Coin change orbs 500.png|Coin change problem for orbs up to 500 XP.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+{{Navbox entities|other}}
+
+[[Category:Pages missing sound volume]]
+[[Category:Pages with inaccurate sound pitch value]]
+
+[[de:Erfahrung]]
+[[es:Experiencia]]
+[[fr:Expérience]]
+[[hu:Tapasztalat]]
+[[ja:経験値]]
+[[ko:경험치]]
+[[lzh:經驗]]
+[[nl:Ervaring]]
+[[pl:Doświadczenie]]
+[[pt:Experiência]]
+[[ru:Опыт]]
+[[th:ค่าประสบการณ์]]
+[[uk:Досвід]]
+[[zh:经验]]

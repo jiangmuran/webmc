@@ -1,0 +1,1461 @@
+{{About|the mechanic about losing health points|the command|Commands/damage|the property of items|Durability}}
+[[File:Hurt.png|thumb|An example of a player taking fall damage.]]
+
+'''Damage''' is the reduction of an entity's [[health]].
+
+== Health ==
+{{main|Health}}
+[[Player]]s and [[mob]]s have a supply of [[health]] points, which are reduced when they are injured. One health point is half a heart, shown as {{hp|1}}.
+
+Players have {{hp|20}} health points, but that may vary by [[status effect]]s. Mobs have varying numbers of health points, but these are not generally visible to players, with some exceptions: a player can see the health of a mount being ridden, a tamed [[wolf]]'s health is indicated by its tail angle (90 degrees indicates it's at full health), the [[wither]] and [[ender dragon]] have boss bars that display their health, an [[iron golem]]'s body shows cracks as its health declines, and an [[axolotl]] plays dead when its health is low.
+
+== Damage ==
+Damage from attacks or natural causes subtracts from a player or mob's current health. When their health reaches zero, they [[die]].
+
+[[Armor]], [[horse armor]], [[nautilus armor]], and [[wolf armor]] absorb some of the damage that would have been done to their wearer.
+* Armor and wolf armor lose [[durability]] in the process.
+* Wolf armor absorbs all incoming damage, while armor, horse armor, and nautilus armor absorb a [[Armor#Mechanics|percentage]].
+
+When a player takes damage, along with their hurt sound being heard, a white outline will flash around the health bar on their [[HUD]] and their screen will tilt to signify that damage was taken.
+
+In ''[[Java Edition]]'', the flash occurs repeatedly for 1 second after taking damage, and unless the health bar is using the freeze damage graphics,<ref>{{bug|MC-206881}}</ref> it additionally shows pale-colored hearts equal to the amount of health that was just lost. If the player took damage from an entity, the screen tilt will be angled towards the entity that dealt the damage, creating an effect as if the player's head were being whipped to the side by inertia from the knockback (although the effect still occurs even if no knockback was caused). If no entity was involved or the damage was dealt through an explosion,<ref>{{bug|MC-298499}}</ref> then it will "remember" the last direction that the screen tilted and reuse that, defaulting to the player's left if no damage has been taken from entities since loading the world.<ref>{{bug|MC-259212}}</ref>
+
+In ''[[Bedrock Edition]]'', the health bar only flashes once, shows no pale hearts indicating the damage taken,<ref>{{bug|MCPE-33658}}</ref> and the screen always tilts to the left regardless of if the player was damaged by an entity or not.<ref>{{bug|MCPE-169593}}</ref>
+
+The damage tilt can be adjusted and disabled in {{UI|[[Options]]|[[Options#Accessibility Settings|Accessibility Settings]]|Damage Tilt}}{{only|je}} or {{UI|[[Settings]]|[[Settings#Accessibility|Accessibility]]|Damage Tilt}}.
+
+== Storage and display ==
+Health and damage are stored as floating-point numbers in units of half-hearts. When displaying the [[Heads-up display|HUD]], fractional values are rounded up to the next integer; for example, {{hp|6.2}} is shown as {{hp|7}}.
+
+== Adjustments ==
+The damage that a [[mob]] take can be adjusted by the following factors:
+
+# [[Invulnerable|Invulnerability]];
+# [[Armor point]] and [[armor toughness]];
+# Armor [[enchantments]] ([[Protection]], [[Blast Protection]], [[Fire Protection]], [[Projectile Protection]] and [[Feather Falling]]);
+#* These enchantments can reduce up to 20% of the original damage.
+# Mob-specific adjustments;
+#* Magic damage dealt to [[witches]] is reduced to 15% of the original damage.
+#* Damage dealt to all parts of the [[ender dragon]] except the head is modified to <code>{{frac|1|4}} × original damage + min(1, original damage)</code>.
+#* Damage dealt to [[armadillo]] when it rolls up is <code>(original damage - 1) / 2</code>. {{IN|be}}, damage with type <code>self_destruct</code> is not affected by this.
+#* {{IN|be}}, the damage from [[lightning]] that the [[turtle]] and [[axolotl]] take is <code>2000 × original damage</code>, or {{hp|10000}}.
+# Mob armor;
+#* A [[wolf]] wearing [[wolf armor]] doesn't take damage from most sources; Instead, the wolf armor consumes [[durability]] based on the original damage.
+# [[Resistance]] effect reduces the 20% of the original damage per level;
+#* Resistance of level 5 or higher reduces almost all kinds of the damage the mobs take to {{hp|0}}.
+# {{IN|be}}, if the damage taken by [[iron golem]], [[snow golem]], [[wither]], [[ender dragon]], [[frog]], [[allay]], [[mooshroom]], [[bat]], [[chicken]], [[parrot]], [[pig]], [[turtle]], [[villager]], [[wandering trader]], [[goat]], [[axolotl]], [[cat]], [[ocelot]], [[bee]], [[fox]], [[llama]], [[ghast]], [[blaze]], [[creeper]], [[magma cube]], [[breeze]] and [[armadillo]] is less than {{health|1}} and greater than {{health|0}}, the damage taken is rounded up to {{health|1}}.<ref>{{bug|MCPE-171506}}</ref>
+
+Even if damage is reduced to {{hp|0}}, the damage is not cancelled; the other effects of the damage are not cancelled as well.
+
+The following table shows the conditions under when damage adjustments can adjust the damage that the mobs take.
+
+<div style="overflow-x:auto">
+{| class="wikitable sortable"
+! Damage type
+! [[Armor]], [[armor toughness]]
+! [[Protection]]
+! [[Fire Protection]]
+! [[Blast Protection]]
+! [[Projectile Protection]]
+! [[Feather Falling]]
+! [[Resistance]]
+! [[Armadillo]]<br>reduction
+! [[Ender dragon]]<br>adjustment
+|-
+! {{cmd|kill}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+|-
+! [[Starvation]],<br>[[Void]]
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Warden]]'s ranged attack
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Drowning]],<br>[[Damage#Magic damage|Magic]],<br>[[Kinetic energy]],<br>[[Freezing]]
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Suffocation]]
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|always|Immune}}
+|-
+! [[Burning]]
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Lava]],<br>[[Magma block]],<br>[[Fireball]]
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Explosion]]
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Projectile]]
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|-
+! [[Falling]]
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|always|Immune}}
+|-
+! Other
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|no|No effect}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+| {{tc|yes|Applies}}
+|}
+</div>
+
+== Dealing damage ==
+Players can deal damage and [[Knockback (mechanic)|knockback]] by attacking most [[entities]] with targets at close (melee) range. Attacking without a weapon (or with items not intended for attacking) does {{hp|1}} damage. While falling, melee attacks deal a [[#Critical hit|critical hit]] (150% of the weapon's damage, including potion effects, but before [[enchantments]] are applied, rounded down to the nearest hit point).
+
+There are several melee weapons in the game:
+* [[Sword]]s are a melee weapon that have exclusive access to [[Looting]] and [[Knockback]]. {{IN|java}}, they have high attack speed and the highest DPS, and can do [[sweep attack]]s that hit multiple entities at once.
+* [[Axe]]s are a melee weapon that can disable [[shield]]s. {{IN|java}}, they have low attack speeds and higher damage than their sword counterparts.
+* [[Mace]]s are a melee weapon that can do smash attacks, dealing more damage the farther a player falls before attacking and nullifying fall damage. {{IN|java}}, they have the lowest attack speed of any melee weapon. {{IN|bedrock}}, they have the highest DPS versus entities wearing [[diamond armor]] or better when enchanted with [[Breach]] IV, greater than that of even [[Sharpness]] V [[netherite sword]]s.
+* [[Spear]]s are a melee weapon with longer reach that can do charge attacks. The damage of the charge attack scales with speed. However, they cannot hit if the target is within a 2-block radius of attacker. 
+* [[Pickaxe]]s and [[shovel]]s can be used as melee weapons to deal more damage than bare fists. {{IN|java}}, pickaxes have middling attack speed greater than that of axes but slower than that of swords. Shovels are strictly inferior to axes, having the same attack speed as most axes but with lower damage.
+* [[Hoe]]s can also be used as a melee weapon. {{IN|bedrock}}, they deal identical damage to pickaxes of the same tier, while {{in|java}} they are strictly inferior to bare fists.
+* Any other item (excluding [[trident]]s) is equivalent to bare fists.
+
+There is one weapon in the game that functions as both a melee weapon and a throwable projectile:
+* [[Trident]]s are a melee weapon that can be thrown as a projectile. They have higher damage than any sword type, aside from {{in|bedrock}} where their damage is identical to that of a [[netherite sword]]. {{IN|java}}, they have a low attack speed that is slightly lower than that of [[pickaxe]]s.
+
+There are several ranged weapons, throwable projectiles, and ammunition types in the game:
+* [[Bow]]s are a ranged weapon that can shoot arrows at varying strength and speed. They have slightly lower damage than crossbows, but can exceed crossbows in damage with the [[Power]] enchantment.
+* [[Crossbow]]s are a ranged weapon that can shoot arrows at any time after being charged in advance. They have slightly longer charging time than bows, but can exceed bows in charging speed with the [[Quick Charge]] enchantment. They can also use firework rockets as ammunition.
+* [[Arrow]]s are ammunition used by bows and crossbows. When shot by a bow, their damage depends on the charging state of the bow prior to firing. The damage of a arrow fired at maximum charge, called critical charge for bows, is 6-11 randomly for bows and 7-11 randomly for crossbows.
+* [[Firework rocket]]s are ammunition used by crossbows that explode on impact with blocks and entities. They deal damage only when crafted with [[firework star]]s, with their damage depending on the amount of firework stars used to craft them. The damage of a maxed firework shot by a crossbow is 11-18 randomly.
+* [[Snowball]]s and [[egg]]s are projectiles that can be used to knock back mobs, but not players. Snowballs deal damage in addition to their knockback when used against [[blaze]]s.
+* [[Splash potion]]s and [[lingering potion]]s are projectiles that inflict various effects depending on their type. Splash potions deal their effects on impact, while lingering potions do not, instead leaving a lingering cloud of their effect on the ground.
+* [[Fishing rod]]s {{in|bedrock}} can be used to knock back entities when attaching.
+
+The values below on the table show the base damage dealt per hit using various weapons. Critical hits do 50% extra damage.
+
+=== Damage by weapon ===
+{{el|je}}:
+
+Damage calculation starts with the weapon's base damage, then adds damage from effects, then multiplies by 1.5 if it's a critical hit, and then adds damage from enchantments.
+<div style="overflow-x:auto">
+{{#invoke:Weapon info|infoTable}}
+</div>
+{{notelist}}
+
+{{el|be}}:
+
+<div style="overflow-x:auto">
+{|class="wikitable" style="text-align:center"
+|-
+!rowspan=2|Tool
+!colspan=7|Attack damage
+|-
+!Wood!!Stone!!Copper!!Iron!!Gold!!Diamond!!Netherite
+|-
+![[Sword]]
+|{{ItemSprite|Wooden Sword}} {{Hp|5}}
+|{{ItemSprite|Stone Sword}} {{Hp|6}}
+|{{ItemSprite|Copper Sword}} {{Hp|6}}
+|{{ItemSprite|Iron Sword}} {{Hp|7}}
+|{{ItemSprite|Golden Sword}} {{Hp|5}}
+|{{ItemSprite|Diamond Sword}} {{Hp|8}}
+|{{ItemSprite|Netherite Sword}} {{Hp|9}}
+|-
+![[Trident]]
+|colspan=7|{{ItemSprite|Trident}} {{Hp|9}}
+|-
+![[Spear]]
+|{{ItemSprite|Wooden Spear}} {{Hp|1}}
+|{{ItemSprite|Stone Spear}} {{Hp|2}}
+|{{ItemSprite|Copper Spear}} {{Hp|2}}
+|{{ItemSprite|Iron Spear}} {{Hp|3}}
+|{{ItemSprite|Golden Spear}} {{Hp|1}}
+|{{ItemSprite|Diamond Spear}} {{Hp|4}}
+|{{ItemSprite|Netherite Spear}} {{Hp|5}}
+|-
+![[Mace]]
+|colspan=7|{{ItemSprite|Mace}} {{Hp|6}}
+|-
+![[Shovel]]
+|{{ItemSprite|Wooden Shovel}} {{Hp|2}}
+|{{ItemSprite|Stone Shovel}} {{Hp|3}}
+|{{ItemSprite|Copper Shovel}} {{Hp|3}}
+|{{ItemSprite|Iron Shovel}} {{Hp|4}}
+|{{ItemSprite|Golden Shovel}} {{Hp|2}}
+|{{ItemSprite|Diamond Shovel}} {{Hp|5}}
+|{{ItemSprite|Netherite Shovel}} {{Hp|6}}
+|-
+![[Pickaxe]]
+|{{ItemSprite|Wooden Pickaxe}} {{Hp|3}}
+|{{ItemSprite|Stone Pickaxe}} {{Hp|4}}
+|{{ItemSprite|Copper Pickaxe}} {{Hp|4}}
+|{{ItemSprite|Iron Pickaxe}} {{Hp|5}}
+|{{ItemSprite|Golden Pickaxe}} {{Hp|3}}
+|{{ItemSprite|Diamond Pickaxe}} {{Hp|6}}
+|{{ItemSprite|Netherite Pickaxe}} {{Hp|7}}
+|-
+![[Axe]]
+|{{ItemSprite|Wooden Axe}} {{Hp|4}}
+|{{ItemSprite|Stone Axe}} {{Hp|5}}
+|{{ItemSprite|Copper Axe}} {{Hp|5}}
+|{{ItemSprite|Iron Axe}} {{Hp|6}}
+|{{ItemSprite|Golden Axe}} {{Hp|4}}
+|{{ItemSprite|Diamond Axe}} {{Hp|7}}
+|{{ItemSprite|Netherite Axe}} {{Hp|8}}
+|-
+![[Hoe]]
+|{{ItemSprite|Wooden Hoe}} {{Hp|3}}
+|{{ItemSprite|Stone Hoe}} {{Hp|4}}
+|{{ItemSprite|Copper Hoe}} {{Hp|4}}
+|{{ItemSprite|Iron Hoe}} {{Hp|5}}
+|{{ItemSprite|Golden Hoe}} {{Hp|3}}
+|{{ItemSprite|Diamond Hoe}} {{Hp|6}}
+|{{ItemSprite|Netherite Hoe}} {{Hp|7}}
+|-
+!Other
+|colspan=7|{{Hp|1}}
+|}
+</div>
+
+=== Attack cooldown ===
+{{main|Melee attack#Attack cooldown}}
+{{Redirect|Cooldown|the enchantment in ''Minecraft Dungeons''|MCD:Cool Down}}
+{{exclusive|Java|section=5}}
+[[File:AttackIndicatorCrosshair.png|thumb|Attack indicator (crosshair), empty and charged]]
+[[File:AttackIndicatorHotbar.png|thumb|Attack indicator (hotbar), empty and charged]]
+
+When a player swings a weapon or switches to a weapon, they are locked into a cooldown meter that limits how much damage they can deal and requires them to wait before being able to deal maximum damage again. The base damage done depends on the time between attacks, and is also reflected in the height of the held weapon on screen and the attack indicator bar. The fill-level of the attack indicator bar (as a proportion of its total width) is exactly equal to the damage the held weapon would deal if it were used now, in proportion to its maximum damage. Therefore, the attack indicator appears fully charged when the damage dealt after cooldown reaches 100% of the maximum. There are settings for the attack indicators in the [[options]] menu. At 84.8% attack cooldown charge, critical hits, [[sweep attack]]s, and [[sprint-knockback]] attacks become possible.
+
+<div style="overflow:auto">
+The % of a weapon's maximum damage that is dealt after a certain amount of cooldown time is described in the table below.{{#invoke:Weapon info|damageReductionTable}}
+</div>
+
+The {{cd|attack_speed}} attribute controls the length of the cooldown time, with the time taken being <code>T = 20 / attack_speed</code> ticks. The damage multiplier is then <code>0.2 + ((t + 0.5) / T) ^ 2 * 0.8</code>, restricted to the range 0.2 – 1, where <code>t</code> is the number of ticks since the last attack or item switch.
+
+Damage done by enchantments ([[Sharpness]], [[Smite]], and [[Bane of Arthropods]]) is also reduced, but not as severely (the multiplier is not squared):
+
+<div style="overflow:auto">
+{{#invoke:Weapon info|damageReductionTable|enchantment=1}}
+</div>
+
+=== Critical hit ===
+[[File:crits.png|thumb|A critical hit performed on a [[sheep]].]]
+{{main|Melee attack#Critical hit}}
+{{redirect|Critical hit|the enchantment in {{MCD}}|MCD:Critical Hit}}
+
+A '''critical hit''' is a type of attack that deals extra damage compared to a regular attack. Critical hits cause small cross-shaped particles to fly out of the target. A critical hit is performed when a player attacks an entity while ''falling'', and increases the damage of the attack by 50% (''after'' strength is applied and before{{only|JE|short=1}} / after{{only|be|short=1}} enchantments or armor are applied).
+
+{{IN|java}}, critical hits can be performed only if the attack cooldown of the weapon is at 84.8% or higher. Critical hits cannot be performed at the same time as [[sprint-knockback attack]]s. They also cannot be performed while in [[water]], while climbing a [[ladder]] or [[vines]] (including its variants), while under the effect of [[Slow Falling]] or [[Blindness]], while riding a mount, or while [[flying]].
+
+=== Maximum damage values ===
+In Survival mode, the maximum damage that can be dealt by a player depends on various factors.
+
+'''Melee attack'''
+
+{{JE}}
+*With a [[sword]]:
+**Maximum damage to [[undead]] or [[arthropod]] mobs is {{hp|33.5}} damage.
+***{{hp|8}} from a [[netherite sword]], + {{hp|6}} from [[Strength]] II, + 50% from a [[critical hit]], + {{hp|12.5}} from [[Smite]] V or [[Bane of Arthropods]] V respectively.
+**Maximum damage to players or ordinary mobs is {{hp|24}} damage.
+***{{hp|8}} from a netherite sword, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|3}} from Sharpness V.
+**Maximum damage to players wearing full [[Protection]] IV [[netherite armor]] is {{hp|3.38688}} damage.
+***{{hp|8}} from a netherite sword, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|3}} from Sharpness V.
+
+*With an [[axe]]:
+**Maximum damage to undead or arthropod mobs is {{hp|36.5}} damage.
+***{{hp|10}} from a [[netherite axe]], + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|12.5}} from Smite V or Bane of Arthropods V respectively.
+**Maximum damage to players or ordinary mobs is {{hp|27}} damage.
+***{{hp|10}} from a netherite axe, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|3}} from Sharpness V.
+**Maximum damage to players wearing full Protection IV netherite armor is {{hp|4.04352}} damage.
+***{{hp|10}} from a netherite axe, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|3}} from Sharpness V.
+
+*With a [[trident]]:
+**Maximum damage to [[aquatic]] mobs is {{hp|35}} damage.
+***{{hp|9}} from a trident, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|12.5}} damage from [[Impaling]] V.
+**Maximum damage to players or ordinary mobs is {{hp|22.5}} damage.
+***{{hp|9}} from a trident, + {{hp|6}} from Strength II, + 50% from a critical hit.
+**Maximum damage to players wearing full Protection IV netherite armor is {{hp|3.078001}} damage.
+***{{hp|9}} from a trident, + {{hp|6}} from Strength II, + 50% from a critical hit.
+
+*With a [[mace]]:
+**Without [[smash attack]]s:
+***Maximum damage to undead or arthropod mobs is {{hp|30.5}} damage.
+****{{hp|6}} from a mace, + {{hp|6}} from Strength II, + 50% from a critical hit, + {{hp|12.5}} from Smite V or Bane of Arthropods V respectively.
+***Maximum damage to players or ordinary mobs is {{hp|18}} damage.
+****{{hp|6}} from a mace, + {{hp|6}} from Strength II, + 50% from a critical hit.
+***Maximum damage to players wearing full Protection IV netherite armor is {{hp|6.117121}} damage.
+****{{hp|6}} from a mace, + {{hp|6}} from Strength II, + 50% from a critical hit, - 60% armor effectiveness from [[Breach]] IV.
+**With smash attacks:
+***Maximum damage to any player or mob is ∞ ([[File:Heart (icon).png|9px]] × ∞) damage.
+
+{{BE}}
+{{rewrite|section=Section mode}}
+**Maximum damage to undeads or arthropods is {{hp|41.25}} damage, consisting of {{hp|8}} from netherite sword + {{hp|12.5}} from Smite V for undead mobs or Bane of Arthropods V for arthropod mobs + {{hp|7}} from strength II, all × 1.5 from a critical hit (+ {{Hp|13.75}} damage).
+**Maximum damage to non-undead and non-arthropod on land is {{hp|31.875}} damage, consisting of {{hp|8}} from netherite sword + {{hp|6.25}} from Sharpness V + {{hp|7}} from Strength II, all × 1.5 from a critical hit (+ {{Hp|10.625}} damage).
+**Maximum damage to players and mobs on water or during rain is {{hp|42.75}} damage, consisting of {{hp|9}} of melee trident + {{hp|12.5}} from Impaling V + {{hp|7}} from strength II, all × 1.5 from a critical hit (+ {{Hp|14.25}} damage). (Also works with [[Riptide]])
+**By use of a [[mace]] smash attack, the maximum damage that can be dealt by a player is unlimited.
+
+'''Ranged attack'''
+*With a [[bow]]:
+**Maximum damage to players and mobs is {{hp|25}} damage, from a maximum damage-roll shot at critical charge with the [[Power]] V enchantment.
+***Using [[Arrow of Harming|arrows of harming]] does not increase damage output. This is because the damage increase from an arrow of harming is ignored if the damage of the ranged weapon exceeds it, rather than adding the two together. In this case, the bow with Power V does 25 damage, which is greater than the arrow of harming's damage increase (12), which causes the arrow of harming's damage to be ignored.
+
+*With a [[crossbow]]:
+**Maximum damage to players and mobs is {{hp|18}} damage, from a maximum damage-roll shot using a [[firework rocket]] crafted with 7 [[firework star]]s.
+***The [[Multishot]] enchantment does not increase damage output, because only one of the projectiles can deal damage at a time.
+
+== Invulnerability timer ==
+{{See also|Invulnerable}}
+{{Anchor|Immunity}}After sustaining damage from any source, a [[mob]] or [[player]] turns red for {{convert|10|gt|s}}. During this period, the target is invulnerable to most kinds of further damage. For instance, if the player attacks a mob by repeatedly hitting the {{control|attack}} button, attacks that land while the mob is invulnerable deal no damage, and do not reduce the [[durability]] of a melee weapon. Unsuccessful attacks also do not anger neutral mobs. This mechanic is called the '''invulnerability timer'''.<ref>{{Citation|url=https://www.reddit.com/r/Minecraft/comments/c5mqwv/a_custom_java_edition_snapshot_to_test_new_combat/|title=A custom Java Edition snapshot to test new combat mechanics|author=[[jeb_]]|website=Reddit|date=2019-06-26}}</ref><ref>{{Citation|url=https://www.reddit.com/r/Minecraft/comments/dq2v7o/updated_combat_test_snapshot_number_3_and_a/|title=Updated Combat Test Snapshot (number 3) and a custom map for combat testing|author=[[jeb_]]|website=Reddit|date=2019-11-01}}</ref>
+
+While invulnerable, any damage less than or equal to the original damage that caused the invulnerability is ignored. However, any ''higher'' damage (before accounting for armor, enchantments, or status effects) causes only the difference between the original and new damage amounts to be dealt. For example, if a mob is attacked with a weapon dealing {{hp|7}} damage and then attacked with another weapon dealing {{hp|12}} damage while invulnerable, the second hit deals {{hp|5}} damage (resulting in {{hp|12}} total). This does not reset invulnerability.
+
+{{IN|java}}, when an attack deals a fatal amount of damage to a mob so that it dies while invulnerable, its death sound is not triggered. This has never been fixed.
+
+== Inflicted by mobs ==
+<div style="overflow-x:auto">
+{{:Damage/Mobs}}
+</div>
+
+== Natural damage ==
+Besides mob attacks, players can take damage from several other sources.
+
+=== Lightning damage ===
+[[Lightning]] striking on or near the player inflicts {{hp|5}} damage, which can be reduced with armor. Natural lightning strikes on the player are rare and occur only during thunderstorms. Players and mobs that get hit by lightning are set on [[fire]], which is quickly extinguished by the [[rain]] during a thunderstorm.
+
+=== Fall damage ===
+{{Redirect|Fall}}
+{{redirect|fall_damage|the game rule|Game rule#fall_damage}}
+Players and most mobs take damage when hitting the ground after falling a certain distance. 
+
+Fall damage is based on the change in an entity's Y coordinate, and not how fast the entity is moving. Most mobs take fall damage after falling more than 3 blocks; however, some mobs are able to fall farther before taking damage. How far a mob can safely fall is controlled by the {{cd|safe_fall_distance}} [[attribute]].
+
+Most mobs take about {{hp|1}} damage for every block fallen over their safe fall distance. Some mobs take a different amount of fall damage per block fallen, determined by a multiplier stored in the {{cd|fall_damage_multiplier}} attribute.
+
+The amount of fall damage a mob takes is determined by the formula:
+
+<div style="overflow:auto;>
+<math> \mathsf{fall \ damage} = Max \left( 0, \ Floor \left[ \left( \mathsf{fall\ distance - safe\_fall\_distance} \right)\ \times \ \mathsf{fall\_damage\_multiplier}\right] \right) </math>
+</div>
+
+where the Ceiling function rounds the answer up to the nearest whole number.
+
+While a fall of 23 blocks should be enough to kill a player at full health, a fall of at least 23.5 blocks is required to kill the player because the game checks if the player is on the ground and calculates fall damage before updating the player's fall distance.
+
+==== Fall damage resistance ====
+[[Armor]] itself does not reduce fall damage; however, armor enchanted with [[Feather Falling]] or [[Protection]] does.
+
+Some [[status effect]]s reduce fall damage:
+
+* [[Slow Falling]] - Negates all fall damage. If the effect wears off mid-air, the entity takes damage only for the height difference between where the effect ended and where the entity lands.
+* [[Resistance]] - Reduces most damage (including fall) by 20% per level.
+* [[Jump Boost]] - In addition to increasing jump height, it also reduces fall damage by {{hp|1}} per level.
+
+Every player is immune to fall damage when the [[game rule]] <code>fallDamage</code> is set to <code>false</code>. Players who can fly are not immune to fall damage and take fall damage for the change in Y from where they stop flying to where they land.
+
+Monsters that are immune to fall damage:
+* {{EntityLink|Blaze}}
+* {{EntityLink|Breeze}}
+* {{EntityLink|Creaking}} summoned by [[creaking heart]].
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Ghast}}
+* {{EntityLink|Magma Cube}}
+* {{EntityLink|Phantom}}
+* {{EntityLink|Shulker}}
+* {{EntityLink|Vex}}
+* {{EntityLink|Wither}}
+
+Friendly mobs that are immune to fall damage:
+* {{EntityLink|Agent}}
+* {{EntityLink|Allay}}
+* {{EntityLink|Bat}}
+* {{EntityLink|Bee}}
+* {{EntityLink|Cat}}
+* {{EntityLink|Chicken}}
+* {{EntityLink|Copper Golem}}
+* {{EntityLink|Happy Ghast}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|NPC}}
+* {{EntityLink|Ocelot}}
+* {{EntityLink|Parrot}}
+* {{EntityLink|Snow Golem}}
+
+Other mobs with resistance to fall damage:
+
+* These mobs take damage after falling more than 6 blocks and take half of the normal fall damage {{cd|(fall_damage_multiplier &equals; 0.5)}}
+** {{EntityLink|Camel}}
+** {{EntityLink|Camel Husk}}
+** {{EntityLink|Donkey}}
+** {{EntityLink|Horse}}
+** {{EntityLink|Llama}}
+** {{EntityLink|Mule}}
+** {{EntityLink|Skeleton Horse}}
+** {{EntityLink|Trader Llama}}
+** {{EntityLink|Zombie Horse}}
+
+* This mob always takes {{Hp|10}} less fall damage:
+** {{EntityLink|Goat}}
+
+* This mob always takes {{Hp|5}} less fall damage:
+** {{EntityLink|Frog}}
+
+* This mob takes fall damage after falling more than 5 blocks, and its fall damage is not affected by [[Jump Boost]]:
+** {{EntityLink|Fox}}
+
+===== Sound =====
+For most solid blocks, if a player or mob falls onto the blocks and takes damage, a sound plays and is transmitted to the environment. No sound is played or transmitted if the entity doesn't take damage. Falling from a small height (4–7 blocks) plays a thud sound, and falling from a larger height (8 or more blocks) gives a click or cracking sound.
+
+==== Fall damage reduction ====
+In some cases, falling damage can be mitigated or entirely avoided:
+
+[[Sneaking|{{control|Sneaking}}]] prevents a player from falling off a drop of one block or greater.
+
+The following cases reset the player or mob's change in Y:
+*Colliding with a [[cobweb]].
+*A [[minecart]]'s change in Y is reset when landing on rails.
+*Entering or being in [[water]] (when not in a boat) resets the change in Y. This includes falling into the water of any depth, as long as the entity collides with the water before colliding with the ground.
+*Entering [[powder snow]] while falling.
+*Successfully landing a smash attack with a [[mace]]. 
+*Eating a [[chorus fruit]].<ref>{{bug|MC-112133}}</ref> 
+*Teleporting due to a thrown [[ender pearl]]; however, the teleportation itself causes {{hp|5}} fall damage to players.
+*Moving into a [[ladder]] or [[vine]]'s area of effect resets the fall distance. This also applies to [[trapdoor]]s acting as a ladder.
+**[[Spider]]s climbing a block, count the block as a "ladder" for this purpose.
+*These can potentially increase fall damage:
+**Being hit by a [[wind charge]] causes the change in y to be measured from where the wind charge hit the entity, rather than where the entity started falling.
+**[[Levitation]] sets the change in y to 0 while it is active. Therefore, the change in y is measured from where the entity starts falling after Levitation runs out.
+
+The following cases reduce or negate all fall damage:
+*Being in [[lava]] reduces the change in Y by half a block each [[game tick]].
+*Flying using [[elytra]] such that the vertical movement is upward, level or less than 0.5 blocks per game tick downward resets the change in Y to 1 block.
+*Wearing armor that is [[enchant]]ed with [[Feather Falling]] or [[Protection]] reduces fall damage based on the level of the enchantment.
+*Having the [[Jump Boost]] status effect reduces the effective change in Y by 1 block per level, e.g., falling 5 blocks with Jump Boost II counts as having fallen only 3.
+*[[Slime blocks]] negate all fall damage, but bounce the entity into the air. Sneaking when hitting the slime block negates fall damage and stops the bounce.
+*[[Hay bale]]s and [[honey block]]s decrease fall damage to 20% of normal.
+*Beds decrease fall distance to 50% of the actual distance fallen, which usually reduces fall damage to less than half of the normal amount.
+*[[Sweet berry bush]]es negate all fall damage.
+*Holding sneak while landing on at least a two-block-high stack of [[scaffolding]] negates fall damage from any height. Only 1 scaffolding block is needed to negate damage from smaller heights.
+*Slow falling status effect completely negates all fall damage but causes the entity to fall slowly.
+*Contact the [[void|void floor]].{{only|be}}
+*Riding a [[horse]] negates all fall damage from the player, but the horse itself can die if it hits the ground too hard.
+
+The following cases do not reduce any fall damage:
+*[[Boat]]s do not accumulate any change in Y while in water deeper than 1 block.
+*Falling onto the top of a ladder does not reset the change in Y and counts as hitting the ground.
+*Horses are unaffected by ladders and vines, and so their change in Y is not reset.
+*An entity riding another entity does not accumulate any change in Y. However, when the ridden entity takes fall damage, it damages all riders for the same change in Y.
+
+=== Falling block ===
+[[Falling block]] entities deal damage to players and mobs in the same block space where they land. The damage is dealt only on landing, and is not dealt to players and mobs that collide with falling block entities in mid-air.
+
+A falling [[anvil]] deals {{hp|2}} per block fallen after the first block (e.g., an anvil that falls 4 blocks deals {{hp|6}} damage). A falling [[stalactite]] deals {{hp|6}} per block fallen after the first block (e.g., a stalactite that falls 4 blocks deals {{hp|18}} damage).
+
+The damage is capped at {{hp|40}}, no matter how far the anvil or stalactite falls.
+
+[[Helmet]]s takes twice as much [[durability]] damage as other armor pieces, but does not provide any special protection other than the normal armor damage reduction.<ref name="falling_block">Per [[Talk:Damage#Falling_Block]], helmets no longer provide a 25% damage reduction to falling blocks.</ref>
+
+If cheats are enabled, a falling block entity that deals damage can be [[summon]]ed if its {{cd|HurtEntities}} tag is set to {{cd|true}}. The amount of damage dealt per block fallen can be customized via the {{cd|FallHurtAmount}} tag, and the maximum damage dealt can be customized via the {{cd|FallHurtMax}} tag.
+
+=== Thorns enchantment ===
+When a player or mob deals melee or projectile damage to a player or mob that is wearing [[Thorns]]-enchanted [[armor]], part of the damage is reflected back at the attacker. The amount varies with the enchantment level. (<code>Level * 15</code>% chance of inflicting {{hp|1}}–{{hp|4}} damage, or <code>Level - 10</code> damage if level is over 10) however, thorns increases the amount of durability lost per hit on the enchanted armor.
+
+=== Suffocation ===
+Suffocation occurs when a player or mob's eyeline is inside of certain blocks, receiving {{hp|1}} damage every half-second. They also become [[black entities]]. 
+
+Blocks that are transparent or do not fill an entire block do not cause damage, these include:
+<ul class="hlist">
+* {{BlockLink|Amethyst cluster}}
+* {{BlockLink|Anvil}}
+* {{BlockLink|Bamboo}}
+* {{BlockLink|Banners}}
+* {{BlockLink|Bed}}
+* {{BlockLink|Bell}}
+* {{BlockLink|Brewing stand}}
+* {{BlockLink|Cake}}
+* {{BlockLink|Cauldron}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Chorus flower}}
+* {{BlockLink|Chorus plant}}
+* {{BlockLink|Cocoa}}
+* {{BlockLink|Copper chain}}
+* {{BlockLink|Redstone comparator}}
+* {{BlockLink|Composter}}
+* {{BlockLink|Daylight detector}}
+* {{BlockLink|Dragon egg}}
+* {{BlockLink|Enchanting table}}
+* {{BlockLink|End portal frame}}
+* {{BlockLink|Ender chest}}
+* {{BlockLink|Fences}}
+* {{BlockLink|Fence gates}}
+* {{BlockLink|Flower pot}}
+* {{BlockLink|Glass}}
+* {{BlockLink|Grindstone}}
+* {{BlockLink|Heads}}
+* {{BlockLink|Honey block}}
+* {{BlockLink|Hopper}}
+* {{BlockLink|Iron bars}}
+* {{BlockLink|Iron chain}}
+* {{BlockLink|Leaves}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|Lightning rod}}
+* {{BlockLink|Mangrove roots}}
+* Extended  {{BlockLink|piston head}} 
+* {{BlockLink|Redstone repeater}}
+* {{BlockLink|Saplings}}
+* {{BlockLink|Slabs}} that are not double
+* {{BlockLink|Stairs}}
+* {{BlockLink|Stonecutter}}
+* {{BlockLink|Trapdoor}}
+* {{BlockLink|Walls}}
+</ul>
+
+Despite being fully to partially transparent, the following can cause suffocation:
+* {{BlockLink|Barrier}}
+* {{BlockLink|Beacon}}
+* {{BlockLink|Ice}}
+* {{BlockLink|Slime block}}
+* {{BlockLink|Monster spawner}}
+
+Additionally, [[dirt path]] and [[farmland]] can also cause suffocation, regardless of them not being full blocks.
+
+The player's screen displays a darkened form of the block in which the player is suffocating.
+
+{{IN|Bedrock}}, an oxygen bar is also present in the suffocation process. Water Breathing effects can prevent suffocation {{in|Bedrock}}.
+
+[[Creaking]]s spawned from a [[creaking heart]] are immune to suffocation damage.
+
+The usual ways an entity can suffocate are:
+
+*[[Sand]], [[gravel]] or [[concrete powder]] falling into the space the entity occupies.
+*Riding a [[pig]], [[boat]], or [[minecart]] into a one-block-high space.
+*Riding a [[horse]], [[llama]], or [[strider]] into a two-block-high space.
+*Standing where a [[tree]] just grew from a [[sapling]], where a [[huge mushroom]] just grew from a [[mushroom]], or where a [[huge fungus]] just grew from a [[nether fungus]].
+*Standing where an [[end gateway]] appeared after killing the dragon.
+*Having a solid block pushed into the entity's head with a [[piston]].
+*Sleeping in a [[bed]] surrounded by blocks or having a solid block above it.{{only|bedrock}}
+*Being teleported into a block or having one placed onto the entity via [[commands]] (including {{cmd|setblock}}, {{cmd|fill}}, or {{cmd|clone}}).
+*When playing on a distant server, sometimes broken blocks can reappear due to lag, and if the player moves where the block respawned, it can provoke suffocation (for example, chopping down a tree by moving right below the trunk).
+*When water and lava meet, and create a [[cobblestone]], [[stone]], or [[obsidian]] block on the entity's head.
+*Standing a certain distance outside of the [[world border]], configurable with {{cmd|worldborder damage buffer}} (default is 5 blocks).
+*Summoning an entity inside a block through [[spawn egg]]s, commands, or with a [[golem]] or [[wither]] structure lying down.
+*Standing in 2 block deep water in snowy and cold biomes where the topmost layer of water freezes into ice 
+*Throwing an [[ender pearl]] in a way that the player ends up inside a block they can suffocate in.
+
+=== Entity cramming ===
+{{exclusive|java|section=5}}
+
+{{IN|Java}}, players and mobs take damage if too many entities are packed into the same block space. Specifically, the {{Cd|maxEntityCramming}} [[game rule]] defines the maximum number of entities that can be in a block without becoming crammed. Once the number of entities in the space of a single block exceeds this value, entity cramming occurs. Entities with the <code>Invulnerable:1b</code> NBT tag are not affected by entity cramming but do count toward the <code>maxEntityCramming</code> game rule limit. When entity cramming occurs, a random selection of {{Cd|cram count {{=}} (entities in block) - maxEntityCramming}} living entities (players and mobs) become crammed. A living entity can be crammed by non-living entities, such as [[minecart]]s or [[armor stand]]s, but not by block-like entities, such as [[item frame]]s. The block space used for counting the number of entities is the axis and grid-aligned 1-meter cubic space containing the centers of the entities. An entity outside this space can collide with the entities within the space, but it can not become crammed by the entities within the space.
+
+When crammed, a player or mob takes {{hp|6}} suffocation damage with a 25% chance every game tick, as long as that player or mob is pushing greater than that number of other entities. The default value for {{Cd|maxEntityCramming}} is 24 entities. This means that up to 24 entities can coexist in one block space without getting crammed.
+
+If an entity is climbing, it does not count toward the number of entities in the block and does not contribute to cramming<ref>{{bug|MC-177062||Entities lose collision when in climbable blocks
+}}</ref>. This means that climbable blocks, such as [[ladder]]s, [[vine]]s, and [[scaffolding]] can prevent entity cramming. However, spiders and cave spiders are always counted toward the number of entities in the block when they are climbing. This can cause entities on climbable blocks to become crammed.
+
+If a player is killed by entity cramming damage, the [[death message]] reads '''<''player''> was squished too much'''.
+
+=== Drowning ===
+{{Redirect|Drown|the ''Minecraft'' mob|Drowned|the negative effect in {{MCD}}|MCD:Drowning}}
+{{redirect|drowning_damage|the game rule|Game rule#drowning_damage}}
+A player who runs out of air underwater begins drowning, taking {{hp|2}} damage per second. Damage is taken when the air supply value reaches -20. Usually, the air supply value decreases each game tick. It resets to 0 after being damaged. [[Respiration]] gives a chance for the air supply not to decrease per game tick. Chance is ''x''/(''x'' + 1), where ''x'' is the level of enchantment.
+
+Monsters that are immune to drowning:
+
+* {{EntityLink|Bogged}}
+* {{EntityLink|Camel Husk}}
+* {{EntityLink|Creaking}} summoned by [[creaking heart]].
+* {{EntityLink|Drowned}}
+* {{EntityLink|Elder Guardian}}
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Guardian}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Phantom}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Skeleton Horse}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Zoglin}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Horse}}
+* {{EntityLink|Zombie Nautilus}}
+* {{EntityLink|Zombie Villager}}
+* {{EntityLink|Zombified Piglin}}
+
+This monster isn't immune to drowning, but it can drink a water-breathing potion, making it partially immune to drowning:
+* {{EntityLink|Witch}}
+
+Friendly mobs that are immune to drowning:
+
+* {{EntityLink|Agent}}
+* {{EntityLink|Axolotl}}
+* {{EntityLink|Copper Golem}}
+* {{EntityLink|Cod}}
+* {{EntityLink|Frog}}
+* {{EntityLink|Ghastling}}
+* {{EntityLink|Glow Squid}}
+* {{EntityLink|Iron Golem}}
+* {{EntityLink|Nautilus}}
+* {{EntityLink|NPC}}
+* {{EntityLink|Pufferfish}}
+* {{EntityLink|Salmon}}
+* {{EntityLink|Squid}}
+* {{EntityLink|Tadpole}}
+* {{EntityLink|Tropical Fish}}
+* {{EntityLink|Turtle}}
+
+A popping sound is heard every time the air supply value reaches a number that is two more than a multiple of 30, or in other words, every time a bubble pops on the oxygen bar, with the popping sound becoming increasingly higher-pitched as the air supply value decreases, alerting the player that they're about to drown.
+
+When the [[game rule]] {{cd|drowningDamage}} is set to {{cd|false}}, the air supply of players depletes normally, but no drowning damage is inflicted when players run out of air.
+
+Mobs can also drown, although most mobs that can drown attempt to swim upward. Normally, mobs can remain underwater for 15 seconds before their air supply fully depletes. They can remain underwater for 16 seconds before actually beginning to take damage.
+* {{anchor|Dehydration}}A [[squid]], [[glow squid]], [[tadpole]], [[nautilus]] or any kind of [[fish]] suffocates in air instead of drowning in water.
+* [[Dolphin]]s can suffocate in air or drown in water and must be given access to both to survive.
+* [[Aquatic]] mobs, [[undead]] mobs, [[iron golem]]s and [[frog]]s are immune to drowning.
+* A [[zombie]] does not take drowning damage; instead, it begins the process of converting to a [[drowned]] mob when continuously in water for 30 seconds.
+* Similar to a zombie, a [[husk]] does not take damage from drowning, but first converts into a zombie, which then converts to a drowned if it remains underwater.
+* [[Piglin]]s, [[piglin brute]]s and [[hoglin]]s do not attempt to swim upward in water and drown as a result.
+** Because these mobs normally zombify outside the Nether before they can start drowning, this can happen only if their {{cd|IsImmuneToZombification}} tag set to {{cd|true}}, or that water is created in the Nether using commands.
+
+When the player is no longer submerged in water or is in a [[bubble column]], the air supply regenerates at a rate of 1 bubble every 0.2 seconds (4 game ticks). A [[Respiration]] helmet adds an additional on average 15 seconds duration underwater per enchantment level, and a [[turtle shell]] adds an additional 10 seconds. [[Water Breathing]] and [[Conduit Power]] regenerate the air supply. {{IN|bedrock}}, both effects affect squid and fish.
+
+=== Starvation ===
+When the [[hunger]] bar becomes empty ({{Hungerbar|0|9px|notag=1|total=20}}), the player takes {{hp|1}} damage every four seconds that is irrespective of [[armor]], the [[Protection]] enchantment, and [[Resistance]]. In order to stop taking starvation damage, the player needs to eat [[food]] or drop to certain health thresholds; {{hp|10}} on Easy difficulty or {{hp|1}} on Normal difficulty. In Hard difficulty and [[Hardcore]] mode, the player always takes starvation damage regardless of health and the damage can kill the player.
+
+The hunger system does not apply to [[mobs]] and, so they do not normally take starvation damage. However, the {{cmd|damage}} command can still cause starvation damage to mobs, and [[vex|vexes]] take starvation damage 30 to 119 seconds after having been summoned by an [[evoker]].{{only|java}}
+
+=== Environmental ===
+==== Cactus ====
+Players and mobs take {{hp|1}} damage every half-second when they are touching or within the same tile-space as a [[cactus]].
+
+==== Berry bush ====
+[[Sweet berry bush]]es deals {{hp|1}} damage for every half-second when a player or mob is moving inside a sweet berry bush.
+
+Monsters that are immune to berry bush damage:
+* {{EntityLink|Ender Dragon}}
+
+Friendly mobs that are immune to berry bush damage:
+* {{EntityLink|Agent}}
+* {{EntityLink|Fox}}
+* {{EntityLink|NPC}}
+
+=== Fire-related damage ===
+==== Fire ====
+{{redirect|fire_damage|the game rule|Game rule#fire_damage}}
+When mobs and players without [[fire]] immunity stand on fire, they take {{hp|1}} damage every half-second and get burned. Standing in [[soul fire]] does {{hp|2}} damage every half-second instead. They continue burning after leaving the fire block. Fire damage can be prevented by the [[Fire Resistance]] effect. Fire duration can be decreased with the [[Fire Protection]] enchantment. Most Nether mobs are immune to fire, but they can still drown in lava.
+
+Players do not take damage from fire if the [[game rule]] {{cd|fireDamage}} is set to {{cd|false}}.
+
+Monsters that are immune to fire damage:
+
+* {{EntityLink|Blaze}}
+* {{EntityLink|Creaking}} summoned by [[creaking heart]].
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Ghast}}
+* {{EntityLink|Magma Cube}}
+* {{EntityLink|Shulker}}
+* {{EntityLink|Vex}}
+* {{EntityLink|Warden}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Zoglin}}
+* {{EntityLink|Zombified Piglin}}
+
+Friendly mobs that are immune to fire damage:
+* {{EntityLink|Agent}}
+* {{EntityLink|NPC}}
+* {{EntityLink|Strider}}
+
+==== Lava ====
+[[Lava]] is a dangerous natural occurrence. Players and mobs (except some Nether mobs) get burned and take damage from contact with lava at a rate of {{hp|4}} every half-second, and they continue burning after they leave it. [[Fire Resistance]] nullifies both the direct damage from lava and the burning damage.
+
+Players do not take damage from lava if the [[game rule]] {{cd|fireDamage}} is set to {{cd|false}}.
+
+==== Burning ====
+[[Player]]s and many [[mob]]s burn when exposed to fire or lava or attacked by certain kinds of burning projectiles, [[Fire Aspect]] weapons, or burning [[zombie]]s. In addition, armor itself does not reduce burning damage; to do so, armor needs either the [[Fire Protection]] enchantment, [[Protection]] enchantment, or the [[Resistance]] [[status effect]]. Burning obstructs the player's view slightly and, unless the player or mob has Fire Resistance, inflicts damage at a rate of {{hp|1}} per second. This is the same rate that the player gains health in Peaceful [[difficulty]], so burning alone cannot kill the player in this mode. Burning lasts some amount of time depending on its cause, but it is extinguished by [[rain]], [[water]], or [[cauldron]]s.
+
+Players do not take damage from burning if the [[game rule]] {{cd|fireDamage}} is set to {{cd|false}}.
+
+Except for piglins, hoglins, skeletons, and endermen, mobs that spawn in the [[Nether]] do not burn and cannot be damaged by fire. [[Warden]]s also does not burn. Burning is not considered a [[status effect]] and therefore cannot be cured by [[milk]].
+
+==== Magma block ====
+Mobs without [[fire]] immunity and players take {{hp|1}} damage every half-second if they are walking on [[magma block]]s. This can be avoided by having the [[Fire Resistance]] effect, [[sneaking]], or wearing [[Frost Walker]]-enchanted [[boots]].
+
+Players do not take damage from magma blocks if the [[game rule]] {{cd|fireDamage}} is set to {{cd|false}}.
+
+==== Campfire ====
+Players or mobs standing on top of a [[campfire]] take {{hp|1}} damage every half second. Standing in a [[Soul Campfire]] does {{hp|2}} damage every half second instead. Unlike any other damage sources, armor itself does not reduce campfire and soul campfire damage; to do so, armor needs either the [[Fire Protection]] enchantment, [[Protection]] enchantment, or the [[Resistance]] status effect. {{IN|be}}, it also inflicts damage for {{convert|160|game tick|second}} after the player exits the block.
+
+Players do not take damage from campfires if the [[game rule]] {{cd|fireDamage}} is set to {{cd|false}}.
+
+=== Status effects ===
+{{main|Status effect}}
+Status effects are either helpful or harmful conditions that can be given to players and mobs alike. They can be given in different ways: being in range of thrown splash potions or lingering potions, being afflicted by certain mobs' attacks, simply being near certain mobs, being near [[conduit]]s and beacons, and eating specific types of food (such as [[rotten flesh]] or [[raw chicken]]). Status effects can last for a certain amount of time or can happen instantaneously.
+
+Entities under a status effect emit colored particles, with the color of the particles resembling the type of status effect. Having multiple status effects combines the respective colors.
+
+==== Instant damage ====
+{{Main|Instant Damage}}
+Instant Damage caused by [[potion]]s or [[tipped arrow]]s can damage the player {{Hp|6}} at level I and {{Hp|12}} at level II. This damage occurs instantaneously. [[Undead]] mobs are instead healed, but are similarly damaged by the Healing effect. Zombified piglins that are splashed by an Instant Damage potion do not attack the player who threw it, as it heals them.
+
+==== Poison ====
+{{Main|Poison}}
+
+[[Cave spider]]s, [[witch]]es and [[bee]]s can poison other mobs and players when they attack (if the game is not on [[Easy]] difficulty). Some mobs, like the [[wither]] and [[bogged]] are resistant to the Poison effect and can not be poisoned. Pufferfish inflict Poison as a defense against players and some mobs if they are nearby. A player can poison themself by eating a [[spider eye]], [[poisonous potato]], [[pufferfish]], or a [[suspicious stew]] made out of lily of the valley. Drinking or being hit by a [[potion]] or arrow of poison also results in poisoning. While poisoned, the hearts in the health meter turn from {{Hp|20|notag=1}} ({{Hp|20|hardcore=1|notag=1}} on Hardcore) to an olive green ({{hp|20|poisoned=1|notag=1}})({{Hp|20|poisoned=1|notag=1|hardcore=1}} on Hardcore) and the player takes {{hp|1|poisoned=1}} every 25 ticks (1.25 seconds) on level I. See [[Poison]] for a table for higher levels. The Poison itself cannot kill the player, but it can reduce them to half a heart ({{Hp|1|notag=1|total=20|poisoned=1}}), thus leaving them vulnerable to damage from other sources.
+
+Monsters that are immune to poison:
+* {{EntityLink|Bogged}}
+* {{EntityLink|Camel Husk}}
+* {{EntityLink|Cave Spider}}
+* {{EntityLink|Drowned}}
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Husk}}
+* {{EntityLink|Parched}}
+* {{EntityLink|Phantom}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Skeleton Horse}}
+* {{EntityLink|Spider}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+* {{EntityLink|Zoglin}}
+* {{EntityLink|Zombie}}
+* {{EntityLink|Zombie Horse}}
+* {{EntityLink|Zombie Nautilus}}
+* {{EntityLink|Zombie Villager}}
+* {{EntityLink|Zombified Piglin}}
+
+Friendly mobs that are immune to poison:
+* {{EntityLink|Agent}}
+* {{EntityLink|NPC}}
+
+==== Wither ====
+{{Main|Wither (status effect)}}
+
+[[Wither]]s and [[wither skeleton]]s inflict the Wither effect with their attacks (the wither skulls do not inflict the effect on easy difficulty). This darkens the health bar to {{hp|20|withered=1|notag=1}} on [[Survival]] and {{Hp|20|withered=1|notag=1|hardcore=1}} on [[Hardcore]], while inflicting damage over time. The effect deals {{hp|1|withered=1}} every 2 seconds (40 ticks) for the wither skeleton's attack (level I), and every second for the wither's skulls (level II). [[Wither rose]]s also inflict the Wither effect to any mobs colliding it. Players also get the Wither effect after eating [[suspicious stew]] made out of wither rose or when hit by potion or an arrow of decay.{{only|bedrock|education}} Unlike Poison, withering can kill on any difficulty level, and the darkened health bar makes it harder to keep track of the damage, which the only way is seeing the white spark on the left of the heart.
+
+Monsters that are immune to wither effect:
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Wither}}
+* {{EntityLink|Wither Skeleton}}
+
+Friendly mobs that are immune to wither effect:
+* {{EntityLink|Agent}}
+* {{EntityLink|NPC}}
+
+=== Magic damage ===
+Magic damage bypasses [[armor]], but can be reduced by the [[Protection]] enchantment and the [[Resistance]] effect. It is dealt by multiple sources:
+
+* {{EffectLink|Instant Damage}} and {{EffectLink|Poison}}
+** {{EffectLink|Instant Health}} on undead mobs
+* {{EntityLink|Ender Dragon}} breath attack <!-- technically applies the instant damage effect -->
+* {{EntityLink|Evoker Fang}}
+* {{EntityLink|Guardian}} and {{EntityLink|Elder Guardian}} beam (only {{health|1}} part is magic)
+* {{BlockLink|Conduit}} attack, which damages all [[monster]]s
+
+Monsters that are immune to magic damage:
+* {{EntityLink|Bogged}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Camel Husk}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Cave Spider}} from {{EffectLink|Poison}}
+* {{EntityLink|Drowned}} from {{EffectLink|Poison}} and attacks from {{EntityLink|Guardian|text=guardians}} and {{EntityLink|Elder Guardian|text=elder guardians}}.
+* {{EntityLink|Ender Dragon}} from all [[effect]]s.
+* {{EntityLink|Enderman}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}} shotted  by their [[arrow]] .
+* {{EntityLink|Evoker}} from his own fangs.
+* {{EntityLink|Husk}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Illusioner}} from [[evoker]] fangs.
+* {{EntityLink|Parched}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Phantom}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Pillager}} from [[evoker]] fangs.
+* {{EntityLink|Skeleton}}  from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Skeleton Horse}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Spider}} from {{EffectLink|Poison}}.
+* {{EntityLink|Stray}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Vindicator}} from [[evoker]] fangs.
+* {{EntityLink|Wither}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Wither Skeleton}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zoglin}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zombie}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zombie Horse}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zombie Nautilus}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zombie Villager}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+* {{EntityLink|Zombified Piglin}} from {{EffectLink|Poison}} and {{EffectLink|Instant Damage}}.
+
+Friendly mobs that are immune to magic damage:
+* {{EntityLink|Agent}}
+* {{EntityLink|NPC}}
+
+There is no mob that is immune to [[conduit]] damage.
+
+=== Void ===
+{{main|Void}}
+If the player breaks through the [[bedrock]] barrier found at the bottom of worlds, the void can be seen. Players and mobs in the void below the Y-axis of -64{{only|bedrock}} or -128{{only|java}} take damage at a rate of about {{hp|4}} per half-second. The player usually dies from falling in the void, even in [[Creative]] or [[Spectator]] modes{{Only|java}}, but the player may be saved by throwing an [[ender pearl]] before falling below the Y-axis of -64{{only|bedrock}} or -128{{only|java}}.
+
+Falling into the void in [[the End]] is more likely, and is the only way to access the void in [[Survival]] mode without exploiting glitches.
+
+By using {{cmd|effect}} to give the player [[Regeneration]] 6 and higher or [[Instant Health]], they can fall infinitely into the void without dying until the effect stops.
+
+{{IN|bedrock}}, the player can survive in the void in [[Creative]] mode, but there is a one-way barrier at Y=-104 to prevent falling further into the void. However, this barrier can be teleported past by teleporting the player to any location with a Y value of -106 and below. The player continues falling until the player teleports away, flies back up, or crashes the game.
+
+=== Explosions ===
+{{main|Explosion}}
+
+Explosions cause varying amounts of damage based on the explosion strength, the entity's proximity to the explosion, and whether it is obstructed by [[solid block]]s.
+
+=== Firework rocket explosion ===
+[[File:Firework_Star_Damages.png|350px|thumb|right]]
+[[Firework rocket]] explosions can deal damage to entities if crafted with a [[firework star]].
+
+The maximum damage about is {{hp|6}} at the explosion's center with one firework star, decreasing to {{hp|1}} at the edge of a radius of 5 blocks (exclusive). Each additional firework star adds {{hp|2}} to the maximum.
+
+If a rocket crafted with a firework star is {{control|use}}d to provide a speed boost while gliding with [[elytra]], it explodes as it is used, dealing {{hp|7}} damage to the player.
+
+=== Freezing ===
+{{redirect|freeze_damage|the game rule|Game rule#freeze_damage}}
+[[File:HUD recieving the freeze damage.gif|thumb|Freezing hearts when the player is submerged in powder snow.]] 
+
+When an entity is inside a [[powder snow]] block, they begin to freeze, taking damage. 
+
+A player submerged in powder snow sees a frosty frame slowly fade in at the sides of the screen and the FOV slowly decreases. After {{Convert|7|seconds|game ticks}}, the player's hearts change to a cyan frosty texture ({{healthbar|2|9px|freezing=1}}), and the player begins taking damage at a rate of {{hp|1}} HP every two seconds (40 game ticks). If the player leaves the powder snow block, the vignette slowly fades away. A frozen player moves slower than usual until the vignette fully fades away. This is controlled by the {{Cd|TicksFrozen}} data tag, which increases by 1 every game tick (to a maximum of 300) for an entity within the powder snow block. It decreases at a rate of 2 per game tick after the entity leaves the powder snow block. This is currently not a separate effect when used with commands such as <code>/effect give freezing</code>, and does not have its own unique art, particles, or potion. 
+
+Players do not take damage from powder snow if the [[game rule]] {{cd|freezeDamage}} is set to {{cd|false}}.
+
+Mobs and players that are freezing have a shivering animation.
+
+Wearing any piece of [[leather armor]] stops the freezing effect and damage. This applies to entities that can wear armor, such as [[zombie]]s. [[Horse]]s wearing leather [[horse armor]] also don’t take damage from freezing. 
+
+Monsters that are immune to freezing from powder snow:
+* {{EntityLink|Creaking}} summoned by [[creaking heart]].
+* {{EntityLink|Ender Dragon}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Stray}}
+* {{EntityLink|Wither}}
+
+Friendly mobs that are immune to freezing from powder snow:
+* {{EntityLink|Agent}}
+* {{EntityLink|NPC}}
+* {{EntityLink|Polar Bear}}
+* {{EntityLink|Snow Golem}}
+
+Mobs that can walk in powder snow:
+
+Monsters that can walk in powder snow:
+* {{EntityLink|Endermite}}
+* {{EntityLink|Silverfish}}
+
+Friendly mobs that can walk in powder snow:
+* {{EntityLink|Fox}}
+* {{EntityLink|Rabbit}}
+
+Mobs that take extra damage from powder snow:
+
+Monsters that take extra damage from powder snow:
+* {{EntityLink|Blaze}}
+* {{EntityLink|Magma Cube}}
+
+Friendly mobs that take extra damage from powder snow:
+* {{EntityLink|Strider}}
+
+== Sounds ==
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Player hurt1.ogg
+|sound2=Player hurt2.ogg
+|sound3=Player hurt3.ogg
+|subtitle=Player hurts
+|source=player
+|description=When a player is damaged from a generic source
+|id=entity.player.hurt
+|translationkey=subtitles.entity.player.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Player hurt drowning1.ogg
+|sound2=Player hurt drowning2.ogg
+|sound3=Player hurt drowning3.ogg
+|sound4=Player hurt drowning4.ogg
+|subtitle=Player drowning
+|source=player
+|description=When a player is damaged by running out of breath
+|id=entity.player.hurt_drown
+|translationkey=subtitles.entity.player.hurt_drown
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Player hurt fire1.ogg
+|sound2=Player hurt fire2.ogg
+|sound3=Player hurt fire3.ogg
+|subtitle=Player burns
+|source=player
+|description=When a player is damaged by fire
+|id=entity.player.hurt_on_fire
+|translationkey=subtitles.entity.player.hurt_on_fire
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Player hurt freeze1.ogg
+|sound2=Player hurt freeze2.ogg
+|sound3=Player hurt freeze3.ogg
+|sound4=Player hurt freeze4.ogg
+|sound5=Player hurt freeze5.ogg
+|subtitle=Player freezes
+|source=block
+|description=When a player is damaged by freezing in [[powder snow]]
+|id=entity.player.hurt_freeze
+|translationkey=subtitles.entity.player.freeze_hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Player hurt sweet berry bush1.ogg
+|sound2=Player hurt sweet berry bush2.ogg
+|subtitle=Player hurts
+|source=player
+|description=When a player is damaged by touching a [[sweet berry bush]]
+|id=entity.player.hurt_sweet_berry_bush
+|translationkey=subtitles.entity.player.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Fall damage small.ogg
+|subtitle=Something trips
+|source=player
+|description=When a player falls from 4 to 7 blocks high in [[Survival]] or [[Adventure]] mode
+|id=entity.player.small_fall
+|translationkey=subtitles.entity.generic.small_fall
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Fall damage big.ogg
+|subtitle=Something fell
+|source=player
+|description=When a player falls from 8 or more blocks high in Survival or Adventure mode
+|id=entity.player.big_fall
+|translationkey=subtitles.entity.generic.big_fall
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Player hurt1.ogg
+|sound2=Player hurt2.ogg
+|sound3=Player hurt3.ogg
+|source=player
+|description=When a player is damaged from a generic source
+|id=game.player.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Player hurt drowning1.ogg
+|sound2=Player hurt drowning2.ogg
+|sound3=Player hurt drowning3.ogg
+|sound4=Player hurt drowning4.ogg
+|source=player
+|description=When a player is damaged by running out of breath
+|id=mob.player.hurt_drown
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Player hurt fire1.ogg
+|sound2=Player hurt fire2.ogg
+|sound3=Player hurt fire3.ogg
+|source=player
+|description=When a player is damaged by fire
+|id=mob.player.hurt_on_fire
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Player hurt freeze1.ogg
+|sound2=Player hurt freeze2.ogg
+|sound3=Player hurt freeze3.ogg
+|sound4=Player hurt freeze4.ogg
+|sound5=Player hurt freeze5.ogg
+|source=player
+|description=When a player is damaged by freezing in [[powder snow]]
+|id=mob.player.hurt_freeze
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fall damage small.ogg
+|source=player
+|description=When a player falls from 4 to 7 blocks high in [[Survival]] or [[Adventure]] mode
+|id=damage.fallsmall
+|volume=0.75
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fall damage big.ogg
+|source=player
+|description=When a player falls from 8 or more blocks high in Survival or Adventure mode
+|id=damage.fallbig
+|volume=0.75
+| pitch = 1.0
+}}
+}}
+
+== Achievements ==
+{{load achievements|Monster Hunter;Overkill;Sniper Duel;Archer;Camouflage;The Beginning.;Over-overkill}}
+
+== Advancements ==
+{{load advancements|Adventure;Monster Hunter;Take Aim;Sniper Duel;Spooky Scary Skeleton;Withering Heights;Return To Sender;Uneasy Alliance;Monsters Hunted;The Healing Power of Friendship;Free the End;The End... Again...;Voluntary Exile;Hero of the Village;A Throwaway Joke;It Spreads;Postmortal;Glow and Behold!;Over-Overkill}}
+{{load advancements|Ol' Betsy;Two Birds, One Arrow;Arbalistic;Who's the Pillager Now?}}<small>(only applicable if shooting the specified [[entity]](ies) with a {{ItemLink|crossbow}}).</small>
+
+== History ==
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 20, 2009|link=https://web.archive.org/web/20110302004111/http://notch.tumblr.com/post/110459630/health-and-food|Notch mentions plans to add damage, which could be taken by falling, lava, combat and drowning, and be healed by eating food.}}
+|{{HistoryLine||August 18, 2009|link=https://web.archive.org/web/20140427004052/http://notch.tumblr.com/post/165713706/each-player-has-10-hearts-of-health-you-can-lose|First showcased fall damage.}}
+|{{HistoryLine||August 25, 2009|link=https://web.archive.org/web/20090828041746/https://notch.tumblr.com/post/170887079/survival-mode-status-update-video-with-plenty-of|It has been shown that the [[player]] can now hold their breath underwater for just 15 seconds.
+|Lava now has been shown to cause damage.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Added damage.
+|Mobs and the player now take [[Knockback (mechanic)|knockback]] when damage is taken.
+|Added arrows that cause damage when hitting a player.
+|Taking damage would indicate the amount of health lost with pale red hearts flashing briefly in place of the hearts lost on the HUD. The camera would also tilt toward the damage source, acting as a directional damage indicator. Environmental damage sources, such as falling damage, would randomly tilt the screen either left or right.}}
+|{{HistoryLine||0.25 SURVIVAL TEST|Arrows deal more damage.}}
+|{{HistoryLine||0.30|"Missing a hit" (hitting the air) triggers a 10 tick cooldown. During this cooldown, no attack is possible.{{check version|Was this a 0.30 survival change ? It isn't in 0.30 creative.}}}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100125|Drowning damage has been reduced to 1 per second. Prior to this update, drowning damage dealt by 2 per second.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100617-1531|Added suffocation.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.4|Players no longer suffocate when riding in a [[minecart]] in two-block-high spaces.}}
+|{{HistoryLine||v1.2.3|Damage now functions in [[multiplayer]].
+|The directional damage tilt animation does not work properly in multiplayer, instead always tilting the camera left.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|All attacks from players now deal {{hp|1}} more damage than intended unless the player is currently moving upwards in singleplayer. This happens due to newly added code that attempts to increase the damage dealt by {{hp|1}} if the player is falling, similarly to the later added critical hit mechanic. However, a [[w:Floating-point arithmetic#Accuracy problems|floating-point precision error]] causes players with a vertical velocity of ''zero'' to be considered "falling" by this code, which is the case when standing on solid ground and at all times in multiplayer.}}
+|{{HistoryLine||1.6|The 10 tick cooldown when hitting the air was removed.}}
+|{{HistoryLine||1.8|dev=Pre-release|Player attacks no longer deal {{hp|1}} more damage than intended.
+|Extended the combat system with critical hits and sword blocking.
+|Poison added, which deals damage, until the player or mob's health is {{hp|1|poisoned=1}}.
+|The player can no longer attack repeatedly by holding down the {{control|attack}} button.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Armor no longer prevents certain types of damage.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|The animation showing the amount of health lost with pale red hearts no longer functions in multiplayer.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Sword damage was decreased (a diamond sword went from 5 hearts to 3.5 hearts damage).}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Enchantments added, some of which increase [[damage]] the [[player]] deals or decrease damage dealt to the player.}}
+|{{HistoryLine|||dev=RC1|The sound of the player taking damage was changed from a masculine oof to painful crunching sound. These were changed to remove the restriction that all avatars have a male voice, regardless of the gender of the character depicted in the skin.}}
+|{{HistoryLine||1.3.1|dev=12w18a|As a result of [[singleplayer]] being changed to an internal server, taking damage no longer shows the amount of health lost with pale red hearts, and always tilts the camera left instead of toward the damage source.}}
+|{{HistoryLine|||dev=12w30a|Explosions damage the player different amounts in different difficulties, and the player doesn't take any damage from explosions on Peaceful.}}
+|{{HistoryLine|||dev=1.3|Added spawn immunity that lasts for 3 seconds when a player respawns either from death or rejoining.}}
+|{{HistoryLine||1.3.2|dev=release|Mobs no longer shove the player when moving into them.{{check version|1.3.2 page says nothing of this}}}}
+|{{HistoryLine||1.4.2|dev=12w32a|Mobs can hold weapons, making them deal more damage. Also, the crunching noise from 1.0.0 was changed, sounding more like a slap rather than a bone-breaking punch. The fall damage noise was also changed from a crunch to a dull, thumping noise.}}
+|{{HistoryLine|||dev=12w34a|Wither effect added, which deals damage. Unlike Poison, withering can kill players or other mobs.}}
+|{{HistoryLine|||dev=12w38a|Player hurting sound was changed again.}}
+|{{HistoryLine|||dev=12w41a|Added [[anvil]]s, which deal damage to entities when they land on them.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Water of any depth now completely negates all fall damage from any height.}}
+|{{HistoryLine||?|Critical hits no longer add a random bonus scale (+0% ~ +100% weapon damage + {{hp|2}}) but instead add +50% of the weapon damage. Enchantments no longer add a random number too; instead they add a flat number per level ({{hp|1.25}} for sharpness and {{hp|2.5}} for other damage bonus enchantments).{{check version|Was this a 1.6 or 1.7 change?}}}}
+|{{HistoryLine||1.6.2|dev=release|Instead of replacing the barehanded damage ({{hp|1}}), swords, shovels, pickaxes and axes now add their damage onto the barehanded damage, which results in all tools doing {{hp|1}} more damage than before.{{check version|Was this a 1.6.2 change?}}}}
+|{{HistoryLine||1.8|dev=14w05a|Armor no longer flashes red when damage is taken, only the player.}}
+|{{HistoryLine|||dev=14w32a|The health bar once again shows the amount of health lost with pale red hearts when taking damage. Compared to before 12w18a, the animation has been enhanced to stack health that is lost repeatedly in a short period of time.}}
+|{{HistoryLine||1.9|dev=15w34a|Added attack cooldown.}}
+|{{HistoryLine|||dev=15w34b|Added attack speed stat and attribute.|The attack cooldown stopped working due to a bug{{cn}} (visual still works)|Changed how damage on weapons show up: instead of "+[damage]"
+it is now the total damage it deals.}}
+|{{HistoryLine|||dev=15w34c|Tool damages and cooldowns adjusted.
+{{pipe escape|{| class{{=}}"collapsible collapsed" data-description{{=}}"Previous values" data-description="Previous damage values"
+! Previous values
+|-
+|
+{| class{{=}}"wikitable" style{{=}}"text-align:center" data-description{{=}}"Values"
+! Item
+! colspan{{=}}"4" | Damage
+|-
+| [[Sword]]s
+| {{ItemSprite|Wooden Sword}}{{ItemSprite|Golden Sword}} {{hp|5}}
+| {{ItemSprite|Stone Sword}} {{hp|6}}
+| {{ItemSprite|Iron Sword}} {{hp|7}}
+| {{ItemSprite|Diamond Sword}} {{hp|8}}
+|-
+| [[Axe]]s <ref group="note" name="durability">Dealing damage with an axe, pick, or shovel decreases its durability by 2.</ref>
+| {{ItemSprite|Wooden Axe}}{{ItemSprite|Golden Axe}} {{hp|4}}
+| {{ItemSprite|Stone Axe}} {{hp|5}}
+| {{ItemSprite|Iron Axe}} {{hp|6|}}
+| {{ItemSprite|Diamond Axe}} {{hp|7}}
+|-
+| [[Pickaxe]]s <ref group="note" name="durability" />
+| {{ItemSprite|Wooden Pickaxe}}{{ItemSprite|Golden Pickaxe}} {{hp|3}}
+| {{ItemSprite|Stone Pickaxe}} {{hp|4}}
+| {{ItemSprite|Iron Pickaxe}} {{hp|5}}
+| {{ItemSprite|Diamond Pickaxe}} {{hp|6}}
+|-
+| [[Shovel]]s <ref group="note" name="durability" />
+| {{ItemSprite|Wooden Shovel}}{{ItemSprite|Golden Shovel}} {{hp|2}}
+| {{ItemSprite|Stone Shovel}} {{hp|3}}
+| {{ItemSprite|Iron Shovel}} {{hp|4}}
+| {{ItemSprite|Diamond Shovel}} {{hp|5}}
+|}
+{{notelist}}
+|}
+}}
+}}
+|{{HistoryLine|||dev=15w35a|Tool damages and cooldowns adjusted again.}}
+|{{HistoryLine|||dev=15w47b|Added sounds for critical hits, fully-charged and not-fully-charged attacks, blocked attacks, sweep attacks, and sprint-knockback attacks.}}
+|{{HistoryLine|||dev=16w02a|Cooldown damage reduction formula adjusted, reduction is now linear 50%–100% rather than quadratic 0%–100%.}}
+|{{HistoryLine|||dev=16w05a|Cooldown damage reduction formula adjusted again, reduction is now quadratic 20%–100%.}}
+|{{HistoryLine||1.11|dev=16w38a|Added a new damage type: entity cramming.}}
+|{{HistoryLine||1.13|dev=18w07a|Added a new weapon: [[trident]]s. These can be either thrown or used in melee combat, and deal {{hp|9}} damage.}}
+|{{HistoryLine||1.14|dev=18w43a|Added a new weapon: [[crossbow]].}}
+|{{HistoryLine||1.15|dev=19w36a|Added [[game rule]]s {{cd|drowningDamage}}, {{cd|fallDamage}} and {{cd|fireDamage}}, allowing these types of natural damages to be toggled.}}
+|{{HistoryLine||1.17|dev=20w46a|Added a new damage type: freezing. 
+|Entities take freezing damage when immersed in [[powder snow]].}}
+|{{HistoryLine|||dev=20w48a|Wearing any piece of leather armor now stops the freezing effect.
+|Added the [[game rule]] <code>freezeDamage</code>, which stops entities from taking freezing damage if it is set to {{cd|false}}.
+|Added [[pointed dripstone]], which deals damage when it lands on entities, and doubles the fall damage for entities that fall on them.}}
+|{{HistoryLine|||dev=21w10a|Freezing in powder snow while using the "Fast" graphics setting gradually turns the player's view to black, and the vignette also appears as black in third-person view.}}
+|{{HistoryLine|||dev=21w11a|Frozen hearts now have a different texture in [[Hardcore]] mode.}}
+|{{HistoryLine|||dev=21w13a|[[Blaze]]s, [[magma cube]]s and [[strider]]s now take extra damage from freezing.
+|[[Stray]]s, [[polar bear]]s and [[snow golem]]s are now immune to freezing.
+|Leather [[horse armor]] now grants horses immunity to freezing.
+|Mobs now shake when they are fully frozen.
+|Freeze time decreased to 7 seconds (140 game ticks) and hurt frequency to 2 seconds (40 game ticks).}}
+|{{HistoryLine||1.19.4|dev=23w03a|Taking damage once again causes the camera to tilt toward the damage source. However, the random left/right tilt when taking environmental damage is still broken, now "remembering" the last direction the player was hit from, or always tilting left if they have not been hit since loading the world.}}
+|{{HistoryLine||1.20.5|dev=24w11a|experiment=Update 1.21|Added a new weapon: the [[mace]], which does the same damage as a diamond sword, but it accumulates more damage the higher you land the hit from.}}
+|{{HistoryLine||1.21|dev=24w18a|Decreased the attack damage of maces to 6.
+|Decreased the attack speed of maces to 0.5.}}
+|{{HistoryLine|||dev=pre1|Increased the attack speed of maces to 0.6.}}
+|{{HistoryLine||1.21.2|dev=pre1|Added an empty state for air bubbles ([[File:Empty Bubble (icon).png|16px]]) along with a wobble when the player is drowning.|
+Added a popping sound when bubbles pop on the oxygen bar.}}
+|{{HistoryLine||1.21.4|dev=24w45a|Player is no longer immune to damage for a few seconds after rejoining a server/world.<ref>{{bug|MC-21650}}</ref>}}
+|{{HistoryLine|combat java}}
+|{{HistoryLine||1.14.3|Attacks can no longer be landed when a weapon is not fully charged.
+|The attack timer can now be charged up to 200%, which is now required for critical hits.
+|Weapons with higher attack speed now give the victim a shorter invincibility frames.
+|Holding down the {{ctrl|attack}} key now automatically deals damage once the weapon is fully charged.
+|It is now possible to deal damage through non-full-sized blocks.
+|Critical hits now bypass [[shield]]s.
+|Shields no longer need a warm-up time to protect against damage.
+|Sneaking can now activate a shield if it's in the off hand, allowing it to protect against damage.
+|Adjusted the attack damage and speed of all tools as the following:
+{{pipe escape|{| class{{=}}"wikitable"
+!rowspan{{=}}2 | Tool
+!colspan{{=}}2 | Axe
+!colspan{{=}}2 | Hoe
+!colspan{{=}}2 | Pickaxe
+!colspan{{=}}2 | Shovel
+!colspan{{=}}2 | Sword
+|-
+!Damage
+!Speed
+!Damage
+!Speed
+!Damage
+!Speed
+!Damage
+!Speed
+!Damage
+!Speed
+|-
+!Wood
+|{{hp|6}}
+|2
+|{{hp|2}}
+|2
+|{{hp|3}}
+|2.5
+|{{hp|2}}
+|2
+|{{hp|5}}
+|3
+|-
+!Gold
+|{{hp|6}}
+|2
+|{{hp|2}}
+|3.5
+|{{hp|3}}
+|2.5
+|{{hp|2}}
+|2
+|{{hp|5}}
+|3
+|-
+!Stone
+|{{hp|7}}
+|2
+|{{hp|2}}
+|2.5
+|{{hp|4}}
+|2.5
+|{{hp|3}}
+|2
+|{{hp|6}}
+|3
+|-
+!Iron
+|{{hp|8}}
+|2
+|{{hp|3}}
+|3
+|{{hp|5}}
+|2.5
+|{{hp|4}}
+|2
+|{{hp|7}}
+|3
+|-
+!Diamond
+|{{hp|9}}
+|2
+|{{hp|3}}
+|3.5
+|{{hp|6}}
+|2.5
+|{{hp|5}}
+|2
+|{{hp|8}}
+|3
+|}}}
+|Increased the attack speed of tridents to 2.
+|Decreased the attack damage of tridents to {{hp|7}}.}}
+|{{HistoryLine||2|Shields can protect against critical hits again.
+|Holding down the {{ctrl|attack}} key no longer automatically attacks.
+|The attack speed of swords has been decreased to 2.5.
+|The attack damage of tridents has been increased to {{hp|8}}.
+|Shields can now protect only against damage when the attack timer is charged to 200%.}}
+|{{HistoryLine||3|Added the [[Cleaving|Chopping]] enchantment, which makes axes deal {{hp|1}} more damage and disable shields for {{convert|0.5|sec|gt}} per level.
+|Holding down the {{ctrl|attack}} key automatically attacks again.
+|The attack speed of swords is increased back to 3.0.
+|Axes now always disable shields for {{convert|1.6|sec|gt}}.
+|Axes now use only 1 durability when attacking.
+|Swords now have an attack speed of 3.0 again.
+|Holding down the {{ctrl|attack}} key automatically attacks again, but now does so when the weapon is charged to 120%, which is slower than attacking normally.
+|Projectiles no longer trigger [[#Immunity|i-frames]].
+|Shields now protect damage within a 100° arc instead of 180°.}}
+|{{HistoryLine||4|The ability to activate a shield when sneaking can now be disabled in the settings.
+|Tridents with [[Impaling]] now deal extra damage to all mobs touching water.}}
+|{{HistoryLine||5|Projectiles that deal less than {{hp|1}} point of damage now deal knockback. This includes projectiles that deal no damage, such as [[snowball]]s.
+|Players can now deal damage to mobs slightly outside their hitbox if the mob's normal hitbox is smaller than 0.9 blocks. This happens only if the player has aimed at the mob's hitbox within a fraction of a second{{testing needed|What fraction of a second?}}.
+|The damage of tools has been adjusted.
+{{pipe escape|{|class{{=}}"wikitable" style{{=}}"margin-left:2em;"
+! rowspan{{=}}2 | Tool
+! colspan{{=}}2 | Axe
+! colspan{{=}}2 | Pickaxe
+! colspan{{=}}2 | Shovel
+! colspan{{=}}2 | Sword
+|-
+! Before !! After
+! Before !! After
+! Before !! After
+! Before !! After
+|-
+! Wood
+| {{hp|6}} || {{hp|5}}
+| {{hp|3}} || {{hp|3}}
+| {{hp|2}} || {{hp|2}}
+| {{hp|5}} || {{hp|4}}
+|-
+! Gold
+| {{hp|6}} || {{hp|5}}
+| {{hp|3}} || {{hp|3}}
+| {{hp|2}} || {{hp|2}}
+| {{hp|5}} || {{hp|4}}
+|-
+! Stone
+| {{hp|7}} || {{hp|5}}
+| {{hp|4}} || {{hp|3}}
+| {{hp|3}} || {{hp|2}}
+| {{hp|6}} || {{hp|4}}
+|-
+! Iron
+| {{hp|8}} || {{hp|6}}
+| {{hp|5}} || {{hp|4}}
+| {{hp|4}} || {{hp|3}}
+| {{hp|7}} || {{hp|5}}
+|-
+! Diamond
+| {{hp|9}} || {{hp|7}}
+| {{hp|6}} || {{hp|5}}
+| {{hp|5}} || {{hp|4}}
+| {{hp|8}} || {{hp|6}}
+|}
+}}
+|Tridents now deal {{hp|7}} damage, was {{hp|8}}.
+|Barehand damage is increased to {{hp|2}}.}}
+|{{HistoryLine||6|The change about entities with small hitboxes in the previous version has been reverted. Instead, entities with hitboxes smaller than 0.9 blocks now have the hitbox inflated to that value. This means that the player can hit the mob even if they aren't aiming at the hitbox, as long as they are aiming within the 0.9 block range.
+|Missed attacks now trigger a {{convert|4|tick|second}} cooldown instead of the full attack speed cooldown.
+|Damage caused by the [[Sweeping Edge]] enchantment is now nerfed. Level I now deals 25% of the weapon's damage, level II now does 33%, and level III now does 37.5%.
+|[[Shields]] now protect only up to {{hp|5}}.
+|Removed 200%-charged attacks, so shield work like they did before the change in Combat Test 2 again.
+|The Chopping enchantment has been renamed to [[Cleaving]].}}
+|{{HistoryLine||7c|Shields now protect 100% of explosion damage.
+|Readded 200%-charged attacks and the mechan with shields.
+|Netherite tools and weapons now have the updated stats from the previous versions, now being one attack damage above diamond.}}
+|{{HistoryLine||8b|Cleaving now adds {{hp|1}} more extra damage in every level as compared to before (i.e. Cleaving used to add 1 damage per level, but now it adds 2 damage for level I, 3 damage for level II, and so on).}}
+|{{HistoryLine||8c|Shields with [[banner]]s can now protect up to {{hp|10}} damage, which is double the amount of regular shields.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|Added [[Survival]] mode and [[mob]]s, making damage possible.
+|In singleplayer and for the host in multiplayer, taking damage tilts the camera toward the damage source. Joining players' cameras only tilt left, however.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Poison added, which deals damage, until the player or mob's health is {{hp|1|poisoned=1}}.}} 
+|{{HistoryLine||v0.12.1|dev=build 1|Added critical hits.
+|Punch damage is now added to damage from [[sword]]s, [[axe]]s, [[pickaxe]]s, and [[shovel]]s.
+|Hunger system added: Health is no longer restored directly by eating. Instead, it recovers slowly when well-fed, but is lost if starving.
+|Wither effect added, which deals damage. Unlike Poison, withering can kill players or other mobs.
+|Mobs can hold weapons, making them deal more damage.
+|Enchantments added, some of which increase the damage the [[player]] deals or decrease damage dealt to the player.}}
+|{{HistoryLine|||dev=build 10|The sound of the player taking damage was changed from a masculine oof to a painful crunching sound. These were changed to remove the restriction that all avatars have a male voice, regardless of the gender of the character depicted in the skin.}} 
+|{{HistoryLine|||dev=build 12|Critical hits now have more particles.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=?|Taking damage no longer causes the camera to tilt toward the damage source, instead always tilting left.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|Added a new weapon: [[trident]]s. These can be either thrown or used in melee combat, and deal {{hp|9}} damage.}} 
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.10|Added a new weapon: [[crossbow]].}}
+|{{HistoryLine||1.16.210|dev=beta 1.16.210.53|Added new damage type: freezing.
+|Entities in powder snow now begin freezing and eventually die.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|[[Blaze]]s, [[magma cube]]s and [[stray]]s now take extra damage from freezing.
+|[[Stray]]s, [[polar bear]]s and [[snow golem]]s are now immune to freezing.
+|Leather [[horse armor]] now grants horses immunity to freezing.
+|Mobs now shake when they are fully frozen.
+|Freeze time decreased to 7 seconds (140 game ticks) and hurt frequency to 2 seconds (40 game ticks).}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.30.20|Unarmed damage was decreased from {{Hp|2}} to {{Hp|1}} to match Java Edition.}}
+|{{HistoryLine||1.20.80|dev=beta 1.20.80.22|experiment=Update 1.21|Added a new weapon: the [[mace]].}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.24|Added an empty state for air bubbles ([[File:Empty Bubble (icon).png|16px]]) along with a wobble when the player is drowning.|Added a popping sound when bubbles pop on the oxygen bar.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added damage.
+|Taking damage would indicate the amount of health lost with pale red hearts flashing briefly in place of the hearts lost on the HUD.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The sound of the player taking damage was changed from a masculine oof to a painful crunching sound. These were changed to remove the restriction that all avatars have a male voice, regardless of the gender of the character depicted in the skin.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The animation showing the amount of health lost with pale red hearts no longer functions. This was never fixed.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[anvil]]s, which deal damage to entities when they land on them.
+|Removed the downward knockback while drowning.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Wither effect added, which deals damage. Unlike Poison, withering can kill players or other mobs.|Water of any depth now completely negates all fall damage from any height.}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|Armor no longer flashes red when damage is taken, only the player.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added sounds for critical hits.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added a new damage type: entity cramming. The [[death message]], however, includes only the name of the entity dying.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Player hurting sound was changed again.|Added a new weapon: [[trident]]s. These can be either thrown or used in melee combat.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Added a new weapon: [[crossbow]].}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*Critical hits can be done while reflecting a [[ghast]] fireball, but does not change the damage or speed of it.
+*It is impossible to drown in Peaceful difficulty with a helmet enchanted with any level of [[Respiration]], as the regeneration on Peaceful is higher than the reduced drowning damage.
+*When the player jumps while taking damage, the damage prevents the player from jumping.
+**This also applies to mobs that deal damage that prevents jumping.
+*In [[Creative]] mode, attacking a mob while flying after having descended scores a critical hit.
+*When the player dies when attacking, its animation stops and freezes as the player died.{{only|java}}
+**This previously occurred in the [[Pocket Edition]], and [[Legacy Console Edition]] versions.
+*With all possible reductions to fall damage currently available in Survival (landing on a [[hay bale]], [[Feather Falling]] IV boots, [[Protection]] IV on other armor pieces, and [[Resistance]] IV from a Potion of the Turtle Master) the maximum height the player can fall while surviving without Absorption is 3003 blocks. However, [[Slow Falling]] completely negates fall damage.
+**With the maximum Absorption effect possible in Survival (IV from an enchanted golden apple), and all the effects listed above, the player can survive a fall of 5403 blocks.
+**Riding a horse along with being under the effects of a beacon's Jump Boost II further increases the maximum falling distance to 9005 blocks.
+*In [[Legacy Console Edition]], a player or mob taking fatal damage simply falls down instead of getting knocked back before disappearing.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox combat|general}}
+{{Navbox gameplay}}
+[[Category:UI]]
+[[Category:Needs updating]]
+
+[[de:Schaden]]
+[[es:Daño]]
+[[fr:Dégâts]]
+[[ja:ダメージ]]
+[[ko:피해]]
+[[nl:Schade]]
+[[pl:Obrażenia]]
+[[pt:Dano]]
+[[ru:Урон]]
+[[zh:伤害]]
