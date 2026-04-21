@@ -39,13 +39,24 @@ export default defineConfig({
       use: { ...devices['Pixel 7'], launchOptions: browserLaunchOptions },
     },
   ],
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:5173',
-    reuseExistingServer: !isCI,
-    timeout: 30_000,
-    env: {
-      ...noProxyEnv,
+  webServer: [
+    {
+      command: 'npm run dev',
+      url: 'http://localhost:5173',
+      reuseExistingServer: !isCI,
+      timeout: 30_000,
+      env: {
+        ...noProxyEnv,
+      },
     },
-  },
+    {
+      command: 'npm run signaling',
+      url: 'http://localhost:7777/health',
+      reuseExistingServer: !isCI,
+      timeout: 15_000,
+      env: {
+        ...noProxyEnv,
+      },
+    },
+  ],
 });
