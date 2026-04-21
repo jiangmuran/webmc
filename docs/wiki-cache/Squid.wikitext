@@ -1,0 +1,424 @@
+{{For}}
+{{More images|Add animation to the Tiny Takeover squid}}
+{{Infobox entity
+| image = Squid.gif
+| imagecaption = Adult
+| image2 = Baby Squid.png
+| image2caption = Baby
+| image2size = 40px
+| health = {{hp|10}}
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}<br>{{EntityLink|Aquatic}}
+| invimage = Squid Spawn Egg
+| size = '''{{IN|Java}}:'''<br>
+'''Adult:'''<br>Height: 0.8 blocks<br>Width: 0.8 blocks<br>
+'''Baby:'''<br>Height: 0.4 blocks<br>Width: 0.4 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+'''Adult:'''<br>Height: 0.95 blocks<br>Width: 0.95 blocks<br>
+'''Baby:'''<br>Height: 0.475 blocks<br>Width: 0.475 blocks
+| knockbackresistance = 85%
+| spawn = {{slink||Spawning}}
+| usableitems = {{drop|Item|Lead}}
+{{drop|Item|Name Tag}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+
+A '''squid''' is a common aquatic [[passive mob]] that [[Mob spawning|spawn]]s in [[river]]s and [[ocean]]s, and are the main sources of ink sacs, which they drop upon death.
+
+== Spawning ==
+{{IN|Java}}, 2 to 4 squid can spawn in [[water]] or waterlogged block from [[altitude|Y-level]] 50 to 63 (inclusive), as long as the [[biome]] is a [[river]] or [[ocean]] variant. The block above must also be water, and the block below must be water or waterlogged.<ref group="s" name="water_conditions">
+The spawning block and the block below must contain water fluid (water source, flowing water, or waterlogged blocks) while the block above must be water (source or flowing).<br 
+/>The squid itself must also pass the collision check. E.g. they can spawn in waterlogged blocks with no collisions such as kelp, sea grass, or signs, but will fail when trying to spawn in a waterlogged slab or above a waterlogged fence.
+</ref>
+Squid share the water creature [[mob cap]] with [[dolphin]]s and [[nautilus]]es.
+
+{{IN|bedrock}}, 2 to 4 squid can spawn in ocean biomes, and two can spawn in river biomes. In addition, squid spawn only on the surface, i.e. there must not be a solid or spawnable block above the spawn location.
+
+Squid have a 5% chance of spawning as babies.
+
+{{Mob spawn table}}
+<br />
+{{reflist|group="s"}}
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Ink Sac|quantity=1-3|lootingquantity=0-1}}
+}}
+* {{xp|1|3}} [[experience|experience points]] when killed by a [[player]] or tamed [[wolf]].
+
+== Behavior ==
+[[File:Particle squid ink.png|thumb|The ink cloud produced by a squid]]
+Squid are [[passive]] toward the player. They are not attracted to light and do not deliberately interact with the player. Squid sometimes beach themselves and suffocate on the banks of rivers and occasionally on ocean beaches. These behaviors are shared with the glow squid.
+
+Squid wander around aimlessly in three dimensions as long as they are in the water, opening and closing their tentacles, which gives them the appearance of pushing themselves leisurely forward.
+
+A squid's hitbox does not include its tentacles, and therefore they cannot be damaged by attacking its tentacles.
+
+Squid suffocate when out of water, dying after {{convert|15|second|game tick}}. While on land, they remain stationary until they suffocate.<ref>{{bug|MC-240990|||WAI}}</ref> They can take fall damage and [[fire|burn]] like any other land mob, but they cannot drown. When out of the water, squid are extremely resistant to [[knockback]].
+
+Squid cannot swim in lava, even if inflicted with {{EffectLink|Fire Resistance}}. They simply pass through the lava and behave as if on land.
+
+{{IN|be}}, squid can survive on land with {{EffectLink|Water Breathing}}. However, they still cannot move.
+
+Unlike land-based mobs, squid can swim against a current and not get pushed by it.{{only|je}}
+
+[[Guardian]]s and [[elder guardian]]s attack squid in the same manner as they would a player, even if the squid is affected by [[Invisibility]]. [[Axolotl]]s also attack squid.
+
+Squid are affected by the [[Impaling]] enchantment — {{IN|Java}} because they are aquatic mobs; {{IN|Bedrock}} as long as they touch water.
+
+Squid produce a cloud of black ink particles and swim away when attacked. They also produce unique dark blue bubble particles when hit. The ink remains visible when the squid has the {{EffectLink|Invisibility}} status effect.
+
+Squid sometimes accidentally beach themselves.<ref>{{bug|MC-132473||Squids and glow squids can swim one block above water}}</ref>
+
+If the player is in [[Spectator]] mode or is far away from a squid (often when it is in an unloaded [[chunk]]), it remains stationary. When attacked in this state, squid cannot flee.<ref>{{bug|MC-212687||Squid and glow squid stop moving if player is a little far from them}}</ref>
+
+Like land-based mobs, squid can be picked up by a [[minecart]].
+
+Unlike most 'animal' mobs, squid cannot [[breed]]. Baby squid can only be found when they naturally spawn. A baby squid eventually turns into an adult after 24000 ticks (20 minutes), and their growth cannot be sped up. Feeding a baby squid a golden dandelion will freeze their growth. Using it again they will then take 24000 ticks (20 minutes) to grow up.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Squid idle1.ogg
+|sound2=Squid idle2.ogg
+|sound3=Squid idle3.ogg
+|sound4=Squid idle4.ogg
+|sound5=Squid idle5.ogg
+|subtitle=Squid swims
+|source=neutral
+|description=Randomly
+|id=entity.squid.ambient
+|translationkey=subtitles.entity.squid.ambient
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Squid death1.ogg
+|sound2=Squid death2.ogg
+|sound3=Squid death3.ogg
+|subtitle=Squid dies
+|source=neutral
+|description=When a squid dies
+|id=entity.squid.death
+|translationkey=subtitles.entity.squid.death
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Squid hurt1.ogg
+|sound2=Squid hurt2.ogg
+|sound3=Squid hurt3.ogg
+|sound4=Squid hurt4.ogg
+|subtitle=Squid hurts
+|source=neutral
+|description=When a squid is damaged
+|id=entity.squid.hurt
+|translationkey=subtitles.entity.squid.hurt
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Squid shoot1.ogg
+|sound2=Squid shoot2.ogg
+|sound3=Squid shoot3.ogg
+|subtitle=Squid shoots ink
+|source=neutral
+|description=When a squid shoots ink after being damaged by a player
+|id=entity.squid.squirt
+|translationkey=subtitles.entity.squid.squirt
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Squid idle1.ogg
+|sound2=Squid idle2.ogg
+|sound3=Squid idle3.ogg
+|sound4=Squid idle4.ogg
+|sound5=Squid idle5.ogg
+|source=neutral
+|description=Randomly
+|id=mob.squid.ambient
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Squid death1.ogg
+|sound2=Squid death2.ogg
+|sound3=Squid death3.ogg
+|source=neutral
+|description=When a squid dies
+|id=mob.squid.death
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Squid hurt1.ogg
+|sound2=Squid hurt2.ogg
+|sound3=Squid hurt3.ogg
+|sound4=Squid hurt4.ogg
+|source=neutral
+|description=When a squid is damaged
+|id=mob.squid.hurt
+|volume=0.4
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Squid shoot1.ogg
+|sound2=Squid shoot2.ogg
+|sound3=Squid shoot3.ogg
+|source=neutral
+|description=When a squid shoots ink after being damaged by a player
+|id=mob.squid.ink_squirt
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Squid
+|spritetype=entity
+|nameid=squid
+|entitytags=aquatic, axolotl_hunt_targets, can_breathe_under_water, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Squid
+|spritetype=entity
+|nameid=squid
+|showentityfamily=y
+|entityfamily=aquatic,mob,squid
+|id=17
+|foot=1}}
+
+=== Entity data ===
+
+Squid have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+Bedrock Edition:
+
+: See [[Bedrock Edition level format/Entity format]].
+
+==Achievements==
+{{load achievements|It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||January 3, 2011|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/2582321901/2011-here-we-go|Notch mentions adding a new aquatic mob in a near future update.}}
+}}
+
+=== ''Java Edition'' ===
+{{more images|Initial appearence of baby squid}}
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|[[File:Squid JE1 BE1.png|32px]] Added squid.
+|The squid is the first aquatic mob added to the game.
+|Squid can be [[milk]]ed with an empty [[bucket]], just like [[cow]]s.}}
+|{{HistoryLine||1.3|Squid now have the ability to move in three dimensions (rather than only along the bottom of the body of [[water]]).
+|Squid can no longer be milked.}}
+|{{HistoryLine||1.5|Squid are now incapable of [[swimming]] upward. When they do manage to swim upward, they drift down with a zero net gain in altitude, resulting in a jittery animation.}}
+|{{HistoryLine||1.7|Squid have been made to despawn like other mobs. 
+|Until this version, squid would not despawn like other mobs. This made squid a popular pet as once harvested they could be put in aquariums and kept there. However, this has been corrected because of their downward movement (at the time) caused them to pool in relatively deep crevices in the [[ocean]] or [[lake]]s, thus making [[ink sac]]s hard to acquire as further squid would not spawn until the local population had been lowered.}}
+|{{HistoryLine||1.8|dev=Pre-release 2 ;)|Squid now drop [[experience]] orbs when killed by the [[player]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|Squid now spawn only between layers 45 and 63.}}
+|{{HistoryLine||1.4.4|dev=pre|Squid now suffocate when exposed to [[air]].}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[lead]]s, which can be used to leash squid.}}
+|{{HistoryLine||1.8|dev=14w06a|Squid have been updated with a new AI system. They previously could not [[swimming|swim]] upward, and eventually collected at the bottoms of lakes. They can now swim upward and in all directions more fluently.}}
+|{{HistoryLine||1.8.2|dev=pre7|Squid spawn below sea level, rather than a constant Y{{=}}63.}}
+|{{HistoryLine||1.9|dev=15w39a|Squid are slightly smaller (0.8 blocks square rather than 0.95).}}
+|{{HistoryLine|||dev=15w50a|Added [[sound]]s <code>entity.squid.ambient</code>, <code>entity.squid.hurt</code> and <code>entity.squid.death</code>}}
+|{{HistoryLine||1.13|dev=18w07a|Squid now produce a cloud of floating black ink [[particle]]s plus dark blue bubbling particles when attacked.}}
+|{{HistoryLine|||dev=18w08a|Added a sound effect when squid shoot ink.}}
+|{{HistoryLine|||dev=18w15a|Squid can no longer be [[lead|leashed]].}}
+|{{HistoryLine||1.13.1|dev=18w31a|Squid now spawn only in [[river]]s and [[ocean]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Squid JE2 BE2.png|32px]] The texture of squid has been changed.}}
+|{{HistoryLine||1.15|dev=19w34a|Squid now take damage on [[magma block]]s.}}
+|{{HistoryLine||1.17|dev=20w51a|Added [[axolotl]]s, which attack squid.}}
+|{{HistoryLine|||dev=21w19a|Squid can now be [[lead|leashed]] again.<ref>{{Bug|MC-136647|||Fixed}}</ref>}}
+|{{HistoryLine||1.18|dev=21w40a|Squid now spawn only between y{{=}}50 and y{{=}}64.}}
+|{{HistoryLine||1.21.2|dev=24w33a|[[File:Squid JE2 BE2.png|20px]] Added baby squid variant.}}
+|{{HistoryLine|||dev=24w36a|Squid spawn eggs now spawn only adult squid.}}
+|{{HistoryLine||26.1|dev=snap5|[[File:Baby Squid JE2 BE3.png|32px]] The model and texture of baby squid have been changed.|Increased the bounding box of baby squid to better fit the new model.
+|Added [[golden dandelion]]s, which can be used to prevent baby squid from growing up.}}
+
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Squid JE1 BE1.png|32px]][[File:Squid JE1 BE1.png|20px]] Added squid and baby squid. Baby squid are a version exclusive.
+|Squid produce a cloud of floating black ink [[particle]]s when attacked.}}
+|{{HistoryLine||v0.14.0|dev=build 5|Squid now have bubbling particles.}}
+|{{HistoryLine||v0.16.0|dev=build 1|Added new [[sound]]s for squid.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Squid JE2 BE2.png|32px]][[File:Squid JE2 BE2.png|20px]] The textures of squid and baby squid have been changed.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Squid can now spawn in [[river]]s.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.54|Added a sound when a squid shoots out ink.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Baby squid no longer drop items when killed.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|[[File:Baby Squid JE2 BE3.png|32px]] The model and texture of baby squid have been changed.|Increased the bounding box of baby squid to better fit the new model.}}
+|{{HistoryLine|||dev=Preview 26.10.21 |Added [[golden dandelion]]s, which can be used to prevent baby squid from growing up.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Squid JE1 BE1.png|32px]] Added squid.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Added [[sound]]s for squid.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|The squid [[spawn limit]] has been increased from 13{{verify|Was it 10 or 13?}} to 38.{{check version|Fix version of bug report may be incorrect.}}}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Squid now produce a cloud of floating black ink [[particle]]s when attacked.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Squid now share their [[spawn limit]] category with [[fish]].|A squid now emits bubble particles when underwater.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Squid JE1 BE1.png|32px]] Added squid.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed from <code>Squid</code> to <code>squid</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*When [[Jeb]] first added squid to ''Minecraft'', he used the code for [[cow]]s as a basis for squid. He accidentally forgot to remove the milking feature, which led to squid being able to be milked.<ref>{{ytl|MNOWp8wLNro|Why Is That Squid Flying? Minecraft Bugs Explained!|t=108s}}</ref>
+** He also made a mistake in the squid's movement code, causing a server-client desync over the squid's position, which led to the "flying squid" bug.
+*Jeb also did not realise baby squid were added to the game until seeing one while filming [[Minecraft Live – March 2026]].<ref>{{Citation|url=https://www.youtube.com/watch?v=Z0yqFN-2q9E&t=2327s|title=My Experience on Minecraft Live|author=camman18 LIVE|website=YouTube|date=2026-03-29|section=38:47|quote=Jeb, before the soccer games, I&ndash; he saw like a baby dolphin. He's like, 'I didn't even know there was baby dolphins.' And I was like, 'oh yeah, there's uh, there's actually four mobs that can spawn naturally.' I'm like "oh yeah, it can spawn naturally as a baby, but you just can't breed it. There's actually four&ndash;' oh no, I think he said baby squids. He didn't know there were baby squids.}}</ref>
+*Hitting a squid underwater causes it to rise approximately {{fraction|1|3}}–{{fraction|1|2}} block.
+*Squid don't have a death animation {{in|java}}.<ref>{{bug|MC-237079||Squid do not rotate 90 degrees upon death}}</ref>
+*The squid's idle sound is barely audible.
+*{{IN|bedrock}}, if a squid is out of the water, its tentacles swing more slowly as its oxygen meter goes down. When 15 seconds have passed, its tentacles stop swinging and the squid begins to suffocate.
+*In-game squid have eight arms, but in real life they also have two additional long tentacles. The in-game squid is more like an octopus.
+*In-game squid have a gaping, tooth-lined mouth, but as passive mobs they are completely harmless. Real-life squid, like all cephalopods, have a beak instead of teeth.
+*{{IN|java}}, squid are not affected by the "Dinnerbone" and "Grumm" [[name tag]] easter egg.<ref>{{bug|MC-115092||Squid/glow squid named "Dinnerbone" or "Grumm" is not upside-down}}</ref>
+*According to ''Minecraft Education'', squid ink is actually {{w|ferrous sulfate}}, unlike real squid ink which is mostly mucus and melanin.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Squid swim1.png|A squid swimming
+File:Squid Death.png|A squid suffocating
+File:SquidIceSpawn.png|A squid under [[ice]]
+File:Squid Teeth.png|The underside of a squid
+File:Squidridingminecart.png|A squid riding a [[minecart]]
+File:Flyingsquidbug.png|Flying squid
+File:Squid Waterfall.png|Squid that have spawned from the side of a hill
+File:Squid on land.png|A squid beached on the land. After a few seconds, it dies
+File:Squid Village.png|A squid that has spawned in a [[village]] farm
+File:PESquid&BabySquid.png|A squid compared to a baby squid {{in|be}}
+File:Squid inking.jpg|A squid squirting ink to blind the attacking [[player]]
+File:Squid Ink.jpg|Squid and baby squid in ''Bedrock Edition'', along with an 'ink cloud'
+File:Red Squid.png|A squid taking suffocation [[damage]] from being out of the water
+File:Ocean life.png|A squid, along with some [[fish]] and a [[turtle]]
+File:Guardians Attack.png|A [[guardian]] attacking a squid
+File:Squidmouth.png|The mouth of a squid
+File:TrappedSquid.jpg|A squid stranded out of water
+File:SquidInCave.jpg|A squid inside a cave
+File:Squid in Nether.png|Squid in [[the Nether]]
+File:Squidpair.jpg|The squid in a cave
+File:FlyingSquid.png|A former bug that allowed squid to appear flying
+File:Traped.png|A squid stranded inside a cave
+File:TreeSquid.png|A [[wikipedia:Pacific Northwest tree octopus|squid atop a tree]]
+File:Bunchasquid.png|Several squid underwater
+File:Squidsandwaterinnether.png|In early game versions, it was possible to get water to the Nether, in which squid could spawn.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Squid (texture).png|Squid texture file
+Baby Squid (texture).png|Baby squid texture file
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Squid Artwork.png|Artwork of a squid
+File:Steve Swimming Art.jpg|Artwork of a squid by a swimming Steve
+File:Wild key art.png|A squid in official artwork for [[The Wild Update]]
+File:Squid Minecraft Instagram.jpg|Artwork of a squid
+File:Squid annoys Camel.png|A squid gnawing on a [[camel]]
+File:Squid Uprising.png|[[The Squid Uprising]], as depicted in [[The Last Ten Years]]
+File:Squid Story Mode.png|A squid in ''[[Minecraft: Story Mode]]''
+File:LEGO Squid.png|[[Lego Minecraft]] Squid
+File:Squid MP.gif|Squid from [[Minecraft Plus]]
+File:Rumor Has It JINX.jpg|Official T-shirt artwork "Rumor Has It" made by JINX
+File:Squid Pro Quo JINX.jpg|Official T-shirt artwork "Squid Pro Quo" made by JINX. The name of the art is a reference to the noun: {{Wikipedia|quid pro quo}}.
+File:Flying Squid JINX.jpg|Official T-shirt artwork "Flying Squid" made by JINX
+File:Squid Plush JINX.jpg|Squid plush made by JINX
+File:Squid in Natural Habitat.jpg|Squid plush on the ground
+File:Squid Sticker.gif|Squid art
+File:AMCM-FBTBC-concept-art-redstone-mountains-bridge-2.jpg|A squid hidden in the water in concept art for {{AMCM}}
+File:Jolly Mobs Squid.png
+File:MCD Baby Squid.png|A baby squid in ''[[Minecraft Dungeons]]''.
+</gallery>
+
+== See also ==
+* [[Tutorial:Squid farming]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Aquatic mobs]]
+[[Category:Animal mobs]]
+
+[[cs:Chobotnice]]
+[[de:Tintenfisch]]
+[[es:Calamar]]
+[[fr:Poulpe]]
+[[hu:Tintahal]]
+[[it:Calamaro]]
+[[ja:イカ]]
+[[ko:오징어]]
+[[lzh:鰂]]
+[[nl:Inktvis]]
+[[pl:Kałamarnica]]
+[[pt:Lula]]
+[[ru:Спрут]]
+[[th:หมึก]]
+[[uk:Кальмар]]
+[[zh:鱿鱼]]

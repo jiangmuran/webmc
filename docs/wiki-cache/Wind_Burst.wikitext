@@ -1,0 +1,114 @@
+{{about|the enchantment|the throwable item|Wind Charge|the status effect|Wind Charged}}
+{{Infobox enchantment
+| maxlevel = III
+| secondaryitems = {{ItemSprite|Mace|link=Mace}}
+| weight = 2
+| id = wind_burst
+}}
+'''Wind Burst''' is an [[enchantment]] applied to [[mace]]s that causes a powerful upward [[knockback]] effect to be created upon executing a [[smash attack]]. Unlike [[wind charge]]s, Wind Burst does not negate fall damage.
+
+== Obtaining ==
+Wind Burst can only be obtained from [[ominous vault]]s in [[trial chambers]] in the form of [[enchanted book]]s at level I. It is a rare enchantment, having a 5.5% chance of being ejected from an ominous vault once activated with an ominous key.
+
+== Usage ==
+[[File:Using Wind Burst On Husk.gif|thumb|Wind Burst launching a player into the air after using a smash attack.]]
+When executing a [[smash attack]] using a [[mace]] enchanted with Wind Burst, the user is launched back into the air, allowing them to chain continuous smash attacks. Attacks on the ground do not activate Wind Burst, as the activation requires a smash attack.
+
+In order to perform a smash attack, and in turn activate Wind Burst, a player has to fall more than 1.5 blocks. This can be achieved by jumping off a single block placed on the ground and attacking right before touching the ground (total fall height of ~2 blocks), or alternatively by using a [[wind charge]] or the [[Jump Boost]] effect.
+
+The slow attack speed of the mace in ''Java Edition'' makes it impossible to chain fully-charged smash attacks with Wind Burst I on a target that stays at the same elevation.<ref>{{bug|MC-272819||Mace attack speed 0.6 causes Wind Burst 1 smash attacks to be performed on uncharged attacks|Unresolved}}</ref>
+
+Like wind charges, Wind Burst can interact with redstone objects such as [[lever]]s or [[wooden door]]s.
+
+Since [[Fox|foxes]] can attack mobs by pouncing on them, a fox given a mace enchanted with Wind Burst is capable of activating it. This is of little benefit to the fox, as it will typically fail to chain a second smash attack and will thus take [[fall damage]]. 
+
+=== Launch power per level ===
+Wind Burst adds approximately 8 blocks of upward [[knockback]] for the first level, 16 blocks for the second level, and 24 blocks for the third level. {{IN|je}}, [[Blast Protection]] reduces the effect of Wind Burst. {{IN|be}} [[netherite armor]] reduces Wind Burst's effect. The table below details the explosion knockback multiplier and blocks launched per level.
+
+{| class="wikitable"
+|+Wind Burst knockback multiplier
+!I
+!II
+!III
+|-
+|1.2x (8 blocks)
+|1.75x (16 blocks)
+|2.2x (24 blocks)
+|}
+
+Further Wind Burst levels use the formula <code>1.15 + 0.35 * level</code> to calculate the knockback multiplier.
+
+=== On other items ===
+If Wind Burst is applied to an item other than a mace by use of commands or [[anvil]]s in [[Creative]] mode {{in|java}}, Wind Burst activates after the player has fallen at least 1.5 blocks. The launch from Wind Burst doesn't boost the player as high, since landing hits with any other item does not reset vertical [[velocity]] unlike the mace. The faster the player falls while hitting an entity, the less it is launched upwards, since gravity and the enchantment are close to causing a force equilibrium.<ref>{{bug|MC-271920||Wind Burst launch is inconsistent when applied to weapons other than a mace|Won't Fix}}</ref>
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=wind_burst
+|displayname=Wind Burst
+|translationtype=enchantment
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wind Burst
+|nameid=wind_burst
+|id=38
+|translationkey=enchantment.heavy_weapon.windburst
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Added the Wind Burst enchantment.}}
+|{{HistoryLine|||dev=pre1|Wind Burst now activates only from smash attacks, rather than ordinary attacks on the ground.}}
+|{{HistoryLine||1.21|dev=24w18a|Wind Burst is now available without using the "Update 1.21" experimental data pack.}}
+|{{HistoryLine|||dev=24w19a|Items other than the mace that are given Wind Burst using commands now only activate Wind Burst upon falling at least 1.5 blocks, rather than activating Wind Burst from the ground.
+|Wind Burst now negates fall damage like wind charges do, per a bug fix.<ref name="wind_burst_fall_damage">{{Cite bug|MC|270687|Maces enchanted with wind burst don't reliably protect players from fall damage}}</ref>}}
+|{{HistoryLine|||dev=24w20a|Wind Burst no longer negates fall damage once again, undoing the previous fix of MC-270687.<ref name="wind_burst_fall_damage"/>}}
+|{{HistoryLine|||dev=pre1|The strength of the launch from Wind Burst now matches {{BE}}: the base launch power has been increased from 0.5 to 1.5, and the additional launch power per level has been increased from 0.25 to 0.35.
+|Wind Burst now bounces the player a further 7 blocks up per enchantment level, for 21 blocks at level 3.
+|Charged attacks can now be performed when chaining Wind Burst smash attacks, due to the increased launch power of Wind Burst.
+|Charged attacks can now be performed after using a wind charge from the ground to do a Wind Burst smash attack, due to maces having their attack speed increased from 0.5 to 0.6.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.21|Added the Wind Burst enchantment.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Wind Burst is now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Wind Burst now activates only from smash attacks, rather than ordinary attacks on the ground.
+|The strength of the launch from Wind Burst has been increased from 0.5 to 1.5, and the additional launch power per level has been increased from 0.25 to 0.35.
+|Wind Burst now bounces the player a further 7 blocks up per enchantment level, for 21 blocks at level 3.<ref>{{bug|MCPE-181193||Wind Burst sends players flying ridiculously high|Works as Intended}}</ref>}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+<gallery>
+File:Noor using Wind Burst.jpeg|[[Noor]] using Wind Burst to kill [[pillager]]s at an [[Pillager Outpost|outpost]].
+</gallery>
+
+== References ==
+
+{{reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+{{Navbox combat|melee}}
+
+[[de:Windstoß]]
+[[es:Aeroimpulso]]
+[[fr:Rafale de vent]]
+[[ja:ウィンドバースト]]
+[[pt:Rajada de Vento]]
+[[uk:Порив вітру]]
+[[zh:风爆]]

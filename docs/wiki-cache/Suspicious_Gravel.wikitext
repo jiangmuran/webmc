@@ -1,0 +1,221 @@
+{{For||Suspicious|Gravel (disambiguation)}}
+{{Infobox block
+| image = Suspicious Gravel.png
+| invimage = Suspicious Gravel
+| rarity = Common
+| renewable = No
+| stackable = Yes
+| maxStack = 64
+| tool = brush
+| tool2 = shovel
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+}}
+
+'''Suspicious gravel''' is a fragile [[Falling Block|gravity-affected block]] found in various Overworld [[Structure|structures]]. It can be [[Brush|brushed]] to extract unique structure-dependent loot from it. It drops nothing if it breaks, and will break if it falls or is moved.
+
+== Obtaining ==
+{{IN|java}}, suspicious gravel drops as an [[item (entity)|item]] if it falls for more than 30 seconds, which can be achieved by falling into an upward [[bubble column]], or through two [[cobweb]]s stacked on top of each other.<ref>{{bug|MC-260073||Suspicious gravel drops as an item after 30 seconds of existing as falling block|WF}}</ref> However, it does not retain its loot.<br>
+{{IN|bedrock}}, suspicious gravel can be obtained only through the [[Creative inventory]], using {{control|pick block}} in [[Creative]] mode and [[command]]s.
+
+=== Breaking ===
+The suitable tool to break suspicious gravel is [[shovel]].
+{{Breaking row|Suspicious Gravel|Shovel|drop=0|horizontal=1}}
+Suspicious gravel drops nothing when it's destroyed.
+
+=== Natural generation ===
+Suspicious gravel generates naturally in cold [[ocean ruins]]. Additionally, some of the [[gravel]] within [[trail ruins]] is replaced with suspicious gravel upon generation.
+
+== Usage ==
+=== Brushing ===
+When a [[brush]] is {{ctrl|used}} on suspicious gravel, cracks start to appear on all sides of the block as the {{cd|dusted}} block state of the block starts to increase. If the suspicious gravel being brushed is naturally generated, an item gradually emerges from the side where the player starts brushing. After 96 (6+20+30+40 per stage) [[game tick]]s (4.8 seconds), the item is extracted, and the suspicious gravel is converted into [[gravel]].
+
+If the player stops brushing a suspicious gravel, the block remains in its half-excavated state for a few seconds, before gradually returning to its unexcavated state one stage at a time.
+
+=== Loot ===
+The item obtained and the [[loot table]] of suspicious gravel is dependent on which structure it has generated in. Items can be extracted only from naturally generated suspicious gravel. When placed by the player, nothing is produced after brushing.
+
+{{LootChest|brushable-trail-ruins}}
+{{LootChest|brushable-trail-ruins-rare}}
+{{LootChest|brushable-cold-ocean-ruins}}
+
+=== Piston interactivity ===
+Suspicious gravel is destroyed when pushed by a [[piston]]. It cannot be pulled by a [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Suspicious gravel}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Brushing gravel1.ogg
+|sound2=Brushing gravel2.ogg
+|sound3=Brushing gravel3.ogg
+|sound4=Brushing gravel4.ogg
+|subtitle=Brushing Gravel
+|source=block
+|description=While a brush is brushing suspicious gravel
+|id=item.brush.brushing.gravel
+|translationkey=subtitles.item.brush.brushing.gravel
+|volume=0.6
+|pitch=0.6
+|distance=16}}
+| {{SoundLine
+|sound=Brushing gravel completed1.ogg
+|sound2=Brushing gravel completed2.ogg
+|sound3=Brushing gravel completed3.ogg
+|sound4=Brushing gravel completed4.ogg
+|subtitle=Brushing Gravel completed
+|source=Players<ref group=sound>{{Bug|MC-260202}}</ref>|overridesource=1
+|description=When a brush finishes brushing suspicious gravel
+|id=item.brush.brushing.gravel.complete
+|translationkey=subtitles.item.brush.brushing.gravel.complete
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Brushing gravel1.ogg
+|sound2=Brushing gravel2.ogg
+|sound3=Brushing gravel3.ogg
+|sound4=Brushing gravel4.ogg
+|source=player
+|description=While a brush is brushing suspicious gravel
+|id=brush.suspicious_gravel
+|volume=1.0
+|pitch=0.8-1.0}}
+| {{SoundLine
+|sound=Brushing gravel completed1.ogg
+|sound2=Brushing gravel completed2.ogg
+|sound3=Brushing gravel completed3.ogg
+|sound4=Brushing gravel completed4.ogg
+|source=player
+|description=When a brush finishes brushing suspicious gravel
+|id=brush_completed.suspicious_gravel
+|volume=1.0
+| pitch = 0.8-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Gravel
+|spritetype=block
+|nameid=suspicious_gravel
+|blocktags=bamboo_plantable_on, enderman_holdable, lush_ground_replaceable, mineable/shovel
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=suspicious-block
+|spritetype=block
+|nameid=brushable_block
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Gravel
+|spritetype=block
+|nameid=suspicious_gravel
+|id=-573
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=suspicious-block
+|spritetype=block
+|nameid=BrushableBlock
+|foot=1}}
+
+=== Block states ===
+{{#lst:Suspicious Sand|block states}}
+
+=== Block data ===
+{{main|Block entity format}}
+{{#lst:Suspicious Sand|block data}}
+
+=== Falling block entity ===
+{{main|Falling Block}}
+{{#lst:Falling Block|infobox}}
+<!--- Do NOT remove this empty space, this causes templates to overlap. --->
+
+{{#lst:Falling Block|entity data}}
+
+== Advancements ==
+{{Load advancements|Respecting the Remnants}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20|dev=23w12a|[[File:Suspicious Gravel BE1.png|32px]] Added suspicious gravel.}}
+|{{HistoryLine|||dev=23w14a|Suspicious gravel now has an assigned tool (shovel).
+|Suspicious gravel can now have bamboo planted on it.}}
+|{{HistoryLine|||dev=23w16a|The amount of suspicious gravel in [[trail ruins]] has been tweaked.}}
+|{{HistoryLine|||dev=23w17a|The player now gets the [[advancement]] "Respecting the Remnants" when they brush suspicious gravel to obtain a [[pottery sherd]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|[[File:Suspicious Gravel BE1.png|32px]] Added suspicious gravel behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine|||dev=Preview 1.19.80.22|Reworked loot tables.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Suspicious gravel are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.0.22|Suspicious gravel can now have [[bamboo]] planted on it.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+
+=== Screenshots ===
+<gallery>
+File:Steve and Ari excavate.jpg|[[Steve]] and [[Ari]] excavating suspicious gravel.<ref>https://www.minecraft.net/en-us/article/trails-tales-update-out-today-java</ref>
+</gallery>
+
+=== Development Images ===
+<gallery>
+Gravel and Suspicious Gravel.png|Suspicious gravel next to normal gravel.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|utility}}
+{{Navbox entities|Other}}
+
+[[Category:Generated structure blocks]]
+[[Category:Natural blocks]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Falling blocks]]
+
+[[de:Seltsamer Kies]]
+[[es:Grava sospechosa]]
+[[fr:Gravier suspect]]
+[[ko:수상한 자갈]]
+[[pt:Cascalho suspeito]]
+[[uk:Підозрілий гравій]]
+[[zh:可疑的沙砾]]

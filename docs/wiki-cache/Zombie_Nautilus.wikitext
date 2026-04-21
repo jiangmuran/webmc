@@ -1,0 +1,807 @@
+{{missing info|New ''Bedrock Edition'' swimming animation.
+}}
+{{Infobox entity
+| group = Temperate
+| groupsize = 250px
+| 1-1 = Zombie Nautilus.gif
+| group2 = Coral
+| group2size = 250px
+| group3size = 200px
+| group4size = 200px
+| group5size = 200px
+| 2-1 = Coral Zombie Nautilus Breathe JE1.gif
+| invimage = Zombie Nautilus Spawn Egg
+| group4 = Armored
+| group3 = Saddled
+| group5 = Armored saddled
+| 3-1 = Saddled Zombie Nautilus.png
+| 4-1 = Zombie Nautilus with Iron Nautilus Armor.png
+| 5-1 = Saddled Zombie Nautilus with Iron Nautilus Armor.png
+| health = {{hp|15|mob=1}}
+| armor = {{armor|0}}
+| behavior = Neutral (untamed)<br>Passive (tamed)
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Aquatic}}<br>{{EntityLink|Monster}}<br>{{EntityLink|Animal}}
+| damage = Easy: {{hp|2.5}}<br />Normal: {{hp|3}}<br />Hard: {{hp|4.5}} <br>
+| speed = 7.15 m/s
+| size = Height: 0.95 blocks<br>Width: 0.875 blocks
+| spawn = {{BiomeLink|Cold Ocean}} <br> {{BiomeLink|Deep Cold Ocean}} <br> {{BiomeLink|Lukewarm Ocean}} <br> {{BiomeLink|Deep Lukewarm Ocean}} <br> {{BiomeLink|Ocean}} <br> {{BiomeLink|Deep Ocean}} <br> {{BiomeLink|Frozen Ocean}} <br> {{BiomeLink|Deep Frozen Ocean}}<br> {{BiomeLink|Warm Ocean}} <br> {{BiomeLink|Dripstone Caves}} <br> {{EnvLink|Ocean Ruins}}
+| usableitems = {{drop|Item|Saddle}}
+{{drop|Item|Nautilus Armor}}
+{{drop|Item|Shears}}<small>(when equipped with a saddle or nautilus armor)</small>
+{{drop|Item|Lead}}<small>(only when dismounted)</small>
+{{drop|Item|id=Raw Cod|Raw Fish}}
+{{drop|Item|id=Cooked Cod|Cooked Fish}}
+{{drop|Item|id=Bucket of Cod|Buckets of Fish}}
+{{drop|Item|Name Tag}}
+| tickingorder = 
+| gravity = 
+}}
+A '''zombie nautilus''' is an [[undead]] variant of the [[nautilus]] that spawns being ridden and controlled by a [[trident]]-wielding [[drowned]], forming a '''zombie nautilus jockey'''. Once separated from the jockey, it behaves like a regular nautilus, but burns in [[sun]]light instead of suffocating while not in [[water]].
+
+== Spawning ==
+{{anchor|Zombie nautilus jockey}}
+When an adult [[drowned]] spawns outside of [[river]] or [[frozen river]] biomes, (excluding drowned reinforcements) either [[spawn cycle|naturally]] or as part of a [[structure]] (i.e. an [[underwater ruin]]), and is wielding a [[trident]] in its main hand, it has a 50% chance to spawn as a '''zombie nautilus jockey''', riding a zombie nautilus. Zombie nautilus jockeys thus spawn in dripstone caves and various ocean [[biome]]s; those that spawn in [[warm ocean]]s will become the '''coral zombie nautilus''' variant, which only differs in appearance.
+
+In this state, the zombie nautilus's movement is controlled by the jockey. When the drowned rider is dismounted or killed, the zombie nautilus becomes neutral. It can then subsequently be tamed and ridden by the player.
+
+Zombie nautiluses count towards the "monster" [[mob cap]] and can despawn like most hostile mobs (unless they spawned as part of a structure) until the first time any player interacts with it. At that point it becomes persistent and no longer counts towards any mob cap either.
+
+Zombie nautiluses do not naturally spawn in the Peaceful [[difficulty]] except during [[world generation]] as part of [[ocean ruins]].<ref>{{bug|MC-304858||Zombie nautiluses can spawn on peaceful by themselves, unlike skeleton/zombie horses and camel husks}}</ref>
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Rotten Flesh|quantity=0-3|lootingquantity=0-1|notes=je_player}}
+|notes=
+je_player.java => player_or_pet
+}}
+* {{xp|1|3}} when killed by a [[player]] or tamed [[wolf]].
+* If equipped with a saddle or nautilus armor, they drop those items.
+
+== Behavior ==
+{{needs render|Fix Java Edition Temperate Drowned Jockey Arm and leg texture.}}
+{{Infobox entity
+| title = Zombie Nautilus Jockey
+| group = Temperate
+| 1-1 = Zombie Nautilus Jockey JE1.png
+| 1-2 = Zombie Nautilus Jockey BE2.png
+| group2 = Coral
+| 2-1 = Coral Zombie Nautilus Jockey JE1.png
+| 2-2 = Coral Zombie Nautilus Jockey BE1.png
+| *-1caption = {{JE}}
+| *-2caption = {{BE}}
+| health = '''Drowned:'''&nbsp;{{hp|20}}<br> '''Zombie Nautilus:'''&nbsp;{{hp|15|mob=1}}
+| behavior = Hostile
+| equipment = '''Drowned:'''{{drop|Item|Trident}}<br>{{drop|Item|Nautilus Shell}} (occasionally, only appears in offhand)
+}}
+
+Zombie nautiluses behave like regular [[nautilus]]es, drifting through water. They move backward, propelling themselves and leaving bubble [[particle]]s behind.
+
+Zombie nautiluses follow players holding any [[fish]] or [[bucket of fish]] within a 10-block radius.
+
+Unlike the [[nautilus]], zombie nautiluses cannot be bred.
+
+When ridden by a hostile mob, as in the case of a zombie nautilus jockey, the hostile mob controls the movement of the zombie nautilus.
+
+When [[Vibrant Visuals]] are enabled, their eyes emit a surrounding glow that does not illuminate objects, just like the glowing eyes of other mobs such as [[endermen]] and [[drowned]].
+
+As they are [[monsters]], zombie nautiluses count towards the hostile mob cap.
+
+{{IN|Bedrock}}, adult and baby drowned can mount and ride any untamed zombie nautilus that they collide with.
+
+=== Attacking ===
+Zombie nautiluses are [[neutral]], attacking only when provoked. Like regular nautiluses, they attack by dashing into their target. Zombie nautiluses occasionally dash toward and attack nearby [[pufferfish]].
+
+When dashing toward a target on land, zombie nautiluses can launch themselves out of the water and accidentally become beached on land, where they are unable to move.
+
+They may also unintentionally attack a mob or player that stands between them and their target.
+
+A zombie nautilus can also perform dash attacks when being ridden by a mob, such as when part of a zombie nautilus jockey. It performs dash attacks on its own accord, temporarily taking control of the jockey's movement.
+
+Unlike drowned, zombie nautiluses are ignored by [[axolotl]]s.
+
+When they are hostile or mounted by a drowned, zombie nautiluses cannot be leashed.
+
+=== Taming ===
+Zombie nautiluses can be [[tamed]] by being {{Control|fed}} [[pufferfish (item)|pufferfish]] or [[buckets of pufferfish]]. Each pufferfish or bucket of pufferfish has a {{frac|1|3}} chance of taming the zombie nautilus.
+
+These items can also be used to tempt them.
+
+=== Healing ===
+Zombie nautiluses can be healed by being {{control|fed}} any [[fish]] or any [[bucket of fish]].
+{| class="wikitable"
+|-
+! Food !! Heals 
+! Notes
+|-
+| {{ItemLink|Pufferfish|link=Pufferfish (item)}}
+| rowspan="4" | {{hp|2|mob=1}}
+| Does not inflict [[Hunger (status effect)|Hunger]], [[Poison]], or [[Nausea]].
+|-
+| {{ItemLink|Bucket of Pufferfish}}
+|
+|-
+| {{ItemLink|Tropical Fish|link=Tropical Fish (item)}}
+|
+|-
+| {{ItemLink|Bucket of Tropical Fish}}
+|
+|-
+| {{ItemLink|Raw Cod}}
+| rowspan="4" | {{hp|4|mob=1}}
+|
+|-
+| {{ItemLink|Bucket of Cod}}
+|
+|-
+| {{ItemLink|Raw Salmon}}
+|
+|-
+| {{ItemLink|Bucket of Salmon}}
+|
+|-
+| {{ItemLink|Cooked Cod}}|| {{hp|10|mob=1}}
+|
+|-
+| {{ItemLink|Cooked Salmon}} || {{hp|12|mob=1}}
+|
+|}
+
+=== Mob type ===
+Being an [[undead]] mob, they are: 
+* Damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* Unaffected by the status effects [[Regeneration]] and [[Poison]].
+* Ignored by the [[wither]].
+* Affected by the [[Smite]] enchantment.
+* A threat to [[armadillo]]s, causing them to hide in their shell.
+
+Like most other undead mobs, zombie nautiluses also burn in direct sunlight. They are protected from burning when wearing nautilus armor, similar to other undead mobs wearing [[helmet]]s. As nautilus armor has no [[durability]], it does not break from absorbing the damage like helmets do.
+
+Being an [[aquatic]] mob, they are affected by the [[Impaling]] enchantment in {{JE}}. Unlike the normal nautilus, zombie nautiluses don't suffocate outside of the water, as they are undead monsters.
+
+[[Parrot]]s can also imitate them, like other hostile mobs.{{Only|JE|short=1}}
+
+{{IN|BE}}, zombie nautiluses are targeted by [[iron golem]]s and [[snow golem]]s.<ref>{{bug|MCPE-235914||Iron Golems and Snow Golems attack tamed Zombie Nautili}}</ref> This is due to the fact that zombie nautiluses are in the {{cd|monster}} [[family]], and mobs in the {{cd|monster}} family are attacked by iron golems and snow golems.
+
+=== Weaknesses ===
+Like regular nautiluses, they can be controlled and even dash on land, but their movement is much slower than in water.
+
+=== Jockey ===
+{{Exclusive|bedrock|section=1}}
+[[File:Baby Drowned Zombie Nautilus Jockey BE.png|thumb|width=165x165|A zombie nautilus ridden by a gurgle.]]
+15% of nearby [[gurgle]]s may ride an untamed zombie nautilus to form a [[jockey]].
+
+== Usage ==
+Tamed and saddled zombie nautiluses can be used as a means of underwater [[transportation]]. When ridden, the player is granted the [[Breath of the Nautilus]] status effect, which pauses the [[oxygen bar]] while the player rides the zombie nautilus. As with other zombies, they can be killed to obtain rotten flesh.
+
+=== Equipment ===
+Tamed zombie nautiluses have two equipment slots:
+* {{SlotSprite|Saddle}} Saddle slot: for equipping a [[saddle]].
+* {{SlotSprite|Nautilus Armor}} Nautilus armor slot: for equipping [[nautilus armor]].
+
+Equipment can be placed on a zombie nautilus by holding it and then pressing the {{control|use}} control on the zombie nautilus, or by accessing the zombie nautilus's inventory. This can be done by pressing the {{control|use}} control on the zombie nautilus while [[sneaking]], or by mounting the zombie nautilus and pressing the {{control|inventory}} control. A [[dispenser]] can also place a saddle or nautilus armor if it is facing a tamed zombie nautilus.
+
+The equipment can be removed by two methods:
+* Removing the equipment from their slots in the zombie nautilus's inventory.
+* {{ctrl|Using}} [[shears]] on the zombie nautilus. If both a saddle and nautilus armor are equipped, they are removed one at a time. The first use removes the nautilus armor, and a second use removes the saddle.
+
+=== Riding ===
+{{main|Riding}}
+Once a zombie nautilus is tamed and saddled, the player can control it with the standard directional controls; pressing {{control|forward}} moves the zombie nautilus in the direction the player is facing. The player dismounts using the {{control|dismount}} control. {{IN|bedrock}}, it is impossible for a player to use a [[Nether portal]] or [[End portal]] while on a zombie nautilus. 
+
+Zombie nautiluses are 10% faster than nautiluses when swimming. A zombie nautilus gradually gains speed while moving in a straight line, up to a swimming speed of 7.15 m/s. A zombie nautilus can still move on land when controlled by a player, but is significantly slower, moving at a maximum of 0.97 m/s.
+
+Saddled zombie nautiluses also have the ability to dash. When the player rides them, the experience bar on the [[HUD]] is replaced by a dash charging bar. Dashing is done using the {{control|jump}} control: holding the control charges for a longer dash. When dashing, a zombie nautilus launches up to about 13 blocks forward. A zombie nautilus can dash every 2 seconds. Dashing while moving upward near the surface results in a quick breach, wherein the zombie nautilus and its rider break the surface briefly.
+
+== Sounds ==
+{{More sounds|New ''Bedrock Edition'' 26.0 sounds.}}
+Despite being monsters, zombie nautiluses use the "Friendly Mobs" sound category.<ref>{{bug|MC-30324||Zombie nautiluses use the friendly mobs sound category, which is inconsistent with Bedrock Edition|Working as Intended}}</ref>
+
+{{Edition|Java}}:
+{{SoundTable
+|type=java
+|{{SoundLine
+|sound=Zombie Nautilus ambient1.ogg
+|sound2=Zombie Nautilus ambient2.ogg
+|sound3=Zombie Nautilus ambient3.ogg
+|sound4=Zombie Nautilus ambient4.ogg
+|sound5=Zombie Nautilus ambient5.ogg
+|subtitle=Zombie Nautilus burbles
+|source=neutral
+|description=Randomly when underwater
+|id=entity.zombie_nautilus.ambient
+|translationkey=subtitles.entity.zombie_nautilus.ambient
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus ambient land1.ogg
+|sound2=Zombie Nautilus ambient land2.ogg
+|sound3=Zombie Nautilus ambient land3.ogg
+|sound4=Zombie Nautilus ambient land4.ogg
+|sound5=Zombie Nautilus ambient land5.ogg
+|sound6=Zombie Nautilus ambient land6.ogg
+|subtitle=Zombie Nautilus burbles
+|source=neutral
+|description=Randomly when on land
+|id=entity.zombie_nautilus.ambient_land
+|translationkey=subtitles.entity.zombie_nautilus.ambient_land
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus swim1.ogg
+|sound2=Nautilus swim2.ogg
+|sound3=Nautilus swim3.ogg
+|sound4=Nautilus swim4.ogg
+|sound5=Nautilus swim5.ogg
+|sound6=Nautilus swim6.ogg
+|sound7=Nautilus swim7.ogg
+|sound8=Nautilus swim8.ogg
+|sound9=Nautilus swim9.ogg
+|subtitle=Zombie Nautilus swims
+|source=neutral
+|description=When a zombie nautilus swims
+|id=entity.zombie_nautilus.swim
+|translationkey=subtitles.entity.zombie_nautilus.swim
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus riding.ogg
+|subtitle=-
+|source=neutral
+|description=While riding a zombie nautilus underwater
+|id=entity.nautilus.riding
+|translationkey=
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus eat1.ogg
+|sound2=Zombie Nautilus eat2.ogg
+|subtitle=Zombie Nautilus eats
+|source=neutral
+|description=When a zombie nautilus is fed
+|id=entity.zombie_nautilus.eat
+|translationkey=subtitles.entity.zombie_nautilus.eat
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus dash1.ogg
+|sound2=Nautilus dash2.ogg
+|sound3=Nautilus dash3.ogg
+|sound4=Nautilus dash4.ogg
+|subtitle=Zombie Nautilus jets
+|source=neutral
+|description=When a zombie nautilus dashes underwater
+|id=entity.zombie_nautilus.dash
+|translationkey=subtitles.entity.zombie_nautilus.dash
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus dash land1.ogg
+|sound2=Nautilus dash land2.ogg
+|sound3=Nautilus dash land3.ogg
+|sound4=Nautilus dash land4.ogg
+|subtitle=Zombie Nautilus jets
+|source=neutral
+|description=When a zombie nautilus dashes on land
+|id=entity.zombie_nautilus.dash_land
+|translationkey=subtitles.entity.zombie_nautilus.dash_land
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus dash ready1.ogg
+|sound2=Zombie Nautilus dash ready2.ogg
+|sound3=Zombie Nautilus dash ready3.ogg
+|subtitle=Zombie Nautilus recovers
+|source=neutral
+|description=When a zombie nautilus' dash ability resets underwater
+|id=entity.zombie_nautilus.dash_ready
+|translationkey=subtitles.entity.zombie_nautilus.dash_ready
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus dash ready land1.ogg
+|sound2=Zombie Nautilus dash ready land2.ogg
+|sound3=Zombie Nautilus dash ready land3.ogg
+|sound4=Zombie Nautilus dash ready land4.ogg
+|subtitle=Zombie Nautilus recovers
+|source=neutral
+|description=When a zombie nautilus' dash ability resets on land
+|id=entity.zombie_nautilus.dash_ready_land
+|translationkey=subtitles.entity.zombie_nautilus.dash_ready_land
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus hurt1.ogg
+|sound2=Zombie Nautilus hurt2.ogg
+|sound3=Zombie Nautilus hurt3.ogg
+|sound4=Zombie Nautilus hurt4.ogg
+|subtitle=Zombie Nautilus hurts
+|source=neutral
+|description=When a zombie nautilus is damaged underwater
+|id=entity.zombie_nautilus.hurt
+|translationkey=subtitles.entity.zombie_nautilus.hurt
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus hurt land1.ogg
+|sound2=Zombie Nautilus hurt land2.ogg
+|sound3=Zombie Nautilus hurt land3.ogg
+|sound4=Zombie Nautilus hurt land4.ogg
+|subtitle=Zombie Nautilus hurts
+|source=neutral
+|description=When a zombie nautilus is damaged on land
+|id=entity.zombie_nautilus.hurt_land
+|translationkey=subtitles.entity.zombie_nautilus.hurt_land
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus death.ogg
+|subtitle=Zombie Nautilus dies
+|source=neutral
+|description=When a zombie nautilus dies underwater
+|id=entity.zombie_nautilus.death
+|translationkey=subtitles.entity.zombie_nautilus.death
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Zombie Nautilus death land.ogg
+|subtitle=Zombie Nautilus dies
+|source=neutral
+|description=When a zombie nautilus dies on land
+|id=entity.zombie_nautilus.death_land
+|translationkey=subtitles.entity.zombie_nautilus.death_land
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus saddle equip.ogg
+|subtitle=Saddle equips
+|source=neutral
+|description=When a saddle is equipped to a zombie nautilus
+|id=item.nautilus_saddle_equip
+|translationkey=subtitles.item.nautilus_saddle_equip
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Nautilus saddle underwater equip.ogg
+|subtitle=Saddle equips
+|source=neutral
+|description=When a saddle is equipped to a zombie nautilus underwater
+|id=item.nautilus_saddle_underwater_equip
+|translationkey=subtitles.item.nautilus_saddle_underwater_equip
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Saddle unequip.ogg
+|subtitle=Saddle snips away
+|source=neutral
+|description=When a saddle is removed from a zombie nautilus using shears
+|id=item.saddle.unequip
+|translationkey=subtitles.item.saddle.unequip
+|volume=0.5
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Wolf armor equip1 JE1 BE1.ogg
+|sound2=Wolf armor equip2 JE1 BE1.ogg
+|subtitle=Nautilus Armor equips
+|source=neutral
+|description=When a nautilus armor is equipped to a zombie nautilus
+|id=item.armor.equip_nautilus
+|translationkey=subtitles.item.armor.equip_nautilus
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+|{{SoundLine
+|sound=Wolf armor unequip1 JE1 BE1.ogg
+|sound2=Wolf armor unequip2 JE1 BE1.ogg
+|subtitle=Nautilus Armor unequips
+|source=neutral
+|description=When a nautilus armor is unequipped from a zombie nautilus
+|id=subtitles.item.armor.unequip_nautilus
+|translationkey=subtitles.item.armor.unequip_nautilus
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+|type=bedrock
+|{{SoundLine
+|sound=Zombie Nautilus ambient1.ogg
+|sound2=Zombie Nautilus ambient2.ogg
+|sound3=Zombie Nautilus ambient3.ogg
+|sound4=Zombie Nautilus ambient4.ogg
+|sound5=Zombie Nautilus ambient5.ogg
+|source=neutral
+|description=Randomly
+|id=mob.zombie_nautilus.ambient
+|volume=3.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Fish swim1.ogg
+|sound2=Fish swim2.ogg
+|sound3=Fish swim3.ogg
+|sound4=Fish swim4.ogg
+|sound5=Fish swim5.ogg
+|sound6=Fish swim6.ogg
+|sound7=Fish swim7.ogg
+|source=neutral
+|description=When a zombie nautilus swims
+|id=mob.fish.step
+|volume=1.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Nautilus riding.ogg
+|source=neutral
+|description=While riding a zombie nautilus underwater
+|id=mob.nautilus.ride <!-- Appears to not have its own id as of 1.21.130.22 -->
+|volume=0.4
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Zombie Nautilus eat1.ogg
+|sound2=Zombie Nautilus eat2.ogg
+|source=neutral
+|description=When a zombie nautilus is fed
+|id=mob.zombie_nautilus.eat
+|volume=3.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Nautilus dash1.ogg
+|sound2=Nautilus dash2.ogg
+|sound3=Nautilus dash3.ogg
+|sound4=Nautilus dash4.ogg
+|source=neutral
+|description=When a zombie nautilus dashes
+|id=mob.zombie_nautilus.dash
+|volume=0.4
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Zombie Nautilus dash ready1.ogg
+|sound2=Zombie Nautilus dash ready2.ogg
+|sound3=Zombie Nautilus dash ready3.ogg
+|source=neutral
+|description=When a zombie nautilus' dash ability resets
+|id=mob.zombie_nautilus.dash_ready
+|volume=3.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Zombie Nautilus hurt1.ogg
+|sound2=Zombie Nautilus hurt2.ogg
+|sound3=Zombie Nautilus hurt3.ogg
+|sound4=Zombie Nautilus hurt4.ogg
+|source=neutral
+|description=When a zombie nautilus is damaged
+|id=mob.zombie_nautilus.hurt
+|volume=3.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=Zombie Nautilus death.ogg
+|source=neutral
+|description=When a zombie nautilus dies
+|id=mob.zombie_nautilus.death
+|volume=3.0
+|pitch=1.0
+}}
+|{{SoundLine
+|sound=nautilus_saddle_equip.ogg <!-- To be updated once Bedrock gets the underwater saddle sound -->
+|source=neutral
+|description=When a saddle is equipped to a zombie nautilus
+|id=mob.nautilus.nautilus_saddle
+|volume=3.0 <!-- To be updated once Bedrock gets the underwater saddle sound -->
+|pitch=1.0 <!-- To be updated once Bedrock gets the underwater saddle sound -->
+}}
+|{{SoundLine
+|sound=Saddle unequip.ogg
+|source=neutral
+|description=When a saddle is removed from a zombie nautilus using shears
+|id=mob.unsaddle
+|volume=0.5
+|pitch=1.0
+}} <!-- Currently makes no sound in Bedrock -->
+<!-- |{{SoundLine
+|sound=Wolf armor equip1 JE1 BE1.ogg
+|sound2=Wolf armor equip2 JE1 BE1.ogg
+|source=neutral
+|description=When a nautilus armor is equipped to a nautilus
+|id=item.armor.equip_nautilus
+|volume=1.0
+|pitch=1.0
+}} --><!-- Currently makes no sound in Bedrock -->
+|{{SoundLine
+|sound=horse_armor_unequip.ogg
+|source=neutral
+|description=When a nautilus armor is unequipped from a nautilus
+|id=mob.nautilus.armor_unequip
+|volume=3.0
+|pitch=1.0
+}}  <!-- Currently makes no sound in Bedrock -->
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Zombie Nautilus
+|spritetype=entity
+|nameid=zombie_nautilus
+|entitytags=aquatic, burn_in_daylight, can_breathe_under_water, can_equip_saddle, can_wear_nautilus_armor, ignores_poison_and_regen, inverted_healing_and_harm, not_scary_for_pufferfish, sensitive_to_impaling, sensitive_to_smite, undead, wither_friends, zombies
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showentityfamily=y
+|generatetranslationkeys=y
+|displayname=Zombie Nautilus
+|spritetype=entity
+|nameid=zombie_nautilus
+|entityfamily=aquatic,mob,monster,undead,zombie_nautilus
+|id=150
+|foot=1
+}}
+
+=== Entity data ===
+Zombie nautiluses have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/tameable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|string|variant}}: the variant of the nautilus. Represents the [[Data component format#zombie_nautilus/variant|minecraft:zombie_nautilus/variant]] component.{{Note|{{cd|minecraft:warm}} for the coral variant, {{cd|minecraft:temperate}} or anything else for the temperate variant.}}
+<references group="note"/> 
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads;Free Diver;Sleep with the Fishes}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here;It Spreads;Monster Hunter;Monsters Hunted;Best Friends Forever}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|HGAZVzza-Hc}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable|
+{{HistoryLine||September 27, 2025|link=https://www.youtube.com/watch?v=AEHc8jrcc6g|[[File:Zombie Nautilus Breathe JE1.gif|48px]] Zombie nautiluses (and zombie nautilus jockeys) are revealed at [[Minecraft LIVE – September 2025]]}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable|
+{{HistoryLine|java}}
+|{{HistoryLine||1.21.11|dev=25w41a|[[File:Zombie Nautilus Breathe JE1.gif|48px]][[File:Zombie Nautilus Jockey.png|32px]] Added zombie nautiluses, along with zombie nautilus jockeys.}}
+|{{HistoryLine|||dev=25w42a|Zombie nautiluses no longer despawn in Peaceful [[difficulty]].
+|Zombie nautiluses can now be controlled on land.
+|Zombie nautiluses can now despawn.
+|Riding a zombie nautilus underwater now plays an ambient sound.}}
+|{{HistoryLine|||dev=25w43a|Zombie nautiluses can no longer be placed in [[boat]]s.
+|Zombie nautiluses no longer suffocate out of water, like how other [[undead]] mobs do not drown in water.
+|Equipping a [[saddle]] to a zombie nautilus now plays a unique sound ({{sound||Underwater saddle equip.ogg}}) rather than the standard sound ({{sound||Saddle equip.ogg}}).}}
+|{{HistoryLine|||dev=25w44a|Zombie nautiluses now retaliate against any mob, not just against players.
+|Zombie nautiluses now have unique swimming sounds ({{sound||Nautilus swim1.ogg}}{{sound||Nautilus swim2.ogg}}{{sound||Nautilus swim3.ogg}}{{sound||Nautilus swim4.ogg}}{{sound||Nautilus swim5.ogg}}{{sound||Nautilus swim6.ogg}}{{sound||Nautilus swim7.ogg}}{{sound||Nautilus swim8.ogg}}{{sound||Nautilus swim9.ogg}}) rather than fish swimming sounds ({{sound||Fish swim1.ogg}}{{sound||Fish swim2.ogg}}{{sound||Fish swim3.ogg}}{{sound||Fish swim4.ogg}}{{sound||Fish swim5.ogg}}{{sound||Fish swim6.ogg}}{{sound||Fish swim7.ogg}}).
+|Equipping a saddle to a zombie nautilus now plays a different sound depending on whether the zombie nautilus is underwater ({{sound||Nautilus saddle underwater equip.ogg}}) or not ({{sound||Nautilus saddle equip.ogg}}).}}
+|{{HistoryLine|||dev=25w45a|[[File:Coral Zombie Nautilus Breathe JE1.gif|48px]] Added coral zombie nautiluses, a variant which spawns in warm oceans in place of temperate zombie nautiluses.
+|Now becomes [[persistent]] with any interaction from a player, not just riding them.}}
+|{{HistoryLine|||dev=25w46a|Zombie nautiluses now play a dash sound when they perform their dash attack.|Added inventory UI for the zombie nautilus.}}
+|{{HistoryLine|||dev=pre1|The zombie nautilus head now clips less through its shell.
+|Added ambient, dash, recovering, hurting and dying sounds for when zombie nautiluses are on land.
+|Changed the swimming sounds (from {{sound||Nautilus swim1 JE1 BE1.ogg}}{{sound||Nautilus swim2 JE1 BE1.ogg}}{{sound||Nautilus swim3 JE1 BE1.ogg}}{{sound||Nautilus swim4 JE1 BE1.ogg}}{{sound||Nautilus swim5 JE1 BE1.ogg}}{{sound||Nautilus swim6 JE1 BE1.ogg}}{{sound||Nautilus swim7 JE1 BE1.ogg}}{{sound||Nautilus swim8 JE1 BE1.ogg}}{{sound||Nautilus swim9 JE1 BE1.ogg}} to {{sound||Nautilus swim1.ogg}}{{sound||Nautilus swim2.ogg}}{{sound||Nautilus swim3.ogg}}{{sound||Nautilus swim4.ogg}}{{sound||Nautilus swim5.ogg}}{{sound||Nautilus swim6.ogg}}{{sound||Nautilus swim7.ogg}}{{sound||Nautilus swim8.ogg}}{{sound||Nautilus swim9.ogg}}).}}
+|{{HistoryLine|||dev=pre3|Zombie nautiluses with a negative age no longer possess a hitbox the size of a baby nautilus.}}
+|{{HistoryLine|||dev=pre4|[[Dispenser]]s can now equip saddles and nautilus armor on tamed zombie nautiluses.
+|The [[rotten flesh]] drop of zombie nautiluses is now affected by [[Looting]].
+|Dismounting a zombie nautilus while on land no longer places the player inside the zombie nautilus if there is a valid block to place the player on.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}|
+{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|[[File:Zombie Nautilus Breathe BE1.gif|48px]][[File:Zombie Nautilus Jockey BE1.png|32px]] Added zombie nautiluses, along with zombie nautilus jockeys.}}
+|{{HistoryLine|||dev=Preview 1.21.130.22|An untamed zombie nautilus can now be tempted by [[pufferfish]] and [[bucket of pufferfish]].|A tamed zombie nautilus will now be tempted by all [[fish]]. This includes [[buckets of fish]].|Zombie nautiluses no longer suffocate out of water, like how other [[undead]] mobs do not drown in water.}}
+|{{HistoryLine|||dev=Preview 1.21.130.24|Zombie nautiluses now retaliate against any mob, not just against players.
+|Untamed zombie nautiluses are now neutral instead of hostile.
+|Zombie nautiluses now attack pufferfish.}}
+|{{HistoryLine|||dev=Preview 1.21.130.26|[[File:Coral Zombie Nautilus Breathe JE1.gif|48px]] [[File:Coral Zombie Nautilus Jockey BE1.png|32px]] Added coral zombie nautiluses, a variant which spawns in warm oceans in place of temperate zombie nautiluses.
+|[[File:Zombie Nautilus Breathe BE2.gif|48px]] The model of zombie nautiluses has been fixed to match {{JE}}.}}
+|{{HistoryLine|||dev=Preview 1.21.130.27|Equipping a [[saddle]] to a zombie nautilus now plays a unique sound ({{sound||Nautilus saddle equip.ogg}}) rather than the standard sound ({{sound||Saddle equip.ogg}}).}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Attachable items no longer render when equipped to a zombie nautilus via commands.
+|Zombie nautiluses now have swim sounds ({{sound||Nautilus swim1.ogg}}{{sound||Nautilus swim2.ogg}}{{sound||Nautilus swim3.ogg}}{{sound||Nautilus swim4.ogg}}{{sound||Nautilus swim5.ogg}}{{sound||Nautilus swim6.ogg}}{{sound||Nautilus swim7.ogg}}{{sound||Nautilus swim8.ogg}}{{sound||Nautilus swim9.ogg}}).
+|Zombie nautiluses now also have alternative ambient ({{sound||Zombie Nautilus ambient land1.ogg}}{{sound||Zombie Nautilus ambient land2.ogg}}{{sound||Zombie Nautilus ambient land3.ogg}}{{sound||Zombie Nautilus ambient land4.ogg}}{{sound||Zombie Nautilus ambient land5.ogg}}{{sound||Zombie Nautilus ambient land6.ogg}}), hurt ({{sound||Zombie Nautilus hurt land1.ogg}}{{sound||Zombie Nautilus hurt land2.ogg}}{{sound||Zombie Nautilus hurt land3.ogg}}{{sound||Zombie Nautilus hurt land4.ogg}}), and death ({{sound||Zombie Nautilus death land.ogg}}) sounds when on land.|Zombie nautiluses are now part of the {{cd|monster}} [[family]].|Due to zombie nautiluses now being part of the {{cd|monster}} family, they can now be attacked by golems.<ref>{{bug|MCPE-235914}}</ref>}}
+|{{HistoryLine|||dev=Preview 26.0.27|Zombie nautiluses are no longer damaged by the [[conduit]].
+|Zombie nautiluses no longer prevent the player from sleeping when nearby.|Equipping a saddle to a zombie nautilus underwater now plays a unique sound ({{sound||Nautilus saddle underwater equip.ogg}}) rather than the standard sound ({{sound||Nautilus saddle equip.ogg}}).|Changed swimming animation.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}|
+{{HistoryLine||1.21.132|dev=Preview 1.21.131.1|[[File:Zombie Nautilus Breathe JE1 BE2.gif|48px]][[File:Zombie Nautilus Jockey BE2.png|32px]] [[File:Coral Zombie Nautilus Breathe JE1.gif|48px]] [[File:Coral Zombie Nautilus Jockey BE1.png|32px]] Added zombie nautiluses, and all its changes and features from [[Bedrock Edition 1.21.130]].}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The design of the zombie nautilus is inspired by {{W|escargots}}, a dish composed of cooked land snails with few herbs and greens on the inside.<ref>https://youtu.be/HGAZVzza-Hc</ref>
+
+== Gallery ==
+{{Needs render|All animations with armor and saddle, and update swimming and charging animation model}}
+=== Renders ===
+<gallery>
+Zombie Nautilus.png|Zombie nautilus front side
+Zombie Nautilus (Back).png|Zombie nautilus back side
+Coral_Zombie_Nautilus_JE1.png|Coral zombie nautilus front side
+Coral_Zombie_Nautilus_(back).png|Coral zombie nautilus back side
+Saddled Zombie Nautilus (Back).png|Zombie nautilus back side with a saddle equipped
+Saddled Coral Zombie Nautilus.png|Coral zombie nautilus with a saddle equipped.
+Zombie Nautilus Jockey JE1.png|Zombie nautilus jockey {{in|java}}
+Zombie Nautilus Jockey BE2.png|Zombie nautilus jockey {{in|bedrock}}
+Coral Zombie Nautilus Jockey JE1.png|Coral zombie nautilus jockey {{in|java}}
+Coral Zombie Nautilus Jockey BE1.png|Coral zombie nautilus jockey {{in|bedrock}}
+</gallery>
+
+==== Zombie nautilus with nautilus armor ====
+<gallery>
+Zombie Nautilus with Copper Nautilus Armor.png|Zombie nautilus with copper nautilus armor
+Saddled Zombie Nautilus with Copper Nautilus Armor.png|Saddled zombie nautilus with copper nautilus armor
+Zombie Nautilus with Iron Nautilus Armor.png|Zombie nautilus with iron nautilus armor
+Saddled Zombie Nautilus with Iron Nautilus Armor.png|Saddled zombie nautilus with iron nautilus armor
+Zombie Nautilus with Golden Nautilus Armor.png|Zombie nautilus with golden nautilus armor
+Saddled Zombie Nautilus with Golden Nautilus Armor.png|Saddled zombie nautilus with golden nautilus armor
+Zombie Nautilus with Diamond Nautilus Armor.png|Zombie nautilus with diamond nautilus armor
+Saddled Zombie Nautilus with Diamond Nautilus Armor.png|Saddled zombie nautilus with diamond nautilus armor
+Zombie Nautilus with Netherite Nautilus Armor.png|Zombie nautilus with netherite nautilus armor
+Saddled Zombie Nautilus with Netherite Nautilus Armor.png|Saddled zombie nautilus with netherite nautilus armor
+</gallery>
+<gallery>
+Zombie Coral Nautilus with Copper Nautilus Armor.png|Coral zombie nautilus with copper nautilus armor
+Saddled Coral Zombie Nautilus with Copper Nautilus Armor.png|Saddled coral zombie nautilus with copper nautilus armor
+Zombie Coral Nautilus with Iron Nautilus Armor.png|Coral zombie nautilus with iron nautilus armor
+Saddled Coral Zombie Nautilus with Iron Nautilus Armor.png|Saddled coral zombie nautilus with iron nautilus armor
+Zombie Coral Nautilus with Golden Nautilus Armor.png|Coral zombie nautilus with golden nautilus armor
+Saddled Coral Zombie Nautilus with Golden Nautilus Armor.png|Saddled coral zombie nautilus with golden nautilus armor
+Zombie Coral Nautilus with Diamond Nautilus Armor.png|Coral zombie nautilus with diamond nautilus armor
+Saddled Coral Zombie Nautilus with Diamond Nautilus Armor.png|Saddled coral zombie nautilus with diamond nautilus armor
+Zombie Coral Nautilus with Netherite Nautilus Armor.png|Coral zombie nautilus with netherite nautilus armor
+Saddled Coral Zombie Nautilus with Netherite Nautilus Armor.png|Saddled coral zombie nautilus with netherite nautilus armor
+</gallery>
+
+=== Animations ===
+<gallery>
+Zombie Nautilus Breathe JE1.gif|Zombie nautilus breathing and swimming
+</gallery>
+==== Development renders ====
+<gallery>
+Zombie_Nautilus_Breathe_BE1.gif|Zombie nautilus breathing (model used in [[Bedrock Edition]] from preview [[1.21.130.20]] to [[1.21.130.26]])
+Zombie_Nautilus_Swim_BE1.gif|Zombie nautilus swimming (model used in [[Bedrock Edition]] from preview [[1.21.130.20]] to [[1.21.130.26]])
+Zombie_Nautilus_Charge_BE1.gif|Zombie nautilus charging (this animation is not used in-game and model used in [[Bedrock Edition]] from preview [[1.21.130.20]] to [[1.21.130.26]])
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Zombie nautilus jockey in ocean ruins.png|A zombie nautilus jockey near [[ocean ruin|cold ocean ruins]]
+Coral Zombie Nautilus Swimming.jpeg|A coral zombie nautilus swimming in a [[coral reef]]
+Coral zombie nautilus jockey.png|A zombie nautilus jockey featuring a coral zombie nautilus
+Coral Zombie Nautilus Close Up.png|Close up of a coral zombie nautilus in a coral reef
+Zombie Nautilus in Dripstone Cave.png|A zombie nautilus in a [[dripstone cave]], from a [[single biome]]'s world.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:Zombie Nautilus underwater.png|A zombie nautilus
+File:Zombie nautilus being ridden by a drowned.png|A zombie nautilus being ridden by a [[drowned]]
+File:Mounts of Mayhem zombie nautilus.png|A zombie nautilus swimming in the water
+File:Kai taming a zombie nautilus.jpg|[[Kai]] taming a zombie nautilus
+File:Drowned riding a zombie nautilus.jpg|Another image of a zombie nautilus being ridden by a [[drowned]] forming a zombie nautilus jockey
+File:Taming a zautilus.jpg|A zombie nautilus being tamed
+File:Zuri flees drowned.jpeg|[[Zuri]] fleeing several drowned and a zombie nautilus
+File:Efe on zautilus.jpg|[[Efe]] on a zombie nautilus
+File:Zuri vs drowned.jpg
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Zombie Nautilus (texture) JE1.png|Zombie nautilus texture file
+Coral Zombie Nautilus (texture) JE1.png|Coral zombie nautilus texture file
+Nautilus Saddle (texture).png|Nautilus saddle texture file
+</gallery>
+
+===In other media===
+<gallery>
+File:Mounts of Mayhem Key Art.png|A zombie nautilus seen in the [[Mounts of Mayhem]] artwork.
+File:Mounts of Mayhem Monthly artwork 1.jpg|A Mounts of Mayhem artwork used in a Minecraft Monthly episode.
+File:Mounts of Mayhem Monthly artwork 2.jpg|Alternate colors version.
+File:Mounts of Mayhem Date Announce Artwork.png|Artwork used for the release date reveal showing zombie nautilus as enemies.
+File:Mounts of Mayhem date reveal artwork.jpg|Ditto.
+File:Mounts of Mayhem player vs zombie nautilus jockey artwork.jpg|Artwork of [[Kai]] battling a zombie nautilus.
+File:Drowned But Not Out hoodie.jpg
+File:Drowned jogger pants.jpg
+File:Drowned but not Out tumbler.jpg
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox ocean}}
+{{Navbox entities|mobs}}
+
+[[Category:Neutral mobs]]
+[[Category:Tameable mobs]]
+[[Category:Undead mobs]]
+[[Category:Aquatic mobs]]
+[[Category:Animal mobs]]
+[[Category:Monster mobs]]
+[[Category:Transport]]
+
+[[de:Zombienautilus]]
+[[es:Nautilo zombi]]
+[[fr:Nautile-zombie]]
+[[it:Nautilo zombi]]
+[[ja:ゾンビオウムガイ]]
+[[ko:좀비 앵무조개]]
+[[lzh:屍化鸚鵡螺]]
+[[pl:Łodzik-zombie]]
+[[pt:Náutilo-Zumbi]]
+[[ru:Наутилус-зомби]]
+[[uk:Зомбонавтилус]]
+[[zh:僵尸鹦鹉螺]]

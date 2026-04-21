@@ -1,0 +1,977 @@
+{{About|the world options for existing worlds|world options during world creation|Create New World|the internal game settings|Game rule}}
+{{Split|World Options|Game settings|reason=Edit world in Bedrock is a completely different mechanic than in Java, literally nothing on this page applies to both editions}}
+
+The '''world options''' or '''edit world''' screen are options to manage a world's files and its settings. {{IN|je}}, internal world settings can't be changed from the edit world screen and are handled by [[game rule]]s, while {{In|be}}, game rules, [[add-ons]], [[experiments]], and other world settings can be changed at any time from the edit world screen, even from the [[pause menu]].
+
+== ''Java Edition'' ==
+[[File:Edit World JE.png|alt=A world's edit screen.|thumb|A [[world]]'s edit screen.]]
+A player can click on a world to select it, and thereby access the options of it. Then, some options appear at the bottom of the screen. 
+
+There are a total of 9 operations that can be performed from the world options, some of which are contained within the "Edit World" screen.
+{| class="wikitable"
+|+
+!Location
+!Button
+!Description
+|-
+| rowspan="4" |Main Screen
+|{{Btn|Play Selected World}}
+|Loads the selected world. A world can also be loaded by clicking on
+|-
+|{{Btn|Delete}}
+|Permanently deletes the world after confirmation.
+|-
+|{{Btn|Re-Create}}
+|Make a restarted copy of the world. It has the same [[Seed (world generation)|seed]] and settings, but without saving any changes made to the [[World|terrain.]]
+|-
+|{{Btn|Edit}}
+|Open a screen with more options:
+|-
+| rowspan="6" |Edit World Screen
+|Editing world name
+|The world name is visible on the top of the screen.  A new display name for the world can be inputted. 
+Note that the name of the [[.minecraft|world folder]] does not change.
+|-
+|{{btn|Reset Icon}}
+|Deletes the world's <code>icon.png</code> file, which allows a new icon to be taken. A new screenshot is taken to become the world's icon the next time {{btn|Save and Quit to Title}} is clicked.{{verify}}
+|-
+|{{Btn|Open World Folder}}
+|Opens <code>.minecraft/saves/<SELECTED WORLD>/</code>. This allows quickly accessing folders like <code>datapacks</code> along with all the data for the world.
+|-
+|{{Btn|Make Backup}}
+|Makes a new .zip archive in <code>.minecraft/backups/</code> with the data of the selected world stored. The file name of a backup follows this format: <code>YYYY-MM-DD_hh-mm-ss_<World Folder Name>.zip</code>.
+Example: <code>2020-12-24_13-32-00_My World.zip</code>. This is the world called "My World", it was made on December 24, 2020, at time 13:32 (1:32 PM). The world folder name is the ''original'' name of the world given at world creation, not the display name. 
+|-
+|{{Btn|Open Backups Folder}}
+|Opens <code>.minecraft/backups/</code>.
+|-
+|{{Btn|Optimize World}}
+|Opens a screen to upgrade the level data of the world to the latest format. Once a world is optimized, it is no longer compatible with previous level formats. There are four options:
+* "Erase Cached Data" erases data like light levels and biome data, which must then be regenerated.
+* {{btn|Create Backup and Load}} creates a backup to <code>.minecraft/backups/</code> and then begin the optimization process.
+* {{btn|I know what I'm doing!}} begins the optimization process without making a backup.
+* {{btn|Cancel}} cancels the optimization process.
+After clicking either of the buttons, the optimization process begins. [[Chunk|Chunks]] generated in [[Java Edition 1.19|1.19]] or later are skipped, as they use the current format. The rest of the chunks are reformatted.
+|}
+
+== ''Bedrock Edition'' ==
+<templatestyles src=":Minecraft_Wiki/styles.css/editcopy" />
+The edit world screen {{in|bedrock}} allows for various settings, most [[game rules]], [[add-on]]s, and [[experiment]]s to be changed. Worlds that are stored locally on the device can be edited, as well as worlds in an owned [[Realms]] server. The edit world screen for local worlds uses [[Ore UI]], while the edit world screen for ''Minecraft'' Realms{{until}} and the ''Editor'' uses the Classic UI, making them look vastly different while offering almost the same options.
+
+The world options for local worlds can also be viewed and edited from the [[settings]] in the [[game menu]], which uses the Classic UI in Realms. In the game menu, most options are located in sections in the "Game" tab (except Multiplayer), and some are not available or named differently. Resource and behavior pack settings can be viewed in the Classic UI, but not edited.
+
+=== Ore UI ===
+[[File:Ore UI - Edit World Screen Menu "General" Tab Settings (Bedrock).png|thumb|The Edit world screen for local worlds.]]
+[[File:Ore UI - Edit World Realms Screen Menu "General" Tab Settings (Bedrock).png|thumb|The Edit world screen for ''Minecraft'' Realms in ''[[Minecraft Preview|Preview]]'' only]]
+The edit world screen for local worlds can be opened from the "Worlds" tab in the [[play screen]] by selecting the "Edit" button on a world, or by pressing {{xbtn|x}}/{{psbtn|tr}} for controllers on a selected world. In ''Minecraft Preview'', the edit world screen for ''Minecraft'' Realms can be opened by the Realm owner or members with an administrator role by selecting "Edit World" on an active world in the Realms Hub.
+
+The menu shows the world thumbnail with some buttons and a tab list on the left, and the world options for each selected tab on the right.
+{| class="wikitable" border="1"
+|+
+! width="125" | Option
+! Description
+|-
+| style="font-size: large; text-align: center;" | [[File:Ore UI - Back Button Icon (Bedrock).png|50px|link=]]
+| Returns to the previously opened [[menu screen]], usually the "Worlds" tab in the [[play screen]] for local worlds, and the Edit Realm screen for ''Minecraft'' Realms. If any options have been changed, the game offers to save the changes, or discard them.
+|-
+| [[File:Ore UI - Select Screenshot Button Icon (Bedrock).png|50px|center|link=]]
+| Opens a menu with the option to change the world thumbnail to an in-game [[screenshot]], or reset it to the default screenshot which is taken upon world saving. Not available for worlds in ''Minecraft'' Realms.
+|-
+| [[File:Ore UI - Play Button (Bedrock).png|200px|link=]]<br>[[File:Ore UI - Play Realms Button (Bedrock).png|200px|link=]]
+| Saves changes made to the world options and opens the [[loading world screen]] to join the world or Realm.
+|-
+| [[File:Ore UI - Edit World Screen - Play On Realms Button (Bedrock).png|200px|link=]]
+| Opens a menu with the options to upload the world to an owned Realm, or create a new Realms subscription. Selecting a Realms server will show a selection screen with three available world slots where the world can be stored. If a world already exists in the slot, the world will be replaced with the uploaded world.
+Not available for worlds in ''Minecraft'' Realms.
+|}
+Below, there are seven sections which open the respective world options on the right: General, Advanced, Multiplayer, Cheats, Resource packs, Behavior packs, and Experiments.
+
+When the world has been created from a [[Marketplace]] template, some options may be locked by the creator. The options can be unlocked by selecting the message at the top, but this may result in different gameplay than the creator intended for the template.
+
+Some options and custom [[add-ons]] may permanently disable [[achievements]] for the world, which are shown with a message on the top. Enabling add-ons or [[experiments]] shows a warning message as well.
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Crafting Table Block" Icon.png|40px|left|class=pixel-image|frameless]] General</h4>
+{{-}}
+<div class="collapsible-content">
+----
+; World name <div class="tright"; style="font-family:Minecraft">My World</div>
+: The name of the world, shown in all world lists, in the in-game player list, and for multiplayer connections. Allows a string from 1-30 characters.
+----
+; Game mode <div class="tright"; style="font-family:Minecraft">Survival</div>
+: Changes the default [[game mode]], which is the game mode all players get when joining the world. Selecting Creative mode disables [[achievement]]s.
+;* <span style="font-family:Minecraft">[[Survival]]</span>
+''Explore a mysterious world where you build, collect, craft, and fight monsters.''
+;* <span style="font-family:Minecraft">[[Creative]]</span>
+''Create, build, and explore without limits. You can fly, have endless materials, and can't be hurt by monsters.''
+;* <span style="font-family:Minecraft">[[Adventure]]</span>
+''You get to set your own rules through in-game commands on how you and other can interact with the game''
+----
+; Difficulty <div class="tright"; style="font-family:Minecraft">Normal</div>
+: Changes the game's [[difficulty]] setting, which has a significant effect on Survival gameplay.
+;* <span style="font-family:Minecraft">[[Peaceful]]</span>
+''No hostile mobs and only some neutral mobs spawn. Hunger bar doesn't deplete and health replenishes over time.''
+;* <span style="font-family:Minecraft">[[Easy]]</span>
+''Hostile mobs spawn but deal less damage. Hunger bar depletes and drains health down to 5 hearts.''
+;* <span style="font-family:Minecraft">[[Normal]]</span>
+''Hostile mobs spawn and deal standard damage. Hunger bar depletes and drains health down to half a heart.''
+;* <span style="font-family:Minecraft">[[Hard]]</span>
+''Hostile mobs spawn and deal more damage. Hunger bar depletes and can drain all health.''
+----
+; Hardcore [[File:Ore UI - Hardcore Mode - Toggle OFF Button Locked Icon (Bedrock).png|55px|right|link=]]
+''You can't respawn if you die. Good luck! You'll need it.''
+: Shows whether [[Hardcore]] mode is enabled, which cannot be changed.
+----
+; World size <div class="tright"; style="font-family:Minecraft">Update to Infinite</div>
+''Turn your old 256x256 block world into an Infinite world. This will automatically make a backup of your old world.
+: Only available for worlds created with the [[Old]] world type before [[Bedrock Edition 1.18.0|1.18.0]]. This removes the invisible bedrock boundary around the world and allows infinite chunk generation, as well as gameplay features from the latest version.
+----
+; File management
+: The first three options are not available on Realms. The last three options are exclusive to Realms. 
+;* <span style="font-family:Minecraft">Duplicate world</span>
+: Copies the world files and stores the new world locally with {{Cd|- Copy}} added to the name.
+;* <span style="font-family:Minecraft">Delete world</span>
+''Are you sure? If you delete this world it will be gone forever..''
+: Permanently deletes the world, after confirmed a second time.
+;* <span style="font-family:Minecraft">Export world</span>
+''Export a world and its settings such as game modes, or difficulty''<br>
+''Erasing the data is not available on a world with hardcore mode enabled.''
+: Opens a menu to export the world files. Proceeding will export a copy of the world as {{cd|[[File extensions|.mcworld]]}}, opening the Windows file explorer to select where the world will be stored. It can be imported by opening the file with ''Minecraft'' or the import world feature. Only available on Windows.<ref name=":0">{{bug|MCPE-174595||Missing Export and Import buttons on mobile devices|resolution=WAI}}</ref><ref name=":1">{{bug|MCPE-180257||Missing Export and Import buttons on Chromebooks|resolution=WAI}}</ref> There is one setting for world exportation.
+----
+:; Clear player data [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+: ''This will erase all players cata completely, including chest contents, inventories, and locations.''
+----
+;* <span style="font-family:Minecraft">Reset world</span>
+''This will remove your current world from your Realm's active slot and replace it with a brand new world. Anyone currently playing will be temporarily disconnected.''
+: Deletes all world data (except Saves) and activates a new, default world in the world slot. This does not allow world creation settings to be changed, which requires to replace it with a local world.
+;* <span style="font-family:Minecraft">Replace world</span>
+''This will remove your current world from your Realm's active slot and let you choose a world to replace it with. Anyone currently playing will be temporarily disconnected.''
+: Opens a list of local worlds. Selecting one will replace the world slot on the Realm with the world, overwriting the old world.
+;* <span style="font-family:Minecraft">Download world</span>
+: Downloads the world and stores it locally on the device, with a name in the format {{Cd|[REALM NAME] - Copy}}.
+<div style="border: 1px solid var(--border-color-subtle); padding: 10px;">
+''Settings changes are applied when the world is running on the server''{{note|Only shown in Realms}}
+
+''Size: ''Size''MB - Last saved: ''DD Mon YYYY
+: The current size of the world, and the date when the world file was last edited.
+</div>
+<gallery mode="packed">
+Ore_UI - Edit World Screen "General" Tab Settings - File Management Section Button (Bedrock).png|The "File management" section for local worlds.
+Ore UI - Edit World Realms Screen "General" Tab Settings - File Management Section Button (Bedrock).png|The "File management" section for Realms.
+</gallery>
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Furnace Lit Block" Icon.png|40px|left|class=pixel-image|frameless]] Advanced</h4>
+{{-}}
+<div class="collapsible-content">
+----
+; World seed
+''Guides the algorithm that magically creates your world''
+: This is the [[world seed]], a random number which cannot be changed. In Realms, the value is not shown. A button on the right allows to copy the seed to the clipboard.
+----
+; Flat world [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''A flat world to build up or mine down into''
+: Shows whether the [[Overworld]] generates with a [[flat world]], cannot be changed.
+----
+; Flat world preset <div class="tright"; style="font-family:Minecraft">Classic Flat</div>
+''The layers of blocks that make up your flat world''
+: When "Flat world" is enabled, this shows the selected [[Superflat#Default presets|flat world preset]] for the generation. Below the selected flat world preset, a list of blocks that make up the flat world is shown with the amount of layers for each block.
+----
+; Show coordinates [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Display your current position''
+: Shows the player's current [[coordinates]] on the HUD without decimals, applied for all players in the world.
+----
+; Show days played [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Display the number of in-game days played''
+: Shows the number of in-game days played on the HUD, applied for all players in the world.
+----
+; Recipe unlocking [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Collect materials to unlock recipes in your recipe book''
+: When enabled, [[crafting recipes]] need to be unlocked through gameplay before they appear in the [[recipe book]]. Locked recipes still function when items are put in the crafting grid without using the recipe book.
+----
+; Fire spreads [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Fire can spread between entities''
+: Controls whether [[fire]] can spread from block to block, between [[entities]], and distinguish naturally.
+----
+; TNT explodes [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Red box goes boom''
+: Controls whether [[TNT]] and [[minecarts with TNT]] can explode.
+----
+; Mob loot [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Mobs drop items when killed''
+: Controls whether [[mob]]s can drop items when killed.
+----
+; Natural regeneration [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Gain or lose health based on your hunger''
+: Controls whether [[hunger]] can affect the player's health; a high hunger bar regenerating health or an empty hunger bar lowering the health.
+----
+; Tile drops [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Blocks drop when they're broken''
+: Controls whether [[block]]s can drop items when they are broken.
+----
+; Skip night by sleeping [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Sleeping in a bed will skip to morning''
+: Controls whether sleeping in a [[bed]] at night or during thunderstorms skips to morning and clear weather.
+----
+; Required Sleeping Players <div class="tright"; style="font-family:Minecraft">All (100%)</div>
+''How many players must be in bed to skip the night?''
+: Changes how many players are required to sleep before the night will be skipped, if "Skip night by sleeping" is enabled. Can be set between 0%, where the night will always be skipped if anyone sleeps in a bed, and 100% where all players need to be in bed before the night is skipped.
+----
+; Immediate respawn [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Skip "You died!" menu and immediately respawn''
+: Controls whether to skip the [[death]] screen and immediately respawn after the player has died. In Hardcore mode, the "Game over!" screen will be skipped and the player will instantly enter [[Spectator]] mode upon death.
+----
+; Respawn blocks explode [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Respawn anchors and beds can explode''
+: Controls whether [[bed]]s and [[respawn anchor]]s explode when used in the wrong [[dimension]].
+----
+; Respawn radius <div class="tright"; style="font-family:Minecraft">10</div>
+''Respawn within this block radius when you die and no custom spawnpoint is set (max 128)''
+: An integer input controlling the spread distance around the [[world spawn]] where players randomly spawn if they don't have a custom respawn point. Can be set between 0 and 128.
+----
+; Simulation distance <div class="tright"; style="font-family:Minecraft">4 chunks</div>
+''The game loads and applies changes within a range of {{abbr|64x64|Variable depending on the option}} blocks from the player''
+: Allows the [[simulation distance]] to be changed, which determines the range of [[mob spawning]]/despawning, game [[tick]]s, and chunk updates. Can be set to 4, 6, 8, 10, or 12 chunks. Some devices may limit the simulation distance option to 8 or 10 chunks. Not available in Realms.
+----
+; Starting map [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Spawn with a blank map to explore your world''
+: When a player spawns in the world for the first time, an empty [[locator map]] appears in their hotbar. This is grayed out and cannot be changed.
+----
+; Bonus chest [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Spawn close to a chest with items to get you started''
+: Shows whether a [[bonus chest]] generated near the [[world spawn]] during world generation, cannot be changed.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Steve and Alex Face 1" Icon.png|40px|left|class=pixel-image|frameless]] Multiplayer</h4>
+{{-}}
+<div class="collapsible-content">
+----
+; Multiplayer game [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Other players can join your world''
+: Controls whether [[multiplayer]] is enabled in this world, not available in Realms. If enabled, the game is still considered singleplayer until other players join.
+----
+===== Settings =====
+The following settings are grayed out unless multiplayer is enabled.
+----
+; Player access / PlayStation™ Network friends <div class="tright"; style="font-family:Minecraft">Friends</div>
+: Determines who can join this world trough ''Minecraft''<nowiki/>'s [[social]] network. Players can always join when they received an invite from the [[pause menu]], and if enabled, the world shows as multiplayer world in the [[Select World|world list]] of friends, or the game can be joined from the [[profile]]. In Realms, this is a "Manage members" button located below the other options, which redirects to the Members tab of the Realm's settings, where players and default permissions can be changed.
+;* <span style="font-family:Minecraft">Invite players</span>
+''Anyone you send a direct invite can join''
+;* <span style="font-family:Minecraft">Friends</span>
+''Anyone you've added as a Minecraft friend can join''
+;* <span style="font-family:Minecraft">Friends of friends</span>
+''Friends of your Minecraft friends can join''
+----
+; Default player permissions <div class="tright"; style="font-family:Minecraft">Member</div>
+: The assigned [[player permission]]s to new players joining the game. These can always be customized per player from the [[pause menu]]. Not available in Realms.
+;* <span style="font-family:Minecraft">Visitor</span>
+''Visitors can only observe your world, not interact with it''
+;* <span style="font-family:Minecraft">Member</span>
+''Members can build and mine, attack players and mobs, and interact with items and entities''
+;* <span style="font-family:Minecraft">Operator</span>
+''Operators can teleport and use commands, in addition to anything Members can do''
+----
+; Visible to LAN players [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Players on your local network can join your world''
+: Controls whether the world is visible to any player on the same [[LAN]] network as a multiplayer game, regardless of the player access setting. Not available in Realms.
+----
+; Friendly fire [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Players can damage each other''
+: Controls whether players can directly damage each other, using melee attacks or projectiles.
+----
+; Locator bar [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Shows the direction of nearby players in the world''
+: Controls whether the [[locator bar]] is visible if multiple players are in the world.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Enchanting Table Block" Icon.png|40px|left|class=pixel-image|frameless]] Cheats</h4>
+{{-}}
+<div class="collapsible-content">
+----
+; Cheats [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Customize the game with cheat settings''
+: Controls whether most [[commands]] are available for operators, unlocks the following cheat settings. Enabling this disables [[achievement]]s, not available on Hardcore.
+----
+===== Cheat settings =====
+The following settings are grayed out unless cheats are enabled.
+----
+; Daylight cycle <div class="tright"; style="font-family:Minecraft">Normal</div>
+: Controls functionality of the [[daylight cycle]]. Always day is not available in Realms.
+;* <span style="font-family:Minecraft">Normal</span>
+''In-game time passes normally, from day to night''
+;* <span style="font-family:Minecraft">Always day</span>
+''In-game time is locked to noon''
+;* <span style="font-family:Minecraft">Lock time</span>
+''In-game time is locked to current time''
+----
+; Keep inventory [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Keep all items in the inventory when you die''
+: Controls whether players keep their [[inventory]] contents after dying.
+----
+; Mob spawning [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Mobs spawn naturally''
+: Controls whether [[mobs]] can spawn naturally.
+----
+; Mob griefing [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Mobs can move and destroy blocks in your world''
+: Controls whether certain mobs can move and destroy blocks, such as [[endermen]] and [[creeper]]s.
+----
+; Entities drop loot [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Non-mob entities, like paintings, drop items when destroyed''
+: Controls whether non-mob [[entities]] can drop items when destroyed.
+----
+; Weather cycle [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''The possibility to get rain, snow and thunderstorms''
+: Controls whether the [[weather]] can change between rain, snow, and thunderstorms over time, or is locked to the current weather.
+----
+; Command blocks [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Use commands to program these blocks''
+: Controls whether [[command blocks]] can execute commands and can be customized by operators.
+----
+; Minecraft Education features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enables educational items like the chemistry kit''
+: Controls whether to enable certain features from {{edition|edu}}. Not available in Realms.
+----
+; Random tick speed <div class="tright"; style="font-family:Minecraft">1</div>
+''Affects the behavior of certain blocks, like the speed of vegetation growth and decay (max 4096)''
+: An integer input that controls the rate at which random events occur in the world caused by [[random ticks]]. Can be set between 0 and 4096, contains a quick reset button next to the box.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Chest Block" Icon.png|40px|left|class=pixel-image|frameless]] Resource packs</h4>
+{{-}}
+<div class="collapsible-content">
+: Not available in Realms, can only be accessed from the Classic UI.
+----
+; Shared packs [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Players are asked to download all local packs in order to join the game.''
+: Controls whether [[resource packs]] on the world are optional or forced. When turned off, players can refuse to download and enable local resource packs, and select their own packs in the [[Settings#Global Resources|Global Resources]] settings. When turned on, players will download all enabled resource packs and global resource packs are disabled.
+----
+===== Active =====
+----
+; Local
+: Lists all active local resource packs. When multiple resource packs are enabled that can conflict with each other, the highest resource pack in the list will overwrite conflicting features from other packs. Each pack can be dragged to any location in the list. A pack can be removed with the "Remove" button next to each pack, and the description can be shown by selecting the pack. For Marketplace packs, there is a button to open the purchase page in the Marketplace. For all packs, there is a button to open a menu with the technical details of the pack, such as the UUID, storage location, and error logs. Certain packs have a settings menu which allows to customize features from the pack and view custom information.
+----
+; Global
+: Lists all active global resource packs. The same details and links can be opened for global packs as for local packs, but they can only be enabled or disabled in the "Global Resources" tab in the main settings menu.
+----
+===== Available =====
+----
+; Owned
+: A dropdown widget that lists available resource packs obtained from the [[Marketplace]], imported custom packs, or stored manually in {{File|directory|development_resource_packs|inline=1}}. Each pack can be activated by pressing the button on the right of the pack, and more information can be shown by selecting the pack. Marketplace packs also show a button to open the purchase screen in the Marketplace. Some packs may require downloading before they can be activated. Enabling a resource pack that is part of an [[add-on]] also enables the connected behavior pack if available.
+----
+; Marketplace Pass
+: A dropdown widget that lists available resource packs from [[Marketplace Pass]]. They can be opened the same way as packs in the "Owned" list. If the player is not subscribed to the Marketplace Pass, a button that opens the Marketplace Pass purchase screen shows instead.
+----
+; Get more packs
+''Hundreds of packs available in the Marketplace''
+: Redirects to a Marketplace page featuring new resource packs.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Shulker Box Block" Icon.png|40px|left|class=pixel-image|frameless]] Behavior packs</h4>
+{{-}}
+<div class="collapsible-content">
+: Not available in Realms, can only be accessed from the Classic UI.
+----
+; Active
+: A submenu that lists active [[behavior packs]], sets of customized features that affect [[gameplay]]. Behavior packs can be opened similarly to resource packs, but are always connected to the world data and can't be disabled for players.
+----
+; Available 
+: A submenu that lists available behavior packs obtained from the Marketplace, imported custom packs, or stored manually in {{File|directory|development_behavior_packs|inline=1}}. Enabling a behavior pack that is part of an [[add-on]] also enables the connected resource pack if available.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Redstone Lamp Lit Block" Icon.png|40px|left|class=pixel-image|frameless]] Experiments</h4>
+{{-}}
+<div class="collapsible-content">
+''Experiments are potential new features. Be careful as things might break.''
+: Allows the player to enable several [[experimental]] features, not available in Realms. After saving the world with experiments enabled, the experiments can't be toggled off again. See {{slink|Experiments|Bedrock Edition}} for details about each experiment.
+====== Gameplay ======
+''Change the way your game looks''
+----
+; Villager Trade Rebalancing [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Contains updated trades for villagers for the purpose of rebalancing''
+----
+====== Add-on creators ======
+''For creators of game packs and other add-ons''
+----
+; Upcoming Creator Features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Includes actor properties and adjustable fog parameters''
+----
+; Beta APIs [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Use "-beta" versions of API modules in add-on packs''
+----
+; Experimental Creator Camera Features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enables the use of the latest custom camera features''
+----
+; Render Dragon Features for Creators [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enable the deferred rendering pipeline. Requires a PBR-enabled resource pack and compatible hardware.''
+----
+</div></div>
+
+=== Settings ===
+[[File:Ore UI - Game Menu - Settings Screen Menu "Game" Tab (Bedrock).png|thumb|The Game settings tab in the game menu]]
+These are the same game settings as listed above, but located in-game in the [[settings]] menu, if the player hosts the world. Realms and the ''Editor'' use the Classic UI for these settings, described below.
+{{-}}
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Overworld Sun Day" Icon.png|40px|left|class=pixel-image|frameless]] Game</h4>
+''Change world settings and style of play''
+<div class="collapsible-content">
+----
+; World name <div class="tright"; style="font-family:Minecraft">My World</div>
+: Shows the world name, cannot be changed.
+----
+; Difficulty <div class="tright"; style="font-family:Minecraft">Normal</div>
+: Changes the game's [[difficulty]] setting, which has a significant effect on Survival gameplay.
+;* <span style="font-family:Minecraft">Peaceful</span>
+''No hostile mobs and only some neutral mobs spawn. Hunger bar doesn't deplete and health replenishes over time.''
+;* <span style="font-family:Minecraft">Easy</span>
+''Hostile mobs spawn but deal less damage. Hunger bar depletes and drains health down to 5 hearts.''
+;* <span style="font-family:Minecraft">Normal</span>
+''Hostile mobs spawn and deal standard damage. Hunger bar depletes and drains health down to half a heart.''
+;* <span style="font-family:Minecraft">Hard</span>
+''Hostile mobs spawn and deal more damage. Hunger bar depletes and can drain all health.''
+----
+; Default game mode <div class="tright"; style="font-family:Minecraft">Survival</div>
+''Select a game mode for players entering your world''
+: Changes the default [[game mode]], which is the game mode all players get when joining the world.
+;* <span style="font-family:Minecraft">[[Survival]]</span>
+''Explore a mysterious world where you build, collect, craft, and fight monsters.''
+;* <span style="font-family:Minecraft">[[Creative]]</span>
+''Create, build, and explore without limits. You can fly, have endless materials, and can't be hurt by monsters.''
+;* <span style="font-family:Minecraft">[[Adventure]]</span>
+''Explore special worlds and play by the rules of their creator''
+----
+; Personal game mode <div class="tright"; style="font-family:Minecraft">Default</div>
+''Select your preferred game mode''
+: Similar to the game mode above, but is only applied to the player and not world-wide. There are two additional game modes available:
+;* <span style="font-family:Minecraft">Default</span>
+''Whatever the default game mode is... that's what you get.''
+;* <span style="font-family:Minecraft">[[Spectator]]</span>
+''Fly around and observe without interacting with the world or being seen''
+----
+; Hardcore mode [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''You can't respawn if you die. Good luck! You'll need it.''
+: Shows whether the game has [[Hardcore]] enabled, but cannot be changed.
+----
+===== World setup =====
+''Settings for worlds created by you''
+----
+; Starting map [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Spawn with a blank map to explore your world''
+: Shows whether players that join for the first time spawn with an [[empty locator map]] in their first hotbar slot, but cannot be changed.
+----
+; Bonus chest [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Spawn close to a chest with items to get you started''
+: Shows whether the world has been generated with the [[bonus chest]], but cannot be changed.
+----
+; Player permission when joining from invite <div class="tright"; style="font-family:Minecraft">Member</div>
+: The assigned [[player permission]]s to new players joining the game. These can always be customized per player from the [[pause menu]].
+;* <span style="font-family:Minecraft">Visitor</span>
+''Visitors can freely explore your world, but cannot interact with blocks, items, or entities. Trust Players Off.''
+;* <span style="font-family:Minecraft">Member</span>
+''Members are active players in your world who can break and create blocks, and attack mobs and other players.''
+;* <span style="font-family:Minecraft">Operator</span>
+''Operators are members who can set player permissions and use commands to have more control over your world.''
+----
+; Flat world [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''A flat world to build up or mine down into''
+: Shows whether the world has been created as a [[flat world]], but cannot be changed.
+----
+; Seed
+''A mysterious series of numbers used to create your world''
+: The [[world seed]], a random number by default, used to determine how the [[world generation]] randomly creates the world, cannot be changed. The seed can be copied with the button on the right.
+----
+; Simulation Distance <div class="tright"; style="font-family:Minecraft">4 chunks</div>
+''The game loads and applies changes within a range of {{abbr|64x64|Variable depending on the option}} blocks from the player''
+: Shows the [[simulation distance]], which affects the range of blocks that receive [[tick]]s and chunk updates, but cannot be changed.
+----
+===== World options =====
+''Make the world yours''
+----
+; Friendly fire [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Players can hurt each other''
+: Controls whether players can directly damage each other, using melee attacks or projectiles.
+----
+; Show coordinates [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Display your current position at all times''
+: Shows the player's current [[coordinates]] on the HUD without decimals, applied for all players in the world.
+----
+; Locator bar [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Shows the direction of nearby players in the world''
+: Controls whether the [[locator bar]] is visible if multiple players are in the world.
+----
+; Show days played [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Number of in-game days that have passed''
+: Shows the number of in-game days played on the HUD, applied for all players in the world.
+----
+; Fire spreads [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+'' Might want to build with stone''
+: Controls whether [[fire]] can spread from block to block, between [[entities]], and extinguish naturally.
+----
+; Recipes unlocking [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Collect materials to automatically unlock recipes''
+: When enabled, [[crafting recipes]] need to be unlocked through gameplay before they appear in the [[recipe book]]. Locked recipes still function when items are put in the crafting grid without using the recipe book.
+----
+; TNT explodes [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Red box goes boom''
+: Controls whether [[TNT]] and [[minecarts with TNT]] can explode.
+----
+; Respawn blocks explode [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Respawn anchors and beds can explode if poorly placed''
+: Controls whether [[bed]]s and [[respawn anchor]]s explode when used in the wrong [[dimension]].
+----
+; Mob loot [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Mobs drop items when killed''
+: Controls whether [[mob]]s can drop items when killed.
+----
+; Natural regeneration [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Gain or lose health based on your hunger''
+: Controls whether [[hunger]] can affect the player's health; a high hunger bar regenerating health or an empty hunger bar lowering the health.
+----
+; Tile drops [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Blocks drop in the spot or tile where they're broken. When off, blocks are simply destroyed.''
+: Controls whether [[block]]s can drop items when they are broken.
+----
+; Skip night by sleeping [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Sleeping in a bed at night will skip to morning''
+: Controls whether sleeping in a [[bed]] at night or during thunderstorms skips to morning and clear weather.
+----
+; Required sleeping players <div class="tright"; style="font-family:Minecraft">100%</div>
+''Percentage of players that must be in bed to skip to morning''
+: Changes how many players are required to sleep before the night will be skipped, if "Skip night by sleeping" is enabled. Can be set between 0%, where the night will always be skipped if anyone sleeps in a bed, and 100% where all players need to be in bed before the night is skipped.
+----
+; Immediate respawn [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Skip "You died!" menu and respawn immediately''
+: Controls whether to skip the [[death]] screen and immediately respawn after the player has died. In Hardcore mode, the "Game over!" screen will be skipped and the player will instantly enter [[Spectator]] mode upon death.
+----
+; Respawn radius in blocks <div class="tright"; style="font-family:Minecraft">10</div>
+''Randomly respawn somewhere within this many blocks of where you died (max 128)''
+: An integer input controlling the spread distance around the [[world spawn]] where players randomly spawn if they don't have a custom respawn point. Can be set between 0 and 128.
+----
+
+===== Experiments =====
+''Try out new features and in-game experiments. But heads up! These can't be turned off after world creation.''
+: Shows all [[experiments]] that are enabled for the world, but cannot be changed. See {{slink|Experiments|Bedrock Edition}} for details about each experiment.
+====== Gameplay ======
+----
+; Villager Trade Rebalancing [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Contains updated trades for villagers for the purpose of rebalancing''
+----
+; Furnace Recipe Book [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Add a recipe book in the furnace screen, similar to the one in the crafting table''
+----
+; Drop 2 of 2026{{upcoming|be 26.20}} [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Explore a new underground biome where you can find a bouncy friend to play with''
+----
+====== Add-on creators ======
+----
+; Upcoming Creator Features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Includes actor properties and adjustable fog parameters''
+----
+; Beta APIS [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Use "-beta" versions of API modules in add-on packs''
+----
+; Experimental Creator Camera Features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enables the use of the latest custom camera features''
+----
+; Render Dragon Features for Creators [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enable the deferred rendering pipeline. Requires a PBR-enabled resource pack and compatible hardware.''
+----
+; Experimental Voxel Shape Features [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enables the use of voxel shapes for some vanilla and custom blocks''
+----
+; Experimental Custom Projectile Features{{upcoming|be 26.20}} [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Enables custom projectile improvements''
+===== Cheats =====
+''Sometimes you need to bend the rules''
+----
+; Activate cheats [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Get access to Minecraft's built-in cheat system''
+: Controls whether most [[commands]] are available for operators, unlocks the following cheat settings. Enabling this disables [[achievement]]s, not available on Hardcore.
+----
+; Education edition [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Try out your world with Education edition's toolset''
+: Controls whether to enable certain features from {{edition|edu}}.
+----
+; Normal Day/Night Cycle [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Turn off to freeze the day/night cycle in its current phase''
+: Whether the [[daylight cycle]] is active, or the time is locked to the current time.
+----
+; Always day [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Night never comes, it is always noon''
+: Locks the time to noon, disabling "Normal Day/Night Cycle".
+----
+; Keep inventory [[File:Ore UI - Toggle OFF Button Locked (Bedrock).png|55px|right|link=]]
+''Keep all items in the inventory when you die''
+: Controls whether players keep their [[inventory]] contents after dying.
+----
+; Mobs spawn normally [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Turn off to prevent mobs from spawning''
+: Controls whether [[mobs]] can spawn naturally.
+----
+; Mob griefing [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Mobs can break blocks and interfere with the environment''
+: Controls whether certain mobs can move and destroy blocks, such as [[endermen]] and [[creeper]]s.
+----
+; Entities drop loot [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Non-mob entities, like paintings, drop items when destroyed''
+: Controls whether non-mob [[entities]] can drop items when destroyed.
+----
+; Normal weather cycle [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Like rain, snow, and thunderstorms''
+: Controls whether the [[weather]] can change between rain, snow, and thunderstorms over time, or is locked to the current weather.
+----
+; Command blocks enabled [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''These are special programmable blocks''
+: Controls whether [[command blocks]] can execute commands and can be customized by operators.
+----
+; Tick Speed <div class="tright"; style="font-family:Minecraft">1</div>
+''Changes the speed of the world and everything in it (max 4096)''
+: An integer input that controls the rate at which random events occur in the world caused by [[random ticks]] (''not'' [[tick]]s). Can be set between 0 and 4096, contains a quick reset button next to the box.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h4 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Steve and Alex Face 1" Icon.png|40px|left|class=pixel-image|frameless]] Multiplayer</h4>
+''Enjoy Minecraft with friends''
+<div class="collapsible-content">
+: The following settings are all grayed out.
+----
+; Enable Multiplayer [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Allow other players to join your world''
+: Shows whether [[multiplayer]] is enabled in this world. If enabled, the game is still considered singleplayer until other players join.
+----
+; Microsoft account privacy <div class="tright"; style="font-family:Minecraft">Friends Only</div>
+''Select who can join your multiplayer world''
+: Shows who can join this world trough ''Minecraft''<nowiki/>'s [[social]] network,. Players can always join when they received an invite from the [[pause menu]], and if enabled, the world shows as multiplayer world in the [[Select World|world list]] of friends, or the game can be joined from the [[profile]].
+;* <span style="font-family:Minecraft">Invite Only</span>
+''Anyone you send a direct invite can join your world''
+;* <span style="font-family:Minecraft">Friends Only</span>
+''Anyone you've added as a Minecraft friend can join your world''
+;* <span style="font-family:Minecraft">Friends of Friends</span>
+''Friends of your Minecraft friends can join your world''
+----
+; Visible to LAN players [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+: Shows whether the world is visible to any player on the same [[LAN]] network as a multiplayer game, regardless of the player access setting.
+----
+</div></div>
+
+The Resource Packs and Behavior Packs tabs currently use the classic UI, see below.
+
+=== Classic UI ===
+[[File:Realms_New_World_Game_settings_BE.png|thumb|The "Game Settings" tab in Realms.]]
+The edit world screen in ''Minecraft'' [[Realms]] in the [[game menu]] and ''[[Bedrock Editor]]'' use the Classic UI, which looks vastly different from Ore UI and offers some different options. The game settings for Realms in the game menu can be opened by selecting "Settings" in the game menu. The world options tabs are located in the "World" or "Realm" section on the left, and the add-on tabs are located in the Add-Ons tab at the bottom.
+
+The edit project screen in ''Bedrock Editor'' only affects the world after exportation, and allows all options to be changed including normally grayed out options.
+
+==== Game Settings ====
+{| class="wikitable" border="1" width="100%" data-description=
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| style="font-size: large;" | World Name
+| Allows the name of the world to be set to a custom string from up to 30 characters.
+| style="text-align: center;" | My World
+|-
+| style="font-size: large;" | Difficulty
+| Allows the default [[difficulty]] setting to be changed. Can be set between Peaceful, Easy, Normal (default), and Hard.
+| style="text-align: center;" | Normal
+|-
+| style="font-size: large;" | Default Game Mode<ref group="note" name="pause menu">In the game settings screen in the [[pause menu]].</ref><br>Game Mode<ref group="note" name="realms">In the game settings screen for ''Minecraft'' [[Realms]].</ref>
+| Allows the default [[game mode]] of the world to be changed. The available modes are [[Survival]], [[Creative]], and [[Adventure]].
+| style="text-align: center;" | Survival
+|-
+| style="font-size: large;" | Personal Game Mode
+| Allows the personal game mode for the player to be changed, which is also affected by the {{Cmd|/gamemode}} command. Available game modes are Survival, Creative, Adventure, [[Spectator]], and Default (the player's game mode is the same as the world's default game mode). Not available for ''Minecraft'' Realms.
+| style="text-align: center;" | Default
+|-
+| style="font-size: large;" | Hardcore mode
+| Shows whether [[Hardcore]] mode is enabled or not, but can't be changed.
+| style="text-align: center;" | OFF
+|-
+! colspan="3" | World Preferences
+|-
+| style="font-size: large;" | Starting Map
+| Shows whether the [[starting map]] option was enabled upon world creation, but can't be changed. Not available for ''Minecraft'' Realms.
+| rowspan="2" style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Bonus Chest
+| Shows whether the [[Bonus Chest|bonus chest]] option was enabled upon world creation, but can't be changed. Not available for ''Minecraft'' Realms.
+|-
+| style="font-size: large;" | Player permission when joining from invite
+| The default [[player permission]] when a player joins the world from an invite. Available permissions are Visitor, Member, and Operator. In ''Minecraft'' Realms, this option can be changed in the "Members" tab in the Manage Realm screen or the [[pause menu]] and affects the whole Realm, rather than only the world.
+| style="text-align: center;" | Member
+|-
+| style="font-size: large;" | World Type
+| Shows the [[world type]] of the world, which is Infinite by default. If the "[[Flat world]]" option has been enabled, the world type shows Flat. If a world has been created as an Old world before [[Bedrock Edition 1.18.0]], this shows Old. Not available for ''Minecraft'' Realms.
+| style="text-align: center;" | Infinite
+|-
+| style="font-size: large;" | Seed
+| Shows the [[world seed]] which randomly generates the world's terrain and features, but can't be changed. Not available for ''Minecraft'' Realms.
+|
+|-
+| style="font-size: large;" | Simulation Distance
+| Shows the [[simulation distance]] selected for the world. This can only be changed in the edit world screen in the [[Play screen]]. Not available for ''Minecraft'' Realms.
+| style="text-align: center;" | 4 chunks
+|-
+! colspan="3" | World Options
+|-
+| style="font-size: large;" | Friendly Fire
+| Controls whether players can damage each other.
+| style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Show Coordinates
+| Controls whether to display the player's [[coordinates]].
+| style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Locator bar
+| Controls whether the [[locator bar]] is visible if multiple players are in the world.
+| style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Show Days Played
+| Controls whether to display the in-game days played.
+| style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Fire Spreads
+| Controls whether [[fire]] can spread.
+| rowspan="8" style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Recipes Unlock
+| Controls whether recipes in the [[recipe book]] need to be unlocked.
+|-
+| style="font-size: large;" | TNT Explodes
+| Controls whether [[TNT]] can explode.
+|-
+| style="font-size: large;" | Respawn Blocks Explode
+| Controls whether [[bed]]s and [[respawn anchor]]s explode when used in the wrong [[dimension]].
+|-
+| style="font-size: large;" | Mob Loot
+| Controls whether [[mobs]] drop items when killed.
+|-
+| style="font-size: large;" | Natural Regeneration
+| Controls whether [[hunger]] can affect the player's health.
+|-
+| style="font-size: large;" | Tile Drops
+| Controls whether blocks drop when they are broken.
+|-
+| style="font-size: large;" | Beds Work
+| Controls whether sleeping in [[bed]] at night skips to morning.
+|-
+| style="font-size: large;" | Players needed to skip night
+| How many players must be in bed to skip the night.
+| style="text-align: center;" | 100%
+|-
+| style="font-size: large;" | Immediate Respawn
+| Controls whether to skip the death screen and immediately respawn.
+| style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Respawn Radius
+| An integer input controlling the spread distance around the [[world spawn]] where players spawn. Defaults to 10, with a maximum value of 128.
+| style="text-align: center;" | 10
+|-
+| style="font-size: large;" | Experiments
+| Shows which [[experiments]] are enabled for the world, but can't be changed while in the pause menu. Not available for ''Minecraft'' [[Realms]].
+| style="text-align: center;" | OFF
+|-
+! colspan="3" | Cheats
+|-
+| style="font-size: large;" | Activate Cheats
+| Controls whether commands and other cheat settings are enabled. When disabled, the following cheat settings are grayed out.
+| rowspan="3" style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Education Edition
+| Controls whether to enable certain features from {{edition|edu}}. Not available for ''Minecraft'' Realms.
+|-
+| style="font-size: large;" | Always Day
+| Controls whether the in-game [[time]] is locked to noon. Not available for ''Minecraft'' Realms.
+|-
+| style="font-size: large;" | Do Daylight Cycle
+| Controls whether the daylight cycle is enabled, or the time is locked to the current time.
+| style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Keep Inventory
+| Controls whether players keep their inventory after dying.
+| style="text-align: center;" | OFF
+|-
+| style="font-size: large;" | Mob Spawning
+| Controls whether [[mobs]] spawn naturally.
+| rowspan="5" style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Mob Griefing
+| Controls whether mobs can move and destroy blocks.
+|-
+| style="font-size: large;" | Entities Drop Loot
+| Controls whether non-mob [[entities]] drop items when destroyed.
+|-
+| style="font-size: large;" | Weather Cycle
+| Controls whether the [[weather]] can change between rain, snow, and thunderstorms, or is locked to the current weather.
+|-
+| style="font-size: large;" | Command Blocks Enabled
+| Controls whether to enable [[command blocks]].
+|-
+| style="font-size: large;" | Random Tick Speed
+| An integer input that controls the rate at which random events occur in the world caused by [[random ticks]]. Defaults to 1, with a maximum value of 4096. Contains a reset button next to the box.
+| style="text-align: center;" | 1
+|-
+| style="font-size: large;" | Download World
+| Downloads the world and stores it locally on the device, with a name in the format {{Cd|[REALM NAME] - Copy}}. Only available for ''Minecraft'' Realms.
+|
+|-
+| style="font-size: large;" | Replace World
+| Opens a list of local worlds. Selecting one will replace the world slot on the Realm with the world, overwriting the old world. Only available for ''Minecraft'' Realms.
+|
+|-
+| style="font-size: large;" | Reset World
+| Deletes all world data (except backups) and activates a new, default world in the world slot. Only available for ''Minecraft'' Realms.
+| 
+|-
+|}
+
+==== Multiplayer ====
+The following options are not available for ''Minecraft'' [[Realms]].
+{| class="wikitable" border="1" width="100%" data-description=""
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| style="font-size: large;" | Multiplayer Game
+|Shows whether [[multiplayer]] is enabled in this world, but can't be changed.
+| style="text-align: center;" | ON
+|-
+| style="font-size: large;" | Microsoft account Settings
+| Shows which type of players can join the world, which can be Invited Players Only, Friends Only, or Friends of Friends, but can't be changed.
+| style="text-align: center;" | Friends Only
+|-
+| style="font-size: large;" | Visible to LAN Players
+| Shows whether players on the same [[LAN]] network can join the world, but can't be changed.
+| style="text-align: center;" | ON
+|-
+|}
+
+==== Add-Ons ====
+Enabling and disabling [[resource packs]] and [[behavior packs]] works exactly the same as in the Ore UI version of the edit world screen, however, the buttons are located differently. All packs are located behind collapsible section headers. The options for each pack can be viewed by selecting a pack. Press "Activate" or "Deactivate" to enable or disable packs, and press "View in Store" to open the purchase screen in the Marketplace for Marketplace packs. Activated packs can be moved in the list by selecting an arrow button on the bottom-right of a pack. For activated packs only, the technical details screen can be opened by pressing the green checkmark button on the right.
+
+All activated and available resource packs and behavior packs can be viewed from the pause menu, but none of them can be activated or deactivated while in the world. Additionally, on ''Minecraft'' Realms, locally stored custom packs in {{File|directory|development_resource_packs}} and {{File|directory|development_behavior_packs}} but this can be bypassed by storing them in the regular resource packs and behavior packs directories.
+
+<references group="note" />
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w32b|Added Edit Button.}}
+|{{HistoryLine||July 16, 2018|link=https://web.archive.org/web/20190712192453/twitter.com/Dinnerbone/status/1018773041227227136|[[File:World Converter.jpg|x32px]] Dinnerbone mentions possible addition of optimize world screen and shows early version of it.}}
+|{{HistoryLine||1.13|dev=pre10|[[File:1.13-pre10 Optimizing World.png|x32px]] Added optimize world screen.}}
+|{{HistoryLine|||dev=release|[[File:1.13 Optimizing World.png|x32px]] Added information about upgraded, skipped and total number of chunks.}}
+|{{HistoryLine||1.20|dev=Pre-release 1|[[File:1.20-pre1 Optimizing World.png|x32px]] Changed background texture.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.23|[[File:New UI - Edit World Screen Menu (Bedrock Preview 1.20.60.23).png|53px]] Edit World screen has been updated to match [[Ore UI]], available in [[Minecraft Preview|preview]] only<ref>{{tweet|Volgar|1735022317124665569|Well, actually, that's not all, my dears. In today's preview the new Edit World screen is rolling out too! Check it out, and use the feedback button on the screen to tell us what you think.}}</ref>.}}
+|{{HistoryLine||December 28, 2024|link=https://x.com/Volgar/status/1872771566146338897?t=181j8xNYHPvkQgK0P4T3Ng&s=19|Edit World screen is released to the public and no longer in [[Minecraft Preview|preview]] only.}}
+|{{HistoryLine||Preview 1.21.110.20|[[File:New UI - Edit World Realms Screen Menu (Bedrock Preview 1.21.110.20).png|45px]] The Edit World screen for ''Minecraft'' [[Realms]] has been updated to match [[Ore UI]], available in [[Minecraft Preview|preview]] only.}}
+|{{HistoryLine||Preview 26.0.28|[[File:New UI - Pause Menu - Settings Screen Menu (Bedrock Preview 26.0.28).png|45px]] The Game and Multiplayer settings tabs in the [[pause menu]], containing the world options, have been updated with Ore UI, available in ''Preview'' only.}}
+|{{HistoryLine||26.10|Game settings in the game menu are released to the public and no longer ''Preview'' only.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|Education}}
+|{{HistoryLine||1.21.91|dev=Preview 1.21.90.1|[[File:New UI - Edit World Screen Menu (Education 1.21.91).png|45px]] Edit World screen has been updated to match [[Ore UI]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU0|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=patch 1|switch=1.0.1|Added the World Options menu.}}
+|{{HistoryLine||xbox=TU5|Added [[bonus chest]] option to the World Options menu.}}
+}}
+
+== Issues ==
+{{issue list|World Options|Edit World Screen}}
+
+== Gallery ==
+=== ''Java Edition'' ===
+<gallery>
+Edit World JE-1.20.1.png|A [[world]]'s edit screen in Java Edition 1.20.1.
+Edit world screen 23w13a or b.png|Edit screen in [[Java Edition 23w13a_or_b]].
+</gallery>
+
+=== ''Bedrock Edition'' ===
+==== Current menu screens ====
+<gallery>
+File:Ore UI - Edit World Screen Menu "General" Tab Settings (Bedrock).png|The "General" tab.
+File:Ore UI - Edit World Screen Menu "Advanced" Tab Settings (Bedrock).png|The "Advanced" tab.
+File:Ore UI - Edit World Screen Menu "Multiplayer" Tab Settings (Bedrock).png|The "Multiplayer" tab.
+File:Ore UI - Edit World Screen Menu "Cheats" Tab Settings (Bedrock).png|The "Cheats" tab.
+File:Ore UI - Edit World Screen Menu "Resource Packs" Tab Settings (Bedrock).png|The "Resource packs" tab.
+File:Ore UI - Edit World Screen Menu "Behavior Packs" Tab Settings (Bedrock).png|The "Behavior packs" tab.
+File:Ore UI - Edit World Screen Menu "Experiments" Tab Settings (Bedrock).png|The "Experiments" tab.
+File:Ore UI - Edit World Screen "General" Tab Settings - Export World Button - Exportation Settings Screen Menu (Bedrock).png|The exportation settings menu.
+File:Ore UI - Game Menu - Settings Screen Menu "Game" Tab (Bedrock).png|The "Game" tab in the game menu
+File:Ore UI - Game Menu - Settings Screen Menu "Multiplayer" Tab (Bedrock).png|The "Multiplayer" tab in the game menu
+File:Realms New World Game settings BE.png|The "Game settings" tab in ''Minecraft'' Realms. Note that this screenshot is taken in the "New World" version of the edit world screen, but it looks similar in the regular edit world screen.
+File:Realms Edit World Backups settings BE.png|The "Backups" tab in ''Minecraft'' Realms.
+File:Realms Game Settings Pause Menu BE.png|The "Game settings" tab in the pause menu for ''Minecraft'' Realms.
+File:Editor Edit Project.png|The edit project screen in ''[[Bedrock Editor]]''.
+</gallery>
+
+==== New Realms UI ====
+<gallery>
+File:Ore UI - Edit World Realms Screen Menu "General" Tab Settings (Bedrock).png|The General tab
+File:Ore UI - Edit World Realms Screen Menu "Advanced" Tab Settings (Bedrock).png|The Advanced tab
+File:Ore UI - Edit World Realms Screen Menu "Multiplayer" Tab Settings (Bedrock).png|The Multiplayer tab
+File:Ore UI - Edit World Realms Screen Menu "Cheats" Tab Settings (Bedrock).png|The Cheats tab
+File:Ore UI - Edit World Realms Screen Menu "Resource Packs" Tab Settings (Bedrock).png|The Resource packs tab
+File:Ore UI - Edit World Realms Screen Menu "Behavior Packs" Tab Settings (Bedrock).png|The Behavior packs tab
+File:Ore UI - Edit World Realms Screen Menu "Experiments" Tab Settings (Bedrock).png|The Experiments tab
+</gallery>
+
+==== Historical screenshots ====
+<gallery>
+File:MCPE Edit your World.jpg|The "Edit your World" screen in older versions of ''[[Pocket Edition]]''.
+File:Hardcore Mode Locked v1.20.80.22 (On).jpg|The Classic UI edit world screen with [[Hardcore]] mode enabled.
+File:Minecraft-Realms-Menu-PE-0.15.0.png|The old edit world screen for ''Minecraft'' Realms in ''[[Pocket Edition]]''.
+File:BE Game settings (Pause menu).png|The Game settings in the game menu before 26.10
+File:BE Multiplayer settings (Pause menu).png|The Multiplayer settings in the game menu before 26.10
+</gallery>
+
+=== ''Minecraft Education'' ===
+==== Edit world screen menu ====
+<gallery>
+Ore UI - Edit World Screen Menu "General" Tab Settings (Education).png|The "General" tab.
+Ore UI - Edit World Screen Menu "Advanced" Tab Settings (Education).png|The "Advanced" tab.
+Ore UI - Edit World Screen Menu "Classroom" Tab Settings (Education).png|The "Classroom" tab.
+Ore UI - Edit World Screen Menu "Cloud Storage" Tab Settings (Education).png|The "Cloud Storage" tab.
+Ore UI - Edit World Screen Menu "Multiplayer" Tab Settings (Education).png|The "Multiplayer" tab.
+Ore UI - Edit World Screen Menu "Coding & Scripting" Tab Settings (Education).png|The "Coding & Scripting" tab.
+Ore UI - Edit World Screen Menu "Cheats" Tab Settings (Education).png|The "Cheats" tab.
+Ore UI - Edit World Screen Menu "Resource Packs" Tab Settings (Education).png|The "Resource packs" tab.
+Ore UI - Edit World Screen Menu "Behavior Packs" Tab Settings (Education).png|The "Behavior packs" tab.
+</gallery>
+
+==== Historical screenshots ====
+<gallery>
+New UI - Edit World Screen Menu (Education 1.21.91).png|Edit world screen from ? to [[Minecraft Education Preview 1.21.90.1|1.21.90.1]] for Preview and [[Minecraft Education 1.21.91|1.21.91]] for full release onwards.
+</gallery>
+
+== See also ==
+* [[Ore UI]], the {{BE}} and {{Edu}} UI refresh
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+[[Category:Menu screens]]
+
+[[pt:Opções do mundo]]
+[[zh:编辑世界]]

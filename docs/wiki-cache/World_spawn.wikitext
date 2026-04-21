@@ -1,0 +1,192 @@
+{{About|player spawning|mob spawning|Mob spawning|other uses|Spawn}}
+
+The '''world spawn''' is where [[player]]s initially spawn in the ''Minecraft'' world.
+
+== Spawn ==
+[[File:Spawning Area.png|thumb|The default respawn area for an individual player. White represents the extent of singleplayer, blue represents multiplayer, and yellow represents the world spawn point.]]
+{{redirect|respawn_radius|the game rule|Game rule#respawn_radius}}
+{{see also|Spawn/Multiplayer details|title1=Multiplayer spawning details}}
+
+The world spawnpoint is determined using a search algorithm that discourages (but cannot fully prevent) spawns in oceans, rivers, or regions with very high or low [[World_generation#Overworld|climate noise]] samples.
+# The algorithm first evaluates 66 exact coordinates that loosely form circles of radius 0, 512, 1024, 1536, and 2048 blocks from the world's center. Each coordinate is evaluated by its distance to (0,0), and by how far its climate samples fall outside the desired climate thresholds for spawnpoints. The most suitable coordinate is set as the interim spawnpoint.
+# The algorithm then draws 16 circles centered around the interim spawn point, roughly 32 blocks apart, and performs the same fitness evaluations on 862 coordinates across those circles. If a more suitable position is found, the world spawnpoint is set to that position; otherwise, the world spawnpoint remains at the current position.
+# ''Java Edition'' alone then inspects all chunks within a five-chunk square radius of the current interim spawnpoint, looking for a topsolid non-waterlogged block. Once one is found, it is set as the final spawnpoint.
+
+The world spawn point can be changed using the {{cmd|setworldspawn}} command.
+
+When the player first loads into the world, the game searches within a small area surrounding the world spawnpoint, and tries to place the player on a random solid block. This area is 21×21 blocks by default, but can be changed by the {{gmr|respawn_radius|spawnradius}} game rule or [[Game settings|world setting]]. Upon spawning, the player is placed on the highest topsolid non-waterlogged block, regardless of elevation. {{IN|be}}, it is also possible for a player to spawn underwater and start drowning.<ref>{{bug|MCPE-120237}}</ref> Upon death or return from [[the End]] dimension, the player respawns within this same area unless the player's [[#Individual spawn|individual spawn point]] changed (by using a [[bed]], [[respawn anchor]], or {{cmd|spawnpoint}}).
+
+[[File:Bedrock Edition's OreUI Respawn Radius Interface.png|thumb|''Bedrock Edition''<nowiki/>'s respawn radius setting.]]
+
+{{Calculator|chunkbase|pois=Sp|zoom=0.25}}
+
+==== Adventure mode ====
+When the server's settings specify the default game mode as Adventure (using the server.properties), then the normal spawning mechanic is ignored, and players are spawned directly on the world spawn point. This includes the X, Y, and Z coordinates, even if there is no block there, and even if there are blocks above it.
+
+If the Y coordinate is not within a valid spawning area, then the server looks up until it finds one, up to a maximum of Y=256. If there is space to spawn, but it is in mid-air, the player spawns in mid-air, even falling into the void if there is a hole.
+
+==== Location ====
+There are several ways to determine the world spawn point:
+* A [[compass]] (that hasn't been assigned to a [[lodestone]]) always points to the world spawn point.
+* Doing the [[command]]s {{cmd|gamerule spawnRadius 0}} then {{cmd|kill}}.
+* If commands are disabled, remove all the [[grass blocks]] in the 21×21 spawn area (or place a block above them to make them invalid), make sure the individual spawn point is disabled, and die.
+* Entities, other than players, falling into the [[exit portal]] in [[the End]] land exactly at the world spawn point. Items thrown in mark the spot in the [[Overworld]]. Players spawn like they normally do, allowing this action to be used to perform the above without dying, and thus can be performed in [[hardcore mode]].
+* Mods or external programs, such as [[Programs and editors/NBTExplorer|NBTExplorer]] or [[MCEdit]], can also be used to find and set the world spawn point.
+
+=== Individual spawn ===
+The individual spawn point of the player can be changed by sleeping in a [[bed]], using a [[respawn anchor]], or using the {{cmd|spawnpoint}} command. If the individual spawning area of the player is obstructed upon death, the player respawns at the world spawn.
+
+Sleeping in a bed allows for leniency in obstruction, in that the player respawns on other blocks near the bed if the original point becomes blocked. The same is true for the respawn anchor. If the spawn point set via {{cmd|setworldspawn}} or {{cmd|spawnpoint}} becomes obstructed, the player is not given this leniency in respawning. If the block obstructing the player's spawn point is a bed in the Overworld or a respawn anchor in the Nether, regardless of if the bed or respawn anchor was used to set the spawnpoint, this leniency will still be given.
+
+For the spawn point to be considered unobstructed, certain criteria need to be met. Generally, for a spawn point set via {{cmd|/setworldspawn}} or {{cmd|/spawnpoint}}, there must be a two-block-tall space at the spawn point which is free of [[solid blocks]]. However, there are also some solid blocks which do not obstruct spawning, some examples including the [[Heavy Core|heavy core]], [[candles]], and [[Head|player and mob heads]]. [[Lava]] and [[water]] will also obstruct the spawn point despite being non-solid, however, aquatic plants, such as [[kelp]] and [[seagrass]], will not, even when in water. The player will always be spawned in the center of the spawn point block and {{frac|1|10}} of a block above the bottom of the block, even if there is a non-obstructing solid block occupying the space, such that the player can sometimes be spawned inside of a block they would otherwise have collision with. Unlike when respawning around a bed or respawn anchor, the block below the spawn point is not considered, meaning the player can be spawned on top of dangerous blocks such as [[Magma Block|magma block]]s, or over a non-solid block. The state of any blocks occupying the two-block-tall spawning space is also not considered. For example, an open [[Fence Gate|fence gate]] will still obstruct the spawn point even though the player has no collision with it.
+
+{{Collapse
+|title='''List of non-obstructing blocks for a spawn point set with commands'''
+|head=1
+}}
+* [[Air]] (air, cave air, and void air)
+* All {{BlockSprite|banners}} [[banner]]s
+* All {{BlockSprite|beds}} [[bed]]s (in the Overworld only; will apply bed respawn positioning logic)<ref name="respawn">{{bug|MC-278686|||Won't Fix}}</ref>
+* All {{BlockSprite|buttons}} [[button]]s
+* All {{BlockSprite|candles}} [[candle]]s
+* All {{BlockSprite|carpets}} {{BlockSprite|moss carpet}} {{BlockSprite|pale moss carpet}} [[carpet]]s (including [[Moss Carpet|moss carpet]] and [[Pale Moss Carpet|pale moss carpet]])
+* All {{BlockSprite|coral}} {{BlockSprite|coral fans}} {{BlockSprite|dead coral}} {{BlockSprite|dead coral fans}} [[coral plant]]s and [[coral fan]]s (including dead variants)
+* All crops
+* All {{BlockSprite|flower pot}} [[flower pot]]s
+* All {{BlockSprite|flowers}} [[flower]]s (including two-high flowers)
+* All {{BlockSprite|mushrooms}} {{BlockSprite|fungi}} [[mushroom]]s and [[Nether fungi]]
+* All {{BlockSprite|mob heads}} player and mob [[head]]s
+* All {{BlockSprite|end portal}} {{BlockSprite|nether portal}} portals ([[End Portal (block)|End portal]], [[End Gateway (block)|End gateway]], and [[Nether Portal (block)|Nether portal]])
+* All {{BlockSprite|pressure plates}} [[pressure plate]]s
+* All {{BlockSprite|rail}} {{BlockSprite|powered rail}} [[rail]]s
+* All {{BlockSprite|saplings}} [[sapling]]s (including [[azalea]]s and  [[Flowering Azalea|flowering azalea]]s, but not [[bamboo]] saplings)
+* All {{BlockSprite|signs}} {{BlockSprite|hanging signs}} {{BlockSprite|wall hanging signs}} [[sign]]s (including [[hanging sign]]s and wall hanging signs)
+* All {{BlockSprite|torch}} {{BlockSprite|soul torch}} {{BlockSprite|redstone torch}} torches and wall torches ([[torch]]es, [[Soul Torch|soul torch]]es, and [[Redstone Torch|redstone torch]]es)
+* All {{BlockSprite|vines}} {{BlockSprite|twisting vines}} {{BlockSprite|weeping vines}} {{BlockSprite|cave vines}} vines ([[vines]], [[Twisting Vines|twisting vines]], [[Weeping Vines|weeping vines]], and [[cave vines]])
+* {{BlockSprite|big dripleaf}} [[Big Dripleaf|Big dripleaf]]
+* {{BlockSprite|big dripleaf stem}} Big dripleaf stem
+* {{BlockSprite|chorus flower}} [[Chorus Flower|Chorus flower]]
+* {{BlockSprite|chorus plant}} [[Chorus Plant|Chorus plant]]
+* {{BlockSprite|cocoa}} [[Cocoa Beans|Cocoa]]
+* {{BlockSprite|roots}} [[Crimson Roots|Crimson roots]] and [[Warped Roots|warped roots]]
+* {{BlockSprite|dead bush}} [[Dead Bush|Dead bush]]
+* {{BlockSprite|fire}} {{BlockSprite|soul fire}} [[Fire]] and [[Soul Fire|soul fire]]
+* {{BlockSprite|frogspawn}} [[Frogspawn]]
+* {{BlockSprite|hanging roots}} [[Hanging Roots|Hanging roots]]
+* {{BlockSprite|heavy core}} [[Heavy Core|Heavy core]]
+* {{BlockSprite|kelp}} [[Kelp]]
+* {{BlockSprite|ladder}} [[Ladder]]
+* {{BlockSprite|lever}} [[Lever]]
+* {{BlockSprite|light}} [[Light (block)|Light]]
+* {{BlockSprite|lily pad}} [[Lily Pad|Lily pad]]
+* {{BlockSprite|nether sprouts}} [[Nether Sprouts|Nether sprouts]]
+* {{BlockSprite|pale hanging moss}} [[Pale Hanging Moss|Pale hanging moss]]
+* {{BlockSprite|pink petals}} [[Pink Petals|Pink petals]]
+* {{BlockSprite|powder snow}} [[Powder Snow|Powder snow]]
+* {{BlockSprite|redstone comparator}} [[Redstone Comparator|Redstone comparator]]
+* {{BlockSprite|redstone repeater}} [[Redstone Repeater|Redstone repeater]]
+* {{BlockSprite|resin clump}} [[Resin Clump|Resin clump]]
+* {{BlockSprite|respawn anchor}} [[Respawn Anchor|Respawn anchor]] (in the Nether only; will apply respawn anchor respawn positioning logic, even if uncharged)<ref name="respawn"/>
+* {{BlockSprite|scaffolding}} [[Scaffolding]]
+* {{BlockSprite|sea pickle}} [[Sea Pickle|Sea pickle]]
+* {{BlockSprite|seagrass}} [[Seagrass]]
+* {{BlockSprite|short grass}} {{BlockSprite|tall grass}} [[Short Grass|Short grass]] and [[Tall Grass|tall grass]]
+* {{BlockSprite|small dripleaf}} [[Small Dripleaf|Small dripleaf]]
+* {{BlockSprite|snow layer}} [[Snow]] (any number of layers)
+* {{BlockSprite|spore blossom}} [[Spore Blossom|Spore blossom]]
+* {{BlockSprite|structure void}} [[Structure Void|Structure void]]
+* {{BlockSprite|sugar cane}} [[Sugar Cane|Sugar cane]]
+* {{BlockSprite|sweet berry bush}} [[Sweet berry bush]]
+* {{BlockSprite|tripwire}} [[Tripwire]]
+* {{BlockSprite|tripwire hook}} [[Tripwire Hook|Tripwire hook]]
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100327|The [[player]] now drops their [[inventory]] and respawns at the spawn location upon death, rather than having to reload the last save.}}
+|{{HistoryLine||20100611|The [[player]] now only spawns on sand blocks.  As a result, the player will often spawn in beaches, but spawning on deserts is also a possibility.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4_01|[[Bed]]s now act as respawn points for players.}}
+|{{HistoryLine||1.8|dev=1.8 (PAX Prime)|In this version only the player spawns in a [[village]].}}
+|{{HistoryLine|||dev=Pre-release|The player's spawn point now attempts to spawn players on [[grass block]]s, and favors forests, swamps, and taiga biomes.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.1|dev=12w01a|The algorithm now favors forests, plains, taigas, forest hills, and taiga hills biomes.}}
+|{{HistoryLine||1.2.1|dev=12w03a|The algorithm now additionally favors jungles and jungle hills biomes.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Added the [[command]] {{cmd|spawnpoint}}.}}
+|{{HistoryLine||1.7.2|dev=13w43a|Added the command {{cmd|setworldspawn}}.}}
+|{{HistoryLine||1.8|dev=?|The fallback spawnpoint if no favored blocks can be found is shifted 11.3 blocks, changing some spawnpoints.}}
+|{{HistoryLine||1.9|dev=15w51a|Added the game rule <code>spawnRadius</code> to control the size of the world spawn area.}}
+|{{HistoryLine||1.15|dev=19w36a|Added the game rule <code>doImmediateRespawn</code>.}}
+|{{HistoryLine||1.16|dev=20w12a|Added the [[respawn anchor]], allowing players to set their spawn point in the Nether.}}
+|{{HistoryLine||1.18|dev=21w42a|Reworked world spawn selection algorithm. Players now spawn according to the same climate parameters that control biome placement and world generation: players spawn less often in the ocean or similar inconvenient locations.}}
+|{{HistoryLine||1.20.5|dev=24w03a|Added the [[game rule]] <code>spawnChunkRadius</code> to control the size of the [[spawn chunks]].
+|The default spawn chunk propagation is now 3×3 instead of 19×19.}}
+|{{HistoryLine||1.21.2|dev=24w40a|The formula used to grade potential spawn coordinates is changed.|Spawns are far less likely to occur in oceans, and routinely place the player farther from (0,0).}}
+|{{HistoryLine||1.21.9|dev=25w31a|Removed spawn chunks and the aforementioned game rule.}}
+|{{HistoryLine|||dev=Pre-Release 1|The world spawn can now be set in a dimension other than the Overworld.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||0.1.0|Added the world spawn point. The spawn point is always located in the center of the world (X/Z: 128).}}
+|{{HistoryLine||0.9.0|dev=build 1|The player's spawn point is now located in specific biomes in the Infinite world type.
+|On the Old world type, the player still spawns on the center of the world, but the exact position is no longer consistent between worlds. Instead, the position is determined by the world seed.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|Added the {{cd|immediateRespawn}} game rule.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|Added the game rule {{cd|spawnRadius}} to control the size of the world spawn area.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|The world spawn can now be set in [[the Nether]] using {{cmd|spawnpoint}}.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.50.20|The formula used to grade potential spawn coordinates is changed.|Spawns are far less likely to occur in oceans, and routinely place the player farther from (0,0).}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The world spawn can now be set in [[the End]] using {{cmd|spawnpoint}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the world spawn point.}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|The player's spawn point can now also be located in jungle and jungle hills biomes.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=1.0.1|Added a [[host options|host option]] that allows players to change the world spawn point.{{info needed|Was this added in TU19?}}}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.88|wiiu=none|switch=none|Added the Immediate Respawn host option.}}
+}}
+
+== Trivia ==
+* The farthest possible spawnpoint from (0,0) under Euclidean distance is (1599, -2160).
+* Developer [[Ulraf]] in a livestream expressed the idea of giving the [[dragon egg]] the use of modifying the world spawn, because there is only one dragon egg per world. He clarified that he experimented with this idea using [[command]]s, and that there weren't plans to add this function to vanilla.<ref> https://youtu.be/2cxUNoWNy50?t=11284</ref>
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Idealspawn.png|An ideal spawn location, with trees and animals nearby.
+Notidealspawn.png|A non-ideal spawn location. In a desert, unless a player finds an exposed mineshaft, it is much more difficult to find wood.
+Survival island.png|A spawn location on an island, with trees nearby.
+Dangerous spawn.png|A dark forest's dense foliage can protect hostile mobs from sun, making this biome dangerous. Note the village and ruined portal on the left.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/spawning-and-dying How spawning, dying and respawning works in Minecraft] – Minecraft.net on September 22, 2023
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Gameplay]]
+
+[[cs:Výskyt]]
+[[de:Spawn]]
+[[es:Aparición]]
+[[fr:Apparition]]
+[[ja:スポーン]]
+[[ko:생성]]
+[[nl:Spawnen]]
+[[pl:Odradzanie]]
+[[pt:Geração]]
+[[ru:Спаун]]
+[[uk:Поява]]
+[[zh:生成]]

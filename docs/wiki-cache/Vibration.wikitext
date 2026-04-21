@@ -1,0 +1,323 @@
+{{WIP}}
+[[File:Vibration JE1 BE1.gif|thumb|A vibration [[particle]].]]
+'''Vibrations''' are a gameplay mechanic based around the concept of [[sound]] and its physical interactions. Most in-game actions and events produce vibrations of different frequencies, or intensity. [[Wool]] can be used to dampen or block vibrations and prevent them from traveling if collided with. Vibrations are solely utilized by [[sculk sensor]]s, [[sculk shriekers]], [[warden]]s, and [[allay]]s. 
+
+== Mechanics ==
+When a vibration is created, it takes the appearance of blue-cyan "sound wave" [[particle]]s which moves from its source of origin to the entity which detected it. Vibration waves move at a constant speed, and their speed cannot be altered.
+
+=== Vibration frequency ===
+<onlyinclude>
+<!-- 
+Syntax Documentation: https://www.mediawiki.org/wiki/Transclusion#Partial_transclusion
+Allows other pages like [[Sculk Sensor]] and [[Calibrated Sculk Sensor]] to only transclude this table without having to transclude the rest of this article.
+
+{{:Vibration/Vibration Frequency}} is not supported for article pages.
+Might be worth considering putting this table into a template.
+-->
+{{Expand section|''[[Bedrock Edition]]'' values}}
+Each vibration in the game falls under a certain frequency value. This value can be measured with a [[comparator]]. With the right contraption utilizing a [[calibrated sculk sensor]] or [[sculk sensor]], the player could detect if a certain action has occurred or is occurring  nearby.
+{| class="sortable wikitable"
+|-
+!Output!!Vibration type!!Game event!!Description
+|-
+| rowspan="4" |{{Redstone strength|1}}
+|Step
+|<code>minecraft:step</code>
+|Player or entity [[Walking|steps]]
+|-
+|Swim
+|<code>minecraft:swim</code>
+|Player or entity [[swim]]s, or [[boat]] paddles
+|-
+|Flap
+|<code>minecraft:flap</code>
+|Entity flaps ([[bat]])
+|-
+|Resonate 1
+|<code>minecraft:resonate_1</code>
+|
+|-
+| rowspan="4" |{{Redstone strength|2}}
+|Projectile Land
+|<code>minecraft:projectile_land</code>
+|Projectile lands ([[Snowball]] hits a [[block]])
+|-
+|Hit Ground
+|<code>minecraft:hit_ground</code>
+|Player or entity hits ground after a [[jump]] or fall
+|-
+|Splash
+|<code>minecraft:splash</code>
+|Player or entity splashes in [[water]], enters water or enters [[bubble column]]
+|-
+|Resonate 2
+|<code>minecraft:resonate_2</code> 
+|
+|-
+| rowspan="4" |{{Redstone strength|3}}
+|Item Interact Finish
+|<code>minecraft:item_interact_finish</code>
+|Any interaction using a [[shield]], [[spyglass]], or [[bone meal]]
+|-
+|Projectile Shoot
+|<code>minecraft:projectile_shoot</code>
+|[[Projectile]] is shot (can be an [[arrow]], a [[firework]], etc.)
+|-
+|Instrument Play
+|<code>minecraft:instrument_play</code>
+|[[Goat horn]] plays
+|-
+|Resonate 3
+|<code>minecraft:resonate_3</code>
+|
+|-
+| rowspan="4" |{{Redstone strength|4}}
+|Entity Action
+|<code>minecraft:entity_action</code>
+|Entity roars ([[Ravager]]), entity shakes water off ([[wolf]] after swimming), entity holds or stops holding item ([[Villager]], [[Copper Golem|copper golem]], [[fox]], [[allay]]), [[sniffer]] digs, [[armadillo]] rolls up or unrolls, or [[creaking]] stops or starts moving
+|-
+|Elytra Glide
+|<code>minecraft:elytra_glide</code>
+|Player [[glide|glides]]
+|-
+|Unequip
+|<code>minecraft:unequip</code>
+|[[Armor]] gets unequipped from an armor [[slot]] or an [[armor stand]]
+|-
+|Resonate 4
+|<code>minecraft:resonate_4</code>
+|
+|-
+| rowspan="3" |{{Redstone strength|5}}
+|Entity Dismount
+|<code>minecraft:entity_dismount</code>
+|Player dismounts from a [[mount]] or [[vehicle]]
+|-
+|Equip
+|<code>minecraft:equip</code>
+|[[Armor]] gets equipped to an armor [[slot]] or an [[armor stand]]
+|-
+|Resonate 5
+|<code>minecraft:resonate_5</code>
+|
+|-
+| rowspan="4" |{{Redstone strength|6}}
+|Entity Mount
+|<code>minecraft:entity_mount</code>
+|Player mounts a [[mount]] or [[vehicle]]
+|-
+|Entity Interact
+|<code>minecraft:entity_interact</code>
+|Player interaction with entity ([[breed|breeding]])
+|-
+|Shear
+|<code>minecraft:shear</code>
+|A [[sheep]], [[mooshroom]], or [[bogged]] gets sheared
+|-
+|Resonate 6
+|<code>minecraft:resonate_6</code>
+|
+|-
+| rowspan="2" |{{Redstone strength|7}}
+|Entity Damage
+|<code>minecraft:entity_damage</code>
+|Entity takes [[damage]]
+|-
+|Resonate 7
+|<code>minecraft:resonate_7</code>
+|
+|-
+| rowspan="3" |{{Redstone strength|8}}
+|Drink
+|<code>minecraft:drink</code>
+|Entity [[drink|drinks]] (i.e. uses a [[bottle|bottled liquid]] or [[milk bucket]])
+|-
+|Eat
+|<code>minecraft:eat</code>
+|Entity [[eat]]s.<br>This includes players eating items, [[sheep|sheeps]] attempting to eat [[Grass Block|grass]], and [[pandas]] finishing eating bamboo.<br>'''Not triggered by''' [[horses]] grazing, players feeding other animals, or [[frogs]] eating [[slimes]] and [[magma cubes]]
+|-
+|Resonate 8
+|<code>minecraft:resonate_8</code>
+|
+|-
+| rowspan="5" |{{Redstone strength|9}}
+|Container Close
+|<code>minecraft:container_close</code>
+|Container ([[chest]], [[barrel]], [[shulker box]]) closes
+|-
+|Block Close
+|<code>minecraft:block_close</code>
+|[[Door]], [[trapdoor]], or [[fence gate]] closes
+|-
+|Block Deactivate
+|<code>minecraft:block_deactivate</code>
+|Block deactivation ([[piston]] retracts, [[lever]] is switched off, [[button]] or [[pressure plate]] turn off)
+|-
+|Block Detach
+|<code>minecraft:block_detach</code>
+|[[Tripwire]] gets detached from a [[tripwire hook]]
+|-
+|Resonate 9
+|<code>minecraft:resonate_9</code>
+|
+|-
+| rowspan="7" |{{Redstone strength|10}}
+|Container Open
+|<code>minecraft:container_open</code>
+|Container ([[chest]], [[barrel]], [[shulker box]]) opens
+|-
+|Block Open
+|<code>minecraft:block_open</code>
+|[[Door]], [[trapdoor]], or [[fence gate]] opens
+|-
+|Block Activate
+|<code>minecraft:block_activate</code>
+|Block activation<br>A [[dispenser]], [[piston]], [[button]], [[lever]], or [[pressure plate]] is powered.<br>'''Not triggered by''' a [[crafter]], [[dropper]], or [[jukebox]]
+|-
+|Block Attach
+|<code>minecraft:block_attach</code>
+|[[Tripwire]] gets attached to a [[tripwire hook]]
+|-
+|Prime Fuse
+|<code>minecraft:prime_fuse</code>
+|[[TNT]] block or [[creeper]] is ignited
+|-
+|Note Block Play
+|<code>minecraft:note_block_play</code>
+|[[Note block]] plays a note
+|-
+|Resonate 10
+|<code>minecraft:resonate_10</code>
+|
+|-
+| rowspan="2" |{{Redstone strength|11}}
+|Block Change
+|<code>minecraft:block_change</code>
+|Block changes state ([[chiseled bookshelf]], [[lectern]], [[composter]], [[decorated pot]], [[bell]] ringing, [[item frame]] etc.){{info needed|What type of change of state? A complete list of all blocks would be useful here.}}
+|-
+|Resonate 11
+|<code>minecraft:resonate_11</code>
+|
+|-
+| rowspan="3" |{{Redstone strength|12}}
+|Block Destroy
+|<code>minecraft:block_destroy</code>
+|Block destruction<br>Triggered by block [[breaking]], removing a block required to support it, or pushing it with a [[piston]] (if the block is broken when moved).<br>'''Not triggered when''' blocks are destroyed by an explosion.
+|-
+|Fluid Pickup
+|<code>minecraft:fluid_pickup</code>
+|Liquid is picked up into a [[glass bottle]] or [[empty bucket]] (i.e. the bottle or bucket is used, filling it with water, lava, milk, honey, powder snow, or a [[potion]] from a [[cauldron]]{{only|be}})
+|-
+|Resonate 12
+|<code>minecraft:resonate_12</code>
+|
+|-
+| rowspan="3" |{{Redstone strength|13}}
+|Block Place
+|<code>minecraft:block_place</code>
+|Block placement
+|-
+|Fluid Place
+|<code>minecraft:fluid_place</code>
+|Fluid placement
+|-
+|Resonate 13
+|<code>minecraft:resonate_13</code>
+|
+|-
+| rowspan="4" |{{Redstone strength|14}}
+|Entity Place
+|<code>minecraft:entity_place</code>
+|Entity placement<br>Triggered by [[vehicle]], [[armor stand]], or [[item frame]] is placed; or a mob is spawned via [[spawn egg]], [[mob spawner]], [[creaking heart]], or [[evoker]] magic<br>'''Not triggered by''' random mob spawning or breeding
+|-
+|Lightning Strike
+|<code>minecraft:lightning_strike</code>
+|[[Lightning]] strikes
+|-
+|Teleport
+|<code>minecraft:teleport</code>
+|[[Endermen]], [[shulker]], or player eating a [[chorus fruit]] teleports.<br>'''Not triggered by''' [[wolves]], [[cats]], or [[ender pearls]].
+|-
+|Resonate 14
+|<code>minecraft:resonate_14</code>
+|
+|-
+| rowspan="3" |{{Redstone strength|15}}
+|Entity Die
+|<code>minecraft:entity_die</code>
+|Entity [[die|dies]] or is broken ([[vehicle]], [[armor stand]], or [[item frame]]), [[firework]] finishes
+|-
+|Explode
+|<code>minecraft:explode</code>
+|[[TNT]], [[end crystal]], [[bed]], [[respawn anchor]], [[creeper]], [[ghast fireball]], [[Wind Charge|wind charge]] or [[Wither#Wither_Skull|wither skull]] [[explode|explodes]]
+|-
+|Resonate 15
+|<code>minecraft:resonate_15</code>
+|
+|}
+</onlyinclude>
+
+=== Sources which are not detected ===
+The following occurrences, despite presumably causing physical motion, do not produce vibrations and therefore cannot be detected: 
+*Blocks destroyed by a fluid flowing into their space<ref>{{bug|MC-207410}}</ref>
+*Several blocks being destroyed due to their supporting block being removed:<ref>{{bug|MC-207411}}</ref>
+**Rails
+**Powered rails
+**Detector rails
+**Activator rails
+**Redstone wire
+**Redstone repeaters
+**Redstone comparators
+*Several cases where a [[dispenser]] fails to perform an action:<ref>{{bug|MC-208142}}</ref>
+**Flint and steel not creating fire
+**Bone meal not growing something
+**Heads and carved pumpkins, if not equipped on something or placed
+**Shulker boxes, if not placed
+**Shears, if there's nothing to shear
+**Glowstone, if it doesn't charge a respawn anchor
+*Inserting an [[eye of ender]] into an [[end portal frame]]<ref>{{bug|MC-208805}}</ref><ref>{{bug|MC-209798}}</ref>
+*Eyes of ender breaking<ref>{{bug|MC-210153}}</ref>
+*[[Silverfish]] entering blocks<ref>{{bug|MC-210283}}</ref>
+*[[Water]] and [[lava]] flowing into existing spaces, or drying up<ref>{{bug|MC-210482}}</ref>
+*Changing the mode of a [[redstone comparator]]<ref>{{bug|MC-211331}}</ref>
+*Changing the delay on a [[redstone repeater]]<ref>{{bug|MC-214621}}</ref>
+*Changing the shape of a single unit of [[redstone wire]]<ref>{{bug|MC-214623}}</ref>
+*[[Fire]] extinguished by rain<ref>{{bug|MC-251525}}</ref>
+
+The following cases have been confirmed to be intentional: 
+*[[Axolotl]]s being bred via tropical fish buckets<ref name="axo-bucket">{{bug|MC-208799|||WAI}}</ref>
+*[[Moss block]]s replacing existing blocks<ref>{{bug|MC-214210|||WAI}}</ref>
+
+=== Amethyst resonation ===
+When a block of amethyst is placed adjacent to a [[sculk sensor]] or a [[calibrated sculk sensor]], if that sculk sensor receives a [[vibration]], the block of amethyst re-emits its frequency as a separate vibration at its location. This vibration can then be detected by another sculk sensor, allowing a chain of sculk sensors and amethyst blocks to be created, transmitting a signal wirelessly.
+
+=== Vibration occlusion ===
+[[Wool]] can be used to block vibrations from reaching nearby [[sculk sensor]]s. If a wool block is placed between a sensor and a vibration source, the sensor is not able to detect vibrations behind it. Similarly, if a wool block is placed between a sensor and a [[sculk shrieker]], the sensor is unable to alert the shrieker. 
+
+Sculk sensors are not able to detect the placing and breaking of wool, as well as entities [[walking]], [[sprinting]], or [[jumping]] on top of it. They are also unable to detect [[Item (entity)|items]] dropped on wool, or wool itself dropped in item form.
+
+Similar to sculk sensors, [[warden]]s are also unable to detect everything wool-related as listed above.
+
+Wool can also be used to block [[note block]] sounds from reaching [[allays]].
+
+== Achievements ==
+{{load achievements|Sneak 100}}
+
+== Advancements ==
+{{load advancements|Sneak 100}}
+
+== History==
+{{HistoryTable
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Added {{cd|minecraft:bounce}}, with a vibration frequency of 2.}}
+}}
+
+== Issues ==
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[pt:Vibração]]

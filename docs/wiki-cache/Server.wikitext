@@ -1,0 +1,175 @@
+{{About|the multiplayer server in general and community archetypes in ''Java Edition'' and ''Bedrock Edition''|the official featured servers in Bedrock Edition|Featured servers|the occasional ''Bedrock Edition'' servers featured on the title screen hosted by [[Mojang Studios]]|Event server}}
+<!--[[File:Hypixel hub.png|right|thumb|{{w|Hypixel}} server {{in|JE}}.]]-->
+[[File:The Hive hub.png|right|thumb|[[The Hive]] server {{in|BE}}.]]
+{{Relevant tutorial|Setting up a server}}
+A '''server''' provides a game environment for [[player]]s to play [[multiplayer]] with others over the {{w|Internet}} or a {{w|local area network}} (LAN). Players are connected to a server using the ''Minecraft'' [[client software]], and the server is hosted using the server software, as [[server.jar]]{{only|je|short=1}} or [[Bedrock Dedicated Server]]{{only|be|short=1}}.
+
+{{TOC limit|3}}
+
+== Archetypes ==
+{{see also|Tutorial:Playing on servers}}
+
+Multiple archetypes of ''[[Minecraft]]'' multiplayer servers exist, distinguished by the unique gameplay features, rules, and societal structures that they implement. Each server is unique from the others, and often, the line between archetypes is blurred or indistinguishable. Many special types of servers rely on the use of map editors or the [[Creative]] game mode to build custom maps, and some use [[mod]]ded server software to provide additional features outside the [[vanilla]] experience. Some of these servers are heavily competitive, involving [[player versus player]] (PvP) and unique gameplay aspects of {{w|minigames}}; however, some simply followed the base [[vanilla]] [[survival]] experience.
+
+Common archetypes found in ''Minecraft'' servers may include:
+* '''{{va|Survival|Survival Multiplayer|SMP}}''', also known as '''Survival Multiplayer''' ('''SMP'''): Servers that follow the [[Survival]] mode progression. [[Player]] activities ranging from collecting [[resource]]s, building bases and [[structure]]s, fighting [[monster]]s, exploring the [[world]], and reaching [[the End]]. They typically work together to complete some sort of objectives and reach some kind of [[progression]]. Players may also develop relationships and rivalries across different groups. Servers specialized in this field are faction servers.
+* '''{{va|Creative}}''': Servers that allow the freedom and control of the [[Creative]] mode. Players create and design elaborate buildings, ranging small-scale works from {{w|house}}s, {{w|bridge}}s, {{w|pixel art}}s, player {{w|statue}}s, to massive projects such as {{w|mansion}}s, {{w|castle}}s, {{w|town}}s, and [[w:City|cities]]. A common type of Creative server is ''plot'' servers, where players are given their own plot of land which they can control, build, and destroy using Creative mode. They are limited only to their plots, which prevents [[griefing]] in other players' plots.
+* '''{{va|Roleplay}}''': Servers that are structured around narrative-driven interactions, in which players adopt fictional personas and engage in collaborative storytelling. These servers often establish original lore, scripted scenarios, and persistent {{w|worldbuilding}}, supported by custom maps, in-game voice support, and custom content using [[mod]]s, and multiple player hierarchies.
+* '''{{va|Minigame}}''': Servers that host multiple {{w|minigame}}s where players compete with one another. These minigames are short games contained within ''Minecraft'', having different [[gameplay]] elements from the main game itself. Popular minigames include [[spleef]], {{w|Capture the flag#Software and games|capture the flag}}, sky wars, bed wars, and more. Usually, the last player standing wins a reward, often in the form of {{w|Virtual economy|game currency}}, which lets players use and trade for cosmetics, kits, upgrades, and other types of unlockables. Players may also compete in the leaderboards, which show the top-performing players of these minigames.
+* '''{{va|Faction}}''':  Similar in concept to [[Survival]] servers, but players build organized groups and regularly play together as a team, which are called ''factions''. They typically partake in activities such as claiming lands, building bases, and farming mobs or items, while some compete and challenge other factions, such as faction wars, base raiding, [[player versus player]] (PvP), and other form of rivalries and relationships between factions.
+* '''{{va|Anarchy}}''': Servers that are dedicated to having no rules at all, allowing the freedom and usage of [[cheating]] and exploiting, which are prominent in these servers. Anarchy servers may also allow [[griefing]], unmoderated {{w|user-generated content}}s, inappropriate language, and behaviors which are frowned upon in the ''Minecraft'' community.
+* '''Customized''': Servers that provide a playing experience very different to the [[vanilla]] game, with the use of [[add-ons]] or [[mods]].
+
+== Variants ==
+
+Multiple variants of ''Minecraft'' server software exist, and each of them is used for different purposes and has varying levels of setup and features.
+
+* The default server software ([[server.jar]] {{in|je}} and [[BDS]] {{in|be}}) provides a stable environment for players to play a [[multiplayer]] game. It's provided free of charge by Mojang Studios for Windows, macOS{{Only|je|short=1}}, and Linux systems.
+* The game also provides an [[Open to LAN]] feature that turns singleplayer worlds into a multiplayer game accessible to people on the {{w|local network}}. Worlds and servers using this feature automatically pop up on the [[server list]]{{Only|je|short=1}}/[[Play|worlds list]]{{Only|be|short=1}} without needing to specify the server address.
+** In ''Bedrock Edition'', this feature is extended to the {{w|Xbox network}}. Players can join a singleplayer world if they are friends with the world owner on the Xbox network. The owner can also invite other people to join their world through Xbox.
+* [[Minecraft Realms]] provides a multiplayer server similar to the default software, which is always online. They are provided by [[Mojang Studios]] as a paid subscription-based server hosting service. Realms also provides additional features, such as automatic world backup, in-game server and world management, and free minigame maps designed for multiplayer.
+** Realms are limited in player slots. A Realms server can only provide up to 10 players playing simultaneously in a multiplayer game (or 2 with a Core subscription). However, this does not apply to the Realm's invite slots, e.g. a Realm can have more than 10 players invited.
+
+Related tutorials for setting up these kinds of servers also exist, see {{slink|Tutorials|Server setup}}.
+
+== Management ==
+{{See also|Tutorial:Server maintenance|Server/Requirements}}
+{{Redirect|Admin|the characters in {{MCSM}}|MCSM:Admin}}
+Servers are generally managed by '''administrators''' and '''operators'''. The administrator generally takes responsibility for the server. It may be that the server is running from their machine, or that they simply have jurisdiction over a server. Operators generally assist the administrators in moderating a server and to prevent unruly players and griefers. Both operators and administrators have access to various [[commands]] to ensure the smooth running of the server. On a default server, players are assigned as operator or administrator by using the {{command|op <playername>}} command, or by editing the <code>ops.json</code> in the server directory, then restarting the server.
+
+Features of a ''Minecraft'' server, such as the server's address, port, message of the day (MOTD), and others, can be configured on [[server.properties]] file, which contains key-value pairs that enable or disable such features. It's located under the [[server.jar#Directory structure|server's working directory]], alongside other resources. By default, the server listens to all {{w|IP address}} on {{cd|25565}} TCP port{{only|je|short=1}} or {{cd|19132}} UDP port{{only|be|short=1}}.
+
+Servers do not strictly require access to [[Mojang API|''Minecraft'' online services]], and can be played on an isolated local network without {{w|Internet}} connection. Servers use ''Minecraft'' online services to fetch player [[skin]]s and verify genuine ''Minecraft'' accounts, which prevents hackers and griefers from using false names while on such a server. This feature can be enabled or disabled by setting {{cd|[[server.properties#online-mode|online-mode]]}} property in the [[server.properties]].
+
+The server saves the level in the "world" folder every 30 seconds if chunks have been modified by default.
+
+=== Whitelist{{Anchor|Allowlist}} ===
+Whitelist or allowlist{{only|BE|short=1}} is a feature provided by the server that allows and blocks specific players from joining a multiplayer game. It works by checking [[UUID]] or XUID{{only|BE|short=1}} of the players who have been whitelisted on a server. Its configured in {{cd|whitelist.json}} or {{cd|allowlist.json}} file inside the [[server.jar]]'s working directory, and can be activated by setting {{cd|[[server.properties#white-list|white-list]]}} or {{cd|[[server.properties#allow-list|allow-list]]}} server property.
+
+Each entry in {{cd|whitelist.json}} or {{cd|allowlist.json}} is a JSON object identifying which players the server should allow access.
+
+<div class="treeview">
+* {{nbt|list}}: A list of objects.
+** {{nbt|compound}}: An object that contains the profile of whitelisted players.
+*** {{nbt|string|uuid}}: The [[UUID]] of the player, in hyphenated hexadecimal format.{{only|JE}}
+*** {{nbt|string|xuid}}: The XUID of the player. XUID is the Xbox account identifier.{{only|BE}}
+*** {{nbt|string|name}}: The [[Player#Username|username]] of the player.
+*** {{nbt|bool|ignoresPlayerLimit}}: Whether this player can join the server even while the number of players online has reached the limit.<ref name="bedrock-server-how-to">Built-in <code>bedrock_server_how_to.html</code> file in [[Bedrock Dedicated Server]].</ref>{{only|BE}} Equivalent to <code>bypassesPlayerLimit</code> on <code>ops.json</code> in ''Java Edition''.
+</div>
+
+As well as manually editing the file, the {{cmd|whitelist}} command can also be used by operators. When editing the file manually while the server is running, the command {{cmd|whitelist reload}} needs to be used for the changes to take effect.
+
+In ''Java Edition'', server operators can always connect when the whitelist is active, even if their UUIDs do not appear in the whitelist. This differs from ''Bedrock Edition'', where players must be whitelisted regardless of operator status.<!-- copied from [[Commands/whitelist]] -->
+
+In ''Java Edition'' servers with {{cd|online-mode}} disabled, the whitelist checks against the offline UUID of players, converted from their [[Player#Username|username]]s.
+
+{{Calculator|playerUuid}}
+
+=== Operator list ===
+{{exclusive|java|section=1}}
+In ''Java Edition'', players' operator status is managed by the server in the {{cd|ops.json}} file. Operators can execute [[commands]], and their privileges allow control for certain aspects of the game, e.g. teleporting players, summoning entities, changing [[game mode]]s, and more.
+
+Each entry in {{cd|ops.json}} is similar to a whitelist, with {{cd|uuid}} and {{cd|name}} being the player's identifier.
+
+<div class="treeview">
+* {{nbt|list}}: A list of objects.
+** {{nbt|compound}}: An object which contains the operator's configuration.
+*** {{nbt|string|uuid}}: The [[UUID]] of the operator, in hyphenated hexadecimal format.
+*** {{nbt|string|name}}: The [[Player#Username|username]] of the operator.
+*** {{nbt|int|level}}: The [[permission level]] of the operator, which may limit certain commands and abilities. By default, its specified by <code>[[server.properties#op-permission-level|op-permission-level]]</code> property.
+*** {{nbt|boolean|bypassesPlayerLimit}}: Whether this player can join the server even while the number of players online has reached the limit set by the <code>[[Server.properties#max-players|max-players]]</code> property. Note that players with this setting still count toward the limit despite being exempt from join restrictions.
+</div>
+
+Commands {{cmd|op}} and {{cmd|deop}} can set a player's operator status.
+
+=== Permission list ===
+{{exclusive|bedrock|section=1}}
+In ''Bedrock Edition'', players' permissions are managed by the <code>permissions.json</code> file. The file contains a list of JSON objects with players' XUID and permissions. Note that <code>online-mode</code> needs to be enabled for this feature to work since xuid requires online verification of the user account.<ref name="bedrock-server-how-to"/>
+
+<div class="treeview">
+* {{nbt|list}}: A list of objects.
+** {{nbt|compound}}: An object that contains the player's permission.
+*** {{nbt|string|xuid}}: The XUID of the player.
+*** {{nbt|string|permission}}: The permission of the player, which may limit certain commands and abilities, see below. By default, its specified by <code>[[server.properties#default-player-permission-level|default-player-permission-level]]</code> property.
+</div>
+
+There are three valid player permissions (see [[Player Permissions]] for details):
+* The {{cd|operator}} permission allows players full access to commands, and in addition to everything {{cd|member}} could do.
+* The {{cd|member}} permission allows players to modify and interact with the [[world]] and [[entities]], but unable to execute commands.
+* The {{cd|visitor}} permission restricts players to only view or observe the world, unable to modify or interact with it.
+
+Commands such as {{cmd|permission reload}} reload the permission list while running in the server, and {{cmd|permission list}} lists players' permissions.
+
+=== <span class="anchor" id="Kick messages"></span>Disconnect messages ===
+Disconnect messages are texts that are displayed when an operator kicks the player or the player has issues connecting to the server.
+
+==== ''Java Edition'' ====
+'''Server or client errors'''
+* '''End Of Stream''' (Client message) &ndash; The server has stopped sending data to the client.
+* '''Internal Server Error:java.net.Minecraft (...)''' &ndash; The server is sending unknown information to the client. If the server is [[mod]]ded, this usually happens when a client with an outdated mod tries to join the server with the updated mod.
+* '''Timed Out''' &ndash; The client has lost connection to the server, likely due to disconnecting from the internet or having ''Minecraft'' features blocked by a firewall.
+* '''Internal exception: java.io.IOException: Received string length longer than the maximum allowed {{ph|number}}''' &ndash; A chat message that the client sent to the server exceeded the maximum character limit (&gt; 256).
+* '''Internal Server Error''' &ndash; The server generated an exception when handling the client's request.
+* '''Illegal characters in chat''' &ndash; The client was denied sending certain characters, such as the "§" {{w|section symbol}}.
+* '''Kicked for spamming''' (disconnect.spam) &ndash; The client is sending chat messages too quickly.
+* '''Read timed out''' &ndash; The server can't find the client's connection. This usually happens when the client has a slow Internet connection.
+* '''Bad login''' &ndash; The client is running in offline mode and can't connect to an authenticated server.
+* '''Out of memory!''' &ndash; This happens when the client or server cannot assign more memory to the game. This can be checked on the [[debug screen]]. It also happens if one traveled past X/Z: ±34,359,738,368 in Beta 1.7.3 or lower (see [[Far Lands]]).
+* '''Flying is not enabled on this server''' &ndash; The client tried to fly for longer than 5 seconds in Survival or Adventure mode, usually enabled by [[mod]]s.
+* '''Attempting to attack an invalid entity''' &ndash; This happens when the client tries to hit either themselves, or an entity that can't normally be attacked (e.g. arrow, egg, ender pearl, trident). This is usually possible through mods.
+* '''Illegal stance''' &ndash; This happens when the client's position is extremely high on the [[sky]] or low on the [[void]].
+* '''Illegal position''' &ndash; The client is beyond X/Z: ±30,000,000 (or ±32,000,000 in 1.6.4 and lower).
+
+'''Informational'''
+* '''Disconnected''' &ndash; The player disconnected by using the disconnect button in the [[pause menu]].
+* '''You logged in from another location''' &ndash; Another client has logged in to the server the player is playing on with the player's username.
+* '''Outdated client''' ('''Please use {{ph|version}}''') &ndash; The server is running a more recent version of ''Minecraft'' than the client.
+* '''Outdated server''' ('''I'm still on {{ph|version}}''') &ndash; The client is running a more recent version of ''Minecraft'' than the server.
+* '''You have been idle for too long!''' &ndash; The client was idle for a longer time than allowed.
+* '''Server closed.''' &ndash; The server has been shut down either by closing out of the "Minecraft server" window/pressing {{keys|Alt+F4}}, or using the {{cmd|stop}} command.
+
+'''Operator actions'''
+* '''You are banned from this server''' (during gameplay) or '''You are banned from this server. Reason: {{ph|reason}}. Your ban will be removed on {{ph|date}} on {{ph|time}}.''' (when joined through [[server list]]) &ndash; The client's ''Minecraft'' account is banned and remains banned until [[pardon]]ed by an admin, or automatically by set duration.
+* '''You have been IP banned from this server''' (during gameplay) or '''Your IP address is banned from this server. Reason: {{ph|reason}}. Your ban will be removed on {{ph|date}} on {{ph|time}}.''' (when joined through server list) &ndash; The client's IP has been banned.
+* '''Kicked by an operator.''' &ndash; The client has been disconnected using the {{cmd|kick}} command. This message appears when no custom message is entered, otherwise, the custom message is written directly on the disconnect screen.
+
+====''Bedrock Edition''====
+{{empty section|A full list can be found at <code><server directory or [[Microsoft.MinecraftUWP]]>/definitions/disconnection_errors/disconnection_error_messaging.json</code>.}}
+
+== History ==
+{{Main|Multiplayer#History}}
+
+== Issues ==
+{{Issue list|Server}}
+
+== See also ==
+* [[Commands]] &ndash; commonly used in servers to manage configurations and others.
+
+== References ==
+<references/>
+
+== External links ==
+* [[Wikipedia: Minecraft server|Minecraft server]] on Wikipedia.
+* The official [https://findmcserver.com/ server listing] for ''Minecraft'' provided by GameSafer.
+
+== Navigation ==
+{{Navbox gameplay}}
+{{Navbox Java Edition technical|general}}
+{{Navbox Bedrock Edition}}
+
+[[Category:Server| ]]
+
+[[de:Minecraft-Server]]
+[[es:Servidor]]
+[[fr:Serveur]]
+[[hu:Szerver]]
+[[it:Server]]
+[[ja:サーバー]]
+[[ko:서버]]
+[[nl:Server]]
+[[pl:Serwer]]
+[[pt:Servidor]]
+[[ru:Сервер]]
+[[th:เซิร์ฟเวอร์]]
+[[uk:Сервер]]
+[[zh:服务器]]

@@ -1,0 +1,484 @@
+{{For}}
+{{Infobox block
+|transparent=No
+|light=No
+|tool=Any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=Yes (15)
+|lavasusceptible=Yes
+}}
+[[File:KillRadiiGrenade4.png|thumb|TNT kill radius.]]
+'''TNT''' is an explosive [[block]] that can be lit by a [[redstone]] signal, [[flint and steel]], stray [[fire]], flaming projectile or explosion.
+
+When lit, TNT becomes '''primed TNT''', a gravity-affected [[entity]] that produces a damaging, block-destroying [[explosion]], usually after four seconds. Blocks destroyed by TNT always drop their usual [[item]]s as if mined by a [[player]].
+
+== Obtaining ==
+=== Breaking ===
+TNT can be [[instant mining|broken instantly]] with any [[tool]] or by hand. Primed TNT cannot be broken as it is an [[entity]], but it can be removed with the {{cmd|kill}} command.
+
+=== Natural generation ===
+Nine TNT blocks generate naturally in each [[desert pyramid]].
+
+Two TNT blocks flank a [[trapped chest]] in one secret [[woodland mansion]] room.
+
+=== Mob loot ===
+An [[enderman]] holding a block of TNT drops the block upon death.
+
+=== Generated loot ===
+{{LootChestItem|tnt}}
+
+=== Crafting ===
+{{Crafting
+|A1= Gunpowder
+|B1= Sand; Red Sand
+|C1= Gunpowder
+|A2= Sand; Red Sand
+|B2= Gunpowder
+|C2= Sand; Red Sand
+|A3= Gunpowder
+|B3= Sand; Red Sand
+|C3= Gunpowder
+|Output= TNT
+|type= Redstone
+|showdescription= 1
+|description= It is possible to use any combination of sand and red sand.
+}}
+
+== Usage ==
+[[File:Minecraft-tnt-explosion.gif|thumb|A TNT [[explosion]].]]
+
+=== Activation ===
+TNT blocks can be activated by:
+*{{control|Using}} a [[flint and steel]] or a [[fire charge]]
+**Attempting to ignite TNT while [[sneaking]] results in the block catching fire, rather than the TNT becoming primed immediately.
+*Using an [[item]] enchanted with [[Fire Aspect]] {{Only|BE}}
+*A redstone signal
+*{{IN|be}} TNT can only activate on the input/consumer redstone tick ([[C-tick]]).
+*Projectiles that create fire or explosions
+**Flaming [[arrow]]s
+**[[Fireball]]s
+**[[Small fireball]]s
+**[[Wither#Wither Skull|Wither skulls]]
+*Other explosions
+*[[Fire]] spreading onto the TNT block (the block burns for several seconds before activating)
+*Being placed by a [[dispenser]], or a dispenser using a flint and steel on a TNT block
+*Being summoned through commands, though it will immediately explode (except {{in|BE}})
+
+=== Behavior ===
+{{Anchor|Primed TNT}}
+{{Infobox entity
+| title = Primed TNT
+| image = TNT.png
+| size = Height: 0.98 blocks<br>Width: 0.98 blocks<br>
+}}
+
+When activated, a TNT block is replaced with an entity called primed TNT that creates an explosion after an amount of time has passed. Primed TNT is affected by gravity, and can be pushed by flowing [[water]], [[lava]], [[piston]]s, and [[explosion]]s. {{IN|java}}, [[spear]] attacks (both jab and charge attacks) can also horizontally push primed TNT, which is more effective with the [[Knockback]] enchantment.
+
+The amount of time before primed TNT explodes depends on how the TNT was activated:
+*If activated by fire or a redstone signal, or summoned by commands, primed TNT explodes after 80 game ticks (4 seconds).
+*If activated by an explosion, primed TNT explodes after a random number of game ticks between 10 and 30 (0.5 to 1.5 seconds).
+The TNT block has a display name of "TNT" in the inventory; however, it also has an in-game name of "tnt" when used in commands such as {{command|setblock}}. The primed TNT entity has a display name of "primed TNT" in chat, but also has an in-game name of "tnt" when used in commands such as {{command|summon}}.
+;Countdown timer
+Primed TNT has a data tag called {{code|fuse}} that acts as a countdown timer, and stores the number of game ticks until the primed TNT explodes. The timer decreases by 1 every game tick, and the Primed TNT explodes when it reaches 0. When summoned by activating a TNT block or commands, {{code|fuse}} is set to 80 by default, but can be modified using commands.
+
+;Explosion
+When TNT is activated, the primed TNT entity is placed offset from the bottom center of the TNT [[Coordinates#Block_position|block position]] by [+0.5, +0.0, +0.5], and given an initial velocity of 0.2 blocks per tick upward, and 0.02 blocks per tick in a random direction. When the primed TNT explodes, the explosion is located at 0.06125 blocks above the entity's position (at {{frac|0.98|16}} block height). Primed TNT creates explosions with a power of 4, which can break most blocks. Blocks destroyed by primed TNT always drop items as if mined by a player using a correct, [[Enchanting|unenchanted]] tool (or an empty hand if the correct tool would be [[shears]]).
+
+The explosion deals a maximum of {{hp|84.5}} damage on [[Hard]] difficulty, {{hp|56}} damage on [[Normal]] difficulty, {{hp|29}} damage on [[Easy]] difficulty and high knockback to a player exposed to the explosion. TNT explosions do not damage players in [[Peaceful]] difficulty.
+
+;Appearance
+Primed TNT's texture blinks, alternating every 0.5 seconds between the TNT block's texture, and a copy of it that has been brightened to near-white. The effect is dynamic and the brightened texture can't be found in the assets.
+
+;Portals
+A primed TNT is teleported to the respective dimensions when entering a [[Nether portal]] or [[End portal]], maintaining its fuse, direction and speed. {{IN|java}}, after teleporting through a nether portal, the primed TNT cannot destroy [[Nether portal block]]s.
+
+;Underwater behavior
+{{See also|Tutorial:Igniting TNT underwater}}
+TNT usually cannot be used to destroy blocks underwater; however, there are some circumstances {{in|java}} where TNT can be made to destroy blocks underwater.
+
+{{IN|java}}, if TNT is activated while a gravity-affected block (e.g. [[sand]], or [[gravel]]) is on top of it, the block falls through the primed TNT entity, and when the primed TNT explodes, it can break blocks.
+
+If TNT is placed on top of a block whose height is less than a full block (e.g. [[soul sand]], [[honey block]], etc.) and activated, the primed TNT can destroy blocks. If TNT is activated while on top of a soul sand block, a bubble column forms, but the primed TNT does not float away. Primed TNT is affected by bubble columns if summoned farther up the column, or if pushed into the bubble column by a piston.
+
+{{IN|bedrock}}, TNT is unable to destroy blocks underwater by any of the above methods: falling blocks partially displace primed TNT, and primed TNT is always pushed upward by a soul sand's bubble column. There is however a variation of TNT called underwater TNT (When ''Education Edition'' option is enabled) that can destroy blocks underwater.
+
+=== Redstone component ===
+
+A TNT block is considered a redstone [[Redstone component|mechanism component]], and is activated when it receives a redstone signal.
+
+TNT is a [[Conductivity|non-conductive]] (transparent) block and cannot be [[Redstone mechanics|powered]]. When a TNT block receives a redstone signal, it does not activate any other adjacent TNT blocks via redstone, but any adjacent TNT blocks are activated by the explosion.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Grass}}
+
+=== Unique ===
+{{edition|java}}:<br>
+Primed TNT use the Friendly Mobs sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Fuse.ogg
+|subtitle=TNT fizzes
+|source=block
+|description=When a TNT block is lit
+|id=entity.tnt.primed
+|translationkey=subtitles.entity.tnt.primed
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|subtitle=Explosion
+|source=block
+|description=When a TNT block explodes
+|id=entity.generic.explode
+|translationkey=subtitles.entity.generic.explode
+|volume=4.0
+|pitch=0.56-0.84
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Fuse.ogg
+|source=block
+|description=When a TNT block is lit
+|id=random.fuse
+|translationkey=subtitles.entity.tnt.primed
+|subtitle=TNT fizzes
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|source=block
+|description=When a TNT block explodes
+|id=random.explode
+|translationkey=subtitles.entity.generic.explode
+|subtitle=Explosion
+|volume=4.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=TNT
+|spritetype=block
+|nameid=tnt
+|blocktags=enderman_holdable
+|foot=1}}
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Primed TNT
+|spritetype=entity
+|nameid=tnt
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=TNT
+|spritetype=block
+|nameid=tnt
+|aliasid=tnt / 0
+|id=46
+|foot=1}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Block of TNT
+|spritename=primed-tnt
+|spritetype=entity
+|nameid=tnt
+|showentityfamily=y
+|entityfamily=inanimate,tnt
+|id=65
+|foot=1}}
+
+=== Block states ===
+{{el|je}}:
+{{bst|unstable|false
+|false|{{control|Hitting}} the TNT block breaks it, dropping it as an item that can be picked up.
+|true|{{control|Hitting}} the TNT block causes it to ignite and then explode.|foot=1}}
+
+{{el|be}}:
+<section begin="block states"/>{{bst|showaux=1|bits=0x1|explode_bit|false
+|false|{{control|Hitting}} the TNT block breaks it, dropping it as an item that can be picked up.|0
+|true|{{control|Hitting}} the TNT block causes it to ignite and then explode.|1|foot=1}}<section end="block states"/>
+
+=== Entity data ===
+TNT has entity data associated with them that contain various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+*{{nbt|compound}} Dynamic block entity data
+** {{nbt inherit/entity}}
+** {{nbt|short|fuse}}: Ticks until explosion. Defaults to 80.
+** {{nbt|compound|block_state}}: The block model to use. defaults to tnt if not specified.
+*** {{nbt|string|Name}}: The [[resource location]] of the block.
+*** {{nbt|compound|Properties}}: Optional. The [[block states]] of the block.
+**** {{nbt|string|''Name''}}: The block state name and its value.
+** {{nbt|float|explosion_power}}: A value from 0 to 128. The [[Explosion#Block_destruction|power]] of the explosion.  Defaults to 4.0. If set to the default value, this field is not saved to the entity's NBT.
+** {{nbt|int-array|owner}}: The [[UUID]] of the entity this TNT was lit by, stored as four ints. May not exist.
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Videos ==
+{{yt|_aFMq4vvv38}}
+
+== History ==
+{{more sounds|section=1|type=old|Initial explosion sound before it was updated}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] shows interest in adding "explosives", which would blow up when a pulse from a wire was received.}}
+|{{HistoryLine||October 24, 2009|link=https://web.archive.org/web/0/https://notch.tumblr.com/post/221308991/the-new-block-types-and-new-graphics-for-the-gold|TNT was teased in a blog post.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.26 SURVIVAL TEST|[[File:TNT JE1.png|32px]] Added TNT.
+|[[Player]]s have to hit TNT to prime the [[block]].
+|The player starts with 10 blocks of TNT in their [[hotbar]].
+|TNT's fuse time was shorter than in later versions, which is 2 seconds instead of 4 seconds.}}
+|{{HistoryLine||0.28|[[File:TNT JE2 BE1.png|32px]] Changed the side texture of TNT.
+|TNT no longer works in Survival.}}
+|{{HistoryLine||0.30 (Survival)|Hitting an already active TNT block now defuses it and allows the [[player]] to pick it up.
+|Explosions caused by TNT no longer produce smoke particles.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-0040|When broken, TNT replaces every [[block]] one level below it that is of the same block type as the block directly below it with [[wooden planks]].}}
+|{{HistoryLine|||dev=20091231-2255|[[Player]]s can no longer cancel the detonation of TNT by hitting it after priming it.{{Verify|Is this the exact version?}}}}
+|{{HistoryLine|||dev=20100124-2310|Explosions caused by TNT now produce smoke particles again.
+|TNT now deals more damage.}}
+|{{HistoryLine|||dev=20100125|TNT's fuse time is now 4 seconds, raised from 2 seconds.
+|TNT now flashes when lit.}}
+|{{HistoryLine|||dev=20100130|TNT is now [[craft]]able.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|[[Mob]] traps can no longer be created by putting a [[pressure plate]] directly on top of the [[block]] of TNT.
+|TNT can no longer have [[torch]]es placed on it. Any previously-placed torches remain until a block update is received.}}
+|{{HistoryLine||1.7|TNT can be primed only by [[redstone]] or any other mechanism that powers the TNT [[block]], as well as by {{control|hitting}} it with [[flint and steel]]. If the player hits TNT with an empty hand or while holding any other item, the block is destroyed and dropped as an item.}}
+|{{HistoryLine||1.8|dev=Pre-release|TNT explosions now emit shockwave particles.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=RC1|TNT has been given a new explosion [[sound]].}}
+|{{HistoryLine||1.2.5|{{control|Hitting}} TNT with flint and steel destroys TNT without priming it. Instead, TNT can be primed by {{control|using}} flint and steel on it.}}
+|{{HistoryLine||1.3.1|dev=12w21a|TNT can be naturally found (with structure generation turned on) in [[desert pyramid]]s as a trap in the treasure room. It's a 3×3 square of 9 TNT under a sandstone floor with a stone [[pressure plate]] on the center [[sandstone]] block.}}
+|{{HistoryLine|||dev=12w26a|TNT no longer drops as an item when broken in [[Creative mode]].}}
+|{{HistoryLine|||dev=12w30a|TNT no longer damages the player in [[Peaceful]] difficulty.}}
+|{{HistoryLine||1.4.2|dev=12w34a|TNT is now ignited when hit by flaming arrows (for example, shot by a bow enchanted with [[Flame]]).}}
+|{{HistoryLine||1.5|dev=13w02a|TNT is now used to craft [[TNT minecart]].}}
+|{{HistoryLine|||dev=13w04a|TNT is now primed when released from a dispenser.}}
+|{{HistoryLine||1.8|dev=14w05b|Mobs now suffocate inside of TNT.}}
+|{{HistoryLine|||dev=14w27b|TNT's top texture is now rotated randomly, as part of the addition of arrays to [[block model]]s.}}
+|{{HistoryLine|||dev=14w31a|The explosion physics have been changed, which greatly reduces the range of TNT cannons.}}
+|{{HistoryLine||1.8.2|dev=pre1|The explosion physics of TNT have been reverted to those before the [[14w31a]] snapshot.
+|Explosion force of TNT is no longer directionally biased.}}
+|{{HistoryLine||1.9|dev=15w47a|The random rotation of TNT's top texture has been removed.<ref>{{bug|MC-12959||TNT mesh rotated wrongly placed vs primed|Fixed}}</ref>}}
+|{{HistoryLine||1.11|dev=16w39a|TNT now generates in [[woodland mansion]]s.}}
+|{{HistoryLine||1.13|dev=18w10a|TNT now generates in [[buried treasure]] [[chest]]s.}}
+|{{HistoryLine|||dev=18w11a|TNT can now be found in [[shipwreck]] chests.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:TNT JE3 BE2.png|32px]] The texture of TNT has been changed.}}
+|{{HistoryLine|||dev=19w05a|TNT has become a [[renewable resource]] due to [[wandering trader]]s selling sand.}}
+|{{HistoryLine|||dev=19w11a|TNT explosions now have a 100% drop rate.}}
+|{{HistoryLine||1.15|dev=19w39a|TNT no longer flashes with a solid white color when primed.<ref>{{bug|MC-47941||TNT/Creepers flash solid white when exploding|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre1|The explosions from TNT have been optimized.
+|Black and white smoke particles are removed.<ref>{{bug|MC-165991||TNT explosion no longer shows additional smoke particles since 1.15 Pre-release 1}}</ref>}}
+|{{HistoryLine||1.16|dev=20w11a|TNT can now be ignited by any burning projectile.}}
+|{{HistoryLine||1.19|dev=22w13a|TNT no longer drops when breaking a [[minecart with TNT]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|TNT now drops when brushing [[suspicious sand]] in [[desert pyramid]]s.}}
+|{{HistoryLine||1.20|dev=23w12a|The probability for the TNT to generate in the suspicious sand in desert pyramid has been changed from 1/7 to 1/8.}}
+|{{HistoryLine||1.20.3|dev=23w42a|The {{cd|Fuse}} field has been renamed to {{cd|fuse}}.}}
+|{{HistoryLine||1.21|dev=pre1|Primed TNT can now teleport through a [[nether portal]].<ref>{{bug|MC-8983||Primed TNT cannot travel through nether portals|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre4|A primed TNT that has teleported through a nether portal can no longer destroy [[nether portal block]]s.}}
+|{{HistoryLine||1.21.2|dev=24w33a|TNT can no longer destroy item frames, paintings and armor stands when in water.<ref>{{bug|MC-3697}}</ref>|Added optional field <code>explosion_power</code>.}}
+|{{HistoryLine||1.21.5|dev=25w09a|The default {{cd|fuse}} value for TNT summoned using commands is now 80 instead of 0.}}
+|{{HistoryLine|||dev=25w10a|Added the {{cd|tntExplodes}} game rule.}}
+|{{HistoryLine||1.21.6|dev=25w20a|TNT can once again destroy items and armor stands when in water.}}
+|{{HistoryLine||1.21.9|dev=25w33a|Black and white smoke particles are once again shown when TNT explodes.<ref>{{bug|MC-165991||TNT explosion no longer shows additional smoke particles since 1.15 Pre-release 1|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|[[File:TNT JE2 BE1.png|32px]] Added TNT.
+|TNT currently cannot be obtained except via a hex editor. When edited in, the primed TNT simply emits smoke [[particles]], then disappears.{{Verify|There exists a video on the "Sony Ericsson Developer World" channel of the pre-release/demo, which shows TNT being fully detonated.}}}}
+|{{HistoryLine||v0.2.0|Edited-in TNT can now be successfully primed and detonated.}}
+|{{HistoryLine||v0.4.0|TNT is now able to be obtained without a hex editor in both [[Survival]] and [[Creative]].}}
+|{{HistoryLine||v0.8.0|TNT can now be ignited by [[Fire]] and [[Lava]]. (Previously would just burn away)}}
+|{{HistoryLine||v0.9.0|dev=build 1|The performance of TNT has been improved.}}
+|{{HistoryLine||v0.12.1|dev=build 1|TNT can now be ignited when hit with an [[item]] that has the [[Flame]] enchantment.}}
+|{{HistoryLine|||dev=build 10|The [[sound]] of TNT has been changed to that of {{JE}}.}}
+|{{HistoryLine||v0.13.0|dev=build 1|TNT can now be naturally found (with structure generation turned on) in [[desert pyramid]]s as a trap in the treasure room. It is a 3×3 square of 9 TNT under a sandstone floor with a stone [[pressure plate]] on the center [[sandstone]] block.}}
+|{{HistoryLine||v0.14.0|dev=build 1|TNT now can be used to craft [[minecart with TNT]].
+|Primed TNT can now travel through [[nether portal]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 1|TNT can now be ignited when hit with an item that has the [[Fire Aspect]] enchantment.}}
+|{{HistoryLine||v0.16.0|dev=build 1|An explosion in [[creative]] now gives the [[player]] materials as it does in [[survival]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.5|dev=alpha 1.0.5.0|An explosion in [[creative]] no longer gives the [[player]] materials as it does in [[survival]].}}
+|{{HistoryLine||1.0.7|TNT no longer does [[damage]] to a player if the TNT is in [[water]].}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|TNT now generates in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|TNT can now be found inside [[shipwreck]] supply [[chest]]s and [[buried treasure]] chests.}}
+|{{HistoryLine|||dev=beta 1.2.20.2|TNT can now can be used to craft [[underwater TNT]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:TNT JE3 BE2.png|32px]] The texture of TNT has been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.100.51|TNT no longer activates when a [[redstone torch]] is placed directly on it.<ref>{{Bug|MCPE-81258||TNT activates when a redstone torch is placed on the side of the block|Fixed}}</ref>}}
+|{{HistoryLine||1.19.70|dev=Preview 1.19.70.23|TNT now drops when brushing [[suspicious sand]] in [[desert pyramid]]s.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.20|TNT explosions now have a 100% drop rate.<ref>{{bug|MCPE-56036||TNT Does Not Have 100% Drop Rate|Fixed}}</ref>}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|TNT no longer flashes with a solid white color when primed.<ref>{{bug|MCPE-51809||TNT/Creepers flash solid white when exploding|Fixed}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:TNT JE2 BE1.png|32px]] Added TNT.}}
+|{{HistoryLine||xbox=TU3|TNT can no longer be directly primed by the [[player]], but only by [[redstone]] or any other mechanism that powers the TNT [[block]], as well as by {{control|using}} [[flint and steel]]. Hitting the block destroys it simply and safely so it can be picked up.}}
+|{{HistoryLine||xbox=TU5|The explosion [[sound]] of TNT has been changed.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|TNT now makes a sound before exploding.
+|TNT does variable [[damage]] depending on [[difficulty]] setting.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|TNT is now used to craft [[TNT minecart]].|TNT is now primed when released from a dispenser.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|TNT now generates in [[woodland mansion]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|TNT can now be found inside [[shipwreck]] supply [[chest]]s and [[buried treasure]] chests.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:TNT JE3 BE2.png|32px]] The texture of TNT has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:TNT JE2 BE1.png|32px]] Added TNT.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|TNT can now be created (using map editors) with a data value of 1 to make it retain the old behavior of being primed when punched.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|TNT now uses the newly-implemented model json file {{code|models/block/cube.json}}; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.9|dev=15w32c|TNT's maximum fuse time has been increased from 127 [[ticks]] into 32767 ticks.}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed from <code>PrimedTnt</code> to <code>tnt</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|The <code>explode</code> block states for the <code>tnt</code> ID have been removed. As a result, the old punch to prime behavior of TNT is no longer available.
+|Prior to [[Java Edition Flattening|''The Flattening'']], this [[block]]'s numeral ID was 46.}}
+|{{HistoryLine||1.13.1|dev=18w30a|Added the <code>unstable</code> block states for TNT, acting like the <code>explode</code> block states did.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has been changed from <code>primedtnt</code> to <code>tnt</code>.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.23|The different allow underwater bit [[block states]] for the <code>tnt</code> ID have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* "TNT" stands for {{W|TNT|'''T'''ri'''n'''itro'''t'''oluene|newtab=1}}. The {{W|preferred IUPAC name|newtab=1}}, however, is 2-methyl-1,3,5-trinitrobenzene. The chemical formula is C<sub>7</sub>H<sub>5</sub>N<sub>3</sub>O<sub>6</sub>, and unlike in ''Minecraft'', has nothing to do with gunpowder.
+* The use of sand in the crafting recipe references {{w|dynamite|newtab=1}}, a different high explosive from TNT, consisting of {{w|nitroglycerin|newtab=1}} mixed with {{w|diatomaceous earth|newtab=1}}. The block's appearance as a bundle of red sticks is also typical of dynamite.
+* It takes 19.75 blocks to fall for it to reduce the timer for one second.
+* Although primed TNT normally gets caught in [[cobweb]]s, TNT propelled fast enough flies through them without slowing down at all.
+* It is slightly smaller than a full block when activated, as with all entity versions of blocks (see [[shulker]]).
+* {{IN|pi}}, TNT by default doesn't do anything, but when set to data value 1, it ignites when broken. 
+* The longest fuse time of TNT is 27 minutes and 18.35 seconds, or 32,767 ticks.
+* The TNT fuse sound uses the same sound file as when a creeper is primed, but it is played at a higher pitch when the TNT is primed.
+* As seen in the [[Minecraft: Mobestiary|Mobestiary]], ''[[Minecraft Dungeons]]'', and several pieces of merchandise, creepers have TNT inside of them.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Falling TNT.png|Falling primed TNT, showing the effect of gravity.
+File:TNT triggered by redstone.gif|TNT triggered by redstone signal.
+File:TNT Cube.png|A giant cube room of TNT.
+File:Tnt shower.png|Thousands of tnts.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Magnus Griefing Large.gif|[[Story Mode:Magnus the Rogue|Magnus]] juggling TNT blocks, in promotion of the [[Story Mode Skin Pack]].
+File:Getting-started.jpg|A hybrid between a creeper and TNT, used to represent [[Add-on|add-ons]].<ref>https://learn.microsoft.com/en-us/minecraft/creator/documents/gettingstarted?view=minecraft-bedrock-stable&tabs=Windows10</ref>
+File:Kai and Zuri on a mountain of TNT.png|[[Kai]] and [[Zuri]] on top of a large pile of TNT, from [[Minecraft x Marketplace Pass]].
+File:TNT (Dungeons).png|[[Dungeons:TNT|TNT]] as it appears in Minecraft Dungeons.
+File:Super TNT.png|[[Story Mode:Super TNT|Super TNT]], an enhanced version of TNT featured in ''[[Minecraft: Story Mode|Minecraft Story Mode]]''.
+File:Formidi-Bomb.png|[[Story Mode:Formidi-Bomb|Formidi-Bomb]], another enhanced version of TNT featured in ''[[Minecraft: Story Mode|Minecraft Story Mode]]''.
+File:TNT (inventory) MCE.png|[[Earth:TNT|TNT]] as it appeared in ''[[Minecraft Earth]]''.
+File:TNT Box.jpg|An officially licensed box in the shape of TNT.
+File:AMCM TNT.png|TNT as seen in [[A Minecraft Movie]].
+File:Sam crafts TNT.png|[[Sam]] crafting TNT.
+Jessica-eberle-17654-1243.jpg
+Jessica-eberle-17924-23-1.jpg
+Jessica-eberle-17924-32.jpg
+Jessica-eberle-18267-64.jpg
+Jessica-eberle-toastertnt-2.jpg
+Jessica-eberle-untitled-1.jpg
+</gallery>
+
+== See also ==
+* {{EntityLink|Creeper}}
+* {{slink|Tutorial:Traps|Explosive traps}}
+* [[Tutorial:TNT cannons]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/block-week-tnt-0 Block of the Week: TNT] – Minecraft.net on August 11, 2017
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|utility}}
+{{Navbox entities|Other}}
+{{Navbox combat|general}}
+
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Utility blocks]]
+[[Category:Mechanisms]]
+[[Category:Combat]]
+[[Category:Flammable blocks]]
+[[Category:Hazardous blocks]]
+[[Category:Falling blocks]]
+
+[[cs:TNT]]
+[[de:TNT]]
+[[es:Dinamita]]
+[[fr:TNT]]
+[[hu:TNT]]
+[[it:TNT]]
+[[ja:TNT]]
+[[ko:TNT]]
+[[nl:TNT]]
+[[pl:TNT]]
+[[pt:TNT]]
+[[ru:ТНТ]]
+[[th:ระเบิดทีเอ็นที]]
+[[tr:TNT]]
+[[uk:Динаміт]]
+[[zh:TNT]]

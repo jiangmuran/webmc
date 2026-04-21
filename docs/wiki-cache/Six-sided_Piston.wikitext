@@ -1,0 +1,99 @@
+{{conjecture}}
+{{Removed feature}}
+{{Infobox block
+| group = Normal
+| group2 = Sticky
+| 1-1 = Piston (no direction) JE1.png
+| 1-1caption = ''Java Edition''
+| 1-1size = 150px
+| 2-1 = Sticky Piston (no direction).png
+| 2-1caption = ''Java Edition''
+| 2-1size = 150px
+| image2 = Piston (no direction) BE2.png
+| image2caption = ''Bedrock Edition''
+| transparent = No
+| light = No
+| tool = any
+| renewable = Yes
+| flammable = No
+| lavasusceptible = No
+}}
+A '''six-sided piston''' was an extreme metadata variant of the [[piston]]. It could be used as [[update suppression]] agents.
+[[File:Six-sided piston BE.png|thumb|Six-sided piston {{in|pe}}]]
+
+== Obtaining ==
+=== Breaking ===
+Six-sided pistons can be broken in the same way normal pistons can. They cannot be obtained as an item, instead dropping normal pistons.
+{{breaking row|horizontal=1|Six-sided Piston|Pickaxe|sprite=all pistons}}
+
+=== BUD piston method ===
+Six-sided pistons of metadata value 7 could be created if a placed piston updates a BUD-powered piston, such that it pushes or pulls the placed piston.
+
+=== Block transmutation ===
+Multiple [[mcdf:Java Edition:Block Transmutation|block transmutation methods]] can be used to create Six-sided Pistons {{in|JE}}. From Beta 1.7.2 to Beta 1.9 Prerelease 5, Six-sided Pistons can be created using moving piston merge transmutation, from Beta 1.7.3 to 1.2.3, can be created using water transmutation, and from 13w36a-1 to 1.7.5 and 14w02a to 14w11b, can be created using arrow transmutation.
+
+=== <samp>/setblock</samp> and <samp>/fill</samp> method ===
+Six-sided pistons can be obtainable using the {{cmd|setblock}} and {{cmd|fill}} command. (e.g <code>/setblock ~ ~ ~ piston (or sticky_piston) metadata value beyond 6</code>){{more info}}
+
+== Usage ==
+=== Update suppression ===
+When powered, six-sided pistons of metadata 6 immediately crash the game. This game crash happens so quick that block updates are not processed correctly, and this can allow for otherwise-impossible arrangements of blocks to be achieved.
+
+Every time the six-sided pistons is updated while receiving power, the game crashes again, so having it be in a position where it receives constant updates is not recommended due to effectively softlocking the world. Depowering the six-sided pistons should make it safe again. This has a possibility of corrupting singleplayer worlds, and it is much safer to perform this on a hosted server.
+
+Analysis of the behavior of metadata 6 six-sided pistons using 1.7 releases and 1.8 snapshots suggests that they remain at data value 6 permanently, even upon loading a world, as opposed to converting to data value 14 - if they do indeed convert, this conversion is not saved.
+
+== History ==
+{{info needed section|From the Bedrock Edition removed blocks page: "Running the block on the higher versions, such as 1.16.0, replaces an normal piston but in random directions." Can we figure out what data values correspond to what resultant directions, or is it truly random?}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|[[File:Piston (no direction) JE1.png|32px]] [[File:Piston (no direction) JE1.png|32px]] [[File:Piston (no direction) JE1.png|32px]] [[File:Piston (no direction) JE1.png|32px]] [[File:Sticky Piston (no direction) JE1.png|32px]] [[File:Sticky Piston (no direction) JE1.png|32px]] [[File:Sticky Piston (no direction) JE1.png|32px]] [[File:Sticky Piston (no direction) JE1.png|32px]]<br>Six-sided pistons and six-sided sticky pistons exist. There are eight types: the normal piston with data values 6, 7, 14 and 15, and the sticky piston with data values 6, 7, 14 and 15.
+|The variants with metadata 6 crash the game when powered, allowing for update suppression.
+|The variants with metadata 7 can be obtained via the BUD piston method.
+|The variants with metadata 14 and 15 crash the game immediately when updated in any way, likely also allowing for update suppression. However, they are not known to be obtainable in a stable state at this point.}}
+|{{HistoryLine||1.7_01|Six-sided pistons of metadata 15 appear to convert to metadata 7 upon loading the world again after updating them.}}
+|{{HistoryLine||1.7.3|Six-sided pistons of other metadata values are now obtainable in survival via block transmutation using the water method.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.4|dev=release|Water transmutation has been patched, preventing six-sided pistons from being obtained this way.}}
+|{{HistoryLine||1.3.1|dev=12w26a|Patched the BUD piston method, preventing six-sided pistons from being obtained this way.}}
+|{{HistoryLine|||dev=12w27a|Six-sided pistons of metadata 15 no longer crash the game when updated.}}
+|{{HistoryLine||1.7.2|dev=13w36a|"Added" arrow transmutation, allowing for the obtaining of six-sided pistons this way.}}
+|{{HistoryLine||1.7.6|dev=pre1|Patched arrow transmutation in the 1.7 branch, preventing six-sided pistons from being obtained this way.}}
+|{{HistoryLine||1.8|dev=14w02a|Six-sided pistons with data value 6 no longer crash the game when powered, rendering them no longer usable for update suppression.
+|In addition, six-sided pistons with metadata 14 can be obtained in a stable state with commands or arrow transmutation, as they no longer crash the game either.}}
+|{{HistoryLine|||dev=14w17a|[[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] [[File:Missing Model JE2.png|32px]] Six-sided pistons [[Missing model|no longer have a model]].
+|Patched arrow transmutation in the 1.8 branch, preventing six-sided pistons from being obtained this way.}}
+|{{HistoryLine|||dev=14w25a|Due to blocks using block states instead of metadata from this version onward, since six-sided pistons were not associated with any valid block states, approaching one would result in a game crash.}}
+|{{HistoryLine|||dev=14w26a|Six-sided pistons have been fully removed from the game alongside other invalid metadata variants of blocks.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Piston (no direction) BE1.png|32px]] Six-sided pistons and six-sided sticky pistons exist. In this edition they appear extremely mutilated, with the side texture on all six sides instead of the head texture, and a piston arm lodged partway inside it, causing visible Z-fighting.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Piston (no direction) BE2.png|32px]] Piston-related textures have been updated.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Six-sided pistons have been removed.<ref>{{bug|MCPE-21558||Setblock Bug - Six Sided Piston|Fixed}}</ref> Existing six-sided pistons are automatically converted to data value 0 pistons.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||?|[[File:Piston (no direction) JE1.png|32px]] [[File:Sticky Piston (no direction) JE1.png|32px]] Six-sided pistons and six-sided sticky pistons exist.}}
+|{{HistoryLine||?|Six-sided pistons can be obtained via the BUD piston method.}}
+|{{HistoryLine||?|Patched the BUD piston method, preventing six-sided pistons from being obtained this way.}}
+}}
+
+== Issues ==
+{{unintended block issues}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Meta}}
+
+[[ja:Six-sided Piston]]
+[[pt:Pistão de seis lados]]

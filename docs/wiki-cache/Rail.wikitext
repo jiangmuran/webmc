@@ -1,0 +1,379 @@
+{{For}}
+{{Needs updating|reason=Much of the information about rail mechanics needs to be checked for accuracy and/or reformatted to reflect modern Minecraft. The effects waterlogged rails have on minecart speeds need explaining. Experimental Minecart Improvements may be worth mentioning in some capacity, even if it is just to mention it exists.}}
+{{Infobox block
+| image = Rail (NS).png
+| image2 = Rail (ES).png
+| extratext = View [[#Renders|all renders]]
+| transparent = Yes
+| light = No
+| tool = pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+A '''rail''' is a non-solid [[block]] that provides a path along which [[minecart]]s can travel, and can be placed either flat on the ground, as a ramp, or curved.
+
+A '''curved rail''' allows minecarts to turn corners, and can rotate to connect to a different rail line while [[powered]].
+
+== Obtaining ==
+=== Breaking ===
+The suitable tool to break a rail is a [[pickaxe]]. It will always drop itself when broken.
+{{breaking row|horizontal=1|Rail|pickaxe}}
+=== Natural generation ===
+Rails can be found naturally running along the floor in [[mineshaft]]s, both in the center of tunnels and under loot [[chest minecart]]s, and in the "pumpkin ring room" of [[woodland mansion]]s.
+
+=== Generated loot ===
+{{LootChestItem|rail}}
+
+=== Crafting ===
+{{Crafting
+|A1= Iron Ingot
+|C1= Iron Ingot
+|A2= Iron Ingot
+|B2= Stick
+|C2= Iron Ingot
+|A3= Iron Ingot
+|C3= Iron Ingot
+|Output= Rail,16
+|type= Transportation
+}}
+
+== Usage ==
+{{see also|Tutorial:Minecarts}}
+A rail can be used as a track for minecarts to move along.
+
+=== Placement ===
+To place a rail, {{control|use}} a rail item while pointing at a surface facing the space the rail should occupy. A rail can be placed on top of a block whose top face has a rim around the edge, such as any [[full block]], [[hopper]], top [[Slab#Placement|slab]], upside-down [[Stairs#Placement|stairs]], or top [[Trapdoor#Properties|trapdoor]]. A full list of these blocks is [https://joakimthorsen.github.io/MCPropertyEncyclopedia/?selection=variants,top_face_has_rim&filter=(top_face_has_rim:No)# here]. A rail can also be placed into a water source on any of these blocks and will be waterlogged after placement.
+
+Rails visually float {{frac|1|16}} blocks above the ground, with an [[Hitbox#Outline_box|outline]] {{frac|2|16}} blocks high.
+
+A rail cannot be attached to the side or bottom of any block, but attempting to make such an attachment may cause the rail to attach to the top of a block under the destination space. For example, if a fence is on the ground, attempting to attach a rail to the side of the fence causes the rail to be attached to the top of the ground next to the fence instead.
+
+More information regarding placement on transparent blocks can be found at [[Opacity/Placement]].
+
+A placed rail configures itself to be straight or curved according to rail blocks around it. 
+* If there are no other rails adjacent, or if placed beside an existing rail line of any type, then {{in|bedrock}} the new rail orients itself as a straight north-south rail, and {{in|java}} the new rail orients itself in the direction the player is facing.
+* A new rail placed at the end of an existing rail line continues the existing line in the same direction, either east-west or north-south.
+* If there are two adjacent rails on its level, or one level up or down, the newly placed rail configures itself as straight or curved as needed to connect the other two.
+* If placed between three adjacent rails (forming a T-junction) the newly placed rail configures itself as curved to join two of the sides.
+<gallery mode="packed">
+Teesbeforefilling.png|T-junction before filling in rails
+Tjunctionsafter.png|T-junction after filling in rails
+</gallery>
+Existing rail lines one block up and down are considered for adjacency in the same manner, and the new rail gets laid as a curve, but unless space is left for sloping rails, minecarts can continue past the curve only on level or one-block-down corners. In one-block-up corners, the cart ends up buried in the ground.
+<gallery mode="packed">
+3wayoneblockup.png|Before placing the top block.
+3wayoneblockupplaced.png|Top block is placed as curve.
+3wayoneupcart.png|Showing cart getting buried.
+</gallery>
+Some rail placements produce rail layouts that cause minecarts to collide and enter blocks.
+<gallery mode="packed">
+Updowntooclose.png|Minecarts always buried
+Updowngoodspacing.png|Minecarts get through
+</gallery>
+* If placed to form a 4-way junction with no curved rail, it does not form a cross-rail connection.
+* If placed between four adjacent rails to form a junction, the center rail always curves south-to-east.
+<gallery mode="packed">
+4wayjoined.png|Curve controls minecart passage
+</gallery>
+
+Existing rails may get re-oriented, become sloping, or even change into curved rails when a new rail is placed adjacent to it:
+* An existing straight, north-south rail re-orients to east-west when a new rail is placed at the east or west sides.
+* If placed next to an existing rail that is one block up or down, the new rail becomes a ramp to join it. A rail "prefers", in order: west, east, south, and north. Other configurations can be created by placing and removing rails.
+* If a rail is placed perpendicular to an existing length of rail, it appears as a straight rail, but is in fact curved according to the patterns for T-junctions as seen above; minecarts going through the junction will turn the corner. Breaking and re-laying rails so that the middle rail is laid last causes it to be updated as a curved rail.
+
+=== Redstone functionality ===
+A curved rail at a T-junction can be rotated by applying redstone power.
+
+If a rail is not in its most preferred available state, it will change to that preferred state as its default when the rail is updated via redstone power.<ref>This is caused by the way rails update when given a redstone signal. A rail's preference inverts when a redstone signal is applied, and then its direction is updated to be the most preferred state. This can easily be observed when placing a rail on a redstone block with a 4-way junction compared to a non-powered block.</ref>
+<gallery mode="packed">
+File:Teeswitchleft.png
+File:Teeswitchright.png
+File:Teeswitchnoeffect.png
+</gallery>
+
+Separate rails are laid adjacent, but at the next level, lower or higher rails can sometimes cause rail reorientation.
+
+=== Minecart behavior ===
+==== South-east rule ====
+[[File:Track intersections.png|left|thumb]]
+[[File:T-intersection-south-west.png|right|thumb]]
+{{main|South-east rule}}
+A minecart travels straight through a T-junction when entering from the "back of" the curved rail. It follows the curve when entering from either of the other two legs.
+
+A minecart passes straight through a 4-way junction constructed to have no curved rail. When entering the 4-way from east or west a cart turns according to the south-east rule.
+{{-}}
+
+==== Downhill rule ====
+[[File:Downhill rule.png|thumb]]
+At non-curve rail junctions, minecarts always travel downhill if they can, ignoring the south-east rule.
+{{-}}
+
+==== Ramp clearance & one-way effect ====
+[[File:Minecart Block Passing Effect.png|thumb]]
+A block placed above a rail line at the downhill end of a ramp prevents minecarts from traveling down the slope, but not up. For a minecart to move down a diagonal tunnel, there must be clearance sufficient for a player to walk through it.
+{{-}}
+
+==== Curved rail interactions ====
+[[File:Railguide.png|thumb|A diagram on how minecarts travel according to rail curves.]]
+If a straight rail leads to a curved rail and does not connect to it, a minecart runs over the gap and continues to go straight over the curved rail. This is not applicable for other types of rails.
+
+Notably, minecarts can exceed the normal 8&nbsp;m/s speed limit while it jumps over the gap. For example, by placing curved rails on every other block of a straight rail, it is possible to travel at 10&nbsp;m/s in a straight direction.
+
+As with straight T-junctions and 4-way junctions, the practice of making a minecart jump between rails can be used to make one-way entries onto a rail line. For curved rails, the behavior is more intuitive as the cart simply proceeds in the direction it is already going, allowing designs that do not rely on the south-east rule.
+{{-}}
+
+==== Minecart speeds ====
+To accelerate from a standstill to full speed, most minecarts need seven powered rails (a [[minecart with furnace]] has a lower top speed). After a certain number of rails, the minecart begins slowing down. This slowdown can be negated using a powered rail. A certain number of rails followed by a single powered rail can then be repeated indefinitely to maintain full speed with the minimum amount of powered rails.
+
+{| class="wikitable"
+! Minecart type
+! Initial maximum rails at full speed
+! Subsequent maximums
+|-
+| Empty [[minecart]] and [[minecart with TNT]]
+| 7
+| 3
+|-
+| Minecart with entity
+| 112
+| Alternates between 38 and 26
+|-
+| [[Minecart with chest]] and [[minecart with hopper]]
+| 85
+| 20, then 29 onward
+|}
+
+For example, a minecart with an entity would require 112 rails, then 1 powered rail, then 38 rails, then 1 powered rail, then 26 rails, then 1 powered rail, then 38 rails, etc. Note that these rails can go in any direction: going 112 rails diagonally would still require a powered rail.
+
+A minecart with no rider at full speed can climb 10 blocks on an unpowered rail. This suggests that a powered rail is needed at a height of only 10 blocks to keep a cart climbing. However, the cart slows so much that it can reach only another 5 blocks high with 2 lengths of powered rails starting at 9 blocks high. The minimum number of powered rails to keep the cart climbing constantly is 3 every 6 blocks.
+
+Minecarts carrying entities, or minecarts with chests, have more momentum and so climb higher than empty minecarts. With a rider, a minecart can climb at most 24 blocks before stopping and needing powered rails to go higher.
+
+=== Mob behavior ===
+{{IN|java}}, most mobs avoid walking on rails,<ref>{{bug|MC-33359||Mobs are unable to cross minecart rails|WAI}}</ref> but they ignore rails when they are already on them. Jumping mobs like [[slime]]s, [[frog]]s<ref>{{bug|MC-263494||Frogs jump over rails and sometimes land on them|WAI}}</ref>, and [[goat]]s can jump onto rails, but frogs and goats do not walk onto rails. [[Aquatic]] creatures like [[guardian]]s, [[tadpole]]s, and [[fish]] that flop around on land can flop onto rails. [[Parrot]]s can land on rails and [[endermen]] can teleport onto rails, although they do not walk onto them. In pursuit of their targets, zombies may push other mobs onto the rails. The only mobs that freely walk onto rails are [[spider]]s, [[cave spider]]s, and [[warden]]s.
+
+=== Piston interactivity ===
+A rail can be pushed by a [[piston]], and can be pulled by a [[sticky piston]]. However, the rail breaks and drops as an item when it is unsupported due to being moved.
+
+== Sounds ==
+{{Sound table/Block/Metal}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Rail
+|spritetype=block
+|nameid=rail
+|blocktags=prevent_mob_spawning_inside, rails
+|itemtags=rails
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Rail
+|spritetype=block
+|nameid=rail
+|id=66
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{edition|java}}:
+{{bst|shape|north_south
+|east_west,north_east,north_south,north_west,south_east,south_west|The two directions a rail connects to.<br>For example, a <code>south_east</code> rail is a curved rail that connects to the south and to the east.
+|ascending_east,ascending_north,ascending_south,ascending_west|A rail that ascends ''toward'' the direction noted.<br>For example, an <code>ascending_west</code> rail is a straight rail that goes upward from the east ''toward'' the west.}}
+{{Bst|waterlogged|false|true,false|Whether or not there's water in the same place as this rail.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|rail_direction|0
+|0|Straight rail connecting to the north and south.|
+|1|Straight rail connecting to the east and west.|
+|2|Sloped rail ascending to the east.|
+|3|Sloped rail ascending to the west.|
+|4|Sloped rail ascending to the north.|
+|5|Sloped rail ascending to the south.|
+|6|Curved rail connecting to the south and east.|
+|7|Curved rail connecting to the south and west.|
+|8|Curved rail connecting to the north and west.|
+|9|Curved rail connecting to the north and east.|
+|foot=1}}
+
+== Achievements ==
+{{load achievements|On A Rail}}
+
+== Videos ==
+<div style="text-align:center">{{yt|ILy1jrm_GUw}}</div>
+
+== History ==
+{{info needed section|Did 1.8 change the way rails were shaded? Or was this change made in the 1.15-1.16 era?}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100618|[[File:Rail (NS) JE1.png|32px]] [[File:Rail (EW) JE1.png|32px]] [[File:Rail (NE) JE1.png|32px]] [[File:Rail (ES) JE1.png|32px]] [[File:Rail (SW) JE1.png|32px]] [[File:Rail (NW) JE1.png|32px]] [[File:Rail (Ns) JE1.png|32px]] [[File:Rail (nS) JE1.png|32px]] [[File:Rail (Ew) JE1.png|32px]] [[File:Rail (eW) JE1.png|32px]] Added rails in the first [[Seecret Updates|"Seecret Friday Update"]] to Infdev.}}
+|{{HistoryLine||20100624|Sloped rails are currently being dropped if the block on the side was destroyed.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=<nowiki>?</nowiki>|slink=:Category:Information needed requiring unarchived version|[[File:Rail (NS) JE2 BE1.png|32px]] [[File:Rail (EW) JE2 BE1.png|32px]] [[File:Rail (NE) JE2 BE1.png|32px]] [[File:Rail (ES) JE2 BE1.png|32px]] [[File:Rail (SW) JE2 BE1.png|32px]] [[File:Rail (NW) JE2 BE1.png|32px]] [[File:Rail (Ns) JE2 BE1.png|32px]] [[File:Rail (nS) JE2 BE1.png|32px]] [[File:Rail (Ew) JE2 BE1.png|32px]] [[File:Rail (eW) JE2 BE1.png|32px]] The textures of rails and curved rails have been changed slightly.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.6|dev=Test Build 3|Before this update, parallel rail lines would be used to create [[Tutorial:Minecart booster|minecart boosters]].}}
+|{{HistoryLine||1.8|dev=Pre-release|Rails are now found in the new [[mineshaft]] chests.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Rails are now destroyed by [[snowfall]] (bug).}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Some rail behavior is now affected following the change of the south-west rule to [[south-east rule]].}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Rails are now broken faster using a [[pickaxe]].}}
+|{{HistoryLine||1.3.1|dev=12w25a|Rails can now be placed on upside-down [[slab]]s and [[stairs]].}}
+|{{HistoryLine||1.5|dev=13w04a|[[Mob]]s no longer walk over rails, if they are not currently standing on one.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Rail (in minecart) 14w04a.png|32px]] [[File:Curved Rail (in minecart) 14w04a.png|32px]] If a rail is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine||1.9|dev=15w38a|All sloped rail types' hitbox heights have been decreased from 10 pixels of a block to about 2.5 pixels of a block.}}
+|{{HistoryLine|||dev=15w44a|The average yield from [[chest minecarts]] in [[mineshaft]]s has been increased by more than 20 times.}}
+|{{HistoryLine|||dev=15w46a|Mobs no longer spawn on rails.}}
+|{{HistoryLine||1.10|dev=16w21a|All sloped rail types' hitbox heights have been increased from about 2.5 pixels of a  block to a full block.}}
+|{{HistoryLine||1.11|dev=16w32b|All sloped rail types' hitbox heights have been decreased from a full block to a half block.}}
+|{{HistoryLine|||dev=16w39a|Rails now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Rail (NS) JE3 BE2.png|32px]] [[File:Rail (EW) JE3 BE2.png|32px]] [[File:Rail (NE) JE3 BE2.png|32px]] [[File:Rail (ES) JE3 BE2.png|32px]] [[File:Rail (SW) JE3 BE2.png|32px]] [[File:Rail (NW) JE3 BE2.png|32px]] [[File:Rail (Ns) JE3 BE2.png|32px]] [[File:Rail (nS) JE3 BE2.png|32px]] [[File:Rail (Ew) JE3 BE2.png|32px]] [[File:Rail (eW) JE3 BE2.png|32px]] The texture of rails has been changed.}}
+|{{HistoryLine|||dev=19w12b|Rails can now be placed on [[glass]], [[ice]], [[glowstone]] and [[sea lantern]]s.}}
+|{{HistoryLine||1.15|dev=19w39a|Placing a new, unconnected section of rails now orients them in the direction the [[player]] is facing, rather than always north-south.}}
+|{{HistoryLine||October 22, 2020|link=https://web.archive.org/web/20201025215822/https://bugs.mojang.com/browse/MC-202638|A leaked screenshot was accidentally posted in a bug report that said "waterlogged-rail", which was later removed.}}
+|{{HistoryLine||1.16|dev=20w09a|[[File:Rail (Ns) JE4.png|32px]] [[File:Rail (nS) JE4.png|32px]] [[File:Rail (Ew) JE4.png|32px]] [[File:Rail (eW) JE4.png|32px]] Rails are affected by ambient occlusion.}}
+|{{HistoryLine||1.17|dev=20w45a|All rail types can now be [[waterlogged]].
+|Rails are no longer swept away by water.}}
+|{{HistoryLine||1.19|dev=22w13a|[[Warden]]s can now pass over rails.<ref>{{bug|MC-249642||Wardens can't pass over rails|F}}</ref>}}
+|{{HistoryLine||1.21.6|dev=25w15a|[[File:Rail (Ns) JE3 BE2.png|32px]] [[File:Rail (nS) JE3 BE2.png|32px]] [[File:Rail (Ew) JE3 BE2.png|32px]] [[File:Rail (eW) JE3 BE2.png|32px]] Rails are no longer affected by ambient occlusion.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Rail (NS) JE2 BE1.png|32px]] Added rails.}}
+|{{HistoryLine|||dev=build 2|Rails are now craftable.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Rails now generate in [[mineshaft]]s.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Rails can now be found in mineshaft [[chest]]s. }}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Rails now generate in [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Rails can now be placed underwater.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Rails are once again broken by flowing water. Previously it flowed through the rails.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Rail.png|32px]] The texture of rails has been changed.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21|Zombie horses no longer avoid walking on rails, making mobs avoiding rails remaining a {{JE}} exclusive.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Rail (NS) JE2 BE1.png|32px]] Added rails.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[Mob]]s no longer walk over rails, if they are not currently standing on one.{{check version}}}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Mobs no longer spawn on rails.|All sloped rail types' hitbox heights have been increased from 10 pixels of a block to a full block.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|All sloped rail types' hitbox heights have been decreased from a full block to a half block.|Rails now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|All types of rails can now be [[waterlogged]] and are no longer destroyed by flowing water. Instead it flows right through them.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Rail.png|32px]] The texture of rails has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Rail (NS) JE2 BE1.png|32px]] Added rails.}}
+}}<gallery>
+File:Beta Roller Coaster.png|A roller coaster.
+</gallery>
+
+=== Data history ===
+{{HistoryTable|
+{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w10a|Rails with [[Java Edition data values/Pre-flattening/Block IDs/Before 14w25a|numerical metadata variants]] 10 to 15, which are inaccessible through normal gameplay or even commands and as such require the use of external editors to exist, now have [[Missing model|no model]] [[File:Missing Model JE2.png|32px]]. Their appearances prior to this point used the south east curved rail model.}}
+|{{HistoryLine|||dev=14w25a|Rails are now defined via [[block states]] rather than by numerical metadata. Prior to this version, the numerical metadata variants of the rail were as follows:
+{{dvt|spritetype=block|sprite=rail|North-south}}
+{{dvt|spritetype=block|sprite=rail|East-west}}
+{{dvt|spritetype=block|sprite=rail|Ascending east}}
+{{dvt|spritetype=block|sprite=rail|Ascending west}}
+{{dvt|spritetype=block|sprite=rail|Ascending north}}
+{{dvt|spritetype=block|sprite=rail|Ascending south}}
+{{dvt|spritetype=block|sprite=rail|Curved south-east}}
+{{dvt|spritetype=block|sprite=rail|Curved south-west}}
+{{dvt|spritetype=block|sprite=rail|Curved north-west}}
+{{dvt|spritetype=block|sprite=rail|Curved north-east}}
+{{dvt|spritetype=block|sprite=missingno|dv=10-15|[[Java Edition removed blocks/Metadata variants#Boring variants|Inaccessible - behavior unknown]]|foot=1}}}}
+|{{HistoryLine|||dev=14w26a|Rails with metadata values 10 to 15 have been completely removed from the game.{{verify|MCDF wiki says that invalid metadata acts as air until 1.9, can this be checked?}}}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[Java Edition 1.13/Flattening|''The Flattening'']], this block's numeral ID was 66.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* When walking on a [[block]] that has a rail on top, a [[player]] will hear the [[sound]] of the block they are walking on, but if they jump (while still walking), they hear the sound of the rail itself.<ref>{{bug|MC-1691||Sprinting / falling on level 1 and 2 snow, lily pads and carpet use the block below for the particles}}</ref>
+* Rails are narrow gauge with a controversial gauge value (the gauge value is the distance between the rails) that may be 8 pixels (500mm) between the innermost edges of the rails, 10 pixels (625mm) between the two lighter sections (which may be intended to be the raised section), 632 mm (approx. 2-foot), or 750mm (approx. 2-foot 5-inch).
+* A chest of rails has a total length of 64×27 = 1728 meters, which is slightly more than 1 mile (1.074 miles, 0.933 nautical miles).
+* Rails do not touch the block they are placed on. The flat texture can actually be seen to hover over their supporting block.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Rail (NS).png|North south
+Rail (EW).png|East west
+Rail (NE).png|North east
+Rail (ES).png|East straight
+Rail (SW).png|South west
+Rail (NW).png|North west
+Railtrack.png|An example of a rail line with curves and ramps.
+</gallery>
+=== Screenshots ===
+<gallery>
+sticky piston rails.gif|An example of sticky piston use with rails.
+Minecraftrollercoaster.jpg|An example of how to use rails as a roller coaster.
+RailBug.png|A randomly generated misplaced rail found in a [[mineshaft]].
+Floating rails.png|Three more floating rails in a mineshaft.
+Minecraft train.png|[[Villager]]s riding [[minecart]]s with rails below them.
+Rail stop front.png|A railroad stop without any [[redstone]] switching mechanisms, based purely on the one-way curved rail behavior.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:AYIB Mastered.jpeg|[[Kai]] [[Crafter|crafting]] a rail, in [[A year in blocks|''A year in blocks'']].
+Cinematic rails.png|Rails in {{amcm}}.
+</gallery>
+
+== See also ==
+* {{BlockLink|Powered rail}}
+* {{BlockLink|Activator rail}}
+* {{BlockLink|Detector rail}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Non-solid blocks]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+
+[[cs:Kolej]]
+[[de:Schiene]]
+[[es:Raíl]]
+[[fr:Rails]]
+[[hu:Sín]]
+[[it:Binario]]
+[[ja:レール]]
+[[ko:레일]]
+[[lzh:軌]]
+[[nl:Spoor]]
+[[pl:Tory]]
+[[pt:Trilho]]
+[[ru:Рельсы]]
+[[uk:Рейки]]
+[[zh:铁轨]]

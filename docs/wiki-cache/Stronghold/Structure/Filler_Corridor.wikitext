@@ -1,0 +1,32 @@
+<noinclude>{{structure info}}</noinclude>
+'''Filler corridors''', also known as '''dead-end corridors''', are a special kind of sub-structure that generates when a normal [[stronghold]] room fails to generate, but the exit from where came the generation attempt is close enough to other parts of the stronghold. You can distinguish these from normal corridors by two details:
+* they are composed of only normal [[stone bricks]]: no [[mossy stone bricks|mossy]], nor [[cracked stone bricks|cracked]], nor [[infested blocks|infested]].
+* their generation is always complete and cannot be overwritten by caves (like the [[Stronghold/Structure/Portal_Room|portal room]]). This can result in them appearing like they are totally disconnected from the rest of the stronghold, if they are generated in caves.
+
+They consist of a vertical one-block wide ring of stone bricks, the same size as a normal corridor. For them to generate, the game checks for, in order:
+* failed generation of rooms from exits;
+* other parts of the stronghold that are 4 blocks or less away horizontaly from the selected exit, and at the same y-level of the exit.
+When these criteria are met, it generates up to 3 filler corridors sub-structures, stacked horizontaly on the same y-level, starting from the selected exit until it hits the other room's outer wall, in which in most cases makes a dent or an opening. In this way, the filler corridor is usually able to connects up near parts of the strongholds in order to form a denser network of passages.
+
+Unlike every other stronghold room, these pieces do not generate doors.
+
+==== Materials====
+{| class="wikitable"
+|-
+! Name
+! Amount
+|-
+| Stone bricks
+| 16-48
+|}
+
+==== Blueprint ====
+
+{{layered blueprint|name=Filler Corridor|default=Front view|S=Stone Bricks
+|----Front view|
+SSSSS
+S   S
+S   S
+S   S
+SSSSS
+}}

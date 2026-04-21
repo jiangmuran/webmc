@@ -1,0 +1,92 @@
+{{distinguish|Info_Update|Unknown}}
+{{DISPLAYTITLE:<samp>reserved6</samp>}}
+{{exclusive|bedrock|3ds}}
+{{unobtainable}}
+{{Infobox block
+|title = reserved6
+|image=Missing Tile BE3.png
+|invimage=reserved6
+|transparent=No
+|light=None
+|tool=Any
+|renewable=No
+|flammable=No
+|stackable=Yes (64)
+|lavasusceptible=No
+}}
+<samp>'''reserved6'''</samp> is an unused former technical block. It was used for referencing empty inventory slots.
+
+== Obtaining ==
+This block cannot be obtained via {{cmd|give}} or {{cmd|setblock}}, and as such can only be obtained through inventory editors or [[add-on]]s.
+
+=== Breaking ===
+<samp>reserved6</samp> is immediately destroyed when broken.
+{{breaking row|reserved6|horizontal=1}}
+<samp>reserved6</samp> drops itself when it's destroyed.
+
+== Sounds ==
+{{Sound table/Block/Normal/BE}}
+
+== Data values ==
+
+=== ID ===
+
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=tile.reserved6.name
+|spritename=reserved6
+|spritetype=block
+|nameid=reserved6
+|id=255
+|form=block
+|translationkey=-
+|foot=1}}
+
+== History ==
+{{see also|Bedrock Edition level format/History}}
+{{info needed section|Does this exist in the New Nintendo 3DS edition?}}
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|[[File:Stone BE2.png|32px]] Added a nameless block with ID 255. It uses the same texture as [[stone]]. Internally it is referred to as <samp>Tile::info_reserved6</samp>.
+|This block is used for referencing inventory slots in the player's [[hotbar]] in Survival mode. The first nine {{nbt|compound}} compound tags under {{nbt|list|Inventory}}, those with {{nbt|byte|Slot}} values ranging from <code>00</code> (0) to <code>08</code> (8), have their {{nbt|short|id}} and {{nbt|byte|Count}} values set to <code>FF</code> (255). Each of the nine compound tags also has a {{nbt|short|Damage}} value that is either equal to the slot value of another inventory slot (ranging from <code>09</code> (9) to <code>35</code> (53)), or is set to <code>00</code> (0) for empty hotbar slots.}}
+|{{HistoryLine||v0.2.1|Empty hotbar slots now have the block with a damage value of <code>01</code> (1).}}
+|{{HistoryLine||v0.3.0|The game now only saves up to 36 inventory slots, reducing the maximum damage value of the block to <code>2C</code> (44).
+|Empty hotbar slots now have the block with a damage value of <code>FFFF</code> (-1).}}
+<!-- Do not add information about Fire here. Reserved6 did not replace fire blocks in v0.3.3, that is a common misconception. -->
+|{{HistoryLine||v0.5.0|With the addition of tooltips, the block now displays the name ".name<".}}
+|{{HistoryLine||v0.7.5|reserved6 now generally breaks at the same speed as [[stone]], however, the speed may vary from update to update and device to device.}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:reserved6 BE1.png|32px]] reserved6 now uses a solid gray texture, derived from the top-left pixel of the [[grass block]] top texture.
+|reserved6 no longer has a red background in the inventory.
+|This version saves 162 inventory slots in Creative mode worlds, one for each item available in the game mode. This allows the reserved6 hotbar slots to have damage values ranging from <code>09</code> (9) to <code>AA</code> (170).}}
+|{{HistoryLine|||dev=build 2|Creative mode worlds now only save nine inventory slots, reducing the maximum damage value of reserved6 to <code>11</code> (17).}}
+|{{HistoryLine||v0.11.0|dev=build 1|The name is now displayed as ".name".}}
+|{{HistoryLine||v0.13.0|dev=build 1|The name is now displayed as "tile.reserved6.name".}}
+|{{HistoryLine||v0.14.0|dev=build 1|Up to 36 inventory slots are now saved in Creative mode, increasing the maximum damage value of reserved6 to <code>2C</code> (44).}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:info update BE1.png|32px]] <samp>reserved6</samp> now uses the texture of [[info update|tile.info_update.name]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Empty hotbar slots are no longer saved for the player entity, meaning that it is no longer possible for <samp>reserved6</samp> hotbar slots to have a damage value of -1.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.10|dev=beta 1.2.10.1|Due to changes made to how the player's inventory is saved, <samp>reserved6</samp> is no longer used for referencing inventory slots.}}
+|{{HistoryLine|||dev=release|Most changes from beta 1.2.10.1, including the inventory save changes, were reverted due to stability issues.<ref>[[Special:Diff/1181122|Edit to Bedrock Edition 1.2.10 by Minecraft Staff]]</ref>}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.5|Readded the inventory save changes that make <samp>reserved6</samp> unused.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.21|[[File:Missing Tile BE3.png|32px]] The texture of <samp>reserved6</samp> has been changed.}}
+}}
+
+== Issues ==
+<samp>reserved6</samp> is an unsupported block, and as such, issues relating to it may not be fixed.
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox unused features}}
+{{Navbox blocks|Unused}}
+[[Category:Unused blocks]]
+
+[[ja:Reserved6]]
+[[ko:Reserved6]]
+[[pt:Reserved6]]
+[[zh:Reserved6]]

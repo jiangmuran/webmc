@@ -1,0 +1,101 @@
+{{distinguish|Test Instance Block}}
+{{exclusive|java}}
+{{Infobox block
+|group = Start
+|group2 = Log
+|group3 = Fail
+|group4 = Accept
+|1-1 = Test Block start.png
+|invimage = [&dTest Block]Test Block start
+|2-1 = Test Block log.png
+|invimage2 = [&dTest Block]Test Block log
+|3-1 = Test Block fail.png
+|invimage3 = [&dTest Block]Test Block fail
+|4-1 = Test Block accept.png
+|invimage4 = [&dTest Block]Test Block accept
+|transparent = No
+|light=No
+|tool=None
+|renewable = No
+|stackable = Yes (64)
+|flammable = No
+|lavasusceptible = No
+|rarity = Epic
+}}
+A '''test block''' is a technical [[block]] that is used for [[GameTest|game test]]s.
+
+== Obtaining ==
+Test blocks are available in the [[Creative inventory]], under the ''Operator Utilities'' tab, and using the {{cmd|setblock}}, {{cmd|fill}}, or {{cmd|give}} commands. When placed, test blocks are unbreakable in [[Survival]] and have the same blast resistance as [[bedrock]].
+
+== Usage ==
+Cannot be placed in [[Survival]].
+When placed, {{control|use}} the test block to open its GUI. The GUI opens only if the player is in [[Creative]] mode, and has [[permission level]] 2 or higher.
+
+=== Start ===
+Emits a constant redstone signal, similarly to a [[block of redstone]], when the test starts. This block is required to be part of the structure of a block-based test.
+
+=== Log ===
+Logs a message to the server log every time it receives a redstone signal. The message is set in the block's GUI. This has a speech bubble texture.
+
+=== Fail ===
+Causes a test to fail when it receives a redstone signal. This has a frowning face texture.
+
+=== Accept ===
+Causes a test to pass when it receives a redstone signal. This block is required to be part of the structure of a block-based test. This has a smiling face texture.
+
+
+<gallery>
+Test block start UI.png
+Test block log UI.png
+Test block fail UI.png
+Test block accept UI.png
+</gallery>
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Test Block
+|spritetype=block
+|spritename=test-block-start
+|nameid=test_block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|mode|start|start,log,fail,accept|The state the test block is in.|foot=1}}
+
+== History ==
+{{info needed section|Include information on early iteration: https://youtu.be/vXaWOJTCYNg}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.5|dev=25w03a|[[File:Test Block start JE1.png|32px]] [[File:Test Block log JE1.png|32px]] [[File:Test Block fail JE1.png|32px]] [[File:Test Block accept JE1.png|32px]] Added test blocks.}}
+|{{HistoryLine|||dev=25w04a|The name of block state has been changed from <code>test_block_mode</code> to <code>mode</code>.}}
+|{{HistoryLine|||dev=25w10a|[[File:Test Block start JE2.png|32px]] [[File:Test Block log JE2.png|32px]] [[File:Test Block fail JE2.png|32px]] [[File:Test Block accept JE2.png|32px]] The textures of test blocks have been changed.}}
+}}
+
+== Issues ==
+{{Issue list|Test Block|projects=MC}}
+
+== Navigation ==
+{{Navbox blocks|creative}}
+
+[[Category:Creative or commands only blocks]]
+[[Category:Blocks with GUI]]
+
+[[de:Testblock]]
+[[es:Bloque de pruebas]]
+[[fr:Bloc de test]]
+[[it:Blocco di test]]
+[[ja:テストブロック]]
+[[ko:테스트 블록]]
+[[pl:Blok testowy]]
+[[pt:Bloco de Teste]]
+[[ru:Блок-тестер]]
+[[uk:Тестовий блок]]
+[[zh:测试方块]]

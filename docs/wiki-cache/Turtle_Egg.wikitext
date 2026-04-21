@@ -1,0 +1,345 @@
+{{distinguish|Turtle Spawn Egg}}
+{{Infobox block
+| group = Not Cracked
+| 1-1 = Turtle Egg 1.png
+| 1-1class = notpageimage
+| group2 = Slightly Cracked
+| 2-1 = Turtle Egg 1 (slightly cracked).png
+| 2-1class = notpageimage
+| group3 = Very Cracked
+| 3-1 = Turtle Egg 1 (very cracked).png
+| 3-1class = notpageimage
+| image = Turtle Egg (item).png
+| invimage = Turtle Egg
+| extratext = [[#Gallery|View all renders]]
+| transparent = Yes
+| light = No
+| tool = Any
+| renewable = Yes
+| stackable = Yes (64)
+| waterloggable = {{jebe|No|Yes}}
+| flammable = No
+| lavasusceptible = No
+}}
+A '''turtle egg''' is a block that can be placed up to four times within one block space that hatches [[turtle]]s.
+
+== Obtaining ==
+=== Breaking ===
+A turtle egg drops as an [[item (entity)|item]] when mined using any [[tool]]<ref>{{bug|MC-176865||Turtle eggs do not have an assigned breaking tool}}</ref> with the [[Silk Touch]] enchantment. If broken without the enchantment, pushed by a [[piston]], or broken by a player or mob falling onto it, the egg breaks without dropping anything.
+
+When mining a cluster of more than one turtle egg, the eggs break one at a time, instead of all at once. This is different from other clustered blocks, such as [[sea pickle]]s or [[candle]]s.
+
+Breaking a cracked turtle egg with a Silk Touch tool resets the growth stage when the egg is placed on a different block.
+
+{{breaking row|horizontal=1|drop=0|Turtle Egg}}
+
+=== Post-generation ===
+{{main|Turtle#Egg laying}}
+
+When two [[turtle]]s are bred with [[seagrass]], one of them returns to its home beach, and after several seconds it lays a cluster of 1–4 eggs on the [[sand]].
+
+== Trampling ==
+[[File:Zombie stomping on eggs.jpg|thumb|upright|A zombie stomping on turtle eggs.]]
+[[File:Husks Breaking Turtle Eggs.png|thumb|upright|Two husks breaking turtle eggs by trampling on them.]]
+
+Turtle eggs can be trampled by living entities (players, mobs, livestock, etc.), except [[bats]], that fall onto or stand on top of them. Eggs in a cluster of eggs are trampled one at a time until no eggs remain.
+
+Under no circumstance can [[turtle]]s break turtle eggs. Crouch-walking (or "[[sneaking]]") on turtle eggs prevents them from breaking. Jumping of any kind still breaks the eggs.
+
+Though eggs cannot be trampled by non-living entities like arrows, items or [[Falling Block|falling blocks]], they can be trampled by [[armor stand]]s.<ref>{{bug|MC-271259||Turtle Eggs can be destroyed by Armor Stands}}</ref> When a falling block such as an [[anvil]] or [[sand]] block is dropped onto an egg, the falling block is dropped and turned into an item, leaving the egg unharmed.
+
+[[Zombie]]s and their variants ([[husk]]s, [[drowned]], [[zombie villager]]s, and [[zombified piglin]]s) seek out and trample turtle eggs that have 2 blocks of air above them unless {{cmd|gamerule mobGriefing}} is false. The range of detection is a 47×7×47{{only|java|short=1}} or 11×5×11{{only|bedrock|short=1}} box, centered on the block the mob is standing on. When a player in [[Survival]] or [[Adventure]] mode is nearby (also includes [[iron golem]]s and [[villager]]s), the zombie (other than zombified piglins) prefers to attack the player rather than trampling the turtle egg.
+
+Unlike zombies and their variants, other mobs do not seek out turtle eggs to trample them. However, they can still break turtle eggs by accident. Almost all entities, except for those mentioned above, when falling onto an egg, have a {{frac|1|3}} chance of trampling it. Standing on top of an egg has a {{frac|1|100}} chance each game tick of trampling the egg.
+
+== Usage ==
+=== Placement ===
+Up to 4 turtle eggs can be placed in a cluster on one block. Even though turtle eggs can be placed on any block, they only hatch on sand blocks. When adding more eggs to an existing cluster, they retain their hatching progress.
+
+Turtle eggs do not require a supporting block below and unlike dragon eggs are not affected by gravity. Eggs are also capable of supporting lanterns hanging under them.<ref>{{bug|MC-169684}}</ref>
+
+=== Hatching ===
+Turtle eggs hatch on sand, red sand, or suspicious sand in any dimension. Eggs crack over time and hatch after cracking three times. Eggs hatch significantly faster at the end of the night.
+
+Turtle eggs have a 1/500 chance of cracking if they are [[random tick|randomly tick]]ed during the day. However, if the in-game time is between 21062 and 21904 ticks (3:03 am and 3:54 am), then turtle eggs always crack when random ticked. This is a roughly 48-second window for the player. About 95% of eggs crack or hatch during this night-time window. On average, an egg hatches in 4 to 5 nights. 90% of eggs hatch in 7 nights or less.<ref>https://github.com/jeremy-rifkin/MC-Turtle-Mechanics</ref>
+
+When a cluster of eggs hatches, all eggs hatch simultaneously.
+
+Baby turtles always hatch facing south.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Turtle egg}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Turtle egg hatch1.ogg
+|sound2=Turtle egg hatch2.ogg
+|sound3=Turtle egg hatch3.ogg
+|subtitle=Turtle Egg hatches
+|source=block
+|description=When a turtle egg hatches
+|id=entity.turtle.egg_hatch|idnote=<ref name=badcat group=sound>{{bug|MC-177458}}</ref>
+|translationkey=subtitles.entity.turtle.egg_hatch|translationkeynote=<ref name=badcat group=sound/>
+|volume=0.7
+|pitch=0.9-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Turtle lay egg1.ogg
+|sound2=Turtle lay egg2.ogg
+|subtitle=Turtle lays egg
+|source=neutral
+|description=When a turtle lays an egg
+|id=entity.turtle.lay_egg|idnote=<ref name=badcat group=sound/>
+|translationkey=subtitles.entity.turtle.lay_egg|translationkeynote=<ref name=badcat group=sound/>
+|volume=0.3
+|pitch=0.9-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Turtle egg crack1.ogg
+|sound2=Turtle egg crack2.ogg
+|sound3=Turtle egg crack3.ogg
+|sound4=Turtle egg crack4.ogg
+|sound5=Turtle egg crack5.ogg
+|subtitle=Turtle Egg cracks
+|source=block
+|description=When a turtle egg's hatch state progresses
+|id=entity.turtle.egg_crack|idnote=<ref name=badcat group=sound/>
+|translationkey=subtitles.entity.turtle.egg_crack|translationkeynote=<ref name=badcat group=sound/>
+|volume=0.7
+|pitch=0.9-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Turtle egg break1.ogg
+|sound2=Turtle egg break2.ogg
+|subtitle=Turtle Egg breaks
+|source=block
+|description=When a turtle egg is destroyed by trampling
+|id=entity.turtle.egg_break|idnote=<ref name=badcat group=sound/>
+|translationkey=subtitles.entity.turtle.egg_break|translationkeynote=<ref name=badcat group=sound/>
+|volume=0.7
+|pitch=0.9-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Turtle egg jump1.ogg
+|sound2=Turtle egg jump2.ogg
+|sound3=Turtle egg jump3.ogg
+|sound4=Turtle egg jump4.ogg
+|subtitle=Turtle Egg stomped
+|source=hostile
+|description=When a [[zombie]] or zombie variant stomps on a turtle egg
+|id=entity.zombie.destroy_egg
+|translationkey=subtitles.entity.zombie.destroy_egg
+|volume=0.5
+|pitch=0.9-1.1
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Turtle lay egg1.ogg
+|sound2=Turtle lay egg2.ogg
+|source=block
+|description=When a turtle egg hatches
+|id=block.turtle_egg.drop
+|volume=0.85
+|pitch=0.9}}
+| {{SoundLine
+|source=block
+|description=When a turtle lays an egg
+|id=block.turtle_egg.drop
+|volume=0.3
+|pitch=0.9}}
+| {{SoundLine
+|sound=Turtle egg hatch1.ogg
+|sound2=Turtle egg hatch2.ogg
+|sound3=Turtle egg hatch3.ogg
+|source=neutral
+|description=When a turtle egg hatches
+|id=mob.turtle_baby.born
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Turtle egg crack1.ogg
+|sound2=Turtle egg crack2.ogg
+|sound3=Turtle egg crack3.ogg
+|sound4=Turtle egg crack4.ogg
+|sound5=Turtle egg crack5.ogg
+|source=block
+|description=When a turtle egg's hatch state progresses
+|id=block.turtle_egg.crack
+|volume=0.85
+|pitch=0.9}}
+| {{SoundLine
+|sound=Turtle egg break1.ogg
+|sound2=Turtle egg break2.ogg
+|source=block
+|description=When a turtle egg is destroyed by trampling or broken by a player<ref group="sound">{{Bug|MCPE-117964}}</ref>
+|id=block.turtle_egg.break
+|volume=0.85
+|pitch=0.9}}
+| {{SoundLine
+|sound=Turtle egg jump1.ogg
+|sound2=Turtle egg jump2.ogg
+|sound3=Turtle egg jump3.ogg
+|sound4=Turtle egg jump4.ogg
+|source=player
+|description=When a zombie or zombie variant stomps on a turtle egg
+|id=fall.egg
+|volume=0.5
+|pitch=0.9-1.0}}
+| {{SoundLine
+|sound=Bonemeal1.ogg
+|sound2=Bonemeal2.ogg
+|sound3=Bonemeal3.ogg
+|sound4=Bonemeal4.ogg
+|sound5=Bonemeal5.ogg
+|source=block
+|description=When a turtle egg is placed with another turtle egg<ref group="sound">{{Bug|MCPE-127189}}</ref>
+|id=item.bone_meal.use
+|volume=1.0
+| pitch = 0.9-1.1
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Turtle Egg
+|spritetype=block
+|nameid=turtle_egg
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Turtle Egg
+|spritetype=block
+|nameid=turtle_egg
+|id=414
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|eggs|1|1,2,3,4|Number of eggs.}}
+{{bst|hatch|0|0,1,2|Determines how close an egg is to hatching; starts at 0 and is randomly incremented.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2|turtle_egg_count|one_egg|one_egg,two_egg,three_egg,four_egg|Number of eggs.|0,1,2,3}}
+{{bst|bits=0x4,0x8|cracked_state|no_cracks|no_cracks,cracked,max_cracked|Determines how close an egg is to hatching; starts at no cracks and is randomly incremented.|0,1,2|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Turtle Egg 1 JE1.png|32px]] [[File:Turtle Egg 2 JE1.png|32px]] [[File:Turtle Egg 3 JE1.png|32px]] [[File:Turtle Egg 4 JE1.png|32px]]<br>[[File:Turtle Egg 1 (slightly cracked) JE1.png|32px]] [[File:Turtle Egg 2 (slightly cracked) JE1.png|32px]] [[File:Turtle Egg 3 (slightly cracked) JE1.png|32px]] [[File:Turtle Egg 4 (slightly cracked) JE1.png|32px]]<br>[[File:Turtle Egg 1 (very cracked) JE1.png|32px]] [[File:Turtle Egg 2 (very cracked) JE1.png|32px]] [[File:Turtle Egg 3 (very cracked) JE1.png|32px]] [[File:Turtle Egg 4 (very cracked) JE1.png|32px]]<br>Added turtle eggs.
+|[[File:Turtle Egg (item) JE1 BE1.png|32px]] Turtle eggs currently render three-dimensional in the [[inventory]].}}
+|{{HistoryLine|||dev=18w11a|Added [[drowned]], which like [[zombie]]s and their variants, seek out and trample turtle eggs.}}
+|{{HistoryLine|||dev=18w19a|[[File:Turtle Egg (item) JE2 BE2.png|32px]] Turtle eggs now display as a 2D sprite in the [[inventory]].}}
+|{{HistoryLine|||dev=18w22a|If the [[player]] is inside the hitbox of one turtle egg, and another is attempted to be placed, the placement fails.
+|Turtle eggs now make placement [[sound]]s when the amount in a stack is increased.
+|More turtle eggs than normal can be placed in one stack by aiming at adjacent [[block]]s.}}
+|{{HistoryLine||1.14|dev=19w03c|Turtle egg clusters now use correct cullface arguments, with the exception of four turtle eggs, which still renders a redundant face.}}
+|{{HistoryLine|||dev=19w08a|[[File:Turtle Egg 1 JE2.png|32px]] [[File:Turtle Egg 2 JE2.png|32px]] [[File:Turtle Egg 3 JE2.png|32px]] [[File:Turtle Egg 4 JE2.png|32px]]<br>[[File:Turtle Egg 1 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 2 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 3 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 4 (slightly cracked) JE2.png|32px]]<br>[[File:Turtle Egg 1 (very cracked) JE2.png|32px]] [[File:Turtle Egg 2 (very cracked) JE2.png|32px]] [[File:Turtle Egg 3 (very cracked) JE2.png|32px]] [[File:Turtle Egg 4 (very cracked) JE2.png|32px]]<br>The [[model]] of turtle eggs has been changed, as to not have a stretched texture.<ref>{{bug|MC-129855}}</ref>}}
+|{{HistoryLine||1.16|dev=pre3|Turtle eggs now hatch on red sand.<ref>{{bug|MC-185616}}</ref>}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Turtle eggs now hatch on suspicious sand.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Turtle eggs cracking now emit a <code>block_change</code> [[vibration]] of frequency <code>11</code>.
+|Turtle eggs hatching now emit a <code>block_destroy</code> vibration of frequency <code>12</code>.}}
+|{{HistoryLine||1.21.11|dev=25w45a|The hatching chance over the day is now controlled via the {{cd|minecraft:gameplay/turtle_egg_hatch_chance}} environment attribute, which defaults to 0 for dimensions without a daylight cycle. As a result, turtle eggs no longer hatch in dimensions other than the Overworld.}}
+|{{HistoryLine||26.1|dev=snap5|Turtle eggs can now hatch in dimensions other than the Overworld again.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|[[File:Turtle Egg 1 JE2.png|32px]] [[File:Turtle Egg 2 JE2.png|32px]] [[File:Turtle Egg 3 JE2.png|32px]] [[File:Turtle Egg 4 JE2.png|32px]]<br>[[File:Turtle Egg 1 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 2 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 3 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 4 (slightly cracked) JE2.png|32px]]<br>[[File:Turtle Egg 1 (very cracked) JE2.png|32px]] [[File:Turtle Egg 2 (very cracked) JE2.png|32px]] [[File:Turtle Egg 3 (very cracked) JE2.png|32px]] [[File:Turtle Egg 4 (very cracked) JE2.png|32px]]{{verify|These models are from Java Edition, are they the same in Bedrock Edition or will different renders be needed?}}<br>[[File:Turtle Egg (item) JE1 BE1.png|32px]] Added sea turtle eggs.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|[[Ravager]]s can now destroy turtle eggs in their path.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|[[File:Turtle Egg (item) JE2 BE2.png|32px]] Turtle eggs now display as a 2D sprite in the [[inventory]].}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the hardness and blast resistance of turtle eggs from 0.4 to 0.5.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Changed name from "Sea Turtle Egg" to "Turtle Egg" to match {{JE}}.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|Turtle eggs can no longer be destroyed by [[ravager]]s.<ref>{{bug|MCPE-169375}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Turtle Egg 1 JE2.png|32px]] [[File:Turtle Egg 2 JE2.png|32px]] [[File:Turtle Egg 3 JE2.png|32px]] [[File:Turtle Egg 4 JE2.png|32px]]<br>[[File:Turtle Egg 1 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 2 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 3 (slightly cracked) JE2.png|32px]] [[File:Turtle Egg 4 (slightly cracked) JE2.png|32px]]<br>[[File:Turtle Egg 1 (very cracked) JE2.png|32px]] [[File:Turtle Egg 2 (very cracked) JE2.png|32px]] [[File:Turtle Egg 3 (very cracked) JE2.png|32px]] [[File:Turtle Egg 4 (very cracked) JE2.png|32px]]{{verify|These models are from Java Edition, are they the same in Console Edition or will different renders be needed?}}<br>Added sea turtle eggs.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Turtle Egg 1.png
+Turtle Egg 1 (slightly cracked) JE2.png
+Turtle Egg 1 (very cracked) JE2.png
+Turtle Egg 2.png
+Turtle Egg 2 (slightly cracked) JE2.png
+Turtle Egg 2 (very cracked) JE2.png
+Turtle Egg 3.png
+Turtle Egg 3 (slightly cracked) JE2.png
+Turtle Egg 3 (very cracked) JE2.png
+Turtle Egg 4.png
+Turtle Egg 4 (slightly cracked) JE2.png
+Turtle Egg 4 (very cracked) JE2.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+TurtleEggs.jpg|First image of turtle eggs.
+Turtle eggs 2.jpg|Second image of turtle eggs.
+Zombie stomping on turtle eggs.png|A [[zombie]] stomping on turtle eggs.
+Turtle Egg States.png|The 3 stages a turtle egg goes through before it hatches: plain, slightly cracked, and very cracked.
+Multiple turtle eggs.png|The different numbers of turtle eggs that can fit in one [[block]].
+Turtle eggs island.png|Turtle eggs on a small island.
+Turtle Egg Detection Range.png|The detection range of hostile mobs toward turtle eggs.
+Egg hatching frequencies.png|Graph of simulation results showing how long it takes turtle eggs to hatch.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:At the Beach.jpg|[[Steve]] and [[Alex]] digging near turtle eggs
+File:Turtle Egg (inventory) MCE.png|A {{MCE|turtle egg}} as it appeared in {{MCE}}
+File:Turtle egg flash.png|Turtle eggs as they appear in [[Mojang Presents... An Update Aquatic]]
+File:Inside of turtle shell.jpg|A turtle egg factory inside of the shell
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[category:Animal blocks]]
+[[Category:Createable blocks]]
+[[Category:Utility blocks]]
+
+[[cs:Želví vajíčko]]
+[[de:Schildkrötenei]]
+[[es:Huevo de tortuga]]
+[[fr:Oeuf de tortue]]
+[[it:Uovo di tartaruga]]
+[[ja:カメの卵]]
+[[ko:거북알]]
+[[pl:Żółwie jajko]]
+[[pt:Ovo de Tartaruga]]
+[[ru:Черепашье яйцо]]
+[[zh:海龟蛋]]

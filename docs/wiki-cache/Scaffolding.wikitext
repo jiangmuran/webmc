@@ -1,0 +1,262 @@
+{{Infobox block
+| group = Standing
+| 1-1 = Standing Scaffolding.png
+| 1-1caption = {{JE}}
+| 1-2 = Standing Scaffolding BE.png
+| 1-2caption = {{BE}}
+| group2 = Floating
+| 2-1 = Floating Scaffolding.png
+| 2-1caption = {{JE}}
+| 2-2 = Floating Scaffolding BE.png
+| 2-2caption = {{BE}}
+| transparent = Partial
+| light = No
+| tool = Any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = Yes (60)
+| lavasusceptible = Yes
+| waterloggable = Yes
+}}
+'''Scaffolding''' is a climbable semi-solid [[block]] with a stable top platform and unique {{Control|place|text=placement}} controls that simplify creating columns and bridges. Scaffolding pieces fall downward if placed too far away from a supporting block, which can naturally form into more supporting columns.
+
+== Obtaining ==
+=== Breaking ===
+Scaffolding is [[instant mining|broken instantly]], and no tools are required. Scaffolding requires support and drops as an item if it loses this support.
+
+{{breaking row|Scaffolding|horizontal=1}}
+
+Breaking scaffolding with almost any tool doesn't reduce its durability, except for shears.<ref>{{bug|MC-174829||Shears damaged by every block}}</ref>
+
+=== Generated loot ===
+{{LootChestItem|scaffolding}}
+
+=== Crafting ===
+{{crafting
+|A1=Bamboo
+|A2=Bamboo
+|A3=Bamboo
+|B1=String
+|C1=Bamboo
+|C2=Bamboo
+|C3=Bamboo
+|Output=Scaffolding,6
+|type=Building block
+}}
+
+== Usage ==
+[[File:Scaffolding building.gif|thumb|A stack of scaffolding created by placing another scaffolding block on the side face of the bottom scaffolding block.]]
+When the bottom [[block]] of scaffolding is destroyed, all scaffolding blocks above it break, similar to [[chorus plant]]s and [[bamboo]]; this makes it easier for [[player]]s to make temporary structures. 
+
+The placement of scaffolding is different from any other blocks in the game.
+
+{{IN|java}}, when holding scaffolding, the hitbox of scaffolding in the world is a full block.
+* Pressing {{control|use}} on the top face of the scaffolding adds the scaffolding to the horizontal side, depending on the horizontal direction the player is facing. When pressing use on the other faces of a scaffolding, the scaffolding is added on top of the highest scaffolding in that location, allowing the player to build the scaffolding structure higher on the ground.
+* When the player's eyes are inside the scaffolding, the placement depends on the vertical rotation of the player's head. If facing more than 45 degrees down, pressing use adds the scaffolding to the horizontal side, depending on the horizontal rotation of the player. Otherwise, the scaffolding is added on top of the highest scaffolding in that location.
+* While {{control|sneaking}}, pressing use on a face of the scaffolding places the new scaffolding on that face, just like placing a block on full blocks (dirt, stone, etc.).
+* While {{control|sneaking}} and the player's eyes are inside the scaffolding, pressing use adds the scaffolding to the direction the player is facing.
+
+{{IN|bedrock}}, the hitbox of scaffolding in the world is not a full block even when holding a scaffolding, so the player can hit/interact with other blocks through the scaffolding. But when being hit, the scaffolding's interaction box is a full block.
+* When trying to place a scaffolding inside of another scaffolding, the scaffolding is added on top of the highest scaffolding in that location, allowing the player to build the scaffolding structure higher on the ground.
+* When pressing use while hitting the scaffolding, a new scaffolding is placed on the interaction face, just like placing a block on full blocks (dirt, stone, etc.). There's an exception that trying to place a scaffolding on the bottom face of a scaffolding adds the new scaffolding on top of the highest scaffolding.
+* When the player's eyes are inside the scaffolding, pressing use places a scaffolding to the direction the player is facing. There's an exception that trying to place a scaffolding on the bottom of the scaffolding adds the new scaffolding on top of the highest scaffolding.
+
+The placing scaffolding may fall as a [[falling block]] if not adequately supported.
+
+[[File:How to Play Scaffolding.png|thumb|Scaffolding can be placed up to 6 [[block]]s away from the base of support.]]
+Scaffolding can be placed up to 6 blocks out from the base of support (i.e. scaffolding block on a solid block) that is targeted; any further scaffolding placed [[Falling Block|falls to the ground]] unless able to be supported by a different scaffolding block. Only one additional block can be placed after 6 blocks, even if more would be able to be placed.
+
+Scaffolding has different collision detection. The player can climb up or down by {{control|jumping}} or {{control|sneaking}} respectively. {{in|java}}, floating scaffolding has a solid bottom.
+
+A scaffolding block can be moved by [[piston]]s, allowing them to be broken easily.
+
+Scaffolding can be [[waterlog]]ged.
+
+{{IN|Bedrock}}, scaffolding cannot be placed inside [[lava]]; if scaffolding is placed next to [[lava]] or [[fire]], the scaffolding is destroyed. If it falls into [[lava]] or [[fire]], it is destroyed immediately.
+
+{{IN|Java}}, scaffolding is not ignited by [[lava]] and can be placed inside. It will be destroyed by [[fire]].
+
+Mobs do not spawn on scaffolding. {{IN|Bedrock}}, mobs can spawn inside of scaffolding if the block below the scaffolding is spawnable. {{IN|Java}}, very small mobs such as [[chicken]]s can spawn in the empty space inside of a scaffolding block if the block below is spawnable.
+
+Scaffolding resets the fall distance of players that fall onto it while sneaking, and can be used to prevent fall damage. While in scaffolding, the speed of all mobs and players is decreased.
+
+=== Fuel ===
+Scaffolding can be used as a [[fuel]] in [[furnace]]s, smelting 0.25 [[item]]s per block.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Scaffolding}}
+
+=== Unique ===
+{{Edition|Java}}: ''None''
+
+{{Edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Scaffolding hit1.ogg
+|sound2=Scaffolding hit2.ogg
+|sound3=Scaffolding hit3.ogg
+|sound4=Scaffolding hit4.ogg
+|sound5=Scaffolding hit5.ogg
+|sound6=Scaffolding hit6.ogg
+|sound7=Scaffolding hit7.ogg
+|source=block
+|description=While a player is climbing scaffolding
+|id=block.scaffolding.climb
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Scaffolding
+|spritetype=block
+|nameid=scaffolding
+|blocktags=climbable
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Scaffolding
+|spritetype=block
+|nameid=scaffolding
+|id=420
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|bottom|false|false,true|If this scaffolding is floating.}}
+{{Bst|distance|7|0,1,2,3,4,5,6,7|The distance from a center scaffolding horizontally. If it is 7, it becomes a falling block entity.}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this scaffolding.|foot=1}}
+
+{{BE}}:
+{{Bst|showaux=1|bits=0x2,0x4,0x8|stability|7|0,1,2,3,4,5,6,7|The distance from a center scaffolding horizontally. If it is 7, it becomes a falling block entity.}}
+{{bst|bits=0x1|stability_check|false|false,true|If a scaffolding block has been checked for stability.{{more info needed}}|0,1|foot=1}}
+
+=== Falling block entity ===
+{{main|Falling Block}}
+{{#lst:Falling Block|infobox}}
+{{#lst:Falling Block|entity data}}
+
+== Achievements ==
+{{load achievements|Top of the World}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 29, 2018|link={{ytl|HoMDyRqMNMA|t=19m54s}}|Scaffolding is announced at [[MINECON Earth 2018]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w45a|[[File:Standing Scaffolding JE1.png|32px]] [[File:Floating Scaffolding JE1.png|32px]] Added scaffolding.}}
+|{{HistoryLine|||dev=18w46a|Scaffolding can now be placed 6 [[block]]s (was 4 blocks) out from its base of support without falling.
+|The [[smelting]] of scaffolding has been changed to 0.25.}}
+|{{HistoryLine|||dev=19w03a|When built up from the bottom, blocks such as [[water]] and [[vines]] are now properly placed above scaffolding.<ref>{{bug|MC-139018||Scaffolding doesn't stack from the bottom under water|Fixed}}</ref><ref>{{bug|MC-141080||Scaffolding does not replace vines when attempting to stack from the bottom|Fixed}}</ref>
+|[[File:Floating Scaffolding JE2.png|32px]] The floating scaffolding [[model]] has been changed.|Scaffolding can now be [[instant mining|instantly broken]].|Scaffolding now has a full block hitbox when holding scaffolding.<ref>{{bug|MC-150607}}</ref>|Scaffolding can now also be stacked by placing scaffolding against the side of it when not sneaking in addition to trying to place scaffolding in the same space.|Placing scaffolding against the top of another scaffolding when not sneaking now adds a scaffolding to the horizontal side.}}
+|{{HistoryLine|||dev=19w12a|[[File:Standing Scaffolding JE2.png|32px]] [[File:Floating Scaffolding JE3.png|32px]] The textures of scaffolding have been changed slightly.<ref>{{bug|MC-140409||Scaffolding Texture|Fixed}}</ref>}}
+|{{HistoryLine||1.15|dev=pre1|When used as a [[fuel]], scaffolding now [[smelt]]s 2 [[item]]s instead of 0.25.}}
+|{{HistoryLine||?|Scaffolding is part of the <code>sword_efficient</code> [[block tag]].{{check the code|Before the tag was added, was this block internally treated as breakable faster by this internally, even if it didn't affect anything?}}}}
+|{{HistoryLine||1.19|dev=22w11a|Scaffolding now smelts 0.25 items again.<ref>{{bug|MC-165990||Crafting bamboo into scaffolding gives you 8 times the furnace fuel for free|Fixed}}</ref>}}
+|{{HistoryLine||1.19.3|dev=22w42a|Mobs no longer spawn on scaffolding.<ref>{{bug|MC-150488||Mobs can spawn on scaffolding|Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w45a|[[File:Standing Scaffolding JE3.png|32px]] [[File:Floating Scaffolding JE4.png|32px]] The textures of scaffolding have been changed to match [[1.20]] experimental [[bamboo block]]s.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Scaffolding can now be found in [[trial chambers]] corridor barrels.}}
+|{{HistoryLine||1.21.5|dev=25w10a|Removed scaffolding from the block tag <code>sword_efficient</code> due to being already instantly breakable.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|[[File:Standing Scaffolding BE1.png|32px]] [[File:Floating Scaffolding BE1.png|32px]] Added scaffolding.}}
+|{{HistoryLine|||dev=beta 1.8.0.10|[[File:Standing Scaffolding BE2.png|32px]] [[File:Floating Scaffolding BE2.png|32px]] Scaffolding blocks now have proper shading on the entire model and a 3D mesh.<ref>{{bug|MCPE-38057||Scaffolding Flickers in hand and as an item drop|Fixed}}</ref>
+|[[Sound]]s have been added for scaffolding.
+|A guide in the "How to Play" menu has been added for scaffolding.
+|Scaffolding now burns in [[lava]].}}
+|{{HistoryLine|||dev=beta 1.8.0.11|The flight controls on touch devices after climbing scaffolding have been fixed.}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|[[File:Standing Scaffolding BE3.png|32px]] [[File:Floating Scaffolding BE3.png|32px]] Changed model and textures to be closer to Java Edition.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Scaffolding can now be placed 6 [[block]]s (was 4 blocks) out from its base of support without falling.}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.22|Scaffolding now smelts only 0.25 blocks, matching ''Java Edition''.<ref>{{bug|MCPE-42949||Scaffolding as fuel burns too long|Fixed}}</ref>}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.20|[[File:Standing Scaffolding BE4.png|32px]] [[File:Floating Scaffolding BE4.png|32px]] The textures of scaffolding have been changed to match [[1.20]] experimental bamboo blocks.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Decreased the hardness of scaffolding from 0.6 to 0.
+|Decreased the blast resistance of scaffolding from 0.9 to 0.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Scaffolding can now be found in [[trial chambers]] corridor barrels.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|[[File:Standing Scaffolding BE5.png|32px]] [[File:Floating Scaffolding BE5.png|32px]] Scaffolding blocks no longer have a 3D mesh.<ref>{{bug|MCPE-120910||Scaffolding flickers like blocks and as an item drop (when moving away from them)|Fixed}}</ref>}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.83|[[File:Standing Scaffolding BE2.png|32px]] [[File:Floating Scaffolding BE2.png|32px]] Added scaffolding.}}
+|{{HistoryLine||1.91|Scaffolding can now be placed 6 [[block]]s (was 4 blocks) out from its base of support without falling.}}
+}}
+
+=== Images referencing historical changes ===
+<gallery>
+File:ScaffoldingSpawn.png|Mobs spawning on the top of scaffolding at night. This is no longer possible after [[Java Edition 1.19.3]].
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* When at the [[Altitude|build height limit]], if the maximum horizontal scaffolding build limit (6 + 1 blocks) has been reached, the message for build height limit is still shown, even though scaffolding would not normally have been placed.
+
+== Gallery ==
+=== Mojang screenshots ===
+<gallery>
+File:Scaffolding BE beta.jpg|The first image released of scaffolding.
+File:1.20-pre2.jpg|[[Steve]], [[Kai]], and [[Noor]] sitting on scaffolding.
+End Scaffolding.png|Alex using scaffolding in the end.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Scaffolding IRL.jpg|Scaffolding in real life.
+File:Live2023-11.jpeg|[[Sunny]] approaching a structure using scaffolding in a [[cherry grove]].
+File:Live2023-04.jpeg|Noor, Kai, [[Makena]], and Steve building on scaffolding. 
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/block-week--scaffolding Block of the Week: Scaffolding] – Minecraft.net on April 16, 2020
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox entities|Other}}
+
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Flammable blocks]]
+[[Category:Climbable blocks]]
+[[Category:Falling blocks]]
+
+[[de:Gerüst]]
+[[es:Andamio]]
+[[fr:Échafaudage]]
+[[it:Impalcatura]]
+[[ja:足場]]
+[[ko:비계]]
+[[nl:Steiger]]
+[[pl:Rusztowanie]]
+[[pt:Andaime]]
+[[ru:Строительные леса]]
+[[th:นั่งร้าน]]
+[[uk:Риштування]]
+[[zh:脚手架]]

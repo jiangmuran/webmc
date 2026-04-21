@@ -1,0 +1,344 @@
+{{about|the gray hostile mob|the joke feature|Redstone Bug|the mob in {{MCD}}|MCD:Silverfish}}
+{{Infobox entity
+| image = Silverfish.gif
+| imagesize = 200px
+| invimage = Silverfish Spawn Egg
+| health = {{hp|8}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}<br>{{EntityLink|Arthropod}}
+| damage = Easy and Normal: {{hp|1}}<br>Hard: {{hp|1.5}}
+| size = Height: 0.3 Blocks<br>Width: 0.4 Blocks
+| speed = 0.25
+| spawn = 
+* After mining [[infested block]]s.
+* {{EnvLink|Stronghold}}: from infested blocks and [[monster spawner]]s.
+* {{EnvLink|Igloo}}: from infested blocks.
+* {{EnvLink|Woodland Mansion}}: from infested blocks.
+* {{EnvLink|Trial Chambers}}: from [[trial spawner]]s.
+* 10% When an entity with the [[Infested]] effect takes damage.
+}}
+'''Silverfish''' are small [[hostile]] [[arthropod]]s found [[Infested Block|infesting stone and deepslate blocks]] in [[mountain]] caves and certain [[structure]]s, such as [[stronghold]]s, or spawned using [[potions of Infestation]]. They attack by biting, and attacking one can cause nearby silverfish to break out of their blocks to attack the aggressor.
+
+== Spawning ==
+Silverfish spawn from broken [[infested block]]s, which generate in [[stronghold]]s, underground in [[mountains]] and [[windswept hills]] [[biome]]s, in [[igloo]] basements, and in [[woodland mansion]] false portal rooms. Silverfish do not appear if the block is broken with the [[Silk Touch]] enchantment.<ref>{{bug|MC-48184|||WAI}}</ref>
+
+=== Monster spawners ===
+Silverfish [[monster spawner]]s naturally generate in [[end portal]] rooms in [[stronghold]]s. Silverfish can spawn from spawners at [[light level]] 11 or lower. {{IN|java}}, they can also spawn on stone types they can enter (stone, cobblestone, stone bricks, etc.) at any light level, and cannot spawn within a 5 block distance of any player{{verify}}.
+
+=== Trial spawners ===
+Each [[trial chamber]]s structure has a 25% chance to select silverfish as the "small melee" mob for its [[trial spawner]]s.
+
+During [[ominous trial]]s, each [[ominous trial spawner]] has a {{frac|1|7}} chance to be able to dispense [[lingering potion]]s of Infestation, which spawns silverfish when an affected entity takes damage. Any type of trial spawner can dispense Infested potions, regardless of the mob type it spawns.
+
+=== Infested ===
+Silverfish have a 10% chance to spawn in groups of 1-2 when an entity with the [[Infested]] effect takes damage.
+
+== Drops ==
+=== On death ===
+Silverfish have no drops other than {{xp|5}} [[experience]] points when killed by a player or [[tamed wolf]].
+
+== Behavior ==
+[[File:Silverfish infest anim.gif|alt=|thumb|right|A silverfish being freed from an infested block, which calls for help from other silverfish; causing them to emerge from more infested blocks.]]
+Silverfish attack [[player]]s and [[snow golem]]s and call other silverfish in the area upon being hit. Silverfish pathfind toward the player and can see the player through walls. 
+
+When they suffer [[Poison]] damage or damage inflicted by the player and survive, they cause other silverfish within a 21×11×21 area to break out of their infested blocks. The player can prevent other silverfish from appearing by killing them in one hit.<ref>{{bug|MC-2432|||WAI}}</ref> If the game rule {{cd|doTileDrops}} is set to {{cd|false}}, the infested blocks are broken, but no silverfish spawn from them. 
+
+Silverfish, being [[arthropod]]s, take extra damage from the [[Bane of Arthropods]] enchantment and receive [[Slowness]] IV upon being hit.
+
+When idle, silverfish enter a nearby [[deepslate]], [[stone]], [[cobblestone]], [[stone bricks]], [[mossy stone bricks]], [[cracked stone bricks]], or [[chiseled stone bricks]] block, transforming it into the respective [[infested block]] if the [[game rule]] {{cd|mobGriefing}} is set to {{cd|true}}, as per default. They cannot infest [[mossy cobblestone]],<ref>{{bug|MC-167357}}</ref> despite being capable of infesting both mossy blocks and cobblestone, and they also cannot infest [[slab]] or [[stairs]] of these blocks.<ref>{{bug|MC-167372}}</ref> They are also unable to infest [[andesite]], [[diorite]], [[granite]], and [[smooth stone]].<ref>{{bug|MC-189974}}</ref>
+
+Silverfish are immune to the [[infested]] status effect.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Silverfish idle1.ogg
+|sound2=Silverfish idle2.ogg
+|sound3=Silverfish idle3.ogg
+|sound4=Silverfish idle4.ogg
+|subtitle=Silverfish hisses
+|source=hostile
+|description=Randomly
+|id=entity.silverfish.ambient
+|translationkey=subtitles.entity.silverfish.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish death.ogg
+|subtitle=Silverfish dies
+|source=hostile
+|description=When a silverfish dies
+|id=entity.silverfish.death
+|translationkey=subtitles.entity.silverfish.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish hurt1.ogg
+|sound2=Silverfish hurt2.ogg
+|sound3=Silverfish hurt3.ogg
+|subtitle=Silverfish hurts
+|source=hostile
+|description=When a silverfish is damaged
+|id=entity.silverfish.hurt
+|translationkey=subtitles.entity.silverfish.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Silverfish step1.ogg
+|sound2=Silverfish step2.ogg
+|sound3=Silverfish step3.ogg
+|sound4=Silverfish step4.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=''Unused sound event'' <ref group=sound>{{bug|MC-117609||Silverfish and Endermites don't make footstep sounds or subtitles}}</ref>
+|id=entity.silverfish.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Silverfish idle1.ogg
+|sound2=Silverfish idle2.ogg
+|sound3=Silverfish idle3.ogg
+|sound4=Silverfish idle4.ogg
+|source=hostile
+|description=Randomly
+|id=mob.silverfish.say
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish death.ogg
+|source=hostile
+|description=When a silverfish dies
+|id=mob.silverfish.kill
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish hurt1.ogg
+|sound2=Silverfish hurt2.ogg
+|sound3=Silverfish hurt3.ogg
+|source=hostile
+|description=When a silverfish is damaged
+|id=mob.silverfish.hit
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Silverfish step1.ogg
+|sound2=Silverfish step2.ogg
+|sound3=Silverfish step3.ogg
+|sound4=Silverfish step4.ogg
+|source=hostile
+|description=While a silverfish is walking
+|id=mob.silverfish.step
+|volume=0.35
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Silverfish
+|spritetype=entity
+|nameid=silverfish
+|entitytags=arthropod, powder_snow_walkable_mobs, sensitive_to_bane_of_arthropods
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Silverfish
+|spritetype=entity
+|nameid=silverfish
+|showentityfamily=y
+|entityfamily=arthropod,lightweight,mob,monster,silverfish
+|id=39
+|foot=1}}
+
+=== Entity data ===
+Silverfish have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+<div style="text-align:center">{{yt|rDqqOqaS9B4}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|The texture (silverfish.png) has been added. However, the [[mob]] itself is not yet present.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Silverfish JE1 BE1.gif|32px]] Added silverfish.
+|Silverfish spawn from broken [[stone brick monster egg]]s in strongholds.
+|Silverfish can infest stone bricks and its variants, cobblestone and stone, making them their monster egg variants, except the mossy and cracked stone bricks. It used spider sounds.|
+Idle sounds: [[File:Spider idle1.ogg]][[File:Spider idle2.ogg]][[File:Spider idle3.ogg]][[File:Spider idle4.ogg]]
+Death sound:[[File:Spider death.ogg]]
+Hurt sounds:[[File:Spider idle1.ogg]][[File:Spider idle2.ogg]][[File:Spider idle3.ogg]][[File:Spider idle4.ogg]]
+Stepping sounds:[[File:Spider step1.ogg]][[File:Spider step2.ogg]][[File:Spider step3.ogg]][[File:Spider step4.ogg]]}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|The health of silverfish has been reduced from {{hp|20}} to {{hp|8}}.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Silverfish [[monster spawners]] are now found in [[end portal]] rooms in [[stronghold]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Silverfish are now considered [[arthropod]]s.}}
+|{{HistoryLine|||dev=RC1|Added [[sound]]s for silverfish. Before the update, silverfish used [[spider]] sounds.}}
+|{{HistoryLine||1.2.1|dev=1.2|Silverfish can now infest the new chiseled stone bricks into infested stone bricks.}}
+|{{HistoryLine||1.3.1|dev=12w26a|Silverfish now summon silverfish from nearby [[monster egg]]s whenever they take [[Poison]] damage.}}
+|{{HistoryLine||1.4.2|dev=12w38a|Monster eggs containing silverfish can now generate underground in [[extreme hills]] and [[extreme hills edge]] biomes.}}
+|{{HistoryLine||1.7.2|dev=?|Silverfish can now rarely spawn inside [[cobblestone]] or stone brick blocks.{{verify|what ones exactly?}}}}
+|{{HistoryLine||1.8|dev=14w06a|Silverfish now pathfind, alert other silverfish of the [[player]] when hit, and stop occasionally before moving again (similar to most other mobs).}}
+|{{HistoryLine||1.9|dev=15w43a|Silverfish can now be spawned from broken monster eggs in the basements of [[igloo]]s.}}
+|{{HistoryLine|||dev=15w51b|Silverfish no longer enter into blocks if the [[game rule]] {{cd|mobGriefing}} is false.}}
+|{{HistoryLine||1.11|dev=16w36a|Silverfish can now spawn from broken infested cobblestone in the fake portal room of [[woodland mansion]]s.}}
+|{{HistoryLine||1.15|dev=19w34a|Silverfish now take damage on [[magma block]]s.}}
+|{{HistoryLine||1.17|dev=21w10a|Silverfish can now infest [[deepslate]].}}
+|{{HistoryLine||1.20.3|dev=23w45a|exp=Update 1.21|Silverfish now spawn in [[trial chambers]].}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Silverfish can now spawn when an entity with the [[infested]] status effect takes damage.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Silverfish JE1 BE1.gif|32px]] Added silverfish.}}
+|{{HistoryLine||v0.12.1|dev=build 12|Silverfish no longer make [[sound]]s while moving.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Silverfish can now be spawned from broken [[infested block|monster eggs]] in the basements of [[igloo]]s.}}
+|{{HistoryLine|||dev=alpha 0.17.0.2|Silverfish once again make sounds while moving.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Silverfish can now spawn from broken infested cobblestone in the fake portal room of [[woodland mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.20|exp=Update 1.21|Silverfish now spawn in [[trial chambers]] behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Silverfish can now spawn when an entity with the [[infested]] status effect takes damage.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|[[File:Silverfish JE1 BE1.gif|32px]] Added silverfish.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Silverfish JE1 BE1.gif|32px]] Added silverfish.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed from {{cd|Silverfish}} to {{cd|silverfish}}.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*In real life, [[wikipedia:Silverfish|silverfish]] are harmless, small, and wingless insects that are often found in dark areas in buildings and the wooden pilings of seaside piers and trees. They are infamous for damaging paper-based products.
+*Silverfish appeared in the [[Java Edition 2.0|April Fools 2.0 update]] as the [[redstone bug]].
+*Silverfish are the only real-life animals to be fully hostile mobs.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Stronghold Silverfish.png|Two silverfish.
+Silverfish Swarm.png|A swarm of silverfish.
+Incomplete End Portal.png|Silverfish spawner room in a [[stronghold]].
+End Portal Spawner.png|The same room, with a lit portal.
+Silverfish Minecart.png|A silverfish riding a minecart.
+VillageFish.gif|Many silverfish in a village (click for animation).
+Sandstone silverfish.png|Silverfish as they appear in the ''[[Timeless Trails]]'' DLC, seemingly made out of [[sandstone]].
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Mm-silverfish-ingame.jpeg|A silverfish crawling around.
+13w26a.png|A giant stone silverfish as seen in the [[Java Edition 13w26a]] banner.
+Jeb Silverfish.png|Too many silverfish.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Silverfish (texture).png|Silverfish texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+Every cloud has a silver lining.jpeg|A silverfish as it appears in [[Minecraft Mash-Up]]
+Silverfish Minecraft Instagram.jpg|Artwork of a silverfish
+Silverfish (Dungeons).png|A {{MCD|silverfish}} as it appears in {{MCD}}
+City Silverfish.png|A silverfish as it appears in the City texture pack
+Greek Silverfish.png|A silverfish as it appears in the Greek mash-up pack
+LEGO Silverfish.png|[[Lego]] silverfish 
+</gallery>
+
+== See also ==
+* {{EntityLink|Endermite}}
+* {{BlockLink|id=all-infested-blocks|Infested block}}
+* {{EffectLink|Infested}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/mob-menagerie--silverfish Mob Menagerie: Silverfish] – Minecraft.net on May 4, 2023
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+[[Category:Arthropod mobs]]
+
+[[cs:Rybenka]]
+[[de:Silberfischchen]]
+[[es:Lepisma]]
+[[fr:Poisson d'argent]]
+[[hu:Ezüstmoly]]
+[[it:Pesciolino d'argento]]
+[[ja:シルバーフィッシュ]]
+[[ko:좀벌레]]
+[[lzh:蟫]]
+[[nl:Zilvervis]]
+[[pl:Rybik cukrowy]]
+[[pt:Traça]]
+[[ru:Чешуйница]]
+[[uk:Лусківниця]]
+[[zh:蠹虫]]

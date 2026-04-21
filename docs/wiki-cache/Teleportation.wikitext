@@ -1,0 +1,191 @@
+'''Teleportation''' is a form of [[transportation]] in which the moving object is instantaneously moved to its target location.
+
+== Overview ==
+Teleportation can occur under numerous circumstances. The target object appears to instantly be at its destination afterward, usually<ref>{{bug|MC-166291}}</ref> playing a sound in the process (cases, where they do not, are not accidental). It can also refer to entities traveling through [[portal]]s.
+
+== Player teleportation ==
+* Throwing an [[ender pearl]].
+* Eating a [[chorus fruit]].
+* Using the {{command|teleport}} command.
+* Passing through a [[nether portal]], [[end portal]], [[exit portal]] or [[end gateway]].
+* Entering a [[bed]].
+* Mounting a [[horse]], [[mule]], [[donkey]], [[llama]], [[camel]], saddled [[pig]] or saddled [[strider]].
+* Entering a [[boat]] or [[minecart]].
+* Dying and [[respawn]]ing.
+* Quitting and re-logging the game while above the [[Nether]] roof.{{only|be}}
+
+== Other mobs ==
+Other mobs can teleport via other methods:
+
+* Tamed [[wolves]], [[cat]]s, and [[parrot]]s teleport to their owner if not [[sitting]] and their owner is far enough away.
+* [[Endermen]] teleport under numerous circumstances.
+* [[Shulker]]s are also capable of teleportation.
+* As with players, [[fox]]es can teleport upon consumption of chorus fruit.
+* Other entities can also be teleported using {{command|teleport}}.
+* They can be teleported by passing through a [[nether portal]], [[end portal]], [[exit portal]] or [[end gateway]].
+
+== Non-entities ==
+[[Dragon egg]]s can also teleport when clicked on.
+
+[[Ender chest]]s allow the same set of items to be accessed from multiple locations, effectively teleporting them.
+
+== Sounds ==
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Teleport1.ogg
+|sound2=Teleport2.ogg
+|subtitle=Enderman teleports
+|source=hostile
+|description=When an enderman teleports
+|id=entity.enderman.teleport
+|translationkey=subtitles.entity.enderman.teleport
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Player teleports
+|source=player
+|description=When a player teleports by eating chorus fruit
+|id=item.chorus_fruit.teleport
+|translationkey=subtitles.item.chorus_fruit.teleport
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Shulker teleports
+|source=hostile
+|description=When a shulker teleports
+|id=entity.shulker.teleport
+|translationkey=subtitles.entity.shulker.teleport
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Fox teleports
+|source=Players & Friendly Creatures<wbr><ref group=sound>{{Bug|MC-257516||"Fox teleports" sound plays for both Players and Friendly Creatures sound categories}}</ref>|overridesource=1
+|description=When a fox teleports by eating a chorus fruit
+|id=entity.fox.teleport
+|translationkey=subtitles.entity.fox.teleport
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|subtitle=Portal noise fades
+|source=ambient
+|description=When a player enters another dimension using any portal except the End exit portal
+|id=block.portal.travel|idnote=<ref group=sound name=GenericPortal>The sound event and translation string still refers to this generically as "portal", despite the block being renamed to "nether_portal" in 1.13; see also the {{Bug|MC-193751|bug tracker ticket on this}}</ref>
+|translationkey=subtitles.block.portal.travel
+|translationkeynote=
+|volume=0.25
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Teleport1.ogg
+|sound2=Teleport2.ogg
+|source=hostile
+|description=When something teleports
+|id=mob.shulker.teleport
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=hostile
+|description=When an enderman teleports
+|id=mob.endermen.portal
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Portal teleportation.ogg
+|source=ambient
+|description=After the player is teleported through a nether portal
+|id=portal.travel
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== History ==
+{{info needed section|non-java history and mob teleportation history}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.18a|Added {{cmd|teleport}}.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100327|The player now drops their [[inventory]] and [[respawn]]s at their spawn location upon death, rather than having to reload the last save.}}
+|{{HistoryLine||20100625-1917|[[Saddle]]s were added, allowing the player to mount saddled [[pig]]s.}}
+|{{HistoryLine||20100624|[[Minecart]]s are now rideable, and can be entered instantly.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.6|Added [[boat]]s, which can be entered instantly.}}
+|{{HistoryLine||v1.2.0|dev=preview|Added [[nether portal]]s.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Added [[bed]]s, which can be entered instantly.}}
+|{{HistoryLine||1.4|Added [[wolves]], as the first mob that can teleport.}}
+|{{HistoryLine||1.4_01|Beds now act properly as respawn point.}}
+|{{HistoryLine||1.8|dev=Pre-release|Added [[endermen]], which can teleport.}}
+|{{HistoryLine|java edition}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[Ender pearl]]s now teleport players when thrown.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|[[End Portal (block)|End portals]] now teleport players to [[the End]].
+|Added [[exit portal]]s, which bring players back to the [[Overworld]].}}
+|{{HistoryLine||1.2.1|dev=12w04a|Added [[cat]]s as tamed [[ocelot]]s, which can teleport.}}
+|{{HistoryLine||1.3.1|dev=12w25a|{{cmd|tp}} Can now be used to teleport to any [[coordinates]] rather than just another player.}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[Entities]] can now travel through portals.}} 
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[horse]]s and their variants, which can be mounted.}}
+|{{HistoryLine||1.9|dev=15w31a|Added [[chorus fruit]].
+|Added [[end gateway]]s.
+|Added [[shulker]]s, which can teleport.
+|Ender pearls can now be thrown in [[Creative]] mode.}}
+|{{HistoryLine|||dev=15w34c|A cooldown for using chorus fruit has been added.
+|Ender pearls now have a cooldown after using.}}
+|{{HistoryLine|||dev=15w37a|The chorus fruit's teleportation range has been reduced from ±32 to ±8.}}
+|{{HistoryLine||1.10|dev=16w21a|Ender pearls can now teleport riders off their mounts.}}
+|{{HistoryLine|||dev=pre1|Added {{cmd|teleport}}.}}
+|{{HistoryLine||1.11|dev=16w39a|Added [[llama]]s, which can be mounted.}}
+|{{HistoryLine||1.12|dev=17w13a|Added [[parrot]]s, which can teleport.}}
+|{{HistoryLine||1.14|dev=19w09a|[[Fox]]es now teleport after they eat chorus fruits.}}
+|{{HistoryLine||1.16|dev=20w12a|Added [[respawn anchor]]s, allowing setting spawn in [[the Nether]].}}
+|{{HistoryLine||1.16|dev=20w13a|Added [[strider]]s, which can be mounted.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.16.0|dev=build 1|Added {{cmd|teleport}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added all teleportation features from and prior to [[Java Edition Beta 1.6.6]].}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[endermen]], which can teleport.}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[Ender pearl]]s now teleport players when thrown.}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[End Portal (block)|End portals]] now teleport players to [[the End]].|Added [[exit portal]]s, which bring players back to the [[Overworld]].}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[cat]]s as tamed [[ocelot]]s, which can teleport.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added [[host options]] for teleporting players to each other.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[Entities]] can now travel through portals.|Added [[horse]]s and their variants, which can be mounted.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added [[chorus fruit]].|Added [[end gateway]]s.|Added [[shulker]]s, which can teleport.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added [[llama]]s, which can be mounted.|Added [[parrot]]s, which can teleport.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Ender pearls now have a cooldown after using.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Transport]]
+
+[[fr:Téléportation]]
+[[pt:Teletransporte]]

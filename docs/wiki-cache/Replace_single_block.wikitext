@@ -1,0 +1,65 @@
+{{Exclusive|java}}
+{{stub}}
+
+'''Replace single block''' is a technical [[feature]] that replaces a single block using a list of targets and states. It is not used by the game currently.
+
+== Data values ==
+
+=== ID ===
+
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=replace_single_block
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|list|targets}} (Required, but can be empty) A list of targets.
+*** {{nbt|compound}} A target.
+**** {{nbt|compound|target}}  A [[Processor list#Rule test| rule test]] to check the block to replace.
+**** {{nbt|compound|state}} The block to use.
+***** {{nbt inherit/block_state}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:replace_single_block",
+  "config": {
+    "targets": [
+      {
+        "state": {
+          "Name": "minecraft:diamond_ore"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:stone_ore_replaceables"
+        }
+      },
+      {
+        "state": {
+          "Name": "minecraft:deepslate_diamond_ore"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:deepslate_ore_replaceables"
+        }
+      }
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{empty section}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Remplacer un seul bloc]]
+[[pt:Substituir bloco único]]

@@ -1,0 +1,1004 @@
+{{For}}
+{{Infobox entity
+|image = Warden.gif
+|invimage = Warden Spawn Egg
+|health = {{hp|500}}
+|behavior = Hostile
+|mobtype = {{EntityLink|Monster}}
+|damage = '''Melee:'''<br>Easy: {{hp|16}}<br>Normal: {{hp|30}}<br>Hard: {{hp|45}}<br>
+<hr>
+'''Ranged:''' (ignores [[armor]] and [[Protection]]) <br>Easy: {{hp|6}}<br>Normal: {{hp|10}}<br>Hard: {{hp|15}}
+|spawn = When a player activates naturally generated [[sculk shrieker]]s four times or more
+|knockbackresistance = 100%
+|size = Height: 2.9 blocks<br>Width: 0.9 blocks<br>
+'''While digging/emerging:'''<br>
+Height: 1 block<br>Width: 0.9 blocks<br>
+|atk speed = 0.9
+| leashable = No
+| boat = No
+| minecart = No
+}}
+A '''warden''' is a [[hostile mob]] summoned by [[sculk shrieker]]s located in the [[deep dark]]. It is completely blind, relying entirely on [[vibrations]] and its sense of smell to detect [[player]]s and [[entities]] to attack, and digs down to [[despawn]] if it does not detect anything for 60 seconds and if it doesn't have a [[Name Tag|name]]. If a warden successfully detects a target, it rapidly strikes them with its arms, or fires damaging sonic beams which pass through [[block]]s and ignore [[armor]], [[shields]], as well as all [[enchantment]]s.
+
+== Spawning ==
+[[File:Warden emerging.gif|thumb|upright|A warden emerges from the ground after being summoned by [[sculk shrieker]]s.]]
+Wardens do not follow the standard [[mob spawning]] rules. Instead, a warden is spawned when a player in [[Survival]], [[Adventure]] or [[Creative]] mode activates any number of naturally generated [[sculk shrieker]]s four times (see details below).
+
+Each player has a ''warning level'', which increases every time that player activates a naturally generated sculk shrieker. This is not specific to any sculk shrieker. A sculk shrieker that has already been activated by a player before activates the same way it does normally, and the warning level does not reset if the player were to activate a new sculk shrieker. The distance between the shriekers doesn't matter. The shrieker spawns a warden 4.5 seconds after the warning level reaches 4, or immediately if the sculk shrieker is destroyed. If the warning level is already at 4, it stays at 4 and spawns another warden.
+
+The [[light level]] does not have an effect on shrieker activation or warden spawning, regardless of the warning level.
+
+When a shrieker attempts to spawn a warden, it makes up to 20 attempts to spawn the warden within an 11×13×11 cubic area centered on the shrieker. During each attempt, the game picks a random column (i.e. a stack of blocks parallel to the Y axis), and then picks the highest valid block in that column. A valid block is any block that has a complete top surface (i.e. the top face is a grid-aligned square meter surface with no holes), and that a warden can be placed directly on top of without having the warden collide with any existing blocks or entities. A warden can't spawn if the bottom block that it would occupy has a [[liquid]] inside it, but it can spawn with 1 or more liquids in the blocks above that. So, a [[pressure plate]] with [[water]] flowing on top would be a valid location for the shrieker to spawn the warden (this would place the warden with its feet in the water, one block above the pressure plate).
+
+{{IN|java}}, warden spawning can be toggled on or off with the [[game rule]] {{cd|spawn_wardens}}.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Sculk Catalyst}}
+}}
+* {{xp|5}} [[experience]] if killed by either a player or a tamed [[wolf]].
+
+== Behavior ==
+[[File:Warden sniffing.gif|thumb|upright|A warden is blind and seeks out targets by sensing vibrations and by sniffing.]]
+After spawning, wardens wander randomly and move toward nearby vibrations originating from players, mobs, and non-mob sources including projectiles and [[minecart]]s. A warden also periodically sniffs the area around it, allowing it to zero in on targets even if they don't create vibrations. As wardens sniff, pick up vibrations, or are touched by other players or mobs, they become increasingly agitated.
+
+Similar to sculk, the bright blue parts of the warden's texture are emissive with [[Vibrant Visuals]], easily noticeable in the dark where they spawn.
+
+=== Idle ===
+A warden can fit inside any space that is 1 block wide and 3 blocks tall, allowing it to chase players and mobs through small corridors.
+
+Wardens are immune to damage from [[fire]] or [[lava]], and are immune to [[Damage#Knockback|knockback]]. They pursue through blocks that are usually avoided by other mobs, including [[rail]]s<ref name="MC-249642">{{bug|MC-249642||Wardens can't pass over rails|Fixed}}</ref>, [[cacti]], or [[magma block]]s.
+
+A warden listens to all vibrations within a 15 block radius ovoid shape, except those from other wardens, [[armor stand]]s, dying mobs, and players in [[Creative]] or [[Spectator]] mode. Like with [[sculk sensor]]s, they cannot detect vibrations from a [[sneaking]] player that is moving, [[jumping]], falling or shooting a projectile. A warden has a 2-second cooldown between detecting vibrations.
+
+A warden is aware of all targetable entities within a 49×51×49 box around itself. If the warden has a targetable entity, is not investigating any disturbances, and is otherwise idle, it pathfinds toward the closest entity, prioritizing players over mobs. While pathfinding, the warden can begin a 'sniff' behavior and animation. This takes around 4.2 seconds and has a 5-10 seconds cooldown. A warden can still sniff out sneaking players, despite not being able to detect vibrations from them.
+
+A warden prefers to track down the most suspicious targets, rather than the ones closest to it.<ref>{{Tweet|kingbdogz|1464376942791213059|Also currently it sniffs out the mob/player that it is most suspicious of, rather than the nearest mob/player.|November 26, 2021}}</ref>
+
+=== Inflicting Darkness ===
+A warden, whether angered or not, gives 13 seconds of [[Darkness]] to all players within a 20 block ovoid radius of it every 6 seconds. The souls in its chest make a low heartbeat that occurs in tandem with the Darkness effect.{{info needed|Does this heartbeat effect require the player to have Darkness? Does it play in Creative mode?}} The heartbeat speeds up as the warden becomes increasingly agitated.<ref>{{Tweet|kingbdogz|1449816849655472128|Currently the Warden's heartbeat gets faster the angrier or "close" it is to find its prey. In real time, this has really felt like it mimics the panic level of the player itself &mdash; the closer the Warden is to finding you, the more anxious you're probably going to be.|October 17, 2021}}</ref>
+
+=== Suspense ===
+Wardens keep track of how angry they are at each suspect as a number from 0 to 150. When a warden notices a vibration, it adds anger to the player or mob that caused the vibration. It adds 10 anger if the vibration was from a projectile or 35 anger for other vibrations. However, if two projectiles from the same player/mob are heard by the warden within five seconds, it instead adds the full 35 anger toward that player/mob. Wardens do not add anger toward a mob/player if the projectile was shot from more than 30 blocks away, although the projectile does count toward the counter of two projectiles. Anger decays at a rate of 1 per second and immediately clears if the targeted player switches to [[Creative]] or [[Spectator]] modes, the target or warden leaves the dimension, or if the target dies.
+
+A warden adds 35 anger toward any mob that directly touches it. This effect has a 1-second cooldown.
+
+When it finishes sniffing, a warden adds 35 anger to the nearest mob or player within a 6 block radius horizontally and 20 blocks vertically, a cylindrical volume centered on the warden.
+[[File:Warden roar.gif|thumb|upright|A warden roars before pursuing its target.]]
+Once a warden reaches 80 anger with a target, it roars for 4.2 seconds, adds another 20 anger, and pursues the target. In this angered state, the warden chases the target normally despite being blind. A warden also enters its hostile state and adds 100 anger if directly attacked by a mob. If the attacking player or mob is within 5 blocks, it skips its roaring animation altogether and immediately gives chase.
+
+A warden is biased toward player vibrations, attacks, and contact - even if a warden is angrier at another mob, it still attacks the player first as long as they have angered the warden as well. This is not true of any other [[mob]].<ref>{{bug|MC-251045|||WAI}}</ref>
+
+After 60 seconds of being "calm" and not detecting any vibrations or sniffing any mobs, as well as immediately after being spawned by a command block with status effects, a warden burrows back into the ground and despawns. If the warden is floating on a liquid, it instead immediately despawns without any burrowing animation. During its emerging/burrowing animation, a warden cannot detect any vibrations and can take damage only from {{cmd|kill}}, though it can still be pushed by entities, [[piston]]s, or liquids.{{only|java|short=1}} [[Name Tag|Named]] wardens do not despawn.
+
+Unlike most hostile mobs, wardens do not despawn randomly when more than 32 blocks from a player, nor do they immediately despawn when more than 128 blocks from a player.
+
+=== Attacks ===
+A warden's melee attack has a cooldown of 36 ticks (1.8 seconds) and disables [[shield]]s for 5 seconds, dealing {{hp|16}} to {{hp|45}} health points depending on the difficulty.
+[[File:Warden sonic boom.jpg|thumb|left|The warden's sonic boom attack on a [[chicken]]]]
+If a warden cannot reach its target, it switches to its ranged attack: a sonic boom. It does so when the following are true:
+*It has been 10 seconds since the warden detected the target
+*It has been 5 seconds since the warden last used a melee or ranged attack
+*The target is within a 14-block radius horizontally and 20 blocks vertically of the warden in an ovoid shape.
+
+The sonic boom aims directly at the '''only''' target, making it impossible to dodge, passing through all blocks and entities. A warden takes 1.7 seconds to charge and unleashes the attack, which instantly hits the target as long as the target is within attack range. The attack takes an additional 1.3 seconds to cool down before the warden can use melee attacks again for a total of 3 seconds. The sonic boom is visible via teal [[particles]] that are projected out of the warden's chest. This attack bypasses most forms of [[armor]], including [[shield]]s, armor [[enchantment]]s (such as [[Protection]]), and the [[natural armor points|natural armor]] that some mobs possess. Only [[wolf armor]], the 85%{{only|je}} or 95%{{only|be}} magic damage resistance of a [[witch]], and the [[Resistance]] effect can reduce the damage from a sonic boom. [[Wolf armor]] loses durability when hit by a sonic boom, but normal armor does not.
+{{clear}}
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Warden ambient1.ogg
+|sound2=Warden ambient2.ogg
+|sound3=Warden ambient3.ogg
+|sound4=Warden ambient4.ogg
+|sound5=Warden ambient5.ogg
+|sound6=Warden ambient6.ogg
+|sound7=Warden ambient7.ogg
+|sound8=Warden ambient8.ogg
+|sound9=Warden ambient9.ogg
+|sound10=Warden ambient10.ogg
+|sound11=Warden ambient11.ogg
+|sound12=Warden ambient12.ogg
+|subtitle=Warden whines
+|source=hostile
+|description=Randomly while calm
+|id=entity.warden.ambient
+|translationkey=subtitles.entity.warden.ambient
+|volume=4.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden agitated1.ogg
+|sound2=Warden agitated2.ogg
+|sound3=Warden agitated3.ogg
+|sound4=Warden agitated4.ogg
+|sound5=Warden agitated5.ogg
+|sound6=Warden agitated6.ogg
+|subtitle=Warden groans angrily
+|source=hostile
+|description=Randomly while agitated
+|id=entity.warden.agitated
+|translationkey=subtitles.entity.warden.agitated
+|volume=4.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden angry1.ogg
+|sound2=Warden angry2.ogg
+|sound3=Warden angry3.ogg
+|sound4=Warden angry4.ogg
+|sound5=Warden angry5.ogg
+|sound6=Warden angry6.ogg
+|subtitle=Warden rages
+|source=hostile
+|description=Randomly while angry
+|id=entity.warden.angry
+|translationkey=subtitles.entity.warden.angry
+|volume=4.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden agitated1.ogg
+|sound2=Warden agitated2.ogg
+|sound3=Warden agitated3.ogg
+|sound4=Warden agitated4.ogg
+|sound5=Warden agitated5.ogg
+|sound6=Warden agitated6.ogg
+|subtitle=Warden groans angrily
+|source=hostile
+|description=When a warden fails to spawn underwater
+|id=entity.warden.agitated
+|translationkey=subtitles.entity.warden.agitated
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|subtitle=Warden takes notice angrily
+|source=hostile
+|description=When all of a warden's spawn attempts fail
+|id=entity.warden.listening_angry
+|translationkey=subtitles.entity.warden.listening_angry
+|volume=5.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden attack impact1.ogg
+|sound2=Warden attack impact2.ogg
+|subtitle=Warden lands hit
+|source=hostile
+|description=When a warden does a melee attack on something
+|id=entity.warden.attack_impact
+|translationkey=subtitles.entity.warden.attack_impact
+|volume=10.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden death1.ogg
+|sound2=Warden death2.ogg
+|subtitle=Warden dies
+|source=hostile
+|description=When a warden dies
+|id=entity.warden.death
+|translationkey=subtitles.entity.warden.death
+|volume=4.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden hurt1.ogg
+|sound2=Warden hurt2.ogg
+|sound3=Warden hurt3.ogg
+|sound4=Warden hurt4.ogg
+|subtitle=Warden hurts
+|source=hostile
+|description=When a warden is damaged
+|id=entity.warden.hurt
+|translationkey=subtitles.entity.warden.hurt
+|volume=4.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden emerge.ogg
+|subtitle=Warden emerges
+|source=hostile
+|description=When a warden spawns
+|id=entity.warden.emerge
+|translationkey=subtitles.entity.warden.emerge
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden dig.ogg
+|subtitle=Warden digs
+|source=hostile
+|description=When a warden despawns
+|id=entity.warden.dig
+|translationkey=subtitles.entity.warden.dig
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden heartbeat1.ogg
+|sound2=Warden heartbeat2.ogg
+|sound3=Warden heartbeat3.ogg
+|sound4=Warden heartbeat4.ogg
+|subtitle=Warden's heart beats
+|source=hostile
+|description=Periodically depending on anger
+|id=entity.warden.heartbeat
+|translationkey=subtitles.entity.warden.heartbeat
+|volume=5.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden listening1.ogg
+|sound2=Warden listening2.ogg
+|sound3=Warden listening3.ogg
+|sound4=Warden listening4.ogg
+|sound5=Warden listening5.ogg
+|subtitle=Warden takes notice
+|source=hostile
+|description=When a warden notices a vibration or smell while calm
+|id=entity.warden.listening
+|translationkey=subtitles.entity.warden.listening
+|volume=10.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|subtitle=Warden takes notice angrily
+|source=hostile
+|description=When a warden notices a vibration or smell while agitated or angry
+|id=entity.warden.listening_angry
+|translationkey=subtitles.entity.warden.listening_angry
+|volume=10.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby close1.ogg
+|sound2=Warden nearby close2.ogg
+|sound3=Warden nearby close3.ogg
+|sound4=Warden nearby close4.ogg
+|subtitle=Warden approaches
+|source=hostile
+|description=When a warden is called by a sculk shrieker once
+|id=entity.warden.nearby_close
+|translationkey=subtitles.entity.warden.nearby_close
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby closer1.ogg
+|sound2=Warden nearby closer2.ogg
+|sound3=Warden nearby closer3.ogg
+|subtitle=Warden advances
+|source=hostile
+|description=When a warden is called by a sculk shrieker twice
+|id=entity.warden.nearby_closer
+|translationkey=subtitles.entity.warden.nearby_closer
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby closest1.ogg
+|sound2=Warden nearby closest2.ogg
+|sound3=Warden nearby closest3.ogg
+|subtitle=Warden draws close
+|source=hostile
+|description=When a warden is called by a sculk shrieker thrice
+|id=entity.warden.nearby_closest
+|translationkey=subtitles.entity.warden.nearby_closest
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden tendril clicks1.ogg
+|sound2=Warden tendril clicks2.ogg
+|sound3=Warden tendril clicks3.ogg
+|sound4=Warden tendril clicks4.ogg
+|sound5=Warden tendril clicks5.ogg
+|sound6=Warden tendril clicks6.ogg
+|subtitle=Warden's tendrils click
+|source=hostile
+|description=When a warden detects a vibration
+|id=entity.warden.tendril_clicks
+|translationkey=subtitles.entity.warden.tendril_clicks
+|volume=5.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Warden roar1.ogg
+|sound2=Warden roar2.ogg
+|sound3=Warden roar3.ogg
+|sound4=Warden roar4.ogg
+|sound5=Warden roar5.ogg
+|subtitle=Warden roars
+|source=hostile
+|description=When a warden targets a mob
+|id=entity.warden.roar
+|translationkey=subtitles.entity.warden.roar
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden sniff1.ogg
+|sound2=Warden sniff2.ogg
+|sound3=Warden sniff3.ogg
+|sound4=Warden sniff4.ogg
+|subtitle=Warden sniffs
+|source=hostile
+|description=When a warden sniffs for nearby entities
+|id=entity.warden.sniff
+|translationkey=subtitles.entity.warden.sniff
+|volume=3.75
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Sonic boom1.ogg
+|sound2=Sonic boom2.ogg
+|sound3=Sonic boom3.ogg
+|sound4=Sonic boom4.ogg
+|subtitle=Warden booms
+|source=hostile
+|description=When a warden casts a sonic boom against something
+|id=entity.warden.sonic_boom
+|translationkey=subtitles.entity.warden.sonic_boom
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Sonic charge1.ogg
+|sound2=Sonic charge2.ogg
+|sound3=Sonic charge3.ogg
+|sound4=Sonic charge4.ogg
+|subtitle=Warden charges
+|source=hostile
+|description=When a warden prepares a sonic boom
+|id=entity.warden.sonic_charge
+|translationkey=subtitles.entity.warden.sonic_charge
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden step1.ogg
+|sound2=Warden step2.ogg
+|sound3=Warden step3.ogg
+|sound4=Warden step4.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=While a warden is walking
+|id=entity.warden.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=3.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Warden ambient1.ogg
+|sound2=Warden ambient2.ogg
+|sound3=Warden ambient3.ogg
+|sound4=Warden ambient4.ogg
+|sound5=Warden ambient5.ogg
+|sound6=Warden ambient6.ogg
+|sound7=Warden ambient7.ogg
+|sound8=Warden ambient8.ogg
+|sound9=Warden ambient9.ogg
+|sound10=Warden ambient10.ogg
+|sound11=Warden ambient11.ogg
+|sound12=Warden ambient12.ogg
+|source=hostile
+|description=Randomly
+|id=mob.warden.idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden agitated1.ogg
+|sound2=Warden agitated2.ogg
+|sound3=Warden agitated3.ogg
+|sound4=Warden agitated4.ogg
+|sound5=Warden agitated5.ogg
+|sound6=Warden agitated6.ogg
+|source=hostile
+|description=Randomly when a warden notices something
+|id=mob.warden.agitated
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden angry1.ogg
+|sound2=Warden angry2.ogg
+|sound3=Warden angry3.ogg
+|sound4=Warden angry4.ogg
+|sound5=Warden angry5.ogg
+|sound6=Warden angry6.ogg
+|source=hostile
+|description=Randomly when a warden targets an enemy
+|id=mob.warden.angry
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|source=hostile
+|description=When all of a warden's spawn attempts fail {{more info|does the underwater sound play like in Java Edition or is it just this?}}
+|id=mob.warden.listening_angry
+|volume=10.0 {{verify}}
+|pitch=0.8-1.2 {{verify}}}}
+| {{SoundLine
+|sound=Warden attack impact1.ogg
+|sound2=Warden attack impact2.ogg
+|source=hostile
+|description=When a warden does a melee attack on something
+|id=mob.warden.attack
+|volume=10.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden emerge.ogg
+|source=hostile
+|description=When a warden spawns
+|id=mob.warden.emerge
+|volume=5.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden death1.ogg
+|sound2=Warden death2.ogg
+|source=hostile
+|description=When a warden dies
+|id=mob.warden.death
+|volume=1.0
+|pitch=0.8-1.0}}
+| {{SoundLine
+|sound=Warden hurt1.ogg
+|sound2=Warden hurt2.ogg
+|sound3=Warden hurt3.ogg
+|sound4=Warden hurt4.ogg
+|source=hostile
+|description=When a warden is damaged
+|id=mob.warden.hurt
+|volume=1.0
+|pitch=0.8-1.0}}
+| {{SoundLine
+|sound=Warden dig.ogg
+|source=hostile
+|description=When a warden despawns
+|id=mob.warden.dig
+|volume=5.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden heartbeat1.ogg
+|sound2=Warden heartbeat2.ogg
+|sound3=Warden heartbeat3.ogg
+|sound4=Warden heartbeat4.ogg
+|source=hostile
+|description=Periodically depending on anger
+|id=mob.warden.heartbeat
+|volume=5.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden listening1.ogg
+|sound2=Warden listening2.ogg
+|sound3=Warden listening3.ogg
+|sound4=Warden listening4.ogg
+|sound5=Warden listening5.ogg
+|source=hostile
+|description=When a warden notices a vibration or smell while calm
+|id=mob.warden.listening
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|source=hostile
+|description=When a warden fails to spawn or notices a vibration or smell from a target while agitated or angry
+|id=mob.warden.listening_angry
+|volume=10.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden nearby close1.ogg
+|sound2=Warden nearby close2.ogg
+|sound3=Warden nearby close3.ogg
+|sound4=Warden nearby close4.ogg
+|source=hostile
+|description=When a warden is called by a sculk shrieker once
+|id=mob.warden.nearby_close
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden nearby closer1.ogg
+|sound2=Warden nearby closer2.ogg
+|sound3=Warden nearby closer3.ogg
+|source=hostile
+|description=When a warden is called by a sculk shrieker twice
+|id=mob.warden.nearby_closer
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden nearby closest1.ogg
+|sound2=Warden nearby closest2.ogg
+|sound3=Warden nearby closest3.ogg
+|source=hostile
+|description=When a warden is called by a sculk shrieker thrice
+|id=mob.warden.nearby_closest
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden tendril clicks1.ogg
+|sound2=Warden tendril clicks2.ogg
+|sound3=Warden tendril clicks3.ogg
+|sound4=Warden tendril clicks4.ogg
+|sound5=Warden tendril clicks5.ogg
+|sound6=Warden tendril clicks6.ogg
+|source=hostile
+|description=When a warden detects a vibration
+|id=mob.warden.clicking
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden roar1.ogg
+|sound2=Warden roar2.ogg
+|sound3=Warden roar3.ogg
+|sound4=Warden roar4.ogg
+|sound5=Warden roar5.ogg
+|source=hostile
+|description=When a warden targets a mob
+|id=mob.warden.roar
+|volume=10.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden sniff1.ogg
+|sound2=Warden sniff2.ogg
+|sound3=Warden sniff3.ogg
+|sound4=Warden sniff4.ogg
+|source=hostile
+|description=When a warden sniffs for nearby entities
+|id=mob.warden.sniff
+|volume=5.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=sonic_boom1.ogg
+|sound2=sonic_boom2.ogg
+|sound3=sonic_boom3.ogg
+|sound4=sonic_boom4.ogg
+|source=hostile
+|description=When a warden casts a sonic boom against something
+|id=mob.warden.sonic_boom
+|volume=3.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=sonic_charge1.ogg
+|sound2=sonic_charge2.ogg
+|sound3=sonic_charge3.ogg
+|sound4=sonic_charge4.ogg
+|source=hostile
+|description=When a warden prepares a sonic boom
+|id=mob.warden.sonic_charge
+|volume=3.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Warden step1.ogg
+|sound2=Warden step2.ogg
+|sound3=Warden step3.ogg
+|sound4=Warden step4.ogg
+|source=hostile
+|description=While a warden is walking
+|id=mob.warden.step
+|volume=1.0
+|pitch=0.8-1.2}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Warden
+|spritetype=entity
+|nameid=warden
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Warden
+|spritetype=entity
+|nameid=warden
+|showentityfamily=y
+|entityfamily=mob,monster,warden
+|id=131
+|foot=1}}
+
+=== Entity data ===
+Wardens have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}}: Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|compound|anger}}: Anger management of the warden.
+*** {{nbt|list|suspects}}: List of suspects that have angered the warden.
+**** {{nbt|compound}}: A suspect.
+***** {{nbt|int|anger}}: The level of anger. It has a maximum value of 150 and decreases by 1 every second.
+***** {{nbt|int-array|uuid}}: The [[UUID]] of the entity that is associated with the anger, stored as four ints.
+** {{nbt|compound|listener}}: The vibration event listener for this warden.
+*** {{nbt|compound|event}}: Exists only if there is an incoming vibration.
+**** {{nbt|float|distance}}: The distance between this vibration's source and the block.
+**** {{nbt|string|game_event}}: The [[resource location]] of the vibration event that caused the current incoming vibration.
+**** {{nbt|list|pos}}: The coordinates of the source of this vibration.
+***** {{nbt|double}}: X coordinate.
+***** {{nbt|double}}: Y coordinate.
+***** {{nbt|double}}: Z coordinate.
+**** {{nbt|int-array|projectile_owner}}: If the vibration was caused by a projectile, this is the [[UUID]] of the entity that launched the projectile. Does not exist if vibration was not caused by a projectile.
+**** {{nbt|int-array|source}}: The [[UUID]] of the entity that caused the vibration. Does not exist if vibration was not caused by an entity.
+*** {{nbt|int|event_delay}}: How many ticks remain until triggered by the vibration. Set to 0 if there is no incoming vibration
+*** {{nbt|compound|selector}}: The data of the vibration selector.{{info needed|What does this mean?}}<!--Copied from machine translation from ZH wiki-->
+**** {{nbt|long|tick}}: The game time when the vibration occurs, or -1 if there is no vibration to choose from.{{info needed|What does this mean?}}<!--Copied from machine translation from ZH wiki-->
+**** {{nbt|compound|event}}: Candidate game event, with the same structure as the {{nbt|compound|event}} tag above.{{info needed|What does this mean?}}<!--Based on machine translation from ZH wiki-->
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Sneak 100;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+Killing a warden does not grant the [[Advancement#Monster Hunter|Monster Hunter]] advancement and is not required in order to complete the [[Monsters Hunted]] advancement.<ref>{{tweet|kingbdogz|1412819085239492616|No|July 7, 2021}}</ref><ref>{{bug|MC-249515|||WAI}}</ref>
+
+{{load advancements|Sneak 100;It Spreads;How Did We Get Here}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+=== YouTube ===
+{{yt|cd7cVNeb0Uk}}
+{{yt|PiGKxxvCkUw}}
+{{yt|G_xHVgRU1Ho}}
+
+=== Other ===
+<!-- really recommend embedding something from the Minecraft official youtube, twitter, or other official sources, because the wiki's video player is really unreasonably slow and some cannot even be loaded -->
+<gallery>
+File:Running warden.mp4|A warden running in ancient city.
+File:Steve running from warden.mp4|Steve running away from a warden in an ancient city.
+File:Dancing warden.mp4|A warden with a bow tie, wooden cane and glowing sticks dancing from Minecraft's [[YouTube]].
+File:Mobile Warden 640x960.png
+</gallery>
+
+== History ==
+{{hatnote|[[#Java Edition|Jump to version history]]}}
+<div class="nomobile">{{YouTube|cd7cVNeb0Uk|align=right}}</div>
+<div class="mobileonly">{{YouTube|cd7cVNeb0Uk|align=center}}</div>
+For the [[Nether Update]], Mojang planned to add a "blind [[piglin]] that could only respond to sounds" that could be found within a "new biome".<ref name="meet-warden">{{mcnet|meet-warden|Meet the Warden|June 3, 2022|Per Landin}}</ref> This idea was then later reused for the warden instead.
+
+The warden was developed by [[Brandon Pearce]]. During early development, the planned mechanics and abilities of the warden were significantly different to the final version. Planned and then scrapped ideas for the warden include:
+* If the player managed to get out of the warden's attack and pathfinding range but still be within its detection range, the warden would use a "mind-altering" attack that would cause the player to move erratically (walking forward would cause the player to go backward, etc.) and deal damage overtime. The mechanic was eventually scrapped due to being deemed too complicated.<ref>{{tweet|kingbdogz|1320772725066076165|I think something a little more.. mind altering.|October 26, 2020}}</ref><ref name="cheesingthewarden">{{ytl|uraHCIYRjsM|Podcast: Warden Iterations with kingbdogz|Minecraft Ideas Academy @ 1:15:31|November 22, 2022|t=4531s}}</ref>
+* The warden would destroy blocks or burrow through them. The former was rejected due to the developers wanting to limit the number of "destructive" mobs there are in the game and the later was rejected due to being too difficult to implement.<ref name="cheesingthewarden"/>
+* The warden could hide the player's hunger bar and health bar.<ref>{{Tweet|CagilMartin|1554743654182715392|Fun fact: One warden prototype hid your hunger and health bar. That would have been scary Source: Minecraft Ideas Academy|August 3, 2022}}</ref>
+* Brandon wanted the warden to be immune to damage to discourage players from fighting it, but he didn't think that would work for a sandbox game.<ref>{{Tweet|CagilMartin|1556533751571947520|Fun fact: Kingbdogz originally wanted the warden to be invincible to discourage combat but he scrapped that idea. Source: Minecraft Ideas Academy|August 8, 2022}}</ref>
+* The warden originally burned when exposed to daylight.<ref>{{Tweet|kingbdogz|1395834612191006726|1. It will not. This is both for design reasons (we want it to be something more "physical", like motion), and for technical reasons. 2. It will probably investigate the location it "felt/heard" the vibration. 3. Nope, but in the current design it will burn in sunlight.|May 22, 2021}}</ref>
+
+The warden is the most concepted and worked through mob in Minecraft in terms of sound design.<ref>{{Tweet|slamp0000|1540777334596374528|Hey thats a looooong story. Probably the most concepted and worked through entity(s) in Minecraft, in sound design. Hoping to share some WIPs and behind the scenes in the future.|June 26, 2022}}</ref> When [[Brandon Pearce]] was first developing the warden, sound design was important to him, and the warden was designed with that in mind.<ref name="kingbdogz-tweet2">{{Tweet|kingbdogz|1449816845209554946|I want to talk about the heartbeat in the Warden videos: when developing the Warden for the first time, sound design was super important to me and the mob was designed with that in mind. Part of me wanted to hear the player's "heartbeat" as the Warden got closer, for anticipation|October 18, 2021}}</ref> Brandon originally wanted players to hear their own "heartbeat" as the warden got closer for anticipation, but he thought that it felt out of place and didn't make sense to hear the player's heartbeat. His solution was for something else to make the heartbeat, and thus the warden itself gained a heartbeat sound.<ref name="kingbdogz-tweet">{{Tweet|kingbdogz|1449816847382163462|That would be the opposite of immersive though. Do Steve or Alex have heartbeats? Would it even make sense to hear it? In my opinion no. It feels too out of place.My solution instead was, what if something else made that heartbeat sound? Thus the Warden gained a heartbeat.|October 18,2021}}</ref>
+
+=== Early concepts and prototypes ===
+There were multiple prototypes for what ultimately became the warden.<ref name=wardeninfo>{{ytl|cd7cVNeb0Uk|The Secrets of Minecraft: How We're Making the Warden|Minecraft|January 21, 2022}}</ref> According to [[Jasper Boerstra]], it went through 175 different concept iterations to ensure that the warden was "something really special".<ref>{{Ytl|pI6HFSu2W8Y|Minecraft Now: The Warden and Mangroves|Minecraft|June 30, 2022|t=657}}</ref> The very first warden iteration created was a modified cow that made the lights and torches flicker and served as the main prototype for the darkness effect.<ref>{{ytl|PiGKxxvCkUw|The Scariest Cow Ever Created The Story Of The Warden|Minecraft @ 4:36|Mar 30, 2024|t=276}}</ref>
+
+Some known concepts and names for the warden from this time were the "shade",<ref>{{ytl|n9TpuPGH9hk|Minecraft Now: Wild Update and Farlands ft AntVenom!|Minecraft|May 19, 2022|t=1285s}}</ref> the "stalker" and the "hollowed".<ref name=wardeninfo />
+
+<gallery>
+Warden concept art 2.png|Various early concepts for the warden, including some concept art for the shade and the stalker. Two concepts resemble a [[wither]].
+Warden concept art 7.png|A concept of the warden with an ethereal style.
+Warden concept art 8.png|A concept of the warden, using the current sculk colors. This one floated or hovered.
+Warden Concept Art.jpg|Iterations of the warden, using the current sculk colors.
+Warden Development Texture.png|Early texture of the final warden iteration.<ref>{{ytl|PiGKxxvCkUw|The Scariest Cow Ever Created {{!}} The Story Of The Warden @ 3:12|Minecraft|March 30, 2024|t=192}}</ref>
+Warden Development Render.png|A recreated render of a warden with this early texture.
+</gallery>
+
+==== Shade ====
+The '''shade''' was a vaguely humanoid translucent mob with glowing eyes. It was meant to be a more ambient mob, which would stand in darkness with only its eyes visible and would slowly fade away as the player approached it. It would also imitate the noise of other mobs, making it sound as though they were right behind the player.
+
+Rather than an iteration on the warden, by then called the "stalker", the shade had come to be a completely separate mob to the stalker, though in some concepts it was meant to be sort of complementary, living in the [[ancient cities]] and helping the stalker by tricking players into alerting it. It was eventually scrapped due to a feeling that it would grow to become annoying rather than creepy, and so the team could better focus on developing the stalker.<ref>{{ytl|uraHCIYRjsM|Podcast: Warden Iterations with kingbdogz|Minecraft Ideas Academy|November 22, 2022|t=2860s}}</ref>
+
+It is unknown whether the shade was ever implemented into the game as a prototype.
+
+<gallery>
+Warden concept art 6.png|Concept art of the early "shade" prototype.
+</gallery>
+
+==== Stalker ====
+Another early prototype was the '''stalker'''. Several pieces of concept art were created for this iteration of the mob, and a prototype of the original stalker design was programmed into the game.
+
+The first stalker iteration was a mob that could spawn anywhere deep underground. Stalkers could make torches flicker off and on when nearby.<ref>{{ytl|PiGKxxvCkUw|The Scariest Cow Ever Created The Story Of The Warden|Minecraft @ 1:32|Mar 30, 2024|t=92}}</ref> The stalker was tall and asymmetrical with a glowing core, sometimes referred to as a chest crystal.<ref name="meet-warden"/> It occurred in totems throughout the deep dark. The stalker would stand completely still to trick players into taking its core and aggravating it.
+
+A later version of the stalker could transform into a form that was less wide and tall when chasing an entity or player, while its regular form was meant to disguise as a treasure totem. This iteration got scrapped as it was considered too clunky and goofy, and was insufficiently scary.
+
+The vibration-sensing aspect, which was developed in this version, however, was passed down to and refined in the later iterations.<ref>{{tweet|kingbdogz|1484953764205318147|Some ideas we had for early iterations of the Warden. Stalkers were going to have a glowing item in the middle of its chest that you would also randomly find throughout the biome floating on totems. The idea was stalkers would stand perfectly still to "fake" those glowing items.|January 22, 2022}}</ref><ref>{{ytl|uraHCIYRjsM|Podcast: Warden Iterations with kingbdogz|Minecraft Ideas Academy @ 1:04:15|November 22, 2022|t=3855s}}</ref>
+
+The sounds iterated for the stalker.<ref>{{ytl|PiGKxxvCkUw|The Scariest Cow Ever Created The Story Of The Warden|Minecraft @ 1:47|Mar 30, 2024|t=107}}</ref>
+{{SoundTable
+|type = java
+|{{SoundLine
+|sound=Stalker sounds.wav
+|source=hostile
+|description=Sounds a stalker makes
+|volume=?
+|pitch=?
+}}
+}}
+
+<gallery>
+Warden concept art 1.png|Early concept art of the stalker prototype.
+Warden concept art 9.jpg|The stalker with a rearranged form.
+Warden concept model.jpg|The in-game model of an early iteration of the stalker.<ref name="meet-warden"/>
+The Stalker Sculk With The Stalker Incarnation.jpg|The stalker in-game, with both it and the [[sculk]] using brown textures similar to [[soul sand]] and rust sculk concept art.
+Stalker and Stalker Sculk.png|Ditto.
+Stalker.png|A stalker, one standing and two in 1 block tall mode.
+Stalker Development Video.mp4|The in-game prototype of the stalker, being able to transform.
+Very Early Warden.png|A recreated render of the stalker in the earliest known screenshots. Its legs were thicker than in later iterations.
+Warden (pre-release 1).png|A recreated render of the initial stalker design
+Warden (pre-release 2).png|A recreated render of a later version of the stalker, in vertical form
+Warden (pre-release 2 alternate).png|A recreated render of the one block tall form of the stalker
+Stalker transform.gif|A recreated render of a stalker transforming
+</gallery>
+
+==== Hollowed ====
+Later on, the stalker was renamed to hollowed. Several pieces of concept art were also created for the hollowed design iteration. A prototype of the hollowed design was programmed into the game.
+
+The hollowed was designed with the intent of inciting [[Wikipedia:Trypophobia|trypophobia]] and had white flesh with holes in it. According to [[Brandon Pearce]], its design was an experiment to see how far the boundaries of ''Minecraft '' could be pushed and to try and draw a line as to what would be acceptable. The design had to ultimately be toned down multiple times due to said metaphorical line being crossed. The visuals for this iteration were ultimately scrapped, as they were considered too uncanny and overall frightening for ''Minecraft''. After many back-and-forths between the developers, the directors and art team, a design similar to the current one was landed on, with the mechanics remaining mostly the same.<ref>{{ytl|9leQqqlWwU0|146 - From Modding to Mojang with Kingbdogz // The Spawn Chunks: A Minecraft Podcast|The Spawn Chunks @ 2:55|June 21, 2021|t=5264}}</ref><ref>{{ytl|uraHCIYRjsM|Podcast: Warden Iterations with kingbdogz|Minecraft Ideas Academy @ 1:07:47|November 22, 2022|t=4067s}}</ref>
+
+The sounds created for the hollowed were even more unsettling and scarier than what had been created for the current warden iteration.<ref>{{ytl|PiGKxxvCkUw|The Scariest Cow Ever Created The Story Of The Warden|Minecraft @ 2:48|Mar 30, 2024|t=171}}</ref>
+{{SoundTable
+|type = java
+|{{SoundLine
+|sound=Hollowed sounds.wav
+|source=hostile
+|description=Sounds a hollowed makes
+|volume=?
+|pitch=?
+}}
+}}
+
+<gallery>
+Warden concept art 3.png|Early concepts of the warden, featuring a "weird smiling creature".
+Warden concept art 4.png|More early concepts of the warden, involving particles.
+Warden concept art 5.png|Concept of the warden being "overtaken" by the "hollowed".
+Hollowed.png|An in-game prototype of the hollowed.
+Hollowed Vibration Particles.jpg|Vibration particles of the hollowed. First starting off as one pixel, then four pixels encircled by a ring then bigger circles.
+The Hollow (Warden Early Concept).mp4|An in-game prototype of the hollowed
+Warden (pre-release 3).png|A recreated render of the hollowed prototype design
+</gallery>
+
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{tweet|minecraft|1312427526946521088}}|[[File:Warden (pre-release 4).png|32px]] The warden was announced at [[Minecraft Live 2020]].}}
+|{{HistoryLine||October 6, 2020|link={{tweet|kingbdogz|1313449116068917249}}|A set of teaser images regarding the warden's size and behavior were posted on [[Brandon Pearce]]'s Twitter.}}
+|{{HistoryLine||2020-2021|link=https://youtu.be/cd7cVNeb0Uk?t=74|[[File:Warden (pre-release 5).png|32px]] The warden's texture from between Minecraft Live 2020 and 2021 was showcased in the ''[[The Secrets of Minecraft]]'' series.}}
+|{{HistoryLine||October 16, 2021|link=https://www.youtube.com/watch?v=w6zLprHHZOk&t=6476s|[[File:Warden JE1 BE1.png|32px]] New spawning conditions and textures for the warden were revealed at [[Minecraft Live 2021]].}}
+|{{HistoryLine||November 26, 2021|link={{tweet|kingbdogz|1464376460085501960}}|The warden was revealed to have a sense of smell; it can detect and pathfind toward the general location of a player or mob through a "smelling" action. It also prioritizes smelling the player or mob that it is most suspicious of, rather than the one closest to it.<ref>{{Tweet|kingbdogz|1464376460085501960|Kinda. Wardens have no capability to detect players through vision. It technically has no idea where the player is, a system tells the Warden a general location that the player MIGHT be, not exactly. Only when the warden suspects a mob enough that it knows their exact position|November 26, 2021}}</ref><ref>{{Tweet|kingbdogz|1464376942791213059|Also currently it sniffs out the mob/player that it is most suspicious of, rather than the nearest mob/player.|November 26, 2021}}</ref>}}
+|{{HistoryLine||December 18, 2021|link={{tweet|kingbdogz|1472119177712447490}}|The warden's emerging animations were showcased.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|[[File:Warden JE1 BE1.png|32px]] Added wardens.}}
+|{{HistoryLine|||dev=22w11a|Removed wardens.}}
+|{{HistoryLine|||dev=22w12a|Re-added wardens.|Wardens are no longer considered undead.|[[File:Warden attacking.gif|32px]]Wardens have been given a new attacking animation.|Increased warden's vertical reach from 3 blocks to 4 blocks.|Wardens no longer slow down in water.|Wardens are now immune to fire and lava.|[[File:Warden 22w12a Texture.png|32px]]Warden textures have been changed. The tusks on the chest have been separated and new overlays have been added.|[[nametag|Nametagged]] wardens no longer burrow.}}
+|{{HistoryLine|||dev=22w13a|Wardens can now pass over [[rail]]s.<ref>{{bug|MC-249642|||F}}</ref>}}
+|{{HistoryLine|||dev=22w14a|Wardens now become angry at all living mobs that bump into it, not just players.|Wardens now slow down in water and are affected by bubble columns again.}}
+|{{HistoryLine|||dev=22w15a|[[File:Warden Sonic Boom Attack 22w15a.gif|62px]] Wardens now charge and release a ranged attack when the target is found to be well beyond the melee attack's range. This attack can penetrate walls.|Wardens can now smell players from further away.|The vertical range in which wardens get angry has been increased from 6 to 20 blocks.|Reverted the warden's vertical reach back to how it was before 22w12a.<ref>{{bug|MC-250192|||WAI}}</ref>}}
+|{{HistoryLine|||dev=22w16a|Decreased the warden's vertical reach again, from 3 to 2 blocks.
+|Added the [[game rule]] {{cd|doWardenSpawning}}.}}
+|{{HistoryLine|||dev=22w17a|Wardens now drop one sculk catalyst upon death.|The amount of damage dealt by its ranged attack has been decreased from {{hp|30}} to {{hp|10}}.|The cooldown for their ranged attack has been decreased from 5 to 2 seconds.|The ranged attack can bypass shields and armor.}}
+|{{HistoryLine|||dev=22w18a|[[File:Warden Sonic Boom Attack.gif|62px]] Updated the textures of the sonic boom particle.}}
+|{{HistoryLine|||dev=22w19a|The warden's ranged attack is now affected by difficulty.|Sculk shriekers now need to be activated four times to summon the warden.}}
+|{{HistoryLine|||dev=pre3|Sonic boom attack damage is no longer reduced by the [[Protection]] enchantment.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||December 9, 2021|link={{tweet|kingbdogz|1469019573936656385}}|[[File:Warden JE1 BE1.png|32px]] Development of deep dark content, including the warden, was revealed for Bedrock.}}
+|{{HistoryLine||December 17, 2021|link={{tweet|marcio_os|1471913396228534282}}|A new burrowing animation was showcased.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.33|Added wardens behind the "Wild Update" experimental toggle.
+|At that time, there were no hit or death sound effects, and some of its features were outdated compared to the latest Java Edition snapshots.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Wardens are now available without having to enable experimental gameplay.|Added hurt, death, and angry listening sound effects.
+|Wardens can now preserve anger levels toward despawned entities.
+|Wardens no longer get angry toward other wardens or inanimate objects.|[[File:Warden Hurt BE.gif|38px]] Due to a bug, the warden's hurt animation is slightly broken.<ref>{{bug|MCPE-153967}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.19.0.27|Wardens now charge and release a ranged attack when the target is found to be well beyond the melee attack's range. This attack can penetrate walls.|Wardens can now smell players from further away.|The vertical range in which wardens get angry has been increased to 6 to 20 blocks.|Wardens now gets angry at all living mobs that bump into it, not just players.|Wardens now prioritize attacking players over other mobs.}}
+|{{HistoryLine|||dev=Preview 1.19.0.29|Wardens now drop one sculk catalyst upon death.|The amount of damage dealt by its ranged attack has been decreased from {{hp|30}} to {{hp|10}}.|The cooldown for their ranged attack has been decreased from 5 to 2 seconds.|The ranged attack can bypass shields and armor.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.23|[[File:Warden Hurt 2.gif|46px]] The warden's hurt animation has been fixed, matching {{JE}}.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.24|Removed the {{cd|idle}} sound event from the {{cd|warden}} object in {{cd|sounds.json}}.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The warden is the most iterated mob in terms of designs with it having 175 iterations.<ref>{{Ytl|pI6HFSu2W8Y|Minecraft Now: The Warden and Mangroves|Minecraft|June 30, 2022|t=657}}</ref> The second being the [[Bee#Concept Artwork|bee]] with it having 13 iterations as seen in [[The World of Minecraft]] book. 
+* Although the warden is supposed to be blind, [[Spectator#Mob view|spectating]] it reveals that it still has normal vision.<ref>{{bug|MC-249500|||WAI}}</ref>
+* [[Brandon Pearce]] considers the warden as something entirely new, as it isn't a boss, a mini boss or a regular enemy, but a force of nature: "when a tornado is barreling towards you, you don't try to kill it - you run away! The warden is exactly the same."<ref>{{Tweet|kingbdogz|1312579202076626944|I'd actually consider it something entirely new. The Warden is a force of a nature, not a boss. When a tornado is barreling towards you, you don't try to kill it - you run away! The Warden is exactly the same.|October 4, 2020}}</ref>
+* Brandon's thought process on finally giving the warden a drop after he was heavily against it was the warden should never drop something that is important or hard to get that would be worth going through the trouble of fighting it. In this case, fighting a warden is not worth a [[sculk catalyst]]. This change was made for renewability farms and tech players.<ref>{{Tweet|kingbdogz|1519355948518854656|The key is that the Warden should never drop something that is important or hard to get that would be worth going through the trouble of fighting it. In this case though, fighting a Warden is not worth a Sculk Catalyst. This change is only made for renewability farms/tech players|April 28, 2022}}</ref>
+* The warden and sculk were inspired by {{w|Lovecraftian horror}}, as the developers wanted to make something that wasn't traditionally scary (like jumpscares), but scary in a "mysterious and unknown" way.<ref>{{ytl|rpKieiahBBU|Minecraft 1.19: The Deep Dark – Not So Scary After All! (If You’re The Warden)|Minecraft|August 12, 2022}}</ref>
+* In the sixth episode of ''[[The Secrets of Minecraft]]'', it was joked that the warden's personal names are "Jonathan" and "William", depending on the scene, similar to how the [[player]], the [[ender dragon]] or the [[wither]] all have personal joke names.<ref name="wardeninfo" /> "Warden" itself was also jokingly broken down into "War! Dens!" in the description.
+** "Jonathan" can be seen on a blackboard for name suggestions alongside "the stalker" and "the hollowed".
+** It is also joked that the name "warden" was the result of calling it "William" and spelling it wrong.
+** In the tenth episode, both names were used when [[Narrator (YouTube)|Narrator]] spotted the warden behind him.<ref>{{Ytl|Z4haZTbU9ZA|The Secrets of Minecraft's Deep Dark|Minecraft|June 24, 2022|t=310s}}</ref> He mistakenly called the warden Jonathan before correcting himself as William, foreshadowing [[Jonathan Minecraft]], who appears in the eleventh and final episode leading into ''[[Around the Minecraft World in 80 Biomes]]''.<ref>{{Ytl|CSdQ61dEizI|The FINAL Secrets of Minecraft!!|Minecraft|July 22, 2022|t=15s}}</ref>
+* [[Brandon Pearce]] stated in a tweet that the souls in the warden's chest is important to its lore.<ref>{{Tweet|kingbdogz|1484988496876126210|In terms of character, the souls in its chest were incredibly important to its lore and, likewise with the color palette. It all comes together to tell a story that I think can be really more unsettling than any of these previous iterations, despite it being less "gory".|January 23, 2022}}</ref> 
+** He also said that the warden is inspired by the mystery creature heard at the end of the [[Music Disc 11]].<ref>{{ytl|pH_6-ZVOUAk|Ask Mojang #11: All About Caves & Cliffs|Minecraft|OCtober 30, 2020}}</ref>
+
+== Gallery ==
+=== Renders ===
+
+<gallery>
+Warden JE1 BE1.png|A warden.
+Warden Layers.png|A warden with all its layers.
+Warden Bioluminescent Layer.png|A warden's glowing texture layer.
+Warden Pulsating Spots Layer.png|A warden's pulsating spots.
+</gallery>
+
+=== Animations ===
+<gallery>
+Warden emerging.gif|A newly spawned warden emerging from the ground
+Warden digging.gif|A warden burrowing into the ground before despawning
+Warden.gif|A warden idling
+Warden move.gif|A warden walking 
+Warden sniffing.gif|A warden sniffing
+Warden Shiver.gif|A warden hearing a vibration
+Warden roar.gif|A warden roaring
+Warden attacking.gif|A warden performing its melee attack
+Warden Sonic Boom Attack 22w18a.gif|A warden performing its sonic boom attack
+Warden Hurt 1.gif|A warden hurt rotating in a 12-degree angle.
+Warden Hurt 2.gif|Ditto, but the warden rotates -12 degree when hurt.
+Warden Attack.gif|Warden's old melee attack animation from [[Java Edition Deep Dark Experimental Snapshot 1]].
+Warden (angry).gif|A recreation of the warden's old animations from Minecraft Live 2020.
+Warden Sniffing BE Left JE Right.gif|The warden's sniffing animation on ''Bedrock Edition'' (left) and ''Java Edition'' (right) have different head movement in the last few seconds.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Warden inspecting a zombie.png|A warden inspecting a [[zombie]].
+Warden vs Golem.png|A warden fighting an [[iron golem]].
+Warden in an ancient city.png|Warden in an [[ancient city]].
+Warden Picture.png|A warden.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+JE 1.17 Development Warden.jpg|A warden in the deep dark.
+JE 1.17 Development Warden 2.jpg|A warden approaching the player.
+Warden Approaching.jpg|A warden in [[Minecraft Live 2020]].
+Old Deep Dark.png|A warden in [[Minecraft Live 2020]].
+Warden&Golem.jpg|The [[iron golem]] and warden next to each other.
+1.17 Dev Warden and rabbit.jpg|Warden and [[rabbit]].
+Player and Warden.jpg|Player and warden next to each other.
+The Warden Emerging From the Ground.png|Warden emerging from the ground of the deep dark.<!--Please find a clearer picture if possible.-->
+Warden x ancient city sneak peak.jpg|A warden within an ancient city.
+Warden Subtitles Reveal.jpg|The showcase of the new warden subtitles.
+Warden sonic boom alternative.png|An alternative sonic boom animation made by Chi Wong as a joke.<ref>{{ytl|n9TpuPGH9hk|Minecraft Now: Wild Update and Farlands ft AntVenom! @ 24:35|Minecraft|May 19, 2022|t=1475}}</ref>
+Warden Fishing Rod.png|Chi Wong making the warden scarier by giving it a fishing rod referencing 1.8 PvP as a joke.
+Chi Animating the Warden.jpg|Chi animating the warden in Blender.
+Old warden digging.gif|Warden's old digging animation revealed by Marcio.
+Warden B.T.S. Mc Live Announcment Trailer.jpg|Behind the scenes of a warden in the Minecraft Live trailer.<ref>{{Ytl|QKXlt8ptw1w|Everything WRONG with our videos: MINECRAFT LIVE! (PART 1) @ 10:59|Element Animation|March 25, 2023|t=659s}}</ref>
+Warden sonic boom.jpg|The warden using its sonic boom attack on a [[chicken]].
+File:Warden Sonic Boom Attack.jpg|Warden attacking Steve.
+Warden in Ancient City.jpg|Warden in ancient city.
+Warden Getting Angry.jpg|Warden in ancient city.
+Warden taking a selfie.jpeg
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Axolotl & Warden concept art.jpg|Sketches of the [[axolotl]] and warden.
+Scale of cuteness concept art.jpg|A "scale of cuteness" depicting the axolotl, [[goat]], and warden.
+Warden mood concept art.png|Mood concept art for the warden.
+Warden concept art.jpg|Sketches of the final iteration of the warden, as well as other iterations for its ears.
+Warden Concept Art 2.jpg|Ditto but warden is roaring at bunny instead of looking at it.
+Warden ears concept art.png|Early iterations of the warden's tendrils.
+Warden Ear Concept Art 2.jpg|Ditto but the third warden has a different tendril shape.
+Warden Ear Concept Art 1.jpg|Ditto but the middle has another different tendril shape and color.
+Warden animation concept.png|Early concepts of the warden's animations.
+Warden Ancient City Alex Concept Art.jpg|A warden in an ancient city standing with Alex.
+Warden Ancient City Concept Art.jpg|A warden in an ancient city.
+Warden Ancient City Concept Art 2.jpg|Ditto.
+Mariana salimena accessories warden head.jpg|Concept art of Mojang's Mojavatar Maker with a warden head.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Warden (texture).png|Warden texture file.
+Warden Bioluminescent Layer (texture).png|Warden bioluminescent layer texture file.
+Warden Heart (texture).png|Warden heart layer texture file.
+Warden Pulsating Spots 1 (texture).png|Warden pulsating spots 1 layer texture file.
+Warden Pulsating Spots 2 (texture).png|Warden pulsating spots 2 layer texture file.
+</gallery>
+
+=== In other media ===
+==== Official media ====
+<gallery>
+Wild key art.png|A warden in official artwork for [[The Wild Update]].
+Mobile Warden 640x960.png|A warden in an ancient city.
+Ward.gif|Warden artwork.
+Looping warden.gif|Looping animation of the Warden running through a tunnel outside an ancient city.
+Warden Burrowing.png|A warden burrowing through blocks.<ref>{{Ytl|0cpQC5jVMDg|Minecraft Live 2022: A Warden’s Song|Minecraft|t=109s}}</ref>
+Efe Chicken & Warden.jpg|The Warden inspecting [[Efe]] and a [[chicken]]
+Warden Annoucement Trailer.jpg|Warden in the Minecraft Live announcement trailer
+Warden Annoucement Trailer Sonic Boom.png|Warden shooting a sonic boom
+Warden Minecart.png|A warden riding a minecart in the Minecraft Live announcement trailer
+Evade the smell.gif|The warden sniffing
+Warden Rib Cage.webp|Warden with different rib cage design from merch
+Warden Sticker.png|[https://knowyourmeme.com/memes/surprised-patrick Suprised warden] from official Minecraft Discord
+Warden pixel art uniqlo 2.png|Pixel art version of the warden made by Nekofresa
+Warden Chasing Alex with Silence Trim Pixel Art.png|Warden chasing [[Alex]] holding the [[silence armor trim]]
+SteveWhacks.jpeg|Steve slaying the warden with a [[mace]]
+Warden Marketplace Banner Sprite.png|Pixel art of the Warden used on a banner for the [[Minecraft Marketplace]]
+Sleep paralysis warden.jpeg|A [[W:sleep paralysis demon|sleep paralysis demon]] in the form of a warden.
+The warden under your bed.jpeg|A warden under a bed
+Warden on the streets.jpeg|A warden skulking in the streets
+</gallery>
+
+==== Merchandise ====
+<gallery>
+Warden Action Figure.jpg|alt=|Warden action figure, produced by Mattel.
+LEGO Warden.png|alt=|[[Lego Minecraft]] warden.
+Minecraft Mini Mode Warden.png|alt=|Minecraft Mini Mode Warden
+Minecraft Mini Mode Rise of the Warden Playset.png|alt=|'''Minecraft Mini Mode Rise of the Warden Playset'''
+Warden flippin fig.jpg|Warden figure of Flippin' Figs
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|meet-warden|Meet the Warden|June 3, 2022|[[Per Landin]]}}
+*{{Mcnet|warden|Mob Menagerie: Warden|April 9, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+{{Featured}}
+
+[[Category:Hostile mobs]]
+[[Category:Monster mobs]]
+
+[[de:Wärter]]
+[[es:Warden]]
+[[fr:Warden]]
+[[it:Sorvegliante]]
+[[ja:ウォーデン]]
+[[ko:워든]]
+[[lzh:監守]]
+[[pl:Nadzorca]]
+[[pt:Defensor]]
+[[ru:Хранитель]]
+[[uk:Боронитель]]
+[[zh:监守者]]

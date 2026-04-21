@@ -1,0 +1,677 @@
+{{For|the {{MCD|Hidden Depths}} DLC consumable in {{MCD}}|MCD:Trident}} 
+{{Infobox item
+| group = Entity
+| 1-1 = Trident.png
+| group2 = Item
+| 2-1 = Trident (item).png
+| 2-2 = Enchanted Trident (item).gif
+| invimage = Trident
+| rarity = Rare (epic if enchanted)
+| attackdamage = {{hp|9}}
+| attackspeed = 1.1
+| attackrange = 3
+| hitboxmargin = 0
+| projectiledamage = {{hp|8}}<br>{{hp|13}} ([[Channeling]])<ref group="note">Due to a bug regarding the duration of the lightning damage hitbox, the lightning from Channeling will occasionally not deal damage after the initial projectile hits.</ref><ref>{{bug|MC-305643||Lightning occasionally fails to deal its double damage tick correctly|Unresolved}}</ref>
+| chargetime = 0.5s<ref group="note">Due to a server-client desync bug, tridents can occasionally be thrown 1 tick earlier than their programmed 0.5 second charge time.</ref><ref>{{bug|MC-302165||Bows/tridents/crossbows are able to be charged earlier than should be possible on a singleplayer world|Unresolved}}</ref>
+| inaccuracy = 1
+| durability = {{jebe|250|251}}
+| enchantability = 1
+| renewable = Yes
+| stackable = No
+| size = Height: 0.5 blocks<br>Width: 0.5 blocks
+}}
+A '''trident''' is a [[weapon]] that can be used to perform {{Control|attack|text=melee attacks}}, or be {{Control|use|text=thrown}} as a [[projectile]] that is not slowed down by [[water]]. It can rarely be obtained either from trident-wielding [[drowned]] or from [[trial chambers]].
+
+== Obtaining ==
+=== Generated loot ===
+{{LootChestItem|trident}}
+
+=== Mob loot ===
+6.25% of naturally-spawned [[drowned]] {{in|java}}, or 15% of naturally-spawned drowned {{in|bedrock}}, spawn with a trident of random durability as their natural weapon. When a drowned with a trident is killed by a player or a tamed [[wolf]], it has a 8.5% chance {{in|java}} or a 25% chance {{in|bedrock}} of dropping the trident. This chance is increased by 1% with each level of [[Looting]].
+
+Only naturally-spawned drowned can spawn with a trident. Zombies converted to drowned never spawn with tridents. A trident held by a drowned has a chance to be [[enchanted]]. The [[Loyalty]], [[Impaling]], and [[Channeling]] enchantments function the same, while [[Riptide]] has no effect for the drowned.
+
+=== Thrown tridents ===
+Tridents thrown onto the ground by a player can be picked up; however, tridents thrown by [[drowned]] cannot be picked up, similar to arrows shot by [[skeleton]]s and other arrow-firing mobs. 
+
+Only the owner of a trident thrown in Creative mode or enchanted with [[Loyalty]] can pick it up; other players in Creative and players in Survival mode, including its owner, cannot pick up a trident thrown in Creative.
+
+== Usage ==
+=== Attacking ===
+==== Melee attack ====
+Pressing {{control|attack}} while holding a trident deals damage to both [[mob]]s and players. Tridents deal {{hp|9}} melee damage and, in {{JE}}, have an attack speed of 1.1. Upon damaging a mob or player, the trident's [[durability]] decreases by 1. The trident's melee attack does not have any [[special attack]] mechanics that are unique to it, unlike all other melee <abbr title="Items classified as weapons due to being in the Combat tab of the Creative inventory.">weapons</abbr>.<ref group="note">[[Sword]]s can do [[sweep attack]]s, [[axe]]s can do [[crushing blow]]s, [[mace]]s can do [[smash attack]]s, and [[spear]]s can do both [[jab attack]]s and [[charge attack]]s.</ref>
+
+==== Ranged attack ====
+[[File:Steve aiming with Trident.png|thumb|upright|Steve aiming with Trident]]
+[[File:Trident throwing.gif|thumb|right|Throwing a trident {{in|java}}.]]
+Pressing and holding {{control|use}} while holding a trident charges it. When released at full charge, the trident is thrown and deals damage to any [[entity]] it hits. It flies on a ballistic trajectory similar to that of an [[arrow]]. If the trident hits a block, it sticks to the block. If it hits an entity, it bounces off the entity and lands nearby. It is also blocked by [[shield]]s and can be retrieved once it lands on the ground. Thrown tridents can trigger wooden [[button]]s, wooden [[pressure plate]]s, and [[target]] blocks. A trident can be thrown at a [[chorus flower]] or [[pointed dripstone]] to break it, which causes the block to be dropped as its respective item. Unlike other projectiles, the trident does not slow down when thrown through water or lava.
+
+Tridents take 1 durability damage when thrown, regardless of whether they hit an entity or not. Tridents with 1 durability or less remaining cannot be thrown.<ref>{{bug|MC-163946||Tridents with one durability remaining can be thrown|Fixed}}</ref> {{IN|java}}, tridents despawn after 60 seconds if they are not picked up, just like [[arrow]]s.<ref>{{bug|MC-125817||Tridents thrown in survival despawn after one minute}}</ref> {{IN|bedrock}}, thrown tridents do not despawn. When thrown at the [[ender dragon]] while it is perched, they are deflected and lit on fire, in the same way as arrows.
+
+{{IN|java}}, thrown tridents only damage one entity.<ref>{{bug|MC-125325||Tridents will not cause damage to entities after it falls from a block it was stuck in|Works As Intended}}</ref> {{IN|bedrock}}, a trident can damage multiple entities as long as it touches a solid block before damaging the next entity; for example, a [[piston]] can move a trident into a mob.<ref>{{bug|MCPE-60933||A single trident can hurt multiple mobs in one throw|Works As Intended}}</ref> Subsequent hits from the same throw still count as player damage, meaning that mobs drop [[experience]] and [[Looting]] can be used, but the trident does not lose additional durability.
+
+{{IN|bedrock}} and [[Java Edition Combat Test 4]], tridents can be shot by [[dispenser]]s regardless of enchantment.
+
+=== Statistics ===
+==== Java Edition ====
+{{IN|java}}, tridents have an attack speed of 1.1 (0.909 seconds), and have the following statistics:
+
+{| class="wikitable"
+!colspan=14 |Unenchanted
+|-
+!Type!!Attack damage!!Attack speed!!<abbr title="Damage/Second">DPS</abbr>!!Attack range!!Hitbox margin!!Lifetime damage inflicted<ref group="note">The formula to find the total lifetime damage is ''Lifetime damage minimum = Durability × Damage per hit''. It assumes the trident is at maximum charge.</ref>!!Durability!!Enchantability
+|-
+|{{ItemSprite|Trident}} Melee||{{hp|9}}|| rowspan=2 |1.1 (0.909 seconds)||9.9|| rowspan=2 |3 (3 blocks)|| rowspan=2 |0||{{hp|2250}}|| rowspan=2 |250|| rowspan=2 |1
+|-
+|{{ItemSprite|Trident}} Melee (critical)||{{hp|13.5}}||14.85||{{hp|3375}}
+|-
+!Type!!Projectile damage!!Charge time!!<abbr title="Damage/Second">DPS</abbr>!!Inaccuracy!!Hitbox margin!!Lifetime damage inflicted!!Durability!!Enchantability
+|-
+|{{ItemSprite|Trident}} Ranged||{{hp|8}}||0.5s||16||1||N/A||{{hp|2000}}||250||1
+|}
+
+{| class="wikitable"
+!colspan=7 |Enchanted
+|-
+!Type!!Base damage!!Impaling I!!Impaling II!!Impaling III!!Impaling IV!!Impaling V
+|-
+|{{ItemSprite|Enchanted Trident}} Melee||{{hp|9}}||{{hp|11.5}}||{{hp|14}}||{{hp|16.5}}||{{hp|19}}||{{hp|21.5}}
+|-
+|{{ItemSprite|Enchanted Trident}} Melee (critical)||{{hp|13.5}}||{{hp|16}}||{{hp|18.5}}||{{hp|21}}||{{hp|23.5}}||{{hp|26}}
+|-
+|{{ItemSprite|Enchanted Trident}} Ranged||{{hp|8}}||{{hp|10.5}}||{{hp|13}}||{{hp|15.5}}||{{hp|18}}||{{hp|20.5}}
+|-
+!Type!! colspan=3 |Base damage!! colspan=3 |Channeling
+|-
+|{{ItemSprite|Enchanted Trident}} Ranged|| colspan=3 |{{hp|8}}|| colspan=3 |{{hp|13}}
+|}
+
+==== Bedrock Edition ====
+{{IN|bedrock}}, tridents have no attack cooldown, and have the following statistics:
+
+{| class="wikitable"
+!colspan=14 |Unenchanted
+|-
+!Type!!Attack damage!!Attack speed!!<abbr title="Damage/Second">DPS</abbr>!!Attack range!!Hitbox margin!!Lifetime damage inflicted<ref group="note">The formula to find the total lifetime damage is ''Lifetime damage minimum = Durability × Damage per hit''.</ref>!!Durability!!Enchantability
+|-
+|{{ItemSprite|Trident}} Melee||{{hp|9}}|| rowspan=2 |N/A||18|| rowspan=2 |3 (3 blocks)|| rowspan=2 |0||{{hp|2259}}|| rowspan=2 |251|| rowspan=2 |1
+|-
+|{{ItemSprite|Trident}} Melee (critical)||{{hp|13.5}}||27||{{hp|3388.5}}
+|-
+!Type!!Projectile damage!!Charge time!!<abbr title="Damage/Second">DPS</abbr>!!Inaccuracy!!Hitbox margin!!Lifetime damage inflicted!!Durability!!Enchantability
+|-
+|{{ItemSprite|Trident}} Ranged||{{hp|8}}||0.5s||16||1||N/A||{{hp|2008}}||251||1
+|}
+
+{| class="wikitable"
+!colspan=7 |Enchanted
+|-
+!Type!!Base damage!!Impaling I!!Impaling II!!Impaling III!!Impaling IV!!Impaling V
+|-
+|{{ItemSprite|Enchanted Trident}} Melee||{{hp|9}}||{{hp|11}}||{{hp|14}}||{{hp|16}}||{{hp|19}}||{{hp|21}}
+|-
+|{{ItemSprite|Enchanted Trident}} Melee (critical)||{{hp|13.5}}||{{hp|16.5}}||{{hp|21}}||{{hp|24}}||{{hp|28.5}}||{{hp|31.5}}
+|-
+|{{ItemSprite|Enchanted Trident}} Ranged||{{hp|8}}||{{hp|10}}||{{hp|13}}||{{hp|15}}||{{hp|18}}||{{hp|20}}
+|-
+!Type!! colspan=3 |Base damage!! colspan=3 |Channeling
+|-
+|{{ItemSprite|Enchanted Trident}} Ranged|| colspan=3 |{{hp|8}}|| colspan=3 |{{hp|13}}
+|}
+
+=== Projectile motion ===
+The projectile motion of a thrown trident is dependent on the angle the user is facing, as well as the user's movement speed.
+{{:Calculators/Projectile motion|name=Trident|type=1|gravity=-0.05|dragx=0.99|dragy=0.99|hideproperties=1|hidedynamics=1}}
+
+=== Drowned ===
+{{main|Drowned}}
+A drowned holding a trident throws tridents at its target every 1.5 seconds, dealing {{hp|9}} [[damage]] in Normal [[difficulty]]. A drowned can throw unlimited tridents, and these tridents cannot be picked up by the [[player]].
+
+A [[villager]] can be converted into a [[zombie villager]] if it is killed by a trident thrown by a drowned. The chance of conversion is 0% on Easy [[difficulty]], 50% on Normal, and 100% on Hard.
+
+{{IN|bedrock}}, a drowned can use the trident's melee attack if its target is within three blocks. The melee attack deals {{hp|9}} damage.
+
+A drowned's trident can be [[enchanted]]. The Loyalty, Impaling and Channeling enchantments work the same as they would for a player, while Riptide has no effect for drowned.
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|ingredients = 2× Damaged Trident|Damaged Trident|Damaged Trident
+|Output = Trident
+|type = Combat
+|ignoreusage = 1
+|showdescription = 1
+|description = The durability of the two tridents is added together, plus an extra 5% durability.
+}}
+{{Grinding
+|ingredients=2× Damaged Trident
+|Damaged Trident
+|Damaged Trident
+|Trident
+|showdescription=1
+|description=The durability of the two tridents is added together, plus an extra 5% durability.
+}}
+
+==== Unit repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+|head=1
+|Damaged Trident
+|Damaged Trident
+|Trident
+|tail=1
+}}
+
+A trident can be repaired only by the common procedure of combining with another trident in an [[anvil]]. The [[enchantment]]s of both are preserved, and an extra 5% durability bonus is added.
+
+=== Enchantments ===
+==== Applicable enchantments ====
+A trident can receive the following [[enchantment]]s:
+
+{| class="wikitable col-3-center"
+|+
+!Name
+!Description
+!Max Level
+![[Enchantment#Obtaining|Method]]
+!Weight
+|-
+|[[Loyalty]]<ref group="note" name="note1">Loyalty and Channeling are mutually exclusive with Riptide, but Loyalty and Channeling can coexist.</ref>
+|Causes the trident to return after landing.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Channeling]]<ref group="note" name="note1" />
+|Releases a bolt of lightning when the thrown trident strikes a mob or [[lightning rod]] during a [[thunderstorm]].
+|I
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|1
+|-
+|[[Riptide]]<ref group="note" name="note1" />
+|Replaces the throw with a charge that hurls the user forward ''only'' when wet. Throwing the trident becomes impossible.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Impaling]]
+|Increases the damage dealt to [[aquatic]] mobs{{Only|java}} or mobs in contact with [[water]] or [[rain]]{{Only|bedrock}}.
+|V
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|2
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}<br/>{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]
+|Repairs the trident when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The trident in the player’s possession disappears upon the player’s death and does not drop as an item.
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+
+==== Enchantment behavior ====
+Tridents have exclusive access to the [[Impaling]], [[Loyalty]], [[Riptide]], and [[Channeling]] enchantments.
+
+===== Impaling =====
+{{main|Impaling}}
+Tridents [[Enchanting#Summary_of_enchantments_by_item|enchanted]] with [[Impaling]] increase damage against mobs in certain conditions depending on the game version. {{IN|java}}, the enchantment deals extra damage to all [[aquatic]] mobs. {{IN|bedrock}}, it deals extra damage to players and mobs that are in water or rain. In the [[Java Edition Combat Tests]], it has both of these effects.
+
+===== Loyalty =====
+{{main|Loyalty}}
+Tridents enchanted with [[Loyalty]] return to the thrower after hitting an entity{{only|java}}/hitting and bouncing off an entity then hitting a block{{only|bedrock}}<ref>{{bug|MCPE-51726|||WF}}</ref> or directly hitting a block. A Loyalty-enchanted trident fired from a [[dispenser]] just sticks to the block it strikes. Higher levels of enchantment result in shorter recovery times. {{IN|java}}, throwing a trident enchanted with Loyalty into the [[void]] destroys it,<ref>{{bug|MC-125755|||WAI}}</ref> while {{in|bedrock}} it automatically returns to the player. Loyalty-enchanted tridents can take [[fire]] damage but still return to the player if thrown in [[lava]]. This is especially helpful in [[the Nether]] if the [[player]] is using the trident instead of a [[bow]]. If a trident enchanted with Loyalty attempts to return to a player with no available inventory space, the trident floats near the player until inventory space becomes available.
+
+===== Riptide =====
+{{main|Riptide}}
+Tridents enchanted with [[Riptide]] launch the player a certain distance and do not leave the player's hand when thrown, with the distance increasing for higher enchantment levels. They can be thrown only if the player is standing in [[water]] or if it is raining on the block they are standing on. If the player charges it but walks into a nearby dry area, the charge is canceled. If the player throws a Riptide trident and collides with a mob, the mob takes melee damage (including critical damage if the player is falling). {{IN|java}} tridents enchanted with Riptide take one durability damage upon throwing and lose an additional 1 durability if it collides with an entity on both editions. Each level of Riptide increases the distance traveled by six blocks. The enchantment at level one launches the player nine blocks, fifteen blocks at level two, and twenty-one blocks at level three. Using [[Riptide]], nearby players or mobs are dealt [[Harming|splash damage]] within an 8.25×8.25×4.25 cubical area. It stacks with the [[Impaling]] enchantment and [[Strength]] effect. Critical hits do not increase splash damage, but affect the target.
+
+A trident with the [[Riptide]] enchantment can be used to propel a player wearing [[elytra]], but only in [[rain]]y weather, during snowy weather in certain biomes<ref>{{bug|MC-128169}}</ref> or while the [[player]] is in a body of water. A Riptide trident can boost the player to speeds as high as 125 blocks per second,<ref>{{bug|MC-147173||Using riptide tridents while elytra flying can boost the player to excessive speeds}}</ref> much faster than the 33.5 blocks per second speed achievable using [[firework rocket]]s.
+
+===== Channeling =====
+{{main|Channeling}}
+Tridents enchanted with [[Channeling]] summon a lightning bolt if there is a thunderstorm, although only upon hitting a mob or player standing in the rain as well as a [[Lightning Rod|lightning rod]] placed in the rain<sup>[''[[Java Edition|JE]]'' only]</sup>. On ''[[Bedrock Edition]],'' lightning is summoned when a trident enchanted with [[Channeling]] hits a lightning rod, even in regular rain <sup>[''[[Bedrock Edition|BE]]'' only]</sup>.
+
+== Sounds ==
+{{Edition|Java}}:<br>
+Thrown tridents use the Friendly Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Trident pierce1.ogg
+|sound2=Trident pierce2.ogg
+|sound3=Trident pierce3.ogg
+|subtitle=Trident stabs
+|source=neutral
+|description=When a trident hits a mob
+|id=item.trident.hit
+|translationkey=subtitles.item.trident.hit
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trident ground impact1.ogg
+|sound2=Trident ground impact2.ogg
+|sound3=Trident ground impact3.ogg
+|sound4=Trident ground impact4.ogg
+|subtitle=Trident vibrates
+|source=neutral
+|description=When a trident hits the ground
+|id=item.trident.hit_ground
+|translationkey=subtitles.item.trident.hit_ground
+|volume=0.9
+|pitch={{frac|12|11}}-{{frac|4|3}}
+|distance=16}}
+| {{SoundLine
+|sound=Trident throw1.ogg
+|sound2=Trident throw2.ogg
+|subtitle=Trident clangs
+|source=player
+|description=When a player throws a trident
+|id=item.trident.throw
+|translationkey=subtitles.item.trident.throw
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|subtitle=Trident thunder cracks
+|source=neutral
+|description=When a Channeling trident hits a mob
+|id=item.trident.thunder
+|translationkey=subtitles.item.trident.thunder
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Trident thunder cracks
+|source=weather
+|description=When a trident with Channeling strikes a lightning rod
+|id=item.trident.thunder
+|translationkey=subtitles.item.trident.thunder
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Riptide I.ogg
+|subtitle=Trident zooms
+|source=player
+|description=When a Riptide I trident is used
+|id=item.trident.riptide_1
+|translationkey=subtitles.item.trident.riptide
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Riptide II.ogg
+|subtitle=Trident zooms
+|source=player
+|description=When a Riptide II trident is used
+|id=item.trident.riptide_2
+|translationkey=subtitles.item.trident.riptide
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Riptide III.ogg
+|subtitle=Trident zooms
+|source=player
+|description=When a Riptide III or higher trident is used
+|id=item.trident.riptide_3
+|translationkey=subtitles.item.trident.riptide
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trident return1.ogg
+|sound2=Trident return2.ogg
+|sound3=Trident return3.ogg
+|subtitle=Trident returns
+|source=neutral
+|description=When a trident starts returning <ref group=sound>The first sound is only played {{frac|1|9}} of the time, while the others are played {{frac|4|9}} of the time</ref>
+|id=item.trident.return
+|translationkey=subtitles.item.trident.return
+|volume=8.0
+|pitch=''varies'' <ref group=sound>1.0 for <code>return1</code>, 1.0/0.8/1.2/1.2 for <code>return2</code>, and 1.0/0.8/0.8/1.2 for <code>return3</code></ref>
+|distance=16}}
+| {{SoundLine
+|sound=Trident throw1.ogg
+|sound2=Trident throw2.ogg
+|subtitle=Drowned throws Trident
+|source=hostile
+|description=When a drowned throws a trident
+|id=entity.drowned.shoot
+|translationkey=subtitles.entity.drowned.shoot
+|volume=1.0
+|pitch={{frac|5|6}}-1.25
+|distance=16}}
+| {{SoundLine
+|sound=Random break.ogg
+|subtitle=Item breaks
+|source=player
+|description=When a trident's durability is exhausted
+|id=entity.item.break
+|translationkey=subtitles.entity.item.break
+|volume=0.8
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Trident pierce1.ogg
+|sound2=Trident pierce2.ogg
+|sound3=Trident pierce3.ogg
+|source=player
+|description=When a trident hits a mob
+|id=item.trident.hit
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trident ground impact1.ogg
+|sound2=Trident ground impact2.ogg
+|sound3=Trident ground impact3.ogg
+|sound4=Trident ground impact4.ogg
+|source=player
+|description=When a trident hits the ground
+|id=item.trident.hit_ground
+|volume=0.9
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trident throw1.ogg
+|sound2=Trident throw2.ogg
+|source=player
+|description=When a player throws a trident
+|id=item.trident.throw
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trident thunder1.ogg
+|sound2=Trident thunder2.ogg
+|source=player
+|description=When a trident with Channeling strikes a mob<ref group=sound>{{bug|MCPE-173931||Tridents don't make channeling sounds when striking a lightning rod}}</ref><wbr>
+|id=item.trident.thunder
+|volume=1.0<ref group=sound>{{bug|MCPE-178265||Trident thunder sound definition schema error}}</ref>
+|pitch=1.0}}
+| {{SoundLine
+|sound=Riptide I.ogg
+|source=player
+|description=When a Riptide I trident is used
+|id=item.trident.riptide_1
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Riptide II.ogg
+|source=player
+|description=When a Riptide II trident is used
+|id=item.trident.riptide_2
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Riptide III.ogg
+|source=player
+|description=When a Riptide III trident is used
+|id=item.trident.riptide_3
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trident return1.ogg
+|sound2=Trident return2.ogg
+|sound3=Trident return3.ogg
+|source=player
+|description=When a trident starts returning<ref group=sound>The first sound is only played {{frac|1|9}} of the time, while the others are played {{frac|4|9}} of the time</ref>
+|id=item.trident.return
+|volume=8.0
+|pitch=''varies'' <ref group=sound>1.0 for <code>return1</code>, 1.0/0.8/1.2/1.2 for <code>return2</code>, and 1.0/0.8/0.8/1.2 for <code>return3</code></ref>}}
+| {{SoundLine
+|sound=Trident throw1.ogg
+|sound2=Trident throw2.ogg
+|source=hostile
+|description=When a drowned shoots a trident
+|id=mob.drowned.shoot
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Trident
+|spritetype=item
+|nameid=trident
+|form=item
+|foot=1}} 
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Trident
+|spritetype=entity
+|nameid=trident
+|entitytags=impact_projectiles
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Trident
+|spritetype=item
+|nameid=trident
+|id=546
+|form=item
+|foot=1}} 
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Trident
+|spritetype=entity
+|nameid=thrown_trident
+|id=73
+|foot=1}}
+
+=== Entity data ===
+Tridents have entity data associated with them that contain various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/arrow}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|boolean|DealtDamage}}: {{cd|1}} or {{cd|0}} ({{cd|true}}/{{cd|false}}) - If {{cd|true}}, the trident has already damaged an entity or been stuck in the ground for more than 4 ticks, in which case subsequent collisions with entities deal no damage and Loyalty tridents begin to return to the player.
+** {{nbt|compound|item}}: The tag representing the item that is given when the entity is picked up.
+*** {{nbt inherit/itemnoslot|indent=***}}
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Do a Barrel Roll!;Bullseye}}
+
+== Advancements ==
+{{load advancements|A Throwaway Joke;Very Very Frightening;Not Today, Thank You;Sniper Duel;Bullseye}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||November 18, 2017|link={{YouTubeLink|mAapz_nIC_Y}}|A trident was shown killing a [[zombie]] in a clip presented at [[MineCon Earth]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Trident.png|60px]] {{InvSprite|Trident Revision 1}} Added tridents, which are currently unobtainable in [[Survival]].}}
+|{{HistoryLine|||dev=18w10a|[[File:Trident (item).png|32px]] Tridents now have a new texture in the [[inventory]].}}
+|{{HistoryLine|||dev=18w11a|Added [[drowned]] mobs, which can spawn with a trident, allowing tridents to now become obtainable in [[Survival]].}}
+|{{HistoryLine|||dev=18w14a|If the [[player]] is not in [[water]] and it is not [[rain]]ing, the player can no longer throw tridents [[enchantment|enchanted]] with [[Riptide]], but they can still deal melee [[damage]].}}
+|{{HistoryLine|||dev=18w20a|Like with swords, tridents no longer can break blocks when held in [[Creative]] mode.<ref>{{bug|MC-126300}}</ref>}}
+|{{HistoryLine||1.13.1|dev=18w30a|Loyalty tridents no longer have a rope while returning.<ref>{{bug|MC-136136}}</ref>}}
+|{{HistoryLine||1.14|dev=18w43a|Thrown tridents can now break [[chorus flower]]s.}}
+|{{HistoryLine||1.15|dev=19w39a|[[File:Enchanted Trident.png|60px]] [[File:Enchanted Trident (item).gif|32px]] Tridents that are [[enchanted]] now show the [[enchantment glint]].<ref>{{bug|MC-125360}}</ref>
+|Trident items use a 3D model again. When dropped, it rotates off center<ref>{{bug|MC-161886}}</ref> (like with beds at the time).}}
+|{{HistoryLine|||dev=19w42a|Trident items now use the 2D sprite again.<ref>{{bug|MC-161872}}</ref>}}
+|{{HistoryLine|||dev=19w45a|Thrown enchanted tridents have the enchantment glint applied to them.<ref>{{bug|MC-161976}}</ref>}}
+|{{HistoryLine||1.17|dev=20w48a|Thrown tridents can now break [[pointed dripstone]].}}
+|{{HistoryLine||1.20.2|exp=Villager Trade Rebalance|dev=23w31a|Trident-exclusive enchantments are no longer obtainable from villager [[trading]].}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Tridents are now obtainable from reward containers and [[vault]]s found inside [[trial chambers]].}}
+|{{HistoryLine||1.21|dev=pre2|The [[rarity]] of tridents has been changed from "Common" to "Epic".}} 
+|{{HistoryLine||1.21.2|dev=24w33a|The rarity of tridents has once again changed, from "Epic" to "Rare".|[[Drowned]] with tridents can now use the [[Loyalty]], [[Impaling]] and [[Channeling]] enchantments.}}
+|{{HistoryLine|||dev=24w34a|Thrown tridents now bounce off when hitting the [[world border]].}}
+|{{HistoryLine|upcoming java}}
+|{{HistoryLine||26.2|dev=snap3|Thrown tridents can now break [[sulfur spike]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|exp=Experimental Gameplay|[[File:Trident.png|60px]] [[File:Trident (item).png|32px]] Added tridents.
+|Tridents are currently a part of [[Experimental Gameplay]].}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Tridents have been fully implemented.}}
+|{{HistoryLine|||dev=beta 1.2.20.1|A new animation has been added for tridents with [[Riptide]] when they are thrown.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Tridents can now be [[enchantment|enchanted]] with [[Mending]] and [[Unbreaking]].}}
+|{{HistoryLine|||dev=beta 1.5.0.7|Tridents no longer break [[block]]s in [[Creative]] Mode.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.2|Tridents with [[Loyalty]] that fall into the [[void]] now return to their owner upon breaking in the void.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Thrown tridents can now break [[chorus flower]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|Drowned can no longer have a trident when converted.|Drowned that are not holding a trident are no longer able to drop one.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.50|Tridents are now able to break pointed dripstone.}}
+|{{HistoryLine||1.16.220|dev=beta 1.16.220.51|Drowned now hold their tridents correctly when targeting a player.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Tridents are now obtainable from reward containers and [[vault]]s found inside [[trial chambers]].}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|The [[rarity]] of tridents has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of tridents has once again changed, from "Epic" to "Rare".}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Trident.png|60px]] [[File:Trident (item).png|32px]] Added tridents.}}
+|{{HistoryLine||xbox=?|ps3=?|psvita=?|ps4=?|wiiu=?|Tridents with [[Loyalty]] that fall into the [[void]] now return to their owner upon breaking in the void.}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.4.0|[[File:Trident.png|60px]] [[File:Trident (item).png|32px]] Added tridents.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||1.14.3|The attack speed of tridents has been increased to 2.
+|The base [[damage]] of tridents has been decreased from {{hp|9}} to {{hp|7}}.
+|The attack reach of tridents has been increased to 3.5 [[block]]s.}}
+|{{HistoryLine||2|The damage of tridents has been increased to {{hp|8}}.}}
+|{{HistoryLine||4|Tridents can now be shot from [[dispenser]]s.
+|Tridents with [[Loyalty]] that fall into the [[void]] now return to their owner upon breaking in the void.
+|Tridents with [[Impaling]] now deal [[enchantment]] damage to all [[mob]]s that are in [[water]] or [[rain]].}}
+|{{HistoryLine||5|The damage of tridents has been decreased to {{hp|7}} again.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|dev=23w43a|Renamed the trident entity's NBT tag {{nbt|compound|Trident}} to {{nbt|compound|item}}.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* If a [[player]] throws a Loyalty-enchanted trident and the player's inventory subsequently fills, the trident hovers around or through the player's skin until an [[inventory]] slot opens, which it fills immediately. Multiple tridents can be 'queued' to re-enter the player's inventory in this manner.
+* {{IN|java}}, if a trident is enchanted with sword enchantments (for example, via an [[anvil]] in [[Creative]] mode or through commands), the effects of most enchantments are applied even when the trident is thrown. The only exception is [[Fire Aspect]], which is applied exclusively on melee attacks.<ref>{{bug|MC-166282||Trident with Fire Aspect enchantment puts entities on fire only when used as a melee weapon|Invalid}}</ref>
+* Thrown tridents pass through [[Nether portal block]]s without being transported to [[the Nether]] or the [[Overworld]].
+* Using a trident enchanted with Riptide while riding an entity cancels the charge and does nothing.
+* The sounds of tridents were recorded by [[Samuel Åberg]] from metal rulers.<ref>{{ytl|f0k7JNFGhms|Growth & Evolution - Part 3: 15 Years of Minecraft|Minecraft|t=479s}}</ref>
+* A drowned with trident which later drops its trident as an item, enchanted with Loyalty I, shows a trident-returning animation, while still wielding earlier.
+* In a behind the scenes video for ''[[A Minecraft Movie]]'', [[Jason Momoa]] can be seen holding a trident, which is a reference to his role as Aquaman in the DC films.<ref>{{ytl|Q2llFFHsQO0|A MINECRAFT MOVIE - A DAY IN THE LIFE OF JASON MOMOA|Warner Bros Pictures|t=58s}}</ref>
+
+== Gallery ==
+=== Renders ===
+==== Item ====
+<gallery>
+Enchanted Trident (item).gif|An enchanted trident.
+</gallery>
+
+==== Held ====
+<gallery>
+Two-hand drowned.png|A drowned holding a trident and a [[nautilus shell]].
+Alex aiming with Trident.png|Alex aiming with Trident
+</gallery>
+
+=== Screenshots ===
+<gallery>
+TridentMineconEarth.jpg|Tridents are shown in a clip of Minecon Earth 2017.
+Returning trident.jpg|A trident [[enchantment|enchanted]] with [[Loyalty]] returning to the [[player]].
+Riptide Trident.png|A player "flying" high in the [[air]] after throwing a trident enchanted with [[Riptide]] III vertically upward.
+Trident in ground.png|A trident stuck in [[sand]].
+ArgoMajor Trident.jpg|First image of a trident in ''Bedrock Edition''.
+</gallery>
+
+=== In other media ===
+<gallery>
+Dolphin Trident Exhibit.png|A trident exhibit in [[15 Year Journey]]
+VibrantMemories MarketingScreenshot 2.jpeg|[[Kai]] using a trident in a promo for [[Vibrant Memories Add-On]]
+Loot Swimming Sticker.gif|Artwork of [[Ari]] swimming with a trident.
+Trident flash.png|A trident in [[Mojang Presents... An Update Aquatic]]
+Trident (Dungeons).png|A {{MCD|trident}} as it appears in {{MCD}}.
+Trident (inventory) MCE.png|A {{MCE|trident}} as it appeared in {{MCE}}
+Alex with Trident.png|An official T-Shirt design of [[Alex]] with a trident.
+Acid Drowned.png|"Acid Drowned," an officially licensed T-Shirt featuring a [[drowned]] with a trident.
+AMCMEventTrident.png|A [[Movie:Trident|trident]] as it appears in ''[[A Minecraft Movie Live Event]]''.
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|taking-inventory--trident|Taking Inventory: Trident|January 30, 2020|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox weapons}}
+{{Navbox combat|melee-ranged}}
+{{Navbox items|Tools}}
+{{Navbox entities|Other}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[de:Dreizack]]
+[[es:Tridente]]
+[[fr:Trident]]
+[[it:Tridente]]
+[[ja:トライデント]]
+[[ko:삼지창]]
+[[pl:Trójząb]]
+[[pt:Tridente]]
+[[ru:Трезубец]]
+[[th:ตรีศูล]]
+[[uk:Тризубець]]
+[[zh:三叉戟]]

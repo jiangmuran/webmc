@@ -1,0 +1,378 @@
+{{For|other uses|Pig (disambiguation)}}{{Needs render}}{{Infobox entity
+|groupsize = 250px
+| group2size = 150px
+| 2-1size = 100px
+| title = Zoglin
+| group = Adult
+| 1-1 = Zoglin.png
+| 1-1caption = {{JE}}
+| 1-2 = Zoglin BE.png
+| 1-2caption = {{BE}}
+| group2 = Baby
+| 2-1 = Baby Zoglin JE2 BE3.png
+| invimage = Zoglin Spawn Egg
+| health = {{hp|40}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}
+| armor = 
+| damage = '''Adult:'''<br>
+Easy: {{hp|2.5}} to {{hp|5}}<br>Normal: {{hp|3}} to {{hp|8}}<br>Hard: {{hp|4.5}} to {{hp|12}}<br>
+'''Baby:'''<br>Easy and Normal: {{hp|0.5}}<br>Hard: {{hp|0.75}}
+| knockbackresistance = 60%
+| spawn = When a [[Hoglin]] is in the [[Overworld]] or [[the End]] for 15 seconds
+| size = '''Adult:'''<br>Height: 1.4 Blocks<br>Width: 1.3965 Blocks<br>
+'''Baby:'''<br>Height: 0.7 Blocks<br>Width: 0.6982 Blocks<br>
+| speed = 0.3
+| equipment = 
+| usableitems = {{Drop|Item|Lead}}
+| leashable = Yes
+| boat = No
+| minecart = Yes
+}}
+A '''zoglin''' is an [[undead]] [[hostile mob]] created when a [[hoglin]] is out of the [[Nether]] for too long. It never retreats or flees, and attacks [[player]]s and almost all non-zoglin [[mob]]s indiscriminately, using the same tusk attack as its non-zombified counterpart.
+
+== Spawning ==
+Zoglins spawn when a [[hoglin]] has been out of the [[Nether]] for {{convert|300|ticks|seconds}}. For their first 10 seconds after zombification, they get the [[Nausea]] effect{{only|java|short=1}}<ref>This does not happen in Bedrock Edition due to {{bug|MCPE-70866}}.</ref>. This nausea effect is cosmetic and does not affect its behavior.
+
+Like most [[hostile]] mobs, zoglins despawn when the [[difficulty]] is changed to [[Peaceful]].
+
+== Drops ==
+=== On death ===
+Both adult and baby zoglins share the following item drop table:
+{{DropTable
+|{{DropLine|name=Rotten Flesh|quantity=1-3|lootingquantity=0-1}}
+}}
+* {{xp|5}} if killed by a [[player]] or tamed [[wolf]].
+
+== Behavior ==
+Zoglins are hostile toward [[armor stand]]s<ref>{{bug|MC-177122||Zoglins try to attack armor stands|Works As Intended}}</ref>, [[camera]]s{{only|bedrock|education|short=1}}, players in [[Adventure]] or [[Survival]] mode, and all mobs except [[agent]]s, [[creeper]]s, [[ghast]]s, and other zoglins. This includes hoglins and zombified piglins. Normal hoglins do not attack zoglins unless provoked by zoglins.<!--Aggressive to any entity that extends the "LivingEntity" class, which includes armor stands. This does not include things like minecarts or item frames.-->
+
+When an adult zoglin attacks, it flings its target into the air{{only|java|short=1}}<ref>This does not happen in Bedrock Edition due to {{bug|MCPE-74465}}.</ref>. [[Blocking]] with a [[shield]] does not mitigate this. When a baby zoglin attacks, they do not fling their target. Baby zoglins, unlike baby [[hoglin]]s, never grow up. Any mob that can retaliate attacks a zoglin in return after being attacked, including baby zoglins.
+
+{{IN|je}}, adult zoglins attack once every two seconds and babies attack every second. {{IN|be}}, both adults and babies attack once every second.
+
+When a zoglin attacks a [[piglin]], the piglin either retreats or fights back. [[Piglin brute]]s attack zoglins if they are attacked first and never retreat. They also attack the zoglin if the zoglin attacks a piglin or another piglin brute.
+
+Like hoglins, zoglins can be leashed. If a player has a zoglin on a lead, then the zoglin still attacks other entities who get within its attack range, but does not actively pursue and attack the player leading it.{{only|java|short=1}}
+
+Zoglins are incapable of [[breeding]] and do not flee from [[Tag#blocks hoglin repellents|blocks that repel hoglins]]. Unlike baby [[hoglin]]s, baby zoglins attack baby [[piglin]]s. [[Piglin]]s flee from zoglins if they are not engaged in combat.
+
+Being an [[undead]] mob, they are: 
+* damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* unaffected by the status effects [[Regeneration]] and [[Poison]].
+* ignored by the [[wither]].
+* affected by the [[Smite]] enchantment.
+* unable to swim in [[water]], but do not drown.
+* a threat to [[armadillo]]s, causing them to hide in their shell.
+
+As they are [[monster]]s, [[golden dandelion]]s don't work on baby zoglins.​
+
+Like [[zombified piglin]]s, they are immune to [[fire]] and [[lava]].
+
+If a hoglin is fed [[crimson fungus]] before it is zombified, the resulting zoglin does not despawn naturally and it does not count toward the mob cap.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Zoglin idle1.ogg
+|sound2=Zoglin idle2.ogg
+|sound3=Zoglin idle3.ogg
+|sound4=Zoglin idle4.ogg
+|sound5=Zoglin idle5.ogg
+|sound6=Zoglin idle6.ogg
+|subtitle=Zoglin growls
+|source=hostile
+|description=Randomly
+|id=entity.zoglin.ambient
+|translationkey=subtitles.entity.zoglin.ambient
+|volume=0.9
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7) <ref group="sound" name="variesjavaidle">Except {{cd|idle2}}, which is 0.64-0.96 (Baby: 1.04-1.36)</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Zoglin angry1.ogg
+|sound2=Zoglin angry2.ogg
+|sound3=Zoglin angry3.ogg
+|subtitle=Zoglin growls angrily
+|source=hostile
+|description=Randomly while a zoglin is chasing something
+|id=entity.zoglin.angry
+|translationkey=subtitles.entity.zoglin.angry
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Zoglin attack1.ogg
+|sound2=Zoglin attack2.ogg
+|subtitle=Zoglin attacks
+|source=hostile
+|description=When a zoglin attacks something
+|id=entity.zoglin.attack
+|translationkey=subtitles.entity.zoglin.attack
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 0.8-1.2 (Baby: 1.3-1.7) or 0.64-0.96 (Baby: 1.04-1.36) for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Zoglin death1.ogg
+|sound2=Zoglin death2.ogg
+|sound3=Zoglin death3.ogg
+|subtitle=Zoglin dies
+|source=hostile
+|description=When a zoglin dies
+|id=entity.zoglin.death
+|translationkey=subtitles.entity.zoglin.death
+|volume=0.93
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Zoglin hurt1.ogg
+|sound2=Zoglin hurt2.ogg
+|sound3=Zoglin hurt3.ogg
+|subtitle=Zoglin hurts
+|source=hostile
+|description=When a zoglin is damaged
+|id=entity.zoglin.hurt
+|translationkey=subtitles.entity.zoglin.hurt
+|volume=0.9<ref group=sound>Except {{cd|hurt1}}, which is 0.83</ref>
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Zoglin step1.ogg
+|sound2=Zoglin step2.ogg
+|sound3=Zoglin step3.ogg
+|sound4=Zoglin step4.ogg
+|sound5=Zoglin step5.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=While a zoglin is walking
+|id=entity.zoglin.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Hoglin converted1.ogg
+|sound2=Hoglin converted2.ogg
+|subtitle=Hoglin converts to Zoglin
+|source=hostile
+|description=When a hoglin converts into a zoglin via the Overworld or the End
+|id=entity.hoglin.converted_to_zombified
+|translationkey=subtitles.entity.hoglin.converted_to_zombified
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Zoglin idle1.ogg
+|sound2=Zoglin idle2.ogg
+|sound3=Zoglin idle3.ogg
+|sound4=Zoglin idle4.ogg
+|sound5=Zoglin idle5.ogg
+|sound6=Zoglin idle6.ogg
+|source=hostile
+|description=Randomly
+|id=mob.zoglin.idle
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Zoglin angry1.ogg
+|sound2=Zoglin angry2.ogg
+|sound3=Zoglin angry3.ogg
+|source=hostile
+|description=Randomly while a zoglin is chasing something
+|id=mob.zoglin.angry
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Zoglin attack1.ogg
+|sound2=Zoglin attack2.ogg
+|source=hostile
+|description=When a zoglin attacks something
+|id=mob.zoglin.attack
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Zoglin death1.ogg
+|sound2=Zoglin death2.ogg
+|sound3=Zoglin death3.ogg
+|source=hostile
+|description=When a zoglin dies
+|id=mob.zoglin.death
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Zoglin hurt1.ogg
+|sound2=Zoglin hurt2.ogg
+|sound3=Zoglin hurt3.ogg
+|source=hostile
+|description=When a zoglin is damaged
+|id=mob.zoglin.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Zoglin step1.ogg
+|sound2=Zoglin step2.ogg
+|sound3=Zoglin step3.ogg
+|sound4=Zoglin step4.ogg
+|sound5=Zoglin step5.ogg
+|source=hostile
+|description=While a zoglin is walking
+|id=mob.zoglin.step
+|volume=0.15
+|pitch=1.0 (Baby: 1.5)}}
+| {{SoundLine
+|sound=Hoglin converted1.ogg
+|sound2=Hoglin converted2.ogg
+|source=hostile
+|description=When a hoglin converts into a zoglin via the Overworld or the End
+|id=mob.hoglin.converted_to_zombified
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|spritetype=entity
+|displayname=Zoglin
+|nameid=zoglin
+|entitytags=can_breathe_under_water, ignores_poison_and_regen, inverted_healing_and_harm, undead, wither_friends, zombies, sensitive_to_smite 
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|spritetype=entity
+|displayname=Zoglin
+|nameid=zoglin
+|showentityfamily=y
+|entityfamily=mob,monster,undead,zoglin,zoglin_adult,zoglin_baby
+|id=126
+|foot=1}}
+
+=== Entity data ===
+Zoglins have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|IsBaby}}: 1 or 0 (true/false) - true if the zoglin is a baby. May not exist.
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|Monster Hunter;Monsters Hunted;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w14a|[[File:Zoglin.png|32px]] [[File:Baby Zoglin.png|22px]] Added zoglins.}}
+|{{HistoryLine|||dev=20w15a|Zoglins are now [[undead]] [[mob]]s.<ref>{{bug|MC-177102}}</ref>}}
+|{{HistoryLine|||dev=20w18a|An "IsBaby" [[tag]] has been added to allow summoning and correct saving of baby zoglins.}}
+|{{HistoryLine|||dev=20w19a|[[Hoglin]]s now become zoglins when in [[the End]].}}
+|{{HistoryLine|||dev=pre6|Zoglins now have a knockback resistance of 0.6 instead of 0.5.
+|Zoglins now have separate textures for each tusk.}}
+|{{HistoryLine||1.16.2|dev=20w27a|Zoglins can now be [[leash]]ed. However, [[hoglins]] still break their [[leash]] when zombifying.<ref>{{bug|MC-196736}}</ref>}}
+|{{HistoryLine||1.20.3|dev=23w40a|Zoglins are now part of the {{cd|#can_breathe_under_water}}, {{cd|#undead}} and {{cd|#zombies}} [[tag]]s.}}
+|{{HistoryLine||1.21.2|dev=24w36a|Hoglins no longer break their leash when zombifying.}}
+|{{HistoryLine||26.1|dev=snap8|[[File:Baby Zoglin JE2 BE3.png|22px]] The model and texture of baby zoglins have been changed.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|The left ear texture of baby zoglins is now properly mirrored.}}}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Zoglin BE.png|32px]] [[File:Zoglin BE.png|22px]] Added zoglins.
+|Zoglins currently use the same [[sound]]s as normal [[pig]]s.}}
+|{{HistoryLine|||dev=beta 1.16.0.63|Zoglins now have knockback resistance.}}
+|{{HistoryLine||1.16.20|dev=beta 1.16.20.50|Zoglins now use their unique sounds.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Zoglins now get healed from harming potions and get damaged from the healing ones.|Baby zoglins now have drops after being killed by the player.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.55|[[File:Baby Zoglin BE2.png|30px]] Baby zoglins now have bigger heads to match Java Edition.}}
+|{{HistoryLine||1.18.20|dev=Preview 1.18.20.28|Baby zoglins now deal slightly less damage on normal mode, from {{hp|1}} to {{hp|0.5}} ({{frac|1|4}} of a heart).}}
+|{{HistoryLine||1.19.30|dev=Preview 1.19.30.21|Zoglins now have the same hitbox size as Java Edition.}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.20|Adult zoglins can no longer ride boats.}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.25|Zoglins no longer spawn in Peaceful difficulty.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.20.21|Zoglins now make angry sounds when chasing a mob.<ref>{{bug|MCPE-95523|||F}}</ref>}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.21|The zoglins' speed when chasing a mob has been decreased, to match ''Java Edition''.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.24|[[File:Baby Zoglin JE2 BE3.png|22px]] The model and texture of baby zoglins have been changed.}}
+}}
+
+== Trivia ==
+* The zoglin's behavior resembles a [[vindicator]] named "Johnny".
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Zoglin attacking.gif|A zoglin attacking.
+Baby Zoglin attacking.gif|A baby zoglin attacking before [[Tiny Takeover]].
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:1.16.2-nether-pig-like-mobs.png|All of the [[Pig (disambiguation)|pig-like]] mobs in the 1.16 [[Nether Update]].
+File:Zoglinuncropped.png|A zoglin in the Overworld.
+File:Zoglinattackingarmourstand.png|Zoglin attacking an [[armor stand]].
+File:Noor vs. zoglin.jpg|A zoglin fighting [[Noor]]
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Zoglin (texture).png|Zoglin texture file.
+Baby Zoglin (texture).png|Baby zoglin texture file.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+[[Category:Hostile mobs]]
+[[Category:Undead mobs]]
+[[Category:Monster mobs]]
+[[Category:Nether mobs]]
+
+[[de:Zoglin]]
+[[es:Zoglin]]
+[[fr:Zoglin]]
+[[it:Zoglin]]
+[[ja:ゾグリン]]
+[[ko:조글린]]
+[[lzh:屍化獷豕]]
+[[pl:Zoglin]]
+[[pt:Zoglin]]
+[[ru:Зоглин]]
+[[th:ซอกลิน]]
+[[zh:僵尸疣猪兽]]

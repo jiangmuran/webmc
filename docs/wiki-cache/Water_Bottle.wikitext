@@ -1,0 +1,304 @@
+{{Infobox item
+| title = Water Bottle
+| group = Bottle
+| 1-1 = Water Bottle.png
+| group2 = Splash Bottle
+| 2-1 = Splash Water Bottle.png
+| group3 = Lingering Bottle
+| 3-1 = Lingering Water Bottle.png
+| invimage = Water Bottle
+| invimage2 = Splash Water Bottle
+| invimage3 = Lingering Water Bottle
+| consumptiontime = {{convert|32|ticks|seconds}}
+| alwaysconsumable = Yes
+| renewable = Yes
+| stackable = No
+}}
+A '''water bottle''' is a [[glass bottle]] filled with [[water]]. It can be {{Control|used|text=emptied}} onto [[dirt]] to convert it to [[mud]], and is a required base ingredient to [[brew]] any [[potion]].
+
+'''[[Splash Potion|Splash water bottles]]''' and '''[[Lingering Potion|lingering water bottles]]''' are {{Control|throw}}able variants obtained via brewing.
+
+== Obtaining ==
+=== Glass bottle ===
+Using a [[glass bottle]] on a [[water]] source returns a water bottle. This can be automated using a [[dispenser]].
+
+Using a glass bottle on a water-filled [[cauldron]] also returns a water bottle, decreasing the water level in the cauldron by one level. This does not work with a dispenser.
+
+=== Bartering ===
+When given a [[gold ingot]], [[piglin]]s have a {{frac|10|469}} (~2.13%) chance to [[barter]] a water bottle.
+
+=== Fishing ===
+Water bottles can be fished up as junk items.
+
+== Usage ==
+===Base potions===
+Water bottle is a base for multiple potions. Drinking it has no effect.
+{{Brewing
+|head = 1
+|Nether Wart
+|base = Water Bottle
+|Awkward Potion
+|showvariants=1
+}}
+{{Brewing
+|Fermented Spider Eye
+|base = Water Bottle
+|Potion of Weakness
+|showvariants=1
+}}
+{{Brewing
+|Redstone Dust; Blaze Rod; Stone; Slime Block; Cobweb; Magma Cream; Rabbit's Foot; Sugar; Glistering Melon Slice; Spider Eye; Ghast Tear; Blaze Powder
+|base = Water Bottle
+|Mundane Potion
+|showvariants=1
+}}
+{{Brewing
+|Glowstone Dust
+|base = Water Bottle
+|Thick Potion
+|showvariants=1
+|foot=1
+}}
+
+=== Mud conversion ===
+{{control|Using}} a water bottle, splash water bottle, or lingering water bottle on [[dirt]], [[coarse dirt]], or [[rooted dirt]] converts it into [[mud]]. This process can be automated with a [[dispenser]]. When the regular, splash, or lingering water bottle is used, it leaves a [[glass bottle]] in its inventory slot.<ref>{{Bug|MC-259337}}</ref><ref>{{Bug|MCPE-156390}}</ref> Throwing splash and lingering water bottles does not convert the dirt into mud, and does not leave a glass bottle behind.
+
+=== Filling cauldron ===
+A water bottle adds 1 water level to a cauldron.
+
+=== Splash and lingering water bottles ===
+Splash water bottles have no effect on almost all entities, but they extinguish fire in the block hit and the four blocks horizontally surrounding it.
+
+A splash water bottle deals {{hp|1}} damage to [[endermen]], [[striders]], [[snow golems]], and [[blazes]]. Splash and lingering water bottles will also restore 1800 game ticks (90 seconds) of air to an [[axolotl]]. Splash water bottles can extinguish burning entities.
+
+In ''Java Edition'', the lingering water bottle creates no effect cloud, while in ''Bedrock Edition'' it creates an effect cloud that extinguishes burning entities that walk into it.
+{{Brewing
+|head = 1
+|Gunpowder
+|base = Water Bottle
+|Splash Water Bottle
+|name = Splash Water Bottle
+}}
+{{Brewing
+|Dragon's Breath
+|base = Splash Water Bottle
+|Lingering Water Bottle
+|name = Lingering Water Bottle
+|ingredients = [[Dragon's Breath]] +<br> '''Splash Water Bottle'''
+|foot=1
+}}
+
+=== Crafting ingredient ===
+{{Crafting
+|head = 1
+|ignoreusage = 1
+|showname = 1
+|name = [[Arrow of Splashing]]
+|showdescription = 1
+|description = {{only|java}}
+|ingredients = [[Arrow]] +<br>'''Lingering Water Bottle'''
+|A1 = Arrow
+|A2 = Arrow
+|A3 = Arrow
+|B1 = Arrow
+|B2 = Lingering Water Bottle
+|B3 = Arrow
+|C1 = Arrow
+|C2 = Arrow
+|C3 = Arrow
+|Output = Arrow of Splashing, 8
+|foot = 1
+}}
+
+=== Trading ===
+[[Wandering trader]]s occasionally purchase a water bottle for a single [[emerald]].
+{{Trade uses|Water Bottle}}
+
+== Sounds ==
+{{Main|Potion#Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition = java
+|showforms = y
+|generatetranslationkeys = y
+|displayname = Water Bottle
+|spritetype = item
+|nameid = potion
+|form = item
+|translationkey = item.minecraft.potion.effect.water
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Splash Water Bottle
+|spritetype=item
+|nameid=splash_potion
+|form=item
+|translationkey=item.minecraft.splash_potion.effect.water
+}}
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Water Bottle
+|spritetype=item
+|nameid=lingering_potion
+|form=item
+|translationkey=item.minecraft.lingering_potion.effect.awkward
+|foot=1
+}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition = bedrock
+|shownumericids = y
+|showforms = y
+|notshowbeitemforms = y
+|generatetranslationkeys = y
+|displayname = Water Bottle
+|spritetype = item
+|nameid = potion
+|id = 426
+|form = item
+|translationkey = potion.emptyPotion.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Splash Water Bottle
+|spritetype=item
+|nameid=splash_potion
+|id=561
+|form=item
+|translationkey=potion.emptyPotion.splash.name
+}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Lingering Water Bottle
+|spritetype=item
+|nameid=lingering_potion
+|id=562
+|form=item
+|translationkey=potion.emptyPotion.linger.name
+|foot=1
+}}
+
+
+=== Metadata ===
+{{IN|bedrock}}:
+{| class = wikitable
+! Potion !! Regular
+|-|
+|{{ItemSprite|Water Bottle}} Water Bottle || 0
+|}
+
+=== Item data ===
+{{see also|Potion#Item data}}
+{{JE}}:
+{{see also|Data component format}}
+Normal potions use a "potion" tag inside "potion_contents" component to indicate the potion type.
+{| class=wikitable
+!Potion
+!Regular
+|-|
+| Water Bottle || <code>water</code>
+|}
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== Advancements ==
+{{load advancements|Husbandry;Local Brewery}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|Added water bottles.}}
+|{{HistoryLine||link=http://www.reddit.com/r/Minecraft/comments/lbrqq/water_balloons/c2rey4s?context=3|Oct 14, 2011|[[Jeb]] had commented that while splash water bottles should logically harm [[endermen]] and [[blazes]], its coding would be more difficult to implement than is worthwhile.}}
+|{{HistoryLine||1.3.1|dev=12w21b|[[File:Water Bottle JE1 BE1.png|32px]] Water bottles have been added to the [[Creative inventory]].}}
+|{{HistoryLine||1.7.2|dev=13w36a|Water bottles can now be obtained as one of the "junk" [[items]] from [[fishing]].}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Splash Water Bottle JE1 BE1.png|32px]] Added splash water bottles.}}
+|{{HistoryLine|||dev=15w33a|[[File:Lingering Water Bottle JE1 BE1.png|32px]] Added lingering water bottle.}}
+|{{HistoryLine|||dev=15w34a|Splash and lingering water bottles now just extinguish fire, without placing flowing [[water]].}}
+|{{HistoryLine||1.11|dev=16w33a|A water bottle is now able to add 1 water level to a cauldron.}}
+|{{HistoryLine|||dev=16w35a|Splash and lingering water bottles now deal {{hp|1}} damage to [[endermen]] and [[blazes]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Water Bottle JE2 BE2.png|32px]] [[File:Splash Water Bottle JE2 BE2.png|32px]] [[File:Lingering Water Bottle JE2 BE2.png|32px]] Changed the textures of water bottle.}}
+|{{HistoryLine|||dev=19w08a|Splash and lingering water bottles now extinguish lit [[campfire]]s.}}
+|{{HistoryLine||1.14.3|dev=pre3|Splash and lingering water bottles now inflict [[knockback (mechanic)|knockback]] away from their owner when damaging blazes.
+|Damage caused by splash and lingering water bottles now counts as being caused by the player who threw it.<ref>{{bug|MC-110004}}</ref>
+|Splash and lingering water bottles no longer deal damage to endermen.<ref>{{bug|MC-166423}}</ref>}}
+|{{HistoryLine||1.16|dev=pre1|Splash water bottles now deal {{hp|1}} [[damage]] to [[snow golems]] and [[striders]].<ref>{{bug|MC-106968}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Splash and lingering water bottles now extinguish lit [[candle]]s.}}
+|{{HistoryLine|||dev=21w15a|Splash and lingering water bottles now give [[axolotl]]s one and a half minutes of moisture when they are thrown at them.}}
+|{{HistoryLine|||dev=21w20a|Splash and lingering water bottles now extinguish lit [[cake]]s with candles.<ref>{{bug|MC-222116}}</ref>}}
+|{{HistoryLine||1.18|dev=21w37a|Endermen now take damage when hit by a splash or lingering water bottle again.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Water bottles can now be obtained through [[bartering]].}}
+|{{HistoryLine||1.19|dev=22w11a|Water bottles, splash water bottles and lingering water bottles can now be used on [[dirt]], [[coarse dirt]], or [[rooted dirt]] to turn it into [[mud]].}}
+|{{HistoryLine||1.19.3|dev=22w43a|Splash water bottles can now extinguish burning entities.<ref>{{bug|MC-189911|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|exp=Villager Trade Rebalance|dev=23w31a|[[Wandering trader]]s now have a chance to [[trading|buy]] a water bottle.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Fire being doused by splash water bottles now emits a <code>block_destroy</code> [[vibration]] of frequency <code>12</code>.}}
+|{{HistoryLine||1.20.5|dev=24w09a|[[File:Splash Water Bottle JE2 BE2.png|32px]] Splash uncraftable potions now use the water bottle color instead of their own distinct color.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Water Bottle JE1 BE1.png|32px]] [[File:Splash Water Bottle JE1 BE1.png|32px]] Added water bottle with its splash variant.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Splash water bottles are now able to extinguish [[fire]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Splash water bottles now deal {{hp|1}} [[damage]] to [[endermen]] and [[blazes]].
+|[[File:Lingering Water Bottle JE1 BE1.png|32px]] Added lingering water bottle.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Water Bottle BE2.png|32px]] [[File:Splash Water Bottle BE2.png|32px]] [[File:Lingering Water Bottle BE2.png|32px]] Changed the textures for water bottles.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Water bottles can now be obtained through [[bartering]].}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Water bottles can now be used on [[dirt]], [[coarse dirt]], or [[rooted dirt]] to turn it into [[mud]].}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Water Bottle BE3.png|32px]] [[File:Splash Water Bottle BE3.png|32px]] [[File:Lingering Water Bottle BE3.png|32px]] Changed the textures for water bottles.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|ps4=1.00|psvita=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Water Bottle JE1 BE1.png|32px]] Added water bottle.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Splash Water Bottle JE1 BE1.png|32px]] [[File:Lingering Water Bottle JE1 BE1.png|32px]] Added splash and lingering water bottles.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Splash and lingering water bottles now deal {{hp|1}} [[damage]] to [[endermen]] and [[blaze]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|ps4=1.90|psvita=none|wiiu=none|switch=none|[[File:Water Bottle JE2 BE2.png|32px]] [[File:Splash Water Bottle JE2 BE2.png|32px]] [[File:Lingering Water Bottle JE2 BE2.png|32px]] Changed textures of water bottle.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Water Bottle JE1 BE1.png|32px]] [[File:Splash Water Bottle JE1 BE1.png|32px]] Added water bottle with its splash variant.}}
+|{{HistoryLine||1.7.10|[[File:Lingering Water Bottle JE1 BE1.png|32px]] Added lingering water bottle.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Mojang images ===
+<gallery>
+File:Ti-waterbottle-header.jpg|[[Alex]] holding a water bottle on a banner for [[Taking Inventory]].
+</gallery>
+
+== References ==
+<references />
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox brewing}}
+{{Navbox items|Utilities}}
+
+[[fr:Fiole d'eau]]
+[[pt:Frasco de Água]]
+[[zh:水瓶]]

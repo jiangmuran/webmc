@@ -1,0 +1,120 @@
+{{Infobox structure
+| image1 = Underwater magma.png
+| biome = Any [[Overworld]] biomes
+| blocks =
+* {{BlockLink|Magma block}}
+| canspawn=No
+}}
+
+'''Underwater magma''' is a [[feature]] found underwater in the Overworld.
+
+== Generation ==
+An underwater magma is a feature made entirely of [[magma block]]s. It is up to 3×3×3 in size. It can be found at the underwater floor in any [[Overworld]] biome.
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=magma-block
+|spritetype=block
+|nameid=underwater_magma
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=magma-block
+|spritetype=block
+|nameid=underwater_magma
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=magma-block
+|spritetype=block
+|nameid=underwater_magma_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=magma-block
+|spritetype=block
+|nameid=underwater_magma_snap_to_surface_feature
+|foot=1}}
+which is used in:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=magma-block
+|spritetype=block
+|nameid=underwater_magma_underground_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+**{{nbt|int|floor_search_range}} Value between 0 and 512 (inclusive).
+**{{nbt|int|placement_radius_around_floor}} Value between 0 and 64 (inclusive).
+**{{nbt|float|placement_probability_per_valid_position}} Value between 0.0 and 1.0 (inclusive).
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:underwater_magma",
+  "config": {
+    "floor_search_range": 5,
+    "placement_probability_per_valid_position": 0.5,
+    "placement_radius_around_floor": 1
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w06a|Added underwater magma, which generates at the bottom of underground bodies of water.}}
+|{{HistoryLine||1.18|dev=experimental snapshot 6|Underwater magmas more frequently generate in underwater caves.}}
+|{{HistoryLine|||dev=21w40a|The frequency of underwater magma generation has been slightly increased.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.22|Added underwater magma.<ref>{{bug|MCPE-141376||[Experimental] Magma blocks doesn't generate at the bottom of the underwater cave|Fixed}}</ref>}}
+}}
+
+==Issues==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+Group of underwater magma.png|Two patches of underwater magma in a flooded cave.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[es:Magma acuático]]
+[[fr:Magma sous-marin]]
+[[ja:水中のマグマ]]
+[[pt:Magma subaquático]]
+[[ru:Подводная магма]]
+[[th:แม็กม่าใต้น้ำ]]
+[[uk:Підводна магма]]
+[[zh:水下岩浆块]]

@@ -1,0 +1,308 @@
+{{Distinguish|Enchanted Book}}
+{{Infobox item
+| title = Written Book
+| image = Written Book.gif
+| renewable = Yes
+| stackable = Yes (16)
+}}
+A '''written book''' is a [[book and quill]] that has been signed, which prevents its text from being edited and allows copies of it to be [[crafted]]. It can also be displayed on a [[lectern]].
+
+== Obtaining ==
+
+=== Signing a book and quill ===
+Written books can be obtained by signing a [[book and quill]]. After it has been signed, it cannot be edited again. The label does not say "Written Book", but whatever the [[player]] titles it. The title appears on the top line of the label, and "by <''player''>" (the player's username) on the bottom. {{IN|bedrock}}, this is customizable without [[commands]].
+
+=== Copying ===
+A signed written book can be be copied using a [[crafting table]]. Books have four generations: "Original", "Copy of Original", "Copy of Copy", and "Tattered". Only books of the generations "Original" and "Copy of Original" may be copied, creating the "Copy of Original" and "Copy of Copy" generations respectively. Books of the generation "Copy of Copy" may not be copied. The "Tattered" generation is unused in normal gameplay.
+
+{| class="wikitable"
+|-
+! Source<br>Generation !! Copiable? !! Outcome<br>Generation
+|-
+| Original || {{tc|Yes}} || Copy of Original
+|-
+| Copy of Original || {{tc|Yes}} || Copy of Copy
+|-
+| Copy of Copy || {{tc|No}} || {{tc|N/A}}
+|-
+| Tattered || {{tc|No}} || {{tc|N/A}}
+|}
+
+{{crafting
+|name=Written Book
+|showdescription=1
+|;;;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill
+|;;;;Book and Quill;Book and Quill;Book and Quill;Book and Quill
+|;;;;;Book and Quill;Book and Quill;Book and Quill
+|Book and Quill
+|Written Book
+|;;;;;;Book and Quill;Book and Quill
+|;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill
+|;;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill;Book and Quill
+|;;;;;;;Book and Quill
+|Output= Written Book; Written Book,2; Written Book,3; Written Book,4; Written Book,5; Written Book,6; Written Book,7; Written Book,8
+|description=The input written book is not consumed.<br>The new copies are "Copy of Original" or "Copy of Copy", depending on whether the input written book is "Original" or "Copy of Original".<br>Copies of copies cannot be copied.<br>Copied books of the same generation ("Original", "Copy of Original", "Copy of Copy", or "Tattered") stack.
+|type=Miscellaneous
+}}
+
+== Usage ==
+[[File:Written book GUI.png|thumb|Written book GUI]]
+Written books can be opened by pressing the {{control|use}} control (or holding down on the touchscreen {{in|bedrock}}), and display a GUI allowing the player to read it or turn the page.
+
+The contents of a book are an extra set of data attached to the item. This means that when a book is destroyed, its contents are lost with it.
+
+=== Lecterns ===
+Written books can be placed on an empty [[lectern]].
+
+The lectern then emits a redstone signal depending on the displayed page in the book. On the last page, the lectern emits a signal strength of 15.
+
+=== Chiseled bookshelf ===
+{{control|Use|text=Using}} the [[chiseled bookshelf]] while having a written book in the main hand puts the book inside the chiseled bookshelf.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|subtitle=Page rustles
+|source=ui
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|translationkey=subtitles.item.book.page_turn
+|volume=2.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|subtitle=Page rustles
+|source=block
+|description=When the page of a book is turned on a lectern
+|id=item.book.page_turn
+|translationkey=subtitles.item.book.page_turn
+|volume=2.0
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|subtitle=Book thumps
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|translationkey=subtitles.item.book.put
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|subtitle=Book placed
+|source=block
+|description=When a written book is placed in a chiseled bookshelf
+|id=block.chiseled_bookshelf.insert
+|translationkey=subtitles.chiseled_bookshelf.insert
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.85, or 1.1 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|subtitle=Book taken
+|source=block
+|description=When a written book is removed from a chiseled bookshelf
+|id=block.chiseled_bookshelf.pickup
+|translationkey=subtitles.chiseled_bookshelf.take
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Page turn1.ogg
+|sound2=Page turn2.ogg
+|sound3=Page turn3.ogg
+|source=sound
+|description=When the page of a book is turned
+|id=item.book.page_turn
+|volume=2.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Book thump1.ogg
+|sound2=Book thump2.ogg
+|source=block
+|description=When a book is placed on a lectern
+|id=item.book.put
+|volume=4.8
+|pitch=1.0}}
+| {{SoundLine
+|type=bedrock
+|sound=Chiseled bookshelf insert1.ogg
+|sound2=Chiseled bookshelf insert2.ogg
+|sound3=Chiseled bookshelf insert3.ogg
+|sound4=Chiseled bookshelf insert4.ogg
+|source=block
+|description=When a written book is placed in a chiseled bookshelf
+|id=insert.chiseled_bookshelf
+|volume=0.8
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.85, or 1.1 for each sound</ref>}}
+| {{SoundLine
+|sound=Chiseled bookshelf pickup1.ogg
+|sound2=Chiseled bookshelf pickup2.ogg
+|sound3=Chiseled bookshelf pickup3.ogg
+|source=block
+|description=When a written book is removed from a chiseled bookshelf
+|id=pickup.chiseled_bookshelf
+|volume=0.8
+| pitch = ''varies'' <ref group=sound>Can be 1.0, 0.8, or 1.1 for each sound</ref>
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Written Book
+|spritetype=item
+|nameid=written_book
+|itemtags=bookshelf_books, lectern_books
+|form=item
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|showitemtags=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Written Book
+|spritetype=item
+|nameid=written_book
+|id=511
+|itemtags=minecraft:bookshelf_books, minecraft:lectern_books
+|form=item
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/written_book_content}}
+</div>
+
+{{BE}}:
+{{see also|Bedrock Edition level format/Item format}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w17a|[[File:Written Book JE1 BE1.png|32px]] Added written books.}}
+|{{HistoryLine|||dev=12w21a|Written books can now be [[trading|sold]] to librarian [[villager]]s, at 1 written book for 1 [[emerald]].}}
+|{{HistoryLine||1.7.2|dev=13w36a|Written books can now be cloned the same way [[map]]s can, but by using [[book and quill|books and quills]] instead of Empty Maps. Multiple copies of the same written book can be cloned by putting more book and quills in the crafting grid. 
+|Written books can now be stacked (up to 16 per stack).}}
+|{{HistoryLine||1.8|dev=14w02a|[[Trading]] has been changed: librarian [[villager]]s now [[trading|buy]] 2 written books for 1 [[emerald]].}}
+|{{HistoryLine|||dev=14w05a|Copying written books now marks them as "Copy of Original" or "Copy of Copy". The copying status of a book is denoted in a separate line in the tooltip, beneath the author's name. Copies of copies cannot be copied.}}
+|{{HistoryLine||1.9|dev=15w33c|A written book titled "Work in Progress" now generates within a [[hopper]] as a part of the [[end ship]] in the [[end cities]]. It reads: "We will have something else here soon..." and is signed by [[Searge]].}}
+|{{HistoryLine|||dev=15w41a|End ships no longer contain a written book.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Written Book JE2 BE2.png|32px]] The texture of written books has been changed.}}
+|{{HistoryLine|||dev=19w02a|Written books can now be held on [[lectern]]s.}}
+|{{HistoryLine|||dev=19w11a|Librarian [[villager]]s no longer [[trading|buy]] written books.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|Written books can now interact with [[chiseled bookshelves]].}}
+|{{HistoryLine||1.20.5|dev=pre1|The page limit of written books has now been removed.}}
+|{{HistoryLine||1.21.6|dev=pre3|The turn page sound is now controlled by the "UI" source.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Written Book JE1 BE1.png|32px]] Added written books.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Written Book JE2 BE2.png|32px]] The texture of written books has been changed.
+|Written books can now be held on [[lectern]]s.}}
+|{{HistoryLine||?|Written Books are no longer obtainable with the [[commands/give|/give Command]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|wiiu=Patch 1|switch=1.0.1|[[File:Written Book JE1 BE1.png|32px]] Added written books.
+|Written books can be [[trading|sold]] to librarian [[villager]]s, at 1 written book for 1 [[emerald]].{{verify}}}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Written books can now be cloned the same way [[map]]s can, but by using [[book and quill|books and quills]] instead of Empty Maps. Multiple copies of the same written book can be cloned by putting more book and quills in the crafting grid.{{check version}}|Written books can now be stacked (up to 16 per stack).{{check version}}|[[Trading]] has been changed: librarian [[villager]]s now [[trading|buy]] 2 written books for 1 [[emerald]].|Copying written books marks them as "Copy of Original" or "Copy of Copy". The copying status of a book is denoted in a separate line in the tooltip, beneath the author's name. Copies of copies cannot be copied.{{check version}}}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Written Book JE2 BE2.png|32px]] The texture of written books has been changed.
+|Written books can now be held on [[lectern]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Librarian [[villager]]s no longer [[trading|buy]] written books.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 387.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*When written books are obtained with [[commands]] (without the correct [[Player.dat format#Written Books|data tag]]), the label shows "Written Book" and has the text "*Invalid book tag*" when opened. The book is signed and cannot be edited without commands.
+*Commands that were added to a written book using serialized JSON objects are executed through the chat system. This means that any command added to a written book can't be longer than 256 characters, which is the maximum chat line limit.
+*Within the April Fools' snapshot [[Java Edition 20w14∞]], throwing a written book into a lit [[Nether Portal (block)|nether portal]] creates a portal to one of the 2,147,483,645 new dimensions.
+
+== Gallery ==
+=== Textures ===
+<gallery class=pixel-image>
+Book Background (JE).png|Java Edition book background texture.
+Book Background (BE).png|Bedrock Edition book background texture.
+Book Arrowleft (JE).png|Java Edition left arrow texture.
+Book Arrowright (JE).png|Java Edition right arrow texture.
+Book Arrowleft (BE).png|Bedrock Edition left arrow texture.
+Book Arrowright (BE).png|Bedrock Edition Right arrow texture.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Written Book tooltip.png|A signed book.
+File:Test by Dinnerbone.png|Copying a signed book.
+File:JSON Book.png|First image of a book using JSON text.
+File:No NBT written book GUI.png|A no NBT written book using commands.
+</gallery>
+
+== See also ==
+*[[Book]]
+*[[Bookshelf]]
+*[[Book and Quill]]
+*[[Formatting codes|Formatting Codes]]
+
+== Navigation ==
+{{Navbox items|utilities}}
+
+[[cs:Napsaná kniha]]
+[[es:Libro escrito]]
+[[fr:Livre écrit]]
+[[hu:Megírt könyv]]
+[[it:Libro]]
+[[ja:記入済みの本]]
+[[ko:글이 쓰인 책]]
+[[nl:Geschreven boek]]
+[[pl:Zapisana książka]]
+[[pt:Livro escrito]]
+[[ru:Написанная книга]]
+[[uk:Написана книга]]
+[[zh:成书]]

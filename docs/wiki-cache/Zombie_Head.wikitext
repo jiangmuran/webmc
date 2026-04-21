@@ -1,0 +1,309 @@
+{{Infobox block
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = {{jebe|No|Yes}}
+| rarity = Uncommon
+}}
+A '''zombie head''' is the [[head]] of a [[zombie]] in the form of a [[block]]. It can only be obtained by killing a zombie using a [[charged creeper]]'s [[explosion]].
+
+== Obtaining ==
+=== Breaking ===
+No tool can accelerate the breaking process of zombie head.<ref>{{bug|MC-192905||Heads & Skulls have no assigned tool}}</ref>
+{{breaking row|horizontal=1|Zombie Head}}
+Zombie head drops itself when it's destroyed.
+When destroyed by an [[explosion]], the zombie head always drops as an item.
+
+=== Mob loot ===
+Zombie heads are always dropped by a [[zombie]] if it dies due to a [[charged creeper]]'s explosion. {{IN|bedrock}}, if multiple mobs are killed by the same charged creeper, all of them drop their heads, however {{in|java}} only one mob selected at random drops its head.<ref>{{bug|MC-63534|||WAI}}</ref>
+{{Drop sources|Zombie Head}}
+
+== Usage ==
+=== Decoration ===
+Zombie heads can be oriented in 16 different directions on top of a block, and 4 directions on the sides of blocks, similar to [[sign]]s. They can be placed on top of, or beside each other by shift clicking.
+
+=== Wearing ===
+{{See also|#Renders}}
+
+The player can wear zombie heads, similarly to [[carved pumpkin]]s or helmets. This overlays the second layer of the player's [[skin]].
+
+==== Disguise ====
+Wearing a zombie head reduces the detection range for [[zombie]]s to 50% of the normal range. This is similar to (and stacks with) the reductions in detection range from [[sneaking]] and from the [[Invisibility]] status effect.
+
+{{IN|bedrock}}, wearing a zombie head makes the player invisible to other players on a locator [[map]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a zombie head on a player, mob, or armor stand with an empty helmet slot, within the block the dispenser is facing.
+
+=== Crafting ingredient===
+{{Crafting
+  |ignoreusage=1
+  |ingredients=Zombie head +<br>[[Gunpowder]] +<br>Any [[Dye]]
+  |Gunpowder
+  |Zombie Head
+  |Matching Dye
+  |Output= Matching Firework Star
+  |description=Forms Creeper shape
+  |foot=1
+}}
+
+=== Enchantments ===
+Zombie heads can receive the following enchantments, but only through an [[anvil]].
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchanting|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Note blocks ===
+Placing a zombie head above a [[note block]] causes the note block to play the [[zombie]]'s {{cd|ambient}} sound when activated.
+
+The block below the note block does not affect the mob sound it creates.
+
+=== Piston interactivity ===
+Zombie head is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Zombie idle1.ogg
+|sound2=Zombie idle2.ogg
+|sound3=Zombie idle3.ogg
+|subtitle=Zombie groans
+|source=record
+|description=When a zombie head is played using a note block
+|id=block.note_block.imitate.zombie
+|translationkey=subtitles.entity.zombie.ambient
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a zombie head is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+<!--volumes and pitches seem to be approximately v=0.9 p=0.84, but those values are approximate and are not in the files. They are probably inside of the code.-->
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Zombie idle1.ogg
+|sound2=Zombie idle2.ogg
+|sound3=Zombie idle3.ogg
+|source=record
+|description=When a zombie head is played using a note block
+|id=note.zombie
+|pitch=0.84 <ref group=sound name=pitch>Actually equal to <math>\frac{1}{\sqrt[4]{2}}</math>, which is about 0.8409</ref>}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a zombie head is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Zombie Head
+|spritetype=block
+|nameid=zombie_head
+|itemtags=skulls}}
+{{ID table
+|displayname=Zombie Wall Head
+|spritetype=block
+|nameid=zombie_wall_head
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=zombie-head
+|spritetype=block
+|nameid=skull
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Zombie Head
+|spritetype=block
+|nameid=zombie_head
+|aliasid=skull / 2
+|id=-966
+|translationkey=item.skull.zombie.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=zombie-head
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Head|block states}}
+
+=== Block data ===
+A zombie head has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Head|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Camouflage}}
+
+== History ==
+{{See asset history|type=block}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w36a|[[File:Zombie Head (item) JE1.png|32px]] Added zombie heads, obtainable only from the [[Creative inventory]].}}
+|{{HistoryLine|||dev=12w37a|[[File:Zombie Head (item) JE1 BE1.png|32px]] Changed item textures.}}
+|{{HistoryLine||1.4.6|dev=12w49a|A zombie head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||1.8|dev=14w29a|Zombie heads now display a cracking animation.}}
+|{{HistoryLine|||dev=14w30a|[[File:Zombie Head (item) JE2.png|32px]] Zombie heads in [[inventories]] and held by mobs/players now display as [[block]]s.
+|Zombie heads are now displayed on the armor layer. Previously, the zombie head replaced the mob/player's head texture; the hat layer appeared over the zombie head.
+|Zombie heads are now available in [[Survival]]. The player can obtain them by killing a [[zombie]] with a charged [[creeper]].}}
+|{{HistoryLine|||dev=14w30b|A single charged creeper explosion no longer yields more than one mob [[head]]. The mob head that drops is chosen randomly.}}
+|{{HistoryLine||1.9|dev=15w31a|Zombie heads now appear larger in the [[inventory]].}}
+|{{HistoryLine|||dev=15w32a|Zombie heads can now be worn to reduce detection by zombies by 50%.}}
+|{{HistoryLine|||dev=15w33c|The disguise that is given by zombie heads now reduces detection range to 37.5% of normal.}}
+|{{HistoryLine|||dev=15w36a|The disguise that is given by zombie heads now reduces detection range to 50% of normal again.}}
+|{{HistoryLine|||dev=15w39a|[[Dispenser]]s can now equip zombie heads onto [[player]]s, [[mob]]s and [[armor stand]]s.}}
+|{{HistoryLine|||dev=15w49a|Zombie heads no longer turn red when the player or mob takes damage.<ref>{{bug|MC-85756}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Zombie heads now play a sound when placed.
+|Zombie heads can no longer be placed inside entities.<ref>{{bug|MC-2208}}</ref>}}
+|{{HistoryLine|||dev=18w21a|The rarity of zombie heads has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w03a|Zombie heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.19.4|dev=23w05a|Zombie heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Zombie Head (item) JE1 BE1.png|32px]] Added zombie heads. 
+|The zombie heads use the [[Java]] textures prior to [[14w30a]].}}
+|{{HistoryLine||v0.14.0|dev=build 1|Zombie heads can now be worn as armor.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Zombie heads can now be used to craft [[firework star]]s.}}
+|{{HistoryLine|||dev=beta 1.2.0.11|[[File:Zombie Head (item) BE2.png|32px]] Zombie heads in [[inventories]] and when held by mobs/players now display as [[block]]s.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|Heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of zombie skulls has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Zombie Head (item) JE1 BE1.png|32px]] Added zombie heads to the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|A zombie head can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Zombie Head (item) JE2.png|32px]] Zombie heads in [[inventories]] and held by mobs/players now display as [[block]]s.|Zombie heads are now available in [[Survival]]. The [[player]] can obtain them by killing a [[zombie]] with a charged [[creeper]].}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Zombie heads can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Zombie heads are now held the same way as on ''Java Edition'' in first person.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Zombie Head (item) JE1 BE1.png|32px]] Added zombie heads.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The separate and direct item forms of the <code>skull</code> block ID have been merged and its [[Bedrock Edition data values|data values]] have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Alex wearing Zombie Head.png|[[Alex]] wearing a zombie head.
+File:Ari wearing Zombie Head.png|[[Ari]] wearing a zombie head.
+File:Efe wearing Zombie Head.png|[[Efe]] wearing a zombie head.
+File:Kai wearing Zombie Head.png|[[Kai]] wearing a zombie head.
+File:Makena wearing Zombie Head.png|[[Makena]] wearing a zombie head.
+File:Noor wearing Zombie Head.png|[[Noor]] wearing a zombie head.
+File:Steve wearing Zombie Head.png|[[Player|Steve]] wearing a zombie head.
+File:Sunny wearing Zombie Head.png|[[Sunny]] wearing a zombie head.
+File:Zuri wearing Zombie Head.png|[[Zuri]] wearing a zombie head.
+</gallery>
+
+=== In other media ===
+<gallery>
+Efe Looking at Makena Napping on a Note Block.jpg|[[Efe]] looking at [[Makena]] napping on a Note block.
+Efe Placing a Zombie Head on a Note Block.jpg|Efe placing a zombie head sneakily on the note block.
+Makena Waking up Startled by the Zombie Noise.jpg|Makena waking up startled at the sound of zombies being played on the note block.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox combat|armor}}
+
+[[Category:Utility blocks]]
+[[Category:Createable blocks]]
+[[Category:Block entities]]
+
+[[es:Cabeza#Zombi]]
+[[ko:좀비 머리]]
+[[pt:Cabeça de Zumbi]]
+[[zh:僵尸的头]]

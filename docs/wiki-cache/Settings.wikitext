@@ -1,0 +1,1524 @@
+<templatestyles src=":Minecraft_Wiki/styles.css/editcopy" />
+{{about||the options in {{JE}}|Options|the options related to worlds|Create New World|world options|World Options}}
+{{exclusive|Bedrock|Edu}}
+[[File:Ore UI - Settings Screen Menu "Accessibility" Tab (Bedrock).png|thumb|The Accessibility tab, the first tab shown when opening the settings]]
+''Minecraft's'' user environment can be configured through the '''Settings''' menus. A few additional options can be changed only by editing the [[options.txt]] file manually.
+
+The settings menus can be accessed from both the [[main menu]] and the [[Game Menu|game menu]]. The "Storage" and "Language" settings tabs are not available from the pause menu, and some options are only changeable in the main menu or the pause menu. For the settings tabs related to game settings in the pause menu, see {{Slink|World Options|Settings 2}}. The "Global Resources" tab is not accessible from the ''Editor''.
+
+The Subscriptions, Storage, all pack settings, and Creator settings tabs still use their old UI and are shown in separate screens. The settings in the game menu on [[Realms]] and in the ''Editor'' use the old UI for all tabs.
+
+== Settings ==
+
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Accessibility" Icon.png|40px|left|class=pixel-image]] Accessibility</h3>
+''Minecraft is for everyone, including you''
+<div class="collapsible-content">
+----
+==== Text to speech ====
+''Adjust how you hear on-screen text''
+----
+; Text To Speech with Device Settings [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Use your device for text to speech''
+: Toggles the system [[Narrator|text-to-speech]] settings. Only available on devices with text-to-speech support.
+----
+; Text To Speech For UI [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Hear menu options and other UI elements''
+: Toggles text to speech for text shown in GUIs and [[menu screen]]s, certain devices do not support this.
+----
+; Text To Speech For Chat [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Hear chat messages with text to speech''
+: Toggles text to speech for [[chat]] messages that appear on the [[HUD]], certain devices do not support this.
+----
+; Text to speech <div class="tright"; style="font-family:Minecraft">100%</div>
+''The game's text to speech voice''
+: Adjusts the volume of text to speech.
+----
+
+==== Gameplay ====
+''Change accessibility options for in-game visuals and camera movements''
+----
+; Closed Captions{{upcoming}} [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Subtitles for all the sounds in Minecraft''
+: Enables [[closed captions]], an accessibility feature which describes all [[sound]]s on the [[HUD]].
+----
+; Hide your sounds{{upcoming}} [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Less captions for sounds you make, like "Burp" and "Footsteps"''
+: Hides closed captions for sounds produced by the [[player]] (not other players), such as eating and walking. Only available if "Closed Captions" is enabled.
+----
+; Hide weather and ambient sounds{{upcoming}} [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Less captions for vibe sounds like "Rain falls" and "Eerie noise"''
+: Hides closed captions for sounds of the "Weather" and "Environmental audio" categories. Only available if "Closed Captions" is enabled.
+----
+; Location of closed captions{{upcoming}} <div class="tright"; style="font-family:Minecraft">Top right</div>
+''Decide where captions show up on screen''
+: Toggles to show closed captions in the top-right of the HUD, on the same height of the [[chat]], or on the bottom-right. Only available if "Closed Captions" is enabled.
+----
+; Closed caption duration{{upcoming}} <div class="tright"; style="font-family:Minecraft">1.5 seconds</div>
+''Choose how long closed captions remain visible''
+: Adjusts the time a subtitle is shown for one sound, between 1 and 4 seconds with steps of 0.5. Only available if "Closed Captions" is enabled.
+----
+; Camera Shake [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Set up camera shake using macros or chat''
+: Whether the camera can visually shake using {{cmd|camerashake}} or creator features.
+----
+; Hide Sky Flashes [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Prevents environmental effects in the End from making the sky flash''
+: Toggles the occasional [[End sky]] flashes when playing with [[Vibrant Visuals]].
+----
+; Block dithering [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Enables an effect that fades out certain blocks near the camera, such as sugar cane''
+: Toggles [[block]] dithering, which makes certain transparent blocks including [[glass pane]]s and [[sugar cane]] transparent inside the camera.
+----
+; Player and mob dithering [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Enables an effect that fades out players and mobs near the player camera''
+: Toggles dithering for all [[mob]]s, including [[player]]s and [[armor stand]]s.
+----
+; Darkness effect strength <div class="tright"; style="font-family:Minecraft">100%</div>
+''How dark the screen gets when affected by some hostile mobs and environmental hazards''
+: Adjusts how dark the screen gets during the [[Darkness]] effect.
+----
+; Glint strength <div class="tright"; style="font-family:Minecraft">75%</div>
+''Shiny glint for enchanted items''
+: Adjusts the transparency of [[enchantment glint]] applied to [[enchanted]] items, written books, lodestone compasses, and some other items.
+----
+; Glint speed <div class="tright"; style="font-family:Minecraft">50%</div>
+''How fast enchanted items sparkle''
+: Adjusts the speed of the enchantment glint animation.
+----
+
+==== User interface ====
+''Set the game's UI to fit your playing style''
+----
+; Action Bar Background Opacity <div class="tright"; style="font-family:Minecraft">60%</div>
+''How much you can see-through the action bar''
+: Adjusts the opacity of the text background from the [[action bar]], often used by [[Marketplace]] packs and some informational messages.
+----
+; Chat Background Opacity <div class="tright"; style="font-family:Minecraft">75%</div>
+''Controls backgrounds for chat messages''
+: Adjusts the opacity of the text background from [[chat]] messages on the [[HUD]], as well as [[closed caption]]s.
+----
+; Text Background Opacity <div class="tright"; style="font-family:Minecraft">60%</div>
+''Controls backgrounds for tooltips and text from the /title command''
+: Adjusts the opacity of the text background from item tooltips above the [[hotbar]], the player's coordinates and days played indicator in the top-left, controller hints, and text displayed with {{cmd|title}}.
+----
+; Chat instructions on join [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Get a reminder on how to open chat when you join a world''
+: When loading into a world or moving between [[dimension]]s, a chat message is sent showing the [[controls]] to open the chat or use [[emote]]s (not on touch controls).
+----
+; Chat message duration <div class="tright"; style="font-family:Minecraft">10 seconds (default)</div>
+''Select how long messages in the chat remain visible''
+: How long messages in the chat remain visible on the HUD. Available options are '''3 seconds''', '''10 seconds''', and '''30 seconds'''.
+----
+; Toast notification duration <div class="tright"; style="font-family:Minecraft">3 seconds (default)</div>
+''Select how long notifications like game invites and marketplace offers remain visible''
+: How long menu [[Toasts|toast]] notifications and messages remain visible. Available options are '''3 seconds''', '''10 seconds''', and '''30 seconds'''.
+----
+; GUI Scale Modifier <div class="tright"; style="font-family:Minecraft">100%</div>
+''Select the size of the HUD and other UI elements to make them easier to use on different devices''
+: Adjusts the scale of the all [[menu screen]]s, [[UI]] elements, and [[GUI]]s. Smaller scales are only available on higher resolutions. Available percentages differ between devices.
+----
+; Extra large new UI [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Increase the size of the UI for clarity and easy reading''
+: Enables an extra large version of the [[Ore UI]] menu interface, locking "UI scale modifier" to 100%.
+----
+; ''Reset to default'' <div class="tright"; style="font-family:Minecraft">Reset</div>
+''Return all accessibility settings and sliders to their original values''
+: Resets all options in this tab to the default state shown here, after confirming a pop-up.
+----
+</div></div>
+
+== Controls ==
+{{main|Controls#Bedrock Edition}}
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Mouse" Icon.png|40px|left|class=pixel-image]] Keyboard & Mouse</h3>
+''Adjust input and mapping options''
+<div class="collapsible-content">
+----
+; Camera sensitivity (mouse) <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when looking around with the mouse''
+: Adjusts the sensitivity of the mouse for camera movement.
+----
+; Spyglass damping <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when using a spyglass''
+: Adjusts the sensitivity of camera movement while using a [[spyglass]].
+----
+; Invert camera Y-axis [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Reverses up and down when looking around. A less common option for keyboard and mouse users, but you do you''
+: Toggles inversion of vertical camera movement with the mouse.
+----
+; Auto jump <div class="tright">Windows, console: [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]<br><br>'''Mobile:'''[[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]</div>
+''Jump up single blocks when moving forward''
+: Enables automatically [[jumping]] when the player walks near a block with a block of air above.
+----
+; Full keyboard mode [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Maps mouse input onto the keyboard''
+: Toggles [[full keyboard gameplay]], which changes default control mapping and allows mapping camera movement to the keyboard.
+----
+; Camera sensitivity (keyboard) <div class="tright"; style="font-family:Minecraft">10</div>
+''Adjust the speed of the camera when looking around with the keyboard''
+: The movement speed of the camera when using full keyboard gameplay, only available with said option enabled.
+----
+; ''Reset settings to default'' <div class="tright"; style="font-family:Minecraft">Restore</div>
+''Restore all the above keyboard & mouse options to their original values''
+: Resets all options in this tab, excluding control mappings, to the default state shown here, after confirming a pop-up.
+----
+
+==== Keyboard & mouse mappings ====
+''Remap any and all keyboard and mouse buttons to play your way''
+: This section contains all configurable keyboard and mouse keybinds, available options and default states differ if "Full keyboard mode" is enabled. By selecting a control, the first input detected next will be assigned as key, unassiging previously mapped controls with that key. If a control uses a custom key, a button shows which resets only that control to its default state. See {{Slink|Controls|Keyboard & Mouse}} for all controls.
+----
+==== Chords ====
+''Keys that are used with 'CTRL + ALT'''
+: Controls for copy [[coordinates]] and copy facing coordinates are used with {{keys|Ctrl+Alt}} and one customizable key.
+----
+==== Macros ====
+''Assign a keyboard input that will run a command when pressing ALT and the bound key''
+: This section contains 11 [[command macros]], each with a customizable hotkey and a [[command]] input. Entering this key with {{keys|Alt}} instantly executes the command in-game.
+----
+; ''Reset to default mapping'' <div class="tright"; style="font-family:Minecraft">Reset</div>
+''Restore all keyboard & mouse button mappings to their original values''
+: Resets all keybinds in this tab to the default state after confirming a pop-up.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Controller" Icon.png|40px|left|class=pixel-image]] Controller</h3>
+''Input options, sensitivity settings and button mapping for controllers.''
+<div class="collapsible-content">
+----
+; Camera Sensitivity <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when looking around with the mouse''
+: Adjusts the sensitivity of the joystick for camera movement.
+----
+; Spyglass damping <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when using a spyglass''
+: Adjusts the sensitivity of camera movement while using a [[spyglass]].
+----
+; Invert camera Y-axis [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Reverses up and down when looking around''
+: Toggles inversion of vertical camera movement with the joystick.
+----
+; Auto jump <div class="tright">Windows, console: [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]<br><br>'''Mobile:'''[[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]</div>
+''Jump up single blocks when moving forward''
+: Enables automatically [[jumping]] when the player walks near a block with a block of air above.
+----
+; Hide Controller Hints [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Removes button prompts from the on-screen UI''
+: Toggles to hide the controller hint messages on the HUD and in menus.
+----
+; Hide Controller Cursor [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Removes the cursor for in-game menus''
+: Toggles the controller cursor feature in [[inventories]].
+----
+; Clear Hotbar [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turns on the option to remove all items from your hotbar while in the inventory menu''
+: Enables the use of a button ( {{xbtn|X}}/{{psbtn|square}} by default) to instantly clear the player's [[hotbar]] while in a GUI.
+----
+; A/B Button Swamp [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Reverses the functions of the A and B buttons''
+: Toggles to swap the position of {{xbtn|A}}/{{xbtn|B}} button ({{psbtn|x}}/{{psbtn|o}} buttons on PlayStation).
+----
+; X/Y Button Swamp [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Reverses the functions of the X and Y buttons''
+: Toggles to swap the position of {{xbtn|X}}/{{xbtn|Y}} button ({{psbtn|square}}/{{psbtn|triangle}} buttons on PlayStation).
+----
+; Controller Cursor Sensitivity <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the cursor in menus''
+: Adjusts the sensitivity of the controller cursor in GUIs.
+----
+; ''Reset settings to default'' <div class="tright"; style="font-family:Minecraft">Restore</div>
+''Restore all the above controller options to their original values''
+: Resets all options in this tab, excluding control mappings, to the default state shown here, after confirming a pop-up.
+----
+==== Button mapping ====
+''Remap any and all controller buttons to play your way''
+: This section contains all configurable controller keybinds. By selecting a control, the first input detected next will be assigned as button, unassiging previously mapped controls with that button. If a control uses a custom button, a button shows which resets only that control to its default state. See {{Slink|Controls|Controller}} for all controls.
+----
+; ''Reset mapping to default'' <div class="tright"; style="font-family:Minecraft">Reset</div>
+''Restore all controller button mappings to their original values''
+: Resets all keybinds in this tab to the default state after confirming a pop-up.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Hand Click" Icon.png|40px|left|class=pixel-image]] Touch</h3>
+''Input options, sensitivity settings and button mapping for touch screens''
+<div class="collapsible-content">
+----
+; ''Customize controls'' <div class="tright"; style="font-family:Minecraft">Customize</div>
+''Change on-screen button size and position to fit your play style''
+: Opens a menu where the position, opacity, and size of individual buttons can be changed. Touch controls can only be customized while loaded into a world.
+----
+; Control mode <div class="tright"; style="font-family:Minecraft">Joystick & tap to interact</div>
+: Allows the touch control mode to be changed. Movement can be changed to either a joystick or a d-pad, and interaction can be changed to either tapping in the world, or split controls with a crosshair. "D-Pad & aim crosshair" control mode is available by selecting "D-Pad & tap to interact" with "Split Controls" enabled.
+;* <span style="font-family:Minecraft">Joystick & tap to interact</span>
+''Drag joystick to move. Drag anywhere else to look around. Tap and hold blocks to interact with them.''
+;* <span style="font-family:Minecraft">D-Pad & tap to interact</span>
+''Tap arrows to move. Drag anywhere else to look around. Tap and hold blocks to interact with them.''
+;* <span style="font-family:Minecraft">Joystick & aim crosshair</span>
+''Drag joystick to move. Drag anywhere else to look around. Aim crosshair and use buttons to interact with blocks.''
+----
+; Show action buttons [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Turns on additional on-screen buttons for advanced play''
+: Toggles whether additional buttons or the touchscreen are used to interact with blocks and items. Only available when the control mode is set to Joystick & aim crosshair.
+----
+; Left-handed inventory access [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Places the inventory on the left of the hotbar, rather than the right. Great for left-handed players.''
+: Mirrors all buttons and objects for touch controls on the HUD.
+----
+; Joystick visibility <div class="tright"; style="font-family:Minecraft">Always visible</div>
+''Choose when you can see the on-screen joystick''
+: Changes the joystick's visibility, either always visible, always hidden, or only visible when being used. Not available when the control mode is set to D-Pad & tap to interact.
+----
+; Invert camera Y-axis [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Reverses up and down when looking around. Some users find this more comfortable''
+: Toggles inversion of vertical camera movement with the touchscreen.
+----
+; Camera sensitivity <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when looking around''
+: Adjusts the sensitivity of the touchscreen for camera movement.
+----
+; Spyglass damping <div class="tright"; style="font-family:Minecraft">50</div>
+''Adjust the speed of the camera when using a spyglass''
+: Adjusts the sensitivity of camera movement while using a [[spyglass]].
+----
+; Pick block<ref group=note>This setting is not available on ''[[Minecraft Education]]''.</ref> [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turns on a feature that quickly allows you to equip any block you can see in the world. Useful after explosions...''
+: Enables a button that allows the player to quickly equip the block being looked at, if possible.
+----
+; Camera perspective button [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turns on an on-screen button which changes the perspective of the camera from first-person to third-person. And back again''
+: Shows a button on the top that cycles trough all three camera perspectives.
+----
+; Auto jump <div class="tright">Windows, console: [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]<br><br>'''Mobile:'''[[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]</div>
+''Jump up single blocks when moving forward''
+: Enables automatically [[jumping]] when the player walks near a block with a block of air above.
+----
+; Easy sprint [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turns on butonless sprinting, allowing you to sprint when the joystick is fully pressed. No buttons required''
+: Enables sprinting by holding the joystick forward. Not available when the control mode is set to D-Pad & tap to interact.
+----
+; Top button size <div class="tright"; style="font-family:Minecraft">Small</div>
+''Select a size for top row buttons on the HUD''
+: Changes the size of the menu, chat, perspective, and emote buttons on the top of the HUD between '''Small''', '''Medium''', and '''Big'''.
+----
+; Sneak button behaviour <div class="tright"; style="font-family:Minecraft">Tap button once</div>
+''Choose your preferred method for crouching''
+: Toggles whether to tap the sneak button once to sneak, or to hold it down to sneak. Not available when the control mode is set to D-Pad & tap to interact.
+----
+; Delayed block breaking (Creative mode only) [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Turns on slower block breaking in creative mode, which can help prevent accidental block breaking''
+: Toggles whether blocks require a longer press to break in [[Creative]] mode. Only available when the control mode is set to Joystick & aim crosshair, and "Show action buttons" is enabled.
+----
+; Vibrate when breaking blocks [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Turns on haptic feedback for mining and other destructive behavior''
+: Toggles device vibration when destroying blocks.
+----
+; Vibrate when splitting items [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Turns on haptic feedback for inventory management''
+: Toggles device vibration when splitting a stack of items in a GUI.
+----
+; Outline selection [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Adds a colored border to blocks you're looking at, to make it easier to see which block is currently targeted''
+: Determines whether blocks are always highlighted by the crosshair, or if they are highlighted only when tapped. Only available when the control mode is set to Joystick & aim crosshair.
+----
+; Touch input for hotbar only [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turns off touch input for everything except the hotbar. Designed to be used alongside a controller''
+: Toggles whether touch controls are disabled and the touchscreen only affects the hotbar or menu screens.
+----
+; Split controls [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+: Toggles to use the touchscreen to interact throughout the screen or use a crosshair and action buttons. Only available when the control mode is set to D-Pad & tap to interact.
+----
+; Swap jump and sneak [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+: Toggles to swap the position of jump and sneak buttons. Only available when the control mode is set to D-Pad & tap to interact.
+----
+; ''Reset to default'' <div class="tright"; style="font-family:Minecraft">Reset</div>
+''Return all touch settings and sliders to their initial values''
+: Resets all options in this tab to the default state shown here, after confirming a pop-up.
+----
+</div></div>
+
+== Social ==
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Navbar_Friends 1" Icon.png|40px|left|class=pixel-image]] Party</h3>
+{{-}}
+<div class="collapsible-content">
+{{in development|bedrock|section=1}}
+These settings apply to [[parties]], a group of ''Minecraft'' players which can be created or joined from the [[friends sidebar|social drawer]] and allows players to quickly join their worlds.
+{| class="wikitable" width="100%" border="1"
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| {{vanchor|Receive party invites from}}
+| Whether party invites are shown from followers and friends or only friends.
+| style="text-align: center; | Everyone
+|-
+| {{vanchor|Who can send party invites in your party}}
+| Whether members can also send party invites.
+| style="text-align: center; | Party leader & members
+|-
+| {{vanchor|Default party privacy}}
+| Changes the default state of the "Party privacy" setting for hosted parties, which can always be changed in a party.
+| style="text-align: center; | Invite only
+|-
+| Privacy & online safety
+| Opens the privacy settings in the Xbox site.
+| 
+|}
+</div></div>
+== General ==
+
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Crafting Table Block" Icon.png|40px|left|class=pixel-image]] General</h3>
+''A bunch of stuff, from network settings to game credits''
+<div class="collapsible-content">
+----
+==== Network settings ====
+''Adjust the online experience on a technical and social level''
+----
+; Allow mobile data for online play [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Use Mobile data for Multiplayer when Wi-Fi is unavailable. This might incur additional data costs''
+: Toggles to allow [[multiplayer]] connections when connected to a mobile network instead of Wi-Fi. When joining an online game with mobile data, an icon is shown on the [[loading screen]]. Only available for mobile devices, cannot be changed in-game.
+----
+; Enable WebSockets [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Connect to a WebSockets server for the setup of external scripts and other automated features''
+----
+; Require Encrypted Websockets [[File:Ore UI - Toggle ON Button Locked (Bedrock).png|55px|right|link=]]
+''Securely encrypt data between WebSockets and Minecraft''
+: Only allows WebSocket connections with encryption. Locked when "Websockets Enabled" is disabled.
+----
+; Automatically update content packs <div class="tright">Windows, console: [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]<br><br>'''Mobile:<div style="font-family:Minecraft">On with Wi-Fi only</div></div>
+''Newly released versions of your packs will be downloaded as soon as they're available''
+: Downloaded [[Marketplace]] packs are automatically updated when an update is available and the player is in the menus. On mobile, there are three available options, offering to only download updates with a Wi-Fi connection or allow downloading using cellular data.
+----
+; Tutorial<ref name="tutorial">Not available for certain players, {{cite bug|MCPE|184669|Tutorial option does not appear sometimes}}</ref> [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Get in-game tips to learn the basics of Minecraft''
+: Toggles the [[tutorial hints]] when playing the first few times in a world. Only available for certain players.
+----
+; ''Restart Tutorial''<ref name="tutorial" /> <div class="tright"; style="font-family:Minecraft">Restart</div>
+''Restarts the tutorial in case you missed something''
+: Resets all tutorial hints and shows all toasts again when playing in a world, when the tutorial has been finished before. Only available for certain players.
+----
+; Only allow trusted skins [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+: Toggle to replace custom imported [[skins]] of other players with default skins.
+----
+; Filter profanity [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Filter out inappropriate language''
+: Toggles the Xbox profanity filter for all player-created text in-game (such as [[chat]]s), replacing inappropriate language with hashes (#). This can only be disabled if the account received confirmation from the Xbox privacy settings.
+----
+; Enable Game Pause [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''A single-player feature that pauses gameplay while the game menu is open''
+: Pauses the game while in the [[pause menu]] in [[singleplayer]]. This option is only available in-game.
+----
+; Show Pause Menu on Focus Lost [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Shows the pause menu when switching to another application''
+: Opens the pause menu when the application loses focus, available on Windows only.
+----
+
+==== Miscellaneous ====
+''We didn't know where else to put these settings''
+----
+; Lower framerate when controller is disconnected [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+: Shows a pop-up on the screen and drastically lowers the FPS the connection to the controller gets lost, if in controller mode. Cannot be toggled in-game.
+----
+; ''Help Center'' <div class="tright"; style="font-family:Minecraft">Open</div>
+''Get answers to all of your burning support queries''
+: Opens the [https://help.minecraft.net/hc/en-us Minecraft Help Center].
+----
+; ''Credits'' <div class="tright"; style="font-family:Minecraft">View</div>
+''All the people who helped make this game''
+: Opens the [[credits]] sequence.
+----
+; ''Attribution'' <div class="tright"; style="font-family:Minecraft">View</div>
+''Technology partners and systems''
+: Opens the [https://minecraft.net/en-us/attribution/ attribution] site.
+----
+; ''Licensed content'' <div class="tright"; style="font-family:Minecraft">Open</div>
+''All licensed content available in Minecraft''
+: Opens the [https://minecraft.net/en-us/licensed-content/ licensed content] site.
+----
+; ''Font license'' <div class="tright"; style="font-family:Minecraft">Open</div>
+''A license for third-party fonts''
+: Shows the [[Noto Sans]] font license in a pop-up.
+----
+; ''Tinkering list'' <div class="tright"; style="font-family:Minecraft">Open</div>
+''Technical info that's not relevant for players. Feel free to have a look if you're curious!''
+: Opens a tinkering list in a pop-up. This contains random item names, some of which do not exist, with unknown purpose (Glass Bottle, Blue Base Sinister Canton, etc.).
+----
+<div style="border: 1px solid var(--border-color-subtle); padding: 10px;">
+Version: v{{v|bedrock}} (may be different on ''Preview'' or some platforms)<br>
+Build: ''[[Version formats#Internal version number|Build number]]''<br>
+Branch: ''Network branch code''<br>
+SHA: ''A UUID''<br>
+Protocol Version: ''[[Protocol version]]''
+<div class="tright"; style="font-family:Minecraft">'''Copy text'''</div>
+: Allows to copy this information to the clipboard.
+</div>
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Painting" Icon.png|40px|left|class=pixel-image]] Video</h3>
+''Adjust graphics and visual quality''
+<div class="collapsible-content">
+----
+==== Graphics, performance and layout ====
+''Control how Minecraft looks and runs''
+----
+; In-game graphics mode switching. [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Change graphics mode during play. Turn off in Main Menu settings if frame rate drops.''
+: Toggles whether the graphics mode can be changed in-game. This option is locked when loaded in a world.
+----
+; Texture streaming{{upcoming}} [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Load textures only when needed to reduce memory usage. Requires game restart.''
+: Makes the game only load [[textures]] that are required, and not from resource packs that are being overwritten, to significantly save on GPU usage.
+----
+; Mode <div class="tright"><span style="font-family:Minecraft">Vibrant Visuals</span><ref group="note">Only on Xbox One X, Xbox Series S, Xbox Series X, PlayStation 4 Pro, PlayStation 5, PlayStation 5 Slim, PlayStation 5 Pro, iOS, iPadOS, Android devices running on Adreno 740, Mali-G615, Mali-G720, Xclipse 920, or higher, and Windows devices with Vibrant Visuals support.</ref><br><span style="font-family:Minecraft">'''Fancy'''</span><ref group="note">Only on Xbox One, Xbox One S, PlayStation 4, PlayStation 4 Sim, ChromeOS, Fire, Nintendo Switch, and Android devices ''lower'' than Adreno 740, Mali-G615, Mali-G720, or Xclipse 920. </ref></div>
+''Select the quality of your game visuals''
+: Changes the [[Graphics settings|graphics mode]]. Not available in-game when "Allow In-Game Graphics Mode Switching" is disabled. There are four available options, and a subset of options is shown below depending on the selected mode.
+
+<div style="font-family:Minecraft">'''Simple'''</div>
+''Best for low-end or older devices''
+: Classic graphics, [[clouds]] become opaque and do not fade with fog, [[leaves]] do not become snowy, round shadows below entities are not visible, and entity lighting is simplified.
+<div style="font-family:Minecraft">'''Fancy'''</div>
+''Classic fancy, great for most devices''
+: Classic ''Minecraft'' graphics, equivalent to ''Fabulous!'' {{in|je}}. This uses the same set of settings as Simple.
+<span style="font-family:Minecraft">'''Vibrant Visuals'''</span><ref group="note">Only available for [[Vibrant Visuals#Availability|devices with support for Vibrant Visuals]] and not with incompatible [[resource packs]], in [[splitscreen]], or on [[servers]] with Vibrant Visuals disabled.</ref>
+
+''Vibrant visuals for a richer, more immersive look. Requires a supported device and compatible Marketplace content''
+: Enables [[Vibrant Visuals]], a [[w:Deferred lighting|deferred rendering]] mode with PBR textures, [[biome]]-configured graphical effects, and dynamic lighting.
+<span style="font-family:Minecraft">'''Ray Traced'''</span><ref name="rtx" group="note">These settings are available only with ray-tracing support (Windows 10 or 11 with [[Ray tracing|specific requirements]]) in worlds with a compatible [[resource pack]].</ref>
+
+''Advanced real-time lighting and reflections''
+: Enables [[ray tracing]], a graphics mode with dynamic lighting and physically based rendering configured in certain [[Marketplace]] resource packs and for creators.
+----
+<div class="mp-section collapsible collapsed">
+<h5 class="mp-title" style="display: block; position: relative">Simple/Fancy</h5>
+<div class="collapsible-content">
+----
+; Brightness <div class="tright"; style="font-family:Minecraft">50%</div>
+''If your screen is still too dark, change the settings on your device, TV, or monitor''
+: Adjusts the brightness of the game. Dims down or lights up the game's surfaces, even if fully dark. It has no effect on gameplay, it is a visual effect. Works in any dimension and affects the [[Night Vision]] status effect.
+----
+; Framerate Limit <div class="tright"; style="font-family:Minecraft">Unlimited</div>
+''Set a limit for maximum frames per second to keep a steady frame rate or prevent overheating your device''
+: Limits how many frames the game can render per second. Slider can be set between 30 and 60 FPS with steps of 5, or Unlimited.
+----
+; Anti-Aliasing <div class="tright"><span style="font-family:Minecraft">2</span><ref name="varies" group="note">Default on most Windows devices, varies depending on the device specifications.</ref></div>
+''Not a trick question. How smooth do you like your blocks?''
+: Adjusts the amount of [[w:Multisample_anti-aliasing|multisample anti aliasing]], which smooths the image and removes jagged edges. Available options are powers of 2 between 1 and 16. Not available on mobile devices.{{verify|Does this also apply to other platforms?}}
+----
+; Smooth Lighting [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Better transitions for natural looking shadows and brightness''
+: Toggles [[smooth lighting]]. Lighting is smoothed across the blocks with ambient occlusion. This setting does not change the gameplay in any way, but it has a slight effect on performance.
+----
+; Beautiful Skies [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Show sun, moon, stars, and atmospheric effects''
+: Toggles the [[sun]], [[moon]], [[clouds]], [[stars]], [[sky]], [[End sky]], and [[End flash]].
+----
+; Render Distance <div class="tright"><span style="font-family:Minecraft">''27'' chunks (recommended)</span><ref name="varies" group="note">Default on most Windows devices, varies depending on the device specifications.</ref></div>
+''Adjust the distance at which detail is rendered. A high render distance could impact performance''<br>
+''This high render distance could cause a low frame rate, crashes, or other unexpected behavior''<ref group="note">Replaces description if set above recommended value.</ref>
+: The render distance controls how many chunks of the world are visible at once. The fewer chunks that are included, the faster each frame can be rendered, resulting in higher frames per second (FPS). This also affects the render distance of foliage such as transparent leaves, crops and animated textures. Available in 2-10 sections on the slider, ranging from 5-96 chunks maximum (depending on the device). The most distant terrain is faded by [[fog]], to avoid a sharp edge to the visible world. This slider is only available when the graphics mode is set to "Simple" or "Fancy".
+:The maximum render distance available on the slider depends on the device.
+:{| class="wikitable"
+|+
+!Operating system
+!Max render distance
+|-
+| style="text-align: center" | {{OS|win}}
+| rowspan="5" style="text-align: center" | 12, 27, 50, or 96<ref name="render distance" group="note">Varies depending on the device specifications. However, this can be bypassed by adjusting {{cd|gfx_viewdistance}} in [[options.txt]]</ref>
+|-
+| style="text-align: center" | {{OS|chrome}}
+|-
+| style="text-align: center" | {{OS|and}}
+|-
+| style="text-align: center" | {{OS|ios}} & {{OS|ipad}}
+|-
+| style="text-align: center" | {{OS|fire}}
+|-
+| style="text-align: center" | {{OS|xb1}}
+| style="text-align: center" | 16
+|-
+| style="text-align: center" | {{OS|xsx}}
+| style="text-align: center" | 36
+|-
+| style="text-align: center" | {{OS|ns}}
+| style="text-align: center" | 12
+|-
+| style="text-align: center" | {{OS|ps4}}
+| style="text-align: center" | 28
+|-
+| style="text-align: center" | {{OS|ps5}}
+| style="text-align: center" | 36
+|}
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h5 class="mp-title" style="display: block; position: relative">Vibrant Visuals</h5>
+<div class="collapsible-content">
+----
+; Preferences <div class="tright"; style="font-family:Minecraft">Performance</div>
+''Choose between optimized performance or enhanced visuals''
+: Sets all Vibrant Visuals options to a predefined setting for better performance or visuals. The default settings depend on the device specifications.
+: <div style="font-family:Minecraft">'''Performance'''</div>
+: ''Favor frame rate and responsiveness''
+:: Most Vibrant Visuals settings are set to "Low" or "Off" for a better experience on lower-end devices.
+: <div style="font-family:Minecraft">'''Visuals'''</div>
+: ''Favor visual quality and immersion''
+:: Most Vibrant Visuals settings are set to "Medium" for a higher quality of Vibrant Visuals on higher-end devices.
+: <div style="font-family:Minecraft">'''Custom'''</div>
+: ''Your preferences, as you wish''
+:: Vibrant Visuals settings are individually set to custom values in the menu below.
+: Note that each option is configured differently for each device; e.g. a high shadow quality on Android has different rendering features than a high shadow quality on Windows.
+----
+; Display brightness <div class="tright"; style="font-family:Minecraft">100%</div>
+''Make Minecraft brighter and easier to see''
+: Opens a menu with a slider to adjust the gamma (brightness). The menu shows 3 [[creeper]] faces which are affected by the gamma slider. For an optimal experience, the left-most creeper should be completely invisible, the middle creeper should be barely visible, and the right-most creeper should be clearly visible.
+: This screen also shows the percentage of the gamma between 50-150%, as well as a button to reset it to the default state.
+----
+; Framerate Limit <div class="tright"; style="font-family:Minecraft">Unlimited</div>
+''Set a limit for maximum frames per second to keep a steady frame rate or prevent overheating your device''
+: Limits how many frames the game can render per second. Slider can be set between 30 and 60 FPS with steps of 5, or Unlimited.
+----
+; Shadow Quality <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Control the resolution and render distance of shadows''
+: Changes the resolution, quality, and render distance of [[Vibrant Visuals#Directional lighting and shadows|shadows]] created by blocks and entities. Can be set to "Low", "Medium", "High", and "Ultra".
+----
+; Cloud range <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Control the render distance of clouds''
+: Changes the maximum distance where [[clouds]] are rendered, and rendering quality. Can be set to "Low", "Medium", "High", and "Ultra" (128 chunks).
+----
+; Point Light Quality<ref name="point light" group="note">Only available in-game when the "Render Dragon Features for Creators" [[experiment]] is enabled.</ref> <div class="tright"; style="font-family:Minecraft">Off</div>
+''Adjust level of detail for point light''
+: Changes the quality of point light effects. Can be set to "Off", "Low", "Medium", "High", and "Ultra".
+----
+; Point Light Shadow Quality<ref name="point light" group="note" /> <div class="tright"; style="font-family:Minecraft">Off</div>
+''Adjust level of detail for point light shadows''
+: Changes the resolution, quality, and render distance of shadows created by [[Vibrant Visuals#Colored lighting|point light]] effects. Can be set to "Off", "Low", "Medium", "High", and "Ultra".
+----
+; Volumetric Fog Quality <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Light shaft resolution for more immersive fog''
+: Changes the detail level of [[Fog#Volumetric fog|volumetric fog]]. Can be set to "Off", "Low", "Medium", "High", and "Ultra".
+----
+; Reflections <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Control resolution and sample quality of reflections''
+: Changes the resolution and sample quality of [[Vibrant Visuals#Relfections|reflections]] on blocks and water. Can be set to "Off", "Low", "Medium", "High", and "Ultra".
+----
+; Bloom intensity <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Control how vividly lights glow''
+: Adjusts the strength of [[Vibrant Visuals#Post processing effects|light bloom]], which affects how lights glow. Slider can be set between 0-100%.
+----
+; Upscaling mode <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Select your preferred technique for upscaling''
+: Changes the [[Vibrant Visuals#Post processing effects|upscaling]] mode.
+: <div style="font-family:Minecraft">'''TAAU'''</div>
+: ''Use multiple frames to create a crisper upscaled frame''
+: <div style="font-family:Minecraft">'''Bilinear'''</div>
+: ''Stretch the frame to fit the screen, more suitable for low end devices''
+----
+; Resolution <div class="tright"; style="font-family:Minecraft">Automatic</div>
+''Fine tune your upscaling resolution''
+: Adjusts the resolution of upscaling for Vibrant Visuals. Can be set to "Automatic", 33%, 50%, 66%, 75%, and "Native".
+----
+; Render Distance <div class="tright"; style="font-family:Minecraft">[[#Default|See below]]</div>
+''Adjust the distance at which detail is rendered. A high render distance could impact performance.''
+: Controls the distance in which [[chunks]] are rendered. The available settings range as follows per device, with steps of 2:
+: {| class="wikitable"
+!Operating system
+!Range
+|-
+| style="text-align: center" | {{OS|win}}
+| style="text-align: center" | 8-28
+|-
+| style="text-align: center" | {{OS|and}}
+| rowspan="3" style="text-align: center" | 2-12
+|-
+| style="text-align: center" | {{OS|ios}} & {{OS|ipad}}
+|-
+| style="text-align: center" | {{OS|ns}}<ref group="note" name=":0">Preset in the game files, not available in-game</ref>
+|-
+| style="text-align: center" | {{OS|xb1}}
+| style="text-align: center" | 6-12
+|-
+| style="text-align: center" | {{OS|xb1}} '''X'''
+| style="text-align: center" | 8-16
+|-
+| style="text-align: center" | {{OS|xsx}}
+| style="text-align: center" | 8-28
+|-
+| style="text-align: center" | {{OS|ps4}}
+| style="text-align: center" | 8-16
+|-
+| style="text-align: center" | {{OS|ps5}}
+| style="text-align: center" | 8-28
+|}
+: This can be changed to any value in [[options.txt]]. Values below 8 chunks will result in chunks at higher distances not initially loading, but the chunks will not be unloaded until the distance is higher than 8 chunks. Values above 24 chunks will result in the game actually rendering this distance up to 128 chunks away from the player.
+----
+====== Default ======
+The default state of Vibrant Visuals options differs depending on the platform, memory tier, and selected quality preset.
+{| class="wikitable mw-collapsible mw-collapsed" border="1" width="100%" data-description="Main options page"
+|-
+! rowspan="2" width="125" | Option
+! colspan="3" | {{OS|and}}
+! rowspan="2" |{{OS|chrome}}<ref name=":0" group="note" />
+! colspan="2" |{{OS|ns}}<ref name=":0" group="note" />
+! colspan="3" |Console
+! rowspan="2" |{{OS|xb1}}
+! rowspan="2" |{{OS|xb1}} '''X'''
+! colspan="2" |{{OS|xsx}}
+! colspan="3" |{{OS|ps5}}
+! colspan="2" |{{OS|ps4}}
+! colspan="3" |{{OS|ios}} & {{OS|ipad}}
+! colspan="5" |{{OS|win}}
+|-
+!3
+!4
+!5
+!Docked
+!Handheld
+!1
+!2
+!3
+!S
+!X
+!
+!Pro
+!Emu
+!
+!Pro
+!2
+!3
+!4
+!1
+!2
+!3
+!4
+!5
+|-
+|Bloom intensity
+| style="text-align: center; " | Perf: '''0%'''
+Qual: '''100%'''
+| colspan="2" style="text-align: center; " | 100%
+| style="text-align: center; " | Perf: '''0%'''
+Qual: '''100%'''
+| colspan="14" style="text-align: center; " | 100%
+| colspan="2" style="text-align: center; " | Perf: '''0%'''
+Qual: '''100%'''
+| colspan="6" style="text-align: center; " | 100%
+|-
+| Cloud range
+| colspan="3" style="text-align: center; " | Low
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| colspan="5" style="text-align: center; " | Low
+| colspan="2" style="text-align: center; " | Medium
+| style="text-align: center; " | High
+| colspan="3" style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''High'''
+| style="text-align: center; " | Low
+|
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Low
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Ultra
+| style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Ultra
+|-
+| Render Distance
+| style="text-align: center; " | 4
+| style="text-align: center; " | 6
+| style="text-align: center; " | Perf: '''6'''
+Qual: '''8'''
+| style="text-align: center; " | 8
+| colspan="2" style="text-align: center; " | 6
+| style="text-align: center; " | Perf: '''10'''
+Qual: '''12'''
+| style="text-align: center; " | Perf: '''12'''
+Qual: '''16'''
+| style="text-align: center; " | Perf: '''20'''
+Qual: '''24'''
+| style="text-align: center; " | Perf: '''10'''
+Qual: '''12'''
+| colspan="2" style="text-align: center; " | Perf: '''12'''
+Qual: '''16'''
+| colspan="3" style="text-align: center; " | Perf: '''20'''
+Qual: '''28'''
+| style="text-align: center; " | Perf: '''10'''
+Qual: '''14'''
+| style="text-align: center; " | Perf: '''10'''
+Qual: '''12'''
+| style="text-align: center; " | Perf: '''10'''
+Qual: '''14'''
+| style="text-align: center; " | Perf: '''4'''
+Qual: '''6'''
+| style="text-align: center; " | 6
+| style="text-align: center; " | Perf: '''6'''
+Qual: '''8'''
+| style="text-align: center; " | 12
+| style="text-align: center; " | Perf: '''12'''
+Qual: '''24'''
+| colspan="3" style="text-align: center; " | Perf: '''20'''
+Qual: '''24'''
+|-
+| Reflections
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Medium
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Low
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| colspan="3" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| colspan="2" style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Ultra
+|-
+| Shadow Quality
+| style="text-align: center; " style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Medium
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| colspan="3" style="text-align: center; " | Low
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Perf: '''Medium'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| colspan="3" style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| colspan="2" style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Ultra
+| style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Ultra
+|-
+|Automatic resolution
+| style="text-align: center; " | 480p
+| style="text-align: center; " | Perf: '''480p'''
+Qual: '''720p'''
+| colspan="2" style="text-align: center; " | 720p
+| colspan="2" style="text-align: center; " | 540p
+| colspan="5" |
+| style="text-align: center; " | Perf: '''1440p'''
+|
+| colspan="3" style="text-align: center; " | 2160p
+| style="text-align: center; " | 1080p
+| style="text-align: center; " | 1440p
+| style="text-align: center; " | 480p
+| style="text-align: center; " | Perf: '''480p'''
+Qual: '''720p'''
+| style="text-align: center; " | Perf: '''540p'''
+Qual: '''720p'''
+| style="text-align: center; " | 720p
+| colspan="2" style="text-align: center; " | 1440p
+| style="text-align: center; " | Perf: '''1080p'''
+Qual: '''1440p'''
+| style="text-align: center; " | Perf: '''1440p'''
+Qual: '''2160p'''
+|-
+|Upscaling mode
+| colspan="2" style="text-align: center; " | Bilinear
+| style="text-align: center; " | Perf: '''Bilinear'''
+Qual: '''TAAU'''
+| style="text-align: center; " | TAAU
+| colspan="2" style="text-align: center; " | Bilinear
+| colspan="5" style="text-align: center; " | TAAU
+| style="text-align: center; " | Perf: '''Bilinear'''
+Qual: '''TAAU'''
+| style="text-align: center; " | TAAU
+| colspan="7" style="text-align: center; " | Bilinear
+| style="text-align: center; " | TAAU
+| colspan="3" style="text-align: center; " | Perf: '''Bilinear'''
+Qual: '''TAAU'''
+| colspan="2" style="text-align: center; " | TAAU
+|-
+| Volumetric Fog Quality
+| colspan="3" style="text-align: center; " | Low
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| colspan="2" style="text-align: center; " | Perf: '''Off'''
+Qual: '''Low'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''High'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Low'''
+Qual: '''High'''
+| style="text-align: center; " | Low
+| colspan="2" style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| colspan="2" style="text-align: center; " | Perf: '''Low'''
+Qual: '''Medium'''
+| style="text-align: center; " | Perf: '''Medium'''
+Qual: '''High'''
+| style="text-align: center; " | Perf: '''High'''
+Qual: '''Ultra'''
+| style="text-align: center; " | Ultra
+|}
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h5 class="mp-title" style="display: block; position: relative">Ray Traced</h5>
+<div class="collapsible-content">
+----
+; Brightness <div class="tright"; style="font-family:Minecraft">50%</div>
+''If your screen is still too dark, change the settings on your device, TV, or monitor''
+: Adjusts the brightness of the game. Dims down or lights up the game's surfaces, even if fully dark. It has no effect on gameplay, it is a visual effect. Works in any dimension and affects the [[Night Vision]] status effect.
+----
+; Framerate Limit <div class="tright"; style="font-family:Minecraft">Unlimited</div>
+''Set a limit for maximum frames per second to keep a steady frame rate or prevent overheating your device''
+: Limits how many frames the game can render per second. Slider can be set between 30 and 60 FPS with steps of 5, or Unlimited.
+----
+; Anti-Aliasing <div class="tright"><span style="font-family:Minecraft">2</span><ref name="varies" group="note">Default on most Windows devices, varies depending on the device specifications.</ref></div>
+''Not a trick question. How smooth do you like your blocks?''
+: Adjusts the amount of [[w:Multisample_anti-aliasing|multisample anti aliasing]], which smooths the image and removes jagged edges. Available options are powers of 2 between 1 and 16. Not available on mobile devices.
+----
+; Upscaling [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+: Significantly boosts frame rates on GeForce RTX graphics cards with NVIDIA DLSS 2.0.
+----
+; Ray Tracing Render Distance <div class="tright"; style="font-family:Minecraft">8 chunks</div>
+''This high render distance could cause a low frame rate, crashes, or other unexpected behavior''<ref group="note">Only shown if set above recommended value.</ref>
+: Controls the distance in which [[chunk]]s are rendered. Slider can be set between 5 and 24 chunks, but can be changed to any value in options.txt, similar to Vibrant Visuals.
+----
+</div></div>
+----
+; Render Clouds [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Happy little clouds in the sky''
+: Toggles the [[clouds]] graphics, requires "Beatiful Skies" to be enabled.
+----
+; Fancy Leaves [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Leaves but better''
+: Toggles transparent [[leaves]].
+----
+; Fancy Bubbles [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Bubbles with style''
+: Toggles the water [[bubbles]] graphics between particles inside bubble collumns or animated bubble textures on the side of bubble collumns. Not available in-game.
+----
+; Improved input response [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Makes the game react faster when you press buttons or move. May increase power consumption''
+: Reduces delay between inputs and what is displayed on-screen. Grayed out when the graphics mode is set to Vibrant Visuals or Ray Traced, and only available on Windows.
+----
+; Frame pacing [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Turn this on for a smoother, more stable experience. This may cap your game at a lower frame rate''
+: Only available on mobile devices.
+----
+; UI Profile <div class="tright">Windows, console: <span style="font-family:Minecraft">Classic</span><br>'''Mobile:<span style="font-family:Minecraft"> Pocket</span>'''</div>
+''Select Pocket (mobile) or Classic interface layouts''
+: Changes the game's [[GUI]] style between classic and Pocket.
+----
+==== View customization ====
+''Build, stream, or take screenshots without distractions''
+----
+; Camera Perspective <div class="tright"; style="font-family:Minecraft">First Person</div>
+''Select the in-game camera's point of view''
+: Toggles camera perspective between regular '''First Person''' and [[third-person view]], '''Third Person Back''' and '''Third Person Front'''. This can also be toggled with {{key|F5}} or {{Xbutton|seriesdpad-up}} by default, or the optional camera perspective button on touchscreen.
+----
+; Fullscreen [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Minecraft, in full screen''
+: Toggles between windowed and fullscreen mode, also toggleable with {{keys|F11}}. Only available on Windows.
+----
+; Hide Hand [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Hide your hand in first-person view''
+: Toggles to hide the player [[hand]] and items, but show any other HUD elements, or vice versa and only show the hand.
+----
+; Hide Paper Doll [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Hide your character preview when swimming, sneaking, flying, or riding''
+: Toggles the side-view of the player displayed in the top-left corner of the screen during special movements, toggleable with {{keys|F8}}.
+----
+; Hide HUD [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Hide your Heads Up Display, including health, hunger, and item bars''
+: Toggles to hide all [[HUD]] elements, but the hand and paper doll can be re-enabled individually. This can also be toggled with {{keys|F1}}.
+----
+; HUD Opacity <div class="tright"; style="font-family:Minecraft">100%</div>
+''How much you can see-trough the Heads Up Display''
+: Changes the opacity of several HUD elements.
+----
+; Splitscreen HUD Opacity
+''{{info needed}}''
+: Changes the opacity of the HUD, while in [[splitscreen]] mode. Only available on consoles.
+----
+; Change Screen Safe Area <div class="tright"; style="font-family:Minecraft">100.0</div>
+''Make sure the game looks great in your device's screen''
+: Opens a menu with a slider controlling the offset of the corners of the screen, moving the UI elements further inside. Not available in-game.
+----
+; Splitscreen <div class="tright"; style="font-family:Minecraft">Horizontal</div>
+''{{info needed}}''
+: Toggles between horizontal and vertical orientation of the splitscreen. Only available on consoles.
+----
+; FOV <div class="tright"; style="font-family:Minecraft">60°</div>
+''Viewing angle of the in-game camera''
+: Changes the field of view, which can make the screen appear more zoomed in or out. The actual field of view depends on the aspect ratio of the screen. Available options range from 30° to 110° with steps of 1°.
+----
+; Field of view can be altered by gameplay [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Allow gameplay effects like sprinting or potion use to temporarily change the Field Of View''
+: Toggles whether gameplay, such as speed changes, can change the field of fiew.
+----
+; Show player names [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Display names above other players' heads''
+: Toggles to show nametags from other [[player]]s.
+----
+; Splitscreen player names [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''{{info needed}}''
+: Toggles to show the player names in the corner of each splitscreen section, indicating which screen belongs to which player. Only available on consoles.
+----
+; Show autosave icon [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Display an icon when the game is autosaving''
+: Toggles the [[autosave]] icon in the top-right of the screen.
+----
+==== Accessibility: Video ====
+''Controls to make Minecraft more comfortable to play''
+----
+; UI scale modifier <div class="tright"; style="font-family:Minecraft">100%</div>
+''Select the size of the HUD and other UI elements to make them easier to use on different devices''
+: Adjusts the scale of the all [[menu screen]]s, [[UI]] elements, and [[GUI]]s. Smaller scales are only available on higher resolutions. Available options on 4K displays (max for ''Minecraft'') are '''50%''', '''63%''', '''75%''', '''88%''', and '''100%''', percentages may differ depending on the resolution.
+----
+; Extra large new UI [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Increase the size of the UI for clarity and easy reading''
+: Enables an extra large version of the [[Ore UI]] menu interface, locking "UI scale modifier" to 100%.
+----
+; Screen Animations [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Subtle HUD animations to help transition from one screen to another''
+: Toggles the animations when switching GUIs or menus, certain UI animations like [[splash]] text bobbing, the animated [[Marketplace]] button, and the [[panorama]] scrolling.
+----
+; View Bobbing [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Camera bobs when walking''
+: Toggles to show the bobbing animation when walking.
+----
+; Damage Tilt <div class="tright"; style="font-family:Minecraft">100%</div>
+''The amount of camera shake caused by being hurt''
+: Adjusts how much the screen shakes and changes field of view when taking [[damage]].
+----
+; Camera Shake [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]
+''Set up camera shake using macros or chat''
+: Whether the camera can visually shake using {{cmd|camerashake}} or creator features.
+----
+; Outline Selection <div class="tright">Windows, console: [[File:Ore UI - Toggle ON Button (Bedrock).png|55px|right|link=]]<br><br>'''Mobile:'''[[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]</div>
+''Makes it easier to see which block you're looking at''
+: Toggles the outline selection of blocks.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Note Block" Icon.png|40px|left|class=pixel-image]] Audio</h3>
+''Adjust volume settings for music and sound effects''
+<div class="collapsible-content">
+: This tab contains sliders that adjust the volume level of specific [[sound]]s. While adjusting these sliders, preview sounds play according to the category, with the same variety of pitches as in-game.
+----
+; Global {{sound||Click stereo.ogg}} <div class="tright"; style="font-family:Minecraft">50%</div>
+''Overall volume of the game''
+: Controls the overall volume of the entire game.
+----
+; Music <div class="tright"; style="font-family:Minecraft">30%</div>
+''Background music''
+: Controls the volume of the in-game [[Music|soundtrack]].
+----
+; Sound {{sound||Click stereo.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Adjust the volume for sound effects''
+: Controls the volume level of UI and miscellaneous sounds.
+----
+; Environmental audio {{sound||Cave1.ogg}}{{sound||Cave2.ogg}}{{sound||Cave3.ogg}}{{sound||Cave4.ogg}}{{sound||Cave5.ogg}}{{sound||Cave6.ogg}}{{sound||Cave7.ogg}}{{sound||Cave8.ogg}}{{sound||Cave9.ogg}}{{sound||Cave10.ogg}}{{sound||Cave11.ogg}}{{sound||Cave12.ogg}}{{sound||Cave13.ogg}}{{sound||Cave14.ogg}}{{sound||Cave15.ogg}}{{sound||Cave16.ogg}}{{sound||Cave17.ogg}}{{sound||Cave18.ogg}}{{sound||Cave19.ogg}}{{sound||Cave20 BE1.wav}}{{sound||Cave21 BE1.wav}}{{sound||Cave22 BE1.wav}}{{sound||Cave23 BE1.wav}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Ambient sounds made by the environment''
+: Controls the volume of [[ambience]], entering/exiting [[water]], and firework rockets going off. 
+
+----
+; Blocks {{Sound||Grass dig1.ogg}}{{Sound||Grass dig2.ogg}}{{Sound||Grass dig3.ogg}}{{Sound||Grass dig4.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Sounds when placing or removing blocks''
+: Controls the volume level of [[blocks]] (anvils, chests, doors, etc.).
+----
+; Hostile mobs {{Sound||Zombie idle1.ogg}}{{Sound||Zombie idle2.ogg}}{{Sound||Zombie idle3.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Like zombies and skeletons''
+: Controls the volume level of hostile and neutral [[mobs]].
+----
+; Friendly mobs {{Sound||Cow idle1.ogg}}{{Sound||Cow idle2.ogg}}{{Sound||Cow idle3.ogg}}{{Sound||Cow idle4.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Like animals and villagers''
+: Controls the volume level of passive [[mobs]] and [[entities]].
+----
+; Other players {{Sound||Eat1.ogg}}{{Sound||Eat2.ogg}}{{Sound||Eat3.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Sounds made by other nearby players''
+: Controls the volume level of [[players]] (item plops, hurt sounds, etc.).
+----
+; Musical blocks {{Sound||Note block guitar.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Like jukeboxes and note blocks''
+: Controls the volume of music from [[Jukebox|jukeboxes]] and [[Note Block|note blocks]].
+----
+; Weather {{Sound||Thunder1.ogg}}{{Sound||Thunder2.ogg}}{{Sound||Thunder3.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''Weather sounds like rain and wind''
+: Contols the volume of [[rain]] and [[Thunderstorm|thunder]].
+----
+; Text to speech {{Sound||Thunder1.ogg}}{{Sound||Thunder2.ogg}}{{Sound||Thunder3.ogg}} <div class="tright"; style="font-family:Minecraft">100%</div>
+''The game's text to speech voice''
+: Controls the volume level of text to speech.
+----
+; ''Reset to default'' <div class="tright"; style="font-family:Minecraft">Reset</div>
+''Set all options to their original values''
+: Resets all options in this tab to the default state shown here, after confirming a pop-up.
+----
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Account" Icon.png|40px|left|class=pixel-image]] Account</h3>
+''Access your account information''
+<div class="collapsible-content">
+----
+; Name <div class="tright"; style="font-family:Minecraft">Player</div>
+: Text box controlling the player's in-game username. Available only when not signed in.
+----
+; ''Sign in for free'' <div class="tright"; style="font-family:Minecraft">Sign in</div>
+: Opens the sign in pop-up, similar to the sign in button on the [[main menu]]. Available only when not signed in.
+----
+; Gamertag<nowiki>:</nowiki> {{EntitySprite|Steve}} ''[[Gamertag]]''
+: The player's active Xbox gamertag along with the face sprite of the currently selected skin. Visible when player is signed in.
+----
+; ''Change Gamertag'' <div class="tright"; style="font-family:Minecraft">Change</div>
+: Opens the Xbox account settings with the option to change the gamertag. Visible when player is signed in and not in-game.
+----
+; ''Manage Account'' <div class="tright"; style="font-family:Minecraft">Manage</div>
+: Opens the Xbox account settings. Visible when player is signed in and not in-game.
+----
+; ''Privacy & online safety'' <div class="tright"; style="font-family:Minecraft">View</div>
+: Opens the privacy settings in the Xbox site.
+----
+; ''Manage Realms membership invites'' <div class="tright"; style="font-family:Minecraft">Manage</div>
+: Opens a menu listing all active [[Realms]] invites, and allows to manage them, or sort to only show invites from friends. Not available in ''Minecraft Preview''.
+----
+; ''Sign out of your Microsoft Account'' <div class="tright"; style="font-family:Minecraft">Sign Out</div>
+: Signs the player out of their Microsoft account. Only available for non-Windows devices.
+----
+; Remote Connect [[File:Ore UI - Toggle OFF Button (Bedrock).png|55px|right|link=]]
+''Use Remote Connect for Microsoft account Sign In (requires restart)
+: Enables the option to sign in using a Microsoft invite link whenever the player is signed out. Only available for non-Windows devices.
+----
+; DID<nowiki>:</nowiki> ''A UUID''
+; MCID<nowiki>:</nowiki> ''An ID''
+----
+</div></div>
+
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Enchanted Book" Icon.png|40px|left|class=pixel-image]] Subscriptions</h3>
+{{-}}
+<div class="collapsible-content">
+Shows active and inactive in-game subscriptions, which include [[Realms]] server, including Realms Plus and Realms Core, and [[Marketplace Pass]]. Purchase and information screens can be opened from here. Active subscriptions may have a button to end the subscription, if purchased from the same device.
+
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Chest Block" Icon.png|40px|left|class=pixel-image]] Global Resources</h3>
+{{-}}
+<div class="collapsible-content">
+Allows the player to manage global [[resource packs]], which are enabled locally for all worlds. Minecraft Texture Pack is enabled by default and can't be disabled. For each pack, the description can be opened, the Marketplace purchase page, a pack info screen with technical details and options, and the pack settings menu.
+
+Packs under any tab can be managed by clicking on them, which shows a button to enable/disable it. Under the "Active" tab, the order of packs can be organized. Resource packs are applied from bottom to top, any higher pack overrides conflicting features from lower packs, with the vanilla pack at the bottom.
+
+Resource packs can only be changed while in the main menu, in a world they can still be viewed.
+
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Beehive Block" Icon.png|40px|left|class=pixel-image]] Storage</h3>
+{{-}}
+<div class="collapsible-content">
+Allows the player to delete or change the worlds, resource and behavior packs, cached data, or world template.
+{| class="wikitable" border="1" width="100%"
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| {{vanchor|File Storage Location}}
+| Choose where the game files are stored on the device, inside the application folder or external. Only available for Android devices.
+| style="text-align: center; " | Application
+|-
+| {{vanchor|Clear Marketplace Cache}} / {{vanchor|Clear Minecraft Store Cache}}
+| Instantly clears the [[Marketplace]] cache.
+| rowspan="5" |
+|-
+| {{vanchor|Clear Download Cache}}
+| Instantly clears cache created from downloading Marketplace packs, [[Realms]] worlds, or [[Featured servers|featured server]] resource packs.
+|-
+| {{vanchor|Clear Screenshots Cache}}
+| Instantly clears the [[screenshots]] cache (includes thumbnails).
+|-
+| {{vanchor|Delete Local Screenshots}}
+| Choose to delete all in-game screenshots.
+|}
+Below is a section of stored data. In collapsed lists, all worlds, world templates, resource and behavior packs, and cached datapacks can be managed and deleted, more quickly using the Multiselect button.
+</div></div>
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Language" Icon.png|40px|left|class=pixel-image]] Language</h3>
+''Select your preferred language for Minecraft''
+<div class="collapsible-content">
+: This tab allows to select a [[language]] for all in-game text. Languages are listed in alphabetical order, each showing the region of the dialect used. Not available in-game.
+</div></div>
+
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Command Block" Icon.png|40px|left|class=pixel-image]] Creator</h3>
+{{-}}
+<div class="collapsible-content">
+{{Expand section|provide more specific information about the debugger and the watchdog.}}
+{| class="wikitable" border="1" width="100%"
+|-
+! width="125" | Option
+! Description
+! Default
+|-
+| {{vanchor|Enable Copy Coordinate UI}}
+| Shows feet and facing [[coordinates]] in the [[chat]] menu, as well as a button to copy them. Not available on consoles.
+| rowspan="3" style="text-align: center; " | OFF
+|-
+| {{vanchor|Require Passcode}}
+| VSCode will prompt user for passcode to connect.
+|-
+| {{vanchor|Passcode}}
+| The passcode used for the debugger. Available only when Require Passcode is enabled. 
+|-
+| {{vanchor|Attach Debugger on Load}}
+| Attempt to attach script debugger at level load, requires that either inbound port or connect address is set and that inbound or outbound connections are enabled. When turned on, this can be set to '''connect''' or '''listen'''. When set to '''connect''', the game will attempt to connect to debugger in listening mode on the specified port. When set to '''listen''', the game will listen to inbound connect attempts from debugger using connect mode on the specified port.
+| style="text-align: center; " | OFF
+|-
+| {{vanchor|Host}}
+| The specified host to connect to the debugger. Available only when Attach Debugger on Load is enabled and set to '''listen'''.
+| style="text-align: center; " | localhost
+|-
+| {{vanchor|Port}}
+| The specified port to connect with the debugger. Available only when Attach Debugger on Load is enabled.
+| style="text-align: center; " | 19144
+|-
+| {{vanchor|Attach Timeout}}
+| Amount of time to wait at world load for debugger to attach. Can be set between 0-10 seconds with steps of 1. Available only when Attach Debugger on Load is enabled.
+| style="text-align: center; " | 0 Seconds
+|-
+| {{vanchor|Enable Client Diagnostics}}
+| Starts a diagnostics capture session at level load.
+| style="text-align: center; " | OFF
+|-
+| {{vanchor|Delete Diagnostics and Profiler Captures}}
+| Choose to delete old diagnostics and profiler capture files.
+|
+|-
+| {{vanchor|Interrupt after}}
+| Sets the watchdog threshold for single tick hangs. Can be set between 3-20 seconds.
+| style="text-align: center;" | 10 Seconds
+|-
+| {{vanchor|Script Spike Warnings}}
+| Enables the watchdog for single tick spikes.
+| style="text-align: center; " | OFF
+|-
+| {{vanchor|Spike Exceeds}}
+| Sets the watchdog threshold for single tick spikes. Can be set between 50-500 milliseconds. Available only when Script Spike Warnings is enabled.
+| style="text-align: center; " | 100 Milliseconds
+|-
+| {{vanchor|Slow Script Warnings}}
+| Enables the watchdog for slow scripts over multiple ticks.
+| style="text-align: center; " | OFF
+|-
+| {{vanchor|Average Exceeds}}
+| Sets the watchdog threshold for slow scripts over multiple ticks. Can be set between 5-50 milliseconds. Available only when Slow Script Warnings is enabled.
+| style="text-align: center; " | 10 Milliseconds
+|-
+| {{vanchor|Collect Network Metrics}}
+| Whether to collect metrics in the ''[[Editor]]'', which can be viewed in the VSCode live diagnostics view.
+| style="text-align: center; " | ON
+|-
+| {{vanchor|Enable Memory Tier Override}}
+| Whether to manually set the memory tier.
+| style="text-align: center; " | OFF
+|-
+| {{vanchor|Memory Tier}}
+| Saves and shuts down the world when the combined script memory usage exceeds the given threshold. Can be set to Super Low, Low, Mid, High, and Super High. Only available when Enable Memory Tier Override is enabled.
+| style="text-align: center; | Mid
+|-
+| {{vanchor|Enable Debug Text Filtering Delay Override}}{{upcoming|be 26.20}}
+| Allows to set a custom delay for profanity filtering
+| style="text-align: center; | OFF
+|-
+| {{vanchor|Text Filtering Delay}}{{upcoming|be 26.20}}
+| Allows to change the delay for profanity filtering between 0 and 5 seconds.
+| style="text-align: center; | 0 Second(s)
+|-
+| {{vanchor|Enable Content Log File}}
+| Enables a content log file in the game's files. The file location is shown below.
+| style="text-align: center;" rowspan="2" |OFF
+|-
+| {{vanchor|Enable Content Log GUI}}
+| Enables the content log GUI feature.
+|-
+| {{vanchor|Show Content Log GUI On Error During Load}}
+| Opens the content log GUI upon errors during world load. Available only when Enable Content Log GUI is enabled.
+| style="text-align: center; " | ON
+|-
+| {{vanchor|GUI Log Level}}
+| The minimum script level shown in the content log GUI and during world load.
+* Verbose
+* Info
+* Warn
+* Error
+| style="text-align: center; " | Warn
+|-
+| {{vanchor|Content Log History}}
+| Opens the Content Log History menu. Available only when Enable Content Log GUI is enabled.
+| rowspan="2" |
+|-
+| {{vanchor|Delete Old Logs}}
+| Deletes old content log files.
+|}
+</div></div>
+
+<div class="mp-section collapsible collapsed">
+<h3 class="mp-title" style="display: block; position: relative">[[File:Ore UI - "Wrench" Icon.png|40px|left|class=pixel-image]] Preview</h3>
+{{-}}
+<div class="collapsible-content">
+{{Exclusive|ps|section=1|nocat=1}}
+{| class="wikitable" border="1" width="100%"
+|-
+! width="125" | Option
+! Description
+|-
+| {{vanchor|Get Preview for PlayStation®5}}
+| Get Minecraft Preview to experience the latest and greatest forthcoming Minecraft features and provide feedback to the Mojang team.
+|}
+</div></div>
+
+== History ==
+{{expand section|Describe changes (relocation, renaming, functionality change) of every option, especially between 1.17-1.21.90 info is missing.}}
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.1|Added split controls option.}}
+|{{HistoryLine||v0.4.0|Added option for peaceful mode.}}
+|{{HistoryLine||v0.7.0|Redesigned options menu. There are now four sections in the menu: game, controls, graphics, and sound.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Added "Show craftable recipes first" option.
+|Added far (256 blocks) and farthest (400 blocks) render distances. The default render distance has been changed to far.
+|By default, fancy graphics is now on.}}
+|{{HistoryLine|||dev=build 2|Removed "Show craftable recipes first" option.
+|Removed option for smooth lighting. It is now always on.}}
+|{{HistoryLine|||dev=release|The default render distance has been changed back to normal (128 blocks).}}
+|{{HistoryLine||v0.9.3|View distance on Android is no longer limited to 3 sliders.}}
+|{{HistoryLine||v0.10.0|dev=build 1|Added the brightness slider. It is located in the graphics menu.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Worlds can now be renamed.
+|Gamemode can be changed in the world edit menu.
+|On creative mode worlds, the daylight cycle can be locked to day.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added option to swap jump and sneak.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Multiplayer can now be disabled in the options menu.}}
+|{{HistoryLine||v0.13.1|Removed sound section in the options menu. The volume slider is now in the Game section.
+|On the title screen, the options icon is no longer a wrench.
+|Made the options icon slightly bigger.}}
+|{{HistoryLine||v0.14.2|Added "Fancy Leaves", "Anti-Aliasing", and "Particle Render Distance" option to the video settings on Windows 10.}}
+|{{HistoryLine||v0.15.1|dev=build 1|Added "Use Cellular Data" toggle.}}
+|{{HistoryLine||v0.16.0|dev=build 1|Redesigned options screen.
+|Added "Audio Settings", "Keyboard and Mouse Settings", "Controller Settings", and "Profile" settings.
+|Added "Camera Perspective" option to the video settings.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added "UI Profile" option to change between classic and pocket UI.
+|Added "Text To Speech for Chat" option.}}
+|{{HistoryLine|||dev=alpha 1.0.0.0|Added "Change Screen Safe Area" option to the video settings.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Classic UI now repositions the health, hunger, oxygen, and armor bars to above the hotbar instead of the top of the screen, making it like ''Java Edition'' and Legacy Console Edition.
+|Added "Smooth Lighting" to the video settings.
+|Added "Require Encrypted Websockets" to the profile settings.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added "Hide HUD", "Hide Hand", "Outline Selection", "In-game Player Names", "HUD Opacity", "Hide Paper Doll", "Show Autosave Icon", and "Render Clouds" to the video settings.}}
+|{{HistoryLine||1.2.1|Added "FOV Can Be Altered By Gameplay" option to the video settings}}
+|{{HistoryLine||1.2.3|dev=beta 1.2.3.3|Added "Licensed Content" button to the profile settings.}}
+|{{HistoryLine||1.2.5|dev=beta 1.2.5.12|Removed "Limit World Size" option.}}
+|{{HistoryLine||1.2.10|dev=beta 1.2.10.1|Added "Controller Cursor Sensitivity" option to the controller controls settings.}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.5|Added "Screen Animation" option to the video settings.
+|Added "Touch only affects hotbar" option to the touch controls settings.}}
+|{{HistoryLine|||dev=beta 1.2.13.11|Added "A/B Button Swap" and "X/Y Button Swap" option to the controller controls settings.}}|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added "Full Keyboard Gameplay" toggle to the Keyboard & Mouse settings.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.7|Added "Fancy Bubbles" to the video settings.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Added "Accessibility Settings".
+|Added "Enable UI Screen Reader" to the accessibility settings.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.2|Added "Enable Open Chat Message" to the accessibility settings.}}|
+{{HistoryLine|||dev=beta 1.13.0.9|Added "Credits" button to the profile settings.}}
+|{{HistoryLine|||dev=beta 1.13.0.15|Added "Enable Text To Speech with Device Settings" to the accessibility settings.}}
+|{{HistoryLine||1.14.60|Added "Only Allow Trusted Skins" option to the profile settings.}}
+|{{HistoryLine||RTX Beta|dev=beta 1.15.0.8|Added advanced video settings along with "Upscaling" and "DirectX Ray Tracing".
+|Moved "View Bobbing", "Fancy Leaves", "Fancy Bubbles", "Render Clouds", "Beautiful Skies", "Smooth Lighting", "Fancy Bubbles", "Fancy Graphics", "Render Distance", "Particle Render Distance", and "Anti-Aliasing" options to advanced video settings.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.63|Added "Text Background Opacity" to the accessibility settings.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.50|Added "Font License" button to the profile settings.}}
+|{{HistoryLine|||dev=beta 1.16.100.54|Removed "Particle Render Distance" option to the video settings.}}
+|{{HistoryLine|||dev=beta 1.16.100.57|Added "Camera Shake" to the accessibility and video settings.}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.53|Added "Sound", "Ambient/Environment", "Blocks", "Hostile Creatures", "Friendly Creatures", "Players", "Jukeboxes/Note Blocks", and "Weather" to the audio settings.
+|Added "Upscaling" and "Ray Tracing" to the video settings, ported from the [[RTX Beta]].
+|Renamed "Master Volume" to "Main" in the Audio settings.}}
+|{{HistoryLine||1.16.210|dev=beta 1.16.210.54|Added text-to-speech setting to the Audio settings.}}
+|{{HistoryLine|||dev=beta 1.16.210.58|Broadcasting options are now completely removed from the game again, since Mixer streaming services are no longer available.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Added "Spyglass Damping" scale option ranging from 0 to 100.}}
+|{{HistoryLine|||dev=beta 1.17.0.54|Added Creator settings, which currently has content log settings.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.30.20|Added "Clear Hotbar" option to the controller settings.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.30.23|Added the "Enable New Touch Control Schemes" toggle.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.20|Added "Enable Copy Coordinate UI" option to the creator settings.}}
+|{{HistoryLine||1.19.30|dev=Preview 1.19.30.21|Added configurable keybinds for copying coordinates and copying facing coordinates, only available when "Enable Copy Coordinate UI" is on.}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.20|Split "Profile" section into "General" and "Account".|Added a "Control Mode" selection screen under the touch settings.|Renamed the touch settings "Sprint On Movement", "Move Joystick Visible", "Move Joystick Auto Visible When Not Used", "Static Joystick", and "Toggle Crouch" to "Auto Sprint", "Joystick Always Visible", "Joystick Visible When Unused", "Lock Joystick", and "Crouch Toggle" respectively.}}
+|{{HistoryLine|||dev=Preview 1.19.40.22|Improved the images for the three control schemes in the touch settings menu.|Added "Maximum Framerate" to the video settings after being previously editable in options.txt.}}
+|{{HistoryLine||1.19.50|dev=Preview 1.19.50.21|Players can now rebind the copy coordinate keys with "Full Keyboard Gameplay" and the "Enable Copy Coordinate UI" settings enabled.<ref>{{Cite bug|MCPE|163082|Cannot use copy coords hot keys with full keyboard gameplay on}}</ref>}}
+|{{HistoryLine||1.19.80|dev=Preview 1.19.80.20|Added "Glint Speed" and "Glint Strength" to accessibility settings.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Added "Vertical Sync" to the video settings, previously available in options.txt.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.21.50.20|Removed "Vertical Sync" from video settings in favor the "Improved Input Response" setting. It can still be toggled from options.txt.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.20|Added "Tutorial" option and "Restart Tutorial" button to the general settings.<ref name="tutorial" />}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Renamed the maximum framerate slider to "Framerate Limit" and added a tooltip to better describe its purpose.}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.23|Added text-to-speech voiceover for items in Marketplace Pass content tab and Realms content tab.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Added "Filter Profanity" option, currently only enabled on Windows.}}
+|{{HistoryLine|||dev=Preview 1.21.60.23|Added the "Bilinear Upscaling" mode to Vibrant Visuals settings.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.25|Enabled "Filter Profanity" option on mobile platforms.}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.25|Enabled "Filter Profanity" option on PlayStation platforms.}}
+|{{HistoryLine|||dev=Preview 1.21.80.27|Enabled "Filter Profanity" option on Xbox and Nintendo platforms.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|The audio default volumes have been updated.|[[File:New UI - Audio Settings Screen Menu (Bedrock Preview 1.21.100.20).png|53px]] Audio settings have been updated to match [[Ore UI]], available in ''Preview'' only.|Each setting now includes a helpful description, making it easier to understand what it does.|Improved interaction with sliders that are now smoother and more responsive than before.}}
+|{{HistoryLine|||dev=Preview 1.21.100.21|Moved the graphics mode and render distance options to the top of the video settings tab.|Added preview sounds to the audio tab, available in both [[Ore UI]] and the classic UI.}}
+|{{HistoryLine|||dev=Preview 1.21.100.23|Added spaces between the tab buttons in the settings screen.}}
+|{{HistoryLine|||dev=?|Removed the "Use Recommended Texture Limit" option from the video settings.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.20|Increased the maximum deferred render distance for Windows devices from 24 to 28 chunks.}}
+|{{HistoryLine|||dev=Preview 1.21.110.26|Added the "Hide Sky Flashes" option in the accessibility settings.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.20|Renamed "Adjust Brightness" to "Adjust Gamma" in the Vibrant Visuals options.|Improved quality of gamma correction on Windows and consoles and fixed the brightness of the [[creeper]] textures in the gamma calibration screen.|Added a percentage indicator to the gamma calibration screen as well as a button to reset the gamma to the default state.}}
+|{{HistoryLine|||dev=Preview 1.21.120.21|Increased line spacing in the video settings tab.|Removed the "Text to Speech with Device Settings" and "Improved Input Response" options.}}
+|{{HistoryLine|||dev=Preview 1.21.120.22|Re-added the "Text to Speech with Device Settings" and "Improved Input Response" options.|[[File:New UI - Accessibility Settings Screen Menu (Bedrock Preview 1.21.120.22).png|53px]] [[File:New UI - Language Settings Screen Menu (Bedrock Preview 1.21.120.22).png|53px]] The Accessibility and Language settings tabs have been updated to match [[Ore UI]], available in ''Preview'' only.|Added the "Enable Dithering for Blocks" option to the accessibility settings.}}
+|{{HistoryLine|||dev=Preview 1.21.120.23|Added the "Enable Dithering for Mobs" option to the accessibility settings.}}
+|{{HistoryLine|||dev=Preview 1.21.120.24|[[File:New UI - General Settings Screen Menu (Bedrock Preview 1.21.120.24).png|53px]] The General settings tab has been updated to match [[Ore UI]], available in ''Preview'' only.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added an option to adjust the size of the top buttons in the [[HUD]] for touch controls.|Removed the "Customize Controls" toggle, the button now always appears.|Removed the "Joystick Opacity" and "Mobile menu size" options, since they can also be adjusted from the Customiza Controls screen.|Added the "Damage Tilt" option.}}
+|{{HistoryLine|||dev=Preview 1.21.130.24|[[File:New UI - Video Settings Screen Menu (Bedrock Preview 1.21.130.24).png|53px]] The Video settings tab has been updated to match [[Ore UI]], available in ''Preview'' only.|Renamed "Bloom" to "Bloom intensity".}}
+|{{HistoryLine|||dev=Preview 1.21.130.26|Accessibility option "Enable Open Chat Message" has been renamed to "Chat Instructions on Join".}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Added the "Closed Captions" (''Preview'' only) and "Enable Command Macros" options.}}
+|{{HistoryLine|||dev=Preview 26.0.25|The "Closed Captions" option is now visible and functions properly (''Preview'' only).|Added the "Party" settings tab.|[[File:New UI - Keyboard & Mouse Settings Screen Menu (Bedrock Preview 26.0.25).png|53px]] [[File:New UI - Account Settings Screen Menu - Signed In (Bedrock Preview 26.0.25).png|53px]] [[File:New UI - Account Settings Screen Menu (Bedrock Preview 26.0.25).png|53px]] The Keyboard & Mouse and Account settings tabs have been updated to match [[Ore UI]], available in ''Preview'' only.|Renamed "Chat Instructions on Join" to "Chat instructions on join".}}
+|{{HistoryLine|||dev=Preview 26.0.28|[[File:New UI - Settings Screen Menu (Bedrock Preview 26.0.28).png|53px]] The main settings menu has been updated with [[Ore UI]] except for a few tabs, available in ''Preview'' only.|The keybinds for command macros and copy coordinates are now always present in the Keyboard & Mouse settings.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|Added the "Collect Network Metrics" option.}}
+|{{HistoryLine|||dev=Preview 26.10.21|Added a setting for texture streaming on some devices to the Video settings, which will reduce the GPU memory for some textures, especially with more add-ons. Available on ''Preview'' only.|Added an option on Windows to disable pausing when the application loses focus.}}
+|{{HistoryLine|||dev=Preview 26.10.23|[[File:New UI - Controller Settings Screen Menu (Bedrock Preview 26.10.23).png|53px]] [[File:New UI - Touch Settings Screen Menu (Bedrock Preview 26.10.23).png|53px]] The Controller and Touch settings tabs have been updated to match [[Ore UI]], available in ''Preview'' only.}}
+|{{HistoryLine|||dev=Preview 26.10.24|Moved the [[How to Play]] button from the settings to the [[game menu]].}}
+|{{HistoryLine|||dev=release|Settings screen is now updated with [[Ore UI]] in stable release and no longer ''Preview'' only.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.22|Added the "Hide your sounds", "Hide weather and ambient sounds", "Location of closed captions", and "Closed caption duration" settings for [[closed captions]].}}
+|{{HistoryLine|||dev=Preview 26.20.23|Added text filtering delay options to the creator settings.}}
+}}
+
+== Gallery ==
+=== Settings menus ===
+<gallery>
+File:Ore UI - Settings Screen Menu "Accessibility" Tab (Bedrock).png|The Accessibility tab
+File:Ore UI - Settings Screen Menu "Keyboard & Mouse" Tab (Bedrock).png|The Keyboard & Mouse tab
+File:Ore UI - Settings Screen Menu "Controller" Tab (Bedrock).png|The Controller tab
+File:Ore UI - Settings Screen Menu "Touch" Tab (Bedrock).png|The Touch tab
+File:Customize Touch Controls (Bedrock).png|The control customization interface.
+File:Bedrock Party settings.png|The upcoming Party tab
+File:Ore UI - Settings Screen Menu "General" Tab (Bedrock).png|The General tab
+File:Ore UI - Settings Screen Menu "Video" Tab (Bedrock).png|The Video tab
+File:New UI - Video Settings Screen - Graphics Mode - Vibrant Visuals Options (Bedrock Preview 1.21.130.24).png|All Vibrant Visuals options
+File:Vibrant Visuals gamma calibration screen.png|The Vibrant Visuals gamma calibration screen
+File:Ore UI - Settings Screen Menu "Audio" Tab (Bedrock).png|The Audio tab
+File:Ore UI - Settings Screen Menu "Account" Tab (signed out) (Bedrock).png|The Account tab, when signed out
+File:Ore UI - Settings Screen Menu "Account" Tab (signed in) (Bedrock).png.png|The Account tab, when signed in
+File:BE Subscriptions settings.png|The Subscriptions tab.
+File:BE Global Resources settings.png|The Global Resources tab.
+File:BE Storage settings.png|The Storage tab.
+File:Ore UI - Settings Screen Menu "Language" Tab (Bedrock).png|The Language tab
+File:BE Creator settings.png|The Creator Settings tab.
+</gallery>
+
+=== Settings feedback ===
+<gallery>
+File:Ore UI Feedback Settings Screen.png|The new Settings menu.
+File:Ore UI Feedback Audio Settings Screen.png|The new Audio Settings menu.
+</gallery>
+
+=== Historical menus ===
+<gallery>
+File:Mcpeandroidoptionscreen.png|The options screen in the Android version before v0.7.0 Alpha.
+File:MinecraftPEOptionsIOS.png|The options screen in the iOS version before v0.7.0 Alpha.
+File:MinecraftPE-OptionsAfter070.png|Options screen from [[Pocket Edition v0.7.0 alpha|v0.7.0]] to [[Pocket Edition v0.7.5 alpha|v0.7.5]].
+File:Options 0110.jpg|Options screen before [[Pocket Edition v0.12.1 alpha|v0.12.1]] (Omitted the sound button and added the Skin button).
+File:Options 1.0.4.png|The options screen from [[Pocket Edition 1.0.4|1.0.4]] to [[Pocket Edition 1.1.5|1.1.5]].
+File:BedrockEditionSettings.png|The options screen in an older version{{More info needed}}.
+File:View Bobbing Option.png|The view bobbing option.
+File:Brightness Slider.png|The brightness and view distance sliders.
+File:Better Together Pick Block.jpg|The pick block keybind option.
+File:VR Settings screen.png|The old VR Settings tab.
+File:Vibrant Visuals brightness calibration screen.png|The old Vibrant Visuals brightness calibration screen.
+File:Bedrock Accessibility settings.png|The Accessibility tab before 26.10
+File:BE Keyboard & Mouse Controls settings.png|The Keyboard & Mouse tab before 26.10
+File:BE Controller Controls settings.png|The Controller tab before 26.10
+File:BE Touch Controls settings.png|The Touch tab before 26.10
+File:Ore UI - Settings Touch - Control Mode Screen Menu (Bedrock).png|The Control Mode screen in the Touch tab before 26.10
+File:BE General settings.png|The General tab before 26.10
+File:BE Video settings.png|The Video tab before 26.10
+File:Vibrant Visuals menu (Bedrock Preview 1.21.80.25).png|The Vibrant Visuals settings before 26.10
+File:BE Audio settings.png|The Audio tab before 26.10
+File:BE Language settings.png|The Language tab before 26.10
+</gallery>
+
+== See also ==
+*[[Options]]
+*[[Heads-up display]]
+*[[Third person view]]
+*[[How to Play]]
+*[[Menu screen]]
+*[[World Options]]
+*[[Ore UI]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+{{Featured}}
+[[Category:Menu screens]]
+
+[[zh:设置]]

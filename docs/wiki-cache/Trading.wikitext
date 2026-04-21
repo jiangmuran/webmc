@@ -1,0 +1,415 @@
+{{about||the mechanic used with piglins|Bartering|the definition of trades in data packs|Villager trade definition}}
+[[File:VillagerGUI 1.14.png|thumb|upright=1.25|The trading menu {{in|java}}.]]
+[[File:Bedrock trading interface.png|thumb|upright=1.25|The trading menu {{in|be}}.]]
+[[File:Trading and Bartering Guide for Minecraft Java Edition 1.17+.png|thumb|upright=1.25|A reference chart for trading and [[bartering]] as of [[Java Edition 1.21.4]]. Offers may differ {{in|be}}.]]
+'''Trading''' is a [[gameplay]] mechanic that allows [[player]]s to exchange [[emerald]]s for [[item]]s, and vice versa, with [[villager]]s and [[wandering trader]]s. Trading can allow the acquisition of items that would otherwise be difficult or impossible to obtain, such as [[enchanted book]]s with "treasure" enchantments (e.g. [[Mending]]), [[bottles o' enchanting]], or [[Chainmail Armor|chainmail]] [[armor]].
+
+== Mechanics ==
+Pressing {{control|use}} on an adult [[villager]] with a profession, or on a [[wandering trader]], opens a menu, allowing a player to trade with that merchant. This action pauses any pathfinding the merchant was doing and makes it face you. If the merchant takes [[damage]] while trading, the trading menu closes. The same thing happens if they walk or are transported far enough away.
+
+All transactions involve [[emerald]]s. Trading is the only method of acquiring the [[globe banner pattern]], [[arrows of Decay]]{{only|BE|short=1}}, as well as all types of [[explorer map]]s except [[buried treasure]] maps in [[Survival]] mode. It is also the only [[renewable]] way to obtain [[bell]]s, [[diamond]] gear <ref group="note">Technically, diamond armor (not other types of diamond gear) can also be obtained renewably from zombies and skeletons; however, these mobs only have a 0.04% ({{frac|1|25,000}}) chance to spawn with diamond armor, rendering this an extremely impractical way to obtain such armor.</ref>, [[lapis lazuli]]{{only|BE|short=1}}, [[bottles o' enchanting]], [[glass]], [[sand]], [[red sand]], [[coral block]]s, and [[small dripleaves]].
+
+{{Message box
+| class = msgbox-blue
+| mini = 1
+| image = Wandering_Trader.png
+| text = The rest of this section describes mechanics that only apply to villagers. For wandering trader mechanics, see {{slink||Wandering Trader offers}}.
+}}
+
+=== Level ===
+Villagers have five career levels that can be increased by trading with them. Each villager starts at the novice level. A villager's level can be seen in the trading menu. The badge that a villager wears can also be identified: stone for a novice, iron for an apprentice, gold for a journeyman, emerald for an expert, and diamond for a master. Trading until the villager's trading bar gets full unlocks the next level of trades. When a player trades with a villager, both the villager and the player gain [[experience]]. All villager trades reward the player with 3–6 [[experience]] plus an additional 5 experience if the villager levels up with the trade. Trading with a wandering trader also rewards the player with some experience, although the trader does not have experience levels to gain. A villager levels up when its experience bar becomes full and gains up to two{{only|je|short=1}} or three{{only|be|short=1}} new trades and retains its existing trades.
+
+When a villager levels up its profession, it receives 10 seconds of [[Regeneration]] I (totaling to {{hp|4}} of restoration), which emits pink particles. The villager also emits green plus-shaped particles.
+
+Trades from the master level would still reward the villager with experience, but it has no actual effect as the villager can't level up any further.
+
+Each badge is 2x3 pixels except the novice (stone) badge, which is 4x4 pixels.
+
+{| class="wikitable" style="text-align:center" data-description="Villager trade levels"
+! Level
+! Badge
+! Name
+! Total villager experience required
+|-
+| 1
+| [[File:Villager badge Novice.png]]
+| Novice
+| 0
+|-
+| 2
+| [[File:Villager badge Apprentice.png]]
+| Apprentice
+| 10
+|-
+| 3
+| [[File:Villager badge Journeyman.png]]
+| Journeyman
+| 70
+|-
+| 4
+| [[File:Villager badge Expert.png]]
+| Expert
+| 150
+|-
+| 5
+| [[File:Villager badge Master.png]]
+| Master
+| 250
+|}
+
+{{IN|java}}, villagers have a maximum of 10 trades. Each level unlocks a maximum of two new trades. If a level has a pool of more than two trades, the two offered trades are chosen randomly from the set. For example, a novice farmer randomly picks 2 out of 5 possible trades (buy wheat, buy potatoes, buy carrots, buy beetroots, or sell bread). Master librarians are currently the only exception, as they pick 3 trades; this however is only visible when the [[Villager Trade Rebalance]] experiment is enabled, as the default pool contains only two possible choices and thus only those two trades are offered.
+
+{{IN|bedrock}}, each level unlocks 1, 2 or 3 trade slots; the amount of slots unlocked is fixed and depends on the profession and its level. Overall, villagers have 7–10 trade slots. For each slot, one trade is chosen randomly from a pool. For example, a novice farmer has two trade slots: for the first slot, it picks 1 out of 4 possible trades (buy wheat, buy potatoes, buy carrots or buy beetroots); for the second slot, only 1 trade is available (sell bread), so it is always offered. Cartographers are currently the only exception; for the apprentice, journeyman, and expert levels 2 trades are randomly chosen from the respective pools without being bound to specific trade slots. 
+
+A villager's [[profession]] dictates the trading pool used to determine its trades. For example, villagers wearing straw hats are farmers, so their trades are based on the Farmer trade pool. Each profession unlocks a predefined and finite set of offers. Different professions are assigned to each villager based on their job-site block. This profession is indicated by their appearance and in the trading interface. Novice villagers who have not traded can lose their profession and change back into unemployed villagers if their claimed job site block is removed. Removing and then replacing a job site block can alter the trades offered, and a villager with no experience resets its trades every so often. Once a player trades with a villager, the villager keeps its profession forever and subsequently locks in the offered trades.
+
+=== Trades ===
+Each trade can be used a maximum number of times, after which the villager runs out of stock, and the trade becomes disabled. The exact number is different for each item and referenced in the tables below. When villagers work at their [[job site block]]s, they activate their offers again, up to twice per day. {{IN|bedrock}}, villagers need to be linked to a bed to restock their trades (it is not necessary for them to sleep, but they require a bed nearby). When an offer is disabled, a red "X" appears in the trading interface {{in|java}}, or the trading slot becomes red {{in|bedrock}}, and the villager displays the same particle effect as an offer being created.
+
+When buying items from players, villagers ignore [[Data component format|additional item data]]; this allows, for example, selling renamed or enchanted items, as well as [[lodestone compass]]es instead of regular [[compass]]es {{in|java}}. When the [[Villager Trade Rebalance]] experiment is enabled, taiga armorers can also accept armor of any durability.<!--including 0 & negative durability-->
+
+=== Sale prices ===
+{{Anchor|Economics}}
+{{Hatnote|For the default sale price of a specific trade, find the trade in the tables below.}}
+{{Redirect|Discount|the mechanic that influences trading prices and iron golem hostility|Gossiping}}
+
+All price fluctuations affect only the first item involved in trade; for example, for an initial trade of 32 sticks for 1 emerald, the price might be driven down to 1 stick or up to 64 sticks for 1 emerald, but never for 2 emeralds. Additionally, no quantity can go lower than 1 or higher than the stack size.
+
+How strongly demand and reputation affect the price is determined by the price multiplier. The discount from the Hero of the Village effect does not use the price multiplier.
+
+Demand is tracked per item and is initially minus two times the number of times the villager has the trade in stock. Villagers restock twice per day, at which point they subtract the number of possible purchases before running out of stock and add twice the number of actually made purchases. When the demand becomes positive, the price is increased by the initial price times the price multiplier times the demand, rounded down.
+
+[[Villager#Gossiping|Reputation]] is tracked per player by each villager, though villagers can share the reputation of players. Positive reputation gives price discounts and {{in|java}} negative reputation gives price penalties. [[Curing]] a zombie villager gives permanent major positive reputation, trading gives temporary positive reputation, and attacking or killing villagers gives temporary negative reputation. The price is decreased by the price multiplier times the reputation, rounded down, though it can result in an overall price increase only in ''Java Edition''.
+
+The [[Hero of the Village]] effect, gained from completing a raid, reduces the price of all villagers by 30% of the initial price, rounded down but at least 1, and 6.25% per additional level.
+
+The formula for the full price in ''Java Edition'' can be written as:
+
+<math>\text{Final Price}=\min\left(\max\left(\left\lfloor p\cdot \left(m\cdot \max\left(0,d\right)+1\right)\right\rfloor-\left\lfloor m\cdot r\right\rfloor-sign\left(h\right)\cdot\max\left(1,\left\lfloor p\cdot \left(0.3+0.0625\cdot \left(h-1\right)\right)\right\rfloor\right),1\right),\text{Stack Size}\right)</math>
+
+where <math>p</math> is the initial price, <math>m</math> is the price multiplier, <math>d</math> is the demand, <math>r</math> is the reputation and <math>h</math> is the Hero of the Village level.
+
+== Non-trading villagers ==
+If the player attempts to trade with a non-trading villager {{in|java}}, it grunts and bobs its head, but if the player tries to do the same thing {{in|bedrock}}, nothing happens.
+
+=== Nitwit ===
+[[File:Nitwit refusing.gif|thumb|right|upright=0.4|A plains nitwit bobbing its head.{{Only|Java}}]]
+Nitwits are green-coated villagers. They cannot gain a profession.
+
+While they can be used for breeding, it is impossible to get a baby nitwit by breeding adult nitwits.
+
+=== Unemployed villager ===
+[[File:Villager refusing.gif|thumb|right|upright=0.4|An unemployed plains villager bobbing its head.{{Only|Java}}]]Villagers without a job cannot trade. They only wear their biome outfits. An unemployed villager gains a profession by claiming an unclaimed [[job site block]]. For example, an unclaimed [[cartography table]] converts an unemployed villager into a cartographer when the villager claims it, and both the villager and the table emit green particles. An inaccessible (or destroyed) job site block causes the connected villager to lose its profession, but that does not affect the player's [[popularity]] in the village.
+
+=== Baby villagers ===
+The appearance of baby villagers is similar to the corresponding adult unemployed villagers. They can't get a job or trade.<div style="clear: both;"></div>
+
+== Trade offers ==
+{{About|section=1|the trades in the current version of the game|the trades before [[Java Edition 1.8]]|Trading/Before Java Edition 1.8|the trades before [[Java Edition 1.14]]|Trading/Before Village & Pillage|the experimental rebalanced trades|Villager Trade Rebalance}}
+The villager pictured on the right is from the plains biome. To see villager professions dressed for other biomes, see {{Section link|Villagers|Professions}}.
+
+In {{JE}}, starting from Novice, at each level, two additional trades become available, unless there is only one trade within that level. If there are more than two possible trades, two are randomly selected.
+
+In {{BE}}, one trade is chosen randomly from each slot available. For example, if there are two items in the same slot, then only one of them will show up in the trade.
+
+=== Armorer ===
+[[File:Plains Armorer.png|thumb|upright=0.4|An armorer.]]
+'''{{EntityLink|Armorer|Armorers}}''' trade various foundry and armor items. Their job site block is the {{BlockLink|Blast Furnace}}.
+{{Profession trades|Armorer}}
+
+=== Butcher ===
+[[File:Plains Butcher.png|thumb|right|upright=0.4|A butcher.]]
+'''{{EntityLink|Butcher|Butchers}}''' trade meat and some other food items. Their job site block is the {{BlockLink|Smoker}}.
+{{Profession trades|Butcher}}
+
+=== Cartographer ===
+[[File:Plains Cartographer.png|thumb|right|upright=0.4|A cartographer.]]
+'''{{EntityLink|Cartographer|Cartographers}}''' trade maps and related items. Their job site block is the {{BlockLink|Cartography Table}}.
+{{Profession trades|Cartographer}}
+
+=== Cleric ===
+'''{{EntityLink|Cleric|Clerics}}''' trade magic items. Their job site block is the {{BlockLink|Brewing Stand}}.
+[[File:Plains Cleric.png|thumb|right|upright=0.4|A cleric.]]
+{{Profession trades|Cleric}}
+
+=== Farmer ===
+[[File:Plains Farmer.png|thumb|right|upright=0.4|A farmer.]]
+'''{{EntityLink|Farmer|Farmers}}''' trade crops and natural foods. Their job site block is the {{BlockLink|Composter}}.
+{{Profession trades|Farmer}}
+
+=== Fisherman ===
+[[File:Plains Fisherman.png|thumb|right|upright=0.4|A fisherman.]]
+'''{{EntityLink|Fisherman|Fishermen}}''' trade fishing-related items. Their job site block is the {{BlockLink|Barrel}}.
+{{Profession trades|Fisherman}}
+
+=== Fletcher ===
+[[File:Plains Fletcher.png|thumb|right|upright=0.4|A fletcher.]]
+'''{{EntityLink|Fletcher|Fletchers}}''' trade archery-related items. Their job site block is the {{BlockLink|Fletching Table}}.
+{{Profession trades|Fletcher}}
+
+=== Leatherworker ===
+[[File:Plains Leatherworker.png|thumb|right|upright=0.4|A leatherworker.]]
+'''{{EntityLink|Leatherworker|Leatherworkers}}''' trade animal products, including leather-related items. Their job site block is the {{BlockLink|Cauldron}}.
+{{Profession trades|Leatherworker}}
+
+=== Librarian ===
+[[File:Plains Librarian.png|thumb|right|upright=0.4|A librarian.]]
+'''{{EntityLink|Librarian|Librarians}}''' trade books and related items. Their job site block is the {{BlockLink|Lectern}}.
+{{Profession trades|Librarian}}
+
+=== Mason ===
+[[File:Plains Mason.png|thumb|right|upright=0.4|A mason.]]
+'''{{EntityLink|Mason|Masons}}''' trade various types of stone. Their job site block is the {{BlockLink|Stonecutter}}.
+{{Profession trades|Mason}}
+
+=== Shepherd ===
+[[File:Plains Shepherd.png|thumb|right|upright=0.4|A shepherd.]]
+'''{{EntityLink|Shepherd|Shepherds}}''' trade wool and dyed items. Their job site block is the {{BlockLink|Loom}}.
+{{Profession trades|Shepherd}}
+
+=== Toolsmith ===
+[[File:Plains Toolsmith.png|thumb|right|upright=0.4|A toolsmith.]]
+'''{{EntityLink|Toolsmith|Toolsmiths}}''' trade tools and related materials. Their job site block is the {{BlockLink|Smithing Table}}.
+{{Profession trades|Toolsmith}}
+
+=== Weaponsmith ===
+[[File:Plains Weaponsmith.png|thumb|right|upright=0.4|A weaponsmith.]]
+'''{{EntityLink|Weaponsmith|Weaponsmiths}}''' trade weapons and related materials. Their job site block is the {{BlockLink|Grindstone}}.
+{{Profession trades|Weaponsmith}}
+
+== Wandering Trader offers ==
+
+[[File:Wandering Trader.png|thumb|right|upright=0.4|Wandering Trader]]
+
+The [[wandering trader]] offers nine trades in total: two random trades from the purchasing table, two random trades from the special selling table, and five random trades from the ordinary selling table. These trades are not divided into categories; for example, a single wandering trader can sell 2 different saplings. Each trade is equally likely.{{verify}}
+
+In the trading GUI, the trade offers are always listed in this order:<br>
+* 2 purchasing trades
+* 2 special selling trades 
+* 5 ordinary selling trades 
+
+{{Profession trades|Wandering Trader|hide_xp=1|hide_multiplier=1}}
+
+{{-}}
+
+== Notes ==
+<references group="note" />
+<references group="n" />
+
+== Achievements ==
+{{load achievements|The Haggler; Treasure Hunter; Buy Low, Sell High; Master Trader;Star Trader}}
+
+== Advancements ==
+{{load advancements|Getting an Upgrade;Suit Up;Isn't it Iron Pick;Cover me with Diamonds;What a Deal!;Star Trader}}
+
+== Videos ==
+{{Video note|The first video is from [[Java Edition 1.5]], so [[Trading/Before Java Edition 1.8|old trading mechanics]] appear.}}{{yt|Uiz02BBiYZc}}
+{{yt|r_Jc2C96CcE}}
+
+== History ==
+{{See also|Trading/Before Village & Pillage|Trading/Before Java Edition 1.8}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||August 31, 2010|link=https://www.minecraftforum.net/forums/minecraft-java-edition/discussion/115233-minecraftcon-2010-gamestick-stream-transcription|The first time [[Notch]] hinted at plans for a possible future trading system was in an interview during [[MINECON 2010|MinecraftCon]]. The implementation of [[village]]s themselves and their inhabitants wasn't even confirmed at this point, but Notch still had a couple of ideas: "If you treat the villagers well, they become friendly to you and might start throwing things at you as gifts. If you treat them badly though by attacking and killing them they hate you and might chase you."<br>Notch also mentioned a meter of how much "villagers like you."}}
+|{{HistoryLine||May 21, 2012|link=https://twitter.com/jeb_/status/204619936616808451|[[Jeb]] released a screenshot of himself testing the trading system. The image showed buying and selling areas.
+|An ore block can be seen in the background later revealed in snapshot 12w21a to be [[History_of_textures/Unused_textures#Ruby|ruby]] ore, it was changed to [[emerald ore]] before 12w21a because [[Dinnerbone]] is colorblind. <ref>https://web.archive.org/web/20150316193400/http://www.minecraftforum.net/forums/archive/future-updates/384441-1-5-new-blocks-items#c11</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w21a|Added villager trading.}}
+|{{HistoryLine|||dev=12w22a|[[Eyes of ender]] are now sold by priests instead of bought, and [[rotten flesh]] is no longer bought.
+|Added the enchanted item trades to clerics.
+|Farmers now sell 2-3 flint for 10 gravel + 1 emerald.
+|Added the 1 emerald for 5 arrows trade.
+|The trading UI has been changed where an extra input space has been added where tools can be placed for buying enchantments and/or repair.
+}}
+|{{HistoryLine|||dev=12w23a|Before this snapshot, the librarian defaulted to [[written books]] instead of [[gold ingots]], since the written books had a potential offer of 1.3.}}
+|{{HistoryLine||1.4.2|dev=12w32a|The librarian's paper offer was adjusted to 24–35 [[paper]] per emerald from 19-29 paper.
+|The farmer's arrow offer was fixed to sell 9-12 [[arrow]]s from only 5 before. The original 1 emerald for 5 arrows trade was a result of a bug in the code where the minimum and maximum values of the arrow trade were swapped.
+|The librarian's buy book offer was adjusted to 11-12 [[book]]s from 12-14.
+|The farmer's gravel to flint trade now produces 4-5 [[flint]] from 2-3.
+|The offer probability mechanic was changed: as more offers exist for a villager, the probability of all offers rise. When an offer's probability goes beyond a certain limit, its probability goes down. The net effect is that rarer offers become more common when a villager has many offers, and common offers become rarer.
+|The offer removal mechanic has been replaced with an offer disabling mechanic.
+|All offers begin with 7 uses, allowing the offer to be traded up to seven times.
+|After this, even if the player has not left the trading menu, the offer is disabled.
+|If a player trades the last offer on the list and closes the menu, waiting for particles to appear around the villager, all disabled offers are renewed with 2–12 additional uses added to them.
+|It is possible for the final offer slot to be disabled, at which point no new offers can be generated and no existing offers can be renewed.
+|Trading with the last offer slot available increases the player's popularity with the village by one point. Popularity applies to the village as a whole; other players are not affected.}}
+|{{HistoryLine||1.4.6|dev=12w50a|Librarians now can sell [[enchanted book]]s.}}
+|{{HistoryLine||1.5|dev=13w04a|A villager spawned from a renamed [[spawn egg]] shows its name in the trading interface in place of "Villager".}}
+|{{HistoryLine||1.8|dev=14w02a|Villager trading has been revamped. See [[/Before Java Edition 1.8|here]] for offers before 1.8.
+|Trading now gives the player [[experience]].}}
+|{{HistoryLine|||dev=14w03a|Clerics no longer buy [[ender pearl]]s, as they did in 14w02a.}}
+|{{HistoryLine|||dev=14w03b|Librarians now sell name tags as their last trade instead of enchanted books.}}
+|{{HistoryLine|||dev=14w31a|Clerics now can sell [[bottles o' enchanting]], prices range from 3 to 11 emeralds each.}}
+|{{HistoryLine||1.9|dev=15w41a|Clerics no longer sell [[eyes of ender]].
+|Clerics now can sell [[ender pearls]]. Prices range from 4 to 7 emeralds each.}}
+|{{HistoryLine|||dev=15w43a|Librarians charge double for books with [[treasure enchantment]]s.}}
+|{{HistoryLine||1.11|dev=16w33a|Farmers now sell 5 to 7 [[apple]]s and 6 to 10 [[cookie]]s for an [[emerald]] instead of just 5 and 6 respectively.}}
+|{{HistoryLine|||dev=16w39a|Added new trades through the cartographer career.}}
+|{{HistoryLine||1.14|dev=19w05a|Added [[wandering trader]]s, which can trade with the player.}}
+|{{HistoryLine|||dev=19w11a|Revamped the trading system, adding many new trades for each villager profession.
+|Villager profession now depends on their job site block, rather than randomly assigned at birth.
+|Villager trading prices now depend on the player's popularity in the village.
+|Villagers now resupply their trades up to two times a day, if they get to work at a [[job site block]].
+|Added the mason profession, which uses a [[stonecutter]] as a job site block.
+|The trading UI has been updated.
+|The villager now gains experience as it trades with the player, and the experience is visible in a bar on top of the trading UI.}}
+|{{HistoryLine|||dev=19w13b|All available trades are now listed in a sidebar on the left of the trading interface.
+|When the player has the required materials, clicking on an available trade puts the items into the slots automatically.}}
+|{{HistoryLine||1.15|dev=19w45a|Librarians now sell one [[bookshelf]] for nine emeralds, instead of three bookshelves for six emeralds.}}
+|{{HistoryLine||1.17|dev=21w05a|Wandering traders now can sell [[small dripleaf]].}}
+|{{HistoryLine|||dev=21w13a|Wandering traders now can sell [[pointed dripstone]], [[rooted dirt]] and [[moss block]].
+|Masons now can sell [[dripstone block]]s.}}
+|{{HistoryLine||1.19|dev=22w15a|Wandering traders now can sell [[mangrove propagule]]s.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Wandering traders now can sell [[cherry sapling]]s.}}
+|{{HistoryLine||1.20.2|dev=23w31a|A villager now only gives a big discount the first time it is cured from a zombie villager. There are no longer multiple stacked discounts if a villager is zombified and cured multiple times.<ref name="MC-181190">{{bug|MC-181190||The discount for curing a villager is multiplied if the villager is reinfected and cured again|Fixed}}</ref>
+|Existing villagers with multiple curing discounts keep their lowered prices when updated to this snapshot.}}
+|{{HistoryLine|||dev=pre1|When villagers unlock new trades, the order of those trades in the UI is now always random instead of sometimes being deterministic.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=23w31a|Librarians from different biomes now sell different enchanted books.
+|Each village biome has one special enchantment that is only available from master-level librarians, and players must visit all seven village biomes to get all the enchanted books available from trading.
+|Some enchanted book trades are exclusive to jungle and swamp villagers, which do not spawn naturally, unless villagers are brought to and bred in jungle and swamp biomes.
+|Enchantments for [[trident]]s, [[crossbow]]s and [[fishing rod]]s are no longer obtainable from trading, and must be acquired by other means.
+|Wandering traders now sell more items, and buy certain items from the player.
+|Some of the existing trades from wandering traders have reduced prices.}}
+|{{HistoryLine|||dev=pre1|Added seven new maps which cartographers can sell.
+|Buying diamond armor from armorers now also requires a small amount of diamonds.
+|Most master-level armorers buy iron blocks and pay 4 emeralds for them.
+|Chainmail armor is exclusively sold by jungle and swamp armorers.
+|The savanna armorer sells cursed diamond armor at reduced prices.
+|The taiga armorer can swap one piece of diamond armor for another.}}
+|{{HistoryLine||1.20.5|exp=Villager Trade Rebalance|dev=24w03a|Villagers who buy armor now ignore durability and can buy damaged armor.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w12a|Added the [[trial chambers]] maps, sold by journeyman-level cartographers.}}
+|{{HistoryLine||1.21.5|dev=25w07a|Updated trades for cartographers and wandering traders are no longer behind the "Villager Trade Rebalance" experimental toggle.
+|Decreased the maximum uses of paper and glass pane cartographer trades from 16 to 12.}}
+|{{HistoryLine||26.1|dev=snap1|Trades are now [[Villager trade definition|data-driven]].}}
+|{{HistoryLine|||dev=snap11|The master librarian no longer offers [[name tag]]s.|The master librarian will now offer [[red candle]]s and [[yellow candle]]s for the price of three [[emerald]]s.|The [[wandering trader]] will now offer [[name tag]]s for the price of one emerald.}}
+|{{HistoryLine|||dev=pre2|The master [[librarian]] will now have three available trades to ensure that an enchanted book trade is always offered when using the [[Villager Trade Rebalance]] experiment.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Added villager trading.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.3|Added new trades through the cartographer career.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.5|Added [[Curse of Binding]] and [[Curse of Vanishing]] enchantments, which at this time can be obtained only via trading with librarians.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.2|Removed the curse enchantments in [[enchanted book]]s from librarian trading.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Added new trades through the stone mason villager profession and [[wandering trader]].}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Added economic trades, where players can unlock multiple tiers at once by leveling up villagers.
+|Villagers now have a demand in which their emerald cost can change higher or lower than usual.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Changed trading for villagers.
+|Villager no longer instantly resupply their trades when disabled, as now they need to work at a [[job site block]] to resupply themselves.
+|[[Hero of the Village]] now gives a trading price discount, except for one emerald trades (as it already costs one emerald).}}
+|{{HistoryLine|||dev=beta 1.11.0.7|Pressing {{control|use}} on a trade now auto-trades items.
+|Reverted cake trade from farmer villagers, increased max amount of some trade until disabled for master level stone mason and wandering trader.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.3|Changed some trades for both villager and wandering trader.}}
+|{{HistoryLine|||dev=beta 1.12.0.4|Removed regular sand from the wandering trader trades and adjusted the cost of a [[diamond hoe]] on the toolsmith.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Cartographer villager now buy 11 [[glass pane]]s, rather than 10.}}
+|{{HistoryLine|||dev=beta 1.13.0.15|Farmer villagers now sell [[suspicious stew]].}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Villager trade values have been changed to closely match ''Java Edition''.}}
+|{{HistoryLine|||dev=?|Enchanted items now cost in a range.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Wandering traders can sell [[small dripleaf]], [[pointed dripstone]], [[rooted dirt]], and [[moss block]]s.
+|Stone masons can now sell [[dripstone block]]s.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.26|Butcher, cartographer, librarian, and wandering trader trades have been changed to match ''Java Edition''.|Removed the emerald icon above a villager's head when trading.}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.20.21|Armorer, cleric, fisherman, shepherd, toolsmith, and weaponsmith villager trades have been changed to match ''Java Edition''.}}
+|{{HistoryLine||1.20.30|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.30.20|Librarians from different biomes now sell different enchanted books.
+|Librarians now sell, as their only master-level trade, enchanted books with a special enchantment that depends on the biome they spawned in (as shown by their garments). This is the only way to obtain these enchantments via trading.
+|Since jungle and swamp villagers do not spawn naturally, the only way to obtain the special enchanted books from these librarians is to bring in villagers from outside, get them to mate, and arrange for their babies to become librarians.
+|Enchantments for [[trident]]s, [[crossbow]]s and [[fishing rod]]s are no longer obtainable from trading, and must be acquired by other means.
+|Wandering traders now sell more items, and buy certain items from the player.
+|Some of the existing trades from wandering traders have reduced prices.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.21|A villager now only gives a big discount the first time it is cured from a zombie villager. There are no longer multiple stacked discounts if a villager is zombified and cured multiple times.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.23|Added the trial chambers maps, sold by journeyman-level cartographers.}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|Updated trades for cartographers and wandering traders are no longer behind the "Villager Trade Rebalancing" experimental toggle.
+|Decreased the maximum uses of paper and glass pane cartographer trades from 16 to 12.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added villager trading.}}
+|{{HistoryLine||xbox=TU20|xbone=CU8|ps3=1.13|psvita=1.13|ps4=1.13|Librarian villagers now may offer [[name tag]]s for sale.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Changed villager trades to offers as of [[Java Edition 1.8]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Clerics no longer sell [[eyes of ender]].
+|Clerics now sell [[ender pearls]]. Prices range from 4 to 7 emeralds each.|Librarians charge double for books with [[treasure enchantment]]s.{{check version|Change was apparently not present in TU43 yet even though mending and frost walker existed.}}}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Farmers now sell 5 to 7 [[apple]]s and 6 to 10 [[cookie]]s for an [[emerald]] instead of just 5 and 6 respectively.{{check version}}|Added new trades through the cartographer career.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|When trading with a villager, an emerald icon is now shown above it as long as the UI is open.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|The trading interface shows the new career level for villagers and which trades are locked.
+|Villager trading prices now depend on the player's popularity in the village.
+|Villagers now resupply their trades up to two times a day, if they get to work at a [[job site block]].
+|Added new trades through the stone mason villager profession and [[wandering trader]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.95|wiiu=none|switch=none|Stone mason [[villager]]s now sell 4 chiseled stone bricks for 1 emerald instead of 1 for 20 emeralds.|Stone mason [[villager]]s now sell 12 glazed terracotta for 1 emerald instead of buying it.}}
+}}
+
+== Issues ==
+{{issue list|Trading|Trades|trade system}}
+
+== Trivia ==
+* While diamonds are not renewable (except via vault, which is impractical in normal gameplay), many of their products (armor, tools, and weapons) are renewable through trading.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Villager refusing.gif|An unemployed [[villager]] refuses a player trying to trade.
+Nitwit refusing.gif|A [[nitwit]] villager refuses a player trying to trade.
+Leatherworker begging Leather.png|A villager presenting their [[emerald]]s.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Trading GUI2.jpg|The trading menu before [[Bedrock Edition 1.11.0]].
+Villager GUI Master.png|Trading options of a master-level weaponsmith.
+</gallery>
+
+=== Development images ===
+<gallery>
+Villager trading preview.png|The first image of the trading system released by Jeb. The currency item (later updated to the [[emerald]]) can be seen in the inventory.
+Villagenhanced.jpg|An enhanced version of Jeb's screenshot showing the original ore texture more clearly.
+</gallery>
+
+== See also ==
+* [[Bartering]]
+* {{EntityLink|Villager}}
+** {{EntityLink|Armorer}}
+** {{EntityLink|Butcher}}
+** {{EntityLink|Cartographer}}
+** {{EntityLink|Cleric}}
+** {{EntityLink|Farmer}}
+** {{EntityLink|Fisherman}}
+** {{EntityLink|Fletcher}}
+** {{EntityLink|Leatherworker}}
+** {{EntityLink|Librarian}}
+** {{EntityLink|Mason}}
+** {{EntityLink|Shepherd}}
+** {{EntityLink|Toolsmith}}
+** {{EntityLink|Weaponsmith}}
+* {{EntityLink|Wandering Trader}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|villager-jobs-ranked|All villager jobs – Ranked|August 19, 2025|James Nouch}}
+
+== Navigation ==
+{{Navbox villagers}}{{Navbox gameplay}}
+
+[[cs:Obchodování]]
+[[de:Handel]]
+[[es:Comercio]]
+[[fr:Commerce]]
+[[hu:Kereskedés]]
+[[it:Commercio]]
+[[ja:取引]]
+[[ko:거래]]
+[[lzh:商賈]]
+[[pl:Handel]]
+[[pt:Comércio]]
+[[ru:Торговля]]
+[[th:การแลกเปลี่ยน]]
+[[uk:Торгівля]]
+[[zh:交易]]

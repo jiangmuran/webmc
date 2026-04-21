@@ -1,0 +1,2341 @@
+{{about|the format used by structure blocks|the similar format used by many community programs|Schematic file format}}
+A '''structure file''' (also called '''structure template''') is an [[NBT]] file that stores small structures of blocks and entities. Structure files are used to store some structures such as [[end cities]], [[igloo]]s, and [[fossil]]s.
+
+== Usage ==
+=== Java Edition ===
+Structure files are stored as .nbt files in [[data pack]]s in the {{file|directory|inline=1|data/{{ph|namespace}}/structure}} folder.
+
+They can be saved and loaded using the [[Structure Block]]. When saved from Structure Blocks they are saved into the {{cd|generated/{{ph|namespace}}/structures}} subfolder in the world save folder. When no namespace is given, then the {{cd|minecraft}} namespace is used.
+
+Structure files can also be placed using the {{cmd|place template}} command. They are also used during the generation of some [[structure]]s and of [[fossil]] features.
+
+==== Prebuild structures ====
+
+<div class="treeview">
+{{Collapse|title={{EnvLink|Ancient City|ancient_city}}|content=
+** city
+*** entrance
+**** {{nbt|compound}} entrance_connector.nbt
+**** {{nbt|compound}} entrance_path_1.nbt
+**** {{nbt|compound}} entrance_path_2.nbt
+**** {{nbt|compound}} entrance_path_3.nbt
+**** {{nbt|compound}} entrance_path_4.nbt
+**** {{nbt|compound}} entrance_path_5.nbt
+** city_center
+*** walls
+**** {{nbt|compound}} bottom_1.nbt
+**** {{nbt|compound}} bottom_2.nbt
+**** {{nbt|compound}} bottom_left_corner.nbt
+**** {{nbt|compound}} bottom_right_corner.nbt
+**** {{nbt|compound}} bottom_right_corner_1.nbt
+**** {{nbt|compound}} bottom_right_corner_2.nbt
+**** {{nbt|compound}} left.nbt
+**** {{nbt|compound}} right.nbt
+**** {{nbt|compound}} top.nbt
+**** {{nbt|compound}} top_left_corner.nbt
+**** {{nbt|compound}} top_right_corner.nbt
+*** {{nbt|compound}} city_center_1.nbt
+*** {{nbt|compound}} city_center_2.nbt
+*** {{nbt|compound}} city_center_3.nbt
+** structures
+*** {{nbt|compound}} barracks.nbt
+*** {{nbt|compound}} camp_1.nbt
+*** {{nbt|compound}} camp_2.nbt
+*** {{nbt|compound}} camp_3.nbt
+*** {{nbt|compound}} chamber_1.nbt
+*** {{nbt|compound}} chamber_2.nbt
+*** {{nbt|compound}} chamber_3.nbt
+*** {{nbt|compound}} ice_box_1.nbt
+*** {{nbt|compound}} large_pillar_1.nbt
+*** {{nbt|compound}} large_ruin_1.nbt
+*** {{nbt|compound}} medium_pillar_1.nbt
+*** {{nbt|compound}} medium_ruin_1.nbt
+*** {{nbt|compound}} medium_ruin_2.nbt
+*** {{nbt|compound}} sauna_1.nbt
+*** {{nbt|compound}} small_ruin_1.nbt
+*** {{nbt|compound}} small_ruin_2.nbt
+*** {{nbt|compound}} small_statue.nbt
+*** {{nbt|compound}} tall_ruin_1.nbt
+*** {{nbt|compound}} tall_ruin_2.nbt
+*** {{nbt|compound}} tall_ruin_3.nbt
+*** {{nbt|compound}} tall_ruin_4.nbt
+** walls
+*** {{nbt|compound}} intact_corner_wall_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_bridge.nbt
+*** {{nbt|compound}} intact_horizontal_wall_passage_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_2.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_3.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_4.nbt
+*** {{nbt|compound}} intact_intersection_wall_1.nbt
+*** {{nbt|compound}} intact_lshape_wall_1.nbt
+*** {{nbt|compound}} ruined_corner_wall_1.nbt
+*** {{nbt|compound}} ruined_corner_wall_2.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_1.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_2.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_3.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_4.nbt
+}}
+{{Collapse|title={{EnvLink|Bastion Remnant|bastion}}|content=
+** blocks
+*** {{nbt|compound}} air.nbt
+*** {{nbt|compound}} gold.nbt
+** bridge
+*** bridge_pieces
+**** {{nbt|compound}} bridge.nbt
+*** connectors
+**** {{nbt|compound}} back_bridge_bottom.nbt
+**** {{nbt|compound}} back_bridge_top.nbt
+*** legs
+**** {{nbt|compound}} leg_0.nbt
+**** {{nbt|compound}} leg_1.nbt
+*** rampart_plates
+**** {{nbt|compound}} plate_0.nbt
+*** ramparts
+**** {{nbt|compound}} rampart_0.nbt
+**** {{nbt|compound}} rampart_1.nbt
+*** starting_pieces
+**** {{nbt|compound}} entrance.nbt
+**** {{nbt|compound}} entrance_base.nbt
+**** {{nbt|compound}} entrance_face.nbt
+*** walls
+**** {{nbt|compound}} wall_base_0.nbt
+**** {{nbt|compound}} wall_base_1.nbt
+** hoglin_stable
+*** connectors
+**** {{nbt|compound}} end_post_connector.nbt
+*** large_stables
+**** {{nbt|compound}} inner_0.nbt
+**** {{nbt|compound}} inner_1.nbt
+**** {{nbt|compound}} inner_2.nbt
+**** {{nbt|compound}} inner_3.nbt
+**** {{nbt|compound}} inner_4.nbt
+**** {{nbt|compound}} outer_0.nbt
+**** {{nbt|compound}} outer_1.nbt
+**** {{nbt|compound}} outer_2.nbt
+**** {{nbt|compound}} outer_3.nbt
+**** {{nbt|compound}} outer_4.nbt
+*** posts
+**** {{nbt|compound}} end_post.nbt
+**** {{nbt|compound}} stair_post.nbt
+*** rampart_plates
+**** {{nbt|compound}} rampart_plate_1.nbt
+*** ramparts
+**** {{nbt|compound}} ramparts_1.nbt
+**** {{nbt|compound}} ramparts_2.nbt
+**** {{nbt|compound}} ramparts_3.nbt
+*** small_stables
+**** {{nbt|compound}} inner_0.nbt
+**** {{nbt|compound}} inner_1.nbt
+**** {{nbt|compound}} inner_2.nbt
+**** {{nbt|compound}} inner_3.nbt
+**** {{nbt|compound}} outer_0.nbt
+**** {{nbt|compound}} outer_1.nbt
+**** {{nbt|compound}} outer_2.nbt
+**** {{nbt|compound}} outer_3.nbt
+*** stairs
+**** {{nbt|compound}} stairs_1_0.nbt
+**** {{nbt|compound}} stairs_1_1.nbt
+**** {{nbt|compound}} stairs_1_2.nbt
+**** {{nbt|compound}} stairs_1_3.nbt
+**** {{nbt|compound}} stairs_1_4.nbt
+**** {{nbt|compound}} stairs_2_0.nbt
+**** {{nbt|compound}} stairs_2_1.nbt
+**** {{nbt|compound}} stairs_2_2.nbt
+**** {{nbt|compound}} stairs_2_3.nbt
+**** {{nbt|compound}} stairs_2_4.nbt
+**** {{nbt|compound}} stairs_3_0.nbt
+**** {{nbt|compound}} stairs_3_1.nbt
+**** {{nbt|compound}} stairs_3_2.nbt
+**** {{nbt|compound}} stairs_3_3.nbt
+**** {{nbt|compound}} stairs_3_4.nbt
+*** starting_pieces
+**** {{nbt|compound}} stairs_0_mirrored.nbt
+**** {{nbt|compound}} stairs_1_mirrored.nbt
+**** {{nbt|compound}} stairs_2_mirrored.nbt
+**** {{nbt|compound}} stairs_3_mirrored.nbt
+**** {{nbt|compound}} stairs_4_mirrored.nbt
+**** {{nbt|compound}} starting_stairs_0.nbt
+**** {{nbt|compound}} starting_stairs_1.nbt
+**** {{nbt|compound}} starting_stairs_2.nbt
+**** {{nbt|compound}} starting_stairs_3.nbt
+**** {{nbt|compound}} starting_stairs_4.nbt
+*** walls
+**** {{nbt|compound}} side_wall_0.nbt
+**** {{nbt|compound}} side_wall_1.nbt
+**** {{nbt|compound}} wall_base.nbt
+*** {{nbt|compound}} air_base.nbt
+** mobs
+*** {{nbt|compound}} crossbow_piglin.nbt
+*** {{nbt|compound}} empty.nbt
+*** {{nbt|compound}} hoglin.nbt
+*** {{nbt|compound}} melee_piglin.nbt
+*** {{nbt|compound}} melee_piglin_always.nbt
+*** {{nbt|compound}} sword_piglin.nbt
+** treasure
+*** bases
+**** centers
+***** {{nbt|compound}} center_0.nbt
+***** {{nbt|compound}} center_1.nbt
+***** {{nbt|compound}} center_2.nbt
+***** {{nbt|compound}} center_3.nbt
+**** {{nbt|compound}} lava_basin.nbt
+*** brains
+**** {{nbt|compound}} center_brain.nbt
+*** connectors
+**** {{nbt|compound}} center_to_wall_middle.nbt
+**** {{nbt|compound}} center_to_wall_top.nbt
+**** {{nbt|compound}} center_to_wall_top_entrance.nbt
+*** corners
+**** bottom
+***** {{nbt|compound}} corner_0.nbt
+***** {{nbt|compound}} corner_1.nbt
+**** edges
+***** {{nbt|compound}} bottom.nbt
+***** {{nbt|compound}} middle.nbt
+***** {{nbt|compound}} top.nbt
+**** middle
+***** {{nbt|compound}} corner_0.nbt
+***** {{nbt|compound}} corner_1.nbt
+**** top
+***** {{nbt|compound}} corner_0.nbt
+***** {{nbt|compound}} corner_1.nbt
+*** entrances
+**** {{nbt|compound}} entrance_0.nbt
+*** extensions
+**** {{nbt|compound}} empty.nbt
+**** {{nbt|compound}} fire_room.nbt
+**** {{nbt|compound}} house_0.nbt
+**** {{nbt|compound}} house_1.nbt
+**** {{nbt|compound}} large_bridge_0.nbt
+**** {{nbt|compound}} large_bridge_1.nbt
+**** {{nbt|compound}} large_bridge_2.nbt
+**** {{nbt|compound}} large_bridge_3.nbt
+**** {{nbt|compound}} roofed_bridge.nbt
+**** {{nbt|compound}} small_bridge_0.nbt
+**** {{nbt|compound}} small_bridge_1.nbt
+**** {{nbt|compound}} small_bridge_2.nbt
+**** {{nbt|compound}} small_bridge_3.nbt
+*** ramparts
+**** {{nbt|compound}} bottom_wall_0.nbt
+**** {{nbt|compound}} lava_basin_main.nbt
+**** {{nbt|compound}} lava_basin_side.nbt
+**** {{nbt|compound}} mid_wall_main.nbt
+**** {{nbt|compound}} mid_wall_side.nbt
+**** {{nbt|compound}} top_wall.nbt
+*** roofs
+**** {{nbt|compound}} center_roof.nbt
+**** {{nbt|compound}} corner_roof.nbt
+**** {{nbt|compound}} wall_roof.nbt
+*** stairs
+**** {{nbt|compound}} lower_stairs.nbt
+*** walls
+**** bottom
+***** {{nbt|compound}} wall_0.nbt
+***** {{nbt|compound}} wall_1.nbt
+***** {{nbt|compound}} wall_2.nbt
+***** {{nbt|compound}} wall_3.nbt
+**** mid
+***** {{nbt|compound}} wall_0.nbt
+***** {{nbt|compound}} wall_1.nbt
+***** {{nbt|compound}} wall_2.nbt
+**** outer
+***** {{nbt|compound}} bottom_corner.nbt
+***** {{nbt|compound}} medium_outer_wall.nbt
+***** {{nbt|compound}} mid_corner.nbt
+***** {{nbt|compound}} outer_wall.nbt
+***** {{nbt|compound}} tall_outer_wall.nbt
+***** {{nbt|compound}} top_corner.nbt
+**** top
+***** {{nbt|compound}} main_entrance.nbt
+***** {{nbt|compound}} wall_0.nbt
+***** {{nbt|compound}} wall_1.nbt
+**** {{nbt|compound}} entrance_wall.nbt
+**** {{nbt|compound}} lava_wall.nbt
+*** {{nbt|compound}} big_air_full.nbt
+** units
+*** center_pieces
+**** {{nbt|compound}} center_0.nbt
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} center_2.nbt
+*** edges
+**** {{nbt|compound}} edge_0.nbt
+*** fillers
+**** {{nbt|compound}} stage_0.nbt
+*** pathways
+**** {{nbt|compound}} pathway_0.nbt
+**** {{nbt|compound}} pathway_wall_0.nbt
+*** rampart_plates
+**** {{nbt|compound}} plate_0.nbt
+*** ramparts
+**** {{nbt|compound}} ramparts_0.nbt
+**** {{nbt|compound}} ramparts_1.nbt
+**** {{nbt|compound}} ramparts_2.nbt
+*** stages
+**** rot
+***** {{nbt|compound}} stage_1_0.nbt
+**** {{nbt|compound}} stage_0_0.nbt
+**** {{nbt|compound}} stage_0_1.nbt
+**** {{nbt|compound}} stage_0_2.nbt
+**** {{nbt|compound}} stage_0_3.nbt
+**** {{nbt|compound}} stage_1_0.nbt
+**** {{nbt|compound}} stage_1_1.nbt
+**** {{nbt|compound}} stage_1_2.nbt
+**** {{nbt|compound}} stage_1_3.nbt
+**** {{nbt|compound}} stage_2_0.nbt
+**** {{nbt|compound}} stage_2_1.nbt
+**** {{nbt|compound}} stage_3_0.nbt
+**** {{nbt|compound}} stage_3_1.nbt
+**** {{nbt|compound}} stage_3_2.nbt
+**** {{nbt|compound}} stage_3_3.nbt
+*** wall_units
+**** {{nbt|compound}} edge_0_large.nbt
+**** {{nbt|compound}} unit_0.nbt
+*** walls
+**** {{nbt|compound}} connected_wall.nbt
+**** {{nbt|compound}} wall_base.nbt
+*** {{nbt|compound}} air_base.nbt
+}}
+{{collapse|title={{EnvLink|End City|end_city}}|content=
+**{{nbt|compound}} base_floor.nbt
+**{{nbt|compound}} base_roof.nbt
+**{{nbt|compound}} bridge_end.nbt
+**{{nbt|compound}} bridge_gentle_stairs.nbt
+**{{nbt|compound}} bridge_piece.nbt
+**{{nbt|compound}} bridge_steep_stairs.nbt
+**{{nbt|compound}} fat_tower_base.nbt
+**{{nbt|compound}} fat_tower_middle.nbt
+**{{nbt|compound}} fat_tower_top.nbt
+**{{nbt|compound}} second_floor_1.nbt
+**{{nbt|compound}} second_floor_2.nbt
+**{{nbt|compound}} second_roof.nbt
+**{{nbt|compound}} ship.nbt
+**{{nbt|compound}} third_floor_1.nbt
+**{{nbt|compound}} third_floor_2.nbt
+**{{nbt|compound}} third_roof.nbt
+**{{nbt|compound}} tower_base.nbt
+**{{nbt|compound}} tower_floor.nbt
+**{{nbt|compound}} tower_piece.nbt
+**{{nbt|compound}} tower_top.nbt
+}}
+{{collapse|title={{EnvLink|fossil}}|content=
+**{{nbt|compound}} skull_1.nbt
+**{{nbt|compound}} skull_1_coal.nbt
+**{{nbt|compound}} skull_2.nbt
+**{{nbt|compound}} skull_2_coal.nbt
+**{{nbt|compound}} skull_3.nbt
+**{{nbt|compound}} skull_3_coal.nbt
+**{{nbt|compound}} skull_4.nbt
+**{{nbt|compound}} skull_4_coal.nbt
+**{{nbt|compound}} spine_1.nbt
+**{{nbt|compound}} spine_1_coal.nbt
+**{{nbt|compound}} spine_2.nbt
+**{{nbt|compound}} spine_2_coal.nbt
+**{{nbt|compound}} spine_3.nbt
+**{{nbt|compound}} spine_3_coal.nbt
+**{{nbt|compound}} spine_4.nbt
+**{{nbt|compound}} spine_4_coal.nbt
+}}
+{{collapse|title={{EnvLink|igloo}}|content=
+**{{nbt|compound}} bottom.nbt
+**{{nbt|compound}} middle.nbt
+**{{nbt|compound}} top.nbt
+}}
+{{collapse|title={{EnvLink|Nether Fossil|nether_fossils}}|content=
+**{{nbt|compound}} fossil_1.nbt
+**{{nbt|compound}} fossil_2.nbt
+**{{nbt|compound}} fossil_3.nbt
+**{{nbt|compound}} fossil_4.nbt
+**{{nbt|compound}} fossil_5.nbt
+**{{nbt|compound}} fossil_6.nbt
+**{{nbt|compound}} fossil_7nbt
+**{{nbt|compound}} fossil_8.nbt
+**{{nbt|compound}} fossil_9.nbt
+**{{nbt|compound}} fossil_10.nbt
+**{{nbt|compound}} fossil_11.nbt
+**{{nbt|compound}} fossil_12.nbt
+**{{nbt|compound}} fossil_13.nbt
+**{{nbt|compound}} fossil_14.nbt
+}}
+{{collapse|title={{EnvLink|Pillager Outpost|pillager_outpost}}|content=
+**{{nbt|compound}} base_plate.nbt
+**{{nbt|compound}} feature_cage1.nbt
+**{{nbt|compound}} feature_cage2.nbt
+**{{nbt|compound}} feature_logs.nbt
+**{{nbt|compound}} feature_plate.nbt
+**{{nbt|compound}} feature_targets.nbt
+**{{nbt|compound}} feature_tent1.nbt
+**{{nbt|compound}} feature_tent2.nbt
+**{{nbt|compound}} watchtower.nbt
+**{{nbt|compound}} watchtower_overgrown.nbt
+}}
+{{collapse|title={{EnvLink|Ruined Portal|ruined_portal}}|content=
+**{{nbt|compound}} giant_portal_1.nbt
+**{{nbt|compound}} giant_portal_2.nbt
+**{{nbt|compound}} giant_portal_3.nbt
+**{{nbt|compound}} portal_1.nbt
+**{{nbt|compound}} portal_2.nbt
+**{{nbt|compound}} portal_3.nbt
+**{{nbt|compound}} portal_4.nbt
+**{{nbt|compound}} portal_5.nbt
+**{{nbt|compound}} portal_6.nbt
+**{{nbt|compound}} portal_7.nbt
+**{{nbt|compound}} portal_8.nbt
+**{{nbt|compound}} portal_9.nbt
+**{{nbt|compound}} portal_10.nbt
+}}
+{{collapse|title={{EnvLink|shipwreck}}|content=
+**{{nbt|compound}} rightsideup_backhalf.nbt
+**{{nbt|compound}} rightsideup_backhalf_degraded.nbt
+**{{nbt|compound}} rightsideup_fronthalf.nbt
+**{{nbt|compound}} rightsideup_fronthalf_degraded.nbt
+**{{nbt|compound}} rightsideup_full.nbt
+**{{nbt|compound}} rightsideup_full_degraded.nbt
+**{{nbt|compound}} sideways_backhalf.nbt
+**{{nbt|compound}} sideways_backhalf_degraded.nbt
+**{{nbt|compound}} sideways_fronthalf.nbt
+**{{nbt|compound}} sideways_fronthalf_degraded.nbt
+**{{nbt|compound}} sideways_full.nbt
+**{{nbt|compound}} sideways_full_degraded.nbt
+**{{nbt|compound}} upsidedown_backhalf.nbt
+**{{nbt|compound}} upsidedown_backhalf_degraded.nbt
+**{{nbt|compound}} upsidedown_fronthalf.nbt
+**{{nbt|compound}} upsidedown_fronthalf_degraded.nbt
+**{{nbt|compound}} upsidedown_full.nbt
+**{{nbt|compound}} upsidedown_full_degraded.nbt
+**{{nbt|compound}} with_mast.nbt
+**{{nbt|compound}} with_mast_degraded.nbt
+}}
+{{collapse|title={{EnvLink|Trail Ruins|trail_ruins}}|content=
+** buildings
+*** {{nbt|compound}} group_full_1.nbt
+*** {{nbt|compound}} group_full_2.nbt
+*** {{nbt|compound}} group_full_3.nbt
+*** {{nbt|compound}} group_full_4.nbt
+*** {{nbt|compound}} group_full_5.nbt
+*** {{nbt|compound}} group_hall_1.nbt
+*** {{nbt|compound}} group_hall_2.nbt
+*** {{nbt|compound}} group_hall_3.nbt
+*** {{nbt|compound}} group_hall_4.nbt
+*** {{nbt|compound}} group_hall_5.nbt
+*** {{nbt|compound}} group_lower_1.nbt
+*** {{nbt|compound}} group_lower_2.nbt
+*** {{nbt|compound}} group_lower_3.nbt
+*** {{nbt|compound}} group_lower_4.nbt
+*** {{nbt|compound}} group_lower_5.nbt
+*** {{nbt|compound}} group_room_1.nbt
+*** {{nbt|compound}} group_room_2.nbt
+*** {{nbt|compound}} group_room_3.nbt
+*** {{nbt|compound}} group_room_4.nbt
+*** {{nbt|compound}} group_room_5.nbt
+*** {{nbt|compound}} group_upper_1.nbt
+*** {{nbt|compound}} group_upper_2.nbt
+*** {{nbt|compound}} group_upper_3.nbt
+*** {{nbt|compound}} group_upper_4.nbt
+*** {{nbt|compound}} group_upper_5.nbt
+*** {{nbt|compound}} large_room_1.nbt
+*** {{nbt|compound}} large_room_2.nbt
+*** {{nbt|compound}} large_room_3.nbt
+*** {{nbt|compound}} large_room_4.nbt
+*** {{nbt|compound}} large_room_5.nbt
+*** {{nbt|compound}} one_room_1.nbt
+*** {{nbt|compound}} one_room_2.nbt
+*** {{nbt|compound}} one_room_3.nbt
+*** {{nbt|compound}} one_room_4.nbt
+*** {{nbt|compound}} one_room_5.nbt
+** decor
+*** {{nbt|compound}} decor_1.nbt
+*** {{nbt|compound}} decor_2.nbt
+*** {{nbt|compound}} decor_3.nbt
+*** {{nbt|compound}} decor_4.nbt
+*** {{nbt|compound}} decor_5.nbt
+*** {{nbt|compound}} decor_6.nbt
+*** {{nbt|compound}} decor_7.nbt
+** roads
+*** {{nbt|compound}} long_road_end.nbt
+*** {{nbt|compound}} road_end_1.nbt
+*** {{nbt|compound}} road_section_1.nbt
+*** {{nbt|compound}} road_section_2.nbt
+*** {{nbt|compound}} road_section_3.nbt
+*** {{nbt|compound}} road_section_4.nbt
+*** {{nbt|compound}} road_spacer_1.nbt
+** tower
+*** {{nbt|compound}} hall_1.nbt
+*** {{nbt|compound}} hall_2.nbt
+*** {{nbt|compound}} hall_3.nbt
+*** {{nbt|compound}} hall_4.nbt
+*** {{nbt|compound}} hall_5.nbt
+*** {{nbt|compound}} large_hall_1.nbt
+*** {{nbt|compound}} large_hall_2.nbt
+*** {{nbt|compound}} large_hall_3.nbt
+*** {{nbt|compound}} large_hall_4.nbt
+*** {{nbt|compound}} large_hall_5.nbt
+*** {{nbt|compound}} one_room_1.nbt
+*** {{nbt|compound}} one_room_2.nbt
+*** {{nbt|compound}} one_room_3.nbt
+*** {{nbt|compound}} one_room_4.nbt
+*** {{nbt|compound}} one_room_5.nbt
+*** {{nbt|compound}} platform_1.nbt
+*** {{nbt|compound}} platform_2.nbt
+*** {{nbt|compound}} platform_3.nbt
+*** {{nbt|compound}} platform_4.nbt
+*** {{nbt|compound}} platform_5.nbt
+*** {{nbt|compound}} stable_1.nbt
+*** {{nbt|compound}} stable_2.nbt
+*** {{nbt|compound}} stable_3.nbt
+*** {{nbt|compound}} stable_4.nbt
+*** {{nbt|compound}} stable_5.nbt
+*** {{nbt|compound}} tower_1.nbt
+*** {{nbt|compound}} tower_2.nbt
+*** {{nbt|compound}} tower_3.nbt
+*** {{nbt|compound}} tower_4.nbt
+*** {{nbt|compound}} tower_5.nbt
+*** {{nbt|compound}} tower_top_1.nbt
+*** {{nbt|compound}} tower_top_2.nbt
+*** {{nbt|compound}} tower_top_3.nbt
+*** {{nbt|compound}} tower_top_4.nbt
+*** {{nbt|compound}} tower_top_5.nbt
+}}
+{{collapse|title={{EnvLink|Trial Chambers|trial_chambers}}|content=
+** chamber
+*** {{nbt|compound}} assembly.nbt
+*** {{nbt|compound}} chamber_1.nbt
+*** {{nbt|compound}} chamber_2.nbt
+*** {{nbt|compound}} chamber_4.nbt
+*** {{nbt|compound}} chamber_8.nbt
+*** {{nbt|compound}} entrance_cap.nbt
+*** {{nbt|compound}} eruption.nbt
+*** {{nbt|compound}} pedestal.nbt
+*** {{nbt|compound}} slanted.nbt
+*** addon
+**** {{nbt|compound}} c1_breeze.nbt
+**** {{nbt|compound}} full_corner_column.nbt
+**** {{nbt|compound}} full_stacked_walkway.nbt
+**** {{nbt|compound}} full_stacked_walkway_2.nbt
+**** {{nbt|compound}} grate_bridge.nbt
+**** {{nbt|compound}} hanging_platform.nbt
+**** {{nbt|compound}} lower_staircase_down.nbt
+**** {{nbt|compound}} short_grate_platform.nbt
+**** {{nbt|compound}} short_platform.nbt
+**** {{nbt|compound}} walkway_with_bridge_1.nbt
+*** assembly
+**** {{nbt|compound}} cover_1.nbt
+**** {{nbt|compound}} cover_2.nbt
+**** {{nbt|compound}} cover_3.nbt
+**** {{nbt|compound}} cover_4.nbt
+**** {{nbt|compound}} cover_5.nbt
+**** {{nbt|compound}} cover_6.nbt
+**** {{nbt|compound}} full_column.nbt
+**** {{nbt|compound}} hanging_1.nbt
+**** {{nbt|compound}} hanging_2.nbt
+**** {{nbt|compound}} hanging_3.nbt
+**** {{nbt|compound}} hanging_4.nbt
+**** {{nbt|compound}} hanging_5.nbt
+**** {{nbt|compound}} left_staircase_1.nbt
+**** {{nbt|compound}} left_staircase_2.nbt
+**** {{nbt|compound}} left_staircase_3.nbt
+**** {{nbt|compound}} platform_1.nbt
+**** {{nbt|compound}} right_staircase_1.nbt
+**** {{nbt|compound}} right_staircase_2.nbt
+**** {{nbt|compound}} right_staircase_3.nbt
+**** {{nbt|compound}} spawner_1.nbt
+**** {{nbt|compound}} spawner_trap_1.nbt
+*** eruption
+**** {{nbt|compound}} breeze_slice_1.nbt
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} quadrant_4.nbt
+**** {{nbt|compound}} quadrant_5.nbt
+**** {{nbt|compound}} slice_1.nbt
+**** {{nbt|compound}} slice_2.nbt
+**** {{nbt|compound}} slice_3.nbt
+*** pedestal
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} ominous_slice_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} slice_1.nbt
+**** {{nbt|compound}} slice_2.nbt
+**** {{nbt|compound}} slice_3.nbt
+**** {{nbt|compound}} slice_4.nbt
+**** {{nbt|compound}} slice_5.nbt
+*** slanted
+**** {{nbt|compound}} center.nbt
+**** {{nbt|compound}} hallway_1.nbt
+**** {{nbt|compound}} hallway_2.nbt
+**** {{nbt|compound}} hallway_3.nbt
+**** {{nbt|compound}} hallway_4.nbt
+**** {{nbt|compound}} hallway_5.nbt
+**** {{nbt|compound}} ominous_upper_arm_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} quadrant_4.nbt
+**** {{nbt|compound}} ramp_1.nbt
+**** {{nbt|compound}} ramp_2.nbt
+**** {{nbt|compound}} ramp_3.nbt
+**** {{nbt|compound}} ramp_4.nbt
+** chests
+*** {{nbt|compound}} supply.nbt
+*** connectors
+**** {{nbt|compound}} supply.nbt
+** corridor
+*** {{nbt|compound}} atrium_1.nbt
+*** {{nbt|compound}} end_1.nbt
+*** {{nbt|compound}} end_2.nbt
+*** {{nbt|compound}} entrance_1.nbt
+*** {{nbt|compound}} entrance_2.nbt
+*** {{nbt|compound}} entrance_3.nbt
+*** {{nbt|compound}} first_plate.nbt
+*** {{nbt|compound}} second_plate.nbt
+*** {{nbt|compound}} straight_1.nbt
+*** {{nbt|compound}} straight_2.nbt
+*** {{nbt|compound}} straight_3.nbt
+*** {{nbt|compound}} straight_4.nbt
+*** {{nbt|compound}} straight_5.nbt
+*** {{nbt|compound}} straight_6.nbt
+*** {{nbt|compound}} straight_7.nbt
+*** {{nbt|compound}} straight_8.nbt
+*** addon
+**** {{nbt|compound}} arrow_dispenser.nbt
+**** {{nbt|compound}} bridge_lower.nbt
+**** {{nbt|compound}} chandelier_upper.nbt
+**** {{nbt|compound}} decoration_upper.nbt
+**** {{nbt|compound}} display_1.nbt
+**** {{nbt|compound}} display_2.nbt
+**** {{nbt|compound}} display_3.nbt
+**** {{nbt|compound}} head_upper.nbt
+**** {{nbt|compound}} ladder_to_middle.nbt
+**** {{nbt|compound}} open_walkway.nbt
+**** {{nbt|compound}} open_walkway_upper.nbt
+**** {{nbt|compound}} reward_upper.nbt
+**** {{nbt|compound}} staircase.nbt
+**** {{nbt|compound}} wall.nbt
+**** {{nbt|compound}} walled_walkway.nbt
+*** atrium
+**** {{nbt|compound}} bogged_relief.nbt
+**** {{nbt|compound}} breeze_relief.nbt
+**** {{nbt|compound}} grand_staircase_1.nbt
+**** {{nbt|compound}} grand_staircase_2.nbt
+**** {{nbt|compound}} grand_staircase_3.nbt
+**** {{nbt|compound}} spider_relief.nbt
+**** {{nbt|compound}} spiral_relief.nbt
+** decor
+*** {{nbt|compound}} barrel.nbt
+*** {{nbt|compound}} candle_1.nbt
+*** {{nbt|compound}} candle_2.nbt
+*** {{nbt|compound}} candle_3.nbt
+*** {{nbt|compound}} candle_4.nbt
+*** {{nbt|compound}} dead_bush_pot.nbt
+*** {{nbt|compound}} empty_pot.nbt
+*** {{nbt|compound}} flow_pot.nbt
+*** {{nbt|compound}} guster_pot.nbt
+*** {{nbt|compound}} scrape_pot.nbt
+*** {{nbt|compound}} undecorated_pot.nbt
+** dispensers
+*** {{nbt|compound}} chamber.nbt
+*** {{nbt|compound}} floor_dispenser.nbt
+*** {{nbt|compound}} wall_dispenser.nbt
+** hallway
+*** {{nbt|compound}} cache_1.nbt
+*** {{nbt|compound}} corner_staircase.nbt
+*** {{nbt|compound}} corner_staircase_down.nbt
+*** {{nbt|compound}} corridor_connector_1.nbt
+*** {{nbt|compound}} left_corner.nbt
+*** {{nbt|compound}} long_straight_staircase.nbt
+*** {{nbt|compound}} long_straight_staircase_down.nbt
+*** {{nbt|compound}} lower_hallway_connector.nbt
+*** {{nbt|compound}} right_corner.nbt
+*** {{nbt|compound}} rubble.nbt
+*** {{nbt|compound}} rubble_chamber.nbt
+*** {{nbt|compound}} rubble_chamber_thin.nbt
+*** {{nbt|compound}} rubble_thin.nbt
+*** {{nbt|compound}} straight.nbt
+*** {{nbt|compound}} straight_staircase.nbt
+*** {{nbt|compound}} straight_staircase_down.nbt
+*** {{nbt|compound}} upper_hallway_connector.nbt
+** intersection
+*** {{nbt|compound}} intersection_1.nbt
+*** {{nbt|compound}} intersection_2.nbt
+*** {{nbt|compound}} intersection_3.nbt
+** reward
+*** {{nbt|compound}} ominous_vault.nbt
+*** {{nbt|compound}} vault.nbt
+** spawner
+*** breeze
+**** {{nbt|compound}} breeze.nbt
+*** connectors
+**** {{nbt|compound}} breeze.nbt
+**** {{nbt|compound}} melee.nbt
+**** {{nbt|compound}} ranged.nbt
+**** {{nbt|compound}} slow_ranged.nbt
+**** {{nbt|compound}} small_melee.nbt
+*** melee
+**** {{nbt|compound}} husk.nbt
+**** {{nbt|compound}} spider.nbt
+**** {{nbt|compound}} zombie.nbt
+*** ranged
+**** {{nbt|compound}} poison_skeleton.nbt
+**** {{nbt|compound}} skeleton.nbt
+**** {{nbt|compound}} stray.nbt
+*** slow_ranged
+**** {{nbt|compound}} poison_skeleton.nbt
+**** {{nbt|compound}} skeleton.nbt
+**** {{nbt|compound}} stray.nbt
+*** small_melee
+**** {{nbt|compound}} baby_zombie.nbt
+**** {{nbt|compound}} cave_spider.nbt
+**** {{nbt|compound}} silverfish.nbt
+**** {{nbt|compound}} slime.nbt
+}}
+{{collapse|title={{EnvLink|Ocean Ruins|underwater_ruin}}|content=
+**{{nbt|compound}} big_brick_1.nbt
+**{{nbt|compound}} big_brick_2.nbt
+**{{nbt|compound}} big_brick_3.nbt
+**{{nbt|compound}} big_brick_8.nbt
+**{{nbt|compound}} big_cracked_1.nbt
+**{{nbt|compound}} big_cracked_2.nbt
+**{{nbt|compound}} big_cracked_3.nbt
+**{{nbt|compound}} big_cracked_8.nbt
+**{{nbt|compound}} big_mossy_1.nbt
+**{{nbt|compound}} big_mossy_2.nbt
+**{{nbt|compound}} big_mossy_3.nbt
+**{{nbt|compound}} big_mossy_8.nbt
+**{{nbt|compound}} big_warm_?.nbt
+**{{nbt|compound}} big_warm_4.nbt
+**{{nbt|compound}} big_warm_5.nbt
+**{{nbt|compound}} big_warm_6.nbt
+**{{nbt|compound}} big_warm_7.nbt
+**{{nbt|compound}} brick_1.nbt
+**{{nbt|compound}} brick_2.nbt
+**{{nbt|compound}} brick_3.nbt
+**{{nbt|compound}} brick_4.nbt
+**{{nbt|compound}} brick_5.nbt
+**{{nbt|compound}} brick_6.nbt
+**{{nbt|compound}} brick_7.nbt
+**{{nbt|compound}} brick_8.nbt
+**{{nbt|compound}} cracked_1.nbt
+**{{nbt|compound}} cracked_2.nbt
+**{{nbt|compound}} cracked_3.nbt
+**{{nbt|compound}} cracked_4.nbt
+**{{nbt|compound}} cracked_5.nbt
+**{{nbt|compound}} cracked_6.nbt
+**{{nbt|compound}} cracked_7.nbt
+**{{nbt|compound}} cracked_8.nbt
+**{{nbt|compound}} mossy_1.nbt
+**{{nbt|compound}} mossy_2.nbt
+**{{nbt|compound}} mossy_3.nbt
+**{{nbt|compound}} mossy_4.nbt
+**{{nbt|compound}} mossy_5.nbt
+**{{nbt|compound}} mossy_6.nbt
+**{{nbt|compound}} mossy_7.nbt
+**{{nbt|compound}} mossy_8.nbt
+**{{nbt|compound}} warm_1.nbt
+**{{nbt|compound}} warm_2.nbt
+**{{nbt|compound}} warm_3.nbt
+**{{nbt|compound}} warm_4.nbt
+**{{nbt|compound}} warm_5.nbt
+**{{nbt|compound}} warm_6.nbt
+**{{nbt|compound}} warm_7.nbt
+**{{nbt|compound}} warm_8.nbt
+}}
+{{collapse|title={{EnvLink|village}}|content=
+** common
+*** animals: Spawns a [[jigsaw block]] which sets the position of an animal. 
+**** {{nbt|compound}} cat_black
+**** {{nbt|compound}} cat_british
+**** {{nbt|compound}} cat_calico
+**** {{nbt|compound}} cat_jellie
+**** {{nbt|compound}} cat_persian
+**** {{nbt|compound}} cat_ragdoll
+**** {{nbt|compound}} cat_red
+**** {{nbt|compound}} cat_siamese
+**** {{nbt|compound}} cat_tabby
+**** {{nbt|compound}} cat_white
+**** {{nbt|compound}} cows_1
+**** {{nbt|compound}} horses_1
+**** {{nbt|compound}} horses_2
+**** {{nbt|compound}} horses_3
+**** {{nbt|compound}} horses_4
+**** {{nbt|compound}} horses_5
+**** {{nbt|compound}} pigs_1
+**** {{nbt|compound}} sheep_1
+**** {{nbt|compound}} sheep_2
+*** {{nbt|compound}} well_bottom: Spawns the foundation of a village well. 
+** decays: Spawns a patch of grass of the specified dimensions. 
+*** {{nbt|compound}} grass_9x9
+*** {{nbt|compound}} grass_11x13
+*** {{nbt|compound}} grass_16x16
+** desert
+*** houses: Desert variants of village houses.
+**** {{nbt|compound}} desert_animal_pen_1
+**** {{nbt|compound}} desert_animal_pen_2
+**** {{nbt|compound}} desert_armorer_1
+**** {{nbt|compound}} desert_blacksmith_1
+**** {{nbt|compound}} desert_butcher_shop_1
+**** {{nbt|compound}} desert_cartographer_house_1
+**** {{nbt|compound}} desert_farm_1
+**** {{nbt|compound}} desert_farm_2
+**** {{nbt|compound}} desert_fisher_1
+**** {{nbt|compound}} desert_fletcher_house_1
+**** {{nbt|compound}} desert_large_farm_1
+**** {{nbt|compound}} desert_library_1
+**** {{nbt|compound}} desert_mason_1
+**** {{nbt|compound}} desert_medium_house_1
+**** {{nbt|compound}} desert_medium_house_2
+**** {{nbt|compound}} desert_shepherd_house_1
+**** {{nbt|compound}} desert_small_house_1
+**** {{nbt|compound}} desert_small_house_2
+**** {{nbt|compound}} desert_small_house_3
+**** {{nbt|compound}} desert_small_house_4
+**** {{nbt|compound}} desert_small_house_5
+**** {{nbt|compound}} desert_small_house_6
+**** {{nbt|compound}} desert_small_house_7
+**** {{nbt|compound}} desert_small_house_8
+**** {{nbt|compound}} desert_tannery_1
+**** {{nbt|compound}} desert_temple_1
+**** {{nbt|compound}} desert_temple_2
+**** {{nbt|compound}} desert_tool_smith_1
+**** {{nbt|compound}} desert_weaponsmith_1
+*** streets: Generates the streets that span across the village.
+**** {{nbt|compound}} corner_01
+**** {{nbt|compound}} corner_02
+**** {{nbt|compound}} crossroad_01
+**** {{nbt|compound}} crossroad_02
+**** {{nbt|compound}} crossroad_03
+**** {{nbt|compound}} square_01
+**** {{nbt|compound}} square_02
+**** {{nbt|compound}} straight_01
+**** {{nbt|compound}} straight_02
+**** {{nbt|compound}} straight_03
+**** {{nbt|compound}} turn_01
+*** terminators: Used to generate the village streets.
+**** {{nbt|compound}} terminator_01
+**** {{nbt|compound}} terminator_02
+*** town_centers: Centerpieces of the town.
+**** {{nbt|compound}} desert_meeting_point_1
+**** {{nbt|compound}} desert_meeting_point_2
+**** {{nbt|compound}} desert_meeting_point_3
+*** {{nbt|compound}} desert_lamp_1
+** plains
+*** houses: Plains variants of village houses.
+**** {{nbt|compound}} plains_accessory_1
+**** {{nbt|compound}} plains_animal_pen_1
+**** {{nbt|compound}} plains_animal_pen_2
+**** {{nbt|compound}} plains_animal_pen_3
+**** {{nbt|compound}} plains_armorer_house_1
+**** {{nbt|compound}} plains_big_house_1
+**** {{nbt|compound}} plains_butcher_shop_1
+**** {{nbt|compound}} plains_butcher_shop_2
+**** {{nbt|compound}} plains_cartographer_1
+**** {{nbt|compound}} plains_fisher_cottage_1
+**** {{nbt|compound}} plains_fletcher_house_1
+**** {{nbt|compound}} plains_large_farm_1
+**** {{nbt|compound}} plains_library_1
+**** {{nbt|compound}} plains_library_2
+**** {{nbt|compound}} plains_masons_house_1
+**** {{nbt|compound}} plains_medium_house_1
+**** {{nbt|compound}} plains_medium_house_2
+**** {{nbt|compound}} plains_meeting_point_4
+**** {{nbt|compound}} plains_meeting_point_5
+**** {{nbt|compound}} plains_shepherds_house_1
+**** {{nbt|compound}} plains_small_farm_1
+**** {{nbt|compound}} plains_small_house_1
+**** {{nbt|compound}} plains_small_house_2
+**** {{nbt|compound}} plains_small_house_3
+**** {{nbt|compound}} plains_small_house_4
+**** {{nbt|compound}} plains_small_house_5
+**** {{nbt|compound}} plains_small_house_6
+**** {{nbt|compound}} plains_small_house_7
+**** {{nbt|compound}} plains_small_house_8
+**** {{nbt|compound}} plains_stable_1
+**** {{nbt|compound}} plains_stable_2
+**** {{nbt|compound}} plains_tannery_1
+**** {{nbt|compound}} plains_temple_3
+**** {{nbt|compound}} plains_temple_4
+**** {{nbt|compound}} plains_tool_smith_1
+**** {{nbt|compound}} plains_weaponsmith_1
+*** streets: Generates the streets that span across the village.
+**** {{nbt|compound}} corner_01
+**** {{nbt|compound}} corner_02
+**** {{nbt|compound}} corner_03
+**** {{nbt|compound}} crossroad_01
+**** {{nbt|compound}} crossroad_02
+**** {{nbt|compound}} crossroad_03
+**** {{nbt|compound}} crossroad_04
+**** {{nbt|compound}} crossroad_05
+**** {{nbt|compound}} crossroad_06
+**** {{nbt|compound}} straight_01
+**** {{nbt|compound}} straight_02
+**** {{nbt|compound}} straight_03
+**** {{nbt|compound}} straight_04
+**** {{nbt|compound}} straight_05
+**** {{nbt|compound}} straight_06
+**** {{nbt|compound}} turn_01
+*** terminators: Used to generate the village streets.
+**** {{nbt|compound}} terminator_01
+**** {{nbt|compound}} terminator_02
+**** {{nbt|compound}} terminator_03
+**** {{nbt|compound}} terminator_04
+*** town_centers: Centerpieces of the town.
+**** {{nbt|compound}} plains_fountain_01
+**** {{nbt|compound}} plains_meeting_point_1
+**** {{nbt|compound}} plains_meeting_point_2
+**** {{nbt|compound}} plains_meeting_point_3
+*** villagers: Spawns a jigsaw block which sets the position of a villager. 
+**** {{nbt|compound}} armorer
+**** {{nbt|compound}} butcher
+**** {{nbt|compound}} cartographer
+**** {{nbt|compound}} cleric
+**** {{nbt|compound}} farmer
+**** {{nbt|compound}} fishermen
+**** {{nbt|compound}} fletcher
+**** {{nbt|compound}} leatherworker
+**** {{nbt|compound}} librarian
+**** {{nbt|compound}} nitwit
+**** {{nbt|compound}} shepherd
+**** {{nbt|compound}} toolsmith
+**** {{nbt|compound}} unemployed
+**** {{nbt|compound}} weaponsmith
+*** {{nbt|compound}} plains_lamp_1
+** savanna
+*** houses: Savanna variants of village houses.
+**** {{nbt|compound}} savanna_animal_pen_1
+**** {{nbt|compound}} savanna_animal_pen_2
+**** {{nbt|compound}} savanna_animal_pen_3
+**** {{nbt|compound}} savanna_armorer_1
+**** {{nbt|compound}} savanna_butchers_shop_1
+**** {{nbt|compound}} savanna_butchers_shop_2
+**** {{nbt|compound}} savanna_cartographer_1
+**** {{nbt|compound}} savanna_fisher_cottage_1
+**** {{nbt|compound}} savanna_fletcher_house_1
+**** {{nbt|compound}} savanna_large_farm_1
+**** {{nbt|compound}} savanna_large_farm_2
+**** {{nbt|compound}} savanna_library_1
+**** {{nbt|compound}} savanna_mason_1
+**** {{nbt|compound}} savanna_medium_house_1
+**** {{nbt|compound}} savanna_medium_house_2
+**** {{nbt|compound}} savanna_shepherd_1
+**** {{nbt|compound}} savanna_small_farm
+**** {{nbt|compound}} savanna_small_house_1
+**** {{nbt|compound}} savanna_small_house_2
+**** {{nbt|compound}} savanna_small_house_3
+**** {{nbt|compound}} savanna_small_house_4
+**** {{nbt|compound}} savanna_small_house_5
+**** {{nbt|compound}} savanna_small_house_6
+**** {{nbt|compound}} savanna_small_house_7
+**** {{nbt|compound}} savanna_small_house_8
+**** {{nbt|compound}} savanna_tannery_1
+**** {{nbt|compound}} savanna_temple_1
+**** {{nbt|compound}} savanna_temple_2
+**** {{nbt|compound}} savanna_tool_smith_1
+**** {{nbt|compound}} savanna_weaponsmith_1
+**** {{nbt|compound}} savanna_weaponsmith_2
+*** streets: Generates the streets that span across the village.
+**** {{nbt|compound}} corner_01
+**** {{nbt|compound}} corner_03
+**** {{nbt|compound}} crossroad_02
+**** {{nbt|compound}} crossroad_03
+**** {{nbt|compound}} crossroad_04
+**** {{nbt|compound}} crossroad_05
+**** {{nbt|compound}} crossroad_06
+**** {{nbt|compound}} crossroad_07
+**** {{nbt|compound}} split_01
+**** {{nbt|compound}} split_02
+**** {{nbt|compound}} straight_02
+**** {{nbt|compound}} straight_04
+**** {{nbt|compound}} straight_05
+**** {{nbt|compound}} straight_06
+**** {{nbt|compound}} straight_08
+**** {{nbt|compound}} straight_09
+**** {{nbt|compound}} straight_10
+**** {{nbt|compound}} straight_11
+**** {{nbt|compound}} turn_01
+*** terminators: Used to generate the village streets.
+**** {{nbt|compound}} terminator_05
+*** town_centers: Centerpieces of the town.
+**** {{nbt|compound}} savanna_meeting_point_1
+**** {{nbt|compound}} savanna_meeting_point_2
+**** {{nbt|compound}} savanna_meeting_point_3
+**** {{nbt|compound}} savanna_meeting_point_4
+*** {{nbt|compound}} savanna_lamp_post_01
+** snowy
+*** houses: Snowy variants of village houses.
+**** {{nbt|compound}} snowy_animal_pen_1
+**** {{nbt|compound}} snowy_animal_pen_2
+**** {{nbt|compound}} snowy_armorer_house_1
+**** {{nbt|compound}} snowy_armorer_house_2
+**** {{nbt|compound}} snowy_butchers_shop_1
+**** {{nbt|compound}} snowy_butchers_shop_2
+**** {{nbt|compound}} snowy_cartographer_house_1
+**** {{nbt|compound}} snowy_farm_1
+**** {{nbt|compound}} snowy_farm_2
+**** {{nbt|compound}} snowy_fisher_cottage
+**** {{nbt|compound}} snowy_fletcher_house_1
+**** {{nbt|compound}} snowy_library_1
+**** {{nbt|compound}} snowy_masons_house_1
+**** {{nbt|compound}} snowy_masons_house_2
+**** {{nbt|compound}} snowy_medium_house_1
+**** {{nbt|compound}} snowy_medium_house_2
+**** {{nbt|compound}} snowy_medium_house_3
+**** {{nbt|compound}} snowy_shepherds_house_1
+**** {{nbt|compound}} snowy_small_house_1
+**** {{nbt|compound}} snowy_small_house_2
+**** {{nbt|compound}} snowy_small_house_3
+**** {{nbt|compound}} snowy_small_house_4
+**** {{nbt|compound}} snowy_small_house_5
+**** {{nbt|compound}} snowy_small_house_6
+**** {{nbt|compound}} snowy_small_house_7
+**** {{nbt|compound}} snowy_small_house_8
+**** {{nbt|compound}} snowy_tannery_1
+**** {{nbt|compound}} snowy_temple_1
+**** {{nbt|compound}} snowy_tool_smith_1
+**** {{nbt|compound}} snowy_weapon_smith_1
+*** streets: Generates the streets that span across the village.
+**** {{nbt|compound}} corner_01
+**** {{nbt|compound}} corner_02
+**** {{nbt|compound}} corner_03
+**** {{nbt|compound}} crossroad_01
+**** {{nbt|compound}} crossroad_02
+**** {{nbt|compound}} crossroad_03
+**** {{nbt|compound}} crossroad_04
+**** {{nbt|compound}} crossroad_05
+**** {{nbt|compound}} crossroad_06
+**** {{nbt|compound}} square_01
+**** {{nbt|compound}} straight_01
+**** {{nbt|compound}} straight_02
+**** {{nbt|compound}} straight_03
+**** {{nbt|compound}} straight_04
+**** {{nbt|compound}} straight_06
+**** {{nbt|compound}} straight_08
+**** {{nbt|compound}} turn_01
+*** town_centers: Centerpieces of the town.
+**** {{nbt|compound}} snowy_meeting_point_1
+**** {{nbt|compound}} snowy_meeting_point_2
+**** {{nbt|compound}} snowy_meeting_point_3
+*** {{nbt|compound}} snowy_lamp_post_01
+*** {{nbt|compound}} snowy_lamp_post_02
+*** {{nbt|compound}} snowy_lamp_post_03
+** taiga
+*** houses: Taiga variants of village houses. 
+**** {{nbt|compound}} taiga_animal_pen_1
+**** {{nbt|compound}} taiga_armorer_2
+**** {{nbt|compound}} taiga_armorer_house_1
+**** {{nbt|compound}} taiga_armorer_house_2
+**** {{nbt|compound}} taiga_butcher_shop_1
+**** {{nbt|compound}} taiga_cartographer_house_1
+**** {{nbt|compound}} taiga_fisher_cottage_1
+**** {{nbt|compound}} taiga_fletcher_house_1
+**** {{nbt|compound}} taiga_large_farm_1
+**** {{nbt|compound}} taiga_large_farm_2
+**** {{nbt|compound}} taiga_library_1
+**** {{nbt|compound}} taiga_masons_house_1
+**** {{nbt|compound}} taiga_medium_house_1
+**** {{nbt|compound}} taiga_medium_house_2
+**** {{nbt|compound}} taiga_medium_house_3
+**** {{nbt|compound}} taiga_medium_house_4
+**** {{nbt|compound}} taiga_shepherds_house_1
+**** {{nbt|compound}} taiga_small_farm_1
+**** {{nbt|compound}} taiga_small_house_1
+**** {{nbt|compound}} taiga_small_house_2
+**** {{nbt|compound}} taiga_small_house_3
+**** {{nbt|compound}} taiga_small_house_4
+**** {{nbt|compound}} taiga_small_house_5
+**** {{nbt|compound}} taiga_tannery_1
+**** {{nbt|compound}} taiga_temple_1
+**** {{nbt|compound}} taiga_tool_smith_1
+**** {{nbt|compound}} taiga_weaponsmith_1
+**** {{nbt|compound}} taiga_weaponsmith_2
+*** streets: Generates the streets that span across the village.
+**** {{nbt|compound}} corner_01
+**** {{nbt|compound}} corner_02
+**** {{nbt|compound}} corner_03
+**** {{nbt|compound}} crossroad_01
+**** {{nbt|compound}} crossroad_02
+**** {{nbt|compound}} crossroad_03
+**** {{nbt|compound}} crossroad_04
+**** {{nbt|compound}} crossroad_05
+**** {{nbt|compound}} crossroad_06
+**** {{nbt|compound}} straight_01
+**** {{nbt|compound}} straight_02
+**** {{nbt|compound}} straight_03
+**** {{nbt|compound}} straight_04
+**** {{nbt|compound}} straight_05
+**** {{nbt|compound}} straight_06
+**** {{nbt|compound}} turn_01
+*** town_centers: Centerpieces of the town.
+**** {{nbt|compound}} taiga_meeting_point_1
+**** {{nbt|compound}} taiga_meeting_point_2
+*** {{nbt|compound}} taiga_decoration_1
+*** {{nbt|compound}} taiga_decoration_2
+*** {{nbt|compound}} taiga_decoration_3
+*** {{nbt|compound}} taiga_decoration_4
+*** {{nbt|compound}} taiga_decoration_5
+*** {{nbt|compound}} taiga_decoration_6
+*** {{nbt|compound}} taiga_lamp_post_1
+}}
+{{collapse|title={{EnvLink|Woodland Mansion|woodland_mansion}}|content=
+**{{nbt|compound}} 1x1_a1.nbt
+**{{nbt|compound}} 1x1_a2.nbt
+**{{nbt|compound}} 1x1_a3.nbt
+**{{nbt|compound}} 1x1_a4.nbt
+**{{nbt|compound}} 1x1_a5.nbt
+**{{nbt|compound}} 1x1_as1.nbt
+**{{nbt|compound}} 1x1_as2.nbt
+**{{nbt|compound}} 1x1_as3.nbt
+**{{nbt|compound}} 1x1_as4.nbt
+**{{nbt|compound}} 1x1_b1.nbt
+**{{nbt|compound}} 1x1_b2.nbt
+**{{nbt|compound}} 1x1_b3.nbt
+**{{nbt|compound}} 1x1_b4.nbt
+**{{nbt|compound}} 1x1_b5.nbt
+**{{nbt|compound}} 1x2_a1.nbt
+**{{nbt|compound}} 1x2_a2.nbt
+**{{nbt|compound}} 1x2_a3.nbt
+**{{nbt|compound}} 1x2_a4.nbt
+**{{nbt|compound}} 1x2_a5.nbt
+**{{nbt|compound}} 1x2_a6.nbt
+**{{nbt|compound}} 1x2_a7.nbt
+**{{nbt|compound}} 1x2_a8.nbt
+**{{nbt|compound}} 1x2_a9.nbt
+**{{nbt|compound}} 1x2_b1.nbt
+**{{nbt|compound}} 1x2_b2.nbt
+**{{nbt|compound}} 1x2_b3.nbt
+**{{nbt|compound}} 1x2_b4.nbt
+**{{nbt|compound}} 1x2_b5.nbt
+**{{nbt|compound}} 1x2_c_stairs.nbt
+**{{nbt|compound}} 1x2_c1.nbt
+**{{nbt|compound}} 1x2_c2.nbt
+**{{nbt|compound}} 1x2_c3.nbt
+**{{nbt|compound}} 1x2_c4.nbt
+**{{nbt|compound}} 1x2_d_stairs.nbt
+**{{nbt|compound}} 1x2_d1.nbt
+**{{nbt|compound}} 1x2_d2.nbt
+**{{nbt|compound}} 1x2_d3.nbt
+**{{nbt|compound}} 1x2_d4.nbt
+**{{nbt|compound}} 1x2_d5.nbt
+**{{nbt|compound}} 1x2_s1.nbt
+**{{nbt|compound}} 1x2_s2.nbt
+**{{nbt|compound}} 1x2_se1.nbt
+**{{nbt|compound}} 2x2_a1.nbt
+**{{nbt|compound}} 2x2_a2.nbt
+**{{nbt|compound}} 2x2_a3.nbt
+**{{nbt|compound}} 2x2_a4.nbt
+**{{nbt|compound}} 2x2_b1.nbt
+**{{nbt|compound}} 2x2_b2.nbt
+**{{nbt|compound}} 2x2_b3.nbt
+**{{nbt|compound}} 2x2_b4.nbt
+**{{nbt|compound}} 2x2_b5.nbt
+**{{nbt|compound}} 2x2_s1.nbt
+**{{nbt|compound}} carpet_east.nbt
+**{{nbt|compound}} carpet_north.nbt
+**{{nbt|compound}} carpet_south_1.nbt
+**{{nbt|compound}} carpet_south_2.nbt
+**{{nbt|compound}} carpet_west_1.nbt
+**{{nbt|compound}} carpet_west_2.nbt
+**{{nbt|compound}} corridor_floor.nbt
+**{{nbt|compound}} entrance.nbt
+**{{nbt|compound}} indoors_door_1.nbt
+**{{nbt|compound}} indoors_door_2.nbt
+**{{nbt|compound}} indoors_wall_1.nbt
+**{{nbt|compound}} indoors_wall_2.nbt
+**{{nbt|compound}} roof.nbt
+**{{nbt|compound}} roof_corner.nbt
+**{{nbt|compound}} roof_front.nbt
+**{{nbt|compound}} roof_inner_corner.nbt
+**{{nbt|compound}} small_wall.nbt
+**{{nbt|compound}} small_wall_corner.nbt
+**{{nbt|compound}} wall_corner.nbt
+**{{nbt|compound}} wall_flat.nbt
+**{{nbt|compound}} wall_window.nbt
+}}</div>
+
+===Bedrock Edition===
+Structure files are stored using the [[NBT format]] in the game files. In [[behavior pack]]s, they are stored as {{cd|.mcstructure}} files in the {{cd|structures/{{ph|namespace}}}} folder.
+
+==== Prebuild structures ====
+
+<div class="treeview">
+{{Collapse|title={{EnvLink|Ancient City|ancient_city}}|content=<!-- exactly the same as Java -->
+** city
+*** entrance
+**** {{nbt|compound}} entrance_connector.nbt
+**** {{nbt|compound}} entrance_path_1.nbt
+**** {{nbt|compound}} entrance_path_2.nbt
+**** {{nbt|compound}} entrance_path_3.nbt
+**** {{nbt|compound}} entrance_path_4.nbt
+**** {{nbt|compound}} entrance_path_5.nbt
+** city_center
+*** walls
+**** {{nbt|compound}} bottom_1.nbt
+**** {{nbt|compound}} bottom_2.nbt
+**** {{nbt|compound}} bottom_left_corner.nbt
+**** {{nbt|compound}} bottom_right_corner.nbt
+**** {{nbt|compound}} bottom_right_corner_1.nbt
+**** {{nbt|compound}} bottom_right_corner_2.nbt
+**** {{nbt|compound}} left.nbt
+**** {{nbt|compound}} right.nbt
+**** {{nbt|compound}} top.nbt
+**** {{nbt|compound}} top_left_corner.nbt
+**** {{nbt|compound}} top_right_corner.nbt
+*** {{nbt|compound}} city_center_1.nbt
+*** {{nbt|compound}} city_center_2.nbt
+*** {{nbt|compound}} city_center_3.nbt
+** structures
+*** {{nbt|compound}} barracks.nbt
+*** {{nbt|compound}} camp_1.nbt
+*** {{nbt|compound}} camp_2.nbt
+*** {{nbt|compound}} camp_3.nbt
+*** {{nbt|compound}} chamber_1.nbt
+*** {{nbt|compound}} chamber_2.nbt
+*** {{nbt|compound}} chamber_3.nbt
+*** {{nbt|compound}} ice_box_1.nbt
+*** {{nbt|compound}} large_pillar_1.nbt
+*** {{nbt|compound}} large_ruin_1.nbt
+*** {{nbt|compound}} medium_pillar_1.nbt
+*** {{nbt|compound}} medium_ruin_1.nbt
+*** {{nbt|compound}} medium_ruin_2.nbt
+*** {{nbt|compound}} sauna_1.nbt
+*** {{nbt|compound}} small_ruin_1.nbt
+*** {{nbt|compound}} small_ruin_2.nbt
+*** {{nbt|compound}} small_statue.nbt
+*** {{nbt|compound}} tall_ruin_1.nbt
+*** {{nbt|compound}} tall_ruin_2.nbt
+*** {{nbt|compound}} tall_ruin_3.nbt
+*** {{nbt|compound}} tall_ruin_4.nbt
+** walls
+*** {{nbt|compound}} intact_corner_wall_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_bridge.nbt
+*** {{nbt|compound}} intact_horizontal_wall_passage_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_1.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_2.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_3.nbt
+*** {{nbt|compound}} intact_horizontal_wall_stairs_4.nbt
+*** {{nbt|compound}} intact_intersection_wall_1.nbt
+*** {{nbt|compound}} intact_lshape_wall_1.nbt
+*** {{nbt|compound}} ruined_corner_wall_1.nbt
+*** {{nbt|compound}} ruined_corner_wall_2.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_1.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_2.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_3.nbt
+*** {{nbt|compound}} ruined_horizontal_wall_stairs_4.nbt
+}}
+{{Collapse|title={{EnvLink|Bastion Remnant|bastion}}|content=
+** blocks
+*** {{nbt|compound}} air.nbt
+*** {{nbt|compound}} gold.nbt
+** bridge
+*** bridge_pieces
+**** {{nbt|compound}} bridge.nbt
+*** connectors
+**** {{nbt|compound}} back_bridge_bottom.nbt
+**** {{nbt|compound}} back_bridge_top.nbt
+*** legs
+**** {{nbt|compound}} leg_0.nbt
+**** {{nbt|compound}} leg_1.nbt
+*** rampart_plates
+**** {{nbt|compound}} plate_0.nbt
+*** ramparts
+**** {{nbt|compound}} rampart_0.nbt
+**** {{nbt|compound}} rampart_1.nbt
+*** starting_pieces
+**** {{nbt|compound}} entrance.nbt
+**** {{nbt|compound}} entrance_base.nbt
+**** {{nbt|compound}} entrance_face.nbt
+*** walls
+**** {{nbt|compound}} wall_base_0.nbt
+**** {{nbt|compound}} wall_base_1.nbt
+** hoglin_stable
+*** connectors
+**** {{nbt|compound}} end_post_connector.nbt
+*** large_stables
+**** {{nbt|compound}} inner_0.nbt
+**** {{nbt|compound}} inner_1.nbt
+**** {{nbt|compound}} inner_2.nbt
+**** {{nbt|compound}} inner_3.nbt
+**** {{nbt|compound}} inner_4.nbt
+**** {{nbt|compound}} outer_0.nbt
+**** {{nbt|compound}} outer_1.nbt
+**** {{nbt|compound}} outer_2.nbt
+**** {{nbt|compound}} outer_3.nbt
+**** {{nbt|compound}} outer_4.nbt
+*** posts
+**** {{nbt|compound}} end_post.nbt
+**** {{nbt|compound}} stair_post.nbt
+*** rampart_plates
+**** {{nbt|compound}} rampart_plate_1.nbt
+*** ramparts
+**** {{nbt|compound}} ramparts_1.nbt
+**** {{nbt|compound}} ramparts_2.nbt
+**** {{nbt|compound}} ramparts_3.nbt
+*** small_stables
+**** {{nbt|compound}} inner_0.nbt
+**** {{nbt|compound}} inner_1.nbt
+**** {{nbt|compound}} inner_2.nbt
+**** {{nbt|compound}} inner_3.nbt
+**** {{nbt|compound}} outer_0.nbt
+**** {{nbt|compound}} outer_1.nbt
+**** {{nbt|compound}} outer_2.nbt
+**** {{nbt|compound}} outer_3.nbt
+*** stairs
+**** {{nbt|compound}} stairs_1_0.nbt
+**** {{nbt|compound}} stairs_1_1.nbt
+**** {{nbt|compound}} stairs_1_2.nbt
+**** {{nbt|compound}} stairs_1_3.nbt
+**** {{nbt|compound}} stairs_1_4.nbt
+**** {{nbt|compound}} stairs_2_0.nbt
+**** {{nbt|compound}} stairs_2_1.nbt
+**** {{nbt|compound}} stairs_2_2.nbt
+**** {{nbt|compound}} stairs_2_3.nbt
+**** {{nbt|compound}} stairs_2_4.nbt
+**** {{nbt|compound}} stairs_3_0.nbt
+**** {{nbt|compound}} stairs_3_1.nbt
+**** {{nbt|compound}} stairs_3_2.nbt
+**** {{nbt|compound}} stairs_3_3.nbt
+**** {{nbt|compound}} stairs_3_4.nbt
+*** starting_pieces
+**** {{nbt|compound}} stairs_0_mirrored.nbt
+**** {{nbt|compound}} stairs_1_mirrored.nbt
+**** {{nbt|compound}} stairs_2_mirrored.nbt
+**** {{nbt|compound}} stairs_3_mirrored.nbt
+**** {{nbt|compound}} stairs_4_mirrored.nbt
+**** {{nbt|compound}} starting_stairs_0.nbt
+**** {{nbt|compound}} starting_stairs_1.nbt
+**** {{nbt|compound}} starting_stairs_2.nbt
+**** {{nbt|compound}} starting_stairs_3.nbt
+**** {{nbt|compound}} starting_stairs_4.nbt
+*** walls
+**** {{nbt|compound}} side_wall_0.nbt
+**** {{nbt|compound}} side_wall_1.nbt
+**** {{nbt|compound}} wall_base.nbt
+*** {{nbt|compound}} air_base.nbt
+** mobs
+*** {{nbt|compound}} crossbow_piglin.mcstructure
+*** {{nbt|compound}} empty.nbt
+*** {{nbt|compound}} hoglin.mcstructure
+*** {{nbt|compound}} melee_piglin.mcstructure
+*** {{nbt|compound}} melee_piglin_always.mcstructure
+*** {{nbt|compound}} sword_piglin.mcstructure
+** treasure
+*** bases
+**** {{nbt|compound}} centers__center_0.nbt
+**** {{nbt|compound}} centers__center_1.nbt
+**** {{nbt|compound}} centers__center_2.nbt
+**** {{nbt|compound}} centers__center_3.nbt
+**** {{nbt|compound}} lava_basin.nbt
+*** brains
+**** {{nbt|compound}} center_brain.nbt
+*** connectors
+**** {{nbt|compound}} center_to_wall_middle.nbt
+**** {{nbt|compound}} center_to_wall_top.nbt
+**** {{nbt|compound}} center_to_wall_top_entrance.nbt
+*** corners
+**** {{nbt|compound}} bottom__corner_0.nbt
+**** {{nbt|compound}} bottom__corner_1.nbt
+**** {{nbt|compound}} edges__bottom.nbt
+**** {{nbt|compound}} edges__middle.nbt
+**** {{nbt|compound}} edges__top.nbt
+**** {{nbt|compound}} middle__corner_0.nbt
+**** {{nbt|compound}} middle__corner_1.nbt
+**** {{nbt|compound}} top__corner_0.nbt
+**** {{nbt|compound}} top__corner_1.nbt
+*** entrances
+**** {{nbt|compound}} entrance_0.nbt
+*** extensions
+**** {{nbt|compound}} empty.nbt
+**** {{nbt|compound}} fire_room.nbt
+**** {{nbt|compound}} house_0.nbt
+**** {{nbt|compound}} house_1.nbt
+**** {{nbt|compound}} large_bridge_0.nbt
+**** {{nbt|compound}} large_bridge_1.nbt
+**** {{nbt|compound}} large_bridge_2.nbt
+**** {{nbt|compound}} large_bridge_3.nbt
+**** {{nbt|compound}} roofed_bridge.nbt
+**** {{nbt|compound}} small_bridge_0.nbt
+**** {{nbt|compound}} small_bridge_1.nbt
+**** {{nbt|compound}} small_bridge_2.nbt
+**** {{nbt|compound}} small_bridge_3.nbt
+*** ramparts
+**** {{nbt|compound}} bottom_wall_0.nbt
+**** {{nbt|compound}} lava_basin.nbt
+**** {{nbt|compound}} lava_basin_main.nbt
+**** {{nbt|compound}} lava_basin_side.nbt
+**** {{nbt|compound}} mid_wall_main.nbt
+**** {{nbt|compound}} mid_wall_side.nbt
+**** {{nbt|compound}} top_wall.nbt
+*** roofs
+**** {{nbt|compound}} center_roof.nbt
+**** {{nbt|compound}} corner_roof.nbt
+**** {{nbt|compound}} wall_roof.nbt
+*** stairs
+**** {{nbt|compound}} lower_stairs.nbt
+*** walls
+**** {{nbt|compound}} bottom__wall_0.nbt
+**** {{nbt|compound}} bottom__wall_1.nbt
+**** {{nbt|compound}} bottom__wall_2.nbt
+**** {{nbt|compound}} bottom__wall_3.nbt
+**** {{nbt|compound}} entrance_wall.nbt
+**** {{nbt|compound}} lava_wall.nbt
+**** {{nbt|compound}} mid__wall_0.nbt
+**** {{nbt|compound}} mid__wall_1.nbt
+**** {{nbt|compound}} mid__wall_2.nbt
+**** {{nbt|compound}} outer__bottom_corner.nbt
+**** {{nbt|compound}} outer__medium_outer_wall.nbt
+**** {{nbt|compound}} outer__mid_corner.nbt
+**** {{nbt|compound}} outer__outer_wall.nbt
+**** {{nbt|compound}} outer__tall_outer_wall.nbt
+**** {{nbt|compound}} outer__top_corner.nbt
+**** {{nbt|compound}} top__main_entrance.nbt
+**** {{nbt|compound}} top__wall_0.nbt
+**** {{nbt|compound}} top__wall_1.nbt
+*** {{nbt|compound}} big_air_full.nbt
+** units
+*** center_pieces
+**** {{nbt|compound}} center_0.nbt
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} center_2.nbt
+*** edges
+**** {{nbt|compound}} edge_0.nbt
+*** fillers
+**** {{nbt|compound}} stage_0.nbt
+*** pathways
+**** {{nbt|compound}} pathway_0.nbt
+**** {{nbt|compound}} pathway_wall_0.nbt
+*** rampart_plates
+**** {{nbt|compound}} plate_0.nbt
+*** ramparts
+**** {{nbt|compound}} ramparts_0.nbt
+**** {{nbt|compound}} ramparts_1.nbt
+**** {{nbt|compound}} ramparts_2.nbt
+*** stages
+**** {{nbt|compound}} rot__stage_1_0.nbt
+**** {{nbt|compound}} stage_0_0.nbt
+**** {{nbt|compound}} stage_0_1.nbt
+**** {{nbt|compound}} stage_0_2.nbt
+**** {{nbt|compound}} stage_0_3.nbt
+**** {{nbt|compound}} stage_1_0.nbt
+**** {{nbt|compound}} stage_1_1.nbt
+**** {{nbt|compound}} stage_1_2.nbt
+**** {{nbt|compound}} stage_1_3.nbt
+**** {{nbt|compound}} stage_2_0.nbt
+**** {{nbt|compound}} stage_2_1.nbt
+**** {{nbt|compound}} stage_3_0.nbt
+**** {{nbt|compound}} stage_3_1.nbt
+**** {{nbt|compound}} stage_3_2.nbt
+**** {{nbt|compound}} stage_3_3.nbt
+*** wall_units
+**** {{nbt|compound}} edge_0.nbt
+**** {{nbt|compound}} edge_0_large.nbt
+**** {{nbt|compound}} unit_0.nbt
+*** walls
+**** {{nbt|compound}} connected_wall.nbt
+**** {{nbt|compound}} wall_base.nbt
+*** {{nbt|compound}} air_base.nbt
+** {{nbt|compound}} jigsaw_test.nbt
+}}
+{{collapse|title={{EnvLink|Coral reef|coralcrust}}|content=
+**{{nbt|compound}} crust1.nbt
+**{{nbt|compound}} crust2.nbt
+**{{nbt|compound}} crust3.nbt
+**{{nbt|compound}} crust4.nbt
+**{{nbt|compound}} crust5.nbt
+**{{nbt|compound}} outcropping1.nbt
+**{{nbt|compound}} outcropping2.nbt
+**{{nbt|compound}} outcropping3.nbt
+**{{nbt|compound}} outcropping4.nbt
+**{{nbt|compound}} outcropping5.nbt
+**{{nbt|compound}} outcropping6.nbt
+}}
+{{collapse|title={{EnvLink|End City|endcity}}|content=
+**{{nbt|compound}} base_floor.nbt
+**{{nbt|compound}} base_roof.nbt
+**{{nbt|compound}} bridge_end.nbt
+**{{nbt|compound}} bridge_gentle_stairs.nbt
+**{{nbt|compound}} bridge_piece.nbt
+**{{nbt|compound}} bridge_steep_stairs.nbt
+**{{nbt|compound}} fat_tower_base.nbt
+**{{nbt|compound}} fat_tower_middle.nbt
+**{{nbt|compound}} fat_tower_top.nbt
+**{{nbt|compound}} second_floor.nbt
+**{{nbt|compound}} second_floor_2.nbt
+**{{nbt|compound}} second_roof.nbt
+**{{nbt|compound}} ship.nbt
+**{{nbt|compound}} third_floor.nbt
+**{{nbt|compound}} third_floor_b.nbt
+**{{nbt|compound}} third_floor_c.nbt
+**{{nbt|compound}} third_roof.nbt
+**{{nbt|compound}} tower_base.nbt
+**{{nbt|compound}} tower_floor.nbt
+**{{nbt|compound}} tower_piece.nbt
+**{{nbt|compound}} tower_top.nbt
+}}
+{{collapse|title={{EnvLink|Fossil|fossils}}|content=
+**{{nbt|compound}} fossil_skull_01.nbt
+**{{nbt|compound}} fossil_skull_02.nbt
+**{{nbt|compound}} fossil_skull_03.nbt
+**{{nbt|compound}} fossil_skull_04.nbt
+**{{nbt|compound}} fossil_spine_01.nbt
+**{{nbt|compound}} fossil_spine_02.nbt
+**{{nbt|compound}} fossil_spine_03.nbt
+**{{nbt|compound}} fossil_spine_04.nbt
+}}
+{{collapse|title={{EnvLink|igloo}}|content=
+**{{nbt|compound}} igloo_bottom.nbt
+**{{nbt|compound}} igloo_middle.nbt
+**{{nbt|compound}} igloo_top_no_trapdoor.nbt
+**{{nbt|compound}} igloo_top_trapdoor.nbt
+}}
+{{collapse|title={{EnvLink|Woodland Mansion|mansion}}|content=
+**{{nbt|compound}} 1x1_a1.nbt
+**{{nbt|compound}} 1x1_a2.nbt
+**{{nbt|compound}} 1x1_a3.nbt
+**{{nbt|compound}} 1x1_a4.nbt
+**{{nbt|compound}} 1x1_a5.nbt
+**{{nbt|compound}} 1x1_as1.nbt
+**{{nbt|compound}} 1x1_as2.nbt
+**{{nbt|compound}} 1x1_as3.nbt
+**{{nbt|compound}} 1x1_as4.nbt
+**{{nbt|compound}} 1x1_b1.nbt
+**{{nbt|compound}} 1x1_b2.nbt
+**{{nbt|compound}} 1x1_b3.nbt
+**{{nbt|compound}} 1x1_b4.nbt
+**{{nbt|compound}} 1x1_b5.nbt
+**{{nbt|compound}} 1x2_a1.nbt
+**{{nbt|compound}} 1x2_a2.nbt
+**{{nbt|compound}} 1x2_a3.nbt
+**{{nbt|compound}} 1x2_a4.nbt
+**{{nbt|compound}} 1x2_a5.nbt
+**{{nbt|compound}} 1x2_a6.nbt
+**{{nbt|compound}} 1x2_a7.nbt
+**{{nbt|compound}} 1x2_a8.nbt
+**{{nbt|compound}} 1x2_a9.nbt
+**{{nbt|compound}} 1x2_b1.nbt
+**{{nbt|compound}} 1x2_b2.nbt
+**{{nbt|compound}} 1x2_b3.nbt
+**{{nbt|compound}} 1x2_b4.nbt
+**{{nbt|compound}} 1x2_b5.nbt
+**{{nbt|compound}} 1x2_c_stairs.nbt
+**{{nbt|compound}} 1x2_c1.nbt
+**{{nbt|compound}} 1x2_c2.nbt
+**{{nbt|compound}} 1x2_c3.nbt
+**{{nbt|compound}} 1x2_c4.nbt
+**{{nbt|compound}} 1x2_d_stairs.nbt
+**{{nbt|compound}} 1x2_d1.nbt
+**{{nbt|compound}} 1x2_d2.nbt
+**{{nbt|compound}} 1x2_d3.nbt
+**{{nbt|compound}} 1x2_d4.nbt
+**{{nbt|compound}} 1x2_d5.nbt
+**{{nbt|compound}} 1x2_s1.nbt
+**{{nbt|compound}} 1x2_s2.nbt
+**{{nbt|compound}} 1x2_se1.nbt
+**{{nbt|compound}} 2x2_a1.nbt
+**{{nbt|compound}} 2x2_a2.nbt
+**{{nbt|compound}} 2x2_a3.nbt
+**{{nbt|compound}} 2x2_a4.nbt
+**{{nbt|compound}} 2x2_b1.nbt
+**{{nbt|compound}} 2x2_b2.nbt
+**{{nbt|compound}} 2x2_b3.nbt
+**{{nbt|compound}} 2x2_b4.nbt
+**{{nbt|compound}} 2x2_b5.nbt
+**{{nbt|compound}} 2x2_s1.nbt
+**{{nbt|compound}} carpet_east.nbt
+**{{nbt|compound}} carpet_north.nbt
+**{{nbt|compound}} carpet_south.nbt
+**{{nbt|compound}} carpet_south_2.nbt
+**{{nbt|compound}} carpet_west.nbt
+**{{nbt|compound}} carpet_west_2.nbt
+**{{nbt|compound}} corridor_floor.nbt
+**{{nbt|compound}} corridor_floor_2.nbt
+**{{nbt|compound}} entrance.nbt
+**{{nbt|compound}} indoors_door.nbt
+**{{nbt|compound}} indoors_door_2.nbt
+**{{nbt|compound}} indoors_wall.nbt
+**{{nbt|compound}} indoors_wall_2.nbt
+**{{nbt|compound}} roof.nbt
+**{{nbt|compound}} roof_corner.nbt
+**{{nbt|compound}} roof_front.nbt
+**{{nbt|compound}} roof_inner_corner.nbt
+**{{nbt|compound}} small_wall.nbt
+**{{nbt|compound}} small_wall_corner.nbt
+**{{nbt|compound}} wall_corner.nbt
+**{{nbt|compound}} wall_flat.nbt
+**{{nbt|compound}} wall_window.nbt
+}}
+{{collapse|title={{EnvLink|Nether Fossil|nether_fossils}}|content=<!-- exactly the same as Java -->
+**{{nbt|compound}} fossil_1.nbt
+**{{nbt|compound}} fossil_2.nbt
+**{{nbt|compound}} fossil_3.nbt
+**{{nbt|compound}} fossil_4.nbt
+**{{nbt|compound}} fossil_5.nbt
+**{{nbt|compound}} fossil_6.nbt
+**{{nbt|compound}} fossil_7nbt
+**{{nbt|compound}} fossil_8.nbt
+**{{nbt|compound}} fossil_9.nbt
+**{{nbt|compound}} fossil_10.nbt
+**{{nbt|compound}} fossil_11.nbt
+**{{nbt|compound}} fossil_12.nbt
+**{{nbt|compound}} fossil_13.nbt
+**{{nbt|compound}} fossil_14.nbt
+}}
+{{collapse|title={{EnvLink|Pillager Outpost|pillageroutpost}}|content=
+**{{nbt|compound}} feature_cage_with_allays.nbt
+**{{nbt|compound}} feature_cage1.nbt
+**{{nbt|compound}} feature_cage2.nbt
+**{{nbt|compound}} feature_logs.nbt
+**{{nbt|compound}} feature_targets.nbt
+**{{nbt|compound}} feature_tent1.nbt
+**{{nbt|compound}} feature_tent2.nbt
+**{{nbt|compound}} watchtower.nbt
+**{{nbt|compound}} watchtower_overgrown.nbt
+}}
+{{collapse|title={{EnvLink|Ocean Ruins|ruin}}|content=
+**{{nbt|compound}} big_ruin_warm_4.nbt
+**{{nbt|compound}} big_ruin_warm_5.nbt
+**{{nbt|compound}} big_ruin_warm_6.nbt
+**{{nbt|compound}} big_ruin_warm_7.nbt
+**{{nbt|compound}} big_ruin1_brick.nbt
+**{{nbt|compound}} big_ruin1_cracked.nbt
+**{{nbt|compound}} big_ruin1_mossy.nbt
+**{{nbt|compound}} big_ruin2_brick.nbt
+**{{nbt|compound}} big_ruin2_cracked.nbt
+**{{nbt|compound}} big_ruin2_mossy.nbt
+**{{nbt|compound}} big_ruin3_brick.nbt
+**{{nbt|compound}} big_ruin3_cracked.nbt
+**{{nbt|compound}} big_ruin3_mossy.nbt
+**{{nbt|compound}} big_ruin8_brick.nbt
+**{{nbt|compound}} big_ruin8_cracked.nbt
+**{{nbt|compound}} big_ruin8_mossy.nbt
+**{{nbt|compound}} ruin_warm_1.nbt
+**{{nbt|compound}} ruin_warm_2.nbt
+**{{nbt|compound}} ruin_warm_3.nbt
+**{{nbt|compound}} ruin_warm_4.nbt
+**{{nbt|compound}} ruin_warm_5.nbt
+**{{nbt|compound}} ruin_warm_6.nbt
+**{{nbt|compound}} ruin_warm_7.nbt
+**{{nbt|compound}} ruin_warm_8.nbt
+**{{nbt|compound}} ruin1_brick.nbt
+**{{nbt|compound}} ruin1_cracked.nbt
+**{{nbt|compound}} ruin1_mossy.nbt
+**{{nbt|compound}} ruin2_brick.nbt
+**{{nbt|compound}} ruin2_cracked.nbt
+**{{nbt|compound}} ruin2_mossy.nbt
+**{{nbt|compound}} ruin3_brick.nbt
+**{{nbt|compound}} ruin3_cracked.nbt
+**{{nbt|compound}} ruin3_mossy.nbt
+**{{nbt|compound}} ruin4.nbt
+**{{nbt|compound}} ruin4_brick.nbt
+**{{nbt|compound}} ruin4_cracked.nbt
+**{{nbt|compound}} ruin4_mossy.nbt
+**{{nbt|compound}} ruin5_brick.nbt
+**{{nbt|compound}} ruin5_cracked.nbt
+**{{nbt|compound}} ruin5_mossy.nbt
+**{{nbt|compound}} ruin6_brick.nbt
+**{{nbt|compound}} ruin6_cracked.nbt
+**{{nbt|compound}} ruin6_mossy.nbt
+**{{nbt|compound}} ruin7_brick.nbt
+**{{nbt|compound}} ruin7_cracked.nbt
+**{{nbt|compound}} ruin7_mossy.nbt
+**{{nbt|compound}} ruin8_brick.nbt
+**{{nbt|compound}} ruin8_cracked.nbt
+**{{nbt|compound}} ruin8_mossy.nbt
+}}
+{{collapse|title={{EnvLink|Ruined Portal|ruined_portal}}|content=<!-- exactly the same as Java -->
+**{{nbt|compound}} giant_portal_1.nbt
+**{{nbt|compound}} giant_portal_2.nbt
+**{{nbt|compound}} giant_portal_3.nbt
+**{{nbt|compound}} portal_1.nbt
+**{{nbt|compound}} portal_2.nbt
+**{{nbt|compound}} portal_3.nbt
+**{{nbt|compound}} portal_4.nbt
+**{{nbt|compound}} portal_5.nbt
+**{{nbt|compound}} portal_6.nbt
+**{{nbt|compound}} portal_7.nbt
+**{{nbt|compound}} portal_8.nbt
+**{{nbt|compound}} portal_9.nbt
+**{{nbt|compound}} portal_10.nbt
+}}
+{{collapse|title={{EnvLink|shipwreck}}|content=
+**{{nbt|compound}} swrightsideupbackhalf.nbt
+**{{nbt|compound}} swrightsideupbackhalfdegraded.nbt
+**{{nbt|compound}} swrightsideupfronthalf.nbt
+**{{nbt|compound}} swrightsideupfronthalfdegraded.nbt
+**{{nbt|compound}} swrightsideupfull.nbt
+**{{nbt|compound}} swrightsideupfulldegraded.nbt
+**{{nbt|compound}} swsidewaysbackhalf.nbt
+**{{nbt|compound}} swsidewaysbackhalfdegraded.nbt
+**{{nbt|compound}} swsidewaysfronthalf.nbt
+**{{nbt|compound}} swsidewaysfronthalfdegraded.nbt
+**{{nbt|compound}} swsidewaysfull.nbt
+**{{nbt|compound}} swsidewaysfulldegraded.nbt
+**{{nbt|compound}} swupsidedownbackhalf.nbt
+**{{nbt|compound}} swupsidedownbackhalfdegraded.nbt
+**{{nbt|compound}} swupsidedownfronthalf.nbt
+**{{nbt|compound}} swupsidedownfronthalfdegraded.nbt
+**{{nbt|compound}} swupsidedownfull.nbt
+**{{nbt|compound}} swupsidedownfulldegraded.nbt
+**{{nbt|compound}} swwithmast.nbt
+**{{nbt|compound}} swwithmastdegraded.nbt
+}}
+{{collapse|title={{EnvLink|Trail Ruins|trail_ruins}}|content=<!-- exactly the same as Java -->
+** buildings
+*** {{nbt|compound}} group_full_1.nbt
+*** {{nbt|compound}} group_full_2.nbt
+*** {{nbt|compound}} group_full_3.nbt
+*** {{nbt|compound}} group_full_4.nbt
+*** {{nbt|compound}} group_full_5.nbt
+*** {{nbt|compound}} group_hall_1.nbt
+*** {{nbt|compound}} group_hall_2.nbt
+*** {{nbt|compound}} group_hall_3.nbt
+*** {{nbt|compound}} group_hall_4.nbt
+*** {{nbt|compound}} group_hall_5.nbt
+*** {{nbt|compound}} group_lower_1.nbt
+*** {{nbt|compound}} group_lower_2.nbt
+*** {{nbt|compound}} group_lower_3.nbt
+*** {{nbt|compound}} group_lower_4.nbt
+*** {{nbt|compound}} group_lower_5.nbt
+*** {{nbt|compound}} group_room_1.nbt
+*** {{nbt|compound}} group_room_2.nbt
+*** {{nbt|compound}} group_room_3.nbt
+*** {{nbt|compound}} group_room_4.nbt
+*** {{nbt|compound}} group_room_5.nbt
+*** {{nbt|compound}} group_upper_1.nbt
+*** {{nbt|compound}} group_upper_2.nbt
+*** {{nbt|compound}} group_upper_3.nbt
+*** {{nbt|compound}} group_upper_4.nbt
+*** {{nbt|compound}} group_upper_5.nbt
+*** {{nbt|compound}} large_room_1.nbt
+*** {{nbt|compound}} large_room_2.nbt
+*** {{nbt|compound}} large_room_3.nbt
+*** {{nbt|compound}} large_room_4.nbt
+*** {{nbt|compound}} large_room_5.nbt
+*** {{nbt|compound}} one_room_1.nbt
+*** {{nbt|compound}} one_room_2.nbt
+*** {{nbt|compound}} one_room_3.nbt
+*** {{nbt|compound}} one_room_4.nbt
+*** {{nbt|compound}} one_room_5.nbt
+** decor
+*** {{nbt|compound}} decor_1.nbt
+*** {{nbt|compound}} decor_2.nbt
+*** {{nbt|compound}} decor_3.nbt
+*** {{nbt|compound}} decor_4.nbt
+*** {{nbt|compound}} decor_5.nbt
+*** {{nbt|compound}} decor_6.nbt
+*** {{nbt|compound}} decor_7.nbt
+** roads
+*** {{nbt|compound}} long_road_end.nbt
+*** {{nbt|compound}} road_end_1.nbt
+*** {{nbt|compound}} road_section_1.nbt
+*** {{nbt|compound}} road_section_2.nbt
+*** {{nbt|compound}} road_section_3.nbt
+*** {{nbt|compound}} road_section_4.nbt
+*** {{nbt|compound}} road_spacer_1.nbt
+** tower
+*** {{nbt|compound}} hall_1.nbt
+*** {{nbt|compound}} hall_2.nbt
+*** {{nbt|compound}} hall_3.nbt
+*** {{nbt|compound}} hall_4.nbt
+*** {{nbt|compound}} hall_5.nbt
+*** {{nbt|compound}} large_hall_1.nbt
+*** {{nbt|compound}} large_hall_2.nbt
+*** {{nbt|compound}} large_hall_3.nbt
+*** {{nbt|compound}} large_hall_4.nbt
+*** {{nbt|compound}} large_hall_5.nbt
+*** {{nbt|compound}} one_room_1.nbt
+*** {{nbt|compound}} one_room_2.nbt
+*** {{nbt|compound}} one_room_3.nbt
+*** {{nbt|compound}} one_room_4.nbt
+*** {{nbt|compound}} one_room_5.nbt
+*** {{nbt|compound}} platform_1.nbt
+*** {{nbt|compound}} platform_2.nbt
+*** {{nbt|compound}} platform_3.nbt
+*** {{nbt|compound}} platform_4.nbt
+*** {{nbt|compound}} platform_5.nbt
+*** {{nbt|compound}} stable_1.nbt
+*** {{nbt|compound}} stable_2.nbt
+*** {{nbt|compound}} stable_3.nbt
+*** {{nbt|compound}} stable_4.nbt
+*** {{nbt|compound}} stable_5.nbt
+*** {{nbt|compound}} tower_1.nbt
+*** {{nbt|compound}} tower_2.nbt
+*** {{nbt|compound}} tower_3.nbt
+*** {{nbt|compound}} tower_4.nbt
+*** {{nbt|compound}} tower_5.nbt
+*** {{nbt|compound}} tower_top_1.nbt
+*** {{nbt|compound}} tower_top_2.nbt
+*** {{nbt|compound}} tower_top_3.nbt
+*** {{nbt|compound}} tower_top_4.nbt
+*** {{nbt|compound}} tower_top_5.nbt
+}}
+{{collapse|title={{EnvLink|Trial Chambers|trial_chambers}}|content=<!-- exactly the same as Java -->
+** chamber
+*** {{nbt|compound}} assembly.nbt
+*** {{nbt|compound}} chamber_1.nbt
+*** {{nbt|compound}} chamber_2.nbt
+*** {{nbt|compound}} chamber_4.nbt
+*** {{nbt|compound}} chamber_8.nbt
+*** {{nbt|compound}} entrance_cap.nbt
+*** {{nbt|compound}} eruption.nbt
+*** {{nbt|compound}} pedestal.nbt
+*** {{nbt|compound}} slanted.nbt
+*** addon
+**** {{nbt|compound}} c1_breeze.nbt
+**** {{nbt|compound}} full_corner_column.nbt
+**** {{nbt|compound}} full_stacked_walkway.nbt
+**** {{nbt|compound}} full_stacked_walkway_2.nbt
+**** {{nbt|compound}} grate_bridge.nbt
+**** {{nbt|compound}} hanging_platform.nbt
+**** {{nbt|compound}} lower_staircase_down.nbt
+**** {{nbt|compound}} short_grate_platform.nbt
+**** {{nbt|compound}} short_platform.nbt
+**** {{nbt|compound}} walkway_with_bridge_1.nbt
+*** assembly
+**** {{nbt|compound}} cover_1.nbt
+**** {{nbt|compound}} cover_2.nbt
+**** {{nbt|compound}} cover_3.nbt
+**** {{nbt|compound}} cover_4.nbt
+**** {{nbt|compound}} cover_5.nbt
+**** {{nbt|compound}} cover_6.nbt
+**** {{nbt|compound}} full_column.nbt
+**** {{nbt|compound}} hanging_1.nbt
+**** {{nbt|compound}} hanging_2.nbt
+**** {{nbt|compound}} hanging_3.nbt
+**** {{nbt|compound}} hanging_4.nbt
+**** {{nbt|compound}} hanging_5.nbt
+**** {{nbt|compound}} left_staircase_1.nbt
+**** {{nbt|compound}} left_staircase_2.nbt
+**** {{nbt|compound}} left_staircase_3.nbt
+**** {{nbt|compound}} platform_1.nbt
+**** {{nbt|compound}} right_staircase_1.nbt
+**** {{nbt|compound}} right_staircase_2.nbt
+**** {{nbt|compound}} right_staircase_3.nbt
+**** {{nbt|compound}} spawner_1.nbt
+**** {{nbt|compound}} spawner_trap_1.nbt
+*** eruption
+**** {{nbt|compound}} breeze_slice_1.nbt
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} quadrant_4.nbt
+**** {{nbt|compound}} quadrant_5.nbt
+**** {{nbt|compound}} slice_1.nbt
+**** {{nbt|compound}} slice_2.nbt
+**** {{nbt|compound}} slice_3.nbt
+*** pedestal
+**** {{nbt|compound}} center_1.nbt
+**** {{nbt|compound}} ominous_slice_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} slice_1.nbt
+**** {{nbt|compound}} slice_2.nbt
+**** {{nbt|compound}} slice_3.nbt
+**** {{nbt|compound}} slice_4.nbt
+**** {{nbt|compound}} slice_5.nbt
+*** slanted
+**** {{nbt|compound}} center.nbt
+**** {{nbt|compound}} hallway_1.nbt
+**** {{nbt|compound}} hallway_2.nbt
+**** {{nbt|compound}} hallway_3.nbt
+**** {{nbt|compound}} hallway_4.nbt
+**** {{nbt|compound}} hallway_5.nbt
+**** {{nbt|compound}} ominous_upper_arm_1.nbt
+**** {{nbt|compound}} quadrant_1.nbt
+**** {{nbt|compound}} quadrant_2.nbt
+**** {{nbt|compound}} quadrant_3.nbt
+**** {{nbt|compound}} quadrant_4.nbt
+**** {{nbt|compound}} ramp_1.nbt
+**** {{nbt|compound}} ramp_2.nbt
+**** {{nbt|compound}} ramp_3.nbt
+**** {{nbt|compound}} ramp_4.nbt
+** chests
+*** {{nbt|compound}} supply.nbt
+*** connectors
+**** {{nbt|compound}} supply.nbt
+** corridor
+*** {{nbt|compound}} atrium_1.nbt
+*** {{nbt|compound}} end_1.nbt
+*** {{nbt|compound}} end_2.nbt
+*** {{nbt|compound}} entrance_1.nbt
+*** {{nbt|compound}} entrance_2.nbt
+*** {{nbt|compound}} entrance_3.nbt
+*** {{nbt|compound}} first_plate.nbt
+*** {{nbt|compound}} second_plate.nbt
+*** {{nbt|compound}} straight_1.nbt
+*** {{nbt|compound}} straight_2.nbt
+*** {{nbt|compound}} straight_3.nbt
+*** {{nbt|compound}} straight_4.nbt
+*** {{nbt|compound}} straight_5.nbt
+*** {{nbt|compound}} straight_6.nbt
+*** {{nbt|compound}} straight_7.nbt
+*** {{nbt|compound}} straight_8.nbt
+*** addon
+**** {{nbt|compound}} arrow_dispenser.nbt
+**** {{nbt|compound}} bridge_lower.nbt
+**** {{nbt|compound}} chandelier_upper.nbt
+**** {{nbt|compound}} decoration_upper.nbt
+**** {{nbt|compound}} display_1.nbt
+**** {{nbt|compound}} display_2.nbt
+**** {{nbt|compound}} display_3.nbt
+**** {{nbt|compound}} head_upper.nbt
+**** {{nbt|compound}} ladder_to_middle.nbt
+**** {{nbt|compound}} open_walkway.nbt
+**** {{nbt|compound}} open_walkway_upper.nbt
+**** {{nbt|compound}} reward_upper.nbt
+**** {{nbt|compound}} staircase.nbt
+**** {{nbt|compound}} wall.nbt
+**** {{nbt|compound}} walled_walkway.nbt
+*** atrium
+**** {{nbt|compound}} bogged_relief.nbt
+**** {{nbt|compound}} breeze_relief.nbt
+**** {{nbt|compound}} grand_staircase_1.nbt
+**** {{nbt|compound}} grand_staircase_2.nbt
+**** {{nbt|compound}} grand_staircase_3.nbt
+**** {{nbt|compound}} spider_relief.nbt
+**** {{nbt|compound}} spiral_relief.nbt
+** decor
+*** {{nbt|compound}} barrel.nbt
+*** {{nbt|compound}} candle_1.nbt
+*** {{nbt|compound}} candle_2.nbt
+*** {{nbt|compound}} candle_3.nbt
+*** {{nbt|compound}} candle_4.nbt
+*** {{nbt|compound}} dead_bush_pot.nbt
+*** {{nbt|compound}} empty_pot.nbt
+*** {{nbt|compound}} flow_pot.nbt
+*** {{nbt|compound}} guster_pot.nbt
+*** {{nbt|compound}} scrape_pot.nbt
+*** {{nbt|compound}} undecorated_pot.nbt
+** dispensers
+*** {{nbt|compound}} chamber.nbt
+*** {{nbt|compound}} floor_dispenser.nbt
+*** {{nbt|compound}} wall_dispenser.nbt
+** hallway
+*** {{nbt|compound}} cache_1.nbt
+*** {{nbt|compound}} corner_staircase.nbt
+*** {{nbt|compound}} corner_staircase_down.nbt
+*** {{nbt|compound}} corridor_connector_1.nbt
+*** {{nbt|compound}} left_corner.nbt
+*** {{nbt|compound}} long_straight_staircase.nbt
+*** {{nbt|compound}} long_straight_staircase_down.nbt
+*** {{nbt|compound}} lower_hallway_connector.nbt
+*** {{nbt|compound}} right_corner.nbt
+*** {{nbt|compound}} rubble.nbt
+*** {{nbt|compound}} rubble_chamber.nbt
+*** {{nbt|compound}} rubble_chamber_thin.nbt
+*** {{nbt|compound}} rubble_thin.nbt
+*** {{nbt|compound}} straight.nbt
+*** {{nbt|compound}} straight_staircase.nbt
+*** {{nbt|compound}} straight_staircase_down.nbt
+*** {{nbt|compound}} upper_hallway_connector.nbt
+** intersection
+*** {{nbt|compound}} intersection_1.nbt
+*** {{nbt|compound}} intersection_2.nbt
+*** {{nbt|compound}} intersection_3.nbt
+** reward
+*** {{nbt|compound}} ominous_vault.nbt
+*** {{nbt|compound}} vault.nbt
+** spawner
+*** breeze
+**** {{nbt|compound}} breeze.nbt
+*** connectors
+**** {{nbt|compound}} breeze.nbt
+**** {{nbt|compound}} melee.nbt
+**** {{nbt|compound}} ranged.nbt
+**** {{nbt|compound}} slow_ranged.nbt
+**** {{nbt|compound}} small_melee.nbt
+*** melee
+**** {{nbt|compound}} husk.nbt
+**** {{nbt|compound}} spider.nbt
+**** {{nbt|compound}} zombie.nbt
+*** ranged
+**** {{nbt|compound}} poison_skeleton.nbt
+**** {{nbt|compound}} skeleton.nbt
+**** {{nbt|compound}} stray.nbt
+*** slow_ranged
+**** {{nbt|compound}} poison_skeleton.nbt
+**** {{nbt|compound}} skeleton.nbt
+**** {{nbt|compound}} stray.nbt
+*** small_melee
+**** {{nbt|compound}} baby_zombie.nbt
+**** {{nbt|compound}} cave_spider.nbt
+**** {{nbt|compound}} silverfish.nbt
+**** {{nbt|compound}} slime.nbt
+}}
+{{collapse|title={{EnvLink|village}}|content=
+** common
+*** animals
+**** {{nbt|compound}} cat.nbt
+**** {{nbt|compound}} cows_1.nbt
+**** {{nbt|compound}} horses_1.nbt
+**** {{nbt|compound}} horses_2.nbt
+**** {{nbt|compound}} pigs_1.nbt
+**** {{nbt|compound}} sheep_1.nbt
+*** {{nbt|compound}} villager.nbt
+*** {{nbt|compound}} well_bottom.nbt
+** desert
+*** houses
+**** {{nbt|compound}} desert_animal_pen_1.nbt.nbt
+**** {{nbt|compound}} desert_animal_pen_2.nbt
+**** {{nbt|compound}} desert_armorer_1.nbt
+**** {{nbt|compound}} desert_butcher_shop_1.nbt
+**** {{nbt|compound}} desert_cartographer_house_1.nbt
+**** {{nbt|compound}} desert_farm_1.nbt
+**** {{nbt|compound}} desert_farm_2.nbt
+**** {{nbt|compound}} desert_fisher_1.nbt
+**** {{nbt|compound}} desert_fletcher_house_1.nbt
+**** {{nbt|compound}} desert_large_farm_1.nbt
+**** {{nbt|compound}} desert_library_1.nbt
+**** {{nbt|compound}} desert_mason_1.nbt
+**** {{nbt|compound}} desert_medium_house_1.nbt
+**** {{nbt|compound}} desert_medium_house_2.nbt
+**** {{nbt|compound}} desert_shepherd_house_1.nbt
+**** {{nbt|compound}} desert_small_house_1.nbt
+**** {{nbt|compound}} desert_small_house_2.nbt
+**** {{nbt|compound}} desert_small_house_3.nbt
+**** {{nbt|compound}} desert_small_house_4.nbt
+**** {{nbt|compound}} desert_small_house_5.nbt
+**** {{nbt|compound}} desert_small_house_6.nbt
+**** {{nbt|compound}} desert_small_house_7.nbt
+**** {{nbt|compound}} desert_small_house_8.nbt
+**** {{nbt|compound}} desert_tannery_1.nbt
+**** {{nbt|compound}} desert_temple_1.nbt
+**** {{nbt|compound}} desert_temple_2.nbt
+**** {{nbt|compound}} desert_tool_smith_1.nbt
+**** {{nbt|compound}} desert_weaponsmith_1.nbt
+*** streets
+**** {{nbt|compound}} corner_01.nbt
+**** {{nbt|compound}} corner_02.nbt
+**** {{nbt|compound}} crossroad_01.nbt
+**** {{nbt|compound}} crossroad_02.nbt
+**** {{nbt|compound}} crossroad_03.nbt
+**** {{nbt|compound}} square_01.nbt
+**** {{nbt|compound}} square_02.nbt
+**** {{nbt|compound}} straight_01.nbt
+**** {{nbt|compound}} straight_02.nbt
+**** {{nbt|compound}} straight_03.nbt
+**** {{nbt|compound}} turn_01.nbt
+*** terminators
+**** {{nbt|compound}} terminator_01.nbt
+**** {{nbt|compound}} terminator_02.nbt
+*** town_centers
+**** {{nbt|compound}} desert_meeting_point_1.nbt
+**** {{nbt|compound}} desert_meeting_point_2.nbt
+**** {{nbt|compound}} desert_meeting_point_3.nbt
+*** {{nbt|compound}} desert_lamp_1.nbt
+** plains
+*** houses
+**** {{nbt|compound}} plains_accessory_1.nbt
+**** {{nbt|compound}} plains_animal_pen_1.nbt
+**** {{nbt|compound}} plains_animal_pen_2.nbt
+**** {{nbt|compound}} plains_animal_pen_3.nbt
+**** {{nbt|compound}} plains_armorer_house_1.nbt
+**** {{nbt|compound}} plains_big_house_1.nbt
+**** {{nbt|compound}} plains_butcher_shop_1.nbt
+**** {{nbt|compound}} plains_butcher_shop_2.nbt
+**** {{nbt|compound}} plains_cartographer_1.nbt
+**** {{nbt|compound}} plains_fisher_cottage_1.nbt
+**** {{nbt|compound}} plains_fletcher_house_1.nbt
+**** {{nbt|compound}} plains_large_farm_1.nbt
+**** {{nbt|compound}} plains_library_1.nbt
+**** {{nbt|compound}} plains_library_2.nbt
+**** {{nbt|compound}} plains_masons_house_1.nbt
+**** {{nbt|compound}} plains_medium_house_1.nbt
+**** {{nbt|compound}} plains_medium_house_2.nbt
+**** {{nbt|compound}} plains_meeting_point_4.nbt
+**** {{nbt|compound}} plains_meeting_point_5.nbt
+**** {{nbt|compound}} plains_shepherds_house_1.nbt
+**** {{nbt|compound}} plains_small_farm_1.nbt
+**** {{nbt|compound}} plains_small_house_1.nbt
+**** {{nbt|compound}} plains_small_house_2.nbt
+**** {{nbt|compound}} plains_small_house_3.nbt
+**** {{nbt|compound}} plains_small_house_4.nbt
+**** {{nbt|compound}} plains_small_house_5.nbt
+**** {{nbt|compound}} plains_small_house_6.nbt
+**** {{nbt|compound}} plains_small_house_7.nbt
+**** {{nbt|compound}} plains_small_house_8.nbt
+**** {{nbt|compound}} plains_stable_1.nbt
+**** {{nbt|compound}} plains_stable_2.nbt
+**** {{nbt|compound}} plains_tannery_1.nbt
+**** {{nbt|compound}} plains_temple_3.nbt
+**** {{nbt|compound}} plains_temple_4.nbt
+**** {{nbt|compound}} plains_tool_smith_1.nbt
+**** {{nbt|compound}} plains_weaponsmith_1.nbt
+*** streets
+**** {{nbt|compound}} corner_01.nbt
+**** {{nbt|compound}} corner_02.nbt
+**** {{nbt|compound}} corner_03.nbt
+**** {{nbt|compound}} crossroad_01.nbt
+**** {{nbt|compound}} crossroad_02.nbt
+**** {{nbt|compound}} crossroad_03.nbt
+**** {{nbt|compound}} crossroad_04.nbt
+**** {{nbt|compound}} crossroad_05.nbt
+**** {{nbt|compound}} crossroad_06.nbt
+**** {{nbt|compound}} straight_01.nbt
+**** {{nbt|compound}} straight_02.nbt
+**** {{nbt|compound}} straight_03.nbt
+**** {{nbt|compound}} straight_04.nbt
+**** {{nbt|compound}} straight_05.nbt
+**** {{nbt|compound}} straight_06.nbt
+**** {{nbt|compound}} turn_01.nbt
+*** terminators
+**** {{nbt|compound}} terminator_01.nbt
+**** {{nbt|compound}} terminator_02.nbt
+**** {{nbt|compound}} terminator_03.nbt
+**** {{nbt|compound}} terminator_04.nbt
+*** town_centers
+**** {{nbt|compound}} plains_fountain_01.nbt
+**** {{nbt|compound}} plains_meeting_point_1.nbt
+**** {{nbt|compound}} plains_meeting_point_2.nbt
+**** {{nbt|compound}} plains_meeting_point_3.nbt
+*** villagers
+**** {{nbt|compound}} armorer.nbt
+**** {{nbt|compound}} butcher.nbt
+**** {{nbt|compound}} cartographer.nbt
+**** {{nbt|compound}} cleric.nbt
+**** {{nbt|compound}} farmer.nbt
+**** {{nbt|compound}} fishermen.nbt
+**** {{nbt|compound}} fletcher.nbt
+**** {{nbt|compound}} leatherworker.nbt
+**** {{nbt|compound}} librarian.nbt
+**** {{nbt|compound}} nitwit.nbt
+**** {{nbt|compound}} shepherd.nbt
+**** {{nbt|compound}} toolsmith.nbt
+**** {{nbt|compound}} unemployed.nbt
+**** {{nbt|compound}} weaponsmith.nbt
+*** {{nbt|compound}} plains_lamp_1.nbt
+** savanna
+*** houses
+**** {{nbt|compound}} savanna_animal_pen_1.nbt
+**** {{nbt|compound}} savanna_animal_pen_2.nbt.nbt
+**** {{nbt|compound}} savanna_animal_pen_3.nbt
+**** {{nbt|compound}} savanna_armorer_1.nbt
+**** {{nbt|compound}} savanna_butchers_shop_1.nbt
+**** {{nbt|compound}} savanna_butchers_shop_2.nbt
+**** {{nbt|compound}} savanna_cartographer_1.nbt
+**** {{nbt|compound}} savanna_fisher_cottage_1.nbt
+**** {{nbt|compound}} savanna_fletcher_house_1.nbt
+**** {{nbt|compound}} savanna_large_farm_1.nbt
+**** {{nbt|compound}} savanna_large_farm_2.nbt
+**** {{nbt|compound}} savanna_library_1.nbt
+**** {{nbt|compound}} savanna_mason_1.nbt
+**** {{nbt|compound}} savanna_medium_house_1.nbt
+**** {{nbt|compound}} savanna_medium_house_2.nbt
+**** {{nbt|compound}} savanna_shepherd_1.nbt
+**** {{nbt|compound}} savanna_small_farm.nbt
+**** {{nbt|compound}} savanna_small_house_1.nbt
+**** {{nbt|compound}} savanna_small_house_2.nbt
+**** {{nbt|compound}} savanna_small_house_3.nbt
+**** {{nbt|compound}} savanna_small_house_4.nbt
+**** {{nbt|compound}} savanna_small_house_5.nbt
+**** {{nbt|compound}} savanna_small_house_6.nbt
+**** {{nbt|compound}} savanna_small_house_7.nbt
+**** {{nbt|compound}} savanna_small_house_8.nbt
+**** {{nbt|compound}} savanna_tannery_1.nbt
+**** {{nbt|compound}} savanna_temple_1.nbt
+**** {{nbt|compound}} savanna_temple_2.nbt
+**** {{nbt|compound}} savanna_tool_smith_1.nbt
+**** {{nbt|compound}} savanna_weaponsmith_1.nbt
+**** {{nbt|compound}} savanna_weaponsmith_2.nbt
+*** streets
+**** {{nbt|compound}} corner_01.nbt
+**** {{nbt|compound}} corner_03.nbt
+**** {{nbt|compound}} crossroad_02.nbt
+**** {{nbt|compound}} crossroad_03.nbt
+**** {{nbt|compound}} crossroad_04.nbt
+**** {{nbt|compound}} crossroad_05.nbt
+**** {{nbt|compound}} crossroad_06.nbt
+**** {{nbt|compound}} crossroad_07.nbt
+**** {{nbt|compound}} split_01.nbt
+**** {{nbt|compound}} split_02.nbt
+**** {{nbt|compound}} straight_02.nbt
+**** {{nbt|compound}} straight_04.nbt
+**** {{nbt|compound}} straight_05.nbt
+**** {{nbt|compound}} straight_06.nbt
+**** {{nbt|compound}} straight_08.nbt
+**** {{nbt|compound}} straight_09.nbt
+**** {{nbt|compound}} straight_10.nbt
+**** {{nbt|compound}} straight_11.nbt
+**** {{nbt|compound}} turn_01.nbt
+*** terminators
+**** {{nbt|compound}} terminator_05.nbt
+*** town_centers
+**** {{nbt|compound}} savanna_meeting_point_1.nbt
+**** {{nbt|compound}} savanna_meeting_point_2.nbt
+**** {{nbt|compound}} savanna_meeting_point_3.nbt
+**** {{nbt|compound}} savanna_meeting_point_4.nbt
+*** {{nbt|compound}} savanna_lamp_post_01.nbt
+** snowy
+*** houses
+**** {{nbt|compound}} snowy_animal_pen_1.nbt
+**** {{nbt|compound}} snowy_animal_pen_2.nbt
+**** {{nbt|compound}} snowy_armorer_house_1.nbt
+**** {{nbt|compound}} snowy_armorer_house_2.nbt
+**** {{nbt|compound}} snowy_butchers_shop_1.nbt
+**** {{nbt|compound}} snowy_butchers_shop_2.nbt
+**** {{nbt|compound}} snowy_cartographer_house_1.nbt
+**** {{nbt|compound}} snowy_farm_1.nbt
+**** {{nbt|compound}} snowy_farm_2.nbt
+**** {{nbt|compound}} snowy_fisher_cottage.nbt
+**** {{nbt|compound}} snowy_fletcher_house_1.nbt
+**** {{nbt|compound}} snowy_library_1.nbt
+**** {{nbt|compound}} snowy_masons_house_1.nbt
+**** {{nbt|compound}} snowy_masons_house_2.nbt
+**** {{nbt|compound}} snowy_medium_house_1.nbt
+**** {{nbt|compound}} snowy_medium_house_2.nbt
+**** {{nbt|compound}} snowy_medium_house_3.nbt
+**** {{nbt|compound}} snowy_shepherds_house_1.nbt
+**** {{nbt|compound}} snowy_small_house_1.nbt
+**** {{nbt|compound}} snowy_small_house_2.nbt
+**** {{nbt|compound}} snowy_small_house_3.nbt
+**** {{nbt|compound}} snowy_small_house_4.nbt
+**** {{nbt|compound}} snowy_small_house_5.nbt
+**** {{nbt|compound}} snowy_small_house_6.nbt
+**** {{nbt|compound}} snowy_small_house_7.nbt
+**** {{nbt|compound}} snowy_small_house_8.nbt
+**** {{nbt|compound}} snowy_tannery_1.nbt
+**** {{nbt|compound}} snowy_temple_1.nbt
+**** {{nbt|compound}} snowy_tool_smith_1.nbt
+**** {{nbt|compound}} snowy_weapon_smith_1.nbt
+*** streets
+**** {{nbt|compound}} corner_01.nbt
+**** {{nbt|compound}} corner_02.nbt
+**** {{nbt|compound}} corner_03.nbt
+**** {{nbt|compound}} crossroad_01.nbt
+**** {{nbt|compound}} crossroad_02.nbt
+**** {{nbt|compound}} crossroad_03.nbt
+**** {{nbt|compound}} crossroad_04.nbt
+**** {{nbt|compound}} crossroad_05.nbt
+**** {{nbt|compound}} crossroad_06.nbt
+**** {{nbt|compound}} square_01.nbt
+**** {{nbt|compound}} straight_01.nbt
+**** {{nbt|compound}} straight_02.nbt
+**** {{nbt|compound}} straight_03.nbt
+**** {{nbt|compound}} straight_04.nbt
+**** {{nbt|compound}} straight_06.nbt
+**** {{nbt|compound}} straight_08.nbt
+**** {{nbt|compound}} turn_01.nbt
+*** town_centers
+**** {{nbt|compound}} snowy_meeting_point_1.nbt
+**** {{nbt|compound}} snowy_meeting_point_2.nbt
+**** {{nbt|compound}} snowy_meeting_point_3.nbt
+*** {{nbt|compound}} snowy_lamp_post_01.nbt
+*** {{nbt|compound}} snowy_lamp_post_02.nbt
+*** {{nbt|compound}} snowy_lamp_post_03.nbt
+** taiga
+*** houses
+**** {{nbt|compound}} taiga_animal_pen_1.nbt
+**** {{nbt|compound}} taiga_armorer_house_1.nbt
+**** {{nbt|compound}} taiga_armorer_house_2.nbt
+**** {{nbt|compound}} taiga_butcher_shop_1.nbt
+**** {{nbt|compound}} taiga_cartographer_house_1.nbt
+**** {{nbt|compound}} taiga_decoration_1.nbt
+**** {{nbt|compound}} taiga_fisher_cottage_1.nbt
+**** {{nbt|compound}} taiga_fletcher_house_1.nbt
+**** {{nbt|compound}} taiga_lamp_post_1.nbt
+**** {{nbt|compound}} taiga_large_farm_1.nbt
+**** {{nbt|compound}} taiga_large_farm_2.nbt
+**** {{nbt|compound}} taiga_library_1.nbt
+**** {{nbt|compound}} taiga_masons_house_1.nbt
+**** {{nbt|compound}} taiga_medium_house_1.nbt
+**** {{nbt|compound}} taiga_medium_house_2.nbt
+**** {{nbt|compound}} taiga_medium_house_3.nbt
+**** {{nbt|compound}} taiga_medium_house_4.nbt
+**** {{nbt|compound}} taiga_shepherds_house_1.nbt
+**** {{nbt|compound}} taiga_small_farm_1.nbt
+**** {{nbt|compound}} taiga_small_house_1.nbt
+**** {{nbt|compound}} taiga_small_house_2.nbt
+**** {{nbt|compound}} taiga_small_house_3.nbt
+**** {{nbt|compound}} taiga_small_house_4.nbt
+**** {{nbt|compound}} taiga_small_house_5.nbt
+**** {{nbt|compound}} taiga_tannery_1.nbt
+**** {{nbt|compound}} taiga_temple_1.nbt
+**** {{nbt|compound}} taiga_tool_smith_1.nbt
+**** {{nbt|compound}} taiga_weaponsmith_1.nbt
+**** {{nbt|compound}} taiga_weaponsmith_2.nbt
+*** streets
+**** {{nbt|compound}} corner_01.nbt
+**** {{nbt|compound}} corner_02.nbt
+**** {{nbt|compound}} corner_03.nbt
+**** {{nbt|compound}} crossroad_01.nbt
+**** {{nbt|compound}} crossroad_02.nbt
+**** {{nbt|compound}} crossroad_03.nbt
+**** {{nbt|compound}} crossroad_04.nbt
+**** {{nbt|compound}} crossroad_05.nbt
+**** {{nbt|compound}} crossroad_06.nbt
+**** {{nbt|compound}} straight_01.nbt
+**** {{nbt|compound}} straight_02.nbt
+**** {{nbt|compound}} straight_03.nbt
+**** {{nbt|compound}} straight_04.nbt
+**** {{nbt|compound}} straight_05.nbt
+**** {{nbt|compound}} straight_06.nbt
+**** {{nbt|compound}} turn_01.nbt
+*** town_centers
+**** {{nbt|compound}} taiga_meeting_point_1.nbt
+**** {{nbt|compound}} taiga_meeting_point_2.nbt
+*** {{nbt|compound}} taiga_decoration_1.nbt
+*** {{nbt|compound}} taiga_decoration_2.nbt
+*** {{nbt|compound}} taiga_decoration_3.nbt
+*** {{nbt|compound}} taiga_decoration_4.nbt
+*** {{nbt|compound}} taiga_decoration_5.nbt
+*** {{nbt|compound}} taiga_lamp_post_1.nbt
+}}</div>
+
+== NBT structure ==
+All the specified positions are relative to the block located toward  -X, -Y, -Z.
+
+<div class="treeview">
+* {{nbt|compound}} The root tag.
+** {{nbt|integer|DataVersion}}: [[Data version]] of the NBT structure.
+** <s>{{nbt|string|author}}</s>: Name of the player who created this structure. Only exists for structures saved before 1.13.
+** {{nbt|list|size}}: 3 TAG_Int describing the size of the structure.
+** {{nbt|list|palette}}: Set of different block states used in the structure.
+*** {{nbt|compound}} A block.
+**** {{nbt|string|Name}}: [[Resource location|Block ID]].
+**** {{nbt|compound|Properties}}: List of [[block state]] properties.
+***** {{nbt|string|{{ph|state property name}}}}: The value of the corresponding state property.
+** {{nbt|list|palettes}}: Sets of different block states used in the structure, a random palette gets selected based on coordinates. Used in vanilla by shipwrecks.
+*** {{nbt|list}} A set of different block states used in the structure.
+**** {{nbt|compound}} A block.
+***** {{nbt|string|Name}}: [[Resource location|Block ID]].
+***** {{nbt|compound|Properties}}: List of [[block state]] properties.
+****** {{nbt|string|{{ph|state property name}}}}: The value of the corresponding state property.
+** {{nbt|list|blocks}}: List of individual blocks in the structure.
+*** {{nbt|compound}} An individual block.
+**** {{nbt|integer|state}}: Index of the block in the palette.
+**** {{nbt|list|pos}}: 3 TAG_Int describing the position of this block.
+**** {{nbt|compound|nbt}}: NBT of the associated [[block entity]] (optional, only present if the block has one).  Does not contain x, y, or z fields.  See [[Block entity format]].
+** {{nbt|list|entities}}: List of entities in the structure.
+*** {{nbt|compound}} An entity.
+**** {{nbt|list|pos}}: 3 TAG_Double describing the exact position of the entity.
+**** {{nbt|list|blockPos}}: 3 TAG_Int describing the block position of the entity.
+**** {{nbt|compound|nbt}}: NBT of the entity (required).  See [[entity format]].
+</div>
+
+
+==History==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|Added structure files.}}
+|{{HistoryLine||1.10|dev=16w20a|Changed structure files to their current format. Before this, {{nbt|list|palette}} did not exist. Instead of referring to an index in the palette, {{nbt|int|state}} encoded the block ID and metadata at that position. The last byte encodes the block id, and the second-to-last byte encodes the block data.}}
+|{{HistoryLine||1.11|Removed {{nbt|int|version}}. Before its removal, its value was always <code>1</code>.
+|Added {{nbt|int|DataVersion}} that is set to the [[data version]] of the version of the game that saved the file.}}
+|{{HistoryLine||1.21|dev=24w21a|Moved structure files from {{file|directory|inline=1|structures}} to {{file|directory|inline=1|structure}}.}}
+}}
+
+== Navigation ==
+{{Navbox Java Edition technical|datapack}}
+
+[[Category:Development]]
+
+[[Category:Structures]]
+
+[[de:Konstruktionsvorlagen]]
+[[fr:Fichier de structure]]
+[[ja:構造物ファイルフォーマット]]
+[[pt:Modelo de estrutura]]
+[[zh:结构存储格式]]

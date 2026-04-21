@@ -1,0 +1,753 @@
+{{For||Skeleton (disambiguation)|Horse (disambiguation)}}
+{{Needs render|Update the render of saddled skeleton horses, as its saddle texture was changed in ''Java Edition'' 1.19.4 and ''Bedrock Edition'' 1.19.60 to align with the [[horse]] texture.}}
+{{Infobox entity
+| 1-1caption = Adult
+| 2-1caption = Adult only
+| 1-2caption = Baby
+| group = Horse
+| 1-1 = Skeleton Horse.png
+| 1-2 = Baby Skeleton Horse JE7.png
+| 1-2size = 100px
+| group2 = Saddled
+| 2-1 = Saddled Skeleton Horse.png
+| extratext = [[#Renders|View all renders]]
+| invimage = Skeleton Horse Spawn Egg
+| health = {{hp|15|mob=1}}
+| behavior = Passive<ref group="note" name="behavior">Passive by itself, but hostile as a jockey, as the rider controls its [[pathfinding]], therefore making it hostile, despite skeleton horses not actually damaging players, like small [[slime]]s.</ref>
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}<br>{{EntityLink|Animal}}
+| size = '''{{IN|Java}}:'''<br>
+'''Adult:'''<br>Height: 1.6 blocks<br>Width: 1.3965 blocks<br>
+'''Baby:'''<br>Height: 0.8 blocks<br>Width: 0.6982 Blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+'''Adult:'''<br>Height: 1.6 blocks<br>Width: 1.4 blocks<br>
+'''Baby:'''<br>Height: 0.8 blocks<br>Width: 0.7 blocks
+| speed = 0.2
+| spawn = Rarely during thunderstorms as skeleton trap horses
+| usableitems = {{drop|Item|Saddle}}{{only|Java}}
+{{drop|Item|Shears}}{{only|Java}}<small>(when equipped with a saddle)</small>
+{{drop|Item|Lead}}
+{{drop|item|Name Tag}}
+}}
+A '''skeleton horse''' is an [[undead]] skeletal [[horse]] that sometimes spawns when [[lightning]] strikes as a skeleton horseman. Despite being undead, it does not burn in [[sunlight]]. It becomes [[passive]] once separated from its rider.
+
+A '''skeleton horseman''' is a skeleton wearing an enchanted [[iron helmet]] that rides and controls a skeleton horse.
+
+== Spawning ==
+{{anchor|Skeleton trap}}
+
+A "skeleton trap" horse is a skeleton horse spawned from a fraction of [[lightning]] generated naturally by a [[thunderstorm]] (0.75–1.5% chance on Easy, 1.5–4% on Normal, and 2.25–6.75% on Hard [[difficulty]], depending on [[regional difficulty]]). {{IN|java}}, the lightning that spawns a trap horse doesn't strike nearby entities or spawn [[fire]]s. Lightning strikes created from a [[Channeling]]-enchanted [[trident]] and lightning strikes directed to a [[lightning rod]] ''never'' spawn a skeleton trap horse. The trap horse despawns after <abbr title="18,000 ticks">15 minutes</abbr> if not triggered (even if it is named). Trap horses will spawn in any biome where it can rain, even in [[mushroom fields]] and [[deep dark]].<ref>{{bug|MC-305630||Skeleton horse traps can spawn in any biome where it can rain, including deep dark and mushroom fields}}</ref>{{verify|edition=bedrock}}
+
+{{IN|je}}, skeleton horses do not spawn in Peaceful [[difficulty]], like hostile mobs.{{verify|edition=bedrock}} Note that skeleton traps do not follow other mob spawning rules and can spawn on basically any block. They can even spawn when the [[game rule]] <code>spawn_monsters</code>{{Only|java}} is false.<ref>{{bug|MC-305880||Skeleton trap horses can still spawn if the "spawn_monsters" game rule is set to false}}</ref>
+
+Baby skeleton horses cannot spawn naturally.
+
+=== Skeleton Horseman ===
+{{redirect|Skeleton Horseman|the powerful mob in {{MCD}}|Dungeons:Skeleton Horseman}}
+
+The skeleton trap horse is triggered when a [[player]] approaches within 10 blocks of it, resulting in a lightning strike that does not start fires or damage nearby entities. When struck, the skeleton trap horse transforms into a '''skeleton horseman''': a [[skeleton]] riding a skeleton horse. It also spawns three additional skeleton horsemen in the vicinity.
+
+The skeleton rider is equipped with an [[enchanted]] [[iron helmet]] along with an enchanted [[bow]]. Like regular skeletons, they also have a chance to spawn with various pieces of armor or with the ability to pick up equipment on the ground. The skeleton riders are always regular skeletons, and never spawn as [[stray]]s, [[bogged]], [[parched]], or [[wither skeleton]]s. Like the horses themselves, the skeleton riders are persistent, meaning they do not despawn unless the difficulty is set to "Peaceful".
+
+{{IN|java}}, both the horse and rider have [[Damage#Immunity|damage immunity]] for 3 seconds after spawning. {{IN|bedrock}}, both the horse and rider are always immune to lightning. Once its skeleton rider is killed, the skeleton horse becomes completely passive, allowing for it to be ridden.
+
+A skeleton trap horse, and therefore skeleton horsemen, can also be manually spawned using [[command]]s:
+
+'''Java Edition'''<br>
+{{cmd|/summon skeleton_horse ~ ~ ~ {SkeletonTrap:1}<nowiki/>}}
+
+'''Bedrock Edition'''<br>
+{{cmd|/summon skeleton_horse ~ ~ ~ ~ ~ minecraft:set_trap}}.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Bone|quantity=0-2|lootingquantity=0-1}}
+}}
+* {{xp|1|3}} when killed by a player or [[tamed wolf]].
+If saddled, it drops a saddle.{{only|java}}
+
+Killing a baby skeleton horse yields no items or experience. {{IN|bedrock}}, killing a trap skeleton horse also yields no items or experience.
+
+== Behavior ==
+{{Infobox entity
+| title = Skeleton Horseman
+| image = Skeleton Horseman.png
+| health = '''Skeleton:'''&nbsp;{{hp|20}}<br>'''Skeleton Horse:'''&nbsp;{{hp|15|mob=1}}
+| behavior = Hostile
+| spawn = When a skeleton trap is triggered
+| equipment = '''Skeleton:'''{{drop|Item|Bow}}(enchanted)<br>{{drop|Item|Iron Helmet}}(enchanted, can sometimes be replaced by another tier of helmet)<br>{{drop|Item|id=chestplate|Armor|text=Armor}} (occasionally, may be enchanted)
+}}
+The skeleton horse is an undead mob that spawns and triggers a "skeleton trap" if the player gets too close. Once the skeleton rider is defeated, the skeleton horse becomes completely passive. Skeleton horses behave like normal horses, roaming idly and occasionally stopping to rear, or lower their heads as though eating the grass. Unlike [[sheep]], the eating animation does not actually cause any grass to be consumed. Skeleton horses can breathe in water.
+
+Skeleton horses can safely fall 6 blocks before they begin to accumulate [[Damage#Fall damage|fall damage]], unlike most mobs, which can only safely fall 3 blocks. Skeleton horses also take half of the normal fall damage (rounded up) that most other mobs take ({{hp|0.5}} damage per block over the safe distance instead of {{hp|1}}). If an entity is riding a skeleton horse, they receive the same fall damage as the skeleton horse.
+
+Skeleton horses have a {{frac|1|900}} chance to regenerate {{hp|1}} health point each game tick.
+
+Unlike most passive mobs, skeleton horses don't panic when damaged.
+
+Skeleton horses cannot be [[breed|bred]].
+
+Other notes:
+* The skeleton wears an iron helmet, unless it randomly spawned with some other headgear.
+* The skeleton's bow and helmet are enchanted as if on an [[enchanting table]] at level 5–22. The exact level depends on [[regional difficulty]]; on Easy it is always a level-5 enchantment.
+* The skeleton trap horse and the skeleton horse in a jockey are always adults.
+* The skeleton in a naturally spawned skeleton horseman jockey does not despawn.
+* A trap horse may spawn in areas that a regular horse may not, such as the middle of an ocean.
+* A trap horse can trigger normally in clear weather (and often a player encounters a trap horse after the thunderstorm has cleared).
+* The skeleton drops more experience orbs.
+* The skeleton does not attack any mob that attacks the skeleton horse.
+
+Differences/inconsistencies of skeleton horses with other undead mounts, such as [[zombie horse]]s, [[camel husk]]s, and [[zombie nautilus]]es:
+*It counts for the passive mob cap instead of the hostile mob cap.<ref>{{bug|MC-304371||Skeleton horses use the incorrect mob cap}}</ref>
+*It is not valid for [[advancement]]s.<ref name="bug">{{bug|MC-303546||Zombie horses and zombie nautiluses count towards the "Monster Hunter" and "Monsters Hunted" advancements while skeleton horses don't|WAI}}</ref>
+*It can still be leashed and fed with horse food items when ridden by hostile mobs.<ref>{{bug|MC-304372||Skeleton horses can be interacted when ridden by hostile mobs}}</ref>
+*It cannot be tamed normally, as its tamed by default when the trap triggers.
+*A skeleton horse spawned via a [[spawn egg]] cannot be tamed or ridden.<ref>{{bug|MC-102949||Can't interact with a skeleton and a zombie horse that have been spawned from a spawn egg}}</ref>
+*Its health and stats are not variable.<ref>{{bug|MC-188404||Naturally spawned skeleton horses do not have randomized stats}}</ref>
+*It cannot wear [[horse armor]].<ref>{{bug|MC-304394||Skeleton Horses can't wear armor|Works As Intended}}</ref>
+*[[Parrot]]s can't imitate them.<ref>{{bug|MC-304373||Parrots don't imitate skeleton horses, endermen and zombified piglins}}</ref>
+*It does not burn in sunlight, unlike [[zombie horse]]s and [[zombie nautilus]]es.
+
+=== Mob type ===
+Being an [[undead]] mob, they are: 
+* damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* unaffected by the status effects [[Regeneration]] and [[Poison]].
+* ignored by the [[wither]].
+* affected by the [[Smite]] enchantment.
+* a threat to [[armadillo]]s, causing them to hide in their shell.
+
+As they are monsters, [[golden dandelion]]s do not work on baby skeleton horses.
+
+As they are under the {{cd|skeletons}} [[Entity type tag (Java Edition)|entity type tag]], [[creeper]]s drop a [[music disc]] when killed by a skeleton horse.{{note|This can be done with the following command:
+{{cmd|damage @n[type{{=}}creeper] 100 generic by @n[type{{=}}skeleton_horse]}}}}
+
+=== Taming ===
+{{IN|bedrock}}, a skeleton horse is always [[tame]]d. {{IN|java}}, a skeleton trap horse becomes tamed when struck by [[lightning]]. The other three skeleton horses are tamed when they are spawned.
+
+{{IN|java}}, with the use of commands, a skeleton horse can be tamed in the same way as a regular horse, granting the [[Best Friends Forever]] advancement.
+
+=== Jockey ===
+{{Exclusive|bedrock|section=1}}
+15% of nearby baby [[zombies]], [[husks]], [[zombie villager]]s, or [[drowned]] may ride an adult skeleton horse to form a [[jockey]], if the skeleton horse has no riders.
+
+== Statistics ==
+{{see also|Tutorial:Horses}}
+
+All horses have three "equine stats" that vary from horse to horse: health, maximum movement speed, and jump strength. These stats are created once the horse is born or spawned, and are not affected by food.
+
+=== Spawned values ===
+When spawned in any way except breeding – for instance, using commands, spawning naturally, spawning as part of a skeleton trap, or using spawn eggs – horses are assigned their stats within certain ranges, specific according to their horse type.
+
+==== Health ====
+A skeleton horse's health is always 15. Displayed hearts are health, divided by two, rounded down. A horse with an odd number of health points (15, 17, 19, etc.) does not show the last half-heart. If the horse has lost one health point lower than the inflicted damage and did not regenerate, it has an odd number of health points, otherwise, it has an even number of health points.
+
+==== Movement speed ====
+A skeleton horse's speed is always 0.2; the player's normal walking speed is 0.1. The speed listed does not include any [[status effect]] that affects the speed of a horse or a player.
+
+See {{slink|Transportation|Methods}} to compare the speeds of various transportation methods.
+
+==== Jump strength ====
+Jump strength ranges from 0.4–1.0, averaging 0.7.
+
+A jump strength of 0.5 is enough to clear {{frac|1|19|32}} blocks, while 1.0 is enough to clear {{frac|5|9|32}} blocks.
+
+The jump strengths required to clear several block heights are:
+{| class="wikitable" data-description="Jump strength"
+! Jump Strength
+! Blocks
+|-
+| 0.967||5.00
+|-
+| 0.848||4.00
+|-
+| 0.716||3.00
+|-
+| 0.565||2.00
+|-
+| 0.431||1.25 (player's jump height)
+|}
+
+== Usage ==
+{{see also|Transportation}}
+
+As with normal horses, skeleton horses can be ridden by a player. When ridden, they can be used to climb hills and jump fences because the skeleton horses can jump up to five block heights, versus the player's maximum of one (without jump boost).
+
+Skeleton horses can be ridden in water at any depth without forcing the player to dismount. They sink to the bottom and can be ridden along the ocean or river floor.
+
+Skeleton horses can be pulled or tethered with a [[lead]].
+
+=== Equipment ===
+[[File:Skeleton Horse GUI.png|thumb|right|GUI of a skeleton horse.{{only|JE|short=1}}]]
+; {{el|java}}
+Skeleton horses have the following slot available:
+* {{SlotSprite|Saddle}} Saddle Slot: For equipping a [[saddle]].
+
+Saddles can be placed on a tamed skeleton horse by holding it and then {{control|using}} on the skeleton horse, or by accessing its inventory. A skeleton horse’s inventory can be accessed by mounting the skeleton horse and using {{control|inventory}} control, or by {{control|sneaking}} and then {{control|using}} on the skeleton horse. 
+
+The saddle can be removed by two methods:
+* Removing the saddle from its slot in the skeleton horse's inventory.
+* {{ctrl|Using}} [[shears]] on the skeleton horse.
+
+Baby skeleton horses cannot be equipped, as they cannot be ridden.
+
+; {{el|bedrock}}
+A skeleton horse does not have an inventory and cannot be equipped with a saddle or horse armor. Despite this, the default texture file, like those of normal horses, [[donkey]]s and [[mule]]s, includes a chest.
+
+=== Riding ===
+{{main|Riding}}
+
+{{IN|bedrock}}, skeleton horses can be controlled by the player without a saddle. {{IN|java}}, skeleton horses must be equipped with a saddle to be controlled. Like riding other entities, a player can travel into a [[nether portal]] or [[end portal]] while on a skeleton horse.
+
+The player can control a tamed (and saddled {{el|java}}) skeleton horse with standard directional controls, {{control|jump}}, and the mouse. The player dismounts using the {{control|dismount}} control.
+
+A player controlled skeleton horse automatically runs up any one block high slope. The skeleton horse and rider can safely fit through a space as low as 2.75 blocks high. Lower clearance risks suffocating the rider if the rider's head enters a non-transparent block. The horse itself can enter gaps as low as 1.625 blocks high, but may itself take suffocation damage when clearance is less than 1.75 blocks. Skeleton horses cannot fit through a 1-block-wide gap.
+
+Player controlled skeleton horses have the ability of "jumping charging". When the player rides them, the experience bar on [[HUD]] is replaced by jumping charging bar. A controlled skeleton horse can be made to {{control|jump}} and holding the control charges for a higher leap. Skeleton horses are not affected by jump boost beacons or potions.
+
+Unlike normal horses, a skeleton horse does not force the player to dismount when it is under [[water]]; rather, it can be ridden underwater without drowning. The player can still drown underwater without the proper potions or enchantments, even when mounted on the skeleton horse. When underwater, its running speed and jump remain the same although it has a slower rate of descent.
+
+== Sounds ==
+Skeleton horse sounds are the sounds of the regular horse but lower pitched and slowed with reverb. Despite being monsters, skeleton horses use the "Friendly Mobs" sound category.<ref>{{bug|MC-304386||Undead mounts use the friendly mobs sound category, which is inconsistent|Working as Intended}}</ref>
+
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Skeleton horse idle1.ogg
+|sound2=Skeleton horse idle2.ogg
+|sound3=Skeleton horse idle3.ogg
+|subtitle=Skeleton Horse cries
+|source=neutral
+|description=Randomly while in air
+|id=entity.skeleton_horse.ambient
+|translationkey=subtitles.entity.skeleton_horse.ambient
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse water idle1.ogg
+|sound2=Skeleton horse water idle2.ogg
+|sound3=Skeleton horse water idle3.ogg
+|sound4=Skeleton horse water idle4.ogg
+|sound5=Skeleton horse water idle5.ogg
+|subtitle=Skeleton Horse cries
+|source=neutral
+|description=Randomly while in water
+|id=entity.skeleton_horse.ambient_water
+|translationkey=subtitles.entity.skeleton_horse.ambient
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse death.ogg
+|subtitle=Skeleton Horse dies
+|source=neutral
+|description=When a skeleton horse dies
+|id=entity.skeleton_horse.death
+|translationkey=subtitles.entity.skeleton_horse.death
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Horse gallop1.ogg
+|sound2=Horse gallop2.ogg
+|sound3=Horse gallop3.ogg
+|sound4=Horse gallop4.ogg
+|subtitle=Horse gallops
+|source=neutral
+|description=While a skeleton horse is galloping
+|id=entity.horse.gallop
+|translationkey=subtitles.entity.horse.gallop
+|volume=Block-Dependent<wbr><ref group=sound name=blockdependent>See [[block sound type]]</ref>
+|pitch=Block-Dependent<wbr><ref group=sound name=blockdependent/>
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse water gallop1.ogg
+|sound2=Skeleton horse water gallop2.ogg
+|sound3=Skeleton horse water gallop3.ogg
+|sound4=Skeleton horse water gallop4.ogg
+|subtitle=Horse gallops
+|source=neutral
+|description=While a skeleton horse is galloping on blocks in water
+|id=entity.skeleton_horse.gallop_water
+|translationkey=subtitles.entity.horse.gallop
+|volume=0.15
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse hurt1.ogg
+|sound2=Skeleton horse hurt2.ogg
+|sound3=Skeleton horse hurt3.ogg
+|sound4=Skeleton horse hurt4.ogg
+|subtitle=Skeleton Horse hurts
+|source=neutral
+|description=When a skeleton horse is damaged
+|id=entity.skeleton_horse.hurt
+|translationkey=subtitles.entity.skeleton_horse.hurt
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Horse jump.ogg
+|subtitle=Horse jumps
+|source=neutral
+|description=When a skeleton horse begins a leap
+|id=entity.horse.jump
+|translationkey=subtitles.entity.horse.jump
+|volume=0.4
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse water jump.ogg
+|subtitle=Skeleton Horse jumps
+|source=neutral
+|description=When a skeleton horse attempts to begin a leap in water
+|id=entity.skeleton_horse.jump_water
+|translationkey=subtitles.entity.skeleton_horse.jump_water
+|volume=0.32
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Horse land.ogg
+|subtitle=Something fell
+|source=neutral
+|description=When a skeleton horse falls from more than 1 block
+|id=entity.horse.land
+|translationkey=subtitles.entity.generic.big_fall
+|volume=0.4
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Swim9.ogg
+|sound2=Swim10.ogg
+|sound3=Swim11.ogg
+|sound4=Swim12.ogg
+|sound5=Swim14.ogg
+|sound6=Swim15.ogg
+|sound7=Swim16.ogg
+|sound8=Swim17.ogg
+<!--This list is complete-->
+|subtitle=Skeleton Horse swims
+|source=neutral
+|description=Randomly while a skeleton horse is moving through water
+|id=entity.skeleton_horse.swim
+|translationkey=subtitles.entity.skeleton_horse.swim
+|volume=<ref group=sound>The precise equation is as follows:<br><math>\text{velocity}=\sqrt{\text{speed.x}^2\times0.2+\text{speed.y}^2+\text{speed.z}^2\times0.2}</math><br><math>\text{volume}=</math>(whichever is smaller) 0.1 or (<math>\text{velocity}\times10</math> if being ridden and <math>\text{velocity}\times8.75</math> if not)</ref>
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Horse step1.ogg
+|sound2=Horse step2.ogg
+|sound3=Horse step3.ogg
+|sound4=Horse step4.ogg
+|sound5=Horse step5.ogg
+|sound6=Horse step6.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While a skeleton horse is walking
+|id=entity.horse.step
+|translationkey=subtitles.generic.block.footsteps
+|volume=Block-Dependent<wbr><ref group=sound name=blockdependent/>
+|pitch=Block-Dependent<wbr><ref group=sound name=blockdependent/>
+|distance=16}}
+| {{SoundLine
+|sound=Skeleton horse water step1.ogg
+|sound2=Skeleton horse water step2.ogg
+|sound3=Skeleton horse water step3.ogg
+|sound4=Skeleton horse water step4.ogg
+|sound5=Skeleton horse water step5.ogg
+|sound6=Skeleton horse water step6.ogg
+|subtitle=MC-177090
+|source=neutral
+|description=While a skeleton horse is walking in water
+|id=entity.skeleton_horse.step_water
+|translationkey=-
+|volume=0.18
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Saddle equip.ogg
+|subtitle=Saddle equips
+|source=neutral
+|description=When a saddle is equipped to a skeleton horse
+|id=entity.horse.saddle
+|translationkey=subtitles.entity.horse.saddle
+|distance=16
+|volume=0.5
+|pitch=1.0}}
+| {{SoundLine
+|sound=Saddle unequip.ogg
+|subtitle=Saddle snips away
+|source=Friendly Creatures
+|description=When a saddle is removed from a skeleton horse using shears
+|id=item.saddle.unequip
+|translationkey=subtitles.item.saddle.unequip
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Skeleton horse idle1.ogg
+|sound2=Skeleton horse idle2.ogg
+|sound3=Skeleton horse idle3.ogg
+|source=neutral
+|description=Randomly
+|id=mob.horse.skeleton.idle
+|volume=0.8
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|rowspan=2
+|sound=Horse armor.ogg
+|source=neutral
+|description=''Unused sound event''<ref group="sound">This sound event would occur if skeleton horses could have armor equipped.</ref>
+|id=mob.horse.armor
+|volume=0.6
+|pitch=1.0 (Baby: 1.5)}}
+| {{SoundLine
+|source=neutral
+|description=''Unused sound event''<ref group="sound">This sound event would occur if skeleton horses could have a chest equipped.</ref>
+|id=mob.horse.armor
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Horse breathe1.ogg
+|sound2=Horse breathe2.ogg
+|sound3=Horse breathe3.ogg
+|source=neutral
+|description=''Unused sound event''
+|id=mob.horse.breath
+|volume=0.7
+|pitch=1.0 (Baby: 1.5)}}
+| {{SoundLine
+|sound=Skeleton horse death.ogg
+|source=neutral
+|description=When a skeleton horse dies
+|id=mob.horse.skeleton.death
+|volume=0.8
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Horse gallop1.ogg
+|sound2=Horse gallop2.ogg
+|sound3=Horse gallop3.ogg
+|sound4=Horse gallop4.ogg
+|source=neutral
+|description=While a skeleton horse is galloping while in air
+|id=mob.horse.gallop
+|volume=0.45
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Skeleton horse hurt1.ogg
+|sound2=Skeleton horse hurt2.ogg
+|sound3=Skeleton horse hurt3.ogg
+|sound4=Skeleton horse hurt4.ogg
+|source=neutral
+|description=When a skeleton horse is damaged
+|id=mob.horse.skeleton.hit
+|volume=0.8
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Horse jump.ogg
+|source=neutral
+|description=When a skeleton horse begins a leap
+|id=mob.horse.jump
+|volume=0.4
+|pitch=1.0}}
+| {{SoundLine
+|sound=Horse land.ogg
+|source=neutral
+|description=When a skeleton horse falls from more than 1 block
+|id=mob.horse.land
+|volume=0.4
+|pitch=1.0 (Baby: 1.5)}}
+| {{SoundLine
+|sound=Horse step1.ogg
+|sound2=Horse step2.ogg
+|sound3=Horse step3.ogg
+|sound4=Horse step4.ogg
+|sound5=Horse step5.ogg
+|sound6=Horse step6.ogg
+|source=neutral
+|description=While a skeleton horse is walking
+|id=mob.horse.soft
+|volume=0.45
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Horse step wood1.ogg
+|sound2=Horse step wood2.ogg
+|sound3=Horse step wood3.ogg
+|sound4=Horse step wood4.ogg
+|sound5=Horse step wood5.ogg
+|sound6=Horse step wood6.ogg
+|source=neutral
+|description=While a skeleton horse is walking on wood<ref group=sound>Except for stems, Nether wood, cherry wood, and bamboo wood due to {{Bug|MCPE-165012}}</ref> or is being ridden
+|id=mob.horse.wood
+|volume=0.45
+|pitch=0.9-1.1}}
+| {{SoundLine
+|sound=Saddle equip.ogg
+|source=neutral
+|description=''Unused sound event''
+|id=mob.horse.leather
+|volume=0.6
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Skeleton Horse
+|spritetype=entity
+|nameid=skeleton_horse
+|entitytags=can_breathe_under_water, can_equip_saddle, cannot_be_age_locked, followable_friendly_mobs, ignores_poison_and_regen, inverted_healing_and_harm, skeletons, undead, wither_friends, sensitive_to_smite 
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Skeleton Horse
+|spritetype=entity
+|nameid=skeleton_horse
+|showentityfamily=y
+|entityfamily=mob,skeletonhorse,undead
+|id=26
+|foot=1}}
+
+=== Entity data ===
+Skeleton horses have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{#lst:Horse|horse base data}}
+** {{nbt|byte|SkeletonTrap}}: 1 or 0 (true/false) - true if the horse is a trapped [[skeleton horse]]. Does not affect horse type.
+** {{nbt|integer|SkeletonTrapTime}}: Incremented each tick when SkeletonTrap is set to 1. The horse automatically despawns when it reaches 18000 (15 minutes).
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+<!-- Skeleton Horse is not a valid mob for Sniper Duel.-->
+Unlike all other undead mounts, killing a skeleton horse does not grant the [[Advancement#Monster Hunter|Monster Hunter]] advancement and is not required in order to complete the [[Monsters Hunted]] advancement.<ref name="bug" />
+{{load advancements|Best Friends Forever;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{info needed section|
+* Render after the fix of MC-222518 in 23w03a with saddle texture fixed
+* Did saddles always show up on invisible skeleton horses? If not, when did this change? Remember to include any relevant bug reports.}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||4 April 2013|link={{tweet|jeb|319937646673674241}}|[[Jeb]] hinted at adding horses when ''[[Minecraft]]'' hit 10,000,000 sales.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.6.1|dev=13w16a|[[File:Skeleton Horse Revision 1.png|50px]] [[File:Baby Skeleton Horse Revision 1.png|24px]] Added skeleton horses.
+|The addition of skeleton horses, along with other [[horse]]s, has been assisted by DrZhark (John Olarte), creator of the Mo' Creatures mod, whose horses are a baseline for [[Minecraft]]'s horse [[model]]s.<ref>{{tweet|Jeb|319938276003827712|Also big thanks to @DrZhark, the creator of Mo' Creatures, that have assisted us to make it happen!|April 4, 2013}}</ref>|Skeleton horses are not available yet without the use of third party [[commands]].}}
+|{{HistoryLine|||dev=13w21a|Added new GUI for horses, including skeleton horses; to control [[saddle]]s, [[horse armor|armor]] and [[inventories]].}}
+|{{HistoryLine|||dev=13w22a|Added new sound effects for skeleton horses.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Skeleton horses are now available without third-party tools, with the introduction of the {{cmd|summon}} [[commands|command]].}}
+|{{HistoryLine||1.9|dev=15w38a|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses and [[skeleton horsemen]].
+|There is a chance (depending on [[regional difficulty]]) that a [[lightning]] strike spawns a "skeleton trap" skeleton horse.
+|When the skeleton trap is approached, 4 [[skeleton horsemen]] appear.}}
+|{{HistoryLine|||dev=15w38b|Skeleton horses are now [[Undead|undead mob]]s.}}
+|{{HistoryLine|||dev=15w43a|Skeleton horses no longer drop anything other than their equipment.}}
+|{{HistoryLine|||dev=15w43c|Skeleton horses now drop 1 [[bone]], not affected by [[Looting]].}}
+|{{HistoryLine|||dev=15w44a|Skeleton horses now drop 1 [[end crystal]], not affected by [[Looting]].}}
+|{{HistoryLine|||dev=15w44b|The above change has been reverted.}}
+|{{HistoryLine||1.10|dev=16w20a|Added [[spawn egg]]s for skeleton horses.}}
+|{{HistoryLine|||dev=pre2|The spawn eggs for skeleton horses have been removed.}}
+|{{HistoryLine||1.11|dev=16w32a|The spawn egg for skeleton horses has been re-added.
+|Skeleton trap horses' chance to spawn during [[lightning]] strikes has been reduced to {{frac|1|5}} of what it was.
+|Skeleton horses are now unable to spawn if [[game rule]]s {{cd|doMobSpawning}} is set to false.}}
+|{{HistoryLine|||dev=16w38a|Skeleton horses now [[drops|drop]] 0–2 of [[bone]]s or [[rotten flesh]], affected by [[Looting]].}}
+|{{HistoryLine||1.13|dev=17w45a|[[File:Skeleton Horse 17w45a.png|50px]] [[File:Baby Skeleton Horse 17w45a.png|24px]] The [[model]]s of skeleton horses have been changed.}}
+|{{HistoryLine|||dev=17w46a|[[File:Skeleton Horse 17w46a.png|50px]] [[File:Baby Skeleton Horse 17w46a.png|24px]] The new models for skeleton horses have been slightly tweaked.}}
+|{{HistoryLine|||dev=18w03a|[[File:Skeleton Horse Revision 2.png|50px]] [[File:Baby Skeleton Horse Revision 2.png|24px]] The models of skeleton horses have been updated again and the textures have been slightly altered.}}
+|{{HistoryLine|||dev=18w19a|Skeleton horses now sink in [[water]], due to being an undead [[mob]]. [[Zombie horse]]s, curiously, do not.<ref>{{bug|MC-129262}}</ref>
+|The [[player]] can now ride skeleton horses when underwater.}}
+|{{HistoryLine|||dev=pre2|The [[model]] of skeleton horses has been updated to fix serious Z-fighting, which has changed the model from [[File:Skeleton Horse 1.13 Z-fighting.png|32px]] to [[File:Skeleton Horse 1.13 pre2 Z-fighting fixed.png|32px]].<ref>{{bug|MC-121832}}</ref>}}
+|{{HistoryLine||1.14|dev=19w08a|[[File:Skeleton Horse.png|50px]] [[File:Baby Skeleton Horse.png|50px]] The textures of skeleton horses have been changed.
+|[[File:Skeleton Horseman.png|50px]] The textures of skeleton horsemen have been changed.}}
+|{{HistoryLine||1.16|dev=20w09a|Skeleton horses can now be [[lead|leashed]].<ref>{{bug|MC-166246|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.4|dev=23w03a|The saddle texture of the skeleton horse has been changed to use the [[horse]] saddle from the texture update.}}
+|{{HistoryLine||1.21.5|dev=25w03a|The skeleton horse's saddle is now an overlay texture, split from the skeleton horse main texture.
+|[[Saddles]] now show up on [[Invisibility|invisible]] skeleton horses.<ref>{{bug|MC-13738}}</ref>
+|[[Saddle]]s now show the [[enchantment glint]] on the skeleton horse when enchanted.
+|The unused saddlebag of the skeleton horse's texture has been removed.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Saddles can now be removed from skeleton horses using shears.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Skeleton horses now burn in sunlight.}}
+|{{HistoryLine|||dev=25w42a|Skeleton horses no longer burn in sunlight.}}
+|{{HistoryLine||26.1|dev=snap2|Skeleton horses no longer panic when hit.}}
+|{{HistoryLine|||dev=snap4|[[File:Baby Skeleton Horse JE7.png|32px]] The model and texture of baby skeleton horses have been changed.
+|Increased the bounding box of baby skeleton horses to better fit the new model.
+|Saddles on baby skeleton horses no longer render.}}
+|{{HistoryLine|||dev=snap6|[[Golden dandelion]]s no longer work on tamed baby skeleton horses.}}
+|{{HistoryLine|||dev=snap7|Baby skeleton horses no longer grow up.<ref>{{bug|MC-305580||Baby zombie horses and baby skeleton horses grow into adults, unlike other baby undead mobs|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses and [[skeleton horsemen]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.6|dev=alpha 1.0.6.0|Skeleton horses spawned from traps can now be tamed and ridden.}}
+|{{HistoryLine||?|Skeleton horses no longer need to be tamed and do not require saddles to be controlled.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.6|dev=beta 1.2.6.2|[[File:Skeleton Horse 17w45a.png|50px]] [[File:Baby Skeleton Horse 17w45a.png|24px]] The [[model]]s of skeleton horses have been changed to [[Java Edition 17w45a]]'s skeleton horse models.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Skeleton horses can now be ridden underwater.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Baby skeleton horses now have a chance of being spawned using a [[spawn egg]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Skeleton Horse.png|50px]] [[File:Baby Skeleton Horse.png|50px]] The textures of skeleton horses have been changed.
+|[[File:Skeleton Horseman.png|50px]] The textures of skeleton horsemen have been changed.}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.25|The saddle texture of the skeleton horse has been changed to use the [[horse]] saddle from the texture update.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.24|The skeleton horse's [[saddle]] is now an overlay texture, split from the skeleton horse main texture.{{check version}}
+|The unused saddlebag of the skeleton horse's texture has been removed.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.25|Skeleton horses no longer panic when hit.}}
+|{{HistoryLine|||dev=Preview 26.0.27|Skeleton horses are no longer damaged by the [[conduit]].
+|Skeleton horses no longer prevent the player from sleeping when nearby.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|[[File:Baby Skeleton Horse JE7.png|32px]] The model and texture of baby skeleton horses have been changed.|Increased the bounding box of baby skeleton horses to better fit the new model.}}
+|{{HistoryLine|||dev=Preview 26.10.21|Baby skeleton horses no longer grow up.<ref name="skelly horse">{{bug|MCPE-234733||Baby skeleton horses grow up, unlike baby zombie horses|Fixed}}</ref>
+|Skeleton horses now try to avoid dangerous blocks.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Skeleton Horse Revision 1.png|50px]] [[File:Baby Skeleton Horse Revision 1.png|24px]] Added skeleton horses.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses and [[skeleton horsemen]].
+|Skeleton horses are now [[Undead|undead mob]]s.{{check version}}}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Skeleton Horse Revision 1.png|50px]] [[File:Baby Skeleton Horse Revision 1.png|24px]] Skeleton horses are now able to be spawned with a [[spawn egg]] found in the [[creative]] [[inventory]].}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Skeleton horses can now be tamed and [[lead|leashed]].}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|[[File:Skeleton Horse 17w45a.png|50px]] [[File:Baby Skeleton Horse 17w45a.png|24px]] The [[model]]s of skeleton horses have been changed to [[Java Edition 17w45a]]'s skeleton horse models.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Skeleton horses now sink in [[water]], due to being an undead [[mob]].|The [[player]] can now ride skeleton horses when underwater.|Skeleton horses no longer need to be tamed and don't need a saddle to be controlled just like on ''Bedrock Edition''.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Skeleton Horse.png|50px]] [[File:Baby Skeleton Horse.png|50px]] The textures of skeleton horses have been changed.
+|[[File:Skeleton Horseman.png|50px]] The textures of skeleton horsemen have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Skeleton Trap Revision 1.png|50px]] Added [[#Spawning|"skeleton trap"]] horses and [[skeleton horsemen]].}}
+}}
+
+=== Data history ===
+
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|[[Horse]]s now have separate IDs. The ID for skeleton horses has been changed from the NBT <code>Type</code> equal <code>4</code> to the unique ID <code>skeleton_horse</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine||1.20.3|dev=23w40a|Skeleton horses are now part of the {{cd|#can_breathe_under_water}}, {{cd|#undead}} and {{cd|#skeletons}} tags.}}
+|{{HistoryLine||1.21.5|dev=25w03a|Unified the {{nbt|compound|SaddleItem}} into the new {{nbt|compound|equipment.saddle}} slot.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID for skeleton horse has been changed from <code>skeletonhorse</code> to <code>skeleton_horse</code>.}}
+}}
+
+== Issues ==
+
+{{issue list|Skeleton horse}}
+
+== Trivia ==
+*In the [[Mobspotter's Encyclopedia]], skeleton horses were referred to as neutral mobs, due to their behavior as a hostile mob when ridden by skeletons.
+
+== Gallery ==
+=== Renders ===
+<gallery class="pixel-image">
+Stray horseman.png|A [[stray]] skeleton horseman, possible through the skeleton rider freezing in [[powder snow]].
+Wither Horseman.png|A [[wither skeleton]] horseman (this is not possible in modern versions of the game)
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Skeleton HorseIngame.png|A skeleton horse spawned in.
+Dinnerbone skeleton traps.png|The four variations of skeleton traps using "Grumm" or "Dinnerbone" [[name tag]]s {{in|be}}.
+Skeletalhorse.png|Skeleton horses spawned from a trapped skeleton horse.
+Player ridden skeleton horse.png|A [[player]] riding a skeleton horse, having killed the skeleton rider.
+Skeleton horse underwater.png|A player riding a skeleton horse underwater. It can run and jump.
+Skeleton Horse with Saddle Survival.png|Skeleton horse with saddle{{only|java}} in [[survival]] after defeating the skeleton horse trap.
+Skeleton Horse (MinecraftEdu).png|A skeleton horse {{in|ee}}.
+SkeletonRiderGroup.png|A group of skeleton horsemen spawned by a "skeleton trap" horse.
+Horse Variants.png|A comparison between a [[horse]], a [[zombie horse]], and a skeleton horse.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Horse Skeleton (texture).png|Skeleton horse texture file.
+Baby Skeleton Horse (texture).png|Baby skeleton horse texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+Steve changing with the seasons.jpeg
+Winter is coming.gif|Animation of undead mobs walking on snow, including skeleton horsemen.
+LEGO Skeleton Horse.jpg|[[Lego Minecraft]] Skeleton Horse.
+LEGO Skeleton Horseman.png|[[Lego Minecraft]] Skeleton Horseman.
+Woodsword Chronicles skeleton horse.jpg|A skeleton horse as it appears in {{WSC|6|1}} 
+</gallery>
+
+== See also ==
+* {{EntityLink|Horse}}
+* {{EntityLink|Donkey}}
+* {{EntityLink|Mule}}
+* {{EntityLink|Skeleton}}
+* {{EntityLink|Zombie Horse}}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+[[Category:Passive mobs]]
+[[Category:Hostile mobs]]
+[[Category:Tameable mobs]]
+[[Category:Undead mobs]]
+[[Category:Animal mobs]]
+[[Category:Monster mobs]]
+[[Category:Transport]]
+
+[[de:Skelettpferd]]
+[[es:Caballo esqueleto]]
+[[fr:Cheval-squelette]]
+[[it:Cavallo scheletro]]
+[[ja:スケルトンホース]]
+[[ko:스켈레톤 말]]
+[[pl:Koń-szkielet]]
+[[pt:Cavalo-Esqueleto]]
+[[ru:Лошадь#Лошадь-нежить]]
+[[zh:骷髅马]]

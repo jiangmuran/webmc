@@ -1,0 +1,175 @@
+{{for|its larger, more powerful variant|Plaguewhale Slab}}
+{{Joke feature|update=24w14potato}}
+{{Infobox entity
+| title = Toxifin Slab
+| image = Toxifin Slab.gif
+| invimage = Toxifin Slab Spawn Egg
+| addedVersion = [[24w14potato]]
+| health = {{Hp|30}}
+| behavior = Hostile
+| mobtype = {{EntityLink|id=monster-mob-type|Monster}}<br>{{EntityLink|Aquatic}}
+| damage = '''Laser:''' <br>
+The laser doesn't inflict direct damage but it only inflicts effects, The beam constantly inflicts {{EffectLink|Poison}} for 1 seconds for maximum {{hp|2|poisoned=1}}, When the beam fully charged it inflicts {{EffectLink|Wither}} for 2 seconds ({{hp|1|withered=1|notag=1}}) <br>
+'''Spikes:''' <br> doesn't inflict direct damage only inflict {{EffectLink|Wither}} for 2 seconds ({{hp|1|withered=1|notag=1}})
+| spawn = {{EnvLink|Colosseum}}, {{BiomeLink|Wasteland}}
+}}
+A '''toxifin slab''', also known as simply '''toxifin''', is a modified version of the [[guardian]] with an orange body and green spikes, available in [[24w14potato]]. It has the same width and length, but half the height as a guardian.
+
+== Spawning ==
+Toxifin slabs spawn naturally in the [[Potato dimension]]. They frequently spawn in the [[wasteland]] biome, as well as inside of a [[colosseum]]. Each colosseum spawns a large number of toxifins upon generation, and there are four [[monster spawner]]s under the central platform, which also spawn toxifins. Even after destroying spawners and killing all initially generated toxifins, more of them still seem to spawn in the structure, although not very frequently.{{more info needed|what are the exact conditions on spawning?}}
+
+== Drops ==
+{{DropTable|edition=java
+|{{DropLine|name=Toxic Resin|notes=toxic_resin_lore_clouded|quantity=0-1|lootingquantity=1}}
+|{{DropLine|name=Toxic Resin|quantity=0-1|notes=toxic_resin_lore_jewel|dropchance=10|lootingquantity=1|lootingchance=2|}}
+|{{DropLine|name=Toxic Beam|notes=player_only|quantity=0-1|dropchance=50|lootingchance=10}}
+|notes=
+toxic_resin_lore_clouded = Clouded clarity with fishy impurities.
+toxic_resin_lore_jewel = Jewel clarity with fishy impurities.
+}}
+
+Toxifins also drop {{xp|5}} when killed by a player or tamed wolf.
+
+== Behavior ==
+Toxifins wander aimlessly when no enemies are around. They can either swim in water, or jump around on land. When nearby other toxifins, they may stack on top of each other. Stacking can occur multiple times. They may dismount each other naturally, and always dismount upon taking damage. They can also dismount boats and minecarts in the same way.
+
+Toxifins attack by sending out a beam directed at their target. The beam constantly inflicts [[Poison]] for 1 second until charged, when it adds [[Wither (effect)|Wither]] for 2 seconds.
+
+In addition to attacking players, toxifins also attack squid, glow squid and axolotls. Snow golems, iron golems and axolotls attack toxifins. Toxifins don't get angry at entities that attack them, this includes players and axolotls if they are distracted by another entity.
+
+When a toxifin takes melee damage from another entity, it inflicts 2 seconds of Wither. This also applies to players in Creative.
+
+== Sounds ==
+Toxifin slabs use the Hostile Creatures sound category for [[Sound#Entity-dependent categories|entity-dependent sound events]].
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Toxifin Slab ambient1.ogg
+|sound2=Toxifin Slab ambient2.ogg
+|sound3=Toxifin Slab ambient3.ogg
+|sound4=Toxifin Slab ambient4.ogg
+|subtitle=Toxifin Slab zooms
+|source=hostile
+|description=Randomly while in water
+|id=entity.toxifin.ambient
+|translationkey=subtitles.entity.toxifin.ambient
+|volume=0.1
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land idle1.ogg
+|sound2=Toxifin Slab land idle2.ogg
+|sound3=Toxifin Slab land idle3.ogg
+|sound4=Toxifin Slab land idle4.ogg
+|subtitle=Toxifin Slab slaps
+|source=hostile
+|description=Randomly while out of water
+|id=entity.toxifin.ambient_land
+|translationkey=subtitles.entity.toxifin.ambient_land
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab attack loop.ogg
+|subtitle=Toxifin Slab zaps
+|source=hostile
+|description=When a toxifin slab uses its laser attack
+|id=entity.toxifin.attack
+|translationkey=subtitles.entity.toxifin.attack
+|volume=0.0-1.0 <ref group=sound>Increases quadratically from minimum to maximum as the attack goes on</ref>
+|pitch=0.7-1.2 <ref group=sound>Increases linearly from minimum to maximum as the attack goes on</ref>
+|distance=16 (technical) / ∞ (effective)<ref group=sound>{{bug|MC-57057||Guardian laser attack sound ignores distance}}</ref>}}
+| {{SoundLine
+|sound=Toxifin Slab death.ogg
+|subtitle=Toxifin Slab dies
+|source=hostile
+|description=When a toxifin slab dies while in water
+|id=entity.toxifin.death
+|translationkey=subtitles.entity.toxifin.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land death.ogg
+|subtitle=Toxifin Slab dies
+|source=hostile
+|description=When a toxifin slab dies while out of water
+|id=entity.toxifin.death_land
+|translationkey=subtitles.entity.toxifin.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab hit1.ogg
+|sound2=Toxifin Slab hit2.ogg
+|sound3=Toxifin Slab hit3.ogg
+|sound4=Toxifin Slab hit4.ogg
+|subtitle=Toxifin Slab hurts
+|source=hostile
+|description=When a toxifin slab is damaged while in water
+|id=entity.toxifin.hurt
+|translationkey=subtitles.entity.toxifin.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab land hit1.ogg
+|sound2=Toxifin Slab land hit2.ogg
+|sound3=Toxifin Slab land hit3.ogg
+|sound4=Toxifin Slab land hit4.ogg
+|subtitle=Toxifin Slab hurts
+|source=hostile
+|description=When a toxifin slab is damaged while out of water
+|id=entity.toxifin.hurt_land
+|translationkey=subtitles.entity.toxifin.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Toxifin Slab flop1.ogg
+|sound2=Toxifin Slab flop2.ogg
+|sound3=Toxifin Slab flop3.ogg
+|sound4=Toxifin Slab flop4.ogg
+|subtitle=Toxifin Slab flips
+|source=hostile
+|description=While a toxifin slab is on land
+|id=entity.toxifin.flop
+|translationkey=subtitles.entity.toxifin.flop
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+== Data values ==
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Toxifin Slab
+|spritetype=entity
+|nameid=toxifin
+|entitytags=aquatic, axolotl_always_hostiles, can_breathe_under_water, not_scary_for_pufferfish, sensitive_to_impaling
+|foot=1}}
+
+== Issues ==
+{{April Fools issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Toxifin Slab.png|A toxifin slab.
+Four high toxifin stack.png|Four toxifin slabs, stacked on top of each other.
+</gallery>
+
+[[Category:Joke mobs]]
+[[Category:Joke entities]]
+
+== Navigation ==
+{{Navbox entities|joke}}
+{{Navbox jokes|24w14potato}}
+
+[[ja:Toxifin Slab]]
+[[ru:Токсифиновая плита]]
+[[zh:毒鳍台阶]]

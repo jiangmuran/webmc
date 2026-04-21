@@ -1,0 +1,41 @@
+{{exclusive|java}}
+'''Spawn protection''' prevents players from building around [[world spawn]], undoing any attempts at placing or breaking [[block]]s.
+
+== Description ==
+Spawn protection only exists in dedicated servers and does not apply in singleplayer worlds or LAN worlds. Spawn protection only applies in the [[Overworld]], since the world spawn is always in the Overworld.
+
+The <code>spawn-protection</code> field in <samp>[[server.properties]]</samp> determines the side length of the square spawn protection area as 2''x''+1. Setting this to 0 or a negative value disables the spawn protection. A value of 1 protects a 3×3 square centered on the spawn point, 2 protects 5×5, 3 protects 7×7, etc. The area that it protects is (spawn-protection×2 + 1)×(spawn-protection×2 + 1).
+
+Operators (in the [[ops.json]]) can bypass the spawn protection.
+
+If there are no operators at all in the server, spawn protection does not apply.
+
+There are several indirect <!--indirect, using commands and cheats--> ways to bypass spawn protection, namely activating pistons, dispensers, explosives and using mob griefing.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3<!-- Beta 1.8 or earlier -->|Added spawn protection. The radius is always 16 (protecting a 33×33 area).}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w40a|Added <code>spawn-protection</code> to [[server.properties]].
+|Spawn protection no longer applies if the server does not have any ops.}}
+|{{HistoryLine||1.5|dev=13w05a|Setting <code>spawn-protection</code> to 0 now disables spawn protection, instead of protecting a 1×1 area.<ref>{{bug|MC-666||Spawn Protection not working properly|Fixed}}</ref>}}
+|{{HistoryLine||1.8|dev=14w17a|Added the [[world border]]. It is stated that terrain outside of this border should be treated the same as spawn protection, although the implementation is flawed.}}
+}}
+
+==Issues==
+{{issue list}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Server]]
+
+[[fr:Zone protégée]]
+[[ja:リスポーン地点の保護]]
+[[pt:Proteção de geração]]
+[[ru:Защита спауна]]
+[[zh:出生点保护]]

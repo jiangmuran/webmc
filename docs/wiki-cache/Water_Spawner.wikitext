@@ -1,0 +1,95 @@
+{{for|how to create water infinitely in modern versions|Water#Source blocks}}
+{{outdated feature|edition=java}}
+{{Infobox block
+|image=Water Spawner JE1.gif
+|renewable=No
+|tool=any
+|light=No
+|transparent=No
+|flammable=No
+|lavasusceptible=No
+}}
+The '''water spawner''' was a [[block]] that would repeatedly create [[water]] on each of its four orthogonal sides.
+
+== Obtaining ==
+=== Breaking ===
+Water spawners can be broken instantly, regardless of held items.
+
+{{Breaking row|Water Spawner|horizontal=1|foot=1}}
+
+=== Generated loot ===
+Water spawners could be found in [[starting house]] [[chest]]s in stacks of 99 in [[Indev 0.31 20100124-2310]], and stacks of 100 in [[Indev 0.31 20100128-2200]]. Prior to this, they were added to the player's [[inventory]] by default in a stack of 5.
+
+== Usage ==
+[[File:Gears on infinite sources.png|thumb|right|As water spawners are full solid cubes, placed [[gear]]s render on their sides.]]
+The water spawner has many visual and functional differences from normal water:
+* It is a full, solid cube block with full block collision.
+* It is completely opaque.
+* All sides use the same still water texture.
+
+=== Creating liquids ===
+Immediately after placement, the water spawner creates source blocks of water on each of its four orthogonal sides. If these created sources are removed, they get regenerated after enough time.
+
+=== Sponges ===
+Water spawners are deleted by [[sponge]]s.
+
+== Sounds ==
+{{empty section}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=java
+|shownumericids=y
+|nonameid=y
+|showforms=y
+|displayname=[No displayed name]
+|spritename=infinite-water
+|spritetype=block
+|id=52
+|foot=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||May 18, 2009|link=https://forums.tigsource.com/index.php?topic=6273.msg201323#msg201323|Notch states that a water spawner would probably be silly.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100114|[[File:Water Spawner.png|32px]] Added water spawners.
+|The block is referred to as an "item spawner block".<ref>{{won|333135179|I SHOULD be sleeping, but..|January 14, 2010}}</ref>
+|The blocks were added to allow for players to create lakes on floating maps.}}
+|{{HistoryLine|||dev=20100124-2310|Water spawners can now be found in starting house chests in a stack of 99.}}
+|{{HistoryLine|||dev=20100128-2200|Water spawners can now be found in starting house chests in a stack of 100.}}
+|{{HistoryLine|||dev=20100129-1447|Water spawners can no longer be found in starting house chests.}}
+|{{HistoryLine|||dev=20100131-2156|Water spawners now periodically generate water around themselves even if said water was previously removed.}}
+|{{HistoryLine|||dev=20100201-2227|Water spawners are now deleted by sponges.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100624|The water spawner has been removed. As the ID is now empty, it now crashes the game with a NullPointerException if a chunk containing said block is loaded or an inventory containing one opened.}}
+|{{HistoryLine||20100625-1917|[[File:Spawner JE1.png|32px]] The numeric ID that water spawners used is now used by the [[monster spawner]], and as such all existing water spawners seamlessly convert into monster spawners instead of causing the game to crash.}}
+}}
+
+== Issues ==
+{{removed block issues}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Edge water.png|A water spawner. It could be held in the [[inventory]] by inventory editing.
+</gallery>
+
+== See also ==
+* [[Lava Spawner]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|removed}}
+{{Navbox removed features}}
+
+[[Category:Removed blocks]]
+
+[[fr:Générateur d'eau]]
+[[ja:無限の水]]
+[[lzh:息源息火]]
+[[pt:Gerador de Água]]
+[[zh:无限水源]]

@@ -1,0 +1,205 @@
+{{For|the object in ''[[Minecraft: The Manga]]''|Giant Spyglass}}{{Infobox item
+| title = Spyglass
+| image = Spyglass.png
+| durability = 
+| rarity = Common
+| renewable = Yes
+| stackable = No
+}}
+A '''spyglass''' is a utility [[item]] used to zoom in on distant objects.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+  |B1=Amethyst Shard
+  |B2=Copper Ingot
+  |B3=Copper Ingot
+  |Output=Spyglass
+  |type=Utility
+}}
+
+== Usage ==
+[[File:Alex scoping Spyglass.png|right|100px]]
+
+To use a spyglass, the player selects it from the hotbar and clicks {{control|use}} while looking in the desired direction.
+
+Spyglasses are used to zoom in on a specific location in the player's field of view (FOV). The spyglass changes the FOV to {{frac|1|10}} of the FOV set in [[options]]. By default, the FOV is set to 70° in ''Java Edition'' and 60° in Bedrock Edition, resulting in an FOV of 7° in ''Java Edition'' and 6° in Bedrock Edition through the spyglass. The player's FOV can be set from 30° to 110°, so the spyglass FOV can  range from 3° to 11°. Regardless of the situation, or status effects the player has, using the Spyglass always shows a FOV {{frac|1|10}} of the FOV set in [[options]].
+
+A square vignette is applied when in use, similar to the effect when wearing a [[carved pumpkin]]. Pressing {{key|F1}} removes the vignette,{{only|java}}<ref>{{bug|MC-203575||The spyglass overlay goes away when pressing F1|WAI}}</ref><ref>{{bug|MCPE-125869||Spyglass's overlay don't go away even if the player toggles Hide GUI on/ Pressing F1|WF}}</ref> similar to a carved pumpkin. 
+
+Hazy distant objects remain hazy when viewed in the spyglass. Mobs too distant to render also do not render in the spyglass. The spyglass shows a magnified view of what the player already sees.
+
+The player is slowed down while watching through the spyglass. Camera movement damping can be adjusted in the controls [[settings]] {{in|be}}. When the player uses the spyglass continuously for {{convert|1|minute|game tick}}, the interface is automatically closed.
+
+If the player has a certain effect on their screen like [[fire]], the spyglass does not remove that effect on the player's screen.
+
+[[File:Spyglass Zooming.gif|thumb|center|A spyglass being used to zoom in on a [[block of gold]] starting from normal FOV (70°).]]
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Spyglass use.ogg
+|subtitle=Spyglass expands
+|source=player
+|description=When a player uses a spyglass
+|id=item.spyglass.use
+|translationkey=subtitles.item.spyglass.use
+|volume=0.5
+|pitch=''varies'' <ref group=sound>Can be 1.15, 1.33, 1.4, or 1.55</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Spyglass stop.ogg
+|subtitle=Spyglass retracts
+|source=player
+|description=When a player stops using a spyglass
+|id=item.spyglass.stop_using
+|translationkey=subtitles.item.spyglass.stop_using
+|volume=0.5
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.8, or 0.9</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Spyglass use.ogg
+|source=player
+|description=When a player uses a spyglass
+|id=item.spyglass.use
+|volume=0.5
+|pitch=1.15-1.55}}
+| {{SoundLine
+|sound=Spyglass stop.ogg
+|source=player
+|description=When a player stops using a spyglass
+|id=item.spyglass.stop_using
+|volume=0.5
+| pitch = 0.8-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Spyglass
+|spritetype=item
+|nameid=spyglass
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Spyglass
+|spritetype=item
+|nameid=spyglass
+|form=item
+|foot=1|id=660}}
+
+== Advancements ==
+{{load advancements|Is it a Bird?;Is it a Balloon?;Is it a Plane?}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=25m21s}}|[[File:Spyglass JE1.png|32px]]<!-- [[File:Spyglass scope (pre-release).png|32px]]--> Spyglasses are revealed at [[Minecraft Live 2020]]. They were originally named "telescopes" and had an oval vignette.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w45a|[[File:Spyglass JE1.png|32px]] Added spyglasses.
+|[[File:Spyglass scope JE1.png|32px]] The scope texture is currently a circle with glare spots.}}
+|{{HistoryLine|||dev=20w46a|[[File:Spyglass scope JE2.png|32px]] The scope texture is now a [[glass]] square with a [[copper]] border.}}
+|{{HistoryLine|||dev=20w48a|[[File:Spyglass JE2 BE1.png|32px]] The spyglass is now a 3D model instead of a flat sprite.
+|[[File:Spyglass (texture) JE2.png|32px]] The texture of the spyglass has changed.
+|A spyglass in use is anchored better to the [[player]]'s "eye" when viewed in 3rd person.}}
+|{{HistoryLine|||dev=21w05a|Copper ingots are now [[Renewable resource|renewable]] via [[drowned]], making spyglasses renewable.}}
+|{{HistoryLine|||dev=21w10a|[[File:Spyglass (item) JE3 BE1.png|32px]] Spyglasses have a new texture in the inventory. The 3D model is still used in the hand, similar to [[trident]]s.}}
+|{{HistoryLine||1.17.1|dev=pre1|[[File:Spyglass (texture) JE3.png|32px]] The texture of the spyglass model has changed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|[[File:Spyglass JE2 BE1.png|32px]] [[File:Spyglass (item) JE3 BE1.png|32px]] Added spyglasses.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|Spyglasses are now available without enabling [[Experiments|Experimental Gameplay]].}}
+}}
+
+<gallery>
+JE 1.17 Development Telescope.jpg|The spyglass was originally called the telescope.
+JE 1.17 Development Telescope 2.jpg|The telescope's overlay was originally round instead of square.
+Steve scoping Spyglass JE1.png|Steve using a spyglass before its 3D model was added.
+Alex scoping Spyglass JE1.png|Alex using a spyglass before its 3D model was added.
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* If {{command|item replace}} is used to place a spyglass on a [[player]]'s head, the item appears stuck to the center of the player's face.
+* If loaded in an outdated world {{in|Bedrock}}, it has no texture, but can still be used.
+
+== Gallery ==
+=== Renders ===
+{{Needs render|Add renders of Ari, Efe, Kai, Makena, Noor, Sunny, and Zuri}}<gallery>
+Alex scoping Spyglass JE2.png|[[Player#Alex|Alex]] using a spyglass.
+Steve scoping Spyglass JE2.png|[[Player#Steve|Steve]] using a spyglass.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Villager Spyglass.png|Spying on [[villager]]s through a spyglass.
+After using the spyglass at FOV 30 F1.png|Hiding the HUD removes the spyglass overlay.
+Ari Spyglass.jpg|How the spyglass looks in the third person.
+Ti-spyglass-ingame.jpeg|Screenshot used in the spyglass taking inventory Minecraft.net article.
+Ti-Spyglass-Cory.jpeg|Screenshot used in the spyglass taking inventory Minecraft.net article.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Ti-spyglass-header.jpeg|Header of the spyglass taking inventory Minecraft.net article.
+File:Chase the Skies key art happy ghast.png|[[Makena]] using a spyglass on a [[happy ghast]].
+File:Efe spyglass.gif|Pixel art of [[Efe]] using a spyglass
+File:New places.gif|[[Player#Noor|Noor]] trying out a spyglass.
+File:Mangrove Portal.jpg|An [[allay]] peeking into view of Noor's spyglass.
+File:Tiny Jens Lighthouse Idle Mob Vote Server.gif|[[Jens Bergensten|Tiny Jens]] holding a stylized spyglass, from the [[2023 Mob Vote Event|Mob Vote 2023 Server Event]]. 
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|taking-inventory--spyglass|Taking Inventory: Spyglass|February 17, 2022|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox items|Utilities}}
+
+[[Category:Utilities]]
+
+[[de:Fernrohr]]
+[[es:Catalejo]]
+[[fr:Longue-vue]]
+[[it:Cannocchiale]]
+[[ja:望遠鏡]]
+[[ko:망원경]]
+[[lzh:望遠鏡]]
+[[nl:Verrekijker]]
+[[pl:Luneta]]
+[[pt:Luneta]]
+[[ru:Подзорная труба]]
+[[th:กล้องส่องทางไกล]]
+[[uk:Підзорна труба]]
+[[zh:望远镜]]

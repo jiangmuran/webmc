@@ -1,0 +1,444 @@
+A '''tooltip''' is extra information that appears when hovering over or focusing on certain elements in the user interfaces, or when switching the held [[item]].
+
+== Types of tooltips ==
+
+=== Item tooltips ===
+[[File:ExampleTooltip.png|thumb|An example of an item tooltip with [[Enchanting|enchantments]] and [[attribute]]s.]]
+When hovering over an [[item]] with the cursor while in the [[inventory]] or a [[container]] screen, a tooltip with the item’s name appears next to the cursor. When playing with touch controls, tapping an item displays its tooltip on the bottom of the screen. Some items display extra information on their tooltips, such as [[Enchanting|enchantments]] and [[shulker box]] contents. {{IN|java}}, basic item tooltips are also visible in the "Items" section of the [[statistics]] menu when hovering over a block or item on the left side of the screen. {{IN|bedrock}}, tooltips in the inventory display the category of the item (Construction, Equipment, Items, or Nature) on the first line below the item name in dark blue.
+
+{{IN|java}}, advanced tooltips, including item IDs and the exact remaining [[durability]] of tools, can be displayed by pressing the [[debug hotkey]] {{key|F3+H}}.
+
+==== Description of item tooltip lines ====
+{{Work in progress|section=1}}
+The table below describes all possible tooltip lines, including these shown when advanced tooltips are enabled. Note that table preserves the order of these lines too.
+
+In "Content" column, cells with yellow background means the exact text displayed. Additionally, cells marked "''[...]''" means that this field has variable lines count.
+
+{| class="wikitable collapsible collapsed"
+|+ All available information displayed on tooltips
+|-lines count
+! style="text-align: left;" | Order
+! style="text-align: left;" | Content
+! style="text-align: left;" | Description
+! style="text-align: center;" | {{Tooltip|Common information|This information doesn't need enabled advanced tooltips to be shown}}
+|-
+| 0
+| ''Item name''
+| The item name.<br>Some data components are able to alter the default item name (note that <code>[[Data_component_format#custom_name|minecraft:custom_name]]</code> component has highest priority and overrides any other alterations).
+| {{tc|planned|''Item name''|style=text-align: center;}}
+|-
+| rowspan=3 | 1
+| {{tc|partial|Can hold a mixed stack of items}}
+| rowspan=3 | Graphical representation of the [[Bundle|bundle's]] contents and its fullness bar. Shown only on bundle items.<br>If bundle is empty, the description text will be printed, otherwise bundle contents stored in <code>[[Data_component_format#bundle_contents|minecraft:bundle_contents]]</code> will be shown.<br>This is the only case where information is presented in other form than text.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| ''Bundle contents''
+|-
+| ''Bundle fullness bar''
+|-
+| 2
+| ''Creative inventory section''
+| [[Creative_inventory#Java_Edition|Section name]] to which the item belongs.<br>Shown when player is in [[Creative_mode|Creative mode]], and only in ''Search Items'', ''Survival Inventory'' and ''Saved Hotbars'' tabs.<br>Note that in most cases this text will not appear if item has additional data components {{verify}}.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=6 | 3
+| {{tc|partial|Smithing Template}}
+| rowspan=6 | Description of [[Smithing_Template|smithing template]], shown only on smithing template items.
+| {{tc|yes|style=text-align: center;|rowspan=6}}
+|-
+| {{tc|partial|''<empty space>''}}
+|-
+| {{tc|partial|Applies to:}}
+|-
+| ''Applicable items''
+|-
+| {{tc|partial|Ingredients:}}
+|-
+| ''Ingredients''
+|-
+| rowspan=3 | 4
+| ''Painting's name''
+| rowspan=3 | [[Painting|Painting]] description, shown when item ID is <code>minecraft:painting</code> and have valid <code>[[Data_component_format#painting/variant|minecraft:painting/variant]]</code> component.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| ''Painting's author''
+|-
+| ''Painting's dimensions''
+|-
+| rowspan=2 | 5
+| ''Tropical fish's pattern''
+| The pattern of [[Tropical_Fish|tropical fish]], defined by <code>[[Data_component_format#tropical_fish/pattern|minecraft:tropical_fish/pattern]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Tropical fish's base and pattern color''
+| The base and pattern colors of tropical fish, defined by <code>[[Data_component_format#tropical_fish/base_color|minecraft:tropical_fish/base_color]]</code> and <code>[[Data_component_format#tropical_fish/pattern_color|minecraft:tropical_fish/pattern_color]]</code> components.
+| {{tc|yes|style=text-align: center;}}
+|-
+| 6
+| ''Goat horn's instrument''
+| [[Goat Horn|Goat Horn]] instrument, defined by <code>[[Data_component_format#instrument|minecraft:instrument]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=5 | 7
+| {{tc|partial|Unknown Map}}
+| Shown when item has <code>[[Data_component_format#map_id|minecraft:map_id]]</code> component pointing to a unknown [[Map|map]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Map ID''
+| Shown when item has valid <code>minecraft:map_id</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| {{tc|partial|Locked}}
+| This line appears only if map with specified ID is locked.<br>[[Map_item_format#map_%3C#%3E.dat_format_(Java)|See this article for more information]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Map scaling''
+| rowspan=2 | Additional information about map scaling and level.
+| {{tc|no|style=text-align: center;|rowspan=2}}
+|-
+| ''Map level''
+|-
+| 8
+| ''Number of bees''
+| The number of [[Bee|bees]] (entities) hiding inside, defined by <code>[[Data_component_format#bees|minecraft:bees]]</code> component. Displayed naturally on [[Beehive|beehives]] and [[Bee_Nest|bee nests]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| 9
+| {{tc|partial|??????? {{sic}}}}
+| Indicates that this item has <code>[[Data_component_format#container_loot|minecraft:container_loot]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=6 | 10
+| ''1st item name + amount''
+| rowspan=6 | Item names "held" in first five slots of this item, defined by <code>[[Data_component_format#container|minecraft:container]]</code> component.<br>When item count is 6 or higher, the line with remaining items will be shown.
+| {{tc|yes|style=text-align: center;|rowspan=6}}
+|-
+| ''2nd item name + amount''
+|-
+| ''3rd item name + amount''
+|-
+| ''4th item name + amount''
+|-
+| ''5th item name + amount''
+|-
+| ''Count of the rest items (not their total amount)''
+|-
+| rowspan=6 | 11
+| ''1st banner pattern''
+| rowspan=6 | Six first [[Banner|banner patterns]], defined by <code>[[Data_component_format#banner_patterns|minecraft:banner_patterns]]</code> component.<br>Note that banners with more than 6 patterns are uncraftable, and can be obtained only with commands.
+| {{tc|yes|style=text-align: center;|rowspan=6}}
+|-
+| ''2nd banner pattern''
+|-
+| ''3rd banner pattern''
+|-
+| ''4th banner pattern''
+|-
+| ''5th banner pattern''
+|-
+| ''6th banner pattern''
+|-
+| rowspan=5 | 12
+| {{tc|partial|''<empty space>''}}
+| rowspan=5 | Materials used to craft this [[Decorated_Pot|decorated pot]], defined by <code>[[Data_component_format#pot_decorations|minecraft:pot_decorations]]</code> component.
+| {{tc|yes|style=text-align: center;|rowspan=5}}
+|-
+| ''Front side material''
+|- 
+| ''Left side material''
+|-
+| ''Right side material''
+|-
+| ''Rear side material''
+|-
+| rowspan=2 | 13
+| ''Book's author''
+| rowspan=2 | Shown when <code>[[Data_component_format#written_book_content|minecraft:written_book_content]]</code> component is present. Meant for [[Written_Book|written books]]. 
+| {{tc|yes|style=text-align: center;|rowspan=2}}
+|-
+| ''Book's generation''
+|-
+| rowspan=2 | 14
+| ''Projectile name''
+| rowspan=2 | A section describing charged projectile, defined by <code>[[Data_component_format#charged_projectiles|minecraft:charged_projectiles]]</code> component. Meant to be used with [[Crossbow|crossbows]].<br>Note that this section may appear multiple times, if the item contains multiple projectiles loaded.
+| {{tc|yes|style=text-align: center;|rowspan=2}}
+|-
+| ''Projectile's tooltip lines {{note|1=Item name, bundle section, durability, item ID, number of components and usage warning are not visible there. Additionally, if item is dyed, "Dyed" will always be shown, even if advanced tooltips are enabled.}}<br>[...]''
+|-
+| rowspan=2 | 15
+| ''Flight duration''
+| Shown when item has <code>flight_duration</code> tag in <code>[[Data_component_format#fireworks|minecraft:fireworks]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Firework effects<br>[...]''
+| All [[Firework_Rocket|firework]] effects applied with [[Firework_Star|firework stars]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=6 | 16
+| {{tc|partial|No Effects}}
+| Shown when item has <code>[[Data_component_format#potion_contents|minecraft:potion_contents]]</code> component, but is empty.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Effect name''
+| A single primary [[Effect|effect]] to be applied. Shown when item has filled <code>potion</code> tag in <code>minecraft:potion_contents</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Custom effects<br>[...]''
+| List of custom effects to be applied. Shown when item has entries in <code>custom_effects</code> list in <code>minecraft:potion_contents</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | A section describing how item will affect on player's attributes when consumed.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|When Applied:}}
+|-
+| ''Attributes<br>[...]''
+|-
+| 17
+| ''Music disc name''
+| Shown when item has <code>[[Data_component_format#jukebox_playable|minecraft:jukebox_playable]]</code> component with valid value.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=3 | 18
+| {{tc|partial|Upgrade:}}
+| rowspan=3 | [[Smithing#Trimming|Armor trim upgrade]], defined by <code>[[Data_component_format#trim|minecraft:trim]]</code> component.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| ''Trim pattern''
+|-
+| ''Trim material''
+|-
+| 19
+| ''Stored enchantments<br>[...]''
+| [[Enchanting#Summary_of_enchantments|Enchantments]] stored in <code>[[Data_component_format#stored_enchantments|minecraft:stored_enchantments]]</code> component. Meant to be used for [[Enchanted_Book|enchanted books]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| 20
+| ''Applied enchantments<br>[...]''
+| Enchantments applied on this item, stored in <code>[[Data_component_format#enchantments|minecraft:enchantments]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=2 | 21
+| {{tc|partial|Dyed}}
+| Shown when item has <code>[[Data_component_format#dyed_color|minecraft:dyed_color]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Color''
+| A hexadecimal color code. Replaces text above, if advanced tooltips are enabled.
+| {{tc|no|style=text-align: center;}}
+|-
+| 22
+| ''Lore<br>[...]''
+| Custom text shown in tooltip, defined by <code>[[Data_component_format#lore|minecraft:lore]]</code> component.<br>By default it has <code>"dark_purple"</code> color and is italicized.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=3 | 23
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | [[Attribute#Item_modifiers|Attribute modifiers]] applied when this item is held or equipped, defined in <code>[[Data_component_format#attribute_modifiers|minecraft:attribute_modifiers]]</code> component.<br>Note that this section may appear multiple times, if the component above contains many modifiers with different <code>slot</code> tags.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| ''"When (...)" field'' {{note|1=Text in this field depends on the value of <code>slot</code> tag.}}
+|-
+| ''Attributes<br>[...]''
+|-
+| 24
+| {{tc|partial|Unbreakable}}
+| Shown when item is unbreakable, using <code>[[Data_component_format#unbreakable|minecraft:unbreakable]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=5 | 25 {{note|1=This section has been designed to be displayed '''only''' in Creative mode's item picker, meaning that it is '''not''' shown when item is located in player's hotbar, nor in Creative Inventory.<br>However, they are still visible in ''Saved Hotbars'' section, which may be more useful way to preview them than using <code>/data</code> command.}}
+| {{tc|partial|No Effects}}
+| Shown when item has <code>[[Data_component_format#suspicious_stew_effects|minecraft:suspicious_stew_effects]]</code> component, but is empty.
+| {{tc|yes|style=text-align: center;}}
+|-
+| ''Effects<br>[...]''
+| List of effects passed in <code>minecraft:suspicious_stew_effects</code> list.
+| {{tc|yes|style=text-align: center;}}
+|-
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | A section describing how item will affect on player's attributes when consumed.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|When Applied:}}
+|-
+| ''Attributes<br>[...]''
+|-
+| 26
+| ''Honey amount''
+| Shown when item has <code>honey_level</code> tag in <code>[[Data_component_format#block_state|minecraft:block_state]]</code> component. Displayed naturally on [[Beehive|beehives]] and [[Bee_Nest|bee nests]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| 27
+| {{tc|partial|Disabled in Peaceful}}
+| Shown in Peaceful mode when item has <code>id</code> tag in <code>[[Data_component_format#entity_data|minecraft:entity_data]]</code> component, pointing to a mob which is not allowed in Peaceful.<br>[[Difficulty#Peaceful|See this article for more information]].
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=4 | 28
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | Shown when item ID is <code>[[Monster_Spawner|minecraft:spawner]]</code> or <code>[[Trial_Spawner|minecraft:trial_spawner]]</code>.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|Interact with Spawn Egg:}}
+|-
+| {{tc|partial| Sets mob type}}
+|-
+| ''Spawner entity name''
+| Shown when item ID is <code>minecraft:spawner</code> or <code>minecraft:trial_spawner</code> and has <code>SpawnData</code> or <code>spawn_data</code> tag respectively in <code>[[Data_component_format#block_entity_data|minecraft:block_entity_data]]</code> component.
+| {{tc|yes|style=text-align: center;}}
+|-
+| rowspan=3 | 29
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | Shows a list of blocks defined in <code>[[Data_component_format#can_break|minecraft:can_break]]</code> component that can be mined with this item.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|Can break:}}
+|-
+| ''Block names<br>[...]''
+|-
+| rowspan=3 | 30
+| {{tc|partial|''<empty space>''}}
+| rowspan=3 | Shows a list of blocks defined in <code>[[Data_component_format#can_place_on|minecraft:can_place_on]]</code> component on which this block can be placed.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|Can be placed on:}}
+|-
+| ''Block names<br>[...]''
+|-
+| 31
+| ''Durability''
+| Remaining and total [[Durability|durability]] of the tool item. Hidden if item contains <code>[[Data_component_format#unbreakable|minecraft:unbreakable]]</code> component.
+| {{tc|no|style=text-align: center;}}
+|-
+| 32
+| ''Item ID''
+| Internal [[Java_Edition_data_values#Items|item ID]].
+| {{tc|no|style=text-align: center;}}
+|-
+| 33
+| ''Number of components''
+| Total number of [[Data_component_format|data components]].
+| {{tc|no|style=text-align: center;}}
+|-
+| rowspan=3 | 34
+| {{tc|partial|Warning:}}
+| rowspan=3 | Usage warning, shown on block items with <code>id</code> tag in <code>[[Data_component_format#block_entity_data|minecraft:block_entity_data]]</code> component.<br>This is the only section that cannot be hidden using <code>[[Data_component_format#tooltip_display|minecraft:tooltip_display]]</code> component.
+| {{tc|yes|style=text-align: center;|rowspan=3}}
+|-
+| {{tc|partial|Use of this item might lead to command execution}}
+|-
+| {{tc|partial|Do not use unless you know the exact contents!}}
+|}
+
+==== Held item tooltips ====
+When switching the item being held, the name of the item appears above the [[Heads-up display|hotbar]]. {{IN|bedrock}}, held item tooltips also show enchantments and shulker box contents. {{IN|java}}, the “Notification Time” [[Options|option]] affects how long this type of tooltip appears on-screen.
+
+=== Effect tooltips ===
+{{exclusive|java|section=1}}
+[[File:EffectCompact.png|thumb|An effect tooltip.]]
+When [[effect]]s in the [[inventory]] are displayed in the compact style, hovering over an effect icon displays more information about that effect.
+
+=== Option tooltips ===
+{{exclusive|java|section=1}}
+[[File:OptionTooltip.png|thumb|An option tooltip.]]
+When certain buttons, text fields, and sliders are hovered over, or focused on when navigating with {{Key|Tab}}, they show a description in the form of a tooltip. The “Key Binds” options menu also has tooltips to provide details on conflicts between keys.
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|Java edition beta}}
+|{{HistoryLine||1.0|Added item tooltips.}}
+|{{HistoryLine||1.5|Added [[statistics]], which use tooltips in the "Blocks" and "Items" sections.}}
+|{{HistoryLine|Java Edition}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Item tooltips now have an outline and rounded corners.
+|Added [[potion]]s, which display effect information on their tooltip.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Added [[enchantments]]. Enchanted items display "Enchanted!!" on their tooltip.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|The “Enchanted!!” text has been removed from enchanted item tooltips, and items now display their enchantments.}}
+|{{HistoryLine||1.4.2|dev=12w34a|{{key|F3+H}} now shows advanced tooltips.}}
+|{{HistoryLine|||dev=12w41a|Advanced tooltips now display tool and armor durability, and map zoom levels.}}
+|{{HistoryLine||1.4.6|dev=12w50a|Added held item tooltips.}}
+|{{HistoryLine||1.6.1|dev=13w21a|[[Attributes]] now display on item tooltips.}}
+|{{HistoryLine||1.11|dev=16w39a|Added [[shulker boxes]], which list their contents on their item tooltip.}}
+|{{HistoryLine||1.13.1|dev=18w33a|[[Tropical fish bucket]]s now display the type of fish they are holding on their tooltip.}}
+|{{HistoryLine||1.14|dev=18w43c|Added [[crossbow]]s, which show what projectile is loaded on their tooltip when in that state.}}
+|{{HistoryLine||unknown|dev=unknown|Added option tooltips.}}
+|{{HistoryLine||1.17|dev=20w45a|Added [[bundle]]s, which list their contents on their item tooltip.}}
+|{{HistoryLine|||dev=20w46a|Changed how bundles display their contents on their tooltip.}}
+|{{HistoryLine||1.18|dev=21w39a|Added effect tooltips, which appear when the compact style is used for displaying effects in the inventory.}}
+|{{HistoryLine||1.19|dev=22w17a|Added goat horns, which display the variant name on their tooltips.}}
+|{{HistoryLine||1.19.1|dev=Pre-release 3|Tooltips can no longer become offset.<ref>{{bug|MC-253214|||Fixed}}</ref>}}
+|{{HistoryLine||1.19.3|dev=22w42a|Long tooltips no longer get cut off at the edge of the screen.<ref>{{bug|MC-26757|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=22w44a|[[Monster spawner]] tooltips now display the name of the mob that it spawns. If the spawner’s mob spawn type has not been set, it instead shows information on how to do so.}}
+|{{HistoryLine|||dev=Pre-release 2|Tooltips now appear when navigating through menus with {{key|Tab}}.}}
+|{{HistoryLine||1.19.4|dev=23w03a|Added the “Notification Display Time” option, which affects how long held item tooltips appear onscreen.}}
+|{{HistoryLine|||dev=23w05a|Adjusted the positioning of option tooltips to avoid covering the button being hovered over.}}
+|{{HistoryLine|||dev=23w06a|Option tooltips are now used in the key binds [[options]] menu to provide details on conflicts between keys.|[[Paintings]] now have special tooltips in the creative inventory.}}
+|{{HistoryLine|||dev=Pre-release 2|Hovering over the world name field on the world creation screen now displays a tooltip that shows the name of the folder in which the world is saved.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|Tooltips for trimmed [[armor]] now show the trim material and variant name.|Added [[smithing template]]s, which show their type, what items they can be used on, and what materials can be used with them on their tooltip.}}
+|{{HistoryLine||1.20|dev=23w17a|Tooltips for [[decorated pot]]s with [[pottery sherd]]s now list the ingredients used to craft them.}}
+|{{HistoryLine||1.20.2|dev=23w31a|Updated the design of the tooltips in the statistics screen.<ref>{{bug|MC-29371|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w10a|No longer appears when hovering outside the containing element.}}
+|{{HistoryLine||1.21|dev=24w18a|Enchanted items and potions now show more attributes on their tooltips.}}
+|{{HistoryLine||1.21.2|exp=Bundles|dev=24w33a| Bundle tooltips have been changed again; they now feature a fullness meter and the item slots no longer have backgrounds.|It is now possible to scroll to select items in a bundle while the tooltip is displayed.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Smithing template tooltips have been changed; the variant’s name and “Smithing Template” have switched places.|Banner patterns now specify which variant they are in their name instead of a subtitle.}}
+|{{HistoryLine|||dev=24w35a|Tooltips for [[bee nest]]s and [[beehive]]s now show the amount of bees and honey inside on their tooltips.}}
+|{{HistoryLine|||dev=24w36a|Data packs now support custom tooltip window designs.}}
+|{{HistoryLine||1.21.5|dev=25w04a|Crossbows will now show all charged projectiles in their tooltip instead of just the first.}}
+|{{HistoryLine|||dev=25w06a|Tooltips for [[fireworks]] and [[crossbows]] now show a compact form of multiple repeated stars or projectiles that are identical.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|Pocket Edition Alpha}}
+|{{HistoryLine||v0.5.0|Added item tooltips.}}
+|{{HistoryLine|Pocket Edition}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Added shulker boxes, which list their contents on their tooltip.}}
+|{{HistoryLine|Bedrock Edition}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.63|Held item tooltips now have a background.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|[[Decorated pot]]s crafted with at least one [[pottery sherd]] now list their crafting ingredients on their tooltip.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.22|Added Armor and Armor Toughness values to vanilla [[armor]] tooltips, not working with [[add-on]] armors.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|Legacy Console Edition}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added item tooltips.}}
+|{{HistoryLine||xbox=TU3|Changed the tooltip display setting to in-game tooltip display, so that tooltips always display in menus.}}
+|{{HistoryLine||xbox=TU7|Added [[potion]]s, which display effect information on their tooltip.|Added [[enchantment]]s. Enchanted items show their enchantments on their tooltip.|Added held item tooltips.|Added more descriptive tooltips for different types of tree-related blocks, silverfish blocks and stone bricks, a feature from [[Java Edition 1.3.1]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|[[Attributes]] now display on item tooltips.}}
+|{{HistoryLine||xbox=TU36|xbone=CU25|ps3=1.28|psvita=1.28|ps4=1.28|wiiu=Patch 7|switch=1.0.1|Held item tooltips now show the [[rarity]] of the item and the first 3 rows of the item's lore.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Added shulker boxes, which list their contents on their tooltip.}}
+}}
+<gallery>
+OldStatsTooltip.png|The old ''Java Edition'' item tooltip as seen in the [[statistics]] menu before [[Java Edition 1.20.2|1.20.2]].
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+==Gallery==
+===Examples===
+<gallery>
+File:Tooltip1.png|An example of a [[smithing template]] tooltip.
+File:Tooltip2.png|An example of a tooltip for a trimmed piece of [[armor]].
+File:TooltipIII.png|An example of a [[painting]] tooltip in the creative inventory {{in|java}}.
+File:Tooltip4.png|An example of a [[goat horn]] tooltip.
+File:Written Book tooltip.png|An example of a [[written book]] tooltip.
+File:Tooltip7.png|An example of a [[crossbow]] tooltip.
+File:Tooltip5.png|An example of a [[decorated pot]] tooltip.
+File:Tooltip8.png|An example of a [[bucket of tropical fish]] tooltip {{in|java}}.
+File:Tooltip6.png|An example of a key bind conflict tooltip {{in|java}}.
+</gallery>
+
+== Notes ==
+{{Notelist}}
+
+==References==
+<references />
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[ja:ツールチップ]]
+[[pt:Descrição]]
+[[zh:提示框]]

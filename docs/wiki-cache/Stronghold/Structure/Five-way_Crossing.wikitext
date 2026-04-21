@@ -1,0 +1,140 @@
+<noinclude>{{structure info}}</noinclude>
+Five-way crossings are naturally generated components of [[strongholds]], up to 5 per stronghold can generate.
+
+They have up to 6 exits (including the entrance to the room), of which only the entrance generates one of the doors at random. The forward exit is always generated as a plain 3×3 opening (and attempts to generate a further room), while the other four side exits (two for each side, one near and one far from the entrance) have a 50% chance (66% in case of the far exit to the right) to attempt at further generation. Only in case of making an attempt at generating further rooms, those side exits are considered proper exits and generate like plain 3×3 opening, otherwise they result as normal stone bricks walls.
+
+Currently due to a bug, if the player enters this room facing north (-Z) or west (-X) there is a chance for rooms in the stronghold to be hidden from sight, because the side exits swap roles, so that the near exit behaves like the far exit and vice-versa. For example, the near right side exit has generated a room behind, but the far right one has not: in this case the near exit will result in a stone bricks wall, while the far one is the plain 3×3 opening (onto nothing)<ref>Ninjabrain explains how to [https://www.youtube.com/watch?v=vztJNmUdyBY&t=37s find hidden rooms in five-way crossing].</ref> <ref>[https://bugs.mojang.com/browse/MC-188358 MC-188358] - Stronghold rooms and corridors can be blocked off by other parts of the stronghold</ref>
+
+In total there can be 4 outcomes for each side exit: the exit is open but there is no room behind, the exit is walled up and there is nothing behind, the exit is open and there is a room behind, the exit is walled up but there is a room behind.
+
+These rooms are composed of [[stone bricks]], [[smooth stone slabs]] and a [[torch]]
+
+==== Materials ====
+
+{| class="wikitable"
+|-
+! Name
+! Total Amount
+|-
+| Stone bricks
+| 536-572
+|-
+| Smooth stone slabs
+| 36
+|-
+| Torch
+| 1
+|-
+|}
+
+==== Blueprint ====
+{{layered blueprint|name=Straight Staircase|default=Ground Layer|S=Stone Bricks|s=Smooth Stone Slab|d=Double Smooth Stone Slab|T=Torch
+
+|----Ground Layer|
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+
+|----Layer 1|
+SS   SSSSS
+SSsssS   S
+SSSSSS   S
+SSSSSS   S
+SS   S   S
+SS   S   S
+S        S
+S        S
+S        S
+S        S
+SSSSSSSSSS
+
+|----Layer 2|
+SS   SSSSS
+SS   S   S
+SS   S   S
+SSsssS   S
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+
+|----Layer 3|
+SS   SSSSS
+SS   S   S
+SS   S   S
+SS   S   S
+SS   SSSSS
+SS   SSSSS
+S     sssS
+          
+          
+          
+SSS   SSSS
+
+|----Layer 4|
+SSSSSSSSSS
+SS   SSSSS
+SS   SSSSS
+SS   SSSSS
+SS   SsssS
+SS   S   S
+S        S
+          
+          
+          
+SSS   SSSS
+
+|----Layer 5|
+SSSSSSSSSS
+ sddds    
+ sddds    
+ sddds    
+S  T     S
+S        S
+S        S
+          
+          
+          
+SSS   SSSS
+
+|----Layer 6 & 7|
+SSSSSSSSSS
+          
+          
+          
+S        S
+S        S
+S        S
+S        S
+S        S
+S        S
+SSSSSSSSSS
+
+|----Layer 8|
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+SSSSSSSSSS
+}}
+
+==References==
+
+{{reflist}}

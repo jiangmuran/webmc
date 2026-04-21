@@ -1,0 +1,354 @@
+{{About|the [[Furnace|furnace]] variant|the block that emits smoke|Campfire}}{{Infobox block
+| group = Inactive
+| 1-1 = Smoker.png
+| group2 = Lit
+| 2-1 = Lit Smoker.gif
+| 2-1caption = {{JE}}
+| 2-2 = Lit Smoker BE.gif
+| 2-2caption = {{BE}}
+| extratext = View [[#Renders|all renders]]
+| transparent = Partial <small>(when active)</small>
+| light = Yes (13) <small>(when active)</small>
+| tool = Wooden pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''smoker''' is a block that cooks [[food]] twice as quickly as a [[furnace]], but cannot smelt anything else. It also serves as a [[butcher]]'s [[job site block]].
+
+== Obtaining ==
+=== Breaking ===
+A smoker can be mined and obtained using any [[pickaxe]]. If mined without a pickaxe, it does not drop itself.
+
+Smokers drop their contents when broken.
+
+{{breaking row|horizontal=1|Smoker|Pickaxe|Wood|foot=1}}
+
+=== Natural generation ===
+Smokers can generate in [[butcher]] houses in [[village]]s.
+
+=== Crafting ===
+{{Crafting
+|B1={Any Log or Stem}; {Any Stripped Log or Stem}; {Any Wood or Hyphae}; {Any Stripped Wood or Hyphae}
+|A2={Any Log or Stem}; {Any Stripped Log or Stem}; {Any Wood or Hyphae}; {Any Stripped Wood or Hyphae}
+|B2=Furnace 
+|C2={Any Log or Stem}; {Any Stripped Log or Stem}; {Any Wood or Hyphae}; {Any Stripped Wood or Hyphae}
+|B3={Any Log or Stem}; {Any Stripped Log or Stem}; {Any Wood or Hyphae}; {Any Stripped Wood or Hyphae}
+|Output=Smoker
+|type=Decoration block
+}}
+
+== Usage ==
+Smokers cannot be pushed by [[pistons]].{{only|java}}
+
+=== Cooking ===
+[[File:Smoker GUI.png|thumb|176px|The GUI for the smoker.]]
+{{main|Cooking}}
+
+Smokers are used to cook food [[item]]s twice as fast as a regular [[furnace]], taking only 5 seconds per item instead of 10. It is the counterpart to the [[blast furnace]], which is used to quickly smelt ores, metal tools and armor. When an uncooked food item and a [[fuel]] item are placed into the smoker, the block state changes to {{code|lit}} and the item cooks. Fuel is used at double the rate of regular furnaces, so the number of items cooked per fuel stays the same. The product can then be taken out of the output slot in the smoker's interface, or be collected using a [[hopper]].
+
+Smokers cannot cook [[chorus fruit]], as [[popped chorus fruit]] is not edible.
+
+{| class="sortable wikitable" data-description="Food recipes"
+|- align="center"
+! width="80" | Product
+! width="80" | Ingredient
+! Exp
+! class="unsortable" | Usage
+|-
+!{{Slot|Baked Potato}}<br>[[Baked Potato]]
+| align="center" |{{Slot|Potato}}<br>[[Potato]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|1}}.
+|-
+!{{Slot|Dried Kelp}}<br>[[Dried Kelp]]
+| align="center" |{{Slot|Kelp}}<br>[[Kelp]]
+| align="center" | 0.1
+| Fills {{hunger|1}} and can be eaten faster than other [[food]]s; while uncooked kelp is inedible. Can also be used to craft [[dried kelp block]].
+|-
+!{{Slot|Steak}}<br>[[Steak]]
+| align="center" |{{Slot|Raw Beef}}<br>[[Raw Beef]]
+| align="center" | 0.35
+| Fills {{hunger|8}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Porkchop}}<br>[[Cooked Porkchop]]
+| align="center" |{{Slot|Raw Porkchop}}<br>[[Raw Porkchop]]
+| align="center" | 0.35
+| Fills {{hunger|8}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Mutton}}<br>[[Cooked Mutton]]
+| align="center" |{{Slot|Raw Mutton}}<br>[[Raw Mutton]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}}.
+|-
+!{{Slot|Cooked Chicken}}<br>[[Cooked Chicken]]
+| align="center" |{{Slot|Raw Chicken}}<br>[[Raw Chicken]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}} and has a 30% chance to give the [[Hunger#Food poisoning|Hunger]] status effect.
+|-
+!{{Slot|Cooked Rabbit}}<br>[[Cooked Rabbit]]
+| align="center" |{{Slot|Raw Rabbit}}<br>[[Raw Rabbit]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Cod}}<br>[[Cooked Cod]]
+| align="center" |{{Slot|Raw Cod}}<br>[[Raw Cod]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|2}}.
+|-
+!{{Slot|Cooked Salmon}}<br>[[Cooked Salmon]]
+| align="center" |{{Slot|Raw Salmon}}<br>[[Raw Salmon]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}}.
+|}
+
+=== Profession ===
+{{main|Job site block}}
+If a smoker has not been claimed by a [[villager]], any nearby unemployed villager has a chance to change their profession to butcher and claim the smoker as their [[job site block]].
+
+=== Light source ===
+Smokers emit a light level of 13 when active, just like normal furnaces.
+
+=== Custom name ===
+By default, the interface of a smoker is labeled "Smoker", but this name can be customized by naming it in an [[anvil]] before placing it, or by changing the <code>CustomName</code> tag using the {{cmd|data}} command{{only|Java}}.
+
+=== Lock ===
+{{IN|je}}, a smoker can be "locked" by setting its <code>lock</code> tag using the {{cmd|data}} command. If a smoker's <code>lock</code> tag is not blank, the smoker cannot be opened unless the player is holding an item with the same name as the <code>lock</code> tag's text. For example, to lock a smoker at (0,64,0) so that the smoker cannot be opened unless the player is holding an item named "Smoker Key", use {{cmd|data merge block 0 64 0 <nowiki>{lock:{components:{"custom_name":"Smoker Key"}}}</nowiki>}}.
+
+=== Note blocks ===
+Smoker can be placed under [[note block]]s to produce "bass drum" sounds.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Smoker fire crackle1.ogg
+|sound2=Smoker fire crackle2.ogg
+|sound3=Smoker fire crackle3.ogg
+|sound4=Smoker fire crackle4.ogg
+|sound5=Smoker fire crackle5.ogg
+|subtitle=Smoker smokes
+|source=block
+|description=Randomly while lit
+|id=block.smoker.smoke
+|translationkey=subtitles.block.smoker.smoke
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|subtitle=Butcher works
+|source=neutral
+|description=Randomly while a butcher is working
+|id=entity.villager.work_butcher
+|translationkey=subtitles.entity.villager.work_butcher
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Door close.ogg
+|sound2=Door open.ogg
+|subtitle=Chest locked<ref group=sound name=lock>{{Bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>
+|source=block
+|description=When a player attempts to open a smoker locked using the {{nbt|compound|lock}} tag
+|id=block.chest.locked|idnote=<ref group=sound name=lock/>
+|translationkey=subtitles.block.chest.locked|translationkeynote=<ref group=sound name=lock/>
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Smoker fire crackle1.ogg
+|sound2=Smoker fire crackle2.ogg
+|sound3=Furnace fire crackle4.ogg
+|source=block
+|description=Randomly while lit
+|id=block.smoker.smoke
+|volume=3.0
+|pitch=1.0 <ref group="sound" name="pitch">Except <code>fire_crackle4</code> (the last sound), which is 0.8</ref>}}
+| {{SoundLine
+|source=block
+|description=Randomly while a butcher is working
+|id=block.smoker.smoke
+|volume=3.0
+| pitch = 1.0 <ref group="sound" name="pitch"/>
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Smoker
+|spritetype=block
+|nameid=smoker
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=smoker
+|spritetype=block
+|nameid=smoker
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Smoker
+|spritetype=block
+|nameid=smoker
+|id=453}}
+{{ID table2
+|displayname=Lit Smoker
+|spritetype=block
+|nameid=lit_smoker
+|id=454
+|form=block
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=smoker
+|spritetype=block
+|nameid=Smoker
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|facing|north|east,north,south,west|The direction the smoker's opening faces.<br>The opposite from the direction the player faces while placing the smoker.}}
+{{bst|lit|false|false,true|If the smoker is lit.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|minecraft:cardinal_direction|south|east,north,south,west|The direction the smoker's opening faces.<br>The opposite from the direction the player faces while placing the smoker.|Unsupported|foot=1}}
+
+=== Block data ===
+A smoker has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+{{#lst:Furnace|block data}}
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+{{yt|mLOs-tc4gAw}}
+
+== History ==
+''For a more in-depth breakdown of changes to textures and models, including a set of renders for each state combination, see [[/Asset history]]''
+{{See technical block|Lit Smoker}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w44a|[[File:Smoker (S) JE1.png|32px]]  Added smokers.
+|Smokers are currently obtainable only from the [[Creative inventory]].
+|The GUI of smokers can currently be accessed only through [[Spectator]] mode.}}
+|{{HistoryLine|||dev=18w48a|Smokers can now generate in some [[plains]] [[village]] houses.}}
+|{{HistoryLine|||dev=18w49a|Smokers can now generate in some [[savanna]] and [[snowy tundra]] village houses.}}
+|{{HistoryLine|||dev=18w50a|Smokers can now be found in some [[desert]] and [[taiga]] village houses.
+|[[File:Lit Smoker (S) JE1.png|32px]] Smokers are now functional.
+|Smokers can cook [[food]] items twice as fast as a regular [[furnace]].
+|Smokers can now be crafted using 4 [[log]]s and 1 furnace.}}
+|{{HistoryLine|||dev=19w03a|[[Sound]]s have been added for smokers.}}
+|{{HistoryLine|||dev=19w11a|Smokers now serve as butcher [[villager]]s' job site block.}}
+|{{HistoryLine||1.16|dev=20w13a|Smokers can now be crafted with stems and hyphae.}}
+|{{HistoryLine||1.17|dev=21w11a|[[File:Smoker (S) JE2.png|32px]] [[File:Lit Smoker (S) JE2.png|32px]] Changed the top texture of smoker.
+|[[File:Lit Smoker (S) (bottom view) JE1.png|32px]] The bottom texture is still unchanged.}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Lit Smoker (S) (bottom view) JE2.png|32px]] Changed the bottom texture of smoker.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.2|exp=Experimental Gameplay|[[File:Smoker (S) BE1.png|32px]] Added smokers, currently behind [[Experimental Gameplay]].
+|[[File:Smoker Animation.gif|32px]] The texture for the lit smoker exists, but it is unused.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|Smokers are now [[craft]]able.
+|Smokers can now generate in the butcher houses in [[village]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|[[File:Lit Smoker (S) BE1.png|32px]] Added lit smokers. |Smokers are now functional.|They are now available outside of Experimental Gameplay.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|[[File:Smoker (S).png|32px]] [[File:Lit Smoker (S).png|32px]] Changed the top texture of smokers.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.24|Smokers drop themselves only if mined using a pickaxe, matching {{JE}}.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Smoker (S) JE1.png|32px]] [[File:Lit Smoker (S) JE1.png|32px]] Added smokers.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Smokers now use the <code>minecraft:cardinal_direction</code> [[block state]] instead of <code>facing_direction</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery caption="''Java Edition''">
+Smoker.png|Facing south
+Lit Smoker.png|Facing south, lit
+Smoker (W).png|Facing west
+Smoker (N).png|Facing north
+Smoker (E).png|Facing east
+Lit Smoker (E).png|Facing east, lit
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Blast Furnace Smoker & Barrel.jpg|A blast furnace, smoker and barrel.
+Smoker XP Storage 1.jpg|An auto-smelter containing a smoker.
+Smoker XP Storage 2.jpg|An auto-smelter for cooking kelp.
+</gallery>
+
+== See also ==
+* {{BlockLink|Furnace}}
+* {{BlockLink|Blast Furnace}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week--smoker Block of the Week: Smoker] – Minecraft.net on July 22, 2022
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Job blocks]]
+[[Category:Utility blocks]]
+[[Category:Storage]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+[[Category:Light sources]]
+[[Category:Blocks with GUI]]
+[[Category:Readable by comparators]]
+
+[[cs:Trouba]]
+[[de:Räucherofen]]
+[[es:Ahumador]]
+[[fr:Fumoir]]
+[[ja:燻製器]]
+[[ko:훈연기]]
+[[pl:Wędzarka]]
+[[pt:Defumador]]
+[[ru:Коптильня]]
+[[uk:Коптильня]]
+[[zh:烟熏炉]]

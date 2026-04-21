@@ -1,0 +1,73 @@
+{{distinguish|Info_Update|Reserved6}}
+{{About|the placeholder block|the unknown [[element]]|Element#???|the {{MCD}} mission|MCD:???}}
+{{exclusive|bedrock}}
+{{Infobox block
+| title = Unknown
+| image = Missing Tile.png
+| invimage = Unknown
+| transparent = No
+| light = No
+| maxStack = 64
+| tool = Any
+| renewable = No
+| stackable = Yes
+| flammable = No
+| lavasusceptible = No
+}}
+'''Unknown''' is a placeholder block exclusive to {{BE}} that generates in place where blocks have an invalid ID or invalid components in their [[Add-on|behavior files]].
+If the block has a unique model, it takes the shape of that model.
+
+== Obtaining ==
+=== Breaking ===
+The unknown block drops nothing when broken, and breaks instantly with any tool.
+{{breaking row|horizontal=1|Unknown|sprite=unknown-block|drop=0}}
+
+
+=== Natural generation ===
+Loading a block with an incorrect [[Bedrock Edition data values#Block IDs|ID]] in any world results in it being replaced by an unknown block, although it retains its ID. The ID is not retained upon being broken. It is often caused by corruption or force opening a world of a higher version than the client, as the game does not recognize the ID of newer blocks.
+
+Examples of the unknown block naturally generating include placing an [[add-on]] and then removing the add-on from the world, or placing an {{el|edu}}-exclusive block and loading the world on a vanilla version.
+
+== Behavior ==
+The unknown block breaks instantly, and is able to be placed if it has been converted to the {{code|unknown}} identifier. If it still retains the invalid identifier, such as when obtained via {{control|pick block}}, it cannot be placed, though it flashes briefly on the client. Like ice, it has low friction, but only for the player. When the player moves on it, the movement stutters, teleporting the player slightly forward or backward. When attempting to drop the item from the hotbar, it plays the sound but remains in the inventory triggering the pick up item animation. The item can be disposed by dropping it from the inventory or destroying it in the Creative inventory.
+
+== Sounds ==
+{{Sound table/Block/Normal/BE}}
+
+== Data values ==
+=== ID ===
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Unknown
+|spritename=unknown-block
+|spritetype=block
+|nameid=unknown
+|id=560
+|form=block
+|foot=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:info update BE1.png|32px]] A placeholder block was added to represent blocks with invalid IDs, replacing the functionality formerly used by [[info_update]].{{info needed|Is this a single placeholder block, or is there one such block for each ID?}}{{checkthecode|Confirm that this placeholder block and "Unknown" are the same block.}}}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|The placeholder block now displays the name "Unknown".}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.59|"Unknown" can now be placed with commands, and be obtained by breaking.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Unknown blocks can no longer be placed via commands.}} 
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.21|[[File:Missing Tile BE3.png|32px]] The texture of the unknown block has been changed and can’t be obtained by breaking.}}
+}}
+
+== Navigation ==
+{{Navbox unused features}}{{Navbox blocks|unused}}
+[[Category:Unused blocks]]
+
+[[de:Unbekannt]]
+[[es:Desconocido]]
+[[ja:不明]]
+[[ko:Unknown]]
+[[pt:Desconhecido]]
+[[uk:Невідомо]]
+[[zh:未知方块]]

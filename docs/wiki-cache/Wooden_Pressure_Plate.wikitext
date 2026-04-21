@@ -1,0 +1,579 @@
+{{Infobox block
+| group = Oak
+| 1-1 = Oak Pressure Plate.png
+| invimage = Oak Pressure Plate
+| group2 = Spruce
+| 2-1 = Spruce Pressure Plate.png
+| invimage2 = Spruce Pressure Plate
+| group3 = Birch
+| 3-1 = Birch Pressure Plate.png
+| invimage3 = Birch Pressure Plate
+| group4 = Jungle
+| 4-1 = Jungle Pressure Plate.png
+| invimage4 = Jungle Pressure Plate
+| group5 = Acacia
+| 5-1 = Acacia Pressure Plate.png
+| invimage5 = Acacia Pressure Plate
+| group6 = Dark Oak
+| 6-1 = Dark Oak Pressure Plate.png
+| invimage6 = Dark Oak Pressure Plate
+| group7 = Mangrove
+| 7-1 = Mangrove Pressure Plate.png
+| invimage7 = Mangrove Pressure Plate
+| group8 = Cherry
+| 8-1 = Cherry Pressure Plate.png
+| invimage8 = Cherry Pressure Plate
+| group9 = Pale Oak
+| 9-1 = Pale Oak Pressure Plate.png
+| invimage9 = Pale Oak Pressure Plate
+| group10 = Bamboo
+| 10-1 = Bamboo Pressure Plate.png
+| invimage10 = Bamboo Pressure Plate
+| group11 = Crimson
+| 11-1 = Crimson Pressure Plate.png
+| invimage11 = Crimson Pressure Plate
+| group12 = Warped
+| 12-1 = Warped Pressure Plate.png
+| invimage12 = Warped Pressure Plate
+| transparent = Yes
+| light = No
+| tool = axe
+| tool2 = 
+| waterloggable = {{jebe|No|Yes}}
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = * {{BlockSprite|Oak Pressure Plate}} {{BlockSprite|Spruce Pressure Plate}} {{BlockSprite|Birch Pressure Plate}} {{BlockSprite|Jungle Pressure Plate}} {{BlockSprite|Acacia Pressure Plate}} {{BlockSprite|Dark Oak Pressure Plate}} {{BlockSprite|Mangrove Pressure Plate}} {{BlockSprite|Cherry Pressure Plate}} {{BlockSprite|Pale Oak Pressure Plate}} {{BlockSprite|Bamboo Pressure Plate}} Yes
+*{{BlockSprite|Crimson Pressure Plate}} {{BlockSprite|Warped Pressure Plate}} {{Jebe|No|Yes}}
+|mapcolor={{Collapse|title=Varies|content= 
+{{TooltipSprite||Oak Pressure Plate}} {{Map color|Oak}}<br>
+{{TooltipSprite||Spruce Pressure Plate}} {{Map color|Spruce}}
+<br>{{TooltipSprite||Birch Pressure Plate}} {{Map color|Birch}}
+<br>{{TooltipSprite||Jungle Pressure Plate}} {{Map color|Jungle}}
+<br>{{TooltipSprite||Acacia Pressure Plate}} {{Map color|Acacia}}
+<br>{{TooltipSprite||Dark Oak Pressure Plate}} {{Map color|Dark Oak}}
+<br>{{TooltipSprite||Mangrove Pressure Plate}} {{Map color|Mangrove}}
+<br>{{TooltipSprite||Cherry Pressure Plate}} {{Map color|Cherry}}
+<br>{{TooltipSprite||Pale Oak Pressure Plate}} {{Map color|Quartz Block}}
+<br>{{TooltipSprite||Bamboo Pressure Plate}} {{Map color|Bamboo Mosaic}} 
+<br>{{TooltipSprite||Crimson Pressure Plate}} {{Map color|Crimson Stem}}{{only|je|short=1}}
+<br>{{TooltipSprite||Crimson Pressure Plate}} {{Map color|Netherrack}}{{only|be|short=1}}
+<br>{{TooltipSprite||Warped Pressure Plate}} {{Map color|Warped Stem}}{{only|je|short=1}}
+<br>{{TooltipSprite||Warped Pressure Plate}} {{Map color|Prismarine}}{{only|be|short=1}}
+}}
+}}
+A '''wooden pressure plate''' is a wooden variant of the [[pressure plate]]. It can detect all entities, producing the maximum signal strength of 15. Wooden pressure plates come in all variants of wood.
+
+== Obtaining ==
+=== Breaking ===
+A wooden pressure plate can be mined using any tool, or without a tool, and drops itself as an item. However, [[axe]]s are the fastest way to break one.
+
+{{breaking row|horizontal=1
+|Wooden Pressure Plate
+|sprite=wooden-pressure-plates
+|Axe
+|Any
+|link=none}}
+
+A pressure plate is removed and drops itself as an item if:
+
+* the block beneath it is moved, removed, or destroyed
+* a [[piston]] tries to push it or moves a block into its space
+
+=== Natural generation ===
+Oak pressure plates can generate in some [[plains]] village houses and in [[trial chambers]] (some [[dispenser]] traps and a hidden chamber in the "Intersection 2" room).
+
+Acacia pressure plates can generate in some [[savanna]] [[village]] houses.
+
+Spruce pressure plates can generate in some [[snowy tundra]], [[taiga]], and [[snowy taiga]] [[village]] houses.
+
+=== Crafting ===
+{{Crafting
+|A2= Matching Planks
+|B2= Matching Planks
+|Output= Matching Wooden Pressure Plate
+|type= Redstone
+}}
+
+== Usage ==
+=== Redstone component ===
+{{see also|Redstone circuit}}
+
+A pressure plate can be used to detect entities on top of it (players, mobs, items, etc.).
+
+==== Placement ====
+[[File:Pressure plate as power source.png|thumb|Pressure plate placement and behavior.]]
+[[File:Pressure plate.png|thumb|Pressure plates on fences.]]
+
+To place a pressure plate, {{control|use}} it while aiming at the face of a block adjacent to the destination space.
+
+A pressure plate can be attached to:
+* the '''top''' of any full solid [[opaque]] block (stone, dirt, blocks of gold, etc.), including full-block mechanism components ([[command block]]s, [[dispenser]]s, [[dropper]]s, [[note block]]s, and [[redstone lamp]]s)
+* the '''top''' of a [[hopper]], [[fence]], [[nether brick fence]], an upside-down [[slab]], or upside-down [[stairs]].
+
+A pressure plate cannot be attached to the side or bottom of any block, but attempting to make such an attachment may cause the plate to attach to the top of a block under the destination space. For example, if a fence is on the ground, attempting to attach a plate to the ''side'' of the fence causes the plate to be attached to the ''top'' of the ground next to the fence instead.
+
+More information regarding placement on transparent blocks can be found at [[Opacity/Placement]].
+
+==== Activation ====
+A pressure plate ''activates'' when an entity is on top of it (specifically, when the entity's collision mask intersects the bottom quarter-block of the pressure plate's space, which may include entities flying close to the ground), with a minimum activation time of {{convert|1|second|tick}}.
+
+A wooden pressure plate is activated by all entities (including players, mobs, items, arrows, experience orbs, fishing bobs, etc.) besides snowballs.
+
+Once activated, a pressure plate checks if entities are still present at regular intervals. Wooden pressure plates check every {{convert|10|redstone tick|second}}, starting 10 redstone ticks after activation, so they deactivate up to 10 redstone ticks after no entities are on top of them.
+
+A [[minecart]] traveling on [[rail]]s activates a pressure plate next to a diagonal track but not one next to a straight track.
+
+==== Behavior ====
+While active, a pressure plate:
+* powers adjacent '''[[redstone dust]]''', and adjacent '''[[redstone comparator]]s''' or '''[[redstone repeater]]s''' facing away from the plate
+* strongly powers any full solid opaque '''block''' beneath it
+* activates adjacent '''[[mechanism component]]s''', including above or below, such as [[piston]]s, [[redstone lamp]]s, etc.
+
+The [[Redstone circuit#Power level|power level]] is always 15.
+
+[[Water]] and [[lava]] flow around a pressure plate without affecting it.
+
+A pressure plate is not solid (it is not a barrier to entity movement). A block under a pressure plate can provide a solid barrier underneath it (for mobs to walk across, items to fall on, etc.), but when a pressure plate is placed on a block with a small collision mask, such as a fence or nether brick fence, it is possible for entities to move through the pressure plate while still activating it (walking through it horizontally, or falling through it vertically). Thus, a pressure plate on a fence can be used to detect entities without stopping them (more compactly than a tripwire circuit).
+
+Pressure plates are 0.0625 blocks high ({{frac|1|16}} of a block) when inactive and 0.03125 blocks high ({{frac|1|32}} of a block) when active, but because they are not solid they do not affect the position of entities "on top" of them, so a player on top of a pressure plate is actually standing on the block beneath it.
+
+Pressure plates can also open [[doors]], activate [[TNT]], and power [[command block]]s.
+{{-}}
+
+=== Fuel ===
+Overworld wooden pressure plates can be used as a [[fuel]] in [[furnace]]s, smelting 1.5 items per pressure plate. Nether wood pressure plates (crimson and warped), cannot be used as fuel in a furnace.
+
+=== Note blocks ===
+Wooden pressure plates can be placed under [[note block]]s to produce "bass" sounds.
+
+== Sounds ==
+=== Generic ===
+==== Normal wood ====
+{{Sound table/Block/Wood}}
+
+==== Cherry wood ====
+{{Sound table/Block/Cherry wood}}
+
+==== Bamboo wood ====
+{{Sound table/Block/Bamboo wood}}
+
+==== Nether wood ====
+{{Sound table/Block/Nether wood}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Click.ogg
+|rowspan=8
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a wooden pressure plate is deactivated
+|id=block.wooden_pressure_plate.click_off
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.7
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a wooden pressure plate is activated
+|id=block.wooden_pressure_plate.click_on
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.8
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a cherry wood pressure plate is deactivated
+|id=block.cherry_wood_pressure_plate.click_off
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.7
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a cherry wood pressure plate is activated
+|id=block.cherry_wood_pressure_plate.click_on
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.8
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a bamboo wood pressure plate is deactivated
+|id=block.bamboo_wood_pressure_plate.click_off
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.7
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a bamboo wood pressure plate is activated
+|id=block.bamboo_wood_pressure_plate.click_on
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.8
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a Nether wood pressure plate is deactivated
+|id=block.nether_wood_pressure_plate.click_off
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.7
+|distance=16}}
+| {{SoundLine
+|subtitle=Pressure Plate clicks
+|source=block
+|description=When a Nether wood pressure plate is activated
+|id=block.nether_wood_pressure_plate.click_on
+|translationkey=subtitles.block.pressure_plate.click
+|volume=0.3
+|pitch=0.8
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Click.ogg
+|rowspan=8
+|source=block
+|description=When a wooden pressure plate deactivates
+|id=click_off.wooden_pressure_plate
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a wooden pressure plate activates
+|id=click_on.wooden_pressure_plate
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a cherry wood pressure plate deactivates
+|id=click_off.cherry_wood_pressure_plate
+|volume=0.3
+|pitch=0.7}}
+| {{SoundLine
+|source=block
+|description=When a cherry wood pressure plate activates
+|id=click_on.cherry_wood_pressure_plate
+|volume=0.3
+|pitch=0.8}}
+| {{SoundLine
+|source=block
+|description=When a bamboo wood pressure plate deactivates
+|id=click_off.bamboo_wood_pressure_plate
+|volume=0.3
+|pitch=0.7}}
+| {{SoundLine
+|source=block
+|description=When a bamboo wood pressure plate activates
+|id=click_on.bamboo_wood_pressure_plate
+|volume=0.3
+|pitch=0.8}}
+| {{SoundLine
+|source=block
+|description=When a Nether wood pressure plate deactivates
+|id=click_off.nether_wood_pressure_plate
+|volume=0.3
+|pitch=0.7}}
+| {{SoundLine
+|source=block
+|description=When a Nether wood pressure plate activates
+|id=click_on.nether_wood_pressure_plate
+|volume=0.3
+| pitch = 0.8
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oak Pressure Plate
+|spritetype=block
+|nameid=oak_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Spruce Pressure Plate
+|spritetype=block
+|nameid=spruce_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Birch Pressure Plate
+|spritetype=block
+|nameid=birch_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Jungle Pressure Plate
+|spritetype=block
+|nameid=jungle_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Acacia Pressure Plate
+|spritetype=block
+|nameid=acacia_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Dark Oak Pressure Plate
+|spritetype=block
+|nameid=dark_oak_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Mangrove Pressure Plate
+|spritetype=block
+|nameid=mangrove_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Cherry Pressure Plate
+|spritetype=block
+|nameid=cherry_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Pale Oak Pressure Plate
+|spritetype=block
+|nameid=pale_oak_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Bamboo Pressure Plate
+|spritetype=block
+|nameid=bamboo_pressure_plate
+|blocktags=pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=wooden_pressure_plates}}
+{{ID table
+|displayname=Crimson Pressure Plate
+|spritetype=block
+|nameid=crimson_pressure_plate
+|blocktags=non_flammable_wood, pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=non_flammable_wood, wooden_pressure_plates}}
+{{ID table
+|displayname=Warped Pressure Plate
+|spritetype=block
+|nameid=warped_pressure_plate
+|blocktags=non_flammable_wood, pressure_plates, wall_post_override, wooden_pressure_plates
+|itemtags=non_flammable_wood, wooden_pressure_plates
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oak Pressure Plate
+|spritetype=block
+|nameid=wooden_pressure_plate
+|id=72}}
+{{ID table2
+|displayname=Spruce Pressure Plate
+|spritetype=block
+|nameid=spruce_pressure_plate
+|id=409}}
+{{ID table2
+|displayname=Birch Pressure Plate
+|spritetype=block
+|nameid=birch_pressure_plate
+|id=406}}
+{{ID table2
+|displayname=Jungle Pressure Plate
+|spritetype=block
+|nameid=jungle_pressure_plate
+|id=408}}
+{{ID table2
+|displayname=Acacia Pressure Plate
+|spritetype=block
+|nameid=acacia_pressure_plate
+|id=405}}
+{{ID table2
+|displayname=Dark Oak Pressure Plate
+|spritetype=block
+|nameid=dark_oak_pressure_plate
+|id=407}}
+{{ID table2
+|displayname=Mangrove Pressure Plate
+|spritetype=block
+|nameid=mangrove_pressure_plate
+|id=-490}}
+{{ID table2
+|displayname=Cherry Pressure Plate
+|spritetype=block
+|nameid=cherry_pressure_plate
+|id=-538}}
+{{ID table2
+|displayname=Pale Oak Pressure Plate
+|spritetype=block
+|nameid=pale_oak_pressure_plate
+|id=-997}}
+{{ID table2
+|displayname=Bamboo Pressure Plate
+|spritetype=block
+|nameid=bamboo_pressure_plate
+|id=-514}}
+{{ID table2
+|displayname=Crimson Pressure Plate
+|spritetype=block
+|nameid=crimson_pressure_plate
+|id=517}}
+{{ID table2
+|displayname=Warped Pressure Plate
+|spritetype=block
+|nameid=warped_pressure_plate
+|id=518
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{edition|java}}:
+{{bst|powered|false|false,true|True if pressure plate is depressed, providing power.|foot=1}}
+
+{{edition|bedrock}}:
+{{bst|showaux=1|bits=0x1|redstone_signal|0|0,1|Specifies whether the pressure plate is pressed.|
+|2,3,4,5,6,7,8,9,10,11,12,13,14,15|Unused|Unsupported|foot=1}}<section end="block states" />
+
+== Videos ==
+{{yt|zJApINwkCEw}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] shows interest in adding pressure plates.}}
+|{{HistoryLine||October 18, 2022|link={{Mcnet|try-first-minecraft-1-20-features}}|[[File:Bamboo Pressure Plate JE1 BE1.png|32px]] Bamboo pressure plates were shown in an official article.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Oak Pressure Plate JE1.png|32px]] [[File:Powered Oak Pressure Plate JE1.png|32px]] Added wooden pressure plates.
+|[[File:Oak Pressure Plate (item) JE1.png|32px]] The model of pressure plates in item form is different.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|Pressure plates now require only two [[wood planks]] to [[craft]]; previous versions required three (this recipe now creates wooden [[slab]]s).}}
+|{{HistoryLine||1.6|dev=Test Build 3|Wooden plates no longer require a [[pickaxe]] to be successfully extracted.
+|Pressure plates can now also be recovered by destroying the [[block]] they are on.
+|Pressure plates may no longer be placed on [[leaf block]]s or [[TNT]]. Pressure plates placed on such blocks prior to this update drop themselves when [[Block update|updated]] (whether by stepping on them or by placing/breaking adjacent blocks) and can be recollected, though they can still ignite TNT.}}
+|{{HistoryLine||1.7|[[File:Oak Pressure Plate JE2.png|32px]] [[File:Powered Oak Pressure Plate JE2.png|32px]] The model of pressure plates has been changed.}}
+|{{HistoryLine||1.8|dev=Pre-release|Pressure plates can now be placed on [[fence]]s, though they are not functional in this configuration due to the fence's hitbox.
+|Dropped pressure plate items no longer appear larger than normal blocks.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Pressure plates now function when placed on top of [[fence]]s.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|[[File:Oak Pressure Plate JE3 BE1.png|32px]] [[File:Powered Oak Pressure Plate JE3 BE1.png|32px]] [[File:Oak Pressure Plate (item) JE2.png|32px]] The textures of pressure plates have been changed.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|Wooden pressure plates are now broken faster with an [[axe]].}}
+|{{HistoryLine||1.3.1|dev=12w23a|Wooden pressure plates can now be activated by [[arrow]]s.}}
+|{{HistoryLine||1.8|dev=14w10a|[[File:Oak Pressure Plate JE3 BE1.png|32px]] The model of pressure plates in item form has been changed.}}
+|{{HistoryLine|||dev=14w10c|[[File:Oak Pressure Plate (item) JE3.png|32px]] The model of pressure plates in item form has been changed.<ref>{{bug|MC-50309}}</ref>}}
+|{{HistoryLine|||dev=14w33a|Pressure plates now have unique [[item]] names.<ref>{{bug|MC-66247}}</ref>}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Oak Pressure Plate JE3 BE1.png|32px]] The model of pressure plates in item form has been changed.}}
+|{{HistoryLine|||dev=15w43a|Wooden pressure plates have now been given a different, more high-pitched activation [[sound]], so that they no longer match the sound of [[stone pressure plate]]s.}}
+|{{HistoryLine|||dev=15w46a|[[Mob]]s can no longer spawn on pressure plates.}}
+|{{HistoryLine||1.13|dev=17w47a|[[File:Spruce Pressure Plate JE1 BE1.png|32px]] [[File:Birch Pressure Plate JE1 BE1.png|32px]] [[File:Jungle Pressure Plate JE1 BE1.png|32px]] [[File:Acacia Pressure Plate JE1 BE1.png|32px]] [[File:Dark Oak Pressure Plate JE1 BE1.png|32px]] Pressure plates now come in all six types of wood.
+|"Wooden Pressure Plate" has now been renamed to "<wood type> Pressure Plate".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Oak Pressure Plate JE4.png|32px]] [[File:Spruce Pressure Plate JE2.png|32px]] [[File:Birch Pressure Plate JE2.png|32px]] [[File:Jungle Pressure Plate JE2.png|32px]] [[File:Acacia Pressure Plate JE2.png|32px]] [[File:Dark Oak Pressure Plate JE2.png|32px]] The textures of pressure plates have been changed.}}
+|{{HistoryLine|||dev=18w47a|[[File:Oak Pressure Plate JE5 BE2.png|32px]] [[File:Spruce Pressure Plate JE3.png|32px]] [[File:Birch Pressure Plate JE3 BE2.png|32px]] [[File:Jungle Pressure Plate JE3 BE2.png|32px]] [[File:Acacia Pressure Plate JE3 BE2.png|32px]] [[File:Dark Oak Pressure Plate JE3 BE2.png|32px]] The textures of pressure plates have been changed again.}}
+|{{HistoryLine|||dev=18w50a|[[File:Spruce Pressure Plate JE4 BE2.png|32px]] The texture of spruce pressure plates has been changed again.}}
+|{{HistoryLine|||dev=19w12b|Pressure plates can now be placed on [[glass]], [[ice]], [[glowstone]] and the [[sea lantern]]s.}}
+|{{HistoryLine||1.14.3|dev=pre3|Pressure plates can now be placed on [[iron bar]]s and [[glass pane]]s.}}
+|{{HistoryLine||1.16|dev=20w06a|[[File:Crimson Pressure Plate JE1 BE1.png|32px]] [[File:Warped Pressure Plate JE1 BE1.png|32px]] Added crimson and warped pressure plates.}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Spruce Pressure Plate JE5.png|32px]] The texture of spruce pressure plates have been changed.}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Mangrove Pressure Plate JE1 BE1.png|32px]] Added mangrove pressure plates.}}
+|{{HistoryLine|||dev=22w14a|Due to the addition of the [[mangrove tree]] and [[mangrove swamp]], mangrove pressure plates are now obtainable and renewable.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[File:Bamboo Pressure Plate JE1 BE1.png|32px]] Added bamboo pressure plates behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].|Nether wood pressure plates and bamboo wood pressure plates now have unique sounds.}}
+|{{HistoryLine|||dev=22w46a|[[File:Bamboo Pressure Plate JE2 BE2.png|32px]] The texture of bamboo pressure plates have been changed, due to the texture change on [[bamboo planks]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Cherry Pressure Plate JE1 BE1.png|32px]] Added cherry pressure plates behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.20|dev=23w12a|Bamboo and cherry pressure plates are now available without using the "Update 1.20" experimental data pack.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Pale Oak Pressure Plate JE1 BE1.png|32px]] Added pale oak pressure plates.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Oak Pressure Plate JE3 BE1.png|32px]] Added pressure plates.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[File:Spruce Pressure Plate JE1 BE1.png|32px]] [[File:Birch Pressure Plate JE1 BE1.png|32px]] [[File:Jungle Pressure Plate JE1 BE1.png|32px]] [[File:Acacia Pressure Plate JE1 BE1.png|32px]] [[File:Dark Oak Pressure Plate JE1 BE1.png|32px]] Pressure plates now come in all six types of wood.
+|[[Water]] can now be placed in the same [[block]] as pressure plates ([[waterlogging]]).}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Oak Pressure Plate.png|32px]] [[File:Spruce Pressure Plate.png|32px]] [[File:Birch Pressure Plate.png|32px]] [[File:Jungle Pressure Plate.png|32px]] [[File:Acacia Pressure Plate.png|32px]] [[File:Dark Oak Pressure Plate.png|32px]] The textures of pressure plates have been changed.
+|An oak, acacia, and spruce pressure plate generate in new [[village]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|[[File:Crimson Pressure Plate.png|32px]] [[File:Warped Pressure Plate.png|32px]] Added crimson and warped pressure plates.}}
+|{{HistoryLine||1.16.20|dev=beta 1.16.20.50|Crimson and warped pressure plates now uses regular plank [[sound]]s instead of their stem variant sounds.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|[[File:Mangrove Pressure Plate JE1 BE1.png|32px]] Added mangrove pressure plates.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|[[File:Bamboo Pressure Plate JE1 BE1.png|32px]] Added bamboo pressure plates behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.|Nether wood pressure plates and bamboo wood pressure plates now have unique sounds.
+|The pressure plates now have different pitches based on their behavior to match {{JE}}.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[File:Bamboo Pressure Plate JE2 BE2.png|32px]] The texture of bamboo pressure plates have been changed, due to the texture change on [[bamboo planks]].}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[File:Cherry Pressure Plate JE1 BE1.png|32px]] Added cherry pressure plates behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Bamboo and cherry pressure plates are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Pale Oak Pressure Plate JE1 BE1.png|32px]] Added pale oak pressure plates.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Oak Pressure Plate JE1.png|32px]] Added pressure plates.}}
+|{{HistoryLine||xbox=TU3|[[File:Oak Pressure Plate JE3 BE1.png|32px]] The textures of wooden pressure plates have been changed.}}
+|{{HistoryLine||xbox=TU5|Pressure plates are now placeable on [[fence]]s.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Wooden pressure plates can now be activated by [[arrow]]s.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Stone pressure plates now have unique [[item]] names.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Wooden pressure plates have now been given a different, more high-pitched activation [[sound]], so that they no longer match the sound of [[stone pressure plate]]s.{{check version}}}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Wooden pressure plates no longer generate as part of tables in [[village]]s, brown [[carpet]]s generate instead.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[File:Spruce Pressure Plate JE1 BE1.png|32px]] [[File:Birch Pressure Plate JE1 BE1.png|32px]] [[File:Jungle Pressure Plate JE1 BE1.png|32px]] [[File:Acacia Pressure Plate JE1 BE1.png|32px]] [[File:Dark Oak Pressure Plate JE1 BE1.png|32px]] Pressure plates now come in all six types of wood.}}
+|{{HistoryLine||xbox=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|[[File:Oak Pressure Plate JE5 BE2.png|32px]] [[File:Spruce Pressure Plate JE4 BE2.png|32px]] [[File:Birch Pressure Plate JE3 BE2.png|32px]] [[File:Jungle Pressure Plate JE3 BE2.png|32px]] [[File:Acacia Pressure Plate JE3 BE2.png|32px]] [[File:Dark Oak Pressure Plate JE3 BE2.png|32px]] The textures of pressure plates have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Oak Pressure Plate JE3 BE1.png|32px]] Added pressure plates.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|The oak pressure plate ID has now been changed from <code>wooden_pressure_plate</code> to <code>oak_pressure_plate</code>.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 72.}}
+}}
+
+== Issues ==
+{{Issue list|Pressure Plate}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox wood}}
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+
+[[fr:Plaque de pression en bois]]
+[[ja:板材の感圧板]]
+[[ko:나무 압력판]]
+[[pt:Placa de Pressão de Madeira]]
+[[zh:木压力板]]

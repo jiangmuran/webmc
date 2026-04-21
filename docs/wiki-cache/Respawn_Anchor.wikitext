@@ -1,0 +1,334 @@
+{{Infobox block
+|title=Respawn Anchor
+|group=0 charges
+|1-1=Respawn Anchor Charges 0.png
+|group2=1 charge
+|2-1=Respawn Anchor Charges 1.gif
+|group3=2 charges
+|3-1=Respawn Anchor Charges 2.gif
+|group4=3 charges
+|4-1=Respawn Anchor Charges 3.gif
+|group5=4 charges
+|5-1=Respawn Anchor Charges 4.gif
+|transparent=No
+|light='''Charge 1, 2, 3, 4:''' Yes (3, 7, 11, 15)<br>'''Not Charged:''' No
+|tool=Diamond Pickaxe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}}
+
+The '''respawn anchor''' is a [[block]] that allows the [[player]] to set their [[spawn point]] in [[the Nether]]. It will only work if fueled using [[glowstone]] blocks.
+
+== Obtaining ==
+=== Breaking ===
+The suitable tool to break a respawn anchor is a [[pickaxe]]. A respawn anchor needs to be broken using a [[diamond pickaxe]] or better, otherwise the breaking time will increase and the block drops nothing.
+{{breaking row|horizontal=1|Respawn Anchor|Pickaxe|Diamond}}
+A respawn anchor drops itself when destroyed, but resets glowstone charges back to 0 when broken.
+
+=== Crafting ===
+While the ingredients to craft a respawn anchor are all native to the Nether, they are also obtainable in the Overworld: [[glowstone]] can be obtained from [[trading]] with [[villager]]s or [[wandering trader]]s, or crafted from [[glowstone dust]] dropped by [[witch]]es; crying obsidian can be found in [[ruined portal]]s.
+
+{{Crafting
+|A1= Crying Obsidian
+|B1= Crying Obsidian
+|C1= Crying Obsidian
+|A2= Glowstone
+|B2= Glowstone
+|C2= Glowstone
+|A3= Crying Obsidian
+|B3= Crying Obsidian
+|C3= Crying Obsidian
+|Output= Respawn Anchor
+|type= Decoration block
+}}
+
+== Usage ==
+Like [[obsidian]] and [[crying obsidian]], the respawn anchor can't be destroyed by the [[ender dragon]].
+
+=== Respawning ===
+[[File:Respawn anchor logic3.png|alt=|thumb|308x308px|Tile priority in where the anchor looks to respawn the player (with 1 being the highest). The minimum area required to be valid is 1×2×1. Respawn attempts are made per column for layer1 and layer2, layer3 is used when attempts for all columns fail for layer1 and layer2; e.g. column1-layer2 has priority over column2-layer1, and column8-layer1 has priority over column1-layer3.]]
+The respawn anchor is used to respawn in the Nether, even if the player leaves the Nether. Once the block is charged, it can be {{control|used}} to set the player's respawn location.
+
+;Charging
+When crafted, a respawn anchor has no (zero) charge and can't yet be used until charged. ''{{Control|Using}}'' a [[glowstone]] block (not [[glowstone dust]]) on it adds a charge. The anchor accepts up to 4 charges, and the charge level is indicated by a dial on the side of the block.
+
+The first charge makes the respawn anchor glow with a light level of 3. Each glowstone after the first increases the light level by 4, up to a maximum of 15.
+
+;Setting respawn
+To set the player's spawn location to the respawn anchor they must {{control|use}} it, just like one does with a bed. The anchor must at least have one charge, and it must be in the Nether. A confirmation appears when the player's respawn location is set. Other players can also set their spawn point to the same respawn anchor. Each respawn uses up one charge, even if used by another player.
+
+Using a charged anchor overrides any other spawn location the player might have had, as with a bed. The respawn anchor does not serve as a backup spawn point to a missing or obstructed bed.
+
+;Respawn upon player death
+Upon death, the player respawns next to the anchor, and it loses one charge. If a player's respawn anchor is destroyed, if its charges have been exhausted, or if the area around it is made unsuitable for respawning, a message appears saying "You have no home bed or charged Respawn Anchor, or it was obstructed", and the player respawns at the world spawn point. Returning through an [[End Portal (block)|End portal]] is not considered a respawn, and does not use any charges.
+
+A respawn anchor can be shared among several players. When shared, remaining charges are shared as well.
+In [[Hardcore]] mode, the respawn anchor does not resurrect the player, but may still teleport them and consume charges.
+
+=== Exploding ===
+If the player attempts to set their [[World spawn#Individual spawn|spawn]] at a charged respawn anchor in the [[Overworld]], [[the End]], or [[custom dimension]]s in which they are disabled, the block [[explode]]s (and is destroyed) similar to when a [[bed]] is used in the Nether or the End. The explosion has a power of 5 and sets fire to surrounding blocks.
+
+Upon death from a respawn anchor explosion, the [[death messages|message]] "'''(Player) was killed by <span class="minetip" title=MCPE-28723>{{bug|MCPE-28723|[Intentional Game Design]}}</span>'''" appears. {{IN|bedrock}}, respawn anchor explosions can be disabled by setting the [[Game rule|gamerule]] <code>respawnBlocksExplode</code> to <code>false</code> which can be done with the following command: {{cmd|gamerule respawnBlocksExplode}}; this still does not permit respawn anchors to be used in invalid dimensions.
+
+=== Redstone component ===
+When charged, a [[redstone comparator]] gives a signal depending on the number of charges: 3 for one charge, 7 for two charges, 11 for three charges, 15 for four charges. An empty anchor gives a signal of 0.
+
+The respawn anchor can also be charged with a [[dispenser]] containing glowstone.
+
+=== Hoglins ===
+[[Hoglin]]s run away from respawn anchors, regardless of charge.
+
+=== Note blocks ===
+Respawn anchors can be placed under [[note block]]s to produce the "bass drum" sound.
+
+=== Piston interactivity ===
+Respawn anchors cannot be pushed or pulled by [[piston]]s or [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Edition|Java}}:
+{{Sound table/Block/Stone/JE}}
+{{Edition|Bedrock}}:
+{{Sound table/Block/Metal/BE}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Respawn anchor charge1.ogg
+|sound2=Respawn anchor charge2.ogg
+|sound3=Respawn anchor charge3.ogg
+|subtitle=Respawn anchor is charged
+|source=block
+|description=When a respawn anchor is charged using glowstone
+|id=block.respawn_anchor.charge
+|translationkey=subtitles.block.respawn_anchor.charge
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Respawn anchor deplete1.ogg
+|sound2=Respawn anchor deplete2.ogg
+|subtitle=Respawn anchor depletes
+|source=block
+|description=When a player respawns in the Nether
+|id=block.respawn_anchor.deplete
+|translationkey=subtitles.block.respawn_anchor.deplete
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Respawn anchor set spawn1.ogg
+|sound2=Respawn anchor set spawn2.ogg
+|sound3=Respawn anchor set spawn3.ogg
+|subtitle=Respawn anchor sets spawn
+|source=block
+|description=When a player's spawn is set using a respawn anchor
+|id=block.respawn_anchor.set_spawn
+|translationkey=subtitles.block.respawn_anchor.set_spawn
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Respawn anchor ambient1.ogg
+|sound2=Respawn anchor ambient2.ogg
+|sound3=Respawn anchor ambient3.ogg
+|subtitle=Respawn Anchor whooshes
+|source=block
+|description=Randomly<ref name=noambient group=sound>{{bug|MC-184066}}</ref>
+|id=block.respawn_anchor.ambient
+|translationkey=subtitles.block.portal.ambient
+|volume=1.0
+|pitch=1.0
+|distance=7}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|subtitle=Explosion
+|source=block
+|description=When a player attempts to set their spawn while not in the Nether
+|id=entity.generic.explode
+|translationkey=subtitles.entity.generic.explode
+|volume=4.0
+|pitch=0.56-0.84
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Respawn anchor charge1.ogg
+|sound2=Respawn anchor charge2.ogg
+|sound3=Respawn anchor charge3.ogg
+|source=block
+|description=When a respawn anchor is charged using glowstone
+|id=respawn_anchor.charge
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Respawn anchor deplete1.ogg
+|sound2=Respawn anchor deplete2.ogg
+|source=block
+|description=When a player respawns in the Nether <ref group=sound>{{Bug|MCPE-79640||When respawning with the respawn anchor, the deplete sounds doesn't play when you died far away from it}}</ref>
+|id=respawn_anchor.deplete
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Respawn anchor set spawn1.ogg
+|sound2=Respawn anchor set spawn2.ogg
+|sound3=Respawn anchor set spawn3.ogg
+|source=block
+|description=When a player's spawn is set using a respawn anchor
+|id=respawn_anchor.set_spawn
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Respawn anchor ambient1.ogg
+|sound2=Respawn anchor ambient2.ogg
+|sound3=Respawn anchor ambient3.ogg
+|source=block
+|description=''Unused sound event'' <ref group=sound>{{Bug|MCPE-136484}}</ref>
+|id=respawn_anchor.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Explosion1.ogg
+|sound2=Explosion2.ogg
+|sound3=Explosion3.ogg
+|sound4=Explosion4.ogg
+|source=block
+|description=When a player attempts to set their spawn while not in the Nether
+|id=random.explode
+|volume=4.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Respawn Anchor
+|spritetype=block
+|nameid=respawn_anchor
+|blocktags=dragon_immune, hoglin_repellents
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Respawn Anchor
+|spritetype=block
+|nameid=respawn_anchor
+|id=527
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|charges|0|0,1,2,3,4|How many charges the Respawn Anchor has left.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|respawn_anchor_charge|0|0,1,2,3,4|How many charges the Respawn Anchor has left.|foot=1}}
+
+== Advancements ==
+{{load advancements|Not Quite "Nine" Lives}}
+
+== Videos ==
+{{yt|r_DMol6gg7s}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||February 23, 2011|link={{tweet|jeb_|40350003591380992}}|[[Jeb]] states he would like to add [[crying obsidian]] as a [[block]].}}
+|{{HistoryLine||March 30, 2011|link={{tweet|jeb_|52994778224275456}}|Jeb states that crying obsidian would act as a way of setting a [[World spawn#Individual spawn|respawn]] point. The idea would later be discarded in favor of [[bed]]s.<ref>{{tweet|jeb_|140410431394160640|@Bobinti It was a set respawn point project, before we added beds}}</ref>}}
+}}
+=== ''Java Edition'' ===
+{{info needed section|Were there any texture changes in 26.1 and did these affect the way that respawn anchors actually look?}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w12a|[[File:Respawn Anchor (0) JE1.png|32px]] [[File:Respawn Anchor Charges 1 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 2 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 3 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 4 JE1 BE1.gif|32px]] Added the respawn anchor.}}
+|{{HistoryLine|||dev=20w13a|The respawn anchor can now be charged with a [[dispenser]].
+|Respawn anchor can no longer be destroyed by the [[ender dragon]].
+|Respawn anchors no longer consume charges when going into the [[exit portal]].<ref>{{bug|MC-175210}}</ref>}}
+|{{HistoryLine|||dev=20w20a|The Not Quite "Nine" Lives [[advancement]] has been added, which is completed by charging up a respawn anchor to the maximum level.}}
+|{{HistoryLine||1.16.2|dev=20w30a|Respawn anchors now prioritize cardinal directions over corners.}}
+|{{HistoryLine||1.19.3|dev=22w43a|Respawn anchor explosions can now be properly [[blocking|blocked]] by [[shield]]s.<ref>{{bug|MC-200006}}</ref>}}
+|{{HistoryLine||1.21|dev=24w20a|Respawn anchors consume charges when going into the [[exit portal]] again.<ref>{{bug|MC-273427}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|Respawn anchors no longer consume charges when going into the [[exit portal]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Respawn Anchor (0) JE1.png|32px]] [[File:Respawn Anchor Charges 1 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 2 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 3 JE1 BE1.gif|32px]] [[File:Respawn Anchor Charges 4 JE1 BE1.gif|32px]] Added the respawn anchor.}}
+|{{HistoryLine|||dev=beta 1.16.0.63|Respawn anchors can now be charged in the [[Overworld]] without them [[exploding]].<ref>{{bug|MCPE-69044}}</ref>
+|A [[sound]] now plays when a respawn anchor charge is depleted.
+|[[Block]]s can now be placed to respawn anchors with no charges without them exploding.
+|Respawn anchors now require a diamond or netherite [[pickaxe]] in order to be [[breaking|mined]].<ref>{{bug|MCPE-72102}}</ref>
+|The [[Silk Touch]] enchantment now works on respawn anchors.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.22|Respawn anchors can no longer be destroyed by the [[ender dragon]].}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.23|Respawn anchors no longer keep their charges when broken by a tool enchanted with Silk Touch.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of respawn anchors from 720 to 1,200.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The respawn anchor's ambient sound is in fact the nether portal's ambient sound played backward.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Explosion comparasion.png|An explosion comparison between (from left to right) the respawn anchor, a charged [[creeper]], [[TNT]], and a creeper.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+Respawn Anchor Crafting.jpg|Crafting a respawn anchor.
+Crying Obsidian and Respawn Anchor.jpeg|Respawn anchors in the Nether.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+[[Category:Utility blocks]]
+[[Category:Player-built structures]]
+[[Category:Manufactured blocks]]
+[[Category:Nether blocks]]
+[[Category:Light sources]]
+[[Category:Readable by comparators]]
+[[Category:Hazardous blocks]]
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox combat|general}}
+
+[[de:Seelenanker]]
+[[es:Nexo de reaparición]]
+[[fr:Ancre de réapparition]]
+[[it:Ancora della rinascita]]
+[[ja:リスポーンアンカー]]
+[[ko:리스폰 정박기]]
+[[pl:Kotwica odrodzenia]]
+[[pt:Âncora de Renascimento]]
+[[ru:Якорь возрождения]]
+[[th:หลักจุดเกิด]]
+[[uk:Якір відродження]]
+[[zh:重生锚]]

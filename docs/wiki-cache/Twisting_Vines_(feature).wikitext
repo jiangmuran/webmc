@@ -1,0 +1,91 @@
+{{About|the feature|the block|Twisting Vines}}
+{{Infobox structure
+| image = Twisting vine iso.png
+| image1size = 50px
+| canspawn = No
+| biome =
+* {{BiomeLink|Warped Forest}}
+| blocks =
+* {{BlockLink|Twisting Vines}}
+* {{BlockLink|Twisting Vines Plant}}
+}}
+
+'''Twisting vines''' is a [[feature]] that places [[twisting vines]] in the [[warped forest]] biome.
+
+== Generation ==
+{{Incomplete section|Technical generation details}}
+[[File:Twisting vines patch.png|thumb|Large twisting vines on the ground]]
+
+== Data values ==
+
+=== ID ===
+
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=twisting-vines
+|spritetype=block
+|nameid=twisting_vines
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=twisting-vines-plant
+|spritetype=block
+|nameid=twisting_vines
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=twisting-vines-plant
+|spritetype=block
+|nameid=twisting_vines_bonemeal
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=twisting-vines-plant
+|spritetype=block
+|nameid=_twisting_vines_cluster_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config" /><div class="treeview">
+* {{nbt|compound|config}}
+**{{nbt|int|spread_width}} Must be a positive integer. The max spread width is <code>spread_width * 2 + 1</code>
+**{{nbt|int|spread_height}} Must be a positive integer. The max spread height is <code>spread_height * 2 + 1</code>
+**{{nbt|int|max_height}} Must be a positive integer. The max length is <code>max_height * 2</code>, and the min length is 1.
+</div><section end="config" />
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:twisting_vines",
+  "config": {
+    "max_height": 8,
+    "spread_height": 4,
+    "spread_width": 8
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{Empty section}}
+{{HistoryTable}}
+
+==Issues==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Lianes tortueuses (élément du terrain)]]
+[[ja:ねじれツタ (生成物)]]
+[[pt:Trepadeiras retorcidas (recurso)]]

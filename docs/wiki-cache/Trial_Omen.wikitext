@@ -1,0 +1,114 @@
+{{distinguish|Bad Omen|Raid Omen}}
+{{for|other uses of "omen"|Ominous}}
+{{for|other uses of "trial"|Trial (disambiguation)}}
+{{Infobox effect
+|image=Trial Omen.png
+|sources=See {{slink||Causes}}
+|type=Neutral
+|particle={{EffectSprite|particle-trial-omen}} #16A6A6 (cyan)
+}}
+
+'''Trial Omen''' is a variant of the [[Bad Omen]] [[effect]], which is granted when a non-ominous [[trial spawner]] enters the line of sight of a player with [[Bad Omen]]. Trial Omen causes nearby trial spawners to become [[ominous trial spawner]]s.
+
+== Causes ==
+When a player with [[Bad Omen]] is '''seen''' by a (non-ominous) [[trial spawner]], the player's Bad Omen is replaced with [[Trial Omen]]. The duration of the Trial Omen is always 15 minutes multiplied by the level of Bad Omen, regardless of the remaining duration on the Bad Omen effect. If the player already has the Trial Omen effect, with T minutes remaining, and also has Bad Omen level X (with any amount of time remaining), and is seen by a trial spawner, the player will lose the Bad Omen effect (regardless of the values of T and X), and the time remaining on the Trial Omen will be set to max(T, 15*X). If T > 15*X, then the Bad Omen is effectively wasted. Notice that the player cannot stack lower levels of Bad Omen to increase the time remaining.
+
+== Effect ==
+[[File:Activating Trial Omen.gif|thumb|Trial Omen activating, beginning an ominous trial.]]
+When a player receives the Trial Omen effect, they start an [[ominous trial]], and blue flames appear on their body. This is purely visual and does not damage the player.
+
+Any trial spawner within 15 blocks of a player with Trial Omen and with a line of sight to the player immediately becomes ominous and joins the ominous trial. This transformation does not affect the duration of the status effect, and does not cause it to stop.
+
+Trial Omen is a [[effect|status effect]] and can be removed through all conventional methods, such as drinking [[milk]] or dying.
+
+== Immune mobs ==
+*[[Wither]]s, [[ender dragon]]s and mobs that spawn from [[trial spawner]]s in [[trial chambers]] are immune to Trial Omen.
+*All entities except the [[player]] are not affected by Trial Omen.
+
+== Sounds ==
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trial omen.ogg
+|subtitle=Ominous trial looms nearby
+|source=dependent
+|description=When Trial Omen is granted to a mob
+|id=event.mob_effect.trial_omen
+|translationkey=subtitles.event.mob_effect.trial_omen
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Trial omen.ogg
+|source=player
+|description=When Trial Omen is granted to a mob
+|id=apply_effect.trial_omen
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Trial Omen
+|spritetype=effect
+|nameid=trial_omen
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Trial Omen
+|spritetype=effect
+|nameid=trial_omen
+|id=31
+|translationkey=effect.trial_omen
+|foot=1}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here?}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|[[File:Trial Omen JE1 BE1.png|32px]] Added Trial Omen.}}
+|{{HistoryLine||1.21|dev=24w18a|Trial Omen is now available without using the "Update 1.21" experimental data pack.
+|Trial Omen is now needed for the "How Did We Get Here?" advancement.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Trial Omen JE1 BE1.png|32px]] Added Trial Omen.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Trial Omen is now available without using the "Update 1.21" experimental toggle.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Drohende Prüfung]]
+[[es:Presagio de desafío]]
+[[fr:Présage d'épreuve]]
+[[ja:試練の予感]]
+[[ko:시련 징조]]
+[[pt:Presságio de Desafio]]
+[[ru:Знак испытаний]]
+[[th:ลางร้ายบททดสอบ]]
+[[zh:试炼之兆]]

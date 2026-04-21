@@ -1,0 +1,199 @@
+{{For|the diseases in [[Story Mode]]|Story Mode:Wither|Story Mode:Mad Wither}}
+{{about|the effect|the mob|Wither|other uses|Wither (disambiguation)}}
+{{Infobox effect
+|image = Wither (effect).png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-wither}} #736156 (bistre)
+|type=Negative
+| invimage = Potion of Decay
+| invimage2 = Splash Potion of Decay
+| invimage3 = Lingering Potion of Decay
+| invimage4 = Arrow of Decay
+}}
+
+'''Wither''' is a [[status effect]] that inflicts [[damage]] over time. It acts similarly to [[Poison]], save for the fact that it acts slower, can do so against the undead, and can kill on any difficulty level. It also turns the player's health bar black, making their health harder to track.
+
+It can be cured by drinking [[milk bucket|milk]].
+
+== Effect ==
+[[File:HUD recieved the Wither.gif|thumb|An animation of the [[health bar]] when it receives the Wither II effect for 5 seconds.]]
+The amount of [[damage]] inflicted to the affected entity is shown in the table below:
+{| class="wikitable" style="text-align:center"
+ ! Level !! Ticks per {{hp|1|notag=1}} !! {{hp|1|notag=1}} per second
+ |-
+ | 1 || 40 || {{hp|0.5}}
+ |-
+ | 2 || 20 || {{hp|1}}
+ |-
+ | 3 || 10 || {{hp|2}}
+ |-
+ | 4{{note|name=immunity|Due to [[damage immunity]], the effective rate is 10 ticks ({{hp|2|notag=1}} × 1 per second) at levels 4 and up.}}|| 5 || {{hp|4}}
+ |-
+ | 5{{note|name=immunity}} || 2 || {{hp|10}}
+ |-
+ | 6+{{note|name=immunity}} || 1 || {{hp|20}}
+ |}
+{{notelist|columns=1}}
+The [[player]]'s hearts turn black ({{hp|2|withered=1|notag=1}} on [[Survival]] mode or {{hp|2|hardcore=1|notag=1|withered=1}} on [[Hardcore]] mode), making it more difficult, but still possible, for the player to see their [[health]]. Death is reported as "<player> withered away".
+Amplifiers outside the range 0–31 (corresponding to levels 1–32) use {{w|Modulo operation|modulo}} 32.
+
+== Causes ==
+{| class="wikitable" data-description="Causes"
+ ! Cause
+ ! Potency
+ ! Length
+ ! Lifetime damage
+ ! Notes
+ |-
+ | {{ItemLink|Potion of Decay}}
+ | II
+ | 0:40
+ | {{hp|40}}
+ | {{only|bedrock}}
+ |-
+ | {{ItemLink|Splash Potion of Decay}}
+ | II
+ | 0:40
+ | {{hp|40}}
+ | {{only|bedrock}}
+ |-
+ | {{ItemLink|Lingering Potion of Decay}}
+ | II
+ | 0:10
+ | {{hp|10}}
+ | {{only|bedrock}}
+ |-
+ | {{ItemLink|Arrow of Decay}}
+ | II
+ | 0:05
+ | {{hp|5}}
+ | {{only|bedrock}}
+ |-
+ | {{EntityLink|Wither}}
+ | II
+ | 
+0:10 (normal difficulty)<br>
+0:40 (hard difficulty)
+ | 
+{{hp|10}} (normal difficulty)<br>
+{{hp|40}} (hard difficulty)
+ | When wither skulls make a direct hit on the target. Normal and Hard difficulty only.
+ |-
+ | {{EntityLink|Wither Skeleton}}
+ | I
+ | 0:10
+ | {{hp|5}}
+ | Melee attack only.
+ |-
+ | {{BlockLink|Wither Rose}}
+ | I
+ | 0:02{{note|name=rose immunity|{{IN|java}} the effect is being refreshed every tick, causing it to apply damage at the same rate. Effectively this causes 1 ({{hp|1|notag=1}}) damage every 10 ticks (instead of every 2 seconds) to living entities due to [[damage immunity]] while the entity touches the block.}}
+ | {{hp|1}}
+ |
+Only when in range (within the block) and if the [[difficulty]] is higher than Peaceful.<br>
+The effect is also applied when a [[bee]] is fed a wither rose.
+ |- 
+ | {{ItemLink|Suspicious Stew}}
+ | I
+ | 0:07
+ | {{hp|3}}
+ | Must be made with {{BlockLink|Wither Rose}}
+ |}
+{{notelist|columns=1}}
+
+== Immune mobs ==
+*[[Wither skeleton]]s, [[wither]]s, and [[ender dragon]]s are immune to Wither.
+*[[Witch]]es are 95% resistant to damage dealt by the wither effect {{in|be}}, and 85% resistant {{in|je}}.
+
+== Data values ==
+=== ID ===
+{{EffectIDLink}}
+{{edition|java}}:
+{{ID table
+|edition=java
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wither
+|spritetype=effect
+|nameid=wither
+|id=20
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wither
+|spritetype=effect
+|nameid=wither
+|id=20
+|foot=1}}
+
+== Advancements ==
+{{load advancements|How Did We Get Here?}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Wither (effect) JE1 BE1.png|18px]] The Wither effect has been added, and it is inflicted by the [[wither]]'s wither skulls and [[wither skeleton]]s.}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[wither rose]]s, which inflict the Wither status effect.|[[Suspicious stew]]s have been added, which can inflict the Wither status effect if crafted with a wither rose.
+|[[File:Wither (effect) JE2 BE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine||1.20|dev=23w12a|The Wither [[effect]] color has been adjusted from {{color|#352A27}} to {{color|#736156}} to make it more distinguishable.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Bees are inflicted with Wither when they are fed a wither rose.}}
+|{{HistoryLine|||dev=24w45a|Decreased the duration of Wither obtained from a suspicious stew made with a wither rose from 8 seconds to 7 seconds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Wither (effect) JE1 BE1.png|18px]] Added the wither status effect, which is currently unobtainable.}}
+|{{HistoryLine||v0.12.1|dev=build 1|The Wither effect is now obtainable from wither skeleton attacks.}}
+|{{HistoryLine||v0.16.0|dev=build 4|The Wither effect is now obtainable from wither skull projectiles, and potions of decay as well as splash potion and tipped arrow variants.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|The Wither effect can now be obtained from lingering potions of decay.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.5|[[File:Wither (effect) JE2 BE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Added suspicious stew and wither roses, which can inflict the Wither effect.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.30.21|The Wither effect is now mitigated by [[Protection]] to match ''Java Edition''.<ref>{{bug|MCPE-40651||Protection enchantment doesn't provide extra defense against magic attacks|Fixed}}</ref>}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.28|Bees are inflicted with Wither when they are fed a wither rose.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Wither (effect) JE1 BE1.png|32px]] Added Wither.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|The wither effect can now be obtained from potions, splash potions, lingering potions and arrows of decay.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[File:Wither (effect) JE2 BE2.png|32px]] The texture for the wither effect has changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Wither (effect) JE1 BE1.png|18px]] Added the wither status effect.}}
+}}
+
+==Issues==
+
+{{Issue list}}
+
+==Trivia==
+
+*Wither is the only status effect that can harm both living and undead mobs.
+
+==References==
+{{reflist}}
+
+== Navigation ==
+{{Navbox effects}}
+
+[[de:Verdorrung]]
+[[es:Descomposición]]
+[[fr:Décomposition]]
+[[it:Avvizzimento]]
+[[ja:衰弱]]
+[[ko:시듦]]
+[[pt:Decomposição]]
+[[ru:Иссушение]]
+[[zh:凋零]]

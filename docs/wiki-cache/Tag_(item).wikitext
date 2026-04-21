@@ -1,0 +1,207 @@
+{{About|the April Fools' Day joke item|other uses|Tag}}
+{{joke feature}}
+{{Infobox item
+| title = Tag
+| image = Tag.png
+| renewable = Yes
+| stackable = Yes (64)
+}}
+'''Tags''' and '''Bits''' are items exclusive to the [[Java Edition 23w13a or b|23w13a_or_b]] [[April Fools' Day jokes#2023|April Fools' joke]] snapshot from 2023. They are used to craft in-game representations of [[NBT format|NBT tags]].
+
+== Obtaining ==
+A [[stonecutter]] can be used to cut a [[name tag]] into either 16 "Name" or 16 "Tag" items. These can be cut into 16 Bit items each.
+
+{{Stonecutting
+|head=1
+|showdescription=1
+|Name Tag
+|Name, 16; Tag, 16
+|description=The resulting "Name" items must be named in an [[anvil]].
+}}
+{{Stonecutting
+|showdescription=
+|Name; Tag
+|Bit, 16
+|foot=1
+}}
+
+To be able to proceed from here the <code>nbt_crafting</code> vote must be approved. Bits can be used in a crafting table to craft Left Curly, Right Curly, Left Square, and Right Square.
+
+A [[crafting table]] can be used to convert a "Tag" item into a "Byte Tag." The amount of [[stick]]s added to the crafting recipe specifies the value of the Byte, as a [[wikipedia:Signed number representations#Two's complement|signed 8-bit value]]. For example, a "Tag" and a full stack of sticks make a Byte with the value <code>64b</code>, while 255 sticks result in <code>-1b</code>. Only one of the sticks is consumed. Two Bytes can be crafted into a "Short Tag" (equivalent to 16 bit), two Shorts into an "Int Tag" (equivalent to 32 bit), and two Ints into a "Long Tag" (equivalent to 64 bit). Many other combinations that form either 16, 32, or 64 bit are possible. For example, two Shorts and an Int make a Long. When combining values, their digits are stuck together in the given order, e.g. <code>1b</code> and <code>0b</code> make <code>256s</code> (equivalent to 0100<sub>16</sub> in [[wikipedia:Hexadecimal|hexadecimal]]). Undoing any of these crafting actions in e.g. a stonecutter is not possible.
+
+"Float" and "Double Tags" can be crafted by adding one or two [[boat]]s to any numeric tag. A "String Tag" is crafted with a "Tag" and a piece of [[string]].
+
+{{Crafting
+|head=1
+|showdescription=1
+|A1= Bit;    ; Bit; Bit |B1=    ; Bit; Bit; Bit
+|A2=    ; Bit; Bit;     |B2= Bit;    ;    ; Bit
+|A3= Bit;    ; Bit; Bit |B3=    ; Bit; Bit; Bit
+|Output= Right Curly; Left Curly; Left Square; Right Square
+|ignoreusage=1
+}}
+{{Crafting
+|Tag
+|String
+|Output= String Tag
+|description=String tags must be named in an [[anvil]] to set their value.
+|ignoreusage=1
+}}
+{{Crafting
+|Tag; Tag;   Tag
+|;    Stick; Stick, 64
+|;    ;      Stick, 63
+|Output= Byte Tag; Byte Tag; Byte Tag
+|description=Only 1 stick is consumed. 128 and more sticks make [[wikipedia:Signed number representations#Two's complement|two's complements]]:
+128 sticks = <code>-128b</code><br>
+129 sticks = <code>-127b</code><br>
+⋮<br>
+254 sticks = <code>-2b</code><br>
+255 sticks = <code>-1b</code>
+|ignoreusage=1
+}}
+{{Crafting
+|Byte Tag; Byte Tag; Byte Tag
+|Byte Tag; Byte Tag; Byte Tag
+|        ; Byte Tag; Byte Tag
+|        ; Byte Tag; Byte Tag
+|        ;         ; Byte Tag
+|        ;         ; Byte Tag
+|        ;         ; Byte Tag
+|        ;         ; Byte Tag
+|Output= Short Tag; Int Tag; Long Tag
+|description=Shorts and Ints can be combined the same way, even mixed.
+
+Digits are appended, e.g. two <code>1b</code> tags make <code>257s</code> (0101<sub>16</sub> in [[wikipedia:Hexadecimal|hexadecimal]]).
+|ignoreusage=1
+}}
+{{Crafting
+|Byte Tag; Short Tag; Int Tag; Long Tag
+|Any Boat; Any Boat; Any Boat; Any Boat
+|Output= Float Tag; Float Tag; Float Tag; Float Tag
+|ignoreusage=1
+}}
+{{Crafting
+|Byte Tag; Short Tag; Int Tag; Long Tag
+|Any Boat; Any Boat; Any Boat; Any Boat
+|Any Boat; Any Boat; Any Boat; Any Boat
+|Output= Double Tag; Double Tag; Double Tag; Double Tag
+|ignoreusage=1
+}}
+{{Crafting
+|Left Curly;  Left Curly
+|Name;        Name
+|Byte Tag;    Byte Tag
+|Right Curly; Name |; Byte Tag | |; Name |; Byte Tag |; Right Curly
+|Output= Compound Tag; Compound Tag
+|description=Instead of Bytes any other tag can be used, including other compound tags.
+|ignoreusage=1
+}}
+{{Crafting
+|Left Square;  Left Square
+|Byte Tag;     Byte Tag
+|Right Square; Byte Tag |; Byte Tag |; Byte Tag |; Byte Tag |; Byte Tag |; Byte Tag |; Right Square
+|Output= List Tag; List Tag
+|description=Instead of Bytes any other tag can be used, including other list tags.
+|ignoreusage=1
+}}
+{{Crafting
+|Compound Tag; List Tag
+|Compound Tag; List Tag
+|Output= Compound Tag; List Tag
+|description=Up to 9 can be combined.
+
+When compound tags contain identical names, only the latest of the corresponding values is used.
+|ignoreusage=1
+}}
+{{crafting
+|ingredients=Any incomplete or <br>invalid combination of tags
+|A1=Left Curly; Left Curly; Left Curly; Left Square; Left Square
+|B1=Name; Name; Name; Byte Tag; Byte Tag
+|C1=Byte Tag; ; String Tag; ;Byte Tag
+|A2= ; Name; ; ; Byte Tag
+|B2= ; Byte Tag; ; ; Byte Tag
+|C2= ; ; ; ; Byte Tag
+|A3= ; Name; ; ; Byte Tag
+|B3= ; Byte Tag; ; ; Byte Tag
+|C3= ; ; ; ;
+|Output=Sssyntax Error
+|description=If the player makes a mistake in the NBT structure, a Sssyntax error item will appear in the result slot with one of the following error messages in the tooltip:
+*Expected { or [
+*Expected either single or double
+*Unexpected entries in when casting to float
+*Unexpected value after closing bracket
+*OH NO INTERNAL ERROR
+*Can't add element of type <''tag''> to list <''tag''>
+*Unexpected value in list: expected either tag or closing bracket
+*Expected closing bracket
+*Expected tag after name
+*Expected name
+*INTERNAL ERROR OH NO
+*Unexpected value in compound tag: expected either name, tag or closing bracket
+*Total number of bytes (<''number''> exceeds 8 <!-- This missing parenthesis is intentional -->
+*Can't concatenate <''tag''> with <''tag''>
+*Number of bytes (<''number''>) is not power of 2
+|ignoreusage=1
+|foot=1
+}}
+
+"Name" and "String Tags" must be named in an [[anvil]] before they can be used. Unnamed Names and Strings always produce a "Sssyntax Error". None of the other tag items can be named.
+
+All these items can be combined in a crafting table to form a short sequence of NBT data, as long as the resulting syntax is valid. For example: 
+*A pair of Curlies that enclose a named "Name" item and some value, e.g. a Byte, create a "Compound Tag" with the content <code>{Example:0b}</code>.
+**Because of the limited size of the crafting table only 3 name-value pairs can be put between Curlies at a time. Compound Tags of any length can be created by concatenating two or more Compound Tags.
+**An empty pair of Curlies produces an empty Compound Tag with the content <code>{}</code>.
+*A pair of Square brackets that enclose any number of values, e.g. 7 Bytes, create a "List Tag" with the content <code>[0b,0b,0b,0b,0b,0b,0b]</code>.
+**Because of the limited size of the crafting table only 7 values can be put between Square brackets at a time. List Tags of any length can be created by concatenating two or more List Tags.
+**An empty pair of Square brackets produces an empty List with the content <code>[]</code>.
+**"Name" items cannot be used in a List.
+
+The resulting Compound and List Tags can be used as values in other Compound and List Tags, as deeply nested as you want.
+
+== Usage ==
+Compound Tags with [[enchantment]] data will exhibit the traits of that enchantment.<ref>https://www.reddit.com/r/Minecraft/comments/129xdyl/i_figure_out_how_the_nbtcrafting_in_the_vote/</ref>
+
+== Trivia ==
+*This implies that a [[name tag]] is 256 bit.
+*Compound and list tags are special in so far that the value they show in their [[tooltip]] is not merely a property of the item, but their ''actual'' [[NBT format|NBT data]]. This is also the reason why naming them is disabled as that would mess up the NBT data.
+*The snapshot also contains an [[History of textures/Unused textures|unused texture]] for an {{ItemLink|End Tag}}.
+
+== Issues ==
+Issues relating to "Tag" and "Bit" are not maintained on the [[bug tracker]] because they're [[April Fools' joke]]s, and are therefore not in the newest stable version or snapshot. Issues reported there are closed as "Invalid".
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Tag.png|Tag
+Bit.png|Bit
+Byte Tag.png|Byte Tag
+Compound Tag.png|Compound Tag
+Double Tag.png|Double Tag
+End Tag.png|End Tag
+Float Tag.png|Float Tag
+Int Tag.png|Int Tag
+Left Curly.png|Left Curly
+Left Square.png|Left Square
+List Tag.png|List Tag
+Long Tag.png|Long Tag
+Name (23w13a or b).png|Name
+Right Curly.png|Right Curly
+Right Square.png|Right Square
+Short Tag.png|Short Tag
+Sssyntax Error.png|Sssyntax Error
+String Tag.png|String Tag
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Joke}}
+{{Navbox jokes|23w13a or b}}
+
+[[Category:Joke items]]
+
+[[ja:Tag (アイテム)]]
+[[pt:Edição Java 23w13a or b/Tag]]
+[[zh:标签（物品）]]

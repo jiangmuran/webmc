@@ -1,0 +1,228 @@
+{{for|other uses|Sniffer (disambiguation)|Egg (disambiguation)}}
+{{distinguish|Sniffer Spawn Egg}}
+{{Infobox block
+| group = Not Cracked
+| 1-1 = Sniffer Egg.png
+| group2 = Slightly Cracked
+| 2-1 = Sniffer Egg Slightly Cracked.png
+| group3 = Very Cracked
+| 3-1 = Sniffer Egg Very Cracked.png
+| image = Sniffer Egg (item).png
+| imageclass = pixel-image
+| invimage = Sniffer Egg
+| renewable = Yes
+| tool = any
+| stackable = Yes (64)
+| light = No
+| transparent = '''[[JE]]''': No<br>'''[[BE]]''': Yes
+| flammable = No
+| lavasusceptible = No
+| rarity = Uncommon
+}}
+A '''sniffer egg''' is a [[block]] that can be [[brush]]ed out of [[suspicious sand]] in [[warm ocean ruins]], or obtained by [[breeding]] two [[sniffer]]s. It slowly hatches into a snifflet (baby sniffer) when placed.
+
+== Obtaining ==
+=== Breaking ===
+Sniffer eggs can be mined with any tool, even with bare hands, and always drop themselves. Unlike turtle eggs, [[Silk Touch]] is not needed.<ref>{{bug|MC-261258||Sniffer eggs do not need to be mined by the Silk Touch enchantment which is different from the turtle eggs|WAI}}</ref>
+{{breaking row|horizontal=1|Sniffer Egg}}
+
+=== Mob loot ===
+Sniffer eggs can also be obtained by [[breeding]] two [[sniffer]]s with [[torchflower seeds]]. Unlike [[turtle egg]]s or [[frogspawn]], which are placed into the world in block form, sniffer eggs are dropped as [[Item (entity)|items]], similar to [[chicken egg]]s.
+
+=== Generated loot ===
+{{LootChestItem|sniffer-egg}}
+
+== Usage ==
+=== Placing ===
+Sniffer eggs can be placed in block form. Once placed, they slowly mature and hatch into snifflets. 
+
+Sniffer eggs do not require a supporting block below.<ref>{{bug|MC-263505||Sniffers eggs don't require support and can float|WAI}}</ref> Unlike [[dragon egg]]s, they are not affected by gravity.
+
+=== Hatching ===
+Sniffer eggs crack over time and hatch after cracking twice. They hatch in 10 minutes when placed on [[moss block]]s or 20 minutes when placed on any other block (including [[pale moss block]]s).
+
+Sniffer eggs do not need to receive [[random tick]]s to hatch {{in|java}}. Therefore, the hatching speed of sniffer eggs is not affected by the {{cd|randomTickSpeed}} [[game rule]].<ref>{{bug|MC-261250||Sniffer Eggs are not affected by the "randomTickSpeed" game rule|Invalid}}</ref>
+
+=== Piston interactivity ===
+Sniffer eggs can be pushed and pulled by [[piston]]s.<ref>{{bug|MC-261168||Sniffer eggs can be pushed and pulled by pistons|WAI}}</ref>
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Metal}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Chicken plop.ogg
+|subtitle=Sniffer plops
+|source=neutral
+|description=When a sniffer egg is laid by a sniffer
+|id=block.sniffer_egg.plop
+|translationkey=subtitles.block.sniffer_egg.plop
+|volume=1.0
+|pitch=''varies''<wbr><ref group=sound>Can be 0.18-0.42, 0.21-0.49, or 0.24-0.56</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Turtle egg crack1.ogg
+|sound2=Turtle egg crack2.ogg
+|sound3=Turtle egg crack3.ogg
+|sound4=Turtle egg crack4.ogg
+|sound5=Turtle egg crack5.ogg
+|subtitle=Sniffer Egg cracks
+|source=block
+|description=When a sniffer egg's hatch state progresses
+|id=block.sniffer_egg.crack
+|translationkey=subtitles.block.sniffer_egg.crack
+|volume=0.7
+|pitch=0.72-0.88
+|distance=16}}
+| {{SoundLine
+|sound=Turtle egg break1.ogg
+|sound2=Turtle egg break2.ogg
+|subtitle=Sniffer Egg hatches
+|source=block
+|description=When a sniffer egg hatches
+|id=block.sniffer_egg.hatch
+|translationkey=subtitles.block.sniffer.egg_hatch
+|volume=0.7
+|pitch=0.72-0.88
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Chicken plop.ogg
+|source=neutral
+|description=When a sniffer egg is laid by a sniffer
+|id=mob.sniffer.plop
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Turtle egg crack1.ogg
+|sound2=Turtle egg crack2.ogg
+|sound3=Turtle egg crack3.ogg
+|sound4=Turtle egg crack4.ogg
+|sound5=Turtle egg crack5.ogg
+|source=block
+|description=When a sniffer egg's hatch state progresses
+|id=block.sniffer_egg.crack
+|volume=0.85
+|pitch=0.8}}
+| {{SoundLine
+|sound=Turtle egg break1.ogg
+|sound2=Turtle egg break2.ogg
+|source=block
+|description=When a sniffer egg hatches
+|id=block.sniffer_egg.hatch
+|volume=0.85
+| pitch = 0.8
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sniffer Egg
+|spritetype=block
+|nameid=sniffer_egg
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sniffer Egg
+|spritetype=block
+|nameid=sniffer_egg
+|id=-596
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|hatch|0|0,1,2|Determines how close an egg is to hatching; starts at 0 and is randomly incremented.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|cracked_state|no_cracks|no_cracks,cracked,max_cracked|Determines how close an egg is to hatching; starts at no cracks and is randomly incremented.|Unsupported|foot=1}}
+
+== Advancements ==
+{{load advancements|Smells Interesting}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20|dev=23w12a|[[File:Sniffer Egg JE1 BE1.png|32px]] [[File:Sniffer Egg Slightly Cracked JE1 BE1.png|32px]] [[File:Sniffer Egg Very Cracked JE1 BE1.png|32px]] [[File:Sniffer Egg (item) JE1 BE1.png|32px]] Added sniffer eggs.}}
+|{{HistoryLine|||dev=23w17a|The player now gets the [[advancement]] "Smells interesting" when they obtain a sniffer egg.}}
+|{{HistoryLine||1.21.2|dev=24w33a|The rarity of sniffer eggs has been changed from "Common" to "Uncommon".}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.20|[[File:Sniffer Egg JE1 BE1.png|32px]] [[File:Sniffer Egg Slightly Cracked JE1 BE1.png|32px]] [[File:Sniffer Egg Very Cracked JE1 BE1.png|32px]] [[File:Sniffer Egg (item) JE1 BE1.png|32px]] Added sniffer eggs.
+|Currently, sniffer eggs cannot be found from brushing suspicious sand in ocean ruins, making them not naturally obtainable in survival.}}
+|{{HistoryLine|||dev=Preview 1.20.0.22|Can now be found in the [[suspicious sand]] loot table found at [[warm ocean ruins]].|Now emits particles only when placed on [[moss block]]s.}}
+|{{HistoryLine|||dev=Preview 1.20.0.23|Now can be replaced into water or lava.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the hardness and blast resistance of sniffer eggs from 0.4 to 0.5.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of sniffer eggs has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.24|Sniffer eggs no longer provide side support to any block.
+|Sniffer eggs now provide only center support on top and bottom faces.<ref>{{bug|MCPE-169520||Block placement on Sniffer Egg is inconsistent/doesn't match java|Fixed}}</ref>}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Sniffer Egg placed.png|A placed sniffer egg.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Efe discovers sniffer egg.jpg|[[Efe]] digging up a sniffer egg.
+File:Efe puts sniffer egg in lush cave.jpg|A player next to a sniffer egg in a [[lush cave]].
+File:Sniffer Hatched.jpg
+</gallery>
+
+=== In other media ===
+<gallery>
+SnifferEggLive2022.png|The pixel art of the sniffer egg shown at Minecraft Live 2022
+Sunny Finding the Sniffer Egg.png|Sunny finding the sniffer egg in an ocean ruin and swimming away.
+Sunny Watching the Sniffer Egg Crack.png|Sunny watching the sniffer egg crack.
+Snifflet Wallpaper.jpg|Wallpaper of Sunny watching a sniffer egg hatch.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Animal blocks]]
+[[Category:Utility blocks]]
+[[Category:Createable blocks]]
+
+[[de:Schnüffler-Ei]]
+[[es:Huevo de sniffer]]
+[[fr:Oeuf de renifleur]]
+[[ja:スニッファーの卵]]
+[[ko:스니퍼 알]]
+[[pl:Jajo niuchacza]]
+[[pt:Ovo de Farejador]]
+[[ru:Яйцо нюхача]]
+[[uk:Яйце нюхача]]
+[[zh:嗅探兽蛋]]

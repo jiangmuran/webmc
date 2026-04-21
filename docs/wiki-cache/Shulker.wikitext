@@ -1,0 +1,667 @@
+{{For}}
+{{Infobox entity
+| title = Shulker
+| group = Open
+| 1-1 = Shulker.png
+| group2 = Closed
+| 2-1 = Shulker Closed.png
+| extratext = View [[#Gallery|all renders]]
+| invimage = Shulker Spawn Egg
+| health = {{hp|30}}
+| damage = {{EntitySprite|Shulker Bullet}} '''Shulker Bullet:''' <br>
+Easy: {{hp|3}}<br>Normal: {{hp|4}}<br>Hard: {{hp|6}} <br> ''' [[File: Levitation.png|16px]] Levitation:''' <br> {{EffectLink|Levitation}} for 10 seconds (9 Blocks)
+| armor = Closed: {{armor|20}} <br> Opened: {{armor|0}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Monster}}
+| size = '''Closed:'''<br>Height: 1 block<br>Width: 1 block<br>
+'''Peeking:'''<br>Height: 1.2 blocks<br>Width: 1 block<br>
+'''Open:'''<br>Height: 2 blocks<br>Width: 1 block
+| spawn = {{EnvLink|End city}}
+| usableitems = {{drop|Item|id=dyes|Dye}}{{only|be|ee|short=1}}
+{{drop|item|Bone Meal}}{{only|be|ee|short=1}}
+{{drop|item|Ink Sac}}{{only|be|ee|short=1}}
+{{drop|item|Lapis Lazuli}}{{only|be|ee|short=1}}
+{{drop|item|Cocoa Beans}}{{only|be|ee|short=1}}
+}}
+A '''shulker''' is a box shaped hostile mob found only in [[End cities]]. It hides in its shell to protect itself and blend in with its surroundings, and attacks by shooting homing bullets that inflict [[Levitation]]. It is the only source of [[shulker shell]]s, which are used to craft [[shulker box]]es.
+
+== Spawning ==
+=== Natural generation ===
+Shulkers spawn during the generation of [[End cities]], which are located on the outer islands of the [[End]]. They usually spawn on the walls of the city and on End ships. They do not despawn naturally, even in Peaceful difficulty.
+
+=== Post-generation ===
+
+There is a chance for a new shulker of the same color to spawn when a shulker is hit with a shulker bullet (including one of its own {{only|java}}).
+
+The following checks need to pass:
+
+* The hit shulker must have its lid open. (Peeking is technically enough, but fully open is more practical for farming purposes.)
+* The shulker needs to actually take damage and survive. (It just ignores the hit if it is invulnerable to that damage.)
+* The shulker's health needs to be above 50% after taking damage from the hit, otherwise there is a 20% chance for it to attempt to just teleport away "for health reasons". If that happens, the shulker will not attempt to duplicate, even if the teleportation attempt somehow fails.
+* The damage must be projectile damage and originate from a shulker bullet.
+* The shulker will attempt to teleport away (see [[#Teleportation|Teleportation]] below for details) and must succeed in doing so.
+* A random chance check must pass. The chance to succeed is calculated as 100% minus 20% for each other shulker within 8 blocks of the hit shulker's pre-teleport position. (If there are at least 5 other shulkers this check can never pass.<ref>Technically this is an overlap test, which will count shulkers if an 8x8x8 cube can be positioned anywhere – not necessarily snapped to a block position – between the two shulkers such that it touches both of them.</ref>)
+
+{{IN|bedrock}} shulkers also duplicate every time they are killed by a shulker bullet.
+
+If the attempt succeeds a new shulker spawns where the old shulker was before it teleported. The new shulker is a completely fresh entity and only copies the original shulker's color.
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=Shulker Shell|edition=java|dropchance=0.5|lootingchance=0.0625}}
+|{{DropLine|name=Shulker Shell|edition=bedrock|quantity=0-1|lootingquantity=0-1}}
+}}
+
+Shulkers also drop {{xp|5}} when killed by a player or a tamed wolf.
+
+== Behavior ==
+[[File:Shulker shooting.webp|right|250px]]
+
+A shulker's shell is similar in color to a [[purpur block]]. Inside the shell is a [[w:Siphon (mollusc)|small yellow head with two eyes]]. Shulkers can be spawned with other colors using the {{cmd|summon}} command, as detailed [[#Data values|below]].
+
+Shulkers generally remain stationary, attached to an adjacent block with a full face.<ref>Most solid blocks have 6 full faces. Some have fewer; for example, [[composter]]s have 5 as the top is open, [[slab]]s have just one (top or bottom), [[stairs]] have two (one side and top or bottom), and [[chest]]s have none as they are slightly smaller than a full block.</ref> However, if the block the shulker occupies becomes something other than air or the shulker finds itself not adjacent to any full face, or the shell cannot fully open (due to solid blocks or entities such as boats or other shulkers), it attempts to teleport away.
+
+Shulkers occasionally open their shell for 1–3 seconds. When a target comes within about 16 blocks, it opens fully and shoots guided projectiles that follow its target, called [[Shulker#Shulker bullet|shulker bullets,]] moving only along the X, Y, or Z axes and leaving trails of white particles. The projectiles can be destroyed by attacking them or blocking them with a [[shield]]. If the projectile hits an entity, it does {{hp|4}} damage and inflicts the [[Levitation]] [[status effect]] for 10 seconds. This status effect has no effect underwater<ref>{{bug|MC-83369}}</ref>{{only|java}}, while in flight mode{{only|bedrock}}, or while riding a mob. The shulker continues firing every 1&ndash;5.5 seconds while the target remains in range. If the shulker's target dies with projectiles still in flight, they fall to the ground.
+
+Shulkers can attack each other, in which case they shoot fully guided bullets at each other, but are unaffected by Levitation when hit. The normal teleportation habits apply during these battles, and is likely to result in the duplication of more shulkers.
+
+When its shell is closed, a shulker has {{armor|20}} armor points and deflects [[arrow]]s. When the shell opens, it loses this natural armor and takes damage as normal. When at less than half health, a shulker has a 25% chance of teleporting (as described above) after taking damage. When a shulker is attacked, other shulkers within a 32x20x32 box will target the attacker as well.
+
+Shulkers do not take burning damage from lava or fire. They drown in water, but try to teleport away when water or lava flows into the block they occupy.
+
+In [[Peaceful]] difficulty, shulkers still spawn but do not attack,<ref>{{bug|MC-227168||Shulkers don't attack back in peaceful difficulty}}</ref> like [[piglin]]s and [[hoglin]]s.
+
+Shulkers are treated differently than true blocks. For example, mobs are unable to pathfind around<ref>{{bug|MC-94831||Mobs pathfinding AI does not regard shulkers and boats as obstructions|WF}}</ref> or jump over them,<ref>{{bug|MC-94115||Mobs unable to jump on the shulkers and boats|WF}}</ref> and falling on them from a height does not produce particles.<ref>{{bug|MC-129795||Falling onto shulkers from a height or sprinting on top of shulkers does not produce particles|WF}}</ref> Their [[spawn egg]] also does not destroy blocks such as [[grass]].<ref>{{bug|MC-130571||Using a shulker spawn egg on grass/other replaceable blocks will not delete the grass and the shulker will teleport|WAI}}</ref>
+
+Despite having a full block hitbox, their collision box is not a full block, allowing players to stand on the edge of a block with a shulker on top.
+
+Gravity-affected blocks break when falling onto a shulker.
+
+=== Teleportation ===
+Shulkers can attempt to teleport away for several reasons:
+* The shulker's position may no longer allow attaching to an adjacent block. In this case the shulker attempts to teleport away every tick until it either succeeds or can attach at its current position again.
+* The shulker took damage and is below half health. When taking damage to below half health, the shulker has a 20% chance to attempt to teleport away.
+* The shulker was hit by a shulker bullet and its lid was open. (It might leave behind a new shulker if teleportation succeeds.)
+
+When a shulker attempts to teleport away, it will make five attempts to find a position to teleport to. Each attempt checks a random position within a 17x17x17 cube centered on the shulker's current position. The position must satisfy the following criteria for the teleportation attempt to succeed:
+* The position must be above the bottom build limit of the world and within the [[world border]].
+* The position must not contain any non-air block.
+* The block space of the position must not overlap with any block's or entity's hit box.
+* At least one of the adjacent blocks must provide an attachable surface such that the shulker could fully open from that attachment point, i.e. the shulker would not touch any block's or entity's hit box when fully open.
+
+Shulkers evaluate the collision box of [[scaffolding]] based on their current position,<ref>When the shulker is at a Y position above the scaffolding block, the top is a full face and blocks opening. When at the same Y level as scaffolding unsupported from below, the bottom is a full face and it blocks opening. Otherwise the scaffolding is seen as having no faces and does not block opening.</ref> which can result in the shulker teleporting to a position right above a scaffolding block, only to find it invalid and teleport again.
+
+When trying to find an attachable surface, the shulker tests adjacent blocks in the following order: below, above, north, south, west, east. It also uses this order when looking for alternative attachment options before teleporting away form its current position if the previous attachment side became invalid.
+
+=== Shulker bullet ===
+{{Infobox entity
+| title = Shulker bullet
+| image = Shulker Bullet.png
+| imagesize = 125px
+| size = Height: 0.3125 blocks<br>Width: 0.3125 blocks
+| networkid = '''[[JE]]''': 67
+}}
+
+A '''shulker bullet''' is a guided projectile that is launched from shulkers. Its shape is similar to a [[Conduit]]'s power structure, with End stone white coloring on the outside and purple mottling on the inside. As the bullet flies towards its target it spins randomly. It follows the targeted entity along the X, Y, or Z axis and leaves trails of white particles. A shulker bullet that hits a mob or player deals damage and affects it with [[Levitation]] for ten seconds. If a shulker bullet hits a neutral or hostile mob by accident, it retaliates against the shulker after its Levitation effect is removed.
+
+The shulker's projectiles also have entity data that control its movement.
+
+The bullet can be destroyed when it is hit with any item, shot with an [[arrow]], or blocked with a [[shield]]. Specifically when attacked by a player using a melee attack, it has a larger hitbox than usual.{{only|java}} It is also destroyed upon contact with a block or lava.
+
+When a Shulker Bullet is made to go through a portal into another dimension, the bullets continue tracking its target and pathfind to the target's exact coordinates in the new dimension. This works even if the target moves in the other dimension, the shulker bullet keeps tracking its new position. The target has to be kept loaded and if it is not then the bullets fall.
+
+=== Coloring ===
+
+{{IN|bedrock}}, shulkers can be [[dye]]d in a similar fashion to [[sheep]]. {{ctrl|Using}} a dye on a shulker gives it the color of the dye. They can be dyed only in [[Creative]] mode.
+
+{{IN|java}}, the color of a shulker can be changed through [[commands]] using the <code>color</code> byte tag.
+
+== Transportation ==
+
+[[File:shulkerinboat.png|thumb|A shulker is transported in the Overworld by boat. A piston raises the boat uphill. Note that this can also be done by pulling the boat with a lead.]]
+
+Shulkers can be moved by [[boat]]s or [[minecart]]s; pushing a boat/minecart into a shulker causes it to board. A boat's sides block some of a shulker's projectiles.
+
+Shulkers can be teleported through [[End gateway]]s. {{IN|java}}, they can be transported through the gateway and arrive on the [[obsidian platform]] while in a boat or a minecart. {{IN|bedrock}}, shulkers in a boat or a minecart cannot go through an End gateway, so they have to be dismounted before being teleported through. 
+
+A shulker that enters the [[exit portal]] in [[the End]] gets transported to the [[world spawn]] point in the [[Overworld]]. {{IN|java}}, entities with passengers can pass through the exit portal, so shulkers can be directly teleported to the Overworld while in a boat or a minecart.
+
+{{IN|bedrock}}, entities with passengers cannot pass through the exit portal; therefore, the shulker has to be dismounted from the boat or minecart it is transported in. Since shulkers teleport when not adjacent to a solid block, they must be pushed down the central pillar of the exit portal (or a manually placed block directly above the portal) with a [[piston]]. Alternatively, if a shulker is in a boat that has been ridden into the exit portal, it is possible to break the boat, either with an arrow shot at the boat or otherwise. This causes the shulker to go through the exit portal.
+
+== Sounds ==
+Despite being a solid surface, walking on shulkers is completely silent and does not produce footstep sounds.<ref>{{bug|MC-101950}}</ref>
+
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Shulker idle1.ogg
+|sound2=Shulker idle2.ogg
+|sound3=Shulker idle3.ogg
+|sound4=Shulker idle4.ogg
+|sound5=Shulker idle5.ogg
+|sound6=Shulker idle6.ogg
+|sound7=Shulker idle7.ogg
+|subtitle=Shulker lurks
+|source=hostile
+|description=Randomly
+|id=entity.shulker.ambient
+|translationkey=subtitles.entity.shulker.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shulker close1.ogg
+|sound2=Shulker close2.ogg
+|sound3=Shulker close3.ogg
+|sound4=Shulker close4.ogg
+|sound5=Shulker close5.ogg
+|subtitle=Shulker closes
+|source=hostile
+|description=When a shulker's shell closes
+|id=entity.shulker.close
+|translationkey=subtitles.entity.shulker.close
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Shulker open1.ogg
+|sound2=Shulker open2.ogg
+|sound3=Shulker open3.ogg
+|sound4=Shulker open4.ogg
+|sound5=Shulker open5.ogg
+|subtitle=Shulker opens
+|source=hostile
+|description=When a shulker's shell opens
+|id=entity.shulker.open
+|translationkey=subtitles.entity.shulker.open
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Shulker death1.ogg
+|sound2=Shulker death2.ogg
+|sound3=Shulker death3.ogg
+|sound4=Shulker death4.ogg
+|subtitle=Shulker dies
+|source=hostile
+|description=When a shulker dies
+|id=entity.shulker.death
+|translationkey=subtitles.entity.shulker.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shulker hurt close1.ogg
+|sound2=Shulker hurt close2.ogg
+|sound3=Shulker hurt close3.ogg
+|sound4=Shulker hurt close4.ogg
+|sound5=Shulker hurt close5.ogg
+|subtitle=Shulker hurts
+|source=hostile
+|description=When a shulker is damaged with its shell closed
+|id=entity.shulker.hurt_closed
+|translationkey=subtitles.entity.shulker.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shulker hurt1.ogg
+|sound2=Shulker hurt2.ogg
+|sound3=Shulker hurt3.ogg
+|sound4=Shulker hurt4.ogg
+|subtitle=Shulker hurts
+|source=hostile
+|description=When a shulker is damaged with its shell open
+|id=entity.shulker.hurt
+|translationkey=subtitles.entity.shulker.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shulker shoot1.ogg
+|sound2=Shulker shoot2.ogg
+|sound3=Shulker shoot3.ogg
+|sound4=Shulker shoot4.ogg
+|subtitle=Shulker shoots
+|source=hostile
+|description=When a shulker shoots a bullet
+|id=entity.shulker.shoot
+|translationkey=subtitles.entity.shulker.shoot
+|volume=2.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Teleport1.ogg
+|sound2=Teleport2.ogg
+|subtitle=Shulker teleports
+|source=hostile
+|description=When a shulker teleports
+|id=entity.shulker.teleport
+|translationkey=subtitles.entity.shulker.teleport
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Shulker idle1.ogg
+|sound2=Shulker idle2.ogg
+|sound3=Shulker idle3.ogg
+|sound4=Shulker idle4.ogg
+|sound5=Shulker idle5.ogg
+|sound6=Shulker idle6.ogg
+|sound7=Shulker idle7.ogg
+|source=hostile
+|description=Randomly
+|id=mob.shulker.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shulker close1.ogg
+|sound2=Shulker close2.ogg
+|sound3=Shulker close3.ogg
+|sound4=Shulker close4.ogg
+|sound5=Shulker close5.ogg
+|source=hostile
+|description=When a shulker's shell closes
+|id=mob.shulker.close
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shulker open1.ogg
+|sound2=Shulker open2.ogg
+|sound3=Shulker open3.ogg
+|sound4=Shulker open4.ogg
+|sound5=Shulker open5.ogg
+|source=hostile
+|description=When a shulker's shell opens
+|id=mob.shulker.open
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shulker death1.ogg
+|sound2=Shulker death2.ogg
+|sound3=Shulker death3.ogg
+|sound4=Shulker death4.ogg
+|source=hostile
+|description=When a shulker dies
+|id=mob.shulker.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shulker hurt1.ogg
+|sound2=Shulker hurt2.ogg
+|sound3=Shulker hurt3.ogg
+|sound4=Shulker hurt4.ogg
+|source=hostile
+|description=When a shulker is damaged
+|id=mob.shulker.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shulker shoot1.ogg
+|sound2=Shulker shoot2.ogg
+|sound3=Shulker shoot3.ogg
+|sound4=Shulker shoot4.ogg
+|source=hostile
+|description=When a shulker shoots a bullet
+|id=mob.shulker.shoot
+|volume=2.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Teleport1.ogg
+|sound2=Teleport2.ogg
+|source=hostile
+|description=When a shulker teleports
+|id=mob.shulker.teleport
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Shulker
+|spritetype=entity
+|showentitytags=y
+|entitytags=fall_damage_immune
+|nameid=shulker}}
+{{ID table
+|displayname=Shulker Bullet
+|spritetype=entity
+|nameid=shulker_bullet
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Shulker
+|spritetype=entity
+|nameid=shulker
+|showentityfamily=y
+|entityfamily=mob,monster,shulker
+|id=54}}
+{{ID table
+|displayname=Shulker Bullet
+|spritetype=entity
+|nameid=shulker_bullet
+|id=76
+|foot=1}}
+
+=== Entity data ===
+{{el|java}}:
+{{main|Entity format}}
+Shulkers have entity data associated with them that contains various properties.
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|AttachFace}}: Which face of its block the shulker is attached to. The shulker also opens up in the direction going from the center of the block to that face. {{code|0b}} means the top face. {{code|1b}} means the bottom face. {{code|2b}} means the north face. {{code|3b}} means the south face. {{code|4b}} means the west face. {{code|5b}} means the east face.
+** {{nbt|byte|Color}}: The color of the shulker. Default is 0. Shulkers spawned by eggs or as part of End cities have value 16. Represents the {{DCL|minecraft:shulker/color}} component, with 16 encoding the absence of the component.
+** {{nbt|byte|Peek}}: "Height" of the head of the shulker.
+*** This "height" is measured in pixels from the bottom of the shulker, where 1 pixel = 1/16th of a block.{{Info needed|just speculation}}
+*** This "height" goes in the direction that the shulker is facing according to {{Cd|AttachFace}}.{{Info needed|just speculation}}
+</div>
+{|class="wikitable mw-collapsible mw-collapsed"
+! Color
+! Data value
+|-
+| [[File:White Shulker.png|32px]] White
+| <code>0</code>
+|-
+| [[File:Orange Shulker.png|32px]] Orange
+| <code>1</code>
+|-
+| [[File:Magenta Shulker.png|32px]] Magenta
+| <code>2</code>
+|-
+| [[File:Light Blue Shulker.png|32px]] Light Blue
+| <code>3</code>
+|-
+| [[File:Yellow Shulker.png|32px]] Yellow
+| <code>4</code>
+|-
+| [[File:Lime Shulker.png|32px]] Lime
+| <code>5</code>
+|-
+| [[File:Pink Shulker.png|32px]] Pink
+| <code>6</code>
+|-
+| [[File:Gray Shulker.png|32px]] Gray
+| <code>7</code>
+|-
+| [[File:Light Gray Shulker.png|32px]] Light Gray
+| <code>8</code>
+|-
+| [[File:Cyan Shulker.png|32px]] Cyan
+| <code>9</code>
+|-
+| [[File:Purple Shulker.png|32px]] Purple
+| <code>10</code>
+|-
+| [[File:Blue Shulker.png|32px]] Blue
+| <code>11</code>
+|-
+| [[File:Brown Shulker.png|32px]] Brown
+| <code>12</code>
+|-
+| [[File:Green Shulker.png|32px]] Green
+| <code>13</code>
+|-
+| [[File:Red Shulker.png|32px]] Red
+| <code>14</code>
+|-
+| [[File:Black Shulker.png|32px]] Black
+| <code>15</code>
+|-
+| [[File:Shulker.png|32px]] Default
+| <code>16</code>
+|}<section end="entity data" />
+
+Shulker bullets have entity data associated with them that contains various properties.
+<section begin="bullet entity data" /><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|int|Steps}}: How many "steps" it takes to attack to the target. The higher it is, the further out of the way the bullet travels to get to the target. If set to 0, it makes no attempt to attack the target and instead uses TXD/TYD/TZD in a straight line.
+** {{nbt|int-array|Target}}: The [[UUID]] of the target of this shulker bullet, stored as four ints. Is not preserved when removed.
+** {{nbt|double|TXD}}: The offset in the X direction to travel in accordance with its target. Is not preserved when removed.
+** {{nbt|double|TYD}}: The offset in the Y direction to travel in accordance with its target. Is not preserved when removed.
+** {{nbt|double|TZD}}: The offset in the Z direction to travel in accordance with its target. Is not preserved when removed.
+</div><section end="bullet entity data" />
+
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{Load achievements|Great View From Up Here;Monster Hunter;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|How did we get here;Not Today, Thank You;Monster Hunter;Monsters Hunted;Great View From Up Here;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{info needed section|shulker textures from Legacy Console Edition - the terrain.png contained only a single white "shulker top" texture rather than a textue per color, so were color variants generated via a tint system?}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Shulker.png|30px]] Added shulkers.}}
+|{{HistoryLine|||dev=15w32b|Shulkers no longer teleport by themselves if <code>NoAI</code> is set to 1.
+|Shulkers can now be teleported using {{cmd|tp}} or {{cmd|spreadplayers}}.}}
+|{{HistoryLine|||dev=15w37a|Shulker bullets can now be blocked by [[shield]]s, also preventing the player from getting the [[Levitation]] effect.<ref>{{bug|MC-86905}}</ref>}}
+|{{HistoryLine|||dev=15w40a|Shulkers no longer target [[player]]s or attack in Peaceful [[difficulty]].
+|Shulker bullets now despawn in Peaceful.}}
+|{{HistoryLine|||dev=15w45a|Added [[sound]]s for shulkers being [[damage]]d.|Shulkers now only push entities if their hitbox intersects with the shulker's hitbox. Previously they also pushed entities that were very close.}}
+|{{HistoryLine|||dev=15w47a|Shulkers now drop [[experience]].}}
+|{{HistoryLine|||dev=15w47b|Added ambient, aggravated and death [[sound]]s for shulkers, and added sounds for their bullets dealing and taking [[damage]].}}
+|{{HistoryLine||1.11|dev=16w39a|Shulkers now drop [[shulker shell]]s.
+|[[File:White Shulker JE1 BE1.png|30px]] [[File:Light Gray Shulker JE1 BE1.png|30px]] [[File:Gray Shulker JE1 BE1.png|30px]] [[File:Black Shulker JE1 BE1.png|30px]] [[File:Brown Shulker JE1 BE1.png|30px]] [[File:Red Shulker JE1 BE1.png|30px]] [[File:Orange Shulker JE1 BE1.png|30px]] [[File:Yellow Shulker JE1 BE1.png|30px]] [[File:Lime Shulker JE1 BE1.png|30px]] [[File:Green Shulker JE1 BE1.png|30px]] [[File:Cyan Shulker JE1 BE1.png|30px]] [[File:Light Blue Shulker JE1 BE1.png|30px]] [[File:Blue Shulker JE1 BE1.png|30px]] [[File:Magenta Shulker JE1 BE1.png|30px]] [[File:Pink Shulker JE1 BE1.png|30px]] The color of a shulker can now be changed through [[commands]] using a new byte tag <code>Color</code>.}}
+|{{HistoryLine|||dev=16w39c|Shulkers can now be spawned on the sides and bottoms of blocks through the usage of [[spawn egg]]s.}}
+|{{HistoryLine||1.12|dev=17w16a|[[File:White Shulker.png|30px]] [[File:Light Gray Shulker.png|30px]] [[File:Gray Shulker.png|30px]] [[File:Black Shulker.png|30px]] [[File:Brown Shulker.png|30px]] [[File:Red Shulker.png|30px]] [[File:Orange Shulker.png|30px]] [[File:Yellow Shulker.png|30px]] [[File:Lime Shulker.png|30px]] [[File:Green Shulker.png|30px]] [[File:Cyan Shulker.png|30px]] [[File:Light Blue Shulker.png|30px]] [[File:Blue Shulker.png|30px]] [[File:Purple Shulker.png|30px]] [[File:Magenta Shulker.png|30px]] [[File:Pink Shulker.png|30px]] Shulkers have been retextured, none of them are now like [[purpur block]]s.}}
+|{{HistoryLine|||dev=17w17a|[[File:Shulker.png|30px]] The purple shulker's color has been reverted to the previous color.}}
+|{{HistoryLine||1.13|dev=18w10b|[[File:Shulker.png|30px]] Added a default shulker.
+|[[File:Purple Shulker.png|30px]] The purple shulker texture has been changed to the one used in [[Java Edition 17w16a|17w16a]].}}
+|{{HistoryLine||1.17|dev=20w45a|New shulkers now have a chance to spawn when one shulker hits another shulker with a [[shulker bullet]].}}
+|{{HistoryLine|||dev=21w03a|Shulkers mounting boats and minecarts now sit upright if previously attached to blocks sideways or upside down.}}
+|{{HistoryLine||1.20.5|dev=23w51a|Shulkers are no longer able to destroy armor stands.}}
+|{{HistoryLine|||dev=pre1|Shulkers bullets are now easier to hit with melee attacks, as they now have a larger hitbox specifically for melee player attacks.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Shulkers under Invisibility effect are now completely invisible. Previously, only their shells become invisible.}}
+|{{HistoryLine|||dev=24w34a|Shulker bullets no longer go through the [[world border]] if hit.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|[[File:White Shulker JE1 BE1.png|30px]] [[File:Light Gray Shulker JE1 BE1.png|30px]] [[File:Gray Shulker JE1 BE1.png|30px]] [[File:Black Shulker JE1 BE1.png|30px]] [[File:Brown Shulker JE1 BE1.png|30px]] [[File:Red Shulker JE1 BE1.png|30px]] [[File:Orange Shulker JE1 BE1.png|30px]] [[File:Yellow Shulker JE1 BE1.png|30px]] [[File:Lime Shulker JE1 BE1.png|30px]] [[File:Green Shulker JE1 BE1.png|30px]] [[File:Cyan Shulker JE1 BE1.png|30px]] [[File:Light Blue Shulker JE1 BE1.png|30px]] [[File:Blue Shulker JE1 BE1.png|30px]] [[File:Purple Shulker JE1 BE1.png|30px]] [[File:Magenta Shulker JE1 BE1.png|30px]] [[File:Pink Shulker JE1 BE1.png|30px]] Added shulkers.
+|Shulkers can be [[dye]]d in [[Creative mode]] by long-tapping any dye on a shulker, or through an interact button.}}
+|{{HistoryLine|||dev=alpha 1.0.0.1|Shulkers now drop [[shulker shell]]s.}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|The shulker's [[model]]s can now be edited using [[add-on]]s.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.9|[[File:White Shulker.png|30px]] [[File:Light Gray Shulker.png|30px]] [[File:Gray Shulker.png|30px]] [[File:Black Shulker.png|30px]] [[File:Brown Shulker.png|30px]] [[File:Red Shulker.png|30px]] [[File:Orange Shulker.png|30px]] [[File:Yellow Shulker.png|30px]] [[File:Lime Shulker.png|30px]] [[File:Green Shulker.png|30px]] [[File:Cyan Shulker.png|30px]] [[File:Light Blue Shulker.png|30px]] [[File:Blue Shulker.png|30px]] [[File:Purple Shulker.png|30px]] [[File:Magenta Shulker.png|30px]] [[File:Pink Shulker.png|30px]] The shulkers' textures have been changed.}}
+|{{HistoryLine|||dev=?|[[File:Shulker.png|30px]] The purple shulker's color has been reverted to the previous color.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Shulker.png|30px]] Added a default shulker.
+|[[File:Purple Shulker.png|30px]] The purple shulker color has been changed to the new palette.}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.30.23|New shulkers now have a chance to spawn when one shulker hits another shulker with a shulker bullet.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.29|Shulkers no longer take burning damage from fire or lava.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.23|[[Shulker bullet]]s now give [[Levitation]] I instead of II.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Shulker.png|30px]] Added shulkers and [[spawn egg]]s for the shulkers.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Shulkers now drop [[shulker shell]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Added [[shield]]s, which can block shulker bullets and prevent players from getting the [[Levitation]] effect.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||1.7.10|[[File:Shulker.png|30px]] Added shulkers.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] ID of shulkers has been changed from <code>Shulker</code> to <code>shulker</code>.
+|The bullet's entity ID is changed from <code>ShulkerBullet</code> to <code>shulker_bullet</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Originally, shulkers were going to fully camouflage to look exactly like a nearby block. However, [[Jens Bergensten|Jeb]] decided this was too difficult to code, so instead, they were simply made to be a similar shade of purple to purpur.<ref>{{ytl|eYw3U8C_P40|t=5m42s}}</ref>
+* The word "shulker" is a portmanteau of "shell lurker".<ref>{{ytl|h3vjmzCV8PY|t=12m01s}}</ref><ref>[https://www.youtube.com/watch?v=eYw3U8C_P40&t=5m42s https://youtu.be/eYw3U8C_P40&t=5m42s]</ref>
+*A shulker named '[[Nathan Adams|Dinnerbone]]' or '[[Erik Broes|Grumm]]' flips upside-down. This appears to also lift the shulker by the same height as a [[pressure plate]].
+*By using commands, they can be made to be part of a [[team]] to attack other teams and can be used as defense [[mob]]s. In that case, it does not attack its teammates but targets most hostile mobs without provocation.
+*Walking toward a shulker at the same level as a player's head pushes the [[player]] down to the one-block [[crawling]] position if there is space beneath.
+*In the game's [[List of mob textures#Current Entity Skins|texture files]], the shulker bullet is named <samp>spark.png</samp>.
+**The shulker's texture file was named <code>endergolem.png</code> in version [[Java Edition 1.9|1.9]] until it was fixed in [[Java Edition 1.11|1.11]]. additionally the shulker still extends <code>AbstractGolem</code> in the current game files.
+* If a shulker in a boat or minecart is dropped into the void, the vehicle breaks but the shulker floats just above the void, taking no damage.
+* While the scale attribute of a shulker can be set as high as 16, its actual size increases only up to 3 times its original size.
+* In its [[Mob Menagerie]], shulkers were implied to be molluscs, a group of real-life invertebrate animals that include [[squid]], [[glow squid]], and [[nautilus]]es, given the nature of their shells.<ref>[https://www.minecraft.net/en-us/article/shulker Mob Menagerie: Shulker]</ref>
+* In [[Bedrock Edition]], Shulkers play their damage sound with its shell open when they close their shell.
+
+== Gallery ==
+===Renders===
+==== Open ====
+<gallery>
+Shulker.png|
+White Shulker.png|
+Light Gray Shulker.png|
+Gray Shulker.png|
+Black Shulker.png|
+Brown Shulker.png|
+Red Shulker.png|
+Orange Shulker.png|
+Yellow Shulker.png|
+Lime Shulker.png|
+Green Shulker.png|
+Cyan Shulker.png|
+Light Blue Shulker.png|
+Blue Shulker.png|
+Purple Shulker.png|
+Magenta Shulker.png|
+Pink Shulker.png|
+</gallery>
+==== Closed ====
+<gallery>
+Shulker Closed.png|
+White Shulker Box.png|
+Light Gray Shulker Box.png|
+Gray Shulker Box.png|
+Black Shulker Box.png|
+Brown Shulker Box.png|
+Red Shulker Box.png|
+Orange Shulker Box.png|
+Yellow Shulker Box.png|
+Lime Shulker Box.png|
+Green Shulker Box.png|
+Cyan Shulker Box.png|
+Light Blue Shulker Box.png|
+Blue Shulker Box.png|
+Purple Shulker Box.png|
+Magenta Shulker Box.png|
+Pink Shulker Box.png|
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:ShulkerAttack.png|A shulker firing a bullet.
+File:ShulkerBullet.png|Close-up of the projectile shot by a shulker.
+File:ShulkerCamouflage.png|A shulker inside an [[End city]]. It is difficult to spot against the [[purpur block]]s.
+File:ShulkersFighting.png|A shulker attacking another shulker.
+File:Shulkerbottom.png|The bottom of a shulker.
+File:ShulkerInvisiblity.png|A shulker with [[Invisibility]] [[Status effect|effect]].
+File:AllShulkerColors.png|All 16 shulker colors from before [[Java Edition 1.16.4]].
+File:2shulkers.png|2 shulkers guarding entrance to the End city.
+File:Shulkersonship.png|2 shulkers on End ship.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Shulkblaze.jpg|An image released by [[Jeb_]] of shulkers appearing to attack [[blaze]]s in [[the Nether]].
+File:Invisibility Shulker.jpg|A player avoiding a shulker by using the [[Invisibility]] effect.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Shulker (texture).png|Shulker texture file.
+Shulker White (texture).png|White shulker texture file.
+Shulker Light Gray (texture).png|Light gray shulker texture file.
+Shulker Gray (texture).png|Gray shulker texture file.
+Shulker Black (texture).png|Black shulker texture file.
+Shulker Brown (texture).png|Brown shulker texture file.
+Shulker Red (texture).png|Red shulker texture file.
+Shulker Orange (texture).png|Orange shulker texture file.
+Shulker Yellow (texture).png|Yellow shulker texture file.
+Shulker Lime (texture).png|Lime shulker texture file.
+Shulker Green (texture).png|Green shulker texture file.
+Shulker Cyan (texture).png|Cyan shulker texture file.
+Shulker Light Blue (texture).png|Light blue shulker texture file.
+Shulker Blue (texture).png|Blue shulker texture file.
+Shulker Purple (texture).png|Purple shulker texture file.
+Shulker Magenta (texture).png|Magenta shulker texture file.
+Shulker Pink (texture).png|Pink shulker texture file.
+</gallery>
+
+===In other media===
+<gallery>
+File:LEGO Shulker.png|[[Lego Minecraft]] shulker.
+File:Woodsword Chronicles shulker.jpg|A shulker as it appears in {{WSC|6|1}}
+File:Shulker Plastic.png|A shulker in the [[Plastic Texture Pack]]
+</gallery>
+
+==References==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|meet-shulker|Meet the Shulker|January 30, 2017|[[Marsh Davies]]}}
+* {{mcnet|shulker|Mob Menagerie: Shulker|December 11, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox The End}}
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:End mobs]]
+[[Category:Monster mobs]]
+
+[[cs:Shulker]]
+[[de:Shulker]]
+[[es:Shulker]]
+[[fr:Shulker]]
+[[hu:Kagylapuló]]
+[[it:Shulker]]
+[[ja:シュルカー]]
+[[ko:셜커]]
+[[lzh:匿贆]]
+[[nl:Shulker]]
+[[pl:Shulker]]
+[[pt:Shulker]]
+[[ru:Шалкер]]
+[[th:ชัลเกอร์]]
+[[uk:Шалкер]]
+[[zh:潜影贝]]

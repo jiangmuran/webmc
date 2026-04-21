@@ -1,0 +1,3118 @@
+{{Distinguish|Trail Ruins}}
+{{redirect|Trial}}
+{{Infobox structure
+| image = Trial Chambers isometric view.png
+| imagesize = 400px
+| biome = Any [[Overworld]] biome except for the [[deep dark]]
+| y level = -40 to -20
+| mobs = From [[trial spawner]]:
+*{{EntityLink|Zombie}}
+*{{EntityLink|Baby Zombie}}
+*{{EntityLink|Husk}}
+*{{EntityLink|Skeleton}}
+*{{EntityLink|Stray}}
+*{{EntityLink|Bogged}}
+*{{EntityLink|Spider}}
+*{{EntityLink|Cave spider}}
+*{{EntityLink|Slime}}
+*{{EntityLink|Silverfish}}
+*{{EntityLink|Breeze}}
+'''{{JE}}:'''
+*{{EntityLink|Chicken}} <small>(rarely through [[Chicken Jockey|jockeys]])</small>
+| blocks =
+* See {{slink||Structure}} 
+* See {{slink||Blocks}}
+}}
+{{relevant tutorial|Defeating trial chambers}}
+'''Trial chambers'''<ref group="n">The name is inconsistently plural in-game:
+
+* <code>trial_chambers</code> in-game ID
+* "Step foot in a Trial Chamber" &#x2013; "Minecraft: Trial(s) Edition" [[advancement]] {{in|java}}
+* "Trial Chambers" &#x2013; in-game structure name {{in|bedrock}}.
+</ref> are uncommon underground [[structure]]s that serve as a mid-game combat challenge.<ref>{{Mcnet|minecraft-snapshot-23w45a|Minecraft Snapshot 23w45a|November 8, 2023}}</ref> They consist mostly of [[copper]] blocks and [[tuff bricks]], and are the only place where [[trial spawner]]s and [[vault]]s naturally generate. Trial chambers are also the only place where [[breeze]]s spawn, whose [[breeze rod]]s can be used to craft [[wind charge]]s. Various materials such as [[heavy core]]s and certain [[armor trim]]s are obtained exclusively by unlocking vaults in trial chambers. As it is the only source of breeze rods and heavy cores, the structure is also the location where [[mace]]s are obtained.
+
+[[Ominous trial]]s can also take place here through [[Bad Omen]], where [[Trial Omen]] causes all trial spawners to become [[ominous trial spawner|ominous]], making them more difficult and providing greater rewards.
+
+== Generation ==
+Trial chambers generate underground in the [[Overworld]]. The starting room generates at an [[altitude]] of between Y=-40 and -20, but the structure is not restricted to those Y levels; the majority of the structure's rooms tend to generate between Y=-20 and 0.{{verify}}
+
+Trial chambers can only generate in new chunks, specifically ones that did not exist prior to [[Java Edition 1.21|''Java Edition'' 1.21]] and [[Bedrock Edition 1.21.0|''Bedrock Edition'' 1.21.0]].
+
+The generation of trial chambers follows a grid of 34×34 [[chunk]] regions centered on the world origin (X=0, Z=0). There is always one trial chambers structure generated in each region at a random location, unless a deep dark biome cancels the generation of the trial chambers.
+
+While the origin point of the structure ({{code|corridor_end}}) cannot generate within a deep dark biome, other parts of it can intersect a deep dark biome.
+
+{{Calculator|chunkbase|pois=Tc|zoom=0.25}}
+
+=== Locating ===
+Trial chambers can be located using [[trial explorer map]]s, which are sold by journeyman-level [[cartographer]] villagers for 12 [[emerald]]s and a [[compass]]. The maps always point to the nearest trial chamber relative to the cartographer that does not already have a trial explorer map that points to it. All maps bought from the same cartographer always points to the same structure.
+
+{{IN|je}}, a given villager always trades the same map, which is determined upon the trade unlocking.
+
+An online seed map such as [https://mcseedmap.net mcseedmap.net] or [https://chunkbase.com chunkbase.com] may be used instead.
+
+== Structure ==
+{{Main|/Structure}}
+[[File:Trial Chambers layout.png|thumb|Overhead view of a typical trial chamber layout]]
+The starting room of the structure is {{cd|corridor/end}}. This room connects to a chamber and a section of a corridor. At the end of the section of a corridor, an intersection links to another chamber and another section of a corridor is generated, but this time it ends on the atrium, which then leads to the entrance room.
+
+The structure then branches out from some {{cd|corridor/straight}} pieces.
+
+=== File structure ===
+All trial chambers structures found below are located in the folder <samp>[[client.jar]]/data/minecraft/structure/trial_chambers</samp>{{only|java|short=1}} or <samp>data/behavior_packs/vanilla/structures/trial_chambers</samp>{{only|bedrock|short=1}}.
+
+{| class="collapsible collapsed collapse-button-none" data-description="File structure"
+! List
+|-
+| <div class="toccolours treeview">
+* trial_chambers
+** chamber
+*** assembly.nbt
+*** chamber_1.nbt
+*** chamber_2.nbt
+*** chamber_4.nbt
+*** chamber_8.nbt
+*** entrance_cap.nbt
+*** eruption.nbt
+*** pedestal.nbt
+*** slanted.nbt
+*** addon
+**** c1_breeze.nbt
+**** full_corner_column.nbt
+**** full_stacked_walkway.nbt
+**** full_stacked_walkway_2.nbt
+**** grate_bridge.nbt
+**** hanging_platform.nbt
+**** lower_staircase_down.nbt
+**** short_grate_platform.nbt
+**** short_platform.nbt
+**** walkway_with_bridge_1.nbt
+*** assembly
+**** cover_1.nbt
+**** cover_2.nbt
+**** cover_3.nbt
+**** cover_4.nbt
+**** cover_5.nbt
+**** cover_6.nbt
+**** full_column.nbt
+**** hanging_1.nbt
+**** hanging_2.nbt
+**** hanging_3.nbt
+**** hanging_4.nbt
+**** hanging_5.nbt
+**** left_staircase_1.nbt
+**** left_staircase_2.nbt
+**** left_staircase_3.nbt
+**** platform_1.nbt
+**** right_staircase_1.nbt
+**** right_staircase_2.nbt
+**** right_staircase_3.nbt
+**** spawner_1.nbt
+*** eruption
+**** breeze_slice_1.nbt
+**** center_1.nbt
+**** quadrant_1.nbt
+**** quadrant_2.nbt
+**** quadrant_3.nbt
+**** quadrant_4.nbt
+**** quadrant_5.nbt
+**** slice_1.nbt
+**** slice_2.nbt
+**** slice_3.nbt
+*** pedestal
+**** center_1.nbt
+**** ominous_slice_1.nbt
+**** quadrant_1.nbt
+**** quadrant_2.nbt
+**** quadrant_3.nbt
+**** slice_1.nbt
+**** slice_2.nbt
+**** slice_3.nbt
+**** slice_4.nbt
+**** slice_5.nbt
+*** slanted
+**** center.nbt
+**** hallway_1.nbt
+**** hallway_2.nbt
+**** hallway_3.nbt
+**** ominous_upper_arm_1.nbt
+**** quadrant_1.nbt
+**** quadrant_2.nbt
+**** quadrant_3.nbt
+**** quadrant_4.nbt
+**** ramp_1.nbt
+**** ramp_2.nbt
+**** ramp_3.nbt
+**** ramp_4.nbt
+** chests
+*** supply.nbt
+*** connectors
+**** supply.nbt
+** corridor
+*** atrium_1.nbt
+*** end_1.nbt
+*** end_2.nbt
+*** entrance_1.nbt
+*** entrance_2.nbt
+*** entrance_3.nbt
+*** first_plate.nbt
+*** second_plate.nbt
+*** straight_1.nbt
+*** straight_2.nbt
+*** straight_3.nbt
+*** straight_4.nbt
+*** straight_5.nbt
+*** straight_6.nbt
+*** straight_7.nbt
+*** straight_8.nbt
+*** addon
+**** arrow_dispenser.nbt
+**** bridge_lower.nbt
+**** chandelier_upper.nbt
+**** decoration_upper.nbt
+**** display_1.nbt
+**** display_2.nbt
+**** display_3.nbt
+**** head_upper.nbt
+**** ladder_to_middle.nbt
+**** open_walkway.nbt
+**** open_walkway_upper.nbt
+**** reward_upper.nbt
+**** staircase.nbt
+**** wall.nbt
+**** walled_walkway.nbt
+*** atrium
+**** bogged_relief.nbt
+**** breeze_relief.nbt
+**** grand_staircase_1.nbt
+**** grand_staircase_2.nbt
+**** grand_staircase_3.nbt
+**** spider_relief.nbt
+**** spiral_relief.nbt
+** decor
+*** barrel.nbt
+*** black_bed.nbt
+*** blue_bed.nbt
+*** brown_bed.nbt
+*** candle_1.nbt
+*** candle_2.nbt
+*** candle_3.nbt
+*** candle_4.nbt
+*** cyan_bed.nbt
+*** dead_bush_pot.nbt
+*** disposal.nbt 
+*** empty_pot.nbt
+*** flow_pot.nbt
+*** gray_bed.nbt 
+*** green_bed.nbt 
+*** guster_pot.nbt
+*** light_blue_bed.nbt 
+*** light_gray_bed.nbt 
+*** lime_bed.nbt 
+*** magenta_bed.nbt 
+*** orange_bed.nbt 
+*** pink_bed.nbt 
+*** purple_bed.nbt 
+*** red_bed.nbt 
+*** scrape_pot.nbt
+*** undecorated_pot.nbt
+*** white_bed.nbt 
+*** yellow_bed.nbt 
+** dispensers
+*** chamber.nbt
+*** floor_dispenser.nbt
+*** wall_dispenser.nbt
+** hallway
+*** cache_1.nbt
+*** corner_staircase.nbt
+*** corner_staircase_down.nbt
+*** corridor_connector_1.nbt
+*** encounter_1.nbt 
+*** encounter_2.nbt 
+*** encounter_3.nbt 
+*** encounter_4.nbt 
+*** encounter_5.nbt 
+*** left_corner.nbt
+*** long_straight_staircase.nbt
+*** long_straight_staircase_down.nbt
+*** lower_hallway_connector.nbt
+*** right_corner.nbt
+*** rubble.nbt
+*** rubble_chamber.nbt
+*** rubble_chamber_thin.nbt
+*** rubble_thin.nbt
+*** straight.nbt
+*** straight_staircase.nbt
+*** straight_staircase_down.nbt
+*** trapped_staircase.nbt 
+*** upper_hallway_connector.nbt
+** intersection
+*** intersection_1.nbt
+*** intersection_2.nbt
+*** intersection_3.nbt
+** reward
+*** ominous_vault.nbt
+*** vault.nbt
+** spawner
+*** breeze
+**** breeze.nbt
+*** connectors
+**** breeze.nbt
+**** melee.nbt
+**** ranged.nbt
+**** slow_ranged.nbt
+**** small_melee.nbt
+*** melee
+**** husk.nbt
+**** spider.nbt
+**** zombie.nbt
+*** ranged
+**** poison_skeleton.nbt
+**** skeleton.nbt
+**** stray.nbt
+*** slow_ranged
+**** poison_skeleton.nbt
+**** skeleton.nbt
+**** stray.nbt
+*** small_melee
+**** baby_zombie.nbt
+**** cave_spider.nbt
+**** silverfish.nbt
+**** slime.nbt
+</div>
+|}
+
+=== Blocks ===
+{{columns-list|colwidth=16em|
+* {{BlockLink|Barrel}}<ref group="n" name="loot">Random loot table</ref>
+* {{BlockLink|Black Stained Glass}}
+* {{BlockLink|Block of Copper}}
+* {{BlockLink|Blue Bed}}
+* {{BlockLink|Bone Block}}
+* {{BlockLink|Brown Bed}}
+* {{BlockLink|Cactus}}
+* {{BlockLink|Candle}}
+* {{BlockLink|Chest}}<ref group="n" name="loot">Random loot table</ref>
+* {{BlockLink|Chiseled Sandstone}}
+* {{BlockLink|Chiseled Tuff}}
+* {{BlockLink|Chiseled Tuff Bricks}}
+* {{BlockLink|Cobbled Deepslate}}
+* {{BlockLink|Cobblestone}}
+* {{BlockLink|Cobweb}}
+* {{BlockLink|Crafting Table}}
+* {{BlockLink|Dead Bush}}
+* {{BlockLink|Decorated Pot}}<ref group="n"> 4 bricks or 3 bricks with either 1 flow, guster or scrape pottery sherd. </ref><ref group="n" name="loot">Random loot table</ref>
+* {{BlockLink|Dirt}}
+* {{BlockLink|Dispenser}}<ref group="n" name="loot">Random loot table</ref>
+* {{BlockLink|Flower Pot}}
+* {{BlockLink|Green Bed}}
+* {{BlockLink|Hopper}}
+* {{BlockLink|Iron Chain}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Light Gray Stained Glass}}
+* {{BlockLink|Magenta Bed}}
+* {{BlockLink|Magma Block}}
+* {{BlockLink|Mangrove Leaves}}
+* {{BlockLink|Mangrove Log}}
+* {{BlockLink|Mangrove Roots}}
+* {{BlockLink|Mangrove Wood}}
+* {{BlockLink|Moss Block}}
+* {{BlockLink|Moss Carpet}}
+* {{BlockLink|Mossy Cobblestone}}
+* {{BlockLink|Mud}}
+* {{BlockLink|Muddy Mangrove Roots}}
+* {{BlockLink|Oak Button}}
+* {{BlockLink|Oak Fence}}
+* {{BlockLink|Oak Leaves}}
+* {{BlockLink|Oak Log}}
+* {{BlockLink|Oak Pressure Plate}}
+* {{BlockLink|Oak Slab}}
+* {{BlockLink|Oxidized Copper Trapdoor}}
+* {{BlockLink|Oxidized Cut Copper}}
+* {{BlockLink|Packed Ice}}
+* {{BlockLink|Podzol}}
+* {{BlockLink|id=Pointed Dripstone Down Tip Merge|Pointed Dripstone}}
+* {{BlockLink|Polished Andesite}}
+* {{BlockLink|Polished Tuff}}
+* {{BlockLink|Polished Tuff Slab}}
+* {{BlockLink|Potted Dead Bush}}
+* {{BlockLink|Powder Snow}}
+* {{BlockLink|Purple Bed}}
+* {{BlockLink|Red Bed}}
+* {{BlockLink|Red Candle}}
+* {{BlockLink|Red Concrete}}
+* {{BlockLink|Red Glazed Terracotta}}
+* {{BlockLink|Red Mushroom}}
+* {{BlockLink|Redstone Dust}}
+* {{BlockLink|Sand}}
+* {{BlockLink|Stone}}
+* {{BlockLink|Stone Bricks}}
+* {{BlockLink|Stone Button}}
+* {{BlockLink|Trial Spawner}}<ref group="n">Trial spawners become ominous as part of ominous trials, and these ominous trial spawners equip some mobs based on loot tables. More information on the [[ominous trial spawner]] page.</ref><!-- Don't put ominous next to trial spawners, as ominous trial spawners never generate in trial chambers, but can do as part of ominous trials. -->
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Tripwire Hook}}
+* {{BlockLink|Tuff Bricks}}
+* {{BlockSprite|Vault}}{{BlockSprite|Ominous Vault}} [[Vault]]
+* {{BlockLink|Vines}}
+* {{BlockLink|Water}}
+* {{BlockLink|Waxed Chiseled Copper}}
+* {{BlockLink|Waxed Block of Copper}}
+* {{BlockLink|Waxed Copper Bulb}}
+* {{BlockLink|Waxed Copper Door}}
+* {{BlockLink|Waxed Copper Grate}}
+* {{BlockLink|Waxed Cut Copper}}
+* {{BlockLink|Waxed Cut Copper Slab}}
+* {{BlockLink|Waxed Cut Copper Stairs}}
+* {{BlockLink|Waxed Oxidized Chiseled Copper}}
+* {{BlockLink|Waxed Oxidized Copper}}
+* {{BlockLink|Waxed Oxidized Copper Door}}
+* {{BlockLink|Waxed Oxidized Copper Grate}}
+* {{BlockLink|Waxed Oxidized Copper Trapdoor}}
+* {{BlockLink|Waxed Oxidized Cut Copper}}
+* {{BlockLink|Waxed Oxidized Cut Copper Slab}}
+* {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+* {{BlockLink|White Bed}}
+* {{BlockLink|White Concrete}}
+* {{BlockLink|White Stained Glass}}}}
+
+=== Components ===
+==== Entrances ====
+The trial chambers generate an entrance chamber, which contains multiple levels and always generate a 3x3 doorway made out of oxidized variants of chiseled copper, cut copper and copper blocks. Behind it is a 3x3x1 gap, which is visible by breaking the doorway or via [[Spectator]] mode. A vault is found in a high place, alongside with multiple chests behind copper block and chiseled copper pedestals. Most entrance chambers generate a vegetation platform in the center.
+
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/corridor/entrance_1</code>
+| ''Entrance 1'' is a two-story room with the first story containing a walkway and over is a copper grate leading into a hidden room with a bed and a chest with reward loot. The staircase over the walkway connects to the second floor.
+
+The second floor contains a platform with vegetation and two chests over a ramp. The gate can be found opposite one of the chests. Also, there is an upper ledge containing a vault. There are three different vegetation platforms:
+* An oak ({{cd|display_1}})
+* A mangrove ({{cd|display_2}})
+* A cactus ({{cd|display_3}})
+
+Inbetween the two chests and right next to the vegetation platform is a trapdoor leading into a ventilitation-shaft like tunnel leading down to the first floor, which acts like a shortcut.
+|
+3619 {{BlockLink|Tuff Bricks}}<br>
+353 {{BlockLink|Waxed Block of Copper}}<br>
+279 {{BlockLink|Polished Tuff}}<br>
+238 {{BlockLink|Chiseled Tuff Bricks}}<br>
+169 {{BlockLink|Waxed Oxidized Copper}}<br>
+118 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+31 {{BlockLink|Chiseled Tuff}}<br>
+30 {{BlockLink|Oak Leaves}}<br>
+27 {{BlockLink|Waxed Copper Bulb}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+14 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Chest}}<ref group="n" name="1 entrance loot">2 loot containers in this area use the entrance loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/entrance}}.</ref><ref group="n" name="reward 1 loot">One loot container in this area use the reward loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/reward}}.</ref><br>
+3 {{BlockLink|Oak Log}}<br>
+3 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Dirt}}<br>
+1 {{BlockLink|Oxidized Copper Trapdoor}}<ref>{{bug|MC-266613}}</ref><br>
+1 {{BlockLink|Water}}<br>
+1 {{BlockLink|Waxed Copper Door}}<br>
+1 {{BlockLink|Purple Bed}}<br>
+1 {{BlockLink|Waxed Oxidized Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Trapdoor}}
+| [[File:Trial Chambers entrance 1 (oak).png|250px]]
+|-
+| <code>trial_chambers/corridor/entrance_2</code>
+| ''Entrance 2'' is a two-story room. The first floor contains a platform resembling a railway station platform and the gate leads through. The small staircases leads to the platform, while the bigger staircase leads up to the second floor.
+
+On the second floor, there is a vegetation platform. The wide ledge goes through the corner and onto the side, making a L-shape, which contains a vault in one of the ends. Underneath the ledge contains two chests. There are three different vegetation platforms:
+* An oak ({{cd|display_1}})
+* A mangrove ({{cd|display_2}})
+* A cactus ({{cd|display_3}})
+| 
+3599 {{BlockLink|Tuff Bricks}}<br>
+326 {{BlockLink|Waxed Block of Copper}}<br>
+314 {{BlockLink|Waxed Oxidized Copper}}<br>
+262 {{BlockLink|Chiseled Tuff Bricks}}<br>
+231 {{BlockLink|Polished Tuff}}<br>
+56 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+32 {{BlockLink|Waxed Copper Bulb}}<br>
+23 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Chest}}<ref group="n" name="entrance loot 2">All loot containers in this area use the entrance loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/entrance}}.</ref><br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Chiseled Copper}}
+| [[File:Trial Chambers entrance 2 (mangrove).png|250px]]
+|-
+| <code>trial_chambers/corridor/entrance_3</code>
+| ''Entrance 3'' is a tall room with two big spiral staircases. The first floor contains two chests.
+
+The first spiral staircase is connected to the first floor and contains a ledge with a chest. The gate is visible above.
+
+The second spiral staircase is not connected to the first floor and is identified by the copper grates, giving a hint. One ledge contains a vault and the end contains another vault. Also, there is no vegetation platforms.
+|
+4363 {{BlockLink|Tuff Bricks}}<br>
+471 {{BlockLink|Polished Tuff}}<br>
+413 {{BlockLink|Waxed Block of Copper}}<br>
+406 {{BlockLink|Waxed Oxidized Copper}}<br>
+98 {{BlockLink|Chiseled Tuff Bricks}}<br>
+69 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+44 {{BlockLink|Waxed Copper Bulb}}<br>
+12 {{BlockLink|Waxed Cut Copper Stairs}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+3 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Chest}}<ref group="n" name="entrance loot 2">All loot containers in this area use the entrance loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/entrance}}.</ref><br>
+3 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Chiseled Copper}}
+| [[File:Trial Chambers entrance 3.png|250px]]
+|-
+! colspan = 4 | Trees
+|-
+| <code>trial_chambers/corridor/addon/display_1</code>
+| An oak. This can generate in most entrance chambers.
+| 
+25 {{BlockLink|Oak Leaves}}<br>
+24 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+6 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+3 {{BlockLink|Oak Log}}<br>
+1 {{BlockLink|Water}}<br>
+1 {{BlockLink|Waxed Oxidized Copper}}<br>
+1 {{BlockLink|Dirt}}
+| [[File:Trial Chambers display 1.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/display_2</code>
+| A mangrove. This can generate in most entrance chambers.
+| 
+25 {{BlockLink|Vines}}<br>
+24 {{BlockLink|Mangrove Leaves}}<br>
+19 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+16 {{BlockLink|Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+3 {{BlockLink|Mangrove Roots}}<br>
+3 {{BlockLink|Mangrove Log}}<br>
+2 {{BlockLink|Mud}}<br>
+2 {{BlockLink|Mangrove Wood}}<br>
+1 {{BlockLink|Moss Carpet}}<br>
+1 {{BlockLink|Water}}<br>
+1 {{BlockLink|Waxed Oxidized Copper}}<br>
+1 {{BlockLink|Muddy Mangrove Roots}}
+| [[File:Trial Chambers display 2.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/display_3</code>
+| A [[cactus]] and a [[dead bush]] on top of [[sand]]. This can generate in most entrance chambers. The top of the cactus is cut off.
+| 
+23 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+12 {{BlockLink|Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Sand}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+3 (2 during generation) {{BlockLink|Cactus}}<br>
+1 {{BlockLink|Dead Bush}}<br>
+1 {{BlockLink|Waxed Oxidized Copper}}
+| [[File:Trial Chambers display 3.png|200px]]
+|}
+
+==== Corridors, atriums, and ends ====
+[[File:Trial Chambers corridor.png|thumb|upright=0.80|An isometric view of a corridor]]
+
+The trial chambers feature two corridors ({{cd|corridor/straight}}). One connects to a {{cd|corridor/end}}; the other connects to {{cd|corridor/atrium_1}}, which connects to {{cd|corridor/entrance}} pieces. The corridors are divided by an intersection in different sides, making a L shape.
+
+Addons such as decorated pots, flower pots, candles, tripwire traps, dispensers, chandeliers, stairs, platforms, vaults, and trial spawners may generate in the {{cd|corridor/straight}} pieces. Trial spawners are either melee, small melee, or ranged mob spawners, but never spawn [[breeze]] spawners.
+
+Some {{cd|corridor/straight}} pieces have a copper door that can lead to either nothing (a stone wall)<ref>{{bug|MC-266451}}</ref>, a chamber, or a hallway.
+
+{| class="wikitable collapsible collapsed"
+|+ Structures
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/corridor/atrium_1</code>
+| ''Atrium 1'' is a big hall with two holes during pre-generation that connects the entrance chamber with the second section of the corridor. These two holes can be filled out by four random murals. The entrance chamber connection can also be filled out by three random grand staircases.
+| 
+2668 {{BlockLink|Tuff Bricks}}<br>
+334 {{BlockLink|Polished Tuff}}<br>
+236 {{BlockLink|Waxed Block of Copper}}<br>
+189 {{BlockLink|Waxed Oxidized Copper}}<br>
+129 {{BlockLink|Chiseled Tuff Bricks}}<br>
+84 {{BlockLink|Waxed Copper Grate}}<br>
+78 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+25 {{BlockLink|Ladder}}<br>
+22 {{BlockLink|Chiseled Tuff}}<br>
+19 {{BlockLink|Waxed Copper Bulb}}<br>
+17 {{BlockLink|Water}}<br>
+12 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers atrium 1 (1).png|250px]]
+|-
+| <code>trial_chambers/corridor/end_1</code>
+| ''End 1'' is a wide room with two staircases leading up to the chamber. A wall with an ominous vault can generate.
+| 
+3087 {{BlockLink|Tuff Bricks}}<br>
+265 {{BlockLink|Polished Tuff}}<br>
+230 {{BlockLink|Waxed Block of Copper}}<br>
+185 {{BlockLink|Waxed Oxidized Copper}}<br>
+170 {{BlockLink|Chiseled Tuff Bricks}}<br>
+111 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+42 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+23 {{BlockLink|Waxed Copper Grate}}<br>
+19 {{BlockLink|Waxed Copper Bulb}}<br>
+7 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Cut Copper}}
+| [[File:Trial Chambers end 1.png|250px]]
+|-
+| <code>trial_chambers/corridor/end_2</code>
+| ''End 2'' is a large room with a staircase leading up to the chamber. A shallow water pool generates at the lower level, which contains a chest with intersection loot. Also, the four pillars in the room can generate three copper grate rings and one vault. An ominous vault can be found in a room sealed with copper grates opposite the chest.
+| 
+2714 {{BlockLink|Tuff Bricks}}<br>
+337 {{BlockLink|Waxed Block of Copper}}<br>
+265 {{BlockLink|Polished Tuff}}<br>
+237 {{BlockLink|Waxed Oxidized Copper}}<br>
+211 {{BlockLink|Chiseled Tuff Bricks}}<br>
+83 {{BlockLink|Waxed Copper Grate}}<br>
+62 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+60 {{BlockLink|Water}}<br>
+56 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}（23 Waterlogged）<br>
+17 {{BlockLink|Waxed Copper Bulb}}<br>
+5 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Chest}}<ref group="n" name="entrance loot">All loot containers in this area use the intersection chest loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/intersection}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper Slab}}
+| [[File:Trial Chambers end 2.png|250px]]
+|-
+| <code>trial_chambers/corridor/first_plate</code>
+| rowspan="2"| The foundation of the corridor.
+| rowspan="2"| 380 {{BlockLink|Tuff Bricks}}
+| rowspan="2"| [[File:Trial Chambers plate.png|250px]]
+|-
+| <code>trial_chambers/corridor/second_plate</code>
+|-
+| <code>trial_chambers/corridor/straight_1</code>
+| rowspan="8" | There are two large main corridors composed out of four randomly selected ("straight") pieces. The main corridors have three different floors. Various addons have trial spawners in other levels, but trial spawners don't generate in the sides. There are three side layers and two sides opposite each other:
+* The first side layer is the lower side piece which contains decor pieces.
+* The second side layer is the middle side piece which also contains decor pieces.
+* The third side layer is the upper side piece, which is a copper grate walkway and never generates any decor pieces.
+Most straight pieces generate a copper door in any side layer or any side.
+
+The following decor pieces generates at the main corridors:
+* A barrel with random loot ({{cd|barrel}})
+* Pile of unlit candles ({{cd|candle_1-4}})
+* Potted dead bush ({{cd|dead_bush_pot}})
+* Empty flower pot ({{cd|empty_pot}})
+* Decorated pot with random loot which have no sherds ({{cd|undecorated_pot}}) or have one sherd ({{cd|flow_pot}}, {{cd|guster_pot}} or {{cd|scrape_pot}})
+
+The following addons may generate:
+* Tripwire trap ({{cd|arrow_dispenser}})
+* Staircase bridge ({{cd|bridge_lower}})
+* Chandelier {{cd|chandelier_upper}})
+* Copper grate platform ({{cd|decoration_upper}})
+* Gong ({{cd|head_upper}})
+* Ladder in the sides connecting the first two layers ({{cd|ladder_to_middle}})
+* Trial spawner walkway ({{cd|open_walkway}}, {{cd|open_walkway_upper}}, {{cd|walled_wallway}})
+* Small staircase ({{cd|staircase}})
+
+Other non-addon stuff can generate during pre-generation of the straight pieces:
+* A wall blocking one side of the upper two layers ({{cd|straight_3}})
+* Symmetrical staircases on the bottom level, a trial spawner on the center and a destructed copper grate walkway ({{cd|straight_6}})
+* A wall blocking one side of the upper two layers, in which contains a vault ({{cd|straight_7}})
+* A bridge leading into a trial spawner and a destructued copper grate walkway ({{cd|straight_8}})
+| 
+667 {{BlockLink|Tuff Bricks}}<br>
+110 {{BlockLink|Polished Tuff}}<br>
+69 {{BlockLink|Waxed Oxidized Copper}}<br>
+68 {{BlockLink|Waxed Block of Copper}}<br>
+66 {{BlockLink|Chiseled Tuff Bricks}}<br>
+44 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+26 {{BlockLink|Waxed Copper Grate}}<br>
+8 {{BlockLink|Chiseled Tuff}}<br>
+8 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers straight 1.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_2</code>
+| 
+629 {{BlockLink|Tuff Bricks}}<br>
+108 {{BlockLink|Polished Tuff}}<br>
+95 {{BlockLink|Waxed Block of Copper}}<br>
+72 {{BlockLink|Waxed Oxidized Copper}}<br>
+61 {{BlockLink|Chiseled Tuff Bricks}}<br>
+46 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+26 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Copper Bulb}}<br>
+6 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 2.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_3</code>
+| 
+844 {{BlockLink|Tuff Bricks}}<br>
+93 {{BlockLink|Waxed Block of Copper}}<br>
+86 {{BlockLink|Polished Tuff}}<br>
+85 {{BlockLink|Chiseled Tuff Bricks}}<br>
+54 {{BlockLink|Waxed Oxidized Copper}}<br>
+41 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+16 {{BlockLink|Waxed Copper Grate}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 3.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_4</code>
+| 
+629 {{BlockLink|Tuff Bricks}}<br>
+107 {{BlockLink|Polished Tuff}}<br>
+96 {{BlockLink|Waxed Block of Copper}}<br>
+69 {{BlockLink|Waxed Oxidized Copper}}<br>
+59 {{BlockLink|Chiseled Tuff Bricks}}<br>
+48 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+26 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Copper Bulb}}<br>
+8 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 4.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_5</code>
+| 
+630 {{BlockLink|Tuff Bricks}}<br> 
+107 {{BlockLink|Polished Tuff}}<br>
+95 {{BlockLink|Waxed Block of Copper}}<br>
+69 {{BlockLink|Waxed Oxidized Copper}}<br>
+61 {{BlockLink|Chiseled Tuff Bricks}}<br>
+47 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+27 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Copper Bulb}}<br>
+6 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 5.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_6</code>
+| 
+595 {{BlockLink|Tuff Bricks}}<br>
+107 {{BlockLink|Polished Tuff}}<br>
+90 {{BlockLink|Waxed Block of Copper}}<br>
+79 {{BlockLink|Waxed Oxidized Copper}}<br>
+62 {{BlockLink|Chiseled Tuff Bricks}}<br>
+48 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+14 {{BlockLink|Waxed Copper Grate}}<br>
+8 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+6 {{BlockLink|Chiseled Tuff}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 6.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_7</code>
+| 
+779 {{BlockLink|Tuff Bricks}}<br>
+102 {{BlockLink|Polished Tuff}}<br>
+91 {{BlockLink|Waxed Block of Copper}}<br>
+78 {{BlockLink|Chiseled Tuff Bricks}}<br>
+61 {{BlockLink|Waxed Oxidized Copper}}<br>
+44 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+15 {{BlockLink|Waxed Copper Grate}}<br>
+12 {{BlockLink|Chiseled Tuff}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Door}}
+| [[File:Trial Chambers straight 7.png|250px]]
+|-
+| <code>trial_chambers/corridor/straight_8</code>
+| 
+715 {{BlockLink|Tuff Bricks}}<br>
+117 {{BlockLink|Polished Tuff}}<br>
+88 {{BlockLink|Waxed Oxidized Copper}}<br>
+70 {{BlockLink|Chiseled Tuff Bricks}}<br>
+70 {{BlockLink|Waxed Block of Copper}}<br>
+36 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+17 {{BlockLink|Waxed Copper Grate}}<br>
+10 {{BlockLink|Chiseled Tuff}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers straight 8.png|250px]]
+|}
+{| class="wikitable collapsible collapsed"
+|+ Addons
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/corridor/addon/arrow_dispenser</code>
+| ''Arrow Dispenser'' is placed on the bottom center of the main corridor. It contains two tripwire traps surrounding a dispenser containing arrows. and a chiseled tuff block in front of it, as well as two unlit copper bulbs in the side.
+| 
+12 {{BlockLink|Waxed Block of Copper}}<br>
+10 {{BlockLink|Tuff Bricks}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+10 {{BlockLink|Tripwire}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}<br>
+4 {{BlockLink|Tripwire Hook}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Dispenser}} (4-8 {{ItemLink|Arrow|Arrows}})
+| [[File:Trial Chambers arrow-dispenser.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/bridge_lower</code>
+|''Bridge Lower'' is placed on the bottom center of the main corridor. It contains two staircases leading up into either side of the first floor.
+| 
+23 {{BlockLink|Waxed Oxidized Copper}}<br>
+17 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+14 {{BlockLink|Chiseled Tuff Bricks}}<br>
+12 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+10 {{BlockLink|Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers bridge lower.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/chandelier_upper</code>
+| ''Chandelier Upper'' is a copper bulb chandelier generating on the top of the main corridor.
+| 
+3 {{BlockLink|Chain}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers chandelier upper.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/decoration_upper</code>
+| ''Decoration Upper'' is similar to chambers' hanging platforms, yet found in the corridor and doesn't generate copper blocks and polished tuff. It is placed on the top of the main corridor.
+| 
+8 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Chain}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers decoration upper.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/head_upper</code>
+| ''Head Upper'' is a gong located in the top of the main corridor.
+| 
+4 {{BlockLink|Waxed Copper Grate}}<br>
+4 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Chain}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers head upper.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/ladder_to_middle</code>
+| ''Ladder to Middle'' is placed on up to two sides of the first floor, which contains a ladder connected to the second floor.
+| 
+10 {{BlockLink|Waxed Block of Copper}}<br>
+7 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+6 {{BlockLink|Ladder}}<br>
+6 {{BlockLink|Polished Tuff}}<br>
+5 {{BlockLink|Tuff Bricks}}<br>
+4 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers ladder to middle.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/open_walkway</code>
+| ''Open Walkway'' is placed on the middle center of the main corridor. There is a trial spawner in the center.
+| 
+31 {{BlockLink|Tuff Bricks}}<br>
+21 {{BlockLink|Polished Tuff}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Chiseled Tuff Bricks}}<br>
+6 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers open walkway.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/open_walkway_upper</code>
+| Similar to ''Open Walkway'', but is located on the top and is suspended by chains.
+| 
+12 {{BlockLink|Chain}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+6 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers open walkway upper.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/reward_upper</code>
+| ''Reward Upper'' contains a vault and is found in the top floor. Doesn't generate due to a bug. <ref name="MC-266778">{{bug|MC-266778}}</ref>
+| 
+10 {{BlockLink|Chain}}<br>
+5 {{BlockLink|Waxed Chiseled Copper}}<br>
+4 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers reward upper.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/staircase</code>
+| ''Staircase'' is a smaller staircase connecting into up to two sides of the main corridor.
+| 
+3 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers staircase.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/wall</code>
+| ''Wall'' is a big tuff wall blocking the center of the main corridor. Currently doesn't generate due to a bug. <ref name="MC-266778" />
+| 
+220 {{BlockLink|Tuff Bricks}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers wall.png|200px]]
+|-
+| <code>trial_chambers/corridor/addon/walled_walkway</code>
+| ''Walled Walkway'' is a closed area in the middle center. On the center is a trial spawner.
+| 
+58 {{BlockLink|Tuff Bricks}}<br>
+30 {{BlockLink|Chiseled Tuff Bricks}}<br>
+15 {{BlockLink|Polished Tuff}}<br>
+10 {{BlockLink|Waxed Block of Copper}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+5 {{BlockLink|Waxed Oxidized Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers walled walkway.png|200px]]
+|-
+! colspan = 4 | Atrium
+|-
+| <code>trial_chambers/corridor/atrium/bogged_relief</code>
+| The mural has a [[bogged]] style. Placed on the left and right sides of the atrium.
+| 
+497 {{BlockLink|Tuff Bricks}}<br>
+38 {{BlockLink|Polished Tuff}}<br>
+32 {{BlockLink|Waxed Block of Copper}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+21 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+21 {{BlockLink|Waxed Oxidized Copper}}<br>
+14 {{BlockLink|Mossy Cobblestone}}<br>
+10 {{BlockLink|Chiseled Tuff}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+4 {{BlockLink|White Concrete}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers bogged relief.png|250px]]
+|-
+| <code>trial_chambers/corridor/atrium/breeze_relief</code>
+| The mural contains a [[breeze]]. Placed on the left and right sides of the atrium.
+| 
+496 {{BlockLink|Tuff Bricks}}<br>
+38 {{BlockLink|Polished Tuff}}<br>
+34 {{BlockLink|Chiseled Tuff Bricks}}<br>
+32 {{BlockLink|Waxed Block of Copper}}<br>
+25 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+21 {{BlockLink|Waxed Oxidized Copper}}<br>
+12 {{BlockLink|Chiseled Tuff}}<br>
+8 {{BlockLink|White Stained Glass}}<br>
+4 {{BlockLink|Black Stained Glass}}<br>
+4 {{BlockLink|Waxed Copper Bulb}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers breeze relief.png|250px]]
+|-
+| <code>trial_chambers/corridor/atrium/grand_staircase_1</code>
+| The large double-run stairs leading from the atrium to the entrance of the corridor go up along both sides and then converge to the middle.
+| 
+330 {{BlockLink|Tuff Bricks}}<br>
+59 {{BlockLink|Waxed Oxidized Copper}}<br>
+42 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+29 {{BlockLink|Waxed Block of Copper}}<br>
+27 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+16 {{BlockLink|Chiseled Tuff Bricks}}<br>
+3 {{BlockLink|Polished Tuff}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers grand staircase 1.png|200px]]
+|-
+| <code>trial_chambers/corridor/atrium/grand_staircase_2</code>
+| The large double-run stairs leading from the atrium to the entrance of the corridor converge to the middle first and then go up.
+| 
+110 {{BlockLink|Tuff Bricks}}<br>
+79 {{BlockLink|Waxed Oxidized Copper}}<br>
+24 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+24 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+15 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers grand staircase 2.png|200px]]
+|-
+| <code>trial_chambers/corridor/atrium/grand_staircase_3</code>
+| The large three-run stairs from the atrium to the entrance of the corridor go up along both sides and then converge to the middle.
+| 
+150 {{BlockLink|Tuff Bricks}}<br>
+75 {{BlockLink|Waxed Oxidized Copper}}<br>
+28 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+25 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+20 {{BlockLink|Block of Copper}}<ref name="MC-271719">{{bug|MC-271719}}</ref><br>
+6 {{BlockLink|Chiseled Tuff Bricks}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers grand staircase 3.png|200px]]
+|-
+| <code>trial_chambers/corridor/atrium/spider_relief</code>
+| A mural with a [[spider]] style. Placed on the left and right sides of the atrium.
+| 
+645 {{BlockLink|Tuff Bricks}}<br>
+38 {{BlockLink|Polished Tuff}}<br>
+32 {{BlockLink|Waxed Block of Copper}}<br>
+29 {{BlockLink|Chiseled Tuff Bricks}}<br>
+21 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+21 {{BlockLink|Waxed Oxidized Copper}}<br>
+16 {{BlockLink|Red Concrete}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Black Stained Glass}}<br>
+4 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+4 {{BlockLink|Chiseled Tuff}}<br>
+4 {{BlockLink|White Stained Glass}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers spider relief.png|250px]]
+|-
+| <code>trial_chambers/corridor/atrium/spiral_relief</code>
+| A mural with a spiral pattern. Placed on the left and right sides of the atrium.
+| 
+512 {{BlockLink|Tuff Bricks}}<br>
+78 {{BlockLink|Polished Tuff}}<br>
+32 {{BlockLink|Waxed Block of Copper}}<br>
+24 {{BlockLink|Chiseled Tuff Bricks}}<br>
+21 {{BlockLink|Waxed Oxidized Copper}}<br>
+21 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+4 {{BlockLink|Chiseled Tuff}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers spiral relief.png|250px]]
+|}
+
+==== Hallways ====
+Hallways are smaller branches connected to some {{cd|corridor/straight}} pieces consisting of passageways, staircases, and a spiral staircase; they may contain chests. The other side of the hallway can generate either a stone wall, a dead end with a chest, or a chamber. Rarely, hallways generate in an intersection.
+
+{| class="wikitable collapsible collapsed"
+|+ Hallways
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/hallway/cache_1</code>
+| Contains a long hallway with a chest containing supply loot.
+|
+344 {{BlockLink|Tuff Bricks}}<br>
+60 {{BlockLink|Polished Tuff}}<br>
+51 {{BlockLink|Waxed Oxidized Copper}}<br>
+45 {{BlockLink|Waxed Block of Copper}}<br>
+40 {{BlockLink|Chiseled Tuff Bricks}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+4 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers cache 1.png|200px]]
+|-
+| <code>trial_chambers/hallway/corner_staircase</code>
+|
+|
+140 {{BlockLink|Tuff Bricks}}<br>
+31 {{BlockLink|Waxed Block of Copper}}<br>
+26 {{BlockLink|Chiseled Tuff Bricks}}<br>
+17 {{BlockLink|Polished Tuff}}<br>
+14 {{BlockLink|Waxed Oxidized Copper}}<br>
+5 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers corner staircase.png|200px]]
+|-
+| <code>trial_chambers/hallway/corner_staircase_down</code>
+| 
+|
+138 {{BlockLink|Tuff Bricks}}<br>
+32 {{BlockLink|Waxed Block of Copper}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+17 {{BlockLink|Polished Tuff}}<br>
+14 {{BlockLink|Waxed Oxidized Copper}}<br>
+5 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers corner staircase down.png|200px]]
+|-
+| <code>trial_chambers/hallway/corridor_connector_1</code>
+| 
+|
+48 {{BlockLink|Tuff Bricks}}<br>
+9 {{BlockLink|Polished Tuff}}<br>
+9 {{BlockLink|Waxed Oxidized Copper}}<br>
+6 {{BlockLink|Chiseled Tuff Bricks}}<br>
+6 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers corridor connector 1.png|200px]]
+|-
+| <code>trial_chambers/hallway/left_corner</code>
+| A corner walkway. Some chiseled tuff bricks are missing.<ref>{{bug|MC-266441}}</ref>
+|
+70 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Waxed Oxidized Copper}}<br>
+15 {{BlockLink|Polished Tuff}}<br>
+10 {{BlockLink|Waxed Block of Copper}}<br>
+6 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers left corner.png|200px]]
+|-
+| <code>trial_chambers/hallway/long_straight_staircase</code>
+|
+| rowspan=2 |
+393 {{BlockLink|Tuff Bricks}}<br>
+36 {{BlockLink|Waxed Block of Copper}}<br>
+30 {{BlockLink|Polished Tuff}}<br>
+24 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+20 {{BlockLink|Chiseled Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Chiseled Copper}}<br>
+7 {{BlockLink|Waxed Oxidized Copper}}<br>
+3 {{BlockLink|Chiseled Tuff}}<br>
+3 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper}}
+| rowspan=2 | [[File:Trial Chambers long straight staircase.png|200px]]
+|-
+| <code>trial_chambers/hallway/long_straight_staircase_down</code>
+| 
+|-
+| <code>trial_chambers/hallway/lower_hallway_connector</code>
+|
+|
+532 {{BlockLink|Tuff Bricks}}<br>
+52 {{BlockLink|Waxed Oxidized Copper}}<br>
+48 {{BlockLink|Polished Tuff}}<br>
+44 {{BlockLink|Waxed Block of Copper}}<br>
+42 {{BlockLink|Chiseled Tuff Bricks}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+3 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers lower hallway connector.png|200px]]
+|-
+| <code>trial_chambers/hallway/right_corner</code>
+| A corner walkway. Some chiseled tuff bricks are missing. <ref>{{bug|MC-266441}}</ref>
+|
+69 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Waxed Oxidized Copper}}<br>
+10 {{BlockLink|Waxed Block of Copper}}<br>
+9 {{BlockLink|Chiseled Tuff Bricks}}<br>
+8 {{BlockLink|Polished Tuff}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers right corner.png|200px]]
+|-
+| <code>trial_chambers/hallway/rubble</code>
+| rowspan=2 | A chest with reward loot on a dead end of oxidized copper grates.
+|
+61 {{BlockLink|Tuff Bricks}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+12 {{BlockLink|Polished Tuff}}<br>
+12 {{BlockLink|Cobbled Deepslate}}<br>
+9 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Chest}}<ref group="n" name="reward 2 loot">This loot container in this area use the entrance loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/reward}}.</ref><br>
+| [[File:Trial Chambers rubble.png|200px]]
+|-
+| <code>trial_chambers/hallway/rubble_chamber</code>
+|
+61 {{BlockLink|Tuff Bricks}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+12 {{BlockLink|Polished Tuff}}<br>
+12 {{BlockLink|Cobbled Deepslate}}<br>
+9 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+| [[File:Trial Chambers rubble chamber.png|200px]]
+|-
+| <code>trial_chambers/hallway/rubble_chamber_thin</code>
+| rowspan=2 | The dead end with copper grates.
+| rowspan=2 |
+16 {{BlockLink|Tuff Bricks}}<br>
+6 {{BlockLink|Waxed Block of Copper}}<br>
+5 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Waxed Oxidized Copper}}<br>
+3 {{BlockLink|Polished Tuff}}<br>
+2 {{BlockLink|Chiseled Tuff Bricks}}
+| rowspan=2 | [[File:Trial Chambers rubble chamber thin.png|200px]]
+|-
+| <code>trial_chambers/hallway/rubble_thin</code>
+|-
+| <code>trial_chambers/hallway/straight</code>
+|
+|
+78 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Waxed Oxidized Copper}}<br>
+15 {{BlockLink|Polished Tuff}}<br>
+10 {{BlockLink|Chiseled Tuff Bricks}}<br>
+10 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers straight.png|200px]]
+|-
+| <code>trial_chambers/hallway/straight_staircase</code>
+| <ref>{{bug|MC-266441}}</ref>
+|
+111 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Polished Tuff}}<br>
+14 {{BlockLink|Waxed Block of Copper}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+9 {{BlockLink|Chiseled Tuff Bricks}}<br>
+7 {{BlockLink|Waxed Oxidized Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper}}
+| rowspan=2 | [[File:Trial Chambers straight staircase.png|200px]]
+|-
+| <code>trial_chambers/hallway/straight_staircase_down</code>
+|
+|
+112 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Polished Tuff}}<br>
+14 {{BlockLink|Waxed Block of Copper}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}<br>
+7 {{BlockLink|Waxed Oxidized Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper}}
+|-
+| <code>trial_chambers/hallway/trapped_staircase</code>
+| A spiral staircase variant, which contains a pit of pointed dripstone on the middle and ladders to go back up.
+|
+632 {{BlockLink|Tuff Bricks}}<br>
+52 {{BlockLink|Waxed Oxidized Copper}}<br>
+48 {{BlockLink|Polished Tuff}}<br>
+44 {{BlockLink|Waxed Block of Copper}}<br>
+42 {{BlockLink|Chiseled Tuff Bricks}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+9 {{BlockLink|Ladder}}<br>
+5 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+3 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Pointed Dripstone}}
+|[[File:Trial Chambers trapped staircase.png|200px]]
+|-
+| <code>trial_chambers/hallway/upper_hallway_connector</code>
+| 
+|
+400 {{BlockLink|Tuff Bricks}}<br>
+51 {{BlockLink|Waxed Oxidized Copper}}<br>
+44 {{BlockLink|Waxed Block of Copper}}<br>
+42 {{BlockLink|Chiseled Tuff Bricks}}<br>
+39 {{BlockLink|Polished Tuff}}<br>
+7 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+3 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers upper hallway connector.png|200px]]
+|}
+
+{| class="wikitable collapsible collapsed"
+|+ Encounters<br>{{only|java}}
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/hallway/encounter_1</code>
+|''Encounter 1'' is a hallway with a staircase containing a trial spawner of any categories and a vault, but the trial spawners never spawn breezes.
+|
+771 {{BlockLink|Tuff Bricks}}<br>
+188 {{BlockLink|Polished Tuff}}<br>
+164 {{BlockLink|Waxed Block of Copper}}<br>
+145 {{BlockLink|Chiseled Tuff Bricks}}<br>
+126 {{BlockLink|Waxed Oxidized Copper}}<br>
+37 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+18 {{BlockLink|Waxed Copper Bulb}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers encounter 1.png|200px]]
+|-
+| <code>trial_chambers/hallway/encounter_2</code>
+|''Encounter 2'' is a room with nothing but a breeze trial spawner, a vault and some dispenser traps on the walls.
+|
+981 {{BlockLink|Tuff Bricks}}<br>
+110 {{BlockLink|Polished Tuff}}<br>
+108 {{BlockLink|Waxed Block of Copper}}<br>
+102 {{BlockLink|Chiseled Tuff Bricks}}<br>
+79 {{BlockLink|Waxed Oxidized Copper}}<br>
+22 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+14 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers encounter 2.png|200px]]
+|-
+| <code>trial_chambers/hallway/encounter_3</code>
+|''Encounter 3'' is a tall room with a vault on the bottom with copper grate platforms on the wall, leading up to a platform with a trial spawner that can spawn mobs in any category, but never Breezes.
+|
+1061 {{BlockLink|Tuff Bricks}}<br>
+121 {{BlockLink|Waxed Block of Copper}}<br>
+83 {{BlockLink|Chiseled Tuff Bricks}}<br>
+52 {{BlockLink|Polished Tuff}}<br>
+27 {{BlockLink|Waxed Oxidized Copper}}<br>
+11 {{BlockLink|Waxed Copper Bulb}}<br>
+10 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers encounter 3.png|200px]]
+|-
+| <code>trial_chambers/hallway/encounter_4</code>
+|''Encounter 4'' is a tall room going through a "U" shape with copper grate platforms. The floor is tuff bricks and pointed dripstone covering the lowest copper block layer. The pillar on the sides contain a slow ranged trial spawner and a vault on the bottom. A tripwire trap generates at the end.
+|
+2872 {{BlockLink|Tuff Bricks}}<br>
+446 {{BlockLink|Waxed Block of Copper}}<br>
+378 {{BlockLink|Chiseled Tuff Bricks}}<br>
+132 {{BlockLink|Polished Tuff}}<br>
+100 {{BlockLink|Pointed Dripstone}}<br>
+56 {{BlockLink|Waxed Copper Bulb}}<br>
+36 {{BlockLink|Waxed Copper Grate}}<br>
+21 {{BlockLink|Waxed Oxidized Copper}}<br>
+7 {{BlockLink|Ladder}}<br>
+3 {{BlockLink|Tripwire}}<br>
+2 {{BlockLink|Tripwire Hook}}<br>
+2 {{BlockLink|Dispenser}}<br>
+1 {{BlockLink|Redstone Dust}}
+| [[File:Trial Chambers encounter 4.png|200px]]
+|-
+| <code>trial_chambers/hallway/encounter_5</code>
+|''Encounter 5'' is a room with a grand staircase leading up to a platform with a breeze trial spawner, a vault, some dispenser traps and some decor pieces from the main corridor.
+|
+2543 {{BlockLink|Tuff Bricks}}<br>
+288 {{BlockLink|Polished Tuff}}<br>
+210 {{BlockLink|Waxed Oxidized Copper}}<br>
+153 {{BlockLink|Waxed Block of Copper}}<br>
+138 {{BlockLink|Chiseled Tuff Bricks}}<br>
+44 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+16 {{BlockLink|Waxed Copper Bulb}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers encounter 5.png|200px]]
+|}
+
+==== Intersections ====
+Intersections are rooms connecting both corridors. They feature a safer zone equipped with [[bed]]s as well as an entrance to a chamber.
+
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/intersection/intersection_1</code>
+| 
+''Intersection 1'' connects the top floor of the two corridors. The large room contains three staircases and a part where all staircases meet up, which contains a ladder into a room with four beds and a hidden room with an ominous vault (although it can be seen underwater behind stained glass).
+
+Deep water surrounds the underwater bedroom. Escaping requires swimming to the second section of the corridor.
+| 
+4117 {{BlockLink|Tuff Bricks}}<br>
+966 {{BlockLink|Water}}<br>
+429 {{BlockLink|Waxed Block of Copper}}<br>
+388 {{BlockLink|Polished Tuff}}<br>
+311 {{BlockLink|Waxed Oxidized Copper}}<br>
+303 {{BlockLink|Chiseled Tuff Bricks}}<br>
+111 {{BlockLink|Light Gray Stained Glass}}<br>
+65 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+53 {{BlockLink|Ladder}}<br>
+38 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+33 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+33 {{BlockLink|Waxed Copper Grate}}<br>
+27 {{BlockLink|Waxed Copper Bulb}}<br>
+12 {{BlockLink|Waxed Chiseled Copper}}<br>
+9 {{BlockLink|Chiseled Tuff}}<br>
+2 {{BlockLink|Chain}}
+| [[File:Trial Chambers intersection 1.png|250px]]
+|-
+| <code>trial_chambers/intersection/intersection_2</code>
+|
+''Intersection 2'' connects the two corridors by the bottom center and is linked through hallways, meeting up to a larger passage. A staircase leads up to an upper bedroom and the opposite generates a chamber room.
+
+The upper bedroom contains a barrel and four beds; opposite the barrel is an ominous vault. A secret room is marked by a copper grate behind one of the beds and contains a fifth bed, a decorated pot and a crafting table.
+| 
+6553 {{BlockLink|Tuff Bricks}}<br>
+379 {{BlockLink|Polished Tuff}}<br>
+358 {{BlockLink|Waxed Block of Copper}}<br>
+274 {{BlockLink|Chiseled Tuff Bricks}}<br>
+260 {{BlockLink|Waxed Oxidized Copper}}<br>
+75 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+51 {{BlockLink|Waxed Copper Grate}}<br>
+44 {{BlockLink|Ladder}}<br>
+29 {{BlockLink|Waxed Copper Bulb}}<br>
+29 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+24 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+8 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Oak Slab}}<br>
+1 {{BlockLink|Decorated Pot}}<ref group="n" name="potgen">The decorated pot always generates a flow pattern.</ref><br>
+1 {{BlockLink|Crafting Table}}<br>
+1 {{BlockLink|Oak Pressure Plate}}<br>
+1 {{BlockLink|Oak Fence}}<br>
+1 {{BlockLink|Barrel}}<ref group="n" name="barrel 2 loot">This loot container in this area use the intersection barrel loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/intersection_barrel}}.</ref><br>
+1 {{BlockLink|Purple Bed}}<br>
+1 {{BlockLink|Waxed Copper Door}}<br>
+1 {{BlockLink|Potted Dead Bush}}
+| [[File:Trial Chambers intersection 2.png|250px]]
+|-
+| <code>trial_chambers/intersection/intersection_3</code>
+| 
+''Intersection 3'' is a tall room, in which the connecting corridors are on the bottom side. The top of the intersection connects through the second section of the corridor, while the bottom of it connects through the first section of the corridor.
+
+The center is filled up by a tall tower with three levels. The first level connects the second section and has four pillars above it, the second level contains three beds and a barrel and the third level is a copper grate walkway and the ground is four pillars and the chamber is blocked by a wall of copper grates.
+
+Unlike the other two intersections, this intersection doesn't contain an ominous vault.
+| 
+7934 {{BlockLink|Tuff Bricks}}<br>
+552 {{BlockLink|Waxed Block of Copper}}<br>
+474 {{BlockLink|Chiseled Tuff Bricks}}<br>
+462 {{BlockLink|Polished Tuff}}<br>
+343 {{BlockLink|Waxed Oxidized Copper}}<br>
+218 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+102 {{BlockLink|Waxed Copper Grate}}<br>
+49 {{BlockLink|Waxed Copper Bulb}}<br>
+44 {{BlockLink|Ladder}}<br>
+36 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+14 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+6 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Barrel}}<ref group="n" name="barrel 2 loot">This loot container in this area use the intersection barrel loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/intersection_barrel}}.</ref>
+|[[File:Trial Chambers intersection 3.png|250px]]
+|}
+
+==== Chambers ====
+Chambers are combat rooms, larger than encounters and can contain multiple trial spawners and vaults and at least one ominous vault. Multiple potential entrances can spawn in the chamber. Some can be sealed, but only one of these potential entrances can be connected to:
+* Hallways.
+* Intersections.
+* Corridor ends.
+* Some {{cd|corridor/straight}} pieces.
+
+Most rooms generates a base in which various addons including copper grate hanging platforms and obstacles, corner and side structures, dispenser traps and corridor pots.
+
+Each potential entrance, including the sealed ones, generates a disposal consisting of a hopper placed above a barrel, allowing the player to sort their inventory.<ref>{{tweet|kingbdogz|1801569900885942604|If you are referring to chests being empty, it's actually intentional that they have empty chests to help you put junk in to manage your inventory.|June 14, 2024}}</ref>
+{| class="wikitable collapsible collapsed"
+|+ Main structures
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/chamber/assembly</code>
+| 
+''Assembly'' is a large room, by default contains a platform with a ranged trial spawner and three vaults embedded on the wall. A back ledge generates on the opposite side of the platform, which contains a breeze trial spawner in front of it. Three potential entrances generate: one high up on the back ledge, one on the platform and one on a passageway that contains a vault and a staircase leading up to the main room.
+
+Lower structure extensions generate in the floor and contains a series of copper grate obstacles and holes covered by oxidized copper trapdoors:
+* {{cd|cover_1}}
+* {{cd|cover_2}}
+* {{cd|cover_3}}
+* {{cd|cover_4}}
+
+{{cd|cover_5}} and {{cd|cover_6}} contain {{cd|floor_dispenser}} over them, other variants include:
+* A variant of the covers, but doesn't contain copper grate obstacles ({{cd|cover_7}})
+* A small platform ({{cd|platform_1}})
+* Two staircases leading down ({{cd|spawner_1}})
+
+Upper structure extensions include:
+* Hanging platforms made out of copper grates ({{cd|hanging_1-5}})
+* Column leading down ({{cd|full_column}})
+
+Staircases generate at the two sides of the back ledge. They are named {{cd|left_staircase}} and {{cd|right_staircase}}.
+* A ladder ({{cd|staircase_1}})
+* A staircase ({{cd|staircase_2}})
+* A trial spawner selected from any category, but never Breezes ({{cd|staircase_3}})
+| 
+10579 {{BlockLink|Tuff Bricks}}<br>
+755 {{BlockLink|Polished Tuff}}<br>
+598 {{BlockLink|Waxed Oxidized Copper}}<br>
+545 {{BlockLink|Waxed Block of Copper}}<br>
+344 {{BlockLink|Chiseled Tuff Bricks}}<br>
+81 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+51 {{BlockLink|Waxed Copper Bulb}}<br>
+27 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+22 {{BlockLink|Waxed Copper Grate}}<br>
+13 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+5 {{BlockLink|Waxed Chiseled Copper}}
+|[[File:Trial Chambers assembly.png|250px]]
+|-
+| <code>trial_chambers/chamber/chamber_1</code>
+| 
+''Chamber 1'' is a tall room, having four potential entrances on each side of the room in different heights. There seems to be nothing in this structure during pre-generation.
+
+{{cd|c1_breeze}} is the center structure, generating in every {{cd|chamber_1}} room. It is a pillar with a breeze trial spawner over it. There is also a staircase ({{cd|lower_staircase_down}}) going onto it.
+
+Upper structure extensions connect through the upper entrances:
+* Copper block bridge ({{cd|grate_bridge}})
+* Copper grate hanging platform ({{cd|hanging_platform}})
+* Copper grate platforms connected through the entrance ({{cd|short_platform}})
+* The same, but bigger ({{cd|short_grate_platform}})
+
+The corners can generate up to two corner structures:
+* Wall ({{cd|full_corner_column}})
+* An upper ledge with two floors, with a ranged trial spawner on the second ({{cd|full_stacked_walkway_1}})
+* An open walkway with a platform consisting of a ranged trial spawner and a vault ({{cd|full_stacked_walkway_2}}
+| 
+4252 {{BlockLink|Tuff Bricks}}<br>
+494 {{BlockLink|Waxed Block of Copper}}<br>
+492 {{BlockLink|Polished Tuff}}<br>
+426 {{BlockLink|Waxed Oxidized Copper}}<br>
+367 {{BlockLink|Chiseled Tuff Bricks}}<br>
+58 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+35 {{BlockLink|Waxed Copper Bulb}}<br>
+8 {{BlockLink|Oxidized Cut Copper}}
+| [[File:Trial Chambers chamber_1.png|250px]]
+|-
+| <code>trial_chambers/chamber/chamber_2</code>
+| 
+''Chamber 2'' is similar to ''Chamber 1'' in several minor ways:
+* The structure ''c1_breeze'' is already generated and has a ranged trial spawner instead of a breeze trial spawner.
+* The oxidized copper floor has been replaced into a tuff brick floor, with powder snow filling up the lowest copper block layer.
+* The ominous vault is now embedded inside the pillar.
+* Six tuff bricks covers or obstacles near the pillar generates there.
+''Chamber 2'' never generates connected to a {{cd|corridor/end}}.
+| 
+4868 {{BlockLink|Tuff Bricks}}<br>
+560 {{BlockLink|Waxed Block of Copper}}<br>
+508 {{BlockLink|Polished Tuff}}<br>
+403 {{BlockLink|Chiseled Tuff Bricks}}<br>
+395 {{BlockLink|Powder Snow}}<br>
+44 {{BlockLink|Waxed Oxidized Copper}}<br>
+36 {{BlockLink|Waxed Copper Bulb}}<br>
+8 {{BlockLink|Oxidized Cut Copper}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers chamber_2.png|250px]]
+|-
+| <code>trial_chambers/chamber/chamber_4</code>
+| 
+''Chamber 4'' is a small structure containing two floors and three potential entrances: two on the second floor and one on the lower floor.
+
+The first floor contains a walkway with parts of it containing a copper grate pathway that leaves a 1-block high gap of air underneath, which the small melee mobs can crawl underneath there. Also, there is a vault over one corner of the room and contains a staircase leading up to the second floor.
+
+The second floor is a wide bridge containing a vault on one corner of it and a wall over the staircase. There are two small melee trial spawners, one near the staircase and another on one side of the bridge. 
+
+Unlike other chambers, there are no dispensers on the wall. Instead, players can find decorated pots with the same loot as the ones from the corridors.
+
+''Chamber 4'' never generates connected to a {{cd|corridor/end}}.
+| 
+3382 {{BlockLink|Tuff Bricks}}<br>
+546 {{BlockLink|Polished Tuff}}<br>
+446 {{BlockLink|Waxed Oxidized Copper}}<br>
+308 {{BlockLink|Waxed Block of Copper}}<br>
+258 {{BlockLink|Chiseled Tuff Bricks}}<br>
+60 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+30 {{BlockLink|Waxed Copper Grate}}<br>
+30 {{BlockLink|Waxed Copper Bulb}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+13 {{BlockLink|Chiseled Tuff}}
+| [[File:Trial Chambers chamber_4.png|250px]]
+|-
+| <code>trial_chambers/chamber/chamber_8</code>
+| 
+''Chamber 8'' is a tall and narrow room with three higher ledges underneath the floor. One potential entrance is underneath a ledge and another is on a ledge. Each ledge contains copper grates with unwaxed oxidized copper trapdoors underneath.
+
+Four {{cd|slow_ranged}} trial spawners generate there. The first and second ledge contains one each and the third ledge contains two, which is on the sides of them.
+
+Three vaults can be found, two on the sides of the floor and one surrounded by two ranged trial spawners on the highest ledge, and an ominous vault can be found in the topmost area.
+
+''Chamber 8'' never generates connected to a {{cd|corridor/end}}.
+| 
+2736 {{BlockLink|Tuff Bricks}}<br>
+528 {{BlockLink|Waxed Block of Copper}}<br>
+321 {{BlockLink|Polished Tuff}}<br>
+172 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+170 {{BlockLink|Chiseled Tuff Bricks}}<br>
+124 {{BlockLink|Waxed Oxidized Copper}}<br>
+40 {{BlockLink|Waxed Copper Grate}}<br>
+31 {{BlockLink|Oxidized Copper Trapdoor}}<br>
+23 {{BlockLink|Waxed Copper Bulb}}<br>
+17 {{BlockLink|Chiseled Tuff}}<br>
+9 {{BlockLink|Waxed Cut Copper Slab}}
+| [[File:Trial Chambers chamber_8.png|250px]]
+|-
+| <code>trial_chambers/chamber/entrance_cap</code>
+| ''Entrance Cap'' is used to seal some potential entrances that are not used after the structure generates a structure with one potential entrance.
+| 
+15 {{BlockLink|Tuff Bricks}}<br>
+5 {{BlockLink|Chiseled Tuff Bricks}}<br>
+5 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers entrance cap.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption</code>
+|
+''Eruption'' is a large and round with some walls out of tuff bricks. Also, the center has corners filled with magma blocks. The slices and quadrants are empty during pre-generation.
+
+Instead, three sides generate random slices connecting the potential entrance:
+* A small room containing a vault ({{cd|slice_1}})
+* A staircase ({{cd|slice_2}})
+* A bridge, in which a melee trial spawner generates underneath it ({{cd|slice_3}})
+
+{{cd|breeze_slice_1}} generate in every Eruption chamber and the sides without a potential entrance, consisting of a breeze trial spawner and an ominous vault.
+
+Four corners of the room consist of quadrants:
+* Nothing ({{cd|quadrant_1}})
+* A bridge with a vault ({{cd|quadrant_2}})
+* A large bridge with a staircase going up to the vault ({{cd|quadrant_3}})
+* Four parkour platforms leading up to a ranged trial spawner sitting on an upper ledge ({{cd|quadrant_4}})
+* A bridge leading straight into a ranged trial spawner ({{cd|quadrant_5}})
+| 
+3518 {{BlockLink|Tuff Bricks}}<br>
+459 {{BlockLink|Polished Tuff}}<br>
+290 {{BlockLink|Waxed Block of Copper}}<br>
+235 {{BlockLink|Waxed Oxidized Copper}}<br>
+190 {{BlockLink|Chiseled Tuff Bricks}}<br>
+71 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+32 {{BlockLink|Magma Block}}<br>
+15 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+4 {{BlockLink|Waxed Copper Grate}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers eruption.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal</code>
+| 
+''Pedestal'' is a large room with some pillars on the ground and a balcony on the second floor surrounding the walls of the room. The center piece ("center") is used to fill up the center's pillars and contains three trial spawners (one of them is a breeze trial spawner and the other two are randomly selected by other categories). There are two potential entrances on each height.
+
+Sides of the room generate areas known as "slices". There are five slices and can contain copper grates that obstruct pathways and contain vaults in either the first or second floor.
+* {{cd|slice_1}}
+* {{cd|slice_2}}
+* {{cd|slice_3}}
+* {{cd|slice_4}}
+* {{cd|slice_5}}
+* A slice with a floating waxed copper grate and an ominous vault in the topmost area ({{cd|ominous_slice_1}})
+
+Corners of the room contain the quadrants from the ''slanted'' chamber that also generate. Quadrants in ''pedestal'' generate rarely in 1.21 and up.
+* A corner staircase ({{cd|quadrant_1}})
+* A balcony ({{cd|quadrant_2}})
+* A spiral staircase ({{cd|quadrant_3}})
+| 
+5906 {{BlockLink|Tuff Bricks}}<br>
+1124 {{BlockLink|Polished Tuff}}<br>
+1067 {{BlockLink|Waxed Oxidized Copper}}<br>
+573 {{BlockLink|Waxed Block of Copper}}<br>
+368 {{BlockLink|Chiseled Tuff Bricks}}<br>
+77 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+45 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers pedestal.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted</code>
+| 
+''Slanted'' is a large (empty during pre-generation) room densely made of pillars and contains two potential entrances on each height. The center is filled with a structure with a breeze trial spawner atop.
+
+Sides on the first floor are known as ("hallways").
+* Walkway ({{cd|hallway_1}})
+* A copper grate wall on one side and a walled vault on another side ({{cd|hallway_2}})
+* Walkway ({{cd|hallway_3}})
+
+Sides on the second floor are known as ("ramps").
+* Melee trial spawner ramps ({{cd|ramp_1~2}})
+* Ranged trial spawner ramps ({{cd|ramp_3}})
+* No trial spawner ramps ({{cd|ramp_4}})
+
+Corners of the room (and ''pedestal'') generate ("quadrants").
+* A staircase with the melee trial spawner on the second story ({{cd|quadrant_1}})
+* Two vaults, a staircase leading to a hole and a ladder ({{cd|quadrant_2}})
+* Two vaults and one hole ({{cd|quadrant_3}})
+* Parkour platforms leading up to the second floor ({{cd|quadrant_4}})
+| 
+4798 {{BlockLink|Tuff Bricks}}<br>
+505 {{BlockLink|Polished Tuff}}<br>
+406 {{BlockLink|Waxed Block of Copper}}<br>
+204 {{BlockLink|Chiseled Tuff Bricks}}<br>
+38 {{BlockLink|Waxed Copper Bulb}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}
+| [[File:Trial Chambers slanted.png|250px]]
+|}
+
+{| class="wikitable collapsible collapsed"
+|+ Addons
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+! colspan = 4 | Chamber 1 and 2
+|-
+| <code>trial_chambers/chamber/addon/c1_breeze</code>
+| ''C1 Breeze'' is a big pillar placed on the center of ''Chamber 1''. It have two sections. The upper section connects to either a corner or an upper structure extension and the lower section contains a breeze trial spawner on it.
+| 
+96 {{BlockLink|Tuff Bricks}}<br>
+66 {{BlockLink|Waxed Block of Copper}}<br>
+41 {{BlockLink|Polished Tuff}}<br>
+34 {{BlockLink|Chiseled Tuff Bricks}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers c1 breeze.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/full_corner_column</code>
+| ''Full Corner Column'' is one of the possible corners which blocks off a wall.
+| 
+777 {{BlockLink|Tuff Bricks}}<br>
+68 {{BlockLink|Waxed Block of Copper}}<br>
+51 {{BlockLink|Chiseled Tuff Bricks}}<br>
+25 {{BlockLink|Waxed Oxidized Copper}}<br>
+25 {{BlockLink|Polished Tuff}}<br>
+5 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers full corner column.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/full_stacked_walkway</code>
+| ''Full Stacked Walkway 1'' is one of the possible corners which contains a two-story upper ledge with distinct levels. The lower level is a staircase and the upper level contains ranged trial spawner off the side.
+| 
+359 {{BlockLink|Tuff Bricks}}<br>
+114 {{BlockLink|Polished Tuff}}<br>
+86 {{BlockLink|Waxed Block of Copper}}<br>
+59 {{BlockLink|Waxed Oxidized Copper}}<br>
+38 {{BlockLink|Chiseled Tuff Bricks}}<br>
+17 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+11 {{BlockLink|Oxidized Cut Copper}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers full stacked walkway.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/full_stacked_walkway_2</code>
+| ''Full Stacked Walkway 2'' is one of the possible corners which contains an open walkway consisting of a staircase leading up into a high platform. An upper ledge generates underneath the staircase, containing a ranged trial spawner and a vault.
+| 
+326 {{BlockLink|Tuff Bricks}}<br>
+100 {{BlockLink|Polished Tuff}}<br>
+62 {{BlockLink|Waxed Block of Copper}}<br>
+48 {{BlockLink|Waxed Oxidized Copper}}<br>
+25 {{BlockLink|Chiseled Tuff Bricks}}<br>
+10 {{BlockLink|Oxidized Cut Copper}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+5 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers full stacked walkway 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/grate_bridge</code>
+| ''Grate Bridge'' is a narrow copper block walkway leading fron the entrance of the chamber to the structure ''C1 Breeze''.
+| 
+58 {{BlockLink|Polished Tuff}}<br>
+20 {{BlockLink|Waxed Copper Grate}}<br>
+10 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers grate bridge.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/hanging_platform</code>
+| ''Hanging Platform'' is a 3x3 copper grate platform with the center suspended by chains, with chiseled copper connectors.
+| 
+16 {{BlockLink|Polished Tuff}}<br>
+8 {{BlockLink|Waxed Copper Grate}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+5 {{BlockLink|Chain}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers hanging platform.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/lower_staircase_down</code>
+| ''Lower Staircase Down'' is a higher staircase that cannot be reached and is connected through the ''C1 Breeze'' pillar.
+| 
+3 {{BlockLink|Tuff Bricks}}<br>
+3 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Copper}}<br>
+2 {{BlockLink|Chiseled Tuff Bricks}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers lower staircase down.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/short_grate_platform</code>
+| rowspan=2 | ''Short Grate Platform'' and ''Short Platform'' are copper grate platforms that is connected through the entrance of the chamber.
+| 
+10 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Polished Tuff}}<br>
+3 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers short grate platform.png|250px]]
+|-
+| <code>trial_chambers/chamber/addon/short_platform</code>
+| 
+20 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers short platform.png|250px]]
+|-
+! colspan = 4 | Assembly
+|-
+| <code>trial_chambers/chamber/assembly/cover_1</code>
+| rowspan="4"| ''Assembly/Cover 1-4'' are pieces of lower structures that consist of copper grate obstacles and contain gaps filled with oxidized copper trapdoors and small staircases.
+| 
+61 {{BlockLink|Tuff Bricks}}<br>
+21 {{BlockLink|Waxed Copper Grate}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+8 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+7 {{BlockLink|Waxed Block of Copper}}<br>
+3 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_2</code>
+| 
+57 {{BlockLink|Tuff Bricks}}<br>
+21 {{BlockLink|Waxed Copper Grate}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+7 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_3</code>
+| 
+65 {{BlockLink|Tuff Bricks}}<br>
+18 {{BlockLink|Waxed Copper Grate}}<br>
+10 {{BlockLink|Waxed Oxidized Copper}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_4</code>
+| 
+61 {{BlockLink|Tuff Bricks}}<br>
+13 {{BlockLink|Waxed Copper Grate}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+8 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+7 {{BlockLink|Waxed Block of Copper}}<br>
+3 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 4.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_5</code>
+| rowspan="2"| Similar to the last four, but uses ''Floor Dispenser''.
+| 
+57 {{BlockLink|Tuff Bricks}}<br>
+12 {{BlockLink|Waxed Oxidized Copper}}<br>
+10 {{BlockLink|Waxed Copper Grate}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+7 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 5.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_6</code>
+| 
+65 {{BlockLink|Tuff Bricks}}<br>
+11 {{BlockLink|Waxed Copper Grate}}<br>
+10 {{BlockLink|Waxed Oxidized Copper}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 6.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/cover_7</code>
+| ''Assembly/Cover 7'' is a little oxidized copper trapdoor gap.
+|
+65 {{BlockLink|Tuff Bricks}}<br>
+23 {{BlockLink|Waxed Oxidized Copper}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Oxidized Copper Trapdoor}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly cover 7.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/full_column</code>
+| ''Assembly/Full Column'' is a large pillar leading from the top to the start of the second story.
+| 
+29 {{BlockLink|Tuff Bricks}}<br>
+16 {{BlockLink|Waxed Block of Copper}}<br>
+10 {{BlockLink|Waxed Oxidized Copper}}<br>
+9 {{BlockLink|Polished Tuff}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}
+| [[File:Trial Chambers Assembly full column.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/hanging_1</code>
+| rowspan="4"| ''Assembly/Hanging 1-4'' are copper grate platforms suspended by chains, which can be placed in different formations and different heights, and can also connect to eacn other.
+| 
+12 {{BlockLink|Chain}}<br>
+11 {{BlockLink|Polished Tuff}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+6 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly hanging 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/hanging_2</code>
+| 
+21 {{BlockLink|Waxed Copper Grate}}<br>
+21 {{BlockLink|Polished Tuff}}<br>
+20 {{BlockLink|Chain}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+4 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers Assembly hanging 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/hanging_3</code>
+| 
+8 {{BlockLink|Chain}}<br>
+7 {{BlockLink|Polished Tuff}}<br>
+3 {{BlockLink|Waxed Copper Grate}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers Assembly hanging 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/hanging_4</code>
+| 
+13 {{BlockLink|Polished Tuff}}<br>
+8 {{BlockLink|Chain}}<br>
+3 {{BlockLink|Waxed Copper Grate}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+2 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers Assembly hanging 4.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/hanging_5</code>
+| Polished tuff.
+| 
+9 {{BlockLink|Polished Tuff}}
+| [[File:Trial Chambers Assembly hanging 5.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/platform_1</code>
+| ''Assembly/Platform 1'' is a small platform.
+| 
+12 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Waxed Oxidized Copper}}
+| [[File:Trial Chambers Assembly platform 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/left_staircase_1</code>
+| rowspan="2" | ''Assembly/Staircase 1'' is a room containing a ladder leading to the top, but is cut off.
+| 
+254 {{BlockLink|Tuff Bricks}}<br>
+57 {{BlockLink|Polished Tuff}}<br>
+57 {{BlockLink|Waxed Block of Copper}}<br>
+47 {{BlockLink|Waxed Oxidized Copper}}<br>
+33 {{BlockLink|Chiseled Tuff Bricks}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+8 {{BlockLink|Waxed Copper Bulb}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+4 {{BlockLink|Ladder}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly left staircase 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/right_staircase_1</code>
+| 
+239 {{BlockLink|Tuff Bricks}}<br>
+51 {{BlockLink|Waxed Block of Copper}}<br>
+40 {{BlockLink|Polished Tuff}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+22 {{BlockLink|Waxed Oxidized Copper}}<br>
+12 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+12 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly right staircase 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/left_staircase_2</code>
+| rowspan="2" | ''Staircase 2'' is a staircase.
+| 
+172 {{BlockLink|Tuff Bricks}}<br>
+51 {{BlockLink|Waxed Block of Copper}}<br>
+49 {{BlockLink|Polished Tuff}}<br>
+40 {{BlockLink|Waxed Oxidized Copper}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly left staircase 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/right_staircase_2</code>
+| 
+254 {{BlockLink|Tuff Bricks}}<br>
+57 {{BlockLink|Polished Tuff}}<br>
+56 {{BlockLink|Waxed Oxidized Copper}}<br>
+54 {{BlockLink|Waxed Block of Copper}}<br>
+33 {{BlockLink|Chiseled Tuff Bricks}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+8 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Ladder}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly right staircase 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/left_staircase_3</code>
+| rowspan="2" | ''Staircase 3'' contains a turn to a trial spawner (the same category rules as the corridor) underneath a ledge.
+| 
+245 {{BlockLink|Tuff Bricks}}<br>
+51 {{BlockLink|Waxed Block of Copper}}<br>
+40 {{BlockLink|Polished Tuff}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+22 {{BlockLink|Waxed Oxidized Copper}}<br>
+12 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly left staircase 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/right_staircase_3</code>
+| 
+172 {{BlockLink|Tuff Bricks}}<br>
+51 {{BlockLink|Waxed Block of Copper}}<br>
+49 {{BlockLink|Polished Tuff}}<br>
+40 {{BlockLink|Waxed Oxidized Copper}}<br>
+27 {{BlockLink|Chiseled Tuff Bricks}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Assembly right staircase 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/assembly/spawner_1</code>
+| ''Assembly/Spawner 1'' contains two staircases cutting through into the bottom.
+| 
+30 {{BlockLink|Tuff Bricks}}<br>
+18 {{BlockLink|Waxed Oxidized Copper}}<br>
+10 {{BlockLink|Waxed Block of Copper}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Assembly spawner 1.png|250px]]
+|-
+! colspan = 4 | Eruption
+|-
+| <code>trial_chambers/chamber/eruption/breeze_slice_1</code>
+| ''Eruption/Breeze Slice 1'' is placed on the side without any possible entrances. It contains a pillar with a breeze trial spawner and above it is an ominous vault.
+| 
+91 {{BlockLink|Tuff Bricks}}<br>
+54 {{BlockLink|Waxed Block of Copper}}<br>
+48 {{BlockLink|Polished Tuff}}<br>
+20 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+11 {{BlockLink|Chiseled Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Oxidized Copper}}<br>
+5 {{BlockLink|Magma Block}}<br>
+5 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+2 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Eruption breeze slice 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/center_1</code>
+| ''Eruption/Center 1'' is the main center pedestal which contains a fountain-like structure with a dispenser.
+| 
+44 {{BlockLink|Polished Tuff}}<br>
+33 {{BlockLink|Tuff Bricks}}<br>
+20 {{BlockLink|Waxed Oxidized Copper}}<br>
+14 {{BlockLink|Waxed Block of Copper}}<br>
+13 {{BlockLink|Magma Block}}<br>
+4 {{BlockLink|Oak Button}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Dispenser}} (1 {{ItemLink|Water Bucket}})
+| [[File:Trial Chambers Eruption center 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/quadrant_1</code>
+| Nothing.
+| 
+286 {{BlockLink|Tuff Bricks}}<br>
+81 {{BlockLink|Polished Tuff}}<br>
+70 {{BlockLink|Waxed Block of Copper}}<br>
+53 {{BlockLink|Waxed Oxidized Copper}}<br>
+46 {{BlockLink|Chiseled Tuff Bricks}}<br>
+20 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Magma Block}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Copper Grate}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Eruption quadrant 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/quadrant_2</code>
+| ''Eruption/Quadrant 2'' contains a bridge with a vault.
+| 
+288 {{BlockLink|Tuff Bricks}}<br>
+127 {{BlockLink|Polished Tuff}}<br>
+92 {{BlockLink|Waxed Oxidized Copper}}<br>
+83 {{BlockLink|Waxed Block of Copper}}<br>
+43 {{BlockLink|Chiseled Tuff Bricks}}<br>
+17 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Magma Block}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Copper Grate}}
+| [[File:Trial Chambers Eruption quadrant 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/quadrant_3</code>
+| ''Eruption/Quadrant 3'' is a large bridge with some small holes. Over the wall is a ramp which contains a vault.
+| 
+331 {{BlockLink|Tuff Bricks}}<br>
+143 {{BlockLink|Polished Tuff}}<br>
+99 {{BlockLink|Waxed Oxidized Copper}}<br>
+81 {{BlockLink|Waxed Block of Copper}}<br>
+46 {{BlockLink|Chiseled Tuff Bricks}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Magma Block}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+5 {{BlockLink|Waxed Copper Bulb}}<br>
+2 {{BlockLink|Waxed Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Grate}}
+| [[File:Trial Chambers Eruption quadrant 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/quadrant_4</code>
+| ''Eruption/Quadrant 4'' contains four parkour platforms going into a small ledge. That small ledge contains a ranged trial spawner and a staircase similar to the previous design generates there.
+| 
+296 {{BlockLink|Tuff Bricks}}<br>
+93 {{BlockLink|Polished Tuff}}<br>
+86 {{BlockLink|Waxed Block of Copper}}<br>
+62 {{BlockLink|Waxed Oxidized Copper}}<br>
+54 {{BlockLink|Chiseled Tuff Bricks}}<br>
+20 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Magma Block}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+4 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+1 {{BlockLink|Waxed Copper Grate}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Eruption quadrant 4.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/quadrant_5</code>
+| ''Eruption/Quadrant 5'' is a bridge straight to a ranged trial spawner.
+| 
+287 {{BlockLink|Tuff Bricks}}<br>
+114 {{BlockLink|Polished Tuff}}<br>
+80 {{BlockLink|Waxed Oxidized Copper}}<br>
+68 {{BlockLink|Waxed Block of Copper}}<br>
+48 {{BlockLink|Chiseled Tuff Bricks}}<br>
+20 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+8 {{BlockLink|Magma Block}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Copper Grate}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Eruption quadrant 5.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/slice_1</code>
+| ''Eruption/Slice 1'' is one of the possible slices, containing a small room with a vault.
+| 
+99 {{BlockLink|Tuff Bricks}}<br>
+92 {{BlockLink|Polished Tuff}}<br>
+58 {{BlockLink|Waxed Block of Copper}}<br>
+55 {{BlockLink|Waxed Oxidized Copper}}<br>
+23 {{BlockLink|Chiseled Tuff Bricks}}<br>
+17 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+5 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Eruption slice 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/slice_2</code>
+| ''Eruption/Slice 2'' is one of the possible slices, containing a staircase.
+| 
+84 {{BlockLink|Polished Tuff}}<br>
+53 {{BlockLink|Tuff Bricks}}<br>
+48 {{BlockLink|Waxed Oxidized Copper}}<br>
+44 {{BlockLink|Waxed Block of Copper}}<br>
+20 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+10 {{BlockLink|Chiseled Tuff Bricks}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+5 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Chiseled Tuff}}
+| [[File:Trial Chambers Eruption slice 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/eruption/slice_3</code>
+| ''Eruption/Slice 3'' is one of the possible slices, containing a bridge with no staircases. Also, there is a melee trial spawner underneath it.
+| 
+83 {{BlockLink|Polished Tuff}}<br>
+72 {{BlockLink|Tuff Bricks}}<br>
+53 {{BlockLink|Waxed Block of Copper}}<br>
+46 {{BlockLink|Waxed Oxidized Copper}}<br>
+13 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+10 {{BlockLink|Chiseled Tuff Bricks}}<br>
+5 {{BlockLink|Magma Block}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}
+| [[File:Trial Chambers Eruption slice 3.png|250px]]
+|-
+! colspan = 4 | Pedestal
+|-
+| <code>trial_chambers/chamber/pedestal/center_1</code>
+| ''Pedestal/Center 1'' is a large pedestal with three trial spawners topped on it. One of them is a breeze trial spawner and the other two is randomly selected from other categories.
+| 
+124 {{BlockLink|Polished Tuff}}<br>
+97 {{BlockLink|Waxed Oxidized Copper}}<br>
+57 {{BlockLink|Tuff Bricks}}<br>
+40 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers Pedestal center 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/ominous_slice_1</code>
+| ''Pedestal/Ominous Slice 1'' is similar to the slices, which contains an ominous vault. 
+| 
+36 {{BlockLink|Polished Tuff}}<br>
+33 {{BlockLink|Waxed Oxidized Copper}}<br>
+30 {{BlockLink|Waxed Block of Copper}}<br>
+14 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Tuff Bricks}}
+| [[File:Trial Chambers Pedestal ominous slice 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/quadrant_1</code>
+| ''Pedestal/Quadrant 1'' is a large staircase leading from one corner to another.
+| 
+130 {{BlockLink|Polished Tuff}}<br>
+105 {{BlockLink|Waxed Oxidized Copper}}<br>
+50 {{BlockLink|Tuff Bricks}}<br>
+23 {{BlockLink|Waxed Block of Copper}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+3 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Pedestal quadrant 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/quadrant_2</code>
+| ''Pedestal/Quadrant 2'' is a balcony.
+| 
+247 {{BlockLink|Tuff Bricks}}<br>
+90 {{BlockLink|Waxed Oxidized Copper}}<br>
+84 {{BlockLink|Polished Tuff}}<br>
+6 {{BlockLink|Waxed Block of Copper}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Pedestal quadrant 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/quadrant_3</code>
+| ''Pedestal/Quadrant 3'' is a balcony, which contains a small hallway. The end of the small hallway contains a spiral staircase leading up to the upper floor.
+| 
+120 {{BlockLink|Tuff Bricks}}<br>
+118 {{BlockLink|Polished Tuff}}<br>
+114 {{BlockLink|Waxed Oxidized Copper}}<br>
+52 {{BlockLink|Waxed Block of Copper}}<br>
+5 {{BlockLink|Waxed Cut Copper Stairs}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Pedestal quadrant 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/slice_1</code>
+| rowspan="5" | ''Pedestal/Slice 1-5'' are the possible slices for Pedestal. They contain copper grates obstructing pathways and vaults scattered in most areas.
+| 
+60 {{BlockLink|Polished Tuff}}<br>
+57 {{BlockLink|Waxed Oxidized Copper}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+6 {{BlockLink|Tuff Bricks}}<br>
+6 {{BlockLink|Waxed Block of Copper}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers Pedestal slice 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/slice_2</code>
+| 
+60 {{BlockLink|Polished Tuff}}<br>
+42 {{BlockLink|Waxed Oxidized Copper}}<br>
+40 {{BlockLink|Waxed Copper Grate}}<br>
+39 {{BlockLink|Waxed Block of Copper}}<br>
+12 {{BlockLink|Tuff Bricks}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers Pedestal slice 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/slice_3</code>
+| 
+63 {{BlockLink|Waxed Copper Grate}}<br>
+48 {{BlockLink|Polished Tuff}}<br>
+45 {{BlockLink|Waxed Oxidized Copper}}<br>
+42 {{BlockLink|Waxed Block of Copper}}<br>
+24 {{BlockLink|Tuff Bricks}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers Pedestal slice 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/slice_4</code>
+| 
+72 {{BlockLink|Waxed Copper Grate}}<br>
+54 {{BlockLink|Waxed Oxidized Copper}}<br>
+54 {{BlockLink|Waxed Block of Copper}}<br>
+51 {{BlockLink|Polished Tuff}}<br>
+30 {{BlockLink|Tuff Bricks}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers Pedestal slice 4.png|250px]]
+|-
+| <code>trial_chambers/chamber/pedestal/slice_5</code>
+| 
+54 {{BlockLink|Polished Tuff}}<br>
+48 {{BlockLink|Waxed Oxidized Copper}}<br>
+42 {{BlockLink|Waxed Block of Copper}}<br>
+40 {{BlockLink|Waxed Copper Grate}}<br>
+12 {{BlockLink|Tuff Bricks}}
+| [[File:Trial Chambers Pedestal slice 5.png|250px]]
+|-
+! colspan = 4 | Slanted
+|-
+| <code>trial_chambers/chamber/slanted/center</code>
+| ''Slanted/Center'' contains a breeze trial spawner on the upper floor and a wall.
+| 
+42 {{BlockLink|Polished Tuff}}<br>
+39 {{BlockLink|Waxed Oxidized Copper}}<br>
+11 {{BlockLink|Tuff Bricks}}<br>
+3 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Chiseled Tuff Bricks}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Slanted center.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/hallway_1</code>
+| rowspan="3" | The lower side structures. 
+* ''Hallway 2'' contains a wall with an vault embedded to it and a wall of copper grates.
+* ''Hallway 3'' contains a wall of copper grates between the two pillars.
+| 
+42 {{BlockLink|Waxed Oxidized Copper}}<br>
+40 {{BlockLink|Polished Tuff}}
+| [[File:Trial Chambers Slanted hallway 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/hallway_2</code>
+| 
+36 {{BlockLink|Waxed Oxidized Copper}}<br>
+34 {{BlockLink|Polished Tuff}}<br>
+11 {{BlockLink|Tuff Bricks}}<br>
+9 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Slanted hallway 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/hallway_3</code>
+| 
+42 {{BlockLink|Waxed Oxidized Copper}}<br>
+34 {{BlockLink|Polished Tuff}}<br>
+18 {{BlockLink|Waxed Copper Grate}}<br>
+9 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers Slanted hallway 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/ominous_upper_arm_1</code>
+| ''Slanted/Ominous Upper Arm 1'' connects to the wall of the center and contains an ominous vault encased in a copper grate wall.
+| 
+42 {{BlockLink|Polished Tuff}}<br>
+40 {{BlockLink|Waxed Oxidized Copper}}<br>
+22 {{BlockLink|Tuff Bricks}}<br>
+15 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+8 {{BlockLink|Chiseled Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Slanted ominous upper arm 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/quadrant_1</code>
+| ''Slanted/Quadrant 1'' is a staircase leading up to a melee trial spawner.
+| 
+138 {{BlockLink|Polished Tuff}}<br>
+130 {{BlockLink|Waxed Oxidized Copper}}<br>
+49 {{BlockLink|Tuff Bricks}}<br>
+23 {{BlockLink|Waxed Block of Copper}}<br>
+15 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+5 {{BlockLink|Waxed Copper Grate}}<br>
+5 {{BlockLink|Waxed Copper Bulb}}
+| [[File:Trial Chambers Slanted quadrant 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/quadrant_2</code>
+| ''Slanted/Quadrant 2'' contains a staircase leading to a hole and underneath it is a vault. Right next to it is a ladder.
+| 
+135 {{BlockLink|Polished Tuff}}<br>
+121 {{BlockLink|Tuff Bricks}}<br>
+104 {{BlockLink|Waxed Oxidized Copper}}<br>
+49 {{BlockLink|Waxed Block of Copper}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+3 {{BlockLink|Ladder}}<br>
+3 {{BlockLink|Waxed Cut Copper Stairs}}
+| [[File:Trial Chambers Slanted quadrant 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/quadrant_3</code>
+| ''Slanted/Quadrant 3'' contains one hole, one vault and a staircase.
+| 
+137 {{BlockLink|Polished Tuff}}<br>
+120 {{BlockLink|Waxed Oxidized Copper}}<br>
+99 {{BlockLink|Tuff Bricks}}<br>
+35 {{BlockLink|Waxed Block of Copper}}<br>
+7 {{BlockLink|Waxed Copper Bulb}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers Slanted quadrant 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/quadrant_4</code>
+| ''Slanted/Quadrant 4'' contains five parkour platforms leading to the upper floor.
+| 
+108 {{BlockLink|Polished Tuff}}<br>
+96 {{BlockLink|Waxed Oxidized Copper}}<br>
+80 {{BlockLink|Tuff Bricks}}<br>
+27 {{BlockLink|Waxed Block of Copper}}<br>
+14 {{BlockLink|Waxed Oxidized Copper Grate}}<br>
+6 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers Slanted quadrant 4.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/ramp_1</code>
+| rowspan="3" | Big ramps with staircases leading up to melee (ranged in ''Ramp 3'') trial spawners. Hidden underneath the ramps are 1-block copper grate tunnels.
+| 
+42 {{BlockLink|Polished Tuff}}<br>
+41 {{BlockLink|Waxed Oxidized Copper}}<br>
+40 {{BlockLink|Tuff Bricks}}<br>
+8 {{BlockLink|Waxed Oxidized Cut Copper Slab}}<br>
+7 {{BlockLink|Waxed Copper Grate}}
+| [[File:Trial Chambers Slanted ramp 1.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/ramp_2</code>
+| 
+73 {{BlockLink|Tuff Bricks}}<br>
+42 {{BlockLink|Polished Tuff}}<br>
+32 {{BlockLink|Waxed Oxidized Copper}}<br>
+8 {{BlockLink|Waxed Block of Copper}}<br>
+7 {{BlockLink|Waxed Copper Grate}}
+| [[File:Trial Chambers Slanted ramp 2.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/ramp_3</code>
+| 
+52 {{BlockLink|Tuff Bricks}}<br>
+42 {{BlockLink|Polished Tuff}}<br>
+18 {{BlockLink|Waxed Oxidized Copper}}<br>
+10 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}<br>
+9 {{BlockLink|Waxed Block of Copper}}<br>
+7 {{BlockLink|Waxed Copper Grate}}<br>
+3 {{BlockLink|Waxed Oxidized Cut Copper Slab}}
+| [[File:Trial Chambers Slanted ramp 3.png|250px]]
+|-
+| <code>trial_chambers/chamber/slanted/ramp_4</code>
+| A staircase.
+| 
+43 {{BlockLink|Waxed Oxidized Copper}}<br>
+42 {{BlockLink|Polished Tuff}}<br>
+6 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers Slanted ramp 4.png|250px]]
+|}
+
+==== Decor ====
+Most decor pieces can be found in the corridor, beds can be found in intersections and the disposal can be found near the entrances of chambers.
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/decor/barrel</code>
+|
+| 
+1 {{BlockLink|Barrel}}<ref group="n" name="barrel loot">This loot container in this area use the corridor loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/corridor}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Barrel.png|100px]]
+|-
+| <code>trial_chambers/decor/candle_1</code>
+|
+| 
+1 {{BlockLink|Candle}}（1）<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Candle JE1 BE1.png|100px]]
+|-
+| <code>trial_chambers/decor/candle_2</code>
+| 
+|
+1 {{BlockLink|Candle}}（2）<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Two Candles.png|100px]]
+|-
+| <code>trial_chambers/decor/candle_3</code>
+| 
+|
+1 {{BlockLink|Candle}}（3）<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Three Candles.png|100px]]
+|-
+| <code>trial_chambers/decor/candle_4</code>
+| 
+|
+1 {{BlockLink|Candle}}（4）<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Four Candles.png|100px]]
+|-
+| <code>trial_chambers/decor/dead_bush_pot</code>
+| 
+|
+1 {{BlockLink|Potted Dead Bush}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Potted Dead Bush.png|100px]]
+|-
+| <code>trial_chambers/decor/disposal</code>
+| The hopper and barrel combination underneath a staircase.
+| 
+3 {{BlockLink|Tuff Bricks}}<br>
+1 {{BlockLink|Barrel}}<br>
+1 {{BlockLink|Hopper}}<br>
+1 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper Stairs}}
+| [[File:Trial Chambers disposal.png|100px]]
+|-
+| <code>trial_chambers/decor/empty_pot</code>
+|
+| 
+1 {{BlockLink|Flower Pot}}<br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Flower Pot.png|100px]]
+|-
+| <code>trial_chambers/decor/flow_pot</code>
+| 
+|
+1 {{BlockLink|Decorated Pot}} (Flow)<ref group="n" name="pot loot">One loot container in this area use the corridor pot loot.<br>The loot for this area is found in {{cd|loot_tables/pots/trial_chambers/corridor}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers flow pot.png|100px]]
+|-
+| <code>trial_chambers/decor/guster_pot</code>
+| 
+|
+1 {{BlockLink|Decorated Pot}}（Guster)<ref group="n" name="pot loot">One loot container in this area use the corridor pot loot.<br>The loot for this area is found in {{cd|loot_tables/pots/trial_chambers/corridor}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers guster pot.png|100px]]
+|-
+| <code>trial_chambers/decor/scrape_pot</code>
+| 
+|
+1 {{BlockLink|Decorated Pot}} (Scrape)<ref group="n" name="pot loot">One loot container in this area use the corridor pot loot.<br>The loot for this area is found in {{cd|loot_tables/pots/trial_chambers/corridor}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Trial Chambers scrape pot.png|100px]]
+|-
+| <code>trial_chambers/decor/undecorated_pot</code>
+| 
+|
+1 {{BlockLink|Decorated Pot}}<ref group="n" name="pot loot">One loot container in this area use the corridor pot loot.<br>The loot for this area is found in {{cd|loot_tables/pots/trial_chambers/corridor}}.</ref><br>
+1 {{BlockLink|Waxed Oxidized Cut Copper}}
+| [[File:Decorated Pot.png|100px]]
+|-
+| <code>trial_chambers/decor/<color>_bed</code>
+| Colored beds that can generate in the main intersections.
+|1 {{BlockLink|Bed}}<ref group="n" name="bed">Colored beds correspond to the color of the structure file.</ref>
+|{{animate|White_Bed.png;Light_Gray_Bed.png;Gray_Bed.png;Black_Bed.png;Brown_Bed.png;Red_Bed.png;Orange_Bed.png;Yellow_Bed.png;Lime_Bed.png;Green_Bed.png;Cyan_Bed.png;Light_Blue_Bed.png;Blue_Bed.png;Purple_Bed.png;Magenta_Bed.png;Pink_Bed.png|100px}}
+|}
+
+==== Dispensers ====
+Some chambers can generate dispenser traps, which contain dispensers with random traps (such as arrows, water buckets and potions) and buttons connected to them.
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+! colspan = 4 | Dispenser traps
+|-
+| <code>trial_chambers/dispensers/chamber</code>
+| Used for {{cd|full_stacked_walkway_2}}. Two stone buttons surrounding a dispenser.
+| 
+2 {{BlockLink|Chiseled Tuff Bricks}}<br>
+2 {{BlockLink|Stone Button}}<br>
+1 {{BlockLink|Dispenser}}<ref group="n" name="dispenser loot">This loot container in this area use the chamber dispenser loot.<br>The loot for this area is found in {{cd|loot_tables/dispensers/trial_chambers/chamber}}.</ref>
+| [[File:Trial Chambers dispensers chamber.png|200px]]
+|-
+| <code>trial_chambers/dispensers/floor_dispenser</code>
+| Used for {{cd|assembly}}. A dispenser with an oak pressure plate on top.
+|
+1 {{BlockLink|Oak Pressure Plate}}<br>
+1 {{BlockLink|Dispenser}}<ref group="n" name="dispenser loot">This loot container in this area use the chamber dispenser loot.<br>The loot for this area is found in {{cd|loot_tables/dispensers/trial_chambers/chamber}}.</ref>
+| [[File:Trial Chambers floor dispenser.png|200px]]
+|-
+| <code>trial_chambers/dispensers/wall_dispenser</code>
+| The dispenser type that appears in most rooms. A dispenser with an oak button on the bottom and a copper bulb on a far wall.
+|
+1 {{BlockLink|Waxed Copper Bulb}}<br>
+1 {{BlockLink|Dispenser}}<ref group="n" name="dispenser loot">This loot container in this area use the chamber dispenser loot.<br>The loot for this area is found in {{cd|loot_tables/dispensers/trial_chambers/chamber}}.</ref><br>
+1 {{BlockLink|Oak Button}}<br>
+1 {{BlockLink|Waxed Block of Copper}}
+| [[File:Trial Chambers wall dispenser.png|200px]]
+|}
+==== Loot containers ====
+Vaults, ominous vault and "supply" chests generate in the structure with potential loot. 1 to 2 vaults generate at the topmost area of the entrance chamber, 1 ominous vault generates at the high area of the atrium, and 1 supply chest generates at the hallway variant ({{cd|cache_1}}). Other vaults and ominous vaults can be found in the corridor, the end and the intersection.
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+! colspan = 4 | Chests
+|-
+| <code>trial_chambers/chests/connectors/supply</code>
+| Technical connection structure
+| N/A
+| 
+|-
+| <code>trial_chambers/chests/supply</code>
+| A chest with supply loot.
+| 
+1 {{BlockLink|Chest}}<ref group="n" name="supply loot">This loot container in this area use the supply loot.<br>The loot for this area is found in {{cd|loot_tables/chests/trial_chambers/supply}}.</ref><br>
+5 {{BlockLink|Chiseled Tuff Bricks}}<br>
+4 {{BlockLink|Polished Andesite}}
+| [[File:Trial Chambers chests supply.png|200px]]
+|-
+! colspan = 4 | Rewards and vaults
+|-
+| <code>trial_chambers/reward/vault</code>
+|A vault that is in a cut copper pedestal.
+|
+1 {{BlockLink|Vault}}<br>
+5 {{BlockLink|Waxed Cut Copper Slab}}<br>
+3 {{BlockLink|Waxed Cut Copper}}<br>
+6 {{BlockLink|Tuff Bricks}}
+| [[File:Vaultrender3.png|200px]]
+|-
+| <code>trial_chambers/reward/ominous_vault</code>
+| An [[ominous vault]] in an altar-like structure used of red elements, such as 2 piles of candles (a pile contains 4 and another contains 3) and glazed terracotta.
+|
+7 {{BlockLink|Polished Tuff}}<br>
+2 {{BlockLink|Waxed Copper Bulb}}<br>
+5 {{BlockLink|Tuff Bricks}}<br>
+2 {{BlockLink|Polished Tuff Slab}}<br>
+2 {{BlockLink|Red Glazed Terracotta}}<br>
+1 {{BlockLink|Chiseled Tuff}}<br>
+7 {{BlockLink|Red Candle}}（Left 4, Right 3）<br>
+1 {{BlockLink|Ominous Vault}}<br>
+6 {{BlockLink|Waxed Oxidized Copper Grate}}
+|[[File:VaultrenderO2.png|200px]]
+|}
+
+==== Trial spawners ====
+Trial spawners can generate at the center area of the corridor at three different heights, one trial spawner generates at the encounters and multiple trial spawners generate at the chambers.
+{| class="wikitable collapsible collapsed"
+! scope="col" style="width: 200px" | Structure
+! scope="col" style="width: 250px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 250px" | Image
+|-
+| <code>trial_chambers/spawner/breeze/breeze</code>
+| rowspan="14"| Trial spawners that are configured to spawn mobs described by the pattern surrounding them. For a descriptive table of how mobs are configured to spawn, see {{slink||Mobs}}.
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Chiseled Tuff}}
+| [[File:Breeze trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/melee/husk</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Chiseled Sandstone}}
+| [[File:Husk trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/melee/spider</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Stone}}<br>
+5 {{BlockLink|Cobweb}}
+| [[File:Spider trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/melee/zombie</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Mossy Cobblestone}}
+| [[File:Zombie trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/ranged/poison_skeleton</code>
+| rowspan="2"| 1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Bone Block}}<br>
+2 {{BlockLink|Podzol}}<br>
+2 {{BlockLink|Red Mushroom}}<br>
+| rowspan="2"| [[File:Poison skeleton trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/slow_ranged/poison_skeleton</code>
+|-
+| <code>trial_chambers/spawner/ranged/skeleton</code>
+| rowspan="2"| 1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Bone Block}}
+| rowspan="2"| [[File:Skeleton trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/slow_ranged/skeleton</code>
+|-
+| <code>trial_chambers/spawner/ranged/stray</code>
+| rowspan="2"| 1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Packed Ice}}
+| rowspan="2"| [[File:Stray trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/slow_ranged/stray</code>
+|-
+| <code>trial_chambers/spawner/small_melee/baby_zombie</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Cobblestone}}<br>
+2 {{BlockLink|Mossy Cobblestone}}
+| [[File:Baby zombie trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/small_melee/cave_spider</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+2 {{BlockLink|Stone}}<br>
+2 {{BlockLink|Podzol}}<br>
+2 {{BlockLink|Red Mushroom}}<br>
+3 {{BlockLink|Cobweb}}
+| [[File:Cave spider trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/small_melee/silverfish</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Stone Bricks}}
+| [[File:Silverfish trial spawner.png|200px]]
+|-
+| <code>trial_chambers/spawner/small_melee/slime</code>
+| 
+1 {{BlockLink|Trial Spawner}}<br>
+4 {{BlockLink|Waxed Chiseled Copper}}<br>
+1 {{BlockLink|Waxed Block of Copper}}<br>
+4 {{BlockLink|Moss Block}}
+| [[File:Slime trial spawner.png|200px]]
+|}
+
+== Mobs ==
+{{anchor|Mob spawning}}
+{{Main|Trial Spawner#Mob spawning}}
+
+Natural hostile mob spawning is disabled within a trial chamber. Mobs spawn only from the [[trial spawner]]s. The number of mobs spawned scales with the number of players in range of each spawner, and breezes are spawned less per spawner and per player than other mobs.
+
+When a trial chamber structure generates, one mob from each of the following categories is randomly selected for the trial spawners in that structure. Every mob within the same category has an equal chance to be selected. The breeze is in its own category and is thus guaranteed to be found in certain chambers.
+
+{| class="wikitable"
+|+ Trial spawner configuration
+! Category
+! Mob spawned
+! Floor
+! Blocks in/on the floor
+|-
+| Breeze
+| {{EntityLink|Breeze}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Chiseled Tuff Top?Chiseled Tuff
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[chiseled tuff]]
+|-
+|rowspan="3"| Melee
+| {{EntityLink|Zombie}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Mossy Cobblestone
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[mossy cobblestone]]
+|-
+| {{EntityLink|Husk}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Sandstone Top?Chiseled Sandstone
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[chiseled sandstone]]
+|-
+| {{EntityLink|Spider}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Stone
+|tct
+|cbc
+|tct
+}}
+<div style="position:relative;"><div style="width:10em; position:absolute; transform:translateY(-100%);">
+{{Sprite grid|
+w=Cobweb
+|w w
+|   
+|w w
+}}
+</div></div>
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]], one of which with 1 [[cobweb]] on top
+* 4 [[stone]] with 4 cobwebs on top
+|-
+|rowspan="4"| Small melee
+| {{EntityLink|Slime}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Moss Block
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[moss block]]s
+|-
+| {{EntityLink|Silverfish}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Stone Bricks
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[stone bricks]]
+|-
+| {{EntityLink|Baby Zombie}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Mossy Cobblestone|y=Cobblestone
+|tcy
+|cbc
+|yct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 2 [[cobblestone]]
+* 2 [[mossy cobblestone]]
+|-
+| {{EntityLink|Cave spider}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Podzol Top?Podzol|y=Stone
+|tcy
+|cbc
+|yct
+}}
+<div style="position:relative;"><div style="width:10em; position:absolute; transform:translateY(-100%);">
+{{Sprite grid|
+m=Red Mushroom|w=Cobweb
+|m w
+|   
+|w m
+}}
+</div></div>
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]], one of which with 1 [[cobweb]] on top
+* 2 [[podzol]] with 2 [[red mushroom]]s on top
+* 2 [[stone]] with 2 [[cobweb]]s on top
+|-
+|rowspan="3"| Ranged
+| {{EntityLink|Stray}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Packed Ice
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[packed ice]]
+|-
+| {{EntityLink|Skeleton}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Bone Block Top?Bone Block
+|tct
+|cbc
+|tct
+}}
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 4 [[bone block]]s
+|-
+| {{EntityLink|Bogged}}
+|
+{{Sprite grid
+|c=Chiseled Copper|b=Block of Copper|t=Podzol Top?Podzol|y=Bone Block Top?Bone Block
+|tcy
+|cbc
+|yct
+}}
+<div style="position:relative;"><div style="width:10em; position:absolute; transform:translateY(-100%);">
+{{Sprite grid
+|m=Red Mushroom
+|m  
+|   
+|  m
+}}
+</div></div>
+|
+* 1 [[block of copper]]
+* 4 [[chiseled copper]]
+* 2 [[podzol]] with 2 [[red mushroom]]s on top
+* 2 [[bone block]]s
+|}
+
+== Loot ==
+{{seealso|Chest loot}}
+Loot is available from [[vault]]s, [[chest]]s, [[barrel]]s, [[dispenser]]s, and [[decorated pot]]s from within the chambers. Players who defeat a trial spawner each receive rewards; this loot scales depending on the number of players who defeat the trial spawner.
+
+=== Vaults ===
+[[File:Trial Chambers Vault Pedestal Screenshot.png|thumb|A vault on its pedestal inside the trial chambers]]{{anchor|Vault loot}}{{Main|Vault#Loot}}{{LootChest|trial-chambers-reward}}
+
+==== Ominous vaults ====
+[[File:Ominous Tweet Image.jpeg|thumb|An ominous vault on its altar-like structure inside the trial chambers]]
+{{Main|Ominous Vault#Loot}}
+{{LootChest|trial-chambers-reward-ominous}}
+
+=== Chests ===
+==== Entrances ====
+{{LootChest|trial-chambers-entrance}}
+
+==== Intersections ====
+The room where the loot is stored isn't actually an intersection, it is a corridor end.
+{{LootChest|trial-chambers-intersection}}
+
+==== Supply ====
+{{LootChest|trial-chambers-supply}}
+
+=== Barrels ===
+==== Intersection barrels ====
+{{LootChest|trial-chambers-intersection-barrel}}
+
+==== Corridor barrels ====
+Despite being barrels, the corridor containers are referred to as chests by the game.
+
+{{LootChest|trial-chambers-corridor}}
+
+=== Decorated pots ===
+[[File:Decorated Pot in Trial Chambers.png|295px|thumb|A [[decorated pot]] inside trial chambers]]
+In addition to the below, decorated pots may have flow, guster, or scrape designs, which yield their respective pottery sherds when broken, along with bricks for any blank sides. There is a {{frac|10|13}} chance that the pot is composed entirely out of bricks, and {{frac|1|13}} chance for each of the variants with a single sherd.
+
+{{LootChest|trial-chambers-corridor-pot}}
+
+=== Dispensers ===
+[[File:Trial Chamber dispenser trap.jpeg|thumb|Some of the dispenser traps that are placed inside various chambers]]
+==== Chamber dispenser ====
+{{LootChest|trial-chambers-chamber-dispenser}}
+
+==== Corridor dispenser ====
+{{LootChest|trial-chambers-corridor-dispenser}}
+
+==== Water dispenser ====
+{{LootChest|trial-chambers-water-dispenser}}
+
+=== Trial spawners ===
+When all mobs have been killed, the [[trial spawner]] has a 50% chance of picking the [[trial key]], in which case it drops for all players. The other 50% of the time it drops one of the other items for each player.
+
+{{LootChest|trial-chambers-trial-spawner}}
+
+==== Ominous trial spawners ====
+When all mobs have been killed, the [[ominous trial spawner]] has a 30% chance of picking the [[ominous trial key]], in which case it drops for all players. The other 70% of the time it drops one of the other items for each player.
+
+{{LootChest|trial-chambers-trial-spawner-ominous}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=[[Jigsaw structure|Jigsaw]]
+|spritename=jigsaw
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Trial Chambers
+|spritetype=env
+|nameid=trial_chambers
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure type
+|displayname=[[Jigsaw structure|Jigsaw]]
+|spritename=jigsaw
+|spritetype=block
+|nameid=jigsaw
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Trial Chambers
+|spritetype=env
+|nameid=trial_chambers
+|translationkey=feature.trial_chambers
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Treasure Hunter; Revaulting; Who Needs Rockets?; Over-Overkill}}
+
+== Advancements ==
+{{load advancements|Minecraft: Trial(s) Edition; Under Lock and Key; revaulting; Blowback; Who Needs Rockets; Lighten Up; Over-Overkill}}
+
+== Videos ==
+{{yt|bBr8BBrk1v8}}
+{{yt|TNtgwlzeJUc}}
+{{yt|lD7twuq1AoU}}
+{{yt|8jwAtfyxhlk}}
+
+== History ==
+=== Announcement and teaser ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0|Trial chambers are announced at [[Minecraft Live 2023]].}}
+|{{HistoryLine||November 6, 2023|link=https://www.minecraft.net/en-us/article/trial-chambers-first-peek|Trial chambers are teased in a [[minecraft.net]] blog post.}}
+}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Added trial chambers behind the "[[Java Edition 1.21|Update 1.21]]" experimental [[data pack]].}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w05a|[[Vault]]s now generate in trial chambers.}}
+|{{HistoryLine|||dev=24w07a|[[Trial spawner]]s surrounded by bone block and podzol now spawn [[bogged]] instead of [[skeleton]]s with [[arrows of Poison]].}}
+|{{HistoryLine|||dev=24w11a|Added new chambers and variations, with new challenges.
+|Added flow, guster, and scrape [[pottery sherd]]s to the [[decorated pot]]s in the decor structure pool.
+|Changed the layout of the blocks around [[vault]]s.
+|Remade <code>chamber_3</code> and <code>chamber_9</code> and renamed them to <code>pedestal</code> and <code>slanted</code>, respectively.}}
+|{{HistoryLine|||dev=24w12a|Trial chambers now generate slightly more rarely and a bit more spaced out from each other.}}
+|{{HistoryLine|||dev=24w13a|[[Ominous vault]]s now generate in trial chambers.
+|Loot, amount, layout and placement of [[trial spawner]]s and [[vault]]s has been adjusted.
+|Changed the layout of {{cd|straight_7}}, {{cd|straight_8}}, {{cd|end_1}}, {{cd|end_2}}, {{cd|intersection_1}}, {{cd|pedestal}} and {{cd|slanted}}. 
+|Added an atrium to the corridors.
+|Remade <code>chamber_5</code> and renamed it to <code>eruption</code>.}}
+|{{HistoryLine|||dev=pre1|Trial chambers are now more consistently buried by terrain when found underground.
+|Remade <code>chamber_6</code> and renamed it to <code>assembly</code>.
+|Added a new trap dispenser style to chambers.
+|Fixed various broken jigsaw connections in the corridors.
+|In chamber 'Eruption', stopped tuff bricks from spawning in the air.
+|In chamber 'Eruption', added more lights to quadrants.}}
+|{{HistoryLine||1.21|dev=24w18a|Trial chambers are now available without using the "Update 1.21" experimental data pack.
+|Made various layout changes in intersections and corridors.
+|Added new trap dispenser style to chambers.
+|Added new entrance variations.
+|Added empty chests to chamber entrances.}}
+|{{HistoryLine|||dev=24w21a|Trial chambers are less likely to generate in the deep dark.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Beds in intersections now have their colors randomized.
+|Removed the [[oak tree]] in <code>corridor/entrance_1</code>.
+|Tweaked the <code>corridor/straight_6</code>.
+|Added "Encounter" room types that generate in hallways.
+|Replaced empty chests at chamber entrances with hoppers above barrels embedded into the wall.
+|Removed {{cd|chamber/slanted/hallway_4}} and {{cd|chamber/slanted/hallway_5}}.
+|Some slime trial spawners are moved to allow spawning without terrain modification.
+|Traps no longer generate behind walls, making them more accessible.
+|Fixed ominous vaults failing to generate at chamber {{cd|pedestal}}, {{cd|chamber_1}}, and {{cd|chamber_2}}.}}
+|{{HistoryLine|||dev=Release Candidate 1|The chest loot at {{cd|corridor/end_2}} now generates correctly.<ref>{{bug|MC-273812||Intersection chests in trial chambers not generating correctly|Fixed}})</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Added trial chambers behind the "[[Bedrock Edition 1.21.0|Update 1.21]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.21|[[Vault]]s now generate in trial chambers.}}
+|{{HistoryLine|||dev=Preview 1.20.70.24|Trial chambers now generate in the same locations as {{in|je}}.
+|[[Trial spawner]]s surrounded by bone block and podzol now spawn [[bogged]] instead of [[skeleton]]s.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.20|Trial chambers now generate in the same configurations as {{in|je}}.}}
+|{{HistoryLine|||dev=Preview 1.20.80.22|Added new chambers and variations, with new challenges.
+|Remade <code>chamber_3</code> and <code>chamber_9</code> and renamed them to <code>pedestal</code> and <code>slanted</code>, respectively.
+|Trial spawners now generate more frequently in corridors.
+|[[Decorated pot]]s in trial chambers can now generate with "[[Flow Pottery Sherd|flow]]", "[[Guster Pottery Sherd|guster]]", and "[[Scrape Pottery Sherd|scrape]]" [[pottery sherd]]s.
+|Changed the blocks surrounding [[vault]]s from [[waxed blocks of copper]] and [[waxed chiseled copper]] to [[polished andesite]] and [[chiseled tuff bricks]].
+|Updated loot tables for trial chambers vaults, removing [[horse armor]] and [[saddle]]s and adding [[wind charge]]s, "[[bolt armor trim]]" and "[[flow armor trim]]" [[smithing template]]s, "[[Flow Banner Pattern|flow]]" and "[[Guster Banner Pattern|guster]]" [[banner pattern]]s, and [[heavy core]]s.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Trial chambers now generate slightly more rarely and a bit more spaced out from each other.
+|[[Ominous vault]]s now generate in trial chambers.
+|Loot, amount, layout and placement of [[trial spawner]]s and [[vault]]s has been adjusted.
+|Changed the layout of intersections and corridors.
+|Remade <code>chamber_5</code> and renamed it to <code>eruption</code>.}}
+|{{HistoryLine|||dev=Preview 1.21.0.21|Trial chambers are now more consistently buried by terrain when found underground.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Trial chambers are now available without using the "Update 1.21" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.21.0.23|Remade <code>chamber_6</code> and renamed it to <code>assembly</code>.
+|Added a new trap dispenser style to chambers.
+|Fixed various broken jigsaw connections in the corridors.
+|Added new intersection variation.
+|In chamber 'Eruption', added missing [[water bucket]] into [[dispenser]].
+|Added new wall dispenser style.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Removed the [[TNT]] trap in the ''Eruption'' chamber ({{cd|chamber/eruption}}).
+|Fixed the seams in corridors so they now match.
+|Added new entrance variations.
+|Fixed various broken or incorrect jigsaw data.
+|Added empty [[chest]]s to the entrances of some chambers.{{Info needed|Which chambers?}}}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|Trial chambers now generate far less frequently in the [[deep dark]] biome.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|Added "Encounter" room types that generate in hallways.
+|Replaced empty chests at chamber entrances with hoppers above barrels embedded into the wall.}}
+|{{HistoryLine|||dev=Preview 1.21.30.24|"Encounters" no longer generate in hallways.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The idea of trial chambers evolved from [[CornerHard]] pitching in a meeting to revisit the [[monster room]].<ref>{{twl|clip=y|KawaiiArbitraryNikudonKeyboardCat-BsrnVON_L8vehSz8}}</ref>
+* The design of trial chambers was inspired by the architecture of {{w|Mesoamerica}}n civilizations, whose geometric designs fit well into ''Minecraft''. The design combines the aesthetic of ancient civilizations with a futuristic feel.<ref>{{ytl|bBr8BBrk1v8|ALL ABOUT THE TRIAL CHAMBERS|Minecraft|t=97s}}</ref>
+* A scrapped chamber design appears in two [[YouTube]] videos showcasing the trial chambers and the trial spawners.<ref>{{ytl|lD7twuq1AoU| Minecraft 1.21: Early peek at trial chambers @ 0:40|Minecraft|November 16, 2023|t=40}}</ref><ref>{{ytl|FpE6q0nvVjA| Minecraft 1.21: A closer look at trial spawners @ 0:30|Minecraft|November 17, 2023|t=30}}</ref> It includes a trial spawner, two chests, and two redstone lamps with levers on top.
+* [[Brandon Pearce]] thinks that whoever created trial chambers in-universe seem to be "pretty tinkery".<ref>{{tweet|kingbdogz|1819129051249872907|I think whoever or whatever built the Trial Chambers seems to be pretty tinkery - it doesn't feel much far off from what is already done with dispensers and traps in the structure.|August 1, 2024}}</ref>
+* In Java Edition, if a Trial Chamber is generated in a [[superflat world]] after being upgraded from a version before [[Caves & Cliffs|1.18]], (e.g. using custom presets or by upgrading an [[Updates|old world]] with new terrain), and a [[Trial Spawner]] pedestal is positioned so that the spawner is at [[bedrock]] level, (Y:0), the surrounding bedrock blocks are cleared to make space for it. This appears to be part of the pedestal's placement behavior. 
+* As of version 1.21.5, Trial Chambers do not generate naturally in superflat worlds.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Trial Chambers Corridor Pots Screenshot.png|The main corridor in trial chambers
+File:Trial Chamber Bedroom.png|An intersection room featuring 4 beds and a loot barrel
+File:Trial Chambers Atrium Screenshot.png|An atrium inside the trial chambers
+File:MC Screenshot Trial Chambers Encounter.png|An encounter inside the trial chambers
+File:Trial chamber in deep dark.png|A trial chamber covered in [[sculk vein]]s
+File:Monster Room in Trial Chambers.png|A [[monster room]] connected to trial chambers
+File:Monster room in trial chamber.jpg|Another monster room in a trial chamber
+File:Holy and Rare.png|An [[amethyst geode]], [[mineshaft]] and a [[monster room]] generating together in a trial chamber within a [[lush cave]]
+File:PortalInTrialChamber.png|[[Ruined portal]] generated inside a trial chamber
+File:Trial Chambers Bogged Mural Screenshot.png|A mural on a wall depicting the face of a [[bogged]]
+File:Trial Chambers Breeze Mural Screenshot.png|A mural on a wall depicting the face of a [[breeze]]
+File:Trial Chambers Spider Mural Screenshot.png|A mural on a wall depicting the face of a [[spider]]
+File:Trial Chambers Spiral Mural Screenshot.png|A mural on a wall depicting a spiral design
+File:Trial Spawner Superflat.png|A screenshot depicting a strange behavior where [[Trial Spawner]] pedestals break through [[bedrock]] in a [[Superflat|superflat world]] upgraded from a pre-1.18 version
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Trial Chamber room.jpeg|Trial chamber room
+Trial chamber fountain room.jpeg|Trial chamber fountain room
+Trial chamber corridor.jpeg|Trial chamber corridor
+Trial Chamber Dispensers.jpg|Dispensers in a trial chamber
+A screenshot of a corridor inside a trial chamber.jpeg|A corridor inside a trial chamber
+TrialChamber Hallway.jpg|A corridor of the trial chamber
+TrialChamber floor2.jpg|The second floor of a trial chamber
+Example Hall.png|A view of a corridor
+File:Ominous Tweet Image.jpeg|An ominous vault
+TrialChamber staircase1.jpg|A staircase at the end of a trial chamber hallway
+TrialChamber trap1.jpg|A trap featuring a dispenser and two tripwires
+Breeze room.jpeg|A large room with a [[trial spawner]] in the middle
+A screenshot of a corridor inside a trial chamber.jpeg|A trial chamber corridor with a trial spawner on the balcony
+Encapsulated Trial Chambers 1.jpg|Trial chambers encapsulated in stone
+Encapsulated Trial Chambers 2.jpg|Trial chambers not using the encapsulate terrain adaption type
+Lush Trial Chambers.jpg|Trial chambers in a lush caves biome
+Chamber Trial.jpg|A vertical room with a vault
+Sunny springs into action.jpeg|[[Sunny]] in the trial chambers
+Efe ready to use the bow.jpeg|[[Efe]] using a bow
+Makena using the wind charge 1.jpeg|[[Makena]] using a wind charge in the trial chambers
+Makena using the wind charge 2.jpeg|Ditto
+Noor using mace in trial chambers 1.jpeg|[[Noor]] using a mace in the trial chambers
+Noor using mace in trial chambers 2.jpeg|Another shot of Noor
+Decorated Intersection 3 Trial Chambers.jpg|Decorated {{cd|intersection/intersection 3}}
+An entrance with a water fountain in the trial chamber.jpeg|An entrance with a water fountain in the trial chamber
+A bedroom in the trial chamber.jpeg|A bedroom in the trial chamber
+A well decorated trial chamber.jpeg|A well decorated trial chamber
+Music & painting in the trial chamber.jpeg|Music & painting in the trial chamber
+Kai watches.png|[[Alex]] and [[Kai]] in trial chambers
+Kai jumps across grates.png|Kai jumps across platforms in trial chambers
+Kingbdogz Trial Chambers Disposal Screenshot.jpg|A trial chambers disposal unit
+</gallery>
+
+=== In other media ===
+<gallery>
+Tricky Trials Key Art.png|[[Tricky Trials]] key art, featuring trial chambers
+Looting Trial Spawner Artwork.jpg|[[Ari]], [[Noor]], and [[Efe]] looting a trial spawner and receiving trial keys
+Alex faces the breeze.jpeg|[[Alex]] faces a breeze in trial chambers.m
+The breeze fires a wind charge.jpeg|A breeze fires a [[wind charge]].
+Alex gets knocked back.jpeg|Alex gets knocked back
+Alex falls.jpeg|Alex falls off the platform while the breeze watches.
+Sunny and Ari entering the trial chambers.png|[[Ari]] and [[Sunny]] entering the trial chambers
+Minecraft characters fighting mobs.jpg|Ari and Sunny fighting [[husks]]
+Minecraft characters open the trial vault.png|Ari and Sunny open a [[vault]].
+Sunny's Misfire.png|[[Steve]], [[Makena]], and many mobs caught in an explosion in the trial chambers
+Out we go.png|An active trial
+Hole in the chamber.png|Steve, Alex, Efe, Sunny, Kai, and Makena entering a trial chamber through a hole
+Steve vs. the Bogged.png|Steve and a wolf fighting several bogged
+Walking in on the action.png|Another shot of an active trial
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Trial chambers concept art.png|Trial chambers concept arts
+Trial chambers concept art 1.png|Ditto
+Trial chambers concept art 2.png|Ditto
+Trial chambers concept art 3.png|Ditto
+Trial chambers concept art 4.png|Ditto
+</gallery>
+
+== Notes ==
+{{reflist|group=n}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/trial-chamber Building Blocks: Trial Chamber] – Minecraft.net on September 19, 2024
+* {{Mcnet|trial-chamber-prepping|Trial Chamber prepping|June 4, 2024|Per Landin}}
+* {{Mcnet|trial-chambers-weapons-and-armor|Into the Trial Chambers: Weapons and Armor|June 11, 2024|Duncan Geere}}
+* {{Mcnet|chamber-secrets|The Chamber of Secrets|June 18, 2024|Per Landin}}
+* {{Mcnet|the-rewards-tricky-trials|The rewards of Tricky Trials|June 26, 2024|Sophie Austin}}
+
+== Navigation ==
+{{Navbox generated structures}}
+{{Featured}}
+
+[[de:Prüfungskammern]]
+[[es:Cámaras de desafío]]
+[[fr:Chambres des épreuves]]
+[[ja:試練の間]]
+[[ko:시련의 회당]]
+[[pl:Komnaty próby]]
+[[pt:Câmaras do Desafio]]
+[[ru:Камеры испытаний]]
+[[uk:Палац випробувань]]
+[[zh:试炼密室]]

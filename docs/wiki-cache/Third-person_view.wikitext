@@ -1,0 +1,111 @@
+[[File:Third-person front.png|thumb|250px|Third-person view as seen from the front of the player.]]
+[[File:Third-person back.png|thumb|250px|Third-person view as seen from the back of the player.]]
+
+'''Third-person view''' allows the [[player]] to view the nearby environment from an "outside" perspective.
+
+== Usage ==
+Different perspectives can be toggled by [[Controls|pressing]] {{key|F5}} when using a keyboard, or {{Xbutton|seriesdpad-up}} when using a controller. Pressing it once displays the back of the player, and pressing it again displays the front. Pressing it once more reverts to first-person view.
+
+{{IN|be}}, it can be changed in the settings, or when "Show camera perspective button" toggle is enabled for touch control. In the mobile version of {{El|china}}, it can be changed by pressing the Fold button, which shows multiple buttons to change between perspectives.
+
+When in third-person view, the player can be viewed from an angle of 0 degrees (Y axis) when the mouse is leveled with the ground, up to an angle of 90 degrees when looking straight down toward the player. {{IN|je}}, if the player suffocates while in this mode, the camera doesn't automatically switch back to the first-person view.<ref>{{ytl|Mb3S-MuvICA|Does 3PV reset back to FPV when suffocating? [MC JE 1.20.4]|Le Sharkoïste|January 17, 2024}}</ref>
+
+A third-person front view can also be seen while the [[survival]] [[inventory]] is open; the player, in this case, always faces the cursor.
+
+The third-person view camera has a [[Hitbox#Third-person view camera collision box|collision]] that collides with [[solid block]]s, except non-solid and [[transparent]] blocks. This can obstruct the player's vision with a close-up view in some situation where solid blocks are placed behind or in front of the player.
+
+The third-person camera is positioned 4 blocks from the player's front/back by default, and 8 blocks from a player riding a [[happy ghast]]. {{IN|je}}, the third-person view camera's position can be changed by modifying the {{attr|camera_distance}} attribute. It controls how far the camera's position from the player's front or back, or while [[spectating]] an [[entity]] in third-person view. {{IN|be}}, it can be controlled by using {{cmd|camera}} command, which allows extensive customization of the camera's view.
+
+== Videos ==
+<div style="text-align:center">{{yt|lpRB1PdlVwU}}</div>
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||20100218-0016|Added third-person mode. Pressing {{key|F5}} now switches the view to third-person view.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|The player is no longer visible when the third-person mode is shown.}}
+|{{HistoryLine||20100316|The player is now visible again when the third-person mode is shown.}}
+|{{HistoryLine||20100413|F5 now toggles [[rain]] (a reimplemented feature from Classic), causing water particles to now surround the player while in third-person.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.3|The player's body no longer slowly rotates to face forward while in third-person view.}}
+|{{HistoryLine||v1.0.5|F5 no longer toggles rain, so water particles no longer surround the player while in third-person.}}
+|{{HistoryLine||v1.0.6|Items can now be seen being held in third-person mode. However, the items are larger than the usual.}}
+|{{HistoryLine||v1.0.11|When in third-person view, the player is off center by one block to the left, giving an "over-the-shoulder" appearance.
+|Because mobs looked at the camera and not the player's head, in third-person view they looked at the wrong location.}}
+|{{HistoryLine||v1.0.15|The arm swinging animation of the player in third-person view has now been added.}}
+|{{HistoryLine||v1.0.17|The player is now centered when in third-person view.}}
+|{{HistoryLine||v1.2.0|dev=<nowiki>?</nowiki>|slink=:Category:Information needed requiring unarchived version|Holding {{key|F1}} while in third-person view now causes the front of the player to be shown.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.3|The front of the player is no longer shown by holding {{key|F1}} while in third-person view.|View bobbing now also applies in third-person view.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Pressing {{key|F5}} twice now switches the camera to the front of the player, while it now takes a third press of {{key|F5}} to switch back into first person view.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|The debugging view manipulation, known in the code as the "deadmau5 camera",<ref name="deadmau">{{tweet|jeb|172983022038163456|@PaulScelus They don't really.. They are called "deadmau5 camera" in the code and was only added for him. They were accidentally enabled|February 24, 2012}}</ref> was accidentally enabled.
+|This feature causes the keys {{Key|Y}}, {{Key|H}}, {{Key|U}}, {{Key|O}}, {{Key|I}}, {{Key|K}}, {{Key|J}}, {{Key|L}}, {{Key|N}}, and {{Key|M}} to change the camera position in a variety of ways, and pressing {{Key|F9}} freezes the view. Pressing two functionally connected keys at the same time reverts the view back to normal, except pressing {{Key|U+O}}.
+|This feature was added only for [[Wikipedia:deadmau5|deadmau5]].<ref name="deadmau"/>}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 6|The deadmau5 camera was removed.}}
+|{{HistoryLine||1.2.1|dev=12w08a|The deadmau5 camera was accidentally added again.<ref>{{tweet|jeb|172982497104240640|@retsynNL I forgot to disable them in the snapshot|February 24, 2012}}</ref>
+|The sides of the player's head may now be shown when rotating the view using the deadmau5 camera.}}
+|{{HistoryLine|||dev=1.2|The deadmau5 camera was removed again.}}
+|{{HistoryLine||1.7.2|dev=13w36a|The camera switching key, default set to {{key|F5}}, can now be rebound.}}
+|{{HistoryLine||1.9|dev=15w31a|Crosshairs no longer show in 3rd person view.}}
+|{{HistoryLine|||dev=15w46a|Being inside of a block no longer reverts the player's view to first person.<ref>{{bug|MC-128}}</ref>}}
+|{{HistoryLine||1.14|dev=19w11a|No longer blocked by most non solid blocks like grass.|Due to a bug the camera direction is now vertically reversed in third-person front view, similar to how it was in old versions of [[Legacy Console Edition]].|Third-person view now works properly while sleeping in a [[bed]].}}
+|{{HistoryLine|||dev=19w12a|The bug that caused the camera direction to be vertically reversed in third-person front view has been fixed.}}
+|{{HistoryLine||1.16|dev=20w12a|No longer obstructed by [[glass]] and other such blocks.
+|However, it is still obstructed by [[fence]]s, [[slime block]]s, [[honey block]]s and [[ice]].<ref>{{bug|MC-175927|||Invalid}}, {{bug|MC-177512|||Invalid}}</ref>}}
+|{{HistoryLine||1.21.6|dev=25w15a
+ |Increased the third-person camera distance when spectating or riding [[Ghast]]s, [[Ender Dragon]]s, and [[Giant]]s.
+ |Added {{attr|camera_distance}} attribute for changing third-person camera distance from a player's perspective, or an entity while [[spectating]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.2|Added an option for third-person view.}}
+|{{HistoryLine||v0.12.1|dev=build 6|Added the front third-person view.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.1|The crosshair no longer appears in third-person view.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added third-person view.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|The camera direction is no longer vertically reversed in third-person front view to match ''Java Edition''.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|No longer blocked by most non solid blocks like grass.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Crosshairs no longer show in 3rd person view.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|The camera switching key can now be rebound.}}
+}}
+
+== Issues ==
+{{Issue list|Third-person view|Third person|Third-person}}
+
+== Trivia ==
+
+* {{IN|BE}}, the third-person view allows the player to reach further than in first-person, and behind them when using touch controls.
+* In older versions of {{LCE}}, the third-person front view looked up and down with your character before eventually being updated to match {{JE}}.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Alpha ShoulderCam.png|Shoulder camera in [[Java Edition Alpha|Alpha]].
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:UI]]
+
+[[de:Perspektive]]
+[[es:Vista en tercera persona]]
+[[fr:Vue à la troisième personne]]
+[[ja:三人称視点]]
+[[nl:Third person view]]
+[[pt:Visão em terceira pessoa]]
+[[ru:Вид от третьего лица]]
+[[zh:视角]]

@@ -1,0 +1,301 @@
+{{for|the regular variant|Piston}}
+{{Earth hatnote|type=block}}
+{{Infobox block
+| image = Sticky Piston.gif
+| imagecaption = Java Edition
+| image2 = Sticky Piston BE.gif
+| image2caption = Bedrock Edition
+| invimage = Sticky Piston
+| transparent = '''[[JE]]''': No<br>'''[[BE]]''': Yes
+| light = No
+| tool = Pickaxe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''sticky piston''' is a variant of the [[piston]] that can additionally pull most blocks when it retracts.
+
+== Obtaining ==
+=== Breaking ===
+A sticky piston can be broken using any [[tool]] with equal efficiency, and always drops itself.
+{{IN|java}}, it is faster to break them with a [[pickaxe]]. The pickaxe is also the preferred tool for breaking the head when extended.<ref>{{bug|MC-171370|||WAI}}</ref>
+{{breaking row|horizontal=1|Sticky Piston|Pickaxe}}
+
+=== Natural generation ===
+Three sticky pistons generate as part of each [[jungle pyramid]]. Five sticky pistons also generate in each [[ancient city]].
+
+=== Crafting ===
+{{Crafting
+|B1 = Slimeball
+|B2 = Piston
+|Output = Sticky Piston
+|type = Redstone
+}}
+
+== Usage ==
+{{see also|Piston}}
+A sticky piston behaves the same way as a [[Piston|normal piston]], except when pulling. A sticky piston pulls when it is [[Redstone circuits|unpowered]].
+
+{{IN|be}}, the start delay is fixed at 1 [[redstone tick]] which is {{convert|2|game tick|second}}, meaning that the sticky piston starts to extend or retract 1 redstone tick (2 game ticks) after it is activated. Sticky pistons can only activate on the input/consumer redstone tick ([[C-tick]]).
+
+==== Soft Inversion ====
+{{exclusive|bedrock|section=1}}
+{{IN|be}}, a unique mechanic known as "soft inversion" occurs when a sticky piston is "soft-powered" by redstone. A [[redstone torch]] attached to such a [[soft-powered]] sticky piston will be deactivated, deviating from the normal rule that requires a block to be "[[hard-powered]]" to deactivate an attached torch. This piston-specific behavior allows for circuit designs where the torch is turned off by a dust line running into the side of the sticky piston's block, a feature exclusive to this edition.
+
+=== Pulling ===
+A sticky piston also pulls the block attached to its head and any blocks attached to the head via [[Slime Block|slime]]- or [[Honey Block|honey blocks]], but not any of the other blocks it may have pushed.
+
+A sticky piston cannot pull a [[Falling Block|falling block]].
+
+==== Block dropping ====
+{{exclusive|java|section=1}}
+Sticky pistons finish extending early and start retracting if they lose power before the extension process is over; most 2[[Tick#Game tick | game tick]] long pulses, some 3 game tick long pulses (when [[Piston#Start delay|start delay]] is present) and all pulses equal to or shorter than 1 game tick that pistons can react to allow this to happen. This causes a sticky piston to "drop" the blocks it's pushing, leaving them behind when it starts to retract. Also, the first out of the blocks that are being moved ends up in its final position as soon as the piston starts retracting. This behavior is referred to as "block dropping"<ref> Jeb has once said that the observer block's pulse "Allows tricking sticky pistons into dropping blocks" - https://www.reddit.com/r/Minecraft/comments/5c752g</ref> or sometimes "block spitting".
+
+A sticky piston still pulls a block back if the piston extended through an air gap to contact the block.
+
+== Limitations ==
+Sticky pistons have the same [[piston#Limitations|limitations for pushing]] as normal pistons. These limitations also apply for pulling: when a sticky piston is unpowered but cannot pull a block, it retracts without doing so.
+
+The table below lists which blocks can be pushed or pulled.
+
+{{:Sticky_Piston/Table}}
+
+== Technical components ==
+{{main|Piston/Technical components}}
+Sticky pistons have 2 technical blocks that cannot be obtained. These include the '''piston head''' and '''moving piston''' blocks.
+
+== Sounds ==
+=== Generic ===
+{{edition|java}}:
+{{Sound table/Block/Stone/JE}}
+{{edition|bedrock}} (piston):
+{{Sound table/Block/Stone/BE}}
+{{edition|bedrock}} (arm):
+{{Sound table/Block/Normal/BE}}
+
+=== Unique ===
+{{:Piston/Sounds|a sticky piston}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sticky Piston
+|spritetype=block
+|nameid=sticky_piston
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showaliasids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sticky Piston
+|spritetype=block
+|nameid=sticky_piston
+|id=29
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Sticky piston block entity
+|spritename=sticky-piston
+|spritetype=block
+|nameid=PistonArm
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+The <code>sticky_piston</code> block uses following block states:
+
+{{#lst:Piston|block states}}
+
+=== Block data ===
+{{exclusive|bedrock|section=1}}
+{{IN|be}}, a sticky piston has a [[block entity]] associated with it that holds additional data about the block.
+
+: See [[Bedrock Edition level format/Block entity format]].
+
+==Achievements==
+{{load achievements|Inception}}
+
+== Videos ==
+{{yt|dKDSUKXN138}}
+
+== History ==
+{{Needs render|type=old|<p>
+* {{bug|MCPE-38053}}
+* extended sticky piston from the original mod
+* extended sticky pistons in Legacy Console Edition
+* 1.19 changes</p>}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||?|[[File:Sticky piston mod.png|32px]] The original sticky piston was a mod posted on the [[Minecraft Forums]] by Hippoplatimus.<ref>http://www.minecraftforum.net/viewtopic.php?t=247686&f=1032</ref> The code for that version was given to [[Jeb]], who then worked on implementing pistons into vanilla [[Minecraft]]; Hippoplatimus is in the game's credits under "Additional Programming", like other modders whose work made it into vanilla Minecraft.
+|Another user, DiEvAl, privately submitted code as well, including the idea of [[block entities]] to track moving blocks.<ref>http://www.reddit.com/r/Minecraft/comments/hvkmo/attribution_of_the_piston_mod_in_vanilla_minecraft/</ref>}}
+|{{HistoryLine||1.7|[[File:Sticky Piston (U) JE1.png|32px]] [[File:Sticky Piston (N) JE1 BE1.png|32px]] [[File:Sticky Piston (E) JE1 BE1.png|32px]] [[File:Sticky Piston (S) JE1 BE1.png|32px]] [[File:Sticky Piston (W) JE1 BE1.png|32px]] [[File:Sticky Piston (D) JE1 BE1.png|32px]]<br>[[File:Headless Piston (U) JE1 BE1.png|32px]] [[File:Headless Piston (N) JE1 BE1.png|32px]] [[File:Headless Piston (E) JE1 BE1.png|32px]] [[File:Headless Piston (S) JE1 BE1.png|32px]] [[File:Headless Piston (W) JE1 BE1.png|32px]] [[File:Headless Piston (D) JE1 BE1.png|32px]]<br>Added sticky pistons, alongside associated head and moving blocks.
+|A bug existed in this version which caused the game to crash and lock the player out of their world when powering sticky pistons in some scenarios (for example when trying to push a redstone torch).}}
+|{{HistoryLine||1.7_01|The aforementioned bug has been fixed and affected worlds now load normally again.
+|Headless sticky pistons won't break upon receiving a [[block update]] anymore.}}
+|{{HistoryLine||1.7.3|Sticky pistons now drop the blocks they are pushing when powered by a short pulse.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w22a|Sticky pistons now generate naturally inside [[jungle temple]]s. In the temples, the pistons are used to form a puzzle mechanism.}}
+|{{HistoryLine|||dev=12w26a|Sticky pistons now schedule extensions and retractions rather than executing them as soon as they are updated.}}
+|{{HistoryLine||1.5|dev=13w06a|Sticky pistons can now pull extended sticky and normal pistons as long as they are both depowered in the same tick, but only if the first one is updated before the other. This behavior is intended.<ref>{{bug|MC-9342|||WAI}}</ref>}}
+|{{HistoryLine|||dev=13w10a|Sticky pistons changing their {{code|extended}} state from {{code|false}} to {{code|true}} is now the ''last'' step of (the start of) the extension process, rather then the first. This change affects some redstone contraptions.}}
+|{{HistoryLine||1.8|dev=14w17a|[[File:Sticky Piston (U) JE2.png|32px]] [[File:Sticky Piston (D) JE2.png|32px]] [[File:Headless Piston (U) JE2.png|32px]] [[File:Headless Piston (D) JE2.png|32px]] The models for sticky piston and related blocks when facing up and down have been changed.}}
+|{{HistoryLine|||dev=14w18a|[[Slime block]]s now push and pull blocks adjacent when connected to sticky pistons.
+|Extending a sticky piston with a slime block on top of it launches the [[entity]] ([[mob]]s, [[player]]s, [[item]]s, launched [[arrow]]s, etc) into the [[air]].}}
+|{{HistoryLine|||dev=14w26a|Sticky pistons do not check if they are receiving power in the moment in which their {{code|extended}} state changes from {{code|false}} to {{code|true}} anymore.}}
+|{{HistoryLine||1.9|dev=15w38b|Retracting sticky pistons can now pull [[entities]] through them.<ref>{{bug|MC-89030||}}</ref> This was known as "piston translocation" by the community.
+|Sticky pistons can no longer pull extended sticky and normal pistons when depowered in the same tick, due to a bug.<ref>{{bug|MC-88959|}}</ref>}}
+|{{HistoryLine|||dev=15w49a|Unextended sticky pistons, downward-facing sticky pistons, and upward-facing sticky piston heads are now considered to have a solid top surface, like upside-down [[stairs]] and top [[slab]]s.}}
+|{{HistoryLine||1.11|dev=16w40a|Retracting sticky pistons can no longer pull [[entities]] through them. "Piston translocation" has been removed.}}
+|{{HistoryLine||1.12|dev=17w16a|Sticky pistons do not pull [[glazed terracotta]], and when pistons move [[slime block]]s, they do not move glazed terracotta attached to the side of the slime block.}}
+|{{HistoryLine|||dev=pre3|Glazed terracotta does not stick to slime blocks in some situations anymore.<ref>{{bug|MC-116373|||fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Sticky pistons now can push [[note block]]s.}}
+|{{HistoryLine|||dev=17w48a|Piston heads are no longer removed when breaking a sticky piston while it is extending.<ref>{{bug|MC-122711|}}</ref>}}
+|{{HistoryLine|||dev=17w49a|Piston heads are now once again removed when breaking a sticky piston while it is extending.
+|Sticky pistons' block dropping behavior has been removed.<ref>{{bug|MC-122911|}}</ref>}}
+|{{HistoryLine|||dev=17w49b|Sticky pistons can now drop blocks again. According to [[Grum]], this behavior was restored by fixing {{bug|MC-122711|}},<ref>https://bugs-legacy.mojang.com/browse/MC-122911?focusedId=421892&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-421892</ref> however that bug was actually fixed in snapshot [[17w49a]]—additionally, it should be noted that in [[17w48a]] (the only snapshot that was ever actually affected by MC-122711) block dropping still worked as expected.}}
+|{{HistoryLine|||dev=pre6|Sticky pistons can now pull [[glazed terracotta]].<ref>{{bug|MC-133214|}}</ref>}}
+|{{HistoryLine|||dev=pre8|Sticky pistons can no longer pull glazed terracotta.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Sticky Piston (U) JE3.png|32px]] [[File:Sticky Piston (N) JE2.png|32px]] [[File:Sticky Piston (E) JE2.png|32px]] [[File:Sticky Piston (S) JE2.png|32px]] [[File:Sticky Piston (W) JE2.png|32px]] [[File:Sticky Piston (D) JE3.png|32px]]<br>[[File:Headless Piston (U) JE3.png|32px]] [[File:Headless Piston (N) JE2.png|32px]] [[File:Headless Piston (E) JE2.png|32px]] [[File:Headless Piston (S) JE2.png|32px]] [[File:Headless Piston (W) JE2.png|32px]] [[File:Headless Piston (D) JE3.png|32px]]<br>The textures associated with sticky pistons have been changed.
+|While the texture for oak planks was later updated in subsequent snapshots, the sticky piston texture is yet to be changed to reflect this.<ref>{{bug|MC-248841|||WAI}}</ref>}}
+|{{HistoryLine|||dev=18w44a|Non-extended sticky pistons now block [[light]].}}
+|{{HistoryLine|||dev=18w46a|Added support for directional opacity of blocks. As such, extended sticky pistons now allow light to only pass through certain faces.}}
+|{{HistoryLine||1.15|dev=19w41a|Added honey blocks, which have multiple different types of interactions with sticky pistons.}}
+|{{HistoryLine||1.16|dev=20w06a|The hardness of sticky pistons has been increased from 0.5 to 1.5.
+|The blast resistance of sticky pistons has been increased from 0.5 to 1.5.
+|[[Pickaxe]]s are now the tool for breaking sticky pistons.
+|Sticky pistons no longer pop off redstone components placed on the back when retracting.}}
+|{{HistoryLine||1.17|dev=20w45a|Particles now appear if a block is broken by a sticky piston.}}
+|{{HistoryLine||1.19|dev=22w13a|Sticky pistons and piston heads now generate in [[ancient cities]].}}
+|{{HistoryLine|||dev=22w17a|[[File:Sticky Piston (U) JE4.png|32px]] [[File:Sticky Piston (N) JE3.png|32px]] [[File:Sticky Piston (E) JE3.png|32px]] [[File:Sticky Piston (S) JE3.png|32px]] [[File:Sticky Piston (W) JE3.png|32px]] [[File:Sticky Piston (D) JE4.png|32px]] Changed sticky piston textures, to match the color of the oak planks on the piston head.}}
+|{{HistoryLine||1.21|dev=24w20a|Sticky piston sounds have been updated to be quieter and less harsh.<br>[[File:Piston extend JE2.ogg]]<br>[[File:Piston contract JE2.ogg]]}}
+|{{HistoryLine|||dev=24w21a|Sticky piston sounds have been reverted to what they previously were, but the attenuation distance and sound level has been halved.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Sticky Piston (U) JE2 BE1.png|32px]] Added sticky pistons.
+|Sticky pistons have a version exclusive animation and the ability to push [[block entities]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Sticky Piston BE2.png|32px]] The texture of sticky pistons has been changed.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the hardness and blast resistance of sticky pistons from 0.5 to 1.5.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU3|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Sticky Piston (U) JE1.png|32px]] Added sticky pistons.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Sticky pistons have been updated to make them less error-prone, thus they also appear to update slower. This also alters the way pistons work, so the [[player]] might have to adapt their [[repeater]] delays and similar.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Retracting sticky pistons can now pull [[entities]] through them. This was known as "piston translocation" by the community.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Retracting sticky pistons can no longer pull [[entities]] through them. "Piston translocation" has been removed.|Sticky pistons can no longer pull [[glazed terracotta]].}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Sticky pistons can now move [[daylight detector]]s.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Sticky pistons can no longer move cauldrons.}}
+|{{HistoryLine||xbox=TU62|xbone=CU52|ps3=1.66|psvita=1.66|ps4=1.66|wiiu=Patch 31|switch=1.0.12|Sticky pistons can now move small chests but only if the new position would have been valid for players to place a new chest. This limitation can however be bypassed by moving the chests simultaniously.|Sticky pistons can move cauldrons again.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Sticky Piston (U) BE2.png|32px]] The texture of sticky pistons has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Sticky Piston (U) JE2 BE1.png|32px]] Added sticky pistons.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.7|[[Six-sided Piston|Six-sided sticky piston]]s exist as extreme metadata variants of sticky pistons.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w26a|Pistons now use block states instead of metadata. As such, weird pistons have been removed.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 33.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.15.0|dev=build 1|Weird sticky pistons also existed, but they didn't look six-sided.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Weird sticky pistons have been removed.}}
+}}
+
+==== Legacy Console Edition ====
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||?|Weird sticky pistons definitely existed at one point.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Mojang stated that the 12-block push limit for sticky pistons would not be changed, because "the current limitations are by design".<ref>
+{{cite
+|url=https://feedback.minecraft.net/hc/en-us/articles/360005029872-Previously-Considered-Suggestions
+|title=Piston Push Limits (and increases). The current limitations are by design.
+|website=Minecraft Feedback
+|date=January 3, 2019}}
+</ref>
+* When toggled between on and off rapidly with a gravity affected block (such as sand) above it, a sticky piston can eventually break the block, which can be picked up as a resource. However, gravel broken this way never drops flint.
+* If a sticky piston powered by a short pulse directly pushes a waterlogged block, the block remains waterlogged at its new position.
+* Carpet can be placed on the sticky piston extension block, and remains even if it is replaced with a solid block using {{cmd|setblock}}.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Glassp.gif|An example of sticky piston use with [[glass pane]]s.
+File:Sticky piston rails.gif|An example of sticky piston use with rails.
+File:Sticky piston fence.gif|An example of sticky piston use with fences.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Pistonscreen.png|First screenshot of pistons.
+File:Efe tinkers.jpg|[[Efe]] tinkering with a sticky piston.<ref>{{mcnet|trails-tales-update-out-today-java|Trails Tales Update Out Today on Java|June 7, 2023}}</ref>
+File:Stickypiston-header.jpeg|A sticky piston.
+File:Stickypiston-ingame.jpeg|Two sticky pistons atop a temple.
+File:Stickypiston-ingame2.jpeg|Sticky pistons spelling out the word piston.
+</gallery>
+
+== See also ==
+*[[Piston]]
+*[[Slime block]]
+*[[Redstone]]
+*[[Tutorial:Piston uses]]
+*[[Tutorial:Headless pistons]]
+*[[Mechanics/Redstone/Piston circuits]]
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{mcnet|sticky-piston|Block of the Month: Sticky Piston|July 14, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|utility}}
+
+[[Category:Block entities]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+
+[[fr:Piston collant]]
+[[ko:끈끈이 피스톤]]
+[[nl:Kleefzuiger]]
+[[pt:Pistão Grudento]]
+[[uk:Липкий поршень]]

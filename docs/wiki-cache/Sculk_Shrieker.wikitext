@@ -1,0 +1,370 @@
+{{Infobox block
+| image = Sculk Shrieker.gif
+| transparent = '''[[JE]]''': No<br>'''[[BE]]''': Yes
+| light = No
+| tool = hoe
+| renewable = '''Non Warden-Summoning''': Yes<br>'''Warden-Summoning''': No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+A '''sculk shrieker''' is a [[sculk family|sculk]] block that will "shriek" if any [[player]] touches its top (even [[Projectile|indirectly]]) or activates a nearby [[sculk sensor]]. Only players can trigger it. 
+
+[[Deep Dark|Naturally-generated]] sculk shriekers also inflict [[Darkness]] and may summon a [[warden]] if triggered, but shriekers placed by players or [[sculk catalyst]]s are completely inert and harmless.
+
+== Obtaining ==
+=== Breaking ===
+A sculk shrieker can be mined with any tool, but [[hoe]]s are the quickest. It drops itself only if mined with any tool enchanted with [[Silk Touch]]. If mined with a non-Silk Touch tool, it drops 5 [[experience]] instead. When a sculk shrieker is broken it loses the ability to summon wardens, even if mined with Silk Touch.
+{{Breaking row|Sculk Shrieker|Hoe|drop=0|horizontal=1}}
+
+=== Natural generation ===
+Sculk shriekers can be found infrequently within the [[deep dark]] biome, and they are much more common within [[ancient cities]]. All naturally generated shriekers can summon wardens.
+
+{{block distribution}}
+
+=== Post-generation ===
+A [[sculk catalyst]] has a 1% chance of generating a sculk shrieker on top of a [[sculk]] block. These shriekers do not summon wardens.
+
+== Usage ==
+[[File:Shriek.png|thumb|The shriek particle]]
+Sculk shriekers "shriek" after being activated. A sculk shrieker activates when any player stands on the black part in the center of the block, even when {{Control|sneaking}}. Sculk shriekers are also activated by any [[sculk sensor]] triggered within an 8-block spherical radius of itself, but only if the [[vibration]] was caused by a player. However, a [[sculk sensor]] cannot activate the sculk shrieker if the line between the two contains a wool block. The shrieker shrieks for 90 game ticks (4.5 seconds). 
+
+=== Spawning wardens ===
+[[File:Sculk shriek particles.png|thumb|A set of shriek particles emitted by a sculk shrieker]]
+Sculk shriekers that naturally generate in the deep dark biome are capable of inflicting the [[Darkness]] effect upon players and summoning wardens. In {{BE}}, when a warden is summoned from a sculk shrieker, the [[spawn event]] {{cd|minecraft:spawn_emerging}} is applied to it. This spawn event is what allows the warden to play the emerging animation with the {{cd|minecraft:behavior.emerge}} component. If a sculk shrieker is placed by a player or generated via a [[sculk catalyst]], the tag <code>can_summon</code> is set to <code>false</code>, and therefore a warden cannot be summoned and Darkness cannot be inflicted by that sculk shrieker<ref>{{bug|MC-250137|||Works As Intended }}</ref>. Each time a naturally generated sculk shrieker is activated, it adds 1 to a "warning" level to alert a [[warden]]. The warning level is specific to each ''player'', not each sculk shrieker, meaning that the same player can activate a different sculk shrieker for each of the four times, and a warden still spawns on the fourth activation, even though any particular shrieker had been activated once. If a player does not activate any sculk shrieker, the warning level decreases by 1 every 10 minutes (12000 ticks). In multiplayer, all other players in a 16-block spherical radius are also "blamed" for a sculk shrieker's activation, and all blamed players will have their warning level set to one more than the highest warning level among blamed players, and all of their warning level timers will be reset. After the shrieking ends, all players in Survival or Adventure mode within 40 blocks are given the [[Darkness]] effect for 12 seconds. After a warden is summoned, a player's warning level does not reset back to 0, meaning multiple wardens can be summoned.
+
+Naturally generated sculk shriekers have a 10-second cooldown per ''player''. This means that if a player triggers one shrieker, they are completely unable to trigger any other shrieker within 10 seconds. The cooldown period includes the 4.5-second shrieking, which means 5.5 seconds after the previous shrieking ends, the player can activate sculk shriekers again.
+
+When a player's warning level reaches level 4, the sculk shrieker attempts to spawn a warden after its shrieking ends. If the shrieker is broken before it ends shrieking, a warden spawns immediately. Up to 20 attempts are made to spawn a warden within an 11×13×11 box centered on the shrieker. If there isn't another warden within 24 blocks, a warden emerges from the ground. The warden always spawns at the highest available block. If all 20 spawning attempts fail, a loud roaring sound is played. Spawning a warden does not decrease the player's warning level, so a warden can be immediately summoned again after the 10-second cooldown. However, the warning level will not increase above 4.
+
+In Peaceful [[difficulty]] or {{in|Java}}, if the [[game rule]] <code>doWardenSpawning</code> is set to <code>false</code>, naturally generated sculk shriekers behave as if they are placed by a player: they do shriek, but there is no shrieking cooldown, the player's warning level does not increase, no Darkness effect is inflicted, and no warden spawns.
+
+If the player that triggered the sculk shrieker is outside the shrieker's range when the shrieking ends, the sculk shrieker does not apply the Darkness effect to any player. The player's warning level still increases by 1.
+
+It is possible to make a warden spawn from a distance, by shooting a [[projectile]] into the direction of known sensors that are near shriekers.
+
+The warnings have unique [[subtitles]] at different levels of warning: 
+# ''Warden approaches''
+# ''Warden advances''
+# ''Warden draws close''
+
+=== Vibration filter ===
+[[File:Vibration_JE1_BE1.gif|thumb|The sculk sensor vibration [[particle]]]]
+Since sculk shriekers only activate in response to vibrations caused by a player, it has the potential be used for systems that require player-only vibrations. Activated sculk shriekers can also be detected by an [[observer]], making it useful for sending a pulse to [[redstone]] components.
+
+=== Piston interactivity ===
+Sculk shriekers cannot be moved by [[piston]]s or [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Sculk shrieker}}
+
+=== Unique ===
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Sculk shrieker shriek1.ogg
+|sound2=Sculk shrieker shriek2.ogg
+|sound3=Sculk shrieker shriek3.ogg
+|sound4=Sculk shrieker shriek4.ogg
+|sound5=Sculk shrieker shriek5.ogg
+|subtitle=Sculk Shrieker shrieks
+|source=block
+|description=When a sculk shrieker is activated
+|id=block.sculk_shrieker.shriek
+|translationkey=subtitles.block.sculk_shrieker.shriek
+|volume=1.7
+|pitch=0.6-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby close1.ogg
+|sound2=Warden nearby close2.ogg
+|sound3=Warden nearby close3.ogg
+|sound4=Warden nearby close4.ogg
+|subtitle=Warden approaches
+|source=hostile
+|description=When a sculk shrieker calls a warden once
+|id=entity.warden.nearby_close
+|translationkey=subtitles.entity.warden.nearby_close
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby closer1.ogg
+|sound2=Warden nearby closer2.ogg
+|sound3=Warden nearby closer3.ogg
+|subtitle=Warden advances
+|source=hostile
+|description=When a sculk shrieker calls a warden twice
+|id=entity.warden.nearby_closer
+|translationkey=subtitles.entity.warden.nearby_closer
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden nearby closest1.ogg
+|sound2=Warden nearby closest2.ogg
+|sound3=Warden nearby closest3.ogg
+|subtitle=Warden draws close
+|source=hostile
+|description=When a sculk shrieker calls a warden three times
+|id=entity.warden.nearby_closest
+|translationkey=subtitles.entity.warden.nearby_closest
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden agitated1.ogg
+|sound2=Warden agitated2.ogg
+|sound3=Warden agitated3.ogg
+|sound4=Warden agitated4.ogg
+|sound5=Warden agitated5.ogg
+|sound6=Warden agitated6.ogg
+|subtitle=Warden groans angrily
+|source=hostile
+|description=When a warden fails to spawn underwater
+|id=entity.warden.agitated
+|translationkey=subtitles.entity.warden.agitated
+|volume=5.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|subtitle=Warden takes notice angrily
+|source=hostile
+|description=When all of a warden's spawn attempts fail
+|id=entity.warden.listening_angry
+|translationkey=subtitles.entity.warden.listening_angry
+|volume=5.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Sculk shrieker shriek1.ogg
+|sound2=Sculk shrieker shriek2.ogg
+|sound3=Sculk shrieker shriek3.ogg
+|sound4=Sculk shrieker shriek4.ogg
+|sound5=Sculk shrieker shriek5.ogg
+|source=block
+|description=When a sculk shrieker shrieks
+|id=shriek.sculk_shrieker
+|volume=1.7
+|pitch=0.6-1.0}}
+| {{SoundLine
+|sound=Warden nearby close1.ogg
+|sound2=Warden nearby close2.ogg
+|sound3=Warden nearby close3.ogg
+|sound4=Warden nearby close4.ogg
+|source=hostile
+|description=When a sculk shrieker calls a warden once
+|id=mob.warden.nearby_close
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden nearby closer1.ogg
+|sound2=Warden nearby closer2.ogg
+|sound3=Warden nearby closer3.ogg
+|source=hostile
+|description=When a sculk shrieker calls a warden twice
+|id=mob.warden.nearby_closer
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden nearby closest1.ogg
+|sound2=Warden nearby closest2.ogg
+|sound3=Warden nearby closest3.ogg
+|source=hostile
+|description=When a sculk shrieker calls a warden three times
+|id=mob.warden.nearby_closest
+|volume=5.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Warden listening angry1.ogg
+|sound2=Warden listening angry2.ogg
+|sound3=Warden listening angry3.ogg
+|sound4=Warden listening angry4.ogg
+|sound5=Warden listening angry5.ogg
+|source=hostile
+|description=When all of a warden's spawn attempts fail {{more info|does the underwater sound play like in Java Edition or is it just this?}}
+|id=mob.warden.listening_angry
+|volume=10.0 {{verify}}
+| pitch = 0.8-1.2 {{verify}}
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sculk Shrieker
+|spritetype=block
+|nameid=sculk_shrieker
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=sculk-shrieker
+|spritetype=block
+|nameid=sculk_shrieker
+|foot=1}}
+
+{{el|be}}:
+{{ID table2
+|edition=bedrock
+|showforms=y
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Sculk Shrieker
+|nameid=sculk_shrieker
+|spritetype=block
+|id=716
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=sculk-shrieker
+|spritetype=block
+|nameid=SculkShrieker
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|can_summon|false|false,true|If true, the sculk shrieker can summon a [[warden]].}}
+{{bst|shrieking|false|false,true|Whether the sculk shrieker is shrieking or not.}}
+{{bst|waterlogged|false|false,true|Whether or not there is water in the same place as this sculk shrieker. Waterlogged sculk shriekers do not emit sound when shrieking.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|active|0|0,1|Whether the sculk shrieker is shrieking or not.|Unsupported}}
+{{bst|can_summon|false|true,false|If true, the sculk shrieker can summon a [[warden]].|Unsupported|foot=1}}
+
+=== Block data ===
+A sculk shrieker has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+*{{nbt|compound}}: The block entity's root tag.
+** {{nbt|compound|VibrationListener}}: The vibration event listener of the sculk shrieker, sculk sensor, and calibrated sculk sensor.
+*** {{nbt|int|event}}: Unknown.
+*** {{nbt|compound|pending}}: Unknown.
+**** {{nbt|float|distance}}: Unknown.
+**** {{nbt|long|source}}: Unknown.
+**** {{nbt|int|vibration}}: Unknown.
+**** {{nbt|int|x}}: Unknown.
+**** {{nbt|int|y}}: Unknown.
+**** {{nbt|int|z}}: Unknown.
+*** {{nbt|compound|selector}}: Unknown.
+*** {{nbt|int|ticks}}: Unknown.
+</div><section end="block data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Advancements ==
+{{load advancements|How Did We Get Here}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 16, 2021|link={{ytl|w6zLprHHZOk|t=6479}}|[[File:Sculk Shrieker JE1 BE2.gif|32px]] Sculk shriekers are shown at [[Minecraft Live 2021]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|[[File:Sculk Shrieker JE1 BE2.gif|32px]] Added sculk shriekers.}}
+|{{HistoryLine|||dev=22w11a|Sculk shriekers no longer drop when mined with Silk Touch.
+|Sculk shriekers can't be activated in this snapshot, as [[warden]]s and the [[Darkness]] effect is not added in this snapshot.}}
+|{{HistoryLine|||dev=22w12a|Added functionality to the sculk shrieker.
+|Sculk shriekers are no longer generated by [[sculk catalyst]]s.<ref>{{bug|MC-249437}}</ref>}}
+|{{HistoryLine|||dev=22w13a|Sculk shriekers are once again obtainable with Silk Touch and once again spawn from sculk catalysts.
+|Introduced a new <code>can_summon</code> block state for sculk shriekers that determines whether or not they can spawn a warden, it is set to true for naturally generated shriekers and false for ones that were placed by a player or spawned by a sculk catalyst.
+|[[File:Sculk Shrieker Inactive JE1 BE1.gif|32px]] Added a new texture for when the <code>can_summon</code> block state is set to false.}}
+|{{HistoryLine|||dev=22w15a|[[File:Sculk Shrieker JE2 BE3.gif|32px]][[File:Sculk Shrieker Inactive JE2 BE2.gif|32px]] The model of the sculk shrieker has been changed.
+|Sculk shriekers can no longer be triggered by redstone activation.<ref>{{bug|MC-250200|||Works As Intended }}</ref>}}
+|{{HistoryLine|||dev=22w19a|Sculk shriekers now need to be activated four times to summon a warden.}}
+|{{HistoryLine||1.19.3|dev=22w42a|The warning level for sculk shriekers is no longer reset upon a player's death.<ref>{{bug|MC-255164|||Fixed}}</ref>}} 
+|{{HistoryLine||1.20|dev=23w14a|Waterlogged sculk shriekers are now silenced.
+|Sculk shriekers are now located in the "Redstone Blocks" tab in [[Creative inventory]].}}
+|{{HistoryLine|||dev=23w16a|If a vibration is scheduled to be received by a sculk shrieker, it remains queued until all adjacent chunks are loaded and ticking. This prevents vibration resonance setups from breaking when unloading their chunks from a distance.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.30.22|"Sculk Shrieker" was mentioned in the Bedrock Beta documentation.}}
+|{{HistoryLine|||dev=beta 1.17.30.23|[[File:Sculk Shrieker (top texture) BE1.png|32px]] [[File:Sculk Shrieker (side texture) BE1.png|32px]] [[File:Sculk Shrieker (bottom texture) BE1.png|32px]] [[File:Sculk Shrieker (inner texture) BE1.png|4px]] Added textures of the sculk shrieker in internal [[Caves & Cliffs]] files.}}
+|{{HistoryLine||1.18.0|exp=Vanilla Experiments|dev=beta 1.18.0.22|[[File:Sculk Shrieker BE1.gif|32px]] Added sculk shriekers behind the "Vanilla Experiments" experimental toggle.
+|It uses an outdated model.<ref>{{tweet|kingbdogz|1451257085925203972|Oh and Sculk Shrieker model is outdated|October 21, 2021}}</ref>
+|It can be activated with a redstone signal, or by stepping on it.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.21|Moved sculk shriekers to the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.21|Sculk shriekers now listen to [[sculk sensor]] tendril clicking.
+|The threat level that causes a warden to spawn in the future now decreases over time.}} 
+|{{HistoryLine|||dev=Preview 1.18.30.23|[[File:Sculk Shrieker JE1 BE2.gif|32px]] Updated the sculk shrieker's model.
+|Revamped the sculk spreading mechanics to match ''Java Edition''.}}
+|{{HistoryLine|||dev=Preview 1.18.30.29|Sculk shriekers no longer drop when mined with Silk Touch.<ref>{{bug|MCPE-153359}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.18.30.33|Sculk shriekers can now summon wardens.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Sculk shriekers are now available without enabling experimental gameplay.}}
+|{{HistoryLine|||dev=Preview 1.19.0.25|Sculk shriekers can be obtained again with Silk Touch.
+|There’s now a new <code>can_summon</code> tag for sculk shriekers that control whether or not they can spawn a warden, it is set to true for naturally generated shriekers and false for ones that were placed by a player or spawned by a sculk catalyst.
+|[[File:Sculk Shrieker Inactive JE1 BE1.gif|32px]] When the <code>can_summon</code> tag is set to false, it has another texture.
+|Sculk shriekers can no longer be triggered by redstone activation.}}
+|{{HistoryLine|||dev=Preview 1.19.0.27|[[File:Sculk Shrieker JE2 BE3.gif|32px]][[File:Sculk Shrieker Inactive JE2 BE2.gif|32px]] The model of the sculk shrieker has been changed to match ''Java Edition''.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of sculk shriekers from 1.8 to 3.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The sculk shrieker's design was inspired by the {{w|Larynx|human larynx}}.<ref>{{ytl|w6zLprHHZOk|Minecraft Live 2021 @ 1:52:36|Minecraft|October 15, 2021|t=6756s}}</ref>
+* The old trypophobia shrieker was a combination of the modern day shrieker and scrapped sculk jaw as it would both scream and show teeth.<ref>{{Tweet|CagilMartin|1550728464608612352|The old shreiker didn't have lights|July 23, 2022}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Sculk shrieker activated.png|A player steps on a sculk shrieker and activates it.
+Bedrock Sculk Shrieker.jpg|A sculk shrieker getting activated
+Bedrock Sculk Shrieker & Warden.jpg|A sculk shrieker summoning a warden
+Bedrock Warden.jpg|A warden summoned by a sculk shrieker
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|block-month--sculk-shrieker|Block of the Month: Sculk shrieker|May 2, 2024|[[Duncan Geere]]}}
+*{{Mcnet|sculk-shrieker|Block of the Month: Sculk shrieker|June 20, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Hazardous blocks]]
+
+[[de:Sculk-Kreischer]]
+[[es:Chillador de sculk]]
+[[fr:Hurleur sculk]]
+[[ja:スカルクシュリーカー]]
+[[ko:스컬크 비명체]]
+[[pl:Sculkowe wrzeszczydło]]
+[[pt:Emissor de Sculk]]
+[[ru:Скалковый крикун]]
+[[zh:幽匿尖啸体]]

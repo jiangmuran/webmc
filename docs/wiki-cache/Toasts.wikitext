@@ -1,0 +1,182 @@
+{{About|the text boxes|the rabbit variant|Toast}}
+{{Page image|File:Music Toast Blind Spots.webp}}
+[[File:Music Toast Blind Spots.webp|thumb|A music toast when playing [[Blind Spots]] by [[C418]].]]
+'''Toasts''' are informational text boxes shown on the screen. They typically show up when the player unlocks new [[Recipe|crafting recipes]], grants [[Advancement|advancements]], or a [[song]] starts playing, and there are informational messages which can be of any type.
+
+[[Tutorial hints]] are also specific toasts that serve to teach the player how to play the game.
+
+== Description ==
+[[File:Toast Recipe Java Edition.png|thumb|A recipe toast in ''Java Edition''.]]
+[[File:Toast Bedrock Edition.png|thumb|A recipe toast in ''Bedrock Edition''.]]There are various situations where a toast is shown, each has different appearances or positions:
+
+'''Gameplay:'''
+
+* When the player unlocks crafting (or smelting) [[recipes]] in Survival, if recipe unlocking is enabled. The toast cycles through the inventory icons of all unlocked recipes until it disappears.
+* [[Tutorial hints]].
+* When obtaining an [[advancement]].{{Only|je|short=1}}
+* When joining a [[server]] without chat [[Social interactions|reporting]].{{Only|je|short=1}}
+* When joining a server that has a required resource pack to show download progress.{{Only|je|short=1}}
+* When a song starts playing, or plays (can be adjusted in the [[options]]).{{Only|je|short=1}}
+* When changing [[narrator]] mode.{{Only|je|short=1}}
+* When the game, in controller or touch mode, receives no input for 15 minutes and darkens the screen, an animated toast appears on the action bar prompting to press any button.{{Only|be|short=1}}
+* When performing a [[command macro]] that fails to execute, a toast appears showing the entered command.{{Only|be|short=1}}
+
+'''Menu:'''
+
+* When the disk storage is almost full, or completely full.
+* When a pack has a critical error.
+* While importing an add-on, world, or world template.{{Only|be|short=1}}
+* When purchasing, updating or downloading Marketplace content.{{Only|be|short=1}}
+* After capturing, or attempting to capture a [[screenshot]].{{Only|be|short=1}}
+* After submitting a rate to a Marketplace pack or adding/removing one to the wishlist.{{Only|be|short=1}}
+* After changing, creating, removing, or switching a [[skin]] in the [[Dressing Room]].{{Only|be|short=1}}
+* When a friend joins a singleplayer game and the game unpauses. This toast has a "Play" button resuming the game.{{Only|be|short=1}}
+* Certain news messages sent by Mojang Studios, like Marketplace offers.{{Only|be|short=1}} Mostly replaced by [[Title Screen#Bedrock Edition|pop-ups]] and [[Inbox]] messages.
+* After copying the build information in the legacy [[Settings#General 2|General]] settings to the clipboard.{{Only|be|short=1}}
+* When receiving a [[party]] invite. This toast has a button to open the Party tab in the social drawer.{{Upcoming|be|nocat=1}}
+* When a joined party moves to a world or the main menu. This toast has a countdown bar, and a decline button.{{Upcoming|be|nocat=1}}[[File:Party moving toast.png|thumb|A party moving toast.{{upcoming|nocat=1}}]]
+
+{{IN|be}}, menu toasts can be opened by pressing {{control|Open Notification}}/tapping on it, which redirects to the settings tab or resource pack with the problem, opens the pack's technical details menu allowing to fix the problem, or opens the party invite/declines moving with a party. The duration of menu toast messages can be adjusted in the accessibility [[settings]]. Toasts can be completely disabled in the ''[[Editor]]''.
+
+[[Ore UI]] menu screens have a variant of toasts that are small, simple black boxes that pop up on the bottom of the screen with a Noto Sans text.
+
+== Sounds ==
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =In.ogg
+|subtitle=MC-200463
+|source=ui
+|description=When a toast pops up
+|id=ui.toast.in
+|translationkey=-
+|volume=0.4
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Out.ogg
+|subtitle=MC-200463
+|source=ui
+|description=When a toast slides off the screen
+|id=ui.toast.out
+|translationkey=-
+|volume=0.4
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Challenge complete.ogg
+|subtitle=MC-200463
+|source=ui
+|description=When a challenge [[advancement]] is completed
+|id=ui.toast.challenge_complete
+|translationkey=-
+|volume=0.6
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Toast.ogg
+|source=sound
+|description=When a toast pops up
+|id=random.toast
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=In.ogg
+|source=sound
+|description=When a [[Recipe book|recipe]] is unlocked
+|id=random.toast_recipe_unlocking_in
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Out.ogg
+|source=sound
+|description=When a recipe toast finishes
+|id=random.toast_recipe_unlocking_out
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== History ==
+{{Missing information|When did {{BE}} toasts start being used to unlock recipes and the "you have been away from the game too long" toast}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.5|Added toasts.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.12|dev=17w13a|Toasts are now being used to display "Unlocked recipe" toasts.}}
+|{{HistoryLine||1.13|dev=18w06a|"Unlocked recipe" toasts now show an icon in the top left to specify whether the unlocked recipe is a crafting or smelting recipe.}}
+|{{HistoryLine||1.17|dev=21w05a|<samp>toasts.png</samp> contains a new texture for the bundle tutorial.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Added an option to the Music & Sound settings that enables a music toast to be shown whenever a song starts playing.}}
+|{{HistoryLine|||dev=pre3|Toast sounds are now controlled by the "UI" source.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||0.15.0|dev=build 1|Added toasts.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.100|dev=?|Added a key to decline toasts shown on menu screens to keyboard & mouse controls, {{keys|M}} by default.}}
+|{{HistoryLine||Preview 26.0.25|Added the party moving toast.}}
+|{{HistoryLine||26.0|dev=?|Removed the {{keys|M}} key to decline menu toasts.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== ''Java Edition'' ===
+==== Gameplay ====
+<gallery mode="nolines" widths="300" heights="70">
+File:AdvancementMade.png|A toast after obtaining an [[advancement]] in ''Java Edition''.
+File:Music Toast Minecraft.png|A toast when playing ''[[Minecraft (song)|Minecraft]]'' by [[C418]] in ''[[Java Edition]]''.
+File:Toast Recipe Java Edition.png|A toast after unlocking a recipe in ''Java Edition''.
+</gallery>
+
+==== Informational ====
+<gallery mode="nolines" widths="300" heights="70">
+File:NarratorToastMessage.gif|A toast after changing the narrator's settings.
+File:Low space.png|A toast after attempting to save the world without adequate storage.
+File:Resource pack fail.png|A toast after a resource pack reload fails.
+File:Chat Reporting Verification Error Toast.png|A toast when entering a server with [[Chat Reporting]] disabled.
+File:Server Resource Pack Download progress bar 1.21.11.png| A toast showing download progress of a resource pack when joining a server.
+</gallery>
+
+=== ''Bedrock Edition'' ===
+<gallery mode="nolines" widths="300" heights="70">
+File:Toast Bedrock Edition.png|A toast after unlocking a recipe
+File:Party invite toast.png|A party invite toast
+File:Party moving toast.png|A party moving toast
+File:Joined game toast.png|The toast that appears when someone joins the game while it was paused
+File:Command macro toast.png|The toast that appears when a command macro fails
+File:Copy build info toast.png|The toast shown for copying build information
+File:BE Screenshot Popup Captured.png|Toast after capturing a [[screenshot]]
+File:BE Screenshot Popup Captured Almost Full.png|After capturing the 95th-99th screenshot
+File:BE Screenshot Popup Captured Full.png|After capturing the 100th screenshot
+File:BE Screenshot Popup Full 1.png|The first warning when the screenshot gallery is full
+File:BE Screenshot Popup Full 2.png|Later warnings when the gallery is full
+File:Copy coordinate toast.png|A toast shown after copying coordinates in the chat
+File:MCLive March 2026 toast.png|A toast promoting [[Minecraft Live – March 2026|Minecraft Live - March 2026]]
+File:Tiny Takeover Toast.png|A toast promoting [[Tiny Takeover]]
+File:Crafting recipe toast BE.png|A crafting recipe toast with the "Furnace Recipe Book" experiment enabled
+File:Smelting recipe toast BE.png|A smelting recipe toast with the experiment enabled
+File:Ore UI - Sleep Inactive Toast (Bedrock).jpg|The animated toast that appears when the game is idle. The dreaming icon is picked randomly (see [[Bedrock Edition GUI, UI, and Ore UI textures#Animations|here]]).  
+</gallery>
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[de:Toast]]
+[[ja:トースト]]
+[[lzh:幕]]
+[[pt:Balões]]
+[[uk:Тости]]
+[[zh:弹窗]]

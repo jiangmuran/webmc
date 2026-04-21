@@ -1,0 +1,98 @@
+{{stub|add more information about the feature and some screenshots of the feature}}
+{{Infobox structure
+| image = Sculk group generated.png
+| biome = {{BiomeLink|Deep Dark}} 
+| blocks =
+* {{BlockLink|Sculk Catalyst}}
+* {{BlockLink|Sculk Shrieker}}
+}}
+
+A '''sculk patch''' is a [[feature]] that places [[sculk catalyst]]s and [[sculk shrieker]]s in patches in the [[deep dark]] biome.
+
+== Data values ==
+
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=sculk-catalyst
+|spritetype=block
+|nameid=sculk_patch
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=sculk-catalyst
+|spritetype=block
+|nameid=sculk_patch_ancient_city
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=sculk-catalyst
+|spritetype=block
+|nameid=sculk_patch_deep_dark
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+{{nbt|compound|config}}
+** {{Nbt|int|charge_count}} The number of charges. Value between 1 and 32 (inclusive).
+** {{Nbt|int|amount_per_charge}} The initial value of each charge. Value between 1 and 500 (inclusive).
+** {{Nbt|int|spread_attempts}} The number of attempts to spread. Value between 1 and 64 (inclusive).
+** {{Nbt|int|growth_rounds}} The number of times to generate. Value between 0 and 8 (inclusive).
+** {{Nbt|int|spread_rounds}} The number of times to spread. Value between 0 and 8 (inclusive).
+** {{Nbt|int}}{{Nbt|compound|extra_rare_growths}} The number of extra shriekers generated.
+*** {{Nbt inherit/int provider}}
+** {{Nbt|float|catalyst_chance}} The probability of generating a catalyst. Value between 0.0 and 1.0 (inclusive).
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:sculk_patch",
+  "config": {
+    "amount_per_charge": 32,
+    "catalyst_chance": 0.5,
+    "charge_count": 10,
+    "extra_rare_growths": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 3,
+        "min_inclusive": 1
+      }
+    },
+    "growth_rounds": 0,
+    "spread_attempts": 64,
+    "spread_rounds": 1
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Added sculk patches.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.33|Added sculk patches behind the "Wild Update" experimental toggle.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Parcelle de sculk]]
+[[ja:スカルク群生体]]
+[[pt:Aglomerado de sculk]]
+[[zh:幽匿斑块]]

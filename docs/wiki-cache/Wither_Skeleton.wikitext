@@ -1,0 +1,441 @@
+{{For|the [[MCD:Mob|enemy mob]] in {{MCD}}|MCD:Wither Skeleton}}
+{{Infobox entity
+| image = Wither Skeleton.png
+| health = {{hp|20}}
+| behavior = Hostile
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}
+|invimage=Wither Skeleton Spawn Egg
+| damage = '''Armed:'''<br>
+{{ItemLink|Stone Sword}}: <br>
+'''{{IN|Java}}:'''<br>Easy: {{hp|5|withered=1}}<br>Normal: {{hp|8|withered=1}}<br>Hard: {{hp|12|withered=1}}
+<br>'''{{IN|Bedrock}}:'''<br>Easy: {{hp|5.5|withered=1}}<br>Normal: {{hp|9|withered=1}}<br>Hard: {{hp|13.5|withered=1}}
+<br>
+<hr>
+'''Unarmed:'''<br> Easy: {{hp|3|withered=1}}<br>Normal: {{hp|4|withered=1}}<br>Hard: {{hp|6|withered=1}}<br>
+<hr>
+'''[[File:Wither (effect).png|16px]] Wither:''' <br>{{hp|1|withered=1}} per 2 sec<br>{{EffectLink|id=wither|Wither (effect)|Wither}} for 10 sec ({{hp|5|withered=1|notag=1}})
+| spawn = {{EnvLink|Nether Fortress}} <br> When a [[wither]] reaches half health.{{only|bedrock|short=1}}<br>
+| speed = 0.25 when idle and 0.3125 when attacking
+| size = '''{{IN|Java}}:'''<br>
+Height: 2.4 blocks<br>Width: 0.7 blocks
+
+'''{{IN|Bedrock}}:'''<br>
+Height: 2.412 blocks<br>Width: 0.864 blocks
+| equipment = 
+{{drop|Item|id=Stone Sword|text=Stone Sword|sword}} (right hand: 95%; left hand: 5%{{only|java|short=1}})
+{{drop|Block|Carved Pumpkin}} (22.5% chance, only during Halloween) {{only|je|short=1}}<br>
+{{drop|Block|Jack o'Lantern}} (2.5% chance, only during Halloween) {{only|je|short=1}}
+}}
+A '''wither skeleton''' is a tall, black variant of a [[skeleton]] equipped with a [[stone sword]]. They inflict the [[Wither (effect)|Wither]] effect when attacking the [[player]]. They are found exclusively in [[Nether fortress]]es and are the only source of [[wither skeleton skull]]s, as well as the only [[renewable]] source of [[coal]].
+
+== Spawning ==
+Wither skeletons can spawn in [[Nether fortress]]es at a [[light#Light level|light level]] between 0 and 7, in [[Pack spawning|groups]] of 5{{Only|Java|short=JE}} or 2-3{{Only|Bedrock|short=BE}}:
+
+* In the structure bounding box of any single piece of the Nether fortress they can spawn on any block
+* In the larger area bounding box of the entire Nether fortress they can spawn exclusively on [[Nether bricks]]
+
+They are the only mobs that can spawn inside [[wither rose]]s due to their immunity to the damaging effect.
+
+{{Mob spawn table}}
+
+=== Spider jockeys ===
+{{exclusive|Bedrock|section=1}}{{Removed feature|edition=java|section=2}}
+[[Spider]]s and [[cave spider]]s spawned in the Nether using commands or [[spawn egg]]s have a 1% chance to spawn as a [[spider jockey]], with an 80% chance of that spider being ridden by a wither skeleton.
+
+=== Halloween ===
+{{exclusive|java|section=1}}
+On Halloween, wither skeletons have a 22.5% chance of spawning wearing a [[carved pumpkin]] and a 2.5% chance of spawning wearing a [[Jack o'lantern]]. They are never dropped.
+
+=== Withers ===
+{{exclusive|Bedrock|section=1}}
+The [[wither]] spawns 3-4 wither skeletons when below half health on Normal and Hard [[difficulties]].
+
+== Drops ==
+{{DropTable
+|{{DropLine|name=Coal|edition=java|quantity=-1-1|lootingquantity=0-1}}
+|{{DropLine|name=Coal|edition=bedrock|quantity=0-1|lootingquantity=0-1}}
+|{{DropLine|name=Bone|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Wither Skeleton Skull|edition=java|notes=player|dropchance=0.025|lootingchance=0.01}}
+|{{DropLine|name=Wither Skeleton Skull|edition=bedrock|notes=player|dropchance=0.025|lootingchance=0.02}}
+|{{DropLine|name=Wither Skeleton Skull|notes=charged_creeper}}
+|notes=
+charged_creeper = Only when killed by a [[charged creeper]].
+}}
+* 8.5% chance of dropping their unenchanted stone [[sword]] which has a random [[durability]]. This chance increases by 1% per level of Looting, for a maximum of 11.5% chance with Looting III.
+* {{xp|5}} experience orbs when killed by a [[player]] or tamed [[wolf]], and an additional {{xp|1|3}} is dropped per piece of naturally-spawned equipment that ''does not'' drop upon death.
+** Because all wither skeletons spawn with a stone sword, each of them effectively drop {{xp|6|8}} if the sword is not dropped.
+** If the wither skeleton ''does'' drop its stone sword, it drops the default {{xp|5}} instead.
+* A [[carved pumpkin]] or [[jack o'lantern]] worn by a wither skeleton spawned on Halloween is never dropped.
+
+== Behavior ==
+Wither skeletons wander aimlessly when idle. They [[sprint]] to attack [[player]]s, [[iron golem]]s, [[Turtle#Predators|baby turtles]], [[piglin]]s, and [[piglin brute]]s within 16 blocks.
+
+When an [[entity]] is attacked by a wither skeleton on any [[difficulty]], it is inflicted with the [[Wither (effect)|Wither effect]] for 10 seconds, which turns the [[health]] bar black ({{hp|20|notag=1|withered=1}}) and decreases it by {{hp|1|withered=1}} every two seconds. Unlike [[Poison]], this effect can cause death.
+
+[[Wolves]] are aggressive toward wither skeletons, which retaliate when attacked. Wither skeletons flee from wolves {{in|java}}, but do not {{in|bedrock}} because they are part of the skeleton [[family]] and wolves attack any mob from that family.<ref>{{bug|MCPE-173569||Wither Skeletons do not flee from Wolves}}</ref> Despite being associated to iron golems, [[villager]]s and [[wandering trader]]s are ignored by wither skeletons. However, a wither skeleton can retaliate if a [[firework rocket]] set by a villager hits it.
+
+In Normal and Hard difficulties, some wither skeletons pick up dropped equipment. The chance depends on [[regional difficulty]], with up to 55% of them capable of picking up [[sword]]s higher than stone [[tiers|tier]] plus any [[armor]]. Wither skeletons never take {{ItemLink|bow}}s; {{in|Java}}, if they hold a bow (which can be done with {{cmd|/summon wither_skeleton ~ ~ ~ {equipment:{mainhand:{id:bow, count:1<nowiki>}}}</nowiki>}}) they shoot flaming [[arrow]]s even if their bows are not enchanted, dealing the same damage as a normal skeleton would plus an additional {{hp|4}} of fire damage. If the wither skeleton is holding a [[tipped arrow]] or [[spectral arrow]] in its off-hand, it shoots that type of arrow, and the arrow held is not consumed. They cannot use [[crossbow]]s.
+
+Wither skeletons are immune to [[fire]] and the Wither effect. They still seek shade or [[water]] during daylight if they are in the [[Overworld]], even though they do not burn in [[sun]]light.
+
+As they are also under the "skeletons" [[entity type tag]], if a wither skeleton (only possible through commands) kills a [[creeper]], the creeper drops a [[music disc]], randomly selected from [[13]], [[Music Disc cat|cat]], [[Music Disc blocks|blocks]], [[chirp]], [[far]], [[mall]], [[mellohi]], [[stal]], [[strad]], [[ward]], [[11]], and [[wait]].{{only|java}}
+
+Being an [[undead]] mob, they are: 
+* damaged by the status effect [[Instant Health]] and healed by the status effect [[Instant Damage]].
+* unaffected by the status effects [[Regeneration]] and [[Poison]].
+* ignored by the [[wither]].
+* affected by the [[Smite]] enchantment.
+* unable to swim in [[water]], but do not drown.
+* a threat to [[armadillo]]s, causing them to hide in their shell.
+
+Due to their height of 2.4 blocks, they cannot fit through openings 2 blocks tall.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Wither skeleton idle1.ogg
+|sound2=Wither skeleton idle2.ogg
+|sound3=Wither skeleton idle3.ogg
+|subtitle=Wither Skeleton rattles
+|source=hostile
+|description=Randomly
+|id=entity.wither_skeleton.ambient
+|translationkey=subtitles.entity.wither_skeleton.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wither skeleton hurt1.ogg
+|sound2=Wither skeleton hurt2.ogg
+|sound3=Wither skeleton hurt3.ogg
+|sound4=Wither skeleton hurt4.ogg
+|subtitle=Wither Skeleton hurts
+|source=hostile
+|description=When a wither skeleton is damaged
+|id=entity.wither_skeleton.hurt
+|translationkey=subtitles.entity.wither_skeleton.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wither skeleton death1.ogg
+|sound2=Wither skeleton death2.ogg
+|subtitle=Wither Skeleton dies
+|source=hostile
+|description=When a wither skeleton dies
+|id=entity.wither_skeleton.death
+|translationkey=subtitles.entity.wither_skeleton.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wither skeleton step1.ogg
+|sound2=Wither skeleton step2.ogg
+|sound3=Wither skeleton step3.ogg
+|sound4=Wither skeleton step4.ogg
+|subtitle=Footsteps
+|source=hostile
+|description=While a wither skeleton is walking
+|id=entity.wither_skeleton.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|subtitle=Skeleton shoots
+|source=hostile
+|description=When a wither skeleton shoots an arrow (when given a bow through commands)
+|id=entity.skeleton.shoot
+|translationkey=subtitles.entity.skeleton.shoot
+|volume=1.0
+|pitch={{frac|5|6}}-1.25
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Wither skeleton idle1.ogg
+|sound2=Wither skeleton idle2.ogg
+|sound3=Wither skeleton idle3.ogg
+|source=hostile
+|description=Randomly
+|id=entity.wither_skeleton.ambient
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wither skeleton hurt1.ogg
+|sound2=Wither skeleton hurt2.ogg
+|sound3=Wither skeleton hurt3.ogg
+|sound4=Wither skeleton hurt4.ogg
+|source=hostile
+|description=When a wither skeleton is damaged
+|id=entity.wither_skeleton.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wither skeleton death1.ogg
+|sound2=Wither skeleton death2.ogg
+|source=hostile
+|description=When a wither skeleton dies
+|id=entity.wither_skeleton.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wither skeleton step1.ogg
+|sound2=Wither skeleton step2.ogg
+|sound3=Wither skeleton step3.ogg
+|sound4=Wither skeleton step4.ogg
+|source=hostile
+|description=While a wither skeleton is walking
+|id=entity.wither_skeleton.step
+|volume=0.15
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Wither Skeleton
+|spritetype=entity
+|nameid=wither_skeleton
+|entitytags=burn_in_daylight,can_breathe_under_water, ignores_poison_and_regen, inverted_healing_and_harm, skeletons, undead, wither_friends, sensitive_to_smite 
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wither Skeleton
+|spritetype=entity
+|nameid=wither_skeleton
+|showentityfamily=y
+|entityfamily=mob,monster,skeleton,undead,wither
+|id=48
+|foot=1}}
+
+=== Entity data ===
+Wither skeleton have entity data associated with them that contains various properties. The wither skeleton is taller than the skeleton.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Monster Hunter;Camouflage;Sniper Duel;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+<!-- Wither Skeleton is not a valid mob for Sniper Duel.-->
+{{load advancements|Monster Hunter;Monsters Hunted;Spooky Scary Skeleton;It Spreads;Not Today, Thank You}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w36a|[[File:Wither Skeleton JE1 BE1.png|32px]] Added wither skeletons.}}
+|{{HistoryLine|||dev=12w38b|Wither skeletons now spawn more frequently.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Wither skeletons can now sprint toward the [[player]].}}
+|{{HistoryLine||1.8|dev=14w11a|Wither skeletons now run away from [[creeper]]s that are about to explode.}}
+|{{HistoryLine|||dev=14w25a|Wither skeletons no longer visibly catch fire when going into fire or lava.}}
+|{{HistoryLine|||dev=14w30a|Wither skeletons now drop their [[wither skeleton skull|skull]] when killed by a charged creeper.
+|[[File:Wither Skeleton JE2.png|32px]] The weapon holding position of wither skeletons has been changed.}}
+|{{HistoryLine||1.8.1|dev=pre1|Wither skeletons no longer run away from [[creeper]]s that are about to explode.}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Wither Skeleton JE3 BE2.png|32px]] Wither skeletons now lower their arms when idle and swing their arms when [[damage|damaging]] something.
+|Wither skeletons now sometimes (11% of times) spawn with their left hand as their main hand.
+|Wither skeletons now have the ability to hold [[item]]s in both of their hands.}}
+|{{HistoryLine|||dev=15w39a|Wither skeletons are now slightly shorter (2.4 [[block]]s tall rather than 2.535) and narrower (0.7 blocks instead of 0.72).}}
+|{{HistoryLine||1.10|dev=16w20a|Added separate [[spawn egg]]s for wither skeletons.}}
+|{{HistoryLine|||dev=pre2|The wither skeleton spawn egg has been removed.}}
+|{{HistoryLine||1.11|dev=16w32a|The wither skeleton spawn egg has been re-added.
+|The wither skeleton's in-game name is now "Wither Skeleton" instead of "Skeleton".
+|Creepers no longer drop music discs when killed by wither skeletons.<ref>{{bug|MC-112579}}</ref>
+|Wither skeletons can no longer spawn from normal skeleton spawn egg used in the Nether.}}
+|{{HistoryLine|||dev=16w39a|Wither skeletons now have their own [[sound]]s.}}
+|{{HistoryLine||1.13|dev=18w19a|Wither skeletons now sink underwater.
+|Wither skeletons no longer [[drown]] underwater.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Wither Skeleton.png|32px]] The texture of wither skeletons has been changed.
+|Wither skeletons are now immune to the [[Wither (effect)|Wither effect]].|[[Creeper]]s now drop [[music disc]]s when killed by wither skeletons again.{{fn|Wither skeletons can only be given the ability to damage creepers through commands, such as being given a bow.}}}}
+|{{HistoryLine|||dev=19w09a|Wither skeletons holding [[tipped arrow]]s or [[spectral arrow]]s in their off-hand now shoot that type of [[arrow]].<ref>{{bug|MC-106133}}</ref>}}
+|{{HistoryLine||September 28, 2019|link={{ytl|leBJrc15yno|t=702|}}|Announced [[piglin]]s, which attack wither skeletons.}}
+|{{HistoryLine||1.15|dev=19w37a|Mobs that spawn wearing carved pumpkins or jack o'lanterns on Halloween no longer drop them.}}
+|{{HistoryLine||1.16|dev=20w07a|Added piglins, which attack wither skeletons.}}
+|{{HistoryLine|||dev=20w10a|Wither skeletons now attack piglins on sight.<ref>{{bug|MC-172567}}</ref>}}
+|{{HistoryLine|||dev=20w21a|Wither skeletons are now the only [[mob]]s that can spawn on [[wither rose]]s.}}
+|{{HistoryLine||1.19|dev=pre1|Wither skeletons now spawn from light level 0 to 11.}}
+|{{HistoryLine||1.19.3|dev=22w46a|Wither skeletons now spawn from light level 0 to 7 in the Nether.}}
+|{{HistoryLine||1.21.4|dev=24w45a|Wither skeletons now prefer to pick [[bows]] from the ground as opposed to other items.}}
+|{{HistoryLine|||dev=24w46a|Wither skeletons now no longer pick up bows.}}
+|{{HistoryLine||1.21.11|dev=pre1|Wither skeletons can no longer pick up spears.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Wither Skeleton JE1 BE1.png|32px]] Added wither skeletons.}}
+|{{HistoryLine|||dev=build 9|Wither skeletons are now larger than regular [[skeleton]]s.}}
+|{{HistoryLine|||dev=build 12|Added new [[sound]]s for dying wither skeletons.}}
+|{{HistoryLine||v0.15.0|dev=build 1|[[File:Wither Skeleton JE3 BE2.png|32px]] Wither skeletons now lower their arms when idle and swing their arms when [[damage|damaging]] something.
+|Added separate [[spawn egg]]s for wither skeletons.}}
+|{{HistoryLine||v0.16.0|dev=build 4|Wither skeletons now spawn when a [[wither]]'s [[health]] reaches 50%.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Wither skeletons no longer spawn with gear (or [[enchanting|enchanted]] gear).}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Wither skeletons now sink in [[water]].
+|Wither skeletons no longer [[drown]] underwater.}}
+|{{HistoryLine|||dev=beta 1.5.0.4|Wither skeletons now seek and attack baby [[turtle]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Wither Skeleton JE4 BE3.png|32px]] The texture of wither skeletons has been changed.|Wither skeletons can now be renamed with a [[name tag]].<ref>{{bug|MCPE-20701}}</ref>}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Wither skeletons now have ability to pick up [[item (entity)|item]]s.
+|Added [[piglin]]s, which attack wither skeletons.}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.22|Wither skeletons now spawn from light level 0 to 7 in the Nether.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.20|Wither skeletons now have the same [[sound]]s as in {{JE}}.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.24|Wither skeletons now have the same "step" sounds as in {{JE}}.<ref>{{bug|MCPE-174857}}</ref>}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.26|Wither skeletons now spawn as riders in [[spider jockey]]s when [[spider]]s are spawned in the Nether again. They did not since Pocket Edition 1.1.0 due to an identifier change.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.22|Wither skeletons can now pick up [[copper sword]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Wither Skeleton JE1 BE1.png|32px]] Added wither skeletons.}}
+|{{HistoryLine||xbox=TU20|xbone=CU8|ps3=1.13|psvita=1.13|ps4=1.13|Wither skeletons now rarely spawn anywhere in the [[Nether]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Wither skeletons no longer visibly catch fire when going into fire or lava.|Wither skeletons now drop their [[Wither Skeleton Skull|skull]] when killed by a charged [[creeper]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Wither skeletons now use the [[Java_Edition_removed_features#Mob_sounds|old sound]] for dying.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Wither Skeleton JE3 BE2.png|32px]] Wither skeletons now lower their arms when idle and swing their arms when [[damage|damaging]] something.|Wither skeletons now sometimes spawn with their left hand as their main hand.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added separate [[spawn egg]]s for wither skeletons.|Wither skeletons can no longer spawn from normal skeleton spawn egg used in the Nether.}}
+|{{HistoryLine||xbox=TU57|xbone=CU49|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 27|switch=1.0.7|Wither skeletons no longer fear daylight and attack anything that lives.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Wither skeletons now spawn when a [[wither]]'s [[health]] reaches 50%.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Wither skeletons now sink in [[water]].
+|Wither skeletons no longer [[drown]] underwater.|Wither skeletons now have the same sounds as {{in|java}}.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Wither Skeleton JE1 BE1.png|32px]] Added wither skeletons.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID has been changed changed from {{code|Skeleton}} to {{code|wither_skeleton}}, {{code|SkeletonType}} tag is removed.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine||1.20.3|dev=23w40a|Wither skeletons are now part of the {{cd|#can_breathe_under_water}} and {{cd|#undead}} [[tag]]s.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has been changed from {{code|skeleton.wither}} to {{code|wither_skeleton}}.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Wither Skeleton.png|A wither skeleton
+Wither Skeleton Targeting.png|A wither skeleton targeting.
+File:Wither Skeleton with Carved Pumpkin.png|A wither skeleton with a [[carved pumpkin]] on its head.
+File:Wither Skeleton in iron armor.png|A wither skeleton wearing iron [[armor]] and wielding an iron [[sword]].
+File:Wither Skeleton Aiming without a Sword.png|A wither skeleton targeting without a weapon.
+File:Wither Skeleton with Bow.png|A wither skeleton holding a [[bow]], ready to fire an arrow.
+File:Spider Jockey Wither Skeleton JE3.png|A wither skeleton spider jockey.{{Only|be}}
+File:Cave Spider Jockey (Wither Skeleton) BE3.png|A wither skeleton cave spider jockey.{{Only|be}}
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Skeleton comparison.png|A wither skeleton being compared to its variants {{in|je}}.
+WitherSkeletonOverworld.jpg|A wither skeleton in the [[Overworld]].
+Wither Skeleton Jockey.png|A wither jockey.
+Wither Skeleton 2.png|A wither skeleton next to the wall of a Nether fortress.
+Wither Skeleton and Blaze.png|A wither skeleton and a [[blaze]] idling in a [[Nether fortress]].
+Blazes and Wither Skeleton near a Spawner.png|A wither skeleton and two [[blaze]]s near a blaze [[monster spawner]].
+Wither skeleton on Halloween..png|Wither skeleton wearing a pumpkin on Halloween.
+Wither Skeleton Halloween Screenshot.png|Wither skeleton wearing a [[jack o'lantern]] in the [[Nether]].
+Tikiana WitherSkeleton1.png|A wither skeleton in a Nether fortress.
+File:Wither Skeleton with Tall Kai.png|A wither skeleton compared to a tall player.{{only|Bedrock}}
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:MInecraft-Nether-Soulsand-Valley-01.jpg|A preview of two wither skeletons in the [[Soul Sand Valley|soul sand valley]].
+File:Dev Diaries wither skeleton jumpscare.jpeg
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Wither Skeleton (texture).png|Wither skeleton texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Pretty Scary Update poster.png|Wither Skeleton in promotional artwork for the [[Pretty Scary Update]].
+File:NetherUpdateArtwork.png|Wither Skeletons in promotional artwork for the [[Nether Update]].
+File:Wither Skeleton (Dungeons).png|A [[MCD:Wither Skeleton|Wither Skeleton]], as it appears in [[Minecraft Dungeons]].
+File:LEGO Wither skelly.png|[[LEGO Minecraft]] Wither Skeleton.
+File:Acid Wither Skeleton.png|"Acid Wither Skeleton," an officially licensed T-Shirt design.
+File:Wither Skeleton Bottle.png|An officially licensed cup featuring a wither skeleton.
+File:MCWSC-GITM 16-17.png|A wither skeleton as it appears in [[Ghast in the Machine!]]
+Action Figure Photo Wither Skeleton.jpg|Wither skeleton [[action figure]].
+</gallery>
+
+== See also ==
+* [[Skeleton (disambiguation)]]
+* [[Wither]]
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Hostile mobs]]
+[[Category:Undead mobs]]
+[[Category:Nether mobs]]
+[[Category:Monster mobs]]
+
+[[cs:Wither kostlivec]]
+[[de:Witherskelett]]
+[[es:Esqueleto del Wither]]
+[[fr:Wither squelette]]
+[[it:Scheletro di Wither]]
+[[ja:ウィザースケルトン]]
+[[ko:위더 스켈레톤]]
+[[lzh:凋靈骷髏]]
+[[nl:Witherskelet]]
+[[pl:Witherowy szkielet]]
+[[pt:Esqueleto Wither]]
+[[ru:Скелет-иссушитель]]
+[[uk:Візер-скелет]]
+[[zh:凋灵骷髅]]

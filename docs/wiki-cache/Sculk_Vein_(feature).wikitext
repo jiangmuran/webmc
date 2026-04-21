@@ -1,0 +1,93 @@
+{{About|the feature|the block|Sculk Vein|the similar feature that places glow lichen|Glow Lichen (feature)}}
+{{Infobox structure
+| title = Sculk Vein
+| image = Sculk vines generated.png
+| biome = {{BiomeLink|Deep Dark}}
+| blocks =
+* {{BlockLink|Sculk Vein}}
+}}
+
+A '''sculk vein''' is a [[feature]] that consist of several [[sculk vein]] blocks. It generates exclusively in the [[deep dark]] biome.
+
+== Generation ==
+The sculk vein feature generates on the four sides and lower surface of stone-like blocks including [[stone]], [[andesite]], [[diorite]], [[granite]], [[dripstone block]]s, [[calcite]], [[tuff]], and [[deepslate]]. It generates only in [[air]] and [[water]].
+
+== Data values ==
+
+=== ID ===
+
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=sculk-vein
+|spritetype=block
+|nameid=multiface_growth
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=sculk-vein
+|spritetype=block
+|nameid=sculk_vein
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+{{#lst:Glow Lichen (feature)|config}}
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:multiface_growth",
+  "config": {
+    "block": "minecraft:sculk_vein",
+    "can_be_placed_on": [
+      "minecraft:stone",
+      "minecraft:andesite",
+      "minecraft:diorite",
+      "minecraft:granite",
+      "minecraft:dripstone_block",
+      "minecraft:calcite",
+      "minecraft:tuff",
+      "minecraft:deepslate"
+    ],
+    "can_place_on_ceiling": true,
+    "can_place_on_floor": true,
+    "can_place_on_wall": true,
+    "chance_of_spreading": 1.0,
+    "search_range": 20
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|[[File:Sculk Vein BE1.gif|32px]] Added sculk veins.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.18.0|exp=Vanilla Experiments|dev=beta 1.18.0.22|[[File:Sculk Vein BE1.gif|32px]] Added sculk veins behind the "Vanilla Experiments" experimental toggle.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.21|Sculk veins have been moved behind the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Sculk veins are now available without enabling experimental gameplay.}}
+}}
+
+== Issues ==
+{{issue list|sculk vein}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Veine de sculk (élément du terrain)]]
+[[ja:スカルクヴェイン (生成物)]]
+[[pt:Veios de sculk (recurso)]]
+[[uk:Скалкова жила (об'єкт)]]
+[[zh:幽匿脉络（地物）]]

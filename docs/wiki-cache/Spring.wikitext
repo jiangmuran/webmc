@@ -1,0 +1,218 @@
+{{About|generated waterfalls and lavafalls|the [[Minecraft Dungeons|Dungeons]] item|Dungeons: Spring Platform|the [[game drop]] released in 2025|Spring to Life|the single released to promote said game drop|Minecraft: Spring to Life|the feature that marks sulfur Caves|Sulfur Spring}}
+{{Infobox structure
+| title = Spring
+| image = Water.gif
+| image2 = Lava.gif
+| image1size = 100px
+| image2size = 100px
+| biome = 
+* {{EnvLink|Overworld}}
+* {{EnvLink|The Nether}}
+| blocks =
+{{BlockLink|Water}} or {{BlockLink|Lava}}
+}}
+A '''spring''' is a [[feature]] consisting of a single unit of [[liquid]] that flows out into spaces level with or lower than the source.
+
+== Types of springs ==
+There are three main categories of fluid springs.
+
+=== Normal springs ===
+[[File:Waterfall Cavern.png|thumb|right|A water spring as viewed from inside a cave.]]
+Normal springs can generate as either [[water]] or [[lava]] in the sides of [[stone]] surfaces. These are commonly encountered on the sides of cliffs, as well as inside [[cave]]s. Lava springs are a common source of forest fires.
+
+=== Ceiling springs ===
+[[File:Ceiling Lava.png|thumb|right|Nether ceiling spring.]]
+Ceiling springs are exclusive to [[the Nether]] and only generate with lava. They generate on ceilings, and the lava flows directly downwards from them.
+
+=== Hidden springs ===
+[[File:Lava Springs Plentiful.png|thumb|right|Hidden lava springs are plentiful at all depths in the Nether.]]
+Unlike other types of springs, these are hidden from generation, requiring all adjacent blocks to be solid. Currently, these only generate with lava in the Nether. They are particularly dangerous since they can be exposed at any depth in any biome while mining.
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=spring
+|spritetype=env
+|nameid=spring_feature
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=spring
+|spritetype=env
+|nameid=spring_water
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=spring_lava_overworld
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=spring_lava_frozen
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=spring_lava_nether
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=spring_nether_closed
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=spring_nether_open
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=lava-spring
+|spritetype=env
+|nameid=lava_spring_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=spring
+|spritetype=env
+|nameid=water_spring_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=spring
+|spritetype=env
+|nameid=minecraft:legacy:springs_feature
+}}
+{{ID table
+|displayname=[No displayed name]<ref group="fn">Lava spring in the Nether</ref>
+|spritename=lava-spring
+|spritetype=env
+|nameid=[No ID]
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|state}} The fluid to use.
+*** {{Nbt inherit/block state}}
+** {{nbt|int|rock_count}} (optional, defaults to 4) The required number of blocks adjacent to the spring that belong to {{nbt|list|valid_blocks}}. Block above is not counted.
+** {{nbt|int|hole_count}} (optional, defaults to 1) The required number of air blocks adjacent to the spring. Block above is not counted.
+** {{nbt|boolean|requires_block_below}} (optional, defaults to true) Whether the spring feature requires a block in {{nbt|list|valid_blocks}} below it.
+** {{nbt|string}}{{nbt|list|valid_blocks}} Can be a block ID or a block tag, or a list of block IDs.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:spring_feature",
+  "config": {
+    "hole_count": 1,
+    "requires_block_below": true,
+    "rock_count": 4,
+    "state": {
+      "Name": "minecraft:water",
+      "Properties": {
+        "falling": "true"
+      }
+    },
+    "valid_blocks": [
+      "minecraft:stone",
+      "minecraft:granite",
+      "minecraft:diorite",
+      "minecraft:andesite",
+      "minecraft:deepslate",
+      "minecraft:tuff",
+      "minecraft:calcite",
+      "minecraft:dirt",
+      "minecraft:snow_block",
+      "minecraft:powder_snow",
+      "minecraft:packed_ice"
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+Feature is hardcoded to check if the block above it belongs to {{nbt|list|valid_blocks}} and does not place if the block is not there.
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100616-1808|Added springs.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.0|dev=preview|Added [[the Nether]], which contains open nether springs.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.5|dev=13w02a|Added closed nether springs in the Nether.}}
+|{{HistoryLine||1.17|dev=21w08a|Normal springs are now able to generate below Y{{=}}0.}}
+|{{HistoryLine|||dev=21w15a|Normal springs are no longer able to generate below Y{{=}}0.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Springs are now able to generate in [[meadow]], [[lofty peaks]], [[snowcapped peaks]], [[snowy slopes]], and [[grove]]s.
+|Normal springs are able to generate below Y{{=}}0 once again.}}
+|{{HistoryLine|||dev=experimental snapshot 5|Water springs are now able to replace [[dirt]] and [[snow block]]s.
+|Springs are now able to generate in [[lush caves]].}}
+|{{HistoryLine|||dev=experimental snapshot 6|Water springs are slightly less common.}}
+|{{HistoryLine|||dev=21w42a|The maximum Y-level of water spring generation has been changed to Y{{=}}192.
+|Water springs have been made slightly less common again.
+|Lava springs are now able to replace [[calcite]], [[dirt]], [[powder snow]], and [[packed ice]].}}
+|{{HistoryLine|||dev=21w43a|Lava springs are no longer able to replace [[snow block]], [[powder snow]], [[packed ice]].<ref name="MC-239397">{{bug|MC-239397||Lava pockets generate in icebergs|Fixed}}</ref>
+|Added frozen lava springs that can replace snow block, powder snow, packed ice, which generate in [[jagged peaks]], [[frozen peaks]], [[snowy slopes]], and [[grove]]s.}}
+|{{HistoryLine|||dev=1.18-pre1|Regular lava springs are able to replace snow block, powder snow, packed ice again.}}
+|{{HistoryLine|||dev=1.18-pre3|Regular lava springs are no longer able to replace snow block, powder snow, packed ice again.<ref name="MC-239397" />}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.1.0|Added springs.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added [[the Nether]], which contains open and closed nether springs.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery widths="240">
+File:Squid Waterfall.png|A water spring in which two squid have spawned.
+File:Squids in flowing water next to mountain.png|Another three water-spring [[squid|squids]].
+File:DoubleLavaStream.png|2 lava springs, with the wildfire in the foreground.
+File:Multiplesprings.png|Numerous water springs and lava spring generated together in a [[windswept hills]] [[biome]].
+File:Lavawaterfall.png|Lava spring flowing to the ocean.
+File:Forestwaterfalls.png|2 water springs generated in birch forest biome.
+File:Lava flowing over sculk veins.png|A lava spring in a [[deep dark]] biome, directed by [[sculk vein]]s.
+File:HiddenlavainNether.png|A closed nether spring near a quartz ore blob.
+File:Lava & Water Spring.png|A lava spring generated next to a water spring, with the water actually touching the lava.
+</gallery>
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Source]]
+[[ja:源泉]]
+[[ko:샘]]
+[[pl:Wodospad]]
+[[pt:Nascente]]
+[[ru:Источник]]
+[[zh:涌泉]]

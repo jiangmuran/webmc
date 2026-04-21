@@ -1,0 +1,103 @@
+{{Infobox structure
+| title = Void Start Platform
+| image = Void Start Platform.png
+| biome = {{BiomeLink|The Void}}{{only|je|short=y}}<br>
+{{BiomeLink|Plains}}{{only|be|short=y}}
+| blocks =
+* {{BlockLink|Stone}}
+* {{BlockLink|Cobblestone}}
+| canspawn = No
+}}
+The '''void start platform''' is a [[feature]] of 33×33 square of [[stone]] with a single block of [[cobblestone]] in the center. One can generate at the origin of [[superflat]] worlds with "The Void" preset and [[single biome]] worlds if in [[The Void|{{code|the_void}} biome]].{{Only|je}}
+
+== Generation ==
+The void start platform spawns from [[Coordinates#Block position|block positions]] (-8, -61{{Only|je|short=1}}/-64{{Only|be|short=1}}, -8) to (24, -61{{Only|je|short=1}}/-64{{Only|be|short=1}}, 24), and thus the [[player]] spawns at Y=-60{{Only|je|short=1}}/Y=-63{{Only|be|short=1}}. This feature is most easily accessible through "The Void" [[presets|preset]] but it still generates if different layers are specified, even if it gets engulfed. Void start platforms replace any blocks such as even [[bedrock]] when generated underground.
+
+== Construction ==
+{{main|Void Start Platform/Structure}}
+Void start platforms are large platforms made up of [[stone]] and [[cobblestone]].
+
+== Data values ==
+=== ID ===
+
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=void-start-platform
+|spritetype=env
+|nameid=void_start_platform
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=void-start-platform
+|spritetype=env
+|nameid=void_start_platform
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}: Empty
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:void_start_platform",
+  "config": {}
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w37a|[[File:Void Start Platform JE1.png|32px]] Added void start platforms.}}
+|{{HistoryLine||1.13|dev=18w07c|Void start platforms no longer generate.<ref>{{bug|MC-125872|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=18w19a|Void start platforms now generate again.}}
+|{{HistoryLine|||dev=18w22b|Void start platforms no longer generate, once again.}}
+|{{HistoryLine|||dev=pre7|[[File:Void Start Platform JE2.png|32px]] Void start platforms now generate, once again. One [[stone]] block at the corner of the platform is missing.<ref>{{bug|MC-133205|||Fixed}}</ref>}}
+|{{HistoryLine||1.14|dev=Pre-Release 2|[[File:Void Start Platform JE6.png|32px]] Added the missing stone block.}}
+|{{HistoryLine||1.17|dev=21w05a|[[File:Void Start Platform JE7.png|40px]] Resized void start platforms from 33×33 to 48×48. Changed from one to nine cobblestone blocks.<ref>{{bug|MC-214187|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w17a|[[File:Void Start Platform JE8.png|32px]] Reverted 21w05a changes.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.23|Added "The Void" [[flat world]] preset, which generates the void start platform.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* The player first spawns right above the platform, even if there are layers of full opaque [[block]]s above it, causing [[suffocation]].
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Stone platform from below.png|A void start platform seen from below.
+File:Stoneplatform.png|A void start platform seen from above.
+File:Void platform Vibrant Visuals.jpeg|The void start platform with [[Vibrant Visuals]].
+File:The Void with mobs.png|Mobs spawning on the void start platform {{In|be}}.
+</gallery>
+
+== See also ==
+* {{EnvLink|Obsidian platform}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Plateforme initiale du vide]]
+[[ja:奈落の土台]]
+[[lzh:凌虛臺]]
+[[ru:Каменная платформа]]
+[[pt:Plataforma inicial do vazio]]
+[[zh:虚空平台]]

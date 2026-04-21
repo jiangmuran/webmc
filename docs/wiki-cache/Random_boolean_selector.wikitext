@@ -1,0 +1,46 @@
+{{Exclusive|java}}
+
+'''Random boolean selector''' is a technical [[feature]] that randomly chooses between two features with equal probability.
+
+== Data values ==
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=random_boolean_selector
+|foot=1
+}}
+
+=== Config ===
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|string}}{{nbt|compound|feature_false}}: {{json ref|placed feature|inline=1}}
+** {{nbt|string}}{{nbt|compound|feature_true}}: {{json ref|placed feature|inline=1}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:random_boolean_selector",
+  "config": {
+    "feature_false": {
+      "feature": "minecraft:clay_pool_with_dripleaves",
+      "placement": []
+    },
+    "feature_true": {
+      "feature": "minecraft:clay_with_dripleaves",
+      "placement": []
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Sélecteur de booléen aléatoire]]
+[[ja:Random boolean selector]]
+[[pt:Seletor booleano aleatório]]
+[[ru:Случайный селектор логического типа данных]]

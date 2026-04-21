@@ -1,0 +1,173 @@
+{{About|the former mechanism used to customize the appearance of game elements|asset customization in current versions of Minecraft|Resource pack|other uses}}
+{{outdated|This feature was present in earlier versions of {{MC}}, but has since been replaced by [[resource packs]].}}
+[[File:Texture pack example.png|thumb|300px|Default textures with a custom texture pack in the center. The texture pack being used is Jolicraft.]]
+
+'''Texture packs''' were a way to change the in-game textures of [[block]]s, [[item]]s, [[mob]]s, and the GUI.
+
+In [[Java Edition 1.6.1]], texture packs were replaced with [[resource pack]]s, which provide more control over textures and other game features, such as music and text.
+
+== Behavior ==
+[[File:Select Texture Pack.png|thumb|The texture pack selection screen.]]
+
+Each custom texture pack is either a [[wp:Zip (file format)|ZIP archive]] with a case-insensitive <code>.zip</code> suffix or a directory.
+
+Texture packs are placed in the {{file|directory|texturepacks|inline=1}} directory within {{file|directory|[[.minecraft]]|inline=1}}. They can be chosen from the [[options]], but only one pack can be selected at any given time.
+
+By default, the game uses the texture pack called ''Default''. It has the description ''The default look of Minecraft'' and a default pack.png. It's always present and uses textures from the {{file|archive|[[client.jar]]|inline=1}}. If a custom texture pack doesn't have a certain texture, the texture from the default texture pack is used instead.
+
+The ''Default'' pack has block and item textures 16×16 pixels in size. 32×32, 64×64, 128×128, 256×256, 512×512, and 1024×1024 textures were referred to as "HD". Textures of different resolutions can be mixed and matched within one texture pack.
+
+Texture packs in the older format from before 1.5 that are directories (not ZIP files) are displayed in red and marked as incompatible.
+
+Downloading a specific texture pack can be requested by [[server]]s when joining.
+
+== Contents ==
+
+<div class="treeview">
+* {{File|directory|''texture pack name''}} or {{File|archive|''texture pack name''.zip}} (case insensitive)
+** {{File|file|font.txt}}
+** {{File|file|pack.png}}: Image used as the thumbnail for the pack on the texture pack selection menu. Optional.
+** {{File|file|pack.txt}}
+** {{File|file|particles.png}}
+** {{File|directory|achievement}}
+*** {{File|file|bg.png}}
+*** {{File|file|icons.png}}
+*** {{File|file|map.txt}}
+** {{File|directory|armor}}
+*** {{File|file|''texture''.png}}
+** {{File|directory|art}}
+*** {{File|file|kz.png}}
+** {{File|directory|environment}}
+*** {{File|file|''texture''.png}}
+** {{File|directory|font}}
+*** {{File|file|''texture''.png}}
+** {{File|directory|gui}}
+*** {{File|file|''texture''.png}}
+*** {{File|directory|creative_inv}}
+**** {{File|file|''texture''.png}}
+** {{File|directory|item}}
+*** {{File|file|''texture''.png}}
+*** {{File|directory|chests}}
+**** {{File|file|''texture''.png}}
+** {{File|directory|lang}}
+*** {{File|file|''lang''.lang}}
+*** {{File|file|languages.txt}}
+** {{File|directory|misc}}
+*** {{File|file|''texture''.png}}
+** {{File|directory|mob}}
+*** {{File|file|''texture''.png}}
+*** {{File|directory|enderdragon}}
+**** {{File|file|''texture''.png}}
+*** {{File|directory|villager}}
+**** {{File|file|''texture''.png}}
+** {{File|directory|textures}}
+*** {{File|directory|blocks}}
+**** {{File|file|''texture''.png}}
+*** {{File|directory|items}}
+**** {{File|file|''texture''.png}}
+** {{File|directory|title}}
+*** {{File|file|black.png}}
+*** {{File|file|credits.txt}}
+*** {{File|file|mclogo.png}}
+*** {{File|file|mojang.png}}
+*** {{File|file|splashes.txt}}
+*** {{File|file|win.txt}}
+*** {{File|directory|bg}}
+**** {{File|file|''texture''.png}}
+</div>
+
+{{File|file|pack.txt|inline=1}} is a UTF-8 text file with LF or CRLF line endings, which can have up to two lines used as the description of the pack on the texture pack list. The text can be formatted using [[formatting codes]]. Any extraneous lines are cut off. This file is required for a texture pack directory, but not a texture pack ZIP file, to be detected.
+
+== Converting texture packs ==
+Texture packs using the format from before 1.5 can be converted to the 1.5 format using the [[Unstitcher]] tool.
+
+Texture packs can be converted to resource packs using the [[Texture Ender]] tool. Converting texture packs from before 1.5 is a two-step process, requiring them to be converted to the 1.5 format first by using Unstitcher.
+
+== Installing a texture pack ==
+{{Split|section=1|Tutorial:Installing a texture pack|reason=This would be better fit as a tutorial.|discussAnchor=It has been suggested that this section be split into its own page.}}
+{{Cleanup|section=1}}
+# Download a texture pack. Most texture packs are in [[Wikipedia:ZIP (file format)|ZIP]] file format, but as long as it has the necessary files ({{code|pack.txt}}), ''[[Minecraft]]'' recognizes a directory as a texture pack. In-depth instructions on obtaining the files to make custom texture packs are located at [[Tutorial:Custom texture packs]]. However this is not necessary, as of snapshot [[12w23a]], for as long as {{code|pack.txt}} exists, it is recognized as a texture pack.
+# Run ''Minecraft''. If ''Minecraft'' is already running, make sure to leave the world.
+# Click ''Texture Packs'' in ''Options''.
+# Click ''Open Texture Pack Folder''; this opens the directory where ''Minecraft'' stores all texture packs. If nothing happens, the directory must be found manually. Depending on the operating system it is located at:
+::* Windows XP and above: {{code|%appdata%\.minecraft\texturepacks}}.
+::* Linux: {{code|~/.minecraft/texturepacks}} (this directory may be hidden in the home directory).
+::* macOS: {{code|~/Library/Application Support/minecraft/texturepacks}} (this directory may be hidden).
+# ''Minecraft'' does not have to be closed when placing the texture pack in the opened directory.
+# In a few seconds the texture pack appears in ''Minecraft''. Select it and click "Done". The texture pack is now applied. If ''Minecraft'' did not update, simply exit and reopen the texture packs screen.
+
+=== Installation tips ===
+* Texture packs may redesign only some textures. So if the main menu looks the same after a pack is selected, it doesn't mean the pack is not working.
+* Many texture packs may be installed and overlap each other. The texture pack list can be scrolled by dragging the scrollbars up or down.
+* ''Minecraft'' may lock the currently used texture pack (for example, if the pack contains custom textures for user interface), so the file can't be overwritten. If the pack needs to be updated, it may be necessary to temporarily switch to the default pack and then overwrite the file.
+* To get an unzipped directory to show as a texture pack in ''Minecraft'', that directory needs a {{file|file|pack.txt|inline=1}} file in it. This, however, did not work prior to [[12w23a]].
+* Keep in mind that, if a texture pack is downloaded in ZIP form, it may contain another directory inside of it that has the texture pack's title, this is the actual texture pack. In this case, this directory must be copied to the {{file|directory|texturepacks|inline=1}} directory.
+* If an older version of ''Minecraft'' (1.2.5 for example) is being used and a texture pack for a newer version is installed, the texture pack still runs properly, and ignores the unused items or blocks.
+* If an older texture pack is used in a more recent version of ''Minecraft'', then the newer blocks and items show a "missing texture" because the texture pack isn't made for newer versions.
+* An editor is a great way to make a texture pack.
+Current versions of ''Minecraft'' support higher resolutions of texture packs. Traditionally, textures in-game work on a 16×16 block. Bigger texture packs can go all the way up to 512×512 (32×, 64×, 128×, 256×) but require better hardware to play smoothly.
+
+== History ==
+{{Update|section=1}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.2|Added official support for texture packs. Prior to this, users would have to manually replace the {{file|file|[[terrain.png]]|inline=1}} texture atlas in {{file|archive|[[client.jar]]|inline=1}} files, or use a mod.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=?|Fixed a crash related to HD textures, but they still don't work correctly on a vanilla client.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Players can now reload the texture pack by pressing {{keys|F3+T}}.}}
+|{{HistoryLine||1.3.1|dev=12w23a|Texture packs directories are now recognized.}}
+|{{HistoryLine|||dev=12w24a|The ''Open texture pack folder'' button now works on macOS.}}
+|{{HistoryLine||1.5|dev=13w02a|The {{file|file|terrain.png|inline=1}} and {{file|file|gui/[[items.png]]|inline=1}} were replaced by individual block and item textures, allowing for HD textures and animations.
+|These are respectively replaced by [[stitched_terrain.png]] and [[stitched_items.png]].
+|Texture pack directories (but not ZIP files) using the old format are marked as incompatible and displayed with a red name.}}
+|{{HistoryLine||1.6.1|dev=13w24a|Texture packs are no longer supported and are replaced with [[resource pack]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added support for texture packs.}}
+|{{HistoryLine||xbox=TU13|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the Plastic texture pack.}}
+|{{HistoryLine||xbone=CU4|ps3=1.10|psvita=1.10|ps4=1.10|Added the Steampunk texture pack.}}
+|{{HistoryLine||xbone=CU6|ps3=1.11|psvita=1.11|ps4=1.11|Added the Festive texture pack.}}
+|{{HistoryLine||xbox=TU23|xbone=CU11|ps3=1.15|psvita=1.15|ps4=1.15|Added the Pattern texture pack.}}
+}}
+
+== Trivia ==
+* The selected texture pack is saved to the options.txt file in the .minecraft folder, so the "skin:" value can be manually changed to the name of the ZIP file. This can be useful if the texture pack crashes the main menu, making impossible to change the pack using the texture selection screen. Erasing the pack name will reset it to default.
+* Resource packs that only add textures are called "texture packs" in the ''[[Minecraft]]'' [[Marketplace]].{{only|bedrock|short=y}}
+* The block texture visible when the [[player]]'s head is inside of a block is from the default texture pack, regardless of whether a custom texture pack is enabled or not.
+
+== Gallery ==
+<gallery>
+Texture Pack Prompt.png|First image of a texture pack prompt when joining a server.
+Pack.png|The pack.png used for the ''Default'' texture pack.
+</gallery>
+
+== See also ==
+* [[Tutorial:Custom texture packs]]
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+
+[[Category:Skins]]
+[[Category:UI]]
+[[Category:Game customization]]
+
+[[de:Texturenpaket]]
+[[es:Paquete de texturas]]
+[[fr:Pack de textures]]
+[[hu:Textúracsomagok]]
+[[it:Pacchetto grafico]]
+[[ja:テクスチャパック]]
+[[ko:리소스 팩]]
+[[nl:Thema]]
+[[pl:Paczki zasobów]]
+[[pt:Pacote de textura]]
+[[ru:Пакет текстур]]
+[[th:เทกซ์เจอร์แพ็ก]]
+[[tr:Doku Paketi]]
+[[zh:纹理包]]

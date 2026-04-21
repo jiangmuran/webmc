@@ -1,0 +1,690 @@
+{{For|the calibrated version of the sculk sensor|Calibrated Sculk Sensor}}
+{{Infobox block
+| image = Sculk Sensor.gif
+| imagecaption = ''[[Java Edition]]''
+| image2 = Sculk Sensor BE.gif
+| image2caption = ''[[Bedrock Edition]]''
+| invimage = Sculk Sensor
+| transparent = Yes
+| light = Yes (1)
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| tool = Hoe
+| waterloggable = Yes
+| mapcolor = {{Map color|Sculk Sensor}}{{only|je|short=1}}<br>{{Map color|black}}{{only|be|short=1}}
+}}
+A '''sculk sensor''' is a [[sculk family|sculk]] block that detects [[vibration]]s caused by nearby actions and events and emits a [[redstone]] signal in response. [[Player]]-caused vibrations can also trigger nearby [[sculk shrieker]]s. {{Control|Sneaking}} prevents the creation of vibrations while moving, and [[wool]] can be used to block or prevent them. Placing an [[Block of Amethyst|amethyst block]] next to a sculk sensor allows it to "relay" detected vibrations to other sculk sensors.
+
+== Obtaining ==
+=== Breaking ===
+A sculk sensor can be mined with any tool, but [[hoe]]s are the quickest. It drops itself only if mined with any tool enchanted with [[Silk Touch]]. If mined with a non-Silk Touch tool, it drops 5 [[experience]] instead.
+
+{{Breaking row|Sculk Sensor|Hoe|drop=0|horizontal=1}}
+
+=== Natural generation ===
+Sculk sensors generate within the [[deep dark]] biome and [[ancient cities]].
+
+{{block distribution}}
+
+=== Generated loot ===
+{{LootChestItem|sculk-sensor}}
+
+=== Post-generation ===
+A [[sculk catalyst]] has a 9% chance of generating a sculk sensor on top of a [[sculk]] block.
+
+== Usage ==
+=== Crafting ingredient ===
+Sculk sensors can be used to craft [[calibrated sculk sensor]]s.
+
+{{crafting usage}}
+
+=== Light ===
+A sculk sensor has a [[light level]] of 1. When active, it changes to a lighter block state without a change to the light level.
+
+=== Vibration detection ===
+[[File:Vibration JE1 BE1.gif|thumb|The sculk sensor vibration [[particle]].]]
+Sculk sensors detect vibrations in an 8 block spherical radius around it. Vibrations are caused by various events, such as players and mobs walking, placing or breaking blocks (except [[wool]] or [[carpet]]), gliding with [[elytra]], items falling on the ground, shooting projectiles, a [[piston]] extending or a wet [[wolf]] shaking itself off. Vibrations have an associated frequency; different events create vibrations of different frequencies.
+
+When a vibration is made within the range of a sculk sensor, a signal travels from the vibration source to the sensor at a speed of one block per [[game tick]] (20 blocks per second). When the signal arrives, the sensor is activated for {{convert|30|game tick|second}}. The sensor cannot detect any other vibrations while activated or while a signal is traveling to it.
+
+Sculk sensors have a cooldown period of {{convert|10|game tick|second}} after being placed or after deactivating. During this cooldown period, they cannot detect vibrations. This prevents a sensor from reactivating when a contraption it is powering (such as a piston) becomes unpowered.
+
+Sculk sensors don't detect vibrations from other sculk sources or the [[warden]] in ''[[Java Edition]]''.
+
+'''Sneaking'''<br>
+While [[sneaking]], a player is not detected while performing most actions corresponding to vibration frequencies 1, 2, or 3, such as moving, hitting the ground without taking damage, interacting with items, and shooting projectiles (although the projectile itself creates a vibration when it hits the ground).
+
+'''Wool occlusion'''<br>
+[[Wool]] and [[carpet]]s have a special interaction with sculk sensors. If a wool block is placed between a sensor and a vibration source, the sensor is not able to detect the placed wool nor vibrations behind it. Specifically, if the ray joining the cube centers of the sensor block and the vibration source passes through any wool blocks, the vibration is occluded. If the ray passes diagonally through the edge between two blocks, either one or the other block may occlude it but not both. Sculk sensors are not able to detect footsteps or dropped items on wool or carpet, placement or breaking of wool or carpet,  or wool or carpets dropping as [[item (entity)|items]].
+
+'''Sculk shriekers'''<br>
+Sculk sensors pass on the vibrations made by players to [[sculk shrieker]]s within 8 blocks of the sensor. For example, an item dropped by a player triggers the shrieker, but an item dropped by a dispenser or from a broken block does not; a player flying around with elytra triggers the shrieker, but a [[bat]] flying around does not. Alarms can be blocked by wool placed in between the sensor and shrieker, similar to how wool can block vibrations from reaching the sensor itself.
+
+=== Redstone emission ===
+[[File:SculkSensorPower.png|thumb|An activated Sculk Sensor. Only the block ''below'' the sensor is strongly powered. All other sides react as though the sensor itself were strongly powered.]]
+Sculk sensors emit a [[redstone]] signal  in every direction (including top and bottom) when they are activated. The redstone signal emitted from the bottom [[Redstone mechanics#Powered blocks|powers]] the block below the sensor strongly, whereas in all other directions it appears as though the sensor itself is the strongly powered block.
+
+The strength of the redstone signal is {{w|inversely proportional}} to the distance the vibration signal traveled – the closer the vibration is to the sculk sensor, the stronger the redstone signal is, so it reaches the maximum redstone signal strength when the vibration is directly on top of the sensor. The distance is measured from the block at which the vibration occurred; moving within a block never results in a different strength.
+
+<code>redstone_strength = max(1, 15 - floor(15 / detection_range * distance))</code>
+
+==== Vibration frequencies ====
+
+{{main|Vibration}}
+{{:Vibration}}
+
+==== Vibration resonance ====
+When a sculk sensor detects a vibration, any adjacent [[block of amethyst]] re-emits a vibration of the same frequency that the sculk sensor detected, which can be detected by other sensors and [[calibrated sculk sensors]].
+
+==== Things which are not detected ====
+The following occurrences, despite presumably causing physical motion, do not produce vibrations and therefore cannot be detected: 
+*Blocks destroyed by a fluid flowing into their space<ref>{{bug|MC-207410}}</ref>
+*Several blocks being destroyed due to their supporting block being removed:<ref>{{bug|MC-207411}}</ref>
+**Rails
+**Powered rails
+**Detector rails
+**Activator rails
+**Redstone wire
+**Redstone repeaters
+**Redstone comparators
+*Several cases where a [[dispenser]] fails to perform an action:<ref>{{bug|MC-208142}}</ref>
+**Flint and steel not creating fire
+**Bone meal not growing something
+**Heads and carved pumpkins, if not equipped on something or placed
+**Shulker boxes, if not placed
+**Shears, if there's nothing to shear
+**Glowstone, if it doesn't charge a respawn anchor
+*Inserting an [[eye of ender]] into an [[end portal frame]]<ref>{{bug|MC-208805}}</ref>
+*Eyes of ender breaking<ref>{{bug|MC-210153}}</ref>
+*[[Silverfish]] entering blocks<ref>{{bug|MC-210283}}</ref>
+*[[Water]] and [[lava]] flowing into existing spaces, or drying up<ref>{{bug|MC-210482}}</ref>
+*Changing the mode of a [[redstone comparator]]<ref>{{bug|MC-211331}}</ref>
+*Changing the delay on a [[redstone repeater]]<ref>{{bug|MC-214621}}</ref>
+*Changing the shape of a single unit of [[redstone wire]]<ref>{{bug|MC-214623}}</ref>
+*[[Fire]] extinguished by rain<ref>{{bug|MC-251525}}</ref>
+
+The following cases have been confirmed to be intentional: 
+*[[Axolotl]]s being bred via tropical fish buckets<ref name="axo-bucket">{{bug|MC-208799|||WAI}}</ref>
+*[[Moss block]]s replacing existing blocks<ref>{{bug|MC-214210|||WAI}}</ref>
+
+=== Piston interactivity ===
+Sculk sensors are immovable. [[Piston]]s cannot push them, and sticky pistons cannot push or pull them. [[Slime block]]s and [[honey block]]s do not stick to sculk sensors and have no effect whether the slime block or honey block is being pushed or pulled.
+
+== Sounds ==
+A sculk sensor is silent if [[waterlogged]]. It can still detect vibration, but does not produce sounds itself.
+
+=== Generic ===
+{{Sound table/Block/Sculk sensor}}
+
+=== Unique ===
+{{/Sounds}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sculk Sensor
+|spritetype=block
+|nameid=sculk_sensor
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=sculk-sensor
+|spritetype=block
+|nameid=sculk_sensor
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Sculk Sensor
+|nameid=sculk_sensor
+|blocktags=minecraft:is_hoe_item_destructible
+|spritetype=block
+|id=562
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=sculk-sensor
+|spritetype=block
+|nameid=SculkSensor
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|power|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|The sculk sensor's current power level.}}
+{{bst|sculk_sensor_phase|inactive|active, cooldown, inactive|Whether or not the sculk sensor is active.{{info needed}}}}
+{{bst|waterlogged|false|false,true|Whether or not there's water in the same place as this sculk sensor.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|sculk_sensor_phase|0|0,1,2|The sculk sensor phase.{{info needed}}|Unsupported|foot=1}}
+
+=== Block data ===
+A sculk sensor has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}}: Block entity data.
+** {{nbt inherit/blockentity}}
+** {{nbt|int|last_vibration_frequency}}: The frequency of the last vibration.
+** {{nbt|compound|listener}}: The vibration event listener for this sculk shrieker, sculk sensor, or calibrated sculk sensor.
+*** {{nbt|compound|event}}: Exists only if there is an incoming vibration.
+**** {{nbt|float|distance}}: The distance between this vibration's source and the block.
+**** {{nbt|string|game_event}}: The [[resource location]] of the vibration event that caused the current incoming vibration.
+**** {{nbt|list|pos}}: The coordinates of the source of this vibration.
+***** {{nbt|double}}: X coordinate.
+***** {{nbt|double}}: Y coordinate.
+***** {{nbt|double}}: Z coordinate.
+**** {{nbt|int-array|projectile_owner}}: If the vibration was caused by a projectile, this is the [[UUID]] of the entity that launched the projectile. Does not exist if vibration was not caused by a projectile.
+**** {{nbt|int-array|source}}: The [[UUID]] of the entity that caused the vibration. Does not exist if vibration was not caused by an entity.
+*** {{nbt|int|event_delay}}: How many ticks remain until triggered by the vibration. Set to 0 if there is no incoming vibration
+*** {{nbt|compound|selector}}: The data of the vibration selector.{{info needed|What does this mean?}}<!--Copied from machine translation from ZH wiki-->
+**** {{nbt|long|tick}}: The game time when the vibration occurs, or -1 if there is no vibration to choose from.{{info needed|What does this mean?}}<!--Copied from machine translation from ZH wiki-->
+**** {{nbt|compound|event}}: Candidate game event, with the same structure as the {{nbt|compound|event}} tag above.{{info needed|What does this mean?}}<!--Based on machine translation from ZH wiki-->
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Sneak 100}}
+
+== Advancements ==
+{{load advancements|Sneak 100}}
+
+== Videos ==
+{{yt|6dZ-kQXrxYg}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||2020|link={{tweet|CagilMartin1|1540933520268607490}}|Prototypes for the sculk sensor are made, previously simply stepping on sculk would produce noise and alert the warden.
+|[[File:Trypophobia_Skulk_Senser_Actavated_Level0Render.png|32px]] [[File:Trypophobia_Skulk_Senser_Actavated_Level1Render.png|32px]] [[File:Trypophobia_Skulk_Senser_Actavated_Level2Render.png|32px]] [[File:Trypophobia_Skulk_Senser_Actavated_Level3Render.png|32px]] [[File:Trypophobia_Skulk_Senser_Actavated_Level4Render.png|32px]] The sculk sensors during the trypophobia iteration were originally going to emit a redstone signal only after being triggered four times, visually shown by markings on its top that would light up each time.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DBvZ2Iqmm3M|t=13m02s}}|[[File:Sculk Sensor (pre-release 1).gif|32px]] The sculk sensor is shown off at [[Minecraft Live 2020]].
+|[[File:Sculk Sensor (pre-release item).png|32px]] Item model was without tendrils since they were an entity, similar to the book on the [[enchanting table]].}}
+|{{HistoryLine||November 13, 2020|link={{tweet|kingbdogz|1327265084352180224}}|[[File:Sculk Sensor (pre-release 2).gif|32px]] The sculk sensor has a new texture and clicking animation in a tweet from [[Brandon Pearce]].
+|Tendrils are no longer entities and merged to [[block model]].}}
+|{{HistoryLine||November 23, 2020|link={{tweet|kingbdogz|1330993128099229697}}|[[File:Sculk Sensor (pre-release 3).gif|32px]] The sculk sensor has a new clicking animation in a tweet from Brandon Pearce.}}
+|{{HistoryLine||November 27, 2020|link={{tweet|kingbdogz|1332335160038191105}}|[[File:Inactive Sculk Sensor JE1.png|32px]] The sculk sensor has a new final texture in a tweet from Brandon Pearce.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w49a|[[File:Sculk Sensor JE1.gif|32px]] [[File:Inactive Sculk Sensor JE1.gif|32px]] [[File:Active Sculk Sensor JE1.gif|32px]] Added sculk sensor with a new inactive and clicking animation.}}
+|{{HistoryLine|||dev=20w51a|Eating Start has been removed as an event.
+|Entity Hit's frequency value has changed from 9 to 8.
+|Container Close's frequency value has changed from 10 to 14.
+|Container Open's frequency value has changed from 11 to 15.
+|Walking on [[wool]] no longer causes vibrations.
+|Throwing wool as an item onto the ground no longer causes vibrations.
+|Sculk sensors are now silent while [[waterlogged]].}}
+|{{HistoryLine|||dev=21w05a|Added the following game events:
+{{pipe escape|
+{|class{{=}}"wikitable collapsible collapsed"
+! Output !! Vibration type
+|-
+| 6 || Minecart Moving, Ring Bell, Block Change
+|-
+| 7 || Drinking Finish, Prime Fuse
+|-
+| 8 || Mob Interact
+|-
+| 9 || Equip, Shear, Ravager Roar
+|-
+| 12 || Entity Place
+|-
+| 13 || Entity Killed
+|-
+| 14 || Shulker Close
+|-
+| 15 || Shulker Open
+|}
+}}
+}}
+|{{HistoryLine|||dev=21w13a|The two unused textures of the calibrated sculk sensor top and side have been removed.}}
+|{{HistoryLine|||dev=21w19a|Sculk sensors are now accessible only through commands.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Sculk sensors are now available in the [[Creative inventory]].}}
+|{{HistoryLine|||dev=21w37a|Sculk sensors are once again accessible only through commands.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Sculk sensors now generate in the deep dark biome.
+|Sculk sensors now drop [[experience]] when mined without [[Silk Touch]].
+|Sculk sensors now always activate when stepped on, even when sneaking.
+|Sculk sensors have been re-added to the Creative inventory.}}
+|{{HistoryLine|||dev=22w15a|[[Carpet]]s, like wool blocks, now dampen the vibrations caused by their placing, breaking or dropping as items.
+|Carpets now also dampen the vibrations caused by running and jumping over them.}}
+|{{HistoryLine||1.19.4|dev=23w06a|Sculk sensors are now able to detect more actions included in several existing and new game events, such as:
+
+* <code>block_change</code>:
+** Using shears on [[cave vines]], [[kelp]], [[twisting vines]], and [[weeping vines]].
+** Picking an item from a [[cave vine]] or a [[lectern]].
+** Interacting with items placed on both types of [[item frame]]s.
+** Trampling [[farmland]] into regular [[dirt]].
+** Charging up a [[respawn anchor]].
+** Interacting with a [[composter]].
+* <code>block_place</code>:
+** [[Turtle]] and [[frog]]s laying eggs.
+* <code>container_close</code>:
+** Closing a [[minecart with chest]] or a [[boat with chest]].
+* <code>entity_dismount</code> (new game event, with signal 6):
+** Dismount any passenger from any vehicle.
+* <code>entity_interact</code>:
+** Dyeing a [[sheep]].
+** Attaching or removing a [[lead]] from an entity.
+* <code>entity_mount</code> (new game event, with signal 7):
+** Mount any passenger to any vehicle.}}
+|{{HistoryLine|||dev=pre1|The <code>item_interact_finish</code> event now has a vibration frequency of 2 instead of 14.}}
+|{{HistoryLine|||dev=pre4|Sculk sensors are now activated upon breaking [[shulker]] bullets.}}
+|{{HistoryLine||1.20|dev=23w12a|Sculk sensors can now be used to craft [[calibrated sculk sensor]]s.
+|Vibration frequencies of many actions in the game have been tweaked and greatly simplified to prevent unwanted interference, as following:
+{{pipe escape|
+{|class{{=}}"sortable wikitable collapsible collapsed"
+|-
+!Old output!!Vibration type!!Game event!!Description
+|-
+|1||Step||<code>minecraft:step</code>
+||An [[entity]] walks on the ground or a [[minecart]] rolls{{note|name=step-carefully|Is ignored when sneaking.}} 
+|-
+| rowspan{{=}}"2" |2
+|Flap
+|<code>minecraft:flap</code>
+|A flying entity (e.g. a [[bat]]) flaps its wings
+|-
+|Item Interact Finish
+|<code>minecraft:item_interact_finish</code>
+|A player reels in a [[fishing rod]], stops blocking with a [[shield]], finishes pulling back a [[bow]] or [[crossbow]], throws a [[trident]], or retracts a [[spyglass]]{{note|name=step-carefully}}
+|-
+|3||Swim||<code>minecraft:swim</code>||Entity [[swimming]]{{note|name=step-carefully}}
+|-
+|4||Elytra Glide||<code>minecraft:elytra_glide</code>||Glides with [[elytra]]
+|-
+| rowspan{{=}}"2" |5
+|Hit Ground
+|<code>minecraft:hit_ground</code>
+|An entity or an item falls{{note|name=step-carefully}}
+|-
+|Teleport
+|<code>minecraft:teleport</code>
+|An entity (e.g. an [[enderman]]) teleports 
+|-
+| rowspan{{=}}"5" |6
+|Block Change
+|<code>minecraft:block_change</code>
+|A book is placed on a [[lectern]], a music disc is inserted into or ejected from a [[jukebox]], an item is added to or removed from a [[flower pot]], a [[campfire]] is filled with food{{note|name=dispenser|Also works with dispensers.}}, a [[candle]] is placed on a [[cake]], a big [[dripleaf]] is tilted, a [[bell]] is rung, a [[daylight detector]] switches mode, a bee enters or exits a [[beehive]], wax is added to or removed from a [[copper block]], a [[log]] is stripped of its bark, grass is converted into [[farmland]] or a path, a berry bush is harvested, a candle or campfire is lit or extinguished
+|-
+|Minecart Moving
+|<code>minecraft:minecart_moving</code>
+|Does not function currently<ref>{{bug|MC-213936}}</ref><!--Triggers strength of 1, which is step-->
+|-
+|Splash
+|<code>minecraft:splash</code>
+|An entity splashes in [[water]], a [[boat]] is above a [[bubble column]], or a boat paddles{{note|Despite being an occurrence of splashing, sculk sensors do ''not'' detect fishing bobbers hooking a fish; this has been confirmed by Mojang to be intentional.<ref>{{bug|MC-207334|||WAI}}</ref>}}
+|-
+|Entity Shake
+|<code>minecraft:entity_shake</code>
+|A [[wolf]] shakes off water after getting wet
+|-
+|Note Block Play
+|<code>minecraft:note_block_play</code>
+|A [[note block]] emits a sound
+|-
+| rowspan{{=}}"3" |7
+|Drink
+|<code>minecraft:drink</code>
+|A [[potion]] is finished drinking{{note|Milk does not trigger any vibration, and honey and stews trigger the eating event. See {{bug|MC-213937}}.}}
+|-
+|Prime Fuse
+|<code>minecraft:prime_fuse</code>
+|A [[TNT]] or a [[creeper]] begins exploding
+|-
+|Projectile Shoot
+|<code>minecraft:projectile_shoot</code>
+|A projectile is fired{{note|name=step-carefully}}
+|-
+| rowspan{{=}}"4" |8
+|Entity Interact
+|<code>minecraft:entity_interact</code>
+|Giving a [[golden apple]] to a [[zombie villager]] with Weakness, healing a tamed wolf, healing an [[iron golem]], a [[panda]] is given a food item, or most instances of successfully feeding an animal.
+|-
+|Projectile Land
+|<code>minecraft:projectile_land</code>
+|A projectile hits something
+|-
+|Eat
+|<code>minecraft:eat</code>
+|A slice of cake is eaten, a [[horse]] eats,<ref>{{bug|MC-213950}}</ref> a panda eats, an animal eats grass, or a player eats [[food]].{{note|Honey bottles and stews count as food for this case.}}
+|-
+|Entity Damage
+|<code>minecraft:entity_damage</code>
+|An entity is damaged or any entity except an armor stand is killed<!--Triggering on death is likely a bug except for boats, minecarts, and item entities. The code for those 3 is written differently and more explicitly states this behavior. Might still be a bug though. See MC-213947.-->
+|-
+| rowspan{{=}}"3" |9
+|Equip 
+|<code>minecraft:equip</code>
+|An item is put on an [[armor stand]], or [[armor]] is equipped (either through the {{ctrl|use}} button, or from the inventory).
+|-
+|Shear
+|<code>minecraft:shear</code> 
+|Use [[shears]] to disarm a [[tripwire]], carve a [[pumpkin]], harvest [[honeycomb]],{{note|name=dispenser}} remove a [[snow golem]]'s pumpkin,{{note|name=dispenser}} remove wool from a [[sheep]]{{note|name=dispenser}}, or convert a [[mooshroom]] into a [[cow]]{{note|name=dispenser}}
+|-
+|Entity Roar
+|<code>minecraft:entity_roar</code>
+|A [[ravager]] roars 
+|-
+| rowspan{{=}}"4" |10
+|Block Close
+|<code>minecraft:block_close</code>
+|A [[door]], [[trapdoor]], or [[fence gate]] closes
+|-
+|Block Deactivate
+|<code>minecraft:block_deactivate</code> 
+|A [[lever]] is turned off, or a [[button]], tripwire, or [[pressure plate]] reverts to its unpressed state
+|-
+|Block Detach
+|<code>minecraft:block_detach</code>
+|A tripwire is detached
+|-
+|Dispense Fail
+|<code>minecraft:dispense_fail</code>
+|A [[dispenser]] fails to dispense an item. Does not work with [[dropper]]s.
+|-
+| rowspan{{=}}"3" |11
+|Block Open
+|<code>minecraft:block_open</code> 
+|A door, trapdoor, or fence gate opens
+|-
+|Block Activate
+|<code>minecraft:block_activate</code> 
+|A lever is turned on, or a button, tripwire or pressure plate is activated
+|-
+|Block Attach
+|<code>minecraft:block_attach</code>
+|A tripwire is set 
+|-
+| rowspan{{=}}"3" |12
+|Block Place
+|<code>minecraft:block_place</code>
+|A block is placed or [[powder snow]] is placed on the ground{{note|This includes blocks placed by a dispenser or enderman.}}. [[Flint and steel]] or a [[fire charge]] is used to place fire on top of a flammable block
+|-
+|Entity Place
+|<code>minecraft:entity_place</code>
+|An entity is spawned with an item, for example, a painting or a spawn egg{{note|name=dispenser}}
+|-
+|Fluid Place
+|<code>minecraft:fluid_place</code> 
+|Increasing the fluid level in a [[cauldron]], including through weather and stalactites;{{note|name=dispenser}} placing a [[fluid]] using a bucket, not including powder snow<ref>{{bug|MC-213962|||Works As Intended}}</ref>{{note|name=dispenser}}{{note|Using fish buckets to breed axolotls does not cause this vibration. This inconsistency is intentional.<ref name="axo-bucket"/>}}{{note|Replacing an existing fluid, in and out of a cauldron, does not trigger the event. See {{bug|MC-213965}}.}} 
+|-
+| rowspan{{=}}"3" |13
+|Block Destroy
+|<code>minecraft:block_destroy</code>
+|A block is destroyed{{note|name=dispenser}}, an enderman picks up a block{{note|This does not include blocks broken by flowing water ({{bug|MC-207410}}), nor [[redstone dust]], [[redstone repeater]]s, redstone comparators or any type of [[rail]] being broken due to its supporting block being removed ({{bug|MC-207411}}), nor the last slice of cake being eaten ({{bug|MC-213968}}).}}, one of several [[turtle egg]]s on a block cracks
+|-
+|Entity Die
+|<code>minecraft:entity_die</code>
+|An armor stand is killed<ref>{{bug|MC-213947}}</ref>
+|-
+|Fluid Pickup
+|<code>minecraft:fluid_pickup</code>
+|Honey is harvested with a bottle, a fluid is picked up in a [[bucket]],{{note|name=dispenser}} powder snow is picked up in a bucket,{{note|name=dispenser}} a [[glass bottle]] is filled with water or [[dragon's breath]],{{note|name=dispenser}} or a fluid is removed from a cauldron{{note|name=dispenser}}
+|-
+| rowspan{{=}}"2" |14
+|Container Close
+|<code>minecraft:container_close</code>
+|A [[chest]], [[trapped chest]], [[ender chest]], [[barrel]], [[shulker box]], or [[shulker]] closes{{note|Closing a minecart with a chest or with a hopper does not trigger this event. See {{bug|MC-210707}}.}}
+|-
+|Piston Contract
+|<code>minecraft:piston_contract</code>
+|A piston contracts
+|-
+| rowspan{{=}}"6" |15
+|Container Open
+|<code>minecraft:container_open</code>
+|A chest, trapped chest, ender chest, barrel, shulker box, shulker, a minecart with a chest or hopper opens
+|-
+|Piston Extend
+|<code>minecraft:piston_extend</code>
+|A [[piston]] extends
+|-
+|Instrument Play
+|<code>minecraft:instrument_play</code>
+|A [[goat horn]] is played
+|-
+|Explode
+|<code>minecraft:explode</code>
+|TNT, a creeper, or a [[firework rocket]] explodes
+|-
+|Lightning Strike
+|<code>minecraft:lightning_strike</code>
+|[[Lightning]] strikes
+|}
+
+{|class{{=}}"wikitable collapsible collapsed"
+! Action
+! New frequency value
+|-
+| Movement in any medium (land, water, and air)
+| 1
+|-
+| Landing on any surface (land or water)
+| 2
+|-
+| Item interactions
+| 3
+|-
+| Gliding with an elytra or unique mob actions (ravager roar, wolf shaking, etc)
+| 4
+|-
+| Dismounting a mob or equipping gear
+| 5
+|-
+| Mounting a mob or interacting with a mob
+| 6
+|-
+| Mobs and players getting damaged
+| 7
+|-
+| Consuming items (drinking and eating)
+| 8
+|-
+| Blocks 'deactivating' (door close, chest close, button unpress, etc)
+| 9
+|-
+| Blocks 'activating' (door open, chest open, button press, etc)
+| 10
+|-
+| Blocks changing (cauldron water level rising, adding food to campfire, etc)
+| 11
+|-
+| Blocks being destroyed
+| 12
+|-
+| Blocks being placed
+| 13
+|-
+| Mobs and players teleporting or spawning
+| 14
+|-
+| Mobs and players dying or an explosion
+| 15
+|}
+{{notelist}}
+}}
+|Sculk sensors now resonate their vibrations through amethyst.
+}}
+|{{HistoryLine|||dev=23w14a
+|The default redstone output for sculk sensors has been modified to be more reliable for distance calculations.
+|Sculk sensors now strongly power the block they are placed on.
+|Removed the <code>cooldown</code> state of <code>sculk_sensor_phase</code> block state.}}
+|{{HistoryLine|||dev=23w16a|If a vibration is scheduled to be received by a sculk sensor, it stays queued until all adjacent chunks are loaded and ticking. This prevents vibration resonance setups from breaking when unloading their chunks from a distance.}}
+|{{HistoryLine|||dev=23w17a|Sculk sensors now last 30 game ticks when in Active phase instead of 40.
+|Sculk sensors now last 10 game ticks when in Cooldown phase instead of 1.}}
+|{{HistoryLine|||dev=23w18a|Landing or jumping on the edge of wool no longer triggers sculk sensors.<ref name="MC-252389">{{bug|MC-252389||When landing (or jumping) on wool with your hitbox over the edge, it produces a vibration|Fixed}}</ref>
+|Walking on the edge of blocks now properly triggers sculk sensors.<ref>{{bug|MC-207290||Sculk sensors don't detect vibrations while walking on the edge of a block|Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|[[Witch]]es drinking [[potion]]s emit an <code>entity_action</code> vibration of frequency <code>4</code>.
+|[[Turtle]]s clearing away [[sand]] emit an <code>entity_action</code> vibration of frequency <code>4</code>.
+|[[Camel]]s dashing, standing up, or sitting down emit an <code>entity_action</code> vibration of frequency <code>4</code>.
+|[[Totems of undying]] activating emit an <code>entity_damage</code> vibration of frequency <code>7</code>.}}
+|{{HistoryLine|||dev=23w32a|Vibrations no longer risk being lost on simulation distance limit.
+|Unequipping items emits a new <code>unequip</code> vibration of frequency <code>4</code>.
+|[[Chiseled bookshelves]] emit a <code>block_change</code> vibration of frequency <code>11</code> when receiving books from [[hopper]]s.
+|[[Turtle egg]]s cracking emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|Turtle eggs hatching emit a <code>block_destroy</code> vibration of frequency <code>12</code>.
+|Using [[bone meal]] emits an <code>item_interact_finish</code> vibration of frequency <code>3</code>.
+|[[Fire]] being doused by [[splash water bottle]]s emits a <code>block_destroy</code> vibration of frequency <code>12</code>.
+|[[Evoker]]s evoking [[vex]]es or fangs emit an <code>entity_place</code> vibration of frequency <code>14</code>.
+|[[Carrot]]s being eaten by [[rabbit]]s emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|[[Sweet berries]] being eaten by [[fox]]es emit a <code>block_change</code> vibration of frequency <code>11</code>.
+|Camels eating cactus emit an <code>eat</code> vibration of frequency <code>8</code>.}}
+|{{HistoryLine||1.21|dev=24w19a|[[Frosted ice]] being placed by [[Frost Walker]] emits a <code>block_place</code> vibration of frequency <code>13</code>.}}
+|{{HistoryLine||1.21.4|dev=24w45a|[[Resin clump]] being placed by [[creaking heart]] emits a <code>block_place</code> vibration of frequency <code>13</code>.}}
+|{{HistoryLine||1.21.5|dev=25w02a|Attacking a [[creaking]] spawned by a [[creaking heart]] emits an <code>entity_action</code> vibration of frequency <code>4</code>.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Entities bouncing off of blocks or a collidable entity will emit a vibration frequency of {{cd|2}}.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.56|[[File:Sculk Sensor BE1.gif|32px]] Added the sculk sensor. It uses a different texture from the one in {{JE}}.
+|<code>sculk_sensor_redstone_signal</code> [[particles]] are also different from the ones in ''Java Edition''.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.17.0.50|Sculk sensors can now detect walking vibrations below y{{=}}0.}}
+|{{HistoryLine||1.17.10|exp=Caves and Cliffs|dev=beta 1.17.10.20|[[File:Sculk Sensor BE2.gif|32px]] Texture changed to match ''Java Edition''. But not the animation.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.20|Sculk sensors are now available outside experimental gameplay.}}
+|{{HistoryLine||1.18.0|exp=Vanilla Experiments|dev=beta 1.18.0.22|Sculk sensors have been moved behind the "Vanilla Experiments" [[Experimental Gameplay]] toggle.
+|Sculk sensors are now broken faster with a hoe.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.21|Sculk sensors have been moved behind the "Wild Update" [[Experimental Gameplay]] toggle.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.23|Added wool occlusion to sculk sensors.
+|Sculk sensors no longer make clicking sounds if they are waterlogged.}}
+|{{HistoryLine|||dev=Preview 1.18.30.29|Sculk sensors now generate in the [[deep dark]] biome.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Added more game events to match ''Java Edition''.
+|Sculk sensors now always activate when stepped on, even when sneaking.
+|Sculk sensors are now available without enabling experimental gameplay again.}}
+|{{HistoryLine|||dev=Preview 1.19.0.25|Sculk sensors now drop [[experience]] when mined without [[Silk Touch]].}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|Sculk sensors can now detect the following events:
+
+* Placing, rotating, or removing an item in an [[item frame]] or a [[glow item frame]].
+* Charging a [[respawn anchor]].
+* Scraping or applying wax to blocks of the copper block set.
+* Switching a [[daylight detector]] to an inverted daylight detector or vice-versa.
+* Adding food to a [[campfire]].
+* Adding or removing a [[music disc]] to a [[jukebox]].
+* [[Mud]] turning into [[clay]].
+* Harvesting [[sweet berries]].
+* Placing an [[eye of ender]] in an [[end portal frame]].
+* [[Bees]] entering or exiting a [[beehive]] or a [[bee nest]].
+* Interacting with [[composter]].
+* Attaching or detaching a [[lead]] from a [[fence]].
+* Attaching or detaching a lead from a mob.
+* Dying a [[sheep]].
+* Picking [[glow berries]].
+* [[Farmland]] turning into [[dirt]].
+* Using a [[spawn egg]] on a [[monster spawner]].
+* [[Silverfish]] merging with blocks.
+* Using a [[hoe]] on [[rooted dirt]].
+* Using a [[shovel]] to create [[dirt path]]s.
+* Placing a [[door]].
+* Planting seeds in [[farmland]].}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.30.20|Sculk sensors can now detect the following events:
+
+* Throwing an [[eye of ender]].
+* [[Minecart]]s, consistently when moving on [[rail]]s while empty.
+* Collecting [[fish]], [[axolotl]]s, and [[tadpole]]s with [[bucket]]s.
+* Cleaning items in [[cauldron]]s.
+* Dying leather [[armor]] in cauldrons.
+* [[Tipped Arrow|Tipping arrow]]s in cauldrons.
+* Using [[dye]]s to change cauldrons' water color.
+* Non-player actors event when equipping [[shield]]s in their off-hand slot.}}
+|{{HistoryLine|||dev=Preview 1.20.30.21|Sculk sensors can now detect the following events:
+
+* Applying a [[name tag]].
+* [[Evoker]]s summoning [[vex]]es or fangs.
+* [[Chicken]]s, [[frog]]s, and [[turtle]]s laying eggs.
+* Using [[bone meal]].
+* [[Chiseled bookshelves]] when [[book]]s are inserted into them using [[hopper]]s.
+* Extinguishing [[fire]].
+* Mounting or dismounting a [[vehicle]].
+* [[Rabbit]]s eating [[carrot]] crops.
+* [[Fox]]es eating [[sweet berry]] bushes.
+* Unequipping [[armor]].
+* Placing a [[banner]], [[bamboo sapling]], [[lily pad]], or a [[head]].
+* Placing [[frogspawn]]s.
+* Placing or adding [[sea pickle]]s.
+* Adding/destroying a [[turtle egg]].
+* [[Turtle egg]]s cracking.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|[[Resin clump]] being placed by [[creaking heart]] emits a <code>block_place</code> vibration of frequency <code>13</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* "Sculk" is derived from "[[wiktionary:skulk#English|skulk]]", meaning "keep out of sight, typically with a sinister or cowardly motive".<ref>{{tweet|kingbdogz|1316040636538204160|While not related, Sculk name was inspired by Jeb's process with naming the Shulkers - he liked the word "Lurker", but changed it around a bit to feel new. Sculk is one letter changed in Skulk, meaning 'keep out of sight, typically with a sinister or cowardly motive'|October 13, 2020}}</ref>
+* In one of the early "hollowed" concepts of the sculk sensor, it used to require 4 vibrations before it would emit a redstone signal, indicated by the markings on the top texture, which would light up for each vibration received and would slowly go down over time.<ref>{{Tweet|CagilMartin|1540933520268607490|This is how the old sculk sensor worked Source: Minecraft Ideas Academy discord|June 26, 2022}}</ref>
+
+== Gallery ==
+=== Development images ===
+<gallery>
+Deep_dark_concept_art_6.png|Sculk sensor concept art.
+Trypophobia Sculk Sensor.jpg|Trypophobia sculk sensor.
+Trypophobia Skulk Senser Actavated Level0Render.png|Trypophobia sculk sensor recreation.
+Trypophobia Skulk Senser Actavated Level1Render.png|Ditto.
+Trypophobia Skulk Senser Actavated Level2Render.png|Ditto.
+Trypophobia Skulk Senser Actavated Level3Render.png|Ditto.
+Trypophobia Skulk Senser Actavated Level4Render.png|Ditto.
+JE_1.17_Development_Sculk_family.png|Multiple Sculk sensors with other sculk type of blocks on [[Minecraft Live]].
+JE_1.17_Dev_Sculk_family.jpg|Ditto. Screenshot by kingbdogz.
+JE_1.17_Dev_Sculk_family_(cropped).png|Close look.
+JE_1.17_Development_Piston_occluding.png|Wool occlusion.
+JE_1.17_Development_Wireless_redstone_trapdoors.png|Sculk sensors as wireless redstone.
+JE_1.17_Dev_Sculk_Sensor_under_rain.jpg|Sculk sensors are not affected by rain.
+Sculk Forest.jpg|Sculk in a forest.
+JE_1.17_Dev_Sculk_old_textures.jpg|Old textures.
+JE_1.17_Dev_Sculk_new_textures.jpg|New textures.
+JE_1.17_Dev_Pigs_under_sculk_chunk.jpg|Performance optimizing.
+JE_1.17_Dev_Pigs_under_sculk_chunk_2.jpg|Ditto.
+Sculk Snowball.jpg|Snowballs creating vibrations.
+Sculk Sensor Cave.jpg|Sculk sensors in a cave.
+Sculk Sensor Circuit.jpg|A contraption using a waterlogged sculk sensor.
+Sculk_in_redstone.png|Sculk type of blocks in redstone category.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/how-use-skulk-sensors How to Use Sculk Sensors] – Minecraft.net on February 2, 2023
+
+== Navigation ==
+{{Navbox redstone|Components}}
+{{Navbox blocks|Natural}}
+
+[[Category:Natural blocks]]
+[[Category:Utility blocks]]
+[[Category:Mechanisms]]
+[[Category:Light sources]]
+[[Category:Block entities]]
+[[Category:Readable by comparators]]
+
+[[de:Sculk-Sensor]]
+[[es:Sensor de sculk]]
+[[fr:Capteur Sculk]]
+[[it:Sensore di sculk]]
+[[ja:スカルクセンサー]]
+[[ko:스컬크 감지체]]
+[[pl:Skulkowy czujnik]]
+[[pt:Sensor de sculk]]
+[[ru:Скалк-сенсор]]
+[[uk:Скалковий сенсор]]
+[[zh:幽匿感测体]]

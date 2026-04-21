@@ -1,0 +1,493 @@
+{{About|the block in ''Minecraft''|the block in ''[[Minecraft: Story Mode]]''|MCSM:Structure Block}}
+{{distinguish|Structure Void}}
+{{Infobox block
+| group = Normal
+| 1-1 = Structure Block.png
+| invimage = Structure Block
+| group2 = Save
+| 2-1 = Structure Block Save.png
+| group3 = Load
+| 3-1 = Structure Block Load.png
+| group4 = Corner
+| 4-1 = Structure Block Corner.png
+| group5 = Data
+| 5-1 = Structure Block Data.png
+| group6 = 3D Export (BE only)
+| 6-1 = Structure Block Export.png
+| transparent = No
+| light = No
+| tool = None
+| renewable = No
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| rarity =
+* Epic {{only|java|short=1}}
+* Common {{only|bedrock|short=1}}
+}}
+A '''structure block''' is used to generate structures manually. They can also be used to save and load structures, alongside [[structure void]] blocks.
+
+== Obtaining ==
+Structure blocks are available using the {{cmd|setblock}}, {{cmd|fill}}, or {{cmd|give}} commands, or the [[Creative inventory]] {{in|Java}} through the "Operator Utilities" tab. When placed, structure blocks are unbreakable in [[Survival]] and have the same blast resistance as [[bedrock]]. {{IN|be}}, only save-mode structure blocks are obtainable through commands in the inventory.
+
+== Usage ==
+When placed, {{control|use}} the structure block to open its GUI. The GUI opens only if the player is in [[Creative]] mode, and has [[permission level]] 2 or higher.
+
+Once a structure is named, its name appears above the structure block when highlighted, preceded by the block mode (e.g. "Save:minecraft:example").{{only|je}}
+
+Switching between modes preserves the settings of the structure block wherever possible.
+
+In item form, the structure block uses a "blank" texture, a texture that is not used when on a placed block.
+
+Structure blocks can't be moved by [[piston]]s, and can't be destroyed by the [[ender dragon]].
+
+=== Save ===
+[[File:StructureSaveGUI.png|thumb|250px|Save mode GUI for ''Java Edition'']]
+[[File:Structure Block Bedrock ClassicUI.png|thumb|250px|Save mode GUI for ''Bedrock Edition'']]
+
+{{BlockSprite|Structure Block Save}} '''Save''' mode allows the player to highlight a structure in the world and save it to memory, level file, or a separate file.{{only|be}}
+
+; Structure Name
+: A text box for entering the [[resource location]] of the structure to be saved. Only [[Resource location#Legal characters|some characters]] are allowed. {{IN|bedrock}}, it has a "mystructure:" prefix by default.
+
+; Relative Position / Offset
+: The X, Y, and Z offsets of the structure, relative to the bottom north-west corner of the structure block. Sets the origin of the structure outline.
+: {{IN|je}}, the origin must be at most 48 blocks away in all directions. {{IN|be}}, the origin must be at most 64 blocks away horizontally, and 384 blocks vertically.
+
+[[File:Shown Invisible Blocks.png|thumb|right|All invisible blocks shown by structure blocks]]
+
+; Show invisible blocks{{only|je|short=1}}
+{{info needed section|What color was used for structure voids prior to 21w20a? And were there any other changes since their introduction in 1.10 (ignoring the old dark outlines)?}}
+: Displays [[invisible block]]s as small colored cubes. Off by default.
+
+:; Invisible blocks as shown by the "Show invisible blocks" option
+
+:{| class="wikitable" style="text-align:center" data-description="Rendered invisible blocks"
+! Block
+! Appearance
+! Color
+! Notes
+|-
+! {{BlockLink|Air}}<br><code>minecraft:air</code><br>{{BlockLink|Cave Air}}<br><code>minecraft:cave_air</code><br>{{BlockLink|Void Air}}<br><code>minecraft:void_air</code>
+| [[File:Air (shown).png|96px]]
+| {{Color|rgb(127.5, 127.5, 255)}}
+| All air types look the same by design.<ref>{{bug|MC-221834|||Invalid}}</ref>
+|-
+! {{BlockLink|Structure Void}}<br><code>minecraft:structure_void</code>
+| [[File:Structure Void (shown) JE3.png|96px]]
+| {{Color|rgb(255, 191.25, 191.25)}}
+|
+|-
+! {{BlockLink|Barrier}}<br><code>minecraft:barrier</code>
+| [[File:Barrier (shown).png|96px]]
+| {{Color|rgb(255, 0, 0)}}
+|
+|-
+! {{BlockLink|Light Block}}<br><code>minecraft:light</code>
+| [[File:Light (shown).png|96px]]
+| {{Color|rgb(255, 255, 0)}}
+|
+|}
+
+; Structure Size / Size
+: X, Y, and Z offset from the Relative Position coordinates. This sets the opposite corner of the structure, and defines the structure's size.
+: The maximum structure size is 48×48×48 {{In|je}} and 64×384×64 {{In|be}}.
+: When successful, generates an outline surrounding the structure that's mostly white except for the red, green and blue lines that represent the X, Y and Z axis. {{IN|be}}, the structure also gets previewed with a rotatable 3D model inside of the structure block's GUI.
+
+; Detect structure size and position / Detect
+: Automatically calculates the size and position of the structure using a corner block placed on the opposite corner of the structure.
+: The name of the structure in the save block '''must''' match the name within the corner block, or the size calculation fails.
+: Two corner blocks can also be used. It uses the second corner block instead of the structure block.
+
+; Include entities
+: When saving the structure, if this option is on, saves any [[entities]] within the structure as well.
+
+;Remove blocks{{only|be|short=1}}
+: When saving the structure, if enabled, no [[block]]s are included in the structure.\
+
+; Redstone Save Mode{{only|be|short=1}}
+: Sets the save location for the structure file when the structure block gets activated by [[redstone]]. '''Save In Memory''' stores the structure in the game's loading memory, which will be lost after leaving the world, while '''Save To Disk''' stores the structure permanently in the [[Bedrock Edition level format|level files]].
+
+; Show Bounding Box{{only|be|short=1}}
+: Toggles the outline of the structure, both in the preview and in the world.
+
+; Save
+: When all coordinates and a structure name have been entered, press this button to save the structure.
+: {{IN|java}}, this saves the structure to a file. The name of the structure is the name of the file.
+:: Structures can be saved to a file only by manually pressing this button. If a structure block in Save mode is instead powered by [[Redstone_components|redstone]], the structure is only saved in memory. This is the case even if a file for that structure already exists on disk. Reloading the world clears any structures stored in memory. This is for unspecified security reasons.<ref>{{bug|MC-105595|||WAI}}</ref>
+:: If no namespace is specified, a default value of <code>minecraft</code> is used. This can be changed by prefixing the structure name with <code><namespace>:</code> in the structure block.
+:: Structures are saved in <code>.minecraft/saves/(WorldName)/generated/(namespace)/structures</code>.<ref group="note" name="before1.13">Structures created in versions before [[Java Edition 1.13|1.13]] are saved in <code>.minecraft/saves/(WorldName)/structures</code>.</ref>
+: {{IN|be}}, this saves the structure into the level database file rather than a standalone file. 
+
+; Export{{only|be|short=1}}
+: Used to export a structure into a <code>.mcstructure</code> file, which can be used to load from the <code>structures</code> folder of a [[behavior pack]] or import in a Load structure block. If the structure contains a custom block from a behavior pack, then the block is also saved on the structure block. This option is only available on Windows devices by default and Android with [[resource pack#Bedrock Edition|resource packs]] however, starting with version [[1.21.130]], the button becomes completely useless on Android, as exporting to unsupported platforms has been removed.
+
+=== Load ===
+[[File:StructureLoadGUI.png|thumb|250px|Load Mode GUI for ''Java Edition'']]
+[[File:Structure Block Bedrock ClassicUI Load.png|thumb|250px|Load Mode GUI for ''Bedrock Edition'']]
+
+{{BlockSprite|Structure Block Load}} '''Load''' mode allows the player to load and rotate saved structures.
+
+;Structure Name
+:The name of the structure to load.
+:{{IN|java}}, structures are searched in the following order:
+:* from memory
+:* from a file (<code>.minecraft/saves/''&lt;World Name>''/generated/''&lt;namespace>''/structures/</code>)
+:* from data packs
+:* built-in structures from [[minecraft.jar]]
+:{{IN|bedrock}}, structures are searched for in the following order:
+:* from memory
+:* from disk (level database)
+:* from behavior packs
+:{{IN|bedrock}}, vanilla NBT structure files cannot be loaded with structure block.
+
+;Relative Position / Offset
+:The X, Y, and Z offsets of the structure, relative to the bottom north-west corner of the structure block. Coordinates may be specified as numbers between -48 and 48 in ''Java Edition'', or between -64 and 64 horizontally, and -384 and 384 vertically in ''Bedrock Edition''.
+
+;Show bounding box
+:Highlights the outline of the structure. On by default.
+
+;Structure Integrity and Seed
+:Removes random blocks that compose the structure based on a user-defined seed.
+
+:Lower integrity values result in more blocks being removed. The integrity value must be between 0.0 and 1.0{{only|je|short=1}} or 100.00.{{only|be|short=1}}
+
+;Strict Placement{{only|je|short=1}}
+:When on, the blocks of the structure do not emit [[block updates]] or run their post-placement code when the structure gets loaded.
+
+;Include entities
+:Include any entities saved in the structure file when loading the structure. Off by default.
+
+;Waterlog Blocks{{only|be|short=1}}
+:When loading the structure blocks that replace water become [[waterlogged]] instead of replacing blocks with air, creating air pockets. 
+
+;Remove Blocks{{only|be|short=1}}
+:When loading the structure, don't include any [[block]]s from the saved structure.
+
+;Rotation (0, 90, 180, 270)
+:Sets the rotation of the structure to 0° (no rotation), 90° clockwise, 180° clockwise, and 270° clockwise (or 90° counter-clockwise).
+
+;Mirror (¦, <>, ^v)
+:Sets the mirroring of the structure to none (<code>¦</code>), left to right (<code>&lt; &gt;</code>), or front to back (<code>^ v</code>). At 0° rotation <code>&lt; &gt;</code> mirrors across the X-axis and <code>^ v</code> mirrors across the Z-axis.{{info needed|how do mirror and rotation behave when combined?}}
+:{{IN|be}}, the options are x and z, which can be toggled to set mirroring.
+
+;Animation Mode{{only|be|short=1}}
+:Select the animation to show how structure is loaded. '''Place by Layer''' makes structure loaded layer by layer, '''Place by Block''' makes structure loaded one block by block. Default to none.
+:Once the loading has started, breaking the structure block can not stop the loading process.
+:Loading with animation may break blocks in structures that contain multiple parts (such as beds, doors, or tall grass), or need to be attached to other blocks (such as torches), and may cause water, lava, and fire to spread out.
+
+;Animation Time{{only|be|short=1}}
+:Adjust the animation time in seconds for loading the structure.
+
+;Load
+:Press to load the structure.
+:{{IN|java}}, press this button once to prepare the outline preview of the structure. When satisfied with the position, press again to generate the structure.
+:A redstone signal will also activate the structure block and load the structure.
+
+;Import{{only|be|short=1}}
+:Only available on Windows. Opens the file explorer and allows to select a <code>.mcstructure</code> file exported from a Save structure block. This imports the structure into the memory, allowing to use its save name to load (entered by default).
+
+=== Corner ===
+[[File:StructureCornerGUI.png|thumb|250px|Corner Mode GUI for ''Java Edition'']]
+[[File:StructureCorner_BedrockGUI.jpg|thumb|250px|Corner Mode GUI for ''Bedrock Edition''|link=Special:FilePath/StructureCorner_BedrockGUI.jpg]]
+
+{{BlockSprite|Structure Block Corner}} '''Corner''' mode allows for an easier and automatic size calculation while saving or loading structures.
+
+:To use, place on the opposite corner of a save structure block or a second corner structure block. Then, using a save block, press "DETECT".
+:When successful, a bounding outline appears.
+
+;Structure Name
+:The name of the structure on which to calculate the size and position.
+:Name is case sensitive,{{only|be|short=1}} it must match exactly with the name provided by the complementary save or corner structure block.
+
+=== 3D Export ===
+{{Exclusive|bedrock|section=1}}
+[[File:ExportModeBedrock.png|thumb|250px|Export Mode GUI]]
+
+{{BlockSprite|Structure Block Export}} '''3D Export''' mode,{{Note|Only available on Windows}} is similar to Save mode, but the structure is saved as a 3D render in the format of <code>.glb</code> rather than as an actual structure.<ref>{{ytl|OKIfw1fjSlY|How to Use Structure Blocks in Minecraft: Education Edition|Minecraft: Education Edition|August 2, 2018}}</ref> Therefore, structures saved this way can be viewed with 3D Viewer<ref>https://apps.microsoft.com/store/detail/3d-viewer/9NBLGGH42THS</ref> or Paint 3D<ref>https://apps.microsoft.com/store/detail/paint-3d/9NBLGGH5FV99</ref>, but cannot be generated via [[#Load|load mode]].
+
+The 3D file exported is basically the same as the real-time rendering in the preview. Animated textures such as Nether portal blocks, liquids, magma, etc. only have a static texture. Some blocks cannot be displayed properly, such as piston arms, chests, beds, etc. including entities is not supported in this mode.
+
+Structure blocks in 3D export mode cannot be activated by redstone.
+
+3D export can't be used in Marketplace world templates.
+
+;Structure Name
+:Enter the name of the structure. Case sensitive. The player must enter a file name in order to export.
+
+;Size
+:Enter the X, Y, and Z values to set the distance from the Relative Position coordinates. This sets the opposite corner of the structure, and defines its size.
+:Maximum structure size is 64×384×64.
+
+;Offset
+:Enter the X, Y, and Z values for the structure here, based on the position of the structure block. Sets the origin of the structure outline.
+:Maximum allowed distance from the structure block is 64 blocks in any direction.
+
+;Remove Blocks
+:While exporting the structure, doesn't include any blocks within saved structure.
+
+; Show Bounding Box
+: Toggles the outline of the structure, both in the preview and in the world.
+
+=== Data ===
+[[File:StructureDataGUI.png|thumb|250px|Data mode GUI for ''Java Edition''.]]
+[[File:DataModeBedrock.png|thumb|250px|Data Mode GUI for ''Bedrock Edition''.]]
+
+{{BlockSprite|Structure Block Data}} '''Data''' is a deprecated mode, which is superseded by the [[Jigsaw Block|jigsaw block]], but still used in some certain vanilla structures (igloo, end city, woodland mansion, ocean ruin, shipwreck). Structure blocks in data mode can be used only during natural generation. They mark the location to run a specified hardcoded function, which can be used only for relevant structures. {{IN|java}}, this mode is hidden unless the {{key|Alt}} key is held while switching from Corner mode. {{IN|bedrock}}, data mode structure block cannot be obtained with commands.
+
+;Custom Data Tag Name
+:The name of the function to run. 
+:;[[Igloo]]
+::"chest" - sets the [[loot table]] for a chest beneath the structure block to "chests/igloo_chest" and sets the loot table seed dependent on the world seed.
+:;[[End city]]
+::"Chest" - Sets the loot table for a chest beneath the structure block to "chests/end_city_treasure" and sets the loot table seed dependent on the world seed.
+::"Sentry" - Creates a [[shulker]] at the location of the structure block.
+::"Elytra" - Creates an [[item frame]] entity with an [[elytra]] item inside it at the location of the structure block.
+:;[[Woodland mansion]]
+::"ChestSouth" - Sets the loot table for a chest that replaces the structure block to "chests/woodland_mansion" and sets the loot table seed dependent on the world seed.
+::"ChestNorth" - Sets the loot table for a chest that replaces the structure block to "chests/woodland_mansion" and sets the loot table seed dependent on the world seed.
+::"ChestEast" - Sets the loot table for a chest that replaces the structure block to "chests/woodland_mansion" and sets the loot table seed dependent on the world seed.
+::"ChestWest" - Sets the loot table for a chest that replaces the structure block to "chests/woodland_mansion" and sets the loot table seed dependent on the world seed.
+::"Mage" - Creates an [[evoker]] at the location of the structure block.
+::"Warrior" - Creates a [[vindicator]] at the location of the structure block.
+::"Group of Allays" - Creates a group of [[allay]]s at the location of the structure block.
+:;[[Ocean ruins]]
+::"chest" - Creates a chest at the location of the structure block, setting its loot table to either "chests/underwater_ruin_big" or "chests/underwater_ruin_small", with seed dependent on the world seed.
+::"drowned" - Creates a [[drowned]] at the location of the structure block.
+:;[[Shipwreck]]
+::"map_chest" - Sets the loot table for a chest that replaces the structure block to "chests/shipwreck_map" and sets the loot table seed dependent on the world seed.
+::"treasure_chest" - Sets the loot table for a chest that replaces the structure block to "chests/shipwreck_treasure" and sets the loot table seed dependent on the world seed.
+::"supply_chest" - Sets the loot table for a chest that replaces the structure block to "chests/shipwreck_supply" and sets the loot table seed dependent on the world seed.
+
+; Show Bounding Box{{only|be|short=1}}
+: Toggles the outline of the structure, both in the preview and in the world.
+
+== Sounds ==
+{{Sound table/Block/Normal}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Structure Block
+|spritetype=block
+|nameid=structure_block
+|blocktags=dragon_immune, wither_immune
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=structure-block
+|spritetype=block
+|nameid=structure_block
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Structure Block
+|spritetype=block
+|nameid=structure_block
+|id=252
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=structure-block
+|spritetype=block
+|nameid=StructureBlock
+|foot=1}}
+
+=== Block states === 
+{{see also|Block states}}
+
+{{JE}}:
+{{bst|mode|data
+|corner|{{blockSprite|structure-block-corner}} Corner Structure Block
+|data|{{blockSprite|structure-block-data}} Data Structure Block
+|load|{{blockSprite|structure-block-load}} Load Structure Block
+|save|{{blockSprite|structure-block-save}} Save Structure Block|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|structure_block_type|data
+|corner|{{blockSprite|structure-block-load}} Corner Structure Block|3
+|data|{{blockSprite|structure-block}} Data Structure Block|0
+|export|{{blockSprite|structure-block-export}} Export Structure Block|5
+|invalid|{{blockSprite|structure-block-corner}} Inventory Structure Block|4
+|load|{{blockSprite|structure-block-save}} Load Structure Block|2
+|save|{{blockSprite|structure-block-data}} Save Structure Block|1|foot=1}}
+
+=== Block data ===
+A structure block also has a block entity associated with it.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|string|author}}: Author of the structure; only set to "?" for most vanilla structures.
+** {{nbt|byte|ignoreEntities}}: 1 or 0 (true/false): Whether entities should be ignored in the structure.
+** {{nbt|float|integrity}}: How complete the structure is that gets placed.
+** {{nbt|string|metadata}}: Value of the data structure block field.
+** {{nbt|string|mirror}}: How the structure is mirrored, one of "NONE", "LEFT_RIGHT" (mirrored over X axis when not rotated), or "FRONT_BACK" (mirrored over Z axis when not rotated).
+** {{nbt|string|mode}}: The current mode of this structure block, one of "SAVE", "LOAD", "CORNER", or "DATA".
+** {{nbt|string|name}}: Name of the structure.
+** {{nbt|int|posX}}: X-position of the structure.
+** {{nbt|int|posY}}: Y-position of the structure.
+** {{nbt|int|posZ}}: Z-position of the structure.
+** {{nbt|byte|powered}}: 1 or 0 (true/false): Whether this structure block is being powered by redstone.
+** {{nbt|string|rotation}}: Rotation of the structure, one of "NONE", "CLOCKWISE_90", "CLOCKWISE_180", or "COUNTERCLOCKWISE_90".
+** {{nbt|long|seed}}: The seed to use for the structure integrity, 0 means random.
+** {{nbt|byte|showboundingbox}}: 1 or 0 (true/false): Whether to show the structure's bounding box to players in Creative mode.
+** {{nbt|int|sizeX}}: X-size of the structure, its length.
+** {{nbt|int|sizeY}}: Y-size of the structure, its height.
+** {{nbt|int|sizeZ}}: Z-size of the structure, its depth.
+</div><section end="block data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Block entity format]].
+
+== Videos ==
+{{yt|iZVT-ac0i-s}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||March 18, 2015|link={{tweet|SeargeDP|578219322373496832}}|[[File:Structure Block JE1.png|32px]] [[Searge]] tweets an image of a then-mysterious dark [[block]].}}
+|{{HistoryLine||April 8, 2015|link={{tweet|SeargeDP|585838892999380992}}|Searge tweets a cryptic message containing another screenshot of the mysterious dark block.
+|He later asks if [[player]]s would like an unobtainable block whose effects to the world are "visible and exciting."<ref>{{tweet|SeargeDP|585863978636681216|How about a block that players can't get, can't be found in the world, but it's effect to the world is visible and exciting?|April 8, 2015}}</ref>}}
+|{{HistoryLine||April 14, 2015|link={{tweet|SeargeDP|588002295750721540}}|Searge tweets another cryptic image, with the dark block visible in the hotbar and in the upper-right corner.
+|Bright dots cover a mysterious floating structure in the upper-left corner, which Searge "clarified" in a later tweet.<ref>{{tweet|SeargeDP|588014450118098944|I once met a small bright dot that enjoyed nothing more in his life than protecting big dark secrets by being painted over them in images.|April 14, 2015}}</ref>}}
+|{{HistoryLine||June 24, 2015|link={{tweet|SeargeDP|613699145069654017}}|Searge explains that the mysterious [[block]] is a technical block used internally for world generation.}}
+|{{HistoryLine||July 5, 2015|link=https://www.twitch.tv/mojang/v/6949826?t=13h40m25s|[[File:Structure Block Save JE1.png|32px]] [[File:Structure Block Load JE1.png|32px]] [[File:Structure Block Corner JE1.png|32px]] [[File:Structure Block Data JE1.png|32px]] The usage of structure blocks was detailed in a live stream during [[MINECON 2015]].}}
+|{{HistoryLine||May 3, 2016|link={{tweet|jeb_|727476558621872128}}|[[File:Structure Block Save JE2 BE1.png|32px]] [[File:Structure Block Load JE2 BE1.png|32px]] [[File:Structure Block Corner JE2 BE1.png|32px]] [[File:Structure Block Data JE2 BE1.png|32px]] [[Jens Bergensten]] tweets a screenshot of the new structure block textures.
+|Jeb was instructed to make structure blocks "feel mysterious."<ref>{{tweet|jeb_|727479748344033280|The instructions I got was to make them "feel mysterious" ;)|May 3, 2016}}</ref>}}
+|{{HistoryLine||May 13, 2016|link={{tweet|ProfMobius|731048441015631872}}|[[ProfMobius]] tweets an image of the new structure blocks in action, generating what appears to be a [[fossil]] made of [[quartz block]]s.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Structure Block JE1.png|32px]] [[File:Structure Block Save JE1.png|32px]] [[File:Structure Block Load JE1.png|32px]] [[File:Structure Block Corner JE1.png|32px]] [[File:Structure Block Data JE1.png|32px]] Added structure blocks.
+|Structure blocks are currently available only with the {{cmd|setblock}} [[command]].
+|Structure blocks currently do not have an interface and are used internally by the developers.}}
+|{{HistoryLine||1.10|dev=16w20a|[[File:Structure Block JE2 BE1.png|32px]] [[File:Structure Block Save JE2 BE1.png|32px]] [[File:Structure Block Load JE2 BE1.png|32px]] [[File:Structure Block Corner JE2 BE1.png|32px]] [[File:Structure Block Data JE2 BE1.png|32px]] The textures of structure blocks have been changed.
+|Structure blocks are now obtainable using {{cmd|give}} [[command]] and usable in-game.}}
+|{{HistoryLine|||dev=16w21a|Structure blocks no longer emit [[light]] (was previously light-level 15).
+|"Structure Integrity and Seed" to load mode have been added to structure blocks.}}
+|{{HistoryLine||1.13|dev=17w47a|The saved structures of structure blocks are now stored in <code><World Name>/generated/<namespace>/structures/<name>.nbt</code>.
+|Due to [[Java Edition 1.13/Flattening|''The Flattening'']], structures saved before this version are now broken and don't load in any blocks who's previous ID is not a valid ID in current versions, such as <code>planks</code>.}}
+|{{HistoryLine|||dev=18w21a|The rarity of structure blocks has been changed from "Common" to "Epic".}}
+|{{HistoryLine||1.16|dev=20w16a|The maximum size per axis of structure blocks has been increased from 32 to 48.}}
+|{{HistoryLine||1.17|dev=20w46a|Default mode of structure blocks is now "Load". "Data" is now hidden by default.
+|"Data" can be accessed by clicking the mode button while holding the {{key|Alt}} key.}}
+|{{HistoryLine||1.19.3|dev=22w45a|Structure blocks are now available in the Creative inventory, but only if cheats are enabled and the "Operator Items Tab" option in the controls menu is turned on.<ref>{{bug|MC-257102||Missing Structure Block in creative tab|Fixed}}</ref>
+}}
+|{{HistoryLine||1.21.5|dev=25w02a|Added the "Strict Placement" option.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|"Added" structure blocks. While fully implemented, they have no assigned [[block]] ID and are completely unobtainable.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Structure Block JE2 BE1.png|32px]] [[File:Structure Block Save JE2 BE1.png|32px]] [[File:Structure Block Load JE2 BE1.png|32px]] [[File:Structure Block Corner JE2 BE1.png|32px]] [[File:Structure Block Data JE2 BE1.png|32px]] Structure blocks now have a [[block]] ID and can be obtained with {{cmd|give}} and {{cmd|setblock}}.
+|[[File:Structure Block Export BE1.png|32px]] Structure blocks now have a new mode called "3D Export" with a new texture. However, it's possible to use them only in [[wikipedia:Windows 10|Windows 10]] and "3D Export" is the only mode.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Structure blocks can now be obtained in [[wikipedia:iOS|iOS]] and [[wikipedia:Android|Android]], but cannot be used yet.}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|The option to export using Remix3D has been removed from structure blocks. Instead, structures now export locally.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|exp=Experimental Gameplay|Structure blocks are now usable, with save and load mode available only through [[Experimental Gameplay]].}}
+|{{HistoryLine||1.16.0|dev=beta 1.15.0.51|A detect button for save mode has been added to structure blocks.}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Structure block functionality with save and load mode are now available outside of [[Experimental Gameplay]].}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|The structure placement block now has placement animation options similar to {{cmd|structure}} command.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.21|Added corner mode to structure blocks.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|It is no longer possible to export structures on unsupported platforms, including mobile.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|ps4=1.36|psvita=1.36|wiiu=Patch 13|Added the structure block's textures to <samp>[[terrain.png]]</samp>.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[block entity]] ID has been changed from <code>Structure</code> to <code>structure_block</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[Java Edition 1.13/Flattening|''The Flattening'']], this block's numeral ID was 255.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Textures ===
+<gallery>
+Structureblockcomparison.png|Comparison of [[Java Edition 1.9]] and [[Java Edition 1.10]] blank structure block textures.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:StructureTree1.png|Selecting a [[tree]] on an island using Save and Corner structure blocks.
+File:StructureTree2.png|Preparing to load the saved tree structure into an empty [[sunflower plains]].
+File:StructureTree3.png|Structure loaded.
+File:InvisibleBlock1.17.png|A structure block showing invisible blocks.
+</gallery>
+
+=== Development images ===
+<gallery>
+Darkblock.png|The first image of the then-mysterious structure block, as posted by [[Michael Stoyke]].
+SeargeMysteryImage.png|Another cryptic image by Searge; the structure block can be seen in the center of the image, as well as the hotbar.
+SeargeMysteryImageBrightened.png|The previous image, brightened for clarity.
+SeargeMysteryImageDots.png|Yet another of the cryptic images posted by Searge; note the structure block in the hotbar and several in the upper-right corner.
+SeargeDotsSecretMessage.png|The secret message uncovered in the previous image with the use of an image-editing program.
+SeargeMysteryImageDoor.png|Another mystery image.
+SeargeMysteryImageBook.png|Yet another mystery image.
+SeargeMysteryImages.png|The mystery images in sequence.
+SeargeMysteryImageSideQuest.png|A "side quest" mystery image.
+Structure Block 1.png|Highlighting of the [[end city]] structures.
+Structure Block 2.png|The structure block on the data mode in 1.9.
+Structure Block 3.png|The interface in 1.9.
+Structure Block 4.png|Highlighting of end city structures in save mode.
+Structure Block 5.png|Highlighting of structures.
+New block 1.10.jpg|Teaser screenshot of the 1.10 structure block textures.
+ProfMobiusFossil.jpg|An image, tweeted by ProfMobius, of a structure block generating a fossil-like structure made of quartz.
+Structure Block UIs.jpg|The UIs of different structure block types.
+</gallery>
+
+== See also ==
+*[[Jigsaw block]]
+
+== Notes ==
+{{Reflist|group=note}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{mcnet|get-some-structure--blocks--your-life|Get some structure (blocks) in your life|May 5, 2019|Tom Stone}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|creative}}
+
+[[Category:Mechanisms]]
+[[Category:Block entities]]
+[[Category:Creative or commands only blocks]]
+[[Category:Blocks with GUI]]
+
+[[de:Konstruktionsblock]]
+[[es:Bloque estructural]]
+[[fr:Bloc de structure]]
+[[it:Blocco strutture]]
+[[ja:ストラクチャーブロック]]
+[[ko:구조물 블록]]
+[[pl:Blok struktur]]
+[[pt:Gerador de Estruturas]]
+[[ru:Структурный блок]]
+[[zh:结构方块]]

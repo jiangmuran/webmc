@@ -1,0 +1,128 @@
+{{wip}}{{Infobox structure
+| title = Root System
+| image = Rooted Azalea Tree.png
+| biome = Any [[Overworld]] biome
+| blocks =
+* {{BlockLink|Oak Log}}
+* {{BlockLink|Azalea Leaves}}
+* {{BlockLink|Flowering Azalea Leaves}}
+* {{BlockLink|Rooted Dirt}}
+* {{BlockLink|Hanging Roots}}
+}}
+
+A '''root system''' is a [[feature]] that spawns below naturally generated [[azalea tree]]s.
+
+== Generation ==
+{{empty section}}
+
+== Data values ==
+
+=== ID ===
+{{el|je}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=rooted-dirt
+|spritetype=block
+|nameid=root_system
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=rooted-dirt
+|spritetype=block
+|nameid=rooted_azalea_tree
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|int|required_vertical_space_for_tree}} Value between 1 and 64 (inclusive).
+** {{nbt|int|root_radius}} Value between 1 and 64 (inclusive).
+** {{nbt|int|root_placement_attempts}} Value between 1 and 256 (inclusive).
+** {{nbt|int|root_column_max_height}} Value between 1 and 4096 (inclusive).
+** {{nbt|int|hanging_root_radius}} Value between 1 and 64 (inclusive).
+** {{nbt|int|hanging_roots_vertical_span}} Value between 0 and 16 (inclusive).
+** {{nbt|int|hanging_root_placement_attempts}} Value between 1 and 256 (inclusive).
+** {{nbt|int|allowed_vertical_water_for_tree}} Value between 1 and 64 (inclusive).
+** {{nbt|string|root_replaceable}} A block tag with <code>#</code> specifying which blocks can be replaced by the root column.
+** {{nbt|compound|root_state_provider}} The block to use for the root column.
+*** {{nbt inherit/block_state_provider}}
+** {{nbt|compound|hanging_root_state_provider}} The block to use hanging below the root column.
+*** {{nbt inherit/block_state_provider}}
+** {{nbt|compound|allowed_tree_position}} The [[block predicate]] used to check if the tree position is valid.
+*** {{list indent|*|{{#lst:block predicate|json format}}}}
+** {{nbt|string}}{{nbt|compound|feature}} The [[placed feature]] to place on top of the root system. Can be an ID of a placed feature, or a placed feature object.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:root_system",
+  "config": {
+    "required_vertical_space_for_tree": 3,
+    "root_radius": 3,
+    "root_placement_attempts": 20,
+    "root_column_max_height": 100,
+    "hanging_root_radius": 3,
+    "hanging_roots_vertical_span": 2,
+    "hanging_root_placement_attempts": 20,
+    "allowed_vertical_water_for_tree": 2,
+    "root_replaceable": "#minecraft:azalea_root_replaceable",
+    "root_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:rooted_dirt"
+      }
+    },
+    "hanging_root_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:hanging_roots",
+        "Properties": {
+          "waterlogged": "false"
+        }
+      }
+    },
+    "allowed_tree_position": {
+      "type": "minecraft:true"
+    },
+    "feature": {
+      "feature": "minecraft:azalea_tree",
+      "placement": []
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Added root systems.}}
+|{{HistoryLine|||dev=Pre-release 7|Root systems no longer generate underwater.<ref>{{bug|MC-218592}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Added root systems.}}
+}}
+
+==Issues==
+{{Issue list}}
+
+==References==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Système racinaire]]
+[[ja:root_system]]
+[[pt:Sistema de raízes]]

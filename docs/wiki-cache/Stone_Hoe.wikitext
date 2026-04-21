@@ -1,0 +1,330 @@
+{{For||Hoe (disambiguation)}}
+{{Infobox item
+| image2 = Enchanted Stone Hoe.gif
+| miningefficiency = 4
+| attackdamage = {{jebe|{{hp|1}}|{{hp|4}}}}
+| attackspeed = 2
+| attackrange = 3
+| hitboxmargin = 0
+| durability = {{jebe|131|132}}
+| enchantability = 5
+| renewable = Yes
+| stackable = No
+}}
+
+A '''stone hoe''' is a variant of [[hoe]] that is crafted from [[cobblestone]]. It is used to [[till]] [[Dirt (disambiguation)|dirt-related]] blocks into [[farmland]], and to break [[leaves]], [[haybale]]s, and [[Sculk family|sculk-related]] blocks faster. It is the fifth-highest [[tier]] of hoe, having higher [[mining efficiency]], attack speed, and durability than a [[wooden hoe]].
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|name = [[Stone Hoe]]
+|A1 = Any stone-tier block
+|B1 = Any stone-tier block
+|B2 = Stick
+|B3 = Stick
+|Output = Stone Hoe
+|type = Tool
+|description = Can use cobblestone and its other variants interchangeably.
+}}
+
+=== Repairing ===
+==== Combining ====
+{{Crafting
+|Damaged Stone Hoe
+|Damaged Stone Hoe
+|Output = Stone Hoe
+|type = Tool
+|ignoreusage = 1
+|showdescription = 1
+|description = The durability of the two hoes is added together, plus an extra 5% durability.
+}}
+{{Grinding
+|showdescription=1
+|ingredients=2x Damaged [[Stone Hoe]] or<br>2x Damaged [[Iron Hoe]]
+|Damaged Stone Hoe|Damaged Stone Hoe|Stone Hoe|description=The durability of the two hoes is added together, plus an extra 5% durability.
+}}
+
+==== Anvil repair ====
+{{main|Anvil mechanics#Unit repair}}
+{{Repairing
+| head=1
+| Damaged Stone Hoe
+| Damaged Stone Hoe; Cobblestone; Blackstone
+| Stone Hoe
+| tail=1
+}}
+
+A stone hoe can be repaired in an [[anvil]] by adding [[cobblestone]], [[cobbled deepslate]] or [[blackstone]], with each block restoring 32{{only|JE|short=1}} or 33{{only|BE|short=1}} durability (25% of its maximum durability, rounded down). Two stone hoes can also be combined in an anvil. Both methods preserve the hoe's [[enchantment]]s.
+
+=== Trading ===
+{{Trade sources}}
+
+=== Villager gifts ===
+Toolsmith [[villager]]s occasionally throw stone hoes at players with the [[Hero of the Village]] status effect.{{Only|java}}
+
+== Usage ==
+{{Main|Hoe#Usage}}
+
+=== Harvesting ===
+Hoes are used to harvest certain plant-based or organic blocks more quickly. Breaking one of these blocks takes 1 [[durability]].
+
+Breaking any other block takes 0 durability if the block breaks instantly when broken by hand, or 1 otherwise.
+
+=== Tilling ===
+Hoes are used to turn dirt, grass blocks, and dirt paths into [[farmland]]. To till, press {{control|use}} on a grass or dirt block while holding a hoe. This does not work on [[mycelium]] or [[podzol]],<ref>{{bug|MC-8231||Mycelium and podzol cannot be tilled with hoes}}</ref> nor does it work if there are other blocks on top of the targeted blocks, including snow layers or torches. However, mycelium and podzol can be first converted to dirt paths with a shovel, then tilled into farmland with a hoe.
+
+Hoes can be used to convert [[coarse dirt]] into regular dirt by pressing {{control|use}} on the coarse dirt. Similar to tilling dirt, the space above the coarse dirt must be empty for it to be tilled.
+
+Hoes can also be used on [[rooted dirt]], which turns it into normal dirt, and yields a [[hanging roots]] item.
+
+Tilling is effectively instantaneous, regardless of material, and uses 1 durability. Breaking blocks with a hoe uses 0 or 1 durability, depending on the block.
+
+Hoes are unable to work on blocks with a plant on top, even if that plant could normally be placed on top of farmland without reverting it to dirt.<ref>{{bug|MC-167846||Hoe cannot be used on blocks with certain blocks on top even if said blocks can normally exist on farmland|WAI}}</ref>
+
+=== Weapon ===
+Hoes may be used as a weapon, although they deal only {{hp|1}} damage {{in|java}}. {{IN|bedrock}}, hoes can do as much as a pickaxe in terms of damage. Hoes use 1 durability when used as a weapon.
+
+{{IN|java}}, hoes have an attack speed modifier -2 (refill in 0.5s).
+
+Hoes always attack instantly {{in|bedrock}}.
+
+=== Enchantments ===
+A hoe can receive the following [[enchantment]]s:
+{| class="wikitable col-2-center"
+|+
+!Name
+!Description
+!Max Level
+![[Enchanting|Method]]
+!Weight
+|-
+|[[Efficiency]]
+|Increases the mining speed.
+|V
+|{{BlockLink|Enchanting Table}}{{BlockLink|Anvil}}
+|10
+|-
+|[[Fortune]]<ref name="exc" group="note">Silk Touch and Fortune are mutually exclusive</ref>
+|Increases the amount of [[drops]] when mining.
+|III
+|{{BlockLink|Enchanting Table}}{{BlockLink|Anvil}}
+|2
+|-
+|[[Silk Touch]]<ref name="exc" group="note" />
+|Causes blocks to drop themselves when mined.
+|I
+|{{BlockLink|Enchanting Table}}{{BlockLink|Anvil}}
+|1
+|-
+|[[Unbreaking]]
+|Grants a chance to negate durability consumption.
+|III
+|{{BlockLink|Enchanting Table}}{{BlockLink|Anvil}}
+|5
+|-
+|[[Mending]]
+|Repairs the hoe when obtaining [[experience]].
+|I
+|{{BlockLink|Anvil}}
+|2
+|-
+|[[Curse of Vanishing]]
+|The hoe vanishes on death, not dropping as an item.
+|I
+|{{BlockLink|Anvil}}
+|1
+|}
+<references />
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Hoe till1.ogg
+|sound2=Hoe till2.ogg
+|sound3=Hoe till3.ogg
+|sound4=Hoe till4.ogg
+|subtitle=Hoe tills
+|source=block
+|description=When a block is tilled into farmland
+|id=item.hoe.till
+|translationkey=subtitles.item.hoe.till
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Random break.ogg
+|subtitle=Item breaks
+|source=player
+|description=When a hoe's durability is exhausted
+|id=entity.item.break
+|translationkey=subtitles.entity.item.break
+|volume=0.8
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Gravel hit1.ogg
+|sound2=Gravel hit2.ogg
+|sound3=Gravel hit3.ogg
+|sound4=Gravel hit4.ogg
+|source=block
+|description=When a block is tilled into farmland
+|id=use.gravel
+|volume=1.0
+|pitch=0.8}}
+| {{SoundLine
+|sound=Random break.ogg
+|source=player
+|description=When a hoe's durability is exhausted
+|id=random.break
+|volume=1.0
+| pitch = 0.9
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Stone Hoe
+|spritetype=item
+|nameid=stone_hoe
+|form=item
+|foot=1}}
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Stone hoe
+|spritetype=item
+|nameid=stone_hoe
+|id=330
+|form=item
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Time to Farm!; MOAR Tools}}
+
+== Videos ==
+{{yt|Wkqfv6QLEs0}}
+{{yt|GJ6XBDFDBd0}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||20100206-2034|[[File:Stone Hoe JE1 BE1.png|32px]] Added stone hoe.
+|Stone hoes now have a durability of 65.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Stone hoes' durability has been increased from 65 to 131.}}
+|{{HistoryLine||1.6|dev=Test Build 3|Before, using a hoe on [[grass block]]s was the only way to collect [[Wheat Seeds|seeds]] for planting. As [[short grass]] has been introduced, this feature has been removed.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w07a|Player is now unable to till [[dirt]] or [[grass block]] when there is a block on top of them.}}
+|{{HistoryLine||1.4.2|dev=12w38a|Hoes now have a [[sound]] when tilling [[dirt]].}}
+|{{HistoryLine||1.8|dev=14w32a|Stone hoes can now be used to convert [[coarse dirt]] into regular [[dirt]].}}
+|{{HistoryLine||1.9|dev=15w34c|Stone hoes now do slightly more [[damage]] than an unarmed attack.}}
+|{{HistoryLine|||dev=15w34d|Stone hoes now lose 1 [[durability]] when used as a [[weapon]].}}
+|{{HistoryLine|||dev=15w35a|Hoes now all do the same damage, but better materials have higher speeds.}}
+|{{HistoryLine|||dev=15w50a|Added a [[sound]] for hoes: <code>item.hoe.till</code>.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Stone Hoe JE2 BE2.png|32px]] The texture of stone hoe have been changed.}}
+|{{HistoryLine|||dev=19w11a|Toolsmith villagers now sell stone hoes.}}
+|{{HistoryLine|||dev=19w13a|Toolsmith villagers now give stone hoes to players under the [[Hero of the Village]] effect.}}
+|{{HistoryLine||1.16|dev=20w09a|Hoes can now break [[Nether Wart Block|nether wart and warped wart block]]s quickly.}}
+|{{HistoryLine|||dev=20w10a|Each tier of hoes now has different a speed while [[breaking|mining]] blocks they are effective against.
+|Hoes can now be enchanted with [[Efficiency]], [[Fortune]] and [[Silk Touch]].
+|Hoes now mine [[hay bale]]s faster than other tools}}
+|{{HistoryLine|||dev=20w11a|Hoes can now mine [[dried kelp block]]s, [[target]]s, and [[shroomlight]]s faster than other [[tool]]s.}}
+|{{HistoryLine|||dev=20w12a|Hoes can now mine [[sponge]]s faster than other tools.}}
+|{{HistoryLine|||dev=20w15a|Hoes can now mine [[leaves]] faster.
+|Stone hoes can now be crafted using [[blackstone]].}}
+|{{HistoryLine||1.17|dev=20w49a|Hoes can now mine [[sculk sensor]]s faster than other tools.}}
+|{{HistoryLine|||dev=21w11a|Hoes are now the appropriate tool for breaking [[moss block]]s.}}
+|{{HistoryLine|||dev=21w08a|Stone hoes can now be crafted using [[cobbled deepslate]].}}
+|{{HistoryLine|||dev=21w20a|Hoes can now be used on [[rooted dirt]], turning it into normal dirt, yielding a [[hanging roots]] item.}}
+|{{HistoryLine||1.19|dev=22w12a|Hoes can now mine mangrove [[leaves]] faster.<ref>{{Cite bug|MC|249270|Mangrove leaves do not have a hoe as their preferred tool|date=March 19, 2022}}</ref>}}
+|{{HistoryLine|combat java}}
+|{{HistoryLine||1.14.3|The attack speed of stones has been changed to 2.5.
+|The [[damage]] dealt for stone hoes have been changed to {{hp|2}}.
+|The attack reach of hoes has been increased to 4 [[block]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.4.0|[[File:Stone Hoe JE1 BE1.png|32px]] Added stone hoe.
+|[[Wheat seed]]s are now obtained by using a hoe on [[grass block]]s.}}
+|{{HistoryLine||v0.8.0|dev=build 3|[[Beetroot seeds]], [[carrot]]s, and [[potato]]es are now obtained by using a hoe on [[grass block]]s.}}
+|{{HistoryLine|||dev=build 4|[[Carrot]]s and [[potato]]es no longer spawn from tilling [[grass block]]s with a hoe.}}
+|{{HistoryLine||v0.11.0|dev=build 11|Stone hoes are now available in the [[creative]] [[inventory]].}}
+|{{HistoryLine|||dev=build 12|Stone hoes have been removed from creative.}}
+|{{HistoryLine|||dev=build 13|Stone hoes are now available in [[creative]] mode again.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Hoes can now be used to transform [[coarse dirt]] into normal [[dirt]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Stone Hoe JE2 BE2.png|32px]] The texture of stone hoe has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Stone hoes can now be [[trading|bought]] from toolsmith [[villager]]s.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Each tier of hoes now has different a speed while [[breaking|mining]] blocks they are effective against.
+|Hoes can now break [[hay bale]]s, [[dried kelp block]]s, [[target block]]s, [[Sponge|dry and wet sponges]], [[shroomlight]]s, [[leaves]], [[Nether Wart Block|nether wart and warped wart block]]s quickly.
+|Hoes can now be enchanted with [[Efficiency]], [[Fortune]] and [[Silk Touch]].
+|Stone hoes can now be created using Blackstone.
+|Stone hoe now deal the same damage as stone pickaxe.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps=1.0|wiiu=Patch 1|switch=1.0.1|[[File:Stone Hoe JE1 BE1.png|32px]] Added stone hoes.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Stone hoes can now be used to convert [[coarse dirt]] into regular [[dirt]].}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added a [[sound]] for hoes. Previously, using a hoe played the sound for walking on farmland.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Stone Hoe JE2 BE2.png|32px]] The texture of stone hoe has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Stone Hoe JE1 BE1.png|32px]] Added stone hoes.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to ''[[1.13/Flattening|The Flattening]]'', stone hoe's numeral ID was 291.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*Tilling a [[dirt]] block that has a dirt block on top of it changes it to [[farmland]] even though it cannot be used. If a hoe is used on a [[block]] horizontally adjacent to such a block, the first block reverts to dirt and the selected block is not tilled.
+*When a hoe breaks while tilling dirt, it does not display the tool breaking animation like on other tools, because tilling is not predicted client-side.
+
+== Gallery ==
+=== In other media ===
+<gallery>
+Stone Hoe SDGP.png|Stone hoe in the [[Super Duper Graphics Pack]].
+</gallery>
+
+== References ==
+<references /><references group="note"/>
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/taking-inventory--hoe Taking Inventory: Hoe] – Minecraft.net on June 25, 2019
+
+== Navigation ==
+{{navbox tools}}
+{{Navbox items|tools}}
+
+[[Category:Tools]]
+
+[[pt:Enxada de pedra]]

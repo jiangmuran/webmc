@@ -1,0 +1,258 @@
+{{For|the current version of zombie villagers|Zombie Villager}}
+{{Merge|Zombie Villager|discussAnchor=Rewrite}}
+{{Outdated|edition=Java}}
+{{unobtainable|edition=be}}
+{{Exclusive|Legacy Console|New3DS|customtext=This feature is exclusive to [[Legacy Console Edition]], ''[[New Nintendo 3DS Edition]]'' and the [[Marketplace|''Bedrock Edition'' Marketplace]]. This page describes its mechanics from before it was replaced by the current villager.}}
+{{Infobox entity
+| *-2size = x136px
+| *-1caption = Adult
+| *-2caption = Baby
+| group1 = Farmer
+| 1-1 = Zombie Farmer.png
+| 1-2 = Baby Zombie Farmer.png
+| group2 = Librarian
+| 2-1 = Zombie Librarian.png
+| 2-2 = Baby Zombie Librarian.png
+| group3 = Priest
+| 3-1 = Zombie Priest.png
+| 3-2 = Baby Zombie Priest.png
+| group4 = Blacksmith
+| 4-1 = Zombie Blacksmith.png
+| 4-2 = Baby Zombie Blacksmith.png
+| group5 = Butcher
+| 5-1 = Zombie Butcher.png
+| 5-2 = Baby Zombie Butcher.png
+| group6 = Nitwit
+| 6-1 = Zombie Nitwit.png
+| 6-2 = Baby Zombie Nitwit.png
+| health = {{hp|20}}
+| size = '''Adult:'''<br>Height: 1.95 Blocks<br>Width: 0.6 Blocks<br>
+'''Baby:'''<br>Height: 0.975 Blocks<br>Width: 0.3 Blocks
+| mobtype = {{EntityLink|Undead}}<br>{{EntityLink|Monster}}
+| spawn = at night, if {{EntityLink|Zombie}} kills {{EntityLink|Villager (old)|id=villager}}
+| behavior = Hostile
+}}
+
+A '''zombie villager''' is a variant of the [[zombie]] that can be cured into a normal [[Villager (old)|villager]] by {{ctrl|using}} a [[golden apple]] on it while it is has the [[Weakness]] effect.
+
+== Spawning ==
+When a group in the normal spawn cycle spawns zombies, there is a 5% chance to instead spawn a group of zombie villagers{{only|pocket}}, or a single zombie villager{{only|java}}. (This increases to a 20% chance in [[old growth taiga]] biomes){{only|java}}
+
+If any type of [[zombie]] kills a [[villager]], there is a chance for the villager to transform into a zombie villager.
+
+{| class="wikitable"
+!Difficulty
+!Chance
+|-
+|[[Difficulty#Easy|Easy]]
+|0%
+|-
+|[[Difficulty#Normal|Normal]]
+|50%
+|-
+|[[Difficulty#Hard|Hard]]
+|100%
+|}
+
+{{IN|Java}} a zombified zombie villager does not despawn if the player has traded with it at least once prior to its death, but unlike all other persistent mobs it still counts toward the hostile mob cap. If the zombie villager picks up any item however, it remains persistent but is excluded from the mob cap. {{IN|Pocket}} all zombified villagers are persistent.
+
+A zombie villager appears alongside a [[Villager|cleric]] villager in every [[igloo]] basement (a normal zombie villager in [[Pocket Edition]] and a cleric zombie villager in ''[[Java Edition]]''). One of them transforms into a leatherworker, due to the workstation (a cauldron). They also spawn in [[zombie village]]s. Zombie villagers generated in both of these structures do not despawn naturally.
+
+== Drops ==
+=== On death ===
+{{DropTable|edition=bedrock|nosource=1
+|{{DropLine|name=Rotten Flesh|quantity=0-2|lootingquantity=0-1}}
+|{{DropLine|name=Iron Ingot|notes=player_or_pet|dropchance=0.025|lootingchance=0.01|multiplychance=1/3}}
+|{{DropLine|name=Carrot|notes=player_or_pet|dropchance=0.025|lootingchance=0.01|multiplychance=1/3}}
+|{{DropLine|name=Potato|notes=player_or_pet|dropchance=0.025|lootingchance=0.01|multiplychance=1/3}}
+}}
+Any picked-up equipment has a 100% chance of dropping on death or when cured and drops with the same damage level it had when picked up.
+
+=== Naturally-spawned equipment ===
+Zombie villagers do not spawn with equipment in ''Bedrock Edition''. In ''Java Edition'', a zombie villager can spawn with any of the following:
+* {{BlockLink|Carved Pumpkin}} <ref name=":0" group="note">Zombie villagers spawn with [[pumpkin]]s and [[jack o'lantern]]s{{Only|java}} only during [[Wikipedia:Halloween|Halloween]].</ref>
+* {{BlockLink|Jack o'Lantern}}{{only|java}}<ref name=":0" group="note" />
+* {{ItemLink|Iron Shovel}}
+* {{ItemLink|Iron Sword}}
+* {{ItemLink|Iron Chestplate|Random Armor|link=Armor}}
+* Zombie villagers have an 8.5% chance of dropping their naturally-spawned equipment (other than Halloween pumpkins), and drop it with a random durability. Each level of [[Looting]] increases the chance by 1 percentage point (11.5% with Looting III).
+
+{{Notelist}}
+
+=== Experience ===
+Adult zombie villagers drop {{xp|5}} and an additional {{xp|1|3}} per naturally-spawned equipment. Baby zombie villagers drop {{xp|12}} experience.
+[[Category:Java Edition]]
+[[Category:Bedrock Edition]]
+
+== Data values ==
+=== ID ===
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Zombie Villager (old)
+|spritetype=entity
+|spritename=zombie-villager-revision-1
+|nameid=zombie_villager
+|showentityfamily=y
+|entityfamily=armorer,butcher,cartographer,cleric,farmer,fisherman,fletcher,leatherworker,librarian,mob,monster,nitwit,shepherd,stone_mason,toolsmith,undead,weaponsmith,zombie,zombie_villager
+|id=44
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w32a|[[File:Zombie Villager.png|32px]] Added zombie villagers.
+|[[File:Baby Zombie Villager.png|20px]] Added baby zombie villagers. 
+|5% of [[zombie]]s spawned are zombie villagers, and [[villager]]s now become infected when killed by a [[zombie]]. Infecting a baby villager creates a baby zombie villager, which is faster than a normal zombie and does not age.
+|Zombie villagers under the effects of a [[potion of Weakness]] can be cured by using a [[golden apple]] on them.}}
+|{{HistoryLine|||dev=12w34a|Zombie villagers now have two new rare [[drop]]s – [[carrot]]s and [[potato]]es.}}
+|{{HistoryLine|||dev=12w34b|Zombie villagers can now pick up and equip dropped [[item]]s.<ref>{{tweet|jeb|240381873480687616}}</ref><ref>http://www.reddit.com/r/Minecraft/comments/yrjp8/zombies_can_pick_up_items_from_the_ground_in_the/c5y7uma</ref> 
+|If killed, zombie villagers now drop the item they are holding.
+|Zombie villagers can now survive in sunlight, if they are wearing a [[helmet]] or a [[pumpkin]].<ref>{{tweet|dinner|243645556872855552}}</ref>}}
+|{{HistoryLine|||dev=12w37a|[[File:Zombie Villager with Carved Pumpkin Revision 1.png|32px]] [[File:Zombie Villager with Jack o'Lantern Revision 1.png|32px]] [[File:Baby Zombie Villager with Carved Pumpkin Revision 1.png|x56px]] [[File:Baby Zombie Villager with Jack o'Lantern Revision 1.png|x56px]] On [[wikipedia:Halloween|Halloween]], zombie villagers can now spawn wearing [[pumpkin]]s or [[jack o'lantern]]s.}}
+|{{HistoryLine||1.5|dev=13w03a|Zombie villagers are now able to set the [[player]] on [[fire]], if they are on fire and they attack the player.
+|Zombie villagers can now call other [[zombie]]s from the nearby area (radius dependent on difficulty) to attack the [[player]], making packs of zombies approach shortly after [[damage|damaging]] the zombie villager.
+|Zombie villagers now cause more [[damage]] when their [[health]] is lower.}}
+|{{HistoryLine||1.6.1|dev=13w17a|When damaged, zombie villagers now have a low chance to spawn more zombies.}}
+|{{HistoryLine|||dev=13w21a|Zombie villager [[damage]] increasing with decreasing health has been removed.}}
+|{{HistoryLine|||dev=13w23b|Zombie villager AI and mechanics have been changed – this has now made them much more horde-like.
+|Zombie villagers are now able to detect the [[player]] up to 40 [[block]]s.}}
+|{{HistoryLine||1.6.2|dev=pre|Baby zombie villagers now spawn among regular ones. 
+|Baby zombie villagers now have the same percentage of spawning as zombie villagers.}}
+|{{HistoryLine||1.7.2|dev=13w36a|Baby zombie villagers now [[drop]] loot and [[experience]].}}
+|{{HistoryLine||1.7.4|dev=13w49a|Added zombie villager [[chicken jockey]]s – a rare version of the baby zombie villager.}}
+|{{HistoryLine||1.8|dev=14w11a|Zombie villagers now run away from [[creeper]]s that are about to [[explode]].}}
+|{{HistoryLine|||dev=14w30a|Zombie villagers now [[drop]] a [[zombie]] [[head]] when killed by a [[charged creeper]].}}
+|{{HistoryLine||1.8.1|dev=pre1|Zombie villagers no longer run away from [[creeper]]s that are about to explode.}}
+|{{HistoryLine||1.9|dev=15w32a|The detection range of zombie villagers is now halved when the [[player]] is wearing a [[zombie]] [[mob head]].}}
+|{{HistoryLine|||dev=15w33c|The zombie villager's detection range for [[player]]s wearing the zombie head has been adjusted, now 37.5% of the normal range.}}
+|{{HistoryLine|||dev=15w34a|Zombie villagers now have an attack animation similar to the one they had in [[Survival Test]], even without [[weapon]]s.}}
+|{{HistoryLine|||dev=15w35a|[[File:Zombie Farmer.png|32px]] [[File:Zombie Librarian.png|32px]] [[File:Zombie Priest.png|32px]] [[File:Zombie Blacksmith.png|32px]] [[File:Zombie Butcher.png|32px]] [[File:Zombie Nitwit.png|32px]] Zombie villagers now retain their professions and clothes, which have a tattered appearance. Before this version, the zombie villager's body texture shared the same texture as the regular [[zombie]]'s, including [[Steve]]'s clothes.
+|[[File:Baby Zombie Farmer.png|20px]] [[File:Baby Zombie Librarian.png|20px]] [[File:Baby Zombie Priest.png|20px]] [[File:Baby Zombie Blacksmith.png|20px]] [[File:Baby Zombie Butcher.png|20px]] [[File:Baby Zombie Nitwit.png|20px]] Baby zombie villagers now retain their professions and clothes, which have a tattered appearance.}}
+|{{HistoryLine|||dev=15w36a|The zombie villager's detection range for [[player]]s wearing the [[zombie head]] is now again 50% of the normal range.}}
+|{{HistoryLine|||dev=15w43a|A zombie villager priest can now be found caged in an [[igloo]] basement.}}
+|{{HistoryLine||1.10|dev=16w20a|"Generic" green-robed zombie villager has been removed, due to the new <code>ZombieType</code> tag not allowing invalid [[villager]] professions.
+|Zombie villagers now spawn in [[abandoned village]]s.}}
+|{{HistoryLine|||dev=pre1|The chance of a zombie villager setting the target on [[fire]] when burning, and the duration of the effect, now depends on raw regional difficulty.
+|Zombie villagers that spawn as part of abandoned villages no longer despawn.}}
+|{{HistoryLine||1.11|dev=16w32a|Added a zombie villager [[spawn egg]].
+|The zombie villager's in-game name has been changed to "Zombie Villager" instead of "Zombie".
+|Zombie villagers no longer drop [[zombie head]]s when killed by a [[charged creeper]].
+|Zombie villagers no longer spawn from zombie [[spawner]]s.<ref>{{bug|MC-106146|||WAI}}</ref>
+|Zombie villagers can no longer spawn from normal zombie spawn eggs.}}
+|{{HistoryLine|||dev=16w32b|[[File:Zombie Nitwit.png|32px]] [[File:Baby Zombie Nitwit.png|20px]] Generic zombie villagers have been re-added, along with their normal [[villager]] counterpart.}}
+|{{HistoryLine|||dev=16w39a|Zombie villagers now have their own [[sound]]s.}}
+|{{HistoryLine||1.13|dev=18w07a|Zombie villagers now intentionally stomp on [[turtle egg]]s and attack [[turtle]]s.}}
+|{{HistoryLine|||dev=18w10d|Baby zombie villagers now burn in the [[sun]].}}
+|{{HistoryLine|||dev=18w19a|Zombie villagers now sink in water.
+|Zombie villagers no longer drown underwater.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Zombie Farmer.png|32px]] [[File:Zombie Librarian.png|32px]] [[File:Zombie Priest.png|32px]] [[File:Zombie Blacksmith.png|32px]] [[File:Zombie Butcher.png|32px]] [[File:Zombie Nitwit.png|32px]] Added zombie villagers.
+|[[File:Baby Zombie Farmer.png|20px]] [[File:Baby Zombie Librarian.png|20px]] [[File:Baby Zombie Priest.png|20px]] [[File:Baby Zombie Blacksmith.png|20px]] [[File:Baby Zombie Butcher.png|20px]] [[File:Baby Zombie Nitwit.png|20px]] Added baby zombie villagers.
+|Zombie villagers retain their professions and clothes, which have a tattered appearance.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Baby zombie villagers now have a 15% chance of becoming a [[jockey]]. Before becoming a jockey, upon nearing the [[player]], they check for one of the following to mount prior attacking: adult [[chicken]]s, adult [[ocelot]]s, adult [[wolves]], adult [[zombies]], adult zombie villager, adult [[zombie pigmen]], [[cow]]s, [[pig]]s, [[sheep]], [[cave spider]]s, or [[spider]]s.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Baby zombie villagers can now mount adult [[husk]]s and [[horse]] variants.}} 
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.9|Zombie villagers now have their own [[sound]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Baby zombie villagers can no longer mount adult [[zombie pigmen]].}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Baby zombie villagers now burn in [[daylight]].}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.0|Zombie villagers now sink underwater.}}
+|{{HistoryLine|||dev=beta 1.5.0.4|Zombie villagers now attack baby [[turtle]]s and stomp on [[turtle egg]]s.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Baby zombie villagers can now mount [[panda]]s and stray [[cat]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Zombie Villager.png|32px]] Added zombie villagers.
+|[[File:Baby Zombie Villager.png|20px]] Added baby zombie villagers.
+|Baby zombie villagers can be obtained only by having a [[zombie]] kill a baby [[villager]], as a zombie [[spawn egg]] does not spawn them, due to baby zombies not being in game.}}
+|{{HistoryLine||xbox=TU15|xbone=CU1|ps3=1.05|psvita=1.00|ps4=1.00|The rare loot of zombie villagers' [[drop]]s have been changed to be [[carrot]]s, [[potato]]es or [[iron ingot]]s.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|Zombie villagers can now pick up [[item]]s and occasionally spawn with [[armor]] and/or [[weapon]]s.
+|Baby zombie villagers can now be spawned with a [[zombie]] [[spawn egg]].
+|When damaged, zombie villagers now have a low chance to spawn more zombies.{{verify|Is this the correct version?}}|[[File:Zombie Villager with Carved Pumpkin Revision 1.png|32px]] [[File:Zombie Villager with Jack o'Lantern Revision 1.png|32px]] [[File:Baby Zombie Villager with Carved Pumpkin Revision 1.png|x56px]] [[File:Baby Zombie Villager with Jack o'Lantern Revision 1.png|x56px]] On [[wikipedia:Halloween|Halloween]], zombie villagers can now spawn wearing [[pumpkin]]s or [[jack o'lantern]]s.{{check version}}}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Baby zombie villagers now drop [[experience]].
+|Added zombie villager [[chicken jockey]]s – a rare version of the baby zombie villager.
+|Zombie villagers now drop a [[zombie head]] when killed by a [[charged creeper]].}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|A zombie villager can now be found in [[igloo]] basements. Since the new zombie villager skins were not added yet, the zombie villager received a random profession when cured.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Zombie Farmer.png|32px]] [[File:Zombie Librarian.png|32px]] [[File:Zombie Priest.png|32px]] [[File:Zombie Blacksmith.png|32px]] [[File:Zombie Butcher.png|32px]] [[File:Zombie Nitwit.png|32px]] Zombie villagers now retain their professions and clothes, which have a tattered appearance. Before this version, the zombie villager's body texture shared the same texture as the regular [[zombie]]'s body.
+|When the curing process of zombie villagers finishes, they now make the same sound as when the curing process starts.
+|The zombie villager in igloo basements is now a cleric.}}
+|{{HistoryLine||xbox=TU54|xbone=CU45|ps3=1.57|psvita=1.56|ps4=1.56|wiiu=Patch 24|switch=1.0.4|Zombie Villagers no longer spawn from [[zombie]] [[spawn egg]]s or [[Monster Spawner|spawner]]s, since they now have their own spawn egg.}}
+|{{HistoryLine||xbox=TU56|xbone=CU47|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|Zombie villagers now spawn in [[abandoned village]]s.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Baby zombie villagers now have a 15% chance of becoming a jockey. Before becoming a jockey, upon nearing the [[player]], they check for one of the following to mount prior attacking: adult [[chicken]]s, adult [[ocelot]]s, adult [[wolves]], adult [[zombie]]s, [[cow]]s, [[pig]]s, [[sheep]], [[spider]]s or [[cave spider]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Zombie villagers now have their own [[sound]]s.
+|Zombie villagers now sink in water.
+|Zombie villagers no longer drown underwater.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Zombie Farmer.png|32px]] [[File:Zombie Librarian.png|32px]] [[File:Zombie Priest.png|32px]] [[File:Zombie Blacksmith.png|32px]] [[File:Zombie Butcher.png|32px]] [[File:Zombie Nitwit.png|32px]] Added zombie villagers.
+|[[File:Baby Zombie Farmer.png|20px]] [[File:Baby Zombie Librarian.png|20px]] [[File:Baby Zombie Priest.png|20px]] [[File:Baby Zombie Blacksmith.png|20px]] [[File:Baby Zombie Butcher.png|20px]] [[File:Baby Zombie Nitwit.png|20px]] Added baby zombie villagers.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w35a|A new <code>VillagerProfession</code> tag that determines what profession the zombie villager is, as well its profession when cured, has been added.}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID <code>Zombie</code> has been changed to <code>zombie</code>, <code>zombie_villager</code> and <code>husk</code> for those respective mobs.
+|The <code>ZombieType, IsVillager</code> [[tag]] has been removed and the <code>Profession</code> tag to the <code>zombie_villager</code> has been added, and the <code>ConversionTime</code> has been made to apply to <code>zombie_villager</code> only.
+|Setting the <code>Profession</code> tag to 5 now makes green-robed villagers.}}
+|{{HistoryLine||1.12|dev=17w14a|Added <code>ConversionPlayerLeast</code> and <code>ConversionPlayerMost</code> [[tag]]s to the zombie villager, for the purpose of the <code>minecraft:cured_zombie_villager</code> trigger for [[advancement]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+}}
+
+== Gallery ==
+=== Renders ===
+==== Poses ====
+<gallery>
+File:Zombie Villager.png|The original zombie villager texture.
+File:Baby Zombie Villager.png|The original texture for the baby zombie villager.
+File:Chicken Zombie Villager Jockey.png|The original texture for the baby zombie villager jockey
+File:Babyzdiamondarmor.png|A baby zombie villager wearing full diamond [[armor]].
+File:Zombie Villager with Carved Pumpkin Revision 1.png|A zombie villager wearing [[carved pumpkin]].
+File:Zombie Villager with Jack o'Lantern Revision 1.png|A zombie villager wearing [[jack o'lantern]].
+File:Baby Zombie Villager with Carved Pumpkin Revision 1.png|A baby zombie villager wearing carved pumpkin.
+File:Baby Zombie Villager with Jack o'Lantern Revision 1.png|A baby zombie villager wearing jack o'lantern.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+ZombieVillagerClothes.png|The zombie villager textures added in [[15w35a]].
+Babywitherskeletonheadglitch.png|A glitch that occurs when baby villager zombie 'wears' a wither skeleton skull.
+File:Snímek obrazovky 2025-08-17 154049.png|Comparison of a zombie and an old zombie villager.
+</gallery>
+
+=== Textures ===
+<gallery>
+File:Zombie Villager (texture) JE1.png|alt=|Old texture file
+File:Zombie villager.png|Nitwit/Generic texture file
+File:Zombie librarian.png|Librarian texture file
+File:Zombie butcher.png|Butcher texture file
+File:Zombie farmer.png|Farmer texture file
+File:Zombie priest.png|Priest texture file
+File:Zombie smith.png|Blacksmith texture file
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox entities|unimplemented}}
+
+[[Category:Monster mobs]]
+[[Category:Undead mobs]]
+[[Category:Humanoid mobs]]
+
+[[de:Zombiedorfbewohner/Vor 1.14]]
+[[pt:Aldeão Zumbi (antigo)]]

@@ -1,0 +1,1521 @@
+'''Technical blocks''' are blocks that can be used for some purposes when events in the game are happening, or blocks that use independent ID namespaces prevent the unnecessary combinations of [[block states]]. Technical blocks can't normally be obtained in the game, but in older ''Java Edition'' versions and current ''Bedrock Edition'' versions, different technical blocks can be obtained using glitches or NBT editing.
+
+== ''Java Edition'' ==
+The game prevents certain [[block]]s from being obtained through normal gameplay methods, such as [[crafting]], the [[Creative inventory]], the [[pick block]] key, and the [[Silk Touch]] enchantment. It also prevents such blocks from being given through less conventional methods, such as inventory editing, [[mod]]s, and [[commands]]. Until [[Java Edition 1.7.2|1.7.2]] and [[Java Edition 1.8|1.8]], there had been a wide variety of blocks that could be edited into the inventory; over time, however, the game was updated so that these blocks became entirely unavailable, even though one utilized inventory editing. From [[Java Edition 1.13]] onwards, blocks and items are completely different concepts, and numerical IDs no longer exist at all.
+
+Currently, the game only accepts [[resource location]]s (such as <code>minecraft:dirt</code>) in most commands, and uses these resource locations when assigning blocks to the inventory and save files. The old method of obtaining a block via numerical IDs is no longer an option because the numerical id method <code>getItemById(Integer.parseInt(id))</code>  is no longer used in command <code>/give</code>. In addition, the game automatically removes blocks with illegitimate resource locations from the inventory, so using inventory editors is also no longer an option. Furthermore, certain blocks with both block and [[item]] forms, such as <code>minecraft:cake</code>, cannot be obtained in their block form in the inventory; however, since the game has a corresponding item named <code>minecraft:cake</code>, the item form is given instead. The only option is modifying game's class where registered items and ItemBlocks (direct item forms of blocks) in order to register and obtain them.
+
+=== List ===
+{|class="wikitable stikitable sortable"data-description="Block IDs"
+!Icon!![[Resource location]]!!Block!!Item form's ID
+|-
+|[[File:Acacia Wall Hanging Sign.png|30px]]||{{code|acacia_wall_hanging_sign}}||[[Acacia Wall Hanging Sign]]||acacia_hanging_sign
+|-
+|[[File:Acacia Wall Sign.png|30px]]||{{code|acacia_wall_sign}}||[[Acacia Wall Sign]]||acacia_sign
+|-
+|[[File:Air.png|30px]]||{{code|air}}||[[Air]]||Identical 
+|-
+|[[File:Attached Melon Stem.png|30px]]||{{code|attached_melon_stem}}||[[Attached Melon Stem]]||melon_seeds
+|-
+|[[File:Attached Pumpkin Stem.png|30px]]||{{code|attached_pumpkin_stem}}||[[Attached Pumpkin Stem]]||pumpkin_seeds
+|-
+|[[File:Bamboo Shoot.png|30px]]||{{code|bamboo_sapling}}||[[Bamboo Shoot]]||bamboo
+|-
+|[[File:Bamboo Wall Hanging Sign.png|30px]]||{{code|bamboo_wall_hanging_sign}}||[[Bamboo Wall Hanging Sign]]||bamboo_hanging_sign
+|-
+|[[File:Bamboo Wall Sign.png|30px]]||{{code|bamboo_wall_sign}}||[[Bamboo Wall Sign]]||bamboo_sign
+|-
+|[[File:Beetroots.png|30px]]||{{code|beetroots}}||[[Beetroots]]||beetroot_seeds
+|-
+|[[File:Big Dripleaf Stem.png|30px]]||{{code|big_dripleaf_stem}}||[[Big Dripleaf Stem]]||big_dripleaf
+|-
+|[[File:Birch Wall Hanging Sign.png|30px]]||{{code|birch_wall_hanging_sign}}||[[Birch Wall Hanging Sign]]||birch_hanging_sign
+|-
+|[[File:Birch Wall Sign.png|30px]]||{{code|birch_wall_sign}}||[[Birch Wall Sign]]||birch_sign
+|-
+|[[File:Cake with Black Candle.png|30px]]||{{code|black_candle_cake}}||[[Cake with Black Candle]]||cake
+|-
+|[[File:Black Wall Banner.png|30px]]||{{code|black_wall_banner}}||[[Black Wall Banner]]||black_banner
+|-
+|[[File:Cake with Blue Candle.png|30px]]||{{code|blue_candle_cake}}||[[Cake with Blue Candle]]||cake
+|-
+|[[File:Blue Wall Banner.png|30px]]||{{code|blue_wall_banner}}||[[Blue Wall Banner]]||blue_banner
+|-
+|[[File:Brain Coral Wall Fan.png|30px]]||{{code|brain_coral_wall_fan}}||[[Brain Coral Wall Fan]]||brain_coral_fan
+|-
+|[[File:Cake with Brown Candle.png|30px]]||{{code|brown_candle_cake}}||[[Cake with Brown Candle]]||cake
+|-
+|[[File:Brown Wall Banner.png|30px]]||{{code|brown_wall_banner}}||[[Brown Wall Banner]]||brown_banner
+|-
+|[[File:Bubble Column.png|30px]]||{{code|bubble_column}}||[[Bubble Column]]||None
+|-
+|[[File:Bubble Coral Wall Fan.png|30px]]||{{code|bubble_coral_wall_fan}}||[[Bubble Coral Wall Fan]]||bubble_coral_fan
+|-
+|[[File:Cake with Candle.png|30px]]||{{code|candle_cake}}||[[Cake with Candle]]||cake
+|-
+|[[File:Carrots.png|30px]]||{{code|carrots}}||[[Carrots]]||carrot
+|-
+|[[File:Cave Air.png|30px]]||{{code|cave_air}}||[[Cave Air]]||None
+|-
+|[[File:Cave Vines.png|30px]]||{{code|cave_vines}}||[[Cave Vines]]||glow_berries
+|-
+|[[File:Cave Vines Plant.png|30px]]||{{code|cave_vines_plant}}||[[Cave Vines Plant]]||glow_berries
+|-
+|[[File:Cherry Wall Hanging Sign.png|30px]]||{{code|cherry_wall_hanging_sign}}||[[Cherry Wall Hanging Sign]]||cherry_hanging_sign
+|-
+|[[File:Cherry Wall Sign.png|30px]]||{{code|cherry_wall_sign}}||[[Cherry Wall Sign]]||cherry_sign
+|-
+|[[File:Cocoa.png|30px]]||{{code|cocoa}}||[[Cocoa]]||cocoa_beans
+|-
+|[[File:Creeper Wall Head.png|30px]]||{{code|creeper_wall_head}}||[[Creeper Wall Head]]||creeper_head
+|-
+|[[File:Crimson Wall Hanging Sign.png|30px]]||{{code|crimson_wall_hanging_sign}}||[[Crimson Wall Hanging Sign]]||crimson_hanging_sign
+|-
+|[[File:Crimson Wall Sign.png|30px]]||{{code|crimson_wall_sign}}||[[Crimson Wall Sign]]||crimson_sign
+|-
+|[[File:Copper Wall Torch.png|30px]]||{{code|copper_wall_torch}}||[[Copper Wall Torch]]||copper_torch
+|-
+|[[File:Cake with Cyan Candle.png|30px]]||{{code|cyan_candle_cake}}||[[Cake with Cyan Candle]]||cake
+|-
+|[[File:Cyan Wall Banner.png|30px]]||{{code|cyan_wall_banner}}||[[Cyan Wall Banner]]||cyan_banner
+|-
+|[[File:Dark Oak Wall Hanging Sign.png|30px]]||{{code|dark_oak_wall_hanging_sign}}||[[Dark Oak Wall Hanging Sign]]||dark_oak_hanging_sign
+|-
+|[[File:Dark Oak Wall Sign.png|30px]]||{{code|dark_oak_wall_sign}}||[[Dark Oak Wall Sign]]||dark_oak_sign
+|-
+|[[File:Dead Brain Coral Wall Fan.png|30px]]||{{code|dead_brain_coral_wall_fan}}||[[Dead Brain Coral Wall Fan]]||dead_brain_coral_fan
+|-
+|[[File:Dead Bubble Coral Wall Fan.png|30px]]||{{code|dead_bubble_coral_wall_fan}}||[[Dead Bubble Coral Wall Fan]]||dead_bubble_coral_fan
+|-
+|[[File:Dead Fire Coral Wall Fan.png|30px]]||{{code|dead_fire_coral_wall_fan}}||[[Dead Fire Coral Wall Fan]]||dead_fire_coral_fan
+|-
+|[[File:Dead Horn Coral Wall Fan.png|30px]]||{{code|dead_horn_coral_wall_fan}}||[[Dead Horn Coral Wall Fan]]||dead_horn_coral_fan
+|-
+|[[File:Dead Tube Coral Wall Fan.png|30px]]||{{code|dead_tube_coral_wall_fan}}||[[Dead Tube Coral Wall Fan]]||dead_tube_coral_fan
+|-
+|[[File:Dragon Wall Head.png|30px]]||{{code|dragon_wall_head}}||[[Dragon Wall Head]]||dragon_head
+|-
+|[[File:End Gateway.png|30px]]||{{code|end_gateway}}||[[End Gateway (block)|End Gateway]]||None
+|-
+|[[File:End Portal.png|30px]]||{{code|end_portal}}||[[End Portal (block)|End Portal]]||None
+|-
+|[[File:Fire.png|30px]]||{{code|fire}}||[[Fire]]||None
+|-
+|[[File:Fire Coral Wall Fan.png|30px]]||{{code|fire_coral_wall_fan}}||[[Fire Coral Wall Fan]]||fire_coral_fan
+|-
+|[[File:Frosted Ice.png|30px]]||{{code|frosted_ice}}||[[Frosted Ice]]||None
+|-
+|[[File:Cake with Gray Candle.png|30px]]||{{code|gray_candle_cake}}||[[Cake with Gray Candle]]||cake
+|-
+|[[File:Gray Wall Banner.png|30px]]||{{code|gray_wall_banner}}||[[Gray Wall Banner]]||gray_banner
+|-
+|[[File:Cake with Green Candle.png|30px]]||{{code|green_candle_cake}}||[[Cake with Green Candle]]||cake
+|-
+|[[File:Green Wall Banner.png|30px]]||{{code|green_wall_banner}}||[[Green Wall Banner]]||green_banner
+|-
+|[[File:Horn Coral Wall Fan.png|30px]]||{{code|horn_coral_wall_fan}}||[[Horn Coral Wall Fan]]||horn_coral_fan
+|-
+|[[File:Jungle Wall Hanging Sign.png|30px]]||{{code|jungle_wall_hanging_sign}}||[[Jungle Wall Hanging Sign]]||jungle_hanging_sign
+|-
+|[[File:Kelp Plant.png|30px]]||{{code|kelp_plant}}||[[Kelp Plant]]||kelp
+|-
+|[[File:Lava.png|30px]]||{{code|lava}}||[[Lava]]||None
+|-
+|[[File:Lava Cauldron.png|30px]]||{{code|lava_cauldron}}||[[Lava Cauldron]]||cauldron
+|-
+|[[File:Cake with Light Blue Candle.png|30px]]||{{code|light_blue_candle_cake}}||[[Cake with Light Blue Candle]]||cake
+|-
+|[[File:Light Blue Wall Banner.png|30px]]||{{code|light_blue_wall_banner}}||[[Light Blue Wall Banner]]||light_blue_banner
+|-
+|[[File:Cake with Light Gray Candle.png|30px]]||{{code|light_gray_candle_cake}}||[[Cake with Light Gray Candle]]||cake
+|-
+|[[File:Light Gray Wall Banner.png|30px]]||{{code|light_gray_wall_banner}}||[[Light Gray Wall Banner]]||light_gray_banner
+|-
+|[[File:Cake with Lime Candle.png|30px]]||{{code|lime_candle_cake}}||[[Cake with Lime Candle]]||cake
+|-
+|[[File:Lime Wall Banner.png|30px]]||{{code|lime_wall_banner}}||[[Lime Wall Banner]]||lime_banner
+|-
+|[[File:Cake with Magenta Candle.png|30px]]||{{code|magenta_candle_cake}}||[[Cake with Magenta Candle]]||cake
+|-
+|[[File:Magenta Wall Banner.png|30px]]||{{code|magenta_wall_banner}}||[[Magenta Wall Banner]]||magenta_banner
+|-
+|[[File:Mangrove Wall Hanging Sign.png|30px]]||{{code|mangrove_wall_hanging_sign}}||[[Mangrove Wall Hanging Sign]]||mangrove_hanging_sign
+|-
+|[[File:Mangrove Wall Sign.png|30px]]||{{code|mangrove_wall_sign}}||[[Mangrove Wall Sign]]||mangrove_sign
+|-
+|[[File:Melon Stem.png|30px]]||{{code|melon_stem}}||[[Melon Stem]]||melon_seeds
+|-
+|[[File:Moving Piston.png|30px]]||{{code|moving_piston}}||[[Moving Piston]]||None
+|-
+|[[File:Nether Portal.png|30px]]||{{code|nether_portal}}||[[Nether Portal]]||None
+|-
+|[[File:Oak Wall Hanging Sign.png|30px]]||{{code|oak_wall_hanging_sign}}||[[Oak Wall Hanging Sign]]||oak_hanging_sign
+|-
+|[[File:Oak Wall Sign.png|30px]]||{{code|oak_wall_sign}}||[[Oak Wall Sign]]||oak_sign
+|-
+|[[File:Cake with Orange Candle.png|30px]]||{{code|orange_candle_cake}}||[[Cake with Orange Candle]]||cake
+|-
+|[[File:Orange Wall Banner.png|30px]]||{{code|orange_wall_banner}}||[[Orange Wall Banner]]||orange_banner
+|-
+|[[File:Pale Oak Wall Hanging Sign.png|30px]]||{{code|pale_oak_wall_hanging_sign}}||[[Pale Oak Wall Hanging Sign]]||pale_oak_hanging_sign
+|-
+|[[File:Pale Oak Wall Sign.png|30px]]||{{code|pale_oak_wall_sign}}||[[Pale Oak Wall Sign]]||pale_oak_sign
+|-
+|[[File:Piglin Wall Head.png|30px]]||{{code|piglin_wall_head}}||[[Piglin Wall Head]]||piglin_head
+|-
+|[[File:Cake with Pink Candle.png|30px]]||{{code|pink_candle_cake}}||[[Cake with Pink Candle]]||cake
+|-
+|[[File:Pink Wall Banner.png|30px]]||{{code|pink_wall_banner}}||[[Pink Wall Banner]]||pink_banner
+|-
+|[[File:Piston Head.png|30px]]||{{code|piston_head}}||[[Piston Head]]||None
+|-
+|[[File:Pitcher Crop.png|30px]]||{{code|pitcher_crop}}||[[Pitcher Crop]]||pitcher_pod
+|-
+|[[File:Player Wall Head.png|30px]]||{{code|player_wall_head}}||[[Player Wall Head]]||player_head
+|-
+|[[File:Potatoes.png|30px]]||{{code|potatoes}}||[[Potatoes]]||potato
+|-
+|[[File:Potted Acacia Sapling.png|30px]]||{{code|potted_acacia_sapling}}||[[Potted Acacia Sapling]]||acacia_sapling
+|-
+|[[File:Potted Allium.png|30px]]||{{code|potted_allium}}||[[Potted Allium]]||allium
+|-
+|[[File:Potted Azalea.png|30px]]||{{code|potted_azalea_bush}}||[[Potted Azalea]]||azalea
+|-
+|[[File:Potted Azure Bluet.png|30px]]||{{code|potted_azure_bluet}}||[[Potted Azure Bluet]]||azure_bluet
+|-
+|[[File:Potted Bamboo.png|30px]]||{{code|potted_bamboo}}||[[Potted Bamboo]]||bamboo
+|-
+|[[File:Potted Birch Sapling.png|30px]]||{{code|potted_birch_sapling}}||[[Potted Birch Sapling]]||birch_sapling
+|-
+|[[File:Potted Blue Orchid.png|30px]]||{{code|potted_blue_orchid}}||[[Potted Blue Orchid]]||blue_orchid
+|-
+|[[File:Potted Brown Mushroom.png|30px]]||{{code|potted_brown_mushroom}}||[[Potted Brown Mushroom]]||brown_mushroom
+|-
+|[[File:Potted Cactus.png|30px]]||{{code|potted_cactus}}||[[Potted Cactus]]||cactus
+|-
+|[[File:Potted Cherry Sapling.png|30px]]||{{code|potted_cherry_sapling}}||[[Potted Cherry Sapling]]||cherry_sapling
+|-
+|[[File:Potted Closed Eyeblossom.png|30px]]||{{code|potted_closed_eyeblossom}}||[[Potted Closed Eyeblossom]]||closed_eyeblossom
+|-
+|[[File:Potted Cornflower.png|30px]]||{{code|potted_cornflower}}||[[Potted Cornflower]]||cornflower
+|-
+|[[File:Potted Crimson Fungus.png|30px]]||{{code|potted_crimson_fungus}}||[[Potted Crimson Fungus]]||crimson_fungus
+|-
+|[[File:Potted Crimson Roots.png|30px]]||{{code|potted_crimson_roots}}||[[Potted Crimson Roots]]||crimson_roots
+|-
+|[[File:Potted Dandelion.png|30px]]||{{code|potted_dandelion}}||[[Potted Dandelion]]||dandelion
+|-
+|[[File:Potted Dark Oak Sapling.png|30px]]||{{code|potted_dark_oak_sapling}}||[[Potted Dark Oak Sapling]]||dark_oak_sapling
+|-
+|[[File:Potted Dead Bush.png|30px]]||{{code|potted_dead_bush}}||[[Potted Dead Bush]]||dead_bush
+|-
+|[[File:Potted Fern.png|30px]]||{{code|potted_fern}}||[[Potted Fern]]||fern
+|-
+|[[File:Potted Flowering Azalea.png|30px]]||{{code|potted_flowering_azalea_bush}}||[[Potted Flowering Azalea]]||flowering_azalea
+|-
+|[[File:Potted Golden_Dandelion.png|30px]]||{{code|potted_golden_dandelion}}||[[Potted Golden Dandelion]]||golden_dandelion
+|-
+|[[File:Potted Jungle Sapling.png|30px]]||{{code|potted_jungle_sapling}}||[[Potted Jungle Sapling]]||jungle_sapling
+|-
+|[[File:Potted Lily of the Valley.png|30px]]||{{code|potted_lily_of_the_valley}}||[[Potted Lily of the Valley]]||lily_of_the_valley
+|-
+|[[File:Potted Mangrove Propagule.png|30px]]||{{code|potted_mangrove_propagule}}||[[Potted Mangrove Propagule]]||mangrove_propagule
+|-
+|[[File:Potted Oak Sapling.png|30px]]||{{code|potted_oak_sapling}}||[[Potted Oak Sapling]]||oak_sapling
+|-
+|[[File:Potted Open Eyeblossom.png|30px]]||{{code|potted_open_eyeblossom}}||[[Potted Open Eyeblossom]]||open_eyeblossom
+|-
+|[[File:Potted Orange Tulip.png|30px]]||{{code|potted_orange_tulip}}||[[Potted Orange Tulip]]||orange_tulip
+|-
+|[[File:Potted Oxeye Daisy.png|30px]]||{{code|potted_oxeye_daisy}}||[[Potted Oxeye Daisy]]||oxeye_daisy
+|-
+|[[File:Potted Pale Oak Sapling.png|30px]]||{{code|potted_pale_oak_sapling}}||[[Potted Pale Oak Sapling]]||pale_oak_sapling
+|-
+|[[File:Potted Pink Tulip.png|30px]]||{{code|potted_pink_tulip}}||[[Potted Pink Tulip]]||pink_tulip
+|-
+|[[File:Potted Poppy.png|30px]]||{{code|potted_poppy}}||[[Potted Poppy]]||poppy
+|-
+|[[File:Potted Red Mushroom.png|30px]]||{{code|potted_red_mushroom}}||[[Potted Red Mushroom]]||red_mushroom
+|-
+|[[File:Potted Red Tulip.png|30px]]||{{code|potted_red_tulip}}||[[Potted Red Tulip]]||red_tulip
+|-
+|[[File:Potted Spruce Sapling.png|30px]]||{{code|potted_spruce_sapling}}||[[Potted Spruce Sapling]]||spruce_sapling
+|-
+|[[File:Potted Torchflower.png|30px]]||{{code|potted_torchflower}}||[[Potted Torchflower]]||torchflower
+|-
+|[[File:Potted Warped Fungus.png|30px]]||{{code|potted_warped_fungus}}||[[Potted Warped Fungus]]||warped_fungus
+|-
+|[[File:Potted Warped Roots.png|30px]]||{{code|potted_warped_roots}}||[[Potted Warped Roots]]||warped_roots
+|-
+|[[File:Potted White Tulip.png|30px]]||{{code|potted_white_tulip}}||[[Potted White Tulip]]||white_tulip
+|-
+|[[File:Potted Wither Rose.png|30px]]||{{code|potted_wither_rose}}||[[Potted Wither Rose]]||wither_rose
+|-
+|[[File:Powder Snow.png|30px]]||{{code|powder_snow}}||[[Powder Snow]]||powder_snow_bucket
+|-
+|[[File:Powder Snow Cauldron.png|30px]]||{{code|powder_snow_cauldron}}||[[Powder Snow Cauldron]]||cauldron
+|-
+|[[File:Pumpkin Stem.png|30px]]||{{code|pumpkin_stem}}||[[Pumpkin Stem]]||pumpkin_seeds
+|-
+|[[File:Cake with Purple Candle.png|30px]]||{{code|purple_candle_cake}}||[[Cake with Purple Candle]]||cake
+|-
+|[[File:Purple Wall Banner.png|30px]]||{{code|purple_wall_banner}}||[[Purple Wall Banner]]||purple_banner
+|-
+|[[File:Cake with Red Candle.png|30px]]||{{code|red_candle_cake}}||[[Cake with Red Candle]]||cake
+|-
+|[[File:Red Wall Banner.png|30px]]||{{code|red_wall_banner}}||[[Red Wall Banner]]||red_banner
+|-
+|[[File:Redstone Wall Torch.png|30px]]||{{code|redstone_wall_torch}}||[[Redstone Wall Torch]]||redstone_torch
+|-
+|[[File:Redstone Wire.png|30px]]||{{code|redstone_wire}}||[[Redstone Wire]]||redstone
+|-
+|[[File:Skeleton Wall Skull.png|30px]]||{{code|skeleton_wall_skull}}||[[Skeleton Wall Skull]]||skeleton_skull
+|-
+|[[File:Soul Fire.png|30px]]||{{code|soul_fire}}||[[Soul Fire]]||None
+|-
+|[[File:Soul Wall Torch.png|30px]]||{{code|soul_wall_torch}}||[[Soul Wall Torch]]||soul_torch
+|-
+|[[File:Spruce Wall Hanging Sign.png|30px]]||{{code|spruce_wall_hanging_sign}}||[[Spruce Wall Hanging Sign]]||spruce_hanging_sign
+|-
+|[[File:Spruce Wall Sign.png|30px]]||{{code|spruce_wall_sign}}||[[Spruce Wall Sign]]||spruce_sign
+|-
+|[[File:Sweet Berry Bush.png|30px]]||{{code|sweet_berry_bush}}||[[Sweet Berry Bush]]||sweet_berries
+|-
+|[[File:Tall Seagrass.png|30px]]||{{code|tall_seagrass}}||[[Tall Seagrass]]||seagrass
+|-
+|[[File:Torchflower Crop.png|30px]]||{{code|torchflower_crop}}||[[Torchflower Crop]]||torchflower_seeds
+|-
+|[[File:Tripwire.png|30px]]||{{code|tripwire}}||[[Tripwire]]||string
+|-
+|[[File:Tube Coral Wall Fan.png|30px]]||{{code|tube_coral_wall_fan}}||[[Tube Coral Wall Fan]]||tube_coral_fan
+|-
+|[[File:Twisting Vines Plant.png|30px]]||{{code|twisting_vines_plant}}||[[Twisting Vines Plant]]||twisting_vines
+|-
+|[[File:Void Air.png|30px]]||{{code|void_air}}||[[Void Air]]||None
+|-
+|[[File:Wall Torch.png|30px]]||{{code|wall_torch}}||[[Wall Torch]]||torch
+|-
+|[[File:Warped Wall Hanging Sign.png|30px]]||{{code|warped_wall_hanging_sign}}||[[Warped Wall Hanging Sign]]||warped_hanging_sign
+|-
+|[[File:Warped Wall Sign.png|30px]]||{{code|warped_wall_sign}}||[[Warped Wall Sign]]||warped_sign
+|-
+|[[File:Water.png|30px]]||{{code|water}}||[[Water]]||None
+|-
+|[[File:Water Cauldron.png|30px]]||{{code|water_cauldron}}||[[Water Cauldron]]||cauldron
+|-
+|[[File:Weeping Vines Plant.png|30px]]||{{code|weeping_vines_plant}}||[[Weeping Vines Plant]]||weeping_vines
+|-
+|[[File:Wheat Crops.png|30px]]||{{code|wheat}}||[[Wheat Crops]]||wheat_seeds
+|-
+|[[File:Cake with White Candle.png|30px]]||{{code|white_candle_cake}}||[[Cake with White Candle]]||cake
+|-
+|[[File:White Wall Banner.png|30px]]||{{code|white_wall_banner}}||[[White Wall Banner]]||white_banner
+|-
+|[[File:Wither Skeleton Wall Skull.png|30px]]||{{code|wither_skeleton_wall_skull}}||[[Wither Skeleton Wall Skull]]||wither_skeleton_skull
+|-
+|[[File:Cake with Yellow Candle.png|30px]]||{{code|yellow_candle_cake}}||[[Cake with Yellow Candle]]||cake
+|-
+|[[File:Yellow Wall Banner.png|30px]]||{{code|yellow_wall_banner}}||[[Yellow Wall Banner]]||yellow_banner
+|-
+|[[File:Zombie Wall Head.png|30px]]||{{code|zombie_wall_head}}||[[Zombie Wall Head]]||zombie_head
+|}
+
+==== Removals ====
+{{Removed feature|edition=java|section=1}}
+{{see also|Java Edition data values#IDs}}
+All of the following block items were removed at one point, as clarified in the following paragraphs.
+
+In snapshot [[Java Edition 13w37a|13w37a]] for [[Java Edition 1.7.2|1.7.2]], the {{cmd|give}} command was modified so that it would display the name of the item in chat. In fact, this change could not remove ItemBlocks, another change was necessary. Due to this,  <code>Sets.newHashSet(Block[], {''blocks here''})</code> was added which ''removes'' the item forms of blocks in the list of its list. Due to this, 26 blocks were made unavailable.
+
+In snapshot [[Java Edition 14w25a|14w25a]] for [[Java Edition 1.8|1.8]], changes were made to the way the icons of items were rendered, and the way block data was internally represented. Similar to 13w37a, this change could not remove ItemBlocks, another change was necessary. Due to this, <code>registerItemBlock(block)</code> method was added, which ''adds'' the item form of respective block. Due to this, 12 blocks were made unavailable. 
+
+{| class="wikitable tech" data-description="Technical blocks unavailable since the respective updates to Java Edition"
+|-
+! scope="col" |[[Block]]
+! scope="col" |[[Resource location]]
+! scope="col" |Dec
+! scope="col" |Hex
+! scope="col" |Obtainable until... 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bed (bottom texture) JE1 BE1.png|24px]] [[Bed]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bed 
+| style="border-width: 0; padding: 0.2em 0.5em;" | 26
+| style="border-width: 0; padding: 0.2em 0.5em;" |1A
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Piston Head (texture) JE1 BE1.png|24px]] [[Piston Head]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |piston_head
+| style="border-width: 0; padding: 0.2em 0.5em;" |34
+| style="border-width: 0; padding: 0.2em 0.5em;" |22
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Piston Head (texture) JE1 BE1.png|24px]] [[Piston Extension]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |piston_extension
+| style="border-width: 0; padding: 0.2em 0.5em;" |36
+| style="border-width: 0; padding: 0.2em 0.5em;" |24
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |{{darkbg|[[File:Redstone Wire Cross (texture) JE2 BE1.png|24px]]}} [[Redstone Wire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |redstone_wire
+| style="border-width: 0; padding: 0.2em 0.5em;" |55
+| style="border-width: 0; padding: 0.2em 0.5em;" |37
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a) 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Wheat Age 0 (texture) JE1 BE1.png|24px]] [[Wheat Seeds|Wheat]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wheat
+| style="border-width: 0; padding: 0.2em 0.5em;" |59 
+| style="border-width: 0; padding: 0.2em 0.5em;" |3B
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks (texture) JE4 BE2.png|24px]] [[Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |63
+| style="border-width: 0; padding: 0.2em 0.5em;" |3F
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Door (bottom texture) JE2 BE1.png|24px]] [[Wooden Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wooden_door 
+| style="border-width: 0; padding: 0.2em 0.5em;" |64
+| style="border-width: 0; padding: 0.2em 0.5em;" |40
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks (texture) JE4 BE2.png|24px]] [[Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |68
+| style="border-width: 0; padding: 0.2em 0.5em;" |44
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a) 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Iron Door (bottom texture) JE1 BE1.png|24px]] [[Iron Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |iron_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |71
+| style="border-width: 0; padding: 0.2em 0.5em;" |47
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Redstone Ore (inventory) JE6.png|24px]] Lit [[Redstone Ore]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_redstone_ore
+| style="border-width: 0; padding: 0.2em 0.5em;" | 74
+| style="border-width: 0; padding: 0.2em 0.5em;" |4A
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Off Redstone Torch (texture) JE1 BE1.png|24px]] Unlit [[Redstone Torch]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unlit_redstone_torch 
+| style="border-width: 0; padding: 0.2em 0.5em;" |75
+| style="border-width: 0; padding: 0.2em 0.5em;" |4B
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Sugar Cane (texture) JE1.png|24px]] [[Sugar Cane]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |reeds
+| style="border-width: 0; padding: 0.2em 0.5em;" |83
+| style="border-width: 0; padding: 0.2em 0.5em;" |53
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a) 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (inventory) JE1.png|24px]] [[Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |92
+| style="border-width: 0; padding: 0.2em 0.5em;" |5C
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Off Redstone Repeater (texture) JE2 BE2.png|24px]] Unpowered [[Redstone Repeater]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unpowered_repeater
+| style="border-width: 0; padding: 0.2em 0.5em;" | 93
+| style="border-width: 0; padding: 0.2em 0.5em;" |5D
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:On Redstone Repeater (texture) JE2 BE2.png|24px]] Powered [[Redstone Repeater]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |powered_repeater
+| style="border-width: 0; padding: 0.2em 0.5em;" |94
+| style="border-width: 0; padding: 0.2em 0.5em;" |5E
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stem (texture) JE2 BE2.png|24px]] [[Pumpkin Seeds|Pumpkin Stem]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pumpkin_stem
+| style="border-width: 0; padding: 0.2em 0.5em;" |104
+| style="border-width: 0; padding: 0.2em 0.5em;" |68
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stem (texture) JE2 BE2.png|24px]] [[Melon Seeds|Melon Stem]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |melon_stem
+| style="border-width: 0; padding: 0.2em 0.5em;" | 105
+| style="border-width: 0; padding: 0.2em 0.5em;" | 69
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Nether Wart Age 0 (texture) JE1 BE1.png|24px]] [[Nether Wart]]
+| style="border-width: 0; padding: 0.2em 0.5em;" | nether_wart
+| style="border-width: 0; padding: 0.2em 0.5em;" |115 
+| style="border-width: 0; padding: 0.2em 0.5em;" |73
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Brewing Stand (texture) JE1 BE1.png|24px]] [[Brewing Stand]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |brewing_stand
+| style="border-width: 0; padding: 0.2em 0.5em;" |117
+| style="border-width: 0; padding: 0.2em 0.5em;" |75
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cauldron (top texture) JE1.png|24px]] [[Cauldron]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cauldron
+| style="border-width: 0; padding: 0.2em 0.5em;" |118
+| style="border-width: 0; padding: 0.2em 0.5em;" |76
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Redstone Lamp (inventory) JE2.png|24px]] Lit [[Redstone Lamp]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_redstone_lamp
+| style="border-width: 0; padding: 0.2em 0.5em;" |124
+| style="border-width: 0; padding: 0.2em 0.5em;" |7C
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Tripwire (texture) JE2 BE1.png|24px]] [[String|Tripwire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |tripwire
+| style="border-width: 0; padding: 0.2em 0.5em;" |132
+| style="border-width: 0; padding: 0.2em 0.5em;" |84
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a) 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Flower Pot (texture) JE1 BE1.png|24px]] [[Flower Pot]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flower_pot 
+| style="border-width: 0; padding: 0.2em 0.5em;" |140
+| style="border-width: 0; padding: 0.2em 0.5em;" |8C
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Skeleton Skull (item) JE1 BE1.png|24px]] [[Head|Skull]]
+| style="border-width: 0; padding: 0.2em 0.5em;" | skull
+| style="border-width: 0; padding: 0.2em 0.5em;" |144
+| style="border-width: 0; padding: 0.2em 0.5em;" |90
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Off Redstone Comparator (texture) JE2 BE1.png|24px]] Unpowered [[Redstone Comparator]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unpowered_comparator
+| style="border-width: 0; padding: 0.2em 0.5em;" |149
+| style="border-width: 0; padding: 0.2em 0.5em;" |95
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:On Redstone Comparator (texture) JE2 BE1.png|24px]] Powered [[Redstone Comparator]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |powered_comparator
+| style="border-width: 0; padding: 0.2em 0.5em;" |150 
+| style="border-width: 0; padding: 0.2em 0.5em;" |96
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w37a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Missing Texture JE3.png|24px]] [[Air]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |air
+| style="border-width: 0; padding: 0.2em 0.5em;" |0
+| style="border-width: 0; padding: 0.2em 0.5em;" |0
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.7.2 (13w38c)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Water (inventory) JE13.png|24px]] Flowing [[Water]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flowing_water
+| style="border-width: 0; padding: 0.2em 0.5em;" |8
+| style="border-width: 0; padding: 0.2em 0.5em;" |08
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a) 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Water (inventory) JE13.png|24px]] Still [[Water]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |water
+| style="border-width: 0; padding: 0.2em 0.5em;" |9
+| style="border-width: 0; padding: 0.2em 0.5em;" |09
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lava (inventory) JE13.gif|24px]] Flowing [[Lava]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flowing_lava
+| style="border-width: 0; padding: 0.2em 0.5em;" |10
+| style="border-width: 0; padding: 0.2em 0.5em;" |0A
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lava (inventory) JE13.gif|24px]] Still [[Lava]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lava
+| style="border-width: 0; padding: 0.2em 0.5em;" |11
+| style="border-width: 0; padding: 0.2em 0.5em;" |0B 
+| style="border-width: 0; padding: 0.2em 0.5em;" | 1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Double Smooth Stone Slab (inventory) JE13.png|24px]] [[Double Stone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |double_stone_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |43
+| style="border-width: 0; padding: 0.2em 0.5em;" | 2B
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Fire (inventory) JE2.png|24px]] [[Fire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |fire
+| style="border-width: 0; padding: 0.2em 0.5em;" |51 
+| style="border-width: 0; padding: 0.2em 0.5em;" |34 
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Nether Portal (texture) JE2-a1.png|24px]] [[Nether Portal]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |portal
+| style="border-width: 0; padding: 0.2em 0.5em;" |90
+| style="border-width: 0; padding: 0.2em 0.5em;" |5A 
+| style="border-width: 0; padding: 0.2em 0.5em;" | 1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Missing Texture JE3.png|24px]] [[End Portal (block)|End Portal]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |end_portal
+| style="border-width: 0; padding: 0.2em 0.5em;" |119
+| style="border-width: 0; padding: 0.2em 0.5em;" |77 
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks (inventory) JE14.png|24px]] [[slab|Double Wooden Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |double_wooden_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |125
+| style="border-width: 0; padding: 0.2em 0.5em;" |7D
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cocoa Age 0 (texture) JE1 BE1.png|24px]] [[Cocoa]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cocoa
+| style="border-width: 0; padding: 0.2em 0.5em;" |127
+| style="border-width: 0; padding: 0.2em 0.5em;" |7F
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Root Vegetables Age 0 (texture) JE1 BE1.png|24px]] [[Carrots]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |carrots
+| style="border-width: 0; padding: 0.2em 0.5em;" |141 
+| style="border-width: 0; padding: 0.2em 0.5em;" |8D
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Root Vegetables Age 0 (texture) JE1 BE1.png|24px]] [[Potatoes]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |potatoes
+| style="border-width: 0; padding: 0.2em 0.5em;" |142
+| style="border-width: 0; padding: 0.2em 0.5em;" |8E
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.8 (14w25a)
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Furnace (inventory) JE15.png|24px]] [[Lit Furnace]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_furnace
+| style="border-width: 0; padding: 0.2em 0.5em;" |62
+| style="border-width: 0; padding: 0.2em 0.5em;" |3E 
+| style="border-width: 0; padding: 0.2em 0.5em;" |1.9 (15w49a)
+|}
+
+== ''Bedrock Edition'' ==
+<!-- update the style of the table to the format like in Java Edition -->
+{{IN|BE}}, some of the items can only be obtained from inventory editing or add-ons.
+
+{| class="wikitable tech" data-description="Technical blocks in Bedrock Edition"
+|-
+! scope="col" |[[Block]]
+! scope="col" |[[Resource location]]
+! scope="col" |Block ID
+! scope="col" |Item ID 
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Water_(inventory)_BE.gif|24px]] [[Water]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flowing_water
+| style="border-width: 0; padding: 0.2em 0.5em;" |8
+| style="border-width: 0; padding: 0.2em 0.5em;" |8
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Water_(inventory)_BE.gif|24px]] Stationary [[Water]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |water
+| style="border-width: 0; padding: 0.2em 0.5em;" |9
+| style="border-width: 0; padding: 0.2em 0.5em;" |9
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lava_(inventory)_BE.gif|24px]] [[Lava]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flowing_lava
+| style="border-width: 0; padding: 0.2em 0.5em;" |10
+| style="border-width: 0; padding: 0.2em 0.5em;" |10
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lava_(inventory)_BE.gif|24px]] Stationary [[Lava]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lava
+| style="border-width: 0; padding: 0.2em 0.5em;" |11
+| style="border-width: 0; padding: 0.2em 0.5em;" |11
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:White Bed (item) BE1.png|24px]] [[Bed]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bed
+| style="border-width: 0; padding: 0.2em 0.5em;" |26
+| style="border-width: 0; padding: 0.2em 0.5em;" |26
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Piston (top texture) JE2 BE2.png|24px]] [[Piston Head]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |piston_arm_collision
+| style="border-width: 0; padding: 0.2em 0.5em;" |34
+| style="border-width: 0; padding: 0.2em 0.5em;" |34
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Double Smooth Stone Slab (inventory) BE2.png|24px]] [[Double Smooth Stone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |smooth_stone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |43
+| style="border-width: 0; padding: 0.2em 0.5em;" |43
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Fire 1 (texture) JE2-a2.gif|24px]] [[Fire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |fire
+| style="border-width: 0; padding: 0.2em 0.5em;" |51
+| style="border-width: 0; padding: 0.2em 0.5em;" |51
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Redstone Wire (inventory) BE.png|24px]] [[Redstone Wire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |redstone_wire
+| style="border-width: 0; padding: 0.2em 0.5em;" |55
+| style="border-width: 0; padding: 0.2em 0.5em;" |55
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Wheat JE2 BE2.png|24px]] [[Wheat Seeds|Wheat Crops]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wheat
+| style="border-width: 0; padding: 0.2em 0.5em;" |59
+| style="border-width: 0; padding: 0.2em 0.5em;" |59
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Furnace (inventory) BE.png|24px]] [[Lit Furnace]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_furnace
+| style="border-width: 0; padding: 0.2em 0.5em;" |62
+| style="border-width: 0; padding: 0.2em 0.5em;" |62
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks (texture) JE6 BE3.png|24px]] [[Sign|Oak Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |63
+| style="border-width: 0; padding: 0.2em 0.5em;" |63
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Door (item).png|24px]] [[Oak Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wooden_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |64
+| style="border-width: 0; padding: 0.2em 0.5em;" |64
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks (texture) JE6 BE3.png|24px]] [[Sign|Oak Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |68
+| style="border-width: 0; padding: 0.2em 0.5em;" |68
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Iron Door (item).png|24px]] [[Iron Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |iron_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |71 
+| style="border-width: 0; padding: 0.2em 0.5em;" |47
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Redstone Ore (inventory) BE3.png|24px]] [[Lit Redstone Ore]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_redstone_ore
+| style="border-width: 0; padding: 0.2em 0.5em;" |74
+| style="border-width: 0; padding: 0.2em 0.5em;" |74
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Off Redstone Torch (texture) JE2 BE2.png|24px]] [[Unlit Redstone Torch]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unlit_redstone_torch
+| style="border-width: 0; padding: 0.2em 0.5em;" |75
+| style="border-width: 0; padding: 0.2em 0.5em;" |75
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Sugar Cane (item).png|24px]] [[Sugar Cane]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |reeds
+| style="border-width: 0; padding: 0.2em 0.5em;" |83
+| style="border-width: 0; padding: 0.2em 0.5em;" |83
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Invicon Nether Portal.gif|24px]] [[Nether Portal]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |portal
+| style="border-width: 0; padding: 0.2em 0.5em;" |90
+| style="border-width: 0; padding: 0.2em 0.5em;" |90
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (item).png|24px]] [[Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |92
+| style="border-width: 0; padding: 0.2em 0.5em;" |92
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Stone (texture) JE2 BE2.png|24px]] Unpowered [[Redstone Repeater]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unpowered_repeater
+| style="border-width: 0; padding: 0.2em 0.5em;" |93
+| style="border-width: 0; padding: 0.2em 0.5em;" |93
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Stone (texture) JE2 BE2.png|24px]] Powered [[Redstone Repeater]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |powered_repeater
+| style="border-width: 0; padding: 0.2em 0.5em;" |94
+| style="border-width: 0; padding: 0.2em 0.5em;" |94
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stone (texture) JE5 BE3.png|24px]] [[Invisible Bedrock]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |invisible_bedrock
+| style="border-width: 0; padding: 0.2em 0.5em;" |95
+| style="border-width: 0; padding: 0.2em 0.5em;" |95
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stem (texture) JE2 BE2.png|24px]] [[Pumpkin Seeds|Pumpkin Stem]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pumpkin_stem
+| style="border-width: 0; padding: 0.2em 0.5em;" |104
+| style="border-width: 0; padding: 0.2em 0.5em;" |104
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stem (texture) JE2 BE2.png|24px]] [[Melon Seeds|Melon Stem]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |melon_stem
+| style="border-width: 0; padding: 0.2em 0.5em;" |105
+| style="border-width: 0; padding: 0.2em 0.5em;" |105
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Nether Wart (item).png|24px]] [[Nether Wart]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |nether_wart
+| style="border-width: 0; padding: 0.2em 0.5em;" |115
+| style="border-width: 0; padding: 0.2em 0.5em;" |115
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Brewing Stand (texture) JE3.png|24px]] [[Brewing Stand]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |brewing_stand
+| style="border-width: 0; padding: 0.2em 0.5em;" |117 
+| style="border-width: 0; padding: 0.2em 0.5em;" |117
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cauldron (item).png|24px]] [[Cauldron]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cauldron 
+| style="border-width: 0; padding: 0.2em 0.5em;" |118
+| style="border-width: 0; padding: 0.2em 0.5em;" |118
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:End_Portal_(inventory)_BE.png|24px]] [[End Portal (block)|End Portal]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |end_portal
+| style="border-width: 0; padding: 0.2em 0.5em;" |119
+| style="border-width: 0; padding: 0.2em 0.5em;" |119
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Redstone Lamp Item BE.png|24px]] Lit [[Redstone Lamp]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_redstone_lamp
+| style="border-width: 0; padding: 0.2em 0.5em;" |124
+| style="border-width: 0; padding: 0.2em 0.5em;" |124
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cocoa Age 0 (texture) JE2 BE2.png|24px]] [[Cocoa]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cocoa
+| style="border-width: 0; padding: 0.2em 0.5em;" |127
+| style="border-width: 0; padding: 0.2em 0.5em;" |127
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Tripwire (texture) JE2 BE1.png|24px]] [[Tripwire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |trip_wire
+| style="border-width: 0; padding: 0.2em 0.5em;" |132
+| style="border-width: 0; padding: 0.2em 0.5em;" |132
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Flower Pot (item).png|24px]] [[Flower Pot]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |flower_pot
+| style="border-width: 0; padding: 0.2em 0.5em;" |140
+| style="border-width: 0; padding: 0.2em 0.5em;" |140
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Carrots Age 0 (texture) JE2 BE2.png|24px]] [[Carrot]]s
+| style="border-width: 0; padding: 0.2em 0.5em;" |carrots
+| style="border-width: 0; padding: 0.2em 0.5em;" |141
+| style="border-width: 0; padding: 0.2em 0.5em;" |141
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Potatoes Age 0 (texture) JE2 BE2.png|24px]] [[Potato]]es
+| style="border-width: 0; padding: 0.2em 0.5em;" |potatoes
+| style="border-width: 0; padding: 0.2em 0.5em;" |142
+| style="border-width: 0; padding: 0.2em 0.5em;" |142
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Stone (texture) JE2 BE2.png|24px]] Unpowered [[Redstone Comparator]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |unpowered_comparator
+| style="border-width: 0; padding: 0.2em 0.5em;" |149
+| style="border-width: 0; padding: 0.2em 0.5em;" |149
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Stone (texture) JE2 BE2.png|24px]] Powered [[Redstone Comparator]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |powered_comparator
+| style="border-width: 0; padding: 0.2em 0.5em;" |150
+| style="border-width: 0; padding: 0.2em 0.5em;" |150
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Hopper (item).png|24px]] [[Hopper]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |hopper
+| style="border-width: 0; padding: 0.2em 0.5em;" |154
+| style="border-width: 0; padding: 0.2em 0.5em;" |154
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks.png|24px]] [[Double Oak Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |oak_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |157
+| style="border-width: 0; padding: 0.2em 0.5em;" |157
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Invicon Black Banner.png|24px]] Standing [[Banner]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |standing_banner
+| style="border-width: 0; padding: 0.2em 0.5em;" |176
+| style="border-width: 0; padding: 0.2em 0.5em;" |176
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Blank.png|24px]]<!--The item's form look is the same as above but without the pole--> Wall [[Banner]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |wall_banner
+| style="border-width: 0; padding: 0.2em 0.5em;" |177
+| style="border-width: 0; padding: 0.2em 0.5em;" |177
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Inverted Daylight Detector JE1 BE1.png|24px]] [[Inverted Daylight Detector]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |daylight_detector_inverted
+| style="border-width: 0; padding: 0.2em 0.5em;" |178
+| style="border-width: 0; padding: 0.2em 0.5em;" |178
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Red Sandstone JE4 BE2.png|24px]] [[Red Sandstone Slab|Double Red Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |red_sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |181
+| style="border-width: 0; padding: 0.2em 0.5em;" |181
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Spruce Door (item).png|24px]] [[Spruce Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |spruce_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |193
+| style="border-width: 0; padding: 0.2em 0.5em;" |193
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Birch Door (item).png|24px]] [[Birch Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |birch_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |194
+| style="border-width: 0; padding: 0.2em 0.5em;" |194
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Jungle Door (item).png|24px]] [[Jungle Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |jungle_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |195 
+| style="border-width: 0; padding: 0.2em 0.5em;" |195
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Acacia Door (item).png|24px]] [[Acacia Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |acacia_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |196
+| style="border-width: 0; padding: 0.2em 0.5em;" |196
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dark Oak Door (item).png|24px]] [[Dark Oak Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dark_oak_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |197
+| style="border-width: 0; padding: 0.2em 0.5em;" |197
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Item Frame (Block Item) - Minecraft Bedrock Edition.png|24px]] [[Item Frame]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |frame
+| style="border-width: 0; padding: 0.2em 0.5em;" |199
+| style="border-width: 0; padding: 0.2em 0.5em;" |199
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Frosted Ice JE2 BE2.png|24px]] [[Frosted Ice]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |frosted_ice
+| style="border-width: 0; padding: 0.2em 0.5em;" |207
+| style="border-width: 0; padding: 0.2em 0.5em;" |207
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:End_Gateway_(inventory)_BE.png|24px]] [[End Gateway (block)|End Gateway]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |end_gateway
+| style="border-width: 0; padding: 0.2em 0.5em;" |209
+| style="border-width: 0; padding: 0.2em 0.5em;" |209
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Chalkboard.png|24px]] [[Chalkboard]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |chalkboard
+| style="border-width: 0; padding: 0.2em 0.5em;" |230
+| style="border-width: 0; padding: 0.2em 0.5em;" |230
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Beetroot.png|24px]] [[Beetroot]]s
+| style="border-width: 0; padding: 0.2em 0.5em;" |beetroot
+| style="border-width: 0; padding: 0.2em 0.5em;" |244
+| style="border-width: 0; padding: 0.2em 0.5em;" |244
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Missing Tile (texture) BE3.png|24px]] [[Moving Piston|Block moved by Piston]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |moving_block
+| style="border-width: 0; padding: 0.2em 0.5em;" |250
+| style="border-width: 0; padding: 0.2em 0.5em;" |250
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Tube Coral Fan.png|24px]] [[Tube Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |tube_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |390
+| style="border-width: 0; padding: 0.2em 0.5em;" |-135
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bubble Coral Fan.png|24px]] [[Bubble Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bubble_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |391
+| style="border-width: 0; padding: 0.2em 0.5em;" |-136
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Horn Coral Fan.png|24px]] [[Horn Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |horn_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |392
+| style="border-width: 0; padding: 0.2em 0.5em;" |-137
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Kelp_(item) JE1 BE2.png|24px]] [[Kelp]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |kelp
+| style="border-width: 0; padding: 0.2em 0.5em;" |393
+| style="border-width: 0; padding: 0.2em 0.5em;" |-138
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Blank.png|24px]] [[Air]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |air
+| style="border-width: 0; padding: 0.2em 0.5em;" |413
+| style="border-width: 0; padding: 0.2em 0.5em;" |-158
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bubble Column (inventory) BE.gif|24px]] [[Bubble Column]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bubble_column
+| style="border-width: 0; padding: 0.2em 0.5em;" |415
+| style="border-width: 0; padding: 0.2em 0.5em;" |-161
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bamboo (item).png|24px]] [[Bamboo Sapling]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bamboo_sapling
+| style="border-width: 0; padding: 0.2em 0.5em;" |419
+| style="border-width: 0; padding: 0.2em 0.5em;" |-164
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:End Stone Bricks JE2 BE2.png|24px]] [[Double End Stone Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |end_stone_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |422
+| style="border-width: 0; padding: 0.2em 0.5em;" |-167
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mossy Stone Bricks JE3 BE2.png|24px]] [[Double Mossy Stone Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mossy_stone_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |423
+| style="border-width: 0; padding: 0.2em 0.5em;" |-168
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Spruce Planks (texture) JE4 BE2.png|24px]] [[Sign|Spruce Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |spruce_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |436
+| style="border-width: 0; padding: 0.2em 0.5em;" |-181
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Spruce Planks (texture) JE4 BE2.png|24px]] [[Sign|Spruce Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |spruce_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |437
+| style="border-width: 0; padding: 0.2em 0.5em;" |-182
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Birch Planks (texture) JE3 BE2.png|24px]] [[Sign|Birch Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |birch_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |441
+| style="border-width: 0; padding: 0.2em 0.5em;" |-186
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Birch Planks (texture) JE3 BE2.png|24px]] [[Sign|Birch Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |birch_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |442
+| style="border-width: 0; padding: 0.2em 0.5em;" |-187
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Jungle Planks (texture) JE3 BE2.png|24px]] [[Sign|Jungle Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |jungle_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |443
+| style="border-width: 0; padding: 0.2em 0.5em;" |-188
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Jungle Planks (texture) JE3 BE2.png|24px]] [[Sign|Jungle Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |jungle_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |444 
+| style="border-width: 0; padding: 0.2em 0.5em;" |-189
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Acacia Planks (texture) JE3 BE2.png|24px]] [[Sign|Jungle Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |acacia_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |445
+| style="border-width: 0; padding: 0.2em 0.5em;" |-190
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Acacia Planks (texture) JE3 BE2.png|24px]] [[Sign|Jungle Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |acacia_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |446
+| style="border-width: 0; padding: 0.2em 0.5em;" |-191
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dark Oak Planks (texture) JE3 BE2.png|24px]] [[Sign|Dark Oak Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |darkoak_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |447
+| style="border-width: 0; padding: 0.2em 0.5em;" |-192
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dark Oak Planks (texture) JE3 BE2.png|24px]] [[Sign|Dark Oak Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |darkoak_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |448
+| style="border-width: 0; padding: 0.2em 0.5em;" |-193
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Smoker (inventory).png|24px]] [[Lit Smoker]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_smoker
+| style="border-width: 0; padding: 0.2em 0.5em;" |454
+| style="border-width: 0; padding: 0.2em 0.5em;" |-199
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Sweet Berries JE1 BE1.png|24px]] [[Sweet Berry Bush]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |sweet_berry_bush
+| style="border-width: 0; padding: 0.2em 0.5em;" |462
+| style="border-width: 0; padding: 0.2em 0.5em;" |-207
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Campfire (item) JE1 BE1.png|24px]] [[Campfire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |campfire
+| style="border-width: 0; padding: 0.2em 0.5em;" |462
+| style="border-width: 0; padding: 0.2em 0.5em;" |-209
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Lit Blast Furnace (inventory).png|24px]] [[Lit Blast Furnace]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_blast_furnace
+| style="border-width: 0; padding: 0.2em 0.5em;" |469
+| style="border-width: 0; padding: 0.2em 0.5em;" |-214
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Piston (top texture) JE2 BE2.png|24px]] [[Sticky Piston Head]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |sticky_piston_arm_collision
+| style="border-width: 0; padding: 0.2em 0.5em;" |472
+| style="border-width: 0; padding: 0.2em 0.5em;" |-217
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Soul Fire (inventory) BE.gif|24px]] [[Soul Fire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |soul_fire
+| style="border-width: 0; padding: 0.2em 0.5em;" |492
+| style="border-width: 0; padding: 0.2em 0.5em;" |-237
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Nether Sprouts (item) JE3 BE2.png|24px]] [[Nether Sprouts]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |nether_sprouts
+| style="border-width: 0; padding: 0.2em 0.5em;" |493
+| style="border-width: 0; padding: 0.2em 0.5em;" |-238
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Crimson Door (item) JE1 BE1.png|24px]] [[Crimson Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |crimson_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |499
+| style="border-width: 0; padding: 0.2em 0.5em;" |-244
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Warped Door (item) JE1 BE1.png|24px]] [[Warped Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |warped_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |500
+| style="border-width: 0; padding: 0.2em 0.5em;" |-245
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Crimson Planks (texture) JE1 BE1.png|24px]] [[Sign|Crimson Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |crimson_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |505
+| style="border-width: 0; padding: 0.2em 0.5em;" |-250
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Warped Planks (texture) JE1 BE1.png|24px]] [[Sign|Warped Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |warped_standing_sign 
+| style="border-width: 0; padding: 0.2em 0.5em;" |506 
+| style="border-width: 0; padding: 0.2em 0.5em;" |-251
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Crimson Planks (texture) JE1 BE1.png|24px]] [[Sign|Crimson Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |crimson_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |507
+| style="border-width: 0; padding: 0.2em 0.5em;" |-252
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Warped Planks (texture) JE1 BE1.png|24px]] [[Sign|Warped Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |warped_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |508
+| style="border-width: 0; padding: 0.2em 0.5em;" |-253
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Crimson Planks JE1 BE1.png|24px]] [[Slab|Crimson Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |crimson_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |521
+| style="border-width: 0; padding: 0.2em 0.5em;" |-266
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Warped Planks JE1 BE1.png|24px]] [[Slab|Warped Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |warped_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |522
+| style="border-width: 0; padding: 0.2em 0.5em;" |-267
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Blackstone JE3 BE2.png|24px]] [[Slab|Blackstone Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |blackstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |538
+| style="border-width: 0; padding: 0.2em 0.5em;" |-283
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Blackstone Bricks JE1 BE1.png|24px]] [[Slab|Polished Blackstone Bricks Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_blackstone_brick_double_slab 
+| style="border-width: 0; padding: 0.2em 0.5em;" |540
+| style="border-width: 0; padding: 0.2em 0.5em;" |-285
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Soul Campfire (item) JE1 BE1.png|24px]] [[Soul Campfire]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |soul_campfire
+| style="border-width: 0; padding: 0.2em 0.5em;" |545
+| style="border-width: 0; padding: 0.2em 0.5em;" |-290
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Blackstone JE1 BE1.png|24px]] [[Slab|Polished Blackstone Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_blackstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |549
+| style="border-width: 0; padding: 0.2em 0.5em;" |-294
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Powder Snow.png|24px]] [[Powder Snow]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |powder_snow
+| style="border-width: 0; padding: 0.2em 0.5em;" |561
+| style="border-width: 0; padding: 0.2em 0.5em;" |-306
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cave Vines (texture) JE1.png|24px]] [[Glow Berries|Cave Vines]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cave_vines
+| style="border-width: 0; padding: 0.2em 0.5em;" |577
+| style="border-width: 0; padding: 0.2em 0.5em;" |-322
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Glow Item Frame (block item) Texture 5 - Minecraft Bedrock Edition.png|24px]] [[Glow Item Frame]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |glow_frame
+| style="border-width: 0; padding: 0.2em 0.5em;" |594
+| style="border-width: 0; padding: 0.2em 0.5em;" |-399
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cut Copper.png|24px]] [[Cut Copper Slab|Double Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |623
+| style="border-width: 0; padding: 0.2em 0.5em;" |-368
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Exposed Cut Copper.png|24px]] [[Cut Copper Slab|Double Exposed Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |exposed_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |624
+| style="border-width: 0; padding: 0.2em 0.5em;" |-369
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Weathered Cut Copper.png|24px]] [[Cut Copper Slab|Double Weathered Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |weathered_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |625
+| style="border-width: 0; padding: 0.2em 0.5em;" |-370
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oxidized Cut Copper.png|24px]] [[Cut Copper Slab|Double Oxidized Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |oxidized_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |626
+| style="border-width: 0; padding: 0.2em 0.5em;" |-371
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cut Copper.png|24px]] [[Cut Copper Slab|Double Waxed Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |waxed_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |627
+| style="border-width: 0; padding: 0.2em 0.5em;" |-372
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Exposed Cut Copper.png|24px]] [[Cut Copper Slab|Double Waxed Exposed Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |waxed_exposed_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |628
+| style="border-width: 0; padding: 0.2em 0.5em;" |-373
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Weathered Cut Copper.png|24px]] [[Cut Copper Slab|Double Waxed Weathered Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |waxed_weathered_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |629
+| style="border-width: 0; padding: 0.2em 0.5em;" |-374
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cave Vines (berries, plant texture) JE2.png|24px]] [[Glow Berries|Cave Vines Body With Berries]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cave_vines_body_with_berries
+| style="border-width: 0; padding: 0.2em 0.5em;" |630
+| style="border-width: 0; padding: 0.2em 0.5em;" |-375
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cave Vines (berries, texture) JE1.png|24px]] [[Glow Berries|Cave Vines Head With Berries]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cave_vines_head_with_berries
+| style="border-width: 0; padding: 0.2em 0.5em;" |631
+| style="border-width: 0; padding: 0.2em 0.5em;" |-376
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cobbled Deepslate JE2 BE1.png|24px]] [[Slab|Cobbled Deepslate Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cobbled_deepslate_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |651
+| style="border-width: 0; padding: 0.2em 0.5em;" |-396
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Deepslate JE2 BE1.png|24px]] [[Slab|Polished Deepslate Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_deepslate_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |652
+| style="border-width: 0; padding: 0.2em 0.5em;" |-397
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Deepslate Tiles JE2 BE1.png|24px]] [[Slab|Deepslate Tile Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |deepslate_tile_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |653
+| style="border-width: 0; padding: 0.2em 0.5em;" |-398
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Deepslate Bricks JE2 BE1.png|24px]] [[Slab|Deepslate Brick Double Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |deepslate_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |654
+| style="border-width: 0; padding: 0.2em 0.5em;" |-399
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Deepslate Redstone Ore.png|24px]] [[Lit Deepslate Redstone Ore]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lit_deepslate_redstone_ore
+| style="border-width: 0; padding: 0.2em 0.5em;" |659
+| style="border-width: 0; padding: 0.2em 0.5em;" |-404
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |684
+| style="border-width: 0; padding: 0.2em 0.5em;" |-429
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|White Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |white_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |685
+| style="border-width: 0; padding: 0.2em 0.5em;" |-430
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Orange Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |orange_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |686
+| style="border-width: 0; padding: 0.2em 0.5em;" |-431
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Magenta Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |magenta_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |687
+| style="border-width: 0; padding: 0.2em 0.5em;" |-432
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Light Blue Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |light_blue_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |688
+| style="border-width: 0; padding: 0.2em 0.5em;" |-433
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Yellow Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |yellow_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |689
+| style="border-width: 0; padding: 0.2em 0.5em;" |-434
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Lime Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |lime_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |690
+| style="border-width: 0; padding: 0.2em 0.5em;" |-435
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Pink Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pink_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |691
+| style="border-width: 0; padding: 0.2em 0.5em;" |-436
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Gray Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |gray_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |692
+| style="border-width: 0; padding: 0.2em 0.5em;" |-437
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Light Gray Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |gray_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |693
+| style="border-width: 0; padding: 0.2em 0.5em;" |-438
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Cyan Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cyan_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |694
+| style="border-width: 0; padding: 0.2em 0.5em;" |-439
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Purple Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |purple_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |695
+| style="border-width: 0; padding: 0.2em 0.5em;" |-440
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Blue Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |blue_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |696
+| style="border-width: 0; padding: 0.2em 0.5em;" |-441
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Brown Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |brown_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |697
+| style="border-width: 0; padding: 0.2em 0.5em;" |-442
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Green Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |green_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |698
+| style="border-width: 0; padding: 0.2em 0.5em;" |-443
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Red Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |red_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |699
+| style="border-width: 0; padding: 0.2em 0.5em;" |-444
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cake (side texture) JE3 BE3.png|24px]] [[Cake|Black Candle Cake]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |black_candle_cake
+| style="border-width: 0; padding: 0.2em 0.5em;" |700
+| style="border-width: 0; padding: 0.2em 0.5em;" |-445
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oxidized Cut Copper.png|24px]] [[Cut Copper Slab|Double Waxed Oxidized Cut Copper Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |waxed_oxidized_double_cut_copper_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |705
+| style="border-width: 0; padding: 0.2em 0.5em;" |-450
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mud Bricks.png|24px]] [[Mud Brick Slab|Double Mud Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mud_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |734
+| style="border-width: 0; padding: 0.2em 0.5em;" |-479
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mangrove Door (item).png|24px]] [[Mangrove Door]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mangrove_door
+| style="border-width: 0; padding: 0.2em 0.5em;" |748
+| style="border-width: 0; padding: 0.2em 0.5em;" |-493
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mangrove Planks (texture) JE1 BE1.png|24px]] [[Sign|Mangrove Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mangrove_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |749
+| style="border-width: 0; padding: 0.2em 0.5em;" |-494
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mangrove Planks (texture) JE1 BE1.png|24px]] [[Sign|Mangrove Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mangrove_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |750
+| style="border-width: 0; padding: 0.2em 0.5em;" |-495
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mangrove Planks JE1 BE1.png|24px]] [[Wooden Slab|Double Mangrove Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mangrove_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |754
+| style="border-width: 0; padding: 0.2em 0.5em;" |-499
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bamboo Planks (texture) JE2.png|24px]] [[Sign|Bamboo Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bamboo_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |773
+| style="border-width: 0; padding: 0.2em 0.5em;" |-518
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bamboo Planks (texture) JE2.png|24px]] [[Sign|Bamboo Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bamboo_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |774
+| style="border-width: 0; padding: 0.2em 0.5em;" |-519
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bamboo Planks JE2 BE2.png|24px]] [[Wooden Slab|Double Bamboo Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bamboo_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |776
+| style="border-width: 0; padding: 0.2em 0.5em;" |-521
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bamboo Mosaic JE1 BE1.png|24px]] [[Bamboo Mosaic Slab|Double Bamboo Mosaic Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |bamboo_mosaic_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |780
+| style="border-width: 0; padding: 0.2em 0.5em;" |-525
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cherry Planks JE1 BE1.png|24px]] [[Wooden Slab|Double Cherry Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cherry_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |795
+| style="border-width: 0; padding: 0.2em 0.5em;" |-540
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cherry Planks (texture) JE1.png|24px]] [[Sign|Cherry Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cherry_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |797
+| style="border-width: 0; padding: 0.2em 0.5em;" |-542
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cherry Planks (texture) JE1.png|24px]] [[Sign|Cherry Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cherry_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |799
+| style="border-width: 0; padding: 0.2em 0.5em;" |-544
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Torchflower Crop (stage0 texture) JE1.png|24px]] [[Torchflower Crop]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |torchflower_crop
+| style="border-width: 0; padding: 0.2em 0.5em;" |822
+| style="border-width: 0; padding: 0.2em 0.5em;" |-567
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Pitched Crop (side texture) JE1.png|24px]] [[Pitcher Crop]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pitcher_crop
+| style="border-width: 0; padding: 0.2em 0.5em;" |829
+| style="border-width: 0; padding: 0.2em 0.5em;" |-574
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Tuff.png|24px]] [[Tuff Slab|Double Tuff Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |tuff_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1000
+| style="border-width: 0; padding: 0.2em 0.5em;" |-745
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Tuff.png|24px]] [[Polished Tuff Slab|Double Polished Tuff Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_tuff_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1005
+| style="border-width: 0; padding: 0.2em 0.5em;" |-750
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Tuff Bricks.png|24px]] [[Tuff Brick Slab|Double Tuff Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |tuff_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1011
+| style="border-width: 0; padding: 0.2em 0.5em;" |-756
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Spruce Planks.png|24px]] [[Wooden Slab|Double Spruce Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |spruce_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1064
+| style="border-width: 0; padding: 0.2em 0.5em;" |-809
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Birch Planks.png|24px]] [[Wooden Slab|Double Birch Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |birch_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1065
+| style="border-width: 0; padding: 0.2em 0.5em;" |-810
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Jungle Planks.png|24px]] [[Wooden Slab|Double Jungle Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |jungle_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1066
+| style="border-width: 0; padding: 0.2em 0.5em;" |-811
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Acacia Planks.png|24px]] [[Wooden Slab|Double Acacia Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |acacia_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1067
+| style="border-width: 0; padding: 0.2em 0.5em;" |-812
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dark Oak Planks.png|24px]] [[Wooden Slab|Double Dark Oak Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dark_oak_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1068
+| style="border-width: 0; padding: 0.2em 0.5em;" |-813
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Sandstone.png|24px]] [[Sandstone_Slab|Double Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1133
+| style="border-width: 0; padding: 0.2em 0.5em;" |-878
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cobblestone.png|24px]] [[Cobblestone Slab|Double Cobblestone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cobblestone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1134
+| style="border-width: 0; padding: 0.2em 0.5em;" |-879
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Bricks.png|24px]] [[Brick Slab|Double Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1135
+| style="border-width: 0; padding: 0.2em 0.5em;" |-880
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stone Bricks.png|24px]] [[Stone Brick Slab|Double Stone Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |stone_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1136
+| style="border-width: 0; padding: 0.2em 0.5em;" |-881
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Block of Quartz.png|24px]] [[Quartz Slab|Double Quartz Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |quartz_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1137
+| style="border-width: 0; padding: 0.2em 0.5em;" |-882
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Nether Bricks.png|24px]] [[Nether Brick Slab|Double Nether Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |nether_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1138
+| style="border-width: 0; padding: 0.2em 0.5em;" |-883
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Oak Planks.png|24px]] [[Petrified Oak Slab|Double Petrified Oak Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |petrified_oak_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1158
+| style="border-width: 0; padding: 0.2em 0.5em;" |-903
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Brain Coral Fan (texture).png|24px]] [[Brain Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |brain_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1159
+| style="border-width: 0; padding: 0.2em 0.5em;" |-904
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dead Tube Coral Fan (texture).png|24px]] [[Dead Tube Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dead_tube_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1160
+| style="border-width: 0; padding: 0.2em 0.5em;" |-905
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dead Brain Coral Fan (texture).png|24px]] [[Dead Brain Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dead_brain_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1161
+| style="border-width: 0; padding: 0.2em 0.5em;" |-906
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Fire Coral Fan (texture).png|24px]] [[Fire Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |fire_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1162
+| style="border-width: 0; padding: 0.2em 0.5em;" |-907
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dead Bubble Coral Fan (texture).png|24px]] [[Dead Bubble Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dead_bubble_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1163
+| style="border-width: 0; padding: 0.2em 0.5em;" |-908
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dead Fire Coral Fan (texture).png|24px]] [[Dead Fire Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dead_fire_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1164
+| style="border-width: 0; padding: 0.2em 0.5em;" |-909
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dead Horn Coral Fan (texture).png|24px]] [[Dead Horn Coral Wall Fan]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dead_horn_coral_wall_fan
+| style="border-width: 0; padding: 0.2em 0.5em;" |1165
+| style="border-width: 0; padding: 0.2em 0.5em;" |-910
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Purpur Block.png|24px]] [[Purpur Slab|Double Purpur Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |purpur_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1166
+| style="border-width: 0; padding: 0.2em 0.5em;" |-911
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Prismarine.png|24px]] [[Prismarine Slab|Double Prismarine Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |prismarine_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1167
+| style="border-width: 0; padding: 0.2em 0.5em;" |-912
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Dark Prismarine.png|24px]] [[Dark Prismarine Slab|Double Dark Prismarine Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |dark_prismarine_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1168
+| style="border-width: 0; padding: 0.2em 0.5em;" |-913
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Prismarine Bricks.png|24px]] [[Prismarine Brick Slab|Double Prismarine Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |prismarine_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1169
+| style="border-width: 0; padding: 0.2em 0.5em;" |-914
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Mossy Cobblestone.png|24px]] [[Mossy Cobblestone Slab|Double Mossy Cobblestone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |mossy_cobblestone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1170
+| style="border-width: 0; padding: 0.2em 0.5em;" |-915
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Sandstone.png|24px]] [[Smooth Sandstone Slab|Double Smooth Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |smooth_sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1171
+| style="border-width: 0; padding: 0.2em 0.5em;" |-916
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Red Nether Bricks.png|24px]] [[Red Nether Brick Slab|Double Red Nether Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |red_nether_brick_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1172
+| style="border-width: 0; padding: 0.2em 0.5em;" |-917
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Red Sandstone.png|24px]] [[Smooth Red Sandstone Slab|Double Smooth Red Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |smooth_red_sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1173
+| style="border-width: 0; padding: 0.2em 0.5em;" |-918
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Andesite.png|24px]] [[Polished Andesite Slab|Double Polished Andesite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_andesite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1174
+| style="border-width: 0; padding: 0.2em 0.5em;" |-919
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Andesite.png|24px]] [[Andesite Slab|Double Andesite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |andesite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1175
+| style="border-width: 0; padding: 0.2em 0.5em;" |-920
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Diorite.png|24px]] [[Diorite Slab|Double Diorite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |diorite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1176
+| style="border-width: 0; padding: 0.2em 0.5em;" |-921
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Diorite.png|24px]] [[Polished Diorite Slab|Double Polished Diorite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_diorite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1177
+| style="border-width: 0; padding: 0.2em 0.5em;" |-922
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Granite.png|24px]] [[Granite Slab|Double Granite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |granite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1178
+| style="border-width: 0; padding: 0.2em 0.5em;" |-923
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Polished Granite.png|24px]] [[Polished Granite Slab|Double Polished Granite Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |polished_granite_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1179
+| style="border-width: 0; padding: 0.2em 0.5em;" |-924
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Smooth Quartz.png|24px]] [[Smooth Quartz Slab|Double Smooth Quartz Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |smooth_quartz_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1180
+| style="border-width: 0; padding: 0.2em 0.5em;" |-925
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Stone.png|24px]] [[Stone Slab|Double Stone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |normal_stone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1181
+| style="border-width: 0; padding: 0.2em 0.5em;" |-926
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cut Sandstone.png|24px]] [[Cut Sandstone Slab|Double Cut Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cut_sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1182
+| style="border-width: 0; padding: 0.2em 0.5em;" |-927
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Cut Red Sandstone.png|24px]] [[Cut Red Sandstone Slab|Double Cut Red Sandstone Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |cut_red_sandstone_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1183
+| style="border-width: 0; padding: 0.2em 0.5em;" |-928
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Pale Oak Planks.png|24px]] [[Wooden Slab|Double Pale Oak Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pale_oak_double_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1254
+| style="border-width: 0; padding: 0.2em 0.5em;" |-999
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Pale Oak Planks (texture) JE1 BE1.png|24px]] [[Sign|Pale Oak Standing Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pale_oak_standing_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |1256
+| style="border-width: 0; padding: 0.2em 0.5em;" |-1001
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Pale Oak Planks (texture) JE1 BE1.png|24px]] [[Sign|Pale Oak Wall Sign]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |pale_oak_wall_sign
+| style="border-width: 0; padding: 0.2em 0.5em;" |1258
+| style="border-width: 0; padding: 0.2em 0.5em;" |-1003
+|-
+| style="border-width: 0; padding: 0.2em 0.5em;" |[[File:Resin Bricks.png|24px]] [[Resin Brick Slab|Double Resin Brick Slab]]
+| style="border-width: 0; padding: 0.2em 0.5em;" |resin_brick_slab
+| style="border-width: 0; padding: 0.2em 0.5em;" |1258
+| style="border-width: 0; padding: 0.2em 0.5em;" |-1003
+|}
+
+== Navigation ==
+{{Navbox blocks|all}}
+
+[[ru:Технические блоки]]

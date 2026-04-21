@@ -1,0 +1,161 @@
+{{about<!--Looks like it might be time to make a disambiguation page
+-->|tiers of tools and weapons|the tiers of armor|Armor materials}}
+'''Tiers''' refer to the different levels and materials of [[tool]]s and weapons.
+
+== Tiers ==
+There are currently seven tiers in the game: wood, gold, stone, copper, iron, diamond, and netherite. The tier of an item determines its mining level, durability, [[mining efficiency]], damage bonus, enchantability, and repair item.
+
+{| class="wikitable sortable" style="text-align:center" data-description="Tiers"
+! Tier name
+! Mining level
+! [[Durability]]
+! [[Breaking#Mining_efficiency|Mining efficiency]]
+! [[Damage ]]bonus{{fn|The damage bonus is added to the base attack damage of 1. Most tiered items further modify their attack damage value. In ''[[Java Edition]]'' this does not apply to axes and hoes.}}
+! [[Enchantability]]
+! [[Unit repair|Repair item]]
+|-
+!Wood
+| rowspan="2" |0
+|59
+|2
+| rowspan="2" |0
+|15
+| style="text-align:left | {{BlockLink|Planks}}
+|-
+![[Gold]]
+|32
+|12
+|22 (25 on armor)
+| style="text-align:left " | {{ItemLink|Gold Ingot}}
+|-
+!Stone
+| rowspan="2" |1
+|131
+|4
+| rowspan="2" |1
+|5
+| style="text-align:left " |
+{{BlockLink|Cobbled Deepslate}}<br>{{BlockLink|Cobblestone}}<br>{{BlockLink|Blackstone}}
+|-
+![[Copper]]
+|191
+|5
+|13 (8 on armor)
+| style="text-align:left " | {{ItemLink|Copper Ingot}}
+|-
+![[Iron]]
+|2
+|250
+|6
+|2
+|14 (9 on armor)
+| style="text-align:left " |{{ItemLink|Iron Ingot}}
+|-
+![[Diamond family|Diamond]]
+|3
+|1561
+|8
+|3
+|10
+| style="text-align:left " |{{ItemLink|Diamond}}
+|-
+![[Netherite]]
+|4
+|2031
+|9
+|4
+|15
+| style="text-align:left " |{{ItemLink|Netherite Ingot}}
+|}
+{{fnlist}}
+
+== Mining level ==
+Mining level is an internal numeric value used by [[pickaxe]]s that represents an additional restriction to whether or not blocks drop anything when [[mined]], in addition to requiring the correct tool type. While it is used only by pickaxes, other tools have mining level values internally that match their tier.
+
+A block with the [[tag]] <code>minecraft:needs_stone_tool</code><ref group=note name=mininglevel1>Includes [[iron ore]], [[copper ore]], [[lapis lazuli ore]], [[deepslate iron ore]], [[deepslate copper ore]], [[deepslate lapis lazuli ore]], [[blocks of copper]], [[blocks of raw copper]], [[blocks of iron]], [[blocks of raw iron]], [[blocks of lapis lazuli]], [[cut copper]] and its variants, and [[lightning rod]]s.</ref> requires a mining level of 1 or higher, a block with the tag <code>minecraft:needs_iron_tool</code><ref group=note name=mininglevel2>Includes [[diamond ore]], [[emerald ore]], [[gold ore]], [[redstone ore]], [[deepslate diamond ore]], [[deepslate emerald ore]], [[deepslate gold ore]], [[deepslate redstone ore]], [[blocks of diamond]], [[blocks of emerald]], [[blocks of gold]], and [[block of raw gold]]</ref> requires a mining level of 2 or higher, and a block with the tag <code>minecraft:needs_diamond_tool</code><ref group=note name=mininglevel3>Includes [[ancient debris]], [[obsidian]], [[crying obsidian]], [[blocks of netherite]], [[respawn anchors]], and [[glowing obsidian]]{{only|BE|short=1}}.</ref> requires a tool with mining level 3 or higher. If a block has no mining level tags, it can be mined with a mining level of 0. There is an unused 4th mining level with the tag <code>minecraft:needs_netherite_tool</code>.
+
+== Affected items ==
+All of the [[sword]]s, [[axe]]s, [[pickaxe]]s, [[shovel]]s, [[hoe]]s, and [[spear]]s use tiers.
+
+== History ==
+{{Info needed section|Legacy Console Edition}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100131|Tier system for wooden, stone, iron, diamond, and gold [[tool]]s added. Each tier has a different mining speed multiplier and durability. [[Sword]]s also have a different damage bonus.}}
+|{{HistoryLine|||dev=20100201-2227|Added mining levels. Before this update, blocks and ores could be broken by hand.}}
+|{{HistoryLine|||dev=20100202-4|All tools can now be used to hit mobs. Damage bonuses apply to all tools instead of just swords.}}
+|{{HistoryLine||20100206-2034|Added [[hoe]]s. Since they did not mine any block types faster, the only differences between each tier were their durability and their damage bonus.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100313|The durability of diamond-tier items has been increased from 257 to 513.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.3|The durability of diamond-tier items has been increased to 1025.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|The durability of wood, stone, iron, and diamond tier items have been increased to about twice the previous value.
+|The mining speed multiplier of gold-tier items has been increased to 12.{{info needed|what was their mining speed multplier before this version?}}}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|Added the [[enchanting]] system. Each tier has a different level of enchantability.}}
+|{{HistoryLine||1.4.2|dev=12w41a|Added the ability to repair items in an [[anvil]]. Each tier requires a different material to be used.}}
+|{{HistoryLine||1.9|dev=15w35a|Damage bonuses no longer apply to [[hoe]]s.}}
+|{{HistoryLine||1.13.1|dev=18w30b|The durability of all tiers has been decreased by one due to the fix of {{bug|MC-120664}}.}}
+|{{HistoryLine||1.16|dev=20w06a|Netherite tools added to tier system.}}
+|{{HistoryLine|||dev=20w09a|Hoes can now break certain block types more quickly, making them affected by mining speed multipliers.}}
+|{{HistoryLine|||dev=20w22a|[[Blackstone]] can now be used to repair stone-tier items.}}
+|{{HistoryLine||1.16.2|dev=20w29a|[[Tools]] are now sorted based on their tier in the [[creative inventory]].}}
+|{{HistoryLine||1.17|dev=21w07a|[[Grimstone]] (now called "Deepslate") can now be used to repair stone-tier items.}}
+|{{HistoryLine|||dev=21w08a|[[Cobbled deepslate]] is now used to repair stone-tier items instead of regular deepslate.}}
+|{{HistoryLine||1.21.9|dev=25w31a|[[Copper]] tools added to tier system.}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added [[spear]]s, which use the tier system.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|Added stone-tier items. They have infinite durability.}}
+|{{HistoryLine||v0.3.0|Added mining levels. Before this update, blocks and ores could be broken by hand.|Added wooden-tier items. They have 11 durability.|Stone-tier items' durability has been decreased to 132 uses.}}
+|{{HistoryLine||v0.3.2|Added diamond, gold, and iron tier items.}}
+|{{HistoryLine||v0.3.3|The durabilities of all tiers have been increased to match ''Java Edition''. The durability of gold tools was not increased, but they were given a speed boost.}}
+|{{HistoryLine||v0.4.0|Added hoes. Since they did not mine any block types faster, the only differences between each tier were their durability and their damage bonus.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added the ability to repair items in an [[anvil]]. Each tier requires a different material to be used.
+|Added the [[enchanting]] system. Each tier has a different level of enchantability.}}
+|{{HistoryLine|Bedrock Edition}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Netherite tools added to tier system.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.52|[[Cobblestone]] and [[cobbled deepslate]] can now be used to repair stone-tier items.<ref>{{bug|MCPE-64644}}</ref>|[[Stone]] can no longer be used to repair stone-tier items.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.23|experiment=Drop 3 2025|Copper tools added to tier system.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added [[spear]]s, which use the tier system.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|legacy console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Tier system for wooden, stone, iron, diamond, and gold tools added.{{info needed}}}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the ability to repair items in an [[anvil]]. Each tier requires a different material to be used.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Tier system for wooden, stone, iron, diamond, and gold tools added.}}
+}}
+
+== See also ==
+* [[Armor materials]]
+* [[Materials]]
+
+== References ==
+{{reflist}}
+
+== Notes ==
+{{notelist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[fr:Tiers]]
+[[ja:階級]]
+[[ko:등급]]
+[[lzh:器質]]
+[[pt:Matérias-primas]]
+[[ru:Ресурсы инструментов]]
+[[zh:工具材料]]

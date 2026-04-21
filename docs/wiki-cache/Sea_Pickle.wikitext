@@ -1,0 +1,245 @@
+{{for|the terrain feature that generates sea pickles|Sea Pickle (feature)}}
+{{Infobox block
+| group = 1 pickle
+| 1-1 = Sea Pickle 1 JE1 BE1.png
+| 1-2 = Sea Pickle 1 Dry JE1 BE1.png
+| group2 = 2 pickles
+| 2-1 = Sea Pickle 2 JE1 BE1.png
+| 2-2 = Sea Pickle 2 Dry JE1 BE1.png
+| group3 = 3 pickles
+| 3-1 = Sea Pickle 3 JE1 BE1.png
+| 3-2 = Sea Pickle 3 Dry JE1 BE1.png
+| group4 = 4 pickles
+| 4-1 = Sea Pickle 4 JE1 BE1.png
+| 4-2 = Sea Pickle 4 Dry JE1 BE1.png
+| *-1caption = In water
+| *-2caption = Out of water
+| extratext = [[#Renders|View all renders]]
+| transparent = Yes
+| light = Yes, when waterlogged <br> 1 sea pickle: 6 <br> 2 sea pickles: 9 <br> 3 sea pickles: 12 <br> 4 sea pickles: 15
+| tool = Any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = Yes
+}}
+A '''sea pickle''' is a [[block]] found in [[warm ocean]]s. While in [[water]] it emits [[light]], and can be spread using [[bone meal]] if placed on a living [[coral block]]. Up to four sea pickles can be placed in one block space, which affects the amount of light produced while in water.
+
+== Obtaining ==
+=== Breaking ===
+Sea pickles can be broken instantly with any tool including hands. Each colony drops 1-4 sea pickles, depending on how many are in the colony (so a colony of 3 pickles drops 3 pickles).
+
+{{breaking row|Sea Pickle|horizontal=1}}
+
+=== Natural generation ===
+[[Sea Pickle (feature)|Sea pickle colonies]] generate on the bottom of warm oceans and are found on top of [[coral block]]s in [[coral reef]]s. Each chunk has {{frac|1|6}} chance to generate sea pickle colonies. They can be found in groups of 1 up to 4.
+
+Sea pickles may also be found in [[desert village]] houses as decorative blocks that resemble pottery.
+
+{{block distribution}}
+
+=== Trading ===
+[[Wandering trader]]s may sell 1 sea pickle for 2 [[emerald]]s.
+{{Trade sources}}
+
+=== Mob loot ===
+{{IN|bedrock}}, [[wandering traders]] have a chance of 8.5% (increased by 1% per level of [[Looting]]) to drop 1 sea pickle when killed while showing the item as trade offer, if the player holds an [[emerald]].
+
+=== Post-generation ===
+Using [[bone meal]] on an underwater sea pickle placed on top of a living [[coral block]] creates more sea pickles. Specifically, the colony to which bone meal is applied increases in size, and any living coral block within a [[taxicab distance]] of 2 blocks (horizontally from either the coral block or the sea pickle itself) can generate 1-3 sea pickles. They do not grow or spread naturally, and do not require light. 
+
+== Usage ==
+=== Placing ===
+Sea pickles can be placed on top of most solid [[block]]s, as well as non-solid blocks, up to four per block, similar to [[turtle egg]]s or [[candle]]s. More information regarding placement on transparent blocks can be found at [[Opacity/Placement]].
+
+{{IN|Bedrock}}, unlike [[Turtle Egg|turtle eggs]], sea pickles can only be placed on complete blocks.
+
+=== Light ===
+Sea pickles produce light when underwater. A single pickle produces a light level of 6, and a colony produces an additional 3 levels per pickle (so 4 sea pickles produces a light level of 15). When they produce light, there is a pale green glow at the end of the pickle.
+
+{|class=wikitable
+|-
+! colspan=2 | Sea pickles !! Light level
+|-
+| 1 || [[File:Sea Pickle 1 JE1 BE1.png|32px]] || 6
+|-
+| 2 || [[File:Sea Pickle 2 JE1 BE1.png|32px]] || 9
+|-
+| 3 || [[File:Sea Pickle 3 JE1 BE1.png|32px]] || 12
+|-
+| 4 || [[File:Sea Pickle 4 JE1 BE1.png|32px]] || 15
+|}
+When the [[Render Dragon Features for Creators]] experiment is enabled in ''[[Minecraft Preview]]'', the center of lit sea pickles emits colored [[Vibrant Visuals#Point lighting|point lighting]] with {{color|#b0dad3}}. This causes the bottom part of sea pickles to render a small square shadow.
+
+=== Growing ===
+[[Bone meal]] can be {{control|used}} on sea pickles if they are underwater and planted on living [[coral block]]s. This increases their number on that block, and they spread to ''empty'' areas underwater above other living coral blocks. They can spread to the original sea pickle's level or one level below, out to a horizontal [[taxicab distance]] of 2.
+
+=== Smelting ingredient ===
+{{Smelting
+|head=1
+|showdescription=1
+|showname=1
+|description={{only|je}}
+|Sea Pickle
+|Lime Dye
+|0,1
+}}
+{{Smelting
+|description={{only|be}}
+|Sea Pickle
+|Lime Dye
+|0,2
+|foot=1
+}}
+
+=== Composting ===
+Placing a sea pickle into a [[composter]] has a 65% chance of raising the compost level by 1.
+
+== Sounds ==
+{{Sound table/Block/Slime block}}
+
+== Achievements ==
+{{load achievements|One Pickle, Two Pickle, Sea Pickle, Four}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sea Pickle
+|spritetype=block
+|nameid=sea_pickle
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sea Pickle
+|spritetype=block
+|nameid=sea_pickle
+|id=411
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|pickles|1|1,2,3,4|Number of pickles.}}
+{{bst|waterlogged|true|false,true|Whether or not there is water in the same place as these pickles, as well as whether or not they emit light.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2|cluster_count|0|0,1,2,3|Number of pickles, starting from 1 to 4.}}
+{{bst|bits=0x4|dead_bit|false|false,true|True if there is no water in the same place as these pickles. If this is false, they emit light. If true, they do not.|0,1|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w14b|[[File:Sea Pickle 1 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 2 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 3 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 4 Dry JE1 BE1.png|32px]]<br>[[File:Sea Pickle 1 JE1 BE1.png|32px]] [[File:Sea Pickle 2 JE1 BE1.png|32px]] [[File:Sea Pickle 3 JE1 BE1.png|32px]] [[File:Sea Pickle 4 JE1 BE1.png|32px]]<br>[[File:Sea Pickle (item) JE1 BE1.png|32px]] Added sea pickles.}}
+|{{HistoryLine|||dev=18w16a|Sea pickles can now be placed on top of non-solid [[block]]s.}}
+|{{HistoryLine|||dev=18w22a|If the [[player]] is inside the hitbox of sea pickle, and another is attempted to be placed, the placement now fails, as with most other blocks.
+|Sea pickles now make placement [[sound]]s when the amount in a stack is increased.
+|More sea pickles can now be added to a stack when aiming at adjacent [[block]]s instead of requiring the player to target the pickle stack directly
+|Sea pickles now require a supporting [[block]] underneath.}}
+|{{HistoryLine||1.14|dev=18w50a|Sea pickles may now generate in [[Village#Desert|desert village]] houses.}}
+|{{HistoryLine|||dev=19w03a|Placing a sea pickle into the new [[composter]] block has a 50% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Sea pickles now have a 65% chance of increasing the compost level in a composter by 1.
+|Added [[Wandering Trader|wandering trader]]s, which sell sea pickles.}}
+|{{HistoryLine||1.16|dev=20w15a|[[Wall]]s now connect to the bottom of sea pickles.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Sea pickles can now be placed on [[soul sand]].}}
+|{{HistoryLine||1.17|dev=21w13a|The model of the tentacles of the sea pickles has been tweaked that the backside textures are mirrored.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|[[File:Sea Pickle 1 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 2 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 3 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 4 Dry JE1 BE1.png|32px]]<br>[[File:Sea Pickle 1 JE1 BE1.png|32px]] [[File:Sea Pickle 2 JE1 BE1.png|32px]] [[File:Sea Pickle 3 JE1 BE1.png|32px]] [[File:Sea Pickle 4 JE1 BE1.png|32px]]{{verify|were/are the models indeed identical to Java Edition or are there minor differences?}}<br>[[File:Sea Pickle (item) JE1 BE1.png|32px]] Added sea pickles.}}
+|{{HistoryLine||1.7.0|dev=beta 1.7.0.3|Sea pickles now break instantly when destroyed in [[Survival mode]].}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Sea pickles can now be [[trading|bought]] from [[wandering trader]]s.
+|2 sea pickles now generate in one of new [[Village#Desert|desert village]] small houses.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Sea pickles can now be used to fill up [[composter]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Sea Pickle 1 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 2 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 3 Dry JE1 BE1.png|32px]] [[File:Sea Pickle 4 Dry JE1 BE1.png|32px]]<br>[[File:Sea Pickle 1 JE1 BE1.png|32px]] [[File:Sea Pickle 2 JE1 BE1.png|32px]] [[File:Sea Pickle 3 JE1 BE1.png|32px]] [[File:Sea Pickle 4 JE1 BE1.png|32px]]{{verify|were/are the models indeed identical to Java Edition or are there minor differences?}}<br>[[File:Sea Pickle (item) JE1 BE1.png|32px]] Added sea pickles.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Added [[wandering trader]]s, which sell sea pickles.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Sea pickles are based on real-life {{W|Pyrosome|sea pickles|newtab=1}}, which are free-floating colonial {{W|Tunicata|tunicates|newtab=1}} with blue-green {{W|bioluminescence|newtab=1}}, more properly known as pyrosomes. Unlike the ''Minecraft'' version, they are not stationary organisms and are an entirely different species.<ref>{{Mcnet|sea-pickle|Taking Inventory: Sea Pickle|December 20, 2023|[[Duncan Geere]]}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Sea Pickle 1.png
+Sea Pickle 2.png
+Sea Pickle 3.png
+Sea Pickle 4.png
+Sea Pickle 1 Dry.png
+Sea Pickle 2 Dry.png
+Sea Pickle 3 Dry.png
+Sea Pickle 4 Dry.png
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Sea Pickle (texture) JE1 BE1.png|Texture file of the sea pickle.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Sea pickles no glow.png|Sea pickles out of [[water]].
+File:Sea pickle glow.png|Sea pickles in water.
+File:Sea pickles on ocean floor.png|Sea pickles on a warm [[ocean]] bed in a [[coral reef]].
+File:Sea pickles on coral.png|Sea pickles that generate on top of a [[coral]] structure.
+File:Glowing sea pickles.png|Sea pickles from above the surface.
+File:Sea pickle light comparison.png|A comparison on how much light sea pickles emit.
+File:Coral reef at night.png|Sea pickles illuminating a [[coral reef]].
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Sea Pickle (inventory) MCE.png|A {{MCE|sea pickle}} as it appeared in {{MCE}}
+File:Sea Pickle Wanderers.png|Sea Pickle Wanderers skin from [[Coral Crafters Skin Pack]]
+File:Sea Pickle 4 MCC Event.png|Sea pickles as they appeared in [[MCC x Minecraft 15th Anniversary Party]]
+File:Woodsword Chronicles sea pickle.jpg|A sea pickle as it appears in {{WSC|3|1}} 
+</gallery>
+
+== See also ==
+* [[Underwater torch]]
+* [[Tutorial:Sea Pickle farming]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Vegetation}}
+
+[[Category:Animal blocks]]
+[[Category:Natural blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+
+[[de:Meeresgurke]]
+[[es:Pepino de mar]]
+[[fr:Cornichon de mer]]
+[[ja:シーピクルス]]
+[[ko:불우렁쉥이]]
+[[pl:Iskrzyłuda]]
+[[pt:Pepino-do-Mar]]
+[[ru:Морской огурец]]
+[[th:แตงกวาดองทะเล]]
+[[uk:Морський огірок]]
+[[zh:海泡菜]]

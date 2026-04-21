@@ -1,0 +1,225 @@
+{{for|a tutorial on breeding mechanics of older versions|Village mechanics/Before Village & Pillage|Tutorial:Legacy village mechanics}}
+
+This page describes '''mechanics relating to [[village]] and [[villager]]s'''.
+
+== Village definition ==
+As used in this article, the term ''village'' means a "logical village", which is an area of a world where village mechanics governs villager behavior. This is in contrast to a "physical village", which is a set of buildings, crop fields, etc. created as part of world generation. Although the two kinds of villages most often coincide, this is not obligatory:
+
+* A physical village that has no villagers cannot have village mechanics. Examples include houseless villages, [[Village#Abandoned villages|abandoned villages]], villages that were generated while [[game rule]] {{code|doMobSpawning}} is set to {{code|false}}, and villages where all the villagers have died or were taken somewhere else.
+* A logical village is most often generated when the chunks of a physical village are generated, but one can also be created where no physical village exists by placing certain kinds of blocks near a villager, or by moving or spawning a villager near such a block.
+
+This article describes the behavior of villagers in a logical village, whether or not they are in a physical village.
+
+=== Java villages ===
+Villages do not have a defined center or radius. Rather, a village is defined by proximity to a village subchunk.
+
+Any [[chunk]] section (aka. "subchunk") containing a claimed [[bed]], [[bell]], or [[job site]] block is considered to be a village center, and all 26 sections in a 3×3×3 cube around it are also considered part of the village, as used in [[raid]]s, [[zombie siege]]s and some pathfinding. [[Cat]]s spawn within the 5×5×5 cube around a village center, and [[patrol]]s do not spawn when the player is in the same range.
+
+Subchunks in a 17×17×17 cube from village subchunks define degrees of proximity to a village.
+
+Mob AI uses these definitions in various cases. For example, when a villager is not in a village and needs to return to one, it sets out in the direction of increasing proximity. When an iron golem patrols the village, it frequently looks for a village subchunk within a 5×5×5 cube of itself to walk to.
+
+Population of a village is never measured. Villager breeding succeeds if the birthing parent can path to an unclaimed bed with at least two empty blocks over its head. [[Iron golem]] spawning happens if enough villagers haven't seen a golem recently, when gathered near a bell, or panicked by zombies. Cats spawn around players in or near villages if enough beds (and few enough cats) are nearby.
+
+==== Gathering site ====
+A gathering site is where villagers spend their mingling time during the day and can be anywhere in a village, even if it is not located in the center. It is defined by claimed [[bell]]s. When a bell is claimed, green particles appear above the bell and the bell is registered as a gathering site. 
+
+During a raid, a villager goes to gathering sites and rings the bell to warn other villagers.
+
+Adding a bell establishes a new potential gathering site, even if the village already has one. Villagers remember their specific gathering site and go to it during mingling time, even if another gathering site is closer. However, new or unregistered villagers may choose this new site.
+
+If the player is within 48 blocks of a bell (claimed or not) when a wandering trader is being spawned, the trader spawns within 48 blocks of the bell rather than the player.
+
+=== Bedrock villages ===
+A village is defined through several mechanics: the village gathering sites, village radius, number of job sites, number of houses, villager population, population cap (maximum number of villagers that can live in the village based on available housing), [[cat]] population, and [[Iron Golem]] population. Players can use these mechanics to build artificial villages.
+
+==== House ====
+A village needs at least one house and one villager to be considered a village. A house is defined as a [[bed]]. The game utilizes villager breeding to try to maintain a 100% population level, so long as there are at least two villagers occupying it.
+
+==== Gathering site ====
+A gathering site is where villagers spend their mingling time during the day and can be anywhere in a village, even if it is not located in the center. It is defined as a claimed [[bell]]. When a bell is claimed, green particles appear above the bell and the bell is registered as a gathering site. If a player is in the village, a [[wandering trader]] can spawn from a claimed bell.
+
+The bell must be within the village boundary to be considered a gathering site of the village, therefore it needs to be located near at least one villager and one bed. If villagers and a bell are present but without housing, the villagers search for unclaimed beds rather than mingle.
+
+During a raid, the bell rings automatically.
+
+Adding a bell at a location near claimed beds establishes a new gathering site, even if the village already has one. Each villager remembers their specific gathering site and goes there during mingling time, even if another gathering site is closer. However, new or unregistered villagers may choose this new location if it is closer.
+
+==== Point of interest ====
+{{see also|Point of Interest}}
+
+Points of interest (POIs) relevant to villagers are three blocks a villager can claim, which are beds, bells (gathering sites), or job site blocks (workstations).
+
+Claimed POIs are placed in a data structure for villagers called "unordered map", which associates the villager with its claimed POIs. Each villager has three slots in the map, the first slot is used by the villager's bed if any, the second slot by the villager's gathering site if any, and the third slot by the villager's job site if any.
+
+They also serve to calculate a village boundary, and a village boundary is recalculated whenever a POI is claimed by a villager in the village or the village detects that a POI currently claimed is no longer valid. To avoid this, avoid adding or removing POIs from the village, including building a village where villagers may unlink from their POI due to them being unable to find a path to it.
+
+==== Initial size of villages ====
+[[File:Village Boundary Box with Unambiguous Dimensions.jpg|alt=A screenshot of a Minecraft player hovering far above a bed and surrounded by two boxes that indicate the boundaries of the village and it's expansion area|thumb|300px|The village boundary and expansion area.]]
+
+The game first calculates and constructs an initial 64.0m x 24.0m x 64.0m<ref group="note">The game uses two different coordinate systems: entity coordinates, which use real numbers and specify the position of entities in the game, and block positions, which use integers and specify the location of blocks in the game. A 1.0m x 1.0m x 1.0m cube in entity coordinates takes up the same amount of space as a single full block.</ref> boundary for the village making it encompass the locations of all claimed POIs, "location" being defined as the northwest bottom corner of the POI. 
+
+Any entity coordinate that coincides with any edge of the village boundary is considered "inside" it. Thus, a village forms when a villager claims the first bed, indicated by green particles emitting from the bed and villager.
+
+Initially, the village spans a rectangular space with the bed's pillow at its center, extending outward 32 blocks in all horizontal directions and 12 blocks vertically from that point, resulting in a total volume of 65 blocks wide, 65 blocks deep, and 25 blocks high.
+
+New points of interest (POIs) added within this area don't affect the village's size.
+
+==== Village center and origin point ====
+[[File:Center of Expanded Villages.jpg|alt=In expanded villages, the center shifts from the first bed to the geometric center of the village boundaries.|thumb|300px|In expanded villages, the center shifts from the first bed to the geometric center of the village boundaries.]]
+
+The village origin point serves as the center of smaller villages and determines the area where iron golems and cats spawn. The center of the initial village boundary is the location of the first claimed POI in the POI list. If every villager in the village has claimed a bed, and the village is not expanded beyond the initial boundary, then the center of the village will coincide with the origin of the village, which will also coincide with the northwest bottom corner of the pillow of the bed of one of the villagers. In villages that have expanded, it serves as the starting point from which village expansions are calculated.
+
+This point is marked by a bed, bell, or villager's job site. A "lead" villager’s bed pillow, being the first villager of a hierarchy order, determines this point (if it has a claimed bed). To identify this villager, remove all the job sites in the village and notice which villager claims a new one first, indicated by green particles over his head. Villagers claim job sites based on village hierarchy, not proximity.
+
+The origin point prioritizes this villager’s claimed POIs in the following order: bed pillow, bell, then job site. If the lead villager unlinks from all his POIs or dies, the second villager in the hierarchy becomes the first, and so forth until a POI is designated the origin.
+
+''However, as of October 24, 2025, [[bugtracker:MCPE-54183|a bug (MCPE-54183)]] causes the hierarchy order to be recalculated when logging out and back in on certain platforms like Nintendo Switch, due to the map data structure being unordered. This bug also means that on certain platforms, adding new villagers can alter the hierarchy order, as they may not always join at the end of the list. The new villager could become the lead or be positioned elsewhere in the hierarchy.''<ref>https://github.com/reedacartwright/village_bounding_boxes#village-mechanics - Section describing village mechanics, with extra details on the bug mentioned on [https://github.com/reedacartwright/village_bounding_boxes#bugs-affecting-village-mechanics #bugs-affecting-village-mechanics]</ref>
+
+If the village borders expand, the center shifts to the geometric center to accommodate this growth, affecting where iron golems and cats spawn. While the origin point may still influence the bounding box to some extent, it no longer correlates with the village center.
+
+==== Expansion of villages ====
+[[File:Village Growth.jpg|alt=A village expands its borders to include new claimed points of interest outside its boundaries.|thumb|300px|A village expands its borders to include new claimed points of interest outside its boundaries.]]
+
+Beyond the initial borders, within an additional range of 32 blocks horizontally and 52 blocks vertically, lies the potential for expansion. If new POIs are added within this extended area, the village expands accordingly, growing the minimum amount needed to include the new POI. This expansion occurs when a villager claims the new POI, again indicated by green particles.
+
+==== Distinct villages ====
+[[File:Separate Villages.jpg|alt=Shows the distance between beds necessary to establish two distinct villages.|thumb|300px|Shows the distance between beds necessary to establish two distinct villages.]]
+
+To create two separate villages, the new village must exist beyond the expansion range of the original one. The border of the second village must be at least 33 blocks away horizontally or 53 blocks vertically from the first border. This means that two basic villages each made up of a single claimed bed must be at least 97 blocks apart horizontally to be considered separate. This calculation considers the initial border of 32 blocks from the first bed's pillow, an additional 33 blocks for shared expansion area, and finally, the village border for the second bed's pillow. Vertically, two beds must be at least 77 blocks apart. Similarly to horizontal, this calculation counts the initial border of 12 blocks from the first bed's pillow, an additional 53 blocks for shared expansion area, and finally, the initial border of 12 blocks for the second bed's pillow.
+
+==== Overlap potential ====
+Village expansion ranges can overlap. When two villages share the same expansion space, any claimed POIs within this area belong to the village whose border is closest to the POI. This means that both villages may expand into the shared space until their borders touch.
+
+== Housing ==
+A "house" is defined as a claimed bed. If the bed is obstructed by a solid block, a villager able to pathfind but cannot pathfind ''to the bed'' unlinks from it. This causes anger particles to emit from the villager's head and from on top of the bed. If a villager succeeds in sleeping in an obstructed bed, the villager suffocates and dies, leaving the bed unclaimed.
+
+Villager pathfinding is disabled when they are stuck in a 1×1 space, or mounted in a vehicle.
+
+Once a villager has claimed a bed, that bed is registered as a house in the village.{{only|bedrock}} The villager remembers their bed location, even when underground. In the evening, villagers return to their beds. However, if a villager cannot reach their bed and then loses ownership of it, other villagers can claim it. In this case the previous bed owner forgets the bed location and searches for another unclaimed bed.
+
+== Job site ==
+Naturally spawned villagers spawn either as unemployed or nitwits. Unemployed villagers can then change their profession by seeking and claiming an unclaimed [[job site]] block. 
+
+Naturally generated villages consist of two main types of buildings: houses (any building with beds) and job sites (a building with job site blocks). No villagers spawn in job site buildings. Therefore if a naturally generated village consists of only job site buildings, no villagers can spawn and {{in|bedrock}} the structures are never registered as a village.
+
+Employed villagers spend their time working at their job site block, starting in the morning. Unemployed villagers, nitwits, and baby villagers have no job site and do not work. Once a villager chooses a job site block, the villager remembers its location. They go to work in the morning, mingle at their gathering point, and return to work in the afternoon.
+
+== Breeding and population cap ==
+{{main|Villager#Breeding|Breeding}}
+Villagers can breed without player intervention, but there must be at least two adult villagers who can reach one another.
+
+Villagers go into love mode (indicated by red heart particles above both their heads) if they have enough food to make themselves and their partner willing. They enter love mode based on their amount of food and not the population cap, but can produce a baby only if they have their own beds plus an available bed for the baby, and the beds have two empty blocks above them because there must be room for the baby to jump on the bed. If the population cap is met,{{only|bedrock}} or the beds are obstructed, they cannot mate, and angry particles appear above their heads along with the hearts (when this happens, they still use up their food points). Much like with farm animals, when two villagers are in love mode and can see each other, they go to each other and stare for a few seconds, after which a baby villager spawns next to them. Breeding villagers does not drop [[experience]]. The baby villager's outfit has a 50% chance to correspond to the [[biome]] the village is in, a 25% chance of inheriting the first parent's outfit, and a 25% chance of inheriting second parent's outfit. It acquires a job after it has grown up and if there is a valid, unclaimed job site.
+
+=== Willingness ===
+Villagers must be willing to breed. 
+
+{{IN|java}}, villagers become willing once they have achieved 12 food points, which are gained as a villager gathers food items into its inventory. [[Bread]] provides 4 points, while [[carrot]]s, [[potato]]es, and [[beetroot]]s each provide one point. Farmer villagers occasionally throw harvested crops at other villagers, allowing them to obtain enough food to become willing without player intervention. Each breeding villager consumes 12 food points by mating.
+
+Villagers do not accept food if the [[game rule]] <code>mobGriefing</code> is set to <code>false</code>. This makes villager breeding possible only with <code>mobGriefing</code> enabled, because villagers cannot become fully willing without food.
+
+{{IN|bedrock}}, villagers can become willing if the player trades with them. Willingness is granted the first time a new offer is traded, or at a one-in-five chance on subsequent trades. This does not cause them to immediately seek out a mate, however.{{verify|still valid after 1.14?|edition=bedrock}}
+
+== Cats ==
+{{IN|java}}, [[cat]]s are spawned around players in or near villages. A random position is chosen near the player, and a cat is spawned if that position is within a 5×5×5 subchunk cube around a village center subchunk, and the position is within 48 blocks of at least 4 claimed beds and fewer than 5 cats are within a 97×17×97 box centered around the spawn position.
+
+Cats spawned in this way may despawn if not tamed.
+
+{{IN|bedrock}}, the number of [[cat]]s spawned in a village is based on the number of beds in that village. Cats require only one villager, and one cat can spawn for every four beds, claimed or not. Up to 20 beds can be present for a maximum of 5 cats, and cats respawn based on the number of beds.
+
+If there are two villages, each already with 5 cats, merging the villages into a single village does not cause any cats to despawn. However, the number of cats is still capped at 5, so no new cats spawn until the number of cats is below 5.
+
+The player can run cats out of the village, thus allowing for more cats to spawn.
+
+== Iron golems ==
+{{see also|Iron Golem#Villages|Tutorial:Iron Golem farming}}
+
+{{IN|java}}, [[iron golem]]s are spawned when villagers are talking. Their spawning requirements are:
+
+# The villager must be gossiping with another villager or panicking
+# The villager has not seen an iron golem recently
+# The villager has slept in the past day
+# 5 villagers (3 if panicking) within 10 blocks meet those requirements (other than #1)
+# The random location chosen for the iron golem isn't air or liquid that blocks light.
+
+Random location choosing is attempted 10 times within 16 blocks of the villager, and is attempted once from 6 blocks above the chosen x and z, to 6 blocks below it.
+
+{{IN|bedrock}}, [[iron golem]]s are spawned in villages meeting these requirements:
+
+# The village has at least 20 beds and at least 10 villagers
+# 75% of the villagers must have worked in the past day
+# All of the villagers must be linked to a bed
+# The village must be within a player's [[simulation distance]] volume
+# There must be space to spawn an iron golem within a 17×13×17 volume around the [[Village mechanics#Village center|village center]].
+
+To clarify, iron golems can spawn as long as the player is within simulation range of the village's boundaries; being near the village center is not necessary. Simulation distance remains consistent both horizontally and vertically. The formula for calculating simulation range is as follows:
+
+<math display="block">\mathsf{SimulationRange} = 8 \times \mathsf{SimulationDistance}</math>
+
+Iron golems spawn within a 17×13×17 volume, ±8 blocks horizontal and ±6 blocks vertical from the [[Village mechanics#Village center|village center]], which may be a bed pillow or a [[bell]]. A spawn is attempted on average once every 35 seconds and an iron golem can spawn when the 2×4×2 volume above the spawn point contains only non-solid blocks and the spawn block is solid.
+
+== Zombie sieges ==
+{{main|Zombie siege}}
+{{Exclusive|Java|section=14}}
+
+At midnight, there is a 10% chance that a [[zombie]] siege might occur. This is when a large number of zombies spawn in or near a village, attacking what villagers they can reach, crowding around and pounding on the doors of those they can't. On [[difficulty|Hard]] or [[Hardcore]] mode, they can actually break down the wooden doors (this is true of all zombies, not just during sieges). They'll attempt to beat them down on other difficulties, but not succeed.
+
+Zombies in sieges ignore the 24-block minimum distance from the player, but other than that, behave absolutely normally (i.e., they do not spawn on [[glowstone]] or any other [[opacity|transparent]] or half block, need a 2×1×1 minimum space, etc.). Houses can be zombie-proofed by taking out one ground block from directly in front of the door, and if necessary, rehanging the door such that the outside is flush with the outside wall. This is because zombies can break only the top half of a door, and if they have to jump, they cannot get through. In addition, players can fill the hole with two layers of carpet to achieve the same effect as zombies cannot pathfind into the door.
+
+== Raids ==
+{{main|Raids}}
+
+When a player with the [[Bad Omen]] effect enters a village, the Bad Omen effect converts into the [[Raid Omen]] effect, which lasts for 30 seconds. Once the effect expires, a raid starts. Raids are groups of [[illager]]s ([[pillager]]s, [[vindicator]]s, [[evoker]]s, [[ravager]]s, and [[witch]]es) attacking the village with the intent of killing villagers. The player can defend a village from a raid, at which point the player gains the '[[Hero of the Village]]' buff. This causes villagers to give the player steep discounts during trading, as well as bestow various gifts upon the player.{{only|java}}
+
+== History == 
+===Old Popularity Mechanism===
+{{outdated|section=1|edition=java|Village popularity was removed in [[Java Edition 1.14]] in favor of per-villager [[Villager#Gossiping|reputation]], and Bedrock never had it.}}
+
+A player's popularity starts at zero and ranges between −30 and 30. The following can alter a player's popularity:
+
+{| class="wikitable col-2-center" data-description="Actions"
+! colspan="5" |Popularity of Actions
+|-
+! width="350" |Action!!Popularity Change <!-- don't put "in bedrock" back here, bedrock never had the popularity mechanism // Mikk 2024-07-27 --> 
+|-
+| Curing a [[zombie villager]]||+10
+|-
+| Present when a villager joins its first village (this includes curing the first zombie villager in an abandoned village or spawning villagers in an empty village)||+5
+|- 
+| Upgrading a Villager to Expert/Master||+1
+|-
+| Upgrading a Villager to Journeyman||+1
+|-
+| Upgrading a Villager to Apprentice||+1
+|-
+| Spending time in a village (does not increase popularity above 0)||+1
+|-
+| Attacking a villager (hitting the villager with anything or using a fishing rod on the villager. Projectiles like arrows, snowballs, and eggs, also count)||&minus;1 per hit
+|- 
+| Killing a villager||&minus;2
+|-
+| Attacking a baby villager||&minus;3 per hit
+|-
+| Killing a baby villager||&minus;2
+|-
+| Killing a village's [[iron golem]] (building an iron golem or spawning an iron golem using commands does not increase the player's popularity)||&minus;5
+|}
+
+A player's popularity does not reset on death, and players cannot alter other players' popularity. Popularity is stored per village; a player's popularity may be high in one village and low in another. When a player acts directly on a villager, particles around that villager indicate the change in popularity. Conversely, because popularity is stored per village, if the entire village is destroyed, any accumulated popularity, positive or negative, is also eliminated.
+
+If a player has -15 popularity or less, the village's naturally-spawned [[iron golem]]s act hostile to that player until the player's popularity is increased by trading. Golems constructed by the player, however, are always passive toward the player.
+
+Summoning golems, trading, and healing increase popularity.
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[ja:村の仕組み]]
+[[ru:Руководство:Постройка домов для деревенских жителей]]
+[[zh:Tutorial:村庄机制]]

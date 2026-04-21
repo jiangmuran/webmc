@@ -1,0 +1,130 @@
+<noinclude>{{structure info}}</noinclude>
+Corridors are the most common type of room that can generate as part of a [[stronghold]]; there is no maximum number for them, thus allowing stronghold size to vary.
+
+There are three types of corridor that can be found: the left and right turns, and the straight corridor. There is equal chance to generate between the strait and the turns, and there is equal chance to generate between the two types of turn.
+
+Since these types of room are only defined by their outer walls, if the stronghold is generated floating is possible for them to not appear in the world at all, making it seem like the stronghold just cut off or ended in a cave.
+
+==Right and left corridor turns==
+
+These are simple 90° turn in the corresponding direction, as seen from the entrance. Like all the other stronghold room, at the entrance generates one of the stronghold doors at random, while the exit is always a plain 3×3 opening.
+
+They are composed only of [[stone bricks]].
+
+====Materials====
+
+{| class="wikitable"
+|-
+! Name
+! Amount
+|-
+| Stone bricks
+| 80
+|}
+
+====Blueprint====
+
+{{layered blueprint|name=Left and right corridor turns|default=Ground Layer|S=Stone Bricks
+|----Ground Layer|
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+
+|---- Layer 1-2-3, right|
+SSSSS
+S    
+S    
+S    
+S   S
+
+|---- Layer 1-2-3, left|
+SSSSS
+    S
+    S
+    S
+S   S
+
+|---- Layer 4|
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+}}
+
+==Straight corridor==
+
+This type of corridor can generate up to 4 exits (including the entrance), making it equivalent to a potential four-way crossing.
+
+The entrance is always on the short side of the room and the default exit is opposite to it; the entrance generates one of the stronghold doors at random, while this default exit is always a plain 3×3 opening.
+
+Furthermore, two side exits can generate on the long side, each with a 50% chance. If it does, then the game makes an attempt to generate another room from that exit, and the exit is treated as a proper one as a plain 3×3 opening; if it does not, then that exit remains closed as a stone bricks wall.
+
+This piece of corridor also features up to 4 [[torches]], each with a 10% chance to generate. They are placed hanging from the walls on the sides of the potential side exits, whether the exits themself generate or not.
+
+In the blueprint below is shown the piece as if everything mentioned above were generated.
+
+====Materials====
+
+{| class="wikitable"
+|-
+! Name
+! Amount
+|-
+| Stone bricks
+| 94-112
+|-
+| Torch
+| 0-4
+|}
+
+====Blueprint====
+
+{{layered blueprint|name=Straight corridor|default=Ground Layer|S=Stone Bricks|T=Torch
+|----Ground Layer|
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+
+|---- Layer 1|
+S   S
+S   S
+     
+     
+     
+S   S
+S   S
+
+|---- Layer 2|
+S   S
+ST TS
+     
+     
+     
+ST TS
+S   S
+
+|---- Layer 3|
+S   S
+S   S
+     
+     
+     
+S   S
+S   S
+
+|---- Layer 4|
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+SSSSS
+}}

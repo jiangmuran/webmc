@@ -1,0 +1,163 @@
+{{About|the soul variant|the regular fire|Fire|other uses|Fire (disambiguation)}}
+{{Infobox block
+| image = Soul Fire.gif
+| invimage = none
+| renewable = Yes
+| transparent = Partially
+| light = Yes (10)
+| tool = Any
+| flammable = No
+| lavasusceptible = No
+| stackable = Yes (64)
+}}
+'''Soul fire''' is a dimmer turquoise variation of [[fire]] that is created when [[soul sand]] or [[soul soil]] is ignited. Soul fire deals more damage than normal fire and does not spread.
+
+== Obtaining ==
+Soul fire cannot be obtained as an item under any circumstances {{in|java}}, though {{in|bedrock}} soul fire may be obtained as an item via inventory editing.
+
+=== Breaking ===
+Soul fire is immediately destroyed when broken. When [[shears]] are used to break soul fire, they don't lose [[durability]].
+{{breaking row|horizontal=1|Soul fire|any|drop=0|foot=1}}
+Soul fire drops nothing when destroyed.
+
+=== Natural generation ===
+Soul fire naturally generates in the [[soul sand valley]] biome in the Nether. It exclusively generates on soul soil; it does not generate on soul sand within either the same biome<ref>{{bug|MC-175325}}</ref> nor in the [[nether wastes]] biome.<ref>{{bug|MC-184561}}</ref>
+
+Soul fire also generates in [[ancient cities]].
+
+{{Block distribution}}
+
+== Usage ==
+=== Placement ===
+Soul fire can be placed on [[soul sand]] or [[soul soil]] using [[flint and steel]] or a [[fire charge]], and explosions from sources like beds or ghast fireballs can ignite soul fire as well. Unlike regular fire, it can be placed only on the top of a block.
+
+When placed, a soul fire burns and does not extinguish by itself. [[Water]] that touches soul fire extinguishes it.
+
+It cannot be placed suspended in midair, even with commands.<ref>{{bug|MC-182709}}</ref>
+
+=== Burning entities ===
+[[Player]]s and many [[mob]]s burn when exposed to soul fire. Burning obstructs the player's view slightly. While inside a soul fire block, the fire inflicts [[damage]] at a rate of {{hp|2}} per tick, twice as many as with the normal [[fire]] (although [[damage immunity]] reduces this to once every half-second) unless the player or mob has [[Fire Resistance]] or a total [[Fire Protection]] of 7 or higher.{{only|bedrock|short=1}} When the player is on fire outside the soul fire block, they take damage at {{hp|1}} per second, the same as with normal fire.<ref>{{bug|MC-170828||Soul fire sets entities on normal fire|WAI}}</ref><ref>{{bug|MCPE-66081||Soul fire sets entities on normal fire|WAI}}</ref> This is the same rate that the player gains health in Peaceful [[difficulty]], so burning alone cannot kill the player in this mode. After leaving a fire source, the player or mob continues burning for some time depending on how long it was exposed to the soul fire (stored in a <code>Fire</code> tag shared by all [[entities]]). Players and mobs that are burning can be extinguished by [[powder snow]], [[rain]], [[water]], or a [[cauldron]].
+
+{{See also|Fire#Burning}}
+
+=== Extinguishing ===
+Soul fire never extinguishes unless punched or when it receives a block update and finds there is no soul soil or soul sand below it.
+
+Punching or hitting a soul fire block extinguishes it, making the ''Fire extinguished'' sound (see below). Hitting soul fire while holding a tool does not reduce the tool's durability. Placing blocks on soul fire also extinguishes it. Water and lava extinguish soul fires that they flow into, and thrown [[Splash Potion#Splash water bottles|splash]] and [[Lingering Potion|lingering]] water bottles extinguish soul fires in the block hit and the four blocks horizontally surrounding it.<!--{{Info needed|is this also true for soul fire?}} tested in 25w19a-->
+
+Mobs on fire are extinguished when in water or in a [[cauldron]] containing it. In the latter case, one layer of water disappears.
+
+=== Piglins ===
+Soul fire repels [[piglin]]s. [[Piglin brute]]s are not repelled by soul fire.
+
+== Sounds ==
+=== Generic ===
+{{edition|java}}: <ref group=sound>{{Bug|MC-171366}}</ref>
+{{Sound table/Block/Wool/JE}}
+
+{{edition|bedrock}}:
+{{Sound table/Block/Stone/BE}}
+
+=== Unique ===
+{{Main|Fire#Unique}}
+
+== Data values ==
+
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Soul Fire
+|spritetype=block
+|nameid=soul_fire
+|blocktags=fire, piglin_repellents
+|form=block
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Soul Fire
+|spritetype=block
+|nameid=soul_fire
+|id=492
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{el|be}}:<br>
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|age|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Newly placed fire has an age of 0.<br>This factor affects how the fire extinguishes.|foot=1}}<section end="block states"/>
+
+== Videos ==
+{{yt|kJLoViAIJWg}}
+
+== History ==
+{{See technical block|Fire}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208&t|t=2h13m39s}}|[[File:Soul Fire.png|32px]] Soul fire is shown unnamed as part of [[soul sand valley]] biome at [[Minecon 2019]].}}
+|{{HistoryLine||December 3, 2019|link=https://twitter.com/MiaLem_n/status/1201782817417580544|[[Maria Lemón]] confirms that fire set on soul sand does not become soul fire.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w06a|[[File:Soul Fire.png|32px]] Added soul fire.
+|Fire no longer burns [[item]]s.<ref>{{bug|MC-170881}}</ref>}}
+|{{HistoryLine|||dev=20w07a|The texture of soul fire has been changed. The color channel of transparent pixels is now filled to black.{{Info needed|image needed}}
+|Normal fire burns [[item]]s again, and soul fire now burns items.}}
+|{{HistoryLine|||dev=20w11a|[[Soul sand]] is now capable of supporting fire on its top surface,<ref>{{bug|MC-170836}}</ref> however this is regular fire, not soul fire.<ref>{{bug|MC-174467}}</ref>}}
+|{{HistoryLine|||dev=20w12a|Fire lit on top of soul sand is now soul fire.
+|A dedicated block [[tag]] is now used to determine what [[block]]s support soul fire.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Soul fire now generate as part of [[ancient cities]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|[[File:Soul Fire BE.png|32px]] Added soul fire.}}
+|{{HistoryLine|||dev=beta 1.16.0.59|Fire lit on top of [[soul sand]] is now soul fire.}}
+|{{HistoryLine|||dev=beta 1.16.0.63|Soul fire is now created when <code>randomTickSpeed</code> is set to {{cd|0}}.
+|Soul fire is now created when {{cd|doFireTick}} is set to {{cd|false}}.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* While soul fire was not announced until [[MINECON Live 2019]], a similar-looking blue fire was seen in the spin-off game ''[[Minecraft: Story Mode]]'', years earlier.
+* Soul fire cannot normally be placed on any other block other than soul sand or soul soil, even if it's placed with {{cmd|setblock}}.{{only|java}} {{IN|Bedrock}}, soul fire can be placed on other blocks with {{cmd|setblock}}.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Soul fire on soul soil.png|Soul fire on [[soul soil]].
+Soul fire in an ancient city.png|Naturally generated soul fire in an [[ancient city]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Natural}}
+
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+[[Category:Hazardous blocks]]
+
+[[es:Fuego de almas]]
+[[fr:Feu des âmes]]
+[[ko:영혼 불]]
+[[pt:Fogo das Almas]]
+[[uk:Вогонь душ]]
+[[zh:灵魂火]]

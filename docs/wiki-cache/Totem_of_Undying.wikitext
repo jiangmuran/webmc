@@ -1,0 +1,216 @@
+{{redirect|Totem}}
+{{hatnote|"Undying" redirects here. Not to be confused with [[Undead]].}}
+{{Infobox item
+| image = Totem_of_Undying_JE2_BE2.png
+| renewable = Yes
+| stackable = No
+| rarity = Uncommon
+| effects = {{EffectLink|Absorption}} II (0:05)
+{{EffectLink|Regeneration}} II (0:45) 
+{{EffectLink|Fire Resistance}} I (0:40)
+}}
+A '''totem of undying''' is an item that can prevent players or mobs from dying when they take fatal damage. It is dropped by [[evoker]]s, which spawn in [[woodland mansion]]s and [[raid]]s.
+
+== Obtaining ==
+=== Mob loot ===
+Evokers always drop one totem of undying upon death, which is not affected by [[Looting]].
+{{Drop sources|Totem of Undying}}
+
+== Usage ==
+[[File:Totem of Undying Animation.gif|alt=The totem animation in Java Edition.|thumb|Animation of the totem activating {{in|java}}.]]
+[[File:Totem of Undying Bedrock Animation.gif|alt=The totem animation in Bedrock Edition.|thumb|Animation of the totem activating {{in|bedrock}}.]]
+If a [[player]] or a [[mob]] is holding a totem of undying in the [[off-hand]] or main hand slot and receives otherwise fatal [[damage]], the totem prevents their [[death]]. The totem of undying must be held in the user's hand for it to work — it does not work if it is in the [[hotbar]], unless selected. Totems of undying prevent a [[game over]] in [[Hardcore]] mode in the same way they prevent a [[death]] in [[Easy]], [[Normal]], and [[Hard]] mode.
+
+A totem can be used only once, and disappears when the effect is activated. It does not prevent death caused by [[void]] damage or the {{cmd|kill}} command. {{IN|java}}, it also does not prevent death caused by an arrow of [[Instant Damage|harming]] if the arrow kills the holder with just the [[arrow]]'s physical [[damage]], as the arrow's Instant Damage effect is applied after the totem has activated, effectively killing the player a second time. <ref>{{bug|MC-206307||Arrow of Harming bypasses Totem of Undying}}</ref>
+
+When a totem of undying is activated, it restores {{hp|1}}, removes all existing status [[effect]]s and grants several positive status effects:
+
+* [[Regeneration]] II ({{hp|1}} every 25 ticks, {{hp|2|notag=1}} × 0.4 per second) for 45 seconds (long enough to heal {{hp|36|notag=1}})
+* [[Fire Resistance]] I for 40 seconds
+* 5 seconds of [[Absorption]] II (providing {{hp|8|absorption=1|notag=1}})
+
+When activated, multiple green and yellow particles are displayed around the player that held the totem. A [[Screen effects#Totem of Undying|screen effect]] also plays, showing the totem hovering in front of the [[player]]'s screen, similar to the animation seen when a player receives the [[Raid Omen]] effect or the [[Hero of the Village]] effect {{in|bedrock}}, or enters the same area as an [[elder guardian]].
+
+Any [[mob]] that can hold a totem of undying (in a hand or in the mouth) is revived if killed while it is holding the totem. The totem functions exactly as it does with players, although undead mobs are not affected by the Regeneration effect.
+{{-}}
+
+== Sounds ==
+{{edition|java}}:
+{{SoundTable
+|type=java|{{SoundLine
+|sound =Totem of Undying.ogg
+|subtitle=Totem activates
+|source=dependent
+|description=When a mob or player uses a totem of undying.
+|id=item.totem.use
+|translationkey=subtitles.item.totem.use
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Totem of Undying.ogg
+|source=player
+|description=When something dies, using a totem of undying
+|id=random.totem
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Totem of Undying
+|spritetype=item
+|nameid=totem_of_undying
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Totem of Undying
+|spritetype=item
+|nameid=totem_of_undying
+|aliasid=totem
+|id=568
+|form=item
+|translationkey=item.totem.name
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Cheating Death}}
+
+== Advancements ==
+{{load advancements|Postmortal}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||MINECON 2016|link= https://youtu.be/Vm6oplvyyh0?t=1470|[[File:Totem of Undying (pre-release).png|32px]] An early version of the totem of undying was seen during Minecon shortly before its reveal.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w39a|[[File:Totem of Undying JE1 BE1.png|32px]] Added totems of undying.}}
+|{{HistoryLine||1.13|dev=18w21a|The [[rarity]] of totems of undying has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Totem of Undying JE2 BE2.png|32px]] The texture of the totem of undying has been changed.}}
+|{{HistoryLine|||dev=18w47a|The totem of undying is now [[renewable resource|renewable]] as [[evoker]]s now spawn in [[raid]]s.}}
+|{{HistoryLine||1.16.2|dev=20w28a|The totem of undying now gives the [[Fire Resistance]] II status effect for 40 seconds.}}
+|{{HistoryLine|||dev=20w29a|The level of Fire Resistance given by the totem of undying is now reduced from II to I.<ref>{{bug|MC-194220||Totems of Undying give you Fire Resistance II instead of the maximum Fire Resistance I
+|resolution=Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|dev=23w31a|Totems of undying activating now emit an <code>entity_damage</code> [[vibration]] of frequency <code>7</code>.<ref>{{bug|MC-261427||Sculk sensors and calibrated sculk sensors don't detect totem of undying activating|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|[[File:Totem of Undying JE1 BE1.png|32px]] Added totems of undying.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Totem of Undying JE2 BE2.png|32px]] The texture of the totem of undying has been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.3|The totem of undying is now [[renewable resource|renewable]] as [[evoker]]s now spawn in [[raid]]s.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|The level of Fire Resistance given by the totem of undying is now reduced from II to I.<ref>{{bug|MCPE-52364||Totem of Undying gives Fire Resistance II after death|Fixed}}</ref>}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The [[rarity]] of totems of undying has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.20|Increased the duration of the Regeneration II effect from 40 to 45 seconds, matching Java Edition.<ref>{{bug|MCPE-90716||Parity: The Durations of Regeneration II by Totem of Undying are different|Fixed}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[File:Totem of Undying JE1 BE1.png|32px]] Added totem of undying.}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|The totem of undying now applies [[Fire Resistance]] II when used.|The duration of the [[Regeneration]] effect given by the totem of undying is now reduced from 45 seconds to 40 seconds.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Totem of Undying JE2 BE2.png|32px]] The texture of the totem of undying has been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|The totem of undying is now [[renewable resource|renewable]] as [[evoker]]s now spawn in [[raid]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.9.19|[[File:Totem of Undying JE1 BE1.png|32px]] Added totem of undying.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11.1|dev=16w50a|The ID name has now been changed from <code>totem</code> to <code>totem_of_undying</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 449.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The ID of totems of undying has been changed from <code>totem</code> to <code>totem_of_undying</code>.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* In the {{3ds}}, the totem of undying can be put in any hotbar slot to activate it, due to the lack of an [[Dual wield|off-hand slot]] in that version.
+* Being able to obtain totems of undying in [[raid]]s without exploring [[woodland mansion]]s is considered a "massive game play design flaw" by Mojang.<ref>{{ytl|YRPlscod34Y|WOODLAND MANSION MYSTERY: Episode 3|Minecraft|Jan 6, 2023|t=4m20s}}</ref>
+* Totems of undying are the only [[renewable resource]] that are made [[non-renewable]] in a [[difficulty]] other than Peaceful, as [[raid]]s do not last long enough to spawn [[evoker]]s in Easy difficulty.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Particle totem of undying.png|Screenshot of the totem of undying being used mid-animation after a [[drowned]] deals otherwise fatal damage to the player.
+File:Totem of Undying activating.gif|Animation of the totem activating.
+File:Totem animation in third person mode.png|The totem animation in third person mode.
+File:Totem Popping After A Fall.gif|A totem of undying is playing its animation after falling from a tower of dirt.
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+File:T TotemOfUndying.png|A totem of undying texture found in the ''[[Minecraft: Dungeons]]'' source files.
+File:Totem Of Undying (Minecraft Dungeons Texture).png|Another texture of the totem for Dungeons.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:AMCM Totem.png|The totem of undying as it appears in {{AMCM}}.
+File:A Minecraft Movie Steve's treasures.png|A totem inside Steve's Secret Stash in {{AMCM}}.
+File:Powerup Totem Render AMCM.png|A totem of undying as it appears in ''{{AMCM|A Minecraft Movie DLC}}''.
+File:Undying Evoker Boost Mini.png|A [[MCE:Boost#Boost minis|boost mini]] of an evoker holding the old totem.
+File:Totem of Undying (inventory) MCE.png|A totem of undying as it appears in [[Minecraft Earth]].
+File:LUSH Totem of Undying Soap.png|A totem of undying soap from the [[LUSH collection]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+{{Navbox combat|general}}
+
+[[Category:Combat]]
+
+[[de:Totem der Unsterblichkeit]]
+[[es:Tótem de inmortalidad]]
+[[fr:Totem d'immortalité]]
+[[ja:不死のトーテム]]
+[[ko:불사의 토템]]
+[[lzh:保命符]]
+[[nl:Totem der onsterfelijkheid]]
+[[pl:Totem nieśmiertelności]]
+[[pt:Totem da Imortalidade]]
+[[ru:Тотем бессмертия]]
+[[th:เครื่องรางคลาดแคล้ว]]
+[[uk:Тотем безсмертя]]
+[[zh:不死图腾]]

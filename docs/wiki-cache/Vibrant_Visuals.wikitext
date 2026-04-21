@@ -1,0 +1,931 @@
+{{About|the built-in graphics mode and enhancements|the graphics mode using {{W|Ray tracing (graphics)|ray tracing}} technology|RTX|deferred rendering|RenderDragon#Deferred Rendering}}{{exclusive|bedrock|customtext=This feature is exclusive to {{BE}}.{{note|Except ChromeOS, Fire tablets, Nintendo Switch, and devices without the required specifications. See {{slink||Availability}} below.}}}}
+{{Planned|JE|cite=<ref name="java">{{mcnet|vibrant-visuals-java-edition|Vibrant Visuals on Java Edition|April 16, 2025}}</ref><ref name="rendering-thread">{{mcnet|the-road-to-vibrant-visuals-on-java|The road to Vibrant Visuals on Java|October 22, 2025}}</ref><ref name="vulkan">{{mcnet|another-step-towards-vibrant-visuals-for-java-edition|Another step towards Vibrant Visuals|February 18, 2026}}</ref>}}
+[[File:Vibrant Visuals.png|thumb|A screenshot showing many of the features in Vibrant Visuals]]
+'''Vibrant Visuals''' is a [[graphics]] mode that aims to improve the visual looks of ''Minecraft''<ref>{{YouTube link|NTOLOErWN4w|MINECRAFT’S VISUAL REFRESH!|Minecraft|June 14, 2025|t=10s}}</ref> by adding directional lighting, physically based textures, pixel-aligned shadows, atmospheric sky, environmental effects, and various other visual features based on {{w|photorealism}}. It is built around a {{w|physically based rendering}} pipeline used for [[w:Deferred shading|deferred lighting]] and {{w|ray tracing}}.<ref name="vibrant-visuals">{{Cite|title=Vibrant Visuals|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/introvibrantvisuals?view=minecraft-bedrock-stable}}</ref><ref>{{cite Discord
+|url=https://discord.com/channels/523663022053392405/1351937058486095893/1353058710355968110
+|title=Herobrine64: So... vibrant visuals ''is'' deferred, yeah?<br>kayla (in reply to): it is using the deferred features, yes.
+|user=kaylasara
+|date=March 22, 2025
+|invite=https://discord.gg/bedrock-add-ons|server=Bedrock Add-Ons
+|ss=DeferredRenderingScreenshot.png
+}}</ref> It runs locally on the player's device, and can be enabled in the [[Settings|player's settings]] rather than [[Create New World|world specific settings]].<ref>{{Ytl|5zcZJcXRdw0|Minecraft LIVE – March 2025: VIBRANT VISUALS|Minecraft|March 23, 2025}}</ref>
+
+Most configurations and textures can be customized using [[resource packs]], and various tagged [[Marketplace]] add-ons make use of custom Vibrant Visuals packs.<ref name="marketplace" />
+
+Vibrant Visuals affects only the graphical appearance of ''[[Minecraft]]''; it does not affect gameplay. However, enabling Vibrant Visuals on lower-end devices (especially with high render distance and higher graphics settings) can decrease game performance significantly, which can affect the game experience.
+
+== Features ==
+
+=== Physically based rendering ===
+[[File:Dark vibrant comparison.jpg|thumb|A comparison of the default and Vibrant Visuals textures, outside a [[woodland mansion]]]]
+Vibrant Visuals uses {{w|physically based rendering}} (PBR), which simulates realistic lighting behaviors between different surface materials. This is achieved by creating different texture maps for every [[block]], [[entity]], [[item]], and [[Particles (Bedrock Edition)|particle]], which define specific characteristics of the surface material.<ref name="texture-map">{{Cite|title=Overview of Physically Based Rendering|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/pbroverview?view=minecraft-bedrock-stable}}</ref> A [[texture set]] is used to specify these texture maps in a [[resource pack]].<ref name="texture-set">{{Cite|title=Texture Set JSON and Introduction to Texture Sets|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/reference/content/texturesetsreference/texturesetsconcepts/texturesetsintroduction?view=minecraft-bedrock-stable}}</ref> Four maps &mdash; metalness, emissive, roughness, and subsurface scattering (collectively known as MERS) &mdash; define the material's properties. Each property in MERS is assigned to RGBA image (four channel), such as red to metalness, green to emissive, blue to roughness, and alpha to subsurface.
+
+==== Reflections ====
+[[File:Vibrant Visuals PBR reflections.png|left|thumb|width=250x250|Metallic surfaces like [[Block of Copper|copper]] fully reflect sunlight and emissive light, smooth surfaces like [[Smooth Quartz Block|smooth quartz]] and [[bricks]] only reflect sunlight, and rough surfaces like [[wood]] reflect nothing.]]
+Object reflections are heavily affected by their metalness and roughness properties. Metallic surfaces reflect light directly and tint that reflection with their own color (like [[gold]] and [[copper]]). Non-metallic surfaces like [[grass]], [[dirt]], and [[tree]] barks show more solid color and less reflection. A surface with low roughness is very smooth, resulting in sharp, mirror-like reflections, compared with high roughness that results in blurry, diffused reflections.
+[[File:Zuri's vibrant boat ride.jpg|thumb|right|Reflections on the surface of water]]
+[[File:Vibrant Visuals reflection quality comparison.gif|thumb|The amount of blocks reflected depends on the "Reflections" setting.]]
+The game uses {{w|screen space reflections}} (SSR) and {{w|image-based lighting}} (IBL) to create dynamic reflections which appear on these surfaces.<ref name="lighting">{{Cite|title=Light Sources|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/lightingcustomization?view=minecraft-bedrock-stable}}</ref> SSR generates reflections by reusing what's already visible on the screen. They are limited by the objects and parts of the world that are currently visible in the camera's view, which can cause reflections to fade or disappear near the edges of the screen. In contrast, IBL reflections, used to reflect [[cloud]]s, aren't limited by what is already displayed on the screen but often appear low resolution and distorted. They use {{w|cube maps}}, which are affected by environmental lighting and atmospheric scattering.<ref name="cubemap" />
+
+Most blocks and entities in Vibrant Visuals with high metalness only reflect light sources and do not completely mirror areas. [[Water]] surfaces are fully reflective and properly mirror the area surrounding them. The reflection quality can be configured under the [[Settings#Vibrant Visuals Options|video settings]], which affects their resolution and distance at which they appear.
+
+==== Surface glows ====
+[[File:Vibrant Visuals emissive textures.png|thumb|Various emissive textures in a cave]]
+Pixels can appear to glow in the dark environment through the emissive texture map. This map defines which parts of a texture should be self-illuminated. It uses the green color channel in the MERS texture; areas of the map that are solid green will glow at full intensity, with different shades of the color affecting their intensity, while black areas will be unaffected by the emissive property. Emissive surfaces do not cast light onto surrounding blocks or entities, and therefore do not cast proper shadows. However, their glow remains visible even in complete darkness, making them appear bright and distinct. They also produce a light bloom effect, which makes their color bleed into the surrounding areas.
+
+Some entities and blocks &mdash; like [[drowned]], [[spider]]s, [[sculk]], certain [[Item (entity)|dropped items]], and [[firefly bush|firefly particles]] &mdash; use emissive texture maps and produce glowing effect. This effect is often contributed by their natural block [[lighting]] (like [[torch]]es and [[glowstone]]), which makes the glow appear more intense and realistic.
+
+==== Subsurface scattering ====
+The fourth map, subsurface scattering, simulates an effect of light shining on translucent surfaces, like [[leaves]].<ref name="subsurface" /> This effect is applied to blocks exposed to sky lighting, and blends to roughly one block deep on vertical surfaces. Subsurface scattering cannot be used in conjunction with metalness on the same pixel on an object; instead, only one effect will be applied.
+
+=== Directional lighting and shadows ===
+[[File:Sunlight Vibrant Visuals.png|left|thumb|Pixelated shadows created by the sun on all objects]]
+The primary light sources in Vibrant Visuals are global directional lights, including the [[sun]] and the [[moon]] in the [[Overworld]], and [[End flash|End flashes]] in the [[End]].<ref name="lighting" /> Depending on the location of the light source in the sky, they illuminate all objects directly exposed to them. The texture maps define how this affects objects, such as how the light is reflected and recolored. Light also shines through [[Glass pane|glass panes]] and other supported transparent blocks, where it has the same effects on objects behind it.  
+
+When the camera is looking at a bright object, either directional lighting, emissive textures, or bright colors,<ref>{{bug|MCPE-221779||Vibrant Visuals: Auto Exposure reacts to the color of blocks, not just the light level|WAI}}</ref> the whole view gets darkened by auto-exposure, which gradually fades away when looking at a dark object.  
+
+Directional light sources cast shadows on all objects, including held items on the [[HUD]]. The object that creates the shadow and the location of the light source affect the shape, size, and direction of the shadow. Unlike shadows in most games, shadows are pixelated to match the resolution of other textures and align with the pixel grid. Shadows can be created by any block that can obstruct lighting, most [[Particles (Bedrock Edition)|particles]], and entities, including [[players]]. Animated objects, like animated player [[skins]] or the tentacles of a [[ghast]], create animated shadows as well. Shadows are rendered at a lower quality at higher distances, which can be configured in the settings.  
+
+==== End flash ====
+[[File:Vibrant Visuals End flash.gif|thumb|A flash in the End. Notice the shadows created by [[chorus plants]].]]The End flash is an effect in the [[End sky]] that is exclusive to Vibrant Visuals until [[Bedrock Edition 26.20|26.20]].{{upcoming}} End flashes occur once every 30 seconds at random spots above the horizon. As a directional light source, End flashes illuminate the environment with a purple color and create shadow and reflection effects. Each flash lasts between 5 and 19 seconds, with fading at the beginning and the end, while also producing a [[sound]]. Flashes can be disabled in the [[Settings#Accessibility|accessibility settings]].
+
+==== Colored lighting<span class="anchor" id="Point lighting"></span> ====
+{{experimental|be=Render Dragon Features for Creators|section=1|nocat=1}}
+[[File:Vibrant Visuals point lights comparison.png|thumb|Point lights off (top) and on (bottom)]]If the "[[Render Dragon Features for Creators]]" experiment is enabled in ''[[Minecraft Preview]]'', and "point lights" are turned on in the settings, light-emitting blocks like [[Torch|torches]] emit directional light and cast dynamic shadows as well. The light is emitted from a single point at the center of a block, hence the name, and the strength is affected by the block's [[lighting]]. This light is colored, and blends additively. The following blocks are affected by point lighting:
+{| class="wikitable sortable mw-collapsible"
+!Block
+!Color
+![[Light]] level
+|-
+|{{BlockLink|Torch}}
+| rowspan="2" |{{Color|#f39a5e}}
+|14
+|-
+|{{BlockLink|Lantern}}
+| rowspan="2" |15
+|-
+|{{BlockLink|Copper Lantern}} (all oxidized and waxed variants)
+|{{Color|#e8c398}}
+|-
+|{{BlockLink|Soul Lantern}}
+| rowspan="2" |{{Color|#36d9e6}}
+| rowspan="2" |10
+|-
+|{{BlockLink|Soul Torch}}
+|-
+|{{BlockLink|Redstone Torch}}
+|{{Color|#c32c1f}}
+|7
+|-
+|{{BlockLink|Copper Torch}}
+| rowspan="2" |{{Color|#86ca59}}
+|14
+|-
+|{{BlockLink|Copper Lantern}} (unwaxed, unaffected)
+|15
+|-
+|{{BlockLink|Candle}} (all variants)
+| rowspan="2" |{{Color|#d3852b}}
+|3, 6, 9, or 12
+|-
+|{{BlockLink|Candle Cake}} (all variants)
+|3
+|-
+|{{BlockLink|Blue Torch}}
+|{{Color|#0000ff}}
+| rowspan="5" |14
+|-
+|{{BlockLink|Purple Torch}}
+|{{Color|#ff00ff}}
+|-
+|{{BlockLink|Red Torch}}
+|{{Color|#ff0000}}
+|-
+|{{BlockLink|Green Torch}}
+|{{Color|#00ff00}}
+|-
+|{{BlockLink|End Rod}}
+|{{Color|#da73de}}
+|-
+|{{BlockLink|Sea Pickle}} (all waterlogged variants)
+|{{Color|#b0dad3}}
+|6, 9, 12, or 15
+|}
+The quality of point lighting and the shadows created by point lights can be adjusted in the settings, or turned off.
+
+[[File:Vibrant Visuals light colors.png|thumb|All different light colors, from both point lighting and static lighting]]
+In addition to point lighting, all other blocks with block lighting create static colored light. For a full list of colors, see {{Slink|Light|Light-emitting blocks}}.
+
+==== Other light sources ====
+Without directional light sources, objects are lit by ambient lighting, to prevent them from rendering pitch black. Ambient lighting has a [[dimension]]-dependent strength (0.02 in the [[Overworld]], 0.5 in the [[Nether]], and 0.125 in the [[End]]), which affects objects based on the texture sets. For example, blocks have a red tint in the Nether, where no directional lighting is available.
+
+The [[sky]] also contributes as a light source, which can also be reflected by objects. Depending on the exposure to sky light, shadows created by directional lighting can appear darker and more visible or blend in more with bright areas.
+
+[[Night Vision]] heavily increases ambient light and sky light during nighttime, making caves appear fully bright and shadows no darker than the environment at night. It does not change fog or brightness on the surface of the Overworld like in other graphics modes.
+
+When the player has [[Blindness]] or [[Darkness]], global and sky lighting is deactivated and the scene appears as in a cave.
+
+=== Environmental effects ===
+Each [[biome]] and [[dimension]] has unique effects for lighting and color that greatly affect the scene. Biome-dependent effects include atmospherics, color grading, fog, and lighting (excluding point lights). In transitions between biomes, the game automatically blends the effects.<ref name="biome" />
+
+==== Atmospherics ====
+The [[sky]] color of a biome in Vibrant Visuals is defined at the horizon and the zenith.<ref name="atmospherics" /> When these colors are different, the sky will blend these colors between the horizon and the zenith. For example, [[desert]]s and [[badlands]] have a light orange/green sky color, snowy biomes have a light blue or white sky color, and pale gardens have a gray sky color. The color and intensity of sunlight and moonlight are affected by the biome as well, which affects directional specular highlights and the illumination of all objects hit by light sources.[[File:Vibrant Visuals volumetric fog comparison.png|thumb|Volumetric fog turned off (top) and set to Ultra (bottom) in a [[pale garden]]|width=314x314]]
+Vibrant Visuals enhances all [[fog]] effects that change depending on the environment.<ref name="fog" /> Certain biomes, like swamps and pale gardens, have denser volumetric fog effects with unique colors and strength depending on the height, and directional lighting. Directional lighting can be scattered by strong fog, and the heaviest fog can greatly lower the view distance to only a few chunks, or even block the sun entirely. With decreased effects from directional lighting, shadows and reflections are less visible, and blocks in the distance appear half-transparent and faded. 
+
+With the [https://glossary.ametsoc.org/wiki/Henyey-greenstein_phase_function Henyey-Greenstein G phase function], Vibrant Visuals fog can create varying light shafts for scattering in air and water. Light rays, colored from the directional light color and scattered by fog, can fall through transparent blocks, and scatter into smaller light beams with shadows by blocks and entities. Volumetric fog can be disabled in the settings, and the quality of light shafts and distance fading can be adjusted. [[File:Vibrant Visuals sun beams.png|thumb|Sunbeams and different sky colors during sunrise]]
+Global directional light sources are affected by [[W:Rayleigh scattering|rayleigh scattering]] and [[W:Mie scattering|mie scattering]], which change with the object's position in the sky.<ref name="atmospherics" /> This creates a glow around directional light sources in the sky (not to be confused with the haze from volumetric fog), tinting the sky depending on the illumination. It also affects the contribution of directional light to the sky color and illumination.
+
+===== Daylight cycle =====
+All atmospheric effects gradually change during the [[time of day]],<ref name="keyframe" /> for example, certain scattering effects only apply during sunrise or sunset, and the sky, sun, and moon colors are constantly changing. The color of sunlight is darker orange and more dimly lit at sunrise and sunset, gradually increasing in brightness and turning yellow/white at noon. Moonlight is light gray/blue with a much lower illuminance.
+
+At night, the sky color is black at zenith and blue at horizon, appearing almost entirely black due to the dim moonlight. The rising sun illuminates this while the horizon changes from purple, to pink, to bright orange, and eventually gray with high illumination, in contrast to a deep blue sky. Sunset applies these graphics in reverse, but instead of pink, the horizon turns brown for a while. Rayleigh and mie scattering combine the changing sunlight and sky colors into a unique appearance for each part of the sky.
+
+Different temperature-based [[Vibrant Visuals#Post processing effects|color grading]] settings distinguish biomes with different temperatures, making especially cold biomes appear gray/blue, and warm biomes colored orange.<ref name="color-grading-tone-mapping" /> Color grading is applied as a post-processing effect to the whole image, including blocks, light, and the sky.
+
+===== Biome settings =====
+Most biomes, including [[unused biomes]], use default settings for fog, atmospherics, lighting, and color grading, or share a common setting with a specific climate, while some biomes have unique settings. 
+
+* Fog settings are split into default, semi-humid, and humid. [[Ice Spikes|Ice spikes]], [[Mushroom Fields|mushroom fields]], [[swamps]], [[pale gardens]], [[Dark Forest|dark forests]], and [[The End (biome)|the End]] have unique fog settings.
+** For a complete overview of these settings, see {{Slink|Fog|Volumetric fog}}.
+* In order from warm color temperature, color grading is split into [[desert]], [[mesa]], warmish, [[Mangrove Swamp|mangrove swamp]], default, coolish, cold, and [[Ice Spikes|ice spikes]].
+** [[Lush Caves|Lush caves]] use warmish color grading with a higher contrast.
+** Mesa biomes have a lower saturation value than other biomes.
+** For more details about these settings, see {{Slink|/Configurations|Color grading}}.
+* Most biomes share their lighting settings with the default, but some specific settings differ.
+** [[Mushroom Fields|Mushroom fields]] have dynamic purple sunlight colors, while [[pale gardens]] and [[Ice Spikes|ice spikes]] have a static light gray sunlight color.
+** [[Dark Forest|Dark forests]], ice spikes, and pale gardens have significantly lower sunlight illuminances.
+** Warmish biomes have a more deep blue moonlight color. [[Deserts]] increase this effect, while pale gardens have a more light gray moonlight color.
+** See {{Slink|/Configurations|Lighting}} for more details.
+* Various biomes have unique zenith colors. The final color of the sky also depends on directional light sources, fog, and color grading.
+** [[Dark Forest|Dark forests]] have a slightly darker blue zenith color at daytime.
+** [[Swamps]] use a dull brown/green zenith color.
+** [[Mangrove swamps]] have a brighter blue zenith color.
+** [[Deserts]] use a turquoise zenith color, [[Mesa|mesas]] slightly increase this effect.
+** Warmish biomes, deserts, and mesas have slightly brighter blue zenith colors at nighttime.
+** In [[Ice Spikes|ice spikes]] and [[Mushroom Fields|mushroom fields]], the daytime zenith is light gray. In [[pale gardens]], this is dark gray.
+*Some biomes also have unique horizon colors at certain times of day.
+**[[Mesa]] biomes have a brown horizon at daytime.
+**[[Pale gardens]] have a slightly more gray daytime horizon. [[Ice Spikes|Ice spikes]] also lack an orange sunset/sunrise.
+**Mushroom fields have a very bright yellow/green horizon at daytime, bright red at sunset, dark purple at nighttime, and bright purple at sunrise.
+
+* The [[End sky]] uses unique black/purple atmospherics, but this is rendered on top of the End sky texture, and a dense purple volumetric fog effect is visible during an End flash.
+* The sky in all [[Nether]] biomes uses the same atmospheric colors as without Vibrant Visuals. Rayleigh scattering is minimal, but there are slight differences between the biomes.
+See {{Slink|/Configurations|Atmospherics}} for details about all atmospheric scattering values.<gallery>
+File:Vibrant Visuals warm biomes sky.png|The sky in warm biomes<ref name="warm sky" group="note">Includes the following biomes:<br />{{BiomeLink|Jungle}}<br />{{BiomeLink|Jungle Hills}}<br />{{BiomeLink|Modified Jungle}}<br />{{BiomeLink|Bamboo Jungle}}<br />{{BiomeLink|Bamboo Jungle Hills}}<br />{{BiomeLink|Sparse Jungle}}<br />{{BiomeLink|Modified Jungle Edge}}<br />Without humid fog:<br />{{BiomeLink|Savanna}}<br />{{BiomeLink|Savanna Plateau}}<br />{{BiomeLink|Windswept Savanna}}<br />{{BiomeLink|Shattered Savanna Plateau}}<br />{{BiomeLink|Stony Peaks}}</ref>
+File:Vibrant Visuals temperate biomes sky.png|The sky in temperate biomes<ref name="temperate sky" group="note">Includes the following biomes:<br />{{BiomeLink|Plains}}<br />{{BiomeLink|Sunflower Plains}}<br />{{BiomeLink|Flower Forest}}<br />{{BiomeLink|Cherry Grove}}<br />{{BiomeLink|Meadow}}<br />{{BiomeLink|Forest}}<br />{{BiomeLink|Wooded Hills}}<br />{{BiomeLink|Birch Forest}}<br />{{BiomeLink|Birch Forest Hills}}<br />{{BiomeLink|Old Growth Birch Forest}}<br />{{BiomeLink|Tall Birch Hills}}<br />{{BiomeLink|Stony Shore}}<br />{{BiomeLink|Ocean}}<br />{{BiomeLink|Deep Ocean}}<br />{{BiomeLink|River}}<br />{{BiomeLink|Dripstone Caves}}<br />{{BiomeLink|Deep Dark}}<br />With semi-humid fog:<br />{{BiomeLink|Lukewarm Ocean}}<br />{{BiomeLink|Deep Lukewarm Ocean}}<br />{{BiomeLink|Warm Ocean}}<br />{{BiomeLink|Deep Warm Ocean}}<br />{{BiomeLink|Beach}}</ref>
+File:Vibrant Visuals coolish biomes sky.png|The sky with coolish color grading<ref name="coolish sky" group="note">Includes the following biomes:<br />{{BiomeLink|Windswept Hills}}<br />{{BiomeLink|Windswept Gravelly Hills}}<br />{{BiomeLink|Mountain Edge}}<br />{{BiomeLink|Cold Ocean}}<br />{{BiomeLink|Deep Cold Ocean}}<br />{{BiomeLink|Grove}}<br />{{BiomeLink|Snowy Slopes}}<br />{{BiomeLink|Jagged Peaks}}<br />With semi-humid fog:<br />{{BiomeLink|Taiga}}<br />{{BiomeLink|Taiga Hills}}<br />{{BiomeLink|Taiga Mountains}}<br />{{BiomeLink|Old Growth Pine Taiga}}<br />{{BiomeLink|Giant Tree Taiga Hills}}<br />{{BiomeLink|Old Growth Spruce Taiga}}<br />{{BiomeLink|Giant Spruce Taiga Hills}}<br />{{BiomeLink|Windswept Forest}}<br />{{BiomeLink|id=modified-gravelly-mountains|Gravelly Mountains+}}</ref>
+File:Vibrant Visuals cold biomes sky.png|The sky with cold color grading<ref name="cold sky" group="note">Includes the following biomes:<br />{{BiomeLink|Snowy Plains}}<br />{{BiomeLink|Snowy Mountains}}<br />{{BiomeLink|Snowy Beach}}<br />{{BiomeLink|Frozen Peaks}}<br />{{BiomeLink|Frozen River}}<br />{{BiomeLink|Frozen Ocean}}<br />{{BiomeLink|Deep Frozen Ocean}}<br />{{BiomeLink|Legacy Frozen Ocean}}<br />With semi-humid fog:<br />{{BiomeLink|Snowy Taiga}}<br />{{BiomeLink|Snowy Taiga Hills}}<br />{{BiomeLink|Snowy Taiga Mountains}}</ref>
+File:Vibrant Visuals mangrove swamp sky.png|The sky in a [[Mangrove Swamp|mangrove swamp]]
+File:Vibrant Visuals lush caves sky.png|The sky in [[Lush Caves|lush caves]]
+File:Vibrant Visuals dry biomes sky.png|The sky in [[deserts]], [[Desert Hills|desert hills]], and [[Desert Lakes|desert lakes]]
+File:Vibrant Visuals badlands sky.png|The sky in mesa biomes<ref name="mesa sky" group="note">Includes the following biomes:<br />{{BiomeLink|Badlands}}<br />{{BiomeLink|Eroded Badlands}}<br />{{BiomeLink|Badlands Plateau}}<br />{{BiomeLink|Modified Badlands Plateau}}<br />{{BiomeLink|Wooded Badlands}}<br />{{BiomeLink|Modified Wooded Badlands Plateau}}</ref>
+File:Vibrant Visuals swamp sky.png|The sky in [[swamps]] and [[Swamp Hills|swamp hills]]
+File:Vibrant Visuals mushroom fields sky.png|The sky in [[Mushroom Fields|mushroom fields]] and [[Mushroom Field Shore|mushroom field shores]]
+File:Vibrant Visuals ice spikes sky.png|The sky in [[Ice Spikes|ice spikes]]
+File:Vibrant Visuals pale garden sky.png|The sky in a [[Pale Garden|pale garden]]
+File:Vibrant Visuals dark forest sky.png|The sky in a [[Dark Forest|dark forest]] and [[Dark Forest Hills|dark forest hills]]
+File:Vibrant Visuals End sky.png|The sky in the [[End]]
+</gallery>
+==== Clouds ====
+[[File:Vibrant Visuals clouds.png|thumb|Clouds with Vibrant Visuals. Note the shadows.]]
+[[Clouds]] have more detail and additional light on the edges, making large clouds appear much darker than smaller clouds. Furthermore, clouds can block sunlight or moonlight and cast shadows on the ground. When a cloud covers the sun or moon, the sky and the environment darken and change colors. The color of clouds also changes with sky colors, for example, in different biomes, and during weather events.
+
+Unlike other graphics modes, clouds are rendered past the horizon up to 128 chunks. The cloud distance can be adjusted in the Vibrant Visuals options.
+
+==== Weather effects ====
+[[File:Rain Vibrant Visuals.png|thumb|Rainfall in a forest, where the sky is tinted slightly more yellow than without Vibrant Visuals]]
+[[File:Snowfall Vibrant Visuals.png|thumb|Snowfall with Vibrant Visuals, with a bright glow in the sky]]
+The [[weather]] influences environmental light effects to make them match more with the set colors of classic graphics modes. During [[rainfall]], the sky appears dark gray, but the biome effects still partially apply, making rain look unique for every biome. Thunderstorms increase this effect and make the sky even darker. During [[snowfall]], the sky turns into a unique shade of light gray with biome effects much less visible. During a combination of snowfall and thunder, the sky is much darker at the horizon, but the light blue/light gray colors are still visible higher in the sky. The sun and moon are not visible during weather events, and don't cast shadows on blocks or entities. However, at the location of the sun and moon, a brighter glow is visible in the sky.
+
+In dry biomes, rainfall does not affect sky or clouds at all and is indistinguishable from clear weather, unlike without Vibrant Visuals. Thunderstorms and the proximity of a [[wither]] darken the environment, while the sun and lighting appears darker and tinted yellow-brown.
+
+Volumetric fog effects are heavily increased during rain, snowfall, or thunderstorms, and change their colors according to the sky color. The regular biome fog is unaffected.
+
+==== Water effects ====
+The [[water]] color texture is not rendered, making it completely transparent. Instead, water volumes scatter light and accumulate fog, creating a deep blue hue in oceans and tinting underwater objects.<ref name="water" />{{note|Applied anywhere behind water surfaces, when the [[player]]'s eye level is outside water.}} The surface uses MERS textures, making light reflect on smooth pixels in the invisible color texture. Despite this, small bodies of water appear almost invisible, and large bodies are more transparent in general, with a less saturated blue color compared to classic graphics modes. Biome-specific water colors are not applied to the surface or light scattering, but some "tweaks in different biomes" have been announced for future updates.<ref name="evolving">{{Mcnet|evolving-vibrant-visuals-for-bedrock-edition|Evolving Vibrant Visuals for Bedrock Edition|November 7, 2025|Sophie Austin}}</ref>
+
+When the [[player]]'s eye level is inside water, volumetric fog effects are created, which change along regular water fog with the depth, initiation, and the biome. Without sky light underwater, the fog color is pitch black, and the only light created by the blocks is much less effective. When the player is in an underwater area without a skylight, looking at an area exposed to a skylight, the textures of blocks are not visible, and everything is colored cyan. The effect of [[W:Snell's window|Snell's window]] appears when looking at any water surface from underwater.
+
+Volumetric fog hides the sun and moon underwater, a blurred and colored light source can be seen in the direction of the sun and moon, creating light beams falling through the water. These light beams can be obstructed and scattered by objects and fog effects. When directional lighting hits a surface underwater, water caustics are projected on that surface.{{note|If the player's eye level is above water: past any water surface. If the eye level is inside water: anywhere ''except'' past a water surface.}} Water caustics are randomly animated, and certain parts appear brighter than others, depending on the light projecting the water caustics.
+
+Water effects do not apply to water in [[cauldron]]s, which is rendered like in Fancy graphics.
+<gallery mode="nolines" widths="180">
+File:Vibrant Visuals underwater lighting.png|Sunbeams underwater
+File:Vibrant Visuals aquifer.png|A dark aquifer
+File:Vibrant Visuals water caustics.png|Water caustics in a [[desert]]. Note the caustics projected on the dry sand behind the waterfall on the right.
+File:Vibrant Visuals underwater caustics.png|Water caustics as seen from underwater
+File:Vibrant Visuals underwater shadows.png|Coral structures obstruct sunlight, the lack of water caustics simulates a shadow effect.
+</gallery>
+
+=== Post processing effects ===
+Post-processing effects are visual elements that are not directly produced by either PBR or direct lighting sources, but are instead applied after the scene is fully rendered. There are multiple post-processing effects applied by Vibrant Visuals, such as:
+* '''Bloom''' which appears on emissive textures and light sources. It creates a soft and hazy aura of light around the glowing object, with the colors bleeding out around the object. The effect's intensity can be configured on the [[Settings#Vibrant Visuals Options|video settings]].
+* '''Upscaling''' which is done from low-resolution scene renders. The game usually renders the scene at a lower resolution and upscales it to the native resolution to improve video performance. This effect can be configured on the video settings, where the player can set between ''TAAU'' ([[W:Temporal anti-aliasing|Temporal Anti-Aliasing]] Upsampling) and ''[[W:Bilinear interpolation|Bilinear]]'' mode, and the final resolution quality. Generally, TAAU makes the game use multiple frames to create a crisper upscaled frame, while Bilinear stretches the frame to fit the screen, more suitable for low-end devices.
+* '''Color grading''' which controls the saturation, contrast, gain, and gamma of the final image.<ref name="color-grading-tone-mapping">{{cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/colorgradingtonemappingcustomization?view=minecraft-bedrock-stable|title=Color Grading and Tone Mapping|website=Microsoft Learn}}</ref>
+** There is an additional '''temperature-based color grading''' which makes the scene look "warmer" with more yellow and orange colors, and "cooler" with more blue color. 14 different color grading effects are applied based on the [[biome]], some biomes also have different contrast or saturation.
+* '''Tone mapping''' is also used to remap the colors from [[w:High dynamic range|HDR]] to [[w:Standard-dynamic-range video|SDR]], as ''Minecraft'' is not supported in HDR.<ref name="color-grading-tone-mapping"/>
+
+<gallery widths="200" heights="150">
+File:Vibrant Visuals bloom sun.png|The bloom effect around the sun during sunrise
+File:Vibrant Visuals bloom comparison.png|A comparison of a firefly bush with bloom set to 0% (bottom) and 100% (top)
+</gallery>
+
+=== Panorama ===
+An exclusive [[panorama]] is shown when using Vibrant Visuals. The cubemap consists of HDR image files, which are rendered using the post-processing effects from Vibrant Visuals. Specifically, the image uses the default data-driven color grading settings, and the gamma, upscaling mode, and resolution settings affect it.
+
+== Applying ==
+Vibrant Visuals can be toggled on in the [[Settings#Video|video settings]] in the [[Graphics settings|graphics]] mode dropdown menu.<ref>{{cite|url=https://help.minecraft.net/hc/en-us/articles/37415428023821-Manage-Vibrant-Visuals-Graphics-Mode-Settings|title=Manage Vibrant Visuals Graphics Mode Settings|website=[[Minecraft Help Center]]}}</ref> The graphics mode can only be changed in-game when "Allow In-Game Graphics Mode Switching" is turned on, but this can have negative impact on performance and not all devices support this.
+
+If playing [[multiplayer]], not everyone needs to have it activated to play in the world; one player could have it activated, whilst other players could have it inactive since it's a local setting.
+
+=== Vibrant Visuals options ===
+{{Main|Settings#Vibrant Visuals Options}}
+[[File:Low quality VV.png|thumb|Vibrant Visuals at the lowest quality settings. Bloom and volumetric fog are disabled, SSR reflections are not visible, and shadows have a lower resolution.]]
+The quality of specific features from Vibrant Visuals as well as some technical options can be adjusted in the Vibrant Visuals options, below the graphics mode setting. These options can be preset to the "Favor Performance" for a better experience on lower-end devices, or "Favor Visuals" for a higher quality of Vibrant Visuals on high-end devices. The options can also be adjusted individually.
+
+The [[Settings#Video|render distance]] for Vibrant Visuals is controlled by the "Deferred Render Distance" slider instead of the regular render distance slider. This slider can be set between 8-28 chunks (may be lower on some devices), but can be changed to any value chunks in [[options.txt]]. Higher render distances than 128 chunks will result in the game not loading any chunks further than 128 chunks away from the player, and even higher render distances can lead to glitched visual effects or crashes. Lower render distances than 8 chunks will result in the game not loading any chunks further away than the set render distance, but chunks won't be unloaded until they are further away than 8 chunks. A render distance of 0 chunks results in no chunks being loaded, but [[entities]] and [[Particles (Bedrock Edition)|particles]] are still visible.
+
+The regular brightness setting is not available when using Vibrant Visuals, but the brightness can be calibrated in a separate menu in the Vibrant Visuals options. This also affects the brightness of the [[panorama]].
+
+==== Configurations ====
+All options related to Vibrant Visuals have configurations for specific devices. The [[Settings#Default|default settings]] for each preset, and the renderer configurations per setting differs between devices. The setting configurations can be found in {{File|directory|[[Bedrock Edition installation files|Content]]/data/renderer|inline=1}} as JSON files, with all renderer configurations located in a "lods" sub-directory. These files contain all available options per device, and a <code>platform_configuration.json</code> file contains all defaults for each generic graphics setting. There are separate configurations for three Android memory tiers, Xbox One (X) and Xbox Series X|S, all PS4 and PS5 consoles, three iOS devices memory tiers, and four Windows memory tiers.
+
+There are also configurations for ChromeOS and Nintendo Switch, indicating that Vibrant Visuals may become available on those devices in the future.
+
+This directory also contains configurations for features that are not customizable in resource packs, including tone mapping curves, deferred shading parameters, light clustering, luminance configurations, weather effects, <code>.bin</code> [https://wiki.bedrock.dev/visuals/materials material] files, and an unknown <code>brdf_lut.png</code> image, seemingly a [[colormap]].
+
+== Availability ==
+Vibrant Visuals is available to use on the following platforms:<ref>{{citation|url=https://help.minecraft.net/hc/en-us/articles/37413608357773-Learn-about-Vibrant-Visuals-Graphics-Mode|title=Learn about Vibrant Visuals Graphics Mode|website=help.minecraft.net}}</ref>
+{| class="wikitable"
+!Platform
+!Supported devices
+|-
+|[[File:Windows wordmark.svg|x40px|center|frameless|alt=Windows|link=w:Microsoft Windows]]
+|Graphics card and graphics driver with support for [[w:DirectX#DirectX_12|DirectX 12]] with [[W:Feature levels in Direct3D|feature level]] 12.1.
+
+* For Intel GPUs, Intel graphics driver 31.0.101.3430 or later is required for ''Minecraft'' to run on DirectX 12.<ref>{{bug|MCPE-166351|||WAI}}</ref>
+|-
+|[[File:Android.svg|x40px|center|frameless|alt=Android|link=w:Android (operating system)]]
+|Devices running on Adreno 640, Mali-G68, Mali-G77, Xclipse 530 or higher. Enabled by default on Adreno 740, Mali-G615, Mali-G720, Xclipse 920 or higher.
+|-
+|[[File:iOS.svg|x40px|center|frameless|alt=iOS|class=darkmode-invert|link=w:iOS]]
+|A12 Bionic or higher:
+
+* iPhone XR or later
+* iPhone SE (2020) or later
+* iPhone Air (2025)
+|-
+|[[File:iPadOS.svg|x40px|center|frameless|alt=iPadOS|class=darkmode-invert|link=w:iPadOS]]
+|A12 Bionic, A12X Bionic, M1 or higher:
+
+* iPad (2020) or later
+* iPad mini (2019) or later
+* iPad Air (2019) or later
+* iPad Pro (2018) or later
+|-
+|[[File:Xbox.svg|x40px|center|frameless|alt=Xbox|link=w:Xbox]]
+|
+* Xbox One (disabled by default)
+* Xbox One S (disabled by default)
+* Xbox One X
+* Xbox Series X
+* Xbox Series S
+|-
+|[[File:Playstation logo.svg|x40px|center|frameless|alt=PlayStation|link=w:PlayStation]]
+|
+* PlayStation 4 (disabled by default)
+* PlayStation 4 Slim (disabled by default)
+* PlayStation 4 Pro
+* PlayStation 5
+* PlayStation 5 Slim
+* PlayStation 5 Pro
+|}
+
+Vibrant Visuals is currently not supported on {{w|ChromeOS}} devices, {{w|Amazon Fire|Fire}} tablets, or {{w|Nintendo Switch}} consoles. [[Mojang Studios]] intends to bring Vibrant Visuals, either fully or partially, to as many devices as possible.<ref name="article">{{mcnet|minecraft-vibrant-visuals|Vibrant Visuals|March 22, 2025}}</ref> Though not strictly official, Vibrant Visuals may also be supported on {{w|Linux}} systems by playing ''Bedrock Edition'' through a custom [[w:Wine (software)|Wine]] compatibility layer (see [[Tutorial:Playing Minecraft on Linux|related tutorial]]).
+
+Some [[server]]s may disable Vibrant Visuals during the game using <code>disable-client-vibrant-visuals</code> in [[server.properties]], even when available on singleplayer. All [[featured server]]s besides ''[[Mob Maze]]'' and ''[[The Hive]]''<ref group="note">Requires to enable an additional toggle in {{UI|<code>/settings</code>|Experimental}} and rejoin the server.</ref> have disabled Vibrant Visuals, although this restriction can be circumvented by using third-party modification software.<ref>{{Citation|url=https://github.com/QYCottage/BetterRenderDragon|title=BetterRenderDragon|website=GitHub}}</ref> ''Minecraft'' [[Realms]] has Vibrant Visuals enabled.
+
+During local [[splitscreen]] multiplayer on consoles, the graphics mode is restricted to Fancy or lower.
+
+Vibrant Visuals has limited compatibility with [[resource packs]], which may be part of an [[add-on]]. Resource packs without the <code>pbr</code> [[Manifest.json|capability]] restrict the graphics mode to Fancy or lower.<ref name="resources" /> When a pack has <code>metadata.product_type</code> set to <code>addon</code> Vibrant Visuals can be enabled, regardless of the <code>pbr</code> capability. Custom textures from the add-on's resource pack default to 0% metalness, 0% emissiveness, 100% roughness, and 0% subsurface scattering.
+
+=== ''Java Edition'' ===
+Vibrant Visuals is currently planned to be added to {{JE}} at some point in the future. In preparation, developers are rebuilding the game's rendering code into a dedicated thread, and updating them with "modern approaches to rendering".<ref name="java"/><ref name="rendering-thread"/>
+To allow newer graphical features and sustain compatibility with all platforms supporting ''Java Edition'', the game will switch to {{w|Vulkan}}, a modern graphics technology, replacing the deprecated {{w|OpenGL}} API.<ref name="vulkan"/> During development, this can be toggled in-game.{{upcoming|je 26.2}}
+
+== Customization ==
+{{hatnote|1=For more detailed information and guides about customization, see [https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/introvibrantvisuals?view=minecraft-bedrock-stable the official documentation].}}
+[[File:Ore UI - Project Vibrant Visuals Settings Menu (Bedrock Editor).png|thumb|The Vibrant Visuals Settings window in ''[[Bedrock Editor]]'']]
+Vibrant Visuals can be customized with a [[resource pack]]. A pack with <code>pbr</code> capability in its <code>[[manifest.json]]</code> can define PBR for each individual texture with a texture set.<ref name="resources">{{Cite|title=Vibrant Visuals Resource Packs|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/vvresourcepacks?view=minecraft-bedrock-stable}}</ref> They can also configure light sources, atmospheric effects, volumetric fog and light shafts, color grading and tone mapping, and many more.<ref name="vibrant-visuals" />
+
+Vibrant Visuals is also compatible with resource packs that are designed for [[Ray Tracing|ray tracing]] (with <code>raytraced</code> capability). All ray tracing resource packs only support MER (metalness, emissive, and roughness) for its textures, and these can only be applied for blocks only.<ref name="texture-set" /> Vibrant Visuals resource packs however, support MER and subsurface scattering (MERS), and its textures can be applied for entities, mobs, particles, and items.
+
+Global lighting, atmospherics, color grading, cubemaps, and water effects can be customized for each [[biome]].<ref name="biome">{{Cite|title=Biome Customization|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/biomecustomization?view=minecraft-bedrock-stable}}</ref> Multiple JSON configuration files can be stored in each directory as long as they have different names and identifiers, which are not the same as the global configurations. To apply settings to a biome, the identifier of the JSON file must be included in the [[Resource pack#Biomes|client biome JSON]] file in {{File|directory|biomes|inline=1}}, in the <code>minecraft:''setting''_identifier</code> components. The configurations will be blended automatically on biome borders, except for tone mapping, orbital offset, caustics, and waves enabled/disabled, which should use the same settings globally.
+
+Resource packs that customize Vibrant Visuals can quickly be created with ''[[Bedrock Editor]]''.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/bedrockeditor/editorvibrantvisuals?view=minecraft-bedrock-stable|title=Vibrant Visuals in Bedrock Editor|website=Microsoft Learn}}</ref> The Vibrant Visuals Settings window allows most JSON configurations to be changed in a graphical environment, and the effects are directly visible in-game. All settings are not saved, but each JSON file can be copied to the clipboard, or a resource pack with all settings can be auto-generated. Once generated, '''Download Resource Pack''' will import the pack in [[mctools.dev]], where the pack can be directly exported or further customized.
+
+In the ''Editor'', settings for existing biomes or configurations can be changed, and even new configurations may be added. A biome can be selected with '''Target Biome''' (Target Biomes By Location selects the player's current biome), if custom biomes are used the [[namespace]] can be changed to disambiguate. Next, the '''Config Set for Biome''' selects which settings file is used for the selected configurations. This allows to reorganize vanilla settings in a biome, and the raw JSON text of the client biome file can be copied. A new configuration file can also be created, with a custom namespace and identifier (both ''cannot'' have spaces), and it can be auto-filled by inserting the raw JSON content in the '''Inport''' button.
+
+=== Texture sets<!-- This will be moved to its own page at [[Texture set]], after the ray tracing page has been finished -->===
+[[File:Vibrant Visuals subsurface scattering comparison.png|thumb|A comparison of leaves with (bottom) and without (top) subsurface scattering]]
+Textures from [[blocks]], [[entities]], [[items]] (held, displayed, and dropped), and [[Particles (Bedrock Edition)|particles]] use texture sets to calculate how light behaves on the texture, regarding reflections and emissiveness.<ref name="texture-map" /> Texture sets cannot be customized with ''Bedrock Editor''. On top of the regular RGBA [[Textures|texture]] maps, which control the colors and transparency, Vibrant Visuals uses six new maps for other properties of each pixel, including metalness, emissive, roughness, subsurface scattering, normal, and height maps. The first four are all created in one file, collectively known as MERS values (or MER without subsurface scattering).
+
+* '''Metalness''' is a grayscale texture map that affect how metallic pixels look, which makes them more reflective. Pixels can use metalness values between black (non-metallic) and white (completely metalic), where metalness for values in between is affected by the brightness.
+* The grayscale '''emissive''' map is used for pixels that emit light. Black pixels do not emit light at all, and any brighter values result in emissive textures. Pure white pixels are emissive at its brightest. The desaturation of the pixel's colors can be adjusted per biome in {{File|directory|lighting|inline=1}}.
+* '''Subsurface scattering''' is an effect created by light shining on transcluent surfaces.<ref name="subsurface">{{Cite|title=Subsurface Scattering|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/subsurfacescatteringcustomization?view=minecraft-bedrock-stable}}</ref> It is a grayscale map where brighter pixels allow more subsurface scattering. This texture map cannot be used in conjunction with the metalness map; if both are provided only the highest value will be applied (subsurface scattering when tied).
+* '''Roughness''' is a grayscale texture map affecting how "rough" pixels are, which can block reflection effects. Black pixels are very smooth and allow all reflections caused by the metalness map, while white pixels only allow (distorted) light reflection.
+* The [[W:Normal mapping|'''normal''' map]] is an RGB texture map which affect the depth of the pixel and how light rays are reflected. The ''RGB'' elements correspond to ''XYZ'' coordinates of the pixel, with (128, 128, 255) being completely flat.
+* '''Height''' maps are similar to normal maps but in grayscale, allowing less possible textures. Black pixels appear to extrude inward to the object, and white pixels extrude outward. Combining black and white pixels next to each other can create height variation on which light can reflect, while creating a shadow behind. Heightmaps cannot be used together with normal maps.
+Texture maps can be quickly created using [[Blockbench]],<ref>{{Cite|title=Use Blockbench to Create Vibrant Visuals Models|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/useblockbenchtocreatemodelswithtextures?view=minecraft-bedrock-stable}}</ref> which may require plugins to customize textures. The MERS textures need to be placed, preferably named <code>''[[Resource location|block/particle/entity/item ID]]''_mers</code> (or <code>_mer</code> if only using MER maps for compatibility with [[ray tracing]]), in {{File|directory|[[Resource pack|textures]]|inline=1}}, in the sub-directory containing textures for the object type. Texture maps can be stored in <code>.tga</code>, <code>.png</code>, <code>.jpg</code>, and <code>.jpeg</code> formats. To make the game replace the default textures with a custom texture set, it needs to be specified in a texture set JSON file, on file for each texture, located in the same sub-directory as the texture itself.<ref name="texture-set" />
+
+Instead of creating texture maps, the JSON file can also be used to apply specific MERS values to the whole texture.
+
+'''<code>texture_set.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}: The 3-part schema version used in the file. It needs to be at least <code>"1.16.100"</code> but requires <code>"1.21.30"</code> when using MERS texture sets instead of MER.
+** {{nbt|compound|minecraft:texture_set}}
+*** {{nbt|int array}}{{nbt|string|color}}: Required, the name of the "regular" texture file in the same sub-directory providing the visible colors. This can also be an RGB array or HEX string to make the whole texture use one color.
+*** {{nbt|string|normal}}: The name of the normal map file, cannot be used together with heightmaps.
+*** {{nbt|string|heightmap}}: The name of the heightmap file, cannot be used together with normal maps.
+*** {{nbt|int array}}{{nbt|string|metalness_emissive_roughness}}: The name of the MER file, cannot be used together with MERS. This can also be an RGB array or HEX string to make the whole texture use one color.
+*** {{nbt|int array}}{{nbt|string|metalness_emissive_roughness_subsurface}}: The name of the MERS file, cannot be used together with MER. This can also be an RGB array or HEX string to make the whole texture use one color.
+</div>
+
+==== Fallback values ====
+When a resource pack does not contain one or more texture maps, the missing texture maps will default to the vanilla textures instead. However, for custom textures as part of an [[add-on]], all pixels default to values specified in a customizable JSON file in {{File|directory|pbr|inline=1}}.<ref>{{Cite|title=PBR uniforms|website=Microsoft Learn|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/lightingcustomization?view=minecraft-bedrock-stable#pbr-uniforms}}</ref>
+
+'''<code>global.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}: The 3-part schema version used in the file, requires <code>"1.21.40"</code>.
+** {{nbt|compound|minecraft:pbr_fallback_settings}}
+*** {{nbt|compound|blocks}}
+**** {{nbt|int array}}{{nbt|string}} '''global_metalness_emissive_roughness_subsurface''': The default MERS value to use for blocks when not defined via texture maps; supports RGBA array or HEX string
+*** {{nbt|compound|actors}}
+**** {{nbt|int array}}{{nbt|string}} '''global_metalness_emissive_roughness_subsurface''': The default MERS value to use for actors/mobs when not defined via texture maps; supports RGBA array or HEX string
+*** {{nbt|compound|particles}}
+**** {{nbt|int array}}{{nbt|string}} '''global_metalness_emissive_roughness_subsurface''': The default MERS value to use for particles when not defined via texture maps; supports RGBA array or HEX string
+*** {{nbt|compound|items}}
+**** {{nbt|int array}}{{nbt|string}} '''global_metalness_emissive_roughness_subsurface''': The default MERS value to use for items when not defined via texture maps; supports RGBA array or HEX string
+</div>
+
+=== Lighting ===
+Various types of light sources can be customized, which are split into global lighting and local lighting in the {{File|directory|lighting|inline=1}} and {{File|directory|local_lighting|inline=1}} directories.<ref name="lighting" /> Global light settings are defined per biome and require different JSON files for each biome or set of biomes and need to be specified in {{File|file|''biome''.client_biome.json|inline=1}}. Local light settings are applied for individual blocks specified in one JSON file. Local lighting currently only includes [[Vibrant Visuals#Point lighting|point lights]], while global lighting includes directional lights, emissive textures, ambient light, and sky light.
+
+* '''Directional lighting''' includes the [[sun]] and [[moon]] (orbital), and [[End flash]]. For each object, the total brightness can be adjusted, and the color of that lighting. This affects the sky and atmospheric scattering, and all objects lit by the directional light source, which are both also affected by texture sets, atmospheric settings, and color grading.
+** All values for directional lighting in the JSON file and in ''Bedrock Editor'' support multiple key frames for different in-game times. See [[#Atmospherics 2|§ Atmospherics]] below for more information.
+** For the sun and the moon, the orbital offset can be customized, which affects how the orbit is rotated towards the south (can be rotated 360 degrees). This can also be keyframed, which allows to customize the position of the sun and moon depending on the in-game time. [[File:Vibrant Visuals orbital offset.png|thumb|A custom orbital offset]]
+* '''Emissive''' lights are produced by blocks, entities, and particles with emissive pixels in their texture set. The desaturation of the color of the pixel can be adjusted per biome. [[File:Emissive desaturation.png|thumb|Several mobs with a high emissive desaturation value]]
+* '''Ambient''' lighting is always applied and makes blocks visible when there are no other light sources. The strength and color of this light can be adjusted.
+* '''Sky''' lighting is applied to surfaces exposed to the [[sky]]. The intensity can be adjusted, which affects how dark shadows are compared to surfaces lit by directional lighting.
+* '''Static lights''' are local light sources set per [[block]]. They do not create specular highlights or dynamic shadows and are fixed in space and in brightness. It can only be used by blocks with "regular" [[lighting]], which affects the strength. The color of this static light can be customized. When multiple static lights with different colors are overlapping in an area, the total luminance will add up.
+* '''Point lights''' are local directional light sources in blocks, only available in the "Render Dragon Features for Creators" [[experiment]] in ''[[Minecraft Preview]]''. Point lights are created by a single point in the center of the block, with a specific color similar to the color for global directional lighting. Static lights are automatically also added to blocks with point lighting. The strength of the point light is affected by the [[Block light|block lighting]] of the block.
+
+'''<code>global.json</code> format'''
+{{Info|section=1|The <code>global.json</code> file does not override any vanilla lighting settings for non-custom biomes, each biome type requires its own JSON file such as <code>cold_lighting.json</code>.}}
+<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.26.0"</code> for all current features.
+** {{nbt|compound|minecraft:lighting_settings}}
+*** {{nbt|compound|description}}
+**** {{nbt|string|identifier}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The identifier for these settings, <code>"minecraft:default_lighting"</code> will be applied to all biomes, other identifiers can be specified in the {{File|file|''biome''.client_biome.json|inline=1}} files. Must include a namespace.
+*** {{nbt|compound|directional_lights}}
+**** {{nbt|compound|orbital}}
+***** {{nbt|compound|sun}}
+****** {{nbt|compound}}{{nbt|float|illuminance}}: The brightness of the [[sun]] in lux. When 0, the sun disappears.
+****** {{nbt|compound}}{{nbt|int array}}{{nbt|string|color}}: The color that the sun contributes to direct surface lighting; supports RGB array or HEX string.
+***** {{nbt|compound|moon}}
+****** {{nbt|compound}}{{nbt|float|illuminance}}: The brightness of the [[moon]] in lux. When 0, the moon disappears.
+****** {{nbt|compound}}{{nbt|int array}}{{nbt|string|color}}: The color that the moon contributes to direct surface lighting; supports RGB array or HEX string.
+*****{{nbt|compound}}{{nbt|float|orbital_offset_degrees}}: The rotational offset of the sun and moon from their standard orbital axis; measured in degrees.
+**** {{nbt|compound|flash}}
+***** {{nbt|compound}}{{nbt|float|illuminance}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The brightness of the [[End flash]] in lux. When 0, no flashes are visible.
+***** {{nbt|compound}}{{nbt|int array}}{{nbt|string|color}}: The color that the End flash contributes to surface lighting; supports RGB array or HEX string.
+*** {{nbt|compound|emissive}}
+**** {{nbt|float|desaturation}}: The amount of desaturation to apply to albedo color values during emissive light calculation between 0.0 (full color) and 1.0 (white).
+*** {{nbt|compound|ambient}}
+**** {{nbt|compound}}{{nbt|float|illuminance}}: The brightness of ambient lighting in lux.
+**** {{nbt|compound}}{{nbt|int array}}{{nbt|string|color}}: The color that the ambient light contributes to surface lighting; supports RGB array or HEX string.
+*** {{nbt|compound|sky}}
+**** {{nbt|compound}}{{nbt|float|intensity}}: Scales how much energy the sky contributes to lighting between 0.0 and 1.0.
+</div>
+'''<code>local_lighting.json</code> format'''
+
+The <code>point_light</code> type is only available in the "Render Dragon Features for Creators" experiment. Existing light settings can be changed in the ''Editor'', which includes most blocks when the experiment is enabled. Adding new blocks requires to import custom JSON settings.
+<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}: The 3-part schema version used in the file, requires <code>"1.21.120"</code> for all current features.
+** {{nbt|compound|minecraft:point_light_settings}}
+*** {{nbt|compound|''block identifier''}}: The [[identifier]] of the block, with a namespace.
+**** {{nbt|int array}}{{nbt|string|light_color}}: The color of the point light or static light; supports RGB array or HEX string.
+**** {{nbt|string|light_type}}: The type of local lighting applied for this block, either <code>"static_light"</code> or <code>"point_light"</code>.
+</div>
+
+=== Atmospherics ===
+The colors and some other values for the sky can be changed in {{File|directory|atmospherics|inline=1}}.<ref name="atmospherics">{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/atmosphericscustomization?view=minecraft-bedrock-stable|title=Atmospheric Effects|website=Microsoft Learn}}</ref> The atmospheric effects include separate horizon and zenith colors, mie scattering for the sun and moon, and rayleigh scattering. The horizon and zenith colors blend into each other depending on the specified heights for both colors. Mie scattering can also specify a height.
+
+In this JSON file, all values can be individually key framed.<ref name="keyframe">{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/keyframejsonsyntax?view=minecraft-bedrock-stable|title=Key Frame JSON Syntax|website=Microsoft Learn}}</ref> Instead of providing a single value for a setting, the setting can be treated as an object with a set of values from the same type. The key is a number from 0 to 1 which represents the in-game [[time]], allowing to change atmospherics based on the time of day. The engine linearly interpolates between the values of the key frames, resulting in the actual atmospherics blending between specified times. A key of 0 is noon, 0.25 is sunset, 0.5 midnight, 0.75 sunrise, and 1 is the next noon.
+
+[[File:Ore UI - Project Vibrant Visuals Settings Menu - Key Frame Graphs (Bedrock Editor).png|thumb|Some key framed settings in ''Bedrock Editor'' in different graphs]]
+
+In ''Bedrock Editor'', a set of different key frames can be adjusted individually. The amount of available key frames varies for each setting, which can only be changed by importing JSON settings. With the slider below each graph, the key value for the X-axis can be seen. The Y-axis shows all values for the setting. Each key can be moved horizontally and vertically, and all keys are connected with a line corresponding to the linear interpolation. Double-clicking on a key shows text boxes for the exact coordinates, and a color picker in RGB-supported settings.
+
+'''<code>atmospherics.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.21.40"</code>.
+** {{nbt|compound|minecraft:atmosphere_settings}}
+*** {{nbt|compound|description}}
+**** {{nbt|string|identifier}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The identifier for these settings, <code>"minecraft:default_atmospherics"</code> will be applied to all biomes, other identifiers can be specified in the {{File|file|''biome''.client_biome.json|inline=1}} files. Must include a namespace.
+*** {{nbt|compound|horizon_blend_stops}}: This affects how the atmosphere is divided for the atmospheric effects.
+**** {{nbt|compound}}{{nbt|float|min}}: The minimum horizon height.
+**** {{nbt|compound}}{{nbt|float|start}}: The height relative to the horizon where the zenith contribution will take over.
+**** {{nbt|compound}}{{nbt|float|mie_start}}: The height relative to the horizon where mie scattering begins.
+**** {{nbt|compound}}{{nbt|float|max}}: The maximum horizon height.
+*** {{nbt|compound}}{{nbt|float|rayleigh_strength}}: How strong the atmosphere's [[W:Rayleigh scattering|rayleigh scattering]] term is, which affects how particles larger or smaller than the light ray's wavelength scatter the light.
+*** {{nbt|compound}}{{nbt|float|sun_mie_strength}}: How strong the [[sun]]'s [[W:Mie scattering|mie scattering]] term is, which affects how particles from the same size as the light ray's wavelength scatter the light.
+*** {{nbt|compound}}{{nbt|float|moon_mie_strength}}: How strong the [[moon]]'s mie scattering term is.
+*** {{nbt|compound}}{{nbt|float|sun_glare_shape}}: How the lobe of the mie scattering is shaped.
+*** {{nbt|compound}}{{nbt|int array}}{{nbt|string|sky_zenith_color}}: The color of the zenith region of the atmosphere; supports RGB array or HEX string.
+*** {{nbt|compound}}{{nbt|int array}}{{nbt|string|sky_horizon_color}}: The color of the horizon region of the atmosphere; supports RGB array or HEX string
+</div>
+
+==== Scripting ====
+The atmospherics can also be dynamically overridden by the game's [[scripting]] modules.<ref>{{Citation|url=https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server-graphics/atmospherics?view=minecraft-bedrock-stable|title=Atmospherics Class|website=Microsoft Learn}}</ref> In <code>@minecraft/server-graphics</code>, all above settings can be customized per biome in the format <code>set''<setting in camel case>''(''setting'': ''input'', biomeIdentifier: ''[[Biome/ID|biome ID]]''): void</code>. The input is similar to the JSON format above: either a float number or key framed float (''number'', ''number''), or an RGB input <code>''red''; ''green''; ''blue''</code>, which can also be key framed. Atmospherics can be reset to the data-driven values using <code>reset</code> with the biome.
+
+=== Fog ===
+The [[fog]] in Vibrant Visuals can be customized per biome in the same JSON file as regular fog in {{File|directory|fogs|inline=1}}, and using the {{Cmd|fog}} command.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/foginresourcepacks?view=minecraft-bedrock-stable|title=Fog in Resource Packs|website=Microsoft Learn}}</ref> However, Vibrant Visuals has some options for more complex volumetric fog and Henyey-Greenstein G.<ref name="fog">{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/volumetricfoglightshaftscustomization?view=minecraft-bedrock-stable|title=Volumetric Fog and Light Shafts|website=Microsoft Learn}}</ref>
+
+The density of volumetric fog can be adjusted, either for specified heights or every height, for each block where fog occurs in different situations (air, water, lava). For fog in the air, clouds, or water, the color of the fog can be specified. Finally, Vibrant Visuals allows to change light shafts inside fog for water and air. All fog settings are optional, if not specified they will equal to lower settings in the fog stack, first global values and then default values.
+
+For all settings and the JSON format, see [[Fog definition]].
+
+=== Color grading ===
+Configurations for color grading and tone mapping can be adjusted for various situations and colors, making the final look of the scene fully customizable.<ref name="color-grading-tone-mapping" /> Both post-processing effects are configured in JSON file per biome in the {{File|directory|color_grading|inline=1}} directory.
+
+Color grading is split into three scales based on lighting applied to the objects, and there is an additional temperature grading option. The highlight parameters are applied to the brightest pixels, the shadows to the darkest pixels, and midtones to pixels close to the average luminance of a scene. Highlights and shadows need to be enabled for specified color grading, otherwise the midtone parameters will be applied to all pixels as a global setting. The minimum brightness of the highlights and maximum brightness of the shadows affect which pixels are considered highlights and shadows instead of midtones.
+
+For each color grading parameter, different values for each RGB color can be specified.
+
+* The '''contrast''' affects the pixels with different luminances from the average luminance. Higher contrast values will increase brightness of highlights and darken shadows, while lower contrast values result in a more gray image with less differences in color and brightness.
+* '''Gain''' affects the luminance intensity of the whole image, regardless of the luminance of a pixel.
+* Similar to gain, the '''gamma''' affects the overall luminance intensity of all pixels, but after all other post-processing effects have been applied.
+* The '''offset''' adjusts the intensity of pixels based on the average luminance of the scene, which is added to all pixels and has a stronger effect on brighter pixels than darker pixels.
+* '''Saturation''' changes the intensity of colors apart from their luminance. Higher values increase the intensity, while lower values result in a grayscale image.
+
+Finally, the temperature can be adjusted for the whole image, affecting how "warm" (yellow/orange) or "cool" (blue) the scene becomes. The type of temperature grading can be inverted, to make higher temperatures result in a warmer or cooler image.
+
+{{FakeImage|{{Animate|Tone mapping Aces.png;Tone mapping Hable.png;Tone mapping Reinhard.png;Tone mapping Reinhard Luma.png;Tone mapping Reinhard Luminance.png;Tone mapping Generic.png|300px}}|The available tone mapping operators}}
+The '''tone mapping''' effect cannot be customized for individual curves, but there are six operators that can be selected. Reinhard is a generic operator which looks good in low-contrast scenes and has a lower quality for higher luminances. Reinhard Luma is an extended variant that preserves details in low dynamic range regions, and Reinhard Luminance is a variant that preserves colors in higher luminance regions.
+
+There are also filmic tone mapping operators, which emulate real-life film and work best when other Vibrant Visuals configurations are based on physically accurate values. Hable and ACES are filmic operators which preserve subtle differences in extremely dark or bright scenes, but come at a higher performance cost. Mojang Studios has developed a generic filmic tone mapping curve which preserves a bit more hue saturation at high luminance regions.
+
+'''<code>color_grading.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.21.90"</code> for all current features.
+** {{nbt|compound|minecraft:color_grading_settings}}
+*** {{nbt|compound|description}}
+**** {{nbt|string|identifier}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The identifier for these settings, <code>"minecraft:default_color_grading"</code> will be applied to all biomes, other identifiers can be specified in the {{File|file|''biome''.client_biome.json|inline=1}} files. Must include a namespace.
+*** {{nbt|compound|color_grading}}
+**** {{nbt|compound|midtones}}: Color grading parameters of all pixels that are not considered highlights or shadows, if they are enabled.
+***** {{nbt|list}}{{nbt|float|contrast}}: The contrast between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gain}}: The gain between 0.0 and 10.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gamma}}: The gamma between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|offset}}: The offset between -1.0 and 1.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|saturation}}: The saturation between 0.0 and 10.0, per RGB channel.
+**** {{nbt|compound|highlights}}: Color grading parameters of all brighter pixels.
+***** {{nbt|bool|enabled}}: Whether the following parameters are applied to highlights, or if they should follow the midtone parameters.
+***** {{nbt|float|highlightsMin}}: The darkest pixels considered highlights, between 1.0 and 4.0. 1.0 is equal to the average luminance, and higher values will cause the minimum required luminance value for a pixel to be considered a highlight to rise.
+***** {{nbt|list}}{{nbt|float|contrast}}: The contrast between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gain}}: The gain between 0.0 and 10.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gamma}}: The gamma between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|offset}}: The offset between -1.0 and 1.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|saturation}}: The saturation between 0.0 and 10.0, per RGB channel.
+**** {{nbt|compound|shadows}}: Color grading parameters of all darker pixels.
+***** {{nbt|bool|enabled}}: Whether the following parameters are applied to shadows, or if they should follow the midtone parameters.
+***** {{nbt|float|shadowsMax}}: The brightest pixels considered shadows, between 0.1 and 1.0. 1.0 is equal to the average luminance, lower values will cause the maximum required luminance value for a pixel to be considered a shadow to drop.
+***** {{nbt|list}}{{nbt|float|contrast}}: The contrast between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gain}}: The gain between 0.0 and 10.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|gamma}}: The gamma between 0.0 and 4.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|offset}}: The offset between -1.0 and 1.0, per RGB channel.
+***** {{nbt|list}}{{nbt|float|saturation}}: The saturation between 0.0 and 10.0, per RGB channel.
+**** {{nbt|compound|temperature}}
+***** {{nbt|bool|enabled}}: Whether temperature-based color grading is applied.
+***** {{nbt|float|temperature}}: The temperature of the image, between 1000 and 15000 Kelvin.
+***** {{nbt|string|type}}: The type of temperature grading used, either <code>"white_balance"</code> (higher temperatures result in cooler image) or <code>"color_temperature"</code> (higher temperatures result in  warmer image).
+*** {{nbt|compound|tone_mapping}}
+**** {{nbt|string|operator}}: The operator used for tone mapping. This can be <code>"reinhard"</code>, <code>"reinhard_luma"</code>, <code>"reinhard_luminance"</code>, <code>"hable"</code>, <code>"aces"</code>, or <code>"generic"</code>.
+</div>
+
+=== Cubemaps ===
+Cubemaps are six 2D textures always rendered around the player which are affected by directional, ambient, and sky lighting, and scattering.<ref name="cubemap">{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/cubemapcustomization?view=minecraft-bedrock-stable|title=Cubemaps|website=Microsoft Learn}}</ref> They can be customized in {{File|directory|cubemaps|inline=1}} for each biome or set of biomes. Custom cubemaps only affect the [[Overworld]], the cubemap used in the [[End sky]] is unaffected.
+
+The influence of each type of light on the cubemap can be customized, but it is always dependent of the biome's lighting settings and which types of lighting are currently applied. Cubemaps can be affected by two types of scattering. Depending on whether the cubemap contains objects in the sky (such as [[clouds]]), or in space (such as [[stars]]), atmospheric scattering should be turned on or off, respectively. Volumetric scattering lets fog and light shafts affect the cubemap, for objects close to the surface.
+
+'''<code>''cubemap''.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.21.130"</code> for all current features.
+** {{nbt|compound|minecraft:cubemap_settings}}
+*** {{nbt|compound|description}}
+**** {{nbt|string|identifier}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The identifier for these settings, specified in the {{File|file|''biome''.client_biome.json|inline=1}} files. Must include a namespace.
+*** {{nbt|compound|lighting}}
+**** {{nbt|compound}}{{nbt|float|ambient_light_illuminance}}: The amount of fixed ambient light applied to the cubemap. Contains pairs of numbers, where the first number should be between 0.0 and 1.0 (time of day) and the second number should be between 0.0 and 100000.0 (ambient light). Default value is 5.625 for all times of day.
+**** {{nbt|float|sky_light_contribution}}: Contribution of the sky light. It should be between 0.0 and 1.0 (default).
+**** {{nbt|float|directional_light_contribution}}: Contribution of the directional light. It should be between 0.0 (default) and 1.0.
+**** {{nbt|bool|affected_by_atmospheric_scattering}}: Whether the cubemap is affected by atmospheric scattering (mie and rayleigh), false by default.
+**** {{nbt|bool|affected_by_volumetric_scattering}}: Whether the cubemap is affected by volumetric scattering (fog and light shafts), true by default.
+</div>
+
+=== Shadows ===
+[[File:Vibrant Visuals shadows comparison.png|thumb|A comparison of blocky (top) and soft shadows (bottom)]]
+There are two settings for shadows created by blocks, entities, and some other objects.<ref>{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/shadowscustomization?view=minecraft-bedrock-stable|title=Shadows|website=Microsoft Learn}}</ref> They can be changed with a JSON file in {{File|directory|shadows|inline=1}} and are applied globally.
+
+* The '''shadow style''' affects which type of shadows are rendered. This can be soft, which is often used in third-party shaders and other video games, or blocky, which is used in default Vibrant Visuals. Both types are affected by the shape of the object casting the shadows.
+* The '''texel size''' represents the resolution in texture to which shadows will be quantized. For the best effect, this should be the same as the pixel resolution used for block textures, which makes shadows align with the pixel grid.
+
+'''<code>global.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.21.80"</code> for all current features.
+** {{nbt|compound|minecraft:shadow_settings}}
+*** {{nbt|string|shadow_style}}: The type of shadows to use, either <code>"blocky_shadows"</code> (default) or <code>"soft_shadows"</code>.
+*** {{nbt|int|texel_size}}: The resolution in pixels to snap shadow texels to, defaults to 16.
+</div>
+
+=== Water ===
+[[File:Vibrant Visuals particles comparison.png|thumb|Different particle concentrations create colored water fog. Clockwise from top-left: default water, medium CDOM, medium suspended sediment, and low chlorophyll values.]][[File:Vibrant Visuals waves.png|thumb|Animated water waves enabled with a resource pack. This pack uses the default settings for waves.]]
+[[Water]] effects can be customized per biome or for default water in the {{File|directory|water|inline=1}} directory.<ref name="water">{{Cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/watercustomization?view=minecraft-bedrock-stable|title=Water Effects|website=Microsoft Learn}}</ref> Instead of blending the effects per biome based on the camera's location, the water color is set for the location of the water block in the world, meaning that multiple biome effects for water can be observed at once.
+
+There are three elements that can be customized: particle concentrations, waves, and caustics.
+* '''Particle concentrations''' affect the fog color and underwater light scattering. There are three particle concentrations in mg/L, which aren't used in default Vibrant Visuals:
+** CDOM produces yellow to yellow-brown collors. Low values result in a fresh, blue appearance, like real-life oceans, and rivers have higher CDOM and more colored water.
+** Chlorophyll produces green colors, which varies based on the temperature in real life.
+** Suspended sediment produces red to red-brown colors, which appears more in real-life rivers.
+* '''Waves''' are animations on the surface of water, disabled in default Vibrant Visuals. They can partially replace the water surface texture by actual three-dimensional textures, but this doesn't affect gameplay. Waves can be customized with various settings, which affect speed variations, smoother or sharper shapes, the amount of waves (and variations) per block, and the height of waves. Individual wave animations can blend into each other and pull into larger waves, which can be customized.
+* '''Caustics''' are animated textures projected on any object surfaces ''behind'' a water surface when directional lighting hits the surface, which are enabled by default. The caustics use an internal texture with 64 frames of animation, but this can be changed to any custom texture. The speed of the animation (frame length) and scale can be customized, and the intensity can be increased.
+** A custom caustics texture must have all animation frames laid out vertically next to each other, each using the same square resolution. It should be located under the {{File|directory|textures|inline=1}} directory in the [[resource pack]], declared in {{File|file|textures_list.json|inline=1}}.
+*The [[biome]]'s '''water color''' is ignored by default in Vibrant Visuals, but the contribution of the regular water color to the fog can be increased. Depending on the setting, water fog and scatttering will be tinted with a color specified in the [[Resource pack#Biomes|client biome]] file, which is applied prior to the effects from particle concentrations.
+
+'''<code>water.json</code> format'''<div class="treeview">
+* {{nbt|compound}} The root tag
+** {{nbt|string|format_version}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The 3-part schema version used in the file, requires <code>"1.26.0"</code> for all current features.
+** {{nbt|compound|minecraft:water_settings}}
+*** {{nbt|compound|description}}
+**** {{nbt|string|identifier}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} The identifier for these settings, <code>"minecraft:default_water"</code> applies to all biomes by default, other identifiers can be specified in the {{File|file|''biome''.client_biome.json|inline=1}} file. Must include a namespace.
+*** {{nbt|compound|particle_concentrations}}
+**** {{nbt|float|cdom}}: Concentration of chromophoric dissolved organic matter which produce yellow/yellow-brown colors. Can be set between 0.0 (default) and 15.0.
+**** {{nbt|float|chlorophyll}}: Concentration of chlorophyll which produces green colors. Can be set between 0.0 (default) and 10.0.
+**** {{nbt|float|suspended_sediment}}: Concentration of suspended sediment which produces red/red-brown colors. Can be set between 0.0 (default) and 300.0.
+*** {{nbt|compound|waves}}
+**** {{nbt|bool|enabled}}: Whether waves are on or off (default).
+**** {{nbt|float|depth}}: Controls the amount of wave displacement. Can be set between 0.0 and 3.0, defaults to 1.
+**** {{nbt|float|direction_increment}}: Controls how much the heading changes between each octave. Can be set between 0.0 and 360.0.
+**** {{nbt|float|frequency}}: Controls the size of individual waves; higher values create more tightly packed waves. Can be set between 0.01 and 3.0, defaults to 1.
+**** {{nbt|float|frequency_scaling}}: Controls how much frequencies change in subsequent octaves. Can be set between 0.0 and 2.0, defaults to 1.2000000476837158.
+**** {{nbt|float|mix}}: Controls how much each octave will blend into the neighboring octave. Can be set between 0.0 and 1.0, defaults to 0.20000000298023224.
+**** {{nbt|int|octaves}}: Determines how many layers of waves to simulate; high values result in more complex waves. Can be set between 1 and 30, defaults to 28.
+**** {{nbt|float|pull}}: Controls how much smaller waves are pulled into larger ones. Can be set between -1.0 and 1.0, defaults to 0.3799999952316284.
+**** {{nbt|float|sampleWidth}}: Controls the resolutions of the fractal effect; higher values result in smoother waves. Can be set between 0.01 and 1.0.
+**** {{nbt|float|shape}}. Adjusts the shape of the wave. Can be set between 1.0 and 10.0, defaults to 1.5.
+**** {{nbt|float|speed}}: Controls the starting speed of the first waves. Can be set between 0.01 and 10.0, defaults to 2.
+**** {{nbt|float|speed_scaling}}: Controls how much faster/slower subsequent octaves move. Can be set between 0.0 and 2.0, defaults to 1.0299999713897705.
+*** {{nbt|compound|caustics}}
+**** {{nbt|bool|enabled}}: Whether caustics are on (default) or off.
+**** {{nbt|float|frame_length}}: How many seconds to spend on each frame of animation in the caustics texture. Can be set between 0.01 and 5.0, defaults to 0.09.
+**** {{nbt|int|power}}: Controls how bright the caustics effect appears. Can be set between 1 (default) and 6.
+**** {{nbt|float|scale}}: Controls the size of the repetition of the caustics texture. Can be set between 0.1 and 5.0, defaults to 0.5.
+**** {{nbt|string|texture}}:{{Fn|Not customizable in ''[[Bedrock Editor]]''|name=Editor}} Resource location of a custom caustics texture, which defaults to the internal <code>[[:File:Caustics.png|caustics.png]]</code>.
+***{{nbt|float|biome_water_color_contribution}}: Controls the contribution of the water surface color applied by the [[biome]]. Can be set between 0.0 (default) and 1.0.
+</div>
+
+{{fnlist}}
+
+== Quotes ==
+{{Q|Explore a more vibrant Overworld with Minecraft's official visual refresh – now available on compatible Bedrock Edition devices!* Soar with your happy ghast towards the sunrise, descend into shadowy depths, or simply enjoy the vivid beauty of each biome.|[[minecraft.net]]|Vibrant Visuals}}
+
+{{Q|Vibrant visuals for a richer, more immersive look.|Description of Vibrant Visuals in the [[Settings#Video|video settings]]}}
+== Sounds ==
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=End flash1.wav
+|sound2=End flash2.wav
+|sound3=End flash3.wav
+|sound4=End flash4.wav
+|sound5=End flash5.wav
+|sound6=End flash6.wav
+|sound7=End flash7.wav
+|sound8=End flash8.wav
+|subtitle=End Flash rumbles
+|source=weather
+|description=When an End flash occurs
+|id=ambient.weather.the_end_light_flash
+|volume=6.250
+|pitch=0.80-1.0
+|translationkey=subtitles.weather.end_flash
+}}
+}}
+
+== Videos ==
+{{yt|5zcZJcXRdw0|caption=A video announcing and displaying various aspects of Vibrant Visuals|align=inline}}
+{{yt|NTOLOErWN4w|caption=Showcase of Vibrant Visuals with developer commentary|align=inline}}
+{{yt|PkrKE3OpbqU|caption=An unlisted video showing ''Minecraft'' gameplay with Vibrant Visuals|align=inline}}
+{{YT|YQ1DfyAcPIQ|caption=Announcement of Vibrant Visuals in supported [[Marketplace]] packs|align=inline}}
+
+== History ==
+
+=== Announcement ===
+Vibrant Visuals was revealed at [[Minecraft LIVE – March 2025]], planned for ''Bedrock Edition'' in the coming months, with more improvements over the next few years.<ref>{{YouTube link|jGNgh5zEFkY|Minecraft LIVE - March 2025|Minecraft|March 22, 2025|t=15m26s}}</ref><ref>{{YouTube link|NTOLOErWN4w|MINECRAFT’S VISUAL REFRESH!|Minecraft|June 14, 2025|t=228s}}</ref><ref name="evolving" />
+
+It is planned to come to ''Java Edition'' in the future, but without colored lighting.<ref>{{cite|url=https://discord.com/channels/1362331987666403328/1362335022782087389/1362744378539511931|title=LowSkillCamper's FAQ on the Vibrant Vanguard Discord server|website=Discord.com|date=April 18, 2025|quote=<br>Q: Colored light?<br>A: No.}}</ref> Developers are rewriting the rendering code before Vibrant Visuals will be added to all ''Java Edition'' supported devices.<ref name="java" /> In order to implement more graphical features and sustain compatibility with macOS, the game will switch from {{w|OpenGL}} to the {{w|Vulkan}} graphics API in the summer of 2026, which can be toggled in-game until development is ready.<ref name="vulkan" />
+
+=== Deferred Technical Preview ===
+[[File:Render Dragon Banner.png|thumb|The first image of the deferred technical preview]]
+Before Vibrant Visuals was released, the deferred rendering engine was available behind the "Render Dragon Features for Creators" [[experiment]] in ''[[Minecraft Preview]]''. This was built on the features for [[ray tracing]], and gradually developed more exclusive rendering features.<ref>{{cite|url=https://www.minecraft.net/en-us/creator/article/new-render-dragon-features-creators|title=New Render Dragon Features for Creators|date=August 2, 2023|author=Kayla Kinnunen|website=[[Minecraft.net]]}}</ref> Unlike Vibrant Visuals, Mojang Studios did not provide any default configurations and textures, meaning that it needed to be configured first through [[resource pack]]s, similar to ray tracing.
+
+Since the vanilla implementation of Vibrant Visuals, the experimental deferred lighting mode has been merged with the graphics upgrade. However, the experiment is still used for other deferred rendering features that are not implemented in Vibrant Visuals, such as colored lighting.
+{{-}}{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine|||link=Minecraft Preview|dev=Preview 1.20.30.20|Added experimental support for deferred rendering in [[resource pack]]s, under the placeholder name of "Deferred Technical Preview". It adds directional lighting, shadows, bloom, tone mapping, and works with the same PBR features and textures as [[ray tracing]]. It is available for Windows, Xbox, and Android, and does not contain any default configurations. More features and supported platforms are planned.|It can be enabled in-game by setting Graphics Mode to Deferred.}}
+|{{HistoryLine|||dev=Preview 1.20.30.24|Smooth Lighting and Beatiful Skies options now only appear in the Simple and Fancy graphics options, and no longer affect visuals in deferred or ray traced graphics modes.|Removed Bloom option from Simple, Fancy, and Ray Traced graphics options}}
+|{{HistoryLine|||dev=Preview 1.20.40.20|[[Soul torch]]es are now treated as point lights.|Point lights and colors are now data-driven and customizable via resource packs.|Improved chunk rendering performance.}}
+|{{HistoryLine|||dev=Preview 1.20.40.22|Disabled deferred technical preview on Android devices without support for compute shaders.}}
+|{{HistoryLine|||dev=Preview 1.20.60.21|Added volumetric fog and light shafts.}}
+|{{HistoryLine|||dev=Preview 1.20.60.22|Adjusted the falloff of point light sources to use a square, Manhattan-based distance metric.|Tinted ambient light color with point light color for better multi-colored lighting over large distances.}}
+|{{HistoryLine|||dev=Preview 1.20.70.21|Enabled the Deferred Technical Preview for iOS and iPadOS devices.|Added point light shadows, which allows point light sources to cast shadows.}}
+|{{HistoryLine|||dev=Preview 1.20.80.20|Added a dedicated quality slider for Point Light Shadows in the Deferred Video Settings menu.|Added subsurface scattering as a new feature to the lighting model, currently only affecting [[leaves]].|Increased the contrast and saturation of the world.}}
+|{{HistoryLine|||dev=Preview 1.20.80.22|Added sky reflections for blocks, which will reflect the sky depending on roughness and other surface properties.}}
+|{{HistoryLine|||dev=Preview 1.21.0.20|Extended texture set support to [[Particles (Bedrock Edition)|particles]].}}
+|{{HistoryLine|||dev=Preview 1.21.0.22|Added color grading and tone mapping, which allows resource packs to define their own color post processing for conveying distinct moods and themes.|Added a "Remove Texture Limit" option, which makes the game load all textures until the system exhausts all available graphics memory, instead of applying the [[missing texture]].|Added light pre-exposure, which allows to specify sun or atmospheric intensities with values larger than 65,000.}}
+|{{HistoryLine|||dev=Preview 1.21.10.20|Volumetric fog density settings are now supported for [[weather]] when a format version of <code>1.21.0</code> or higher is specified.}}
+|{{HistoryLine|||dev=Preview 1.21.10.22|Added a brightness calibration screen to the deferred graphics settings.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.6.7|Released with Preview 1.21.20.21}}|slink=Bedrock Editor 0.6.7|Added Deferred Lighting Settings to ''[[Bedrock Editor]]'', which can be accessed in worlds with deferred lighting.|It has panels for atmospherics, global illumination, and color grading settings.|After configuration, the JSON contents of each setting can be copied to the clipboard and pasted in resource packs.}}
+|{{HistoryLine|||dev=Preview 1.21.20.22|Extended texture set support to [[items]].|Added the new bio-optical lighting model for [[water]], which is not data-driven yet.|Added screen space reflections, which are included as part of the Reflections quality slider in the deferred graphics settings menu. On mobile devices, screen space reflections are only available when running at Ultra settings.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.6.8|Released with Preview 1.21.20.22}}|slink=Bedrock Editor 0.6.8|Global Illumation can now be changed in the Deferred Lighting Settings.|Added localized field names in the property editor dropdown.}}
+|{{HistoryLine|||dev=Preview 1.21.20.24|Removed support for iOS or iPadOS devices older than the iPhone 8, iPad (8th generation), or iPad mini (5th generation).}}
+|{{HistoryLine|||dev=Preview 1.21.30.21|Added the ability to data-drive subsurface scattering via texture sets.|Changed the color grading JSON schema to now require explicit enabling of highlight and shadow specific color grading settings.|Added the ability to data-drive emissive desaturation.|Added support for enchanted items in texture sets.|Reduced the smudging or "ghosting" artifacts that would occur when swinging the item in the player’s hand with Upscaling enabled.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.6.10|Released with Preview 1.21.20.31}}|slink=Bedrock Editor 0.6.10|Added highlight and shadow color grading controls to the ''Editor''{{'}}s Deferred Graphics Settings.}}
+|{{HistoryLine|||dev=Preview 1.21.30.22|Added the ability to data-drive water parameters.|Added a new realistic waves feature, which must be opted into via a resource pack and will not be enabled by default.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.6.11|Released with Preview 1.21.20.32}}|slink=Bedrock Editor 0.6.11|Added the water settings to the Deferred Lighting Settings.}}
+|{{HistoryLine|||dev=Preview 1.21.40.20|Removed the dark aura around the [[moon]].}}
+|{{HistoryLine|||dev=Preview 1.21.40.21|Added a slider in the Deferred Graphics Settings for controlling the upscaling resolution factor.|Improved lighting for [[map]]s when held in hand and when placed in item frames.}}
+|{{HistoryLine|||dev=Preview 1.21.40.22|Updated some JSON schemas for Deferred Technical Preview resource packs. Some files are now split or relocated and require a format version of <code>1.21.40</code>.}}
+|{{HistoryLine|||dev=Preview 1.21.40.23|Added the ability to data-drive ambient lighting.}}
+|{{HistoryLine|||dev=Preview 1.21.50.20|[[End Portal (block)|End portals]] now cast shadows.|Improved the visibility of reflective surfaces when underground.|Slightly reduced the intensity of the wrapping effect of subsurface scattering.}}
+|{{HistoryLine|||dev=Preview 1.21.60.21|Subsurface scattering is now affected by point lights.|Added a new radio button to allow players to select if they want to set the deferred video settings to predefined values for favor performance or favor visuals.}}
+|{{HistoryLine|||dev=Preview 1.21.60.23|Add bilinear upscaling option.|Enabled the Deferred Technical Preview for PlayStation 5 and PlayStation 4 in ''Preview''.}}
+|{{HistoryLine|||dev=Preview 1.21.70.20|Added support for controlling the intensity of sky light, which affects both the contribution of legacy sky lighting as well as sky reflections.|Improved the quality of screen space reflections, specifically cases where holes would appear in reflections at certain angles.}}
+|{{HistoryLine|||dev=Preview 1.21.70.24|Added 4 optional components to the [[Resource pack#Biomes|Client Biome JSON 1.21.70 Schema]], used for the deferred technical preview: <code>atmospherics</code>, <code>color_grading</code>, <code>lighting</code>, and <code>water</code>. Identifiers can now be specified per [[biome]] to apply different configurations for these features, otherwise the global configurations will be applied.}}
+|{{HistoryLine|||dev=Preview 1.21.70.25|Reduced emissive intensity by a factor of 15.|Adjusted air and fog densities for volumetric scattering for more visible light rays.|Made slight adjustments to auto exposure and eye adaptation.}}
+|{{HistoryLine|||dev=Preview 1.21.80.20|Added caustics to bodies of [[water]], which is enabled by default, and can be further controlled by resource packs.|Modified exposure to preserve details in scenes with high contrast in lighting (i.e., local exposure).|Improved the lighting handoff between the sun and moon at sunrise and sunset.|Made some slight adjustments to volumetric fog density, the sky probe strength and the emissive brightness of the sun and moon sprites|Introduced new 'Off' option to the Point Light Quality slider to fully disable analytical point light evaluation.}}
+|{{HistoryLine|||dev=Preview 1.21.80.21|Enforced minimum Android, iOS, and iPadOS requirements for devices running the Deferred Technical Preview for maintained performance, stability, and visuals moving forward.|Disabled local exposure on all platforms because of a bug that can cause massive visual corruption. Developers will re-enable the technology in a future update once the issue has been resolved.}}
+|{{HistoryLine|||dev=Preview 1.21.80.22|Disabled [[splitscreen]] for the Deferred Technical Preview. Deferred/Ray Tracing modes are not available in the video menu during splitscreen sessions, and starting a split screen session while in one of these modes will force the game back to Fancy mode.}}
+|{{HistoryLine|||dev=Preview 1.21.80.25|The deferred technical preview now enables all features from Vibrant Visuals. The "Render Dragon features for Creators" experiment is now only used for experimental changes outside of default Vibrant Visuals.}}
+|{{HistoryLine|||dev=Preview 1.21.120.20|Deprecated <code>point_lights/global.json</code> in favor of a new file and schema, <code>local_lighting/local_lighting.json</code>.|Extended per-block local lighting information to include a <code>light_type</code> which can be either <code>static_light</code> (unused) or <code>point_light</code>.|The <code>light_color</code> property is now optional. If unprovided, the block will use a fallback light color instead.|Added vanilla light colors for most light-emitting blocks that are not point lights, defined as static lights in the file but not customizable yet. Colored lighting is not available on Android/PlayStation while issues are sorted out.}}
+|{{HistoryLine|||dev=Preview 1.21.120.21|Updated point light tracking to be able to link to custom blocks.}}
+|{{HistoryLine|||dev=Preview 1.21.130.27|Added the ability to customize static light colors.}}
+|{{HistoryLine|||dev=Preview 26.0.23|The colors of block lights have been slightly adjusted.}}
+|{{HistoryLine|||dev=Preview 26.0.28|Added Android/PlayStation support for colored block lighting.}}
+|{{HistoryLine|||dev=Preview 26.10.23|Removed the legacy <code>point_lights/global.json</code> configuration file.}}
+|{{HistoryLine|||dev=Preview 26.20.20|Point lights no longer fade out when past a certain distance from the camera.}}
+|{{HistoryLine|||dev=Preview 26.20.22|Migrated colored block light storage to the GPU.|Colored block lights now influence volumetric fog.}}
+|{{HistoryLine|||dev=Preview 26.20.26|Added static light shading to weather.}}
+}}<gallery mode="nolines" widths="200" heights="200">
+File:Bedrock 1.20.60.21 PatchNotes.jpg|The first image of volumetric fog and light shafts
+File:Bedrock 1.21.20.22 PatchNotes.jpeg|The first image of water effects
+File:Defered Lighting Settings.mp4|Showcase video of customizing deferred lighting in the ''Editor''
+File:Bedrock 1.21.30.21 PatchNotes.jpeg|The first image of subsurface scattering
+File:Bedrock 1.21.30.22 PatchNotes.jpeg|The first image of waves
+File:Deferred water.mp4|Showcase of water customization in the ''Editor''
+File:Editor Vibrant Visuals.mp4|Showcase video of customizing atmospherics in the ''Editor''
+</gallery>
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.80|exp=Vibrant Visuals|dev=Preview 1.21.80.25|Added Vibrant Visuals, which can be enabled in worlds with the [[experiment]] enabled. It adds default configurations and textures for deferred lighting, and [[End flash]]es. Point lighting is not included.|Added a new lighting model for [[clouds]], which can not be configured at this time.|Increased the range of cloud rendering.|Added pixelated reflections and shadows, which will cause them to align to the texel grid of textures in the world. Shadows are data-driven and the style and texel size can be customized.|[[File:Cloud pattern VV.png|40px]] Added a unique pattern of clouds for when Vibrant Visuals is turned on.}}
+|{{HistoryLine|||dev=Preview 1.21.80.27|Re-enabled local exposure on all platforms.}}
+|{{HistoryLine|||dev=Preview 1.21.80.28|The illuminance and color of End flashes can now be customized.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.20
+|Vibrant Visuals is now available without using its respective experimental toggle.
+|Vibrant Visuals is now the default graphics mode on devices that support it.
+|Added the ability to data-drive some of the Vibrant Visuals-related settings per biome. Creators can provide multiple versions of atmospherics, color grading, lighting and/or water configurations as long as each has a unique {{cd|identifier}} and file name. The reserved JSON names for each group of settings (e.g., {{cd|lighting/global.json}}) will continue to function as before. Creators can utilize the identifiers in [[Resource pack#Biomes|client biome]] JSON files to connect particular rendering settings to a given biome. Certain parameters, such as tone mapping operators, caustics and wave simulation on/off cannot be customized per biome at this time. Parameters will be spatially blended as players move between biomes.
+|Increased back-scattering of light underwater.
+|Cloud shadows no longer pop in and out of view when looking around on Android devices.
+|Paintings now render with correct PBR properties, shadows and illumination.
+|Added MERS texture support for signs.
+|Added new texture assets for trims, particles, spawn eggs, water and dark oak boats.
+|Changed the appearance of metals, cave vines, chorus flowers, pumpkins, fire fly bushes, and other blocks.
+|Changed the bee, dolphin, ghast, pig saddle and strider textures.}}
+|{{HistoryLine|||dev=Preview 1.21.90.23
+|Made glass blocks more reflective.
+|Tweaked metallics on cauldrons and ancient debris.
+|Tweaked emissiveness on eyeblossom.
+|Added emissiveness to the End crystal to match the item.
+|Added MERS textures for happy ghasts and harnesses.
+|Adjusted the glow lichen block emissiveness.
+|Improved Snell's window effect when looking up from underwater.
+|The End flash is now visible again in the End.}}
+|{{HistoryLine|||dev=Preview 1.21.90.25
+|Changed shadows in Vibrant Visuals so that they cast further at sunrise and sunset. Prior to this change, shadows were clamped at a 30 degree angle relative to the horizon. This clamp has now been reduced to 10 degrees. This also improves an issue where specular highlights, light rays and volumetric fog were not properly occluded when the sun or moon was behind a mountain at a low angle.
+|Added temperature grading settings to the color grading json files for Vibrant Visuals. Schemas must specify a format version of <code>1.21.90</code> to access this new setting.
+|Particles rendered without the <code>minecraft:particle_appareance_lighting</code> component are now renderered as expected.
+|Removed the debug feature where <code>;</code> could be used to toggle between graphics modes.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.9.9|Released with Preview 1.21.90.25}}|slink=Bedrock Editor 0.9.9|Added key frame graphs to the ''Editor''{{'}}s Vibrant Visuals Settings.|Projects are no longer in Vibrant Visuals mode by default and can now be toggled in the settings pane.|Removed point lights from the settings pane when "Render Dragon Features for Creators" is disabled.}}
+|{{HistoryLine|||dev=Preview 1.21.90.26
+|<code>the_end_light_flash</code> sound effect now triggers when the light flashes in the End dimension.
+|Customized atmospherics, color grading, fog and lighting for the End, the Nether, the Overworld dimensions and a variety of biomes. Some issues exist with atmospherics in End and Nether dimensions.
+|Recalibrated all emissiveness values in MERS textures.
+|Update shadow configurations for "Favor Performance" targets on all Xbox platforms.
+|Changed the volumetric fog configuration for "Favor Performance" targets on Xbox One and Xbox One X.
+|Reduced the intensity and speed of the caustics animation.
+|Increased emissive intensity and adjusted tone mapping parameters.
+|Added <code>henyey_greenstein_g</code> settings to the fog json files, which allows specifying value for both <code>air</code> and <code>water</code> used for light shafts in Vibrant Visuals.|Updated the cloud pattern, and removed the Vibrant Visuals-exclusive pattern.}}
+|{{HistoryLine|||dev={{abbr|Editor 0.9.9.9|Released with Preview 1.21.90.26}}|slink=Bedrock Editor 0.9.9.9|Added functionality to export Vibrant Visuals settings into a resource pack.|Added an optional action bar button for Vibrant Visuals Settings.}}
+|{{HistoryLine|||dev=Preview 1.21.90.27|Temporarily reverted weather-related changes to sky color while some issues are sorted out.}}
+|{{HistoryLine|||dev=Preview 1.21.90.28|Vibrant Visuals is no longer the default graphics mode on Xbox One, Xbox One S, and PlayStation 4.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.21
+|Weather events now affect the scene illumination and the color of clouds and sky in Vibrant Visuals.
+|Changed Reflections configuration for "Favor Performance" preset on Xbox platforms with Vibrant Visuals.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.20|Updated volumetric fog configs for Windows to have more consistent steps in performance impact, while also maximizing image quality for cost.|Added support for subsurface scattering on particle textures.|The maximum [[Deferred Render Distance|render distance]] has been increased to 28 chunks for Vibrant Visuals on Windows.|Increased thickness on block selection wireframe to make it more visible in Vibrant Visuals especially with TAAU enabled.}}
+|{{HistoryLine|||dev={{abbr|Editor 1.1.0|Released with Preview 1.21.110.25}}|slink=Bedrock Editor 1.1.0|Removed PBR Fallout Settings from the Vibrant Visuals Settings.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.20|Renamed "Adjust Brightness" to "Adjust Gamma" in the Vibrant Visuals options.|Improved quality of gamma correction on Windows and consoles and fixed the brightness of the [[creeper]] textures in the gamma calibration screen.|Added a percentage indicator to the gamma calibration screen as well as a button to reset the gamma to the default state.}}
+|{{HistoryLine|||dev=Preview 1.21.120.22|Added unique biome settings for the [[dark forest]] biome.|Reduced the intensity of temperature-based color grading in certain biomes, especially dry biomes.|Slightly reduced contrast across all biomes.|Adjusted the sky color in the End.}}
+|{{HistoryLine|||dev=release|Vibrant Visuals is now available for several [[Marketplace]] packs, and an [[Vibrant Adventures|official map]] has been made available for free.<ref name="marketplace">{{mcnet|vibrant-visuals-in-minecraft-marketplace|Vibrant Visuals arrives in Minecraft Marketplace|October 28, 2025|Sofia Dankis}}</ref>}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added the ability to data-drive cubemap lighting and effects.}}
+|{{HistoryLine|||dev={{abbr|Editor 1.1.6|Released with Preview 1.21.130.20}}|slink=Bedrock Editor 1.1.6|Added cubemap controls to the Vibrant Visuals Settings.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Introduced new parameter <code>biome_water_color_contribution</code> to the [[water]] JSON file, allowing to control the contribution of biome water colors in Vibrant Visuals.}}
+|{{HistoryLine|||dev=Preview 26.0.27|Added the ability to specify ambient light colors and illuminances, and sky light intensity according to the time of day.}}
+|{{HistoryLine|||dev={{abbr|Editor 1.2.4|Released with Preview 26.0.28}}|slink=Bedrock Editor 1.2.4|Added functionality to edit Vibrant Visuals Settings for each [[biome]].}}
+|{{HistoryLine||26.10|dev=Preview 26.10.20|Static light colors can now be customized in Vibrant Visuals and no longer requires the "Render Dragon Features for Creators" experiment.}}
+|{{HistoryLine|||dev={{abbr|Editor 1.2.5|Released with Preview 26.10.20}}|slink=Bedrock Editor 1.2.5|Improved performance of ''Editor'' in Vibrant Visuals mode by preventing an extra deferred rendering call.}}
+|{{HistoryLine|||dev=Preview 26.10.23|Added static local lighting support for more entities and items, including pistons, moving blocks, signs, beds and chests.}}
+|{{HistoryLine|||dev=Preview 26.10.25|Added static/colorized light shading to [[Particles (Bedrock Edition)|particles]].}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.20|Water settings and the description object for biome identifiers are now required in the <code>1.26.20</code> water JSON schema.}}
+|{{HistoryLine|||dev=Preview 26.20.23|{{cd|minecraft:atmosphere_settings}} and {{cd|minecraft:atmosphere_settings/description}} are now required in the {{cd|1.26.20}} version of the atmospherics config file.
+|Accessing atmospherics graphics overrrides through [[scripting]] is now done from {{cd|getBiomeAtmospherics}}.}}
+}}
+<!--Because the Deferred Technical Preview and Bedrock Edition history are directly related with each other, it is chronologically more logical to have Java Edition below.-->
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Implemented the {{w|Vulkan}} graphics API on an experimental backend, which can be toggled in the video settings. The game attempts to use Vulkan by default, but falls back to OpenGL if there are issues.}}
+}}
+== Issues ==
+{{issue list|projects=mcpe}}
+
+== Trivia ==
+[[File:Vibrant Visuals older versions.png|thumb|Vibrant Visuals in an old world, with soft shadows, lacking water reflections, and no MERS textures]]
+* Vibrant Visuals can be enabled in worlds locked in any older version using [[World template|world templates]] and a PBR-enabled resource pack. This ignores all resource packs from versions above the world's version, including Vibrant Visuals configurations and textures. Below 1.21.90, this results in interesting behavior for some features, while most others function normally:
+** All MERS textures are ignored, making environments without directional lighting appear identical to classic graphics modes.
+** Atmospherics and lighting configurations are not applied, defaulting to the hard-coded values, and some environmental effects do not appear at all. Sunset and sunrise for example, tint the zenith sky dark blue and the horizon red, much brighter than regular colors.
+** Shadows are not blocky but soft.
+** End flashes still occur, but are not colored and appear white.
+** The [[End sky]] is not colored below the horizon, resembling the classic End sky with [[Night Vision]]. At zenith however, the sky is tinted dark green/blue.
+** Without brightness configurations, directional lighting from the sun appears glitched, and excessively bright.
+** The [[Nether roof]] is completely glitched without any light.
+** Water reflections or cubemaps don't appear, deep water looks shadow blue.
+** For a moment in the loading world screen before entering the world, the [[panorama]] renders with the the [[missing texture]].
+* The introduction of Vibrant Visuals added MERS textures for any block, entity, and particle present in all vanilla resources, including [[unused textures]] and various old textures kept for backward-compatibility. However, these can never be encountered in-game because loading an old world will ignore the resource packs containing these textures.
+* According to developers, the deferred rendering mode was build on parts from the [[RTX]] pipeline and the rendering pipeline from {{MCL}} since 2020.<ref>{{Cite|url=https://wiki.bedrock.dev/meta/deferred-qna|title=Deferred Technical Preview Q&A 2024/02/23|website=Bedrock Wiki|quote=The Deferred pipeline has been in development in various forms since 2020. Parts of it were born out of optimizations to the RTX pipeline but other parts were born out of the pipeline used for Minecraft Legends. Development started in earnest in March of 2022.}}</ref>
+* [[File:Vibrant Visuals hot sky.png|thumb|The unused hot atmospherics, lighting, and color grading settings applied to [[Wooded Badlands|wooded badlands]] with a resource pack.]]The vanilla resources contain unused "hot" atmospherics, lighting, and color grading. This generally increases the effects from desert and mesa biomes, but the sky uses a dark blue color instead of turquoise green.
+<gallery>
+File:Vibrant Visuals glitched end sky.png|The End sky in an older version with a flash
+File:Vibrant Visuals glitched sunlight.png|Sunlight appears too bright, and the sky has unusual colors.
+File:Vibrant Visuals glitched nether roof.png|A glitched Nether roof in older versions
+File:Missing texture panorama.png|The missing panorama
+</gallery>
+
+== Gallery ==
+
+=== Textures ===
+{{Hatnote|See [[:Category:MERS textures]] for vanilla PBR textures.}}
+<gallery>
+File:Sun vv.png|The texture of the [[sun]] exclusive to Vibrant Visuals, which has more vibrant colors and layers.
+File:Caustics.png|<code>caustics.png</code>, containing 50 frames of the water caustics animation.
+File:Brdf lut.png|<code>brdf_lut.png</code>
+</gallery>
+
+=== Screenshots ===
+{{See also|Category:Vibrant Visuals screenshots}}<gallery>
+File:Desert sunset VV.png|A desert sunset with different sky and sun colors and stretched shadows
+File:Monument top VV.png|Example of underwater lighting with Vibrant Visuals, on an [[Ocean Monument|ocean monument]]
+File:Moonlight Vibrant Visuals.png|The [[moon]] has a blue glow and can create shadows.
+File:Light falling into lush cave.png|Sunlight falling into a [[Lush Caves|lush cave]] through a hole. Although the blocks look fully lit, the [[light]] level is still 0 and hostile mobs can spawn.
+File:Shadows on trees VV.png|Shadows on trees in an old growth pine taiga, as seen from the position of the sun. Notice the subsurface scattering on [[leaves]], and the [[player]]'s shadow.
+File:Ancient city VV.png|An [[Ancient City|ancient city]]. The darkness makes blue emissive textures dominate the atmosphere, resulting in an entirely unique environment.
+File:Vibrant Visuals ocean reflections.png|[[Iceberg (feature)|Icebergs]] create detailed reflections on an ocean's surface, while [[clouds]] create blurry reflections.
+File:Wither sky.png|The sky as it appears with a dry [[thunderstorm]] or when a [[wither]] is nearby
+File:Large Lush Caves VV.png|[[Lush Caves|Lush caves]] are much more vibrantly illumated.
+File:Vibrant Visuals Nether.png|[[The Nether]]. Screenshot taken over a lava sea in a [[Crimson Forest|crimson forest]].
+File:Vibrant Visuals End.png|[[The End]] after an End flash
+File:Colored light cave.png|Point lights and colored lights
+File:VV purple sun.png|On the transition between biomes, volumetric fog from both biomes are combined. With [[Mushroom Fields|mushroom fields]], this result in a strong purple glow.
+File:Nether roof VV.png|The [[Nether roof]] has red ambient lighting, where no other light sources are available.
+File:Void Vibrant Visuals.png|The [[void]] lets light beams shine through the bedrock at higher distances.
+</gallery>
+
+==== Settings ====
+<gallery>
+File:New UI - Video Settings Screen - Graphics Mode - Vibrant Visuals Options (Bedrock Preview 1.21.130.24).png|The Vibrant Visuals options in the [[Settings#Video|video settings]]
+File:Vibrant Visuals gamma calibration screen.png|The Vibrant Visuals gamma calibration screen
+File:Vibrant Visuals gamma comparison.png|A cave with gamma set to 50% (left), 100% (middle), and 150% (right).
+File:Large savanna VV.png|Example of a render distance of 128 chunks with Vibrant Visuals enabled
+File:Vibrant Visuals reflections off.png|[[Water]] with reflections off. The [[redstone torch]] can be seen emitting red point light.
+File:Vibrant Visuals reflections ultra.png|The same water with reflections set to Ultra
+File:Vibrant Visuals point lights off.png|A [[torch]] and [[soul torch]] with point lights off. They look just like torches in Fancy graphics, despite Vibrant Visuals being used.
+File:Vibrant Visuals point lights on.png|The same torch and soul torch with point lights on. Each torch emits colored light on its side of the room, and the colored light can be faintly seen combining into green light in the middle.
+File:Vibrant Visuals reflection quality Low Off.png|An [[ocean]] near a [[jungle]] with reflections set to Low or Off
+File:Vibrant Visuals reflection quality Medium.png|Ditto, with reflections set to Medium
+File:Vibrant Visuals reflection quality High.png|Ditto, with reflections set to High
+File:Vibrant Visuals reflection quality Ultra.png|Ditto, with reflections set to Ultra
+File:VV clouds low.png|The cloud distance set to Low
+File:VV clouds medium.png|The cloud distance set to Medium
+File:VV clouds high.png|The cloud distance set to High
+File:VV clouds ultra.png|The cloud distance set to Ultra
+</gallery>
+
+=== Vibrant Visuals announcement ===
+<gallery>
+File:No VV beach.png|A [[beach]] without Vibrant Visuals. There is a [[mangrove swamp]] and [[jungle]] behind it. There are [[firefly bush]]es in the swamp, emitting firefly particles.
+File:VV beach.png|The same beach with Vibrant Visuals. The firely particles are more visible, and have a blue color. The [[sun]] produces a strong glare.
+File:Zuri's vibrant boat ride.jpg|[[Zuri]] on a [[boat]] on the coast of a [[Bamboo Jungle|bamboo jungle]] during [[Daylight cycle|sunset]] with Vibrant Visuals
+File:Vibrant forest.jpg|A [[forest]] with Vibrant Visuals. On the left there is a large oak tree, and the [[leaves]] are reflecting some of the blue skylight.
+File:Mountain vibrant comparison.jpg|A comparison of Fancy graphics and Vibrant Visuals in a [[cherry grove]] biome, showing shadows and roughness textures on grass blocks.
+File:Dark vibrant comparison.jpg|A similar comparison outside a [[woodland mansion]], with light falling into the window of "Triple bed bedroom", with a potted [[azure bluet]].
+File:Cold vibrant comparison.jpg|A comparison with [[Terrain_features#Iceberg|icebergs]] in a [[frozen ocean]]. The ice is actually less transparent in Vibrant Visuals, so the form of the ice berg underwater cannot be seen as easily.
+File:Vibrant juxtaposition.jpg|A desert [[village]] with Vibrant Visuals, during sunset. The screenshot was taken in a [[river]], so the yellow haze of the [[desert]] is not present. Instead, there is a blue haze, which makes the texture of the [[sand]] more visible.
+File:Vibrant jungle cruise.jpg|A copper boat sailing through a jungle [[river]], with a copper water mill on the right, a large bridge on the cliffs in the background, and multiple cliffside buildings
+File:Vibrant iceberg.jpg|A frozen ocean at sunset, with 3 [[polar bear]]s and a snow [[fox]], while Zuri does some ice [[fishing]]. Minor visual glitches can be seen on the icebergs.
+File:Vibrant canyon lake.jpg|A lake in a [[badlands]] biome, with a [[wooded badlands]] behind it. This image shows water reflections from sunlight, clouds, and the terrain.
+File:Vibrant meadow.jpg|A [[plains]] biome at sunrise with more vibrant colors compared to Fancy graphics
+File:Vibrant village.jpg|The plains village from the previous image, showing different shadow effects
+File:VibrantVisuals Overworld.jpeg|A [[cherry grove]] with the sun hovering just over the cliff, creating light rays. The camera is in a plains biome.
+File:VibrantVisuals buildfarm.jpeg|A player-made [[wheat]] and [[carrot]] farm, with homes next to it. [[Kai]], [[Sunny]], and Zuri are standing in the farm.
+File:VibrantVisuals Taiga.jpeg|An [[old growth pine taiga]]
+File:Vibrant visuals scenic view.jpeg|A plains with a river running through it
+File:VV snowy taiga.png|A cabin in a [[snowy taiga]]
+File:VV jungle.png|A tree house in a jungle
+File:Characters enjoying a sunset.jpeg|Kai, Zuri, and [[Ari]] watching a sunset with Fancy graphics
+File:Characters enjoying a vibrant sunset.jpeg|The same scene with Vibrant Visuals has more unique atmospherics and reflections.
+</gallery>
+
+=== [[Chase the Skies]] announcement ===
+<gallery>
+File:Ari leads mobs.jpeg|Ari using the new [[lead|leashing]] functionality to leash 3 mobs in a line, while holding a [[snowball]] to attract a [[ghastling]].
+File:Trio of happy ghasts.jpg|A trio of [[happy ghasts]] ridden by [[Efe]], [[Makena]], and Kai, with mobs in boats underneath
+File:Ari’s mounts.jpeg|Ari riding a [[horse]] while leashing a [[camel]] and a happy ghast
+File:Ghastling lake stroll.jpeg|A ghastling next to [[water]]. Ripples and reflections can be seen in the water.
+File:Vibrant and regular swamp.jpeg|Each image shows a [[swamp]] during [[Daylight cycle|sunset]]. The right image shows the reflection of the sunset in Vibrant Visuals. These images show how Vibrant Visuals enhances the scene.
+File:Vibrant and regular desert.jpeg|A desert, [[stony shore]], and [[badlands]] (right) during sunset
+File:Vibrant and regular mangrove swamp.jpeg|A [[mangrove swamp]]  during sunset
+File:Chase the Skies Vibrant Visuals scene.jpeg|alt=Vibrant Visuals scene with the words "tomorrow"|Promotional image just before the release of Chase the Skies with Vibrant Visuals
+</gallery>
+
+== See also ==
+* [[Overworld Adventures]], a series of online stories made to promote Vibrant Visuals.
+* [[Vibrant Memories Add-On]], an add-on made to promote the initial launch.
+* [[Vibrant Adventures]], an adventure world template featured in the Vibrant Visuals-tagged contents in the [[Marketplace]].
+* [[Shader]], the previous system of graphics enhancement in {{BE}} using resource packs which is still used in {{JE}}.
+* [[Shader pack]]s, similar but unofficial graphic enhancement mods for ''Java Edition''.
+* [[Super Duper Graphics Pack]], a previously cancelled graphics update for ''Bedrock Edition''.
+
+== Notes ==
+<references group="note" />
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|minecraft-vibrant-visuals|Vibrant Visuals|March 22, 2025}}
+* {{cite|url=https://www.minecraft.net/en-us/vibrant-visuals-update?tabs=%7B%22tab-b-2b62266a10%22%3A0%2C%22tab-b-5a84571c05%22%3A0%7D|title=Vibrant Visuals: Enable Enhanced Minecraft Graphics|website=[[Minecraft.net]]}}
+* [https://github.com/microsoft/minecraft-samples/tree/main/deferred_lighting_starter Deferred lighting starter samples] on GitHub.
+* [https://www.minecraft.net/en-us/search?q=Vibrant+Visuals&tabs=%7B%22searchApp%22%3A2%7D&filter=%7B%22marketplace%22%3A%7B%22price%22%3A%7B%7D%2C%22rating%22%3A%7B%7D%2C%22packType%22%3A%7B%7D%2C%22worldType%22%3A%7B%7D%7D%7D&sort=%7B%22marketplace%22%3A%22Relevance%22%7D&page=%7B%22marketplace%22%3A1%2C%22explore%22%3A1%2C%22games%22%3A1%2C%22news%22%3A1%2C%22community%22%3A1%2C%22support%22%3A1%7D Vibrant Visuals packs in the Marketplace].
+* [https://discord.gg/eWmK8p565c Vibrant Vanguard], an unofficial Discord server sanctioned by Mojang for developers and modders to discuss Vibrant Visuals development on ''Java Edition''.
+
+=== Feedback ===
+
+* [https://feedback.minecraft.net/hc/en-us/community/topics/35262308901901-Vibrant-Visuals Vibrant Visuals – Minecraft Feedback].
+** [https://feedback.minecraft.net/hc/en-us/community/posts/35391950770317-Vibrant-Visuals-FAQ-Thread Vibrant Visuals FAQ Thread] – July 30, 2025.
+** [https://feedback.minecraft.net/hc/en-us/community/posts/35394147049613-Known-Issues-Read-before-you-post Known Issues (Read before you post!)] – July 30, 2025.
+** [https://feedback.minecraft.net/hc/en-us/community/posts/35551829624077-Let-s-talk-about-water-in-Vibrant-Visuals Let's talk about water in Vibrant Visuals!] – April 3, 2025.
+** [https://feedback.minecraft.net/hc/en-us/community/posts/35553557116813-Let-s-talk-about-lava-in-Vibrant-Visuals Let's talk about lava in Vibrant Visuals!] – April 3, 2025.
+** [https://feedback.minecraft.net/hc/en-us/community/posts/35554064025101-Let-s-talk-about-reflections-roughness-on-material-surfaces-and-blocks Let's talk about reflections & roughness on material surfaces and blocks!] – April 3, 2025.
+* [https://discord.com/channels/1138536747932864532/1357376861352497283 Feedback Discord]
+
+== Navigation ==
+{{Navbox Bedrock Edition}}
+{{Navbox gameplay}}
+{{Navbox resource packs}}
+{{Featured}}
+[[Category:Experimental]]
+[[Category:Minecraft Live]]
+
+[[de:Vibrant Visuals]]
+[[es:Visuales vibrantes]]
+[[fr:Graphismes éclatants]]
+[[ja:バイブラントビジュアルズ]]
+[[lzh:Vibrant Visuals]]
+[[pt:Visuais Vibrantes]]
+[[ru:Vibrant Visuals]]
+[[uk:Vibrant Visuals]]
+[[zh:Vibrant Visuals]]

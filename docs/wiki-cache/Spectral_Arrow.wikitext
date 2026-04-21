@@ -1,0 +1,160 @@
+{{For||Arrow (disambiguation)}}
+{{exclusive|java}}
+{{Infobox item entity
+|image=Spectral Arrow.png
+|invimage=Spectral Arrow
+|renewable=Yes
+|stackable=Yes (64)
+|size=Height: 0.5 Blocks<br>Width: 0.5 Blocks
+|networkid='''[[JE]]''': 91
+}}
+A '''spectral arrow''' is a type of [[arrow]] that inflicts the [[Glowing]] effect on hit in addition to dealing [[damage]].
+
+== Obtaining ==
+=== Picking up arrows ===
+{{main|Arrow#Picking up arrows}}
+Similarly to regular arrows, players can pick up spectral arrows that have been shot by dispensers, or other players in [[Survival]] or [[Adventure]] mode. Unlike regular arrows, spectral arrows shot by an [[Infinity]]-enchanted bow can be picked up, as they are not affected by the enchantment.
+
+=== Generated loot ===
+{{LootChestItem|spectral-arrow}}
+
+=== Crafting ===
+{{Crafting
+|head=1
+|A2= Glowstone Dust
+|B1= Glowstone Dust
+|B2= Arrow
+|B3= Glowstone Dust
+|C2= Glowstone Dust
+|Output = Spectral Arrow,2
+|type = Combat
+|description = {{only|java}}
+|foot=1
+}}
+
+=== Bartering ===
+Spectral arrows can be obtained through [[bartering]] with [[piglin]]s, which has a {{frac|40|469}} (~8.53%) chance to give the [[player]] 6-12 arrows.
+
+== Usage ==
+{{main|Arrow#Common properties}}
+Spectral arrows share many of the same characteristics as regular arrows as projectiles. See [[Arrow#Common properties]] for information on common properties shared by all arrows. 
+
+=== Special properties ===
+A spectral arrow confers the [[Glowing]] status effect for 10 seconds. The Glowing effect creates an outline of the target, which is visible through blocks, and colored based on the target's [[team]] (white by default). Even if a bow is enchanted with [[Infinity]], spectral arrows are still consumed.
+
+== Sounds ==
+{{:Arrow/Sounds|a spectral arrow|spectral arrows|hidebedrock=1}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Spectral Arrow
+|spritetype=item
+|nameid=spectral_arrow
+|itemtags=arrows
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Spectral Arrow
+|spritetype=entity
+|nameid=spectral_arrow
+|entitytags=arrows, impact_projectiles
+|foot=1}}
+
+=== Entity data ===
+Spectral arrows have entity data that define various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/arrow}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt|integer|Duration}}: The time in ticks that the Glowing effect persists.
+</div><section end="entity data"/>
+
+== Advancements ==
+{{load advancements|Take Aim;Sniper Duel;Not Today, Thank You;Bullseye;Ol' Betsy;Two Birds, One Arrow;Who's the Pillager Now;Arbalistic;How Did We Get Here?}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||May 4, 2015|link=https://x.com/Dinnerbone/status/595224755126534144|[[File:Spectral Arrow (item) JE1.png|32px]] Spectral arrows are shown in a screenshot by Dinnerbone.}}
+|{{HistoryLine||May 22, 2015|link=https://x.com/Dinnerbone/status/601714812436029440|Spectral arrows are shown in another screenshot by Dinnerbone.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.9|dev=15w31a|[[File:Spectral Arrow JE1.png|42px]] [[File:Spectral Arrow (item) JE1.png|32px]] Added spectral arrows. They show [[mob]] and [[player]] outlines in their team color when hit. They have [[Missing texture|no texture]] when shot.}}
+|{{HistoryLine|||dev=15w31b|[[File:Spectral Arrow JE2.png|42px]] Spectral arrows now use their intended texture.<ref>{{bug|MC-82809}}</ref>}}
+|{{HistoryLine|||dev=15w49a|Spectral arrows are no longer affected by the [[Infinity]] [[enchanting|enchantment]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Spectral Arrow (item) JE2.png|32px]] The [[item]] sprite texture for spectral arrows has been changed.}}
+|{{HistoryLine||1.16|dev=20w16a|Spectral arrows now generate in [[bastion remnant]] chests.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Spectral arrows can now be obtained through [[bartering]] with [[piglin]]s.}}
+|{{HistoryLine|||dev=20w30a|The average yield of spectral arrows from bastion remnant chests have been substantially increased.}}
+|{{HistoryLine||1.17|dev=21w11a|[[File:Spectral Arrow JE3.png|42px]] The texture of the spectral arrow has been changed.}}
+|{{HistoryLine||1.20.3|dev=23w43a|Spectral arrows keep all of their NBT data when shot and picked up.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Shot spectral arrows now bounce on the [[world border]] if hit.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[File:Spectral Arrow (item) JE1.png|32px]] Added spectral arrows.
+|Spectral arrows are currently unobtainable and do not have any effects.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Spectral Arrow (item) JE2.png|32px]] The [[item]] sprite texture for spectral arrow has been changed.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||3|Spectral arrows no longer trigger the attack [[invulnerability timer]], allowing multiple spectral arrows to connect even if the entity is invulnerable.}}
+|{{HistoryLine||4|The [[inaccuracy]] value on [[bow]]s and [[crossbow]]s has been decreased from 1 to 0.25, increasing the accuracy of fired spectral arrows.}}
+|{{HistoryLine||6|Vertical momentum no longer influences the flight path of fired spectral arrows.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The [[entity]] IDs{{info needed|why plural? isn't there only one?}} have been changed from {{cd|SpectralArrow}} to {{cd|spectral_arrow}}.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], the item's numeral ID was 439.{{info needed|and what was the numeric entity ID?}}}}
+}}
+
+== Issues ==
+{{issue list|projects=MC}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Flaming_stuck_spectral_arrow.png|A flaming spectral arrow stuck in a tree.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox items|Equipment}}
+{{Navbox entities|other}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[de:Spektralpfeil]]
+[[es:Flecha#Flecha espectral]]
+[[fr:Flèche spectrale]]
+[[ja:光の矢]]
+[[nl:Spectrale pijl]]
+[[pt:Flecha Espectral]]
+[[uk:Спектральна стріла]]
+[[zh:光灵箭]]

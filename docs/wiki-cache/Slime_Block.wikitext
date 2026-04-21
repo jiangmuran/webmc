@@ -1,0 +1,257 @@
+{{for|other uses|Slime (disambiguation)}}
+{{Infobox block
+| image = Slime Block.png
+| transparent = '''[[JE]]''': Partial{{fn|Like leaves, this block diffuses sky light only from directly above.}}
+<br>'''[[BE]]''': Yes
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''slime block''' is a storage [[block]] equivalent to nine [[slimeball]]s. It has both sticky and bouncy properties making it useful in conjunction with [[piston]]s to move both blocks and entities. It can be used to brew [[Potions of Oozing]].
+
+== Obtaining ==
+=== Breaking ===
+Slime blocks can be [[instant mining|broken instantly]], regardless of held items, or when under the [[Mining Fatigue]] effect.
+
+{{Breaking row|Slime Block|horizontal=1|foot=1}}
+
+=== Crafting ===
+{{Crafting
+|A1= Slimeball
+|B1= Slimeball
+|C1= Slimeball
+|A2= Slimeball
+|B2= Slimeball
+|C2= Slimeball
+|A3= Slimeball
+|B3= Slimeball
+|C3= Slimeball
+|Output= Slime Block
+|type= Redstone
+}}
+
+== Usage ==
+Landing on a slime block does not cause fall damage regardless of whether the player is {{control|sneaking}}.‌
+
+Slime blocks are also slightly slippery, but less so than [[ice]].
+
+Slime blocks cause movement on top of them to slow down.
+
+=== Bouncing ===
+A player or mob that falls onto the top of a slime block bounces to a height proportional to the falling velocity. The bounce height quickly deteriorates. For example, a fall of 255 blocks produces a bounce height of about 50 blocks, while a fall of 50 blocks results in a bounce height of 22 blocks. The maximum bounce height is 57.625 blocks. Entities hitting the side of a slime block do not bounce, unless the slime block is moving using a piston.
+
+A player holding {{control|jump}} while landing on a slime block bounces farther. A player holding {{control|sneak}} takes no fall damage and does not bounce at all.
+
+Placing [[carpet]]s, [[rail]]s, [[trapdoor]]s, [[redstone repeater]]s or [[redstone comparator]]s on a slime block does not stop mobs from bouncing and not taking fall damage. Likewise, placing a [[pressure plate]] on a slime block does not stop mobs from bouncing, but the pressure plate still activates. Half-blocks such as [[cake]]s and [[slab]]s stop the bouncing effect.
+
+Most mobs bounce off slime blocks. Exceptions are [[chicken]]s, [[ghast]]s, [[bat]]s, [[phantom]]s, [[bee]]s, [[parrot]]s, and [[vex]]es. Occasionally a [[horse]] may get stuck on a block when a player tries to spawn it on top of a slime block in [[Creative]] mode.
+
+Items, [[falling block]]s and [[minecart]]s do not bounce on slime blocks. [[Particle]]s, however, do bounce. Players can also get around the fact that falling blocks, and minecarts don't bounce by having sticky pistons with slime blocks bounce them.
+
+=== Pistons ===
+{{Schematic
+|caption=Piston A can extend because the slime block ignores the adjacent obsidian. Piston B cannot extend because the diamond block is prevented from moving by the obsidian and so the slime block also refuses to move.
+|pi-e+A|SL|||pi-e+B|SL||-
+||obsidian||||MB|obsidian
+}}
+[[File:Dico's fast engine compacted by Xbxp.png|thumb|250px|A self-propelled aircraft engine. Place the top [[block of redstone]] and [[sticky piston]] last.]]
+
+When being pushed by a [[piston]], entities (except [[ender dragon]]s, [[item frame]]s and [[painting]]s) that are ahead are launched into the direction the block is pushed into, at an initial speed of 20 blocks a second. When pulled by a piston, no entities are launched.
+
+When a slime block is pushed or pulled by a piston, it attempts to move all adjacent blocks in the same direction. The types of blocks that can be moved are the same as those that can be ''pulled'' by a [[sticky piston]]. Blocks that cannot be pulled by a sticky piston (i.e. all the blocks listed on the [[Piston#Limitations|table on the pistons page]]) stay in place. The blocks that are moved may in turn push other blocks. For example, a slime block sitting on the ground attempts to move the ground block underneath itself, which pushes additional ground blocks in the direction of motion just as if it were being pushed directly by a piston.
+
+Blocks such as [[glazed terracotta]] and [[honey block]]s are exceptions; they do not move when adjacent slime blocks are moved, even if they are normally pushable by a piston.
+
+When the adjacent block that is moved is also a slime block, that block attempts to move all its adjacent blocks. For example, a 2×2×2 cube of slime blocks may be pushed or pulled as a unit by a single piston acting on any of the blocks in the cube and attempts to move all blocks adjacent to the cube.
+
+A slime block adjacent to a block that cannot be moved by pistons ignores the immobile block. However, if an adjacent block ''could'' be moved but is prevented by the presence of an immobile block, the slime block is also prevented from moving. This includes slime blocks being pulled rather than pushed, in which case the piston retracts without pulling anything. [[Liquid]]s are an exception: they aren't moved, but neither do they stop a piston from pushing or pulling blocks into their space ([https://bugs.mojang.com/browse/MC-75581 usually destroying the liquid, and in a rare case displacing it through the piston]).
+
+Slime blocks are not pulled by a non-sticky piston, nor are they moved if an adjacent (non-slime) block is moved by a piston.
+
+The maximum of 12 blocks moved by a piston still applies. For example, a 2×2×3 of slime blocks may be pushed or pulled by a sticky piston as long as no other movable blocks are adjacent to it.
+
+A piston cannot move itself via a "loop" constructed of slime blocks, but [[Tutorials/Flying machines|self-propelled contraptions]] can be created with multiple pistons.
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Brewing ingredient ===
+{{Brewing
+  |head=1
+  |Slime Block
+  |Mundane Potion
+  |base=Water Bottle
+  |showvariants=1
+}}
+{{brewing
+  |foot=1
+  |showname=1
+  |Slime Block
+  |Potion of Oozing
+  |showvariants=1
+}}
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb slime blocks, either through picking them up or being interacted with them. This provides the golf ball/fast flat effect to the mob when hitting it. Plus, it will also cling onto ceilings.
+
+== Sounds ==
+{{Sound table/Block/Slime block}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Slime Block
+|spritetype=block
+|nameid=slime_block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Slime Block
+|spritetype=block
+|nameid=slime
+|id=165
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Trampoline}}
+
+== Videos ==
+{{yt|dkb9i1-5N_s}}
+
+== History ==
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||December 20, 2013|link={{tweet|jeb|413984532191526912}}|[[Jeb]] posts the first image of the slime block. At this stage, slime blocks are known as "Bouncy Blocks".}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w02a|[[File:Slime Block JE1.png|32px]] Added slime blocks.
+|[[File:Slime Block (in minecart) JE1.png|32px]] They appear opaque if set to render as the block inside of a [[minecart]] via commands or map editing.}}
+|{{HistoryLine|||dev=14w18a|Slime blocks can now move adjacent [[block]]s when moved by [[piston]]s.
+|Slime blocks pushed upward by a piston now launch [[entities]] vertically into the air.}}
+|{{HistoryLine|||dev=14w18b|[[Sneaking]] now prevents players from bouncing on slime blocks and results in players taking fall damage when landing on them.}}
+|{{HistoryLine|||dev=14w19a|Slime blocks can now push entities sideways and downward when attached to a piston.}}
+|{{HistoryLine|||dev=14w25a|The texture of the inside block originally used the 10×10 center of the 16×16 <code>slime.png</code> file, however, since the addition of explicit texture referencing in [[block models]] in this snapshot, the center 10×10 section now has its own texture, due to limitations of the custom models not being able to access non-square texture files. However this change did not affect the actual appearance.}}
+|{{HistoryLine|||dev=14w32c|The [[breaking]]/placing [[sound]] of slime blocks has been changed to the [[damage|hurt]] sound of [[slime]]s.}}
+|{{HistoryLine||1.12|dev=17w16a|Slime blocks no longer pull [[glazed terracotta]] attached to its side when pulled by [[sticky piston]]s.}}
+|{{HistoryLine|||dev=pre3|Slime blocks no longer pull [[glazed terracotta]] attached on any side, moved by any type of [[piston]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Slime Block JE2 BE3.png|32px]] The texture of slime blocks has been changed.}}
+|{{HistoryLine||1.15|dev=19w42a|Slime blocks no longer stick to [[honey block]]s when pushed by [[piston]]s.}}
+|{{HistoryLine||1.17|dev=21w08a|Slime blocks have been moved to the redstone tab of the [[Creative inventory]].}}
+|{{HistoryLine||1.20|dev=23w12a|The [[inventory]] icon of the slime block has been changed from [[File:Slime Block (inventory) JE2.png]] to {{InvSprite|Slime Block}}.}}
+|{{HistoryLine|||dev=23w18a|Entities landing on the edge of a slime block now properly bounces without taking fall damage.<ref name="MC-1133">{{bug|MC-1133||Whether or not a player experiences some effect is calculated based on the block under the center of the player|Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w13a|exp=Update 1.21|Slime blocks are now used as a brewing ingredient for the potion of oozing after combining it with an awkward potion.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Bounce effect of slime blocks can no longer be overwritten by jumping in the moment when hitting the ground.<ref>{{bug|MC-275834||Jumping when falling onto a slime block no longer cancels the bounce effect|Fixed}}</ref>}}
+|{{HistoryLine|||dev=pre2|Slime blocks now cancel fall damage when sneaking.<ref name="MC-54532">{{bug|MC-54532||Sneaking while falling on Slime Blocks inflicts fall damage|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Slime Block BE1.png|32px]] Added slime blocks.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Slime Block BE2.png|32px]] The texture{{verify|can we confirm this wasn't a model or rendering change? the texture file in use at the time seems identical}} of slime blocks has been changed.}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.2|[[File:Slime Block.png|32px]] The texture of slime blocks has been changed to match {{el|je}}'s texture.
+|Slime blocks no longer stick to [[honey block]]s when pushed by [[piston]]s.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.20|exp=Update 1.21|Slime blocks are now used as a brewing ingredient for the potion of oozing after combining it with an awkward potion.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.26|Slime blocks now cancel fall damage when sneaking.}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb slime blocks, providing the golf ball/fast flat effect to the mob.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[File:Slime Block LCE.png|32px]] Added slime blocks.
+|Slime blocks are a lot more see-through on this edition.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Glazed terracotta]] no longer sticks to moving [[slime block]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Slime Block.png|32px]] The texture of slime blocks has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Slime Block JE1.png|32px]] Added slime blocks.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|The ID has been changed from <code>slime</code> to <code>slime_block</code>.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 165.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* A [[minecart]] leaving a [[rail]] onto a slime block can continue on a rail on the opposite side if it has sufficient momentum leaving the initial rail.
+* Slime blocks under [[soul sand]] make the player move slower than if the player was just walking on soul sand. This is also apparent with ice.
+* Entities launched upward by a slime block on top of a piston achieve slightly more than 6.4 blocks of lift, including the lift from the piston. Entities launched sideways across normal blocks or air are moved 3.510 blocks in the direction of the launch.
+* While falling, placing a slime block just before impact prevents all fall damage.
+* Players walking on slime blocks move at 1.359 m/s, a speed reduction of around 70% from the normal walking speed.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Slimeblockzombie.gif|A [[zombie]] bouncing on a slime block.
+HeightOFBounceX2.png|Testing of bounce heights. X axis is the start height in half blocks. Y axis is the return height in half blocks. Red line at the top is maximum possible bounce height in half blocks.
+</gallery>
+=== Development images ===
+<gallery>
+First showcase of the slime block.png|The first image of a slime block.
+14w02a Banner.png|The 14w02a banner showing slime blocks in a slime shape. [[Obsidian]] is used for the eyes and the mouth.
+MCPE Slime Block.png|The first image of a slime block in {{PE}}.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Slime Block MCC Event.png|Slime blocks as they appeared in [[MCC x Minecraft 15th Anniversary Party]]
+File:Slime Block Story Mode.png|alt=Crafting a slime block in Minecraft: Story Mode.|Crafting a {{MCSM|slime block}} in {{MCSM}}
+File:Slime Block (inventory) MCE.png|alt=Slime Block as it appeared in <nowiki>''Minecraft Earth''</nowiki>|{{MCE|Slime Block}} as it appeared in {{MCE}}
+</gallery>
+
+== Notes ==
+{{fnlist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|block-week-slime|Block of the Week: Slime|March 10, 2017|[[Tom Stone]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Compacted blocks]]
+[[Category:Utility blocks]]
+
+[[de:Schleimblock]]
+[[es:Bloque de slime]]
+[[fr:Bloc de slime]]
+[[ja:スライムブロック]]
+[[ko:슬라임 블록]]
+[[lzh:黏膠塊]]
+[[nl:Slijmblok]]
+[[pl:Blok szlamu]]
+[[pt:Bloco de Slime]]
+[[ru:Блок слизи]]
+[[uk:Слизовий блок]]
+[[zh:黏液块]]

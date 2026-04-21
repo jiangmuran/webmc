@@ -1,0 +1,86 @@
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''Locked-Repeater Two-Way Repeater'''
+
+3&times;4&times;2 (24 block volume)<br />flat, silent<br />''circuit delay:'' 1 tick<br />''fastest clock signal:'' 1-clock<br />''two-way reset time:'' 3 ticks
+
+ | | rd-se | rr-e1 | SB | rd-ns | |-
+ | duplex+rd-ew | rd-nsw | rr-n1 | rr-s1 | rd-nse | duplex+rd-ew |-
+ | | rd-ns | SB | rr-w1 | rd-nw |
+
+}}
+
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''Comparison Two-Way Repeater'''
+
+2&times;5&times;2 (20 block volume)<br />flat, silent<br />''circuit delay:'' 2 ticks<br />''fastest clock signal:'' 2-clock<br />''two-way reset time:'' 4 ticks
+
+ | duplex+rd-ew | rd-sew | rc-e | rr-e1 | rd-sew | rd-sw | |-
+ | | rd-ne | rd-new | rr-w1 | rc-w | rd-new | duplex+rd-ew
+
+}}
+
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''CodeCrafted's Two-Way Repeater'''
+
+2&times;6&times;3 (36 block volume)<br />silent<br />''circuit delay:'' 2 ticks<br />''fastest clock signal:'' 3-clock<br />''two-way reset time:'' 3 ticks
+
+The powered torches are above redstone dust which has configured itself to point towards the unpowered torches underneath the blocks.
+
+ | duplex+rd-ew | SB+rd-ew | rt-e+SB-u | SB | rd-ew! | rd-sw!+rt-s! | | |-
+ | | | rd-ne!+rt-n! | rd-ew! | SB | rt-w+SB-u | SB+rd-ew | duplex+rd-ew
+
+}}
+
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''Instant Two-Way Repeater'''
+
+4&times;4&times;3 (48 block volume)<br />instant<br />''circuit delay:'' 0 ticks<br />''fastest clock signal:'' 2-clock<br />''two-way reset time:'' 2.5 ticks
+
+Under the sticky pistons are 1-tick repeaters facing away from the torches.
+
+ | | | rd-ns! | SB+rr-w1! | SB+rt-! | |-
+ | duplex+rd-ew | SB+rd-ew | rd-ne!+MB-u | rr-w1!+sp-s | rt-s! | |-
+ | | rt-n! | rr-e1!+sp-n | rd-sw!+MB-u | SB+rd-ew | duplex+rd-ew |-
+ | | SB+rt-! | SB+rr-e1! | rd-ns! | |
+}}
+
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''Moved-Block Two-Way Repeater'''
+
+2&times;5&times;2 (20 block volume)<br />flat<br />''circuit delay:'' 1 tick (rising edge) and 0 ticks (falling edge)<br />''fastest clock signal:'' 3-clock (but shortens pulses)<br />''two-way reset time:'' 1.5 ticks
+
+ | duplex+rd-ew | rd-ew | SB | sp-e | BR | | |-
+ | | | BR | sp-w | SB | rd-ew | duplex+rd-ew
+}}
+
+{{Schematic
+ | style = display: inline-block; float: none; vertical-align: text-top;
+ | caption =
+
+'''Classic Two-Way Repeater'''
+
+3&times;4&times;3 (36 block volume)<br />silent<br />''circuit delay:'' 2 ticks<br />''fastest clock signal:'' 3-clock<br />''two-way reset time:'' 4 ticks
+
+ | duplex+rd-ew | rd-sew | rt-e | SB+rd-ew! | SB+rt-! | |-
+ | | rd-ns | rr-s1 | rr-n1 | rd-ns | |-
+ | | SB+rt-! | SB+rd-ew! | rt-w | rd-new | duplex+rd-ew
+
+}}
+
+[[Category:Ajax loaded pages]]
+[[Category:Redstone circuits|T]]

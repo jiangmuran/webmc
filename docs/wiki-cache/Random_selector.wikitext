@@ -1,0 +1,59 @@
+{{about|the terrain generation feature|the target selector <code>@r</code>|Target selectors}}
+{{Exclusive|java}}
+
+'''Random selector''' is a technical [[feature]] that randomly chooses a feature from a list with chances.
+
+== Data values ==
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=random_selector
+|foot=1
+}}
+
+=== Config ===
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|string}}{{nbt|compound|default}}: {{json ref|placed feature|inline=1}} &mdash; Used if none of the below features are chosen.
+** {{nbt|list|features}}: (Required, but can be empty) A list of placed features from which to randomly choose.
+*** {{nbt|compound}}: A feature and its corresponding chance.
+**** {{nbt|string}}{{nbt|compound|feature}}: {{json ref|placed feature|inline=1}}
+**** {{nbt|float|chance}}: The chance of this feature being chosen. Value between 0.0 and 1.0 (inclusive).
+The defined features can either reference a placed feature directly, or can reference a configured feature by nesting another "feature" node within. For more information, see [[Random selector/Config/Example definitions|this page]] on the two allowed types of feature definitions.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": {
+      "feature": "minecraft:patch_grass_jungle",
+      "placement": []
+    },
+    "features": [
+      {
+        "chance": 0.05,
+        "feature": "minecraft:fancy_oak_checked"
+      },
+      {
+        "chance": 0.15,
+        "feature": "minecraft:jungle_bush"
+      },
+      {
+        "chance": 0.7,
+        "feature": "minecraft:mega_jungle_tree_checked"
+      }
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Sélecteur aléatoire]]
+[[pt:Seletor aleatório]]

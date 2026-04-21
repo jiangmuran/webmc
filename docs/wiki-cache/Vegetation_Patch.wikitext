@@ -1,0 +1,181 @@
+{{Distinguish|Pale moss patch}}
+{{Infobox structure
+| image1=Underground vegetation ground.png
+| imagecaption = Ground vegetation
+| image2=Underground vegetation ceiling.png
+| image2caption = Ceiling vegetation
+| image2size=150px
+| biome = 
+* {{BiomeLink|Lush Caves}}
+| blocks =
+* {{blockLink|Moss Block}}
+* {{blockLink|Cave Vines Plant}}
+* {{blockLink|Cave Vines}}
+* {{blockLink|Small Dripleaf}}
+* {{blockLink|Big Dripleaf}}
+* {{blockLink|Clay}}
+* {{blockLink|Water}}
+| canspawn=Yes
+}}
+
+'''Vegetation patch''' is a [[feature]] that places some vegetation in the [[lush caves]] biome.
+
+== Data values ==
+
+=== ID ===
+
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=vegetation_patch
+}}
+{{ID table
+|displayname=[No displayed name]
+|nameid=waterlogged_vegetation_patch
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=clay
+|spritetype=block
+|nameid=clay_with_dripleaves
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch_bonemeal
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch_ceiling
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=clay
+|spritetype=block
+|nameid=clay_with_dripleaves_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch_bonemeal_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_patch_snap_to_floor_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_ceiling_feature
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=moss-block
+|spritetype=block
+|nameid=moss_ceiling_snap_to_ceiling_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+
+Vegetation patch is placed in columns, one column for each XZ position, placed separately. Rectangle of available XZ positions is defined by {{nbt|int}}{{nbt|compound|xz_radius}}. For each XZ position feature starts searching for {{nbt|int|vertical_range}} blocks either up or down for closest available position, starting from Y, where feature has been placed. It can fail to generate only if all columns fail to generate.
+
+Depending on {{nbt|string|surface}} feature will change direction of its search and available position:
+* <code>floor</code> - available position is air 1 block above the block <!--Block should be solid? Requires confirmation.--> from {{nbt|string|replaceable}} tag. If search starts in air, feature will search down, otherwise - up.
+* <code>ceiling</code> - available position is air 1 block below the block <!--Block should be solid? Requires confirmation.--> from {{nbt|string|replaceable}} tag. If search starts in air, feature will search up, otherwise - down.
+After search is completed and available position is found, column of blocks is placed. It replaces blocks from {{nbt|string|replaceable}} tag for either amount of blocks set in {{nbt|int}}{{nbt|compound|depth}} or until the first instance of non replacable, or same block, that is chosen by {{nbt|compound|ground_state}} (state of block is ignored).
+
+After that feature, defined in {{nbt|string}}{{nbt|compound|vegetation_feature}} is generated on the found available position.
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+**{{nbt|string|surface}} The surface to place on. One of <code>floor</code>, or <code>ceiling</code>
+** {{nbt|int}}{{nbt|compound|depth}} Value between 1 and 128 (inclusive). Amount of blocks, that should be replaced by column.
+***{{nbt inherit/int_provider}}
+**{{nbt|int|vertical_range}} Value between 1 and 256 (inclusive). Y radius in which column should search for available placement.
+**{{nbt|float|extra_bottom_block_chance}} Value between 0.0 and 1.0 (inclusive). Chance to add 1 to {{nbt|int}}{{nbt|compound|depth}}.
+**{{nbt|float|extra_edge_column_chance}} Value between 0.0 and 1.0 (inclusive). Chance to add search position adjacent to initial rectangle.
+**{{nbt|float|vegetation_chance}} Value between 0.0 and 1.0 (inclusive). The chance of placing {{nbt|string}}{{nbt|compound|vegetation_feature}} on found available position.
+**{{nbt|int}}{{nbt|compound|xz_radius}} XZ radius for searching available positions. Also note that the even though the x and z axes share the same integer provider, they are sampled individually, for example, if a <code>uniform</code> type integer provider is used for the {{nbt|int}}{{nbt|compound|xz_radius}} with a min of 2 and a max of 8, the x radius could be 6 while the z radius could be 3. Specifying unique X and Z values isn't possible.
+***{{nbt inherit/int_provider}}
+**{{nbt|string|replaceable}} A block tag with <code>#</code> specifying what blocks column can replace.
+**{{nbt|compound|ground_state}} The block, used for generating column.
+***{{nbt inherit/block_state_provider}}
+**{{nbt|string}}{{nbt|compound|vegetation_feature}} The [[placed feature]] to place on found available position. Can be a placed feature ID, or a placed feature object.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:vegetation_patch",
+  "config": {
+    "depth": 1,
+    "extra_bottom_block_chance": 0.0,
+    "extra_edge_column_chance": 0.3,
+    "ground_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:moss_block"
+      }
+    },
+    "replaceable": "#minecraft:moss_replaceable",
+    "surface": "floor",
+    "vegetation_chance": 0.8,
+    "vegetation_feature": {
+      "feature": "minecraft:moss_vegetation",
+      "placement": []
+    },
+    "vertical_range": 5,
+    "xz_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 7,
+        "min_inclusive": 4
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+{{Empty section}}
+{{HistoryTable}}
+
+==Issues==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Parcelle de végétation]]
+[[ja:繁茂した粘土池]]
+[[lzh:埴鱗]]
+[[pt:Mancha de vegetação]]
+[[zh:多叶黏土层]]

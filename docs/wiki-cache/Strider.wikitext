@@ -1,0 +1,623 @@
+{{For}}
+{{More images|adult strider looks different in ''Bedrock Edition''. History section also needs fixed for ''Bedrock Edition'' to have the correct renders.}}
+{{Infobox entity
+| group = Idle
+| 1-1 = Strider.gif
+| 1-1caption = Adult in {{JE}}<!--
+| 1-2 = Strider BE.gif
+| 1-2caption = Adult in {{BE}}-->
+| 1-3 = Baby Strider.gif
+| 1-3caption = Baby
+| 1-3size = 50px
+| group2 = Shivering
+| 2-1 = Strider Shiver.gif
+| 2-1caption = Adult in {{JE}}
+| 2-2 = Strider Shiver BE.gif
+| 2-2caption = Adult in {{BE}}
+| 2-3 = Baby strider shiver.gif
+| 2-3caption = Baby
+| 2-3size = 50px
+| group3 = Saddled
+| 3-1 = Saddled Strider.gif
+| 3-1caption = Adult only in {{JE}}
+| 3-2 = Saddled Strider BE.gif
+| 3-2caption = Adult only in {{BE}}
+| invimage = Strider Spawn Egg
+| health = {{hp|20|mob=1}}
+| size = '''Adult:'''<br>Height: 1.7 blocks<br>Width: 0.9 blocks<br>
+'''Baby:'''<br>Height: 0.85 blocks<br>Width: 0.45 blocks
+| speed = 0.175
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| spawn = {{EnvLink|Lava sea}}<br>{{EnvLink|Delta}}<br>{{BiomeLink|Nether Wastes}}<br>{{BiomeLink|Crimson Forest}}<br>{{BiomeLink|Warped Forest}}<br>{{BiomeLink|Soul Sand Valley}}<br>{{BiomeLink|Basalt Deltas}}
+| usableitems = {{drop|Item|Saddle}}
+{{drop|Item|Shears}}<small>(when equipped with a saddle)</small>
+{{drop|Item|Warped Fungus on a Stick}}
+{{drop|Item|Lead}}
+{{drop|Block|Warped Fungus}}
+{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+A '''strider''' is a [[passive mob]] found in [[the Nether]]. It can walk on [[lava]] and be [[saddle]]d by the [[player]], being directed via a [[warped fungus on a stick]].
+
+== Spawning ==
+Striders can spawn in every [[Nether]] biome. Groups of 2 to 4 striders spawn on spaces of [[lava]] that have an [[air]] block above. {{IN|Java}}, striders are the only [[passive mob]] in the Nether, so spawning attempts are made every 400 [[game tick]]s. {{IN|Bedrock}}, striders share the animal population cap with [[hoglin]]s, and their spawn rate depends on the biome, being impacted by the ability of other mobs to spawn at a given coordinate.
+
+For every strider that spawns, there is a 1 in 10 chance for an additional [[baby]] strider to spawn riding on top of the previous strider. This behavior is limited to one strider.<ref>{{bug|MC-176028||Striders can spawn in stacks of three or more|Fixed}}</ref> A baby strider on the adult strider continues to grow, although it does not dismount the adult strider once it has grown up. 
+
+In {{JE}}<ref>{{bug|MCPE-236161||Zombified piglins riding striders no longer spawn}}</ref>, adult striders also have a 1 in 30 chance of spawning being [[riding|ridden]] by a [[zombified piglin]], forming a [[strider jockey]]. When this happens, the strider spawns with a [[saddle]] and the zombified piglin spawns wielding a [[warped fungus on a stick]] instead of a [[golden sword]] or [[golden spear|spear]]. The zombified piglin does not despawn naturally and does not count toward the mob cap. On [[Peaceful]] difficulty, the zombified piglin despawns immediately, leaving a saddled strider.<ref>{{bug|MC-232869||Adult striders can spawn with saddles in peaceful mode}}</ref>
+
+If a strider spawns under [[lava]], it rises out of the [[lava]]. {{IN|Bedrock}}, baby striders spawn more commonly than adult striders do, including when spawned by a spawn egg.
+
+{{Mob spawn table}}
+
+<gallery>
+Baby Strider riding Strider.png|An adult strider that spawned with a baby strider riding it.
+Strider Jockey.png|A strider jockey.
+Shivering Strider on Warm Strider.png|Adult shivering strider riding an adult warm strider.
+</gallery>
+
+== Drops ==
+=== On death ===
+{{DropTable
+|{{DropLine|name=String|edition=java|quantity=2-5|lootingquantity=0-1}}
+|{{DropLine|name=String|edition=bedrock|notes=MCPE-112761|quantity=2-5}}
+|notes=
+MCPE-112761 = {{bug|MCPE-112761||Strider drops are not affected by Looting}}
+}}
+Striders wearing a saddle always drop the saddle upon death, regardless of if they spawn wearing it or if a player puts it on them. The saddle can be removed by using [[shears]] on the strider. 
+When an adult strider is killed by a player or tamed [[wolf]], {{xp|1|3}} experience is dropped. Killing a baby strider yields no items or experience.
+
+== Behavior ==
+[[Lava]] does not damage striders, and they can walk on top of it without sinking.
+
+Upon being harmed by another mob, striders attempt to flee for a few seconds while making "retreat" noises.
+
+Striders are damaged by [[water]], [[rain]], and [[splash water bottle]]s, which deal damage by {{Hp|1}} per splash water bottle or half-second in water or rain. While in water, they slowly sink while taking damage. Striders still take damage from rain even if they are in lava. However, they are not harmed when standing in a filled [[cauldron]] as a baby. They also cannot be harmed by [[snowfall]] or [[snowball]]s. They take extra damage from freezing in [[powder snow]].
+
+Unlike [[piglin]]s and [[hoglin]]s, striders can exist safely in the [[Overworld]], as long as they are kept away from water and rain. Striders outside of lava change to a dull purple color, change their expression to more of a frown, shiver, and their legs become slightly shorter. They also move slower when outside of lava.<ref>This behavior is controlled by the <code>[[Tags#blocks strider warm blocks|#strider_warm_blocks]]</code> block tag.</ref> 
+
+If a strider has the {{EffectLink|Speed}} effect applied to it, it moves faster on both land and lava (though its land speed is still considerably slower). If a zombified piglin is riding a strider, the strider pursues the player if the zombified piglin is angered.
+
+Due to a bug,<ref name=StriderLavaBug>{{bug|MC-197177}}</ref> striders that fall from a height take fall damage when landing in lava.{{only|je|short=1}}
+
+A baby strider on an adult strider still grows into an adult. Apart from this, adult striders riding other adult striders do not spawn naturally. Baby striders not riding on an adult follow the closest adult strider.
+
+<gallery>
+File:Strider walking.gif|A strider walking.
+File:Strider walking (not in lava).gif|A strider shivering and slowed down on land.
+</gallery>
+
+=== Riding ===
+{{Main|Riding}}
+[[File:Strider riding.gif|thumb|right|A player riding a strider.]]
+The player can ride on an adult strider using a [[saddle]]. 
+
+Similar to how [[pig]]s are controlled using a [[carrot on a stick]], striders move forward automatically while their direction is influenced using a [[warped fungus on a stick]], at a speed of 4.24&nbsp;m/s{{only|je|short=1}} / 3.71&nbsp;m/s{{only|be|short=1}} if on a flat lava surface (such as the Nether [[lava sea]]) or 1.78&nbsp;m/s{{only|je|short=1}} / 1.64&nbsp;m/s{{only|be|short=1}} if on land. They walk especially slowly against the lava flow direction.
+
+When a warped fungus on a stick is {{ctrl|used}}, the strider enters a boost for a random duration between 140 to 980 game ticks (7 to 49 seconds){{only|je|short=1}} / 320 game ticks (16 seconds){{only|be|short=1}}. Each boost takes 1 point of durability from the warped fungus on a stick. If the durability of the warped fungus on a stick reaches 0, it turns into a fishing rod.
+
+While boosted, the strider gradually accelerates to its peak speed of 9.12&nbsp;m/s {{only|je|short=1}} / 7.98&nbsp;m/s{{only|be|short=1}} until halfway through the boost, and then decelerates to its default speed by the end of the boost. Specifically, the speed of the strider increases by <math>1+1.15\times \sin(\frac{t}{t_0}\pi)</math> times the original speed, where <math>t</math> is the time already passed since the start of the boost, and <math>t_0</math> is the total duration of the boost. No matter how many ticks the boost lasts, the average speed of the strider during a full boost cycle is roughly 7.34&nbsp;m/s {{only|je|short=1}} / 6.42&nbsp;m/s{{only|be|short=1}}.
+
+Striders also follow players holding a [[warped fungus]] or a warped fungus on a stick. 
+
+Unlike underwater [[boat]]s, players riding striders are not dismounted if the strider submerges in lava, and striders rise back up to the surface if this happens. However, players risk getting burned by the lava while submerged. {{IN|be}}, players can start riding a strider that is fully submerged in lava.
+
+A strider ridden into flowing lava slowly rises to the top. Fall damage does not affect striders that have dropped onto flowing lava, unlike the bug<ref name=StriderLavaBug/> for lava source blocks. When ridden over land, striders automatically walk up any one block high slope. They also cross any 1-wide block gap or air space that is only one block higher - diagonally up - when ridden directly upward and not completely sideways to the slope.
+
+To safely dismount from a strider, a player who does not have [[Fire Resistance]] may face a solid block within reach before dismounting to dismount onto that block,<ref>{{tweet|kingbdogz|1256260637283569673|How are Striders feeling for everyone? Recent snapshot their walking logic was changed quite a lot and should be far, far more consistent.<br><br>Another change is that dismounting Striders when looking at a nearby solid block will dismount you onto that solid block, making it safer!|May 1, 2020}}</ref> instead of at the strider's location (which is usually in lava<ref>{{tweet|kingbdogz|1256262349343936513|Him and many other players do seem to die from dismounting 😂|May 1, 2020}}</ref>).{{only|java|short=1}}<ref>{{bug|MCPE-175573}}</ref>
+
+A strider can still be equipped with a saddle while another mob is riding it.
+
+=== Breeding ===
+{{Main|Breeding}}
+If striders are given [[warped fungus]], they breed to create baby striders, granting the player 1–7 [[experience]] orbs. The parent striders have a cooldown of about 5 minutes before they can breed again. All babies obtained through breeding take 20 minutes to grow up. The growth of baby striders can be accelerated using warped fungus; each use takes 10% off of the remaining time to grow up.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound=Strider idle1.ogg
+|sound2=Strider idle2.ogg
+|sound3=Strider idle3.ogg
+|sound4=Strider idle4.ogg
+|sound5=Strider idle5.ogg
+|sound6=Strider idle6.ogg
+|subtitle=Strider chirps
+|source=neutral
+|description=Randomly
+|id=entity.strider.ambient
+|translationkey=subtitles.entity.strider.ambient
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Strider eat1.ogg
+|sound2=Strider eat2.ogg
+|sound3=Strider eat3.ogg
+|subtitle=Strider eats
+|source=neutral
+|description=When a Strider is fed a [[warped fungus]]
+|id=entity.strider.eat
+|translationkey=subtitles.entity.strider.eat
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Strider happy1.ogg
+|sound2=Strider happy2.ogg
+|sound3=Strider happy3.ogg
+|sound4=Strider happy4.ogg
+|sound5=Strider happy5.ogg
+|subtitle=Strider warbles
+|source=neutral
+|description=Randomly while a player is holding a [[warped fungus]] or [[warped fungus on a stick]]
+|id=entity.strider.happy
+|translationkey=subtitles.entity.strider.happy
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby:1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Strider death1.ogg
+|sound2=Strider death2.ogg
+|sound3=Strider death3.ogg
+|sound4=Strider death4.ogg
+|subtitle=Strider dies
+|source=neutral
+|description=When a strider dies
+|id=entity.strider.death
+|translationkey=subtitles.entity.strider.death
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Strider hurt1.ogg
+|sound2=Strider hurt2.ogg
+|sound3=Strider hurt3.ogg
+|sound4=Strider hurt4.ogg
+|subtitle=Strider hurts
+|source=neutral
+|description=When a strider is damaged
+|id=entity.strider.hurt
+|translationkey=subtitles.entity.strider.hurt
+|volume=1.0
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Strider retreat1.ogg
+|sound2=Strider retreat2.ogg
+|sound3=Strider retreat3.ogg
+|sound4=Strider retreat4.ogg
+|sound5=Strider retreat5.ogg
+|subtitle=Strider retreats
+|source=neutral
+|description=Randomly for 10 seconds after a strider is damaged
+|id=entity.strider.retreat
+|translationkey=subtitles.entity.strider.retreat
+|volume=0.8
+|pitch=0.8-1.2<br>(Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Strider step1.ogg
+|sound2=Strider step2.ogg
+|sound3=Strider step3.ogg
+|sound4=Strider step4.ogg
+|sound5=Strider step5.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While a strider is walking on land
+|id=entity.strider.step
+|translationkey=subtitles.entity.generic.footsteps
+|volume=0.25
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Strider step lava1.ogg
+|sound2=Strider step lava2.ogg
+|sound3=Strider step lava3.ogg
+|sound4=Strider step lava4.ogg
+|sound5=Strider step lava5.ogg
+|sound6=Strider step lava6.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While a strider is walking on [[lava]]
+|id=entity.strider.step_lava
+|translationkey=subtitles.entity.generic.footsteps
+|volume=0.2
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Saddle equip.ogg
+|subtitle=MC-184399
+|source=neutral
+|description=When a strider equips a saddle
+|id=entity.strider.saddle
+|translationkey=-
+|volume=0.5
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Saddle unequip.ogg
+|subtitle=Saddle snips away
+|source=Friendly Creatures
+|description=When a saddle is removed from a strider using shears
+|id=item.saddle.unequip
+|translationkey=subtitles.item.saddle.unequip
+|volume=1.0
+|pitch=1.0
+|distance=16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound=Strider idle1.ogg
+|sound2=Strider idle2.ogg
+|sound3=Strider idle3.ogg
+|sound4=Strider idle4.ogg
+|sound5=Strider idle5.ogg
+|sound6=Strider idle6.ogg
+|source=neutral
+|description=Randomly
+|id=mob.strider.idle
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Strider eat1.ogg
+|sound2=Strider eat2.ogg
+|sound3=Strider eat3.ogg
+|source=neutral
+|description=When a Strider is fed a warped fungus
+|id=mob.strider.eat
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Strider happy1.ogg
+|sound2=Strider happy2.ogg
+|sound3=Strider happy3.ogg
+|sound4=Strider happy4.ogg
+|sound5=Strider happy5.ogg
+|source=neutral
+|description=Randomly while a player is holding a warped fungus or warped fungus on a stick
+|id=mob.strider.tempt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Strider death1.ogg
+|sound2=Strider death2.ogg
+|sound3=Strider death3.ogg
+|sound4=Strider death4.ogg
+|source=neutral
+|description=When a strider dies
+|id=mob.strider.death
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Strider hurt1.ogg
+|sound2=Strider hurt2.ogg
+|sound3=Strider hurt3.ogg
+|sound4=Strider hurt4.ogg
+|source=neutral
+|description=When a strider is damaged
+|id=mob.strider.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Strider retreat1.ogg
+|sound2=Strider retreat2.ogg
+|sound3=Strider retreat3.ogg
+|sound4=Strider retreat4.ogg
+|sound5=Strider retreat5.ogg
+|source=neutral
+|description=Randomly for 10{{verify}} seconds after a strider is damaged
+|id=mob.strider.panic
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}
+| {{SoundLine
+|sound=Strider step1.ogg
+|sound2=Strider step2.ogg
+|sound3=Strider step3.ogg
+|sound4=Strider step4.ogg
+|sound5=Strider step5.ogg
+|source=neutral
+|description=While a strider is walking on land
+|id=mob.strider.step
+|volume=0.25
+|pitch=1.0}}
+| {{SoundLine
+|sound=Strider step lava1.ogg
+|sound2=Strider step lava2.ogg
+|sound3=Strider step lava3.ogg
+|sound4=Strider step lava4.ogg
+|sound5=Strider step lava5.ogg
+|sound6=Strider step lava6.ogg
+|source=neutral
+|description=While a strider is walking on lava
+|id=mob.strider.step_lava
+|volume=0.2
+|pitch=1.0}}
+| {{SoundLine
+|sound=Saddle equip.ogg
+|source=neutral
+|description=When a strider equips a saddle
+|id=mob.horse.leather
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Saddle unequip.ogg
+|source=neutral
+|description=When a saddle is removed from a strider using shears
+|id=mob.unsaddle
+|volume=1.0
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Strider
+|spritetype=entity
+|nameid=strider
+|showentitytags=y
+|entitytags=can_equip_saddle, dismounts_underwater, followable_friendly_mobs, freeze_hurts_extra_types
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Strider
+|spritetype=entity
+|nameid=strider
+|showentityfamily=y
+|entityfamily=mob,strider,strider_adult,strider_baby
+|id=125
+|foot=1}}
+
+=== Entity data ===
+Striders have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|Feels Like Home;It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|This Boat Has Legs;Feels Like Home;The Parrots and the Bats;Two by Two;It Spreads}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|w-VbYe7M7oU}}
+
+== History ==
+{{More images|Strider jockey with [[warped fungus on a stick]]|section=1}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||March 25, 2020|link=none|[https://twitter.com/kingbdogz/status/1242860019219128320 Three] [https://twitter.com/kingbdogz/status/1242864488296198144 different] [https://twitter.com/kingbdogz/status/1242854683460481026 screenshots] are released of what was then revealed to be a strider.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w13a|[[File:Strider JE1 BE1.gif|32px]] [[File:Strider JE1 BE1.gif|20px]] [[File:Saddled Strider JE1 BE1.gif|32px]] [[File:Saddled Strider JE1 BE1.gif|20px]] Added striders and baby striders.
+|[[File:Baby Strider riding Strider JE1.png|32px]] [[File:Strider Jockey JE1.png|32px]] Adult striders can be ridden by [[zombified piglin]]s and baby striders.
+|[[File:Strider Shiver JE1.gif|32px]] [[File:Strider Shiver JE1.gif|20px]] [[File:Saddled Strider Shiver JE1 BE1.gif|32px]] [[File:Saddled Strider Shiver JE1 BE1.gif|20px]] A shivering animation exists for when a strider is out of [[lava]].}}
+|{{HistoryLine|||dev=20w14a|Striders now move faster to resemble a [[boat]]'s speed on [[water]].
+|[[Subtitles]] have been added for strider [[sound]]s.}}
+|{{HistoryLine|||dev=20w15a|[[File:Strider Shiver JE2.gif|32px]] [[File:Strider Shiver JE2.gif|20px]] [[File:Saddled Strider Shiver JE2.gif|32px]] [[File:Saddled Strider Shiver JE2.gif|20px]] Striders now turn purple when outside of [[lava]].
+|Striders can now be [[saddle]]d by [[dispenser]]s.
+|The texture of striders has been changed from [[File:Strider Texture JE1.png|100px]] to [[File:Strider Texture JE2.png|50px]] to remove an unused fin. The fin itself was not viewable in-game.}}
+|{{HistoryLine|||dev=20w17a|[[File:Saddled Strider JE2.gif|32px]] [[File:Saddled Strider JE2.gif|20px]] [[File:Saddled Strider Shiver JE3.gif|32px]] [[File:Saddled Strider Shiver JE3.gif|20px]] The texture of the strider [[saddle]]s have been changed. The front and back orientation of the saddle has been corrected.<ref>{{bug|MC-176116}}</ref>}}
+|{{HistoryLine|||dev=20w18a|Striders can no longer spawn in stacks of 3 or higher; only an adult and baby strider or an adult strider and a [[zombified piglin]].
+|Zombified piglins that spawn riding striders no longer despawn.
+|Walking logic was changed significantly.
+|Player can now "safely" dismount, by looking at the block they want to dismount onto before dismounting.}}
+|{{HistoryLine|||dev=20w19a|The "Distance by Strider" [[statistic]] that displays the distance traveled while on a strider has been added.}}
+|{{HistoryLine|||dev=20w20a|Striders are now required for the "Two by Two" [[advancement]].}}
+|{{HistoryLine|||dev=pre1|Striders are now damaged by splash and lingering [[water bottle]]s.<ref>{{bug|MC-176188}}</ref>}}
+|{{HistoryLine|||dev=pre3|Striders are now more common.}}
+|{{HistoryLine|||dev=pre7|[[File:Strider JE2 BE2.gif|32px]] [[File:Strider JE2 BE2.gif|20px]] Each strider leg can now be textured individually. The textures of the legs on the [[model]] are now mirrored.}}
+|{{HistoryLine||1.16.2|dev=pre1|[[Zombified piglin]]s now hold a [[warped fungus on a stick]] when spawned as a strider jockey.
+|Striders now try to find their way to [[lava]] and avoid going out of lava.
+|Fixed bug that allowed striders to walk on other mobs.<ref>{{bug|MC-176034}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Striders now take extra damage when [[freezing]].}}
+|{{HistoryLine||1.19.4|dev=pre2|Striders now have a weakness to freezing damage for the {{cmd|damage}} command.}}
+|{{HistoryLine||1.21.5|dev=25w02a|The speed of striders was increased from 1.74&nbsp;m/s to 1.78&nbsp;m/s on land, and from 4.14&nbsp;m/s to 4.24&nbsp;m/s on lava.}}
+|{{HistoryLine|||dev=25w03a|[[Saddle]]s now show the [[enchantment glint]] on the strider when enchanted.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Saddles can now be removed from striders using [[shears]].}}
+|{{HistoryLine||26.1|dev=snap5 |Added [[golden dandelion]]s, which can be used to prevent baby striders from growing up.}}
+|{{HistoryLine|||dev=snap8|[[File:Baby Strider JE3 BE3.png|22px]] The model and texture of baby striders have been changed.
+|Saddles on baby striders no longer render.}}
+|{{HistoryLine|||dev=snap10|Passenger striders now inherit the warmth of the ridden strider.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[File:Strider JE1 BE1.gif|32px]] [[File:Strider JE1 BE1.gif|20px]] [[File:Saddled Strider JE1 BE1.gif|32px]] [[File:Saddled Strider JE1 BE1.gif|20px]] Added striders and baby striders.
+|[[File:Baby Strider riding Strider JE1.png|32px]] [[File:Strider Jockey JE3.png|32px]] Adult striders can be ridden by [[zombified piglin]]s and baby striders.}}
+|{{HistoryLine|||dev=beta 1.16.0.63|Striders now move faster to resemble a [[boat]]'s speed on [[water]].}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|[[Zombified piglin]]s now hold a [[warped fungus on a stick]] when spawned as a strider jockey.
+|Striders now have the correct health of {{hp|20}} instead of {{hp|15}}.
+|[[File:Strider JE2 BE2.gif|32px]] [[File:Strider JE2 BE2.gif|20px]] Each strider leg can now be textured individually. The textures of the legs on the model are now mirrored.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Striders now take extra damage when [[freezing]].}}
+|{{HistoryLine|||dev=beta 1.17.0.52|Striders are now damaged by splash [[water bottle]]s and lingering water bottles.}}
+|{{HistoryLine||1.21.90|dev=Preview 1.21.90.25|[[Saddle]]s can now be removed from striders using [[shears]].}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21 |Added [[golden dandelion]]s, which can be used to prevent baby striders from growing up.}}
+|{{HistoryLine|||dev=Preview 26.10.24|[[File:Baby Strider JE3 BE3.png|22px]] The model and texture of baby striders have been changed.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.21.5|dev=25w03a|The nbt tag {{nbt|boolean|Saddle}} has been removed, in favor of the new equipment field.}}
+}}
+
+== Issues ==
+{{issue list|-depth strider}}
+
+== Trivia ==
+[[File:Strider fin.png|thumb|64px|Strider's fin]]
+* Striders previously had a fin in their texture file. The fin was not visible in-game and was removed in 20w15a.
+* If commands are used to saddle a baby strider, and the player rides the baby strider in lava, the player takes fire damage due to not being high enough to avoid the lava.
+* Mojang added striders to the game as the solution to the community request for lava boats.<ref>
+{{cite
+|url=https://feedback.minecraft.net/hc/en-us/articles/360005029872-Previously-Considered-Suggestions
+|title=We are introducing the Strider in the Nether update. You've got one job, Strider! Or maybe you need more. Anyway, that's the deal with lava boats.
+|website=Minecraft Feedback
+|date=April 2020}}
+</ref> Prior to this, actual [[Obsidian Boat|lava boats]] made of [[obsidian]] were briefly added as an April Fools prank.
+* At one point in the strider's development, before it was added to the game, a strider out of lava would retract its legs and start to take damage while bouncing around until it died, similar to how [[fish]] suffocate when out of water. This feature was discarded for being "kind of sad".<ref name="meet strider">{{Mcnet|meet-strider|Meet the Strider|July 7, 2020|Per Landin}}</ref>
+* Striders were planned to have their own unique armor and saddle, but this was decided against.<ref name="MCIA kingbdogz">{{tweet|CagilMartin1|1554866644132175872|Fun fact: Striders we're originally going to have it's own armor and a unique saddle for it. Also it was also planned to have a long tongue<br><br>Source: Minecraft Ideas Academy|August 3, 2022}}, Discord: "once upon a time Striders were going to get their own armor<br>and unique saddle" - [[Brandon Pearce]]</ref>
+* Striders were initially going to have a long tongue with which they could eat things, similar to [[frog]]s. The different items would all have various effects, such as [[sword]]s hurting the strider, and [[TNT]] exploding.<ref name="MCIA kingbdogz"/>
+* Part of the reason that striders drop string (from their bristles) was to answer the question of "how do [[piglin]]s make crossbows?".<ref name="meet strider"/> In ''[[Minecraft Legends: Return of the Piglins]]'', striders shed the strings that piglins used to make crossbows.<ref>{{w|Matt Forbeck}}, ''[[Minecraft Legends: Return of the Piglins]]'', Finding the Portal (chapter 8)</ref>
+* The bobbing animation that the strider makes while walking was initially an accident. However, the developers thought it was "quirky and fun", so it was added as a feature.<ref name="meet strider"/>
+* Internally the strider was originally referred to as the <code>derp-a-tron</code>.<ref>[https://www.youtube.com/watch?v=gkbZWEUgsAM From Modder to Mojangstah: The kingbdogz Story - The Void Frogs Minecraft Podcast] at 1:01:15</ref>
+* In a video summarizing the [[Tiny Takeover]] drop, Mojang developer [[Slicedlime]] refers to baby Striders as "Striderlings" before adding that he made up this word.<ref>{{YouTube link|8wqIYgk-uD0|archive=|Cute Mobs and More - All the News in the Tiny Takeover Drop!|Minecraft|March 24, 2026|t=3m14s}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Strider JE2 BE2.gif|Idle
+File:Strider walking.gif|A strider walking
+File:Strider Shiver JE1.gif|A strider shivering
+File:Saddled Strider JE1 BE1.gif|A saddled strider idling
+File:Saddled Strider Shiver JE1 BE1.gif|A saddled strider shivering
+File:Strider Shiver JE2.gif|A cold strider shivering
+File:Strider walking (not in lava) JE3.gif|A cold strider walking while shivering
+File:Saddled Strider Shiver JE3.gif|A saddled cold strider shivering
+File:Baby Strider JE3 BE3.gif|Idle
+File:Baby_strider_walking.gif|A baby strider walking
+File:Baby_strider_shiver.gif|A baby strider shivering
+File:Baby_strider_shiver_walking.gif|A baby strider shivering and walking
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Strider-header.webp|alt=
+File:Strider-1.jpeg|alt=
+File:Strider-4.jpeg|alt=
+File:Strider-3.jpeg|alt=
+File:Strider-ingame.jpeg|alt=
+File:Strider-ingame2.jpeg|alt=
+</gallery>
+
+=== Development Images ===
+<gallery>
+File:StriderTeaser1.png|Strider teaser 1
+File:StriderTeaser2.png|Strider teaser 2
+File:StriderTeaser3.png|Strider teaser 3
+File:Kingbdogz Strider.jpg|[[Kingbdogz]] riding a strider
+File:Strider discord information.jpeg|Kingbdogz reveals Strider information on Discord
+File:Shivering Strider.jpg|A cold strider in a warped forest
+File:Upside Down Striders.jpg|Upside down striders
+File:Strider family.jpg|Adult and baby striders
+File:Strider with Jockey.png|A strider with a jockey
+File:Striders in Love.jpg|Striders in love
+File:Lava Swimming.jpg|Dismounting a strider into lava
+File:Lava Riding.jpg|Riding a strider over lava
+File:Striders and Ghasts.jpg|Several striders on a lava sea. Note the blue shivering striders and the hoglins riding striders.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Strider Concept 1.jpg|Concept art of an early design of the strider
+Strider Concept 2.jpg|An early design of the strider by [[Jasper Boerstra]], similar in appearance to a {{w|tardigrade}}
+Strider Concept 3.jpg|An early, [[ghast]]-like design of the strider. Notice that there is no hair and one has six legs, while the other has nine.
+Early sketch iterations of the strider.png|Ditto
+Strider Concept 4.jpg|Concept art of [[Alex]] riding a strider. Notice the [[carrot on a stick]] instead of [[warped fungus on a stick]].
+</gallery>
+
+;Recreations 
+<gallery>
+PrototypeStriderRenderRecreation.png|A recreation of the latter
+File:Cold Strider PreRelease.png|A recreation of a pre-release shivering strider<ref>{{tweet|Xilefian|1432379731668873225|Found some old 1.16 development screenshots. It's interesting seeing some of the small things that were tweaked that I've forgotten about (textures, items, etc).<br><br>One screenshot reminded me of a feature I wanted for one of the blocks, and now that I am reminded: I want it again!|August 30, 2021}}</ref>
+</gallery>
+
+=== Screenshots ===
+<gallery>
+StriderStrider.png|Baby strider riding on an adult strider
+StriderJockey.png|Striders are occasionally ridden by a [[zombified piglin]] when spawned.
+Baby Zombified Piglin Strider Jockey.png|Striders can be ridden by baby zombified piglins too.
+StriderStriderStrider.png|Three striders riding one another before 20w18a
+Strider out of the lava.png|Strider out of the [[lava]]
+Strider difference.png|A comparison image of model differences between ''Java'' and ''Bedrock'' editions
+Player on striders.png|Player riding a strider riding a strider, with nearby striders looking on
+Three baby striders and an adult.png|Three baby striders stacked on top of an adult
+Strider baby riding an adult Strider taken by DUFFY1.png|A baby strider riding an adult
+Lava sea.png|Several striders on a lava sea
+Piglin strider shiver.png|Piglin and a shivering strider
+Shroom Bait.png|A player attracting multiple striders using a warped fungus on a stick
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Strider (texture).png|Strider texture file.
+Strider Cold (texture).png|Cold strider texture file.
+Baby Strider (texture).png|Baby strider texture file.
+Baby Strider Cold (texture).png|Baby cold strider texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Camel looks at Striders.png|A [[camel]] looking at striders
+File:MCD Strider Warrior T Pose.png|{{MCD|Strider Warrior}}, a {{MCD|hero}} dressed as a strider featured in {{MCD}}.
+File:LEGO Saddled Strider.png|''[[Lego Minecraft]]'' Strider
+File:Strider Action Figure.jpg|An official strider action figure
+File:MCLReturnofPiglinsCover.jpg|A strider as it appears on the cover of ''[[Minecraft Legends: Return of the Piglins]]''
+File:Minecraft Journey to the World's End Volume 5.jpg|Several striders on the cover of ''[[Minecraft: The Manga]]''
+File:Strider Plastic.png|A strider in the [[Plastic Texture Pack]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+
+* {{Mcnet|meet-strider|Meet the Strider|July 7, 2020|Per Landin}}
+
+*{{Mcnet|mob-menagerie--strider|Mob Menagerie: Strider|January 16, 2023|Duncan Geere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+[[Category:Passive mobs]]
+[[Category:Nether mobs]]
+[[Category:Animal mobs]]
+[[Category:Transport]]
+
+[[de:Schreiter]]
+[[es:Lavagante]]
+[[fr:Arpenteur]]
+[[it:Strider]]
+[[ja:ストライダー]]
+[[ko:스트라이더]]
+[[pl:Magmołaz]]
+[[pt:Lavagante]]
+[[ru:Страйдер]]
+[[uk:Блукач]]
+[[zh:炽足兽]]

@@ -1,0 +1,331 @@
+{{about|[[Survival]] mode hints|tips given while [[Loading world screen|loading]] a [[world]]|loading tips|user-created tutorials|Tutorials|the tutorial world that existed in Legacy Console Edition|Legacy Console Edition Tutorial|the hints feature that existed in Legacy Console Edition|Legacy Console Edition descriptions}}[[File:Hints.gif|thumb|320px|Most of the hints available in ''[[Java Edition]]'' in order.]]
+[[File:HintProgress.gif|thumb|An animation demonstrating the progress bar of the "Destroy the tree" hint.]]
+[[File:Game tip.png|thumb|320px|A tutorial hint/game tip in {{BE}}.]]
+
+'''Tutorial hints''' (also known as '''game tips''' in {{BE}}) are [[toasts]] on the player's [[HUD]] which show up when a player starts a world in [[Survival mode]] for the first time on a device. They are meant to guide new players on the game [[controls]].
+
+== Description ==
+When a [[Survival]] world is generated for the first time on a device, the first tutorial hint appears: the movement hint. Tutorial hints appear as a toasts in the top right of the screen (much like new [[Recipe Book|recipes]]), or pointing to related HUD elements.{{Only|be|short=1}} Each hint consists of the hint title,{{Only|je|short=1}} a description of how to complete it, and an image to describe it, usually an animation of [[Alex]] performing the action with the required controls in ''Bedrock Edition''. Once the tutorial hint has been completed (for example, when the player harvests a tree's log), that tutorial hint disappears. After a certain amount of time or when certain events happen, the next hint is shown automatically. {{IN|je}}, once the "craft wooden planks" hint is completed, tutorial hints never again appear in any world. {{IN|be}}, any tutorial hint is always shown 3 times before they never appear again, but the tutorial can be reset in the "General" [[settings]] tab, where it can also be disabled entirely.
+
+Tutorial hints are obtained by simply completing the task given. {{IN|je}} each hint, minus the "Open your inventory" and the "Craft wooden planks" hint, have a progress bar that shows the player's progress on the current hint and fills up as it is being completed. For example, for the "Destroy the tree" hint, the progress bar begins emptying and starts filling up as the player harvests a log, so that when the log is destroyed, the bar is complete and the hint disappears.
+
+In [[Creative]] mode, only the first two hints are displayed,{{Only|je|short=1}} or a different set of tutorial hints is used.{{Only|be|short=1}} Different tutorial hints also appear in ''Bedrock Edition'' when using different control modes.
+
+{{IN|je}}, when an open to LAN world or multiplayer server is first joined on a device, there is also a hint about the social interaction menu. It simply tells the player that they can press the {{key|P}} button on the keyboard to open the social interactions menu.
+
+=== options.txt ===
+{{IN|je}}, the gameplay stages of the tutorial is stored as <code>tutorialStep:</code> in the <code>[[options.txt]]</code> file in the game directory, except the [[Social interactions]] hint, which is stored as <code>joinedFirstServer:</code>, so they are kept per device and per directory (you can set up more profiles with different game directories in the launcher options). After the last guide is shown, the value <code>none</code> is saved. Changing TutorialStep to this value (the game must be closed beforehand) prevents the instructions from appearing.
+
+{{IN|be}}, each game tip has its own line in <code>options.txt</code> to track whether or not it's been completed.
+
+== List of hints ==
+{{edition|java}}:
+Controls in '''bold''' display in-game as the actual key bind for that control (e.g., "W" by default for "Forwards").
+{| class="wikitable"
+|-
+! Image !! In-game title and description !! Actual requirements (if different) !! options.txt name
+|-
+| [[File:Movement hint.png|class=pixel-image]] || Move with '''{{Control|Forwards}}''', '''{{Control|Left}}''', '''{{Control|Backwards}}''', and '''{{Control|Right}}'''<br>  Jump with '''{{Control|Jump}}''' || Use {{Control|move}} and {{Control|jump}} to move around. || <code>movement</code>
+|-
+| [[File:Look around hint.png|class=pixel-image]] || Look around<br> Use your mouse to turn || — || <code>movement</code>
+|-
+|[[File:Punch tree hint.png|class=pixel-image]]
+|Find a tree
+Punch it to collect wood
+|
+|<code>find_tree</code>
+|-
+| [[File:Punch tree hint.png|class=pixel-image]] || Destroy the tree<br> Hold down '''{{Control|Mine}}''' || {{Control|Mine}} a [[log]] block until it breaks. || <code>punch_tree</code>
+|-
+| [[File:Open inventory hint.png|class=pixel-image]] || Open your inventory<br> Press '''{{Control|Inventory}}''' || — || <code>open_inventory</code>
+|-
+| [[File:Craft planks hint.png|class=pixel-image]] || Craft wooden planks<br> The recipe book can help || Put wood in a [[crafting table]] or the [[inventory]] crafting. || <code>craft_planks</code>
+|-
+| [[File:Social Interactions hint JE2.png|class=pixel-image]] || Social Interactions<br> Press '''{{Control|Social Interactions}}''' to open || Open the [[social interactions]] menu || <code>joinedFirstServer</code>
+|}
+
+{{edition|bedrock}}:
+{{Wip|Actual requirements, add missing images, list which other tutorial hints appear on different positions (especially on mobile)|section=1}}
+{{hatnote|The in-game descriptions use emojis for controller controls and letters for keyboard and mouse controls.}}
+{| class="wikitable"
+|-
+! Image !! In-game title and description !! Actual requirements (if different) !! options.txt name
+!Input method
+|-
+|[[File:Camera-mouse.gif|class=pixel-image]]
+|Look around
+Use your mouse to turn
+| rowspan="3" |
+| rowspan="3" |{{Code|camera}}
+|Mouse
+|-
+|[[File:Camera-touch.gif|class=pixel-image]]
+|Touch and drag the screen to look around
+|Touch
+|-
+|
+|Move :tip_right_stick: to look around
+|Controller
+|-
+|[[File:Movement-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+| rowspan="2" |Move with {{Control|Forwards}}, {{Control|Left}}, {{Control|Backwards}}, {{Control|Right}}
+| rowspan="5" |
+| rowspan="5" |{{Code|movement}}
+| rowspan="2" |Mouse
+|-
+|[[File:Movement-ZQSD-mouse.gif|class=pixel-image]]
+|-
+|[[File:Movement-touch.gif|class=pixel-image]]
+|Move by using the joystick
+|Touch (joystick)
+|-
+|
+|Move by using the arrow buttons
+|Touch (D-pad)
+|-
+|
+|Move {{Control|Move}} to move around
+|Controller
+|-
+|[[File:Fly-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Double tap {{Control|Jump}} to fly
+| rowspan="2" |
+| rowspan="2" |{{Code|flying}}
+|Mouse
+|-
+|[[File:Fly-touch.gif|class=pixel-image]]
+|Double tap jump to fly
+|Touch
+|-
+|[[File:Fly-up-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Press {{Control|Jump}} to fly up
+|
+|{{Code|fly_up}}
+|Mouse
+|-
+|[[File:Fly-down-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Press {{Control|Sneak}} to fly down
+|
+|{{Code|fly_down}}
+|Mouse
+|-
+|[[File:Stop-fly-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Double tap {{Control|Jump}} to stop flying
+| rowspan="2" |
+| rowspan="2" |{{Code|stop_flying}}
+|Mouse
+|-
+|[[File:Stop-fly-touch.gif|class=pixel-image]]
+|Double tap fly down to stop flying
+|Touch
+|-
+|[[File:Jump-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Jump with {{Control|Jump}}
+|
+|{{Code|jump}}
+|Mouse
+|-
+|[[File:Swim-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Press and hold {{Control|Jump}} to swim up
+| rowspan="2" |
+| rowspan="2" |{{Code|swim}}
+|Mouse
+|-
+|[[File:Swim-touch.gif|class=pixel-image]]
+|Press to swim up
+|Touch
+|-
+|[[File:Break-block-mouse.gif|class=pixel-image]]
+|Hold left click to break blocks
+| rowspan="5" |
+| rowspan="5" |{{Code|break_block}}
+|Mouse
+|-
+|[[File:Break-block-touch.gif|class=pixel-image]]
+| rowspan="3" |Tap and hold to break blocks
+|Touch (joystick)
+|-
+|
+|Touch (D-pad)
+|-
+|
+|Controller
+|-
+|
+|Tap and hold :tip_virtual_button_action_attack_or_destroy:
+to break blocks
+|Touch (crosshair)
+|-
+|[[File:Place-block-mouse.gif|class=pixel-image]]
+|Right click to place block
+| rowspan="4" |
+| rowspan="4" |{{Code|place_block}}
+|Mouse
+|-
+|[[File:Place-block-touch.gif|class=pixel-image]]
+|Tap to place block
+|Touch (default)
+|-
+|
+|Click on the ground to place block
+|Controller
+|-
+|
+|Tap :tip_virtual_button_action_build_or_use: to place block
+|Touch (crosshair)
+|-
+|[[File:Open-inventory-mouse.png]]
+|Open your inventory
+Press {{Control|Inventory}}
+| rowspan="3" |
+| rowspan="3" |{{Code|open_inventory}}
+|Mouse
+|-
+|[[File:Open-inventory-touch.png]]
+|Open inventory to see crafting recipes
+|Touch
+|-
+|
+|Press {{Control|Inventory}} to open your inventory
+|Controller
+|-
+|[[File:Open-inventory-creative-mouse.gif|class=pixel-image]]
+|Open your inventory
+Press {{Control|Inventory}}
+| rowspan="3" |
+| rowspan="3" |
+|Mouse
+|-
+|[[File:Open-inventory-creative-touch.gif|class=pixel-image]]
+|Open inventory to see building blocks
+|Touch
+|-
+|
+|Press {{Control|Inventory}} to open your inventory
+|Controller
+|-
+|[[File:Sneak-mouse.gif|class=pixel-image]]{{Note|If something other than the default controls are used, the keys are removed from the animation|name=Default controls only}}
+|Hold {{Control|Sneak}} to sneak!
+Can't fall off edges now
+|
+|{{Code|sneak}}
+|Mouse
+|-
+|
+|You are sneaking! Can’t fall off edges now
+| rowspan="3" |
+| rowspan="3" |
+|Mouse
+|-
+|[[File:Sneak-touch.gif|class=pixel-image]]
+| rowspan="2" |You're sneaking, so you can't fall off edges
+|Touch
+|-
+|
+|Controller
+|-
+|[[File:Stop-sneaking-touch.gif|class=pixel-image]]
+|—
+|
+|{{Code|stop_sneaking}}
+|Touch
+|-
+|[[File:Crafting-table-place-mouse.gif|class=pixel-image]]
+|Place your crafting table. Hold it and click to place
+| rowspan="3" |
+| rowspan="3" |{{Code|place_crafting_table}}
+|Mouse
+|-
+|[[File:Crafting-table-place-touch.gif|class=pixel-image]]
+|Place your crafting table by tapping the ground
+|Touch
+|-
+|
+|Place your crafting table, hold it then tap the ground
+|Controller
+|-
+|[[File:Crafting-table-use-mouse.gif|class=pixel-image]]
+|Right click on Crafting Table to use
+|
+|{{Code|use_crafting_table}}
+|Mouse
+|-
+|[[File:Hotbar-mouse.gif|class=pixel-image]]
+|Scroll or press %s to hold item{{Note|A random hotbar slot with items is picked. Instead of appearing like other hints, it appears directly above the hotbar slot, pointing to it like a speech bubble.}}
+| rowspan="2" |
+| rowspan="2" |{{Code|hotbar_scrolling}}
+|Mouse
+|-
+|[[File:Hotbar-touch.gif|class=pixel-image]]
+|Tap item in hotbar to hold it
+|Touch
+|-
+|[[File:Chat-open-mouse.gif|class=pixel-image]]{{Note|If {{keys|Enter}} isn't at least one of the keys bound to Chat button, the mobile animation is used}}
+|Press {{Control|Chat}} to open chat{{Note|If multiple keys are bound, both options are listed}}
+| rowspan="3" |
+| rowspan="3" |{{Code|chat}}
+|Mouse
+|-
+|[[File:Chat-open-touch.gif|class=pixel-image]]
+|Tap to open chat
+|Touch
+|-
+|
+|Tap the chat button to open chat
+|Touch (tts)
+|-
+|[[File:Emote-mouse.gif|class=pixel-image]]{{Needs testing|Does using a keybind other than B remove the key from the animation?}}
+|Press or hold {{Control|Emote}} to emote
+| rowspan="3" |
+| rowspan="3" |{{Code|emote}}
+|Mouse
+|-
+|[[File:Emote-touch.gif|class=pixel-image]]
+|Tap to emote
+|Touch
+|-
+|
+|Tap the emote button to emote
+|Touch (tts)
+|}
+{{Notelist}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.12|dev=17w16a|[[File:Movement hint.png]] [[File:Look around hint.png]] [[File:Punch tree hint.png]] [[File:Open inventory hint JE1.png]] [[File:Craft planks hint JE1.png]] Added tutorial hints.}}
+|{{HistoryLine|||dev=pre3|Tutorial hints are now more accurate with deciding whether or not to display.}}
+|{{HistoryLine||1.16.4|dev=Pre-release 1|[[File:Social Interactions hint JE1.png]] Added the [[Social Interactions]] tutorial hint.}}
+|{{HistoryLine|||dev=Pre-release 2|[[File:Social Interactions hint JE2.png]] The icon for the [[Social Interactions]] tutorial hint has changed.}}
+|{{HistoryLine||1.17|dev=21w05a|[[File:Toast right click.png|40px]] Added the bundle tutorial hint.}}
+|{{HistoryLine||1.19.3|dev=Pre-release 3|[[File:Open inventory hint.png]] The icon for the Open your inventory tutorial hint has been updated.}}
+|{{HistoryLine||1.20.3|dev=23w41a|[[File:Craft planks hint.png]] The icon for the Craft wooden planks tutorial hint has been updated.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Removed the bundle tutorial hint.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.20|Added tutorial hints.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.20|Added "Tutorial" option and "Restart Tutorial" button to the general settings.<ref>{{bug|MCPE-184669|MCPE-184669|Tutorial option does not appear sometimes}}</ref>}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.21|Added chat game tip.}}
+}}
+
+== Issues ==
+{{Issue list|Tutorial hints|Tutorial}}
+
+== See also ==
+*[[Loading tips]]
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+[[de:Anleitungs-Hinweise]]
+[[fr:Astuces]]
+[[ja:チュートリアルヒント]]
+[[pl:Podpowiedzi]]
+[[pt:Dicas de tutoriais]]
+[[zh:教学提示]]

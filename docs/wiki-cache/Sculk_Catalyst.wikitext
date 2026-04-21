@@ -1,0 +1,344 @@
+{{Infobox block
+| image1 = Sculk Catalyst JE1 BE1.png
+| image1caption = {{JE}}
+| image2 = Sculk Catalyst BE1.png
+| image2caption = {{BE}}
+| transparent = No
+| light = Yes (6)
+| tool = hoe
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''sculk catalyst''' is a [[Sculk family|sculk]] block that "blooms" when a [[mob]] or [[player]] dies nearby, which may convert nearby blocks to sculk blocks (except for more sculk catalysts). 
+
+== Obtaining ==
+=== Breaking ===
+A sculk catalyst can be mined with any tool, but [[hoe]]s are the quickest. It drops itself only if mined with any tool enchanted with [[Silk Touch]]. It drops 5 [[experience]] if mined without Silk Touch.
+{{Breaking row|Sculk Catalyst|Hoe|drop=0|horizontal=1}}
+
+=== Natural generation ===
+Sculk catalysts are generated within the [[deep dark]] biome.
+
+{{block distribution}}
+
+=== Mob loot ===
+A [[warden]] drops a single sculk catalyst upon death, unaffected by [[Looting]]. This is the only renewable way to obtain sculk catalysts.
+{{Drop sources|Sculk Catalyst}}
+
+=== Generated loot ===
+{{LootChestItem|sculk-catalyst}}
+
+== Usage ==
+[[File:Sculk Catalyst Bloom BE1.gif|thumb|upright|Sculk catalyst blooming.|alt=Sculk catalyst activating.]]Sculk catalysts convert [[experience]] into [[Sculk Vein|sculk veins]], [[Sculk Sensor|sculk sensors]], and [[Sculk Shrieker|sculk shriekers]], and use experience to convert many natural blocks into [[sculk]].[[File:Sculkcatalystrange.png|thumb|upright|Sculk catalyst detection range.|alt=Sculk catalyst detection range]]
+[[File:Sculk Catalyst bloom and spread sculks.gif|thumb|upright|It turns the blocks around the dead Mob into sculk or sculk veins.]]
+
+=== Blooming ===
+When a living entity (a mob or player, including [[ender dragon]]s <ref>{{bug|MC-249285}} The ender dragon's death can trigger a sculk bloom, but it does not produce any sculk charges. The ender dragon still drops experience just like it normally does.</ref><ref>{{tweet|gnembon_mc|1495571681137594374|it hasn't been implemented yet. Dragon's death is... special.|February 20, 2022}} However, new behavior for ''ender dragon blooms'' might be implemented in the future.</ref>, [[wither]]s, and [[warden]]s) dies near a sculk catalyst by any means, it blooms. This '''sculk bloom''' turns the mob into sculk charges based off its natural experience drops. Sculk charges grow into new sculk blocks, sensors and shriekers. Sculk blocks are always produced, with up to 1 sculk block per experience point. A sculk charge also has a 9% chance to grow a sculk sensor, and a 1% chance to grow a sculk shrieker.
+
+A bloom occurs for the death of any living entity, and can even consume multiple entities at once. A sculk bloom cannot occur if the entity is not directly above a solid block or if the entity is below the sculk catalyst. A [[Tutorial:Sculk farming|sculk farm]] can be made using [[Pointed Dripstone|pointed dripstone]] as long as the sculk catalyst is on the same level as the [[Pointed Dripstone|pointed dripstone]].
+
+During a sculk bloom, the catalyst gives off soul [[particle]]s, and creates a patch of sculk blocks with [[sculk vein]]s around them. Sculk blooms can replace blocks in the {{code|sculk_replaceable}} [[tag]], including the surface materials of most of the biomes in all the [[Overworld]], [[the Nether]], and [[the End]].
+
+==== Blooming range ====
+A sculk bloom occurs for the death of any living entity within a [[Euclidean distance]] of 8 blocks {{in|je}} or 10 blocks {{in|be}} from a sculk catalyst.
+
+If the entity dies near multiple sculk catalysts, only the nearest sculk catalyst blooms.
+
+==== Sculk charges ====
+When a living entity (a [[player]] or [[mob]]), is consumed by a sculk bloom, it won't drop [[experience]], because the sculk bloom event converts the entity's experience into '''sculk charges'''. One experience point is worth one sculk charge. These charges are used to convert the block beneath the entity into a [[sculk]] block. If the block is already a sculk block, or if there are extra sculk charges, the sculk block absorbs the sculk charges. Up to 1000 charges can be present in one block.
+
+The sculk charge in a block is lost when the block is destroyed or broken.
+
+=== Sculk growth ===
+Sculk growth is an event where a sculk bloom starts on a non-sculk block. The sculk growth first tries to convert the charged block into a sculk block. The following blocks can be converted:{{columns-list|colwidth=16em|
+* {{BlockLink|Stone}}
+* {{BlockLink|Granite}}
+* {{BlockLink|Andesite}}
+* {{BlockLink|Diorite}}
+* {{BlockLink|Tuff}}
+* {{BlockLink|Calcite}}
+* {{BlockLink|Deepslate}}
+* {{BlockLink|Dripstone Block}}
+* {{BlockLink|Terracotta}}
+* {{BlockLink|Netherrack}}
+* {{BlockLink|Nylium}}
+* {{BlockLink|Basalt}}
+* {{BlockLink|Smooth Basalt}}
+* {{BlockLink|Blackstone}}
+* {{BlockLink|End Stone}}
+* {{BlockLink|Gravel}}
+* {{BlockLink|Sand}}
+* {{BlockLink|Red sand}}
+* {{BlockLink|Sandstone}}
+* {{BlockLink|Red Sandstone}}
+* {{BlockLink|Dirt}}
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Mycelium}}
+* {{BlockLink|Podzol}}
+* {{BlockLink|Coarse Dirt}}
+* {{BlockLink|Rooted Dirt}}
+* {{BlockLink|Clay}}
+* {{BlockLink|Moss Block}}
+* {{BlockLink|Pale Moss Block}}
+* {{BlockLink|Mud}}
+* {{BlockLink|Muddy Mangrove Roots}}
+* {{BlockLink|Soul Sand}}
+* {{BlockLink|Soul Soil}}
+}}
+
+{{IN|je}}, these blocks are marked under the {{cd|sculk_replaceable}} [[tag]].
+
+Sculk growth can grow all of the [[sculk family]] blocks excluding more sculk catalysts. If the charged block can't be converted, sculk veins grow on the block instead. If sculk veins can't grow, the sculk charge is removed and nothing happens. Each sculk block costs 1 experience to grow. Charge can also be used to create sensors or shriekers, or can be lost to decay.
+
+When a sculk block is grown, it also tries to grow up to 20 sculk veins on every face of every adjacent block. A sculk vein costs 1 sculk charge when it grows on a block that cannot be converted into sculk.
+
+Sculk growth can't happen on a block that is completely surrounded by blocks unless some of those blocks are sculk veins.
+
+Sculk veins are never placed on the sides of a sculk block and are removed when the block they are attached to is converted to a sculk block.
+==== Discharging ====
+Every other [[game tick]], [[sculk]] blocks and [[Sculk Vein|veins]] '''discharge''' excess sculk charges. This discharge can cause the sculk charge to spread across a patch of sculk blocks and grow the patch larger.
+
+Every other game tick, when sculk blocks or veins discharge, they transfer all of their sculk charges to a random adjacent block. The adjacent block must be a sculk block, a sculk vein, or one of the blocks that is {{Cd|sculk_replaceable}}. If there are no adjacent blocks to discharge to, the sculk charge simply stays where it is and eventually decays.
+
+Each time a sculk block is charged, it discharges again. This causes sculk charges to move like electricity in a daisy chain. Sculk charges from different sculk blocks and veins tend to cluster together if there are enough charges, similar to how water collects in a valley or river. Sculk charges keep moving like this until they run out due to converting blocks, constructing shriekers and sensors, or decaying.
+
+If a sculk charge keeps discharging in the same area without creating new sculk family blocks, it decays.
+
+Every time a sculk block or vein discharges, it has a 9% chance to grow a sculk sensor, and a 1% chance to grow a sculk shrieker.
+
+[[Sculk sensor]]s and [[sculk shrieker]]s cannot receive sculk charges and are only produced by them.
+
+Sculk sensors and shriekers cannot grow if there are 2 or more sculk sensors and shriekers within a 9×3×9 box, with the bottom center of the box centered on the sculk bloom's origin (or within {{code|-4,0,-4}} and {{code|4,2,4}} in relative coordinates).
+
+Sculk shriekers generated by sculk growth won't summon wardens, and they shriek more frequently due to their {{cd|can_summon}} tag being set to {{code|false}}.
+
+==== Blooming without spreading ====
+Even though growing new sculk requires experience, sculk blooms still occur for mobs that can not drop experience on death. This is the intended behavior, and a sculk catalyst even blooms when an [[Armor Stand|armor stand]] is destroyed<ref>{{bug|MC-251167}}</ref> because the game has armor stands labeled as being living entities.
+
+When a [[player]] with no experience dies in range of a sculk catalyst, it still blooms and no sculk grows. If keep inventory is on, the player retains experience after dying. This prevents the sculk bloom from consuming the experience and growing sculk.<ref>{{bug|MCPE-157884}}</ref>
+
+=== Light source ===
+Sculk catalysts emit a [[light level]] of 6.
+
+=== Piston interactivity ===
+Sculk catalysts cannot be moved by [[piston]]s or [[sticky pistons]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Sculk catalyst}}
+
+=== Unique ===
+{{Edition|Java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =soulspeed1.ogg
+|sound2=soulspeed2.ogg
+|sound3=soulspeed3.ogg
+|sound4=soulspeed4.ogg
+|sound5=soulspeed5.ogg
+|sound6=soulspeed6.ogg
+|sound7=soulspeed7.ogg
+|sound8=soulspeed8.ogg
+|sound9=soulspeed9.ogg
+|sound10=soulspeed10.ogg
+|sound11=soulspeed11.ogg
+|sound12=soulspeed12.ogg
+|sound13=soulspeed13.ogg
+|subtitle=Sculk Catalyst blooms
+|source=block
+|description=When a mob is killed near a sculk catalyst
+|id=block.sculk_catalyst.bloom
+|translationkey=subtitles.block.sculk_catalyst.bloom
+|volume=0.5
+|pitch=0.6-1.0
+| distance = 12
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =soulspeed1.ogg
+|sound2=soulspeed2.ogg
+|sound3=soulspeed3.ogg
+|sound4=soulspeed4.ogg
+|sound5=soulspeed5.ogg
+|sound6=soulspeed6.ogg
+|sound7=soulspeed7.ogg
+|sound8=soulspeed8.ogg
+|sound9=soulspeed9.ogg
+|sound10=soulspeed10.ogg
+|sound11=soulspeed11.ogg
+|sound12=soulspeed12.ogg
+|sound13=soulspeed13.ogg
+|source=block
+|description=When a mob is killed near a sculk catalyst
+|id=bloom.sculk_catalyst
+|volume=2.0
+| pitch = 0.6-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sculk Catalyst
+|spritetype=block
+|nameid=sculk_catalyst
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=sculk-catalyst
+|spritetype=block
+|nameid=sculk_catalyst
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|showforms=y
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Sculk Catalyst
+|nameid=sculk_catalyst
+|spritetype=block
+|id=715
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=sculk-catalyst
+|spritetype=block
+|nameid=SculkCatalyst
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|bloom|false|false,true|Whether the sculk catalyst is actively spreading the sculk or not.|foot=1}}
+
+{{el|be}}:
+{{bst|bloom|0|0,1|Whether the sculk catalyst is actively spreading the sculk or not.|foot=1}}
+
+=== Block data ===
+A sculk catalyst has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|list|cursors}}: List of sculk charge clusters associated with the sculk catalyst.
+*** {{nbt|compound}}: A sculk charge cluster. Each cluster is stored within a single [[sculk]] block.
+**** {{nbt|int|charge}}: How many sculk charges are being carried in the cluster.
+**** {{nbt|list|pos}}: List of three integers representing the coordinates of the cluster.
+**** {{nbt|integer|decay_delay}}: {{cd|1|0|d=or}} ({{cd|true|false|d=/}}) - ''Not to be confused with {{cd|update_delay}}.'' This controls the decay of the cluster. If this is {{cd|true}}, then the cluster was spread from a sculk block or [[sculk vein]], and this cluster can only spread to sculk, sculk veins, and blocks with the <span style="white-space:nowrap">{{nbt|bool}} ''sculk_replaceable''</span> tag set to {{cd|true}}. If this is {{cd|false}}, then all the sculk charges disappear when the cluster discharges to a block that is not in the sculk family.
+**** {{nbt|integer|update_delay}}: Delay in [[game tick]]s until the cluster begins to discharge (or travel) after being created. Usually starts at 1 game tick when a cluster discharges to a new block.
+**** {{nbt|list|facings}}: If the block to replace is an [[air]] or [[water]] block, the block is replaced with sculk veins, and the faces where the sculk veins are placed are stored in this list. The sculk veins never grow directly on the faces of a sculk block. The same thing is done to any air or water blocks that are adjacent to blocks that are adjacent to this sculk block, if sculk veins can't grow in the blocks adjacent to this sculk block without growing directly on the faces of sculk blocks.
+</div><section end="block data"/>
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|It Spreads}}
+
+== Advancements ==
+{{load advancements|It Spreads}}
+
+== History ==
+=== Announcement and tweets ===
+{{HistoryTable
+|{{HistoryLine||October 3, 2020|link={{ytl|https://youtu.be/DWZIfsaIgtE?|t=2424s}}|[[File:Sculk Catalyst (pre-release).png|32px]] Sculk catalysts are shown unnamed at [[Minecraft Live 2020]].}}
+|{{HistoryLine||November 13, 2020|link={{tweet|kingbdogz|1327265084352180224}}|[[File:Sculk Catalyst BE1.png|32px]] The sculk catalyst has a new texture in a tweet from [[Brandon Pearce]].}}
+|{{HistoryLine||April 26, 2021|link={{Tweet|kingbdogz|1386776067046785025}}|[[Kingbdogz]] states that sculk features aren't coming in [[Java Edition 1.17|1.17]].}}
+|{{HistoryLine||October 16, 2021|link={{ytl|https://youtu.be/w6zLprHHZOk}}|Sculk features were delayed to [[Java Edition 1.19|1.19]].
+|[[File:Sculk Catalyst Bloom BE1.gif|32px]] New sculk catalyst functions were shown.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|[[File:Sculk Catalyst BE1.png|32px]] [[File:Sculk Catalyst Bloom BE1.gif|32px]] Added sculk catalysts.}}
+|{{HistoryLine|||dev=22w11a|Implemented sculk catalysts into normal snapshot.}}
+|{{HistoryLine|||dev=22w17a|[[Warden]]s now drop a single sculk catalyst upon death, making them renewable.}}
+|{{HistoryLine||1.19.1|dev=pre6|Sculk catalysts now drop five experience instead of 20.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.30.22|"Sculk Catalyst" was mentioned in Bedrock Beta documentation.}}
+|{{HistoryLine|||dev=beta 1.17.30.23|[[File:Sculk Catalyst (top texture) BE1.png|32px]] [[File:Sculk Catalyst (side texture) BE1.png|32px]] [[File:Sculk Catalyst (bottom texture) BE1.png|32px]] [[File:Sculk Catalyst (top bloom texture) BE1.png|16px]] [[File:Sculk Catalyst (side bloom texture) BE1.png|16px]] Sculk Catalyst textures were shown in internal [[Caves & Cliffs]] textures.}}
+|{{HistoryLine||1.18.0|exp=Vanilla Experiments|dev=beta 1.18.0.22|[[File:Sculk Catalyst BE1.png|32px]] [[File:Sculk Catalyst (bloom) BE1.gif|32px]] Added sculk catalysts behind the "Vanilla Experiments" experimental toggle.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.21|Moved sculk catalysts to the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.18.30|exp=Wild Update|dev=Preview 1.18.30.23|Sculk catalysts were updated to match {{JE}}'s behavior.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Sculk catalysts are now available without enabling experimental gameplay.}}
+|{{HistoryLine|||dev=Preview 1.19.0.29|Wardens now drop a single sculk catalyst upon death.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.23|Sculk catalysts now drop five experience instead of 20.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Increased the blast resistance of sculk catalysts from 1.8 to 3.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+
+* The sculk catalyst is made of a "bone-like material".<ref>{{Tweet|kingbdogz|1327266276511768577|That is actually a bone-like material, not End Stone :)|November 13, 2020}}</ref>
+
+== Gallery ==
+=== Textures ===
+<gallery>
+Sculk Catalyst (bottom texture) JE1 BE1.png|The bottom texture of the sculk catalyst.
+</gallery>
+=== Screenshots ===
+<gallery>
+Slicedlime video sculk catalyst.gif|[[Slicedlime]] "corrupting" a canyon into sculk block by using sculk catalyst and dying [[skeleton]] in his video.
+Sculk Charge on blocks.png|Particles appear above blocks when a sculk charge travels over them.
+Sculk catalyst generated in the side of a wall.png|A sculk catalyst generated in a wall.
+Sculk Apocalypse.jpg|Sculk from a catalyst spreading over a [[savanna]].
+Lots of Sculk 1.jpg|Lots of sculk from a catalyst.
+Lots of Sculk 2.jpg|Sculk spreading from a catalyst.
+Lots of Sculk 3.jpg|Lots of sculk spreading from a catalyst.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:SteveWins.png|[[Steve]] claiming a sculk catalyst from a Warden that was slain using a [[mace]].
+File:Sculk catalyst flippin fig.jpg|Sculk catalyst figure of Flippin' Figs
+</gallery>
+
+== See also ==
+* {{BlockLink|Moss Block}}
+* {{BlockLink|Pale Moss Block}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+[[Category:Utility blocks]]
+[[Category:Light sources]]
+[[Category:Block entities]]
+
+[[de:Sculk-Katalysator]]
+[[es:Catalizador de sculk]]
+[[fr:Catalyseur de sculk]]
+[[ja:スカルクカタリスト]]
+[[ko:스컬크 촉매]]
+[[pl:Sculkowy katalizator]]
+[[pt:Catalisador de Sculk]]
+[[ru:Скалк-катализатор]]
+[[uk:Скалковий каталізатор]]
+[[zh:幽匿催发体]]

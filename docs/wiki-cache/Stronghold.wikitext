@@ -1,0 +1,525 @@
+{{for|the mission in {{MCD}}|MCD:The Stronghold}}
+{{Infobox structure
+| image = StrongholdPortalRoom.png
+| imagesize = 250px
+| biome = Any [[Overworld]] biome
+| mobs = {{EntityLink|Silverfish}} (from [[monster spawner]] and [[infested block]]s)
+| blocks = *See {{slink||Structure}}
+*See {{slink||Blocks}}
+| canspawn = No
+}}
+{{relevant tutorial|Defeating a stronghold}}
+A '''stronghold''' is a rare underground [[structure]] in the [[Overworld]], and is the only place where an [[End portal]] can be found. Strongholds can be located by using an [[eye of ender]].
+
+== Generation ==
+{{For|locating strongholds|Eye of Ender#Locating strongholds}}
+[[File:EndPortalRoom.png|thumb|right|The [[End portal]] room]]
+
+Strongholds generate at any Y level, mostly underground, and prefer to generate in [[biome]]s above sea level, but generate underwater if necessary. Strongholds may generate at [[bedrock]] level, cutting the bedrock.
+
+Most parts of the stronghold can be overwritten by [[cave]]s, [[ocean monument]]s, [[Ancient City|ancient cities]], [[mineshaft]]s, [[fossil]]s, [[amethyst geode]]s, [[trial chambers]], and [[monster room]]s; but it is rare for the [[End portal]] to be replaced, which would force a player to find one of the other strongholds, as a portal can be activated only with all 12 [[End portal frame]]s present. [[Canyon]]s do not overwrite strongholds; rather, a stronghold can occasionally be found exposed by a canyon.<!-- verified in Bedrock 1.17.0, see talk page for examples -->
+
+=== ''Bedrock Edition'' ===
+{{IN|Bedrock}}, strongholds generate randomly throughout the world and they are at least 160 blocks away from the world origin. There is no limit to the number of strongholds that can generate, unlike in ''Java Edition''. There are 3 extra strongholds at least 453 blocks away from the world origin, which tend to be close to the 453-block boundary, and are guaranteed to generate below meeting points of a [[village]]. In rare cases, these 3 extra strongholds can be very far from the world origin, sometimes over 10,000 blocks away.
+
+=== ''Java Edition'' ===
+[[File:Strongholds 1.9.svg|class=skin-invert-image|thumb|right|400px|Stronghold layout through the world {{in|Java}}]]
+{{IN|je}}, all strongholds are located at random coordinates within rings in all biomes, where each ring is a certain radius from the center of the world (X=0, Z=0). For a given ring, the strongholds are generated at roughly equal angles from the center point of the world (for instance, each stronghold in a ring of 3 is in the region of 120 degrees from the others, measured from the origin). The game does not generate a stronghold partially above ground; any portion above the sea level is replaced with [[air]], leaving a cutaway. If a stronghold generates in an [[ocean]], which occurs rarely, it typically generates with terrain covered above it. Strongholds are biased towards biomes in the {{cd|[[Biome tag (Java Edition)#stronghold_biased_to|#stronghold_biased_to]]}} biome tag.{{info needed|How does the bias work specifically?}}
+
+There are eight rings, containing 128 strongholds in total:
+# The first ring has 3 strongholds within 1,280–2,816 blocks of the origin.
+# The second ring has 6 strongholds within 4,352–5,888 blocks of the origin.
+# The third ring has 10 strongholds within 7,424–8,960 blocks of the origin.
+# The fourth ring has 15 strongholds within 10,496–12,032 blocks of the origin.
+# The fifth ring has 21 strongholds within 13,568–15,104 blocks of the origin.
+# The sixth ring has 28 strongholds within 16,640–18,176 blocks of the origin.
+# The seventh ring has 36 strongholds within 19,712–21,248 blocks of the origin.
+# The eighth and outermost ring has 9 strongholds within 22,784–24,320 blocks of the origin.
+The number of strongholds in each ring is the [https://oeis.org/A000217 triangular number] of the number one more than the ring number, except for the outermost ring, where 45 would be expected.
+
+The outermost ring has the further unusual property of putting the strongholds at angles of roughly 36° (not the expected 40°) as if there were to be ten equally spaced strongholds, like in the third ring. One of these ten does not generate, however, keeping the number at nine.
+
+{{Calculator|chunkbase|pois=St|zoom=0.25}}
+
+== Structure ==
+{{Main|/Structure}}
+[[File:Stronghold isometric view.png|thumb|An isometric view of a stronghold in a [[superflat]] world.<ref group="n">In superflat worlds, strongholds generate with the maximum number of rooms possible.</ref>]]
+
+Stronghold generation starts with a spiral staircase room that leads down to a five-way intersection. From there, additional rooms are randomly generated. The layout can extend up to 50 rooms away from the original room and within a horizontal radius of 112 blocks.{{info needed|From which room is the 50 rooms count measured: the spiral staircase or the five-way crossing? From which block is the horizontal radius measured: the top, bottom, or center of the starting room?}} If no portal room is generated during this process, the stronghold generation restarts.
+
+=== Blocks ===
+{{columns-list|colwidth=16em|
+* {{BlockLink|Bookshelf}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Cobblestone Stairs}}
+* {{BlockLink|Cobblestone}}
+* {{BlockLink|Cobweb}}
+* {{BlockLink|Cracked Stone Bricks}}
+* {{BlockLink|End Portal Frame}}
+* {{BlockLink|id=end portal|End Portal (block)|End Portal Block}}<ref group="n">If the portal is lit.</ref>
+* {{BlockLink|id=infested stone bricks|Infested Stone Bricks}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Iron Door}}{{only|java|short=1}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Lava}}
+* {{BlockLink|id=silverfish-spawner|Monster Spawner|Silverfish Monster Spawner}}
+* {{BlockLink|Mossy Stone Bricks}}
+* {{BlockLink|Oak Door}}
+* {{BlockLink|Oak Fence}}
+* {{BlockLink|Oak Planks}}
+* {{BlockLink|Smooth Stone Slab}}
+* {{BlockLink|Stone Brick Slab}}
+* {{BlockLink|Stone Brick Stairs}}
+* {{BlockLink|Stone Bricks}}
+* {{BlockLink|Stone Button}}{{only|java|short=1}}
+* {{BlockLink|Torch}}
+* {{BlockLink|Water}}
+}}
+
+The distribution of stone brick variants is roughly as follows:
+* {{BlockLink|Stone Bricks|link=none}}: 45%
+* {{BlockLink|Mossy Stone Bricks|link=none}}: 30%
+* {{BlockLink|Cracked Stone Bricks|link=none}}: 20%
+* {{BlockLink|Infested Stone Bricks|link=none}}: 5%
+[[Infested cracked stone bricks]] and [[infested mossy stone bricks]] do not naturally generate; they only appear when [[silverfish]] infest these blocks.<ref>{{bug|MC-140209||Cracked and mossy stone brick infested blocks/monster eggs do not generate in strongholds|Invalid}}</ref>
+
+=== Components ===
+==== Corridors ====
+{| class="wikitable collapsible"
+|+ Corridors
+! scope="col" style="width: 200px" | Name<br><small>(ID)</small>
+! scope="col" style="width: 300px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 200px" | Image
+|-
+| Straight corridor<br><small>(minecraft:shs)</small>
+| This sub-structure consists of a corridor; it generates with an entrance and an exit on opposite sides, making it a 5 block long corridor. On each side, a side exit has a 50% chance to generate; if it does not, the corresponding side is sealed with a stone bricks wall.
+
+This sub-structure can also include up to 4 torches, each with a 10% chance to generate. They are placed hanging on the walls beside the potential side exits, regardless of whether the exits generate.
+
+The render on the side depicts the sub-structure with all the features generated.
+| 94-112 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks">For simplicity, this number assumes the rooms are composed solely of stone bricks. However, the actual composition is as follows:
+* 45% {{BlockLink|Stone Bricks}}
+* 30% {{BlockLink|Mossy Stone Bricks}}
+* 20% {{BlockLink|Cracked Stone Bricks}}
+* 5% {{BlockLink|Infested Stone Bricks}}</ref><br>0-4 {{BlockLink|Torch}}
+| [[File:Stronghold straight corridor.png|200px]]
+|-
+| Right Turn Corridor<br><small>(minecraft:shrt)</small>
+| rowspan="2" | These sub-structures are corridors with 90° turns. Both types have an equal chance of appearing.
+| rowspan="2" | 80 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/>
+| rowspan="2" style="text-align:center" | [[File:Stronghold turn corridor.png|200px]]
+|-
+| Left Turn Corridor<br><small>(minecraft:shlt)</small>
+|-
+| Spiral staircase<br><small>(minecraft:shsd)</small>
+| This sub-structure consists of a staircase, with its entrance at the top and its exit at the bottom.
+
+Between 0 and 5 spiral staircases can generate per stronghold. In addition to these, an extra spiral staircase always generates as part of the starting point of the structure.
+| 187 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>6 {{BlockLink|Smooth Stone Slab}}
+| [[File:Stronghold spiral staircase.png|200px]]
+|-
+| Straight staircase<br><small>(minecraft:shssd)</small>
+| This sub-structure consists of a staircase, with its entrance at the top and its exit at the bottom.
+
+There is also an empty alcove under the stairs.
+
+Between 0 and 5 straight staircases can generate per stronghold.
+| 275 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>18 {{BlockLink|Cobblestone stairs}}
+| [[File:Stronghold straight staircase.png|200px]]
+|-
+| Loot Altar<br><small>(minecraft:shcc)</small>
+| This sub-structure consists in a chest on an altar in a corridor.
+
+Between 0 and 4 loot altars can generate per stronghold.
+| 115 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>7 {{BlockLink|Stone Brick Slab}}<br>1 {{BlockLink|Chest}}<ref group="n">This chest uses the altar chest loot. This loot is found in <code>loot_tables/chests/stronghold_corridor</code>.</ref>
+| [[File:Stronghold loot altar.png|200px]]
+|}
+
+{| class="wikitable collapsible"
+|+ Doors
+! scope="col" style="width: 200px" | Name<br><small>(ID)</small>
+! scope="col" style="width: 300px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 200px" | Image
+|-
+| {{info needed}}
+| rowspan="4" |
+Doors are the separating sub-structures that generate between the various rooms of strongholds. There are 4 types of door: the empty opening, the grate of iron bars, the wooden door and the iron door. The iron door variant is exlusive to {{JE}}.<ref name="irondoors">{{bug|MCPE-11765|MCPE-11765|No iron doors and stone buttons in strongholds}}</ref>
+
+They are generated randomly, with each having an equal chance of appearing, except for the empty opening which is twice as likely to occur.
+
+In order to prevent two doors from generating directly adjacent to each other, they are generated only as room entrances.
+
+Wooden and iron doors always face the direction in which the stronghold generates: a door that is flush with the wall always leads away from the starting staircase, while a door that is indented into the wall leads toward it.
+| 9 {{BlockLink|Air}}
+| style="text-align:center" | [[File:Blank.png|100px]]
+|-
+| {{info needed}}
+| 7 {{BlockLink|Iron Bars}}
+| style="text-align:center" | [[File:Stronghold door (grates).png|100px]]
+|-
+| {{info needed}}
+| 7 {{BlockLink|Stone Bricks}}<ref group="n" name="onlystonebricks">Unlike other rooms, this structure only generates with stone bricks. It does not include mossy stone bricks, cracked stone bricks, and infested stone bricks.</ref><br>1 {{BlockLink|Oak Door}}
+| style="text-align:center" | [[File:Stronghold door (wooden).png|100px]]
+|-
+| {{info needed}}
+| 7 {{BlockLink|Stone Bricks}}<ref group="n" name="onlystonebricks"/><br>1 {{BlockLink|Iron Door}}<br>1 {{BlockLink|Stone Button}}
+| style="text-align:center" | [[File:Stronghold door (iron).png|100px]]
+|}
+
+==== Rooms ====
+{| class="wikitable collapsible"
+! scope="col" style="width: 200px" | Name<br><small>(ID)</small>
+! scope="col" style="width: 300px" | Description
+! scope="col" style="width: 300px" | Blocks
+! scope="col" style="width: 200px" | Image
+|-
+| Five-way crossing<br><small>(minecraft:sh5c)</small>
+| This room consists of a small atrium from which 2 to 6 paths can branch out:
+* The first exit (1), located in front of the stairway, always generates, as it acts as the entrance to the room.
+* The second exit (2), located down the stairway, always generates.
+* The other exits (3, 4, 5, and 6) each have a 50% chance to generate.{{more info|According to Stronghold/Structure, the "far exit to the right" has a 66% chance; however "right" is meaningless as the room can be flipped.}}
+
+<gallery>Stronghold five-way crossing layout.png|The layout of a five-way crossing</gallery>
+
+This room can branch out to hidden rooms. If the room is rotated such that the player faces west or north when entering it, a hidden room tries to generate. Hidden rooms always attempt to generate directly adjacent to indentations on the same wall; the attempt can sometimes fail meaning no hidden room generates.
+
+<gallery>
+Stronghold five-way crossing hidden room.png|The indentation (on the left, marked in green) indicates a hidden room attempted to generate behind the wall (on the right, marked in red). In other words, a hidden room can be found behind a smooth wall where an exit can generate.
+</gallery>
+
+Between 0 and 4 five-way crossings can generate per stronghold. In addition to these, an extra five-way crossing always generates as part of the starting point of the structure.
+| 536-572 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>36 {{BlockLink|Smooth Stone Slab}}<br>1 {{BlockLink|Torch}}
+| [[File:Stronghold five-way crossing.png|200px]]
+|-
+| Jail cell<br><small>(minecraft:shph)</small>
+| This room consists of a corridor with two cells located on one of its sides. {{IN|BE}}, jail cells generate without iron doors.<ref name="irondoors"/>
+
+Between 0 and 5 jail cells can generate per stronghold.
+| 300 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>20 {{BlockLink|Iron Bars}}<br>2 {{BlockLink|Iron Door}}{{only|je|short=1}}
+| [[File:Stronghold jail cell.png|200px]]
+|-
+| Large room<br><small>(minecraft:shrc)</small>
+| This room consist in a cross junction; four exits (including the entrance) always generate.
+
+Large rooms come in 4 variants:
+* Empty: has no decoration.
+* Fountain: has a fountain.
+* Pillar: has a stone brick pillar with torches.
+* Store: has 2 floors, each 2 blocks high, with a cobblestone center structure joining the two and a torch housed within the structure; a ladder runs up the side wall, providing access to the second floor, which is a chamber made of oak planks and that contains a loot chest.
+
+Between 0 and 6 large rooms, regardless of variants, can generate per stronghold.
+| 406 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/> (all)<br><br>'''Fountain:'''<br>19 {{BlockLink|Stone Bricks}}<ref group="n" name="onlystonebricks"/><br>1 {{BlockLink|Water}}<br><br>'''Pillar''':<br>3 {{BlockLink|Stone Bricks}}<ref group="n" name="onlystonebricks"/><br>8 {{BlockLink|Smooth Stone Slab}}<br>4 {{BlockLink|Torch}}<br><br>'''Store:'''<br>51 {{BlockLink|Cobblestone}}<br>40 {{BlockLink|Oak Planks}}<br>3 {{BlockLink|Ladder}}<br>1 {{BlockLink|Chest}}<ref group="n">This chest uses the storeroom chest loot. This loot is found in <code>loot_tables/chests/stronghold_crossing</code>.</ref><br>1 {{BlockLink|Torch}}
+|
+<div class="infobox-imagearea">
+<tabber>
+Empty=
+[[File:Stronghold large room (empty).png|200px]]
+|-|
+Fountain=
+[[File:Stronghold large room (fountain).png|200px]]
+|-|
+Pillar=
+[[File:Stronghold large room (pillar).png|200px]]
+|-|
+Store=
+[[File:Stronghold large room (store).png|200px]]
+</tabber>
+</div>
+|-
+| Library<br><small>(minecraft:shli)</small>
+| 
+
+Libraries come in 2 variants:
+* Large: a duplex library containing 2 chests.
+* Small: a single-level library containing 1 chest.
+
+Libraries generate in their small variant only when there isn't enough space for the large variant; otherwise, they always generate in their large variant.
+
+Each air block within 4 blocks above the ground (inclusive) has a 7% chance of being replaced by a cobweb upon generation.
+
+Between 0 and 2 libraries can generate per stronghold. Additionally, libraries can never generate within four rooms of the starting staircase.
+| '''Large:'''<br>895 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>233 {{BlockLink|Bookshelf}}<br>166 {{BlockLink|Oak Planks}}<br>46 {{BlockLink|Oak Fence}}<br>14 {{BlockLink|Torch}}<br>7 {{BlockLink|Ladder}}<br>2 {{BlockLink|Chest}}<ref group="n" name="librarychest">This chest uses the library chest loot. This loot is found in <code>loot_tables/chests/stronghold_library</code>.</ref><br>0-417 {{BlockLink|Cobweb}} ({{Tooltip|avg.|Average}}: 29)<br><br>'''Small:'''<br>627 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>161 {{BlockLink|Bookshelf}}<br>32 {{BlockLink|Oak Planks}}<br>8 {{BlockLink|Torch}}<br>1 {{BlockLink|Chest}}<ref group="n" name="librarychest"/><br>0-422 {{BlockLink|Cobweb}} ({{Tooltip|avg.|Average}}: 29)
+|
+<div class="infobox-imagearea">
+<tabber>
+Large=
+[[File:Stronghold Library.png|200px]]
+|-|
+Small=
+[[File:Stronghold library (small).png|200px]]
+</tabber>
+</div>
+|-
+| Portal room<br><small>(minecraft:shpr)</small>
+| The End portal room is the only room guaranteed to generate in a stronghold. It never generates within five rooms of the starting staircase, although it is less likely to generate farther away.
+
+Unlike all other rooms in the stronghold, it always generates with a complete outer wall, making it the only room that is consistently fully formed after generation.
+
+Each portal frame has a 10% chance to generate containing an [[eye of ender]]; the average number of portal frames found prefilled is 1.2. The chance of the portal being completely pre-filled is one in a trillion (1:1,000,000,000,000 or 10<sup>-12</sup>).
+
+Its entrance is always the door variant made of iron bars.
+
+As of [[Java Edition 1.16]], all [[world seed]]s that have a pre-activated End portal in the first ring have been found.<ref>{{citation|url=https://github.com/hube12/SSGOutput/releases/tag/1.1|title= 1.16 12-eye seeds with spawn locations Latest|website=github.com|author=hube12|date=September 14, 2020}}</ref>
+
+| 704 {{BlockLink|Stone Bricks}}<ref group="n" name="stonebricks"/><br>39 {{BlockLink|Iron Bars}}<br>15 {{BlockLink|Lava}}<br>8 {{BlockLink|Stone Brick Stairs}}<br>12 {{BlockLink|End Portal Frame}}<br>1 {{BlockLink|Monster Spawner}}
+| [[File:StrongholdPortalRoom.png|200px]]
+|}
+
+== Loot ==
+{{seealso|Chest loot}}
+
+=== Altars ===
+{{LootChest|altar}}
+
+=== Storerooms ===
+Storeroom chests are found in the "store" room variant of large rooms.
+
+{{LootChest|storeroom}}
+
+=== Libraries ===
+{{LootChest|library}}
+
+{{notelist}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Stronghold
+|spritetype=env
+|nameid=stronghold
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Stronghold
+|spritetype=env
+|nameid=stronghold
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Stronghold
+|spritetype=env
+|nameid=stronghold
+|translationkey=feature.stronghold
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config" /><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:stronghold}}
+** {{Nbt inherit/structure}}
+</div><section end="config" />
+
+== Advancements ==
+{{load advancements|Eye Spy}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||July 01, 2011|link=https://web.archive.org/web/20180510013141/https://plus.google.com/+JensBergensten/posts/BihVUsKA4Vp|[[Jens Bergensten]] shares an image of mysterious ruins that resemble a stronghold. Unlike the implemented strongholds, a large part of these ruins are above-ground.}} 
+|{{HistoryLine||1.8|dev=Pre-release|Added strongholds as part of the [[Adventure Update]]. A single one generates per world. They are vacant except for regular mobs that spawn under normal conditions.
+|Strongholds have [[chest]]s in libraries and in storerooms.}}
+|{{HistoryLine|||dev=Pre-release 2 ;)|Increased stronghold count to three per world instead of one.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 3|The [[End portal]] room was added to the stronghold. The portal frames can be filled in using eyes of ender, but does not activate.
+|A pair of [[Java Edition removed features#Glass pillars|glass towers]] indicated the location of a stronghold's start (aka main entrance) and second for the portal room on top of them, extending from the top of the map to the stone bricks. This was a debug feature that Jeb forgot to remove.<ref>{{Tweet|jeb|121951968389369857|Ah LOL! I forgot to remove the debug pillars from the strongholds. Oh well, it's not severe enough for another update|October 6, 2011}}</ref>
+|Strongholds now also have chests in corridor altars.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Removed glass towers generating above strongholds.
+|The End portal is now functional.
+|[[Eyes of ender]] now properly point to strongholds.}}
+|{{HistoryLine||?|The game no longer prints the coordinates of generated strongholds to the output log.}}
+|{{HistoryLine||1.4.2|dev=12w40a|Strongholds can now generate in the air in [[Superflat]] worlds with certain customization presets.}}
+|{{HistoryLine||1.9|dev=15w43a|Increased stronghold count to 128 per world, rather than 3.
+|Library chests now have 2–10 stacks of items, rather than 1–4 stacks.
+|Enchanted books found in library chests is now weighted to 10 rather than 2, and in single books rather than in groups of 1–5.}}
+|{{HistoryLine|||dev=16w06a|Stronghold placement formula changed.}}
+|{{HistoryLine|||dev=pre3|Eyes of ender can now point to the 125 new strongholds.}}
+|{{HistoryLine||1.17|dev=21w07a|Strongholds are no longer exposed in oceans. Instead, they get covered by the seabed.<ref>{{bug|MC-216191|resolution=WAI}}</ref>}}
+|{{HistoryLine||1.18.2|dev=22w07a|Strongholds now spawn in [[superflat]], but not in the "Classic Flat" preset.}}
+|{{HistoryLine||1.19.3|dev=22w42a|The placement code has been changed to be more efficient, causing stronghold positions to shift.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|[[Eye armor trim]]s are now found in stronghold chests.}}
+|{{HistoryLine|||dev=23w05a|Increased the chance of [[eye armor trim]]s from 4.7% to 10% in altar chests, and to 100% in library chests.}}
+|{{HistoryLine||1.20|dev=23w12a|Changes from 23w04a and 23w05a are now available without using the "Update 1.20" experimental data pack.}}
+|{{HistoryLine||1.21.2|dev=pre1|Strongholds can now generate in the [[pale garden]] biome.}}
+|{{HistoryLine||1.21.4|dev=24w44a|The changes from 1.21.2-pre1 are now available without using the "Winter Drop" experimental data pack.}}
+|{{HistoryLine||1.21.6|dev=25w20a|Removed saddles from stronghold corridor loot tables, replaced with 1–5 leather.}}
+|{{HistoryLine||1.21.9|dev=25w31a|[[Copper horse armor]] now generates in stronghold altar chests.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.9.0|dev=May 6, 2014|slink=https://instagram.com/p/np4UDPpMMN/|[[Jeb]] posts on Instagram a photo of one section of a stronghold.}}
+|{{HistoryLine|||dev=May 8, 2014|slink=https://instagram.com/p/nvTX5bpMN5/|Jeb posts another image of a stronghold, this time within the End portal room.}}
+|{{HistoryLine|||dev=build 1|Added strongholds.
+|The End portal block frame exists, but the player cannot travel to [[the End]].}}
+|{{HistoryLine||v0.9.2|Strongholds are now more common.}}
+|{{HistoryLine||v0.12.0|Enchanted books can now be found in stronghold library chests.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Maps can be found in stronghold library chests.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Strongholds now generate in new chunks.|Strongholds can now be found using [[eyes of ender]].
+|Chests now generate in stronghold storerooms.
+|[[Ender pearl]]s now generate in altar chests.}}
+|{{HistoryLine|bedrock edition}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|Cobblestone stairs in strongholds are replaced with stone stairs.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Most strongholds no longer generate under village wells; they now generate under village meeting points.
+|Reduced chance of strongholds generating under villages.<!-- some strongholds attempt to generate under village well (meeting points), but not as common as in previous version -->}}
+|{{HistoryLine|||dev=beta 1.10.0.4|Stone stairs in strongholds are changed back to cobblestone stairs.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.22|Strongholds are no longer able to generate mid-air in large caves.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.21|[[Eye armor trim]]s are now found in stronghold chests.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.22|Strongholds now always generate with an [[End portal]] room.}}
+|{{HistoryLine||1.21.111|dev=Preview 1.21.110.22|[[Copper horse armor]] now generates in stronghold altar chests.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added strongholds.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|Strongholds can now generate in the air in [[Superflat]] worlds with certain customization presets.|It is now possible to change the amount of strongholds that generate in a Superflat world. This means it is possible to have up to 3 strongholds instead of only 1.}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Stronghold chests can now generate [[emerald]]s and [[ink sac]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|Added strongholds.}}
+}}
+<gallery>
+Unnamed Brick Blocks.png|The first image of a stronghold that [[Jeb]] posted
+Ruins1.png|The first image of a stronghold that [[Notch]] posted
+Beta 1.9 pre3 stronghold.png|Stronghold markers in [[Beta 1.9 Prerelease 3]]
+Strongholdgeneration.png|A stronghold generated on Superflat using Customization GUI in 12w40a and 12w40b.
+StrongholdUncovered1.png|The side view of an uncovered stronghold
+StrongholdUncovered2.png|Overhead view of an uncovered stronghold
+StrongholdUncovered3.png|Top view of an uncovered stronghold
+</gallery>
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* There are exactly 233 bookshelves in a large library, yielding 699 [[book]]s if mined without [[Silk Touch]], which is 10 stacks plus 59 left over.
+* Along with some other older structures, strongholds do not generate with [[air]] inside them.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Iron Door in Stronghold.png|An iron door in a stronghold
+Stone Bricks in Stronghold.png|Many stone bricks in a stronghold
+Stronghold1.png|A stronghold with a fountain
+PillarRoom.png|A stone pillar generated in a large room.
+Library In Stronghold.png|A small library
+Large Stronghold Library.png|A large library
+Stronghold Chest.png|A chest in a stronghold chamber
+Stronghold Torch Glitch.png|A floating torch in a pillar room, from a rendering glitch
+Floating torch in a library.png|A floating torch in a library
+Incomplete End Portal.png|The [[End portal]] room, with an inactive End portal
+End Portal Spawner.png|Finished End portal
+Ladder in Stronghold.png|A ladder in a stronghold library, which gives a player access to a second floor
+End Portal without Silverfish Spawner.png|An End portal with a silverfish spawner
+Active portal.png|This portal is already activated upon world generation. (1/10^12 chance)
+Silverfish Near Fountain.png|Four [[silverfish]] chasing the player in a stronghold
+Mushrooms In Cell.png|Mushrooms growing in a cell made of iron bars
+FloatingLadders.png|A glitch where the ladders of a stronghold can appear floating
+Stronghold Portal Room Screenshot.png|The portal room
+Preset stronghold below.png|A stronghold under a [[village]]
+Stronghold under village cross section.png|A cross section of a stronghold generating under a village in [[Bedrock Edition]]
+A part of a stronghold vibrant visuals.png|A part of a stronghold
+</gallery>
+
+=== Unique generation ===
+<gallery>
+File:Over.png|An underground view of the top of a stronghold
+File:Stronghold at surface.png|An End portal room generated partially above sea level, noted by the windows
+File:Surface stronghold console.png|A stronghold generating on the surface in {{el|xbox 360}}
+File:Tiny Underwater Stronghold.png|An underwater End portal room with no other rooms
+File:Under.png|An underground view of the bottom of a stronghold
+File:Canyon intersecting a stronghold.png|Ravine with multiple ores, water and lava falls, and a stronghold bridge over it
+File:3 structures together.png|A desert pyramid, mineshaft, and stronghold generated together
+File:Monster room in stronghold.png|A zombie [[monster room]] overriding a stronghold's generation
+File:Monster room in a stronghold corridor.png|A monster room intersecting a stronghold
+File:Ravine2.png|A canyon cutting through a stronghold
+File:Stronghold Mineshaft.png|A stronghold intersecting with a mineshaft
+File:Lava Ravine Stronghold.png|A floating library generated in a canyon over a lava lake
+File:RavineStronghold.png|A stronghold cut by a canyon
+File:Library Mine.png|A [[mineshaft]] generated inside a stronghold library
+File:Monster room betwixt two libraries.jpg|A monster room intersecting a stronghold and library room
+File:Stronghold-mineshaft.png|A stronghold and a mineshaft intersection
+File:3inone.png|A monster room, stronghold, and a mineshaft in one area
+File:Stronghold floating doors.png|A stronghold and a cave system
+File:Monster room in a stronghold.png|A [[skeleton]] monster room that generated in a stronghold
+File:Monster room in stronghold library.png|A monster room generated in a library
+File:EndPortalIncomplete.png|An End portal room intersected by a mineshaft
+File:Floorless Stronghold Library.png|A stronghold library above a cave
+File:Underwater Exposed Stronghold.png|A stronghold exposed underwater
+File:Stronghold Cave Spider Spawner.png|A stronghold intersecting the monster spawner corridor in a mineshaft
+File:3 rooms stronghold.png|A stronghold with only 3 rooms
+File:Small Stronghold.png|A small stronghold
+File:SmallStronghold.png|A small stronghold with a small library, a chest corridor, and a portal room
+File:2way.png|An End portal room in a stronghold with 2 possible ways to get in. Check the image for the seed and coordinates.
+File:Multiple structures in a canyon.png|A [[mineshaft]] along with a stronghold and [[jungle pyramid]] generated in one canyon.
+File:GlitchedMinecartChest.png|This [[minecart with chest]] is trapped inside of a [[stone brick]], due to a stronghold and a [[mineshaft]] that generated partially overlapping.
+File:Minecartportal.png|A minecart with chest generated on top of an [[End portal frame]], because there is a [[mineshaft]] behind the wall
+File:Minecraftstoreroom.png|Two store rooms that are intersecting with a [[mineshaft]].
+File:Libraryintheair.png|Stronghold library generated in a ravine, making it float
+File:AmethystGeodeStronghold.jpg|An [[amethyst geode]] intersecting with a stronghold
+File:Exposed portal.png|A portal room at the bottom of an ocean
+File:Sf.jpg|A stronghold room generated at bedrock level
+File:Deep Stronghold Stairs.png|A staircase leading to bedrock
+File:Library Set Ablaze.png|Stronghold libraries can sometimes be set on [[fire]] by naturally-occurring lava.
+File:Deep Dark Stronghold.png|A stronghold generated within a Deep Dark biome.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Live2023-03.jpeg|[[Ari]] and [[Efe]] in the stronghold library, from the [[Minecraft Live is back for 2023!|announcement]] of [[Minecraft Live 2023]]
+File:Strongholds Exhibit.png|The stronghold exhibit in [[15 Year Journey]]
+File:The Stronghold (Dungeons).png|A [[Dungeons:The Stronghold|stronghold]] as it appears in ''[[Minecraft Dungeons]]''.
+File:LEGO 21124-1.jpg|A [[LEGO Minecraft|Lego]] set of a stronghold intersected with a badlands mineshaft
+</gallery>
+
+=== Official artwork ===
+<gallery>
+File:Stronghold Artwork.jpg|Artwork of the structure
+</gallery>
+
+== External links ==
+* [https://www.minecraft.net/en-us/article/stronghold Building Blocks: Stronghold] – Minecraft.net on July 4, 2024
+
+== Notes ==
+<references group="n"/>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox generated structures}}
+{{Featured}}
+
+[[cs:Pevnost]]
+[[de:Festung]]
+[[es:Fortaleza]]
+[[fr:Fort]]
+[[hu:Erődítmény]]
+[[it:Roccaforte]]
+[[ja:要塞]]
+[[ko:근거지]]
+[[lzh:要塞]]
+[[nl:Burcht]]
+[[pl:Twierdza]]
+[[pt:Fortaleza]]
+[[ru:Крепость]]
+[[th:สตรองโฮลด์]]
+[[uk:Цитадель]]
+[[zh:要塞]]

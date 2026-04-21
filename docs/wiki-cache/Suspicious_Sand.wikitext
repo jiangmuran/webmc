@@ -1,0 +1,253 @@
+{{For||Suspicious|Sand (disambiguation)}}
+{{Infobox block
+| image = Suspicious Sand.png
+| invimage = Suspicious Sand
+| rarity = Common
+| renewable = No
+| stackable = Yes
+| maxStack = 64
+| tool = brush
+| tool2 = shovel
+| light = No
+| transparent = No
+| flammable = No
+| lavasusceptible = No
+| Tool = Shovel
+}}
+'''Suspicious sand''' is a fragile [[Falling Block|gravity-affected block]] found in various Overworld [[structure]]s. It can be [[brush]]ed to extract unique structure-dependent loot from it. It drops nothing if it breaks, and will break if it falls or is moved.
+
+== Obtaining ==
+{{IN|java}}, suspicious sand drops as an [[item (entity)|item]] if it falls for more than 30 seconds, which can be achieved by falling into an upward [[bubble column]], or through two [[cobweb]]s stacked on top of each other.<ref>{{bug|MC-260073||Suspicious sand drops as an item after 30 seconds of existing as falling block|WF}}</ref> However, it does not retain its loot.<br>
+{{IN|bedrock}}, suspicious sand can be obtained only through the [[Creative inventory]], using {{control|pick block}} in [[Creative]] mode and [[command]]s.
+
+=== Breaking ===
+The suitable tool to break suspicious sand is [[shovel]].
+{{Breaking row|Suspicious Sand|Shovel|drop=0|horizontal=1}}
+Suspicious sand drops nothing when it's destroyed.
+
+=== Natural generation ===
+Suspicious sand generates naturally in buried rooms under [[desert pyramid]]s, as well as in the bottom of [[desert well]]s. It also generates within [[Ocean Ruins#Warm ocean ruins|warm ocean ruins]].
+
+== Usage ==
+=== Brushing ===
+When a [[brush]] is {{ctrl|used}} on a suspicious sand, cracks start to appear on all sides of the block as the {{cd|dusted}} block state of the block starts to increase. If the suspicious sand being brushed is naturally generated, an item gradually emerges from the side where the player starts brushing. After 96 (6+20+30+40 per stage) [[game tick]]s (4.8 seconds), the item is extracted, and the suspicious sand is converted into [[sand]].
+
+If the player stops brushing a suspicious sand, the block remains in its half-excavated state for a few seconds, before gradually returning to its unexcavated state one stage at a time.
+
+=== Loot ===
+The item obtained and the [[loot table]] of suspicious sand is dependent on which structure it has generated in. Items can be extracted only from naturally generated suspicious sand. When placed by the player, nothing is produced after brushing.
+
+{{LootChest|brushable-warm-ocean-ruins}}
+{{LootChest|brushable-desert-temple}}
+{{LootChest|brushable-desert-well}}
+
+=== Turtle eggs ===
+A [[turtle egg]] can hatch only if placed on suspicious sand, regular [[sand]], or [[red sand]].
+
+=== Piston interactivity ===
+Suspicious sand is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Suspicious sand}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Brushing sand1.ogg
+|sound2=Brushing sand2.ogg
+|sound3=Brushing sand3.ogg
+|sound4=Brushing sand4.ogg
+|subtitle=Brushing Sand
+|source=block
+|description=While a brush is brushing suspicious sand
+|id=item.brush.brushing.sand
+|translationkey=subtitles.item.brush.brushing.sand
+|volume=0.6
+|pitch=0.6
+|distance=16}}
+| {{SoundLine
+|sound=Brushing sand completed1.ogg
+|sound2=Brushing sand completed2.ogg
+|sound3=Brushing sand completed3.ogg
+|sound4=Brushing sand completed4.ogg
+|sound5=Brushing sand completed5.ogg
+|source=Players<ref group=sound>{{Bug|MC-260202||The sound of using the brush isn't affected by blocks|Fixed}}</ref>|overridesource=1
+|subtitle=Brushing Sand completed
+|description=When a brush finishes brushing suspicious sand
+|id=item.brush.brushing.sand.complete
+|translationkey=subtitles.item.brush.brushing.sand.complete
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Brushing sand1.ogg
+|sound2=Brushing sand2.ogg
+|sound3=Brushing sand3.ogg
+|sound4=Brushing sand4.ogg
+|source=player
+|description=While a brush is brushing suspicious sand
+|id=brush.suspicious_sand
+|volume=1.0
+|pitch=0.8-1.0}}
+| {{SoundLine
+|sound=Brushing sand completed1.ogg
+|sound2=Brushing sand completed2.ogg
+|sound3=Brushing sand completed3.ogg
+|sound4=Brushing sand completed4.ogg
+|sound5=Brushing sand completed5.ogg
+|source=player
+|description=When a brush finishes brushing suspicious sand
+|id=brush_completed.suspicious_sand
+|volume=1.0
+| pitch = 0.8-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Sand
+|spritetype=block
+|nameid=suspicious_sand
+|blocktags=bamboo_plantable_on, enderman_holdable, sand, lush_ground_replaceable, mineable/shovel
+|itemtags=sand
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=suspicious-block
+|spritetype=block
+|nameid=brushable_block
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Sand
+|spritetype=block
+|nameid=suspicious_sand
+|id=-529
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=suspicious-block
+|spritetype=block
+|nameid=BrushableBlock
+|foot=1}}
+
+=== Block states ===
+<section begin="block states"/>{{el|je}}:
+{{bst|dusted|0|0,1,2,3|Increases as the block is being brushed.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=|brushed_progress|0|0,1,2,3|Increases as the block is being brushed.|Unsupported}}
+{{bst|bits=|hanging|true|true,false|If there is a block under this block or not.|Unsupported|foot=1}}<section end="block states"/>
+
+=== Block data ===
+{{main|Block entity format}}
+<section begin="block data"/><div class="treeview">
+* {{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt inherit/lootable}}
+** {{nbt|compound|item}}: The item in the block. May not exist.
+*** See [[item format]].
+</div><section end="block data"/>
+
+=== Falling block entity ===
+{{main|Falling Block}}
+{{#lst:Falling Block|infobox}}
+<!--- Do NOT remove this empty space, this causes templates to overlap. --->
+
+{{#lst:Falling Block|entity data}}
+
+== Advancements ==
+{{Load advancements|Respecting the Remnants;Smells Interesting}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||February 10, 2023|link=https://twitter.com/Minecraft/status/1624075979860635649|Suspicious sand is announced.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Suspicious Sand JE1 BE1.png|32px]] Added suspicious sand behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.20|dev=23w12a|Suspicious sand is now available without using the "Update 1.20" experimental datapack.
+|Suspicious sand now generates in warm [[ocean ruins]] and the [[trail ruins]].}}
+|{{HistoryLine|||dev=23w14a|Suspicious sand now has an assigned tool (shovel).
+|A suspicious sand is now visible on the top layer of the newly added room in [[desert pyramid]]s.
+|Suspicious sand can now have [[cacti]] and [[sugar cane]] planted on it.
+|Suspicious sand can no longer be replaced by [[sculk]] when a [[sculk catalyst]] triggers.}}
+|{{HistoryLine|||dev=23w16a|Suspicious sand no longer generates in [[trail ruins]].}}
+|{{HistoryLine|||dev=23w17a|The player now gets the [[advancement]] "Respecting the Remnants" when they brush suspicious sand to obtain a [[pottery sherd]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|[[File:Suspicious Sand JE1 BE1.png|32px]] Added suspicious sand behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|When suspicious sand is done being brushed, it now turns into a normal sand block instead of just breaking.}}
+|{{HistoryLine|||dev=Preview 1.19.80.21|Suspicious sand now also generates within warm ocean ruins. It uses the same loot table as in desert temples.}}
+|{{HistoryLine|||dev=Preview 1.19.80.22|Suspicious sand now also generates within [[trail ruins]].
+|Reworked loot tables.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Suspicious sand is now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.0.22|Suspicious sand can now have bamboo, [[Cactus|cacti]], [[sugar cane]], and [[dead bush]]es planted on it.
+|Suspicious sand no longer generates within trail ruins.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Development Images ===
+<gallery>
+Suspicious Sand Protoype Texture.png|Prototype texture of suspicious sand.<ref>{{Ytl|klP9SrJFDU8|Minecraft 1.20: Armor Trims – What Do They Mean?|Minecraft|June 5, 2023|t=205}}</ref>
+Brushing Suspicious Sand Protoype.png|Prototype of suspicious sand being brushed. 
+Brushing Suspicious Sand Protoype2.png|Ditto.
+Brushing Suspicious Sand Protoype3.png|Ditto.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox entities|Other}}
+
+[[Category:Generated structure blocks]]
+[[Category:Natural blocks]]
+[[Category:Utility blocks]]
+[[Category:Block entities]]
+[[Category:Entities]]
+[[Category:Falling blocks]]
+
+[[de:Seltsamer Sand]]
+[[es:Bloque sospechoso]]
+[[fr:Sable suspect]]
+[[it:Sabbia sospetta]]
+[[ja:怪しげなブロック]]
+[[ko:수상한 모래]]
+[[pl:Podejrzany blok]]
+[[pt:Areia Suspeita]]
+[[ru:Подозрительные блоки]]
+[[uk:Підозрілий пісок]]
+[[zh:可疑的沙子]]

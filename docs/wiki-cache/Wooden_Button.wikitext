@@ -1,0 +1,547 @@
+{{Infobox block
+| group = Oak
+| 1-1 = Oak Button.png
+| invimage = Oak Button
+| group2 = Spruce
+| 2-1 = Spruce Button.png
+| invimage2 = Spruce Button
+| group3 = Birch
+| 3-1 = Birch Button.png
+| invimage3 = Birch Button
+| group4 = Jungle
+| 4-1 = Jungle Button.png
+| invimage4 = Jungle Button
+| group5 = Acacia
+| 5-1 = Acacia Button.png
+| invimage5 = Acacia Button
+| group6 = Dark Oak
+| 6-1 = Dark Oak Button.png
+| invimage6 = Dark Oak Button
+| group7 = Mangrove
+| 7-1 = Mangrove Button.png
+| invimage7 = Mangrove Button
+| group8 = Cherry
+| 8-1 = Cherry Button.png
+| invimage8 = Cherry Button
+| group9 = Pale Oak
+| 9-1 = Pale Oak Button.png
+| invimage9 = Pale Oak Button
+| group10 = Bamboo
+| 10-1 = Bamboo Button.png
+| invimage10 = Bamboo Button
+| group11 = Crimson
+| 11-1 = Crimson Button.png
+| invimage11 = Crimson Button
+| group12 = Warped
+| 12-1 = Warped Button.png
+| invimage12 = Warped Button
+| transparent = Yes
+| light = No
+| tool = Axe
+| renewable = Yes
+| waterloggable = {{jebe|No|Yes}}
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = {{jebe|No|Yes}}
+}}
+A '''wooden button''' is a type of [[button]] that remains pressed for longer than a [[stone button]] and can additionally be pressed by [[arrow]]s and thrown [[trident]]s.
+
+== Obtaining ==
+=== Breaking ===
+A wooden button is most easily broken with an [[axe]]. It drops itself as an item when broken using any [[tool]].
+{{breaking row
+|horizontal=1
+|Wooden Button
+|sprite=wooden-buttons
+|Axe
+|link=none}}
+
+A button is removed and drops as an item if:
+* its attachment block is moved, removed, or destroyed.
+* [[water]] or [[lava]] flows into its space.{{only|java}}
+* a [[piston]] tries to push it or moves a block into its space.
+
+=== Natural generation ===
+Jungle buttons generate naturally on house walls in desert [[village]]s. Oak buttons generate naturally in [[trial chambers]] making up the various dispensers.
+
+=== Crafting ===
+Buttons can be crafted from [[planks]] for a matching wood-type button.
+{{Crafting
+|Matching Planks
+|Output= Matching Wooden Button
+|type=Redstone
+}}
+
+== Usage ==
+{{see also|Redstone circuit}}
+
+=== Placement ===
+Buttons can be placed by {{control|using}} them on a surface.
+
+They can be attached to the side, bottom and top of any full opaque block.
+
+{{IN|java}}, if placed on the top or bottom of a block, the button can face any direction.
+
+It can also be attached to the top of a fence {{in|be}}.
+
+More information about placement on transparent blocks can be found at [[Opacity/Placement]].
+
+=== Redstone power ===
+A button can be used as a [[monostable]] redstone [[Redstone components#Power components|power source]] (it automatically deactivates shortly after being activated).
+
+==== Activation ====
+Buttons are usually in an inactive state, but can be temporarily activated by players {{control|using}} it. A wooden button can also be activated by a fired [[arrow]], a thrown wind charge, or a thrown [[trident]] if its collision box touched the button.
+
+[[Mob]]s cannot activate buttons directly, but arrows fired by [[skeleton]]s or [[dispenser]]s can activate wooden buttons.
+
+==== Behavior ====
+When activated, a wooden button remains active for {{convert|1.5|seconds|redstone tick|game tick}}.
+A wooden button activated by a fired arrow or a thrown trident remains active until the arrow or trident despawns (after {{convert|1|minute}}) or is picked up by a player.
+
+While active, a button:
+* powers any adjacent [[redstone dust]] to [[Redstone circuit#Power|power level]] 15, including beneath the button
+* powers any adjacent [[redstone comparator]]s or [[redstone repeater]]s facing away from the button to power level 15
+* strongly powers its attachment block to power level 15
+* activates any adjacent [[Redstone components#Mechanism components|mechanism components]], including above or below, such as [[piston]]s, [[redstone lamp]]s, etc.
+
+When a button changes state it provides a [[Redstone circuit#Redstone update|redstone update]] to all redstone components adjacent to itself (including above and below), and to all redstone components adjacent to its attachment block.
+
+=== Fuel ===
+Overworld wooden buttons can be used as a fuel source in [[furnace]]s, smelting 0.5 items per button. Nether wood buttons (crimson and warped), cannot be used as fuel in a furnace.
+
+== Sounds ==
+=== Generic ===
+==== Normal wood ====
+{{Sound table/Block/Wood}}
+
+==== Cherry wood ====
+{{Sound table/Block/Cherry wood}}
+
+==== Bamboo wood ====
+{{Sound table/Block/Bamboo wood}}
+
+==== Nether wood ====
+{{Sound table/Block/Nether wood}}
+
+=== Unique ===
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Wood button unpress.ogg
+|subtitle=Button clicks
+|source=block
+|description=When a wooden button deactivates
+|id=block.wooden_button.click_off
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.5
+|distance=16}}
+| {{SoundLine
+|sound=Wood button press.ogg
+|subtitle=Button clicks
+|source=block
+|description=When a wooden button activates
+|id=block.wooden_button.click_on
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.6
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Cherry button press.ogg
+|subtitle=Button clicks
+|source=block
+|description=When a cherry wood button deactivates
+|id=block.cherry_wood_button.click_off
+|translationkey=subtitles.block.button.click
+|volume=0.4
+|pitch=0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Button clicks
+|source=block
+|description=When a cherry wood button activates
+|id=block.cherry_wood_button.click_on
+|translationkey=subtitles.block.button.click
+|volume=0.4
+|pitch=0.6
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Bamboo button press.ogg
+|subtitle=Button clicks
+|source=block
+|description=When a bamboo wood button deactivates
+|id=block.bamboo_wood_button.click_off
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Button clicks
+|source=block
+|description=When a bamboo wood button activates
+|id=block.bamboo_wood_button.click_on
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.6
+|distance=16}}
+| {{SoundLine
+|rowspan=2
+|sound=Nether button press.ogg
+|subtitle=Button clicks
+|source=block
+|description=When a Nether wood button deactivates
+|id=block.nether_wood_button.click_off
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Button clicks
+|source=block
+|description=When a Nether wood button activates
+|id=block.nether_wood_button.click_on
+|translationkey=subtitles.block.button.click
+|volume=0.3
+|pitch=0.6
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Wood button unpress.ogg
+|source=block
+|description=When a wooden button deactivates
+|id=random.wood_click
+|volume=0.3
+|pitch=0.5}}
+| {{SoundLine
+|sound=Wood button press.ogg
+|source=block
+|description=When a wooden button activates
+|id=random.wood_click
+|volume=0.3
+|pitch=0.6}}
+| {{SoundLine
+|rowspan=2
+|sound=Cherry button press.ogg
+|source=block
+|description=When a cherry wood button deactivates
+|id=click_off.cherry_wood_button
+|volume=1.0
+|pitch=0.5}}
+| {{SoundLine
+|source=block
+|description=When a cherry wood button activates
+|id=click_on.cherry_wood_button
+|volume=1.0
+|pitch=0.6}}
+| {{SoundLine
+|rowspan=2
+|sound=Bamboo button press.ogg
+|source=block
+|description=When a bamboo wood button deactivates
+|id=click_off.bamboo_wood_button
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a bamboo wood button activates
+|id=click_on.bamboo_wood_button
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Nether button press.ogg
+|source=block
+|description=When a Nether wood button deactivates
+|id=click_off.nether_wood_button
+|volume=1.0
+|pitch=0.5}}
+| {{SoundLine
+|source=block
+|description=When a Nether wood button activates
+|id=click_on.nether_wood_button
+|volume=1.0
+| pitch = 0.6
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oak Button
+|spritetype=block
+|nameid=oak_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Spruce Button
+|spritetype=block
+|nameid=spruce_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Birch Button
+|spritetype=block
+|nameid=birch_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Jungle Button
+|spritetype=block
+|nameid=jungle_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Acacia Button
+|spritetype=block
+|nameid=acacia_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Dark Oak Button
+|spritetype=block
+|nameid=dark_oak_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Mangrove Button
+|spritetype=block
+|nameid=mangrove_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Cherry Button
+|spritetype=block
+|nameid=cherry_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Pale Oak Button
+|spritetype=block
+|nameid=pale_oak_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Bamboo Button
+|spritetype=block
+|nameid=bamboo_button
+|blocktags=buttons, wooden_buttons
+|itemtags=buttons, wooden_buttons}}
+{{ID table
+|displayname=Crimson Button
+|spritetype=block
+|nameid=crimson_button
+|blocktags=buttons, non_flammable_wood, wooden_buttons
+|itemtags=buttons, non_flammable_wood, wooden_buttons}}
+{{ID table
+|displayname=Warped Button
+|spritetype=block
+|nameid=warped_button
+|blocktags=buttons, non_flammable_wood, wooden_buttons
+|itemtags=buttons, non_flammable_wood, wooden_buttons
+|foot=1}}
+
+{{BE}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Oak Button
+|spritetype=block
+|nameid=wooden_button
+|id=143}}
+{{ID table2
+|displayname=Spruce Button
+|spritetype=block
+|nameid=spruce_button
+|id=399}}
+{{ID table2
+|displayname=Birch Button
+|spritetype=block
+|nameid=birch_button
+|id=396}}
+{{ID table2
+|displayname=Jungle Button
+|spritetype=block
+|nameid=jungle_button
+|id=398}}
+{{ID table2
+|displayname=Acacia Button
+|spritetype=block
+|nameid=acacia_button
+|id=395}}
+{{ID table2
+|displayname=Dark Oak Button
+|spritetype=block
+|nameid=dark_oak_button
+|id=397}}
+{{ID table2
+|displayname=Mangrove Button
+|spritetype=block
+|nameid=mangrove_button
+|id=-487}}
+{{ID table2
+|displayname=Cherry Button
+|spritetype=block
+|nameid=cherry_button
+|id=-530}}
+{{ID table2
+|displayname=Pale Oak Button
+|spritetype=block
+|nameid=pale_oak_button
+|id=-989}}
+{{ID table2
+|displayname=Bamboo Button
+|spritetype=block
+|nameid=bamboo_button
+|id=-511}}
+{{ID table2
+|displayname=Crimson Button
+|spritetype=block
+|nameid=crimson_button
+|id=515}}
+{{ID table2
+|displayname=Warped Button
+|spritetype=block
+|nameid=warped_button
+|id=516
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Button|block states}}
+
+== Videos ==
+{{yt|n7BP3NDpHtA}}
+
+== History ==
+{{expand section|when the pitch of the sound of the button being pressed in was changed in Java Edition}}
+{{info needed section|{{bug|MC-8522}}}}<!--- all buttons are ordered with wood before stone types--->
+
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||October 18, 2022|link={{Mcnet|try-first-minecraft-1-20-features}}|[[File:Bamboo Button JE1 BE1.png|32px]] Bamboo buttons were shown on ''Java Edition'' 1.20's official article.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w34a|[[File:Oak Wall Button (N) JE1.png|32px]] [[File:Oak Wall Button (E) JE1.png|32px]] [[File:Oak Wall Button (S) JE1.png|32px]] [[File:Oak Wall Button (W) JE1.png|32px]]<br>[[File:Powered Oak Wall Button (N) JE1.png|32px]] [[File:Powered Oak Wall Button (E) JE1.png|32px]] [[File:Powered Oak Wall Button (S) JE1.png|32px]] [[File:Powered Oak Wall Button (W) JE1.png|32px]]<br>[[File:Oak Button (item) JE1.png|32px]] Added wooden buttons. They are currently uncraftable.}}
+|{{HistoryLine|||dev=12w34b|Added [[crafting]] recipe for wooden buttons.
+{{Collapse|title=Recipe|content=
+<div style="display:inline-block">{{Crafting Table
+|B2= Oak Planks
+|Output= Wooden Button
+}}</div>
+}}
+}}
+|{{HistoryLine|||dev=12w37a|The [[redstone]] signal duration of the button has been changed from 9 to 12 redstone ticks.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Oak Floor Button (N) JE1.png|32px]] [[File:Oak Ceiling Button (N) JE1.png|32px]]<br>[[File:Powered Oak Floor Button (N) JE1.png|32px]] [[File:Powered Oak Ceiling Button (N) JE1.png|32px]]<br>Buttons are now able to be placed on the top and bottom of [[block]]s, and can currently only face north.}}
+|{{HistoryLine|||dev=14w10a|[[File:Oak Floor Button (N) JE2.png|32px]]<br>[[File:Oak Wall Button (N) JE2.png|32px]] [[File:Oak Wall Button (E) JE2.png|32px]] [[File:Oak Wall Button (S) JE2.png|32px]] [[File:Oak Wall Button (W) JE2.png|32px]]<br>[[File:Oak Ceiling Button (N) JE2.png|32px]]<br>[[File:Powered Oak Floor Button (N) JE2.png|32px]]<br>[[File:Powered Oak Wall Button (N) JE2.png|32px]] [[File:Powered Oak Wall Button (E) JE2.png|32px]] [[File:Powered Oak Wall Button (S) JE2.png|32px]] [[File:Powered Oak Wall Button (W) JE2.png|32px]]<br>[[File:Powered Oak Ceiling Button (N) JE2.png|32px]]<br>[[File:Oak Button (item) JE2.png|32px]] The models of buttons have been changed.}}
+|{{HistoryLine||1.9|dev=15w43a|Wooden buttons have now been given a different [[sound]] from [[stone button]]s.}}
+|{{HistoryLine|||dev=15w46a|[[Mob]]s no longer spawn on wooden buttons.}}
+|{{HistoryLine|||dev=16w02a|Wooden buttons are now broken more easily with [[axe]]s.}}
+|{{HistoryLine||1.11|dev=16w33a|Wooden buttons can now be used as fuel in [[furnace]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|[[File:Spruce Button JE1 BE1.png|32px]] [[File:Birch Button JE1 BE1.png|32px]] [[File:Jungle Button JE1 BE1.png|32px]] [[File:Acacia Button JE1 BE1.png|32px]] [[File:Dark Oak Button JE1 BE1.png|32px]] Buttons now come in all six types of wood.
+|The names of wooden buttons have been changed to <''wood type''> button.
+|Buttons can no longer be placed on top of [[piston]]s.
+|Buttons can now be placed in all 4 rotations on the top and bottom of a [[block]].}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Oak Button (S) JE3.png|32px]] [[File:Spruce Button JE2.png|32px]] [[File:Birch Button JE2.png|32px]] [[File:Jungle Button JE2.png|32px]] [[File:Acacia Button JE2.png|32px]] [[File:Dark Oak Button JE2.png|32px]] The textures of buttons have been changed.}}
+|{{HistoryLine|||dev=18w47a|[[File:Oak Button (S) JE4.png|32px]] [[File:Spruce Button JE3.png|32px]] [[File:Birch Button JE3 BE2.png|32px]] [[File:Jungle Button JE3 BE2.png|32px]] [[File:Acacia Button JE3 BE2.png|32px]] [[File:Dark Oak Button JE3 BE2.png|32px]] The textures of wooden buttons have been changed again.}}
+|{{HistoryLine|||dev=18w50a|[[File:Spruce Button JE4 BE2.png|32px]] The texture of spruce buttons has been changed, once again.}}
+|{{HistoryLine|||dev=?|Jungle buttons now generate in desert [[village]]s.}}
+|{{HistoryLine||1.16|dev=20w06a|[[File:Crimson Button JE1 BE1.png|32px]] [[File:Warped Button JE1 BE1.png|32px]] Added crimson and warped buttons.}}
+|{{HistoryLine||1.19|dev=22w11a|[[File:Mangrove Button JE1 BE1.png|32px]] Added mangrove buttons.}}
+|{{HistoryLine|||dev=22w14a|Due to the addition of the [[mangrove tree]] and [[mangrove swamp]], make mangrove button obtainable and renewable.}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|[[File:Bamboo Button JE1 BE1.png|32px]] Added bamboo buttons behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].
+|Added unique sounds for Nether and bamboo wood buttons.}}
+|{{HistoryLine|||dev=22w46a|[[File:Bamboo Button JE2 BE2.png|32px]] The texture of the bamboo button has been changed, due to the texture change on [[bamboo planks]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Cherry Button JE1 BE1.png|32px]] Added cherry buttons behind the "[[Java Edition 1.20|Update 1.20]]" [[experimental]] [[data pack]].}}
+|{{HistoryLine||1.20|dev=23w12a|Bamboo and cherry buttons are now available without using the "Update 1.20" experimental data pack.}}
+|{{HistoryLine|||dev=23w14a|[[File:Oak Button JE5.png|32px]] [[File:Birch Button JE4.png|32px]] [[File:Spruce Button JE5.png|32px]] [[File:Jungle Button JE4.png|32px]] [[File:Acacia Button JE4.png|32px]] [[File:Dark Oak Button JE4.png|32px]] [[File:Mangrove Button JE2.png|32px]] [[File:Cherry Button JE2.png|32px]] [[File:Bamboo Button JE3.png|32px]] [[File:Crimson Button JE2.png|32px]] [[File:Warped Button JE2.png|32px]] All wooden buttons' UV texture map has been changed, the front texture of all buttons is no longer mirrored.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Oak buttons now generate in [[trial chambers]].}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Pale Oak Button JE1 BE1.png|32px]] Added pale oak buttons.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Oak Button (item) JE1.png|32px]] Added buttons.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[File:Spruce Button JE1 BE1.png|32px]] [[File:Birch Button JE1 BE1.png|32px]] [[File:Jungle Button JE1 BE1.png|32px]] [[File:Acacia Button JE1 BE1.png|32px]] [[File:Dark Oak Button JE1 BE1.png|32px]] Buttons now come in all six types of wood.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Jungle buttons now generate in the new [[Village#Desert|desert village]]s.
+|[[File:Oak Button (S) JE4.png|32px]] [[File:Spruce Button JE4 BE2.png|32px]] [[File:Birch Button JE3 BE2.png|32px]] [[File:Jungle Button JE3 BE2.png|32px]] [[File:Acacia Button JE3 BE2.png|32px]] [[File:Dark Oak Button JE3 BE2.png|32px]] The textures of buttons have been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|[[File:Crimson Button JE1 BE1.png|32px]] [[File:Warped Button JE1 BE1.png|32px]] Added crimson and warped buttons.}}
+|{{HistoryLine||1.16.20|dev=beta 1.16.20.50|Crimson and warped buttons now use regular plank [[sound]]s instead of their stem variant sounds.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.20|[[File:Mangrove Button JE1 BE1.png|32px]] Added mangrove buttons.}}
+|{{HistoryLine||1.19.50|exp=Next Major Update|dev=Preview 1.19.50.21|[[File:Bamboo Button JE1 BE1.png|32px]] Added bamboo buttons behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.|Added unique sounds for Nether and bamboo wood buttons.|Added unique button click [[sound]] for wooden buttons to match {{JE}}.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.20|[[File:Bamboo Button JE2 BE2.png|32px]] The texture of the bamboo button has been changed, due to the texture change on [[bamboo planks]].}}
+|{{HistoryLine||1.19.80|exp=Next Major Update|dev=Preview 1.19.80.20|[[File:Cherry Button JE1 BE1.png|32px]] Added cherry buttons behind the "[[Bedrock Edition 1.20.0|Next Major Update]]" [[experimental]] toggle.}}
+|{{HistoryLine||1.20.0|dev=Preview 1.20.0.21|Bamboo and cherry buttons are now available without using the "Next Major Update" experimental toggle.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|[[File:Pale Oak Button JE1 BE1.png|32px]] Added pale oak buttons.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU9|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Oak Button (item) JE1.png|32px]] Added wooden buttons.}}
+|{{HistoryLine||xbox=TU14|ps3=1.04|psvita=1.00|ps4=1.00|Wooden buttons can now be triggered by [[arrow]]s.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Buttons are now able to be placed on the top and bottom of [[block]]s.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Wooden buttons can now be used as fuel in [[furnace]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[File:Spruce Button JE1 BE1.png|32px]] [[File:Birch Button JE1 BE1.png|32px]] [[File:Jungle Button JE1 BE1.png|32px]] [[File:Acacia Button JE1 BE1.png|32px]] [[File:Dark Oak Button JE1 BE1.png|32px]] Buttons now come in all six types of wood.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Oak Button (S) JE4.png|32px]] [[File:Spruce Button.png|32px]] [[File:Birch Button.png|32px]] [[File:Jungle Button.png|32px]] [[File:Acacia Button.png|32px]] [[File:Dark Oak Button.png|32px]] The textures of buttons have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Oak Button (item) JE1.png|32px]] Added buttons.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|The wooden button ID has been changed from <code>wooden_button</code> to <code>oak_button</code>.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 143.}}
+}}
+
+== Issues ==
+{{Issue list|Wooden Button|Oak Button|Spruce Button|Birch Button|Jungle Button|Acacia Button|Dark Oak Button|Mangrove Button|Cherry Button|Pale Oak Button|Bamboo Button|Crimson Button|Warped Button}}
+
+== Gallery ==
+<gallery>
+Ceiling Button.png|First image of a button on a ceiling.
+</gallery>
+
+== Navigation ==
+{{Navbox wood}}
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+
+[[es:Botón de madera]]
+[[fr:Bouton en bois]]
+[[ja:板材のボタン]]
+[[ko:나무 버튼]]
+[[pt:Botão de madeira]]
+[[uk:Дерев'яна кнопка]]
+[[zh:木按钮]]

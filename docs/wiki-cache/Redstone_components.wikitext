@@ -1,0 +1,1208 @@
+{{relevant category|Redstone}}
+'''Redstone components''' are the blocks used to build [[redstone circuits]]. Redstone components include power source components (such as [[redstone torch]]es, [[button]]s, and [[pressure plate]]s), transmission components (such as [[redstone dust]] and [[redstone repeater]]s), and mechanism components (such as [[piston]]s, [[door]]s, and [[redstone lamp]]s).
+
+This article assumes familiarity with the basics of redstone structures. This article also limits its discussion of each component to its role in redstone structures; for full details about a component, see the main article for the block.
+
+== <span class="anchor" id="power components"></span> Power components ==
+
+Power components create redstone signals, either permanently or in response to player, mob, and environmental activity.
+
+=== <span class="anchor" id="block of redstone"></span><span class="anchor" id="redstone block"></span><span class="anchor" id="redblock"></span><span class="anchor" id="BR"></span> Block of redstone ===
+
+{{Schematic|caption=Block of Redstone's range of activation<br>It does not '''power''' any adjacent [[conductive]] block
+||output||-
+|output|BR|output|-
+||output|-
+}}
+
+{{main|Block of Redstone}}
+
+A [[block of redstone]] provides a constant redstone signal. It can be moved by pistons.
+
+;Activation
+
+:A block of redstone is always active.
+
+;Effect
+
+:A block of redstone behaves like a permanently powered block and:
+:*activates adjacent redstone mechanism components
+:*powers adjacent [[redstone dust]], and [[redstone repeater]]s and [[redstone comparator]]s facing away from the block with a redstone signal of strength 15
+:*when placed adjacent to a [[Redstone Comparator|redstone comparator]], the comparator behaves as if a [[Redstone Dust|redstone dust]] with a power of 15 was placed next to it, this is different from having a powered block next to the comparator
+
+:A block of redstone does not power any adjacent blocks.
+
+=== <span class="anchor" id="button"></span><span class="anchor" id="stone button"></span><span class="anchor" id="wood button"></span><span class="anchor" id="wooden button"></span><span class="anchor" id="sb"></span><span class="anchor" id="wb"></span> Button ===
+
+{{Schematic|caption=Button's range of activation<br>It '''powers''' the [[conductive]] block it is attached to
+||output|output||-
+|output|SB+P.|sb-$w|output|-
+||output|output||-
+}}
+
+{{main|Button}}
+
+A [[button]] is used to generate a redstone pulse. A button may be of three types: [[Wooden Button|wooden]], [[Stone Button|stone]], or [[polished blackstone button|polished blackstone]].
+
+;Placement
+:A button can be attached to any part of most [[opaque]] blocks. If the attachment block is removed, the button drops into the item form.
+
+;Activation
+:A button activates immediately when the player presses the {{control|Use}} control. A stone button stays activated for 20 game [[tick]]s (1 second), while a wooden button stays activated for 30 game ticks (1.5 seconds). A wooden button can also be activated by an [[arrow]] or [[trident]] that has been shot at it. In such a case, the button remains activated until the arrow or trident despawns (after one minute) or is taken.
+
+;Effect
+:While activated, a button:
+:*powers the block it is attached to
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and adjacent redstone repeaters and comparators facing away from the button with a redstone signal of strength 15
+
+=== <span class="anchor" id="calibrated sculk sensor"></span><span class="anchor" id="CSS"></span> Calibrated sculk sensor ===
+{{main|Calibrated Sculk Sensor}}
+
+{{Schematic|caption=Calibrated Sculk Sensor's range of activation<br>It '''powers''' the [[conductive]] block beneath it
+||output||-
+|output|[[File:BlockSprite calibrated-sculk-sensor.png|30px]]|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+A calibrated sculk sensor functions similar to a sculk sensor (emitting a redstone signal when it detects a vibration), but with twice the range and half the cooldown of a sculk sensor. It can be filtered using a redstone signal strength level to make it only detect a specific vibration frequency.
+
+;Activation
+:A calibrated sculk sensor is activated immediately upon receiving a vibration. The sensor stays activated for 10 game ticks (0.5 seconds), then has a cool down of 10 more ticks before it can detect another vibration.
+
+;Effect
+
+:While activated, a calibrated sculk sensor:
+:*powers the block beneath it
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust and adjacent redstone repeaters facing away from the sensor with a redstone signal whose strength that depends on the distance of the source of the vibration
+:*powers redstone comparators facing away from the sensor with a redstone signal whose strength depends on the type of vibration
+
+=== <span class="anchor" id="daylight detector"></span><span class="anchor" id="ds"></span> Daylight detector ===
+
+{{Schematic|caption=Daylight Detector's range of activation<br>It does not '''power''' any adjacent [[conductive]] block
+||output||-
+|output|ds-$|output|-
+||output|-
+}}
+
+{{main|Daylight Detector}}
+
+A [[daylight detector]] that emits a redstone signal based on time of day, weather, and internal skylight levels.
+
+;Activation
+:A daylight detector is activated when exposed to the sky during the day. The detector can be inverted, making it activate in low light levels.
+
+A daylight detector updates its output 20 game ticks (1 second) after a change in light level, or after being placed.
+
+;Effect
+
+:While activated, a daylight detector:
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, redstone repeaters and redstone comparators facing away from the detector with a redstone signal whose strength depends on the current time of day, weather, and internal skylight
+
+:A daylight detector does not power any adjacent [[conductive]] blocks.
+
+=== <span class="anchor" id="detector rail"></span><span class="anchor" id="dr"></span> Detector rail ===
+
+{{Schematic|caption=Detector Rail's range of activation<br>It '''powers''' the [[conductive]] block it is attached to
+||output||-
+|output|dr-$ew|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+{{main|Detector Rail}}
+
+[[File:Detector rail as power source.png|thumb|Detector rail as power component]]
+A [[detector rail]] is used to detect the passage of a [[#minecart|minecart]].
+
+;Placement
+
+:A detector rail can be attached to the '''top''' of any [[opaque]] block, or to the '''top''' of an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the detector rail drops as an item.
+
+:When placed, a detector rail lines up with adjacent [[rail]]s, [[powered rail]]s, and other detector rails, as well as adjacent rails one block above it. If there are two adjacent rails not on opposite sides, or three or more adjacent rails, the detector rail lines up in the east-west direction. If there are no adjacent rails, the detector rail lines up in the north-south direction. If there is an adjacent rail one block above, the detector rail slants to match it (when there is more than one adjacent rail to slant toward, the order of preference is: west, east, south, and north). Other configurations can be created by placing and removing various rail.
+
+;Activation
+
+:A detector rail activates when a minecart moves over top of it, and deactivates when the minecart leaves. 
+
+:A detector rail's activation/deactivation behavior is somewhat complex. A detector rail activates 1 game tick after a [[#minecart|minecart]]'s hitbox first enter the block occupied by the detector rail. A detector rail is always active for a multiple of 10 game ticks. The detector rail waits 10 game ticks after the minecart leaves its block, then deactivates at the nearest multiple of 10 game ticks. For example, if a minecart is over a detector rail for 25 game ticks, the detector rail waits another 15 game ticks before deactivating. This means the detector rail is always active for at least 20 game ticks.
+
+;Effect
+
+:While activated,a detector rail:
+:*powers the block it is attached to
+:* activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters facing away from it with a redstone signal of strength 15
+::*powers redstone comparators facing away from the rail when activated by a minecart with chest or a minecart with hopper with a redstone signal whose strength depends on the fullness of the minecart
+
+=== <span class="anchor" id="jukebox"></span> Jukebox ===
+{{main|Jukebox}}
+
+A [[jukebox]] with a music disc playing emits a redstone signal.
+
+{{Schematic|caption=Jukebox range of activation<br>It does not '''power''' any adjacent [[conductive]] block
+||output||-
+|output|Ju-$|output|-
+||output|-
+}}
+
+;Activation
+:A jukebox activates instantly when a music disc is inserted, and deactivates immediately when the music track ends or the music disc is removed.
+
+;Effect
+
+:While activated, a jukebox:
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust and redstone repeaters facing away from the jukebox with a redstone signal of strength 15
+:*powers redstone comparators facing away from the jukebox with a signal strength that depends on the inserted music disc. Comparators are powered as long as the disc is stored in the jukebox, even if it has stopped playing.
+
+:A jukebox does not power any blocks.
+
+=== <span class="anchor" id="lectern"></span><span class="anchor" id="wpp"></span> Lectern ===
+
+{{Schematic|caption=Lectern's range of activation<br>It '''powers''' the [[conductive]] block beneath it
+||output||-
+|output|lc-$s|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+{{main|Lectern}}
+
+A [[lectern]] is a block that can hold a [[book and quill]] or a [[written book]] and can produce a redstone pulse or a constant redstone signal.
+
+;Placement
+:Lecterns can face north, south, east or west, facing toward the player when placed.
+
+;Activation
+:When the page of the book it is holding is turned, the lectern emits a redstone signal for 2 game ticks (0.1 seconds).
+
+;Effect
+:While activated, a lectern:
+:*powers the block beneath it
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters facing away from the lectern with a redstone signal of strength 15
+
+:A lectern powers a redstone comparator facing away from the lectern, even when not activated, with a signal whose strength depends on which page the book is turned to.
+
+=== <span class="anchor" id="lever"></span><span class="anchor" id="le"></span> Lever ===
+
+{{Schematic|caption=Lever's range of activation<br>It '''powers''' the [[conductive]] block it is attached to
+||output|output||-
+|output|SB+P.|le-$w!|output|-
+||output|output||-
+}}
+
+{{main|Lever}}
+
+[[File:Lever as power source.png|thumb|Lever as power component]]
+A [[lever]] is a power source that can be toggled on or off.
+
+;Placement
+
+:A lever can be attached to any part of most [[opaque]] blocks, or to the '''top''' of an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the lever drops as an item.
+
+;Activation
+
+:A lever activates immediately when a player right-clicks it or when hit by a wind charge explosion, and stays active until the player right-clicks it again.
+
+;Effect
+
+:While activated, a lever:
+:*powers the block it is attached to
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters and redstone comparators facing away from the lever with a signal of strength 15
+{{-}}
+
+===<span class="anchor" id="lightning rod"></span> Lightning rod ===
+{{main|Lightning rod}}
+
+{{Schematic|caption=Lightning Rod's range of activation<br>It '''powers''' the [[conductive]] block it is attached to
+||output||-
+|output|[[File:BlockSprite lightning-rod.png|30px]]|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+A [[lightning rod]] emits a redstone signal when struck by lightning.
+
+;Placement
+: A lightning rod can be placed anywhere and can face in any direction, including up or down.
+
+;Activation
+A lightning rod is activated when struck by lightning during a thunderstorm, including when the player throws a trident enchanted with Channeling at the lightning rod. The lightning rod remains activated for 8 game ticks (0.4 seconds)
+
+;Effect
+:While activated, a lightning rod:
+:*powers the block it is attached to
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters and redstone comparators facing away from the lightning rod with a redstone signal of strength 15
+
+{{-}}
+
+=== Observer ===
+
+{{Schematic|caption=Observer's range of activation<br>It does not activate adjacent components<br>It '''powers''' the [[conductive]] block behind it
+||output|||-
+|output|SB+P.|obs-w|input|-
+||output|||-
+}}
+
+{{main|Observer}}
+
+An [[observer]] produces a redstone signal when it detects a block change.
+
+;Placement
+: An observer can be placed anywhere and can face in any direction, including up or down. When placed, the observer's side that detects block changes (its face) faces away from the player and the side that produces a pulse faces the player.
+
+;Activation
+: An observer is activated when the block in front of its face changes state (for example, a block being placed or mined, water changing to ice, a repeater having its delay changed by a player, etc.). An observer has a delay of 2 game ticks (0.1 seconds), then emits a redstone signal for 2 ticks.
+
+;Effect
+
+: When activated, an observer produces a 1tick pulse from the side opposite its face.
+
+:An observer only provides a redstone signal from its output, which is the side of the block opposite of the block's face
+
+:While activated, an observer can:
+:*power a block
+:*activate a redstone mechanism component
+:*power redstone dust, a redstone repeater, or a redstone comparator facing away from the observer's output with a signal of strength 15
+
+=== Pressure plate ===
+
+{{Schematic|caption=Pressure Plate's range of activation<br>It '''powers''' the [[conductive]] block that supports it
+||output||-
+|output|wpp-$|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+{{main|Pressure Plate}}
+
+[[File:Pressure plate as power source.png|thumb|Pressure plate as power component]]
+A pressure plate emits a redstone signal when it detects players, mobs, items, or other [[entity|entities]]. There are four types of pressure plates: [[wooden pressure plate|wood]], [[stone pressure plate|stone]], [[light weighted pressure plate|light weighted]], and [[heavy weighted pressure plate|heavy weighted]].
+
+;Placement
+
+: A pressure plate can be attached to the '''top''' of any [[opaque]] block, or to the '''top''' of a [[#fence|fence]], [[#nether brick fence|nether brick fence]], an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the pressure plate drops as an item.
+
+;Activation
+
+:Pressure plates are activated while certain entities are on top of them. Wood, light weighted, and heavy weighted pressure plates are activated by all entities, including players, mobs, items, shot arrows, and thrown tridents. Stone pressure plates can only be activated by players and mobs.
+
+:Light weighted and heavy weighted pressure plates are always active for a multiple of 10 game ticks (0.5 seconds). For example, if an entity moves off a light weighted pressure plate after 15 game ticks, the pressure plate waits 5 ticks before turning off. Light and heavy weighted pressure plates are always active for at least 10 game ticks.
+
+:Wood and stone pressure plates are also always active for a multiple of 10 game ticks, but they first wait 10 game ticks after an entity moves off of them, then deactivate at the next multiple of 10 game ticks. For example, if a player moves off of a stone pressure plate after 25 game ticks, the pressure plate waits 15 more ticks before deactivating. This means wood and stone pressure plates are always active for at least 20 game ticks.
+
+;Effect
+
+:While activated, a pressure plate:
+:*powers the block it is attached to
+:*activates adjacent redstone mechanism components
+:*powers redstone dust, and redstone repeaters and redstone comparators facing away from the pressure plate
+::*wood and stone pressure plates emit redstone signals of strength 15
+::*light and heavy weighted pressure plates emit a redstone signal whose strength depends on the number of entities on the pressure plate
+
+;Considerations
+
+:A pressure plate is not solid (it cannot be used as a wall or platform). Usually a block under a pressure plate provides solid ground (for mobs to walk across, items to fall on, etc.), but when a pressure plate is placed on a block with a small collision mask, like a fence or nether brick fence, it is possible for entities to move through the pressure plate and still activate it. Thus, a pressure plate on a fence can be used to detect entities without stopping them (more compactly than a tripwire circuit).
+
+=== <span class="anchor" id="redstone torch"></span><span class="anchor" id="torch"></span><span class="anchor" id="rt"></span> Redstone torch ===
+
+{{Schematic|caption=Redstone Torch's range of activation<br>It '''powers''' the [[conductive]] block that is '''above''' it<br>It does not power/activate the block/component it is attached to
+||output||||output||-
+|output|SB+P.|output||output|SB+P.|output|-
+|output|rt-$!|output||ts+x|rt-$w!|output|-
+||ts+x||||output||-
+}}
+
+{{main|Redstone Torch}}
+
+[[File:Redstone torch as power source.png|thumb|Redstone torch as power component]]
+A [[redstone torch]] provides a constant redstone signal.
+
+;Placement
+
+:A redstone torch can be attached to any surface (except the bottom) of any [[opaque]] block, or to the '''top''' of: a [[cobblestone wall]], a [[fence]], [[glass]], [[nether brick fence]], an upside-down [[slab]] or upside-down [[stairs]]. If the attachment block is removed, the redstone torch drops as an item.
+
+;Activation
+
+:A redstone torch is active by default, but is deactivated while the block it is attached to is powered. There is a 2 game tick (0.1 seconds) delay between a redstone torch extinguishing or reigniting.
+
+;Effect
+
+:While activated, a redstone torch:
+:*powers the block above it
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters and redstone comparators facing away from the torch with a redstone signal of strength 15
+
+:A redstone torch does not power or activate the block it is attached to.
+
+;Considerations
+
+:A redstone torch can burn out (stop turning on) when it is forced to flicker on and off too quickly (by powering and de-powering its attachment block). After burning out, a redstone torch re-lights when it receives a redstone update, or randomly after a short time.
+
+:One way to cause a burnout is with a '''short-circuit''' – using a torch to turn itself off, which then allows the torch to turn back on, etc. For example, placing redstone dust on top of a block with a redstone torch on its side, then putting another block above the torch, causes the torch to power the top block, which activates the dust, which powers the first block, turning the torch off – this feedback loop causes the redstone torch to flicker and burn out. When putting a torch underneath a block, make sure that the block isn't adjacent to redstone dust or the torch can burn out.
+
+=== <span class="anchor" id="sculk sensor"></span> Sculk sensor ===
+{{main|Sculk sensor}}
+
+{{Schematic|caption=Sculk Sensor's range of activation<br>It '''powers''' the [[conductive]] block beneath it
+||output||-
+|output|ss-$!|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+A sculk sensor emits a redstone signal when it detects a vibration.
+
+;Activation
+:A sculk sensor activates immediately upon detecting a vibration and remains active for 30 game ticks (1.5 seconds), then has a cooldown of 10 game ticks (0.5 seconds) before it can detect another vibration.
+
+;Effect
+
+:While activated, a sculk sensor:
+:*powers the block beneath it
+:*activate adjacent redstone mechanism components
+:*powers adjacent redstone dust and adjacent redstone repeaters facing away from the sensor with a redstone signal whose strength that depends on the distance of the source of the vibration
+:*powers redstone comparators facing away from the sensor with a redstone signal whose strength depends on the type of vibration
+
+=== <span class="anchor" id="target"></span> Target ===
+
+{{Schematic|caption=Target's range of activation<br>It does not '''power''' any adjacent [[conductive]] block
+||output||-
+|output|tg|output|-
+||output|-
+}}
+
+{{main|Target}}
+
+A [[target]] emits a redstone signal when hit by a projectile (including arrows, tridents, eggs, snowballs, splash potions, fire charges fired from dispensers, and lingering potions, but excluding ender pearls and eyes of ender).
+
+;Activation
+
+:When a target is activated by arrows or tridents, it emits a redstone signal for 20 game ticks (1 second), while other projectiles activate the target for 8 game ticks (0.4 seconds). It may also be powered by other redstone components. A target attracts redstone dust on all four sides, so it can be powered by dust.
+
+;Effect
+
+:While activated, a target:
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters and redstone comparators facing away from the target with a redstone signal whose strength depends on how close the projectile hits the target. The signal strength is 1 at the edge and 15 at the center.
+
+:A target does not power any blocks when activated, but when powered, a target powers adjacent redstone components, except dust and other targets.  When powered by other redstone, a comparator can read it.  This can be used to make space for more redstone inputs and outputs. A target block next to a container has the same comparator value as the container itself
+
+=== <span class="anchor" id="trapped chest"></span><span class="anchor" id="tc"></span> Trapped chest ===
+
+{{Schematic|caption=Trapped Chest's range of activation<br>It '''powers''' the [[conductive]] block beneath it
+||output||-
+|output|tc-$|output|-
+|output|SB+P.|output|-
+||output||-
+}}
+
+{{main|Trapped Chest}}
+
+A [[trapped chest]] produces a redstone signal when accessed by players.
+
+;Activation
+
+:A trapped chest activates immediately when one or more players accesses it, and deactivates immediately when players stop accessing it.
+
+;Effect
+
+:While activated, a trapped chest:
+:*powers the block beneath it
+:*powers adjacent redstone dust, and redstone repeaters facing away from the chest with a redstone signal whose strength depends on the number of players simultaneously accessing the chest (up to 15)
+:*powers redstone comparators facing away from the chest with a signal strength that depends on the fullness of the chest
+
+=== <span class="anchor" id="tripwire hook"></span><span class="anchor" id="th"></span> Tripwire hook ===
+
+{{Schematic|caption=Tripwire Hook's range of activation<br>It '''powers''' the [[conductive]] block it is attached to
+||output|output|||-
+|output|SB+P.|th-$w|tw-$ew|tw-$ew|-
+||output|output|ts+x|ts+x|-
+}}
+
+{{main|Tripwire Hook}}
+
+[[File:Tripwire hook as power source.png|thumb|Tripwire hook as power component – The tripwire hooks and the blocks they are attached to provide power, but the tripwire does not.]]
+
+A [[tripwire hook]] produces a redstone signal when it detects players, mobs, or other entities.
+
+;Placement
+
+:A tripwire hook can be attached to the '''side''' of most [[opaque]] blocks. If the attachment block is removed, the tripwire hook drops as an item.
+
+:In order to function correctly, a tripwire hook must be part of a tripwire circuit: two opaque blocks attached to tripwire hooks, at the ends of a tripwire line (one or more blocks of [[tripwire]]).
+
+:To place tripwire, right-click on an adjacent block with a [[string]]. Tripwire can be placed on the ground or in the air, and forms a valid tripwire line only if all the tripwire is of the same type. Tripwire is considered on the ground if placed on any opaque block, or on a block of redstone, a hopper, an upside-down slab, or an upside-down stairs. Tripwire is considered in the air if placed on or above any other block. Tripwire on the ground has a short hitbox (1/8 block tall), while tripwire in the air has a taller hitbox (1/2 block tall).
+
+:If the attachment block under ground tripwire is removed, the tripwire drops as string.
+
+:A tripwire circuit is properly placed when the tripwire hooks are fully extended and the tripwire line runs continuously between the tripwire hooks. Tripwire lines from separate tripwire circuits can be placed next to each other (in parallel), above each other, and can even intersect each other.
+
+;Activation
+
+:A tripwire hook is activated when an [[entity]] (mob, item, etc.) crosses of falls on the hook's tripwire (but not the tripwire hook itself). The tripwire hook is always active for a multiple of 10 game ticks (0.5 seconds). When an entity moves off the tripwire, the tripwire hook waits until the next multiple of 10 game ticks. For example, if an entity moves off of the tripwire after 25 game ticks, the tripwire hook waits 5 game ticks before deactivating.
+
+:A tripwire hook is not activated if [[shears]] are used to cut the tripwire. Breaking the tripwire  hook itself, or its attachment block does not activate the hook.
+
+;Effect
+
+:While activated, a tripwire hook:
+:*powers the block it is attached to
+:*activates adjacent redstone mechanism components
+:*powers adjacent redstone dust, and redstone repeaters and comparators facing away from the tripwire hook with a redstone signal of strength 15
+
+:Tripwire itself provides no power.
+
+== <span class="anchor" id="transmission component"></span> Transmission components ==
+
+Transmission components propagate signals and pulses from power components to mechanism components. Complex effects can also be produced by allowing a signal to affect itself or its circuit.
+
+=== <span class="anchor" id="redstone dust"></span><span class="anchor" id="dust"></span><span class="anchor" id="rd"></span> Redstone dust ===
+{{main|Redstone dust}}
+
+{{Schematic|caption=Redstone Dust's range of activation<br>It '''weakly powers''' the [[conductive]] blocks beneath it and it points to
+|||output||-
+|rd-$ew!|rd-$ew!|SB+w.|output|-
+|SB+w.|SB+w.|output||-
+|output|output|||-
+}}
+
+[[File:Redstone wire as circuit component.png|thumb|Redstone dust as redstone component]]
+
+[[Redstone dust]] transmits a redstone signal.
+
+;Placement
+
+:Redstone dust is placed by right-clicking with [[redstone dust]]. Redstone dust can be attached to the '''top''' of any [[opaque]] block, or to the '''top''' of [[#glowstone|glowstone]], an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the redstone dust drops as an item.
+
+:When placed, redstone dust configures itself to point toward adjacent redstone dust (at the same level or one level up or down), correctly-facing [[#redstone repeater|redstone repeaters]] and [[#redstone comparator|redstone comparators]], and power components. If there is only one such neighbor, redstone dust forms a line pointing toward and away from that one neighbor (which can cause it to point toward blocks it wouldn't normally point toward). If there are multiple such neighbors, redstone dust forms either a line, an "L", a "T", or a "+". If there are no such neighbors, redstone dust forms a large directionless dot. Redstone dust does not automatically configure itself to point toward adjacent mechanism components, it must be arranged to do so.
+
+:When two redstone dust trails are placed vertically diagonally (one block over and one up, or one over and one down), the lower dust trail appears to crawl up the side of the higher block to join the other dust. This linking can be cut by a [[conductive]] block above the lower trail, which prevents the two trails from connecting. If the higher trail is on an upside-down slab or upside-down stairs, the higher trail configures itself to point toward the lower trail (and other adjacent dust), but the lower trail (although visually) does not configure itself to point toward the higher trail (including not appearing to crawl up the side of the slab or stairs).
+
+:The directions in which redstone dust configures itself can affect whether it powers adjacent [[conductive]] blocks and mechanisms.
+
+;Activation
+
+:Redstone dust can be powered by an adjacent power component, another transmission component, or a strongly powered block. When a redstone signal is transmitted through multiple redstone dust, the redstone signal decreases in strength by 1 for every block traveled. Redstone dust can transmit a redstone signal up to 15 blocks away.
+
+:For [[non-conductive]] blocks, redstone dust can transmit power diagonally upward (one block up and one block over), but power cannot be transmitted diagonally down a transparent block (including top slabs and upside down stairs).
+
+;Effect
+
+:Powered redstone dust activates mechanisms components the dust points to, or is placed on top of. Powered redstone dust weakly powers [[conductive]] blocks that it points to or is placed on top of.
+
+
+=== <span class="anchor" id="redstone repeater"></span><span class="anchor" id="repeater"></span><span class="anchor" id="rr"></span><span class="anchor" id="lr"></span> Redstone repeater ===
+
+{{Schematic|caption=Redstone Repeater's range of activation<br>It '''powers''' the [[conductive]] block it points to
+|||output||-
+|rd-$ew!|rr-$e1!|SB+P.|output|-
+|SB|SB|output||-
+}}
+
+{{main|Redstone Repeater}}
+
+[[File:Redstone repeater as circuit component.png|thumb|Redstone repeater as redstone component]]
+
+A [[redstone repeater]] can transmit, strengthen, and delay redstone signals.
+
+;Placement
+
+:A redstone repeater can be placed on top of most full solid blocks, and some non-full blocks with solid surfaces such as top slabs or upside down stairs. If the attachment block is removed, the repeater drops as an item.
+
+:A redstone repeater has a triangular arrow that point towards its front. The front of the repeater is the output, and the back is the input. The repeater also has an adjustable torch to set its delay, which can be adjusted by right-clicking.
+
+;Activation
+
+:A redstone repeater can be powered by a power component, transmission component, or a strongly or weakly powered block providing a redstone signal to the back input of the repeater. The repeater can also be powered from the side by another redstone repeater or a redstone comparator to lock it (see below).
+
+;Effect
+
+:A redstone repeater always outputs a redstone signal strength of 15 when it receives a redstone signal, and can activate mechanism components, power transmission components, or strongly power a block. The repeater also adds a delay of 2 to 8 game ticks (0.1 to 0.4 seconds), depending on the position of the block's torch, which can be adjusted by right-clicking.
+
+:A redstone repeater can be locked by powering the it from the side with another redstone repeater or a redstone comparator. The repeater stays locked until it is no longer powered from the side. A locked repeater does not change its output, even if the back input changes. While locked, the repeater's adjustable torch is replaced by a bar with the texture of bedrock, but remains adjustable.
+
+
+=== <span class="anchor" id="redstone comparator"></span><span class="anchor" id="comparator"></span><span class="anchor" id="rc"></span><span class="anchor" id="rs"></span> Redstone comparator ===
+{{Schematic|caption=Redstone Comparator's range of activation<br>It '''powers''' the [[conductive]] block it points to
+|||output||-
+|rd-$ew!|rs-$e!|SB+P.|output|-
+|SB|SB|output||-
+}}
+
+{{main|Redstone Comparator}}
+
+A [[redstone comparator]] can retransmit a redstone signal, compare or subtract redstone signals, or read the block state of certain blocks (for example, the fullness of containers).
+
+;Placement
+
+:A redstone comparator can be placed on top of most full solid blocks, or non-full blocks or non-solid blocks that have a solid surface (for example, top slabs, top of scaffolding). If the attachment block is removed, the redstone comparator drops as an item.
+
+:A redstone comparator is marked with an arrow that point toward its '''front'''. The comparator takes a signal from its back as its input, and outputs a signal to the block in front of it. The comparator has two optional side inputs that can be used to modify the back input signal (see below).
+
+{| class="wikitable sortable floatright" style="margin-left: 0.5em; margin-right: 0; text-align: center;"
+|+ Minimum items for container signal strength
+|-
+!Containers
+!{{BlockSprite|Decorated Pot|link=Decorated Pot}}
+!{{BlockSprite|Furnace|link=Furnace}}<br>{{BlockSprite|Blast Furnace|link=Blast Furnace}}<br>{{BlockSprite|Smoker|link=Smoker}}
+!{{BlockSprite|Hopper|link=Hopper}}<br>{{EntitySprite|Minecart with Hopper|link=Minecart with Hopper}}<br>{{BlockSprite|Brewing Stand|link=Brewing Stand}}
+!{{BlockSprite|Dispenser|link=Dispenser}}<br>{{BlockSprite|Dropper|link=Dropper}}
+!{{BlockSprite|Chest|link=Chest}}<br>{{EntitySprite|Minecart with Chest|link=Minecart with Chest}}<br>{{BlockSprite|Shulker Box|link=Shulker Box}}<br>{{BlockSprite|Barrel|link=Barrel}}
+![[Double chest|{{Schematic|size=16|ch-s|-|ch-n}}
+]]
+!{{BlockSprite|Jukebox|link=Jukebox}}
+!{{BlockSprite|Crafter|link=Crafter}}
+|-
+!Total slots
+!1!!3!!5!!9!!27!!54!!1
+!9
+|-
+!Power level
+!colspan="6" |Number of items
+!Music disc
+!No. of slots
+|-
+|0||0||0||0||0||0||0||No disc
+|0
+|-
+|1||1||1||1||1||1||1||''[[13]]''
+|1
+|-
+|2||5||14||23||42||1s 60||3s 55||''[[cat]]''
+|2
+|-
+|3||10||28||46||1s 19||3s 55||7s 46||''[[blocks]]''
+|3
+|-
+|4||14||42||1s 5||1s 60||5s 51||11s 37||''[[chirp]]''
+|4
+|-
+|5||19||55||1s 28||2s 37||7s 46||15s 28||''[[far]]''
+|5
+|-
+|6||23||1s 5||1s 51||3s 14||9s 42||19s 19||''[[mall]]''
+|6
+|-
+|7||28||1s 19||2s 10||3s 55||11s 37||23s 10||''[[mellohi]]''
+|7
+|-
+|8||32||1s 32||2s 32||4s 32||13s 32||27s||''[[stal]]''
+|8
+|-
+|9||37||1s 46||2s 55||5s 10||15s 28||30s 55||''[[strad]]''<br>''[[Music Disc Lava Chicken|Lava Chicken]]''
+|9
+|-
+|10||42||1s 60||3s 14||5s 51||17s 23||34s 46||''[[ward]]''<br>''[[Tears]]
+|<nowiki>-</nowiki>
+|-
+|11||46||2s 10||3s 37||6s 28||19s 19||38s 37||''[[11]]''<br>''[[Creator (Music Box)]]''
+| -
+|-
+|12||51||2s 23||3s 60||7s 5||21s 14||42s 28||''[[wait]]''<br>''[[Creator]]''
+| -
+|-
+|13||55||2s 37||4s 19||7s 46||23s 10||46s 19||''[[Pigstep]]''<br>''[[Precipice]]''
+| -
+|-
+|14||60||2s 51||4s 42||8s 23||25s 5||50s 10||''[[Otherside]]''<br>''[[Relic]]''
+| -
+|-
+|15||1s||3s||5s||9s||27s||54s||''[[5]]''
+| -
+|}
+
+:A redstone comparator has two '''modes'''. Pressing the {{control|use}} control while looking at it toggles between comparison mode (front torch down/off) and subtraction mode (front torch up/on).
+
+;Activation
+
+:A redstone comparator is powered when its back input receives a redstone signal. The comparator can be powered in the ways other transmission components can be powered: a power component producing a signal, or a powered transmission component transmitting a signal. 
+
+:The comparator also has a unique property where it can be powered by reading the block state of certain blocks. For example, a comparator can read the "fullness" of a container such as a chest, and output a redstone signal proportional to how full the chest is, essentially treating the chest as a power source. There are other, non-container blocks that have unique interactions with a comparator. 
+
+:Like a redstone repeater, the comparator can also be powered if there is a [[conductive]] block between the comparator and the power source.
+
+;Effect
+
+:A powered redstone comparator can power other transmission components, strongly power a block, or activate a mechanism component located at the comparator's output. When there is no signal supplied to the comparator's side inputs, the comparator outputs a redstone signal equal to the strength of the back input signal. The comparator does not power any other adjacent blocks.
+
+:When one or both side inputs receive a redstone signal, the output of a comparator may be modified depending on what mode the comparator is in. The side inputs must receive a signal from a transmission component (redstone dust, redstone repeater, redstone comparator), or a block of redstone. Other power components cannot power the side inputs.
+:* In '''comparison mode''', if the comparator's back input is greater than or equal to the largest side input, the comparator outputs the back signal; otherwise it outputs no signal.
+
+:* In '''subtraction mode''', the comparator outputs a signal equal to: back input minus largest side input, and outputs no signal if the answer is 0 or negative.
+
+:''Fullness of containers''
+
+:A redstone comparator that is powered by a container outputs a power level in proportion to how full the container is (rounded up, so a single item in a container produces a power level of at least 1). A container's fullness is measured by stacks: for example, a single [[shovel]] (a non-stackable item), 16 [[sign]]s, or 64 [[stick]]s are all considered to be equivalent, full stacks.
+
+:The '''Comparator Output Table''' (right) shows the minimum stacks ("s") plus items required to produce a specific power level from a container. For example, to get power level 5 from a hopper, put 1 stack plus 28 items in the hopper. Divide items by 4 and round up for items with a stack maximum of 16. The values for the chest, dispenser, furnace and hopper apply to minecarts with those components as well (when on a [[#detector rail|detector rail]]).
+
+:Some blocks (such as [[crafting table]]s, [[enchantment table]]s, etc.) can hold items temporarily while the player uses the block's interface &ndash; the items are returned to the player if the player exits the interface with items still inside. Other blocks (such as [[beacon]]s) only consume items. Putting items in these blocks never activates a redstone comparator.
+
+:''Other block states''
+:A comparator can also be powered by:
+:beehive/bee nest
+:cake
+:calibrated sculk sensor
+:cauldron
+:chiseled bookshelf
+:composter
+:copper bulb
+:command block
+:creaking heart
+:end portal frame
+:item frame
+:jukebox
+:lectern
+:respawn anchor
+:sculk sensor
+
+See main article for details.
+
+{{-}}
+
+== <span class="anchor" id="mechanism component"></span> Mechanism components ==
+
+Mechanism components are blocks that are [[Redstone mechanics#Activating mechanisms|activated]] when they receive a redstone signal and perform an action, such as moving a block, producing light or sound, exploding, etc. These components can be activated by a power or transmission component, or by a powered block.
+
+=== <span class="anchor" id="activator rail"></span><span class="anchor" id="ar"></span> Activator rail ===
+
+{{main|Activator Rail}}
+
+An activator rail causes unique actions with different kinds of [[#minecart|minecarts]].
+
+;Placement
+
+:Activator rails can be placed on top of most full solid blocks, or on top of non-full blocks with a solid surface such as top slabs or upside down stairs. If the attachment block is removed, the activator rails drops as an item.
+
+:When placed, an activator rail configures itself to line up with adjacent rails, activator rails, powered rails, and detector rails, as well as such adjacent rails one block above. If there are two such adjacent rails not on opposite sides, or three or more such adjacent rails, an activator rail lines up in the east-west direction. If there are no such adjacent rails, an activator rail lines up in the north-south direction. An activator rail slopes upward to match with a rail above it (when there is more than one such rail, the order of preference is: west, east, south, and north). Other configurations can be created by placing and removing various rails.
+
+;Activation
+
+: When an activator rail is activated by one of the usual methods, that activator rail can activate other connected activator rails up to 8 blocks away. A single activator rail can activate up to 16 other activator rails (8 in front, and 8 behind). The strength of the redstone signal that the original activator rail receives does not affect how many other activator rails it can activate. Only the original activated activator rail can activate other activator rails.
+
+;Effect
+
+:An activator rail affects certain minecarts passing over it. The effects vary with the type of minecart:
+:* Regular minecarts with an entity riding it (mob or player) eject that entity if the activator rail is active.
+:* A [[#minecart with hopper|minecart with hopper]] is deactivated by an activated activator rail (it stops sucking up items in its path, or transferring items to containers as it passes them), and re-activated by an unactivated activator rail.
+:* A [[#minecart with tnt|minecart with TNT]] is ignited by an active activator rail.
+:* A [[#minecart with command block|minecart with command block]] executes its command every 4 game ticks (5 times per second).
+:* [[#minecart with chest|Minecarts with chest]] and [[#minecart with furnace|minecarts with furnace]] are not affected by activator rails.
+
+=== <span class="anchor" id="bell"></span> Bell ===
+
+{{main|Bell}}
+
+Bells can be rung using a redstone signal.
+
+;Placement
+
+:Bells can be placed on the top, bottom, or side of most full solid blocks. Bells can also be placed on top of trapdoors that occupy the top half of a block.
+
+;Activation
+
+:A bell activates in the same game tick that it receives a redstone signal.
+
+;Effect
+
+:When a bell is activated, it rings (sways side to side and makes a sound) one time upon receiving a redstone signal. The bell does not ring again until the redstone signal stops, and a new signal is supplied.
+
+:An observer can detect when a bell starts or stops receiving a redstone signal (corresponding to the {{code|powered}} block state. Sculk sensors can detect a bell's activation, which produces a vibration with a frequency of 11.
+
+=== <span class="anchor" id="big dripleaf"></span> Big dripleaf ===
+
+{{main|Big dripleaf}}
+
+Big dripleaf is a unique plant block that provides a temporary horizontal barrier for mobs and entities, and can place the player in a crawl, similar to a trapdoor. A redstone signal can be used to prevent the big dripleaf from collapsing, and to restore it to its original state.
+
+;Placement
+
+:Big dripleaf can be placed on [[clay]], [[coarse dirt]], [[dirt]], [[farmland]], [[grass blocks]], [[moss blocks]], [[mycelium]], [[podzol]], [[rooted dirt]].
+
+;Effect
+:A big dripleaf initially provides a solid horizontal barrier that prevent mobs and entities from moving through it. After 20 game ticks (1 second), the big dripleaf's {{cd|tilt}} blockstate changes to {{cd|full}}, and mobs and entities fall through the big dripleaf. After 100 game ticks (5 seconds), the big dripleaf returns to its original state; if the player is on the same y-level as the big dripleaf, the player goes into a crawl. Items, such as lanterns, cannot be placed on a big dripleaf like they can with a closed trapdoor.
+
+:When activated, the big dripleaf immediately returns to its original state, and does not change states until the redstone signal stops. Providing a redstone signal to an attached [[Big Dripleaf Stem|big dripleaf stem]] does not affect the big dripleaf.
+
+=== <span class="anchor" id="copper bulb"></span> Copper bulb ===
+
+{{main|Copper bulb}}
+
+A copper bulb is a light source that can be toggled on or off using a redstone pulse.
+
+;Activation
+
+:A copper bulb has no delay and immediately changes its state upon activation.
+
+;Effect
+
+:When a copper bulb first receives a redstone signal, the bulb becomes lit and starts producing light if it was unlit; or if the bulb was already lit, then it becomes unlit. The amount of light produced depends on the oxidation state of the bulb. 
+
+:While the bulb is receiving a redstone signal, a red dot appears in the middle of every face of the block, acting as an indicator that the bulb is currently receiving a redstone signal. This red dot is also visible when the bulb is unlit, but still receiving a redstone signal.
+
+:An observer can detect when a copper bulb starts or stops receiving a redstone signal (the red indicator light turns on or off).
+
+:A redstone comparator facing away from a copper bulb emits a redstone signal strength of 15 when the bulb is lit, regardless of its oxidation state.
+
+=== <span class="anchor" id="crafter"></span> Crafter ===
+
+{{main|Crafter}}
+
+A crafter is a block that can be used for automatic crafting.
+
+=== <span class="anchor" id="dispenser"></span><span class="anchor" id="Di"></span> Dispenser ===
+
+{{main|Dispenser}}
+
+A dispenser ejects items into the world, or performs a unique action when it contains certain items.
+
+;Placement
+
+:A dispenser has an input, which faces they player when the dispenser is placed.
+
+;Activation
+
+:A dispenser activates 4 game ticks after receiving a redstone signal, and does not respond to additional redstone signals during that time. The dispenser does not activate again until the redstone signal stops, and a new signal is received. A dispenser can also be activated by [[quasi-connectivity]].
+
+;Effect
+
+:When activated, a dispenser ejects one item. If multiple slots are occupied by items, a random occupied slot is chosen for ejection.
+
+:When a dispenser contains certain item, it exhibits unique behavior:
+
+:{| class="wikitable"
+|+ Dispenser Behavior
+! Item
+! Effect
+|-
+| {{ItemLink|Iron Chestplate|Armor}}<br>{{ItemLink|Elytra}}<br>{{BlockLink|Heads}}<br>{{ItemLink|Shield|Shield}}
+| Equips on a player within a one-block distance (any armor, made from any material)
+|-
+| {{ItemLink|Arrow}}<br>{{ItemLink|Bottle o' Enchanting}}<br>{{ItemLink|Egg}}<br>{{ItemLink|Fire Charge}}<br>{{ItemLink|Snowball}}<br>{{ItemLink|Splash Potion}} {{ItemLink|Firework Rocket}}
+| Fired in the direction the dispenser is facing, as if a player had used the item themselves
+|-
+| {{ItemLink|Boat}}
+| Placed as entity (i.e., a right-clickable vehicle) onto the block in front of the dispenser, if it is water or air above water; otherwise dropped (see below)
+|-
+|{{ItemLink|Bone Meal}}
+| Increments the growth stage of [[beetroot seeds|beetroot crops]], [[carrot]]s, [[Cocoa|cocoa pods]], [[wheat seeds|crops]], [[Melon Stem|melon stems]], [[potato]]es, [[Pumpkin Stem|pumpkin stems]], and [[sapling]]s in front of the dispenser; grows [[grass]], [[dandelion]]s, and [[rose]]s, if a [[grass block]] is in front of the dispenser; grows a [[Huge Mushrooms|huge mushroom]] if facing a [[mushroom]]; otherwise remains unused
+|-
+| {{ItemLink|Bucket}}
+| Collects lava, water, or powder snow in front of the dispenser (replacing the empty bucket in the dispenser with a lava bucket, water bucket, or powder snow bucket); otherwise dropped (see below)
+|-
+| {{ItemLink|Flint and Steel}}
+| Ignites the block the dispenser is facing; reduces the remaining durability of the used flint and steel
+|-
+| {{ItemLink|Lava Bucket}}<br>{{ItemLink|Water Bucket}}<br>{{ItemLink|Powder Snow Bucket}}
+| Places lava, water or powder snow in the block in front of the dispenser (replacing the filled bucket in the dispenser with an empty bucket), if the block in front of the dispenser is one that the player could use a lava or water bucket on (e.g., [[air]], [[flower]]s, [[grass]], etc.); otherwise dropped (see below)
+|-
+| {{ItemLink|Minecart}}<br>{{ItemLink|Minecart with Chest}}<br>{{ItemLink|Minecart with Command Block}}<br>{{ItemLink|Minecart with Furnace}}<br>{{ItemLink|Minecart with Hopper}}<br>{{ItemLink|Minecart with TNT}}
+| Placed as entity (i.e., a right-clickable vehicle) in the block in front of the dispenser, if the dispenser is in front of a type of rail; otherwise dropped (see below)
+|-
+| {{BlockLink|TNT}}
+| Ignites TNT on the block in front of the dispenser
+|-
+|{{ItemLink|Shears}}
+|Shears sheep within a one-block radius
+|-
+| {{BlockLink|Glowstone}}
+| If a respawn anchor is one block away, it fills the respawn anchor by 1 as if a player had right clicked with glowstone. If the respawn anchor is full, the dispenser does nothing
+|-
+| Others
+| Dropped&mdash;ejected toward the block in front of the dispenser, as if the player had used the Drop [[control]] (default {{key|Q}})
+|}
+
+;Considerations
+
+:A dispenser is a [[conductive]] block and can be powered and activate adjacent mechanism components.
+
+=== <span class="anchor" id="door"></span><span class="anchor" id="do"></span> Door ===
+
+{{main|Door}}
+
+A door is a switchable barrier that can allow or prevent mobs and entities from moving through it. A wooden door can be manually opened or closed by the player, or with a redstone signal. An iron door can only be opened with a redstone signal.
+
+;Placement
+
+:A door can be placed on top of most full solid blocks, and on top of some non-full blocks with solid surfaces such as top slabs or upside down stair. The door drops as an item if the attachment block is broken. A door is placed on the edge of the block facing the player. The door's hinge can be located on the left or right, depending on which side of the block the player clicks while placing it. If the door is placed next to another door, the door may orient its hinge to form a double door.
+
+;Activation
+
+:A door activates immediately upon receiving a redstone signal.
+
+;Effect
+
+:A door has two states: closed (the same orientation as when the door is placed) and open. When a door receives a redstone signal, the door opens, or stays open if it was already open. When the redstone signal stops, the door closes. When activated, any entities on the door fall off, unless they are standing on the hinge.
+
+:A door doesn't actually move (the way a piston arm or a pushed block moves), it simply disappears from one side and re-appears on another; therefore, it does not push entities as it opens.
+
+=== <span class="anchor" id="dragon Head"></span> Dragon head ===
+
+{{main|Dragon Head}}
+
+The dragon head opens and closes its mouth repeatedly while activated.
+
+;Activation
+
+:A dragon head activates immediately upon receiving a redstone signal and stays activated until the signal stops.
+
+;Effect
+
+:The dragon head opens and closes its mouth repeatedly while activated. An observer can detect when a dragon head starts and stops receiving a redstone signal.
+
+=== <span class="anchor" id="dropper"></span><span class="anchor" id="Dr"></span> Dropper ===
+
+{{main|Dropper}}
+
+A dropper can eject items into the world or into containers (including other droppers).
+
+;Placement
+
+:A dropper has an input, which faces the player when the dropper is placed.
+
+;Activation
+
+:A dropper activates 4 game ticks after receiving a redstone signal, and does not respond to additional redstone signals during that time. The dropper does not activate again until the redstone signal stops, and a new signal is received. A dropper can also be activated by [[quasi-connectivity]].
+
+;Effect
+
+:When activated, a dropper ejects one item. If multiple slots are occupied by items, a random occupied slot is chosen for ejection.
+
+:If the dropper is facing a container, the ejected item is transferred into the container. Otherwise, the item is ejected in the direction the dropper is facing, as if the player had used the {{control|Drop Item}} [[control]].
+
+;Considerations
+
+:A dropper is a [[conductive]] block and can be powered and activate adjacent mechanism components (including other droppers).
+
+=== <span class="anchor" id="fence gate"></span><span class="anchor" id="fg"></span> Fence gate ===
+
+{{main|Fence Gate}}
+
+A fence gate is a switchable barrier that can allow or prevent mobs and entities from moving through it.
+
+;Placement
+:A fence gate can be placed on the top of most blocks. Once placed, the block beneath it may be removed without the fence gate dropping as an item.
+
+;Activation
+:A fence gate activates immediately upon receiving a redstone signal.
+
+;Effect
+
+:A fence gate has two states: closed (the same orientation as when the fence gate is placed) and open. When a fence gate receives a redstone signal, the fence gate opens, or stays open if it was already open. When the redstone signal stops, the fence gate closes. Unlike a door or trapdoor, while active, a fence gate is completely non-solid (lacks a collision mask) to all entities.  When a wall is placed next to a fence gate, it will move down a single pixel and an observer can detect that.
+
+:A fence gate doesn't actually move (the way a piston arm or a pushed block moves), it simply disappears from one state and re-appears in another, so it does not push entities as it opens.
+
+=== <span class="anchor" id="hopper"></span><span class="anchor" id="ho"></span> Hopper ===
+
+{{main|Hopper}}
+
+A hopper is used to move items to and from containers (including other hoppers).
+
+;Placement
+
+:A hopper can be placed so that its output faces in any direction except up.
+
+;Effect
+
+:While ''not'' activated, a hopper pulls items from a container above it (or item entities in the space above it) into its own slots and pushes items from its own slots into a container it is facing. Both types of transfers occur every 8 ticks (0.4 seconds), and pushes are processed before pulls. A hopper always pulls items into the leftmost available slot, and pushes items from leftmost slots before rightmost slots (it does not start pushing items from the second slot before the first is empty, from the third slot before the second is empty, etc.).
+
+:While activated, a hopper does not pull items from above or push them out, but may receive items from other mechanism components such as droppers, and may have its items removed by another hopper beneath it.
+
+=== <span class="anchor" id="note block"></span><span class="anchor" id="NB"></span> Note block ===
+
+{{main|Note Block}}
+
+A note block is used to produce a player-chosen [[sound]].
+
+;Placement
+
+:After being placed, a note block's pitch can be adjusted over a two-octave range by right-clicking the note block, and its timbre can be adjusted by placing different blocks beneath it.
+
+;Effect
+
+:When activated, a note block produces a sound and send out block updates to all adjacent blocks. A note block must have [[air]] or a head above it to activate. When a head is above a note block it will make the sound of the mob that the head came from; player heads can have a custom sound.
+
+;Considerations
+
+:A note block is a [[conductive]] block, so powering it directly can cause adjacent mechanism components (including other note blocks) to activate as well.
+
+=== <span class="anchor" id="piglin Head"></span> Piglin Head ===
+
+{{main|Piglin Head}}
+
+The piglin head moves its ears repeatedly while activated.
+
+;Activation
+
+:A piglin head activates immediately upon receiving a redstone signal and stays activated until the signal stops.
+
+;Effect
+
+:The piglin head moves its ears repeatedly while activated. An observer can detect when a piglin head starts and stops receiving a redstone signal.
+
+=== <span class="anchor" id="piston"></span><span class="anchor" id="sticky piston"></span><span class="anchor" id="pi"></span><span class="anchor" id="pe"></span><span class="anchor" id="sp"></span><span class="anchor" id="se"></span> Piston ===
+
+{{main|Piston}}
+
+A piston is used to move blocks or entities. A piston may be of two types: a regular piston only pushes blocks, while a sticky piston pushes and pulls blocks.
+
+;Placement
+
+:A piston has a stone base and a wooden head, and can be placed so the head faces in any direction (its front).
+
+;Activation
+The piston can be activated from the 3 sides that are not the "head" and also the top. (The side that pushes blocks.). 
+;Effect
+
+:When activated, a piston pushes the block in front of its arm, and up to 11 more blocks in front of that (up to 12 blocks total). When deactivated, a regular piston pulls its arm back (leaving an [[air]] block in front of the piston), while a sticky piston pulls back both its arm and one block (leaving an air block on the other side of the pulled block).
+
+:A moving piston or block can also push an [[entity]] such as a mob or item.
+
+:Some blocks (bedrock, obsidian, end portal frame, etc.) cannot be moved by a piston. Some blocks (flowers, leaves, torches, etc.) are destroyed, but may drop items (as if destroyed by the player). For full details of how pistons interact with other blocks, see [[Piston#Limitations|Pushing Blocks]].
+
+:[[Slime Block|Slime blocks]] stick to blocks and make them move when adjacent blocks are moved. The 12 block limit still holds.
+
+;Considerations
+
+:{{IN|JE}}, when a sticky piston is activated by a pulse ''shorter than 1.5 ticks'', it ''pushes'' the block in front of it, but ''fails to pull back'' the pushed block on the end of the pulse. If that sticky piston is activated again by any pulse, it ''can still pull back'' the block. Thus, a sticky piston running on fast pulses (for example, 1-tick pulses) pushes and pulls a block every ''other'' pulse.
+:A piston is a transparent block, so powering it directly does not cause adjacent mechanism components (including other pistons) to activate (for exceptions see [[Tutorials/Quasi-connectivity|Quasi-Connectivity]]).
+
+=== <span class="anchor" id="powered rail"></span><span class="anchor" id="pr"></span> Powered rail ===
+
+{{main|Powered Rail}}
+
+A powered rail is used to propel or brake(use as brakes) a [[#minecart|minecart]].
+
+;Placement
+
+:A powered rail can be attached to the '''top''' of any [[opaque]] block, or to the '''top''' of an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the powered rail drops as an item.
+
+:When placed, a powered rail configures itself to line up with adjacent rails, powered rails, and detector rails, as well as such adjacent rails one block up. If there are two such adjacent rails on non-opposite sides, or three or more such adjacent rails, a powered rail lines up in the east-west direction. If there are no such adjacent rails, a powered rail lines up in the north-south direction. If a rail it would line up with is one block up, a powered rail slants upward toward it (with multiple options to slant upward to, a powered rail prefers, in order: west, east, south, and north). Other configurations can be created by placing and removing various rail.
+
+;Activation
+
+:In addition to the methods above, a powered rail can also be activated by other adjacent activated powered rails. A powered rail can transmit activation up to 9 rails (the first originally-powered powered rail, and up to eight additional activated rails). Activation transmitted in this way cannot power any redstone components except powered rails, but the power change states can be detected by observers.
+
+;Effect
+
+:While activated, a powered rail boosts the speed of a minecart passing over it, or starts a minecart moving away from an adjacent solid block it is in contact with.
+:While not activated, it acts as a brake, reducing the speed or even stopping a minecart passing over it.
+
+=== <span class="anchor" id="rail"></span><span class="anchor" id="ra"></span> Rail ===
+
+{{main|Rail}}
+
+[[File:Rails as powered mechanisms.png|thumb|Rails and powered rails as mechanism components]]
+
+A rail is used to switch the track of a [[#minecart|minecart]].
+
+;Placement
+
+:A rail can be attached to the '''top''' of any [[opaque]] block, or to the '''top''' of an upside-down [[#slab|slab]] or upside-down [[#stairs|stairs]]. If the attachment block is removed, the rail drops as an item.
+
+:When placed, rail configures itself to line up with adjacent rails, powered rails, and detector rails, as well as such adjacent rails one block up. If there are two such adjacent rails on non-opposite sides, the rail curves from one to the other. If there are three or four such adjacent rails, the rail curves between two of them (when choosing which directions to curve between, a rail prefers south over north, and east over west). If there are no such adjacent rails, the rail lines up in the north-south direction. If a rail it would line up with is one block up, a rail slants upward toward it ''without'' curving (with multiple options to slant upward to, a rail prefers, in order: west, east, south, and north). Other configurations can be created by placing and removing various rails.
+
+;Effect
+
+:When activated, a rail in a "T" junction flips to curve the other way (activating a rail in another configuration has no effect).
+
+=== <span class="anchor" id="redstone lamp"></span><span class="anchor" id="RL"></span> Redstone lamp ===
+
+{{main|Redstone Lamp}}
+
+A redstone lamp is used to provide [[light]].
+
+;Activation
+
+:A redstone lamp activates normally, but takes 2 ticks to deactivate.
+
+;Effect
+
+:While activated, a redstone lamp has block light level 15 (so produces block light level 14 in all adjacent transparent spaces). An activated redstone lamp is transparent to sky light.
+
+;Considerations
+
+:A redstone lamp is a [[conductive]] block, so powering it directly can cause adjacent mechanism components (including other redstone lamps) to activate as well.
+
+=== <span class="anchor" id="tnt"></span> TNT ===
+
+{{main|TNT}}
+
+TNT is used to create an [[explosion]].
+
+;Activation
+
+:TNT can be activated by a redstone signal, flint and steel, fire, explosions, flaming arrows, or projectiles that create fire or explosions.
+
+;Effect
+
+:When a TNT block is activated, the block is replaced with an entity called Primed TNT, which creates the explosion. If not activated by an explosion, TNT explodes after 80 game ticks (4 seconds). If activated by an explosion, TNT explodes at a random time between 10 to 30 game ticks (0.5 to 1.5 seconds).
+
+;Considerations
+
+:TNT is a [[non-conductive]] block; supplying a redstone signal to a TNT block does not cause other adjacent TNT blocks to activate (but they can still be activated by the explosion).
+
+=== <span class="anchor" id="trapdoor"></span><span class="anchor" id="td"></span> Trapdoor ===
+
+{{main|trapdoor}}
+
+[[File:Trapdoors_supporting_lanterns.png|thumb|Closed trapdoors acting as solid surfaces]]
+
+A trapdoor is a switchable barrier that can allow or prevent mobs and entities from moving through it. A wooden trapdoor can be open or closed manually by the player or using a redstone signal. An iron trapdoor can only be opened with a redstone signal.
+
+;Placement
+
+:A trapdoor can be placed on the top, bottom, or side of most blocks. When placing on the side of a block, the trapdoor can be attached to the top or bottom half of the block. If the attachment block is removed, the trapdoor does not drop as an item.
+
+;Activation
+:A trapdoor activates immediately upon receiving a redstone signal.
+
+;Effect
+:A trapdoor has two states: closed (the same orientation as when the trapdoor is placed) and open. When a trapdoor receives a redstone signal, the trapdoor opens, or stays open if it was already open. When the redstone signal stops, the trapdoor closes. A trapdoor doesn't actually move (the way a piston arm or a pushed block moves), it simply disappears from one state and re-appears in another, so it does not push entities as it opens. When a trapdoor closes, it can put the player into a crawl if the trapdoor is one block above the ground.
+
+;Considerations
+
+:A closed trapdoor occupying the top half of a block can act as a solid surface for items to be placed on top of. A closed trapdoor occupying the bottom half of a block can act as a solid surface for items to be placed underneath (acts as a ceiling). If the trapdoor is opened, the attached blocks may drop if they require a supporting block.
+
+=== <span class="anchor" id="command block"></span><span class="anchor" id="CB"></span> Command block ===
+
+{{main|Command Block}}
+
+A command block is used to execute a server [[command]]. Command blocks can be obtained only by placing it or giving it to the player with [[commands]].
+
+;Types
+A command block have 3 types: impulse (execute a command once), chain (execute a command when triggered), and repeat (execute a command for 2 or more ticks when powered)
+
+;Placement
+
+:After being placed, the player can set the command to be executed by {{control|using}} the command block.
+
+;Effect
+
+:When activated, a command block executes its defined command ''once''. To make a command block constantly execute its command, it must be run on a [[clock circuit]] or using a repeating command block.
+
+:Like other mechanism components, an already-activated command block does not respond to other redstone signals. To make a command block execute its defined command more than once it must be deactivated and re-activated repetitively.
+
+;Considerations
+A command block is a [[conductive]] block, so powering it directly can activate adjacent mechanism components (including other command blocks) as well.
+
+=== <span class="anchor" id="structure block"></span><span class="anchor" id="SB"></span> Structure block ===
+
+{{main|Structure Block}}
+
+A Structure Block is used to save and load structures. Structure blocks can be obtained only by placing it or giving it to the player with [[command]]s.
+
+;Placement
+
+:After being placed, the player can set the mode or the structure to save/load by right-clicking the structure block.
+
+;Effect
+
+:Redstone signals can be used to automate some of the structure block's functions.
+
+:Like other mechanism components, an already-activated structure block does not respond to other redstone signals. To make a command block execute its defined command more than once it must be deactivated and re-activated repetitively.
+
+== Mobile components ==
+
+Mobile components are blocks (entities) that can travel from the stationary blocks in a circuit and perform actions such as collecting or transporting items or mobs.
+
+=== <span class="anchor" id="boat with chest"></span> Boat with chest ===
+
+{{main|Boat with chest}}
+
+A boat with chest can be used to transport mobs and items over water.
+
+;Behavior
+
+:A boat with chest behaves like a normal boat, except that it has an inventory, and can carry only one passenger at a time. A boat with chest can transport both mobs and items. Hoppers can be used to insert and extract items from a boat with chest.
+
+=== <span class="anchor" id="minecart"></span> Minecart ===
+
+{{main|Minecart}}
+
+A minecart is used to transport a mob or player over [[#rail|rails]].
+
+;Behavior
+
+:The player can move a minecart by pushing against it while outside the minecart (whether the minecart is on rails or not), or by pressing the Forward control key (by default, W) while inside the minecart (only while the minecart is on rails). A minecart resting on powered rails configured to point at an adjacent opaque block is propelled away from the opaque block when the powered rails are activated. A minecart traveling over activated powered rails gets a speed boost. When a minecart passes over an activated activator rails, the entity inside it is ejected out.
+
+=== <span class="anchor" id="minecart with chest"></span><span class="anchor" id="chest minecart"></span><span class="anchor" id="storage minecart"></span> Minecart with chest ===
+
+{{main|Minecart with Chest}}
+
+A minecart with chest is used to store and transport items over [[#rail|rails]].
+
+;Behavior
+
+:A minecart with chest accepts items from a hopper or hopper minecart and allows a hopper or a hopper minecart underneath it to pull items from it.
+
+=== <span class="anchor" id="minecart with command block"></span><span class="anchor" id="command minecart"></span><span class="anchor" id="command block minecart"></span> Minecart with command block ===
+
+{{main|Minecart with Command Block}}
+
+A minecart with command block is used to execute commands.
+
+;Behavior
+
+:A minecart with command block executes its command every {{convert|4|game tick|second}} while on an [[#activator rail|activator rail]].
+
+=== <span class="anchor" id="minecart with furnace"></span><span class="anchor" id="furnace minecart"></span> Minecart with furnace ===
+
+{{main|Minecart with Furnace}}
+
+A minecart with furnace{{only|java}} (a.k.a. furnace minecart, powered minecart) is used to push other minecarts over [[#rail|rails]].
+
+;Behavior
+
+:A minecart with furnace propels itself and other minecarts without requiring powered rails.
+
+;Activation
+
+:A minecart with furnace can be activated by pressing the {{control|use}} key while facing the minecart with furnace and holding fuel (coal, lava, wood, etc.). It continues to move until the fuel runs out.
+
+=== <span class="anchor" id="minecart with hopper"></span><span class="anchor" id="hopper minecart"></span> Minecart with hopper ===
+
+{{main|Minecart with Hopper}}
+
+A minecart with hopper is used to collect, transport, and distribute items over [[#rail|rails]].
+
+;Behavior
+
+:A minecart with hopper pulls items from containers above it and  can have items pulled from it with ''hoppers'' below (the number of items transferred can depend on how long its velocity allows it to remain within reach of the containers). It also picks up items that have fallen on the rails. If a minecart with hopper passes over a powered activator rail, it stops transferring items indefinitely until it passes over an unpowered activator rail.
+
+=== <span class="anchor" id="minecart with tnt"></span><span class="anchor" id="tnt minecart"></span> Minecart with TNT ===
+
+{{main|Minecart with TNT}}
+
+A minecart with TNT is used to create [[explosion]]s.
+
+;Behavior
+
+:A minecart with TNT that passes over a powered activator rail explodes.
+
+== Videos ==
+<div style="text-align:center">{{yt|lz21jbH9akA}}</div>
+
+== Navigation ==
+{{Navbox redstone|all}}
+
+[[Category:Redstone]]
+[[Category:Redstone mechanics]]
+
+[[de:Redstone-Element]]
+[[es:Componentes de redstone]]
+[[fr:Interrupteurs]]
+[[ja:レッドストーン回路/レッドストーンの構成部品]]
+[[ko:레드스톤 구성 요소]]
+[[nl:Schakelaars]]
+[[pt:Componentes de redstone]]
+[[ru:Переключатели]]
+[[zh:红石元件列表]]

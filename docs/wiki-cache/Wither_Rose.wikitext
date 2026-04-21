@@ -1,0 +1,160 @@
+{{Infobox block
+| title = Wither Rose
+| image = Wither Rose.png
+| renewable = Yes
+| stackable = Yes (64)
+| tool = any
+| light = No
+| transparent = Yes
+| flammable = {{jebe|Yes (60)|Yes (30)}}
+| lavasusceptible = No<br>
+}}
+A '''wither rose''' is a damaging [[flower]] that drops when a [[mob]] is killed by a [[wither]].
+
+== Obtaining ==
+Unlike with other one-block-tall flowers {{in|Bedrock}}, players cannot spread wither roses on top of nearby grass blocks by applying [[bone meal]] on a wither rose.
+
+=== Breaking ===
+A wither rose can be broken instantly with any item or by hand, dropping itself.
+
+A wither rose also breaks if [[water]] or [[lava]] runs over its location, if a [[piston]] extends or pushes a block into its location, or if the block under the plant is moved or destroyed.
+{{breaking row|Wither Rose|horizontal=1}}
+
+=== Mob loot ===
+Any [[mob]] killed by the [[wither]] drops one wither rose upon death. If possible, the wither rose is placed on the [[block]] where the mob died. If the flower cannot be placed there, or if the [[game rule]] {{cd|mob_griefing}} is set to {{cd|false}}, the flower is dropped as an [[item (entity)|item]] instead. Wither roses are dropped even when the game rule {{cd|mob_drops}} is set to {{cd|false}}.<ref>{{bug|MC-154922||Wither roses drop even if {{cd|mob_drops}} is set to {{cd|false}}}}</ref><ref>{{bug|MCPE-73842||Wither roses drop even if {{cd|mob_drops}} is set to {{cd|false}}}}</ref>
+
+{{IN|java}}, [[endermen]] can pick up wither roses, like any other one-block-tall flower, and [[drop]] it if killed while holding it.
+
+== Usage ==
+Like most flowers, wither roses can be used as decoration and planted on [[grass block]]s, [[dirt]], [[coarse dirt]], [[rooted dirt]], [[farmland]], [[podzol]], [[mycelium]], [[moss block]]s, [[pale moss block]]s, [[mud]], or [[muddy mangrove roots]]. They can also be planted on [[netherrack]] or [[soul sand]]. {{IN|java}}, wither roses can also be planted on [[soul soil]].
+
+=== Damaging ===
+When not in [[Peaceful]] difficulty, wither roses inflict the [[Wither (effect)|Wither]] effect to any [[player]]s or non-immune [[mob]]s touching it, dealing {{hp|1}} damage every half second. The effect lingers for 1 second after the player/mob leaves its [[block]] space. [[Wither skeleton]]s, the [[wither]], and the [[ender dragon]] are not affected because they are immune to the Wither effect.
+
+When placed in a flower pot, wither roses do not cause damage to any entity. {{IN|bedrock}}, when a wither rose is [[snowlogged]], it does not emit particles and does not hurt entities.<ref>{{bug|MCPE-61608||Wither rose in snow emits no particles and deals no damage}}</ref>
+
+=== Crafting ingredient ===
+{{crafting usage}}
+
+=== Suspicious stew ===
+{{Main|Suspicious Stew}}
+
+Suspicious stew that is created using a wither rose imparts the {{EffectLink|link=Wither (effect)|Wither}} effect for 7 seconds, dealing {{hp|3}} damage. It can be crafted using a wither rose or produced by feeding a wither rose to a brown [[mooshroom]] and then milking it with a [[bowl]].
+
+{{Crafting
+|ignoreusage =1
+|Red Mushroom
+|Brown Mushroom
+|Bowl
+|Wither Rose
+|Output = Suspicious Stew
+|shapeless = true
+}}
+
+=== Mob spawning ===
+[[Wither skeleton]]s and [[zombified piglins]]{{only|BE}}<ref>{{bug|MCPE-162247||Zombified piglins can spawn inside wither roses}}</ref> are the only mobs that can spawn on wither roses, given their spawning requirements are met.
+
+=== Bees ===
+As with other mobs, when a [[bee]] touches a wither rose on any [[difficulty]] other than Peaceful, it is inflicted with the [[Wither (effect)|Wither]] effect. Despite this, bees still attempt to pollinate wither roses and succeed if the difficulty is set to Peaceful.<ref>{{bug|MC-159396||Bees target wither roses and die|WAI}}</ref>
+
+Wither roses can be used to lead bees, but cannot be used to breed them or grow baby bees. Feeding a bee a wither rose inflicts it with the [[Wither (effect)|Wither]] effect for {{convert|2|second|game tick}}, without angering the bee.
+
+=== Bee nests ===
+[[Oak]], [[birch]], and [[cherry]] trees grown from [[sapling]]s that are within 2 blocks of a wither rose have a 5% chance to grow with a [[bee nest]] and 2-3 [[bee]]s in it.
+
+=== Composting ===
+Placing a wither rose into a [[composter]] has a 65% chance of raising the compost level by 1. A stack of wither roses yields an average of 5.94 [[bone meal]].
+
+== Sounds ==
+{{Sound table/Block/Grass}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition = java
+|showblocktags = true
+|showitemtags = true
+|showforms = true
+|generatetranslationkeys = true
+|displayname = Wither Rose
+|spritetype = block
+|nameid = wither_rose
+|blocktags = flowers, small_flowers
+|itemtags = flowers, small_flowers
+|foot = 1
+}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition = bedrock
+|shownumericids = true
+|showforms = true
+|generatetranslationkeys = true
+|displayname = Wither Rose
+|spritetype = block
+|nameid = wither_rose
+|id = -216
+|foot = 1
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Wither Rose JE1 BE3.png|32px]] Added wither roses.}}
+|{{HistoryLine|||dev=19w03a|Placing a wither rose into the new [[composter]] has a 50% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Wither roses now have a 65% chance of increasing the compost level in a composter by 1.}}
+|{{HistoryLine||1.15|dev=19w34a|Wither roses can now be used to breed [[bee]]s.
+|Bees can now pollinate wither roses.}}
+|{{HistoryLine||1.16|dev=20w19a|Mobs can no longer spawn on wither roses.}}
+|{{HistoryLine|||dev=20w21a|Wither skeletons can spawn on wither roses again.}}
+|{{HistoryLine||1.20|dev=pre2|The wither rose is now grouped with other small flowers in the [[Creative inventory]].}}
+|{{HistoryLine||1.21.4|dev=24w44a|[[Bee]]s now get the [[Wither (effect)|Wither]] effect for 2 seconds when fed with wither roses although this does not anger them.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|[[File:Wither Rose BE1.png|32px]] Added the wither rose.}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|Wither roses can now be used to breed [[bee]]s.
+|Bees can now pollinate wither roses.}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.21|[[File:Wither Rose BE2.png|32px]] The model of wither roses has been changed.<ref>{{bug|MCPE-40646|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.25|Wither roses now deal damage to mobs and players every half second, rather than every two seconds.}}
+|{{HistoryLine|||dev=release|[[File:Wither Rose JE1 BE3.png|32px]] The model of wither roses has been changed.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.28|[[Bee]]s now get the [[Wither (effect)|Wither]] effect for 2 seconds when fed with wither roses although this does not anger them.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Wither roses no longer appear mirrored when viewed from certain angles.<ref>{{bug|MCPE-40646||Cross models are displayed wrongly from east and west sides|Fixed}}</ref>}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Wither roses deal the same damage while in contact (and a second more) as [[magma block]]s, via the [[Wither (effect)|Wither]] effect.
+* The rarity of wither roses is Common, despite the fact that a rare item (the [[wither skeleton skull]]) is required to encounter them in the first place.<ref>{{bug|MC-277942||Wither rose is Common, despite requiring Rare items to obtain}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Wither Rose Creeper.jpg|A creeper being damaged by wither roses.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox flower}}
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Non-solid blocks]]
+[[Category:Flammable blocks]]
+[[Category:Createable blocks]]
+[[Category:Hazardous blocks]]
+[[Category:Flowers]]
+
+[[fr:Rose de Wither]]
+[[ko:위더 장미]]
+[[pt:Rosa do Wither]]
+[[uk:Троянда візера]]
+[[zh:凋灵玫瑰]]

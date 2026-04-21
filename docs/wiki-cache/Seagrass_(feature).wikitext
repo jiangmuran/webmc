@@ -1,0 +1,130 @@
+{{About|the feature|the block|Seagrass}}
+{{Infobox structure
+| image = Seagrass cluster.png
+| biome =
+* {{BiomeLink|Deep Cold Ocean}}
+* {{BiomeLink|Deep Ocean}}
+* {{BiomeLink|Cold Ocean}}
+* {{BiomeLink|Deep Lukewarm Ocean}}
+* {{BiomeLink|Lukewarm Ocean}}
+* {{BiomeLink|Ocean}}
+* {{BiomeLink|Warm Ocean}}
+* {{BiomeLink|Mangrove Swamp}}
+* {{BiomeLink|River}}
+* {{BiomeLink|Swamp}}{{only|je|short=1}}
+* {{BiomeLink|Frozen River}}{{only|be|short=1}}
+* {{BiomeLink|Frozen Ocean}}{{only|be|short=1}}
+* {{BiomeLink|Deep Frozen Ocean}}{{only|be|short=1}}
+* {{BiomeLink|Legacy Frozen Ocean}}{{only|be|short=1}}(Unused)
+* {{BiomeLink|Deep Warm Ocean}}{{only|be|short=1}}(Unused)
+| blocks =
+* {{BlockLink|Tall Seagrass}}
+* {{BlockLink|Seagrass}}
+}}
+'''Seagrass''' is a [[feature]] that places a large cluster of [[seagrass]] in various underwater [[biome]]s.
+
+== Generation ==
+{{Incomplete section|Technical generation details}}
+Seagrass features generate on most [[ocean]] floors. They appear in a pseudo-circular pattern and heavily overlap with other clusters in a way that creates large blankets of seagrass. They are composed of [[seagrass]] and [[Seagrass#Tall Seagrass|tall seagrass]]. The percentage of tall seagrass in the feature is determined by <code>percentage</code> value in the [[#Config|configured feature]].
+
+== Data values ==
+=== ID ===
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_mid
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_short
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_simple
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_slightly_less_short
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_tall
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_feature
+|foot=1}}
+
+=== Config ===
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+{{nbt|compound|config}}
+** {{nbt|float|probability}} Value between 0.0 and 1.0 (inclusive). Probability of using tall seagrass instead of seagrass
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:seagrass",
+  "config": {
+    "probability": 0.6
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev= 18w07a|Added sea grass.}}
+|{{HistoryLine|||dev = 18w14a|Sea grass can now generate in [[river]]s and [[swamp]]s.}}
+|{{HistoryLine|||dev = 18w19a|Sea grass now generates in underwater [[cave]]s.}}
+|{{HistoryLine||1.17|dev= 21w07a|Seagrass can no longer replace parts of [[swamp hut]]s.<ref>{{bug|MC-211224}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev= beta 1.2.14.2|Added sea grass.}}
+|{{HistoryLine|||dev= beta 1.2.20.1|Sea grass now generates in underwater [[cave]]s.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|Seagrass no longer generates through ice in biomes with frozen water surfaces.}}
+}}
+
+== Issues ==
+{{Issue list|seagrass}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Herbe aquatique (élément du terrain)]]
+[[ja:海草 (生成物)]]
+[[pt:Erva marinha (recurso)]]

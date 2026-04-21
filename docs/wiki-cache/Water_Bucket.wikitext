@@ -1,0 +1,281 @@
+{{Infobox item
+| title = Water Bucket
+| renewable = Yes
+| image = Water Bucket.png
+| invimage = Water Bucket
+| stackable = No
+}}
+A '''water bucket''' is a [[bucket]] filled with [[water]].
+
+== Obtaining ==
+=== Interacting ===
+To fill an empty [[bucket]] with water, {{control|use}} it on a [[water]] source block. The water is consumed in the process. Flowing water does not fill a bucket.
+
+{{control|Using}} an empty bucket on a [[cauldron]] filled with water (water level 3) empties the cauldron and fills the bucket.
+
+Water buckets can also be filled by placing an empty one in the fuel slot of a [[furnace]], and a wet [[sponge]] into the oven slot. The bucket is filled when the [[smelting]] process completes, which also leaves the sponge dry and ready to be reused.
+
+=== Generated loot ===
+{{LootChestItem|water-bucket}}
+
+=== Smelting ===
+If an empty bucket is in the fuel slot of a [[furnace]]  when a [[wet sponge]] finishes [[smelting]] and becomes a dry sponge, the bucket fills with water. Other fuel items have to be used to smelt the wet sponge before the empty bucket is inserted. If a [[lava bucket]] is used as the fuel, it fills with water when the sponge dries out, meaning an empty bucket does not need to be inserted separately.
+
+{{Smelting
+  |ingredients=[[Wet Sponge]]<br>+ [[Bucket]]
+  |Wet Sponge;
+  |;Sponge
+  |fuel=Bucket; Water Bucket
+  |0,15
+}}
+
+== Usage ==
+{{Control|Using}} a water bucket on a solid block places a water source block against that block, emptying the bucket; using a water bucket on a [[waterlogging|waterloggable]] block waterlogs the block. In [[the Nether]], however, the water evaporates, making a fire extinguishing sound and displays smoke particles while nothing gets placed.
+
+Water buckets are also used to perform [[water bucket clutch]]s to remove [[fall damage]].
+
+=== Dispensers ===
+A [[dispenser]] can be loaded with a water bucket, and when activated it places a water block directly before it, emptying the bucket. A dispenser loaded with an empty bucket and a water source right in front of it draws the source into the bucket when activated.
+
+=== Cauldrons ===
+A single water bucket can fill a [[cauldron]], and using an empty bucket on a water-filled cauldron fills the bucket. Empty buckets cannot be filled from partly-filled cauldrons. This also works in [[the Nether]], and is the only way to place water there without cheats or mods.
+
+=== Filling bucket with mobs ===
+Water buckets can be used on a [[fish]], [[axolotl]] or [[tadpole]] to create a [[bucket of aquatic mob]].
+
+=== Transportation ===
+{{main|Tutorial:Elevators#Water elevators}}
+Water buckets can be used as a means of quickly descending great heights in the [[Overworld]] and [[the End]], either by creating a waterfall or using the water bucket while falling to create a safe water landing.
+
+Water buckets can also be used to climb vertical surfaces anywhere (except [[the Nether]]) by repeatedly creating higher waterfalls from the bottom and swimming up them.
+
+=== Trading ===
+[[Wandering trader]]s have a {{frac|1|3}} chance of purchasing 1 water bucket for 2 [[emerald]]s.
+
+{{Trade uses}}
+
+== Sounds ==
+{{el|je}}:
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When a bucket is filled with water
+|id=item.bucket.fill
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket2.ogg
+|sound3=Empty water bucket3.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When the bucket is placed
+|id=item.bucket.empty
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0 <ref group=sound>Except for the second copy of {{cd|empty1}}, which is 0.9</ref>
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{el|be}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|type=bedrock
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|source=block
+|description=When a bucket is filled with water
+|id=bucket.fill_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket2.ogg
+|sound3=Empty water bucket3.ogg
+|source=block
+|description=When a water bucket is emptied
+|id=bucket.empty_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|rowspan=2
+|sound=Water Splash Old.ogg
+|source=block
+|description=When a water bucket is placed in a cauldron<wbr><ref group=sound name=bucketsplash>{{Bug|MCPE-135919}}</ref>
+|id=cauldron.fillwater
+|volume=0.1
+|pitch=1.0}}
+| {{SoundLine
+|source=block
+|description=When a water bucket is removed from a cauldron<wbr><ref group=sound name=bucketsplash/>
+|id=cauldron.takewater
+|volume=0.1
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Water Bucket
+|spritetype=item
+|nameid=water_bucket
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Water Bucket
+|spritetype=item
+|nameid=water_bucket
+|aliasid=bucket / 8
+|id=362
+|form=item
+|translationkey=item.bucketWater.name
+|foot=1}}
+
+== Achievements ==
+{{Load achievements|I am a Marine Biologist}}
+
+== Advancements ==
+{{load advancements|Tactical fishing;The Cutest Predator;Bukkit bukkit}}
+
+== Videos ==
+{{yt|hRBH10aCNbE}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100615|[[File:Water Bucket JE1 BE1.png|32px]] Added water buckets.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.6|{{control|Using}} a water bucket on [[block]]s with GUIs ([[chest]]s, [[furnace]]s, etc.) no longer places the water.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|Water buckets can now be used to fill [[cauldron]]s.}}
+|{{HistoryLine||1.3.1|dev=12w15a|[[Dispenser]]s have now been given the ability to dispense water buckets. They can also collect if activated again.}}
+|{{HistoryLine||1.8|dev=14w25a|A water bucket is now shown as the icon when [[water]] is used as a layer in [[Superflat]].}}
+|{{HistoryLine|||dev=14w25b|[[Smelting]] a wet [[sponge]] while an empty bucket is in the fuel slot fills the bucket with water.}}
+|{{HistoryLine||1.9|dev=15w44a|A full [[cauldron]] can now be emptied with a bucket, yielding a water bucket.}}
+|{{HistoryLine|||dev=15w50a|Added sounds for collecting and pouring water using a bucket.}}
+|{{HistoryLine||1.13|dev=18w08b|Water buckets can now be used to pick up [[fish]] mobs.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Water Bucket JE2 BE2.png|32px]] The texture of water buckets has now been changed.}}
+|{{HistoryLine|||dev=18w48a|Water buckets can now be found in [[chest]]s in [[village]] fishing cottages.}}
+|{{HistoryLine|||dev=19w02a|Water buckets can now be used to put out [[campfire]]s.}}
+|{{HistoryLine||1.17|dev=20w51a|Water buckets can now be used to collect [[axolotl]]s.}}
+|{{HistoryLine||1.19|dev=22w11a|Water buckets can now be used to collect [[tadpole]]s.}}
+|{{HistoryLine||1.19.3|dev=22w45a|Water buckets can now be emptied into [[waterlogged]] blocks, instead of placing water against them.<ref>{{bug|MC-127110|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.2|exp=Villager Trade Rebalance|dev=23w31a|[[Wandering trader]]s now have a chance to [[trading|buy]] a water bucket from the player.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Water buckets can now generate in [[trial chambers]] dispensers.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.7.0|[[File:Water Bucket JE1 BE1.png|32px]] Added water buckets.
+|Water buckets were simply called "Bucket".}}
+|{{HistoryLine||v0.7.4|Water buckets no longer stack to 64.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Dispensers can now shoot out water from water buckets.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Water buckets can now be used to pick up [[fish mob]]s.
+|Moved all bucket items, including water buckets, from the Equipment tab to the Items tab in the [[Creative inventory]].{{verify|type=update}}{{info needed}}<!---please check snapshots, only 1 major release version was checked each--->}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Water Bucket JE2 BE2.png|32px]] The texture of water buckets has now been changed.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.52|Water buckets can now be used to collect [[axolotl]]s.}}
+|{{HistoryLine||1.18.10|exp=Wild Update|dev=beta 1.18.10.24|Water buckets can now be used to collect [[tadpole]]s behind the "Wild Update" experimental toggle.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Water buckets can now generate in [[trial chambers]] dispensers.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Water Bucket JE1 BE1.png|32px]] Added water buckets.}}
+|{{HistoryLine||xbox=TU9|[[Dispenser]]s have now been given the ability to shoot out the [[liquids]] inside water buckets. Due to a bug, they cannot fill empty [[bucket]]s.}}
+|{{HistoryLine||xbox=TU10|Dispensers can now fill empty buckets when facing toward a water source.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[Smelting]] a wet [[sponge]] while an empty bucket is in the fuel slot fills the bucket with water.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|A full [[cauldron]] can now be emptied with a bucket, yielding a water bucket.|Added sounds for collecting and pouring water using a bucket.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|Water buckets can now be used to pick up [[fish]] mobs.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Water Bucket JE2 BE2.png|32px]] The texture of water buckets has now been changed.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Water buckets can now be used to put out [[campfire]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New Nintendo 3DS Edition}}
+|{{HistoryLine||0.1.0|[[File:Water Bucket JE1 BE1.png|32px]] Added water buckets.}}
+}}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to the ''[[Flattening]]'' this item's numerical ID was 326.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.56|The ID of water buckets has been changed from <code>bucket/8</code> to <code>water_bucket</code>.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+
+=== Mojang images ===
+<gallery>
+File:Ari gets bucket from copper golem.jpg|A [[copper golem]] handing [[Ari]] a water bucket
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Water Bucket IRL.jpg
+File:MCSM Water Bucket.png|{{MCSM|Water Bucket}} as it appears in {{MCSM}}
+File:Water Bucket (inventory) MCE.png|{{MCE|Water Bucket}} as it appeared in {{MCE}}
+File:Water Bucket SDGP.png|Water bucket in the [[Super Duper Graphics Pack]].
+File:AMCM Bucket to the rescue.jpeg|{{amcm|Water bucket}} in {{amcm}}.
+File:Steve water bucket clutch.jpeg|[[Steve]] jumping out a plane with a water bucket
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox items|utilities}}
+{{Navbox combat|general}}
+
+[[Category:Utilities]]
+
+[[de:Wassereimer]]
+[[es:Cubo con agua]]
+[[fr:Seau d'eau]]
+[[it:Acqua#Secchio d'acqua]]
+[[ja:水入りバケツ]]
+[[ko:물 양동이]]
+[[nl:Water#Emmer water]]
+[[pt:Balde de Água]]
+[[ru:Ведро воды]]
+[[th:ถังน้ำ]]
+[[uk:Відро води]]
+[[zh:水桶]]

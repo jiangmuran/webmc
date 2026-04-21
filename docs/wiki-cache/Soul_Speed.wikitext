@@ -1,0 +1,244 @@
+{{Dungeons hatnote|type=enchantment}}
+{{Infobox enchantment
+| maxlevel = III
+| secondaryitems = {{ItemSprite|Boots|link=Boots}}
+| weight = 1
+| id = soul_speed
+}}
+'''Soul Speed''' is an [[enchantment]] applied to [[boots]] that causes faster movement on [[soul sand]] and [[soul soil]], but slowly drains [[durability]] in the process.
+
+== Obtaining ==
+
+==== Loot chest ====
+{{LootChestItem|enchanted-book-rnd-soul-speed}}
+
+Soul Speed can be acquired via [[bartering]] with [[piglin]]s, who may offer [[enchanted book]]s and [[iron boots]] with a random level of Soul Speed. Piglins may spawn wearing [[golden boots]] enchanted with Soul Speed which have a chance to be dropped when they are killed. Enchanted books and golden boots with a random level of Soul Speed may appear in [[bastion remnant]] "generic" chests.
+
+Soul Speed is a treasure enchantment. It cannot be obtained from [[enchanting]] in an [[enchanting table]]. Unlike most other treasure enchantments, it also cannot be obtained from most [[chest loot]] (except from chests in bastion remnants), [[fishing]], or [[trading]].
+
+== Usage ==
+=== Speed ===
+When walking on [[soul sand]] or [[soul soil]], Soul Speed increases the player's speed. When wearing [[boots]] with Soul Speed, the player's speed is adjusted by the multiplier {{cd|(Soul Speed Level * 0.105) + 1.3}}. The speed decrease of soul sand has no effect on Soul Speed, meaning that the player can walk on soul sand with the same speed as on soul soil.
+
+While Soul Speed walkways are not as fast as some other means of transit (such as [[blue ice]] tracks), Soul Speed boots do not require vehicles such as minecarts or boats in order to apply their speed boost. This makes Soul Speed walkways useful for increasing movement speed across more uneven or varied terrain where vehicles might prove unwieldy. 
+
+[[Carpet]]s or [[slab]]s{{Only|Java|short=1}} on top of soul sand or soul soil does not prevent the speed increase from Soul Speed.
+
+{| class="wikitable"
+|+ Player's speed on compatible blocks compared to player's speed on non-soul blocks:
+|-
+! Enchantment level !! Speed increase
+|-
+| Soul Speed I || 40.5%
+|-
+| Soul Speed II || 51.0%
+|-
+| Soul Speed III || 61.5%
+|}
+
+=== Durability ===
+The durability of worn boots enchanted with Soul Speed has a 4% chance to go down for each compatible block stepped on.{{verify}}<ref>{{bug|MC-274447||Soul speed can use durability when equipping boots while standing on soul blocks}}</ref> This chance can be decreased with the [[Unbreaking]] enchantment.
+
+{| class=wikitable
+|-
+! [[Unbreaking]] level !! Breaking chance !! Decrease
+|-
+| ''None'' || 4% || 0%
+|-
+| I || 3.2% || 20%
+|-
+| II || 2.93% || 26.6%
+|-
+| III || 2.8% || 30%
+|}
+
+{| class="wikitable"
+|+ Expected number of compatible blocks stepped on before boots break (by unbreaking level):
+!Boots
+!Durability
+!No Unbreaking (4%)
+!Unbreaking I (3.2%)
+!Unbreaking II (2.93%)
+!Unbreaking III (2.8%)
+|-
+|{{ItemLink|Leather Boots}}
+|65
+|1,625
+|2,031
+|2,219
+|2,321
+|-
+|{{ItemLink|Golden Boots}}
+|91
+|2,275
+|2,844
+|3,105
+|3,250
+|-
+|{{ItemLink|Copper Boots}}
+|143
+|3,575
+|4,469
+|4,881
+|5,107
+|-
+|{{ItemLink|Chainmail Boots}}
+|195
+|4,875
+|6,094
+|6,656
+|6,964
+|-
+|{{ItemLink|Iron Boots}}
+|195
+|4,875
+|6,094
+|6,656
+|6,964
+|-
+|{{ItemLink|Diamond Boots}}
+|429
+|10,725
+|13,406
+|14,644
+|15,321
+|-
+|{{ItemLink|Netherite Boots}}
+|481
+|12,025
+|15,031
+|16,404
+|17,179
+|}
+
+=== Particles ===
+[[File:Soul Speed Particle Animation.gif|100px|thumb|right|Soul Particle]]
+[[Particles#soul|Soul particles]] appear when walking on one of the compatible blocks.
+
+=== General ===
+The {{cd|soul_speed_blocks}} [[Tag#blocks soul speed blocks|tag]] determines which blocks are compatible with Soul Speed.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Soulspeed1.ogg
+|sound2=Soulspeed2.ogg
+|sound3=Soulspeed3.ogg
+|sound4=Soulspeed4.ogg
+|sound5=Soulspeed5.ogg
+|sound6=Soulspeed6.ogg
+|sound7=Soulspeed7.ogg
+|sound8=Soulspeed8.ogg
+|sound9=Soulspeed9.ogg
+|sound10=Soulspeed10.ogg
+|sound11=Soulspeed11.ogg
+|sound12=Soulspeed12.ogg
+|sound13=Soulspeed13.ogg
+|subtitle=Soul escapes
+|source=player
+|description=When a player runs on soul sand or soul soil using soul speed boots
+|id=particle.soul_escape
+|translationkey=subtitles.particle.soul_escape
+|volume=''varies'' <ref group=sound>Has a 70% chance to be 0.15 and a 30% chance to be 0.0</ref>
+|pitch=0.6-1.0
+| distance = 12
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Soulspeed1.ogg
+|sound2=Soulspeed2.ogg
+|sound3=Soulspeed3.ogg
+|sound4=Soulspeed4.ogg
+|sound5=Soulspeed5.ogg
+|sound6=Soulspeed6.ogg
+|sound7=Soulspeed7.ogg
+|sound8=Soulspeed8.ogg
+|sound9=Soulspeed9.ogg
+|sound10=Soulspeed10.ogg
+|sound11=Soulspeed11.ogg
+|sound12=Soulspeed12.ogg
+|sound13=Soulspeed13.ogg
+|source=player
+|description=When a player runs on soul sand or soul soil using soul speed boots
+|id=particle.soul_escape
+|volume=0.0-0.1
+|pitch=0.6-1.0}}
+| {{SoundLine
+|type=bedrock
+|source=player
+|description=<!--Defined as particle.soul_escape.loud in vanilla_1.16.100-->
+|id=particle.soul_escape
+|volume=0.25-0.75
+| pitch = 0.6-1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=soul_speed
+|displayname=Soul Speed
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=soul_speed
+|displayname=Soul Speed
+|id=36
+|translationtype=enchantment
+|foot=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.16|dev=20w11a|Added Soul Speed.}}
+|{{HistoryLine|||dev=20w13a|Items enchanted with Soul Speed are now slightly more common when bartering.}}
+|{{HistoryLine|||dev=20w16a|Soul Speed [[enchanted book]]s can now be found in [[bastion remnant]] chests.}}
+|{{HistoryLine||1.16.2|dev=Pre-release 1|The Soul Speed boost is now kept when jumping and when the soul block is covered by non-full blocks, such as slabs.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Added Soul Speed.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Soul Speed books are no longer obtainable through raids, loot chests, or fishing. It can now be obtained only from chests in [[bastion remnant]]s.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* {{IN|be}} the particles generated by the enchantment are bright in the darkness because they don't respect light levels.<ref>{{bug|MCPE-100534}} Resolved as Won't Fix</ref>
+* Soul Speed works via stomping the souls out of the blocks, hence the particles.<ref>https://www.youtube.com/watch?v=rcHiRdrsAfk&t=2510s</ref>
+* {{IN|be}}, in [[Spectator]] mode, if a player wearing boots with Soul Speed flies over soul sand or soul soil, the particle effect still plays.<ref>{{bug|MCPE-165655}}</ref>
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+
+[[Category:Transport]]
+
+[[de:Seelenläufer]]
+[[es:Velocidad del alma]]
+[[fr:Agilité des âmes]]
+[[ja:ソウルスピード]]
+[[ko:마법 부여#영혼 가속]]
+[[pt:Velocidade das Almas]]
+[[th:ความเร็ววิญญาณ]]
+[[zh:灵魂疾行]]

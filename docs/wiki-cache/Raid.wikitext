@@ -1,0 +1,617 @@
+{{distinguish|Patrol|Zombie siege|Ominous trial}}
+{{redirect|raids|the game rule|Game rule#raids}}
+[[File:Raid.png|thumb|[[Illager]]s attacking a [[village]] in a raid.]]
+{{relevant tutorial|Defeating a village raid}}
+A '''raid''' is an [[ominous event]] in which waves of various mobs, mainly [[illager]]s, spawn and attack a [[village]]. It is triggered when a [[player]] with the [[Raid Omen]] effect runs out of said effect.
+
+== Spawning ==
+When a player with the [[Bad Omen]] status [[effect]] enters a village (see below for exact definitions), the effect converts into [[Raid Omen]]. If the player doesn't drink [[milk]] to cancel the Raid Omen before it naturally expires, a raid begins.
+
+Raids can be triggered in the [[Overworld]] and [[the End]], and in non-[[Java Edition]] games, [[the Nether]].<ref>{{bug|MC-148540|||WAI}}</ref> 
+
+{{IN|java}}, raids can be disabled by setting the game rule {{gmr|raids}} to {{cd|false}}.
+
+== Behavior ==
+=== Starting ===
+{{IN|java}}, any subchunk containing a [[POI]] (point of interest: a [[bed]], [[job site]], or [[bell]]) claimed by a villager counts as a [[village]]. When a player with [[Bad Omen]] enters a 3×3×3 subchunk region around a village, the effect transforms into [[Raid Omen]] that disappears after 30 seconds, and then the raid starts if the dimension allows it (currently, only the Nether disallows raids). The raid center is initially the average position of all claimed POIs within 64 block radius of the player when the raid triggers. A [[bossbar]] labeled "Raid" appears and begins charging taking 15 seconds to complete; a villager runs to ring the bell and all other villagers within 96 blocks (spherical) from the raid center start panicking until the bar is full. The bossbar is visible to players up to 96 blocks away (spherical) from the raid center. The bar is red and represents the total remaining health of the raid mobs (each segment is 1/10 of the bar). The number of mobs still alive displays when there are fewer than three.
+
+Raid waves spawn some distance away from the raid center and navigate toward it, although they can spawn much closer to the center if the only valid spots are there. A horn sounds at the start of each wave, from the direction of the wave spawn and 13 blocks away from the player. Each subsequent wave is larger, with more mobs, including [[pillager]]s, [[witch]]es, [[evoker]]s, [[ravager]]s, and [[vindicator]]s. If during the course of the raid, all the POIs inside the subchunk around the raid center are lost (either because the villagers are killed or the blocks themselves are somehow destroyed), the raid center moves to the center of the nearest subchunk that still counts as a village within the surrounding 5×5×5 subchunk region (if there are none, the raid ends in defeat for the player).
+
+{{IN|bedrock}}, when a player with [[Bad Omen]] enters a 64×23×64 region around a [[village]] center (technically 1.12 blocks below the center), the effect transforms into [[Raid Omen]] that disappears after 30 seconds, and then the raid starts. A [[bossbar]] labeled "Raid" appears and begins charging. The bossbar is visible in a 128×88×128 region around the village center (technically 1.12 blocks below the center). The bar is red, and represents the number of remaining mobs. While a wither is already present in the village and a raid starts, the bar is red and black. The number of mobs still alive displays when there are fewer than three. A horn sounds at the start of each wave, and plays again at intervals until the wave has been defeated, or the player has lost. The horn plays from the direction of one of the illagers, which can help players locate it. The bell rings while the bossbar charges. Each subsequent wave is larger, with more mobs, including [[pillager]]s, [[witch]]es, [[evoker]]s, [[ravager]]s, and [[vindicator]]s.
+
+=== Raiders ===
+==== Joining ====
+Illagers, ravagers, and witches not spawned as part of the raid (e.g., from a [[patrol]] or [[spawn egg]]s) may join the raid and be counted by the bossbar, provided they are within 96 blocks of the raid center when a wave spawns.  
+
+{{IN|java}}, [[illusioner]]s can also join the raid. Raid captains may also join the raid. Raiders leave the raid if they are more than 112 blocks away from the raid center or haven't seen action in a while.
+
+==== Illagers ==== 
+Illagers have exclusive behavior during raids. 
+
+{{IN|java}}, [[vindicator]]s in a raid take the initiative to open and close doors to search for [[villager]]s. They can sometimes break a [[wooden door]] in Normal {{verify|Java editions min difficulty}} or Hard [[difficulty]] if they cannot open the door normally. [[Evoker]]s gain extra movement speed without any [[effects]]. This causes evokers to sprint much faster than the player. Evokers exhibit normal attack behavior, but if they do not have a target, they sprint back and forth.<!-- The evoker's movement speed is already 0.5 in normal behavior. This sentence is probably untrue as it is probably an illusion because the evoker is sprinting back and forth. -->
+
+{{IN|bedrock}}, a vindicator spawned in a raid gains the ability to break doors in Normal difficulty, but does not actively seek doors. They try to break the door only when passing by.
+<!--Vindicator.json file in BE behavior pack show that vindicator takes 30 seconds to break a wooden door. ("min_difficulty": "normal") -->
+
+==== Captains ====
+<!-- Illager captains are unused in raids in BE -->
+{{IN|je}}, when a wave captain is killed, other nearby illagers in the raid try to pick up any ominous banners on the ground until a new wave captain is made; the illager that retrieves the banner becomes the new wave captain. 
+
+==== Witches ====
+Witches participating in a raid assist other raid members by splashing them with a [[Potion]] of [[Regeneration]] or [[Healing]]. Witches are passive toward the villagers and do not throw harmful potions at them, but one of their potions may hit a villager accidentally<ref>{{bug|MC-139947}} resolved as "Works As Intended"</ref>. {{IN|be}}, witches attack [[iron golem]]s in addition to [[player]]s.
+
+=== Raid wave spawning === 
+==== Java Edition ====
+The game attempts to find a valid spawn location for the raiders during the cooldown between waves. For the duration of the 300-tick cooldown, the game makes 8 attempts to find such a location every 5 ticks. This means that there are <code>(300 / 5) * 8</code> = 480 individual location checks during this period. Once a location is found, the game stops looking for one and waits out the rest of the cooldown unless the chunk it is in becomes non-entity-ticking.
+
+A location is valid only if:
+* it is in generated, entity-ticking chunks
+* it is not part of a village (including other villages)
+* the vertical distance from the raid center is less than 96 blocks
+* the block underneath is a [[Mob spawning#Spawn mechanics|valid spawn]] block (meaning that blocks like [[glass]] can be used to block raid spawns)
+
+Only the topmost non-air blocks are checked. Light level and player proximity are not taken into account, so it is possible for raiders to spawn on top of players, particularly if the available spawning locations are manipulated.
+
+How far the checked locations are from the raid center depends on the remaining cooldown - the game starts checking far from the raid center, but as the remaining cooldown time decreases, it moves closer, to the point where waves can spawn right next to the raid center if there is nowhere else for them to spawn. In practice, the sheer amount of checks means that such an occurrence requires artificial setups (such as villages built over the ocean or sufficiently higher than all non-village terrain), but if using such setups, then forcing raid waves to spawn in a general area is feasible.
+
+If a valid spawn location has not yet been found when the cooldown ends, 6 last-resort groups of 20 locations each are checked. At this point, the remaining raid cooldown is 0, so these locations are also close to the center. If these checks still fail to find a valid location, the raid ends without being counted as a victory.
+
+The raid ticking logic for determining when to spawn the next group is as follows:
+
+# Check the number of living raiders in the current wave's set of raiders. If it is 0, reset the raid cooldown to 300 ticks. Note that raiders are not checked for proximity at this time.
+# Every 20 ticks, remove raiders who are too far from the raid center from the set. "Too far" is defined as either being outside of a 112-block spherical radius from the raid center or being in a different dimension.
+# If the raid cooldown is 0, and there are still groups left to spawn, check the number of living raiders in the set again. If it is 0, spawn the next group.
+
+This logic results in a quirk that can cause the next wave to spawn immediately near the raid center when the last raider in the group is removed due to being too far (instead of being killed). This is because the cooldown can be reset to 300 only during step 1, so if the final raider in the set is removed in step 2 (i.e. due to being too far instead of being killed), then the cooldown is still 0, and the number of living raiders in the set are also 0. This fulfills the conditions for step 3, which is run immediately after step 2, spawning the next group without a delay.
+
+When finding locations for this group to spawn, the game jumps to the aforementioned 6 last-resort groups as the cooldown checks do not get a chance to occur. As the raid cooldown is still 0 at this point, the potential locations end up being very close to the raid center.
+
+This generally does not happen without artificial setups, as the raiders attempt to head toward the raid center, but it may happen if the final raider of a wave wanders into a portal.
+
+==== Bedrock Edition ====
+[[File:Raiders spawning on multiple levels in Bedrock.png|thumb|right|Raiders spawning above and below ground in Bedrock (1.21.1)]]
+The raid spawns several waves of raider mobs. If a raid wave begins while an illager or witch is  already present inside the village, the wave spawns as normal and the extra mobs join the raid. The exact spawning mechanics are unknown, but the raid can spawn in the 128×32×128 region around the village center. Spawns may occur above or below ground. 
+
+[[Mob spawning#Spawn conditions|Valid spawn]] blocks {{in|bedrock}} are ''any'' block except leaves and scaffolding (''inside'' scaffolding is fine, as usual) with enough space on top. This includes on top of unusual blocks like redstone components, fences and beds. Any light level is fine and player proximity does not matter. If the spawn attempt fails, the wave is immediately declared over and the game moves on to the next wave, victory, or cancels the raid.  Once a valid location is found, the horn sounds and all raider mobs for that wave spawn there at once. They then spread out and move toward the village. Once all raiders are killed, there is a 15-second cooldown before the next wave. Raiders that are part of a raid do not despawn naturally and do not contribute to the mob cap, but resume despawning once the raid is over.
+
+=== Raider despawning ===
+Raiders that are part of a raid do not contribute to the mob cap and do not despawn naturally until the raid is over or they get far enough away from the raid center. It is also required that the chunks they are in are reloaded (for example by getting out of render distance and coming back) or they don't disappear even if the player is >128 blocks away.
+
+=== Raid wave composition ===
+==== ''Java Edition'' ====
+The number of waves depends on difficulty and the level of Bad Omen/Raid Omen. There are three waves in Easy difficulty, five waves in Normal, and seven waves in Hard. If the player's Raid Omen effect is level II or higher, one additional wave spawns (i.e., four in Easy, six in Normal, and eight in Hard) with the same strength as the final wave. The number of waves is determined at the beginning of the first wave, and changing the difficulty during a started raid does not add or remove any remaining waves. In Hard difficulty, there is also a chance that one additional pillager or vindicator spawns for each wave. Raiders have an increased chance of spawning with [[enchanted]] items with higher Raid Omen levels: a 10% chance starting at Raid Omen II and up to a 75% chance at Raid Omen V.
+
+; Easy difficulty
+
+When triggered with Raid Omen I, illager weapons are unenchanted. Raid Omen levels II through V increase the possibility of low-level enchantments. There is a 25% chance that an additional pillager spawns, for a total of four pillagers on waves 2 and 3 and the extra wave. Starting at wave 3, there is a 25% chance that a vindicator spawns each wave, and there is also a 25% chance that an evoker spawns.
+
+{| class="wikitable" style="text-align: center;"
+|+ Number of mobs in each wave
+! Mob
+! Wave 1
+! Wave 2
+! Wave 3
+! Extra Wave
+|-
+! style="text-align:left;" | {{entityLink|Pillager}}
+| 4 - 5|| 3 - 4|| 3 - 4|| 3 - 4
+|-
+! style="text-align:left;" | {{entityLink|Vindicator}}
+| || 2 - 3|| 0 - 1|| 0 - 1
+|-
+! style="text-align:left;" | {{entityLink|Ravager}}
+| || || 1|| 1
+|-
+! style="text-align:left; " |
+{{entityLink|Evoker}}
+| || || 1 || 1
+|-
+!Total mobs
+!4 - 5
+!5 - 7
+!5 - 7
+!5 - 7
+|-
+!Overall total
+! colspan="3" |14 - 19
+!19 - 26
+|}
+
+; Normal difficulty
+
+There's a 50% chance of spawning either an additional pillager from 3 pillagers per wave, and/or a vindicator on each wave. Witches can also spawn with a 50% chance on waves 3 and 5, and 3 witches always spawn on wave 4. A ravager also spawns at wave 3, but if there is an extra wave, there is a chance of 2 ravagers in the extra wave. Only wave 5 spawns a pillager-ravager jockey.
+
+{| class="wikitable" style="text-align: center;"
+|+ Number of mobs in each wave
+! Mob
+! Wave 1
+! Wave 2
+! Wave 3
+! Wave 4
+! Wave 5
+! Extra Wave
+|-
+! style="text-align:left;" | {{entityLink|Pillager}}
+| 4 - 5 || 3 - 4 || 3 - 4 || 4 - 5|| 4 - 5|| 4 - 5
+|-
+! style="text-align:left;" | {{entityLink|Vindicator}}
+| 0 - 1|| 2 - 3|| 0 - 1|| 1 - 2|| 4 - 5|| 4 - 5
+|-
+! style="text-align:left;" | {{entityLink|Ravager}}
+| || || 1 || || || 0 - 1
+|-
+! style="text-align:left;" | {{entityLink|Evoker}}
+|
+|
+|
+|
+|1
+|1
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Pillager}}
+|
+|
+|
+|
+|1
+|1
+|-
+! style="text-align:left;" | {{entityLink|Witch}}
+|
+|
+|0 - 1
+|3
+|0 - 1
+|0 - 1
+|-
+!Total mobs
+!4 - 6
+!5 - 7
+!4 - 7
+!8 - 10
+!10 - 13
+!10 - 14
+|-
+!Overall total
+! colspan="5" |31 - 43
+!41 - 57
+|}
+
+; Hard difficulty
+
+There are at least 3 pillagers each wave except wave 7 on. However, waves 1, 4, 5, and 6 spawn at least 4 pillagers, but each wave has a 50% chance to spawn additional pillagers. A different minimum number of pillagers spawn from wave 5 onward, and they also have a 50% chance to spawn extra pillagers on each wave. At least 1 vindicator spawns starting at wave 4, but there is a range from as few as 0 to up to 7 across the waves. Wave 4 spawns 3 witches, and from wave 7 on, at least one witch spawns. Waves 3, 5, and 6 also have a 50% chance to spawn witches. There are also illager-ravager jockeys spawning in wave 5, and wave 7 on.
+
+{| class="wikitable" style="text-align: center;"
+|+ Number of mobs in each wave
+! Mob
+! Wave 1
+! Wave 2
+! Wave 3
+! Wave 4
+! Wave 5
+! Wave 6
+! Wave 7
+! Extra Wave
+|-
+! style="text-align:left;" | {{entityLink|Pillager}}
+| 4 - 6 || 3 - 5 || 3 - 5 || 4 - 6|| 4 - 6|| 4 - 6|| 2 - 4|| 2 - 4
+|-
+! style="text-align:left;" | {{entityLink|Vindicator}}
+| 0 - 2|| 2 - 4 || 0 - 2 || 1 - 3|| 4 - 6 || 2 - 4 || 5 - 7|| 5 - 7
+|-
+! style="text-align:left;" | {{entityLink|Ravager}}
+| || || 1 || || || || || 
+|-
+! style="text-align:left;" | {{entityLink|Witch}}
+| || ||0 - 1|| 3 || 0 - 1|| 0 - 1|| 1 - 2|| 1 - 2
+|-
+! style="text-align:left;" | {{entityLink|Evoker}}
+| || || || || 1 || 1 || 2 || 2
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Pillager}}
+| || || || || 1 || || ||0 - 1
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Vindicator}}
+| || || || || || || 1 || 1
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Evoker}}
+| || || || || || || 1 || 1
+|-
+!Total mobs
+!4 - 8
+!5 - 9
+!4 - 9
+!8 - 12
+!10 - 15
+!7 - 12
+!13 - 18
+!13 - 19
+|-
+!Overall total
+! colspan="7" |51 - 83
+!64 - 102
+|}
+{{Notelist}}
+{{Notelist}}
+
+==== Bedrock Edition ====
+{{IN|bedrock}}, the number of waves depends on difficulty, regardless of Bad Omen/Raid Omen level without any additional waves. There are 3 waves in Easy difficulty, 5 waves in Normal, and 7 waves in Hard. The number of waves is determined at the beginning of the first wave, and changing the difficulty during a started raid does not add or remove any remaining waves. They spawn with enchanted weapons at level 5 on Easy and at levels 5-19 in other difficulties. There are no attempts to spawn additional mobs in any difficulty aside from [[vex]]es spawned by [[evoker]]s.
+
+{| class="wikitable" style="text-align: center;"
+|+ Number of mobs in each wave
+! Mobs
+! Wave 1
+! Wave 2
+! Wave 3
+! Wave 4
+! Wave 5
+! Wave 6
+! Wave 7
+|-
+! style="text-align:left;" | {{entityLink|Pillager}}
+| 4 || 3 || 3 || 3 || || 5 ||
+|-
+! style="text-align:left;" | {{entityLink|Vindicator}}
+| || 2 || || || 4 || 2 || 6 
+|-
+! style="text-align:left;" | {{entityLink|Ravager}}
+| || || 1 || || 1 || ||
+|-
+! style="text-align:left;" | {{entityLink|Witch}}
+| || || || 3 || || || 1
+|-
+! style="text-align:left;" | {{entityLink|Evoker}}
+| || || 1 || 1 || 1 || 1 || 2
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Pillager}}
+| || || || || 1 || || 1
+|-
+! style="text-align:left;" | {{entityLink|Ravager}} + {{entityLink|Evoker}}
+| || || || || || || 1
+|-
+!Total mobs
+!4
+!5
+!5
+!7
+!7
+!8
+!11
+|-
+!Overall total
+! colspan="3" | 14 (Easy)
+! colspan="2" | 28 (Normal)
+! colspan="2" | 47 (Hard)
+|}
+
+=== Loot ===
+All mobs in a raid drop their own regular loot, with some additions.
+
+{{IN|je}}, ''villagers'' give the player extra loot (gifts) after the raid, while {{in|be}}, the ''illagers'' drop extra loot when killed.
+
+==== In ''Java Edition'' ====
+The raid captain drops
+* 1 {{InvSprite|Ominous Banner}} [[Ominous Banner]]
+
+[[Pillager]]s, [[vindicator]]s, and [[evoker]]s drop their regular loot. Omen levels above one affect enchanted gear drops, see [[#Raid_wave_composition|Raid wave composition]], above.
+
+==== In ''Bedrock Edition'' ====
+In addition to regular loot, pillagers and vindicators can drop:
+* 0-1 {{ItemLink|Emerald}}
+Additionally, depending on difficulty, they have a 65% chance of dropping on Easy and Normal, while 80% chance of dropping on Hard:
+* 0-1 {{ItemLink|Emerald}} ({{frac|10|39}} chance) <!-- or {{frac|20|78}}-->
+* 2-3 {{ItemLink|Emerald}} ({{frac|5|39}} chance) <!-- or {{frac|10|78}}-->
+* 4-5 {{ItemLink|Emerald}} ({{frac|2|39}} chance) <!-- or {{frac|4|78}}-->
+* 1 {{ItemLink|Enchanted Book}} ({{frac|2|39}} chance) <!-- or {{frac|4|78}} -->
+<!-- (*) empty {{frac|5|78}} (actually an iron_pick(not iron_pickaxe) but due the name is invalid causing to drop nothing)-->
+* 1 {{ItemLink|Iron Axe}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Shovel}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Pickaxe}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Sword}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Helmet}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Chestplate}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Leggings}} ({{frac|5|78}} chance)
+* 1 {{ItemLink|Iron Boots}} ({{frac|5|78}} chance)
+Note:
+* Iron equipment from raider drops has 50% chance of being enchanted with random enchantment(s) at a low-to-medium level.{{Info needed|Equivalent to what exact levels on an enchantment table?}}
+* Iron equipment from raider drops is always damaged.
+* Enchanted books from raider drops have random enchantments at a high level, including treasure enchantments (but not [[Soul Speed]] or [[Swift Sneak]]).{{Info needed|Equivalent to what exact levels on an enchantment table?}}
+* Emerald is both a regular raid drop and an additional drop.
+** Only emerald drops are affected by looting enchantment, increased by 1% per looting level.
+
+=== Defeat ===
+If the attacked village no longer registers as a village (i.e., all [[villager]]s were killed or all claimed beds, bells, and profession blocks were destroyed), the raid ends, the raid bar displays "Raid - Defeat", and all of the raiders celebrate: The evokers, pillagers, and vindicators raise their hands, the pillagers jump up and down{{only|java|short=1}} or{{verify|The renders show that in Bedrock they do both, is it really "or"?}} raise their hands{{only|bedrock|short=1}}, the witches and ravagers jump up and down, and all of them emit "celebration sounds".
+
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Pillager celebrate1.ogg
+|sound2=Pillager celebrate2.ogg
+|sound3=Pillager celebrate3.ogg
+|sound4=Pillager celebrate4.ogg
+|sound5=Pillager horn celebrate.ogg
+|subtitle=Pillager cheers
+|source=hostile
+|description=When a pillager wins a raid
+|id=entity.pillager.celebrate
+|translationkey=subtitles.entity.pillager.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Vindicator celebrate1.ogg
+|sound2=Vindicator celebrate2.ogg
+|subtitle=Vindicator cheers
+|source=hostile
+|description=When a vindicator wins a raid
+|id=entity.vindicator.celebrate
+|translationkey=subtitles.entity.vindicator.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Ravager celebrate1.ogg
+|sound2=Ravager celebrate2.ogg
+|subtitle=Ravager cheers
+|source=hostile
+|description=When a ravager wins a raid
+|id=entity.ravager.celebrate
+|translationkey=subtitles.entity.ravager.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}  
+| {{SoundLine
+|sound=Evoker celebrate.ogg
+|subtitle=Evoker cheers
+|source=hostile
+|description=When an evoker wins a raid
+|id=entity.evoker.celebrate
+|translationkey=subtitles.entity.evoker.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Witch celebrate.ogg
+|subtitle=Witch cheers
+|source=hostile
+|description=When a witch wins a raid
+|id=entity.witch.celebrate
+|translationkey=subtitles.entity.witch.celebrate
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Pillager celebrate1.ogg
+|sound2=Pillager celebrate2.ogg
+|sound3=Pillager celebrate3.ogg
+|sound4=Pillager celebrate4.ogg
+|sound5=Pillager horn celebrate.ogg
+|source=hostile
+|description=When a pillager wins a raid
+|id=mob.pillager.celebrate
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Vindicator celebrate1.ogg
+|sound2=Vindicator celebrate2.ogg
+|source=hostile
+|description=When a vindicator wins a raid
+|id=mob.vindicator.celebrate
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Ravager celebrate1.ogg
+|sound2=Ravager celebrate2.ogg
+|source=hostile
+|description=When a ravager wins a raid
+|id=mob.ravager.celebrate
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Evoker celebrate.ogg
+|sound2=Evoker idle1.ogg
+|sound3=Evoker idle2.ogg
+|source=hostile
+|description=When an evoker wins a raid
+|id=mob.evocation_illager.celebrate
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Witch celebrate.ogg
+|sound2=Witch idle1.ogg
+|sound3=Witch idle4.ogg
+|source=hostile
+|description=When a witch wins a raid
+|id=mob.witch.celebrate
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+=== Victory ===
+The village is victorious when the last raid member in the final wave has been defeated. When this happens, the villagers exit their homes and shoot off fireworks to celebrate, and the Raid bar displays "Raid - Victory".
+
+In some cases a raid ends after a set amount of time, if all left over raiders cannot move.{{info needed|but what is the result? expiry? victory?}}
+
+==== Hero of the Village ====
+{{main|Hero of the Village}}
+
+If all raiders are killed in the final wave, any player who has killed a raid member in the raid receives the [[Hero of the Village]] effect, which gives useful bonuses.
+
+=== Villagers ===
+{{IN|java}} during a raid, [[villager]]s emit "sweat particles". At least one villager rushes to the village meeting point and rings the [[bell]] to alert other villagers to get inside their houses during the warmup of an upcoming raid wave{{only|java|short=1}}. 
+
+After successfully defending a village from a raid, the villagers emerge from their houses and celebrate, by setting off [[firework rocket]]s and cheering, although the villagers do not have celebration sounds like the raiders do.
+
+==== Gifts ====
+{{Main|Hero of the Village}}
+Villagers give players [[:en:Hero_of_the_Village#Gifts|gifts]] after the raid in [[Java Edition|''Java Edition'']]. Each villager periodically throws items at the player that are related to their profession. 
+
+=== Mobs not counted ===
+[[Vex]]es summoned by [[evoker]]s do not count as part of the raid. Killing them has no effect on the raid bossbar, and the raid can end in victory even if there are vexes remaining.
+
+=== Expiring ===
+If a raid goes on for 48,000 [[ticks]] (40 minutes in real time) the raid bossbar disappears, and {{in|be}} a message appears reading “Raid Expired”. Any raiders alive when the raid expires stay until they are killed.
+
+== Sounds ==
+{{edition|java}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Event raidhorn1.ogg
+|sound2=Event raidhorn2.ogg
+|sound3=Event raidhorn3.ogg
+|sound4=Event raidhorn4.ogg
+|subtitle=Ominous horn blares
+|source=neutral
+|description=When a new wave of a raid starts
+|id=event.raid.horn
+|translationkey=subtitles.event.raid.horn
+|volume=0.64
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Event raidhorn1.ogg
+|sound2=Event raidhorn2.ogg
+|sound3=Event raidhorn3.ogg
+|sound4=Event raidhorn4.ogg
+|source=neutral
+|description=When a new wave of a raid starts
+|id=raid.horn
+|volume=120.0
+| pitch = 1.0
+}}
+}}
+
+== NBT structure ==
+{{main|raids.dat format}}
+
+== Achievements ==
+{{load achievements|Kill the Beast!;We're being attacked!;Sound the Alarm!;Feeling Ill;I've got a bad feeling about this}}
+
+== Advancements ==
+{{load advancements|Voluntary Exile;Hero of the Village;How Did We Get Here}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w47a|Added raids.}}
+|{{HistoryLine|||dev=18w49a|There are now two waves per {{EffectLink|Bad Omen}} level.
+|Players now have to complete a wave before the next one starts.
+|The raid boss bar now slowly fills up when a raid is triggered or when a wave is cleared.
+}}
+|{{HistoryLine|||dev=18w50a|Patrol captains now give 1–3 Bad Omen levels when killed. Outpost captains always give 1.
+|Captains can now spawn at outposts.
+|Ravagers start at wave 2, witches at wave 4, evokers at wave 5.}}
+|{{HistoryLine|||dev=19w13a|Patrol captains now give 1–6 Bad Omen levels when killed.
+|Players now get the {{EffectLink|Hero of the Village}} effect after completing raids.|The raid's bossbar now takes the amount of health of raiders into account, causing it to decrease whenever a raider takes damage. However, it updates only when a raider takes damage, not when it heals.<ref>{{bug|MC-263799}}</ref>}}
+|{{HistoryLine||1.14.3|dev=pre3|Raids can now be enabled or disabled by using the command {{cmd|gamerule disableRaids}}.}}
+|{{HistoryLine||September 29, 2019|link=MINECON Live 2019|[[Illusioners]] were mentioned as potential candidates for addition to raids in [[Java Edition 1.16]], in analogy to the implementation of brown [[mooshroom]]s as announced a year earlier.}}
+|{{HistoryLine||1.16|dev=20w18a|The maximum potency of Bad Omen has been decreased to five.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w13a|Raids are now ominous events.|Raids are now triggered by the Raid Omen effect rather than the Bad Omen effect.}}
+|{{HistoryLine||1.21.2|dev=24w33a|A triggered raid no longer starts if the raiders cannot find a place to spawn within a reasonable distance of the village they are trying to raid.}}
+|{{HistoryLine|||dev=24w35a|Raiders must find a place to spawn no more than 96 blocks vertically above or below the village center, or a raid does not start.|It is now much less likely for raiders to not find a valid place to spawn when raiding.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|exp=Experimental Gameplay|Added raids, available only through experimental gameplay.
+|Raids are currently unused at this time and use a pink boss bar color.}}
+|{{HistoryLine|||dev=beta 1.11.0.3|Raids can now be triggered by the player, making them no longer unused.
+|A bell-ringing sound can now be heard during raids.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Players now get the {{EffectLink|Hero of the Village}} effect after completing raids.}}
+|{{HistoryLine|||dev=beta 1.11.0.5|Players now get {{EffectLink|Bad Omen}} if a village is no longer registered as a village during a raid.}}
+|{{HistoryLine|||dev=beta 1.11.0.7|A message now appears when a raid expires after 2-3 in-game days.
+|Maximum distance of raiding illager spawn from the village has been increased and now depends on render distance and a suitable block, which is up to 1024.}}
+|{{HistoryLine||1.11.0|dev=release|Raids are now available outside of Experimental Gameplay.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Added successful village raid celebration.
+|Players no longer receive Bad Omen when all villagers die or all beds are destroyed during a raid.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.20|Raids now use a red boss bar color to match ''Java Edition''.
+|Raid mobs now despawn after a raid ends if the players move too far away.}}
+|{{HistoryLine|||dev=beta 1.18.0.22|Raid boss bars now decrease whenever a raider takes damage.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|Added raids.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+[[File:Old villagers, raid fail.png|thumb|right|A raid of illagers celebrating victory, despite having the old villagers and beds {{in|BE}}.]]
+*{{IN|BE}}, by downloading worlds from the [[Marketplace]], [[Villager (old)|old]] and new villagers can be summoned at the same place. Because old villagers don't count as villagers, any raid ends in defeat the moment all new villagers are killed, even if old villagers are still alive.
+* If the [[player]] leaves a [[village]] during a raid, obtains another level of [[Bad Omen]], and returns to the village, then the [[status effect|effect]] is nullified and has no effect on the progressing raid.
+* The horn [[sound]] that blares at the start of each wave is created by a corkscrew [[wikipedia:Didgeridoo|didgeridoo]].<ref>{{ytl|CvqmhgmO2Bg|Ask Mojang #3: The Villager Prank|Minecraft|August 28, 2019}}</ref> The "seek" [[goat horn]] has a similar sound.
+* A Ravager with vindicator rider (in .json code) is an unused mob {{In|BE}}.
+* [[Witch]]es are not considered [[illager]]s, and although allied with the raiders, they don't attack [[villager]]s. [[Cory Scheviak]] jokingly explained that witches are "just along for the ride".<ref>{{bug|MC-182733|"Witches aren't illagers - they are just along for the ride!"|Cory Scheviak}}</ref>
+* In a Twitter post, raids were referred to as pillager raids.<ref>{{tweet|Minecraft|1773021151205245321|Ominous Trials are now available on Java Snapshot! 🔑 Drink an ominous bottle to gain the Bad Omen effect 🔑 Head to a village for a Raid Omen and start a pillager raid OR enter a trial chamber to trigger a Trial Omen effect 🔑 Trial Omen effect will spew out tougher mobs with better gear, potions, and projectiles 🔑 Earn the ominous trial key to unlock an ominous vault Read more about the update (coming soon to Beta/Preview): https://minecraft.net/en-us/article/introducing-mace-and-ominous-events|March 27, 2024}}</ref>
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Pillager celebrating.gif|A pillager celebrating a raid victory {{in|Java}}.
+Pillager celebrating BE.gif|A pillager celebrating a raid victory {{in|bedrock}}.
+Vindicator celebrating.gif|A vindicator celebrating a raid victory.
+Evoker celebrating.gif|An evoker celebrating a raid victory.
+Witch celebrating.gif|A witch celebrating a raid victory.
+Illusioner celebrating.gif|An [[illusioner]] celebrating a raid victory{{only|java|short=1}}.
+</gallery>
+=== Textures ===
+<gallery>
+Raid bar.png|Raid bar in Java Edition.
+Raid bar BE.png|Raid bar in [[Bedrock Edition]].
+</gallery>
+=== Screenshots ===
+<gallery>
+VillagerSweating.png|A [[librarian]] sweating in a [[village]] house during a raid.
+Illager beast extending neck.png|A [[ravager]] attacking an [[iron golem]].
+PillagersMinecon.png|A group of [[pillagers]] raiding a village.
+Pillager attacking villager.png|Pillager [[riding]] ravager attacking a villager.
+Village Raid.jpg|[[Illagers]] killing an iron golem.
+Pillager attacking Iron Golem.png|A pillager and iron golem fight, but because of the height difference, the iron golem cannot fight back.
+Pillager leader chasing villager.png|A [[raid captain]] chasing a librarian.
+Pillagers using crossbow.png|Pillagers holding [[crossbows]], shown at MINECON Earth 2018.
+Village Raiders.jpg|A raid in a pre-[[Village and Pillage]] village.
+</gallery>
+
+== See also ==
+* [[Ominous Trial]]
+* [[Zombie siege]]
+
+==References==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox villagers}}{{Navbox gameplay}}{{Featured}}
+
+[[cs:Nájezd]]
+[[de:Überfall]]
+[[es:Invasión]]
+[[fr:Invasion]]
+[[it:Incursione]]
+[[ja:襲撃]]
+[[ko:습격]]
+[[pl:Najazd]]
+[[pt:Invasão]]
+[[ru:Набег]]
+[[th:กลุ่มปล้นสะดม]]
+[[uk:Набіг]]
+[[zh:袭击]]

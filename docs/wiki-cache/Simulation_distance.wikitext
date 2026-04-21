@@ -1,0 +1,121 @@
+'''Simulation distance''' is a [[World Options|world option]] {{in|bedrock}} that controls mob spawning and despawning, and [[tick]] updates. {{IN|java}}, simulation distance is a [[Options#Video Settings|video setting]] related to render distance, to restrict tick update distance.
+
+== Range of simulation distance ==
+{| class="wikitable"
+|+
+! Edition
+! {{BE}}
+! {{JE}}
+|-
+! Singleplayer (High device performance)
+| Even number ranging from 4 to 12, 4 in default.<ref group="note">Up to 10 chunks on Xbox and PlayStation</ref>
+| Integer ranging from 5 to 32, 12 in default.
+|-
+! Singleplayer (Low device performance)
+| Even number ranging from 4 to 8, 4 in default.<ref group="note">Up to 6 chunks on devices with less than 2GB RAM</ref>
+| Integer from 5 to 16, 8 in default.<ref group="note">Less than 1GB or none 64-bit Java.</ref>
+|-
+! Multiplayer
+| Integer ranging from 4 to 12, 4 in default.
+| Integer ranging from 3 to 32, 10 in default.
+|}
+
+The simulation distance of the ''Minecraft'' server can be modified in the file [[server.properties]].
+
+== ''Bedrock Edition'' ==
+{{infobox
+|group=4|1-1=Simulation_Distance_4_(Bedrock_1.20.50.20+).png
+|group2=5|2-1=Simulation_Distance_5_(Bedrock_1.20.50.20+).png
+|group3=6|3-1=Simulation_Distance_6_(Bedrock_1.20.50.20+).png
+|group4=7|4-1=Simulation_Distance_7_(Bedrock_1.20.50.20+).png
+|group5=8|5-1=Simulation_Distance_8_(Bedrock_1.20.50.20+).png
+|group6=9|6-1=Simulation_Distance_9_(Bedrock_1.20.50.20+).png
+|group7=10|7-1=Simulation_Distance_10_(Bedrock_1.20.50.20+).png
+|group8=11|8-1=Simulation_Distance_11_(Bedrock_1.20.50.20+).png
+|group9=12|9-1=Simulation_Distance_12_(Bedrock_1.20.50.20+).png
+|rows=
+{{infobox row|Green|Spawning and despawning range}}
+{{infobox row|Red|Ticking range}}
+}}
+[[File:Simulation distance 4.svg|thumb|right|Simulation Distance 4 chunks receiving ticks, as well as mob despawn radius from the corners of the central chunk]]
+[[File:Ore UI - Create New World or Edit World Screen "Advanced" Tab Simulation Distance (Bedrock).png|380px|thumb|The Simulation distance option in the [[Create New World|create new world]] screen or [[edit world]] screen. Note that this screenshot is taken on a mobile device which limits the option to 8 chunks; desktop devices use a dropdown menu limited at 12 chunks.]]
+
+=== Control ===
+The simulation distance control appears in the "Advanced" tab of the [[Create New World|create new world]] screen or [[edit world]] screen. It is separated by  different worlds, and cannot be modified when the world is loading.
+
+=== Spawning and despawning ===
+Simulation distance restricts the range at which mobs spawn and despawn.
+
+The minimum spawning distance is 24 blocks (Euclidean distance) from the player. The maximum spawning distance and despawning distances are determined by the simulation distance, which is a quasi-spherical shell having the following ranges relative to the player:
+
+{| class="wikitable"
+|+ Mob spawning and despawning range in {{BE}}
+|-
+! Simulation distance <math>n</math>!! Mob spawning range !! Mob randomly despawning range !! Mob immediately despawning range.
+|-
+| 4 || 24 to 44 blocks of Euclidean distance from player || 32 to 44 blocks of Euclidean distance from player || Greater than 44 blocks of Euclidean distance from player
+|-
+| >4 || 24 to 128 blocks of Euclidean distance '''and''' no greater than <math>n-1</math> chunks  of [[taxicab distance]] from player|| 32 to 128 blocks of Euclidean distance '''and''' no greater than <math>n-1</math> chunks of taxicab distance from player|| Greater than 128 blocks of Euclidean distance '''or''' greater than <math>n-1</math> chunks of taxicab distance from player
+|}
+
+Within the simulation distance, there is a {{frac|11|2000}} chance of the mob spawning algorithm attempting to run per chunk, per tick.<!--
+
+[[Realms]] worlds use a simulation distance of 9 chunks {{in|JE}} and 4 chunks {{in|BE}}.<ref>{{tweet|cornerhardmc|1559308097125904384| Good question! Java is now at: Render {{=}} 12 chunks Simulation {{=}} 9 chunks Bedrock is now at: Render {{=}} 12 chunks Simulation {{=}} 4 chunks The games are quite different internally and have different CPU and RAM requirements for servers, but we are looking to improve things over time|August 15, 2022}}</ref>-->
+
+Regardless of simulation distance, mobs with [[persistence]] do not despawn, and [[fish]] always despawn when they are more than 40 blocks from the nearest player.
+
+=== Tick updates ===
+[[File:Lightning distribution BE.png|thumb|right|Maximum distance of lightning strikes from a lightning rod is determined by simulation distance as [[taxicab distance]], in this case 12 chunks (192 blocks) from the player position at the center of the image.]]
+Simulation distance determines the maximum chunk distance in which entities get updated, and blocks and fluids are ticked. This is not a Euclidean distance, but [[taxicab distance]] in Bedrock Edition.
+
+These ticks include random ticking of crops, amethysts and such. The simulation distance is purely chunk based and has nothing to do with the player's position inside the chunk.
+
+Pure redstone circuits continue to function infinitely far away, but break down where they interact with hoppers, pistons, observers, and anything else that needs tick updates to function.
+
+=== Mob cap ===
+Mobs in chunks outside a ticking area still count toward the per-mob population control caps as long as they were previously loaded within the simulation distance at some time.
+
+== ''Java Edition'' ==
+{{Update|Outdated. Chinese version (zh) has the latest version for reference{{dubious|reason=Chinese version consists of about three sentences}}.|section=1}}
+
+=== Control ===
+All worlds on the client share a simulation distance, and the distance can be modified anytime.
+
+=== Ticking ===
+Simulation distance defines a square region of chunks around the player where entities are ticked. Using distance of 6 for instance, entities may move normally within a 13×13 chunk column around the player chunk. One more chunk out, within a one-chunk-thick square frame surrounding this region, redstone may run, fluid may flow, and crop may grow (subject to normal [[Tick#Chunk_tick|chunk ticking rules]]). Beyond that nothing moves or changes. But these game aspects are also subject to [[Chunk#Chunk_loading|chunk loading rules]]. See also [[Chunk#Ticking]].
+
+The simulation distance setting is ideally less than render distance because updating all entities within the simulation distance is more taxing on performance than the equivalent level of render distance.
+
+=== Entity visibility ===
+
+Not all entities within the loaded and visible chunks are displayed to the player. There are three criteria that hide entities from view. First, the server does not send any information about an entity to the client if the entity is beyond a certain distance from the player, controlled by "entity-broadcast-range-percentage" in the [[server.properties]] file. Second, the client does not render entities depending on both "Render distance" and "Entity distance" [[Options#Video|video settings]]. Apparently, render distance (in chunks) multiplied by a magic number (about 8.5 for mobs, 2 for items) and scaled by the "entity distance" percentage gives the radius in blocks for a sphere around the player beyond which entities are hidden. For example, using render distance 10 and 100% entity distance, a skeleton disappears from view if the player stands more than 85 blocks directly above it. The magic number varies slightly for different types of mobs, such as being larger for spiders and ghasts, even though ghasts still frequently attack player from beyond visibility range. Finally, the client has a hard visibility limit of 128 blocks horizontally, defining another circular column. Entities are displayed only if they are inside the intersection of this sphere and two cylinders.
+
+== History ==
+{{Info needed section}}
+===''Java Edition''===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.18|dev=21w38a|Added custom simulation distance.}}
+|{{HistoryLine|||dev=21w44a|Now blocks and liquid are affected by simulation distance.
+|The minimum simulation distance changed from 2 to 5.}}}}
+
+===''Bedrock Edition''===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.10|dev=beta 1.2.10.1|Added custom simulation distance.}}
+|{{HistoryLine||1.17.10|dev=beta 1.17.10.22|Now the default simulation distance is 4 instead of being determined by device quality.}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.20|When the simulation distance is no less than 6, mobs 6 chunks away from player can now spawn.<ref>{{bug|MCPE-102197|||Fixed}}</ref>}}
+}}
+
+== Notes ==
+{{Notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Bedrock Edition}}
+[[Category:UI]]
+
+[[pt:Distância de simulação]]
+[[zh:模拟距离]]

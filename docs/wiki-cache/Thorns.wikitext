@@ -1,0 +1,175 @@
+{{about||the enchantment in {{MCD}}|MCD:Thorns|the hazard in {{MCL}}|MCL:Redthorn}}
+{{Infobox enchantment
+| maxlevel = III
+| primaryitems = {{ItemSprite|Chestplate|link=Chestplate}}<br/>{{ItemSprite|Helmet|link=Helmet}}{{only|bedrock}}<br/>{{ItemSprite|Leggings|link=Leggings}}{{only|bedrock}}<br/>{{ItemSprite|Boots|link=Boots}}{{only|bedrock}}<br/>{{ItemSprite|Turtle Shell|link=Turtle Shell}}{{only|bedrock}}
+| secondaryitems = {{ItemSprite|Helmet|link=Helmet}}{{only|java}}<br/>{{ItemSprite|Leggings|link=Leggings}}{{only|java}}<br/>{{ItemSprite|Boots|link=Boots}}{{only|java}}<br/>{{ItemSprite|Turtle Shell|link=Turtle Shell}}{{only|java}}
+| weight = 1
+| id = thorns
+}}
+
+'''Thorns''' is an [[armor]] [[enchantment]] that gives a random chance to damage entities that attack the user, at the cost of increasing incurred durability damage.
+
+== Obtaining ==
+Thorns can be obtained from [[enchanting tables]], books obtained by [[fishing]], [[monster room]] chests, librarian [[villager]]s, and non-village [[structure]] loot.
+
+=== Enchanting table maximum ===
+Thorns III cannot be received directly through the enchanting table on any [[tier]] of armor, because their [[enchantability]] does not meet the required threshold.
+
+Tiers that cannot receive Thorns III can have it applied to them by use of an [[anvil]], or can be found naturally enchanted with it through certain [[structure]] loot.
+
+== Usage ==
+While wearing any piece of armor with the Thorns enchantment, each piece independently has a <code>Level × 15%</code> chance of the wearer inflicting {{hp|1}} to {{hp|5}} damage (''not'' restricted to integer values) on anyone who attacks them, regardless of whether they were hit by a melee attack, arrow, or other projectile. The entity also gets knocked back when being damaged by the enchantment.
+
+If the player dies as a result of Thorns damage, the death message <code><player> was killed trying to hurt <entity></code> is displayed.
+
+Multiple worn armor items with the Thorns enchantment do stack. Each piece confers an independent chance to deal damage to the attacker as described above. However, due to the [[Damage#Invulnerability timer|invulnerability timer]], the total damage is capped at the highest individual amount of damage dealt this way, and damage may or may not be caused in individual chunks. As a result, wearing multiple pieces of high-level Thorns armor pieces not only increases the overall chance to deal damage, but also shifts the average amount of damage dealt this way towards the upper end of the possible range. (Since damage and [[health]] are both floating point numbers, the chance to literally reduce health by exactly 5.0 are next to zero. The typical maximum number of hearts lost from thorns damage is 2, but can rarely be 2½ due to rounding.)
+
+Average damage dealt depending on the number of items with Thorns III worn are as follows: 
+{| class="wikitable"
+|+
+!Items with Thorns III
+!Average damage dealt
+|-
+|1
+|{{hp|1.35}}
+|-
+|2
+|{{hp|1.823}}
+|-
+|3
+|{{hp|2.46}}
+|-
+|4
+|{{hp|3.322}}
+|}
+Thorns applies a durability penalty to the armor. It reduces durability by an additional 2 points when inflicting damage. If multiple armor pieces are enchanted with Thorns, the durability penalty is applied to each piece that triggered (even if it didn't end up inflicting the highest damage), regardless of what level of Thorns that piece has. If the item is also enchanted with [[Unbreaking]], the usual probabilities for ignoring each individual point of durability loss apply. 
+
+Thorns damage can be blocked by a shield, if there is an opportunity to block, usually because the damage triggering the thorns effect comes from a projectile.
+
+The Thorns effect can trigger from any equipment slot, including e.g. the body slot of horses or holding the enchanted item in the main or off-hand.<ref>{{bug|MC-73710||Holding items enchanted with thorns in your hand works as if you were wearing them|WAI}}</ref> Although [[horse armor]] cannot be enchanted in [[Survival]], {{in|java}} the Thorns enchantment can be applied to horse armor in Creative and works when held by the player or equipped to a [[horse]].
+
+=== Guardian thorns ===
+[[Guardians]] and [[elder guardians]] have a Thorns-like effect that inflicts damage when their spikes are out. However, this affects only melee damage, whereas Thorns the enchantment applies to all direct attacks, including ranged.
+
+==Unaffected mobs==
+
+[[Warden]]s<ref>{{bug|MC-250157|||Works As Intended }}</ref> using sonic boom attacks are not affected by this enchantment.
+
+== Sounds ==
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Thorns1.ogg
+|sound2=Thorns2.ogg
+|sound3=Thorns3.ogg
+|sound4=Thorns4.ogg
+|subtitle=Thorns prick
+|source=player
+|description=When an entity is damaged by something with Thorns
+|id=enchant.thorns.hit
+|translationkey=subtitles.enchant.thorns.hit
+|volume=1.0 <ref group=sound>Dependent upon the entity being damaged, but it is usually 1.0</ref>
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Thorns1.ogg
+|sound2=Thorns2.ogg
+|sound3=Thorns3.ogg
+|sound4=Thorns4.ogg
+|source=player
+|description=When an entity is damaged by something with Thorns
+|id=damage.thorns
+|volume=0.5
+| pitch = 1.0
+}}
+}}
+
+(In the upcoming Closed captions on Bedrock, since Bedrock hashtags Bad words, when thorns is in use and the Closed captions is on it will say Thorns ##### instead of Thorns prick because Minecraft Bedrock flags it as a Bad word however this does not affect Java edition since there is no Clean chat or Swear block on Java edition)
+== Data values ==
+
+=== ID ===
+
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|nameid=thorns
+|displayname=Thorns
+|translationtype=enchantment
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=1
+|generatetranslationkeys=y
+|nameid=thorns
+|displayname=Thorns
+|id=5
+|translationtype=enchantment
+|foot=1}}
+
+== Video ==
+{{yt|gaYww0HMLyA|align=inline}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.6|dev=12w50a|Added Thorns.}}
+|{{HistoryLine||1.9|dev=15w42a|When multiple pieces of Thorns [[armor]] are worn, one is chosen at random to lose [[item durability|durability]] instead of always using the "bottommost" piece.}}
+|{{HistoryLine|||dev=15w47b|[[Sound]]s for Thorns have been added.}}
+|{{HistoryLine||1.14|dev=19w08a|Thorns enchantment is now functional for horses when added to horse armor in creative mode.}}
+|{{HistoryLine||1.16.2|dev=20w28a|Thorns now takes away less durability.<ref>{{bug|MC-34661}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w03a|Helmets, leggings, and boots can now receive Thorns through an enchanting table, rather than only through an anvil.<ref>{{bug|MC-267943||Anvil exclusive enchantments can be obtained from enchanting tables|Fixed}}</ref>}}
+|{{HistoryLine|||dev=24w12a|Helmets, leggings, and boots can no longer receive Thorns through an enchanting table.}}
+|{{HistoryLine||1.21|dev=24w18a|Thorns levels above 10 no longer deal level-based damage.<ref>{{bug|MC-271651}}</ref>|Thorns enchantment no longer works when holding the item in a hand.<ref>{{bug|MC-271652}}</ref>}}
+|{{HistoryLine|||dev=24w19a|Thorns enchantment works again when holding the item in a hand but also consumes durability, unlike in previous versions.}}
+|{{HistoryLine||1.21.5|dev=25w03a|Thorns enchantment is now functional on saddles when mobs are wearing it.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added Thorns.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|Sounds for Thorns have been added.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added Thorns.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|[[Sound]]s for Thorns have been added.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|Added Thorns.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== References ==
+
+{{Reflist}}
+
+== Navigation ==
+{{Navbox enchantments}}
+
+[[de:Dornen]]
+[[es:Espinas]]
+[[fr:Épines]]
+[[ja:棘の鎧]]
+[[pt:Espinhos]]
+[[th:สะท้อน]]
+[[zh:荆棘]]

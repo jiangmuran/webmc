@@ -1,0 +1,213 @@
+[[File:Sneaking Steve (wide).png|right|225px]]
+'''Sneaking''', '''crouching''', or '''shifting''' is a form of [[movement]]. Its effects include causing the [[player]] to move slower, preventing them from falling off [[block]]s, reducing the radius in which [[mobs]] detect them, and concealing their username and [[Locator Bar]] position to other players in [[multiplayer]].
+
+== Controls ==
+{{main|Controls}}
+{{IN|java|bedrock}} with keyboard controls, the control for sneaking defaults to {{key|shift}}. The player sneaks as long as the key is held down. {{IN|bedrock}} with touch controls, sneaking is toggled by double-tapping [[File:Sneak button.png|30px]] and toggled back by double-tapping [[File:Sneak toggled button.png|30px]]. {{IN|bedrock}} with gamepad controls, sneaking is toggled by pressing on {{Xbutton|onethumb-right-click}}. Certain actions like opening the [[inventory]] can cancel sneaking, even if the player is still holding down the key for sneaking. This never happens on touch devices as the player doesn't need to hold down the sneak key.
+
+== Effects ==
+[[Image:Sneakoverthelava.png|right|thumb|223px|A player sneaking to avoid falling into [[lava]].]]
+While sneaking, including being forced to sneak by entering a space less than 1.8 blocks tall but not less than 1.5 blocks:
+
+*The player moves slower, at a speed of about 1.3 m/s.
+**If two movement keys are pressed at once, the player sneaks diagonally at a faster 1.8 m/s.
+*Eye level moves down {{frac|1|8}} of a block, and the character model bends over slightly. The latter can be seen in {{control|third-person view}}. Additionally, the third-person camera itself moves down.
+*The player's hitbox height reduces from its usual 1.8 blocks to 1.5 blocks.
+
+While sneaking by using the {{Control|sneak}} control:
+*Players are prevented from walking off edges if the [[Solid block#Height|difference in height]] between the two surfaces is higher than 0.6 blocks as long as they are up to 0.6 blocks above the ground,{{only|Java}} which makes sneaking useful for building horizontally outward over empty space. 
+**The player can still dismount blocks while sneaking by [[jumping]] over the block's edge.
+**A sneaking player still falls if the block beneath the player's feet is destroyed.
+*[[Hostile mobs]] do not become aware of the player until within 80% of the usual detection range.
+*Players cannot hear their own footstep sounds.
+*In multiplayer, a sneaking player's name tag appears fainter than normal, invisible to players more than 32 blocks away, and invisible through solid [[block]]s.
+*The player's waypoint in the [[Locator Bar]] is not shown to other players.
+*If players are on a climbable block (such as [[ladder]] or [[vines]]) other than scaffolding, they do not move down. This gives the impression of holding on to that specific ladder rung or vine. Mining speed is still decreased by a factor of 5.
+*Pressing {{control|use}} prioritizes using a held item over interacting with a targeted block. For example, this allows placing a [[hopper]] on a [[chest]], a [[torch]] on a [[furnace]], or [[redstone]] on a [[command block]].
+*Players are able to interact with a tamed [[horse]] (tamed donkey or mule inventories, also) when pressing {{control|use item}} control while holding the {{control|sneak}} key.
+*The player moves downward on [[scaffolding]].
+**The player can't fall through a scaffolding block hanging in mid-air.
+*The player moves downward in [[powder snow]] if they are wearing leather [[boots]]. 
+**Without leather boots, the player simply sinks into powder snow without control.
+*The player does not bounce on [[slime block]]s.
+*[[Magma block]]s do not cause harm.
+*Stepping on [[redstone ore]] does not light it.
+*The player sinks faster in water or lava.
+*[[Sculk sensor]]s and [[warden]]s do not detect vibrations from sneaking players, even if they jump while sneaking.
+**Sculk sensors can still detect players that stand on top of them, even when they are sneaking.
+**The warden can still "sniff out" a sneaking player's location and slowly approach them.
+*{{IN|java}}, if sneaking is set to "Toggle" under Accessibility Settings or Controls, the player keeps sneaking when interacting with blocks that have a UI if the player was sneaking when they interacted with the block.
+*{{IN|bedrock}}, sneaking is used to block attacks while holding a [[shield]].
+*{{IN|java}}, while holding a shield in the [[off-hand]], the player can strip or scrape blocks with an axe in the main-hand if they {{control|use}} while sneaking.
+** If the player is not sneaking, they defend with a shield instead of stripping/scraping a block.
+
+Sneaking does '''not''' affect:
+*Jump height: players can still jump up to the same heights and at the same vertical speed. Horizontal jump speed and distance is decreased, however.
+*[[Farmland]] and crops: they are still trampled when jumped upon.
+
+== Sneaking speed ==
+The sneaking speed attribute affects movement speed while sneaking. With the [[Swift Sneak]] enchantment, sneaking speed is increased by 15% per level of enchantment.
+
+== Achievements ==
+{{load achievements|Sneak 100}}
+
+== Advancements ==
+{{load advancements|Sneak 100}}
+
+== History ==
+{{missing information|section|whether ocelots and any other mobs sneak and the features related with sculk sensors on 1.17 snapshots|type=old}}
+
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 18, 2009|link=http://forums.tigsource.com/index.php?topic=6273.msg201207#msg201207|Sneaking was first suggested on the [https://www.tigsource.com/ TIGSource] forums.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.1|Added sneaking.}}
+|{{HistoryLine||v1.2.3_05|In [[multiplayer]], players can now see other players sneaking. Names of sneaking players are fainter and visible at a shorter distance, and are not visible through solid blocks.
+|Leaving sneak mode no longer rapidly plays all the step sounds that it silenced during the sneak.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.4|Sneaking now allows the [[player]] to hold their place on a [[ladder]].}}
+|{{HistoryLine||1.6|dev=Test Build 3|The ability to sneak up and down half-meter slopes has been added.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=?|The [[player]] no longer falls off the edge of a [[block]] if they stop sneaking too soon after reaching the edge.}}
+|{{HistoryLine||1.4.6|dev=12w49a|The player can now place blocks, such as [[redstone dust]] or [[lever]]s, on interactable blocks while sneaking.}}
+|{{HistoryLine||1.6.1|dev=13w16a|Sneaking is now used to get out for all transportation methods, such as [[boat]]s, [[horse]]s and [[minecart]]s.}}
+|{{HistoryLine||1.8|dev=14w06a|A smooth transition is no longer applied to the camera when the player sneaks.|The player's arm changes position when sneaking in first person view.<ref>{{bug|MC-47431}}</ref>}}
+|{{HistoryLine|||dev=14w10a|The player's arm no longer changes position when sneaking in first person view.}}
+|{{HistoryLine|||dev=14w18b|Sneaking can now be used to prevent bouncing on [[slime block]]s.}}
+|{{HistoryLine||1.9|dev=15w42a|Sneaking now lowers the [[player]]'s hitbox from the normal height of 1.8 blocks to 1.65 blocks.}}
+|{{HistoryLine|||dev=15w49a|Sneaking now increases exhaustion by 0.005/m, decreased from 0.01/m.}}
+|{{HistoryLine|||dev=16w04a|Players now keep their smaller hitbox when stopping sneaking in spaces that they cannot fit in with the larger hitbox. Leaving that area causes the player to regain their normal hitbox.<ref>{{bug|MC-90594}}</ref>}}
+|{{HistoryLine||1.10|dev=16w20a|Sneaking now prevents taking damage from magma blocks.}}
+|{{HistoryLine||1.11|dev=16w32a|Sneaking no longer increases exhaustion.}}
+|{{HistoryLine|||dev=16w39a|Sneaking can now be used to access a [[llama]]'s [[inventory]].}}
+|{{HistoryLine|||dev=16w44a|Sneaking now now prevents drops from heights of more than 0.6 blocks; previously, it was 1 full block or greater.<ref>{{bug|MC-2334}}</ref>}}
+|{{HistoryLine||1.13|dev=18w07a|A smooth transition is once again applied to the camera when the [[player]] sneaks.}}
+|{{HistoryLine||1.14|dev=19w12a|Sneaking now lowers the player's hitbox to 1.5 blocks.}}
+|{{HistoryLine|||dev=19w14a|Entering any vertical space 1.5 or taller, but less than 1.8 blocks tall initiates the sneaking pose.}}
+|{{HistoryLine|||dev=Pre-Release 1|Entering any vertical space 1.5 or taller, but less than 1.8 [[block]]s tall initiates actual sneaking, the non-interactivity of blocks.}}
+|{{HistoryLine||1.15|dev=19w41a|Sneak inputs can now be switched between Hold and Toggle mode in the Accessibility Options.}}
+|{{HistoryLine||1.16.2|dev=20w27a|Sneaking now also prevents falling from heights when being up to 0.6 blocks above the ground; previously the player had to be on the ground.<ref>{{bug|MC-2404}}</ref>}}
+|{{HistoryLine||1.19|dev=22w19a|Sneaking no longer creates an invisible barrier to prevent falling from heights when the player is moving upwards.<ref>{{bug|MC-197647}}</ref><ref>{{bug|MC-200282}}</ref><ref>{{bug|MC-199326||Unable to escape block bound box when you have levitation and holding shift|Won't Fix}}</ref>}}
+|{{HistoryLine||1.20.5|dev=23w51a|Added the {{cd|generic.step_height}} attribute, which controls the minimum height from which it prevents falling and the minimum amount of blocks to be above the ground for it to prevent falling from heights.<ref>{{bug|MC-268917||Players with increased step height can fall off blocks while sneaking|WAI}}</ref>}}
+|{{HistoryLine||1.21.2|dev=pre2|Landing on [[slime block]]s no longer deals fall damage, even when sneaking.<ref name="MC-54532">{{bug|MC-54532||Sneaking while falling on Slime Blocks inflicts fall damage|Fixed}}</ref>}}
+|{{HistoryLine||1.21.6|exp=Locator Bar|dev=25w15a|Sneaking will now hide players from the [[locator bar]].}}
+|{{HistoryLine|combat java}}
+|{{HistoryLine||1.14.3|When in the off-hand, [[shields]] now activate when sneaking.}}
+|{{HistoryLine||4|An option to disable shields being activated by pressing {{ctrl|crouch}} has been added.
+|The option to hide the shield has been removed.|[[Shields]] in the offhand are now also activated if the player is forced to sneak due to not having enough space.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.5.0|Added sneaking exclusively on the Xperia PLAY gaming console.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added sneaking on all other devices.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Sneaking can now be used to access a [[horse]], [[donkey]], or [[mule]]'s [[inventory]].
+|Sneaking is now used to dismount from [[animal]]s.}}
+|{{HistoryLine||v0.16.0|dev=build 1|The [[player]] now uses a sneaking stance when flying downward.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Sneaking can now be used to access a [[llama]]'s [[inventory]].}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Sneaking is now used to change [[armor stand]] poses.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Sneaking is now used to block with [[shield]]s.}}
+|{{HistoryLine||1.19.70|dev=Preview 1.19.70.20|Sneaking now lowers the player's hitbox to 1.5 blocks.|Entering any vertical space 1.5 or taller, but less than 1.8 [[block]]s tall initiates actual sneaking, the non-interactivity of blocks.}}
+|{{HistoryLine|||dev=Preview 1.19.70.24|Changes from 1.19.70.20 temporarily reverted.}}
+|{{HistoryLine||1.19.80|exp=Short Sneaking|dev=Preview 1.19.80.20|The player's hitbox is once again lowered to 1.5 blocks when sneaking with the "Short Sneaking" [[experimental]] toggle enabled.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.10.20|Sneak under 1.5 blocks tall is now behind the "Short Sneaking and Crawling" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.10.23|Sneak under 1.5 blocks tall is now available without the "Short Sneaking and Crawling" experimental toggle.
+|Players can now be forced into sneak state while flying.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|The player now gets forced out of sneak state when riding.}}
+|{{HistoryLine|||dev=Preview 1.20.30.21|Players can now toggle flying when sneaking in [[Creative]] mode.}}
+|{{HistoryLine||1.21.80|exp=Locator Bar|dev=Preview 1.21.80.20|Sneaking will now hide players from the [[locator bar]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added sneaking.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|The player can now place blocks, such as [[redstone dust]] or [[lever]]s, on interactable blocks while sneaking.|Sneaking is now used to get out for all transportation methods, such as [[boat]]s, [[horse]]s and [[minecart]]s.}}
+|{{HistoryLine||xbox=TU24|xbone=CU12|ps3=1.16|psvita=1.16|ps4=1.16|A smooth transition is no longer applied to the camera when the player sneaks.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Sneaking can now be used to prevent bouncing on [[slime block]]s.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Sneaking now prevents taking damage from magma blocks.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Sneaking now lowers the [[player]]'s hitbox from the normal height of 1.8 blocks to 1.65 blocks.|Players keep their smaller hitbox when stopping sneaking in spaces that they cannot fit in with the larger hitbox. Leaving that area causes the player to regain their normal hitbox.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Sneaking now now prevents drops from heights of more than 0.6 blocks; previously, it was 1 full block or greater.|Sneaking no longer increases exhaustion.|Sneaking can now be used to access a [[llama]]'s [[inventory]].}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|Sneaking is now used to change [[armor stand]] poses.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|A smooth transition is once again applied to the camera when the [[player]] sneaks.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Sneaking is now used to block with [[shield]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||0.1.0|Added sneaking.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+*While flying in [[Creative]] mode, holding the {{control|jump}} and sneak buttons simultaneously causes the player to remain at the same height.
+*{{IN|bedrock}}, the player uses a sneaking stance when flying downward. The player can also place blocks on chests, furnaces and other utility blocks in this stance, suggesting the player ''is'' actually in a sneaking mode. {{IN|java}}, the player no longer enters sneak mode when flying downward, but they still don't interact with blocks by right-clicking.
+*{{IN|bedrock}}, the player can bridge out by looking at the [[air]] block they are placing on, though it must be adjacent to an existing block. This works even if the player is not sneaking.<ref>{{ytl|Yc6xgkuCdRQ|t=4m5s}}</ref>
+**{{IN|java}}, the player must travel to the edge of the block (usually by sneaking) and look backward to place the next block.
+*If the player begins to sneak while [[sprinting]], they sneak faster than someone who sneaks without sprinting.<ref>{{bug|MC-152728}}</ref>
+**This is more noticeable when the player is wearing pants or leggings with the Swift Sneak enchantment.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Sneaking Alex (slim).png|[[Alex]]
+File:Sneaking Alex (wide).png|[[Alex]] with wide arms
+File:Sneaking Ari (wide).png|[[Ari]]
+File:Sneaking Ari (slim).png|[[Ari]] with slim arms
+File:Sneaking Efe (slim).png|[[Efe]]
+File:Sneaking Efe (wide).png|[[Efe]] with wide arms
+File:Sneaking Kai (wide).png|[[Kai]]
+File:Sneaking Kai (slim).png|[[Kai]] with slim arms
+File:Sneaking Makena (slim).png|[[Makena]]
+File:Sneaking Makena (wide).png|[[Makena]] with wide arms
+File:Sneaking Noor (slim).png|[[Noor]]
+File:Sneaking Noor (wide).png|[[Noor]] with wide arms
+File:Sneaking Steve (wide).png|[[Steve]]
+File:Sneaking Steve (slim).png|[[Steve]] with slim arms
+File:Sneaking Sunny (wide).png|[[Sunny]]
+File:Sneaking Sunny (slim).png|[[Sunny]] with slim arms
+File:Sneaking Zuri (wide).png|[[Zuri]]
+File:Sneaking Zuri (slim).png|[[Zuri]] with slim arms
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Sneaking.png|The first image of sneaking.
+Sneak Attack Sneak.png|A player sneaking under a slab at a [[pillager outpost]].
+Sneaking third person view.png|A side view of sneaking.
+</gallery>
+
+== See also ==
+*[[Crawling]]
+*[[Swimming]]
+*[[Sprinting]]
+
+== References ==
+<references />
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[Category:Transport]]
+
+[[de:Schleichen]]
+[[es:Agacharse]]
+[[fr:S'accroupir]]
+[[ja:スニーク]]
+[[ko:웅크리기]]
+[[nl:Sluipen]]
+[[pl:Skradanie]]
+[[pt:Agachar]]
+[[ru:Приседание]]
+[[uk:Присідання]]
+[[zh:潜行]]

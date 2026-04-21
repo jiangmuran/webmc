@@ -1,0 +1,399 @@
+{{about|visual effects that affect the player's [[heads-up display]]|other uses|Effect (disambiguation)}}
+{{redirect|Overlay|''Java Edition'' data and resource pack overlays|pack.mcmeta}}
+{{Page image|Pumpkin blur BE.png}}
+'''Screen effects''' encompass a variety of effects applied alongside or beneath the [[heads-up display]] as augmentations to the [[player]]'s point of view as a method of conveying further information about a player's current state. They are not to be confused with visual effects caused by the game's [[shaders]], which are applied directly in the game rendering.
+
+== Summary ==
+
+=== Overlays and vignettes ===
+{| class="wikitable" style="text-align:center;" data-description="Screen effects overview, conditions and parity issues"
+|-
+!Effect
+! {{abbr|Image|Click the image for more information}}
+! Visible in [[third-person view]]?
+! Visible with {{key|F1}}?
+|-
+| style="text-align:left;" | [[Suffocation]] inside a block
+| [[File:Inside of a block.png|64px|link=#Suffocation]]
+| {{tc|no}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | When on [[fire]]
+| [[File:On fire.png|64px|link=#On fire]]
+| {{tc|no}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | When in a [[Nether portal]]
+| [[File:Nether portal overlay.png|64px|link=#Nether portal]]
+| {{tc|partial|''[[JE]]'' only}}<ref>{{bug|MC-177524||Nether portal camera effect still applies when in third person mode|WAI}}</ref>
+| {{tc|partial|''[[BE]]'' only}}<ref>{{bug|MC-83353||Pressing F1 while in nether portal deletes purple texture.|WAI}}</ref>
+|-
+| style="text-align:left;" | When underwater
+| [[File:Underwater overlay.png|64px|link=#Underwater]]
+| {{tc|no}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | Distortion effect overlay{{only|je}}
+| [[File:Distortion overlay.png|64px|link=#Nausea sickness overlay]]
+| {{tc|yes}}
+| {{tc|yes}}<ref>{{bug|MC-196469||F1 hides the nausea green tint|Fixed}}</ref>
+|-
+| style="text-align:left;" | Darkness
+| [[File:Vignette.png|64px|link=#Darkness vignette]]
+| {{tc|yes}}
+| {{tc|no}}<ref>{{bug|MC-73730}}</ref>
+|-
+| style="text-align:left;" | When near the [[world border]]{{only|je}}
+| [[File:World border overlay.png|64px|link=#World border overlay]]
+| {{tc|yes}}
+| {{tc|no}}<ref>{{bug|MC-197123||F1 hides the world border red effect}}</ref>
+|-
+| style="text-align:left;" | When inside [[powder snow]]
+| [[File:Frozen effect.png|64px|link=#Freezing overlay]]
+| {{tc|yes}}
+| {{tc|partial|''[[BE]]'' only}}<ref>{{bug|MC-205029||The powder snow freezing overlay goes away when pressing F1|WAI}}</ref>
+|-
+| style="text-align:left;" | When wearing a [[pumpkin]]
+| [[File:Pumpkin blur.png|64px|link=#Pumpkin blur]]
+| {{tc|no}}
+| {{tc|partial|''[[BE]]'' only}}<ref>{{bug|MC-121536||The carved pumpkin overlay disappears when pressing F1|WAI}}</ref>
+|-
+| style="text-align:left;" | When using a [[spyglass]]
+| [[File:Spyglass scope.png|64px|link=#Spyglass scope]]
+| {{tc|no}}
+| {{tc|partial|''[[BE]]'' only}}<ref>{{bug|MC-203575||The spyglass overlay goes away when pressing F1|WAI}}</ref>
+|}
+
+=== Animated sprites ===
+{| class="wikitable" style="text-align:center;" data-description="Screen effects overview, conditions and parity issues"
+|-
+!Effect
+! {{abbr|Image|Click the image for more information}}
+! Visible in third-person view?
+! Visible with {{key|F1}}?
+|-
+| style="text-align:left;" | [[Totem of undying]] when used
+| align="center" | [[File:Totem of Undying Animation.gif|36px|link=#Totem of Undying]]
+| {{tc|yes}}
+| {{tc|partial|''[[BE]]'' only}}<ref>{{bug|MC-107476||Totem of undying doesn't show in F1 mode|WAI}}</ref>
+|-
+| style="text-align:left;" | [[Raid Omen]] when obtained{{only|be}}
+| [[File:Raid Omen Bedrock Animation.gif|36px|link=#Raid Omen]]
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[Hero of the Village]] when obtained{{only|be}}
+| [[File:Hero of the Village Bedrock Animation.gif|36px|link=#Hero of the Village]]
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[Elder guardian]] ghost
+| [[File:Elder guardian curse.gif|64px|link=#Mining Fatigue]]
+| {{tc|yes}}
+| {{tc|yes}}
+|}
+
+=== Visual transformations ===
+{| class="wikitable" style="text-align:center;" data-description="Screen effects overview, conditions and parity issues"
+|-
+!Effect
+! Visible in third-person view?
+! Visible with {{key|F1}}?
+|-
+| style="text-align:left;" | [[#Damage tilt|Screen tilting when damaged]]
+| {{tc|yes}}<ref>{{bug|MC-214654}}</ref>
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[#View bobbing|View bobbing]]
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[#Distortion effects|Distortion effects]]
+| {{tc|yes}}<ref>{{bug|MC-214655}}</ref>
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[#FOV based changes|FOV based changes]]
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+| style="text-align:left;" | [[Screen effects#Camera shake|Camera shake]]
+| {{tc|yes}}
+| {{tc|yes}}
+|-
+|}
+
+== Overlays ==
+
+=== Suffocation ===
+{{Infobox screen effect
+|title=Suffocation overlay
+|image=Inside of a block.png
+|camera=No
+|hud=Yes
+|graphics=All{{needs testing|java=1}}
+|options=None
+|image2=Suffocation overlay BE.png}}
+{{conjecture|section=1}}
+This effect manifests when an applicable mob or player's eye level intersects specific [[block]]s; generally those that are full solid cubes and block both vision and movement, with the exception of [[ice]].
+
+{{IN|je}} this effect involves a darkened version of the block texture covering the entire area of the screen.
+
+{{IN|be}}, the block's texture is instead arranged into a cube around the player in which the camera can move. This is the case regardless of the player's placement inside the block; the player can be at the edge of it (such that the player's view is partially outside it and the outside texture is clearly visible) and the player can still be rendered as if at the exact center of the cube.
+{{-}}
+=== On fire ===
+{{Infobox screen effect
+|title=Fire overlay
+|image=On fire.png
+|camera=No
+|hud=Yes
+|graphics=All{{needs testing|java=1}}
+|options=None
+|image2=On fire overlay BE.png}}
+{{conjecture|section=1}}
+When the player is on [[fire]], this animated effect is applied to the screen. This is caused by being inside of [[fire]] or [[lava]] (even in [[Creative]] mode, although not in [[Spectator]]), after exiting such a block (except in Creative/Spectator), or being set on fire through the attack of a burning mob or a burning arrow.
+
+This overlay always displays as [[fire]], even if the player in question is inside of soul fire.
+
+{{IN|Java}} this effect involves two intersecting texture planes being rendered across the bottom half of the screen with the fire texture.
+
+{{IN|Bedrock}}, the fire texture is rendered as a cubemap around the player with only the front and a small part of the sides visible.
+{{-}}
+=== Nether portal ===
+{{Infobox screen effect
+|title=Nether Portal overlay
+|image=Nether portal overlay.png
+|camera={{jebe|Yes|No}}
+|hud={{jebe|No|Yes}}
+|graphics=All{{needs testing|java=1}}
+|options=None
+|image2=Nether portal overlay BE.png}}
+{{conjecture|section=1}}
+''Note: this section discusses the Nether portal texture overlay. The Nether portal/nausea wobble effect effect is discussed in the Distortion effect/Nausea sickness overlay sections.''
+
+When the player is inside of a [[Nether portal]], this effect is applied to the screen. It always coincides with either the distortion effect and/or its overlay.
+
+{{IN|je}} this effect involves the [[Nether portal]] texture being stretched across the entirety of the screen.
+
+{{IN|be}}, the texture is instead arranged into a cube around the player in which the camera can move.
+{{-}}
+
+=== Underwater ===
+{{Infobox screen effect
+|title=Underwater overlay
+|image=Underwater overlay.png
+|camera=No
+|hud=Yes
+|graphics={{needs testing}}
+|options=None
+}}
+{{Expand section}}
+The underwater effect is a blue vignette.
+{{-}}
+=== Nausea sickness overlay ===
+{{Infobox screen effect
+|title=Nausea sickness overlay
+|image=Distortion overlay.png
+|camera=Yes
+|hud=Yes
+|graphics={{needs testing}}
+|options=Settings
+}}
+{{Exclusive|Java|section=1}}
+This effect is a green vignette.
+
+This effect appears only when the player has [[Nausea]], and the distortion effect is set to 0%. The effect becomes more transparent as the slider is turned up, until 100% distortion, in which it disappears.
+{{-}}
+
+=== Darkness vignette ===
+{{Infobox screen effect
+|title=Darkness vignette
+|image=Vignette.png
+|image2=Vignette BE.png
+|camera=Yes
+|hud=No
+|graphics=Fancy Minimum<ref>{{bug|MC-241321}}</ref>
+|options=None
+}}
+This effect is a black circular blur at the corners. This effect is similar to a regular vignette. This effect appears usually in [[cave]]s; however, it can appear in any dark place. It also appears when players are inside the structure of [[trial chamber]]s.
+
+In ''Bedrock Edition'', the vignette gradually fades in as the [[sky]] darkens below Y=32, and at Y=-12, it suddenly turns into it's full opacity.
+{{-}}
+
+=== World border overlay ===
+{{Infobox screen effect
+|title=World border overlay
+|image=World border overlay.png
+|camera=Yes
+|hud=No
+|graphics=Fancy Minimum<ref>{{bug|MC-54988}}</ref>
+|options=None
+}}
+{{Exclusive|Java|section=1}}
+The [[world border]] effect is a red vignette. This effect becomes more intense as the player moves closer to the world border. The effect reaches its maximum strength when the player goes past the world border.
+{{-}}
+=== Freezing overlay ===
+{{Infobox screen effect
+|title=Freezing overlay 
+|image=Frozen effect.png
+|camera=Yes
+|hud={{Jebe|Yes|No}}
+|graphics=All{{needs testing|java=1}}
+|options=None
+}}
+The freezing overlay is a circular formation of crystals and snow flakes that appears when the player is freezing in [[powder snow]]. This effect slowly fades in until it is at full opacity.
+
+If the player equips leather armor while freezing, this overlay fades out slowly, then disappears.
+{{-}}
+=== Pumpkin blur ===
+{{Infobox screen effect
+|title=Carved pumpkin blur
+|image=Pumpkin blur.png
+|camera=No
+|hud={{Jebe|No|Yes}}
+|graphics=All
+|options=None
+|image2=Pumpkin blur BE.png}}
+The pumpkin blur is a cut-out shape of the carved pumpkin's face that appears when wearing a [[carved pumpkin]]. {{IN|je}}, the texture is stretched to the edges of the screen; {{In|be}}, the texture is placed in the middle of the screen, with dark edges filling the rest.
+{{-}}
+=== Spyglass scope ===
+{{Infobox screen effect
+|title=Spyglass scope
+|image=Spyglass scope.png
+|camera=No
+|hud={{Jebe|No|Yes}}
+|graphics=All
+|options=None
+}}
+The spyglass scope is a brown square in the middle of the screen that appears when using a [[spyglass]]. This scope effect quickly zooms in when using a spyglass, until the top and bottom are partly covered.
+{{-}}
+
+== Animated sprites and models ==
+
+=== Mining Fatigue ===
+{{Infobox screen effect
+|title=Elder Guardian ghost
+|image=Elder guardian curse.gif
+|camera=Yes
+|hud=Yes
+|graphics=No
+|options=None
+|image2=ElderGuardianCurseBedrock.gif}}
+{{conjecture|section=1}}
+When within a spherical radius of 50 blocks of an [[elder guardian]], the player is inflicted with [[Mining Fatigue]] III. This is indicated by a ghost of an elder guardian appearing in the player's view, which moves from the top of the screen to the bottom.
+
+{{IN|Java}}, this occurrence is considered a particle effect; it can be summoned with the {{cmd|particle minecraft:elder_guardian}} command.
+
+{{IN|Bedrock}}, this occurrence is caused by a separate mob called the [[Elder Guardian Ghost|elder guardian ghost]]. However, when it is summoned using {{cmd|summon
+minecraft:elder_guardian_ghost}}, it is invisible and rises to the sky.
+
+The model of the elder guardian is used for this effect. This means that changing the texture and model associated with the elder guardian also changes what appears on the player's screen.
+{{-}}
+
+=== Totem of Undying ===
+{{Infobox screen effect|title=Totem of Undying|image=Totem of Undying Animation.gif|camera=Yes|hud={{jebe|No|Yes}}|image2=Totem of Undying Bedrock Animation.gif}}The effect appears when a [[Totem of Undying|totem of undying]] is used. The totem spins to the middle of the screen and disappears. 
+{{IN|Java}}, the totem of undying effect is a full 3D model. 
+{{IN|Bedrock}}, the totem of undying effect is a 2D texture.
+{{-}}
+
+=== Hero of the Village ===
+{{Infobox screen effect|title=Hero of the Village|image=Hero of the Village Bedrock Animation.gif|camera=Yes|hud=Yes}}
+{{exclusive|bedrock|section=1}}
+This effect appears when the player obtains [[Hero of the Village]] from defeating a [[raid]]. This effect does not happen when the effect is given through commands. It is similar to the totem of undying effect.
+{{-}}
+=== Raid Omen ===
+{{Infobox screen effect|title=Raid Omen|image=Raid Omen Bedrock Animation.gif|camera=Yes|hud=Yes}}
+{{exclusive|Bedrock|section=1}}
+This screen effect appears when the player enters a village while under the [[Bad Omen]] effect, converting it into [[Raid Omen]]. This effect does not appear when giving Raid Omen through commands, and it looks similar to the totem of undying effect.
+{{-}}
+
+==Transformations==
+
+===Damage tilt===
+[[File:Damage tilt.png|thumb|Damage tilt effect]]
+{{IN|Java}}, when the player receives damage, the screen tilts to the direction opposite of the entity or block who damaged the player. 
+
+{{IN|Bedrock}}, when the player receives damage, the screen tilts to the right regardless of the damage direction.
+
+The strength of damage tilting can be adjusted in the settings.
+
+===View bobbing===
+View bobbing is a toggleable feature that adds a slight movement of the screen from left to right when walking. It also affects items and blocks in the player's hand.
+
+===Distortion effects===
+These effects are seen when the player either goes through a nether portal or has the nausea status effect. Different levels do not affect the distortion. However, the effect can be affected by changing the distortion effect setting.{{Only|Java}}
+
+===FOV based changes===
+While sprinting, flying, swimming or while affected by a speed effect, the FOV (field of view) increases. The FOV decreases when being affected by the slowness effect, while using a spyglass, by using a bow, or by going into water or powder snow. The FOV can be changed in settings with a minimum of 30, and a maximum of 110. Different levels of slowness or speed affect the FOV more than others.
+
+FOV effects can be toggled in the settings.
+
+=== Camera shake ===
+{{Exclusive|bedrock|section=1}}
+With the {{Cmd|camerashake}} command, a player's camera can perform a shaking effect. This can be either positional (shaking the camera position) or rotational (shaking the camera direction). The effect can be disabled in the settings.<gallery>
+File:Minecraft_Bedrock_Positional_Camerashake.gif|Example of a positional camera shake
+File:Minecraft_Bedrock_Rotational_Camerashake.gif|Example of a rotational camera shake
+</gallery>
+
+== History ==
+{{Expand section}}
+
+=== Overlays ===
+{{empty section}}
+
+=== Animated sprites ===
+==== ''Java Edition'' ====
+{{more images|section=1|the appearence of the elder guardian effect changed in 1.15; before then, the internal spikes were not visible}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w27a|Added elder guardian curse screen effect.[[File:Elder guardian curse.gif|64px]]}}
+|{{HistoryLine||1.11|dev=16w39a|Added totem of undying screen effect.{{info needed|A GIF of the animation with the old texture.}}}}
+|{{HistoryLine||1.14|dev=18w43a|Changed totem of undying screen effect to [[File:Totem of Undying Animation.gif|64x64px]].}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|Pocket}}
+|{{HistoryLine||?|Added elder guardian curse screen effect[[File:Elder guardian curse.gif|64px]]}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0 |Added totem of undying screen effect.}}
+|{{HistoryLine|Bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Changed totem of undying screen effect to [[File:Totem of Undying Bedrock Animation.gif|64x64px]]}}
+|{{HistoryLine|||dev=beta 1.11.0.7|[[File:Bad Omen Bedrock Animation.gif|64x64px]] A screen effect now plays when a player obtains Bad Omen.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.7|[[File:Hero of the Village Bedrock Animation.gif|64px]]A screen effect now plays when a player gets Hero of the Village.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.4|Added the elder guardian ghost effect, replacing the original elder guardian curse screen effect.{{Verify}}}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.24|Removed the sceen effect that appears when Bad Omen is obtained.}}
+|{{HistoryLine||?|Re-added the screen effect that appears when Bad Omen is obtained.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.20|Replaced Bad Omen screen effect with Raid Omen screen effect.[[File:Raid Omen Bedrock Animation.gif|64x64px]]|If a world was imported from the [[Marketplace]], then the Bad Omen screen effect would look like this:[[File:Bad Omen Bedrock Animation (1.21 icon).gif|64x64px]]}}
+}}
+
+==== Legacy Console Edition ====
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Added elder guardian curse screen effect.[[File:Elder guardian curse.gif|64px]]}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Added totem of undying screen effect.{{info needed|A GIF of the animation with the old texture. Animation looks like Java Edition.}}}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|A screen effect now plays when a player obtains [[Bad Omen]].{{info needed|GIF/Video should be added, since it looks different from bedrock.}}|A screen effect now plays when a player gets [[Hero of the Village]].{{info needed|GIF/Video should be added, since it looks different from bedrock.}}}}
+}}
+
+=== Transformations ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|Taking damage caused the player's screen to tilt toward the damage source. Environmental damage sources, such as fall damage, randomly tilt the player's screen left or right.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.2.3|The directional damage tilt animation does not work properly in multiplayer, instead always tilting the player's screen left.}}
+|{{HistoryLine|Java}}|{{HistoryLine||1.19.4|dev=23w03a|Taking damage once again causes the player's screen to tilt toward the damage source. However, the random  tilt when taking environmental damage is broken, instead tilting the player's screen in the last direction the player was hit from.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|In singleplayer and for the host in multiplayer, taking damage tilts the player's screen toward the damage source. For joining players the screen always tilts left.}}|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=?|Taking damage no longer causes the player's screen to tilt toward the damage source, instead always tilting left.}}
+}}
+
+==References==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[ja:画面効果]]

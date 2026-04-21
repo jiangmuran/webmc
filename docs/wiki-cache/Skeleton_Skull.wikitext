@@ -1,0 +1,323 @@
+{{Infobox block
+| transparent = Yes
+| light = No
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| waterloggable = {{jebe|No|Yes}}
+| rarity = Uncommon
+}}
+A '''skeleton skull''' is the [[head]] of a [[skeleton]] in the form of a [[block]]. It can be obtained from [[ancient cities]] or by killing a skeleton using a [[charged creeper]]'s [[explosion]].
+
+== Obtaining ==
+=== Breaking ===
+No tool can accelerate the breaking process of skeleton skull.<ref>{{bug|MC-192905||Heads & Skulls have no assigned tool}}</ref>
+{{breaking row|horizontal=1|Skeleton Skull}}
+Skeleton skull drops itself when it's destroyed.
+When destroyed by an [[explosion]], the skeleton skull always drops as an item.
+
+=== Natural generation ===
+Skeleton skulls can generate in [[ancient cities]], which sometimes generate in the [[deep dark]].
+
+=== Mob loot ===
+Skeleton heads are always dropped by a [[skeleton]] if it dies due to a [[charged creeper]]'s explosion. {{IN|bedrock}}, if multiple mobs are killed by the same charged creeper, all of them drop their heads, however {{in|java}} only one mob selected at random drops its head.<ref>{{bug|MC-63534|||WAI}}</ref>
+
+== Usage ==
+=== Decoration ===
+A skeleton skull can be oriented in 16 different directions on top of a block, and 4 directions on the sides of blocks, similar to [[sign]]s. They can be placed on top of, or beside each other by shift clicking.
+
+=== Wearing ===
+{{See also|#Renders}}
+
+The player can wear skeleton skulls, similarly to [[pumpkin]]s or helmets. This overlays the second layer of the player's [[skin]].
+
+==== Disguise ====
+Wearing a skeleton skull reduces the detection range for [[skeleton]]s. This is similar to (and stacks with) the reductions in detection range from [[sneaking]] and from the [[Invisibility]] status effect.
+
+{{IN|bedrock}}, wearing a skeleton skull makes the player invisible to other players on a locator [[map]].
+
+=== Dispensers ===
+A [[dispenser]] can equip a skeleton skull on a player, mob, or [[armor stand]] with an empty helmet slot, within the block the dispenser is facing.
+
+=== Crafting ingredient===
+{{Crafting
+  |ignoreusage=1
+  |ingredients='''Skeleton skull''' +<br>[[Gunpowder]] +<br>Any [[Dye]]
+  |Gunpowder
+  |Skeleton Skull
+  |Matching Dye
+  |Output= Matching Firework Star
+  |description=Forms Creeper shape
+  |foot=1
+}}
+
+=== Enchantments ===
+Skeleton skulls can receive the following enchantments, but only through an [[anvil]].
+{| class="wikitable col-2-center col-3-right"
+|+
+!Name
+!Max level
+![[Enchanting|Method]]
+|-
+|[[Curse of Binding]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|[[Curse of Vanishing]]
+|I
+|{{BlockLink|Anvil}}
+|-
+|}
+
+=== Note blocks ===
+Placing a skeleton skull above a [[note block]] causes the note block to play the [[skeleton]]'s {{cd|ambient}} sound when activated.
+
+The block below the note block does not affect the mob sound it creates.
+
+=== Piston interactivity ===
+Skeleton skull is destroyed when the [[piston]] tries to push it. It can't be pulled by the [[sticky piston]].
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Skeleton idle1.ogg
+|sound2=Skeleton idle2.ogg
+|sound3=Skeleton idle3.ogg
+|subtitle=Skeleton rattles
+|source=record
+|description=When a skeleton skull is played using a note block
+|id=block.note_block.imitate.skeleton
+|translationkey=subtitles.entity.skeleton.ambient
+|volume=3.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|subtitle=Gear equips
+|source=player
+|description=When a skeleton skull is equipped
+|id=item.armor.equip_generic
+|translationkey=subtitles.item.armor.equip
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+<!--volumes and pitches seem to be approximately v=0.9 p=0.84, but those values are approximate and are not in the files. They are probably inside of the code.-->
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Skeleton step1.ogg
+|sound2=Skeleton step2.ogg
+|sound3=Skeleton step3.ogg
+|sound4=Skeleton step4.ogg
+|source=record
+|description=When a skeleton skull is played using a note block<wbr><ref group=sound name=skeletoncreeper>{{Bug|MCPE-164530}}</ref>
+|id=note.skeleton
+|pitch=0.84 <ref group=sound name=pitch>Actually equal to <math>\frac{1}{\sqrt[4]{2}}</math>, which is about 0.8409</ref>}}
+| {{SoundLine
+|sound=Equip generic1.ogg
+|sound2=Equip generic2.ogg
+|sound3=Equip generic3.ogg
+|sound4=Equip generic4.ogg
+|sound5=Equip generic5.ogg
+|sound6=Equip generic6.ogg
+|source=player
+|description=When a skeleton skull is equipped
+|id=armor.equip_generic
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showitemtags=y
+|generatetranslationkeys=y
+|displayname=Skeleton Skull
+|spritetype=block
+|nameid=skeleton_skull
+|itemtags=skulls}}
+{{ID table
+|displayname=Skeleton Wall Skull
+|spritetype=block
+|nameid=skeleton_wall_skull
+|form=block
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=skeleton-skull
+|spritetype=block
+|nameid=skull
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Skeleton Skull
+|spritetype=block
+|nameid=skeleton_skull
+|aliasid=skull / 0
+|id=144
+|translationkey=item.skull.skeleton.name
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=skeleton-skull
+|spritetype=block
+|nameid=Skull
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Head|block states}}
+
+=== Block data ===
+A skeleton skull has a block entity associated with it that holds additional data about the block.
+
+{{el|java}}:
+{{see also|Block entity format}}
+{{#lst:Head|block data}}
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Achievements ==
+{{load achievements|Camouflage}}
+
+== History ==
+{{See asset history|type=block}}
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||August 28, 2012|link={{tweet|jeb|240383066831462401}}|[[Jeb]] released images of the skeleton head, hinting of more types to come.}}
+|{{HistoryLine||PAX 2012|link={{ytl|IqciEbjYd-I|t=03m21s}}|At [[wikipedia:PAX (event)|PAX]], [[Dinnerbone]] revealed that there would be rare [[drops]] of these [[mob]]s.<ref>http://www.twitch.tv/pax2/b/330745811 (at 3:59:00)</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w36a|[[File:Skeleton_Skull_(S)_JE1.png|32px]][[File:Skeleton Skull (item) JE1.png|32px]] Added skeleton skulls, obtainable only from the [[Creative inventory]].}}
+|{{HistoryLine|||dev=12w37a|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] Changed item textures.}}
+|{{HistoryLine||1.4.6|dev=12w49a|Skeleton skulls can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||1.8|dev=14w29a|Heads now display a cracking animation.}}
+|{{HistoryLine|||dev=14w30a|[[File:Skeleton Skull (item) JE2.png|32px]] Skeleton skulls in [[inventories]] and held by mobs/players now display as [[block]]s. 
+|Skulls worn by [[mob]]s and [[player]]s are now displayed on the armor layer. Previously, the skull replaced the mob/player's head texture; the hat layer appeared over the skull.
+|Skeleton skulls are now available in [[survival]]. The player can obtain them by killing a [[skeleton]] with a [[charged creeper]].}}
+|{{HistoryLine|||dev=14w30b|A single charged creeper explosion no longer yields more than one mob head. The mob head that drops is chosen randomly.}}
+|{{HistoryLine||1.9|dev=15w31a|Skeleton skulls now appear larger in the [[inventory]].}}
+|{{HistoryLine|||dev=15w32a|Skeleton skulls can now be worn to reduce detection by the corresponding mobs by 50%.}}
+|{{HistoryLine|||dev=15w33c|The disguise that is given by mob heads now reduces detection range to 37.5% of normal.}}
+|{{HistoryLine|||dev=15w36a|The disguise that is given by mob heads now reduces detection range to 50% of normal again.}}
+|{{HistoryLine|||dev=15w39a|[[Dispenser]]s can now equip skeleton skulls onto [[player]]s, [[mob]]s and [[armor stand]]s.}}
+|{{HistoryLine|||dev=15w49a|Skeleton skulls no longer turn red when the player or mob takes damage.<ref>{{bug|MC-85756}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|Skeleton skulls now play a sound when placed.
+|Skeleton skulls can no longer be placed inside entities.<ref>{{bug|MC-2208}}</ref>}}
+|{{HistoryLine|||dev=18w21a|The rarity of skeleton skulls has been changed from "Common" to "Uncommon".}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Skeleton skulls now generate as part of [[ancient cities]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w03a|Skeleton skulls can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.19.4|dev=23w05a|Skeleton skulls can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.<ref>{{bug|MC-216270|||Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] Added skeleton skulls.
+|The skeleton skull uses the [[Java]] texture prior to [[14w30a]].}}
+|{{HistoryLine||v0.14.0|dev=build 1|Skeleton skulls can now be worn as armor.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Skeleton skulls can now be used to craft [[firework star]]s.}}
+|{{HistoryLine|||dev=beta 1.2.0.11|[[File:Skeleton Skull (item) BE2.png|32px]] Skeleton skulls in [[inventories]] and when held by mobs/players now display as [[block]]s.}}
+|{{HistoryLine||1.19.60|exp=Next Major Update|dev=Preview 1.19.60.25|Heads can now be placed on top of note blocks without sneaking.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|The rarity of skeleton skulls has been changed from "Common" to "Uncommon" to match {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] Added skeleton skulls to the [[Creative inventory]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Skeleton skulls can now be used to [[craft]] a [[firework star]] with [[creeper]]-face effect.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|[[File:Skeleton Skull (item) JE2.png|32px]] Skeleton skulls in [[inventories]] and held by mobs/players now display as [[block]]s.|Skeleton skulls are now available in [[Survival]]. The [[player]] can obtain them by killing a [[skeleton]] with a [[charged creeper]].}}
+|{{HistoryLine||xbox=TU34|xbone=CU22|ps3=1.25|psvita=1.25|ps4=1.25|wiiu=Patch 4|Skeleton skulls can now be swapped with other pieces of headgear in the ''head'' [[inventory]] slot by {{ctrl|using}} them.}}
+|{{HistoryLine||xbox=TU49|xbone=CU39|ps3=1.42|psvita=1.42|ps4=1.42|wiiu=Patch 18|switch=1.0.1|Skeleton skulls are now held the same way as on ''Java Edition'' in first person.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Skeleton Skull (item) JE1 BE1.png|32px]] Added skeleton skulls.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.40|dev=Preview 1.21.40.20|The separate and direct item forms of the <code>skull</code> block ID have been merged and its [[Bedrock Edition data values|data values]] have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Skeleton skulls do not have their own textures and take their textures from other objects.
+* When [[breaking]] a skeleton skull, the particle effect of breaking it is the same as [[soul sand]].
+* {{IN|be}}, the skull variant for the item is stored under the {{cd|damage}} component, normally used for items with [[durability]].
+
+== Gallery ==
+=== Renders ===
+<gallery>
+File:Alex wearing Skeleton Skull.png|[[Alex]] wearing a skeleton skull.
+File:Ari wearing Skeleton Skull.png|[[Ari]] wearing a skeleton skull.
+File:Efe wearing Skeleton Skull.png|[[Efe]] wearing a skeleton skull.
+File:Kai wearing Skeleton Skull.png|[[Kai]] wearing a skeleton skull.
+File:Makena wearing Skeleton Skull.png|[[Makena]] wearing a skeleton skull.
+File:Noor wearing Skeleton Skull.png|[[Noor]] wearing a skeleton skull.
+File:Steve wearing Skeleton Skull.png|[[Player|Steve]] wearing a skeleton skull.
+File:Sunny wearing Skeleton Skull.png|[[Sunny]] wearing a skeleton skull.
+File:Zuri wearing Skeleton Skull.png|[[Zuri]] wearing a skeleton skull.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Three Skulls.png|[[Kai]] wearing a skull, near a skull, near a skeleton, in an ancient city.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+{{Navbox combat|armor}}
+
+[[Category:Utility blocks]]
+[[Category:Createable blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Block entities]]
+
+[[es:Cabeza#Esqueleto]]
+[[ko:스켈레톤 해골]]
+[[pt:Crânio de Esqueleto]]
+[[zh:骷髅头颅]]

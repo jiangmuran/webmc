@@ -1,0 +1,209 @@
+{{Infobox block
+| image = Stone Button.png
+| transparent = Yes
+| light = No
+| tool = Pickaxe
+| waterloggable = {{jebe|No|Yes}}
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+A '''stone button''' is a variant of the [[button]], a [[non-solid block]] that produces a temporary [[redstone]] signal when pressed by a [[player]] or when hit by a [[Wind Charge|wind charge]].
+
+== Obtaining ==
+=== Breaking ===
+A stone button is most easily broken with a [[pickaxe]]. It drops itself as an item when broken using any [[tool]].
+{{breaking row
+|horizontal=1
+|Stone Button
+|Pickaxe
+|link=none}}
+
+A button is removed and drops as an item if:
+* its attachment block is moved, removed, or destroyed.
+* [[water]] or [[lava]] flows into its space.{{only|java}}
+* a [[piston]] tries to push it or moves a block into its space.
+
+=== Natural generation ===
+Stone buttons are naturally generated in [[stronghold]]s, next to iron doors.{{only|java|short=yes}}
+
+Stone buttons also generate in [[desert]] [[village]]s, in armorer houses attached to granite, as well as in [[trial chambers]].
+
+=== Crafting ===
+{{Crafting
+|Stone
+|Output=Stone Button
+|type=Redstone
+}}
+
+== Usage ==
+{{see also|Redstone circuit}}
+
+=== Placement ===
+Buttons can be placed by {{control|using}} it on a surface.
+
+They can be attached to the side, bottom and top of any full opaque block.
+
+If placed on the top or bottom of a block, the button can face any direction.{{only|java}}
+
+It can also be attached to the top of a fence {{in|be}}.
+
+More information about placement on transparent blocks can be found at [[Opacity/Placement]].
+
+=== Redstone power ===
+A button can be used as a [[monostable]] redstone [[Redstone components#Power components|power source]] (it automatically deactivates shortly after being activated).
+
+Buttons are usually in an inactive state, but can be temporarily activated by players. A stone button is activated by a player {{control|using}} it or when hit by a wind charge. [[Mob]]s cannot activate buttons directly.
+
+When activated, a stone button remains active for {{convert|1|second|redstone tick|game tick}}.
+
+While active, a button:
+* powers any adjacent [[redstone dust]] to [[Redstone circuit#Power|power level]] 15, including beneath the button
+* powers any adjacent [[redstone comparator]]s or [[redstone repeater]]s facing away from the button to power level 15
+* strongly powers its attachment block to power level 15
+* activates any adjacent [[Redstone components#Mechanism components|mechanism components]], including above or below, such as [[piston]]s, [[redstone lamp]]s, etc.
+
+When a button changes state it provides a [[Redstone circuit#Redstone update|redstone update]] to all redstone components adjacent to itself (including above and below), and to all redstone components adjacent to its attachment block.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Stone}}
+
+=== Unique ===
+{{:Stone Button/Sounds|a stone button}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Stone Button
+|spritetype=block
+|nameid=stone_button
+|blocktags=buttons
+|itemtags=buttons
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Stone Button
+|spritetype=block
+|nameid=stone_button
+|id=77
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{#lst:Button|block states}}
+
+== Videos ==
+{{yt|n7BP3NDpHtA}}
+
+== History ==
+{{expand section|when the pitch of the sound of the button being pressed in was changed in Java Edition?}}
+{{info needed section|{{bug|MC-8522}}}}<!--- all buttons are ordered with wood before stone types--->
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.1|[[File:Stone Wall Button (N) JE1.png|32px]] [[File:Stone Wall Button (E) JE1.png|32px]] [[File:Stone Wall Button (S) JE1.png|32px]] [[File:Stone Wall Button (W) JE1.png|32px]]<br>[[File:Powered Stone Wall Button (N) JE1.png|32px]] [[File:Powered Stone Wall Button (E) JE1.png|32px]] [[File:Powered Stone Wall Button (S) JE1.png|32px]] [[File:Powered Stone Wall Button (W) JE1.png|32px]]<br>[[File:Stone Button (item) JE1.png|32px]] Added buttons, which can be placed on the sides of blocks.
+|This was the recipe used at the time:
+{{Collapse|title=Recipe|content=
+{{Crafting Table
+|B2= Stone
+|B3= Stone
+|Output= Button
+|ignoreusage=1
+}}
+}}
+}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Dropped button items no longer appear abnormally large.|Buttons now generate next to iron doors in [[stronghold]]s.{{check version}}}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 5|[[File:Stone Wall Button (N) JE2.png|32px]] [[File:Stone Wall Button (E) JE2.png|32px]] [[File:Stone Wall Button (S) JE2.png|32px]] [[File:Stone Wall Button (W) JE2.png|32px]]<br>The texture of stone has been changed, which changes the edges of unpressed buttons.}}
+|{{HistoryLine||1.4.2|dev=12w34b|The crafting recipe for buttons has been changed.
+{{Collapse|title=Recipe|content=
+<div style="display:inline-block">{{Crafting Table
+ |B2= Stone
+ |Output= Button
+ }}</div>
+}}
+}}
+|{{HistoryLine|||dev=12w37a|The [[redstone]] signal duration of the button has been changed from 9 to 12 redstone ticks.}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Stone Floor Button (N) JE1.png|32px]] [[File:Stone Ceiling Button (N) JE1.png|32px]]<br>[[File:Powered Stone Floor Button (N) JE1.png|32px]] [[File:Powered Stone Ceiling Button (N) JE1.png|32px]]<br>Buttons are now able to be placed on the top and bottom of [[block]]s, and can currently only face north.}}
+|{{HistoryLine|||dev=14w10a|[[File:Stone Floor Button (N) JE2.png|32px]]<br>[[File:Stone Wall Button (N) JE3.png|32px]] [[File:Stone Wall Button (E) JE3.png|32px]] [[File:Stone Wall Button (S) JE3.png|32px]] [[File:Stone Wall Button (W) JE3.png|32px]]<br>[[File:Stone Ceiling Button (N) JE2.png|32px]]<br>[[File:Powered Stone Floor Button (N) JE2.png|32px]]<br>[[File:Powered Stone Wall Button (N) JE2.png|32px]] [[File:Powered Stone Wall Button (E) JE2.png|32px]] [[File:Powered Stone Wall Button (S) JE2.png|32px]] [[File:Powered Stone Wall Button (W) JE2.png|32px]]<br>[[File:Powered Stone Ceiling Button (N) JE2.png|32px]]<br> [[File:Stone Button (item) JE2.png|32px]] The models of buttons have been changed.}}
+|{{HistoryLine||1.9|dev=15w46a|[[Mob]]s no longer spawn on buttons.}}
+|{{HistoryLine|||dev=16w02a|Buttons are broken more easily with [[pickaxe]]s.}}
+|{{HistoryLine||1.13|dev=17w47a|Buttons can no longer be placed on top of [[piston]]s.
+|Buttons can now be placed in all 4 rotations on the top and bottom of a [[block]].
+|Renamed "Button" to "Stone Button".}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Stone Button (S) JE4.png|32px]] The textures of stone buttons has been changed.}}
+|{{HistoryLine|||dev=18w44a|[[File:Stone Button (S) JE5 BE2.png|32px]] The texture of stone buttons has been changed, once again.}}
+|{{HistoryLine||1.20|dev=23w14a|[[File:Stone Button JE6.png|32px]] UV texture map of stone button has been changed, the front texture of stone button is no longer mirrored up and down.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Stone buttons now generate in [[trial chambers]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Stone Button (item) JE2.png|32px]] Added buttons.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=1.2.20.1|The stone button has been renamed to "Stone Button".}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Stone Button (S) JE5 BE2.png|32px]] The textures of buttons have been changed.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Stone buttons now generate in [[trial chambers]].}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Stone buttons no longer require a pickaxe to drop themselves and are faster to mine with any improper tool.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Stone Button (item) JE1.png|32px]] Added stone buttons.}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Stone buttons now generate next to iron doors in [[stronghold]]s.}}
+|{{HistoryLine||xbox=TU9|The [[crafting]] recipe for stone buttons has been changed.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Buttons are now able to be placed on the top and bottom of [[block]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Stone Button.png|32px]] The textures of stone buttons has been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Stone Button (item) JE2.png|32px]] Added buttons.}}
+}}
+
+<gallery>
+Ceiling Button.png|First image of a button on a ceiling.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 77.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+
+[[fr:Bouton en pierre]]
+[[ja:石のボタン]]
+[[ko:돌 버튼]]
+[[pt:Botão de Pedra]]
+[[uk:Кам'яна кнопка]]
+[[zh:石头按钮]]

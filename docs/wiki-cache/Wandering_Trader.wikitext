@@ -1,0 +1,683 @@
+{{About|the mob in {{MC}}|the entity in {{MCD}}|Dungeons:Wandering Trader|the entity in {{AMCM}}|Movie:Wandering Trader}}{{Infobox entity
+| image = Wandering Trader.png
+| imagesize = x272px
+| invimage = Wandering Trader Spawn Egg
+| health = {{hp|20}}
+| behavior = Passive
+| size = '''{{IN|Java}}:'''<br>
+Height: 1.95 blocks<br>Width: 0.6 blocks<br>
+'''{{IN|Bedrock}}:'''<br>
+Height: 1.9 blocks<br>Width: 0.6 blocks
+| speed = 0.7
+| spawn = See {{slink||Spawning}}
+| additional_rows =
+{{Infobox row|Buys|
+* {{BlockLink|Hay Bale}}
+* {{ItemLink|Water Bottle}}
+* {{ItemLink|Baked Potato}}
+* {{ItemLink|Milk Bucket}}
+* {{ItemLink|Water Bucket}}
+* {{ItemLink|Fermented Spider Eye}}
+}}
+{{Infobox row|Sells|
+* {{ItemLink|Potion of Invisibility}}
+* {{ItemLink|Iron Pickaxe|text=Enchanted Iron Pickaxe}}
+* Nature blocks and items, including:
+** {{BlockLink|Logs}}
+** {{BlockLink|Flowers}}
+** {{ItemLink|Seeds}}
+** {{ItemLink|Dyes}}
+** {{BlockLink|Coral Blocks}}
+** {{BlockLink|Saplings}}
+}}
+}}
+
+A '''wandering trader''' is a [[passive mob]] similar to [[villager]]s that sometimes spawns near [[player]]s, alongside two [[trader llama]]s tied to it with [[lead]]s. It can be [[trade]]d with, buying commonly available resources and selling [[item]]s mostly native to specific [[biome]]s. Its trades are randomized each time it spawns, and it will despawn after enough time has passed.
+
+== Spawning ==
+Wandering traders spawn randomly with two leashed trader llamas in the [[Overworld]] near the player, in any biome except in [[the void]] biome, controlled by the {{cd|#minecraft:without_wandering_trader_spawns}} biome tag {{in|JE}}. They typically spawn within a 48-block radius of a player. {{IN|bedrock}}, they also try to spawn by a claimed [[bell]] in a [[village]]. 
+
+When the world is created (or updated from an older version), a counter is initialized to 24000 [[tick]]s (20 real-life minutes, or 1 Minecraft day). Each minute (1200 ticks), if {{gmr|spawn_wandering_traders}} is set to {{code|true}},{{only|java}} the counter is decreased by 1200. When the counter reaches 0 it is reset to 24000 and an attempt may be made to spawn a wandering trader, unless the game rule {{gmr|spawn_mobs|domobspawning}} is set to {{code|false}}.
+
+When the counter is equal to 0 or lower for the first time, there is a 25% chance of making the attempt, which increases to 50% the second time and 75% thereafter until a trader is spawned, or no player is found for the attempt, where it will then be reset to 25%. If a player is found, then there is a 10% chance for a wandering trader to spawn. In summary, when the counter is equal to 0 or lower, the total chance that a trader will spawn will be either 2.5%, 5%, or 7.5% depending on the above conditions.
+
+When attempting a spawn, a random player is selected as the target location. If there is a [[bell]] within 48 blocks of the player, then the nearest such bell is used as the target location instead. Ten attempts are then made to find a valid mob spawning location. This is made on the uppermost block of a random X/Z position within -48/+47 of the target location on each axis. In ''Java Edition'', the game uses the highest Y-level "surface" block for these attempts, so the wandering trader will not spawn inside enclosed caves. If spawning the trader succeeds, an additional ten attempts are made for each of two trader llamas to find a position within -4/+3 of the trader in ''Java Edition''. In ''Bedrock Edition'', the trader always spawns together with its llamas on the same block. Wandering traders and their llamas can still spawn if the passive [[mob cap]] is full.
+
+{{IN|bedrock}}, when using [[spawn egg]]s or the {{cmd|summon}} [[command]] to spawn a wandering trader, llamas always spawn with it. Wandering traders never spawn if {{cmd|mobevent minecraft:wandering_trader_event}} is set to {{code|false}}.
+
+=== Despawning ===
+{{IN|java}}, a wandering trader despawns after being loaded for 48000 [[tick]]s (40 minutes, or 2 full ''Minecraft'' days), although ticks spent with the trading UI open are not counted. {{IN|bedrock}}, a wandering trader despawns after being loaded for either 48000 ticks (2 full ''Minecraft'' days) or 72000 ticks (3 full days) '''and''' the nearest player is more than 24 blocks away from it. In ''Bedrock Edition'', wandering traders also immediately despawn if all trades are used up and the nearest player is more than 24 blocks away.
+
+Unlike most mobs, naming the wandering trader with a [[name tag]] and/or placing it in a [[boat]]/[[minecart]] does not prevent it from despawning.<ref>{{bug|MC-143982||Named wandering traders despawn|WAI}}</ref> This also includes wandering traders as passengers of other mobs in ''Java Edition'', where it still despawns if summoned on top of another mob.
+
+When a wandering trader is unloaded, either by moving into unloaded [[chunk]]s or entering another [[dimension]], its despawn timer freezes.
+
+{{IN|java}}, wandering traders spawned via {{cmd|summon}}, [[spawn egg]]s or [[spawner]]s have a default <code>DespawnDelay</code> value of 0, meaning they do ''not'' despawn after 48000 ticks.
+
+== Behavior ==
+After spawning, the wandering trader prefers to wander within 16 blocks of the initial spawning target location, even if that player leaves, if not otherwise reacting to nearby players or mobs.{{verify|edition=bedrock}}
+
+Wandering traders drink a [[potion of Invisibility]] during dusk and as needed to renew the effect during the night. They also drink [[milk]] if invisible during the day to remove the [[Invisibility]] effect.
+
+Wandering traders avoid [[zombie]]s and their variants ([[zombie villager]]s, [[husk]]s, [[drowned]], [[zombified piglin]]s, [[zoglin]]s), all [[illager]] variants ([[pillager]]s, [[vindicator]]s, [[evoker]]s, [[illusioner]]s{{only|JE}}), [[ravager]]s, and [[vex]]es, staying at least 8 [[block]]s away. Unlike [[villager]]s, a wandering trader killed by zombies does not become a [[zombie villager]].<ref>{{bug|MC-143747||Wandering trader never becomes zombie villager|WF}}</ref> [[Witch]]es do not attack wandering traders during [[raid]]s.
+
+Wandering traders drink potions of Invisibility if hurt by magic attacks or projectiles from hostile [[mob]]s (but not players), or when avoiding illagers, vexes, and zombies.{{only|bedrock|short=y}} 
+
+When attacked by a [[player]], a wandering trader flees from the player as a [[villager]] would do. The [[trader llama]]s, however, attack the player by spitting if their master gets hit, except in [[Peaceful]]. The llamas stop attacking if the player is killed and respawns, if the llamas are leashed after the wandering trader is killed, or if the player gets far enough away from them for a short period of time. 
+
+The wandering trader can sometimes form a caravan, due to wild [[llama]]s that follow the leashed trader llama(s).
+
+Despite their similarities to villagers, attacking or killing wandering traders does not anger [[iron golem]]s.<ref>{{bug|MC-153693||Wandering traders that are being attacked by players do not anger village-spawned iron golems|WAI}}</ref>
+
+Like villagers and witches, wandering traders do not visually sit down when riding objects such as [[boat]]s and [[minecart]]s.<ref>{{bug|MC-161106||Villagers, wandering traders and witches do not have a sitting animation, but other villager-related mobs do|WAI}}</ref>
+
+{{in|BE}}, when a player holds an emerald or other item near a wandering trader who wants that item, the wandering trader holds up an item it offers in exchange, similar to [[vilagers]].
+
+== Trading ==
+[[File:Wandering Trader GUI.png|thumb|right|The trading UI of a wandering trader in ''Java Edition'']]
+
+The [[trading]] system is a [[gameplay]] mechanic that allows [[player]]s to buy and sell [[item]]s, in this case from a wandering trader.
+
+Pressing the {{control|use}} control on the wandering trader allows a player to view the different trade offers, similar to a villager. Different offers are visible in a list, and clicking on one of the offers moves the corresponding items to the slots above the player's [[inventory]]. All offers involve [[emerald]]s as a currency.
+
+Wandering traders typically sell items generated in the world or otherwise related to nature, such as [[plant]]s, [[dye]]s, and [[buckets of fish]]. They can also trade less common items, such as [[coral block]]s, [[blue ice]], or [[nautilus shell]]s. Overall, trades offered by wandering traders offer a way to obtain biome-specific materials, without having to travel to the specific biomes. They will also buy a select few items from the player, giving emeralds in return.
+
+After the [[player]] uses the same trade several times, the wandering trader locks the trade, but unlike villagers, never unlocks the trade. The wandering trader can appear again around the player with new trades after a while.
+
+{{IN|bedrock}}, wandering traders show available items once the player holds the required item, similar to [[villagers]].
+
+Wandering traders do not have the novice-master trading system like villagers. Instead, the player can buy anything from the wandering trader without the need of unlocking the previous trades.
+
+Wandering traders do not increase the prices of its items being sold if attacked by the player, but does decrease the price if the player has the [[Hero of the Village]] effect {{in|bedrock}}.
+
+Unlike [[villager]]s, wandering traders do not have an experience bar or career levels, and do not modify their offers or prices based on changing demand. This (the trade items or prices) can be changed by the player by editing the corresponding NBT data flag through the use of the {{cmd|data}}{{only|je|short=1}} command.
+
+Wandering traders are the only [[renewable]] source of [[sand]], [[red sand]], [[coral block]]s, and [[small dripleaves]] without glitches.
+
+The wandering trader cannot work at a job site block and restock, even when summoned with a villager profession or other villager data.
+
+=== Trade offers ===
+The wandering trader offers nine trades in total: it always purchases two random items, sells two special items, and sells five more ordinary items.
+
+These trades in each of these groups are not divided into categories; for example, a single wandering trader can sell 2 different saplings. Each individual trade is equally likely.
+
+In the trading GUI, the trade offers are always listed in this order:<br>
+* 2 purchasing trades
+* 2 special selling trades 
+* 5 ordinary selling trades 
+
+{{TradeTable|title=Wandering Trader
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Hay Bale|maxTrades=2}}
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Water Bottle|maxTrades=2}}
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Baked Potato|wantQuant=4|maxTrades=2}}
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Milk Bucket|giveQuant=2|maxTrades=2}}
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Water Bucket|giveQuant=2|maxTrades=2}}
+|{{TradeLine|lvl=Purchase|slot=1-2|want=Fermented Spider Eye|giveQuant=3|maxTrades=2}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Packed Ice|maxTrades=6}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Gunpowder|giveQuant=4|maxTrades=2}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Acacia Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Birch Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Cherry Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Dark Oak Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Jungle Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Mangrove Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Oak Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Pale Oak Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|give=Spruce Log|giveQuant=8|maxTrades=4}}
+|{{TradeLine|lvl=Special|slot=3-4|wantQuant=3|give=Podzol|giveQuant=3|maxTrades=6}}
+|{{TradeLine|lvl=Special|slot=3-4|wantQuant=5|give=Potion of Invisibility|giveNote=wandering_trader_invisibility_duration|giveNoteText=Duration: 8:00|maxTrades=1}}
+|{{TradeLine|lvl=Special|slot=3-4|wantQuant=6|give=Blue Ice|maxTrades=6}}
+|{{TradeLine|lvl=Special|slot=3-4|wantQuant=6-20|give=Enchanted Iron Pickaxe|wantNote=wandering_trader_enchant_price|wantNoteText=The price of this trade is the base price, 1 emerald, plus the random enchantment level chosen (5–19).|giveNote=wandering_trader_enchant_level|giveNoteText=When creating an enchantment offer, the game uses a random enchantment level from 5 to 19. The enchantments are never [[treasure enchantments]].|maxTrades=1}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Fern|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Sugar Cane|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pumpkin|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Dandelion|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Poppy|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Allium|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Azure Bluet|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Red Tulip|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Orange Tulip|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=White Tulip|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pink Tulip|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Oxeye Daisy|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Cornflower|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Blue Orchid|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Lily of the Valley|maxTrades=7}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Open Eyeblossom|maxTrades=7}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Wheat Seeds|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Beetroot Seeds|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pumpkin Seeds|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Melon Seeds|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Name Tag|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=White Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Light Gray Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Gray Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Black Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Brown Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Red Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Orange Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Yellow Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Lime Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Green Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Cyan Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Light Blue Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Blue Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Purple Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Magenta Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pink Dye|giveQuant=3|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Vines|giveQuant=3|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pale Hanging Moss|giveQuant=3|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Brown Mushroom|giveQuant=3|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Red Mushroom|giveQuant=3|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Lily Pad|giveQuant=5|maxTrades=2}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Small Dripleaf|giveQuant=2|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Sand|giveQuant=8|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Red Sand|giveQuant=4|maxTrades=6}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pointed Dripstone|giveQuant=2|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Rooted Dirt|giveQuant=2|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Moss Block|giveQuant=2|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Pale Moss Block|giveQuant=2|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Wildflowers|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|give=Tall Dry Grass|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=2|give=Golden Dandelion|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=2|give=Sea Pickle|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=2|give=Glowstone|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Bucket of Tropical Fish|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Bucket of Pufferfish|maxTrades=4}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Kelp|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Cactus|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Brain Coral Block|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Bubble Coral Block|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Fire Coral Block|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Horn Coral Block|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Tube Coral Block|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=3|give=Firefly Bush|maxTrades=12}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=4|give=Slimeball|maxTrades=5}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Acacia Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Birch Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Cherry Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Dark Oak Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Jungle Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Mangrove Propagule|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Oak Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Pale Oak Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Spruce Sapling|maxTrades=8}}
+|{{TradeLine|lvl=Ordinary|slot=5-9|wantQuant=5|give=Nautilus Shell|maxTrades=5}}}}
+
+In [[Chaos Cubed]]{{Upcoming}}, wandering traders can sell two [[sulfur spike]]s for one emerald, with five trades in stock.
+
+== Drops ==
+
+* A [[milk bucket]] (8.5% chance, increased 1% per level of [[Looting]]) if killed while holding or before finishing drinking.
+* A [[potion of Invisibility]] (8.5% chance, increased 1% per level of [[Looting]]) if killed while holding or before finishing drinking.
+* Any trade listed above (8.5% chance, increased 1% per level of [[Looting]]) if killed while showing the item. For example, killing a wandering trader that holds an [[emerald]] while the player holds a [[Fermented Spider Eye|fermented spider eye]], the wandering trader may drop 3 emeralds.{{Only|bedrock}}
+A wandering trader is also a source of [[lead]]s, as it typically spawns with two leashed [[trader llama]]s. These leads break and drop (at the location of the llama) if either trader or llama dies, if they are separated, or if the player uses shears to snip the lead(s). Shearing the wandering trader has no effect. The leads can only be sheared off the llamas.
+
+Separating mobs upon leads have the connection broken, dropping the leads if they enter boats for example. Unless they enter the same boat at the same time, every lead is always broken if at least one moves into a boat (or [[minecart]]).
+
+Wandering traders do not drop any loot or [[experience]] when killed (except for the consumables mentioned above).
+
+{{IN|bedrock}}, wandering traders reward experience after a successful trade.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Wandering trader idle1.ogg
+|sound2=Wandering trader idle2.ogg
+|sound3=Wandering trader idle3.ogg
+|sound4=Wandering trader idle4.ogg
+|sound5=Wandering trader idle5.ogg
+|subtitle=Wandering Trader mumbles
+|source=neutral
+|description=Randomly
+|id=entity.wandering_trader.ambient
+|translationkey=subtitles.entity.wandering_trader.ambient
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader trade1.ogg
+|sound2=Wandering trader trade2.ogg
+|sound3=Wandering trader trade3.ogg
+|subtitle=Wandering Trader trades
+|source=neutral
+|description=While the trade UI on a wandering trader is open
+|id=entity.wandering_trader.trade
+|translationkey=subtitles.entity.wandering_trader.trade
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader death.ogg
+|subtitle=Wandering Trader dies
+|source=neutral
+|description=When a wandering trader dies
+|id=entity.wandering_trader.death
+|translationkey=subtitles.entity.wandering_trader.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader hurt1.ogg
+|sound2=Wandering trader hurt2.ogg
+|sound3=Wandering trader hurt3.ogg
+|sound4=Wandering trader hurt4.ogg
+|subtitle=Wandering Trader hurts
+|source=neutral
+|description=When a wandering trader is damaged
+|id=entity.wandering_trader.hurt
+|translationkey=subtitles.entity.wandering_trader.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader accept1.ogg
+|sound2=Wandering trader accept2.ogg
+|sound3=Wandering trader accept3.ogg
+|sound4=Wandering trader accept4.ogg
+|subtitle=Wandering Trader agrees
+|source=neutral
+|description=When a player successfully trades with a wandering trader
+|id=entity.wandering_trader.yes
+|translationkey=subtitles.entity.wandering_trader.yes
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader deny1.ogg
+|sound2=Wandering trader deny2.ogg
+|sound3=Wandering trader deny3.ogg
+|sound4=Wandering trader deny4.ogg
+|sound5=Wandering trader deny5.ogg
+|subtitle=Wandering Trader disagrees
+|source=neutral
+|description=When a player fails to trade with a wandering trader due to lack of resources
+|id=entity.wandering_trader.no
+|translationkey=subtitles.entity.wandering_trader.no
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader drink milk1.ogg
+|sound2=Wandering trader drink milk2.ogg
+|sound3=Wandering trader drink milk3.ogg
+|sound4=Wandering trader drink milk4.ogg
+|sound5=Wandering trader drink milk5.ogg
+|subtitle=Wandering Trader drinks milk
+|source=neutral
+|description=While a wandering trader is drinking milk to become visible during daytime
+|id=entity.wandering_trader.drink_milk
+|translationkey=subtitles.entity.wandering_trader.drink_milk
+|volume=0.5
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader drink potion.ogg
+|sound2=Drink.ogg
+|subtitle=Wandering Trader drinks potion
+|source=neutral
+|description=While a wandering trader is drinking a potion to become invisible during nighttime
+|id=entity.wandering_trader.drink_potion
+|translationkey=subtitles.entity.wandering_trader.drink_potion
+|volume=''varies'' <ref group=sound>The first listed sound is 0.35; the second listed sound is 0.325</ref>
+|pitch=0.9-1.0
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader disappear1.ogg
+|sound2=Wandering trader disappear2.ogg
+|subtitle=Wandering Trader disappears
+|source=neutral
+|description=When a wandering trader becomes invisible
+|id=entity.wandering_trader.disappeared
+|translationkey=subtitles.entity.wandering_trader.disappeared
+|volume=0.8
+|pitch=0.9-1.1
+|distance=16}}
+| {{SoundLine
+|sound=Wandering trader reappear1.ogg
+|sound2=Wandering trader reappear2.ogg
+|subtitle=Wandering Trader appears
+|source=neutral
+|description=When a wandering trader becomes visible
+|id=entity.wandering_trader.reappeared
+|translationkey=subtitles.entity.wandering_trader.reappeared
+|volume=0.8
+|pitch=0.9-1.1
+|distance=16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Wandering trader idle1.ogg
+|sound2=Wandering trader idle2.ogg
+|sound3=Wandering trader idle3.ogg
+|sound4=Wandering trader idle4.ogg
+|sound5=Wandering trader idle5.ogg
+|source=neutral
+|description=Randomly
+|id=mob.wanderingtrader.idle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader death.ogg
+|source=neutral
+|description=When a wandering trader dies
+|id=mob.wanderingtrader.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader hurt1.ogg
+|sound2=Wandering trader hurt2.ogg
+|sound3=Wandering trader hurt3.ogg
+|sound4=Wandering trader hurt4.ogg
+|source=neutral
+|description=When a wandering trader is damaged
+|id=mob.wanderingtrader.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader disappear1.ogg
+|sound2=Wandering trader disappear2.ogg
+|source=neutral
+|description=When a wandering trader becomes invisible
+|id=mob.wanderingtrader.disappeared
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader reappear1.ogg
+|sound2=Wandering trader reappear2.ogg
+|source=neutral
+|description=When a wandering trader becomes visible
+|id=mob.wanderingtrader.reappeared
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader drink milk1.ogg
+|sound2=Wandering trader drink milk2.ogg
+|sound3=Wandering trader drink milk3.ogg
+|sound4=Wandering trader drink milk4.ogg
+|sound5=Wandering trader drink milk5.ogg
+|source=neutral
+|description = While a wandering trader is drinking milk to become visible during daytime
+|id=mob.wanderingtrader.drink_milk
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader drink potion.ogg
+|source=neutral
+|description=When a wandering trader drinks a potion to become invisible during nighttime
+|id=mob.wanderingtrader.drink_potion
+|volume=0.7
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader trade1.ogg
+|sound2=Wandering trader trade2.ogg
+|sound3=Wandering trader trade3.ogg
+|source=neutral
+|description=While the trade UI on a wandering trader is open
+|id=mob.wanderingtrader.haggle
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Wandering trader accept1.ogg
+|sound2=Wandering trader accept2.ogg
+|sound3=Wandering trader accept3.ogg
+|sound4=Wandering trader accept4.ogg
+|source=neutral
+|description=When a player successfully trades with a wandering trader
+|id=mob.wanderingtrader.yes
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound = Wandering trader deny1.ogg
+|sound2 = Wandering trader deny2.ogg
+|sound3 = Wandering trader deny3.ogg
+|sound4 = Wandering trader deny4.ogg
+|sound5 = Wandering trader deny5.ogg
+|source=neutral
+|description=When a player fails to trade with a wandering trader due to lack of resources
+|id=mob.wanderingtrader.no
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Wandering Trader
+|spritetype=entity
+|nameid=wandering_trader
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wandering Trader
+|spritetype=entity
+|nameid=wandering_trader
+|showentityfamily=y
+|entityfamily=mob,wandering_trader,wandering_trader_despawning
+|id=118
+|foot=1}}
+
+=== Entity data ===
+Wandering traders have entity data associated with them that contains various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** The {{cd|Age}} tag cannot be set to a negative number, making it impossible for them to be a baby.
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|DespawnDelay}}: The number of ticks counted down until this wandering trader is forced to despawn. The wandering trader despawns when this value reaches 1.
+** {{nbt|compound|Offers}}: Is generated when the trading menu is opened for the first time.
+*** {{nbt|list|Recipes}}: List of trade options.
+**** {{nbt|compound}} A trade option.
+***** {{nbt|compound|buy}}: The first 'cost' item, without the Slot tag.
+****** {{nbt inherit/itemnoslot|indent=******}}
+***** {{nbt|compound|buyB}}: May not exist. The second 'cost' item, without the Slot tag.
+****** {{nbt inherit/itemnoslot|indent=******}}
+***** {{nbt|int|maxUses}}: The maximum number of times this trade can be used before it is disabled. Increases by a random amount from 2 to 12 when offers are refreshed.
+***** {{nbt|byte|rewardExp}}: 1 or 0 (true/false) - true if this trade provides XP orb drops. All trades from naturally-generated villagers in Java Edition reward XP orbs.
+***** {{nbt|compound|sell}}: The item being sold for each set of cost items, without the Slot tag.
+****** {{nbt inherit/itemnoslot|indent=******}}
+***** {{nbt|int|uses}}: The number of times this trade has been used. The trade becomes disabled when this is greater or equal to maxUses.
+** {{nbt|int array|wander_target}}: The block location that the trader wanders toward.
+** {{nbt|list|Inventory}}: Each compound tag in this list is an item in the wandering trader's inventory, up to a maximum of 8 slots. Items in two or more slots that can be stacked together are automatically be condensed into one slot. If there are more than 8 slots, the last slot is removed until the total is 8. If there are 9 slots but two previous slots can be condensed, the last slot returns after the two other slots are combined. Wandering traders don't change their inventory automatically or drop items from it upon death. The inventory is currently unused.
+*** {{nbt|compound}} An item in the inventory, excluding the Slot tag.
+**** {{nbt inherit/itemnoslot|indent=****}}
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{Load achievements|The Haggler}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{Load advancements|What a Deal;Star Trader}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=19w05a|[[File:Wandering Trader.png|32px]] Added wandering traders.}}
+|{{HistoryLine|||dev=19w06a|Wandering traders now drink [[potions of Invisibility]] at dusk and [[milk bucket]]s at dawn.}}
+|{{HistoryLine|||dev=19w09a|Added two new [[sound]]s for wandering traders when they drink Invisibility potions and milk.}}
+|{{HistoryLine||1.15.2|dev=pre1|The spawning of wandering traders can now be controlled using {{cmd|gamerule doTraderSpawning}}.}}
+|{{HistoryLine||1.17|dev=21w05a|Wandering traders can sell [[small dripleaf]].}}
+|{{HistoryLine|||dev=21w13a|Wandering traders can sell [[pointed dripstone]], [[rooted dirt]] and [[moss block]].}}
+|{{HistoryLine||1.19|dev=22w15a|Wandering traders can sell [[mangrove propagule]]s.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Wandering traders can sell [[cherry sapling]]s.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=23w31a|Wandering traders now sell more items, and buy certain items from the player.
+|Most existing trades have lower prices and higher amounts in stock.}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|Wandering traders can now sell [[pale oak sapling]]s.}}
+|{{HistoryLine||1.21.4|dev=24w44a|Wandering traders can sell [[open eyeblossom]], [[pale moss]], and [[pale hanging moss]].}}
+|{{HistoryLine||1.21.5|dev=25w07a|The changes to wandering trader trades have been moved from [[Villager Trade Rebalance|experimental features]] and are now available during normal gameplay.}}
+|{{HistoryLine|||dev=25w08a|Some of the new trades have changed from a stock of one single trade to a stock of two trades.}}
+|{{HistoryLine||26.1|dev=snap1|Trades offered by wandering traders and [[villagers]] are now data-driven and can be customized by datapack developers.}}
+|{{HistoryLine|||dev=snap5|Wandering traders can now sell [[golden dandelion]]s.}}
+|{{HistoryLine|||dev=snap11|Wandering traders can now sell [[name tags]].}}
+|{{HistoryLine|upcoming java}}
+|{{HistoryLine||26.2|dev=snap3|Wandering traders can now sell [[sulfur spike]]s.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|[[File:Wandering Trader BE1.png|32px]] Added wandering traders, available only through Experimental Gameplay.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.3|exp=Experimental Gameplay|[[File:Wandering Trader JE1 BE1.png|32px]] Wandering traders now have their legs mirrored.
+|Wandering traders now drink a [[potion of Invisibility]] during dusk, when [[damage|hurt]] by projectiles or magic attacks, and when avoiding [[illager]]s and [[zombie]]s.
+|If a [[player]] is holding an [[emerald]], wandering traders now hold [[item]]s they want to [[trading|trade]].
+|The spawning of wandering traders can now be enabled or disabled using the {{cmd|mobevent}} [[command]].}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.4|Wandering traders have been fully implemented and are now separate from Experimental Gameplay.
+|Wandering traders now disappear faster after all [[trading|trades]] are disabled.
+|Wandering traders now have 6 random trades, instead of 4.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|Wandering traders now have [[sound]]s.}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Wandering traders can sell [[small dripleaf]], [[pointed dripstone]], [[rooted dirt]] and [[moss block]].}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.21|Can no longer open or close doors.
+|Now randomly moves around.
+|Changed drinking sound to match ''Java Edition''.
+|Added new sound effects for gaining and losing [[Invisibility]].
+|Can now be named with a [[name tag]], but this does not stop them from despawning.}}
+|{{HistoryLine|||dev=Preview 1.19.0.25|Wandering traders can sell [[mangrove propagule]]s.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.21|Wandering traders now drink [[milk]] at dawn.}}
+|{{HistoryLine||1.19.20|dev=Preview 1.19.20.20|Wandering traders no longer spawn underground.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|Wandering traders can now sell 1 cherry sapling for 5 emeralds.
+|Wandering traders can no longer sell [[wheat seed]]s, [[beetroot seed]]s, [[pumpkin seed]]s and [[melon seed]]s.}}
+|{{HistoryLine|||dev=Preview 1.20.20.21|Wandering traders now sell blue, black, brown or white [[dye]]s instead of [[lapis lazuli]], [[ink sac]]s, [[cocoa bean]]s and [[bone meal]].}}
+|{{HistoryLine||1.20.30|exp=[[Villager Trade Rebalancing]]|dev=Preview 1.20.30.20|Wandering traders now sell more items, and buy certain items from the player.
+|Most existing trades have lower prices and higher amounts in stock.}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Wandering traders can now sell [[pale oak sapling]]s, [[open eyeblossom]]s, [[pale hanging moss]], and [[pale moss]].}}
+|{{HistoryLine||1.21.70|dev=Preview 1.21.70.23|The changes to wandering trader trades have been moved from [[Villager Trade Rebalance|experimental features]] and are now available during normal gameplay.}}
+|{{HistoryLine|||dev=Preview 1.21.70.25|Wandering traders' buy trades can now be used twice before being locked, instead of just once.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.23|Wandering traders can now sell [[golden dandelion]]s.}}
+|{{HistoryLine|||dev=Preview 26.10.25|Wandering traders can now sell [[name tag]]s.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Wandering Trader.png|32px]] Added wandering traders.
+|If a [[player]] is holding an [[emerald]], wandering traders hold [[item]]s they want to [[trading|trade]].}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|dev=24w06a|{{cd|WanderTarget}} in wandering traders has been renamed to {{cd|wander_target}}.}}
+}}
+
+<gallery>
+File:19w05a.jpg|A wandering trader in [[Java Edition 19w05a|19w05a]]
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The wandering trader was inspired by traveling merchants from various RPGs, specifically ones that appeared to provide players with healing items in dangerous places.<ref>{{Mcnet|meet-wandering-trader|Meet the Wandering Trader|March 22, 2019|Per Landin}}</ref> It especially resembles the Travelling Merchant from Terraria.
+* Wandering traders display their held items differently than most creatures do, using the "ground" parameter instead of the usual hand parameter in model display settings.
+
+== Gallery ==
+
+=== Renders ===
+<gallery>
+File:Wandering Trader without Second Layer JE1 BE1.png|A wandering trader without its second layer. This state cannot normally be seen in-game.
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+File:Wandering Trader concept 3.jpg|An early concept featuring texture close to pre-[[Texture Update]] design
+File:Wandering Trader concept 2.jpg|Another concept
+File:Wandering Trader concept 1.jpg|Concept with a hat and early trader llama
+</gallery>
+
+=== Screenshots ===
+<gallery>
+Wandering traders.png|A group of spawned-in wandering traders with a trader [[llama]] in the background
+Trader and llama.png|A wandering trader and its llama
+Wandering Trader Drinking Potion.png|A wandering trader drinking a [[potion of Invisibility]]
+Two wandering Trader.png|Two wandering traders
+Wandering Trader at player village.png|A wandering trader that spawned in a player-made village {{in|ee}}
+Wandering trader.png|Wandering trader in the windswept hills
+Wanderingtraderandnitwit.png.jpg|A wandering trader next to a nitwit [[villager]]
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Wandering Trader (texture).png|Wandering trader texture file
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Wandering Trader art.png|Artwork
+File:Wandering Trader Art.jpg|Artwork with background
+File:Caves & Cliffs cover art.png|A Wandering Trader in promotional artwork for the first [[Caves & Cliffs]] update
+File:Makena & Wandering Trader.jpeg|[[Makena]] offering a [[milk bucket]] to a wandering trader
+File:Bedrock 1.21.70.23 PatchNotes.png|An isometric wandering trader near [[sheep]]
+File:MCV SpringDrop testing Feb12 DotNet Blog Editorial 1280x720.jpeg|A wandering trader speaking to [[Sunny]]
+File:Sheep field.jpeg|Wandering trader and [[cartographer]] in front of sheep
+File:Wandering trader with Efe.jpeg|A wandering trader with [[Efe]]
+File:Wandering Trader and Llama Animated Pixel Artwork.gif|Animated wandering trader artwork
+File:LEGO Wandering Trader.png|[[Lego Minecraft]] figure
+File:Wanderous Journey Trailer Concept Art.png|Concept art for [[A Wanderous Journey]]
+File:Minecraft x Merlin concept art 3.jpg|A strange looking wandering trader in concept art for [[Minecraft Adventure]]
+File:AMCM Wandering Trader.png|A Wandering Trader as seen in {{AMCM}}.
+File:Latest masterpiece.jpg|A wandering trader in [[Element Animation]]’s "latest masterpiece"
+File:Wandering Trader thinks of llama.jpg|A wandering trader thinking of a regular [[llama]]
+File:Ski trouble.jpg
+</gallery>
+
+== See also ==
+
+* [[The Traveling Trader]], a DLC map themed around wandering traders
+
+== References ==
+{{reflist|group="note"}}
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|meet-wandering-trader|Meet the Wandering Trader|March 22, 2019|[[Per Landin]]}} 
+
+== Navigation ==
+{{Navbox entities|mobs}}
+{{Navbox villagers}}
+
+[[Category:Passive mobs]]
+[[Category:Humanoid mobs]]
+
+[[de:Fahrender Händler]]
+[[es:Vendedor ambulante]]
+[[fr:Marchand ambulant]]
+[[it:Mercante ambulante]]
+[[ja:行商人]]
+[[ko:떠돌이 상인]]
+[[lzh:行商]]
+[[pl:Wędrowny handlarz]]
+[[pt:Vendedor Ambulante]]
+[[ru:Странствующий торговец]]
+[[th:พ่อค้าเร่ร่อน]]
+[[uk:Мандрівний крамар]]
+[[zh:流浪商人]]

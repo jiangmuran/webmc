@@ -1,0 +1,328 @@
+{{about|the throwable item|the status effect|Wind Charged|the enchantment|Wind Burst|the item that can be used as a single use [[flint and steel]] or shot from [[dispenser]]s|Fire Charge}}
+{{Infobox item
+| image = Wind Charge.webp
+| imageclass = drop-shadow-light
+| imagecaption = Entity
+| image2 = Wind Charge (item).png
+| image2class = pixel-image
+| image2caption = Item
+| invimage = Wind Charge
+| usecooldown = 0.5 seconds (10 ticks)
+| renewable = Yes
+| stackable = Yes (64)
+| size = Height: 0.3125 blocks<br>Width: 0.3125 blocks
+}}
+A '''wind charge''' is a throwable [[item]] that bursts into wind on impact, which can knock [[entities]] into the air and interact with [[door]]s, [[button]]s, [[lever]]s, and similar [[block]]s. A breeze rod can be crafted into 4 wind charges, and the breeze rods are obtained from [[breeze]]s, which shoot out wind charges that deal half a heart of damage.
+
+== Obtaining ==
+=== Crafting ===
+{{Crafting
+|Breeze Rod
+|Output= Wind Charge,4
+|type= Combat
+}}
+
+=== Generated loot ===
+{{LootChestItem|wind-charge}}
+
+== Usage ==
+A wind charge can be thrown by {{control|using}} it. After it is thrown, the wind charge is consumed.
+
+Wind charges have a cooldown of 10 ticks (0.5 seconds) before they can be used again. The cooldown is shown in the hotbar by a white overlay on the wind charge that shrinks and must disappear before the player can use it again. If there are other inventory or hotbar slots containing wind charges, they are covered with the white overlay as well.<ref>{{bug|MC-88236||Ender Pearl/Chorus Fruit/Shield cooldown affects items throughout inventory and containers|WAI}}</ref> They can be used to activate [[button]]s, [[fence gate]]s, [[lever]]s, and non-iron [[trapdoor]]s and [[doors]]. They also ring [[bell]]s, break [[chorus flower]]s, extinguish [[candle]]s, and shatter [[decorated pot]]s.
+
+== Behavior ==
+[[File:Wind Charge Launching Player.gif|thumb|A player using the knockback from a wind charge to launch into the air.]]
+Wind charges, when fired by players, dispensers, or breezes, fly in a straight line through the air. There is a random offset in a wind charge's trajectory over a cone-shaped region, spreading along the aimed trajectory, which can cause a wind charge to miss its target or hit something else.
+
+When a wind charge directly hits an [[entity]], the entity takes {{hp|1}} [[damage]] and is knocked back 2.5 blocks unless the entity is resistant to knockback (e.g., [[squid]], [[warden]]s, [[ravager]]s). A burst of wind also appears and knocks back nearby entities without dealing damage to them. Mobs may be knocked high enough into the air to take additional fall damage upon landing. A wind charge that passes through fire or lava sets fire to any entities that it hits.{{only|bedrock}}
+
+The wind burst also interacts with these blocks:
+* ''Non-iron'' [[door]]s and [[trapdoor]]s are flipped.
+* [[Fence gate]]s are flipped.
+* [[Button]]s are pressed.
+* [[Lever]]s are flipped.
+* [[Bell]]s are rung and swung.
+* Lit [[candle]]s (both standalone and on [[cake]]) are extinguished.
+
+Wind charges can be deflected if hit with another projectile or a melee attack, similar to [[Fireball|ghast fireballs]]. [[Blast Protection]] reduces the knockback effect of wind charges.
+
+Wind charges are distance attenuated by [[liquid]]s such as [[water]] and [[lava]]. They fly in a straight line, similar to fireballs.
+
+Wind charges are two separate entities depending on their source. Wind charges shot by breezes are <code>breeze_wind_charge</code>s, while wind charges shot by players and dispensers are simply <code>wind_charge</code>s. This distinction is in place as the two types of wind charges have some different properties. <code>breeze_wind_charge</code>s cannot be obtained as items.
+
+=== When used by players and dispensers ===
+Wind charges fired by players and dispensers deal 10% more knockback than those fired by breezes, but have a much smaller burst area.{{more info|How much smaller? concrete values for both attributes would be helpful.}}
+
+A player launched by wind charges shot by a player or a dispenser accumulates fall damage only when falling below the Y level where the wind burst hit. {{IN|BE}}, when throwing a wind charge, the projectile is slightly offset.
+
+Unlike other forms of projectiles when fired on the move, wind charges slightly offset to whatever direction the shooter is moving, following close to the crosshair.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Bow shoot.ogg
+|subtitle=Wind Charge flies
+|source=neutral
+|description=When a wind charge is thrown by a player
+|id=entity.wind_charge.throw
+|translationkey=subtitles.entity.wind_charge.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|subtitle=Wind Charge flies
+|source=block
+|description=When a dispenser dispenses a wind charge
+|id=entity.wind_charge.throw
+|translationkey=subtitles.entity.wind_charge.throw
+|volume=0.5
+|pitch={{frac|1|3}}-0.5
+|distance=16}}
+| {{SoundLine
+|sound=Generic wind burst1 JE1 BE1.ogg
+|sound2=Generic wind burst2 JE1 BE1.ogg
+|sound3=Generic wind burst3 JE1 BE1.ogg
+|subtitle=Wind Charge bursts
+|source=block
+|description=When a wind charge shot by a player or dispenser strikes something
+|id=entity.wind_charge.wind_burst
+|translationkey=subtitles.entity.generic.wind_burst
+|volume=4.0
+|pitch=0.7-1.05
+|distance=8}}
+| {{SoundLine
+|sound=Breeze wind burst1 JE1 BE1.ogg
+|sound2=Breeze wind burst2 JE1 BE1.ogg
+|sound3=Breeze wind burst3 JE1 BE1.ogg
+|subtitle=Wind Charge bursts
+|source=block
+|description=When a wind charge shot by a breeze strikes something
+|id=entity.breeze.wind_burst
+|translationkey=subtitles.entity.breeze.wind_burst
+|volume=4.0
+|pitch=0.672-1.008
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Bow shoot.ogg
+|source=player
+|description=When a player throws a wind charge
+|id=random.bow
+|volume=0.5
+|pitch=0.33-0.5}}
+| {{SoundLine
+|sound=Generic wind burst1 JE1 BE1.ogg
+|sound2=Generic wind burst2 JE1 BE1.ogg
+|sound3=Generic wind burst3 JE1 BE1.ogg
+|source=Players|overridesource=1
+|description=When a wind charge shot by a player or dispenser strikes something
+|id=wind_charge.burst
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Breeze wind burst1 JE1 BE1.ogg
+|sound2=Breeze wind burst2 JE1 BE1.ogg
+|sound3=Breeze wind burst3 JE1 BE1.ogg
+|source=hostile
+|description=When a wind charge shot by a breeze strikes something
+|id=breeze_wind_charge.burst
+|volume=1.0
+| pitch = 1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|firstcolumnname=Item
+|generatetranslationkeys=y
+|displayname=Wind Charge
+|spritetype=item
+|nameid=wind_charge
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Wind Charge
+|spritetype=entity
+|nameid=wind_charge
+|entitytags=impact_projectiles}}
+{{ID table
+|displayname=Wind Charge
+|spritetype=entity
+|nameid=breeze_wind_charge
+|entitytags=impact_projectiles
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Wind Charge
+|spritetype=item
+|nameid=wind_charge
+|id=377
+|form=item
+|foot=1}}
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Wind Charge
+|spritetype=entity
+|nameid=wind_charge_projectile
+|showentityfamily=y
+|entityfamily=wind_charge,wind_charge_projectile
+|id=143}}
+{{ID table
+|displayname=Wind Charge
+|spritetype=entity
+|nameid=breeze_wind_charge_projectile
+|id=141
+|foot=1}}
+
+=== Entity data ===
+Wind charges have entity data associated with them that contain various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+** {{nbt inherit/hurting projectile}}
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{Load achievements|Who Needs Rockets?}}
+
+== Advancements ==
+{{Load advancements|Not Today, Thank You;Who Needs Rockets?;Blowback}}
+
+== Videos ==
+{{yt|6DDwo8TulM0}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|[[File:Wind Charge JE1 BE1.png|32px|class=drop-shadow-light]] Added wind charges.}}
+|{{HistoryLine|||dev=pre2|Wind charges now break [[decorated pot]]s, [[chorus flower]]s, and [[pointed dripstone]] blocks upon collision.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=23w51a|The texture of wind charges have been changed. However, the in-game appearance is not affected.}}
+|{{HistoryLine|||dev=24w03b|[[File:Wind Charge JE2 BE2.png|32px|class=drop-shadow-light]] The model, texture, and animation of wind charges has been changed.}}
+|{{HistoryLine|||dev=24w06a|[[File:Wind Charge (item) JE1 BE1.png|32px]] Wind charges are now obtainable as an item.
+|Added the <code>breeze_wind_charge</code> entity, which is now shot by the [[breeze]].
+|The <code>wind_charge</code> entity is no longer shot by breezes and now has special properties that the breeze's wind charges do not.}}
+|{{HistoryLine|||dev=24w09a|Removed randomness from the radius of both breeze- and player-shot wind charges.}}
+|{{HistoryLine|||dev=24w11a|Wind charges are no longer dropped by breezes, and are instead crafted using [[breeze rod]]s.
+|Wind charges can now be obtained as loot from [[vault]]s in [[trial chambers]].}}
+|{{HistoryLine|||dev=24w12a|Wind charge projectiles no longer pass through blocks with incomplete collision boxes, but will still pass through blocks with no collision box.}}
+|{{HistoryLine|||dev=24w13a|Wind charges can now be obtained as loot from [[ominous vault]]s.
+|Wind charges no longer collide with [[end crystal]]s.<ref>{{bug|MC-269015||Wind charges can destroy end crystals|Fixed}}</ref>}}
+|{{HistoryLine||1.21|dev=24w18a|Wind charges are now available without using the "Update 1.21" experimental data pack.|Wind charges now use a new damage type <code>wind_charge</code> instead of <code>mob_projectile</code>.}}
+|{{HistoryLine|||dev=pre1|Crouching no longer affects wind charge knockback.|
+Wind charges used by the player aimed straight down now knock the player upward ~6 blocks instead of ~2.5.|
+Wind charges are no longer spawned 0.8 blocks away from the shooter.
+|Changed the wind charge item's fall damage reduction mechanic: it now applies a {{convert|40}} tick reduction timer to ensure that wind charge projectiles always negate the player's fall damage. Due to a bug, this mechanic did not function correctly.<ref name="MC-271971">{{bug|MC-249270|Fixed}}</ref>
+}}
+|{{HistoryLine|||dev=pre4|Fixed a bug where the reduction mechanism failed to work correctly in pre1.<ref name="MC-271971"></ref>}}
+|{{HistoryLine||1.21.2|dev=24w34a|Wind charges no longer go through the [[world border]] if hit.}}
+|{{HistoryLine|||dev=24w35a|Wind charges now have the <code>use_cooldown</code> component by default.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|[[File:Wind Charge JE1 BE1.png|32px|class=drop-shadow-light]] Added wind charges.}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.20|[[File:Wind Charge JE2 BE2.png|32px|class=drop-shadow-light]] The model, texture, and animation of wind charges has been changed.}}
+|{{HistoryLine|||dev=Preview 1.20.70.24|[[File:Wind Charge (item) JE1 BE1.png|32px]] Wind charges are now obtainable as an item.
+|Added the <code>breeze_wind_charge_projectile</code> entity, which is now shot by the [[breeze]].
+|The <code>wind_charge_projectile</code> entity is no longer shot by breezes and now has special properties that the breeze's wind charges do not.
+|Breezes now take damage from wind charges.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.21|Reduced the damage dealt by wind charges shot by players and [[dispenser]]s to {{hp|1}}.|The location that shot wind charges are spawned in has been moved downward and further away from the shooter.|Wind charges now deal additional [[Damage#Knockback|knockback]] to [[crouch]]ing players.}}
+|{{HistoryLine|||dev=Preview 1.20.80.22|Wind charges are no longer dropped by breezes, and are instead crafted using [[breeze rod]]s.|Wind charges can now be obtained as loot from [[vault]]s in [[trial chambers]].}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.20|Wind charges can now be obtained as loot from [[ominous vault]]s.
+|Wind charges no longer collide with end crystals.<ref>{{bug|MCPE-179304||Wind charges can destroys end crystals|Fixed}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.0.21|Wind charge projectiles can now have their trajectory altered by the player's melee attacks.<ref>{{bug|MCPE-179378|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.0.22|Wind charges have been officially added to the game.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.22|Increased the velocity of wind charge projectiles fired by players by 50% to match {{el|je}}.}}
+|{{HistoryLine|||dev=Preview 1.21.20.21|Wind charge projectiles fired by players no longer have a chance to deal more than {{hp|1}} damage.}}
+|{{HistoryLine|||dev=Preview 1.21.10.23|Crouching no longer affects wind charge knockback.
+|Wind charges used by the player aimed straight down now knock the player upward ~6 blocks instead of ~2.5.
+|Wind charges are no longer spawned 0.8 blocks away from the shooter.
+|Wind charges now work the same on all terrain. {{verify|What does this change mean?}}}}
+}}
+
+=== ''Minecraft Education'' ===
+{{HistoryTable
+|{{HistoryLine|education}}
+|{{HistoryLine||1.21.03|dev=Preview 1.21.01.0|[[File:Wind Charge.png|32px]] [[File:Wind Charge (item).png|32px]] Added wind charges.}}
+|{{HistoryLine||1.21.91|dev=Preview 1.21.40.1|Increased the velocity of wind charge projectiles fired by players by 50% to match {{el|je}}.
+|Wind charge projectiles fired by players no longer have a chance to deal more than {{hp|1}} damage.
+|Crouching no longer affects wind charge knockback.
+|Wind charges used by the player aimed straight down now knock the player upward ~6 blocks instead of ~2.5.
+|Wind charges are no longer spawned 0.8 blocks away from the shooter.
+|Wind charges now work the same on all terrain. {{verify|What does this change mean?}}}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+<gallery>
+File:Breeze shooting wind charge.png|A breeze shooting a wind charge.
+File:Wind charge image 1.png|[[Efe]] shooting a wind charge.
+File:Wind charge jump 2.png|Efe using a wind charge to jump up to a breeze in the [[trial chambers]].
+File:Wind charge jump 3.png|Efe using a wind charge to jump up terrain.
+File:Sunny hopping across Badlands.jpeg|Sunny using a wind charge to jump across a [[badlands]] biome.
+File:Explosion particle gif.gif|The particle created by wind charges upon impact
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Minecraft Trial Chamber Legends spritework.jpg|Pixel art of a wind charge used in [[Trial Chamber Legends]].
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|wind-charge|Taking Inventory: Wind Charge|August 29, 2024|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|utilities}}
+{{Navbox entities|other}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[de:Windkugel]]
+[[es:Carga de viento]]
+[[fr:Charge de vent]]
+[[ja:ウィンドチャージ]]
+[[ko:돌풍구]]
+[[pt:Projétil de vento]]
+[[ru:Заряд ветра]]
+[[uk:Заряд вітру]]
+[[zh:风弹]]

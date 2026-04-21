@@ -1,0 +1,323 @@
+{{for||Bush (disambiguation)|Berries}}
+{{Dungeons hatnote|type=consumable}}{{Infobox block
+| title = Sweet Berries
+| group = Age 0
+| 1-1 = Sweet Berry Bush Age 0.png
+| group2 = Age 1
+| 2-1 = Sweet Berry Bush Age 1.png
+| group3 = Age 2
+| 3-1 = Sweet Berry Bush Age 2.png
+| group4 = Age 3
+| 4-1 = Sweet Berry Bush Age 3.png
+| image1 = Sweet Berries.png
+| *-1class = notpageimage
+| invimage = Sweet Berries
+| consumptiontime = {{convert|32|ticks|seconds}}
+| hunger = 2
+| saturationcustom = {{jebe|{{hunger|0.4}}|{{hunger|1.2}}}}
+| saturationboost = <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|0.267}}<br/><abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 0.133 seconds
+| alwaysconsumable = No
+| transparent = Yes
+| light = No
+| tool = Any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = Yes ({{el|je|short=1}}: 60, {{el|be|short=1}}: 30)
+| lavasusceptible = No
+}}
+
+'''Sweet berries''' are a [[food]] item obtained from sweet berry bushes and are used to plant them.
+
+'''Sweet berry bushes''' are quick-growing [[plant]]s that grow sweet berries. [[Player]]s and most [[mob]]s are slowed down and take constant damage while moving through them. They can be found naturally in [[taiga]] and [[snowy taiga]] biomes.
+
+== Obtaining ==
+
+=== Natural generation ===
+Berry bushes commonly generate in [[taiga]] and [[snowy taiga]] biomes. Each [[chunk]] has a {{frac|1|12}} chance to generate sweet berry bushes in [[random patch]]es. They also generate in both [[old growth pine taiga]] and [[old growth spruce taiga]] biomes.
+
+{{block distribution}}
+
+=== Breaking ===
+{{See also|Fortune#Discrete random}}
+Sweet berry bushes can be [[instant mining|mined instantly]] with any tool or by hand. A mature sweet berry bush yields 2–3 sweet berries. On its third growth stage, it yields 1–2 sweet berries. Each level of [[Fortune]] can increase the amount of drops by 1.
+{{breaking row|Sweet Berries|sprite=sweet-berry-bush|horizontal=1}}
+
+=== Harvesting ===
+Sweet berries can be collected from a sweet berry bush by pressing the {{control|use}} control on it, yielding 1–2 sweet berries in its third growth stage, and 2–3 sweet berries in its final growth stage. After dropping the berries on the ground, the sweet berry bush reverts to its second growth stage. 
+
+=== Generated loot ===
+{{LootChestItem|sweet-berries}}
+
+== Usage ==
+=== Placement ===
+Placing sweet berries on a [[grass block]], [[dirt]], [[coarse dirt]], [[rooted dirt]], [[farmland]], [[podzol]], [[mycelium]], [[moss block]], [[mud]], or [[muddy mangrove roots]] creates a small sweet berry bush that eventually becomes a fully grown sweet berry bush.
+
+=== Growth ===
+A sweet berry bush grows through four stages after it is planted. Its first growth stage is a small bush without any berries. It becomes a grown plant in its second stage, and produces berries in its third and fourth growth stage. The bush needs to be in light level 9 or greater to grow. The bush can be placed on a 1 block high space, but it cannot grow with a full, non-transparent block immediately above it. {{control|Using}} [[bone meal]] on it increases its growth stage by one, regardless of light level and available space, and at full maturity, ejects the sweet berry item.
+
+=== Food ===
+
+To eat sweet berries, press and hold {{control|use}} while it is selected in the hotbar. Eating one restores {{hunger|2}} [[hunger]] and 0.4{{only|je|short=1}} / 1.2{{only|be|short=1}} hunger [[saturation]].
+
+=== Composting ===
+Placing sweet berries into a [[composter]] has a 30% chance of raising the compost level by 1.
+
+=== Breeding ===
+Sweet berries can be fed to [[fox]]es to [[breed]] them. Foxes are similar to cats when being fed as a wild animal; a sudden movement by the [[player]] may cause the fox to flee even if the player holds sweet berries. A baby fox bred by a [[player]] trusts the player and does not flee.
+
+=== Trading ===
+{{Trade uses}}
+
+=== Entity movement ===
+
+A sweet berry bush (at any stage) slows down all [[entities]] (except [[Item (entity)|items]]) passing through it. At stage 1 and higher, it causes damage. [[Fox]]es are immune to both characteristics, however. Sweet berry bushes deal {{hp|1}} [[damage]] every tick (although [[damage immunity]] reduces this to once every half-second), only if the entity is moving in the hitbox of the bush. Entities that move through sweet berry bushes slow down to about 34.05% of their normal speed, similar to how a [[cobweb]] slows down mobs to 25% of normal speed. This makes it impossible to jump a full [[block]] while inside the bush.
+
+A sweet berry bush of any growth stage negates all fall damage of entities inside it.
+
+Mobs at standard block height in a [[minecart]] are not damaged when the minecart is pushed through sweet berries. Players in a sweet berry bush take no damage except from horizontal movement, but are unable to jump out of the bush, similar to a cobweb.
+
+=== Bees ===
+[[Bee]]s do not collect nectar from sweet berry bushes, nor will they take damage from being in contact with a sweet berry bush. Sweet berry bushes can be pollenated by bees, accelerating their growth by one stage.
+
+== Sounds ==
+=== Generic ===
+==== Block ====
+{{Sound table/Block/Sweet berry bush}}
+
+==== Item ====
+{{Sound table/Entity/Food}}
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Berries pick1.ogg
+|sound2=Berries pick2.ogg
+|subtitle=Berries pop
+|source=block
+|description=When sweet berries are picked by a player
+|id=block.sweet_berry_bush.pick_berries
+|translationkey=subtitles.item.berries.pick
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|subtitle=Berries pop
+|source=block
+|description=When sweet berries are picked by a fox
+|id=block.sweet_berry_bush.pick_berries
+|translationkey=subtitles.item.berries.pick
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Player hurt sweet berry bush1.ogg
+|sound2=Player hurt sweet berry bush2.ogg
+|subtitle=Player hurts
+|source=player
+|description=When a player is damaged by touching a sweet berry bush
+|id=entity.player.hurt_sweet_berry_bush
+|translationkey=subtitles.entity.player.hurt
+|volume=1.0
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Berries pick1.ogg
+|sound2=Berries pick2.ogg
+|source=block
+|description=When sweet berries are picked
+|id=block.sweet_berry_bush.pick
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Player hurt sweet berry bush1.ogg
+|sound2=Player hurt sweet berry bush2.ogg
+|source=block
+|description=When a player is damaged by touching a sweet berry bush
+|id=block.sweet_berry_bush.hurt
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sweet Berry Bush
+|spritetype=block
+|nameid=sweet_berry_bush
+|blocktags=azalea_log_replaceable, bee_growables
+|form=block}}
+{{ID table
+|displayname=Sweet Berries
+|spritetype=item
+|nameid=sweet_berries
+|itemtags=fox_food
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sweet Berry Bush
+|spritetype=block
+|nameid=sweet_berry_bush
+|id=462
+|form=block}}
+{{ID table
+|displayname=Sweet Berries
+|spritetype=item
+|nameid=sweet_berries
+|id=287
+|form=item
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|age|0
+|0|{{BlockSprite|sweet-berry-bush-1}} Young plant
+|1|{{BlockSprite|sweet-berry-bush-2}} No berries
+|2|{{BlockSprite|sweet-berry-bush-3}} Some berries, {{control|using}} the bush gives 1–2 [[sweet berries]] and sets the age back to 1.
+|3|{{BlockSprite|sweet-berry-bush-4}} Full berries, {{control|using}} the bush gives 2–3 [[sweet berries]] and sets the age back to 1.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1|growth|0
+|0|{{BlockSprite|sweet-berry-bush-1}} Young plant|
+|1|{{BlockSprite|sweet-berry-bush-2}} No berries|
+|2|{{BlockSprite|sweet-berry-bush-3}} Some berries, {{control|using}} the bush gives 1–2 [[sweet berries]] and sets the growth back to 1.|
+|3|{{BlockSprite|sweet-berry-bush-4}} Full berries, {{control|using}} the bush gives 2–3 [[sweet berries]] and sets the growth back to 1.|foot=1}}
+
+== Advancements ==
+{{Load advancements|Husbandry;A Balanced Diet;The Parrots and the Bats;Two by Two}}
+
+== History ==
+{{See technical block|Sweet Berry Bush}}
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||September 26, 2018|link={{tweet|minecraft|1044587405779451906}}|[[File:MineconVoteSweetBerries.png|32px]] Berries are announced to be part of the [[biome]] vote at [[MINECON Earth 2018]].}}
+|{{HistoryLine||September 29, 2018|link={{tweet|minecraft|1046097775199498245}}|[[Taiga]] wins the [[biome]] vote, meaning berries are to be added to the game first.}}
+|{{HistoryLine||December 3, 2018|link={{tweet|cojomax99|1069586461173919745}}|[[Cojomax99]] tweets an image of some berries.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w49a|[[File:Sweet Berry Bush Age 0 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 1 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 2 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 3 JE1 BE1.png|32px]] Added sweet berry bushes.
+|[[File:Sweet Berries JE1 BE1.png|32px]] Added sweet berries.}}
+|{{HistoryLine|||dev=18w50a|Sweet berries can now be found within [[taiga]] [[village]] loot [[chest]]s.}}
+|{{HistoryLine|||dev=19w03a|Placing a sweet berry into the new [[composter]] has a 10% chance of raising the compost level by 1.
+|Added [[sound]]s for sweet berry bushes.}}
+|{{HistoryLine|||dev=19w05a|Sweet berries now have a 30% chance of increasing the compost level in a composter by 1.
+|The [[sound]] for planting sweet berries has been changed.}}
+|{{HistoryLine|||dev=19w07a|Sweet berries can now be fed to [[fox]]es to [[breed]] them.}}
+|{{HistoryLine|||dev=19w11a|Butcher [[villager]]s now [[trading|buy]] 10 sweet berries for 1 emerald.
+|Sweet berries can now be planted by aiming at the side and underside of blocks rather than just on top of the block.<ref>{{bug|MC-140651}}</ref>
+|Sweet berries can now replace replaceable blocks such as fire, snow or grass when planted.<ref>{{bug|MC-140625}}</ref>}}
+|{{HistoryLine||1.15|dev=19w34a|[[Bee]]s can now pollinate sweet berry bushes.}}
+|{{HistoryLine|||dev=pre2|Sweet berries now generate in [[giant tree taiga]] biomes.}}
+|{{HistoryLine||1.16|dev=pre1|Sweet berry bushes no longer prevent mob spawning inside them.}}
+|{{HistoryLine||1.17|dev=21w20a|The sound event for picking berries has been changed as to align better with that of glow berries.<ref>{{bug|MC-220063}}</ref>}}
+|{{HistoryLine||1.18|dev=pre5|Sweet berry bushes in taigas are about 4 times more common than in previous snapshots.}}
+|{{HistoryLine||1.20.2|dev=23w32a|Sweet berries being eaten by foxes now emit a <code>block_change</code> [[vibration]] of frequency <code>11</code>.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|exp=Experimental Gameplay|[[File:Sweet Berries JE1 BE1.png|32px]] Added sweet berries, which are available only through Experimental Gameplay.|[[File:Sweet Berry Bush Age 0 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 1 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 2 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 3 JE1 BE1.png|32px]] Added sweet berry bushes, available only through Experimental Gameplay.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|exp=Experimental Gameplay|Sweet berries can now be used to fill [[composter]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.3|Sweet berries and sweet berry bushes have been fully implemented and are now separate from Experimental Gameplay.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Sweet berries can now be [[trading|sold]] to butcher [[villager]]s.}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Sweet berries can now be fed to [[fox]]es to [[breed]] them.}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|[[Bee]]s can now pollinate sweet berry bushes.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Sweet berry bushes now properly damage entities.<ref>{{Bug|MCPE-56142}}</ref>}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.56|Bees no longer gather nectar from sweet berry bushes.}}
+|{{HistoryLine||1.19.10|dev=Preview 1.19.10.21|Sweet berries can now be planted on [[rooted dirt]], [[mud]], and [[muddy mangrove roots]].}}
+|{{HistoryLine||1.19.40|dev=Preview 1.19.40.21|Sweet berries can now be planted on [[farmland]].}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.21|Decreased the hardness and blast resistance of sweet berry bushes from 0.2 to 0.}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.25|Bees no longer take damage when moving through sweet berry bushes.}}
+|{{HistoryLine||1.20.70|dev=Preview 1.20.70.20|Sweet berry bushes in their first growth stage now slow and damage entities moving through them.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.20|Sweet berry bushes are now affected by [[Fortune]].}}
+|{{historyLine||1.21.20|dev=Preview 1.21.20.22|Sweet berries can now be planted on [[coarse dirt]].}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.21|Sweet berry bushes no longer appear mirrored when viewed from certain angles.<ref>{{bug|MCPE-40646||Cross models are displayed wrongly from east and west sides|Fixed}}</ref>}}
+|{{HistoryLine|||dev=Preview 1.21.60.23|Sweet berry bushes now generate in [[old growth spruce taiga]]s and [[old growth pine taiga]]s.
+|Sweet berry bushes generate in larger patches in [[taiga]]s.}}
+}}
+
+=== ''PlayStation 4 Edition'' ===
+{{HistoryTable
+|{{HistoryLine|ps4}}
+|{{HistoryLine||1.91|[[File:Sweet Berries JE1 BE1.png|32px]] Added sweet berries.|[[File:Sweet Berry Bush Age 0 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 1 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 2 JE1 BE1.png|32px]] [[File:Sweet Berry Bush Age 3 JE1 BE1.png|32px]] Added sweet berry bushes.
+|Sweet berries can be used to fill [[composter]]s.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=21w19a|<code>minecraft:sweet_berry_bush</code> has been added to the newly-implemented <code>#minecraft:mineable/axe</code> [[block tag]]. This, however, has no effect in-game, since the block breaks instantly anyway regardless of tool used or active effects.{{check the code|Prior to this version, assigned tools were presumably hardcoded; were sweet berry bushes also coded to have axes as their "preferred" tool before this version?}}}}
+|{{HistoryLine||1.21.5|dev=25w10a|<code>minecraft:sweet_berry_bush</code> has been removed from the block tags <code>#minecraft:mineable/axe</code> and <code>#minecraft:sword_efficient</code>.}}
+}}
+
+== Issues ==
+{{issue list|berry|berries|sweet berry|sweet berries|berry bush|sweet berry bush|-glow berries|-glow berry}}
+
+== Trivia ==
+* {{IN|java}}, sweet berry bushes absorb [[fall damage]] like [[water]].<ref>{{bug|MC-149990|||WAI}}</ref>
+* Foxes harvest mature sweet berry bushes that have grown into their third or fourth stage. Unlike how carrots eaten by rabbits are destroyed and not dropped as items, sweet berry bushes harvested by foxes drop as items, although the fox may pick up one of the dropped berries. The bush remains intact, allowing for automatic sweet berry farms.
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Berry Bush.png|A close-up look of a sweet berry bush.
+Naturally generated berry bushes.png|A naturally generated sweet berry bush.
+Multiplebushes.png|Multiple bushes of sweet berries in Taiga biome.
+BerryBushCloseToRavine.png|A berry bush that is close to a ravine.
+Cozy Cabin Berries.jpg|Berry bushes near a cozy cabin.
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--sweet-berries|Taking Inventory: Sweet Berries|November 4, 2021|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+{{Navbox items|food}}
+
+[[Category:Food]]
+[[Category:Plants]]
+[[Category:Non-solid blocks]]
+[[Category:Natural blocks]]
+[[Category:Flammable blocks]]
+[[Category:Hazardous blocks]]
+
+[[cs:Sladké bobule]]
+[[de:Süßbeeren]]
+[[es:Bayas dulces]]
+[[fr:Baies sucrées]]
+[[ja:スイートベリー]]
+[[ko:달콤한 열매]]
+[[pl:Słodkie jagody]]
+[[pt:Bagas Doces]]
+[[ru:Сладкие ягоды]]
+[[th:เบอร์รี่หวาน]]
+[[uk:Солодкі ягоди]]
+[[zh:甜浆果]]

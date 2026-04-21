@@ -1,0 +1,46 @@
+:''For this discussion, coordinates refer to the column centered at (x+0.5, z+0.5).  That is, -225x, 255z refers to the column bounded by -224x to -225x and 255z to 256z.''
+
+Every [[world]] has a "spawn point" (really, an area) located within a few hundred blocks of the origin, which is at [[coordinates]] 0x, 0y, 0z.  This point is stored in the [[level.dat]] file's <code>SpawnX</code>, <code>SpawnY</code>, <code>SpawnZ</code> attributes (although <code>SpawnY</code> seems to be ignored).  If the spawn point is deemed unacceptable, a new, temporary spawn point will be selected (although the criterion for "acceptable" is unknown).
+
+A player with no spawn point set (such as by a [[bed]]) will be placed randomly at the highest point in a 20x/20z square centered on the x-/z- corner of the spawn point; that is, the 20x/20z spawn square's edges are at SpawnX -10/+9, SpawnZ -10/+9. The 10 block radius can be changed using {{Command|gamerule spawnRadius}} though. Changing the spawn radius also affects the radius of spawn protection. The spawn protection will be removed if the spawnRadius is set to 0.
+
+On multiplayer servers, a 33x/33z slice of the world centered at SpawnX, SpawnZ can, at the server owner's or operator's option, be set as "protected", and can then (almost; see below) only be modified by [[Operator]]s; that is, the 33x/33z protection square's edges are at SpawnX +16/-16, SpawnZ +16/-16.
+
+[[op|Non-operator players]] cannot place or destroy blocks in the protected area, nor can they use doors or [[Redstone components|redstone devices]] other than [[Pressure Plate]]s. Creepers can still destroy terrain in the protected area and [[TNT]] placed outside of the protected area will destroy surrounding blocks as usual. Along with this, portals from the nether can connect to the protected area, water/lava/fire can spread from outside into the protected area, and pistons can push items inside as well. Players can place blocks on the edge of the protected area if placed against the side of a block on the outside of the area.  However, if the edges of the protected area are avoided, small, indestructible structures can be built. Paintings that are put up can be removed by players in the safe zone.
+
+Sleeping in a [[bed]] will reset your spawn point to that bed, even if you click "Leave Bed".
+If the bed at which you have set your spawn point last is missing or blocked when you respawn, your spawn point reverts to the world spawn.<ref>https://x.com/jeb_/status/50614359507992577</ref>
+
+== Derivation ==
+[[File:player-spawning.png|center|600px|alt=Player spawning diagram]]
+
+The spawn point was forced to 100x,100z and the player data was cleared.  The purple square outlines the column at 100x,100z, which holds an obsidian tower.
+
+To determine the spawn area, a flat, open area large enough for the (presumed) 20×20 spawn area was created.  The player (an op) repeatedly respawned and immediately dug a hole if one was not already present.  The red square, above, is drawn from the midpoints of the outermost holes in each direction.
+
+To determine the protection area, the player (a non-op) attempted to place blocks until successful while moving away from the spawn, and then traced around the edges of the protected area until all four corners were found.  The lapis corners marked above were the extent of the minimum placeable area by the player.  The blue square, above, is drawn from the midpoints of the outermost protected blocks in each direction.
+
+The dimensions of each square are given by <code>(max - min + 1)</code> to include the extra half-block on either end of the measurement (In the example below, width should be [7 - 3 + 1 = 5]):
+
+   XXXXX   <- width=5
+ 123456789
+   ^min=3
+       ^max=7
+
+== Constantly loaded chunks ==
+{{main|Spawn chunk}}
+There is a 23×23 '''[[chunk]] area''' around the world's "spawn point" that is constantly loaded, even when the player is not in range. This can be verified by moving a player far away from the world's spawn point and deleting the original spawn chunks in MCEdit and then reloading the world.
+
+That being said, [[redstone]] and [[hopper]] clocks only work within a 21×21 '''chunk area''' of the world's "spawn point", and entities will only stay loaded within a 19×19 '''chunk area'''.
+
+[[Clock circuit|Clocks]] will continue to run even when the [[player]] is not in the area, making this a useful tool for map makers who need to have constantly running clocks for the world.
+
+The loaded chunks are decided by the natural spawn point in the world, and may be changed or edited by map makers using the "Move Spawn Point" feature in [[MCEdit]], or the {{Command|setworldspawn}} command.
+
+== References ==
+{{reflist}}
+
+[[Category:Gameplay]]
+
+[[pt:Geração/Detalhes no multijogador]]
+[[zh:生成/多人游戏详情]]

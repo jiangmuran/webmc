@@ -1,0 +1,653 @@
+{{For||Snow (disambiguation)|Golem}}
+{{Infobox entity
+| group = Normal
+| 1-1 = Snow Golem.png
+| group2 = Sheared
+| 2-1 = Sheared Snow Golem.png
+| invimage = Snow Golem Spawn Egg
+| health = {{hp|4}}
+| damage = {{ItemLink|Snowball}}:<br>
+{{hp|0}}<br>
+{{hp|3}} ([[Blaze]] only)
+| size = '''{{IN|Java}}:'''<br>
+Height: 1.9 blocks<br>Width: 0.7 blocks
+
+'''{{IN|Bedrock}}:'''<br>
+Height: 1.8 blocks<br>Width: 0.4 blocks
+| speed = 0.2
+| spawn = When created by a player, enderman, or dispenser
+| behavior = Passive<ref group="note" name="passive">Can unintentionally throw a snowball at the player, dealing knockback {{in|bedrock}}.</ref>
+| usableitems = {{drop|Item|Lead}}
+{{drop|item|Name tag}}
+{{drop|Item|Shears}}
+}}
+A '''snow golem''' is a buildable [[passive mob]] that throws [[snowball]]s at monsters, which provokes them into attacking it. Depending on the [[biome temperature]], it also either produces a trail of [[snow]] or takes heat [[damage]] and dies.
+
+== Creation ==
+{{see also|Tutorial:Snow golems}}
+{{FakeImage|align=none|style=display:block;float:right;margin:0 1em 1em 0;|image-style=background:#222;border:2px solid black|{{BlockGrid|scale=2|p=Carved Pumpkin|s=Snow Block| p | s | s }}|Snow golem build configuration. [[Jack o'lantern]]s can also be used.}}
+Snow golems are created by stacking two [[snow block]]s vertically, and then placing a [[carved pumpkin]] or [[jack o'lantern]] on top of the stack. The pumpkin may be placed by the [[player]], a [[dispenser]], or an [[enderman]].<ref>{{Reddit2|sub=Minecraft|id=korjk|author=CHLGV|date=September 23, 2011|text=Endermen can make snow golems.}}</ref> Snow golems cannot be made by [[piston]]s. The building pattern also works when arranged sideways or upside-down, as long as the pumpkin is the last block placed. 
+
+The snow golem spawns at the location of the [[snow block]] as its feet when created horizontally.
+
+== Drops ==
+=== Sheared ===
+A snow golem drops 1 {{BlockLink|Carved Pumpkin|carved pumpkin}} when sheared.
+
+[[File:Snow golem sheared.png|thumb|upright|right|A snow golem after shearing the carved pumpkin from its head.]]
+
+=== On death ===
+{{DropTable
+|{{DropLine|name=Snowball|quantity=0-15}}
+}}
+
+== Behavior ==
+[[File:Snow golem attacking a witch.png|thumb|Snow golems search for the nearest monster and attack it.]]
+{{see also|Tutorial:Snow farming}}
+[[File:A snow golem's range.png|thumb|The golem can hit an entity when:
+
+* it is anywhere on the block '''(green),'''
+* it is not pushed furthest away from the golem '''(yellow),'''
+* it is pushed furthest towards the golem '''(orange)'''.
+* The golem can not hit entities on '''red''' or other further away blocks 
+
+]]
+Snow golems wander aimlessly and try to avoid [[water]], obstacles, and environmental hazards, but are immune to damage from [[powder snow]]. They are also immune to [[fall damage]].
+
+Snow golems take {{Hp|1}} damage per tick when in contact with [[rain]] or water and in [[biome]]s with a [[Biome#List of biome climates|temperature]] greater than 1.0. Examples include [[savanna]]s,{{only|java}} [[badlands]], [[desert]]s, and biomes in [[the Nether]]. The [[Fire Resistance]] [[effect]] allows them to survive in these biomes.
+
+[[File:Snow Golem Stats.png|thumb|Snow golem biome statistics.]]
+
+As a snow golem moves, it leaves a trail of [[snow]] on the ground if the blocks can support it<ref name="SnowGolemTrail">{{Tweet|notch|116449906658516992|Also, they spread snow by walking around. Nice.|September 21, 2011}}</ref>. {{IN|java}}, this happens in any biome. {{IN|bedrock}}, however, the snow trail is not generated in biomes with a high temperature value; examples include [[jungle]]s, [[mushroom field]]s, [[savanna]]s, [[stony peaks]], [[desert]]s, [[badlands]], and biomes in [[the Nether]]. If the <code>mobGriefing</code> [[game rule]] is <code>false</code>, the snow trail does not appear.
+
+[[File:SnowGolemBehavior.png|thumb|A group of snow golems throwing snowballs at a spider.]]
+Snow golems move toward all [[monsters]] (except [[ghast]]s and [[undead mount]]s) and throw [[snowball]]s at them up to 10 [[block]]s away, provoking them, regardless of whether they attack the player.<ref>{{Citation|url=https://gaming.stackexchange.com/questions/54362/what-is-a-snow-golems-range|title=What is a snow golem's range?|author=Ullallulloo|website=Arqade|date=March 8, 2012|quote=I tested this by making a hall in creative mode and blocking a zombie in a small chamber on one end and letting a snow golem go on the other. He ran forward until he was '''10 blocks away''' and started pelting the zombie with snowballs until I quit the game.}}</ref> When captured, they throw snowballs up to 16 blocks away (in [[Distance#Euclidean distance|Euclidian distance]]). They throw one snowball per second. Thrown snowballs do not deal [[damage]] except to [[blaze]]s, but they still knock back any mobs that they hit.
+
+Additionally, snow golems also attack [[creeper]]s. They never intentionally attack the player. {{IN|bedrock}}, if a snowball hits the player, it deals [[Damage#Knockback|knockback]] and makes tamed [[wolves]] and trusting [[fox]]es attack the snow golem. 
+
+{{IN|bedrock}}, a snow golem's [[snowball]]s can also set other mobs on fire if the shot flies through a [[lava]] block or a block that is on fire.
+
+A snow golem is not provoked by another [[golem]] (snow or iron) attacking it, although an [[iron golem]] that is hit accidentally by a snow golem's snowball attacks the snow golem.
+
+A snow golem wears its [[carved pumpkin]] like a [[helmet]]. Its actual head is hidden beneath the pumpkin. [[Shearing]] a snow golem removes the pumpkin, revealing its derpy face and making it drop the pumpkin. The pumpkin is stored using the <code>Pumpkin</code> tag instead of <code>ArmorItems</code>; a snow golem does not display its <code>HandItems</code> or its <code>ArmorItems</code>. {{IN|java}}, after shearing the pumpkin, the player can give a snow golem a new pumpkin only by using a command, such as {{cmd|data}}.
+
+=== Provocation by other mobs ===
+{{Anchor|Provocation by hostile mobs}}<!-- To keep the table concise, do not add mobs here unless mobs can attack iron golem or can be attacked by them. -->
+{| class="wikitable  sortable"
+!Entity 
+!Snow golem actively attacks the mob?
+!Actively attacks the snow golem?
+! Notes<!-- Do not add description that simply repeats the information of either one or both column before it in "note" column. The purpose of this column is to add information that is not fit for the two column before it. -->
+|-
+|{{EntityLink|Bee}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Bees retaliate if accidentally attacked.
+|-
+|{{EntityLink|Blaze}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Blazes retaliate.
+|-
+|{{EntityLink|Bogged}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Bogged retaliate {{in|be}}.
+|-
+|{{EntityLink|Breeze}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Breezes deflect the snowballs.
+|-
+|{{EntityLink|Creaking}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Creeper}}
+|{{Tc|yes}}<ref>{{bug|MC-73964||Snow golems attack creepers}}</ref><ref>{{bug|MCPE-102634||Snow golems attack creepers}}</ref>
+|{{Tc|no}}
+|Creepers retaliate.
+|-
+|{{EntityLink|Dolphin}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Dolphins retaliate if accidentally attacked.
+|-
+|{{EntityLink|Drowned}}
+|{{Tc|Yes}}
+|{{Tc|Partial|Partial{{only|be|short=1}}<br>No{{only|je|short=1}}}}
+|Drowned do not attack any mob that is not touching water during daytime.
+|-
+|{{EntityLink|Ender Dragon}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Enderman}} 
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Endermen teleport away when hit by a snowball.
+|-
+|{{EntityLink|Endermite}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Endermites retaliate {{in|je}}.
+|-
+|{{EntityLink|Evoker}}
+|{{Tc|yes}}
+|{{Tc|partial|Yes{{only|bedrock|short=1}}<br>No{{only|java|short=1}}}}
+|-
+|{{EntityLink|Fox}}
+|{{Tc|no}}
+|{{Tc|no}}
+|{{IN|be}}, trusting foxes attack the snow golem if the golem unintentionally attacks the player.
+|-
+|{{EntityLink|Ghast}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Ghasts can still unintentionally damage the snow golem.
+|-
+|{{EntityLink|Giant}}{{only|je|short=1}}
+|{{Tc|yes}}
+|{{Tc|no}}
+|Giants do not have any AI.
+|-
+|{{EntityLink|Goat}}
+|{{Tc|no}}
+|{{Tc|partial|Randomly}}
+|
+|-
+|{{EntityLink|Guardian}}<br>{{EntityLink|Elder Guardian}} 
+|{{Tc|Yes}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Hoglin}}
+|{{Tc|partial|Yes{{only|je|short=1}}<br>No{{only|be|short=1}}}}
+|{{Tc|No}}
+|Hoglins retaliate.
+|-
+|{{EntityLink|Husk}}<br>{{EntityLink|Zombie}}<br>{{EntityLink|Zombie Villager}}
+|{{tc|yes}}
+|{{Tc|Partial|Yes{{only|be|short=1}}<br>No{{only|je|short=1}}}}
+|Zombies retaliate {{in|je}}.
+|-
+|{{EntityLink|Illusioner}}{{only|java|short=1}}
+|{{Tc|yes}}
+|{{Tc|no}}
+|Illusioners retaliate.
+|-
+|{{EntityLink|Iron Golem}}
+|{{Tc|No}}
+|{{Tc|No}}
+|Iron golems retaliate if accidentally attacked.
+|-
+|{{EntityLink|Killer Bunny}}{{only|je|short=1}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Killer bunnies retaliate if accidentally attacked.
+|-
+|{{EntityLink|Llama}}<br>{{EntityLink|Trader Llama}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Llamas retaliate if accidentally attacked.
+|-
+|{{EntityLink|Magma Cube}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|
+|-
+|{{EntityLink|Phantom}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|
+|-
+|{{EntityLink|Panda}} (aggressive)
+|{{Tc|no}}
+|{{Tc|no}}
+|Aggressive pandas retaliate if accidentally attacked.
+|-
+|{{EntityLink|Piglin}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Piglins retaliate.
+|-
+|{{EntityLink|Piglin Brute}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Piglin brutes retaliate.
+|-
+|{{EntityLink|Pillager}}
+|{{Tc|yes}}
+|{{Tc|no}}
+|Pillagers retaliate.
+|-
+|{{EntityLink|Polar Bear}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Polar bears retaliate if accidentally attacked.
+|-
+|{{EntityLink|Pufferfish}}
+|{{Tc|no}}
+|{{Tc|no}}
+|Pufferfish can still damage the golem with its defense.
+|-
+|{{EntityLink|Ravager}}
+|{{tc|yes}}
+|{{tc|no}}
+|Ravagers retaliate.
+|-
+|{{EntityLink|Shulker}}
+|{{Tc|Yes}}
+|{{Tc|no}}
+|Shulkers retaliate.
+|-
+|{{EntityLink|Silverfish}}
+|{{Tc|Yes}}
+|{{Tc|Partial|Yes{{only|be|short=1}}<br>No{{only|je|short=1}}}}
+|
+|-
+|{{EntityLink|Skeleton}}<br>{{EntityLink|Stray}}<br>{{EntityLink|Wither Skeleton}} 
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Skeletons retaliate.
+|-
+|{{EntityLink|Slime}}
+|{{Tc|Yes}}
+| {{Tc|Partial|Yes{{only|be|short=1}}<br>No{{only|je|short=1}}}}
+|
+|-
+|{{EntityLink|Spider}}<br>{{EntityLink|Cave Spider}}
+|{{Tc|Yes}}
+|{{Tc|No}}
+|Spiders retaliate.
+|-
+|{{EntityLink|Vex}}
+|{{Tc|yes}}
+|{{Tc|partial}}
+|A vex attacks a snow golem immediately when an evoker summons three vexes.
+|-
+|{{EntityLink|Vindicator}}
+|{{Tc|Yes}}
+|{{Tc|partial|Yes{{only|be|short=1}}<br>No/Yes (if named "Johnny"){{only|je|short=1}}}}
+|
+|-
+|{{EntityLink|Villager}}
+|{{tc|no}}
+|{{tc|no}}
+|Villagers can accidentally damage the snow golem by setting off a firework.
+|-
+|{{EntityLink|Warden}}
+|{{Tc|Yes}}
+|{{Tc|Partial}}
+|A warden immediately retaliates when attacked by a snow golem, it also attacks when noticed.
+|-
+|{{EntityLink|Witch}}
+|{{Tc|Yes}}
+|{{Tc|Partial|Yes{{only|be|short=1}}<br>No{{only|je|short=1}}}}
+|
+|-
+|{{EntityLink|Wither}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Wolf}} (wild)
+|{{Tc|no}}
+|{{Tc|no}}
+|Wild wolves retaliate if accidentally attacked.
+|-
+|{{EntityLink|id=tamed-wolf|Wolf}} (tamed)
+|{{Tc|no}}
+|{{Tc|no}}
+|Tamed wolves attack the snow golem if the owner attacks the golem.
+|-
+|{{EntityLink|Zoglin}}
+|{{Tc|Yes}}
+|{{Tc|Yes}}
+|
+|-
+|{{EntityLink|Zombie Nautilus}}
+|{{Tc|partial|Yes{{only|bedrock|short=1}}<ref>{{bug|MCPE-235914||Iron Golems and Snow Golems attack tamed Zombie Nautili}}</ref>
+<br>No{{only|java|short=1}}}}
+|{{Tc|no}}
+|
+|-
+|{{EntityLink|Zombified Piglin}}
+|{{Tc|partial|Yes, 99.25% of them{{only|bedrock|short=1}}{{note|See {{slink|Zombified Piglin|Mounting}}}}
+<br>Yes, all of them{{only|java|short=1}}}}
+|{{Tc|no}}
+|Zombified piglins retaliate.
+|-
+|All other mobs
+|{{Tc|no}}
+|{{Tc|no}}
+|
+|}
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =-
+|subtitle=MC-97521
+|source=none
+|description=''Unused sound event''
+|id=entity.snow_golem.ambient
+|translationkey=-
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Snow golem death1.ogg
+|sound2=Snow golem death2.ogg
+|sound3=Snow golem death3.ogg
+|subtitle=Snow Golem dies
+|source=neutral
+|description=When a snow golem dies
+|id=entity.snow_golem.death
+|translationkey=subtitles.entity.snow_golem.death
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Snow golem hurt1.ogg
+|sound2=Snow golem hurt2.ogg
+|sound3=Snow golem hurt3.ogg
+|subtitle=Snow Golem hurts
+|source=neutral
+|description=When a snow golem is damaged
+|id=entity.snow_golem.hurt
+|translationkey=subtitles.entity.snow_golem.hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Shear.ogg
+|subtitle=Shears click
+|source=Players
+|description=When a snow golem is sheared
+|id=entity.snow_golem.shear
+|translationkey=subtitles.item.shears.shear
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|subtitle=Snowball flies
+|source=neutral
+|description=When a snow golem shoots a snowball
+|id=entity.snow_golem.shoot
+|translationkey=subtitles.entity.snowball.throw
+|volume=1.0
+|pitch={{frac|1|3}}-0.5
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Snow golem death1.ogg
+|sound2=Snow golem death2.ogg
+|sound3=Snow golem death3.ogg
+|source=neutral
+|description=When a snow golem dies
+|id=mob.snowgolem.death
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Snow golem hurt1.ogg
+|sound2=Snow golem hurt2.ogg
+|sound3=Snow golem hurt3.ogg
+|source=neutral
+|description=When a snow golem is damaged
+|id=mob.snowgolem.hurt
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Shear.ogg
+|source=neutral
+|description=When a snow golem is sheared
+|id=mob.sheep.shear
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Bow shoot.ogg
+|source=neutral
+|description=When a snow golem shoots a snowball
+|id=mob.snowgolem.shoot
+|volume=1.0
+| pitch = 0.33-0.5
+}}
+}}
+
+==Data values==
+===ID===
+{{edition|java}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Snow Golem
+|spritetype=entity
+|nameid=snow_golem
+|showentitytags=y
+|entitytags=fall_damage_immune, freeze_immune_entity_types
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Snow Golem
+|spritetype=entity
+|nameid=snow_golem
+|showentityfamily=y
+|entityfamily=mob,snowgolem
+|id=21
+|foot=1}}
+
+=== Entity data ===
+Snow golems have entity data associated with them that contain various properties.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data" /><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|byte|Pumpkin}} : 1 or 0 (true/false) - whether or not the Snow Golem has a pumpkin on its head.
+</div><section end="entity data" />
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== History ==
+{{info needed section|1.14 pumpkin textures}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||September 21, 2011|link=none|Snow golems were first showcased by [[Notch]] on [[wikipedia:Twitter|Twitter]] as a new [[mob]]<ref>{{tweet|notch|116449292859883520| Got frustrated with AWS, so I made a new mob! :D|September 21, 2011}}</ref> that is "[[Crafting|craftable]], is friendly, and throws [[snowball]]s at enemies. Also melts in hot [[biome]]s."<ref>{{tweet|notch|116449606983880705|It will be craftable, is friendly, and throws snowballs at enemies. Also melts in hot biomes.|September 22, 2011}}</ref> and that it would "spread [[snow]] by walking around."<ref name=SnowGolemTrail/>
+|They were stated on [[wikipedia:Reddit|Reddit]] to appear in [[Java Edition Beta 1.9 Prerelease|Beta 1.9]].<ref>http://www.reddit.com/r/Minecraft/comments/kmro7/mojang_potentially_releasing_something_tomorrow/c2li04x</ref>
+|Notch originally planned to call this mob ''Snowmen''. However, soon after revealing the name, Reddit user ''Cuttleman'' stated he would call them ''Snow Golems'', a name Notch approved of and made official.<ref>http://www.reddit.com/r/Minecraft/comments/kml6r/notchs_new_snowman_mob_is_craftable_and_throws/</ref>}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Snow Golem JE1 BE1.png|32px]] Added snow golems.
+|Snow golems flee when attacked.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 2|Snow golems can be bred with wheat and attack other snow golems nearby. They also attack [[player]]s holding [[wheat]] and continue attacking even after the wheat isn't being held anymore. However, they do not attack immediately.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Reverted the above changes.}}
+|{{HistoryLine||1.2.1|dev=12w06a|Snow golems have a new path-finding AI and can form a wall to attack [[mob]]s.
+|Snow golems now take damage from rain and water.}}
+|{{HistoryLine|||dev=12w07a|Snow golems now take [[damage]] in [[desert]]s, [[jungle]]s, [[the Nether]].}}
+|{{HistoryLine||1.6.1|dev=13w16a|Added [[lead]]s, which can be used to leash snow golems.}}
+|{{HistoryLine||1.8|dev=14w04a|Snow golems can now be created by dispensing the [[pumpkin]] from a [[dispenser]] atop two [[snow block]]s.}}
+|{{HistoryLine|||dev=14w05b|Snow golems' pumpkin heads are no longer visible when they have the [[Invisibility]] effect.}}
+|{{HistoryLine|||dev=14w25a|Snow golems can now be built sideways and upside-down instead of just upright.}}
+|{{HistoryLine|||dev=14w26c|[[Jack o'lantern]]s can no longer be used to build snow golems.}}
+|{{HistoryLine|||dev=14w33a|Snow golems now attack [[creeper]]s, provoking them.}}
+|{{HistoryLine||1.8.1|dev=pre1|Jack o'lanterns can now be used to build snow golems again.}}
+|{{HistoryLine||1.9|dev=15w31c|Snow golems can no longer cause [[damage]] to [[ender dragon]]s.}}
+|{{HistoryLine|||dev=15w46a|Snow golems no longer create a trail of [[snow|snow layers]], if the [[game rule]] <code>mobGriefing</code> is set to {{cd|false}}.}}
+|{{HistoryLine|||dev=15w49a|[[File:Sheared Snow Golem JE1 BE1.png|32px]] Snow golems' [[pumpkin]] can now be removed with [[shears]].}}
+|{{HistoryLine|||dev=15w50a|Added [[sound]]s <code>entity.snowman.ambient</code>, <code>entity.snowman.hurt</code>, and <code>entity.snowman.death</code>.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Snow Golem.png|32px]] [[File:Sheared Snow Golem JE2 BE2.png|32px]] The textures of snow golems have been changed.}}
+|{{HistoryLine||1.16|dev=20w07a|Snow golems now [[drops|drop]] a [[pumpkin]] when [[Shears|sheared]].<ref>{{bug|MC-94094}}</ref>}}
+|{{HistoryLine|||dev=20w15a|Snow golems can now be sheared by [[dispenser]]s.}}
+|{{HistoryLine|||dev=pre1|Snow golems are now damaged by splash and lingering [[water bottle]]s.<ref>{{bug|MC-106968}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Snow golems are immune to [[Damage#Freezing|freezing]].}}
+|{{HistoryLine||1.18|dev=pre6|Snow golems now leave a snow trail in every biome.}}
+|{{HistoryLine||1.19.3|dev=22w44a|[[File:Snow Golem Spawn Egg JE2 BE1.png|32px]] Added [[spawn egg]]s for snow golems.<ref>{{bug|MC-189872|||Fixed}}</ref>}}
+|{{HistoryLine||1.20.5|dev=24w06a|[[Wolf|Wolves]] are no longer damaged by snowballs from snow golems.<ref>{{bug|MC-72151||Snow Golem's snowballs damage wolves instead of pushing them|Fixed}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.12.1|dev=build 1|[[File:Sheared Snow Golem JE1 BE1.png|32px]] Added snow golems.}}
+|{{HistoryLine|||dev=build 2|[[File:Snow Golem JE1 BE1.png|32px]] Snow golems now spawn wearing a [[pumpkin]].}}
+|{{HistoryLine|||dev=build 3|[[File:Sheared Snow Golem JE1 BE1.png|32px]] Snow golems' pumpkin can now be removed with [[shears]].}}
+|{{HistoryLine|||dev=build 9|Snow golems can now leave a trail of [[snow]] in [[plains]] biomes.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Snow golems can now be created by dispensing the [[pumpkin]] from a [[dispenser]] atop two [[snow block]]s.}} 
+|{{HistoryLine||v0.16.0|dev=build 5|Added [[sound]]s <code>entity.snowman.ambient</code>, <code>entity.snowman.hurt</code>, and <code>entity.snowman.death</code>.}} 
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.5|dev=alpha 1.0.5.0|Snow golems are no longer able to leave a trail of [[Snow|snow layers]] if the [[game rule]] <code>mobGriefing</code> is set to {{cd|false}}.}} 
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|The [[health]] of snow golems has been reduced from 10 to 4.}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|The snow golem's face can now be seen only after [[Shears|shearing]] it.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Snow Golem.png|32px]] [[File:Sheared Snow Golem JE2 BE2.png|32px]] The textures of snow golems have been changed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Snow golems now take [[damage]] from walking over [[campfire]]s.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|Snow golems now [[drops|drop]] a [[pumpkin]] when [[Shears|sheared]].<ref>{{bug|MCPE-66967}}</ref>}}
+|{{HistoryLine||1.17.0|dev=beta 1.16.230.54|Snow golems are now immune to [[Damage#Freezing|freezing]].}}
+|{{HistoryLine|||dev=beta 1.17.0.52|Snow golems are now damaged by splash [[water bottle]]s and lingering [[water bottle]]s.}}
+|{{HistoryLine||1.19.60|dev=Preview 1.19.60.20|[[File:Snow Golem Spawn Egg JE2 BE1.png|32px]] Added [[spawn egg]]s for snow golems.}}
+|{{HistoryLine||1.20.40|dev=Preview 1.20.40.22|Snow golems now produce a crumbling particle effect when constructed.}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|Snow golems can no longer be created with un-carved pumpkins.|Snow golems no longer take damage in biomes with high temperatures if they have the Fire Resistance effect applied.}}
+|{{HistoryLine||26.0|dev=Preview 26.0.23|Due to a bug, snow golems now attack [[zombie nautilus]]es, even tamed ones.<ref>{{bug|MCPE-235914}}</ref>}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Snow Golem JE1 BE1.png|32px]] Added snow golems.}}
+|{{HistoryLine||xbox=TU11|The [[spawn limit|limit]] for snow golems in a world has been increased from 8 to 16.}}
+|{{HistoryLine||xbox=TU12|Snow golems have a new path-finding AI and can form a wall to attack [[mob]]s.
+|Snow golems now take [[damage]] in [[desert]]s, [[jungle]]s, [[the Nether]], and when in contact with [[rain]] and [[water]].}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|Snow golems can now be created by dispensing the [[pumpkin]] from a [[dispenser]] atop two [[snow block]]s.|Snow golems can now be built sideways and upside-down instead of just upright.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Added [[sound]]s for snow golems.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|[[File:Sheared Snow Golem JE1 BE1.png|32px]] Snow golems' [[pumpkin]] can now be removed with [[shears]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Snow Golem.png|32px]] [[File:Sheared Snow Golem JE2 BE2.png|32px]] The textures of snow golems have been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Snow Golem JE1 BE1.png|32px]] [[File:Sheared Snow Golem JE1 BE1.png|32px]] Added snow golems.}}
+}}
+
+<gallery>
+Beta 1.9 Development Snowman.png|First screenshot of a snow golem, released by [[Notch]] on September 21, 2011.
+</gallery>
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|Snow golems now use a byte data tag <code>Pumpkin</code> to determine whether they have a [[pumpkin]] head, allowing [[Shears|sheared]] snow golems to save and reload in their sheared state.
+|The entity ID has been changed from <code>SnowMan</code> to <code>snowman</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Numeric IDs for entities were presumably deprecated in this version.{{info needed|what was this entity's numeric ID?}}}}
+|{{HistoryLine|||dev=pre5|The entity ID has been changed from <code>snowman</code> to <code>snow_golem</code>.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has been changed from <code>snowgolem</code> to <code>snow_golem</code>.}}
+}}
+
+==Issues==
+{{issue list}}
+
+==Gallery==
+=== Screenshots ===
+<gallery>
+Snow golem.png|Creation of a snow golem.
+Snow golem (2).png|A snow golem attacks a [[spider]].
+ManySnowGolems.png|A large group of snow golems in a [[lake]].
+Endermadegolems.jpg|Three snow golems that were built by [[endermen]].
+Insidetheman.png|The view from inside a snow golem's head. Its real face can be seen.
+Snow golem in a minecart.png|A snow golem riding in a [[minecart]].
+ShearedSnowGolem.png|A [[shears|sheared]] snow golem.
+SnowGolemAndMoon.png|A snow golem at night. 
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Snow Golem (texture).png|Snow golem texture file.
+Snow Golem (texture) JE1.png|[[Programmer Art]]
+</gallery>
+
+=== In other media ===
+<gallery class="pixel-image">
+File:Icy Golem.png|The [[Minecraft Story Mode:Icy Golem|Icy Golem]], a unique variation of a snow golem featured in [[Minecraft Story Mode]].
+File:Melon Golem.png|[[MCE:Melon Golem|Melon Golem]], another unique version featured in [[Minecraft Earth]].
+File:LEGO Snowman.png|[[Lego Minecraft]] snow Golem.
+File:City Snowgolem.png|A snow golem as it appears in the [[Texture Pack DLC|City texture pack]].
+File:Greek Snow Golem.png|A snow golem as it appears in the [[Mash-up Pack|Greek Mythology mash-up pack]]
+File:Halloween Snow Golem.png|A snow golem as it appears in the [[Mash-up Pack|Halloween mash-up pack]].
+File:Party Snow Golem.png|Party Snow Golem, a skin featured in the first [[Skin pack|Birthday skin pack]].
+File:Combatlogo.png|Official artwork of a snow golem under attack.
+File:Winter art 2025.jpg|[[Kai]] and [[Zuri]] building a snow golem
+File:MC Wallpaper SereneSnow 3840x2160.png|Three snow golems as seen in ''[[Minecraft: Soothing Scenes]]'' snow and the ''[[Launcher]]''.
+File:Snow Golem Melting Animated Pixel Artwork.gif|Pixel art animation of a poor snow golem melting to death.
+File:Snow Golem Animated Pixel Artwork.gif|Pixel art animation of an unmasked snow golem throwing a snowball.
+File:Icon winter.png|Icon of a snow golem used on the [[Minecraft Marketplace]].
+File:Mini house.jpeg|[[Sunny]] and several snow golems marveling at a ''Minecraft'' brand gingerbread house.
+File:Mojang - Xmas Card.jpg|A snow golem Christmas card.
+File:Snow golem's snowman.jpg|A snow golem handing a snowball to a real snowman. (Photo Cut)
+File:Snow Golem Slasher.jpg|Art of a snow golem halloween costume.
+File:HTTYD Snowman.jpg
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox snow}}
+{{Navbox entities|mobs}}
+
+[[Category:Golem mobs]]
+[[Category:Passive mobs]]
+
+[[cs:Sněhulák]]
+[[de:Schneegolem]]
+[[es:Gólem de nieve]]
+[[fr:Golem de neige]]
+[[hu:Hógólem]]
+[[it:Golem di neve]]
+[[ja:スノウゴーレム]]
+[[ko:눈 골렘]]
+[[nl:Sneeuwgolem]]
+[[pl:Śnieżny golem]]
+[[pt:Golem de Neve]]
+[[ru:Снежный голем]]
+[[uk:Сніговий ґолем]]
+[[zh:雪傀儡]]

@@ -1,0 +1,203 @@
+{{redirect|Lamp|the other light source|Lantern}}
+{{for|other uses|Redstone}}
+{{Infobox block
+|group=Unlit
+|1-1=Redstone Lamp.png
+|group2=Lit
+|2-1=Lit Redstone Lamp.png
+|invimage=Redstone Lamp
+|invimage2=Lit Redstone Lamp
+|transparent=No
+|light=Yes (15) <small>(when lit)</small>
+|tool=any
+|renewable=Yes
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+| mapcolor = {{Map color|Redstone Lamp}}{{only|je|short=1}}<br>{{Map color|Air}}{{only|be|short=1}}
+}}
+A '''redstone lamp''' is a solid [[block]] that produces [[light]] while it is receiving [[redstone]] power.
+
+== Obtaining ==
+=== Breaking ===
+A redstone lamp can be mined with any [[tool]]<ref>{{bug|MC-192719||Sea Lantern, Glowstone, Redstone Lamp don't have an assigned tool}}</ref> or by hand, dropping itself as an [[item (entity)|item]].
+{{breaking row|horizontal=1|Redstone Lamp}}
+
+=== Natural generation ===
+Redstone lamps generate naturally in [[ancient cities]].
+
+=== Crafting ===
+{{Crafting
+|B1= Redstone Dust
+|A2= Redstone Dust
+|B2= Glowstone
+|C2= Redstone Dust
+|B3= Redstone Dust
+|Output= Redstone Lamp
+|type= Redstone
+}}
+
+== Usage ==
+A redstone lamp can be used to produce switchable [[light]]. 
+
+Redstone lamps are [[Redstone components#Mechanism components|redstone mechanisms]] and can be activated by:
+* An adjacent active '''[[power component]]''', including above or below: for example, a [[redstone torch]] (except that a redstone torch does not activate a redstone lamp it is attached to), a [[block of redstone]], a [[daylight sensor]], etc.
+* An adjacent '''powered block''' (for example, an opaque block with an active redstone torch under it), including above or below
+* A powered '''[[redstone comparator]]''' or '''[[redstone repeater]]''' facing the redstone lamp
+* Adjacent powered '''[[redstone dust]]''' configured to point at the redstone lamp (or on top of it) or directionless; a redstone lamp is ''not'' activated by adjacent powered redstone dust that is configured to point away from it.
+
+A redstone lamp activates instantly, but takes 4 ticks (0.2 seconds) to turn off {{in|java}} or 6 ticks (0.3 seconds) to turn off  {{in|bedrock}}.
+
+An active redstone lamp produces block light level 15. An inactive redstone lamp produces no light.
+
+A redstone lamp acts like an opaque block; it blocks [[sky]] light, [[mob]]s suffocate in it, and it conducts redstone power. It also allows mobs to spawn on them, even when the lamp is lit, provided the mob ignores light level for spawning.
+
+== Sounds ==
+{{Sound table/Block/Glass}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Redstone Lamp
+|spritetype=block
+|nameid=redstone_lamp
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Redstone Lamp
+|spritetype=block
+|nameid=redstone_lamp
+|id=123}}
+{{ID table
+|displayname=Lit Redstone Lamp
+|spritetype=block
+|nameid=lit_redstone_lamp
+|id=124
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|lit|false|false,true|If the redstone lamp is lit.|foot=1}}
+
+== Videos ==
+<div style="text-align:center">{{yt|pjO4dp7j5ks}}{{yt|4cZri-VcxKE}}</div>
+
+== History ==
+{{See technical block|Lit Redstone Lamp}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w07a|[[File:Redstone Lamp JE1.png|32px]] [[File:Lit Redstone Lamp JE1.png|32px]] Added redstone lamps.}}
+|{{HistoryLine|||dev=1.2|[[File:Redstone Lamp JE2 BE1.png|32px]] [[File:Lit Redstone Lamp JE2 BE1.png|32px]] The texture of redstone lamps has now been darkened, and the texture of lit redstone lamps has been slightly changed.}}
+|{{HistoryLine||1.2.4|dev=release|A 2-[[tick]] delay to deactivation has been added to redstone lamps.}}
+|{{HistoryLine||1.3.1|dev=12w21a|As both [[redstone dust]] and [[glowstone]] are now renewable via [[trading]], redstone lamp is now [[renewable]].}}
+|{{HistoryLine||January 11, 2018|link={{tweet|JasperBoerstra|951440267038593024}}|[[File:Redstone Lamp JE3 BE2.png|32px]] [[File:Lit Redstone Lamp JE3 BE2.png|32px]] [[Jasper Boerstra]] tweets an image of updated redstone lamp textures.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Redstone Lamp JE3 BE2.png|32px]] [[File:Lit Redstone Lamp JE3 BE2.png|32px]] The texture of redstone lamps has now been changed.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Redstone lamps now generate as part of [[ancient cities]].}}
+|{{HistoryLine||1.21.2|dev=24w35a|Redstone lamps are now visible on [[map]]s.<ref>{{bug|MC-124331}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.13.0|dev=build 1|[[File:Redstone Lamp JE2 BE1.png|32px]] [[File:Lit Redstone Lamp JE2 BE1.png|32px]] Added redstone lamps.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|Levers can be placed on redstone lamps.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Redstone Lamp BE.png|32px]] [[File:Lit Redstone Lamp BE.png|32px]] The texture of redstone lamps has now been changed.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU12|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Redstone Lamp JE2 BE1.png|32px]] [[File:Lit Redstone Lamp JE2 BE1.png|32px]] Added redstone lamps.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Redstone Lamp JE3 BE2.png|32px]] [[File:Lit Redstone Lamp JE3 BE2.png|32px]] The texture of redstone lamps has now been changed.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Redstone Lamp JE2 BE1.png|32px]] [[File:Lit Redstone Lamp JE2 BE1.png|32px]] Added redstone lamps.}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=17w47a|The different block IDs for the redstone lamp has now been merged into one ID.
+|A lit block state has been added to redstone lamps.
+|Prior to [[1.13/Flattening|''The Flattening'']], these blocks' numeral IDs were 123 and 124.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Multiple tiled redstone lamps produce a pattern that resembles the [[wikipedia:Truncated square tiling|truncated square tiling]] t{4,4}.
+* {{IN|bedrock}}, redstone lamps are transparent on [[map]]s.<ref>{{bug|MCPE-112543}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Redstone Lamp Day (Switched Off).png|A redstone lamp shown during the day that is switched off.
+File:Redstone Lamp Day (Switched On).png|A redstone lamp shown during the day that is switched on.
+File:Redstone Lamp Evening (Switched Off).png|A redstone lamp shown during the evening that is switched off.
+File:Redstone Lamp Evening (Switched On).png|A redstone lamp shown during the evening that is switched on.
+File:Redstone-lamp-and-wire.png|Demonstrating how wire powers redstone lamps.
+File:Redstone-lamp-and-repeaters.png|Demonstrating how repeaters power redstone lamps.
+File:Redstone-lamp-powered-block.png|Demonstrating how a solid block powers redstone lamps.
+File:Redstone-lamp-torch-floor-no-block-above.png|Floor torch with no lamp above it.
+File:Redstone-lamp-torch-floor-with-block-above.png|Floor torch with a lamp above it.
+File:Redstone-lamp-torch-wall-no-block-above.png|Wall torch with no lamp above it.
+File:Redstone-lamp-torch-wall-with-block-above.png|Wall torch with a lamp above it.
+File:Creativity of redstone lamps.png|A demonstration of how redstone lamps can be used in building.
+File:Redstone-lamp-floor.png|A redstone lamp floor.
+File:Redstone-lamp-wall.png|A redstone lamp wall.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:BlockWeek redstone lamp.png|Artwork of redstone lamps used in [[Block of the Week]]
+File:CyanRedstoneLamp.png|A cyan redstone lamp as it appears in {{MCSM}}
+File:Redstone Lamp (inventory) MCE.png|{{MCE|Redstone Lamp}} as it appeared in {{MCE}}
+File:Chained Redstone Lamp Lit FN MCD.png|A chained redstone lamp in {{MCD}}
+</gallery>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|block-week-redstone-lamp|Block of the Week: Redstone Lamp|March 30, 2018|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Redstone]]
+[[Category:Mechanisms]]
+[[Category:Manufactured blocks]]
+[[Category:Light sources]]
+
+[[de:Redstone-Lampe]]
+[[es:Lámpara de redstone]]
+[[fr:Lampe à redstone]]
+[[hu:Redstone-lámpa]]
+[[it:Lampada a redstone]]
+[[ja:レッドストーンランプ]]
+[[ko:레드스톤 조명]]
+[[nl:Redstonelamp]]
+[[pl:Lampa redstone]]
+[[pt:Lâmpada de Redstone]]
+[[ru:Лампа]]
+[[uk:Редстоунова лампа]]
+[[zh:红石灯]]

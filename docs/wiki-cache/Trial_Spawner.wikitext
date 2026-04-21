@@ -1,0 +1,496 @@
+{{About||the more difficult variant|Ominous Trial Spawner|other uses|Spawner}}
+{{Infobox block
+| group1 = Normal
+| 1-1 = Active Trial Spawner.png
+| group2 = Ejecting
+| 2-1 = Ejecting Trial Spawner.png
+| group3 = Cooldown
+| 3-1 = Trial Spawner.png
+| renewable = No
+| stackable = Yes (64)
+| light = 
+* Yes, when not inactive
+** Waiting for players: 4
+** Active: 8
+| transparent = Partial
+| tool = any
+| flammable = No
+| lavasusceptible = No
+}}
+A '''trial spawner''' is a type of [[spawner]] found in [[trial chambers]]. It spawns [[mob]]s in waves, ejects consumable items and/or [[trial keys]] after they are all defeated, and then deactivates for 30 minutes. Having more [[Survival]]/[[Adventure]] mode [[player]]s nearby results in more mobs and more rewards.
+
+A trial spawner will convert into an active [[ominous trial spawner]] during an [[ominous trial]], even if it was on cooldown.
+
+== Obtaining ==
+Trial spawner can be obtained only by using the [[Creative inventory]], using {{Control|pick block}} or executing [[commands]].
+
+=== Natural generation ===
+Trial spawners generate naturally in every chamber and every corridor of [[trial chambers]], except for the entrance chamber.
+
+=== Breaking ===
+No tool can accelerate the breaking process of trial spawner.
+{{breaking row|Trial Spawner|drop=0|horizontal=1}}
+Trial spawner drops nothing when it's destroyed.
+
+== Usage ==
+A trial spawner summons a limited number of mobs, scaled based on the number of nearby [[player]]s. When these mobs are defeated, the spawner ejects a reward for each player and enters a cooldown period.
+
+=== Activation ===
+A trial spawner has a required player range of 14 blocks. Any player in Survival or Adventure mode activates the spawner if the [[distance]] between the player's center and the spawner's center becomes less than the required player range, and the spawner has a direct line of sight to the player. Once activated, the spawner begins summoning copies of the mob set in it, and no longer requires the player to be within range or maintain line of sight.
+
+The line of sight check for trial spawners can pass through transparent solid blocks, such as [[copper grate]]s and [[glass]]. This differs from the line of sight check for hostile mobs, which cannot pass through these blocks.
+
+Trial spawners do not activate if the [[game rule]] {{gmr|spawn_mobs|domobspawning}} is {{cd|false}},<ref>{{bug|MC-266487||Trial Spawners do not activate/spawn mobs if gamerule "doMobSpawning" is set to "false"}}</ref>{{verify|edition=be}} or if the difficulty is set to [[Peaceful]].<ref>{{bug|MC-278006||Trial spawners never try to spawn mobs in peaceful difficulty}}</ref>{{verify|edition=be}}
+
+When a trial spawner first activates, it shoots spark-like [[particles]] up into the air. While active, it emits smoke and flame particles around itself and any entities it summons.
+
+The [[light level]] around a trial spawner does not affect how it summons entities.
+
+=== Mob spawning ===
+[[File:Spawn Radius.png|thumb|Chance to Spawn🟩 70% 🟨 25% 🟧 5% 🟥 0%]]
+[[File:Mobs Spawning From Trial Spawner.gif|thumb|A [[breeze]] and two [[skeleton]]s spawning from their respective trial spawners.]]
+{{See also|Trial Chambers#Trial spawners}}
+
+When a player enters a trial spawner's range, the spawner attempts to spawn 1 mob every {{convert|40|game ticks|seconds}}. With 1 player, it does not spawn a mob if there are already 2 mobs from the spawner that are still alive. It spawns a total of 6 mobs before ejecting loot and going into cooldown. The number of living mobs required to prevent further mob spawning is called the ''simultaneous mob'' count. The number of mobs spawned before going into cooldown is the ''total mob'' count. These numbers are summarized in {{slink||Spawning values}}.
+
+This duration of time between each mob being spawned is the ''spawn interval''. If the spawner can't spawn a mob, it waits for the duration of the ''spawn interval'' and tries again. Once the number of living mobs spawned by the spawner has reached the ''simultaneous mob'' count, it stops trying to spawn mobs. Mobs spawned by the spawner do not naturally despawn, but the spawner does not detect or count living mobs from unloaded [[chunk]]s. Therefore, moving mobs into unloaded chunks causes them to build up and the spawner to continue spawning more. 
+
+A trial spawner also stops spawning mobs if the number of living mobs spawned by it reached the ''total mob'' count. The spawner doesn't need to detect these mobs being alive, and therefore still counts them if they are in unloaded chunks. The spawner detects the death of the mobs only for the ''total mob'' count, and it always detects the death of the mobs even if it is not in a loaded chunk.
+
+Both the ''simultaneous mob'' count and the ''total mob'' count increase if another player comes within the spawner's range. For each additional player present, the ''simultaneous mob'' count increases by 1, and the ''total mob'' count increases by 2. For example, with 2 players, 8 mobs spawn in total with 3 at once, and with 3 players, 10 mobs spawn in total with 4 at once.
+
+If a player leaves the detection range of a trial spawner, these values do not scale back down.
+
+The values described above are the default values used when trial spawners are placed manually. Naturally generated spawners in trial chambers use different values. Additionally, these numbers can be configured by modifying the block's NBT data.
+
+Naturally generating trial spawners in trial chambers use different values for the ''spawn interval'', the ''total mob'' count, and the ''simultaneous mob'' count. The quantity that the last 2 values change by with additional players is also different for different types of spawners. All naturally generated spawners attempt to spawn mobs every {{convert|20|game ticks|seconds}}, or every {{convert|160|game ticks|seconds}} for the slow versions of the spawners. Additionally, naturally generated breeze spawners allow 1 breeze to exist at once (+0.5 for each additional player present) and stop after spawning 2 mobs (+1 for each additional player present). Baby zombie spawners allow 2 baby zombies to exist at once (+0.5 for each additional player present) and stop after spawning 6 mobs (+2 for each additional player present). All other spawners generated in trial chambers use the default value of 6 ''total mobs'', plus 2 for each additional player present, and 3 ''simultaneous mobs'', plus 2 for each additional player present. This is summarized in {{slink||Spawning values}}.
+
+==== Spawning values ====
+{| class="wikitable"
+! Type
+! ''Spawn interval''
+! ''Total mobs'' (base)
+! ''Total mobs'' added per player
+! ''Simultaneous mobs'' (base)
+! ''Simultaneous mobs'' added per player
+|-
+| ''Default values''
+| {{convert|40|game ticks|seconds}}
+| 6
+| 2
+| 2
+| 1
+|-
+| Breeze
+| {{convert|20|game ticks|seconds}}
+| 2
+| 1
+| 1
+| 0.5
+|-
+|Baby zombie
+|{{convert|20|game ticks|seconds}}
+|Default
+|Default
+|Default
+|0.5
+|-
+| All others in trial chambers
+| {{convert|20|game ticks|seconds}}
+| Default
+| Default
+| 3
+| 0.5
+|-
+| Slow versions (those that appear in <code>chamber_8</code>)
+| {{convert|160|game ticks|seconds}}
+| Default
+| Default
+| 4
+| 2
+|}
+
+Mobs spawn in positions that have a line of sight to the trial spawner, in a 4-block [[Euclidian distance|spherical radius]]. This is different from the [[monster spawner]], which has a larger, rectangular spawning box, and no line-of-sight requirement. Otherwise, the standard mob spawning rules apply (mobs cannot collide with blocks, guardians and elder guardians spawn only in water, etc.)
+
+=== Completion ===
+All mobs spawned by a trial spawner must be defeated before the trial spawner can eject loot. A mob is considered defeated when it is killed, enters a block (in the case of silverfish), enters another [[dimension]], or transforms into another entity (excepting for creepers transforming into charged creepers; the charged creepers must be defeated before the trial spawner is completed).
+
+If a mob spawns more mobs upon death, only the initial mob must be defeated to cause the spawner to eject loot (i.e. slimes and magma cubes).
+
+==== Cooldown ====
+Upon completion, a trial spawner enters a cooldown state for {{convert|30|minutes|game ticks}} before it can be activated again. The cooldown timer decreases even if the trial spawner is unloaded.<ref>{{bug|MC-277624||Trial Spawner still count down their 30 minutes cooldown when unloaded|Works as Intended}}</ref>
+
+=== Custom trial spawners ===
+{{control|Using}} a [[spawn egg]] on a trial spawner sets the trial spawner's type to that egg's entity.
+
+Trial spawners placed by players have the same loot data as those found in trial chambers. However, if it becomes an [[ominous trial spawner]] it will keep its same loot and will not update to use the Ominous loot.
+
+=== Loot ===
+When all mobs have been killed, the trial spawner waits 40 ticks (2 seconds). Then, every 30 ticks (1.5 seconds), it ejects random items from the loot table. It does this for every detected player. It has a 50% chance of picking a [[trial key]], in which case it drops for all players. The other 50% of the time it drops one of the other items for each player.
+{{LootChest|trial-chambers-trial-spawner}}
+
+=== Ominous trial ===
+{{main|Ominous Trial Spawner}}
+A player with [[Bad Omen]] that is within the activation range of a trial spawner is given the [[Trial Omen]] effect, starting an [[ominous trial]]. During an ominous trial, trial spawners near a player with Trial Omen are converted into [[ominous trial spawner]]s. When a trial spawner becomes ominous, all of its existing mobs are despawned. If the trial spawner was on cooldown and was not ominous before going on cooldown, the cooldown is skipped when becoming ominous.
+
+=== Piston interactivity ===
+Trial spawner can't be pushed by [[piston]]s or pulled by [[sticky piston]]s.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Trial spawner}}
+
+=== Unique ===
+{{JE}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Trial Spawner ambient1.ogg
+|sound2=Trial Spawner ambient2.ogg
+|sound3=Trial Spawner ambient3.ogg
+|sound4=Trial Spawner ambient4.ogg
+|sound5=Trial Spawner ambient5.ogg
+|subtitle=Trial Spawner crackles
+|source=block
+|description=Randomly while active
+|id=block.trial_spawner.ambient
+|translationkey=subtitles.block.trial_spawner.ambient
+|volume=0.75-1.0
+|pitch=0.5-1.5
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner detect player1.ogg
+|sound2=Trial Spawner detect player2.ogg
+|sound3=Trial Spawner detect player3.ogg
+|subtitle=Trial Spawner charges up
+|source=block
+|description=When a trial spawner is approached by a valid player
+|id=block.trial_spawner.detect_player
+|translationkey=subtitles.block.trial_spawner.detect_player
+|volume=1.0
+|pitch=''Varies''<wbr><ref group=sound>Can be 0.8-1.2 or 0.76-1.14 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|subtitle=Trial Spawner spawns a mob
+|source=block
+|description=When a trial spawner spawns a mob
+|id=block.trial_spawner.spawn_mob
+|translationkey=subtitles.block.trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner open shutter.ogg
+|subtitle=Trial Spawner opens
+|source=block
+|description=When a trial spawner's shutter opens
+|id=block.trial_spawner.open_shutter
+|translationkey=subtitles.block.trial_spawner.open_shutter
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner close shutter.ogg
+|subtitle=Trial Spawner closes
+|source=block
+|description=When a trial spawner's shutter closes
+|id=block.trial_spawner.close_shutter
+|translationkey=subtitles.block.trial_spawner.close_shutter
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner eject item1.ogg
+|subtitle=Trial Spawner ejects items
+|source=block
+|description=When a trial spawner ejects an item
+|id=block.trial_spawner.eject_item
+|translationkey=subtitles.block.trial_spawner.eject_item
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Trial Spawner charge activate.ogg
+|subtitle=Omen engulfs Trial Spawner
+|source=neutral
+|description=When a trial spawner becomes ominous
+|id=block.trial_spawner.ominous_activate
+|translationkey=subtitles.block.trial_spawner.ominous_activate
+|volume=''Varies''<wbr><ref group=sound>Plays two sounds of 0.3 and 1.0 simultaneously</ref>
+|pitch=0.8-1.2
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Trial Spawner ambient1.ogg
+|sound2=Trial Spawner ambient2.ogg
+|sound3=Trial Spawner ambient3.ogg
+|sound4=Trial Spawner ambient4.ogg
+|sound5=Trial Spawner ambient5.ogg
+|source=block
+|description=Randomly while active
+|id=trial_spawner.ambient
+|volume=0.75-1.0
+|pitch=0.5-1.5}}
+| {{SoundLine
+|sound=Trial Spawner detect player1.ogg
+|sound2=Trial Spawner detect player2.ogg
+|sound3=Trial Spawner detect player3.ogg
+|source=block
+|description=When a trial spawner is approached by a valid player
+|id=trial_spawner.detect_player
+|volume=1.0
+|pitch=0.76-1.14}}
+| {{SoundLine
+|sound=Trial Spawner spawn1.ogg
+|sound2=Trial Spawner spawn2.ogg
+|sound3=Trial Spawner spawn3.ogg
+|sound4=Trial Spawner spawn4.ogg
+|source=block
+|description=When a trial spawner spawns a mob
+|id=trial_spawner.spawn_mob
+|volume=1.0
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Trial Spawner open shutter.ogg
+|source=block
+|description=When a trial spawner's shutter opens
+|id=trial_spawner.open_shutter
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trial Spawner close shutter.ogg
+|source=block
+|description=When a trial spawner's shutter closes
+|id=trial_spawner.close_shutter
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Trial Spawner eject item1.ogg
+|source=block
+|description=When a trial spawner ejects an item
+|id=trial_spawner.eject_item
+|volume=1.0
+|pitch=0.8-1.1<!--sic-->}}
+| {{SoundLine
+|sound=Trial Spawner charge activate.ogg
+|source=block
+|description=When a trial spawner becomes ominous
+|id=trial_spawner.charge_activate
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Trial Spawner
+|spritetype=block
+|nameid=trial_spawner
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=trial-spawner
+|spritetype=block
+|nameid=trial_spawner
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Trial Spawner
+|spritetype=block
+|nameid=trial_spawner
+|id=-315
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=trial-spawner
+|spritetype=block
+|nameid=TrialSpawner
+|foot=1}}
+
+=== Block states ===
+{{See also|Block states}}
+
+{{JE}}:
+{{bst|ominous|false
+|false,true|Controls whether this trial spawner is an [[ominous trial spawner]].}}
+{{bst|trial_spawner_state|inactive
+|active|When the spawner is active.
+|cooldown|When the spawner is on cooldown.
+|ejecting_reward|While ejecting rewards.
+|inactive|When no mob is set.
+|waiting_for_players|When no players are nearby, not on cooldown, and a mob is set.
+|waiting_for_reward_ejection|Prior to reward ejection.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=|ominous|false|false,true|Controls whether this trial spawner is an [[ominous trial spawner]].|Unsupported}}
+{{bst|trial_spawner_state|0
+|0|When no mob is set.|Unsupported
+|1|When no players are nearby, not on cooldown, and a mob is set.|Unsupported
+|2|When the spawner is active.|Unsupported
+|3|Prior to reward ejection.|Unsupported
+|4|While ejecting reward.|Unsupported
+|5|When the spawner is on cooldown.|Unsupported|foot=1}}
+
+=== Block data ===
+A trial spawner has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data" /><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|int|required_player_range}}: Between 1 and 128. Defaults to 14. &mdash; Maximum distance in blocks for players to join the battle.
+** {{nbt|int|target_cooldown_length}}: Defaults to 36000. &mdash; Time in ticks of the cooldown period. Includes the time spent ejecting rewards.
+** {{nbt|string}}{{nbt|compound|normal_config}}: (optional) {{json ref|trial spawner configuration|inline=1}} &mdash; The configuration to use when not ominous.
+*** {{nbt_inherit/trial_spawner_config}}
+** {{nbt|string}}{{nbt|compound|ominous_config}}: (optional) {{json ref|trial spawner configuration|inline=1}} &mdash; &mdash; The configuration to use when ominous.
+*** {{nbt_inherit/trial_spawner_config}}
+**; The following fields are used to keep track of the current state of the trial spawner.
+** {{nbt|list|registered_players}}: A set of player UUIDs. &mdash; All the players that have joined the battle. The length of this array determines the amount of mobs and amount of rewards.
+*** {{nbt|int-array}}: A UUID.
+** {{nbt|list|current_mobs}}: A set of mob UUIDs. &mdash; The mobs that were spawned by this spawner and are still alive.
+*** {{nbt|int-array}}: A UUID.
+** {{nbt|long|cooldown_ends_at}}: Gametime in ticks when the cooldown ends. 0 if not currently in cooldown.
+** {{nbt|long|next_mob_spawns_at}}: Gametime in ticks when the next spawn attempt happens. 0 if not currently active.
+** {{nbt|int|total_mobs_spawned}}: The total amount of mobs that have already been spawned in this cycle. 0 if not currently active.
+** {{nbt|compound|spawn_data}}: The next mob to attempt to spawn. Selected from {{nbt|list|spawn_potentials}} after the last attempt. Determines the mob displayed in the spawner.
+*** {{nbt_inherit/spawn_data}}
+** {{nbt|string|ejecting_loot_table}}: A resource location to the [[loot table]] that is given as a reward. Unset if not currently giving rewards. Selected from {{nbt|list|loot_tables_to_eject}} after all mobs are defeated.
+</div><section end="block data" />
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+==Advancements==
+{{load advancements|How Did We Get Here?}}
+
+== Videos ==
+{{yt|FpE6q0nvVjA}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|[[File:Trial Spawner (pre-release).png|32px]] [[File:Active Trial Spawner (pre-release).png|32px]] [[File:Ejecting Trial Spawner (pre-release).png|32px]]  Trial spawners are announced at [[Minecraft Live 2023]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|[[File:Trial Spawner JE1 BE1.png|32px]] [[File:Active Trial Spawner JE1 BE1.png|32px]] [[File:Ejecting Trial Spawner JE1 BE1.png|32px]] Added trial spawners.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w04a|No longer ignores the <code>custom_spawn_rules</code> data field.}}
+|{{HistoryLine|||dev=24w11a|Now appears more frequently in the [[trial chambers]] corridors.}}
+|{{HistoryLine|||dev=24w13a|Can now become an [[ominous trial spawner]] if the player who activates it has [[trial omen]].
+|The ejected loot table has been modified.
+|Now increase the amount of mobs present at once by 0.5 for each additional player instead of 2.
+|Baby Zombie spawners now have 2 mobs present at once to start with instead of 3.
+|Can now activate only when a player is in line of sight.
+}}
+|{{HistoryLine|||dev=pre1|[[File:Trial Spawner JE2.png|32px]] [[File:Active Trial Spawner JE2.png|32px]] [[File:Ejecting Trial Spawner JE2.png|32px]] Updated textures to match [[ominous trial spawner]]s.}}
+|{{HistoryLine||1.21|dev=24w18a|Trial spawners are now available without using the "Update 1.21" experimental data pack.}}
+|{{HistoryLine|||dev=24w19a|[[File:Trial Spawner JE3.png|32px]] [[File:Active Trial Spawner JE3.png|32px]] [[File:Ejecting Trial Spawner JE3.png|32px]] Updated textures to be more consistent across all states as well as the [[ominous trial spawner]].}}
+|{{HistoryLine|||dev=pre2|[[File:Trial Spawner JE4 BE3.png|32px]] [[File:Active Trial Spawner JE4 BE3.png|32px]] [[File:Ejecting Trial Spawner JE4 BE3.png|32px]] Updated bottom texture to match Bedrock Edition.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|[[File:Trial Spawner JE1 BE1.png|32px]] [[File:Active Trial Spawner JE1 BE1.png|32px]] [[File:Ejecting Trial Spawner JE1 BE1.png|32px]] Added trial spawners.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Can now become an [[ominous trial spawner]] if the player who activates it has [[trial omen]].
+|Can now activate only when a player is in line of sight.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Trial spawners are now available without using the "Update 1.21" experimental toggle.|[[File:Trial Spawner BE2.png|32px]] [[File:Active Trial Spawner BE2.png|32px]] [[File:Ejecting Trial Spawner BE2.png|32px]] Updated textures to match [[ominous trial spawner]]s as well as introduce a new design for the bottom face.}}
+|{{HistoryLine||1.21.20|dev=Preview 1.21.10.20|[[File:Trial Spawner JE4 BE3.png|32px]] [[File:Active Trial Spawner JE4 BE3.png|32px]] [[File:Ejecting Trial Spawner JE4 BE3.png|32px]] Updated textures to be more consistent across all states as well as the [[ominous trial spawner]].}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|Trial spawner collision size is now a full block.<ref>{{bug|MCPE-178305}}</ref>}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Trial spawners placed by hand have both <code>spawn_potentials</code> and <code>spawn_data</code> data. Right clicking a trial spawner with a spawn egg changes its <code>spawn_data</code>. Changing its <code>spawn_potentials</code> without removing its <code>spawn_data</code> causes the trial spawner to stop functioning.
+* If there are multiple entities listed within the <code>spawn_potentials</code> data of a trial spawner, the icon displayed by a trial spawner reflects the next entity to be spawned.
+* The line of sight check for trial spawners was implemented to prevent mobs from spawning outside of the room, or outside trial chambers' structure, such as inside caves.<ref>{{ytl|bBr8BBrk1v8|ALL ABOUT THE TRIAL CHAMBERS|Minecraft|t=166s}}</ref>
+* Trial spawners can still eject their loot, even if all mobs they spawned were not defeated but rather converted as listed below:
+** [[Pig]]s and [[villager]]s converting to [[zombified piglin]]s and [[witch]]es respectively when struck by [[lightning]].
+** [[Piglin]]s, [[piglin brute]]s and [[hoglin]]s converting to [[zombified piglin]]s and [[zoglin]]s when outside of [[the Nether]] for 15 seconds.
+** [[Skeleton]]s converting into [[stray]]s when they freeze.
+** [[Husk]]s and [[zombie]]s converting into [[zombie]]s and [[drowned]]s when submerged in water for too long.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Trial Chambers breeze.png|A [[breeze]] trial spawner
+Slime trial spawner.png|A [[slime]] trial spawner
+Zombie trial spawner.png|A [[zombie]] trial spawner
+Baby zombie trial spawner.png|A [[baby zombie]] trial spawner
+Trial Chambers husk.png|A [[husk]] trial spawner
+Skeleton trial spawner.png|A [[skeleton]] trial spawner
+Bogged trial spawner.png|A [[bogged]] trial spawner
+Stray trial spawner.png|A [[stray]] trial spawner
+Spider trial spawner.png|A [[spider]] trial spawner
+Cave spider trial spawner.png|A [[cave spider]] trial spawner
+Silverfish trial spawner.png|A [[silverfish]] trial spawner
+</gallery>
+
+=== Development images ===
+<gallery>
+SpawnerParticles2.png|A trial spawner emitting particles upon activation
+Trial Key First Image.jpg|A defeated [[breeze]] trial spawner
+Breeze room.jpeg|A room with a [[breeze]] trial spawner in the middle
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Looting Trial Spawner Artwork.jpg|[[Ari]], [[Noor]], and [[Efe]] looting a trial spawner and receiving trial keys.
+File:Spider trial spawner trailer.png|A spider trial spawner as it appears in the [[Tricky Trials Update Official Trailer]].
+File:Bogged trial spawner trailer.png|A bogged trial spawner activating before Efe, [[Kai]], [[Makena]], [[Steve]], and [[Sunny]].
+</gallery>
+
+== See also ==
+
+* [[Vault]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|trial-spawner|Trial Spawner|September 26, 2024|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|utility}}
+
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Light sources]]
+[[Category:Hazardous blocks]]
+
+[[de:Prüfungs-Spawner]]
+[[es:Generador de desafío]]
+[[fr:Générateur des épreuves]]
+[[ja:試練のスポナー]]
+[[ko:시련 생성기]]
+[[pl:Przyzywacz prób]]
+[[pt:Gerador do Desafio]]
+[[ru:Спаунер испытаний]]
+[[uk:Породжувач випробувань]]
+[[zh:试炼刷怪笼]]

@@ -1,0 +1,105 @@
+{{About|the terrain feature|the block|Sea Pickle}}
+
+{{Infobox structure
+| image = Pickle cluster.png
+| canspawn = No
+| biome =
+* {{BiomeLink|Warm Ocean}}
+* {{BiomeLink|Deep Warm Ocean}}{{only|be|short=1}}(Unused)
+| blocks =
+* {{BlockLink|Sea Pickle}}
+}}
+
+'''Sea pickle''' is a [[feature]] that places a cluster of [[sea pickle]] blocks in the [[warm ocean]] biome.
+
+== Generation ==
+Sea pickle colonies generate on the bottom of warm oceans and can also be found on top of [[coral block]]s in [[coral reef]]s. Each chunk has {{frac|1|6}} chance to generate sea pickle colonies. They can be found in groups of 1 up to 4.
+
+{{block distribution|Sea Pickle}}
+
+== Data values ==
+
+=== ID ===
+
+{{el|java}}:
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|spritename=sea-pickle
+|spritetype=block
+|nameid=sea_pickle
+|foot=1}}
+
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=sea-pickle
+|spritetype=block
+|nameid=sea_pickle
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|firstcolumnname=Feature
+|displayname=[No displayed name]
+|spritename=sea-pickle
+|spritetype=block
+|nameid=pickle_feature
+|foot=1}}
+
+=== Config ===
+
+{{main|Configured feature}}
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|int}}{{nbt|compound|count}} Value between 0 and 256 (inclusive). The max count of the sea pickle block (not single sea pickle).
+*** {{nbt inherit/int_provider}}
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:sea_pickle",
+  "config": {
+    "count": 20
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w14b|Added sea pickle features.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Added sea pickle features.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|Added sea pickle features.}}
+}}
+
+==Issues==
+
+{{Issue list|sea pickle}}
+
+==Gallery==
+<gallery>
+File:Sea pickles on coral.png|Naturally generated Sea Pickles.
+File:Sea pickles on ocean floor.png|Ditto
+</gallery>
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Cornichon de mer (élément du terrain)]]
+[[ja:シーピクルス (生成物)]]
+[[pt:Pepino-do-mar (recurso)]]

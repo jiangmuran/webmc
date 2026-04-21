@@ -1,0 +1,214 @@
+{{About|the effect|the potion|Potion of Strength}}
+{{Infobox effect
+|image = Strength.png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-strength}} #FFD700 (gold)
+|type=Positive
+| invimage = Potion of Strength
+| invimage2 = Splash Potion of Strength
+| invimage3 = Lingering Potion of Strength
+| invimage4 = Arrow of Strength
+}} 
+
+'''Strength''' is a [[effect|status effect]] which increases attack damage.
+
+== Effect ==
+{{IN|java}}, it increases melee damage by {{hp|3}} × ''level''.
+
+{{IN|bedrock}}, melee damage under the Strength effect can be found through the equation <math>BaseDamage\times1.3^{level}+{1.3^{level}-1\over0.3}</math>, where <math>BaseDamage</math> is the ''default'' damage of whatever weapon or tool is used to attack.<ref>Background for this new equation: https://docs.google.com/document/d/1GtZ9ceTfVGbEkKkbZAfzpKKGk2FQ0FwmeUyw5ja14B8/edit?usp=sharing</ref> Example for an [[iron sword]]:
+* Normal: {{hp|7}}
+* Level 1: {{hp|10.1}}
+* Level 2: {{hp|14.13}}
+
+== Exceptions ==
+Strength does not affect the damage of [[spear]] charge attacks {{in|je}}<ref>{{cite bug|MC|302778|Strength, Weakness and any other attack_damage attribute modifiers do not impact damage dealt by spears when performing charge attacks|resolution=Fixed}}</ref><ref>{{cite bug|MC|306239|Strength and Weakness effects still do not affect spear charge attacks|resolution=Unresolved}}</ref> or the damage of [[ranged attack]]s.
+
+==Causes==
+{| class="wikitable" data-description="Causes"
+ !Cause
+ !Potency
+ !Length
+ !Notes
+ |-
+ |{{ItemLink|Potion of Strength}}
+ |I
+ |3:00
+ |
+ |-
+ |{{ItemLink|Potion of Strength}} (extended)
+ |I
+ |8:00
+ |
+ |-
+ |{{ItemLink|Potion of Strength}} II
+ |II
+ |1:30
+ |
+ |-
+ |{{ItemLink|Splash Potion of Strength}}
+ |I
+ |3:00
+ |
+ |-
+ |
+{{ItemLink|Splash Potion of Strength}} (extended)
+ |I
+ |8:00
+ |
+ |-
+ |{{ItemLink|Splash Potion of Strength}} II
+ |II
+ |1:30
+ |
+ |-
+ |{{ItemLink|Lingering Potion of Strength}}
+ |I
+ |0:45
+ |Potion cloud lasts 30 seconds at most
+ |-
+ |{{ItemLink|Lingering Potion of Strength}} (extended)
+ |I
+ | 2:00
+ |Potion cloud lasts 30 seconds at most
+ |-
+ |{{ItemLink|Lingering Potion of Strength}} II
+ |II
+ |0:23
+ |Potion cloud lasts 30 seconds at most
+ |-
+ |{{ItemLink|Arrow of Strength}}
+ |I
+ |0:23
+ |
+ |-
+ | {{ItemLink|Arrow of Strength}} (extended)
+ |I
+ |1:00
+ |
+ |- 
+ |{{ItemLink|Arrow of Strength}} II
+ | II
+ |0:12
+ |
+ |- 
+ |{{BlockLink|Beacon}}
+ | I
+ |0:05 – 0:17
+ |Replenishes when within range, level 3 only
+ |- 
+ |{{BlockLink|Beacon}}
+ |II
+ |0:17
+ |Replenishes when within range, level 4 only
+ |- 
+ |Being a {{EntityLink|zombie villager}}
+ |I
+ | 2:00 – 5:00
+ |When being cured. Time is always equivalent to the total conversion time.
+ |-
+ | Spawning within the world
+ | I
+ |∞
+ |Only applies to some {{EntityLink|spider|spiders}} on Hard difficulty.<ref group="note">The chance for a spider to have an effect is (10&times;[[Difficulty#Clamped regional difficulty|clamped regional difficulty]])%, and the chance for Strength is 20% of that.</ref>{{only|java|short=1}}
+ |}
+{{notelist}}
+
+==Immune mobs==
+*[[Wither]]s and [[ender dragon]]s are immune to Strength.
+*Any [[mob]] that cannot attack or only attacks with projectiles is unaffected by Strength.
+
+==Data values==
+===ID===
+{{EffectIDLink}}
+{{edition|java}}:
+{{ID table
+|edition=java
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Strength
+|spritetype=effect
+|nameid=strength
+|id=5
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Strength
+|spritetype=effect
+|nameid=strength
+|id=5
+|translationkey=potion.damageBoost
+|foot=1}}
+
+==Advancements==
+{{load advancements|How Did We Get Here?;A Furious Cocktail}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Strength is added along with 18 other status effects but is currently unobtainable in regular gameplay.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[File:Strength JE1 BE1.png|18px]] The effect sprite for Strength has been added to <samp>[[inventory.png]]</samp>.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|Added Potion of Strength.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Strength now increases damage dealt by melee attacks by {{hp|3}} per level.}}
+|{{HistoryLine||1.6.1|dev=13w24a|Spiders now have a chance of spawning with Strength on Hard difficulty.{{check version|If spiders could spawn with the other effects as well in this snapshot, they were likely also able to spawn with Strength in this snapshot.}}}}
+|{{HistoryLine|||dev=1.6|Strength now increases damage by 130% per level.}}
+|{{HistoryLine||1.9|dev=15w33a|Strength now increases damage by {{hp|3}} per level again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Strength JE2.png|18px]] Changed effect icon texture.}}
+|{{HistoryLine|||dev=18w43b|{{darkbg|[[File:Strength (texture) JE3 BE2.png|18px]]}} The Strength texture is fixed.}}
+|{{HistoryLine||1.19.4|dev=Pre-release 3|Potion and effect color changed from {{color|#932423}} to {{color|#FCC500}}.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Strength JE1 BE1.png|18px]] Added Strength, which was unobtainable at the time.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Strength can now be obtained from potions and splash potions of strength.
+|Zombie villagers now gain strength when being cured.}}
+|{{HistoryLine||v0.15.0|dev=build 1|Added the [[Arrow of Strength]], which grants strength.}}
+|{{HistoryLine||v0.16.0|dev=build 4|Strength can now be gained from [[beacon]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Strength can now be obtained from lingering potions of strength.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.5|{{darkbg|[[File:Strength (texture) JE3 BE2.png|18px]]}} Changed effect icon texture.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Strength is added along with 18 other status effects but is currently unobtainable in regular gameplay.{{check version}}}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Strength JE1 BE1.png|18px]] The effect sprite for Strength has been added.{{check version}}|Added Potion and Splash Potion of Strength.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added the ability to get strength from a beacon.|Strength now increases damage by 130% per level.{{check version}}|Spiders now have a chance of spawning with Strength on Hard difficulty.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added the [[Lingering Potion of Strength]].
+|Added the {{ItemLink|Arrow of Strength}}.|Strength now increases damage by {{hp|3}} per level again.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|{{darkbg|[[File:Strength (texture) JE3 BE2.png|18px]]}} Changed effect icon texture.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||8b|Strength now adds +20% damage per level (was +3 damage per level).}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+==References==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox effects}}
+{{Navbox combat|melee}}
+
+[[de:Stärke (Statuseffekt)]]
+[[es:Fuerza]]
+[[fr:Force]]
+[[ja:攻撃力上昇]]
+[[ko:힘 (효과)]]
+[[pt:Força (efeito)]]
+[[ru:Сила]]
+[[zh:力量（状态效果）]]

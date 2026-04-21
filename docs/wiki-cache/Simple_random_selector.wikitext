@@ -1,0 +1,58 @@
+{{Exclusive|java}}
+
+'''Simple random selector''' is a technical [[feature]] that randomly chooses a feature from a list with each having an equal chance.
+
+== Data values ==
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=simple_random_selector
+|foot=1
+}}
+
+=== Config ===
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|string}}{{nbt|compound}}{{nbt|list|features}}: {{json ref|placed feature|tag=1|inline=1}}; Cannot be empty &mdash; Features to choose from.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": [
+      {
+        "feature": {
+          "type": "minecraft:coral_tree",
+          "config": {}
+        },
+        "placement": []
+      },
+      {
+        "feature": {
+          "type": "minecraft:coral_claw",
+          "config": {}
+        },
+        "placement": []
+      },
+      {
+        "feature": {
+          "type": "minecraft:coral_mushroom",
+          "config": {}
+        },
+        "placement": []
+      }
+    ]
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Sélecteur aléatoire simple]]
+[[pt:Seletor aleatório simples]]

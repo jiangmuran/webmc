@@ -1,0 +1,83 @@
+{{Exclusive|java}}
+{{stub}}
+
+{{Infobox structure
+| biome = 
+* {{BiomeLink|Lush Caves}}
+* {{BiomeLink|Ocean}}
+* {{BiomeLink|Deep Ocean}}
+* {{BiomeLink|Cold Ocean}}
+* {{BiomeLink|Deep Cold Ocean}}
+* {{BiomeLink|Deep Lukewarm Ocean}}
+| blocks = Depends
+}}
+
+'''Simple block''' is a [[feature]] that places a block based on a [[block state provider]].
+
+== Data values ==
+=== ID ===
+{{ID table
+|firstcolumnname=Feature type
+|displayname=[No displayed name]
+|nameid=simple_block
+|foot=1
+}}
+{{ID table
+|firstcolumnname=Configured feature
+|displayname=[No displayed name]
+|spritename=seagrass
+|spritetype=block
+|nameid=seagrass_simple
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=short-grass
+|spritetype=block
+|nameid=single_piece_of_grass
+}}
+{{ID table
+|displayname=[No displayed name]
+|spritename=spore-blossom
+|spritetype=block
+|nameid=spore_blossom
+|foot=1
+}}
+
+=== Config ===
+{{main|Configured feature}}
+<section begin="config"/><div class="treeview">
+* {{nbt|compound|config}}
+** {{nbt|compound|to_place}} The block to use.
+*** {{nbt inherit/block_state_provider}}
+**{{nbt|bool|schedule_tick}} (optional, defaults to false) Whether to shedule a block update.
+</div><section end="config"/>
+
+{{Collapse|title=An example|outerstyle=margin: 0.5rem 0|head=1}}
+<syntaxhighlight lang="json">
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:seagrass"
+      }
+    }
+  }
+}
+</syntaxhighlight>
+{{Collapse|tail=1}}
+
+== History ==
+
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||?|dev=?|Added Simple block.}}
+|{{HistoryLine||1.21.4|dev=?|Added {{nbt|bool|schedule_tick}}.}}
+}}
+
+== Navigation ==
+{{Navbox generated features}}
+
+[[fr:Bloc simple]]
+[[pt:Bloco simples]]

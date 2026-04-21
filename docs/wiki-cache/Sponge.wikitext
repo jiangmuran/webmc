@@ -1,0 +1,311 @@
+{{Infobox block
+| group1 = Sponge
+| 1-1 = Sponge JE3 BE3.png
+| invimage1 = Sponge
+| group2 = Wet Sponge
+| 2-1 = Wet Sponge JE2 BE2.png
+| invimage2 = Wet Sponge
+|transparent=No
+|light=No
+|tool=hoe
+|renewable=No
+|stackable=Yes (64)
+|flammable=No
+|lavasusceptible=No
+}} 
+A '''sponge''' is a block that can be placed to remove [[water]] in an area around itself. This turns it into a '''wet sponge''', which can be [[smelt]]ed or placed in [[the Nether]] to dry it to be reused. Sponges can only be found in [[ocean monument]]s.
+
+== Obtaining ==
+=== Breaking ===
+Either type of sponge can be mined by hand, or with any tool, dropping itself as an item; however, [[hoe]]s break sponges the fastest compared to other tools.
+{{breaking row|horizontal=1|Sponge, Wet Sponge|link=Sponge|Hoe}}
+
+=== Natural generation ===
+[[Ocean monument]]s can have "sponge rooms". Each room contains an average of 30 wet sponges. See [[Ocean Monument/Structure]] for details.
+
+=== Mob loot ===
+==== Elder guardians ====
+{{Drop sources|Wet Sponge}}
+
+=== Drying ===
+A wet sponge placed in [[the Nether]] dries out instantly with a puff of steam and turns into a normal sponge.
+
+{{IN|bedrock}}, a wet sponge placed in any [[Biome#Dry biomes|dry biome]] in the [[Overworld]] dries out after a few minutes and turns into a normal sponge. If a normal sponge sucks up water in a dry biome, it immediately dries out with a puff of steam.
+
+=== Smelting ===
+A wet sponge can be dried in a [[furnace]], making the sponge reusable. 
+{{Smelting
+|showdescription=1
+|ingredients=Wet Sponge + Any [[Fuel]]
+|Wet Sponge
+|Sponge
+|0.15
+|description=If a bucket is in the fuel slot at the time the sponge completes its drying, the water drains into the bucket, leaving a bucket of water in the fuel slot. Otherwise, the water just evaporates.
+}}
+
+== Usage ==
+[[File:SpongeUsage.png|thumb|A sponge absorbing water in a pond.]]
+
+=== Water absorption ===
+A sponge can be used to turn water into air by "absorbing" the water. A sponge instantly absorbs nearby water when it is placed next to water or when water comes into contact with it. Sponges immediately turn wet upon absorption and do not absorb any more water afterward. Wet sponges drip small water particles. Sponges in [[item (entity)|item form]] do not absorb water or become wet.
+
+A sponge absorbs both flowing and source blocks of [[water]] up to 6 blocks away (taken as a [[taxicab distance]]) in all six directions around itself. Instead of a cube or a sphere, this effectively encloses the volume of an {{w|octahedron}} with vertices placed 4 units away from the center in each direction due to the game's extensive use of taxicab distance. A sponge does not absorb more than 118 blocks of water however, and water closest to the sponge is absorbed first. The absorption propagates only between adjacent water blocks and does not "jump over" non-water blocks, including air.
+
+=== Sulfur cube ===
+{{In development|drop=Chaos Cubed|section=1}}
+[[Sulfur cube]]s have the ability to absorb sponge and wet sponge, either through picking it up or being interacted with it. This provides the golf ball/fast flat effect to the mob when hitting it.
+
+== Sounds ==
+=== Generic ===
+==== Sponge ====
+{{Sound table/Block/Sponge}}
+
+==== Wet sponge ====
+{{Sound table/Block/Wet sponge}}
+
+=== Unique ===
+{{Edition|Java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Fizz.ogg
+|subtitle=Sponge dries
+|source=block
+|description=When a wet sponge is dried in the Nether
+|id=block.wet_sponge.dries
+|translationkey=subtitles.block.wet_sponge.dries
+|volume=1.0
+|pitch=0.7-0.84
+|distance=16}}
+| {{SoundLine
+|sound=Sponge absorb1.ogg
+|sound2=Sponge absorb2.ogg
+|sound3=Sponge absorb3.ogg
+|subtitle=Sponge sucks
+|source=block
+|description=When a sponge sucks up water
+|id=block.sponge.absorb
+|translationkey=subtitles.block.sponge.absorb
+|volume=0.8
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{Edition|Bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|sound =Fizz.ogg
+|source=block
+|description=When a wet sponge is dried in the Nether or dry biome
+|id=random.fizz
+|volume=1.0{{verify}}
+|pitch=0.6-0.8{{verify|estimated value; not present in sounds.json or sound_definitions.json}}}}
+| {{SoundLine
+|sound=Sponge absorb1.ogg
+|sound2=Sponge absorb2.ogg
+|sound3=Sponge absorb3.ogg
+|source=block
+|description=When a sponge sucks up water
+|id=block.sponge.absorb
+|volume=1.0{{verify}}
+|pitch=0.8-1.0{{verify|estimated value; not present in sounds.json or sound_definitions.json}}}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|showblocktags=y
+|generatetranslationkeys=y
+|displayname=Sponge
+|spritetype=block
+|nameid=sponge
+|blocktags=mineable/hoe}}
+{{ID table
+|displayname=Wet Sponge
+|spritetype=block
+|nameid=wet_sponge
+|blocktags=mineable/hoe
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|showaliasids=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Sponge
+|spritetype=block
+|nameid=sponge
+|aliasid=sponge / 0
+|id=19
+|translationkey=tile.sponge.dry.name}}
+{{ID table2
+|displayname=Wet Sponge
+|spritetype=block
+|nameid=wet_sponge
+|aliasid=sponge / 1
+|id=-984
+|translationkey=tile.sponge.wet.name
+|foot=1}}
+
+== Achievements ==
+{{load achievements|Dry Spell}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 23w33a}}
+{{info needed section|A single pixel in the sponge texture may have changed circa 1.2; been meaning to research this for a while but never got around to it}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 24, 2009|link=http://forums.tigsource.com/index.php?topic=6273.msg204191#msg204191|Sponge was suggested on the [https://www.tigsource.com/ TIGSource] forums. [[Notch]] later approved this suggestion.}}
+|{{HistoryLine||June 16, 2009|link=https://web.archive.org/web/20110302010226/https://notch.tumblr.com/post/124718567/glass-looks-pretty-bad-and-sponge|Sponges were tested by [[Notch]].}}
+|{{HistoryLine||October 15, 2013|link=https://web.archive.org/web/20151105235301/https://twitter.com/jbernhardsson/status/390024970065035264|[[Johan Bernhardsson]] announces sponges for 0.8.0 on Twitter.}}
+|{{HistoryLine||June 8, 2014|link={{tweet|jeb_|475667253728661505}}|[[File:Sponge JE2 BE2.png|32px]] [[File:Wet Sponge pJE20140608.png|32px]] [[Jeb]] tweeted that the ability to erase [[water]] blocks would be returned to the sponge. The linked video revealed that the sponge would become wet once it absorbs water.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.19a|[[File:Sponge JE1 BE1.png|32px]] Added sponges. 
+|The sponge is a temporary fix to stop [[water]] from flooding until finite water is implemented.<ref>[[wordofnotch:126715731|"Sponges won’t vanish randomly now, and glass looks better."]] – [[The Word of Notch]], Jun 20th, 2009</ref> 
+|Sponges soak up water in a 5×5×5 volume around it, and would decay.<!--Note: Although Notch posted an image (https://notch.tumblr.com/post/124718567/glass-looks-pretty-bad-and-sponge) showcasing [[glass]] and sponge blocks with "[[Java Edition Classic 0.0.18a_02|0.0.18a_02]]" displayed in the top left corner, both [[block]]s were added in 0.0.19a. 0.0.18a_02 was released two days before [[Notch]] posted the picture and in the changelog of 0.0.18a_02 there is no mention of both blocks (https://notch.tumblr.com/post/123333539/client-0018a02-is-up). So they were neither added nor tested in 0.0.18a_02, Notch was just already working on 0.0.19a, but hadn't changed the version number yet.-->}}
+|{{HistoryLine||0.0.19a_01|Sponges no longer decay.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100201-2227|Sponges now soak up [[infinite water source]]s and [[infinite lava source]]s. This is despite the fact that they do not delete normal lava.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Due to [[Notch]] reworking many parts of the game to allow for infinite terrain generation, the whole [[liquid]] system from [[Java Edition Indev|Indev]] including sponges becomes non-functional. A new system for liquids was added in a later version of Infdev, though sponges weren't touched as they were no longer necessary.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Sponges have now become available in [[Creative]] mode.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.2.1|dev=12w07a|Prior to this version, sponges could be used in [[redstone]] builds for updating [[block]]s, in conjunction with [[Tutorial:Block update detector|BUD]]s (block update detectors): if a sponge was placed and then removed, all blocks within a 7×7×7 range would be updated.<ref>{{ytl|nZK2glVsIa8}}</ref> The cause of this was some remaining code for the sponge's [[water]] removing property.}}
+|{{HistoryLine||1.8|dev=14w25a|[[File:Wet Sponge JE1 BE1.png|32px]] Added wet sponges. Sponges now soak up contiguous water source [[block]]s out to a [[taxicab distance]] of 7 when placed, thereupon turning into the new wet sponge.
+|[[File:Sponge JE2 BE2.png|32px]] The texture of sponge has been changed.
+|Sponges have now become obtainable in [[Survival]] mode.}}
+|{{HistoryLine|||dev=14w25b|A wet sponge, when [[smelt]]ed, fills an empty [[bucket]] in the [[fuel]] slot with [[water]].}}
+|{{HistoryLine||1.9|dev=15w43a|[[Elder guardian]]s now [[drop]] dry sponges instead of wet ones.}}
+|{{HistoryLine||1.11|dev=16w33a|Elder guardians now drop wet sponges on [[player]] kills, rather than dry sponges.<ref>{{bug|MC-92294||Elder Guardians drop normal sponge instead of wet sponge|Fixed}}</ref>}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Sponge JE3 BE3.png|32px]] [[File:Wet Sponge JE2 BE2.png|32px]] The textures of sponges have been changed.}}
+|{{HistoryLine||1.15|dev=19w36a|Wet Sponges now dry out when placed in [[the Nether]].}}
+|{{HistoryLine||1.16|dev=20w12a|Sponges and wet sponges can now be [[breaking|broken]] faster using [[hoe]]s.}}
+|{{HistoryLine||1.20.2|dev=23w33a|Added unique sounds for dry and wet sponges, and sponges absorbing water.}}
+|{{HistoryLine||1.20.5|dev=24w09a|Added sound event <code>block.wet_sponge.dries</code>, replacing <code>block.fire.extinguish</code> when a wet sponge dries out in the Nether.<ref>{{bug|MC-98316||Wrong subtitles caused by missing distinction}}</ref>}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap 1|Added [[sulfur cube]]s, which have the ability to absorb sponge and wet sponge, providing the golf ball/fast flat effect to the mob.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.8.0|dev=build 1|[[File:Sponge JE1 BE1.png|32px]] Added sponges.
+|Sponges are currently purely decorative and only available in [[Creative]] mode.}}
+|{{HistoryLine||v0.16.0|dev=build 1|[[File:Wet Sponge JE1 BE1.png|32px]] Added wet sponges. Sponges now soak up contiguous water source [[block]]s out to a [[taxicab distance]] of 7 when placed, thereupon turning into the new wet sponge.
+|[[File:Sponge JE2 BE2.png|32px]] The texture of sponge has been changed.
+|Sponges have now become obtainable in [[Survival]] mode.
+|A wet sponge, when [[smelt]]ed, fills an empty [[bucket]] in the [[fuel]] slot with water.}}
+|{{HistoryLine|unknown}}
+|{{HistoryLine||?|Sponges dry out in hot biomes.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|Added [[drowned]], which rarely [[drop]] sponges.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Drowned no longer drop sponge.}}
+|{{HistoryLine||1.6.0|dev=beta 1.6.0.5|[[Elder guardian]]s now drop wet sponges rather than dry.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Sponges now immediately dry out when placed in [[the Nether]].
+|[[File:Sponge JE3 BE3.png|32px]] [[File:Wet Sponge JE2 BE2.png|32px]] The textures of sponges have been changed.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Sponges and wet sponges can now be [[breaking|broken]] faster using [[hoe]]s.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.22|Sponges no longer make a sound when absorbing water.<ref>{{bug|MCPE-173582}}</ref>}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.20|Sponges and wet sponges now make the same sounds as ''[[Java Edition]]''.<ref>{{bug|MCPE-174345|||Fixed}}</ref>
+|Sponges now make a sound when absorbing water again.<ref>{{bug|MCPE-173582|||Fixed}}</ref>}}
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added [[sulfur cube]]s, which have the ability to absorb sponge and wet sponge, providing the golf ball/fast flat effect to the mob.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Sponge JE1 BE1.png|32px]] Added sponges.
+|Sponges are currently unobtainable.}}
+|{{HistoryLine||xbox=TU5|Sponges have now become available in [[Creative]] mode.}}
+|{{HistoryLine||xbox=TU28|xbone=CU16|ps3=1.23|psvita=1.19|ps4=1.19|[[File:Sponge JE2 BE2.png|32px]] The texture of sponge has been changed.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Sponges are now obtainable in [[Survival]] mode.
+|[[File:Wet Sponge JE1 BE1.png|32px]] Added wet sponges. Sponges now soak up contiguous [[water]] source [[block]]s out to a [[taxicab distance]] of 7 when placed, thereupon turning into the new wet sponge.
+|Sponges have been removed from the custom superflat block selection menu.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|[[Elder guardian]]s now [[drop]] dry sponges instead of wet ones.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Elder guardians]] now [[drop]] wet sponges again.}}
+|{{HistoryLine||xbox=TU56|xbone=CU48|ps3=1.55|psvita=1.55|ps4=1.55|wiiu=Patch 26|switch=1.0.6|[[Elder guardians]] now [[drop]] dry sponges again.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[Elder guardians]] now [[drop]] wet sponges again.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Sponge JE3 BE3.png|32px]] [[File:Wet Sponge JE2 BE2.png|32px]] The textures of sponges have been changed.
+|Sponges now dry out when placed in [[the Nether]] and warm [[biome]]s after some time.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Sponge JE1 BE1.png|32px]] Added sponges.}}
+|{{HistoryLine||1.3.12|[[File:Wet Sponge JE1 BE1.png|32px]] Added wet sponges.
+|[[File:Sponge JE2 BE2.png|32px]] The texture of sponge has been changed.
+|Sponges have now become obtainable in [[Survival]] mode.
+|Sponges now soak up contiguous [[water]] source [[block]]s out to a [[taxicab distance]] of 7 when placed, thereupon turning into the new wet sponge.
+|A wet sponge, when [[smelt]]ed, fills an empty [[bucket]] in the [[fuel]] slot with water.}}
+|{{HistoryLine||?|Moved sponge from the ''Decorations'' tab to the ''Building Blocks'' tab in the [[Creative inventory]].{{info needed|Which update did this occur in?}}}}
+}}
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Sponges now use the newly-implemented model json file {{code|models/block/cube.json}}; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.13|dev=17w47a|The two different <code>wet</code> [[block states]] for the <code>sponge</code> ID have been split up into their own IDs.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 19.}}
+
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.22|The different [[block states]] for the <code>sponge</code> ID have been split up into their own IDs.}}
+}}
+
+== Issues ==
+{{issue list|Sponge|Wet Sponge}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Picture of Sponge JE1 BE1.png|An example of sponges keeping an area dry in ''Java Edition Classic''.
+HidingSponge1.png|Hidden sponge in the corner of a wood-paneled room, in ''Java Edition Classic''.
+SpongeInvAdvUpd.png|Sponges in the [[Creative inventory]] in the [[Adventure Update]].
+WetVsDrySponge.png|A sponge next to a wet sponge.
+Beta sponge.png|The old sponge and [[gravel]] textures.
+Glassclassic.jpg|First picture of sponge in the test version of 0.0.18a_02.
+Sponges Drying.png|Sponges drying {{in|bedrock}}.
+Jeb Sponges.jpg|Image of sponges from Jeb's instagram.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week-sponge Block of the Week: Sponge] – Minecraft.net on March 24, 2017
+
+== Navigation ==
+{{Navbox blocks|Utility}}
+
+[[Category:Java Edition specific information]]
+[[Category:Bedrock Edition specific information]]
+[[Category:Generated structure blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Utility blocks]]
+[[Category:Animal blocks]]
+
+[[cs:Mořská houba]]
+[[de:Schwamm]]
+[[es:Esponja]]
+[[fr:Éponge]]
+[[it:Spugna]]
+[[ja:スポンジ]]
+[[ko:스펀지]]
+[[nl:Spons]]
+[[pl:Gąbka]]
+[[pt:Esponja]]
+[[ru:Губка]]
+[[uk:Губка]]
+[[zh:海绵]]

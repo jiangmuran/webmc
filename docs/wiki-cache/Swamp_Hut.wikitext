@@ -1,0 +1,201 @@
+{{redirect|Witch hut|the spawner in {{MCL}}|MCL:Witch Hut}}
+{{Infobox structure
+| image = Swamp hut.png
+| biome = {{BiomeLink|Swamp}}
+| imagesize = 250px
+| mobs = {{EntityLink|Black Cat}}<br>{{EntityLink|Witch}}
+| blocks =
+* {{BlockLink|Cauldron}}{{only|JE|short=1}}<br>([[Cauldron|Potion Cauldron]]{{only|BE|short=1}})
+* {{BlockLink|Crafting Table}}
+* {{BlockLink|Oak Fence}}
+* {{BlockLink|Oak Log}}
+* {{BlockLink|Potted Red Mushroom}}
+* {{BlockLink|Spruce Planks}}
+* {{BlockLink|Spruce Stairs}}
+| canspawn = No
+}}
+'''Swamp huts''' (also known as '''witch huts''') are small above ground [[structure]]s that have the ability to spawn [[witch]]es and black [[cat]]s.
+
+== Generation ==
+Swamp huts generate rarely in [[swamp]] biomes, in the north-west corner of a given [[chunk]]. They do not generate in [[mangrove swamp]]s.<ref>{{bug|MC-249932|||WAI}}</ref>
+
+Swamp huts can be located with swamp [[explorer map]]s, which are sold by [[jungle]], [[Snowy Plains|snowy]] and [[taiga]] cartographer [[villager]]s.
+
+{{Calculator|chunkbase|pois=Wh|zoom=0.25}}
+
+== Structure ==
+{{main|/Structure}}
+[[File:Swamp Hut inside.png|thumb|The inside of a swamp hut with a witch and black cat inside.]]
+Swamp huts consist of a small square building made of [[spruce planks]], with [[oak log]] pillars extending down to the ground. There is a small platform outside of the hut that could be an entrance; however, it is several blocks above the ground, and there are no stairs that go up to the hut, although [[vines]] can generate from the front platform and down to the ground. The roof of the swamp hut is made up of [[spruce stairs]] and [[spruce planks]]. The hut is two blocks tall inside.
+
+The inside of a swamp hut consists of a [[cauldron]], a [[crafting table]], and a [[flower pot]] with a [[red mushroom]] in it.
+
+{{IN|Java}}, the cauldron is always empty, while {{in|BE}}, the cauldron generates with 1 to 3 bottles of a random [[potion]] inside. There is a 25% chance for [[Potion of Healing]] or [[Potion of Poison|Poison]], 15% for [[Potion of Swiftness|Swiftness]], 10% for [[Potion of Slowness|Slowness]], [[Potion of Weakness|Weakness]], or [[Potion of Water Breathing|Water Breathing]], and 5% for [[Potion of Fire Resistance|Fire Resistance]].{{citation needed|These percentages seem accurate, but where exactly do they come from?}}
+
+== Mobs ==
+[[File:Vertical Image of Witch hut.png|thumb|upright|Swamp hut from the side showing the scale and spawning zone.|alt=]]
+[[File:Top View of Witch hut.png|thumb|Swamp hut from above showing the scale and spawning zone. The spawn area matches the roof, plus the porch.]]
+[[File:SwampHut SpawnLocation BedrockEdition.png|thumb|upright|A swamp hut with the roof removed to show the spawning location of a swamp hut {{in|Bedrock}}.]]
+{| style="text-align:center"
+|-
+| scope="col" style="width:70px" | [[File:WitchFace.png|link=Witch]]
+| scope="col" style="width:70px" | [[File:BlackCatFace.png|link=Cat]]
+|-
+| style="vertical-align:top" | [[Witch]]
+| style="vertical-align:top" | [[Cat|Black Cat]]
+|}
+
+Upon world generation, one [[witch]] and one stray [[Cat|black cat]] spawn inside the hut. These never naturally despawn, however, the witch does not spawn when the [[difficulty]] is set to Peaceful.
+
+Additionally, witches can spawn at any block within the 7×7×9 (x×y×z) area that constitutes the hut (this is the size of the roof and one block over the porch, from one level below the floor of the hut to two blocks above the roof). Cats can also spawn within this area. However, they require a [[grass block]] to spawn on. {{IN|Java}}, any other cats to spawn within the swamp hut (from [[spawn egg]]s and [[commands]] without cat type set) always spawn as black.
+
+Both witches and cat wander around independently from each other or the hut, and neither return to the hut on purpose.
+
+{{IN|Bedrock}}, witches respawn on only one block within the swamp hut if the witch is killed. The spawn point is on the hut floor, two blocks in front of the [[crafting table]].
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|firstcolumnname=Structure type
+|displayname=Swamp Hut
+|spritetype=env
+|nameid=swamp_hut
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Structure
+|displayname=Swamp Hut
+|spritetype=env
+|nameid=swamp_hut
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|firstcolumnname=Structure
+|generatetranslationkeys=y
+|displayname=Temple
+|spritename=swamp-hut
+|spritetype=env
+|nameid=temple
+|translationkey=feature.temple
+|foot=1}}
+
+=== Config ===
+{{el|java}}:
+<section begin="config"/><div class="treeview">
+*{{nbt|compound}} Structure configuration
+**{{nbt|string|type}}: {{cd|minecraft:swamp_hut}}
+** {{Nbt inherit/structure}}
+</div><section end="config"/>
+{{-}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.4.2|dev=12w40a|[[File:Swamp hut JE1 BE1.png|40px]] Added witch huts.}}
+|{{HistoryLine||1.8|dev=14w26a|The [[flower pot]] in witch huts no longer has a red mushroom inside.<ref>{{bug|MC-63820|||Fixed}}</ref>}}
+|{{HistoryLine|||dev=14w34d|The witch hut spawning zone has now been decreased or eliminated, depending on altitude of the hut.}}
+|{{HistoryLine||1.8.1|dev=pre1|A new witch hut spawning system can now spawn [[witch]]es from Y coordinates 64 to 71, a wider range than before.}}
+|{{HistoryLine||1.11|dev=16w42a|Witches that spawn upon the generation of witch huts no longer despawn.<ref>{{bug|MC-108664|||Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=17w47a|The [[flower pot]] in witch huts now once again has a [[red mushroom]] inside of it.}}
+|{{HistoryLine|||dev=18w06a|"Witch Huts" are now renamed to "Swamp Huts".
+|The structure ID of swamp huts have been changed from {{cd|temple}} to {{cd|swamp_hut}}, allowing them to be located independently via the {{cmd|locate}} command.
+|Changed generation locations of swamp huts.}}
+|{{HistoryLine||1.14|dev=18w44a|Swamp huts now spawn with a black [[cat]].}}
+|{{HistoryLine||1.17|dev=21w07a|[[Seagrass]] can no longer replace parts of swamp huts.<ref>{{bug|MC-211224|||Fixed}}</ref>}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Due to swamps becoming rarer, swamp huts are now less common.}}
+|{{HistoryLine||1.19|dev=22w14a|With the addition of [[mangrove swamp]]s which don't generate swamp huts, swamp huts are now even less common.}}
+|{{HistoryLine||1.20.2|exp=[[Villager Trade Rebalance]]|dev=1.20.2 Pre-release 1|Added swamp [[explorer map]]s, which lead to swamp huts, and are sold by jungle, snowy and taiga [[cartographer]]s.}}
+|{{HistoryLine||1.21.5|dev=25w07a|The swamp explorer map is no longer behind the "Villager Trade Rebalance" experimental toggle.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[File:Swamp hut JE1 BE1.png|40px]] Added witch huts.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.2|A new [[witch]] spawning system has now been added to witch huts.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Witch huts now spawn with a black [[cat]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|[[File:Swamp hut JE1 BE1.png|40px]] Added witch huts.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.83|wiiu=none|switch=none|Swamp huts now spawn with a black [[cat]].{{verify}}}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Swamp hut JE1 BE1.png|40px]] Added witch huts.}}
+}}
+
+== Issues ==
+{{Issue list|Swamp hut|Witch hut}}
+
+== Trivia ==
+* The "hut" part of a swamp hut generates on or above the surface, while the wood "pillars" extend down until they reach solid ground. This means that if part of a swamp hut is at sea level and another part is on top of deep ground, such as a [[canyon]], the pillars on the deep-ground side go all the way down to the bottom.
+* A black cat spawning in a witch hut follows European folklore that {{w|Black cat|associates black cats with witches|newtab=1}}.
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Swamp hut JE2.png|Initial Texture Update revision (18w43a)
+Swamp hut JE3.png|Second Texture Update revision (18w47a)
+Swamp hut JE4 BE2.png|Final Texture Update revision ([[Java Edition 18w50a]], [[Bedrock Edition beta 1.10.0.3]], [[PlayStation 4 Edition 1.90]])
+</gallery>
+
+=== Screenshots ===
+<gallery>
+WitchesHut12w40a1.png|A standard swamp hut.
+WitchHutOcean.png|A swamp hut that generated over deep [[water]].
+Witch hut on top cave.jpg|A swamp hut where part of it generated on highland, and part of it above a deep [[cave]].
+Witch Hut.jpg|The inside of a swamp hut with [[mushroom]]s all over the inside of the hut.
+Duplex witch hut.png|Two swamp huts that generated on top of one another.
+Hutvillageandpyramidclosetoeachother.png|A [[desert pyramid]], [[village]], and a swamp hut close to each other.
+Swamphutnearplains.png|A swamp hut near a [[plains]] biome.
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+Cliffside Witch Hut.jpg|A witch hut on a cliffside.
+Swamphut-header.jpeg|A swamp hut.
+Swamphut-ingame.jpeg|The inside of a swamp hut.
+</gallery>
+
+=== In other media ===
+<gallery>
+Live2023-07.jpeg|[[Makena]] and [[Kai]] running past a swamp hut, from the reveal of [[Minecraft Live 2023]].<ref> https://www.youtube.com/watch?v=zLON6wZYgsE</ref>
+LEGO Minecraft Witch Hut Boxed.png|[[LEGO Minecraft]] witch hut.
+</gallery>
+
+== References ==
+{{reflist}}
+
+== See also ==
+* [[Witch]]
+* [[Tutorial:Witch farming]], a tutorial on farming witches
+
+== External links ==
+* {{mcnet|swamp-hut|Building Blocks: Swamp Hut|February 28, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox generated structures}}
+
+[[de:Sumpfhütte]]
+[[es:Cabaña de pantano]]
+[[fr:Cabane des marais]]
+[[it:Capanna nella palude]]
+[[ja:ウィッチの小屋]]
+[[ko:마녀 오두막]]
+[[pl:Chatka wiedźmy]]
+[[pt:Cabana do pântano]]
+[[ru:Хижина ведьмы]]
+[[uk:Хатина відьми]]
+[[zh:沼泽小屋]]

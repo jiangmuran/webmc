@@ -1,0 +1,173 @@
+{{About|the block|the text used to confirm entities affected by [[commands]]|target selector}}
+{{Infobox block
+|image=Target.png
+|invimage=Target
+|transparent=No 
+|light=None
+|tool=hoe
+|renewable=Yes
+|stackable=Yes (64)
+|flammable={{jebe|Yes (15)|No}}
+|lavasusceptible={{jebe|Yes|No}}
+}}
+A '''target''' is a [[block]] that produces a temporary redstone signal when hit by a [[projectile]]. Unlike most other conductive blocks, it also redirects adjacent [[redstone dust]] toward it.
+
+== Obtaining ==
+=== Breaking ===
+Targets can be [[breaking|mined]] using any [[tool]] or by hand, but using a [[hoe]] is the fastest way to break it.
+{{breaking row|horizontal=1|Target|Hoe|Any}}
+
+=== Natural generation ===
+In [[ancient cities]], a single target can be found integrated into circuitry within a secret room at the city center.
+
+=== Crafting ===
+{{Crafting
+|A2= Redstone Dust
+|B1= Redstone Dust
+|B2= Hay Bale
+|B3= Redstone Dust
+|C2= Redstone Dust
+|Output= Target
+|type= Redstone
+}}
+
+== Usage ==
+Targets emit a [[redstone]] signal when hit by [[projectile]]s. The closer a projectile is to the center of the [[block]], the stronger the redstone signal that is produced.
+
+The following projectiles can activate a target block:
+* {{EntityLink|Arrow}}
+* {{EntityLink|Bottle o' Enchanting}}
+* {{EntityLink|Dragon Fireball}}
+* {{EntityLink|Egg}}
+* {{EntityLink|Ender Pearl}}
+* {{EntityLink|Fireball}}
+* {{EntityLink|Firework Rocket}} (including when boosting a [[gliding]] player)<ref>{{ytl|jvtgn1jg3hc|Hermitcraft 9 Ep 44: Scarland's MEGA Entrance Build!! @ 4:42|GoodTimesWithScar|August 15, 2023|t=282}}</ref>
+* {{EntityLink|Fishing Bobber}}
+* {{EntityLink|Lingering Potion}}
+* {{EntityLink|Llama Spit}}
+* {{EntityLink|Shulker Bullet}}
+* {{EntityLink|Snowball}}
+* {{EntityLink|Small Fireball}}
+* {{EntityLink|Splash Potion}}
+* {{EntityLink|Trident}}
+* {{EntityLink|Wind Charge}}
+* {{EntityLink|Wither Skull}}
+
+=== Redstone component ===
+[[File:Targets redirecting redstone.png|thumb|Targets redirecting redstone toward themselves]]
+When struck by most projectiles, the target emits redstone power for {{convert|8|gt|s}}. [[Arrow]]s and [[trident]]s instead cause the target to emit power for {{convert|20|gt|s}}, similar to [[stone button]]s. A target can be hit with any of the projectiles mentioned above.
+
+The strength of the signal depends on how close the projectile is to the center of the block, from 1 to 15.
+
+{{IN|java}}, the target changes its <code>power</code> state when hit, meaning that an [[observer]] can detect if the target has been hit and has produced a redstone signal.<ref>{{bug|MCPE-84391||Observers don't detect target block updates}}</ref>
+
+Being a power source, a target redirects adjacent [[redstone wire]]s to point to itself. As targets are also [[conductive]], this property can be used to compact redstone circuits.
+
+== Sounds ==
+{{Sound table/Block/Grass}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Target
+|spritetype=block
+|nameid=target
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Target
+|spritetype=block
+|nameid=target
+|id=494
+|foot=1}}
+
+=== Block states ===
+{{edition|java}}:
+{{bst|power|0|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|Redstone power output of the target.|foot=1}}
+
+== Achievements ==
+{{load achievements|Bullseye}}
+
+== Advancements ==
+{{load advancements|Bullseye}}
+
+== Videos ==
+{{yt|Cis0-lqskX8}}
+
+== History ==
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||September 28, 2019|link={{ytl|OZqNaEX8208}}|[[File:Target JE1 BE1.png|32px]] The target block is showcased at [[Minecon Live 2019]].}}  
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}} 
+|{{HistoryLine||1.16|dev=20w09a|[[File:Target JE1 BE1.png|32px]] Added targets.}}
+|{{HistoryLine|||dev=20w10a|Targets are now flammable.
+|Targets can now be activated by [[ender pearl]]s and [[bottles o' enchanting]].}}
+|{{HistoryLine|||dev=20w11a|Targets can now be [[breaking|broken]] faster using [[hoe]]s.}}
+|{{HistoryLine|||dev=20w18a|Targets now conduct redstone power.}}
+|{{HistoryLine||1.19|dev=22w13a|Targets now generate in [[ancient cities]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|exp=Experimental Gameplay|[[File:Target JE1 BE1.png|32px]] Added targets.
+|Targets are currently available only through [[Experimental Gameplay]].}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|Targets are no longer behind [[Experimental Gameplay]].|Targets can now be [[breaking|broken]] faster using [[hoe]]s.}}
+|{{HistoryLine||1.17.30|dev=beta 1.17.20.20|Targets are no longer transparent.}}
+|{{HistoryLine||1.19.0|dev=beta 1.19.0.26|Targets now generate in [[ancient cities]].}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+TargetBlock.png|The target block shown at [[MINECON Live 2019]].
+The Perfect Shot.png|An [[arrow]] at the center of a target block
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Botw-target-header.png|Render of targets used for [[Block of the Week]]
+File:Target Artwork.png|Official target block artwork.
+File:Target icon.png|Sprite of a target block used for [[Minecraft Education]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|block-week--target|Block of the Week: Target|June 18, 2020|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox redstone|components}}
+{{Navbox blocks|Utility}}
+
+[[Category:Manufactured blocks]]
+[[Category:Mechanisms]]
+[[Category:Flammable blocks]]
+
+[[de:Zielblock]]
+[[es:Diana]]
+[[fr:Cible]]
+[[ja:的]]
+[[ko:과녁]]
+[[pl:Tarcza strzelecka]]
+[[pt:Alvo]]
+[[ru:Мишень]]
+[[uk:Мішень]]
+[[zh:标靶]]

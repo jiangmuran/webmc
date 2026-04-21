@@ -1,0 +1,1070 @@
+{{About|in-game shaders using [[resource pack]]s|the shaders provided by game modifications|Shader pack|the shaders available in the [[options]] menu before [[Java Edition 1.9]]|Super Secret Settings|the built-in shaders and modern customization in ''Bedrock Edition''|Vibrant Visuals}}{{Exclusive|java}}{{Removed feature|edition=bedrock}}{{wip|Add historical Bedrock Edition information. Java Edition History section could be expanded to include more details for changes made around 1.17 to 1.19. The Java Edition "Render process" section would benefit from more information. Java Edition would benefit from more information about post_effects (specifically vertex shaders before and after 25w31a) and vertex attributes for both post and core shaders}}
+
+'''Shaders''' are used to define the game's rendering of certain elements.
+
+== ''Java Edition'' ==
+{{in|je}}, two distinct kinds of shaders are used: '''core shaders''' and '''post-processing shaders'''. '''Core shaders''' are used to render fundamental parts of the game such as entities and terrain, while '''post-processing shaders''' are used to apply visual effects to the screen after core shaders have ran.
+
+Examples of post-processing shaders include the menu background blur, [[Spectator#Mob view|certain mob vision types]] as seen in [[spectator]], the ''Fabulous!'' [[graphics setting]]'s fixed handling of translucent object, and the [[glowing]] status effect.
+
+Shaders are written in the [https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language OpenGL Shading Language (GLSL)]. Each shader program{{note|A collection of shaders which run together.}} comes in two parts, the '''vertex''' and '''fragment''' shader. Vertex shaders define the positions of individual vertices, whereas fragment shaders define the final color of a single render fragment. For example, vertex shaders are often used to create waving foliage and water, and fragment shaders can be used to add effects like bloom, god rays, and blur. In ''Minecraft'', vertex shaders must use the extension {{code|.vsh}}, and fragment shaders {{code|.fsh}}.
+
+Shader programs are stored in the {{code|assets/minecraft/shaders}} directory of [[client.jar]], and can be replaced with a [[resource pack]]. Note that if any error occurs when loading the shaders, the resource pack is disabled and fabulous graphics mode is turned off.
+
+=== Core shaders ===
+{{Warning|section=1|Although core shaders can be replaced with a [[resource pack]], this isn't an intended or supported feature and may change at any time.}}
+
+Core shaders are used to render almost everything in the game, including terrain, entities, gui elements, etc. The shader programs for core shaders are located in the <code>assets/<namespace>/shaders/core</code> directory of a resourcepack.
+
+Some objects are not drawn using shaders, this includes:
+* The sky in the nether and bottom half of the overworld. These are the opengl clear color which is set to the same value as the <code>FogColor</code> uniform
+
+==== List of core shaders ====
+A list of all core shaders can be found by expanding the header below, listing descriptions of what each shader is responsible for, as well as what uniforms, samplers, and define directives are available to each shader.
+
+{| class="wikitable collapsible" data-description="List of core shaders"
+! Name
+! Used for
+! Sample images
+! Available [[#Vanilla uniform blocks|uniforms blocks]]
+! Available samplers.
+All samplers are of type <code>sampler2d</code> unless otherwise specified
+! Define directives
+|-
+
+|animate_sprite_blit
+|Renders non-interpolated [[Resource_pack#Texture_animation|texture animations]], as well as any non-animated sprite to a texture atlas.
+Uses the <code>core/animate_sprite.vsh</code> vertex program.
+|
+|<code>SpriteAnimationInfo</code>
+|<code>Sprite</code> - The next animation frame
+|None present.
+|-
+
+|animate_sprite_interpolate
+|Renders interpolated [[Resource_pack#Texture_animation|texture animations]] to a texture atlas.
+Uses the <code>core/animate_sprite.vsh</code> vertex program.
+|
+|<code>SpriteAnimationInfo</code>
+|<code>CurrentSprite</code> - The current animation frame
+
+<code>NextSprite</code> - The next animation frame
+|None present.
+|-
+
+|blit_screen
+|Copies one buffer to another.
+Uses the <code>core/screenquad.vsh</code> vertex program.
+|
+|None present.
+|<code>Sampler0</code> - The buffer to copy from.
+|None present.
+|-
+
+
+|block
+|Renders blocks that aren't part of chunk meshes such as falling sand, blocks being moved by a piston, or pistons while moving a block. {{info needed|verify if this applies to anything else}}
+|[[File:Core shader block highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The blocks atlas.
+
+<code>Sampler2</code> - The lightmap.
+|<code>ALPHA_CUTOUT</code> - Minimum opacity before pixels are discarded, if not defined no pixels get discarded.
+|-
+
+
+|debug_point
+|Used for some debug renderers {{info needed|Which debug renderers, and add image}}
+Uses the <code>core/position_color.fsh</code> fragment program.
+|
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|entity
+|Renders most entities including but not limited to:
+* Mobs
+* End crystal beams
+* Block entities that use special rendering such as banners and chests, both in the world and in guis
+* Equipment and other overlays such as the charged creeper energy swirls
+* Experience orbs
+|[[File:Core shader entity highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Lighting</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The base texture of the entity.
+
+<code>Sampler1</code> - The red damage indicator overlay.
+
+<code>Sampler2</code> - The lightmap.
+
+<code>DissolveMaskSampler</code> - An alpha mask to use when the <code>DISSOLVE</code> define is set.
+|<code>ALPHA_CUTOUT</code> - Minimum opacity before pixels are discarded, if not defined no pixels get discarded.
+
+<code>APPLY_TEXTURE_MATRIX</code> - Whether or not the uv should be offset by the <code>TextureMat</code> uniform.
+
+<code>EMISSIVE</code> - Whether or not lighting should be applied to the entity.
+
+<code>NO_CARDINAL_LIGHTING</code> - Whether or not directional shading should be applied.
+
+<code>NO_OVERLAY</code> - Whether or not the red damage tint should be applied.
+
+<code>PER_FACE_LIGHTING</code> - Whether or not lighting should be calculated seperately for the front and back quad faces.
+
+<code>DISSOLVE</code> - Whether or not the <code>DissolveMaskSampler</code> should be used as an alpha mask.
+|-
+
+
+|glint
+|Renders the enchantment glint on items, equipment, etc.
+|[[File:Core shader glint highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Globals</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The enchantment glint texture.
+|None present.
+|-
+
+
+|gui
+|Renders flat colored gui elements including but not limited to:
+* Chat and F3 screen text background
+* Advancement screen lines and background darken effect
+* Background of resource/datapack screen items
+* Background of selected world/server in world/server screens
+* Loading screen background
+* Selected language in language menu
+* Selected statistic in statistics menu
+* Inventory screen backgrounds
+* World loading progress
+* Text background on "Saving world" and similar screens
+|[[File:Core shader gui highlight.png|thumb]]
+[[File:Core shader gui 2 highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|item
+|Renders item models in various contexts, such as when dropped on the ground, held in an entities hand, in a display entity, etc
+|[[File:Core shader item highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Lighting</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The items or blocks atlas depending on the model currently being rendered.
+
+<code>Sampler2</code> - The lightmap.
+|<code>ALPHA_CUTOUT</code> - Minimum opacity before pixels are discarded, if not defined no pixels get discarded.
+|-
+
+|lightmap
+|Renders the lightmap which is used by other shaders to determine how bright or dark parts of the world should be.
+Uses the <code>core/screenquad.vsh</code> vertex program.
+|[[File:Core shader lightmap highlight.png|thumb|In this image the lightmap shader outputs a horizontal gradient from black to red]]
+[[File:Core shader lightmap visualisation.png|thumb|Here the lightmap has been modified to output a gradient from black to red horizontally, and black to green vertically. A mod has been used to display the output of this shader to the top left of the screen for a clearer visualisation]]
+|<code>LightmapInfo</code>
+|None present.
+|None present.
+|-
+
+
+|panorama
+|Renders the title screen panorama cubemap.
+|
+[[File:Core shader position tex highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> (samplerCube) - A cubemap sampler containing all 6 panorama images.
+|None present.
+|-
+
+
+|particle
+|Renders all particle effects. Also renders the rain and snow weather effects.
+|
+[[File:Core shader particle highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The particles or blocks atlas, depending on the particle that is being rendered. If rendering a weather effect then this is the corresponding texture for that effect.
+
+<code>Sampler2</code> - The lightmap.
+|None present.
+|-
+
+
+|position_color
+|Renders the lower half of the sky at sunrise and sunset. Also renders the F3 debug pie and chunk borders.
+|
+[[File:Core shader position color highlight.png|thumb]]
+[[File:Core shader position color 2 highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|position_tex_color
+|Renders some miscellaneous textured things including but not limited to:
+* The end skybox
+* GUI buttons, backgrounds, tooltips, icons etc
+* Pre-rendered items and entities in GUIs (see the [[#GUI_item_and_entity_rendering|Render process]] section for more information)
+* World icons, server icons, resourcepack icons, datapack icons, etc
+* HUD elements such as the hotbar, crosshair, health hearts, tab list heads, etc
+* The Mojang and Minecraft logos
+* Fire overlay
+* Camera overlay effects such as the vignette, pumpkin blur, freezing effect, etc
+|
+[[File:Core shader position tex color highlight JE2.png|thumb]]
+[[File:Position tex color 3 highlight.png|thumb|In this image, the square to the right is a prerendered item being drawn onto a quad]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - For most gui widgets and icons, this is the gui atlas. For world, resourcepack, etc icons, mojang logo, camera overlays, or other non-gui things this is the texture of the object being rendered.
+|None present.
+|-
+
+
+|position_tex
+|Renders celestial bodies including the sun, moon, and end flashes.
+|
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The celestials atlas
+|None present.
+|-
+
+
+|position
+|Handles depth for the ender dragon's death rays{{info needed | Does editing the shader affect the death rays in any way and how?}}.
+|
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_beacon_beam
+|Renders the beacon and end gateway beams.
+|
+[[File:Core shader rendertype beacon beam highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The texture of the current part of the beam being rendered.
+|None present.
+|-
+
+
+|rendertype_clouds
+|Renders the clouds.
+|
+[[File:Core shader rendertype clouds highlight.png|thumb]]
+|<code>CloudInfo</code>
+
+<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>CloudFaces</code> (isamplerBuffer) - Data about cloud faces{{info needed|What exactly does this contain?}}
+|None present.
+|-
+
+
+|rendertype_crumbling
+|Renders the block breaking animation.
+|
+[[File:Core shader rendertype crumbling highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code> - Although not explicitly defined in the code this can be used
+
+<code>Projection</code>
+|<code>Sampler0</code> - The texture for current stage of the block breaking animation.
+|None present
+|-
+
+
+|rendertype_end_portal
+|Renders the end portal and end gateway block entities, as well as the <code>end_cube</code> special model type
+|
+[[File:Core shader rendertype end portal highlight JE2.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Globals</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The end sky texture <code>textures/environment/end_sky.png</code>.
+
+<code>Sampler1</code> - The end portal stars texture <code>textures/entity/end_portal.png</code>.
+|<code>PORTAL_LAYERS</code> - The amount of star layers to render.
+|-
+
+
+|rendertype_entity_shadow
+|Renders the shadow that appears under most entities.
+|
+[[File:Core shader rendertype entity shadow highlight JE2.png|thumb|Highlighted in orange is where the shadow is normally visible in vanilla]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The shadow texture <code>textures/misc/shadow.png</code>.
+|None present.
+|-
+
+
+|rendertype_leash
+|Renders leads that are attached to entities in the world.
+|
+[[File:Core shader rendertype leash highlight JE2.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler2</code> - The lightmap.
+|None present.
+|-
+
+
+|rendertype_lightning
+|Renders lightning bolts and the ender dragon's death rays.
+|
+[[File:Core shader rendertype lightning highlight.png|thumb]]
+[[File:Core shader rendertype lightning 2 highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_lines
+|Renders all types of lines including:
+* The block outline
+* Entity debug hitboxes
+* The F3 screen crosshair
+* Structure and test block bounding boxes
+|
+[[File:Core shader rendertype lines highlight JE2.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Globals</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_outline
+|Renders a flat colored outline of entities which have the glowing effect.
+The color of this is based on the team the entity is in, or the glow color override for display entities, which is passed to the shader via the <code>Color</code> vertex attribute.
+
+The output of this shader is saved to a buffer and then later used in the <code>entity_outline</code> post effect to create the full glowing effect.
+|
+[[File:Core shader rendertype outline highlight JE2.png|thumb|In this image, the entity_outline post effect has been disabled to clearly show what this shader outputs]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The base texture of the object being rendered.
+|None present.
+|-
+
+
+|rendertype_text_background_see_through
+|Renders the background of text display entities that are set to render through blocks.
+|
+[[File:Core shader rendertype text background see through highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_text_background
+|Renders the background of text display entities that are not set to render through blocks.
+|
+[[File:Core shader rendertype text background highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_text_see_through
+
+rendertype_text_intensity_see_through
+|Renders text that is visible through blocks. Also renders the background of player and entity nameplates.
+
+''Note: rendertype_text_intensity_see_through is identical, however it is only used to render ttf fonts.''
+|
+[[File:Core shader rendertype text see through highlight JE2.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - An automatically generated 256x256 atlas which contains the current character that is being rendered.
+|None present.
+|-
+
+
+|rendertype_text
+
+rendertype_text_intensity
+|Renders text in the world and in GUIs. Also renders maps in item frames or when held in first person.
+
+''Note: rendertype_text_intensity is identical, however it is only used to render ttf fonts.''
+|
+[[File:Core shader rendertype text highlight JE2.png|thumb]]
+[[File:Core shader rendertype text 2 highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - An automatically generated 256x256 atlas which contains the current character that is being rendered. For maps, this is the map background texture, map_decorations atlas, or the map itself depending on which part is currently being rendered.
+<code>Sampler2</code> - The lightmap.
+|None present.
+|-
+
+
+|rendertype_water_mask
+|A mask used to hide water inside boats.
+|
+[[File:Core shader rendertype water mask highlight.png|thumb|In this image the shader has been edited to discard all pixels on the right half of the screen]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|rendertype_world_border
+|Renders the world border.
+|
+[[File:Core shader rendertype world border highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The world border texture <code>textures/misc/forcefield.png</code>.
+|None present.
+|-
+
+
+|sky
+|Renders the upper half of the overworld skybox.
+|
+[[File:Sky core shader highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|stars
+|Renders the stars in the overworld sky at night.
+|
+[[File:Stars core shader highlight.png|thumb]]
+|<code>DynamicTransforms</code>
+
+<code>Projection</code>
+|None present.
+|None present.
+|-
+
+
+|terrain
+|Renders all blocks and fluids in the world.
+|
+[[File:Core shader terrain highlight.png|thumb]]
+|<code>ChunkSection</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler0</code> - The blocks atlas.
+
+<code>Sampler2</code> - The lightmap.
+|<code>ALPHA_CUTOUT</code> - Minimum opacity before pixels are discarded, if not defined no pixels get discarded.
+|-
+
+
+|text_background {{upcoming|je 26.2}}
+|Renders text background, for example those seen on entity nameplates or text display entities.
+|
+|<code>DynamicTransforms</code>
+
+<code>Fog</code>
+
+<code>Projection</code>
+|<code>Sampler2</code> - The lightmap
+|<code>IS_SEE_THROUGH</code> - Defined if the shader has no depth test and can be seen through other objects.
+|-
+
+
+|text {{upcoming|je 26.2}}
+|Renders text in the world and in GUIs. Also renders maps in item frames or when held in first person.
+|
+|<code>DynamicTransforms</code>
+
+<code>Fog</code> (only when <code>IS_GUI</code> is not defined)
+
+<code>Projection</code>
+|<code>Sampler0</code> - An automatically generated 256x256 atlas which contains the current character that is being rendered. For maps, this is the map background texture, map_decorations atlas, or the map itself depending on which part is currently being rendered.
+<code>Sampler2</code> - The lightmap (only when <code>IS_GUI</code> is not defined)
+|<code>IS_GRAYSCALE</code> - Defined if the shader should treat the font texture as an intensity texture for TTF font rendering.
+
+<code>IS_SEE_THROUGH</code> - Defined if the shader has no depth test and can be seen through other objects.
+
+<code>IS_GUI</code> - Defined if the shader handles text for the gui.
+|-
+
+|}
+
+=== Include shaders ===
+Include shaders (stored in <code>assets/<namespace>/shaders/include</code>) contain helper functions and variables that can be used in multiple shader programs. These must have the <code>.glsl</code>, <code>.vsh</code>, or <code>.fsh</code> file extensions.
+
+To import an include shader, add one of the following import directives anywhere in a vertex or fragment shader program
+* <code>#moj_import <filepath.glsl></code> imports a file from <code>assets/minecraft/shaders/include/<filepath>.glsl</code>
+* <code>#moj_import <namespace:path.glsl></code> imports a file from <code>assets/<namespace>/shaders/include/<path>.glsl</code>
+* <code>#moj_import "filepath.glsl"</code> imports a file from <code>assets/minecraft/shaders/core/<filepath>.glsl</code>
+
+When importing an include shader, the game replaces the import directive with the contents of the include shader. ''The imported file needs to end with an empty line, otherwise the shader does not load.''
+
+;Vanilla include shaders
+The following include shaders are used throughout the vanilla resource pack
+{| class="wikitable"
+! Name
+! Description
+|-
+| fog.glsl
+| Contains the <code>linear_fog</code> function to calculate the color based on the vertex distance. Contains a definition of the <code>Fog</code> uniform block
+|-
+| light.glsl
+| Contains the <code>minecraft_mix_light</code> function, used to calculate face lighting in entity shaders. Contains a definition of the <code>Lighting</code> uniform block
+|-
+| matrix.glsl
+| Contains the <code>mat2_rotate_z</code> function that returns the rotation matrix for a vec2 around the z-axis.
+|-
+| projection.glsl
+| Contains the <code>projection_from_position</code> function. Contains a definition of the <code>Projection</code> uniform block
+|-
+| globals.glsl
+| Contains a definition of the <code>Globals</code> uniform block.
+|-
+| dynamictransforms.glsl
+| Contains a definition of the <code>DynamicTransforms</code> uniform block.
+|-
+| chunksection.glsl 
+| Contains a definition of the <code>ChunkSection</code> uniform block.
+|-
+| animation_sprite.glsl 
+| Contains a definition of the <code>SpriteAnimationInfo</code> uniform block.
+|-
+| sample_lightmap.glsl
+| Contains the <code>sample_lightmap</code> function, used by various shaders to sample the lightmap texture.
+|}
+
+=== Post-processing effects ===
+As mentioned previously, post-processing effects are used in menu backgrounds, when spectating certain mobs to create vision effects, the Fabulous! graphics setting, and when rendering the [[glowing]] effect.
+
+==== Post-effect file format ====
+Post-processing effects are made up of multiple passes and render targets. A target is a buffer that can be read from and written to. The game provides some built-in targets that contain certain parts of the game world (particles, water, etc), and you can define your own to read and write data to. A pass can have multiple inputs from png textures or render targets.
+
+Post-processing effects are defined in <code>assets/<namespace>/post_effect/<post effect>.json</code>. ''Note that post-processing effects are applied before the HUD and GUI elements are rendered''
+
+<div class="treeview">
+* {{nbt | compound}}: The root tag
+** {{nbt | compound | targets}}: Custom render targets to be used by render passes
+*** {{nbt | compound | target definition}}: The key is the name of the target
+**** {{nbt | integer | width}}: Defaults to the current viewport width. The width of the target
+**** {{nbt | integer | height}}: Defaults to the current viewport height. The height of the target
+**** {{nbt | bool | persistent}}: Defaults to false. If true, this target is not cleared between frames. It is still cleared when the game window is resized, however.
+**** {{nbt | list}}{{nbt | int | clear_color}} Defaults to <code>[0, 0, 0, 0]</code>. The color this target is filled with when it is created or cleared. Supports two formats. A list of floats in 0-1 range <code>[R, G, B, A]</code>, or a color in decimal format calculated from the red, green and blue components using this formula:<br>'''(Alpha [[wikipedia:Logical shift|<<]] 24) + (<span style="color:red">Red</span> [[wikipedia:Logical shift|<<]] 16) + (<span style="color:green">Green</span> [[wikipedia:Logical shift|<<]] 8) + <span style="color:blue">Blue</span>'''
+** {{nbt | list | passes}}: Render passes
+*** {{nbt | compound | pass}}: A render pass
+**** {{nbt | string | vertex_shader}}: The namespaced id of a vertex shader to use for this pass, relative to the shaders folder. <code>minecraft:post/blit</code> resolves to <code>assets/minecraft/shaders/post/blit.vsh</code>
+**** {{nbt | string | fragment_shader}}: The namespaced id of a fragment shader to use for this pass, relative to the shaders folder. <code>minecraft:post/box_blur</code> resolves to <code>assets/minecraft/shaders/post/box_blur.fsh</code>
+**** {{nbt | list | inputs}}: A list of render target inputs and / or texture inputs
+***** {{nbt | compound | render target input}}
+****** {{nbt | string | sampler_name}}: The name of the sampler uniform
+******* ''Setting this to <code>MainDepth</code>, for example, makes a sampler2D uniform called <code>MainDepthSampler</code> available to the shader program for this pass. This will also provide an additional vec2 to the <code>SamplerInfo</code> uniform block called <code><sampler_name>Size</code>, for example <code>MainDepthSize</code>''
+****** {{nbt | boolean | bilinear}}: Default: false. If set to true, the sampler uses bilinear filtering instead of nearest neighbor
+****** {{nbt | string | target}}: The name of the target. Can either be a custom target as specified in <code>targets</code> above, or one of the following built in targets: <code>minecraft:main</code>, <code>minecraft:translucent</code>, <code>minecraft:item_entity</code>, <code>minecraft:particles</code>, <code>minecraft:weather</code>, <code>minecraft:clouds</code>, or <code>minecraft:entity_outline</code>
+****** {{nbt | boolean | use_depth_buffer}}: Default: false. If set to true, it samples from the depth texture instead of the color texture.
+***** {{nbt | compound | texture input}}
+****** {{nbt | string | sampler_name}}: The name of the sampler uniform
+******* ''Setting this to <code>MyTexture</code>, for example, makes a sampler2D uniform called <code>MyTextureSampler</code> available to the shader program for this pass. This will also provide an additional vec2 to the <code>SamplerInfo</code> uniform block called <code><sampler_name>Size</code>, for example <code>MyTextureSize</code>''
+****** {{nbt | boolean | bilinear}}: Default: false. If set to true, the sampler uses bilinear filtering instead of nearest neighbor
+****** {{nbt | string | location}}: The resource location of the texture. <code>my_namespace:post_texture</code> resolves to <code>assets/my_namespace/textures/effect/post_texture.png</code>
+****** {{nbt | integer | width}}: The width of the texture in pixels
+****** {{nbt | integer | height}}: The height of the texture in pixels
+**** {{nbt | string | output}}: The target to output to. Can either be a custom target as specified in <code>targets</code> above or <code>minecraft:main</code>. ''Note: you cannot read and write to the same target in the same pass''
+**** {{nbt | compound | uniforms}}: An object of uniform blocks to pass to the vertex and fragment shaders. For example, <code>uniforms: { "UniformBlockName": [ { "type": "vec2", "value": [...] } ] }</code>
+***** {{nbt | list | uniform block}}: The key is what this uniform block will be called when referenced in a shader
+****** {{nbt | compound | uniform definition}}
+******* {{nbt | string | name}}: The name of the uniform. This is unused by the game, however it is recommended to set it for organizational purposes
+******* {{nbt | string | type}}: The type of the uniform, can be any of: <code>int</code>, <code>float</code>, <code>ivec3</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, and <code>matrix4x4</code>
+******* {{nbt | int}}{{nbt | float}}{{nbt | list | value}}: Uniform values. The amount and format of this depends on what the <code>type</code> field is set to
+******** <code>int</code> requires a single int
+******** <code>float</code> requires a single float
+******** <code>ivec3</code> requires list of 3 ints
+******** <code>vec2</code> requires list of 2 floats
+******** <code>vec3</code> requires list of 3 floats
+******** <code>vec4</code> requires list of 4 floats
+******** <code>matrix4x4</code> requires 16 floats
+</div>
+
+==== List of post-processing effects ====
+There are currently six post-processing effects used in the game:
+
+{| class="wikitable"
+! Name
+! Used for
+! Sample images
+|-
+| blur
+| Used for the blur effect in the background of most menus in-game and on the title screen. This post effect is not used when the "Menu Background Blur" accessibility setting is set to 0.
+| 
+<span style="white-space:nowrap;"><!--
+--><span style="display:inline-block;">[[File:Post effect blur.png|left|thumb]]</span><!--
+--><span style="display:inline-block;">[[File:Post effect blur ingame.png|left|thumb]]</span><!--
+--></span>
+|-
+| creeper
+| Adds a green filter over the screen and give the appearance of a reduced resolution. Used when spectating a [[creeper]].
+| 
+[[File:Post effect creeper.png|left|thumb]]
+|-
+| entity_outline
+| Applies a blur over a solid color silhouette of an entity. Used when an entity with the [[glowing]] effect is on-screen.
+| 
+[[File:Post effect entity outline.png|left|thumb|Left side is the "minecraft:entity_outline" target before the post effect is applied, right side is the final image with the post effect applied]]
+|-
+| invert
+| Inverts the colors of the screen. Used when spectating an [[enderman]].
+| 
+[[File:Post effect invert.png|left|thumb]]
+|-
+| spider
+| Renders a blurred version of the screen with 5 additional copies overlapped on top with blurred edges. Used when spectating a [[spider]].
+| 
+[[File:Post effect spider.png|left|thumb]]
+|-
+| transparency
+| Combines multiple passes (targets) of different objects in the world, resulting in slightly better translucency blending compared to "Fast" or "Fancy" graphics. Used when the graphics mode is set to "Fabulous!".
+| 
+<span style="white-space:nowrap;"><!--
+--><span style="display:inline-block;">[[File:Post effect transparency main.png|left|thumb|"minecraft:main" target]]</span><!--
+--><span style="display:inline-block;">[[File:Post effect Transparency translucent.png|left|thumb|"minecraft:translucent" target]]</span>
+<br><!--
+--><span style="display:inline-block;">[[File:Post effect transparency item entity.png|left|thumb|"minecraft:item_entity" target]]</span><!--
+--><span style="display:inline-block;">[[File:Post effect transparency particles.png|left|thumb|"minecraft:particles" target]]</span>
+<br><!--
+--><span style="display:inline-block;">[[File:Post effect transparency clouds.png|left|thumb|"minecraft:clouds" target]]</span><!--
+--><span style="display:inline-block;">[[File:Post effect transparency weather.png|left|thumb|"minecraft:weather" target]]</span>
+<br><!--
+--><span style="display:inline-block;">[[File:Post effect transparency.png|left|thumb|Final image]]</span><!--
+--></span>
+|}
+
+=== Render process ===
+{{expand section}}
+
+==== General game rendering ====
+Each frame is rendered in the following order{{info needed|Verify this order}}
+* The world, including entities, blocks, the sky, items, etc is rendered (by core shaders)
+* Any Post effects are applied as necessary
+* The GUI and HUD elements are rendered (by core shaders)
+
+==== GUI item and entity rendering ====
+When the game draws an item or entity in a GUI the following process occurs:
+* The item or entity is pre-rendered to an internal texture. For items, this may be an atlas of all currently visible items ("GUI items atlas") or a single texture for that item. This depends on if the <code>oversized_in_gui</code> field is set to true or false in the [[items model definition]]. For entities, each one always has a unique texture that it gets rendered to
+* For each item or entity, a quad is drawn to the screen which samples from either the GUI items atlas or individual texture for the corresponding item or entity
+The game can skip rendering an item when neccesary and will use whatever was drawn on the previous frame. An item is only re-rendered if one of the following conditions is met:
+* The item has an animated texture somewhere on its model
+* The item has an enchantment glint
+* The GUI items atlas fills up, in this case it is cleared and all currently visible GUI items are redrawn
+* The GUI scale is changed, in this case the GUI items atlas is cleared and all currently visible GUI items are redrawn
+* The item data is changed in a way that would cause a visual update. This includes but is not limited to: changing the <code>item_model</code>, <code>custom_model_data</code>, or <code>profile</code> [[Data component format|data components]]
+
+=== Vanilla uniform blocks ===
+<!-- DO NOT reorder the individual uniforms, the order is important -->
+{{Warning|section=1|Using uniform blocks outside supported shaders may work in some cases, however this is undefined behavior and may cause unexpected results or crashes. Refer to [[#List of core shaders|the list of core shaders]] for more info}}
+
+Uniforms blocks use the [https://ptgmedia.pearsoncmg.com/images/9780321552624/downloads/0321552628_AppL.pdf std140 layout]. All uniforms must be specified and in the correct order and with the correct type, otherwise weird and undefined behavior will occur. For convenience, some uniform blocks are pre-defined in include shaders, see the [[#Include_shaders|include shaders]] section for more information.
+
+Some shaders may not use all uniforms in a given uniform block, in this case the unused uniforms will have a 'default' value. For example, while the <code>rendertype_lines</code> core shader will have the proper value for the <code>LineWidth</code> uniform, other shaders will have a "default value" for which will likely not be useful.
+
+==== Common blocks ====
+The following uniform blocks are available in both post-processing and core shaders.
+
+;<code>Globals</code>
+This uniform block is always bound and has proper values in all shaders. {{INUpcoming|je 26.2}} this excludes <code>lightmap</code>, <code>animate_sprite_interpolate</code> and <code>animate_sprite_blit</code>.
+* (ivec3) <code>CameraBlockPos</code> Block position of the camera in world-space coordinates.
+* (vec3) <code>CameraOffset</code> Fractional position of the camera in world-space coordinates.
+* (vec2) <code>ScreenSize</code> The width and height of the current framebuffer in pixels.
+* (float) <code>GlintAlpha</code> The value of the Glint Strength accessibility setting in a 0-1 range.
+* (float) <code>GameTime</code> A value that constantly increases from 0-1 over the span of roughly 20 minutes, then resets to 0. The exact formula for this is <code>(<age of the world> modulo 24000) / 24000</code>. {{INUntil|je 26.2}} this is set to a constant 0 value within <code>animate_sprite_interpolate</code> and <code>animate_sprite_blit</code>.
+* (int) <code>MenuBlurRadius</code> The value of the Menu Background Blur accessibility setting in a 0-10 range.
+* (int) <code>UseRgss</code> A "boolean" value. Value is 1 if the [[Options#Video_Settings|texture filtering video setting]] is set to RGSS, otherwise 0.
+
+==== Core blocks ====
+The following uniform blocks are only available in core shaders.
+
+;<code>Fog</code>
+This uniform block is always bound, however may not have proper values if used outside shaders which support it.
+* (vec4) <code>FogColor</code> Color of the fog.
+* (float) <code>FogEnvironmentalStart</code> Starting distance of environmental fog.
+* (float) <code>FogEnvironmentalEnd</code> Ending distance of environmental fog.
+* (float) <code>FogRenderDistanceStart</code> Starting distance of render distance fog.
+* (float) <code>FogRenderDistanceEnd</code> Ending distance of render distance fog.
+* (float) <code>FogSkyEnd</code> Ending distance of fog for the upper portion of the sky.
+* (float) <code>FogCloudsEnd</code> Ending distance for clouds fog.
+
+;<code>DynamicTransforms</code>
+* (mat4) <code>ModelViewMat</code> The model-view matrix.
+* (vec4) <code>ColorModulator</code> A color multiplier that can be set in game code to modify the final color of objects.
+* (vec3) <code>ModelOffset</code> The offset of the model being rendered.
+* (mat4) <code>TextureMat</code> A 4D matrix used to transform UV's for some animated effects, such as the enchantment glint, breeze and wind charge wind, world border, etc.
+
+;<code>Lighting</code>
+This uniform block is always bound, however may not have proper values if used outside shaders which support it.
+* (vec3) <code>Light0_Direction</code> First light direction. Used to calculate directional entity shading.
+* (vec3) <code>Light1_Direction</code> Second light direction. Used to calculate directional entity shading.
+
+;<code>Projection</code>
+This uniform block is always bound, however may not have proper values if used outside shaders which support it.
+* (mat4) <code>ProjMat</code> The projection matrix
+
+;<code>LightmapInfo</code>
+*(float) <code>SkyFactor</code> A value that specifies how much to brighten the lightmap by when the sky flashes, typically when a lightning strike occurs. This value comes from the <code>minecraft:visual/sky_light_factor</code> environment attribute.
+*(float) <code>BlockFactor</code> A value that fluctuates randomly, used in the vanilla shader for block light flickering.
+*(float) <code>NightVisionFactor</code> A value in a 0-1 range that specifies how much the Night Vision [[Effect | status effect]] should brighten the lightmap by.
+*(float) <code>DarknessScale</code> A value in a 0-1 range that specifies how much the Darkness [[Effect | status effect]] should darken the lightmap by.
+*(float) <code>BossOverlayWorldDarkeningFactor</code> A value that specifies how much to darken the lightmap by when a bossbar is visible. This is seemingly only used in the ender dragon fight {{info needed|Verify if any other boss bars can affect this}}.
+*(float) <code>BrightnessFactor</code> The value of the brightness video setting in a 0-1 range.
+*(vec3) <code>BlockLightTint</code> The color of block light. This value comes from the <code>minecraft:visual/block_light_tint</code> environment attribute.
+*(vec3) <code>SkyLightColor</code> The color of sky light. This value comes from the <code>minecraft:visual/sky_light_color</code> environment attribute.
+*(vec3) <code>AmbientColor</code> The ambient light color. This value comes from the <code>minecraft:visual/ambient_light_color</code> environment attribute.
+*(vec3) <code>NightVisionColor</code> The color of the Night Vision [[Effect | status effect]]. This value comes from the <code>minecraft:visual/night_vision_color</code> environment attribute.
+
+;<code>CloudInfo</code>
+* (vec4) <code>CloudColor</code> The color of the clouds.
+* (vec3) <code>CloudOffset</code> Offset of the clouds {{info needed|Verify this}}.
+* (vec3) <code>CellSize</code> Size of each individual cloud {{info needed|Verify this}}.
+
+;<code>ChunkSection</code>
+* (mat4) <code>ModelViewMat</code> The model-view matrix.
+* (float) <code>ChunkVisibility</code> Value that increments from 0 to 1 once a chunk section has been displayed. The amount of time this takes is dependent on the [[Video settings|"Chunk Fade" video setting]]
+* (ivec2) <code>TextureSize</code> {{info needed}}
+* (ivec3) <code>ChunkPosition</code> {{info needed}}
+
+;<code>SpriteAnimationInfo</code>
+* (mat4) <code>ProjectionMatrix</code> The projection matrix
+* (mat4) <code>SpriteMatrix</code> {{info needed}}
+* (float) <code>UPadding</code> {{info needed}}
+* (float) <code>VPadding</code> {{info needed}}
+* (int) <code>MipMapLevel</code> {{info needed}}
+
+==== Post-processing blocks ====
+The following uniform blocks are only available in post-processing shaders.
+
+;<code>SamplerInfo</code>
+* (vec2) <code>OutSize</code> The width and height of the output buffer in pixels.
+* (vec2) All other inputs specified in the same order as the [[#Post-effect_file_format | post-effect definition]]. These are named as <code><sampler_name>Size</code>, for example, <code>MainSize</code> for an input with a name of "Main"
+
+
+== ''Bedrock Edition'' ==
+{{Expand section}}
+
+Since [[Bedrock Edition 1.18.30]], third-party shader in resource packs are no longer supported on all devices due to the implementation of [[RenderDragon]]. 
+
+=== Deferred rendering pipeline ===
+
+The deferred rendering pipeline is an alternative rendering pipeline which can be customized via resource packs and is used in the vanilla game for the [[Vibrant Visuals]] graphics mode.
+
+Although it doesn't directly support custom shaders, it offers ways to define properties about light, fog, atmosphere, and PBR texture materials. This can be used to create lighting effects similar to those seen in Java Edition's [[shader pack]]s.
+
+== History ==
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.7.2|dev=13w38a
+|Shaders were added for [[Super Secret Settings]].
+}}
+|{{HistoryLine||1.8|dev=14w05a
+|The Creeper and Spider shaders were added. Shaders are automatically applied in [[spectator]] mode when viewing the world as a [[creeper]], [[spider]] or [[enderman]].
+}}
+|{{HistoryLine|||dev=14w05b
+|Shaders have been removed from view when changing perspective while spectating a mob.<ref name="NoBug">{{bug|MC-46727#comment-219617}}</ref>|{{key|F4}} now toggles different shaders rather than turning them off.<ref name="NoBug"/>
+}}
+|{{HistoryLine|||dev=14w06a
+|The <code>entity_outline</code> post effect shader was added.
+}}
+|{{HistoryLine||1.9|dev=15w31a
+|Removed the [[Super Secret Settings]] button for an internal rewrite.<ref>{{tweet|_grum|627141591942209536|nah just rewriting it all :p They are still in the game, the button is just gone atm. It would make more sense to keybind imho|July 31, 2015}}</ref>
+}}
+|{{HistoryLine||1.16|dev=20w22a
+|The <code>transparency</code> post effect shader was added for ''Fabulous!'' graphics mode.
+}}
+|{{HistoryLine||1.17|dev=21w10a
+|Added core shaders.
+|Added the <code>fog.glsl</code>, <code>light.glsl</code>, <code>matrix.glsl</code>, and <code>projection.glsl</code> include shaders
+|The game now requires OpenGL 3.2 Core Profile.
+|Upgraded the existing shader programs for post processing effects from glsl version <code>110</code> to <code>150</code>
+}}
+|{{HistoryLine||1.18.1|dev=?
+|The <code>fog.glsl</code> include shader now has a <code>cylindrical_distance</code> function. All core shaders that previously used the builtin <code>length</code> function to calculate vertex distance use this.
+}}
+|{{HistoryLine||1.18.2|dev=?
+|In <code>fog.glsl</code> the <code>cylindrical_distance</code> function has been renamed to <code>fog_distance</code>. It also takes an additional int parameter for fog shape.
+}}
+|{{HistoryLine|||dev=?
+|Added the <code>FogShape</code> uniform for core shaders.
+}}
+|{{HistoryLine||1.19|dev=22w12a
+|There are now shader files for translucent entity rendering.
+}}
+|{{HistoryLine||1.20.5|dev=24w05a
+|The attributes array in core shader definitions has been removed. All attributes are now always bound for a given shader.
+|The unused <code>position_color_normal</code> and <code>position_tex_lightmap_color</code> core shaders have been removed
+|The <code>position_tex_color_normal</code> core shader has been renamed to <code>rendertype_clouds</code>
+|The <code>IViewRotMat</code> uniform has been removed, and the Position attribute for entities is now in (camera relative) world space
+|Light direction uniforms are no longer premultiplied by the view matrix
+}}
+|{{HistoryLine|||dev=24w09a
+|The menu background dirt texture has been replaced by a post-processing blur shader.
+}}
+|{{HistoryLine|||dev=24w11a
+|All unused post-processing shaders that were used for [[Super Secret Settings]] have been removed.
+}}
+|{{HistoryLine||1.21.2|dev=24w34a
+|Shader program configurations can now specify preprocessor define directives to apply to their linked shaders.
+|The format of core shader and post-processing shader configurations have been consolidated.
+|The <code>rendertype_entity_glint_direct</code> core shader has been removed and replaced by <code>rendertype_entity_glint</code>.
+|The <code>rendertype_entity_translucent_cull</code> shader has been removed and replaced by <code>rendertype_item_entity_translucent_cull</code>.
+}}
+|{{HistoryLine|||dev=?
+|Renamed the <code>ChunkOffset</code> uniform to <code>ModelOffset</code>
+}}
+|{{HistoryLine|||dev=?
+|The <code>moj_import</code> directive now accepts a [[resource location]], allowing include shaders to be placed in namespaces other than '''minecraft'''
+}}
+|{{HistoryLine|||dev=?
+|Most textured gui elements now use the <code>core/position_tex_color</code> shader instead of <code>core/position_tex</code>
+}}
+
+|{{HistoryLine||1.21.4|dev=?
+|The sun and moon now use the <code>core/position_tex_color</code> shaders instead of <code>core/position_tex</code>
+}}
+
+|{{HistoryLine||1.21.5|dev=25w06a
+|Added a new core shader, <code>rendertype_world_border</code>, which is used to render the world border
+}}
+|{{HistoryLine|||dev=25w07a
+|Shader program configuration files have been removed. The shader programs are still present, however the only uniforms available to them are the default ones that are used in the vanilla rendering.
+|In post-processing effects, the field <code>program</code> was replaced with <code>vertex_shader</code> and <code>fragment_shader</code> which resolve to <code>assets/<namespace>/shaders/<path>.<vsh or fsh></code>
+|In post-processing effects, <code>type</code> is now a required field for each <code>uniform</code>, with the possible values being <code>int</code>, <code>ivec3</code>, <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code> and <code>matrix4x4</code>
+|In post-processing effects, the <code>values</code> field is now option for each <code>uniform</code>. Leaving it unset is not recommended as it will result in undefined behavior. Leaving it unset is only used for runtime configuration of the blur post-processing effect in the vanilla rendering
+|The <code>EndPortalLayers</code> uniform has been removed and replaced by a pre-processor define called  <code>PORTAL_LAYERS</code>}}
+|{{HistoryLine|||dev=25w10a
+|"Global" uniforms can now be defined in shader programs. If a uniform is not usually available to that shader, or the type of the uniform is not defined as what it would normally be, undefined behavior will occur
+|Currently, the "global" uniforms are: <code>ModelViewMat</code>, <code>ProjMat</code>, <code>TextureMat</code>, <code>ScreenSize</code>, <code>ColorModulator</code>, <code>Light0_Direction</code>, <code>Light1_Direction</code>, <code>GlintAlpha</code>, <code>FogStart</code>, <code>FogEnd</code>, <code>FogColor</code>, <code>FogShape</code>, <code>LineWidth</code>, <code>GameTime</code>, and <code>ModelOffset</code>
+}}
+|{{HistoryLine||1.21.6|dev=25w16a
+|All built-in uniforms are now uniform blocks instead of opaque loose uniforms
+|Custom uniforms provided to post-process shaders are now uniform blocks
+|In post-processing effects, <code>targets</code> now supports two new optional fields: <code>persistent</code> and <code>clear_color</code>
+|In post-processing effects, the <code>uniforms</code> field is now a list of uniform blocks, example: <code>{ "UniformBlockName": [ { "type": "vec2", "value": [...] } ] }</code>.
+|In post-processing effect uniform definitions, the <code>name</code> field is now unused by the game but still present. The <code>values</code> field has been replaced with <code>value</code>, behaving largely the same but for the <code>int</code> and <code>float</code> uniform types this field accepts a single number instead of a list with 1 entry.
+|In post-processing effects, the list of size (all vec2 *Size) uniforms have been replaced with a single <code>SamplerInfo</code> uniform block.
+|The main menu panorama now uses a new fragment program, <code>core/panorama.fsh</code>.
+|The <code>core/position_tex.fsh</code> program is now unused.
+|The <code>position</code> core shader can now have a <code>FOG_IS_SKY</code> define directive.
+|The <code>minecraft_sample_lightmap</code> has been removed from the <code>light.glsl</code> include shader. All shaders that previously used this function now instead sample the lightmap texture directly.
+}}
+|{{HistoryLine|||dev=25w17a
+|Added two new core shaders; <code>stars</code>, and <code>sky</code> which are used to render the stars and upper portion of the sky respectively.
+|Removed the <code>FOG_IS_SKY</code> define directive, as the sky now uses a separate shader.
+}}
+|{{HistoryLine|||dev=25w19a
+|The main menu panorama now uses a new vertex program, <code>core/panorama.vsh</code>.
+|The <code>core/position_tex.vsh</code> program is now unused.
+|Added four new uniforms, <code>FogEnvironmentalStart</code>, <code>FogEnvironmentalEnd</code>, <code>FogRenderDistanceStart</code> and <code>FogRenderDistanceEnd</code>.
+|The <code>FogShape</code>, <code>FogStart</code> and <code>FogEnd</code> uniforms have been removed.
+}}
+
+|{{HistoryLine||1.21.9|dev=25w31a
+|Removed the <code>post/blit.vsh</code>, <code>post/blur.vsh</code>, <code>post/invert.vsh</code>, <code>post/sobel.vsh</code>, <code>post/screenquad.vsh</code>, and <code>core/blit_screen.vsh</code> shader programs and replaced them with <code>core/screenquad.vsh</code>.
+|Vertex shaders for post-processing effects and full screen blits are no longer are passed a <code>Position</code> attribute. Instead these must assign vertex coordinates using <code>gl_VertexID</code>. Additionally, these shaders are only executed with 3 vertices instead of a full quad like they were previously.
+}}
+|{{HistoryLine|||dev=25w33a
+|In the <code>LightmapInfo</code> uniform block, the <code>int UseBrightLightmap</code> uniform has been removed, and <code>vec3 AmbientColor</code> has been added.
+|The <code>core/lightmap.fsh</code> shader has been modified for the new end flashes.
+}}
+|{{HistoryLine|||dev=25w35a
+|The <code>core/lightmap.fsh</code> shader has been modified slightly to fix some issues with end flashes. The darkness effect pulsing is no longer applied in the end as part of these changes.
+}}
+|{{HistoryLine|||dev=25w36a
+|Removed the unused <code>core/position_color_lightmap.fsh</code>, <code>core/position_color_lightmap.vsh</code>, <code>core/position_color_tex_lightmap.fsh</code>, and <code>core/position_color_tex_lightmap.vsh</code> shader programs.
+|Minor change to uv calculations in the <code>minecraft_sample_lightmap</code> function in the <code>core/terrain.vsh</code> program.
+}}
+|{{HistoryLine|||dev=25w37a|The <code>core/entity</code> shader can now have a <code>PER_FACE_LIGHTING</code> flag. When set, cardinal lighting will be computed separately for front and back faces of each quad.
+|The game now requires OpenGL 3.3 Core Profile.
+|Upgraded all shader programs from glsl version <code>150</code> to <code>330</code>
+|Split the logic for <code>minecraft_mix_light</code> function in <code>include/light.glsl</code> into two additional functions: <code>minecraft_compute_light</code> and <code>minecraft_mix_light_separate</code>
+}}
+|{{HistoryLine|||dev=?
+|The sun and moon now use the <code>core/position_tex</code> shaders instead of <code>core/position_tex_color</code>
+}}
+
+|{{HistoryLine||1.21.11|dev=25w41a
+|Added a new shader program <code>core/debug_point.vsh</code>
+|Removed the <code>LineWidth</code> uniform from the <code>DynamicTransforms</code> uniform block. Line width is now passed as a vertex attribute to the <code>core/rendertype_lines</code> and <code>core/debug_point</code> shaders instead.
+}}
+|{{HistoryLine|||dev=25w44a
+|Added new shader programs <code>core/animate_sprite.vsh</code>, <code>core/animate_sprite_blit.fsh</code>, and <code>core/animate_sprite_interpolate.fsh</code> for rendering [[Resource_pack#Texture_animation|texture animations]].
+|Changes have been made to the <code>core/terrain</code> shader for texel antialiasing and chunk fade animations.
+|The <code>Sampler0</code> uniform in the <code>core/terrain</code> shader now uses linear filtering instead of nearest.
+|Added new shader programs <code>core/block.vsh</code> and <code>core/block.fsh</code> for rendering non-chunk-meshed blocks such as falling sand or blocks being moved by a piston.
+|Added new include shaders <code>include/animation_sprite.glsl</code> and <code>include/chunksection.glsl</code> which contain definitions for new <code>SpriteAnimationInfo</code> and <code>ChunkSection</code> uniform blocks respectively.
+|Added two new uniforms, <code>ivec3 CameraBlockPos</code> and <code>vec3 CameraOffset</code>, to the <code>Globals</code> uniform block.
+}}
+|{{HistoryLine|||dev=pre1
+|The <code>core/terrain.fsh</code> shader has been modified to implement RGSS texture filtering.
+|Added a new uniform, <code>int UseRgss</code>, to the <code>Globals</code> uniforms block.
+}}
+
+|{{HistoryLine||26.1|dev=26.1 Snapshot 1
+|The <code>core/lightmap.fsh</code> shader has been mostly rewritten
+|Added two new uniforms to the <code>LightmapInfo</code> uniform block: <code>vec3 BlockLightTint</code> and <code>vec3 NightVisionColor</code>.
+|The <code>float AmbientLightFactor</code> uniform has been removed from the <code>LightmapInfo</code> uniform block. It is now pre-multiplied into the <code>vec3 AmbientColor</code> uniform.
+|The <code>float DarkenWorldFactor</code> uniform in the <code>LightmapInfo</code> uniform block has been renamed to <code>float BossOverlayWorldDarkeningFactor</code>
+|Added a new <code>include/smooth_lighting.glsl</code> shader. Contains a function called <code>minecraft_sample_lightmap</code> used by various shaders to sample the lightmap texture.
+}}
+|{{HistoryLine|||dev=26.1 Snapshot 5
+|Various shaders now sample the lightmap texture using the <code>texture</code> function instead of <code>texelFetch</code>. This includes <code>core/entity.vsh</code>, <code>core/rendertype_entity_decal.vsh</code>, <code>core/rendertype_item_entity_translucent_cull.vsh</code>, <code>core/rendertype_leash.vsh</code>, <code>core/rendertype_text.vsh</code>, <code>core/rendertype_text_background.vsh</code>, <code>core/rendertype_text_intensity.vsh</code>, and <code>core/rendertype_translucent_moving_block.vsh</code>.
+}}
+|{{HistoryLine|||dev=26.1 Snapshot 6
+|The <code>core/rendertype_item_entity_translucent_cull</code> shader has been removed, most things that were previously handled by this shader are now handled by <code>core/entity</code>.
+|The <code>core/rendertype_entity_alpha</code> and <code>core/rendertype_entity_decal</code> shaders have been removed and replaced by a <code>DISSOLVE</code> define directive in <code>core/entity</code>
+|All item models are now rendered using a new <code>core/item</code> shader instead of <code>core/entity</code>, with the exception of special model renderers which still use <code>core/entity</code>
+}}
+|{{HistoryLine|||dev=26.1 Snapshot 7
+|The <code>core/terrain.vsh</code> and <code>core/block.vsh</code> shaders no longer have the <code>Normal</code> vertex attribute
+|Some small changes were to how various shaders sample the lightmap texture. This includes <code>core/entity.vsh</code>, <code>core/item.vsh</code>, <code>core/rendertype_leash.vsh</code>, <code>core/rendertype_text.vsh</code>, <code>core/rendertype_text_background.vsh</code>, <code>core/rendertype_text_intensity.vsh</code>, and <code>core/rendertype_translucent_moving_block.vsh</code>.
+}}
+|{{HistoryLine|||dev=26.1 Snapshot 10
+|The <code>include/smooth_lighting.glsl</code> shader has been removed and replaced by a new <code>include/sample_lightmap.glsl</code> shader. This contains a function called <code>sample_lightmap</code> used by various shaders to sample the lightmap texture.
+|The following shaders; <code>core/block.vsh</code>, <code>core/entity.vsh</code>, <code>core/item.vsh</code>, <code>core/particle.vsh</code>, <code>core/rendertype_leash.vsh</code>, <code>core/rendertype_text.vsh</code>, <code>core/rendertype_text_background.vsh</code>, <code>core/rendertype_text_intensity.vsh</code>, <code>core/rendertype_translucent_moving_block.vsh</code>, and <code>core/terrain.vsh</code>, now sample the lightmap texture using the helper function declared in <code>include/sample_lightmap.glsl</code>.
+|<code>core/rendertype_crumbling.vsh</code> no longer defines a varying named <code>texCoord2</code>
+}}
+|{{HistoryLine|||dev=26.1 Pre-Release 1
+|The <code>core/rendertype_translucent_moving_block</code> shaders have been removed. Objects which were previously rendered by this shader are now handled by <code>core/block</code>
+}}
+
+|{{HistoryLine|Java edition upcoming}}
+|{{HistoryLine||26.2|dev=26.2 Snapshot 1
+|The <code>core/rendertype_text</code>, <code>core/rendertype_text_see_through</code>, <code>core/rendertype_text_intensity</code>, and <code>core/rendertype_text_intensity_see_through</code> shaders have been merged into new <code>core/text</code> shaders. Three defines are available for handling variants of text; <code>IS_GUI</code>, <code>IS_SEE_THROUGH</code>, and <code>IS_GRAYSCALE</code>.
+|The <code>core/rendertype_text_background</code> and <code>core/rendertype_text_background_see_through</code> shaders have been merged into new <code>core/text_background</code> shaders. The <code>IS_SEE_THROUGH</code> define is availble for handling see-through backgrounds.
+|When the games graphics api is set to Vulkan, some minor pre-processing is now done to shaders. Notably, <code>gl_VertexID</code> is replaced with <code>gl_VertexIndex</code> and <code>gl_InstanceID</code> is replaced with <code>gl_InstanceIndex</code>.
+|This snapshot has a bug which prevents the game from loading any shaders from resourcepack after the initial resource load. This only applies when the graphics api is set to Vulkan.
+}}
+
+}}
+
+==Gallery==
+<gallery>
+CreeperVision.png|The creeper vision shader
+EndermanVision.png|The enderman vision shader
+SpiderVision.png|The spider vision shader
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links == 
+* [https://github.com/McTsts/Minecraft-Shaders-Wiki Vanilla Shaders Wiki]
+* [https://docs.google.com/document/d/15TOAOVLgSNEoHGzpNlkez5cryH3hFF3awXL5Py81EMk/edit?usp=sharing Minecraft Vanilla Shaders Guide]
+* [https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language OpenGL Shading Language on the OpenGL Wiki]
+* [https://thebookofshaders.com/ The Book of Shaders]
+* [https://learnopengl.com/ Learn OpenGL]
+* [https://github.com/mclegoman/luminance/blob/master/ResourcepackGuide/ResourcepackGuide.md Minecraft Post-Processing Shaders Guide]
+* [https://learn.microsoft.com/en-us/minecraft/creator/documents/deferredlighting/?view=minecraft-bedrock-experimental Bedrock Edition Deferred Rendering Pipeline Documentation]
+
+== Navigation ==
+{{Navbox resource packs}}
+{{Navbox Java Edition technical|resourcepack}}
+
+[[Category:Gameplay]]
+
+[[de:Shaderdaten]]
+[[es:Sombreador]]
+[[fr:Filtres]]
+[[ja:シェーダー]]
+[[pl:Shadery]]
+[[pt:Shader]]
+[[ru:Шейдеры]]
+[[zh:着色器]]

@@ -1,0 +1,283 @@
+{{about|the normal vault|the ominous variant|Ominous Vault|the sub dungeon in {{MCD}}|MCD:Vault}}
+{{Infobox block
+| group1 = Normal
+| 1-1 = Vault.png
+| group2 = Awaiting key
+| 2-1 = Vault (active).png
+| group3 = Unlocking
+| 3-1 = Vault (unlocking).png
+| group4 = Ejecting
+| 4-1 = Vault (ejecting).png
+| renewable = No
+| stackable = Yes (64)
+| light = Yes <br> Active or ejecting: 12 <br> Inactive: 6
+| transparent = Partial
+| tool = any
+| flammable = No
+| lavasusceptible = No
+}}
+A '''vault''' is a [[block]] found in [[trial chambers]] that ejects loot when unlocked using a [[trial key]]. Each vault can be opened by an unlimited number of [[players]], but each player can unlock a specific vault only once.<ref name="Minecraft Monthly">{{ytl|gbCSAffHr0w|REVEALING A NEW BLOCK + TRIAL KEY UNLOCKS...??? {{!}} MINECRAFT MONTHLY|Minecraft|January 26, 2024|t=4m}}</ref>
+
+== Obtaining ==
+Vaults can be obtained only by the [[Creative inventory]], using {{Control|pick block}}, or executing [[commands]].
+
+=== Breaking ===
+A vault has no tool associated with it and does not drop anything when destroyed.
+{{breaking row|Vault|drop=0|horizontal=1}}
+
+=== Natural generation ===
+[[File:Vaultrender3.png|thumb|200px|A vault, as it appears in [[trial chambers]]]]
+In [[trial chambers]], vaults can generate naturally in all rooms that also contain [[trial spawner]]s, as well as the entrance room. They are found generated on small pedestals made of waxed [[cut copper block]]s and [[cut copper slab]]s.
+
+== Usage ==
+=== Activation ===
+When a player is within 3.0 blocks of a vault, it becomes active and begins emitting flame [[particles]] inside of it. If the player has not unlocked the vault before (i.e. if the player is not in its [[#Player limit|list of players]]), a stream of orange particles flows from the player to the vault's keyhole. The vault becomes inactive if there are no players within 4.0 blocks who have not unlocked the vault.
+
+When active, a vault idly cycles between items once every second, visually displaying the current item inside the block. Each time the vault cycles to a new item, the item is randomly chosen from the loot table ({{slink||Loot}}). While the display items are chosen from the same loot table, their sequence is unrelated to the sequence rolls for items to eject while opening the vault. Small orange particles also appear in front of the vault as if they were being sucked into the keyhole.
+
+=== Unlocking ===
+[[File:Vault Ejecting Loot Screenshot.png|thumb|A vault in the process of ejecting loot]]
+When a trial key is {{control|used}} on a vault, it ejects items. Items are ejected one stack at a time with a burst of particles for each stack.
+
+While a vault is ejecting items, it will briefly show the next item to be ejected. This should not be confused with the random items displayed while the vault is idle. These random item displays ''cannot'' be used for timing the unlocking, as the items to eject are rolled independently of whatever the idle display shows.
+
+When a vault is finished ejecting items, it becomes inactive until another player approaches it.
+
+Each vault can be unlocked only once per player. Vaults are intended to reward each player for completing each trial chamber one time. This gives every player in a [[world]] the opportunity to find their own loot without having to travel substantial distances to find undiscovered loot at a fresh structure.
+
+; Player limit {{anchor|Player limit}}
+Each vault keeps track of up to 128 unique players that have opened it. If the list of players is full and another opens the vault, the new player is added to the end of the list while the first known player is forgotten and becomes able to open the vault again. Because of this, any item dropped by vaults is functionally [[renewable]] with enough players.<ref>{{bug|MC-274049||Each vault can only track up to 128 players, if 128 players have already opened the vault and another new player opens the vault, the first player tracked by the vault will be forgotten and becomes able to open the vault again|WAI}}</ref><ref>{{bug|MCPE-226578||Each vault can only track up to 128 players, if 128 players have already opened the vault and another new player opens the vault, the first player tracked by the vault will be forgotten and becomes able to open the vault again(in MCBE)|WAI}}</ref> See {{Slink|Renewable resource|Vault}}.
+
+=== Piston interactivity ===
+A vault cannot be pushed by a [[piston]] or pulled by a [[sticky piston]].
+
+== Loot ==
+A vault ejects 2 to 5 stacks of loot, which can sometimes include a few unstackable items. It ejects a combination of loot from three different loot tables. The following information describes the loot ejected for a single [[player]] when a single [[trial key]] is {{control|used}}.
+* Common loot
+** Every vault gives between one and three sets of common loot, corresponding the 3rd and 6th columns below.
+** A vault that does not give rare loot gives an additional set of common loot, making it possible to get 4 sets of common loot.
+* Rare loot
+** {{IN|je}}, every vault has an 80% chance to include a set of rare loot.
+** {{IN|be}}, every vault has a 20% chance to include a set of rare loot.
+** The loot listed in the 2nd and 5th columns below corresponds with the chance of one set of rare loot, plus the chance of the one set of common loot that can be used in its place.
+* Unique loot
+** Every vault has a 25% chance to also include one set of unique loot.
+** This loot, and the 75% chance for each vault to not have this loot, corresponds with the 4th and 7th columns below.
+<!-- See MC-275403 for where "reward chests" still exist (report doesn't mention that minecraft:trial_chambers/hallway/rubble_chamber has the same problem -->
+
+{{LootChest|trial-chambers-reward}}
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Vault}}
+
+=== Unique ===
+{{:Vault/Sounds|java=1|bedrock=1}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Vault
+|spritetype=block
+|nameid=vault
+|foot=1}}
+{{ID table
+|displayname=Block entity
+|spritename=vault
+|spritetype=block
+|nameid=vault
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Vault
+|spritetype=block
+|nameid=vault
+|id=-314
+|foot=1}}
+{{ID table
+|notnamespaced=y
+|displayname=Block entity
+|spritename=vault
+|spritetype=block
+|nameid=Vault
+|foot=1}}
+
+=== Block states ===
+{{See also|Block states}}
+
+{{JE}}:
+{{bst|facing|north|east,north,south,west|The direction the vault's face is facing.<br>The opposite from the direction the player faces while placing the vault.}}
+{{bst|ominous|false|false,true|Controls whether this vault is an [[ominous vault]].}}
+{{bst|vault_state|inactive
+|active|When a player who has not used the vault is nearby.
+|ejecting|While ejecting reward.
+|inactive|When no players who have not used the vault are nearby.
+|unlocking|Prior to reward ejection.|foot=1}}
+
+{{BE}}:
+{{bst|showaux=1|bits=|minecraft:cardinal_direction|south|east,north,south,west|The direction the vault's face is facing.<br>The opposite from the direction the player faces while placing the vault.|Unsupported}}
+{{bst|ominous|false|false,true|Controls whether this vault is an [[ominous vault]].|Unsupported}}
+{{bst|vault_state|inactive
+|active|When a player who has not used the vault is nearby.|Unsupported
+|ejecting|While ejecting reward.|Unsupported
+|inactive|When no players who have not used the vault are nearby.|Unsupported
+|unlocking|Prior to reward ejection.|Unsupported|foot=1}}
+
+=== Block data ===
+A vault has a block entity associated with it that holds additional data about the block.
+
+{{JE}}:
+{{see also|Block entity format}}
+<section begin="block data"/><div class="treeview">
+*{{nbt|compound}} Block entity data
+** {{nbt inherit/blockentity}}
+** {{nbt|compound|config}}: Configuration data that does not automatically change. All fields are optional.
+*** {{nbt|string|loot_table}}: A resource location to the [[loot table]] that is ejected when unlocking the vault. Defaults to {{cd|"minecraft:chests/trial_chambers/reward"}}.
+*** {{nbt|string|override_loot_table_to_display}}: A resource location to the loot table that is used to display items in the vault. If not present, the game uses the {{cd|loot_table}} field.
+*** {{nbt|double|activation_range}}: The range in blocks when the vault should activate. Defaults to 4.
+*** {{nbt|double|deactivation_range}}: The range in blocks when the vault should deactivate. Defaults to 4.5.
+*** {{nbt|compound|key_item}}: The key item that is used to check for valid keys. Defaults to {{cd|"minecraft:trial_key"}}.
+**** {{nbt inherit/item}}
+** {{nbt|compound|server_data}}: Data that is only stored on the server.
+*** {{nbt|list|rewarded_players}}: A set of player UUIDs that have already received their rewards from this vault.
+*** {{nbt|long|state_updating_resumes_at}}: The game time when the vault processes block state changes, such as changing from {{cd|unlocking}} to {{cd|ejecting}} after a delay.
+*** {{nbt|list|items_to_eject}}: List of item stacks that have been rolled by the loot table and are waiting to be ejected.
+**** {{nbt|compound}}: An item stack
+***** {{nbt inherit/item}}
+*** {{nbt|int|total_ejections_needed}}: The total amount of item stacks that need to be ejected.
+** {{nbt|compound|shared_data}}: Data that is synced between the server and client.
+*** {{nbt|compound|display_item}}: The item that is currently being displayed.
+*** {{nbt|list|connected_players}}: A set of player UUIDs that are within range of the vault.
+*** {{nbt|double|connected_particles_range}}: The range in blocks when the vault emits particles.
+</div><section end="block data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Block entity format]].
+
+== Advancements ==
+{{load advancements|Under Lock and Key}}
+
+== Videos ==
+{{video note|The vault's texture has been changed since this video's release}}
+{{yt|OyGfdaacGyE}}
+{{yt|gbCSAffHr0w}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||January 26, 2024|link=https://www.youtube.com/watch?v=gbCSAffHr0w|[[File:Vault JE1 BE1.png|32px]] [[File:Vault (active) JE1 BE1.png|32px]] [[File:Vault (unlocking) JE1 BE1.png|32px]] [[File:Vault (ejecting) JE1 BE1.png|32px]] Vaults are announced at [[Minecraft Monthly]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w05a|[[File:Vault JE1 BE1.png|32px]] [[File:Vault (active) JE1 BE1.png|32px]] [[File:Vault (unlocking) JE1 BE1.png|32px]] [[File:Vault (ejecting) JE1 BE1.png|32px]] Added vaults.}}
+|{{HistoryLine|||dev=24w06a|[[File:Vault JE2 BE2.png|32px]] [[File:Vault (active) JE2 BE2.png|32px]] [[File:Vault (unlocking) JE2 BE2.png|32px]] [[File:Vault (ejecting) JE2 BE2.png|32px]] Changed the textures of vaults to distinguish them from [[trial spawner]]s.}}
+|{{HistoryLine|||dev=24w09a|[[File:Vault JE3 BE3.png|32px]] [[File:Vault (active) JE3 BE3.png|32px]] [[File:Vault (unlocking) JE3 BE3.png|32px]] [[File:Vault (ejecting) JE3 BE3.png|32px]] Changed the textures of vaults to further distinguish them from trial spawners.}}
+|{{HistoryLine|||dev=24w10a|[[File:Vault JE4.png|32px]] Updated the left column of pixels on the front face of the disabled vault to match the textures of the other states.}}
+|{{HistoryLine|||dev=24w11a|Their loot tables have been updated to address some inventory management issues.}}
+|{{HistoryLine|||dev=24w13a|Changed the loot table of the standard vaults.
+|[[File:Vault JE5 BE4.png|32px]] [[File:Vault (active) JE4 BE4.png|32px]] [[File:Vault (unlocking) JE4 BE4.png|32px]] [[File:Vault (ejecting) JE4 BE4.png|32px]] Changed the textures of the vault to match the colors used in [[ominous vault]]s.}}
+|{{HistoryLine|||dev=pre1|[[File:Vault JE6 BE5.png|32px]] [[File:Vault (active) JE5 BE5.png|32px]] [[File:Vault (unlocking) JE5 BE5.png|32px]] [[File:Vault (ejecting) JE5 BE5.png|32px]] Updated textures to fix inconsistencies across all states.}}
+|{{HistoryLine||1.21|dev=24w18a|Vaults are now available without using the "Update 1.21" experimental data pack.|Vaults can now eject the new "[[Precipice]]" music disc.}}
+|{{HistoryLine|||dev=24w21a|Vaults now have a new sound to help players understand if they've already looted a vault.}}
+|{{HistoryLine||1.21.2|dev=24w40a|Breaking vaults no longer needs wooden tools or higher.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.70|exp=Update 1.21|dev=Preview 1.20.70.21|[[File:Vault JE1 BE1.png|32px]] [[File:Vault (active) JE1 BE1.png|32px]] [[File:Vault (unlocking) JE1 BE1.png|32px]] [[File:Vault (ejecting) JE1 BE1.png|32px]] Added vaults.}}
+|{{HistoryLine|||dev=Preview 1.20.70.22|[[File:Vault JE2 BE2.png|32px]] [[File:Vault (active) JE2 BE2.png|32px]] [[File:Vault (unlocking) JE2 BE2.png|32px]] [[File:Vault (ejecting) JE2 BE2.png|32px]] Changed the textures of vaults to distinguish them from [[trial spawner]]s.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.20|[[File:Vault JE3 BE3.png|32px]] [[File:Vault (active) JE3 BE3.png|32px]] [[File:Vault (unlocking) JE3 BE3.png|32px]] [[File:Vault (ejecting) JE3 BE3.png|32px]] Changed the textures of vaults to further distinguish them from trial spawners.}}
+|{{HistoryLine|||dev=Preview 1.20.80.22|Vaults no longer eject more than one unstackable item per unlock.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|[[File:Vault JE5 BE4.png|32px]] [[File:Vault (active) JE4 BE4.png|32px]] [[File:Vault (unlocking) JE4 BE4.png|32px]] [[File:Vault (ejecting) JE4 BE4.png|32px]] Changed the textures of the vault to match the colors used in [[ominous vault]]s.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.22|Vaults are now available without using the "Update 1.21" experimental toggle.
+|[[File:Vault JE6 BE5.png|32px]] [[File:Vault (active) JE5 BE5.png|32px]] [[File:Vault (unlocking) JE5 BE5.png|32px]] [[File:Vault (ejecting) JE5 BE5.png|32px]] Updated textures to fix inconsistencies across all states.}}
+|{{HistoryLine|||dev=Preview 1.21.0.24|Vaults can now eject the new "[[Precipice]]" music disc.}}
+}}
+
+<gallery>
+Vault render.png|A vault, as it appeared in trial chambers before [[24w06a]] and [[1.20.70.22]]
+Vault from Trial Chamber Render.png|A vault, as it appeared in trial chambers before [[24w09a]] and [[1.21.80.20]]
+Vaultrender.png|A vault, as it appeared in trial chambers before [[24w11a]] and [[1.20.80.22]]
+File:Vaultrender2.png|A vault, as it appeared in [[trial chambers]] before [[24w13a]] and [[1.21.0.20]]
+</gallery>
+<gallery>
+Vault with particles JE1 BE1.png|The first iteration of a vault with particles
+Vault with particles JE2 BE2.png|The second iteration of a vault with particles
+</gallery>
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* During unseen development, the texture of a vault had blue eyes, but the eyes were later changed to be orange to match the eyes seen on the [[trial spawner]].<ref>{{Tweet|kingbdogz|1751177169651298356|The original key texture was never aimed at the Deep Dark, it's just that an older texture of Vaults had blue eyes instead of orange ones. We opted to change it so that both Vaults and Trial Spawners had the same eye color.|January 27, 2024}}</ref>
+* Vaults were inspired by {{w|Gashapon|gashapon machines|newtab=1}}, which are vending machines that dispense capsuled toys.<ref>https://www.youtube.com/watch?v=bBr8BBrk1v8</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Vault in hidden room.png|A vault in a hidden room
+File:Active vault in hidden room.png|The same vault, activated
+File:Trial Chambers Vault Pedestal Screenshot.png|A vault on a pedestal
+</gallery>
+
+=== Mojang screenshots ===
+<gallery>
+File:Kai Zuri Efe Steve vault.png|[[Kai]], [[Zuri]], [[Efe]], and [[Steve]] looting a vault
+</gallery>
+
+=== Development images ===
+<gallery>
+Vault Screenshot.jpg|First screenshot
+The Vault.png|A vault in the trial chambers
+The Vault Dispensing Loot.png|A vault giving players loot
+The Vault Locked.png|A vault after being unlocked
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Minecraft characters open the trial vault.png|[[Ari]] and [[Sunny]] open a vault
+File:Approaching the vault.png|Sunny, [[Kai]], [[Steve]], [[Makena]], and [[Efe]] approaching a vault, from the [[Tricky Trials Update Official Trailer]]
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Vault concept art.png|Vault concept art
+</gallery>
+
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|vault|Block of the Month: Vault|Feb 25, 2025|Duncan Geere}}
+
+== Navigation ==
+{{Navbox blocks|utility}}
+
+[[Category:Block entities]]
+[[Category:Utility blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Light sources]]
+
+[[de:Tresor]]
+[[es:Arca]]
+[[fr:Coffre-fort]]
+[[ja:宝物庫]]
+[[ko:금고]]
+[[pl:Skarbiec]]
+[[pt:Cofre]]
+[[ru:Хранилище]]
+[[uk:Сховище]]
+[[zh:宝库]]

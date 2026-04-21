@@ -1,0 +1,341 @@
+{{For||Snow (disambiguation)}}
+{{Infobox block
+|image=Powder Snow.png
+|invimage=Powder Snow Bucket
+|transparent=Yes
+|light=No
+|tool=Bucket
+|renewable=Yes
+|stackable=No
+|flammable=No
+|lavasusceptible=No
+}}
+
+'''Powder snow'''{{note|Although Mojang has used it in other media, the term '''powdered snow''' is never used in-game.<ref>{{Citation|url=https://feedback.minecraft.net/hc/en-us/articles/20297322879245-Minecraft-Beta-Preview-1-20-50-20|title=Minecraft Beta & Preview - 1.20.50.20|website=[[Minecraft.net]]|date=October 11, 2023}}</ref>}} is a non-solid [[block]] found in [[snowy slopes]] and [[grove]]s, or collected from [[snowfall]] using [[cauldron]]s. It slows down and deals freezing [[damage]] to most [[entities]] within it. Wearing any [[leather armor]] prevents freezing, and worn [[leather boots]] allow powder snow to be walked on and climbed through. It can only be [[Powder Snow Bucket|obtained]] using a [[bucket]] and melts when placed inside [[water]].
+
+== Obtaining ==
+Powder snow does not have an item form {{in|java}}.
+
+The item form of it can be obtained only by inventory editing or with add-ons {{in|bedrock}}.
+
+=== Breaking ===
+No tool can accelerate the process of breaking powder snow.<ref>{{bug|MC-205407||Powder snow isn't mined any faster with shovels}}</ref><ref>{{bug|MCPE-104192||Powder snow doesn't break faster with a shovel|WF}}</ref>
+{{Breaking row|horizontal=1|Powder Snow|foot=1|drop=0}}
+Powder snow drops nothing upon being destroyed.
+
+Powder snow is broken by [[water]] or [[lava]], when shot with a [[Flame]]-enchanted bow or when a burning player touches it.
+
+=== Natural generation ===
+Powder snow naturally generates in [[grove]]s and [[snowy slopes]] in [[strip]] formations. Powder snow cannot have a [[snow layer]] placed on it.
+
+Powder snow also generates in the room {{cd|chamber_2}} in [[trial chambers]].
+
+{{block distribution}}
+
+=== Post-generation ===
+{{main|Tutorial:Powder snow farming}}
+
+A [[cauldron]] in a snowy [[biome]] under open sky fills with powder snow when it is [[snowing]]. Powder snow can then be picked up from this cauldron with an empty [[bucket]].
+
+==== Bucket ====
+
+Using a [[powder snow bucket]] places powder snow; placed powder snow can be picked up again with an empty bucket. These actions can be automated using a [[dispenser]]. When picked up, breaking particles appear.{{only|je}}<ref>{{bug|MCPE-113502||Powder snow does not create particles when collected with a bucket}}</ref>
+
+== Usage ==
+[[File:Frozen effect (texture) JE1.png|thumb|The frosty vignette when a player is within powder snow.]]
+All entities (except [[rabbit]]s, [[endermite]]s, [[silverfish]], [[shulker]]s, [[vex]]es and [[fox]]es) fall through powder snow and move much slower in it, similar to [[cobweb]]s. Powder snow does not cause [[Damage#Suffocation|suffocation damage]].
+
+Entities wearing [[leather boots]] (including players, mobs, and armor stands) do not fall through powder snow. Leather boots also allow players to use powder snow like [[scaffolding]], descending by sneaking or crouching on the block and jumping while inside of the block. Leather boots do not speed up entities in snow.
+
+All fall damage is negated when falling on top of powder snow, even for entities wearing leather boots. While moving through powder snow, snowflake [[particles]] appear. 
+
+Most walking mobs (except for [[goat]]s) treat powder snow like normal solid blocks while pathfinding, similar to [[trapdoor]]s, allowing them to voluntarily walk into it, and fall through it if possible.<ref>{{bug|MC-243456||Mobs can walk into powder snow and freeze themselves|WAI}}</ref> However, mobs do not attempt to jump up to powder snow, instead treating it as impassable if they cannot find a path to walk over it from neighboring blocks of equal or greater height.<ref>https://www.youtube.com/watch?v=Zg0Cxn8AVZA</ref> Goats avoid powder snow, although they are not immune to falling through it and taking freezing damage.
+
+If an entity that is on fire touches powder snow, the powder snow is broken and the entity extinguished.
+
+[[Carpet|Carpets]] can also be placed on top of powder snow to prevent entities from falling through.
+
+Being fully inside a block causes a thick [[fog]] effect around the point of view. Players in [[Spectator]] mode can see through powder snow without any fogging effect.
+
+When powder snow is on top of [[grass block]]s, [[mycelium]] or [[podzol]], the blocks below change to a snowy texture, similar to when [[snow]] layers are on top;<ref>{{bug|MC-262799||When placing powdered snow on grass the grass gets the snow block texture|WAI}}</ref> they revert to their default textures when the powder snow is removed. This change can be detected by [[observer]]s.
+
+=== Freezing ===
+{{for|the ''[[Minecraft Dungeons]]'' enchantment|MCD:Freezing}}
+{{redirect|Frost}}
+
+[[File:HUD recieving the freeze damage.gif|thumb|Freezing hearts when the player is in powder snow.]][[File:HUD recieving the freeze damage hardcore.gif|thumb|Freezing hearts when the player is in [[Hardcore]].]][[File:Skeleton become Stray.gif|thumb|right|Powder snow converting a [[skeleton]] into a [[stray]].]]
+When an entity is inside a powder snow block, they begin to freeze and shake, taking [[damage]].
+
+A player submerged in powder snow sees a frosty vignette slowly fade in at the sides of the screen and the FOV slowly decreases. When the vignette is fully shown, the player begins shivering visibly. After seven seconds (140 game ticks), the player's hearts change to a cyan frosty texture ({{healthbar|2|9px|freezing=1}}), and the player begins taking damage at a rate of {{hp|1}} every two seconds (40 game ticks). When an entity dies of freezing damage, a [[death messages|message]] appears, saying ''[entity] froze to death''. If the player leaves the powder snow block, the vignette slowly fades away. A frozen player moves slower than usual until the vignette fully fades away. This is controlled by the "TicksFrozen" data tag, which increases by 1 every tick (to a maximum of 140) for an entity within the powder snow block. It decreases at a rate of 2 per tick after the entity leaves the powder snow block. As such, if the player reenters powder snow while they are still frozen, they resume freezing and start taking freezing damage based on the value of "TicksFrozen". This is currently not a separate effect when used with commands such as {{cmd|effect give freezing}}, and does not have its own unique art, particles, or potion.
+
+Players do not take freezing damage if the [[game rule]] {{cd|freezeDamage}} is set to {{cd|false}}.
+
+Wearing any piece of [[leather armor]] stops the freezing effect and reverses the damage. This applies to entities that can wear armor, such as [[players]], [[zombie]]s and [[horse]]s wearing leather [[horse armor]]. If the leather armor is put on while the entity already has the freezing effect, the effect fades away the same as if the entity exited the powder snow.
+
+[[Snow golem]]s, [[stray]]s, [[polar bear]]s, [[creaking]]s, [[wither]]s, [[ender dragon]]s, and [[sulfur cube]]s (only if they absorded a block){{upcoming|Chaos Cubed}} are immune to freezing damage. Fire-related mobs like [[strider]]s, [[magma cube]]s, and [[blaze]]s take {{hp|5}} every two seconds (40 game ticks) from freezing.
+
+[[Skeleton]]s turn into [[stray]]s instead of taking freezing damage.
+
+=== Preventing fall damage ===
+Similar to water, powder snow resets the fall distance of players and mobs falling into it, and can be used to prevent fall damage. It is superior to water in that it can be used in [[the Nether]]. Damage is also negated when falling onto [[carpet]] placed over powder snow.
+
+=== Piston interactivity ===
+Despite not being a solid block, powder snow can be pushed and pulled by pistons like most solid blocks. This makes it the only block that can be placed and retrieved by [[dispenser]]s, while also pushable by pistons.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Block/Powder snow}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Player hurt freeze1.ogg
+|sound2=Player hurt freeze2.ogg
+|sound3=Player hurt freeze3.ogg
+|sound4=Player hurt freeze4.ogg
+|sound5=Player hurt freeze5.ogg
+|subtitle=Player freezes
+|source=block
+|description=When a player is damaged by freezing in powder snow
+|id=entity.player.hurt_freeze
+|translationkey=subtitles.entity.player.freeze_hurt
+|volume=1.0
+|pitch=0.8-1.2
+|distance=16}}
+| {{SoundLine
+|sound=Fizz.ogg
+|subtitle=Fire extinguishes
+|description=When something freezing is dunked into lava
+|source=block
+|id=entity.generic.extinguish_fire
+|translationkey=subtitles.entity.generic.extinguish_fire
+|volume=0.7
+|pitch=1.2-2.0
+|distance=16}}
+| {{SoundLine
+|sound=Empty powder snow bucket1.ogg
+|sound2=Empty powder snow bucket2.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When a powder snow bucket is emptied
+|id=item.bucket.empty_powder_snow
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Each sound event can be 1.0, 0.95, or 1.1</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Fill powder snow bucket1.ogg
+|sound2=Fill powder snow bucket2.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When a bucket is filled with powder snow
+|id=item.bucket.fill_powder_snow
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Each sound event can be 1.0, 0.9, or 1.1</ref>
+| distance = 16
+}}
+}}
+
+{{edition|be}}:
+{{SoundTable
+|type = bedrock
+| {{SoundLine
+|sound=Player hurt freeze1.ogg
+|sound2=Player hurt freeze2.ogg
+|sound3=Player hurt freeze3.ogg
+|sound4=Player hurt freeze4.ogg
+|sound5=Player hurt freeze5.ogg
+|source=player
+|description=When a player is damaged by freezing in powder snow
+|id=mob.player.hurt_freeze
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fizz.ogg
+|source=block
+|description=When something freezing is dunked into lava
+|id=random.fizz}}
+| {{SoundLine
+|sound=Empty powder snow bucket1.ogg
+|sound2=Empty powder snow bucket2.ogg
+|source=block
+|description=When a powder snow bucket is emptied
+|id=bucket.empty_powder_snow
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fill powder snow bucket1.ogg
+|sound2=Fill powder snow bucket2.ogg
+|source=player
+|description=When a bucket is filled with powder snow
+|id=bucket.fill_powder_snow
+|volume=1.0
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{el|je}}:
+{{ID table
+|edition=java
+|showblocktags=1
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Powder Snow
+|spritetype=block
+|nameid=powder_snow
+|blocktags=inside_step_sound_blocks, snow
+|form=block
+|foot=1}}
+
+{{el|be}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Powder Snow
+|nameid=powder_snow
+|spritetype=block
+|id=561
+|form=block
+|foot=1}}
+
+== Advancements ==
+{{load advancements|Light as a Rabbit}}
+
+== History ==
+=== Announcement and mention ===
+{{HistoryTable
+|{{HistoryLine||September 26, 2019|link={{ytl|Q5Z5pMNfmZY|t=76}}|Powder snow was announced as “Snowier Snow” at [[MINECON Live 2019]] as part of [[mountains]] in the [[MINECON Live 2019#Biome vote|biome vote]], and was set to be added to the game due to mountains winning the vote.}}
+|{{HistoryLine||October 3, 2020|link={{ytl|DWZIfsaIgtE|t=2905}}|Powder snow was mentioned at [[Minecraft Live 2020]], but no images were shown.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.17|dev=20w46a|[[File:Powder Snow JE1 BE1.png|32px]] Added powder snow.}}
+|{{HistoryLine|||dev=20w48a|Wearing any piece of leather armor now stops the freezing effect.
+|Added the <code>freezeDamage</code> gamerule, which stops entities from taking freezing damage if it is set to {{cd|false}}.
+|The <code>snow_step_sound_blocks</code> block tag was renamed to <code>inside_step_sound_block</code>.}}
+|{{HistoryLine|||dev=21w05a|Skeletons now turn into strays when they are in powder snow after {{convert|45|second|game tick}}.
+|[[Fox]]es no longer fall through powder snow.
+|Powder snow now extinguishes any flaming arrows shot into it.}}
+|{{HistoryLine|||dev=21w10a|Freezing in powder snow while using the "Fast" graphics setting gradually turns the player's view to black, and the vignette also appears as black in third-person view.}}
+|{{HistoryLine|||dev=21w11a|Frozen hearts now have a different texture in [[Hardcore]] mode.
+|Players in [[Spectator]] mode can now see through when inside powder snow.<ref>{{bug|MC-213743||Spectators can't see through powder snow|Fixed}}</ref>}}
+|{{HistoryLine|||dev=21w13a|Slightly increased hardness and blast resistance.
+|Increased vertical movement speed in powder snow.
+|Entities on fire now melt powder snow on colliding.
+|Skeletons now convert into strays after {{convert|7|second|game tick}}.
+|[[Blaze]]s, [[magma cube]]s and [[strider]]s now take extra damage from freezing.
+|[[Stray]]s, [[polar bear]]s and [[snow golem]]s are now immune to freezing.
+|Leather [[horse armor]] now grants horses immunity to freezing.
+|Mobs now shake when they are fully frozen.
+|Freeze time decreased to 7 seconds (140 game ticks) and hurt frequency to 2 seconds (40 game ticks).
+|The model of powder snow has been tweaked so that the inner side textures are mirrored.}}
+|{{HistoryLine|||dev=21w17a|[[Wither]]s are now immune to freezing.}}
+|{{HistoryLine||1.17.1|dev=pre1|Powder snow cauldrons are now filled twice as fast as before.}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|Powder snow now generates naturally in the new mountain biomes.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Powder snow now generates naturally in the new [[trial chambers]].}}
+|{{HistoryLine||1.21.5|dev=25w05a|Landing on powder snow with [[leather boots]] equipped after falling further than 2.5 blocks now make entities fall through the snow.|Jumping or falling less than 2.5 blocks allows the entity to land on top of the snow like before.}}
+}}
+{{HistoryTable
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|Added sulfur cubes, which are immune to freezing only if they absorbed a block.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.200|exp=Caves and Cliffs|dev=beta 1.16.200.52|[[File:Powder Snow JE1 BE1.png|32px]] Added powder snow under the "Caves and Cliffs" [[experimental]] toggle.}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.51|Powder snow now shows the block breaking animation when being mined.
+|Powder snow is no longer transparent when looked at through [[cloud]]s.}}
+|{{HistoryLine|||dev=beta 1.16.210.53|Entities in powder snow now begin freezing and eventually die.
+|Powder snow can now be picked up and placed with a bucket.
+|Powder snow no longer appears in the [[Creative inventory]].
+|Added new sound effects for powder snow.
+|Powder snow now emits particles when an entity is landing or moving inside it.
+|[[Endermite]]s, [[rabbit]]s and [[silverfish]] no longer fall through powder snow.}}
+|{{HistoryLine|||dev=beta 1.16.210.57|Powder snow block was readded to the Creative inventory.}}
+|{{HistoryLine||1.16.220|exp=Caves and Cliffs|dev=beta 1.16.220.50|Powder snow now naturally generates in the new mountain biomes.}}
+|{{HistoryLine|||dev=beta 1.16.220.51|Powder snow block is once again unavailable through the Creative inventory.}}
+|{{HistoryLine||1.17.0|exp=Caves and Cliffs|dev=beta 1.16.230.54|Slightly increased hardness and durability.
+|Increased vertical movement speed in powder snow.
+|Entities on fire now melt powder snow on colliding.
+|[[Blaze]]s, [[magma cube]]s and [[strider]]s now take extra damage from freezing.
+|[[Stray]]s, [[polar bear]]s and [[snow golem]]s are now immune to freezing.
+|Leather [[horse armor]] now grants horses immunity to freezing.
+|Mobs now shake when they are fully frozen.
+|Freeze time decreased to 7 seconds (140 game ticks) and hurt frequency to 2 seconds (40 game ticks).
+|A fog effect is now applied while standing very close outside a powder snow block.}}
+|{{HistoryLine||1.17.0|dev=beta 1.17.0.50|Powder snow is now available without enabling [[experimental gameplay]].
+|Powder snow now makes a different noise when players get hurt by it.
+|[[Fox]]es no longer fall through powder snow.
+|Powder snow blocks are now removed by flowing [[water]] and [[lava]].}}
+|{{HistoryLine|||dev=beta 1.17.0.52|[[Cauldron]]s now fill with powder snow when it snows, making it renewable.}}
+|{{HistoryLine|||dev=beta 1.17.0.54|Powder snow's hardness has been changed to 0.25 to match ''[[Java Edition]]''.
+|[[Skeleton]]s now convert into [[stray]]s when they are inside of powder snow.}}
+|{{HistoryLine|||dev=beta 1.17.0.56|[[Wither]]s are now immune to freezing.}}
+|{{HistoryLine||1.18.0|dev=beta 1.18.0.20|Powder snow now generates naturally in the new mountain biomes.}}
+}}
+{{HistoryTable
+|{{HistoryLine|bedrock upcoming}}
+|{{HistoryLine||26.20|dev=Preview 26.20.23|exp=Drop 2 of 2026|Added sulfur cubes, which are immune to freezing only if they absorbed a block.}}
+}}
+
+=== Powder snow "items" ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.16.200|exp=Caves and Cliffs|dev=beta 1.16.200.52|Added powder snow to the [[Creative inventory]].}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.53|Removed powder snow from the [[Creative inventory]].}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:Regular and powder snow.png|A patch of powder snow in a [[snowy slopes]] biome, barely standing out from regular snow surrounding it.
+File:Regular and powder snow (annotated).png|Annotated version of the previous screenshot. Thick blue line separates regular and powder snow; dashed line denotes the level of blocks the player has been standing on.
+File:Powder Snow Pit 1.jpg|A pit full of powder snow, labeled "the pit of despair", with a sheared [[snow golem]] in it.
+File:Powder Snow Pit 2.jpg|Ditto, but without the snow golem.
+File:Powder snow fog.png|Powder snow fog.
+File:Powder snow fog VV.png|Powder snow fog with [[Vibrant Visuals]].
+</gallery>
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== External links ==
+*[https://www.minecraft.net/en-us/article/block-week--powder-snow Block of the Week: Powder Snow] – Minecraft.net on October 21, 2021
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox snow}}
+{{Navbox blocks|natural}}
+
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Hazardous blocks]]
+[[Category:Generated structure blocks]]
+
+[[de:Pulverschnee]]
+[[es:Nieve polvo]]
+[[fr:Neige poudreuse]]
+[[it:Neve polverosa]]
+[[ja:粉雪]]
+[[ko:가루눈]]
+[[pl:Sypki śnieg]]
+[[pt:Neve Fofa]]
+[[ru:Рыхлый снег]]
+[[uk:Сипкий сніг]]
+[[zh:细雪]]

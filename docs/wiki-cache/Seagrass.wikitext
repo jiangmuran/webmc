@@ -1,0 +1,200 @@
+{{redirect|Sea Grass|the feature|Seagrass (feature)|other uses|Grass}}
+{{Infobox block
+| image = Seagrass.gif
+| image2 = Tall Seagrass.gif
+| image2size = 225px
+| invimage = Seagrass
+| transparent = Yes
+| light = No
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+| tool = shears
+}}
+'''Seagrass''' is a [[solid block|non-solid]] plant [[block]] that generates in all [[ocean]]s, except [[frozen ocean]]s.
+
+'''Tall seagrass''' is a two-block high variety of seagrass.
+
+== Obtaining ==
+=== Breaking ===
+Seagrass can be harvested only with [[shears]]. Using any other [[tool]], [[item]], or the [[player]]'s fist destroys seagrass and causes it to drop nothing. When harvested with shears, regular seagrass drops itself as an item, and tall seagrass drops 2 seagrass items.
+
+Tall seagrass only exists in block form; obtaining it as an item is impossible even in [[Creative]] mode or by using [[commands]].
+{{breaking row|Seagrass|None|drop=0|shears=1|horizontal=1}}
+
+=== Natural generation ===
+{{main|Seagrass (feature)}}
+Seagrass generates in either its tall or small form in [[river]]s, non-frozen [[ocean]]s, underwater [[cave]]s and [[swamp]]s, replacing [[ice]]<ref>{{bug|MC-129888}}</ref> and [[planks]]<ref>{{bug|MC-128329}}</ref> as necessary. To generate seagrass, the water column it is in must have access to the sky.
+
+{{block distribution}}
+
+=== Mob loot ===
+{{Drop sources|Seagrass}}
+
+=== Post-generation ===
+Using [[bone meal]] on any [[Solid block|solid]] block{{only|java}}, or [[dirt]], [[coarse dirt]], [[sand]], [[red sand]], [[gravel]], or [[clay]]{{only|bedrock}} that is underwater generates seagrass on that block and its surrounding blocks. In order for this to work, there must be 2 water blocks above the block the bone meal is being used on, and the lower one must be non-flowing water. 
+
+== Usage ==
+The seagrass [[item]] can be placed only on opaque blocks. It breaks when opaque blocks move into its hitbox.
+
+Like [[grass]], [[snow layer]]s, and other such blocks, placing blocks inside seagrass deletes the seagrass. However, seagrass prevents [[coral fan]] placement.{{only|bedrock}}<ref>{{bug|MCPE-33346}}</ref>
+
+Tall seagrass has a [[hitbox]] considerably more appropriate for its size than other two-block-tall plants such as tall grass.<ref>{{bug|MC-163896|||WAI}}</ref>
+
+Seagrass is completely resistant to [[lava]] trying to flow into it, allowing for lava to be floating on top of the water.<ref>{{bug|MC-129731|||WAI}}</ref>
+
+=== Breeding ===
+Seagrass can be used to lead and breed [[turtle]]s.
+
+=== Bone meal ===
+Applying [[bone meal]] to a regular seagrass transforms it to tall seagrass if there is enough space. The bone meal will not be consumed if insufficient space exists.<ref>{{bug|MC-125642|||fixed}}</ref>
+
+=== Composting ===
+Placing seagrass into a [[composter]] has a 30% chance of raising the compost level by 1.
+
+=== Growing turtles ===
+Using seagrass on a baby turtle accelerates its growing time. When the turtle becomes an adult, it drops one [[turtle scute]].
+
+== Sounds ==
+{{Sound table/Block/Wet grass}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Seagrass
+|spritetype=block
+|nameid=seagrass
+|blocktags=underwater_bonemeals}}
+{{ID table
+|displayname=Tall Seagrass
+|spritetype=block
+|nameid=tall_seagrass
+|form=block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table2
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Seagrass
+|spritetype=block
+|nameid=seagrass
+|id=385
+|translationkey=tile.seagrass.seagrass.name
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:<br>
+Tall
+{{bst|half|lower|lower,upper|The half of the plant contained in this block.|foot=1}}
+
+{{el|be}}:<br>
+{{bst|showaux=1|bits=0x1,0x2|sea_grass_type|default
+|default|This is seagrass.|0
+|double_bot|This is the bottom half of tall seagrass.|1
+|double_top|This is the top half of tall seagrass.|2|foot=1}}
+
+== History ==
+{{more sounds|section=1|type=old|Sounds before 1.13-pre6}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 21, 2009|link=https://web.archive.org/web/0/http://notch.tumblr.com/post/110762705/my-list-on-tile-types-so-far|[[Notch]] shows interest in adding a "[[seaweed]]" [[block]].}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.13|dev=18w07a|[[File:Seagrass JE1 BE2.gif|32px]] [[File:Tall Seagrass JE1 BE2.gif|32px]] Added "sea grass".
+|[[File:Seagrass (item) JE1.gif|32px]] Sea grass currently has an animated texture as an [[inventory]] item.}}
+|{{HistoryLine|||dev=18w07b|Sea grass is now used to breed [[turtle]]s.
+|The [[block]] that sea grass occupies now behaves more like [[water]]. For example, [[mob]]s can no longer spawn within the [[plant]] underwater, nor can they replenish their breath by [[swimming]] through it.}}
+|{{HistoryLine|||dev=18w08a|[[File:Seagrass (item) JE2.png|32px]] Sea grass no longer has an animated texture as an [[inventory]] item.}}
+|{{HistoryLine|||dev=18w14a|Sea grass can now generate in [[river]]s and [[swamp]]s.}}
+|{{HistoryLine|||dev=18w19a|Sea grass now generates in underwater [[cave]]s.
+|"Sea Grass" has been renamed to "Seagrass".}}
+|{{HistoryLine|||dev=pre2|Seagrass can now be destroyed by [[sponge]]s.<ref>{{bug|MC-127111}}</ref>}}
+|{{HistoryLine|||dev=pre6|[[Conduit]]s and [[kelp]] can now replace seagrass.<ref>{{bug|MC-130414}}</ref>
+|Added 5 new [[sound]] events that apply to seagrass: <code>block.wet_grass.break</code>, <code>block.wet_grass.fall</code>, <code>block.wet_grass.hit</code>, <code>block.wet_grass.place</code>, and <code>block.wet_grass.step</code>.}}
+|{{HistoryLine||1.14|dev=19w03a|Placing seagrass into the new [[composter]] has a 10% chance of raising the compost level by 1.}}
+|{{HistoryLine|||dev=19w05a|Seagrass now has a 30% chance of increasing the compost level in a composter by 1.}}
+|{{HistoryLine||1.17|dev=21w07a|Seagrass can no longer replace parts of a [[swamp hut]].<ref>{{bug|MC-211224}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|[[File:Seagrass BE1.gif|32px]] [[File:Tall Seagrass BE1.gif|32px]] Added sea grass. 
+|[[File:Seagrass (item) BE1.png|32px]] The inventory texture of seagrass has the same texture as regular [[grass]].}}
+|{{HistoryLine|||dev=beta 1.2.20.1|[[File:Seagrass (item) BE2.png|32px]] The seagrass inventory texture has been changed. The seagrass texture in the [[inventory]] is currently different from {{el|je}}'s texture.|Seagrass now generate in underwater [[cave]]s.}}
+|{{HistoryLine||1.5.0|dev=beta 1.5.0.4|Seagrass can now be [[drop]]ped by [[turtle]]s.
+|Seagrass can now be used to [[breed]] turtles.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Seagrass can now be used to fill [[composter]]s.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|[[File:Seagrass JE1 BE2.gif|32px]] [[File:Tall Seagrass BE2.gif|32px]] The color of seagrass has been updated to match {{el|je}}'s.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.24|Seagrass can be used to tempt and breed [[frog]]s behind the "Wild Update" experimental toggle. This is confirmed to be a placeholder.}}
+|{{HistoryLine||1.21.100|dev=Preview 1.21.100.20|No longer pokes through [[ice]] when it generates in shallow [[water]] in [[biome]]s that have ice on the water's surface.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}} 
+|{{HistoryLine||xbox=TU69|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|[[File:Seagrass BE1.gif|32px]] [[File:Tall Seagrass BE1.gif|32px]] Added sea grass.
+|[[File:Seagrass (item) BE2.png|32px]] The seagrass texture in the [[inventory]] is currently different from {{el|je}}'s texture.}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+Seagrass Natural Generation.png|Naturally generated seagrass.
+Group of seagrass.jpg|A big group of natural seagrass.
+Ocean life.png|An [[ocean]] with seagrass.
+Seagrass in River.png|Seagrass that generated in a [[river]] biome.
+Coral reef at night.png|Seagrass visible near a [[coral reef]].
+Sea grass out of water.png|Sea grass out of water.
+Seagrass BE1.4.0.png|Seagrass when first added {{in|bedrock}}.
+Kelp and Seagrass.jpg|Seagrass and kelp.
+</gallery>
+===In other media===
+<gallery>
+Steve Swimming Art.jpg|“Seagrass” artwork predating the actual addition of seagrass.
+MCSM2 Coral E.png|A “[[Story Mode:Coral|seagrass]]” in {{MCSM}}
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory--seagrass|Taking Inventory: Seagrass|June 12, 2019|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|vegetation}}
+
+[[Category:Plants]]
+[[Category:Mob food]]
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Double blocks]]
+
+[[de:Seegras]]
+[[es:Hierba marina]]
+[[fr:Herbe aquatique]]
+[[it:Erba acquatica]]
+[[ja:海草]]
+[[ko:해초]]
+[[pl:Trawa morska]]
+[[pt:Erva marinha]]
+[[ru:Морская трава]]
+[[uk:Морська трава]]
+[[zh:海草]]

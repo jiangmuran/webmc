@@ -1,0 +1,159 @@
+{{about|the RTX graphics enhancements in resource packs|the vanilla implementation of physically based rendering|Vibrant Visuals|the joke mob added in [[Java Edition 23w13a_or_b]]|Ray Tracing (mob)}}
+{{exclusive|bedrock|customtext=This feature is exclusive to the Windows version of {{BE}}.}}
+{{wip|
+*Add descriptions about the features; some sections are already made. Include information about customization, but most information will be at a separate page (link to [[Texture set]]).
+*Take screenshots about all features. Also take some from the Marketplace maps.}}
+<!-- [[File:Ray Tracing.png|thumb|A screenshot showing many of the features available with ray tracing.]] -->
+{{Q|Ray tracing for Windows brings a brand new experience to Minecraft! Experience creator-built worlds with realistic lighting, vibrant colors, naturally reflective water and emissive textures that light up.|[[minecraft.net]]|Ray Tracing}}
+'''Ray Traced'''<ref group="fn">Refers to the graphics mode in the game.</ref> or '''RTX'''<ref group="fn">Primarily used by {{w|Nvidia}} in their promotion and marketing for the [[w:Nvidia RTX|RTX graphic card]].</ref> is a [[graphics]] mode that improves the visual fidelity in ''[[Minecraft]]'' with {{w|physically based rendering}} and real-time lighting simulation using [[w:Ray tracing (graphics)|ray tracing]]. It enhances graphics of sunlight and moonlight with light rays, adds [[water]] effects, reflections on all blocks, and light-emissive textures. It can be enabled using client-side [[resource pack]]s that define PBR texture sets. ''Minecraft'' has published several RTX-compatible worlds for free in the [[Marketplace]], in collaboration with Nvidia.
+
+Ray tracing only affects the graphical appearance of ''Minecraft'' and has no effect on gameplay. However, many emissive light sources and reflections together can decrease game performance, especially on lower-end devices.
+
+== Features ==
+[[File:RTX default light sources.png|thumb|The default light sources and their colors. Notice the diagonal shadows caused by ambient occlusion.]]
+By default, [[torch]]es, [[redstone torch]]es, [[lantern]]s, [[soul lantern]]s, and [[end rod]]s are strong emissive light sources, which create dynamic shadows using ambient occlusion and illuminate surrounding surfaces with their light color.
+[[File:RTX VV emissive textures.png|thumb|All blocks that have emissive textures from Vibrant Visuals, as seen with ray tracing.]]
+When a ray traced resource pack without PBR textures is applied to a world, not as a [[Settings#Global Resources|global resource]], it applies all MERS block textures for [[Vibrant Visuals]] and ignores subsurface scattering. Metallic, rough, or emissive pixels are generally less intense than in designed ray tracing resource packs, but still noticable with the effects from ray tracing.
+
+=== Physically based rendering ===
+
+=== Directional lighting and shadows ===
+
+==== Volumetric fog ====
+{{For|customization|Fog definition}}
+[[File:RTX pale garden fog.png|thumb|The strong fog and light scattering in [[pale gardens]]]]
+Ray tracing supports [[volumetric fog]], an additional fog layer which is affected by directional lighting, and can be customized per [[biome]]. Depending on the density, volumetric fog appears around directional lighting; the stronger the light the stronger the fog. The density can change with the [[altitude]] and fog is not applied above the build height limit. Media coefficients change the scattering and absorption of RGB light when it passes through [[Sky|air]], [[clouds]], or [[water]], to tint the fog and directional lighting.
+
+Fog can be applied to the sky, the sky during [[precipitation]], [[water]], [[lava]], and lava with [[Fire Resistance]]. It is only visible with directional lighting, both sunlight and emissive textures. As light shines between objects, the shaded air does not have fog and the illuminated air does have fog, resulting in light rays. Light rays are also created by scattering from the sun, which has different colors and strengths depending on the [[time of day]].
+
+When enabling ray tracing without custom fog settings, it defaults to the biome settings defined for [[Vibrant Visuals]].
+
+=== Water effects ===
+[[File:RTX water.png|alt=Ray tracing|thumb|Water in ''Minecraft'' with ray tracing]]The [[water]] surface is completely transparent with [[RTX]], but larger bodies of water accumulate more [[biome]]-colored fog. Although it is transparent, water can still have PBR textures allowing for reflections, but this is disabled by default. Light sources can illuminate the surface and the fog below the water with their color, and once sunlight hits an underwater surface, animated caustics appear.
+
+Water surfaces also refract light from objects on the other side, but unlike refractions from transparent blocks, this is a slight distortion effect that bends objects behind it around the point of view. The top surface as seen from underwater projects [[w:Snell's window|Snell's window]], a bright lens around which objects on the other side are distorted. The underwater surface always acts like a perfect mirror for close underwater objects, as such the environment above water is not visible inside shallow bodies.
+
+Without directional lighting, underwater fog creates a dark green/blue atmosphere with all objects colored gray.<gallery widths="200">
+File:RTX aquifer.png|An [[aquifer]] without any light sources.
+File:RTX snells window.png|Snell's window and the spherical distortion.
+File:RTX underwater light rays.png|Light rays as seen underwater.
+File:RTX water refraction.png|The refraction of underwater objects when floating just above the surface.
+File:RTX water reflections.png|Perfect water reflections in the [[Hilltop Lifestyle RTX|Hilltop Lifestyle]] map.
+File:RTX underwater reflections.png|The mirror as seen from underwater
+</gallery>
+
+== Applying ==
+Ray tracing requires a [[resource pack]] with <code>raytraced</code> capability in its <code>[[manifest.json]]</code> file. When applied on a compatible device, this unlocks the "Ray Traced" option in the graphics mode dropdown in the [[Settings#Video|video settings]]. It runs locally on the player's device, meaning that it can be enabled on any [[multiplayer]] world or [[server]] while other players could have it disabled. The resource pack may be enabled locally as a global resource pack, or for the entire world or server.
+
+Ray tracing cannot be enabled in the regular settings but requires the "Allow In-Game Graphics Mode Switching" option to be enabled, to enable ray tracing in-game. It can also be enabled by setting <code>graphics_mode</code> to 3 in [[options.txt]].
+
+Some options related to ray tracing can be adjusted in the "Ray Traced Graphics Options" section below the graphics mode, which includes upscaling for GeForce RTX graphics cards with NVIDIA DLSS 2.0. Upscaling makes the game render the scene at lower resolution and upscaled to the native resolution to improve significantly on video performance.
+
+The render distance for ray tracing is controlled by the "Ray Tracing Render Distance" slider instead of the regular render distance slider. This slider can be set between 8-24 chunks, but can be changed to any value chunks in options.txt.
+
+=== System requirements ===
+The ray tracing graphics mode is only available on the Windows version of {{BE}}, with additional minimum requirements:<ref>{{cite|url=https://help.minecraft.net/hc/en-us/articles/4408865164173-Minecraft-with-Ray-Tracing-and-Advanced-Graphics-FAQ|title=Minimum Requirements for Ray Tracing in Minecraft: Bedrock Edition for Windows|website=Minecraft Help Center}}</ref>
+* OS: 64-bit Windows 10 or Windows 11
+* GPU: DirectX hardware ray tracing capable GPU like NVIDIA GeForce RTX 20 Series, and AMD Radeon RX 6000 Series
+* CPU: Intel Core i5{{More information needed|Which model of Intel Core i5?}} or equivalent
+* RAM: 8GB
+
+== Official maps ==
+The following maps are made officially in collaboration with Nvidia to promote ray tracing. They are available in the Marketplace for free, even on devices without support for ray tracing.
+
+* [[Of Temples and Totems RTX|Of Temples and Totems]]<!--April 8, 2020-->
+* [[Color, Light and Shadow RTX|Color, Light and Shadow]]<!--April 8, 2020-->
+* [[Aquatic Adventure RTX|Aquatic Adventure]]<!--April 8, 2020-->
+* [[Crystal Palace RTX|Crystal Palace]]<!--April 8, 2020-->
+* [[Imagination Island RTX|Imagination Island]]<!--April 8, 2020-->
+* [[Neon District RTX|Neon District]]<!--April 14, 2020-->
+* [[The Observer RTX|The Observer]]<!--May 4, 2020-->
+* [[Hilltop Lifestyle RTX|Hilltop Lifestyle]]<!--May 4, 2020-->
+* [[Medieval RTX|Medieval]]<!--May 4, 2020-->
+* [[The Dark Village RTX|The Dark Village]]<!--May 4, 2020-->
+* [[Egg Hunt RTX]]<!--May 4, 2020-->
+* [[Fins N' Flippers RTX|Fins N' Flippers]]<!--August 31, 2020-->
+* [[Portal Pioneers RTX|Portal Pioneers]]<!--August 31, 2020-->
+* [[Colosseum RTX|Colosseum]]<!--December 2, 2020-->
+* [[Dungeon Dash RTX|Dungeon Dash]]<!--January 21, 2021-->
+* [[The Isle of Whimsy]]<!--November 28, 2022-->
+* [[Alien Encounter RTX|Alien Encounter]]<!--November 29, 2022-->
+* [[The Redstone Temple]]<!--November 21, 2022-->
+* [[A Spirit's Journey]]
+
+== Videos ==
+{{yt|VM-6da3PB1o|caption=Release trailer of ray tracing.|inline=1}}
+{{yt|UCfuZSEFzIg|caption=Official announcement video about RTX in ''Minecraft''.|inline=1}}
+
+== History ==
+{{HistoryTable
+|{{HistoryLine||August 19, 2019|link=https://www.youtube.com/watch?v=UCfuZSEFzIg|Ray tracing has been announced for Windows.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||RTX Beta|dev=beta 1.15.0.8|The Windows 10 version of the game now uses [[RenderDragon]] and supports ray tracing.}}
+|{{HistoryLine|||dev=beta 1.15.0.9|Fixed several bugs related to RenderDragon and RTX.}}
+|{{HistoryLine||1.16.200|dev=beta 1.16.200.53|RenderDragon now supports ray tracing outside RTX Beta.}}
+|{{HistoryLine||1.21.80|exp=Vibrant Visuals|dev=Preview 1.21.80.25|Added vanilla volumetric fog settings to each biome in [[Vibrant Visuals]], which is also applied with ray tracing.|Added vanilla MER textures for [[block]]s in Vibrant Visuals. These are applied with ray tracing only when an ray traced resource pack without custom textures is applied to a world, not in global resources.}}
+|{{HistoryLine||1.21.90|With the release of Vibrant Visuals, no further changes are planned for ray tracing, but it will remain compatible with the newest versions.<ref>{{mcnet|ray-tracing|Ray Tracing}}</ref>}}
+}}
+
+== Issues ==
+{{Issue list|Ray Tracing|RTX}}
+
+== Gallery ==
+
+=== Textures ===
+<gallery>
+File:Caustics (RTX).png|<code>caustics.png</code>, containing 50 frames of the water caustics animation.
+File:Look up tables.png|<code>look_up_tables.png</code>
+File:Sky (RTX).png|<code>sky.png</code>
+File:Water n.png|<code>water_n.tga</code>
+File:Wibbly.png|<code>wibbly.png</code>
+</gallery>
+
+=== Screenshots ===
+{{See also|Category:RTX screenshots}}
+<gallery>
+File:RTX worlds.png|All RTX worlds in the Marketplace.
+File:RTX underwater fog.png|Fog and light rays underwater.
+File:Pale garden light shafts.png|Light rays caused by objects blocking sunlight.
+File:RTX mushroom field fog.png|Scattering of different RGB lights in the air caused by volumetric fog can color it; in vanilla this makes [[Mushroom Fields|mushroom fields]] purple.
+File:RTX sunrise fog.png|The red colored fog at sunrise and sunset.
+</gallery>
+
+=== Mojang images ===
+<gallery>
+File:Minecraft RTX Official by Mojang and Nvidia.png|Promotional banner for ''Minecraft'' with RTX.
+File:Bedrock 1.15.0.7 (Unreleased).png|A screenshot of RTX in an unreleased beta version.
+File:Atmospherics minecraft rtx.jpg|Light rays falling into a [[ravine]].
+File:Ambient occlusion minecraft.png|Ambient occlusion creates shadows in corners where light rays cannot escape.
+File:RTX shadows.png|Dynamic shadows created by directional lighting.
+File:RTX light reflections.png|Reflections of emissive light sources.
+File:RTX refraction.png|Light refraction inside [[glass]].
+File:Ray tracing emissive comparison.jpg|A comparison of RTX off vs on, with various emissive textures.
+File:Bedrock 1.16.200 PatchNotes2.png|The "Colloseum RTX" map.
+File:Bedrock 1.16.200 PatchNotes.png|Various light reflections from emissive textures.
+File:Comparing RTX enabled and RTX disabled in Minecraft.png|Comparison of RTX enabled and disabled with light falling into a building.
+</gallery>
+
+== See also ==
+* [[RenderDragon]], the rendering engine used to implement ray tracing.
+* [[Shader]], the previous system of graphics enhancement in {{BE}} using resource packs which is still used in {{JE}}.
+* [[Shader pack]]s, similar but unofficial graphic enhancement mods for ''Java Edition''.
+* [[Super Duper Graphics Pack]], a previously cancelled graphics update for ''Bedrock Edition''.
+
+== Notes ==
+<references group="note" />
+<references group="fn" />
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{mcnet|hitchhiker-s-guide-minecraft-ray-tracing-windows-10|Hitchhiker’s guide to Minecraft with ray tracing on Windows 10|December 10, 2020|Per Landin}}
+* {{cite|url=https://learn.microsoft.com/en-us/minecraft/creator/documents/rtxgettingstarted?view=minecraft-bedrock-stable|title=Getting Started with Ray Tracing|website=Microsoft Learn}}
+* [[w:Ray tracing (graphics)|Ray tracing]] on Wikipedia
+
+== Navigation ==
+{{Navbox Bedrock Edition}}
+{{Navbox gameplay}}
+{{Navbox resource packs}}

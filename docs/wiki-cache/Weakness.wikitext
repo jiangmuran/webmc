@@ -1,0 +1,200 @@
+{{About|the effect|the potion|Potion of Weakness|the the enchantment in {{MCD}}|MCD:Weakening}}
+{{Infobox effect
+|image = Weakness.png
+|sources=See {{slink||Causes}}
+|particle= {{EffectSprite|particle-weakness}} #484D48 (gray)
+|type=Negative
+| invimage = Potion of Weakness
+| invimage2 = Splash Potion of Weakness
+| invimage3 = Lingering Potion of Weakness
+| invimage4 = Arrow of Weakness
+}}
+'''Weakness''' is an [[effect]] that decreases attack damage. It is required to cure [[zombie villager]]s.
+
+== Effect ==
+Melee damage inflicted by the affected entity is reduced by {{hp|4}} × level {{in|java}}. Negative levels increase melee [[damage]] dealt.
+
+{{IN|bedrock}}, melee damage under the Weakness effect can be found through the equation <math>BaseDamage\times0.8^{level}+{0.8^{level}-1\over0.4}</math> where <math>BaseDamage</math> is the ''default'' attack damage with whatever weapon or tool is used to attack.<ref group=note>Background for the new equation: https://docs.google.com/document/d/1GtZ9ceTfVGbEkKkbZAfzpKKGk2FQ0FwmeUyw5ja14B8/edit?usp=sharing</ref><ref group="note">To find the damage when [[Strength]] and Weakness are applied at the same time, first calculate the damage with the Strength formula, then plug that in as the "<math>BaseDamage</math>" in this Weakness formula.</ref>
+
+Attacks that deal {{hp|0}} or less due to Weakness will fail to connect entirely, making them do no [[Knockback (mechanic)|knockback]]. However, by use of damage-increasing enchantments such as [[Sharpness]], [[Smite]], [[Bane of Arthropods]], or [[Impaling]], attacks will always connect. This effect is also used to cure [[zombie villager]]s, preceding the [[golden apple]]. The effect can be removed by drinking [[milk]]. {{IN|education|bedrock}} when education options are enabled, drinking [[elixir]] also removes Weakness.
+
+== Exceptions ==
+Weakness does not affect the damage of [[spear]] charge attacks,<ref>{{cite bug|MC|302778|Strength, Weakness and any other attack_damage attribute modifiers do not impact damage dealt by spears when performing charge attacks|resolution=Fixed}}</ref><ref>{{cite bug|MC|306239|Strength and Weakness effects still do not affect spear charge attacks|resolution=Unresolved}}</ref> or the damage of [[ranged attack]]s.
+
+==Causes==
+{| class="wikitable" data-description="Causes"
+ ! Cause
+ ! Potency
+ !Length
+ !Notes
+ |-
+ |{{ItemLink|Potion of Weakness}}
+ |I
+ |1:30
+ |
+ |-
+ |{{ItemLink|Potion of Weakness}} (extended)
+ |I
+ | 4:00
+ |
+ |-
+ |{{ItemLink|Splash Potion of Weakness}}
+ |I
+ |1:30
+ |Thrown by {{EntityLink|Witch}}es if their target is within 3 blocks and under the {{EffectLink|Poison}} effect.
+ |-
+ |{{ItemLink|Splash Potion of Weakness}} (extended)
+ |I
+ |4:00
+ |
+ |-
+ |{{ItemLink|Lingering Potion of Weakness}}
+ |I
+ |0:22
+ |
+ |-
+ |{{ItemLink|Lingering Potion of Weakness}} (extended)
+ |I
+ |1:00
+ |
+ |-
+ |{{ItemLink|Arrow of Weakness}}
+ | I
+ |0:11
+ |50% chance of being dropped by {{EntityLink|Parched}}.
+ |-
+ |{{ItemLink|Arrow of Weakness}} (extended)
+ |I
+ | 0:30
+ |Fired by {{EntityLink|Parched}}.
+ |- 
+ |{{ItemLink|Suspicious Stew}}
+ |I
+ | 0:07
+ |Must be crafted from a {{BlockLink|id=Tulips|Tulip}}
+ |- 
+ |{{ItemLink|Suspicious Stew}}
+ |I
+ |0:07
+ |[[Trade]]d from expert farmer [[villager]]s
+ |-
+ |{{ItemLink|Suspicious Stew}}
+ |I
+ |0:06–0:08
+ |Found in [[shipwreck]] supply chests
+ |}
+
+==Immune mobs==
+*[[Wither]]s, [[ender dragon]]s, and [[parched]] are immune to Weakness.
+*Any [[mob]] that cannot attack or only attacks with projectiles is unaffected by Weakness.
+
+==Data values==
+===ID===
+{{EffectIDLink}}
+{{edition|java}}:
+{{ID table
+|edition=java
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Weakness
+|spritetype=effect
+|nameid=weakness
+|id=18
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Weakness
+|spritetype=effect
+|nameid=weakness
+|id=18
+|foot=1}}
+
+==Achievements==
+{{load achievements|Zombie Doctor}}
+
+==Advancements==
+{{load advancements|Zombie Doctor;How Did We Get Here?;A Furious Cocktail}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.8|dev=Pre-release|Weakness is added along with 18 other status effects but is currently unobtainable in regular gameplay.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 2|[[File:Weakness JE1 BE1.png|18px]] The effect sprite for Weakness has been added to <samp>[[inventory.png]]</samp>.
+|[[Potion]]s have been added, but are unobtainable without inventory editing. All effects can appear on potions.
+|Drinking [[milk]] now clears all status effects.|Weakness is now functional.{{verify}}}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 3|[[Potion]]s have been revamped and made obtainable.}}
+|{{HistoryLine||1.4.2|dev=12w32a|Weakness can now be used to cure [[zombie villager]]s.}}
+|{{HistoryLine|||dev=12w38a|Added [[witch]]es, which can throw [[splash potion]]s of Weakness at their targets.}}
+|{{HistoryLine||1.9|dev=15w31a|Added tipped arrows of Weakness.}}
+|{{HistoryLine|||dev=15w33a|Each level of Weakness effect changed from 0.5 ({{hp|2|notag=1}} × {{frac|1|4}}) reduction to damage to {{hp|4}}.|Added Lingering Potions of Weakness.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Weakness JE2.png|18px]] Changed effect icon texture.
+|Weakness can now be obtained from [[suspicious stew]].}}
+|{{HistoryLine|||dev=18w43b|[[File:Weakness JE3 BE2.png|18px]] The effect icon has been fixed.}}
+|{{HistoryLine|||dev=19w11a|Expert-level farmer [[villager]]s may now sell suspicious stew, including the Weakness one.}}
+|{{HistoryLine||1.21.4|dev=24w45a|Decreased the duration of Weakness obtained from suspicious stew made with a tulip from 9 seconds to 7 seconds.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.11.0|dev=build 1|[[File:Weakness JE1 BE1.png|18px]] Added Weakness, which is currently unobtainable.}}
+|{{HistoryLine|||dev=build 4|Milk now cures all status effects, including Weakness.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Weakness is now obtainable from potion and splash potion of Weakness.|
+Weakness can now be used to cure [[zombie villager]]s.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Added [[witch]]es that utilize splash potions to inflict Weakness.}} 
+|{{HistoryLine||v0.15.0|dev=build 1|Added [[Arrow of Weakness]] that inflicts Weakness.}} 
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Weakness can now be obtained from lingering potion of Weakness.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|[[Elixir]]s now remove the Weakness effect when consumed.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.5|[[File:Weakness JE3 BE2.png|18px]] Changed effect icon texture.}} 
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|Weakness can now be obtained from [[suspicious stew]].}}
+|{{HistoryLine|||dev=beta 1.13.0.15|Master-level farmer [[villager]]s may now sell [[suspicious stew]], including the Weakness one{{verify}}.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[Trading]] has been changed, expert-level farmer [[villager]]s now sell suspicious stew (including Weakness) for an [[emerald]].}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.23|Decreased the duration of Weakness applied by suspicious stews from 8 seconds to 7 seconds, matching {{JE}}.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU5|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Weakness is added along with 18 other status effects but is currently unobtainable in regular gameplay.{{check version}}}}
+|{{HistoryLine||xbox=TU7|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Added the [[potion of Weakness]] and the [[splash potion of Weakness]].}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Weakness can now be used to cure [[zombie villager]]s.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Added [[witch]]es, which can throw [[splash potion]]s of Weakness at their targets.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Added tipped arrows of Weakness.|Each level of Weakness effect changed from 0.5 ({{hp|2|notag=1}} × {{frac|1|4}}) reduction to damage to {{hp|4}}.|Added Lingering Potions of Weakness.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|[[File:Weakness JE3 BE2.png|18px]] Changed effect icon texture.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||8b|Weakness now gives -20% damage per level (was -4 damage per level).}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Refrences ==
+{{Reflist}}
+
+==Notes==
+{{notelist}}
+
+== Navigation ==
+{{Navbox effects}}
+{{Navbox combat|melee}}
+
+[[de:Schwäche]]
+[[es:Debilidad]]
+[[fr:Faiblesse]]
+[[ja:弱体化]]
+[[ko:나약함]]
+[[pt:Fraqueza]]
+[[ru:Слабость]]
+[[zh:虚弱]]

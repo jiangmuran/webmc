@@ -1,0 +1,261 @@
+{{for||Stew|Suspicious}}
+{{Infobox item
+| title = Suspicious Stew
+| consumptiontime = {{convert|32|ticks|seconds}}
+| hungercustom = {{hunger|6}}<br><hr>
+{{EffectSprite|saturation}} {{hunger|13}}
+| saturationcustom = {{hunger|7.2}}<br><hr>
+{{EffectSprite|saturation}} {{hunger|21.2}}
+| saturationboost = <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|4.8}}<br/><abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 2.4 seconds
+<hr>
+{{EffectSprite|saturation}} <abbr title="Assumes saturation is 0 before eating.">'''Heals'''</abbr>: {{hp|14.133}}<br/>{{EffectSprite|saturation}} <abbr title="The time it takes for saturation boost to fully finish healing, assuming the player does not reach full health before it finishes.">'''Duration'''</abbr>: 7.067 seconds
+| effects=See {{slink||Food}}
+| alwaysconsumable = Yes
+| renewable = Yes 
+| stackable = No
+}}
+'''Suspicious stew''' is a [[food]] item that can give the [[player]] a [[effect|status effect]] that depends on the [[flower]] used to craft it.
+
+== Obtaining ==
+=== Generated loot ===
+{{LootChestItem|suspicious-stew,suspicious-stew-2}}
+
+=== Crafting ===
+{{Crafting
+|Red Mushroom
+|Brown Mushroom
+|Bowl
+|Any Small Flower
+|Output=Suspicious Stew
+|shapeless=true
+|type=Foodstuff
+}}
+
+=== Harvesting ===
+Suspicious stew can be obtained by “milking” a brown [[mooshroom]] by {{Control|using}} an empty [[bowl]] on it after {{control|using}} a small flower on it. The flower type determines the stew's effect using the same rule as a crafted stew. After being milked once, the brown mooshroom returns to producing [[mushroom stew]] until fed another small flower. Red mooshrooms do not produce suspicious stew.
+
+=== Trading ===
+{{Trade sources}}
+The [[trading]] interface does not indicate the type of suspicious stew being sold, but each trade entry consistently yields the same type of stew, so the player can remember or make a note of the types offered by a given villager. {{IN|bedrock}}, due to {{bug|MCPE-134483}}, all stews sold by farmers grant [[Night Vision]] for 5 seconds.
+
+=== Commands ===
+Suspicious stew can be given with [[commands]] like {{cmd|give}}; {{in|java}}, if the [[Data component format#suspicious_stew_effects|<code>suspicious_stew_effect</code> component]] is not specified, consuming the stew doesn't inflict any effect. {{IN|Bedrock}}, different types of suspicious stews can be given by specifying its [[#Metadata|metadata value]].
+
+== Usage ==
+=== Food ===
+{{see also|Tutorial:Hunger management}}
+To eat suspicious stew, press and hold {{control|use}} while it is selected in the hotbar. Eating one restores {{hunger|6}} hunger and 7.2 hunger [[Hunger#Mechanics|saturation]] and gives a few seconds of a [[effect|status effect]] that varies depending on which flower was used to craft it. The effect is not displayed in the tooltip, texture, etc., unless the tooltip is viewed from the Creative inventory (including [[saved hotbar]]s), meaning that the player cannot know in advance what the effect is without knowing which flower was used.
+
+{{/Effects}}
+The [[bowl]] is emptied and returned to the player after the suspicious stew has been eaten, and can be re-used to craft more stews. Unlike most foods, suspicious stew can be eaten even if the player's hunger bar is full.
+
+The Saturation effect makes the blue orchid and dandelion stews superfoods, especially {{in|je}}, as the Saturation combined with the stew's initial food value results in the restoration of {{hunger|13}} hunger points and the maximization of saturation {{in|je}}, and the restoration of {{hunger|12}} hunger points and {{hunger|7.2}}<ref>{{bug|MCPE-52353||Saturation status effect does not restore saturation points}}</ref> saturation points {{in|be}}. This is the largest amount of hunger points that can be restored from eating once. {{IN|je}}, that also applies to saturation points, while {{in|be}} it is only the 9th highest item in terms of saturation point restoration. Regeneration can restore up to {{Health|2}} health, while Poison can inflict up to {{health|8}} damage and Wither up to {{Health|3}} damage.
+
+Consuming suspicious stew is the only way to obtain the Saturation and Blindness effects in vanilla ''Minecraft'' without the use of commands.
+
+== Sounds ==
+=== Generic ===
+{{Sound table/Entity/Food}}
+
+=== Unique ===
+{{edition|java}}
+{{SoundTable
+| type = java
+| {{SoundLine
+|sound =Mooshroom eat1.ogg
+|sound2=Mooshroom eat2.ogg
+|sound3=Mooshroom eat3.ogg
+|sound4=Mooshroom eat4.ogg
+|subtitle=Mooshroom eats 
+|source=neutral
+|description=Plays when a brown mooshroom is fed a flower.
+|id=entity.mooshroom.eat
+|translationkey=subtitles.entity.mooshroom.eat
+|volume=2.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.95, or 1.05 for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Mooshroom gets milked suspiciously
+|source=neutral
+|description=Plays when a brown mooshroom is milked with a bowl after being fed a flower.
+|id=entity.mooshroom.suspicious_milk
+|translationkey=subtitles.entity.mooshroom.suspicious_milk
+|volume=1.0
+|pitch=''varies'' <ref group=sound>Can be 1.0, 0.9, or 1.1 for each sound</ref>
+| distance = 16
+}}
+}}
+
+{{edition|bedrock}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Mooshroom eat1.ogg
+|sound2=Mooshroom eat2.ogg
+|sound3=Mooshroom eat3.ogg
+|sound4=Mooshroom eat4.ogg
+|subtitle=Mooshroom eats 
+|source=Friendly Creatures
+|description=When a brown mooshroom is fed a flower
+|id=mob.mooshroom.eat
+|volume=1.0/0.95/1.05
+|pitch=0.8-1.2}}
+| {{SoundLine
+|sound=Mooshroom milk1.ogg
+|sound2=Mooshroom milk2.ogg
+|sound3=Mooshroom milk3.ogg
+|subtitle=Mooshroom gets milked 
+|source=Friendly Creatures
+|description=When a mooshroom is milked with a bowl
+|id=mob.mooshroom.suspicious_milk
+|volume=1.0/0.9/1.1
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Stew
+|spritetype=item
+|nameid=suspicious_stew
+|form=item
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Suspicious Stew
+|spritetype=item
+|nameid=suspicious_stew
+|id=590
+|form=item
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/suspicious_stew_effects}}
+</div>
+
+=== Metadata ===
+{{IN|be}}, suspicious stew uses the following data values:
+{{dvt|spritetype=item|sprite=suspicious-stew|{{BlockLink|Poppy}} ({{EffectLink|Night Vision}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Cornflower}} ({{EffectLink|Jump Boost}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|White Tulip|Tulip}} ({{EffectLink|Weakness}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Azure Bluet}} ({{EffectLink|Blindness}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Lily of the Valley}} ({{EffectLink|Poison}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|id=all-dandelions|link=Dandelion|text=Any Dandelion|}} ({{EffectLink|Saturation}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Blue Orchid}} ({{EffectLink|Saturation}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Allium}} ({{EffectLink|Fire Resistance}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Oxeye Daisy}} ({{EffectLink|Regeneration}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Wither Rose}} ({{EffectLink|Wither|link=Wither (effect)}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Torchflower}} ({{EffectLink|Night Vision}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Open Eyeblossom}} ({{EffectLink|Blindness}})}}
+{{dvt|sprite=suspicious-stew|{{BlockLink|Closed Eyeblossom}} ({{EffectLink|Nausea}})|foot=1}}
+
+== Achievements ==
+{{load achievements|Time for Stew}}
+
+== Advancements ==
+{{load advancements|A Furious Cocktail;How Did We Get Here;Husbandry;A Balanced Diet}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Suspicious Stew JE1 BE1.png|32px]] Added suspicious stew.
+|Suspicious stew is not obtainable in the [[Creative inventory]].}}
+|{{HistoryLine|||dev=19w08a|Suspicious stew can be obtained by milking brown [[mooshroom]]s.}}
+|{{HistoryLine|||dev=19w11a|[[Trading]] has been changed, expert-level farmer villagers now sell suspicious stew for an [[emerald]].}}
+|{{HistoryLine|||dev=19w14b|Suspicious stew with Saturation lasts 0.35 seconds instead of 5 seconds.}}
+|{{HistoryLine||1.14.4|dev=pre1|Suspicious stew made from [[poppies]] now gives [[Night Vision]] to the [[player]] instead of [[Speed]].}}
+|{{HistoryLine||1.16|dev=pre1|Mooshrooms can now be milked for suspicious stew in Creative mode.<ref>{{bug|MC-90969}}</ref>}}
+|{{HistoryLine||1.17|dev=21w13a|Suspicious stew can now be eaten even if the player is at full [[hunger]].}}
+|{{HistoryLine||1.19|dev=22w13a|Suspicious stew may now be found in [[ancient city]] [[chest]]s.}}
+|{{HistoryLine||1.19.3|dev=22w45a|Suspicious stew is now available in the [[Creative]] [[inventory]].}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Suspicious stew now drops when brushing [[suspicious sand]] in [[desert well]]s.}}
+|{{HistoryLine|||dev=pre1|[[Torchflower]]s can now be used to make suspicious stew.}}
+|{{HistoryLine||1.20|dev=23w12a|The probability for the suspicious stew to generate in the [[suspicious sand]] in [[desert well]] has been changed from 1/7 to 1/8.}}
+|{{HistoryLine||1.21.2|dev=24w33a|Suspicious stew recipes are now shown in the recipe book.}}
+|{{HistoryLine||1.21.4|dev=24w44a|[[Eyeblossom]]s can now be used to make suspicious stew.}}
+|{{HistoryLine|||dev=24w45a|Changed durations of the Suspicious Stew effects to match [[Bedrock Edition]]:
+[[Fire Resistance]]: 3 seconds
+[[Blindness]]: 11 seconds
+[[Weakness]]: 7 seconds
+[[Regeneration]]: 7 seconds
+[[Jump Boost]]: 5 seconds
+[[Wither (effect)|Wither]]: 7 seconds
+[[Poison]]: 11 seconds}}
+|{{HistoryLine|||dev=24w46a|The stew of [[Blindness]] now gains the same duration when crafted from [[azure bluet]] and open [[eyeblossom]]s.}}
+|{{HistoryLine||26.1|dev=snap5|[[Golden dandelion]]s can now be used to make suspicious stew.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.9|[[File:Suspicious Stew JE1 BE1.png|32px]] Added suspicious stew.
+|Suspicious stew is not obtainable in the Creative inventory.}}
+|{{HistoryLine|||dev=beta 1.13.0.15|Master-level farmer [[villager]]s can now [[trading|sell]] suspicious stew.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.57|[[Trading]] has been changed, expert-level farmer villagers now sell suspicious stew for an [[emerald]].}}
+|{{HistoryLine||1.19.70|exp=Next Major Update|dev=Preview 1.19.70.23|Suspicious stew now drops when brushing [[suspicious sand]] in [[desert well]]s.}}
+|{{HistoryLine||1.20.10|dev=Preview 1.20.0.20|[[Torchflower]] can now be used to make suspicious stew. The resulting type of stew is obtainable from the Creative inventory.}}
+|{{HistoryLine||1.20.30|dev=Preview 1.20.20.20|Suspicious stew can no longer be found in the Creative inventory.}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.25|Suspicious stew can now be eaten even if the player is at full [[hunger]].}}
+|{{HistoryLine||1.21.50|dev=Preview 1.21.50.25|[[Open eyeblossom]] and [[closed eyeblossom]] can now be used to make suspicious stew.}}
+|{{HistoryLine||1.21.60|dev=Preview 1.21.60.23|Suspicious stews crafted with tulips now apply Weakness for 7 seconds, matching {{JE}}.
+|Suspicious stews with the Weakness effect acquired from shipwrecks or by trading now apply Weakness for 7 seconds.}}
+|{{HistoryLine||1.21.120|dev=Preview 1.21.120.20|Suspicious stews can now be found in the Creative inventory again.
+|Hovering over a suspicious stew in Creative mode shows its effect in the tooltip.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* Suspicious stew was introduced because developers wanted a way of communicating that [[wikipedia:Lily_of_the_valley|lilies of the valley]] are poisonous.<ref>{{ytl|YUM7XiEX1DI|Items: Ten Things You Probably Didn't Know About Minecraft @ 3:32|Minecraft|November 29, 2019|t=212s}}</ref>
+* If one excluded the red mushrooms (which are based on a poisonous mushroom), the only suspicious stews that would realistically be edible are the allium, dandelion, cornflower, oxeye daisy, tulip, and azure bluet suspicious stews, as those are the only flowers that are safe to eat in real life.
+* As part of the [[Spookyfest]] campaign, a real life recipe for suspicious stew was made, using [[Pringles]] as ingredients.<ref>{{Mcnet|spookyfest-upon-us|Spookyfest is back!|October 19, 2023|[[Cristina Anderca]]}}</ref>
+
+== Gallery ==
+
+=== In other media ===
+<gallery>
+File:Real Life Suspicious Stew.png|Real life suspicious stew from [[Minecraft.net]]
+</gallery>
+
+== References ==
+{{Reflist}}
+<references group="loot"/>
+
+== Navigation ==
+{{Navbox items|food}}
+
+[[Category:Food]]
+
+[[de:Seltsame Suppe]]
+[[es:Estofado sospechoso]]
+[[fr:Soupe suspecte]]
+[[ja:怪しげなシチュー]]
+[[ko:수상한 스튜]]
+[[lzh:謎羹]]
+[[nl:Geheimzinnige stoofpot]]
+[[pl:Podejrzana potrawka]]
+[[pt:Ensopado Suspeito]]
+[[ru:Подозрительный суп]]
+[[th:สตูพิศวง]]
+[[uk:Підозріла юшка]]
+[[zh:谜之炖菜]]
