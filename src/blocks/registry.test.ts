@@ -1,6 +1,18 @@
 import { describe, it, expect } from 'vitest';
 import { AIR_ID } from './state';
-import { BlockRegistry, createDefaultRegistry } from './registry';
+import { type BlockDef, BlockRegistry, type RGB, createDefaultRegistry } from './registry';
+
+function def(name: string, color: RGB = [100, 100, 100]): BlockDef {
+  return {
+    name,
+    solid: true,
+    opaque: true,
+    lightEmission: 0,
+    color,
+    faceColors: { top: color, bottom: color, side: color },
+    hardness: 1,
+  };
+}
 
 describe('BlockRegistry', () => {
   it('air is pre-registered at id 0', () => {
@@ -12,22 +24,8 @@ describe('BlockRegistry', () => {
 
   it('assigns sequential ids on register', () => {
     const r = new BlockRegistry();
-    const a = r.register({
-      name: 'test:a',
-      solid: true,
-      opaque: true,
-      lightEmission: 0,
-      color: [1, 2, 3],
-      hardness: 1,
-    });
-    const b = r.register({
-      name: 'test:b',
-      solid: true,
-      opaque: true,
-      lightEmission: 0,
-      color: [4, 5, 6],
-      hardness: 1,
-    });
+    const a = r.register(def('test:a', [1, 2, 3]));
+    const b = r.register(def('test:b', [4, 5, 6]));
     expect(a).toBe(1);
     expect(b).toBe(2);
     expect(r.size).toBe(3);
@@ -35,24 +33,8 @@ describe('BlockRegistry', () => {
 
   it('rejects duplicate names', () => {
     const r = new BlockRegistry();
-    r.register({
-      name: 'test:dup',
-      solid: true,
-      opaque: true,
-      lightEmission: 0,
-      color: [0, 0, 0],
-      hardness: 1,
-    });
-    expect(() =>
-      r.register({
-        name: 'test:dup',
-        solid: true,
-        opaque: true,
-        lightEmission: 0,
-        color: [0, 0, 0],
-        hardness: 1,
-      }),
-    ).toThrow(/duplicate/);
+    r.register(def('test:dup'));
+    expect(() => r.register(def('test:dup'))).toThrow(/duplicate/);
   });
 
   it('throws on unknown id', () => {
@@ -65,17 +47,30 @@ describe('BlockRegistry', () => {
     expect(r.byName('nope:nope')).toBeUndefined();
   });
 
-  it('default registry has the M1 block set', () => {
+  it('default registry has the expanded block set', () => {
     const r = createDefaultRegistry();
-    expect(r.byName('webmc:stone')).toBeDefined();
-    expect(r.byName('webmc:dirt')).toBeDefined();
-    expect(r.byName('webmc:grass_block')).toBeDefined();
-    expect(r.byName('webmc:cobblestone')).toBeDefined();
-    expect(r.byName('webmc:oak_log')).toBeDefined();
-    expect(r.byName('webmc:glowstone')).toBeDefined();
-    expect(r.size).toBeGreaterThanOrEqual(7);
+    for (const name of [
+      'webmc:stone',
+      'webmc:dirt',
+      'webmc:grass_block',
+      'webmc:cobblestone',
+      'webmc:oak_log',
+      'webmc:oak_planks',
+      'webmc:oak_leaves',
+      'webmc:sand',
+      'webmc:water',
+      'webmc:lava',
+      'webmc:glowstone',
+      'webmc:diamond_ore',
+    ]) {
+      expect(r.byName(name)).toBeDefined();
+    }
+    expect(r.size).toBeGreaterThanOrEqual(25);
     const glowId = r.byName('webmc:glowstone');
     if (glowId === undefined) throw new Error('missing glowstone');
     expect(r.get(glowId).lightEmission).toBe(15);
+    const grass = r.get(r.byName('webmc:grass_block') ?? 0).faceColors;
+    expect(grass.top).not.toEqual(grass.bottom);
+    expect(grass.top).not.toEqual(grass.side);
   });
 });

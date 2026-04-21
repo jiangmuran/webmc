@@ -24,6 +24,10 @@ const GRASS = makeState(3, 0);
 const isOpaque = (s: number): boolean => s !== AIR;
 const colorByState = (s: number): readonly [number, number, number] =>
   s === STONE ? [128, 128, 128] : s === DIRT ? [134, 96, 67] : [91, 153, 73];
+const faceColorsByState = (s: number) => {
+  const c = colorByState(s);
+  return { top: c, bottom: c, side: c };
+};
 
 function uniformStone(): SubChunk {
   return new SubChunk(STONE);
@@ -62,7 +66,7 @@ function measure(name: string, make: () => SubChunk, iterations = 100): BenchRes
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     const t1 = performance.now();
     timings.push(t1 - t0);

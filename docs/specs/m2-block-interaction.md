@@ -58,23 +58,25 @@ Add a 2nd attribute pair:
 
 ```ts
 interface MeshOutput {
-  positions: Float32Array;    // x,y,z per vertex (unchanged)
-  normals: Int8Array;         // nx,ny,nz (unchanged)
-  colors: Uint8Array;         // r,g,b,ao (keeps AO-alpha open for M3)
-  uvs: Float32Array;          // u, v per vertex  ← NEW
+  positions: Float32Array; // x,y,z per vertex (unchanged)
+  normals: Int8Array; // nx,ny,nz (unchanged)
+  colors: Uint8Array; // r,g,b,ao (keeps AO-alpha open for M3)
+  uvs: Float32Array; // u, v per vertex  ← NEW
   indices: Uint32Array;
   quadCount: number;
 }
 ```
 
-Shader: sample atlas texture with `texture2D(uAtlas, vUv) * lighting`. Colors become a *tint* for biome-colored blocks (grass/leaves in M3); until then they are a neutral white fallback.
+Shader: sample atlas texture with `texture2D(uAtlas, vUv) * lighting`. Colors become a _tint_ for biome-colored blocks (grass/leaves in M3); until then they are a neutral white fallback.
 
 ## Raycast contract
 
 ```ts
 export interface RayHit {
-  bx: number; by: number; bz: number;   // block coord of hit voxel
-  face: 0 | 1 | 2 | 3 | 4 | 5;          // which face (-x +x -y +y -z +z)
+  bx: number;
+  by: number;
+  bz: number; // block coord of hit voxel
+  face: 0 | 1 | 2 | 3 | 4 | 5; // which face (-x +x -y +y -z +z)
   distance: number;
 }
 
@@ -82,7 +84,7 @@ export function raycastVoxels(
   origin: Vec3Lite,
   dir: Vec3Lite,
   maxDistance: number,
-  isSolid: (x,y,z) => boolean,
+  isSolid: (x, y, z) => boolean,
 ): RayHit | null;
 ```
 
@@ -91,7 +93,7 @@ Amanatides-Woo algorithm. Fast in pure JS; no allocations in the step loop.
 ## Test plan
 
 - Unit: raycast on fixed grids (hit directly-above, hit to the side, miss over maxDistance, ray starts inside solid — undefined or returns start?).
-- Property: for any random dir and max=32, hit is always the *first* solid voxel along the ray.
+- Property: for any random dir and max=32, hit is always the _first_ solid voxel along the ray.
 - Golden-image: atlas-based mesher output vs committed PNG, per block def.
 - e2e: boot → pointer-lock → place a block in front → walk past → look back → block persists and is textured.
 

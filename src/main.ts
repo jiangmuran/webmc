@@ -51,6 +51,7 @@ const isOpaque = (state: BlockState): boolean => {
   if (state === AIR) return false;
   return registry.get(stateId(state)).opaque;
 };
+const faceColorsOf = (state: BlockState) => registry.get(stateId(state)).faceColors;
 const colorOf = (state: BlockState): readonly [number, number, number] =>
   registry.get(stateId(state)).color;
 const isSolid = (x: number, y: number, z: number): boolean =>
@@ -166,7 +167,7 @@ function flushDirty(): void {
       }
       const borders = borderFor(chunk.cx, cy, chunk.cz);
       void mesherClient
-        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, colorOf, borders)
+        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders)
         .then((response) => {
           chunkRenderer.apply(response);
         });

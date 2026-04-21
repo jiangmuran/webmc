@@ -1,6 +1,14 @@
 import type { BlockState } from '@/blocks/state';
 import { SUBCHUNK_DIM, type SubChunk, localIndex } from '../SubChunk';
-import { type Snapshot, snapshotSubChunk } from './snapshot';
+import {
+  COLOR_OFFSET_BOTTOM,
+  COLOR_OFFSET_SIDE,
+  COLOR_OFFSET_TOP,
+  COLOR_STRIDE,
+  type FaceColors,
+  type Snapshot,
+  snapshotSubChunk,
+} from './snapshot';
 
 export type OpaqueSampler = (u: number, v: number) => boolean;
 
@@ -17,7 +25,7 @@ export interface MesherInput {
   self: SubChunk;
   neighbors: MesherNeighbors;
   isOpaque: (state: BlockState) => boolean;
-  colorOf: (state: BlockState) => readonly [number, number, number];
+  faceColorsOf: (state: BlockState) => FaceColors;
 }
 
 export interface MeshOutput {
@@ -142,9 +150,12 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             const c3y = oy + dvy;
             const c3z = oz + dvz;
 
-            const r = paletteColor[val * 3] ?? 0;
-            const g = paletteColor[val * 3 + 1] ?? 0;
-            const b = paletteColor[val * 3 + 2] ?? 0;
+            const faceOffset =
+              d === 1 ? (s === 1 ? COLOR_OFFSET_TOP : COLOR_OFFSET_BOTTOM) : COLOR_OFFSET_SIDE;
+            const base3 = val * COLOR_STRIDE + faceOffset;
+            const r = paletteColor[base3] ?? 0;
+            const g = paletteColor[base3 + 1] ?? 0;
+            const b = paletteColor[base3 + 2] ?? 0;
 
             if (s === 1) {
               positions.push(c0x, c0y, c0z, c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
@@ -182,6 +193,6 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
 }
 
 export function meshSubChunk(input: MesherInput): MeshOutput {
-  const snap = snapshotSubChunk(input.self, input.isOpaque, input.colorOf);
+  const snap = snapshotSubChunk(input.self, input.isOpaque, input.faceColorsOf);
   return meshSnapshot(snap, input.neighbors);
 }

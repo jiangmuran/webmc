@@ -1,7 +1,7 @@
 import type { BlockState } from '@/blocks/state';
 import type { BitsPerIndex } from '../packed-indices';
 import { SUBCHUNK_DIM, type SubChunk } from '../SubChunk';
-import { serializePalette } from '../meshing/snapshot';
+import { type FaceColors, serializePalette } from '../meshing/snapshot';
 import type { FromWorker, MesherRequest, MesherResponse } from './mesher.protocol';
 import { transferablesOfRequest } from './mesher.protocol';
 
@@ -80,10 +80,10 @@ export function buildMesherRequest(
   cz: number,
   self: SubChunk,
   isOpaque: (s: BlockState) => boolean,
-  colorOf: (s: BlockState) => readonly [number, number, number],
+  faceColorsOf: (s: BlockState) => FaceColors,
   borders: BorderOpacity,
 ): MesherRequest {
-  const blob = serializePalette(self, isOpaque, colorOf);
+  const blob = serializePalette(self, isOpaque, faceColorsOf);
   const bitsPerIndex: BitsPerIndex = blob.bitsPerIndex;
   return {
     type: 'mesh',
@@ -137,11 +137,11 @@ export class MesherClient {
     cz: number,
     self: SubChunk,
     isOpaque: (s: BlockState) => boolean,
-    colorOf: (s: BlockState) => readonly [number, number, number],
+    faceColorsOf: (s: BlockState) => FaceColors,
     borders: BorderOpacity = EMPTY_BORDERS,
   ): Promise<MesherResponse> {
     const id = this._nextId++;
-    const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, colorOf, borders);
+    const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, faceColorsOf, borders);
     return new Promise<MesherResponse>((resolve, reject) => {
       this.jobs.set(id, { id, resolve, reject });
       this.worker.postMessage(req, transferablesOfRequest(req));

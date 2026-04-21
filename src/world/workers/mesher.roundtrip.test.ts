@@ -15,6 +15,10 @@ const DIRT = makeState(2, 0);
 const opaqueByState = (s: BlockState) => s !== AIR;
 const colorByState = (s: BlockState): readonly [number, number, number] =>
   s === STONE ? [128, 128, 128] : s === DIRT ? [134, 96, 67] : [0, 0, 0];
+const faceColorsByState = (s: BlockState) => {
+  const c = colorByState(s);
+  return { top: c, bottom: c, side: c };
+};
 
 describe('mesher serialize/deserialize round-trip', () => {
   function compareMeshes(sc: SubChunk): void {
@@ -22,10 +26,10 @@ describe('mesher serialize/deserialize round-trip', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
 
-    const blob = serializePalette(sc, opaqueByState, colorByState);
+    const blob = serializePalette(sc, opaqueByState, faceColorsByState);
     const snap = snapshotFromBlob(blob);
     const viaBlob = meshSnapshot(snap, EMPTY_NEIGHBORS);
 
@@ -59,7 +63,7 @@ describe('mesher serialize/deserialize round-trip', () => {
   it('serializePalette bits and indices are consistent with SubChunk state', () => {
     const sc = new SubChunk();
     sc.set(0, 0, 0, STONE);
-    const blob = serializePalette(sc, opaqueByState, colorByState);
+    const blob = serializePalette(sc, opaqueByState, faceColorsByState);
     expect(blob.bitsPerIndex).toBe(sc.bitsPerIndex);
     if (sc.indices === null) {
       expect(blob.indices).toBeNull();
@@ -68,6 +72,6 @@ describe('mesher serialize/deserialize round-trip', () => {
       expect(Array.from(blob.indices)).toEqual(Array.from(sc.indices));
     }
     expect(blob.paletteOpaque.length).toBe(sc.palette.size);
-    expect(blob.paletteColor.length).toBe(sc.palette.size * 3);
+    expect(blob.paletteColor.length).toBe(sc.palette.size * 9);
   });
 });

@@ -2,6 +2,21 @@ import type { BlockState } from '@/blocks/state';
 import { SUBCHUNK_DIM, type SubChunk, SUBCHUNK_VOLUME, localIndex } from '../SubChunk';
 import { type BitsPerIndex, readIndex } from '../packed-indices';
 
+export type RGB = readonly [number, number, number];
+
+export interface FaceColors {
+  readonly top: RGB;
+  readonly bottom: RGB;
+  readonly side: RGB;
+}
+
+// paletteColor layout: 9 bytes per palette entry.
+// Offsets: top[0..2], bottom[3..5], side[6..8].
+export const COLOR_STRIDE = 9;
+export const COLOR_OFFSET_TOP = 0;
+export const COLOR_OFFSET_BOTTOM = 3;
+export const COLOR_OFFSET_SIDE = 6;
+
 export interface Snapshot {
   readonly flatIdx: Uint16Array;
   readonly paletteOpaque: Uint8Array;
@@ -17,22 +32,31 @@ export interface PaletteBlob {
   readonly indices: Uint32Array | null;
 }
 
+function writeFaceColors(out: Uint8Array, at: number, colors: FaceColors): void {
+  out[at + COLOR_OFFSET_TOP] = colors.top[0];
+  out[at + COLOR_OFFSET_TOP + 1] = colors.top[1];
+  out[at + COLOR_OFFSET_TOP + 2] = colors.top[2];
+  out[at + COLOR_OFFSET_BOTTOM] = colors.bottom[0];
+  out[at + COLOR_OFFSET_BOTTOM + 1] = colors.bottom[1];
+  out[at + COLOR_OFFSET_BOTTOM + 2] = colors.bottom[2];
+  out[at + COLOR_OFFSET_SIDE] = colors.side[0];
+  out[at + COLOR_OFFSET_SIDE + 1] = colors.side[1];
+  out[at + COLOR_OFFSET_SIDE + 2] = colors.side[2];
+}
+
 export function snapshotSubChunk(
   self: SubChunk,
   isOpaque: (state: BlockState) => boolean,
-  colorOf: (state: BlockState) => readonly [number, number, number],
+  faceColorsOf: (state: BlockState) => FaceColors,
 ): Snapshot {
   const palette = self.palette;
   const n = palette.size;
   const paletteOpaque = new Uint8Array(n);
-  const paletteColor = new Uint8Array(n * 3);
+  const paletteColor = new Uint8Array(n * COLOR_STRIDE);
   for (let i = 0; i < n; i++) {
     const state = palette.get(i);
     paletteOpaque[i] = isOpaque(state) ? 1 : 0;
-    const c = colorOf(state);
-    paletteColor[i * 3] = c[0];
-    paletteColor[i * 3 + 1] = c[1];
-    paletteColor[i * 3 + 2] = c[2];
+    writeFaceColors(paletteColor, i * COLOR_STRIDE, faceColorsOf(state));
   }
 
   const flatIdx = new Uint16Array(SUBCHUNK_VOLUME);
@@ -55,21 +79,18 @@ export function snapshotSubChunk(
 export function serializePalette(
   self: SubChunk,
   isOpaque: (state: BlockState) => boolean,
-  colorOf: (state: BlockState) => readonly [number, number, number],
+  faceColorsOf: (state: BlockState) => FaceColors,
 ): PaletteBlob {
   const palette = self.palette;
   const n = palette.size;
   const paletteStates = new Uint32Array(n);
   const paletteOpaque = new Uint8Array(n);
-  const paletteColor = new Uint8Array(n * 3);
+  const paletteColor = new Uint8Array(n * COLOR_STRIDE);
   for (let i = 0; i < n; i++) {
     const state = palette.get(i);
     paletteStates[i] = state >>> 0;
     paletteOpaque[i] = isOpaque(state) ? 1 : 0;
-    const c = colorOf(state);
-    paletteColor[i * 3] = c[0];
-    paletteColor[i * 3 + 1] = c[1];
-    paletteColor[i * 3 + 2] = c[2];
+    writeFaceColors(paletteColor, i * COLOR_STRIDE, faceColorsOf(state));
   }
   const indicesSrc = self.indices;
   const indices = indicesSrc ? new Uint32Array(indicesSrc) : null;

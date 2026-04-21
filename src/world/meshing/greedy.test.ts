@@ -10,6 +10,10 @@ const DIRT = makeState(2, 0);
 const opaqueByState = (s: BlockState) => s !== AIR;
 const colorByState = (s: BlockState): readonly [number, number, number] =>
   s === STONE ? [128, 128, 128] : s === DIRT ? [134, 96, 67] : [0, 0, 0];
+const faceColorsByState = (s: BlockState) => {
+  const c = colorByState(s);
+  return { top: c, bottom: c, side: c };
+};
 
 describe('greedy mesher', () => {
   it('empty subchunk produces 0 quads', () => {
@@ -18,7 +22,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.quadCount).toBe(0);
     expect(out.positions.length).toBe(0);
@@ -31,7 +35,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.quadCount).toBe(6);
     expect(out.positions.length).toBe(6 * 4 * 3);
@@ -52,7 +56,7 @@ describe('greedy mesher', () => {
         pz: alwaysOpaque,
       },
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.quadCount).toBe(0);
   });
@@ -64,7 +68,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.quadCount).toBe(6);
     expect(out.positions.length).toBe(6 * 4 * 3);
@@ -78,7 +82,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     // Two cubes share an internal face (both cull it). Each contributes
     // 5 exterior faces merged: top/bottom (1×2), front/back (1×2),
@@ -93,7 +97,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     const vertCount = out.positions.length / 3;
     for (const i of out.indices) {
@@ -111,7 +115,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.positions.length).toBe(12 * out.quadCount);
     expect(out.normals.length).toBe(12 * out.quadCount);
@@ -125,7 +129,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: EMPTY_NEIGHBORS,
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     for (const p of out.positions) {
       expect(p).toBeGreaterThanOrEqual(0);
@@ -155,7 +159,7 @@ describe('greedy mesher', () => {
             self: sc,
             neighbors: EMPTY_NEIGHBORS,
             isOpaque: opaqueByState,
-            colorOf: colorByState,
+            faceColorsOf: faceColorsByState,
           });
           expect(out.positions.length).toBe(12 * out.quadCount);
           expect(out.indices.length).toBe(6 * out.quadCount);
@@ -176,7 +180,7 @@ describe('greedy mesher', () => {
       self: sc,
       neighbors: { ...EMPTY_NEIGHBORS, px: alwaysOpaque },
       isOpaque: opaqueByState,
-      colorOf: colorByState,
+      faceColorsOf: faceColorsByState,
     });
     expect(out.quadCount).toBe(5);
   });
