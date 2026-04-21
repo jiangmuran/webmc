@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { FrameTimer } from './engine/time/FrameTimer';
+import { DayNightCycle } from './engine/time/DayNightCycle';
 import { FirstPersonCamera } from './engine/input/FirstPersonCamera';
 import { ChunkRenderer } from './engine/render/ChunkRenderer';
 import { type BlockState, AIR, makeState, stateId } from './blocks/state';
@@ -86,6 +87,8 @@ fp.attach(canvas);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
+
+const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
 const mesherClient = createMesherClient();
 
@@ -227,6 +230,14 @@ function frame(): void {
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
 
   fp.update(dtSec, { isSolid });
+
+  dayNight.tick(dtSec);
+  const uniforms = chunkRenderer.material.uniforms;
+  (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
+  (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(dayNight.skyColor);
+  (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient;
+  scene.background = dayNight.skyColor;
+  if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(dayNight.fogColor);
 
   const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad);
 

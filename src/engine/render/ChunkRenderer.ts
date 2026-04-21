@@ -9,7 +9,7 @@ export function chunkKey(cx: number, cy: number, cz: number): string {
 
 export class ChunkRenderer {
   readonly group = new THREE.Group();
-  private readonly material: THREE.ShaderMaterial;
+  readonly material: THREE.ShaderMaterial;
   private readonly meshes = new Map<string, THREE.Mesh>();
 
   constructor(material: THREE.ShaderMaterial = createChunkMaterial()) {
