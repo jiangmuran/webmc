@@ -2,11 +2,7 @@ import * as THREE from 'three';
 
 const vertexShader = `
 precision highp float;
-attribute vec3 position;
-attribute vec3 normal;
 attribute vec4 color;
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
 varying vec3 vNormal;
 varying vec4 vColor;
 void main() {

@@ -23,8 +23,10 @@
     "test:e2e:install": "playwright install --with-deps chromium",
     "wiki:fetch": "tsx scripts/wiki-fetch.ts",
     "wiki:seed": "tsx scripts/wiki-fetch.ts --seed",
+    "bench:mesh": "tsx tests/perf/mesh-bench.ts",
     "ci": "npm run typecheck && npm run lint && npm run format:check && npm run test",
-    "verify:m0": "npm run ci && npm run test:e2e"
+    "verify:m0": "npm run ci && npm run test:e2e",
+    "verify:m1": "npm run ci && npm run bench:mesh && npm run test:e2e"
   },
   "dependencies": {
     "three": "^0.175.0"

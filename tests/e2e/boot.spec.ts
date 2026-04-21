@@ -9,7 +9,7 @@ test.describe('M0 boot smoke', () => {
     expect(width).toBeGreaterThan(0);
 
     const hud = page.getByTestId('hud');
-    await expect(hud).toContainText('webmc M0');
+    await expect(hud).toContainText(/webmc M\d+/);
     await expect(hud).toContainText('WebGL2');
 
     await page.waitForFunction(
