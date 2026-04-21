@@ -1,0 +1,343 @@
+{{about|the current mechanics|anvil mechanics prior to 1.8|Anvil mechanics/Before 1.8|the mechanics of the [[smithing table]]|Smithing}}
+[[File:Anvil2.png|thumb|Two diamond pickaxes are combined, repairing one and sacrificing the other.]]
+
+This page explains the '''mechanics of the anvil'''. The [[anvil]] is primarily used in its [[inventory]] to combine [[tools]], [[weapons]], and [[armor]] with other items of the same type or with an [[enchanted book]] at the cost of [[experience]] without the stripping of [[enchantment]]s, or to rename any [[item]]. The item on the left side of an anvil operation is known as the ''target'', and any item on the right is known as the ''sacrifice''. The result (in the third slot) is a modification of the target item, consuming the sacrifice if it is part of the operation.
+
+As a gravity-affected block, an anvil can also be placed to drop on [[living entities]] to damage them.
+
+The five basic functions of the anvil are:
+* '''Renaming''' any item, including non-tool items. Any changed name is {{w|italics|italicized}}. Most blocks lose their rename when placed, except some container blocks, which show the name if opened. For example, naming a chest "My Custom Named Chest" causes the title of the chest inventory to turn into "My Custom Named Chest" if placed and opened.
+* '''Repairing''' the [[durability]] of items with their material. For example, iron ingots can be used to repair iron tools and armor.
+* '''Combining''' two tools, weapons, or armor pieces of the same kind. Durabilities combine similarly to [[item repair]] in a crafting table, but the enchantments are combined following rules detailed below.
+* '''Combining''' a tool, weapon, or armor piece with an [[enchanted book]] to add the book's enchantments to the tool. This allows usage of [[treasure enchantments]] which are not available at an [[enchanting table]].
+* '''Damaging''' living entities. This causes the anvil to sometimes degrade by one level and deal {{hp|2}} HP damage for each block fallen after the first block to the mob/player who were crushed. A maximum of {{hp|40}} HP damage can be dealt by a falling anvil, no matter how high the anvil falls.
+
+Each time something is repaired, enchanted, or renamed using an anvil, the anvil has a 12% chance to degrade. There are three degradation levels: ''Anvil'', ''Chipped Anvil'', and ''Damaged Anvil''. Degrading further destroys the anvil.
+
+In [[Survival]] and [[Adventure]] mode, an anvil can only apply an operation worth 39 experience levels or less. Once the cost exceeds 39 levels, the anvil menu refuses the operation with the message "Too Expensive!". From there, a player may only use [[Creative]] mode to combine (and to rename {{in|be|}}) items using an anvil.
+
+== Prior work penalty ==
+Every time an item is used in an anvil, except by being renamed, the item accumulates a ''prior work penalty'', a modifier that increases the XP cost of that item's next operation. This value roughly doubles every operation, starting at zero and increasing by <math>2n+1</math> where <math>n</math> is the current largest penalty ''between the two items of the operation''.
+
+The table below shows the possible prior work penalties on an item in Survival and Adventure mode without [[commands]]. The cost increases exponentially by the formula <math>2^c-1</math> where <math>c</math> is the anvil use count (i.e., number of prior anvil uses).
+{| class="wikitable" data-description="Prior work penalty"
+|-
+! Anvil use count !! Penalty ({{code|[[Data component format#repair_cost|repair_cost]]}}{{only|je|short=1}})
+|-
+| 0 || 0
+|-
+| 1 || 1
+|-
+| 2 || 3
+|-
+| 3 || 7
+|-
+| 4 || 15
+|-
+| 5 || 31
+|}
+
+[[Item repair]] on a crafting grid removes all prior work penalties, enchantments, and custom names. If a [[grindstone]] is used, the item instead keeps its custom name while losing all of its prior work penalties and enchantments.
+
+== Renaming ==
+Any [[item]] or single stack of items can be renamed in an anvil, adding a single [[experience]] level to the cost of the anvil operation. There is no extra cost to rename a stack of items as opposed to a single item. The custom name can be between one and 30{{only|BE|short=1}} or 50{{only|JE|short=1}} characters long.
+
+Renamed stackable items can only stack with other renamed items of its type that share exactly the same name and [[#prior work penalty|prior work penalty]]. {{IN|be}}, renaming an item that doesn't have a prior work penalty gives it a work penalty of 0,{{check the code}} making it stackable only with renamed items, even if its custom name is reset.
+
+If the item's custom name would be unchanged from its current name, which can occur when renaming an item for the first time and using any of the aforementioned blank parameters, and no other valid operation is happening in the anvil, a red "X" appears on top of the arrow in the GUI, and the operation cannot proceed.
+
+===Renaming and prior work penalty===
+Any existing prior work penalty is added to the cost of all anvil operations, including renaming. However, renaming alone does not cause an item's prior work penalty to accumulate. {{IN|je|}}, the cost of just renaming is capped at a maximum of 39 levels.
+
+Because prior work penalty is charged for any rename, it is most economical to rename a tool, weapon, or armor piece either before or while repairing or enchanting it, minimizing the penalty the player must pay for the rename.
+
+If the penalty reaches or exceeds 2,147,483,647, further renames become impossible.{{verify|No longer true in Java Edition as of at least 1.21.9|edition=bedrock}}
+
+===Resetting a custom name===
+The custom name of an item can be reset to its default name by:
+* Clearing the rename field and taking the output item,{{note|This does not reset the item stack's other data, so it cannot be stacked with other items of the same type with different data.}}
+* [[Item repair]] in a crafting table,
+* If the item is a [[block]] with no [[block entity]] data, placing and [[breaking]] the block to retrieve it (one item in the stack at a time), or 
+* {{in|JE}}, renaming it to a name that consists of only a combination of {{w|white space}} or {{w|non-breaking space}}s.
+
+{{notelist}}
+
+===Special effects===
+Some items have some special effects when renamed.
+* Renaming a [[name tag]] allows the player to {{control|use}} the item on [[mob]]s to rename the mob to the name tag's custom name.
+* Renamed and placed [[block]]s and [[entity|entities]] with a [[Inventory]] GUI that normally show their own name at the top of their menus show their custom name instead.
+* Renamed [[Bucket of aquatic mob|Buckets of aquatic mobs]]{{only|JE}} and [[Spawn Egg]]s produce a mob with the same name.
+* {{IN|JE}}, killing a [[player]] or named mob with any renamed item causes that item to appear as part of the [[death message]] as the weapon.
+* Renamed [[command blocks]] use their custom name for their [[execution context]]
+** If the [[Game rule#List of game rule|game rule]] {{code|commandBlockOutput}} is true, or in the case of the {{cmd|say}} and {{cmd|tellraw}} commands, the executor appears as the custom name rather than {{code|@}} {{in|JE}} or {{code|!}} {{in|BE}}. {{IN|BE}}, the hover text above the command block is also set to the custom name when placed.
+== Unit repair ==
+Some items are "[[Tiers|tiered]]" and can be repaired using units of its repair material. Each unit restores up to 25% total [[durability]] of the item (rounded down) and costs 1 level per unit of material used in addition to any applicable prior work penalties.
+* The material to use is specific for each item (see the table below). For many items, this is determined by its [[tier]] or [[armor material]].
+* Due to the rapid increase in prior work penalty for each repair, it is generally most effective to use an item almost to the breaking point and then repair using four units of raw material at once (or by [[#Combining items|combining]] with a newly crafted instance of the item).
+* If enchantments are added to raw materials (for example, using commands to give Sharpness to an iron ingot), these enchantments are ignored when doing unit repair.
+* Doing so costs 1 level per unit used plus any prior work penalty. 
+
+'''Repairable items'''
+{{/Repairable items}}
+Anvils cannot be repaired by any iron item or block.
+
+== Combining items ==
+The [[anvil]] can be used to combine two of the same [[item]], or an item with an [[enchanted book]]. This applies only to items with [[durability]]: [[weapon]]s, [[shield]]s, [[tool]]s, and [[armor]], as well as enchanted books. The first (left) item is the ''target'' item, the second (right) item is the ''sacrifice'' item. The ''sacrifice'' item is destroyed upon combination of the two items. Combining two similar items does either or both of two things; each of which cost levels, though part of the cost is shared if they're both done at once:
+* If the ''target'' item is damaged it is repaired, adding the [[durability]] of the ''sacrifice'' item plus a bonus of 12% of the maximum durability. This repairs up to the item's maximum durability. The cost for this repair is 2 levels.
+* If the ''sacrifice'' item has [[enchantment]]s, it also tries to combine the ''sacrifice'' item's enchantments onto the ''target'' item. Regardless of whether any enchantments on the ''target'' item are actually changed, the cost is based on the total enchantments on the ''target'' item and the ''sacrifice'' item. For each enchantment on the ''sacrifice'' item:
+** If the ''target'' item has the enchantment:
+*** and the level of the enchantment on the ''sacrifice'' item is '''greater''', the enchantment level on the ''target'' item is raised to match it.
+*** and the level of the enchantment on the ''sacrifice'' item is '''equal''' AND the enchantment is not already at the maximum level, the enchantment on the ''target'' item gains one level.
+*** and the level of the enchantment on the ''sacrifice'' item is '''less''', the enchantment level on the ''target'' item is unaffected.
+** If the target does ''not'' have the enchantment, it gains all levels of that enchantment, ''unless'' it already has an incompatible enchantment, resulting in the anvil refusing to combine the items and a red "X" displaying on top of the arrow in the anvil GUI (as of {{JE}} 1.12.2 one can combine these; the ''sacrifice'' item's enchantment is lost). Enchantments are incompatible if both are in one of the following groups:
+*** '''Sword:''' [[Sharpness]], [[Smite]], and [[Bane of Arthropods]]
+*** '''Tool:''' [[Fortune]] and [[Silk Touch]]
+*** '''Armor:''' [[Protection]], [[Fire Protection]], [[Blast Protection]], [[Projectile Protection]]
+*** '''Boots:''' [[Depth Strider]] and [[Frost Walker]]
+*** '''Bow:''' [[Infinity]] and [[Mending]]
+*** '''Crossbow:''' [[Multishot]] and [[Piercing]]
+*** '''Trident:''' [[Loyalty]] and [[Riptide]] or [[Channeling]] and [[Riptide]]
+*** '''Mace:''' [[Density]], [[Breach]], Smite, and Bane of Arthropods.
+*** '''Books:''' Sharpness, Density, and Breach. All of the above restrictions also apply. 
+
+The '''total cost''' for combining two similar items is the sum of:
+* [[#Prior work penalty|Prior work penalties]] of ''both'' target and sacrifice.
+* If [[#Renaming|renaming]], the renaming cost of 1 level.
+* If the target item is not at full durability, the repair cost of 2 levels.
+* If the sacrifice has [[enchantments]], the [[#Costs for combining enchantments|enchantment cost]].
+
+If the sacrifice is a book, there is no repair, but the anvil tries to combine the book's enchantments onto the target. The item can also be renamed at the same time. The enchantment cost is generally less than for combining two similar items.
+
+If the target item is at full durability and the sacrifice does not have any enchantments, the anvil also refuses to combine the items, unless if renaming the item to a valid name.
+
+=== Costs for combining enchantments ===
+(This is just the enchanting cost. The total cost outline is in [[#Combining items|Combining items]].)
+* For each enchantment on the sacrifice:
+** Ignore any enchantment that cannot be applied to the target (e.g. Protection on a sword).
+** Add one level for every incompatible enchantment on the target ({{in|je}}).
+** If the enchantment is compatible with the existing enchantments on the target:
+*** For {{Edition|java}}, add the final level of the enchantment on the resulting item multiplied by the multiplier from the table below.
+*** For {{Edition|bedrock}}, add the difference between the final level and the initial level on the target item multiplied by the multiplier from the table below.
+
+{| class="wikitable sortable" style="text-align:center" data-description="Enchantment cost multipliers"
+|-
+! colspan="6" | Enchantment cost multipliers
+|-
+! ID<ref group="note" name="numeral-ids">Numeral IDs are {{Edition|bedrock}} only</ref> !! Enchantment !! Max level !! Applies to !! Multiplier from item !! Multiplier from book
+|-
+| 0 || [[Protection]]<ref group="note" name="combine-protection">The different kinds of Protection are not compatible</ref> || IV || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Turtle Shell}} || 1 || 1
+|-
+| 1 || [[Fire Protection]]<ref group="note" name="combine-protection"/> || IV || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Turtle Shell}} || 2 || 1
+|-
+| 2 || [[Feather Falling]] || IV || {{SimpleGrid|Netherite Boots}} || 2 || 1
+|-
+| 3 || [[Blast Protection]]<ref group="note" name="combine-protection"/> || IV || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Turtle Shell}} || 4 || 2
+|-
+| 4 || [[Projectile Protection]]<ref group="note" name="combine-protection"/> || IV || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Turtle Shell}} || 2 || 1
+|-
+| 5 || [[Thorns]] || III || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Turtle Shell}} || 8 || 4
+|-
+| 6 || [[Respiration]] || III || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Turtle Shell}} || 4 || 2
+|-
+| 7 || [[Depth Strider]]<ref group="note" name="combine-walkers">Depth Strider and Frost Walker are not compatible</ref> || III || {{SimpleGrid|Netherite Boots}} || 4 || 2
+|-
+| 8 || [[Aqua Affinity]] || I || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Turtle Shell}} || 4 || 2
+|-
+| 9 || [[Sharpness]]<ref group="note" name="combine-weapon-damage">Sharpness, Smite, and Bane of Arthropods are not compatible</ref> || V || {{SimpleGrid|Netherite Sword}}{{SimpleGrid|Netherite Axe}} {{SimpleGrid|Netherite Spear}}|| 1 || 1
+|-
+| 10 || [[Smite]]<ref group="note" name="combine-weapon-damage"/> || V || {{SimpleGrid|Netherite Sword}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Mace}} {{SimpleGrid|Netherite Spear}}|| 2 || 1
+|-
+| 11 || [[Bane of Arthropods]]<ref group="note" name="combine-weapon-damage"/> || V || {{SimpleGrid|Netherite Sword}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Mace}} {{SimpleGrid|Netherite Spear}}|| 2 || 1
+|-
+| 12 || [[Knockback]] || II || {{SimpleGrid|Netherite Sword}} {{SimpleGrid|Netherite Spear}}|| 2 || 1
+|-
+| 13 || [[Fire Aspect]] || II || {{SimpleGrid|Netherite Sword}}{{SimpleGrid|Mace}} {{SimpleGrid|Netherite Spear}}|| 4 || 2
+|-
+| 14 || [[Looting]] || III || {{SimpleGrid|Netherite Sword}} {{SimpleGrid|Netherite Spear}}|| 4 || 2
+|-
+| 15 || [[Efficiency]] || V || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Netherite Hoe}}{{SimpleGrid|Shears}} || 1 || 1
+|-
+| 16 || [[Silk Touch]]<ref group="note" name="combine-tool-special">Silk Touch and Fortune are not compatible</ref> || I || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Netherite Hoe}}{{SimpleGrid|Shears}}{{only|be|short=1}} || 8 || 4
+|-
+| 17 || [[Unbreaking]] || III || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Mace}}{{SimpleGrid|Netherite Spear}}{{SimpleGrid|Fishing Rod}}{{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Netherite Sword}}{{SimpleGrid|Bow}}{{SimpleGrid|Netherite Hoe}}{{SimpleGrid|Shears}}{{SimpleGrid|Flint and Steel}}{{SimpleGrid|Carrot on a Stick}}{{SimpleGrid|Warped Fungus on a Stick}}{{SimpleGrid|Shield}}{{SimpleGrid|Elytra}}{{SimpleGrid|Turtle Shell}}{{SimpleGrid|Trident}}{{SimpleGrid|Crossbow}}{{SimpleGrid|Brush}} || 2 || 1
+|-
+| 18 || [[Fortune]]<ref group="note" name="combine-tool-special"/> || III || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Netherite Hoe}} || 4 || 2
+|-
+| 19 || [[Power]] || V || {{SimpleGrid|Bow}} || 1 || 1
+|-
+| 20 || [[Punch]] || II || {{SimpleGrid|Bow}} || 4 || 2
+|-
+| 21 || [[Flame]] || I || {{SimpleGrid|Bow}} || 4 || 2
+|-
+| 22 || [[Infinity]]<ref group="note" name="combine-bow-enchants">Infinity and Mending are not compatible</ref> || I || {{SimpleGrid|Bow}} || 8 || 4
+|-
+| 23 || [[Luck of the Sea]] || III || {{SimpleGrid|Fishing Rod}} || 4 || 2
+|-
+| 24 || [[Lure]] || III || {{SimpleGrid|Fishing Rod}} || 4 || 2
+|-
+| 25 || [[Frost Walker]]<ref group="note" name="combine-walkers"/> || II || {{SimpleGrid|Netherite Boots}} || 4 || 2
+|-
+| 26 || [[Mending]]<ref group="note" name="combine-bow-enchants"/> || I || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Mace}}{{SimpleGrid|Netherite Spear}}{{SimpleGrid|Fishing Rod}}{{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Netherite Sword}}{{SimpleGrid|Bow}}{{SimpleGrid|Netherite Hoe}}{{SimpleGrid|Shears}}{{SimpleGrid|Flint and Steel}}{{SimpleGrid|Carrot on a Stick}}{{SimpleGrid|Warped Fungus on a Stick}}{{SimpleGrid|Shield}}{{SimpleGrid|Elytra}}{{SimpleGrid|Turtle Shell}}{{SimpleGrid|Trident}}{{SimpleGrid|Crossbow}}{{SimpleGrid|Brush}} || 4 || 2
+|-
+| 27 || [[Curse of Binding]] || I || {{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Elytra}}{{SimpleGrid|Carved Pumpkin}}{{SimpleGrid|Head}}{{SimpleGrid|Turtle Shell}} || 8 || 4
+|-
+| 28 || [[Curse of Vanishing]] || I || {{SimpleGrid|Netherite Pickaxe}}{{SimpleGrid|Netherite Shovel}}{{SimpleGrid|Netherite Axe}}{{SimpleGrid|Mace}}{{SimpleGrid|Netherite Spear}}{{SimpleGrid|Fishing Rod}}{{SimpleGrid|Netherite Helmet}}{{SimpleGrid|Netherite Chestplate}}{{SimpleGrid|Netherite Leggings}}{{SimpleGrid|Netherite Boots}}{{SimpleGrid|Netherite Sword}}{{SimpleGrid|Bow}}{{SimpleGrid|Netherite Hoe}}{{SimpleGrid|Shears}}{{SimpleGrid|Flint and Steel}}{{SimpleGrid|Carrot on a Stick}}{{SimpleGrid|Warped Fungus on a Stick}}{{SimpleGrid|Shield}}{{SimpleGrid|Elytra}}{{SimpleGrid|Carved Pumpkin}}{{SimpleGrid|Head}}{{SimpleGrid|Turtle Shell}}{{SimpleGrid|Trident}}{{SimpleGrid|Crossbow}}{{SimpleGrid|Compass}}{{SimpleGrid|Recovery Compass}}{{only|be|short=1}}{{SimpleGrid|Brush}}||8||4
+|-
+| 29 ||[[Impaling]]||V||{{SimpleGrid|Trident}}||4{{only|je}} 2{{only|be}}||2{{Only|je}} 1{{Only|be}}
+|-
+|30 ||[[Riptide]]<ref group="note" name="combine-trident-enchants">Riptide is not compatible with Loyalty or Channeling, although Loyalty and Channeling are compatible</ref>||III||{{SimpleGrid|Trident}}||4||2
+|-
+|31 ||[[Loyalty]]<ref group="note" name="combine-trident-enchants" />||III||{{SimpleGrid|Trident}}||1||1
+|-
+|32|| [[Channeling]]<ref group="note" name="combine-trident-enchants" />||I||{{SimpleGrid|Trident}}||8||4
+|-
+|33||[[Multishot]]<ref group="note" name="combine-crossbow-enchants">Multishot and Piercing are not compatible</ref>||I||{{SimpleGrid|Crossbow}}||4||2
+|-
+|34||[[Piercing]]<ref group="note" name="combine-crossbow-enchants">Multishot and Piercing are not compatible</ref>||IV||{{SimpleGrid|Crossbow}}||1||1
+|-
+|35||[[Quick Charge]]||III||{{SimpleGrid|Crossbow}}||2||1
+|-
+|36||[[Soul Speed]]||III||{{SimpleGrid|Netherite Boots}}||8|| 4
+|-
+|37||[[Swift Sneak]]||III||{{SimpleGrid|Netherite Leggings}}||8||4
+|-
+|38
+|[[Wind Burst]]
+|III
+|{{SimpleGrid|Mace}}
+|4
+|2
+|-
+|39
+|[[Density]]
+|V
+|{{SimpleGrid|Mace}}
+|2
+|1
+|-
+|40
+|[[Breach]]
+|IV
+|{{SimpleGrid|Mace}}
+|4
+|2
+|-
+|41
+|[[Lunge]]
+|III
+|{{SimpleGrid|Netherite Spear}}
+|2
+|1
+|-
+| NA<ref group="note" name="sweeping-edge">Sweeping Edge has no numeral ID since it is not in {{Edition|bedrock}}</ref>||[[Sweeping Edge]]||III||{{SimpleGrid|Netherite Sword}}||4||2
+|} 
+;Examples 
+* Dealing with equal enchantments:
+** In the first slot, the target is a sword with [[Sharpness]] III, [[Knockback]] II and [[Looting]] III.
+** In the second slot, the sacrifice is a sword with Sharpness III and Looting III.
+** For the Sharpness III enchantment on the sacrifice: Since the target has an equal level, add one to the target's Sharpness level, giving Sharpness IV. In Java, add 4 (multiplier 1 times 4 levels) and in Bedrock, add 1 (multiplier 1 times the increase in levels 1) to the level cost for Sharpness IV.
+** For the Looting III enchantment on the sacrifice: Since the maximum level for Looting is III, the target remains at Looting III. In Java, 12 (multiplier 4 times 3 levels) is still added to the level cost while in Bedrock, 0 is added since the level did not change.
+** Thus, the enchanting cost is 16 in Java and 1 in Bedrock. The total cost for the work includes any prior work penalties, repair costs, and rename costs.
+** If combined in the other order (the sword having three enchantments as the sacrifice), there would also be a cost of 4 (level 2 times multiplier 2) for the Knockback II enchantment for both Java and Bedrock (since the target has zero levels in Knockback), giving a total enchantment cost of 20 levels in Java and 5 levels in Bedrock.
+* Dealing with unequal enchantments:
+** In the first slot, the target is a sword with Sharpness III, Knockback II, and Looting I.
+** In the second slot, the sacrifice is a sword with Sharpness I and Looting III.
+** For the Sharpness I enchantment on the sacrifice: Since the target has a higher level, the target keeps Sharpness III. But in Java, 3 (multiplier 1 times 3 levels) is still added to the level cost. In Bedrock, since the level on the target is unchanged, the cost added is 0.
+** For the Looting III enchantment on the sacrifice: Since the target has a lower level, it is upgraded to Looting III. In Java, add 12 (multiplier 4 times 3 levels) to the level cost. In Bedrock, add 8 (multiplier 4 times the increase in levels 2).
+** Thus, the enchanting cost is 15 in Java and 8 in Bedrock. The total cost for the work includes any prior work penalties, repair costs, and rename costs.
+** If combined in the other order (the sword having three enchantments as the sacrifice), there would also be a cost of 4 (multiplier 2 times 2 levels) for adding the Knockback II enchantment, giving a total enchantment cost of 19 levels in Java. In Bedrock, the looting level would be unchanged; the sharpness cost would be 2 (multiplier 1 times the increase in levels 2), and adding the Knockback cost gives a total enchantment cost of 6 levels.
+* Dealing with conflicting enchantments:
+** In the first slot, the target is a sword with Sharpness II and Looting II.
+** In the second slot, the sacrifice is a sword with [[Smite]] V and Looting II.
+** For the Smite V enchantment on the sacrifice: Since Smite is incompatible with Sharpness, add 1 level in Java, nothing for Bedrock. The target keeps Sharpness II.
+** For the Looting II enchantment on the sacrifice: Since the target has an equal level, add one to the target's Looting level, giving Looting III. In Java, add 12 (multiplier 4 times 3 levels) to the level cost for Looting III. In Bedrock, add 4 (multiplier 4 times the increase in levels 1) to the level cost for Looting III.
+** Thus, the enchanting cost is 13 in Java and 4 in Bedrock. The total cost for the work includes any prior work penalties, repair costs, and rename costs.
+** If combined in the other order (the Sharpness sword as the sacrifice), the cost would again be 13 in Java and 4 in Bedrock with the result having Smite V and Looting III.
+* Using books:
+** In the first slot, the target is a sword with Looting II.
+** In the second slot, the sacrifice is a book with [[Protection]] III, Sharpness I, and Looting II.
+** For the Protection III enchantment on the sacrifice: Since Protection is incompatible with swords, ignore it.
+** For the Sharpness I enchantment on the sacrifice: Since the target has no Sharpness, it gets Sharpness I. Add 1 level (multiplier 1 times 1 level) for Sharpness I.
+** For the Looting II enchantment on the sacrifice: Since the target has an equal level, add one to the target's Looting level, giving Looting III. In Java, add 6 (multiplier 2 times 3 levels) to the level cost for Looting III. In Bedrock, add 2 (multiplier 2 times the increase in levels 1) to the level cost for Looting III.
+** Thus, the enchanting cost is 7 in Java and 3 in Bedrock. The total cost for the work includes any prior work penalties and rename costs.
+
+==== Planning the enchanting order ====
+The total cost of [[Enchantment|enchanting]] an item using [[enchanted book]]s depends on the order in which the books are added. Below is a tool to find the optimal order.
+{{calculator|enchantOrder}}
+
+There are two important things to notice about the anvil mechanics when planning the order of multiple enchantments to the same item:
+* When combining two items with prior work penalties, while the penalties for both items apply to the cost, only the higher of the penalties of the two items is considered when determining the penalty of the resulting item. For example, when combining two items with two prior work penalties each, the resulting item has only three prior work penalties.
+* The choice of which item to use as the sacrifice matters. For example having a Soul Speed III book in the first slot and a Mending book in the second slot has a cost of 2 levels, but reversing the order of the books results in a cost of 12, even though the resulting book is the same in the two cases.
+
+[[File:Enchantment_Order_Diagram.png|thumb|500px|Minimal prior work penalty enchantment order.]]
+
+Prior work penalties are minimized by combining two items with equal penalties if possible. For example, it is possible to have 7 different enchantments on a single pair of boots. Starting with an unenchanted pair of boots and the 7 enchantments on individual books, the limit on the cost permitted by the anvil is exceeded if trying to combine the books one at a time with the boots. However, it is possible to avoid this by properly pairing up the items. First combine the boots with one of the books, plus the remaining 6 books in 3 pairs. Then combine the boots with one of the books and the other two books that have 2 enchantments each. Finally combine the boots with the book that has 4 enchantments. This results in a pair of boots with 3 workings on it, although in practice 7 workings have taken place.
+
+It is also possible to minimize the cost of combining by carefully pairing up the items for combination. The enchantment with the highest cost should be in the sacrifice slot the least amount of times. For example, the 7 boots enchantments can be combined using the pairing method in the following order:
+* Soul Speed III (12), Thorns III (12), Feather Falling IV (4), Depth Strider III (6), Protection IV (4), Unbreaking III (3), Mending (2)
+* Combining the items pairwise (with the boots in the first slot) the cost is 12+4+4+2=22.
+* The resulting items are: Boots (Soul Speed III), Thorns III+Feather Falling IV (16), Depth Strider III+Protection IV (10), Unbreaking III+Mending (5).
+* The cost of the second round of combination is 16+5=21, plus 4 for the penalties, totalling 25.
+* The resulting items are: Boots (Soul Speed III+Thorns III+Feather Falling IV), Depth Strider III+Protection IV+Unbreaking III+Mending (15).
+* The cost of the last step is 15 plus the two penalties of 3 each, totalling 21.
+* The overall cost is 22+25+21=68 levels.
+
+[[File:Enchantment Order Diagram minimal XP.svg|thumb|500px|Minimal XP cost enchantment order.]]
+
+However, at times it's better to avoid a pairing so as to avoid paying the enchantment cost multiple times. For example, in the above we pay the costs of Protection IV, Feather Falling IV, and Unbreaking III twice, and Mending three times. If we combine the items this way instead, we spend an extra 4 levels on prior work penalties but pay for Protection IV only once and Mending only twice, saving 6 levels, for a net savings of 2 levels:
+* Soul Speed III (12), Thorns III (12), Mending (2), Depth Strider III (6), Feather Falling IV (4), Protection IV (4), Unbreaking III (3)
+* Combining the items pairwise (with the boots in the first slot) the cost is 12+2+4+3=21.
+* The resulting items are: Boots (Soul Speed III), Thorns III+Mending (14), Depth Strider III+Feather Falling IV (10), Protection IV+Unbreaking III (7).
+* If we then combine the remaining books onto the boots in order, we pay
+** For the Thorns III+Mending book: 14, plus 2 for the penalties, totalling 16.
+** For the Depth Strider III+Feather Falling IV book: 10, plus 4 for the penalties, totalling 14.
+** For the Protection IV+Unbreaking III book: 7, plus 8 for the penalties, totalling 15.
+* The overall cost is 21+16+14+15=66 levels.
+
+==== Enchantment equation ====
+The equation to calculate an enchantment is as follows:
+
+ Experience cost = [Value of sacrificed (right placed) item (after the combination)] + [Work Penalty of target (left placed) item] + [Work Penalty of sacrificed (right placed) item] + [Renaming Cost] + [Refilling Durability] + [Incompatible Enchantments (Java Edition)]
+
+The equation to calculate the new value of an item to be enchanted:
+
+ New value = [Value of target (left placed) item] + [Value of sacrificed (right placed) item]. 
+
+Using the 7 enchantment pairing method shown, and looking at just the first enchantment (Diamond Boots + Soul Speed III) as an example: 
+* Experience cost = [Value of Sacrificed item - Soul Speed III (12)] + [Work Penalty of Diamond Boots (0)] + [Work Penalty of Soul Speed III (0)] = 12 levels.
+* New Value of resulting item = [Value of Diamond Boots (0)] + [Value of Soul Speed III (12)] = value 12.
+
+Going to the next level of enchanting with Diamond Boots (Soul Speed III) and Thorns III + Feather Falling IV book: 
+* Experience cost = [Value of Sacrificed item - Thorns III + Feather Falling IV (16)] + [Work Penalty of Diamond Boots (Soul Speed III) (1)] + [Work Penalty of Thorns III + Feather Falling IV book (1)] = 18 levels.
+* New Value of resulting item = [Value of Diamond Boots (Soul Speed III) (12)] + [Value of Thorns III + Feather Falling IV book (16)] = value 28.
+* Remember that the prior work penalty for each item here is 1 because each has only had one previous anvil operation.
+Note that when two identical enchanted books are combined (e.g., Depth Strider II and Depth Strider II), the value portion of the XP level cost is based on the post-combination value (6 for Depth Strider III), not the pre-combination value (4 for Depth Strider II).
+
+== Notes ==
+<references group="note" />
+
+== External links ==
+*https://trollyloki.net/anvil_calculator - provides a tool that can be used to determine the cheapest way to combine enchanted items (in {{Edition|java}}).
+*https://aviettran.github.io/minecraft-anvil-calc - optimizes combining enchanted items (both editions).
+*https://iamcal.github.io/enchant-order/ - uses a guess-and-check method to find the most optimal solution.
+
+== See also ==
+*{{BlockLink|Anvil}}
+*{{BlockLink|id=enchanting-table-side|Enchanting}}
+
+== References ==
+{{Reflist}}
+
+== Navigation ==
+{{Navbox tutorials|General}}
+
+[[Category:Gameplay]]
+
+[[de:Schmieden]]
+[[es:Mecánicas del yunque]]
+[[fr:Mécanique d'enclume]]
+[[ja:金床の仕組み]]
+[[ko:모루 작동 원리]]
+[[pt:Mecânica da bigorna]]
+[[ru:Механика наковальни]]
+[[zh:铁砧机制]]

@@ -1,0 +1,318 @@
+{{about|materials of armor|tiers of tools and weapons|Tiers|materials of blocks|Materials}}
+'''Armor materials''' refer to the material that an [[armor]] item uses.
+
+== Materials ==
+There are currently nine armor materials in the game: leather, copper, chainmail, iron, gold, diamond, netherite, turtle, and armadillo scute. The armor material of an item determines its durability multiplier, armor values, enchantability, sound events, toughness, knockback resistance, repair items, and equipament asset.
+
+<div style="overflow: auto;">
+{| class="wikitable reset-wrap sortable" style="text-align:center" data-description="Tiers"
+! rowspan="2" width="30" |Material Name
+! rowspan="2" width="30" |[[Durability]]<ref group="n" name="durability">The durability multiplier multiplies each item slot's base durability. The base values are: 11 for head, 16 for chest, 15 for legs, 13 for feet. The durability of the item is the durability multiplier for its material times the base value for the armor slot it goes in.</ref>
+! colspan="5" |[[Defense Points]]
+! rowspan="2" |[[Enchantability]]
+! rowspan="2" |[[Toughness]]
+! rowspan="2" width="30" |KR<ref group="n">[[Knockback (mechanic)#Knockback resistance|Knockback resistance]]</ref>
+! rowspan="2" |[[Unit repair|Repair Item]]
+! rowspan="2" |[[Sounds.json#Sound_events|Sound Event]] & Sounds
+! rowspan="2" |Equipment Asset<ref group="n">The resource location of the equipment model to use when equipped. The directory this refers to is {{mono|assets/minecraft/equipment/<id>.json}}</ref>
+|-<!--These names are taken from the code and reflect equip slots, don't replace with helmet, etc.-->
+!Head!!Chest!!Legs!!Feet!!Body
+|-
+!Leather
+|5
+|1||3||2||1||3
+|15
+|0
+|0
+|{{Tag link|item|repairs_leather_armor}}
+{{ItemLink|Leather}}
+|{{cd|item.armor.equip_leather}}
+{{sound||Equip leather1.ogg|Equip leather2.ogg|Equip leather3.ogg|Equip leather4.ogg|Equip leather5.ogg|Equip leather6.ogg}}
+|{{cd|leather}}
+|-
+!Copper
+|11
+|2||4||3||2||4
+|8
+|0
+|0
+|{{Tag link|item|repairs_copper_armor}}
+{{ItemLink|Copper Ingot}}
+|{{cd|item.armor.equip_copper}}
+{{sound||Equip copper1.ogg|Equip copper2.ogg|Equip copper3.ogg|Equip copper4.ogg|Equip copper5.ogg|Equip copper6.ogg}}
+|{{cd|copper}}
+|-
+!Chainmail<ref group="n" name="chain">Referred to as both "chain" and "chainmail" in the code. Not used in the slot body</ref>
+|15
+|2||5||4||1||4
+|12
+|0
+|0
+|{{Tag link|item|repairs_chain_armor}}
+{{ItemLink|Iron Ingot}}
+|{{cd|item.armor.equip_chain}}
+{{sound||Equip chain1.ogg|Equip chain2.ogg|Equip chain3.ogg|Equip chain4.ogg|Equip chain5.ogg|Equip chain6.ogg}}
+|{{cd|chainmail}}
+|-
+!Iron
+|15
+|2||6||5||2||5
+|9
+|0
+|0
+|{{Tag link|item|repairs_iron_armor}}
+{{ItemLink|Iron Ingot}}
+|{{cd|item.armor.equip_iron}}
+{{sound||Equip iron1.ogg|Equip iron2.ogg|Equip iron3.ogg|Equip iron4.ogg|Equip iron5.ogg|Equip iron6.ogg}}
+|{{cd|iron}}
+|-
+!Turtle<ref group="n" name="turtle">Although the turtle material is currently used only by [[turtle shell]]s, it has unused protection values for other armor slots.</ref>
+|25
+|2||6||5||2||5
+|9
+|0
+|0
+|{{Tag link|item|repairs_turtle_armor}}
+{{ItemLink|Turtle Scute}}
+|{{cd|item.armor.equip_turtle}}
+{{sound||Equip turtle shell.ogg}}
+|{{cd|turtle_scute}}
+|-
+!Gold
+|7
+|2||5||3||1||7
+|25
+|0
+|0
+|{{Tag link|item|repairs_gold_armor}}
+{{ItemLink|Gold Ingot}}
+|{{cd|item.armor.equip_gold}}
+{{sound||Equip gold1.ogg|Equip gold2.ogg|Equip gold3.ogg|Equip gold4.ogg|Equip gold5.ogg|Equip gold6.ogg}}
+|{{cd|gold}}
+|-
+!Diamond
+|33
+|3||8||6||3||11
+|10
+|2
+|0
+|{{Tag link|item|repairs_diamond_armor}}
+{{ItemLink|Diamond}}
+|{{cd|item.armor.equip_diamond}}
+{{sound||Equip diamond1.ogg|Equip diamond2.ogg|Equip diamond3.ogg|Equip diamond4.ogg|Equip diamond5.ogg|Equip diamond6.ogg}}
+|{{cd|diamond}}
+|-
+!Netherite
+|37
+|3||8||6||3||19
+|15
+|3
+|0.1
+|{{Tag link|item|repairs_netherite_armor}}
+{{ItemLink|Netherite Ingot}}
+|{{cd|item.armor.equip_netherite}}
+{{sound||Equip netherite1.ogg|Equip netherite2.ogg|Equip netherite3.ogg|Equip netherite4.ogg}}
+|{{cd|netherite}}
+|-
+!Armadillo Scute<ref group="n" name="armadillo">Although the armadillo scute material is currently used only by [[wolf armor]]s, it has unused protection values for other armor slots.</ref>
+|4
+|3||8||6||3||11
+|10
+|0
+|0
+|{{Tag link|item|repairs_wolf_armor}}
+{{ItemLink|Armadillo Scute}}
+|{{cd|item.armor.equip_wolf}}
+{{sound||Wolf armor equip1 JE1 BE1.ogg
+|Wolf armor equip2 JE1 BE1.ogg}}
+|{{cd|armadillo_scute}}
+|-
+|}
+</div>
+<references group="n"/>
+
+== Usage ==
+
+Armor materials are used to define certain properties of armor items. Which properties are defined by the materials depends of the mobs that use this armor. Only the humanoid armor has a variable slot; all other armors are only defined by the slot {{cd|body}}.
+
+<div style="overflow: auto;">
+{| class="wikitable reset-wrap sortable" style="text-align:center"
+! rowspan="2"|Armor
+! colspan="6"|Material properties
+! colspan="5"|Other properties
+|-
+!Durability!![[Attribute]]s!!Enchantable!!Equip Sound!!Asset Id!!Repair Ingredient!!Allowed Entities!!Can Be Sheared!!Shearing Sound!!Damage On Hurt!!Equip On Interact
+|-
+|Humanoid Armor||Defined by the material||Defined by the material||Defined by the material||Defined by the material||Defined by the material||Defined by the material||''All entities''||False||''None''||True||False
+|-
+|[[Wolf Armor]]||Defined by the material||Defined by the material||''None'' ||Defined by the material||Defined by the material||Defined by the material||{{EntityLink|Wolf}}||True||{{cd|item.armor.unequip_wolf}}
+{{sound||Wolf armor unequip1 JE1 BE1.ogg
+|Wolf armor unequip2 JE1 BE1.ogg}}
+||True||False
+|-
+|[[Horse Armor]]||''None''||Defined by the material||''None'' ||{{cd|entity.horse.armor}}
+{{sound||Horse armor.ogg}}
+||Defined by the material||''None''||{{Tag link|entity type|can_wear_horse_armor }}
+{{Flatlist|
+*{{EntityLink|Horse}}
+*{{EntityLink|Zombie Horse}}}}
+||True||{{cd|item.horse_armor.unequip}}
+{{sound||Horse armor unequip.ogg
+|Horse Armor snips away}}
+||False||False
+|-
+|[[Nautilus Armor]]||''None''||Defined by the material||''None'' ||{{cd|item.armor.equip_nautilus}}
+{{sound||Wolf armor equip1 JE1 BE1.ogg|Wolf armor equip2  JE1 BE1.ogg}}
+||Defined by the material||''None''||{{Tag link|entity type|can_wear_nautilus_armor}}
+{{Flatlist|
+*{{EntityLink|Nautilus}}
+*{{EntityLink|Zombie Nautilus}}}}
+||True||{{cd|item.armor.unequip_nautilus}}
+{{sound||Wolf armor unequip1 JE1 BE1.ogg
+|Wolf armor unequip2 JE1 BE1.ogg}}
+||False||True
+|}
+</div>
+
+Other equipable items do not use armor material. {{Collapse|head=1}}
+<div style="overflow: auto;">
+{| class="wikitable reset-wrap sortable collapsible" style="text-align:center"
+! rowspan="2"|Items
+! colspan="10"|[[Data_component_format#equippable|Equipable properties]]
+! colspan="4"|Other properties
+|-
+!Slot!!Equip Sound
+!Asset Id
+!Allowed Entities!!Swappable
+!Damage On Hurt
+!Equipe On Interact!!Camera Overlay!!Can Be Sheared!!Shearing Sound
+![[Attribute]]s
+!Durability
+!Repair Ingredient
+![[Data_component_format#glider|Glider]]
+|-
+|{{BlockLink|Carved Pumpkin}}||Hand ||{{cd|item.armor.equip_generic}}||''None''||''All entities''||False||True
+|False||{{mono|misc/pumpkinblur}}||False||''None''
+|Hidden waypoint||''None''||''None''||False
+|-
+|{{BlockLink|Carpets}}||Body||{{cd|llama_swag}}||{{cd|<color>_carpet}}||{{Flatlist|
+*{{EntityLink|Llama}}
+*{{EntityLink|Trader Llama}}}}
+|True||True
+|False||''None''||True||{{cd|llama_carpet_unequip}}
+|''None''
+||''None''
+|''None''||False
+|-
+|{{ItemLink|Saddle}}||Saddle||{{cd|horsse_saddle}}||{{cd|saddle}}||{{Collapse|title={{tag link|entity type|can_equip_saddle}}|content=
+{{Flatlist|
+* {{EntityLink|Camel}}
+* {{EntityLink|Camel Husk}}
+* {{EntityLink|Donkey}}
+* {{EntityLink|Horse}}
+* {{EntityLink|Mule}}
+* {{EntityLink|Nautilus}}
+* {{EntityLink|Pig}}
+* {{EntityLink|Skeleton Horse}}
+* {{EntityLink|Strider}}
+* {{EntityLink|Zombie Horse}}
+* {{EntityLink|Zombie Nautilus}}}}}}
+|True||True
+|True||''None''||True||{{cd|saddle_unequip}}
+|''None''||''None''
+||''None''||False
+|-
+|{{ItemLink|Harnesses}}||Body||{{cd|harness_equip}}||{{cd|<color>_harness}}||{{tag link|entity type|can_equip_harness}}
+{{EntityLink|Happy Ghast}}
+|True||True||True||''None''||True||{{cd|harness_unequip}}
+|''None''||''None''
+|''None''||False
+|-
+|{{ItemLink|Elytra}}||Chest||{{cd|armor_equip_elytra}}||{{cd|elytra}}||''All entities''||True||False||False||''None''||False||''None''
+|''None''||432||{{ItemLink|Phantom Membrane}}||True
+|-
+|{{ItemLink|Heads}}||Head||{{cd|item.armor.equip_generic}}||''None''||''All entities''||False||True||False||''None''||False||''None''
+|Hidden waypoint||''None''||''None''||False
+|-
+|{{ItemLink|Shield}}||Offhand{{note|Used so that when pick up by mobs, it can be held in the offhand instead of the mainhand}}||{{cd|item.armor.equip_generic}}||''None''||''All entities''||False||True||False||''None''||False||''None''
+|''None''
+||336||{{Tag link|item|wooden_tool_materials}}
+{{BlockLink|Planks}}
+|False
+|}
+</div>
+{{Notelist}}
+
+Pseudo-equipments:
+* {{InvLink|Chest}} – When interacting with [[donkey]], [[mule]], [[lamma]], or [[trader llama]], the animal transforms into a chested animal; however, the item is not actually equipped on it. Chests do not have the component {{DCL|equippable}}, but it has a [[hardcoded item properties (Java Edition)|hardcoded]] interaction property.
+{{Collapse|tail=1}}
+
+== Affected items ==
+<div style="overflow: auto;">
+{| class="wikitable reset-wrap sortable" style="text-align:center"
+! rowspan="3"|Material
+! colspan="6"|Items by slot
+|-
+!colspan="5"|Humanoid slots
+!rowspan="2"|Body
+|-
+
+!All!!Head!!Chest!!Legs!!Feet
+
+|-
+|Leather||{{ItemLink|Leather Armor}}||{{ItemLink|Leather Cap}}||{{ItemLink|Leather Tunic}}||{{ItemLink|Leather Pants}}||{{ItemLink|Leather Boots}}||{{ItemLink|Leather Horse Armor}}
+|-
+|Copper||{{ItemLink|Copper Armor}}||{{ItemLink|Copper Helmet}}||{{ItemLink|Copper Chestplate}}||{{ItemLink|Copper Leggings}}||{{ItemLink|Copper Boots}}||{{Flatlist|
+*{{ItemLink|Copper Horse Armor}}
+*{{ItemLink|Copper Nautilus Armor}}}}
+|-
+|Chainmail||{{ItemLink|Chainmail Armor}}||{{ItemLink|Chainmail Helmet}}||{{ItemLink|Chainmail Chestplate}}||{{ItemLink|Chainmail Leggings}}||{{ItemLink|Chainmail Boots}}||''None''
+|-
+|Iron||{{ItemLink|Iron Armor}}||{{ItemLink|Iron Helmet}}||{{ItemLink|Iron Chestplate}}||{{ItemLink|Iron Leggings}}||{{ItemLink|Iron Boots}}||{{Flatlist|
+*{{ItemLink|Iron Horse Armor}}
+*{{ItemLink|Iron Nautilus Armor}}}}
+|-
+|Turtle||-||{{ItemLink|Turtle Shell}}||''None''||''None''||''None''||''None''
+|-
+|Gold||{{ItemLink|Leather Armor}}||{{ItemLink|Golden Helmet}}||{{ItemLink|Golden Chestplate}}||{{ItemLink|Golden Leggings}}||{{ItemLink|Golden Boots}}||{{Flatlist|
+*{{ItemLink|Golden Horse Armor}}
+*{{ItemLink|Golden Nautilus Armor}}}}
+|-
+|Diamond||{{ItemLink|Diamond Armor}}||{{ItemLink|Diamond Helmet}}||{{ItemLink|Diamond Chestplate}}||{{ItemLink|Diamond Leggings}}||{{ItemLink|Diamond Boots}}||{{Flatlist|
+*{{ItemLink|Diamond Horse Armor}}
+*{{ItemLink|Diamond Nautilus Armor}}}}
+|-
+|Netherite||{{ItemLink|Netherite Armor}}||{{ItemLink|Netherite Helmet}}||{{ItemLink|Netherite Chestplate}}||{{ItemLink|Netherite Leggings}}||{{ItemLink|Netherite Boots}}||{{Flatlist|
+*{{ItemLink|Netherite Horse Armor}}
+*{{ItemLink|Netherite Nautilus Armor}}}}
+|-
+|Armadillo Scute||-||''None''||''None''||''None''||''None''||{{ItemLink|Wolf Armor}}
+|-
+|}
+</div>
+<!--
+== Other mechanics ==
+Other mechanics in the game use these materials for various purposes.<!--Only add things that directly call the armor material in code.- ->
+* [[Piglin]]s are neutral towards players wearing gold armor.
+*Players and other entities wearing leather armor do not freeze when in [[powder snow]], and do not fall through powder snow when wearing leather boots.
+
+Currently, none of these properties call armor in the code.
+
+Piglins use the tag #piglin_safe_armor (Items added to the tag one by one.)
+Not frezz use the tag #freeze_immune_wearables (Items added to the tag one by one.)
+Not fall through powder snow is a hardcoded properties of leather_boots
+
+-->
+
+== See also ==
+* [[Tiers]]
+* [[Materials]]
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[ja:防具材料]]
+[[pt:Materiais de armadura]]
+[[ru:Материалы брони]]
+[[uk:Матеріали обладунків]]
+[[zh:盔甲材料]]

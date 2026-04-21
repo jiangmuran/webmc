@@ -1,0 +1,593 @@
+{{For}}
+{{Infobox item entity
+|title=Arrow
+|image=Arrow.png
+|imagecaption=Entity
+|image2=Arrow (item).png
+|image2caption=Item
+|invimage=Arrow
+|renewable= Yes
+|stackable=Yes (64)
+|size=Height: 0.5 blocks<br>Width: 0.5 blocks
+|networkid=
+}}
+An '''arrow''' serves as ammunition for [[bow]]s, [[crossbow]]s, and [[dispenser]]s. Arrows can be crafted into [[spectral arrow]]s{{only|je}} and [[tipped arrow]]s to give [[status effects]] to [[player]]s and [[mob]]s.
+
+== Obtaining ==
+
+=== Crafting ===
+{{Crafting
+|head=1
+|B1= Flint
+|B2= Stick
+|B3= Feather
+|Output = Arrow,4
+|type = Combat
+|foot=1
+}}
+
+=== Picking up arrows ===
+Arrows shot by players can always be [[#Retrieving|picked up]] in [[Creative]] mode.
+
+An arrow ''cannot'' be picked up by a player in [[Survival]] or [[Adventure]] mode if: 
+*It is shot by a [[player]] in [[Creative]] mode.
+*It is shot by any [[mob]] able to shoot arrows, such as [[skeleton]]s, [[stray]]s, [[pillager]]s, or [[piglin]]s. This includes mobs that do not shoot arrows in normal gameplay, such as [[illusioner]]s and bow-wielding [[wither skeleton]]s.
+**This is the case even in Creative mode.<ref>{{bug|MC-128845|||WAI}}</ref>
+*It is shot with an [[Infinity]]-enchanted [[bow]].
+*It is one of the two extra arrows shot with a [[Multishot]]-enchanted [[crossbow]].
+
+Arrows that are stuck in a player cannot be retrieved, and the player does not drop them when killed.
+
+After a [[tipped arrow]] has been in the ground for {{convert|600|gt|s}} or more, it becomes a regular arrow and can be picked up as one.
+
+=== Mob loot ===
+{{Drop sources|name=Arrow}}
+
+=== Generated loot ===
+{{LootChestItem|arrow}}
+
+=== Trading ===
+{{Trade sources}}
+
+=== Villager gifts ===
+{{IN|java}}, arrows can be obtained as a reward item from [[fletcher]] [[villager]]s when the player has the [[Hero of the Village]] status effect.
+
+=== Bartering ===
+{{IN|Bedrock}}, arrows can be obtained through [[bartering]] with [[piglin]]s, and have a ~8.53% ({{frac|40|469}}) chance to give the [[player]] 6-12 arrows.
+
+== Usage ==
+{{see also|Bow|Crossbow}}
+=== Trading ===
+{{Trade uses}}
+
+=== Crafting ingredient ===
+Arrows can be used to craft the two variants of arrows, spectral arrows and tipped arrows.
+{{crafting usage}}
+
+=== Cauldrons ===
+{{main|Cauldron#Holding potions}}
+{{IN|bedrock}}, arrows can be used on [[Cauldron#Potions|cauldrons]] that contain [[potion]]s to create [[tipped arrow]]s.
+
+== Behavior ==
+{{info|Technical information related to the arrow entity has been checked in ''Java Edition'' and might differ in ''Bedrock Edition''.|section=1}}
+
+{{Infobox entity
+| title = Arrow (entity)
+| size = Height: 0.5 blocks<br>Width: 0.5 blocks<br>Eye Height: 0.13 blocks
+| tickingorder = pda
+| gravity = 0.05
+| drag = 0.99
+| drag_float = true
+}}
+
+=== Spawning ===
+An arrow entity spawns when an arrow item is shot out of a [[bow]], [[crossbow]], [[dispenser]], or a bow- or crossbow-wielding mob. Arrow entities spawn with a starting velocity calculated using the following process:
+
+*The direction of the velocity is set as the facing vector of the entity that shot it, or the vector pointing straight out of a dispenser.
+*The magnitude of the velocity is set as 0 to 3 for bows depending on how far they're drawn, 3.15 for crossbows, and 1.1 for dispensers.
+*A random vector is added to the previously determined velocity. This vector ranges from <math display="inline">-0.0172275\cdot\text{inaccuracy}</math> to <math display="inline">0.0172275\cdot\text{inaccuracy}</math> on every axis. Inaccuracy is 1 for bows and crossbows, and 6 for dispensers.
+
+Because crossbows shoot slightly faster arrows than bows but have the same inaccuracy, crossbows are actually more accurate because their randomness is smaller in proportion to their total velocity.
+
+==== Critical arrow ====
+{{For||Critical}}
+Arrows fired by players from crossbows (or bows at [[critical charge]]) leave a trail of crit particles behind them. Critical arrows deal random damage, between {{hp|6}} and {{hp|11}} for bows at critical charge, and between {{hp|7}} and {{hp|11}} for crossbows.
+
+=== Movement ===
+An arrow entity follows this list of steps in order when calculating its movement each [[Tick|game tick]]:
+
+* If it is intersecting a block's collision box, its <code>inGround</code> NBT value is set to true.
+* If it is on fire and in rain, water, or powder snow (including cauldrons containing water or powder snow), its fire is extinguished.
+<div class="mw-collapsible mw-collapsed">
+* If <code>inGround</code> is true: <div class="mw-collapsible-toggle-placeholder"></div>
+<div class="mw-collapsible-content">
+:* If it is no longer intersecting a block's collision box:
+::* <code>inGround</code> is set to false.
+::* Its velocity in each axis is multiplied by a random number from 0 to 0.2.
+:* Otherwise, it ticks its despawn timer.
+</div></div>
+* If <code>inGround</code> is false:
+<div class="mw-collapsible mw-collapsed">
+:* It calculates collisions with blocks and entities: <div class="mw-collapsible-toggle-placeholder"></div>
+<div class="mw-collapsible-content">
+::* It sets its target position to its current position plus its velocity.
+::* It performs a raycast from its current position to the target position, checking for blocks to hit. If the raycast hits a block, the target position gets set to the point that was hit.
+::* It performs a raycast from its position to the target position, checking for entities to hit.
+<div class="mw-collapsible mw-collapsed">
+::* If a block was found and no entity was found, handle effects from block collision: <div class="mw-collapsible-toggle-placeholder"></div>
+<div class="mw-collapsible-content">
+:::* The block is activated, if applicable. For example, [[Target|targets]] and wooden [[Button|buttons]] are activated here.
+:::* The arrow's velocity is set to the target position minus the arrow position.
+:::* The arrow is moved directly away from the target position by 0.05 blocks
+:::* <code>inGround</code> is set to true.
+:::* <code>crit</code> is set to false.
+:::* <code>PierceLevel</code> is set to 0.
+</div></div>
+<div class="mw-collapsible mw-collapsed">
+::* If any entity was found, handle effects from entity collision: <div class="mw-collapsible-toggle-placeholder"></div>
+<div class="mw-collapsible-content">
+:::* If the entity is an [[Enderman]], it is skipped.
+:::* The arrow attempts to damage the entity. See the Damage section for more information. If the damage fails:
+::::* If the entity has the [[Tag#List_of_tags|deflects_projectiles]] tag, the arrow's velocity is rotated a random angle about the Y axis and scaled by 0.5.
+::::* Otherwise, its velocity is multiplied by -0.1.
+</div></div>
+</div></div>
+:* Its velocity vector is added to its position vector.
+:* Its velocity vector is multiplied by 0.99 if it's in air or 0.6 if it's in water (this is the "drag").
+:*0.05 is subtracted from its velocity vector's y component (this is the "gravity").
+
+The arrow movement (when not stuck in a block) can be solved as a recurrence relation to obtain the following formulas:
+
+<math display="block">\vec{V_t} = 0.99^t\cdot\left(\vec{V_0}+\begin{bmatrix}0\\5\\0\end{bmatrix}\right)-\begin{bmatrix}0\\5\\0\end{bmatrix}</math>
+
+<math display="block">\vec{P_t} = \vec{P_0}+100\cdot(1-0.99^t)\cdot\left(\vec{V_0}+\begin{bmatrix}0\\5\\0\end{bmatrix}\right)-\begin{bmatrix}0\\5t\\0\end{bmatrix}</math>
+
+Where <math display="inline">\vec{V_t}</math> is the velocity at tick t and <math display="inline">\vec{P_t}</math> is the position at tick t. These formulas can quickly calculate the position and velocity at a future tick t given an initial position and velocity. To make them work for arrows in water instead, change 0.99 with 0.6 and 100 with 2.5.
+
+{{:Calculators/Projectile motion|type=1|name=Arrow|gravity=-0.05|dragx=0.99|dragy=0.99|hideproperties=1}}
+
+=== Damage ===
+The damage an arrow inflicts on an entity depends on the [[#Entity data|damage NBT tag]], the [[#Entity data|crit NBT tag]], and the arrow's speed. However, {{in|bedrock}}, arrows shot from a dispenser do not scale damage with speed.
+
+The damage NBT tag is determined by the item that shot it: It is 2 for everything except bows enchanted with [[Power]], in which case it's <math display="inline">2.5 + \frac{\text{power level}}{2}</math>.
+
+The crit NBT tag is given to all arrows shot out of crossbows or fully charged bows.
+
+The damage inflicted on an entity is <math display="inline">\text{damage NBT tag }\cdot\text{ speed}</math>, rounded up to a whole number. If the arrow has the crit NBT tag, it does an additional random amount of damage between 0 and <math>\frac{\text{damage}}{2}+2</math>.
+{| class="wikitable"
+|+Average damage (fully charged bow, point-blank range)
+! Source 
+!Damage tag
+!Crit tag
+!Starting speed 
+!Average damage
+|-
+| Bow (Power I) 
+|3
+| rowspan="7" |Yes
+| rowspan="6" |<math display="inline">3\pm0.0172275\times\sqrt{3}</math>
+|{{Health|12.25}}
+|-
+|Bow (Power II)
+|3.5
+|{{Health|14.75}}
+|-
+|Bow (Power III)
+| 4
+|{{Health|16}}
+|-
+|Bow (Power IV)
+|4.5 
+|{{Health|18.5}}
+|-
+|Bow (Power V)
+|5
+|{{Health|19.75}}
+|-
+| Bow
+| rowspan="3" |2
+|{{Health|8.5}}
+|-
+|Crossbow
+|<math display="inline">3.15\pm0.0172275\times\sqrt{3}</math>
+|{{Health|9.75}}
+|-
+|Dispenser
+|No
+|<math display="inline">1.1\pm0.103365\times\sqrt{3}</math>
+|{{Health|3.5}}
+|}
+
+=== Common properties ===
+Arrows shot from a bow with the [[Flame]] enchantment, or shot through [[lava]] or [[fire]]{{verify|edition=bedrock}}, catch on fire and show an appropriate animation until they pass through water or rain. They can set other entities they hit on fire for up to 5 seconds (inflicting up to {{hp|4}} of fire damage){{Citation needed}}, as well as ignite [[TNT]], [[candle]]s, and [[campfire]]s.
+
+[[File:ArrowShotInTree.png|thumb|An arrow shot in a [[tree]]]]
+
+Arrows also stick into blocks they come in contact with and remain there for one minute before disappearing. Such arrows may be [[#Picking up arrows|retrieved]]. The 1-minute despawn timer is then refreshed, meaning it takes another minute for the arrow to despawn.
+
+Arrows can get visually stuck in players {{in|java}}, although not any mobs. They appear as regular arrows regardless of type.<ref>{{bug|MC-83933|||WAI}}</ref>
+<gallery>
+Steve got shot.png|Steve covered in arrows
+Alex got shot.png|Alex covered in arrows
+</gallery>
+
+If the arrow has any custom potion effects (NBT tag <code>CustomPotionEffects</code>), all potion effects, including vanilla potion effects (NBT tag <code>Potion</code>) are removed 30 seconds after the arrow stops moving.
+
+An arrow shot at a [[chorus flower]] or [[decorated pot]] breaks the block; a chorus flower drops itself, while a decorated pot shatters into [[pottery sherd]]s and/or [[brick]]s along with dropping any of the items stored inside.
+
+Arrows stuck in blocks drop to the ground in a sharp arc if their supporting blocks are destroyed. Such arrows can still damage entities.
+
+==== Redstone circuits ====
+An arrow can activate a [[wooden button]], [[wooden pressure plate]], a [[tripwire]], or a [[target]]. An arrow continues to power these blocks until it is removed, either due to despawning, or being picked up. Target blocks emit a redstone pulse for one second, as opposed to the static depressed state of the other switches. Non-wooden switches are not affected by arrows.
+
+===Mobs immune to arrows===
+A few mobs cannot be shot using an arrow, because the arrow either disappears or it gets deflected. This includes:
+* [[Endermen]] - even while immobile, the enderman is immune to damage from arrows;
+* [[Breeze]];
+* [[Wither]] under half health, when it gains wither armor;
+* Closed [[shulker]]s;
+* [[Ender dragon]], while sitting on top of the [[exit portal]].
+
+==Sounds ==
+{{/Sounds|an arrow|arrows}}
+
+== Data values ==
+===ID===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Arrow
+|spritetype=item
+|nameid=arrow
+|itemtags=arrows
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|showentitytags=y
+|generatetranslationkeys=y
+|displayname=Arrow
+|spritetype=entity
+|nameid=arrow
+|entitytags=arrows, impact_projectiles
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|showitemtags=y
+|notshowbeitemforms=y
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Arrow
+|spritetype=item
+|nameid=arrow
+|id=301
+|itemtags=minecraft:arrow
+|form=item
+|translationkey=item.arrow.name
+|foot=1}}
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Arrow
+|spritetype=entity
+|nameid=arrow
+|id=80
+|foot=1}}
+
+===Metadata===
+{{IN|bedrock}}, arrows use the following item data values:
+<section begin="metadata"/>
+{|class=wikitable 
+! Arrow !! Regular !! Extended !! Enhanced<br>(Level II)
+|-
+| {{ItemSprite|arrow}} Arrow || 0 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-splashing}} Arrow of Splashing || 1 || N/A || N/A
+|-
+| {{ItemSprite|tipped-arrow}} Tipped Arrow (Mundane) || 2 || 3 || N/A
+|-
+| {{ItemSprite|tipped-arrow}} Tipped Arrow (Thick) || 4 || N/A || N/A
+|-
+| {{ItemSprite|tipped-arrow}} Tipped Arrow (Awkward) || 5 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-night-vision}} Arrow of Night Vision || 6 || 7 || N/A
+|-
+| {{ItemSprite|arrow-of-invisibility}} Arrow of Invisibility || 8 || 9 || N/A
+|-
+| {{ItemSprite|arrow-of-leaping}} Arrow of Leaping || 10 || 11 || 12
+|-
+| {{ItemSprite|arrow-of-fire-resistance}} Arrow of Fire Resistance || 13 || 14 || N/A
+|-
+| {{ItemSprite|arrow-of-swiftness}} Arrow of Swiftness || 15 || 16 || 17
+|-
+| {{ItemSprite|arrow-of-slowness}} Arrow of Slowness || 18 || 19 || 43
+|-
+| {{ItemSprite|arrow-of-water-breathing}} Arrow of Water Breathing || 20 || 21 || N/A
+|-
+| {{ItemSprite|arrow-of-healing}} Arrow of Healing || 22 || N/A || 23
+|-
+| {{ItemSprite|arrow-of-harming}} Arrow of Harming || 24 || N/A || 25
+|-
+| {{ItemSprite|arrow-of-poison}} Arrow of Poison || 26 || 27 || 28
+|-
+| {{ItemSprite|arrow-of-regeneration}} Arrow of Regeneration || 29 || 30 || 31
+|-
+| {{ItemSprite|arrow-of-strength}} Arrow of Strength || 32 || 33 || 34
+|-
+| {{ItemSprite|arrow-of-weakness}} Arrow of Weakness || 35 || 36 || N/A
+|-
+| {{ItemSprite|arrow-of-decay}} Arrow of Decay || 37 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-the-turtle-master}} Arrow of the Turtle Master || 38 || 39 || 40
+|-
+| {{ItemSprite|arrow-of-slow-falling}} Arrow of Slow Falling || 41 || 42 || N/A
+|-
+| {{ItemSprite|arrow-of-wind-charging}} Arrow of Wind Charging || 44 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-weaving}} Arrow of Weaving || 45 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-oozing}} Arrow of Oozing || 46 || N/A || N/A
+|-
+| {{ItemSprite|arrow-of-infestation}} Arrow of Infestation || 47 || N/A || N/A
+|}<section end="metadata"/>
+
+===Entity data===
+Arrows have entity data that define various properties of the entity.
+
+{{el|java}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/arrow}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/projectile}}
+</div><section end="entity data"/>
+
+{{el|bedrock}}:
+:See [[Bedrock Edition level format/Entity format]].
+
+==Achievements==
+{{load achievements|Sniper Duel;Archer;Bullseye}}
+
+==Advancements ==
+{{load advancements|Take Aim;Sniper Duel;Not Today, Thank You;Bullseye;Ol' Betsy;Two Birds, One Arrow;Who's the Pillager Now;Arbalistic}}
+
+==Videos ==
+<div style="text-align:center">{{yt|STQkD1Oa65s}}</div>
+
+==History==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.24_SURVIVAL_TEST|[[File:Arrow JE1.png|42px]] Arrows have been added as an object and are fired by pressing {{Key|Tab}}.}}
+|{{HistoryLine||0.25 SURVIVAL TEST|[[File:Arrow JE2 BE1.png|42px]] The texture of arrows has been changed.
+|Arrows now fly further, deal more [[damage]], and can damage the player.
+|The [[player]] now spawns with 20 arrows; the remaining amount is shown above the hotbar labeled as "Arrows".
+|[[File:Purple Arrow JE1.png|42px]] [[Skeleton]]s now fire purple arrows, instead of hitting the [[player]] directly. These arrows can't be collected by the [[player]]. 
+|When a skeleton is killed, it now drops 4-9 normal arrows for the player to gather.}}
+|{{HistoryLine||0.29|Arrows can no longer be shot by the player in Creative Mode.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100122-2251|[[File:Arrow (item) JE1 BE1.png|32px]] Arrows have been added as [[item]]s alongside with [[bow]]s.
+|The "Arrows" display above the hotbar has been removed.}}
+|{{HistoryLine|||dev=20100124-2119|Arrows now have a [[sound]] effect. What this sound effect is is completely unknown; it could be for hitting a block, for being fired or for something else entirely.}}
+|{{HistoryLine|||dev=20100128-2304|Arrows can now be [[craft]]ed using [[apple]]s.}}
+|{{HistoryLine|||dev=20100129-1447|Arrows can no longer be crafted.}}
+|{{HistoryLine|||dev=20100130|Arrows are once again now craftable. Iron is used instead of flint.}}
+|{{HistoryLine|||dev=20100204-2027|[[File:Arrow JE2 BE1.png|42px]] Skeletons' arrows now look the same as the player's.}}
+|{{HistoryLine||20100219|Arrows are now dropped by [[skeleton]]s.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100316|Arrows now have a high chance of spawning either a [[sheep]], a [[pig]], a [[skeleton]], a [[creeper]], a [[spider]], or a [[zombie]] upon hitting a [[block]].
+|The player now spawns with 999 arrows.}}
+|{{HistoryLine||20100320|The player now spawns with 64 arrows.}}
+|{{HistoryLine||20100327|The player no longer spawns with any arrows in new worlds.}}
+|{{HistoryLine||20100413-1951|Arrows no longer spawn [[mob]]s.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.14|The tip of an arrow in crafting is now made from [[flint]] rather than an [[iron ingot]].}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Arrows can now be fired by [[dispenser]]s.}}
+|{{HistoryLine||1.6|dev=Test Build 3|Arrows could be used to stick in any [[block]] before this update, even some non-solid ones. For example, they could stick in [[torch]]es, [[sugar cane]] and [[nether portal]]s.}}
+|{{HistoryLine||1.8|dev=Pre-release|Arrows can no longer be rapid-fired from [[bow]]s; they must be charged first.
+|Arrows (with a bow at full strength) can now travel 120 blocks when fired from the optimal angle.
+|Arrows now visually stick to [[mob]]s and [[player]]s.}}
+|{{HistoryLine||Sound Update|Arrow firing [[sound]]s have been changed - see sounds section}}
+|{{HistoryLine|java}}
+|{{HistoryLine||November 21, 2011|link={{ytl|BES9EKK4Aw4}}|Exploding arrows are mentioned.}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|Arrows no longer stick to [[mob]]s.}}
+|{{HistoryLine|||dev=RC1|Arrow landing [[sound]]s have been changed.}}
+|{{HistoryLine||1.1|dev=release|Arrows on [[fire]] now set the [[entities]] they hit on fire. Before, arrows could be on fire (like other [[entities]]), but they did not set what they hit on fire, and there was no [[enchantment]] to fire flaming arrows.}}
+|{{HistoryLine||1.3.1|dev=12w21a|Farmer [[villager]]s now [[trading|sell]] 9–12 arrows for 1 [[emerald]].}}
+|{{HistoryLine|||dev=12w22a|Arrows can now be found inside [[dispenser]]s in the newly added [[jungle temple]]s.
+|5 arrows can now be bought for 1 emerald.
+|Fully charged arrows now show their particle effect again.
+|Arrows are now stuck at the correct position in the block they hit.}}
+|{{HistoryLine|||dev=12w23a|Arrows can now activate [[tripwire]] switches and wooden [[pressure plate]]s.}}
+|{{HistoryLine||1.4.2|dev=12w34a|Arrows can now activate wooden [[button]]s.}}
+|{{HistoryLine|||dev=12w34b|Arrows on [[fire]] can now ignite [[TNT]].}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Arrows now stick to [[player]]s again, but not [[mob]]s.}}
+|{{HistoryLine||1.4.6|dev=pre|Arrows now make a "ding" sound when they hit a player.}}
+|{{HistoryLine||1.8|dev=14w02a|Farmer [[villager]]s no longer [[trading|sell]] arrows.
+|Fletcher villagers now sell 8–12 arrows for 1 [[emerald]].}}
+|{{HistoryLine|||dev=14w25a|An underwater arrow now loses all velocity after a few blocks and slowly falls.
+|A flaming arrow underwater now gets extinguished.}}
+|{{HistoryLine|||dev=14w26a|Fire arrows can now be used to detonate [[minecarts with TNT]].}}
+|{{HistoryLine||1.9|dev=15w31a|Arrows can now be used to craft [[spectral arrow]]s.}}
+|{{HistoryLine|||dev=15w33c|Added [[shield]]s; though they fully block [[damage]] from arrows, arrows still visually stick into the [[player]].}}
+|{{HistoryLine|||dev=15w37a|Arrows now ricochet off of [[shield]]s.}}
+|{{HistoryLine|||dev=15w44b|Added a method to use arrows to create [[tipped arrow]]s.}}
+|{{HistoryLine|||dev=15w47b|Arrows now ricochet off of [[creative]] mode [[player]]s, whereas before they would pass straight through.}}
+|{{HistoryLine|||dev=15w49a|Arrows now take the archer's motion into account. For example, if the player is falling, an arrow fired upward travels slower than if the player was standing still, and an arrow fired downward flies faster.}}
+|{{HistoryLine|||dev=15w44b|Arrows are used to create [[tipped arrow]]s by crafting instead.}}
+|{{HistoryLine||1.14|dev=18w43a|Arrows are now used as ammo for [[crossbow]]s.
+|Shot arrows can now break [[chorus flower]]s.}}
+|{{HistoryLine|||dev=18w47a|Arrows can now be generated inside of [[pillager outpost]] chests.}}
+|{{HistoryLine|||dev=18w50a|Arrows can now be found in chests in fletcher houses.}}
+|{{HistoryLine|||dev=19w11a|Fletcher [[villager]]s now [[trading|sell]] 16 arrows for 1 emerald.}}
+|{{HistoryLine|||dev=19w13a|Regular arrows can be obtained as a reward [[item]] from fletcher villagers when the [[player]] has the [[Hero of the Village]] status effect.}}
+|{{HistoryLine||1.14.1|dev=pre2|Flaming arrows can now light [[campfire]]s.}}
+|{{HistoryLine||1.16|dev=20w16a|Arrows now generate in [[bastion remnant]] chests.}}
+|{{HistoryLine||1.17|dev=21w13a|The unused original texture of the arrow<ref>[[File:Arrow (texture) JE2.png|48px]] <code>/asset/minecraft/textures/entity/arrow.png</code></ref> has been removed.}}
+|{{HistoryLine||1.20.3|dev=23w41a|Arrows can now break [[decorated pot]]s.}}
+|{{HistoryLine|||dev=23w43a|Arrows keep all of their NBT data when shot and picked up.}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Arrows can now be found in [[trial chambers]] in decorated pots, chests and dispensers.}}
+|{{HistoryLine||1.20.5|exp=Update 1.21|dev=24w11a|Arrows can now be obtained from [[vault]]s in trial chambers.}}
+|{{HistoryLine|||dev=24w13a|Arrows can now be dispensed as [[ominous item spawner|projectiles]] by [[ominous trial spawner]]s.}}
+|{{HistoryLine||?|dev=?|The model of arrows has been changed to include a mirror side.}}
+|{{HistoryLine||1.21.2|dev=24w34a|Shot arrows now bounce on the [[world border]] if hit.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.2.0|[[File:Arrow (item) JE1 BE1.png|32px]] Added arrows. They are currently unobtainable and serve no purpose.}}
+|{{HistoryLine||v0.3.3|[[File:Arrow JE2 BE1.png|42px]] Arrows now serve as ammunition for bows.
+|Added skeletons, which drop arrows when they die.
+|Arrows are now craftable.}}
+|{{HistoryLine||v0.5.0|Arrows can now be obtained after activating the [[nether reactor]].}}
+|{{HistoryLine||v0.12.1|dev=build 1|Arrows on [[fire]] now set the [[entities]] they hit on fire. Before, arrows could be on fire (like other entities), but they would not set what they hit on fire, and there was no [[enchantment]] to fire flaming arrows.
+|Arrows on fire can now ignite [[TNT]].
+|An underwater arrow now loses all velocity after a few [[block]]s and slowly falls.
+|Arrows are no longer available from the [[nether reactor]].}}
+|{{HistoryLine||v0.13.0|dev=build 1|Arrows now update [[sand]] and [[gravel]].}}
+|{{HistoryLine||v0.15.0|dev=build 1|Arrows can now be found inside [[dispenser]]s in [[jungle temple]]s.
+|Arrows can now be dipped in a potion-filled cauldron to make [[tipped arrows]].}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Arrows can now be used to craft tipped arrows on a crafting table.}}
+|{{HistoryLine||1.0.4|dev=alpha 1.0.4.0|Arrows are now [[trading|sold]] by fletcher [[villager]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.10|Arrows can now be used as ammo for the new [[crossbow]]s.}}
+|{{HistoryLine||1.9.0|dev=beta 1.9.0.0|Added [[pillager]]s, which [[drop]] arrows upon [[death]].}}
+|{{HistoryLine|||dev=beta 1.9.0.2|Arrows can now be used to craft [[fletching table]]s.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Arrows can now be found in [[pillager outpost]] chests.
+|Arrows can now break [[chorus flower]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Arrows can now be found in [[village]] fletcher [[chest]]s.
+|Flaming arrows can now light [[campfire]]s.}}
+|{{HistoryLine|||dev=beta 1.11.0.4|Fletcher [[villager]]s now [[trading|sell]] 5 arrows for one [[emerald]].
+|Arrows can now be used to obtain [[tipped arrow]]s via [[trading]].}}
+|{{HistoryLine|||dev=beta 1.11.0.7|Arrows can no longer can be used to craft [[fletching table]]s.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.3|Novice-level fletcher villagers now [[trading|sell]] 16 regular arrows instead of 5 arrows.}}
+|{{HistoryLine||1.16.0|dev=beta 1.16.0.51|Added [[piglin]]s, which [[drop]] arrows upon [[death]].}}
+|{{HistoryLine|||dev=beta 1.16.0.57|Arrows now generate in [[bastion remnants]] chests.
+|Piglins no longer drop arrows upon death.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.54|Arrows can now be obtained through [[bartering]].}}
+|{{HistoryLine||1.20.50|dev=Preview 1.20.50.20|Arrows can now break [[decorated pot]]s.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Arrows can now be found in [[trial chambers]] in decorated pots, chests and dispensers.}}
+|{{HistoryLine||1.20.80|exp=Update 1.21|dev=Preview 1.20.80.22|Arrows can now be obtained from [[vault]]s in trial chambers.}}
+|{{HistoryLine||1.21.0|exp=Update 1.21|dev=Preview 1.21.0.20|Arrows can now be dispensed as [[ominous item spawner|projectiles]] by [[ominous trial spawner]]s.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Arrow JE2 BE1.png|42px]] [[File:Arrow (item) JE1 BE1.png|32px]] Added arrows.}}
+|{{HistoryLine||xbox=TU14|xbone=CU1|ps3=1.04|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|Farmer [[villager]]s now [[trading|sell]] 9–12 arrows for 1 [[emerald]].}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|wiiu=Patch 1|switch=1.0.1|Arrows now stick to players.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Farmer [[villager]]s no longer [[trading|sell]] arrows.
+|Fletcher villagers now sell 8–12 arrows for 1 [[emerald]].|An underwater arrow now loses all velocity after a few [[block]]s and slowly falls.
+|A flaming arrow underwater now gets extinguished.}}
+|{{HistoryLine||xbox=TU46|xbone=CU36|ps3=1.38|psvita=1.38|ps4=1.38|wiiu=Patch 15|switch=1.0.1|Arrows can now be used to craft [[tipped arrow]]s.|Arrows now take the archer's motion into account. For example, if the player is falling, an arrow fired upward travels slower than if the player was standing still, and an arrow fired downward flies faster.|[[Bows]] can now be drawn while holding arrows. The bow is selected based on the closest bow to slot 0.}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|[[Bows]] can no longer be drawn while holding arrows.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|Arrows are now used as ammo for [[crossbow]]s.|Shot arrows can now break [[chorus flower]]s.|Added [[pillager]]s, which [[drop]] arrows upon [[death]].|Arrows now ricochet off of the newly added [[shield]]s.}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.91|wiiu=none|switch=none|Arrows can now be generated inside of [[pillager outpost]] chests.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|3ds}}
+|{{HistoryLine||0.1.0|[[File:Arrow JE2 BE1.png|42px]] [[File:Arrow (item) JE1 BE1.png|32px]] Added arrows.}}
+}}
+
+=== ''Java Edition Combat Tests'' ===
+{{HistoryTable
+|{{HistoryLine|combat java}}
+|{{HistoryLine||3|Arrows no longer trigger the attack [[invulnerability timer]], allowing multiple arrows to connect even if the entity is invulnerable.}}
+|{{HistoryLine||4|The [[inaccuracy]] value on [[bow]]s and [[crossbow]]s has been decreased from 1 to 0.25, increasing the accuracy of fired arrows.}}
+|{{HistoryLine||6|Vertical momentum no longer influences the flight path of fired arrows.}}
+}}
+
+=== Historical sounds ===
+{| class="wikitable"
+!Sound
+!From
+!to
+!Pitch
+|-
+|{{sound||Arrow Old.ogg}}
+| ?
+| [[Java Edition RC1| RC1]]
+| ?
+|}
+
+=== Data history ===
+==== ''Java Edition'' ====
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.11|dev=16w32a|The entity IDs have been changed from {{cd|Arrow}} to {{cd|arrow}}.}}
+|{{HistoryLine|||dev=16w42a|Arrows now have a {{cd|crit}} tag that determines whether it deals critical damage.}}
+|{{HistoryLine||1.11.1|dev=16w50a|The arrow entity now has a {{cd|Color}} integer tag, for displaying the custom potion color of a fired arrow item that has a {{cd|CustomPotionColor}} tag.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], the item's numeral ID was 262.}}
+}}
+
+==== ''Bedrock Edition'' ====
+{{HistoryTable
+|{{HistoryLine|Pocket Edition}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|The entity ID has been changed from {{cd|arrow.skeleton}} to {{cd|arrow}}.}}
+}}
+
+==Issues==
+{{issue list}}
+
+==Trivia==
+*By default, arrows fly slightly offset to the right. If the player stands close to a wall and fires several arrows without moving the crosshair, the arrows cluster around a point slightly to the right of the crosshair. If the player switches their main hand to be the left hand in options, the arrows instead cluster to the left.
+*Arrows fired at [[Nether portal]]s often skip through the portal block completely and fail to collide, thus continuing through to the opposite side of the block.
+*Arrows stuck in blocks vibrate upon a world reload.<ref>{{bug|MC-93992||Arrow shakes when world loads|WF}}</ref>
+
+==Gallery==
+===Renders===
+<gallery>
+Arrow Burning.gif|An arrow caught on [[fire]].
+</gallery>
+===Screenshots===
+<gallery>
+Purple arrow in game.jpg|Purple arrows in Minecraft Classic.
+Custom arrows.png|Examples of custom arrow types using {{cmd|/give}}.
+Arrow in Sugar Cane.png|Some arrows stick into [[sugar cane]]s. This no longer works since Java Edition Beta 1.6.
+Arrows in player.png|Many arrows stuck in the player, seen through the [[inventory]] screen.
+Arrow Debugging.png|[[Searge]] with a bunch of arrows summoned above him.
+Pot targets.png|[[Alex]] shattering a [[Decorated Pot|decorated pot]] with an arrow.<ref>https://www.minecraft.net/en-us/article/bats-pots-and-competitions</ref>
+</gallery>
+
+==References==
+{{reflist}}
+
+==External links==
+* {{Mcnet|taking-inventory--arrow|Taking Inventory: Arrow|February 4, 2021|Duncan Geere}}
+
+==Navigation==
+{{Navbox items|Equipment}}
+{{Navbox entities|Other}}
+{{Navbox combat|ranged}}
+
+[[Category:Combat]]
+[[Category:Projectiles]]
+
+[[de:Pfeil]]
+[[es:Flecha]]
+[[fr:Flèche]]
+[[hu:Nyíl]]
+[[it:Freccia]]
+[[ja:矢]]
+[[ko:화살]]
+[[nl:Pijl]]
+[[pl:Strzała]]
+[[pt:Flecha]]
+[[ru:Стрела]]
+[[th:ลูกธนู]]
+[[uk:Стріла]]
+[[zh:箭]]

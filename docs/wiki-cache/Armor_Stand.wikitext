@@ -1,0 +1,698 @@
+{{for|the player-like entities|Mannequin|NPC}}
+{{Infobox item entity
+| defaultimagesize = 100px
+| image = Armor Stand.png
+| imagecaption = {{JE}}
+| image2 = Armor Stand BE.png
+| image2caption = {{BE}}
+| invimage = Armor Stand
+| extratext = View [[#Gallery|all renders]]
+| stackable = {{JEBE|Yes (16)|Yes (64)}}
+| renewable = Yes
+| flammable = Yes
+| size = '''Normal:'''<br>
+Width: 0.5 blocks<br>
+Height: 1.975 blocks<br>
+'''Small:'''<br>
+Width: 0.25 blocks<br>
+Height: 0.9875 blocks<br>
+| health = {{JEBE|{{hp|20}}|{{hp|6}}}}
+}}
+An '''armor stand''' is an inanimate [[mob]]-like [[entity]] that can wear [[armor]]. {{IN|bedrock}}, armor stands can also hold [[item]]s and be posed without the use of [[commands]].
+
+== Obtaining ==
+=== Breaking ===
+An armor stand can be broken by quickly {{control|attack|text=attacking}} it twice, causing it to drop itself and any armor or item placed onto it. Players in [[Adventure]] mode cannot break armor stands.<ref>{{bug|MC-71557||Armor stands are not breakable in Adventure mode|WAI}}</ref> Using any tool costs two durability, with no additional benefit.
+
+{{IN|Bedrock}}, if an armor stand is killed by an [[effect]] while holding a [[totem of undying]], then the armor stand revives instead of dropping the totem, as with any [[mob]] holding a totem of undying.
+
+=== Natural generation ===
+Two armor stands are found in each taiga [[village]] outdoor armory, one equipped with an [[iron helmet]] and the other with an [[iron chestplate]].
+
+=== Crafting ===
+{{Crafting
+|A1= Stick
+|B1= Stick
+|C1= Stick  
+|B2= Stick
+|A3= Stick
+|B3= Smooth Stone Slab
+|C3= Stick
+|Output= Armor Stand
+|type= Decoration block
+}}
+
+== Usage ==
+[[Player]]s can use armor stands to hold [[armor]], [[mob head]]s, [[carved pumpkin]]s, and [[elytra]], or other items and blocks if it has arms. The stand does not have a GUI, so players interact with it directly. Armor stands can be placed in 8 different orientations. Armor stands cannot be placed if there is not enough room (i.e. the space is occupied by other entities or [[solid block]]s).
+
+Despite being inanimate, armor stands are living [[entities]], allowing them to be pushed by [[piston]]s, moved by flowing [[water]], pulled with [[fishing rod]]s, pushed by attacks that inflict [[Knockback (mechanic)|knockback]], and bounced by [[slime block]]s.
+
+=== Equipping armor ===
+{{Control|Using}} armor on a stand places the armor in the appropriate slot. If the slot is already equipped with armor, the old armor is swapped with the armor held by the player. Pressing the {{control|use}} control on armor with a bare hand removes the armor and places it in the highlighted hotbar slot.
+
+=== Equipping items ===
+{{IN|BE}}, armor stands have arms by default; {{in|JE}}, arms can be made visible only by setting the NBT tag <code>{ShowArms: 1b}</code> via commands or external editors. Pressing the {{control|use}} control on an armor stand with arms while holding a non-equippable item places it in its main hand. In ''Java Edition'', [[shield]]s are always placed in the [[off-hand]] instead. If the armor stand already holds an item, it is swapped with the item held by the player.
+
+Items from an armor stand's main hand can be retrieved by pressing the {{control|use}} control in any empty spot in ''Java Edition'', or from the chestplate zone if empty in ''Bedrock Edition''. In ''Java Edition'', items in the off-hand slot can be retrieved only if the main hand slot is empty; in ''Bedrock Edition'', items in the off-hand slot cannot be retrieved unless the armor stand is broken.
+
+In ''Java Edition'', commands can be used to equip items in an armor stand's hands even if its arms are not visible.
+
+=== Dispensers ===
+{{IN|je}}, [[dispenser]]s can place armor stands. Dispensers ignore the normal placement rules of armor stands - this means they can place armor stands inside solid blocks, or if the needed space is occupied by other entities.
+
+Armor, mob heads, carved pumpkins, or elytra can be automatically placed on armor stands with a dispenser. Unlike players, dispensers cannot swap armor or items already equipped on the armor stand. Additionally, dispensers can equip shields in an armor stand's off-hand if it has arms; {{in|be}}, this is the only way to equip shields in the off-hand slot without using commands.
+
+=== Posing ===
+{{exclusive|bedrock|section=1}}
+The pose of the armor stand can be changed by interacting with the armor stand (or pressing the {{btn|Pose|be=1}} button on mobile devices) while sneaking, or by using a redstone signal. There are 13 possible poses.
+
+{| class="wikitable collapsible collapsed"
+! No. !! Namespace ID !! Redstone power !! Image
+|-
+| 0
+| {{cd|animation.armor_stand.default_pose}}
+| 0, 1
+| [[File:Armor Stand Default Pose.png|128px]]
+|-
+| 1
+| {{cd|animation.armor_stand.no_pose}}
+| 2
+| [[File:Armor Stand No Pose.png|128px]]
+|-
+| 2
+| {{cd|animation.armor_stand.solemn_pose}}
+| 3
+| [[File:Armor Stand Solemn Pose.png|128px]]
+|-
+| 3
+| {{cd|animation.armor_stand.athena_pose}}
+| 4
+| [[File:Armor Stand Athena Pose.png|128px]]
+|-
+| 4
+| {{cd|animation.armor_stand.brandish_pose}}
+| 5
+| [[File:Armor Stand Brandish Pose.png|128px]]
+|-
+| 5
+| {{cd|animation.armor_stand.honor_pose}}
+| 6
+| [[File:Armor Stand Honor Pose.png|128px]]
+|-
+| 6
+| {{cd|animation.armor_stand.entertain_pose}}
+| 7
+| [[File:Armor Stand Entertain Pose.png|128px]]
+|-
+| 7
+| {{cd|animation.armor_stand.salute_pose}}
+| 8
+| [[File:Armor Stand Salute Pose.png|128px]]
+|-
+| 8
+| {{cd|animation.armor_stand.riposte_pose}}
+| 9
+| [[File:Armor Stand Riposte Pose.png|128px]]
+|-
+| 9
+| {{cd|animation.armor_stand.zombie_pose}}
+| 10
+| [[File:Armor Stand Zombie Pose.png|128px]]
+|-
+| 10
+| {{cd|animation.armor_stand.cancan_a_pose}}
+| 11
+| [[File:Armor Stand Cancan A Pose.png|128px]]
+|-
+| 11
+| {{cd|animation.armor_stand.cancan_b_pose}}
+| 12
+| [[File:Armor Stand Cancan B Pose.png|128px]]
+|-
+| 12
+| {{cd|animation.armor_stand.hero_pose}}
+| 13 or more
+| [[File:Armor Stand Hero Pose.png|128px]]
+|}
+
+=== Naming ===
+[[File:Dinnerbone Armor Stands.png|thumb|Upside-down armor stands {{in|bedrock}}]]
+
+{{control|Using}} a renamed [[name tag]] on an armor stand gives it a custom name. {{IN|je}}, the name is not displayed by default,<ref>{{bug|MC-86164||When renamed with a name tag, armor stand will not show the nameplate above its head until CustomNameVisible:1b is set}}</ref> while {{in|be}} it is displayed similarly to renamed mobs. {{IN|java}}, armor stands can also be given custom names by renaming them at an [[anvil]]. {{IN|je}}, a renamed armor stand keeps its custom name when broken. {{IN|be}}, armor stands named "Dinnerbone" or "Grumm" turn upside-down.
+
+=== Further customization  ===
+[[File:Customized armor stands.png|thumb|Armor stands that have been customized with commands {{in|je}} (from left to right: arms, no base plate, small, invisible, custom pose)]]
+
+[[Commands]], such as {{cmd|item}} {{in|je}} or {{cmd|replaceitem}} {{in|be}}, can be used to give armor stands [[item]]s that normally cannot be equipped in armor or hand slots. In maps that heavily use [[command block]]s, armor stands can be used to keep [[scoreboard]] objectives that are 'global' to the map, run commands, etc. 
+
+{{IN|je}}, armor stands can be customized further to have arms, pose, disobey gravity, dual wield, and other things by summoning them using {{cmd|summon}} with customized [[#Entity data|NBT tags]]. For example, it is possible to create an armor stand with arms using the {{cmd|summon}} [[command]]. It is also possible to change an armor stand without arms into a stand with arms by using the {{cmd|data}} command. The commands are as follows:
+
+* <code>/data merge entity @n[type=armor_stand] {ShowArms:1}</code>, which changes the nearest armor stand into an armor stand with arms.
+* <code>/summon minecraft:armor_stand ~ ~ ~ {ShowArms:1}</code>, which summons a new armor stand with arms shown.
+* <code>/summon minecraft:armor_stand ~ ~ ~ {Rotation:[0f,0f]}</code>, which summons a new armor stand that faces a desired direction (dependent on changing "0f,0f" to other numbers like "90f,0f" or "180f,0f", otherwise it faces the same way as a default armor stand).
+* <code><nowiki>/data merge entity @n[type=armor_stand] {ShowArms:1,Pose:{LeftArm:[0f,0f,0f],RightArm:[0f,0f,0f]}}</nowiki></code>, which changes the orientation of the arms of the nearest armor stand (the default orientation of the left arm is: [350f,0f,350f] and [345f,0f,10f] for the right arm).
+
+Other examples of customization include removing the stone plate below the armor stand, or giving the armor stand a small size (roughly the same size and proportions as a [[baby zombie]]).
+
+== Behavior ==
+[[File:Armor Stand with Night Vision.png|thumb|right|An armor stand affected by a [[night vision]] potion {{in|bedrock}}]] 
+[[File:Armor Stand with Wither Effect.png|thumb|right|An armor stand being damaged by the [[Wither effect]] potion {{in|bedrock}}]]
+Because armor stands are entities, they obey gravity, allowing them to fall and rest on non-full [[block]]s such as [[enchanting table]]s, [[snow layer]]s and [[slab]]s. Armor stands can't be [[leash]]ed and can't ride on [[boat]]s, but {{in|bedrock}}, they can sit on [[minecart]]s.
+
+Armor stands wobble slightly when hit by the player. They are not damaged by [[cacti]] and [[sweet berry bush]]es, but can be broken by [[arrow]]s and [[trident]]s. An armor stand destroyed by an [[explosion]] or a [[firework rocket]] does not drop as an [[Item (entity)|item]]. Armor stands in water and [[lava]] at the same time are not consumed by the lava.
+
+Being living entities, armor stands can also have [[attribute]]s added to them and can be affected by [[effect]]s.
+
+[[Sculk catalyst]]s bloom without spreading when an armor stand is destroyed.<ref>{{bug|MC-251167}}</ref>
+
+{{IN|Java}}, summoning an armor stand with no [[health]] causes the death animation.<ref>{{bug|MC-93206|||won't fix}}</ref>
+
+[[Advancements]] count armor stands as [[mob]]s, and they can be used for advancements such as [[Advancement#Adventure|Adventure]] and [[Arbalistic]].
+
+The player cannot consume [[food]] while looking at an armor stand.
+
+=== Non-mob features ===
+
+Although armor stands are considered mobs, they have some properties set them apart from other mobs:
+
+*They cannot receive [[loot table]]s.
+
+*They cannot be moved by [[lead]]s.
+
+*{{IN|je}}, the [[statistics]] don't count how many times armor stands are "killed".
+
+*When an armor stand reaches lower than the critical height of the [[void]], it disappears instantly, without playing the animation of being damaged or dying.
+
+=== Armor ===
+Any [[armor]] on the stand drops when the stand is broken. The effects of most (enchanted) armor have no effect when on an armor stand, with a few exceptions: 
+* [[Frost Walker]] creates [[frosted ice]] blocks on [[water]] as usual if an armor stand is pushed with a [[piston]], although results are inconsistent.<ref>{{bug|MC-93313||Armor stands that have frost walker enchanted boots will turn near water into frost|WAI}}</ref><ref>{{bug|MC-199481||Frost Walker does not take effect when the wearer is pushed into water by a piston}}</ref><ref>{{bug|MCPE-54312||Frost Walker enchant does not work on Armor Stand in Minecart}}</ref> It also prevents the armor stand from catching on fire as a result of coming into contact with a [[campfire]].
+* [[Depth Strider]] slows the movement of the armor stand when being pushed with water. 
+* {{IN|java}}, a [[player]] may take damage from hitting an armor stand that holds armor enchanted with [[Thorns]].<ref>{{bug|MC-135963||Thorns armor on armor stands damages / kills player|WAI}}</ref>
+* [[Soul Speed]] negates any speed reduction from an armor stand moving over [[soul sand]].
+* [[Fire Protection]] generally reduces the burn time and damage taken when an armor stand comes into contact with blocks that catch it on fire, though the effects are inconsistent between different levels of Fire Protection and different sources of fire damage. Furthermore, if a collective of 7 or more levels of Fire Protection is applied to the armor an armor stand wears, it will not catch fire or take damage from any fire source.
+* {{IN|java}}, armor stands wearing leather boots will stand on top of powder snow, where other stands without leather boots will fall through.
+
+=== Status effects ===
+{{IN|bedrock}}, armor stands can be affected by [[status effect]]s.<ref>{{bug|MCPE-24341||Armor stands affected by splash potions}}</ref> They can be 'killed' by [[Harming]] and [[Decay]] [[splash potion|splash]]/[[lingering potion]]s, lava, [[fire]], and [[campfire]]s, and they play the player death sound and fall to their side and disappear, yielding no armor stand item. If an armor stand is equipped with an item or armor, that item or armor is considered as "naturally-spawned equipment" with an 8.5% chance of dropping when the armor stand "dies" from the [[Instant Damage]] or the [[Wither (status effect)|Wither]] status effect. If the dropped item is any form of [[weapon]], [[tool]] or armor, it drops in a badly damaged state because the game considers it as "naturally-spawned equipment".
+
+{{IN|java}}, armor stands can be given status effects only via commands, as they ignore any effect source in regular gameplay (splash potions, [[area effect cloud]]s, [[shulker bullet]]s, etc).<ref>{{bug|MC-91050||Armor stands can have potion effects|Fixed}}</ref> Armor stands with status effects do not emit particles, and are immune to most effects except for [[Glowing]], [[Levitation]], and [[Slow Falling]].
+
+=== Mob interactions ===
+[[Zoglin]]s, [[goat]]s {{in|java}}, and [[vindicators]] named Johnny {{in|bedrock}}<ref>{{bug|MCPE-51000||Johnny vindicators attempt to attack armor stands and parrots on a player's shoulder}}</ref> attack armor stands, but the armor stand remains undamaged; [[pufferfish]] also inflate when an armor stand is nearby.<ref>{{bug|MC-132239||Pufferfish inflate in response to armor stands|WAI}}</ref> [[Statistics]] classify the armor stand as [[mob]]s if the player dies while hitting the armor stand with the thorns enchantment.
+
+=== Invisible and marker armor stands ===
+{{exclusive|java|section=1}}
+
+[[File:Invisible and marker armor stands.png|thumb|An invisible armor stand (left) and a marker armor stand with no base plate (right) in Spectator mode.]]
+
+{{IN|java}}, armor stands can be made invisible or used as markers by setting the NBT tags <code>{Invisible: 1b}</code> or <code>{Marker: 1b}</code> respectively. Both invisible<ref>{{bug|MC-66068||Invisible armor stands cannot be hit|WAI}}</ref> and marker armor stands are invulnerable to all attacks, including explosions and players in Creative mode; they can be removed only using the {{cmd|kill}} command. Mobs ignore invisible and marker armor stands.<ref>{{bug|MC-244956||Mobs can't target invisible/invulnerable/marker armor stands anymore|WAI}}</ref>
+
+Invisible armor stands still render any equipped items, have a hitbox, and can be interacted with by players in any game mode. Similar to mobs affected by the [[Invisibility]] effect, invisible armor stands can only be seen by players in [[Spectator]] mode, players in the same [[team]] as the invisible armor stand, or if the stand has the [[Glowing]] effect.
+
+Marker armor stands are unaffected by physics (gravity, knockback, flowing water, pistons, etc). They have a hitbox size of 0, meaning that players and dispensers cannot interact with them. Due to the lack of a hitbox, it is possible to place blocks in the space visually occupied by a marker armor stand, or target blocks and entities behind it.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Armor Stand hit1.ogg
+|sound2=Armor Stand hit2.ogg
+|sound3=Armor Stand hit3.ogg
+|sound4=Armor Stand hit4.ogg
+|subtitle=Block breaking
+|source=Friendly Creatures
+|description=When an armor stand is damaged
+|id=entity.armor_stand.hit
+|translationkey=subtitles.block.generic.hit
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Armor Stand break1.ogg
+|sound2=Armor Stand break2.ogg
+|sound3=Armor Stand break3.ogg
+|sound4=Armor Stand break4.ogg
+|subtitle=Block broken
+|source=Friendly Creatures
+|description=When an armor stand is destroyed
+|id=entity.armor_stand.break
+|translationkey=subtitles.block.generic.break
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Stone dig1.ogg
+|sound2=Stone dig2.ogg
+|sound3=Stone dig3.ogg
+|sound4=Stone dig4.ogg
+|subtitle=Block placed
+|source=Blocks
+|description=When an armor stand is placed
+|id=entity.armor_stand.place
+|translationkey=subtitles.block.generic.place
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Wood dig1.ogg
+|sound2=Wood dig2.ogg
+|sound3=Wood dig3.ogg
+|sound4=Wood dig4.ogg
+|subtitle=Block placed
+|source=Friendly Creatures
+|description=When an armor stand falls onto a block at a high speed, such has being dropped off a cliff.
+|id=entity.armor_stand.fall
+|translationkey=subtitles.entity.armorstand.fall
+|volume=1.0
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+| sound =Armor Stand hit1.ogg
+|sound2=Armor Stand hit2.ogg
+|sound3=Armor Stand hit3.ogg
+|sound4=Armor Stand hit4.ogg
+|source=neutral
+|description=When an armor stand is damaged
+|id=mob.armor_stand.hit
+|translationkey=subtitles.block.generic.hit
+|subtitle=Block breaking
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Armor Stand break1.ogg
+|sound2=Armor Stand break2.ogg
+|sound3=Armor Stand break3.ogg
+|sound4=Armor Stand break4.ogg
+|source=neutral
+|description=When an armor stand is destroyed
+|id=mob.armor_stand.break
+|translationkey=subtitles.block.generic.break
+|subtitle=Block broken
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Stone dig1.ogg
+|sound2=Stone dig2.ogg
+|sound3=Stone dig3.ogg
+|sound4=Stone dig4.ogg
+|source=neutral
+|description=When an armor stand is placed
+|id=mob.armor_stand.place
+|translationkey=subtitles.block.generic.place
+|subtitle=Block placed
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Wood dig1.ogg
+|sound2=Wood dig2.ogg
+|sound3=Wood dig3.ogg
+|sound4=Wood dig4.ogg
+|source=neutral
+|description=When an armor stand falls onto a block at a high speed{{Info needed}}
+|id=mob.armor_stand.land
+|translationkey=subtitles.entity.armor_stand.fall
+|subtitle=Something fell
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Player hurt1.ogg
+|sound2=Player hurt2.ogg
+|sound3=Player hurt3.ogg
+|source=player
+|description=When an armor stand dies
+|id=game.player.die
+|translationkey=subtitles.entity.player.death
+|subtitle=Player dies
+|volume=1.0
+| pitch = 0.8-1.2
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|firstcolumnname=Item
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Armor Stand
+|spritename=armor-stand
+|spritetype=item
+|nameid=armor_stand
+|form=item
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Entity
+|generatetranslationkeys=y
+|showentitytags=y
+|entitytags=can_breathe_under_water
+|displayname=Armor Stand
+|spritename=armor-stand
+|spritetype=entity
+|nameid=armor_stand
+|foot=1}}
+
+{{BE}}:
+
+{{ID table
+|edition=bedrock
+|firstcolumnname=Item
+|shownumericids=y
+|showforms=y
+|notshowbeitemforms=y
+|generatetranslationkeys=y
+|displayname=Armor Stand
+|spritename=armor-stand
+|spritetype=item
+|nameid=armor_stand
+|id=552
+|form=item
+|foot=1}} 
+{{ID table
+|edition=bedrock
+|firstcolumnname=Entity
+|shownumericids=y
+|generatetranslationkeys=y
+|displayname=Armor Stand
+|spritename=armor-stand
+|spritetype=entity
+|nameid=armor_stand
+|showentityfamily=y
+|entityfamily=armor_stand,inanimate,mob
+|id=61
+|foot=1}}
+
+=== Item data ===
+{{JE}}:
+{{see also|Data component format}}
+<div class="treeview">
+* {{nbt|compound|components}}: the item's '''components''' tag.
+{{:Data component format/entity_data}}
+</div>
+
+{{BE}}:
+: {{IN|bedrock}}, armor stands have no additional item tag.
+{{see also|Bedrock Edition level format/Item format}}
+
+=== Entity data ===
+Armor stands have entity data associated with them that contain various properties of the [[entity]].
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview" style="margin-top: 0;">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** Tags common to mobs except <code>LeftHanded</code>, <code>DeathLootTable</code>, <code>DeathLootTableSeed</code>, <code>drop_chances</code>, <code>home_pos</code>, <code>home_radius</code>, <code>NoAI</code>, <code>leash</code>, <code>CanPickUpLoot</code> and <code>PersistenceRequired</code>.
+** {{nbt|int|DisabledSlots}}: Bit field allowing disable place/replace/remove of armor elements. For example, the value {{code|16191}} or{{code|4144959}} disables placing, removing and replacing of all equipment. These can be found using the bitwise OR operator.
+** {{nbt|byte|Invisible}}: 1 or 0 (true/false) - if true, ArmorStand is invisible, although items on it still display.
+** {{nbt|byte|Marker}}: 1 or 0 (true/false) - if true, ArmorStand's size is set to 0, has a tiny hitbox, and disables interactions with it. May not exist.
+** {{nbt|byte|NoBasePlate}}: 1 or 0 (true/false) - if true, ArmorStand does not display the base beneath it.
+** {{nbt|compound|Pose}}: Rotation values for the ArmorStand's pose. All values are in degrees.
+*** {{nbt|list|Body}}: Body-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+*** {{nbt|list|Head}}: Head-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+*** {{nbt|list|LeftArm}}: Left Arm-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+*** {{nbt|list|LeftLeg}}: Left Leg-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+*** {{nbt|list|RightArm}}: Right Arm-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+*** {{nbt|list|RightLeg}}: Right Leg-specific rotations.
+**** {{nbt|float}}: x-rotation.
+**** {{nbt|float}}: y-rotation.
+**** {{nbt|float}}: z-rotation.
+** {{nbt|byte|ShowArms}}: 1 or 0 (true/false) - if true, ArmorStand displays full wooden arms. If false, also place and replace interactions with the hand item slot are disabled.
+** {{nbt|byte|Small}}: 1 or 0 (true/false) - if true, ArmorStand is much smaller, similar to the size of a baby zombie.
+</div>
+
+{| class="wikitable"
+|+ Disabled slots
+|-
+! Binary || Integer number || Result
+|-
+| 2^0 || 1 || Disable adding or changing mainhand item
+|-
+| 2^1 || 2 || Disable adding or changing boots item
+|-
+| 2^2 || 4 || Disable adding or changing leggings item
+|-
+| 2^3 || 8 || Disable adding or changing chestplate item
+|-
+| 2^4 || 16 || Disable adding or changing helmet item
+|-
+|2^5
+|32
+|Disable adding or changing offhand item
+|-
+| 2^8 || 256 || Disable removing or changing mainhand item
+|-
+| 2^9 || 512 || Disable removing or changing boots item
+|-
+| 2^10 || 1024 || Disable removing or changing leggings item
+|-
+| 2^11 || 2048 || Disable removing or changing chestplate item
+|-
+| 2^12 || 4096 || Disable removing or changing helmet item
+|-
+|2^13
+|8192
+|Disable removing or changing offhand item
+|-
+| 2^16 || 65536 || Disable adding mainhand item
+|-
+| 2^17 || 131072 || Disable adding boots item
+|-
+| 2^18 || 262144 || Disable adding leggings item
+|-
+| 2^19 || 524288 || Disable adding chestplate item
+|-
+| 2^20 || 1048576 || Disable adding helmet item
+|-
+|2^21
+|2097152
+|Disable adding offhand item
+|}<section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Mob Kabob}}
+}}
+
+== Advancements ==
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Arbalistic;Adventure;Mob Kabob}}
+}}
+
+== History ==
+
+=== Reveal ===
+{{HistoryTable
+|{{HistoryLine||August 5, 2014|link={{Tweet|SeargeDP|496666952530538498}}|[[File:Armor Stand (pre-release).png|32px]] [[File:Armor Stand (item) (pre-release).png|32px]] [[Searge]] tweeted an image of an armor stand. The appearance was changed before release.}}
+|{{HistoryLine||August 5, 2014|link={{Tweet|SeargeDP|496673890148823040}}|Showed crafting recipe and name "[Armor Stand]", both were changed before release.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w32a|[[File:Armor Stand JE1.png|32px]]  [[File:Armor Stand (item) JE1.png|32px]] Added armor stands.}}
+|{{HistoryLine|||dev=14w32b|[[File:Armor Stand (item) JE2 BE1.png|32px]] The item texture has changed.
+|Pick-block can now be used on armor stands.
+|Armor stands can no longer be crafted using [[slab]]s other than stone slabs.}}
+|{{HistoryLine|||dev=14w33a|Breaking [[particles]] have been added for the armor stand.}}
+|{{HistoryLine||1.9|dev=15w31a|Armor stands can now dual wield.}}
+|{{HistoryLine|||dev=15w47a|The armor stand now wobbles when hit by the [[player]].}}
+|{{HistoryLine|||dev=16w02a|Marker armor stands now outline their equipment only when glowing.}}
+|{{HistoryLine||1.11|dev=16w32a|[[Elytra]] can now be placed on armor stands, just like any other [[chestplate]].}}
+|{{HistoryLine||1.13|dev=17w47a|Armor stands are no longer able to step up blocks.<ref>{{bug|MC-133544}}</ref>
+|Armor stands can now be placed inside water, lava and fire, which deletes these blocks just like any other replaceable block.}}
+|{{HistoryLine|||dev=18w14b|Placing an armor stand inside lava or water no longer deletes that block.<ref>{{bug|MC-125669}}</ref> Other replaceable blocks are still deleted.}}
+|{{HistoryLine|||dev=18w20a|Armor stands can now be knocked back by knockback attacks while [[sprinting]] or by using the [[Knockback]] enchantment.<ref>{{bug|MC-175132}}</ref>}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Armor Stand JE2.png|32px]] The texture of armor stands has been changed to the new [[oak planks]] texture.
+|[[File:Armor Stand (item) JE3 BE2.png|32px]] The texture of armor stand [[item]]s has been slightly changed. (Comparison: [[File:Armor Stand (item) Texture Change 1.13 to 18w43a.gif|32px]])}}
+|{{HistoryLine|||dev=18w50a|[[File:Armor Stand JE3.png|32px]] The texture of armor stands has been changed again.
+|Armor stands now generate in taiga [[village]]s.}}
+|{{HistoryLine||1.15|dev=19w42a|Armor stands can now be placed by [[dispenser]]s.}}
+|{{HistoryLine||1.16|dev=20w07a|Armor stands no longer fall through fences and walls when placed.<ref>{{bug|MC-65951||Armor stands fall through fences|Fixed}}</ref>|Placing an armor stand inside a replaceable block no longer removes it.<ref>{{bug|MC-75464}}</ref><ref>{{bug|MC-227739}}</ref>}}
+|{{HistoryLine||1.16.2|dev=20w27a|Armor stands can no longer be placed on top of fences, closed fence gates and walls.<ref>{{bug|MC-222121}}</ref>}}
+|{{HistoryLine|||dev=20w14a|[[Zoglin]]s now attack armor stands.}}
+|{{HistoryLine||1.18|dev=pre5|[[File:Armor Stand JE4.png|32px]] Changed the smooth stone texture on armor stands.}}
+|{{HistoryLine||1.19.4|dev=23w03a|Armor stands now preserve custom names when placed and broken.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w04a|An armor stand now appears in the smithing table GUI; arms are displayed as in Bedrock Edition.
+|When an armor stand is placed, its model now changes in effect of the player's facing direction.<ref>{{bug|MC-93533||Armor stands, boats, boat with chest, bamboo raft or bamboo raft with chest face wrong direction for an instant after being placed}}</ref>}}
+|{{HistoryLine|||dev=23w06a|The model no longer changes when the armory is placed. Also, the head, which tilted slightly to the lower right in the version from 1.8 up to 1.19.3, now faces forward from [[File:Armor Stand JE4.png|32px]] to [[File:Armor Stand JE5.png|32px]].}}
+|{{HistoryLine||1.20.3|dev=23w40a|Marker armor stands no longer create bubbles in water.<ref>{{bug|MC-78314|||Fixed}}</ref>}}
+|{{HistoryLine||1.21.2|dev=24w33a|Armor stands are no longer destroyed by [[TNT]] that explodes in [[water]].<ref>{{bug|MC-3697}}</ref>}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|[[File:Armor Stand BE1.png|32px]] [[File:Armor Stand (item) JE2 BE1.png|32px]] Added armor stands.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Armor Stand BE2.png|32px]] The texture of armor stands has been changed.
+|[[File:Armor Stand (item) JE3 BE2.png|32px]] The texture of armor stand [[item]]s has been slightly changed.}}
+|{{HistoryLine||1.12.0|dev=beta 1.12.0.2|[[File:Armor Stand with Leather Armor MCPE-44669.png|32px]] Leather [[armor]] no longer shows as being [[dye]]d properly when worn by armor stands.}}
+|{{HistoryLine|||dev=beta 1.12.0.3|[[File:Armor Stand wear Chicken.png|x73px]][[File:Armor Stand wear Rabbit.png|x73px]] [[File:Armor Stand wear Salmon.gif|x73px]] [[File:Armor Stand wear Pufferfish.gif|x73px]] [[File:Armor Stand wear Slime.png|x73px]] When armor stands hold a [[raw chicken]], [[raw rabbit]], [[raw salmon]], [[pufferfish]] or a [[slime block]], they now wear these [[mob]] counterparts.<ref>{{bug|MCPE-48629||Armor stands that are holding some certain items causes their mob counterparts to render|Fixed}}</ref>}}
+|{{HistoryLine||1.13.0|dev=beta 1.13.0.1|Leather armor now shows as being dyed properly when worn by armor stands.}}
+|{{HistoryLine|||dev=beta 1.13.0.4|Armor stands no longer hold certain [[mob]]s if they are holding a [[item]] related to them.
+|Armor stands now have a smoother animation when changing poses.}}
+|{{HistoryLine||1.16.0|dev=?|Armor stands are now targeted by zoglins.}}
+|{{HistoryLine||1.16.210|exp=Caves and Cliffs|dev=beta 1.16.210.51|Armor stands are no longer attacked by [[goat]]s.}}
+|{{HistoryLine||1.18.10|dev=beta 1.18.10.22|[[File:Armor Stand BE3.png|32px]] Changed the smooth stone texture on armor stands.}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|switch=1.0.1|[[File:Armor Stand JE1.png|32px]] [[File:Armor Stand (item) JE2 BE1.png|32px]] Added armor stands.|The [[spawn limit|maximum number]] of armor stands in a world is 16.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|Added [[sound]]s for armor stands.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|[[Elytra]] can now be placed on armor stands, just like any other [[chestplate]].}}
+|{{HistoryLine||xbox=TU60|xbone=CU51|ps3=1.64|psvita=1.64|ps4=1.64|wiiu=Patch 30|switch=1.0.11|[[File:Armor Stand BE1.png|32px]] Armor stands now have arms and the [[player]] can now change the pose of the armor stand.}}	
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Armor Stand BE2.png|32px]] The texture of armor stands has been changed.
+|[[File:Armor Stand (item) JE3 BE2.png|32px]] The texture of armor stand [[item]]s has been slightly changed.|Added shields, which are placed into the armor stand's offhand instead of the mainhand when placed onto it by the player.}}
+}}
+
+<gallery>
+Armour stand 1.png|The first image of the armor stand.
+JE 1.8 Dev Armor Stand crafting.png|The first image of armor stand crafting recipe.
+The Bountiful Update.png|Armor stands in the [[Java Edition 1.8|1.8]] poster.
+Dual Wielding Armor Stand.png|A dual wielding armor stand.
+Glowing Armor Stands.png|Armor stands with the [[glowing]] effect.
+Armor Stand Chess.jpg|Chess with armor stands.
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w32c|Added a <code>NoBasePlate</code> tag for the armor stand.}}
+|{{HistoryLine||1.8.1|dev=pre1|Added <code>Marker</code> tag for armor stands.}}
+|{{HistoryLine||1.9|dev=15w31a|<code>HandItems</code> and <code>ArmorItems</code> tags added for armor stands, which is intended to replace the <code>Equipment</code> tag.}}
+|{{HistoryLine|||dev=15w33a|The <code>Equipment</code> tag has been removed from armor stands.}}
+|{{HistoryLine||1.11|dev=16w32a|The entity ID of the armor stand has been changed from <code>ArmorStand</code> to <code>armor_stand</code>.}}
+|{{HistoryLine||1.13|dev=17w47a|Prior to [[1.13/Flattening|''The Flattening'']], this item's numeral ID was 416.{{info needed|and what was the entity ID?}}}}
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* Equipping armor stands with certain [[block]]s and [[item]]s can cause rendering glitches. According to [[Searge]] this is due to transparent rendering on entities not yet being supported.<ref>{{bug|MC-67415||Armor Stands with Slime Block rendering entities behind them|WF}}</ref><ref>{{bug|MC-67674||Armor Stand wearing a Skull and Holding Stained Glass causes Graphical issues|WF}}</ref>
+* {{IN|BE}}, placing the stand within three powered [[redstone dust]] always changes its pose to the honor pose. [[Repeater]]s also switch the stand to the honor pose if not set four blocks from one.
+* Secret signatures for [[JAPPA]], Chi Wong, and Searge can be found at the bottom of the armor stand texture.
+
+== Videos ==
+{{Video note|This video is outdated as zoglins, and vindicators named Johnny {{in|bedrock}}, attack armor stands.}}
+{{yt|tCFkdTfCleQ|align=center}}
+
+== Gallery ==
+=== Renders ===
+{{Needs render|Add copper armor renders.|section=1}}
+==== ''Java Edition'' ====
+<gallery>
+Armor Stand Leather.png
+Armor Stand Golden.png
+Armor Stand Chainmail.png
+Armor Stand Iron.png
+Armor Stand Diamond.png
+Armor Stand Netherite.png
+</gallery>
+
+==== ''Bedrock Edition'' ====
+<gallery>
+Armor Stand with Leather Armor BE.png
+Armor Stand with Golden Armor BE.png
+Armor Stand with Chain Armor BE.png
+Armor Stand with Iron Armor BE.png
+Armor Stand with Diamond Armor BE.png
+Armor Stand with Netherite Armor BE.png
+</gallery>
+
+==== Poses ====
+<gallery>
+Armor Stand Pose 0.png
+Armor Stand Pose 1.png
+Armor Stand Pose 2.png
+Armor Stand Pose 3.png
+Armor Stand Pose 4.png
+Armor Stand Pose 5.png
+Armor Stand Pose 6.png
+Armor Stand Pose 7.png
+Armor Stand Pose 8.png
+Armor Stand Pose 9.png
+Armor Stand Pose 10.png
+Armor Stand Pose 11.png
+Armor Stand Pose 12.png
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Armor Stand Demo.png|Armor stands in various positions with various [[armor]].
+File:Armor Stand glass and sword.png|Armor stands can wear [[block]]s on their heads. This is accessible with [[command]]s such as {{cmd|item}}.
+File:Bedrock edition armor stand poses.png|All armor stand poses as seen {{in|be}}.
+File:Enchanted netherite armor stand.png|An entire set of enchanted netherite [[armor]] on an armor stand.
+File:Armor Stand Garage.png|An armor stand in a garage.
+File:Player riding armor stand.png|Player riding an armor stand with the {{cmd|ride}} command.
+File:Armor stand in the mob statistics.png|An armor stand mentioned in the "Mobs" section of [[statistics]], this occurs when the player dies while attacking an armor stand with the [[Thorns]] enchantment.
+File:Iron armoured stand.png|An armour stand wearing some pieces of iron armour
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Armor Stand (inventory) MCE.png|An {{MCE|armor stand}} as it appeared in {{MCE}}
+File:MCD Armor Stand New.png|An armor stand as it appears in {{MCD}}
+File:Armor Stand Mob Vote Server.png|A [[Tinies|tiny]] armor stand as it appeared in the [[2023 Mob Vote Event]]
+File:AMCM live event Armor stand.png|An armor stand as it appeared in [[A Minecraft Movie Live Event]]
+File:Fashion Wearing Sticker.gif
+File:Armor Stand Plastic.png|An armor stand in the [[Plastic Texture Pack]]
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|taking-inventory--armor-stand|Taking Inventory: Armor Stand|March 16, 2023|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox items|Utilities}}
+{{Navbox entities|Other}}
+{{Mojang featured|https://www.minecraft.net/en-us/article/taking-inventory--armor-stand}}
+
+[[Category:Storage]]
+[[Category:Stationary entities]]
+
+[[de:Rüstungsständer]]
+[[es:Soporte para armadura]]
+[[fr:Porte-armure]]
+[[it:Supporto per armature]]
+[[ja:防具立て]]
+[[ko:갑옷 거치대]]
+[[lzh:甲桁]]
+[[pl:Stojak na zbroję]]
+[[pt:Suporte de Armaduras]]
+[[ru:Стойка для брони]]
+[[th:แท่นวางชุดเกราะ]]
+[[uk:Стійка для обладунків]]
+[[zh:盔甲架]]

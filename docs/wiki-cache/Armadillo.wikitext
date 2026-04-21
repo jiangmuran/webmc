@@ -1,0 +1,657 @@
+{{For}}
+{{Infobox entity
+| group1 = Standing
+| 1-1 = Armadillo JE2 BE2.png
+| 1-2 = Baby Armadillo JE3.png
+| group2 = Rolled up
+| 2-1 = Armadillo Armor JE2 BE2.png
+| 2-2 = Baby Armadillo Armor JE3.png
+| *-2size = 90px
+| *-1caption = Adult
+| *-2caption = Baby
+| invimage = Armadillo Spawn Egg
+| health = {{hp|12}}
+| behavior = Passive
+| mobtype = {{EntityLink|Animal}}
+| size = '''Adult:'''<br>Height: 0.65 blocks<br>Width: 0.7 blocks<br>
+'''Baby:'''<br>Height: 0.39 blocks<br>Width: 0.42 blocks
+| speed = 0.14
+| spawn = * {{BiomeLink|Badlands}}
+* {{BiomeLink|Eroded Badlands}}
+* {{BiomeLink|Savanna}} 
+* {{BiomeLink|Savanna Plateau}}
+* {{BiomeLink|Windswept Savanna}}
+* {{BiomeLink|Wooded Badlands}}
+| usableitems = {{drop|Item|Spider Eye}}<br>{{drop|Item|Lead}}<br>{{drop|Item|Brush}}<br>{{drop|Item|Name Tag}}<br>{{drop|block|Golden Dandelion}}<small>(baby only)</small>
+}}
+
+An '''armadillo''' is a [[passive mob]] found in [[badlands]] and [[savanna]]s. It rolls up in response to being hurt or being near [[undead]] mobs or [[player]]s that are sprinting or mounted. While in this state, it takes less damage. It also repels [[spider]]s and [[cave spider]]s. It is the only source of [[armadillo scute]]s, which the armadillo sheds over time, as well as when it is [[brush]]ed.
+
+== Spawning ==
+Armadillos [[Mob spawning|spawn]] in groups of two to three {{Only|Java}} or four {{Only|Bedrock}} in [[savanna]]s, [[savanna plateau]]s, and [[windswept savanna]]s and in groups of one to two in [[badlands]], [[eroded badlands]], and [[wooded badlands]]. They spawn at a light level of 9 or more {{IN|java}} and a light level of 7 or more {{IN|bedrock}}.
+
+{{IN|bedrock}}, armadillos have a 5% chance to spawn as a baby.
+
+{{Mob spawn table|Armadillo}}
+
+== Drops ==
+Armadillos drop 1 [[armadillo scute]] every 5–10 minutes, similar to the rate at which [[chicken]]s lay [[egg]]s.
+
+Upon successful [[breeding]] (see below), {{xp|1|7}} [[experience]] orbs are dropped.
+
+=== On death ===
+* {{xp|1|3}} experience orbs if killed by a player or tamed [[wolf]].
+Killing a baby armadillo yields no [[item]]s nor [[experience]].
+
+=== Brushing ===
+If a player or [[dispenser]] {{Control|uses}} a [[brush]] on an armadillo, it drops:
+* 1 {{ItemLink|Armadillo Scute}}
+Brushing an armadillo uses 16 [[durability]] points, meaning an unenchanted brush has enough durability to obtain 4{{only|java|short=1}} / 5{{only|bedrock|short=1}} armadillo scutes.
+
+== Behavior ==
+[[File:Two Armadillos Rolled Up.png|thumb|Two armadillos rolled up.]]
+
+[[Spider]]s and [[cave spider]]s flee from armadillos when within 6 blocks of them. This only takes effect when the armadillo is not rolled up in its shell.
+
+=== Rolling up ===
+An armadillo can hide in its shell when it is hurt, confronted by [[undead]], or confronted by players who are sprinting or riding anything. When an armadillo is rolled up it does not walk, cannot eat, and is not tempted by food. While rolled up, it takes a reduced amount of damage given by <code>(original damage-1)/2</code>, damage belonging to the type <code>self_destruct</code> is not affected by this {{in|be}}. The armadillo occasionally peeks out from its shell to see if a threat is still near. It unrolls if it detects no threats for 3 seconds (60 ticks). It also unrolls immediately if it comes into contact with water or is attached to a [[lead]]. An armadillo does not roll up while fleeing, in water, on fire, in the air, or being led.
+
+The distance an armadillo checks for threats is the size of its hitbox inflated by 7 blocks horizontally and 2 blocks vertically.
+
+=== Breeding ===
+{{main|Breeding}}
+
+Armadillos follow players holding [[spider eye]]s within 10{{only|java|short=1}} / 16{{only|bedrock|short=1}} blocks. Additionally, baby armadillos follow adults.
+
+A player can [[breed]] armadillos by using spider eyes on two of them. After breeding, a baby armadillo spawns and 1–7 [[experience]] is generated. The parents cannot be bred again for 5 minutes.
+
+Baby armadillos take 24000 ticks (20 minutes) to grow up, but the growth time can be accelerated {{control|using}} spider eyes. Each use takes 10% off the remaining time to grow up.
+
+An armadillo loses its willingness to breed if it rolls up after it is fed, but before it reaches its mate. It must be fed another spider eye to become willing to breed again.
+
+== Sounds ==
+{{JE}}:
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Armadillo ambient1.ogg
+|sound2=Armadillo ambient2.ogg
+|sound3=Armadillo ambient3.ogg
+|sound4=Armadillo ambient4.ogg
+|sound5=Armadillo ambient5.ogg
+|sound6=Armadillo ambient6.ogg
+|sound7=Armadillo ambient7.ogg
+|sound8=Armadillo ambient8.ogg
+|source=neutral
+|subtitle=Armadillo grunts
+|description=Randomly while not scared
+|id=entity.armadillo.ambient
+|translationkey=subtitles.entity.armadillo.ambient
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo death1.ogg
+|sound2=Armadillo death2.ogg
+|sound3=Armadillo death3.ogg
+|sound4=Armadillo death4.ogg
+|subtitle=Armadillo dies
+|source=neutral
+|description=When an armadillo dies
+|id=entity.armadillo.death
+|translationkey=subtitles.entity.armadillo.death
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo hurt1.ogg
+|sound2=Armadillo hurt2.ogg
+|sound3=Armadillo hurt3.ogg
+|sound4=Armadillo hurt4.ogg
+|sound5=Armadillo hurt5.ogg
+|subtitle=Armadillo hurts
+|source=neutral
+|description=When an armadillo is damaged while not rolled up
+|id=entity.armadillo.hurt
+|translationkey=subtitles.entity.armadillo.hurt
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo hurt reduced1.ogg
+|sound2=Armadillo hurt reduced2.ogg
+|sound3=Armadillo hurt reduced3.ogg
+|sound4=Armadillo hurt reduced4.ogg
+|subtitle=Armadillo shields itself
+|source=neutral
+|description=When an armadillo is damaged while rolled up
+|id=entity.armadillo.hurt_reduced
+|translationkey=subtitles.entity.armadillo.hurt_reduced
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo eat1.ogg
+|sound2=Armadillo eat2.ogg
+|sound3=Armadillo eat3.ogg
+|rowspan=2
+|subtitle=Armadillo eats
+|source=neutral
+|description=When an armadillo eats a spider eye
+|id=entity.armadillo.eat
+|translationkey=subtitles.entity.armadillo.eat
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|subtitle=Armadillo eats
+|source=neutral
+|description=When an armadillo enters love mode
+|id=entity.armadillo.eat
+|translationkey=subtitles.entity.armadillo.eat
+|volume=1.0
+|pitch=0.8-1.2<!--babies can't make this sound-->
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo step1.ogg
+|sound2=Armadillo step2.ogg
+|sound3=Armadillo step3.ogg
+|sound4=Armadillo step4.ogg
+|sound5=Armadillo step5.ogg
+|subtitle=Footsteps
+|source=neutral
+|description=While an armadillo is walking
+|id=entity.armadillo.step
+|translationkey=subtitles.block.generic.footsteps
+|volume=0.15
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo land1.ogg
+|sound2=Armadillo land2.ogg
+|sound3=Armadillo land3.ogg
+|sound4=Armadillo land4.ogg
+|subtitle=Armadillo lands
+|source=neutral
+|description=When an armadillo rolls up while on the ground
+|id=entity.armadillo.land
+|translationkey=subtitles.entity.armadillo.land
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo peek.ogg
+|subtitle=Armadillo peeks
+|source=neutral
+|description=When an armadillo peeks from its shell while rolled up
+|id=entity.armadillo.peek
+|translationkey=subtitles.entity.armadillo.peek
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo roll1.ogg
+|sound2=Armadillo roll2.ogg
+|sound3=Armadillo roll3.ogg
+|sound4=Armadillo roll4.ogg
+|subtitle=Armadillo rolls up
+|source=neutral
+|description=When an armadillo rolls up
+|id=entity.armadillo.roll
+|translationkey=subtitles.entity.armadillo.roll
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo unroll start.ogg
+|subtitle=Armadillo peeks
+|source=neutral
+|description=When an armadillo starts unrolling
+|id=subtitles.entity.armadillo.unroll_start
+|translationkey=subtitles.entity.armadillo.unroll_start
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo unroll finish1.ogg
+|sound2=Armadillo unroll finish2.ogg
+|subtitle=Armadillo unrolls
+|source=neutral
+|description=When an armadillo finishes unrolling
+|id=entity.armadillo.unroll_finish
+|translationkey=subtitles.entity.armadillo.unroll_finish
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo brush1.ogg
+|sound2=Armadillo brush2.ogg
+|subtitle=Scute is brushed off
+|source=neutral
+|description=When an armadillo is brushed
+|id=entity.armadillo.brush
+|translationkey=subtitles.entity.armadillo.brush
+|volume=0.9
+|pitch=''varies''<wbr><ref group="sound">Can be 0.8-1.2 (Baby: 1.3-1.7), 0.64-0.96 (Baby: 1.04-1.36), or 0.72-1.08 (Baby: 1.17-1.53) for each sound</ref>
+|distance=16}}
+| {{SoundLine
+|sound=Armadillo scute drop1.ogg
+|sound2=Armadillo scute drop2.ogg
+|subtitle=Armadillo sheds scute
+|source=neutral
+|description=When an armadillo drops a scute
+|id=entity.armadillo.scute_drop
+|translationkey=subtitles.entity.armadillo.scute_drop
+|volume=1.0
+|pitch=''varies''<wbr><ref group="sound">Can be 0.8-1.2 or 0.72-1.08 for each sound</ref><!-- Not affected by babies -->
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+|type=bedrock|{{SoundLine
+| sound =Armadillo ambient1.ogg
+|sound2=Armadillo ambient2.ogg
+|sound3=Armadillo ambient3.ogg
+|sound4=Armadillo ambient4.ogg
+|sound5=Armadillo ambient5.ogg
+|sound6=Armadillo ambient6.ogg
+|sound7=Armadillo ambient7.ogg
+|sound8=Armadillo ambient8.ogg
+|source=neutral
+|description=Randomly
+|id=mob.armadillo.ambient
+|translationkey=subtitles.entity.armadillo.ambient
+|subtitle=Armadillo grunts
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo death1.ogg
+|sound2=Armadillo death2.ogg
+|sound3=Armadillo death3.ogg
+|sound4=Armadillo death4.ogg
+|source=neutral
+|description=When an armadillo dies
+|id=mob.armadillo.death
+|translationkey=subtitles.entity.armadillo.death
+|subtitle=Armadillo dies
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo hurt1.ogg
+|sound2=Armadillo hurt2.ogg
+|sound3=Armadillo hurt3.ogg
+|sound4=Armadillo hurt4.ogg
+|sound5=Armadillo hurt5.ogg
+|source=neutral
+|description=When an armadillo is damaged while not rolled up
+|id=mob.armadillo.hurt
+|translationkey=subtitles.entity.armadillo.hurt
+|subtitle=Armadillo hurts
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo hurt reduced1.ogg
+|sound2=Armadillo hurt reduced2.ogg
+|sound3=Armadillo hurt reduced3.ogg
+|sound4=Armadillo hurt reduced4.ogg
+|source=neutral
+|description=When an armadillo is damaged while rolled up
+|id=mob.armadillo.hurt_reduced
+|translationkey=subtitles.entity.armadillo.hurt_reduced
+|subtitle=Armadillo shields itself
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo eat1.ogg
+|sound2=Armadillo eat2.ogg
+|sound3=Armadillo eat3.ogg
+|source=neutral
+|description=When an armadillo eats an item
+|id=mob.armadillo.eat
+|translationkey=subtitles.entity.armadillo.eat
+|subtitle=Armadillo eats
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo step1.ogg
+|sound2=Armadillo step2.ogg
+|sound3=Armadillo step3.ogg
+|sound4=Armadillo step4.ogg
+|sound5=Armadillo step5.ogg
+|source=neutral
+|description=While an armadillo is walking
+|id=mob.armadillo.step
+|translationkey=subtitles.block.generic.footsteps
+|subtitle=Footsteps
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo land1.ogg
+|sound2=Armadillo land2.ogg
+|sound3=Armadillo land3.ogg
+|sound4=Armadillo land4.ogg
+|source=neutral
+|description=When an armadillo rolls up while on the ground
+|id=mob.armadillo.land
+|translationkey=subtitles.entity.armadillo.land
+|subtitle=Armadillo lands
+
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo peek.ogg
+|source=neutral
+|description=When an armadillo peeks from its shell while rolled up
+|id=mob.armadillo.peek
+|translationkey=subtitles.entity.armadillo.peek
+|subtitle=Armadillo peeks
+|volume=1.0
+|pitch=1.0}}|{{SoundLine
+|sound=Armadillo roll1.ogg
+|sound2=Armadillo roll2.ogg
+|sound3=Armadillo roll3.ogg
+|sound4=Armadillo roll4.ogg
+|source=neutral
+|description=When an armadillo rolls
+|id=mob.armadillo.roll
+|translationkey=subtitles.entity.armadillo.roll
+|subtitle=Armadillo rolls up
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo unroll start.ogg
+|source=neutral
+|description=When an armadillo starts unrolling
+|id=mob.armadillo.unroll_start
+|translationkey=subtitles.entity.armadillo.unroll_start
+|subtitle=Armadillo peeks
+|volume=1.0
+|pitch=1.0}}|{{SoundLine
+|sound=Armadillo unroll finish1.ogg
+|sound2=Armadillo unroll finish2.ogg
+|source=neutral
+|description=When an armadillo finishes unrolling
+|id=mob.armadillo.unroll_finish
+|translationkey=subtitles.entity.armadillo.unroll_finish
+|subtitle=Armadillo unrolls
+|volume=1.0
+|pitch=0.8-1.2 (Baby: 1.3-1.7)}}|{{SoundLine
+|sound=Armadillo brush1.ogg
+|sound2=Armadillo brush2.ogg
+|source=neutral
+|description=When an armadillo is brushed
+|id=mob.armadillo.brush
+|translationkey=subtitles.entity.armadillo.brush
+|subtitle=Scute is brushed off
+|volume=0.9
+|pitch=1.0/0.8/0.9}}|{{SoundLine
+|sound=Armadillo scute drop1.ogg
+|sound2=Armadillo scute drop2.ogg
+|source=neutral
+|description=When an armadillo drops a scute
+|id=mob.armadillo.scute_drop
+|translationkey=subtitles.entity.armadillo.scute_drop
+|subtitle=Armadillo sheds scute
+|volume=0.9
+| pitch = 1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{JE}}:
+{{ID table
+|edition=java
+|generatetranslationkeys=y
+|displayname=Armadillo
+|spritetype=entity
+|nameid=armadillo
+|showentitytags=y
+|entitytags=followable_friendly_mobs
+|foot=1}}
+
+{{BE}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showentityfamily=y
+|entityfamily=armadillo,mob
+|generatetranslationkeys=y
+|displayname=Armadillo
+|spritetype=entity
+|nameid=armadillo
+|id=142
+|foot=1}}
+
+=== Entity data ===
+Armadillos have entity data associated with them that contain various properties.
+
+{{JE}}:
+{{main|Entity format}}
+<section begin="entity data"/><div class="treeview">
+* {{nbt|compound}} Entity data
+** {{nbt inherit/breedable}}
+** {{nbt inherit/entity}}
+** {{nbt inherit/mob}}
+** {{nbt|int|scute_time}}: The number of ticks until the armadillo drops a scute. A scute is dropped at 0 and this timer gets reset to a new random value between 6000 and 12000.
+** {{nbt|string|state}}: The name for the armadillo's current posture. <code>state:"idle"</code> means the armadillo is standing normally and is not rolled up. <code>state:"scared"</code> means the armadillo has rolled up as it feels threatened by a nearby mob or player. <code>state:"unrolling"</code> means the armadillo is playing its unrolling animation, exiting its scared state. Any other string for <code>state</code> defaults to the same behavior as "idle".
+</div><section end="entity data"/>
+
+{{BE}}:
+: See [[Bedrock Edition level format/Entity format]].
+
+== Achievements ==
+{{load achievements|It Spreads}}
+
+Achievements that apply to all mobs:
+{{collapse|content={{load achievements|Overkill;Over-Overkill;Mob Kabob}}
+}}
+
+== Advancements ==
+{{load advancements|The Parrots and the Bats;Two By Two;It Spreads;Isn't It Scute?}}
+
+Advancements that apply to all mobs:
+{{collapse|content={{load advancements|Take Aim;Arbalistic;A Throwaway Joke;Adventure;Over-Overkill;Mob Kabob}}
+}}
+
+== Videos ==
+{{yt|jNTufMgx6eM}}
+{{yt|7V7D4EnATzc}}
+
+== History ==
+=== Announcement ===
+{{HistoryTable
+|{{HistoryLine||October 4, 2023|link=https://www.youtube.com/watch?v=jNTufMgx6eM&ab_channel=Minecraft|[[File:ArmadilloPixel.png|x32px]] The armadillo was announced as part of the [[2023 Mob Vote|Mob Vote]] for [[Minecraft Live 2023#Videos|Minecraft Live 2023]].}}
+|{{HistoryLine||October 15, 2023|link=https://www.youtube.com/watch?v=DnY5xz11lR0&ab_channel=Minecraft|The armadillo wins the Mob Vote at [[Minecraft Live 2023#Mob Vote|Minecraft Live 2023]].}}
+|{{HistoryLine||December 13, 2023|link=https://twitter.com/lillybeacon/status/1735991091625922808?t=HKOflGEB39Yzjwg2imxtbg&s=19|Armadillos are announced to be added in ''Java Edition'' on December 18, 2023 in a popup in [[Bedrock Edition Preview 1.20.60.23]].}}
+|{{HistoryLine||December 24, 2023|link=https://twitter.com/minecraft/status/1738963955786068362|[[File:Armadillo JE2 BE2.png|x32px]] A new iteration of the armadillo texture is shown.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.20.5|dev=23w51a|[[File:Armadillo JE1.png|x32px]] [[File:Armadillo (Rolled Up) JE1 BE1.png|x32px]] Added armadillos.
+|[[File:Armadillo_Roll_Up_JE1.gif|32px]] [[File:Armadillo_Unroll_JE1.gif|32px]] Currently, the rolling up and unrolling animations are simpler.}}
+|{{HistoryLine|||dev=24w03a|[[File:Armadillo JE2 BE2.png|x32px]] [[File:Armadillo (Rolled Up) JE2 BE2.png|x32px]] [[File:Armadillo_Roll_Up_JE2_BE2.gif|32px]] [[File:Armadillo_Unroll_JE2_BE2.gif|32px]] The texture of armadillos has been changed.
+|Armadillos can now spawn in [[badlands]], [[wooded badlands]], and [[eroded badlands]].
+|Spiders and cave spiders now run from armadillos.}}
+|{{HistoryLine|||dev=24w04a|Armadillos now also roll up when they detect a mob or player that has attacked it recently.
+|Rolled up armadillos are now more resistant to attacks.
+|Added new sounds for when an armadillo is damaged while rolled up.}}
+|{{HistoryLine|||dev=24w06a|[[File:Armadillo Peek JE1 BE1.gif|32px]] Added an animation for armadillos peeking out of their shell.
+|[[File:Armadillo Roll Up JE3 BE3.gif|32px]] [[File:Armadillo Unroll JE3 BE3.gif|32px]] Changed the rolling up and unrolling animations.
+|Rolled up armadillos now only occasionally peek out from their shells, rather than constantly.
+|Added new sounds for rolling up, unrolling, and peeking.}}
+|{{HistoryLine||26.1|dev=snap5|Added [[golden dandelion]]s, which can be used to prevent baby armadillos from growing up.}}
+|{{HistoryLine|||dev=snap6|[[File:Baby Armadillo JE3.png|32px]] The model and texture of baby armadillos have been changed.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.20.60|dev=Preview 1.20.60.20|Added mentions of armadillos to the game files.}}
+|{{HistoryLine||1.20.60|exp=Armadillo and Wolf Armor|dev=Preview 1.20.60.23|[[File:Armadillo BE1.png|x32px]] [[File:Armadillo (Rolled Up) JE1 BE1.png|x32px]] Added armadillos behind the "Armadillo and Wolf Armor" [[experimental]] toggle.
+|[[File:Armadillo_Roll_Up_BE1.gif|32px]] [[File:Armadillo_Unroll_BE1.gif|32px]] Currently, the rolling up and unrolling animations are simpler.}}
+|{{HistoryLine||1.20.70|exp=Armadillo and Wolf Armor|dev=Preview 1.20.70.20|[[File:Armadillo JE2 BE2.png|x32px]] [[File:Armadillo (Rolled Up) JE2 BE2.png|x32px]] [[File:Armadillo_Roll_Up_JE2_BE2.gif|32px]] [[File:Armadillo_Unroll_JE2_BE2.gif|32px]] The texture of armadillos has been changed.
+|Armadillos can now spawn in [[badlands]], [[wooded badlands]], and [[eroded badlands]].
+|Spiders and cave spiders now run from armadillos.
+|Armadillos now have a reduced vertical range when scanning for potential threats.
+|Armadillos now float better and create more splash particles when in water.
+|Baby armadillos now catch up to their parents a bit faster.
+|Armadillos now take less damage when rolled up.
+|Armadillos now roll up when attacked by a player or a mob, instead of panicking.
+|Armadillos now keep track of the last player that hit them, and regard them as a threat for 20 seconds.}}
+|{{HistoryLine|||dev=Preview 1.20.70.21|Added new sounds for when armadillos are damaged while rolled up.
+|Armadillos now regard the last player that hit them as a threat for 10 seconds.}}
+|{{HistoryLine|||dev=Preview 1.20.70.22|[[File:Armadillo Peek JE1 BE1.gif|32px]] Added an animation for armadillos peeking out of their shell.
+|[[File:Armadillo Roll Up JE3 BE3.gif|32px]] [[File:Armadillo Unroll JE3 BE3.gif|32px]] Changed the rolling up and unrolling animations.
+|Rolled up armadillos now only occasionally peek out from their shells, rather than constantly.
+|Increased the amount of time that armadillos stay rolled up after a threat has passed from 3 to 4 seconds.}}
+|{{HistoryLine||1.20.80|dev=Preview 1.20.80.20|Armadillos are now available without using the "Armadillo and Wolf Armor" experimental toggle.}}
+|{{HistoryLine|||dev=Preview 1.20.80.22|Increased the speed of armadillos' walking animation.}}
+|{{HistoryLine||1.21.0|dev=Preview 1.21.0.21|Armadillos no longer roll up repeatedly when constantly taking damage from blocks.}}
+|{{HistoryLine||26.10|dev=Preview 26.10.21|[[File:Baby Armadillo JE3.png|32px]] The model and texture of baby armadillos have been changed.
+|Added [[golden dandelion]]s, which can be used to prevent baby armadillos from growing up.}}
+
+}}
+
+== Issues ==
+{{issue list}}
+
+== Trivia ==
+* The first iteration of the armadillo had deliberately basic animations due to feedback that the sniffer's animations were a bit too advanced. However, the developers felt that quality expectations had been raised, so subsequent armadillo animations were made more expressive.<ref>{{Tweet|JasperBoerstra|1736404493854445958|It's likely that we'll be re-doing all the animations. We tried going "back to basics" after feedback on the Sniffer's animations being to "advanced" but I think the expectations for quality has been raised so we'll have to meet those and make them more expressive :)|December 17, 2023}}</ref><ref>{{Tweet|JasperBoerstra|1736407600978186662|Exactly! But we got feedback that they were.. too good for the rest of the animations, so with the Armadillo we tried going a bit more simple again; But I suppose people expect more advanced animations now instead. The expectation has shifted.|December 17, 2023}}</ref>
+* When first added to the game, the armadillo had its eyes on the front of its face. According to [[Jasper Boerstra]] this is because he felt that it would be difficult for the player to form a personal connection with the armadillo if the eyes were on the side of the head, since they wouldn't be visible while facing the mob directly.<ref>{{tweet|jasperboerstra|1735374457957396921|The eyes of the Armadillo are in the front because when they are on the side you're looking at an empty forehead, It's difficult to a create a connection with it. Considering this is a mob which you'll interact with, possibly quite often, I felt like this was important.|December 14, 2023}}</ref> This decision was reverted following feedback.<ref>{{tweet|Minecraft|1738963955786068362|We've listened to your feedback, here is a new iteration of the Armadillo. In Beta/Snapshots next year!👁️👄👁️.|December 24, 2023}}</ref>
+** The tag on the armadillo plush however uses this initial design, despite the plush itself using its final design.
+* In earlier development versions, though not entirely realistic, the armadillo's head peeked out when balled up because it was deemed amusing.<ref>{{tweet|jasperboerstra|1735375026193318017|Its head peeks out when its balled up because we thought it would be funny or cute. But apparently people prefer realism?|December 14, 2023}}</ref>
+* Despite its passive nature, the armadillo has been referred to as a neutral mob on the official [[minecraft.net]] website.<ref>{{cite|url=https://feedback.minecraft.net/hc/en-us/articles/22307322045197|title=Minecraft - Beta & ''Preview'' 1.20.60.23|website=Minecraft Feedback|date=December 13, 2023}}</ref><ref>{{Mcnet|minecraft-preview-1-20-60-23|Minecraft Preview 1.20.60.23|December 13, 2023|Jay Wells}}</ref>
+* The armadillo is the only mob voted in during a [[Mob Vote|mob vote]] that was released in a minor update (officially the ''[[Armored Paws]]'' drop as {{JE}} [[Java Edition 1.20.5|1.20.5]] and {{BE}} [[Bedrock Edition 1.20.80|1.20.80]]), instead of the [[Tricky Trials|next major update]].
+** It is also the final mob to be added through a mob vote.
+* The development time for the armadillo was the shortest for any mob vote winner, introduced in a [[Java Edition 23w51a|snapshot]] just two months after winning the vote at [[Minecraft Live 2023]].
+
+== Gallery ==
+=== Renders ===
+<gallery>
+Armadillo.png|Armadillo
+Armadillo (Rolled Up).png|Rolled up
+Armadillo without Armor.png|An armadillo without its shell (this state cannot be seen in-game)
+</gallery>
+
+=== Animations ===
+<gallery>
+Armadillo Walking.gif|Walking
+Armadillo Roll Up.gif|Rolling up
+Armadillo Peek.gif|Peeking
+Armadillo Unroll.gif|Unrolling
+</gallery>
+
+<gallery>
+Baby Armadillo Walking.gif|Baby walking
+Baby Armadillo Roll Up.gif|Baby rolling up
+Baby Armadillo Peek.gif|Baby peeking
+Baby Armadillo Unroll.gif|Baby unrolling
+</gallery>
+
+==== Development renders ====
+<gallery>
+Armadillo Walking JE1.gif|Walking (texture used in [[Java Edition]] from snapshot [[23w51a]] to [[23w51b]])
+Armadillo Walking BE1.gif|Walking (texture used in [[Bedrock Edition]] from preview [[1.20.60.23]] to [[1.20.60.26]])
+Armadillo Roll Up JE1.gif|Rolling up (texture used in [[Java Edition]] from snapshot [[23w51a]] to [[23w51b]])
+Armadillo Roll Up BE1.gif|Rolling up (texture used in [[Bedrock Edition]] from preview [[1.20.60.23]] to [[1.20.60.26]])
+Armadillo Rolled Up Idle JE1 BE1.gif|Idle rolled up (despite the main body having slight differences between JE and BE during this time, the shell already matched)
+File:Armadillo Rolled Up Idle JE2 BE2.gif|Idle rolled up using the current texture
+Armadillo Unroll JE1.gif|Unrolling (texture used in [[Java Edition]] from snapshot [[23w51a]] to [[23w51b]])
+Armadillo Unroll BE1.gif|Unrolling (texture used in [[Bedrock Edition]] from preview [[1.20.60.23]] to [[1.20.60.26]])
+Armadillo Armor JE1 BE1.png|Rolled up shell only (this state could not be seen in-game)
+Armadillo without Armor JE1 BE1.png|An armadillo without its shell (this state could not be seen in-game)
+</gallery>
+
+=== Development images ===
+<gallery>
+Armadillo Second Revision First Image.jpg|The first image shown of the armadillo's second texture iteration.
+Three together.png|Two armadillos and an armored wolf on a hill.
+Armadillos here we come.png|A standing armadillo.
+Old peek.png|A rolled up armadillo.
+Zuri feeds.png|[[Zuri]] feeding an armadillo a spider eye.
+Noor's journey.png|Four armadillos, an armored wolf, and [[Noor]] at the top of a hill.
+Armadillo (discord emoji).png|Early development model and texture of the armadillo.
+Armadillo (discord emoji)recreations.png|A recreation of the armadillo early development model based on the Discord emote.
+Armadillos 01.jpg|"Here you can see the first design of the armadillo mob (left) and the final mob design (right)"<ref name="the-future-of-minecrafts-development">https://www.minecraft.net/en-us/article/the-future-of-minecrafts-development</ref>
+Armadillo B.jpg|"The early design of the armadillo mob"<ref name="the-future-of-minecrafts-development" />
+Armadillo A.jpg|"The final design of the armadillo mob"<ref name="the-future-of-minecrafts-development" />
+</gallery>
+
+=== Concept artwork ===
+<gallery>
+Armadillo concept art.png|"Armadillo exploration" concept art featuring different armadillo colors.
+Armadillo Concepts.jpg|"Armadillo exploration" concept art.
+Armadillo concept art 2.png|Armadillo concept art.<ref>{{ytl|LNO89rgNYQQ|All About The Armored Paws Drop|Minecraft|April 22, 2024}}</ref>
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:Armadillo in Badlands.png|An armadillo that naturally spawned in a [[badlands]].
+File:Family of armadillos.jpg|A roll of armadillos.<ref>{{mcnet|minecraft-java-edition-1-20-5|Minecraft Java Edition 1.20.5|April 23, 2024}}</ref>
+File:Armadillo cowers before zombie.jpg|An armadillo cowering beside a [[zombie]].
+File:Armadillo Switch.png|The switch to vote for the armadillo on the [[2023 Mob Vote Event]].
+File:Introducing baby armadillos.jpg
+</gallery>
+
+=== Textures ===
+<gallery class="pixel-image">
+Armadillo (texture).png|Armadillo texture file.
+Baby Armadillo (texture).png|Baby armadillo texture file.
+</gallery>
+
+=== In other media ===
+<gallery>
+File:Trial Chamber Legends key art.jpg|An armadillo running to a [[breeze]] with [[Sunny]], [[Noor]] and a tamed [[wolf]], on the cover of [[Trial Chamber Legends]].
+File:Minecraft Trial Chamber Legends spritework.jpg|Pixel art of an armadillo used in [[Trial Chamber Legends]].
+File:Eyemadillo.png|The eye-madillo, a joke version of an armadillo from the January 26, 2024 episode of [[Minecraft Monthly]].<ref>{{ytl|gbCSAffHr0w|REVEALING A NEW BLOCK + TRIAL KEY UNLOCKS...??? {{!}} MINECRAFT MONTHLY|Minecraft|January 26, 2024|t=91s}}</ref>
+File:LeftRenderEyemadillo.png|A recreation of the latter.
+File:Armadillo Armor 24w14potato.png|The rolled up potato armadillo from [[Java Edition 24w14potato|24w14potato]].
+File:Launcher Armored Paws Loading.webp|An armadillo, as it is on the loading screen on the [[Minecraft Launcher]].
+File:Mm-armadillo-header.png|Official artwork of two armadillos.
+File:Armadillo Hologram.png|Hologram of an armadillo in the [[Eerie Mojang Office Party]].
+File:Armadillo plush.webp|Armadillo plush
+File:Armadillo plush tag.png|Tag of the plush using its initial design.
+File:Armadillo slipper winter ad.jpg
+File:LEGO Armadillo.png|A LEGO Minecraft Armadillo.
+File:Armadillo on grass.jpg|Artwork of an armadillo
+File:Armadillo inside shell.jpg|Artwork of an armadillo tucked
+File:Inside of armadillo shell.jpg|An armadillo playing video games inside its shell
+</gallery>
+
+==== Mob vote artwork ====
+<gallery class="pixel-image">
+ArmadilloPixel.png|Pixel art of an armadillo standing still.
+Armadillo Running Animation.gif|The armadillo running.
+Armadillo Sniffing and Curling into a Ball Animation.gif|The armadillo sniffing and rolling up into a ball.
+MCLive2023MobVoteAllOptions.png|Mob vote image.
+Armadillo Thumbnail.jpg|Thumbnail of the armadillo announcement article.
+Armadillo Header.jpg|Header of the armadillo announcement article.
+Armadillo Win.png|Armadillos wearing party hats.
+Winner of Mob Vote 2023.gif|Armadillo winning the mob vote.
+Gamemode One armadillos.jpg|"We had a great time seeing everyone enjoy our Mob Vote event last weekend! Welcome to Minecraft, Armadillo friend!"
+</gallery>
+
+== References ==
+{{reflist}}
+
+== External links ==
+* {{Mcnet|armadillo-rolls-testing|Armadillo rolls into testing|December 13, 2023|Sophie Austin}}
+* {{Mcnet|armadillo|Armadillo|October 17, 2024|Duncan Geere}}
+
+== Navigation ==
+{{Navbox entities|mobs}}
+
+{{Featured}}
+
+[[Category:Passive mobs]]
+[[Category:Animal mobs]]
+
+[[de:Gürteltier]]
+[[es:Armadillo]]
+[[fr:Tatou]]
+[[it:Armadillo]]
+[[ja:アルマジロ]]
+[[ko:아르마딜로]]
+[[lzh:犰狳]]
+[[pl:Pancernik]]
+[[pt:Tatu]]
+[[ru:Броненосец]]
+[[uk:Броненосець]]
+[[zh:犰狳]]
