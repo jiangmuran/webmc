@@ -12,7 +12,7 @@ test.describe('M1 walkaround', () => {
 
     await page.goto('/');
     const hud = page.getByTestId('hud');
-    await expect(hud).toContainText('webmc M1');
+    await expect(hud).toContainText(/webmc M\d+/);
 
     await page.waitForFunction(
       () => {

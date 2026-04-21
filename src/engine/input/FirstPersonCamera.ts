@@ -77,7 +77,13 @@ export class FirstPersonCamera {
       this.locked = document.pointerLockElement === this.canvas;
     };
     this.click = () => {
-      if (!this.locked) void this.canvas?.requestPointerLock();
+      if (this.locked || !this.canvas) return;
+      const res = this.canvas.requestPointerLock() as Promise<void> | undefined;
+      if (res && typeof res.catch === 'function') {
+        res.catch(() => {
+          /* pointer lock can fail in headless/embedded contexts; non-fatal */
+        });
+      }
     };
   }
 
