@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M6
+
+- **Chunk streaming on join (was M6.6).** CHUNK_FULL / CHUNK_DELTA messages so a freshly-joined guest inherits the host's edited chunks.
+- **Client prediction + reconciliation (was M6.5).** For remote-player motion once avatars exist.
+- **Remote-player avatars + chat UI (was M6.7/8).** Capsule mesh + nametag; in-world chat bubble.
+- **Host-migration.** Elect new host + hand over world state on drop.
+- **Client-side rate limiting + per-message-type validation.** Server rate-limits; client should too for hostile-peer hardening.
+
 ## Post-M5
 
 - **Zstd compression (was M5.3).** zstd-via-wasm on ChunkBlob.payload. ~3x shrink, 50 KB dep.
