@@ -30,11 +30,11 @@ interface InputSource {
 }
 
 interface InputState {
-  move: { x: number; z: number };  // -1..1 each axis (walk / strafe)
-  look: { dx: number; dy: number };  // delta per frame (mouse movement equiv)
+  move: { x: number; z: number }; // -1..1 each axis (walk / strafe)
+  look: { dx: number; dy: number }; // delta per frame (mouse movement equiv)
   jump: boolean;
   sprint: boolean;
-  primary: boolean;   // break / attack
+  primary: boolean; // break / attack
   secondary: boolean; // place / use
   toggles: { fly: boolean; inventory: boolean };
 }

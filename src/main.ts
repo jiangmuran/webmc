@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { FrameTimer } from './engine/time/FrameTimer';
 import { DayNightCycle } from './engine/time/DayNightCycle';
 import { FirstPersonCamera } from './engine/input/FirstPersonCamera';
+import { TouchControls, isTouchDevice } from './engine/input/TouchControls';
 import { ChunkRenderer } from './engine/render/ChunkRenderer';
 import { type BlockState, AIR, makeState, stateId } from './blocks/state';
 import { createDefaultRegistry } from './blocks/registry';
@@ -84,6 +85,9 @@ fp.position.set(0.5, spawnHeight, 0.5);
 fp.yaw = 0;
 fp.input.fly = true;
 fp.attach(canvas);
+
+const touch = isTouchDevice() ? new TouchControls() : null;
+touch?.attach(appEl);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
@@ -229,7 +233,30 @@ function frame(): void {
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
 
+  if (touch) {
+    const look = touch.consumeLook();
+    if (look.dx !== 0 || look.dy !== 0) {
+      fp.yaw -= look.dx;
+      fp.pitch -= look.dy;
+      fp.pitch = Math.max(-Math.PI / 2 + 0.001, Math.min(Math.PI / 2 - 0.001, fp.pitch));
+    }
+    if (touch.state.moveForward !== 0 || touch.state.moveStrafe !== 0) {
+      fp.input.forward = touch.state.moveForward;
+      fp.input.strafe = touch.state.moveStrafe;
+    }
+    if (touch.state.jump) fp.input.jump = true;
+  }
   fp.update(dtSec, { isSolid });
+  if (touch?.state.primary) {
+    (interaction as unknown as { held: string | null }).held = 'break';
+    interaction.tick(now);
+    (interaction as unknown as { held: string | null }).held = null;
+  }
+  if (touch?.state.secondary) {
+    (interaction as unknown as { held: string | null }).held = 'place';
+    interaction.tick(now);
+    (interaction as unknown as { held: string | null }).held = null;
+  }
 
   dayNight.tick(dtSec);
   const uniforms = chunkRenderer.material.uniforms;
