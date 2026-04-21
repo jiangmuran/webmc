@@ -1,0 +1,364 @@
+{{For}}
+{{Infobox block
+| image = Torch.gif
+| invimage = Torch
+| transparent = Yes
+| light = Yes (14)
+| tool = any
+| renewable = Yes
+| stackable = Yes (64)
+| flammable = No
+| lavasusceptible = No
+}}
+'''Torches''' are non-solid [[block]]s that emit [[light]].
+
+== Obtaining ==
+=== Breaking ===
+Torches can be [[instant mining|broken instantly]] using anything, and drop themselves as an item.
+{{breaking row|Torch|horizontal=1}}
+A torch is removed and drops itself as an item if:
+*Its attachment block is moved, removed, or destroyed
+*[[Water]] or [[lava]] flows into its space
+*A [[piston]] pushes it or moves a block into its space
+
+=== Crafting ===
+{{Crafting
+|B2 = Coal; Charcoal
+|B3 = Stick
+|C3 = 
+|Output = Torch, 4
+|type = Decoration block
+}}
+
+=== Natural generation ===
+In the [[Overworld]], torches can be found among the supports in a [[mineshaft]]'s corridors, as part of [[village]] lamp posts and most houses, in various rooms in [[stronghold]]s, in the basements of [[igloo]]s, in [[woodland mansion]]s, and on top of [[pillager outpost]]s. Torches also generate around [[bonus chest]]s if each side has a block at the same height around it. Torches also generate in [[ancient cities]].
+
+=== Generated loot ===
+{{LootChestItem|torch}}
+
+=== Post-generation ===
+When the [[ender dragon]] dies or is re-summoned using [[end crystal]]s, the four torches on the exit portal regenerate. If the original torches are still in position, they drop as [[item (entity)|items]], and the new torches take their place.
+
+== Usage ==
+[[File:Torch Orientations.png|thumb|Torches in various positions on [[chiseled stone bricks]].]]
+
+Torches can be placed on the top or the sides of most solid blocks, although some blocks require {{control|sneaking}}. Being non-solid, torches have no collision box. More information about placement can be found at [[Opacity/Placement]].
+
+Gravity-affected blocks like [[sand]] and [[gravel]] will not start falling if the space immediately beneath is occupied by a torch. Falling blocks break if they fall onto a solid block with a torch above it. If there is an [[air]] block under the torch, the falling blocks fall through the torch onto the surface below.<ref>{{bug|MC-3262|||WAI}}</ref>
+
+=== Light ===
+Torches give off a [[light]] level of 14. Torches also melt [[snow layer]]s within 2 blocks and [[ice]] within 3 blocks ([[taxicab distance]]).
+
+When the [[Render Dragon Features for Creators]] experiment is enabled in ''[[Minecraft Preview]]'', the top part of torches emits colored [[Vibrant Visuals#Point lighting|point lighting]] with {{Color|#f39a5e}}. This causes the bottom part of the torch to render a small square shadow.
+
+=== Crafting ingredient ===
+{{crafting usage|Torch}}
+<!-- (Commenting this out. Inconsistent with other pages and the transparency documentation is still WIP.)
+=== Placement ===
+
+In general, torches can be placed only on solid, opaque, full blocks; exceptions are listed below.
+
+More information can be found at [[Opacity/Placement]].
+
+{| class="wikitable" data-description="Torce placeability"
+! Block name 
+! Placement on top
+! Placement on side
+|-
+|rowspan = 2|{{BlockLink|Anvil}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+|{{BlockLink|Barrier}} || {{tc|Yes}} || {{tc|Yes}}
+|-
+|rowspan = 2|{{BlockLink|Bell}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+| rowspan = 2|{{BlockLink|Chorus Flower}} || {{tc|Yes}}{{only|java|short=1}} || {{tc|Yes}}{{only|java|short=1}}<ref group="n" name="Chorus Flower">When the torch is placed on its side, the chorus flower may break, depending on its position.</ref>
+|-
+|{{tc|no}}{{only|bedrock|short=1}} || {{tc|no}}
+|-
+| rowspan = 2|{{BlockLink|Dragon Egg}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+| rowspan = 2|{{BlockLink|id=end-portal-frame-eye|End Portal Frame|Portal Frame}} (eye) || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+| rowspan = 2|{{BlockLink|End Rod}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+|{{BlockLink|Fences}} || {{tc|Yes}} || {{tc|no}}
+|-
+| rowspan = 2|{{BlockLink|Fence Gates}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+| {{BlockLink|Glass}} || {{tc|yes}}|| {{tc|yes}}
+|-
+| rowspan = 2|{{BlockLink|Glass Pane}} || {{tc|yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+| rowspan = 2|{{BlockLink|Grindstone}} || {{tc|Yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+|{{BlockLink|Ice}} || {{tc|Yes}} || {{tc|Yes}}
+|-
+| rowspan = 2|{{BlockLink|Iron Bars}} || {{tc|yes}}{{only|java|short=1}} || rowspan=2 {{tc|no}}
+|-
+|{{tc|no}}{{only|bedrock|short=1}}
+|-
+|{{BlockLink|Scaffolding}} || {{tc|Yes}} || {{tc|no}}
+|-
+|{{BlockLink|Walls}} || {{tc|Yes}} || {{tc|no}}
+|}
+{{notelist|n}}-->
+
+== Sounds ==
+{{Sound table/Block/Wood}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showblocktags=y
+|showitemtags=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Torch
+|spritetype=block
+|nameid=torch
+|blocktags=wall_post_override}}
+{{ID table
+|displayname=Wall Torch
+|spritetype=block
+|nameid=wall_torch
+|form=block
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Torch
+|spritetype=block
+|nameid=torch
+|id=50
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+<section begin="block states"/>{{el|je}}:<br>
+Wall
+{{bst|facing|north|east,north,south,west|The direction the top of the torch is facing.|foot=1}}
+
+{{el|be}}:
+{{bst|showaux=1|bits=0x1,0x2,0x4|torch_facing_direction|west
+|west,east,north,south,top|The face of the block that the torch is attached to. If the torch is a wall torch, the top of the torch faces opposite to this direction.<ref>{{bug|MCPE-152036}}</ref>|1,2,3,4,5
+|unknown|Unused|0|foot=1}}<section end="block states" />
+
+== Videos ==
+{{yt|-UcCl2EBCgA}}
+
+== History ==
+{{See asset history|type=block}}
+{{missing info|section|When did torches get a bottom texture?}}
+=== Development ===
+{{HistoryTable
+|{{HistoryLine||May 16, 2009|link=https://archive.org/download/Minecraft_IRC_Logs_2009/history/files/May-15-to-June-03-2009/2009-05-16.075419-0400EDT.txt.~1~|Notch suggests adding torches, which would "light up a 3×3 tile" area.}}
+}}
+
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-1457|[[File:Torch JE1.png|32px]] [[File:Wall Torch (S) JE1.png|32px]] Added torches.
+|[[File:Torch (inventory) JE1.png|32px]] Torches currently render 3D in the [[inventory]].
+|Torches can be placed in the air without any block supporting them and do not have a top texture.
+|When removing a block, a torch now moves to another available block.<ref>{{ytl|OpmK7rDU5bA|t=4m13s}}</ref>}}
+|{{HistoryLine|||dev=20091231-1856|[[File:Torch JE2.png|32px]] [[File:Wall Torch (S) JE2.png|32px]] The top red part from the torch has been removed.
+|[[File:Torch (texture) JE2 BE1.png|32px]] Torches now render 2D in the [[inventory]].{{check version|from my testing in in-20100105 they still very much appear 3D, was this reverted, or is this just stating the completely wrong version?}}}}
+|{{HistoryLine|||dev=20100104-2154|Added torches to the [[hotbar]].}}
+|{{HistoryLine|||dev=20100109-1939|Torches are now slightly dimmer.}}
+|{{HistoryLine|||dev=20100124-2310|[[File:Torch JE3.png|32px]] [[File:Wall Torch (S) JE3.png|32px]] Torches now have a top texture.}}
+|{{HistoryLine|||dev=20100125|Torches now have [[particle]] effects.}}
+|{{HistoryLine|||dev=20100129-1447|Torches have been made [[crafting|craftable]].}}
+|{{HistoryLine||20100212-1210|Torches no longer snap to other potential valid attachments once their supporting block is removed.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100618|[[Falling block]]s are implemented, which can be broken by torches.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.1.0|Torches can no longer be placed on [[leaves]] when fancy graphics are enabled.}}
+|{{HistoryLine||October 4, 2010|link=https://notch.tumblr.com/post/1243370641|Notch originally planned for torches to become temporary light sources that would eventually burn out and require re-lighting with [[flint and steel]]. This was planned to add with the [[Halloween Update]].}}
+|{{HistoryLine||v1.2.0|dev=?|slink=:Category:Articles needing clarification requiring unarchived version|Torches are now used to craft [[jack o'lantern]]s.}}
+|{{HistoryLine|java beta}}
+|{{HistoryLine||1.2|Torches can now be [[crafting|crafted]] using [[charcoal]], making them the first [[renewable]] light source in the game that is also obtainable and permanent.}}
+|{{HistoryLine||1.6|dev=Test Build 3|Torches can no longer be placed on [[leaves]] in fast graphics anymore.
+|Torches can no longer be placed on [[glowstone]].}}
+|{{HistoryLine||1.6.6|Torches can now be placed on glowstone once again.}}
+|{{HistoryLine||1.7|Torches and [[redstone torch]]es can now be placed on top of [[fence]]s.}}
+|{{HistoryLine||1.8|dev=Pre-release|Torches now generate in [[mineshaft]]s, [[village]]s and [[stronghold]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease 4|Torches now generate as part of the [[exit portal]] structure.}}
+|{{HistoryLine||1.2.1|dev=12w07a|Torches can now be placed on top of [[glass]] blocks.}}
+|{{HistoryLine||1.3.1|dev=12w19a|Torches now spawn around [[bonus chest]]s if each side has a [[block]] at the same height around it.}}
+|{{HistoryLine|||dev=12w25a|Torches can now be placed on top of upside down [[slab]]s and [[stairs]].}}
+|{{HistoryLine||1.4.2|dev=12w42b|Falling [[sand]] now properly "pops" when falling on torches.}}
+|{{HistoryLine||1.4.4|dev=1.4.3|Torches now have a bottom texture, visible on wall torches or torches placed on top of glass.<ref>{{bug|MC-1153||Torch texture|Fixed}}</ref>}}
+|{{HistoryLine||1.8|dev=14w07a|[[File:Wall Torch (S) JE5.png|32px]] Torches placed on walls are now rotated cuboids rather than a parallelepiped. Their top texture now also rotates accordingly.}}
+|{{HistoryLine|||dev=14w17a|Torches, as part of the [[exit portal]], now generate incorrectly and fall into the portal as [[item]]s.<ref>{{bug|MC-53897||Torches in Villages, Mineshafts, Stronghold, & End exit portal spawned dropped}}</ref>}}
+|{{HistoryLine|||dev=14w18a|Torches can now be placed on [[stained glass]].}}
+|{{HistoryLine|||dev=14w25a|[[File:Torch JE5.png|32px]] [[File:Wall Torch (S) JE6.png|32px]] Torches are now incorrectly affected by ambient occlusion.}}
+|{{HistoryLine|||dev=14w33c|[[File:Torch JE4.png|32px]] [[File:Wall Torch (S) JE5.png|32px]] Torches are no longer affected by ambient occlusion.}}
+|{{HistoryLine||1.9|dev=15w31a|Torches on the [[exit portal]] now regenerate when the [[ender dragon]] is [[Ender Dragon#Re-summoning|re-summoned]].}}
+|{{HistoryLine|||dev=15w43a|Torches can now generate within [[igloo]] basements.}}
+|{{HistoryLine|||dev=15w44a|Torches can now be found inside [[minecart with chest]]s in [[mineshaft]]s.}}
+|{{HistoryLine||1.11|dev=16w39a|Torches now generate in [[woodland mansion]]s.}}
+|{{HistoryLine||1.12|dev=pre4|Torches can no longer be placed on top of [[jack o'lantern]]s.<ref>{{bug|MC-118408||Torches and redstone torches cannot be placed on top of a Jack o'Lantern but can be placed on pumpkin|Fixed}}</ref>}}
+|{{HistoryLine||1.13|dev=17w48a|Torches can now be placed on the top of jack o'lanterns once again.}}
+|{{HistoryLine||1.14|dev=18w43a|[[File:Torch JE7.png|32px]] [[File:Wall Torch (S) JE8.png|32px]] [[File:Torch (texture) JE3 BE2.png|32px]] The texture of torches has been changed.}}
+|{{HistoryLine|||dev=18w46a|Torches can now be used to craft [[lantern]]s.}}
+|{{HistoryLine|||dev=18w47a|Torches now generate in [[pillager outpost]]s.}}
+|{{HistoryLine|||dev=18w48a|With the update of [[plains]] villages, houses are generally better lit with torches.}}
+|{{HistoryLine|||dev=18w49a|With the update of [[savanna]] villages, houses are generally better lit with torches.
+|Torches can now be found in [[chest]]s in [[savanna]] village houses.}}
+|{{HistoryLine|||dev=18w50a|With the update of [[desert]] and [[taiga]] villages, houses are generally better lit with torches.}}
+|{{HistoryLine||1.14.3|dev=pre3|Torches can now be placed on [[iron bar]]s and [[glass pane]]s.}}
+|{{HistoryLine||1.19|dev=22w13a|Torches now generate in [[Ancient City|ancient cities]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Torches can now be found in [[trial chambers]] supply chests and corridor chests.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|[[File:Torch JE3 BE1.png|32px]] [[File:Wall Torch JE3 BE1.png|32px]] [[File:Torch (texture) JE2 BE1.png|32px]] Added torches.}}
+|{{HistoryLine||v0.3.0|Survival players no longer start out with an infinite amount of torches in the inventory.}}
+|{{HistoryLine||v0.8.0|dev=build 1|Torches are now used to craft [[jack o'lantern]]s.}}
+|{{HistoryLine||v0.9.0|dev=build 1|Torches now spawn naturally in [[village]]s, [[mineshaft]]s and [[stronghold]]s.}}
+|{{HistoryLine|||dev=build 2|Torches can now be placed on [[monster spawner]]s.}}
+|{{HistoryLine|||dev=build 5|The placing speed of torches has been improved.}}
+|{{HistoryLine|||dev=build 6|The [[light]]ing from torches is now brighter and more [[Java Edition|PC]]-like. What exactly this means is unknown.}}
+|{{HistoryLine||v0.14.0|dev=build 1|Torches can now be found inside [[minecart with chest]]s in [[mineshaft]]s.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Torches now generate within [[igloo]] basements.
+|Four torches now generate as part of the [[exit portal]] after the [[ender dragon]] dies.}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Torches now generate in [[mansion]]s.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Up to four torches can now generate in bonus [[chest]]s.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.20.1|Torches can now be used to craft [[underwater torch]]es and [[colored torch]]es.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|[[File:Torch BE2.png|32px]] [[File:Wall Torch (S) BE2.png|32px]][[File:Torch (texture) JE3 BE2.png|32px]] The texture of torches has been changed.
+|Torches now generate in [[pillager outpost]]s.
+|Torches can now be used to craft [[lantern]]s.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Torches can now be found in [[savanna]] [[village]] house [[chest]]s.}}
+|{{HistoryLine||1.19.0|dev=Preview 1.19.0.27|Torches now generate in [[Ancient City|ancient cities]].}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Torches can now be found in [[trial chambers]] supply chests and corridor chests.}}
+|{{HistoryLine|upcoming bedrock}}
+|{{HistoryLine||26.20|dev=Preview 26.20.20|The [[recipe]] for torches can now be unlocked by acquiring either a [[stick]], [[coal]], [[charcoal]], or any [[pickaxe]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Torch JE3 BE1.png|32px]] [[File:Wall Torch (S) JE3 BE1.png|32px]] [[File:Torch (texture) JE2 BE1.png|32px]] Added torches.}}
+|{{HistoryLine||xbox=TU43|xbone=CU33|ps3=1.36|psvita=1.36|ps4=1.36|wiiu=Patch 13|switch=1.0.1|Torches can now generate within [[igloo]] basements.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Torches now generate in [[woodland mansion]]s.|Torches can now be placed on the full-[[block]] side of [[stairs]].}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.90|wiiu=none|switch=none|[[File:Torch JE6 BE2.png|32px]] [[File:Wall Torch (S) BE2.png|32px]]{{verify|Were these the actual models used?}} [[File:Torch (texture) JE3 BE2.png|32px]] The texture of torches has been changed.
+|Torches can now be used to craft [[lantern]]s.}}
+|{{HistoryLine||ps3=none|psvita=none|ps4=1.91|Torches now generate in [[pillager outpost]]s.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new 3ds}}
+|{{HistoryLine||0.1.0|[[File:Torch JE3 BE1.png|32px]] [[File:Wall Torch (S) JE3 BE1.png|32px]]{{verify|Were these the actual models used?}} [[File:Torch (texture) JE2 BE1.png|32px]] Added torches.}}
+|{{HistoryLine||1.9.19|Torches now generate in [[woodland mansion]]s.}}
+}}
+
+<gallery>
+NotchTorches.png|The first image of torches posted by Notch.
+Torches.png|Torches in early [[Java Edition Indev 0.31]].
+Floor torch old hitbox.png|A torch from a Pocket Edition Alpha version with a cross [[Hitbox#Outline_box|outline box]].
+Wall torch old hitbox.png|A wall torch from a Pocket Edition Alpha version with a cross [[Hitbox#Outline_box|outline box]].
+</gallery>
+
+=== Data history ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w06a|Torches now have dedicated model json files; previously the geometry was defined in the game code itself.}}
+|{{HistoryLine||1.13|dev=17w47a|The non-up facing block states for the <code>torch</code> ID have been split up into <code>wall_torch</code>.
+|Prior to [[1.13/Flattening|''The Flattening'']], this block's numeral ID was 50.}}
+}}
+
+== Issues ==
+{{issue list|-redstone|-soul|torch}}
+
+==Gallery==
+===Renders===
+<gallery>
+Wall Torch.gif
+Wall Torch BE.gif
+</gallery>
+===Screenshots===
+<gallery>
+Torch and Ice.png|An example of a torch melting [[ice]].
+Stronghold Torch Glitch.png|Torches on a pillar in a [[stronghold]]. The torch on the right has an orientation error.
+Torch texture update preview.png|Preview from [[Jappa]] of the [[Texture Update]] torch texture.
+</gallery>
+
+===In other media===
+<gallery>
+File:Torch JINX.jpg|Official T-shirt artwork depicting a scene that resembles a torch. Made by JINX.
+File:Torch Merch.jpg|An official light up torch by JINX.
+File:ThinkGeek Torch.jpg|An official light up torch by JINX.
+File:Woodsword Chronicles torch.jpg|A torch as it appears in {{Woodsword Chronicle|5|1}}
+File:Minecraft Light Up Torch.png
+File:Torch Display.png
+</gallery>
+
+== See also ==
+* {{BlockLink|Soul Torch}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Redstone Lamp}}
+* {{BlockLink|Underwater torch}}
+* {{BlockSprite|Red Torch}} [[Colored torch]]
+* {{BlockLink|Lantern}}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{Mcnet|taking-inventory-torch|Taking Inventory: Torch|December 10, 2018|[[Duncan Geere]]}}
+
+== Navigation ==
+{{Navbox blocks|decoration}}
+
+[[Category:Utility blocks]]
+[[Category:Manufactured blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Light sources]]
+
+[[cs:Louč]]
+[[de:Fackel]]
+[[es:Antorcha]]
+[[fr:Torche]]
+[[hu:Fáklya]]
+[[it:Torcia]]
+[[ja:松明]]
+[[ko:횃불]]
+[[lzh:炬]]
+[[nl:Fakkel]]
+[[pl:Pochodnia]]
+[[pt:Tocha]]
+[[ru:Факел]]
+[[th:คบเพลิง]]
+[[tr:Meşale]]
+[[uk:Смолоскип]]
+[[zh:火把]]

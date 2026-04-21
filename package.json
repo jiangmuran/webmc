@@ -1,0 +1,48 @@
+{
+  "name": "webmc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Clean-room, AGPL-3.0 browser-native reimplementation of a Minecraft-Java-Edition-like voxel game",
+  "license": "AGPL-3.0-or-later",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "no_proxy='localhost,127.0.0.1,::1' NO_PROXY='localhost,127.0.0.1,::1' playwright test",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "wiki:fetch": "tsx scripts/wiki-fetch.ts",
+    "wiki:seed": "tsx scripts/wiki-fetch.ts --seed",
+    "ci": "npm run typecheck && npm run lint && npm run format:check && npm run test",
+    "verify:m0": "npm run ci && npm run test:e2e"
+  },
+  "dependencies": {
+    "three": "^0.175.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.10.0",
+    "@types/three": "^0.175.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "@vitest/coverage-v8": "^4.1.5",
+    "eslint": "^9.18.0",
+    "fast-check": "^3.23.0",
+    "prettier": "^3.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.59.0",
+    "vite": "^8.0.9",
+    "vitest": "^4.1.5"
+  }
+}

@@ -1,0 +1,1601 @@
+{{about|the definition of the block states|the files that determine block models|Tutorial:Models#Block states}}
+'''Block states''' (also known as '''block properties'''){{note|Sometimes they're different: A block state may refer to a state of the block type, also known as a block permutation {{in|be}}, e.g. a south facing pressed button. While a block property refers to a specific property used to define a block state, e.g. {{cd|facing}} property of button block.}} are extra pieces of data that further define a [[block]], such as how it appears or behaves.
+
+{{IN|bedrock}}, there are also '''aux values''' (also known as '''Metadata''') to define a block. Aux values are in the format of binary flags, which basically match the block states one-to-one, and they are accessible in decimal number in [[commands]]. However, aux values are intended to be deprecated, and newly added blocks or block states no longer support aux values.
+
+{{IN|java}}, there are also '''fluid states''', that further define a [[fluid]] as to how it behaves.
+
+== List of block states ==
+{{Missing information|old=1|section|only covers Java Edition}}
+=== age ===
+Tracks the age of plants to handle growth and of fire to handle spread.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|1}})
+| 
+* {{BlockLink|Bamboo}}
+* {{BlockLink|Torchflower Crop}}
+|-
+| Integer ({{code|0}} to {{code|2}})
+| {{BlockLink|Cocoa}}
+|-
+| Integer ({{code|0}} to {{code|3}})
+| 
+* {{BlockLink|Nether Wart}}
+* {{BlockLink|Beetroots}}
+* {{BlockLink|Frosted Ice}}
+* {{BlockLink|Sweet Berry Bush}}
+|-
+| Integer ({{code|0}} to {{code|4}})
+|
+* {{BlockLink|Pitcher Crop}}
+* {{BlockLink|Mangrove Propagule}}
+|-
+| Integer ({{code|0}} to {{code|5}})
+| {{BlockLink|Chorus Flower}}
+|-
+| Integer ({{code|0}} to {{code|7}})
+| 
+* {{BlockLink|id=wheat|Wheat Crops}}
+* {{BlockLink|Pumpkin Stem}}
+* {{BlockLink|Melon Stem}}
+* {{BlockLink|Carrots}}
+* {{BlockLink|Potatoes}}
+|-
+| Integer ({{code|0}} to {{code|15}})
+| 
+* {{BlockLink|Fire}}
+* {{BlockLink|Cactus}}
+* {{BlockLink|Sugar Cane}}
+|-
+| Integer ({{code|0}} to {{code|25}})
+| 
+* {{BlockLink|Cave Vines}}
+* {{BlockLink|Kelp}}
+* {{BlockLink|Twisting Vines}}
+* {{BlockLink|Weeping Vines}}
+|}
+
+=== attached ===
+Whether the tripwire hook is connected to a valid tripwire circuit or not. For hanging signs, whether the sign is hanging from a single point or not.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Tripwire Hook}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|id=oak-hanging-sign|Hanging Sign}} (any non-wall variant)
+|}
+
+=== attachment ===
+How this block is attached to the block it is on.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|ceiling}}
+* {{code|double_wall}}
+* {{code|floor}}
+* {{code|single_wall}}
+| {{BlockLink|Bell}}
+|}
+
+=== axis ===
+What axis the block is oriented to.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|x}}
+* {{code|y}}
+* {{code|z}}
+|
+* {{BlockLink|Deepslate}} (including infested variant)
+* {{BlockLink|id=verdant-froglight|Froglight}} (any)
+* {{BlockLink|id=oak-log|Log}} (including all variants, wood, bamboo, and stripped versions of bamboo, logs, and wood)
+* {{BlockLink|id=crimson-stem|Log|Stem}} (including all variants, hyphae, and stripped versions of both stems and hyphae)
+* {{BlockLink|Creaking Heart}}
+* {{BlockLink|Basalt}} (including polished basalt)
+* {{BlockLink|Bone Block}}
+* {{BlockLink|Muddy Mangrove Roots}}
+* {{BlockLink|Copper Chain}} (any)
+* {{BlockLink|Iron Chain}}
+* {{BlockLink|Hay Bale}}
+* {{BlockLink|Purpur Pillar}}
+* {{BlockLink|Quartz Pillar}}
+|-
+| 
+* {{code|x}}
+* {{code|z}}
+| {{BlockLink|Nether Portal|link=Nether Portal (block)}}
+|}
+
+=== berries ===
+Whether this block contains any berries.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Cave Vines}}
+* {{BlockLink|Cave Vines Plant}}
+|}
+
+=== bites ===
+The number of bites taken from the cake.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|6}})
+| {{BlockLink|Cake}}
+|}
+
+=== bloom ===
+Whether a sculk catalyst is currently blooming.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Sculk Catalyst}}
+|}
+
+=== bottom ===
+Whether this scaffolding is floating (shows the bottom) or a pale moss carpet is only showing the upper vines.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+|
+* {{BlockLink|Pale Moss Carpet}}
+* {{BlockLink|Scaffolding}}
+|}
+
+=== can_summon ===
+Whether this shrieker can summon a [[warden]] if triggered.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Sculk Shrieker}}
+|}
+
+=== candles ===
+How many candles are contained within this block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+| {{BlockLink|Candle}} (any)
+|}
+
+=== charges ===
+Tracks the remaining uses of respawn anchors.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|4}})
+| {{BlockLink|Respawn Anchor}}
+|}
+
+=== conditional ===
+Whether or not the command block is conditional.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Command Block}} (any variant)
+|}
+
+=== copper_golem_pose ===
+The pose of a copper golem statue.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|standing}}
+* {{code|sitting}}
+* {{code|running}}
+* {{code|star}}
+| {{BlockLink|Copper Golem Statue}} (any)
+|}
+
+=== cracked ===
+Whether or not a decorated pot produces shattering sound when broken.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Decorated Pot}}
+|}
+
+=== crafting ===
+Whether a crafter is currently crafting.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Crafter}}
+|}
+
+=== creaking_heart_state ===
+The current state of a creaking heart.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|uprooted}}
+* {{code|dormant}}
+* {{code|awake}}
+| {{BlockLink|Creaking Heart}}
+|}
+
+=== delay ===
+The amount of time between receiving a signal and responding.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+| {{BlockLink|Redstone Repeater}}
+|}
+
+=== disarmed ===
+Whether the tripwire is broken using shears or not.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Tripwire}}
+|}
+
+=== distance ===
+The distance from a base block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|7}})
+| {{BlockLink|Scaffolding}}
+|-
+| Integer ({{code|1}} to {{code|7}})
+| {{BlockLink|id=oak-leaves|Leaves}} (any)
+|}
+
+=== down ===
+Determines whether something is below the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Sculk Vein}}
+|}
+
+=== drag ===
+Determines whether the bubble column is a whirlpool or upwards.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Bubble Column}}
+|}
+
+=== dusted ===
+The dusting progress of a [[suspicious block]].
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|3}})
+| 
+*{{BlockLink|Suspicious Gravel}}
+*{{BlockLink|Suspicious Sand}}
+|}
+
+=== east ===
+Determines whether something is on the east side of the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-fence|Fence}} (any, including nether brick)
+* {{BlockLink|Glass Pane}} (including all stained colors)
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Copper Bars}} (any)
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Vines}}
+|-
+| 
+* {{code|none}}
+* {{code|side}}
+* {{code|up}}
+| {{BlockLink|Redstone Dust}}
+|-
+| 
+* {{code|low}}
+* {{code|none}}
+* {{code|tall}}
+|
+* {{BlockLink|Pale Moss Carpet}}
+* {{BlockLink|id=cobblestone-wall|Wall}} (any)
+|}
+
+=== eggs ===
+The amount of eggs in this block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+| {{BlockLink|Turtle Egg}}
+|}
+
+=== enabled ===
+Whether or not the hopper can collect and transfer items.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Hopper}}
+|}
+
+=== extended ===
+Whether or not the piston is extended.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Sticky Piston}}
+* {{BlockLink|Piston}}
+|}
+
+=== eye ===
+Whether the frame contains an eye of ender.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|End Portal Frame}}
+|}
+
+=== face ===
+What side of a block the attached block is on.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|ceiling}}
+* {{code|floor}}
+* {{code|wall}}
+| 
+* {{BlockLink|id=oak-button|Button}} (any)
+* {{BlockLink|Grindstone}}
+* {{BlockLink|Lever}}
+|}
+
+=== facing ===
+For most blocks, what direction the block faces.
+
+For wall-attached [[bell]]s as well as [[cocoa]], the opposite is true.<ref>{{bug|MC-193943}}</ref>
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|down}}
+* {{code|east}}
+* {{code|north}}
+* {{code|south}}
+* {{code|west}}
+* {{code|up}}
+| 
+* {{BlockLink|Amethyst Cluster}} (any stage)
+* {{BlockLink|Command Block}} (any variant)
+* {{BlockLink|Shulker Box}} (any color)
+* {{BlockLink|Barrel}}
+* {{BlockLink|Dispenser}}
+* {{BlockLink|Dropper}}
+* {{BlockLink|End Rod}}
+* {{BlockLink|Lightning Rod}}
+* {{BlockLink|Moving Piston}}
+* {{BlockLink|Observer}}
+* {{BlockLink|Piston}}
+* {{BlockLink|Piston Head}}
+* {{BlockLink|Sticky Piston}}
+|-
+| 
+* {{code|east}}
+* {{code|north}}
+* {{code|south}}
+* {{code|west}}
+| 
+* {{BlockLink|Anvil}} (any durability)
+* {{BlockLink|id=white-wall-banner|Banner}} (any wall variant)
+* {{BlockLink|id=white-bed|Bed}} (any)
+* {{BlockLink|id=tube-coral-wall-fan|Coral Wall Fan}} (any variant, including dead)
+* {{BlockLink|id=oak-button|Button}} (any)
+* {{BlockLink|id=oak-door|Door}} (any)
+* {{BlockLink|id=oak-fence-gate|Fence Gate}} (any)
+* {{BlockLink|id=white-glazed-terracotta|Glazed Terracotta}} (any color)
+* {{BlockLink|id=player-head|Mob head}} (any wall variant)
+* {{BlockLink|id=oak-wall-sign|Signs}} (any wall variant)
+* {{BlockLink|id=oak-hanging-sign|Hanging Signs}} (any wall variant)
+* {{BlockLink|id=oak-shelf|Shelves}} (any)
+* {{BlockLink|id=oak-stairs|Stairs}} (any)
+* {{BlockLink|id=oak-trapdoor|Trapdoor}} (any, including iron and copper)
+* {{BlockLink|Attached Melon Stem}}
+* {{BlockLink|Attached Pumpkin Stem}}
+* {{BlockLink|Bell}}
+* {{BlockLink|Beehive}}
+* {{BlockLink|Bee Nest}}
+* {{BlockLink|Big Dripleaf}}
+* {{BlockLink|Big Dripleaf Stem}}
+* {{BlockLink|Blast Furnace}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Carved Pumpkin}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Chiseled Bookshelf}}
+* {{BlockLink|Cocoa}}
+* {{BlockLink|Copper Chest}} (any)
+* {{BlockLink|Copper Golem Statue}} (any)
+* {{BlockLink|Copper Wall Torch}}
+* {{BlockLink|Decorated Pot}}
+* {{BlockLink|Dried Ghast}}
+* {{BlockLink|End Portal Frame}}
+* {{BlockLink|Ender Chest}}
+* {{BlockLink|Furnace}}
+* {{BlockLink|Grindstone}}
+* {{BlockLink|Jack o'Lantern}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|Leaf Litter}}
+* {{BlockLink|Lever}}
+* {{BlockLink|Loom}}
+* {{BlockLink|Pink Petals}}
+* {{BlockLink|Redstone Comparator}}
+* {{BlockLink|Redstone Repeater}}
+* {{BlockLink|Redstone Wall Torch}}
+* {{BlockLink|Small Dripleaf}}
+* {{BlockLink|Smoker}}
+* {{BlockLink|Soul Campfire}}
+* {{BlockLink|Soul Wall Torch}}
+* {{BlockLink|Stonecutter}}
+* {{BlockLink|Trapped Chest}}
+* {{BlockLink|Tripwire Hook}}
+* {{BlockLink|Vault}}
+* {{BlockLink|Wall Torch}}
+* {{BlockLink|Wildflowers}}
+|-
+| 
+* {{code|down}}
+* {{code|east}}
+* {{code|north}}
+* {{code|south}}
+* {{code|west}}
+| {{BlockLink|Hopper}}
+|}
+
+=== falling ===
+Whether a fluid is falling.
+{| class="wikitable
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Lava}}
+* {{BlockLink|Water}}
+|}
+
+=== flower_amount ===
+The amount of flowers in a group of pink petals or wildflowers.
+{| class="wikitable
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+|
+* {{BlockLink|Pink Petals}}
+* {{BlockLink|Wildflowers}}
+|}
+
+=== half ===
+For tall plants and doors, which half of the door or plant occupies the block space. For trapdoors and stairs, what part of the block space they are in.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|lower}}
+* {{code|upper}}
+| 
+* {{BlockLink|id=oak-door|Door}} (any)
+* {{BlockLink|Pitcher Plant}} (including crop variant)
+* {{BlockLink|Large Fern}}
+* {{BlockLink|Lilac}}
+* {{BlockLink|Peony}}
+* {{BlockLink|Rose Bush}}
+* {{BlockLink|Tall Seagrass}}
+* {{BlockLink|Tall Grass}}
+* {{BlockLink|Small Dripleaf}}
+* {{BlockLink|Sunflower}}
+|-
+| 
+* {{code|bottom}}
+* {{code|top}}
+| 
+* {{BlockLink|id=oak-stairs|Stairs}} (any)
+* {{BlockLink|id=oak-trapdoor|Trapdoor}} (any, including iron and copper)
+|}
+
+=== hanging ===
+Whether or not the lantern or mangrove propagule hangs on the ceiling.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+|
+* {{BlockLink|Lantern}}
+* {{BlockLink|Mangrove Propagule}}
+* {{BlockLink|Soul Lantern}}
+|}
+
+=== has_book ===
+Whether or not this lectern holds a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Lectern}}
+|}
+
+=== has_bottle_0 ===
+Whether or not a bottle is in slot 1 of the brewing stand.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Brewing Stand}}
+|}
+
+=== has_bottle_1 ===
+Whether or not a bottle is in slot 2 of the brewing stand.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Brewing Stand}}
+|}
+
+=== has_bottle_2 ===
+Whether or not a bottle is in slot 3 of the brewing stand.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Brewing Stand}}
+|}
+
+=== has_record ===
+True when the jukebox contains a music disc.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Jukebox}}
+|}
+
+=== hatch ===
+Determines how close an egg is to hatching; starts at 0 and is randomly incremented.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|2}})
+|
+*{{BlockLink|Sniffer Egg}}
+*{{BlockLink|Turtle Egg}}
+|}
+
+=== hinge ===
+Identifies the side the hinge is on (when facing the same direction as the door's inside).
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|left}}
+* {{code|right}}
+| {{BlockLink|id=oak-door|Door}} (any)
+|}
+
+=== honey_level ===
+The level of honey inside the beehive and bee nest.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|5}})
+|
+* {{BlockLink|Beehive}}
+* {{BlockLink|Bee Nest}}
+|}
+
+=== in_wall ===
+If true, the gate is lowered by three pixels, to accommodate attaching more cleanly with walls.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|id=oak-fence-gate|Fence Gate}} (any)
+|}
+
+=== instrument ===
+The instrument sound the note block makes when it gets powered or used.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|banjo}}
+* {{code|basedrum}}
+* {{code|bass}}
+* {{code|bell}}
+* {{code|bit}}
+* {{code|chime}}
+* {{code|cow_bell}}
+* {{code|creeper}}
+* {{code|custom_head}}
+* {{code|didgeridoo}}
+* {{code|dragon}}
+* {{code|flute}}
+* {{code|guitar}}
+* {{code|harp}}
+* {{code|hat}}
+* {{code|iron_xylophone}}
+* {{code|piglin}}
+* {{code|pling}}
+* {{code|skeleton}}
+* {{code|snare}}
+* {{code|xylophone}}
+* {{code|zombie}}
+| {{BlockLink|Note Block}}
+|}
+
+=== inverted ===
+Whether the daylight detector detects light (false) or darkness (true).
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Daylight Detector}}
+|}
+
+=== layers ===
+How many layers of snow are on top of each other.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|8}})
+| {{BlockLink|Snow}}
+|}
+
+=== leaves ===
+How big the leaves are on this bamboo.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|large}}
+* {{code|none}}
+* {{code|small}}
+| {{BlockLink|Bamboo}}
+|}
+
+=== level ===
+For cauldrons, composters, and fluids, describes how full the block is. For lights, describes the light level produced.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|3}})
+| {{BlockLink|Cauldron}} ([[water]] and [[Powder Snow|powder snow]])
+|-
+| Integer ({{code|0}} to {{code|8}})
+| {{BlockLink|Composter}}
+|-
+| Integer ({{code|0}} to {{code|15}})
+| 
+* {{BlockLink|Water}}
+* {{BlockLink|Lava}}
+* {{BlockLink|Light|link=light (block)}}
+|}
+
+=== lit ===
+Whether the block is turned on or off.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Candle}} (any)
+* {{BlockLink|Candle Cake}} (any)
+* {{BlockLink|Copper Bulb}} (any)
+* {{BlockLink|Blast Furnace}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Deepslate Redstone Ore}}
+* {{BlockLink|Furnace}}
+* {{BlockLink|Redstone Ore}}
+* {{BlockLink|Redstone Torch}}
+* {{BlockLink|Redstone Wall Torch}}
+* {{BlockLink|Redstone Lamp}}
+* {{BlockLink|Smoker}}
+* {{BlockLink|Soul Campfire}}
+|}
+
+=== locked ===
+Whether the repeater can change it is powered state (false) or not (true).
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Redstone Repeater}}
+|}
+
+=== mode ===
+The mode the comparator or structure block is in.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|compare}}
+* {{code|subtract}}
+| {{BlockLink|Redstone Comparator}}
+|-
+| 
+* {{code|corner}}
+* {{code|data}}
+* {{code|load}}
+* {{code|save}}
+| {{BlockLink|Structure Block}}
+|-
+|
+* {{code|accept}}
+* {{code|fail}}
+* {{code|log}}
+* {{code|start}}
+|{{BlockLink|Test Block}}
+|}
+
+=== moisture ===
+How wet the farmland is.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|7}})
+| {{BlockLink|Farmland}}
+|}
+
+=== natural ===
+If a creaking heart is naturally generated, instead of placed by a player.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Creaking Heart}}
+|}
+
+=== north ===
+Determines whether something is on the north side of the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-fence|Fence}} (any, including nether brick)
+* {{BlockLink|Glass Pane}} (including all stained colors)
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Copper Bars}} (any)
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Vines}}
+|-
+| 
+* {{code|up}}
+* {{code|side}}
+* {{code|none}}
+| {{BlockLink|Redstone Dust}}
+|-
+| 
+* {{code|low}}
+* {{code|none}}
+* {{code|tall}}
+|
+* {{BlockLink|Pale Moss Carpet}}
+* {{BlockLink|id=cobblestone-wall|Wall}} (any)
+|}
+
+=== note ===
+The note the note block plays when it gets powered.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|24}})
+| {{BlockLink|Note Block}}
+|}
+
+=== occupied ===
+If there's already a player in this bed.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|id=white-bed|Bed}} (any)
+|}
+
+=== ominous ===
+Whether a [[trial spawner]] or [[vault]] is ominous.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+|
+*{{BlockLink|Trial Spawner}}
+*{{BlockLink|Vault}}
+|}
+
+=== open ===
+Whether the door is open or closed.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-door|Door}} (any)
+* {{BlockLink|id=oak-fence-gate|Fence Gate}} (any)
+* {{BlockLink|id=oak-trapdoor|Trapdoor}} (any, including iron and copper)
+* {{BlockLink|Barrel}}
+|}
+
+=== orientation ===
+Direction the arrows point, followed by the position of the line face.
+
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|down_east}}
+* {{code|down_north}}
+* {{code|down_south}}
+* {{code|down_west}}
+* {{code|east_up}}
+* {{code|north_up}}
+* {{code|south_up}}
+* {{code|up_east}}
+* {{code|up_north}}
+* {{code|up_south}}
+* {{code|up_west}}
+* {{code|west_up}}
+| 
+*{{BlockLink|Crafter}}
+*{{BlockLink|Jigsaw Block}}
+|}
+
+=== part ===
+Whether this is the foot or head end of the bed.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|foot}}
+* {{code|head}}
+| {{BlockLink|id=white-bed|Bed}} (any)
+|}
+
+=== persistent ===
+Whether leaves decay (false) or not (true)
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|id=oak-leaves|Leaves}} (any)
+|}
+
+=== pickles ===
+The amount of pickles in this block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+| {{BlockLink|Sea Pickle}}
+|}
+
+=== power ===
+The power level of Redstone emission.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|15}})
+| 
+* {{BlockLink|Calibrated Sculk Sensor}}
+* {{BlockLink|Daylight Detector}}
+* {{BlockLink|Heavy Weighted Pressure Plate}}
+* {{BlockLink|Light Weighted Pressure Plate}}
+* {{BlockLink|Redstone Dust}}
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Target}}
+|}
+
+=== powered ===
+Whether the block is powered.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-button|Button}} (any)
+* {{BlockLink|Copper Bulb}} (any)
+* {{BlockLink|id=oak-door|Door}} (any)
+* {{BlockLink|id=oak-fence-gate|Fence Gate}} (any)
+* {{BlockLink|id=player-head|Mob Head}} (any)
+* {{BlockLink|id=oak-pressure-plate|Pressure Plate}} (any non-weighted)
+* {{BlockLink|id=oak-trapdoor|Trapdoor}} (any, including iron and copper)
+* {{BlockLink|id=oak-shelf|Shelves}} (any)
+* {{BlockLink|Activator Rail}}
+* {{BlockLink|Bell}}
+* {{BlockLink|Detector Rail}}
+* {{BlockLink|Lectern}}
+* {{BlockLink|Lever}}
+* {{BlockLink|Lightning Rod}}
+* {{BlockLink|Note Block}}
+* {{BlockLink|Observer}}
+* {{BlockLink|Powered Rail}}
+* {{BlockLink|Redstone Comparator}}
+* {{BlockLink|Redstone Repeater}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Tripwire Hook}}
+|}
+
+=== rotation ===
+The rotation of standing heads, signs and banners.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|15}})
+| 
+* {{BlockLink|id=white-banner|Banner}} (any non-wall variant)
+* {{BlockLink|id=oak-hanging-sign|Hanging Signs}} (any non-wall variant)
+* {{BlockLink|id=player-head|Mob head}} (any non-wall variant)
+* {{BlockLink|id=oak-sign|Signs}} (any non-wall variant)
+|}
+
+=== sculk_sensor_phase ===
+Describes this sculk sensor's phase (whether it's active).
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|active}}
+* {{code|cooldown}}
+* {{code|inactive}}
+| 
+* {{BlockLink|Calibrated Sculk Sensor}}
+* {{BlockLink|Sculk Sensor}}
+|}
+
+=== segment_amount ===
+The amount of leaves in a group of leaf litter.
+{| class="wikitable
+! State value
+! Blocks
+|-
+| Integer ({{code|1}} to {{code|4}})
+| {{BlockLink|Leaf Litter}}
+|}
+
+=== shape ===
+The way this block connects to its neighbors.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|ascending_east}}
+* {{code|ascending_north}}
+* {{code|ascending_south}}
+* {{code|ascending_west}}
+* {{code|east_west}}
+* {{code|north_south}}
+| 
+* {{BlockLink|Powered Rail}}
+* {{BlockLink|Detector Rail}}
+* {{BlockLink|Activator Rail}}
+|-
+| 
+* {{code|inner_left}}
+* {{code|inner_right}}
+* {{code|outer_left}}
+* {{code|outer_right}}
+* {{code|straight}}
+| {{BlockLink|id=oak-stairs|Stairs}} (any)
+|-
+| 
+* {{code|ascending_east}}
+* {{code|ascending_north}}
+* {{code|ascending_south}}
+* {{code|ascending_west}}
+* {{code|east_west}}
+* {{code|north_south}}
+* {{code|north_east}}
+* {{code|north_west}}
+* {{code|south_east}}
+* {{code|south_west}}
+| {{BlockLink|Rail}}
+|}
+
+=== short ===
+Whether this piston head's arm is 4/16th of a block shorter.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Piston Head}}
+|}
+
+=== shrieking ===
+Whether this sculk shrieker is shrieking.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Sculk Shrieker}}
+|}
+
+=== side_chain ===
+The current state of a vault.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|inactive}}
+* {{code|active}}
+* {{code|unlocking}}
+* {{code|ejecting}}
+| {{BlockLink|Vault}}
+|}
+
+=== signal_fire ===
+Whether this campfire has higher smoke or not.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Campfire}}
+* {{BlockLink|Soul Campfire}}
+|}
+
+=== slot_0_occupied ===
+Whether slot 0 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== slot_1_occupied ===
+Whether slot 1 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== slot_2_occupied ===
+Whether slot 2 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== slot_3_occupied ===
+Whether slot 3 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== slot_4_occupied ===
+Whether slot 4 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== slot_5_occupied ===
+Whether slot 5 is occupied by a book.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Chiseled Bookshelf}}
+|}
+
+=== snowy ===
+Whether this block uses the snowy side texture.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Grass Block}}
+* {{BlockLink|Podzol}}
+* {{BlockLink|Mycelium}}
+|}
+
+=== south ===
+Determines whether something is on the south side of the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-fence|Fence}} (any, including nether brick)
+* {{BlockLink|Glass Pane}} (including all stained colors)
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Copper Bars}} (any)
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Vines}}
+|-
+| 
+* {{code|none}}
+* {{code|side}}
+* {{code|up}}
+| {{BlockLink|Redstone Dust}}
+|-
+| 
+* {{code|low}}
+* {{code|none}}
+* {{code|tall}}
+|
+* {{BlockLink|Pale Moss Carpet}}
+* {{BlockLink|id=cobblestone-wall|Wall}} (any)
+|}
+
+=== stage ===
+Whether this sapling is ready to grow.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Integer ({{code|0}} to {{code|1}})
+| 
+* {{BlockLink|id=oak-sapling|Sapling}} (any)
+* {{BlockLink|Bamboo}}
+|}
+
+=== thickness ===
+The thickness of pointed dripstone or sulfur spikes.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|base}}
+* {{code|frustum}}
+* {{code|middle}}
+* {{code|tip}}
+* {{code|tip_merge}}
+| 
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Sulfur Spike}}{{upcoming|Chaos Cubed}}
+|}
+
+=== tilt ===
+The tilt stage of a big dripleaf.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|full}}
+* {{code|none}}
+* {{code|partial}}
+* {{code|unstable}}
+| {{BlockLink|Big Dripleaf}}
+|}
+
+=== tip ===
+Whether pale hanging moss is at the bottom.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|Pale Hanging Moss}}
+|}
+
+=== trial_spawner_state ===
+The current state of a trial spawner.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|inactive}}
+* {{code|waiting_for_players}}
+* {{code|active}}
+* {{code|waiting_for_reward_ejection}}
+* {{code|ejecting_reward}}
+* {{code|cooldown}}
+| {{BlockLink|Trial Spawner}}
+|}
+
+=== triggered ===
+Whether this block has been activated.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Crafter}}
+* {{BlockLink|Dispenser}}
+* {{BlockLink|Dropper}}
+|}
+
+=== type ===
+Determines the variant of this block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| 
+* {{code|normal}}
+* {{code|sticky}}
+| 
+* {{BlockLink|Piston Head}}
+* {{BlockLink|Moving Piston}}
+|-
+| 
+* {{code|left}}
+* {{code|right}}
+* {{code|single}}
+| 
+* {{BlockLink|Chest}}
+* {{BlockLink|Copper Chest}} (any)
+* {{BlockLink|Trapped Chest}}
+|-
+| 
+* {{code|bottom}}
+* {{code|double}}
+* {{code|top}}
+| {{BlockLink|id=oak-slab|Slab}} (any)
+|}
+
+=== unstable ===
+Whether the TNT ignites when punched or not.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| {{BlockLink|TNT}}
+|}
+
+=== up ===
+Determines whether something is above the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=cobblestone-wall|Wall}} (any)
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Vines}}
+|}
+
+=== vault_state ===
+The current state of a vault.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|inactive}}
+* {{code|active}}
+* {{code|unlocking}}
+* {{code|ejecting}}
+| {{BlockLink|Vault}}
+|}
+
+=== vertical_direction ===
+The vertical directon of pointed dripstone or sulfur spikes.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+|
+* {{code|down}}
+* {{code|up}}
+| 
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Sulfur Spike}}{{upcoming|Chaos Cubed}}
+|}
+
+=== waterlogged ===
+Whether the block has water in it.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|Amethyst Cluster}} (any stage)
+* {{BlockLink|Candle}} (any)
+* {{BlockLink|Copper Bars}} (any)
+* {{BlockLink|Copper Chain}} (any)
+* {{BlockLink|Copper Chest}} (any)
+* {{BlockLink|Copper Golem Statue}} (any)
+* {{BlockLink|Copper Grate}} (any)
+* {{BlockLink|Copper Lantern}} (any)
+* {{BlockLink|id=tube-coral|Coral}} (all non-block variants, including dead variants)
+* {{BlockLink|id=oak-fence|Fence}} (any, including nether brick)
+* {{BlockLink|id=glass-pane|Glass Pane}} (including all stained colors)
+* {{BlockLink|id=oak-hanging-sign|Hanging Signs}} (all variants, including wall signs)
+* {{BlockLink|id=oak-leaves|Leaves}} (any)
+* {{BlockLink|id=oak-shelf|Shelf}} (any)
+* {{BlockLink|id=oak-sign|Signs}} (all variants, including wall signs)
+* {{BlockLink|id=stone-slab|Slab}} (any)
+* {{BlockLink|id=oak-stairs|Stairs}} (any)
+* {{BlockLink|id=oak-trapdoor|Trapdoor}} (any, including iron and copper)
+* {{BlockLink|id=cobblestone-wall|Wall}} (any)
+* {{BlockLink|Activator Rail}}
+* {{BlockLink|Barrier}}
+* {{BlockLink|Big Dripleaf}}
+* {{BlockLink|Big Dripleaf Stem}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Calibrated Sculk Sensor}}
+* {{BlockLink|Chest}}
+* {{BlockLink|Conduit}}
+* {{BlockLink|Decorated Pot}}
+* {{BlockLink|Detector Rail}}
+* {{BlockLink|Dried Ghast}}
+* {{BlockLink|Ender Chest}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Hanging Roots}}
+* {{BlockLink|Heavy Core}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Iron Chain}}
+* {{BlockLink|Ladder}}
+* {{BlockLink|Lantern}}
+* {{BlockLink|Light|link=light (block)}}
+* {{BlockLink|Lightning Rod}} (any)
+* {{BlockLink|Mangrove Propagule}}
+* {{BlockLink|Mangrove Roots}}
+* {{BlockLink|Pointed Dripstone}}
+* {{BlockLink|Powered Rail}}
+* {{BlockLink|Rail}}
+* {{BlockLink|Resin Clump}}
+* {{BlockLink|Scaffolding}}
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Sculk Shrieker}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Small Dripleaf}}
+* {{BlockLink|Sea Pickle}}
+* {{BlockLink|Soul Campfire}}
+* {{BlockLink|Soul Lantern}}
+* {{BlockLink|Sulfur Spike}}{{upcoming|Chaos Cubed}}
+* {{BlockLink|Trapped Chest}}
+|}
+
+=== west ===
+Determines whether something is on the west side of the block.
+{| class="wikitable"
+! State value
+! Blocks
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=oak-fence|Fence}} (any, including nether brick)
+* {{BlockLink|Glass Pane}} (including all stained colors)
+* {{BlockLink|Brown Mushroom Block}}
+* {{BlockLink|Chorus Plant}}
+* {{BlockLink|Fire}}
+* {{BlockLink|Glow Lichen}}
+* {{BlockLink|Iron Bars}}
+* {{BlockLink|Mushroom Stem}}
+* {{BlockLink|Red Mushroom Block}}
+* {{BlockLink|Sculk Vein}}
+* {{BlockLink|Tripwire}}
+* {{BlockLink|Vines}}
+|-
+| 
+* {{code|none}}
+* {{code|side}}
+* {{code|up}}
+| {{BlockLink|Redstone Dust}}
+|-
+| 
+* {{code|low}}
+* {{code|none}}
+* {{code|tall}}
+| {{BlockLink|id=cobblestone-wall|Wall}} (any)
+|}
+
+== List of fluid states ==
+
+=== falling ===
+Whether a fluid is falling.
+{| class="wikitable"
+! State value
+! Fluids
+|-
+| Boolean ({{code|false}} or {{code|true}})
+| 
+* {{BlockLink|id=lava|Flowing Lava}}
+* {{BlockLink|id=water|Flowing Water}}
+* {{BlockLink|Lava}} (always false)
+* {{BlockLink|Water}} (always false)
+|}
+
+=== level ===
+Determines the height of the fluid, 8 when the fluid is falling.
+{| class="wikitable"
+! State value
+! Fluids
+|-
+| Integer ({{code|1}} to {{code|8}})
+| 
+* {{BlockLink|id=lava|Flowing Lava}}
+* {{BlockLink|id=water|Flowing Water}}
+|}
+
+== History ==
+<!-- This is just the history of the block state data structure, not of the block states of particular blocks. -->
+{{Missing information|old=1|section|the history {{in|bedrock}}}}
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.8|dev=14w11a|Added block states. Only used in the game engine, not saved in world files or used in commands yet.}}
+|{{HistoryLine|||dev=14w26a|Switched to mostly using block states in the code.}}
+|{{HistoryLine||1.11|dev=16w32a|Enabled the use of block states in commands.}}
+|{{HistoryLine||1.13|dev=17w47a|Many block states got added, changed and removed due to ''[[the Flattening]]''.
+|Added the [[debug stick]], which is an item used to edit the block states of blocks.
+|Fluids are now semi-independent from blocks, so they now have their own fluid states.}}
+|{{HistoryLine||1.20.2|dev=23w35a|Added {{cd|powered}} block state for [[head]]s.}}
+|{{HistoryLine||26.1|dev=snap11|The {{cd|rotation}} property in default block state of [[banner]]s and [[sign]]s has been changed from {{cd|0}} to {{cd|8}}.}}
+}}
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox Minecraft|general}}
+
+[[Category:Game terms]]
+
+[[de:Blockzustand]]
+[[es:Estados de bloque]]
+[[fr:États de blocs]]
+[[ja:ブロック状態]]
+[[ko:블록 상태]]
+[[pt:Estados de bloco]]
+[[ru:Состояния блоков]]
+[[uk:Стани блока]]
+[[zh:方块状态]]

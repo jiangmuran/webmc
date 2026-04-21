@@ -1,0 +1,1428 @@
+{{For}}
+{{Infobox fluid
+| image = Water.gif
+| imagecaption = {{JE}}
+| image2 = Water BE.gif
+| image2caption = {{BE}}
+| invimage = Water Bucket
+| renewable = Yes
+| transparent = '''[[JE]]''': Partial <span style="font-size:smaller">(diffuses sky light)</span><br>'''[[BE]]''': Partial <span style="font-size:smaller">(diffuses sky light, -1 to light)</span>
+| light = No
+| tool = bucket
+| infinite = Yes
+| flowrate = 5 [[tick]]s/block
+| flowdistance = 7 blocks
+| mapcolor = 
+*{{Map color|Water}}{{only|je|short=1}}
+*[[File:Blank.png|link=|12px|middle]] – [[#Bedrock Edition|Water tint]]{{only|be|short=1}} <!--Apparently, there's no image of the water color in the game's textures. It would be good to create an image for this, something similar to what's in 'BlockSprite_all-wool'.-->
+}}
+'''Water''' is a [[fluid]] that naturally generates abundantly in the [[Overworld]].
+
+== Obtaining ==
+Water can be collected by {{ctrl|using}} a [[bucket]] on a water source block or a full water [[cauldron]], creating a [[water bucket]].
+
+{{IN|JE}}, water does not have a direct item form, but {{in|be}} it may be obtained as an item via inventory editing or add-ons.
+
+=== Natural generation ===
+Water naturally generates in the [[Overworld]] to form [[ocean]]s, [[river]]s and [[spring]]s. The water level is at [[altitude|layer 62]] near oceans and rivers, but changes depending on location due to the [[aquifer]] system, filling some carvers, noise caves and canyons with water at different levels. Water also generates as small puddles on the floor next to [[dripstone cluster]]s, and as clay pools on the floor of [[lush caves]].
+
+Water also generates in [[village]]s, [[desert well]]s, [[stronghold]]s, [[woodland mansion]]s, [[ancient cities]], [[ocean monument]]s and [[trial chambers]] within various rooms.
+
+Water never generates in [[the Nether]] and instantly disappears if placed there with a water bucket. However, water can exist in the Nether in a [[cauldron]]. Water can also be placed in the Nether using [[commands]] such as {{cmd|setblock}} and {{cmd|fill}}. Although it does not naturally generate there, water can be placed and functions normally in [[the End]].
+
+{{IN|be}}, water also generates as part of [[ocean ruins]] with loot [[chest]]s, but only two water blocks generate: 
+* One water block generates inside the loot chest, making it a [[waterlogged]] loot chest.
+* The other water block generates on top of the loot chest.
+These water blocks generate even if the ruin is located on the surface.<ref>{{bug|MCPE-36793|||CR}}</ref> This is not the case in {{el|je}}; if an underwater ruin generates on the surface, no water generates.<ref>{{bug|MC-136156}}</ref> This also happens with [[shipwreck]]s.
+
+Water spends most of its time as stationary, rather than flowing – regardless of its level, or whether it contains a current downward or to the side. When specifically triggered by a block update, water changes to 'flowing', updates its level, then changes back to stationary. Water springs are generated as flowing, and oceans, and rivers are generated as stationary. This happens before most types of generated structure are created, and the main cause of water "glitches" is that generated structures do not trigger a block update to let water flow into them.
+
+{{Block distribution}}
+
+=== Post-generation ===
+{{ctrl|Using}} a [[water bucket]] or a [[bucket of aquatic mob]] creates water (except in [[the Nether]]).
+
+[[Ice]] and [[frosted ice]] blocks under brighter light levels melt into water source blocks (except in [[the Nether]]). Ice and frosted ice also create water when broken, but only if there is a movement-blocking block or fluid under it.
+
+== Usage ==
+=== Swimming ===
+{{main|Swimming}}
+
+The button for {{control|swim|text=swimming}} is the same as the button for jumping; non-swimming players and mobs sink slowly in water. Holding the swim button raises the player through the water, and when the surface is reached, the player bobs up and down. The {{control|crouch}} button can be used to sink faster. The {{control|sprint}} button can be used to put the player in "swim mode" when the player is completely submerged in water. When in swim mode, the player is horizontal and one block high. The player has an arm-waving animation when viewed in third person or by other players.
+
+Swimming in water is considerably slower against currents (see [[#Current|Current]] below), but faster when going with the current.
+
+Most mobs that can stand can also swim any time they are in water, except for [[iron golem]]s, [[piglin]]s, [[hoglin]]s, [[strider]]s, [[piglin brute]]s and undead mobs. This can lead to drowning if the water is falling from above.
+
+Water of any depth prevents any entity, including the player, from sustaining falling damage if they fall into it, regardless of the distance fallen.
+
+Being inside of water also imparts a [[fog]] effect, tinted accordingly.
+
+==== Water movement efficiency ====
+Water movement efficiency is an attribute that affects movement speed when in contact with water. With the [[Depth Strider]] enchantment, water movement efficiency is increased by ⅓, including reducing the speed at which flowing water pushes the player when standing still.
+
+=== Spreading ===
+{{Main|Fluid#Spread}}
+[[File:Water spread v1-13.png|300px|right|An image showing water's spreading distance]]
+Water spreads horizontally and downward into nearby [[air]] blocks. Water can spread downward infinitely until stopped by a block, and 7 blocks horizontally from a source block on a flat surface. Water spreads at a rate of 1 block every 5 game ticks, or 4 blocks per second.
+
+When spreading horizontally, a weight is assigned to every direction water can flow. For each direction, this weight is initially set to 1000. Then, for every adjacent block it can flow into it tries to find a way down that is reachable in four or fewer blocks from the block it wants to flow to. When found, the flow weight for that direction is set to the shortest path distance to the way down. Finally, water spreads in the directions with the lowest flow weight.
+
+Spreading water extinguishes [[fire]] and washes away certain types of items or placed blocks, causing them to drop as items and then carrying them along in the flow until the edge of the spread. Affected items include [[plant]]s (except trees), [[snow]], [[torch]]es, [[carpet]]s, [[redstone dust]] and some other redstone components, [[cobweb]], [[end rod]]s, [[head]]s, and [[flower pot]]s.
+
+==== Flow arrangement tables ====
+{| class="wikitable"
+|+ 
+|
+|
+|
+|
+|
+|
+|
+!7
+|
+|
+|
+|
+|
+|
+|
+|-
+|
+| 
+| 
+| 
+| 
+| 
+! 7
+!6
+! 7
+| 
+| 
+| 
+| 
+| 
+|
+|-
+|
+| 
+| 
+| 
+| 
+! 7
+!6
+!5
+!6
+! 7
+| 
+| 
+| 
+| 
+|
+|-
+|
+| 
+| 
+| 
+! 7
+!6
+!5
+!4
+!5
+!6
+! 7
+| 
+| 
+| 
+|
+|-
+|
+| 
+| 
+! 7
+!6
+!5
+!4
+!3
+!4
+!5
+!6
+! 7
+| 
+| 
+|
+|-
+|
+| 
+! 7
+!6
+!5
+!4
+!3
+!2
+!3
+!4
+!5
+!6
+! 7
+| 
+|
+|-
+|
+! 7
+!6
+!5
+!4
+!3
+!2
+!1
+!2
+!3
+!4
+!5
+!6
+! 7
+|
+|-
+!7
+!6
+!5
+!4
+!3
+!2
+!1
+!0
+!1
+!2
+!3
+!4
+!5
+!6
+!7
+|-
+|
+! 7
+!6
+!5
+!4
+!3
+!2
+!1
+!2
+!3
+!4
+!5
+!6
+! 7
+|
+|-
+|
+| 
+! 7
+!6
+!5
+!4
+!3
+!2
+!3
+!4
+!5
+!6
+! 7
+| 
+|
+|-
+|
+| 
+| 
+! 7
+!6
+!5
+!4
+!3
+!4
+!5
+!6
+! 7
+| 
+| 
+|
+|-
+|
+| 
+| 
+| 
+! 7
+!6
+!5
+!4
+!5
+!6
+! 7
+| 
+| 
+| 
+|
+|-
+|
+| 
+| 
+| 
+| 
+! 7
+!6
+!5
+!6
+! 7
+| 
+| 
+| 
+| 
+|
+|-
+|
+| 
+| 
+| 
+| 
+| 
+! 7
+!6
+! 7
+| 
+| 
+| 
+| 
+| 
+|
+|-
+|
+|
+|
+|
+|
+|
+|
+!7
+|
+|
+|
+|
+|
+|
+|
+|}
+
+{| class="wikitable"
+! colspan="2" |Range
+!Height in blocks
+|-
+!1
+|block
+|1
+|-
+!2
+|blocks
+|0.75-1
+|-
+!3
+|blocks
+|0.625-0.75
+|-
+!4
+|blocks
+|0.5-0.625
+|-
+!5
+|blocks
+|0.375-0.5
+|-
+!6
+|blocks
+|0.25-0.375
+|-
+!7
+|blocks
+|0.125-0.25
+|}
+
+=== Source blocks ===
+{{anchor|Water Spawner}} <!-- Compatibility anchor -->
+{{about|the behavior and creation of source units of water|the removed block that created water sources|Water Spawner|section=1}}
+A water source block is created from a flowing block that is horizontally adjacent to two or more other source blocks, and sitting on top of a solid block or another water source block. This allows water spawners to exist, in which a new source block immediately forms in the space left by removing a source block with a [[bucket]]. Pools of still water can be created by placing water source blocks in a confined area.
+
+Water spawners can be constructed by arranging for two source blocks to flow into a third block. Each of the examples below require two source blocks, each on opposite ends of the hole, to create a renewable water source block in between.
+
+While water source blocks generate only adjacent to solid blocks, they do not require a solid block to support them. Removing all adjacent blocks to a water source block causes it to remain floating in the air.
+
+A water source block can also be created from a flowing block that is adjacent to one source block horizontally and one vertically above the flowing block. 
+
+{{IN|java}}, the formation of new water sources blocks can be disabled when the [[game rule]] {{cd|waterSourceConversion}} is set to {{cd|false}}.
+
+<gallery>
+2x2 water source.png|2×2 water spawner (every corner is renewable)
+3x1 water source.png|3×1 water spawner (middle water block is renewable)
+L-shaped water source.png|L-shaped water spawner (corner water block is renewable)
+</gallery>
+
+A [[dispenser]] loaded with a filled [[bucket]] places a water source block in an empty block in front of it when activated. A dispenser loaded with an empty bucket and a water source right in front of it sucks the source into the bucket when activated.
+
+In snowy [[biome]]s, water source blocks have a chance to turn into [[ice]] if directly under the sky. Ice blocks under brighter light levels melt back into water source blocks (except in [[the Nether]]). Ice reverts to water when broken, but only if there is a movement-blocking block or any fluid under it.
+
+The spreading of water sources can be simulated using the plugin below:
+<div style="display: flex; justify-content: center;">
+<div class="mcw-calc searchaux" data-type="lifeviewer">
+<div class="mcw-calc-parameter" data-name="pattern"><nowiki>x = 32, y = 15, rule = B234/S01234VInvestigator
+7.3E.5E.15E$5E.2EAE.EA.AE.EA5.A3.A2.E$EA.AE.EA.E.E3.E.E2.A10.E$5E.4E.
+E.A.E.EA12.E$11.5E.E13.E$10E7.E2.A10.E$EA7.E7.E13.E$E.A6.E7.EA3.A8.E$
+E2.A5.E7.E13.E$E3.A4.E7.E6.A6.E$E4.A3.E7.E13.E$E5.A2.E7.EA12.E$E6.A.E
+7.E8.A4.E$E7.AE7.E6.A5.AE$10E7.15E!
+[[ GPS 4 COLOR on #3F76E4 T 0 "Press Play to spread sources" T 1 "" STOP 87 LABEL 15.5 20 16 "#P water sources (#F new)" ]]</nowiki></div>
+</div>
+</div>
+
+=== Current ===
+The current in a water block determines both the direction it appears to flow and the direction an [[entity]] such as a player or [[boat]] is pushed from that block.
+
+Water with a current pushes players and [[mob]]s at a speed of about 1.39 meters per second, or 25 blocks every 18 seconds. Players that are flying in creative mode do not get pushed.
+
+The horizontal current in a water block is based on a vector sum of the flows to and from that block from its four horizontal neighbors. For example, if a block receives water from the north and sends it both south and east, but borders a solid block on its west edge, then a south-southeast current exits from that block, because 2 southward flows (in and out) are combined with 1 eastward flow (out). Thus, 16 horizontal directions are possible. If a branch in a channel is 2 blocks wide at its entrance, then entities float into it rather than continuing in a straight line.
+
+[[File:Water flow with motion blocking.jpg|thumb|The upper water source block flows toward the bottom-left source block, but not the bottom-right, because [[glass]] [[blocks motion]] but [[ladder]]s do not.]]
+
+Normally, a water source block cannot have horizontal current unless it is actually able to flow into a neighboring block. However, a contained source block ''can'' have current toward a lower source block if the block that prevents its flow is not [[motion-blocking]] (see image).
+
+Water blocks can create a downward current. A downward current in a water block is caused by the block below it. Most blocks that do not have a solid upper face cause downward current on above water blocks. Also, ice and falling water blocks (blocks created by spreading downward) cause downward current on the water block above. Falling water blocks have a downward current by default.
+
+It is also possible for the water current to create horizontal directions beyond the possible 16 directions (i.e. cardinal directions that are multiples of 22.5 degrees) via falling current (typically the 32-direction "{{w|Cardinal direction|tertiary intercardinal direction}}" using directions bisecting the angle between the points on the 16-direction {{w|points of the compass}}, where the intermediate cardinal directions are multiples of 11.25 degrees but not multiples of 22.5 degrees, and rarely the 64-direction points). For instance, if a water block receives water from the north and sends downwards before flowing further to the west and borders a solid block on its east edge below the falling current, if the falling current that sends to the west is not obstructed by a solid block in that particular direction, then the falling current would be displayed as west by north (281.25 degrees clockwise, where 0 degrees indicates north), but the actual movement of the entity will not match the flowing direction and will remain westward. On the other hand, if a water block receives water from the north and sends downwards before flowing further both north and west, and borders a solid block on its east edge, then the northwest by north (326.25 degrees clockwise) falling current exits before the adjacent water blocks below it, and the entity movement direction would match the flowing direction instead.
+
+=== Light ===
+{{IN|bedrock}}, every block of water reduces [[light]] by 1 extra level (in addition to the normal fading-out of light). {{IN|java}}, water does not cause any additional decrease for block light, but diffuses sky light, causing the light to fade with depth.
+
+===Water and lava===
+{{Main|Fluid#Mixing}}
+
+Water and lava can produce [[stone]], [[cobblestone]], or [[obsidian]] based on how they interact. If water touches a lava source, the lava source turns to obsidian. If both touch each other while flowing, cobblestone is made and no sources are removed, and if lava flows downward onto water, the water turns to stone.
+
+=== Interactions with mobs ===
+==== Direct contact ====
+Water damages [[endermen]], [[snow golem]]s, [[strider]]s and [[blaze]]s, at a rate of {{hp|1}} per half second. [[Bee]]s are also damaged at a rate of {{hp|1}} per half second if they stay in water for more than {{convert|20|tick|second}}. If water comes into contact with a [[shulker]] or an [[enderman]], the mob teleports away.
+
+==== Drowning ====
+{{Main|Damage#Drowning}}
+
+Players and mobs (except [[aquatic mob]]s, [[undead mob]]s and [[iron golem]]s) have a breath meter that lasts 15 seconds. After they run out of breath, they take {{hp|2}} drowning damage every second until they die, surface, or enter [[bubble column]]s.
+
+[[Dolphin]]s are a special case when it comes to drowning: they take drowning damage when underwater for about 4 minutes, but also take suffocation damage when in air for about 2 minutes.
+
+If a [[husk]] drowns underwater, it starts to shake and eventually becomes a [[zombie]]. If a [[zombie]] drowns underwater, it starts to shake and eventually transforms into a [[drowned]].
+
+===== Oxygen bonus =====
+Each level of the [[Respiration]] enchantment grants an oxygen bonus of +1, which equates to 15 seconds to the breath meter, and grants an x/(x+1) chance (where x is the Respiration level) of not taking drowning damage after that time: 30 seconds and an average {{hp|1}}/second with Respiration I, 45 seconds and an average of {{frac|2|3}} damage/second with Respiration II, and 60 seconds and an average of {{frac|1|2}} damage/second with Respiration III.
+
+=== Submerged mining speed ===
+Players with their head underwater require 5 times the normal amount of time to mine blocks while standing on the ground, or 25 times while not on the ground. If a player wears a helmet with the [[Aqua Affinity]] enchantment, submerged mining speed is increased by 400%, negating this effect. Mining is still 5 times slower if not standing on the ground.
+
+=== Explosions ===
+Water does not prevent explosions from activating. Water has a high blast resistance, causing it to absorb any normal blasts, with the exception of explosions from [[underwater TNT]]{{only|education}} or placing a [[Falling Block|falling block]] on top of a regular TNT block and then lighting it.
+
+=== Hardening concrete powder ===
+When water comes into contact with [[concrete powder]], the powder hardens into solid [[concrete]].
+
+=== Sponges ===
+When a dry [[sponge]] comes into contact with a water source or flowing block, it becomes a wet [[sponge]], absorbing all water within 3 to 5 blocks in all directions. [[Kelp]] and [[lily pad]]s within the absorbed water blocks are destroyed and drop as items, and [[seagrass]] is destroyed without dropping anything. Mobs that take damage out of water are affected as a side-effect. 
+
+Sponges do not absorb water from [[waterlogged]] blocks, nor water that comes into contact by flowing back in from outside the area of absorption. For instance, placing a sponge 4 or more blocks from a single water source removes the flowing water in the area of effect, but as the flow from the source resumes it is not affected by the wet sponge.
+
+A sponge instantly absorbs nearby water when it is placed next to water or when water comes into contact with it (by being placed next to the sponge, or by flowing toward it). A sponge absorbs [[water]] around itself (water source blocks or flowing water) out to a [[taxicab distance]] of 7 in all directions (including up and down), but won't absorb more than 65 blocks of water (water closest to the sponge is absorbed first). The absorption propagates only from water to water and does not "jump over" non-water blocks (including air).
+
+=== Dripping ===
+[[File:WaterDropletsExample.png|thumb|Dripping water.]]
+Water above a non-transparent block (except for stairs, fences, or slabs) produces dripping particles on the underside of that block. If a block of [[pointed dripstone]] hangs under any block directly beneath a water source, the drips can slowly fill up a [[cauldron]] placed underneath. Without the dripstone, a cauldron does not fill.
+
+=== Vertical transport ===
+[[Bubble column]]s are created by placing [[magma block]]s or [[soul sand]] under water. The latter can be used to transport [[mobs]] or items quickly vertically.
+
+=== Irrigation ===
+Water irrigates all [[farmland]] within a distance of 4 blocks in every direction except upwards, which causes crops on the farmland to grow faster and prevents the farmland from randomly reverting to [[dirt]]. [[Sugar cane]] also requires water next to the block it is planted on to be placed, and breaks if it detects this is no longer the case. [[Lily pad]]s can be placed only on water source blocks, and [[seagrass]] and [[kelp]] can exist only inside of water source blocks. [[Coral]] also must be in contact with water to survive.
+
+=== Appearance ===
+Water uses a translucent animated texture that is tinted differently in different [[biomes]]. {{IN|be}}, biome colors also appear on [[maps]].
+
+Unlike other translucent blocks such as [[ice]], [[stained glass]] and [[tinted glass]], water shows the opposite sides of its external planes when viewed from within and from outside.<ref>{{bug|MC-202578|||WAI}}</ref> However, it applies only to the top plane and four side planes; the bottom face is always unseen from above.<ref>{{bug|MC-190053}}</ref>
+
+==== Fog ====
+When the camera is inside water, a special [[fog]] effect is applied. Initially, this fog is very dense and blocks almost 100% of the view, but it gradually changes to a static fog distance during 30 seconds. The color and view distance are dependent of the biome. The [[Night Vision]] and [[Conduit Power]] effects increase underwater visibility.
+
+==== ''Java Edition'' ====
+{| class="wikitable sortable mw-collapsible mw-collapsed" data-description="Water Color in Java Edition"
+|-
+!Biome!!Water color!!Water fog color!!Block
+|-
+|{{BiomeSprite|Plains|text=Default (biomes not listed below)}}||{{color|#3F76E4}}||{{color|#050533}}||[[File:Plains Water JE.png|32px]]
+|-
+|{{BiomeLink|Swamp}}||{{color|#617B64}}||{{color|#232317}}||[[File:Swamp Water.png|32px]]
+|-
+|{{BiomeLink|Lukewarm Ocean}}<br>{{BiomeLink|Deep Lukewarm Ocean}}||{{color|#45ADF2}}||{{color|#041633}}||[[File:Lukewarm Ocean Water JE.png|32px]]
+|-
+|{{BiomeLink|Warm Ocean}}||{{color|#43D5EE}}||{{color|#041F33}}||[[File:Warm Ocean Water JE.png|32px]]
+|-
+|{{BiomeLink|Cold Ocean}}<br>{{BiomeLink|Deep Cold Ocean}}<br>{{BiomeLink|Snowy Taiga}}<br>{{BiomeLink|Snowy Beach}}||{{color|#3D57D6}}||{{color|#050533}}||[[File:Cold Ocean Water JE.png|32px]]
+|-
+|{{BiomeLink|Frozen River}}<br>{{BiomeLink|Frozen Ocean}}<br>{{BiomeLink|Deep Frozen Ocean}}||{{color|#3938C9}}||{{color|#050533}}||[[File:Frozen Ocean Water JE.png|32px]]
+|-
+|{{BiomeLink|Meadow}}||{{color|#0E4ECF}}||{{color|#050533}}||[[File:Meadow Water.png|32px]]
+|-
+|{{BiomeLink|Mangrove Swamp}}||{{color|#3A7A6A}}||{{color|#4D7A60}}|||[[File:Mangrove Swamp Water.png|32px]]
+|-
+|{{BiomeLink|Cherry Grove}}||{{color|#5DB7EF}}||{{color|#5DB7EF}}||[[File:Cherry Grove Water.png|32px]]
+|-
+|{{BiomeLink|Pale Garden}}||{{color|#76889D}}||{{color|#556980}}||[[File:Pale Garden Water.png|32px]]
+|-
+|{{BiomeLink|Sulfur Caves}}||{{color|#34BF89}}||{{color|#17543C}}||[[File:Sulfur Caves Water JE1.png|32px]]
+|}
+
+==== ''Bedrock Edition''====
+<!--[[File:Water color.png|500px|thumb|center|From left to right - Badlands Plateau, Birch Forest and Snowy Taiga]]-->
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="text-align: center" data-description="Water Color in Bedrock Edition" 
+! Biome
+!Water surface color
+! Water fog color
+!Water fog distance
+!Water surface opacity
+!Block
+|-
+|{{BiomeLink|Modified Badlands Plateau}}<br>
+{{BiomeLink|Modified Wooded Badlands Plateau}}<br>
+{{BiomeLink|Desert Lakes}}<br>
+{{BiomeLink|Stony Peaks}}<br>
+{{BiomeLink|Modified Jungle Edge}}<br>
+{{BiomeLink|Shattered Savanna Plateau}}<br>
+{{BiomeLink|Lush Caves}}<br>
+{{BiomeLink|Plains}}<br>
+{{BiomeLink|Sunflower Plains}}<br>
+{{BiomeLink|Dripstone Caves}}<br>
+{{BiomeLink|Deep Dark}}<br>
+{{BiomeLink|Dark Forest Hills}}<br>
+{{BiomeLink|Tall Birch Hills}}<br>
+{{BiomeLink|Old Growth Birch Forest}}<br>
+{{BiomeLink|Meadow}}<br>
+{{BiomeLink|Old Growth Spruce Taiga}}<br>
+{{BiomeLink|Giant Spruce Taiga Hills}}<br>
+{{BiomeLink|Legacy Frozen Ocean}}<br>
+{{BiomeLink|Grove}}<br>
+{{BiomeLink|Snowy Slopes}}<br>
+{{BiomeLink|Frozen Peaks}}<br>
+{{BiomeLink|Jagged Peaks}}
+|{{color|#44aff5}}
+|{{color|#44aff5}}
+| rowspan="8" |60
+| rowspan="18" | -
+|[[File:Water BE.png|32px]]
+|-
+|{{BiomeLink|Badlands}}
+|{{color|#4e7f81}}
+|{{color|#4e7f81}}
+|[[File:Badlands Water.png|32px]]
+|-
+|{{BiomeLink|Eroded Badlands}}
+|{{color|#497f99}}
+|{{color|#497f99}}
+|[[File:Eroded Badlands Water.png|32px]]
+|-
+|{{BiomeLink|Badlands Plateau}}<br>
+{{BiomeLink|Wooded Badlands}}
+|{{color|#55809e}}
+|{{color|#55809e}}
+|[[File:Badlands Plateau Water.png|32px]]
+|-
+|{{BiomeLink|Desert}}
+|{{color|#32a598}}||{{color|#32a598}}||[[File:Desert Water.png|32px]]
+|-
+|{{BiomeLink|Desert Hills}}
+|{{color|#1a7aa1}}
+|{{color|#1a7aa1}}
+|[[File:Desert Hills Water.png|32px]]
+|-
+|{{BiomeLink|Savanna}}
+|{{color|#2c8b9c}}
+|{{color|#2c8b9c}}
+|[[File:Savanna Water.png|32px]]
+|-
+|{{BiomeLink|Savanna Plateau}}<br>
+{{BiomeLink|Windswept Savanna}}
+|{{color|#2590a8}}
+|{{color|#2590a8}}
+|[[File:Savanna Plateau Water.png|32px]]
+|-
+|{{BiomeLink|Nether Wastes}}<br>
+{{BiomeLink|Warped Forest}}<br>
+{{BiomeLink|Crimson Forest}}<br>
+{{BiomeLink|Soul Sand Valley}}
+|{{color|#905957}}
+|{{color|#905957}}
+| rowspan="2" |15
+|[[File:Nether Water.png|32px]]
+|-
+|{{BiomeLink|Basalt Deltas}}
+|{{color|#3f76e4}}
+|{{color|#423e42}}
+|[[File:Basalt Deltas Water.png|32px]]
+|-
+|{{BiomeLink|Jungle}}
+| rowspan="2" |{{color|#14a2c5}}
+| rowspan="2" |{{color|#14a2c5}}
+| rowspan="8" |60
+| rowspan="2" |[[File:Jungle Water.png|32px]]
+|-
+|{{BiomeLink|Bamboo Jungle}}
+|-
+|{{BiomeLink|Jungle Hills}}<br>
+{{BiomeLink|Modified Jungle}}<br>
+{{BiomeLink|Bamboo Jungle Hills}}
+|{{color|#1b9ed8}}
+|{{color|#1b9ed8}}
+|[[File:Jungle Hills Water.png|32px]]
+|-
+|{{BiomeLink|Sparse Jungle}}
+|{{color|#0d8ae3}}
+|{{color|#0d8ae3}}
+|[[File:Jungle Edge Water.png|32px]]
+|-
+|{{BiomeLink|Mushroom Fields}}
+|{{color|#8a8997}}
+|{{color|#8a8997}}
+|[[File:Mushroom Fields Water.png|32px]]
+|-
+|{{BiomeLink|Mushroom Field Shore}}
+|{{color|#818193}}
+|{{color|#818193}}
+|[[File:Mushroom Field Shore Water.png|32px]]
+|-
+|{{BiomeLink|Beach}}
+|{{color|#157cab}}
+|{{color|#157cab}}
+|[[File:Beach Water.png|32px]]
+|-
+|{{BiomeLink|Sulfur Caves}}{{upcoming|Chaos Cubed}}
+|{{color|#34BF89}}
+|{{color|#44aff5}}
+|[[File:Sulfur_Cave_Water BE1.png|width=32x32]]
+|-
+|{{BiomeLink|Swamp}}<br>
+{{BiomeLink|Swamp Hills}}
+|{{color|#617b64}}
+|{{color|#232317}}
+| rowspan="2" |30
+|65%
+|[[File:Swamp Water BE.png|32px]]
+|-
+|{{BiomeLink|Mangrove Swamp}}
+|{{color|#3a7a6a}}
+|{{color|#4d7a60}}
+| rowspan="10" | -
+|[[File:Mangrove Water BE.png|width=32x32]]
+|-
+|{{BiomeLink|Forest}}
+|{{color|#1e97f2}}||{{color|#1e97f2}}|| rowspan="18" |60||[[File:Forest Water.png|32px]]
+|-
+|{{BiomeLink|Flower Forest}}
+|{{color|#20a3cc}}||{{color|#20a3cc}}||[[File:Flower Forest Water.png|32px]]
+|-
+|{{BiomeLink|Dark Forest}}
+|{{color|#3b6cd1}}
+|{{color|#3b6cd1}}
+|[[File:Dark Forest Water.png|32px]]
+|-
+|{{BiomeLink|Wooded Hills}}
+|{{color|#056bd1}}
+|{{color|#056bd1}}
+|[[File:Wooded Hills Water.png|32px]]
+|-
+|{{BiomeLink|Pale Garden}}
+|{{color|#76889d}}
+|{{color|#556980}}
+|[[File:Pale Garden Water.png|32px]]
+|-
+|{{BiomeLink|Birch Forest}}
+|{{color|#0677ce}}
+|{{color|#0677ce}}
+|[[File:Birch Forest Water.png|32px]]
+|-
+|{{BiomeLink|Birch Forest Hills}}
+|{{color|#0a74c4}}
+|{{color|#0a74c4}}
+|[[File:Birch Forest Hills Water.png|32px]]
+|-
+|{{BiomeLink|Ocean}}
+| rowspan="2" |{{color|#1787D4}}||{{color|#1165b0}}|| rowspan="2" |[[File:Ocean Water.png|32px]]
+|-
+|{{BiomeLink|Deep Ocean}}||{{color|#1463a5}}
+|-
+|{{BiomeLink|Warm Ocean}}
+| rowspan="2" |{{color|#02b0e5}}||{{color|#0289d5}}||55%|| rowspan="2" |[[File:Warm Ocean Water.png|32px]]
+|-
+|{{BiomeLink|Deep Warm Ocean}}
+|{{color|#0686ca}}
+| rowspan="25" | -
+|-
+| {{BiomeLink|Lukewarm Ocean}}
+| rowspan="2" |{{color|#0d96db}}||{{color|#0a74c4}}|| rowspan="2" |[[File:Lukewarm Ocean Water.png|32px]]
+|-
+|{{BiomeLink|Deep Lukewarm Ocean}}||{{color|#0e72b9}}
+|-
+|{{BiomeLink|Cold Ocean}}
+| rowspan="2" |{{color|#2080c9}}||{{color|#14559b}}|| rowspan="2" |[[File:Cold Ocean Water.png|32px]]
+|-
+|{{BiomeLink|Deep Cold Ocean}}||{{color|#185390}}
+|-
+|{{BiomeLink|Frozen Ocean}}
+| rowspan="2" |{{color|#2570b5}}||{{color|#174985}}|| rowspan="2" |[[File:Frozen Ocean Water.png|32px]]
+|-
+|{{BiomeLink|Deep Frozen Ocean}}||{{color|#1a4879}}
+|-
+|{{BiomeLink|River}}
+|{{color|#0084ff}}
+|{{color|#0084ff}}
+|[[File:River Water.png|32px]]
+|-
+|{{BiomeLink|The End}}
+|{{color|#62529e}}
+|{{color|#62529e}}
+|15
+|[[File:The End Water.png|32px]]
+|-
+|{{BiomeLink|Cherry Grove}}
+|{{color|#5db7ef}}
+|{{color|#5db7ef}}
+| rowspan="16" |60
+|[[File:Cherry Grove Water.png|32px]]
+|-
+|{{BiomeLink|Old Growth Pine Taiga}}
+|{{color|#2d6d77}}
+|{{color|#2d6d77}}
+|[[File:Giant Tree Taiga Water.png|32px]]
+|-
+|{{BiomeLink|Giant Tree Taiga Hills}}
+|{{color|#286378}}
+|{{color|#286378}}
+|[[File:Giant Tree Taiga Hills Water.png|32px]]
+|-
+|{{BiomeLink|Taiga}}
+|{{color|#287082}}
+|{{color|#287082}}
+|[[File:Taiga Water.png|32px]]
+|-
+|{{BiomeLink|Taiga Hills}}
+|{{color|#236583}}
+|{{color|#236583}}
+|[[File:Taiga Hills Water.png|32px]]
+|-
+|{{BiomeLink|Taiga Mountains}}
+|{{color|#1e6b82}}
+|{{color|#1e6b82}}
+|[[File:Taiga Mountains Water.png|32px]]
+|-
+|{{BiomeLink|Windswept Hills}}
+|{{color|#007bf7}}
+|{{color|#007bf7}}
+|[[File:Mountains Water.png|32px]]
+|-
+|{{BiomeLink|Windswept Forest}}<br>
+{{BiomeLink|Windswept Gravelly Hills}}<br>
+{{BiomeLink|Gravelly Mountains+|id=modified-gravelly-mountains}}
+|{{color|#0e63ab}}
+|{{color|#0e63ab}}
+|[[File:Wooded Mountains Water.png|32px]]
+|-
+|{{BiomeLink|Mountain Edge}}
+|{{color|#045cd5}}
+|{{color|#045cd5}}
+|[[File:Mountain Edge Water.png|32px]]
+|-
+|{{BiomeLink|Stony Shore}}
+|{{color|#0d67bb}}
+|{{color|#0d67bb}}
+|[[File:Stone Shore Water.png|32px]]
+|-
+|{{BiomeLink|Snowy Beach}}
+|{{color|#1463a5}}
+|{{color|#1463a5}}
+|[[File:Snowy Beach Water.png|32px]]
+|-
+|{{BiomeLink|Snowy Plains}}<br>
+{{BiomeLink|Ice Spikes}}
+|{{color|#14559b}}
+|{{color|#14559b}}
+|[[File:Ice Spikes Water.png|32px]]
+|-
+|{{BiomeLink|Snowy Mountains}}
+|{{color|#1156a7}}
+|{{color|#1156a7}}
+|[[File:Snowy Mountains Water.png|32px]]
+|-
+|{{BiomeLink|Frozen River}}
+|{{color|#185390}}
+|{{color|#185390}}
+|[[File:Frozen River Water.png|32px]]
+|-
+|{{BiomeLink|Snowy Taiga}}<br>
+{{BiomeLink|Snowy Taiga Mountains}}
+|{{color|#205e83}}
+|{{color|#205e83}}
+|[[File:Snowy Taiga Water.png|32px]]
+|-
+|{{BiomeLink|Snowy Taiga Hills}}
+|{{color|#245b78}}
+|{{color|#245b78}}
+|[[File:Snowy Taiga Hills Water.png|32px]]
+|}
+
+==== Vibrant Visuals ====
+When [[Vibrant Visuals]] is enabled, the graphics of water are greatly enhanced with various effects. The biome colors are not visible, but the surface is transparent. Deeper bodies of water create a blue tint on all objects, while single blocks of water appear almost invisible. When a surface underwater is hit by directional lighting (such as the [[sun]] and [[moon]]), animated and pixelated caustics are projected on the textures. Shadows can also be projected on water surfaces, but not underwater. Instead, the lack of caustics where normal shadows would render when directional lighting is being blocked, can be seen as shadows.
+
+Unlike any other block, the water's surface can perfectly reflect all objects. Light sources, both emissive and directional, create glowing reflections. Reflections are only visible for objects currently rendered on the screen, except for [[clouds]] which are always rendered.
+
+Volumetric [[fog]] is applied underwater, on top of the regular biome fog which is less visible. This greatly affects how light behaves underwater, with much more scattering and light shafts, and glowing fog effects around light sources.
+
+<gallery widths="300" heights="170">
+File:Vibrant Visuals ocean reflections.png|Water with Vibrant Visuals, showing different types of reflections, transparency, and the blue color caused by scattering.
+File:Vibrant Visuals water caustics.png|Water caustics in a [[desert]].
+File:Vibrant Visuals underwater lighting.png|Fog and light shafts underwater.
+</gallery>
+
+== Sounds ==
+{{JE}}:
+
+{{SoundTable
+| type = java
+| {{SoundLine
+| sound =Entering water1.ogg
+|sound2=Entering water2.ogg
+|sound3=Entering water3.ogg
+|subtitle=MC-177092
+|source=ambient
+|description=When the player's eye level goes underwater
+|id=ambient.underwater.enter
+|translationkey=-
+|volume=0.5
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Exiting water1.ogg
+|sound2=Exiting water2.ogg
+|sound3=Exiting water3.ogg
+|subtitle=MC-177092
+|source=ambient
+|description=When the player's eye level goes above water
+|id=ambient.underwater.exit
+|translationkey=-
+|volume=0.3
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Underwater Ambience.ogg
+|subtitle=MC-196825
+|source=ambient
+|description=Randomly when underwater
+|id=ambient.underwater.loop
+|translationkey=-
+|volume=0.65
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Bubbles1.ogg
+|sound2=Bubbles2.ogg
+|sound3=Bubbles3.ogg
+|sound4=Bubbles4.ogg
+|sound5=Bubbles5.ogg
+|sound6=Bubbles6.ogg
+|sound7=Water1.ogg
+|sound8=Water2.ogg
+|subtitle=MC-196825
+|source=ambient
+|description=Randomly when underwater
+|id=ambient.underwater.loop.additions
+|translationkey=-
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Animal1.ogg
+|sound2=Bass Whale1.ogg
+|sound3=Bass Whale2.ogg
+|sound4=Crackles1.ogg
+|sound5=Crackles2.ogg
+|sound6=Driplets1.ogg
+|sound7=Driplets2.ogg
+|sound8=Earth Crack.ogg
+|subtitle=MC-196825
+|source=ambient
+|description=Randomly when underwater
+|id=ambient.underwater.loop.additions.rare
+|translationkey=-
+|volume=''varies'' <ref group=sound>The first, fifth, and eighth sounds are 1.0; the second sound is 0.45; the third, sixth, and seventh sounds are 0.5; the fourth sound is 0.7</ref>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Animal2.ogg
+|sound2=Dark1.ogg
+|sound3=Dark2.ogg
+|sound4=Dark3.ogg
+|sound5=Dark4.ogg
+|subtitle=MC-196825
+|source=ambient
+|description=Randomly when underwater
+|id=ambient.underwater.loop.additions.ultra_rare
+|translationkey=-
+|volume=1.0 <ref group=sound>Except the third sound, which is 0.7</ref>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Water1.ogg
+|sound2=Water2.ogg
+|subtitle=Water flows
+|source=block
+|description=Randomly from flowing water
+|id=block.water.ambient
+|translationkey=subtitles.block.water.ambient
+|volume=0.75-1.0
+|pitch=0.5-1.5
+|distance=16}}
+| {{SoundLine
+|sound=Water splash1.ogg
+|sound2=Water splash2.ogg
+|subtitle=Splashing
+|source=dependent
+|description=When something enters water
+|id=entity.generic.splash
+|translationkey=subtitles.entity.generic.splash
+|volume=0.0-1.0 <ref group=sound name=speedvolume>The mob's momentum, with the horizontal axes' velocities multiplied by 0.2 (capped at 1.0)</ref>
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Swim1.ogg
+|sound2=Swim2.ogg
+|sound3=Swim3.ogg
+|sound4=Swim4.ogg
+|subtitle=Swimming
+|source=dependent
+|description=While something is moving through water
+|id=entity.generic.swim
+|translationkey=subtitles.entity.generic.swim
+|volume=0.0-1.0 <ref group=sound name=speedvolume/>
+|pitch=0.6-1.4
+|distance=16}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket1.ogg
+|sound3=Empty water bucket2.ogg
+|sound4=Empty water bucket3.ogg
+|subtitle=Bucket empties
+|source=block
+|description=When water is placed with a bucket
+|id=item.bucket.empty
+|translationkey=subtitles.item.bucket.empty
+|volume=1.0 <ref group=sound>Except for the second copy of {{cd|empty1}}, which is 0.9</ref>
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|subtitle=Bucket fills
+|source=player
+|description=When water is collected with a bucket
+|id=item.bucket.fill
+|translationkey=subtitles.item.bucket.fill
+|volume=1.0
+|pitch=1.0
+|distance=16}}
+| {{SoundLine
+|sound=Axolotl.ogg
+|sound2=Dragon fish.ogg
+|sound3=Shuniji.ogg
+|subtitle=''None''
+|source=music
+|description=Randomly when underwater
+|id=music.under_water
+|translationkey=''None''
+|volume=0.4
+|pitch=1.0
+| distance = 16
+}}
+}}
+
+{{BE}}:
+{{SoundTable
+| type = bedrock
+| {{SoundLine
+|type=bedrock
+|sound=Water2.ogg
+|source=block
+|description=Randomly from flowing water
+|id=liquid.water
+|volume=0.75-1.0
+|pitch=0.5-1.5}}
+| {{SoundLine
+|sound=Water splash1.ogg
+|sound2=Water splash2.ogg
+|source=ambient
+|description=When a player or mob enters water.[[Category:Pages missing sound description]]
+|id=entity.generic.splash
+|pitch=0.6-1.4}}
+| {{SoundLine
+|sound=Entering water1.ogg
+|sound2=Entering water2.ogg
+|sound3=Entering water3.ogg
+|source=player
+|description=When the player's eye level goes underwater
+|id=ambient.underwater.enter
+|volume=<!--0.8 (other multipliers)-->
+|pitch=1.0}}
+| {{SoundLine
+|sound=Exiting water1.ogg
+|sound2=Exiting water2.ogg
+|sound3=Exiting water3.ogg
+|source=player
+|description=When the player's eye level goes above water
+|id=ambient.underwater.exit
+|volume=<!--1.0 (other multipliers)-->
+|pitch=1.0}}
+| {{SoundLine
+|sound=Swim1.ogg
+|sound2=Swim2.ogg
+|sound3=Swim3.ogg
+|sound4=Swim4.ogg
+|source=player
+|description=While something is moving through water
+|id=random.swim
+|pitch=0.6-1.4}}
+| {{SoundLine
+|sound=Empty water bucket1.ogg
+|sound2=Empty water bucket2.ogg
+|sound3=Empty water bucket3.ogg
+|source=block
+|description=When water is placed with a bucket
+|id=bucket.empty_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Fill water bucket1.ogg
+|sound2=Fill water bucket2.ogg
+|sound3=Fill water bucket3.ogg
+|source=block
+|description=When water is collected with a bucket
+|id=bucket.fill_water
+|volume=1.0
+|pitch=1.0}}
+| {{SoundLine
+|sound=Axolotl.ogg
+|sound2=Dragon fish.ogg
+|sound3=Shuniji.ogg
+|source=music
+|description=Randomly when underwater
+|id=music.game.water
+|volume=0.2
+|pitch=1.0
+}}
+}}
+
+== Data values ==
+=== ID ===
+{{edition|java}}:
+{{ID table
+|edition=java
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Water
+|spritename=water
+|spritetype=block
+|nameid=water
+|form=block
+|foot=1}}
+{{ID table
+|edition=java
+|firstcolumnname=Fluid
+|showfluidtags=y
+|displayname=Water
+|spritename=water
+|spritetype=block
+|nameid=water
+|fluidtags=water}}
+{{ID table
+|displayname=Flowing Water
+|spritetype=block
+|spritename=water
+|nameid=flowing_water
+|fluidtags=water
+|foot=1}}
+
+{{edition|bedrock}}:
+{{ID table
+|edition=bedrock
+|shownumericids=y
+|showforms=y
+|generatetranslationkeys=y
+|displayname=Flowing Water
+|spritename=water
+|spritetype=block
+|nameid=flowing_water
+|id=8
+|form=block}}
+{{ID table
+|displayname=Water
+|spritename=water
+|spritetype=block
+|nameid=water
+|id=9
+|form=block
+|foot=1}}
+
+=== Block states ===
+{{see also|Block states}}
+
+{{el|je}}:
+{{bst|level|0
+|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|
+Value 0 is used for water source blocks. Values from 1 to 7 are reversed compared to fluidstate level values: for example, a water block with a level 1 fluidstate will have a level 7 blockstate, a water block with a level 2 fluidstate will have a level 6 blockstate, and so on. Value 8 matches its fluidstate counterpart. Values above 8 can only be obtained with commands. For more informations about how water spreads, see [[fluid#Level]].|foot=1}}
+
+{{el|be}}:<br>
+Water and flowing water
+{{bst|showaux=1|bits=0x1,0x2,0x4,0x8|liquid_depth|0
+|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|
+If bit 0x8 is set, this fluid is "falling" and spreads only downward. At this level, the lower bits are essentially ignored, since this block is then at its highest fluid level. This level is equal to the falling water above, equal to 8 plus the level of the non-falling water above it.
+
+The lower three bits are the fluid block's level. 0 is the highest fluid level (not necessarily filling the block - this depends on the neighboring fluid blocks above each upper corner of the block). Data values increase as the fluid level of the block drops: 1 is the next highest, 2 lower, on through 7, the lowest fluid level. Along a line on a flat plane, water drops one level per meter.|foot=1}}
+
+=== Fluid states ===
+{{see also|Block states}}
+
+{{edition|java}}:<br>
+Water
+{{bst|falling|false|true,false|Always false, except for waterlogged [[copper grates]] (this is most likely a bug).|foot=1}}
+Flowing water
+{{bst|falling|false|true,false|True for flowing water that has other water above itself.}}
+{{bst|level|1|1,2,3,4,5,6,7,8|Height of the water. 8 is used when ''falling'' is <code>true</code>.|foot=1}}
+
+== Achievements ==
+{{load achievements|Free Diver;Sleep with the Fishes;Stay Hydrated!}}
+
+== Advancements ==
+{{load advancements|Tactical fishing;The Cutest Predator;Stay Hydrated!}}
+
+== Videos ==
+{{yt|hRBH10aCNbE}}
+
+== History ==
+{{Needs render|type=old|section=1|<!--
+--><br>To render:<br><ul><!--
+--><li>Pocket 1.0.0 Alpha 1.0.0.0 - "When viewed through glass, water now appears as a solid blue color, as opposed to a downward flowing water texture." (and Bedrock revert).</li><!--
+--><li>Bedrock - "When viewed through glass, water now appears as its own top texture, as opposed to a downward flowing water texture."</li><!--
+--><li>Playstation 4 1.78 - "The animation of water is now less smooth."</li><!--
+--><li>JE 1.16 pre-release 5 - "Water overlay has been changed into a darker shade."</li></ul>
+* 26.2 suffer caves water colour}}
+{{info needed section|
+* According to [[Procedural animated texture generation/Nether portals]], 1.15 changed the water texture; did this actually happen?}}
+{{See technical block}}
+{{See texture generation|Water|type=fluid}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java classic}}
+|{{HistoryLine||0.0.12a|dev=May 18, 2009|slink=Java Edition Classic 0.0.12a/Development#Water test (May 18, 2009)|Notch [https://archive.org/download/Minecraft_IRC_Logs_2009/history/files/May-15-to-June-03-2009/2009-05-17.140618-0400EDT.txt.~1~ mentions] developing water.{{q|a very very first version of the water is somewhat working now, heh [/] the level starts out without any water and is surrounded a by a huge ocean [/] it quickly fills, leaving islands}}
+|[[File:Water (pre-release).png|32px]] Water is shown.
+|It was originally opaque.}}
+|{{HistoryLine|||dev=release|slink=Java Edition Classic 0.0.12a|[[File:Water JE1.png|32px]] Added water.
+|Water is now transparent.
+|Water flows to any available space below or beside it and creates a new source [[block]], making it easy to flood a whole world just with one source.}}
+|{{HistoryLine||May 22, 2009|link=wordofnotch:111386404|[[Notch]] pointed out that when a [[plant]] or non-cube block is placed in water, it produces a box of [[air]] around it. He asked how it could be fixed, and whether he even had to.}}
+|{{HistoryLine||0.0.13a|[[File:Water JE2.png|32px]] The model of water has been changed.}}
+|{{HistoryLine||May 24, 2009|link=wordofnotch:112481256|A new water system is mentioned.}}
+|{{HistoryLine||May 24, 2009|link=wordofnotch:112481370|A new water system is shown.}}
+|{{HistoryLine||May 24, 2009|link=wordofnotch:112487511| Another test of water is shown.}}
+|{{HistoryLine||May 26, 2009|link=wordofnotch:113350683|While sharing feedback on experiments with random vertex and color offsets, and deciding to scrap it, Notch said he would investigate salvaging the technique to add animation to water tiles.}}
+|{{HistoryLine||0.0.19a|[[File:Water JE3.png|32px]] Added [[Procedural animated texture generation|procedural animated texture]] to water. The old texture is retained for use as a [[animation placeholder texture|placeholder]].
+|Upscaled model 2% to fix z-fighting with blocks below water. Water or lava models were overlapping and z-fighting with each other.
+|Added [[sponge]]s, which remove water.
+|Water part of the [[world boundary]] still uses the old water texture.}}
+|{{HistoryLine||0.0.20a_02|[[File:Water JE4.png|32px]] Changed model scale back to normal with 1% offset on all coordinates.}}
+|{{HistoryLine||0.27 SURVIVAL TEST|[[File:Water JE5.png|32px]] UV mapping on side faces now has 11% v offset up.}}
+|{{HistoryLine||0.28|[[File:Water JE4.png|32px]] Fixed UV mapping.}}
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20091223-0040|[[File:Water JE6.png|32px]] Added the flowing water texture, which is now used on the sides of water.}}
+|{{HistoryLine|||dev=20100106-2158|Water part of the [[world boundary]] now uses the animated water texture.}}
+|{{HistoryLine|||dev=20100113-2015|Water is now finite, but [[ocean]]s still have infinite water.
+|Water now always drains from its highest remove location.
+|Water no longer moves on the surface on its own.
+|Water now has a {{frac|2|3}} probability to evaporate and a {{frac|1|3}} probability to copy.}}
+|{{HistoryLine|||dev=20100122-2251|Water now spawns in level generation as [[spring]]s and lakes.}}
+|{{HistoryLine|||dev=20100131-2156|The texture of water is now seen when underwater.|Swimming now creates bubble particles.}}
+|{{HistoryLine|java infdev}}
+|{{HistoryLine||20100227-1414|Water no longer flows due to changes in chunk handling for infinite worlds.{{verify|type=change}}}}
+|{{HistoryLine||20100607|[[File:Water JE7.png|32px]] UV mapping now has 1% uv offset on top and bottom faces and 1% u, 11% v offset on side faces.}}
+|{{HistoryLine||20100608|[[File:Water JE6.png|32px]] Fixed UV mapping, once again.}}
+|{{HistoryLine||20100615|[[File:Water JE8.png|32px]] The model has been changed.
+|Added flowing water.
+|Sources placed in isolation flow exclusively downward, rather than spreading out one block in each direction as well.
+|Water and lava do not produce any solid blocks when combined.
+|Water does not replace plants.
+|Added [[water bucket]]s, which can be filled with water.}}
+|{{HistoryLine||20100616-1808|[[File:Water JE9.png|32px]] Added vertex offset.
+|Water and flowing water now has visual connection to blocks.
+|Downward flowing water now pushes the [[player]] out.{{info needed|and other entities?}}}}
+|{{HistoryLine||20100617-1531|[[File:Water JE10.png|32px]] Removed vertex offset.
+|Water sources placed in the air now flow outward.
+|Lava and flowing lava touching water, flowing water now replaces with [[obsidian]].
+|Downward flowing water no longer pushes the player out.
+|Water now can replace [[plant]]s. However no items are dropped.}}
+|{{HistoryLine||20100618|Water can now replace [[rail]]s.}}
+|{{HistoryLine||20100624|Water now destroys plants, dropping as items.}}
+|{{HistoryLine|java alpha}}
+|{{HistoryLine||v1.0.2_02|[[Fluids]], including water, have been slightly tweaked.}}
+|{{HistoryLine||v1.0.5_01|Water now freezes into [[ice]].}}
+|{{HistoryLine||v1.2.6|[[Lake]]s, which contain water, have been added.}}
+|{{HistoryLine|java beta}}
+<!--{{History||1.5|Dropped [[item]]s in flowing water now move faster.{{check version|Taken from trivia, may not be beta}}}}-->
+|{{HistoryLine||1.6|dev=Test Build 3|[[Rain]] and [[snow]] no longer fall through water.
+|Water sources now form over [[glass]].}}
+|{{HistoryLine||1.6.3|Water that is 2 blocks deep no longer prevents fall damage. Players now need at least 3-block-deep water to prevent fall damage.}}
+|{{HistoryLine||1.8|dev=Pre-release|[[File:Water JE11.png|32px]] Changed [[lighting]].
+|Underwater [[particles]] have been added.
+|Because of the change in how land is generated, if a [[player]] is in a world that was made pre-1.8 and travels into new [[chunk]]s, there's a chance that a large [[ocean]] may be formed as the ocean [[biome]]. There is also a one-[[block]]-high drop in sea level along the discontinuity between the old and new chunks with the old chunks being higher.
+|Water can be found in the farms and wells of [[village]]s, and the fountain rooms of [[stronghold]]s.
+|Two [[biome]]s have been added that are almost all water: [[ocean]]s and [[river]]s.}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.0.0|dev=Beta 1.9 Prerelease|[[File:Swamp Water JE1.png|32px]] {{color|#E0FF70}} Added water color in swampland.
+|Full opaque blocks underneath water with air below now generate dripping particles on their underside.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 4|Added [[Respiration]] and [[Aqua Affinity]] enchantments, which allow more breathing time in water and normal digging speed in water.}}
+|{{HistoryLine|||dev=Beta 1.9 Prerelease 5|Now flowing downward creates source blocks{{verify|is this true and when did this change to not be the case?}}}}
+|{{HistoryLine|||dev=RC1|[[File:Water JE12.png|32px]] [[File:Swamp Water JE2.png|32px]] Faces on model now 0.1% moved to center to fix z-fighting on inner faces.}}
+|{{HistoryLine||1.1|dev=12w01a|[[File:Swamp Water JE3.png|32px]] {{color|#E0FFAE}} The water color in swampland is now less intense.}}
+|{{HistoryLine||1.2.1|dev=12w04a|Added [[desert well]]s, which contain water.}}
+|{{HistoryLine|||dev=12w07a|Water more effectively breaks fall damage}}
+|{{HistoryLine||1.3.1|dev=12w17a|The ability to bring water using [[ice]] into [[the Nether]] has been removed.}}
+|{{HistoryLine|||dev=12w18a|As a result of singleplayer being changed to an internal server, blocks spawned from contact between water and lava are no longer accompanied by smoke particles.}}
+|{{HistoryLine|||dev=12w21a|[[Dispenser]]s have been given the ability to shoot out [[fluids]], including water, inside [[water bucket]]s. They can also collect the fluids if activated again.}}|{{HistoryLine||1.4.2|dev=12w38a|The [[sound]] when jumping and swimming in water has been changed.
+|The sound of flowing water is now continuous.
+|The water overlay is a more saturated blue.}}
+
+|{{HistoryLine||1.4.4|dev=1.4.3|Water of any depth now negates all [[fall damage]]. [[Player]]s and [[mob]]s no longer die from great heights in shallow water.<ref>{{bug|MC-1644|||WAI}}</ref>}}
+|{{HistoryLine||1.5|dev=13w02a|[[File:Water JE13.png|32px]] [[File:Swamp Water JE4.png|32px]] The texture of water has been changed to use an animated texture file. Prior to this version, the texture was procedurally generated by the game (see dedicated section below).}}
+|{{HistoryLine|||dev=13w03a|A water source [[block]] now forms if there is another water source block below it.}}
+|{{HistoryLine|||dev=13w04a|Flowing water no longer slows the [[player]] down when flying in [[Creative]] mode.{{verify|Was there really a speed difference before this version? In 1.4.7 it does not seem to slow you down. It pushes you only when flowing.}}|Flowing water no longer pushes players when flying.}}
+|{{HistoryLine||1.6.1|dev=13w17a|Water [[lake]]s no longer generate in [[desert]]s.}}
+|{{HistoryLine||1.7.2|dev=13w36a|[[File:Swamp Water JE4.png|32px]] {{color|#E0FFAE}} Added water color in swampland hills, which is the same as in swampland.
+|Water pools now generate in the new [[Desert M]] biome.
+|[[Ocean]]s are much smaller.}}
+|{{HistoryLine|||dev=13w41a|[[File:Water JE14.png|32px]] [[File:Swamp Water JE5.png|32px]] Water's six internal faces are now visible from the outside.
+|Water, [[ice]] and [[portal]]s are now visible through each other. This also now allows water's inside faces to be visible from outside.}}
+|{{HistoryLine|||dev=13w42a|[[File:Water JE13.png|32px]] [[File:Swamp Water JE6.png|32px]] Water's internal faces have been removed. This visually reverts water to its pre-13w41a appearance when seen from the outside.}}
+|{{HistoryLine||1.7.4|dev=13w47a|Water's internal top face has been readded.<ref>{{bug|MC-35658}}</ref>}}
+|{{HistoryLine|||dev=13w48a|[[File:Water JE15.png|32px]] [[File:Swamp Water JE7.png|32px]] Water's internal side faces except the bottom face, have been readded.<ref>{{bug|MC-40621}}</ref><ref>{{bug|MC-190053}}</ref>}}
+|{{HistoryLine||1.8|dev=14w04a|[[File:Water (in minecart) 14w04a.png|32px]] If water is set to render as the block inside of a [[minecart]] via commands or map editing, it now appears as this (previously it would be entirely invisible).}}
+|{{HistoryLine||1.9|dev=15w43b|When viewed through [[glass]], water now appears as a solid blue color, as opposed to a downward flowing water texture.<ref name="badwatergraphicsJE">{{bug|MC-35790}}</ref>}}
+|{{HistoryLine||1.11|dev=16w39a|Water now generates in [[woodland mansion]]s.}}
+|{{HistoryLine||1.12|dev=17w06a|Water now hardens [[concrete powder]] into [[concrete]], on contact.}}
+|{{HistoryLine||1.13|dev=17w47a|As part of ''[[The Flattening]]'', the numeric IDs (8 and 9) of water have been removed.}}
+|{{HistoryLine|||dev=18w07a|[[Item]]s now float in water.
+|The [[player]]'s underwater visibility has been changed - the longer a player stays underwater, the better they can see.}}
+|{{HistoryLine|||dev=18w10a|Underwater visibility now depends on the [[biome]] the player is in.}}
+|{{HistoryLine|||dev=18w10c|Water can now be placed in the same block as [[chest]]s, [[trapped chest]]s, [[stairs]], [[slab]]s, [[fence]]s, [[wall]]s, [[iron bars]] and [[glass pane]]s.|Removed <code>flowing_water</code>.}}
+|{{HistoryLine|||dev=18w10d|Water can now be placed in [[ender chest]]s, [[trapdoor]]s, [[ladder]]s, and [[sign]]s.}}|{{HistoryLine|||dev=18w15a|[[File:Water JE16.png|32px]] {{color|#3F76E4}} Added default water color. The textures of water have been changed from blue to grayscale.<ref>{{bug|MC-200838}}</ref>
+|[[File:Warm Ocean Water JE.png|32px]] [[File:Lukewarm Ocean Water JE.png|32px]] [[File:Frozen Ocean Water JE.png|32px]] [[File:Cold Ocean Water JE.png|32px]] Added water colors for [[warm ocean]], [[lukewarm ocean]], [[frozen ocean]] and [[cold ocean]].
+|[[File:Swamp Water.png|32px]] {{color|#617B64}} Water color in swampland has been changed.
+|[[File:Swamp Hills Water 18w15a.png|32px]] {{color|#E0FFAE}} Water color in swampland hills is unchanged.<ref>{{bug|MC-128558}}</ref>
+|Water now blocks 1 [[light]] level per [[block]] instead of 3.
+|[[Player]]s no longer see underwater as clearly as if they had the [[Night Vision]] effect.
+}}
+|{{HistoryLine|||dev=18w16a|When water spreads and would later turn into a source [[block]], it now immediately places a source block.|Water can now spread onto waterloggable blocks creating an infinite water source.}}
+|{{HistoryLine|||dev=18w19a|[[Experience orb]]s now float in water.<ref>{{bug|MC-125550}}</ref>}}
+|{{HistoryLine|||dev=pre3|[[File:Swamp Water.png|32px]] {{color|#617B64}} water color in swamp hills now the same as in [[swamp]].}}
+|{{HistoryLine|||dev=pre7|Pressing the {{control|jump}} button in flowing water at <code><nowiki>level=1</nowiki></code>, <code><nowiki>level=2</nowiki></code> and <code><nowiki>level=3</nowiki></code> now do normal jumps instead of {{control|swimming}} up.}}
+|{{HistoryLine||1.14|dev=19w14a|Blocks spawned from contact between water and lava are once again accompanied by smoke particles.}}
+|{{HistoryLine||1.15|dev=19w34a|Added [[bee]]s, which get damaged while in water.}}
+|{{HistoryLine|||dev=19w35a|Bees now try to avoid water.}}
+|{{HistoryLine||1.17|dev=20w45a|Flowing water no longer breaks rails.}}
+|{{HistoryLine|||dev=21w06a|[[Aquifer]]s, large bodies of water in caves, have been added.}}
+|{{HistoryLine|||dev=21w07a|Aquifers generate less often.}}
+|{{HistoryLine|||dev=21w08a|Water [[spring]]s are now able to generate below Y{{=}}0.}}
+|{{HistoryLine|||dev=21w10a|The FOV shrinking effect now respects the "FOV Effects" accessibility slider.<ref>{{bug|MC-214629}}</ref>}}
+|{{HistoryLine|||dev=21w15a|All changes to water generation from 21w06a to 21w08a have been reverted.}}
+|{{HistoryLine|||dev=pre2|[[Smooth lighting]] now works properly underwater.<ref>{{bug|MC-68129|||Fixed}}</ref>}}
+|{{HistoryLine||1.18|dev=Experimental Snapshot 1|[[File:Meadow Water.png|32px]] Added water color in [[meadow]].
+|All changes to water generation in the 1.17 snapshots have been reintroduced.}}
+|{{HistoryLine|||dev=21w40a|[[Water lake]]s no longer generate.}}
+|{{HistoryLine||1.19|dev=Deep Dark Experimental Snapshot 1|Water generates as part of [[ancient cities]].}}
+|{{HistoryLine|||dev=22w14a|[[File:Mangrove Swamp Water.png|32px]] Added water color in [[mangrove swamp]].}}
+|{{HistoryLine||1.19.3|dev=22w44a|Added the [[game rule]] {{cd|waterSourceConversion}}, which disables the formation of new water source blocks when set to {{cd|false}}.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|[[File:Cherry Grove Water JE1.png|32px]] Added water color in [[cherry grove]].}}
+|{{HistoryLine||1.20.3|exp=Update 1.21|dev=23w45a|Water now generates in [[trial chambers]].}}
+|{{HistoryLine||1.21.2|exp=Winter Drop|dev=24w40a|[[File:Pale Garden Water.png|32px]] Added water color in [[pale garden]].}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap1|[[File:Sulfur Caves Water JE1.png|32px]] Added water color in [[sulfur caves]].}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{info needed section|Water colours in biomes added after 1.4. e.g. sulfur caves, meadow, pale garden, mangrove swamp}}
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||Pre-release|[[File:Water JE11.png|32px]]{{verify|type=change|Is this accurate to how it appeared in this edition at this time?}} Added water.}}
+|{{HistoryLine||v0.1.0|[[File:Water JE2.png|32px]] On older or much newer devices, the old [[Java]] water texture is used, whereas the newer animated texture is used on intermediately modern devices.}}
+|{{HistoryLine||v0.7.0|[[File:Water JE11.png|32px]]{{verify|type=change|Is this accurate to how it appeared in this edition at this time?}} The texture of water has been changed to the new texture for all devices.}}
+|{{HistoryLine||v0.9.0|dev=build 1|[[File:Swamp Water BE1.png|32px]] Water now uses a dark blue coloration in [[swamp]]s.
+|Water dripping [[particles]] have been changed.
+|[[Water lake]]s have been added.
+|Water can be found in the farms and wells of [[village]]s.
+|Two [[biome]]s have been added that are almost all water: [[ocean]]s and [[river]]s.
+|Oasis now generate in the new [[desert]] M [[biome]].}}
+|{{HistoryLine||v0.10.0|dev=build 1|Smooth lighting for water has been added.
+|A gradient effect has been added to water that increases its opacity with distance.
+|[[File:Old bedrock swamp water.png|32px]] Water color in swampland has been changed.
+|Flowing water can now push [[entities]].}}
+|{{HistoryLine|||dev=build 7|Running water now has [[sound]]s.}}
+|{{HistoryLine|||dev=?|Water now destroys [[block]]s.{{info needed|if this is referring to washing away plants and torches and stuff, it's been able to do that since 0.1.0}}}}
+|{{HistoryLine||v0.14.0|dev=build 1|[[Dispenser]]s can now shoot out water from [[water bucket]]s. They can also suck up [[fluids]], including water, directly adjacent to the side they are facing.}}
+|{{HistoryLine||v0.14.2|[[File:Old bedrock water.png|32px]] Water now uses animated texture files.}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 1.0.0.0|When viewed through [[glass]], water now appears as a solid blue color, as opposed to a downward flowing water texture.<ref name="badwatergraphicsBE">{{bug|MCPE-11140|||F}}</ref>}}
+|{{HistoryLine||1.1.0|dev=alpha 1.1.0.0|Water now generates in [[woodland mansion]]s.
+|Water now hardens [[concrete powder]] into [[concrete]], on contact.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||?|The rendering change for water in 1.0.0 has been reverted for an unknown reason.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added [[waterlogging]]: water can now be placed in the same block as most transparent blocks.}}
+|{{HistoryLine|||dev=beta 1.2.20.1|[[File:Plains Water.png|32px]] Water now has a completely new look for every [[biome]] and it is now much easier to see above and underwater (see [[Water#Bedrock Edition]] for all biome colors).
+|[[Item]]s now float to the top of water.
+|Underwater visibility now depends on the [[biome]] the [[player]] is in.
+|[[Respiration]] enchantment and [[Water Breathing]] effect no longer grants enhanced underwater visibility.
+|When viewed through [[glass]], water now appears as its own top texture, as opposed to a downward flowing water texture.<ref name="badwatergraphicsBE"/>}}
+|{{HistoryLine||1.14.0|dev=beta 1.14.0.1|Added [[bee]]s, which get damaged when touching water and try to avoid it.}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.51|[[Experience orb]]s now float in water.<ref>{{bug|MCPE-64039|||F}}</ref>}}
+|{{HistoryLine||1.18.30|dev=Preview 1.18.30.21|Flowing water no longer pushes players when flying.}}
+|{{HistoryLine||1.20.60|exp=Update 1.21|dev=Preview 1.20.60.20|Water now generates in [[trial chambers]].}}
+|{{HistoryLine||1.21.30|dev=Preview 1.21.30.21|When something enters water, the splashing sound is now changed to match ''[[Java Edition]]''.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.26|Light absorption in water has been changed from 2 to 1 units, to match {{JE}}.}}
+|{{HistoryLine|bedrock upcoming}}|{{HistoryLine||26.20|exg=y_2026_drop_2|dev=Preview 26.20.23|[[File:Sulfur_Cave_Water_BE1.png|32px]] Added water color in [[sulfur caves]].}}
+}}
+
+=== Legacy Console Edition ===
+{{HistoryTable
+|{{HistoryLine|console}}
+|{{HistoryLine||xbox=TU1|xbone=CU1|ps3=1.00|psvita=1.00|ps4=1.00|wiiu=Patch 1|switch=1.0.1|[[File:Water JE11.png|32px]]{{verify|type=change|Is this accurate to how it appeared in this edition at this time?}} [[File:Swamp Water JE2.png|32px]] Added water.}}
+|{{HistoryLine||xbox=TU9|[[Dispenser]]s have been given the ability to shoot out [[fluids]], including water, inside [[water bucket]]s. They can also suck up the fluids if activated again, but a bug prevents the empty [[bucket]] from being filled.}}
+|{{HistoryLine||xbox=TU12|[[File:Water JE15.png|32px]] Water now uses animated texture files.|Added [[desert well]]s, which contain water.}}
+|{{HistoryLine||xbox=TU19|xbone=CU7|ps3=1.12|psvita=1.12|ps4=1.12|Water of any depth now negates all [[fall damage]]. [[Player]]s and [[mob]]s no longer die from great heights in shallow water.|Flowing water no longer pushes players when flying.}}
+|{{HistoryLine||xbox=TU25|xbone=CU14|ps3=1.17|psvita=1.17|ps4=1.17|switch=1.0.1|Water can be used in custom superflats. It appears as a 3D block in the block selection screen of the custom superflat interface.}}
+|{{HistoryLine||xbox=TU31|xbone=CU19|ps3=1.22|psvita=1.22|ps4=1.22|wiiu=Patch 3|Water splash [[sound]]s have been updated.
+|Most [[mob]]s can now [[swimming|swim]] in water.}}
+|{{HistoryLine||xbox=?|xbone=?|ps3=?|psvita=?|ps4=?|wiiu=?|switch=?|One of the sound events for the water splashing sound has been changed back to use the old sound. As a result of this all entities, except players and hostile mobs that are not slimes or magma cubes now make the old sound again when falling into water.{{info needed|This might have been changed in TU43 when the skeleton death sound was changed. However it could be that like the skeleton death sound, this was changed on all Consoles except Xbox 360 in the TU43 equivalent and on Xbox 360 in TU46.}}}}
+|{{HistoryLine||xbox=TU53|xbone=CU43|ps3=1.49|psvita=1.49|ps4=1.50|wiiu=Patch 23|switch=1.0.3|Water now hardens [[concrete powder]] into [[concrete]], on contact.}}
+|{{HistoryLine||xbox=TU54|xbone=CU44|ps3=1.52|psvita=1.52|ps4=1.52|wiiu=Patch 24|switch=1.0.4|Water now generates in [[woodland mansion]]s.}}
+|{{HistoryLine||xbox=TU69|xbone=none|ps3=1.76|psvita=1.76|ps4=1.76|wiiu=Patch 38|switch=none|[[File:Plains Water.png|32px]] Water now has a completely new look for every [[biome]] and it is now much easier to see above and underwater (see [[Water#Bedrock Edition]] for all biome colors).}}
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.76|wiiu=none|switch=none|The color of water changes depending on how close the player is.}}
+|{{HistoryLine||ps3=1.78|psvita=1.77|ps4=1.78|The animation of water is now less smooth.}}
+
+|{{HistoryLine||xbox=none|xbone=none|ps3=none|psvita=none|ps4=1.78|wiiu=none|switch=none|The color of water no longer changes depending on how close the player is.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|New 3DS}}
+|{{HistoryLine||0.1.0|[[File:Water JE15.png|32px]]{{verify|type=change|Is this accurate to how it appeared in this edition at this time?}} [[File:Old bedrock swamp water.png|32px]] Added water.}}}}
+<!-- Still need to add in the right version: Drowning added, Water can turn into ice -->
+<!--- Still need to add "1.16 pre-release 5 - Water overlay texture turned slightly darker" -->
+
+=== Historical sounds ===
+{{More sounds|Older water splash sound.|type=historical}}
+{{JE}}:
+{{SoundTable
+|type=java
+|{{SoundLine|sound=Water Splash Old.ogg}}
+}}
+
+<gallery>
+EarlyFlowingWater.png|The water and flowing water in [[Infdev 20100615]].
+</gallery>
+
+==Issues==
+{{Issue list}}
+
+==Trivia==
+*The texture subtly overlaid on the screen when underwater is that of the original water texture from 0.0.12a.
+**The outdatedness of this texture is not considered a bug or oversight, unlike many other outdated textures.<ref>{{bug|MC-241000|||Invalid}}</ref>
+**This texture is particularly difficult to notice due to its extreme transparency,<ref>{{bug|MC-128337}}</ref> as well as the fact that other blocks likely make the scene visually noisy enough to further obscure it under most conditions.
+* While underwater, the player's FOV (field of vision) is lowered by 10 to simulate light {{w|refraction}}. This can be disabled via the "FOV Effects" [[option]].
+*If a player or mob with the [[Levitation]] effect touches water, the effect is completely negated.<ref>{{bug|MC-83369}}</ref>
+
+== Gallery ==
+=== Textures ===
+<gallery class="pixel-image">
+File:Water (texture) JE1 BE1.png|This texture is subtly overlaid on the screen when underwater.
+File:Caustics.png|The full animation of water caustics with [[Vibrant Visuals]].
+File:Bubbles.gif|These bubbles appear above the [[hunger]] bar when the player's head is in water, and when all the bubbles pop, a heart of damage is dealt every second until the player is no longer entirely under water. As of Java Edition 1.21.2, this graphic is outdated as the popped bubbles now have gray circles in place of them.
+</gallery>
+
+=== Screenshots ===
+<gallery>
+File:1.8underwater.png|Underwater particles, or "bubbles".
+File:Underground water mix.png|Water that is underground, but is still part of 2 different biomes. The color is split.
+File:InvisibleWater.png|A glitch where water is invisible below its surface level.
+File:Water Cave Filling.png|Water flowing into a [[cave]].
+File:Under water.png|A view underwater.
+File:Mac os water texture V1.13-920.gif|Animated view of the water texture.
+File:Waterfall.png|A naturally occurring waterfall.
+File:Land ruin.png|An underwater ruin {{in|bedrock}} that generated on land with a water block on top of it.
+File:Largelake.png|A large lake, during a [[thunderstorm]].
+File:Coral reef at night.png|A [[coral reef]] at night, in a [[warm ocean]] biome.
+File:Water truncated by canyon.jpg|Water may not always be updated at chunk borders when intersecting carvers.
+File:Obsidian Spring.png|A water flowing on lava lake, creating obsidian. The water was placed by a player.
+File:Two flowing streams.png|Waterfalls made by a player.
+File:Watercave.png|Water flowing into the cave from nearby lake.
+File:Canyon intersecting a stronghold.png|Ravine with multiple ores, water and lava falls, and stronghold bridge over it.
+File:Water shade.png|Different water colors in a swamp {{In|je}}.
+File:Nonflowingwater.png|A block of water, which is not flowing because of a glitch, besides a village farm.
+File:Vibrant Visuals underwater shadows.png|Shadows created underwater by coral structures.
+</gallery>
+
+===In other media===
+<gallery>
+File:AMCM Puddle.jpeg|Water in {{amcm}}.
+File:Wash Your HANDssSSsss.jpg
+</gallery>
+
+==See also==
+*[[Waterlogging]]
+
+==References ==
+{{Reflist}}
+
+==External links ==
+*{{Mcnet|block-week-water|Block of the Week: Water|July 14, 2017|[[Duncan Geere]]}} 
+
+== Navigation ==
+{{Navbox fluids}}
+{{Navbox blocks|natural}}
+
+[[Category:Fluids]]
+[[Category:Natural blocks]]
+[[Category:Non-solid blocks]]
+[[Category:Generated structure blocks]]
+[[Category:Hazardous blocks]]
+
+[[cs:Voda]]
+[[de:Wasser]]
+[[es:Agua]]
+[[fr:Eau]]
+[[hu:Víz]]
+[[it:Acqua]]
+[[ja:水]]
+[[ko:물]]
+[[lzh:水]]
+[[nl:Water]]
+[[pl:Woda]]
+[[pt:Água]]
+[[ru:Вода]]
+[[th:น้ำ]]
+[[tr:Su]]
+[[uk:Вода]]
+[[zh:水]]

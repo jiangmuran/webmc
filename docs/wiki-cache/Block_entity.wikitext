@@ -1,0 +1,284 @@
+{{distinguish|Entity}}
+
+A '''block entity''' (also known as a '''tile entity''') is an additional object associated with certain [[block]]s.
+
+== Usage ==
+Block entities can store additional information about their block, beyond the finite set of [[block states]] that a block may have. For example, all blocks that can store items use a block entity for this purpose. Block entities can also tick, running code regularly while loaded, even when not interacted with directly.
+Complex rendering not available to normal [[block model]]s is also achieved with block entities.
+Blocks with block entities can be moved by [[piston]]s {{in|be}}, but not {{in|je}}.
+
+== List of block entities ==
+These are the current blocks that hold block entities.
+
+{| class="wikitable list-style-none" data-description="Blocks with block entities"
+! Block Entity
+! Usage
+|-
+|
+* {{BlockLink|Beehive}}
+* {{BlockLink|Bee Nest}}
+| Stores [[bee]]s and their entity data.
+* Ticks regularly to determine when the bees should exit.
+|-
+|
+* {{BlockLink|Signs|id=oak sign}}
+* {{BlockLink|Hanging Signs|id=oak hanging sign}}
+* {{BlockLink|Chalkboard}}{{Only|be|ee|short=1}}
+* {{BlockLink|Poster}}{{Only|be|ee|short=1}}
+* {{BlockLink|Slate}}{{Only|be|ee|short=1}}
+| Stores written text.
+* Renders the text and the sign itself.
+|-
+|
+* {{BlockLink|Sculk Sensor}}
+* {{BlockLink|Calibrated Sculk Sensor}}
+| Stores the [[redstone]] signal strength.
+* Listens for nearby vibrations.
+|-
+|
+* {{BlockLink|Sculk Catalyst}}
+| Stores [[Experience|xp levels]].
+* Listens for nearby deaths, and spreads charges.
+|-
+|
+* {{BlockLink|Sculk Shrieker}}
+| Stores the number of activations.
+* Listens for nearby vibrations.
+|-
+|
+* {{BlockLink|Banners}}
+| Stores color{{only|be|short=1}}, the patterns, and a custom name.
+* Renders the banner with its patterns.
+|-
+|
+* {{BlockLink|Chest}}
+* {{BlockLink|Trapped Chest}}
+* {{BlockLink|Shulker Box}}
+* {{BlockLink|id=Shulker Boxes|Dyed Shulker Box}}
+* {{BlockLink|Dispenser}}
+* {{BlockLink|Dropper}}
+* {{BlockLink|Barrel}}
+* {{BlockLink|Chiseled Bookshelf}}
+* {{BlockLink|Decorated Pot}}
+| Stores its contents and a custom name for the interface.
+* For [[chest]]s, [[trapped chest]]s and [[shulker box]]es, renders the opening and closing animation.
+* For [[decorated pot]]s, renders the wobble animation.
+|-
+|
+* {{BlockLink|Furnace}}
+* {{BlockLink|Smoker}}
+* {{BlockLink|Blast Furnace}}
+* {{BlockLink|Brewing Stand}}
+* {{BlockLink|Campfire}}
+* {{BlockLink|Soul Campfire}}
+| Stores its contents, the cooking and fuel times, and a custom name for the interface.
+* Ticks regularly to advance the cooking time.
+* For [[campfire]]s, renders the contained items.
+|-
+|
+* {{BlockLink|Hopper}}
+| Stores its contents, the transfer cooldown, and a custom name for the interface.
+* Ticks regularly to advance the cooldown and search for items to pull.
+|-
+| 
+* {{BlockLink|Lectern}}
+| Stores the page the book is currently on.
+* Renders the book.
+|-
+|
+* {{BlockLink|Crafter}}
+| Stores its contents, which slots are disabled and the crafting cooldown.
+* Ticks regularly to advance the cooldown.
+|-
+|
+* {{BlockLink|Beacon}}
+| Stores the pyramid level, active [[effect]]s, and contents.
+* Ticks regularly to check for a valid pyramid, and apply effects to nearby players.
+* Renders the [[beacon]] beam.
+|-
+|
+* {{BlockLink|Creaking Heart}}
+| Stores the UUID of the transient creaking associated with this creaking heart.
+|-
+|
+* {{BlockLink|Monster Spawner}}
+* {{BlockLink|Trial Spawner}}
+| Stores: 
+* - the entity to be [[Mob spawning|spawn]]ed
+* - the delay until the next entity is spawned, and the min and max values for the next spawn delay
+* - how many entities to spawn per spawn attempt
+* - additional data about the entity to be spawned (such as equipment, and [[status effects]])
+* - the loot reward for the trial spawner
+* Ticks regularly to advance its cooldown, check for spawn conditions, and spawn mobs.
+* Renders the spinning entity inside.
+|-
+|
+* {{BlockLink|Vault}}
+| Stores its loot configuration and tracked players.
+* Renders the spinning items inside.
+|-
+|
+* {{BlockLink|Note Block}}{{only|be|short=1}}
+| Stores the note to be played.
+|-
+|
+* {{BlockLink|Item Frame}}{{only|be|short=1}}
+* {{BlockLink|Glow Item Frame}}{{only|be|short=1}}
+| Stores the contained [[item]].
+* Renders the item.
+|-
+|
+* {{BlockLink|Piston}}
+* {{BlockLink|Sticky Piston}}
+| Stores the offset of block, and blocks that it should move or [[break]].{{only|bedrock|short=1}} Also stores the moving process.
+|-
+|
+* {{BlockLink|Moving Piston}}
+| Stores the offset of block{{only|java|short=1}}, direction of movement{{only|java|short=1}}, and ID of the moving block.
+* Renders the block.
+|-
+|
+* {{BlockLink|Jukebox}}
+| Stores the contained [[music disc]]s.
+* Regularly ticks to end the song when time has elapsed.
+|-
+|
+* {{BlockLink|Enchanting Table}}
+| Stores a custom name for the interface.
+* Renders the book animation.
+|-
+|
+* {{BlockLink|End Portal|link=End Portal (block)}}
+* {{BlockLink|End Gateway|link=End Gateway (block)}}
+| Stores the destination location.{{verify|checking the pages, it implies only end gateways do this}}
+* Renders the block.
+|-
+|
+* {{BlockLink|Player Head}}
+* {{BlockLink|Zombie Head}} 
+* {{BlockLink|Skeleton Skull}} 
+* {{BlockLink|Wither Skeleton Skull}}
+* {{BlockLink|Creeper Head}}
+* {{BlockLink|Dragon Head}}
+* {{BlockLink|Piglin Head}}
+| For [[player head]]s, stores the player's skin information.
+* Renders the block.
+|-
+|
+* {{BlockSprite|command-block}} {{BlockSprite|chain-command-block}} {{BlockSprite|repeating-command-block}} [[Command Block]]
+| Stores the [[command]] text, its output strength, and the output text.
+|-
+|
+* {{BlockSprite|structure-block-save}} {{BlockSprite|structure-block-corner}} {{BlockSprite|structure-block-data}} {{BlockSprite|structure-block-load}} [[Structure Block]]
+| Stores information about the structure.
+|-
+|
+* {{BlockLink|Jigsaw Block}}
+| Stores the structure pool and the block this jigsaw block becomes.
+|-
+|
+* {{BlockLink|Nether Reactor Core}}{{only|be|short=1}}
+| Stores whether the reaction started and the time remaining in the reaction.
+|-
+|
+* {{BlockLink|id=Daylight Detectors|Daylight Detector}}
+| Ticks regularly to update its output signal strength.
+|-
+|
+* {{BlockLink|Flower Pot}}{{only|be|short=1}}
+| Stores the ID and the data value of the block displayed inside of it.
+|-
+|
+* {{BlockLink|Redstone Comparator}}
+| Stores its output strength.
+|-
+|
+* {{BlockLink|id=red-bed|Bed}}{{until|JE 26.2}}
+| Stores its color{{only|bedrock|short=1}}.
+* Renders the block.
+|-
+|
+* {{BlockLink|Cauldron}}{{only|be|short=1}}
+| Stores details about [[fluid|liquid]] content. Cauldrons containing [[Cauldron#Applying dye to cauldron water|dyed water]] store water color. Cauldrons containing [[Cauldron#Filling cauldrons with potions|potions]] store the potion's ID and a tag of whether it is a splash potion or not.
+|-
+|
+* {{BlockLink|Conduit}}
+| Ticks regularly to check its activation area for valid activation blocks and apply effects to nearby players.
+* Renders the block.
+|-
+|
+* {{BlockLink|Bell}}
+| Ticks regularly to apply the [[glowing]] effect to nearby raiders when used.
+* Renders the swaying animation.
+|-
+|
+* {{BlockLink|Lodestone}}{{only|be|short=1}}
+| To link with a [[compass]].
+|-
+|
+* {{BlockLink|Suspicious Sand}}
+* {{BlockLink|Suspicious Gravel}}
+| Stores the [[loot table]] and contents.
+* Renders the item while brushing.
+|-
+|
+* {{BlockLink|Compound Creator}}{{only|be|ee|short=1}}<br>{{BlockLink|Element Constructor}}{{only|be|ee|short=1}}<br>{{BlockLink|Lab Table}}{{only|be|ee|short=1}}<br>{{BlockLink|Material Reducer}}{{only|be|ee|short=1}}
+| Stores the items in the lab table and the process of lab experiment.
+|-
+|
+* {{BlockLink|Ender chest}}
+| Renders the opening and closing animation.
+|-
+|{{BlockLink|Shelf}}
+| Stores and renders items. 
+* Stores whether items should be centered or aligned to the bottom.
+|-
+|{{BlockLink|Copper Golem Statue}}
+| Renders the block.
+* Stores the golem's custom name.
+|}
+
+== Render limits ==
+{{Exclusive|java|section=1}}
+
+The rendering of block entities that use the [[block entity renderer]] stops beyond a hard-coded block limit which is modeled after the radius of a sphere. This limit is ''not'' affected by the Render Distance nor the Entity Distance scale in the [[Video Settings]].
+
+Some effects related to block entities stop rendering beyond a different number of blocks:
+* The [[beacon]] and [[End Gateway (block)|end gateway]] beams stop rendering beyond 256 blocks {{in|JE}} or 64 blocks {{in|BE}} or when the end gateway is out of frame.
+* The outlines created by a [[structure block]] stop rendering beyond 96 blocks.
+
+== History ==
+{{info needed section|populate this with every historical addition and removal}}
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java}}
+|{{HistoryLine||1.12|dev=?|Beds now use block entities.}}
+|{{HistoryLine||1.13|dev=17w47a|Note blocks no longer have an associated block entity and instead use the block state system.}}
+|{{HistoryLine|java upcoming}}
+|{{HistoryLine||26.2|dev=snap3|The block entity for rendering beds has been removed.}}
+}}
+
+== See also ==
+* [[Block entity format]] – describes the save format for block entities
+* [[Entities]], which are all the dynamic, moving objects throughout the ''Minecraft'' world, plus several non-moving objects that resemble blocks.
+* [[Block states]], which are, like block entities, extra pieces of data that further define a block.
+
+== Navigation ==
+{{Navbox Java Edition technical|general}}
+{{Navbox Bedrock Edition}}
+
+[[Category:Block entities| ]]
+
+[[de:Blockobjektdaten]]
+[[el:Block entity]]
+[[es:Entidad de bloque]]
+[[fr:Entité de bloc]]
+[[hu:Blokkentitás]]
+[[ja:ブロックエンティティ]]
+[[ko:블록 개체]]
+[[nl:Segment formaat]]
+[[pl:Byty bloków]]
+[[pt:Bloco-entidade]]
+[[ru:Блок-сущность]]
+[[uk:Блок-сутність]]
+[[zh:方块实体]]

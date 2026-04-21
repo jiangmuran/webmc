@@ -1,0 +1,487 @@
+[[File:Furnace GUI.png|frame|The [[furnace]] interface. Note how the spaces are displayed.]]
+'''Smelting''' is the process of obtaining refined goods from raw materials by heating them in a [[furnace]], [[blast furnace]] or [[smoker]]. When items are smelted in either type of furnace, [[experience]] is dropped. Like [[crafting]], smelting uses recipes to determine what item is produced.
+
+== Methods ==
+=== Furnace ===
+{{main|Furnace}}
+The furnace interface contains three item slots: the upper left slot for the item that needs to be smelted, the lower left slot for fuel, and the right slot where output items accumulate and can be retrieved by the player. Flames above the fuel slot act as a gauge showing the amount of fuel left of the current fuel item. An arrow in the middle shows the progress of smelting the current item.
+
+The furnace takes 10 seconds (200 in-game ticks) to smelt an item. It begins to smelt if both input item and fuel are placed into the corresponding slots, and there is space in the output slot.
+
+When starting, a fuel item is consumed immediately, filling the fuel gauge. Different fuels will fuel the furnace for different amounts of time. The fuel gauge indicates how much of that fuel's burn time remains, and gradually decreases even if the input slot becomes empty. When a fuel item is fully consumed and the input slot is not empty, another one is taken from the fuel slot, and the gauge resets.
+
+The furnace processes one input item at a time, which remains in the input slot during the 10-second process. So if multiple types of items or more than one stack of item need to be smelted, the player need to move in the item manually or using hoppers.
+
+The arrow indicates the progress on how much the input has been smelted and how much more it needs to be smelted. When the arrow is full, the input item is removed from the input stack and an output item is added to the output stack. Smelting of the next input item then begins immediately.
+
+Furnaces stop smelting under any of four conditions:
+
+* When the furnace runs out of smeltable items: The input slot becomes empty or contains item that cannot be smelted. 
+* The furnace runs out of fuel: The fuel input slot is empty, ''and'' the current fuel item is fully consumed (that is, the fuel gauge becomes empty). 
+* The output slot becomes full: Either the slot has a full stack of the output, or the output contains the wrong output item for the current input item (for example, if the output contains [[Iron Ingot|iron ingots]], but the input contains [[raw beef]]). In this case, smelting (but not fuel consumption) is paused until the output slot becomes available (usually because items were removed by either a player or a hopper). If a fuel item burns out in this condition, a new one is not used until the output slot is again available.
+* The furnace is broken: The contents of all the slots, any accumulated experience, and the furnace itself are dropped. The currently-burning fuel item is lost since it is removed from the fuel slot before burning begins. The furnace block itself may not be dropped if it was destroyed by an explosion.
+
+If smelting stops while a fuel item is still burning, the furnace continues to run visually, but no more input items are processed. If the fuel has been exhausted when an item has been partly smelted, the smelting progress is undone at double speed, and the item remains in the input stack.
+
+Smelting is suspended if the [[chunk]] the furnace is in becomes unloaded. It resumes when the chunk is loaded again.
+
+=== Blast furnace and smoker ===
+[[Smoker]]s and [[blast furnace]]s use the same GUI interface as regular furnaces and function similarly to regular furnaces. They smelt twice as quickly as furnaces, requiring only 5 seconds (100 game ticks) to smelt 1 item; they consume the same amount of fuel as regular furnaces per item smelted. Blast furnaces can only smelt ores, while smokers can only cook food; any other item can be smelted only in regular furnaces.
+
+== Recipes ==
+All smelting recipes can be used in the furnace, but only subsets are available in the blast furnace and smoker.
+
+The furnace, blast furnace and smoker keep track of experience for each item as smelting is completed for them, accumulating it in a hidden counter. The counter remembers the total earned experience even if a hopper is used to remove the items from the output slot. Experience is awarded to the player who uses the interface to remove items manually, after which the counter is reset. If the player takes some of the output but leaves some in the slot, the experience corresponding to items left in the furnace is retained and not awarded to the player. For fractional experience values, first multiply this value by the number of smelted items removed from the furnace, then award the player the integer part, and if there is a fractional part remaining, this represents the chance of an additional experience point.
+
+* For example, when smelting 1 [[coal ore]] and removing the coal, the value is 0.1, so every ten [[coal]] removed grants one experience point on average.
+* When smelting 6 [[sea pickle]]s and removing all 6 [[lime dye]], the value is 0.2×6 = 1.2, so this grants 1 point, plus a 20% chance of another 1 point.
+* The fractional experience stays within the furnace when the final total is not an integer, so the leftover experience is attributed to the next round of smelting.
+
+=== Food ===
+<section begin=Food /> <!-- for transclusion on [[Cooking]]; please don't remove or tamper -->
+All food recipes can be used in a furnace or smoker. Food can alternatively be cooked on a campfire.
+{| class="sortable wikitable" data-description="Food recipes"
+|-
+! width="80" | Product
+! width="80" | Ingredient
+! Exp
+! class="unsortable" | Usage
+|-
+!{{Slot|Baked Potato}}<br>[[Baked Potato]]
+| align="center" |{{Slot|Potato}}<br>[[Potato]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|1}}.
+|-
+!{{Slot|Dried Kelp}}<br>[[Dried Kelp]]
+| align="center" |{{Slot|Kelp}}<br>[[Kelp]]
+| align="center" | 0.1
+| Fills {{hunger|1}} and can be eaten faster than other [[food]]s; while uncooked kelp is inedible. Can also be used to craft [[dried kelp block]].
+|-
+!{{Slot|Steak}}<br>[[Steak]]
+| align="center" |{{Slot|Raw Beef}}<br>[[Raw Beef]]
+| align="center" | 0.35
+| Fills {{hunger|8}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Porkchop}}<br>[[Cooked Porkchop]]
+| align="center" |{{Slot|Raw Porkchop}}<br>[[Raw Porkchop]]
+| align="center" | 0.35
+| Fills {{hunger|8}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Mutton}}<br>[[Cooked Mutton]]
+| align="center" |{{Slot|Raw Mutton}}<br>[[Raw Mutton]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}}.
+|-
+!{{Slot|Cooked Chicken}}<br>[[Cooked Chicken]]
+| align="center" |{{Slot|Raw Chicken}}<br>[[Raw Chicken]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}} and has a 30% chance to give the [[Hunger#Food poisoning|Hunger]] status effect.
+|-
+!{{Slot|Cooked Rabbit}}<br>[[Cooked Rabbit]]
+| align="center" |{{Slot|Raw Rabbit}}<br>[[Raw Rabbit]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|3}}.
+|-
+!{{Slot|Cooked Cod}}<br>[[Cooked Cod]]
+| align="center" |{{Slot|Raw Cod}}<br>[[Raw Cod]]
+| align="center" | 0.35
+| Fills {{hunger|5}}, while raw fills {{hunger|2}}.
+|-
+!{{Slot|Cooked Salmon}}<br>[[Cooked Salmon]]
+| align="center" |{{Slot|Raw Salmon}}<br>[[Raw Salmon]]
+| align="center" | 0.35
+| Fills {{hunger|6}}, while raw fills {{hunger|2}}.
+|}<section end=Food /> <!-- for transclusion on [[Cooking]]; please don't remove or tamper -->
+
+=== Ores ===
+All ore recipes can be used in a furnace or blast furnace.
+{| class="sortable wikitable" data-description="Ore and materials recipes"
+|- align="center"
+! width="80" | Product
+! width="80" | Ingredient
+! Exp
+! class="unsortable" | Usage
+|-
+!{{Slot|Iron Ingot}}<br>[[Iron Ingot]]
+| align="center" |{{Slot|Raw Iron}}<br>[[Raw Iron]]
+| align="center" |0.7
+| Used to craft various items, including [[blast furnace]]s, [[anvil]]s, [[iron block]]s, [[iron nugget]]s, [[rail]]s, [[bucket]]s, [[cauldron]]s, [[iron chain]]s, [[compass]]es, [[crossbow]]s, [[flint and steel]]s, [[heavy weighted pressure plate]]s, [[hopper]]s, [[iron trapdoor]]s, [[minecart]]s, [[piston]]s, [[shears]], [[shield]]s, [[iron armor]], [[iron tools]], [[stonecutter]]s, [[tripwire hook]]s, and [[lodestone]]s.
+|-
+!{{Slot|Copper Ingot}}<br>[[Copper Ingot]]
+| align="center" |{{Slot|Raw Copper}}<br>[[Raw Copper]]
+| align="center" |0.7
+| Used to craft various items, including [[spyglass]]es, [[copper nugget]]s, [[copper chest]]s, [[lightning rod]]s, [[copper armor]], [[copper tools]], [[copper door]]s, [[copper trapdoor]]s, [[copper chain]]s, [[brush]]es, and [[blocks of copper]]. 
+|-
+!{{Slot|Gold Ingot}}<br>[[Gold Ingot]]
+| align="center" |{{Slot|Raw Gold}}<br>[[Raw Gold]] <br> or <br>{{Slot|Nether Gold Ore}}<br>[[Nether Gold Ore]]
+| align="center" |1
+| Used to craft various items, including [[netherite ingot]]s, [[gold block]]s, [[golden apple]]s, [[gold nugget]]s, [[clock]]s, [[golden armor]], [[golden tools]], [[powered rail]]s, and [[light weighted pressure plate]]s. Also used as a currency for [[bartering]].
+|-
+!{{Slot|Netherite Scrap}}<br>[[Netherite Scrap]]
+| align="center" |{{Slot|Ancient Debris}}<br>[[Ancient Debris]]
+| align="center" |2
+| Used to craft [[netherite ingot]]s, which can be used to upgrade diamond gear and craft [[netherite block]]s. 
+|}
+
+The following additional [[ore]]s ''can'' be smelted, but it's more efficient to mine them with an appropriate pickaxe. In most cases mining them saves fuel and yields more product and experience, especially if the pickaxe has a [[Fortune]] enchantment. Smelting them, though, allows obtaining them from an automatic device. The ore blocks themselves can be obtained only with the [[Silk Touch]] enchantment.
+
+{| class="sortable wikitable" data-description="Wasted ores"
+|- align="center"
+! width="80" |Product
+! width="80" | Ingredient
+!Exp
+! class="unsortable" | Usage
+|-
+!{{Slot|Redstone Dust}}<br>[[Redstone Dust]]
+| align="center" |{{Slot|Redstone Ore}}{{Slot|Deepslate Redstone Ore}}<br>[[Redstone Ore]]
+| align="center" |0.7
+| Used to [[craft]] various items and [[redstone block]]s, [[brewing]], or placed as redstone wire. <br>When normally mined drops 4&ndash;5 redstone and {{xp|1|5}}.
+|-
+!{{Slot|Coal}}<br>[[Coal]]
+| align="center" |{{Slot|Coal Ore}}{{Slot|Deepslate Coal Ore}}<br>[[Coal Ore]]
+| align="center" |0.1
+| Used as a fuel, and to craft [[torch]]es, [[campfire]]s and [[blocks of coal]].<br>When normally mined drops 1 coal and {{xp|0|2}}.
+|-
+!{{Slot|Emerald}}<br>[[Emerald]]
+| align="center" |{{Slot|Emerald Ore}}{{Slot|Deepslate Emerald Ore}}<br>[[Emerald Ore]]
+| align="center" |1
+| Used for [[trading]], and to craft [[blocks of emerald]].<br>When normally mined drops 1 emerald and {{xp|3|7}}.
+|-
+!{{Slot|Lapis Lazuli}}<br>[[Lapis Lazuli]]
+| align="center" |{{Slot|Lapis Lazuli Ore}}{{Slot|Deepslate Lapis Lazuli Ore}}<br>[[Lapis Lazuli Ore]]
+| align="center" |0.2
+| Used for [[enchanting]] and for crafting [[blue dye]]s and [[blocks of lapis lazuli]].<br>When normally mined drops 4&ndash;9 lapis lazuli and {{xp|2|5}}.
+|-
+!{{Slot|Diamond}}<br>[[Diamond]]
+| align="center" |{{Slot|Diamond Ore}}{{Slot|Deepslate Diamond Ore}}<br>[[Diamond Ore]]
+| align="center" |1
+| Used to craft various items, [[enchanting table]]s, [[jukebox]]es, and [[blocks of diamond]].<br>When normally mined drops 1 diamond and {{xp|3|7}}.
+|-
+!{{Slot|Nether Quartz}}<br>[[Nether Quartz]]
+| align="center" |{{Slot|Nether Quartz Ore}}<br>[[Nether Quartz Ore]]
+| align="center" |0.2
+| Used to craft various items and [[quartz block]]s.<br>When normally mined drops 1 Nether quartz and {{xp|2|5}}.
+|-
+!{{Slot|Iron Ingot}}<br>[[Iron Ingot]]
+| align="center" |{{Slot|Iron Ore}}{{Slot|Deepslate Iron Ore}}<br>[[Iron Ore]]
+| align="center" |0.7
+| Used to craft various items. 
+|-
+!{{Slot|Copper Ingot}}<br>[[Copper Ingot]]
+| align="center" |{{Slot|Copper Ore}}{{Slot|Deepslate Copper Ore}}<br>[[Copper Ore]]
+| align="center" |0.7
+| Used to craft various items. 
+|-
+!{{Slot|Gold Ingot}}<br>[[Gold Ingot]]
+| align="center" |{{Slot|Gold Ore}}{{Slot|Deepslate Gold Ore}}<br>[[Gold Ore]]
+| align="center" |1
+| Used to craft various items, and as a currency for [[bartering]] with [[piglin]]s.
+|}
+
+=== Gear ===
+These recipes can be used in a furnace or blast furnace to recycle unneeded gear (tools, weapons, armor and horse armor).
+{| class="sortable wikitable" data-description="Other smeltable items"
+|- align="center"
+! width="80" |Product
+! width="200" |Ingredient
+!Exp
+! class="unsortable" |Usage
+|-
+!{{Slot|Iron Nugget}}<br>[[Iron Nugget]]
+| align="center" |{{Slot|Iron Shovel}}{{Slot|Iron Pickaxe}}{{Slot|Iron Axe}}{{Slot|Iron Hoe}}{{Slot|Iron Sword}}{{Slot|Iron Spear}}{{Slot|Chainmail Helmet}}{{Slot|Chainmail Chestplate}}{{Slot|Chainmail Leggings}}{{Slot|Chainmail Boots}}<br>{{Slot|Iron Helmet}}{{Slot|Iron Chestplate}}{{Slot|Iron Leggings}}{{Slot|Iron Boots}}{{Slot|Iron Horse Armor}}{{Slot|Iron Nautilus Armor}}<br>[[Tools]], [[weapons]], [[armor]] and [[mob armor]] made from [[iron]], chainmail armor
+| align="center" |0.1
+|Can be crafted into [[lantern]]s, [[iron chain]]s, or [[iron ingot]]s.
+|-
+!{{Slot|Gold Nugget}}<br>[[Gold Nugget]]
+| align="center" |{{Slot|Golden Shovel}}{{Slot|Golden Pickaxe}}{{Slot|Golden Axe}}{{Slot|Golden Hoe}}{{Slot|Golden Sword}}{{Slot|Golden Spear}}{{Slot|Golden Helmet}}{{Slot|Golden Chestplate}}{{Slot|Golden Leggings}}{{Slot|Golden Boots}}{{Slot|Golden Horse Armor}}{{Slot|Golden Nautilus Armor}}<br>Tools, weapons, armor and mob armor made from [[gold]]
+| align="center" |0.1
+|Can be crafted into [[golden carrot]]s, [[glistering melon]]s, or [[gold ingot]]s.
+|-
+!{{Slot|Copper Nugget}}<br>[[Copper Nugget]]
+| align="center" |{{Slot|Copper Shovel}}{{Slot|Copper Pickaxe}}{{Slot|Copper Axe}}{{Slot|Copper Hoe}}{{Slot|Copper Sword}}{{Slot|Copper Spear}}{{Slot|Copper Helmet}}{{Slot|Copper Chestplate}}{{Slot|Copper Leggings}}{{Slot|Copper Boots}}{{Slot|Copper Horse Armor}}{{Slot|Copper Nautilus Armor}}<br>Tools, weapons, armor and mob armor made from [[copper]]
+| align="center" |0.1
+|Can be crafted into [[copper chain]]s, [[copper lantern]]s, or [[copper ingot]]s.
+|}
+
+=== Furnace-only ===
+These recipes are exclusive to the furnace.
+{| class="sortable wikitable" data-description="Furnace-only recipes"<!--- blocks are listed before items--->
+|- align="center"
+! width="80" | Product
+! width="80" | Ingredient
+! Exp
+! class="unsortable" | Usage
+|-
+!{{Slot|Stone}}<br>[[Stone]]
+| align="center" |{{Slot|Cobblestone}}<br>[[Cobblestone]]
+| align="center" |0.1
+|Used as a building material. Also used for crafting [[stone pressure plate]]s, [[stone button]]s, [[stone bricks]], [[Stone Stairs|stone stairs]], [[grindstone]]s, [[stonecutter]]s, [[redstone repeater]]s and [[comparator]]s. Can be smelted into [[smooth stone]]. 
+|- 
+!{{Slot|Smooth Stone}}<br>[[Smooth Stone]]
+| align="center" |{{Slot|Stone}}<br>[[Stone]]
+| align="center" |0.1
+|Used as a building material. Also used for crafting [[smooth stone slab]]s, [[armor stand]]s, and [[blast furnace]]s.
+|-
+!{{Slot|Cracked Stone Bricks}}<br>[[Cracked Stone Bricks]]
+| align="center" |{{Slot|Stone Bricks}}<br>[[Stone Bricks]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Deepslate}}<br>[[Deepslate]]
+| align="center" |{{Slot|Cobbled Deepslate}}<br>[[Cobbled Deepslate]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Cracked Deepslate Bricks}}<br>[[Cracked Deepslate Bricks]]
+| align="center" |{{Slot|Deepslate Bricks}}<br>[[Deepslate Bricks]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Cracked Deepslate Tiles}}<br>[[Cracked Deepslate Tiles]]
+| align="center" |{{Slot|Deepslate Tiles}}<br>[[Deepslate Tiles]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Smooth Sandstone}}<br>[[Smooth Sandstone]]
+| align="center" |{{Slot|Sandstone}}<br>[[Sandstone]]
+| align="center" |0.1
+|Used as a building material. Also used for crafting [[smooth sandstone slab]]s and [[stairs]].
+|-
+!{{Slot|Smooth Red Sandstone}}<br>[[Smooth Red Sandstone]]
+| align="center" |{{Slot|Red Sandstone}}<br>[[Red Sandstone]]
+| align="center" |0.1
+|Used as a building material. Also used for crafting [[smooth red sandstone slab]]s and [[stairs]].
+|-
+!{{Slot|Cracked Nether Bricks}}<br>[[Cracked Nether Bricks]]
+| align="center" |
+{{Slot|Nether Bricks}}<br>[[Nether Bricks]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Smooth Basalt}}<br>[[Smooth Basalt]]
+| align="center" |
+{{Slot|Basalt}}<br>[[Basalt]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Cracked Polished Blackstone Bricks}}<br>[[Cracked Polished Blackstone Bricks]]
+| align="center" |{{Slot|Polished Blackstone Bricks}}<br>[[Polished Blackstone Bricks]]
+| align="center" |0.1
+|Decoration block.
+|-
+!{{Slot|Smooth Quartz}}<br>[[Smooth Quartz]]
+| align="center" |{{Slot|Block of Quartz}}<br>[[Block of Quartz]]
+| align="center" |0.1
+|Used as a building material. Also used for crafting [[smooth quartz slab]]s and [[stairs]].
+|-
+!{{Slot|Terracotta}}<br>[[Terracotta]]
+| align="center" |{{Slot|Clay}}<br>[[Clay]]
+| align="center" |0.35
+| Decoration block. Also used for crafting [[stained terracotta]]. Can be smelted into [[glazed terracotta]].
+|-
+!{{Slot|Matching Glazed Terracotta}}<br>[[Glazed Terracotta]]
+| align="center" |{{Slot|Matching Stained Terracotta}}<br>[[Stained Terracotta]]
+| align="center" |0.1
+|Decoration block. Can be pushed by [[piston]]s but does not stick.
+|-
+!{{Slot|Glass}}<br>[[Glass]]
+| align="center" |
+{{Slot|Sand; Red Sand}}<br>[[Sand]]
+| align="center" |0.1
+|Used to make transparent structures. Also used to craft [[glass pane]]s, [[glass bottle]]s, [[stained glass]], [[tinted glass]], [[harnesses]], [[End crystal]]s, [[daylight detector]]s, and [[beacon]]s. 
+|-
+!{{Slot|Sponge}}<br>[[Sponge]]
+| align="center" |{{Slot|Wet Sponge}}<br>[[Wet Sponge]]
+| align="center" |0.15
+|Used to soak up water. Drying a [[sponge]] allows it to be reused. If an empty [[bucket]] is in the fuel slot when smelting finishes, it becomes a [[water bucket]]. Wet sponges can also be instantly dried when placed in [[the Nether]].
+|-
+!{{Slot|Charcoal}}<br>[[Charcoal]]
+| align="center" |{{Slot|Any Log}}<br>[[Log]]<br>{{Slot|Any Wood}}<br>[[Wood]]<br>{{Slot|Any Stripped Log}}<br>[[Stripped Log]]<br>{{Slot|Any Stripped Wood}}<br>[[Stripped Wood]]
+| align="center" |0.15
+|Used to craft [[torch]]es, soul torches, [[campfires]] and [[fire charge]]s, and as fuel for smelting or for a [[minecart with furnace]]{{only|java|short=1}}. Input must be an Overworld log or wood, not sticks, planks, or stems.
+|-
+!{{Slot|Popped Chorus Fruit}}<br>[[Popped Chorus Fruit]]
+| align="center" |{{Slot|Chorus Fruit}}<br>[[Chorus Fruit]]
+| align="center" |0.1
+|Used to make [[purpur block]]s and [[End rod]]s. Cannot be eaten.
+|-
+!{{Slot|Lime Dye}}<br>[[Lime Dye]]
+| align="center" |{{Slot|Sea Pickle}}<br>[[Sea Pickle]]
+| align="center" |{{el|je|short=1}}:0.1<br>{{el|be|short=1}}:0.2
+|Used as a [[dye]].
+|-
+!{{Slot|Green Dye}}<br>[[Green Dye]]
+| align="center" |{{Slot|Cactus}}<br>[[Cactus]]
+| align="center" |{{el|java|short=1}}:1<ref>{{bug|MC-210211||Smelting cactus gives too much experience since 1.13}}</ref><br>{{el|bedrock|short=1}}:0.2
+|Used as a [[dye]].
+|- 
+!{{Slot|Brick}}<br>[[Brick]]
+| align="center" |{{Slot|Clay Ball}}<br>[[Clay Ball]]
+| align="center" |0.3
+| Used to make [[bricks]], [[decorated pot]]s, and [[flower pot]]s.
+|-
+!{{Slot|Nether Brick}}<br>[[Nether Brick]]
+| align="center" |{{Slot|Netherrack}}<br>[[Netherrack]]
+| align="center" |0.1
+|Used to make [[Nether bricks]], [[Nether brick fence]]s, and [[red Nether bricks]].
+|-
+!{{Slot|Resin Brick}}<br>[[Resin Brick]]
+| align="center" |{{Slot|Resin Clump}}<br>[[Resin Clump]]
+| align="center" |0.1
+|Used to make [[resin bricks]].
+|-
+!{{Slot|Leaf Litter}}<br>[[Leaf Litter]]
+| align="center" |{{Slot|Any leaves}}<br>[[Leaves]]
+| align="center" |0.1
+|Can be used as fuel for smelting.
+|}
+
+== Fuel ==
+{{see also|Tutorial:Smelting}}
+
+There are multiple fuels that can be used to smelt items.
+
+A single [[lava bucket]] or a [[block of coal]] can smelt more items than can fit in the furnace, a lava bucket being able to smelt 100 blocks and a [[block of coal]] being able to smelt 80 —both input and output are limited to a maximum of a [[stack]].
+
+This is the specific table for all the fuels:
+
+{{:Furnace/table}}
+
+== Hopper automation ==
+{{See also|Tutorial:Hopper#Automatic smelting}}
+[[File:Automated furnace schematic (with legends).png|thumb|width=236x236|In-game Automated furnace schematic]]
+{{Schematic|caption=Automated furnace
+|ho-$d||-
+|Fu-$s|ho-$w|-
+|ho-$e|ch-$
+}}
+
+The smelting process can be automated with [[hopper]]s on the top and bottom of the furnace. For larger smelting jobs, a third hopper on the side of the furnace can feed in fuel and, in case of lava being used as fuel, any empty [[bucket]]s come out of the bottom hopper. This automatically feeds and empties the furnace so that different materials can be smelted in the same batch with no loss.
+
+Whenever a hopper or minecart with hopper removes items from a furnace, any experience earned from cooking or smelting the removed items is saved in the furnace and awarded to the next player who either breaks the furnace or manually removes an item from the furnace's output slot. This saved experience is in addition to that earned for the manually removed item(s).
+
+== Achievements ==
+{{load achievements|Dry Spell;Super Fuel;Acquire Hardware;Delicious Fish;Renewable Energy;Pork Chop;Rabbit Season;Smelt Everything!}}
+
+== Advancements ==
+{{load advancements|Acquire Hardware}}
+
+== History ==
+=== ''Java Edition'' ===
+{{HistoryTable
+|{{HistoryLine|java indev}}
+|{{HistoryLine||0.31|dev=20100129-1447|[[Flint and steel]] can now be used to smelt [[ore]]s.<ref name="0129 demo">{{ytl|OpmK7rDU5bA|archive=nlZR7_nKMaI|Crafting and Mining in Minecraft|Nizzotch|January 29, 2010, 15:41 UTC}}</ref>}}
+|{{HistoryLine||20100219|[[Furnace]]s have been added to replace the cooking/smelting function of flint and steel.}}
+|{{HistoryLine||20100223|The first smeltable [[item]] has been added, [[cobblestone]], which can be smelted into [[stone]].}}
+|{{HistoryLine|java}}
+|{{HistoryLine||1.3.1|dev=12w18a|Wooden [[tool]]s now work in furnaces as one full furnace use.}}
+|{{HistoryLine|||dev=12w22a|Smelting various ores in furnaces now reward [[player]]s with [[experience]] points.
+|When using [[lava]] for fuel, the player can now get the [[bucket]] back.}}
+|{{HistoryLine||1.5|dev=13w02a|[[Hopper]]s can now be used in conjunction with furnaces, allowing for automatic smelting.}}
+|{{HistoryLine||1.8|dev=14w04a|When a furnace runs out of fuel, the smelting progress now rewinds at double speed.}}
+|{{HistoryLine||1.11|dev=16w33a|More items can now be used as fuel: [[wool]], [[carpet]]s, [[ladder]]s, wooden [[button]]s, [[bow]]s, [[fishing rod]]s, [[sign]]s, [[bowl]]s, wooden [[door]]s and [[boat]]s.}}
+|{{HistoryLine||1.13|dev=18w06a|The smelting GUI now includes a recipe tab, which allows players to know how to smelt previously-smelted items, automatically fill in the item to be smelted and filter out the recipes to what they can make from their [[inventory]].
+|Custom recipes are now loaded from data packs in <code>data/(namespace)/recipes/(name).json</code>.
+|Turning off the vanilla data pack now also removes all recipes.}}
+|{{HistoryLine|||dev=18w07a|[[Dried kelp block]]s have been added as a new fuel.}}
+|{{HistoryLine|||dev=18w09a|When the output of a furnace is extracted with a hopper, the experience now accumulates inside the furnace, and is released the next time a player takes the output.<ref>{{bug|MC-7046||Furnace with hopper not giving XP|Fixed}}</ref>}}
+|{{HistoryLine||1.14|dev=18w43a|Added [[bamboo]], which can now be used as a fuel.
+| [[Dead bush]]es can now be used as a fuel, smelting 0.5 items.}}
+|{{HistoryLine|||dev=18w45a|Added [[scaffolding]], which can now be used as a fuel.}}
+|{{HistoryLine|||dev=18w50a|Ores can now be smelted using a [[blast furnace]] and food using a [[smoker]].}}
+|{{HistoryLine|||dev=19w02a|Items can now be cooked using a [[campfire]].}}
+|{{HistoryLine||1.15|dev=19w37a|[[Boat]]s used as fuel now smelt 6 items instead of 1.}}
+|{{HistoryLine|||dev=Pre-release 1|[[Scaffolding]] used as fuel now smelts 2 items instead of 0.25.}}
+|{{HistoryLine||1.17|dev=21w05a|Added [[azalea]] and flowering azalea, which can now be used as a fuel.}}
+|{{HistoryLine||1.19|dev=22w11a|Scaffolding now smelts 0.25 items again.<ref>{{bug|MC-165990||Crafting bamboo into scaffolding gives you 8 times the furnace fuel for free|Fixed}}</ref>
+|Added [[mangrove roots]] and all types of [[mangrove]], which can be used as fuel. Mangrove logs, wood, and their stripped variations can also be smelted to make charcoal.}}
+|{{HistoryLine|||dev=22w12a|Added [[boat with chest]], which can be used as a fuel.
+|Mangrove [[fence]]s, [[fence gate]]s, and [[boat]]s can now be used as a fuel.<ref>{{bug|MC-249316||Mangrove fence, fence gate and boat cannot be used for fuel|Fixed}}</ref>}}
+|{{HistoryLine||1.19.3|exp=Update 1.20|dev=22w42a|Added [[chiseled bookshelf]], Overworld [[hanging sign]]s and all types of [[bamboo]], which can be used as fuel.}}
+|{{HistoryLine|||dev=22w44a|[[Bamboo mosaic]], [[fence]]s, and [[fence gate]]s can now be used as a fuel.}}
+|{{HistoryLine|||dev=22w45a|Added [[block of bamboo]] and their stripped variant, which can now be used as fuel.}}
+|{{HistoryLine||1.19.4|exp=Update 1.20|dev=23w07a|Added all types of [[cherry]], which can be used as fuel.}}
+|{{HistoryLine|||dev=1.19.4-pre1|Cherry logs, wood, their stripped variations, and cherry saplings can now be used as a fuel.<ref>{{bug|MC-260193||Cherry wood, logs and saplings can't be used as fuel in furnaces|Fixed}}</ref>|Cherry logs, wood, and their stripped variations can now be used to make charcoal.<ref>{{bug|MC-260192||You can't make Charcoal with Cherry Logs or Wood|Fixed}}</ref>}}
+|{{HistoryLine||1.21.11|dev=25w41a|Added [[wooden spear]]s, which can be used as a fuel.}}
+}}
+
+=== ''Bedrock Edition'' ===
+{{HistoryTable
+|{{HistoryLine|pocket alpha}}
+|{{HistoryLine||v0.3.2|[[Furnace]]s have been added, which means that every available [[block]] and [[item]] can now be gathered, crafted or smelted into (no more unlimited items).}}
+|{{HistoryLine||v0.8.0|dev=build 1|Added [[blocks of coal]], which can be used as fuel.
+|[[Lava bucket]]s and [[sapling]]s can now be used as fuel.}}
+|{{HistoryLine|||dev=build 7|[[Bow]]s, [[bowl]]s, and most wooden [[tool]]s (excluding axes) can now be used as fuel.}}
+|{{HistoryLine||v0.11.0|dev=build 1|Added [[boat]]s and [[fishing rod]]s, which can be used as fuel.
+|[[Wooden axe]]s can now be used as fuel.}}
+|{{HistoryLine||v0.12.1|dev=build 1|Added [[blaze rod]]s, which can now be used as fuel.}}
+|{{HistoryLine||v0.13.0|dev=build 1|Added [[note block]]s and [[daylight sensor]]s, which can now be used as fuel.}}
+|{{HistoryLine||v0.16.0|dev=build 1|All three item slots in the [[furnace]]'s interface are now labeled. The top-left slot is labeled "Input", the bottom-left slot is labeled "Fuel", and the right slot is labeled "Result".}}
+|{{HistoryLine|pocket}}
+|{{HistoryLine||1.0.0|dev=alpha 0.17.0.1|Added new [[furnace]] UI for classic UI.}}
+|{{HistoryLine|bedrock}}
+|{{HistoryLine||1.2.0|dev=beta 1.2.0.2|Added [[jukebox]]es and [[banner]]s, which can now be used as fuel.}}
+|{{HistoryLine||1.2.13|dev=beta 1.2.13.8|Added [[stripped log]]s, which can now be used as fuel.}}
+|{{HistoryLine||1.4.0|dev=beta 1.2.14.2|Added [[dried kelp block]]s, which can now be used as fuel.}}
+|{{HistoryLine||1.8.0|dev=beta 1.8.0.8|Added [[bamboo]] and [[scaffolding]], which can now be used as fuel.}}
+|{{HistoryLine||1.10.0|dev=beta 1.10.0.3|Dead bushes can now be used as fuel.}}
+|{{HistoryLine||1.11.0|dev=beta 1.11.0.1|Items can now be cooked using a [[campfire]].
+|[[Sign]]s can now be used as fuel.
+|Ores can now be smelted using a [[blast furnace]] and food using a [[smoker]].}}
+|{{HistoryLine||1.16.100|dev=beta 1.16.100.50|[[Nether Brick]]s, [[iron nugget]]s and [[gold nugget]]s can now be used as fuel in a [[furnace]]. Each item has a burn time of 20 ticks.<ref>{{bug|MCPE-114216||Nether bricks and iron and gold nuggets can be used as fuel in furnaces|Fixed}}</ref>}}
+|{{HistoryLine||1.18.30|dev=beta 1.18.30.26|Nether Bricks, iron nuggets and gold nuggets can no longer be used as fuel in a furnace.}}
+|{{HistoryLine||1.21.80|dev=Preview 1.21.80.20|[[Mangrove roots]] can now be used as fuel.}}
+|{{HistoryLine||1.21.130|dev=Preview 1.21.130.20|Added [[wooden spear]]s, which can be used as a fuel.}}
+}}
+
+=== ''New Nintendo 3DS Edition'' ===
+{{HistoryTable
+|{{HistoryLine|new3ds}}
+|{{HistoryLine||1.1.06|Smelting various ores in furnaces now rewards players with experience points.}}
+}}
+
+== Issues ==
+{{Issue list}}
+
+== Trivia ==
+* A wooden tool burns the same regardless of its remaining durability. A used-up tool is just as effective as fuel as a new tool.
+* "Smelting" is a broad term in the context of Minecraft while in the real world, smelting has a more precise definition.<ref>{{Mcnet|block-week-furnace|Block of the Week: Furnace|September 15, 2017|Duncan Geere}}</ref>
+
+== Gallery ==
+=== Screenshots ===
+<gallery>
+File:MCBE_Minecraft_Encyclopedia_Furnace_entry.jpeg|In game encyclopedia entry on Furnace: "A Furnace allows you to cook or smelt items. For example, you can smelt Iron Ore into Iron Ingots."
+</gallery>
+
+== See also ==
+
+* [[Wikipedia:Smelting|Smelting on Wikipedia]]
+* [[Brewing]]
+* [[Cooked food]]
+* [[Crafting]]
+* [[Enchanting]]
+* [[Furnace]]
+
+== References ==
+{{reflist}}
+
+== Navigation ==
+{{Navbox gameplay}}
+
+[[cs:Tavba]]
+[[de:Erhitzen]]
+[[es:Fundición]]
+[[fr:Cuisson]]
+[[hu:Olvasztás]]
+[[it:Cottura]]
+[[ja:製錬]]
+[[ko:제련]]
+[[lzh:煉]]
+[[nl:Smelten]]
+[[pl:Przetapianie]]
+[[pt:Fundição]]
+[[ru:Плавка]]
+[[th:การเผา]]
+[[tr:Eritme]]
+[[uk:Витоплення]]
+[[zh:烧炼]]
