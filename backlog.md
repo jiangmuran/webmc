@@ -2,6 +2,13 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M4
+
+- **Settings panel (was M4.4).** DOM sliders for FOV, view distance, sensitivity, master volume; persist to `localStorage['webmc.settings.v1']`. Also shown from ⚙️ button and `Esc` keypress.
+- **Dynamic-quality throttle (was M4.3).** Rolling p95 frame time; drop view distance by 1 on sustained > 33 ms, restore on < 22 ms sustained.
+- **Footstep cadence.** `SOUNDS.step` exists but unhooked. Add a step timer in `FirstPersonCamera.update` that fires when `onGround && moving` at ~2.5 Hz.
+- **Mobile FPS floor e2e.** Dedicated 5-second FPS-floor scenario asserting ≥ 20 on Pixel-7 emulation.
+
 ## Post-M3
 
 - **Vertex AO** — sample 3 neighbor solids per quad corner, multiply into vertex shade. Needs a second Uint8Array attribute since `colors.a` now carries voxel light. Corner hardening is the visual win.
