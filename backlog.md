@@ -2,6 +2,15 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M15
+
+- **Piston/repeater/comparator/observer/hopper block integration.** Pure-logic modules (`piston.ts`, `components.ts`) are tested; placing the blocks, wiring to the redstone tick scheduler, and mutating the World atomically on push are the missing pieces.
+- **Piston block entity (extended vs retracted state).** 2-tick animation + block-displacement interlock with lighting/mesh regen.
+- **Comparator mode toggle UI.** Right-click cycles compare↔subtract.
+- **Hopper pickup from world (item entities dropping in).** Depends on item-entity layer that doesn't exist yet.
+- **Dropper + Crafter + Dispenser.** Similar tile-entity scaffolding to the hopper.
+- **Command blocks** (master plan mentions "feature flagged"). Out of scope until a scripting sandbox lands (Post-M17).
+
 ## Post-M14
 
 - **Ender dragon boss fight.** `ender_dragon` mob def exists; flight AI, phases (circling / perching / charge), and crystal dependency are unimplemented.
