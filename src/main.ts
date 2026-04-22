@@ -29,6 +29,7 @@ import { BlockDropRegistry } from './items/block-drops';
 import { PlayerState } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
+import { SpawnSystem } from './entities/spawn';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -163,6 +164,7 @@ scene.add(chunkRenderer.group);
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
 scene.add(mobRenderer.group);
+const spawnSystem = new SpawnSystem();
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
@@ -462,10 +464,13 @@ function frame(): void {
   playerState.sprinting = fp.input.sprint;
   playerState.tick(dtSec);
 
-  if (mobWorld.size === 0 && chunkRenderer.meshCount > 20) {
-    const base = generator.surfaceAt(Math.floor(fp.position.x + 8), Math.floor(fp.position.z)) + 1;
-    mobWorld.spawn('zombie', { x: fp.position.x + 8, y: base, z: fp.position.z });
-    mobWorld.spawn('pig', { x: fp.position.x - 6, y: base, z: fp.position.z });
+  if (chunkRenderer.meshCount > 20) {
+    spawnSystem.tick(dtSec, mobWorld, {
+      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+      isDay: dayNight.isDay,
+      surfaceAt: (x, z) => generator.surfaceAt(x, z),
+      isSolid,
+    });
   }
 
   mobWorld.tick(dtSec, {
