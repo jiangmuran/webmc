@@ -4,7 +4,11 @@ import { createDefaultRegistry } from '@/blocks/registry';
 import { AIR, makeState, stateId } from '@/blocks/state';
 import { FluidWorld } from './FluidWorld';
 
-function setup(): { world: World; fluid: FluidWorld; registry: ReturnType<typeof createDefaultRegistry> } {
+function setup(): {
+  world: World;
+  fluid: FluidWorld;
+  registry: ReturnType<typeof createDefaultRegistry>;
+} {
   const registry = createDefaultRegistry();
   const world = new World();
   const fluid = new FluidWorld({ world, registry });

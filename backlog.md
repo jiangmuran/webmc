@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M9
+
+- **Waterlogged state on fences / slabs / stairs (was M9.6).** Requires per-block variant encoding in `BlockState` props + mesher adjustment.
+- **Bucket onUse wiring.** Bucket items are registered; placing water/lava sources or picking them up needs `Interaction.onUse` and InventoryController to swap empty↔filled bucket.
+- **Water-meets-lava conversion.** Adjacent sources: water + flowing lava → cobblestone; water + source lava → obsidian; flowing water + lava → stone (MC rules).
+- **Flowing-lava dynamic light propagation.** Registry lightEmission 15 only fires on block state; flowing levels should taper light or BFS-propagate.
+- **Fire spread from lava.** Placeholder for M9 scope that was never taken; behaviour lives with the combustion system (future M).
+
 ## Post-M8
 
 - **Placement + interaction wiring (was M8.6).** Place dust/torch/lever/button/plate/door via Interaction.onPlace; add Interaction.onUse for lever toggle, button press, door manual open.
