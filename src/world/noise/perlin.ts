@@ -127,6 +127,27 @@ export class Perlin {
     }
     return total / norm;
   }
+
+  fbm3(
+    x: number,
+    y: number,
+    z: number,
+    octaves: number,
+    persistence = 0.5,
+    lacunarity = 2,
+  ): number {
+    let amp = 1;
+    let freq = 1;
+    let total = 0;
+    let norm = 0;
+    for (let o = 0; o < octaves; o++) {
+      total += amp * this.noise3(x * freq, y * freq, z * freq);
+      norm += amp;
+      amp *= persistence;
+      freq *= lacunarity;
+    }
+    return total / norm;
+  }
 }
 
 export function hash32(x: number, z: number, seed: number): number {

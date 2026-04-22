@@ -11,6 +11,18 @@ const GRASS = registry.byName('webmc:grass_block');
 const SAND = registry.byName('webmc:sand');
 const LOG = registry.byName('webmc:oak_log');
 const LEAVES = registry.byName('webmc:oak_leaves');
+const DEEPSLATE = registry.byName('webmc:deepslate');
+const AIR_ID = 0;
+const ORE_IDS = new Set(
+  [
+    'webmc:coal_ore',
+    'webmc:iron_ore',
+    'webmc:gold_ore',
+    'webmc:diamond_ore',
+    'webmc:redstone_ore',
+    'webmc:lapis_ore',
+  ].map((n) => registry.byName(n)),
+);
 
 describe('WorldGenerator', () => {
   it('surfaceAt is deterministic for same seed + coords', () => {
@@ -49,7 +61,9 @@ describe('WorldGenerator', () => {
     const surface = g.surfaceAt(8, 8);
     expect(stateId(c.get(8, surface, 8))).toBeOneOf([GRASS, SAND]);
     expect(stateId(c.get(8, surface - 1, 8))).toBeOneOf([DIRT, SAND]);
-    expect(stateId(c.get(8, 5, 8))).toBe(STONE);
+    // y=5 deep underground: stone, deepslate, an ore, or carved cave air.
+    const deep = stateId(c.get(8, 5, 8));
+    expect(deep === STONE || deep === DEEPSLATE || deep === AIR_ID || ORE_IDS.has(deep)).toBe(true);
     expect(c.get(8, surface + 20, 8)).toBe(AIR);
   });
 
@@ -88,6 +102,64 @@ describe('WorldGenerator', () => {
     }
     expect(hasLog).toBe(true);
     expect(hasLeaves).toBe(true);
+  });
+
+  it('caves carve out a non-trivial fraction of deep stone', () => {
+    const g = new WorldGenerator(1337, registry);
+    const c = new Chunk(0, 0);
+    g.generateChunk(c);
+    let stoneCount = 0;
+    let airCount = 0;
+    for (let y = 5; y <= 55; y++) {
+      for (let x = 0; x < 16; x++) {
+        for (let z = 0; z < 16; z++) {
+          const id = stateId(c.get(x, y, z));
+          if (id === STONE) stoneCount++;
+          if (c.get(x, y, z) === AIR) airCount++;
+        }
+      }
+    }
+    expect(stoneCount).toBeGreaterThan(0);
+    expect(airCount).toBeGreaterThan(50);
+  });
+
+  it('ores appear at expected y-bands (diamond deep, coal mid)', () => {
+    const g = new WorldGenerator(0xbeef, registry);
+    const diamondCounts = { shallow: 0, deep: 0 };
+    const coalCounts = { shallow: 0, deep: 0 };
+    const diamondId = registry.byName('webmc:diamond_ore');
+    const coalId = registry.byName('webmc:coal_ore');
+    for (let cx = -1; cx <= 1; cx++) {
+      for (let cz = -1; cz <= 1; cz++) {
+        const c = new Chunk(cx, cz);
+        g.generateChunk(c);
+        for (let y = 5; y < 70; y++) {
+          for (let x = 0; x < 16; x++) {
+            for (let z = 0; z < 16; z++) {
+              const id = stateId(c.get(x, y, z));
+              const band = y < 30 ? 'deep' : 'shallow';
+              if (id === diamondId) diamondCounts[band]++;
+              if (id === coalId) coalCounts[band]++;
+            }
+          }
+        }
+      }
+    }
+    expect(diamondCounts.deep).toBeGreaterThanOrEqual(diamondCounts.shallow);
+    expect(coalCounts.shallow).toBeGreaterThanOrEqual(coalCounts.deep - 5);
+  });
+
+  it('deepslate replaces stone near bedrock', () => {
+    const g = new WorldGenerator(55, registry);
+    const c = new Chunk(0, 0);
+    g.generateChunk(c);
+    let deepslateCount = 0;
+    for (let x = 0; x < 16; x++) {
+      for (let z = 0; z < 16; z++) {
+        if (stateId(c.get(x, 1, z)) === DEEPSLATE) deepslateCount++;
+      }
+    }
+    expect(deepslateCount).toBeGreaterThan(0);
   });
 
   it('reproducibility: two independent gens of the same chunk are identical', () => {

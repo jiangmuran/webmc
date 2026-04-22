@@ -23,7 +23,26 @@ export interface GeneratedBlocks {
   sand: BlockState;
   log: BlockState;
   leaves: BlockState;
+  coalOre: BlockState;
+  ironOre: BlockState;
+  goldOre: BlockState;
+  diamondOre: BlockState;
+  redstoneOre: BlockState;
+  lapisOre: BlockState;
+  deepslate: BlockState;
 }
+
+interface OreBand {
+  readonly block: keyof GeneratedBlocks;
+  readonly peak: number; // y of max density
+  readonly halfWidth: number; // taper
+  readonly rarity: number; // hash mask threshold (smaller = rarer)
+  readonly salt: number;
+}
+
+const CAVE_FREQ = 1 / 24;
+const CAVE_THRESHOLD = 0.32;
+const DEEPSLATE_Y = 4;
 
 function resolve(registry: BlockRegistry, name: string): BlockState {
   const id = registry.byName(name);
@@ -31,9 +50,19 @@ function resolve(registry: BlockRegistry, name: string): BlockState {
   return makeState(id, 0);
 }
 
+const ORE_BANDS: readonly OreBand[] = [
+  { block: 'coalOre', peak: 55, halfWidth: 45, rarity: 512, salt: 0xc0a1 },
+  { block: 'ironOre', peak: 20, halfWidth: 30, rarity: 900, salt: 0x1702 },
+  { block: 'goldOre', peak: 14, halfWidth: 18, rarity: 1700, salt: 0x9010 },
+  { block: 'redstoneOre', peak: 8, halfWidth: 14, rarity: 1400, salt: 0xd571 },
+  { block: 'lapisOre', peak: 14, halfWidth: 16, rarity: 2100, salt: 0x1a15 },
+  { block: 'diamondOre', peak: 5, halfWidth: 10, rarity: 3400, salt: 0xd1a3 },
+];
+
 export class WorldGenerator {
   readonly heightNoise: Perlin;
   readonly biomeNoise: Perlin;
+  readonly caveNoise: Perlin;
   private readonly blocks: GeneratedBlocks;
 
   constructor(
@@ -42,6 +71,7 @@ export class WorldGenerator {
   ) {
     this.heightNoise = new Perlin(seed);
     this.biomeNoise = new Perlin(seed ^ 0x5eed1de);
+    this.caveNoise = new Perlin(seed ^ 0xcafe01);
     this.blocks = {
       stone: resolve(registry, 'webmc:stone'),
       dirt: resolve(registry, 'webmc:dirt'),
@@ -49,7 +79,34 @@ export class WorldGenerator {
       sand: resolve(registry, 'webmc:sand'),
       log: resolve(registry, 'webmc:oak_log'),
       leaves: resolve(registry, 'webmc:oak_leaves'),
+      coalOre: resolve(registry, 'webmc:coal_ore'),
+      ironOre: resolve(registry, 'webmc:iron_ore'),
+      goldOre: resolve(registry, 'webmc:gold_ore'),
+      diamondOre: resolve(registry, 'webmc:diamond_ore'),
+      redstoneOre: resolve(registry, 'webmc:redstone_ore'),
+      lapisOre: resolve(registry, 'webmc:lapis_ore'),
+      deepslate: resolve(registry, 'webmc:deepslate'),
     };
+  }
+
+  isCave(wx: number, wy: number, wz: number): boolean {
+    if (wy < 2 || wy > 60) return false;
+    const n = this.caveNoise.fbm3(wx * CAVE_FREQ, wy * CAVE_FREQ, wz * CAVE_FREQ, 3);
+    return Math.abs(n) < CAVE_THRESHOLD;
+  }
+
+  oreAt(wx: number, wy: number, wz: number): BlockState | null {
+    if (wy > 70) return null;
+    for (const band of ORE_BANDS) {
+      const dist = Math.abs(wy - band.peak);
+      if (dist > band.halfWidth) continue;
+      const density = 1 - dist / band.halfWidth;
+      const h = hash32(wx, wz ^ band.salt, (this.seed ^ (wy * 0x9e3779b1)) >>> 0);
+      if ((h % band.rarity) / band.rarity < density * 0.04) {
+        return this.blocks[band.block];
+      }
+    }
+    return null;
   }
 
   biomeAt(wx: number, wz: number): BiomeId {
@@ -64,7 +121,7 @@ export class WorldGenerator {
   }
 
   generateChunk(chunk: Chunk): void {
-    const { stone, dirt, grass, sand, log, leaves } = this.blocks;
+    const { stone, dirt, grass, sand, log, leaves, deepslate } = this.blocks;
     const cx = chunk.cx;
     const cz = chunk.cz;
     for (let lx = 0; lx < CHUNK_DIM; lx++) {
@@ -76,8 +133,17 @@ export class WorldGenerator {
         const topBlock = surface <= SEA_LEVEL ? sand : grass;
         for (let y = 0; y <= surface; y++) {
           let state = stone;
+          if (y <= DEEPSLATE_Y) state = deepslate;
           if (y === surface) state = topBlock;
           else if (y >= surface - 3) state = topBlock === sand ? sand : dirt;
+          if (y < surface && this.isCave(wx, y, wz)) {
+            chunk.set(lx, y, lz, AIR);
+            continue;
+          }
+          if (y < surface - 4 && y > DEEPSLATE_Y) {
+            const ore = this.oreAt(wx, y, wz);
+            if (ore !== null) state = ore;
+          }
           chunk.set(lx, y, lz, state);
         }
         if (biome === FOREST && topBlock === grass) {
