@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M10
+
+- **Abandoned mineshafts (was M10.5).** Multi-chunk planks-and-rails tunnels need a cross-chunk structure system; current generator only places per-chunk. Blocked on structure coordinator.
+- **Village v1 (was M10.6).** Flat-ground detection + wood hut templates + path generation. Same cross-chunk blocker as mineshafts.
+- **Dungeon spawner entity + chest loot.** Minimal dungeon rooms ship as empty cobble shells; adding a mob-spawner tile-entity and chest with junk loot is next.
+- **Ravines (was M10.2).** Second 3D noise pass with elongated-axis warp. Deferred to keep M10 focused on cave shape + ore curves.
+- **Cross-chunk cave BFS continuity.** Caves currently cut cleanly at chunk borders since each chunk samples `isCave` independently (the noise IS continuous) but connected-component stitching could prevent isolated dead-ends.
+
 ## Post-M9
 
 - **Waterlogged state on fences / slabs / stairs (was M9.6).** Requires per-block variant encoding in `BlockState` props + mesher adjustment.
