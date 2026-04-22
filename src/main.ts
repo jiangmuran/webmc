@@ -31,6 +31,7 @@ import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { FluidWorld } from './fluids/FluidWorld';
+import { PerfMonitor } from './engine/time/PerfMonitor';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -318,6 +319,16 @@ async function savePlayerNow(): Promise<void> {
 let lastPlayerSaveAt = performance.now();
 let fluidTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
+
+const perfMonitor = new PerfMonitor({
+  startQuality: 6,
+  minQuality: 2,
+  maxQuality: 12,
+  upShiftThresholdSec: 0.033,
+  downShiftThresholdSec: 0.022,
+  windowSec: 3,
+  holdSec: 3,
+});
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
@@ -434,6 +445,7 @@ function frame(): void {
   const stats = timer.tick();
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
+  if (perfMonitor.tick(dtSec)) loader.setViewRadius(perfMonitor.quality);
 
   if (touch) {
     const look = touch.consumeLook();

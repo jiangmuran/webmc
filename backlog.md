@@ -9,6 +9,15 @@ Items deferred during a milestone that were cut from DONE but should land later.
 - **DataPack UI** — upload, enable/disable, reorder, persist to IDB. Loader is pure; integrating the file-picker is UX layer.
 - **Loot table loader.** Pack schema defines `loot: [...]`, but BlockDropRegistry integration isn't wired yet (noop in report).
 
+## Post-M16
+
+- **WebGPU backend behind a feature flag.** WebGL2 path stays authoritative. Port ChunkShader + lighting uniforms, verify golden images match within tolerance, flag-gate on `navigator.gpu` + localStorage opt-in.
+- **SharedArrayBuffer mesh pathway.** COOP/COEP are configured `credentialless`; verifying cross-origin isolation on production hosts and swapping worker transfer from ArrayBuffer → SharedArrayBuffer is its own pass.
+- **Shader-based smooth lighting.** Currently flat per-vertex light from the mesher. Gouraud interpolation across faces + shader sample.
+- **Cascaded directional sun shadows.** Depth-map pass per cascade; blends with existing sky light.
+- **Screen-space AO.** GPU depth/normal pass; expected cost ~1 ms desktop.
+- **Thermal-aware quality throttle.** The frame-time perf monitor ships; a thermal-API hook (`navigator.deviceMemory`, `NetworkInformation`, explicit mobile detection) can bias the initial startQuality lower.
+
 ## Post-M15
 
 - **Piston/repeater/comparator/observer/hopper block integration.** Pure-logic modules (`piston.ts`, `components.ts`) are tested; placing the blocks, wiring to the redstone tick scheduler, and mutating the World atomically on push are the missing pieces.
