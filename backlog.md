@@ -2,6 +2,15 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M7
+
+- **Crafting grid UI (was M7.3).** RecipeRegistry resolver exists; a 2×2 / 3×3 DOM grid with drag-drop (or tap-to-slot on touch) is the missing integration piece.
+- **Furnace (was M7.4).** Tile-entity state + smelting recipe registry + fuel bookkeeping.
+- **Tool durability + tier gating at interaction (was M7.5 full).** InteractionController should read the hotbar-selected tool's toolKind/toolTier and pass them into BlockDropRegistry.drops().
+- **Inventory consumption on block placement.** Currently creative-style (infinite). Swap to consume-from-selected-hotbar-slot when the crafting UI lands.
+- **Pathfinder wired into mob AI.** findPath is tested; Mob.tickMob should use it with a 0.5s re-path throttle.
+- **Save/restore PlayerState across reload.** Persistence schema already has the slot; 1-line wire-up.
+
 ## Post-M6
 
 - **Chunk streaming on join (was M6.6).** CHUNK_FULL / CHUNK_DELTA messages so a freshly-joined guest inherits the host's edited chunks.
