@@ -2,6 +2,13 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M17
+
+- **M16 performance & platform upgrade left on the table.** WebGPU backend, SharedArrayBuffer meshing, shader-based smooth lighting, screen-space AO, cascaded sun shadows, thermal-aware adaptive rendering on mobile. The pure-logic + per-system milestones shipped first because they're gated on nothing; M16's rendering rewrites need a dedicated run.
+- **QuickJS-wasm sandbox for behavior packs.** Datapack JSON loader ships today; script-driven behavior packs need a WASM dep (quickjs-emscripten ≈ 700 KB). Deferred until we're comfortable paying the bundle cost.
+- **DataPack UI** — upload, enable/disable, reorder, persist to IDB. Loader is pure; integrating the file-picker is UX layer.
+- **Loot table loader.** Pack schema defines `loot: [...]`, but BlockDropRegistry integration isn't wired yet (noop in report).
+
 ## Post-M15
 
 - **Piston/repeater/comparator/observer/hopper block integration.** Pure-logic modules (`piston.ts`, `components.ts`) are tested; placing the blocks, wiring to the redstone tick scheduler, and mutating the World atomically on push are the missing pieces.
