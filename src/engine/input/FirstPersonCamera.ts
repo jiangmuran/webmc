@@ -28,8 +28,12 @@ const DEFAULTS: FirstPersonCameraOptions = {
 const UP = new THREE.Vector3(0, 1, 0);
 const PITCH_MAX = Math.PI / 2 - 0.0001;
 
+export type FluidKind = 'water' | 'lava';
+export type FluidSampler = (x: number, y: number, z: number) => FluidKind | null;
+
 export interface UpdateOptions {
   isSolid?: SolidSampler;
+  isFluid?: FluidSampler;
 }
 
 export class FirstPersonCamera {
@@ -47,6 +51,7 @@ export class FirstPersonCamera {
   yaw = 0;
   pitch = 0;
   onGround = false;
+  inFluid: FluidKind | null = null;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -172,6 +177,13 @@ export class FirstPersonCamera {
     const hx = len > 0 ? (mx / len) * speed : 0;
     const hz = len > 0 ? (mz / len) * speed : 0;
 
+    this.inFluid =
+      opts.isFluid?.(
+        Math.floor(this.position.x),
+        Math.floor(this.position.y),
+        Math.floor(this.position.z),
+      ) ?? null;
+
     if (fly || !opts.isSolid) {
       this.position.x += hx * dtSec;
       this.position.z += hz * dtSec;
@@ -179,16 +191,29 @@ export class FirstPersonCamera {
       this.velocity.set(0, 0, 0);
       this.onGround = false;
     } else {
-      this.velocity.x = hx;
-      this.velocity.z = hz;
-      if (this.input.jump && this.onGround) {
-        this.velocity.y = this.opts.jumpVelocity;
-        this.onGround = false;
+      const submerged = this.inFluid !== null;
+      const drag = submerged ? (this.inFluid === 'water' ? 0.8 : 0.5) : 1;
+      this.velocity.x = hx * (submerged ? 0.5 : 1);
+      this.velocity.z = hz * (submerged ? 0.5 : 1);
+      if (submerged) {
+        if (this.input.jump) {
+          this.velocity.y = this.inFluid === 'water' ? 4 : 2;
+        } else {
+          this.velocity.y = Math.max(
+            this.velocity.y * drag - (this.inFluid === 'water' ? 4 : 8) * dtSec,
+            -4,
+          );
+        }
+      } else {
+        if (this.input.jump && this.onGround) {
+          this.velocity.y = this.opts.jumpVelocity;
+          this.onGround = false;
+        }
+        this.velocity.y = Math.max(
+          this.velocity.y - this.opts.gravity * dtSec,
+          -this.opts.terminalVelocity,
+        );
       }
-      this.velocity.y = Math.max(
-        this.velocity.y - this.opts.gravity * dtSec,
-        -this.opts.terminalVelocity,
-      );
       const dv = {
         x: this.velocity.x * dtSec,
         y: this.velocity.y * dtSec,

@@ -7,6 +7,9 @@ export const STARVE_HUNGER_THRESHOLD = 0;
 export const STARVE_DAMAGE_PER_SEC = 0.5;
 export const HUNGER_HEAL_MIN = 18; // above this, slow HP regen
 export const HP_REGEN_PER_SEC = 1;
+export const LAVA_DAMAGE_PER_SEC = 4;
+export const DROWN_DAMAGE_PER_SEC = 2;
+export const BREATH_MAX_SEC = 15;
 
 export interface DamageEvent {
   amount: number;
@@ -23,6 +26,7 @@ export class PlayerState {
   hunger = MAX_HUNGER;
   saturation = 5;
   sprinting = false;
+  breath = BREATH_MAX_SEC;
   readonly inventory: Inventory;
   private readonly onRespawn: () => void;
 
@@ -46,7 +50,7 @@ export class PlayerState {
     this.health = Math.min(MAX_HEALTH, this.health + amount);
   }
 
-  tick(dtSec: number): void {
+  tick(dtSec: number, env: { inFluid?: 'water' | 'lava' | null } = {}): void {
     if (this.health <= 0) return;
     let decay = HUNGER_DECAY_PER_SEC;
     if (this.sprinting) decay *= 4;
@@ -61,12 +65,24 @@ export class PlayerState {
       this.heal(HP_REGEN_PER_SEC * dtSec);
       this.saturation = Math.max(0, this.saturation - dtSec * 0.5);
     }
+    if (env.inFluid === 'lava') {
+      this.takeDamage({ amount: LAVA_DAMAGE_PER_SEC * dtSec, source: 'lava' });
+    }
+    if (env.inFluid === 'water') {
+      this.breath = Math.max(0, this.breath - dtSec);
+      if (this.breath <= 0) {
+        this.takeDamage({ amount: DROWN_DAMAGE_PER_SEC * dtSec, source: 'drown' });
+      }
+    } else {
+      this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
+    }
   }
 
   respawn(): void {
     this.health = MAX_HEALTH;
     this.hunger = MAX_HUNGER;
     this.saturation = 5;
+    this.breath = BREATH_MAX_SEC;
     this.inventory.clear();
     this.onRespawn();
   }

@@ -75,4 +75,26 @@ describe('PlayerState', () => {
     p.takeDamage({ amount: 5 });
     expect(p.health).toBe(0);
   });
+
+  it('lava contact deals continuous damage', () => {
+    const p = build();
+    const before = p.health;
+    p.tick(1, { inFluid: 'lava' });
+    expect(p.health).toBeLessThan(before);
+  });
+
+  it('breath drains underwater and damages after depletion', () => {
+    const p = build();
+    p.breath = 0.5;
+    p.tick(1, { inFluid: 'water' });
+    expect(p.breath).toBe(0);
+    expect(p.health).toBeLessThan(MAX_HEALTH);
+  });
+
+  it('breath refills out of water', () => {
+    const p = build();
+    p.breath = 0;
+    p.tick(2, { inFluid: null });
+    expect(p.breath).toBeGreaterThan(0);
+  });
 });
