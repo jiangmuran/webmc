@@ -2,6 +2,15 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M11
+
+- **Skeleton arrow projectiles.** Current implementation deals instant ranged damage at 8m; real MC fires an arrow entity with ballistic trajectory. Needs a Projectile component + simple kinematic integrator.
+- **Pig / cow / sheep / chicken breeding.** Use wheat / seeds / similar → baby mob at half scale + 20 minute growth timer. Needs item-use-on-entity hook.
+- **Wolf taming.** Bone item consumes on right-click while neutral → becomes owned; persist owner across world saves.
+- **Behavior-tree library.** Current mob AI is a single `tickMob` switch per behavior — fine for 10 kinds; bigger rosters or nested behaviors (flee, pick-up, call-for-help) need a proper BT abstraction.
+- **Enderman pick-up block + water damage.** Real ender should grab a random passable block and take damage in water.
+- **Spider wall-climb.** Currently fakes with a jump at 4m range; real climbing needs a wall-adherence physics mode.
+
 ## Post-M10
 
 - **Abandoned mineshafts (was M10.5).** Multi-chunk planks-and-rails tunnels need a cross-chunk structure system; current generator only places per-chunk. Blocked on structure coordinator.
