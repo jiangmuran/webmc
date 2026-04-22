@@ -30,6 +30,7 @@ import { PlayerState } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
+import { FluidWorld } from './fluids/FluidWorld';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -163,6 +164,18 @@ touch?.attach(appEl);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
+
+const fluidWorld = new FluidWorld({ world, registry });
+const waterId = registry.byName('webmc:water');
+const lavaId = registry.byName('webmc:lava');
+const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
+  const s = world.get(x, y, z);
+  if (s === AIR) return null;
+  const id = stateId(s);
+  if (id === waterId) return 'water';
+  if (id === lavaId) return 'lava';
+  return null;
+};
 
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
@@ -303,6 +316,8 @@ async function savePlayerNow(): Promise<void> {
 }
 
 let lastPlayerSaveAt = performance.now();
+let fluidTickAccum = 0;
+const FLUID_TICK_SEC = 0.25;
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
@@ -433,7 +448,7 @@ function frame(): void {
     }
     if (touch.state.jump) fp.input.jump = true;
   }
-  fp.update(dtSec, { isSolid });
+  fp.update(dtSec, { isSolid, isFluid });
   if (touch?.state.primary) {
     (interaction as unknown as { held: string | null }).held = 'break';
     interaction.tick(now);
@@ -465,7 +480,7 @@ function frame(): void {
   renderer.render(scene, camera);
 
   playerState.sprinting = fp.input.sprint;
-  playerState.tick(dtSec);
+  playerState.tick(dtSec, { inFluid: fp.inFluid });
 
   if (chunkRenderer.meshCount > 20) {
     spawnSystem.tick(dtSec, mobWorld, {
@@ -474,6 +489,21 @@ function frame(): void {
       surfaceAt: (x, z) => generator.surfaceAt(x, z),
       isSolid,
     });
+  }
+
+  fluidTickAccum += dtSec;
+  while (fluidTickAccum >= FLUID_TICK_SEC) {
+    fluidTickAccum -= FLUID_TICK_SEC;
+    const { changed } = fluidWorld.tick();
+    for (const p of changed) {
+      const cx = Math.floor(p.x / 16);
+      const cz = Math.floor(p.z / 16);
+      const chunk = world.getChunk(cx, cz);
+      if (chunk) {
+        const light = lightCache.get(lightKey(cx, cz)) ?? null;
+        chunkStore.markDirty(chunk, light);
+      }
+    }
   }
 
   mobWorld.tick(dtSec, {

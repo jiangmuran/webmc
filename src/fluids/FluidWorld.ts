@@ -60,21 +60,24 @@ export class FluidWorld {
     return this.cells.size;
   }
 
-  tick(): boolean {
+  tick(): { stabilized: boolean; changed: readonly { x: number; y: number; z: number }[] } {
     const { updates, stabilized } = tickFluid(this.cells, (x, y, z) => this.isSolid(x, y, z));
     applyFluidUpdates(this.cells, updates);
+    const changed: { x: number; y: number; z: number }[] = [];
     for (const [k, cell] of updates) {
       const p = parseKey(k);
       if (cell === null) {
         const existing = this.world.get(p.x, p.y, p.z);
         if (existing === this.waterState || existing === this.lavaState) {
           this.world.set(p.x, p.y, p.z, AIR);
+          changed.push(p);
         }
       } else {
         this.world.set(p.x, p.y, p.z, this.blockStateFor(cell.kind));
+        changed.push(p);
       }
     }
-    return stabilized;
+    return { stabilized, changed };
   }
 
   private isSolid(x: number, y: number, z: number): boolean {
