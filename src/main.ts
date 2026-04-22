@@ -27,6 +27,8 @@ import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { BlockDropRegistry } from './items/block-drops';
 import { PlayerState } from './game/PlayerState';
+import { MobWorld } from './entities/mob';
+import { MobRenderer } from './engine/render/MobRenderer';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -157,6 +159,10 @@ touch?.attach(appEl);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
+
+const mobWorld = new MobWorld();
+const mobRenderer = new MobRenderer();
+scene.add(mobRenderer.group);
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
@@ -456,6 +462,21 @@ function frame(): void {
   playerState.sprinting = fp.input.sprint;
   playerState.tick(dtSec);
 
+  if (mobWorld.size === 0 && chunkRenderer.meshCount > 20) {
+    const base = generator.surfaceAt(Math.floor(fp.position.x + 8), Math.floor(fp.position.z)) + 1;
+    mobWorld.spawn('zombie', { x: fp.position.x + 8, y: base, z: fp.position.z });
+    mobWorld.spawn('pig', { x: fp.position.x - 6, y: base, z: fp.position.z });
+  }
+
+  mobWorld.tick(dtSec, {
+    isSolid,
+    playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+    damagePlayer: (amt) => {
+      playerState.takeDamage({ amount: amt, source: 'mob' });
+    },
+  });
+  mobRenderer.sync(mobWorld.all());
+
   if (now - lastPlayerSaveAt > 5000) {
     lastPlayerSaveAt = now;
     void savePlayerNow();
@@ -469,7 +490,7 @@ function frame(): void {
     `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
     `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
     `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
-    `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  items ${inventory.hotbar.filter((s) => s !== null).length}/9${roomCode ? `  room ${roomCode}` : ''}\n` +
+    `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  items ${inventory.hotbar.filter((s) => s !== null).length}/9  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
     `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}`;
   requestAnimationFrame(frame);
 }
