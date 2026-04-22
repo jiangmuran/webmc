@@ -11,7 +11,11 @@ export type MobKind =
   | 'skeleton'
   | 'creeper'
   | 'spider'
-  | 'enderman';
+  | 'enderman'
+  | 'ghast'
+  | 'blaze'
+  | 'piglin'
+  | 'wither_skeleton';
 
 export type MobBehavior = 'passive' | 'hostile' | 'neutral' | 'creeper' | 'enderman';
 
@@ -133,6 +137,46 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     attackDamage: 4,
     attackRangeSq: 2 * 2,
     aggroRangeSq: 24 * 24,
+  },
+  ghast: {
+    kind: 'ghast',
+    aabb: { halfX: 2, halfY: 2, halfZ: 2 },
+    walkSpeed: 0,
+    maxHealth: 10,
+    behavior: 'hostile',
+    attackDamage: 6,
+    attackRangeSq: 48 * 48,
+    aggroRangeSq: 64 * 64,
+  },
+  blaze: {
+    kind: 'blaze',
+    aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
+    walkSpeed: 1.5,
+    maxHealth: 20,
+    behavior: 'hostile',
+    attackDamage: 3,
+    attackRangeSq: 16 * 16,
+    aggroRangeSq: 24 * 24,
+  },
+  piglin: {
+    kind: 'piglin',
+    aabb: TALL_BOX,
+    walkSpeed: 2.1,
+    maxHealth: 16,
+    behavior: 'neutral',
+    attackDamage: 3,
+    attackRangeSq: 1.5 * 1.5,
+    aggroRangeSq: 16 * 16,
+  },
+  wither_skeleton: {
+    kind: 'wither_skeleton',
+    aabb: { halfX: 0.3, halfY: 1.2, halfZ: 0.3 },
+    walkSpeed: 2.2,
+    maxHealth: 20,
+    behavior: 'hostile',
+    attackDamage: 5,
+    attackRangeSq: 2 * 2,
+    aggroRangeSq: 16 * 16,
   },
 };
 

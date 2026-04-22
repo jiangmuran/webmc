@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M13
+
+- **Dimension swap wiring in main.ts.** DimensionRegistry + portal frame detection + NetherGenerator exist as pure modules; wiring the player travel (stand in portal → fade-to-black → move to translated coords in the other dimension's world) requires save-state plumbing we haven't touched.
+- **Nether fortress structure.** Multi-chunk structure (same blocker as M10 mineshafts / villages).
+- **Ghast fireball projectile + explosion.** Depends on projectile system from Post-M11 backlog.
+- **Blaze fireball (fire-resistance check).** Same.
+- **Piglin gold attraction + bartering trades.** Same item-use-on-entity plumbing as breeding/taming.
+
 ## Post-M12
 
 - **Enchantment table block + UI.** Registry + apply logic + XP cost logic exist; placing the block, opening an enchant-picker panel, and showing glyph animation are the missing pieces.

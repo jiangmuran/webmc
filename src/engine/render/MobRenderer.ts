@@ -12,6 +12,10 @@ const COLORS: Record<MobKind, number> = {
   creeper: 0x4caf50,
   spider: 0x2a1d1d,
   enderman: 0x151520,
+  ghast: 0xe6e1d8,
+  blaze: 0xffcb4a,
+  piglin: 0xd3a888,
+  wither_skeleton: 0x262626,
 };
 
 export class MobRenderer {

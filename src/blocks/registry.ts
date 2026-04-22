@@ -219,6 +219,23 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:wool_red', color: [182, 52, 48] as RGB, hardness: 0.8 },
     { name: 'webmc:wool_blue', color: [51, 78, 178] as RGB, hardness: 0.8 },
     { name: 'webmc:wool_yellow', color: [233, 208, 59] as RGB, hardness: 0.8 },
+    { name: 'webmc:netherrack', color: [104, 35, 35] as RGB, hardness: 0.4 },
+    { name: 'webmc:soul_sand', color: [82, 56, 41] as RGB, hardness: 0.5 },
+    { name: 'webmc:nether_brick', color: [45, 23, 27] as RGB, hardness: 2 },
+    { name: 'webmc:nether_quartz_ore', color: [180, 140, 130] as RGB, hardness: 3 },
+    { name: 'webmc:magma_block', color: [150, 60, 20] as RGB, lightEmission: 3, hardness: 0.5 },
+    { name: 'webmc:obsidian', color: [20, 10, 30] as RGB, hardness: 50 },
+    { name: 'webmc:bedrock', color: [50, 50, 50] as RGB, hardness: -1 },
+    {
+      name: 'webmc:portal',
+      solid: false,
+      opaque: false,
+      color: [170, 70, 240] as RGB,
+      lightEmission: 11,
+      hardness: -1,
+    },
+    { name: 'webmc:end_stone', color: [220, 220, 170] as RGB, hardness: 3 },
+    { name: 'webmc:end_portal_frame', color: [80, 95, 85] as RGB, hardness: -1 },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));
   }
