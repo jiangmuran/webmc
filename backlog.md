@@ -2,6 +2,14 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M12
+
+- **Enchantment table block + UI.** Registry + apply logic + XP cost logic exist; placing the block, opening an enchant-picker panel, and showing glyph animation are the missing pieces.
+- **Brewing stand tile-entity.** Potion recipes + effect registry exist; the stand needs a 20s smelt-style timer + fuel (blaze powder) bookkeeping + inventory slots.
+- **Villager entity rendering + trade UI.** Trade logic is pure; spawning a villager Mob with profession state and a DOM trade panel is next.
+- **Anvil block + UI.** Combine logic is pure; the anvil block should land blocks + damage drop + a two-slot DOM panel.
+- **Enchant-by-bookshelf bonus power.** Currently `rollEnchantment` doesn't weight by bookshelf count; wire once the block is placeable.
+
 ## Post-M11
 
 - **Skeleton arrow projectiles.** Current implementation deals instant ranged damage at 8m; real MC fires an arrow entity with ballistic trajectory. Needs a Projectile component + simple kinematic integrator.

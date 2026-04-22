@@ -11,6 +11,13 @@ export const LAVA_DAMAGE_PER_SEC = 4;
 export const DROWN_DAMAGE_PER_SEC = 2;
 export const BREATH_MAX_SEC = 15;
 
+// MC XP curve: 1-16: 2n+7 ; 17-31: 5n-38 ; 32+: 9n-158
+export function xpToNext(level: number): number {
+  if (level < 16) return 2 * level + 7;
+  if (level < 31) return 5 * level - 38;
+  return 9 * level - 158;
+}
+
 export interface DamageEvent {
   amount: number;
   source?: string;
@@ -27,6 +34,9 @@ export class PlayerState {
   saturation = 5;
   sprinting = false;
   breath = BREATH_MAX_SEC;
+  xpLevel = 0;
+  xpProgress = 0;
+  readonly effects = new Map<string, { amplifier: number; remainingSec: number }>();
   readonly inventory: Inventory;
   private readonly onRespawn: () => void;
 
@@ -48,6 +58,27 @@ export class PlayerState {
 
   heal(amount: number): void {
     this.health = Math.min(MAX_HEALTH, this.health + amount);
+  }
+
+  addXP(xp: number): void {
+    if (xp <= 0) return;
+    this.xpProgress += xp;
+    while (this.xpProgress >= xpToNext(this.xpLevel)) {
+      this.xpProgress -= xpToNext(this.xpLevel);
+      this.xpLevel++;
+    }
+  }
+
+  spendXPLevels(levels: number): boolean {
+    if (this.xpLevel < levels) return false;
+    this.xpLevel -= levels;
+    return true;
+  }
+
+  applyEffect(id: string, amplifier: number, durationSec: number): void {
+    const cur = this.effects.get(id);
+    if (cur && cur.amplifier >= amplifier && cur.remainingSec > durationSec) return;
+    this.effects.set(id, { amplifier, remainingSec: durationSec });
   }
 
   tick(dtSec: number, env: { inFluid?: 'water' | 'lava' | null } = {}): void {
@@ -76,6 +107,24 @@ export class PlayerState {
     } else {
       this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
     }
+    for (const [id, eff] of this.effects) {
+      eff.remainingSec -= dtSec;
+      if (eff.remainingSec <= 0) {
+        this.effects.delete(id);
+        continue;
+      }
+      if (id === 'regeneration') {
+        this.heal(0.5 * (eff.amplifier + 1) * dtSec);
+      } else if (id === 'poison' && this.health > 1) {
+        this.takeDamage({ amount: 0.5 * (eff.amplifier + 1) * dtSec, source: 'poison' });
+      } else if (id === 'instant_health') {
+        this.heal(4 * (eff.amplifier + 1));
+        this.effects.delete(id);
+      } else if (id === 'instant_damage') {
+        this.takeDamage({ amount: 3 * (eff.amplifier + 1), source: 'harming' });
+        this.effects.delete(id);
+      }
+    }
   }
 
   respawn(): void {
@@ -83,6 +132,9 @@ export class PlayerState {
     this.hunger = MAX_HUNGER;
     this.saturation = 5;
     this.breath = BREATH_MAX_SEC;
+    this.xpLevel = 0;
+    this.xpProgress = 0;
+    this.effects.clear();
     this.inventory.clear();
     this.onRespawn();
   }

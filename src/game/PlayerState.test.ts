@@ -97,4 +97,56 @@ describe('PlayerState', () => {
     p.tick(2, { inFluid: null });
     expect(p.breath).toBeGreaterThan(0);
   });
+
+  it('addXP accumulates and rolls over at level thresholds', () => {
+    const p = build();
+    p.addXP(7);
+    expect(p.xpLevel).toBe(1);
+    expect(p.xpProgress).toBe(0);
+    p.addXP(100);
+    expect(p.xpLevel).toBeGreaterThan(1);
+  });
+
+  it('spendXPLevels fails if insufficient', () => {
+    const p = build();
+    expect(p.spendXPLevels(5)).toBe(false);
+    p.addXP(1000);
+    expect(p.spendXPLevels(5)).toBe(true);
+  });
+
+  it('regeneration effect heals over time', () => {
+    const p = build();
+    p.health = 10;
+    p.applyEffect('regeneration', 1, 10);
+    p.tick(5);
+    expect(p.health).toBeGreaterThan(10);
+  });
+
+  it('poison damages down to 1 HP but not below', () => {
+    const p = build();
+    p.hunger = 0;
+    p.saturation = 0;
+    p.applyEffect('poison', 2, 10);
+    for (let i = 0; i < 50; i++) p.tick(0.5);
+    expect(p.health).toBeGreaterThanOrEqual(1);
+  });
+
+  it('instant_health heals once and clears', () => {
+    const p = build();
+    p.health = 5;
+    p.applyEffect('instant_health', 1, 1);
+    p.tick(0.1);
+    expect(p.health).toBeGreaterThan(5);
+    expect(p.effects.has('instant_health')).toBe(false);
+  });
+
+  it('respawn clears XP + effects', () => {
+    const p = build();
+    p.addXP(500);
+    p.applyEffect('regeneration', 1, 100);
+    p.health = 0;
+    p.respawn();
+    expect(p.xpLevel).toBe(0);
+    expect(p.effects.size).toBe(0);
+  });
 });
