@@ -2,6 +2,13 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M8
+
+- **Placement + interaction wiring (was M8.6).** Place dust/torch/lever/button/plate/door via Interaction.onPlace; add Interaction.onUse for lever toggle, button press, door manual open.
+- **`m8-door.webmc` demo save (was M8.7).** Blocked on placement + on `.webmc` zip export (Post-M5).
+- **Torch inverter + quasi-connectivity.** Torches emit conditionally on mount-block power; fixed-point iteration.
+- **3D rendering for dust / torch / door.** Real geometries instead of generic coloured cubes.
+
 ## Post-M7
 
 - **Crafting grid UI (was M7.3).** RecipeRegistry resolver exists; a 2×2 / 3×3 DOM grid with drag-drop (or tap-to-slot on touch) is the missing integration piece.
