@@ -23,14 +23,16 @@ describe('SpawnSystem', () => {
     const s = new SpawnSystem({ checkIntervalSec: 0.1, maxHostile: 4 });
     for (let i = 0; i < 20; i++) s.tick(0.5, mobs, ctx(false));
     expect(mobs.size).toBeGreaterThan(0);
-    for (const m of mobs.all()) expect(m.def.hostile).toBe(true);
+    for (const m of mobs.all()) {
+      expect(m.def.behavior === 'hostile' || m.def.behavior === 'creeper').toBe(true);
+    }
   });
 
   it('spawns passive mobs during the day', () => {
     const mobs = new MobWorld();
     const s = new SpawnSystem({ checkIntervalSec: 0.1, maxPassive: 3 });
     for (let i = 0; i < 20; i++) s.tick(0.5, mobs, ctx(true));
-    for (const m of mobs.all()) expect(m.def.hostile).toBe(false);
+    for (const m of mobs.all()) expect(m.def.behavior).toBe('passive');
   });
 
   it('respects per-category caps', () => {

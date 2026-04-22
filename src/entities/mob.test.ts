@@ -72,4 +72,57 @@ describe('MobWorld', () => {
     }
     expect(pig.position.x).toBeCloseTo(startX, 0);
   });
+
+  it('creeper explodes when adjacent to player', () => {
+    const m = new MobWorld();
+    const c = m.spawn('creeper', { x: 0.5, y: 40.9, z: 0.5 });
+    let damage = 0;
+    for (let i = 0; i < 50; i++) {
+      m.tick(1 / 20, {
+        isSolid: floorAtY40,
+        playerPos: { x: 0.5, y: 40.9, z: 0.5 },
+        damagePlayer: (amt) => (damage += amt),
+      });
+    }
+    expect(damage).toBeGreaterThan(10);
+    expect(m.size).toBe(0);
+    void c;
+  });
+
+  it('neutral wolf only aggros after being hit', () => {
+    const m = new MobWorld();
+    const w = m.spawn('wolf', { x: 5, y: 40.9, z: 0.5 });
+    for (let i = 0; i < 20; i++) {
+      m.tick(1 / 20, {
+        isSolid: floorAtY40,
+        playerPos: { x: 0.5, y: 40.9, z: 0.5 },
+        damagePlayer: () => undefined,
+      });
+    }
+    expect(w.position.x).toBeGreaterThan(4);
+    m.damage(w.id, 1);
+    for (let i = 0; i < 40; i++) {
+      m.tick(1 / 20, {
+        isSolid: floorAtY40,
+        playerPos: { x: 0.5, y: 40.9, z: 0.5 },
+        damagePlayer: () => undefined,
+      });
+    }
+    expect(w.position.x).toBeLessThan(4);
+  });
+
+  it('cow and chicken are passive', () => {
+    const m = new MobWorld();
+    const c = m.spawn('cow', { x: 10, y: 40.9, z: 0 });
+    const k = m.spawn('chicken', { x: -10, y: 40.9, z: 0 });
+    for (let i = 0; i < 30; i++) {
+      m.tick(1 / 20, {
+        isSolid: floorAtY40,
+        playerPos: { x: 0, y: 40.9, z: 0 },
+        damagePlayer: () => undefined,
+      });
+    }
+    expect(c.position.x).toBeGreaterThan(9);
+    expect(k.position.x).toBeLessThan(-9);
+  });
 });

@@ -46,7 +46,17 @@ export class SpawnSystem {
     if (current >= this.opts.maxHostile) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
-    const kind: MobKind = (ctx.rng ?? Math.random)() < 0.3 ? 'skeleton' : 'zombie';
+    const r = (ctx.rng ?? Math.random)();
+    const kind: MobKind =
+      r < 0.2
+        ? 'skeleton'
+        : r < 0.4
+          ? 'creeper'
+          : r < 0.6
+            ? 'spider'
+            : r < 0.7
+              ? 'enderman'
+              : 'zombie';
     mobs.spawn(kind, slot);
   }
 
@@ -55,7 +65,9 @@ export class SpawnSystem {
     if (current >= this.opts.maxPassive) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
-    mobs.spawn('pig', slot);
+    const r = (ctx.rng ?? Math.random)();
+    const kind: MobKind = r < 0.25 ? 'pig' : r < 0.5 ? 'cow' : r < 0.75 ? 'sheep' : 'chicken';
+    mobs.spawn(kind, slot);
   }
 
   private findSpawnSlot(ctx: SpawnContext): Vec3 | null {
@@ -87,13 +99,17 @@ export class SpawnSystem {
 
   private countHostile(mobs: MobWorld): number {
     let n = 0;
-    for (const mob of mobs.all()) if (mob.def.hostile) n++;
+    for (const mob of mobs.all()) {
+      if (mob.def.behavior === 'hostile' || mob.def.behavior === 'creeper') n++;
+    }
     return n;
   }
 
   private countPassive(mobs: MobWorld): number {
     let n = 0;
-    for (const mob of mobs.all()) if (!mob.def.hostile) n++;
+    for (const mob of mobs.all()) {
+      if (mob.def.behavior === 'passive') n++;
+    }
     return n;
   }
 }

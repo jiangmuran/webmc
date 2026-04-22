@@ -3,8 +3,15 @@ import type { Mob, MobKind } from '@/entities/mob';
 
 const COLORS: Record<MobKind, number> = {
   pig: 0xf4a4b8,
+  cow: 0x8b5a3c,
+  sheep: 0xeeeeee,
+  chicken: 0xfafafa,
+  wolf: 0xbfbfbf,
   zombie: 0x5a8a4d,
   skeleton: 0xcfcfcf,
+  creeper: 0x4caf50,
+  spider: 0x2a1d1d,
+  enderman: 0x151520,
 };
 
 export class MobRenderer {
