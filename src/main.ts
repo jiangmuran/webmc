@@ -119,6 +119,9 @@ for (const def of registry.defs) {
   });
   blockToItem.set(blockId, id);
 }
+itemRegistry.register({ name: 'webmc:bucket', maxStack: 16, durability: 0 });
+itemRegistry.register({ name: 'webmc:water_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:lava_bucket', maxStack: 1, durability: 0 });
 
 const dropRegistry = new BlockDropRegistry();
 for (const [blockId, itemId] of blockToItem) {
