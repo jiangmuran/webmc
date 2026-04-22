@@ -260,6 +260,69 @@ export function createDefaultRegistry(): BlockRegistry {
       lightEmission: 14,
       hardness: 0,
     },
+    // M18 content expansion — extra wool colors.
+    { name: 'webmc:wool_green', color: [88, 129, 41] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_light_blue', color: [114, 178, 220] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_lime', color: [123, 206, 68] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_pink', color: [235, 176, 194] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_gray', color: [80, 80, 80] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_light_gray', color: [170, 170, 170] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_cyan', color: [36, 136, 150] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_purple', color: [128, 65, 165] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_magenta', color: [198, 78, 188] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_orange', color: [240, 140, 40] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_brown', color: [108, 68, 38] as RGB, hardness: 0.8 },
+    { name: 'webmc:wool_black', color: [22, 22, 22] as RGB, hardness: 0.8 },
+    // Copper family.
+    { name: 'webmc:copper_block', color: [216, 127, 77] as RGB, hardness: 3 },
+    { name: 'webmc:exposed_copper', color: [186, 125, 93] as RGB, hardness: 3 },
+    { name: 'webmc:weathered_copper', color: [120, 165, 125] as RGB, hardness: 3 },
+    { name: 'webmc:oxidized_copper', color: [85, 170, 135] as RGB, hardness: 3 },
+    { name: 'webmc:copper_ore', color: [160, 135, 110] as RGB, hardness: 3 },
+    // Amethyst family.
+    { name: 'webmc:amethyst_block', color: [134, 95, 174] as RGB, hardness: 1.5 },
+    { name: 'webmc:budding_amethyst', color: [158, 121, 196] as RGB, hardness: 1.5 },
+    {
+      name: 'webmc:amethyst_cluster',
+      solid: false,
+      opaque: false,
+      color: [200, 160, 220] as RGB,
+      lightEmission: 5,
+      hardness: 1.5,
+    },
+    // Deep-dark family.
+    { name: 'webmc:sculk', color: [14, 22, 36] as RGB, hardness: 0.2 },
+    {
+      name: 'webmc:sculk_sensor',
+      solid: false,
+      opaque: false,
+      color: [18, 46, 62] as RGB,
+      lightEmission: 1,
+      hardness: 1.5,
+    },
+    { name: 'webmc:reinforced_deepslate', color: [46, 51, 54] as RGB, hardness: 55 },
+    // Calcite / tuff (1.17 deepdark + geode filler).
+    { name: 'webmc:calcite', color: [231, 230, 224] as RGB, hardness: 0.75 },
+    { name: 'webmc:tuff', color: [108, 108, 103] as RGB, hardness: 1.5 },
+    // Mud + mangrove / cherry / azalea / bamboo blocks.
+    { name: 'webmc:mud', color: [67, 54, 52] as RGB, hardness: 0.5 },
+    { name: 'webmc:mangrove_log', color: [92, 55, 53] as RGB, hardness: 2 },
+    { name: 'webmc:cherry_log', color: [80, 58, 60] as RGB, hardness: 2 },
+    { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
+    { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
+    {
+      name: 'webmc:bamboo',
+      solid: false,
+      opaque: false,
+      color: [148, 192, 90] as RGB,
+      hardness: 1,
+    },
+    // Ice / snow for cold biomes.
+    { name: 'webmc:ice', opaque: false, color: [180, 200, 240] as RGB, hardness: 0.5 },
+    { name: 'webmc:snow_block', color: [240, 250, 255] as RGB, hardness: 0.2 },
+    { name: 'webmc:packed_ice', color: [145, 180, 230] as RGB, hardness: 0.5 },
+    // End cities.
+    { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));
   }

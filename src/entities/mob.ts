@@ -17,7 +17,23 @@ export type MobKind =
   | 'piglin'
   | 'wither_skeleton'
   | 'ender_dragon'
-  | 'shulker';
+  | 'shulker'
+  | 'pillager'
+  | 'vindicator'
+  | 'evoker'
+  | 'iron_golem'
+  | 'snow_golem'
+  | 'bee'
+  | 'axolotl'
+  | 'frog'
+  | 'warden'
+  | 'fox'
+  | 'goat'
+  | 'horse'
+  | 'rabbit'
+  | 'squid'
+  | 'cat'
+  | 'parrot';
 
 export type MobBehavior = 'passive' | 'hostile' | 'neutral' | 'creeper' | 'enderman';
 
@@ -199,6 +215,167 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     attackDamage: 2,
     attackRangeSq: 16 * 16,
     aggroRangeSq: 16 * 16,
+  },
+  pillager: {
+    kind: 'pillager',
+    aabb: TALL_BOX,
+    walkSpeed: 1.8,
+    maxHealth: 24,
+    behavior: 'hostile',
+    attackDamage: 3,
+    attackRangeSq: 8 * 8,
+    aggroRangeSq: 16 * 16,
+  },
+  vindicator: {
+    kind: 'vindicator',
+    aabb: TALL_BOX,
+    walkSpeed: 2.0,
+    maxHealth: 24,
+    behavior: 'hostile',
+    attackDamage: 6,
+    attackRangeSq: 1.6 * 1.6,
+    aggroRangeSq: 16 * 16,
+  },
+  evoker: {
+    kind: 'evoker',
+    aabb: TALL_BOX,
+    walkSpeed: 1.5,
+    maxHealth: 24,
+    behavior: 'hostile',
+    attackDamage: 4,
+    attackRangeSq: 12 * 12,
+    aggroRangeSq: 16 * 16,
+  },
+  iron_golem: {
+    kind: 'iron_golem',
+    aabb: { halfX: 0.7, halfY: 1.35, halfZ: 0.7 },
+    walkSpeed: 1.8,
+    maxHealth: 100,
+    behavior: 'neutral',
+    attackDamage: 8,
+    attackRangeSq: 2 * 2,
+    aggroRangeSq: 16 * 16,
+  },
+  snow_golem: {
+    kind: 'snow_golem',
+    aabb: { halfX: 0.35, halfY: 0.95, halfZ: 0.35 },
+    walkSpeed: 1.6,
+    maxHealth: 4,
+    behavior: 'neutral',
+    attackDamage: 0,
+    attackRangeSq: 10 * 10,
+    aggroRangeSq: 16 * 16,
+  },
+  bee: {
+    kind: 'bee',
+    aabb: { halfX: 0.3, halfY: 0.3, halfZ: 0.3 },
+    walkSpeed: 1.2,
+    maxHealth: 10,
+    behavior: 'neutral',
+    attackDamage: 2,
+    attackRangeSq: 1.5 * 1.5,
+    aggroRangeSq: 16 * 16,
+  },
+  axolotl: {
+    kind: 'axolotl',
+    aabb: { halfX: 0.3, halfY: 0.3, halfZ: 0.3 },
+    walkSpeed: 1,
+    maxHealth: 14,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
+  },
+  frog: {
+    kind: 'frog',
+    aabb: { halfX: 0.3, halfY: 0.3, halfZ: 0.3 },
+    walkSpeed: 1,
+    maxHealth: 10,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
+  },
+  warden: {
+    kind: 'warden',
+    aabb: { halfX: 0.45, halfY: 1.45, halfZ: 0.45 },
+    walkSpeed: 2.6,
+    maxHealth: 500,
+    behavior: 'hostile',
+    attackDamage: 30,
+    attackRangeSq: 4 * 4,
+    aggroRangeSq: 20 * 20,
+  },
+  fox: {
+    kind: 'fox',
+    aabb: { halfX: 0.3, halfY: 0.4, halfZ: 0.3 },
+    walkSpeed: 2.2,
+    maxHealth: 10,
+    behavior: 'neutral',
+    attackDamage: 2,
+    attackRangeSq: 1.5 * 1.5,
+    aggroRangeSq: 12 * 12,
+  },
+  goat: {
+    kind: 'goat',
+    aabb: MEDIUM_BOX,
+    walkSpeed: 1.2,
+    maxHealth: 10,
+    behavior: 'neutral',
+    attackDamage: 2,
+    attackRangeSq: 1.5 * 1.5,
+    aggroRangeSq: 12 * 12,
+    jumpVelocity: 9,
+  },
+  horse: {
+    kind: 'horse',
+    aabb: { halfX: 0.7, halfY: 0.8, halfZ: 0.7 },
+    walkSpeed: 2.0,
+    maxHealth: 16,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
+  },
+  rabbit: {
+    kind: 'rabbit',
+    aabb: SMALL_BOX,
+    walkSpeed: 1.6,
+    maxHealth: 3,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
+  },
+  squid: {
+    kind: 'squid',
+    aabb: MEDIUM_BOX,
+    walkSpeed: 0.8,
+    maxHealth: 10,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
+  },
+  cat: {
+    kind: 'cat',
+    aabb: SMALL_BOX,
+    walkSpeed: 1.2,
+    maxHealth: 10,
+    behavior: 'neutral',
+    attackDamage: 1,
+    attackRangeSq: 1.5 * 1.5,
+    aggroRangeSq: 8 * 8,
+  },
+  parrot: {
+    kind: 'parrot',
+    aabb: SMALL_BOX,
+    walkSpeed: 1.4,
+    maxHealth: 6,
+    behavior: 'passive',
+    attackDamage: 0,
+    attackRangeSq: 0,
+    aggroRangeSq: 0,
   },
 };
 

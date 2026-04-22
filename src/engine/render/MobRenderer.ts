@@ -18,6 +18,22 @@ const COLORS: Record<MobKind, number> = {
   wither_skeleton: 0x262626,
   ender_dragon: 0x0a0a1a,
   shulker: 0x9f8ea0,
+  pillager: 0x5a5448,
+  vindicator: 0x807a6d,
+  evoker: 0x555555,
+  iron_golem: 0xdaddcf,
+  snow_golem: 0xfafcff,
+  bee: 0xf2c14e,
+  axolotl: 0xf9b8d0,
+  frog: 0x8aa23a,
+  warden: 0x0d3437,
+  fox: 0xd39853,
+  goat: 0xe0d9c2,
+  horse: 0xc29872,
+  rabbit: 0xbfa684,
+  squid: 0x6a3f63,
+  cat: 0xc0a577,
+  parrot: 0x5ec1ff,
 };
 
 export class MobRenderer {
