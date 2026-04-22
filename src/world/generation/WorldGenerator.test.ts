@@ -162,6 +162,31 @@ describe('WorldGenerator', () => {
     expect(deepslateCount).toBeGreaterThan(0);
   });
 
+  it('dungeons appear across many chunks (mossy cobble underground)', () => {
+    const g = new WorldGenerator(2024, registry);
+    const mossy = registry.byName('webmc:mossy_cobblestone');
+    let mossyCount = 0;
+    for (let cx = -4; cx <= 4 && mossyCount === 0; cx++) {
+      for (let cz = -4; cz <= 4 && mossyCount === 0; cz++) {
+        const c = new Chunk(cx, cz);
+        g.generateChunk(c);
+        for (let y = 12; y < 50; y++) {
+          for (let x = 0; x < 16; x++) {
+            for (let z = 0; z < 16; z++) {
+              if (stateId(c.get(x, y, z)) === mossy) {
+                mossyCount++;
+                break;
+              }
+            }
+            if (mossyCount > 0) break;
+          }
+          if (mossyCount > 0) break;
+        }
+      }
+    }
+    expect(mossyCount).toBeGreaterThan(0);
+  });
+
   it('reproducibility: two independent gens of the same chunk are identical', () => {
     const g1 = new WorldGenerator(999, registry);
     const g2 = new WorldGenerator(999, registry);

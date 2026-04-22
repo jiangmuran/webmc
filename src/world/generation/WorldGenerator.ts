@@ -30,6 +30,8 @@ export interface GeneratedBlocks {
   redstoneOre: BlockState;
   lapisOre: BlockState;
   deepslate: BlockState;
+  mossyCobble: BlockState;
+  cobble: BlockState;
 }
 
 interface OreBand {
@@ -43,6 +45,12 @@ interface OreBand {
 const CAVE_FREQ = 1 / 24;
 const CAVE_THRESHOLD = 0.32;
 const DEEPSLATE_Y = 4;
+const DUNGEON_CHANCE = 1 / 30;
+const DUNGEON_SALT = 0xd00f00d;
+const DUNGEON_HALF_X = 2;
+const DUNGEON_HALF_Z = 2;
+const DUNGEON_Y_MIN = 12;
+const DUNGEON_Y_MAX = 50;
 
 function resolve(registry: BlockRegistry, name: string): BlockState {
   const id = registry.byName(name);
@@ -86,6 +94,8 @@ export class WorldGenerator {
       redstoneOre: resolve(registry, 'webmc:redstone_ore'),
       lapisOre: resolve(registry, 'webmc:lapis_ore'),
       deepslate: resolve(registry, 'webmc:deepslate'),
+      mossyCobble: resolve(registry, 'webmc:mossy_cobblestone'),
+      cobble: resolve(registry, 'webmc:cobblestone'),
     };
   }
 
@@ -150,6 +160,38 @@ export class WorldGenerator {
           const h = hash32(wx, wz, this.seed);
           if ((h & 0xffff) / 0xffff < TREE_DENSITY) {
             this.plantTree(wx, wz, surface + 1, log, leaves, chunk);
+          }
+        }
+      }
+    }
+    this.maybePlaceDungeon(chunk);
+  }
+
+  private maybePlaceDungeon(chunk: Chunk): void {
+    const h = hash32(chunk.cx, chunk.cz, this.seed ^ DUNGEON_SALT);
+    if ((h % 10000) / 10000 >= DUNGEON_CHANCE) return;
+    const cornerX = (h >>> 4) % 16;
+    const cornerZ = (h >>> 12) % 16;
+    const cornerY = DUNGEON_Y_MIN + ((h >>> 20) % (DUNGEON_Y_MAX - DUNGEON_Y_MIN));
+    const { mossyCobble, cobble } = this.blocks;
+    for (let dx = -DUNGEON_HALF_X; dx <= DUNGEON_HALF_X; dx++) {
+      for (let dz = -DUNGEON_HALF_Z; dz <= DUNGEON_HALF_Z; dz++) {
+        for (let dy = 0; dy <= 3; dy++) {
+          const lx = cornerX + dx;
+          const lz = cornerZ + dz;
+          const y = cornerY + dy;
+          if (lx < 0 || lx >= CHUNK_DIM || lz < 0 || lz >= CHUNK_DIM) continue;
+          if (y < 1 || y >= CHUNK_HEIGHT) continue;
+          const onWall =
+            Math.abs(dx) === DUNGEON_HALF_X ||
+            Math.abs(dz) === DUNGEON_HALF_Z ||
+            dy === 0 ||
+            dy === 3;
+          if (onWall) {
+            const mossy = ((hash32(lx, y * 17 + lz, this.seed) >>> 0) & 3) === 0;
+            chunk.set(lx, y, lz, mossy ? mossyCobble : cobble);
+          } else {
+            chunk.set(lx, y, lz, AIR);
           }
         }
       }
