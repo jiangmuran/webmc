@@ -2,6 +2,15 @@
 
 Items deferred during a milestone that were cut from DONE but should land later. Each entry: origin milestone, one-line description, link to spec or discussion.
 
+## Post-M14
+
+- **Ender dragon boss fight.** `ender_dragon` mob def exists; flight AI, phases (circling / perching / charge), and crystal dependency are unimplemented.
+- **End crystals + health-regen rings.** 4 obsidian pillars + crystals restore dragon HP; needs an end-crystal entity with line-of-sight healing.
+- **Exit portal + return-to-overworld wiring.** Dimension registry handles travel math; the post-kill exit portal and credits screen are UX layer.
+- **End cities + elytra.** Outer-island structures (cross-chunk structure blocker again) with shulkers and an elytra loot slot.
+- **Stronghold.** Overworld structure that contains the end portal frame; cross-chunk blocker.
+- **Eye of ender tracking behavior.** Item + right-click to throw and point at a stronghold — blocked on stronghold placement.
+
 ## Post-M13
 
 - **Dimension swap wiring in main.ts.** DimensionRegistry + portal frame detection + NetherGenerator exist as pure modules; wiring the player travel (stand in portal → fade-to-black → move to translated coords in the other dimension's world) requires save-state plumbing we haven't touched.

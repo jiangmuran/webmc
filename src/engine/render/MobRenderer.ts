@@ -16,6 +16,8 @@ const COLORS: Record<MobKind, number> = {
   blaze: 0xffcb4a,
   piglin: 0xd3a888,
   wither_skeleton: 0x262626,
+  ender_dragon: 0x0a0a1a,
+  shulker: 0x9f8ea0,
 };
 
 export class MobRenderer {

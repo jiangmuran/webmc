@@ -236,6 +236,30 @@ export function createDefaultRegistry(): BlockRegistry {
     },
     { name: 'webmc:end_stone', color: [220, 220, 170] as RGB, hardness: 3 },
     { name: 'webmc:end_portal_frame', color: [80, 95, 85] as RGB, hardness: -1 },
+    {
+      name: 'webmc:end_portal',
+      solid: false,
+      opaque: false,
+      color: [10, 10, 30] as RGB,
+      lightEmission: 15,
+      hardness: -1,
+    },
+    {
+      name: 'webmc:dragon_egg',
+      solid: true,
+      opaque: false,
+      color: [12, 6, 20] as RGB,
+      hardness: 3,
+    },
+    { name: 'webmc:purpur_block', color: [170, 130, 170] as RGB, hardness: 1.5 },
+    {
+      name: 'webmc:end_rod',
+      solid: false,
+      opaque: false,
+      color: [245, 235, 215] as RGB,
+      lightEmission: 14,
+      hardness: 0,
+    },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));
   }

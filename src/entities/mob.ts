@@ -15,7 +15,9 @@ export type MobKind =
   | 'ghast'
   | 'blaze'
   | 'piglin'
-  | 'wither_skeleton';
+  | 'wither_skeleton'
+  | 'ender_dragon'
+  | 'shulker';
 
 export type MobBehavior = 'passive' | 'hostile' | 'neutral' | 'creeper' | 'enderman';
 
@@ -176,6 +178,26 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     behavior: 'hostile',
     attackDamage: 5,
     attackRangeSq: 2 * 2,
+    aggroRangeSq: 16 * 16,
+  },
+  ender_dragon: {
+    kind: 'ender_dragon',
+    aabb: { halfX: 8, halfY: 4, halfZ: 8 },
+    walkSpeed: 0,
+    maxHealth: 200,
+    behavior: 'hostile',
+    attackDamage: 10,
+    attackRangeSq: 6 * 6,
+    aggroRangeSq: 128 * 128,
+  },
+  shulker: {
+    kind: 'shulker',
+    aabb: { halfX: 0.5, halfY: 0.5, halfZ: 0.5 },
+    walkSpeed: 0,
+    maxHealth: 30,
+    behavior: 'hostile',
+    attackDamage: 2,
+    attackRangeSq: 16 * 16,
     aggroRangeSq: 16 * 16,
   },
 };
