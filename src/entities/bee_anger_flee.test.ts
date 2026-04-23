@@ -9,9 +9,7 @@ import {
 
 describe('bee anger flee', () => {
   it('attack makes angry', () => {
-    expect(onPlayerAttack({ angerTicks: 0, stung: false }).angerTicks).toBe(
-      ANGER_AFTER_ATTACK,
-    );
+    expect(onPlayerAttack({ angerTicks: 0, stung: false }).angerTicks).toBe(ANGER_AFTER_ATTACK);
   });
 
   it('sting clears anger', () => {
