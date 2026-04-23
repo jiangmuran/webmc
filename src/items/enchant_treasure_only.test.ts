@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { isTreasureOnly, canObtainFromEnchantingTable, sourceHintsFor } from './enchant_treasure_only';
+import {
+  isTreasureOnly,
+  canObtainFromEnchantingTable,
+  sourceHintsFor,
+} from './enchant_treasure_only';
 
 describe('enchant treasure only', () => {
   it('mending treasure', () => {
