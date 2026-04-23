@@ -14,6 +14,8 @@ describe('particle emit rate', () => {
 
   it('rate x20 per sec', () => {
     const r = emitRate({ source: 'torch', intensity: 1, distanceFromCamera: 0 });
-    expect(particlesPerSecond({ source: 'torch', intensity: 1, distanceFromCamera: 0 })).toBe(r * 20);
+    expect(particlesPerSecond({ source: 'torch', intensity: 1, distanceFromCamera: 0 })).toBe(
+      r * 20,
+    );
   });
 });

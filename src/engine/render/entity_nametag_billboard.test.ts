@@ -24,9 +24,7 @@ describe('entity nametag billboard', () => {
   });
 
   it('always-visible ignores distance', () => {
-    expect(
-      shouldRender({ ...base, cameraDistance: 10000, alwaysVisible: true }),
-    ).toBe(true);
+    expect(shouldRender({ ...base, cameraDistance: 10000, alwaysVisible: true })).toBe(true);
   });
 
   it('anchor above head', () => {
