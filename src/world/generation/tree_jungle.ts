@@ -10,7 +10,9 @@ export const THICK_HEIGHT = 20;
 
 export function rollJungle(rng: () => number): Jungle {
   const thick = rng() < 0.1;
-  const height = thick ? THICK_HEIGHT : MIN_HEIGHT + Math.floor(rng() * (MAX_HEIGHT - MIN_HEIGHT + 1));
+  const height = thick
+    ? THICK_HEIGHT
+    : MIN_HEIGHT + Math.floor(rng() * (MAX_HEIGHT - MIN_HEIGHT + 1));
   return { height, thick, vines: true };
 }
 
