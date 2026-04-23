@@ -20,5 +20,5 @@ export function effectiveSpeed(c: BreakCtx): number {
 export function ticksToBreak(hardness: number, c: BreakCtx): number {
   const s = effectiveSpeed(c);
   if (s <= 0) return Infinity;
-  return Math.ceil(hardness * 20 / s);
+  return Math.ceil((hardness * 20) / s);
 }
