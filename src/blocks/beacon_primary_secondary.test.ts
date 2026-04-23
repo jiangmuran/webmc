@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  canSetSecondary,
-  availablePrimaries,
-  effectRangeBlocks,
-} from './beacon_primary_secondary';
+import { canSetSecondary, availablePrimaries, effectRangeBlocks } from './beacon_primary_secondary';
 
 describe('beacon primary secondary', () => {
   it('tier 4 unlocks secondary', () => {
