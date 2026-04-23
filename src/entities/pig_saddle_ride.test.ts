@@ -8,7 +8,9 @@ describe('pig saddle ride', () => {
   });
 
   it('boost faster', () => {
-    expect(speedMult({ saddled: true, holdingCarrotOnStick: false, boostTicks: 50 })).toBeGreaterThan(1);
+    expect(
+      speedMult({ saddled: true, holdingCarrotOnStick: false, boostTicks: 50 }),
+    ).toBeGreaterThan(1);
   });
 
   it('unsaddled speed 1', () => {
@@ -16,11 +18,11 @@ describe('pig saddle ride', () => {
   });
 
   it('boost only with stick', () => {
-    expect(startBoost({ saddled: true, holdingCarrotOnStick: true, boostTicks: 0 }).boostTicks).toBe(
-      MAX_BOOST_TICKS,
-    );
-    expect(startBoost({ saddled: true, holdingCarrotOnStick: false, boostTicks: 0 }).boostTicks).toBe(
-      0,
-    );
+    expect(
+      startBoost({ saddled: true, holdingCarrotOnStick: true, boostTicks: 0 }).boostTicks,
+    ).toBe(MAX_BOOST_TICKS);
+    expect(
+      startBoost({ saddled: true, holdingCarrotOnStick: false, boostTicks: 0 }).boostTicks,
+    ).toBe(0);
   });
 });
