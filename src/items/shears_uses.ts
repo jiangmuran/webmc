@@ -9,7 +9,7 @@ export type ShearTarget =
   | 'glow_berry_vine'
   | 'pumpkin_carve';
 
-export function isShearable(t: ShearTarget): boolean {
+export function isShearable(_t: ShearTarget): boolean {
   return true;
 }
 
