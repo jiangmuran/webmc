@@ -3,9 +3,9 @@ import { progressFraction, shouldUseOpfs, canResume } from './opfs_migrate_idb';
 
 describe('opfs migrate idb', () => {
   it('progress fraction', () => {
-    expect(
-      progressFraction({ opfsAvailable: true, migratedChunks: 50, totalChunks: 100 }),
-    ).toBe(0.5);
+    expect(progressFraction({ opfsAvailable: true, migratedChunks: 50, totalChunks: 100 })).toBe(
+      0.5,
+    );
   });
 
   it('opfs decision', () => {
