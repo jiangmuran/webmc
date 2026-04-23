@@ -22,7 +22,11 @@ describe('ominous vault', () => {
 
   it('drops on unlock', () => {
     expect(
-      dropsOminousLoot({ withOminousKey: true, playerHasBadOmen: true, previouslyUsedByPlayer: false }),
+      dropsOminousLoot({
+        withOminousKey: true,
+        playerHasBadOmen: true,
+        previouslyUsedByPlayer: false,
+      }),
     ).toBe(true);
   });
 
