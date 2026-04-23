@@ -1,4 +1,9 @@
-export type GossipKind = 'minor_positive' | 'major_positive' | 'minor_negative' | 'major_negative' | 'trading';
+export type GossipKind =
+  | 'minor_positive'
+  | 'major_positive'
+  | 'minor_negative'
+  | 'major_negative'
+  | 'trading';
 
 export interface GossipEntry {
   about: string;

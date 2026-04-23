@@ -3,27 +3,25 @@ import { canThrow, takesMeltDamage, leavesSnowTrail, RANGE } from './snow_golem_
 
 describe('snow golem projectile', () => {
   it('in range throws', () => {
-    expect(
-      canThrow({ targetDistance: RANGE, inWarmBiome: false, inRain: false, hp: 4 }),
-    ).toBe(true);
+    expect(canThrow({ targetDistance: RANGE, inWarmBiome: false, inRain: false, hp: 4 })).toBe(
+      true,
+    );
   });
 
   it('dead no throw', () => {
-    expect(
-      canThrow({ targetDistance: 5, inWarmBiome: false, inRain: false, hp: 0 }),
-    ).toBe(false);
+    expect(canThrow({ targetDistance: 5, inWarmBiome: false, inRain: false, hp: 0 })).toBe(false);
   });
 
   it('warm biome melts', () => {
-    expect(
-      takesMeltDamage({ targetDistance: 5, inWarmBiome: true, inRain: false, hp: 4 }),
-    ).toBe(true);
+    expect(takesMeltDamage({ targetDistance: 5, inWarmBiome: true, inRain: false, hp: 4 })).toBe(
+      true,
+    );
   });
 
   it('rain melts', () => {
-    expect(
-      takesMeltDamage({ targetDistance: 5, inWarmBiome: false, inRain: true, hp: 4 }),
-    ).toBe(true);
+    expect(takesMeltDamage({ targetDistance: 5, inWarmBiome: false, inRain: true, hp: 4 })).toBe(
+      true,
+    );
   });
 
   it('leaves trail', () => {
