@@ -9,7 +9,7 @@ export function canSleep(c: Ctx): boolean {
   return c.adjacentPart !== undefined && c.adjacentPart !== c.thisPart;
 }
 
-export function breakingHeadRemovesFoot(part: BedPart): boolean {
+export function breakingHeadRemovesFoot(_part: BedPart): boolean {
   return true;
 }
 
