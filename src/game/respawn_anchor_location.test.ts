@@ -17,9 +17,11 @@ describe('respawn anchor location', () => {
   });
 
   it('no bed falls to world spawn', () => {
-    expect(
-      respawnPosition(undefined, { worldSpawn: { x: 0, y: 64, z: 0 } }),
-    ).toEqual({ x: 0, y: 64, z: 0 });
+    expect(respawnPosition(undefined, { worldSpawn: { x: 0, y: 64, z: 0 } })).toEqual({
+      x: 0,
+      y: 64,
+      z: 0,
+    });
   });
 
   it('only nether anchor consumes charge', () => {
