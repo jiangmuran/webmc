@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
+import type { Toast } from './notification_toast_queue';
 import { activeToasts, pushToast, DEFAULT_DURATION_MS } from './notification_toast_queue';
 
 describe('notification toast queue', () => {
-  const t = (ms: number, dur: number) => ({
+  const t = (ms: number, dur: number): Toast => ({
     message: 'hi',
-    category: 'info' as const,
+    category: 'info',
     enqueuedAtMs: ms,
     durationMs: dur,
   });
@@ -18,7 +19,7 @@ describe('notification toast queue', () => {
   });
 
   it('queue caps', () => {
-    let q: ReturnType<typeof t>[] = [];
+    let q: Toast[] = [];
     for (let i = 0; i < 10; i++) q = pushToast(q, t(i, 5000), 5);
     expect(q).toHaveLength(5);
   });
