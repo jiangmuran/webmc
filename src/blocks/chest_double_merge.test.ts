@@ -7,21 +7,21 @@ describe('chest double merge', () => {
   });
 
   it('facing mismatch stays single', () => {
-    expect(
-      typeOnPlace({ facing: 'n', adjacentChestFacing: 'e', adjacentSide: 'left' }),
-    ).toBe('single');
+    expect(typeOnPlace({ facing: 'n', adjacentChestFacing: 'e', adjacentSide: 'left' })).toBe(
+      'single',
+    );
   });
 
   it('right of left is right', () => {
-    expect(
-      typeOnPlace({ facing: 'n', adjacentChestFacing: 'n', adjacentSide: 'left' }),
-    ).toBe('right');
+    expect(typeOnPlace({ facing: 'n', adjacentChestFacing: 'n', adjacentSide: 'left' })).toBe(
+      'right',
+    );
   });
 
   it('left of right is left', () => {
-    expect(
-      typeOnPlace({ facing: 'n', adjacentChestFacing: 'n', adjacentSide: 'right' }),
-    ).toBe('left');
+    expect(typeOnPlace({ facing: 'n', adjacentChestFacing: 'n', adjacentSide: 'right' })).toBe(
+      'left',
+    );
   });
 
   it('capacities', () => {
