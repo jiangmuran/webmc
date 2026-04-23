@@ -3,15 +3,15 @@ import { vyAdjustment, horizontalMultiplier } from './buoyancy_swim_up';
 
 describe('buoyancy swim up', () => {
   it('dry no adjust', () => {
-    expect(vyAdjustment({ inWater: false, headSubmerged: false, pressingJump: false, sprinting: false })).toBe(
-      0,
-    );
+    expect(
+      vyAdjustment({ inWater: false, headSubmerged: false, pressingJump: false, sprinting: false }),
+    ).toBe(0);
   });
 
   it('water lifts', () => {
-    expect(vyAdjustment({ inWater: true, headSubmerged: false, pressingJump: false, sprinting: false })).toBeGreaterThan(
-      0,
-    );
+    expect(
+      vyAdjustment({ inWater: true, headSubmerged: false, pressingJump: false, sprinting: false }),
+    ).toBeGreaterThan(0);
   });
 
   it('submerged jump accelerates up', () => {
@@ -23,14 +23,24 @@ describe('buoyancy swim up', () => {
   });
 
   it('dry full speed', () => {
-    expect(horizontalMultiplier({ inWater: false, headSubmerged: false, pressingJump: false, sprinting: false })).toBe(
-      1,
-    );
+    expect(
+      horizontalMultiplier({
+        inWater: false,
+        headSubmerged: false,
+        pressingJump: false,
+        sprinting: false,
+      }),
+    ).toBe(1);
   });
 
   it('water slows', () => {
-    expect(horizontalMultiplier({ inWater: true, headSubmerged: false, pressingJump: false, sprinting: false })).toBeLessThan(
-      1,
-    );
+    expect(
+      horizontalMultiplier({
+        inWater: true,
+        headSubmerged: false,
+        pressingJump: false,
+        sprinting: false,
+      }),
+    ).toBeLessThan(1);
   });
 });
