@@ -22,10 +22,7 @@ describe('allay duplicate', () => {
 
   it('cooldown not passed', () => {
     expect(
-      canDuplicate(
-        { lastDupTick: 0, recentlyFedAmethyst: true, danceTicksRemaining: 100 },
-        100,
-      ),
+      canDuplicate({ lastDupTick: 0, recentlyFedAmethyst: true, danceTicksRemaining: 100 }, 100),
     ).toBe(false);
   });
 
