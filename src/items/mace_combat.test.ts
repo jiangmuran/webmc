@@ -3,12 +3,24 @@ import { smashDamage, windBurstHeight, breachArmorIgnoreFraction } from './mace_
 
 describe('mace combat', () => {
   it('no fall just base', () => {
-    const base = { fallDistance: 1, densityBonus: 0, windBurstLevel: 0, breachLevel: 0, baseDamage: 6 };
+    const base = {
+      fallDistance: 1,
+      densityBonus: 0,
+      windBurstLevel: 0,
+      breachLevel: 0,
+      baseDamage: 6,
+    };
     expect(smashDamage(base)).toBe(6);
   });
 
   it('fall increases damage', () => {
-    const hi = { fallDistance: 10, densityBonus: 0, windBurstLevel: 0, breachLevel: 0, baseDamage: 6 };
+    const hi = {
+      fallDistance: 10,
+      densityBonus: 0,
+      windBurstLevel: 0,
+      breachLevel: 0,
+      baseDamage: 6,
+    };
     expect(smashDamage(hi)).toBeGreaterThan(6);
   });
 
