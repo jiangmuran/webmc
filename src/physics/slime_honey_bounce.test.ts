@@ -3,9 +3,9 @@ import { bounceVelocity, honeySlowMultiplier, negatesFallDamage } from './slime_
 
 describe('slime honey bounce', () => {
   it('slime bounces', () => {
-    expect(bounceVelocity({ block: 'slime_block', fallDistance: 5, sneaking: false })).toBeGreaterThan(
-      0,
-    );
+    expect(
+      bounceVelocity({ block: 'slime_block', fallDistance: 5, sneaking: false }),
+    ).toBeGreaterThan(0);
   });
 
   it('sneak skips bounce', () => {
