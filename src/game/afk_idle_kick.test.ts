@@ -7,9 +7,9 @@ describe('afk idle kick', () => {
   });
 
   it('afk at threshold', () => {
-    expect(
-      isAfk({ lastInputTick: 0, currentTick: AFK_FLAG_TICKS, idleKickEnabled: true }),
-    ).toBe(true);
+    expect(isAfk({ lastInputTick: 0, currentTick: AFK_FLAG_TICKS, idleKickEnabled: true })).toBe(
+      true,
+    );
   });
 
   it('kicks at longer threshold', () => {
@@ -19,8 +19,8 @@ describe('afk idle kick', () => {
   });
 
   it('no kick when disabled', () => {
-    expect(
-      shouldKick({ lastInputTick: 0, currentTick: 99999, idleKickEnabled: false }),
-    ).toBe(false);
+    expect(shouldKick({ lastInputTick: 0, currentTick: 99999, idleKickEnabled: false })).toBe(
+      false,
+    );
   });
 });
