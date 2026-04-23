@@ -11,7 +11,8 @@ describe('deepslate shale transition', () => {
   });
 
   it('mid noise stochastic', () => {
-    expect(blockAtY(4, 0.1)).toBe('deepslate');
-    expect(blockAtY(4, 0.9)).toBe('stone');
+    // At y=4, threshold is 0.5; noise<threshold → stone, noise>threshold → deepslate
+    expect(blockAtY(4, 0.1)).toBe('stone');
+    expect(blockAtY(4, 0.9)).toBe('deepslate');
   });
 });
