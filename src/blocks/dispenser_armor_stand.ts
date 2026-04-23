@@ -7,10 +7,12 @@ export interface DispenseCtx {
 export function equipsInsteadOfEjects(c: DispenseCtx): boolean {
   if (!c.targetEntity) return false;
   if (c.targetWearsSlot) return false;
-  return c.itemId.endsWith('_helmet') ||
+  return (
+    c.itemId.endsWith('_helmet') ||
     c.itemId.endsWith('_chestplate') ||
     c.itemId.endsWith('_leggings') ||
-    c.itemId.endsWith('_boots');
+    c.itemId.endsWith('_boots')
+  );
 }
 
 export function shearWaterBucketPlaces(c: DispenseCtx): boolean {

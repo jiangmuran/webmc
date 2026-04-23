@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  smeltTime,
-  fuelTickAtBurnTime,
-  DEFAULT_SMELT_TIME_TICKS,
-} from './furnace_smelt_time';
+import { smeltTime, fuelTickAtBurnTime, DEFAULT_SMELT_TIME_TICKS } from './furnace_smelt_time';
 
 describe('furnace smelt time', () => {
   it('default 200', () => {

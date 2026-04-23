@@ -33,8 +33,8 @@ describe('dispenser armor stand', () => {
   });
 
   it('water bucket places water', () => {
-    expect(
-      shearWaterBucketPlaces({ itemId: 'water_bucket', targetWearsSlot: undefined }),
-    ).toBe(true);
+    expect(shearWaterBucketPlaces({ itemId: 'water_bucket', targetWearsSlot: undefined })).toBe(
+      true,
+    );
   });
 });
