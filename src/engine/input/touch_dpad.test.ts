@@ -5,9 +5,10 @@ describe('touch dpad', () => {
   const center = { x: 100, y: 100, active: true };
 
   it('inactive zero', () => {
-    expect(
-      stickVector(center, { x: 120, y: 100, active: false }, 50),
-    ).toEqual({ forward: 0, strafe: 0 });
+    expect(stickVector(center, { x: 120, y: 100, active: false }, 50)).toEqual({
+      forward: 0,
+      strafe: 0,
+    });
   });
 
   it('push right', () => {
