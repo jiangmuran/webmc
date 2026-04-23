@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  isVanillaAnvilSave,
-  isWebmcSave,
-  detectFormat,
-} from './vanilla_world_import_detect';
+import { isVanillaAnvilSave, isWebmcSave, detectFormat } from './vanilla_world_import_detect';
 
 describe('world import detect', () => {
   const anvil = [{ name: 'level.dat' }, { name: 'region/r.0.0.mca' }];

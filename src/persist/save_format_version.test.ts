@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  isCompatible,
-  needsUpgrade,
-  stamp,
-  CURRENT_FORMAT_VERSION,
-} from './save_format_version';
+import { isCompatible, needsUpgrade, stamp, CURRENT_FORMAT_VERSION } from './save_format_version';
 
 const h = {
   formatVersion: 1,
