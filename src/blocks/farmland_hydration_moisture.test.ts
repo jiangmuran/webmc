@@ -28,9 +28,19 @@ describe('farmland hydration', () => {
 
   it('wet grows faster', () => {
     expect(
-      growthRateMult({ moisture: MAX_MOISTURE, hasWaterWithin4: true, isRaining: false, topBlockIsAir: true }),
+      growthRateMult({
+        moisture: MAX_MOISTURE,
+        hasWaterWithin4: true,
+        isRaining: false,
+        topBlockIsAir: true,
+      }),
     ).toBeGreaterThan(
-      growthRateMult({ moisture: 0, hasWaterWithin4: false, isRaining: false, topBlockIsAir: true }),
+      growthRateMult({
+        moisture: 0,
+        hasWaterWithin4: false,
+        isRaining: false,
+        topBlockIsAir: true,
+      }),
     );
   });
 });
