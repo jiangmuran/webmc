@@ -15,6 +15,8 @@ describe('sound subtitle', () => {
   });
 
   it('subtitle formats', () => {
-    expect(subtitleLine({ source: 'x', subtitle: 'Zombie shuffles', dx: 10, dz: 0 })).toContain('E');
+    expect(subtitleLine({ source: 'x', subtitle: 'Zombie shuffles', dx: 10, dz: 0 })).toContain(
+      'E',
+    );
   });
 });
