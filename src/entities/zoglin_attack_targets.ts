@@ -1,10 +1,4 @@
-export type MobKind =
-  | 'player'
-  | 'villager'
-  | 'piglin'
-  | 'zoglin'
-  | 'zombie'
-  | 'creeper';
+export type MobKind = 'player' | 'villager' | 'piglin' | 'zoglin' | 'zombie' | 'creeper';
 
 export function isHostileToZoglin(mob: MobKind): boolean {
   return mob !== 'creeper' && mob !== 'zoglin';

@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  isHostileToZoglin,
-  knockbackStrength,
-  canTargetInNether,
-} from './zoglin_attack_targets';
+import { isHostileToZoglin, knockbackStrength, canTargetInNether } from './zoglin_attack_targets';
 
 describe('zoglin attack targets', () => {
   it('attacks player', () => {
