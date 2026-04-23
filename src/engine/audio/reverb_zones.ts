@@ -1,4 +1,10 @@
-export type Environment = 'open' | 'cave' | 'underwater' | 'nether' | 'indoor_small' | 'indoor_large';
+export type Environment =
+  | 'open'
+  | 'cave'
+  | 'underwater'
+  | 'nether'
+  | 'indoor_small'
+  | 'indoor_large';
 
 export const REVERB_WET: Record<Environment, number> = {
   open: 0,

@@ -15,14 +15,12 @@ describe('chunk unload strategy thermal', () => {
   });
 
   it('throttle lowers radius', () => {
-    expect(
-      suggestedChunkRadius({ cpuTempCelsius: 80, fpsP95: 60, battery: 1 }, 12),
-    ).toBeLessThan(12);
+    expect(suggestedChunkRadius({ cpuTempCelsius: 80, fpsP95: 60, battery: 1 }, 12)).toBeLessThan(
+      12,
+    );
   });
 
   it('radius floors at 4', () => {
-    expect(
-      suggestedChunkRadius({ cpuTempCelsius: 80, fpsP95: 60, battery: 1 }, 4),
-    ).toBe(4);
+    expect(suggestedChunkRadius({ cpuTempCelsius: 80, fpsP95: 60, battery: 1 }, 4)).toBe(4);
   });
 });
