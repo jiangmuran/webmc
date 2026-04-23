@@ -12,7 +12,10 @@ export function applyNew(existing: StackEntry[], incoming: StackEntry): StackEnt
   const next: StackEntry[] = [...existing];
   if (incoming.amplifier > current.amplifier) {
     next[idx] = incoming;
-  } else if (incoming.amplifier === current.amplifier && incoming.durationTicks > current.durationTicks) {
+  } else if (
+    incoming.amplifier === current.amplifier &&
+    incoming.durationTicks > current.durationTicks
+  ) {
     next[idx] = incoming;
   }
   return next;

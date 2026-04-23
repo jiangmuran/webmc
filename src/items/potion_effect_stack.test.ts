@@ -8,18 +8,20 @@ describe('potion effect stack', () => {
   });
 
   it('higher amp replaces', () => {
-    const r = applyNew(
-      [{ id: 'speed', amplifier: 0, durationTicks: 100 }],
-      { id: 'speed', amplifier: 1, durationTicks: 50 },
-    );
+    const r = applyNew([{ id: 'speed', amplifier: 0, durationTicks: 100 }], {
+      id: 'speed',
+      amplifier: 1,
+      durationTicks: 50,
+    });
     expect(r[0]?.amplifier).toBe(1);
   });
 
   it('same amp longer duration replaces', () => {
-    const r = applyNew(
-      [{ id: 'speed', amplifier: 0, durationTicks: 100 }],
-      { id: 'speed', amplifier: 0, durationTicks: 200 },
-    );
+    const r = applyNew([{ id: 'speed', amplifier: 0, durationTicks: 100 }], {
+      id: 'speed',
+      amplifier: 0,
+      durationTicks: 200,
+    });
     expect(r[0]?.durationTicks).toBe(200);
   });
 
