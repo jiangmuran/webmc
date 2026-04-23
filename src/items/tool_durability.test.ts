@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { consumeOnHit, brokenAt, unbreakingSurvivesChance, MAX_DURABILITY } from './tool_durability';
+import {
+  consumeOnHit,
+  brokenAt,
+  unbreakingSurvivesChance,
+  MAX_DURABILITY,
+} from './tool_durability';
 
 describe('tool durability', () => {
   it('netherite lasts longest', () => {
