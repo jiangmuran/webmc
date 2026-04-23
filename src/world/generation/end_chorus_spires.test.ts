@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { rollSpire, dropsPopped, onlyGrowsOnEndStone, MIN_HEIGHT, MAX_HEIGHT } from './end_chorus_spires';
+import {
+  rollSpire,
+  dropsPopped,
+  onlyGrowsOnEndStone,
+  MIN_HEIGHT,
+  MAX_HEIGHT,
+} from './end_chorus_spires';
 
 describe('end chorus spires', () => {
   it('height in range', () => {

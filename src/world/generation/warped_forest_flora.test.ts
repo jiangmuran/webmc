@@ -21,8 +21,8 @@ describe('warped forest flora', () => {
   });
 
   it('ambient id', () => {
-    expect(
-      ambientSoundId({ isWarpedBiome: true, isCrimsonBiome: false, rng: () => 0 }),
-    ).toContain('warped');
+    expect(ambientSoundId({ isWarpedBiome: true, isCrimsonBiome: false, rng: () => 0 })).toContain(
+      'warped',
+    );
   });
 });
