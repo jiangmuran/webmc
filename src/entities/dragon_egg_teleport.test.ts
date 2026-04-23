@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { teleportOffset, onInteract, isGravity, MAX_TELEPORT_DISTANCE } from './dragon_egg_teleport';
+import {
+  teleportOffset,
+  onInteract,
+  isGravity,
+  MAX_TELEPORT_DISTANCE,
+} from './dragon_egg_teleport';
 
 describe('dragon egg teleport', () => {
   it('offset within range', () => {
