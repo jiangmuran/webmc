@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { rollSize, rollY, inNetherrackOnly, VEIN_SIZE_MIN, VEIN_SIZE_MAX } from './nether_quartz_vein';
+import {
+  rollSize,
+  rollY,
+  inNetherrackOnly,
+  VEIN_SIZE_MIN,
+  VEIN_SIZE_MAX,
+} from './nether_quartz_vein';
 
 describe('nether quartz vein', () => {
   it('size in range', () => {
