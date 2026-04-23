@@ -10,5 +10,7 @@ export function slimeBlockChained(block: string): boolean {
 }
 
 export function slimeAndHoneyCollide(a: string, b: string): boolean {
-  return (a === 'slime_block' && b === 'honey_block') || (b === 'slime_block' && a === 'honey_block');
+  return (
+    (a === 'slime_block' && b === 'honey_block') || (b === 'slime_block' && a === 'honey_block')
+  );
 }
