@@ -1,9 +1,4 @@
-export type Interaction =
-  | 'obsidian'
-  | 'cobblestone'
-  | 'stone'
-  | 'magma_block'
-  | 'none';
+export type Interaction = 'obsidian' | 'cobblestone' | 'stone' | 'magma_block' | 'none';
 
 export interface Combo {
   lavaIsSource: boolean;
