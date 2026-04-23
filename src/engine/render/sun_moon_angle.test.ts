@@ -15,8 +15,7 @@ describe('sun moon angle', () => {
   });
 
   it('cycles over 24000', () => {
-    const a = sunAngle(0);
-    const b = sunAngle(24000);
-    expect(b - a).toBeCloseTo(2 * Math.PI);
+    expect(sunAngle(0)).toBeCloseTo(sunAngle(24000));
+    expect(sunAngle(6000)).toBeCloseTo(Math.PI / 2);
   });
 });
