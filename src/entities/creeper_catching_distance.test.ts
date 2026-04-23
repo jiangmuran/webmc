@@ -17,14 +17,14 @@ describe('creeper catching distance', () => {
   });
 
   it('aborts when out of range', () => {
-    expect(shouldAbort({ distanceToTarget: IGNITE_RANGE * 3, fuseTicks: 10, lineOfSight: true })).toBe(
-      true,
-    );
+    expect(
+      shouldAbort({ distanceToTarget: IGNITE_RANGE * 3, fuseTicks: 10, lineOfSight: true }),
+    ).toBe(true);
   });
 
   it('explodes at max fuse', () => {
-    expect(readyToExplode({ distanceToTarget: 0, fuseTicks: MAX_FUSE_TICKS, lineOfSight: true })).toBe(
-      true,
-    );
+    expect(
+      readyToExplode({ distanceToTarget: 0, fuseTicks: MAX_FUSE_TICKS, lineOfSight: true }),
+    ).toBe(true);
   });
 });
