@@ -17,9 +17,7 @@ describe('ice candidate sort', () => {
   });
 
   it('only relay = relay', () => {
-    expect(
-      preferredTransport([{ type: 'relay', priority: 100, foundation: 'a' }]),
-    ).toBe('relay');
+    expect(preferredTransport([{ type: 'relay', priority: 100, foundation: 'a' }])).toBe('relay');
   });
 
   it('empty = relay fallback', () => {
