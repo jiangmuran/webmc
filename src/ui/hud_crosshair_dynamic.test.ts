@@ -15,7 +15,9 @@ describe('hud crosshair dynamic', () => {
   });
 
   it('charged at 1', () => {
-    expect(charged({ weaponCharge: 1, looksAtEntity: false, looksAtBlockOutline: false })).toBe(true);
+    expect(charged({ weaponCharge: 1, looksAtEntity: false, looksAtBlockOutline: false })).toBe(
+      true,
+    );
     expect(charged({ weaponCharge: 0.5, looksAtEntity: false, looksAtBlockOutline: false })).toBe(
       false,
     );
