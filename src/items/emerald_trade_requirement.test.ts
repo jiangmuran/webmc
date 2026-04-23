@@ -11,13 +11,7 @@ describe('emerald trade requirement', () => {
   });
 
   it('item requirement', () => {
-    expect(
-      canTrade(
-        { emeraldCost: 2, itemNeeded: { id: 'wheat', count: 5 } },
-        5,
-        3,
-      ),
-    ).toBe(false);
+    expect(canTrade({ emeraldCost: 2, itemNeeded: { id: 'wheat', count: 5 } }, 5, 3)).toBe(false);
   });
 
   it('cheapest picked', () => {

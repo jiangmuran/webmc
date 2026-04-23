@@ -15,9 +15,9 @@ describe('smithing template duplicate', () => {
   });
 
   it('low diamond fail', () => {
-    expect(
-      canDuplicate({ templateId: 'dune', matchingBlock: 'sandstone', diamondCount: 1 }),
-    ).toBe(false);
+    expect(canDuplicate({ templateId: 'dune', matchingBlock: 'sandstone', diamondCount: 1 })).toBe(
+      false,
+    );
   });
 
   it('output count 2', () => {
