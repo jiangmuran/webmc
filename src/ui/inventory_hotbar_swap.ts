@@ -14,7 +14,12 @@ export function swapHotbarSlot(inv: Inventory, from: number, to: number): Invent
   return { ...inv, hotbar };
 }
 
-export function swapFromMain(inv: Inventory, hotbarIdx: number, mainRow: number, mainCol: number): Inventory {
+export function swapFromMain(
+  inv: Inventory,
+  hotbarIdx: number,
+  mainRow: number,
+  mainCol: number,
+): Inventory {
   const hotbar = [...inv.hotbar];
   const main = inv.main.map((r) => [...r]);
   const hotItem = hotbar[hotbarIdx] ?? null;
