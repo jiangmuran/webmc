@@ -3,9 +3,7 @@ import { redstoneSignal, countBooks } from './chiseled_bookshelf_signals';
 
 describe('chiseled bookshelf signals', () => {
   it('top slot signal 6', () => {
-    expect(
-      redstoneSignal([false, false, false, false, false, true]),
-    ).toBe(6);
+    expect(redstoneSignal([false, false, false, false, false, true])).toBe(6);
   });
 
   it('empty = 0', () => {

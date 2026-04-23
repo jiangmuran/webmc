@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  hardensToConcrete,
-  concreteName,
-  affectedByGravity,
-} from './concrete_powder_fall_water';
+import { hardensToConcrete, concreteName, affectedByGravity } from './concrete_powder_fall_water';
 
 describe('concrete powder', () => {
   it('water hardens', () => {
