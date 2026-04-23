@@ -3,9 +3,9 @@ import { outlineWidth, textScale, animationScale } from './accessibility_high_co
 
 describe('accessibility high contrast', () => {
   it('hc thicker outline', () => {
-    expect(outlineWidth({ highContrast: true, largeText: false, reduceMotion: false })).toBeGreaterThan(
-      1,
-    );
+    expect(
+      outlineWidth({ highContrast: true, largeText: false, reduceMotion: false }),
+    ).toBeGreaterThan(1);
   });
 
   it('large text 1.5', () => {
@@ -13,9 +13,7 @@ describe('accessibility high contrast', () => {
   });
 
   it('reduce motion 0', () => {
-    expect(
-      animationScale({ highContrast: false, largeText: false, reduceMotion: true }),
-    ).toBe(0);
+    expect(animationScale({ highContrast: false, largeText: false, reduceMotion: true })).toBe(0);
   });
 
   it('default 1x', () => {
