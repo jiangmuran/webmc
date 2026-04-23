@@ -1,0 +1,59 @@
+// Tropical fish variants: 22 named + procedural 2-byte variant NBT.
+
+export const SHAPES = ['flopper', 'stripey', 'glitter', 'blockfish', 'betty', 'clayfish'] as const;
+export type FishShape = (typeof SHAPES)[number];
+
+export type FishColor =
+  | 'white'
+  | 'orange'
+  | 'magenta'
+  | 'yellow'
+  | 'red'
+  | 'black'
+  | 'gray'
+  | 'blue';
+
+export interface FishVariant {
+  shape: FishShape;
+  pattern: number;
+  bodyColor: FishColor;
+  patternColor: FishColor;
+}
+
+export function encodeVariant(v: FishVariant): number {
+  const shapeIdx = SHAPES.indexOf(v.shape);
+  const bodyIdx = colorIndex(v.bodyColor);
+  const patternIdx = colorIndex(v.patternColor);
+  return (
+    (shapeIdx & 0xff) |
+    ((v.pattern & 0xff) << 8) |
+    ((bodyIdx & 0xff) << 16) |
+    ((patternIdx & 0xff) << 24)
+  );
+}
+
+export function decodeVariant(n: number): FishVariant {
+  const shape = SHAPES[(n & 0xff) % SHAPES.length] ?? 'flopper';
+  const pattern = (n >> 8) & 0xff;
+  const body = colorByIndex((n >> 16) & 0xff);
+  const pat = colorByIndex((n >> 24) & 0xff);
+  return { shape, pattern, bodyColor: body, patternColor: pat };
+}
+
+const COLORS: FishColor[] = [
+  'white',
+  'orange',
+  'magenta',
+  'yellow',
+  'red',
+  'black',
+  'gray',
+  'blue',
+];
+
+function colorIndex(c: FishColor): number {
+  return COLORS.indexOf(c);
+}
+function colorByIndex(i: number): FishColor {
+  return COLORS[i % COLORS.length] ?? 'white';
+}
