@@ -14,9 +14,9 @@ describe('torch placement rules', () => {
   });
 
   it('wall placement', () => {
-    expect(placedOrientation({ clickedFace: 'north', backingSolid: true, isSoulTorch: false })).toBe(
-      'wall_north',
-    );
+    expect(
+      placedOrientation({ clickedFace: 'north', backingSolid: true, isSoulTorch: false }),
+    ).toBe('wall_north');
   });
 
   it('soul dimmer', () => {
