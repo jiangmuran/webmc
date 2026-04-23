@@ -3,9 +3,9 @@ import { hasGrace, resistanceAmplifier, GRACE_DURATION_TICKS } from './axolotl_g
 
 describe('axolotl grace', () => {
   it('fresh grace', () => {
-    expect(
-      hasGrace({ axolotlDamagedMobNearby: true, lastDamageAtTick: 0, nowTick: 100 }),
-    ).toBe(true);
+    expect(hasGrace({ axolotlDamagedMobNearby: true, lastDamageAtTick: 0, nowTick: 100 })).toBe(
+      true,
+    );
   });
 
   it('expired grace', () => {
@@ -19,9 +19,9 @@ describe('axolotl grace', () => {
   });
 
   it('no axolotl no grace', () => {
-    expect(
-      hasGrace({ axolotlDamagedMobNearby: false, lastDamageAtTick: 0, nowTick: 10 }),
-    ).toBe(false);
+    expect(hasGrace({ axolotlDamagedMobNearby: false, lastDamageAtTick: 0, nowTick: 10 })).toBe(
+      false,
+    );
   });
 
   it('resistance only when in grace', () => {
