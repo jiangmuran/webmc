@@ -11,11 +11,7 @@ describe('lodestone compass link', () => {
   });
 
   it('bearing east', () => {
-    const b = bearingTo(
-      { targetX: 10, targetY: 64, targetZ: 0, targetDim: 'overworld' },
-      0,
-      0,
-    );
+    const b = bearingTo({ targetX: 10, targetY: 64, targetZ: 0, targetDim: 'overworld' }, 0, 0);
     expect(b).toBeCloseTo(0);
   });
 
@@ -25,10 +21,7 @@ describe('lodestone compass link', () => {
 
   it('spins across dim', () => {
     expect(
-      spinsOutOfDimension(
-        { targetX: 0, targetY: 0, targetZ: 0, targetDim: 'nether' },
-        'overworld',
-      ),
+      spinsOutOfDimension({ targetX: 0, targetY: 0, targetZ: 0, targetDim: 'nether' }, 'overworld'),
     ).toBe(true);
   });
 });

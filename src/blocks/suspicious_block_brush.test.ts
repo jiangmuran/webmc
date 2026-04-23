@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { canBrush, progressFraction, completesThisTick, BRUSH_TOTAL_TICKS } from './suspicious_block_brush';
+import {
+  canBrush,
+  progressFraction,
+  completesThisTick,
+  BRUSH_TOTAL_TICKS,
+} from './suspicious_block_brush';
 
 describe('suspicious block brush', () => {
   const base = { brushingTicks: 0, hitBlock: 'suspicious_sand', hasBrush: true };
