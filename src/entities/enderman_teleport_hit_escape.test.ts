@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { shouldTeleport, pickTeleportOffset, TELEPORT_RADIUS } from './enderman_teleport_hit_escape';
+import {
+  shouldTeleport,
+  pickTeleportOffset,
+  TELEPORT_RADIUS,
+} from './enderman_teleport_hit_escape';
 
 describe('enderman teleport hit escape', () => {
   it('water escapes sometimes', () => {
