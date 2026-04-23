@@ -1,0 +1,308 @@
+{
+	"credit": "By Ewan Howell",
+	"textureSize": [128, 64],
+	"models": [
+		{
+			"part": "cover_left",
+			"id": "cover_left",
+			"invertAxis": "xy",
+			"translate": [-7, -5, 0],
+			"submodels": [
+				{
+					"id": "cover_left_rotation",
+					"invertAxis": "xy",
+					"translate": [4, 5, 0],
+					"rotate": [0, 0, -180],
+					"boxes": [
+						{
+							"coordinates": [-2.5, -5, 0, 5.5, 10, 0.5],
+							"uvNorth": [33, 0, 44, 20],
+							"uvEast": [54, 0, 55, 20],
+							"uvSouth": [44, 0, 55, 20],
+							"uvWest": [44, 0, 45, 20],
+							"uvUp": [44, 0, 55, 1],
+							"uvDown": [44, 0, 55, 1]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"cover_left_rotation.rz": 0
+				}
+			]
+		},
+		{
+			"part": "cover_right",
+			"id": "cover_right",
+			"invertAxis": "xy",
+			"translate": [7, -5, 0],
+			"submodels": [
+				{
+					"id": "cover_right_rotation",
+					"invertAxis": "xy",
+					"translate": [-4, 5, 0],
+					"rotate": [0, 0, -180],
+					"boxes": [
+						{
+							"coordinates": [-3, -5, 0, 5.5, 10, 0.5],
+							"uvNorth": [0, 0, 11, 20],
+							"uvEast": [44, 0, 45, 20],
+							"uvSouth": [13, 0, 24, 20],
+							"uvWest": [14, 0, 13, 19],
+							"uvUp": [13, 0, 24, 1],
+							"uvDown": [13, 1, 24, 2]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"cover_right_rotation.rz": 0
+				}
+			]
+		},
+		{
+			"part": "book_spine",
+			"id": "book_spine",
+			"invertAxis": "xy",
+			"translate": [0, -5, 0],
+			"submodels": [
+				{
+					"id": "spine_rotation",
+					"invertAxis": "xy",
+					"translate": [0, 5, 0],
+					"rotate": [-180, 0, 0],
+					"boxes": [
+						{
+							"coordinates": [-1.5, -5, 0, 3, 10, 0.5],
+							"uvNorth": [71, 8, 70, 18],
+							"uvEast": [28, 0, 30, 20],
+							"uvSouth": [67, 8, 71, 18],
+							"uvWest": [12, 0, 14, 20],
+							"uvUp": [67, 8, 71, 9],
+							"uvDown": [67, 17, 71, 18]
+						}
+					],
+					"submodels": [
+						{
+							"id": "flat",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"submodels": [
+								{
+									"id": "scale_particles",
+									"invertAxis": "xy",
+									"translate": [0, 0, -13],
+									"submodels": [
+										{
+											"id": "symbol1",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol2",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol3",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol4",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol5",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol6",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol7",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										},
+										{
+											"id": "symbol8",
+											"invertAxis": "xy",
+											"translate": [0, 0, 13]
+										}
+									]
+								},
+								{
+									"id": "scale_circle",
+									"invertAxis": "xy",
+									"translate": [0, 0, -13],
+									"submodels": [
+										{
+											"id": "floor",
+											"invertAxis": "xy",
+											"translate": [-0.25, 0.25, -0.5]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"spine_rotation.rx": 0
+				},
+				{
+					"flat.rx": "torad(-10)",
+					"scale_circle.sy": "torad(0) + cover_left.ry",
+					"scale_circle.sx": "torad(0) + cover_left.ry",
+					"scale_circle.sz": "torad(0) + cover_left.ry",
+					"scale_particles.sy": "torad(0) - cover_left.ry",
+					"scale_particles.sx": "torad(0) - cover_left.ry",
+					"scale_particles.sz": "torad(0) - cover_left.ry"
+				},
+				{
+					"floor.rz": "time / 16"
+				},
+				{
+					"symbol1.rz": "time * 0.1",
+					"symbol1.tz": "sin(time * 0.3) * 10",
+					"symbol2.rz": "(-time * 0.2) + 2",
+					"symbol2.tz": "cos(time * 0.3) * 5",
+					"symbol3.rz": "(time * 0.2) + 1",
+					"symbol3.tz": "-cos(time * 0.3) * 5",
+					"symbol4.rz": "-(time * 0.1) - 1.5",
+					"symbol4.tz": "-sin(time * 0.3) * 5",
+					"symbol5.rz": "-(time * 0.1) - 6",
+					"symbol5.tz": "-sin(time * 0.3) * 5",
+					"symbol6.rz": "(time * 0.05) - 5",
+					"symbol6.tz": "-sin(time * 0.3) * 5",
+					"symbol7.rz": "(time * 0.2) - 5",
+					"symbol7.tz": "-sin(time * 0.3) * 5",
+					"symbol8.rz": "(time * 0.25)-5",
+					"symbol8.tz": "-sin(time * 0.3) * 5"
+				}
+			]
+		},
+		{
+			"part": "pages_left",
+			"id": "pages_left",
+			"invertAxis": "xy",
+			"translate": [-5, -5, 1.075],
+			"submodels": [
+				{
+					"id": "page_left_rotation",
+					"invertAxis": "xy",
+					"translate": [2.5, 5, -0.6],
+					"rotate": [0, 0, -180],
+					"boxes": [
+						{
+							"coordinates": [-2.5, -4.5, -0.5, 5, 9, 1],
+							"uvNorth": [2, 22, 12, 38],
+							"uvEast": [12, 22, 14, 38],
+							"uvSouth": [14, 22, 24, 38],
+							"uvWest": [12, 22, 14, 38],
+							"uvUp": [12, 22, 2, 20],
+							"uvDown": [22, 20, 12, 22]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"page_left_rotation.rz": 0
+				}
+			]
+		},
+		{
+			"part": "pages_right",
+			"id": "pages_right",
+			"invertAxis": "xy",
+			"translate": [0, -5, 0.125],
+			"submodels": [
+				{
+					"id": "page_right_rotation",
+					"invertAxis": "xy",
+					"translate": [-2.5, 5, -0.6],
+					"rotate": [0, -180, -180],
+					"boxes": [
+						{
+							"coordinates": [-2.5, -4.5, -0.5, 5, 9, 1],
+							"uvNorth": [38, 22, 48, 38],
+							"uvEast": [12, 22, 14, 38],
+							"uvSouth": [26, 22, 36, 38],
+							"uvWest": [12, 22, 14, 38],
+							"uvUp": [36, 22, 26, 20],
+							"uvDown": [46, 20, 36, 22]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"page_right_rotation.ry": 0,
+					"page_right_rotation.rz": 0
+				}
+			]
+		},
+		{
+			"part": "flipping_page_left",
+			"id": "flipping_page_left",
+			"invertAxis": "xy",
+			"translate": [-5, -5, 2.075],
+			"submodels": [
+				{
+					"id": "flip_left_rotation",
+					"invertAxis": "xy",
+					"translate": [2.5, 5, -2.1],
+					"rotate": [0, 0, -180],
+					"boxes": [
+						{
+							"coordinates": [-2.5, -4.5, 0, 5, 9, 0],
+							"uvNorth": [58, 20, 68, 36],
+							"uvSouth": [48, 20, 58, 36]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"flip_left_rotation.rz": 0
+				}
+			]
+		},
+		{
+			"part": "flipping_page_right",
+			"id": "flipping_page_right",
+			"invertAxis": "xy",
+			"translate": [0, -5, 2.125],
+			"submodels": [
+				{
+					"id": "flip_right_rotation",
+					"invertAxis": "xy",
+					"translate": [-2.5, 5, -2.1],
+					"rotate": [0, -180, -180],
+					"boxes": [
+						{
+							"coordinates": [-2.5, -4.5, 0, 5, 9, 0],
+							"uvNorth": [48, 20, 58, 36],
+							"uvSouth": [58, 20, 68, 36]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"flip_right_rotation.ry": 0,
+					"flip_right_rotation.rz": 0
+				}
+			]
+		}
+	]
+}

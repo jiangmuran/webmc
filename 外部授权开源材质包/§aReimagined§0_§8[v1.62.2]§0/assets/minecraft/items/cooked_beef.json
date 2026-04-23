@@ -1,0 +1,92 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "gui",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/cooked_beef"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:range_dispatch",
+        "property": "minecraft:use_duration",
+        "remaining": true,
+        "scale": 0.045,
+        "entries": [
+          {
+            "threshold": 1,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/cooked_beef"
+            }
+          },
+          {
+            "threshold": 0.90,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat1"
+            }
+          },
+          {
+            "threshold": 0.80,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat2"
+            }
+          },
+          {
+            "threshold": 0.64,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat3"
+            }
+          },
+		  {
+            "threshold": 0.48,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat4"
+            }
+          },
+          {
+            "threshold": 0.32,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat5"
+            }
+          },
+          {
+            "threshold": 0.16,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/grilled_beef_eat6"
+            }
+          },
+		  
+		  {
+            "threshold": 0.03,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/empty"
+            }
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/cooked_beef"
+        }
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "minecraft:item/cooked_beef"
+      }
+    }
+  }
+}

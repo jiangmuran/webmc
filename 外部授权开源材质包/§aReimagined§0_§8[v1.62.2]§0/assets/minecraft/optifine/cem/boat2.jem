@@ -1,0 +1,356 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [128, 64],
+	"models": [
+		{
+			"part": "front",
+			"id": "front",
+			"invertAxis": "xy",
+			"translate": [0, -2, 15],
+			"rotate": [0, 180, 0]
+		},
+		{
+			"part": "back",
+			"id": "back",
+			"invertAxis": "xy",
+			"translate": [4, -2, -15],
+			"submodels": [
+				{
+					"id": "boat",
+					"invertAxis": "xy",
+					"translate": [0, 6, 0],
+					"boxes": [
+						{
+							"coordinates": [-8, -4, -16, 16, 7, 2],
+							"uvNorth": [2, 43, 18, 50],
+							"uvEast": [0, 43, 2, 50],
+							"uvSouth": [20, 43, 36, 50],
+							"uvWest": [18, 43, 20, 50],
+							"uvUp": [18, 43, 2, 41],
+							"uvDown": [34, 41, 18, 43]
+						}
+					],
+					"submodels": [
+						{
+							"id": "sides_boat",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"rotate": [0, -90, 0],
+							"boxes": [
+								{
+									"coordinates": [-14, -4, -10, 30, 7, 20],
+									"uvNorth": [20, 57, 50, 64],
+									"uvEast": [0, 57, 20, 64],
+									"uvSouth": [70, 57, 100, 64],
+									"uvWest": [50, 57, 70, 64],
+									"uvUp": [62, 39, 32, 19],
+									"uvDown": [32, 19, 2, 39]
+								}
+							]
+						},
+						{
+							"id": "bottom_boat",
+							"invertAxis": "xy",
+							"translate": [0, -2.5, 0],
+							"rotate": [-90, -90, 0],
+							"boxes": [
+								{
+									"coordinates": [-14, -8, -4.5, 28, 16, 3],
+									"uvNorth": [3, 3, 31, 19],
+									"uvEast": [0, 3, 3, 19],
+									"uvSouth": [34, 3, 62, 19],
+									"uvWest": [31, 3, 34, 19],
+									"uvUp": [31, 3, 3, 0],
+									"uvDown": [59, 0, 31, 3]
+								},
+								{
+									"coordinates": [-14, -8, -1.5, 28, 16, 7],
+									"uvNorth": [53, 61, 56, 62],
+									"uvEast": [97, 39, 104, 55],
+									"uvSouth": [53, 63, 56, 64],
+									"uvWest": [53, 59, 56, 60],
+									"uvUp": [96, 46, 68, 39],
+									"uvDown": [96, 48, 68, 55]
+								},
+								{
+									"coordinates": [-14, -8, 0.5, 28, 16, 0],
+									"uvNorth": [92, 3, 94, 5],
+									"uvEast": [92, 5, 94, 7],
+									"uvSouth": [62, 3, 90, 19],
+									"uvWest": [92, 12, 94, 13],
+									"uvUp": [94, 15, 92, 14],
+									"uvDown": [94, 9, 92, 11]
+								}
+							]
+						},
+						{
+							"id": "parked",
+							"invertAxis": "xy",
+							"translate": [0.0005, -1.25, -0.75],
+							"submodels": [
+								{
+									"id": "right_oar",
+									"invertAxis": "xy",
+									"translate": [7.4995, 1.25, 0],
+									"boxes": [
+										{
+											"coordinates": [-0.5, -3, 1.75, 1, 6, 8],
+											"uvNorth": [117, 49, 118, 55],
+											"uvEast": [118, 49, 126, 55],
+											"uvSouth": [126, 49, 127, 55],
+											"uvWest": [109, 49, 117, 55],
+											"uvUp": [126, 63, 125, 55],
+											"uvDown": [127, 55, 126, 63]
+										},
+										{
+											"coordinates": [-0.5, -1, -13.25, 1, 2, 15],
+											"uvNorth": [123, 61, 124, 63],
+											"uvEast": [108, 61, 123, 63],
+											"uvSouth": [123, 59, 124, 61],
+											"uvWest": [108, 59, 123, 61],
+											"uvUp": [108, 63, 107, 48],
+											"uvDown": [107, 48, 106, 63]
+										}
+									]
+								},
+								{
+									"id": "left_oar",
+									"invertAxis": "xy",
+									"translate": [-7.5005, 1.25, 0],
+									"boxes": [
+										{
+											"coordinates": [-0.5, -3, 1.75, 1, 6, 8],
+											"uvNorth": [117, 43, 118, 49],
+											"uvEast": [109, 43, 117, 49],
+											"uvSouth": [126, 43, 127, 49],
+											"uvWest": [118, 43, 126, 49],
+											"uvUp": [126, 43, 125, 35],
+											"uvDown": [127, 35, 126, 43]
+										},
+										{
+											"coordinates": [-0.5, -1, -13.25, 1, 2, 15],
+											"uvNorth": [123, 61, 124, 63],
+											"uvEast": [108, 61, 123, 63],
+											"uvSouth": [123, 59, 124, 61],
+											"uvWest": [108, 59, 123, 61],
+											"uvUp": [108, 63, 107, 48],
+											"uvDown": [107, 48, 106, 63]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"var.water_counter": "clamp(if(is_in_water, var.water_counter+0.05, var.water_counter-0.05), 0, 1)",
+					"var.limb_counter": "clamp(if(limb_swing > var.swing_check, var.limb_counter +0.005, var.limb_counter -0.005), 0, 1)",
+					"var.swing_check": "var.limb_swing",
+					"var.rotation_tilt": "clamp(if(between(var.rotation_check-rot_y,-0.01, 0.01), lerp(0.05, var.rotation_tilt, 0), var.rotation_check > rot_y, lerp(0.05, var.rotation_tilt, -1), var.rotation_check < rot_y, lerp(0.05,var.rotation_tilt,1),1),-1,1)",
+					"var.rotation_check": "rot_y",
+					"var.time": "(time/12) + (pos_x+pos_z)/1",
+					"boat.ty": "-6 -var.water_counter * cos(var.time)/5",
+					"boat.tx": "-var.water_counter * cos(var.time/25)/10",
+					"boat.tz": "-var.water_counter * cos(var.time/20)/15",
+					"boat.ry": "-var.water_counter * sin(var.time/40)/50",
+					"boat.rx": "var.water_counter * sin(var.time)/25 + -var.limb_counter/10",
+					"boat.rz": "var.water_counter * cos(var.time/35)/25 + -var.rotation_tilt/5",
+					"parked.visible": "!is_ridden"
+				}
+			]
+		},
+		{
+			"part": "left",
+			"id": "left",
+			"invertAxis": "xy",
+			"translate": [9, -2, 0],
+			"rotate": [0, -90, 0],
+			"animations": [
+				{
+					"this.ry": 0
+				}
+			]
+		},
+		{
+			"part": "right",
+			"id": "right",
+			"invertAxis": "xy",
+			"translate": [-9, -2, 0],
+			"rotate": [0, 90, 0],
+			"animations": [
+				{
+					"this.ry": 0
+				}
+			]
+		},
+		{
+			"part": "bottom",
+			"id": "bottom",
+			"invertAxis": "xy",
+			"translate": [1, -3, 0],
+			"rotate": [0, -90, -90],
+			"animations": [
+				{
+					"var.water_counter": "clamp(if(is_in_water,var.water_counter+0.05,var.water_counter-0.05),0,1)",
+					"boat.rx": "var.water_counter * sin(time/10000)/0.001",
+					"boat.tx": "-var.water_counter * cos(time/5)/0.1"
+				}
+			]
+		},
+		{
+			"part": "bottom_no_water",
+			"id": "bottom_no_water",
+			"invertAxis": "xy",
+			"translate": [1, -9, 0],
+			"rotate": [0, -90, -90],
+			"submodels": [
+				{
+					"id": "rotation_revert_water",
+					"invertAxis": "xy",
+					"translate": [1, 8, -7],
+					"rotate": [90, 0, 90],
+					"submodels": [
+						{
+							"id": "no_water",
+							"invertAxis": "xy",
+							"translate": [2, 4, -2],
+							"boxes": [
+								{
+									"coordinates": [-10, -3, -14, 20, 6, 30],
+									"uvNorth": [76, 55, 76, 56],
+									"uvEast": [76, 55, 76, 56],
+									"uvSouth": [76, 56, 76, 56],
+									"uvWest": [77, 55, 76, 56],
+									"uvUp": [77, 56, 77, 55],
+									"uvDown": [77, 55, 76, 56]
+								}
+							]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"rotation_revert_water.ty": 1,
+					"rotation_revert_water.tx": 9,
+					"rotation_revert_water.tz": 10,
+					"rotation_revert_water.ry": 1.57,
+					"rotation_revert_water.rx": 3.14,
+					"rotation_revert_water.rz": 1.57,
+					"no_water.ty": "boat.ty",
+					"no_water.tx": "boat.tx",
+					"no_water.tz": "boat.tz",
+					"no_water.ry": "boat.ry",
+					"no_water.rx": "boat.rx",
+					"no_water.rz": "boat.rz"
+				}
+			]
+		},
+		{
+			"part": "paddle_left",
+			"id": "paddle_left",
+			"invertAxis": "xy",
+			"translate": [9, -11, 3],
+			"rotate": [-124, -50, 165],
+			"submodels": [
+				{
+					"id": "left_paddle",
+					"invertAxis": "xy",
+					"translate": [-9, 11, -3],
+					"submodels": [
+						{
+							"id": "left_animation",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"boxes": [
+								{
+									"coordinates": [-0.499, -4, 10, 1, 6, 8],
+									"uvNorth": [117, 43, 118, 49],
+									"uvEast": [109, 43, 117, 49],
+									"uvSouth": [126, 43, 127, 49],
+									"uvWest": [118, 43, 126, 49],
+									"uvUp": [126, 43, 125, 35],
+									"uvDown": [127, 35, 126, 43]
+								},
+								{
+									"coordinates": [-0.5, -2, -5, 1, 2, 15],
+									"uvNorth": [123, 61, 124, 63],
+									"uvEast": [108, 61, 123, 63],
+									"uvSouth": [123, 59, 124, 61],
+									"uvWest": [108, 59, 123, 61],
+									"uvUp": [108, 63, 107, 48],
+									"uvDown": [107, 48, 106, 63]
+								}
+							]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"this.rx": "0 + var.water_counter * sin(var.time)/25 + -var.limb_counter/8",
+					"this.ry": "0",
+					"this.rz": "0 + var.water_counter * cos(var.time/35)/25 + -var.rotation_tilt/15",
+					"left_animation.ty": "-1 -var.water_counter * cos(var.time)/5",
+					"this.sx": "if(is_ridden, 1, 0)",
+					"this.sy": "if(is_ridden, 1, 0)",
+					"this.sz": "if(is_ridden, 1, 0)"
+				}
+			]
+		},
+		{
+			"part": "paddle_right",
+			"id": "paddle_right",
+			"invertAxis": "xy",
+			"translate": [-9, -11, 3],
+			"rotate": [-124, 50, -165],
+			"submodels": [
+				{
+					"id": "right_paddle",
+					"invertAxis": "xy",
+					"translate": [9, 11, -3],
+					"submodels": [
+						{
+							"id": "right_animation",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"boxes": [
+								{
+									"coordinates": [-1.001, -4, 10, 1, 6, 8],
+									"uvNorth": [117, 49, 118, 55],
+									"uvEast": [118, 49, 126, 55],
+									"uvSouth": [126, 49, 127, 55],
+									"uvWest": [109, 49, 117, 55],
+									"uvUp": [126, 63, 125, 55],
+									"uvDown": [127, 55, 126, 63]
+								},
+								{
+									"coordinates": [-1, -2, -5, 1, 2, 15],
+									"uvNorth": [123, 61, 124, 63],
+									"uvEast": [108, 61, 123, 63],
+									"uvSouth": [123, 59, 124, 61],
+									"uvWest": [108, 59, 123, 61],
+									"uvUp": [108, 63, 107, 48],
+									"uvDown": [107, 48, 106, 63]
+								}
+							]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"this.rx": "0 + var.water_counter * sin(var.time)/25 + -var.limb_counter/8",
+					"this.ry": "0",
+					"this.rz": "0 + var.water_counter * cos(var.time/35)/25 + -var.rotation_tilt/15",
+					"right_animation.ty": "-1 -var.water_counter * cos(var.time)/5",
+					"this.sx": "if(is_ridden, 1, 0)",
+					"this.sy": "if(is_ridden, 1, 0)",
+					"this.sz": "if(is_ridden, 1, 0)"
+				}
+			]
+		}
+	]
+}

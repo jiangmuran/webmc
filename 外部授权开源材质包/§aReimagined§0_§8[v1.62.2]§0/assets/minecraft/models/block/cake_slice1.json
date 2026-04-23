@@ -1,0 +1,55 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"4": "block/cake_side2",
+		"5": "block/cake_top_blank",
+		"6": "block/cake_top_blank_middle",
+		"bottom": "block/cake_bottom",
+		"top": "block/cake_top",
+		"particle": "block/cake_side",
+		"side": "block/cake_side"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 7, 15],
+			"faces": {
+				"north": {"uv": [1, 9, 15, 16], "texture": "#side"},
+				"east": {"uv": [1, 9, 15, 16], "texture": "#side"},
+				"south": {"uv": [1, 9, 15, 16], "texture": "#side"},
+				"west": {"uv": [1, 9, 15, 16], "texture": "#side"},
+				"up": {"uv": [1, 1, 15, 15], "rotation": 270, "texture": "#5"},
+				"down": {"uv": [1, 1, 15, 15], "rotation": 90, "texture": "#bottom", "cullface": "down"}
+			}
+		},
+		{
+			"from": [3, 7, 3],
+			"to": [13, 11, 13],
+			"faces": {
+				"north": {"uv": [6, 12, 16, 16], "texture": "#4"},
+				"east": {"uv": [6, 0, 16, 4], "texture": "#4"},
+				"south": {"uv": [6, 4, 16, 8], "texture": "#4"},
+				"west": {"uv": [6, 8, 16, 12], "texture": "#4"},
+				"up": {"uv": [3, 3, 13, 13], "rotation": 270, "texture": "#6"},
+				"down": {"uv": [1, 1, 15, 15], "rotation": 90, "texture": "#top", "cullface": "down"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		1,
+		{
+			"name": "cake_slice4",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "cake_slice5",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": []
+				}
+			]
+		}
+	]
+}

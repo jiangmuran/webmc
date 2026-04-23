@@ -1,0 +1,69 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "gui",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/enchanted_golden_apple"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:range_dispatch",
+        "property": "minecraft:use_duration",
+        "remaining": true,
+        "scale": 0.045,
+        "entries": [
+          {
+            "threshold": 1,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/enchanted_golden_apple"
+            }
+          },
+		  {
+            "threshold": 0.86,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat1"}
+          },
+		  {
+            "threshold": 0.71,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat2"}
+          },
+		  {
+            "threshold": 0.57,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat3"}
+          },
+		  {
+            "threshold": 0.43,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat4"}
+          },
+		  {
+            "threshold": 0.29,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat5"}
+          },
+		  {
+            "threshold": 0.14,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/apple_enchanted_eat6"}
+          },
+		  
+		  
+		  {
+            "threshold": 0.03,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/empty"
+            }
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/eating_vanilla/empty"
+        }
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "minecraft:item/enchanted_golden_apple"
+      }
+    }
+  }
+}

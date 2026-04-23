@@ -1,0 +1,81 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "head",
+        "model": {
+          "type": "minecraft:select",
+          "property": "minecraft:local_time",
+          "pattern": "MM",
+          "cases": [
+            {
+              "when": "12",
+              "model": {
+                "type": "minecraft:model",
+                "model": "item/christmas/christmas_hat"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:select",
+            "property": "minecraft:context_entity_type",
+            "cases": [
+              {
+                "when": [
+                  "zombie","husk"
+                ],
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "minecraft:item/3d_hand/carved11_item"
+                }
+              },
+              {
+                "when": [
+                  "skeleton","bogged","stray"
+                ],
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "minecraft:item/3d_hand/carved20_item"
+                }
+              },
+              {
+                "when": [
+                  "player","armor_stand"
+                ],
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "minecraft:item/3d_hand/carved17_item"
+}
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/carved11_item"
+            }
+          }
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:select",
+      "property": "minecraft:display_context",
+      "cases": [
+        {
+          "when": [
+            "firstperson_righthand","firstperson_lefthand","thirdperson_righthand","thirdperson_lefthand","gui","ground","fixed"
+          ],
+          "model": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/3d_hand/carved17_item"
+          }
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:model",
+        "model": "minecraft:item/3d_hand/carved11_item"
+      }
+    }
+  }
+}

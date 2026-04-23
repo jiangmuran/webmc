@@ -1,0 +1,114 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "gui",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/rabbit_stew"
+        }
+      },
+      {
+        "when": "ground",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/rabbit_stew",
+          "tints": []
+        }
+      },
+      {
+        "when": "fixed",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/rabbit_stew"
+        }
+      },
+      {
+        "when": "head",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/3d_hand/3p_rabbit_stew"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:range_dispatch",
+        "property": "minecraft:use_duration",
+        "remaining": true,
+        "scale": 0.045,
+        "entries": [
+          {
+            "threshold": 1,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat0"
+            }
+          },
+          {
+            "threshold": 0.84,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat1"
+            }
+          },
+          {
+            "threshold": 0.7,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat2"
+            }
+          },
+          {
+            "threshold": 0.56,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat3"
+            }
+          },
+          {
+            "threshold": 0.42,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat4"
+            }
+          },
+          {
+            "threshold": 0.28,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat5"
+            }
+          },
+		  
+          {
+            "threshold": 0.14,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat6"
+            }
+          },
+          {
+            "threshold": 0.09,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/3d_hand/3p_rabbit_stew_eat7"
+            }
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/3d_hand/3p_rabbit_stew"
+        }
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "minecraft:item/3d_hand/3p_rabbit_stew"
+      }
+    }
+  }
+}

@@ -1,0 +1,953 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "gui",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/milk_bucket"
+        }
+      },
+      {
+        "when": "ground",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/milk_bucket",
+          "tints": []
+        }
+      },
+      {
+        "when": "fixed",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/milk_bucket"
+        }
+      },
+      {
+        "when": "head",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/3d_hand/3p_bucket_milk"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:select",
+        "property": "minecraft:display_context",
+        "cases": [
+          {
+            "when": "firstperson_righthand",
+            "model": {
+              "type": "minecraft:condition",
+              "property": "minecraft:using_item",
+              "on_true": {
+                "type": "minecraft:range_dispatch",
+                "property": "minecraft:use_duration",
+                "remaining": true,
+                "scale": 0.045,
+                "entries": [
+                  {
+                    "threshold": 1,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking0"
+                    }
+                  },
+				  {
+                    "threshold": 0.98,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking1"
+                    }
+                  },
+				  {
+                    "threshold": 0.962,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking2"
+                    }
+                  },
+				  {
+                    "threshold": 0.925,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking3"
+                    }
+                  },
+				  {
+                    "threshold": 0.888,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking4"
+                    }
+                  },
+				  {
+                    "threshold": 0.851,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking5"
+                    }
+                  },
+				  {
+                    "threshold": 0.814,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking6"
+                    }
+                  },
+				  {
+                    "threshold": 0.777,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking7"
+                    }
+                  },
+				  {
+                    "threshold": 0.74,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking8"
+                    }
+                  },
+				  {
+                    "threshold": 0.703,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking9"
+                    }
+                  },
+				  {
+                    "threshold": 0.666,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking10"
+                    }
+                  },
+				  {
+                    "threshold": 0.629,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking11"
+                    }
+                  },
+				  {
+                    "threshold": 0.592,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking12"
+                    }
+                  },
+				  {
+                    "threshold": 0.555,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking13"
+                    }
+                  },
+				  {
+                    "threshold": 0.518,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking14"
+                    }
+                  },
+				  {
+                    "threshold": 0.481,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking15"
+                    }
+                  },
+				  {
+                    "threshold": 0.444,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking16"
+                    }
+                  },
+				  {
+                    "threshold": 0.407,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking17"
+                    }
+                  },
+				  {
+                    "threshold": 0.37,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking18"
+                    }
+                  },
+				  {
+                    "threshold": 0.333,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking19"
+                    }
+                  },
+				  {
+                    "threshold": 0.296,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking20"
+                    }
+                  },
+				  {
+                    "threshold": 0.259,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking21"
+                    }
+                  },
+				  {
+                    "threshold": 0.222,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking22"
+                    }
+                  },
+				  {
+                    "threshold": 0.185,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking23"
+                    }
+                  },
+				  {
+                    "threshold": 0.148,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking24"
+                    }
+                  },
+				  {
+                    "threshold": 0.111,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking25"
+                    }
+                  },
+				  {
+                    "threshold": 0.074,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking26"
+                    }
+                  },
+				  {
+                    "threshold": 0.037,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking27"
+                    }
+                  }
+				  
+                ],
+				"fallback": {
+				  "type": "minecraft:model",
+				  "model": "minecraft:item/3d_hand/1p_right_bucket_milk_drinking27"
+				}
+              },
+              "on_false": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/3d_hand/1p_bucket_milk"
+              }
+            }
+          }
+      ],
+      "fallback": {
+        "type": "minecraft:select",
+        "property": "minecraft:display_context",
+        "cases": [
+          {
+            "when": "firstperson_lefthand",
+            "model": {
+              "type": "minecraft:condition",
+              "property": "minecraft:using_item",
+              "on_true": {
+                "type": "minecraft:range_dispatch",
+                "property": "minecraft:use_duration",
+                "remaining": true,
+                "scale": 0.045,
+                "entries": [
+                  {
+                    "threshold": 1,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking0"
+                    }
+                  },
+				  {
+                    "threshold": 0.98,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking1"
+                    }
+                  },
+				  {
+                    "threshold": 0.962,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking2"
+                    }
+                  },
+				  {
+                    "threshold": 0.925,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking3"
+                    }
+                  },
+				  {
+                    "threshold": 0.888,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking4"
+                    }
+                  },
+				  {
+                    "threshold": 0.851,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking5"
+                    }
+                  },
+				  {
+                    "threshold": 0.814,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking6"
+                    }
+                  },
+				  {
+                    "threshold": 0.777,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking7"
+                    }
+                  },
+				  {
+                    "threshold": 0.74,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking8"
+                    }
+                  },
+				  {
+                    "threshold": 0.703,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking9"
+                    }
+                  },
+				  {
+                    "threshold": 0.666,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking10"
+                    }
+                  },
+				  {
+                    "threshold": 0.629,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking11"
+                    }
+                  },
+				  {
+                    "threshold": 0.592,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking12"
+                    }
+                  },
+				  {
+                    "threshold": 0.555,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking13"
+                    }
+                  },
+				  {
+                    "threshold": 0.518,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking14"
+                    }
+                  },
+				  {
+                    "threshold": 0.481,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking15"
+                    }
+                  },
+				  {
+                    "threshold": 0.444,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking16"
+                    }
+                  },
+				  {
+                    "threshold": 0.407,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking17"
+                    }
+                  },
+				  {
+                    "threshold": 0.37,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking18"
+                    }
+                  },
+				  {
+                    "threshold": 0.333,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking19"
+                    }
+                  },
+				  {
+                    "threshold": 0.296,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking20"
+                    }
+                  },
+				  {
+                    "threshold": 0.259,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking21"
+                    }
+                  },
+				  {
+                    "threshold": 0.222,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking22"
+                    }
+                  },
+				  {
+                    "threshold": 0.185,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking23"
+                    }
+                  },
+				  {
+                    "threshold": 0.148,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking24"
+                    }
+                  },
+				  {
+                    "threshold": 0.111,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking25"
+                    }
+                  },
+				  {
+                    "threshold": 0.074,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking26"
+                    }
+                  },
+				  {
+                    "threshold": 0.037,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking27"
+                    }
+                  }
+				  
+                ],
+				"fallback": {
+				  "type": "minecraft:model",
+				  "model": "minecraft:item/3d_hand/1p_left_bucket_milk_drinking27"
+				}
+              },
+              "on_false": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/3d_hand/1p_bucket_milk"
+              }
+            }
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "thirdperson_righthand",
+              "model": {
+                "type": "minecraft:condition",
+                "property": "minecraft:using_item",
+                "on_true": {
+                  "type": "minecraft:range_dispatch",
+                  "property": "minecraft:use_duration",
+                  "remaining": true,
+                  "scale": 0.045,
+                  "entries": [
+                  {
+                    "threshold": 1,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking0"
+                    }
+                  },
+				  {
+                    "threshold": 0.98,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking1"
+                    }
+                  },
+				  {
+                    "threshold": 0.962,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking2"
+                    }
+                  },
+				  {
+                    "threshold": 0.925,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking3"
+                    }
+                  },
+				  {
+                    "threshold": 0.888,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking4"
+                    }
+                  },
+				  {
+                    "threshold": 0.851,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking5"
+                    }
+                  },
+				  {
+                    "threshold": 0.814,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking6"
+                    }
+                  },
+				  {
+                    "threshold": 0.766,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking7"
+                    }
+                  },
+				  {
+                    "threshold": 0.74,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking8"
+                    }
+                  },
+				  {
+                    "threshold": 0.703,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking9"
+                    }
+                  },
+				  {
+                    "threshold": 0.666,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking10"
+                    }
+                  },
+				  {
+                    "threshold": 0.629,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking11"
+                    }
+                  },
+				  {
+                    "threshold": 0.592,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking12"
+                    }
+                  },
+				  {
+                    "threshold": 0.555,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking13"
+                    }
+                  },
+				  {
+                    "threshold": 0.518,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking14"
+                    }
+                  },
+				  {
+                    "threshold": 0.481,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking15"
+                    }
+                  },
+				  {
+                    "threshold": 0.444,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking16"
+                    }
+                  },
+				  {
+                    "threshold": 0.407,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking17"
+                    }
+                  },
+				  {
+                    "threshold": 0.37,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking18"
+                    }
+                  },
+				  {
+                    "threshold": 0.333,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking19"
+                    }
+                  },
+				  {
+                    "threshold": 0.296,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking20"
+                    }
+                   },
+				  {
+                    "threshold": 0.259,
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking21"
+                    }
+                   },
+{
+  "threshold": 0.222,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking22"
+  }
+},
+{
+  "threshold": 0.185,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking23"
+  }
+},
+{
+  "threshold": 0.148,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking24"
+ }
+},
+{
+  "threshold": 0.111,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking25"
+ }
+},
+{
+  "threshold": 0.074,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking26"
+ }
+},
+{
+  "threshold": 0.037,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking27"
+}
+
+
+
+
+
+
+				  
+                     
+                  }
+				  
+                ],
+				"fallback": {
+				  "type": "minecraft:model",
+				  "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking27"
+				}
+              },
+              "on_false": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/3d_hand/3p_bucket_milk"
+              }
+            }
+          }
+          ],
+          "fallback": {
+            "type": "minecraft:select",
+            "property": "minecraft:display_context",
+            "cases": [
+              {
+                "when": "thirdperson_lefthand",
+                "model": {
+                  "type": "minecraft:condition",
+                  "property": "minecraft:using_item",
+                  "on_true": {
+                    "type": "minecraft:range_dispatch",
+                    "property": "minecraft:use_duration",
+                    "remaining": true,
+                    "scale": 0.045,
+                    "entries": [
+                    {
+                      "threshold": 1,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking0"
+                      }
+                    },
+				    {
+                      "threshold": 0.98,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking1"
+                      }
+                    },
+				    {
+                      "threshold": 0.962,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking2"
+                      }
+                    },
+				    {
+                      "threshold": 0.925,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking3"
+                      }
+                    },
+				    {
+                      "threshold": 0.888,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking4"
+                      }
+                    },
+				    {
+                      "threshold": 0.851,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking5"
+                      }
+                    },
+				    {
+                      "threshold": 0.814,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking6"
+                      }
+                    },
+				    {
+                      "threshold": 0.766,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking7"
+                      }
+                    },
+				    {
+                      "threshold": 0.74,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking8"
+                      }
+                    },
+				    {
+                      "threshold": 0.703,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking9"
+                      }
+                    },
+				    {
+                      "threshold": 0.666,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking10"
+                      }
+                    },
+				    {
+                      "threshold": 0.629,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking11"
+                      }
+                    },
+				    {
+                      "threshold": 0.592,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking12"
+                      }
+                    },
+				    {
+                      "threshold": 0.555,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking13"
+                      }
+                    },
+				    {
+                      "threshold": 0.518,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking14"
+                      }
+                    },
+				    {
+                      "threshold": 0.481,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking15"
+                      }
+                    },
+				    {
+                      "threshold": 0.444,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking16"
+                      }
+                    },
+				    {
+                      "threshold": 0.407,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking17"
+                      }
+                    },
+				    {
+                      "threshold": 0.37,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking18"
+                      }
+                    },
+				    {
+                      "threshold": 0.333,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking19"
+                      }
+                    },
+				    {
+                      "threshold": 0.296,
+                        "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking20"
+                      }
+                    },
+				    {
+                      "threshold": 0.259,
+                      "model": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking21"
+                      }
+                     },
+{
+  "threshold": 0.222,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking22"
+  }
+},
+{
+  "threshold": 0.185,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking23"
+  }
+},
+{
+  "threshold": 0.148,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking24"
+ }
+},
+{
+  "threshold": 0.111,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking25"
+ }
+},
+{
+  "threshold": 0.074,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking26"
+ }
+},
+{
+  "threshold": 0.037,
+  "model": {
+    "type": "minecraft:model",
+    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking27"
+}
+
+                        
+                    
+				    
+                    }
+				  
+                  ],
+	  		  	    "fallback": {
+  				    "type": "minecraft:model",
+				    "model": "minecraft:item/3d_hand/3p_bucket_milk_drinking27"
+			  	}
+                },
+                "on_false": {
+                  "type": "minecraft:model",
+                  "model": "minecraft:item/3d_hand/3p_bucket_milk"
+                }
+              }
+			}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

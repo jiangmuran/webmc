@@ -1,0 +1,107 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"texture": "block/wood/crimson_fence_gate",
+		"particle": "block/crimson_planks"
+	},
+	"elements": [
+		{
+			"name": "Left-hand post",
+			"from": [0, 3, 7],
+			"to": [2, 16, 9],
+			"faces": {
+				"north": {"uv": [4, 4.5, 5, 11], "texture": "#texture"},
+				"east": {"uv": [11, 4.5, 12, 11], "texture": "#texture"},
+				"south": {"uv": [4, 4.5, 5, 11], "texture": "#texture"},
+				"west": {"uv": [4, 4.5, 5, 11], "texture": "#texture", "cullface": "west"},
+				"up": {"uv": [11, 5, 12, 6], "texture": "#texture"},
+				"down": {"uv": [11, 10, 12, 11], "texture": "#texture"}
+			}
+		},
+		{
+			"name": "Right-hand post",
+			"from": [14, 3, 7],
+			"to": [16, 16, 9],
+			"faces": {
+				"north": {"uv": [11, 4.5, 12, 11], "texture": "#texture"},
+				"east": {"uv": [4, 4.5, 5, 11], "texture": "#texture", "cullface": "east"},
+				"south": {"uv": [11, 4.5, 12, 11], "texture": "#texture"},
+				"west": {"uv": [4, 4.5, 5, 11], "texture": "#texture"},
+				"up": {"uv": [4, 4.5, 5, 5.5], "texture": "#texture"},
+				"down": {"uv": [4, 10, 5, 11], "texture": "#texture"}
+			}
+		},
+		{
+			"name": "Inner vertical post of left-hand gate door",
+			"from": [4, 5, 7.5],
+			"to": [12, 14, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -0.25]},
+			"faces": {
+				"north": {"uv": [6, 5.5, 10, 10], "texture": "#texture"},
+				"east": {"uv": [6, 5.5, 6.5, 10], "texture": "#texture"},
+				"south": {"uv": [6, 5.5, 10, 10], "texture": "#texture"},
+				"west": {"uv": [9.5, 5.5, 10, 10], "texture": "#texture"}
+			}
+		},
+		{
+			"name": "Lower horizontal bar of right-hand gate door",
+			"from": [2, 5, 7.5],
+			"to": [14, 8, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, -0.5]},
+			"faces": {
+				"north": {"uv": [5, 8.5, 11, 10], "texture": "#texture"},
+				"south": {"uv": [5, 8.5, 11, 10], "texture": "#texture"},
+				"up": {"uv": [5, 8.5, 11, 9], "texture": "#texture"},
+				"down": {"uv": [5, 9.5, 11, 10], "texture": "#texture"}
+			}
+		},
+		{
+			"name": "Lower horizontal bar of right-hand gate door",
+			"from": [2, 11, 7.5],
+			"to": [14, 14, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 5, -0.5]},
+			"faces": {
+				"north": {"uv": [5, 5.5, 11, 7], "texture": "#texture"},
+				"south": {"uv": [5, 5.5, 11, 7], "texture": "#texture"},
+				"up": {"uv": [5, 5.5, 11, 6], "texture": "#texture"},
+				"down": {"uv": [5, 6.5, 11, 7], "texture": "#texture"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, -3, -6]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

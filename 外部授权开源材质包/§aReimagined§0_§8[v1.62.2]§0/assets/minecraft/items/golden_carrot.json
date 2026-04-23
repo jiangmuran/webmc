@@ -1,0 +1,75 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": "gui",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/golden_carrot"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:range_dispatch",
+        "property": "minecraft:use_duration",
+        "remaining": true,
+        "scale": 0.045,
+        "entries": [
+          {
+            "threshold": 1,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/golden_carrot"
+            }
+          },
+		  {
+            "threshold": 0.89,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat1"}
+          },
+		  {
+            "threshold": 0.78,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat2"}
+          },
+		  {
+            "threshold": 0.67,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat3"}
+          },
+		  {
+            "threshold": 0.56,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat4"}
+          },
+		  {
+            "threshold": 0.44,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat5"}
+          },
+		  {
+            "threshold": 0.33,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat6"}
+          },
+		  {
+            "threshold": 0.22,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat7"}
+          },
+		  {
+            "threshold": 0.11,"model": {"type": "minecraft:model","model": "minecraft:item/eating_vanilla/carrot_golden_eat8"}
+          },
+		  
+		  
+		  {
+            "threshold": 0.03,
+            "model": {
+              "type": "minecraft:model",
+              "model": "minecraft:item/eating_vanilla/empty"
+            }
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/eating_vanilla/empty"
+        }
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "minecraft:item/golden_carrot"
+      }
+    }
+  }
+}
