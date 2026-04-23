@@ -21,14 +21,14 @@ describe('raid reward', () => {
   });
 
   it('final wave count scales with difficulty', () => {
-    expect(finalWaveWasCaptain({ wavesCleared: 7, difficulty: 'hard', heroOfVillageApplied: false })).toBe(
-      true,
-    );
-    expect(finalWaveWasCaptain({ wavesCleared: 3, difficulty: 'easy', heroOfVillageApplied: false })).toBe(
-      true,
-    );
-    expect(finalWaveWasCaptain({ wavesCleared: 3, difficulty: 'hard', heroOfVillageApplied: false })).toBe(
-      false,
-    );
+    expect(
+      finalWaveWasCaptain({ wavesCleared: 7, difficulty: 'hard', heroOfVillageApplied: false }),
+    ).toBe(true);
+    expect(
+      finalWaveWasCaptain({ wavesCleared: 3, difficulty: 'easy', heroOfVillageApplied: false }),
+    ).toBe(true);
+    expect(
+      finalWaveWasCaptain({ wavesCleared: 3, difficulty: 'hard', heroOfVillageApplied: false }),
+    ).toBe(false);
   });
 });
