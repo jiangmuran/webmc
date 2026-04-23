@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  villagerProfession,
-  claimsAsPoi,
-  recipeGUI,
-  emitsWorkSound,
-} from './smithing_table_decor';
+import { villagerProfession, claimsAsPoi, recipeGUI, emitsWorkSound } from './smithing_table_decor';
 
 describe('smithing table decor', () => {
   it('profession toolsmith', () => {

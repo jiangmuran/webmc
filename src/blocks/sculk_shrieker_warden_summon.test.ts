@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  onTriggered,
-  shouldSpawnWarden,
-  SUMMON_THRESHOLD,
-} from './sculk_shrieker_warden_summon';
+import { onTriggered, shouldSpawnWarden, SUMMON_THRESHOLD } from './sculk_shrieker_warden_summon';
 
 describe('sculk shrieker warden summon', () => {
   it('increments warning', () => {
