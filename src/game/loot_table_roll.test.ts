@@ -20,10 +20,7 @@ describe('loot table roll', () => {
   });
 
   it('count in range', () => {
-    const n = rollCount(
-      { item: 'x', weight: 1, countMin: 1, countMax: 5 },
-      () => 0.5,
-    );
+    const n = rollCount({ item: 'x', weight: 1, countMin: 1, countMax: 5 }, () => 0.5);
     expect(n).toBeGreaterThanOrEqual(1);
     expect(n).toBeLessThanOrEqual(5);
   });
