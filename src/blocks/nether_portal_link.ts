@@ -1,9 +1,6 @@
 export type Dim = 'overworld' | 'nether';
 
-export function mappedCoords(
-  from: Dim,
-  pos: { x: number; z: number },
-): { x: number; z: number } {
+export function mappedCoords(from: Dim, pos: { x: number; z: number }): { x: number; z: number } {
   if (from === 'overworld') {
     return { x: Math.floor(pos.x / 8), z: Math.floor(pos.z / 8) };
   }
