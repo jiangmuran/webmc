@@ -11,20 +11,16 @@ describe('frost walker freeze path', () => {
   });
 
   it('freezes source water', () => {
-    expect(
-      freezesBlock({ level: 1, belowBlock: 'water', blockIsWaterSource: true }),
-    ).toBe(true);
+    expect(freezesBlock({ level: 1, belowBlock: 'water', blockIsWaterSource: true })).toBe(true);
   });
 
   it('no level no freeze', () => {
-    expect(
-      freezesBlock({ level: 0, belowBlock: 'water', blockIsWaterSource: true }),
-    ).toBe(false);
+    expect(freezesBlock({ level: 0, belowBlock: 'water', blockIsWaterSource: true })).toBe(false);
   });
 
   it('result frosted ice', () => {
-    expect(
-      resultingBlock({ level: 1, belowBlock: 'water', blockIsWaterSource: true }),
-    ).toBe('frosted_ice');
+    expect(resultingBlock({ level: 1, belowBlock: 'water', blockIsWaterSource: true })).toBe(
+      'frosted_ice',
+    );
   });
 });
