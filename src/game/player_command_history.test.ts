@@ -26,7 +26,7 @@ describe('player command history', () => {
   });
 
   it('next returns empty past tail', () => {
-    let h = push(create(), 'one');
+    const h = push(create(), 'one');
     const n = next(h);
     expect(n.text).toBe('');
   });
