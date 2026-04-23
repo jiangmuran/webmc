@@ -5,9 +5,7 @@ export interface Pack {
 }
 
 export function effectiveOrder(packs: Pack[]): Pack[] {
-  return [...packs]
-    .filter((p) => p.enabled)
-    .sort((a, b) => b.priority - a.priority);
+  return [...packs].filter((p) => p.enabled).sort((a, b) => b.priority - a.priority);
 }
 
 export function resolvedAsset(packs: Pack[], assetId: string): string | undefined {
