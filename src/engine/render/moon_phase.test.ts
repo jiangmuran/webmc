@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { phaseForDay, lightBoostForMobSpawning, textureAtlasOffset, PHASE_COUNT } from './moon_phase';
+import {
+  phaseForDay,
+  lightBoostForMobSpawning,
+  textureAtlasOffset,
+  PHASE_COUNT,
+} from './moon_phase';
 
 describe('moon phase', () => {
   it('day 0 → phase 0', () => {
