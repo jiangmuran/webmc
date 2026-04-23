@@ -19,7 +19,8 @@ describe('cake slices', () => {
 
   it('candle already exists → no change', () => {
     expect(
-      canPutCandle({ slicesLeft: MAX_SLICES, candleColor: 'red', candleLit: true }, 'blue').candleColor,
+      canPutCandle({ slicesLeft: MAX_SLICES, candleColor: 'red', candleLit: true }, 'blue')
+        .candleColor,
     ).toBe('red');
   });
 });
