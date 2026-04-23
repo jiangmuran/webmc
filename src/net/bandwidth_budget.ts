@@ -4,7 +4,11 @@ export interface BudgetState {
   secondStartMs: number;
 }
 
-export function tryConsume(b: BudgetState, nowMs: number, bytes: number): {
+export function tryConsume(
+  b: BudgetState,
+  nowMs: number,
+  bytes: number,
+): {
   allowed: boolean;
   state: BudgetState;
 } {
