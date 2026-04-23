@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  addCompost,
-  extractBonemeal,
-  composterFillChance,
-  MAX_LEVEL,
-} from './composter_bonemeal';
+import { addCompost, extractBonemeal, composterFillChance, MAX_LEVEL } from './composter_bonemeal';
 
 describe('composter bonemeal', () => {
   const empty = { level: 0, readyForBonemeal: false };
