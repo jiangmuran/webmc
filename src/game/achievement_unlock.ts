@@ -13,9 +13,6 @@ export function isUnlocked(s: ProgressState, id: string): boolean {
   return s.unlocked.has(id);
 }
 
-export function prerequisitesMet(
-  s: ProgressState,
-  requires: string[],
-): boolean {
+export function prerequisitesMet(s: ProgressState, requires: string[]): boolean {
   return requires.every((r) => s.unlocked.has(r));
 }
