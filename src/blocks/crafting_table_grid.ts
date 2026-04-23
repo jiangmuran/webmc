@@ -4,7 +4,9 @@ export interface Grid3x3 {
   rows: [GridCell[], GridCell[], GridCell[]];
 }
 
-export function boundingBox(g: Grid3x3): { minR: number; maxR: number; minC: number; maxC: number } | undefined {
+export function boundingBox(
+  g: Grid3x3,
+): { minR: number; maxR: number; minC: number; maxC: number } | undefined {
   let minR = 3;
   let maxR = -1;
   let minC = 3;
