@@ -8,7 +8,7 @@ export interface PlayerEffects {
   active: EffectEntry[];
 }
 
-export function drinkMilk(p: PlayerEffects): PlayerEffects {
+export function drinkMilk(_p: PlayerEffects): PlayerEffects {
   return { active: [] };
 }
 
