@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  paletteIndex,
-  addBlock,
-  removeUnused,
-  bitsForPalette,
-} from './chunk_palette_delta';
+import { paletteIndex, addBlock, removeUnused, bitsForPalette } from './chunk_palette_delta';
 
 describe('chunk palette delta', () => {
   it('finds existing', () => {
