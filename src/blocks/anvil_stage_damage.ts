@@ -16,7 +16,7 @@ export function damageOnUse(s: Stage, rng: () => number): Stage {
 export function damageOnFall(s: Stage, fallDistance: number): Stage {
   if (s === 'destroyed') return s;
   if (fallDistance < 1) return s;
-  let out = s;
+  let out: Stage = s;
   for (let i = 0; i < Math.floor(fallDistance); i++) out = nextStage(out);
   return out;
 }
