@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  triggers,
-  lootChestCount,
-  treasureRoomDepthY,
-  TNT_COUNT,
-} from './desert_temple_tnt_trap';
+import { triggers, lootChestCount, treasureRoomDepthY, TNT_COUNT } from './desert_temple_tnt_trap';
 
 describe('desert temple tnt trap', () => {
   it('plate triggers', () => {

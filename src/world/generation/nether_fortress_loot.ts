@@ -16,7 +16,10 @@ export const FORTRESS_CHEST: LootPool = {
   ],
 };
 
-export function rollLoot(pool: LootPool, rng: () => number): { id: string; count: number } | undefined {
+export function rollLoot(
+  pool: LootPool,
+  rng: () => number,
+): { id: string; count: number } | undefined {
   const total = pool.items.reduce((a, b) => a + b.weight, 0);
   if (total === 0) return undefined;
   let roll = rng() * total;
