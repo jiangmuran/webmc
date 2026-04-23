@@ -3,15 +3,15 @@ import { silverfishSpawns, dropsBlockItem, tntExplosionSpawnsExtra } from './inf
 
 describe('infested stone reveal', () => {
   it('spawns without silk', () => {
-    expect(
-      silverfishSpawns({ block: 'infested_stone', hasSilkTouch: false, powerLevel: 0 }),
-    ).toBe(true);
+    expect(silverfishSpawns({ block: 'infested_stone', hasSilkTouch: false, powerLevel: 0 })).toBe(
+      true,
+    );
   });
 
   it('silk suppresses', () => {
-    expect(
-      silverfishSpawns({ block: 'infested_stone', hasSilkTouch: true, powerLevel: 0 }),
-    ).toBe(false);
+    expect(silverfishSpawns({ block: 'infested_stone', hasSilkTouch: true, powerLevel: 0 })).toBe(
+      false,
+    );
   });
 
   it('plain stone no spawn', () => {
@@ -19,9 +19,9 @@ describe('infested stone reveal', () => {
   });
 
   it('silk drops block', () => {
-    expect(
-      dropsBlockItem({ block: 'infested_stone', hasSilkTouch: true, powerLevel: 0 }),
-    ).toBe('infested_stone');
+    expect(dropsBlockItem({ block: 'infested_stone', hasSilkTouch: true, powerLevel: 0 })).toBe(
+      'infested_stone',
+    );
   });
 
   it('tnt spawns extra', () => {

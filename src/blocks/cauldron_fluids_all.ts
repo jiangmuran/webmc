@@ -11,7 +11,10 @@ export function canPutBucket(c: Cauldron, bucketKind: 'water' | 'lava' | 'powder
   return true;
 }
 
-export function afterBucketPoured(c: Cauldron, bucketKind: 'water' | 'lava' | 'powder_snow'): Cauldron {
+export function afterBucketPoured(
+  c: Cauldron,
+  bucketKind: 'water' | 'lava' | 'powder_snow',
+): Cauldron {
   if (!canPutBucket(c, bucketKind)) return c;
   return { fluid: bucketKind, level: 3 };
 }
