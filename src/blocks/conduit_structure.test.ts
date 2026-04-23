@@ -17,9 +17,7 @@ describe('conduit structure', () => {
   it('range scales', () => {
     expect(
       conduitPowerRange({ prismarineBlockCount: POWER_FULL, inWaterOrWaterlogged: true }),
-    ).toBeGreaterThan(
-      conduitPowerRange({ prismarineBlockCount: 16, inWaterOrWaterlogged: true }),
-    );
+    ).toBeGreaterThan(conduitPowerRange({ prismarineBlockCount: 16, inWaterOrWaterlogged: true }));
   });
 
   it('full ring attacks', () => {
