@@ -11,7 +11,11 @@ export function canSend(b: UploadBudget, nowMs: number, size: number): boolean {
 
 export function afterSend(b: UploadBudget, nowMs: number, size: number): UploadBudget {
   if (nowMs - b.windowStartMs >= 1000) {
-    return { bytesUsedThisSecond: size, limitBytesPerSecond: b.limitBytesPerSecond, windowStartMs: nowMs };
+    return {
+      bytesUsedThisSecond: size,
+      limitBytesPerSecond: b.limitBytesPerSecond,
+      windowStartMs: nowMs,
+    };
   }
   return { ...b, bytesUsedThisSecond: b.bytesUsedThisSecond + size };
 }
