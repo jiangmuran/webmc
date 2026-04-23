@@ -11,9 +11,9 @@ describe('mob panic flee', () => {
   });
 
   it('far safe threat', () => {
-    expect(
-      isPanicking({ threatDistance: PANIC_DISTANCE * 2, onFire: false, lowHp: false }),
-    ).toBe(false);
+    expect(isPanicking({ threatDistance: PANIC_DISTANCE * 2, onFire: false, lowHp: false })).toBe(
+      false,
+    );
   });
 
   it('low hp close panics', () => {

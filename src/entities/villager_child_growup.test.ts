@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { isAdult, canChooseProfession, runsFromPlayer, GROWUP_TICKS } from './villager_child_growup';
+import {
+  isAdult,
+  canChooseProfession,
+  runsFromPlayer,
+  GROWUP_TICKS,
+} from './villager_child_growup';
 
 describe('villager child growup', () => {
   it('baby not adult', () => {
