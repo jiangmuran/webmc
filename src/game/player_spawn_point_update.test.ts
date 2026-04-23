@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  updateOnBedSleep,
-  updateOnAnchorCharge,
-  isValid,
-} from './player_spawn_point_update';
+import { updateOnBedSleep, updateOnAnchorCharge, isValid } from './player_spawn_point_update';
 
 describe('player spawn point update', () => {
   it('bed sets overworld', () => {
