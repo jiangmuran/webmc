@@ -22,7 +22,11 @@ describe('creaking link heart', () => {
 
   it('invulnerable while linked', () => {
     expect(
-      invulnerableWhileLinked({ isLinkedToHeart: true, heartBroken: false, playerLookingAt: false }),
+      invulnerableWhileLinked({
+        isLinkedToHeart: true,
+        heartBroken: false,
+        playerLookingAt: false,
+      }),
     ).toBe(true);
   });
 });
