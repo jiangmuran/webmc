@@ -23,8 +23,8 @@ describe('packet priority', () => {
   });
 
   it('age budget exceeded', () => {
-    expect(
-      ageMsExceedsBudget({ priority: 'normal', enqueuedAtMs: 0, bytes: 1 }, 200, 100),
-    ).toBe(true);
+    expect(ageMsExceedsBudget({ priority: 'normal', enqueuedAtMs: 0, bytes: 1 }, 200, 100)).toBe(
+      true,
+    );
   });
 });

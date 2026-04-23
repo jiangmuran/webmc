@@ -18,7 +18,10 @@ export function ban(
   untilEpochMs?: number,
 ): BanEntry[] {
   const withoutOld = list.filter((e) => e.uuid !== uuid);
-  return [...withoutOld, untilEpochMs === undefined ? { uuid, reason } : { uuid, reason, untilEpochMs }];
+  return [
+    ...withoutOld,
+    untilEpochMs === undefined ? { uuid, reason } : { uuid, reason, untilEpochMs },
+  ];
 }
 
 export function unban(list: BanEntry[], uuid: string): BanEntry[] {
