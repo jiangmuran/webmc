@@ -6,7 +6,7 @@ export function pullsAttached(block: string): boolean {
 }
 
 export function slimeBlockChained(block: string): boolean {
-  return SLIME_BLOCK_CHAIN && (block === 'slime_block' || block === 'honey_block');
+  return block === 'slime_block' || block === 'honey_block';
 }
 
 export function slimeAndHoneyCollide(a: string, b: string): boolean {
