@@ -12,8 +12,12 @@ export function matchesShaped(r: Recipe, grid: string[][]): boolean {
   if (grid.length !== r.pattern.length) return false;
   return r.pattern.every((row, i) => {
     const gridRow = grid[i];
-    if (!gridRow || gridRow.length !== row.length) return false;
-    return [...row].every((c, j) => (c === ' ' ? gridRow[j] === '' : gridRow[j] === c));
+    if (gridRow?.length !== row.length) return false;
+    for (let j = 0; j < row.length; j++) {
+      const c = row.charAt(j);
+      if (c === ' ' ? gridRow[j] !== '' : gridRow[j] !== c) return false;
+    }
+    return true;
   });
 }
 
