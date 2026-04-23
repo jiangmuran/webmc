@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  canPlaceAt,
-  DEFAULT_WATER_SPRING,
-  DEFAULT_LAVA_SPRING,
-} from './water_spring';
+import { canPlaceAt, DEFAULT_WATER_SPRING, DEFAULT_LAVA_SPRING } from './water_spring';
 
 describe('water spring', () => {
   it('water in range + neighbors', () => {
