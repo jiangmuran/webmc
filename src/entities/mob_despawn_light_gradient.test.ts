@@ -15,8 +15,8 @@ describe('mob despawn light gradient', () => {
   });
 
   it('dark spawn allowed', () => {
-    expect(
-      canNaturallyRespawn({ type: 'zombie', skyLight: 0, blockLight: 0, ticksAlive: 0 }),
-    ).toBe(true);
+    expect(canNaturallyRespawn({ type: 'zombie', skyLight: 0, blockLight: 0, ticksAlive: 0 })).toBe(
+      true,
+    );
   });
 });
