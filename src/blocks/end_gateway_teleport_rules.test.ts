@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { teleportTarget, pearlAllowed, OUTER_RADIUS, INNER_CLEAR_RADIUS } from './end_gateway_teleport_rules';
+import {
+  teleportTarget,
+  pearlAllowed,
+  OUTER_RADIUS,
+  INNER_CLEAR_RADIUS,
+} from './end_gateway_teleport_rules';
 
 describe('end gateway teleport rules', () => {
   it('target in annulus', () => {
