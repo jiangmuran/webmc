@@ -15,7 +15,7 @@ describe('piston push limit', () => {
   });
 
   it('chain too long fails', () => {
-    expect(canPush(Array(MAX_PUSH_BLOCKS + 1).fill('stone'))).toBe(false);
+    expect(canPush(Array<string>(MAX_PUSH_BLOCKS + 1).fill('stone'))).toBe(false);
   });
 
   it('immovable in chain blocks', () => {
