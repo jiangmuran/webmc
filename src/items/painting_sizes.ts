@@ -21,7 +21,11 @@ export function fitsInSpace(size: PaintingSize, availW: number, availH: number):
   return size.w <= availW && size.h <= availH;
 }
 
-export function randomSizeFitting(availW: number, availH: number, rng: () => number): PaintingSize | undefined {
+export function randomSizeFitting(
+  availW: number,
+  availH: number,
+  rng: () => number,
+): PaintingSize | undefined {
   const options = SIZES.filter((s) => fitsInSpace(s, availW, availH));
   if (options.length === 0) return undefined;
   return options[Math.floor(rng() * options.length)];
