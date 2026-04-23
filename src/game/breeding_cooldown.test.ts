@@ -7,9 +7,9 @@ describe('breeding cooldown', () => {
   });
 
   it('cooldown passed', () => {
-    expect(
-      canBreed({ lastBreedTick: 0, currentTick: BREED_COOLDOWN_TICKS, isBaby: false }),
-    ).toBe(true);
+    expect(canBreed({ lastBreedTick: 0, currentTick: BREED_COOLDOWN_TICKS, isBaby: false })).toBe(
+      true,
+    );
   });
 
   it('cooldown not passed', () => {
@@ -20,8 +20,6 @@ describe('breeding cooldown', () => {
     expect(
       inLoveMode({ lastBreedTick: 0, currentTick: BREED_COOLDOWN_TICKS, isBaby: false }, 100),
     ).toBe(true);
-    expect(
-      inLoveMode({ lastBreedTick: 0, currentTick: 100, isBaby: false }, 100),
-    ).toBe(false);
+    expect(inLoveMode({ lastBreedTick: 0, currentTick: 100, isBaby: false }, 100)).toBe(false);
   });
 });
