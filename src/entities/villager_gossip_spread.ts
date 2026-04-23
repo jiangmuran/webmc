@@ -22,7 +22,7 @@ export function reputationScoreFor(g: GossipEntry[], about: string): number {
     else if (e.kind === 'minor_positive') score += e.weight * 1;
     else if (e.kind === 'trading') score += e.weight * 1;
     else if (e.kind === 'minor_negative') score -= e.weight * 1;
-    else if (e.kind === 'major_negative') score -= e.weight * 5;
+    else score -= e.weight * 5;
   }
   return score;
 }
