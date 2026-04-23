@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  lightLevel,
-  smokeColumnDistance,
-  damageToEntities,
-} from './campfire_light_signal';
+import { lightLevel, smokeColumnDistance, damageToEntities } from './campfire_light_signal';
 
 describe('campfire light signal', () => {
   it('lit campfire 15', () => {
