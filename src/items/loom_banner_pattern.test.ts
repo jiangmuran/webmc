@@ -17,9 +17,9 @@ describe('loom banner pattern', () => {
   });
 
   it('unknown template fails', () => {
-    expect(
-      canApply({ bannerBaseColor: 'white', dyeColor: 'red', specialTemplate: 'xyz' }),
-    ).toBe(false);
+    expect(canApply({ bannerBaseColor: 'white', dyeColor: 'red', specialTemplate: 'xyz' })).toBe(
+      false,
+    );
   });
 
   it('template consumed', () => {
