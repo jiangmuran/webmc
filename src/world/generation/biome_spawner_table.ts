@@ -12,9 +12,7 @@ export const BY_BIOME: Record<string, SpawnEntry[]> = {
     { mob: 'pig', weight: 10, min: 4, max: 4 },
     { mob: 'horse', weight: 5, min: 2, max: 6 },
   ],
-  desert: [
-    { mob: 'rabbit', weight: 4, min: 2, max: 3 },
-  ],
+  desert: [{ mob: 'rabbit', weight: 4, min: 2, max: 3 }],
   nether_wastes: [
     { mob: 'zombified_piglin', weight: 100, min: 4, max: 4 },
     { mob: 'ghast', weight: 50, min: 4, max: 4 },
