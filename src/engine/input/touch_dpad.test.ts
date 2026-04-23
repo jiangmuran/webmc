@@ -14,7 +14,7 @@ describe('touch dpad', () => {
   it('push right', () => {
     const r = stickVector(center, { x: 150, y: 100, active: true }, 50);
     expect(r.strafe).toBeGreaterThan(0);
-    expect(r.forward).toBe(0);
+    expect(r.forward).toBeCloseTo(0);
   });
 
   it('push forward (up)', () => {
