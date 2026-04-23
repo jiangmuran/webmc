@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { damageEntitiesWithin, healsDragon, bottomIsObsidianOrBedrock } from './end_crystal_explode';
+import {
+  damageEntitiesWithin,
+  healsDragon,
+  bottomIsObsidianOrBedrock,
+} from './end_crystal_explode';
 
 describe('end crystal explode', () => {
   it('full damage at zero', () => {
