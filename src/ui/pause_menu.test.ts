@@ -3,27 +3,27 @@ import { availableActions, pausesWorldSimulation } from './pause_menu';
 
 describe('pause menu', () => {
   it('singleplayer has save/quit', () => {
-    expect(
-      availableActions({ singleplayer: true, isHost: true, lanOpen: false }),
-    ).toContain('save_and_quit');
+    expect(availableActions({ singleplayer: true, isHost: true, lanOpen: false })).toContain(
+      'save_and_quit',
+    );
   });
 
   it('multiplayer no save/quit', () => {
-    expect(
-      availableActions({ singleplayer: false, isHost: true, lanOpen: false }),
-    ).not.toContain('save_and_quit');
+    expect(availableActions({ singleplayer: false, isHost: true, lanOpen: false })).not.toContain(
+      'save_and_quit',
+    );
   });
 
   it('host offers invite', () => {
-    expect(
-      availableActions({ singleplayer: false, isHost: true, lanOpen: false }),
-    ).toContain('invite');
+    expect(availableActions({ singleplayer: false, isHost: true, lanOpen: false })).toContain(
+      'invite',
+    );
   });
 
   it('LAN already open hides option', () => {
-    expect(
-      availableActions({ singleplayer: true, isHost: true, lanOpen: true }),
-    ).not.toContain('lan_world');
+    expect(availableActions({ singleplayer: true, isHost: true, lanOpen: true })).not.toContain(
+      'lan_world',
+    );
   });
 
   it('pauses only in single', () => {
