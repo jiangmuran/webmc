@@ -3,7 +3,7 @@ import { USER_VISIBLE, isRetryable } from './peer_disconnect_reason_code';
 
 describe('peer disconnect reason code', () => {
   it('user-visible messages exist', () => {
-    expect(USER_VISIBLE['user_quit']).toContain('disconnect');
+    expect(USER_VISIBLE.user_quit).toContain('disconnect');
   });
 
   it('timeout retryable', () => {
