@@ -8,9 +8,9 @@ describe('pillager crossbow charge', () => {
 
   it('charging counts ticks', () => {
     expect(charging({ targetDistance: 5, chargeTicks: 5, cooldownTicks: 0 })).toBe(true);
-    expect(charging({ targetDistance: 5, chargeTicks: CHARGE_REQUIRED_TICKS, cooldownTicks: 0 })).toBe(
-      false,
-    );
+    expect(
+      charging({ targetDistance: 5, chargeTicks: CHARGE_REQUIRED_TICKS, cooldownTicks: 0 }),
+    ).toBe(false);
   });
 
   it('ready after charge', () => {
