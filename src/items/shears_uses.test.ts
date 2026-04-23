@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { isShearable, woolCountFromSheep, durabilityCost, mooshroomBecomesCow } from './shears_uses';
+import {
+  isShearable,
+  woolCountFromSheep,
+  durabilityCost,
+  mooshroomBecomesCow,
+} from './shears_uses';
 
 describe('shears uses', () => {
   it('shearable targets', () => {
