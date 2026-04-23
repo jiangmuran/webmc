@@ -14,7 +14,7 @@ export function touch<T>(s: CacheState<T>, key: string): CacheState<T> {
 export function put<T>(s: CacheState<T>, key: string, value: T): CacheState<T> {
   const entries = new Map(s.entries);
   entries.set(key, value);
-  let order = s.accessOrder.filter((k) => k !== key);
+  const order = s.accessOrder.filter((k) => k !== key);
   order.push(key);
   while (entries.size > s.capacity && order.length > 0) {
     const evict = order.shift();
