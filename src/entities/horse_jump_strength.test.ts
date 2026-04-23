@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { rollJumpStrength, jumpHeightBlocks, canClearHeight, MIN_JUMP } from './horse_jump_strength';
+import {
+  rollJumpStrength,
+  jumpHeightBlocks,
+  canClearHeight,
+  MIN_JUMP,
+} from './horse_jump_strength';
 
 describe('horse jump strength', () => {
   it('roll in range', () => {
