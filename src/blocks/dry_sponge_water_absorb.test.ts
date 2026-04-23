@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { absorbsInRadius, becomesWet, cappedAbsorption, MAX_BLOCKS_ABSORBED } from './dry_sponge_water_absorb';
+import {
+  absorbsInRadius,
+  becomesWet,
+  cappedAbsorption,
+  MAX_BLOCKS_ABSORBED,
+} from './dry_sponge_water_absorb';
 
 describe('dry sponge water absorb', () => {
   it('in radius absorbs', () => {

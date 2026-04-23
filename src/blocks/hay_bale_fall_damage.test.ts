@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { fallDamageMultiplier, effectiveFallDamage, growthAccelForBaby } from './hay_bale_fall_damage';
+import {
+  fallDamageMultiplier,
+  effectiveFallDamage,
+  growthAccelForBaby,
+} from './hay_bale_fall_damage';
 
 describe('hay bale fall damage', () => {
   it('multiplier < 1', () => {
