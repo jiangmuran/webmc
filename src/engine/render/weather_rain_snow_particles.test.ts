@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  activeWeatherParticles,
-  precipitationKind,
-} from './weather_rain_snow_particles';
+import { activeWeatherParticles, precipitationKind } from './weather_rain_snow_particles';
 
 describe('weather rain snow particles', () => {
   const base = {
