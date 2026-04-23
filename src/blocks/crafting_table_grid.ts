@@ -12,7 +12,7 @@ export function boundingBox(g: Grid3x3): { minR: number; maxR: number; minC: num
   for (let r = 0; r < 3; r++) {
     const row = g.rows[r];
     for (let c = 0; c < 3; c++) {
-      if (row && row[c]) {
+      if (row?.[c]) {
         if (r < minR) minR = r;
         if (r > maxR) maxR = r;
         if (c < minC) minC = c;
