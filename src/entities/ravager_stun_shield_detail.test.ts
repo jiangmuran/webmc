@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { onDeflectedAttack, isVulnerableToArrows, STUN_DURATION } from './ravager_stun_shield_detail';
+import {
+  onDeflectedAttack,
+  isVulnerableToArrows,
+  STUN_DURATION,
+} from './ravager_stun_shield_detail';
 
 describe('ravager stun shield detail', () => {
   it('first deflect counts', () => {
@@ -14,8 +18,8 @@ describe('ravager stun shield detail', () => {
   });
 
   it('stunned vulnerable', () => {
-    expect(isVulnerableToArrows({ stunned: true, stunTicksRemaining: 10, shieldDeflectCount: 3 })).toBe(
-      true,
-    );
+    expect(
+      isVulnerableToArrows({ stunned: true, stunTicksRemaining: 10, shieldDeflectCount: 3 }),
+    ).toBe(true);
   });
 });

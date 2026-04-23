@@ -15,14 +15,10 @@ describe('fox trust player', () => {
   });
 
   it('trusted player not fled', () => {
-    expect(
-      willNotFleeFrom({ trustedPlayers: ['a'], bornFromTame: true }, 'a'),
-    ).toBe(true);
+    expect(willNotFleeFrom({ trustedPlayers: ['a'], bornFromTame: true }, 'a')).toBe(true);
   });
 
   it('untrusted fled', () => {
-    expect(
-      willNotFleeFrom({ trustedPlayers: ['a'], bornFromTame: true }, 'b'),
-    ).toBe(false);
+    expect(willNotFleeFrom({ trustedPlayers: ['a'], bornFromTame: true }, 'b')).toBe(false);
   });
 });
