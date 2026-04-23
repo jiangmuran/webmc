@@ -7,14 +7,14 @@ export interface SpawnPoint {
 }
 
 export function updateOnBedSleep(
-  spawn: SpawnPoint | undefined,
+  _spawn: SpawnPoint | undefined,
   bed: { x: number; y: number; z: number },
 ): SpawnPoint {
   return { ...bed, dimension: 'overworld', anchor: false };
 }
 
 export function updateOnAnchorCharge(
-  spawn: SpawnPoint | undefined,
+  _spawn: SpawnPoint | undefined,
   anchor: { x: number; y: number; z: number },
 ): SpawnPoint {
   return { ...anchor, dimension: 'nether', anchor: true };
