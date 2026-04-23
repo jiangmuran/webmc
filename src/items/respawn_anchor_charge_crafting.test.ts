@@ -17,8 +17,8 @@ describe('respawn anchor charge crafting', () => {
   });
 
   it('charges increment', () => {
-    expect(
-      afterCharge({ charges: 2, dimensionAllowed: true, itemGlowstone: true }).charges,
-    ).toBe(3);
+    expect(afterCharge({ charges: 2, dimensionAllowed: true, itemGlowstone: true }).charges).toBe(
+      3,
+    );
   });
 });

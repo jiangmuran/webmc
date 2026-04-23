@@ -14,7 +14,15 @@ export function bonusDamage(h: ImpaleHit): number {
 }
 
 export function isAquatic(mob: string): boolean {
-  return ['squid', 'guardian', 'elder_guardian', 'cod', 'salmon', 'dolphin', 'turtle', 'tropical_fish', 'axolotl'].includes(
-    mob,
-  );
+  return [
+    'squid',
+    'guardian',
+    'elder_guardian',
+    'cod',
+    'salmon',
+    'dolphin',
+    'turtle',
+    'tropical_fish',
+    'axolotl',
+  ].includes(mob);
 }
