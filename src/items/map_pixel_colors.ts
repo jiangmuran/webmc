@@ -17,7 +17,8 @@ export const BIOME_BASE: Record<string, MapColor> = {
 };
 
 export function shadeFor(brightness: 0 | 1 | 2 | 3, base: MapColor): MapColor {
-  const mult = [180, 220, 255, 135][brightness] / 255;
+  const mults: readonly [number, number, number, number] = [180, 220, 255, 135];
+  const mult = mults[brightness] / 255;
   return [
     Math.round(base[0] * mult),
     Math.round(base[1] * mult),
