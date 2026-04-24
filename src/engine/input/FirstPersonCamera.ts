@@ -38,6 +38,7 @@ export type FluidSampler = (x: number, y: number, z: number) => FluidKind | null
 export interface UpdateOptions {
   isSolid?: SolidSampler;
   isFluid?: FluidSampler;
+  isClimbable?: (x: number, y: number, z: number) => boolean;
 }
 
 export class FirstPersonCamera {
@@ -214,6 +215,18 @@ export class FirstPersonCamera {
         Math.floor(this.position.y),
         Math.floor(this.position.z),
       ) ?? null;
+    const climbing = opts.isClimbable
+      ? opts.isClimbable(
+          Math.floor(this.position.x),
+          Math.floor(this.position.y),
+          Math.floor(this.position.z),
+        ) ||
+        opts.isClimbable(
+          Math.floor(this.position.x),
+          Math.floor(this.position.y + 0.5),
+          Math.floor(this.position.z),
+        )
+      : false;
 
     if (fly || !opts.isSolid) {
       this.position.x += hx * dtSec;
@@ -241,6 +254,15 @@ export class FirstPersonCamera {
             this.velocity.y * drag - (this.inFluid === 'water' ? 4 : 8) * dtSec,
             -4,
           );
+        }
+      } else if (climbing) {
+        // Ladder / vine physics: climb up with jump, slow fall otherwise.
+        if (this.input.jump) {
+          this.velocity.y = 3.5;
+        } else if (this.input.sneak) {
+          this.velocity.y = 0;
+        } else {
+          this.velocity.y = Math.max(this.velocity.y - this.opts.gravity * 0.2 * dtSec, -1.5);
         }
       } else {
         const jumpPressedNow = this.input.jump && !this.wasJumpPressed;

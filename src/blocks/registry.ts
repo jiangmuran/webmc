@@ -332,6 +332,13 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
     // Utility blocks (interactable).
     {
+      name: 'webmc:ladder',
+      solid: false,
+      opaque: false,
+      color: [130, 90, 52] as RGB,
+      hardness: 0.4,
+    },
+    {
       name: 'webmc:chest',
       top: [120, 82, 36] as RGB,
       side: [132, 96, 45] as RGB,

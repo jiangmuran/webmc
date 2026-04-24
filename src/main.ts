@@ -109,6 +109,13 @@ const colorOf = (state: BlockState): readonly [number, number, number] =>
   registry.get(stateId(state)).color;
 const isSolid = (x: number, y: number, z: number): boolean =>
   y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
+const ladderId = registry.byName('webmc:ladder');
+const isClimbable = (x: number, y: number, z: number): boolean => {
+  if (y < 0 || y >= CHUNK_HEIGHT) return false;
+  const s = world.get(x, y, z);
+  if (s === AIR) return false;
+  return ladderId !== undefined && stateId(s) === ladderId;
+};
 
 const world = new World();
 const DEFAULT_WORLD_ID = 'default-world';
@@ -1138,7 +1145,7 @@ function frame(): void {
     }
     if (touch.state.jump) fp.input.jump = true;
   }
-  fp.update(dtSec, { isSolid, isFluid });
+  fp.update(dtSec, { isSolid, isFluid, isClimbable });
   if (touch) {
     if (touch.state.primary) {
       if (!lastTouchPrimary) {
