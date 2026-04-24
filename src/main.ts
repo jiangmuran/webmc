@@ -45,6 +45,7 @@ import { Crosshair } from './ui/Crosshair';
 import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { FluidOverlay } from './ui/FluidOverlay';
 import { DeathScreen } from './ui/DeathScreen';
+import { CompassBar } from './ui/CompassBar';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -380,6 +381,7 @@ const survivalHud = new SurvivalHud(appEl);
 const hurtVignette = new HurtVignette(appEl);
 const fluidOverlay = new FluidOverlay(appEl);
 const deathScreen = new DeathScreen(appEl);
+const compassBar = new CompassBar(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   canvas.requestPointerLock();
@@ -1001,6 +1003,7 @@ function frame(): void {
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
+  compassBar.setYaw(fp.yaw);
   if (gameMode === 'survival' || gameMode === 'adventure') {
     survivalHud.render({
       health: playerState.health,
