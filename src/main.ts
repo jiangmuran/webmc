@@ -200,7 +200,6 @@ itemRegistry.register({ name: 'webmc:iron_shovel', maxStack: 1, durability: 251 
 itemRegistry.register({ name: 'webmc:bread', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
 itemRegistry.register({ name: 'webmc:cookie', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
 itemRegistry.register({ name: 'webmc:cake', maxStack: 1, durability: 0 });
-itemRegistry.register({ name: 'webmc:torch', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:cooked_porkchop', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 12.8 });
 itemRegistry.register({ name: 'webmc:cooked_beef', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 12.8 });
 itemRegistry.register({ name: 'webmc:cooked_chicken', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 7.2 });

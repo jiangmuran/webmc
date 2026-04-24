@@ -188,6 +188,14 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 0,
     },
     {
+      name: 'webmc:torch',
+      solid: false,
+      opaque: true,
+      color: [245, 215, 110] as RGB,
+      lightEmission: 14,
+      hardness: 0,
+    },
+    {
       name: 'webmc:lever',
       solid: false,
       opaque: false,
