@@ -12,7 +12,9 @@ export function startTransition(
   toId: string,
   now: number,
 ): MusicTransition {
-  return { fromId, toId, progress01: 0, startedAtMs: now };
+  const base: MusicTransition = { toId, progress01: 0, startedAtMs: now };
+  if (fromId !== undefined) base.fromId = fromId;
+  return base;
 }
 
 export function updateProgress(t: MusicTransition, nowMs: number): MusicTransition {

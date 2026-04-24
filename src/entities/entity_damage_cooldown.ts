@@ -10,7 +10,7 @@ export function canDamage(c: DamageCooldown, newDamage: number): boolean {
   return newDamage > c.lastDamage;
 }
 
-export function applyDamage(c: DamageCooldown, damage: number): DamageCooldown {
+export function applyDamage(_c: DamageCooldown, damage: number): DamageCooldown {
   return { remainingTicks: DEFAULT_COOLDOWN_TICKS, lastDamage: damage };
 }
 

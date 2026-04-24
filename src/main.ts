@@ -26,7 +26,7 @@ import { RoomClient } from './net/RoomClient';
 import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { BlockDropRegistry } from './items/block-drops';
-import { PlayerState } from './game/PlayerState';
+import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
@@ -40,8 +40,11 @@ import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
 import { DebugOverlay } from './ui/DebugOverlay';
 import { Crosshair } from './ui/Crosshair';
+import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
+import { BlockOutline } from './engine/render/BlockOutline';
+import { BlockParticles } from './engine/render/BlockParticles';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
@@ -204,6 +207,10 @@ const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
 scene.add(rain.group);
+const blockOutline = new BlockOutline();
+scene.add(blockOutline.group);
+const blockParticles = new BlockParticles(600);
+scene.add(blockParticles.group);
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   rain.setActive(w !== 'clear');
 }
@@ -226,6 +233,8 @@ const interaction = new InteractionController(
       sfx.play('break');
       const prevState = world.get(bx, by, bz);
       const prevBlockId = stateId(prevState);
+      const def = registry.get(prevBlockId);
+      blockParticles.emitBreak(bx, by, bz, def.color);
       const drops = dropRegistry.drops(prevBlockId, undefined, 99);
       for (const s of drops) inventory.add(s);
       touchWorldEdit(bx, by, bz, 0);
@@ -235,6 +244,10 @@ const interaction = new InteractionController(
       sfx.play('place');
       const sel = hotbar.selected;
       const blockId = sel ? stateId(sel.state) : 0;
+      if (sel) {
+        const def = registry.get(stateId(sel.state));
+        blockParticles.emitPlace(bx, by, bz, def.color);
+      }
       touchWorldEdit(bx, by, bz, blockId);
     },
   },
@@ -261,7 +274,13 @@ function applyGameMode(m: GameMode): void {
   fp.input.fly = eff.canFly;
   fp.passThroughBlocks = eff.passThroughBlocks;
   playerState.invulnerable = eff.invulnerable;
+  survivalHud.setVisible(m === 'survival' || m === 'adventure');
 }
+
+const survivalHud = new SurvivalHud(appEl);
+const hurtVignette = new HurtVignette(appEl);
+survivalHud.setVisible(false);
+let lastPlayerHealth = 20;
 
 const chatInput = new ChatInput(appEl, {
   onSubmit: (text) => {
@@ -719,6 +738,7 @@ function frame(): void {
 
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
+  blockParticles.tick(dtSec);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
@@ -737,12 +757,41 @@ function frame(): void {
   if (sel) interaction.selectedBlock = sel.state;
   interaction.tick(now);
 
+  const aim = interaction.castRay();
+  if (aim && aim.distance > 0) {
+    blockOutline.setHit(aim.bx, aim.by, aim.bz);
+  } else {
+    blockOutline.hide();
+  }
+
   flushDirty();
 
   renderer.render(scene, camera);
 
   playerState.sprinting = fp.input.sprint;
   playerState.tick(dtSec, { inFluid: fp.inFluid });
+
+  if (playerState.health < lastPlayerHealth - 0.05) {
+    const delta = lastPlayerHealth - playerState.health;
+    hurtVignette.pulse(Math.min(0.95, 0.35 + delta * 0.08));
+    sfx.play('hit');
+  }
+  lastPlayerHealth = playerState.health;
+  hurtVignette.tick(dtSec);
+  if (gameMode === 'survival' || gameMode === 'adventure') {
+    survivalHud.render({
+      health: playerState.health,
+      maxHealth: 20,
+      hunger: playerState.hunger,
+      maxHunger: 20,
+      breathSec: playerState.breath,
+      maxBreathSec: BREATH_MAX_SEC,
+      underwater: fp.inFluid === 'water',
+      xpLevel: playerState.xpLevel,
+      xpProgress: playerState.xpProgress,
+      xpToNext: xpToNext(playerState.xpLevel),
+    });
+  }
 
   if (chunkRenderer.meshCount > 20) {
     spawnSystem.tick(dtSec, mobWorld, {

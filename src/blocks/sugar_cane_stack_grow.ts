@@ -17,7 +17,7 @@ export function shouldGrow(c: Column, rng: () => number): boolean {
   return rng() < GROW_CHANCE;
 }
 
-export function destroyOnUnsupported(top: Column, below: Column | undefined): boolean {
+export function destroyOnUnsupported(_top: Column, below: Column | undefined): boolean {
   if (below === undefined) return true;
   return !canPlace(below.supportedBy, below.adjacentWater) && below.currentHeight === 0;
 }

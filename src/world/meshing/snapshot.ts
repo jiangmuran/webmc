@@ -24,7 +24,14 @@ export interface Snapshot {
   readonly paletteSize: number;
   readonly flatSkyLight: Uint8Array;
   readonly flatBlockLight: Uint8Array;
+  /** Optional palette-indexed tile ids: [top, side, bottom] × paletteSize. */
+  readonly paletteTile?: Uint16Array;
 }
+
+export const TILE_STRIDE = 3;
+export const TILE_OFFSET_TOP = 0;
+export const TILE_OFFSET_SIDE = 1;
+export const TILE_OFFSET_BOTTOM = 2;
 
 export interface PaletteBlob {
   readonly paletteStates: Uint32Array;

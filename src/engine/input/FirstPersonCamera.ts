@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { type AABB, type SolidSampler, sweepMove } from '@/physics/collision';
+import { bobY } from '@/engine/render/camera_bob_intensity';
 
 export interface FirstPersonCameraOptions {
   walkSpeed: number;
@@ -62,6 +63,8 @@ export class FirstPersonCamera {
   private jumpBufferTimer = 0;
   private wasJumpPressed = false;
   private sprintFovBoost = 0;
+  private bobPhase = 0;
+  bobEnabled = true;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -288,9 +291,21 @@ export class FirstPersonCamera {
     }
 
     const sneakDrop = this.input.sneak && this.onGround ? 0.3 : 0;
+
+    const horizSpeed = Math.hypot(this.velocity.x, this.velocity.z);
+    const bobActive = this.bobEnabled && this.onGround && !this.input.fly && horizSpeed > 0.5;
+    if (bobActive) {
+      this.bobPhase += dtSec * (8 + horizSpeed * 0.8);
+    } else {
+      this.bobPhase = this.bobPhase * Math.exp(-dtSec / 0.2);
+    }
+    const normalizedSpeed = Math.min(1, horizSpeed / this.opts.walkSpeed);
+    const bobOffset = bobActive ? bobY(this.bobPhase, normalizedSpeed, true) : 0;
+    const bobRoll = bobActive ? Math.cos(this.bobPhase * 0.5) * 0.012 * normalizedSpeed : 0;
+
     this.camera.position.set(
       this.position.x,
-      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop,
+      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset,
       this.position.z,
     );
     const look = this.lookVector();
@@ -300,6 +315,7 @@ export class FirstPersonCamera {
       this.camera.position.z + look.z,
     );
     this.camera.up.copy(UP);
+    this.camera.rotation.z = bobRoll;
 
     // Sprint FOV kick — eased
     const actuallySprinting =

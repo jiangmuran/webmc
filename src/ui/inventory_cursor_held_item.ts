@@ -19,10 +19,9 @@ export function pickUpStack(
 export function halfStack(stack: Stack): { left?: Stack; right: Stack } {
   const half = Math.ceil(stack.count / 2);
   const rem = stack.count - half;
-  return {
-    right: { ...stack, count: half },
-    left: rem > 0 ? { ...stack, count: rem } : undefined,
-  };
+  const out: { left?: Stack; right: Stack } = { right: { ...stack, count: half } };
+  if (rem > 0) out.left = { ...stack, count: rem };
+  return out;
 }
 
 export function placeOne(

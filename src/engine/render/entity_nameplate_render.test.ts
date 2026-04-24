@@ -32,7 +32,8 @@ describe('entity nameplate render', () => {
   });
 
   it('player always shown', () => {
-    expect(shouldRenderName({ ...base, entityType: 'player', customName: undefined })).toBe(true);
+    const { customName: _omit, ...rest } = base;
+    expect(shouldRenderName({ ...rest, entityType: 'player' })).toBe(true);
   });
 
   it('far hidden', () => {

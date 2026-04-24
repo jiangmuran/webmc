@@ -8,7 +8,7 @@ export interface BedBlock {
 }
 
 export function headOfBedFrom(
-  foot: BedBlock,
+  _foot: BedBlock,
   facing: BedBlock['facing'],
 ): { dx: number; dz: number } {
   switch (facing) {

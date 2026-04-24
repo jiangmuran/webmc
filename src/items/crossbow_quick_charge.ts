@@ -11,7 +11,7 @@ export interface ChargedCrossbow {
 }
 
 export function chargeCrossbow(
-  c: ChargedCrossbow,
+  _c: ChargedCrossbow,
   projectile: 'arrow' | 'firework_rocket',
 ): ChargedCrossbow {
   return { loaded: true, projectile };
@@ -22,5 +22,9 @@ export function shoot(c: ChargedCrossbow): {
   fired?: 'arrow' | 'firework_rocket';
 } {
   if (!c.loaded) return { empty: c };
-  return { empty: { loaded: false }, fired: c.projectile };
+  const result: { empty: ChargedCrossbow; fired?: 'arrow' | 'firework_rocket' } = {
+    empty: { loaded: false },
+  };
+  if (c.projectile !== undefined) result.fired = c.projectile;
+  return result;
 }
