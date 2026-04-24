@@ -1372,6 +1372,9 @@ function frame(): void {
       fluid: fp.inFluid,
       viewDistance: loader.viewRadius,
       rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
+      mobs: mobWorld.size,
+      drops: droppedItems.size,
+      xpOrbs: xpOrbs.size,
     });
     hud.textContent = '';
   } else {

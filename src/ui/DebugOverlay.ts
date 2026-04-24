@@ -18,6 +18,9 @@ export interface DebugFrame {
   viewDistance: number;
   rendererName: string;
   memoryMB?: number;
+  mobs?: number;
+  drops?: number;
+  xpOrbs?: number;
 }
 
 export class DebugOverlay {
@@ -67,6 +70,10 @@ export class DebugOverlay {
     const pitchDeg = (f.look.pitch * 180) / Math.PI;
     const facing = facingFromYaw(f.look.yaw);
     const mem = f.memoryMB === undefined ? '' : `\nmem  ${f.memoryMB.toFixed(0)} MB`;
+    const entities =
+      f.mobs !== undefined
+        ? `mobs ${String(f.mobs)}  drops ${String(f.drops ?? 0)}  xp ${String(f.xpOrbs ?? 0)}\n`
+        : '';
     this.root.textContent =
       `webmc — F3 debug\n` +
       `fps  ${f.fps.toFixed(0).padStart(3)}  frame ${f.frameMs.toFixed(1).padStart(5)} ms\n` +
@@ -74,6 +81,7 @@ export class DebugOverlay {
       `chunk  ${String(f.chunkPos.cx)} ${String(f.chunkPos.cz)}  view ${String(f.viewDistance)}\n` +
       `facing  ${facing} (yaw ${yawDeg.toFixed(0)}°, pitch ${pitchDeg.toFixed(0)}°)\n` +
       `meshes ${String(f.meshCount)}  tris ${f.triangles.toLocaleString()}  pending ${String(f.pendingChunks)}\n` +
+      entities +
       `mode  ${f.gameMode}  fly ${f.fly ? 'y' : 'n'}  onGround ${f.onGround ? 'y' : 'n'}  fluid ${f.fluid ?? '-'}\n` +
       `HP ${f.health.toFixed(0)}/20  food ${f.hunger.toFixed(0)}/20\n` +
       `time  ${f.timeOfDay.toFixed(2)}\n` +
