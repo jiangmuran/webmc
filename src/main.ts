@@ -1484,6 +1484,10 @@ function frame(): void {
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
+  // Drowning feedback: breath < 2s → slight hurt vignette pulse
+  if (fp.inFluid === 'water' && playerState.breath < 2) {
+    hurtVignette.pulse(0.15);
+  }
   if (fp.inFluid !== lastInFluid) {
     if (fp.inFluid === 'water') sfx.play('step');
     else if (fp.inFluid === 'lava') sfx.play('hit');
