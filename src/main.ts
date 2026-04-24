@@ -380,8 +380,8 @@ const interaction = new InteractionController(
 
 function countInventoryItem(itemId: number): number {
   let total = 0;
-  for (const s of inventory.hotbar) if (s && s.itemId === itemId) total += s.count;
-  for (const s of inventory.main) if (s && s.itemId === itemId) total += s.count;
+  for (const s of inventory.hotbar) if (s?.itemId === itemId) total += s.count;
+  for (const s of inventory.main) if (s?.itemId === itemId) total += s.count;
   return total;
 }
 
@@ -390,7 +390,7 @@ function consumeInventoryItem(itemId: number, count: number): boolean {
   const go = (slots: (typeof inventory.hotbar)[number][]): void => {
     for (let i = 0; i < slots.length && remaining > 0; i++) {
       const s = slots[i];
-      if (!s || s.itemId !== itemId) continue;
+      if (s?.itemId !== itemId) continue;
       const take = Math.min(s.count, remaining);
       const after = s.count - take;
       slots[i] = after <= 0 ? null : { ...s, count: after };
@@ -1240,9 +1240,11 @@ function frame(): void {
     sfx.play('click');
   });
 
-  if (now - lastPlayerSaveAt > 5000) {
+  if (now - lastPlayerSaveAt > 30000) {
     lastPlayerSaveAt = now;
-    void savePlayerNow();
+    void savePlayerNow().then(() => {
+      chatInput.addLine('World saved.', '#80a0ff');
+    });
   }
 
   if (debugOverlay.isEnabled()) {
