@@ -82,7 +82,9 @@ export class DebugOverlay {
 }
 
 export function facingFromYaw(yaw: number): 'north' | 'south' | 'east' | 'west' {
+  // lookVector at yaw=0 is (0,0,-1) = north. yaw increases CCW (+Y axis rotation),
+  // so yaw=+π/2 points +X = east (mouse right, we subtract yaw → pointing +X after).
   const norm = ((yaw % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
   const octant = Math.floor((norm + Math.PI / 4) / (Math.PI / 2)) % 4;
-  return (['south', 'west', 'north', 'east'] as const)[octant] ?? 'north';
+  return (['north', 'west', 'south', 'east'] as const)[octant] ?? 'north';
 }

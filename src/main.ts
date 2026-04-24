@@ -47,6 +47,7 @@ import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
 import { BlockParticles } from './engine/render/BlockParticles';
 import { Clouds } from './engine/render/Clouds';
+import { ScreenShake } from './engine/render/ScreenShake';
 import { SkyCelestials } from './engine/render/SkyCelestials';
 import { Stars } from './engine/render/Stars';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
@@ -217,6 +218,7 @@ const blockParticles = new BlockParticles(600);
 scene.add(blockParticles.group);
 const clouds = new Clouds();
 scene.add(clouds.mesh);
+const screenShake = new ScreenShake();
 const sky = new SkyCelestials();
 sky.addTo(scene);
 const stars = new Stars();
@@ -384,6 +386,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     fp.setBaseFov(v.fov);
     loader.setViewRadius(v.viewDistance);
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
+    fp.invertY = v.invertY;
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
@@ -787,6 +790,7 @@ function frame(): void {
 
   flushDirty();
 
+  screenShake.apply(camera, dtSec);
   renderer.render(scene, camera);
 
   playerState.sprinting = fp.input.sprint;
@@ -801,6 +805,7 @@ function frame(): void {
   if (playerState.health < lastPlayerHealth - 0.05) {
     const delta = lastPlayerHealth - playerState.health;
     hurtVignette.pulse(Math.min(0.95, 0.35 + delta * 0.08));
+    screenShake.pulse(Math.min(1, 0.2 + delta * 0.1));
     sfx.play('hit');
   }
   lastPlayerHealth = playerState.health;

@@ -60,7 +60,7 @@ export class SkyCelestials {
         map: makeSunTexture(),
         transparent: true,
         depthWrite: false,
-        depthTest: false,
+        depthTest: true,
         fog: false,
         blending: THREE.AdditiveBlending,
       }),
@@ -73,7 +73,7 @@ export class SkyCelestials {
         map: makeMoonTexture(),
         transparent: true,
         depthWrite: false,
-        depthTest: false,
+        depthTest: true,
         fog: false,
       }),
     );

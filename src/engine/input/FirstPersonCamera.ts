@@ -65,6 +65,7 @@ export class FirstPersonCamera {
   private sprintFovBoost = 0;
   private bobPhase = 0;
   bobEnabled = true;
+  invertY = false;
   private airborneStartY: number | null = null;
   lastLandFallBlocks = 0;
 
@@ -91,7 +92,8 @@ export class FirstPersonCamera {
     this.mouseMove = (e) => {
       if (!this.locked || this.inputBlocked) return;
       this.yaw -= e.movementX * this.opts.lookSensitivity;
-      this.pitch -= e.movementY * this.opts.lookSensitivity;
+      const pitchDelta = e.movementY * this.opts.lookSensitivity;
+      this.pitch -= this.invertY ? -pitchDelta : pitchDelta;
       this.pitch = Math.max(-PITCH_MAX, Math.min(PITCH_MAX, this.pitch));
     };
     this.lockChange = () => {
@@ -317,21 +319,15 @@ export class FirstPersonCamera {
     }
     const normalizedSpeed = Math.min(1, horizSpeed / this.opts.walkSpeed);
     const bobOffset = bobActive ? bobY(this.bobPhase, normalizedSpeed, true) : 0;
-    const bobRoll = bobActive ? Math.cos(this.bobPhase * 0.5) * 0.012 * normalizedSpeed : 0;
 
     this.camera.position.set(
       this.position.x,
       this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset,
       this.position.z,
     );
-    const look = this.lookVector();
-    this.camera.lookAt(
-      this.camera.position.x + look.x,
-      this.camera.position.y + look.y,
-      this.camera.position.z + look.z,
-    );
     this.camera.up.copy(UP);
-    this.camera.rotation.z = bobRoll;
+    this.camera.rotation.order = 'YXZ';
+    this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
 
     // Sprint FOV kick — eased
     const actuallySprinting =

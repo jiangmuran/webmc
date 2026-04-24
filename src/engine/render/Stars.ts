@@ -28,7 +28,7 @@ export class Stars {
       transparent: true,
       opacity: 0,
       depthWrite: false,
-      depthTest: false,
+      depthTest: true,
       fog: false,
     });
     this.points = new THREE.Points(geom, this.material);
