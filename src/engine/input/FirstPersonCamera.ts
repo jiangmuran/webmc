@@ -48,6 +48,7 @@ export class FirstPersonCamera {
     strafe: 0,
     vertical: 0,
     sprint: false,
+    sneak: false,
     fly: true,
     jump: false,
   };
@@ -148,7 +149,7 @@ export class FirstPersonCamera {
         if (this.input.fly) {
           this.input.vertical = down ? -1 : Math.min(this.input.vertical + 1, 0);
         } else {
-          this.input.sprint = down;
+          this.input.sneak = down;
         }
         break;
       case 'KeyR':
@@ -230,6 +231,13 @@ export class FirstPersonCamera {
 
         if (this.jumpBufferTimer > 0 && this.coyoteTimer > 0) {
           this.velocity.y = this.opts.jumpVelocity;
+          // Sprint-jump forward boost — small fwd kick in look direction
+          if (this.input.sprint) {
+            const sinY2 = Math.sin(this.yaw);
+            const cosY2 = Math.cos(this.yaw);
+            this.velocity.x += -sinY2 * 2.2;
+            this.velocity.z += -cosY2 * 2.2;
+          }
           this.onGround = false;
           this.coyoteTimer = 0;
           this.jumpBufferTimer = 0;
@@ -245,21 +253,44 @@ export class FirstPersonCamera {
         );
       }
       this.wasJumpPressed = this.input.jump;
-      const dv = {
-        x: this.velocity.x * dtSec,
-        y: this.velocity.y * dtSec,
-        z: this.velocity.z * dtSec,
-      };
-      const result = sweepMove(this.position, this.opts.box, dv, opts.isSolid);
+      // Sneak slows horizontal motion and enables edge cling
+      if (this.input.sneak && this.onGround) {
+        this.velocity.x *= 0.3;
+        this.velocity.z *= 0.3;
+      }
+      let dvx = this.velocity.x * dtSec;
+      let dvy = this.velocity.y * dtSec;
+      let dvz = this.velocity.z * dtSec;
+
+      // Sneak edge cling: prevent walking off ledges per axis
+      if (this.input.sneak && this.onGround) {
+        const box = this.opts.box;
+        const probeY = this.position.y - box.halfY - 0.05;
+        const hasGroundAt = (cx: number, cz: number): boolean => {
+          return (
+            opts.isSolid!(Math.floor(cx - box.halfX + 0.01), Math.floor(probeY), Math.floor(cz - box.halfZ + 0.01)) ||
+            opts.isSolid!(Math.floor(cx + box.halfX - 0.01), Math.floor(probeY), Math.floor(cz - box.halfZ + 0.01)) ||
+            opts.isSolid!(Math.floor(cx - box.halfX + 0.01), Math.floor(probeY), Math.floor(cz + box.halfZ - 0.01)) ||
+            opts.isSolid!(Math.floor(cx + box.halfX - 0.01), Math.floor(probeY), Math.floor(cz + box.halfZ - 0.01))
+          );
+        };
+        if (dvx !== 0 && !hasGroundAt(this.position.x + dvx, this.position.z)) dvx = 0;
+        if (dvz !== 0 && !hasGroundAt(this.position.x, this.position.z + dvz)) dvz = 0;
+        this.velocity.x = dvx / Math.max(dtSec, 0.0001);
+        this.velocity.z = dvz / Math.max(dtSec, 0.0001);
+      }
+
+      const result = sweepMove(this.position, this.opts.box, { x: dvx, y: dvy, z: dvz }, opts.isSolid);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
       this.onGround = result.onGround;
     }
 
+    const sneakDrop = this.input.sneak && this.onGround ? 0.3 : 0;
     this.camera.position.set(
       this.position.x,
-      this.position.y + this.opts.eyeHeight - this.opts.box.halfY,
+      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop,
       this.position.z,
     );
     const look = this.lookVector();

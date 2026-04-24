@@ -331,6 +331,13 @@ const settingsPanel = new SettingsPanel(appEl, {
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
     audio.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
+    const far = v.viewDistance * 16;
+    (chunkRenderer.material.uniforms['uFogFar'] as { value: number }).value = far;
+    (chunkRenderer.material.uniforms['uFogNear'] as { value: number }).value = far * 0.6;
+    if (scene.fog instanceof THREE.Fog) {
+      scene.fog.near = far * 0.6;
+      scene.fog.far = far;
+    }
   },
 });
 
@@ -360,8 +367,7 @@ const creativeInv = new CreativeInventory(appEl, registry, {
 document.addEventListener(
   'keydown',
   (e) => {
-    if (mainMenu.isVisible()) return;
-    if (chatInput.isOpen()) return;
+    // Top-priority modals: ESC always closes them, regardless of main menu state.
     if (settingsPanel.isVisible()) {
       if (e.code === 'Escape') {
         e.preventDefault();
@@ -376,6 +382,8 @@ document.addEventListener(
       }
       return;
     }
+    if (mainMenu.isVisible()) return;
+    if (chatInput.isOpen()) return;
     if (creativeInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
@@ -682,6 +690,8 @@ function frame(): void {
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
   (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(dayNight.skyColor);
   (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient;
+  (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(dayNight.fogColor);
+  (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
   scene.background = dayNight.skyColor;
   if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(dayNight.fogColor);
 

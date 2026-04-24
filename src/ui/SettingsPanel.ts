@@ -61,7 +61,7 @@ export class SettingsPanel {
       'justify-content:center',
       'background:rgba(0,0,0,0.55)',
       'backdrop-filter:blur(2px)',
-      'z-index:850',
+      'z-index:1200',
       'color:#e6edf3',
       'pointer-events:auto',
     ].join(';');
