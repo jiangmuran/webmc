@@ -961,13 +961,15 @@ document.addEventListener(
       if (sel && (gameMode === 'survival' || gameMode === 'adventure')) {
         const def = registry.get(stateId(sel.state));
         const itemId = itemRegistry.byName(def.name);
-        if (itemId !== undefined) {
+        if (itemId !== undefined && countInventoryItem(itemId) > 0) {
+          consumeInventoryItem(itemId, 1);
           const look = fp.lookVector();
           droppedItems.spawn(fp.position.x + look.x * 1.2, fp.position.y, fp.position.z + look.z * 1.2, {
             itemId,
             count: 1,
             color: def.color,
           }, 1.5);
+          sfx.play('click');
         }
       }
     }
