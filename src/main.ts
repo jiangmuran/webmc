@@ -630,6 +630,9 @@ let lastPlayerHealth = 20;
 let lastXpLevel = 0;
 let lastIsDay = true;
 let dayCounter = 1;
+void persistDB.getMeta('dayCounter').then((saved) => {
+  if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
+});
 let playerSpawnPoint: { x: number; y: number; z: number } | null = null;
 void persistDB.getMeta('playerSpawnPoint').then((saved) => {
   if (saved && typeof saved === 'object' && 'x' in saved && 'y' in saved && 'z' in saved) {
@@ -1850,7 +1853,10 @@ function frame(): void {
   }
   if (dayNight.isDay !== lastIsDay) {
     lastIsDay = dayNight.isDay;
-    if (dayNight.isDay) dayCounter++;
+    if (dayNight.isDay) {
+      dayCounter++;
+      void persistDB.setMeta('dayCounter', dayCounter);
+    }
     toast.show(dayNight.isDay ? `Day ${String(dayCounter)}` : 'Night falls', dayNight.isDay ? '#ffd080' : '#80a0ff', 1500);
   }
 
