@@ -341,6 +341,35 @@ const playerStats = {
   distanceWalked: 0,
   playtimeSec: 0,
 };
+const achievedSet = new Set<string>();
+interface Achievement {
+  readonly id: string;
+  readonly title: string;
+  readonly check: () => boolean;
+}
+const achievements: readonly Achievement[] = [
+  { id: 'first_block', title: 'Hello World', check: () => playerStats.blocksBroken >= 1 },
+  { id: 'mason', title: 'Mason (100 blocks placed)', check: () => playerStats.blocksPlaced >= 100 },
+  { id: 'miner', title: 'Miner (100 blocks broken)', check: () => playerStats.blocksBroken >= 100 },
+  { id: 'slayer', title: 'Slayer (10 mobs killed)', check: () => playerStats.mobsKilled >= 10 },
+  { id: 'traveler', title: 'Traveler (500m walked)', check: () => playerStats.distanceWalked >= 500 },
+  { id: 'explorer', title: 'Explorer (1 hour played)', check: () => playerStats.playtimeSec >= 3600 },
+];
+void persistDB.getMeta('achievements').then((saved) => {
+  if (Array.isArray(saved)) {
+    for (const id of saved) if (typeof id === 'string') achievedSet.add(id);
+  }
+});
+function checkAchievements(): void {
+  for (const a of achievements) {
+    if (!achievedSet.has(a.id) && a.check()) {
+      achievedSet.add(a.id);
+      toast.show(`🏆 ${a.title}`, '#ffd080', 2500);
+      chatInput.addLine(`Achievement: ${a.title}`, '#ffd080');
+      void persistDB.setMeta('achievements', Array.from(achievedSet));
+    }
+  }
+}
 void persistDB.getMeta('playerStats').then((saved) => {
   if (saved && typeof saved === 'object') {
     const s = saved as Record<string, unknown>;
@@ -1658,6 +1687,7 @@ function frame(): void {
       void persistDB.setMeta('playerStats', playerStats);
     }
   }
+  checkAchievements();
   // Sprint dust particles
   if (fp.input.sprint && fp.onGround && !fp.input.fly && horizSpeed > 3) {
     sprintDustAccum += dtSec;
