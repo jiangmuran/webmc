@@ -767,6 +767,12 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         seed: () => WORLD_SEED,
+        killAllMobs: () => {
+          const ids: number[] = [];
+          for (const m of mobWorld.all()) ids.push(m.id);
+          for (const id of ids) mobWorld.remove(id);
+          return ids.length;
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');

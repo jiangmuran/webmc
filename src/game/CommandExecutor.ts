@@ -22,6 +22,7 @@ export interface CommandContext {
   openChest?: () => void;
   teleportSpawn?: () => void;
   seed?: () => number;
+  killAllMobs?: () => number;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -43,7 +44,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
     ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
     ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
-    ctx.broadcast('/chest | /spawn | /seed', '#cccccc');
+    ctx.broadcast('/chest | /spawn | /seed | /killall', '#cccccc');
     ctx.broadcast('/stats | /save', '#cccccc');
     return;
   }
@@ -77,6 +78,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'seed') {
     if (ctx.seed) ctx.broadcast(`Seed: ${String(ctx.seed())}`, '#cccccc');
+    return;
+  }
+  if (head === 'killall') {
+    const n = ctx.killAllMobs?.() ?? 0;
+    ctx.broadcast(`Removed ${String(n)} mobs.`, '#80ff80');
     return;
   }
   if (head === 'summon') {
