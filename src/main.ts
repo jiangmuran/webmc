@@ -1947,7 +1947,7 @@ function frame(): void {
     });
   }
 
-  if (chunkRenderer.meshCount > 20) {
+  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0) {
     spawnSystem.tick(dtSec, mobWorld, {
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       isDay: dayNight.isDay,
