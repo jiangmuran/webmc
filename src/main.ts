@@ -470,6 +470,7 @@ deathScreen.setOnRespawn(() => {
 });
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
+let lastInFluid: 'water' | 'lava' | null = null;
 
 const chatInput = new ChatInput(appEl, {
   onSubmit: (text) => {
@@ -1147,6 +1148,11 @@ function frame(): void {
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
+  if (fp.inFluid !== lastInFluid) {
+    if (fp.inFluid === 'water') sfx.play('step');
+    else if (fp.inFluid === 'lava') sfx.play('hit');
+    lastInFluid = fp.inFluid;
+  }
   compassBar.setYaw(fp.yaw);
   if (gameMode === 'survival' || gameMode === 'adventure') {
     survivalHud.render({
