@@ -1082,6 +1082,13 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
         const id2 = stateId(s);
         const def2 = registry.get(id2);
         if (def2.hardness < 0) continue; // bedrock/unbreakable
+        if (def2.name === 'webmc:tnt' && !(x === bx && y === by && z === bz)) {
+          // Cascading TNT: remove as block, schedule fuse with random delay.
+          world.set(x, y, z, airState);
+          primedTnt.push({ bx: x, by: y, bz: z, remainingSec: 0.3 + Math.random() * 0.6 });
+          changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+          continue;
+        }
         const falloff = 1 - dSq / r2;
         if (Math.random() > falloff * 0.9) continue;
         world.set(x, y, z, airState);
