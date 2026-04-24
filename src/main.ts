@@ -420,6 +420,10 @@ const interaction = new InteractionController(
         sfx.play('click');
         return true;
       }
+      if (def.name === 'webmc:tnt') {
+        igniteTnt(bx, by, bz);
+        return true;
+      }
       if (def.name === 'webmc:crafting_table' || def.name === 'webmc:furnace') {
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
@@ -1015,6 +1019,96 @@ async function initMultiplayer(): Promise<void> {
 }
 void initMultiplayer();
 
+interface PrimedTnt {
+  bx: number;
+  by: number;
+  bz: number;
+  remainingSec: number;
+}
+const primedTnt: PrimedTnt[] = [];
+function igniteTnt(bx: number, by: number, bz: number): void {
+  const state = world.get(bx, by, bz);
+  if (state === AIR) return;
+  const id = stateId(state);
+  const def = registry.get(id);
+  if (def.name !== 'webmc:tnt') return;
+  world.set(bx, by, bz, AIR);
+  const cx = Math.floor(bx / 16);
+  const cz = Math.floor(bz / 16);
+  const chunk = world.getChunk(cx, cz);
+  if (chunk) {
+    const light = lightCache.get(lightKey(cx, cz)) ?? null;
+    chunkStore.markDirty(chunk, light);
+  }
+  primedTnt.push({ bx, by, bz, remainingSec: 1.5 });
+  chatInput.addLine(`TNT primed!`, '#ff8040');
+  sfx.play('click');
+}
+
+function tickTnt(dtSec: number): void {
+  for (let i = primedTnt.length - 1; i >= 0; i--) {
+    const t = primedTnt[i]!;
+    t.remainingSec -= dtSec;
+    if (t.remainingSec <= 0) {
+      explodeAt(t.bx, t.by, t.bz, 4);
+      primedTnt.splice(i, 1);
+    }
+  }
+}
+
+function explodeAt(bx: number, by: number, bz: number, radius: number): void {
+  const r2 = radius * radius;
+  const airState = AIR;
+  const changedChunks = new Set<string>();
+  for (let dy = -radius; dy <= radius; dy++) {
+    for (let dz = -radius; dz <= radius; dz++) {
+      for (let dx = -radius; dx <= radius; dx++) {
+        const dSq = dx * dx + dy * dy + dz * dz;
+        if (dSq > r2) continue;
+        const x = bx + dx;
+        const y = by + dy;
+        const z = bz + dz;
+        if (y < 0 || y >= CHUNK_HEIGHT) continue;
+        const s = world.get(x, y, z);
+        if (s === AIR) continue;
+        const id2 = stateId(s);
+        const def2 = registry.get(id2);
+        if (def2.hardness < 0) continue; // bedrock/unbreakable
+        const falloff = 1 - dSq / r2;
+        if (Math.random() > falloff * 0.9) continue;
+        world.set(x, y, z, airState);
+        if (Math.random() < 0.25) {
+          blockParticles.emitBreak(x, y, z, def2.color);
+          const itemId = itemRegistry.byName(def2.name);
+          if (itemId !== undefined) {
+            droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+              itemId,
+              count: 1,
+              color: def2.color,
+            }, 3);
+          }
+        }
+        changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+      }
+    }
+  }
+  for (const k of changedChunks) {
+    const [cxS, czS] = k.split(',');
+    const cx = Number(cxS);
+    const cz = Number(czS);
+    const chunk = world.getChunk(cx, cz);
+    if (chunk) {
+      const light = lightCache.get(lightKey(cx, cz)) ?? null;
+      chunkStore.markDirty(chunk, light);
+    }
+  }
+  screenShake.pulse(0.8);
+  sfx.play('hit');
+  sfx.play('break');
+  audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+  chatInput.addLine(`💥 BOOM`, '#ff6040');
+}
+
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
   const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
   const dropTables: Record<string, readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]> = {
@@ -1190,6 +1284,7 @@ function frame(): void {
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
   blockParticles.tick(dtSec);
+  tickTnt(dtSec);
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
