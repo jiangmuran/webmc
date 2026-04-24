@@ -540,6 +540,12 @@ canvas.addEventListener('mousedown', (e) => {
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
       for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+      blockParticles.emitBreak(
+        Math.floor(result.position.x),
+        Math.floor(result.position.y),
+        Math.floor(result.position.z),
+        [180, 40, 40],
+      );
       playerStats.mobsKilled++;
     }
   } else {
@@ -1442,6 +1448,12 @@ function frame(): void {
           if (result?.killed) {
             spawnMobDrops(result.kind, result.position);
             for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+            blockParticles.emitBreak(
+              Math.floor(result.position.x),
+              Math.floor(result.position.y),
+              Math.floor(result.position.z),
+              [180, 40, 40],
+            );
           }
         } else {
           interaction.setHeld('break');
