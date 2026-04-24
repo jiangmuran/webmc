@@ -88,6 +88,15 @@ export class SurvivalInventory {
     this.craftList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:120px;overflow-y:auto;';
     panel.appendChild(this.craftList);
 
+    const smeltLabel = document.createElement('div');
+    smeltLabel.textContent = 'Smeltable (needs coal)';
+    smeltLabel.style.cssText = 'opacity:0.7;font-size:11px;margin-top:8px;';
+    panel.appendChild(smeltLabel);
+
+    this.smeltList = document.createElement('div');
+    this.smeltList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto;';
+    panel.appendChild(this.smeltList);
+
     const close = document.createElement('button');
     close.textContent = 'Close';
     close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
@@ -100,6 +109,7 @@ export class SurvivalInventory {
 
   private readonly hotGrid: HTMLDivElement;
   private readonly craftList!: HTMLDivElement;
+  private readonly smeltList!: HTMLDivElement;
 
   private renderSlot(stack: { itemId: number; count: number; damage: number } | null): HTMLDivElement {
     const slot = document.createElement('div');
@@ -162,6 +172,74 @@ export class SurvivalInventory {
       this.hotGrid.appendChild(this.renderSlot(s));
     }
     this.refreshCraftList();
+    this.refreshSmeltList();
+  }
+
+  private refreshSmeltList(): void {
+    this.smeltList.textContent = '';
+    const coalId = this.registry.byName('webmc:coal');
+    if (coalId === undefined) return;
+    const hasCoal = this.inventoryCount(coalId) > 0;
+    const pairs: ReadonlyArray<readonly [string, string]> = [
+      ['webmc:raw_beef', 'webmc:cooked_beef'],
+      ['webmc:raw_porkchop', 'webmc:cooked_porkchop'],
+      ['webmc:raw_chicken', 'webmc:cooked_chicken'],
+    ];
+    for (const [inName, outName] of pairs) {
+      const inId = this.registry.byName(inName);
+      const outId = this.registry.byName(outName);
+      if (inId === undefined || outId === undefined) continue;
+      const has = this.inventoryCount(inId) > 0;
+      if (!has || !hasCoal) continue;
+      const btn = document.createElement('button');
+      btn.textContent = `${outName.replace(/^webmc:cooked_/, 'cook ')}`;
+      btn.style.cssText = [
+        'padding:4px 10px',
+        'background:rgba(120,70,30,0.85)',
+        'color:#fff',
+        'border:1px solid rgba(255,255,255,0.2)',
+        'border-radius:3px',
+        'cursor:pointer',
+        'font:inherit',
+        'font-size:11px',
+      ].join(';');
+      btn.addEventListener('click', () => {
+        this.consumeItem(inId, 1);
+        this.consumeItem(coalId, 1);
+        this.inventory.add({ itemId: outId, count: 1, damage: 0 });
+        this.refresh();
+      });
+      this.smeltList.appendChild(btn);
+    }
+    if (!hasCoal) {
+      const hint = document.createElement('div');
+      hint.textContent = 'Need coal to smelt.';
+      hint.style.cssText = 'opacity:0.6;font-size:11px;';
+      this.smeltList.appendChild(hint);
+    }
+  }
+
+  private inventoryCount(itemId: number): number {
+    let n = 0;
+    for (const s of this.inventory.hotbar) if (s?.itemId === itemId) n += s.count;
+    for (const s of this.inventory.main) if (s?.itemId === itemId) n += s.count;
+    return n;
+  }
+
+  private consumeItem(itemId: number, count: number): void {
+    let remaining = count;
+    const go = (slots: (typeof this.inventory.hotbar)[number][]): void => {
+      for (let i = 0; i < slots.length && remaining > 0; i++) {
+        const s = slots[i];
+        if (s?.itemId !== itemId) continue;
+        const take = Math.min(s.count, remaining);
+        const after = s.count - take;
+        slots[i] = after <= 0 ? null : { ...s, count: after };
+        remaining -= take;
+      }
+    };
+    go(this.inventory.hotbar);
+    if (remaining > 0) go(this.inventory.main);
   }
 
   private refreshCraftList(): void {
