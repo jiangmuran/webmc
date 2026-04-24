@@ -422,6 +422,8 @@ export interface MobTickContext {
   playerPos: Vec3 | null;
   damagePlayer: (amount: number) => void;
   onCreeperExplode?: (x: number, y: number, z: number) => void;
+  // True when the mob is in direct sunlight (day + top-of-world exposure).
+  isSunlit?: (x: number, y: number, z: number) => boolean;
 }
 
 export class MobWorld {
@@ -507,6 +509,17 @@ export class MobWorld {
       mob.teleportCooldownSec = Math.max(0, mob.teleportCooldownSec - dtSec);
     if (mob.hurtFlashSec > 0) mob.hurtFlashSec = Math.max(0, mob.hurtFlashSec - dtSec);
     if (mob.fleeingSec > 0) mob.fleeingSec = Math.max(0, mob.fleeingSec - dtSec);
+
+    // Sunlight burn for undead hostile mobs (zombie/skeleton).
+    if (
+      ctx.isSunlit &&
+      (mob.def.kind === 'zombie' || mob.def.kind === 'skeleton') &&
+      ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)
+    ) {
+      mob.health -= 0.5 * dtSec;
+      if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
+      if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+    }
 
     // Passive mobs flee from player while fleeingSec > 0.
     if (mob.fleeingSec > 0 && ctx.playerPos && mob.def.behavior === 'passive') {

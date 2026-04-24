@@ -1849,6 +1849,20 @@ function frame(): void {
     onCreeperExplode: (x, y, z) => {
       explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
     },
+    isSunlit: (x, y, z) => {
+      if (!dayNight.isDay) return false;
+      if (currentWeather === 'thunder') return false;
+      // Check nothing opaque above the mob's head out to the top of the world.
+      const bx = Math.floor(x);
+      const bz = Math.floor(z);
+      const startY = Math.floor(y + 0.5);
+      for (let yy = startY; yy < CHUNK_HEIGHT; yy++) {
+        const s = world.get(bx, yy, bz);
+        if (s === AIR) continue;
+        if (registry.get(stateId(s)).opaque) return false;
+      }
+      return true;
+    },
   });
   mobRenderer.sync(mobWorld.all());
 
