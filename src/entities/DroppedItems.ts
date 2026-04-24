@@ -185,6 +185,21 @@ export class DroppedItemWorld {
     return this.items.size;
   }
 
+  positions(): Iterable<{ x: number; z: number }> {
+    const vals = this.items.values();
+    return {
+      [Symbol.iterator](): Iterator<{ x: number; z: number }> {
+        return {
+          next(): IteratorResult<{ x: number; z: number }> {
+            const n = vals.next();
+            if (n.done) return { done: true, value: undefined };
+            return { done: false, value: { x: n.value.x, z: n.value.z } };
+          },
+        };
+      },
+    };
+  }
+
   clear(): void {
     for (const mesh of this.meshes.values()) {
       this.group.remove(mesh);

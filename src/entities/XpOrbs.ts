@@ -108,6 +108,21 @@ export class XpOrbWorld {
     }
   }
 
+  positions(): Iterable<{ x: number; z: number }> {
+    const vals = this.orbs.values();
+    return {
+      [Symbol.iterator](): Iterator<{ x: number; z: number }> {
+        return {
+          next(): IteratorResult<{ x: number; z: number }> {
+            const n = vals.next();
+            if (n.done) return { done: true, value: undefined };
+            return { done: false, value: { x: n.value.x, z: n.value.z } };
+          },
+        };
+      },
+    };
+  }
+
   get size(): number {
     return this.orbs.size;
   }

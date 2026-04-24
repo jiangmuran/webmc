@@ -1954,6 +1954,12 @@ function frame(): void {
     const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
     markers.push({ x: m.position.x, z: m.position.z, color: isHostile ? '#ff5050' : '#a0ffa0' });
   }
+  for (const p of droppedItems.positions()) {
+    markers.push({ x: p.x, z: p.z, color: '#e0e0a0', size: 1 });
+  }
+  for (const p of xpOrbs.positions()) {
+    markers.push({ x: p.x, z: p.z, color: '#80ff40', size: 1 });
+  }
   if (playerSpawnPoint) {
     markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
   }
