@@ -236,7 +236,7 @@ const playerState = new PlayerState({
     }
   },
   onRespawn: () => {
-    const s = generator.surfaceAt(0, 0) + 4;
+    const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
     fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
   },
 });
@@ -255,7 +255,7 @@ if (savedPlayer) {
   fp.yaw = savedPlayer.yaw;
   fp.pitch = savedPlayer.pitch;
 } else {
-  const spawnHeight = generator.surfaceAt(0, 0) + 4;
+  const spawnHeight = Math.max(generator.surfaceAt(0, 0), 62) + 4;
   fp.position.set(worldMeta.spawn.x, spawnHeight, worldMeta.spawn.z);
   fp.yaw = 0;
 }
