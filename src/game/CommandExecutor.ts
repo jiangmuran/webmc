@@ -25,6 +25,7 @@ export interface CommandContext {
   killAllMobs?: () => number;
   particle?: (x: number, y: number, z: number) => void;
   listAchievements?: () => ReadonlyArray<{ title: string; unlocked: boolean }>;
+  setDifficulty?: (level: 'peaceful' | 'easy' | 'normal' | 'hard') => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -85,6 +86,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'killall') {
     const n = ctx.killAllMobs?.() ?? 0;
     ctx.broadcast(`Removed ${String(n)} mobs.`, '#80ff80');
+    return;
+  }
+  if (head === 'difficulty') {
+    const level = args[0]?.toLowerCase();
+    if (level === 'peaceful' || level === 'easy' || level === 'normal' || level === 'hard') {
+      ctx.setDifficulty?.(level);
+      ctx.broadcast(`Difficulty: ${level}`, '#80ff80');
+    } else {
+      ctx.broadcast('Usage: /difficulty <peaceful|easy|normal|hard>', '#ff8080');
+    }
     return;
   }
   if (head === 'achievements' || head === 'ach') {

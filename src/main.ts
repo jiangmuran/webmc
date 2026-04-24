@@ -334,6 +334,12 @@ let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let autoWeatherEnabled = true;
 let minimapVisible = true;
+let mobDamageMultiplier = 1;
+void persistDB.getMeta('difficulty').then((saved) => {
+  if (saved === 'peaceful') mobDamageMultiplier = 0;
+  else if (saved === 'easy') mobDamageMultiplier = 0.5;
+  else if (saved === 'hard') mobDamageMultiplier = 1.5;
+});
 let sprintDustAccum = 0;
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
@@ -824,6 +830,18 @@ const chatInput = new ChatInput(appEl, {
         },
         listAchievements: () =>
           achievements.map((a) => ({ title: a.title, unlocked: achievedSet.has(a.id) })),
+        setDifficulty: (level) => {
+          mobDamageMultiplier = level === 'peaceful' ? 0 : level === 'easy' ? 0.5 : level === 'hard' ? 1.5 : 1;
+          if (level === 'peaceful') {
+            // Despawn all hostile mobs.
+            const ids: number[] = [];
+            for (const m of mobWorld.all()) {
+              if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') ids.push(m.id);
+            }
+            for (const id of ids) mobWorld.remove(id);
+          }
+          void persistDB.setMeta('difficulty', level);
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
@@ -1957,8 +1975,9 @@ function frame(): void {
     isSolid,
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
     damagePlayer: (amt) => {
-      playerState.takeDamage({ amount: amt, source: 'mob' });
-      if (!playerState.invulnerable && amt > 0) sfx.play('hit');
+      const scaled = amt * mobDamageMultiplier;
+      if (scaled > 0) playerState.takeDamage({ amount: scaled, source: 'mob' });
+      if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
     },
     onCreeperExplode: (x, y, z) => {
       explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
