@@ -326,6 +326,7 @@ const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
+let sprintDustAccum = 0;
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
@@ -1383,6 +1384,19 @@ function frame(): void {
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
+  // Sprint dust particles
+  if (fp.input.sprint && fp.onGround && !fp.input.fly && horizSpeed > 3) {
+    sprintDustAccum += dtSec;
+    if (sprintDustAccum > 0.15) {
+      sprintDustAccum = 0;
+      const groundY = Math.floor(fp.position.y - 0.95);
+      const groundBlock = world.get(Math.floor(fp.position.x), groundY, Math.floor(fp.position.z));
+      if (groundBlock !== AIR) {
+        const gDef = registry.get(stateId(groundBlock));
+        blockParticles.emitPlace(fp.position.x, fp.position.y - 0.85, fp.position.z, gDef.color);
+      }
+    }
+  }
   dayNight.tick(dtSec);
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
