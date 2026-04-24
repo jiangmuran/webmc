@@ -1376,11 +1376,12 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
   const cz = Math.floor(bz / 16);
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
-    // Decide scope: if this block emits light, rebuild neighbors too;
-    // otherwise just this chunk. Keeps edits cheap for common placements.
-    const emits =
-      block !== 0 && registry.get(block).lightEmission > 0;
-    const affected: { cx: number; cz: number }[] = emits
+    // Decide scope: neighbor rebuild only if the block emits light or we're
+    // breaking (block=0, might have removed a light source). Keeps common
+    // placements cheap (1 chunk rebuild instead of 5).
+    const emitsNew = block !== 0 && registry.get(block).lightEmission > 0;
+    const wasBreak = block === 0;
+    const affected: { cx: number; cz: number }[] = emitsNew || wasBreak
       ? [
           { cx, cz },
           { cx: cx - 1, cz },
