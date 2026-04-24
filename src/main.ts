@@ -875,6 +875,9 @@ function frame(): void {
     clouds.mesh.visible = !lowTier;
     stars.points.visible = !lowTier;
     if (lowTier && rain.isActive()) rain.setActive(false);
+    const basePx = Math.min(window.devicePixelRatio, 1.5);
+    const targetPx = lowTier ? Math.min(basePx, 1.0) : basePx;
+    if (Math.abs(renderer.getPixelRatio() - targetPx) > 0.01) renderer.setPixelRatio(targetPx);
   }
 
   if (touch) {
