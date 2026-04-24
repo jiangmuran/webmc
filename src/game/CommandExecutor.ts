@@ -21,6 +21,7 @@ export interface CommandContext {
   summon?: (kind: string, x: number, y: number, z: number) => boolean;
   openChest?: () => void;
   teleportSpawn?: () => void;
+  seed?: () => number;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -42,6 +43,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
     ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
     ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
+    ctx.broadcast('/chest | /spawn | /seed', '#cccccc');
     ctx.broadcast('/stats | /save', '#cccccc');
     return;
   }
@@ -71,6 +73,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'spawn') {
     ctx.teleportSpawn?.();
     ctx.broadcast('Teleported to spawn.', '#80ff80');
+    return;
+  }
+  if (head === 'seed') {
+    if (ctx.seed) ctx.broadcast(`Seed: ${String(ctx.seed())}`, '#cccccc');
     return;
   }
   if (head === 'summon') {

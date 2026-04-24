@@ -723,6 +723,7 @@ const chatInput = new ChatInput(appEl, {
             fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
           }
         },
+        seed: () => WORLD_SEED,
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
