@@ -142,6 +142,10 @@ export class ResourcePackLoader {
       );
       this.renderEntryList(blockTextures, itemTextures);
       this.cb.onLoaded(pack);
+      // Auto-dismiss after a short delay so the user sees the success line.
+      setTimeout(() => {
+        this.hide();
+      }, 1500);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       this.setStatus(`Error: ${msg}`, '#ff6060');
