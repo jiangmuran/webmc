@@ -1017,6 +1017,8 @@ function frame(): void {
 
   // Third-person camera modes orbit around the player's eye position.
   playerAvatar.setPose(fp.position.x, fp.position.y - 0.8, fp.position.z, fp.yaw + Math.PI);
+  const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+  playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
   if (cameraMode !== 'fp') {
     const look = fp.lookVector();
     const back = cameraMode === 'tp_back' ? -3 : 3;

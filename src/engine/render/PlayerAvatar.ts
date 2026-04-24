@@ -2,6 +2,11 @@ import * as THREE from 'three';
 
 export class PlayerAvatar {
   readonly group: THREE.Group;
+  private readonly leftArm: THREE.Group;
+  private readonly rightArm: THREE.Group;
+  private readonly leftLeg: THREE.Group;
+  private readonly rightLeg: THREE.Group;
+  private walkPhase = 0;
 
   constructor() {
     this.group = new THREE.Group();
@@ -17,23 +22,22 @@ export class PlayerAvatar {
     head.position.y = 0.6;
     this.group.add(head);
 
-    const leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.72, 0.3), shirtMat);
-    leftArm.position.set(-0.44, -0.04, 0);
-    this.group.add(leftArm);
-
-    const rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.72, 0.3), shirtMat);
-    rightArm.position.set(0.44, -0.04, 0);
-    this.group.add(rightArm);
-
-    const leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.72, 0.3), legsMat);
-    leftLeg.position.set(-0.16, -0.72, 0);
-    this.group.add(leftLeg);
-
-    const rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.72, 0.3), legsMat);
-    rightLeg.position.set(0.16, -0.72, 0);
-    this.group.add(rightLeg);
+    this.leftArm = this.makeLimb(new THREE.BoxGeometry(0.28, 0.72, 0.3), shirtMat, -0.44, 0.24, 0);
+    this.rightArm = this.makeLimb(new THREE.BoxGeometry(0.28, 0.72, 0.3), shirtMat, 0.44, 0.24, 0);
+    this.leftLeg = this.makeLimb(new THREE.BoxGeometry(0.3, 0.72, 0.3), legsMat, -0.16, -0.44, 0);
+    this.rightLeg = this.makeLimb(new THREE.BoxGeometry(0.3, 0.72, 0.3), legsMat, 0.16, -0.44, 0);
 
     this.group.visible = false;
+  }
+
+  private makeLimb(geom: THREE.BoxGeometry, mat: THREE.Material, px: number, py: number, pz: number): THREE.Group {
+    const pivot = new THREE.Group();
+    pivot.position.set(px, py, pz);
+    const mesh = new THREE.Mesh(geom, mat);
+    mesh.position.y = -0.36;
+    pivot.add(mesh);
+    this.group.add(pivot);
+    return pivot;
   }
 
   setVisible(v: boolean): void {
@@ -43,5 +47,22 @@ export class PlayerAvatar {
   setPose(x: number, y: number, z: number, yaw: number): void {
     this.group.position.set(x, y, z);
     this.group.rotation.y = yaw;
+  }
+
+  animate(dtSec: number, walkSpeed: number): void {
+    if (walkSpeed > 0.4) {
+      this.walkPhase += dtSec * (6 + walkSpeed * 0.5);
+      const swing = Math.sin(this.walkPhase) * Math.min(1, walkSpeed / 5);
+      this.leftArm.rotation.x = swing * 0.8;
+      this.rightArm.rotation.x = -swing * 0.8;
+      this.leftLeg.rotation.x = -swing * 0.9;
+      this.rightLeg.rotation.x = swing * 0.9;
+    } else {
+      this.walkPhase = 0;
+      this.leftArm.rotation.x = 0;
+      this.rightArm.rotation.x = 0;
+      this.leftLeg.rotation.x = 0;
+      this.rightLeg.rotation.x = 0;
+    }
   }
 }
