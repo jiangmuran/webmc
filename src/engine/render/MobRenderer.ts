@@ -41,6 +41,28 @@ interface MobVisual {
   bodyMat: THREE.MeshBasicMaterial;
   headMat: THREE.MeshBasicMaterial;
   headMesh: THREE.Mesh;
+  hpBar: THREE.Sprite;
+  hpMat: THREE.SpriteMaterial;
+  lastHpRatio: number;
+}
+
+function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
+  const w = 64;
+  const h = 8;
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  const ctx = c.getContext('2d');
+  if (ctx) {
+    ctx.fillStyle = '#300';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#f33';
+    ctx.fillRect(0, 0, Math.round(w * Math.max(0, Math.min(1, ratio))), h);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, w, 1);
+    ctx.fillRect(0, h - 1, w, 1);
+  }
+  return new THREE.CanvasTexture(c);
 }
 
 export class MobRenderer {
@@ -92,9 +114,21 @@ export class MobRenderer {
         const headFront = mob.def.aabb.halfZ * 0.7;
         head.position.set(0, headOffset, -headFront);
         group.add(head);
-        this.visuals.set(mob.id, { group, bodyMat, headMat, headMesh: head });
+        const hpMat = new THREE.SpriteMaterial({
+          map: makeHpBarTexture(1),
+          transparent: true,
+          depthTest: true,
+          depthWrite: false,
+          opacity: 0,
+        });
+        const hpBar = new THREE.Sprite(hpMat);
+        hpBar.scale.set(1.2, 0.15, 1);
+        hpBar.position.set(0, mob.def.aabb.halfY + 0.6, 0);
+        group.add(hpBar);
+        const visual: MobVisual = { group, bodyMat, headMat, headMesh: head, hpBar, hpMat, lastHpRatio: 1 };
+        this.visuals.set(mob.id, visual);
         this.group.add(group);
-        vis = { group, bodyMat, headMat, headMesh: head };
+        vis = visual;
       }
       vis.group.position.set(mob.position.x, mob.position.y, mob.position.z);
       vis.group.rotation.y = mob.yaw;
@@ -121,11 +155,26 @@ export class MobRenderer {
         vis.bodyMat.color.setHex(COLORS[mob.def.kind]);
         vis.headMat.color.setHex(COLORS[mob.def.kind]);
       }
+
+      const hpRatio = Math.max(0, mob.health / mob.def.maxHealth);
+      const showBar = hpRatio < 1 && mob.dyingSec === 0;
+      if (showBar) {
+        if (Math.abs(vis.lastHpRatio - hpRatio) > 0.02 || vis.hpMat.opacity === 0) {
+          if (vis.hpMat.map) vis.hpMat.map.dispose();
+          vis.hpMat.map = makeHpBarTexture(hpRatio);
+          vis.lastHpRatio = hpRatio;
+        }
+        vis.hpMat.opacity = 0.92;
+      } else {
+        vis.hpMat.opacity = 0;
+      }
     }
     for (const [id, vis] of this.visuals) {
       if (seen.has(id)) continue;
       vis.bodyMat.dispose();
       vis.headMat.dispose();
+      vis.hpMat.map?.dispose();
+      vis.hpMat.dispose();
       this.group.remove(vis.group);
       this.visuals.delete(id);
     }
@@ -135,6 +184,8 @@ export class MobRenderer {
     for (const vis of this.visuals.values()) {
       vis.bodyMat.dispose();
       vis.headMat.dispose();
+      vis.hpMat.map?.dispose();
+      vis.hpMat.dispose();
       this.group.remove(vis.group);
     }
     this.visuals.clear();
