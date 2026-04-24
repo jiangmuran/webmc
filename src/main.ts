@@ -552,6 +552,7 @@ const toast = new Toast(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
+  toast.show('Respawned', '#80ffa0', 1200);
 });
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
