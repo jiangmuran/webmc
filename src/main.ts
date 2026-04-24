@@ -1645,6 +1645,10 @@ function frame(): void {
   if (fp.inFluid === 'water' && playerState.breath < 2) {
     hurtVignette.pulse(0.15);
   }
+  // Residual lava fire: orange vignette while burning outside lava
+  if (playerState.fireRemainingSec > 0 && fp.inFluid !== 'lava') {
+    hurtVignette.pulse(Math.min(0.4, playerState.fireRemainingSec * 0.08));
+  }
   if (fp.inFluid !== lastInFluid) {
     if (fp.inFluid === 'water') sfx.play('step');
     else if (fp.inFluid === 'lava') sfx.play('hit');
