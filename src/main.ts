@@ -689,6 +689,14 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
   onEat: (_id, hungerRestore, saturation) => {
     playerState.eat(hungerRestore, saturation);
     sfx.play('click');
+    // Small burst of brownish particles in front of player.
+    const look = fp.lookVector();
+    blockParticles.emitPlace(
+      fp.position.x + look.x * 0.6,
+      fp.position.y + look.y * 0.5,
+      fp.position.z + look.z * 0.6,
+      [180, 140, 80],
+    );
   },
 }, recipeRegistry);
 
