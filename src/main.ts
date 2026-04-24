@@ -478,6 +478,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     loader.setViewRadius(v.viewDistance);
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
     fp.invertY = v.invertY;
+    fp.sprintToggle = v.sprintToggle;
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);

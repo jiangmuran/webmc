@@ -66,6 +66,7 @@ export class FirstPersonCamera {
   private bobPhase = 0;
   bobEnabled = true;
   invertY = false;
+  sprintToggle = false;
   private airborneStartY: number | null = null;
   lastLandFallBlocks = 0;
 
@@ -164,7 +165,11 @@ export class FirstPersonCamera {
         break;
       case 'ControlLeft':
       case 'ControlRight':
-        this.input.sprint = down;
+        if (this.sprintToggle) {
+          if (down) this.input.sprint = !this.input.sprint;
+        } else {
+          this.input.sprint = down;
+        }
         break;
       default:
         break;
