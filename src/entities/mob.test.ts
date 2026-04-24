@@ -52,10 +52,13 @@ describe('MobWorld', () => {
     expect(totalDamage).toBeGreaterThan(0);
   });
 
-  it('damage removes mob when health ≤ 0', () => {
+  it('damage ticks mob to removal when health ≤ 0 (via dying animation)', () => {
     const m = new MobWorld();
     const pig = m.spawn('pig', { x: 0, y: 50, z: 0 });
-    m.damage(pig.id, 20);
+    const res = m.damage(pig.id, 20);
+    expect(res?.killed).toBe(true);
+    // Dying animation runs on next ticks; force it to complete.
+    m.tick(1, { isSolid: () => false, playerPos: null, damagePlayer: () => undefined });
     expect(m.size).toBe(0);
   });
 

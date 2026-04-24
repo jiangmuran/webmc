@@ -71,6 +71,12 @@ export class MobRenderer {
       }
       mesh.position.set(mob.position.x, mob.position.y, mob.position.z);
       mesh.rotation.y = mob.yaw;
+      if (mob.dyingSec > 0) {
+        const s = mob.dyingSec / 0.35;
+        mesh.scale.setScalar(Math.max(0.01, s));
+      } else {
+        mesh.scale.setScalar(1);
+      }
       const mat = mesh.material as THREE.MeshBasicMaterial;
       if (mob.hurtFlashSec > 0) {
         const base = COLORS[mob.def.kind];

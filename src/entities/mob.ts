@@ -405,6 +405,8 @@ export interface Mob {
   teleportCooldownSec: number;
   // Hurt flash timer — renderer tints mob red while > 0.
   hurtFlashSec: number;
+  // Death animation: set when killed; renderer scales down over dyingSec.
+  dyingSec: number;
 }
 
 const GRAVITY = 32;
@@ -437,6 +439,7 @@ export class MobWorld {
       fuseSec: 0,
       teleportCooldownSec: 0,
       hurtFlashSec: 0,
+      dyingSec: 0,
     };
     this.mobs.set(mob.id, mob);
     return mob;
@@ -456,14 +459,13 @@ export class MobWorld {
 
   damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
     const m = this.mobs.get(id);
-    if (!m) return null;
+    if (!m || m.dyingSec > 0) return null;
     m.health -= amount;
     m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
     if (m.health <= 0) {
-      const snapshot = { killed: true, kind: m.def.kind, position: { ...m.position } };
-      this.mobs.delete(id);
-      return snapshot;
+      m.dyingSec = 0.35;
+      return { killed: true, kind: m.def.kind, position: { ...m.position } };
     }
     return { killed: false, kind: m.def.kind, position: { ...m.position } };
   }
@@ -486,6 +488,11 @@ export class MobWorld {
   }
 
   private tickMob(mob: Mob, dtSec: number, ctx: MobTickContext): void {
+    if (mob.dyingSec > 0) {
+      mob.dyingSec = Math.max(0, mob.dyingSec - dtSec);
+      if (mob.dyingSec === 0) this.mobs.delete(mob.id);
+      return;
+    }
     if (mob.attackCooldownSec > 0)
       mob.attackCooldownSec = Math.max(0, mob.attackCooldownSec - dtSec);
     if (mob.teleportCooldownSec > 0)
