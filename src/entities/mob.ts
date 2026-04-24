@@ -511,7 +511,12 @@ export class MobWorld {
         const nz = dz / len;
         mob.velocity.x = nx * mob.def.walkSpeed;
         mob.velocity.z = nz * mob.def.walkSpeed;
-        mob.yaw = Math.atan2(nx, nz);
+        const targetYaw = Math.atan2(nx, nz);
+        const twoPi = Math.PI * 2;
+        let dYaw = targetYaw - mob.yaw;
+        while (dYaw > Math.PI) dYaw -= twoPi;
+        while (dYaw < -Math.PI) dYaw += twoPi;
+        mob.yaw += dYaw * Math.min(1, dtSec * 6);
 
         if (mob.def.behavior === 'creeper') {
           if (distSq <= mob.def.attackRangeSq) {
