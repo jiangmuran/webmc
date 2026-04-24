@@ -236,8 +236,12 @@ const playerState = new PlayerState({
     }
   },
   onRespawn: () => {
-    const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
-    fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+    if (playerSpawnPoint) {
+      fp.position.set(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+    } else {
+      const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
+      fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+    }
   },
 });
 
@@ -452,6 +456,20 @@ const interaction = new InteractionController(
         igniteTnt(bx, by, bz);
         return true;
       }
+      if (def.name === 'webmc:bed') {
+        if (!dayNight.isDay) {
+          dayNight.setTimeOfDayTicks(1000);
+          playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
+          toast.show(`Spawn set. Day ${String(++dayCounter)}`, '#ffb0c0');
+          chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
+          sfx.play('click');
+        } else {
+          playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
+          toast.show('Spawn set', '#ffb0c0', 1200);
+          sfx.play('click');
+        }
+        return true;
+      }
       if (def.name === 'webmc:crafting_table' || def.name === 'webmc:furnace') {
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
@@ -594,6 +612,7 @@ let lastPlayerHealth = 20;
 let lastXpLevel = 0;
 let lastIsDay = true;
 let dayCounter = 1;
+let playerSpawnPoint: { x: number; y: number; z: number } | null = null;
 let lastInFluid: 'water' | 'lava' | null = null;
 
 const chatInput = new ChatInput(appEl, {

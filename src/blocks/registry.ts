@@ -332,6 +332,16 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
     // Utility blocks (interactable).
     {
+      name: 'webmc:bed',
+      solid: true,
+      opaque: true,
+      top: [200, 40, 48] as RGB,
+      side: [180, 28, 36] as RGB,
+      bottom: [110, 80, 60] as RGB,
+      color: [200, 40, 48] as RGB,
+      hardness: 0.2,
+    },
+    {
       name: 'webmc:tnt',
       top: [220, 60, 60] as RGB,
       side: [200, 50, 50] as RGB,
