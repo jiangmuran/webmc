@@ -326,9 +326,19 @@ const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
+let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   rain.setActive(w !== 'clear');
+}
+
+let lightningFlashSec = 0;
+function lightningFlash(): void {
+  lightningFlashSec = 0.18;
+  sfx.play('hit');
+  audio.play3D('break', fp.position.x + (Math.random() - 0.5) * 30, fp.position.y, fp.position.z + (Math.random() - 0.5) * 30);
+  chatInput.addLine('⚡ Lightning strikes nearby!', '#e0e0ff');
+  screenShake.pulse(0.35);
 }
 
 const mesherClient = createMesherClient();
@@ -1320,13 +1330,24 @@ function frame(): void {
     }
     weatherTimer = 180 + Math.random() * 240;
   }
+  if (currentWeather === 'thunder') {
+    lightningTimer -= dtSec;
+    if (lightningTimer <= 0) {
+      lightningFlash();
+      lightningTimer = 20 + Math.random() * 40;
+    }
+  } else {
+    lightningTimer = 15 + Math.random() * 30;
+  }
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
-  const weatherDimming = currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0;
+  if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
+  const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
+  const weatherDimming = (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   const skyColor = tmpSkyColor;
