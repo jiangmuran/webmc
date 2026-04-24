@@ -330,6 +330,7 @@ const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let sprintDustAccum = 0;
+let lavaEmberAccum = 0;
 const playerStats = {
   blocksBroken: 0,
   blocksPlaced: 0,
@@ -1527,6 +1528,30 @@ function frame(): void {
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
   blockParticles.tick(dtSec);
   tickTnt(dtSec);
+  // Lava ember: scan nearby (5×3×5) for lava and emit drifting orange embers.
+  lavaEmberAccum += dtSec;
+  if (lavaEmberAccum > 0.18) {
+    lavaEmberAccum = 0;
+    const lavaId = registry.byName('webmc:lava');
+    if (lavaId !== undefined) {
+      const px = Math.floor(fp.position.x);
+      const py = Math.floor(fp.position.y);
+      const pz = Math.floor(fp.position.z);
+      let emitted = 0;
+      for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
+        for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
+          for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
+            const s = world.get(px + dx, py + dy, pz + dz);
+            if (s === AIR) continue;
+            if (stateId(s) !== lavaId) continue;
+            if (Math.random() > 0.05) continue;
+            blockParticles.emitPlace(px + dx + 0.5, py + dy + 1.1, pz + dz + 0.5, [255, 160, 60]);
+            emitted++;
+          }
+        }
+      }
+    }
+  }
   weatherTimer -= dtSec;
   if (weatherTimer <= 0) {
     const r = Math.random();
