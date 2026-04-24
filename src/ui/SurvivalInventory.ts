@@ -1,5 +1,7 @@
 import type { Inventory } from '@/items/Inventory';
 import type { ItemRegistry } from '@/items/item';
+import type { Recipe, RecipeRegistry } from '@/items/recipe';
+import { attemptCraft, hasAllIngredients } from '@/items/CraftingHelper';
 
 export interface SurvivalInventoryCallbacks {
   onClose: () => void;
@@ -16,6 +18,7 @@ export class SurvivalInventory {
     private readonly inventory: Inventory,
     private readonly registry: ItemRegistry,
     cb: SurvivalInventoryCallbacks,
+    private readonly recipes?: RecipeRegistry,
   ) {
     this.cb = cb;
     this.root = document.createElement('div');
@@ -74,6 +77,15 @@ export class SurvivalInventory {
     panel.appendChild(hotGrid);
     this.hotGrid = hotGrid;
 
+    const craftLabel = document.createElement('div');
+    craftLabel.textContent = 'Craftable';
+    craftLabel.style.cssText = 'opacity:0.7;font-size:11px;margin-top:8px;';
+    panel.appendChild(craftLabel);
+
+    this.craftList = document.createElement('div');
+    this.craftList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:120px;overflow-y:auto;';
+    panel.appendChild(this.craftList);
+
     const close = document.createElement('button');
     close.textContent = 'Close';
     close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
@@ -85,6 +97,7 @@ export class SurvivalInventory {
   }
 
   private readonly hotGrid: HTMLDivElement;
+  private readonly craftList!: HTMLDivElement;
 
   private renderSlot(stack: { itemId: number; count: number; damage: number } | null): HTMLDivElement {
     const slot = document.createElement('div');
@@ -126,6 +139,44 @@ export class SurvivalInventory {
     for (const s of this.inventory.hotbar) {
       this.hotGrid.appendChild(this.renderSlot(s));
     }
+    this.refreshCraftList();
+  }
+
+  private refreshCraftList(): void {
+    this.craftList.textContent = '';
+    if (!this.recipes) return;
+    const all = this.recipes.all();
+    for (const recipe of all) {
+      if (!hasAllIngredients(this.inventory, recipe)) continue;
+      this.craftList.appendChild(this.renderRecipeButton(recipe));
+    }
+    if (this.craftList.childElementCount === 0) {
+      const hint = document.createElement('div');
+      hint.textContent = 'No recipes craftable yet.';
+      hint.style.cssText = 'opacity:0.6;font-size:11px;';
+      this.craftList.appendChild(hint);
+    }
+  }
+
+  private renderRecipeButton(recipe: Recipe): HTMLButtonElement {
+    const b = document.createElement('button');
+    const outDef = this.registry.get(recipe.result.itemId);
+    const label = outDef.name.replace(/^webmc:/, '');
+    b.textContent = recipe.result.count > 1 ? `${label} ×${String(recipe.result.count)}` : label;
+    b.style.cssText = [
+      'padding:4px 10px',
+      'background:rgba(60,90,60,0.85)',
+      'color:#fff',
+      'border:1px solid rgba(255,255,255,0.2)',
+      'border-radius:3px',
+      'cursor:pointer',
+      'font:inherit',
+      'font-size:11px',
+    ].join(';');
+    b.addEventListener('click', () => {
+      if (attemptCraft(this.inventory, recipe)) this.refresh();
+    });
+    return b;
   }
 
   show(): void {

@@ -26,6 +26,8 @@ import { RoomClient } from './net/RoomClient';
 import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { BlockDropRegistry } from './items/block-drops';
+import { RecipeRegistry } from './items/recipe';
+import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
@@ -164,6 +166,38 @@ itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:spider_eye', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:stick', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:coal', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:iron_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:gold_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:diamond', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:wheat', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:cocoa_beans', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
+itemRegistry.register({ name: 'webmc:milk_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:wood_pickaxe', maxStack: 1, durability: 60 });
+itemRegistry.register({ name: 'webmc:stone_pickaxe', maxStack: 1, durability: 132 });
+itemRegistry.register({ name: 'webmc:iron_pickaxe', maxStack: 1, durability: 251 });
+itemRegistry.register({ name: 'webmc:gold_pickaxe', maxStack: 1, durability: 33 });
+itemRegistry.register({ name: 'webmc:diamond_pickaxe', maxStack: 1, durability: 1562 });
+itemRegistry.register({ name: 'webmc:wood_sword', maxStack: 1, durability: 60 });
+itemRegistry.register({ name: 'webmc:stone_sword', maxStack: 1, durability: 132 });
+itemRegistry.register({ name: 'webmc:iron_sword', maxStack: 1, durability: 251 });
+itemRegistry.register({ name: 'webmc:diamond_sword', maxStack: 1, durability: 1562 });
+itemRegistry.register({ name: 'webmc:iron_axe', maxStack: 1, durability: 251 });
+itemRegistry.register({ name: 'webmc:iron_shovel', maxStack: 1, durability: 251 });
+itemRegistry.register({ name: 'webmc:bread', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
+itemRegistry.register({ name: 'webmc:cookie', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({ name: 'webmc:cake', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:torch', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:crafting_table', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:furnace', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:chest', maxStack: 64, durability: 0 });
+
+const recipeRegistry = new RecipeRegistry();
+const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
+if (import.meta.env.DEV) console.info(`[webmc] recipes: ${String(recipesRegistered)}`);
 
 const dropRegistry = new BlockDropRegistry();
 for (const [blockId, itemId] of blockToItem) {
@@ -520,7 +554,7 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
   },
-});
+}, recipeRegistry);
 
 const creativeInv = new CreativeInventory(appEl, registry, {
   onPick: (entry) => {
