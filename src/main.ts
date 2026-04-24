@@ -45,6 +45,8 @@ import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
 import { BlockParticles } from './engine/render/BlockParticles';
+import { Clouds } from './engine/render/Clouds';
+import { SkyCelestials } from './engine/render/SkyCelestials';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
@@ -211,7 +213,13 @@ const blockOutline = new BlockOutline();
 scene.add(blockOutline.group);
 const blockParticles = new BlockParticles(600);
 scene.add(blockParticles.group);
+const clouds = new Clouds();
+scene.add(clouds.mesh);
+const sky = new SkyCelestials();
+sky.addTo(scene);
+let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
+  currentWeather = w;
   rain.setActive(w !== 'clear');
 }
 
@@ -739,6 +747,8 @@ function frame(): void {
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
   blockParticles.tick(dtSec);
+  clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
+  sky.update(fp.position, dayNight.sunDir);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
@@ -770,6 +780,12 @@ function frame(): void {
 
   playerState.sprinting = fp.input.sprint;
   playerState.tick(dtSec, { inFluid: fp.inFluid });
+
+  if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure')) {
+    const dmg = fp.lastLandFallBlocks - 3;
+    playerState.takeDamage({ amount: dmg, source: 'fall' });
+  }
+  fp.lastLandFallBlocks = 0;
 
   if (playerState.health < lastPlayerHealth - 0.05) {
     const delta = lastPlayerHealth - playerState.health;

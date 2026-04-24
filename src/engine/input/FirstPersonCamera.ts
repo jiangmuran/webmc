@@ -65,6 +65,8 @@ export class FirstPersonCamera {
   private sprintFovBoost = 0;
   private bobPhase = 0;
   bobEnabled = true;
+  private airborneStartY: number | null = null;
+  lastLandFallBlocks = 0;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -283,11 +285,25 @@ export class FirstPersonCamera {
         this.velocity.z = dvz / Math.max(dtSec, 0.0001);
       }
 
+      const wasOnGround = this.onGround;
       const result = sweepMove(this.position, this.opts.box, { x: dvx, y: dvy, z: dvz }, opts.isSolid);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
       this.onGround = result.onGround;
+      if (!wasOnGround && this.onGround && this.airborneStartY !== null) {
+        const fallDistance = this.airborneStartY - this.position.y;
+        if (fallDistance > 0 && this.inFluid === null) {
+          this.lastLandFallBlocks = fallDistance;
+        }
+        this.airborneStartY = null;
+      } else if (!this.onGround) {
+        if (this.airborneStartY === null || this.position.y > this.airborneStartY) {
+          this.airborneStartY = this.position.y;
+        }
+      } else if (this.onGround) {
+        this.airborneStartY = null;
+      }
     }
 
     const sneakDrop = this.input.sneak && this.onGround ? 0.3 : 0;
