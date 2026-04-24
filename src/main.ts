@@ -555,6 +555,15 @@ canvas.addEventListener('mousedown', (e) => {
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
+    // Knockback: push mob away from player along horizontal look vector.
+    const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+    if (mobHit) {
+      const look = fp.lookVector();
+      const kbMag = 5;
+      mobHit.velocity.x += look.x * kbMag;
+      mobHit.velocity.z += look.z * kbMag;
+      mobHit.velocity.y = Math.max(mobHit.velocity.y, 3);
+    }
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
       for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
