@@ -150,8 +150,9 @@ export class InteractionController {
     this.lastActionAt = nowMs;
     const hit = this.castRay();
     if (!hit || hit.distance === 0) return;
-    if (this.held === 'place' && this.selectedBlock !== AIR) {
+    if (this.held === 'place') {
       if (this.opts.onInteract && this.opts.onInteract(hit.bx, hit.by, hit.bz)) return;
+      if (this.selectedBlock === AIR) return;
       const n = faceNormal(hit.face);
       const tx = hit.bx + n[0];
       const ty = hit.by + n[1];
