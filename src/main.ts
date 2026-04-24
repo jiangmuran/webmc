@@ -48,6 +48,7 @@ import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
 import { BlockParticles } from './engine/render/BlockParticles';
 import { Clouds } from './engine/render/Clouds';
+import { FirstPersonHand } from './engine/render/FirstPersonHand';
 import { ScreenShake } from './engine/render/ScreenShake';
 import { SkyCelestials } from './engine/render/SkyCelestials';
 import { Stars } from './engine/render/Stars';
@@ -220,6 +221,9 @@ scene.add(blockParticles.group);
 const clouds = new Clouds();
 scene.add(clouds.mesh);
 const screenShake = new ScreenShake();
+const hand = new FirstPersonHand();
+camera.add(hand.group);
+scene.add(camera);
 let lastTouchPrimary = false;
 const sky = new SkyCelestials();
 sky.addTo(scene);
@@ -254,6 +258,7 @@ const interaction = new InteractionController(
       const drops = dropRegistry.drops(prevBlockId, undefined, 99);
       for (const s of drops) inventory.add(s);
       touchWorldEdit(bx, by, bz, 0);
+      hand.swing();
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
@@ -265,6 +270,7 @@ const interaction = new InteractionController(
         blockParticles.emitPlace(bx, by, bz, def.color);
       }
       touchWorldEdit(bx, by, bz, blockId);
+      hand.swing();
     },
   },
 );
@@ -299,6 +305,7 @@ canvas.addEventListener('mousedown', (e) => {
     sfx.play('hit');
     interaction.setHeld(null);
     screenShake.pulse(0.15);
+    hand.swing();
   }
 });
 
@@ -834,10 +841,15 @@ function frame(): void {
   const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad);
 
   const sel = hotbar.selected;
-  if (sel) interaction.selectedBlock = sel.state;
+  if (sel) {
+    interaction.selectedBlock = sel.state;
+    hand.setHeldBlockColor(sel.color);
+  }
+  hand.update(dtSec);
   interaction.tick(now);
 
   interaction.tickBreak(dtSec);
+  if (interaction.breaking && !hand.isSwinging) hand.swing();
   const aim = interaction.castRay();
   if (aim && aim.distance > 0) {
     const progress =
