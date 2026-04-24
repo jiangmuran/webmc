@@ -52,6 +52,8 @@ export class FirstPersonCamera {
   pitch = 0;
   onGround = false;
   inFluid: FluidKind | null = null;
+  inputBlocked = false;
+  passThroughBlocks = false;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -67,13 +69,14 @@ export class FirstPersonCamera {
     this.opts = { ...DEFAULTS, ...opts };
 
     this.keyDown = (e) => {
+      if (this.inputBlocked) return;
       this.handleKey(e.code, true);
     };
     this.keyUp = (e) => {
       this.handleKey(e.code, false);
     };
     this.mouseMove = (e) => {
-      if (!this.locked) return;
+      if (!this.locked || this.inputBlocked) return;
       this.yaw -= e.movementX * this.opts.lookSensitivity;
       this.pitch -= e.movementY * this.opts.lookSensitivity;
       this.pitch = Math.max(-PITCH_MAX, Math.min(PITCH_MAX, this.pitch));
@@ -193,8 +196,15 @@ export class FirstPersonCamera {
     } else {
       const submerged = this.inFluid !== null;
       const drag = submerged ? (this.inFluid === 'water' ? 0.8 : 0.5) : 1;
-      this.velocity.x = hx * (submerged ? 0.5 : 1);
-      this.velocity.z = hz * (submerged ? 0.5 : 1);
+      const targetX = hx * (submerged ? 0.5 : 1);
+      const targetZ = hz * (submerged ? 0.5 : 1);
+      const ground = this.onGround && !submerged;
+      const responseTime = ground ? 0.1 : submerged ? 0.25 : 0.5;
+      const alpha = 1 - Math.exp(-dtSec / responseTime);
+      this.velocity.x += (targetX - this.velocity.x) * alpha;
+      this.velocity.z += (targetZ - this.velocity.z) * alpha;
+      if (Math.abs(this.velocity.x) < 0.01) this.velocity.x = 0;
+      if (Math.abs(this.velocity.z) < 0.01) this.velocity.z = 0;
       if (submerged) {
         if (this.input.jump) {
           this.velocity.y = this.inFluid === 'water' ? 4 : 2;

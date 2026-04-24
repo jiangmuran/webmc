@@ -32,6 +32,11 @@ import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { FluidWorld } from './fluids/FluidWorld';
 import { PerfMonitor } from './engine/time/PerfMonitor';
+import { MainMenu } from './ui/MainMenu';
+import { PauseMenu } from './ui/PauseMenu';
+import { ChatInput } from './ui/ChatInput';
+import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
+import { executeCommand } from './game/CommandExecutor';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -228,6 +233,130 @@ const hotbar = new Hotbar(appEl, registry, [
   { state: SAND, name: 'sand', color: colorOf(SAND) },
   { state: GLOW, name: 'glow', color: colorOf(GLOW) },
 ]);
+
+let gameMode: GameMode = 'creative';
+function applyGameMode(m: GameMode): void {
+  gameMode = m;
+  const eff = effectsFor(m);
+  fp.input.fly = eff.canFly;
+  fp.passThroughBlocks = eff.passThroughBlocks;
+  playerState.invulnerable = eff.invulnerable;
+}
+
+const chatInput = new ChatInput(appEl, {
+  onSubmit: (text) => {
+    if (text.startsWith('/')) {
+      executeCommand(text, {
+        playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+        setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
+        gameMode,
+        setGameMode: (m) => applyGameMode(m),
+        setTimeOfDay: (t) => dayNight.setTimeOfDayTicks(t),
+        setWeather: () => chatInput.addLine('weather not yet wired', '#888'),
+        giveItem: (name, count) => {
+          const candidates = [name, `webmc:${name}`, `webmc:${name}_block`];
+          let id: number | undefined;
+          for (const c of candidates) {
+            id = itemRegistry.byName(c);
+            if (id !== undefined) break;
+          }
+          if (id === undefined) return false;
+          const leftover = inventory.add({ itemId: id, count, damage: 0 });
+          return leftover < count;
+        },
+        broadcast: (line, color) => chatInput.addLine(line, color),
+        knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
+        knownItems: [],
+      });
+    } else {
+      chatInput.addLine(`<You> ${text}`);
+    }
+  },
+  onOpenChanged: (open) => {
+    fp.inputBlocked = open;
+    if (open) {
+      fp.input.forward = 0;
+      fp.input.strafe = 0;
+      fp.input.vertical = 0;
+      fp.input.sprint = false;
+      fp.input.jump = false;
+      document.exitPointerLock();
+    }
+  },
+});
+
+const pauseMenu = new PauseMenu(appEl, {
+  onResume: () => {
+    pauseMenu.hide();
+    fp.inputBlocked = false;
+    canvas.requestPointerLock();
+  },
+  onQuit: () => {
+    pauseMenu.hide();
+    mainMenu.show();
+    fp.inputBlocked = true;
+    document.exitPointerLock();
+    void savePlayerNow();
+    void chunkStore.flush();
+  },
+});
+
+const mainMenu = new MainMenu(appEl, {
+  onPlay: () => {
+    fp.inputBlocked = false;
+    applyGameMode(gameMode);
+    canvas.requestPointerLock();
+  },
+  onOpenSettings: () => chatInput.addLine('Settings panel coming soon', '#ffcc80'),
+  onOpenResourcePacks: () => chatInput.addLine('Resource pack loader coming soon', '#ffcc80'),
+});
+fp.inputBlocked = true;
+
+document.addEventListener(
+  'keydown',
+  (e) => {
+    if (mainMenu.isVisible()) return;
+    if (chatInput.isOpen()) return;
+    if (e.code === 'Escape') {
+      e.preventDefault();
+      if (pauseMenu.isVisible()) {
+        pauseMenu.hide();
+        fp.inputBlocked = false;
+        canvas.requestPointerLock();
+      } else {
+        pauseMenu.show();
+        fp.inputBlocked = true;
+        document.exitPointerLock();
+      }
+      return;
+    }
+    if (e.code === 'KeyT') {
+      e.preventDefault();
+      chatInput.openChat();
+      return;
+    }
+    if (e.code === 'Slash') {
+      e.preventDefault();
+      chatInput.openChat('/');
+      return;
+    }
+    if (e.code === 'F4') {
+      e.preventDefault();
+      applyGameMode(nextGameMode(gameMode));
+      chatInput.addLine(`Gamemode: ${gameMode}`, '#ffd080');
+    }
+  },
+  true,
+);
+
+document.addEventListener('pointerlockchange', () => {
+  if (document.pointerLockElement !== canvas) {
+    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen()) {
+      pauseMenu.show();
+      fp.inputBlocked = true;
+    }
+  }
+});
 
 function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
   const b: BorderOpacity = {

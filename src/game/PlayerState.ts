@@ -45,7 +45,10 @@ export class PlayerState {
     this.onRespawn = opts.onRespawn ?? (() => undefined);
   }
 
+  invulnerable = false;
+
   takeDamage(ev: DamageEvent): void {
+    if (this.invulnerable) return;
     if (this.health <= 0) return;
     this.health = Math.max(0, this.health - ev.amount);
     if (this.health === 0) this.respawn();

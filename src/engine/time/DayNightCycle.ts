@@ -65,4 +65,10 @@ export class DayNightCycle {
   get isDay(): boolean {
     return this.timeOfDay >= 0.25 && this.timeOfDay < 0.75;
   }
+
+  setTimeOfDayTicks(ticks: number): void {
+    const wrapped = ((ticks % 24000) + 24000) % 24000;
+    this.timeOfDay = wrapped / 24000;
+    this.update(0);
+  }
 }
