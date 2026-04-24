@@ -15,6 +15,7 @@ export interface CommandContext {
   kill?: () => void;
   clearInventory?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
+  fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
   showStats?: () => void;
 }
@@ -36,6 +37,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/give <item> [count]', '#cccccc');
     ctx.broadcast('/heal | /kill | /clear', '#cccccc');
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
+    ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
     ctx.broadcast('/stats | /save', '#cccccc');
     return;
   }
@@ -61,6 +63,37 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'save') {
     ctx.save?.();
     ctx.broadcast('World saved.', '#80a0ff');
+    return;
+  }
+  if (head === 'fill') {
+    if (args.length < 7 || !ctx.fillBlocks) {
+      ctx.broadcast('Usage: /fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#ff8080');
+      return;
+    }
+    const x1 = parseCoord(args[0] ?? '', ctx.playerPos.x);
+    const y1 = parseCoord(args[1] ?? '', ctx.playerPos.y);
+    const z1 = parseCoord(args[2] ?? '', ctx.playerPos.z);
+    const x2 = parseCoord(args[3] ?? '', ctx.playerPos.x);
+    const y2 = parseCoord(args[4] ?? '', ctx.playerPos.y);
+    const z2 = parseCoord(args[5] ?? '', ctx.playerPos.z);
+    const name = args[6] ?? '';
+    if (!Number.isFinite(x1) || !Number.isFinite(y1) || !Number.isFinite(z1) ||
+        !Number.isFinite(x2) || !Number.isFinite(y2) || !Number.isFinite(z2) || !name) {
+      ctx.broadcast('Invalid args', '#ff8080');
+      return;
+    }
+    const total = Math.abs(x2 - x1 + 1) * Math.abs(y2 - y1 + 1) * Math.abs(z2 - z1 + 1);
+    if (total > 32768) {
+      ctx.broadcast(`Fill volume ${String(total)} exceeds 32768 limit`, '#ff8080');
+      return;
+    }
+    const count = ctx.fillBlocks(
+      Math.floor(x1), Math.floor(y1), Math.floor(z1),
+      Math.floor(x2), Math.floor(y2), Math.floor(z2),
+      name,
+    );
+    if (count < 0) ctx.broadcast(`Unknown block: ${name}`, '#ff8080');
+    else ctx.broadcast(`Filled ${String(count)} blocks.`, '#80ff80');
     return;
   }
   if (head === 'setblock') {

@@ -631,6 +631,40 @@ const chatInput = new ChatInput(appEl, {
           touchWorldEdit(x, y, z, id);
           return true;
         },
+        fillBlocks: (x1, y1, z1, x2, y2, z2, name) => {
+          const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
+          const id = registry.byName(full);
+          if (id === undefined) return -1;
+          const state = makeState(id, 0);
+          const sx = Math.min(x1, x2), ex = Math.max(x1, x2);
+          const sy = Math.min(y1, y2), ey = Math.max(y1, y2);
+          const sz = Math.min(z1, z2), ez = Math.max(z1, z2);
+          let count = 0;
+          const chunksTouched = new Set<string>();
+          for (let y = sy; y <= ey; y++) {
+            for (let z = sz; z <= ez; z++) {
+              for (let x = sx; x <= ex; x++) {
+                if (y < 0 || y >= CHUNK_HEIGHT) continue;
+                world.set(x, y, z, state);
+                count++;
+                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+              }
+            }
+          }
+          for (const k of chunksTouched) {
+            const [cxS, czS] = k.split(',');
+            const cxN = Number(cxS), czN = Number(czS);
+            const chunk = world.getChunk(cxN, czN);
+            if (chunk) {
+              const light = lightCache.get(lightKey(cxN, czN)) ?? null;
+              chunkStore.markDirty(chunk, light);
+              const newLight = buildLight(chunk, lightOracle);
+              lightCache.set(lightKey(cxN, czN), newLight);
+              markChunkAllDirty(chunk);
+            }
+          }
+          return count;
+        },
         save: () => {
           void savePlayerNow();
           void chunkStore.flush();
