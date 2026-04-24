@@ -407,6 +407,8 @@ export interface Mob {
   hurtFlashSec: number;
   // Death animation: set when killed; renderer scales down over dyingSec.
   dyingSec: number;
+  // Peak Y while airborne — used to compute fall damage on land.
+  airborneStartY: number | null;
 }
 
 const GRAVITY = 32;
@@ -441,6 +443,7 @@ export class MobWorld {
       teleportCooldownSec: 0,
       hurtFlashSec: 0,
       dyingSec: 0,
+      airborneStartY: null,
     };
     this.mobs.set(mob.id, mob);
     return mob;
@@ -561,10 +564,26 @@ export class MobWorld {
       y: mob.velocity.y * dtSec,
       z: mob.velocity.z * dtSec,
     };
+    const wasOnGround = mob.onGround;
     const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 0.6);
     if (result.hitX) mob.velocity.x = 0;
     if (result.hitY) mob.velocity.y = 0;
     if (result.hitZ) mob.velocity.z = 0;
     mob.onGround = result.onGround;
+    if (!wasOnGround && mob.onGround && mob.airborneStartY !== null) {
+      const fall = mob.airborneStartY - mob.position.y;
+      if (fall > 3) {
+        mob.health -= fall - 3;
+        mob.hurtFlashSec = 0.18;
+        if (mob.health <= 0) mob.dyingSec = 0.35;
+      }
+      mob.airborneStartY = null;
+    } else if (!mob.onGround) {
+      if (mob.airborneStartY === null || mob.position.y > mob.airborneStartY) {
+        mob.airborneStartY = mob.position.y;
+      }
+    } else if (mob.onGround) {
+      mob.airborneStartY = null;
+    }
   }
 }
