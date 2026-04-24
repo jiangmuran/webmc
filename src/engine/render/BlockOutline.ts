@@ -37,6 +37,9 @@ export class BlockOutline {
     this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
     this.group.visible = true;
     this.crackMat.opacity = breakProgress01 > 0 ? Math.min(0.65, breakProgress01 * 0.75) : 0;
+    // Subtle breathing scale so the outline feels alive.
+    const s = 1 + Math.sin(performance.now() * 0.005) * 0.003;
+    this.group.scale.setScalar(s);
   }
 
   hide(): void {
