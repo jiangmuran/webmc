@@ -169,7 +169,7 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:redstone_ore', color: [158, 55, 55] as RGB, lightEmission: 9, hardness: 3 },
     { name: 'webmc:lapis_ore', color: [52, 74, 155] as RGB, hardness: 3 },
     { name: 'webmc:glowstone', color: [255, 214, 138] as RGB, lightEmission: 15, hardness: 0.3 },
-    { name: 'webmc:glass', opaque: false, color: [220, 240, 250] as RGB, hardness: 0.3 },
+    { name: 'webmc:glass', color: [220, 240, 250] as RGB, hardness: 0.3 },
     { name: 'webmc:brick', color: [152, 94, 70] as RGB, hardness: 2 },
     { name: 'webmc:bookshelf', color: [124, 102, 63] as RGB, hardness: 1.5 },
     {
