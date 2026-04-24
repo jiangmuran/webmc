@@ -1045,10 +1045,17 @@ function igniteTnt(bx: number, by: number, bz: number): void {
   sfx.play('click');
 }
 
+let tntSmokeAccum = 0;
 function tickTnt(dtSec: number): void {
+  tntSmokeAccum += dtSec;
+  const emitNow = tntSmokeAccum > 0.1;
+  if (emitNow) tntSmokeAccum = 0;
   for (let i = primedTnt.length - 1; i >= 0; i--) {
     const t = primedTnt[i]!;
     t.remainingSec -= dtSec;
+    if (emitNow) {
+      blockParticles.emitPlace(t.bx + 0.5, t.by + 0.8, t.bz + 0.5, [90, 90, 90]);
+    }
     if (t.remainingSec <= 0) {
       explodeAt(t.bx, t.by, t.bz, 4);
       primedTnt.splice(i, 1);
