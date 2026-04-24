@@ -295,6 +295,8 @@ sky.addTo(scene);
 const stars = new Stars();
 scene.add(stars.points);
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
+const tmpSkyColor = new THREE.Color();
+const tmpFogColor = new THREE.Color();
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   rain.setActive(w !== 'clear');
@@ -1091,8 +1093,10 @@ function frame(): void {
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
   const weatherDimming = currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0;
-  const skyColor = dayNight.skyColor.clone().multiplyScalar(weatherDimming);
-  const fogColor = dayNight.fogColor.clone().multiplyScalar(weatherDimming);
+  tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
+  tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
+  const skyColor = tmpSkyColor;
+  const fogColor = tmpFogColor;
   const uniforms = chunkRenderer.material.uniforms;
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
   (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
