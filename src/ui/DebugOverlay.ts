@@ -19,6 +19,8 @@ export interface DebugFrame {
   rendererName: string;
   memoryMB?: number;
   mobs?: number;
+  hostile?: number;
+  passive?: number;
   drops?: number;
   xpOrbs?: number;
   seed?: number;
@@ -73,7 +75,7 @@ export class DebugOverlay {
     const mem = f.memoryMB === undefined ? '' : `\nmem  ${f.memoryMB.toFixed(0)} MB`;
     const entities =
       f.mobs !== undefined
-        ? `mobs ${String(f.mobs)}  drops ${String(f.drops ?? 0)}  xp ${String(f.xpOrbs ?? 0)}\n`
+        ? `mobs ${String(f.mobs)} (h${String(f.hostile ?? 0)}/p${String(f.passive ?? 0)})  drops ${String(f.drops ?? 0)}  xp ${String(f.xpOrbs ?? 0)}\n`
         : '';
     this.root.textContent =
       `webmc — F3 debug\n` +

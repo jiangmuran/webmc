@@ -1997,6 +1997,8 @@ function frame(): void {
       viewDistance: loader.viewRadius,
       rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
       mobs: mobWorld.size,
+      hostile: (() => { let n = 0; for (const m of mobWorld.all()) if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') n++; return n; })(),
+      passive: (() => { let n = 0; for (const m of mobWorld.all()) if (m.def.behavior === 'passive') n++; return n; })(),
       drops: droppedItems.size,
       xpOrbs: xpOrbs.size,
       seed: WORLD_SEED,
