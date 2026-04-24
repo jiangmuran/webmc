@@ -537,6 +537,7 @@ function applyGameMode(m: GameMode): void {
   gameMode = m;
   const eff = effectsFor(m);
   fp.input.fly = eff.canFly;
+  fp.canFly = eff.canFly;
   fp.passThroughBlocks = eff.passThroughBlocks;
   playerState.invulnerable = eff.invulnerable;
   survivalHud.setVisible(m === 'survival' || m === 'adventure');

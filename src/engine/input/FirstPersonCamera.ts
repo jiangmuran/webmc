@@ -69,6 +69,8 @@ export class FirstPersonCamera {
   invertY = false;
   sprintToggle = false;
   private lastWKeyDown = 0;
+  private lastSpaceKeyDown = 0;
+  canFly = true;
   private airborneStartY: number | null = null;
   lastLandFallBlocks = 0;
 
@@ -158,6 +160,11 @@ export class FirstPersonCamera {
         this.input.strafe = down ? 1 : Math.max(this.input.strafe - 1, 0);
         break;
       case 'Space':
+        if (down) {
+          const now = performance.now();
+          if (this.canFly && now - this.lastSpaceKeyDown < 260) this.toggleFly();
+          this.lastSpaceKeyDown = now;
+        }
         this.input.vertical = down ? 1 : Math.max(this.input.vertical - 1, 0);
         this.input.jump = down;
         break;
