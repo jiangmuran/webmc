@@ -51,6 +51,7 @@ export class PlayerState {
   invulnerable = false;
   justDied = false;
   hitImmuneSec = 0;
+  fireRemainingSec = 0;
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -112,6 +113,12 @@ export class PlayerState {
     }
     if (env.inFluid === 'lava') {
       this.takeDamage({ amount: LAVA_DAMAGE_PER_SEC * dtSec, source: 'lava' });
+      this.fireRemainingSec = 5;
+    } else if (env.inFluid === 'water') {
+      this.fireRemainingSec = 0;
+    } else if (this.fireRemainingSec > 0) {
+      this.fireRemainingSec = Math.max(0, this.fireRemainingSec - dtSec);
+      this.takeDamage({ amount: 1 * dtSec, source: 'fire' });
     }
     if (env.inFluid === 'water') {
       this.breath = Math.max(0, this.breath - dtSec);
