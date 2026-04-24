@@ -52,6 +52,7 @@ import { BlockOutline } from './engine/render/BlockOutline';
 import { BlockParticles } from './engine/render/BlockParticles';
 import { Clouds } from './engine/render/Clouds';
 import { FirstPersonHand } from './engine/render/FirstPersonHand';
+import { PlayerAvatar } from './engine/render/PlayerAvatar';
 import { ScreenShake } from './engine/render/ScreenShake';
 import { SkyCelestials } from './engine/render/SkyCelestials';
 import { Stars } from './engine/render/Stars';
@@ -241,6 +242,15 @@ const screenShake = new ScreenShake();
 const hand = new FirstPersonHand();
 camera.add(hand.group);
 scene.add(camera);
+const playerAvatar = new PlayerAvatar();
+scene.add(playerAvatar.group);
+type CameraMode = 'fp' | 'tp_back' | 'tp_front';
+let cameraMode: CameraMode = 'fp';
+function cycleCamera(): void {
+  cameraMode = cameraMode === 'fp' ? 'tp_back' : cameraMode === 'tp_back' ? 'tp_front' : 'fp';
+  hand.group.visible = cameraMode === 'fp';
+  playerAvatar.setVisible(cameraMode !== 'fp');
+}
 let lastTouchPrimary = false;
 const sky = new SkyCelestials();
 sky.addTo(scene);
@@ -584,6 +594,10 @@ document.addEventListener(
       e.preventDefault();
       debugOverlay.toggle();
       hud.style.display = debugOverlay.isEnabled() ? 'none' : 'block';
+    }
+    if (e.code === 'F5') {
+      e.preventDefault();
+      cycleCamera();
     }
     if (e.code === 'KeyQ') {
       e.preventDefault();
@@ -981,6 +995,19 @@ function frame(): void {
   }
 
   flushDirty();
+
+  // Third-person camera modes orbit around the player's eye position.
+  playerAvatar.setPose(fp.position.x, fp.position.y - 0.8, fp.position.z, fp.yaw + Math.PI);
+  if (cameraMode !== 'fp') {
+    const look = fp.lookVector();
+    const back = cameraMode === 'tp_back' ? -3 : 3;
+    camera.position.x += look.x * back;
+    camera.position.y += look.y * back;
+    camera.position.z += look.z * back;
+    if (cameraMode === 'tp_front') {
+      camera.rotation.set(-fp.pitch, fp.yaw + Math.PI, 0, 'YXZ');
+    }
+  }
 
   screenShake.apply(camera, dtSec);
   renderer.render(scene, camera);
