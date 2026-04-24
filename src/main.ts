@@ -669,6 +669,14 @@ const chatInput = new ChatInput(appEl, {
           void savePlayerNow();
           void chunkStore.flush();
         },
+        summon: (kind, x, y, z) => {
+          try {
+            mobWorld.spawn(kind as Parameters<typeof mobWorld.spawn>[0], { x, y, z });
+            return true;
+          } catch {
+            return false;
+          }
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');

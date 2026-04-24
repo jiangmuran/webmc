@@ -18,6 +18,7 @@ export interface CommandContext {
   fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
   showStats?: () => void;
+  summon?: (kind: string, x: number, y: number, z: number) => boolean;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -38,6 +39,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/heal | /kill | /clear', '#cccccc');
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
     ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
+    ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
     ctx.broadcast('/stats | /save', '#cccccc');
     return;
   }
@@ -58,6 +60,21 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'stats') {
     ctx.showStats?.();
+    return;
+  }
+  if (head === 'summon') {
+    if (!ctx.summon) return;
+    const kind = args[0] ?? '';
+    const x = args[1] !== undefined ? parseCoord(args[1], ctx.playerPos.x) : ctx.playerPos.x;
+    const y = args[2] !== undefined ? parseCoord(args[2], ctx.playerPos.y) : ctx.playerPos.y;
+    const z = args[3] !== undefined ? parseCoord(args[3], ctx.playerPos.z) : ctx.playerPos.z;
+    if (!kind || !Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
+      ctx.broadcast('Usage: /summon <kind> [x y z]', '#ff8080');
+      return;
+    }
+    const ok = ctx.summon(kind, x, y, z);
+    if (ok) ctx.broadcast(`Summoned ${kind}`, '#80ff80');
+    else ctx.broadcast(`Unknown mob: ${kind}`, '#ff8080');
     return;
   }
   if (head === 'save') {
