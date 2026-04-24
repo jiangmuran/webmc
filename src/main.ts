@@ -834,7 +834,13 @@ function frame(): void {
   const stats = timer.tick();
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
-  if (perfMonitor.tick(dtSec)) loader.setViewRadius(perfMonitor.quality);
+  if (perfMonitor.tick(dtSec)) {
+    loader.setViewRadius(perfMonitor.quality);
+    const lowTier = perfMonitor.quality < 4;
+    clouds.mesh.visible = !lowTier;
+    stars.points.visible = !lowTier;
+    if (lowTier && rain.isActive()) rain.setActive(false);
+  }
 
   if (touch) {
     const look = touch.consumeLook();
