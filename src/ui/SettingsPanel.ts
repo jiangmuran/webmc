@@ -98,6 +98,30 @@ export class SettingsPanel {
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
 
+    const presetRow = document.createElement('div');
+    presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;';
+    const fastBtn = document.createElement('button');
+    fastBtn.textContent = 'Fast preset';
+    fastBtn.style.cssText = 'padding:4px 10px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    fastBtn.addEventListener('click', () => {
+      Object.assign(this.values, { ...DEFAULT_SETTINGS, viewDistance: 4, chunkUploadBudget: 2, masterVolume: 0.2 });
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+      for (const r of this.uiResetters) r();
+    });
+    presetRow.appendChild(fastBtn);
+    const qualityBtn = document.createElement('button');
+    qualityBtn.textContent = 'Quality preset';
+    qualityBtn.style.cssText = 'padding:4px 10px;background:rgba(40,60,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    qualityBtn.addEventListener('click', () => {
+      Object.assign(this.values, { ...DEFAULT_SETTINGS, viewDistance: 12, chunkUploadBudget: 8, masterVolume: 0.5 });
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+      for (const r of this.uiResetters) r();
+    });
+    presetRow.appendChild(qualityBtn);
+    panel.appendChild(presetRow);
+
     const buttonRow = document.createElement('div');
     buttonRow.style.cssText = 'display:flex;gap:8px;align-self:flex-end;';
     const reset = document.createElement('button');
