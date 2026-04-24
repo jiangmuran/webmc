@@ -1682,6 +1682,12 @@ function frame(): void {
   const weatherDimming = (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
+  // Biome fog tint: forest gets a hint of green. Use fp.position so sampling is cheap.
+  const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
+  if (biomeId === 1) {
+    tmpFogColor.multiplyScalar(0.97);
+    tmpFogColor.g = Math.min(1, tmpFogColor.g + 0.03);
+  }
   const skyColor = tmpSkyColor;
   const fogColor = tmpFogColor;
   const uniforms = chunkRenderer.material.uniforms;
