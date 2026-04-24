@@ -150,14 +150,14 @@ export function createDefaultRegistry(): BlockRegistry {
     {
       name: 'webmc:water',
       solid: false,
-      opaque: false,
+      opaque: true,
       color: [64, 96, 200] as RGB,
       hardness: 100,
     },
     {
       name: 'webmc:lava',
       solid: false,
-      opaque: false,
+      opaque: true,
       color: [207, 86, 16] as RGB,
       lightEmission: 15,
       hardness: 100,
