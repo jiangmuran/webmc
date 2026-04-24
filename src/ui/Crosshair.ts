@@ -60,4 +60,17 @@ export class Crosshair {
   show(): void {
     this.root.style.display = '';
   }
+
+  setTint(color: string | null): void {
+    const children = Array.from(this.root.children) as HTMLElement[];
+    for (const el of children) {
+      if (color === null) {
+        el.style.background = '#ffffffcc';
+        el.style.mixBlendMode = 'difference';
+      } else {
+        el.style.background = color;
+        el.style.mixBlendMode = 'normal';
+      }
+    }
+  }
 }

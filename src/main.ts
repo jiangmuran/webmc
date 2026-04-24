@@ -1403,6 +1403,28 @@ function frame(): void {
 
   interaction.tickBreak(dtSec);
   if (interaction.breaking && !hand.isSwinging) hand.swing();
+
+  // Crosshair tint: red when aiming at a mob in range
+  {
+    const originP = camera.position;
+    const lookP = fp.lookVector();
+    let hitMob = false;
+    for (const mob of mobWorld.all()) {
+      const box = {
+        minX: mob.position.x - mob.def.aabb.halfX,
+        minY: mob.position.y - mob.def.aabb.halfY,
+        minZ: mob.position.z - mob.def.aabb.halfZ,
+        maxX: mob.position.x + mob.def.aabb.halfX,
+        maxY: mob.position.y + mob.def.aabb.halfY,
+        maxZ: mob.position.z + mob.def.aabb.halfZ,
+      };
+      if (intersectRayAABB(originP, lookP, box, 5)) {
+        hitMob = true;
+        break;
+      }
+    }
+    crosshair.setTint(hitMob ? '#ff6060cc' : null);
+  }
   const aim = interaction.castRay();
   if (aim && aim.distance > 0) {
     const progress =
