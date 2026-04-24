@@ -46,15 +46,26 @@ export function sweepMove(
   box: AABB,
   dv: Vec3Lite,
   isSolid: SolidSampler,
+  stepHeight = 0,
 ): SweepResult {
   const out: SweepResult = { hitX: false, hitY: false, hitZ: false, onGround: false };
+  const onGroundBefore = aabbIntersectsSolid(
+    { x: pos.x, y: pos.y - 2 * EPS, z: pos.z },
+    box,
+    isSolid,
+  );
+  const canStep = stepHeight > 0 && onGroundBefore && dv.y <= 0;
 
   const px = pos.x;
   pos.x = px + dv.x;
   if (aabbIntersectsSolid(pos, box, isSolid)) {
-    pos.x = px;
-    dv.x = 0;
-    out.hitX = true;
+    if (canStep && tryStepUp(pos, box, isSolid, stepHeight)) {
+      // Auto-step succeeded: pos.x kept, pos.y raised.
+    } else {
+      pos.x = px;
+      dv.x = 0;
+      out.hitX = true;
+    }
   }
 
   const py = pos.y;
@@ -69,10 +80,29 @@ export function sweepMove(
   const pz = pos.z;
   pos.z = pz + dv.z;
   if (aabbIntersectsSolid(pos, box, isSolid)) {
-    pos.z = pz;
-    dv.z = 0;
-    out.hitZ = true;
+    if (canStep && tryStepUp(pos, box, isSolid, stepHeight)) {
+      // Auto-step succeeded.
+    } else {
+      pos.z = pz;
+      dv.z = 0;
+      out.hitZ = true;
+    }
   }
 
   return out;
+}
+
+function tryStepUp(
+  pos: Vec3Lite,
+  box: AABB,
+  isSolid: SolidSampler,
+  stepHeight: number,
+): boolean {
+  const origY = pos.y;
+  pos.y = origY + stepHeight;
+  if (aabbIntersectsSolid(pos, box, isSolid)) {
+    pos.y = origY;
+    return false;
+  }
+  return true;
 }
