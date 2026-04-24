@@ -1199,6 +1199,11 @@ function frame(): void {
   droppedItems.tick(dtSec, isSolid, fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
     sfx.play('click');
+    const def = itemRegistry.get(out.itemId);
+    chatInput.addLine(
+      `+ ${String(out.count)} ${def.name.replace(/^webmc:/, '')}`,
+      '#d2ff80',
+    );
   });
 
   if (now - lastPlayerSaveAt > 5000) {
