@@ -980,6 +980,27 @@ async function savePlayerNow(): Promise<void> {
 let lastPlayerSaveAt = performance.now();
 let fluidTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
+const fallableIds = new Set<number>();
+for (const name of ['webmc:sand', 'webmc:gravel', 'webmc:red_sand']) {
+  const id = registry.byName(name);
+  if (id !== undefined) fallableIds.add(id);
+}
+
+// Cascading falling-block check: called from touchWorldEdit when a block
+// below a fallable-block column is removed. Drops the column one step and
+// recursively checks the block above.
+function cascadeFalling(bx: number, by: number, bz: number): void {
+  let y = by + 1;
+  while (y < CHUNK_HEIGHT) {
+    const s = world.get(bx, y, bz);
+    if (s === AIR) break;
+    if (!fallableIds.has(stateId(s))) break;
+    if (world.get(bx, y - 1, bz) !== AIR) break;
+    world.set(bx, y - 1, bz, s);
+    world.set(bx, y, bz, AIR);
+    y++;
+  }
+}
 
 const perfMonitor = new PerfMonitor({
   startQuality: 6,
@@ -1180,6 +1201,8 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
 }
 
 const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
+  // Cascade fallable-block stacks above the edited cell.
+  cascadeFalling(bx, by, bz);
   const cx = Math.floor(bx / 16);
   const cz = Math.floor(bz / 16);
   const chunk = world.getChunk(cx, cz);
