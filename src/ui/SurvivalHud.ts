@@ -257,12 +257,15 @@ export class SurvivalHud {
   render(frame: SurvivalFrame): void {
     if (!this.visible) return;
     const hpPerHeart = frame.maxHealth / HEARTS;
+    const lowHp = frame.health < 6;
+    const pulse = lowHp ? 0.5 + 0.5 * Math.sin(performance.now() * 0.01) : 1;
     for (let i = 0; i < HEARTS; i++) {
       const start = i * hpPerHeart;
       const v = Math.max(0, Math.min(hpPerHeart, frame.health - start));
       const name: IconName =
         v >= hpPerHeart * 0.9 ? 'heart_full' : v >= hpPerHeart * 0.4 ? 'heart_half' : 'heart_empty';
       this.blit(this.hearts[i]!, name);
+      this.hearts[i]!.style.opacity = name === 'heart_empty' ? '1' : String(pulse.toFixed(2));
     }
 
     const hungerPer = frame.maxHunger / DRUMSTICKS;
