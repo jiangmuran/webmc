@@ -715,6 +715,14 @@ const chatInput = new ChatInput(appEl, {
           fp.inputBlocked = true;
           document.exitPointerLock();
         },
+        teleportSpawn: () => {
+          if (playerSpawnPoint) {
+            fp.position.set(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+          } else {
+            const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
+            fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+          }
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');

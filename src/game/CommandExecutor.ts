@@ -20,6 +20,7 @@ export interface CommandContext {
   showStats?: () => void;
   summon?: (kind: string, x: number, y: number, z: number) => boolean;
   openChest?: () => void;
+  teleportSpawn?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -65,6 +66,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'chest') {
     ctx.openChest?.();
+    return;
+  }
+  if (head === 'spawn') {
+    ctx.teleportSpawn?.();
+    ctx.broadcast('Teleported to spawn.', '#80ff80');
     return;
   }
   if (head === 'summon') {
