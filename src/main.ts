@@ -1954,6 +1954,9 @@ function frame(): void {
     const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
     markers.push({ x: m.position.x, z: m.position.z, color: isHostile ? '#ff5050' : '#a0ffa0' });
   }
+  if (playerSpawnPoint) {
+    markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
+  }
   minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
   droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
