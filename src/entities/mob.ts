@@ -554,7 +554,7 @@ export class MobWorld {
       y: mob.velocity.y * dtSec,
       z: mob.velocity.z * dtSec,
     };
-    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid);
+    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 0.6);
     if (result.hitX) mob.velocity.x = 0;
     if (result.hitY) mob.velocity.y = 0;
     if (result.hitZ) mob.velocity.z = 0;
