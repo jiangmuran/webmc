@@ -15,6 +15,7 @@ export interface CommandContext {
   kill?: () => void;
   clearInventory?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
+  save?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -49,6 +50,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'clear') {
     ctx.clearInventory?.();
     ctx.broadcast('Inventory cleared.', '#80ff80');
+    return;
+  }
+  if (head === 'save') {
+    ctx.save?.();
+    ctx.broadcast('World saved.', '#80a0ff');
     return;
   }
   if (head === 'setblock') {

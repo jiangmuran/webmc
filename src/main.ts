@@ -620,6 +620,10 @@ const chatInput = new ChatInput(appEl, {
           touchWorldEdit(x, y, z, id);
           return true;
         },
+        save: () => {
+          void savePlayerNow();
+          void chunkStore.flush();
+        },
       });
     } else {
       chatInput.addLine(`<You> ${text}`);
