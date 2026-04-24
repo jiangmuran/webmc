@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import type { BlockRegistry, RGB } from '@/blocks/registry';
 import type { LoadedPackTextures } from '@/ui/ResourcePackLoader';
 
@@ -84,4 +85,55 @@ function pickImage(pack: LoadedPackTextures, names: readonly string[]): HTMLImag
     if (img) return img;
   }
   return undefined;
+}
+
+/**
+ * Build a pattern texture from the pack's stone/dirt/grass/planks PNGs by averaging their
+ * luminance into a single tileable grayscale. The shader multiplies this onto per-block
+ * tinted colors, so you get "a texture that looks like the pack" on every block without a
+ * full per-face atlas.
+ */
+export function buildPatternTextureFromPack(pack: LoadedPackTextures): THREE.CanvasTexture | null {
+  const preferred = ['stone', 'dirt', 'cobblestone', 'grass_block_top', 'oak_planks'];
+  let source: HTMLImageElement | undefined;
+  for (const name of preferred) {
+    const img = pack.blockTextures.get(name);
+    if (img) {
+      source = img;
+      break;
+    }
+  }
+  if (!source) {
+    for (const [, img] of pack.blockTextures) {
+      source = img;
+      break;
+    }
+  }
+  if (!source) return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(16, source.width);
+  canvas.height = Math.max(16, source.height);
+  const ctx = canvas.getContext('2d', { willReadFrequently: false });
+  if (!ctx) return null;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+  // Convert to luminance-weighted grayscale to avoid double-tinting pack palette.
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const d = imgData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const lum = ((d[i] ?? 0) * 299 + (d[i + 1] ?? 0) * 587 + (d[i + 2] ?? 0) * 114) / 1000;
+    const v = Math.max(0, Math.min(255, Math.round(lum * 0.4 + 160)));
+    d[i] = v;
+    d[i + 1] = v;
+    d[i + 2] = v;
+    d[i + 3] = 255;
+  }
+  ctx.putImageData(imgData, 0, 0);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+  tex.magFilter = THREE.NearestFilter;
+  tex.minFilter = THREE.NearestMipmapNearestFilter;
+  tex.generateMipmaps = true;
+  return tex;
 }

@@ -38,7 +38,8 @@ import { ChatInput } from './ui/ChatInput';
 import { CreativeInventory } from './ui/CreativeInventory';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
-import { applyPackToRegistry } from './engine/render/ResourcePackApply';
+import { DebugOverlay } from './ui/DebugOverlay';
+import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
 
@@ -310,9 +311,16 @@ const pauseMenu = new PauseMenu(appEl, {
 const resourcePackLoader = new ResourcePackLoader(appEl, {
   onLoaded: (pack) => {
     const result = applyPackToRegistry(registry, pack);
+    const newPattern = buildPatternTextureFromPack(pack);
+    if (newPattern) {
+      const oldTex = (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture | null }).value;
+      if (oldTex) oldTex.dispose();
+      (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture }).value = newPattern;
+      (chunkRenderer.material.uniforms['uPatternStrength'] as { value: number }).value = 0.9;
+    }
     for (const chunk of world.chunks()) markChunkAllDirty(chunk);
     chatInput.addLine(
-      `Pack loaded: ${pack.packName} · ${pack.blockTextures.size} block PNGs · ${String(result.blocksRecolored)} blocks recolored`,
+      `Pack loaded: ${pack.packName} · ${pack.blockTextures.size} block PNGs · ${String(result.blocksRecolored)} blocks recolored${newPattern ? ' + pattern atlas' : ''}`,
       '#80ff80',
     );
     if (result.missingTextures.length > 0) {
@@ -428,9 +436,16 @@ document.addEventListener(
       applyGameMode(nextGameMode(gameMode));
       chatInput.addLine(`Gamemode: ${gameMode}`, '#ffd080');
     }
+    if (e.code === 'F3') {
+      e.preventDefault();
+      debugOverlay.toggle();
+      hud.style.display = debugOverlay.isEnabled() ? 'none' : 'block';
+    }
   },
   true,
 );
+
+const debugOverlay = new DebugOverlay(appEl);
 
 document.addEventListener('pointerlockchange', () => {
   if (document.pointerLockElement !== canvas) {
@@ -746,16 +761,35 @@ function frame(): void {
     void savePlayerNow();
   }
 
-  const look = fp.lookVector();
-  hud.textContent =
-    `webmc M5\n` +
-    `${rendererInfo.gl}  ${rendererInfo.rend}\n` +
-    `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
-    `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
-    `look ${look.x.toFixed(2)} ${look.y.toFixed(2)} ${look.z.toFixed(2)}\n` +
-    `chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}\n` +
-    `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  items ${inventory.hotbar.filter((s) => s !== null).length}/9  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
-    `seed ${WORLD_SEED.toString(16)}  ${fp.input.fly ? 'fly' : 'walk'}  ${sel?.name ?? '?'}  save${chunkStore.pendingCount}`;
+  if (debugOverlay.isEnabled()) {
+    debugOverlay.render({
+      fps: stats.fps,
+      frameMs: stats.frameMs,
+      position: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+      look: { yaw: fp.yaw, pitch: fp.pitch },
+      chunkPos: { cx: Math.floor(fp.position.x / 16), cz: Math.floor(fp.position.z / 16) },
+      meshCount: chunkRenderer.meshCount,
+      triangles: chunkRenderer.triangleCount,
+      pendingChunks: loaderStats.pending,
+      gameMode,
+      timeOfDay: dayNight.timeOfDay,
+      health: playerState.health,
+      hunger: playerState.hunger,
+      fly: fp.input.fly,
+      onGround: fp.onGround,
+      fluid: fp.inFluid,
+      viewDistance: loader.viewRadius,
+      rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
+    });
+    hud.textContent = '';
+  } else {
+    hud.textContent =
+      `webmc — F3 for debug\n` +
+      `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
+      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
+      `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
+      `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}`;
+  }
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
