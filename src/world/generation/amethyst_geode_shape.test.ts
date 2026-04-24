@@ -7,7 +7,7 @@ describe('amethyst geode shape', () => {
   });
 
   it('inner amethyst layer', () => {
-    expect(blockAt(2, DEFAULT_RADII)).toBe('amethyst_block');
+    expect(blockAt(DEFAULT_RADII.innerEnd, DEFAULT_RADII)).toBe('amethyst_block');
   });
 
   it('smooth basalt middle', () => {
