@@ -769,11 +769,26 @@ const settingsPanel = new SettingsPanel(appEl, {
   },
 });
 
+const TIPS: readonly string[] = [
+  'Tip: Press E for inventory',
+  'Tip: Press F4 to cycle game modes',
+  'Tip: Press F5 for third-person',
+  'Tip: Press T for chat, / for commands',
+  'Tip: Press B to sleep through the night',
+  'Tip: Press F2 for a screenshot',
+  'Tip: Double-tap W to sprint',
+  'Tip: Right-click TNT to prime it',
+  'Tip: Middle-click copies the block you look at',
+  'Tip: Press Q to drop the held block',
+];
+
 const mainMenu = new MainMenu(appEl, {
   onPlay: () => {
     fp.inputBlocked = false;
     applyGameMode(gameMode);
     void canvas.requestPointerLock();
+    const tip = TIPS[Math.floor(Math.random() * TIPS.length)] ?? TIPS[0];
+    if (tip) toast.show(tip, '#eef3ff', 3000);
   },
   onOpenSettings: () => { settingsPanel.show(); },
   onOpenResourcePacks: () => { resourcePackLoader.show(); },
