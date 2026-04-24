@@ -1,0 +1,186 @@
+export interface SettingsValues {
+  fov: number;
+  viewDistance: number;
+  mouseSensitivity: number;
+  masterVolume: number;
+  chunkUploadBudget: number;
+  invertY: boolean;
+  sprintToggle: boolean;
+}
+
+export const DEFAULT_SETTINGS: SettingsValues = {
+  fov: 70,
+  viewDistance: 6,
+  mouseSensitivity: 0.0022,
+  masterVolume: 0.35,
+  chunkUploadBudget: 4,
+  invertY: false,
+  sprintToggle: false,
+};
+
+const STORAGE_KEY = 'webmc:settings';
+
+export function loadSettings(): SettingsValues {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw === null) return { ...DEFAULT_SETTINGS };
+    const parsed = JSON.parse(raw) as Partial<SettingsValues>;
+    return { ...DEFAULT_SETTINGS, ...parsed };
+  } catch {
+    return { ...DEFAULT_SETTINGS };
+  }
+}
+
+export function saveSettings(v: SettingsValues): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(v));
+  } catch {
+    // storage quota or privacy mode — non-fatal
+  }
+}
+
+export interface SettingsPanelCallbacks {
+  onChange: (v: SettingsValues) => void;
+}
+
+export class SettingsPanel {
+  readonly root: HTMLDivElement;
+  private visible = false;
+  private readonly values: SettingsValues;
+
+  constructor(parent: HTMLElement, private readonly cb: SettingsPanelCallbacks) {
+    this.values = loadSettings();
+
+    this.root = document.createElement('div');
+    this.root.setAttribute('data-testid', 'settings-panel');
+    this.root.style.cssText = [
+      'position:fixed',
+      'inset:0',
+      'display:none',
+      'align-items:center',
+      'justify-content:center',
+      'background:rgba(0,0,0,0.55)',
+      'backdrop-filter:blur(2px)',
+      'z-index:850',
+      'color:#e6edf3',
+      'pointer-events:auto',
+    ].join(';');
+
+    const panel = document.createElement('div');
+    panel.style.cssText = [
+      'background:rgba(18,22,30,0.96)',
+      'border:1px solid rgba(255,255,255,0.15)',
+      'border-radius:8px',
+      'padding:14px',
+      'width:min(420px,92vw)',
+      'max-height:86vh',
+      'overflow-y:auto',
+      'display:flex',
+      'flex-direction:column',
+      'gap:10px',
+      'font-size:13px',
+    ].join(';');
+
+    const title = document.createElement('div');
+    title.textContent = 'Settings';
+    title.style.cssText = 'font-size:18px;font-weight:600;';
+    panel.appendChild(title);
+
+    this.slider(panel, 'FOV', 'fov', 30, 110, 1);
+    this.slider(panel, 'View distance (chunks)', 'viewDistance', 2, 16, 1);
+    this.slider(panel, 'Mouse sensitivity', 'mouseSensitivity', 0.0005, 0.01, 0.0001);
+    this.slider(panel, 'Master volume', 'masterVolume', 0, 1, 0.01);
+    this.slider(panel, 'Chunk upload per frame', 'chunkUploadBudget', 1, 16, 1);
+    this.checkbox(panel, 'Invert Y', 'invertY');
+    this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
+
+    const close = document.createElement('button');
+    close.textContent = 'Close';
+    close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.addEventListener('click', () => this.hide());
+    panel.appendChild(close);
+
+    this.root.appendChild(panel);
+    parent.appendChild(this.root);
+
+    // Apply initial values
+    cb.onChange({ ...this.values });
+  }
+
+  private slider(
+    parent: HTMLElement,
+    label: string,
+    key: keyof SettingsValues,
+    min: number,
+    max: number,
+    step: number,
+  ): void {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;flex-direction:column;gap:3px;';
+    const lbl = document.createElement('label');
+    const valueSpan = document.createElement('span');
+    valueSpan.style.cssText = 'opacity:0.7;margin-left:6px;';
+    lbl.textContent = label;
+    lbl.appendChild(valueSpan);
+    const input = document.createElement('input');
+    input.type = 'range';
+    input.min = String(min);
+    input.max = String(max);
+    input.step = String(step);
+    const current = this.values[key] as number;
+    input.value = String(current);
+    valueSpan.textContent = `= ${formatValue(current)}`;
+    input.addEventListener('input', () => {
+      const v = Number(input.value);
+      (this.values as unknown as Record<string, number | boolean>)[key as string] = v;
+      valueSpan.textContent = `= ${formatValue(v)}`;
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+    });
+    row.append(lbl, input);
+    parent.appendChild(row);
+  }
+
+  private checkbox(parent: HTMLElement, label: string, key: keyof SettingsValues): void {
+    const row = document.createElement('label');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;cursor:pointer;';
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = Boolean(this.values[key]);
+    input.addEventListener('change', () => {
+      (this.values as unknown as Record<string, number | boolean>)[key as string] = input.checked;
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+    });
+    const text = document.createElement('span');
+    text.textContent = label;
+    row.append(input, text);
+    parent.appendChild(row);
+  }
+
+  show(): void {
+    if (this.visible) return;
+    this.visible = true;
+    this.root.style.display = 'flex';
+  }
+
+  hide(): void {
+    if (!this.visible) return;
+    this.visible = false;
+    this.root.style.display = 'none';
+  }
+
+  isVisible(): boolean {
+    return this.visible;
+  }
+
+  get(): SettingsValues {
+    return { ...this.values };
+  }
+}
+
+function formatValue(v: number): string {
+  if (Math.abs(v) < 0.01) return v.toFixed(4);
+  if (Math.abs(v) < 1) return v.toFixed(3);
+  return v.toFixed(0);
+}

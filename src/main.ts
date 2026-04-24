@@ -37,6 +37,8 @@ import { PauseMenu } from './ui/PauseMenu';
 import { ChatInput } from './ui/ChatInput';
 import { CreativeInventory } from './ui/CreativeInventory';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
+import { SettingsPanel } from './ui/SettingsPanel';
+import { applyPackToRegistry } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
 
@@ -166,6 +168,7 @@ if (savedPlayer) {
 }
 fp.input.fly = true;
 fp.attach(canvas);
+fp.setBaseFov(70);
 
 const touch = isTouchDevice() ? new TouchControls() : null;
 touch?.attach(appEl);
@@ -301,14 +304,33 @@ const pauseMenu = new PauseMenu(appEl, {
     void savePlayerNow();
     void chunkStore.flush();
   },
+  onOpenSettings: () => settingsPanel.show(),
 });
 
 const resourcePackLoader = new ResourcePackLoader(appEl, {
   onLoaded: (pack) => {
+    const result = applyPackToRegistry(registry, pack);
+    for (const chunk of world.chunks()) markChunkAllDirty(chunk);
     chatInput.addLine(
-      `Resource pack loaded: ${pack.packName} (${pack.blockTextures.size} block + ${pack.itemTextures.size} item textures)`,
+      `Pack loaded: ${pack.packName} · ${pack.blockTextures.size} block PNGs · ${String(result.blocksRecolored)} blocks recolored`,
       '#80ff80',
     );
+    if (result.missingTextures.length > 0) {
+      chatInput.addLine(
+        `Missing textures for ${String(result.missingTextures.length)} blocks: ${result.missingTextures.slice(0, 6).join(', ')}…`,
+        '#ffd080',
+      );
+    }
+  },
+});
+
+const settingsPanel = new SettingsPanel(appEl, {
+  onChange: (v) => {
+    fp.setBaseFov(v.fov);
+    loader.setViewRadius(v.viewDistance);
+    (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
+    audio.setMasterVolume(v.masterVolume);
+    loader.setPerFrameBudget(v.chunkUploadBudget);
   },
 });
 
@@ -318,7 +340,7 @@ const mainMenu = new MainMenu(appEl, {
     applyGameMode(gameMode);
     canvas.requestPointerLock();
   },
-  onOpenSettings: () => chatInput.addLine('Settings panel coming soon', '#ffcc80'),
+  onOpenSettings: () => settingsPanel.show(),
   onOpenResourcePacks: () => resourcePackLoader.show(),
 });
 fp.inputBlocked = true;
@@ -340,6 +362,20 @@ document.addEventListener(
   (e) => {
     if (mainMenu.isVisible()) return;
     if (chatInput.isOpen()) return;
+    if (settingsPanel.isVisible()) {
+      if (e.code === 'Escape') {
+        e.preventDefault();
+        settingsPanel.hide();
+      }
+      return;
+    }
+    if (resourcePackLoader.isVisible()) {
+      if (e.code === 'Escape') {
+        e.preventDefault();
+        resourcePackLoader.hide();
+      }
+      return;
+    }
     if (creativeInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();

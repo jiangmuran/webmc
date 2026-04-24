@@ -49,6 +49,10 @@ export class ChunkLoader {
     this.lastCx = Number.NaN;
   }
 
+  setPerFrameBudget(n: number): void {
+    this.opts.perFrameBudget = Math.max(1, Math.floor(n));
+  }
+
   get viewRadius(): number {
     return this.opts.viewRadius;
   }

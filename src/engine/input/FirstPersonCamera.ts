@@ -14,16 +14,19 @@ export interface FirstPersonCameraOptions {
 }
 
 const DEFAULTS: FirstPersonCameraOptions = {
-  walkSpeed: 4.3,
+  walkSpeed: 4.317,
   flySpeed: 10,
-  sprintMultiplier: 1.8,
+  sprintMultiplier: 1.3,
   lookSensitivity: 0.0022,
-  gravity: 32,
+  gravity: 28,
   jumpVelocity: 8.4,
   terminalVelocity: 78.4,
   box: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
   eyeHeight: 1.62,
 };
+
+export const COYOTE_TIME_SEC = 0.1;
+export const JUMP_BUFFER_SEC = 0.12;
 
 const UP = new THREE.Vector3(0, 1, 0);
 const PITCH_MAX = Math.PI / 2 - 0.0001;
@@ -54,6 +57,10 @@ export class FirstPersonCamera {
   inFluid: FluidKind | null = null;
   inputBlocked = false;
   passThroughBlocks = false;
+  private coyoteTimer = 0;
+  private jumpBufferTimer = 0;
+  private wasJumpPressed = false;
+  private sprintFovBoost = 0;
 
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
@@ -215,15 +222,29 @@ export class FirstPersonCamera {
           );
         }
       } else {
-        if (this.input.jump && this.onGround) {
+        const jumpPressedNow = this.input.jump && !this.wasJumpPressed;
+        if (jumpPressedNow) this.jumpBufferTimer = JUMP_BUFFER_SEC;
+        if (this.onGround) this.coyoteTimer = COYOTE_TIME_SEC;
+        else this.coyoteTimer = Math.max(0, this.coyoteTimer - dtSec);
+        this.jumpBufferTimer = Math.max(0, this.jumpBufferTimer - dtSec);
+
+        if (this.jumpBufferTimer > 0 && this.coyoteTimer > 0) {
           this.velocity.y = this.opts.jumpVelocity;
           this.onGround = false;
+          this.coyoteTimer = 0;
+          this.jumpBufferTimer = 0;
+        }
+        // Variable-height jump: releasing jump key while rising cuts upward velocity
+        const jumpReleasedNow = this.wasJumpPressed && !this.input.jump;
+        if (jumpReleasedNow && this.velocity.y > 0) {
+          this.velocity.y *= 0.55;
         }
         this.velocity.y = Math.max(
           this.velocity.y - this.opts.gravity * dtSec,
           -this.opts.terminalVelocity,
         );
       }
+      this.wasJumpPressed = this.input.jump;
       const dv = {
         x: this.velocity.x * dtSec,
         y: this.velocity.y * dtSec,
@@ -248,5 +269,23 @@ export class FirstPersonCamera {
       this.camera.position.z + look.z,
     );
     this.camera.up.copy(UP);
+
+    // Sprint FOV kick — eased
+    const actuallySprinting =
+      this.input.sprint && (Math.abs(this.velocity.x) + Math.abs(this.velocity.z)) > 0.5;
+    const targetBoost = actuallySprinting ? 10 : 0;
+    const fovAlpha = 1 - Math.exp(-dtSec / 0.15);
+    this.sprintFovBoost += (targetBoost - this.sprintFovBoost) * fovAlpha;
+    const baseFov = this.camera.userData['baseFov'] as number | undefined;
+    if (baseFov !== undefined) {
+      this.camera.fov = baseFov + this.sprintFovBoost;
+      this.camera.updateProjectionMatrix();
+    }
+  }
+
+  setBaseFov(deg: number): void {
+    this.camera.userData['baseFov'] = deg;
+    this.camera.fov = deg + this.sprintFovBoost;
+    this.camera.updateProjectionMatrix();
   }
 }

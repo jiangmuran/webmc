@@ -66,6 +66,13 @@ export class BlockRegistry {
   get defs(): readonly BlockDef[] {
     return this._defs;
   }
+
+  overrideFaceColors(id: BlockId, colors: { top: RGB; bottom: RGB; side: RGB }): void {
+    const def = this._defs[id];
+    if (!def) return;
+    (def as unknown as { faceColors: BlockDef['faceColors']; color: RGB }).faceColors = colors;
+    (def as unknown as { color: RGB }).color = colors.side;
+  }
 }
 
 interface SimpleBlock {
