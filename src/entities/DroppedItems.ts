@@ -35,11 +35,23 @@ export class DroppedItemWorld {
   private readonly items = new Map<number, DroppedItem>();
   private readonly meshes = new Map<number, THREE.Mesh>();
   private readonly sharedGeom: THREE.BoxGeometry;
+  private readonly materialPool = new Map<number, THREE.MeshBasicMaterial>();
   private nextId = 1;
 
   constructor() {
     this.group = new THREE.Group();
     this.sharedGeom = new THREE.BoxGeometry(ITEM_SIZE, ITEM_SIZE, ITEM_SIZE);
+  }
+
+  private materialFor(r: number, g: number, b: number): THREE.MeshBasicMaterial {
+    const key = (r << 16) | (g << 8) | b;
+    const existing = this.materialPool.get(key);
+    if (existing) return existing;
+    const mat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(r / 255, g / 255, b / 255),
+    });
+    this.materialPool.set(key, mat);
+    return mat;
   }
 
   spawn(x: number, y: number, z: number, data: DroppedItemData, kick = 2): void {
@@ -58,10 +70,7 @@ export class DroppedItemWorld {
     };
     this.items.set(it.id, it);
     const [r, g, b] = data.color;
-    const mat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color(r / 255, g / 255, b / 255),
-    });
-    const mesh = new THREE.Mesh(this.sharedGeom, mat);
+    const mesh = new THREE.Mesh(this.sharedGeom, this.materialFor(r, g, b));
     mesh.position.set(it.x, it.y, it.z);
     this.meshes.set(it.id, mesh);
     this.group.add(mesh);
@@ -128,7 +137,6 @@ export class DroppedItemWorld {
     for (const id of toRemove) {
       const mesh = this.meshes.get(id);
       if (mesh) {
-        (mesh.material as THREE.MeshBasicMaterial).dispose();
         this.group.remove(mesh);
         this.meshes.delete(id);
       }
@@ -142,10 +150,11 @@ export class DroppedItemWorld {
 
   clear(): void {
     for (const mesh of this.meshes.values()) {
-      (mesh.material as THREE.MeshBasicMaterial).dispose();
       this.group.remove(mesh);
     }
     this.meshes.clear();
     this.items.clear();
+    for (const mat of this.materialPool.values()) mat.dispose();
+    this.materialPool.clear();
   }
 }
