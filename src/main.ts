@@ -325,6 +325,7 @@ let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
+let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   rain.setActive(w !== 'clear');
@@ -1309,6 +1310,16 @@ function frame(): void {
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
   blockParticles.tick(dtSec);
   tickTnt(dtSec);
+  weatherTimer -= dtSec;
+  if (weatherTimer <= 0) {
+    const r = Math.random();
+    const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
+    if (next !== currentWeather) {
+      setWeather(next);
+      toast.show(next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm', '#a0d0ff', 1500);
+    }
+    weatherTimer = 180 + Math.random() * 240;
+  }
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
