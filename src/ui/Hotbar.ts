@@ -12,6 +12,7 @@ export class Hotbar {
   private readonly entries: HotbarEntry[];
   private readonly container: HTMLElement;
   private readonly slotEls: HTMLElement[] = [];
+  private readonly countEls: HTMLElement[] = [];
   private readonly label: HTMLElement;
   private labelHideAt = 0;
   private _selected = 0;
@@ -57,8 +58,23 @@ export class Hotbar {
       ].join(';');
       slot.textContent = String(i + 1);
       slot.title = registry.get(stateId(entry.state)).name;
+      const countEl = document.createElement('div');
+      countEl.style.cssText = [
+        'position:absolute',
+        'right:2px',
+        'bottom:0px',
+        'font-size:11px',
+        'font-weight:700',
+        'color:#fff',
+        'text-shadow:1px 1px 0 rgba(0,0,0,0.9)',
+        'pointer-events:none',
+        'line-height:12px',
+      ].join(';');
+      slot.style.position = 'relative';
+      slot.appendChild(countEl);
       this.container.appendChild(slot);
       this.slotEls.push(slot);
+      this.countEls.push(countEl);
     }
     parent.appendChild(this.container);
 
@@ -112,6 +128,10 @@ export class Hotbar {
     return this._selected;
   }
 
+  getEntry(index: number): HotbarEntry | undefined {
+    return this.entries[index];
+  }
+
   select(index: number): void {
     if (index < 0 || index >= this.entries.length) return;
     this._selected = index;
@@ -139,6 +159,27 @@ export class Hotbar {
     el.style.background = `rgb(${String(r)}, ${String(g)}, ${String(b)})`;
     el.title = entry.name;
     if (index === this._selected) this.showLabel();
+  }
+
+  setCounts(counts: readonly number[], emptyBehavior: 'dim' | 'infinite' = 'dim'): void {
+    for (let i = 0; i < this.slotEls.length; i++) {
+      const el = this.slotEls[i];
+      const countEl = this.countEls[i];
+      if (!el || !countEl) continue;
+      const n = counts[i] ?? 0;
+      if (emptyBehavior === 'infinite') {
+        countEl.textContent = '';
+        el.style.filter = 'none';
+        continue;
+      }
+      if (n <= 0) {
+        countEl.textContent = '';
+        el.style.filter = 'grayscale(0.6) brightness(0.55)';
+      } else {
+        countEl.textContent = n > 1 ? String(n) : '';
+        el.style.filter = 'none';
+      }
+    }
   }
 
   private refreshHighlight(): void {

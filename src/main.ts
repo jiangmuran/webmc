@@ -1072,6 +1072,20 @@ function frame(): void {
   hand.update(dtSec);
   interaction.tick(now);
 
+  if (gameMode === 'creative') {
+    hotbar.setCounts([], 'infinite');
+  } else {
+    const counts: number[] = [];
+    for (let i = 0; i < 9; i++) {
+      const entry = hotbar.getEntry(i);
+      if (!entry) { counts.push(0); continue; }
+      const def = registry.get(stateId(entry.state));
+      const itemId = itemRegistry.byName(def.name);
+      counts.push(itemId === undefined ? 0 : countInventoryItem(itemId));
+    }
+    hotbar.setCounts(counts);
+  }
+
   interaction.tickBreak(dtSec);
   if (interaction.breaking && !hand.isSwinging) hand.swing();
   const aim = interaction.castRay();
