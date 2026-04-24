@@ -1652,6 +1652,7 @@ function frame(): void {
       drops: droppedItems.size,
       xpOrbs: xpOrbs.size,
       seed: WORLD_SEED,
+      biome: generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1 ? 'forest' : 'plains',
     });
     hud.textContent = '';
   } else {

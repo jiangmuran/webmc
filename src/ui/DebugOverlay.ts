@@ -83,7 +83,7 @@ export class DebugOverlay {
       `facing  ${facing} (yaw ${yawDeg.toFixed(0)}°, pitch ${pitchDeg.toFixed(0)}°)\n` +
       `meshes ${String(f.meshCount)}  tris ${f.triangles.toLocaleString()}  pending ${String(f.pendingChunks)}\n` +
       entities +
-      `mode  ${f.gameMode}  fly ${f.fly ? 'y' : 'n'}  onGround ${f.onGround ? 'y' : 'n'}  fluid ${f.fluid ?? '-'}\n` +
+      `mode  ${f.gameMode}  fly ${f.fly ? 'y' : 'n'}  onGround ${f.onGround ? 'y' : 'n'}  fluid ${f.fluid ?? '-'}  biome ${f.biome ?? '-'}\n` +
       `HP ${f.health.toFixed(0)}/20  food ${f.hunger.toFixed(0)}/20\n` +
       `time  ${f.timeOfDay.toFixed(2)}${f.seed !== undefined ? `  seed ${String(f.seed)}` : ''}\n` +
       `${f.rendererName}${mem}`;
