@@ -333,6 +333,7 @@ const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let autoWeatherEnabled = true;
+let minimapVisible = true;
 let sprintDustAccum = 0;
 let lavaEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -1075,6 +1076,12 @@ document.addEventListener(
       e.preventDefault();
       autoWeatherEnabled = !autoWeatherEnabled;
       toast.show(`Auto weather: ${autoWeatherEnabled ? 'on' : 'off'}`, '#a0d0ff', 1200);
+    }
+    if (e.code === 'KeyM') {
+      e.preventDefault();
+      minimapVisible = !minimapVisible;
+      minimap.setVisible(minimapVisible);
+      toast.show(`Minimap: ${minimapVisible ? 'on' : 'off'}`, '#cccccc', 1000);
     }
     if (e.code === 'F1') {
       e.preventDefault();
