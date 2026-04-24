@@ -1177,9 +1177,12 @@ function frame(): void {
     });
     hud.textContent = '';
   } else {
+    const hour = Math.floor(((dayNight.timeOfDay + 0.25) * 24) % 24);
+    const minute = Math.floor((((dayNight.timeOfDay + 0.25) * 24) % 1) * 60);
+    const clock = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
     hud.textContent =
-      `webmc — F3 for debug\n` +
-      `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms\n` +
+      `webmc — F3 debug · F5 cam\n` +
+      `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms  ${clock}\n` +
       `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}\n` +
       `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
       `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}`;
