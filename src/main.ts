@@ -1204,6 +1204,11 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
 const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
   // Cascade fallable-block stacks above the edited cell.
   cascadeFalling(bx, by, bz);
+  // If the edited cell itself is fallable, cascade starting one below it.
+  const selfState = world.get(bx, by, bz);
+  if (selfState !== AIR && fallableIds.has(stateId(selfState)) && by > 0) {
+    cascadeFalling(bx, by - 1, bz);
+  }
   const cx = Math.floor(bx / 16);
   const cz = Math.floor(bz / 16);
   const chunk = world.getChunk(cx, cz);
