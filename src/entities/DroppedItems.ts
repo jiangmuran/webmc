@@ -72,8 +72,17 @@ export class DroppedItemWorld {
     const [r, g, b] = data.color;
     const mesh = new THREE.Mesh(this.sharedGeom, this.materialFor(r, g, b));
     mesh.position.set(it.x, it.y, it.z);
+    const scale = 1 + Math.log10(Math.max(1, data.count)) * 0.6;
+    mesh.scale.setScalar(scale);
     this.meshes.set(it.id, mesh);
     this.group.add(mesh);
+  }
+
+  private updateMeshScale(id: number, count: number): void {
+    const mesh = this.meshes.get(id);
+    if (!mesh) return;
+    const scale = 1 + Math.log10(Math.max(1, count)) * 0.6;
+    mesh.scale.setScalar(scale);
   }
 
   tick(
@@ -161,6 +170,7 @@ export class DroppedItemWorld {
         const dz = a.z - b.z;
         if (dx * dx + dy * dy + dz * dz > 0.6 * 0.6) continue;
         a.data = { ...a.data, count: a.data.count + b.data.count };
+        this.updateMeshScale(a.id, a.data.count);
         const mesh = this.meshes.get(b.id);
         if (mesh) {
           this.group.remove(mesh);
