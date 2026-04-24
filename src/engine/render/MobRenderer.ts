@@ -36,24 +36,40 @@ const COLORS: Record<MobKind, number> = {
   parrot: 0x5ec1ff,
 };
 
+interface MobVisual {
+  group: THREE.Group;
+  bodyMat: THREE.MeshBasicMaterial;
+  headMat: THREE.MeshBasicMaterial;
+  headMesh: THREE.Mesh;
+}
+
 export class MobRenderer {
   readonly group = new THREE.Group();
-  private readonly meshes = new Map<number, THREE.Mesh>();
-  private readonly geoms = new Map<MobKind, THREE.BoxGeometry>();
+  private readonly visuals = new Map<number, MobVisual>();
+  private readonly bodyGeoms = new Map<MobKind, THREE.BoxGeometry>();
+  private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
 
   constructor() {
     this.group.name = 'webmc-mob-group';
   }
 
-  private geometryFor(mob: Mob): THREE.BoxGeometry {
-    const existing = this.geoms.get(mob.def.kind);
+  private bodyGeomFor(mob: Mob): THREE.BoxGeometry {
+    const existing = this.bodyGeoms.get(mob.def.kind);
     if (existing) return existing;
-    const g = new THREE.BoxGeometry(
-      mob.def.aabb.halfX * 2,
-      mob.def.aabb.halfY * 2,
-      mob.def.aabb.halfZ * 2,
-    );
-    this.geoms.set(mob.def.kind, g);
+    const bx = mob.def.aabb.halfX * 2;
+    const by = mob.def.aabb.halfY * 2 * 0.7;
+    const bz = mob.def.aabb.halfZ * 2;
+    const g = new THREE.BoxGeometry(bx, by, bz);
+    this.bodyGeoms.set(mob.def.kind, g);
+    return g;
+  }
+
+  private headGeomFor(mob: Mob): THREE.BoxGeometry {
+    const existing = this.headGeoms.get(mob.def.kind);
+    if (existing) return existing;
+    const size = Math.min(mob.def.aabb.halfX, mob.def.aabb.halfZ) * 1.6;
+    const g = new THREE.BoxGeometry(size, size, size);
+    this.headGeoms.set(mob.def.kind, g);
     return g;
   }
 
@@ -61,53 +77,74 @@ export class MobRenderer {
     const seen = new Set<number>();
     for (const mob of mobs) {
       seen.add(mob.id);
-      let mesh = this.meshes.get(mob.id);
-      if (!mesh) {
-        const mat = new THREE.MeshBasicMaterial({ color: COLORS[mob.def.kind] });
-        mesh = new THREE.Mesh(this.geometryFor(mob), mat);
-        mesh.name = `mob-${String(mob.id)}`;
-        this.meshes.set(mob.id, mesh);
-        this.group.add(mesh);
+      let vis = this.visuals.get(mob.id);
+      if (!vis) {
+        const color = COLORS[mob.def.kind];
+        const bodyMat = new THREE.MeshBasicMaterial({ color });
+        const headMat = new THREE.MeshBasicMaterial({ color });
+        const group = new THREE.Group();
+        group.name = `mob-${String(mob.id)}`;
+        const body = new THREE.Mesh(this.bodyGeomFor(mob), bodyMat);
+        body.position.y = -mob.def.aabb.halfY * 0.3;
+        group.add(body);
+        const head = new THREE.Mesh(this.headGeomFor(mob), headMat);
+        const headOffset = mob.def.aabb.halfY * 0.9;
+        const headFront = mob.def.aabb.halfZ * 0.7;
+        head.position.set(0, headOffset, -headFront);
+        group.add(head);
+        this.visuals.set(mob.id, { group, bodyMat, headMat, headMesh: head });
+        this.group.add(group);
+        vis = { group, bodyMat, headMat, headMesh: head };
       }
-      mesh.position.set(mob.position.x, mob.position.y, mob.position.z);
-      mesh.rotation.y = mob.yaw;
+      vis.group.position.set(mob.position.x, mob.position.y, mob.position.z);
+      vis.group.rotation.y = mob.yaw;
       if (mob.dyingSec > 0) {
         const s = mob.dyingSec / 0.35;
-        mesh.scale.setScalar(Math.max(0.01, s));
+        vis.group.scale.setScalar(Math.max(0.01, s));
+        vis.group.rotation.z = (1 - s) * Math.PI * 0.6;
       } else {
-        mesh.scale.setScalar(1);
+        vis.group.scale.setScalar(1);
+        vis.group.rotation.z = 0;
       }
-      const mat = mesh.material as THREE.MeshBasicMaterial;
       if (mob.hurtFlashSec > 0) {
         const base = COLORS[mob.def.kind];
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
         const k = Math.min(1, mob.hurtFlashSec / 0.18);
-        mat.color.setRGB(r * (1 - k) + 1 * k, g * (1 - k) + 0.2 * k, b * (1 - k) + 0.2 * k);
+        const rr = r * (1 - k) + 1 * k;
+        const gg = g * (1 - k) + 0.2 * k;
+        const bb = b * (1 - k) + 0.2 * k;
+        vis.bodyMat.color.setRGB(rr, gg, bb);
+        vis.headMat.color.setRGB(rr, gg, bb);
       } else {
-        mat.color.setHex(COLORS[mob.def.kind]);
+        vis.bodyMat.color.setHex(COLORS[mob.def.kind]);
+        vis.headMat.color.setHex(COLORS[mob.def.kind]);
       }
     }
-    for (const [id, mesh] of this.meshes) {
+    for (const [id, vis] of this.visuals) {
       if (seen.has(id)) continue;
-      (mesh.material as THREE.MeshBasicMaterial).dispose();
-      this.group.remove(mesh);
-      this.meshes.delete(id);
+      vis.bodyMat.dispose();
+      vis.headMat.dispose();
+      this.group.remove(vis.group);
+      this.visuals.delete(id);
     }
   }
 
   clear(): void {
-    for (const m of this.meshes.values()) {
-      (m.material as THREE.MeshBasicMaterial).dispose();
-      this.group.remove(m);
+    for (const vis of this.visuals.values()) {
+      vis.bodyMat.dispose();
+      vis.headMat.dispose();
+      this.group.remove(vis.group);
     }
-    this.meshes.clear();
-    for (const g of this.geoms.values()) g.dispose();
-    this.geoms.clear();
+    this.visuals.clear();
+    for (const g of this.bodyGeoms.values()) g.dispose();
+    for (const g of this.headGeoms.values()) g.dispose();
+    this.bodyGeoms.clear();
+    this.headGeoms.clear();
   }
 
   get count(): number {
-    return this.meshes.size;
+    return this.visuals.size;
   }
 }
