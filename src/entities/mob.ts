@@ -454,13 +454,18 @@ export class MobWorld {
     return this.mobs.size;
   }
 
-  damage(id: MobId, amount: number): void {
+  damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
     const m = this.mobs.get(id);
-    if (!m) return;
+    if (!m) return null;
     m.health -= amount;
     m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
-    if (m.health <= 0) this.mobs.delete(id);
+    if (m.health <= 0) {
+      const snapshot = { killed: true, kind: m.def.kind, position: { ...m.position } };
+      this.mobs.delete(id);
+      return snapshot;
+    }
+    return { killed: false, kind: m.def.kind, position: { ...m.position } };
   }
 
   tick(dtSec: number, ctx: MobTickContext): void {

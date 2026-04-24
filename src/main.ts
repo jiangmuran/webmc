@@ -149,6 +149,18 @@ for (const def of registry.defs) {
 itemRegistry.register({ name: 'webmc:bucket', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:water_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:lava_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:rotten_flesh', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:arrow', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_porkchop', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_beef', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_chicken', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:spider_eye', maxStack: 64, durability: 0 });
 
 const dropRegistry = new BlockDropRegistry();
 for (const [blockId, itemId] of blockToItem) {
@@ -315,11 +327,12 @@ canvas.addEventListener('mousedown', (e) => {
     }
   }
   if (bestId !== null) {
-    mobWorld.damage(bestId, 2);
+    const result = mobWorld.damage(bestId, 2);
     sfx.play('hit');
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
+    if (result?.killed) spawnMobDrops(result.kind, result.position);
   }
 });
 
@@ -715,6 +728,41 @@ async function initMultiplayer(): Promise<void> {
 }
 void initMultiplayer();
 
+function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
+  const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
+  const dropTables: Record<string, ReadonlyArray<{ name: string; min: number; max: number; color: readonly [number, number, number] }>> = {
+    zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+    skeleton: [
+      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+    ],
+    creeper: [{ name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] }],
+    spider: [
+      { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
+      { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
+    ],
+    pig: [{ name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] }],
+    cow: [
+      { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
+      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+    ],
+    sheep: [{ name: 'wool', min: 1, max: 1, color: [240, 240, 240] }],
+    chicken: [
+      { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
+      { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
+    ],
+  };
+  const table = dropTables[kind];
+  if (!table) return;
+  for (const entry of table) {
+    const count = entry.min + Math.floor(Math.random() * (entry.max - entry.min + 1));
+    if (count <= 0) continue;
+    const itemId = lookup(entry.name);
+    if (itemId === undefined) continue;
+    droppedItems.spawn(pos.x, pos.y + 0.5, pos.z, { itemId, count, color: entry.color });
+  }
+}
+
 const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
   const cx = Math.floor(bx / 16);
   const cz = Math.floor(bz / 16);
@@ -825,9 +873,10 @@ function frame(): void {
           }
         }
         if (bestId !== null) {
-          mobWorld.damage(bestId, 2);
+          const result = mobWorld.damage(bestId, 2);
           sfx.play('hit');
           screenShake.pulse(0.15);
+          if (result?.killed) spawnMobDrops(result.kind, result.position);
         } else {
           interaction.setHeld('break');
         }
