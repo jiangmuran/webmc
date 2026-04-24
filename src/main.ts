@@ -885,6 +885,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     fp.invertY = v.invertY;
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
+    if (v.showCrosshair) crosshair.show(); else crosshair.hide();
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);

@@ -7,6 +7,7 @@ export interface SettingsValues {
   invertY: boolean;
   sprintToggle: boolean;
   brightness: number;
+  showCrosshair: boolean;
 }
 
 export const DEFAULT_SETTINGS: SettingsValues = {
@@ -18,6 +19,7 @@ export const DEFAULT_SETTINGS: SettingsValues = {
   invertY: false,
   sprintToggle: false,
   brightness: 1.0,
+  showCrosshair: true,
 };
 
 const STORAGE_KEY = 'webmc:settings';
@@ -97,6 +99,7 @@ export class SettingsPanel {
     this.slider(panel, 'Brightness', 'brightness', 0.5, 2.0, 0.05);
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
+    this.checkbox(panel, 'Show crosshair', 'showCrosshair');
 
     const presetRow = document.createElement('div');
     presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;';
