@@ -136,9 +136,18 @@ export class MobRenderer {
         const s = mob.dyingSec / 0.35;
         vis.group.scale.setScalar(Math.max(0.01, s));
         vis.group.rotation.z = (1 - s) * Math.PI * 0.6;
+        vis.group.rotation.x = 0;
       } else {
         vis.group.scale.setScalar(1);
         vis.group.rotation.z = 0;
+        // Walk bob: lean forward/back based on horizontal velocity magnitude.
+        const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
+        if (vh > 0.3) {
+          const phase = performance.now() * 0.012 + mob.id * 0.37;
+          vis.group.rotation.x = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
+        } else {
+          vis.group.rotation.x = 0;
+        }
       }
       if (mob.hurtFlashSec > 0) {
         const base = COLORS[mob.def.kind];
