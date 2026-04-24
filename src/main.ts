@@ -413,7 +413,7 @@ const interaction = new InteractionController(
         sfx.play('click');
         return true;
       }
-      if (def.name === 'webmc:crafting_table') {
+      if (def.name === 'webmc:crafting_table' || def.name === 'webmc:furnace') {
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
