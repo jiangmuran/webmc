@@ -341,6 +341,17 @@ const playerStats = {
   distanceWalked: 0,
   playtimeSec: 0,
 };
+void persistDB.getMeta('playerStats').then((saved) => {
+  if (saved && typeof saved === 'object') {
+    const s = saved as Record<string, unknown>;
+    if (typeof s['blocksBroken'] === 'number') playerStats.blocksBroken = s['blocksBroken'];
+    if (typeof s['blocksPlaced'] === 'number') playerStats.blocksPlaced = s['blocksPlaced'];
+    if (typeof s['mobsKilled'] === 'number') playerStats.mobsKilled = s['mobsKilled'];
+    if (typeof s['distanceWalked'] === 'number') playerStats.distanceWalked = s['distanceWalked'];
+    if (typeof s['playtimeSec'] === 'number') playerStats.playtimeSec = s['playtimeSec'];
+  }
+});
+let statsSaveAccum = 0;
 let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
@@ -1627,6 +1638,11 @@ function frame(): void {
     }
     lastStatsPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
     playerStats.playtimeSec += dtSec;
+    statsSaveAccum += dtSec;
+    if (statsSaveAccum > 30) {
+      statsSaveAccum = 0;
+      void persistDB.setMeta('playerStats', playerStats);
+    }
   }
   // Sprint dust particles
   if (fp.input.sprint && fp.onGround && !fp.input.fly && horizSpeed > 3) {
