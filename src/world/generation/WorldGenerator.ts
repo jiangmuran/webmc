@@ -32,6 +32,7 @@ export interface GeneratedBlocks {
   deepslate: BlockState;
   mossyCobble: BlockState;
   cobble: BlockState;
+  water: BlockState;
 }
 
 interface OreBand {
@@ -96,6 +97,7 @@ export class WorldGenerator {
       deepslate: resolve(registry, 'webmc:deepslate'),
       mossyCobble: resolve(registry, 'webmc:mossy_cobblestone'),
       cobble: resolve(registry, 'webmc:cobblestone'),
+      water: resolve(registry, 'webmc:water'),
     };
   }
 
@@ -131,7 +133,7 @@ export class WorldGenerator {
   }
 
   generateChunk(chunk: Chunk): void {
-    const { stone, dirt, grass, sand, log, leaves, deepslate } = this.blocks;
+    const { stone, dirt, grass, sand, log, leaves, deepslate, water } = this.blocks;
     const cx = chunk.cx;
     const cz = chunk.cz;
     for (let lx = 0; lx < CHUNK_DIM; lx++) {
@@ -155,6 +157,12 @@ export class WorldGenerator {
             if (ore !== null) state = ore;
           }
           chunk.set(lx, y, lz, state);
+        }
+        // Flood oceans, rivers, and low terrain with water up to sea level.
+        if (surface < SEA_LEVEL) {
+          for (let y = surface + 1; y <= SEA_LEVEL; y++) {
+            chunk.set(lx, y, lz, water);
+          }
         }
         if (biome === FOREST && topBlock === grass) {
           const h = hash32(wx, wz, this.seed);
