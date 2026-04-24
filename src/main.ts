@@ -1338,6 +1338,7 @@ function frame(): void {
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
     damagePlayer: (amt) => {
       playerState.takeDamage({ amount: amt, source: 'mob' });
+      if (!playerState.invulnerable && amt > 0) sfx.play('hit');
     },
   });
   mobRenderer.sync(mobWorld.all());
