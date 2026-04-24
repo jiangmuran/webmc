@@ -554,6 +554,10 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
   },
+  onEat: (_id, hungerRestore, saturation) => {
+    playerState.eat(hungerRestore, saturation);
+    sfx.play('click');
+  },
 }, recipeRegistry);
 
 const creativeInv = new CreativeInventory(appEl, registry, {

@@ -5,6 +5,7 @@ import { attemptCraft, hasAllIngredients } from '@/items/CraftingHelper';
 
 export interface SurvivalInventoryCallbacks {
   onClose: () => void;
+  onEat?: (itemId: number, hungerRestore: number, saturation: number) => void;
 }
 
 export class SurvivalInventory {
@@ -59,6 +60,7 @@ export class SurvivalInventory {
     panel.appendChild(mainLabel);
 
     this.grid = document.createElement('div');
+    this.grid.setAttribute('data-main-grid', 'true');
     this.grid.style.cssText = [
       'display:grid',
       'grid-template-columns:repeat(9, 40px)',
@@ -127,6 +129,26 @@ export class SurvivalInventory {
     count.textContent = String(stack.count);
     count.style.cssText = 'font-size:11px;font-weight:700;text-shadow:1px 1px 0 rgba(0,0,0,0.8);';
     slot.appendChild(count);
+    if (def.hungerRestore !== undefined && def.hungerRestore > 0 && this.cb.onEat) {
+      slot.style.cursor = 'pointer';
+      slot.style.borderColor = 'rgba(140,220,120,0.6)';
+      slot.title = `Click to eat (+${String(def.hungerRestore)} hunger)`;
+      slot.addEventListener('click', () => {
+        if (!this.cb.onEat) return;
+        const container = slot.parentElement;
+        if (!container) return;
+        const idx = Array.from(container.children).indexOf(slot);
+        if (idx < 0) return;
+        const whichList = container.getAttribute('data-hotbar-grid') ? 'hotbar' : 'main';
+        const slots = whichList === 'hotbar' ? this.inventory.hotbar : this.inventory.main;
+        const cur = slots[idx];
+        if (!cur || cur.count <= 0) return;
+        this.cb.onEat(def.id, def.hungerRestore ?? 0, def.saturation ?? 0);
+        const after = cur.count - 1;
+        slots[idx] = after <= 0 ? null : { ...cur, count: after };
+        this.refresh();
+      });
+    }
     return slot;
   }
 
