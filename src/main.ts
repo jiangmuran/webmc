@@ -670,7 +670,15 @@ const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
+    void persistDB.setMeta('chestStorage', chestUI.storage);
   },
+});
+void persistDB.getMeta('chestStorage').then((saved) => {
+  if (!Array.isArray(saved)) return;
+  for (let i = 0; i < Math.min(27, saved.length); i++) {
+    const v = saved[i];
+    chestUI.storage[i] = (v && typeof v === 'object') ? v as typeof chestUI.storage[number] : null;
+  }
 });
 
 const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
