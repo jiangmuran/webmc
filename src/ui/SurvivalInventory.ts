@@ -97,11 +97,22 @@ export class SurvivalInventory {
     this.smeltList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto;';
     panel.appendChild(this.smeltList);
 
+    const buttonRow = document.createElement('div');
+    buttonRow.style.cssText = 'display:flex;gap:8px;align-self:flex-end;';
+    const sortBtn = document.createElement('button');
+    sortBtn.textContent = 'Sort';
+    sortBtn.style.cssText = 'padding:6px 14px;background:rgba(70,100,70,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    sortBtn.addEventListener('click', () => {
+      this.sortInventory();
+      this.refresh();
+    });
+    buttonRow.appendChild(sortBtn);
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.style.cssText = 'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
     close.addEventListener('click', () => { this.hide(); });
-    panel.appendChild(close);
+    buttonRow.appendChild(close);
+    panel.appendChild(buttonRow);
 
     this.root.appendChild(panel);
     parent.appendChild(this.root);
@@ -239,6 +250,23 @@ export class SurvivalInventory {
       hint.textContent = 'Need coal to smelt.';
       hint.style.cssText = 'opacity:0.6;font-size:11px;';
       this.smeltList.appendChild(hint);
+    }
+  }
+
+  private sortInventory(): void {
+    // Merge all stacks, consolidate by itemId, then re-layout sorted by itemId.
+    const totals = new Map<number, number>();
+    for (const list of [this.inventory.hotbar, this.inventory.main]) {
+      for (let i = 0; i < list.length; i++) {
+        const s = list[i];
+        if (!s || s.count <= 0) continue;
+        totals.set(s.itemId, (totals.get(s.itemId) ?? 0) + s.count);
+        list[i] = null;
+      }
+    }
+    const sorted = Array.from(totals.entries()).sort((a, b) => a[0] - b[0]);
+    for (const [itemId, total] of sorted) {
+      this.inventory.add({ itemId, count: total, damage: 0 });
     }
   }
 
