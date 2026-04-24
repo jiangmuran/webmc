@@ -351,6 +351,12 @@ function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
 void persistDB.getMeta('weather').then((saved) => {
   if (saved === 'clear' || saved === 'rain' || saved === 'thunder') setWeather(saved);
 });
+void persistDB.getMeta('timeOfDay').then((saved) => {
+  if (typeof saved === 'number' && Number.isFinite(saved) && saved >= 0 && saved < 1) {
+    dayNight.timeOfDay = saved;
+  }
+});
+let timeSaveAccum = 0;
 
 let lightningFlashSec = 0;
 function lightningFlash(): void {
@@ -1636,6 +1642,11 @@ function frame(): void {
     }
   }
   dayNight.tick(dtSec);
+  timeSaveAccum += dtSec;
+  if (timeSaveAccum > 10) {
+    timeSaveAccum = 0;
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+  }
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
   const weatherDimming = (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
