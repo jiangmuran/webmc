@@ -1894,6 +1894,11 @@ function frame(): void {
   renderer.render(scene, camera);
 
   playerState.sprinting = fp.input.sprint;
+  if (mobDamageMultiplier === 0) {
+    // Peaceful: auto-regen HP + hunger, no starvation.
+    if (playerState.health < 20) playerState.heal(1 * dtSec);
+    if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
+  }
   playerState.tick(dtSec, { inFluid: fp.inFluid });
 
   if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure')) {
