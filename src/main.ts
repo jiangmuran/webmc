@@ -39,6 +39,9 @@ import { CreativeInventory } from './ui/CreativeInventory';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
 import { DebugOverlay } from './ui/DebugOverlay';
+import { Crosshair } from './ui/Crosshair';
+import { ProceduralSfx } from './engine/audio/ProceduralSfx';
+import { RainParticles } from './engine/render/RainParticles';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
@@ -196,6 +199,15 @@ const spawnSystem = new SpawnSystem();
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
+const crosshair = new Crosshair(appEl);
+const sfx = new ProceduralSfx();
+sfx.attachUnlock(document.body);
+const rain = new RainParticles();
+scene.add(rain.group);
+function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
+  rain.setActive(w !== 'clear');
+}
+
 const mesherClient = createMesherClient();
 const audio = new AudioBus({ masterVolume: 0.35 });
 audio.attachUnlock(document.body);
@@ -211,6 +223,7 @@ const interaction = new InteractionController(
   {
     onBreak: (bx, by, bz) => {
       audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
+      sfx.play('break');
       const prevState = world.get(bx, by, bz);
       const prevBlockId = stateId(prevState);
       const drops = dropRegistry.drops(prevBlockId, undefined, 99);
@@ -219,6 +232,7 @@ const interaction = new InteractionController(
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
+      sfx.play('place');
       const sel = hotbar.selected;
       const blockId = sel ? stateId(sel.state) : 0;
       touchWorldEdit(bx, by, bz, blockId);
@@ -258,7 +272,7 @@ const chatInput = new ChatInput(appEl, {
         gameMode,
         setGameMode: (m) => applyGameMode(m),
         setTimeOfDay: (t) => dayNight.setTimeOfDayTicks(t),
-        setWeather: () => chatInput.addLine('weather not yet wired', '#888'),
+        setWeather: (w) => setWeather(w),
         giveItem: (name, count) => {
           const candidates = [name, `webmc:${name}`, `webmc:${name}_block`];
           let id: number | undefined;
@@ -338,6 +352,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     loader.setViewRadius(v.viewDistance);
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
     audio.setMasterVolume(v.masterVolume);
+    sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
     const far = v.viewDistance * 16;
     (chunkRenderer.material.uniforms['uFogFar'] as { value: number }).value = far;
@@ -449,10 +464,13 @@ const debugOverlay = new DebugOverlay(appEl);
 
 document.addEventListener('pointerlockchange', () => {
   if (document.pointerLockElement !== canvas) {
-    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen()) {
+    crosshair.hide();
+    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
     }
+  } else {
+    crosshair.show();
   }
 });
 
@@ -700,6 +718,9 @@ function frame(): void {
   }
 
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
+  rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
+  const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+  sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
   const uniforms = chunkRenderer.material.uniforms;
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
