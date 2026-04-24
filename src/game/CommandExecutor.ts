@@ -24,6 +24,7 @@ export interface CommandContext {
   seed?: () => number;
   killAllMobs?: () => number;
   particle?: (x: number, y: number, z: number) => void;
+  listAchievements?: () => ReadonlyArray<{ title: string; unlocked: boolean }>;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -84,6 +85,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'killall') {
     const n = ctx.killAllMobs?.() ?? 0;
     ctx.broadcast(`Removed ${String(n)} mobs.`, '#80ff80');
+    return;
+  }
+  if (head === 'achievements' || head === 'ach') {
+    const list = ctx.listAchievements?.() ?? [];
+    for (const a of list) {
+      ctx.broadcast(`${a.unlocked ? '✔' : '✗'} ${a.title}`, a.unlocked ? '#80ff80' : '#888888');
+    }
     return;
   }
   if (head === 'particle') {

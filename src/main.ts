@@ -805,6 +805,8 @@ const chatInput = new ChatInput(appEl, {
         particle: (x, y, z) => {
           blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [255, 220, 100]);
         },
+        listAchievements: () =>
+          achievements.map((a) => ({ title: a.title, unlocked: achievedSet.has(a.id) })),
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
