@@ -22,6 +22,8 @@ describe('PlayerState', () => {
     const p = build();
     p.takeDamage({ amount: 5 });
     expect(p.health).toBe(15);
+    // Rapid hits are blocked by MC-style i-frames; wait out.
+    p.hitImmuneSec = 0;
     p.takeDamage({ amount: 100 });
     // Lethal damage immediately triggers respawn → back to full HP.
     expect(p.health).toBe(MAX_HEALTH);

@@ -47,11 +47,14 @@ export class PlayerState {
 
   invulnerable = false;
   justDied = false;
+  hitImmuneSec = 0;
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
     if (this.health <= 0) return;
+    if (this.hitImmuneSec > 0 && ev.source !== 'starvation' && ev.source !== 'drown') return;
     this.health = Math.max(0, this.health - ev.amount);
+    this.hitImmuneSec = 0.5;
     if (this.health === 0) {
       this.justDied = true;
       this.respawn();
@@ -89,6 +92,7 @@ export class PlayerState {
   }
 
   tick(dtSec: number, env: { inFluid?: 'water' | 'lava' | null } = {}): void {
+    if (this.hitImmuneSec > 0) this.hitImmuneSec = Math.max(0, this.hitImmuneSec - dtSec);
     if (this.health <= 0) return;
     let decay = HUNGER_DECAY_PER_SEC;
     if (this.sprinting) decay *= 4;
