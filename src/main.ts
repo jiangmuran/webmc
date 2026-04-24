@@ -1385,6 +1385,7 @@ function frame(): void {
       mobs: mobWorld.size,
       drops: droppedItems.size,
       xpOrbs: xpOrbs.size,
+      seed: WORLD_SEED,
     });
     hud.textContent = '';
   } else {

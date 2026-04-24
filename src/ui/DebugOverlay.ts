@@ -21,6 +21,7 @@ export interface DebugFrame {
   mobs?: number;
   drops?: number;
   xpOrbs?: number;
+  seed?: number;
 }
 
 export class DebugOverlay {
@@ -84,7 +85,7 @@ export class DebugOverlay {
       entities +
       `mode  ${f.gameMode}  fly ${f.fly ? 'y' : 'n'}  onGround ${f.onGround ? 'y' : 'n'}  fluid ${f.fluid ?? '-'}\n` +
       `HP ${f.health.toFixed(0)}/20  food ${f.hunger.toFixed(0)}/20\n` +
-      `time  ${f.timeOfDay.toFixed(2)}\n` +
+      `time  ${f.timeOfDay.toFixed(2)}${f.seed !== undefined ? `  seed ${String(f.seed)}` : ''}\n` +
       `${f.rendererName}${mem}`;
   }
 }
