@@ -330,6 +330,31 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:packed_ice', color: [145, 180, 230] as RGB, hardness: 0.5 },
     // End cities.
     { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
+    // Utility blocks (interactable).
+    {
+      name: 'webmc:chest',
+      top: [120, 82, 36] as RGB,
+      side: [132, 96, 45] as RGB,
+      bottom: [85, 55, 25] as RGB,
+      color: [132, 96, 45] as RGB,
+      hardness: 2.5,
+    },
+    {
+      name: 'webmc:crafting_table',
+      top: [110, 75, 38] as RGB,
+      side: [138, 96, 48] as RGB,
+      bottom: [100, 72, 38] as RGB,
+      color: [138, 96, 48] as RGB,
+      hardness: 2.5,
+    },
+    {
+      name: 'webmc:furnace',
+      top: [72, 72, 72] as RGB,
+      side: [96, 96, 96] as RGB,
+      bottom: [72, 72, 72] as RGB,
+      color: [96, 96, 96] as RGB,
+      hardness: 3.5,
+    },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));
   }

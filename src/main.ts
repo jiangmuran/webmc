@@ -42,6 +42,7 @@ import { PauseMenu } from './ui/PauseMenu';
 import { ChatInput } from './ui/ChatInput';
 import { CreativeInventory } from './ui/CreativeInventory';
 import { SurvivalInventory } from './ui/SurvivalInventory';
+import { ChestUI } from './ui/ChestUI';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
 import { DebugOverlay } from './ui/DebugOverlay';
@@ -192,9 +193,6 @@ itemRegistry.register({ name: 'webmc:bread', maxStack: 64, durability: 0, hunger
 itemRegistry.register({ name: 'webmc:cookie', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
 itemRegistry.register({ name: 'webmc:cake', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:torch', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:crafting_table', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:furnace', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:chest', maxStack: 64, durability: 0 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
@@ -390,12 +388,33 @@ const interaction = new InteractionController(
       if (state === AIR) return false;
       const id = stateId(state);
       const def = registry.get(id);
-      // Doors and trapdoors: toggle open-flag bit in the props word.
-      if (def.name.endsWith('_door') || def.name.endsWith('_trapdoor')) {
+      // Doors / trapdoors / levers / buttons: toggle the "powered/open" bit.
+      const interactable =
+        def.name.endsWith('_door') ||
+        def.name.endsWith('_trapdoor') ||
+        def.name.endsWith('_button') ||
+        def.name.endsWith('_pressure_plate') ||
+        def.name === 'webmc:lever';
+      if (interactable) {
         const props = (state >>> 16) ^ 1;
         world.set(bx, by, bz, makeState(id, props));
         sfx.play('click');
         touchWorldEdit(bx, by, bz, id);
+        return true;
+      }
+      if (def.name === 'webmc:chest') {
+        chestUI.show();
+        fp.inputBlocked = true;
+        document.exitPointerLock();
+        sfx.play('click');
+        return true;
+      }
+      if (def.name === 'webmc:crafting_table') {
+        if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
+        else creativeInv.show();
+        fp.inputBlocked = true;
+        document.exitPointerLock();
+        sfx.play('click');
         return true;
       }
       return false;
@@ -643,6 +662,13 @@ const mainMenu = new MainMenu(appEl, {
 fp.inputBlocked = true;
 applyGameMode(gameMode);
 
+const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
+  onClose: () => {
+    fp.inputBlocked = false;
+    void canvas.requestPointerLock();
+  },
+});
+
 const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
@@ -699,6 +725,13 @@ document.addEventListener(
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
         survivalInv.hide();
+      }
+      return;
+    }
+    if (chestUI.isVisible()) {
+      if (e.code === 'Escape' || e.code === 'KeyE') {
+        e.preventDefault();
+        chestUI.hide();
       }
       return;
     }
@@ -775,7 +808,7 @@ const debugOverlay = new DebugOverlay(appEl);
 document.addEventListener('pointerlockchange', () => {
   if (document.pointerLockElement !== canvas) {
     crosshair.hide();
-    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible() && !survivalInv.isVisible()) {
+    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible() && !survivalInv.isVisible() && !chestUI.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
     }
