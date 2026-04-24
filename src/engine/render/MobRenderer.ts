@@ -71,6 +71,17 @@ export class MobRenderer {
       }
       mesh.position.set(mob.position.x, mob.position.y, mob.position.z);
       mesh.rotation.y = mob.yaw;
+      const mat = mesh.material as THREE.MeshBasicMaterial;
+      if (mob.hurtFlashSec > 0) {
+        const base = COLORS[mob.def.kind];
+        const r = ((base >> 16) & 0xff) / 255;
+        const g = ((base >> 8) & 0xff) / 255;
+        const b = (base & 0xff) / 255;
+        const k = Math.min(1, mob.hurtFlashSec / 0.18);
+        mat.color.setRGB(r * (1 - k) + 1 * k, g * (1 - k) + 0.2 * k, b * (1 - k) + 0.2 * k);
+      } else {
+        mat.color.setHex(COLORS[mob.def.kind]);
+      }
     }
     for (const [id, mesh] of this.meshes) {
       if (seen.has(id)) continue;

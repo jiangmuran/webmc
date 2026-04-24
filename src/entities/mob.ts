@@ -403,6 +403,8 @@ export interface Mob {
   fuseSec: number;
   // Endermen teleport randomly on a timer when aggroed.
   teleportCooldownSec: number;
+  // Hurt flash timer — renderer tints mob red while > 0.
+  hurtFlashSec: number;
 }
 
 const GRAVITY = 32;
@@ -434,6 +436,7 @@ export class MobWorld {
       provoked: false,
       fuseSec: 0,
       teleportCooldownSec: 0,
+      hurtFlashSec: 0,
     };
     this.mobs.set(mob.id, mob);
     return mob;
@@ -455,6 +458,7 @@ export class MobWorld {
     const m = this.mobs.get(id);
     if (!m) return;
     m.health -= amount;
+    m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
     if (m.health <= 0) this.mobs.delete(id);
   }
@@ -481,6 +485,7 @@ export class MobWorld {
       mob.attackCooldownSec = Math.max(0, mob.attackCooldownSec - dtSec);
     if (mob.teleportCooldownSec > 0)
       mob.teleportCooldownSec = Math.max(0, mob.teleportCooldownSec - dtSec);
+    if (mob.hurtFlashSec > 0) mob.hurtFlashSec = Math.max(0, mob.hurtFlashSec - dtSec);
 
     const aggro = this.isAggroTarget(mob);
     if (aggro && ctx.playerPos) {
