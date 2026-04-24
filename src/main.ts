@@ -684,6 +684,11 @@ const chatInput = new ChatInput(appEl, {
             return false;
           }
         },
+        openChest: () => {
+          chestUI.show();
+          fp.inputBlocked = true;
+          document.exitPointerLock();
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');

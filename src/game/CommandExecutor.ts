@@ -19,6 +19,7 @@ export interface CommandContext {
   save?: () => void;
   showStats?: () => void;
   summon?: (kind: string, x: number, y: number, z: number) => boolean;
+  openChest?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -60,6 +61,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'stats') {
     ctx.showStats?.();
+    return;
+  }
+  if (head === 'chest') {
+    ctx.openChest?.();
     return;
   }
   if (head === 'summon') {
