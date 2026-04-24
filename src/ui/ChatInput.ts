@@ -91,7 +91,7 @@ export class ChatInput {
     line.textContent = text;
     line.style.cssText = `background:rgba(0,0,0,0.55);padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;`;
     this.log.appendChild(line);
-    while (this.log.children.length > 20) this.log.removeChild(this.log.firstChild!);
+    while (this.log.children.length > 40) this.log.removeChild(this.log.firstChild!);
     setTimeout(() => {
       if (!this.open && this.log.contains(line)) {
         line.style.opacity = '0';
