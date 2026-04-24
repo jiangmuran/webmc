@@ -30,6 +30,7 @@ import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
+import { intersectRayAABB } from './physics/raycast_aabb';
 import { FluidWorld } from './fluids/FluidWorld';
 import { PerfMonitor } from './engine/time/PerfMonitor';
 import { MainMenu } from './ui/MainMenu';
@@ -219,6 +220,7 @@ scene.add(blockParticles.group);
 const clouds = new Clouds();
 scene.add(clouds.mesh);
 const screenShake = new ScreenShake();
+let lastTouchPrimary = false;
 const sky = new SkyCelestials();
 sky.addTo(scene);
 const stars = new Stars();
@@ -268,6 +270,37 @@ const interaction = new InteractionController(
 );
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
+
+canvas.addEventListener('mousedown', (e) => {
+  if (document.pointerLockElement !== canvas) return;
+  if (e.button !== 0) return;
+  const origin = camera.position;
+  const look = fp.lookVector();
+  const reach = 5;
+  let bestId: number | null = null;
+  let bestDist = Infinity;
+  for (const mob of mobWorld.all()) {
+    const box = {
+      minX: mob.position.x - mob.def.aabb.halfX,
+      minY: mob.position.y - mob.def.aabb.halfY,
+      minZ: mob.position.z - mob.def.aabb.halfZ,
+      maxX: mob.position.x + mob.def.aabb.halfX,
+      maxY: mob.position.y + mob.def.aabb.halfY,
+      maxZ: mob.position.z + mob.def.aabb.halfZ,
+    };
+    const hit = intersectRayAABB(origin, look, box, reach);
+    if (hit && hit.tMin < bestDist) {
+      bestDist = hit.tMin;
+      bestId = mob.id;
+    }
+  }
+  if (bestId !== null) {
+    mobWorld.damage(bestId, 2);
+    sfx.play('hit');
+    interaction.setHeld(null);
+    screenShake.pulse(0.15);
+  }
+});
 
 const hotbar = new Hotbar(appEl, registry, [
   { state: STONE, name: 'stone', color: colorOf(STONE) },
@@ -744,9 +777,40 @@ function frame(): void {
   }
   fp.update(dtSec, { isSolid, isFluid });
   if (touch) {
-    if (touch.state.primary) interaction.setHeld('break');
-    else if (touch.state.secondary) interaction.setHeld('place');
+    if (touch.state.primary) {
+      if (!lastTouchPrimary) {
+        const origin = camera.position;
+        const look = fp.lookVector();
+        let bestId: number | null = null;
+        let bestDist = Infinity;
+        for (const mob of mobWorld.all()) {
+          const box = {
+            minX: mob.position.x - mob.def.aabb.halfX,
+            minY: mob.position.y - mob.def.aabb.halfY,
+            minZ: mob.position.z - mob.def.aabb.halfZ,
+            maxX: mob.position.x + mob.def.aabb.halfX,
+            maxY: mob.position.y + mob.def.aabb.halfY,
+            maxZ: mob.position.z + mob.def.aabb.halfZ,
+          };
+          const hit = intersectRayAABB(origin, look, box, 5);
+          if (hit && hit.tMin < bestDist) {
+            bestDist = hit.tMin;
+            bestId = mob.id;
+          }
+        }
+        if (bestId !== null) {
+          mobWorld.damage(bestId, 2);
+          sfx.play('hit');
+          screenShake.pulse(0.15);
+        } else {
+          interaction.setHeld('break');
+        }
+      } else {
+        interaction.setHeld('break');
+      }
+    } else if (touch.state.secondary) interaction.setHeld('place');
     else interaction.setHeld(null);
+    lastTouchPrimary = touch.state.primary;
   }
 
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
