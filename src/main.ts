@@ -457,17 +457,16 @@ const interaction = new InteractionController(
         return true;
       }
       if (def.name === 'webmc:bed') {
+        playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
+        void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         if (!dayNight.isDay) {
           dayNight.setTimeOfDayTicks(1000);
-          playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
           toast.show(`Spawn set. Day ${String(++dayCounter)}`, '#ffb0c0');
           chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
-          sfx.play('click');
         } else {
-          playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
           toast.show('Spawn set', '#ffb0c0', 1200);
-          sfx.play('click');
         }
+        sfx.play('click');
         return true;
       }
       if (def.name === 'webmc:crafting_table' || def.name === 'webmc:furnace') {
@@ -613,6 +612,14 @@ let lastXpLevel = 0;
 let lastIsDay = true;
 let dayCounter = 1;
 let playerSpawnPoint: { x: number; y: number; z: number } | null = null;
+void persistDB.getMeta('playerSpawnPoint').then((saved) => {
+  if (saved && typeof saved === 'object' && 'x' in saved && 'y' in saved && 'z' in saved) {
+    const p = saved as { x: unknown; y: unknown; z: unknown };
+    if (typeof p.x === 'number' && typeof p.y === 'number' && typeof p.z === 'number') {
+      playerSpawnPoint = { x: p.x, y: p.y, z: p.z };
+    }
+  }
+});
 let lastInFluid: 'water' | 'lava' | null = null;
 
 const chatInput = new ChatInput(appEl, {
