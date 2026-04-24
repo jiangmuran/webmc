@@ -331,6 +331,7 @@ const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
+let autoWeatherEnabled = true;
 let sprintDustAccum = 0;
 let lavaEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -1067,6 +1068,11 @@ document.addEventListener(
       fp.bobEnabled = !fp.bobEnabled;
       toast.show(`View bob: ${fp.bobEnabled ? 'on' : 'off'}`, '#cccccc', 1200);
     }
+    if (e.code === 'F7') {
+      e.preventDefault();
+      autoWeatherEnabled = !autoWeatherEnabled;
+      toast.show(`Auto weather: ${autoWeatherEnabled ? 'on' : 'off'}`, '#a0d0ff', 1200);
+    }
     if (e.code === 'F1') {
       e.preventDefault();
       controlsHelp.toggle();
@@ -1654,15 +1660,17 @@ function frame(): void {
       }
     }
   }
-  weatherTimer -= dtSec;
-  if (weatherTimer <= 0) {
-    const r = Math.random();
-    const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
-    if (next !== currentWeather) {
-      setWeather(next);
-      toast.show(next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm', '#a0d0ff', 1500);
+  if (autoWeatherEnabled) {
+    weatherTimer -= dtSec;
+    if (weatherTimer <= 0) {
+      const r = Math.random();
+      const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
+      if (next !== currentWeather) {
+        setWeather(next);
+        toast.show(next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm', '#a0d0ff', 1500);
+      }
+      weatherTimer = 180 + Math.random() * 240;
     }
-    weatherTimer = 180 + Math.random() * 240;
   }
   if (currentWeather === 'thunder') {
     lightningTimer -= dtSec;
