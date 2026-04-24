@@ -35,6 +35,8 @@ import { PerfMonitor } from './engine/time/PerfMonitor';
 import { MainMenu } from './ui/MainMenu';
 import { PauseMenu } from './ui/PauseMenu';
 import { ChatInput } from './ui/ChatInput';
+import { CreativeInventory } from './ui/CreativeInventory';
+import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
 
@@ -301,6 +303,15 @@ const pauseMenu = new PauseMenu(appEl, {
   },
 });
 
+const resourcePackLoader = new ResourcePackLoader(appEl, {
+  onLoaded: (pack) => {
+    chatInput.addLine(
+      `Resource pack loaded: ${pack.packName} (${pack.blockTextures.size} block + ${pack.itemTextures.size} item textures)`,
+      '#80ff80',
+    );
+  },
+});
+
 const mainMenu = new MainMenu(appEl, {
   onPlay: () => {
     fp.inputBlocked = false;
@@ -308,15 +319,43 @@ const mainMenu = new MainMenu(appEl, {
     canvas.requestPointerLock();
   },
   onOpenSettings: () => chatInput.addLine('Settings panel coming soon', '#ffcc80'),
-  onOpenResourcePacks: () => chatInput.addLine('Resource pack loader coming soon', '#ffcc80'),
+  onOpenResourcePacks: () => resourcePackLoader.show(),
 });
 fp.inputBlocked = true;
+
+const creativeInv = new CreativeInventory(appEl, registry, {
+  onPick: (entry) => {
+    hotbar.setEntry(hotbar.selectedIndex, {
+      state: entry.state,
+      name: entry.shortName,
+      color: entry.color,
+    });
+    interaction.selectedBlock = entry.state;
+    chatInput.addLine(`Picked ${entry.shortName}`, '#80d080');
+  },
+});
 
 document.addEventListener(
   'keydown',
   (e) => {
     if (mainMenu.isVisible()) return;
     if (chatInput.isOpen()) return;
+    if (creativeInv.isVisible()) {
+      if (e.code === 'Escape' || e.code === 'KeyE') {
+        e.preventDefault();
+        creativeInv.hide();
+        fp.inputBlocked = false;
+        canvas.requestPointerLock();
+      }
+      return;
+    }
+    if (e.code === 'KeyE' && gameMode === 'creative') {
+      e.preventDefault();
+      creativeInv.show();
+      fp.inputBlocked = true;
+      document.exitPointerLock();
+      return;
+    }
     if (e.code === 'Escape') {
       e.preventDefault();
       if (pauseMenu.isVisible()) {

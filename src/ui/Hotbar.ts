@@ -83,10 +83,24 @@ export class Hotbar {
     return this.entries[this._selected] ?? null;
   }
 
+  get selectedIndex(): number {
+    return this._selected;
+  }
+
   select(index: number): void {
     if (index < 0 || index >= this.entries.length) return;
     this._selected = index;
     this.refreshHighlight();
+  }
+
+  setEntry(index: number, entry: HotbarEntry): void {
+    if (index < 0 || index >= this.entries.length) return;
+    this.entries[index] = entry;
+    const el = this.slotEls[index];
+    if (!el) return;
+    const [r, g, b] = entry.color;
+    el.style.background = `rgb(${String(r)}, ${String(g)}, ${String(b)})`;
+    el.title = entry.name;
   }
 
   private refreshHighlight(): void {
