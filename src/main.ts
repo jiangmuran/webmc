@@ -550,6 +550,7 @@ deathScreen.setOnRespawn(() => {
 });
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
+let lastXpLevel = 0;
 let lastInFluid: 'water' | 'lava' | null = null;
 
 const chatInput = new ChatInput(appEl, {
@@ -1468,6 +1469,13 @@ function frame(): void {
     playerState.addXP(xp);
     sfx.play('click');
   });
+  if (playerState.xpLevel > lastXpLevel) {
+    sfx.play('place');
+    chatInput.addLine(`Level up! Level ${String(playerState.xpLevel)}`, '#80ffa0');
+    lastXpLevel = playerState.xpLevel;
+  } else if (playerState.xpLevel < lastXpLevel) {
+    lastXpLevel = playerState.xpLevel;
+  }
 
   if (now - lastPlayerSaveAt > 30000) {
     lastPlayerSaveAt = now;
