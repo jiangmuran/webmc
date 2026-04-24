@@ -354,6 +354,10 @@ const achievements: readonly Achievement[] = [
   { id: 'slayer', title: 'Slayer (10 mobs killed)', check: () => playerStats.mobsKilled >= 10 },
   { id: 'traveler', title: 'Traveler (500m walked)', check: () => playerStats.distanceWalked >= 500 },
   { id: 'explorer', title: 'Explorer (1 hour played)', check: () => playerStats.playtimeSec >= 3600 },
+  { id: 'level_10', title: 'Level 10', check: () => playerState.xpLevel >= 10 },
+  { id: 'survivor', title: 'Survivor (day 5)', check: () => dayCounter >= 5 },
+  { id: 'marathon', title: 'Marathon (5km walked)', check: () => playerStats.distanceWalked >= 5000 },
+  { id: 'architect', title: 'Architect (1000 blocks placed)', check: () => playerStats.blocksPlaced >= 1000 },
 ];
 void persistDB.getMeta('achievements').then((saved) => {
   if (Array.isArray(saved)) {
