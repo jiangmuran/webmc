@@ -795,6 +795,17 @@ document.addEventListener(
       e.preventDefault();
       cycleCamera();
     }
+    if (e.code === 'KeyB') {
+      e.preventDefault();
+      if (!dayNight.isDay) {
+        dayNight.setTimeOfDayTicks(1000);
+        chatInput.addLine('You slept through the night.', '#d0d0ff');
+        sfx.play('click');
+      } else {
+        chatInput.addLine('You can only sleep at night.', '#ffd080');
+      }
+      return;
+    }
     if (e.code === 'KeyQ') {
       e.preventDefault();
       const sel = hotbar.selected;

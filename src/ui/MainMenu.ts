@@ -45,7 +45,7 @@ export class MainMenu {
 
     const footer = document.createElement('div');
     footer.style.cssText = 'position:absolute;bottom:10px;left:10px;font-size:10px;opacity:0.5;';
-    footer.textContent = 'WASD move · Space jump · Ctrl sprint · Shift sneak · E inventory · Q drop · T chat · / command · F3 debug · F4 gamemode · ESC pause · R fly';
+    footer.textContent = 'WASD move · Space jump · Ctrl sprint · Shift sneak · E inventory · Q drop · B sleep · T chat · / command · F3 debug · F4 gamemode · F5 camera · ESC pause · R fly';
 
     this.root.append(title, subtitle, play, settings, resourcePacks, footer);
     parent.appendChild(this.root);
