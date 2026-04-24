@@ -593,6 +593,7 @@ survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
 let lastXpLevel = 0;
 let lastIsDay = true;
+let dayCounter = 1;
 let lastInFluid: 'water' | 'lava' | null = null;
 
 const chatInput = new ChatInput(appEl, {
@@ -1730,7 +1731,8 @@ function frame(): void {
   }
   if (dayNight.isDay !== lastIsDay) {
     lastIsDay = dayNight.isDay;
-    toast.show(dayNight.isDay ? 'Morning' : 'Night falls', dayNight.isDay ? '#ffd080' : '#80a0ff', 1500);
+    if (dayNight.isDay) dayCounter++;
+    toast.show(dayNight.isDay ? `Day ${String(dayCounter)}` : 'Night falls', dayNight.isDay ? '#ffd080' : '#80a0ff', 1500);
   }
 
   if (now - lastPlayerSaveAt > 30000) {
