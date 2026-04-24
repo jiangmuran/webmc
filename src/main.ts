@@ -513,6 +513,9 @@ canvas.addEventListener('mousedown', (e) => {
       spawnMobDrops(result.kind, result.position);
       for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
     }
+  } else {
+    // Air swing — play the hand animation even when we miss
+    hand.swing();
   }
 });
 
