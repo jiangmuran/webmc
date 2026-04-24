@@ -297,6 +297,7 @@ scene.add(stars.points);
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
+let lastEmptyPlaceWarnAt = 0;
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   rain.setActive(w !== 'clear');
@@ -360,7 +361,12 @@ const interaction = new InteractionController(
       const def = registry.get(stateId(sel.state));
       const itemId = itemRegistry.byName(def.name);
       if (itemId === undefined) return false;
-      return countInventoryItem(itemId) > 0;
+      const ok = countInventoryItem(itemId) > 0;
+      if (!ok && performance.now() - lastEmptyPlaceWarnAt > 800) {
+        lastEmptyPlaceWarnAt = performance.now();
+        chatInput.addLine(`No ${def.name.replace(/^webmc:/, '')} in inventory`, '#ffb080');
+      }
+      return ok;
     },
     onInteract: (bx, by, bz) => {
       const state = world.get(bx, by, bz);
