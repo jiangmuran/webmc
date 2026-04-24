@@ -395,7 +395,7 @@ const deathScreen = new DeathScreen(appEl);
 const compassBar = new CompassBar(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
-  canvas.requestPointerLock();
+  void canvas.requestPointerLock();
 });
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
@@ -407,9 +407,9 @@ const chatInput = new ChatInput(appEl, {
         playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
         setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
         gameMode,
-        setGameMode: (m) => applyGameMode(m),
-        setTimeOfDay: (t) => dayNight.setTimeOfDayTicks(t),
-        setWeather: (w) => setWeather(w),
+        setGameMode: (m) => { applyGameMode(m); },
+        setTimeOfDay: (t) => { dayNight.setTimeOfDayTicks(t); },
+        setWeather: (w) => { setWeather(w); },
         giveItem: (name, count) => {
           const candidates = [name, `webmc:${name}`, `webmc:${name}_block`];
           let id: number | undefined;
@@ -421,7 +421,7 @@ const chatInput = new ChatInput(appEl, {
           const leftover = inventory.add({ itemId: id, count, damage: 0 });
           return leftover < count;
         },
-        broadcast: (line, color) => chatInput.addLine(line, color),
+        broadcast: (line, color) => { chatInput.addLine(line, color); },
         knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
         knownItems: [],
       });
@@ -446,7 +446,7 @@ const pauseMenu = new PauseMenu(appEl, {
   onResume: () => {
     pauseMenu.hide();
     fp.inputBlocked = false;
-    canvas.requestPointerLock();
+    void canvas.requestPointerLock();
   },
   onQuit: () => {
     pauseMenu.hide();
@@ -456,7 +456,7 @@ const pauseMenu = new PauseMenu(appEl, {
     void savePlayerNow();
     void chunkStore.flush();
   },
-  onOpenSettings: () => settingsPanel.show(),
+  onOpenSettings: () => { settingsPanel.show(); },
 });
 
 const resourcePackLoader = new ResourcePackLoader(appEl, {
@@ -507,10 +507,10 @@ const mainMenu = new MainMenu(appEl, {
   onPlay: () => {
     fp.inputBlocked = false;
     applyGameMode(gameMode);
-    canvas.requestPointerLock();
+    void canvas.requestPointerLock();
   },
-  onOpenSettings: () => settingsPanel.show(),
-  onOpenResourcePacks: () => resourcePackLoader.show(),
+  onOpenSettings: () => { settingsPanel.show(); },
+  onOpenResourcePacks: () => { resourcePackLoader.show(); },
 });
 fp.inputBlocked = true;
 applyGameMode(gameMode);
@@ -518,7 +518,7 @@ applyGameMode(gameMode);
 const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
-    canvas.requestPointerLock();
+    void canvas.requestPointerLock();
   },
 });
 
@@ -559,7 +559,7 @@ document.addEventListener(
         e.preventDefault();
         creativeInv.hide();
         fp.inputBlocked = false;
-        canvas.requestPointerLock();
+        void canvas.requestPointerLock();
       }
       return;
     }
@@ -586,7 +586,7 @@ document.addEventListener(
       if (pauseMenu.isVisible()) {
         pauseMenu.hide();
         fp.inputBlocked = false;
-        canvas.requestPointerLock();
+        void canvas.requestPointerLock();
       } else {
         pauseMenu.show();
         fp.inputBlocked = true;
@@ -799,7 +799,7 @@ void initMultiplayer();
 
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
   const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
-  const dropTables: Record<string, ReadonlyArray<{ name: string; min: number; max: number; color: readonly [number, number, number] }>> = {
+  const dropTables: Record<string, readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]> = {
     zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
     skeleton: [
       { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
@@ -1002,8 +1002,7 @@ function frame(): void {
   const aim = interaction.castRay();
   if (aim && aim.distance > 0) {
     const progress =
-      interaction.breaking &&
-      interaction.breaking.bx === aim.bx &&
+      interaction.breaking?.bx === aim.bx &&
       interaction.breaking.by === aim.by &&
       interaction.breaking.bz === aim.bz
         ? interaction.breaking.progress01
