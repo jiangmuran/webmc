@@ -362,6 +362,11 @@ const interaction = new InteractionController(
       const prevBlockId = stateId(prevState);
       const def = registry.get(prevBlockId);
       blockParticles.emitBreak(bx, by, bz, def.color);
+      // Mining XP for ores (matches MC: coal 0-2, iron 0 via smelt, diamond 3-7, redstone 1-5, lapis 2-5, emerald 3-7).
+      if (gameMode === 'survival' || gameMode === 'adventure') {
+        const xp = oreXp(def.name);
+        if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
+      }
       const drops = dropRegistry.drops(prevBlockId, undefined, 99);
       if (gameMode === 'survival' || gameMode === 'adventure') {
         for (const s of drops) {
@@ -1172,6 +1177,23 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   sfx.play('break');
   audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
   chatInput.addLine(`💥 BOOM`, '#ff6040');
+}
+
+function oreXp(blockName: string): number {
+  switch (blockName) {
+    case 'webmc:coal_ore':
+      return 1 + Math.floor(Math.random() * 2);
+    case 'webmc:diamond_ore':
+      return 3 + Math.floor(Math.random() * 5);
+    case 'webmc:redstone_ore':
+      return 1 + Math.floor(Math.random() * 5);
+    case 'webmc:lapis_ore':
+      return 2 + Math.floor(Math.random() * 4);
+    case 'webmc:emerald_ore':
+      return 3 + Math.floor(Math.random() * 5);
+    default:
+      return 0;
+  }
 }
 
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
