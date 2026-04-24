@@ -14,6 +14,7 @@ export interface InteractionOptions {
   onBreakProgress?: (bx: number, by: number, bz: number, p01: number) => void;
   onBreakCancel?: () => void;
   canPlace?: () => boolean;
+  onInteract?: (bx: number, by: number, bz: number) => boolean;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -150,6 +151,7 @@ export class InteractionController {
     const hit = this.castRay();
     if (!hit || hit.distance === 0) return;
     if (this.held === 'place' && this.selectedBlock !== AIR) {
+      if (this.opts.onInteract && this.opts.onInteract(hit.bx, hit.by, hit.bz)) return;
       const n = faceNormal(hit.face);
       const tx = hit.bx + n[0];
       const ty = hit.by + n[1];

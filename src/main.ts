@@ -360,6 +360,21 @@ const interaction = new InteractionController(
       if (itemId === undefined) return false;
       return countInventoryItem(itemId) > 0;
     },
+    onInteract: (bx, by, bz) => {
+      const state = world.get(bx, by, bz);
+      if (state === AIR) return false;
+      const id = stateId(state);
+      const def = registry.get(id);
+      // Doors and trapdoors: toggle open-flag bit in the props word.
+      if (def.name.endsWith('_door') || def.name.endsWith('_trapdoor')) {
+        const props = (state >>> 16) ^ 1;
+        world.set(bx, by, bz, makeState(id, props));
+        sfx.play('click');
+        touchWorldEdit(bx, by, bz, id);
+        return true;
+      }
+      return false;
+    },
   },
 );
 
