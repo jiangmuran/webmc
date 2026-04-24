@@ -67,6 +67,7 @@ export class FirstPersonCamera {
   bobEnabled = true;
   invertY = false;
   sprintToggle = false;
+  private lastWKeyDown = 0;
   private airborneStartY: number | null = null;
   lastLandFallBlocks = 0;
 
@@ -137,6 +138,13 @@ export class FirstPersonCamera {
   private handleKey(code: string, down: boolean): void {
     switch (code) {
       case 'KeyW':
+        if (down) {
+          const now = performance.now();
+          if (now - this.lastWKeyDown < 260) this.input.sprint = true;
+          this.lastWKeyDown = now;
+        } else {
+          this.input.sprint = false;
+        }
         this.input.forward = down ? 1 : Math.max(this.input.forward - 1, 0);
         break;
       case 'KeyS':
