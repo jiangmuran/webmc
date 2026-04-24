@@ -327,6 +327,14 @@ const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let sprintDustAccum = 0;
+const playerStats = {
+  blocksBroken: 0,
+  blocksPlaced: 0,
+  mobsKilled: 0,
+  distanceWalked: 0,
+  playtimeSec: 0,
+};
+let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
@@ -381,6 +389,7 @@ const interaction = new InteractionController(
       }
       touchWorldEdit(bx, by, bz, 0);
       hand.swing();
+      playerStats.blocksBroken++;
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
@@ -397,6 +406,7 @@ const interaction = new InteractionController(
       }
       touchWorldEdit(bx, by, bz, blockId);
       hand.swing();
+      playerStats.blocksPlaced++;
     },
     canPlace: () => {
       if (gameMode === 'creative') return true;
@@ -530,6 +540,7 @@ canvas.addEventListener('mousedown', (e) => {
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
       for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+      playerStats.mobsKilled++;
     }
   } else {
     // Air swing — play the hand animation even when we miss
@@ -623,6 +634,12 @@ const chatInput = new ChatInput(appEl, {
         save: () => {
           void savePlayerNow();
           void chunkStore.flush();
+        },
+        showStats: () => {
+          chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
+          chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
+          chatInput.addLine(`Mobs killed: ${String(playerStats.mobsKilled)}`, '#cccccc');
+          chatInput.addLine(`Distance walked: ${playerStats.distanceWalked.toFixed(1)} m`, '#cccccc');
         },
       });
     } else {
@@ -1423,6 +1440,16 @@ function frame(): void {
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
+  {
+    const dpx = fp.position.x - lastStatsPos.x;
+    const dpz = fp.position.z - lastStatsPos.z;
+    if (fp.onGround && !fp.input.fly) {
+      const moved = Math.hypot(dpx, dpz);
+      if (moved > 0 && moved < 2) playerStats.distanceWalked += moved;
+    }
+    lastStatsPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+    playerStats.playtimeSec += dtSec;
+  }
   // Sprint dust particles
   if (fp.input.sprint && fp.onGround && !fp.input.fly && horizSpeed > 3) {
     sprintDustAccum += dtSec;

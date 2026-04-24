@@ -16,6 +16,7 @@ export interface CommandContext {
   clearInventory?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
   save?: () => void;
+  showStats?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -35,6 +36,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/give <item> [count]', '#cccccc');
     ctx.broadcast('/heal | /kill | /clear', '#cccccc');
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
+    ctx.broadcast('/stats | /save', '#cccccc');
     return;
   }
   if (head === 'heal') {
@@ -50,6 +52,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'clear') {
     ctx.clearInventory?.();
     ctx.broadcast('Inventory cleared.', '#80ff80');
+    return;
+  }
+  if (head === 'stats') {
+    ctx.showStats?.();
     return;
   }
   if (head === 'save') {
