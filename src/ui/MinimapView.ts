@@ -45,6 +45,7 @@ export class MinimapView {
     world: World,
     registry: BlockRegistry,
     height: MinimapHeightSampler,
+    markers: readonly { x: number; z: number; color: string; size?: number }[] = [],
   ): void {
     this.updateAccum += dtSec;
     if (this.updateAccum < 0.5) return;
@@ -78,6 +79,16 @@ export class MinimapView {
       }
     }
     ctx.putImageData(img, 0, 0);
+    // Mob markers.
+    for (const m of markers) {
+      const mx = (m.x - camX) / scale + sz / 2;
+      const my = (m.z - camZ) / scale + sz / 2;
+      if (mx < 0 || my < 0 || mx >= sz || my >= sz) continue;
+      const s = m.size ?? 2;
+      ctx.fillStyle = m.color;
+      ctx.fillRect(Math.floor(mx - s / 2), Math.floor(my - s / 2), s, s);
+    }
+    // Player marker.
     ctx.fillStyle = '#ffff80';
     ctx.fillRect(sz / 2 - 2, sz / 2 - 2, 4, 4);
   }

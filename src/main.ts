@@ -1949,7 +1949,12 @@ function frame(): void {
     return { sx, sy, visible: true };
   });
 
-  minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator);
+  const markers: { x: number; z: number; color: string; size?: number }[] = [];
+  for (const m of mobWorld.all()) {
+    const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
+    markers.push({ x: m.position.x, z: m.position.z, color: isHostile ? '#ff5050' : '#a0ffa0' });
+  }
+  minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
   droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
     sfx.play('click');
