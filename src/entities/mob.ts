@@ -409,6 +409,8 @@ export interface Mob {
   dyingSec: number;
   // Peak Y while airborne — used to compute fall damage on land.
   airborneStartY: number | null;
+  // Flee timer: passive mobs that took damage run away for this many seconds.
+  fleeingSec: number;
 }
 
 const GRAVITY = 32;
@@ -444,6 +446,7 @@ export class MobWorld {
       hurtFlashSec: 0,
       dyingSec: 0,
       airborneStartY: null,
+      fleeingSec: 0,
     };
     this.mobs.set(mob.id, mob);
     return mob;
@@ -467,6 +470,7 @@ export class MobWorld {
     m.health -= amount;
     m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
+    if (m.def.behavior === 'passive') m.fleeingSec = 5;
     if (m.health <= 0) {
       m.dyingSec = 0.35;
       return { killed: true, kind: m.def.kind, position: { ...m.position } };
@@ -502,6 +506,17 @@ export class MobWorld {
     if (mob.teleportCooldownSec > 0)
       mob.teleportCooldownSec = Math.max(0, mob.teleportCooldownSec - dtSec);
     if (mob.hurtFlashSec > 0) mob.hurtFlashSec = Math.max(0, mob.hurtFlashSec - dtSec);
+    if (mob.fleeingSec > 0) mob.fleeingSec = Math.max(0, mob.fleeingSec - dtSec);
+
+    // Passive mobs flee from player while fleeingSec > 0.
+    if (mob.fleeingSec > 0 && ctx.playerPos && mob.def.behavior === 'passive') {
+      const dx = mob.position.x - ctx.playerPos.x;
+      const dz = mob.position.z - ctx.playerPos.z;
+      const len = Math.hypot(dx, dz) || 1;
+      mob.velocity.x = (dx / len) * mob.def.walkSpeed * 1.4;
+      mob.velocity.z = (dz / len) * mob.def.walkSpeed * 1.4;
+      mob.yaw = Math.atan2(dx / len, dz / len);
+    }
 
     const aggro = this.isAggroTarget(mob);
     if (aggro && ctx.playerPos) {
