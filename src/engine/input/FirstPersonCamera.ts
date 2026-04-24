@@ -301,7 +301,8 @@ export class FirstPersonCamera {
       }
 
       const wasOnGround = this.onGround;
-      const result = sweepMove(this.position, this.opts.box, { x: dvx, y: dvy, z: dvz }, opts.isSolid, 0.6);
+      const stepH = this.input.sneak ? 0 : 0.6;
+      const result = sweepMove(this.position, this.opts.box, { x: dvx, y: dvy, z: dvz }, opts.isSolid, stepH);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
