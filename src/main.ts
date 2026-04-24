@@ -41,12 +41,14 @@ import { SettingsPanel } from './ui/SettingsPanel';
 import { DebugOverlay } from './ui/DebugOverlay';
 import { Crosshair } from './ui/Crosshair';
 import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
+import { FluidOverlay } from './ui/FluidOverlay';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
 import { BlockParticles } from './engine/render/BlockParticles';
 import { Clouds } from './engine/render/Clouds';
 import { SkyCelestials } from './engine/render/SkyCelestials';
+import { Stars } from './engine/render/Stars';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand } from './game/CommandExecutor';
@@ -217,6 +219,8 @@ const clouds = new Clouds();
 scene.add(clouds.mesh);
 const sky = new SkyCelestials();
 sky.addTo(scene);
+const stars = new Stars();
+scene.add(stars.points);
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
@@ -283,10 +287,12 @@ function applyGameMode(m: GameMode): void {
   fp.passThroughBlocks = eff.passThroughBlocks;
   playerState.invulnerable = eff.invulnerable;
   survivalHud.setVisible(m === 'survival' || m === 'adventure');
+  interaction.breakDurationSec = m === 'creative' ? 0.001 : 0.4;
 }
 
 const survivalHud = new SurvivalHud(appEl);
 const hurtVignette = new HurtVignette(appEl);
+const fluidOverlay = new FluidOverlay(appEl);
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
 
@@ -401,6 +407,7 @@ const mainMenu = new MainMenu(appEl, {
   onOpenResourcePacks: () => resourcePackLoader.show(),
 });
 fp.inputBlocked = true;
+applyGameMode(gameMode);
 
 const creativeInv = new CreativeInventory(appEl, registry, {
   onPick: (entry) => {
@@ -733,15 +740,10 @@ function frame(): void {
     if (touch.state.jump) fp.input.jump = true;
   }
   fp.update(dtSec, { isSolid, isFluid });
-  if (touch?.state.primary) {
-    (interaction as unknown as { held: string | null }).held = 'break';
-    interaction.tick(now);
-    (interaction as unknown as { held: string | null }).held = null;
-  }
-  if (touch?.state.secondary) {
-    (interaction as unknown as { held: string | null }).held = 'place';
-    interaction.tick(now);
-    (interaction as unknown as { held: string | null }).held = null;
+  if (touch) {
+    if (touch.state.primary) interaction.setHeld('break');
+    else if (touch.state.secondary) interaction.setHeld('place');
+    else interaction.setHeld(null);
   }
 
   audio.setListener(fp.position.x, fp.position.y, fp.position.z);
@@ -749,6 +751,7 @@ function frame(): void {
   blockParticles.tick(dtSec);
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
+  stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
@@ -767,9 +770,17 @@ function frame(): void {
   if (sel) interaction.selectedBlock = sel.state;
   interaction.tick(now);
 
+  interaction.tickBreak(dtSec);
   const aim = interaction.castRay();
   if (aim && aim.distance > 0) {
-    blockOutline.setHit(aim.bx, aim.by, aim.bz);
+    const progress =
+      interaction.breaking &&
+      interaction.breaking.bx === aim.bx &&
+      interaction.breaking.by === aim.by &&
+      interaction.breaking.bz === aim.bz
+        ? interaction.breaking.progress01
+        : 0;
+    blockOutline.setHit(aim.bx, aim.by, aim.bz, progress);
   } else {
     blockOutline.hide();
   }
@@ -794,6 +805,7 @@ function frame(): void {
   }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
+  fluidOverlay.set(fp.inFluid);
   if (gameMode === 'survival' || gameMode === 'adventure') {
     survivalHud.render({
       health: playerState.health,

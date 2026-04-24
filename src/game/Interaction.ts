@@ -8,14 +8,25 @@ import { type RayHit, faceNormal, raycastVoxels } from '@/physics/raycast';
 export interface InteractionOptions {
   reach: number;
   repeatMs: number;
+  breakDurationSec: number;
   onBreak?: (bx: number, by: number, bz: number) => void;
   onPlace?: (bx: number, by: number, bz: number) => void;
+  onBreakProgress?: (bx: number, by: number, bz: number, p01: number) => void;
+  onBreakCancel?: () => void;
 }
 
 const DEFAULTS: InteractionOptions = {
   reach: 6,
   repeatMs: 220,
+  breakDurationSec: 0.4,
 };
+
+export interface BreakProgress {
+  bx: number;
+  by: number;
+  bz: number;
+  progress01: number;
+}
 
 export class InteractionController {
   private canvas: HTMLCanvasElement | null = null;
@@ -23,6 +34,15 @@ export class InteractionController {
   private lastActionAt = 0;
   private readonly opts: InteractionOptions;
   selectedBlock: BlockState = AIR;
+  breaking: BreakProgress | null = null;
+  breakDurationSec: number;
+
+  setHeld(kind: 'break' | 'place' | null): void {
+    const prev = this.held;
+    this.held = kind;
+    if (prev === 'break' && kind !== 'break') this.cancelBreak();
+    if (kind === 'place' && prev !== 'place') this.act();
+  }
 
   private readonly onMouseDown: (e: MouseEvent) => void;
   private readonly onMouseUp: (e: MouseEvent) => void;
@@ -36,18 +56,21 @@ export class InteractionController {
     opts: Partial<InteractionOptions> = {},
   ) {
     this.opts = { ...DEFAULTS, ...opts };
+    this.breakDurationSec = this.opts.breakDurationSec;
     this.onMouseDown = (e) => {
       if (document.pointerLockElement !== this.canvas) return;
       if (e.button === 0) {
         this.held = 'break';
-        this.act();
       } else if (e.button === 2) {
         this.held = 'place';
         this.act();
       }
     };
     this.onMouseUp = (e) => {
-      if ((e.button === 0 && this.held === 'break') || (e.button === 2 && this.held === 'place')) {
+      if (e.button === 0 && this.held === 'break') {
+        this.held = null;
+        this.cancelBreak();
+      } else if (e.button === 2 && this.held === 'place') {
         this.held = null;
       }
     };
@@ -74,8 +97,45 @@ export class InteractionController {
 
   tick(nowMs: number): void {
     if (this.held === null) return;
-    if (nowMs - this.lastActionAt < this.opts.repeatMs) return;
-    this.act(nowMs);
+    if (this.held === 'place') {
+      if (nowMs - this.lastActionAt < this.opts.repeatMs) return;
+      this.act(nowMs);
+    }
+  }
+
+  tickBreak(dtSec: number): void {
+    if (this.held !== 'break') {
+      this.cancelBreak();
+      return;
+    }
+    const hit = this.castRay();
+    if (!hit || hit.distance === 0) {
+      this.cancelBreak();
+      return;
+    }
+    if (
+      this.breaking === null ||
+      this.breaking.bx !== hit.bx ||
+      this.breaking.by !== hit.by ||
+      this.breaking.bz !== hit.bz
+    ) {
+      this.breaking = { bx: hit.bx, by: hit.by, bz: hit.bz, progress01: 0 };
+    }
+    const duration = Math.max(0.0001, this.breakDurationSec);
+    this.breaking.progress01 = Math.min(1, this.breaking.progress01 + dtSec / duration);
+    this.opts.onBreakProgress?.(hit.bx, hit.by, hit.bz, this.breaking.progress01);
+    if (this.breaking.progress01 >= 1) {
+      this.world.set(hit.bx, hit.by, hit.bz, AIR);
+      this.opts.onBreak?.(hit.bx, hit.by, hit.bz);
+      this.breaking = null;
+    }
+  }
+
+  private cancelBreak(): void {
+    if (this.breaking !== null) {
+      this.opts.onBreakCancel?.();
+      this.breaking = null;
+    }
   }
 
   castRay(): RayHit | null {
@@ -88,10 +148,7 @@ export class InteractionController {
     this.lastActionAt = nowMs;
     const hit = this.castRay();
     if (!hit || hit.distance === 0) return;
-    if (this.held === 'break') {
-      this.world.set(hit.bx, hit.by, hit.bz, AIR);
-      this.opts.onBreak?.(hit.bx, hit.by, hit.bz);
-    } else if (this.held === 'place' && this.selectedBlock !== AIR) {
+    if (this.held === 'place' && this.selectedBlock !== AIR) {
       const n = faceNormal(hit.face);
       const tx = hit.bx + n[0];
       const ty = hit.by + n[1];

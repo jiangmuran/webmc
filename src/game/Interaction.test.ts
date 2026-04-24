@@ -46,12 +46,32 @@ describe('InteractionController', () => {
     expect(hit?.by).toBe(30);
   });
 
-  it('break removes the block by setting it to AIR', () => {
+  it('break removes the block by holding past break duration', () => {
     const { controller, world } = build();
     controller.selectedBlock = STONE;
-    (controller as unknown as { held: string }).held = 'break';
-    (controller as unknown as { act: (ms: number) => void }).act(0);
+    controller.setHeld('break');
+    controller.tickBreak(2.0);
     expect(world.get(8, 30, 8)).toBe(AIR);
+  });
+
+  it('break progress resets when aim changes', () => {
+    const { controller, setLook } = build();
+    controller.setHeld('break');
+    controller.tickBreak(0.1);
+    const prog1 = controller.breaking?.progress01 ?? 0;
+    expect(prog1).toBeGreaterThan(0);
+    setLook(1, 0, 0);
+    controller.tickBreak(0.01);
+    expect(controller.breaking === null || controller.breaking.progress01 <= prog1).toBe(true);
+  });
+
+  it('releasing break cancels progress', () => {
+    const { controller } = build();
+    controller.setHeld('break');
+    controller.tickBreak(0.1);
+    expect(controller.breaking).not.toBeNull();
+    controller.setHeld(null);
+    expect(controller.breaking).toBeNull();
   });
 
   it('place adds the selected block on the hit face (camera moved to avoid player overlap)', () => {
