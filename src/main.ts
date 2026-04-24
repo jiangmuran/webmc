@@ -332,6 +332,7 @@ let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let sprintDustAccum = 0;
 let lavaEmberAccum = 0;
+let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
   blocksPlaced: 0,
@@ -807,6 +808,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
     fp.invertY = v.invertY;
     fp.sprintToggle = v.sprintToggle;
+    brightnessMul = v.brightness;
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
@@ -1630,7 +1632,7 @@ function frame(): void {
   const uniforms = chunkRenderer.material.uniforms;
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
   (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
-  (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient * weatherDimming;
+  (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient * weatherDimming * brightnessMul;
   (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
   (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
   scene.background = skyColor;

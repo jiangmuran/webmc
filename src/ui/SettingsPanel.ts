@@ -6,6 +6,7 @@ export interface SettingsValues {
   chunkUploadBudget: number;
   invertY: boolean;
   sprintToggle: boolean;
+  brightness: number;
 }
 
 export const DEFAULT_SETTINGS: SettingsValues = {
@@ -16,6 +17,7 @@ export const DEFAULT_SETTINGS: SettingsValues = {
   chunkUploadBudget: 4,
   invertY: false,
   sprintToggle: false,
+  brightness: 1.0,
 };
 
 const STORAGE_KEY = 'webmc:settings';
@@ -92,6 +94,7 @@ export class SettingsPanel {
     this.slider(panel, 'Mouse sensitivity', 'mouseSensitivity', 0.0005, 0.01, 0.0001);
     this.slider(panel, 'Master volume', 'masterVolume', 0, 1, 0.01);
     this.slider(panel, 'Chunk upload per frame', 'chunkUploadBudget', 1, 16, 1);
+    this.slider(panel, 'Brightness', 'brightness', 0.5, 2.0, 0.05);
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
 
