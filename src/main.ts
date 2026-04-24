@@ -853,6 +853,11 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
     void savePlayerNow();
+    if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
+      pauseMenu.show();
+      fp.inputBlocked = true;
+      document.exitPointerLock();
+    }
   }
 });
 window.addEventListener('beforeunload', () => {
