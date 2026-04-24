@@ -47,6 +47,7 @@ export class SettingsPanel {
   readonly root: HTMLDivElement;
   private visible = false;
   private readonly values: SettingsValues;
+  private readonly uiResetters: (() => void)[] = [];
 
   constructor(parent: HTMLElement, private readonly cb: SettingsPanelCallbacks) {
     this.values = loadSettings();
@@ -94,11 +95,24 @@ export class SettingsPanel {
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
 
+    const buttonRow = document.createElement('div');
+    buttonRow.style.cssText = 'display:flex;gap:8px;align-self:flex-end;';
+    const reset = document.createElement('button');
+    reset.textContent = 'Reset';
+    reset.style.cssText = 'padding:6px 14px;background:rgba(100,60,50,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    reset.addEventListener('click', () => {
+      Object.assign(this.values, DEFAULT_SETTINGS);
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+      for (const r of this.uiResetters) r();
+    });
+    buttonRow.appendChild(reset);
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.style.cssText = 'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
     close.addEventListener('click', () => this.hide());
-    panel.appendChild(close);
+    buttonRow.appendChild(close);
+    panel.appendChild(buttonRow);
 
     this.root.appendChild(panel);
     parent.appendChild(this.root);
@@ -139,6 +153,11 @@ export class SettingsPanel {
     });
     row.append(lbl, input);
     parent.appendChild(row);
+    this.uiResetters.push(() => {
+      const v = this.values[key] as number;
+      input.value = String(v);
+      valueSpan.textContent = `= ${formatValue(v)}`;
+    });
   }
 
   private checkbox(parent: HTMLElement, label: string, key: keyof SettingsValues): void {
@@ -156,6 +175,9 @@ export class SettingsPanel {
     text.textContent = label;
     row.append(input, text);
     parent.appendChild(row);
+    this.uiResetters.push(() => {
+      input.checked = Boolean(this.values[key]);
+    });
   }
 
   show(): void {
