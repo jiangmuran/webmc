@@ -158,7 +158,30 @@ export class SurvivalInventory {
         slots[idx] = after <= 0 ? null : { ...cur, count: after };
         this.refresh();
       });
+    } else {
+      slot.style.cursor = 'pointer';
+      slot.title = 'Right-click to swap with hotbar';
     }
+    slot.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const container = slot.parentElement;
+      if (!container) return;
+      const idx = Array.from(container.children).indexOf(slot);
+      if (idx < 0) return;
+      const isHotbar = container.getAttribute('data-hotbar-grid') !== null;
+      if (isHotbar) {
+        const firstEmpty = this.inventory.main.findIndex((v) => !v);
+        if (firstEmpty < 0) return;
+        this.inventory.main[firstEmpty] = this.inventory.hotbar[idx] ?? null;
+        this.inventory.hotbar[idx] = null;
+      } else {
+        const firstEmpty = this.inventory.hotbar.findIndex((v) => !v);
+        if (firstEmpty < 0) return;
+        this.inventory.hotbar[firstEmpty] = this.inventory.main[idx] ?? null;
+        this.inventory.main[idx] = null;
+      }
+      this.refresh();
+    });
     return slot;
   }
 
