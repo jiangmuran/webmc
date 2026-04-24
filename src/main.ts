@@ -33,6 +33,7 @@ import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
+import { XpOrbWorld } from './entities/XpOrbs';
 import { intersectRayAABB } from './physics/raycast_aabb';
 import { FluidWorld } from './fluids/FluidWorld';
 import { PerfMonitor } from './engine/time/PerfMonitor';
@@ -256,8 +257,10 @@ const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
 const droppedItems = new DroppedItemWorld();
+const xpOrbs = new XpOrbWorld();
 scene.add(mobRenderer.group);
 scene.add(droppedItems.group);
+scene.add(xpOrbs.group);
 const spawnSystem = new SpawnSystem();
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
@@ -432,7 +435,10 @@ canvas.addEventListener('mousedown', (e) => {
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
-    if (result?.killed) spawnMobDrops(result.kind, result.position);
+    if (result?.killed) {
+      spawnMobDrops(result.kind, result.position);
+      for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+    }
   }
 });
 
@@ -1030,7 +1036,10 @@ function frame(): void {
           const result = mobWorld.damage(bestId, 2);
           sfx.play('hit');
           screenShake.pulse(0.15);
-          if (result?.killed) spawnMobDrops(result.kind, result.position);
+          if (result?.killed) {
+            spawnMobDrops(result.kind, result.position);
+            for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+          }
         } else {
           interaction.setHeld('break');
         }
@@ -1210,6 +1219,10 @@ function frame(): void {
       `+ ${String(out.count)} ${def.name.replace(/^webmc:/, '')}`,
       '#d2ff80',
     );
+  });
+  xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {
+    playerState.addXP(xp);
+    sfx.play('click');
   });
 
   if (now - lastPlayerSaveAt > 5000) {
