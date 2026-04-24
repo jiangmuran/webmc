@@ -54,6 +54,7 @@ import { CompassBar } from './ui/CompassBar';
 import { Toast } from './ui/Toast';
 import { ControlsHelp } from './ui/ControlsHelp';
 import { DamageNumbers } from './ui/DamageNumbers';
+import { MinimapView } from './ui/MinimapView';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -675,6 +676,7 @@ const compassBar = new CompassBar(appEl);
 const toast = new Toast(appEl);
 const controlsHelp = new ControlsHelp(appEl);
 const damageNumbers = new DamageNumbers(appEl);
+const minimap = new MinimapView(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
@@ -1940,6 +1942,7 @@ function frame(): void {
     return { sx, sy, visible: true };
   });
 
+  minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator);
   droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
     sfx.play('click');
