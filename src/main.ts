@@ -346,7 +346,11 @@ let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   rain.setActive(w !== 'clear');
+  void persistDB.setMeta('weather', w);
 }
+void persistDB.getMeta('weather').then((saved) => {
+  if (saved === 'clear' || saved === 'rain' || saved === 'thunder') setWeather(saved);
+});
 
 let lightningFlashSec = 0;
 function lightningFlash(): void {
