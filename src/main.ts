@@ -1376,15 +1376,19 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
   const cz = Math.floor(bz / 16);
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
-    // Rebuild light for the edited chunk and its 4 neighbors so glowstone/torch
-    // placements (or removals) propagate into surrounding chunks' meshes.
-    const affected: { cx: number; cz: number }[] = [
-      { cx, cz },
-      { cx: cx - 1, cz },
-      { cx: cx + 1, cz },
-      { cx, cz: cz - 1 },
-      { cx, cz: cz + 1 },
-    ];
+    // Decide scope: if this block emits light, rebuild neighbors too;
+    // otherwise just this chunk. Keeps edits cheap for common placements.
+    const emits =
+      block !== 0 && registry.get(block).lightEmission > 0;
+    const affected: { cx: number; cz: number }[] = emits
+      ? [
+          { cx, cz },
+          { cx: cx - 1, cz },
+          { cx: cx + 1, cz },
+          { cx, cz: cz - 1 },
+          { cx, cz: cz + 1 },
+        ]
+      : [{ cx, cz }];
     for (const a of affected) {
       const c = world.getChunk(a.cx, a.cz);
       if (!c) continue;
