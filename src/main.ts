@@ -510,6 +510,7 @@ function consumeInventoryItem(itemId: number, count: number): boolean {
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
+let lastPlayerAttackAt = 0;
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
   if (e.button === 1) {
@@ -551,6 +552,9 @@ canvas.addEventListener('mousedown', (e) => {
     }
   }
   if (bestId !== null) {
+    const nowMs = performance.now();
+    if (nowMs - lastPlayerAttackAt < 400) return;
+    lastPlayerAttackAt = nowMs;
     const result = mobWorld.damage(bestId, 2);
     sfx.play('hit');
     interaction.setHeld(null);
