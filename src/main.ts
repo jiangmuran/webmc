@@ -517,6 +517,16 @@ const chatInput = new ChatInput(appEl, {
         broadcast: (line, color) => { chatInput.addLine(line, color); },
         knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
         knownItems: [],
+        heal: () => {
+          playerState.heal(20);
+          playerState.eat(20, 5);
+        },
+        kill: () => {
+          playerState.takeDamage({ amount: 1000, source: 'command' });
+        },
+        clearInventory: () => {
+          inventory.clear();
+        },
       });
     } else {
       chatInput.addLine(`<You> ${text}`);

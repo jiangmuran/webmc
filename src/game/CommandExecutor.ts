@@ -11,6 +11,9 @@ export interface CommandContext {
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
+  heal?: () => void;
+  kill?: () => void;
+  clearInventory?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -28,6 +31,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/time set <day|night|noon|midnight|ticks>', '#cccccc');
     ctx.broadcast('/weather <clear|rain|thunder>', '#cccccc');
     ctx.broadcast('/give <item> [count]', '#cccccc');
+    ctx.broadcast('/heal | /kill | /clear', '#cccccc');
+    return;
+  }
+  if (head === 'heal') {
+    ctx.heal?.();
+    ctx.broadcast('Healed.', '#80ff80');
+    return;
+  }
+  if (head === 'kill') {
+    ctx.kill?.();
+    ctx.broadcast('RIP.', '#ff4040');
+    return;
+  }
+  if (head === 'clear') {
+    ctx.clearInventory?.();
+    ctx.broadcast('Inventory cleared.', '#80ff80');
     return;
   }
   if (head === 'gamemode' || head === 'gm') {
