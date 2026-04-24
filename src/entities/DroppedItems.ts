@@ -84,6 +84,7 @@ export class DroppedItemWorld {
   ): void {
     const toRemove: number[] = [];
     const twoPi = Math.PI * 2;
+    this.mergeNearby();
     for (const it of this.items.values()) {
       it.ageSec += dtSec;
       it.pickupDelaySec = Math.max(0, it.pickupDelaySec - dtSec);
@@ -141,6 +142,32 @@ export class DroppedItemWorld {
         this.meshes.delete(id);
       }
       this.items.delete(id);
+    }
+  }
+
+  private mergeNearby(): void {
+    const arr = Array.from(this.items.values());
+    for (let i = 0; i < arr.length; i++) {
+      const a = arr[i];
+      if (!a) continue;
+      if (!this.items.has(a.id)) continue;
+      for (let j = i + 1; j < arr.length; j++) {
+        const b = arr[j];
+        if (!b) continue;
+        if (!this.items.has(b.id)) continue;
+        if (a.data.itemId !== b.data.itemId) continue;
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dz = a.z - b.z;
+        if (dx * dx + dy * dy + dz * dz > 0.6 * 0.6) continue;
+        a.data = { ...a.data, count: a.data.count + b.data.count };
+        const mesh = this.meshes.get(b.id);
+        if (mesh) {
+          this.group.remove(mesh);
+          this.meshes.delete(b.id);
+        }
+        this.items.delete(b.id);
+      }
     }
   }
 
