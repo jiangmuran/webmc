@@ -417,6 +417,7 @@ export interface MobTickContext {
   isSolid: SolidSampler;
   playerPos: Vec3 | null;
   damagePlayer: (amount: number) => void;
+  onCreeperExplode?: (x: number, y: number, z: number) => void;
 }
 
 export class MobWorld {
@@ -517,6 +518,7 @@ export class MobWorld {
             mob.fuseSec += dtSec;
             if (mob.fuseSec >= 1.5) {
               ctx.damagePlayer(mob.def.attackDamage);
+              ctx.onCreeperExplode?.(mob.position.x, mob.position.y, mob.position.z);
               this.mobs.delete(mob.id);
               return;
             }

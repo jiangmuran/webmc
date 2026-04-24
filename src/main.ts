@@ -1442,6 +1442,9 @@ function frame(): void {
       playerState.takeDamage({ amount: amt, source: 'mob' });
       if (!playerState.invulnerable && amt > 0) sfx.play('hit');
     },
+    onCreeperExplode: (x, y, z) => {
+      explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+    },
   });
   mobRenderer.sync(mobWorld.all());
 
