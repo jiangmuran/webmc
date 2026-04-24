@@ -23,6 +23,7 @@ export interface CommandContext {
   teleportSpawn?: () => void;
   seed?: () => number;
   killAllMobs?: () => number;
+  particle?: (x: number, y: number, z: number) => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -83,6 +84,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'killall') {
     const n = ctx.killAllMobs?.() ?? 0;
     ctx.broadcast(`Removed ${String(n)} mobs.`, '#80ff80');
+    return;
+  }
+  if (head === 'particle') {
+    const x = args[0] !== undefined ? parseCoord(args[0], ctx.playerPos.x) : ctx.playerPos.x;
+    const y = args[1] !== undefined ? parseCoord(args[1], ctx.playerPos.y) : ctx.playerPos.y;
+    const z = args[2] !== undefined ? parseCoord(args[2], ctx.playerPos.z) : ctx.playerPos.z;
+    ctx.particle?.(x, y, z);
     return;
   }
   if (head === 'summon') {

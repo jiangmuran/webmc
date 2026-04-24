@@ -773,6 +773,9 @@ const chatInput = new ChatInput(appEl, {
           for (const id of ids) mobWorld.remove(id);
           return ids.length;
         },
+        particle: (x, y, z) => {
+          blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [255, 220, 100]);
+        },
         showStats: () => {
           chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
           chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
