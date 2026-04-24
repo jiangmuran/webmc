@@ -51,6 +51,7 @@ import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { FluidOverlay } from './ui/FluidOverlay';
 import { DeathScreen } from './ui/DeathScreen';
 import { CompassBar } from './ui/CompassBar';
+import { Toast } from './ui/Toast';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -547,6 +548,7 @@ const hurtVignette = new HurtVignette(appEl);
 const fluidOverlay = new FluidOverlay(appEl);
 const deathScreen = new DeathScreen(appEl);
 const compassBar = new CompassBar(appEl);
+const toast = new Toast(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
@@ -808,6 +810,7 @@ document.addEventListener(
       e.preventDefault();
       applyGameMode(nextGameMode(gameMode));
       chatInput.addLine(`Gamemode: ${gameMode}`, '#ffd080');
+      toast.show(gameMode.toUpperCase(), '#ffd080');
     }
     if (e.code === 'F3') {
       e.preventDefault();
