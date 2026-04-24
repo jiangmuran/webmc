@@ -1765,7 +1765,7 @@ function frame(): void {
   });
   mobRenderer.sync(mobWorld.all());
 
-  droppedItems.tick(dtSec, isSolid, fp.position, (out) => {
+  droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
     sfx.play('click');
     const def = itemRegistry.get(out.itemId);
