@@ -942,14 +942,17 @@ function frame(): void {
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
   dayNight.tick(dtSec);
+  const weatherDimming = currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0;
+  const skyColor = dayNight.skyColor.clone().multiplyScalar(weatherDimming);
+  const fogColor = dayNight.fogColor.clone().multiplyScalar(weatherDimming);
   const uniforms = chunkRenderer.material.uniforms;
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
-  (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(dayNight.skyColor);
-  (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient;
-  (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(dayNight.fogColor);
+  (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
+  (uniforms['uAmbient'] as { value: number }).value = dayNight.ambient * weatherDimming;
+  (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
   (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
-  scene.background = dayNight.skyColor;
-  if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(dayNight.fogColor);
+  scene.background = skyColor;
+  if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
 
   const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad);
 
