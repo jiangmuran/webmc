@@ -52,6 +52,7 @@ import { FluidOverlay } from './ui/FluidOverlay';
 import { DeathScreen } from './ui/DeathScreen';
 import { CompassBar } from './ui/CompassBar';
 import { Toast } from './ui/Toast';
+import { ControlsHelp } from './ui/ControlsHelp';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -601,6 +602,7 @@ const fluidOverlay = new FluidOverlay(appEl);
 const deathScreen = new DeathScreen(appEl);
 const compassBar = new CompassBar(appEl);
 const toast = new Toast(appEl);
+const controlsHelp = new ControlsHelp(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
@@ -973,6 +975,10 @@ document.addEventListener(
     if (e.code === 'F5') {
       e.preventDefault();
       cycleCamera();
+    }
+    if (e.code === 'F1') {
+      e.preventDefault();
+      controlsHelp.toggle();
     }
     if (e.code === 'F2') {
       e.preventDefault();
