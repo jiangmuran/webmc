@@ -305,6 +305,23 @@ interaction.selectedBlock = STONE;
 
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
+  if (e.button === 1) {
+    e.preventDefault();
+    const hit = interaction.castRay();
+    if (hit) {
+      const pickedState = world.get(hit.bx, hit.by, hit.bz);
+      const pickedId = stateId(pickedState);
+      const def = registry.get(pickedId);
+      hotbar.setEntry(hotbar.selectedIndex, {
+        state: pickedState,
+        name: def.name.replace(/^webmc:/, ''),
+        color: def.color,
+      });
+      interaction.selectedBlock = pickedState;
+      chatInput.addLine(`Picked ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+    }
+    return;
+  }
   if (e.button !== 0) return;
   const origin = camera.position;
   const look = fp.lookVector();
@@ -564,6 +581,22 @@ document.addEventListener(
       e.preventDefault();
       debugOverlay.toggle();
       hud.style.display = debugOverlay.isEnabled() ? 'none' : 'block';
+    }
+    if (e.code === 'KeyQ') {
+      e.preventDefault();
+      const sel = hotbar.selected;
+      if (sel && (gameMode === 'survival' || gameMode === 'adventure')) {
+        const def = registry.get(stateId(sel.state));
+        const itemId = itemRegistry.byName(def.name);
+        if (itemId !== undefined) {
+          const look = fp.lookVector();
+          droppedItems.spawn(fp.position.x + look.x * 1.2, fp.position.y, fp.position.z + look.z * 1.2, {
+            itemId,
+            count: 1,
+            color: def.color,
+          }, 1.5);
+        }
+      }
     }
   },
   true,
