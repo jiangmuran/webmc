@@ -14,6 +14,7 @@ export interface CommandContext {
   heal?: () => void;
   kill?: () => void;
   clearInventory?: () => void;
+  setBlock?: (x: number, y: number, z: number, name: string) => boolean;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -32,6 +33,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/weather <clear|rain|thunder>', '#cccccc');
     ctx.broadcast('/give <item> [count]', '#cccccc');
     ctx.broadcast('/heal | /kill | /clear', '#cccccc');
+    ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
     return;
   }
   if (head === 'heal') {
@@ -47,6 +49,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'clear') {
     ctx.clearInventory?.();
     ctx.broadcast('Inventory cleared.', '#80ff80');
+    return;
+  }
+  if (head === 'setblock') {
+    if (args.length < 4 || !ctx.setBlock) {
+      ctx.broadcast('Usage: /setblock <x> <y> <z> <block>', '#ff8080');
+      return;
+    }
+    const x = parseCoord(args[0] ?? '', ctx.playerPos.x);
+    const y = parseCoord(args[1] ?? '', ctx.playerPos.y);
+    const z = parseCoord(args[2] ?? '', ctx.playerPos.z);
+    const name = args[3] ?? '';
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z) || !name) {
+      ctx.broadcast('Invalid args', '#ff8080');
+      return;
+    }
+    const ok = ctx.setBlock(Math.floor(x), Math.floor(y), Math.floor(z), name);
+    if (ok) ctx.broadcast(`Set ${name} at ${String(Math.floor(x))} ${String(Math.floor(y))} ${String(Math.floor(z))}`, '#80ff80');
+    else ctx.broadcast(`Unknown block: ${name}`, '#ff8080');
     return;
   }
   if (head === 'gamemode' || head === 'gm') {

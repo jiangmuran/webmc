@@ -607,6 +607,14 @@ const chatInput = new ChatInput(appEl, {
         clearInventory: () => {
           inventory.clear();
         },
+        setBlock: (x, y, z, name) => {
+          const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
+          const id = registry.byName(full);
+          if (id === undefined) return false;
+          world.set(x, y, z, makeState(id, 0));
+          touchWorldEdit(x, y, z, id);
+          return true;
+        },
       });
     } else {
       chatInput.addLine(`<You> ${text}`);
