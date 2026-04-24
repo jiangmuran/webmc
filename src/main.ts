@@ -38,6 +38,7 @@ import { MainMenu } from './ui/MainMenu';
 import { PauseMenu } from './ui/PauseMenu';
 import { ChatInput } from './ui/ChatInput';
 import { CreativeInventory } from './ui/CreativeInventory';
+import { SurvivalInventory } from './ui/SurvivalInventory';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
 import { DebugOverlay } from './ui/DebugOverlay';
@@ -514,6 +515,13 @@ const mainMenu = new MainMenu(appEl, {
 fp.inputBlocked = true;
 applyGameMode(gameMode);
 
+const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
+  onClose: () => {
+    fp.inputBlocked = false;
+    canvas.requestPointerLock();
+  },
+});
+
 const creativeInv = new CreativeInventory(appEl, registry, {
   onPick: (entry) => {
     hotbar.setEntry(hotbar.selectedIndex, {
@@ -555,9 +563,20 @@ document.addEventListener(
       }
       return;
     }
-    if (e.code === 'KeyE' && gameMode === 'creative') {
+    if (survivalInv.isVisible()) {
+      if (e.code === 'Escape' || e.code === 'KeyE') {
+        e.preventDefault();
+        survivalInv.hide();
+      }
+      return;
+    }
+    if (e.code === 'KeyE') {
       e.preventDefault();
-      creativeInv.show();
+      if (gameMode === 'creative') {
+        creativeInv.show();
+      } else {
+        survivalInv.show();
+      }
       fp.inputBlocked = true;
       document.exitPointerLock();
       return;
@@ -624,7 +643,7 @@ const debugOverlay = new DebugOverlay(appEl);
 document.addEventListener('pointerlockchange', () => {
   if (document.pointerLockElement !== canvas) {
     crosshair.hide();
-    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible()) {
+    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible() && !survivalInv.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
     }
