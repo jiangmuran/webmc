@@ -30,6 +30,7 @@ import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
+import { DroppedItemWorld } from './entities/DroppedItems';
 import { intersectRayAABB } from './physics/raycast_aabb';
 import { FluidWorld } from './fluids/FluidWorld';
 import { PerfMonitor } from './engine/time/PerfMonitor';
@@ -205,7 +206,9 @@ const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
 
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
+const droppedItems = new DroppedItemWorld();
 scene.add(mobRenderer.group);
+scene.add(droppedItems.group);
 const spawnSystem = new SpawnSystem();
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
@@ -257,7 +260,17 @@ const interaction = new InteractionController(
       const def = registry.get(prevBlockId);
       blockParticles.emitBreak(bx, by, bz, def.color);
       const drops = dropRegistry.drops(prevBlockId, undefined, 99);
-      for (const s of drops) inventory.add(s);
+      if (gameMode === 'survival' || gameMode === 'adventure') {
+        for (const s of drops) {
+          droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
+            itemId: s.itemId,
+            count: s.count,
+            color: def.color,
+          });
+        }
+      } else {
+        for (const s of drops) inventory.add(s);
+      }
       touchWorldEdit(bx, by, bz, 0);
       hand.swing();
     },
@@ -947,6 +960,11 @@ function frame(): void {
     },
   });
   mobRenderer.sync(mobWorld.all());
+
+  droppedItems.tick(dtSec, isSolid, fp.position, (out) => {
+    inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
+    sfx.play('click');
+  });
 
   if (now - lastPlayerSaveAt > 5000) {
     lastPlayerSaveAt = now;
