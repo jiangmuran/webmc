@@ -208,6 +208,23 @@ for (const [blockId, itemId] of blockToItem) {
 const inventory = new Inventory(itemRegistry);
 const playerState = new PlayerState({
   inventory,
+  onDeath: () => {
+    const px = fp.position.x;
+    const py = fp.position.y;
+    const pz = fp.position.z;
+    for (const slot of inventory.hotbar) {
+      if (!slot) continue;
+      const def = itemRegistry.get(slot.itemId);
+      const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(px, py, pz, { itemId: slot.itemId, count: slot.count, color: colorRgb }, 3);
+    }
+    for (const slot of inventory.main) {
+      if (!slot) continue;
+      const def = itemRegistry.get(slot.itemId);
+      const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(px, py, pz, { itemId: slot.itemId, count: slot.count, color: colorRgb }, 3);
+    }
+  },
   onRespawn: () => {
     const s = generator.surfaceAt(0, 0) + 4;
     fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);

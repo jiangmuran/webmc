@@ -26,6 +26,7 @@ export interface DamageEvent {
 export interface PlayerStateOptions {
   inventory: Inventory;
   onRespawn?: () => void;
+  onDeath?: () => void;
 }
 
 export class PlayerState {
@@ -39,10 +40,12 @@ export class PlayerState {
   readonly effects = new Map<string, { amplifier: number; remainingSec: number }>();
   readonly inventory: Inventory;
   private readonly onRespawn: () => void;
+  private readonly onDeathCb: () => void;
 
   constructor(opts: PlayerStateOptions) {
     this.inventory = opts.inventory;
     this.onRespawn = opts.onRespawn ?? (() => undefined);
+    this.onDeathCb = opts.onDeath ?? (() => undefined);
   }
 
   invulnerable = false;
@@ -139,6 +142,7 @@ export class PlayerState {
   }
 
   respawn(): void {
+    this.onDeathCb();
     this.health = MAX_HEALTH;
     this.hunger = MAX_HUNGER;
     this.saturation = 5;
