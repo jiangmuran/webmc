@@ -57,6 +57,8 @@ export class ChunkRenderer {
       response.cz * SUBCHUNK_DIM,
     );
     mesh.name = `chunk-${key}`;
+    mesh.matrixAutoUpdate = false;
+    mesh.updateMatrix();
     this.meshes.set(key, mesh);
     this.group.add(mesh);
   }
