@@ -12,6 +12,8 @@ export class Hotbar {
   private readonly entries: HotbarEntry[];
   private readonly container: HTMLElement;
   private readonly slotEls: HTMLElement[] = [];
+  private readonly label: HTMLElement;
+  private labelHideAt = 0;
   private _selected = 0;
 
   private readonly onKey: (e: KeyboardEvent) => void;
@@ -59,7 +61,30 @@ export class Hotbar {
       this.slotEls.push(slot);
     }
     parent.appendChild(this.container);
+
+    this.label = document.createElement('div');
+    this.label.style.cssText = [
+      'position:fixed',
+      'left:50%',
+      'bottom:52px',
+      'transform:translateX(-50%)',
+      'padding:2px 10px',
+      'background:rgba(10,14,20,0.7)',
+      'border:1px solid rgba(230,237,243,0.18)',
+      'border-radius:3px',
+      'color:#fff',
+      'font-family:monospace',
+      'font-size:12px',
+      'opacity:0',
+      'transition:opacity 0.4s ease-out',
+      'pointer-events:none',
+      'user-select:none',
+      'z-index:11',
+    ].join(';');
+    parent.appendChild(this.label);
+
     this.refreshHighlight();
+    this.showLabel();
 
     this.onKey = (e) => {
       const code = e.code;
@@ -91,6 +116,18 @@ export class Hotbar {
     if (index < 0 || index >= this.entries.length) return;
     this._selected = index;
     this.refreshHighlight();
+    this.showLabel();
+  }
+
+  private showLabel(): void {
+    const entry = this.entries[this._selected];
+    if (!entry) return;
+    this.label.textContent = entry.name;
+    this.label.style.opacity = '1';
+    this.labelHideAt = performance.now() + 1500;
+    setTimeout(() => {
+      if (performance.now() >= this.labelHideAt) this.label.style.opacity = '0';
+    }, 1600);
   }
 
   setEntry(index: number, entry: HotbarEntry): void {
@@ -101,6 +138,7 @@ export class Hotbar {
     const [r, g, b] = entry.color;
     el.style.background = `rgb(${String(r)}, ${String(g)}, ${String(b)})`;
     el.title = entry.name;
+    if (index === this._selected) this.showLabel();
   }
 
   private refreshHighlight(): void {
@@ -117,5 +155,6 @@ export class Hotbar {
     window.removeEventListener('keydown', this.onKey);
     window.removeEventListener('wheel', this.onWheel);
     this.container.remove();
+    this.label.remove();
   }
 }
