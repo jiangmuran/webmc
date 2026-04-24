@@ -53,6 +53,7 @@ import { DeathScreen } from './ui/DeathScreen';
 import { CompassBar } from './ui/CompassBar';
 import { Toast } from './ui/Toast';
 import { ControlsHelp } from './ui/ControlsHelp';
+import { DamageNumbers } from './ui/DamageNumbers';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -560,6 +561,7 @@ canvas.addEventListener('mousedown', (e) => {
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
+    if (result) damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, 2);
     // Knockback: push mob away from player along horizontal look vector.
     const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
     if (mobHit) {
@@ -617,6 +619,7 @@ const deathScreen = new DeathScreen(appEl);
 const compassBar = new CompassBar(appEl);
 const toast = new Toast(appEl);
 const controlsHelp = new ControlsHelp(appEl);
+const damageNumbers = new DamageNumbers(appEl);
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
@@ -1814,6 +1817,15 @@ function frame(): void {
     },
   });
   mobRenderer.sync(mobWorld.all());
+
+  damageNumbers.tick(dtSec, (wx, wy, wz) => {
+    const v = new THREE.Vector3(wx, wy, wz);
+    v.project(camera);
+    if (v.z > 1) return { sx: 0, sy: 0, visible: false };
+    const sx = (v.x + 1) * 0.5 * window.innerWidth;
+    const sy = (-v.y + 1) * 0.5 * window.innerHeight;
+    return { sx, sy, visible: true };
+  });
 
   droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
     inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
