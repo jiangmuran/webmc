@@ -13,6 +13,7 @@ export interface InteractionOptions {
   onPlace?: (bx: number, by: number, bz: number) => void;
   onBreakProgress?: (bx: number, by: number, bz: number, p01: number) => void;
   onBreakCancel?: () => void;
+  canPlace?: () => boolean;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -155,6 +156,7 @@ export class InteractionController {
       const tz = hit.bz + n[2];
       if (this.world.get(tx, ty, tz) !== AIR) return;
       if (this.collidesWithPlayer(tx, ty, tz)) return;
+      if (this.opts.canPlace && !this.opts.canPlace()) return;
       this.world.set(tx, ty, tz, this.selectedBlock);
       this.opts.onPlace?.(tx, ty, tz);
     }

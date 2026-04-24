@@ -340,12 +340,49 @@ const interaction = new InteractionController(
       if (sel) {
         const def = registry.get(stateId(sel.state));
         blockParticles.emitPlace(bx, by, bz, def.color);
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const itemId = itemRegistry.byName(def.name);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+        }
       }
       touchWorldEdit(bx, by, bz, blockId);
       hand.swing();
     },
+    canPlace: () => {
+      if (gameMode === 'creative') return true;
+      const sel = hotbar.selected;
+      if (!sel) return false;
+      const def = registry.get(stateId(sel.state));
+      const itemId = itemRegistry.byName(def.name);
+      if (itemId === undefined) return false;
+      return countInventoryItem(itemId) > 0;
+    },
   },
 );
+
+function countInventoryItem(itemId: number): number {
+  let total = 0;
+  for (const s of inventory.hotbar) if (s && s.itemId === itemId) total += s.count;
+  for (const s of inventory.main) if (s && s.itemId === itemId) total += s.count;
+  return total;
+}
+
+function consumeInventoryItem(itemId: number, count: number): boolean {
+  let remaining = count;
+  const go = (slots: (typeof inventory.hotbar)[number][]): void => {
+    for (let i = 0; i < slots.length && remaining > 0; i++) {
+      const s = slots[i];
+      if (!s || s.itemId !== itemId) continue;
+      const take = Math.min(s.count, remaining);
+      const after = s.count - take;
+      slots[i] = after <= 0 ? null : { ...s, count: after };
+      remaining -= take;
+    }
+  };
+  go(inventory.hotbar);
+  if (remaining > 0) go(inventory.main);
+  return remaining === 0;
+}
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
