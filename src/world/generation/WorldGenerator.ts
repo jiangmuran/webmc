@@ -33,6 +33,7 @@ export interface GeneratedBlocks {
   mossyCobble: BlockState;
   cobble: BlockState;
   water: BlockState;
+  bedrock: BlockState;
 }
 
 interface OreBand {
@@ -98,6 +99,7 @@ export class WorldGenerator {
       mossyCobble: resolve(registry, 'webmc:mossy_cobblestone'),
       cobble: resolve(registry, 'webmc:cobblestone'),
       water: resolve(registry, 'webmc:water'),
+      bedrock: resolve(registry, 'webmc:bedrock'),
     };
   }
 
@@ -133,7 +135,7 @@ export class WorldGenerator {
   }
 
   generateChunk(chunk: Chunk): void {
-    const { stone, dirt, grass, sand, log, leaves, deepslate, water } = this.blocks;
+    const { stone, dirt, grass, sand, log, leaves, deepslate, water, bedrock } = this.blocks;
     const cx = chunk.cx;
     const cz = chunk.cz;
     for (let lx = 0; lx < CHUNK_DIM; lx++) {
@@ -145,7 +147,8 @@ export class WorldGenerator {
         const topBlock = surface <= SEA_LEVEL ? sand : grass;
         for (let y = 0; y <= surface; y++) {
           let state = stone;
-          if (y <= DEEPSLATE_Y) state = deepslate;
+          if (y === 0) state = bedrock;
+          else if (y <= DEEPSLATE_Y) state = deepslate;
           if (y === surface) state = topBlock;
           else if (y >= surface - 3) state = topBlock === sand ? sand : dirt;
           if (y < surface && this.isCave(wx, y, wz)) {
