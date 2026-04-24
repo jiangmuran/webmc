@@ -799,9 +799,17 @@ const chatInput = new ChatInput(appEl, {
         teleportSpawn: () => {
           if (playerSpawnPoint) {
             fp.position.set(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+            chatInput.addLine(
+              `Spawn at ${playerSpawnPoint.x.toFixed(1)} ${playerSpawnPoint.y.toFixed(1)} ${playerSpawnPoint.z.toFixed(1)}`,
+              '#cccccc',
+            );
           } else {
             const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
             fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+            chatInput.addLine(
+              `World spawn at ${worldMeta.spawn.x.toFixed(1)} ${s.toFixed(1)} ${worldMeta.spawn.z.toFixed(1)}`,
+              '#cccccc',
+            );
           }
         },
         seed: () => WORLD_SEED,
