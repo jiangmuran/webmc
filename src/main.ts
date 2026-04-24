@@ -803,6 +803,16 @@ document.addEventListener(
       e.preventDefault();
       cycleCamera();
     }
+    if (e.code === 'F2') {
+      e.preventDefault();
+      renderer.render(scene, camera);
+      const data = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = data;
+      a.download = `webmc-${Date.now().toString()}.png`;
+      a.click();
+      chatInput.addLine('Screenshot saved.', '#d0ff80');
+    }
     if (e.code === 'KeyB') {
       e.preventDefault();
       if (!dayNight.isDay) {
