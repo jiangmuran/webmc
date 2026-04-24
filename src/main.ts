@@ -336,6 +336,7 @@ let autoWeatherEnabled = true;
 let minimapVisible = true;
 let sprintDustAccum = 0;
 let lavaEmberAccum = 0;
+let torchEmberAccum = 0;
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -1646,6 +1647,37 @@ function frame(): void {
   rain.update(dtSec, fp.position.x, fp.position.y, fp.position.z);
   blockParticles.tick(dtSec);
   tickTnt(dtSec);
+  // Torch flame flicker: scan for torch/glowstone in 5x3x5 and emit tiny yellow sparks.
+  torchEmberAccum += dtSec;
+  if (torchEmberAccum > 0.3) {
+    torchEmberAccum = 0;
+    const torchId = registry.byName('webmc:torch');
+    const glowId = registry.byName('webmc:glowstone');
+    if (torchId !== undefined || glowId !== undefined) {
+      const px = Math.floor(fp.position.x);
+      const py = Math.floor(fp.position.y);
+      const pz = Math.floor(fp.position.z);
+      let emitted = 0;
+      for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
+        for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
+          for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
+            const s = world.get(px + dx, py + dy, pz + dz);
+            if (s === AIR) continue;
+            const id = stateId(s);
+            if (id !== torchId && id !== glowId) continue;
+            if (Math.random() > 0.12) continue;
+            blockParticles.emitPlace(
+              px + dx + 0.5,
+              py + dy + 0.9,
+              pz + dz + 0.5,
+              [255, 235, 140],
+            );
+            emitted++;
+          }
+        }
+      }
+    }
+  }
   // Lava ember: scan nearby (5×3×5) for lava and emit drifting orange embers.
   lavaEmberAccum += dtSec;
   if (lavaEmberAccum > 0.18) {
