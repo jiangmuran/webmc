@@ -1024,6 +1024,11 @@ document.addEventListener(
       e.preventDefault();
       cycleCamera();
     }
+    if (e.code === 'F6') {
+      e.preventDefault();
+      fp.bobEnabled = !fp.bobEnabled;
+      toast.show(`View bob: ${fp.bobEnabled ? 'on' : 'off'}`, '#cccccc', 1200);
+    }
     if (e.code === 'F1') {
       e.preventDefault();
       controlsHelp.toggle();

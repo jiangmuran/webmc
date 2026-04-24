@@ -21,6 +21,7 @@ const BINDINGS: readonly { key: string; action: string }[] = [
   { key: 'F3', action: 'Debug overlay' },
   { key: 'F4', action: 'Cycle gamemode' },
   { key: 'F5', action: 'Cycle camera (FP/TP)' },
+  { key: 'F6', action: 'Toggle view bob' },
   { key: 'ESC', action: 'Pause menu' },
 ];
 
