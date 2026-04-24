@@ -43,6 +43,7 @@ import { DebugOverlay } from './ui/DebugOverlay';
 import { Crosshair } from './ui/Crosshair';
 import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { FluidOverlay } from './ui/FluidOverlay';
+import { DeathScreen } from './ui/DeathScreen';
 import { ProceduralSfx } from './engine/audio/ProceduralSfx';
 import { RainParticles } from './engine/render/RainParticles';
 import { BlockOutline } from './engine/render/BlockOutline';
@@ -335,6 +336,11 @@ function applyGameMode(m: GameMode): void {
 const survivalHud = new SurvivalHud(appEl);
 const hurtVignette = new HurtVignette(appEl);
 const fluidOverlay = new FluidOverlay(appEl);
+const deathScreen = new DeathScreen(appEl);
+deathScreen.setOnRespawn(() => {
+  fp.inputBlocked = false;
+  canvas.requestPointerLock();
+});
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
 
@@ -877,6 +883,13 @@ function frame(): void {
     playerState.takeDamage({ amount: dmg, source: 'fall' });
   }
   fp.lastLandFallBlocks = 0;
+
+  if (playerState.justDied && !deathScreen.isVisible() && !playerState.invulnerable) {
+    deathScreen.show();
+    fp.inputBlocked = true;
+    document.exitPointerLock();
+    playerState.justDied = false;
+  }
 
   if (playerState.health < lastPlayerHealth - 0.05) {
     const delta = lastPlayerHealth - playerState.health;
