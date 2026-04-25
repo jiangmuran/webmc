@@ -112,6 +112,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Fly: ${flying ? 'on' : 'off'}`, '#80ff80');
     return;
   }
+  if (head === 'listeffects') {
+    const all = ['regeneration', 'poison', 'instant_health', 'instant_damage',
+      'night_vision', 'speed', 'slowness', 'jump_boost', 'fire_resistance',
+      'water_breathing', 'invisibility', 'strength', 'resistance'];
+    ctx.broadcast(`Effects: ${all.join(', ')}`, '#cccccc');
+    return;
+  }
   if (head === 'effect') {
     const id = args[0];
     if (id === 'clear' || id === 'none') {
