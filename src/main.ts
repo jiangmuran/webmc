@@ -314,6 +314,7 @@ const hand = new FirstPersonHand();
 camera.add(hand.group);
 scene.add(camera);
 const playerAvatar = new PlayerAvatar();
+playerAvatar.setName('Player');
 scene.add(playerAvatar.group);
 type CameraMode = 'fp' | 'tp_back' | 'tp_front';
 let cameraMode: CameraMode = 'fp';

@@ -7,6 +7,7 @@ export class PlayerAvatar {
   private readonly leftLeg: THREE.Group;
   private readonly rightLeg: THREE.Group;
   private walkPhase = 0;
+  private nameSprite: THREE.Sprite | null = null;
 
   constructor() {
     this.group = new THREE.Group();
@@ -42,6 +43,36 @@ export class PlayerAvatar {
 
   setVisible(v: boolean): void {
     this.group.visible = v;
+  }
+
+  setName(name: string): void {
+    if (this.nameSprite) {
+      const map = this.nameSprite.material.map;
+      if (map) map.dispose();
+      this.nameSprite.material.dispose();
+      this.group.remove(this.nameSprite);
+      this.nameSprite = null;
+    }
+    if (!name) return;
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 64;
+    const ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.font = '700 28px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.fillText(name, c.width / 2, c.height / 2);
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, depthWrite: false });
+    const sprite = new THREE.Sprite(mat);
+    sprite.scale.set(1.2, 0.3, 1);
+    sprite.position.set(0, 1.2, 0);
+    this.group.add(sprite);
+    this.nameSprite = sprite;
   }
 
   setPose(x: number, y: number, z: number, yaw: number): void {
