@@ -1157,7 +1157,9 @@ document.addEventListener(
       const data = canvas.toDataURL('image/png');
       const a = document.createElement('a');
       a.href = data;
-      a.download = `webmc-${Date.now().toString()}.png`;
+      const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      const safeName = currentPlayerName.replace(/[^A-Za-z0-9_-]/g, '_');
+      a.download = `webmc-${safeName}-${ts}.png`;
       a.click();
       chatInput.addLine('Screenshot saved.', '#d0ff80');
     }
