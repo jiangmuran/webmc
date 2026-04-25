@@ -2072,6 +2072,11 @@ function frame(): void {
     gyroYawAccum = 0;
   }
 
+  // MC sprint rule: cannot sprint if hunger ≤ 6.
+  if (fp.input.sprint && playerState.hunger <= 6 && (gameMode === 'survival' || gameMode === 'adventure')) {
+    fp.input.sprint = false;
+  }
+
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
   // applies when no menus are open and the player is not in chat.
   if (typeof navigator.getGamepads === 'function' && !chatInput.isOpen() && !pauseMenu.isVisible()) {
