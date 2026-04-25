@@ -27,6 +27,8 @@ export interface CommandContext {
   sortInventory?: () => void;
   toggleScoreboard?: () => boolean;
   toggleGyro?: () => boolean;
+  setTickFrozen?: (frozen: boolean) => void;
+  isTickFrozen?: () => boolean;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -319,6 +321,21 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'milk') {
     ctx.clearEffects?.();
     ctx.broadcast('🥛 Drank milk; all effects cleared.', '#ffffff');
+    return;
+  }
+  if (head === 'tick') {
+    const sub = (args[0] ?? '').toLowerCase();
+    if (sub === 'freeze') {
+      ctx.setTickFrozen?.(true);
+      ctx.broadcast('Tick frozen.', '#80a0ff');
+    } else if (sub === 'unfreeze' || sub === 'resume') {
+      ctx.setTickFrozen?.(false);
+      ctx.broadcast('Tick resumed.', '#80ff80');
+    } else if (sub === 'status') {
+      ctx.broadcast(`Tick: ${ctx.isTickFrozen?.() ? 'frozen' : 'running'}`, '#cccccc');
+    } else {
+      ctx.broadcast('Usage: /tick <freeze|unfreeze|status>', '#ff8080');
+    }
     return;
   }
   if (head === 'scoreboard' || head === 'sb') {

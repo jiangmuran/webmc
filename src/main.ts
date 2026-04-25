@@ -1179,6 +1179,7 @@ let lastPhase: 'dawn' | 'day' | 'dusk' | 'night' = 'day';
 let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
+let tickFrozen = false;
 void persistDB.getMeta('dayCounter').then((saved) => {
   if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
 });
@@ -1277,6 +1278,8 @@ const chatInput = new ChatInput(appEl, {
           inventory.sortMain();
         },
         toggleScoreboard: () => scoreboard.toggle(),
+        setTickFrozen: (frozen) => { tickFrozen = frozen; },
+        isTickFrozen: () => tickFrozen,
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1504,7 +1507,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick',
     ];
     return SLASH_CMDS;
   },
@@ -3096,7 +3099,7 @@ function frame(): void {
     }
   }
 
-  mobWorld.tick(dtSec, {
+  if (!tickFrozen) mobWorld.tick(dtSec, {
     isSolid,
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
     damagePlayer: (amt) => {
