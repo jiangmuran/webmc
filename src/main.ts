@@ -1903,7 +1903,7 @@ const interaction = new InteractionController(
         touchWorldEdit(bx, by, bz, id);
         return true;
       }
-      if (def.name === 'webmc:chest') {
+      if (def.name === 'webmc:chest' || def.name === 'webmc:trapped_chest' || def.name === 'webmc:ender_chest' || def.name === 'webmc:barrel' || def.name.endsWith('_shulker_box') || def.name === 'webmc:shulker_box') {
         chestUI.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
@@ -1927,7 +1927,8 @@ const interaction = new InteractionController(
         sfx.play('click');
         return true;
       }
-      if (def.name === 'webmc:crafting_table' || def.name === 'webmc:furnace') {
+      const WORKSTATIONS = new Set(['webmc:crafting_table', 'webmc:furnace', 'webmc:smoker', 'webmc:blast_furnace', 'webmc:enchanting_table', 'webmc:anvil', 'webmc:chipped_anvil', 'webmc:damaged_anvil', 'webmc:smithing_table', 'webmc:fletching_table', 'webmc:cartography_table', 'webmc:loom', 'webmc:grindstone', 'webmc:stonecutter', 'webmc:lectern', 'webmc:brewing_stand', 'webmc:beacon', 'webmc:respawn_anchor', 'webmc:lodestone', 'webmc:conduit']);
+      if (WORKSTATIONS.has(def.name)) {
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
