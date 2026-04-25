@@ -427,6 +427,10 @@ itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
+const SPAWN_EGG_MOBS = ['pig', 'cow', 'sheep', 'chicken', 'wolf', 'fox', 'cat', 'rabbit', 'goat', 'horse', 'parrot', 'bee', 'panda', 'frog', 'axolotl', 'zombie', 'skeleton', 'creeper', 'spider', 'enderman', 'pillager', 'vindicator', 'evoker', 'piglin', 'wither_skeleton', 'blaze', 'ghast', 'shulker'];
+for (const mob of SPAWN_EGG_MOBS) {
+  itemRegistry.register({ name: `webmc:${mob}_spawn_egg`, maxStack: 64, durability: 0 });
+}
 itemRegistry.register({ name: 'webmc:compass', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:clock', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability: 0 });
@@ -1120,6 +1124,20 @@ const interaction = new InteractionController(
             return true;
           }
         }
+      }
+      // Spawn egg: spawn matching mob above target block.
+      if (heldName.endsWith('_spawn_egg') && airAbove) {
+        const mobKind = heldName.replace(/_spawn_egg$/, '');
+        try {
+          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], { x: bx + 0.5, y: by + 1, z: bz + 0.5 });
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const eggId = itemRegistry.byName(`webmc:${heldName}`);
+            if (eggId !== undefined) consumeInventoryItem(eggId, 1);
+          }
+          subtitles.push(`Spawned ${mobKind}`);
+          sfx.play('click');
+          return true;
+        } catch { /* unknown mob kind */ }
       }
       // Ender pearl: teleport to hit block surface, take 5 damage.
       if (heldName === 'ender_pearl') {
