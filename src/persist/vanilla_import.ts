@@ -60,6 +60,14 @@ export {
 } from './vanilla_advancement_parse';
 export { parseVanillaFunction, type ParsedFunction } from './vanilla_function_parse';
 export { flattenTextComponent } from './text_component';
+export {
+  parseVanillaBiome,
+  BiomeParseError,
+  type ParsedBiome,
+  type BiomeEffects,
+  type BiomeSpawnerEntry,
+  type BiomeSpawnerCategory,
+} from './vanilla_biome_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -71,6 +79,7 @@ export type VanillaFileKind =
   | 'pack_mcmeta'
   | 'advancement_json'
   | 'function_mcfunction'
+  | 'biome_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -89,6 +98,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)loot_tables?\//.test(n)) return 'loot_table_json';
     if (/(\/|^)tags\//.test(n)) return 'tag_json';
     if (/(\/|^)advancements?\//.test(n)) return 'advancement_json';
+    if (/(\/|^)worldgen\/biome\//.test(n)) return 'biome_json';
   }
   return 'unknown';
 }
