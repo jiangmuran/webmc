@@ -6621,7 +6621,9 @@ function frame(): void {
     if (playerState.health < 20) playerState.heal(1 * dtSec);
     if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
   }
-  playerState.tick(dtSec, { inFluid: fp.inFluid });
+  // Drowning is gated by what's at eye level, not the body center —
+  // walking through 1-deep water shouldn't drain breath.
+  playerState.tick(dtSec, { inFluid: fp.inFluidEyes });
   // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
   {
     const chest = inventory.armor[1];

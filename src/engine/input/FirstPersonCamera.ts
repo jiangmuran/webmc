@@ -57,7 +57,13 @@ export class FirstPersonCamera {
   yaw = 0;
   pitch = 0;
   onGround = false;
+  // Whichever fluid (if any) the player's body center is in. Used for
+  // physics drag, swim mechanics, particles.
   inFluid: FluidKind | null = null;
+  // Same but sampled at eye level — used for drowning, vision overlay.
+  // A player walking through 1-deep water has feet in water but head in
+  // air, and shouldn't drown.
+  inFluidEyes: FluidKind | null = null;
   inputBlocked = false;
   passThroughBlocks = false;
   private coyoteTimer = 0;
@@ -225,6 +231,14 @@ export class FirstPersonCamera {
       opts.isFluid?.(
         Math.floor(this.position.x),
         Math.floor(this.position.y),
+        Math.floor(this.position.z),
+      ) ?? null;
+    // Eye sampling: position.y is body center (halfY=0.9), eyes sit
+    // ~0.72 above (eyeHeight 1.62 from feet, feet = position.y - 0.9).
+    this.inFluidEyes =
+      opts.isFluid?.(
+        Math.floor(this.position.x),
+        Math.floor(this.position.y + 0.72),
         Math.floor(this.position.z),
       ) ?? null;
     const climbing = opts.isClimbable
