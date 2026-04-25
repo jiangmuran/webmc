@@ -842,10 +842,14 @@ canvas.addEventListener('mousedown', (e) => {
   }
   if (bestId !== null) {
     const nowMs = performance.now();
-    if (nowMs - lastPlayerAttackAt < 400) return;
+    // Attack cooldown (1.9+ combat): scale damage by charge fraction.
+    const sinceMs = nowMs - lastPlayerAttackAt;
+    const charge = Math.min(1, sinceMs / 400);
+    const damageMult = 0.2 + 0.8 * (charge * charge);
+    if (sinceMs < 60) return; // hard floor on click rate
     lastPlayerAttackAt = nowMs;
     const strengthEff = playerState.effects.get('strength');
-    const baseDmg = 2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0);
+    const baseDmg = (2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0)) * damageMult;
     const result = mobWorld.damage(bestId, baseDmg);
     if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
     sfx.play('hit');
