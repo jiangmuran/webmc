@@ -4550,6 +4550,8 @@ const chatInput = new ChatInput(appEl, {
       '/farm',
       '/cabin',
       '/pool',
+      '/island',
+      '/mountain',
       '/sky',
       '/flightpath',
       '/underground',

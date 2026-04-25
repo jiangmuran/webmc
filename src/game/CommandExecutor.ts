@@ -1143,6 +1143,51 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'island') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '8', 10);
+    if (!Number.isFinite(r) || r < 2 || r > 32) {
+      ctx.broadcast('Usage: /island <r=8>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Stone hemisphere underwater + sand top + grass cap.
+    for (let h = 0; h < r; h++) {
+      const layerR = r - h;
+      const block = h < r - 2 ? 'stone' : h < r - 1 ? 'sand' : 'grass_block';
+      ctx.fillBlocks(
+        px - layerR,
+        py - r + h,
+        pz - layerR,
+        px + layerR,
+        py - r + h,
+        pz + layerR,
+        block,
+      );
+    }
+    ctx.broadcast(`Built a r=${String(r)} island`, '#80ff80');
+    return;
+  }
+  if (head === 'mountain') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '12', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 48) {
+      ctx.broadcast('Usage: /mountain <r=12>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let h = 0; h < r; h++) {
+      const layerR = r - h;
+      const block = h < 2 ? 'dirt' : h < r - 3 ? 'stone' : 'snow_block';
+      ctx.fillBlocks(px - layerR, py + h, pz - layerR, px + layerR, py + h, pz + layerR, block);
+    }
+    ctx.broadcast(`Mountain r=${String(r)}`, '#80ff80');
+    return;
+  }
   if (head === 'pool') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '4', 10);
