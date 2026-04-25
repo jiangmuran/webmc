@@ -286,8 +286,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (w === 'clear' || w === 'rain' || w === 'thunder') {
       ctx.setWeather(w);
       ctx.broadcast(`Weather set to ${w}`, '#80ff80');
+    } else if (w === 'random' || w === 'r') {
+      const r = Math.random();
+      const pick = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
+      ctx.setWeather(pick);
+      ctx.broadcast(`Weather rolled ${pick}`, '#80ff80');
     } else {
-      ctx.broadcast('Usage: /weather <clear|rain|thunder>', '#ff8080');
+      ctx.broadcast('Usage: /weather <clear|rain|thunder|random>', '#ff8080');
     }
     return;
   }
