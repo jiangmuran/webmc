@@ -6087,9 +6087,16 @@ async function initMultiplayer(): Promise<void> {
     },
     onError: (msg) => {
       console.warn('[webmc] mp error:', msg);
+      // Surface to the in-game chat too — was console-only so peers had
+      // no idea why a connection silently failed.
+      chatInput.addLine(`✗ multiplayer: ${msg}`, '#ff8080');
     },
     onChat: (from, text) => {
       console.log(`[chat ${from}]`, text);
+      // Was only logging to the dev console; remote chat messages never
+      // appeared in the actual chat panel, so multiplayer chat was a
+      // one-way silence from the receiver's perspective.
+      chatInput.addLine(`<${from}> ${text}`, '#80c0ff');
     },
   });
   try {
