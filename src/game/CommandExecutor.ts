@@ -325,6 +325,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     }
     return;
   }
+  if (head === 'freeze') {
+    ctx.setGameRule?.('doDaylightCycle', false);
+    ctx.broadcast('Time frozen.', '#80ff80');
+    return;
+  }
+  if (head === 'unfreeze') {
+    ctx.setGameRule?.('doDaylightCycle', true);
+    ctx.broadcast('Time resumed.', '#80ff80');
+    return;
+  }
   if (head === 'time') {
     if (args[0]?.toLowerCase() === 'add') {
       const n = Number(args[1] ?? '');
