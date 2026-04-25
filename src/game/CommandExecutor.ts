@@ -1264,6 +1264,82 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built igloo with bed, furnace and lantern', '#80ff80');
     return;
   }
+  if (head === 'skyscraper') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const floors = Math.max(2, Math.min(20, parseInt(args[0] ?? '8', 10)));
+    const w = 7;
+    // Build floors of glass walls + iron pillar corners + smooth_stone floors.
+    for (let f = 0; f < floors; f++) {
+      const y = py + f * 4;
+      ctx.fillBlocks(px - w, y, pz - w, px + w, y, pz + w, 'smooth_stone');
+      // 4 walls of glass at each floor.
+      for (let h = 1; h <= 3; h++) {
+        ctx.fillBlocks(px - w, y + h, pz - w, px + w, y + h, pz - w, 'glass');
+        ctx.fillBlocks(px - w, y + h, pz + w, px + w, y + h, pz + w, 'glass');
+        ctx.fillBlocks(px - w, y + h, pz - w, px - w, y + h, pz + w, 'glass');
+        ctx.fillBlocks(px + w, y + h, pz - w, px + w, y + h, pz + w, 'glass');
+      }
+      // Corner iron pillars.
+      for (let h = 0; h <= 3; h++) {
+        ctx.setBlock(px - w, y + h, pz - w, 'iron_block');
+        ctx.setBlock(px + w, y + h, pz - w, 'iron_block');
+        ctx.setBlock(px - w, y + h, pz + w, 'iron_block');
+        ctx.setBlock(px + w, y + h, pz + w, 'iron_block');
+      }
+    }
+    ctx.fillBlocks(
+      px - w,
+      py + floors * 4,
+      pz - w,
+      px + w,
+      py + floors * 4,
+      pz + w,
+      'smooth_stone',
+    );
+    // Door at base.
+    ctx.setBlock(px, py + 1, pz - w, 'air');
+    ctx.setBlock(px, py + 2, pz - w, 'air');
+    ctx.broadcast(`Built ${String(floors)}-floor skyscraper`, '#80ff80');
+    return;
+  }
+  if (head === 'treehouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Tree trunk 8 high, spruce-like crown, then 5×5 oak_planks platform inside.
+    for (let h = 0; h < 12; h++) ctx.setBlock(px, py + h, pz, 'oak_log');
+    // Leaf canopy at top.
+    for (let dx = -3; dx <= 3; dx++) {
+      for (let dz = -3; dz <= 3; dz++) {
+        for (let dy = 0; dy <= 3; dy++) {
+          if (dx * dx + dz * dz + dy * dy <= 12) {
+            ctx.setBlock(px + dx, py + 9 + dy, pz + dz, 'oak_leaves');
+          }
+        }
+      }
+    }
+    // Platform at h=6.
+    ctx.fillBlocks(px - 2, py + 6, pz - 2, px + 2, py + 6, pz + 2, 'oak_planks');
+    ctx.fillBlocks(px - 2, py + 7, pz - 2, px + 2, py + 9, pz + 2, 'air');
+    ctx.setBlock(px, py + 6, pz, 'oak_log');
+    // Walls + door + roof.
+    for (let h = 7; h <= 8; h++) {
+      ctx.setBlock(px - 2, py + h, pz - 2, 'oak_planks');
+      ctx.setBlock(px + 2, py + h, pz - 2, 'oak_planks');
+      ctx.setBlock(px - 2, py + h, pz + 2, 'oak_planks');
+      ctx.setBlock(px + 2, py + h, pz + 2, 'oak_planks');
+    }
+    ctx.fillBlocks(px - 2, py + 9, pz - 2, px + 2, py + 9, pz + 2, 'oak_planks');
+    // Ladder up trunk.
+    for (let h = 0; h < 6; h++) ctx.setBlock(px + 1, py + h, pz, 'ladder');
+    ctx.setBlock(px + 1, py + 6, pz, 'air'); // entrance
+    ctx.broadcast('Built treehouse with ladder and leaf crown', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
