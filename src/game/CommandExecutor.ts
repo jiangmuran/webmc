@@ -1210,6 +1210,60 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Parkour course: ${String(len)} jumps along +Z`, '#80ff80');
     return;
   }
+  if (head === 'lighthouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone_brick base, 3×3 hollow tower 16 high, glass top + sea_lantern beacon.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py, pz + 2, 'stone_bricks');
+    for (let h = 1; h <= 16; h++) {
+      ctx.fillBlocks(px - 1, py + h, pz - 1, px + 1, py + h, pz + 1, 'stone_bricks');
+      ctx.setBlock(px, py + h, pz, 'air');
+    }
+    // Hollow top room with glass walls.
+    ctx.fillBlocks(px - 2, py + 17, pz - 2, px + 2, py + 19, pz + 2, 'glass');
+    ctx.fillBlocks(px - 1, py + 17, pz - 1, px + 1, py + 19, pz + 1, 'air');
+    ctx.setBlock(px, py + 18, pz, 'sea_lantern');
+    // Cap and door.
+    ctx.fillBlocks(px - 2, py + 20, pz - 2, px + 2, py + 20, pz + 2, 'stone_bricks');
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built lighthouse (20 high) with sea_lantern beacon', '#80ff80');
+    return;
+  }
+  if (head === 'igloo') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×7 ice/snow dome.
+    const r = 3;
+    for (let dy = 0; dy <= r; dy++) {
+      const ringR = Math.floor(Math.sqrt(r * r - dy * dy) + 0.5);
+      for (let dx = -ringR; dx <= ringR; dx++) {
+        for (let dz = -ringR; dz <= ringR; dz++) {
+          const d = Math.round(Math.sqrt(dx * dx + dy * dy + dz * dz));
+          if (d === ringR && dy === r && (dx !== 0 || dz !== 0)) continue;
+          if (Math.abs(d - r) <= 0.6) {
+            const block = dy < r - 1 ? 'snow_block' : 'ice';
+            ctx.setBlock(px + dx, py + dy, pz + dz, block);
+          }
+        }
+      }
+    }
+    // Hollow interior.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 2, pz + 2, 'air');
+    // Floor + door + furnace + bed.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'snow_block');
+    ctx.setBlock(px, py, pz - 3, 'air');
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px - 1, py, pz + 1, 'red_bed');
+    ctx.setBlock(px + 1, py, pz - 1, 'furnace');
+    ctx.setBlock(px, py + 2, pz, 'lantern');
+    ctx.broadcast('Built igloo with bed, furnace and lantern', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);

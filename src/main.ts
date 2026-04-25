@@ -4644,6 +4644,8 @@ const chatInput = new ChatInput(appEl, {
       '/cfc',
       '/zoo',
       '/parkour',
+      '/lighthouse',
+      '/igloo',
       '/compliment',
       '/salute',
       '/gg',
