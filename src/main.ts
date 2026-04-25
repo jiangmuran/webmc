@@ -34,7 +34,7 @@ import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
-import { critMultiplier } from './game/critical_hit';
+import { critMultiplier, sweepingAttack } from './game/critical_hit';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
@@ -1217,6 +1217,31 @@ canvas.addEventListener('mousedown', (e) => {
     const baseDmg = Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
+    // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
+    if (heldNameLow.includes('sword') && charge >= 0.9 && critMult === 1 && !fp.input.sprint) {
+      const sweep = sweepingAttack({
+        sweepingEdgeLevel: 0,
+        baseSwordDamage: weaponBase,
+        sharpnessBonus: strengthBonus,
+        attackChargedRatio: charge,
+      });
+      if (sweep.sweeps && sweep.sweepDamage > 0) {
+        const primary = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+        if (primary) {
+          let extras = 0;
+          for (const m of mobWorld.all()) {
+            if (m.id === bestId) continue;
+            const dx = m.position.x - primary.position.x;
+            const dy = m.position.y - primary.position.y;
+            const dz = m.position.z - primary.position.z;
+            if (dx * dx + dy * dy + dz * dz > 1.5 * 1.5) continue;
+            mobWorld.damage(m.id, sweep.sweepDamage);
+            extras++;
+          }
+          if (extras > 0) subtitles.push(`Sweep ${extras}`);
+        }
+      }
+    }
     if (gameMode === 'survival' || gameMode === 'adventure') {
       playerState.addExhaustion(0.1);
       // Sword takes 1 durability per hit; axe takes 2.
