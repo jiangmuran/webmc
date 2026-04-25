@@ -29,7 +29,7 @@ import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
-import { MobWorld } from './entities/mob';
+import { MobWorld, MOB_DEFS } from './entities/mob';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -794,6 +794,7 @@ const chatInput = new ChatInput(appEl, {
           const candidates = [name, `webmc:${name}`];
           return candidates.some((c) => registry.byName(c) !== undefined);
         },
+        listMobKinds: () => Object.keys(MOB_DEFS),
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';
           const out: string[] = [];

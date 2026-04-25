@@ -13,6 +13,7 @@ export interface CommandContext {
   lookupItem?: (name: string) => boolean;
   lookupBlock?: (name: string) => boolean;
   listBlocks?: (filter?: string) => readonly string[];
+  listMobKinds?: () => readonly string[];
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -422,6 +423,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast('Usage: /weather <clear|rain|thunder|random>', '#ff8080');
     }
+    return;
+  }
+  if (head === 'listmobs') {
+    const list = ctx.listMobKinds?.() ?? [];
+    ctx.broadcast(`Mob kinds (${String(list.length)}): ${list.join(', ')}`, '#cccccc');
     return;
   }
   if (head === 'listblocks') {
