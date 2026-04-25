@@ -35,6 +35,7 @@ import { kindFor as kindForWeather } from './engine/weather_particles';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
+import { rumbleForDamage } from './engine/input/gamepad_rumble';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -2387,6 +2388,18 @@ function frame(): void {
     screenShake.pulse(Math.min(1, 0.2 + delta * 0.1));
     sfx.play('hit');
     subtitles.push('Player hurt');
+    if (typeof navigator.getGamepads === 'function') {
+      const pad = (navigator.getGamepads() ?? []).find((p) => p && p.connected);
+      const actuator = (pad as (Gamepad & { vibrationActuator?: { playEffect: (type: string, opts: object) => Promise<void> } }) | undefined)?.vibrationActuator;
+      if (actuator) {
+        const r = rumbleForDamage(delta);
+        void actuator.playEffect('dual-rumble', {
+          duration: r.durationMs,
+          strongMagnitude: r.highIntensity,
+          weakMagnitude: r.lowIntensity,
+        }).catch(() => undefined);
+      }
+    }
   }
   subtitles.tick();
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
