@@ -2843,6 +2843,15 @@ function frame(): void {
   const overHostileCap = hostileCount >= WORLD_MOB_CAPS.hostile;
   const overPassiveCap = passiveCount >= WORLD_MOB_CAPS.passive;
   if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0 && gameRules.doMobSpawning && !(overHostileCap && overPassiveCap)) {
+    // Despawn mobs >128 blocks away from player to bound entity count.
+    const farMobs: number[] = [];
+    for (const m of mobWorld.all()) {
+      const dx = m.position.x - fp.position.x;
+      const dz = m.position.z - fp.position.z;
+      if (dx * dx + dz * dz > 128 * 128) farMobs.push(m.id);
+    }
+    for (const id of farMobs) mobWorld.remove(id);
+
     spawnSystem.tick(dtSec, mobWorld, {
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       isDay: dayNight.isDay,
