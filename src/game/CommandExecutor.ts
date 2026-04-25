@@ -36,6 +36,10 @@ export interface CommandContext {
   getWorldBorder?: () => number;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
+  setWaypoint?: (name: string, x: number, y: number, z: number) => void;
+  getWaypoint?: (name: string) => { x: number; y: number; z: number } | null;
+  listWaypoints?: () => ReadonlyArray<{ name: string; x: number; y: number; z: number }>;
+  removeWaypoint?: (name: string) => boolean;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -358,6 +362,43 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
     }
+    return;
+  }
+  if (head === 'waypoint' || head === 'wp') {
+    if (args[0] === 'set') {
+      const name = args[1] ?? 'home';
+      ctx.setWaypoint?.(name, ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
+      ctx.broadcast(`Waypoint "${name}" set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#80ff80');
+      return;
+    }
+    if (args[0] === 'list') {
+      const list = ctx.listWaypoints?.() ?? [];
+      if (list.length === 0) {
+        ctx.broadcast('No waypoints. Use /wp set <name>.', '#cccccc');
+      } else {
+        for (const wp of list) ctx.broadcast(`${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`, '#cccccc');
+      }
+      return;
+    }
+    if (args[0] === 'tp') {
+      const name = args[1] ?? 'home';
+      const wp = ctx.getWaypoint?.(name);
+      if (!wp) {
+        ctx.broadcast(`No waypoint "${name}"`, '#ff8080');
+        return;
+      }
+      lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+      ctx.setPlayerPos(wp.x, wp.y, wp.z);
+      ctx.broadcast(`Teleported to "${name}"`, '#80ff80');
+      return;
+    }
+    if (args[0] === 'remove' || args[0] === 'rm') {
+      const name = args[1] ?? '';
+      const ok = ctx.removeWaypoint?.(name) ?? false;
+      ctx.broadcast(ok ? `Removed waypoint "${name}"` : `No waypoint "${name}"`, ok ? '#80ff80' : '#ff8080');
+      return;
+    }
+    ctx.broadcast('Usage: /wp <set|list|tp|remove> [name]', '#ff8080');
     return;
   }
   if (head === 'locate') {

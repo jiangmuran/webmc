@@ -1235,6 +1235,22 @@ let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
+const waypoints = new Map<string, { x: number; y: number; z: number }>();
+void persistDB.getMeta('waypoints').then((saved) => {
+  if (saved && typeof saved === 'object') {
+    const wps = saved as Record<string, { x?: unknown; y?: unknown; z?: unknown }>;
+    for (const [k, v] of Object.entries(wps)) {
+      if (typeof v.x === 'number' && typeof v.y === 'number' && typeof v.z === 'number') {
+        waypoints.set(k, { x: v.x, y: v.y, z: v.z });
+      }
+    }
+  }
+});
+function persistWaypoints(): void {
+  const obj: Record<string, { x: number; y: number; z: number }> = {};
+  for (const [k, v] of waypoints) obj[k] = v;
+  void persistDB.setMeta('waypoints', obj);
+}
 void persistDB.getMeta('lastDeathPos').then((saved) => {
   if (saved && typeof saved === 'object') {
     const p = saved as { x?: unknown; y?: unknown; z?: unknown };
@@ -1356,6 +1372,17 @@ const chatInput = new ChatInput(appEl, {
         getLastDeathPos: () => lastDeathPos,
         setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
         getWorldBorder: () => worldBorder.diameter,
+        setWaypoint: (name, x, y, z) => {
+          waypoints.set(name, { x, y, z });
+          persistWaypoints();
+        },
+        getWaypoint: (name) => waypoints.get(name) ?? null,
+        listWaypoints: () => Array.from(waypoints, ([name, v]) => ({ name, x: v.x, y: v.y, z: v.z })),
+        removeWaypoint: (name) => {
+          const ok = waypoints.delete(name);
+          if (ok) persistWaypoints();
+          return ok;
+        },
         locateStructure: (kind) => {
           if (kind !== 'stronghold') return null;
           // Use the first ring of strongholds (3 positions) deterministic from world seed.
@@ -1659,7 +1686,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp',
     ];
     return SLASH_CMDS;
   },
