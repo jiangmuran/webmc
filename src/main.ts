@@ -786,6 +786,17 @@ const chatInput = new ChatInput(appEl, {
           const leftover = inventory.add({ itemId: id, count, damage: 0 });
           return leftover < count;
         },
+        giveAllBlocks: () => {
+          let n = 0;
+          for (const def of registry.defs) {
+            if (def.name === 'webmc:air') continue;
+            const id = itemRegistry.byName(def.name);
+            if (id === undefined) continue;
+            inventory.add({ itemId: id, count: 1, damage: 0 });
+            n++;
+          }
+          return n;
+        },
         broadcast: (line, color) => { chatInput.addLine(line, color); },
         knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
         knownItems: [],

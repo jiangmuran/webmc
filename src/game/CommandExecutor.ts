@@ -9,6 +9,7 @@ export interface CommandContext {
   addTimeOfDay?: (ticks: number) => void;
   setWeather: (w: 'clear' | 'rain' | 'thunder') => void;
   giveItem: (name: string, count: number) => boolean;
+  giveAllBlocks?: () => number;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -422,9 +423,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'give') {
     const name = args[0];
+    if (name === 'all') {
+      const n = ctx.giveAllBlocks?.() ?? 0;
+      ctx.broadcast(`Gave 1 of ${String(n)} block items`, '#80ff80');
+      return;
+    }
     const count = args[1] !== undefined ? Math.max(1, Math.min(64, parseInt(args[1], 10))) : 1;
     if (name === undefined || Number.isNaN(count)) {
-      ctx.broadcast('Usage: /give <item> [count]', '#ff8080');
+      ctx.broadcast('Usage: /give <item> [count] | /give all', '#ff8080');
       return;
     }
     const ok = ctx.giveItem(name, count);
