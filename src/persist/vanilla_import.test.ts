@@ -29,6 +29,7 @@ describe('vanilla_import barrel', () => {
     );
     expect(detectVanillaFileKind('data/foo/functions/bar.mcfunction')).toBe('function_mcfunction');
     expect(detectVanillaFileKind('data/minecraft/worldgen/biome/plains.json')).toBe('biome_json');
+    expect(detectVanillaFileKind('data/minecraft/dimension/overworld.json')).toBe('dimension_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

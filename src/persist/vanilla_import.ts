@@ -68,6 +68,12 @@ export {
   type BiomeSpawnerEntry,
   type BiomeSpawnerCategory,
 } from './vanilla_biome_parse';
+export {
+  parseVanillaDimension,
+  DimensionParseError,
+  type ParsedDimension,
+  type GeneratorKind,
+} from './vanilla_dimension_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -80,6 +86,7 @@ export type VanillaFileKind =
   | 'advancement_json'
   | 'function_mcfunction'
   | 'biome_json'
+  | 'dimension_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -99,6 +106,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)tags\//.test(n)) return 'tag_json';
     if (/(\/|^)advancements?\//.test(n)) return 'advancement_json';
     if (/(\/|^)worldgen\/biome\//.test(n)) return 'biome_json';
+    if (/(\/|^)dimension\//.test(n)) return 'dimension_json';
   }
   return 'unknown';
 }
