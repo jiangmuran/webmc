@@ -487,8 +487,55 @@ itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:name_tag', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rail', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:elytra', maxStack: 1, durability: 432 });
+// Dyes — 16 colors.
+const DYE_COLORS = ['white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black'];
+for (const c of DYE_COLORS) itemRegistry.register({ name: `webmc:${c}_dye`, maxStack: 64, durability: 0 });
+// Maps + signs + utility items.
+itemRegistry.register({ name: 'webmc:map', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:filled_map', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:writable_book', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:written_book', maxStack: 16, durability: 0 });
+itemRegistry.register({ name: 'webmc:knowledge_book', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:enchanted_book', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:book', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:paper', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:scute', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:armadillo_scute', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
+const TEMPLATES = ['netherite_upgrade', 'sentry_armor_trim', 'vex_armor_trim', 'wild_armor_trim', 'coast_armor_trim', 'dune_armor_trim', 'wayfinder_armor_trim', 'raiser_armor_trim', 'shaper_armor_trim', 'host_armor_trim', 'ward_armor_trim', 'silence_armor_trim', 'tide_armor_trim', 'snout_armor_trim', 'rib_armor_trim', 'eye_armor_trim', 'spire_armor_trim', 'flow_armor_trim', 'bolt_armor_trim'];
+for (const t of TEMPLATES) itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
+// Crafted misc.
+itemRegistry.register({ name: 'webmc:bowl', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:stick', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:slime_ball', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:phantom_membrane', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:rabbit_hide', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:clay_ball', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:brick', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:popped_chorus_fruit', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:prismarine_shard', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:prismarine_crystals', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:heart_of_the_sea', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:nether_star', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:dragon_scale', maxStack: 64, durability: 0 });
+// Boats / minecarts / signs.
+const WOODS = ['oak', 'spruce', 'birch', 'jungle', 'acacia', 'dark_oak', 'mangrove', 'cherry', 'bamboo'];
+for (const w of WOODS) {
+  itemRegistry.register({ name: `webmc:${w}_boat`, maxStack: 1, durability: 0 });
+  itemRegistry.register({ name: `webmc:${w}_chest_boat`, maxStack: 1, durability: 0 });
+  itemRegistry.register({ name: `webmc:${w}_sign`, maxStack: 16, durability: 0 });
+  itemRegistry.register({ name: `webmc:${w}_hanging_sign`, maxStack: 16, durability: 0 });
+}
+itemRegistry.register({ name: 'webmc:minecart', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:chest_minecart', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:furnace_minecart', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:hopper_minecart', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:tnt_minecart', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
 itemRegistry.register({ name: 'webmc:music_disc_13', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:firework_rocket', maxStack: 64, durability: 0 });
