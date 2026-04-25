@@ -1143,6 +1143,39 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'timer') {
+    const sec = parseInt(args[0] ?? '60', 10);
+    if (!Number.isFinite(sec) || sec < 1 || sec > 3600) {
+      ctx.broadcast('Usage: /timer <seconds=60>', '#ff8080');
+      return;
+    }
+    ctx.broadcast(`⏰ Timer set: ${String(sec)}s`, '#80ff80');
+    setTimeout(() => {
+      if (ctx.showTitle) ctx.showTitle('⏰ Time!', '#ffd080', 3000);
+      ctx.broadcast('⏰ Timer finished', '#ffd080');
+    }, sec * 1000);
+    return;
+  }
+  if (head === 'countdown' || head === 'cd') {
+    const sec = parseInt(args[0] ?? '5', 10);
+    if (!Number.isFinite(sec) || sec < 1 || sec > 30) {
+      ctx.broadcast('Usage: /countdown <1-30>', '#ff8080');
+      return;
+    }
+    for (let i = sec; i > 0; i--) {
+      setTimeout(
+        () => {
+          if (ctx.showTitle) ctx.showTitle(String(i), '#ffd080', 900);
+        },
+        (sec - i) * 1000,
+      );
+    }
+    setTimeout(() => {
+      if (ctx.showTitle) ctx.showTitle('GO!', '#80ff80', 1200);
+    }, sec * 1000);
+    ctx.broadcast(`Countdown ${String(sec)}s started`, '#80ff80');
+    return;
+  }
   if (head === 'redstone_demo' || head === 'rsdemo') {
     if (!ctx.setBlock) return;
     const px = Math.floor(ctx.playerPos.x);
