@@ -3059,7 +3059,7 @@ function frame(): void {
       return true;
     },
   });
-  mobRenderer.sync(mobWorld.all());
+  mobRenderer.sync(mobWorld.all(), camera.position);
 
   damageNumbers.tick(dtSec, (wx, wy, wz) => {
     const v = new THREE.Vector3(wx, wy, wz);

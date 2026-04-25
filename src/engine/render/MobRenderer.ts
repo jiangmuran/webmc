@@ -146,7 +146,7 @@ export class MobRenderer {
     return g;
   }
 
-  sync(mobs: IterableIterator<Mob>): void {
+  sync(mobs: IterableIterator<Mob>, cameraPos?: { x: number; y: number; z: number }): void {
     const seen = new Set<number>();
     for (const mob of mobs) {
       seen.add(mob.id);
@@ -238,7 +238,22 @@ export class MobRenderer {
         vis.headMat.color.setHex(c);
       }
 
-      vis.nameSprite.visible = this.showNameplates;
+      // Distance-aware nameplate visibility: fade past 28 blocks, hide past 64.
+      if (this.showNameplates && cameraPos) {
+        const dx = mob.position.x - cameraPos.x;
+        const dy = mob.position.y - cameraPos.y;
+        const dz = mob.position.z - cameraPos.z;
+        const dist = Math.hypot(dx, dy, dz);
+        if (dist > 64) {
+          vis.nameSprite.visible = false;
+        } else {
+          vis.nameSprite.visible = true;
+          const fade = dist > 28 ? Math.max(0, 1 - (dist - 28) / 36) : 1;
+          vis.nameMat.opacity = 0.9 * fade;
+        }
+      } else {
+        vis.nameSprite.visible = this.showNameplates;
+      }
       const hpRatio = Math.max(0, mob.health / mob.def.maxHealth);
       const showBar = hpRatio < 1 && mob.dyingSec === 0;
       if (showBar) {
