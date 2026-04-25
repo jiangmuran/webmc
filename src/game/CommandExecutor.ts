@@ -28,6 +28,7 @@ export interface CommandContext {
   setDifficulty?: (level: 'peaceful' | 'easy' | 'normal' | 'hard') => void;
   playerName?: string;
   setSpawnHere?: () => void;
+  clearChat?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -92,6 +93,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'spawn') {
     ctx.teleportSpawn?.();
     ctx.broadcast('Teleported to spawn.', '#80ff80');
+    return;
+  }
+  if (head === 'clearchat' || head === 'cc') {
+    ctx.clearChat?.();
     return;
   }
   if (head === 'setspawn') {

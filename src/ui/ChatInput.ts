@@ -86,6 +86,10 @@ export class ChatInput {
     parent.appendChild(this.root);
   }
 
+  clearLog(): void {
+    this.log.textContent = '';
+  }
+
   addLine(text: string, color = '#ffffff'): void {
     const line = document.createElement('div');
     line.textContent = text;
