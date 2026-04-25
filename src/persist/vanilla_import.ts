@@ -21,6 +21,7 @@ export {
 } from './anvil_section_parse';
 export { mapVanillaName, resolveVanillaName } from './vanilla_block_map';
 export { mapVanillaItemName, resolveVanillaItem } from './vanilla_item_map';
+export { mapWebmcToVanillaName } from './webmc_to_vanilla_block_map';
 export { parsePackMcmeta, PackMetaError, type PackMeta } from './pack_mcmeta';
 export {
   parseStructureFromNbt,
