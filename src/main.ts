@@ -1432,6 +1432,23 @@ const interaction = new InteractionController(
         subtitles.push('Goat horn sounds');
         return true;
       }
+      // Music disc on jukebox block: emit notes + subtitle.
+      if (heldName.startsWith('music_disc_') && def.name === 'webmc:jukebox') {
+        sfx.play('break');
+        const NOTES = ['♩', '♪', '♫', '♬'];
+        for (let i = 0; i < 36; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const r = 0.5 + Math.random() * 4;
+          blockParticles.emitPlace(bx + 0.5 + Math.cos(ang) * r, by + 0.5 + Math.random() * 3, bz + 0.5 + Math.sin(ang) * r, [180, 80, 220]);
+        }
+        const note = NOTES[Math.floor(Math.random() * NOTES.length)] ?? '♪';
+        chatInput.addLine(`${note} Now playing: ${heldName.replace('music_disc_', 'C418 - ')}`, '#d0a0ff');
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const dId = itemRegistry.byName(`webmc:${heldName}`);
+          if (dId !== undefined) consumeInventoryItem(dId, 1);
+        }
+        return true;
+      }
       // Music disc: short particle play; placed-on-jukebox not yet wired.
       if (heldName.startsWith('music_disc_')) {
         sfx.play('click');
