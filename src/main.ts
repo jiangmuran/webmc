@@ -1663,10 +1663,35 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
   },
-  onEat: (_id, hungerRestore, saturation) => {
+  onEat: (id, hungerRestore, saturation) => {
     playerState.eat(hungerRestore, saturation);
     sfx.play('click');
-    // Small burst of brownish particles in front of player.
+    // Item-specific food effects.
+    const itemName = itemRegistry.get(id).name;
+    if (itemName === 'webmc:honey_bottle') {
+      playerState.effects.delete('poison');
+    } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
+      playerState.applyEffect('hunger', 0, 30);
+    } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
+      playerState.applyEffect('poison', 0, 5);
+    } else if (itemName === 'webmc:spider_eye') {
+      playerState.applyEffect('poison', 0, 4);
+    } else if (itemName === 'webmc:golden_apple') {
+      playerState.applyEffect('regeneration', 1, 5);
+      playerState.applyEffect('absorption', 0, 120);
+    } else if (itemName === 'webmc:enchanted_golden_apple') {
+      playerState.applyEffect('regeneration', 1, 20);
+      playerState.applyEffect('absorption', 3, 120);
+      playerState.applyEffect('fire_resistance', 0, 300);
+      playerState.applyEffect('resistance', 0, 300);
+    } else if (itemName === 'webmc:chorus_fruit') {
+      // Random teleport ±8 blocks.
+      const tx = fp.position.x + (Math.random() - 0.5) * 16;
+      const tz = fp.position.z + (Math.random() - 0.5) * 16;
+      const ty = Math.max(generator.surfaceAt(Math.floor(tx), Math.floor(tz)) + 2, fp.position.y);
+      fp.position.set(tx, ty, tz);
+      subtitles.push('Chorus warp');
+    }
     const look = fp.lookVector();
     blockParticles.emitPlace(
       fp.position.x + look.x * 0.6,
