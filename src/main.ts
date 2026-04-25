@@ -409,6 +409,7 @@ itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 }
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:compass', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:clock', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability: 0 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
@@ -2924,19 +2925,33 @@ function frame(): void {
     starvingShown = false;
   }
   if (playerState.justDied && !playerState.invulnerable) {
-    lastDeathPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
-    void persistDB.setMeta('lastDeathPos', lastDeathPos);
-    if (gameRules.doImmediateRespawn) {
-      // Skip death screen; world spawn already happened during respawn().
-      toast.show('Respawned', '#80ffa0', 1200);
+    // Totem of Undying: if held in hotbar, consume to revive at 1 HP + Regen II + Absorption II.
+    const totemId = itemRegistry.byName('webmc:totem_of_undying');
+    if (totemId !== undefined && countInventoryItem(totemId) > 0) {
+      consumeInventoryItem(totemId, 1);
+      playerState.health = 1;
       playerState.justDied = false;
-    } else if (!deathScreen.isVisible()) {
-      const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
-      deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);
-      deathScreen.show();
-      fp.inputBlocked = true;
-      document.exitPointerLock();
-      playerState.justDied = false;
+      playerState.applyEffect('regeneration', 1, 45);
+      playerState.applyEffect('absorption', 1, 5);
+      playerState.applyEffect('fire_resistance', 0, 40);
+      toast.show('✦ Totem of Undying ✦', '#ffd040', 3500);
+      subtitles.push('Totem of Undying activated');
+      sfx.play('place');
+    } else {
+      lastDeathPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+      void persistDB.setMeta('lastDeathPos', lastDeathPos);
+      if (gameRules.doImmediateRespawn) {
+        // Skip death screen; world spawn already happened during respawn().
+        toast.show('Respawned', '#80ffa0', 1200);
+        playerState.justDied = false;
+      } else if (!deathScreen.isVisible()) {
+        const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
+        deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);
+        deathScreen.show();
+        fp.inputBlocked = true;
+        document.exitPointerLock();
+        playerState.justDied = false;
+      }
     }
   }
 
