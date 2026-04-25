@@ -272,6 +272,13 @@ export {
   type GuiBorder,
   type GuiScalingType,
 } from './vanilla_gui_sprite_parse';
+export {
+  parseVanillaEquipmentAsset,
+  EquipmentAssetParseError,
+  type ParsedEquipmentAsset,
+  type EquipmentLayer,
+  type EquipmentLayerKey,
+} from './vanilla_equipment_asset_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -322,6 +329,8 @@ export type VanillaFileKind =
   | 'multi_noise_biome_source_parameter_list_json'
   | 'jukebox_song_json'
   | 'density_function_json'
+  | 'equipment_asset_json'
+  | 'gui_sprite_mcmeta'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -382,6 +391,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
       return 'multi_noise_biome_source_parameter_list_json';
     if (/(\/|^)worldgen\/density_function\//.test(n)) return 'density_function_json';
     if (/(\/|^)jukebox_song\//.test(n)) return 'jukebox_song_json';
+    if (/(\/|^)equipment\//.test(n)) return 'equipment_asset_json';
   }
   return 'unknown';
 }
