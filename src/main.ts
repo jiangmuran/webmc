@@ -79,6 +79,7 @@ import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
 import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
 import { feed as animalFeed, isInLove, onBreedComplete, canBreed, type AnimalLove } from './entities/animal_breed_love';
+import { canLeash, tensionStep } from './entities/leash_tether';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -544,6 +545,7 @@ const mobRenderer = new MobRenderer();
 const tamedMobs = new Map<number, TameableState>();
 const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
 const lovingMobs = new Map<number, AnimalLove>();
+const leashedMobs = new Set<number>();
 let worldTick = 0;
 const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
@@ -1641,6 +1643,39 @@ const chatInput = new ChatInput(appEl, {
           }
           return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
         },
+        leashLookedAtMob: () => {
+          const aimLook = fp.lookVector();
+          const reach = 6;
+          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - camera.position.x;
+            const dy = m.position.y - camera.position.y;
+            const dz = m.position.z - camera.position.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > reach + 1) continue;
+            const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+            if (dot > 0.97 && (!best || d < best.dist)) {
+              best = { mob: m, dist: d };
+            }
+          }
+          if (!best) return null;
+          const kind = best.mob.def.kind;
+          if (!canLeash(kind)) return { kind, leashed: false, reason: 'unleashable' };
+          if (leashedMobs.has(best.mob.id)) return { kind, leashed: false, reason: 'already_leashed' };
+          leashedMobs.add(best.mob.id);
+          mobRenderer.setMobName(best.mob.id, `🪢 ${kind}`);
+          return { kind, leashed: true };
+        },
+        unleashAllMobs: () => {
+          const n = leashedMobs.size;
+          const allMobs = [...mobWorld.all()];
+          for (const id of leashedMobs) {
+            const m = allMobs.find((mm) => mm.id === id);
+            if (m) mobRenderer.setMobName(id, m.def.kind);
+          }
+          leashedMobs.clear();
+          return n;
+        },
         feedLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -1927,7 +1962,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash',
     ];
     return SLASH_CMDS;
   },
@@ -3670,6 +3705,26 @@ function frame(): void {
 
   if (!tickFrozen) {
     worldTick += Math.max(1, Math.round(dtSec * 20));
+    if (leashedMobs.size > 0) {
+      const anchor = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+      const allMobs = [...mobWorld.all()];
+      const broken: number[] = [];
+      for (const id of leashedMobs) {
+        const m = allMobs.find((mm) => mm.id === id);
+        if (!m) { broken.push(id); continue; }
+        const r = tensionStep({ anchorPos: anchor, mobPos: m.position });
+        if (r.broken) {
+          broken.push(id);
+          mobRenderer.setMobName(id, m.def.kind);
+          chatInput.addLine(`Leash on ${m.def.kind} snapped.`, '#ffd080');
+          continue;
+        }
+        m.velocity.x += r.pullVec.x;
+        m.velocity.y += r.pullVec.y;
+        m.velocity.z += r.pullVec.z;
+      }
+      for (const id of broken) leashedMobs.delete(id);
+    }
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
       const allMobs = [...mobWorld.all()];
       const mobById = new Map(allMobs.map((m) => [m.id, m] as const));

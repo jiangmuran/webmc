@@ -35,6 +35,8 @@ export interface CommandContext {
   tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
   toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
+  leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
+  unleashAllMobs?: () => number;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
   setHardcore?: (on: boolean) => void;
@@ -556,6 +558,30 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`${r.kind} ate the ${r.itemUsed} but resisted taming. Try again.`, '#ffd080');
     }
+    return;
+  }
+  if (head === 'leash') {
+    if (!ctx.leashLookedAtMob) {
+      ctx.broadcast('Leash not available.', '#ff8080');
+      return;
+    }
+    const r = ctx.leashLookedAtMob();
+    if (!r) {
+      ctx.broadcast('No mob in reach.', '#ff8080');
+      return;
+    }
+    if (r.reason === 'unleashable') {
+      ctx.broadcast(`${r.kind} cannot be leashed.`, '#ff8080');
+    } else if (r.reason === 'already_leashed') {
+      ctx.broadcast(`${r.kind} is already leashed.`, '#ffd080');
+    } else if (r.leashed) {
+      ctx.broadcast(`Leashed ${r.kind}. Walk away — it follows.`, '#80ff80');
+    }
+    return;
+  }
+  if (head === 'unleash') {
+    const n = ctx.unleashAllMobs?.() ?? 0;
+    ctx.broadcast(n > 0 ? `Unleashed ${n} mob(s).` : 'No leashed mobs.', n > 0 ? '#80ff80' : '#ffd080');
     return;
   }
   if (head === 'feed' || head === 'breed') {
