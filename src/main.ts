@@ -1141,6 +1141,19 @@ const resourcePackLoader = new ResourcePackLoader(appEl, {
   },
 });
 
+const accessibilityStyle = document.createElement('style');
+accessibilityStyle.textContent = [
+  'body.webmc-large-text [data-testid="chat-log"] div { font-size: 16px !important; }',
+  'body.webmc-large-text [data-testid="subtitles"] div { font-size: 15px !important; }',
+  'body.webmc-large-text [data-testid="pause-menu"] button { font-size: 20px !important; padding: 14px 26px !important; }',
+  'body.webmc-large-text [data-testid="death-screen"] button { font-size: 20px !important; }',
+  'body.webmc-high-contrast [data-testid="chat-log"] div { background: #000 !important; border: 1px solid #fff !important; }',
+  'body.webmc-high-contrast [data-testid="subtitles"] div { background: #000 !important; border: 1px solid #fff !important; }',
+  'body.webmc-high-contrast [data-testid="pause-menu"] button { border: 2px solid #fff !important; }',
+  'body.webmc-reduce-motion *, body.webmc-reduce-motion *::before, body.webmc-reduce-motion *::after { transition-duration: 0s !important; animation-duration: 0s !important; }',
+].join('\n');
+document.head.appendChild(accessibilityStyle);
+
 const settingsPanel = new SettingsPanel(appEl, {
   onChange: (v) => {
     fp.setBaseFov(v.fov);
@@ -1164,6 +1177,9 @@ const settingsPanel = new SettingsPanel(appEl, {
       scene.fog.near = far * 0.6;
       scene.fog.far = far;
     }
+    document.body.classList.toggle('webmc-high-contrast', v.highContrast);
+    document.body.classList.toggle('webmc-large-text', v.largeText);
+    document.body.classList.toggle('webmc-reduce-motion', v.reduceMotion);
   },
 });
 
