@@ -39,6 +39,8 @@ export interface CommandContext {
   findBlock?: (name: string, radius: number) => { x: number; y: number; z: number; dist: number } | null;
 }
 
+let lastTpFrom: { x: number; y: number; z: number } | null = null;
+
 export function executeCommand(raw: string, ctx: CommandContext): void {
   const command = raw.startsWith('/') ? raw.slice(1) : raw;
   const tokens = command.split(/\s+/).filter((t) => t.length > 0);
@@ -318,11 +320,23 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const py = parseCoord(args[1] ?? '', ctx.playerPos.y);
     const pz = parseCoord(args[2] ?? '', ctx.playerPos.z);
     if (Number.isFinite(px) && Number.isFinite(py) && Number.isFinite(pz)) {
+      lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
       ctx.setPlayerPos(px, py, pz);
       ctx.broadcast(`Teleported to ${px.toFixed(1)} ${py.toFixed(1)} ${pz.toFixed(1)}`, '#80ff80');
     } else {
       ctx.broadcast('Invalid coordinates', '#ff8080');
     }
+    return;
+  }
+  if (head === 'back') {
+    if (!lastTpFrom) {
+      ctx.broadcast('No previous teleport.', '#ff8080');
+      return;
+    }
+    const p = lastTpFrom;
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(p.x, p.y, p.z);
+    ctx.broadcast(`Back to ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#80ff80');
     return;
   }
   if (head === 'freeze') {
