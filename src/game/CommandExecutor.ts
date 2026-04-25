@@ -1144,6 +1144,71 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'animalpen' || head === 'pen') {
+    if (!ctx.fillBlocks || !ctx.summon) return;
+    const kind = args[0] ?? 'cow';
+    const r = parseInt(args[1] ?? '4', 10);
+    if (!Number.isFinite(r) || r < 2 || r > 8) {
+      ctx.broadcast('Usage: /pen <kind=cow> <r=4>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Fence ring + grass interior.
+    for (let dx = -r; dx <= r; dx++) {
+      ctx.setBlock?.(px + dx, py, pz - r, 'oak_fence');
+      ctx.setBlock?.(px + dx, py, pz + r, 'oak_fence');
+    }
+    for (let dz = -r; dz <= r; dz++) {
+      ctx.setBlock?.(px - r, py, pz + dz, 'oak_fence');
+      ctx.setBlock?.(px + r, py, pz + dz, 'oak_fence');
+    }
+    ctx.fillBlocks(px - r + 1, py - 1, pz - r + 1, px + r - 1, py - 1, pz + r - 1, 'grass_block');
+    let n = 0;
+    for (let i = 0; i < 4; i++) {
+      if (
+        ctx.summon(
+          kind,
+          px + (Math.random() - 0.5) * (r * 2),
+          py,
+          pz + (Math.random() - 0.5) * (r * 2),
+        )
+      )
+        n++;
+    }
+    ctx.broadcast(`Built ${kind} pen: r=${String(r)} fence + ${String(n)} ${kind}`, '#80ff80');
+    return;
+  }
+  if (head === 'cropfields' || head === 'allfields') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const CROPS = ['wheat', 'carrots', 'potatoes', 'beetroots'];
+    const SIZE = 5;
+    for (let i = 0; i < 4; i++) {
+      const ox = (i % 2) * (SIZE + 1);
+      const oz = Math.floor(i / 2) * (SIZE + 1);
+      ctx.fillBlocks(
+        px + ox,
+        py - 1,
+        pz + oz,
+        px + ox + SIZE - 1,
+        py - 1,
+        pz + oz + SIZE - 1,
+        'farmland',
+      );
+      const crop = CROPS[i] ?? 'wheat';
+      for (let dx = 0; dx < SIZE; dx++) {
+        for (let dz = 0; dz < SIZE; dz++) {
+          ctx.setBlock(px + ox + dx, py, pz + oz + dz, crop);
+        }
+      }
+    }
+    ctx.broadcast('4 crop fields planted (wheat / carrots / potatoes / beetroots)', '#80ff80');
+    return;
+  }
   if (head === 'monument' || head === 'oceanmonument') {
     if (!ctx.fillBlocks) return;
     const px = Math.floor(ctx.playerPos.x);
