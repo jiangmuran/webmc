@@ -53,6 +53,7 @@ export {
   type AdvancementCriterion,
   type AdvancementFrame,
 } from './vanilla_advancement_parse';
+export { parseVanillaFunction, type ParsedFunction } from './vanilla_function_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -63,6 +64,7 @@ export type VanillaFileKind =
   | 'loot_table_json'
   | 'pack_mcmeta'
   | 'advancement_json'
+  | 'function_mcfunction'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -74,6 +76,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
   if (n.endsWith('.mca')) return 'mca_region';
   if (n.endsWith('.nbt')) return 'structure_nbt';
   if (n === 'pack.mcmeta' || n.endsWith('/pack.mcmeta')) return 'pack_mcmeta';
+  if (n.endsWith('.mcfunction')) return 'function_mcfunction';
   if (n.endsWith('.json')) {
     // Best-effort routing: look at the path. recipes/, loot_tables/, tags/.
     if (/(\/|^)recipes?\//.test(n)) return 'recipe_json';

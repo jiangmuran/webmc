@@ -27,6 +27,7 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('data/minecraft/advancements/story/root.json')).toBe(
       'advancement_json',
     );
+    expect(detectVanillaFileKind('data/foo/functions/bar.mcfunction')).toBe('function_mcfunction');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
