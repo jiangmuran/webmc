@@ -1244,6 +1244,31 @@ const interaction = new InteractionController(
         const def = registry.get(stateId(sel.state));
         subtitles.push(`Block placed: ${def.name.replace(/^webmc:/, '')}`, directionFromPlayer(bx + 0.5, bz + 0.5));
         blockParticles.emitPlace(bx, by, bz, def.color);
+        // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
+        if (def.name === 'webmc:sponge') {
+          const waterId = registry.byName('webmc:water');
+          const wetSpongeId = registry.byName('webmc:wet_sponge');
+          if (waterId !== undefined && wetSpongeId !== undefined) {
+            let absorbed = 0;
+            for (let dy = -2; dy <= 2; dy++) {
+              for (let dz = -2; dz <= 2; dz++) {
+                for (let dx = -2; dx <= 2; dx++) {
+                  const s = world.get(bx + dx, by + dy, bz + dz);
+                  if (s !== AIR && stateId(s) === waterId) {
+                    world.set(bx + dx, by + dy, bz + dz, AIR);
+                    touchWorldEdit(bx + dx, by + dy, bz + dz, 0);
+                    absorbed++;
+                  }
+                }
+              }
+            }
+            if (absorbed > 0) {
+              world.set(bx, by, bz, makeState(wetSpongeId, 0));
+              touchWorldEdit(bx, by, bz, wetSpongeId);
+              subtitles.push(`Sponge absorbed ${absorbed} water`);
+            }
+          }
+        }
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const itemId = itemRegistry.byName(def.name);
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
