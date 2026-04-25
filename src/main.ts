@@ -4547,6 +4547,8 @@ const chatInput = new ChatInput(appEl, {
       '/currentchunk',
       '/gpu',
       '/renderer',
+      '/farm',
+      '/cabin',
       '/randomblock',
       '/rb',
       '/randommob',

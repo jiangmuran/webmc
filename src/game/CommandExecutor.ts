@@ -1143,6 +1143,52 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'farm') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '4', 10);
+    if (!Number.isFinite(r) || r < 1 || r > 16) {
+      ctx.broadcast('Usage: /farm <half-size=4>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Tilled farmland surrounded by water canal.
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'farmland');
+    // Water down the centerline.
+    ctx.fillBlocks(px, py - 1, pz - r, px, py - 1, pz + r, 'water');
+    // Plant wheat over the surface.
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx === 0) continue; // skip water column
+        ctx.setBlock(px + dx, py, pz + dz, 'wheat');
+      }
+    }
+    ctx.broadcast(
+      `Built ${String((r * 2 + 1) * (r * 2 + 1))}-tile wheat farm with center water canal`,
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'cabin') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3×3×3 cozy wood cabin with door.
+    ctx.fillBlocks(px, py - 1, pz, px + 2, py - 1, pz + 2, 'spruce_planks');
+    ctx.fillBlocks(px, py, pz, px + 2, py + 2, pz, 'spruce_planks');
+    ctx.fillBlocks(px, py, pz + 2, px + 2, py + 2, pz + 2, 'spruce_planks');
+    ctx.fillBlocks(px, py, pz, px, py + 2, pz + 2, 'spruce_planks');
+    ctx.fillBlocks(px + 2, py, pz, px + 2, py + 2, pz + 2, 'spruce_planks');
+    ctx.fillBlocks(px, py + 3, pz, px + 2, py + 3, pz + 2, 'spruce_planks');
+    ctx.fillBlocks(px + 1, py, pz, px + 1, py + 1, pz, 'air'); // door opening
+    ctx.setBlock(px + 1, py, pz + 1, 'bed');
+    ctx.setBlock(px + 2, py + 2, pz + 1, 'glass'); // window
+    ctx.setBlock(px + 1, py + 2, pz - 1, 'torch');
+    ctx.broadcast('Built a 3×3×3 spruce cabin', '#80ff80');
+    return;
+  }
   if (head === 'randomblock' || head === 'rb') {
     if (!ctx.listBlocks || !ctx.giveItem) return;
     const blocks = ctx.listBlocks();
