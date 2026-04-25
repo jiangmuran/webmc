@@ -47,17 +47,17 @@ function serializePayload(v: NbtValue): string {
     }
     case 'byteArray': {
       const items: string[] = [];
-      for (let i = 0; i < v.value.length; i++) items.push(`${String(v.value[i] ?? 0)}b`);
+      for (const x of v.value) items.push(`${String(x)}b`);
       return `[B;${items.join(',')}]`;
     }
     case 'intArray': {
       const items: string[] = [];
-      for (let i = 0; i < v.value.length; i++) items.push(String(v.value[i] ?? 0));
+      for (const x of v.value) items.push(String(x));
       return `[I;${items.join(',')}]`;
     }
     case 'longArray': {
       const items: string[] = [];
-      for (let i = 0; i < v.value.length; i++) items.push(`${(v.value[i] ?? 0n).toString()}L`);
+      for (const x of v.value) items.push(`${x.toString()}L`);
       return `[L;${items.join(',')}]`;
     }
   }

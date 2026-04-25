@@ -29,7 +29,7 @@ export interface ParsedStructure {
 }
 
 function listInts(v: NbtValue | undefined, expectedLen: number): number[] {
-  if (!v || v.type !== 'list') return new Array<number>(expectedLen).fill(0);
+  if (v?.type !== 'list') return new Array<number>(expectedLen).fill(0);
   const out: number[] = [];
   for (const item of v.value) {
     if (item.type === 'int' || item.type === 'short' || item.type === 'byte') out.push(item.value);
@@ -39,7 +39,7 @@ function listInts(v: NbtValue | undefined, expectedLen: number): number[] {
 }
 
 function readPalette(v: NbtValue | undefined): StructurePaletteEntry[] {
-  if (!v || v.type !== 'list') return [];
+  if (v?.type !== 'list') return [];
   const out: StructurePaletteEntry[] = [];
   for (const e of v.value) {
     if (e.type !== 'compound') continue;
@@ -50,7 +50,7 @@ function readPalette(v: NbtValue | undefined): StructurePaletteEntry[] {
 }
 
 function readBlocks(v: NbtValue | undefined): StructureBlock[] {
-  if (!v || v.type !== 'list') return [];
+  if (v?.type !== 'list') return [];
   const out: StructureBlock[] = [];
   for (const e of v.value) {
     if (e.type !== 'compound') continue;

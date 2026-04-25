@@ -279,6 +279,12 @@ export {
   type EquipmentLayer,
   type EquipmentLayerKey,
 } from './vanilla_equipment_asset_parse';
+export {
+  parseVanillaEnchantmentProvider,
+  EnchantmentProviderParseError,
+  type ParsedEnchantmentProvider,
+  type EnchantmentProviderKind,
+} from './vanilla_enchantment_provider_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -331,6 +337,7 @@ export type VanillaFileKind =
   | 'density_function_json'
   | 'equipment_asset_json'
   | 'gui_sprite_mcmeta'
+  | 'enchantment_provider_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -392,6 +399,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)worldgen\/density_function\//.test(n)) return 'density_function_json';
     if (/(\/|^)jukebox_song\//.test(n)) return 'jukebox_song_json';
     if (/(\/|^)equipment\//.test(n)) return 'equipment_asset_json';
+    if (/(\/|^)enchantment_provider\//.test(n)) return 'enchantment_provider_json';
   }
   return 'unknown';
 }

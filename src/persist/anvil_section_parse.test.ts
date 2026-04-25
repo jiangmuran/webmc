@@ -27,7 +27,7 @@ describe('Anvil section parser', () => {
     if (!out) return;
     expect(out.palette[0]?.name).toBe('minecraft:air');
     expect(out.indices.length).toBe(16 * 16 * 16);
-    for (let i = 0; i < out.indices.length; i++) expect(out.indices[i]).toBe(0);
+    for (const idx of out.indices) expect(idx).toBe(0);
   });
 
   it('unpacks 4-bit indices from a 2-entry palette', () => {

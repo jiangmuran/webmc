@@ -105,7 +105,7 @@ describe('importVanillaChunk end-to-end', () => {
     expect(out.paletteSize).toBe(1);
     // Single section → ids.length = 4096; all entries should be stone.
     expect(out.ids.length).toBe(16 * 16 * 16);
-    for (let i = 0; i < out.ids.length; i++) expect(out.ids[i]).toBe(stoneId);
+    for (const id of out.ids) expect(id).toBe(stoneId);
   });
 
   it('returns null when chunk is missing', async () => {

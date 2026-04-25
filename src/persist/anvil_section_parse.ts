@@ -61,7 +61,7 @@ export function parseSection(section: NbtValue, y: number): AnvilSection | null 
   const palette = readPalette(bs.value['palette'] ?? { type: 'list', value: [] });
   if (palette.length === 0) return null;
   const dataV = bs.value['data'];
-  if (palette.length === 1 || !dataV || dataV.type !== 'longArray') {
+  if (palette.length === 1 || dataV?.type !== 'longArray') {
     return { y, palette, indices: new Uint16Array(SECTION_BLOCKS) };
   }
   return { y, palette, indices: unpackIndices(dataV.value, palette.length) };

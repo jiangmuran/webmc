@@ -141,17 +141,17 @@ function writePayload(w: Writer, v: NbtValue): void {
       return;
     case 'byteArray': {
       w.i32(v.value.length);
-      for (let i = 0; i < v.value.length; i++) w.i8(v.value[i] ?? 0);
+      for (const x of v.value) w.i8(x);
       return;
     }
     case 'intArray': {
       w.i32(v.value.length);
-      for (let i = 0; i < v.value.length; i++) w.i32(v.value[i] ?? 0);
+      for (const x of v.value) w.i32(x);
       return;
     }
     case 'longArray': {
       w.i32(v.value.length);
-      for (let i = 0; i < v.value.length; i++) w.i64(v.value[i] ?? 0n);
+      for (const x of v.value) w.i64(x);
       return;
     }
     case 'list': {
