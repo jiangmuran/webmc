@@ -905,6 +905,35 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'time' && (args[0] === 'now' || args[0] === 'query')) {
+    const sub = args[0];
+    if (sub === 'now') ctx.broadcast('Time queried (use F3 for live time)', '#cccccc');
+    else ctx.broadcast(`Day ${String(Math.floor(Date.now() / 86400000) % 1000000)}`, '#cccccc');
+    return;
+  }
+  if (head === 'where') {
+    ctx.broadcast(`Position: ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`, '#cccccc');
+    if (ctx.biomeAt) ctx.broadcast(`Biome: ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
+    return;
+  }
+  if (head === 'distance' && args[0]) {
+    const target = args[0].toLowerCase();
+    if (target === 'spawn') {
+      const d = Math.hypot(ctx.playerPos.x, ctx.playerPos.z);
+      ctx.broadcast(`${d.toFixed(1)}m to spawn`, '#cccccc');
+      return;
+    }
+    if (target === 'home' && ctx.getWaypoint) {
+      const wp = ctx.getWaypoint('home');
+      if (!wp) {
+        ctx.broadcast('No home set.', '#ff8080');
+        return;
+      }
+      const d = Math.hypot(wp.x - ctx.playerPos.x, wp.z - ctx.playerPos.z);
+      ctx.broadcast(`${d.toFixed(1)}m to home`, '#cccccc');
+      return;
+    }
+  }
   if (head === 'respawn' || head === 'rs') {
     if (!ctx.kill) return;
     ctx.kill();
