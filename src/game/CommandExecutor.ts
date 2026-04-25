@@ -90,6 +90,31 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(text, '#ffffff');
     return;
   }
+  if (head === '8ball' || head === 'magic8' || head === 'eight') {
+    const ANS: readonly string[] = [
+      'It is certain.',
+      'Without a doubt.',
+      'Yes — definitely.',
+      'You may rely on it.',
+      'Most likely.',
+      'Outlook good.',
+      'Yes.',
+      'Signs point to yes.',
+      'Reply hazy, try again.',
+      'Ask again later.',
+      'Better not tell you now.',
+      'Cannot predict now.',
+      'Concentrate and ask again.',
+      "Don't count on it.",
+      'My reply is no.',
+      'My sources say no.',
+      'Outlook not so good.',
+      'Very doubtful.',
+    ];
+    const idx = Math.floor(Math.random() * ANS.length);
+    ctx.broadcast(`🎱 ${ANS[idx] ?? '?'}`, '#cccccc');
+    return;
+  }
   if (head === 'coin' || head === 'flip') {
     ctx.broadcast(Math.random() < 0.5 ? '🪙 Heads' : '🪙 Tails', '#cccccc');
     return;
