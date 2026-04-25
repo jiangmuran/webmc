@@ -75,6 +75,11 @@ export class PlayerState {
     this.health = Math.max(0, this.health - dmg);
     this.hitImmuneSec = 0.5;
     if (ev.source !== undefined) this.lastDamageSource = ev.source;
+    // MC: damage_taken adds 0.1 exhaustion (continuous sources scale tiny).
+    if (dmg > 0) {
+      const exh = ev.source === 'starvation' || ev.source === 'wither' || ev.source === 'poison' ? 0 : 0.1;
+      if (exh > 0) this.exhaustion += exh;
+    }
     if (this.health === 0) {
       this.justDied = true;
       this.lastDeathCause = ev.source ?? this.lastDamageSource;

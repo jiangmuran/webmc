@@ -3113,6 +3113,10 @@ function frame(): void {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
   prevOnGround = fp.onGround;
+  // Swim exhaustion: 0.01 per meter swum.
+  if (fp.inFluid === 'water' && (gameMode === 'survival' || gameMode === 'adventure')) {
+    playerState.addExhaustion(0.01 * horizSpeed * dtSec);
+  }
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
