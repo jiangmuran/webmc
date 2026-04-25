@@ -1787,6 +1787,20 @@ function computeArmorPoints(): number {
   return pts;
 }
 
+// Lowercased name of what the player is *actually* holding. Prefers the
+// inventory hotbar slot (real items: pickaxes, foods, tools) and falls
+// back to the canned Hotbar-UI entry (creative-mode block selector).
+// Strips the webmc: prefix so the existing `.includes('diamond')` etc.
+// checks keep working.
+function heldNameLower(): string {
+  const stack = inventory.hotbar[inventory.selectedHotbar];
+  if (stack) {
+    const def = itemRegistry.get(stack.itemId);
+    if (def) return def.name.replace(/^webmc:/, '').toLowerCase();
+  }
+  return hotbar.selected?.name.toLowerCase() ?? '';
+}
+
 function consumeHeldToolDurability(amount = 1): void {
   if (gameMode === 'creative') return;
   const sel = inventory.hotbar[inventory.selectedHotbar];
@@ -1874,7 +1888,7 @@ const interaction = new InteractionController(
       const blockShortName = def.name.replace(/^webmc:/, '');
       const requiredLevel = requiredMiningLevel(blockShortName);
       let toolLevel = 1;
-      const heldNameForTool = hotbar.selected?.name.toLowerCase() ?? '';
+      const heldNameForTool = heldNameLower();
       if (heldNameForTool.includes('netherite')) toolLevel = 5;
       else if (heldNameForTool.includes('diamond')) toolLevel = 4;
       else if (heldNameForTool.includes('iron')) toolLevel = 3;
@@ -2043,7 +2057,7 @@ const interaction = new InteractionController(
       const id = stateId(state);
       const def = registry.get(id);
       // Axe / Shovel / Hoe: tool-on-block interactions.
-      const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+      const heldName = heldNameLower();
       const airAbove = world.get(bx, by + 1, bz) === AIR;
       if (heldName.includes('axe') && !heldName.includes('pickaxe')) {
         const result = useAxe(def.name);
@@ -3099,7 +3113,7 @@ canvas.addEventListener('mousedown', (e) => {
   if (bestId !== null) {
     const nowMs = performance.now();
     const sinceMs = nowMs - lastPlayerAttackAt;
-    const heldNameLow = hotbar.selected?.name.toLowerCase() ?? '';
+    const heldNameLow = heldNameLower();
     const fullChargeMs = heldAttackFullChargeMs(heldNameLow);
     const charge = Math.min(1, sinceMs / fullChargeMs);
     const damageMult = 0.2 + 0.8 * (charge * charge);
@@ -3118,7 +3132,7 @@ canvas.addEventListener('mousedown', (e) => {
     const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
     // Weapon tier damage (held item determines base).
     let weaponBase = 1; // fist
-    const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+    const heldName = heldNameLower();
     if (heldName.includes('sword')) {
       if (heldName.includes('netherite')) weaponBase = 8;
       else if (heldName.includes('diamond')) weaponBase = 7;
@@ -3190,7 +3204,7 @@ canvas.addEventListener('mousedown', (e) => {
     if (gameMode === 'survival' || gameMode === 'adventure') {
       playerState.addExhaustion(0.1);
       // Sword takes 1 durability per hit; axe takes 2.
-      const heldNow = hotbar.selected?.name.toLowerCase() ?? '';
+      const heldNow = heldNameLower();
       if (heldNow.includes('sword')) consumeHeldToolDurability(1);
       else if (heldNow.includes('axe')) consumeHeldToolDurability(2);
     }
@@ -7026,8 +7040,7 @@ function frame(): void {
     });
   }
   crosshair.setCooldown(
-    (performance.now() - lastPlayerAttackAt) /
-      heldAttackFullChargeMs(hotbar.selected?.name.toLowerCase() ?? ''),
+    (performance.now() - lastPlayerAttackAt) / heldAttackFullChargeMs(heldNameLower()),
   );
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
