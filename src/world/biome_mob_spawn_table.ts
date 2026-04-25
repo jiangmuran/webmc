@@ -87,6 +87,91 @@ const BIOMES: Record<string, BiomeCategoryPool> = {
     axolotls: [{ mob: 'axolotl', weight: 10, minGroup: 1, maxGroup: 3 }],
     underground_water_creature: [{ mob: 'glow_squid', weight: 10, minGroup: 1, maxGroup: 3 }],
   },
+  desert: {
+    monster: [
+      { mob: 'husk', weight: 80, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'enderman', weight: 10, minGroup: 1, maxGroup: 4 },
+    ],
+    creature: [{ mob: 'rabbit', weight: 4, minGroup: 2, maxGroup: 3 }],
+  },
+  swamp: {
+    monster: [
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'witch', weight: 5, minGroup: 1, maxGroup: 1 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+    ],
+    creature: [
+      { mob: 'sheep', weight: 12, minGroup: 4, maxGroup: 4 },
+      { mob: 'frog', weight: 10, minGroup: 2, maxGroup: 5 },
+    ],
+  },
+  jungle: {
+    creature: [
+      { mob: 'pig', weight: 10, minGroup: 4, maxGroup: 4 },
+      { mob: 'chicken', weight: 10, minGroup: 4, maxGroup: 4 },
+      { mob: 'parrot', weight: 40, minGroup: 1, maxGroup: 2 },
+      { mob: 'panda', weight: 1, minGroup: 1, maxGroup: 2 },
+    ],
+    monster: [
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+    ],
+  },
+  taiga: {
+    creature: [
+      { mob: 'wolf', weight: 8, minGroup: 4, maxGroup: 4 },
+      { mob: 'sheep', weight: 12, minGroup: 4, maxGroup: 4 },
+      { mob: 'cow', weight: 8, minGroup: 4, maxGroup: 4 },
+      { mob: 'rabbit', weight: 4, minGroup: 2, maxGroup: 3 },
+      { mob: 'fox', weight: 8, minGroup: 2, maxGroup: 4 },
+    ],
+    monster: [
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+    ],
+  },
+  savanna: {
+    creature: [
+      { mob: 'horse', weight: 1, minGroup: 2, maxGroup: 6 },
+      { mob: 'cow', weight: 8, minGroup: 4, maxGroup: 4 },
+      { mob: 'sheep', weight: 12, minGroup: 4, maxGroup: 4 },
+      { mob: 'llama', weight: 8, minGroup: 4, maxGroup: 4 },
+    ],
+    monster: [
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+    ],
+  },
+  snowy: {
+    creature: [{ mob: 'rabbit', weight: 10, minGroup: 2, maxGroup: 3 }],
+    monster: [
+      { mob: 'stray', weight: 80, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 20, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+    ],
+  },
+  mushroom_fields: {
+    creature: [{ mob: 'mooshroom', weight: 8, minGroup: 4, maxGroup: 8 }],
+  },
+  deep_dark: {
+    monster: [{ mob: 'warden', weight: 1, minGroup: 1, maxGroup: 1 }],
+  },
+  river: {
+    water_creature: [{ mob: 'salmon', weight: 5, minGroup: 1, maxGroup: 5 }],
+  },
 };
 
 export function poolOf(biome: string, category: MobCategory): readonly SpawnEntry[] {
