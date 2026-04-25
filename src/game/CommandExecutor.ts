@@ -1144,6 +1144,48 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'snow_world' || head === 'icy') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '24', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'snow_block');
+    for (let i = 0; i < 6; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      ctx.fillBlocks(cx - 2, py - 1, cz - 2, cx + 2, py - 1, cz + 2, 'ice');
+    }
+    ctx.broadcast(`Snow biome ${String((r * 2 + 1) ** 2)} tiles + 6 ice patches`, '#80c0ff');
+    return;
+  }
+  if (head === 'forest_world' || head === 'forest') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '24', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'grass_block');
+    for (let i = 0; i < 12; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      const trunkH = 4 + Math.floor(Math.random() * 3);
+      for (let h = 0; h < trunkH; h++) ctx.setBlock(cx, py + h, cz, 'oak_log');
+      for (let dx = -2; dx <= 2; dx++) {
+        for (let dz = -2; dz <= 2; dz++) {
+          for (let dy = trunkH - 2; dy <= trunkH; dy++) {
+            if (Math.abs(dx) + Math.abs(dz) > 3) continue;
+            if (dx === 0 && dz === 0 && dy < trunkH) continue;
+            if (Math.random() < 0.85) ctx.setBlock(cx + dx, py + dy, cz + dz, 'oak_leaves');
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Forest biome with 12 trees`, '#80ff80');
+    return;
+  }
   if (head === 'sea' || head === 'flood') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '12', 10);
