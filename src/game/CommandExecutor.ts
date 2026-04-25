@@ -1763,15 +1763,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const py = Math.floor(ctx.playerPos.y);
     const pz = Math.floor(ctx.playerPos.z);
     ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'oak_planks');
-    ctx.setBlock(px, py, pz - 2, 'furnace');
-    ctx.setBlock(px - 2, py, pz, 'campfire');
-    ctx.setBlock(px + 2, py, pz, 'furnace');
+    ctx.setBlock(px, py, pz - 2, 'smoker');
+    ctx.setBlock(px - 2, py, pz, 'cauldron');
+    ctx.setBlock(px + 2, py, pz, 'blast_furnace');
     ctx.setBlock(px - 2, py, pz - 2, 'barrel');
     ctx.setBlock(px + 2, py, pz - 2, 'barrel');
     ctx.setBlock(px - 1, py, pz + 2, 'chest');
     ctx.setBlock(px + 1, py, pz + 2, 'chest');
     ctx.setBlock(px, py, pz, 'crafting_table');
-    ctx.broadcast('Built kitchen: furnace, campfire, barrels, chests', '#80ff80');
+    ctx.broadcast('Built kitchen: smoker, blast_furnace, cauldron, barrels, chests', '#80ff80');
     return;
   }
   if (head === 'stable') {
@@ -1875,6 +1875,26 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.setBlock(px, py + 1, pz - 4, 'air');
     ctx.setBlock(px, py + 2, pz - 4, 'air');
     ctx.broadcast('Built library: enchanting table + bookshelf walls + lectern', '#80ff80');
+    return;
+  }
+  if (head === 'brewery' || head === 'apothecary') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone room with 3 brewing_stands + 1 cauldron + chest.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'stone_bricks');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 3, pz + 2, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py + 2, pz + 1, 'air');
+    ctx.setBlock(px - 1, py, pz + 2, 'air');
+    ctx.setBlock(px - 1, py + 1, pz + 2, 'air');
+    ctx.setBlock(px - 1, py, pz, 'brewing_stand');
+    ctx.setBlock(px, py, pz, 'brewing_stand');
+    ctx.setBlock(px + 1, py, pz, 'brewing_stand');
+    ctx.setBlock(px - 1, py, pz - 1, 'cauldron');
+    ctx.setBlock(px + 1, py, pz - 1, 'chest');
+    ctx.setBlock(px, py + 3, pz, 'lantern');
+    ctx.broadcast('Built brewery: 3 brewing_stands + cauldron + chest', '#80ff80');
     return;
   }
   if (head === 'chess' || head === 'checkerboard') {

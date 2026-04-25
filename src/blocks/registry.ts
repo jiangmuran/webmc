@@ -2413,6 +2413,48 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [96, 96, 96] as RGB,
       hardness: 3.5,
     },
+    {
+      name: 'webmc:smoker',
+      top: [80, 80, 80] as RGB,
+      side: [110, 92, 60] as RGB,
+      bottom: [70, 70, 70] as RGB,
+      color: [110, 92, 60] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:blast_furnace',
+      top: [80, 80, 90] as RGB,
+      side: [120, 120, 130] as RGB,
+      bottom: [70, 70, 80] as RGB,
+      color: [110, 110, 120] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:cauldron',
+      color: [70, 70, 70] as RGB,
+      hardness: 2,
+      opaque: false,
+    },
+    {
+      name: 'webmc:brewing_stand',
+      color: [120, 100, 70] as RGB,
+      hardness: 0.5,
+      opaque: false,
+    },
+    {
+      name: 'webmc:crafter',
+      top: [80, 75, 70] as RGB,
+      side: [115, 95, 60] as RGB,
+      bottom: [90, 80, 65] as RGB,
+      color: [115, 95, 60] as RGB,
+      hardness: 1.5,
+    },
+    {
+      name: 'webmc:heavy_core',
+      color: [60, 60, 70] as RGB,
+      hardness: -1,
+      opaque: false,
+    },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));
   }

@@ -4684,6 +4684,8 @@ const chatInput = new ChatInput(appEl, {
       '/checkerboard',
       '/fortress',
       '/castle_walls',
+      '/brewery',
+      '/apothecary',
       '/compliment',
       '/salute',
       '/gg',
