@@ -4478,6 +4478,9 @@ const chatInput = new ChatInput(appEl, {
       '/savestate',
       '/savenow',
       '/forcesave',
+      '/keys',
+      '/keybinds',
+      '/controls',
     ];
     return SLASH_CMDS;
   },

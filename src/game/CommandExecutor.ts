@@ -1131,6 +1131,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`📢 ${text}`, '#ffd080');
     return;
   }
+  if (head === 'keys' || head === 'keybinds') {
+    ctx.broadcast('— Keyboard —', '#80ffff');
+    ctx.broadcast('WASD move · Space jump · Shift sneak · Ctrl/2×W sprint', '#cccccc');
+    ctx.broadcast('Mouse: L=mine · R=place · M=pick · Wheel=hotbar', '#cccccc');
+    ctx.broadcast('1-9 hotbar slots · Q drop · E inventory · T/⏎ chat · / commands', '#cccccc');
+    ctx.broadcast('F1 hide HUD · F2 screenshot · F3 debug · F5 camera', '#cccccc');
+    ctx.broadcast('B sleep · ESC pause · M minimap · K controls help', '#cccccc');
+    return;
+  }
+  if (head === 'controls') {
+    ctx.broadcast(
+      'Type /keys for keyboard bindings, /tutorial for game basics, /commands for command list',
+      '#cccccc',
+    );
+    return;
+  }
   if (head === 'savestate' || head === 'savestatus') {
     if (!ctx.saveStateInfo) return;
     const s = ctx.saveStateInfo();
