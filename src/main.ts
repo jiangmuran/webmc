@@ -67,6 +67,7 @@ import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budge
 import { inThermalThrottle } from './engine/chunk_unload_strategy_thermal';
 import { kindFor as kindForWeather } from './engine/weather_particles';
 import { adjustedTemperature } from './world/biome_precipitation';
+import { skyOf } from './world/sky_color';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -3160,12 +3161,17 @@ function frame(): void {
   const weatherDimming = (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
-  // Biome fog tint: forest gets a hint of green. Use fp.position so sampling is cheap.
+  // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
   const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
-  if (biomeId === 1) {
-    tmpFogColor.multiplyScalar(0.97);
-    tmpFogColor.g = Math.min(1, tmpFogColor.g + 0.03);
-  }
+  const biomeName = biomeId === 1 ? 'forest' : 'plains';
+  const biomePalette = skyOf(biomeName);
+  const TINT = 0.18;
+  tmpSkyColor.r = tmpSkyColor.r * (1 - TINT) + (biomePalette.sky[0] / 255) * TINT;
+  tmpSkyColor.g = tmpSkyColor.g * (1 - TINT) + (biomePalette.sky[1] / 255) * TINT;
+  tmpSkyColor.b = tmpSkyColor.b * (1 - TINT) + (biomePalette.sky[2] / 255) * TINT;
+  tmpFogColor.r = tmpFogColor.r * (1 - TINT) + (biomePalette.fog[0] / 255) * TINT;
+  tmpFogColor.g = tmpFogColor.g * (1 - TINT) + (biomePalette.fog[1] / 255) * TINT;
+  tmpFogColor.b = tmpFogColor.b * (1 - TINT) + (biomePalette.fog[2] / 255) * TINT;
   const skyColor = tmpSkyColor;
   const fogColor = tmpFogColor;
   const uniforms = chunkRenderer.material.uniforms;
