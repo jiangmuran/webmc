@@ -44,6 +44,8 @@ export interface CommandContext {
   fillRegion?: (block: string) => number;
   screenshot?: () => void;
   setFov?: (deg: number) => void;
+  entityStats?: () => { mobs: number; hostile: number; passive: number; neutral: number; drops: number; xpOrbs: number; byKind: { kind: string; count: number }[] };
+  chunkStats?: () => { loaded: number; pending: number; meshes: number; triangles: number };
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -905,6 +907,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'entities' || head === 'mobs') {
+    if (!ctx.entityStats) {
+      ctx.broadcast('Entity stats unavailable.', '#ff8080');
+      return;
+    }
+    const s = ctx.entityStats();
+    ctx.broadcast(`mobs ${String(s.mobs)} (h${String(s.hostile)}/p${String(s.passive)}/n${String(s.neutral)}) drops ${String(s.drops)} xp ${String(s.xpOrbs)}`, '#cccccc');
+    if (s.byKind.length > 0) {
+      ctx.broadcast(s.byKind.slice(0, 8).map((k) => `${k.kind}:${String(k.count)}`).join('  '), '#cccccc');
+    }
+    return;
+  }
+  if (head === 'chunkstats' || head === 'chunks') {
+    if (!ctx.chunkStats) return;
+    const s = ctx.chunkStats();
+    ctx.broadcast(`chunks loaded ${String(s.loaded)} pending ${String(s.pending)}  meshes ${String(s.meshes)}  tris ${s.triangles.toLocaleString()}`, '#cccccc');
     return;
   }
   if (head === 'screenshot' || head === 'snap') {
