@@ -34,6 +34,8 @@ export interface CommandContext {
   renameLookedAtMob?: (name: string) => string | null;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
+  setHardcore?: (on: boolean) => void;
+  isHardcore?: () => boolean;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -430,6 +432,19 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Rolled ${item} from ${table} table`, '#80ff80');
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
+    }
+    return;
+  }
+  if (head === 'hardcore') {
+    const sub = (args[0] ?? '').toLowerCase();
+    if (sub === 'on') {
+      ctx.setHardcore?.(true);
+      ctx.broadcast('☠ Hardcore mode ON. Death = spectator forever.', '#ff5050');
+    } else if (sub === 'off') {
+      ctx.setHardcore?.(false);
+      ctx.broadcast('Hardcore mode OFF.', '#80ff80');
+    } else {
+      ctx.broadcast(`Hardcore: ${ctx.isHardcore?.() ? 'ON' : 'OFF'} — usage: /hardcore <on|off>`, '#cccccc');
     }
     return;
   }

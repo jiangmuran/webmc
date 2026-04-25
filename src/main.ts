@@ -1235,6 +1235,10 @@ let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
+let hardcoreMode = false;
+void persistDB.getMeta('hardcore').then((saved) => {
+  if (saved === true) hardcoreMode = true;
+});
 const waypoints = new Map<string, { x: number; y: number; z: number }>();
 void persistDB.getMeta('waypoints').then((saved) => {
   if (saved && typeof saved === 'object') {
@@ -1372,6 +1376,11 @@ const chatInput = new ChatInput(appEl, {
         getLastDeathPos: () => lastDeathPos,
         setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
         getWorldBorder: () => worldBorder.diameter,
+        setHardcore: (on) => {
+          hardcoreMode = on;
+          void persistDB.setMeta('hardcore', on);
+        },
+        isHardcore: () => hardcoreMode,
         setWaypoint: (name, x, y, z) => {
           waypoints.set(name, { x, y, z });
           persistWaypoints();
@@ -1686,7 +1695,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore',
     ];
     return SLASH_CMDS;
   },
@@ -3034,8 +3043,13 @@ function frame(): void {
     } else {
       lastDeathPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
       void persistDB.setMeta('lastDeathPos', lastDeathPos);
-      if (gameRules.doImmediateRespawn) {
-        // Skip death screen; world spawn already happened during respawn().
+      if (hardcoreMode) {
+        // Hardcore: switch to spectator, no respawn.
+        toast.show('☠ HARDCORE — locked to spectator', '#ff5050', 8000);
+        applyGameMode('spectator');
+        playerState.health = 20;
+        playerState.justDied = false;
+      } else if (gameRules.doImmediateRespawn) {
         toast.show('Respawned', '#80ffa0', 1200);
         playerState.justDied = false;
       } else if (!deathScreen.isVisible()) {
