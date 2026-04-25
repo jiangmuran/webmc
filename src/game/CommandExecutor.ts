@@ -51,6 +51,8 @@ export interface CommandContext {
   loadLoadout?: (name: string) => boolean;
   listLoadouts?: () => string[];
   setTickRate?: (tps: number) => void;
+  cycleCamera?: () => string;
+  toggleMinimap?: () => boolean;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -912,6 +914,18 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'cyclecam' || head === 'cyclecamera') {
+    if (!ctx.cycleCamera) return;
+    const next = ctx.cycleCamera();
+    ctx.broadcast(`Camera: ${next}`, '#80ff80');
+    return;
+  }
+  if (head === 'minimap') {
+    if (!ctx.toggleMinimap) return;
+    const on = ctx.toggleMinimap();
+    ctx.broadcast(`Minimap ${on ? 'on' : 'off'}`, '#80ff80');
     return;
   }
   if (head === 'tps_target' || head === 'tickrate') {
