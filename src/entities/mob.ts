@@ -1086,10 +1086,30 @@ export class MobWorld {
       z: mob.velocity.z * dtSec,
     };
     const wasOnGround = mob.onGround;
-    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 0.6);
+    // Mob step height was 0.6 (matched the player) so 1-block-tall walls
+    // brick-walled every hostile mob — zombies would just shove against
+    // the wall of a player's shelter forever. Vanilla mobs step up 1.0
+    // (vex/horse/etc. step higher; we use a flat 1 here for simplicity).
+    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 1.0);
+    // Auto-jump when blocked by a wall while chasing. Step-up handles 1-
+    // block ledges, but anything taller (2-block fence, terrace, snow
+    // pile) needs an actual jump. Vanilla zombies/skeletons hop when
+    // pathing into a wall — without this they grind against the wall
+    // forever instead of trying to climb. Only fires when actively aggro
+    // so peaceful wandering mobs don't bunny-hop pointlessly.
     if (result.hitX) mob.velocity.x = 0;
     if (result.hitY) mob.velocity.y = 0;
     if (result.hitZ) mob.velocity.z = 0;
+    if (
+      (result.hitX || result.hitZ) &&
+      mob.onGround &&
+      this.isAggroTarget(mob) &&
+      ctx.playerPos !== null
+    ) {
+      // Jump after the wall-clear pass so hitY (if any) doesn't wipe the
+      // upward velocity we're about to set.
+      mob.velocity.y = 7.5;
+    }
     mob.onGround = result.onGround;
     if (!wasOnGround && mob.onGround && mob.airborneStartY !== null) {
       const fall = mob.airborneStartY - mob.position.y;
