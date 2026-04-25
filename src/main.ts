@@ -51,6 +51,7 @@ import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './e
 import { BROWSER_CLIPBOARD } from './game/clipboard_util';
 import { canSpawnPhantom } from './entities/phantom_day_despawn';
 import { Weather as WeatherCycle } from './world/weather';
+import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -688,6 +689,7 @@ const weatherCycle = new WeatherCycle(Math.random, {
 });
 const fpsStats = makeFpsStats(120);
 const tpsTracker = new TpsTracker(100);
+const worldBorder = makeWorldBorder(60_000_000);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
 const moodState = makeMoodState();
@@ -1342,6 +1344,8 @@ const chatInput = new ChatInput(appEl, {
           lagging: tpsTracker.isLagging(),
         }),
         getLastDeathPos: () => lastDeathPos,
+        setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
+        getWorldBorder: () => worldBorder.diameter,
         renameLookedAtMob: (name) => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -1588,7 +1592,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb',
     ];
     return SLASH_CMDS;
   },
@@ -2879,6 +2883,13 @@ function frame(): void {
 
   if (fp.position.y < -64 && (gameMode === 'survival' || gameMode === 'adventure')) {
     playerState.takeDamage({ amount: 4, source: 'void' });
+  }
+
+  if (gameMode === 'survival' || gameMode === 'adventure') {
+    const wb = checkWorldBorder(worldBorder, fp.position.x, fp.position.z);
+    if (!wb.insideBorder && wb.damagePerSec > 0) {
+      playerState.takeDamage({ amount: wb.damagePerSec * dtSec, source: 'void' });
+    }
   }
 
   if (gameMode === 'survival' || gameMode === 'adventure') {

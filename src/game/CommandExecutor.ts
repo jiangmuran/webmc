@@ -32,6 +32,8 @@ export interface CommandContext {
   getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
   getLastDeathPos?: () => { x: number; y: number; z: number } | null;
   renameLookedAtMob?: (name: string) => string | null;
+  setWorldBorder?: (diameter: number) => void;
+  getWorldBorder?: () => number;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -354,6 +356,21 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
     }
+    return;
+  }
+  if (head === 'worldborder' || head === 'wb') {
+    if (args.length === 0) {
+      const cur = ctx.getWorldBorder?.() ?? 0;
+      ctx.broadcast(`World border: ${cur.toLocaleString()} blocks diameter`, '#cccccc');
+      return;
+    }
+    const d = Number(args[0]);
+    if (!Number.isFinite(d) || d < 4) {
+      ctx.broadcast('Usage: /worldborder <diameter>', '#ff8080');
+      return;
+    }
+    ctx.setWorldBorder?.(d);
+    ctx.broadcast(`World border set to ${d.toLocaleString()} blocks`, '#80ff80');
     return;
   }
   if (head === 'rename' || head === 'nametag') {
