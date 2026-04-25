@@ -68,6 +68,7 @@ import { inThermalThrottle } from './engine/chunk_unload_strategy_thermal';
 import { kindFor as kindForWeather } from './engine/weather_particles';
 import { adjustedTemperature } from './world/biome_precipitation';
 import { skyOf } from './world/sky_color';
+import { bedlessRespawn } from './world/spawn_safety';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -492,15 +493,32 @@ const playerState = new PlayerState({
       const safe = findSafeRespawnNear(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
       if (safe) {
         fp.position.set(safe.x, safe.y, safe.z);
-      } else {
-        chatInput.addLine('Your home bed was missing or obstructed.', '#ffd080');
-        const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
-        fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+        return;
       }
-    } else {
-      const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
-      fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+      chatInput.addLine('Your home bed was missing or obstructed.', '#ffd080');
     }
+    const ws = bedlessRespawn(
+      { x: worldMeta.spawn.x, y: worldMeta.spawn.y, z: worldMeta.spawn.z },
+      {
+        topSolidY: (x, z) => {
+          const y = generator.surfaceAt(x, z);
+          return Number.isFinite(y) ? y : null;
+        },
+        blockAt: (x, y, z) => {
+          const s = world.get(x, y, z);
+          if (s === AIR) return 'webmc:air';
+          return registry.get(stateId(s)).name;
+        },
+        isOpaque: (x, y, z) => {
+          const s = world.get(x, y, z);
+          if (s === AIR) return false;
+          return registry.get(stateId(s)).opaque;
+        },
+      },
+      Math.random,
+      20,
+    );
+    fp.position.set(ws.x, ws.y + 1, ws.z);
   },
 });
 
