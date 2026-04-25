@@ -61,6 +61,9 @@ export interface CommandContext {
   remeshAllChunks?: () => number;
   setHealth?: (hp: number) => void;
   setHunger?: (h: number) => void;
+  setSaturation?: (s: number) => void;
+  setBreath?: (b: number) => void;
+  setXpLevel?: (lvl: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -966,6 +969,39 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'saturation' || head === 'sat') {
+    if (!ctx.setSaturation) return;
+    const v = parseFloat(args[0] ?? '20');
+    if (!Number.isFinite(v) || v < 0 || v > 20) {
+      ctx.broadcast('Usage: /saturation <0-20>', '#ff8080');
+      return;
+    }
+    ctx.setSaturation(v);
+    ctx.broadcast(`Saturation ${v.toFixed(1)}`, '#80ff80');
+    return;
+  }
+  if (head === 'breath' || head === 'air') {
+    if (!ctx.setBreath) return;
+    const v = parseFloat(args[0] ?? '15');
+    if (!Number.isFinite(v) || v < 0 || v > 15) {
+      ctx.broadcast('Usage: /breath <0-15>', '#ff8080');
+      return;
+    }
+    ctx.setBreath(v);
+    ctx.broadcast(`Breath ${v.toFixed(1)}s`, '#80ff80');
+    return;
+  }
+  if (head === 'level' || head === 'xplevel') {
+    if (!ctx.setXpLevel) return;
+    const v = parseInt(args[0] ?? '0', 10);
+    if (!Number.isFinite(v) || v < 0 || v > 200) {
+      ctx.broadcast('Usage: /level <0-200>', '#ff8080');
+      return;
+    }
+    ctx.setXpLevel(v);
+    ctx.broadcast(`Level ${String(v)}`, '#80ff80');
     return;
   }
   if (head === 'health' || head === 'hp') {
