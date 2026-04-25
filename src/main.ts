@@ -1116,6 +1116,22 @@ interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
 let lastPlayerAttackAt = 0;
+function heldAttackFullChargeMs(heldName: string): number {
+  let attacksPerSec = 4.0;
+  if (heldName.includes('sword')) attacksPerSec = 1.6;
+  else if (heldName.includes('netherite_axe')) attacksPerSec = 1.0;
+  else if (heldName.includes('axe')) attacksPerSec = heldName.includes('wood') || heldName.includes('gold') ? 0.8 : 0.9;
+  else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
+  else if (heldName.includes('shovel')) attacksPerSec = 1.0;
+  else if (heldName.includes('hoe')) {
+    if (heldName.includes('netherite') || heldName.includes('diamond')) attacksPerSec = 4.0;
+    else if (heldName.includes('iron')) attacksPerSec = 3.0;
+    else if (heldName.includes('stone')) attacksPerSec = 2.0;
+    else attacksPerSec = 1.0;
+  } else if (heldName.includes('trident')) attacksPerSec = 1.1;
+  else if (heldName.includes('mace')) attacksPerSec = 0.5;
+  return Math.max(50, 1000 / attacksPerSec);
+}
 window.addEventListener('mousemove', (e) => {
   if (document.pointerLockElement !== canvas) return;
   hand.applyMouseDelta(e.movementX, e.movementY);
@@ -1163,11 +1179,12 @@ canvas.addEventListener('mousedown', (e) => {
   }
   if (bestId !== null) {
     const nowMs = performance.now();
-    // Attack cooldown (1.9+ combat): scale damage by charge fraction.
     const sinceMs = nowMs - lastPlayerAttackAt;
-    const charge = Math.min(1, sinceMs / 400);
+    const heldNameLow = hotbar.selected?.name.toLowerCase() ?? '';
+    const fullChargeMs = heldAttackFullChargeMs(heldNameLow);
+    const charge = Math.min(1, sinceMs / fullChargeMs);
     const damageMult = 0.2 + 0.8 * (charge * charge);
-    if (sinceMs < 60) return; // hard floor on click rate
+    if (sinceMs < 60) return;
     lastPlayerAttackAt = nowMs;
     const strengthEff = playerState.effects.get('strength');
     const weaknessEff = playerState.effects.get('weakness');
@@ -3455,7 +3472,7 @@ function frame(): void {
     beginSave(autosaveState, nowSaveMs);
     void chunkStore.flush().finally(() => endSave(autosaveState));
   }
-  crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
+  crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / heldAttackFullChargeMs(hotbar.selected?.name.toLowerCase() ?? ''));
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
   let bossM: typeof bossCandidate | null = null;
