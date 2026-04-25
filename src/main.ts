@@ -6182,7 +6182,9 @@ function frame(): void {
   // Paused menus freeze the world tick by zeroing dtSec — every tick
   // call below uses dtSec, so day/night, mobs, breath, weather, fluids,
   // hunger, etc. stop advancing. Rendering still runs to draw the menu.
-  const isPaused = pauseMenu.isVisible() || mainMenu.isVisible();
+  // /tick freeze should also pause world systems (vanilla parity), not
+  // just mob AI like before.
+  const isPaused = pauseMenu.isVisible() || mainMenu.isVisible() || tickFrozen;
   const dtSec = isPaused ? 0 : Math.min(stats.frameMs / 1000, 0.1);
   if (perfMonitor.tick(dtSec)) {
     let qualityLimit = perfMonitor.quality;
