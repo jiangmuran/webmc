@@ -5616,27 +5616,30 @@ document.addEventListener(
     }
     if (e.code === 'KeyQ') {
       e.preventDefault();
-      const sel = hotbar.selected;
-      if (sel && (gameMode === 'survival' || gameMode === 'adventure')) {
-        const def = registry.get(stateId(sel.state));
-        const itemId = itemRegistry.byName(def.name);
-        if (itemId !== undefined && countInventoryItem(itemId) > 0) {
-          consumeInventoryItem(itemId, 1);
-          const look = fp.lookVector();
-          droppedItems.spawn(
-            fp.position.x + look.x * 1.2,
-            fp.position.y,
-            fp.position.z + look.z * 1.2,
-            {
-              itemId,
-              count: 1,
-              color: def.color,
-            },
-            1.5,
-          );
-          sfx.play('click');
-        }
-      }
+      if (gameMode !== 'survival' && gameMode !== 'adventure') return;
+      // Drop directly from the inventory hotbar slot. Old code routed
+      // through the visible Hotbar entry (`hotbar.selected.state`) and
+      // looked up the matching item by block name — which silently failed
+      // for tools/food/non-block items because those have no block-id and
+      // the visible-hotbar sync stores them as AIR.
+      const slotIdx = inventory.selectedHotbar;
+      const stk = inventory.hotbar[slotIdx];
+      if (!stk || stk.count <= 0) return;
+      const itemDef = itemRegistry.get(stk.itemId);
+      const dropCount = e.shiftKey ? stk.count : 1;
+      const removed = inventory.remove(stk.itemId, dropCount);
+      if (removed <= 0) return;
+      const look = fp.lookVector();
+      const color: readonly [number, number, number] =
+        itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 130, 100];
+      droppedItems.spawn(
+        fp.position.x + look.x * 1.2,
+        fp.position.y,
+        fp.position.z + look.z * 1.2,
+        { itemId: stk.itemId, count: removed, color },
+        1.5,
+      );
+      sfx.play('click');
     }
   },
   true,
