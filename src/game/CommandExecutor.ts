@@ -860,6 +860,69 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'roof') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '6', 10);
+    const block = args[1] ?? 'oak_planks';
+    if (!Number.isFinite(r) || r < 2 || r > 24) {
+      ctx.broadcast('Usage: /roof <half-size=6> [block=oak_planks]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) + 4;
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let h = 0; h < r; h++) {
+      ctx.fillBlocks(px - r + h, py + h, pz - r + h, px + r - h, py + h, pz + r - h, block);
+    }
+    ctx.broadcast(`Built a ${String(r)}-step pyramid roof of ${block}`, '#80ff80');
+    return;
+  }
+  if (head === 'wall') {
+    if (!ctx.fillBlocks) return;
+    const len = parseInt(args[0] ?? '8', 10);
+    const height = parseInt(args[1] ?? '4', 10);
+    const block = args[2] ?? 'cobblestone';
+    if (!Number.isFinite(len) || len < 1 || len > 64 || !Number.isFinite(height) || height < 1 || height > 32) {
+      ctx.broadcast('Usage: /wall <len=8> <h=4> [block=cobblestone]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px, py, pz, px + len - 1, py + height - 1, pz, block);
+    ctx.broadcast(`Wall ${String(len)}×${String(height)} of ${block} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'bridge') {
+    if (!ctx.fillBlocks) return;
+    const len = parseInt(args[0] ?? '12', 10);
+    const block = args[1] ?? 'oak_planks';
+    if (!Number.isFinite(len) || len < 1 || len > 128) {
+      ctx.broadcast('Usage: /bridge <len=12> [block=oak_planks]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) - 1;
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px - 1, py, pz, px + 1, py, pz + len - 1, block);
+    ctx.broadcast(`Bridge ${String(len)} long of ${block} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'pillar') {
+    if (!ctx.fillBlocks) return;
+    const h = parseInt(args[0] ?? '32', 10);
+    const block = args[1] ?? 'glowstone';
+    if (!Number.isFinite(h) || h < 1 || h > 256) {
+      ctx.broadcast('Usage: /pillar <height=32> [block=glowstone]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px, py, pz, px, py + h - 1, pz, block);
+    ctx.broadcast(`Pillar ${String(h)} of ${block} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
   if (head === 'sphere') {
     if (!ctx.fillBlocks || !ctx.setBlock) return;
     const r = parseInt(args[0] ?? '5', 10);
