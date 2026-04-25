@@ -425,7 +425,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'listeffects') {
     const all = ['regeneration', 'poison', 'instant_health', 'instant_damage',
       'night_vision', 'speed', 'slowness', 'jump_boost', 'fire_resistance',
-      'water_breathing', 'invisibility', 'strength', 'resistance'];
+      'water_breathing', 'invisibility', 'strength', 'resistance',
+      'slow_falling', 'haste', 'mining_fatigue', 'absorption', 'glowing',
+      'levitation', 'luck', 'unluck', 'wither', 'dolphins_grace', 'blindness',
+      'nausea', 'hunger', 'weakness'];
     ctx.broadcast(`Effects: ${all.join(', ')}`, '#cccccc');
     return;
   }
