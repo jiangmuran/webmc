@@ -1644,6 +1644,69 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     );
     return;
   }
+  if (head === 'panic') {
+    if (!ctx.summon) return;
+    const n = Math.max(1, Math.min(40, parseInt(args[0] ?? '12', 10)));
+    const px = ctx.playerPos.x;
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = ctx.playerPos.z;
+    let summoned = 0;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const r = 6;
+      if (ctx.summon('zombie', px + Math.cos(a) * r, py, pz + Math.sin(a) * r)) summoned++;
+    }
+    ctx.broadcast(`PANIC: ${String(summoned)} zombies surround you`, '#ff6060');
+    return;
+  }
+  if (head === 'pets' || head === 'kittens') {
+    if (!ctx.summon) return;
+    const n = Math.max(1, Math.min(20, parseInt(args[0] ?? '8', 10)));
+    const px = ctx.playerPos.x;
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = ctx.playerPos.z;
+    const KINDS = ['cat', 'wolf', 'parrot', 'fox'];
+    let summoned = 0;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const r = 3;
+      const kind = KINDS[i % KINDS.length] ?? 'cat';
+      if (ctx.summon(kind, px + Math.cos(a) * r, py, pz + Math.sin(a) * r)) summoned++;
+    }
+    ctx.broadcast(`Pet circle: ${String(summoned)} (cat/wolf/parrot/fox)`, '#80ff80');
+    return;
+  }
+  if (head === 'carnival') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Ring of colored wool (8 segments) + center jack_o_lantern.
+    const COLORS = [
+      'wool_red',
+      'wool_orange',
+      'wool_yellow',
+      'wool_lime',
+      'wool_cyan',
+      'wool_blue',
+      'wool_magenta',
+      'wool_white',
+    ];
+    const r = 6;
+    for (let i = 0; i < 32; i++) {
+      const a = (i / 32) * Math.PI * 2;
+      const x = px + Math.round(Math.cos(a) * r);
+      const z = pz + Math.round(Math.sin(a) * r);
+      const c = COLORS[Math.floor((i / 32) * COLORS.length)] ?? 'wool_white';
+      ctx.setBlock(x, py, z, c);
+      ctx.setBlock(x, py + 1, z, c);
+    }
+    ctx.setBlock(px, py, pz, 'jack_o_lantern');
+    ctx.setBlock(px, py + 1, pz, 'jack_o_lantern');
+    ctx.setBlock(px, py + 2, pz, 'jack_o_lantern');
+    ctx.broadcast('Built carnival ring with jack_o_lantern column', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
