@@ -379,6 +379,7 @@ itemRegistry.register({ name: 'webmc:redstone', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:glow_ink_sac', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ink_sac', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:bone_meal', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
@@ -1180,6 +1181,8 @@ let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
+const chickenEggTimers = new Map<number, number>(); // mob id → next-egg-ms timestamp
+let lastEggCheckMs = 0;
 void persistDB.getMeta('dayCounter').then((saved) => {
   if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
 });
@@ -3077,6 +3080,36 @@ function frame(): void {
       surfaceAt: (x, z) => generator.surfaceAt(x, z),
       isSolid,
     });
+
+    // Chicken egg laying: every 5–10 min per chicken, drop an egg item.
+    const nowEggMs = performance.now();
+    if (nowEggMs - lastEggCheckMs > 1000) {
+      lastEggCheckMs = nowEggMs;
+      const eggItemId = itemRegistry.byName('webmc:egg');
+      if (eggItemId !== undefined) {
+        for (const m of mobWorld.all()) {
+          if (m.def.kind !== 'chicken') continue;
+          let next = chickenEggTimers.get(m.id);
+          if (next === undefined) {
+            next = nowEggMs + 300_000 + Math.random() * 300_000;
+            chickenEggTimers.set(m.id, next);
+            continue;
+          }
+          if (nowEggMs >= next) {
+            droppedItems.spawn(m.position.x, m.position.y + 0.4, m.position.z, {
+              itemId: eggItemId,
+              count: 1,
+              color: [240, 230, 200],
+            });
+            chickenEggTimers.set(m.id, nowEggMs + 300_000 + Math.random() * 300_000);
+          }
+        }
+        // Drop stale entries.
+        for (const id of chickenEggTimers.keys()) {
+          if (!Array.from(mobWorld.all()).some((m) => m.id === id)) chickenEggTimers.delete(id);
+        }
+      }
+    }
 
     // Phantom spawning: 3+ days without sleep, at night, sky-exposed.
     const nowPhantomMs = performance.now();
