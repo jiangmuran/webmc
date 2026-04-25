@@ -2602,6 +2602,16 @@ function frame(): void {
     if (isSolid(headX, headY, headZ)) {
       playerState.takeDamage({ amount: 1 * dtSec, source: 'suffocation' });
     }
+    // Magma block contact: 1 HP/sec when standing on, unless sneaking.
+    if (fp.onGround && !fp.input.sneak) {
+      const fx = Math.floor(fp.position.x);
+      const fy = Math.floor(fp.position.y - 1.05);
+      const fz = Math.floor(fp.position.z);
+      const belowDef = registry.get(stateId(world.get(fx, fy, fz)));
+      if (belowDef.name === 'webmc:magma_block' && !playerState.effects.has('fire_resistance')) {
+        playerState.takeDamage({ amount: 1 * dtSec, source: 'fire' });
+      }
+    }
   }
 
   if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
