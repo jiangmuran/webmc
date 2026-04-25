@@ -329,6 +329,29 @@ itemRegistry.register({ name: 'webmc:cooked_porkchop', maxStack: 64, durability:
 itemRegistry.register({ name: 'webmc:cooked_beef', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 12.8 });
 itemRegistry.register({ name: 'webmc:cooked_chicken', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 7.2 });
 itemRegistry.register({ name: 'webmc:apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 2.4 });
+// Extended food set from food_nutrition_table — every standard MC food.
+itemRegistry.register({ name: 'webmc:carrot', maxStack: 64, durability: 0, hungerRestore: 3, saturation: 3.6 });
+itemRegistry.register({ name: 'webmc:golden_apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 9.6 });
+itemRegistry.register({ name: 'webmc:enchanted_golden_apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 9.6 });
+itemRegistry.register({ name: 'webmc:golden_carrot', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 14.4 });
+itemRegistry.register({ name: 'webmc:honey_bottle', maxStack: 16, durability: 0, hungerRestore: 6, saturation: 1.2 });
+itemRegistry.register({ name: 'webmc:mushroom_stew', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
+itemRegistry.register({ name: 'webmc:rabbit_stew', maxStack: 1, durability: 0, hungerRestore: 10, saturation: 12 });
+itemRegistry.register({ name: 'webmc:pumpkin_pie', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 4.8 });
+itemRegistry.register({ name: 'webmc:rotten_flesh', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 0.8 });
+itemRegistry.register({ name: 'webmc:potato', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.6 });
+itemRegistry.register({ name: 'webmc:baked_potato', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
+itemRegistry.register({ name: 'webmc:poisonous_potato', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
+itemRegistry.register({ name: 'webmc:spider_eye', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 3.2 });
+itemRegistry.register({ name: 'webmc:chorus_fruit', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 2.4 });
+itemRegistry.register({ name: 'webmc:beetroot_soup', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
+itemRegistry.register({ name: 'webmc:dried_kelp', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.6 });
+itemRegistry.register({ name: 'webmc:sweet_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({ name: 'webmc:glow_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({ name: 'webmc:cooked_mutton', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
+itemRegistry.register({ name: 'webmc:cooked_rabbit', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
+itemRegistry.register({ name: 'webmc:cooked_cod', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
+itemRegistry.register({ name: 'webmc:cooked_salmon', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
