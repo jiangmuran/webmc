@@ -2227,7 +2227,12 @@ function frame(): void {
     hud.textContent =
       `webmc — F3 debug · F5 cam · F1 help\n` +
       `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms  ${clock}  d${String(dayCounter)}\n` +
-      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => { const dx = fp.position.x - worldMeta.spawn.x; const dz = fp.position.z - worldMeta.spawn.z; return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`; })()}\n` +
+      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => {
+        if (!worldMeta) return '';
+        const dx = fp.position.x - worldMeta.spawn.x;
+        const dz = fp.position.z - worldMeta.spawn.z;
+        return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`;
+      })()}\n` +
       `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
       `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
