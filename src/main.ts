@@ -3798,6 +3798,13 @@ const chatInput = new ChatInput(appEl, {
           for (const id of toKill) mobWorld.remove(id);
           return toKill.length;
         },
+        saveStateInfo: () => ({
+          dirtyChunks: autosaveState.dirtyCount,
+          lastSaveSec:
+            autosaveState.lastSaveMs > 0
+              ? (performance.now() - autosaveState.lastSaveMs) / 1000
+              : 0,
+        }),
         healMobsNear: (radius) => {
           const r2 = radius * radius;
           let n = 0;
@@ -4466,6 +4473,11 @@ const chatInput = new ChatInput(appEl, {
       '/xplevel',
       '/clearmobs',
       '/killnear',
+      '/healmobs',
+      '/healall',
+      '/savestate',
+      '/savenow',
+      '/forcesave',
     ];
     return SLASH_CMDS;
   },

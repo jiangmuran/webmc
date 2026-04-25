@@ -2,12 +2,12 @@
 
 ## Branches
 
-| Branch         | Purpose                                                               |
-| -------------- | --------------------------------------------------------------------- |
-| `main`         | Production. Auto-deploys to GitHub Pages. Only PR-merged.            |
-| `dev`          | Integration. Daily PR auto-opens against `main` once CI is green.    |
-| `feature/<x>`  | Short-lived feature branches; PR into `dev`.                         |
-| `fix/<x>`      | Short-lived bugfix branches; PR into `dev`.                          |
+| Branch        | Purpose                                                           |
+| ------------- | ----------------------------------------------------------------- |
+| `main`        | Production. Auto-deploys to GitHub Pages. Only PR-merged.         |
+| `dev`         | Integration. Daily PR auto-opens against `main` once CI is green. |
+| `feature/<x>` | Short-lived feature branches; PR into `dev`.                      |
+| `fix/<x>`     | Short-lived bugfix branches; PR into `dev`.                       |
 
 ## CI gates (run on every PR)
 

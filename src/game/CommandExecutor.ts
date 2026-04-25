@@ -92,6 +92,7 @@ export interface CommandContext {
   setXpLevel?: (lvl: number) => void;
   killMobsNear?: (radius: number) => number;
   healMobsNear?: (radius: number) => number;
+  saveStateInfo?: () => { dirtyChunks: number; lastSaveSec: number };
   feedLookedAtMob?: () => {
     kind: string;
     loved: boolean;
@@ -1128,6 +1129,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'savestate' || head === 'savestatus') {
+    if (!ctx.saveStateInfo) return;
+    const s = ctx.saveStateInfo();
+    ctx.broadcast(
+      `Save: ${String(s.dirtyChunks)} dirty chunks · ${s.lastSaveSec.toFixed(0)}s ago`,
+      '#cccccc',
+    );
+    return;
+  }
+  if (head === 'savenow' || head === 'forcesave') {
+    if (ctx.save) {
+      ctx.save();
+      ctx.broadcast('World saved.', '#80ff80');
+    }
     return;
   }
   if (head === 'healmobs' || head === 'healall') {
