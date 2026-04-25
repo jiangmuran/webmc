@@ -3138,6 +3138,8 @@ const hotbar = new Hotbar(appEl, registry, [
 let gameMode: GameMode = 'creative';
 function applyGameMode(m: GameMode): void {
   gameMode = m;
+  // Persist so the next reload doesn't drop the player back into creative.
+  void persistDB.setMeta('gameMode', m);
   const eff = effectsFor(m);
   fp.input.fly = eff.canFly;
   fp.canFly = eff.canFly;
@@ -5064,6 +5066,15 @@ const mainMenu = new MainMenu(appEl, {
   },
 });
 fp.inputBlocked = true;
+const savedGameMode = (await persistDB.getMeta('gameMode')) as GameMode | null;
+if (
+  savedGameMode === 'survival' ||
+  savedGameMode === 'creative' ||
+  savedGameMode === 'adventure' ||
+  savedGameMode === 'spectator'
+) {
+  gameMode = savedGameMode;
+}
 applyGameMode(gameMode);
 
 const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
