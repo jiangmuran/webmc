@@ -94,7 +94,10 @@ export class PlayerState {
     if (this.health === 0) {
       this.justDied = true;
       this.lastDeathCause = ev.source ?? this.lastDamageSource;
-      this.respawn();
+      // Don't auto-respawn here. Caller handles death sequence
+      // (totem of undying check, item drops, death screen) and decides
+      // whether to call respawn(). Old behavior wiped inventory before
+      // anyone got a chance to read it, breaking totems entirely.
     }
   }
 

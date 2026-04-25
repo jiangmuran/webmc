@@ -3302,6 +3302,9 @@ void persistDB.getMeta('minimapRange').then((saved) => {
   while (minimap.currentRange < saved && minimap.currentRange < 256) minimap.zoomOut();
 });
 deathScreen.setOnRespawn(() => {
+  // Inventory + position reset moved out of takeDamage so totem can run
+  // pre-respawn; the death screen now drives it.
+  playerState.respawn();
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
   toast.show('Respawned', '#80ffa0', 1200);
@@ -6847,8 +6850,9 @@ function frame(): void {
         playerState.health = 20;
         playerState.justDied = false;
       } else if (gameRules.doImmediateRespawn) {
+        // doImmediateRespawn skips the death screen, so respawn here.
+        playerState.respawn();
         toast.show('Respawned', '#80ffa0', 1200);
-        playerState.justDied = false;
       } else if (!deathScreen.isVisible()) {
         const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
         deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);

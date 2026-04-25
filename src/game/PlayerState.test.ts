@@ -18,14 +18,21 @@ describe('PlayerState', () => {
     expect(p.isDead).toBe(false);
   });
 
-  it('takeDamage reduces health and triggers respawn at zero', () => {
+  it('takeDamage reduces health and flags death at zero (caller respawns)', () => {
     const p = build();
     p.takeDamage({ amount: 5 });
     expect(p.health).toBe(15);
     // Rapid hits are blocked by MC-style i-frames; wait out.
     p.hitImmuneSec = 0;
     p.takeDamage({ amount: 100 });
-    // Lethal damage immediately triggers respawn → back to full HP.
+    // takeDamage no longer auto-respawns — it just flags justDied so the
+    // caller (main.ts) can run totem-of-undying / drop logic before
+    // resetting state.
+    expect(p.health).toBe(0);
+    expect(p.justDied).toBe(true);
+    expect(p.isDead).toBe(true);
+    // Caller-driven respawn restores everything.
+    p.respawn();
     expect(p.health).toBe(MAX_HEALTH);
     expect(p.isDead).toBe(false);
   });
@@ -126,8 +133,10 @@ describe('PlayerState', () => {
 
   it('poison damages down to 1 HP but not below', () => {
     const p = build();
-    p.hunger = 0;
-    p.saturation = 0;
+    // Keep saturation positive so starvation doesn't compound — poison alone
+    // is what we're testing, and poison stops at 1 HP per vanilla rules.
+    p.hunger = 20;
+    p.saturation = 20;
     p.applyEffect('poison', 2, 10);
     for (let i = 0; i < 50; i++) p.tick(0.5);
     expect(p.health).toBeGreaterThanOrEqual(1);
