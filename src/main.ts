@@ -1301,6 +1301,10 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
     void savePlayerNow();
+    void persistDB.setMeta('chestStorage', chestUI.storage);
+    void persistDB.setMeta('playerStats', playerStats);
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    void persistDB.setMeta('dayCounter', dayCounter);
     if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
