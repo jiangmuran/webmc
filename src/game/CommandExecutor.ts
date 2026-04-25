@@ -42,6 +42,8 @@ export interface CommandContext {
   heldDurability?: () => { name: string; current: number; max: number } | null;
   markRegionPoint?: (point: 'a' | 'b') => void;
   fillRegion?: (block: string) => number;
+  screenshot?: () => void;
+  setFov?: (deg: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -903,6 +905,26 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'screenshot' || head === 'snap') {
+    if (!ctx.screenshot) {
+      ctx.broadcast('Screenshot unavailable.', '#ff8080');
+      return;
+    }
+    ctx.screenshot();
+    ctx.broadcast('Screenshot saved.', '#80ff80');
+    return;
+  }
+  if (head === 'fov') {
+    if (!ctx.setFov) return;
+    const v = parseFloat(args[0] ?? '70');
+    if (!Number.isFinite(v) || v < 30 || v > 120) {
+      ctx.broadcast('Usage: /fov <30-120>', '#ff8080');
+      return;
+    }
+    ctx.setFov(v);
+    ctx.broadcast(`FOV ${v.toFixed(0)}°`, '#80ff80');
     return;
   }
   if (head === 'time' && (args[0] === 'now' || args[0] === 'query')) {
