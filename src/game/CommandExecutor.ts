@@ -1143,6 +1143,92 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'showcase' || head === 'demoworld') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Showcase platform: 64×64 of various blocks in a checker grid.
+    const PALETTE = [
+      'cobblestone',
+      'oak_planks',
+      'spruce_planks',
+      'birch_planks',
+      'sandstone',
+      'red_sandstone',
+      'stone_bricks',
+      'mossy_cobblestone',
+      'bricks',
+      'andesite',
+      'diorite',
+      'granite',
+      'glass',
+      'glowstone',
+      'lapis_block',
+      'iron_block',
+      'gold_block',
+      'diamond_block',
+      'quartz_block',
+      'purpur_block',
+      'wool_white',
+      'wool_red',
+      'wool_blue',
+      'wool_green',
+      'terracotta',
+      'concrete',
+      'amethyst_block',
+      'crying_obsidian',
+      'sea_lantern',
+      'shroomlight',
+      'sponge',
+      'hay_block',
+    ];
+    let i = 0;
+    for (let dz = 0; dz < 8; dz++) {
+      for (let dx = 0; dx < 4; dx++) {
+        const block = PALETTE[i++ % PALETTE.length] ?? 'stone';
+        ctx.fillBlocks(
+          px + dx * 8,
+          py - 1,
+          pz + dz * 8,
+          px + dx * 8 + 7,
+          py - 1,
+          pz + dz * 8 + 7,
+          block,
+        );
+      }
+    }
+    ctx.broadcast(
+      `Showcase platform: 32×64 with ${String(PALETTE.length)} block samples`,
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'rainbow') {
+    if (!ctx.fillBlocks) return;
+    const len = parseInt(args[0] ?? '32', 10);
+    if (!Number.isFinite(len) || len < 1 || len > 256) {
+      ctx.broadcast('Usage: /rainbow <length=32>', '#ff8080');
+      return;
+    }
+    const COLORS = [
+      'wool_red',
+      'wool_orange',
+      'wool_yellow',
+      'wool_green',
+      'wool_blue',
+      'wool_purple',
+      'wool_pink',
+    ];
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) + 5;
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let i = 0; i < COLORS.length; i++) {
+      ctx.fillBlocks(px - i, py + i, pz, px - i, py + i, pz + len - 1, COLORS[i] ?? 'wool_white');
+    }
+    ctx.broadcast(`Rainbow stripe ${String(len)} long`, '#80ff80');
+    return;
+  }
   if (head === 'wave' || head === 'crowd') {
     if (!ctx.summon) return;
     const count = parseInt(args[0] ?? '20', 10);
