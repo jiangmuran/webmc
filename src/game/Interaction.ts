@@ -14,6 +14,9 @@ export interface InteractionOptions {
   onBreakProgress?: (bx: number, by: number, bz: number, p01: number) => void;
   onBreakCancel?: () => void;
   canPlace?: () => boolean;
+  // Returning false halts the break attempt before any damage accrues —
+  // used to gate bedrock and other indestructible blocks (hardness < 0).
+  canBreak?: (bx: number, by: number, bz: number) => boolean;
   onInteract?: (bx: number, by: number, bz: number) => boolean;
 }
 
@@ -112,6 +115,10 @@ export class InteractionController {
     }
     const hit = this.castRay();
     if (!hit || hit.distance === 0) {
+      this.cancelBreak();
+      return;
+    }
+    if (this.opts.canBreak && !this.opts.canBreak(hit.bx, hit.by, hit.bz)) {
       this.cancelBreak();
       return;
     }

@@ -2201,6 +2201,17 @@ const interaction = new InteractionController(
       }
       return false;
     },
+    canBreak: (bx, by, bz) => {
+      // Bedrock and other indestructible blocks (hardness < 0) are
+      // breakable in creative only — vanilla parity. Without this gate
+      // bedrock could be punched through after the standard 0.4s timer
+      // because nothing was checking hardness in tickBreak.
+      if (gameMode === 'creative') return true;
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return false;
+      const def = registry.get(stateId(s));
+      return def.hardness >= 0;
+    },
     onInteract: (bx, by, bz) => {
       const state = world.get(bx, by, bz);
       if (state === AIR) return false;
