@@ -2823,6 +2823,14 @@ const chatInput = new ChatInput(appEl, {
           currentPlayerName = sanitizePlayerName(name) || 'Player';
           playerAvatar.setName(currentPlayerName);
         },
+        remeshAllChunks: () => {
+          let n = 0;
+          for (const c of world.chunks()) {
+            markChunkAllDirty(c);
+            n++;
+          }
+          return n;
+        },
         dropAllItems: () => {
           let n = 0;
           const drop = (slots: (typeof inventory.hotbar)[number][]): void => {
@@ -3163,7 +3171,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe', '/respawn', '/rs', '/fullness', '/noclip', '/screenshot', '/snap', '/fov', '/entities', '/mobs', '/chunkstats', '/chunks', '/spread', '/spreadplayers', '/lighting', '/creative_inventory', '/ci', '/freezemobs', '/safezone', '/peaceful', '/loadout', '/tps_target', '/tickrate', '/cyclecam', '/cyclecamera', '/minimap', '/minimapzoom', '/reset', '/mute_chat', '/broadcast', '/test', '/sanitycheck', '/item', '/itemstats', '/inventory', '/inv', '/dropall', '/count', '/commandcount', '/pick', '/name', '/rename_self',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe', '/respawn', '/rs', '/fullness', '/noclip', '/screenshot', '/snap', '/fov', '/entities', '/mobs', '/chunkstats', '/chunks', '/spread', '/spreadplayers', '/lighting', '/creative_inventory', '/ci', '/freezemobs', '/safezone', '/peaceful', '/loadout', '/tps_target', '/tickrate', '/cyclecam', '/cyclecamera', '/minimap', '/minimapzoom', '/reset', '/mute_chat', '/broadcast', '/test', '/sanitycheck', '/item', '/itemstats', '/inventory', '/inv', '/dropall', '/count', '/commandcount', '/pick', '/name', '/rename_self', '/reload', '/remesh',
     ];
     return SLASH_CMDS;
   },

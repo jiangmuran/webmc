@@ -58,6 +58,7 @@ export interface CommandContext {
   inventoryStats?: () => { filledSlots: number; totalSlots: number; totalItems: number; uniqueTypes: number; topItems: { name: string; count: number }[] };
   dropAllItems?: () => number;
   setPlayerName?: (name: string) => void;
+  remeshAllChunks?: () => number;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -963,6 +964,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'reload' || head === 'remesh') {
+    if (!ctx.remeshAllChunks) return;
+    const n = ctx.remeshAllChunks();
+    ctx.broadcast(`Re-meshed ${String(n)} chunks`, '#80ff80');
     return;
   }
   if (head === 'name' || head === 'rename_self') {
