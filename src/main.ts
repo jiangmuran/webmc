@@ -5092,15 +5092,22 @@ const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
-    void persistDB.setMeta('chestStorage', chestUI.storage);
+    void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
   },
 });
 void persistDB.getMeta('chestStorage').then((saved) => {
   if (!Array.isArray(saved)) return;
   for (let i = 0; i < Math.min(27, saved.length); i++) {
     const v = saved[i];
-    chestUI.storage[i] =
-      v && typeof v === 'object' ? (v as (typeof chestUI.storage)[number]) : null;
+    if (v && typeof v === 'object' && typeof (v as PersistedItemStack).name === 'string') {
+      chestUI.storage[i] = restoreStack(v as PersistedItemStack);
+    } else if (v && typeof v === 'object' && typeof (v as ItemStack).itemId === 'number') {
+      // Legacy save (numeric itemId) — keep as-is so existing chests don't
+      // disappear; gets re-persisted in name form on next close.
+      chestUI.storage[i] = v as ItemStack;
+    } else {
+      chestUI.storage[i] = null;
+    }
   }
 });
 
@@ -5587,7 +5594,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
     void savePlayerNow();
-    void persistDB.setMeta('chestStorage', chestUI.storage);
+    void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
     void persistDB.setMeta('playerStats', playerStats);
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
     void persistDB.setMeta('dayCounter', dayCounter);
@@ -5602,7 +5609,7 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('beforeunload', () => {
   void chunkStore.flush();
   void savePlayerNow();
-  void persistDB.setMeta('chestStorage', chestUI.storage);
+  void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
   void persistDB.setMeta('playerStats', playerStats);
   void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
   void persistDB.setMeta('dayCounter', dayCounter);
