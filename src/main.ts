@@ -3838,6 +3838,13 @@ function frame(): void {
     } else {
       compassBar.setSpawnDir(null, fp.yaw);
     }
+    if (lastDeathPos) {
+      const dx = lastDeathPos.x - fp.position.x;
+      const dz = lastDeathPos.z - fp.position.z;
+      compassBar.setDeathDir(Math.atan2(-dx, dz), fp.yaw);
+    } else {
+      compassBar.setDeathDir(null, fp.yaw);
+    }
   }
   if (gameMode === 'survival' || gameMode === 'adventure') {
     survivalHud.render({

@@ -3,6 +3,7 @@ export class CompassBar {
   private readonly strip: HTMLDivElement;
   private readonly needle: HTMLDivElement;
   private readonly spawnMarker: HTMLDivElement;
+  private readonly deathMarker: HTMLDivElement;
   private readonly WIDTH = 260;
   private readonly TICKS = 16;
 
@@ -77,7 +78,41 @@ export class CompassBar {
     ].join(';');
     this.root.appendChild(this.spawnMarker);
 
+    this.deathMarker = document.createElement('div');
+    this.deathMarker.title = 'Last death';
+    this.deathMarker.style.cssText = [
+      'position:absolute',
+      'top:11px',
+      'width:8px',
+      'height:8px',
+      'border-radius:50%',
+      'background:#ff7080',
+      'border:1px solid rgba(0,0,0,0.6)',
+      'transform:translateX(-50%)',
+      'display:none',
+      'pointer-events:none',
+    ].join(';');
+    this.root.appendChild(this.deathMarker);
+
     parent.appendChild(this.root);
+  }
+
+  setDeathDir(angleToDeath: number | null, playerYaw: number): void {
+    if (angleToDeath === null) {
+      this.deathMarker.style.display = 'none';
+      return;
+    }
+    let rel = angleToDeath - playerYaw;
+    while (rel > Math.PI) rel -= 2 * Math.PI;
+    while (rel < -Math.PI) rel += 2 * Math.PI;
+    if (rel < -Math.PI / 2 || rel > Math.PI / 2) {
+      this.deathMarker.style.display = 'none';
+      return;
+    }
+    this.deathMarker.style.display = 'block';
+    const halfW = this.WIDTH / 2;
+    const px = halfW + (rel / (Math.PI / 2)) * halfW;
+    this.deathMarker.style.left = `${px.toFixed(1)}px`;
   }
 
   setSpawnDir(angleToSpawn: number | null, playerYaw: number): void {
