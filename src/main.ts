@@ -354,6 +354,27 @@ itemRegistry.register({ name: 'webmc:cooked_mutton', maxStack: 64, durability: 0
 itemRegistry.register({ name: 'webmc:cooked_rabbit', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
 itemRegistry.register({ name: 'webmc:cooked_cod', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
 itemRegistry.register({ name: 'webmc:cooked_salmon', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
+// 16 vanilla dyes — enables future dye-related recipes/crafting.
+for (const dye of [
+  'white_dye', 'orange_dye', 'magenta_dye', 'light_blue_dye',
+  'yellow_dye', 'lime_dye', 'pink_dye', 'gray_dye',
+  'light_gray_dye', 'cyan_dye', 'purple_dye', 'blue_dye',
+  'brown_dye', 'green_dye', 'red_dye', 'black_dye',
+]) {
+  itemRegistry.register({ name: `webmc:${dye}`, maxStack: 64, durability: 0 });
+}
+// Common drops/materials.
+itemRegistry.register({ name: 'webmc:slime_ball', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:ender_pearl', maxStack: 16, durability: 0 });
+itemRegistry.register({ name: 'webmc:blaze_rod', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:blaze_powder', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:nether_star', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:emerald', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:lapis_lazuli', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:redstone', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:glow_ink_sac', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:ink_sac', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:bone_meal', maxStack: 64, durability: 0 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
