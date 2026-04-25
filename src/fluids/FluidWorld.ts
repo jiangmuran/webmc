@@ -86,4 +86,52 @@ export class FluidWorld {
     if (s === this.waterState || s === this.lavaState) return false;
     return this.registry.get(stateId(s)).solid;
   }
+
+  // Snapshot the current cell map for persistence.
+  serialize(): {
+    x: number;
+    y: number;
+    z: number;
+    kind: FluidKind;
+    level: number;
+    source: boolean;
+  }[] {
+    const out: {
+      x: number;
+      y: number;
+      z: number;
+      kind: FluidKind;
+      level: number;
+      source: boolean;
+    }[] = [];
+    for (const [k, c] of this.cells) {
+      const p = parseKey(k);
+      out.push({ x: p.x, y: p.y, z: p.z, kind: c.kind, level: c.level, source: c.source });
+    }
+    return out;
+  }
+
+  // Restore cells from a previous snapshot. Skips entries whose
+  // corresponding world block is no longer the matching fluid (covers
+  // the case where the saved chunks were edited offline).
+  deserialize(
+    cells: readonly {
+      x: number;
+      y: number;
+      z: number;
+      kind: FluidKind;
+      level: number;
+      source: boolean;
+    }[],
+  ): void {
+    for (const c of cells) {
+      const here = this.world.get(c.x, c.y, c.z);
+      if (here !== this.blockStateFor(c.kind)) continue;
+      this.cells.set(keyOf({ x: c.x, y: c.y, z: c.z }), {
+        kind: c.kind,
+        level: c.level,
+        source: c.source,
+      });
+    }
+  }
 }

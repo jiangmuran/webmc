@@ -1197,6 +1197,16 @@ const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
 
 const fluidWorld = new FluidWorld({ world, registry });
+// FluidWorld.cells (the source/level/falling map) was never persisted —
+// bucket-placed water survived chunk unload as a static block but lost
+// its FluidWorld registration so it stopped flowing forever. Persist
+// the cell list via setMeta + deferred deserialize after chunks load.
+const pendingFluidCells: ReturnType<typeof fluidWorld.serialize> = [];
+void persistDB.getMeta('fluidCells').then((saved) => {
+  if (Array.isArray(saved)) pendingFluidCells.push(...(saved as typeof pendingFluidCells));
+});
+let fluidRestoreAccum = 0;
+let fluidSaveAccum = 0;
 const waterId = registry.byName('webmc:water');
 const lavaId = registry.byName('webmc:lava');
 const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
@@ -5632,6 +5642,7 @@ document.addEventListener('visibilitychange', () => {
     void persistDB.setMeta('playerStats', playerStats);
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
     void persistDB.setMeta('dayCounter', dayCounter);
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
     saveHotbarIfChanged();
     if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
       pauseMenu.show();
@@ -7173,6 +7184,30 @@ function frame(): void {
   }
 
   fluidTickAccum += dtSec;
+  // Restore persisted cells once chunks have had ~3s to load. deserialize
+  // skips cells whose world block isn't the matching fluid, so unloaded
+  // chunks just silently miss out — re-attempt periodically while the
+  // queue is non-empty.
+  if (pendingFluidCells.length > 0) {
+    fluidRestoreAccum += dtSec;
+    if (fluidRestoreAccum > 3) {
+      fluidRestoreAccum = 0;
+      const before = fluidWorld.size();
+      fluidWorld.deserialize(pendingFluidCells);
+      if (fluidWorld.size() > before || pendingFluidCells.length === 0) {
+        // Either we restored some or the queue drained; clear it so we
+        // don't re-deserialize the same blob forever.
+        pendingFluidCells.length = 0;
+      }
+    }
+  }
+  // Persist cells every 30s. Sources + flowing tips both — covers
+  // bucket placements that need to survive chunk reloads.
+  fluidSaveAccum += dtSec;
+  if (fluidSaveAccum > 30) {
+    fluidSaveAccum = 0;
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+  }
   while (fluidTickAccum >= FLUID_TICK_SEC) {
     fluidTickAccum -= FLUID_TICK_SEC;
     const { changed } = fluidWorld.tick();
