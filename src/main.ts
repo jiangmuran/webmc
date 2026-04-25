@@ -35,6 +35,7 @@ import { isAfk } from './game/afk_idle_kick';
 import { critMultiplier } from './game/critical_hit';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
+import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -2593,7 +2594,16 @@ function frame(): void {
     });
   }
 
-  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0 && gameRules.doMobSpawning) {
+  // Per-category mob cap (MC-style WORLD_CAPS).
+  let hostileCount = 0;
+  let passiveCount = 0;
+  for (const m of mobWorld.all()) {
+    if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') hostileCount++;
+    else if (m.def.behavior === 'passive') passiveCount++;
+  }
+  const overHostileCap = hostileCount >= WORLD_MOB_CAPS.hostile;
+  const overPassiveCap = passiveCount >= WORLD_MOB_CAPS.passive;
+  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0 && gameRules.doMobSpawning && !(overHostileCap && overPassiveCap)) {
     spawnSystem.tick(dtSec, mobWorld, {
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       isDay: dayNight.isDay,
