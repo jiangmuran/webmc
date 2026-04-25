@@ -1,3 +1,5 @@
+import { formatScore as formatScoreNum } from '../game/score_format';
+
 const CAUSE_TEXT: Record<string, string> = {
   fall: 'fell from a high place',
   mob: 'was slain',
@@ -85,7 +87,7 @@ export class DeathScreen {
   setCause(playerName: string, cause: string | undefined, score: number): void {
     const verb = cause !== undefined ? CAUSE_TEXT[cause] : undefined;
     this.subEl.textContent = verb ? `${playerName} ${verb}.` : 'Game over.';
-    this.scoreEl.textContent = `Score: ${String(score)}`;
+    this.scoreEl.textContent = `Score: ${formatScoreNum(score)}`;
   }
 
   show(): void {
