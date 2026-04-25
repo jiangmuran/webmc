@@ -860,6 +860,38 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'village' || head === 'house') {
+    if (!ctx.fillBlocks) {
+      ctx.broadcast('Fill not available.', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 floor of oak_planks + 4-block walls + flat roof.
+    ctx.fillBlocks(px, py - 1, pz, px + 4, py - 1, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px, py, pz, px + 4, py + 3, pz, 'oak_planks');
+    ctx.fillBlocks(px, py, pz + 4, px + 4, py + 3, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px, py, pz, px, py + 3, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px + 4, py, pz, px + 4, py + 3, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px, py + 4, pz, px + 4, py + 4, pz + 4, 'oak_planks');
+    // Hollow interior.
+    ctx.fillBlocks(px + 1, py, pz + 1, px + 3, py + 2, pz + 3, 'air');
+    // Doorway (front wall: 2-block opening).
+    ctx.fillBlocks(px + 2, py, pz, px + 2, py + 1, pz, 'air');
+    // Window in back wall.
+    ctx.fillBlocks(px + 2, py + 2, pz + 4, px + 2, py + 2, pz + 4, 'glass');
+    // Bed inside.
+    ctx.setBlock?.(px + 1, py, pz + 3, 'bed');
+    // Crafting table + furnace + chest.
+    ctx.setBlock?.(px + 3, py, pz + 1, 'crafting_table');
+    ctx.setBlock?.(px + 3, py, pz + 2, 'furnace');
+    ctx.setBlock?.(px + 3, py, pz + 3, 'chest');
+    // Torch outside the door.
+    ctx.setBlock?.(px + 2, py + 2, pz - 1, 'torch');
+    ctx.broadcast(`Built a 5×5 wooden house at (${px}, ${py}, ${pz})`, '#80ff80');
+    return;
+  }
   if (head === 'summon') {
     if (!ctx.summon) return;
     const kind = args[0] ?? '';

@@ -2717,10 +2717,14 @@ const chatInput = new ChatInput(appEl, {
           return true;
         },
         fillBlocks: (x1, y1, z1, x2, y2, z2, name) => {
-          const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
-          const id = registry.byName(full);
-          if (id === undefined) return -1;
-          const state = makeState(id, 0);
+          const isAir = name === 'air' || name === 'webmc:air';
+          let state = AIR;
+          if (!isAir) {
+            const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
+            const id = registry.byName(full);
+            if (id === undefined) return -1;
+            state = makeState(id, 0);
+          }
           const sx = Math.min(x1, x2), ex = Math.max(x1, x2);
           const sy = Math.min(y1, y2), ey = Math.max(y1, y2);
           const sz = Math.min(z1, z2), ez = Math.max(z1, z2);
@@ -2902,7 +2906,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house',
     ];
     return SLASH_CMDS;
   },
