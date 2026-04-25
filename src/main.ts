@@ -7540,30 +7540,17 @@ function frame(): void {
     (out) => {
       const leftover = inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
       const taken = out.count - leftover;
-      const itemDef = itemRegistry.get(out.itemId);
-      // Display color comes from the matching block (sticks etc fall back to grey).
-      const blockId = registry.byName(itemDef.name);
-      const color: readonly [number, number, number] =
-        blockId !== undefined ? registry.get(blockId).color : [200, 200, 200];
-      if (taken <= 0) {
-        // Inventory full — re-spawn the whole stack so it isn't lost.
-        droppedItems.spawn(fp.position.x, fp.position.y + 0.5, fp.position.z, {
-          itemId: out.itemId,
-          count: out.count,
-          color,
-        });
-        return;
+      if (taken > 0) {
+        sfx.play('click');
+        const itemDef = itemRegistry.get(out.itemId);
+        chatInput.addLine(`+ ${String(taken)} ${itemDef.name.replace(/^webmc:/, '')}`, '#d2ff80');
       }
-      sfx.play('click');
-      chatInput.addLine(`+ ${String(taken)} ${itemDef.name.replace(/^webmc:/, '')}`, '#d2ff80');
-      if (leftover > 0) {
-        // Partial pickup — re-spawn the leftover so the rest stays on the ground.
-        droppedItems.spawn(fp.position.x, fp.position.y + 0.5, fp.position.z, {
-          itemId: out.itemId,
-          count: leftover,
-          color,
-        });
-      }
+      // Tell DroppedItems how much we couldn't accept; it'll either
+      // delete the entity (leftover === 0) or reduce its count + re-arm
+      // pickup delay (leftover > 0). Cleaner than the old re-spawn
+      // workaround which created a new mesh + new id every full-inventory
+      // attempt and slowly piled stacks at the player's feet.
+      return leftover;
     },
   );
   xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {

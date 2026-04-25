@@ -85,11 +85,13 @@ export class DroppedItemWorld {
     mesh.scale.setScalar(scale);
   }
 
+  // onPickup may return leftover count — entity stays (with reduced
+  // count) when leftover > 0. Returning undefined = treat as full pickup.
   tick(
     dtSec: number,
     isSolid: SolidSampler,
     playerPos: { x: number; y: number; z: number },
-    onPickup: (out: PickupOutcome) => void,
+    onPickup: (out: PickupOutcome) => number | undefined,
   ): void {
     const toRemove: number[] = [];
     const twoPi = Math.PI * 2;
@@ -138,8 +140,21 @@ export class DroppedItemWorld {
           it.y += pullY;
           it.z += pullZ;
           if (distSq < 0.5 * 0.5) {
-            onPickup({ itemId: it.data.itemId, count: it.data.count });
-            toRemove.push(it.id);
+            const leftover = onPickup({ itemId: it.data.itemId, count: it.data.count });
+            if (leftover === undefined || leftover <= 0) {
+              toRemove.push(it.id);
+            } else if (leftover < it.data.count) {
+              // Partial pickup — keep the entity but lower its count and
+              // re-arm the pickup delay so the player has a chance to
+              // make space before it re-fires.
+              it.data = { ...it.data, count: leftover };
+              this.updateMeshScale(it.id, leftover);
+              it.pickupDelaySec = 1.0;
+            } else {
+              // Inventory full — push the pickup attempt out so we don't
+              // spam onPickup every frame while the player stands here.
+              it.pickupDelaySec = 1.0;
+            }
           }
         }
       }
