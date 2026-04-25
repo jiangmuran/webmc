@@ -90,6 +90,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.showTitle?.(text, '#ffffff', 2000);
     return;
   }
+  if (head === 'destroy') {
+    const hit = ctx.lookAtBlock?.();
+    if (!hit || !ctx.setBlock) {
+      ctx.broadcast('Nothing in reach.', '#ff8080');
+      return;
+    }
+    ctx.setBlock(hit.x, hit.y, hit.z, 'webmc:air');
+    ctx.broadcast(`Destroyed ${hit.name}`, '#80ff80');
+    return;
+  }
   if (head === 'lookat') {
     const hit = ctx.lookAtBlock?.();
     if (hit) {
