@@ -1144,6 +1144,49 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'highlight' || head === 'mark_block') {
+    if (!ctx.lookAtBlock) return;
+    const hit = ctx.lookAtBlock();
+    if (!hit) {
+      ctx.broadcast('Nothing in reach.', '#ffd080');
+      return;
+    }
+    ctx.setWaypoint?.('marked', hit.x, hit.y, hit.z);
+    ctx.broadcast(
+      `Marked ${hit.name} @ ${String(hit.x)} ${String(hit.y)} ${String(hit.z)} as 'marked' waypoint`,
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'gotomark' || head === 'tpmark') {
+    if (!ctx.getWaypoint) return;
+    const wp = ctx.getWaypoint('marked');
+    if (!wp) {
+      ctx.broadcast('No marked block. Use /highlight first.', '#ff8080');
+      return;
+    }
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(wp.x + 0.5, wp.y + 1, wp.z + 0.5);
+    ctx.broadcast('Teleported to mark', '#80ff80');
+    return;
+  }
+  if (head === 'lookreport' || head === 'aim_info') {
+    if (!ctx.lookAtBlock) return;
+    const hit = ctx.lookAtBlock();
+    if (!hit) {
+      ctx.broadcast('Nothing in reach.', '#ffd080');
+      return;
+    }
+    const dx = hit.x + 0.5 - ctx.playerPos.x;
+    const dy = hit.y + 0.5 - ctx.playerPos.y;
+    const dz = hit.z + 0.5 - ctx.playerPos.z;
+    const d = Math.hypot(dx, dy, dz);
+    ctx.broadcast(
+      `${hit.name} @ ${String(hit.x)} ${String(hit.y)} ${String(hit.z)}  ${d.toFixed(2)}m`,
+      '#cccccc',
+    );
+    return;
+  }
   if (head === 'unpause' || head === 'play') {
     if (ctx.setTickFrozen) ctx.setTickFrozen(false);
     ctx.broadcast('▶ Game un-paused.', '#80ff80');
