@@ -10,6 +10,8 @@ export interface CommandContext {
   setWeather: (w: 'clear' | 'rain' | 'thunder') => void;
   giveItem: (name: string, count: number) => boolean;
   giveAllBlocks?: () => number;
+  lookupItem?: (name: string) => boolean;
+  lookupBlock?: (name: string) => boolean;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -419,6 +421,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast('Usage: /weather <clear|rain|thunder|random>', '#ff8080');
     }
+    return;
+  }
+  if (head === 'lookup') {
+    const name = args[0];
+    if (!name) {
+      ctx.broadcast('Usage: /lookup <name>', '#ff8080');
+      return;
+    }
+    const isItem = ctx.lookupItem?.(name) ?? false;
+    const isBlock = ctx.lookupBlock?.(name) ?? false;
+    ctx.broadcast(`${name}: item=${String(isItem)}, block=${String(isBlock)}`, '#cccccc');
     return;
   }
   if (head === 'give') {

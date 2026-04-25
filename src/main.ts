@@ -786,6 +786,14 @@ const chatInput = new ChatInput(appEl, {
           const leftover = inventory.add({ itemId: id, count, damage: 0 });
           return leftover < count;
         },
+        lookupItem: (name) => {
+          const candidates = [name, `webmc:${name}`];
+          return candidates.some((c) => itemRegistry.byName(c) !== undefined);
+        },
+        lookupBlock: (name) => {
+          const candidates = [name, `webmc:${name}`];
+          return candidates.some((c) => registry.byName(c) !== undefined);
+        },
         giveAllBlocks: () => {
           let n = 0;
           for (const def of registry.defs) {
