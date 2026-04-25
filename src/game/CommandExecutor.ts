@@ -1143,6 +1143,53 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'fountain') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone base + 3×3 hollow stone bowl + center water source.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'stone_brick_slab');
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py, pz + 1, 'stone_bricks');
+    ctx.fillBlocks(px, py, pz, px, py, pz, 'water');
+    ctx.setBlock?.(px, py + 1, pz, 'water');
+    ctx.setBlock?.(px - 2, py, pz - 2, 'lantern');
+    ctx.setBlock?.(px + 2, py, pz + 2, 'lantern');
+    ctx.setBlock?.(px - 2, py, pz + 2, 'lantern');
+    ctx.setBlock?.(px + 2, py, pz - 2, 'lantern');
+    ctx.broadcast('Built decorative fountain', '#80ff80');
+    return;
+  }
+  if (head === 'gardenshed' || head === 'shed') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3×3×3 oak shed.
+    ctx.fillBlocks(px, py, pz, px + 2, py + 2, pz + 2, 'oak_planks');
+    ctx.fillBlocks(px + 1, py, pz + 1, px + 1, py + 1, pz + 1, 'air'); // hollow
+    ctx.setBlock?.(px + 1, py, pz, 'air');
+    ctx.setBlock?.(px + 1, py + 1, pz, 'air');
+    ctx.setBlock?.(px + 1, py + 1, pz + 1, 'crafting_table');
+    ctx.broadcast('Built a 3×3 garden shed', '#80ff80');
+    return;
+  }
+  if (head === 'graveyard') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 8×8 mossy_cobblestone perimeter wall, 4 graves.
+    ctx.fillBlocks(px - 4, py, pz - 4, px + 4, py + 1, pz + 4, 'cobblestone');
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 1, pz + 3, 'air');
+    for (let i = -2; i <= 2; i += 2) {
+      ctx.setBlock(px + i, py, pz - 2, 'cobblestone');
+      ctx.setBlock(px + i, py + 1, pz - 2, 'cobblestone_wall');
+    }
+    ctx.setBlock(px, py + 1, pz + 3, 'torch');
+    ctx.broadcast('Built a graveyard', '#80ff80');
+    return;
+  }
   if (head === 'lake') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '6', 10);
