@@ -341,6 +341,7 @@ itemRegistry.register({ name: 'webmc:wheat', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:cocoa_beans', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
+itemRegistry.register({ name: 'webmc:snowball', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:milk_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:wood_pickaxe', maxStack: 1, durability: 60 });
 itemRegistry.register({ name: 'webmc:stone_pickaxe', maxStack: 1, durability: 132 });
@@ -1172,6 +1173,39 @@ const interaction = new InteractionController(
             return true;
           }
         }
+      }
+      // Snowball / egg: small visual hit at target, no projectile arc.
+      if (heldName === 'snowball' || heldName === 'egg') {
+        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        const burstColor: [number, number, number] = heldName === 'snowball' ? [240, 250, 255] : [240, 220, 180];
+        for (let i = 0; i < 16; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 1.5, cy + Math.random(), cz + (Math.random() - 0.5) * 1.5, burstColor);
+        // Knockback nearest mob within 2 blocks of impact (~1 dmg if egg, snowballs do 0 to most mobs but knock blaze/dragon).
+        for (const m of mobWorld.all()) {
+          const dx = m.position.x - cx;
+          const dy = m.position.y - cy;
+          const dz = m.position.z - cz;
+          if (dx * dx + dy * dy + dz * dz > 4) continue;
+          if (heldName === 'snowball' && (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')) {
+            mobWorld.damage(m.id, 3);
+          } else {
+            // Just knockback.
+            const len = Math.max(0.001, Math.hypot(dx, dz));
+            m.velocity.x += (dx / len) * 4;
+            m.velocity.z += (dz / len) * 4;
+            m.velocity.y += 2;
+          }
+        }
+        // Egg: 12.5% chance to hatch a chicken at impact.
+        if (heldName === 'egg' && Math.random() < 0.125) {
+          try { mobWorld.spawn('chicken', { x: cx, y: cy, z: cz }); } catch { /* ignore */ }
+          subtitles.push('Egg hatched!');
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const itemId = itemRegistry.byName(`webmc:${heldName}`);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+        }
+        sfx.play('click');
+        return true;
       }
       // Firework rocket: launch upward with a colored particle burst.
       if (heldName === 'firework_rocket') {
