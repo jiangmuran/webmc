@@ -4559,6 +4559,8 @@ const chatInput = new ChatInput(appEl, {
       '/spawnvillage',
       '/autotown',
       '/maze',
+      '/arena',
+      '/castle',
       '/island',
       '/mountain',
       '/sky',

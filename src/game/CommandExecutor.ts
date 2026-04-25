@@ -1143,6 +1143,62 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'arena') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '12', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 32) {
+      ctx.broadcast('Usage: /arena <r=12>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'sand');
+    ctx.fillBlocks(px - r, py, pz - r, px + r, py + 5, pz - r, 'cobblestone');
+    ctx.fillBlocks(px - r, py, pz + r, px + r, py + 5, pz + r, 'cobblestone');
+    ctx.fillBlocks(px - r, py, pz - r, px - r, py + 5, pz + r, 'cobblestone');
+    ctx.fillBlocks(px + r, py, pz - r, px + r, py + 5, pz + r, 'cobblestone');
+    for (let i = -r + 4; i <= r - 4; i += 4) {
+      ctx.setBlock?.(px - r, py + 4, pz + i, 'glowstone');
+      ctx.setBlock?.(px + r, py + 4, pz + i, 'glowstone');
+      ctx.setBlock?.(px + i, py + 4, pz - r, 'glowstone');
+      ctx.setBlock?.(px + i, py + 4, pz + r, 'glowstone');
+    }
+    ctx.broadcast(`Arena r=${String(r)}`, '#80ff80');
+    return;
+  }
+  if (head === 'castle') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px, py, pz, px + 10, py + 5, pz, 'stone_bricks');
+    ctx.fillBlocks(px, py, pz + 10, px + 10, py + 5, pz + 10, 'stone_bricks');
+    ctx.fillBlocks(px, py, pz, px, py + 5, pz + 10, 'stone_bricks');
+    ctx.fillBlocks(px + 10, py, pz, px + 10, py + 5, pz + 10, 'stone_bricks');
+    ctx.fillBlocks(px + 1, py, pz + 1, px + 9, py + 5, pz + 9, 'air');
+    for (const [cx, cz] of [
+      [0, 0],
+      [10, 0],
+      [0, 10],
+      [10, 10],
+    ] as const) {
+      ctx.fillBlocks(
+        px + cx - 1,
+        py,
+        pz + cz - 1,
+        px + cx + 1,
+        py + 8,
+        pz + cz + 1,
+        'stone_bricks',
+      );
+      ctx.fillBlocks(px + cx, py, pz + cz, px + cx, py + 7, pz + cz, 'air');
+      ctx.setBlock?.(px + cx, py + 8, pz + cz, 'torch');
+    }
+    ctx.fillBlocks(px + 5, py, pz, px + 5, py + 1, pz, 'air');
+    ctx.broadcast('Built a stone castle (11×11×6 + 4 towers)', '#80ff80');
+    return;
+  }
   if (head === 'spawnvillage' || head === 'autotown') {
     if (!ctx.fillBlocks) return;
     const px = Math.floor(ctx.playerPos.x);
