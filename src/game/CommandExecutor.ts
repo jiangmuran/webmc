@@ -1340,6 +1340,58 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built treehouse with ladder and leaf crown', '#80ff80');
     return;
   }
+  if (head === 'windmill') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Stone base (4×4) + oak shaft 8 high + 4 wool blades.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 1, py + 2, pz + 1, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz - 1, px, py + 1, pz, 'air');
+    for (let h = 3; h <= 10; h++) ctx.setBlock(px, py + h, pz, 'oak_log');
+    // 4 blades extending from hub.
+    for (let i = 1; i <= 4; i++) {
+      ctx.setBlock(px + i, py + 10, pz, 'white_wool');
+      ctx.setBlock(px - i, py + 10, pz, 'white_wool');
+      ctx.setBlock(px, py + 10, pz + i, 'white_wool');
+      ctx.setBlock(px, py + 10, pz - i, 'white_wool');
+    }
+    ctx.setBlock(px, py + 1, pz - 2, 'air'); // door
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built windmill (stone base + oak shaft + wool blades)', '#80ff80');
+    return;
+  }
+  if (head === 'bridge') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(80, parseInt(args[0] ?? '20', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Stone slab walkway 3 wide along +Z, oak fence rails.
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py, pz + len - 1, 'air');
+    for (let i = 0; i < len; i += 3) {
+      ctx.setBlock(px - 2, py, pz + i, 'oak_fence');
+      ctx.setBlock(px + 2, py, pz + i, 'oak_fence');
+      if (i % 6 === 0) {
+        ctx.setBlock(px - 2, py + 1, pz + i, 'lantern');
+        ctx.setBlock(px + 2, py + 1, pz + i, 'lantern');
+      }
+    }
+    ctx.broadcast(`Built ${String(len)}-block bridge along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'pillar') {
+    if (!ctx.setBlock) return;
+    const h = Math.max(2, Math.min(64, parseInt(args[0] ?? '10', 10)));
+    const block = args[1] ?? 'stone_bricks';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let i = 0; i < h; i++) ctx.setBlock(px, py + i, pz, block);
+    ctx.broadcast(`Pillar of ${String(h)} ${block}`, '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
