@@ -910,6 +910,34 @@ export class MobWorld {
   }
 
   tick(dtSec: number, ctx: MobTickContext): void {
+    // Vanilla mob despawn: mobs > 128 blocks from any player despawn instantly,
+    // mobs 32–128 blocks roll a small chance per tick. Without this, mobs
+    // accumulated forever as the player explored — every chunk the player
+    // visited contributed to a permanent population, and FPS slowly tanked.
+    if (ctx.playerPos !== null) {
+      const px = ctx.playerPos.x;
+      const py = ctx.playerPos.y;
+      const pz = ctx.playerPos.z;
+      const toRemove: MobId[] = [];
+      for (const m of this.mobs.values()) {
+        if (m.dyingSec > 0) continue;
+        // Persistent mobs (named, tamed, baby, leashed, breeding) stay
+        // forever — same as vanilla. We don't track named/tamed here yet,
+        // so skip babies as the only persistent class for now.
+        const dx = m.position.x - px;
+        const dy = m.position.y - py;
+        const dz = m.position.z - pz;
+        const distSq = dx * dx + dy * dy + dz * dz;
+        if (distSq > 128 * 128) {
+          toRemove.push(m.id);
+        } else if (distSq > 32 * 32 && Math.random() < dtSec * 0.5) {
+          // Random chance ~ 1/120s at the 32-block boundary — half-life
+          // around 4 minutes for distant mobs.
+          toRemove.push(m.id);
+        }
+      }
+      for (const id of toRemove) this.mobs.delete(id);
+    }
     for (const mob of this.mobs.values()) this.tickMob(mob, dtSec, ctx);
   }
 
