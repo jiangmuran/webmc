@@ -1,7 +1,7 @@
 // Tiny Web Audio procedural SFX — placeholder sounds for break/place/footstep
 // so the game feels alive even without any baked audio assets in the repo.
 
-export type SfxKind = 'break' | 'place' | 'step' | 'click' | 'hit' | 'cave';
+export type SfxKind = 'break' | 'place' | 'step' | 'click' | 'hit' | 'cave' | 'underwater';
 
 export class ProceduralSfx {
   private ctx: AudioContext | null = null;
@@ -88,6 +88,12 @@ export class ProceduralSfx {
         duration = 1.5;
         type = 'sine';
         peak = 0.18;
+        break;
+      case 'underwater':
+        freq = 180 + Math.random() * 80;
+        duration = 0.8;
+        type = 'sine';
+        peak = 0.12;
         break;
     }
     osc.type = type;

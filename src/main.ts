@@ -40,6 +40,7 @@ import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
+import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -603,6 +604,7 @@ const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
 const moodState = makeMoodState();
+let underwaterAmbient: UnderwaterAmbientState = { submerged: false, ticksUntilNextLoop: 200, ticksUntilNextRare: 1000 };
 const autosaveState = makeSaveState();
 const TUTORIAL_TEXT: Record<HintId, string> = {
   welcome: 'Welcome to webmc! Use WASD to move, mouse to look. Press E for inventory.',
@@ -2665,6 +2667,15 @@ function frame(): void {
   if (m.triggered) {
     sfx.play('cave');
     subtitles.push('Cave ambience');
+  }
+
+  // Underwater ambient — runs once per real-time tick equivalent.
+  underwaterAmbient = { ...underwaterAmbient, submerged: fp.inFluid === 'water' };
+  const ua = tickUnderwater(underwaterAmbient, Math.random);
+  underwaterAmbient = ua.state;
+  if (ua.play) {
+    sfx.play('underwater');
+    subtitles.push('Underwater ambience');
   }
 
   // Per-block break duration: hardness * tool factor (break_speed helper).
