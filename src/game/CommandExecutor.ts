@@ -909,6 +909,26 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'spread' || head === 'spreadplayers') {
+    if (!ctx.summon) return;
+    const kind = args[0] ?? 'pig';
+    const count = parseInt(args[1] ?? '20', 10);
+    const range = parseFloat(args[2] ?? '32');
+    if (!Number.isFinite(count) || count < 1 || count > 200 || !Number.isFinite(range) || range < 1 || range > 256) {
+      ctx.broadcast('Usage: /spread <kind=pig> <count=20> <range=32>', '#ff8080');
+      return;
+    }
+    let n = 0;
+    for (let i = 0; i < count; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const r = Math.random() * range;
+      const x = ctx.playerPos.x + Math.cos(ang) * r;
+      const z = ctx.playerPos.z + Math.sin(ang) * r;
+      if (ctx.summon(kind, x, ctx.playerPos.y + 1, z)) n++;
+    }
+    ctx.broadcast(`Spread ${String(n)} ${kind} within ${String(range)}m`, '#80ff80');
+    return;
+  }
   if (head === 'entities' || head === 'mobs') {
     if (!ctx.entityStats) {
       ctx.broadcast('Entity stats unavailable.', '#ff8080');
