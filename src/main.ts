@@ -2395,7 +2395,8 @@ const interaction = new InteractionController(
             consumeInventoryItem(emptyItemId, 1);
             inventory.add({ itemId: filledItemId, count: 1, damage: 0 });
           }
-          world.set(bx, by, bz, AIR);
+          // Drop fluid registration so the cell stops ticking + flowing.
+          fluidWorld.clear(bx, by, bz);
           touchWorldEdit(bx, by, bz, 0);
           sfx.play('click');
           subtitles.push(def.name === 'webmc:water' ? 'Filled water bucket' : 'Filled lava bucket');
@@ -2423,7 +2424,10 @@ const interaction = new InteractionController(
         const fluidName = heldName === 'water_bucket' ? 'webmc:water' : 'webmc:lava';
         const fluidId = registry.byName(fluidName);
         if (fluidId !== undefined) {
-          world.set(bx, by + 1, bz, makeState(fluidId, 0));
+          // Register source with FluidWorld so it actually flows on tick
+          // (setSource itself writes the world cell). Skipping this step
+          // was the long-standing bug where bucketed water sat still.
+          fluidWorld.setSource(bx, by + 1, bz, heldName === 'water_bucket' ? 'water' : 'lava');
           touchWorldEdit(bx, by + 1, bz, fluidId);
           if (gameMode === 'survival' || gameMode === 'adventure') {
             const heldItemId = itemRegistry.byName(`webmc:${heldName}`);
@@ -7013,13 +7017,26 @@ function frame(): void {
   while (fluidTickAccum >= FLUID_TICK_SEC) {
     fluidTickAccum -= FLUID_TICK_SEC;
     const { changed } = fluidWorld.tick();
-    for (const p of changed) {
-      const cx = Math.floor(p.x / 16);
-      const cz = Math.floor(p.z / 16);
-      const chunk = world.getChunk(cx, cz);
-      if (chunk) {
-        const light = lightCache.get(lightKey(cx, cz)) ?? null;
-        chunkStore.markDirty(chunk, light);
+    if (changed.length > 0) {
+      // Dedupe per-chunk so we only rebuild meshes/lights once per chunk.
+      const touched = new Set<string>();
+      for (const p of changed) {
+        const cx = Math.floor(p.x / 16);
+        const cz = Math.floor(p.z / 16);
+        touched.add(`${String(cx)},${String(cz)}`);
+      }
+      for (const k of touched) {
+        const [cxS, czS] = k.split(',');
+        const cxN = Number(cxS);
+        const czN = Number(czS);
+        const chunk = world.getChunk(cxN, czN);
+        if (!chunk) continue;
+        const oldLight = lightCache.get(lightKey(cxN, czN)) ?? null;
+        chunkStore.markDirty(chunk, oldLight);
+        // Rebuild light + mark mesh dirty so the spread is visible this frame.
+        const newLight = buildLight(chunk, lightOracle);
+        lightCache.set(lightKey(cxN, czN), newLight);
+        markChunkAllDirty(chunk);
       }
     }
   }
