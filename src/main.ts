@@ -759,6 +759,7 @@ let sprintDustAccum = 0;
 let prevOnGround = true;
 let prevInWater = false;
 let maceFallStartY = 0;
+let isGliding = false;
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -1317,6 +1318,22 @@ const interaction = new InteractionController(
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
         }
         sfx.play('click');
+        return true;
+      }
+      // Firework rocket while gliding → forward thrust boost.
+      if (heldName === 'firework_rocket' && isGliding) {
+        const look = fp.lookVector();
+        const power = 18;
+        fp.velocity.x += look.x * power;
+        fp.velocity.y += look.y * power * 0.6;
+        fp.velocity.z += look.z * power;
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const fwId = itemRegistry.byName('webmc:firework_rocket');
+          if (fwId !== undefined) consumeInventoryItem(fwId, 1);
+        }
+        for (let i = 0; i < 18; i++) blockParticles.emitPlace(fp.position.x + (Math.random() - 0.5), fp.position.y - 0.5 + Math.random() * 0.5, fp.position.z + (Math.random() - 0.5), [255, 200, 100]);
+        sfx.play('break');
+        subtitles.push('Firework boost!');
         return true;
       }
       // Firework rocket: launch upward with a colored particle burst.
@@ -3905,6 +3922,7 @@ function frame(): void {
     const chest = inventory.armor[1];
     const chestName = chest ? itemRegistry.get(chest.itemId).name : '';
     const wearingElytra = chestName === 'webmc:elytra';
+    isGliding = wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
     if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
       const look = fp.lookVector();
       // Slow descent: clamp downward velocity.
