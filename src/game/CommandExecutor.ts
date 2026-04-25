@@ -29,6 +29,7 @@ export interface CommandContext {
   playerName?: string;
   setSpawnHere?: () => void;
   clearChat?: () => void;
+  toggleFly?: () => boolean;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -97,6 +98,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'clearchat' || head === 'cc') {
     ctx.clearChat?.();
+    return;
+  }
+  if (head === 'fly') {
+    const flying = ctx.toggleFly?.();
+    ctx.broadcast(`Fly: ${flying ? 'on' : 'off'}`, '#80ff80');
     return;
   }
   if (head === 'setspawn') {
