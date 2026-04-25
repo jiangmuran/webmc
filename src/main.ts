@@ -676,6 +676,7 @@ void persistDB.getMeta('difficulty').then((saved) => {
   else if (saved === 'hard') mobDamageMultiplier = 1.5;
 });
 let sprintDustAccum = 0;
+let prevOnGround = true;
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -3107,6 +3108,11 @@ function frame(): void {
     stepMat = 'water';
   }
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
+  // MC-style jump exhaustion: 0.05 normal, 0.2 sprint-jump.
+  if (prevOnGround && !fp.onGround && fp.velocity.y > 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
+    playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
+  }
+  prevOnGround = fp.onGround;
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
