@@ -316,6 +316,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Inventory sorted.', '#80ff80');
     return;
   }
+  if (head === 'milk') {
+    ctx.clearEffects?.();
+    ctx.broadcast('🥛 Drank milk; all effects cleared.', '#ffffff');
+    return;
+  }
   if (head === 'scoreboard' || head === 'sb') {
     const on = ctx.toggleScoreboard?.() ?? false;
     ctx.broadcast(`Scoreboard ${on ? 'shown' : 'hidden'}`, '#80ff80');
