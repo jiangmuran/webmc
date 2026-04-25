@@ -90,6 +90,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(text, '#ffffff');
     return;
   }
+  if (head === 'coin' || head === 'flip') {
+    ctx.broadcast(Math.random() < 0.5 ? '🪙 Heads' : '🪙 Tails', '#cccccc');
+    return;
+  }
   if (head === 'random' || head === 'roll') {
     const max = args[0] !== undefined ? Math.max(1, Math.floor(Number(args[0]))) : 100;
     if (!Number.isFinite(max)) {
