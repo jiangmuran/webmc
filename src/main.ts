@@ -3125,10 +3125,11 @@ canvas.addEventListener('mousedown', (e) => {
   if (e.button === 1) {
     e.preventDefault();
     const hit = interaction.castRay();
-    if (hit) {
-      const pickedState = world.get(hit.bx, hit.by, hit.bz);
-      const pickedId = stateId(pickedState);
-      const def = registry.get(pickedId);
+    if (!hit) return;
+    const pickedState = world.get(hit.bx, hit.by, hit.bz);
+    const pickedId = stateId(pickedState);
+    const def = registry.get(pickedId);
+    if (gameMode === 'creative') {
       hotbar.setEntry(hotbar.selectedIndex, {
         state: pickedState,
         name: def.name.replace(/^webmc:/, ''),
@@ -3136,7 +3137,42 @@ canvas.addEventListener('mousedown', (e) => {
       });
       interaction.selectedBlock = pickedState;
       chatInput.addLine(`Picked ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
     }
+    // Survival/adventure: locate the matching item in the inventory and
+    // swap to it. If the player already has it on the hotbar, switch slots.
+    // If only in the main inventory, swap into the held slot. If they
+    // don't have any, no-op (vanilla behaviour without cheats).
+    const itemId = itemRegistry.byName(def.name);
+    if (itemId === undefined) return;
+    let foundHotbarIdx = -1;
+    for (let i = 0; i < 9; i++) {
+      if (inventory.hotbar[i]?.itemId === itemId) {
+        foundHotbarIdx = i;
+        break;
+      }
+    }
+    if (foundHotbarIdx !== -1) {
+      hotbar.select(foundHotbarIdx);
+      chatInput.addLine(`Selected ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
+    }
+    let foundMainIdx = -1;
+    for (let i = 0; i < inventory.main.length; i++) {
+      if (inventory.main[i]?.itemId === itemId) {
+        foundMainIdx = i;
+        break;
+      }
+    }
+    if (foundMainIdx !== -1) {
+      const heldIdx = hotbar.selectedIndex;
+      const tmp = inventory.hotbar[heldIdx];
+      inventory.hotbar[heldIdx] = inventory.main[foundMainIdx] ?? null;
+      inventory.main[foundMainIdx] = tmp ?? null;
+      chatInput.addLine(`Picked ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
+    }
+    chatInput.addLine(`No ${def.name.replace(/^webmc:/, '')} in inventory`, '#ffb080');
     return;
   }
   if (e.button !== 0) return;
