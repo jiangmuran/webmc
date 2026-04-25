@@ -65,6 +65,7 @@ export class FirstPersonCamera {
   private wasJumpPressed = false;
   private sprintFovBoost = 0;
   speedMultiplier = 1;
+  jumpVelocityMultiplier = 1;
   private bobPhase = 0;
   bobEnabled = true;
   invertY = false;
@@ -280,7 +281,7 @@ export class FirstPersonCamera {
         this.jumpBufferTimer = Math.max(0, this.jumpBufferTimer - dtSec);
 
         if (this.jumpBufferTimer > 0 && this.coyoteTimer > 0) {
-          this.velocity.y = this.opts.jumpVelocity;
+          this.velocity.y = this.opts.jumpVelocity * this.jumpVelocityMultiplier;
           // Sprint-jump forward boost — small fwd kick in look direction
           if (this.input.sprint) {
             const sinY2 = Math.sin(this.yaw);
