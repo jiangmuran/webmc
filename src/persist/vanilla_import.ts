@@ -202,6 +202,22 @@ export {
   type FontProvider,
   type FontProviderKind,
 } from './vanilla_font_parse';
+export {
+  parseVanillaItemModifier,
+  ItemModifierParseError,
+  type ParsedItemModifier,
+} from './vanilla_item_modifier_parse';
+export {
+  parseVanillaWorldPreset,
+  WorldPresetParseError,
+  type ParsedWorldPreset,
+} from './vanilla_world_preset_parse';
+export {
+  parseVanillaFlatPreset,
+  FlatPresetParseError,
+  type ParsedFlatPreset,
+  type FlatLayer,
+} from './vanilla_flat_preset_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -240,6 +256,9 @@ export type VanillaFileKind =
   | 'atlas_json'
   | 'predicate_json'
   | 'font_json'
+  | 'item_modifier_json'
+  | 'world_preset_json'
+  | 'flat_level_generator_preset_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -286,6 +305,10 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)atlases\//.test(n)) return 'atlas_json';
     if (/(\/|^)predicates?\//.test(n)) return 'predicate_json';
     if (/(\/|^)font\//.test(n)) return 'font_json';
+    if (/(\/|^)item_modifiers?\//.test(n)) return 'item_modifier_json';
+    if (/(\/|^)worldgen\/world_preset\//.test(n)) return 'world_preset_json';
+    if (/(\/|^)worldgen\/flat_level_generator_preset\//.test(n))
+      return 'flat_level_generator_preset_json';
   }
   return 'unknown';
 }

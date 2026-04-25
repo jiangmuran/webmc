@@ -75,6 +75,17 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('assets/minecraft/atlases/blocks.json')).toBe('atlas_json');
     expect(detectVanillaFileKind('data/minecraft/predicates/foo.json')).toBe('predicate_json');
     expect(detectVanillaFileKind('assets/minecraft/font/default.json')).toBe('font_json');
+    expect(detectVanillaFileKind('data/minecraft/item_modifiers/foo.json')).toBe(
+      'item_modifier_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/worldgen/world_preset/normal.json')).toBe(
+      'world_preset_json',
+    );
+    expect(
+      detectVanillaFileKind(
+        'data/minecraft/worldgen/flat_level_generator_preset/classic_flat.json',
+      ),
+    ).toBe('flat_level_generator_preset_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
