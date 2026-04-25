@@ -1144,6 +1144,48 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'cherry_world' || head === 'sakura') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'grass_block');
+    for (let i = 0; i < 14; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      const trunkH = 5 + Math.floor(Math.random() * 3);
+      for (let h = 0; h < trunkH; h++) ctx.setBlock(cx, py + h, cz, 'cherry_log');
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          if (Math.abs(dx) + Math.abs(dz) > 4) continue;
+          if (Math.random() < 0.7) ctx.setBlock(cx + dx, py + trunkH, cz + dz, 'cherry_leaves');
+        }
+      }
+    }
+    ctx.broadcast('🌸 Cherry blossom biome with 14 cherry trees', '#ff80c0');
+    return;
+  }
+  if (head === 'amethyst_geode' || head === 'geode') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9³ outer smooth_basalt → 7³ calcite → 5³ amethyst_block + 3 budding_amethyst.
+    ctx.fillBlocks(px - 4, py - 4, pz - 4, px + 4, py + 4, pz + 4, 'smooth_basalt');
+    ctx.fillBlocks(px - 3, py - 3, pz - 3, px + 3, py + 3, pz + 3, 'calcite');
+    ctx.fillBlocks(px - 2, py - 2, pz - 2, px + 2, py + 2, pz + 2, 'amethyst_block');
+    for (let i = 0; i < 3; i++) {
+      const dx = Math.floor((Math.random() - 0.5) * 4);
+      const dy = Math.floor((Math.random() - 0.5) * 4);
+      const dz = Math.floor((Math.random() - 0.5) * 4);
+      ctx.setBlock?.(px + dx, py + dy, pz + dz, 'budding_amethyst');
+    }
+    ctx.fillBlocks(px - 1, py - 1, pz - 1, px + 1, py + 1, pz + 1, 'air');
+    ctx.broadcast('💎 Amethyst geode (9³ smooth_basalt → calcite → amethyst hollow)', '#a060ff');
+    return;
+  }
   if (head === 'end_world' || head === 'end_island') {
     if (!ctx.fillBlocks || !ctx.setBlock) return;
     const r = parseInt(args[0] ?? '24', 10);
