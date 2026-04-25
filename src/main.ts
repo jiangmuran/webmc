@@ -5952,18 +5952,19 @@ document.addEventListener(
     if (e.code === 'KeyQ') {
       e.preventDefault();
       if (gameMode !== 'survival' && gameMode !== 'adventure') return;
-      // Drop directly from the inventory hotbar slot. Old code routed
-      // through the visible Hotbar entry (`hotbar.selected.state`) and
-      // looked up the matching item by block name — which silently failed
-      // for tools/food/non-block items because those have no block-id and
-      // the visible-hotbar sync stores them as AIR.
+      // Drop the EXACT held stack — modify inventory.hotbar[selected]
+      // directly. inventory.remove() iterates from slot 0 up, so it would
+      // happily drop a different pickaxe (with full durability) instead of
+      // the one in your hand if you had spares. It also wiped per-stack
+      // damage state because remove() searches by itemId only.
       const slotIdx = inventory.selectedHotbar;
       const stk = inventory.hotbar[slotIdx];
       if (!stk || stk.count <= 0) return;
       const itemDef = itemRegistry.get(stk.itemId);
       const dropCount = e.shiftKey ? stk.count : 1;
-      const removed = inventory.remove(stk.itemId, dropCount);
-      if (removed <= 0) return;
+      const actualCount = Math.min(dropCount, stk.count);
+      const remaining = stk.count - actualCount;
+      inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
       const look = fp.lookVector();
       const color: readonly [number, number, number] =
         itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 130, 100];
@@ -5971,7 +5972,7 @@ document.addEventListener(
         fp.position.x + look.x * 1.2,
         fp.position.y,
         fp.position.z + look.z * 1.2,
-        { itemId: stk.itemId, count: removed, color },
+        { itemId: stk.itemId, count: actualCount, color },
         1.5,
       );
       sfx.play('click');
