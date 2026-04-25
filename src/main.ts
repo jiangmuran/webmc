@@ -33,6 +33,7 @@ import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_ti
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
+import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -517,6 +518,7 @@ let statsSaveAccum = 0;
 let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const fpsStats = makeFpsStats(120);
+let lastMemoryWarnAt = 0;
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   if (w === 'clear') {
@@ -1974,6 +1976,15 @@ const onLoad = (cx: number, cz: number): void => {
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
+  const perfMem = (performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
+  if (perfMem) {
+    const lvl = memPressureLevel({ heapUsed: perfMem.usedJSHeapSize, heapLimit: perfMem.jsHeapSizeLimit });
+    if (lvl === 'critical' && performance.now() - lastMemoryWarnAt > 30000) {
+      lastMemoryWarnAt = performance.now();
+      toast.show('High memory pressure — flushing chunks', '#ffd080', 3000);
+      void chunkStore.flush();
+    }
+  }
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
   if (perfMonitor.tick(dtSec)) {
