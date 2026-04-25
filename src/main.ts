@@ -6884,7 +6884,8 @@ function frame(): void {
   }
 
   // Underwater ambient — runs once per real-time tick equivalent.
-  underwaterAmbient = { ...underwaterAmbient, submerged: fp.inFluid === 'water' };
+  // Use eye-level fluid: ambient kicks in when head is submerged.
+  underwaterAmbient = { ...underwaterAmbient, submerged: fp.inFluidEyes === 'water' };
   const ua = tickUnderwater(underwaterAmbient, Math.random);
   underwaterAmbient = ua.state;
   if (ua.play) {
@@ -6908,7 +6909,9 @@ function frame(): void {
         correctTool: true,
         toolSpeed: 1,
         onGround: fp.onGround,
-        underwater: fp.inFluid === 'water',
+        // Mining-speed underwater penalty applies when the head is in
+        // water (vanilla rule); aquaAffinity removes it.
+        underwater: fp.inFluidEyes === 'water',
         hasAquaAffinity: aquaAffinity,
         hasteLevel: hasteAmp + (hasteAmp > 0 ? 1 : 0),
         fatigueLevel: fatigueAmp + (fatigueAmp > 0 ? 1 : 0),
@@ -7009,11 +7012,13 @@ function frame(): void {
   }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
-  fluidOverlay.set(fp.inFluid);
+  // Visual overlays follow what the EYES see, not the body — wading
+  // through ankle-deep water shouldn't blue-tint the screen.
+  fluidOverlay.set(fp.inFluidEyes);
 
   // Underwater fog: shorten render distance and tint when submerged.
   if (scene.fog instanceof THREE.Fog) {
-    if (fp.inFluid === 'water') {
+    if (fp.inFluidEyes === 'water') {
       scene.fog.color.setRGB(0.24, 0.4, 0.6);
       scene.fog.near = 1;
       scene.fog.far = 20;
@@ -7030,8 +7035,9 @@ function frame(): void {
       }
     }
   }
-  // Drowning feedback: breath < 2s → slight hurt vignette pulse
-  if (fp.inFluid === 'water' && playerState.breath < 2) {
+  // Drowning feedback: breath < 2s → slight hurt vignette pulse.
+  // Eye-level water: vignette only fires when head is actually submerged.
+  if (fp.inFluidEyes === 'water' && playerState.breath < 2) {
     hurtVignette.pulse(0.15);
   }
   // Residual lava fire: orange vignette while burning outside lava
