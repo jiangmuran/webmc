@@ -2166,7 +2166,16 @@ function frame(): void {
       dayCounter++;
       void persistDB.setMeta('dayCounter', dayCounter);
     }
-    toast.show(dayNight.isDay ? `Day ${String(dayCounter)}` : 'Night falls', dayNight.isDay ? '#ffd080' : '#80a0ff', 1500);
+    const totalDays = playerStats.playtimeSec / 600;
+    toast.show(
+      dayNight.isDay ? `Day ${String(dayCounter)}` : `Night falls (Day ${String(dayCounter)})`,
+      dayNight.isDay ? '#ffd080' : '#80a0ff',
+      1500,
+    );
+    chatInput.addLine(
+      `${dayNight.isDay ? '☀' : '☾'} ${dayNight.isDay ? 'Morning' : 'Night'} of day ${String(dayCounter)} (lifetime ${totalDays.toFixed(1)} days)`,
+      '#cccccc',
+    );
   }
 
   if (now - lastPlayerSaveAt > 30000) {
