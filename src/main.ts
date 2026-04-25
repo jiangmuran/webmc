@@ -3208,6 +3208,15 @@ const hotbar = new Hotbar(appEl, registry, [
 void persistDB.getMeta('hotbarSelected').then((saved) => {
   if (typeof saved === 'number' && saved >= 0 && saved < 9) hotbar.select(saved);
 });
+// Keep inventory.selectedHotbar in lockstep with the Hotbar UI selection.
+// Several systems looked up "the held tool" via inventory.hotbar[selectedHotbar]
+// (durability consumption, mending repair, drop-on-Q, ...) — without this
+// sync those systems all targeted slot 0 forever, regardless of which
+// hotbar slot the player visually had highlighted.
+inventory.selectedHotbar = hotbar.selectedIndex;
+hotbar.onSelect((index) => {
+  inventory.selectedHotbar = index;
+});
 let lastHotbarSavedIndex = hotbar.selectedIndex;
 function saveHotbarIfChanged(): void {
   if (hotbar.selectedIndex !== lastHotbarSavedIndex) {

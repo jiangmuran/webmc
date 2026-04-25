@@ -16,6 +16,11 @@ export class Hotbar {
   private readonly label: HTMLElement;
   private labelHideAt = 0;
   private _selected = 0;
+  // Listeners notified whenever the selection changes (1-9 keys, scroll
+  // wheel, or programmatic select). Used by main.ts to keep the parallel
+  // inventory.selectedHotbar in sync — a held pickaxe needs the same
+  // index to be looked up for durability + mending.
+  private readonly onSelectListeners: ((index: number) => void)[] = [];
 
   private readonly onKey: (e: KeyboardEvent) => void;
   private readonly onWheel: (e: WheelEvent) => void;
@@ -144,9 +149,15 @@ export class Hotbar {
 
   select(index: number): void {
     if (index < 0 || index >= this.entries.length) return;
+    if (this._selected === index) return;
     this._selected = index;
     this.refreshHighlight();
     this.showLabel();
+    for (const fn of this.onSelectListeners) fn(index);
+  }
+
+  onSelect(fn: (index: number) => void): void {
+    this.onSelectListeners.push(fn);
   }
 
   private showLabel(): void {
