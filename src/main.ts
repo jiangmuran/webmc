@@ -6215,6 +6215,56 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   sfx.play('break');
   audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
   chatInput.addLine(`💥 BOOM`, '#ff6040');
+  // Damage and knockback the player. Vanilla MC explosion damage scales
+  // by ((1 - dist/(2*r)) * (2*r) + 1) ^ 2 / 2 with armor mitigation;
+  // simplified here as linear falloff with a 7HP-at-zero peak for radius 4
+  // (TNT) → 14HP for radius 5 (charged creeper). Pre-fix the player took
+  // zero damage from explosions; you could stand on top of a creeper and
+  // walk away with full HP after blocks vanished underfoot.
+  if (gameMode === 'survival' || gameMode === 'adventure') {
+    const dx = fp.position.x - (bx + 0.5);
+    const dy = fp.position.y - (by + 0.5);
+    const dz = fp.position.z - (bz + 0.5);
+    const dist = Math.hypot(dx, dy, dz);
+    const blastRange = radius * 2;
+    if (dist < blastRange) {
+      const fall = 1 - dist / blastRange;
+      const baseDmg = fall * (2 * radius) + 1;
+      const dmg = (baseDmg * baseDmg) / 2;
+      const armorPts = computeArmorPoints();
+      const toughnessPts = computeArmorToughness();
+      const finalDmg = armorPts > 0 ? armorReducedDamage(dmg, armorPts, toughnessPts) : dmg;
+      playerState.takeDamage({ amount: finalDmg, source: 'explosion' });
+      if (armorPts > 0) consumeArmorDurability(dmg);
+      // Knockback away from blast center.
+      if (dist > 0.0001) {
+        const KB = fall * 14;
+        fp.velocity.x += (dx / dist) * KB;
+        fp.velocity.y += (dy / Math.max(0.1, Math.abs(dy))) * KB * 0.5 + 4;
+        fp.velocity.z += (dz / dist) * KB;
+      }
+    }
+  }
+  // Damage nearby mobs too — a creeper next to a sheep was just shoving
+  // the sheep, never killing it.
+  for (const m of mobWorld.all()) {
+    const dx = m.position.x - (bx + 0.5);
+    const dy = m.position.y - (by + 0.5);
+    const dz = m.position.z - (bz + 0.5);
+    const dist = Math.hypot(dx, dy, dz);
+    const blastRange = radius * 2;
+    if (dist >= blastRange) continue;
+    const fall = 1 - dist / blastRange;
+    const baseDmg = fall * (2 * radius) + 1;
+    const dmg = (baseDmg * baseDmg) / 2;
+    mobWorld.damage(m.id, dmg);
+    if (dist > 0.0001) {
+      const KB = fall * 14;
+      m.velocity.x += (dx / dist) * KB;
+      m.velocity.z += (dz / dist) * KB;
+      m.velocity.y = Math.max(m.velocity.y, fall * 8);
+    }
+  }
 }
 
 function oreXp(blockName: string): number {
