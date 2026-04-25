@@ -916,6 +916,31 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'reset' && args[0] === 'gamerules') {
+    if (!ctx.setGameRule || !ctx.listGameRules) return;
+    const DEFAULTS: Record<string, boolean> = {
+      doDaylightCycle: true, doMobSpawning: true, doMobLoot: true, doTileDrops: true,
+      keepInventory: false, mobGriefing: true, naturalRegeneration: true, fallDamage: true,
+      drowningDamage: true, fireDamage: true, freezeDamage: true, doImmediateRespawn: false,
+      pvp: true,
+    };
+    for (const [k, v] of Object.entries(DEFAULTS)) ctx.setGameRule(k, v);
+    ctx.broadcast('All game rules reset to defaults', '#80ff80');
+    return;
+  }
+  if (head === 'mute_chat') {
+    if (!ctx.setMute) return;
+    ctx.setMute(true);
+    ctx.broadcast('Chat muted (use /unmute)', '#cccccc');
+    return;
+  }
+  if (head === 'broadcast' && args.length > 0) {
+    if (!ctx.showTitle) return;
+    const text = args.join(' ');
+    ctx.showTitle(text, '#ffd080', 3000);
+    ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
   if (head === 'cyclecam' || head === 'cyclecamera') {
     if (!ctx.cycleCamera) return;
     const next = ctx.cycleCamera();
