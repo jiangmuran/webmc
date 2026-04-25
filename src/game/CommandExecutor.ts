@@ -34,6 +34,7 @@ export interface CommandContext {
   renameLookedAtMob?: (name: string) => string | null;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
+  rollLootTable?: (table: string) => string | null;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -355,6 +356,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Teleported to last death @ ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#80ff80');
     } else {
       ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
+    }
+    return;
+  }
+  if (head === 'loot') {
+    const table = (args[0] ?? 'desert').toLowerCase();
+    if (!ctx.rollLootTable) {
+      ctx.broadcast('Loot tables unavailable.', '#ff8080');
+      return;
+    }
+    const item = ctx.rollLootTable(table);
+    if (!item) {
+      ctx.broadcast(`Unknown loot table: ${table}. Try: desert, dungeon, mineshaft`, '#ff8080');
+      return;
+    }
+    if (ctx.giveItem(item, 1)) {
+      ctx.broadcast(`Rolled ${item} from ${table} table`, '#80ff80');
+    } else {
+      ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
     }
     return;
   }

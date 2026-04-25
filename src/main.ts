@@ -1355,6 +1355,51 @@ const chatInput = new ChatInput(appEl, {
         getLastDeathPos: () => lastDeathPos,
         setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
         getWorldBorder: () => worldBorder.diameter,
+        rollLootTable: (table) => {
+          const tables: Record<string, ReadonlyArray<{ id: string; w: number }>> = {
+            desert: [
+              { id: 'webmc:diamond', w: 1 },
+              { id: 'webmc:enchanted_golden_apple', w: 1 },
+              { id: 'webmc:golden_apple', w: 4 },
+              { id: 'webmc:iron_ingot', w: 15 },
+              { id: 'webmc:gold_ingot', w: 10 },
+              { id: 'webmc:emerald', w: 8 },
+              { id: 'webmc:bone', w: 25 },
+              { id: 'webmc:rotten_flesh', w: 25 },
+              { id: 'webmc:gunpowder', w: 25 },
+              { id: 'webmc:string', w: 20 },
+            ],
+            dungeon: [
+              { id: 'webmc:iron_ingot', w: 30 },
+              { id: 'webmc:gold_ingot', w: 15 },
+              { id: 'webmc:bread', w: 30 },
+              { id: 'webmc:wheat', w: 30 },
+              { id: 'webmc:redstone', w: 25 },
+              { id: 'webmc:bone', w: 25 },
+              { id: 'webmc:string', w: 25 },
+              { id: 'webmc:enchanted_golden_apple', w: 1 },
+            ],
+            mineshaft: [
+              { id: 'webmc:iron_ingot', w: 25 },
+              { id: 'webmc:bread', w: 15 },
+              { id: 'webmc:gold_ingot', w: 10 },
+              { id: 'webmc:diamond', w: 1 },
+              { id: 'webmc:redstone', w: 30 },
+              { id: 'webmc:lapis_lazuli', w: 30 },
+            ],
+          };
+          const pool = tables[table];
+          if (!pool) return null;
+          const valid = pool.filter((e) => itemRegistry.byName(e.id) !== undefined);
+          if (valid.length === 0) return null;
+          const total = valid.reduce((s, e) => s + e.w, 0);
+          let r = Math.random() * total;
+          for (const e of valid) {
+            r -= e.w;
+            if (r <= 0) return e.id.replace(/^webmc:/, '');
+          }
+          return valid[valid.length - 1]!.id.replace(/^webmc:/, '');
+        },
         renameLookedAtMob: (name) => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -1601,7 +1646,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot',
     ];
     return SLASH_CMDS;
   },
