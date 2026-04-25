@@ -1162,6 +1162,22 @@ const interaction = new InteractionController(
           return true;
         }
       }
+      // Water bucket on fire: extinguish.
+      if (heldName === 'water_bucket' && def.name === 'webmc:fire') {
+        world.set(bx, by, bz, AIR);
+        touchWorldEdit(bx, by, bz, 0);
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const wbId = itemRegistry.byName('webmc:water_bucket');
+          const eId = itemRegistry.byName('webmc:bucket');
+          if (wbId !== undefined && eId !== undefined) {
+            consumeInventoryItem(wbId, 1);
+            inventory.add({ itemId: eId, count: 1, damage: 0 });
+          }
+        }
+        sfx.play('break');
+        subtitles.push('Extinguished fire');
+        return true;
+      }
       // Bucket empty: right-click block with water/lava bucket places fluid in adjacent air space above.
       if ((heldName === 'water_bucket' || heldName === 'lava_bucket') && airAbove) {
         const fluidName = heldName === 'water_bucket' ? 'webmc:water' : 'webmc:lava';
