@@ -32,6 +32,7 @@ import { ARMOR_DEFS } from './items/armor';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
+import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -515,6 +516,7 @@ void persistDB.getMeta('playerStats').then((saved) => {
 let statsSaveAccum = 0;
 let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
+const fpsStats = makeFpsStats(120);
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   if (w === 'clear') {
@@ -1971,6 +1973,7 @@ const onLoad = (cx: number, cz: number): void => {
 
 function frame(): void {
   const stats = timer.tick();
+  fpsFrame(fpsStats, stats.frameMs);
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
   if (perfMonitor.tick(dtSec)) {
@@ -2587,7 +2590,7 @@ function frame(): void {
     }
     hud.textContent =
       `webmc — F3 debug · F5 cam · F1 help\n` +
-      `FPS ${stats.fps.toFixed(0).padStart(3)}  frame ${stats.frameMs.toFixed(1)}ms  ${clock}  d${String(dayCounter)}\n` +
+      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock}  d${String(dayCounter)}\n` +
       `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => {
         if (!worldMeta) return '';
         const dx = fp.position.x - worldMeta.spawn.x;
