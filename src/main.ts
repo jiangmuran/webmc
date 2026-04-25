@@ -4460,8 +4460,18 @@ const chatInput = new ChatInput(appEl, {
           return count;
         },
         save: () => {
+          // Flush every persistent surface — was only flushing player +
+          // chunks, leaving recent meta changes (game mode, weather,
+          // time, fluid cells, day counter, chest, hotbar, ...) only on
+          // their next periodic timer / visibilitychange.
           void savePlayerNow();
           void chunkStore.flush();
+          void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
+          void persistDB.setMeta('playerStats', playerStats);
+          void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+          void persistDB.setMeta('dayCounter', dayCounter);
+          void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+          saveHotbarIfChanged();
         },
         summon: (kind, x, y, z) => {
           try {
