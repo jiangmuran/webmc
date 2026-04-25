@@ -609,6 +609,16 @@ const achievements: readonly Achievement[] = [
   { id: 'survivor', title: 'Survivor (day 5)', check: () => dayCounter >= 5 },
   { id: 'marathon', title: 'Marathon (5km walked)', check: () => playerStats.distanceWalked >= 5000 },
   { id: 'architect', title: 'Architect (1000 blocks placed)', check: () => playerStats.blocksPlaced >= 1000 },
+  { id: 'mountain', title: 'Above Sea Level (y > 100)', check: () => fp.position.y >= 100 },
+  { id: 'caver', title: 'Spelunker (y < 30)', check: () => fp.position.y <= 30 },
+  { id: 'hunter', title: 'Hunter (50 mobs killed)', check: () => playerStats.mobsKilled >= 50 },
+  { id: 'demolisher', title: 'Demolisher (1000 blocks broken)', check: () => playerStats.blocksBroken >= 1000 },
+  { id: 'iron_age', title: 'Iron Age', check: () => inventory.count(itemRegistry.byName('webmc:iron_ingot') ?? -1) >= 1 },
+  { id: 'diamond_hunter', title: 'Diamond Hunter', check: () => inventory.count(itemRegistry.byName('webmc:diamond') ?? -1) >= 1 },
+  { id: 'level_30', title: 'Level 30 (max enchant)', check: () => playerState.xpLevel >= 30 },
+  { id: 'two_weeks', title: 'Two Weeks (day 14)', check: () => dayCounter >= 14 },
+  { id: 'sky_walker', title: 'Sky Walker (y > 200)', check: () => fp.position.y >= 200 },
+  { id: 'bedrock_diver', title: 'Bedrock Diver (y < 5)', check: () => fp.position.y <= 5 },
 ];
 void persistDB.getMeta('achievements').then((saved) => {
   if (Array.isArray(saved)) {
