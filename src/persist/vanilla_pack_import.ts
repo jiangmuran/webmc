@@ -21,6 +21,10 @@ import {
   parseVanillaAnimationMcmeta,
   type ParsedAnimationMcmeta,
 } from './vanilla_animation_mcmeta_parse';
+import { parseVanillaEnchantment, type ParsedEnchantment } from './vanilla_enchantment_parse';
+import { parseVanillaDamageType, type ParsedDamageType } from './vanilla_damage_type_parse';
+import { parseVanillaChatType, type ParsedChatType } from './vanilla_chat_type_parse';
+import { parseVanillaSplashes, type ParsedSplashes } from './vanilla_splashes_parse';
 
 export interface PackImportEntry {
   path: string;
@@ -50,6 +54,10 @@ export interface PackImportReport {
   lang: { path: string; parsed: ParsedLang }[];
   sounds: { path: string; parsed: ParsedSoundsJson }[];
   animations: { path: string; parsed: ParsedAnimationMcmeta }[];
+  enchantments: { path: string; parsed: ParsedEnchantment }[];
+  damageTypes: { path: string; parsed: ParsedDamageType }[];
+  chatTypes: { path: string; parsed: ParsedChatType }[];
+  splashes: { path: string; parsed: ParsedSplashes }[];
   // Files we recognized but skipped (binary content currently routed through other paths).
   skipped: { path: string; kind: VanillaFileKind }[];
   // Files we didn't recognize at all.
@@ -72,6 +80,10 @@ function newReport(): PackImportReport {
     lang: [],
     sounds: [],
     animations: [],
+    enchantments: [],
+    damageTypes: [],
+    chatTypes: [],
+    splashes: [],
     skipped: [],
     unknown: [],
     errors: [],
@@ -136,6 +148,22 @@ export function importVanillaPack(entries: readonly PackImportEntry[]): PackImpo
         case 'animation_mcmeta': {
           if (text)
             out.animations.push({ path: e.path, parsed: parseVanillaAnimationMcmeta(text) });
+          break;
+        }
+        case 'enchantment_json': {
+          if (text) out.enchantments.push({ path: e.path, parsed: parseVanillaEnchantment(text) });
+          break;
+        }
+        case 'damage_type_json': {
+          if (text) out.damageTypes.push({ path: e.path, parsed: parseVanillaDamageType(text) });
+          break;
+        }
+        case 'chat_type_json': {
+          if (text) out.chatTypes.push({ path: e.path, parsed: parseVanillaChatType(text) });
+          break;
+        }
+        case 'splashes_txt': {
+          if (text) out.splashes.push({ path: e.path, parsed: parseVanillaSplashes(text) });
           break;
         }
         case 'level_dat':

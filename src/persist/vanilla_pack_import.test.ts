@@ -115,4 +115,38 @@ describe('vanilla pack importer', () => {
     ]);
     expect(r.unknown).toEqual([]);
   });
+
+  it('routes 1.20.5+ datapack content (enchantments, damage_type, chat_type, splashes)', () => {
+    const r = importVanillaPack([
+      {
+        path: 'data/minecraft/enchantment/sharpness.json',
+        text: JSON.stringify({
+          description: 'Sharpness',
+          max_level: 5,
+          min_cost: { base: 1, per_level_above_first: 11 },
+          max_cost: { base: 21, per_level_above_first: 11 },
+        }),
+      },
+      {
+        path: 'data/minecraft/damage_type/drown.json',
+        text: JSON.stringify({ message_id: 'drown', effects: 'drowning' }),
+      },
+      {
+        path: 'data/minecraft/chat_type/chat.json',
+        text: JSON.stringify({
+          chat: { translation_key: 'chat.type.text', parameters: ['sender', 'content'] },
+        }),
+      },
+      { path: 'assets/minecraft/texts/splashes.txt', text: 'Hi!\nMore splashes!\n' },
+    ]);
+    expect(r.enchantments).toHaveLength(1);
+    expect(r.enchantments[0]?.parsed.description).toBe('Sharpness');
+    expect(r.damageTypes).toHaveLength(1);
+    expect(r.damageTypes[0]?.parsed.effects).toBe('drowning');
+    expect(r.chatTypes).toHaveLength(1);
+    expect(r.chatTypes[0]?.parsed.chat.parameters).toEqual(['sender', 'content']);
+    expect(r.splashes).toHaveLength(1);
+    expect(r.splashes[0]?.parsed.lines).toEqual(['Hi!', 'More splashes!']);
+    expect(r.errors).toEqual([]);
+  });
 });

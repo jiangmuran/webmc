@@ -4136,6 +4136,10 @@ const chatInput = new ChatInput(appEl, {
                       `recipes=${String(report.recipes.length)} tags=${String(report.tags.length)} loot=${String(report.lootTables.length)} adv=${String(report.advancements.length)} fn=${String(report.functions.length)} biome=${String(report.biomes.length)} dim=${String(report.dimensions.length)} bs=${String(report.blockstates.length)} model=${String(report.models.length)} lang=${String(report.lang.length)} sounds=${String(report.sounds.length)} anim=${String(report.animations.length)}`,
                       '#cccccc',
                     );
+                    chatInput.addLine(
+                      `enchant=${String(report.enchantments.length)} dmg=${String(report.damageTypes.length)} chat=${String(report.chatTypes.length)} splash=${String(report.splashes.length)} skipped=${String(report.skipped.length)} unknown=${String(report.unknown.length)}`,
+                      '#cccccc',
+                    );
                     if (report.errors.length > 0) {
                       chatInput.addLine(
                         `${String(report.errors.length)} per-file errors (first: ${
