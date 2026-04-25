@@ -1144,6 +1144,51 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'nether_world' || head === 'nether') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'netherrack');
+    for (let i = 0; i < 6; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      ctx.setBlock?.(cx, py - 1, cz, 'lava');
+    }
+    for (let i = 0; i < 4; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      ctx.setBlock?.(cx, py - 1, cz, 'soul_sand');
+      ctx.setBlock?.(cx, py, cz, 'fire');
+    }
+    ctx.broadcast(`Nether biome with lava lakes + soul fires`, '#ff8080');
+    return;
+  }
+  if (head === 'jungle_world' || head === 'jungle') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'grass_block');
+    for (let i = 0; i < 18; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      const trunkH = 8 + Math.floor(Math.random() * 4);
+      for (let h = 0; h < trunkH; h++) ctx.setBlock(cx, py + h, cz, 'jungle_log');
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          if (Math.abs(dx) + Math.abs(dz) > 4) continue;
+          if (Math.random() < 0.7) ctx.setBlock(cx + dx, py + trunkH, cz + dz, 'jungle_leaves');
+        }
+      }
+    }
+    ctx.broadcast(`Jungle biome with 18 tall jungle trees`, '#80ff80');
+    return;
+  }
   if (head === 'snow_world' || head === 'icy') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '24', 10);
