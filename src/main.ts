@@ -5073,6 +5073,12 @@ const settingsPanel = new SettingsPanel(appEl, {
     document.body.classList.toggle('webmc-reduce-motion', v.reduceMotion);
   },
 });
+// Apply persisted settings at startup. Without this, the SettingsPanel
+// loaded values from localStorage but no onChange ever fired before the
+// user opened the panel, so FOV / sensitivity / volume / sprintToggle
+// / playerName / mob nameplates / brightness / etc. all stayed at
+// hardcoded defaults until the user manually clicked "Settings".
+settingsPanel.applyCurrent();
 
 const TIPS: readonly string[] = [
   'Tip: Press E for inventory',

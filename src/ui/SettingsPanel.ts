@@ -323,6 +323,14 @@ export class SettingsPanel {
   get(): SettingsValues {
     return { ...this.values };
   }
+
+  // Re-emit the current values through the onChange callback. Used at
+  // startup to apply persisted settings — the constructor loads them
+  // from localStorage but doesn't fire onChange, so without this nothing
+  // applies until the user opens the panel.
+  applyCurrent(): void {
+    this.cb.onChange({ ...this.values });
+  }
 }
 
 function formatValue(v: number): string {
