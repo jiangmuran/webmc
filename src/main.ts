@@ -36,6 +36,7 @@ import { critMultiplier } from './game/critical_hit';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
+import { rollXp as rollMobXp } from './game/experience_gain';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -919,7 +920,8 @@ canvas.addEventListener('mousedown', (e) => {
     }
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
-      for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+      const xpAmount = rollMobXp({ source: { kind: 'mob', mob: result.kind }, rng: Math.random });
+      for (let k = 0; k < xpAmount; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
       blockParticles.emitBreak(
         Math.floor(result.position.x),
         Math.floor(result.position.y),
