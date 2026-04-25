@@ -860,6 +860,51 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'tower') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const HEIGHT = 16;
+    const RADIUS = 2;
+    // Cobble shell with hollow interior + ladder column.
+    for (let h = 0; h < HEIGHT; h++) {
+      ctx.fillBlocks(px - RADIUS, py + h, pz - RADIUS, px + RADIUS, py + h, pz + RADIUS, 'cobblestone');
+    }
+    ctx.fillBlocks(px - RADIUS + 1, py + 1, pz - RADIUS + 1, px + RADIUS - 1, py + HEIGHT - 1, pz + RADIUS - 1, 'air');
+    // Ladder column on -Z wall (player can climb).
+    for (let h = 1; h < HEIGHT - 1; h++) ctx.setBlock?.(px, py + h, pz - RADIUS + 1, 'oak_log');
+    // Top crenellations + torch.
+    ctx.setBlock?.(px, py + HEIGHT, pz, 'torch');
+    ctx.broadcast(`Built a ${HEIGHT}-block cobblestone tower`, '#80ff80');
+    return;
+  }
+  if (head === 'pyramid') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const SIZE = 9;
+    for (let h = 0; h < SIZE; h++) {
+      ctx.fillBlocks(px - SIZE + h, py + h, pz - SIZE + h, px + SIZE - h, py + h, pz + SIZE - h, 'sandstone');
+    }
+    ctx.broadcast(`Built a ${SIZE}-step sandstone pyramid`, '#80ff80');
+    return;
+  }
+  if (head === 'dungeon') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×4×7 mossy cobblestone room with dirt floor + monster spawner stub (chest at center).
+    ctx.fillBlocks(px - 3, py - 1, pz - 3, px + 3, py + 3, pz + 3, 'mossy_cobblestone');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 2, pz + 2, 'air');
+    ctx.setBlock?.(px, py, pz, 'chest');
+    ctx.setBlock?.(px - 2, py + 1, pz - 2, 'torch');
+    ctx.setBlock?.(px + 2, py + 1, pz + 2, 'torch');
+    ctx.broadcast(`Built a 7×4×7 mossy-cobblestone dungeon`, '#80ff80');
+    return;
+  }
   if (head === 'village' || head === 'house') {
     if (!ctx.fillBlocks) {
       ctx.broadcast('Fill not available.', '#ff8080');
