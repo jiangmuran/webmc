@@ -5441,6 +5441,12 @@ const settingsPanel = new SettingsPanel(appEl, {
     loader.setViewRadius(v.viewDistance);
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity =
       v.mouseSensitivity;
+    // Touch look sensitivity. Touch px-deltas are smaller than mouse
+    // deltas, so we don't share the raw multiplier — instead derive a
+    // relative scale: touchSens = touchDefault × (userMouseSens /
+    // mouseDefault). User doubling the sensitivity slider doubles both.
+    // Touch users couldn't adjust look sens at all before.
+    touch?.setLookSensitivity(0.005 * (v.mouseSensitivity / 0.0022));
     fp.invertY = v.invertY;
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;

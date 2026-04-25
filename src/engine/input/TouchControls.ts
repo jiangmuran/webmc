@@ -1,6 +1,6 @@
 const STICK_BASE_PX = 48;
 const STICK_DEAD_PX = 6;
-const LOOK_SENSITIVITY = 0.005;
+const DEFAULT_LOOK_SENSITIVITY = 0.005;
 
 export interface TouchInputState {
   moveForward: number;
@@ -33,6 +33,12 @@ export class TouchControls {
 
   private lookTouch: number | null = null;
   private lookLast = { x: 0, y: 0 };
+  private lookSensitivity = DEFAULT_LOOK_SENSITIVITY;
+  setLookSensitivity(s: number): void {
+    // Settings panel typically passes a small float (~0.005 default). Clamp
+    // so a wildly out-of-range stored value can't make the camera unusable.
+    this.lookSensitivity = Math.max(0.0005, Math.min(0.05, s));
+  }
 
   private readonly onTouchStart: (e: TouchEvent) => void;
   private readonly onTouchMove: (e: TouchEvent) => void;
@@ -207,8 +213,8 @@ export class TouchControls {
       } else if (t.identifier === this.lookTouch) {
         const dx = t.clientX - this.lookLast.x;
         const dy = t.clientY - this.lookLast.y;
-        this.state.lookDx += dx * LOOK_SENSITIVITY;
-        this.state.lookDy += dy * LOOK_SENSITIVITY;
+        this.state.lookDx += dx * this.lookSensitivity;
+        this.state.lookDy += dy * this.lookSensitivity;
         this.lookLast = { x: t.clientX, y: t.clientY };
         e.preventDefault();
       }
