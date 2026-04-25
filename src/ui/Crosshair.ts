@@ -104,6 +104,11 @@ export class Crosshair {
     this.root.style.display = '';
   }
 
+  setOpacity(value: number): void {
+    const v = Math.max(0, Math.min(1, value));
+    if (this.root.style.opacity !== String(v)) this.root.style.opacity = String(v);
+  }
+
   setTint(color: string | null): void {
     const children = Array.from(this.root.children) as HTMLElement[];
     for (const el of children) {

@@ -3437,6 +3437,8 @@ function frame(): void {
     }
   }
   crosshair.setTint(aimTint);
+  // Dim crosshair when not aimed at any block or mob (visible-when-relevant).
+  crosshair.setOpacity(aimTint || aim ? 1 : 0.55);
 
   if (!loadingOverlay.isHidden()) {
     const meshes = chunkRenderer.meshCount;
