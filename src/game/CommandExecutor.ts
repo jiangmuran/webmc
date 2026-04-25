@@ -1144,6 +1144,42 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'note' || head === 'memo') {
+    const text = args.join(' ').trim();
+    if (!text) {
+      ctx.broadcast('Usage: /note <text>', '#ff8080');
+      return;
+    }
+    ctx.broadcast(`📝 ${text}`, '#ffd080');
+    if (ctx.copyToClipboard) {
+      void ctx.copyToClipboard(text).then((ok) => {
+        if (ok) ctx.broadcast('(also copied to clipboard)', '#cccccc');
+      });
+    }
+    return;
+  }
+  if (head === 'time_quick' || head === 'tq') {
+    const v = (args[0] ?? '').toLowerCase();
+    const map: Record<string, number> = {
+      dawn: 0,
+      sunrise: 0,
+      morning: 1500,
+      noon: 6000,
+      afternoon: 9000,
+      dusk: 12000,
+      sunset: 12000,
+      night: 14000,
+      midnight: 18000,
+      latenight: 21000,
+    };
+    if (v in map) {
+      ctx.setTimeOfDay(map[v]!);
+      ctx.broadcast(`Time → ${v}`, '#ffd080');
+      return;
+    }
+    ctx.broadcast(`Usage: /time_quick <${Object.keys(map).join('|')}>`, '#ff8080');
+    return;
+  }
   if (head === 'highlight' || head === 'mark_block') {
     if (!ctx.lookAtBlock) return;
     const hit = ctx.lookAtBlock();
