@@ -109,6 +109,10 @@ describe('vanilla_import barrel', () => {
         'data/minecraft/worldgen/multi_noise_biome_source_parameter_list/overworld.json',
       ),
     ).toBe('multi_noise_biome_source_parameter_list_json');
+    expect(
+      detectVanillaFileKind('data/minecraft/worldgen/density_function/overworld/3d_noise.json'),
+    ).toBe('density_function_json');
+    expect(detectVanillaFileKind('data/minecraft/jukebox_song/13.json')).toBe('jukebox_song_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

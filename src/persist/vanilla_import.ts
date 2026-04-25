@@ -255,6 +255,16 @@ export {
   type ParsedMultiNoiseBiomeSource,
   type MultiNoiseBiomeEntry,
 } from './vanilla_multi_noise_parse';
+export {
+  parseVanillaJukeboxSong,
+  JukeboxSongParseError,
+  type ParsedJukeboxSong,
+} from './vanilla_jukebox_song_parse';
+export {
+  parseVanillaDensityFunction,
+  DensityFunctionParseError,
+  type ParsedDensityFunction,
+} from './vanilla_density_function_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -303,6 +313,8 @@ export type VanillaFileKind =
   | 'processor_list_json'
   | 'noise_settings_json'
   | 'multi_noise_biome_source_parameter_list_json'
+  | 'jukebox_song_json'
+  | 'density_function_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -361,6 +373,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)worldgen\/noise_settings\//.test(n)) return 'noise_settings_json';
     if (/(\/|^)worldgen\/multi_noise_biome_source_parameter_list\//.test(n))
       return 'multi_noise_biome_source_parameter_list_json';
+    if (/(\/|^)worldgen\/density_function\//.test(n)) return 'density_function_json';
+    if (/(\/|^)jukebox_song\//.test(n)) return 'jukebox_song_json';
   }
   return 'unknown';
 }
