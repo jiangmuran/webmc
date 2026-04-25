@@ -14,6 +14,7 @@ export interface CommandContext {
   lookupBlock?: (name: string) => boolean;
   listBlocks?: (filter?: string) => readonly string[];
   listMobKinds?: () => readonly string[];
+  uptimeMs?: () => number;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -67,6 +68,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'ping') {
     ctx.broadcast('pong (0ms, single-player)', '#cccccc');
+    return;
+  }
+  if (head === 'uptime') {
+    const ms = ctx.uptimeMs?.() ?? 0;
+    const sec = Math.floor(ms / 1000);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    ctx.broadcast(`Uptime: ${String(m)}m ${String(s)}s`, '#cccccc');
     return;
   }
   if (head === 'whoami') {

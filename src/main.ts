@@ -747,6 +747,7 @@ deathScreen.setOnRespawn(() => {
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
 let starvingShown = false;
+const bootTime = performance.now();
 let lastXpLevel = 0;
 let lastIsDay = true;
 let dayCounter = 1;
@@ -795,6 +796,7 @@ const chatInput = new ChatInput(appEl, {
           return candidates.some((c) => registry.byName(c) !== undefined);
         },
         listMobKinds: () => Object.keys(MOB_DEFS),
+        uptimeMs: () => performance.now() - bootTime,
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';
           const out: string[] = [];
