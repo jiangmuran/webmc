@@ -29,6 +29,7 @@ import { RoomClient } from './net/RoomClient';
 import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
+import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -89,6 +90,41 @@ if (!renderer.capabilities.isWebGL2) {
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+const detectedGpuTier = ((): 'low' | 'mid' | 'high' => {
+  try {
+    const gl = renderer.getContext();
+    const debugInfo = (gl as WebGL2RenderingContext).getExtension('WEBGL_debug_renderer_info');
+    let rendererName = '';
+    if (debugInfo) {
+      rendererName = String((gl as WebGL2RenderingContext).getParameter(
+        (debugInfo as { UNMASKED_RENDERER_WEBGL: number }).UNMASKED_RENDERER_WEBGL,
+      ) ?? '');
+    }
+    const maxTextureSize = (gl as WebGL2RenderingContext).getParameter(gl.MAX_TEXTURE_SIZE) as number;
+    return classifyGpu({
+      rendererName,
+      maxTextureSize,
+      webgpuAvailable: 'gpu' in navigator,
+      instancedArrays: true,
+    });
+  } catch {
+    return 'mid';
+  }
+})();
+
+if (localStorage.getItem('webmc:settings') === null) {
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const recVD = recommendedChunkRadius(detectedGpuTier, !isMobile);
+  try {
+    localStorage.setItem(
+      'webmc:settings',
+      JSON.stringify({ viewDistance: recVD, chunkUploadBudget: detectedGpuTier === 'low' ? 1 : detectedGpuTier === 'mid' ? 3 : 6 }),
+    );
+  } catch {
+    /* non-fatal */
+  }
+}
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8db5f0);
