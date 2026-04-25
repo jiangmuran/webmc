@@ -1143,6 +1143,43 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'pool') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '4', 10);
+    const fluid = (args[1] ?? 'water').toLowerCase();
+    if (!Number.isFinite(r) || r < 1 || r > 16) {
+      ctx.broadcast('Usage: /pool <r=4> [water|lava]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) - 1;
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'stone');
+    ctx.fillBlocks(px - r, py, pz - r, px + r, py, pz + r, 'stone');
+    ctx.fillBlocks(
+      px - r + 1,
+      py,
+      pz - r + 1,
+      px + r - 1,
+      py,
+      pz + r - 1,
+      fluid === 'lava' ? 'lava' : 'water',
+    );
+    ctx.broadcast(`Built ${String((r * 2 - 1) ** 2)}-tile ${fluid} pool`, '#80ff80');
+    return;
+  }
+  if (head === 'sky' || head === 'flightpath') {
+    if (!ctx.setPlayerPos) return;
+    ctx.setPlayerPos(ctx.playerPos.x, 200, ctx.playerPos.z);
+    ctx.broadcast('Teleported to y=200 (sky)', '#80a0ff');
+    return;
+  }
+  if (head === 'underground' || head === 'caves') {
+    if (!ctx.setPlayerPos) return;
+    ctx.setPlayerPos(ctx.playerPos.x, 16, ctx.playerPos.z);
+    ctx.broadcast('Teleported to y=16 (cave layer)', '#cccccc');
+    return;
+  }
   if (head === 'farm') {
     if (!ctx.fillBlocks || !ctx.setBlock) return;
     const r = parseInt(args[0] ?? '4', 10);
