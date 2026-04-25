@@ -876,6 +876,30 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'about' || head === 'credits') {
+    ctx.broadcast('— webmc —', '#ffd080');
+    ctx.broadcast('Browser-native Minecraft-Java-Edition-equivalent voxel game', '#cccccc');
+    ctx.broadcast('Clean-room AGPL-3.0 reimplementation. NOT affiliated with Mojang.', '#cccccc');
+    ctx.broadcast('Built with Three.js + TypeScript + Vite. Mobile + multiplayer ready.', '#cccccc');
+    ctx.broadcast('https://github.com/anthropics/claude-code  ·  /tutorial /help', '#a0a0ff');
+    return;
+  }
+  if (head === 'commands' || head === 'cmds') {
+    ctx.broadcast('— Command categories — type /help for full list —', '#ffd080');
+    ctx.broadcast('Movement: /tp /back /up /down /spawn /home /jump /launch /speed /zoom', '#cccccc');
+    ctx.broadcast('World: /time /weather /day /night /sun /rain /storm /seed /biome /world', '#cccccc');
+    ctx.broadcast('Builders: /village /house /tower /pyramid /dungeon /sphere /cube /portal', '#cccccc');
+    ctx.broadcast('  /roof /wall /bridge /pillar /tree /platform /clear area /replace', '#cccccc');
+    ctx.broadcast('Player: /heal /kill /clear /sort /fly /effect /milk /xp /equip /kit /starter', '#cccccc');
+    ctx.broadcast('  /nv /invis /god /glow', '#cccccc');
+    ctx.broadcast('Mobs: /summon /army /dragon /wither /tame /sit /feed /breed /leash /rename', '#cccccc');
+    ctx.broadcast('  /killall', '#cccccc');
+    ctx.broadcast('Items: /give /craft /cook /find /lookup /listblocks /listmobs', '#cccccc');
+    ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
+    ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
+    ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
   if (head === 'home' || head === 'sethome') {
     if (head === 'sethome') {
       ctx.setWaypoint?.('home', ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
