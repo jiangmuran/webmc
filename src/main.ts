@@ -34,6 +34,7 @@ import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula
 import { isAfk } from './game/afk_idle_kick';
 import { critMultiplier } from './game/critical_hit';
 import { computeKnockback } from './game/combat_knockback';
+import { xpForOre } from './game/mining_xp_ore';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -1938,20 +1939,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
 }
 
 function oreXp(blockName: string): number {
-  switch (blockName) {
-    case 'webmc:coal_ore':
-      return 1 + Math.floor(Math.random() * 2);
-    case 'webmc:diamond_ore':
-      return 3 + Math.floor(Math.random() * 5);
-    case 'webmc:redstone_ore':
-      return 1 + Math.floor(Math.random() * 5);
-    case 'webmc:lapis_ore':
-      return 2 + Math.floor(Math.random() * 4);
-    case 'webmc:emerald_ore':
-      return 3 + Math.floor(Math.random() * 5);
-    default:
-      return 0;
-  }
+  return xpForOre(blockName.replace(/^webmc:/, ''), Math.random, false);
 }
 
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
