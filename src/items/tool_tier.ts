@@ -37,8 +37,12 @@ export function canMine(toolLevel: number, requiredLevel: number): boolean {
 export function requiredLevelFor(blockId: string): number {
   if (blockId === 'obsidian' || blockId === 'crying_obsidian') return 4;
   if (blockId === 'ancient_debris' || blockId === 'netherite_block') return 4;
-  if (blockId === 'diamond_ore') return 3;
-  if (blockId === 'gold_ore') return 3;
-  if (blockId === 'iron_ore') return 2;
+  if (blockId === 'diamond_ore' || blockId === 'deepslate_diamond_ore') return 3;
+  if (blockId === 'gold_ore' || blockId === 'deepslate_gold_ore') return 3;
+  if (blockId === 'redstone_ore' || blockId === 'deepslate_redstone_ore') return 3;
+  if (blockId === 'emerald_ore' || blockId === 'deepslate_emerald_ore') return 3;
+  if (blockId === 'iron_ore' || blockId === 'deepslate_iron_ore') return 2;
+  if (blockId === 'lapis_ore' || blockId === 'deepslate_lapis_ore') return 2;
+  if (blockId === 'copper_ore' || blockId === 'deepslate_copper_ore') return 2;
   return 1;
 }
