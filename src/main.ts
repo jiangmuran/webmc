@@ -4561,6 +4561,8 @@ const chatInput = new ChatInput(appEl, {
       '/maze',
       '/arena',
       '/castle',
+      '/mineshaft',
+      '/staircase',
       '/island',
       '/mountain',
       '/sky',

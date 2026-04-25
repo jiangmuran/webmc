@@ -1143,6 +1143,50 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'mineshaft') {
+    if (!ctx.fillBlocks) return;
+    const len = parseInt(args[0] ?? '32', 10);
+    if (!Number.isFinite(len) || len < 4 || len > 128) {
+      ctx.broadcast('Usage: /mineshaft <length=32>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3x3 stripped tunnel into +Z, oak supports every 4 blocks, torches.
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py + 2, pz + len - 1, 'air');
+    for (let i = 0; i < len; i += 4) {
+      ctx.setBlock?.(px - 1, py, pz + i, 'oak_log');
+      ctx.setBlock?.(px - 1, py + 2, pz + i, 'oak_log');
+      ctx.setBlock?.(px + 1, py, pz + i, 'oak_log');
+      ctx.setBlock?.(px + 1, py + 2, pz + i, 'oak_log');
+      ctx.setBlock?.(px - 1, py + 1, pz + i, 'oak_planks');
+      ctx.setBlock?.(px + 1, py + 1, pz + i, 'oak_planks');
+      ctx.setBlock?.(px, py + 2, pz + i + 2, 'torch');
+    }
+    ctx.broadcast(`Mineshaft ${String(len)} long (oak supports + torches)`, '#80ff80');
+    return;
+  }
+  if (head === 'staircase') {
+    if (!ctx.setBlock) return;
+    const len = parseInt(args[0] ?? '20', 10);
+    const dir = (args[1] ?? 'up').toLowerCase();
+    if (!Number.isFinite(len) || len < 1 || len > 128) {
+      ctx.broadcast('Usage: /staircase <length=20> [up|down]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const sign = dir === 'down' ? -1 : 1;
+    for (let i = 0; i < len; i++) {
+      ctx.setBlock(px, py + i * sign, pz + i, 'cobblestone');
+      ctx.setBlock(px, py + i * sign + 1, pz + i, 'air');
+      ctx.setBlock(px, py + i * sign + 2, pz + i, 'air');
+    }
+    ctx.broadcast(`${dir} staircase ${String(len)} long`, '#80ff80');
+    return;
+  }
   if (head === 'arena') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '12', 10);
