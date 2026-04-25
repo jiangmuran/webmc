@@ -3277,10 +3277,17 @@ function frame(): void {
       scene.fog.color.setRGB(0.24, 0.4, 0.6);
       scene.fog.near = 1;
       scene.fog.far = 20;
-    } else if (!fp.inFluid && scene.fog.far <= 20.1) {
-      // Restore based on view distance (handled elsewhere on settings change).
-      scene.fog.near = (loader.viewRadius ?? 6) * 16 * 0.6;
-      scene.fog.far = (loader.viewRadius ?? 6) * 16;
+    } else {
+      // Restore based on view distance, with weather-aware tightening.
+      const baseFar = (loader.viewRadius ?? 6) * 16;
+      let mul = 1;
+      if (currentWeather === 'thunder') mul = 0.55;
+      else if (currentWeather === 'rain') mul = 0.75;
+      const targetFar = baseFar * mul;
+      if (Math.abs(scene.fog.far - targetFar) > 1) {
+        scene.fog.near = targetFar * 0.6;
+        scene.fog.far = targetFar;
+      }
     }
   }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse
