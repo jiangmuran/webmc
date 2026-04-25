@@ -901,6 +901,27 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'buildmode' || head === 'build') {
+    if (ctx.setGameMode) ctx.setGameMode('creative');
+    if (ctx.applyEffect) ctx.applyEffect('night_vision', 0, 600);
+    if (ctx.toggleFly?.() === false) ctx.toggleFly?.();
+    if (ctx.giveAllBlocks) ctx.giveAllBlocks();
+    ctx.broadcast('Build mode: creative + night vision + fly + all-blocks', '#80ff80');
+    return;
+  }
+  if (head === 'survivalmode' || head === 'sm') {
+    if (ctx.setGameMode) ctx.setGameMode('survival');
+    if (ctx.clearInventory) ctx.clearInventory();
+    if (ctx.heal) ctx.heal();
+    ctx.broadcast('Survival mode reset', '#80ff80');
+    return;
+  }
+  if (head === 'spectate' || head === 'sp') {
+    if (!ctx.setGameMode) return;
+    ctx.setGameMode('spectator');
+    ctx.broadcast('Spectator mode', '#80ff80');
+    return;
+  }
   if (head === 'rtp' || head === 'randomtp') {
     const r = parseInt(args[0] ?? '500', 10);
     if (!Number.isFinite(r) || r < 50 || r > 50000) {
