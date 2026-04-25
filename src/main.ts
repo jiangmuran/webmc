@@ -837,6 +837,9 @@ const chatInput = new ChatInput(appEl, {
           fp.toggleFly();
           return fp.input.fly;
         },
+        applyEffect: (id, amp, sec) => {
+          playerState.applyEffect(id, amp, sec);
+        },
         killAllMobs: () => {
           const ids: number[] = [];
           for (const m of mobWorld.all()) ids.push(m.id);
