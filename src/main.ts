@@ -711,6 +711,24 @@ function computeArmorPoints(): number {
   return pts;
 }
 
+function consumeArmorDurability(damageAmount: number): void {
+  const cost = Math.max(1, Math.floor(damageAmount / 4));
+  for (let i = 0; i < inventory.armor.length; i++) {
+    const slot = inventory.armor[i];
+    if (!slot) continue;
+    const def = itemRegistry.get(slot.itemId);
+    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    if (!armorDef) continue;
+    const newDamage = slot.damage + cost;
+    if (newDamage >= armorDef.durability) {
+      inventory.armor[i] = null;
+      chatInput.addLine(`${def.name.replace(/^webmc:/, '')} broke!`, '#ff8080');
+    } else {
+      inventory.armor[i] = { ...slot, damage: newDamage };
+    }
+  }
+}
+
 function computeArmorToughness(): number {
   let t = 0;
   for (const slot of inventory.armor) {
@@ -2761,7 +2779,10 @@ function frame(): void {
       const armorPts = computeArmorPoints();
       const toughnessPts = computeArmorToughness();
       const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
-      if (finalDmg > 0) playerState.takeDamage({ amount: finalDmg, source: 'mob' });
+      if (finalDmg > 0) {
+        playerState.takeDamage({ amount: finalDmg, source: 'mob' });
+        if (armorPts > 0) consumeArmorDurability(scaled);
+      }
       if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
     },
     onCreeperExplode: (x, y, z) => {
