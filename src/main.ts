@@ -1346,8 +1346,8 @@ let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
-let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
-let autoWeatherEnabled = true;
+// (removed weatherTimer + autoWeatherEnabled — the inline 2nd weather
+//  picker that raced with weatherCycle. F7 now toggles gameRules.doWeatherCycle.)
 let minimapVisible = true;
 let compassBarVisible = true;
 let zoomHeld = false;
@@ -5386,8 +5386,13 @@ document.addEventListener(
     }
     if (e.code === 'F7') {
       e.preventDefault();
-      autoWeatherEnabled = !autoWeatherEnabled;
-      toast.show(`Auto weather: ${autoWeatherEnabled ? 'on' : 'off'}`, '#a0d0ff', 1200);
+      // F7 toggles the doWeatherCycle gamerule (the actual driver in
+      // weatherCycle.tick). The old inline autoWeatherEnabled timer
+      // ran in parallel — two random weather pickers fighting each
+      // other every few minutes.
+      gameRules.doWeatherCycle = !gameRules.doWeatherCycle;
+      void persistDB.setMeta('gameRules', gameRules);
+      toast.show(`Auto weather: ${gameRules.doWeatherCycle ? 'on' : 'off'}`, '#a0d0ff', 1200);
     }
     if (e.code === 'F9') {
       e.preventDefault();
@@ -6332,23 +6337,9 @@ function frame(): void {
       }
     }
   }
-  if (autoWeatherEnabled) {
-    weatherTimer -= dtSec;
-    if (weatherTimer <= 0) {
-      const r = Math.random();
-      const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
-      if (next !== currentWeather) {
-        setWeather(next);
-        toast.show(
-          next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm',
-          '#a0d0ff',
-          1500,
-        );
-      }
-      weatherTimer = 180 + Math.random() * 240;
-    }
-  }
-  // Auto weather cycle (gated by gamerule).
+  // Auto weather cycle (gated by gamerule). The old parallel
+  // autoWeatherEnabled / weatherTimer block was removed — it raced with
+  // weatherCycle.tick below, picking conflicting weather every few minutes.
   if (gameRules.doWeatherCycle) {
     const weatherChanged = weatherCycle.tick(dtSec);
     if (weatherChanged && currentWeather !== weatherChanged) {
