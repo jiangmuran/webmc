@@ -3,6 +3,21 @@ import type { ItemRegistry } from '@/items/item';
 import type { Recipe, RecipeRegistry } from '@/items/recipe';
 import { attemptCraft, hasAllIngredients } from '@/items/CraftingHelper';
 
+// Returns the inventory.armor[] index for an armor item, or null if not
+// armor. Inferred from item name so we don't need to thread ARMOR_DEFS
+// through the UI module. Slot order matches Minecraft: 0=head, 1=chest,
+// 2=legs, 3=feet.
+function armorSlotForName(name: string): number | null {
+  if (name.includes('helmet') || name === 'webmc:turtle_shell') return 0;
+  if (name.includes('chestplate') || name === 'webmc:elytra') return 1;
+  if (name.includes('leggings')) return 2;
+  if (name.includes('boots')) return 3;
+  return null;
+}
+function armorSlotName(idx: number): string {
+  return idx === 0 ? 'helmet' : idx === 1 ? 'chest' : idx === 2 ? 'legs' : 'feet';
+}
+
 export interface SurvivalInventoryCallbacks {
   onClose: () => void;
   onEat?: (itemId: number, hungerRestore: number, saturation: number) => void;
@@ -79,6 +94,16 @@ export class SurvivalInventory {
     panel.appendChild(hotGrid);
     this.hotGrid = hotGrid;
 
+    const armorLabel = document.createElement('div');
+    armorLabel.textContent = 'Armor (head/chest/legs/feet)';
+    armorLabel.style.cssText = 'opacity:0.7;font-size:11px;margin-top:8px;';
+    panel.appendChild(armorLabel);
+    const armorGrid = document.createElement('div');
+    armorGrid.setAttribute('data-armor-grid', 'true');
+    armorGrid.style.cssText = 'display:grid;grid-template-columns:repeat(4, 40px);gap:3px;';
+    panel.appendChild(armorGrid);
+    this.armorGrid = armorGrid;
+
     const craftLabel = document.createElement('div');
     craftLabel.textContent = 'Craftable';
     craftLabel.style.cssText = 'opacity:0.7;font-size:11px;margin-top:8px;';
@@ -125,6 +150,7 @@ export class SurvivalInventory {
   }
 
   private readonly hotGrid: HTMLDivElement;
+  private readonly armorGrid!: HTMLDivElement;
   private readonly craftList!: HTMLDivElement;
   private readonly smeltList!: HTMLDivElement;
 
@@ -160,6 +186,7 @@ export class SurvivalInventory {
     count.style.cssText = 'font-size:11px;font-weight:700;text-shadow:1px 1px 0 rgba(0,0,0,0.8);';
     slot.appendChild(count);
     const isPotion = def.name.includes('potion_') || def.name === 'webmc:awkward_potion';
+    const armorSlotIdx = armorSlotForName(def.name);
     if (((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion) && this.cb.onEat) {
       slot.style.cursor = 'pointer';
       slot.style.borderColor = isPotion ? 'rgba(180,140,220,0.6)' : 'rgba(140,220,120,0.6)';
@@ -179,6 +206,35 @@ export class SurvivalInventory {
         this.cb.onEat(def.id, def.hungerRestore ?? 0, def.saturation ?? 0);
         const after = cur.count - 1;
         slots[idx] = after <= 0 ? null : { ...cur, count: after };
+        this.refresh();
+      });
+    } else if (armorSlotIdx !== null) {
+      slot.style.cursor = 'pointer';
+      slot.style.borderColor = 'rgba(180,180,255,0.6)';
+      slot.title = `Click to equip (${armorSlotName(armorSlotIdx)})`;
+      slot.addEventListener('click', () => {
+        const container = slot.parentElement;
+        if (!container) return;
+        const idx = Array.from(container.children).indexOf(slot);
+        if (idx < 0) return;
+        const isHotbar = container.getAttribute('data-hotbar-grid') !== null;
+        const slots = isHotbar ? this.inventory.hotbar : this.inventory.main;
+        const cur = slots[idx];
+        if (!cur || cur.count <= 0) return;
+        // Swap into the armor slot. Whatever was equipped goes back to
+        // the source slot — same swap pattern the right-click hotbar
+        // shuffle uses.
+        const prevArmor = this.inventory.armor[armorSlotIdx];
+        this.inventory.armor[armorSlotIdx] = { itemId: cur.itemId, count: 1, damage: cur.damage };
+        const remainingCount = cur.count - 1;
+        if (prevArmor && remainingCount === 0) {
+          slots[idx] = prevArmor;
+        } else if (prevArmor) {
+          slots[idx] = { ...cur, count: remainingCount };
+          this.inventory.add(prevArmor);
+        } else {
+          slots[idx] = remainingCount > 0 ? { ...cur, count: remainingCount } : null;
+        }
         this.refresh();
       });
     } else {
@@ -217,8 +273,58 @@ export class SurvivalInventory {
     for (const s of this.inventory.hotbar) {
       this.hotGrid.appendChild(this.renderSlot(s));
     }
+    this.armorGrid.textContent = '';
+    for (let i = 0; i < this.inventory.armor.length; i++) {
+      this.armorGrid.appendChild(this.renderArmorSlot(i));
+    }
     this.refreshCraftList();
     this.refreshSmeltList();
+  }
+
+  // Armor slot displays the equipped piece (if any) with click-to-unequip.
+  // The slot label hints which body part it covers when empty.
+  private renderArmorSlot(slotIdx: number): HTMLDivElement {
+    const stack = this.inventory.armor[slotIdx] ?? null;
+    const slot = document.createElement('div');
+    slot.style.cssText = [
+      'width:40px',
+      'height:40px',
+      'background:rgba(0,0,0,0.5)',
+      'border:2px solid rgba(180,180,255,0.4)',
+      'border-radius:3px',
+      'font-size:9px',
+      'color:#ccd',
+      'display:flex',
+      'align-items:flex-end',
+      'justify-content:flex-end',
+      'padding:2px',
+      'position:relative',
+      'cursor:pointer',
+    ].join(';');
+    if (!stack || stack.count <= 0) {
+      const ph = document.createElement('div');
+      ph.textContent = armorSlotName(slotIdx);
+      ph.style.cssText =
+        'position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;opacity:0.5;font-size:9px;';
+      slot.appendChild(ph);
+      slot.title = `Empty ${armorSlotName(slotIdx)} slot`;
+      return slot;
+    }
+    const def = this.registry.get(stack.itemId);
+    const label = document.createElement('div');
+    label.textContent = def.name.replace(/^webmc:/, '').slice(0, 6);
+    label.style.cssText =
+      'position:absolute;top:2px;left:3px;font-size:8px;line-height:10px;color:#ddd;';
+    slot.appendChild(label);
+    slot.title = `Click to unequip (${def.name.replace(/^webmc:/, '')})`;
+    slot.addEventListener('click', () => {
+      // Move equipped armor back to inventory. Mirrors vanilla shift-click
+      // out of the armor slot.
+      this.inventory.armor[slotIdx] = null;
+      this.inventory.add(stack);
+      this.refresh();
+    });
+    return slot;
   }
 
   private refreshSmeltList(): void {
