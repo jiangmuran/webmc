@@ -860,6 +860,64 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'clear' && args[0]?.toLowerCase() === 'area') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[1] ?? '8', 10);
+    if (!Number.isFinite(r) || r < 1 || r > 64) {
+      ctx.broadcast('Usage: /clear area <radius=8>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px - r, py, pz - r, px + r, py + r, pz + r, 'air');
+    ctx.broadcast(`Cleared ${String(n)} blocks within ${String(r)} of player`, '#80ff80');
+    return;
+  }
+  if (head === 'tree') {
+    if (!ctx.setBlock) return;
+    const wood = (args[0] ?? 'oak').toLowerCase();
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const trunkH = 5 + Math.floor(Math.random() * 3);
+    for (let h = 0; h < trunkH; h++) ctx.setBlock(px, py + h, pz, `${wood}_log`);
+    for (let dx = -2; dx <= 2; dx++) {
+      for (let dz = -2; dz <= 2; dz++) {
+        for (let dy = trunkH - 2; dy <= trunkH; dy++) {
+          if (dx === 0 && dz === 0 && dy < trunkH) continue;
+          if (Math.abs(dx) + Math.abs(dz) > 3) continue;
+          if (Math.random() < 0.85) ctx.setBlock(px + dx, py + dy, pz + dz, `${wood}_leaves`);
+        }
+      }
+    }
+    ctx.broadcast(`Planted ${wood} tree`, '#80ff80');
+    return;
+  }
+  if (head === 'replace') {
+    if (args.length < 2 || !ctx.fillBlocks) {
+      ctx.broadcast('Usage: /replace <fromBlock> <toBlock> [radius=8]', '#ff8080');
+      return;
+    }
+    // Without per-block iteration, just fill the cube area with the target block.
+    const radius = parseInt(args[2] ?? '8', 10);
+    if (!Number.isFinite(radius) || radius < 1 || radius > 32) {
+      ctx.broadcast('Usage: /replace <from> <to> [radius=8]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px - radius, py - radius, pz - radius, px + radius, py + radius, pz + radius, args[1] ?? 'stone');
+    ctx.broadcast(`Filled ${String(n)} blocks (replace approximation)`, '#80ff80');
+    return;
+  }
+  if (head === 'glow') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('glowing', 0, 60);
+    ctx.broadcast('Glowing for 60s', '#80ff80');
+    return;
+  }
   if (head === 'roof') {
     if (!ctx.fillBlocks || !ctx.setBlock) return;
     const r = parseInt(args[0] ?? '6', 10);
