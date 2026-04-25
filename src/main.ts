@@ -140,6 +140,7 @@ if (!worldMeta) {
   await persistDB.putWorld(worldMeta);
 }
 await persistDB.setMeta('lastPlayedWorldId', worldMeta.id);
+document.title = `webmc · ${worldMeta.name}`;
 
 const WORLD_SEED = worldMeta.seed;
 const generator = new WorldGenerator(WORLD_SEED, registry);
