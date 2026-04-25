@@ -876,6 +876,34 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'home' || head === 'sethome') {
+    if (head === 'sethome') {
+      ctx.setWaypoint?.('home', ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
+      ctx.broadcast(`Home set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#80ff80');
+      return;
+    }
+    const name = args[0] ?? 'home';
+    if (name === 'set') {
+      ctx.setWaypoint?.('home', ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
+      ctx.broadcast(`Home set`, '#80ff80');
+      return;
+    }
+    if (name === 'list') {
+      const list = ctx.listWaypoints?.() ?? [];
+      if (list.length === 0) ctx.broadcast('No homes. Use /sethome.', '#cccccc');
+      else for (const wp of list) ctx.broadcast(`${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`, '#cccccc');
+      return;
+    }
+    const wp = ctx.getWaypoint?.(name);
+    if (!wp) {
+      ctx.broadcast(`No home '${name}'. Use /sethome or /home set.`, '#ff8080');
+      return;
+    }
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(wp.x, wp.y, wp.z);
+    ctx.broadcast(`Home '${name}'`, '#80ff80');
+    return;
+  }
   if (head === 'jump') {
     if (!ctx.applyVelocity) return;
     const power = parseFloat(args[0] ?? '12');
