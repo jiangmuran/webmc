@@ -38,6 +38,7 @@ export interface CommandContext {
   isHardcore?: () => boolean;
   loadDatapackDemo?: () => string;
   exportWorldManifest?: () => string;
+  equipArmor?: (itemName: string) => string | null;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -434,6 +435,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Rolled ${item} from ${table} table`, '#80ff80');
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
+    }
+    return;
+  }
+  if (head === 'equip') {
+    const name = (args[0] ?? '').toLowerCase();
+    if (!name || !ctx.equipArmor) {
+      ctx.broadcast('Usage: /equip <item> (e.g. iron_helmet)', '#ff8080');
+      return;
+    }
+    const slot = ctx.equipArmor(name);
+    if (slot) {
+      ctx.broadcast(`Equipped ${name} in ${slot} slot`, '#80ff80');
+    } else {
+      ctx.broadcast(`No ${name} in inventory or not armor`, '#ff8080');
     }
     return;
   }

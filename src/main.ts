@@ -1397,6 +1397,21 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
+        equipArmor: (name) => {
+          const fullName = name.startsWith('webmc:') ? name : `webmc:${name}`;
+          const itemId = itemRegistry.byName(fullName);
+          if (itemId === undefined) return null;
+          const armorDef = ARMOR_DEFS[name.replace(/^webmc:/, '')];
+          if (!armorDef) return null;
+          const slotIndex = armorDef.slot === 'helmet' ? 0 : armorDef.slot === 'chestplate' ? 1 : armorDef.slot === 'leggings' ? 2 : 3;
+          if (countInventoryItem(itemId) === 0) return null;
+          // Swap with whatever's in the slot.
+          const prev = inventory.armor[slotIndex];
+          consumeInventoryItem(itemId, 1);
+          inventory.armor[slotIndex] = { itemId, count: 1, damage: 0 };
+          if (prev) inventory.add(prev);
+          return armorDef.slot;
+        },
         exportWorldManifest: () => {
           const m = createExportManifest({
             worldName: worldMeta.name,
@@ -1733,7 +1748,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip',
     ];
     return SLASH_CMDS;
   },
