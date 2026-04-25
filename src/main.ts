@@ -1377,15 +1377,46 @@ const regionPoints: {
   b: { x: number; y: number; z: number } | null;
 } = { a: null, b: null };
 interface LoadoutSnap {
-  hotbar: ((typeof inventory.hotbar)[number] | null)[];
-  main: ((typeof inventory.main)[number] | null)[];
-  armor: ((typeof inventory.armor)[number] | null)[];
+  hotbar: (PersistedItemStack | null)[];
+  main: (PersistedItemStack | null)[];
+  armor: (PersistedItemStack | null)[];
 }
 const loadouts = new Map<string, LoadoutSnap>();
 void persistDB.getMeta('loadouts').then((saved) => {
   if (saved && typeof saved === 'object') {
-    for (const [name, snap] of Object.entries(saved as Record<string, LoadoutSnap>)) {
-      loadouts.set(name, snap);
+    for (const [name, raw] of Object.entries(saved as Record<string, unknown>)) {
+      if (!raw || typeof raw !== 'object') continue;
+      const r = raw as { hotbar?: unknown; main?: unknown; armor?: unknown };
+      // Migrate legacy numeric-id snapshots: look up name from the registry.
+      const migrate = (arr: unknown): (PersistedItemStack | null)[] => {
+        if (!Array.isArray(arr)) return [];
+        return arr.map((s) => {
+          if (!s || typeof s !== 'object') return null;
+          const o = s as { name?: unknown; itemId?: unknown; count?: unknown; damage?: unknown };
+          if (typeof o.name === 'string' && typeof o.count === 'number') {
+            return {
+              name: o.name,
+              count: o.count,
+              damage: typeof o.damage === 'number' ? o.damage : 0,
+            };
+          }
+          if (typeof o.itemId === 'number') {
+            const def = itemRegistry.get(o.itemId);
+            if (!def) return null;
+            return {
+              name: def.name,
+              count: typeof o.count === 'number' ? o.count : 1,
+              damage: typeof o.damage === 'number' ? o.damage : 0,
+            };
+          }
+          return null;
+        });
+      };
+      loadouts.set(name, {
+        hotbar: migrate(r.hotbar),
+        main: migrate(r.main),
+        armor: migrate(r.armor),
+      });
     }
   }
 });
@@ -3796,10 +3827,10 @@ const chatInput = new ChatInput(appEl, {
           document.exitPointerLock();
         },
         saveLoadout: (name) => {
-          const snapshot = {
-            hotbar: inventory.hotbar.map((s) => (s ? { ...s } : null)),
-            main: inventory.main.map((s) => (s ? { ...s } : null)),
-            armor: inventory.armor.map((s) => (s ? { ...s } : null)),
+          const snapshot: LoadoutSnap = {
+            hotbar: inventory.hotbar.map(snapshotStack),
+            main: inventory.main.map(snapshotStack),
+            armor: inventory.armor.map(snapshotStack),
           };
           loadouts.set(name, snapshot);
           void persistDB.setMeta('loadouts', Object.fromEntries(loadouts));
@@ -3807,12 +3838,9 @@ const chatInput = new ChatInput(appEl, {
         loadLoadout: (name) => {
           const snap = loadouts.get(name);
           if (!snap) return false;
-          for (let i = 0; i < 9; i++)
-            inventory.hotbar[i] = snap.hotbar[i] ? { ...snap.hotbar[i]! } : null;
-          for (let i = 0; i < 27; i++)
-            inventory.main[i] = snap.main[i] ? { ...snap.main[i]! } : null;
-          for (let i = 0; i < 4; i++)
-            inventory.armor[i] = snap.armor[i] ? { ...snap.armor[i]! } : null;
+          for (let i = 0; i < 9; i++) inventory.hotbar[i] = restoreStack(snap.hotbar[i] ?? null);
+          for (let i = 0; i < 27; i++) inventory.main[i] = restoreStack(snap.main[i] ?? null);
+          for (let i = 0; i < 4; i++) inventory.armor[i] = restoreStack(snap.armor[i] ?? null);
           return true;
         },
         listLoadouts: () => Array.from(loadouts.keys()),
