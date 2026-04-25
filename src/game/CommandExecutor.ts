@@ -1143,6 +1143,65 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'redstone_demo' || head === 'rsdemo') {
+    if (!ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Lever -> redstone -> redstone_lamp.
+    ctx.setBlock(px, py, pz, 'lever');
+    for (let i = 1; i <= 5; i++) ctx.setBlock(px, py - 1, pz + i, 'redstone_wire');
+    ctx.setBlock(px, py - 1, pz + 6, 'redstone_lamp');
+    ctx.broadcast('Redstone demo: lever → 5 wire → lamp', '#80ff80');
+    return;
+  }
+  if (head === 'pixelart' && args.length >= 1) {
+    if (!ctx.setBlock) return;
+    const text = args.join(' ').toUpperCase();
+    if (text.length > 12) {
+      ctx.broadcast('Usage: /pixelart <text up to 12 chars>', '#ff8080');
+      return;
+    }
+    const FONT: Record<string, string[]> = {
+      A: ['.X.', 'XXX', 'X.X'],
+      B: ['XX.', 'XXX', 'XX.'],
+      C: ['XXX', 'X..', 'XXX'],
+      D: ['XX.', 'X.X', 'XX.'],
+      E: ['XXX', 'XX.', 'XXX'],
+      F: ['XXX', 'XX.', 'X..'],
+      G: ['XXX', 'X.X', 'XXX'],
+      H: ['X.X', 'XXX', 'X.X'],
+      I: ['XXX', '.X.', 'XXX'],
+      L: ['X..', 'X..', 'XXX'],
+      M: ['X.X', 'XXX', 'X.X'],
+      N: ['XX.', 'X.X', '.XX'],
+      O: ['XXX', 'X.X', 'XXX'],
+      P: ['XXX', 'XX.', 'X..'],
+      R: ['XX.', 'X.X', 'X.X'],
+      S: ['XXX', '.X.', 'XXX'],
+      T: ['XXX', '.X.', '.X.'],
+      U: ['X.X', 'X.X', 'XXX'],
+      W: ['X.X', 'XXX', 'X.X'],
+      Y: ['X.X', '.X.', '.X.'],
+      ' ': ['...', '...', '...'],
+    };
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let dx = 0;
+    for (const ch of text) {
+      const glyph = FONT[ch] ?? FONT[' ']!;
+      for (let row = 0; row < 3; row++) {
+        const r = glyph[row]!;
+        for (let col = 0; col < 3; col++) {
+          if (r[col] === 'X') ctx.setBlock(px + dx + col, py + (2 - row), pz, 'glowstone');
+        }
+      }
+      dx += 4;
+    }
+    ctx.broadcast(`Wrote "${text}" (${String(dx)} wide × 3 tall, glowstone)`, '#80ff80');
+    return;
+  }
   if (head === 'mineshaft') {
     if (!ctx.fillBlocks) return;
     const len = parseInt(args[0] ?? '32', 10);
