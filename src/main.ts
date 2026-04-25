@@ -694,6 +694,7 @@ deathScreen.setOnRespawn(() => {
 });
 survivalHud.setVisible(false);
 let lastPlayerHealth = 20;
+let starvingShown = false;
 let lastXpLevel = 0;
 let lastIsDay = true;
 let dayCounter = 1;
@@ -1920,6 +1921,14 @@ function frame(): void {
   }
   fp.lastLandFallBlocks = 0;
 
+  if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
+    if (!starvingShown) {
+      starvingShown = true;
+      toast.show('Starving!', '#ff6060', 2000);
+    }
+  } else {
+    starvingShown = false;
+  }
   if (playerState.justDied && !deathScreen.isVisible() && !playerState.invulnerable) {
     deathScreen.show();
     fp.inputBlocked = true;
