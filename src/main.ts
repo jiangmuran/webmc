@@ -771,6 +771,21 @@ function computeArmorPoints(): number {
   return pts;
 }
 
+function consumeHeldToolDurability(amount = 1): void {
+  if (gameMode === 'creative') return;
+  const sel = inventory.hotbar[inventory.selectedHotbar];
+  if (!sel) return;
+  const def = itemRegistry.get(sel.itemId);
+  if (def.durability <= 0) return; // not a tool
+  const newDamage = sel.damage + amount;
+  if (newDamage >= def.durability) {
+    inventory.hotbar[inventory.selectedHotbar] = null;
+    chatInput.addLine(`${def.name.replace(/^webmc:/, '')} broke!`, '#ff8080');
+  } else {
+    inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
+  }
+}
+
 function consumeArmorDurability(damageAmount: number): void {
   const cost = Math.max(1, Math.floor(damageAmount / 4));
   for (let i = 0; i < inventory.armor.length; i++) {
@@ -852,7 +867,10 @@ const interaction = new InteractionController(
       hand.swing();
       playerStats.blocksBroken++;
       markSaveDirty(autosaveState);
-      if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.005);
+      if (gameMode === 'survival' || gameMode === 'adventure') {
+        playerState.addExhaustion(0.005);
+        consumeHeldToolDurability(1);
+      }
       if (def.name === 'webmc:oak_log') fireTutorial('collected_log');
       if (def.name === 'webmc:cobblestone' || def.name === 'webmc:cobble') fireTutorial('collected_cobblestone');
     },
@@ -1053,7 +1071,13 @@ canvas.addEventListener('mousedown', (e) => {
     const baseDmg = Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
-    if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
+    if (gameMode === 'survival' || gameMode === 'adventure') {
+      playerState.addExhaustion(0.1);
+      // Sword takes 1 durability per hit; axe takes 2.
+      const heldNow = hotbar.selected?.name.toLowerCase() ?? '';
+      if (heldNow.includes('sword')) consumeHeldToolDurability(1);
+      else if (heldNow.includes('axe')) consumeHeldToolDurability(2);
+    }
     sfx.play('hit');
     interaction.setHeld(null);
     screenShake.pulse(0.15);
