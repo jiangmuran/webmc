@@ -129,7 +129,7 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 2,
     },
     { name: 'webmc:oak_planks', color: [176, 143, 86] as RGB, hardness: 2 },
-    { name: 'webmc:oak_leaves', color: [68, 135, 54] as RGB, hardness: 0.2 },
+    { name: 'webmc:oak_leaves', opaque: false, color: [68, 135, 54] as RGB, hardness: 0.2 },
     {
       name: 'webmc:spruce_log',
       top: [142, 104, 57] as RGB,
@@ -149,14 +149,19 @@ export function createDefaultRegistry(): BlockRegistry {
     {
       name: 'webmc:water',
       solid: false,
-      opaque: true,
+      // Light propagates through water (with attenuation in vanilla; our
+      // BFS lighting is binary so we just let it pass) — opaque:true
+      // here was making everything underwater pitch black.
+      opaque: false,
       color: [64, 96, 200] as RGB,
       hardness: 100,
     },
     {
       name: 'webmc:lava',
       solid: false,
-      opaque: true,
+      // Lava emits light=15, so it lights its own cell either way; making
+      // it non-opaque lets sky light reach lava lakes from above.
+      opaque: false,
       color: [207, 86, 16] as RGB,
       lightEmission: 15,
       hardness: 100,
@@ -168,7 +173,9 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:redstone_ore', color: [158, 55, 55] as RGB, lightEmission: 9, hardness: 3 },
     { name: 'webmc:lapis_ore', color: [52, 74, 155] as RGB, hardness: 3 },
     { name: 'webmc:glowstone', color: [255, 214, 138] as RGB, lightEmission: 15, hardness: 0.3 },
-    { name: 'webmc:glass', color: [220, 240, 250] as RGB, hardness: 0.3 },
+    // Glass: visible but lets light through — was defaulting to opaque:true
+    // which prevented skylight from reaching anything below a glass roof.
+    { name: 'webmc:glass', opaque: false, color: [220, 240, 250] as RGB, hardness: 0.3 },
     { name: 'webmc:brick', color: [152, 94, 70] as RGB, hardness: 2 },
     { name: 'webmc:bookshelf', color: [124, 102, 63] as RGB, hardness: 1.5 },
     {
@@ -1736,14 +1743,14 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:green_concrete_powder', color: [105, 130, 55] as RGB, hardness: 0.5 },
     { name: 'webmc:red_concrete_powder', color: [180, 70, 70] as RGB, hardness: 0.5 },
     { name: 'webmc:black_concrete_powder', color: [25, 25, 30] as RGB, hardness: 0.5 },
-    { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
-    { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
-    { name: 'webmc:spruce_leaves', color: [56, 92, 38] as RGB, hardness: 0.2 },
-    { name: 'webmc:birch_leaves', color: [120, 167, 76] as RGB, hardness: 0.2 },
-    { name: 'webmc:jungle_leaves', color: [76, 152, 41] as RGB, hardness: 0.2 },
-    { name: 'webmc:acacia_leaves', color: [106, 165, 60] as RGB, hardness: 0.2 },
-    { name: 'webmc:dark_oak_leaves', color: [62, 110, 36] as RGB, hardness: 0.2 },
-    { name: 'webmc:mangrove_leaves', color: [60, 132, 50] as RGB, hardness: 0.2 },
+    { name: 'webmc:cherry_leaves', opaque: false, color: [235, 180, 205] as RGB, hardness: 0.2 },
+    { name: 'webmc:azalea_leaves', opaque: false, color: [100, 135, 55] as RGB, hardness: 0.2 },
+    { name: 'webmc:spruce_leaves', opaque: false, color: [56, 92, 38] as RGB, hardness: 0.2 },
+    { name: 'webmc:birch_leaves', opaque: false, color: [120, 167, 76] as RGB, hardness: 0.2 },
+    { name: 'webmc:jungle_leaves', opaque: false, color: [76, 152, 41] as RGB, hardness: 0.2 },
+    { name: 'webmc:acacia_leaves', opaque: false, color: [106, 165, 60] as RGB, hardness: 0.2 },
+    { name: 'webmc:dark_oak_leaves', opaque: false, color: [62, 110, 36] as RGB, hardness: 0.2 },
+    { name: 'webmc:mangrove_leaves', opaque: false, color: [60, 132, 50] as RGB, hardness: 0.2 },
     { name: 'webmc:flowering_azalea_leaves', color: [180, 80, 175] as RGB, hardness: 0.2 },
     // Crimson + warped wood family (slabs/stairs/fence/door).
     {
