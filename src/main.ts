@@ -3141,6 +3141,10 @@ function frame(): void {
   if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
   if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
   fp.speedMultiplier = mul;
+  // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
+  const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
+  const speedLevel = (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
+  fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
   const jumpEff = playerState.effects.get('jump_boost');
   fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
   // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).

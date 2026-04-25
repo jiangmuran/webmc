@@ -385,14 +385,19 @@ export class FirstPersonCamera {
     this.sprintFovBoost += (targetBoost - this.sprintFovBoost) * fovAlpha;
     const baseFov = this.camera.userData['baseFov'] as number | undefined;
     if (baseFov !== undefined) {
-      this.camera.fov = baseFov + this.sprintFovBoost;
+      this.camera.fov = baseFov + this.sprintFovBoost + this.effectFovBoost;
       this.camera.updateProjectionMatrix();
     }
   }
 
   setBaseFov(deg: number): void {
     this.camera.userData['baseFov'] = deg;
-    this.camera.fov = deg + this.sprintFovBoost;
+    this.camera.fov = deg + this.sprintFovBoost + this.effectFovBoost;
     this.camera.updateProjectionMatrix();
+  }
+
+  effectFovBoost = 0;
+  setEffectFovBoost(deg: number): void {
+    this.effectFovBoost = deg;
   }
 }
