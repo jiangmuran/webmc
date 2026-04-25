@@ -25,6 +25,7 @@ export { mapWebmcToVanillaName } from './webmc_to_vanilla_block_map';
 export { mapWebmcToVanillaItemName } from './webmc_to_vanilla_item_map';
 export { encodeSection, packIndices, type SectionEncodeInput } from './anvil_section_encode';
 export { encodeChunkRoot, type ChunkEncodeInput } from './anvil_chunk_encode';
+export { writeRegion, type RegionWriteEntry, type CompressionType } from './anvil_region_write';
 export { parsePackMcmeta, PackMetaError, type PackMeta } from './pack_mcmeta';
 export {
   parseStructureFromNbt,
