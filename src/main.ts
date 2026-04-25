@@ -22,6 +22,7 @@ import { SubtitleView } from './ui/SubtitleView';
 import { BossBarView } from './ui/BossBarView';
 import { ScoreboardSidebarView } from './ui/ScoreboardSidebarView';
 import { AchievementToastView } from './ui/AchievementToastView';
+import { LoadingOverlay } from './ui/LoadingOverlay';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -489,6 +490,8 @@ const subtitles = new SubtitleView(appEl);
 const bossBar = new BossBarView(appEl);
 const scoreboard = new ScoreboardSidebarView(appEl);
 const achievementToast = new AchievementToastView(appEl);
+const loadingOverlay = new LoadingOverlay(appEl);
+loadingOverlay.set('init', 0.5);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -2712,6 +2715,20 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
+  if (!loadingOverlay.isHidden()) {
+    const meshes = chunkRenderer.meshCount;
+    if (meshes >= 25) {
+      loadingOverlay.hide();
+    } else if (meshes < 4) {
+      loadingOverlay.set('world', meshes / 4);
+    } else if (meshes < 12) {
+      loadingOverlay.set('terrain', (meshes - 4) / 8);
+    } else if (meshes < 20) {
+      loadingOverlay.set('light', (meshes - 12) / 8);
+    } else {
+      loadingOverlay.set('entities', (meshes - 20) / 5);
+    }
+  }
   const nowPhase = phaseOfDay(Math.floor(dayNight.timeOfDay * 24000));
   if (nowPhase !== lastPhase) {
     if (nowPhase === 'dusk') fireTutorial('sunset');
