@@ -20,6 +20,7 @@ import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
 import { SubtitleView } from './ui/SubtitleView';
 import { BossBarView } from './ui/BossBarView';
+import { ScoreboardSidebarView } from './ui/ScoreboardSidebarView';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -315,6 +316,7 @@ const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 const crosshair = new Crosshair(appEl);
 const subtitles = new SubtitleView(appEl);
 const bossBar = new BossBarView(appEl);
+const scoreboard = new ScoreboardSidebarView(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -869,6 +871,7 @@ const chatInput = new ChatInput(appEl, {
         sortInventory: () => {
           inventory.sortMain();
         },
+        toggleScoreboard: () => scoreboard.toggle(),
         setBlock: (x, y, z, name) => {
           const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const id = registry.byName(full);
@@ -1063,7 +1066,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb',
     ];
     return SLASH_CMDS;
   },
@@ -2234,6 +2237,17 @@ function frame(): void {
     });
   } else {
     bossBar.hide();
+  }
+
+  if (scoreboard.isVisible()) {
+    scoreboard.render([
+      { name: 'Broken', score: playerStats.blocksBroken },
+      { name: 'Placed', score: playerStats.blocksPlaced },
+      { name: 'Killed', score: playerStats.mobsKilled },
+      { name: 'Walked', score: Math.floor(playerStats.distanceWalked) },
+      { name: 'Time', score: Math.floor(playerStats.playtimeSec) },
+      { name: 'Level', score: playerState.xpLevel },
+    ]);
   }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);

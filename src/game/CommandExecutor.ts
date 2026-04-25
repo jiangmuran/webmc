@@ -25,6 +25,7 @@ export interface CommandContext {
   kill?: () => void;
   clearInventory?: () => void;
   sortInventory?: () => void;
+  toggleScoreboard?: () => boolean;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
   fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
@@ -309,6 +310,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'sort') {
     ctx.sortInventory?.();
     ctx.broadcast('Inventory sorted.', '#80ff80');
+    return;
+  }
+  if (head === 'scoreboard' || head === 'sb') {
+    const on = ctx.toggleScoreboard?.() ?? false;
+    ctx.broadcast(`Scoreboard ${on ? 'shown' : 'hidden'}`, '#80ff80');
     return;
   }
   if (head === 'stats') {
