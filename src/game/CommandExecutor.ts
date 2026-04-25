@@ -54,6 +54,7 @@ export interface CommandContext {
   cycleCamera?: () => string;
   toggleMinimap?: () => boolean;
   minimapZoom?: (dir: 'in' | 'out') => void;
+  heldItemInfo?: () => { name: string; count: number; maxStack: number; durability?: { current: number; max: number }; food?: { hunger: number; saturation: number }; tags?: string[] } | null;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -959,6 +960,21 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'item' || head === 'itemstats') {
+    if (!ctx.heldItemInfo) {
+      ctx.broadcast('Held-item info unavailable.', '#ff8080');
+      return;
+    }
+    const info = ctx.heldItemInfo();
+    if (!info) {
+      ctx.broadcast('Hand empty.', '#cccccc');
+      return;
+    }
+    ctx.broadcast(`— ${info.name} ×${String(info.count)} —`, '#ffd080');
+    ctx.broadcast(`stack ${String(info.maxStack)}  · dura ${info.durability ? `${String(info.durability.current)}/${String(info.durability.max)}` : 'n/a'}  · food ${info.food ? `+${String(info.food.hunger)} (${info.food.saturation.toFixed(1)})` : 'n/a'}`, '#cccccc');
+    if (info.tags?.length) ctx.broadcast(`tags: ${info.tags.join(', ')}`, '#cccccc');
     return;
   }
   if (head === 'minimapzoom') {
