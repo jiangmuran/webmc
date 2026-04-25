@@ -1,4 +1,5 @@
 import { colorFor } from '../items/potion_color_for_effect';
+import { isBeneficial } from '../game/potion_effect_timer';
 
 export interface EffectEntry {
   id: string;
@@ -37,12 +38,14 @@ export class ActiveEffectsHud {
     const rows: HTMLDivElement[] = [];
     for (const e of effects) {
       const row = document.createElement('div');
+      const beneficial = isBeneficial(e.id);
       row.style.cssText = [
         'display:flex',
         'align-items:center',
         'gap:5px',
         'padding:3px 7px',
-        'background:rgba(0,0,0,0.55)',
+        beneficial ? 'background:rgba(20,40,20,0.65)' : 'background:rgba(40,15,15,0.65)',
+        beneficial ? 'border-left:3px solid #80ff80' : 'border-left:3px solid #ff7070',
         'border-radius:3px',
         'min-width:120px',
       ].join(';');
