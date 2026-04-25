@@ -92,17 +92,18 @@ export class TouchControls {
     stickBase.appendChild(stickKnob);
     this.stickKnob = stickKnob;
 
-    this.addButton(container, 'Break', '70%', '85%', () => {
-      this.state.primary = true;
-      setTimeout(() => (this.state.primary = false), 120);
+    // Press-and-hold buttons. Old impl used a 120ms timeout, which made
+    // breaking a block require ~3 taps because hold-to-break needs the
+    // button to stay down while the block is being chiseled. Now the
+    // state stays true while the finger is on the button.
+    this.addHoldButton(container, 'Break', '70%', '85%', (down) => {
+      this.state.primary = down;
     });
-    this.addButton(container, 'Place', '84%', '85%', () => {
-      this.state.secondary = true;
-      setTimeout(() => (this.state.secondary = false), 120);
+    this.addHoldButton(container, 'Place', '84%', '85%', (down) => {
+      this.state.secondary = down;
     });
-    this.addButton(container, 'Jump', '92%', '70%', () => {
-      this.state.jump = true;
-      setTimeout(() => (this.state.jump = false), 120);
+    this.addHoldButton(container, 'Jump', '92%', '70%', (down) => {
+      this.state.jump = down;
     });
 
     window.addEventListener('touchstart', this.onTouchStart, { passive: false });
@@ -128,12 +129,12 @@ export class TouchControls {
     return { dx, dy };
   }
 
-  private addButton(
+  private addHoldButton(
     parent: HTMLElement,
     label: string,
     left: string,
     top: string,
-    onTap: () => void,
+    onState: (down: boolean) => void,
   ): void {
     const btn = document.createElement('div');
     btn.textContent = label;
@@ -154,10 +155,28 @@ export class TouchControls {
       'touch-action:none',
       'user-select:none',
     ].join(';');
+    let activeId: number | null = null;
     btn.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      onTap();
+      const t = e.changedTouches[0];
+      if (!t || activeId !== null) return;
+      activeId = t.identifier;
+      btn.style.background = 'rgba(255,255,255,0.4)';
+      onState(true);
     });
+    const release = (e: TouchEvent): void => {
+      for (const t of Array.from(e.changedTouches)) {
+        if (t.identifier === activeId) {
+          activeId = null;
+          btn.style.background = 'rgba(255,255,255,0.18)';
+          onState(false);
+          e.preventDefault();
+          return;
+        }
+      }
+    };
+    btn.addEventListener('touchend', release);
+    btn.addEventListener('touchcancel', release);
     parent.appendChild(btn);
   }
 
