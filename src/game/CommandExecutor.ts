@@ -34,6 +34,7 @@ export interface CommandContext {
   renameLookedAtMob?: (name: string) => string | null;
   tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
   toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
+  feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
   setHardcore?: (on: boolean) => void;
@@ -554,6 +555,27 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Tamed ${r.kind}! ♥`, '#80ff80');
     } else {
       ctx.broadcast(`${r.kind} ate the ${r.itemUsed} but resisted taming. Try again.`, '#ffd080');
+    }
+    return;
+  }
+  if (head === 'feed' || head === 'breed') {
+    if (!ctx.feedLookedAtMob) {
+      ctx.broadcast('Feed not available.', '#ff8080');
+      return;
+    }
+    const r = ctx.feedLookedAtMob();
+    if (!r) {
+      ctx.broadcast('No animal in reach.', '#ff8080');
+      return;
+    }
+    if (r.reason === 'wrong_item') {
+      ctx.broadcast(`${r.kind} doesn't want that. Try: cow/sheep=wheat, pig=carrot, chicken=seeds, rabbit=carrot.`, '#ffd080');
+    } else if (r.reason === 'cooldown') {
+      ctx.broadcast(`${r.kind} is on breed cooldown.`, '#ffd080');
+    } else if (r.reason === 'not_breedable') {
+      ctx.broadcast(`${r.kind} can't be bred.`, '#ff8080');
+    } else if (r.loved) {
+      ctx.broadcast(`${r.kind} entered love mode ♥`, '#ff80c0');
     }
     return;
   }

@@ -78,6 +78,7 @@ import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
 import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
+import { feed as animalFeed, isInLove, type AnimalLove } from './entities/animal_breed_love';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -542,6 +543,30 @@ const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
 const tamedMobs = new Map<number, TameableState>();
 const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
+const lovingMobs = new Map<number, AnimalLove>();
+let worldTick = 0;
+const BREED_FOOD: Record<string, readonly string[]> = {
+  cow: ['webmc:wheat'],
+  sheep: ['webmc:wheat'],
+  pig: ['webmc:carrot', 'webmc:potato', 'webmc:beetroot'],
+  chicken: ['webmc:wheat_seeds', 'webmc:melon_seeds', 'webmc:pumpkin_seeds', 'webmc:beetroot_seeds'],
+  rabbit: ['webmc:carrot', 'webmc:dandelion'],
+  wolf: ['webmc:beef', 'webmc:cooked_beef', 'webmc:porkchop', 'webmc:cooked_porkchop', 'webmc:chicken', 'webmc:cooked_chicken', 'webmc:mutton', 'webmc:cooked_mutton', 'webmc:rabbit', 'webmc:cooked_rabbit'],
+  cat: ['webmc:raw_fish', 'webmc:raw_salmon', 'webmc:cod', 'webmc:salmon'],
+  fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
+  goat: ['webmc:wheat'],
+  bee: ['webmc:dandelion', 'webmc:poppy'],
+  panda: ['webmc:bamboo'],
+  axolotl: ['webmc:tropical_fish_bucket'],
+  frog: ['webmc:slime_ball'],
+  turtle: ['webmc:seagrass'],
+  hoglin: ['webmc:crimson_fungus'],
+  strider: ['webmc:warped_fungus'],
+  llama: ['webmc:hay_block'],
+  horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
+  donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
+  mule: ['webmc:golden_apple', 'webmc:golden_carrot'],
+};
 const droppedItems = new DroppedItemWorld();
 const xpOrbs = new XpOrbWorld();
 scene.add(mobRenderer.group);
@@ -1616,6 +1641,43 @@ const chatInput = new ChatInput(appEl, {
           }
           return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
         },
+        feedLookedAtMob: () => {
+          const aimLook = fp.lookVector();
+          const reach = 6;
+          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - camera.position.x;
+            const dy = m.position.y - camera.position.y;
+            const dz = m.position.z - camera.position.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > reach + 1) continue;
+            const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+            if (dot > 0.97 && (!best || d < best.dist)) {
+              best = { mob: m, dist: d };
+            }
+          }
+          if (!best) return null;
+          const kind = best.mob.def.kind;
+          const accepted = BREED_FOOD[kind];
+          if (!accepted) {
+            return { kind, loved: false, itemUsed: null, reason: 'not_breedable' };
+          }
+          const sel = hotbar.selected;
+          const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
+          if (!accepted.includes(heldName)) {
+            return { kind, loved: false, itemUsed: null, reason: 'wrong_item' };
+          }
+          const prev = lovingMobs.get(best.mob.id) ?? { inLoveUntilTick: 0, breedCooldownUntilTick: 0 };
+          if (worldTick < prev.breedCooldownUntilTick) {
+            return { kind, loved: false, itemUsed: heldName.replace(/^webmc:/, ''), reason: 'cooldown' };
+          }
+          const next = animalFeed(prev, worldTick);
+          lovingMobs.set(best.mob.id, next);
+          const itemId = itemRegistry.byName(heldName);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          mobRenderer.setMobName(best.mob.id, `♥ ${kind}`);
+          return { kind, loved: true, itemUsed: heldName.replace(/^webmc:/, '') };
+        },
         toggleSitLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -1865,7 +1927,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed',
     ];
     return SLASH_CMDS;
   },
@@ -3606,6 +3668,18 @@ function frame(): void {
     }
   }
 
+  if (!tickFrozen) {
+    worldTick += Math.max(1, Math.round(dtSec * 20));
+    if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
+      for (const [mobId, love] of lovingMobs) {
+        if (!isInLove(love, worldTick) && worldTick >= love.breedCooldownUntilTick) {
+          lovingMobs.delete(mobId);
+          const m = [...mobWorld.all()].find((mm) => mm.id === mobId);
+          if (m) mobRenderer.setMobName(mobId, m.def.kind);
+        }
+      }
+    }
+  }
   if (!tickFrozen) mobWorld.tick(dtSec, {
     isSolid,
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
