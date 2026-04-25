@@ -905,6 +905,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'respawn' || head === 'rs') {
+    if (!ctx.kill) return;
+    ctx.kill();
+    ctx.broadcast('Respawning…', '#cccccc');
+    return;
+  }
+  if (head === 'fullness') {
+    if (!ctx.heal || !ctx.giveItem) return;
+    ctx.heal();
+    ctx.broadcast('Health + hunger maxed', '#80ff80');
+    return;
+  }
+  if (head === 'noclip') {
+    if (!ctx.toggleFly) return;
+    const on = ctx.toggleFly();
+    ctx.broadcast(`Fly ${on ? 'on' : 'off'}`, '#80ff80');
+    return;
+  }
   if (head === 'mark') {
     if (!ctx.markRegionPoint) return;
     const p = (args[0] ?? 'a').toLowerCase();
