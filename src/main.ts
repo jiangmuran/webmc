@@ -1036,7 +1036,21 @@ canvas.addEventListener('mousedown', (e) => {
     });
     const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
     const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
-    const baseDmg = Math.max(0, (2 + strengthBonus + weaknessReduce)) * damageMult * critMult;
+    // Weapon tier damage (held item determines base).
+    let weaponBase = 1; // fist
+    const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+    if (heldName.includes('sword')) {
+      if (heldName.includes('netherite')) weaponBase = 8;
+      else if (heldName.includes('diamond')) weaponBase = 7;
+      else if (heldName.includes('iron')) weaponBase = 6;
+      else if (heldName.includes('stone')) weaponBase = 5;
+      else weaponBase = 4; // wood/gold
+    } else if (heldName.includes('axe')) {
+      if (heldName.includes('netherite')) weaponBase = 10;
+      else if (heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond')) weaponBase = 9;
+      else weaponBase = 7;
+    }
+    const baseDmg = Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
