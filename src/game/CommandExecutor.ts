@@ -46,6 +46,7 @@ export interface CommandContext {
   setFov?: (deg: number) => void;
   entityStats?: () => { mobs: number; hostile: number; passive: number; neutral: number; drops: number; xpOrbs: number; byKind: { kind: string; count: number }[] };
   chunkStats?: () => { loaded: number; pending: number; meshes: number; triangles: number };
+  openCreativeInventory?: () => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -907,6 +908,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'lighting') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('night_vision', 0, 9999);
+    ctx.broadcast('Bright lighting (night_vision ~∞)', '#80ff80');
+    return;
+  }
+  if (head === 'creative_inventory' || head === 'ci') {
+    if (!ctx.openCreativeInventory) {
+      ctx.broadcast('Creative inventory unavailable.', '#ff8080');
+      return;
+    }
+    ctx.openCreativeInventory();
     return;
   }
   if (head === 'spread' || head === 'spreadplayers') {
