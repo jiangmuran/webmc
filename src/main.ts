@@ -4137,7 +4137,15 @@ const chatInput = new ChatInput(appEl, {
                       '#cccccc',
                     );
                     chatInput.addLine(
-                      `enchant=${String(report.enchantments.length)} dmg=${String(report.damageTypes.length)} chat=${String(report.chatTypes.length)} splash=${String(report.splashes.length)} skipped=${String(report.skipped.length)} unknown=${String(report.unknown.length)}`,
+                      `enchant=${String(report.enchantments.length)} dmg=${String(report.damageTypes.length)} chat=${String(report.chatTypes.length)} splash=${String(report.splashes.length)} paint=${String(report.paintingVariants.length)} trim_p=${String(report.trimPatterns.length)} trim_m=${String(report.trimMaterials.length)} mob_v=${String(report.mobVariants.length)} banner=${String(report.bannerPatterns.length)} inst=${String(report.instruments.length)}`,
+                      '#cccccc',
+                    );
+                    chatInput.addLine(
+                      `atlas=${String(report.atlases.length)} pred=${String(report.predicates.length)} font=${String(report.fonts.length)} item_mod=${String(report.itemModifiers.length)} world_pre=${String(report.worldPresets.length)} flat_pre=${String(report.flatPresets.length)} cfeat=${String(report.configuredFeatures.length)} pfeat=${String(report.placedFeatures.length)}`,
+                      '#cccccc',
+                    );
+                    chatInput.addLine(
+                      `struct=${String(report.structures.length)} pool=${String(report.templatePools.length)} proc=${String(report.processorLists.length)} noise=${String(report.noiseSettings.length)} mn=${String(report.multiNoiseSources.length)} dens=${String(report.densityFunctions.length)} jukebox=${String(report.jukeboxSongs.length)} skipped=${String(report.skipped.length)} unknown=${String(report.unknown.length)}`,
                       '#cccccc',
                     );
                     if (report.errors.length > 0) {

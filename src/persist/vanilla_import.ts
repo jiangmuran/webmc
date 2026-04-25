@@ -265,6 +265,13 @@ export {
   DensityFunctionParseError,
   type ParsedDensityFunction,
 } from './vanilla_density_function_parse';
+export {
+  parseVanillaGuiSpriteMcmeta,
+  GuiSpriteMcmetaParseError,
+  type ParsedGuiSpriteMcmeta,
+  type GuiBorder,
+  type GuiScalingType,
+} from './vanilla_gui_sprite_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
