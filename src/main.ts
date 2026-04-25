@@ -4099,10 +4099,54 @@ const chatInput = new ChatInput(appEl, {
                     '#80ff80',
                   );
                 } else if (f.name.endsWith('.zip')) {
-                  chatInput.addLine(
-                    'ZIP: drop in resource-pack uploader for textures or main-menu import for save.',
-                    '#ffd080',
-                  );
+                  try {
+                    const { readZip } = await import('./persist/zip_reader');
+                    const { importVanillaPack } = await import('./persist/vanilla_pack_import');
+                    const zipEntries = await readZip(buf);
+                    const decoder = new TextDecoder('utf-8', { fatal: false });
+                    const packEntries = await Promise.all(
+                      zipEntries.map(async (z) => {
+                        const lower = z.name.toLowerCase();
+                        const isText =
+                          lower.endsWith('.json') ||
+                          lower.endsWith('.mcmeta') ||
+                          lower.endsWith('.mcfunction') ||
+                          lower.endsWith('.txt') ||
+                          lower.endsWith('.properties') ||
+                          lower.endsWith('.lang');
+                        if (!isText) return { path: z.name };
+                        try {
+                          const bytes = await z.data();
+                          return { path: z.name, text: decoder.decode(bytes) };
+                        } catch {
+                          return { path: z.name };
+                        }
+                      }),
+                    );
+                    const report = importVanillaPack(packEntries);
+                    chatInput.addLine(
+                      `ZIP imported: ${String(zipEntries.length)} entries, pack=${
+                        report.pack
+                          ? `format=${String(report.pack.packFormat)} "${report.pack.description}"`
+                          : 'none'
+                      }`,
+                      '#80ff80',
+                    );
+                    chatInput.addLine(
+                      `recipes=${String(report.recipes.length)} tags=${String(report.tags.length)} loot=${String(report.lootTables.length)} adv=${String(report.advancements.length)} fn=${String(report.functions.length)} biome=${String(report.biomes.length)} dim=${String(report.dimensions.length)} bs=${String(report.blockstates.length)} model=${String(report.models.length)} lang=${String(report.lang.length)} sounds=${String(report.sounds.length)} anim=${String(report.animations.length)}`,
+                      '#cccccc',
+                    );
+                    if (report.errors.length > 0) {
+                      chatInput.addLine(
+                        `${String(report.errors.length)} per-file errors (first: ${
+                          report.errors[0]?.path ?? ''
+                        })`,
+                        '#ff8080',
+                      );
+                    }
+                  } catch (e) {
+                    chatInput.addLine(`ZIP parse failed: ${String(e)}`, '#ff8080');
+                  }
                 } else {
                   chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
                 }

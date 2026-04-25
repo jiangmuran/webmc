@@ -127,6 +127,13 @@ export {
   type PackImportReport,
   type PackImportError,
 } from './vanilla_pack_import';
+export {
+  SKIN_LAYOUT_64X64,
+  SKIN_LAYOUT_64X32,
+  pickSkinLayout,
+  type SkinLayout,
+  type Rect,
+} from './vanilla_skin_layout';
 
 export type VanillaFileKind =
   | 'level_dat'
