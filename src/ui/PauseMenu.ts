@@ -7,6 +7,7 @@ export interface PauseMenuCallbacks {
 export class PauseMenu {
   readonly root: HTMLDivElement;
   private visible = false;
+  private readonly titleEl: HTMLDivElement;
 
   constructor(parent: HTMLElement, private readonly cb: PauseMenuCallbacks) {
     this.root = document.createElement('div');
@@ -27,6 +28,7 @@ export class PauseMenu {
     ].join(';');
 
     const title = document.createElement('div');
+    this.titleEl = title;
     title.textContent = 'Game Menu';
     title.style.cssText = 'font-size:28px;margin-bottom:8px;';
 
@@ -68,6 +70,10 @@ export class PauseMenu {
     if (this.visible) return;
     this.visible = true;
     this.root.style.display = 'flex';
+  }
+
+  setSubtitle(text: string): void {
+    this.titleEl.textContent = text;
   }
 
   hide(): void {

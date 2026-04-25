@@ -141,6 +141,7 @@ if (!worldMeta) {
 }
 await persistDB.setMeta('lastPlayedWorldId', worldMeta.id);
 document.title = `webmc · ${worldMeta.name}`;
+const worldNameForUI = worldMeta.name;
 
 const WORLD_SEED = worldMeta.seed;
 const generator = new WorldGenerator(WORLD_SEED, registry);
@@ -1038,6 +1039,7 @@ const pauseMenu = new PauseMenu(appEl, {
   },
   onOpenSettings: () => { settingsPanel.show(); },
 });
+pauseMenu.setSubtitle(`Paused — ${worldNameForUI}`);
 
 const resourcePackLoader = new ResourcePackLoader(appEl, {
   onLoaded: (pack) => {
