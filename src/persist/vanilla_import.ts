@@ -45,6 +45,14 @@ export {
 } from './vanilla_loot_parse';
 export { parseSnbt, type SnbtValue } from './snbt_parse';
 export { snbtValueToNbtValue } from './snbt_to_nbt';
+export { serializeSnbt } from './snbt_serialize';
+export {
+  parseVanillaAdvancement,
+  AdvancementParseError,
+  type ParsedAdvancement,
+  type AdvancementCriterion,
+  type AdvancementFrame,
+} from './vanilla_advancement_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -54,6 +62,7 @@ export type VanillaFileKind =
   | 'tag_json'
   | 'loot_table_json'
   | 'pack_mcmeta'
+  | 'advancement_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -70,6 +79,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)recipes?\//.test(n)) return 'recipe_json';
     if (/(\/|^)loot_tables?\//.test(n)) return 'loot_table_json';
     if (/(\/|^)tags\//.test(n)) return 'tag_json';
+    if (/(\/|^)advancements?\//.test(n)) return 'advancement_json';
   }
   return 'unknown';
 }

@@ -24,6 +24,9 @@ describe('vanilla_import barrel', () => {
       'loot_table_json',
     );
     expect(detectVanillaFileKind('data/minecraft/tags/items/logs.json')).toBe('tag_json');
+    expect(detectVanillaFileKind('data/minecraft/advancements/story/root.json')).toBe(
+      'advancement_json',
+    );
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
