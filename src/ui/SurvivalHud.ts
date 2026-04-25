@@ -1,3 +1,5 @@
+import { armorIcons, visible as armorVisible } from './armor_bar_icons';
+
 export interface SurvivalFrame {
   health: number;
   maxHealth: number;
@@ -9,6 +11,7 @@ export interface SurvivalFrame {
   xpLevel: number;
   xpProgress: number;
   xpToNext: number;
+  armorPoints?: number;
 }
 
 const ICON = 14;
@@ -16,8 +19,9 @@ const BAR_GAP = 2;
 const HEARTS = 10;
 const DRUMSTICKS = 10;
 const BUBBLES = 10;
+const ARMORS = 10;
 
-type IconName = 'heart_full' | 'heart_half' | 'heart_empty' | 'drum_full' | 'drum_half' | 'drum_empty' | 'bubble_full' | 'bubble_empty';
+type IconName = 'heart_full' | 'heart_half' | 'heart_empty' | 'drum_full' | 'drum_half' | 'drum_empty' | 'bubble_full' | 'bubble_empty' | 'armor_full' | 'armor_half' | 'armor_empty';
 
 function paintHeart(ctx: CanvasRenderingContext2D, fill: string, shadow: string): void {
   ctx.fillStyle = shadow;
@@ -147,7 +151,37 @@ function buildIconAtlas(): Map<IconName, HTMLCanvasElement> {
   map.set('drum_empty', make((c) => paintDrumEmpty(c)));
   map.set('bubble_full', make((c) => paintBubble(c, '#e3f1ff')));
   map.set('bubble_empty', make((c) => paintBubble(c, '#3a5878')));
+  map.set('armor_full', make((c) => paintArmor(c, 'full')));
+  map.set('armor_half', make((c) => paintArmor(c, 'half')));
+  map.set('armor_empty', make((c) => paintArmor(c, 'empty')));
   return map;
+}
+
+function paintArmor(ctx: CanvasRenderingContext2D, kind: 'full' | 'half' | 'empty'): void {
+  const outline: [number, number][] = [
+    [4, 2], [5, 2], [6, 2], [7, 2], [8, 2], [9, 2],
+    [3, 3], [10, 3], [3, 4], [10, 4], [3, 5], [10, 5],
+    [4, 6], [5, 6], [6, 6], [7, 6], [8, 6], [9, 6],
+    [4, 7], [9, 7], [4, 8], [9, 8], [4, 9], [9, 9],
+    [4, 10], [9, 10], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11],
+  ];
+  ctx.fillStyle = '#1a2030';
+  for (const [x, y] of outline) ctx.fillRect(x, y, 1, 1);
+  if (kind === 'empty') return;
+  const fill: [number, number][] = [
+    [4, 3], [5, 3], [6, 3], [7, 3], [8, 3], [9, 3],
+    [4, 4], [5, 4], [6, 4], [7, 4], [8, 4], [9, 4],
+    [4, 5], [5, 5], [6, 5], [7, 5], [8, 5], [9, 5],
+    [5, 7], [6, 7], [7, 7], [8, 7],
+    [5, 8], [6, 8], [7, 8], [8, 8],
+    [5, 9], [6, 9], [7, 9], [8, 9],
+    [5, 10], [6, 10], [7, 10], [8, 10],
+  ];
+  ctx.fillStyle = '#dadde6';
+  for (const [x, y] of fill) {
+    if (kind === 'half' && x >= 7) continue;
+    ctx.fillRect(x, y, 1, 1);
+  }
 }
 
 export class SurvivalHud {
@@ -155,6 +189,8 @@ export class SurvivalHud {
   private readonly hearts: HTMLCanvasElement[] = [];
   private readonly hungers: HTMLCanvasElement[] = [];
   private readonly bubbles: HTMLCanvasElement[] = [];
+  private readonly armors: HTMLCanvasElement[] = [];
+  private readonly armorRow: HTMLDivElement;
   private readonly xpBar: HTMLDivElement;
   private readonly xpFill: HTMLDivElement;
   private readonly xpLabel: HTMLDivElement;
@@ -181,6 +217,18 @@ export class SurvivalHud {
       'color:#dcffbc',
       'font-size:11px',
     ].join(';');
+
+    this.armorRow = document.createElement('div');
+    this.armorRow.style.cssText = 'display:flex;gap:1px;min-height:14px;display:none;';
+    for (let i = 0; i < ARMORS; i++) {
+      const c = document.createElement('canvas');
+      c.width = ICON;
+      c.height = ICON;
+      c.style.cssText = 'image-rendering:pixelated;';
+      this.armorRow.appendChild(c);
+      this.armors.push(c);
+    }
+    this.root.appendChild(this.armorRow);
 
     const bubbleRow = document.createElement('div');
     bubbleRow.style.cssText = 'display:flex;gap:1px;min-height:14px;';
@@ -275,6 +323,19 @@ export class SurvivalHud {
       const name: IconName =
         v >= hungerPer * 0.9 ? 'drum_full' : v >= hungerPer * 0.4 ? 'drum_half' : 'drum_empty';
       this.blit(this.hungers[i]!, name);
+    }
+
+    const armorPts = frame.armorPoints ?? 0;
+    if (armorVisible(armorPts)) {
+      this.armorRow.style.display = 'flex';
+      const icons = armorIcons(armorPts);
+      for (let i = 0; i < ARMORS; i++) {
+        const which = icons[i];
+        const name: IconName = which === 'full' ? 'armor_full' : which === 'half' ? 'armor_half' : 'armor_empty';
+        this.blit(this.armors[i]!, name);
+      }
+    } else {
+      this.armorRow.style.display = 'none';
     }
 
     const showBubbles = frame.underwater || frame.breathSec < frame.maxBreathSec;

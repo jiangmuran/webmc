@@ -28,6 +28,7 @@ import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
 import { RoomClient } from './net/RoomClient';
 import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
+import { ARMOR_DEFS } from './items/armor';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -478,6 +479,17 @@ function lightningFlash(): void {
 const mesherClient = createMesherClient();
 const audio = new AudioBus({ masterVolume: 0.35 });
 audio.attachUnlock(document.body);
+
+function computeArmorPoints(): number {
+  let pts = 0;
+  for (const slot of inventory.armor) {
+    if (!slot) continue;
+    const def = itemRegistry.get(slot.itemId);
+    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    if (armorDef) pts += armorDef.defense;
+  }
+  return pts;
+}
 
 function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right' | 'center' {
   const dx = sourceX - fp.position.x;
@@ -2278,6 +2290,7 @@ function frame(): void {
       xpLevel: playerState.xpLevel,
       xpProgress: playerState.xpProgress,
       xpToNext: xpToNext(playerState.xpLevel),
+      armorPoints: computeArmorPoints(),
     });
   }
 
