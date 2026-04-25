@@ -218,6 +218,14 @@ export class PlayerState {
     this.breath = BREATH_MAX_SEC;
     this.xpLevel = 0;
     this.xpProgress = 0;
+    // Clear residual statuses too — fire damage carrying over a respawn
+    // would kill the player again instantly; absorption hearts shouldn't
+    // persist; hit-immune frame and exhaustion accumulator both belong
+    // to the previous life.
+    this.exhaustion = 0;
+    this.absorption = 0;
+    this.fireRemainingSec = 0;
+    this.hitImmuneSec = 0;
     this.effects.clear();
     this.inventory.clear();
     this.onRespawn();
