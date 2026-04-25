@@ -40,6 +40,8 @@ export interface CommandContext {
   exportWorldManifest?: () => string;
   equipArmor?: (itemName: string) => string | null;
   giveXp?: (amount: number) => void;
+  showBossBar?: (name: string, hp: number, maxHp: number, color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white') => void;
+  hideBossBar?: () => void;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -437,6 +439,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
     }
+    return;
+  }
+  if (head === 'bossbar') {
+    const sub = (args[0] ?? '').toLowerCase();
+    if (sub === 'hide') {
+      ctx.hideBossBar?.();
+      ctx.broadcast('Boss bar hidden.', '#cccccc');
+      return;
+    }
+    if (sub === 'show') {
+      const name = args.slice(1).join(' ') || 'Test Boss';
+      const COLORS = ['pink', 'blue', 'red', 'green', 'yellow', 'purple', 'white'] as const;
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'purple';
+      ctx.showBossBar?.(name, 100, 100, color);
+      ctx.broadcast(`Boss bar shown: ${name} (${color})`, '#80ff80');
+      return;
+    }
+    ctx.broadcast('Usage: /bossbar <show [name] | hide>', '#ff8080');
     return;
   }
   if (head === 'xp' || head === 'experience') {

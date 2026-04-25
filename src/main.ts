@@ -1275,6 +1275,7 @@ let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
+let customBossBar: { name: string; hp: number; maxHp: number; color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white' } | null = null;
 let hardcoreMode = false;
 void persistDB.getMeta('hardcore').then((saved) => {
   if (saved === true) hardcoreMode = true;
@@ -1421,6 +1422,10 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
+        showBossBar: (name, hp, maxHp, color) => {
+          customBossBar = { name, hp, maxHp, color };
+        },
+        hideBossBar: () => { customBossBar = null; },
         giveXp: (amount) => {
           if (amount > 0) playerState.addXP(amount);
           else if (amount < 0) {
@@ -1792,7 +1797,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar',
     ];
     return SLASH_CMDS;
   },
@@ -3309,6 +3314,15 @@ function frame(): void {
       hp: bossM.health,
       maxHp: bossM.maxHealth,
       color,
+      style: 'progress',
+      visible: true,
+    });
+  } else if (customBossBar) {
+    bossBar.set({
+      name: customBossBar.name,
+      hp: customBossBar.hp,
+      maxHp: customBossBar.maxHp,
+      color: customBossBar.color,
       style: 'progress',
       visible: true,
     });
