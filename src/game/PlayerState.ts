@@ -121,7 +121,8 @@ export class PlayerState {
       this.fireRemainingSec = Math.max(0, this.fireRemainingSec - dtSec);
       if (!fireImmune) this.takeDamage({ amount: 1 * dtSec, source: 'fire' });
     }
-    if (env.inFluid === 'water') {
+    const waterBreathing = this.effects.has('water_breathing');
+    if (env.inFluid === 'water' && !waterBreathing) {
       this.breath = Math.max(0, this.breath - dtSec);
       if (this.breath <= 0) {
         this.takeDamage({ amount: DROWN_DAMAGE_PER_SEC * dtSec, source: 'drown' });
