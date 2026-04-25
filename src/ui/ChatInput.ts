@@ -1,4 +1,5 @@
 import { completions, nextCompletion } from './chat_tab_complete';
+import { wrap } from './chat_line_wrap';
 
 export interface ChatInputCallbacks {
   onSubmit: (text: string) => void;
@@ -116,6 +117,11 @@ export class ChatInput {
   }
 
   addLine(text: string, color = '#ffffff'): void {
+    const segments = wrap(text, 80);
+    for (const seg of segments) this.addRawLine(seg, color);
+  }
+
+  private addRawLine(text: string, color: string): void {
     const line = document.createElement('div');
     line.textContent = text;
     line.style.cssText = `background:rgba(0,0,0,0.55);padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;`;
