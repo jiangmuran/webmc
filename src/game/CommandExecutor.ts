@@ -916,6 +916,25 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'test' || head === 'sanitycheck') {
+    let pass = 0, fail = 0;
+    const check = (label: string, ok: boolean): void => {
+      if (ok) { pass++; ctx.broadcast(`✔ ${label}`, '#80ff80'); }
+      else { fail++; ctx.broadcast(`✘ ${label}`, '#ff8080'); }
+    };
+    check('giveItem stone', ctx.giveItem('stone', 1));
+    check('lookupItem oak_planks', ctx.lookupItem?.('oak_planks') ?? false);
+    check('lookupBlock cobblestone', ctx.lookupBlock?.('cobblestone') ?? false);
+    check('listBlocks > 100', (ctx.listBlocks?.()?.length ?? 0) > 100);
+    check('listMobKinds > 30', (ctx.listMobKinds?.()?.length ?? 0) > 30);
+    check('uptimeMs > 0', (ctx.uptimeMs?.() ?? 0) > 0);
+    check('biomeAt 0,0 valid', !!ctx.biomeAt?.(0, 0));
+    check('seed positive', (ctx.seed?.() ?? 0) > 0);
+    check('TPS available', ctx.getTpsStats !== undefined);
+    check('giveAllBlocks reachable', ctx.giveAllBlocks !== undefined);
+    ctx.broadcast(`Sanity: ${String(pass)} ✔  ${String(fail)} ✘`, fail === 0 ? '#80ff80' : '#ff8080');
+    return;
+  }
   if (head === 'reset' && args[0] === 'gamerules') {
     if (!ctx.setGameRule || !ctx.listGameRules) return;
     const DEFAULTS: Record<string, boolean> = {
