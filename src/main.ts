@@ -852,6 +852,9 @@ const chatInput = new ChatInput(appEl, {
         applyEffect: (id, amp, sec) => {
           playerState.applyEffect(id, amp, sec);
         },
+        clearEffects: () => {
+          playerState.effects.clear();
+        },
         killAllMobs: () => {
           const ids: number[] = [];
           for (const m of mobWorld.all()) ids.push(m.id);

@@ -32,6 +32,7 @@ export interface CommandContext {
   clearChat?: () => void;
   toggleFly?: () => boolean;
   applyEffect?: (id: string, amplifier: number, durationSec: number) => void;
+  clearEffects?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -113,10 +114,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'effect') {
     const id = args[0];
+    if (id === 'clear' || id === 'none') {
+      ctx.clearEffects?.();
+      ctx.broadcast('All effects cleared.', '#80ff80');
+      return;
+    }
     const sec = args[1] !== undefined ? Number(args[1]) : 30;
     const amp = args[2] !== undefined ? Number(args[2]) : 0;
     if (!id || !Number.isFinite(sec) || !Number.isFinite(amp)) {
-      ctx.broadcast('Usage: /effect <id> [seconds=30] [amplifier=0]', '#ff8080');
+      ctx.broadcast('Usage: /effect <id|clear> [seconds=30] [amplifier=0]', '#ff8080');
       return;
     }
     ctx.applyEffect?.(id, amp, sec);
