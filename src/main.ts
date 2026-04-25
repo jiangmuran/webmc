@@ -72,6 +72,7 @@ import { bedlessRespawn } from './world/spawn_safety';
 import { useAxe } from './items/axe_strip';
 import { useShovel } from './items/shovel_path';
 import { useHoe } from './items/hoe_till';
+import { applyBoneMeal } from './items/bone_meal';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -1114,6 +1115,38 @@ const interaction = new InteractionController(
             sfx.play('break');
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
+            return true;
+          }
+        }
+      }
+      if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
+        const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
+        if (result.consumed && result.spawnFlora) {
+          const FLOWERS = ['webmc:dandelion', 'webmc:poppy', 'webmc:blue_orchid', 'webmc:allium', 'webmc:azure_bluet', 'webmc:oxeye_daisy', 'webmc:cornflower', 'webmc:lily_of_the_valley'];
+          let spawned = 0;
+          for (const f of result.spawnFlora) {
+            const tx = bx + f.x;
+            const tz = bz + f.z;
+            const surfaceY = generator.surfaceAt(tx, tz);
+            const groundState = world.get(tx, surfaceY, tz);
+            if (groundState === AIR) continue;
+            const groundDef = registry.get(stateId(groundState));
+            if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:dirt') continue;
+            const above = world.get(tx, surfaceY + 1, tz);
+            if (above !== AIR) continue;
+            const blockName = f.type === 'flower' ? FLOWERS[Math.floor(Math.random() * FLOWERS.length)] ?? 'webmc:dandelion' : 'webmc:short_grass';
+            const blockId = registry.byName(blockName);
+            if (blockId !== undefined) {
+              world.set(tx, surfaceY + 1, tz, makeState(blockId, 0));
+              touchWorldEdit(tx, surfaceY + 1, tz, blockId);
+              spawned++;
+            }
+          }
+          if (spawned > 0) {
+            const itemId = itemRegistry.byName('webmc:bone_meal');
+            if (itemId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(itemId, 1);
+            for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5) * 4, by + 0.5 + Math.random(), bz + (Math.random() - 0.5) * 4, [200, 220, 80]);
+            subtitles.push('Bone meal applied');
             return true;
           }
         }

@@ -333,6 +333,17 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:farmland', color: [120, 80, 50] as RGB, hardness: 0.6 },
     { name: 'webmc:coarse_dirt', color: [110, 80, 53] as RGB, hardness: 0.5 },
     { name: 'webmc:rooted_dirt', color: [136, 99, 75] as RGB, hardness: 0.5 },
+    // Decorative plants — non-solid, non-opaque "X-cross" sprites.
+    { name: 'webmc:short_grass', solid: false, opaque: false, color: [110, 195, 90] as RGB, hardness: 0 },
+    { name: 'webmc:tall_grass', solid: false, opaque: false, color: [110, 195, 90] as RGB, hardness: 0 },
+    { name: 'webmc:dandelion', solid: false, opaque: false, color: [255, 235, 60] as RGB, hardness: 0 },
+    { name: 'webmc:poppy', solid: false, opaque: false, color: [220, 30, 30] as RGB, hardness: 0 },
+    { name: 'webmc:blue_orchid', solid: false, opaque: false, color: [50, 165, 220] as RGB, hardness: 0 },
+    { name: 'webmc:allium', solid: false, opaque: false, color: [200, 130, 220] as RGB, hardness: 0 },
+    { name: 'webmc:azure_bluet', solid: false, opaque: false, color: [220, 230, 240] as RGB, hardness: 0 },
+    { name: 'webmc:oxeye_daisy', solid: false, opaque: false, color: [240, 240, 230] as RGB, hardness: 0 },
+    { name: 'webmc:cornflower', solid: false, opaque: false, color: [85, 110, 220] as RGB, hardness: 0 },
+    { name: 'webmc:lily_of_the_valley', solid: false, opaque: false, color: [240, 245, 230] as RGB, hardness: 0 },
     { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
     { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
     {
