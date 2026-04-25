@@ -36,6 +36,7 @@ export interface CommandContext {
   setGameRule?: (rule: string, value: boolean) => void;
   listGameRules?: () => Record<string, boolean>;
   biomeAt?: (x: number, z: number) => string;
+  findBlock?: (name: string, radius: number) => { x: number; y: number; z: number; dist: number } | null;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -65,6 +66,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       `Pos ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`,
       '#cccccc',
     );
+    return;
+  }
+  if (head === 'find') {
+    const name = args[0];
+    const r = args[1] !== undefined ? Math.min(64, Math.max(4, parseInt(args[1], 10))) : 32;
+    if (!name || !Number.isFinite(r) || !ctx.findBlock) {
+      ctx.broadcast('Usage: /find <block> [radius=32, max 64]', '#ff8080');
+      return;
+    }
+    const hit = ctx.findBlock(name, r);
+    if (hit) {
+      ctx.broadcast(
+        `Nearest ${name}: ${String(hit.x)} ${String(hit.y)} ${String(hit.z)} (${hit.dist.toFixed(1)}m)`,
+        '#80ff80',
+      );
+    } else {
+      ctx.broadcast(`No ${name} within ${String(r)}m`, '#ff8080');
+    }
     return;
   }
   if (head === 'biome') {

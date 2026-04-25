@@ -880,6 +880,29 @@ const chatInput = new ChatInput(appEl, {
         },
         listGameRules: () => ({ ...gameRules }),
         biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
+        findBlock: (name, r) => {
+          const fullName = name.startsWith('webmc:') ? name : `webmc:${name}`;
+          const id = registry.byName(fullName);
+          if (id === undefined) return null;
+          const px = Math.floor(fp.position.x);
+          const py = Math.floor(fp.position.y);
+          const pz = Math.floor(fp.position.z);
+          let best: { x: number; y: number; z: number; dist: number } | null = null;
+          for (let dy = -r; dy <= r; dy++) {
+            for (let dz = -r; dz <= r; dz++) {
+              for (let dx = -r; dx <= r; dx++) {
+                const x = px + dx, y = py + dy, z = pz + dz;
+                if (y < 0 || y >= CHUNK_HEIGHT) continue;
+                const s = world.get(x, y, z);
+                if (s === AIR) continue;
+                if (stateId(s) !== id) continue;
+                const dist = Math.hypot(dx, dy, dz);
+                if (!best || dist < best.dist) best = { x, y, z, dist };
+              }
+            }
+          }
+          return best;
+        },
         killAllMobs: () => {
           const ids: number[] = [];
           for (const m of mobWorld.all()) ids.push(m.id);
