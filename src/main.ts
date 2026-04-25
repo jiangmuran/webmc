@@ -1944,6 +1944,8 @@ function frame(): void {
   // Third-person camera modes orbit around the player's eye position.
   // Avatar group center + 0.18 puts its feet (y=-1.08 local) at fp.position.y - 0.9.
   playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
+  const invisible = playerState.effects.has('invisibility');
+  playerAvatar.setVisible(cameraMode !== 'fp' && !invisible);
   const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
   if (cameraMode !== 'fp') {
