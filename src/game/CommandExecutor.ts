@@ -64,6 +64,7 @@ export interface CommandContext {
   setSaturation?: (s: number) => void;
   setBreath?: (b: number) => void;
   setXpLevel?: (lvl: number) => void;
+  killMobsNear?: (radius: number) => number;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -969,6 +970,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'clearmobs' || head === 'killnear') {
+    if (!ctx.killMobsNear) return;
+    const r = parseFloat(args[0] ?? '32');
+    if (!Number.isFinite(r) || r < 1 || r > 256) {
+      ctx.broadcast('Usage: /clearmobs [radius=32]', '#ff8080');
+      return;
+    }
+    const n = ctx.killMobsNear(r);
+    ctx.broadcast(`Killed ${String(n)} mobs within ${r.toFixed(0)}m`, '#80ff80');
     return;
   }
   if (head === 'saturation' || head === 'sat') {
