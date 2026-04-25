@@ -66,6 +66,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('empty command', '#ff8080');
     return;
   }
+  if (head === 'repeat') {
+    const n = parseInt(args[0] ?? '', 10);
+    if (!Number.isFinite(n) || n <= 0 || n > 100) {
+      ctx.broadcast('Usage: /repeat <1-100> <command>', '#ff8080');
+      return;
+    }
+    const inner = args.slice(1).join(' ');
+    if (!inner) {
+      ctx.broadcast('Empty inner command', '#ff8080');
+      return;
+    }
+    for (let i = 0; i < n; i++) executeCommand(inner, ctx);
+    return;
+  }
   if (head === 'me') {
     const action = args.join(' ');
     if (action) ctx.broadcast(`* ${ctx.playerName ?? 'You'} ${action}`, '#cccccc');
