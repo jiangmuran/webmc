@@ -1,6 +1,9 @@
+import { completions, nextCompletion } from './chat_tab_complete';
+
 export interface ChatInputCallbacks {
   onSubmit: (text: string) => void;
   onOpenChanged?: (open: boolean) => void;
+  getCompletions?: (input: string) => string[];
 }
 
 export class ChatInput {
@@ -10,6 +13,8 @@ export class ChatInput {
   private history: string[] = [];
   private historyCursor = -1;
   private open = false;
+  private completionCycle: string[] = [];
+  private completionLast = '';
 
   constructor(parent: HTMLElement, private readonly cb: ChatInputCallbacks) {
     this.root = document.createElement('div');
@@ -80,6 +85,26 @@ export class ChatInput {
         } else {
           this.input.value = this.history[this.historyCursor] ?? '';
         }
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        const cur = this.input.value;
+        if (this.completionCycle.length > 0 && cur === this.completionLast) {
+          const next = nextCompletion(cur, this.completionCycle, !e.shiftKey);
+          this.input.value = next;
+          this.completionLast = next;
+          return;
+        }
+        const candidates = cb.getCompletions?.(cur) ?? [];
+        if (candidates.length === 0) return;
+        const matches = completions(cur, candidates);
+        if (matches.length === 0) return;
+        this.completionCycle = matches;
+        const first = matches[0] ?? cur;
+        this.input.value = first;
+        this.completionLast = first;
+      } else if (e.key !== 'Shift') {
+        this.completionCycle = [];
+        this.completionLast = '';
       }
     });
 

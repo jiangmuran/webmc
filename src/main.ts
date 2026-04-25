@@ -1031,6 +1031,23 @@ const chatInput = new ChatInput(appEl, {
       document.exitPointerLock();
     }
   },
+  getCompletions: (input) => {
+    if (!input.startsWith('/')) return [];
+    const SLASH_CMDS = [
+      '/help', '/gamemode', '/gm', '/tp', '/teleport', '/time', '/weather',
+      '/give', '/heal', '/kill', '/clear', '/setblock', '/fill', '/summon',
+      '/chest', '/spawn', '/seed', '/killall', '/stats', '/save', '/setspawn',
+      '/spawnpoint', '/setworldspawn', '/clearchat', '/cc', '/me', '/list',
+      '/whoami', '/fly', '/pos', '/where', '/biome', '/effect', '/listeffects',
+      '/particle', '/difficulty', '/achievements', '/ach', '/find', '/findmob',
+      '/lookup', '/listblocks', '/listmobs', '/lookat', '/destroy', '/back',
+      '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
+      '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
+      '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
+      '/up', '/down', '/distance', '/dist', '/gamerule',
+    ];
+    return SLASH_CMDS;
+  },
 });
 
 const pauseMenu = new PauseMenu(appEl, {
