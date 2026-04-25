@@ -1176,6 +1176,33 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Fishing rod: cast at water; on water-block target, roll a fish drop after 5-30s wait.
+      if (heldName === 'fishing_rod' && def.name === 'webmc:water') {
+        consumeHeldToolDurability(1);
+        for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + 0.5 + (Math.random() - 0.5), by + 1, bz + 0.5 + (Math.random() - 0.5), [200, 220, 240]);
+        sfx.play('click');
+        subtitles.push('Cast line');
+        // Schedule a fish drop in 5-30s.
+        const waitMs = 5000 + Math.random() * 25000;
+        setTimeout(() => {
+          if (gameMode !== 'survival' && gameMode !== 'adventure') return;
+          const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:raw_fish', 'webmc:tropical_fish'];
+          const treasure = ['webmc:bow', 'webmc:enchanted_book', 'webmc:fishing_rod', 'webmc:nautilus_shell'];
+          const useTreasure = Math.random() < 0.05;
+          const pool = (useTreasure ? treasure : FISH).filter((n) => itemRegistry.byName(n) !== undefined);
+          if (pool.length === 0) return;
+          const pickName = pool[Math.floor(Math.random() * pool.length)] ?? 'webmc:cod';
+          const itemId = itemRegistry.byName(pickName);
+          if (itemId !== undefined) {
+            inventory.add({ itemId, count: 1, damage: 0 });
+            const def2 = itemRegistry.get(itemId);
+            chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, '#a0e0ff');
+            sfx.play('click');
+            playerState.addXP(1 + Math.floor(Math.random() * 6));
+          }
+        }, waitMs);
+        return true;
+      }
       // Goat horn: blow a long droning note + ripple particles.
       if (heldName === 'goat_horn') {
         sfx.play('break');
