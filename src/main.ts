@@ -1121,6 +1121,21 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Ender pearl: teleport to hit block surface, take 5 damage.
+      if (heldName === 'ender_pearl') {
+        if (airAbove) {
+          fp.position.set(bx + 0.5, by + 1, bz + 0.5);
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            playerState.takeDamage({ amount: 5, source: 'pearl' });
+            const pearlId = itemRegistry.byName('webmc:ender_pearl');
+            if (pearlId !== undefined) consumeInventoryItem(pearlId, 1);
+          }
+          for (let i = 0; i < 16; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5), by + 1 + Math.random() * 2, bz + (Math.random() - 0.5), [60, 200, 180]);
+          sfx.play('click');
+          subtitles.push('Pearl warped');
+          return true;
+        }
+      }
       // Flint and steel: ignite block above with fire.
       if (heldName === 'flint_and_steel' && airAbove) {
         const fireId = registry.byName('webmc:fire');
