@@ -67,6 +67,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Players online: 1 (${ctx.playerName ?? 'Player'})`, '#cccccc');
     return;
   }
+  if (head === 'version' || head === 'v') {
+    ctx.broadcast('webmc · clean-room AGPL-3.0 voxel · session build', '#cccccc');
+    return;
+  }
   if (head === 'ping') {
     ctx.broadcast('pong (0ms, single-player)', '#cccccc');
     return;
