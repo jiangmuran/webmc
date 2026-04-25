@@ -54,6 +54,7 @@ import { BROWSER_CLIPBOARD } from './game/clipboard_util';
 import { canSpawnPhantom } from './entities/phantom_day_despawn';
 import { Weather as WeatherCycle } from './world/weather';
 import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
+import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -1355,6 +1356,18 @@ const chatInput = new ChatInput(appEl, {
         getLastDeathPos: () => lastDeathPos,
         setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
         getWorldBorder: () => worldBorder.diameter,
+        locateStructure: (kind) => {
+          if (kind !== 'stronghold') return null;
+          // Use the first ring of strongholds (3 positions) deterministic from world seed.
+          const positions = strongholdsInRing(WORLD_SEED, 0);
+          if (positions.length === 0) return null;
+          let best: { x: number; z: number; dist: number } | null = null;
+          for (const p of positions) {
+            const d = Math.hypot(p.x - fp.position.x, p.z - fp.position.z);
+            if (!best || d < best.dist) best = { x: p.x, z: p.z, dist: d };
+          }
+          return best;
+        },
         rollLootTable: (table) => {
           const tables: Record<string, ReadonlyArray<{ id: string; w: number }>> = {
             desert: [
@@ -1646,7 +1659,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate',
     ];
     return SLASH_CMDS;
   },

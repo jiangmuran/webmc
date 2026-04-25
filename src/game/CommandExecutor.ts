@@ -35,6 +35,7 @@ export interface CommandContext {
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
   rollLootTable?: (table: string) => string | null;
+  locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -357,6 +358,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
     }
+    return;
+  }
+  if (head === 'locate') {
+    const kind = (args[0] ?? 'stronghold').toLowerCase();
+    if (!ctx.locateStructure) {
+      ctx.broadcast('Locate unavailable.', '#ff8080');
+      return;
+    }
+    const hit = ctx.locateStructure(kind);
+    if (!hit) {
+      ctx.broadcast(`Unknown structure: ${kind}. Try: stronghold`, '#ff8080');
+      return;
+    }
+    ctx.broadcast(`Nearest ${kind}: ${String(hit.x)} ~ ${String(hit.z)} (${hit.dist.toFixed(0)}m)`, '#80ff80');
     return;
   }
   if (head === 'loot') {
