@@ -77,7 +77,9 @@ export class MinimapView {
         const wx = pxW + Math.floor((x - sz / 2) * scale);
         const wz = pzW + Math.floor((y - sz / 2) * scale);
         const topY = height.surfaceAt(wx, wz);
-        let rr = 30, gg = 30, bb = 30;
+        let rr = 30,
+          gg = 30,
+          bb = 30;
         const s = world.get(wx, topY, wz);
         const id = s === AIR ? 0 : stateId(s);
         const def = registry.get(id);

@@ -22,20 +22,64 @@ const DRUMSTICKS = 10;
 const BUBBLES = 10;
 const ARMORS = 10;
 
-type IconName = 'heart_full' | 'heart_half' | 'heart_empty' | 'drum_full' | 'drum_half' | 'drum_empty' | 'bubble_full' | 'bubble_empty' | 'armor_full' | 'armor_half' | 'armor_empty';
+type IconName =
+  | 'heart_full'
+  | 'heart_half'
+  | 'heart_empty'
+  | 'drum_full'
+  | 'drum_half'
+  | 'drum_empty'
+  | 'bubble_full'
+  | 'bubble_empty'
+  | 'armor_full'
+  | 'armor_half'
+  | 'armor_empty';
 
 function paintHeart(ctx: CanvasRenderingContext2D, fill: string, shadow: string): void {
   ctx.fillStyle = shadow;
   const pts: [number, number][] = [
-    [3, 5], [4, 4], [5, 4], [6, 5], [7, 5], [8, 4], [9, 4], [10, 5],
-    [11, 6], [11, 7], [10, 8], [9, 9], [8, 10], [7, 11], [6, 11], [5, 10],
-    [4, 9], [3, 8], [2, 7], [2, 6],
+    [3, 5],
+    [4, 4],
+    [5, 4],
+    [6, 5],
+    [7, 5],
+    [8, 4],
+    [9, 4],
+    [10, 5],
+    [11, 6],
+    [11, 7],
+    [10, 8],
+    [9, 9],
+    [8, 10],
+    [7, 11],
+    [6, 11],
+    [5, 10],
+    [4, 9],
+    [3, 8],
+    [2, 7],
+    [2, 6],
   ];
   for (const [x, y] of pts) ctx.fillRect(x, y, 1, 1);
   ctx.fillStyle = fill;
   const innerPts: [number, number][] = [
-    [4, 5], [5, 5], [6, 6], [7, 6], [8, 5], [9, 5], [10, 6], [10, 7],
-    [9, 7], [8, 8], [7, 9], [7, 10], [6, 10], [6, 9], [5, 8], [4, 7], [3, 6], [3, 7],
+    [4, 5],
+    [5, 5],
+    [6, 6],
+    [7, 6],
+    [8, 5],
+    [9, 5],
+    [10, 6],
+    [10, 7],
+    [9, 7],
+    [8, 8],
+    [7, 9],
+    [7, 10],
+    [6, 10],
+    [6, 9],
+    [5, 8],
+    [4, 7],
+    [3, 6],
+    [3, 7],
   ];
   for (const [x, y] of innerPts) ctx.fillRect(x, y, 1, 1);
   ctx.fillStyle = 'rgba(255,255,255,0.85)';
@@ -68,15 +112,47 @@ function paintHeartHalf(ctx: CanvasRenderingContext2D, fill: string, shadow: str
 function paintDrumstick(ctx: CanvasRenderingContext2D, fill: string, shadow: string): void {
   ctx.fillStyle = shadow;
   const silhouette: [number, number][] = [
-    [4, 2], [5, 2], [6, 2], [7, 3], [8, 3], [9, 3], [10, 4], [10, 5],
-    [9, 6], [8, 7], [7, 8], [6, 9], [5, 10], [4, 11], [3, 11], [2, 10],
-    [3, 9], [4, 8], [5, 7], [6, 6], [7, 5], [6, 4], [5, 3],
+    [4, 2],
+    [5, 2],
+    [6, 2],
+    [7, 3],
+    [8, 3],
+    [9, 3],
+    [10, 4],
+    [10, 5],
+    [9, 6],
+    [8, 7],
+    [7, 8],
+    [6, 9],
+    [5, 10],
+    [4, 11],
+    [3, 11],
+    [2, 10],
+    [3, 9],
+    [4, 8],
+    [5, 7],
+    [6, 6],
+    [7, 5],
+    [6, 4],
+    [5, 3],
   ];
   for (const [x, y] of silhouette) ctx.fillRect(x, y, 1, 1);
   ctx.fillStyle = fill;
   const flesh: [number, number][] = [
-    [5, 3], [6, 3], [7, 4], [8, 4], [9, 5], [8, 5], [7, 5], [6, 5], [5, 5],
-    [8, 6], [7, 6], [6, 6], [5, 6], [4, 6],
+    [5, 3],
+    [6, 3],
+    [7, 4],
+    [8, 4],
+    [9, 5],
+    [8, 5],
+    [7, 5],
+    [6, 5],
+    [5, 5],
+    [8, 6],
+    [7, 6],
+    [6, 6],
+    [5, 6],
+    [4, 6],
   ];
   for (const [x, y] of flesh) ctx.fillRect(x, y, 1, 1);
   ctx.fillStyle = '#f1e4b6';
@@ -89,7 +165,14 @@ function paintDrumstickHalf(ctx: CanvasRenderingContext2D, fill: string, shadow:
   ctx.clearRect(7, 0, 7, ICON);
   ctx.fillStyle = shadow;
   const rightSilhouette: [number, number][] = [
-    [7, 3], [8, 3], [9, 3], [10, 4], [10, 5], [9, 6], [8, 7], [7, 8],
+    [7, 3],
+    [8, 3],
+    [9, 3],
+    [10, 4],
+    [10, 5],
+    [9, 6],
+    [8, 7],
+    [7, 8],
   ];
   for (const [x, y] of rightSilhouette) ctx.fillRect(x, y, 1, 1);
 }
@@ -97,9 +180,28 @@ function paintDrumstickHalf(ctx: CanvasRenderingContext2D, fill: string, shadow:
 function paintBubble(ctx: CanvasRenderingContext2D, fill: string): void {
   ctx.fillStyle = '#0a1e36';
   const ring: [number, number][] = [
-    [5, 2], [6, 2], [7, 2], [8, 2], [4, 3], [9, 3], [3, 4], [10, 4],
-    [3, 5], [10, 5], [3, 6], [10, 6], [3, 7], [10, 7], [3, 8], [10, 8],
-    [4, 9], [9, 9], [5, 10], [6, 10], [7, 10], [8, 10],
+    [5, 2],
+    [6, 2],
+    [7, 2],
+    [8, 2],
+    [4, 3],
+    [9, 3],
+    [3, 4],
+    [10, 4],
+    [3, 5],
+    [10, 5],
+    [3, 6],
+    [10, 6],
+    [3, 7],
+    [10, 7],
+    [3, 8],
+    [10, 8],
+    [4, 9],
+    [9, 9],
+    [5, 10],
+    [6, 10],
+    [7, 10],
+    [8, 10],
   ];
   for (const [x, y] of ring) ctx.fillRect(x, y, 1, 1);
   ctx.fillStyle = fill;
@@ -115,9 +217,26 @@ function paintBubble(ctx: CanvasRenderingContext2D, fill: string): void {
 function paintHeartEmpty(ctx: CanvasRenderingContext2D): void {
   ctx.fillStyle = '#140305';
   const pts: [number, number][] = [
-    [3, 5], [4, 4], [5, 4], [6, 5], [7, 5], [8, 4], [9, 4], [10, 5],
-    [11, 6], [11, 7], [10, 8], [9, 9], [8, 10], [7, 11], [6, 11], [5, 10],
-    [4, 9], [3, 8], [2, 7], [2, 6],
+    [3, 5],
+    [4, 4],
+    [5, 4],
+    [6, 5],
+    [7, 5],
+    [8, 4],
+    [9, 4],
+    [10, 5],
+    [11, 6],
+    [11, 7],
+    [10, 8],
+    [9, 9],
+    [8, 10],
+    [7, 11],
+    [6, 11],
+    [5, 10],
+    [4, 9],
+    [3, 8],
+    [2, 7],
+    [2, 6],
   ];
   for (const [x, y] of pts) ctx.fillRect(x, y, 1, 1);
 }
@@ -125,9 +244,29 @@ function paintHeartEmpty(ctx: CanvasRenderingContext2D): void {
 function paintDrumEmpty(ctx: CanvasRenderingContext2D): void {
   ctx.fillStyle = '#141008';
   const silhouette: [number, number][] = [
-    [4, 2], [5, 2], [6, 2], [7, 3], [8, 3], [9, 3], [10, 4], [10, 5],
-    [9, 6], [8, 7], [7, 8], [6, 9], [5, 10], [4, 11], [3, 11], [2, 10],
-    [3, 9], [4, 8], [5, 7], [6, 6], [7, 5], [6, 4], [5, 3],
+    [4, 2],
+    [5, 2],
+    [6, 2],
+    [7, 3],
+    [8, 3],
+    [9, 3],
+    [10, 4],
+    [10, 5],
+    [9, 6],
+    [8, 7],
+    [7, 8],
+    [6, 9],
+    [5, 10],
+    [4, 11],
+    [3, 11],
+    [2, 10],
+    [3, 9],
+    [4, 8],
+    [5, 7],
+    [6, 6],
+    [7, 5],
+    [6, 4],
+    [5, 3],
   ];
   for (const [x, y] of silhouette) ctx.fillRect(x, y, 1, 1);
 }
@@ -144,39 +283,148 @@ function buildIconAtlas(): Map<IconName, HTMLCanvasElement> {
     paint(ctx);
     return c;
   };
-  map.set('heart_full', make((c) => paintHeart(c, '#f02030', '#6b0010')));
-  map.set('heart_half', make((c) => paintHeartHalf(c, '#f02030', '#6b0010')));
-  map.set('heart_empty', make((c) => paintHeartEmpty(c)));
-  map.set('drum_full', make((c) => paintDrumstick(c, '#a76d3a', '#3a1e0a')));
-  map.set('drum_half', make((c) => paintDrumstickHalf(c, '#a76d3a', '#3a1e0a')));
-  map.set('drum_empty', make((c) => paintDrumEmpty(c)));
-  map.set('bubble_full', make((c) => paintBubble(c, '#e3f1ff')));
-  map.set('bubble_empty', make((c) => paintBubble(c, '#3a5878')));
-  map.set('armor_full', make((c) => paintArmor(c, 'full')));
-  map.set('armor_half', make((c) => paintArmor(c, 'half')));
-  map.set('armor_empty', make((c) => paintArmor(c, 'empty')));
+  map.set(
+    'heart_full',
+    make((c) => {
+      paintHeart(c, '#f02030', '#6b0010');
+    }),
+  );
+  map.set(
+    'heart_half',
+    make((c) => {
+      paintHeartHalf(c, '#f02030', '#6b0010');
+    }),
+  );
+  map.set(
+    'heart_empty',
+    make((c) => {
+      paintHeartEmpty(c);
+    }),
+  );
+  map.set(
+    'drum_full',
+    make((c) => {
+      paintDrumstick(c, '#a76d3a', '#3a1e0a');
+    }),
+  );
+  map.set(
+    'drum_half',
+    make((c) => {
+      paintDrumstickHalf(c, '#a76d3a', '#3a1e0a');
+    }),
+  );
+  map.set(
+    'drum_empty',
+    make((c) => {
+      paintDrumEmpty(c);
+    }),
+  );
+  map.set(
+    'bubble_full',
+    make((c) => {
+      paintBubble(c, '#e3f1ff');
+    }),
+  );
+  map.set(
+    'bubble_empty',
+    make((c) => {
+      paintBubble(c, '#3a5878');
+    }),
+  );
+  map.set(
+    'armor_full',
+    make((c) => {
+      paintArmor(c, 'full');
+    }),
+  );
+  map.set(
+    'armor_half',
+    make((c) => {
+      paintArmor(c, 'half');
+    }),
+  );
+  map.set(
+    'armor_empty',
+    make((c) => {
+      paintArmor(c, 'empty');
+    }),
+  );
   return map;
 }
 
 function paintArmor(ctx: CanvasRenderingContext2D, kind: 'full' | 'half' | 'empty'): void {
   const outline: [number, number][] = [
-    [4, 2], [5, 2], [6, 2], [7, 2], [8, 2], [9, 2],
-    [3, 3], [10, 3], [3, 4], [10, 4], [3, 5], [10, 5],
-    [4, 6], [5, 6], [6, 6], [7, 6], [8, 6], [9, 6],
-    [4, 7], [9, 7], [4, 8], [9, 8], [4, 9], [9, 9],
-    [4, 10], [9, 10], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11],
+    [4, 2],
+    [5, 2],
+    [6, 2],
+    [7, 2],
+    [8, 2],
+    [9, 2],
+    [3, 3],
+    [10, 3],
+    [3, 4],
+    [10, 4],
+    [3, 5],
+    [10, 5],
+    [4, 6],
+    [5, 6],
+    [6, 6],
+    [7, 6],
+    [8, 6],
+    [9, 6],
+    [4, 7],
+    [9, 7],
+    [4, 8],
+    [9, 8],
+    [4, 9],
+    [9, 9],
+    [4, 10],
+    [9, 10],
+    [4, 11],
+    [5, 11],
+    [6, 11],
+    [7, 11],
+    [8, 11],
+    [9, 11],
   ];
   ctx.fillStyle = '#1a2030';
   for (const [x, y] of outline) ctx.fillRect(x, y, 1, 1);
   if (kind === 'empty') return;
   const fill: [number, number][] = [
-    [4, 3], [5, 3], [6, 3], [7, 3], [8, 3], [9, 3],
-    [4, 4], [5, 4], [6, 4], [7, 4], [8, 4], [9, 4],
-    [4, 5], [5, 5], [6, 5], [7, 5], [8, 5], [9, 5],
-    [5, 7], [6, 7], [7, 7], [8, 7],
-    [5, 8], [6, 8], [7, 8], [8, 8],
-    [5, 9], [6, 9], [7, 9], [8, 9],
-    [5, 10], [6, 10], [7, 10], [8, 10],
+    [4, 3],
+    [5, 3],
+    [6, 3],
+    [7, 3],
+    [8, 3],
+    [9, 3],
+    [4, 4],
+    [5, 4],
+    [6, 4],
+    [7, 4],
+    [8, 4],
+    [9, 4],
+    [4, 5],
+    [5, 5],
+    [6, 5],
+    [7, 5],
+    [8, 5],
+    [9, 5],
+    [5, 7],
+    [6, 7],
+    [7, 7],
+    [8, 7],
+    [5, 8],
+    [6, 8],
+    [7, 8],
+    [8, 8],
+    [5, 9],
+    [6, 9],
+    [7, 9],
+    [8, 9],
+    [5, 10],
+    [6, 10],
+    [7, 10],
+    [8, 10],
   ];
   ctx.fillStyle = '#dadde6';
   for (const [x, y] of fill) {
@@ -318,8 +566,8 @@ export class SurvivalHud {
       this.blit(this.hearts[i]!, name);
       this.hearts[i]!.style.opacity = name === 'heart_empty' ? '1' : String(pulse.toFixed(2));
       if (heartShake) {
-        const ox = ((Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0);
-        const oy = ((Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0);
+        const ox = (Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0;
+        const oy = (Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0;
         this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
       } else {
         this.hearts[i]!.style.transform = '';
@@ -336,8 +584,8 @@ export class SurvivalHud {
         v >= hungerPer * 0.9 ? 'drum_full' : v >= hungerPer * 0.4 ? 'drum_half' : 'drum_empty';
       this.blit(this.hungers[i]!, name);
       if (shake) {
-        const ox = ((Math.sin(t * 0.04 + i * 1.7) * 2) | 0);
-        const oy = ((Math.cos(t * 0.05 + i * 0.9) * 2) | 0);
+        const ox = (Math.sin(t * 0.04 + i * 1.7) * 2) | 0;
+        const oy = (Math.cos(t * 0.05 + i * 0.9) * 2) | 0;
         this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
       } else {
         this.hungers[i]!.style.transform = '';
@@ -350,7 +598,8 @@ export class SurvivalHud {
       const icons = armorIcons(armorPts);
       for (let i = 0; i < ARMORS; i++) {
         const which = icons[i];
-        const name: IconName = which === 'full' ? 'armor_full' : which === 'half' ? 'armor_half' : 'armor_empty';
+        const name: IconName =
+          which === 'full' ? 'armor_full' : which === 'half' ? 'armor_half' : 'armor_empty';
         this.blit(this.armors[i]!, name);
       }
     } else {

@@ -13,8 +13,7 @@ const LFH_SIGNATURE = 0x04034b50;
 
 function findEOCD(bytes: Uint8Array): number {
   for (let i = bytes.length - 22; i >= 0; i--) {
-    const sig =
-      bytes[i]! | (bytes[i + 1]! << 8) | (bytes[i + 2]! << 16) | (bytes[i + 3]! << 24);
+    const sig = bytes[i]! | (bytes[i + 1]! << 8) | (bytes[i + 2]! << 16) | (bytes[i + 3]! << 24);
     if (sig === EOCD_SIGNATURE) return i;
   }
   throw new Error('zip: EOCD not found');
@@ -28,7 +27,7 @@ function u32(b: Uint8Array, off: number): number {
 }
 
 async function inflate(raw: Uint8Array): Promise<Uint8Array> {
-  const ds = new DecompressionStream('deflate-raw' as CompressionFormat);
+  const ds = new DecompressionStream('deflate-raw');
   const ab = raw.slice().buffer;
   const blob = new Blob([ab]).stream().pipeThrough(ds);
   const buf = await new Response(blob).arrayBuffer();

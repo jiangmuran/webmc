@@ -63,7 +63,10 @@ export class SettingsPanel {
   private readonly values: SettingsValues;
   private readonly uiResetters: (() => void)[] = [];
 
-  constructor(parent: HTMLElement, private readonly cb: SettingsPanelCallbacks) {
+  constructor(
+    parent: HTMLElement,
+    private readonly cb: SettingsPanelCallbacks,
+  ) {
     this.values = loadSettings();
 
     this.root = document.createElement('div');
@@ -120,7 +123,8 @@ export class SettingsPanel {
     presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;flex-wrap:wrap;';
     const potatoBtn = document.createElement('button');
     potatoBtn.textContent = 'Potato preset';
-    potatoBtn.style.cssText = 'padding:4px 10px;background:rgba(100,50,30,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    potatoBtn.style.cssText =
+      'padding:4px 10px;background:rgba(100,50,30,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
     potatoBtn.addEventListener('click', () => {
       Object.assign(this.values, {
         ...DEFAULT_SETTINGS,
@@ -138,9 +142,15 @@ export class SettingsPanel {
     presetRow.appendChild(potatoBtn);
     const fastBtn = document.createElement('button');
     fastBtn.textContent = 'Fast preset';
-    fastBtn.style.cssText = 'padding:4px 10px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    fastBtn.style.cssText =
+      'padding:4px 10px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
     fastBtn.addEventListener('click', () => {
-      Object.assign(this.values, { ...DEFAULT_SETTINGS, viewDistance: 4, chunkUploadBudget: 2, masterVolume: 0.2 });
+      Object.assign(this.values, {
+        ...DEFAULT_SETTINGS,
+        viewDistance: 4,
+        chunkUploadBudget: 2,
+        masterVolume: 0.2,
+      });
       saveSettings(this.values);
       this.cb.onChange({ ...this.values });
       for (const r of this.uiResetters) r();
@@ -148,9 +158,15 @@ export class SettingsPanel {
     presetRow.appendChild(fastBtn);
     const qualityBtn = document.createElement('button');
     qualityBtn.textContent = 'Quality preset';
-    qualityBtn.style.cssText = 'padding:4px 10px;background:rgba(40,60,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    qualityBtn.style.cssText =
+      'padding:4px 10px;background:rgba(40,60,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
     qualityBtn.addEventListener('click', () => {
-      Object.assign(this.values, { ...DEFAULT_SETTINGS, viewDistance: 12, chunkUploadBudget: 8, masterVolume: 0.5 });
+      Object.assign(this.values, {
+        ...DEFAULT_SETTINGS,
+        viewDistance: 12,
+        chunkUploadBudget: 8,
+        masterVolume: 0.5,
+      });
       saveSettings(this.values);
       this.cb.onChange({ ...this.values });
       for (const r of this.uiResetters) r();
@@ -158,7 +174,8 @@ export class SettingsPanel {
     presetRow.appendChild(qualityBtn);
     const ultraBtn = document.createElement('button');
     ultraBtn.textContent = 'Ultra preset';
-    ultraBtn.style.cssText = 'padding:4px 10px;background:rgba(60,30,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    ultraBtn.style.cssText =
+      'padding:4px 10px;background:rgba(60,30,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
     ultraBtn.addEventListener('click', () => {
       Object.assign(this.values, {
         ...DEFAULT_SETTINGS,
@@ -178,7 +195,8 @@ export class SettingsPanel {
     buttonRow.style.cssText = 'display:flex;gap:8px;align-self:flex-end;';
     const reset = document.createElement('button');
     reset.textContent = 'Reset';
-    reset.style.cssText = 'padding:6px 14px;background:rgba(100,60,50,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    reset.style.cssText =
+      'padding:6px 14px;background:rgba(100,60,50,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
     reset.addEventListener('click', () => {
       Object.assign(this.values, DEFAULT_SETTINGS);
       saveSettings(this.values);
@@ -188,8 +206,11 @@ export class SettingsPanel {
     buttonRow.appendChild(reset);
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
-    close.addEventListener('click', () => this.hide());
+    close.style.cssText =
+      'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.addEventListener('click', () => {
+      this.hide();
+    });
     buttonRow.appendChild(close);
     panel.appendChild(buttonRow);
 
@@ -249,7 +270,8 @@ export class SettingsPanel {
     input.type = 'text';
     input.maxLength = 20;
     input.value = String(this.values[key]);
-    input.style.cssText = 'flex:1;padding:4px 6px;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;font:inherit;font-size:12px;';
+    input.style.cssText =
+      'flex:1;padding:4px 6px;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;font:inherit;font-size:12px;';
     input.addEventListener('change', () => {
       (this.values as unknown as Record<string, string>)[key as string] = input.value;
       saveSettings(this.values);

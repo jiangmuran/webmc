@@ -11,7 +11,7 @@ export class ProceduralSfx {
   attachUnlock(parent: HTMLElement): void {
     const unlock = (): void => {
       this.ensureCtx();
-      if (this.ctx && this.ctx.state === 'suspended') void this.ctx.resume();
+      if (this.ctx?.state === 'suspended') void this.ctx.resume();
       parent.removeEventListener('click', unlock);
       parent.removeEventListener('keydown', unlock);
       parent.removeEventListener('touchstart', unlock);
@@ -29,8 +29,12 @@ export class ProceduralSfx {
   private ensureCtx(): void {
     if (this.ctx) return;
     const Ctx =
-      (window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext })
-        .AudioContext ??
+      (
+        window as unknown as {
+          AudioContext?: typeof AudioContext;
+          webkitAudioContext?: typeof AudioContext;
+        }
+      ).AudioContext ??
       (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return;
     this.ctx = new Ctx();
@@ -106,7 +110,11 @@ export class ProceduralSfx {
     osc.stop(now + duration + 0.01);
   }
 
-  footstepIfMoving(moving: boolean, dtSec: number, material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water'): void {
+  footstepIfMoving(
+    moving: boolean,
+    dtSec: number,
+    material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water',
+  ): void {
     if (!moving) {
       this.stepAccum = 0;
       return;
@@ -118,7 +126,9 @@ export class ProceduralSfx {
     }
   }
 
-  private playStep(material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water'): void {
+  private playStep(
+    material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water',
+  ): void {
     this.ensureCtx();
     const ctx = this.ctx;
     const master = this.master;
@@ -131,16 +141,52 @@ export class ProceduralSfx {
     let peak = 0.12;
     let type: OscillatorType = 'sawtooth';
     switch (material) {
-      case 'wood': freq = 280 + Math.random() * 50; type = 'triangle'; peak = 0.13; break;
-      case 'stone': freq = 110 + Math.random() * 30; type = 'square'; peak = 0.14; break;
-      case 'gravel': freq = 200 + Math.random() * 100; type = 'sawtooth'; peak = 0.12; break;
-      case 'sand': freq = 240 + Math.random() * 60; type = 'sine'; peak = 0.08; break;
-      case 'snow': freq = 320 + Math.random() * 60; type = 'sine'; peak = 0.06; break;
-      case 'wool': freq = 180 + Math.random() * 30; type = 'triangle'; peak = 0.05; break;
-      case 'metal': freq = 380 + Math.random() * 80; type = 'square'; peak = 0.16; break;
-      case 'water': freq = 90 + Math.random() * 30; type = 'sine'; peak = 0.09; break;
+      case 'wood':
+        freq = 280 + Math.random() * 50;
+        type = 'triangle';
+        peak = 0.13;
+        break;
+      case 'stone':
+        freq = 110 + Math.random() * 30;
+        type = 'square';
+        peak = 0.14;
+        break;
+      case 'gravel':
+        freq = 200 + Math.random() * 100;
+        type = 'sawtooth';
+        peak = 0.12;
+        break;
+      case 'sand':
+        freq = 240 + Math.random() * 60;
+        type = 'sine';
+        peak = 0.08;
+        break;
+      case 'snow':
+        freq = 320 + Math.random() * 60;
+        type = 'sine';
+        peak = 0.06;
+        break;
+      case 'wool':
+        freq = 180 + Math.random() * 30;
+        type = 'triangle';
+        peak = 0.05;
+        break;
+      case 'metal':
+        freq = 380 + Math.random() * 80;
+        type = 'square';
+        peak = 0.16;
+        break;
+      case 'water':
+        freq = 90 + Math.random() * 30;
+        type = 'sine';
+        peak = 0.09;
+        break;
       // grass/default
-      default: freq = 140 + Math.random() * 40; type = 'sawtooth'; peak = 0.12; break;
+      default:
+        freq = 140 + Math.random() * 40;
+        type = 'sawtooth';
+        peak = 0.12;
+        break;
     }
     osc.type = type;
     osc.frequency.setValueAtTime(freq, now);

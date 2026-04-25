@@ -77,8 +77,11 @@ export class ChestUI {
 
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'align-self:flex-end;padding:6px 14px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
-    close.addEventListener('click', () => { this.hide(); });
+    close.style.cssText =
+      'align-self:flex-end;padding:6px 14px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.addEventListener('click', () => {
+      this.hide();
+    });
     panel.appendChild(close);
 
     this.root.appendChild(panel);
@@ -138,7 +141,8 @@ export class ChestUI {
       const def = this.registry.get(stack.itemId);
       const label = document.createElement('div');
       label.textContent = def.name.replace(/^webmc:/, '').slice(0, 6);
-      label.style.cssText = 'position:absolute;top:2px;left:3px;font-size:8px;line-height:10px;color:#ddd;';
+      label.style.cssText =
+        'position:absolute;top:2px;left:3px;font-size:8px;line-height:10px;color:#ddd;';
       slot.appendChild(label);
       const count = document.createElement('div');
       count.textContent = String(stack.count);
@@ -178,7 +182,7 @@ export class ChestUI {
   private findChestSlot(itemId: number): number {
     for (let i = 0; i < 27; i++) {
       const s = this.storage[i];
-      if (s && s.itemId === itemId) return i;
+      if (s?.itemId === itemId) return i;
     }
     for (let i = 0; i < 27; i++) {
       if (!this.storage[i]) return i;

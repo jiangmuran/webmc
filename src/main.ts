@@ -50,17 +50,30 @@ import { sanitize as sanitizePlayerName } from './game/player_name_sanitize';
 const MOON_GLYPHS = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔'];
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
-import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
+import {
+  tickUnderwater,
+  type AmbientState as UnderwaterAmbientState,
+} from './engine/audio/ambient_underwater';
 import { BROWSER_CLIPBOARD } from './game/clipboard_util';
 import { canSpawnPhantom } from './entities/phantom_day_despawn';
 import { Weather as WeatherCycle } from './world/weather';
-import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
+import {
+  checkPosition as checkWorldBorder,
+  makeWorldBorder,
+  setSize as setBorderSize,
+} from './world/world_border';
 import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
 import { frictionFor as blockFriction } from './physics/ice_slip_friction';
 import { requiredLevelFor as requiredMiningLevel } from './items/tool_tier';
 import { loadPack as loadDatapack, type DataPack } from './datapack/DataPack';
 import { createManifest as createExportManifest } from './persist/webmc_export_zip';
-import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
+import {
+  beginSave,
+  endSave,
+  makeSaveState,
+  markDirty as markSaveDirty,
+  shouldSave,
+} from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
@@ -79,15 +92,32 @@ import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
 import { rumbleForDamage } from './engine/input/gamepad_rumble';
-import { init as initGyro, onSample as onGyroSample, setEnabled as setGyroEnabled, type GyroSmoothed } from './engine/input/gyro_assist';
+import {
+  init as initGyro,
+  onSample as onGyroSample,
+  setEnabled as setGyroEnabled,
+  type GyroSmoothed,
+} from './engine/input/gyro_assist';
 import { startPinch, updateFov, type PinchState } from './engine/input/touch_pinch_zoom';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
-import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
-import { feed as animalFeed, isInLove, onBreedComplete, canBreed, type AnimalLove } from './entities/animal_breed_love';
+import {
+  makeTameable,
+  toggleSit,
+  tryTame,
+  type TameableKind,
+  type TameableState,
+} from './entities/tameable';
+import {
+  feed as animalFeed,
+  isInLove,
+  onBreedComplete,
+  canBreed,
+  type AnimalLove,
+} from './entities/animal_breed_love';
 import { canLeash, tensionStep } from './entities/leash_tether';
 import { tick as babyTick, growFraction, type BabyState } from './game/baby_grow_speedup';
 import { damageTiltAngle } from './game/player_damage_tilt_direction';
@@ -126,7 +156,10 @@ import { PlayerAvatar } from './engine/render/PlayerAvatar';
 import { ScreenShake } from './engine/render/ScreenShake';
 import { SkyCelestials } from './engine/render/SkyCelestials';
 import { Stars } from './engine/render/Stars';
-import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
+import {
+  applyPackToRegistry,
+  buildPatternTextureFromPack,
+} from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
 import { executeCommand, executeCommands } from './game/CommandExecutor';
 
@@ -153,11 +186,15 @@ const detectedGpuTier = ((): 'low' | 'mid' | 'high' => {
     const debugInfo = (gl as WebGL2RenderingContext).getExtension('WEBGL_debug_renderer_info');
     let rendererName = '';
     if (debugInfo) {
-      rendererName = String((gl as WebGL2RenderingContext).getParameter(
-        (debugInfo as { UNMASKED_RENDERER_WEBGL: number }).UNMASKED_RENDERER_WEBGL,
-      ) ?? '');
+      rendererName = String(
+        (gl as WebGL2RenderingContext).getParameter(
+          (debugInfo as { UNMASKED_RENDERER_WEBGL: number }).UNMASKED_RENDERER_WEBGL,
+        ) ?? '',
+      );
     }
-    const maxTextureSize = (gl as WebGL2RenderingContext).getParameter(gl.MAX_TEXTURE_SIZE) as number;
+    const maxTextureSize = (gl as WebGL2RenderingContext).getParameter(
+      gl.MAX_TEXTURE_SIZE,
+    ) as number;
     return classifyGpu({
       rendererName,
       maxTextureSize,
@@ -176,32 +213,48 @@ let gyroYawAccum = 0;
 if (isMobileDevice) {
   window.addEventListener('deviceorientation', (e) => {
     if (typeof e.alpha !== 'number') return;
-    const result = onGyroSample(gyroState, { alpha: e.alpha, beta: e.beta ?? 0, gamma: e.gamma ?? 0 });
+    const result = onGyroSample(gyroState, {
+      alpha: e.alpha,
+      beta: e.beta ?? 0,
+      gamma: e.gamma ?? 0,
+    });
     gyroState = result.state;
     gyroYawAccum += result.yawDelta * 0.0035;
   });
 
   let pinch: PinchState | null = null;
-  window.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 2) {
-      const t0 = e.touches[0]!;
-      const t1 = e.touches[1]!;
-      const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
-      pinch = startPinch(fp.camera.fov, d);
-    }
-  }, { passive: true });
-  window.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 2 && pinch) {
-      const t0 = e.touches[0]!;
-      const t1 = e.touches[1]!;
-      const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
-      pinch = updateFov(pinch, d);
-      fp.setBaseFov(pinch.currentFov);
-    }
-  }, { passive: true });
-  window.addEventListener('touchend', () => {
-    if (pinch) pinch = null;
-  }, { passive: true });
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      if (e.touches.length === 2) {
+        const t0 = e.touches[0]!;
+        const t1 = e.touches[1]!;
+        const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        pinch = startPinch(fp.camera.fov, d);
+      }
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'touchmove',
+    (e) => {
+      if (e.touches.length === 2 && pinch) {
+        const t0 = e.touches[0]!;
+        const t1 = e.touches[1]!;
+        const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        pinch = updateFov(pinch, d);
+        fp.setBaseFov(pinch.currentFov);
+      }
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'touchend',
+    () => {
+      if (pinch) pinch = null;
+    },
+    { passive: true },
+  );
 }
 
 if (localStorage.getItem('webmc:settings') === null) {
@@ -209,7 +262,10 @@ if (localStorage.getItem('webmc:settings') === null) {
   try {
     localStorage.setItem(
       'webmc:settings',
-      JSON.stringify({ viewDistance: recVD, chunkUploadBudget: detectedGpuTier === 'low' ? 1 : detectedGpuTier === 'mid' ? 3 : 6 }),
+      JSON.stringify({
+        viewDistance: recVD,
+        chunkUploadBudget: detectedGpuTier === 'low' ? 1 : detectedGpuTier === 'mid' ? 3 : 6,
+      }),
     );
   } catch {
     /* non-fatal */
@@ -355,41 +411,215 @@ itemRegistry.register({ name: 'webmc:iron_sword', maxStack: 1, durability: 251 }
 itemRegistry.register({ name: 'webmc:diamond_sword', maxStack: 1, durability: 1562 });
 itemRegistry.register({ name: 'webmc:iron_axe', maxStack: 1, durability: 251 });
 itemRegistry.register({ name: 'webmc:iron_shovel', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:bread', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:cookie', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({
+  name: 'webmc:bread',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:cookie',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
 itemRegistry.register({ name: 'webmc:cake', maxStack: 1, durability: 0 });
-itemRegistry.register({ name: 'webmc:cooked_porkchop', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 12.8 });
-itemRegistry.register({ name: 'webmc:cooked_beef', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 12.8 });
-itemRegistry.register({ name: 'webmc:cooked_chicken', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 7.2 });
-itemRegistry.register({ name: 'webmc:apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 2.4 });
+itemRegistry.register({
+  name: 'webmc:cooked_porkchop',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 8,
+  saturation: 12.8,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_beef',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 8,
+  saturation: 12.8,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_chicken',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
+itemRegistry.register({
+  name: 'webmc:apple',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 4,
+  saturation: 2.4,
+});
 // Extended food set from food_nutrition_table — every standard MC food.
-itemRegistry.register({ name: 'webmc:carrot', maxStack: 64, durability: 0, hungerRestore: 3, saturation: 3.6 });
-itemRegistry.register({ name: 'webmc:golden_apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 9.6 });
-itemRegistry.register({ name: 'webmc:enchanted_golden_apple', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 9.6 });
-itemRegistry.register({ name: 'webmc:golden_carrot', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 14.4 });
-itemRegistry.register({ name: 'webmc:honey_bottle', maxStack: 16, durability: 0, hungerRestore: 6, saturation: 1.2 });
-itemRegistry.register({ name: 'webmc:mushroom_stew', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
-itemRegistry.register({ name: 'webmc:rabbit_stew', maxStack: 1, durability: 0, hungerRestore: 10, saturation: 12 });
-itemRegistry.register({ name: 'webmc:pumpkin_pie', maxStack: 64, durability: 0, hungerRestore: 8, saturation: 4.8 });
-itemRegistry.register({ name: 'webmc:rotten_flesh', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 0.8 });
-itemRegistry.register({ name: 'webmc:potato', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.6 });
-itemRegistry.register({ name: 'webmc:baked_potato', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:poisonous_potato', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
-itemRegistry.register({ name: 'webmc:spider_eye', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 3.2 });
-itemRegistry.register({ name: 'webmc:chorus_fruit', maxStack: 64, durability: 0, hungerRestore: 4, saturation: 2.4 });
-itemRegistry.register({ name: 'webmc:beetroot_soup', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
-itemRegistry.register({ name: 'webmc:sweet_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:glow_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:cooked_mutton', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
-itemRegistry.register({ name: 'webmc:cooked_rabbit', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:cooked_cod', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:cooked_salmon', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
+itemRegistry.register({
+  name: 'webmc:carrot',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 3.6,
+});
+itemRegistry.register({
+  name: 'webmc:golden_apple',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 4,
+  saturation: 9.6,
+});
+itemRegistry.register({
+  name: 'webmc:enchanted_golden_apple',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 4,
+  saturation: 9.6,
+});
+itemRegistry.register({
+  name: 'webmc:golden_carrot',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 14.4,
+});
+itemRegistry.register({
+  name: 'webmc:honey_bottle',
+  maxStack: 16,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:mushroom_stew',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
+itemRegistry.register({
+  name: 'webmc:rabbit_stew',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 10,
+  saturation: 12,
+});
+itemRegistry.register({
+  name: 'webmc:pumpkin_pie',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 8,
+  saturation: 4.8,
+});
+itemRegistry.register({
+  name: 'webmc:rotten_flesh',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 4,
+  saturation: 0.8,
+});
+itemRegistry.register({
+  name: 'webmc:potato',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 1,
+  saturation: 0.6,
+});
+itemRegistry.register({
+  name: 'webmc:baked_potato',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:poisonous_potato',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:spider_eye',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 3.2,
+});
+itemRegistry.register({
+  name: 'webmc:chorus_fruit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 4,
+  saturation: 2.4,
+});
+itemRegistry.register({
+  name: 'webmc:beetroot_soup',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
+itemRegistry.register({
+  name: 'webmc:sweet_berries',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:glow_berries',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_mutton',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 9.6,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_rabbit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_cod',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_salmon',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 9.6,
+});
 // 16 vanilla dyes — enables future dye-related recipes/crafting.
 for (const dye of [
-  'white_dye', 'orange_dye', 'magenta_dye', 'light_blue_dye',
-  'yellow_dye', 'lime_dye', 'pink_dye', 'gray_dye',
-  'light_gray_dye', 'cyan_dye', 'purple_dye', 'blue_dye',
-  'brown_dye', 'green_dye', 'red_dye', 'black_dye',
+  'white_dye',
+  'orange_dye',
+  'magenta_dye',
+  'light_blue_dye',
+  'yellow_dye',
+  'lime_dye',
+  'pink_dye',
+  'gray_dye',
+  'light_gray_dye',
+  'cyan_dye',
+  'purple_dye',
+  'blue_dye',
+  'brown_dye',
+  'green_dye',
+  'red_dye',
+  'black_dye',
 ]) {
   itemRegistry.register({ name: `webmc:${dye}`, maxStack: 64, durability: 0 });
 }
@@ -428,7 +658,36 @@ itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
-const SPAWN_EGG_MOBS = ['pig', 'cow', 'sheep', 'chicken', 'wolf', 'fox', 'cat', 'rabbit', 'goat', 'horse', 'parrot', 'bee', 'panda', 'frog', 'axolotl', 'zombie', 'skeleton', 'creeper', 'spider', 'enderman', 'pillager', 'vindicator', 'evoker', 'piglin', 'wither_skeleton', 'blaze', 'ghast', 'shulker'];
+const SPAWN_EGG_MOBS = [
+  'pig',
+  'cow',
+  'sheep',
+  'chicken',
+  'wolf',
+  'fox',
+  'cat',
+  'rabbit',
+  'goat',
+  'horse',
+  'parrot',
+  'bee',
+  'panda',
+  'frog',
+  'axolotl',
+  'zombie',
+  'skeleton',
+  'creeper',
+  'spider',
+  'enderman',
+  'pillager',
+  'vindicator',
+  'evoker',
+  'piglin',
+  'wither_skeleton',
+  'blaze',
+  'ghast',
+  'shulker',
+];
 for (const mob of SPAWN_EGG_MOBS) {
   itemRegistry.register({ name: `webmc:${mob}_spawn_egg`, maxStack: 64, durability: 0 });
 }
@@ -488,8 +747,26 @@ itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rail', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:elytra', maxStack: 1, durability: 432 });
 // Dyes — 16 colors.
-const DYE_COLORS = ['white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black'];
-for (const c of DYE_COLORS) itemRegistry.register({ name: `webmc:${c}_dye`, maxStack: 64, durability: 0 });
+const DYE_COLORS = [
+  'white',
+  'orange',
+  'magenta',
+  'light_blue',
+  'yellow',
+  'lime',
+  'pink',
+  'gray',
+  'light_gray',
+  'cyan',
+  'purple',
+  'blue',
+  'brown',
+  'green',
+  'red',
+  'black',
+];
+for (const c of DYE_COLORS)
+  itemRegistry.register({ name: `webmc:${c}_dye`, maxStack: 64, durability: 0 });
 // Maps + signs + utility items.
 itemRegistry.register({ name: 'webmc:map', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:filled_map', maxStack: 64, durability: 0 });
@@ -502,8 +779,29 @@ itemRegistry.register({ name: 'webmc:paper', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:scute', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:armadillo_scute', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
-const TEMPLATES = ['netherite_upgrade', 'sentry_armor_trim', 'vex_armor_trim', 'wild_armor_trim', 'coast_armor_trim', 'dune_armor_trim', 'wayfinder_armor_trim', 'raiser_armor_trim', 'shaper_armor_trim', 'host_armor_trim', 'ward_armor_trim', 'silence_armor_trim', 'tide_armor_trim', 'snout_armor_trim', 'rib_armor_trim', 'eye_armor_trim', 'spire_armor_trim', 'flow_armor_trim', 'bolt_armor_trim'];
-for (const t of TEMPLATES) itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
+const TEMPLATES = [
+  'netherite_upgrade',
+  'sentry_armor_trim',
+  'vex_armor_trim',
+  'wild_armor_trim',
+  'coast_armor_trim',
+  'dune_armor_trim',
+  'wayfinder_armor_trim',
+  'raiser_armor_trim',
+  'shaper_armor_trim',
+  'host_armor_trim',
+  'ward_armor_trim',
+  'silence_armor_trim',
+  'tide_armor_trim',
+  'snout_armor_trim',
+  'rib_armor_trim',
+  'eye_armor_trim',
+  'spire_armor_trim',
+  'flow_armor_trim',
+  'bolt_armor_trim',
+];
+for (const t of TEMPLATES)
+  itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
 // Crafted misc.
 itemRegistry.register({ name: 'webmc:bowl', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
@@ -523,7 +821,17 @@ itemRegistry.register({ name: 'webmc:heart_of_the_sea', maxStack: 64, durability
 itemRegistry.register({ name: 'webmc:nether_star', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:dragon_scale', maxStack: 64, durability: 0 });
 // Boats / minecarts / signs.
-const WOODS = ['oak', 'spruce', 'birch', 'jungle', 'acacia', 'dark_oak', 'mangrove', 'cherry', 'bamboo'];
+const WOODS = [
+  'oak',
+  'spruce',
+  'birch',
+  'jungle',
+  'acacia',
+  'dark_oak',
+  'mangrove',
+  'cherry',
+  'bamboo',
+];
 for (const w of WOODS) {
   itemRegistry.register({ name: `webmc:${w}_boat`, maxStack: 1, durability: 0 });
   itemRegistry.register({ name: `webmc:${w}_chest_boat`, maxStack: 1, durability: 0 });
@@ -542,13 +850,49 @@ itemRegistry.register({ name: 'webmc:melon_seeds', maxStack: 64, durability: 0 }
 itemRegistry.register({ name: 'webmc:pumpkin_seeds', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:torchflower_seeds', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:pitcher_pod', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:beetroot', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 1.2 });
-itemRegistry.register({ name: 'webmc:beetroot_soup', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
-itemRegistry.register({ name: 'webmc:melon_slice', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
+itemRegistry.register({
+  name: 'webmc:beetroot',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 1,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:beetroot_soup',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
+itemRegistry.register({
+  name: 'webmc:melon_slice',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
 itemRegistry.register({ name: 'webmc:glistering_melon_slice', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:sweet_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:glow_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:dried_kelp', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.6 });
+itemRegistry.register({
+  name: 'webmc:sweet_berries',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:glow_berries',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:dried_kelp',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 1,
+  saturation: 0.6,
+});
 // Materials referenced by mob drops + recipes.
 itemRegistry.register({ name: 'webmc:copper_ingot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:netherite_ingot', maxStack: 64, durability: 0 });
@@ -558,19 +902,97 @@ itemRegistry.register({ name: 'webmc:lapis_lazuli', maxStack: 64, durability: 0 
 itemRegistry.register({ name: 'webmc:diamond', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:amethyst_shard', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:salmon', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:cod', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
-itemRegistry.register({ name: 'webmc:tropical_fish', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.2 });
-itemRegistry.register({ name: 'webmc:pufferfish', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.2 });
-itemRegistry.register({ name: 'webmc:cooked_cod', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:cooked_salmon', maxStack: 64, durability: 0, hungerRestore: 6, saturation: 9.6 });
-itemRegistry.register({ name: 'webmc:rabbit', maxStack: 64, durability: 0, hungerRestore: 3, saturation: 1.8 });
-itemRegistry.register({ name: 'webmc:cooked_rabbit', maxStack: 64, durability: 0, hungerRestore: 5, saturation: 6 });
-itemRegistry.register({ name: 'webmc:rabbit_stew', maxStack: 1, durability: 0, hungerRestore: 10, saturation: 12 });
-itemRegistry.register({ name: 'webmc:beef', maxStack: 64, durability: 0, hungerRestore: 3, saturation: 1.8 });
-itemRegistry.register({ name: 'webmc:porkchop', maxStack: 64, durability: 0, hungerRestore: 3, saturation: 1.8 });
-itemRegistry.register({ name: 'webmc:mutton', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
-itemRegistry.register({ name: 'webmc:chicken', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
+itemRegistry.register({
+  name: 'webmc:salmon',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:cod',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 0.4,
+});
+itemRegistry.register({
+  name: 'webmc:tropical_fish',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 1,
+  saturation: 0.2,
+});
+itemRegistry.register({
+  name: 'webmc:pufferfish',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 1,
+  saturation: 0.2,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_cod',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_salmon',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 9.6,
+});
+itemRegistry.register({
+  name: 'webmc:rabbit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:cooked_rabbit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 5,
+  saturation: 6,
+});
+itemRegistry.register({
+  name: 'webmc:rabbit_stew',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 10,
+  saturation: 12,
+});
+itemRegistry.register({
+  name: 'webmc:beef',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:porkchop',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:mutton',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:chicken',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
 itemRegistry.register({ name: 'webmc:poppy', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:dandelion', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:blue_orchid', maxStack: 64, durability: 0 });
@@ -628,14 +1050,28 @@ const playerState = new PlayerState({
     for (const slot of inventory.hotbar) {
       if (!slot) continue;
       const def = itemRegistry.get(slot.itemId);
-      const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
-      droppedItems.spawn(px, py, pz, { itemId: slot.itemId, count: slot.count, color: colorRgb }, 3);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        3,
+      );
     }
     for (const slot of inventory.main) {
       if (!slot) continue;
       const def = itemRegistry.get(slot.itemId);
-      const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
-      droppedItems.spawn(px, py, pz, { itemId: slot.itemId, count: slot.count, color: colorRgb }, 3);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        3,
+      );
     }
   },
   onRespawn: () => {
@@ -715,7 +1151,15 @@ const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
 const tamedMobs = new Map<number, TameableState>();
-const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
+const TAMEABLE_KINDS: ReadonlySet<string> = new Set([
+  'wolf',
+  'cat',
+  'parrot',
+  'horse',
+  'donkey',
+  'mule',
+  'llama',
+]);
 const lovingMobs = new Map<number, AnimalLove>();
 const leashedMobs = new Set<number>();
 const saddledMobs = new Set<number>();
@@ -725,9 +1169,25 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
   sheep: ['webmc:wheat'],
   pig: ['webmc:carrot', 'webmc:potato', 'webmc:beetroot'],
-  chicken: ['webmc:wheat_seeds', 'webmc:melon_seeds', 'webmc:pumpkin_seeds', 'webmc:beetroot_seeds'],
+  chicken: [
+    'webmc:wheat_seeds',
+    'webmc:melon_seeds',
+    'webmc:pumpkin_seeds',
+    'webmc:beetroot_seeds',
+  ],
   rabbit: ['webmc:carrot', 'webmc:dandelion'],
-  wolf: ['webmc:beef', 'webmc:cooked_beef', 'webmc:porkchop', 'webmc:cooked_porkchop', 'webmc:chicken', 'webmc:cooked_chicken', 'webmc:mutton', 'webmc:cooked_mutton', 'webmc:rabbit', 'webmc:cooked_rabbit'],
+  wolf: [
+    'webmc:beef',
+    'webmc:cooked_beef',
+    'webmc:porkchop',
+    'webmc:cooked_porkchop',
+    'webmc:chicken',
+    'webmc:cooked_chicken',
+    'webmc:mutton',
+    'webmc:cooked_mutton',
+    'webmc:rabbit',
+    'webmc:cooked_rabbit',
+  ],
   cat: ['webmc:raw_fish', 'webmc:raw_salmon', 'webmc:cod', 'webmc:salmon'],
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   goat: ['webmc:wheat'],
@@ -852,8 +1312,15 @@ let prevInWater = false;
 let maceFallStartY = 0;
 let isGliding = false;
 let tickRateMultiplier = 1;
-const regionPoints: { a: { x: number; y: number; z: number } | null; b: { x: number; y: number; z: number } | null } = { a: null, b: null };
-type LoadoutSnap = { hotbar: ((typeof inventory.hotbar)[number] | null)[]; main: ((typeof inventory.main)[number] | null)[]; armor: ((typeof inventory.armor)[number] | null)[] };
+const regionPoints: {
+  a: { x: number; y: number; z: number } | null;
+  b: { x: number; y: number; z: number } | null;
+} = { a: null, b: null };
+interface LoadoutSnap {
+  hotbar: ((typeof inventory.hotbar)[number] | null)[];
+  main: ((typeof inventory.main)[number] | null)[];
+  armor: ((typeof inventory.armor)[number] | null)[];
+}
 const loadouts = new Map<string, LoadoutSnap>();
 void persistDB.getMeta('loadouts').then((saved) => {
   if (saved && typeof saved === 'object') {
@@ -883,18 +1350,46 @@ const achievements: readonly Achievement[] = [
   { id: 'mason', title: 'Mason (100 blocks placed)', check: () => playerStats.blocksPlaced >= 100 },
   { id: 'miner', title: 'Miner (100 blocks broken)', check: () => playerStats.blocksBroken >= 100 },
   { id: 'slayer', title: 'Slayer (10 mobs killed)', check: () => playerStats.mobsKilled >= 10 },
-  { id: 'traveler', title: 'Traveler (500m walked)', check: () => playerStats.distanceWalked >= 500 },
-  { id: 'explorer', title: 'Explorer (1 hour played)', check: () => playerStats.playtimeSec >= 3600 },
+  {
+    id: 'traveler',
+    title: 'Traveler (500m walked)',
+    check: () => playerStats.distanceWalked >= 500,
+  },
+  {
+    id: 'explorer',
+    title: 'Explorer (1 hour played)',
+    check: () => playerStats.playtimeSec >= 3600,
+  },
   { id: 'level_10', title: 'Level 10', check: () => playerState.xpLevel >= 10 },
   { id: 'survivor', title: 'Survivor (day 5)', check: () => dayCounter >= 5 },
-  { id: 'marathon', title: 'Marathon (5km walked)', check: () => playerStats.distanceWalked >= 5000 },
-  { id: 'architect', title: 'Architect (1000 blocks placed)', check: () => playerStats.blocksPlaced >= 1000 },
+  {
+    id: 'marathon',
+    title: 'Marathon (5km walked)',
+    check: () => playerStats.distanceWalked >= 5000,
+  },
+  {
+    id: 'architect',
+    title: 'Architect (1000 blocks placed)',
+    check: () => playerStats.blocksPlaced >= 1000,
+  },
   { id: 'mountain', title: 'Above Sea Level (y > 100)', check: () => fp.position.y >= 100 },
   { id: 'caver', title: 'Spelunker (y < 30)', check: () => fp.position.y <= 30 },
   { id: 'hunter', title: 'Hunter (50 mobs killed)', check: () => playerStats.mobsKilled >= 50 },
-  { id: 'demolisher', title: 'Demolisher (1000 blocks broken)', check: () => playerStats.blocksBroken >= 1000 },
-  { id: 'iron_age', title: 'Iron Age', check: () => inventory.count(itemRegistry.byName('webmc:iron_ingot') ?? -1) >= 1 },
-  { id: 'diamond_hunter', title: 'Diamond Hunter', check: () => inventory.count(itemRegistry.byName('webmc:diamond') ?? -1) >= 1 },
+  {
+    id: 'demolisher',
+    title: 'Demolisher (1000 blocks broken)',
+    check: () => playerStats.blocksBroken >= 1000,
+  },
+  {
+    id: 'iron_age',
+    title: 'Iron Age',
+    check: () => inventory.count(itemRegistry.byName('webmc:iron_ingot') ?? -1) >= 1,
+  },
+  {
+    id: 'diamond_hunter',
+    title: 'Diamond Hunter',
+    check: () => inventory.count(itemRegistry.byName('webmc:diamond') ?? -1) >= 1,
+  },
   { id: 'level_30', title: 'Level 30 (max enchant)', check: () => playerState.xpLevel >= 30 },
   { id: 'two_weeks', title: 'Two Weeks (day 14)', check: () => dayCounter >= 14 },
   { id: 'sky_walker', title: 'Sky Walker (y > 200)', check: () => fp.position.y >= 200 },
@@ -942,7 +1437,11 @@ const worldBorder = makeWorldBorder(60_000_000);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
 const moodState = makeMoodState();
-let underwaterAmbient: UnderwaterAmbientState = { submerged: false, ticksUntilNextLoop: 200, ticksUntilNextRare: 1000 };
+let underwaterAmbient: UnderwaterAmbientState = {
+  submerged: false,
+  ticksUntilNextLoop: 200,
+  ticksUntilNextRare: 1000,
+};
 const autosaveState = makeSaveState();
 const TUTORIAL_TEXT: Record<HintId, string> = {
   welcome: 'Welcome to webmc! Use WASD to move, mouse to look. Press E for inventory.',
@@ -988,9 +1487,27 @@ const afkBadge = (() => {
   return el;
 })();
 
-window.addEventListener('mousemove', () => { lastInputTick = currentTickCount; }, { passive: true });
-window.addEventListener('keydown', () => { lastInputTick = currentTickCount; }, { passive: true });
-window.addEventListener('touchstart', () => { lastInputTick = currentTickCount; }, { passive: true });
+window.addEventListener(
+  'mousemove',
+  () => {
+    lastInputTick = currentTickCount;
+  },
+  { passive: true },
+);
+window.addEventListener(
+  'keydown',
+  () => {
+    lastInputTick = currentTickCount;
+  },
+  { passive: true },
+);
+window.addEventListener(
+  'touchstart',
+  () => {
+    lastInputTick = currentTickCount;
+  },
+  { passive: true },
+);
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   if (w === 'clear') {
@@ -1000,7 +1517,10 @@ function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
     const biomeName = biomeId === 1 ? 'forest' : 'plains';
     const baseTemp = biomeTemperature(biomeName);
     // Altitude lowers temperature (MC: 0.00166 per block above Y=64).
-    const adjTemp = adjustedTemperature({ baseTemperature: baseTemp, hasPrecipitation: true }, fp.position.y);
+    const adjTemp = adjustedTemperature(
+      { baseTemperature: baseTemp, hasPrecipitation: true },
+      fp.position.y,
+    );
     const kind = kindForWeather({ raining: true, intensity: 1, biomeTemperature: adjTemp });
     if (kind === 'none') {
       rain.setActive(false);
@@ -1014,7 +1534,13 @@ function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
 
 function biomeTemperature(biome: string): number {
   if (biome.includes('desert') || biome.includes('savanna')) return 1.6;
-  if (biome.includes('snow') || biome.includes('frozen') || biome.includes('ice') || biome.includes('taiga')) return 0.05;
+  if (
+    biome.includes('snow') ||
+    biome.includes('frozen') ||
+    biome.includes('ice') ||
+    biome.includes('taiga')
+  )
+    return 0.05;
   if (biome.includes('jungle') || biome.includes('swamp')) return 0.95;
   return 0.7;
 }
@@ -1032,7 +1558,12 @@ let lightningFlashSec = 0;
 function lightningFlash(): void {
   lightningFlashSec = 0.18;
   sfx.play('hit');
-  audio.play3D('break', fp.position.x + (Math.random() - 0.5) * 30, fp.position.y, fp.position.z + (Math.random() - 0.5) * 30);
+  audio.play3D(
+    'break',
+    fp.position.x + (Math.random() - 0.5) * 30,
+    fp.position.y,
+    fp.position.z + (Math.random() - 0.5) * 30,
+  );
   chatInput.addLine('⚡ Lightning strikes nearby!', '#e0e0ff');
   screenShake.pulse(0.35);
 }
@@ -1041,8 +1572,19 @@ const mesherClient = createMesherClient();
 const audio = new AudioBus({ masterVolume: 0.35 });
 audio.attachUnlock(document.body);
 
-function findSafeRespawnNear(x: number, y: number, z: number): { x: number; y: number; z: number } | null {
-  const candidates: { x: number; y: number; z: number; solidBelow: boolean; airAt: boolean; airAbove: boolean }[] = [];
+function findSafeRespawnNear(
+  x: number,
+  y: number,
+  z: number,
+): { x: number; y: number; z: number } | null {
+  const candidates: {
+    x: number;
+    y: number;
+    z: number;
+    solidBelow: boolean;
+    airAt: boolean;
+    airAbove: boolean;
+  }[] = [];
   const RADIUS = 3;
   for (let dy = 0; dy <= 1; dy++) {
     for (let dx = -RADIUS; dx <= RADIUS; dx++) {
@@ -1149,7 +1691,10 @@ const interaction = new InteractionController(
       const prevState = world.get(bx, by, bz);
       const prevBlockId = stateId(prevState);
       const def = registry.get(prevBlockId);
-      subtitles.push(`Block broken: ${def.name.replace(/^webmc:/, '')}`, directionFromPlayer(bx + 0.5, bz + 0.5));
+      subtitles.push(
+        `Block broken: ${def.name.replace(/^webmc:/, '')}`,
+        directionFromPlayer(bx + 0.5, bz + 0.5),
+      );
       blockParticles.emitBreak(bx, by, bz, def.color);
       // Mining XP for ores (matches MC: coal 0-2, iron 0 via smelt, diamond 3-7, redstone 1-5, lapis 2-5, emerald 3-7).
       if (gameMode === 'survival' || gameMode === 'adventure') {
@@ -1167,13 +1712,19 @@ const interaction = new InteractionController(
       else if (heldNameForTool.includes('stone')) toolLevel = 2;
       else if (heldNameForTool.includes('wood') || heldNameForTool.includes('gold')) toolLevel = 1;
       else toolLevel = 0; // bare hand
-      const dropsAllowed = (gameMode === 'creative') || (toolLevel >= requiredLevel);
+      const dropsAllowed = gameMode === 'creative' || toolLevel >= requiredLevel;
       // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
       const CROP_DROP: Record<string, { id: string; min: number; max: number }[]> = {
-        'webmc:wheat': [{ id: 'webmc:wheat', min: 1, max: 1 }, { id: 'webmc:wheat_seeds', min: 0, max: 3 }],
+        'webmc:wheat': [
+          { id: 'webmc:wheat', min: 1, max: 1 },
+          { id: 'webmc:wheat_seeds', min: 0, max: 3 },
+        ],
         'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
         'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
-        'webmc:beetroots': [{ id: 'webmc:beetroot', min: 1, max: 1 }, { id: 'webmc:beetroot_seeds', min: 1, max: 3 }],
+        'webmc:beetroots': [
+          { id: 'webmc:beetroot', min: 1, max: 1 },
+          { id: 'webmc:beetroot_seeds', min: 1, max: 3 },
+        ],
         'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
         'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
         'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
@@ -1214,16 +1765,19 @@ const interaction = new InteractionController(
         }
       }
       const cropDrop = CROP_DROP[def.name];
-      const drops = leafDrops !== null
-        ? leafDrops
-        : cropDrop && dropsAllowed
-        ? cropDrop.flatMap((d) => {
-            const id = itemRegistry.byName(d.id);
-            if (id === undefined) return [];
-            const c = d.min + Math.floor(Math.random() * (d.max - d.min + 1));
-            return c > 0 ? [{ itemId: id, count: c, damage: 0 }] : [];
-          })
-        : (gameRules.doTileDrops && dropsAllowed) ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
+      const drops =
+        leafDrops !== null
+          ? leafDrops
+          : cropDrop && dropsAllowed
+            ? cropDrop.flatMap((d) => {
+                const id = itemRegistry.byName(d.id);
+                if (id === undefined) return [];
+                const c = d.min + Math.floor(Math.random() * (d.max - d.min + 1));
+                return c > 0 ? [{ itemId: id, count: c, damage: 0 }] : [];
+              })
+            : gameRules.doTileDrops && dropsAllowed
+              ? dropRegistry.drops(prevBlockId, undefined, 99)
+              : [];
       if (gameMode === 'survival' || gameMode === 'adventure') {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
@@ -1244,7 +1798,8 @@ const interaction = new InteractionController(
         consumeHeldToolDurability(1);
       }
       if (def.name === 'webmc:oak_log') fireTutorial('collected_log');
-      if (def.name === 'webmc:cobblestone' || def.name === 'webmc:cobble') fireTutorial('collected_cobblestone');
+      if (def.name === 'webmc:cobblestone' || def.name === 'webmc:cobble')
+        fireTutorial('collected_cobblestone');
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
@@ -1253,7 +1808,10 @@ const interaction = new InteractionController(
       const blockId = sel ? stateId(sel.state) : 0;
       if (sel) {
         const def = registry.get(stateId(sel.state));
-        subtitles.push(`Block placed: ${def.name.replace(/^webmc:/, '')}`, directionFromPlayer(bx + 0.5, bz + 0.5));
+        subtitles.push(
+          `Block placed: ${def.name.replace(/^webmc:/, '')}`,
+          directionFromPlayer(bx + 0.5, bz + 0.5),
+        );
         blockParticles.emitPlace(bx, by, bz, def.color);
         // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
         if (def.name === 'webmc:sponge') {
@@ -1322,8 +1880,13 @@ const interaction = new InteractionController(
             consumeHeldToolDurability(1);
             sfx.play('break');
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
-            const verb = result.kind === 'strip' ? 'Stripped' : result.kind === 'unwax' ? 'Un-waxed' : 'Scraped';
-            subtitles.push(`${verb}`);
+            const verb =
+              result.kind === 'strip'
+                ? 'Stripped'
+                : result.kind === 'unwax'
+                  ? 'Un-waxed'
+                  : 'Scraped';
+            subtitles.push(verb);
             return true;
           }
         }
@@ -1361,10 +1924,18 @@ const interaction = new InteractionController(
       }
       // End crystal: place hovering crystal that explodes on hit (visual only — no projectile path).
       if (heldName === 'end_crystal' && def.name === 'webmc:obsidian' && airAbove) {
-        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        const cx = bx + 0.5,
+          cy = by + 1,
+          cz = bz + 0.5;
         // Hovering visual: pillar of magenta particles, then a "primed" subtitle.
         for (let h = 0; h < 12; h++) {
-          for (let i = 0; i < 4; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 0.8, cy + h * 0.2, cz + (Math.random() - 0.5) * 0.8, [220, 100, 220]);
+          for (let i = 0; i < 4; i++)
+            blockParticles.emitPlace(
+              cx + (Math.random() - 0.5) * 0.8,
+              cy + h * 0.2,
+              cz + (Math.random() - 0.5) * 0.8,
+              [220, 100, 220],
+            );
         }
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const eId = itemRegistry.byName('webmc:end_crystal');
@@ -1376,11 +1947,18 @@ const interaction = new InteractionController(
       }
       // Echo shard: ping subtitles + radial blue particles (warden / sculk audio cue).
       if (heldName === 'echo_shard') {
-        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        const cx = bx + 0.5,
+          cy = by + 1,
+          cz = bz + 0.5;
         for (let i = 0; i < 32; i++) {
           const ang = Math.random() * Math.PI * 2;
           const r = 1 + Math.random() * 5;
-          blockParticles.emitPlace(cx + Math.cos(ang) * r, cy + (Math.random() - 0.5) * 2, cz + Math.sin(ang) * r, [80, 200, 220]);
+          blockParticles.emitPlace(
+            cx + Math.cos(ang) * r,
+            cy + (Math.random() - 0.5) * 2,
+            cz + Math.sin(ang) * r,
+            [80, 200, 220],
+          );
         }
         sfx.play('break');
         subtitles.push('Echo ping…');
@@ -1388,15 +1966,28 @@ const interaction = new InteractionController(
       }
       // Bottle o' enchanting: spawn 3-11 XP orbs at hit point.
       if (heldName === 'experience_bottle') {
-        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        const cx = bx + 0.5,
+          cy = by + 1,
+          cz = bz + 0.5;
         const total = 3 + Math.floor(Math.random() * 9);
         let remaining = total;
         while (remaining > 0) {
           const chunk = Math.min(remaining, 1 + Math.floor(Math.random() * 5));
-          xpOrbs.spawn(cx + (Math.random() - 0.5) * 1.5, cy + Math.random(), cz + (Math.random() - 0.5) * 1.5, chunk);
+          xpOrbs.spawn(
+            cx + (Math.random() - 0.5) * 1.5,
+            cy + Math.random(),
+            cz + (Math.random() - 0.5) * 1.5,
+            chunk,
+          );
           remaining -= chunk;
         }
-        for (let i = 0; i < 16; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5), cy + Math.random(), cz + (Math.random() - 0.5), [220, 230, 80]);
+        for (let i = 0; i < 16; i++)
+          blockParticles.emitPlace(
+            cx + (Math.random() - 0.5),
+            cy + Math.random(),
+            cz + (Math.random() - 0.5),
+            [220, 230, 80],
+          );
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const xbId = itemRegistry.byName('webmc:experience_bottle');
           if (xbId !== undefined) consumeInventoryItem(xbId, 1);
@@ -1408,7 +1999,13 @@ const interaction = new InteractionController(
       // Fishing rod: cast at water; on water-block target, roll a fish drop after 5-30s wait.
       if (heldName === 'fishing_rod' && def.name === 'webmc:water') {
         consumeHeldToolDurability(1);
-        for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + 0.5 + (Math.random() - 0.5), by + 1, bz + 0.5 + (Math.random() - 0.5), [200, 220, 240]);
+        for (let i = 0; i < 12; i++)
+          blockParticles.emitPlace(
+            bx + 0.5 + (Math.random() - 0.5),
+            by + 1,
+            bz + 0.5 + (Math.random() - 0.5),
+            [200, 220, 240],
+          );
         sfx.play('click');
         subtitles.push('Cast line');
         // Schedule a fish drop in 5-30s.
@@ -1416,9 +2013,16 @@ const interaction = new InteractionController(
         setTimeout(() => {
           if (gameMode !== 'survival' && gameMode !== 'adventure') return;
           const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:raw_fish', 'webmc:tropical_fish'];
-          const treasure = ['webmc:bow', 'webmc:enchanted_book', 'webmc:fishing_rod', 'webmc:nautilus_shell'];
+          const treasure = [
+            'webmc:bow',
+            'webmc:enchanted_book',
+            'webmc:fishing_rod',
+            'webmc:nautilus_shell',
+          ];
           const useTreasure = Math.random() < 0.05;
-          const pool = (useTreasure ? treasure : FISH).filter((n) => itemRegistry.byName(n) !== undefined);
+          const pool = (useTreasure ? treasure : FISH).filter(
+            (n) => itemRegistry.byName(n) !== undefined,
+          );
           if (pool.length === 0) return;
           const pickName = pool[Math.floor(Math.random() * pool.length)] ?? 'webmc:cod';
           const itemId = itemRegistry.byName(pickName);
@@ -1438,7 +2042,12 @@ const interaction = new InteractionController(
         for (let i = 0; i < 30; i++) {
           const ang = Math.random() * Math.PI * 2;
           const r = 1 + Math.random() * 6;
-          blockParticles.emitPlace(fp.position.x + Math.cos(ang) * r, fp.position.y + 0.5 + (Math.random() - 0.5) * 1.2, fp.position.z + Math.sin(ang) * r, [220, 200, 130]);
+          blockParticles.emitPlace(
+            fp.position.x + Math.cos(ang) * r,
+            fp.position.y + 0.5 + (Math.random() - 0.5) * 1.2,
+            fp.position.z + Math.sin(ang) * r,
+            [220, 200, 130],
+          );
         }
         subtitles.push('Goat horn sounds');
         return true;
@@ -1450,10 +2059,18 @@ const interaction = new InteractionController(
         for (let i = 0; i < 36; i++) {
           const ang = Math.random() * Math.PI * 2;
           const r = 0.5 + Math.random() * 4;
-          blockParticles.emitPlace(bx + 0.5 + Math.cos(ang) * r, by + 0.5 + Math.random() * 3, bz + 0.5 + Math.sin(ang) * r, [180, 80, 220]);
+          blockParticles.emitPlace(
+            bx + 0.5 + Math.cos(ang) * r,
+            by + 0.5 + Math.random() * 3,
+            bz + 0.5 + Math.sin(ang) * r,
+            [180, 80, 220],
+          );
         }
         const note = NOTES[Math.floor(Math.random() * NOTES.length)] ?? '♪';
-        chatInput.addLine(`${note} Now playing: ${heldName.replace('music_disc_', 'C418 - ')}`, '#d0a0ff');
+        chatInput.addLine(
+          `${note} Now playing: ${heldName.replace('music_disc_', 'C418 - ')}`,
+          '#d0a0ff',
+        );
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const dId = itemRegistry.byName(`webmc:${heldName}`);
           if (dId !== undefined) consumeInventoryItem(dId, 1);
@@ -1463,14 +2080,28 @@ const interaction = new InteractionController(
       // Music disc: short particle play; placed-on-jukebox not yet wired.
       if (heldName.startsWith('music_disc_')) {
         sfx.play('click');
-        for (let i = 0; i < 18; i++) blockParticles.emitPlace(bx + 0.5 + (Math.random() - 0.5), by + 1 + Math.random(), bz + 0.5 + (Math.random() - 0.5), [180, 120, 220]);
+        for (let i = 0; i < 18; i++)
+          blockParticles.emitPlace(
+            bx + 0.5 + (Math.random() - 0.5),
+            by + 1 + Math.random(),
+            bz + 0.5 + (Math.random() - 0.5),
+            [180, 120, 220],
+          );
         subtitles.push(`Now playing: ${heldName.replace('music_disc_', '')}`);
         return true;
       }
       // Wind charge: right-click block → AOE knockback in 3-block radius (MC 1.21+ Breeze drop).
       if (heldName === 'wind_charge') {
-        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
-        for (let i = 0; i < 24; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 3, cy + Math.random() * 2, cz + (Math.random() - 0.5) * 3, [200, 220, 255]);
+        const cx = bx + 0.5,
+          cy = by + 1,
+          cz = bz + 0.5;
+        for (let i = 0; i < 24; i++)
+          blockParticles.emitPlace(
+            cx + (Math.random() - 0.5) * 3,
+            cy + Math.random() * 2,
+            cz + (Math.random() - 0.5) * 3,
+            [200, 220, 255],
+          );
         for (const m of mobWorld.all()) {
           const dx = m.position.x - cx;
           const dy = m.position.y - cy;
@@ -1501,30 +2132,51 @@ const interaction = new InteractionController(
         return true;
       }
       // Trident with Riptide (active when player is in water OR rain): propel forward.
-      if (heldName === 'trident' && (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')) {
+      if (
+        heldName === 'trident' &&
+        (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')
+      ) {
         const look = fp.lookVector();
         const power = 18;
         fp.velocity.x += look.x * power;
         fp.velocity.y += look.y * power;
         fp.velocity.z += look.z * power;
         consumeHeldToolDurability(1);
-        for (let i = 0; i < 24; i++) blockParticles.emitPlace(fp.position.x + (Math.random() - 0.5), fp.position.y + Math.random() * 2, fp.position.z + (Math.random() - 0.5), [180, 220, 255]);
+        for (let i = 0; i < 24; i++)
+          blockParticles.emitPlace(
+            fp.position.x + (Math.random() - 0.5),
+            fp.position.y + Math.random() * 2,
+            fp.position.z + (Math.random() - 0.5),
+            [180, 220, 255],
+          );
         sfx.play('break');
         subtitles.push('Riptide!');
         return true;
       }
       // Snowball / egg: small visual hit at target, no projectile arc.
       if (heldName === 'snowball' || heldName === 'egg') {
-        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
-        const burstColor: [number, number, number] = heldName === 'snowball' ? [240, 250, 255] : [240, 220, 180];
-        for (let i = 0; i < 16; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 1.5, cy + Math.random(), cz + (Math.random() - 0.5) * 1.5, burstColor);
+        const cx = bx + 0.5,
+          cy = by + 1,
+          cz = bz + 0.5;
+        const burstColor: [number, number, number] =
+          heldName === 'snowball' ? [240, 250, 255] : [240, 220, 180];
+        for (let i = 0; i < 16; i++)
+          blockParticles.emitPlace(
+            cx + (Math.random() - 0.5) * 1.5,
+            cy + Math.random(),
+            cz + (Math.random() - 0.5) * 1.5,
+            burstColor,
+          );
         // Knockback nearest mob within 2 blocks of impact (~1 dmg if egg, snowballs do 0 to most mobs but knock blaze/dragon).
         for (const m of mobWorld.all()) {
           const dx = m.position.x - cx;
           const dy = m.position.y - cy;
           const dz = m.position.z - cz;
           if (dx * dx + dy * dy + dz * dz > 4) continue;
-          if (heldName === 'snowball' && (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')) {
+          if (
+            heldName === 'snowball' &&
+            (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')
+          ) {
             mobWorld.damage(m.id, 3);
           } else {
             // Just knockback.
@@ -1536,7 +2188,11 @@ const interaction = new InteractionController(
         }
         // Egg: 12.5% chance to hatch a chicken at impact.
         if (heldName === 'egg' && Math.random() < 0.125) {
-          try { mobWorld.spawn('chicken', { x: cx, y: cy, z: cz }); } catch { /* ignore */ }
+          try {
+            mobWorld.spawn('chicken', { x: cx, y: cy, z: cz });
+          } catch {
+            /* ignore */
+          }
           subtitles.push('Egg hatched!');
         }
         if (gameMode === 'survival' || gameMode === 'adventure') {
@@ -1557,7 +2213,13 @@ const interaction = new InteractionController(
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
-        for (let i = 0; i < 18; i++) blockParticles.emitPlace(fp.position.x + (Math.random() - 0.5), fp.position.y - 0.5 + Math.random() * 0.5, fp.position.z + (Math.random() - 0.5), [255, 200, 100]);
+        for (let i = 0; i < 18; i++)
+          blockParticles.emitPlace(
+            fp.position.x + (Math.random() - 0.5),
+            fp.position.y - 0.5 + Math.random() * 0.5,
+            fp.position.z + (Math.random() - 0.5),
+            [255, 200, 100],
+          );
         sfx.play('break');
         subtitles.push('Firework boost!');
         return true;
@@ -1567,15 +2229,33 @@ const interaction = new InteractionController(
         const px = bx + 0.5;
         const pz = bz + 0.5;
         for (let h = 0; h < 8; h++) {
-          for (let i = 0; i < 3; i++) blockParticles.emitPlace(px + (Math.random() - 0.5) * 0.5, by + h, pz + (Math.random() - 0.5) * 0.5, [255, 220, 80]);
+          for (let i = 0; i < 3; i++)
+            blockParticles.emitPlace(
+              px + (Math.random() - 0.5) * 0.5,
+              by + h,
+              pz + (Math.random() - 0.5) * 0.5,
+              [255, 220, 80],
+            );
         }
-        const COLORS: [number, number, number][] = [[255, 80, 80], [80, 255, 80], [80, 80, 255], [255, 255, 80], [255, 80, 255], [80, 255, 255]];
+        const COLORS: [number, number, number][] = [
+          [255, 80, 80],
+          [80, 255, 80],
+          [80, 80, 255],
+          [255, 255, 80],
+          [255, 80, 255],
+          [80, 255, 255],
+        ];
         const color = COLORS[Math.floor(Math.random() * COLORS.length)] ?? [255, 220, 80];
         const burstY = by + 8;
         for (let i = 0; i < 60; i++) {
           const ang = Math.random() * Math.PI * 2;
           const r = 1 + Math.random() * 4;
-          blockParticles.emitPlace(px + Math.cos(ang) * r, burstY + (Math.random() - 0.5) * 4, pz + Math.sin(ang) * r, color);
+          blockParticles.emitPlace(
+            px + Math.cos(ang) * r,
+            burstY + (Math.random() - 0.5) * 4,
+            pz + Math.sin(ang) * r,
+            color,
+          );
         }
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
@@ -1589,7 +2269,9 @@ const interaction = new InteractionController(
       if (heldName.startsWith('splash_potion_')) {
         const ptype = SPLASH_POTIONS.find((p) => p.name === `webmc:${heldName}`);
         if (ptype) {
-          const cx = bx + 0.5, cy = by + 0.5, cz = bz + 0.5;
+          const cx = bx + 0.5,
+            cy = by + 0.5,
+            cz = bz + 0.5;
           let affected = 0;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - cx;
@@ -1607,10 +2289,22 @@ const interaction = new InteractionController(
           const pdz = fp.position.z - cz;
           if (pdx * pdx + pdy * pdy + pdz * pdz <= 16) {
             if (ptype.effect === 'instant_health') playerState.heal(4);
-            else if (ptype.effect === 'instant_damage') playerState.takeDamage({ amount: 6, source: 'harming' });
-            else playerState.applyEffect(ptype.effect, ptype.amplifier, Math.floor(ptype.durSec * 0.75));
+            else if (ptype.effect === 'instant_damage')
+              playerState.takeDamage({ amount: 6, source: 'harming' });
+            else
+              playerState.applyEffect(
+                ptype.effect,
+                ptype.amplifier,
+                Math.floor(ptype.durSec * 0.75),
+              );
           }
-          for (let i = 0; i < 24; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 4, cy + Math.random() * 2, cz + (Math.random() - 0.5) * 4, [180, 100, 220]);
+          for (let i = 0; i < 24; i++)
+            blockParticles.emitPlace(
+              cx + (Math.random() - 0.5) * 4,
+              cy + Math.random() * 2,
+              cz + (Math.random() - 0.5) * 4,
+              [180, 100, 220],
+            );
           if (gameMode === 'survival' || gameMode === 'adventure') {
             const sId = itemRegistry.byName(`webmc:${heldName}`);
             if (sId !== undefined) consumeInventoryItem(sId, 1);
@@ -1624,7 +2318,11 @@ const interaction = new InteractionController(
       if (heldName.endsWith('_spawn_egg') && airAbove) {
         const mobKind = heldName.replace(/_spawn_egg$/, '');
         try {
-          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], { x: bx + 0.5, y: by + 1, z: bz + 0.5 });
+          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], {
+            x: bx + 0.5,
+            y: by + 1,
+            z: bz + 0.5,
+          });
           if (gameMode === 'survival' || gameMode === 'adventure') {
             const eggId = itemRegistry.byName(`webmc:${heldName}`);
             if (eggId !== undefined) consumeInventoryItem(eggId, 1);
@@ -1632,7 +2330,9 @@ const interaction = new InteractionController(
           subtitles.push(`Spawned ${mobKind}`);
           sfx.play('click');
           return true;
-        } catch { /* unknown mob kind */ }
+        } catch {
+          /* unknown mob kind */
+        }
       }
       // Ender pearl: teleport to hit block surface, take 5 damage.
       if (heldName === 'ender_pearl') {
@@ -1643,7 +2343,13 @@ const interaction = new InteractionController(
             const pearlId = itemRegistry.byName('webmc:ender_pearl');
             if (pearlId !== undefined) consumeInventoryItem(pearlId, 1);
           }
-          for (let i = 0; i < 16; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5), by + 1 + Math.random() * 2, bz + (Math.random() - 0.5), [60, 200, 180]);
+          for (let i = 0; i < 16; i++)
+            blockParticles.emitPlace(
+              bx + (Math.random() - 0.5),
+              by + 1 + Math.random() * 2,
+              bz + (Math.random() - 0.5),
+              [60, 200, 180],
+            );
           sfx.play('click');
           subtitles.push('Pearl warped');
           return true;
@@ -1668,7 +2374,8 @@ const interaction = new InteractionController(
         if (fireId !== undefined) {
           world.set(bx, by + 1, bz, makeState(fireId, 0));
           touchWorldEdit(bx, by + 1, bz, fireId);
-          if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(fcId, 1);
+          if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+            consumeInventoryItem(fcId, 1);
           sfx.play('click');
           subtitles.push('Ignited');
           return true;
@@ -1744,10 +2451,26 @@ const interaction = new InteractionController(
       // Composter: right-click with compostable food/plant → fill chance per item.
       if (def.name === 'webmc:composter') {
         const COMPOSTABLES: Record<string, number> = {
-          wheat: 0.65, wheat_seeds: 0.30, beetroot_seeds: 0.30, melon_seeds: 0.30, pumpkin_seeds: 0.30,
-          carrot: 0.65, potato: 0.65, beetroot: 0.65, apple: 0.65, bread: 0.85, cookie: 0.85,
-          cactus: 0.5, sugar_cane: 0.5, kelp: 0.30, dried_kelp: 0.85, sweet_berries: 0.30,
-          glow_berries: 0.30, melon_slice: 0.5, pumpkin_pie: 1.0, baked_potato: 0.85,
+          wheat: 0.65,
+          wheat_seeds: 0.3,
+          beetroot_seeds: 0.3,
+          melon_seeds: 0.3,
+          pumpkin_seeds: 0.3,
+          carrot: 0.65,
+          potato: 0.65,
+          beetroot: 0.65,
+          apple: 0.65,
+          bread: 0.85,
+          cookie: 0.85,
+          cactus: 0.5,
+          sugar_cane: 0.5,
+          kelp: 0.3,
+          dried_kelp: 0.85,
+          sweet_berries: 0.3,
+          glow_berries: 0.3,
+          melon_slice: 0.5,
+          pumpkin_pie: 1.0,
+          baked_potato: 0.85,
         };
         const chance = COMPOSTABLES[heldName];
         if (chance !== undefined) {
@@ -1804,7 +2527,8 @@ const interaction = new InteractionController(
       if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
         const wood = def.name.replace('webmc:', '').replace('_sapling', '');
         const logId = registry.byName(`webmc:${wood}_log`);
-        const leavesId = registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
+        const leavesId =
+          registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
         if (logId !== undefined && leavesId !== undefined) {
           const trunkH = 4 + Math.floor(Math.random() * 3);
           for (let h = 0; h < trunkH; h++) {
@@ -1819,7 +2543,9 @@ const interaction = new InteractionController(
               for (let dy = trunkH - 2; dy <= trunkH; dy++) {
                 if (dx === 0 && dz === 0 && dy < trunkH) continue;
                 if (Math.abs(dx) + Math.abs(dz) > 3) continue;
-                const lx = bx + dx, ly = by + dy, lz = bz + dz;
+                const lx = bx + dx,
+                  ly = by + dy,
+                  lz = bz + dz;
                 if (world.get(lx, ly, lz) !== AIR) continue;
                 if (Math.random() < 0.85) {
                   world.set(lx, ly, lz, makeState(leavesId, 0));
@@ -1832,14 +2558,26 @@ const interaction = new InteractionController(
             const bmId = itemRegistry.byName('webmc:bone_meal');
             if (bmId !== undefined) consumeInventoryItem(bmId, 1);
           }
-          for (let i = 0; i < 18; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5) * 3, by + Math.random() * trunkH, bz + (Math.random() - 0.5) * 3, [200, 220, 80]);
+          for (let i = 0; i < 18; i++)
+            blockParticles.emitPlace(
+              bx + (Math.random() - 0.5) * 3,
+              by + Math.random() * trunkH,
+              bz + (Math.random() - 0.5) * 3,
+              [200, 220, 80],
+            );
           subtitles.push('Tree grown');
           sfx.play('place');
           return true;
         }
       }
       // Bone meal on crops: jump straight to harvestable form (wheat, carrots, potatoes, beetroots).
-      if (heldName === 'bone_meal' && (def.name === 'webmc:wheat' || def.name === 'webmc:carrots' || def.name === 'webmc:potatoes' || def.name === 'webmc:beetroots')) {
+      if (
+        heldName === 'bone_meal' &&
+        (def.name === 'webmc:wheat' ||
+          def.name === 'webmc:carrots' ||
+          def.name === 'webmc:potatoes' ||
+          def.name === 'webmc:beetroots')
+      ) {
         // Drop the corresponding harvested item.
         const dropMap: Record<string, string[]> = {
           'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
@@ -1864,14 +2602,29 @@ const interaction = new InteractionController(
           const bmId = itemRegistry.byName('webmc:bone_meal');
           if (bmId !== undefined) consumeInventoryItem(bmId, 1);
         }
-        for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5), by + 0.5 + Math.random() * 0.6, bz + (Math.random() - 0.5), [200, 220, 80]);
+        for (let i = 0; i < 12; i++)
+          blockParticles.emitPlace(
+            bx + (Math.random() - 0.5),
+            by + 0.5 + Math.random() * 0.6,
+            bz + (Math.random() - 0.5),
+            [200, 220, 80],
+          );
         subtitles.push('Crop matured');
         return true;
       }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
-          const FLOWERS = ['webmc:dandelion', 'webmc:poppy', 'webmc:blue_orchid', 'webmc:allium', 'webmc:azure_bluet', 'webmc:oxeye_daisy', 'webmc:cornflower', 'webmc:lily_of_the_valley'];
+          const FLOWERS = [
+            'webmc:dandelion',
+            'webmc:poppy',
+            'webmc:blue_orchid',
+            'webmc:allium',
+            'webmc:azure_bluet',
+            'webmc:oxeye_daisy',
+            'webmc:cornflower',
+            'webmc:lily_of_the_valley',
+          ];
           let spawned = 0;
           for (const f of result.spawnFlora) {
             const tx = bx + f.x;
@@ -1883,7 +2636,10 @@ const interaction = new InteractionController(
             if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:dirt') continue;
             const above = world.get(tx, surfaceY + 1, tz);
             if (above !== AIR) continue;
-            const blockName = f.type === 'flower' ? FLOWERS[Math.floor(Math.random() * FLOWERS.length)] ?? 'webmc:dandelion' : 'webmc:short_grass';
+            const blockName =
+              f.type === 'flower'
+                ? (FLOWERS[Math.floor(Math.random() * FLOWERS.length)] ?? 'webmc:dandelion')
+                : 'webmc:short_grass';
             const blockId = registry.byName(blockName);
             if (blockId !== undefined) {
               world.set(tx, surfaceY + 1, tz, makeState(blockId, 0));
@@ -1893,8 +2649,15 @@ const interaction = new InteractionController(
           }
           if (spawned > 0) {
             const itemId = itemRegistry.byName('webmc:bone_meal');
-            if (itemId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(itemId, 1);
-            for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5) * 4, by + 0.5 + Math.random(), bz + (Math.random() - 0.5) * 4, [200, 220, 80]);
+            if (itemId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+              consumeInventoryItem(itemId, 1);
+            for (let i = 0; i < 12; i++)
+              blockParticles.emitPlace(
+                bx + (Math.random() - 0.5) * 4,
+                by + 0.5 + Math.random(),
+                bz + (Math.random() - 0.5) * 4,
+                [200, 220, 80],
+              );
             subtitles.push('Bone meal applied');
             return true;
           }
@@ -1914,7 +2677,14 @@ const interaction = new InteractionController(
         touchWorldEdit(bx, by, bz, id);
         return true;
       }
-      if (def.name === 'webmc:chest' || def.name === 'webmc:trapped_chest' || def.name === 'webmc:ender_chest' || def.name === 'webmc:barrel' || def.name.endsWith('_shulker_box') || def.name === 'webmc:shulker_box') {
+      if (
+        def.name === 'webmc:chest' ||
+        def.name === 'webmc:trapped_chest' ||
+        def.name === 'webmc:ender_chest' ||
+        def.name === 'webmc:barrel' ||
+        def.name.endsWith('_shulker_box') ||
+        def.name === 'webmc:shulker_box'
+      ) {
         chestUI.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
@@ -1938,7 +2708,28 @@ const interaction = new InteractionController(
         sfx.play('click');
         return true;
       }
-      const WORKSTATIONS = new Set(['webmc:crafting_table', 'webmc:furnace', 'webmc:smoker', 'webmc:blast_furnace', 'webmc:enchanting_table', 'webmc:anvil', 'webmc:chipped_anvil', 'webmc:damaged_anvil', 'webmc:smithing_table', 'webmc:fletching_table', 'webmc:cartography_table', 'webmc:loom', 'webmc:grindstone', 'webmc:stonecutter', 'webmc:lectern', 'webmc:brewing_stand', 'webmc:beacon', 'webmc:respawn_anchor', 'webmc:lodestone', 'webmc:conduit']);
+      const WORKSTATIONS = new Set([
+        'webmc:crafting_table',
+        'webmc:furnace',
+        'webmc:smoker',
+        'webmc:blast_furnace',
+        'webmc:enchanting_table',
+        'webmc:anvil',
+        'webmc:chipped_anvil',
+        'webmc:damaged_anvil',
+        'webmc:smithing_table',
+        'webmc:fletching_table',
+        'webmc:cartography_table',
+        'webmc:loom',
+        'webmc:grindstone',
+        'webmc:stonecutter',
+        'webmc:lectern',
+        'webmc:brewing_stand',
+        'webmc:beacon',
+        'webmc:respawn_anchor',
+        'webmc:lodestone',
+        'webmc:conduit',
+      ]);
       if (WORKSTATIONS.has(def.name)) {
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
@@ -1983,7 +2774,8 @@ function heldAttackFullChargeMs(heldName: string): number {
   let attacksPerSec = 4.0;
   if (heldName.includes('sword')) attacksPerSec = 1.6;
   else if (heldName.includes('netherite_axe')) attacksPerSec = 1.0;
-  else if (heldName.includes('axe')) attacksPerSec = heldName.includes('wood') || heldName.includes('gold') ? 0.8 : 0.9;
+  else if (heldName.includes('axe'))
+    attacksPerSec = heldName.includes('wood') || heldName.includes('gold') ? 0.8 : 0.9;
   else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
   else if (heldName.includes('shovel')) attacksPerSec = 1.0;
   else if (heldName.includes('hoe')) {
@@ -2005,7 +2797,8 @@ canvas.addEventListener('mousedown', (e) => {
   if (e.button === 2) {
     // Right-click: if aimed at a mob, try feed → tame → leash with held item.
     const aimLook = fp.lookVector();
-    let aimedMob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M | null : null = null;
+    let aimedMob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M | null : null =
+      null;
     let bestDist = Infinity;
     for (const m of mobWorld.all()) {
       const dx = m.position.x - camera.position.x;
@@ -2024,8 +2817,11 @@ canvas.addEventListener('mousedown', (e) => {
       const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
       const kind = aimedMob.def.kind;
       const breedFood = BREED_FOOD[kind];
-      if (breedFood && breedFood.includes(heldName)) {
-        const prev = lovingMobs.get(aimedMob.id) ?? { inLoveUntilTick: 0, breedCooldownUntilTick: 0 };
+      if (breedFood?.includes(heldName)) {
+        const prev = lovingMobs.get(aimedMob.id) ?? {
+          inLoveUntilTick: 0,
+          breedCooldownUntilTick: 0,
+        };
         if (worldTick >= prev.breedCooldownUntilTick) {
           const next = animalFeed(prev, worldTick);
           lovingMobs.set(aimedMob.id, next);
@@ -2066,7 +2862,8 @@ canvas.addEventListener('mousedown', (e) => {
           saddledMobs.add(aimedMob.id);
           mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
           const sId = itemRegistry.byName('webmc:saddle');
-          if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(sId, 1);
+          if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+            consumeInventoryItem(sId, 1);
           chatInput.addLine(`Saddled ${kind}`, '#80ff80');
           return;
         }
@@ -2148,7 +2945,12 @@ canvas.addEventListener('mousedown', (e) => {
       else weaponBase = 4; // wood/gold
     } else if (heldName.includes('axe')) {
       if (heldName.includes('netherite')) weaponBase = 10;
-      else if (heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond')) weaponBase = 9;
+      else if (
+        heldName.includes('iron') ||
+        heldName.includes('stone') ||
+        heldName.includes('diamond')
+      )
+        weaponBase = 9;
       else weaponBase = 7;
     } else if (heldName.includes('mace')) {
       weaponBase = 6;
@@ -2157,13 +2959,25 @@ canvas.addEventListener('mousedown', (e) => {
     }
     // Mace smash: bonus damage scaled by fall distance (>1.5 blocks falling, capped +24 dmg).
     let maceBonus = 0;
-    if (heldName.includes('mace') && fp.lastLandFallBlocks <= 0 && !fp.onGround && fp.velocity.y < -1) {
+    if (
+      heldName.includes('mace') &&
+      fp.lastLandFallBlocks <= 0 &&
+      !fp.onGround &&
+      fp.velocity.y < -1
+    ) {
       // Approximate fall distance via airborneStartY tracking — use camera height + a simple counter.
       const fallDist = Math.max(0, maceFallStartY - fp.position.y);
-      maceBonus = smashDamage({ fallDistance: fallDist, densityBonus: 0, windBurstLevel: 0, breachLevel: 0, baseDamage: 0 });
+      maceBonus = smashDamage({
+        fallDistance: fallDist,
+        densityBonus: 0,
+        windBurstLevel: 0,
+        breachLevel: 0,
+        baseDamage: 0,
+      });
       if (maceBonus > 0) subtitles.push(`Smash +${maceBonus.toFixed(0)}`);
     }
-    const baseDmg = (Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult) + maceBonus;
+    const baseDmg =
+      Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult + maceBonus;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
@@ -2202,7 +3016,8 @@ canvas.addEventListener('mousedown', (e) => {
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
-    if (result) damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, baseDmg);
+    if (result)
+      damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, baseDmg);
     // Knockback: push mob away from player along horizontal look vector.
     const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
     if (mobHit) {
@@ -2299,7 +3114,13 @@ let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
-let customBossBar: { name: string; hp: number; maxHp: number; color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white'; style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20' } | null = null;
+let customBossBar: {
+  name: string;
+  hp: number;
+  maxHp: number;
+  color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white';
+  style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20';
+} | null = null;
 let hardcoreMode = false;
 void persistDB.getMeta('hardcore').then((saved) => {
   if (saved === true) hardcoreMode = true;
@@ -2338,7 +3159,7 @@ void persistDB.getMeta('dayCounter').then((saved) => {
 let playerSpawnPoint: { x: number; y: number; z: number } | null = null;
 void persistDB.getMeta('playerSpawnPoint').then((saved) => {
   if (saved && typeof saved === 'object' && 'x' in saved && 'y' in saved && 'z' in saved) {
-    const p = saved as { x: unknown; y: unknown; z: unknown };
+    const p = saved;
     if (typeof p.x === 'number' && typeof p.y === 'number' && typeof p.z === 'number') {
       playerSpawnPoint = { x: p.x, y: p.y, z: p.z };
     }
@@ -2355,10 +3176,18 @@ const chatInput = new ChatInput(appEl, {
         playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
         setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
         gameMode,
-        setGameMode: (m) => { applyGameMode(m); },
-        setTimeOfDay: (t) => { dayNight.setTimeOfDayTicks(t); },
-        addTimeOfDay: (n) => { dayNight.setTimeOfDayTicks(Math.floor(dayNight.timeOfDay * 24000) + n); },
-        setWeather: (w) => { setWeather(w); },
+        setGameMode: (m) => {
+          applyGameMode(m);
+        },
+        setTimeOfDay: (t) => {
+          dayNight.setTimeOfDayTicks(t);
+        },
+        addTimeOfDay: (n) => {
+          dayNight.setTimeOfDayTicks(Math.floor(dayNight.timeOfDay * 24000) + n);
+        },
+        setWeather: (w) => {
+          setWeather(w);
+        },
         giveItem: (name, count) => {
           const candidates = [name, `webmc:${name}`, `webmc:${name}_block`];
           let id: number | undefined;
@@ -2390,7 +3219,9 @@ const chatInput = new ChatInput(appEl, {
           audio.setMasterVolume(m ? 0 : 0.35);
           sfx.setMasterVolume(m ? 0 : 0.35);
         },
-        showTitle: (text, color, durMs) => { toast.show(text, color ?? '#ffffff', durMs ?? 2000); },
+        showTitle: (text, color, durMs) => {
+          toast.show(text, color ?? '#ffffff', durMs ?? 2000);
+        },
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';
           const out: string[] = [];
@@ -2410,7 +3241,9 @@ const chatInput = new ChatInput(appEl, {
           }
           return n;
         },
-        broadcast: (line, color) => { chatInput.addLine(line, color); },
+        broadcast: (line, color) => {
+          chatInput.addLine(line, color);
+        },
         knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
         knownItems: [],
         playerName: currentPlayerName,
@@ -2428,7 +3261,9 @@ const chatInput = new ChatInput(appEl, {
           inventory.sortMain();
         },
         toggleScoreboard: () => scoreboard.toggle(),
-        setTickFrozen: (frozen) => { tickFrozen = frozen; },
+        setTickFrozen: (frozen) => {
+          tickFrozen = frozen;
+        },
         isTickFrozen: () => tickFrozen,
         getTpsStats: () => ({
           tps: tpsTracker.tps(),
@@ -2437,7 +3272,9 @@ const chatInput = new ChatInput(appEl, {
           lagging: tpsTracker.isLagging(),
         }),
         getLastDeathPos: () => lastDeathPos,
-        setWorldBorder: (d) => { setBorderSize(worldBorder, d); },
+        setWorldBorder: (d) => {
+          setBorderSize(worldBorder, d);
+        },
         getWorldBorder: () => worldBorder.diameter,
         setHardcore: (on) => {
           hardcoreMode = on;
@@ -2447,7 +3284,9 @@ const chatInput = new ChatInput(appEl, {
         showBossBar: (name, hp, maxHp, color, style) => {
           customBossBar = { name, hp, maxHp, color, style: style ?? 'progress' };
         },
-        hideBossBar: () => { customBossBar = null; },
+        hideBossBar: () => {
+          customBossBar = null;
+        },
         giveXp: (amount) => {
           if (amount > 0) playerState.addXP(amount);
           else if (amount < 0) {
@@ -2474,7 +3313,14 @@ const chatInput = new ChatInput(appEl, {
           if (itemId === undefined) return null;
           const armorDef = ARMOR_DEFS[name.replace(/^webmc:/, '')];
           if (!armorDef) return null;
-          const slotIndex = armorDef.slot === 'helmet' ? 0 : armorDef.slot === 'chestplate' ? 1 : armorDef.slot === 'leggings' ? 2 : 3;
+          const slotIndex =
+            armorDef.slot === 'helmet'
+              ? 0
+              : armorDef.slot === 'chestplate'
+                ? 1
+                : armorDef.slot === 'leggings'
+                  ? 2
+                  : 3;
           if (countInventoryItem(itemId) === 0) return null;
           // Swap with whatever's in the slot.
           const prev = inventory.armor[slotIndex];
@@ -2496,13 +3342,35 @@ const chatInput = new ChatInput(appEl, {
         },
         loadDatapackDemo: () => {
           const demoPack: DataPack = {
-            meta: { name: 'webmc-demo-pack', version: '1.0', author: 'webmc', description: 'Built-in demo' },
+            meta: {
+              name: 'webmc-demo-pack',
+              version: '1.0',
+              author: 'webmc',
+              description: 'Built-in demo',
+            },
             blocks: [
-              { name: 'webmc:demo_pink', color: [255, 100, 200], hardness: 0.5, opaque: true, solid: true },
-              { name: 'webmc:demo_cyan', color: [100, 255, 240], hardness: 0.5, opaque: true, solid: true, lightEmission: 8 },
+              {
+                name: 'webmc:demo_pink',
+                color: [255, 100, 200],
+                hardness: 0.5,
+                opaque: true,
+                solid: true,
+              },
+              {
+                name: 'webmc:demo_cyan',
+                color: [100, 255, 240],
+                hardness: 0.5,
+                opaque: true,
+                solid: true,
+                lightEmission: 8,
+              },
             ],
           };
-          const report = loadDatapack(demoPack, { blocks: registry, items: itemRegistry, recipes: recipeRegistry });
+          const report = loadDatapack(demoPack, {
+            blocks: registry,
+            items: itemRegistry,
+            recipes: recipeRegistry,
+          });
           return `+${String(report.blocksAdded)} blocks +${String(report.recipesAdded)} recipes${report.errors.length ? ` (${String(report.errors.length)} errors)` : ''}`;
         },
         setWaypoint: (name, x, y, z) => {
@@ -2510,7 +3378,8 @@ const chatInput = new ChatInput(appEl, {
           persistWaypoints();
         },
         getWaypoint: (name) => waypoints.get(name) ?? null,
-        listWaypoints: () => Array.from(waypoints, ([name, v]) => ({ name, x: v.x, y: v.y, z: v.z })),
+        listWaypoints: () =>
+          Array.from(waypoints, ([name, v]) => ({ name, x: v.x, y: v.y, z: v.z })),
         removeWaypoint: (name) => {
           const ok = waypoints.delete(name);
           if (ok) persistWaypoints();
@@ -2528,7 +3397,29 @@ const chatInput = new ChatInput(appEl, {
             return best;
           }
           // Deterministic pseudo-locate for other structures: derive an offset from worldSeed + kind hash.
-          const KNOWN = ['village', 'monument', 'fortress', 'mansion', 'pyramid', 'desert_temple', 'jungle_temple', 'igloo', 'shipwreck', 'buried_treasure', 'ocean_ruin', 'pillager_outpost', 'ancient_city', 'trail_ruins', 'trial_chambers', 'bastion', 'mineshaft', 'end_city', 'ruined_portal', 'spawner', 'witch_hut'];
+          const KNOWN = [
+            'village',
+            'monument',
+            'fortress',
+            'mansion',
+            'pyramid',
+            'desert_temple',
+            'jungle_temple',
+            'igloo',
+            'shipwreck',
+            'buried_treasure',
+            'ocean_ruin',
+            'pillager_outpost',
+            'ancient_city',
+            'trail_ruins',
+            'trial_chambers',
+            'bastion',
+            'mineshaft',
+            'end_city',
+            'ruined_portal',
+            'spawner',
+            'witch_hut',
+          ];
           if (!KNOWN.includes(kind)) return null;
           let h = WORLD_SEED >>> 0;
           for (let i = 0; i < kind.length; i++) h = ((h ^ kind.charCodeAt(i)) * 0x01000193) >>> 0;
@@ -2539,7 +3430,7 @@ const chatInput = new ChatInput(appEl, {
           return { x: tx, z: tz, dist };
         },
         rollLootTable: (table) => {
-          const tables: Record<string, ReadonlyArray<{ id: string; w: number }>> = {
+          const tables: Record<string, readonly { id: string; w: number }[]> = {
             desert: [
               { id: 'webmc:diamond', w: 1 },
               { id: 'webmc:enchanted_golden_apple', w: 1 },
@@ -2586,7 +3477,10 @@ const chatInput = new ChatInput(appEl, {
         renameLookedAtMob: (name) => {
           const aimLook = fp.lookVector();
           const reach = 6;
-          let best: { mob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M : never; dist: number } | null = null;
+          let best: {
+            mob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M : never;
+            dist: number;
+          } | null = null;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - camera.position.x;
             const dy = m.position.y - camera.position.y;
@@ -2605,7 +3499,10 @@ const chatInput = new ChatInput(appEl, {
         tameLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
-          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          let best: {
+            mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
+            dist: number;
+          } | null = null;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - camera.position.x;
             const dy = m.position.y - camera.position.y;
@@ -2648,7 +3545,10 @@ const chatInput = new ChatInput(appEl, {
         leashLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
-          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          let best: {
+            mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
+            dist: number;
+          } | null = null;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - camera.position.x;
             const dy = m.position.y - camera.position.y;
@@ -2663,7 +3563,8 @@ const chatInput = new ChatInput(appEl, {
           if (!best) return null;
           const kind = best.mob.def.kind;
           if (!canLeash(kind)) return { kind, leashed: false, reason: 'unleashable' };
-          if (leashedMobs.has(best.mob.id)) return { kind, leashed: false, reason: 'already_leashed' };
+          if (leashedMobs.has(best.mob.id))
+            return { kind, leashed: false, reason: 'already_leashed' };
           leashedMobs.add(best.mob.id);
           mobRenderer.setMobName(best.mob.id, `🪢 ${kind}`);
           return { kind, leashed: true };
@@ -2681,7 +3582,10 @@ const chatInput = new ChatInput(appEl, {
         feedLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
-          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          let best: {
+            mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
+            dist: number;
+          } | null = null;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - camera.position.x;
             const dy = m.position.y - camera.position.y;
@@ -2704,9 +3608,17 @@ const chatInput = new ChatInput(appEl, {
           if (!accepted.includes(heldName)) {
             return { kind, loved: false, itemUsed: null, reason: 'wrong_item' };
           }
-          const prev = lovingMobs.get(best.mob.id) ?? { inLoveUntilTick: 0, breedCooldownUntilTick: 0 };
+          const prev = lovingMobs.get(best.mob.id) ?? {
+            inLoveUntilTick: 0,
+            breedCooldownUntilTick: 0,
+          };
           if (worldTick < prev.breedCooldownUntilTick) {
-            return { kind, loved: false, itemUsed: heldName.replace(/^webmc:/, ''), reason: 'cooldown' };
+            return {
+              kind,
+              loved: false,
+              itemUsed: heldName.replace(/^webmc:/, ''),
+              reason: 'cooldown',
+            };
           }
           const next = animalFeed(prev, worldTick);
           lovingMobs.set(best.mob.id, next);
@@ -2727,7 +3639,11 @@ const chatInput = new ChatInput(appEl, {
         },
         surfaceAt: (x, z) => generator.surfaceAt(x, z),
         markRegionPoint: (point) => {
-          regionPoints[point] = { x: Math.floor(fp.position.x), y: Math.floor(fp.position.y), z: Math.floor(fp.position.z) };
+          regionPoints[point] = {
+            x: Math.floor(fp.position.x),
+            y: Math.floor(fp.position.y),
+            z: Math.floor(fp.position.z),
+          };
         },
         fillRegion: (block) => {
           if (!regionPoints.a || !regionPoints.b) return -1;
@@ -2739,10 +3655,14 @@ const chatInput = new ChatInput(appEl, {
             if (id === undefined) return -1;
             state = makeState(id, 0);
           }
-          const a = regionPoints.a, b = regionPoints.b;
-          const sx = Math.min(a.x, b.x), ex = Math.max(a.x, b.x);
-          const sy = Math.min(a.y, b.y), ey = Math.max(a.y, b.y);
-          const sz = Math.min(a.z, b.z), ez = Math.max(a.z, b.z);
+          const a = regionPoints.a,
+            b = regionPoints.b;
+          const sx = Math.min(a.x, b.x),
+            ex = Math.max(a.x, b.x);
+          const sy = Math.min(a.y, b.y),
+            ey = Math.max(a.y, b.y);
+          const sz = Math.min(a.z, b.z),
+            ez = Math.max(a.z, b.z);
           let n = 0;
           const chunksTouched = new Set<string>();
           for (let y = sy; y <= ey; y++) {
@@ -2763,7 +3683,9 @@ const chatInput = new ChatInput(appEl, {
           return n;
         },
         entityStats: () => {
-          let hostile = 0, passive = 0, neutral = 0;
+          let hostile = 0,
+            passive = 0,
+            neutral = 0;
           const counts = new Map<string, number>();
           for (const m of mobWorld.all()) {
             const b = m.def.behavior;
@@ -2772,8 +3694,18 @@ const chatInput = new ChatInput(appEl, {
             else if (b === 'neutral' || b === 'enderman') neutral++;
             counts.set(m.def.kind, (counts.get(m.def.kind) ?? 0) + 1);
           }
-          const byKind = [...counts.entries()].map(([kind, count]) => ({ kind, count })).sort((a, b) => b.count - a.count);
-          return { mobs: mobWorld.size, hostile, passive, neutral, drops: droppedItems.size, xpOrbs: xpOrbs.size, byKind };
+          const byKind = [...counts.entries()]
+            .map(([kind, count]) => ({ kind, count }))
+            .sort((a, b) => b.count - a.count);
+          return {
+            mobs: mobWorld.size,
+            hostile,
+            passive,
+            neutral,
+            drops: droppedItems.size,
+            xpOrbs: xpOrbs.size,
+            byKind,
+          };
         },
         chunkStats: () => ({
           loaded: Array.from(world.chunks()).length,
@@ -2798,9 +3730,12 @@ const chatInput = new ChatInput(appEl, {
         loadLoadout: (name) => {
           const snap = loadouts.get(name);
           if (!snap) return false;
-          for (let i = 0; i < 9; i++) inventory.hotbar[i] = snap.hotbar[i] ? { ...snap.hotbar[i]! } : null;
-          for (let i = 0; i < 27; i++) inventory.main[i] = snap.main[i] ? { ...snap.main[i]! } : null;
-          for (let i = 0; i < 4; i++) inventory.armor[i] = snap.armor[i] ? { ...snap.armor[i]! } : null;
+          for (let i = 0; i < 9; i++)
+            inventory.hotbar[i] = snap.hotbar[i] ? { ...snap.hotbar[i]! } : null;
+          for (let i = 0; i < 27; i++)
+            inventory.main[i] = snap.main[i] ? { ...snap.main[i]! } : null;
+          for (let i = 0; i < 4; i++)
+            inventory.armor[i] = snap.armor[i] ? { ...snap.armor[i]! } : null;
           return true;
         },
         listLoadouts: () => Array.from(loadouts.keys()),
@@ -2809,7 +3744,11 @@ const chatInput = new ChatInput(appEl, {
         },
         cycleCamera: () => {
           cycleCamera();
-          return cameraMode === 'fp' ? 'first-person' : cameraMode === 'tp_back' ? 'third (back)' : 'third (front)';
+          return cameraMode === 'fp'
+            ? 'first-person'
+            : cameraMode === 'tp_back'
+              ? 'third (back)'
+              : 'third (front)';
         },
         toggleMinimap: () => {
           minimapVisible = !minimapVisible;
@@ -2817,7 +3756,8 @@ const chatInput = new ChatInput(appEl, {
           return minimapVisible;
         },
         minimapZoom: (dir) => {
-          if (dir === 'in') minimap.zoomIn(); else minimap.zoomOut();
+          if (dir === 'in') minimap.zoomIn();
+          else minimap.zoomOut();
         },
         setPlayerName: (name) => {
           currentPlayerName = sanitizePlayerName(name) || 'Player';
@@ -2858,6 +3798,19 @@ const chatInput = new ChatInput(appEl, {
           for (const id of toKill) mobWorld.remove(id);
           return toKill.length;
         },
+        healMobsNear: (radius) => {
+          const r2 = radius * radius;
+          let n = 0;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - fp.position.x;
+            const dz = m.position.z - fp.position.z;
+            if (dx * dx + dz * dz < r2) {
+              m.health = m.def.maxHealth;
+              n++;
+            }
+          }
+          return n;
+        },
         dropAllItems: () => {
           let n = 0;
           const drop = (slots: (typeof inventory.hotbar)[number][]): void => {
@@ -2865,8 +3818,17 @@ const chatInput = new ChatInput(appEl, {
               const s = slots[i];
               if (!s) continue;
               const def = itemRegistry.get(s.itemId);
-              const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
-              droppedItems.spawn(fp.position.x + (Math.random() - 0.5), fp.position.y, fp.position.z + (Math.random() - 0.5), { itemId: s.itemId, count: s.count, color: colorRgb }, 1.5);
+              const colorRgb =
+                def.blockId !== undefined
+                  ? registry.get(def.blockId).color
+                  : ([200, 200, 200] as const);
+              droppedItems.spawn(
+                fp.position.x + (Math.random() - 0.5),
+                fp.position.y,
+                fp.position.z + (Math.random() - 0.5),
+                { itemId: s.itemId, count: s.count, color: colorRgb },
+                1.5,
+              );
               slots[i] = null;
               n++;
             }
@@ -2877,7 +3839,8 @@ const chatInput = new ChatInput(appEl, {
         },
         inventoryStats: () => {
           const counts = new Map<string, number>();
-          let filled = 0, total = 0;
+          let filled = 0,
+            total = 0;
           const all = [...inventory.hotbar, ...inventory.main, ...inventory.armor];
           for (const slot of all) {
             if (slot) {
@@ -2887,24 +3850,53 @@ const chatInput = new ChatInput(appEl, {
               total += slot.count;
             }
           }
-          const topItems = [...counts.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
-          return { filledSlots: filled, totalSlots: all.length, totalItems: total, uniqueTypes: counts.size, topItems };
+          const topItems = [...counts.entries()]
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count);
+          return {
+            filledSlots: filled,
+            totalSlots: all.length,
+            totalItems: total,
+            uniqueTypes: counts.size,
+            topItems,
+          };
         },
         heldItemInfo: () => {
           const sel = inventory.hotbar[inventory.selectedHotbar];
           if (!sel) return null;
           const def = itemRegistry.get(sel.itemId);
-          const out: { name: string; count: number; maxStack: number; durability?: { current: number; max: number }; food?: { hunger: number; saturation: number }; tags?: string[] } = {
+          const out: {
+            name: string;
+            count: number;
+            maxStack: number;
+            durability?: { current: number; max: number };
+            food?: { hunger: number; saturation: number };
+            tags?: string[];
+          } = {
             name: def.name.replace(/^webmc:/, ''),
             count: sel.count,
             maxStack: def.maxStack,
           };
-          if (def.durability > 0) out.durability = { current: def.durability - sel.damage, max: def.durability };
-          if (def.hungerRestore !== undefined && def.hungerRestore > 0) out.food = { hunger: def.hungerRestore, saturation: def.saturation ?? 0 };
+          if (def.durability > 0)
+            out.durability = { current: def.durability - sel.damage, max: def.durability };
+          if (def.hungerRestore !== undefined && def.hungerRestore > 0)
+            out.food = { hunger: def.hungerRestore, saturation: def.saturation ?? 0 };
           const tags: string[] = [];
           if (def.name.includes('sword')) tags.push('weapon');
-          if (def.name.includes('axe') || def.name.includes('pickaxe') || def.name.includes('shovel') || def.name.includes('hoe')) tags.push('tool');
-          if (def.name.includes('helmet') || def.name.includes('chestplate') || def.name.includes('leggings') || def.name.includes('boots')) tags.push('armor');
+          if (
+            def.name.includes('axe') ||
+            def.name.includes('pickaxe') ||
+            def.name.includes('shovel') ||
+            def.name.includes('hoe')
+          )
+            tags.push('tool');
+          if (
+            def.name.includes('helmet') ||
+            def.name.includes('chestplate') ||
+            def.name.includes('leggings') ||
+            def.name.includes('boots')
+          )
+            tags.push('armor');
           if (def.blockId !== undefined) tags.push('placeable');
           if (tags.length > 0) out.tags = tags;
           return out;
@@ -2932,7 +3924,11 @@ const chatInput = new ChatInput(appEl, {
           if (!sel) return null;
           const def = itemRegistry.get(sel.itemId);
           if (def.durability <= 0) return null;
-          return { name: def.name.replace(/^webmc:/, ''), current: def.durability - sel.damage, max: def.durability };
+          return {
+            name: def.name.replace(/^webmc:/, ''),
+            current: def.durability - sel.damage,
+            max: def.durability,
+          };
         },
         applyVelocity: (dx, dy, dz) => {
           if (dx !== 0 || dz !== 0) {
@@ -2948,7 +3944,10 @@ const chatInput = new ChatInput(appEl, {
         toggleSitLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
-          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          let best: {
+            mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
+            dist: number;
+          } | null = null;
           for (const m of mobWorld.all()) {
             const dx = m.position.x - camera.position.x;
             const dy = m.position.y - camera.position.y;
@@ -2969,8 +3968,15 @@ const chatInput = new ChatInput(appEl, {
         },
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
-          if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
-            void (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission().catch(() => undefined);
+          if (
+            gyroState.enabled &&
+            typeof (
+              DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }
+            ).requestPermission === 'function'
+          ) {
+            void (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> })
+              .requestPermission()
+              .catch(() => undefined);
           }
           return gyroState.enabled;
         },
@@ -2982,22 +3988,41 @@ const chatInput = new ChatInput(appEl, {
           input.accept = '.zip,.mca,.dat,.webmc';
           input.style.display = 'none';
           document.body.appendChild(input);
-          input.addEventListener('change', () => {
-            const f = input.files?.[0];
-            input.remove();
-            if (!f) return;
-            chatInput.addLine(`Detecting format of ${f.name} (${(f.size / 1024).toFixed(1)} kB)…`, '#cccccc');
-            if (f.name.endsWith('.mca') || f.name.endsWith('.dat')) {
-              chatInput.addLine('Detected Anvil region/level. Native import scaffold present (full NBT decode TBD).', '#ffd080');
-              chatInput.addLine('User uploads at own licensing risk; webmc never ships Mojang data.', '#888888');
-            } else if (f.name.endsWith('.webmc')) {
-              chatInput.addLine('webmc save detected. Use Main Menu → Import to load.', '#80ff80');
-            } else if (f.name.endsWith('.zip')) {
-              chatInput.addLine('ZIP: drop in resource-pack uploader for textures or main-menu import for save.', '#ffd080');
-            } else {
-              chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
-            }
-          }, { once: true });
+          input.addEventListener(
+            'change',
+            () => {
+              const f = input.files?.[0];
+              input.remove();
+              if (!f) return;
+              chatInput.addLine(
+                `Detecting format of ${f.name} (${(f.size / 1024).toFixed(1)} kB)…`,
+                '#cccccc',
+              );
+              if (f.name.endsWith('.mca') || f.name.endsWith('.dat')) {
+                chatInput.addLine(
+                  'Detected Anvil region/level. Native import scaffold present (full NBT decode TBD).',
+                  '#ffd080',
+                );
+                chatInput.addLine(
+                  'User uploads at own licensing risk; webmc never ships Mojang data.',
+                  '#888888',
+                );
+              } else if (f.name.endsWith('.webmc')) {
+                chatInput.addLine(
+                  'webmc save detected. Use Main Menu → Import to load.',
+                  '#80ff80',
+                );
+              } else if (f.name.endsWith('.zip')) {
+                chatInput.addLine(
+                  'ZIP: drop in resource-pack uploader for textures or main-menu import for save.',
+                  '#ffd080',
+                );
+              } else {
+                chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
+              }
+            },
+            { once: true },
+          );
           input.click();
         },
         setBlock: (x, y, z, name) => {
@@ -3017,9 +4042,12 @@ const chatInput = new ChatInput(appEl, {
             if (id === undefined) return -1;
             state = makeState(id, 0);
           }
-          const sx = Math.min(x1, x2), ex = Math.max(x1, x2);
-          const sy = Math.min(y1, y2), ey = Math.max(y1, y2);
-          const sz = Math.min(z1, z2), ez = Math.max(z1, z2);
+          const sx = Math.min(x1, x2),
+            ex = Math.max(x1, x2);
+          const sy = Math.min(y1, y2),
+            ey = Math.max(y1, y2);
+          const sz = Math.min(z1, z2),
+            ez = Math.max(z1, z2);
           let count = 0;
           const chunksTouched = new Set<string>();
           for (let y = sy; y <= ey; y++) {
@@ -3034,7 +4062,8 @@ const chatInput = new ChatInput(appEl, {
           }
           for (const k of chunksTouched) {
             const [cxS, czS] = k.split(',');
-            const cxN = Number(cxS), czN = Number(czS);
+            const cxN = Number(cxS),
+              czN = Number(czS);
             const chunk = world.getChunk(cxN, czN);
             if (chunk) {
               const light = lightCache.get(lightKey(cxN, czN)) ?? null;
@@ -3084,7 +4113,9 @@ const chatInput = new ChatInput(appEl, {
           playerSpawnPoint = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
           void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         },
-        clearChat: () => { chatInput.clearLog(); },
+        clearChat: () => {
+          chatInput.clearLog();
+        },
         toggleFly: () => {
           fp.toggleFly();
           return fp.input.fly;
@@ -3128,7 +4159,9 @@ const chatInput = new ChatInput(appEl, {
           for (let dy = -r; dy <= r; dy++) {
             for (let dz = -r; dz <= r; dz++) {
               for (let dx = -r; dx <= r; dx++) {
-                const x = px + dx, y = py + dy, z = pz + dz;
+                const x = px + dx,
+                  y = py + dy,
+                  z = pz + dz;
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 const s = world.get(x, y, z);
                 if (s === AIR) continue;
@@ -3152,7 +4185,8 @@ const chatInput = new ChatInput(appEl, {
         listAchievements: () =>
           achievements.map((a) => ({ title: a.title, unlocked: achievedSet.has(a.id) })),
         setDifficulty: (level) => {
-          mobDamageMultiplier = level === 'peaceful' ? 0 : level === 'easy' ? 0.5 : level === 'hard' ? 1.5 : 1;
+          mobDamageMultiplier =
+            level === 'peaceful' ? 0 : level === 'easy' ? 0.5 : level === 'hard' ? 1.5 : 1;
           if (level === 'peaceful') {
             // Despawn all hostile mobs.
             const ids: number[] = [];
@@ -3164,10 +4198,19 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('difficulty', level);
         },
         showStats: () => {
-          chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`, '#cccccc');
-          chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
+          chatInput.addLine(
+            `Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)} min`,
+            '#cccccc',
+          );
+          chatInput.addLine(
+            `Blocks broken: ${String(playerStats.blocksBroken)}  placed: ${String(playerStats.blocksPlaced)}`,
+            '#cccccc',
+          );
           chatInput.addLine(`Mobs killed: ${String(playerStats.mobsKilled)}`, '#cccccc');
-          chatInput.addLine(`Distance walked: ${playerStats.distanceWalked.toFixed(1)} m`, '#cccccc');
+          chatInput.addLine(
+            `Distance walked: ${playerStats.distanceWalked.toFixed(1)} m`,
+            '#cccccc',
+          );
         },
       });
     } else {
@@ -3188,22 +4231,248 @@ const chatInput = new ChatInput(appEl, {
   getCompletions: (input) => {
     if (!input.startsWith('/')) return [];
     const SLASH_CMDS = [
-      '/help', '/gamemode', '/gm', '/tp', '/teleport', '/time', '/weather',
-      '/give', '/heal', '/kill', '/clear', '/setblock', '/fill', '/summon',
-      '/chest', '/spawn', '/seed', '/killall', '/stats', '/save', '/setspawn',
-      '/spawnpoint', '/setworldspawn', '/clearchat', '/cc', '/me', '/list',
-      '/whoami', '/fly', '/pos', '/where', '/biome', '/effect', '/listeffects',
-      '/particle', '/difficulty', '/achievements', '/ach', '/find', '/findmob',
-      '/lookup', '/listblocks', '/listmobs', '/lookat', '/destroy', '/back',
-      '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
-      '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
-      '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe', '/respawn', '/rs', '/fullness', '/noclip', '/screenshot', '/snap', '/fov', '/entities', '/mobs', '/chunkstats', '/chunks', '/spread', '/spreadplayers', '/lighting', '/creative_inventory', '/ci', '/freezemobs', '/safezone', '/peaceful', '/loadout', '/tps_target', '/tickrate', '/cyclecam', '/cyclecamera', '/minimap', '/minimapzoom', '/reset', '/mute_chat', '/broadcast', '/test', '/sanitycheck', '/item', '/itemstats', '/inventory', '/inv', '/dropall', '/count', '/commandcount', '/pick', '/name', '/rename_self', '/reload', '/remesh', '/health', '/hp', '/hunger', '/food', '/saturation', '/sat', '/breath', '/air', '/level', '/xplevel', '/clearmobs', '/killnear',
+      '/help',
+      '/gamemode',
+      '/gm',
+      '/tp',
+      '/teleport',
+      '/time',
+      '/weather',
+      '/give',
+      '/heal',
+      '/kill',
+      '/clear',
+      '/setblock',
+      '/fill',
+      '/summon',
+      '/chest',
+      '/spawn',
+      '/seed',
+      '/killall',
+      '/stats',
+      '/save',
+      '/setspawn',
+      '/spawnpoint',
+      '/setworldspawn',
+      '/clearchat',
+      '/cc',
+      '/me',
+      '/list',
+      '/whoami',
+      '/fly',
+      '/pos',
+      '/where',
+      '/biome',
+      '/effect',
+      '/listeffects',
+      '/particle',
+      '/difficulty',
+      '/achievements',
+      '/ach',
+      '/find',
+      '/findmob',
+      '/lookup',
+      '/listblocks',
+      '/listmobs',
+      '/lookat',
+      '/destroy',
+      '/back',
+      '/freeze',
+      '/unfreeze',
+      '/mute',
+      '/unmute',
+      '/title',
+      '/echo',
+      '/repeat',
+      '/random',
+      '/roll',
+      '/coin',
+      '/flip',
+      '/8ball',
+      '/uptime',
+      '/version',
+      '/v',
+      '/ping',
+      '/day',
+      '/sun',
+      '/night',
+      '/moon',
+      '/noon',
+      '/midnight',
+      '/up',
+      '/down',
+      '/distance',
+      '/dist',
+      '/gamerule',
+      '/sort',
+      '/scoreboard',
+      '/sb',
+      '/gyro',
+      '/tilt',
+      '/copy',
+      '/import',
+      '/milk',
+      '/tick',
+      '/tps',
+      '/deathloc',
+      '/lastdeath',
+      '/rename',
+      '/nametag',
+      '/worldborder',
+      '/wb',
+      '/loot',
+      '/locate',
+      '/waypoint',
+      '/wp',
+      '/hardcore',
+      '/datapack',
+      '/dp',
+      '/export',
+      '/equip',
+      '/xp',
+      '/experience',
+      '/bossbar',
+      '/tame',
+      '/sit',
+      '/stand',
+      '/feed',
+      '/breed',
+      '/leash',
+      '/unleash',
+      '/village',
+      '/house',
+      '/tower',
+      '/pyramid',
+      '/dungeon',
+      '/sphere',
+      '/cube',
+      '/platform',
+      '/portal',
+      '/netherportal',
+      '/roof',
+      '/wall',
+      '/bridge',
+      '/pillar',
+      '/tree',
+      '/glow',
+      '/replace',
+      '/dragon',
+      '/wither',
+      '/army',
+      '/firework',
+      '/fw',
+      '/rain',
+      '/storm',
+      '/sun',
+      '/tutorial',
+      '/guide',
+      '/starter',
+      '/kit',
+      '/craft',
+      '/cook',
+      '/smelt',
+      '/world',
+      '/info',
+      '/perf',
+      '/benchmark',
+      '/zoom',
+      '/speed',
+      '/jump',
+      '/launch',
+      '/nv',
+      '/nightvision',
+      '/invis',
+      '/invisible',
+      '/god',
+      '/godmode',
+      '/home',
+      '/sethome',
+      '/about',
+      '/credits',
+      '/commands',
+      '/cmds',
+      '/rtp',
+      '/randomtp',
+      '/safetp',
+      '/safe',
+      '/buildmode',
+      '/build',
+      '/survivalmode',
+      '/sm',
+      '/spectate',
+      '/sp',
+      '/confetti',
+      '/celebrate',
+      '/panic',
+      '/repair',
+      '/durability',
+      '/dura',
+      '/mark',
+      '/paste',
+      '/fillregion',
+      '/wipe',
+      '/respawn',
+      '/rs',
+      '/fullness',
+      '/noclip',
+      '/screenshot',
+      '/snap',
+      '/fov',
+      '/entities',
+      '/mobs',
+      '/chunkstats',
+      '/chunks',
+      '/spread',
+      '/spreadplayers',
+      '/lighting',
+      '/creative_inventory',
+      '/ci',
+      '/freezemobs',
+      '/safezone',
+      '/peaceful',
+      '/loadout',
+      '/tps_target',
+      '/tickrate',
+      '/cyclecam',
+      '/cyclecamera',
+      '/minimap',
+      '/minimapzoom',
+      '/reset',
+      '/mute_chat',
+      '/broadcast',
+      '/test',
+      '/sanitycheck',
+      '/item',
+      '/itemstats',
+      '/inventory',
+      '/inv',
+      '/dropall',
+      '/count',
+      '/commandcount',
+      '/pick',
+      '/name',
+      '/rename_self',
+      '/reload',
+      '/remesh',
+      '/health',
+      '/hp',
+      '/hunger',
+      '/food',
+      '/saturation',
+      '/sat',
+      '/breath',
+      '/air',
+      '/level',
+      '/xplevel',
+      '/clearmobs',
+      '/killnear',
     ];
     return SLASH_CMDS;
   },
   getPlayerName: () => currentPlayerName,
-  onMention: () => sfx.play('click'),
+  onMention: () => {
+    sfx.play('click');
+  },
 });
 
 const pauseMenu = new PauseMenu(appEl, {
@@ -3220,7 +4489,9 @@ const pauseMenu = new PauseMenu(appEl, {
     void savePlayerNow();
     void chunkStore.flush();
   },
-  onOpenSettings: () => { settingsPanel.show(); },
+  onOpenSettings: () => {
+    settingsPanel.show();
+  },
   onShowAchievements: () => {
     chatInput.addLine('— Achievements —', '#ffeb80');
     for (const a of achievements) {
@@ -3244,7 +4515,9 @@ const resourcePackLoader = new ResourcePackLoader(appEl, {
     const result = applyPackToRegistry(registry, pack);
     const newPattern = buildPatternTextureFromPack(pack);
     if (newPattern) {
-      const oldTex = (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture | null }).value;
+      const oldTex = (
+        chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture | null }
+      ).value;
       if (oldTex) oldTex.dispose();
       (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture }).value = newPattern;
       (chunkRenderer.material.uniforms['uPatternStrength'] as { value: number }).value = 0.9;
@@ -3280,11 +4553,13 @@ const settingsPanel = new SettingsPanel(appEl, {
   onChange: (v) => {
     fp.setBaseFov(v.fov);
     loader.setViewRadius(v.viewDistance);
-    (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity = v.mouseSensitivity;
+    (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity =
+      v.mouseSensitivity;
     fp.invertY = v.invertY;
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
-    if (v.showCrosshair) crosshair.show(); else crosshair.hide();
+    if (v.showCrosshair) crosshair.show();
+    else crosshair.hide();
     currentPlayerName = sanitizePlayerName(v.playerName) || 'Player';
     playerAvatar.setName(currentPlayerName);
     document.title = `webmc · ${worldMeta.name} · ${currentPlayerName}`;
@@ -3328,8 +4603,12 @@ const mainMenu = new MainMenu(appEl, {
     fireTutorial('world_loaded');
     fireTutorial('spawn_finished');
   },
-  onOpenSettings: () => { settingsPanel.show(); },
-  onOpenResourcePacks: () => { resourcePackLoader.show(); },
+  onOpenSettings: () => {
+    settingsPanel.show();
+  },
+  onOpenResourcePacks: () => {
+    resourcePackLoader.show();
+  },
 });
 fp.inputBlocked = true;
 applyGameMode(gameMode);
@@ -3345,81 +4624,89 @@ void persistDB.getMeta('chestStorage').then((saved) => {
   if (!Array.isArray(saved)) return;
   for (let i = 0; i < Math.min(27, saved.length); i++) {
     const v = saved[i];
-    chestUI.storage[i] = (v && typeof v === 'object') ? v as typeof chestUI.storage[number] : null;
+    chestUI.storage[i] =
+      v && typeof v === 'object' ? (v as (typeof chestUI.storage)[number]) : null;
   }
 });
 
-const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
-  onClose: () => {
-    fp.inputBlocked = false;
-    void canvas.requestPointerLock();
-  },
-  onEat: (id, hungerRestore, saturation) => {
-    playerState.eat(hungerRestore, saturation);
-    sfx.play('click');
-    // Item-specific food effects.
-    const itemName = itemRegistry.get(id).name;
-    // Potion drinks: apply effect, return glass bottle.
-    if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
-      const ptype = POTION_TYPES.find((p) => p.name === itemName);
-      if (ptype) {
-        if (ptype.effect === 'instant_health') playerState.heal(4);
-        else if (ptype.effect === 'instant_damage') playerState.takeDamage({ amount: 6, source: 'harming' });
-        else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
-        const glassId = itemRegistry.byName('webmc:glass_bottle');
-        if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
-        subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
-      }
-      return;
-    }
-    if (itemName === 'webmc:honey_bottle') {
-      playerState.effects.delete('poison');
-    } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
-      playerState.applyEffect('hunger', 0, 30);
-    } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
-      playerState.applyEffect('poison', 0, 5);
-    } else if (itemName === 'webmc:spider_eye') {
-      playerState.applyEffect('poison', 0, 4);
-    } else if (itemName === 'webmc:golden_apple') {
-      playerState.applyEffect('regeneration', 1, 5);
-      playerState.applyEffect('absorption', 0, 120);
-    } else if (itemName === 'webmc:enchanted_golden_apple') {
-      playerState.applyEffect('regeneration', 1, 20);
-      playerState.applyEffect('absorption', 3, 120);
-      playerState.applyEffect('fire_resistance', 0, 300);
-      playerState.applyEffect('resistance', 0, 300);
-    } else if (itemName === 'webmc:chorus_fruit') {
-      // MC-accurate: 16 attempts to find a safe spot within ±8 blocks.
-      let placed = false;
-      for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
-        const trial = pickTrial(fp.position, Math.random);
-        const tx = Math.floor(trial.x);
-        const ty = Math.floor(trial.y);
-        const tz = Math.floor(trial.z);
-        const here = world.get(tx, ty, tz);
-        const above = world.get(tx, ty + 1, tz);
-        const below = world.get(tx, ty - 1, tz);
-        const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
-        const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
-        const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
-        if (isAirHere && isAirAbove && solidBelow) {
-          fp.position.set(tx + 0.5, ty, tz + 0.5);
-          subtitles.push('Chorus warp');
-          placed = true;
-          break;
+const survivalInv = new SurvivalInventory(
+  appEl,
+  inventory,
+  itemRegistry,
+  {
+    onClose: () => {
+      fp.inputBlocked = false;
+      void canvas.requestPointerLock();
+    },
+    onEat: (id, hungerRestore, saturation) => {
+      playerState.eat(hungerRestore, saturation);
+      sfx.play('click');
+      // Item-specific food effects.
+      const itemName = itemRegistry.get(id).name;
+      // Potion drinks: apply effect, return glass bottle.
+      if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
+        const ptype = POTION_TYPES.find((p) => p.name === itemName);
+        if (ptype) {
+          if (ptype.effect === 'instant_health') playerState.heal(4);
+          else if (ptype.effect === 'instant_damage')
+            playerState.takeDamage({ amount: 6, source: 'harming' });
+          else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
+          const glassId = itemRegistry.byName('webmc:glass_bottle');
+          if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
+          subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
         }
+        return;
       }
-      if (!placed) subtitles.push('Chorus fizzle');
-    }
-    const look = fp.lookVector();
-    blockParticles.emitPlace(
-      fp.position.x + look.x * 0.6,
-      fp.position.y + look.y * 0.5,
-      fp.position.z + look.z * 0.6,
-      [180, 140, 80],
-    );
+      if (itemName === 'webmc:honey_bottle') {
+        playerState.effects.delete('poison');
+      } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
+        playerState.applyEffect('hunger', 0, 30);
+      } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
+        playerState.applyEffect('poison', 0, 5);
+      } else if (itemName === 'webmc:spider_eye') {
+        playerState.applyEffect('poison', 0, 4);
+      } else if (itemName === 'webmc:golden_apple') {
+        playerState.applyEffect('regeneration', 1, 5);
+        playerState.applyEffect('absorption', 0, 120);
+      } else if (itemName === 'webmc:enchanted_golden_apple') {
+        playerState.applyEffect('regeneration', 1, 20);
+        playerState.applyEffect('absorption', 3, 120);
+        playerState.applyEffect('fire_resistance', 0, 300);
+        playerState.applyEffect('resistance', 0, 300);
+      } else if (itemName === 'webmc:chorus_fruit') {
+        // MC-accurate: 16 attempts to find a safe spot within ±8 blocks.
+        let placed = false;
+        for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
+          const trial = pickTrial(fp.position, Math.random);
+          const tx = Math.floor(trial.x);
+          const ty = Math.floor(trial.y);
+          const tz = Math.floor(trial.z);
+          const here = world.get(tx, ty, tz);
+          const above = world.get(tx, ty + 1, tz);
+          const below = world.get(tx, ty - 1, tz);
+          const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
+          const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
+          const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
+          if (isAirHere && isAirAbove && solidBelow) {
+            fp.position.set(tx + 0.5, ty, tz + 0.5);
+            subtitles.push('Chorus warp');
+            placed = true;
+            break;
+          }
+        }
+        if (!placed) subtitles.push('Chorus fizzle');
+      }
+      const look = fp.lookVector();
+      blockParticles.emitPlace(
+        fp.position.x + look.x * 0.6,
+        fp.position.y + look.y * 0.5,
+        fp.position.z + look.z * 0.6,
+        [180, 140, 80],
+      );
+    },
   },
-}, recipeRegistry);
+  recipeRegistry,
+);
 
 const creativeInv = new CreativeInventory(appEl, registry, {
   onPick: (entry) => {
@@ -3600,11 +4887,17 @@ document.addEventListener(
         if (itemId !== undefined && countInventoryItem(itemId) > 0) {
           consumeInventoryItem(itemId, 1);
           const look = fp.lookVector();
-          droppedItems.spawn(fp.position.x + look.x * 1.2, fp.position.y, fp.position.z + look.z * 1.2, {
-            itemId,
-            count: 1,
-            color: def.color,
-          }, 1.5);
+          droppedItems.spawn(
+            fp.position.x + look.x * 1.2,
+            fp.position.y,
+            fp.position.z + look.z * 1.2,
+            {
+              itemId,
+              count: 1,
+              color: def.color,
+            },
+            1.5,
+          );
           sfx.play('click');
         }
       }
@@ -3618,7 +4911,16 @@ const debugOverlay = new DebugOverlay(appEl);
 document.addEventListener('pointerlockchange', () => {
   if (document.pointerLockElement !== canvas) {
     crosshair.hide();
-    if (!mainMenu.isVisible() && !pauseMenu.isVisible() && !chatInput.isOpen() && !settingsPanel.isVisible() && !resourcePackLoader.isVisible() && !creativeInv.isVisible() && !survivalInv.isVisible() && !chestUI.isVisible()) {
+    if (
+      !mainMenu.isVisible() &&
+      !pauseMenu.isVisible() &&
+      !chatInput.isOpen() &&
+      !settingsPanel.isVisible() &&
+      !resourcePackLoader.isVisible() &&
+      !creativeInv.isVisible() &&
+      !survivalInv.isVisible() &&
+      !chestUI.isVisible()
+    ) {
       pauseMenu.show();
       fp.inputBlocked = true;
     }
@@ -3680,11 +4982,17 @@ function flushDirty(): void {
     if (dispatched >= budget) break;
     const dirty = Array.from(chunk.meshDirty);
     // Sort so closer-to-player sections process first.
-    const px = fp.position.x, py = fp.position.y, pz = fp.position.z;
+    const px = fp.position.x,
+      py = fp.position.y,
+      pz = fp.position.z;
     dirty.sort((a, b) => {
-      const dxA = chunk.cx * 16 - px, dzA = chunk.cz * 16 - pz, dyA = a * 16 - py;
-      const dxB = chunk.cx * 16 - px, dzB = chunk.cz * 16 - pz, dyB = b * 16 - py;
-      return (dxA * dxA + dyA * dyA + dzA * dzA) - (dxB * dxB + dyB * dyB + dzB * dzB);
+      const dxA = chunk.cx * 16 - px,
+        dzA = chunk.cz * 16 - pz,
+        dyA = a * 16 - py;
+      const dxB = chunk.cx * 16 - px,
+        dzB = chunk.cz * 16 - pz,
+        dyB = b * 16 - py;
+      return dxA * dxA + dyA * dyA + dzA * dzA - (dxB * dxB + dyB * dyB + dzB * dzB);
     });
     for (const cy of dirty) {
       if (dispatched >= budget) break;
@@ -3901,11 +5209,17 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
           blockParticles.emitBreak(x, y, z, def2.color);
           const itemId = itemRegistry.byName(def2.name);
           if (itemId !== undefined) {
-            droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
-              itemId,
-              count: 1,
-              color: def2.color,
-            }, 3);
+            droppedItems.spawn(
+              x + 0.5,
+              y + 0.5,
+              z + 0.5,
+              {
+                itemId,
+                count: 1,
+                color: def2.color,
+              },
+              3,
+            );
           }
         }
         changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
@@ -3935,7 +5249,10 @@ function oreXp(blockName: string): number {
 
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
   const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
-  const dropTables: Record<string, readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]> = {
+  const dropTables: Record<
+    string,
+    readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
+  > = {
     zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
     skeleton: [
       { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
@@ -4083,15 +5400,16 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     // placements cheap (1 chunk rebuild instead of 5).
     const emitsNew = block !== 0 && registry.get(block).lightEmission > 0;
     const wasBreak = block === 0;
-    const affected: { cx: number; cz: number }[] = emitsNew || wasBreak
-      ? [
-          { cx, cz },
-          { cx: cx - 1, cz },
-          { cx: cx + 1, cz },
-          { cx, cz: cz - 1 },
-          { cx, cz: cz + 1 },
-        ]
-      : [{ cx, cz }];
+    const affected: { cx: number; cz: number }[] =
+      emitsNew || wasBreak
+        ? [
+            { cx, cz },
+            { cx: cx - 1, cz },
+            { cx: cx + 1, cz },
+            { cx, cz: cz - 1 },
+            { cx, cz: cz + 1 },
+          ]
+        : [{ cx, cz }];
     for (const a of affected) {
       const c = world.getChunk(a.cx, a.cz);
       if (!c) continue;
@@ -4170,9 +5488,14 @@ function frame(): void {
   if (afkOn !== (afkBadge.style.display === 'block')) {
     afkBadge.style.display = afkOn ? 'block' : 'none';
   }
-  const perfMem = (performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
+  const perfMem = (
+    performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }
+  ).memory;
   if (perfMem) {
-    const lvl = memPressureLevel({ heapUsed: perfMem.usedJSHeapSize, heapLimit: perfMem.jsHeapSizeLimit });
+    const lvl = memPressureLevel({
+      heapUsed: perfMem.usedJSHeapSize,
+      heapLimit: perfMem.jsHeapSizeLimit,
+    });
     if (lvl === 'critical' && performance.now() - lastMemoryWarnAt > 30000) {
       lastMemoryWarnAt = performance.now();
       toast.show('High memory pressure — flushing chunks', '#ffd080', 3000);
@@ -4185,13 +5508,23 @@ function frame(): void {
     let qualityLimit = perfMonitor.quality;
     if (isMobileDevice) {
       const powerLimit = maxRenderDistanceChunks(
-        { batteryLevel: powerState.batteryLevel, charging: powerState.charging, thermalState: 'nominal' },
+        {
+          batteryLevel: powerState.batteryLevel,
+          charging: powerState.charging,
+          thermalState: 'nominal',
+        },
         false,
       );
       qualityLimit = Math.min(qualityLimit, powerLimit);
     }
     // Thermal-throttle: shrink view radius if FPS p95 < 25 or low battery (chunk_unload_strategy_thermal).
-    if (inThermalThrottle({ cpuTempCelsius: 50, fpsP95: p95Fps(fpsStats), battery: powerState.batteryLevel })) {
+    if (
+      inThermalThrottle({
+        cpuTempCelsius: 50,
+        fpsP95: p95Fps(fpsStats),
+        battery: powerState.batteryLevel,
+      })
+    ) {
       qualityLimit = Math.max(4, qualityLimit - 4);
     }
     loader.setViewRadius(qualityLimit);
@@ -4203,7 +5536,13 @@ function frame(): void {
     const targetPx = lowTier ? Math.min(basePx, 1.0) : basePx;
     if (Math.abs(renderer.getPixelRatio() - targetPx) > 0.01) renderer.setPixelRatio(targetPx);
   }
-  if (shouldPauseRender({ batteryLevel: powerState.batteryLevel, charging: powerState.charging, thermalState: 'nominal' })) {
+  if (
+    shouldPauseRender({
+      batteryLevel: powerState.batteryLevel,
+      charging: powerState.charging,
+      thermalState: 'nominal',
+    })
+  ) {
     return;
   }
 
@@ -4227,7 +5566,11 @@ function frame(): void {
   }
 
   // MC sprint rule: cannot sprint if hunger ≤ 6.
-  if (fp.input.sprint && playerState.hunger <= 6 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (
+    fp.input.sprint &&
+    playerState.hunger <= 6 &&
+    (gameMode === 'survival' || gameMode === 'adventure')
+  ) {
     fp.input.sprint = false;
   }
   if (fp.input.sprint && (gameMode === 'survival' || gameMode === 'adventure')) {
@@ -4237,7 +5580,11 @@ function frame(): void {
 
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
   // applies when no menus are open and the player is not in chat.
-  if (typeof navigator.getGamepads === 'function' && !chatInput.isOpen() && !pauseMenu.isVisible()) {
+  if (
+    typeof navigator.getGamepads === 'function' &&
+    !chatInput.isOpen() &&
+    !pauseMenu.isVisible()
+  ) {
     const pads = navigator.getGamepads();
     const pad = pads ? Array.from(pads).find((p) => p && p.connected) : null;
     if (pad) {
@@ -4287,7 +5634,8 @@ function frame(): void {
           screenShake.pulse(0.15);
           if (result?.killed) {
             spawnMobDrops(result.kind, result.position);
-            for (let k = 0; k < 3; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+            for (let k = 0; k < 3; k++)
+              xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
             blockParticles.emitBreak(
               Math.floor(result.position.x),
               Math.floor(result.position.y),
@@ -4329,12 +5677,7 @@ function frame(): void {
             const id = stateId(s);
             if (id !== torchId && id !== glowId) continue;
             if (Math.random() > 0.12) continue;
-            blockParticles.emitPlace(
-              px + dx + 0.5,
-              py + dy + 0.9,
-              pz + dz + 0.5,
-              [255, 235, 140],
-            );
+            blockParticles.emitPlace(px + dx + 0.5, py + dy + 0.9, pz + dz + 0.5, [255, 235, 140]);
             emitted++;
           }
         }
@@ -4372,7 +5715,11 @@ function frame(): void {
       const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
       if (next !== currentWeather) {
         setWeather(next);
-        toast.show(next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm', '#a0d0ff', 1500);
+        toast.show(
+          next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm',
+          '#a0d0ff',
+          1500,
+        );
       }
       weatherTimer = 180 + Math.random() * 240;
     }
@@ -4402,9 +5749,11 @@ function frame(): void {
           subtitles.push(`Lightning struck ${target.def.kind}`);
           if (target.def.kind === 'pig') {
             try {
-              mobWorld.spawn('zombified_piglin' as Parameters<typeof mobWorld.spawn>[0], target.position);
+              mobWorld.spawn('zombified_piglin', target.position);
               mobWorld.remove(target.id);
-            } catch { /* zombified_piglin not registered */ }
+            } catch {
+              /* zombified_piglin not registered */
+            }
           } else if (target.def.kind === 'creeper') {
             // Mark for charged behavior; webmc doesn't track charged state, so just damage as visual.
             mobWorld.damage(target.id, 5);
@@ -4423,23 +5772,48 @@ function frame(): void {
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   // Surface-aware footsteps: pick material from block under feet.
-  let stepMat: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water' | undefined;
+  let stepMat:
+    | 'wood'
+    | 'stone'
+    | 'gravel'
+    | 'grass'
+    | 'sand'
+    | 'snow'
+    | 'wool'
+    | 'metal'
+    | 'water'
+    | undefined;
   if (fp.onGround) {
-    const fname = registry.get(stateId(world.get(Math.floor(fp.position.x), Math.floor(fp.position.y - 1.05), Math.floor(fp.position.z)))).name;
+    const fname = registry.get(
+      stateId(
+        world.get(
+          Math.floor(fp.position.x),
+          Math.floor(fp.position.y - 1.05),
+          Math.floor(fp.position.z),
+        ),
+      ),
+    ).name;
     if (fname.includes('log') || fname.includes('plank')) stepMat = 'wood';
-    else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick')) stepMat = 'stone';
+    else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick'))
+      stepMat = 'stone';
     else if (fname.includes('gravel')) stepMat = 'gravel';
     else if (fname.includes('sand')) stepMat = 'sand';
     else if (fname.includes('snow')) stepMat = 'snow';
     else if (fname.includes('wool')) stepMat = 'wool';
-    else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper')) stepMat = 'metal';
+    else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper'))
+      stepMat = 'metal';
     else if (fname.includes('grass') || fname.includes('dirt')) stepMat = 'grass';
   } else if (fp.inFluid === 'water') {
     stepMat = 'water';
   }
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
   // MC-style jump exhaustion: 0.05 normal, 0.2 sprint-jump.
-  if (prevOnGround && !fp.onGround && fp.velocity.y > 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (
+    prevOnGround &&
+    !fp.onGround &&
+    fp.velocity.y > 0 &&
+    (gameMode === 'survival' || gameMode === 'adventure')
+  ) {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
   // Track airborne peak Y for mace smash damage calc.
@@ -4496,7 +5870,8 @@ function frame(): void {
   }
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
-  const weatherDimming = (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
+  const weatherDimming =
+    (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
@@ -4516,7 +5891,8 @@ function frame(): void {
   (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
   (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
   const nightVision = playerState.effects.has('night_vision') ? 0.5 : 0;
-  (uniforms['uAmbient'] as { value: number }).value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
+  (uniforms['uAmbient'] as { value: number }).value =
+    (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
   // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
   const speedEff = playerState.effects.get('speed');
   const slowEff = playerState.effects.get('slowness');
@@ -4526,7 +5902,8 @@ function frame(): void {
   fp.speedMultiplier = mul;
   // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
   const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
-  const speedLevel = (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
+  const speedLevel =
+    (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
   fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
   const jumpEff = playerState.effects.get('jump_boost');
   fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
@@ -4548,7 +5925,14 @@ function frame(): void {
   scene.background = skyColor;
   if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
 
-  const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad, fp.velocity.x, fp.velocity.z);
+  const loaderStats = loader.update(
+    fp.position.x,
+    fp.position.z,
+    onUnload,
+    onLoad,
+    fp.velocity.x,
+    fp.velocity.z,
+  );
 
   const sel = hotbar.selected;
   if (sel) {
@@ -4564,7 +5948,10 @@ function frame(): void {
     const counts: number[] = [];
     for (let i = 0; i < 9; i++) {
       const entry = hotbar.getEntry(i);
-      if (!entry) { counts.push(0); continue; }
+      if (!entry) {
+        counts.push(0);
+        continue;
+      }
       const def = registry.get(stateId(entry.state));
       const itemId = itemRegistry.byName(def.name);
       counts.push(itemId === undefined ? 0 : countInventoryItem(itemId));
@@ -4644,7 +6031,8 @@ function frame(): void {
     const chest = inventory.armor[1];
     const chestName = chest ? itemRegistry.get(chest.itemId).name : '';
     const wearingElytra = chestName === 'webmc:elytra';
-    isGliding = wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
+    isGliding =
+      wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
     if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
       const look = fp.lookVector();
       // Slow descent: clamp downward velocity.
@@ -4671,7 +6059,10 @@ function frame(): void {
     }
   }
   // Walking through fire ignites the player (8s burn).
-  if ((gameMode === 'survival' || gameMode === 'adventure') && !playerState.effects.has('fire_resistance')) {
+  if (
+    (gameMode === 'survival' || gameMode === 'adventure') &&
+    !playerState.effects.has('fire_resistance')
+  ) {
     const fpx = Math.floor(fp.position.x);
     const fpz = Math.floor(fp.position.z);
     for (let dy = 0; dy <= 1; dy++) {
@@ -4683,7 +6074,11 @@ function frame(): void {
     }
   }
 
-  if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure') && gameRules.fallDamage) {
+  if (
+    fp.lastLandFallBlocks > 3 &&
+    (gameMode === 'survival' || gameMode === 'adventure') &&
+    gameRules.fallDamage
+  ) {
     const slowFalling = playerState.effects.has('slow_falling');
     let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
@@ -4724,7 +6119,11 @@ function frame(): void {
       const fy = Math.floor(fp.position.y - 1.05);
       const fz = Math.floor(fp.position.z);
       const belowDef = registry.get(stateId(world.get(fx, fy, fz)));
-      if (belowDef.name === 'webmc:magma_block' && !fp.input.sneak && !playerState.effects.has('fire_resistance')) {
+      if (
+        belowDef.name === 'webmc:magma_block' &&
+        !fp.input.sneak &&
+        !playerState.effects.has('fire_resistance')
+      ) {
         playerState.takeDamage({ amount: 1 * dtSec, source: 'fire' });
       }
       // Soul sand slows player to 60% horizontal velocity (matches MC).
@@ -4794,20 +6193,34 @@ function frame(): void {
     subtitles.push('Player hurt');
     if (typeof navigator.getGamepads === 'function') {
       const pad = (navigator.getGamepads() ?? []).find((p) => p && p.connected);
-      const actuator = (pad as (Gamepad & { vibrationActuator?: { playEffect: (type: string, opts: object) => Promise<void> } }) | undefined)?.vibrationActuator;
+      const actuator = (
+        pad as
+          | (Gamepad & {
+              vibrationActuator?: { playEffect: (type: string, opts: object) => Promise<void> };
+            })
+          | undefined
+      )?.vibrationActuator;
       if (actuator) {
         const r = rumbleForDamage(delta);
-        void actuator.playEffect('dual-rumble', {
-          duration: r.durationMs,
-          strongMagnitude: r.highIntensity,
-          weakMagnitude: r.lowIntensity,
-        }).catch(() => undefined);
+        void actuator
+          .playEffect('dual-rumble', {
+            duration: r.durationMs,
+            strongMagnitude: r.highIntensity,
+            weakMagnitude: r.lowIntensity,
+          })
+          .catch(() => undefined);
       }
     }
   }
   subtitles.tick();
   achievementToast.tick();
-  activeEffectsHud.render(Array.from(playerState.effects, ([id, e]) => ({ id, amplifier: e.amplifier, remainingSec: e.remainingSec })));
+  activeEffectsHud.render(
+    Array.from(playerState.effects, ([id, e]) => ({
+      id,
+      amplifier: e.amplifier,
+      remainingSec: e.remainingSec,
+    })),
+  );
 
   // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
   let aimTint: string | null = null;
@@ -4822,7 +6235,8 @@ function frame(): void {
     const dot = (dx * aimLook2.x + dy * aimLook2.y + dz * aimLook2.z) / Math.max(0.001, d);
     if (dot > 0.97) {
       const beh = m.def.behavior;
-      aimTint = (beh === 'hostile' || beh === 'creeper') ? 'rgba(255,140,140,0.9)' : 'rgba(160,255,160,0.9)';
+      aimTint =
+        beh === 'hostile' || beh === 'creeper' ? 'rgba(255,140,140,0.9)' : 'rgba(160,255,160,0.9)';
       break;
     }
   }
@@ -4856,7 +6270,10 @@ function frame(): void {
   const py = Math.floor(fp.position.y);
   const pz = Math.floor(fp.position.z);
   for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
-    if (isSolid(px, yy, pz)) { skyBlocked = true; break; }
+    if (isSolid(px, yy, pz)) {
+      skyBlocked = true;
+      break;
+    }
   }
   const m = tickMood(moodState, {
     skyLight: skyBlocked ? 0 : 15,
@@ -4905,17 +6322,29 @@ function frame(): void {
 
   // Autosave debouncer: 30s interval OR 64-edit threshold OR forced.
   const nowSaveMs = performance.now();
-  if (shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
-      shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })) {
+  if (
+    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
+    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })
+  ) {
     beginSave(autosaveState, nowSaveMs);
-    void chunkStore.flush().finally(() => endSave(autosaveState));
+    void chunkStore.flush().finally(() => {
+      endSave(autosaveState);
+    });
   }
-  crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / heldAttackFullChargeMs(hotbar.selected?.name.toLowerCase() ?? ''));
+  crosshair.setCooldown(
+    (performance.now() - lastPlayerAttackAt) /
+      heldAttackFullChargeMs(hotbar.selected?.name.toLowerCase() ?? ''),
+  );
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
   let bossM: typeof bossCandidate | null = null;
   let bossDistSq = 32 * 32;
-  type BossCandidate = { name: string; health: number; maxHealth: number; kind: string };
+  interface BossCandidate {
+    name: string;
+    health: number;
+    maxHealth: number;
+    kind: string;
+  }
   let bossCandidate: BossCandidate | null = null;
   for (const m of mobWorld.all()) {
     if (m.def.maxHealth < 40) continue;
@@ -4924,16 +6353,31 @@ function frame(): void {
     const d2 = dx * dx + dz * dz;
     if (d2 > bossDistSq) continue;
     bossDistSq = d2;
-    bossCandidate = { name: m.def.kind, health: m.health, maxHealth: m.def.maxHealth, kind: m.def.kind };
+    bossCandidate = {
+      name: m.def.kind,
+      health: m.health,
+      maxHealth: m.def.maxHealth,
+      kind: m.def.kind,
+    };
     bossM = bossCandidate;
   }
   if (bossM) {
-    const color = bossM.kind === 'ender_dragon' ? 'purple' : bossM.kind === 'warden' ? 'red' : bossM.kind === 'wither' ? 'red' : 'pink';
+    const color =
+      bossM.kind === 'ender_dragon'
+        ? 'purple'
+        : bossM.kind === 'warden'
+          ? 'red'
+          : bossM.kind === 'wither'
+            ? 'red'
+            : 'pink';
     const style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20' =
-      bossM.kind === 'ender_dragon' ? 'notched_10'
-      : bossM.kind === 'warden' ? 'notched_20'
-      : bossM.kind === 'wither' ? 'notched_6'
-      : 'progress';
+      bossM.kind === 'ender_dragon'
+        ? 'notched_10'
+        : bossM.kind === 'warden'
+          ? 'notched_20'
+          : bossM.kind === 'wither'
+            ? 'notched_6'
+            : 'progress';
     bossBar.set({
       name: bossM.name,
       hp: bossM.health,
@@ -5047,7 +6491,12 @@ function frame(): void {
   }
   const overHostileCap = hostileCount >= WORLD_MOB_CAPS.hostile;
   const overPassiveCap = passiveCount >= WORLD_MOB_CAPS.passive;
-  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0 && gameRules.doMobSpawning && !(overHostileCap && overPassiveCap)) {
+  if (
+    chunkRenderer.meshCount > 20 &&
+    mobDamageMultiplier > 0 &&
+    gameRules.doMobSpawning &&
+    !(overHostileCap && overPassiveCap)
+  ) {
     // Despawn mobs >128 blocks away from player to bound entity count.
     const farMobs: number[] = [];
     for (const m of mobWorld.all()) {
@@ -5062,7 +6511,7 @@ function frame(): void {
       isDay: dayNight.isDay,
       surfaceAt: (x, z) => generator.surfaceAt(x, z),
       isSolid,
-      biomeAt: (x, z) => generator.biomeAt(x, z) === 1 ? 'forest' : 'plains',
+      biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
     });
 
     // Chicken egg laying: every 5–10 min per chicken, drop an egg item.
@@ -5110,18 +6559,24 @@ function frame(): void {
         if (inWater) {
           const cur = (zombieDrownTimers.get(m.id) ?? 0) + dt;
           zombieDrownTimers.set(m.id, cur);
-          if (cur >= 30_000) toConvert.push({ id: m.id, pos: { x: m.position.x, y: m.position.y, z: m.position.z } });
+          if (cur >= 30_000)
+            toConvert.push({
+              id: m.id,
+              pos: { x: m.position.x, y: m.position.y, z: m.position.z },
+            });
         } else if (zombieDrownTimers.has(m.id)) {
           zombieDrownTimers.delete(m.id);
         }
       }
       for (const c of toConvert) {
         try {
-          mobWorld.spawn('drowned' as Parameters<typeof mobWorld.spawn>[0], c.pos);
+          mobWorld.spawn('drowned', c.pos);
           mobWorld.remove(c.id);
           zombieDrownTimers.delete(c.id);
           subtitles.push('Zombie drowned');
-        } catch { /* drowned not registered */ }
+        } catch {
+          /* drowned not registered */
+        }
       }
     }
 
@@ -5134,16 +6589,21 @@ function frame(): void {
       const pz2 = Math.floor(fp.position.z);
       let inSky = true;
       for (let yy = Math.floor(fp.position.y) + 2; yy < CHUNK_HEIGHT; yy++) {
-        if (isSolid(px2, yy, pz2)) { inSky = false; break; }
+        if (isSolid(px2, yy, pz2)) {
+          inSky = false;
+          break;
+        }
       }
-      if (canSpawnPhantom({
-        daysSinceSleep,
-        worldTick: Math.floor(dayNight.timeOfDay * 24000),
-        playerInSkyView: inSky,
-        rand: Math.random,
-      })) {
+      if (
+        canSpawnPhantom({
+          daysSinceSleep,
+          worldTick: Math.floor(dayNight.timeOfDay * 24000),
+          playerInSkyView: inSky,
+          rand: Math.random,
+        })
+      ) {
         try {
-          mobWorld.spawn('phantom' as Parameters<typeof mobWorld.spawn>[0], {
+          mobWorld.spawn('phantom', {
             x: fp.position.x + (Math.random() - 0.5) * 30,
             y: fp.position.y + 14,
             z: fp.position.z + (Math.random() - 0.5) * 30,
@@ -5193,7 +6653,10 @@ function frame(): void {
       const broken: number[] = [];
       for (const id of leashedMobs) {
         const m = allMobs.find((mm) => mm.id === id);
-        if (!m) { broken.push(id); continue; }
+        if (!m) {
+          broken.push(id);
+          continue;
+        }
         const r = tensionStep({ anchorPos: anchor, mobPos: m.position });
         if (r.broken) {
           broken.push(id);
@@ -5210,7 +6673,7 @@ function frame(): void {
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
       const allMobs = [...mobWorld.all()];
       const mobById = new Map(allMobs.map((m) => [m.id, m] as const));
-      const lovers: { mob: typeof allMobs[number]; love: AnimalLove }[] = [];
+      const lovers: { mob: (typeof allMobs)[number]; love: AnimalLove }[] = [];
       for (const [id, love] of lovingMobs) {
         const m = mobById.get(id);
         if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
@@ -5254,55 +6717,57 @@ function frame(): void {
       }
     }
   }
-  if (!tickFrozen) mobWorld.tick(dtSec * tickRateMultiplier, {
-    isSolid,
-    playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-    damagePlayer: (amt, attackerPos) => {
-      const scaled = amt * mobDamageMultiplier;
-      const armorPts = computeArmorPoints();
-      const toughnessPts = computeArmorToughness();
-      const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
-      if (finalDmg > 0) {
-        playerState.takeDamage({ amount: finalDmg, source: 'mob' });
-        if (armorPts > 0) consumeArmorDurability(scaled);
-        if (attackerPos) {
-          const angle = damageTiltAngle({
-            attackerX: attackerPos.x,
-            attackerZ: attackerPos.z,
-            playerX: fp.position.x,
-            playerZ: fp.position.z,
-            playerYaw: fp.yaw,
-          });
-          fp.pulseDamageTilt(angle);
+  if (!tickFrozen)
+    mobWorld.tick(dtSec * tickRateMultiplier, {
+      isSolid,
+      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+      damagePlayer: (amt, attackerPos) => {
+        const scaled = amt * mobDamageMultiplier;
+        const armorPts = computeArmorPoints();
+        const toughnessPts = computeArmorToughness();
+        const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
+        if (finalDmg > 0) {
+          playerState.takeDamage({ amount: finalDmg, source: 'mob' });
+          if (armorPts > 0) consumeArmorDurability(scaled);
+          if (attackerPos) {
+            const angle = damageTiltAngle({
+              attackerX: attackerPos.x,
+              attackerZ: attackerPos.z,
+              playerX: fp.position.x,
+              playerZ: fp.position.z,
+              playerYaw: fp.yaw,
+            });
+            fp.pulseDamageTilt(angle);
+          }
         }
-      }
-      if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
-    },
-    onCreeperExplode: (x, y, z) => {
-      // mobGriefing=false: creepers explode but don't break terrain.
-      if (gameRules.mobGriefing) {
-        explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
-      } else {
-        // Visual-only burst.
-        for (let i = 0; i < 12; i++) blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
-        screenShake.pulse(0.4);
-      }
-    },
-    isSunlit: (x, y, z) => {
-      if (!dayNight.isDay) return false;
-      if (currentWeather === 'thunder') return false;
-      // Check nothing opaque above the mob's head out to the top of the world.
-      const bx = Math.floor(x);
-      const bz = Math.floor(z);
-      const startY = Math.floor(y + 0.5);
-      for (let yy = startY; yy < CHUNK_HEIGHT; yy++) {
-        const s = world.get(bx, yy, bz);
-        if (s === AIR) continue;
-        if (registry.get(stateId(s)).opaque) return false;
-      }
-      return true;
-    },
-  });
+        if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
+      },
+      onCreeperExplode: (x, y, z) => {
+        // mobGriefing=false: creepers explode but don't break terrain.
+        if (gameRules.mobGriefing) {
+          explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+        } else {
+          // Visual-only burst.
+          for (let i = 0; i < 12; i++)
+            blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
+          screenShake.pulse(0.4);
+        }
+      },
+      isSunlit: (x, y, z) => {
+        if (!dayNight.isDay) return false;
+        if (currentWeather === 'thunder') return false;
+        // Check nothing opaque above the mob's head out to the top of the world.
+        const bx = Math.floor(x);
+        const bz = Math.floor(z);
+        const startY = Math.floor(y + 0.5);
+        for (let yy = startY; yy < CHUNK_HEIGHT; yy++) {
+          const s = world.get(bx, yy, bz);
+          if (s === AIR) continue;
+          if (registry.get(stateId(s)).opaque) return false;
+        }
+        return true;
+      },
+    });
   mobRenderer.sync(mobWorld.all(), camera.position);
 
   damageNumbers.tick(dtSec, (wx, wy, wz) => {
@@ -5332,15 +6797,17 @@ function frame(): void {
     markers.push({ x: v.x, z: v.z, color: '#80c0ff', size: 3 });
   }
   minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
-  droppedItems.tick(dtSec, isSolid, fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position, (out) => {
-    inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
-    sfx.play('click');
-    const def = itemRegistry.get(out.itemId);
-    chatInput.addLine(
-      `+ ${String(out.count)} ${def.name.replace(/^webmc:/, '')}`,
-      '#d2ff80',
-    );
-  });
+  droppedItems.tick(
+    dtSec,
+    isSolid,
+    fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position,
+    (out) => {
+      inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
+      sfx.play('click');
+      const def = itemRegistry.get(out.itemId);
+      chatInput.addLine(`+ ${String(out.count)} ${def.name.replace(/^webmc:/, '')}`, '#d2ff80');
+    },
+  );
   xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {
     // Mending-style auto-repair: damaged held tool gets durability from XP first.
     let remaining = xp;
@@ -5411,12 +6878,24 @@ function frame(): void {
       viewDistance: loader.viewRadius,
       rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
       mobs: mobWorld.size,
-      hostile: (() => { let n = 0; for (const m of mobWorld.all()) if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') n++; return n; })(),
-      passive: (() => { let n = 0; for (const m of mobWorld.all()) if (m.def.behavior === 'passive') n++; return n; })(),
+      hostile: (() => {
+        let n = 0;
+        for (const m of mobWorld.all())
+          if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') n++;
+        return n;
+      })(),
+      passive: (() => {
+        let n = 0;
+        for (const m of mobWorld.all()) if (m.def.behavior === 'passive') n++;
+        return n;
+      })(),
       drops: droppedItems.size,
       xpOrbs: xpOrbs.size,
       seed: WORLD_SEED,
-      biome: generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1 ? 'forest' : 'plains',
+      biome:
+        generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1
+          ? 'forest'
+          : 'plains',
     });
     hud.textContent = '';
   } else {

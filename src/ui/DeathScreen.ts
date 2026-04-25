@@ -44,7 +44,8 @@ export class DeathScreen {
 
     const title = document.createElement('div');
     title.textContent = 'You died!';
-    title.style.cssText = 'font-size:56px;font-weight:700;text-shadow:2px 2px 0 rgba(0,0,0,0.8);color:#ff5454;';
+    title.style.cssText =
+      'font-size:56px;font-weight:700;text-shadow:2px 2px 0 rgba(0,0,0,0.8);color:#ff5454;';
     this.root.appendChild(title);
 
     this.subEl = document.createElement('div');

@@ -35,8 +35,8 @@ export function hasAllIngredients(inv: Inventory, recipe: Recipe): boolean {
 
 function countItem(inv: Inventory, itemId: number): number {
   let total = 0;
-  for (const s of inv.hotbar) if (s && s.itemId === itemId) total += s.count;
-  for (const s of inv.main) if (s && s.itemId === itemId) total += s.count;
+  for (const s of inv.hotbar) if (s?.itemId === itemId) total += s.count;
+  for (const s of inv.main) if (s?.itemId === itemId) total += s.count;
   return total;
 }
 
@@ -45,7 +45,7 @@ function consume(inv: Inventory, itemId: number, count: number): boolean {
   const consumeFrom = (slots: (typeof inv.hotbar)[number][]): void => {
     for (let i = 0; i < slots.length && remaining > 0; i++) {
       const s = slots[i];
-      if (!s || s.itemId !== itemId) continue;
+      if (s?.itemId !== itemId) continue;
       const take = Math.min(s.count, remaining);
       const after = s.count - take;
       slots[i] = after <= 0 ? null : { ...s, count: after };

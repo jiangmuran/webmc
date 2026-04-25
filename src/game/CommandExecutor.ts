@@ -32,7 +32,12 @@ export interface CommandContext {
   getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
   getLastDeathPos?: () => { x: number; y: number; z: number } | null;
   renameLookedAtMob?: (name: string) => string | null;
-  tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
+  tameLookedAtMob?: () => {
+    kind: string;
+    tamed: boolean;
+    itemUsed: string | null;
+    reason?: string;
+  } | null;
   toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
   toggleZoom?: (factor: number) => void;
   setWalkSpeed?: (mul: number) => void;
@@ -44,7 +49,15 @@ export interface CommandContext {
   fillRegion?: (block: string) => number;
   screenshot?: () => void;
   setFov?: (deg: number) => void;
-  entityStats?: () => { mobs: number; hostile: number; passive: number; neutral: number; drops: number; xpOrbs: number; byKind: { kind: string; count: number }[] };
+  entityStats?: () => {
+    mobs: number;
+    hostile: number;
+    passive: number;
+    neutral: number;
+    drops: number;
+    xpOrbs: number;
+    byKind: { kind: string; count: number }[];
+  };
   chunkStats?: () => { loaded: number; pending: number; meshes: number; triangles: number };
   openCreativeInventory?: () => void;
   saveLoadout?: (name: string) => void;
@@ -54,8 +67,21 @@ export interface CommandContext {
   cycleCamera?: () => string;
   toggleMinimap?: () => boolean;
   minimapZoom?: (dir: 'in' | 'out') => void;
-  heldItemInfo?: () => { name: string; count: number; maxStack: number; durability?: { current: number; max: number }; food?: { hunger: number; saturation: number }; tags?: string[] } | null;
-  inventoryStats?: () => { filledSlots: number; totalSlots: number; totalItems: number; uniqueTypes: number; topItems: { name: string; count: number }[] };
+  heldItemInfo?: () => {
+    name: string;
+    count: number;
+    maxStack: number;
+    durability?: { current: number; max: number };
+    food?: { hunger: number; saturation: number };
+    tags?: string[];
+  } | null;
+  inventoryStats?: () => {
+    filledSlots: number;
+    totalSlots: number;
+    totalItems: number;
+    uniqueTypes: number;
+    topItems: { name: string; count: number }[];
+  };
   dropAllItems?: () => number;
   setPlayerName?: (name: string) => void;
   remeshAllChunks?: () => number;
@@ -65,7 +91,13 @@ export interface CommandContext {
   setBreath?: (b: number) => void;
   setXpLevel?: (lvl: number) => void;
   killMobsNear?: (radius: number) => number;
-  feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
+  healMobsNear?: (radius: number) => number;
+  feedLookedAtMob?: () => {
+    kind: string;
+    loved: boolean;
+    itemUsed: string | null;
+    reason?: string;
+  } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
   setWorldBorder?: (diameter: number) => void;
@@ -76,19 +108,33 @@ export interface CommandContext {
   exportWorldManifest?: () => string;
   equipArmor?: (itemName: string) => string | null;
   giveXp?: (amount: number) => void;
-  showBossBar?: (name: string, hp: number, maxHp: number, color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white', style?: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20') => void;
+  showBossBar?: (
+    name: string,
+    hp: number,
+    maxHp: number,
+    color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white',
+    style?: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20',
+  ) => void;
   hideBossBar?: () => void;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
   getWaypoint?: (name: string) => { x: number; y: number; z: number } | null;
-  listWaypoints?: () => ReadonlyArray<{ name: string; x: number; y: number; z: number }>;
+  listWaypoints?: () => readonly { name: string; x: number; y: number; z: number }[];
   removeWaypoint?: (name: string) => boolean;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
-  fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
+  fillBlocks?: (
+    x1: number,
+    y1: number,
+    z1: number,
+    x2: number,
+    y2: number,
+    z2: number,
+    name: string,
+  ) => number;
   save?: () => void;
   showStats?: () => void;
   summon?: (kind: string, x: number, y: number, z: number) => boolean;
@@ -97,7 +143,7 @@ export interface CommandContext {
   seed?: () => number;
   killAllMobs?: () => number;
   particle?: (x: number, y: number, z: number) => void;
-  listAchievements?: () => ReadonlyArray<{ title: string; unlocked: boolean }>;
+  listAchievements?: () => readonly { title: string; unlocked: boolean }[];
   setDifficulty?: (level: 'peaceful' | 'easy' | 'normal' | 'hard') => void;
   playerName?: string;
   setSpawnHere?: () => void;
@@ -108,14 +154,20 @@ export interface CommandContext {
   setGameRule?: (rule: string, value: boolean) => void;
   listGameRules?: () => Record<string, boolean>;
   biomeAt?: (x: number, z: number) => string;
-  findBlock?: (name: string, radius: number) => { x: number; y: number; z: number; dist: number } | null;
+  findBlock?: (
+    name: string,
+    radius: number,
+  ) => { x: number; y: number; z: number; dist: number } | null;
   findMob?: (kind: string) => { x: number; y: number; z: number; dist: number } | null;
 }
 
 let lastTpFrom: { x: number; y: number; z: number } | null = null;
 
 export function executeCommands(raw: string, ctx: CommandContext): void {
-  for (const part of raw.split(';').map((s) => s.trim()).filter((s) => s.length > 0)) {
+  for (const part of raw
+    .split(';')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0)) {
     executeCommand(part, ctx);
   }
 }
@@ -409,9 +461,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (args[0] === 'tp') {
       lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
       ctx.setPlayerPos(p.x, p.y, p.z);
-      ctx.broadcast(`Teleported to last death @ ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#80ff80');
+      ctx.broadcast(
+        `Teleported to last death @ ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`,
+        '#80ff80',
+      );
     } else {
-      ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
+      ctx.broadcast(
+        `Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`,
+        '#cccccc',
+      );
     }
     return;
   }
@@ -419,7 +477,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (args[0] === 'set') {
       const name = args[1] ?? 'home';
       ctx.setWaypoint?.(name, ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
-      ctx.broadcast(`Waypoint "${name}" set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#80ff80');
+      ctx.broadcast(
+        `Waypoint "${name}" set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`,
+        '#80ff80',
+      );
       return;
     }
     if (args[0] === 'list') {
@@ -427,7 +488,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       if (list.length === 0) {
         ctx.broadcast('No waypoints. Use /wp set <name>.', '#cccccc');
       } else {
-        for (const wp of list) ctx.broadcast(`${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`, '#cccccc');
+        for (const wp of list)
+          ctx.broadcast(
+            `${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`,
+            '#cccccc',
+          );
       }
       return;
     }
@@ -446,7 +511,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (args[0] === 'remove' || args[0] === 'rm') {
       const name = args[1] ?? '';
       const ok = ctx.removeWaypoint?.(name) ?? false;
-      ctx.broadcast(ok ? `Removed waypoint "${name}"` : `No waypoint "${name}"`, ok ? '#80ff80' : '#ff8080');
+      ctx.broadcast(
+        ok ? `Removed waypoint "${name}"` : `No waypoint "${name}"`,
+        ok ? '#80ff80' : '#ff8080',
+      );
       return;
     }
     ctx.broadcast('Usage: /wp <set|list|tp|remove> [name]', '#ff8080');
@@ -463,7 +531,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Unknown structure: ${kind}. Try: stronghold`, '#ff8080');
       return;
     }
-    ctx.broadcast(`Nearest ${kind}: ${String(hit.x)} ~ ${String(hit.z)} (${hit.dist.toFixed(0)}m)`, '#80ff80');
+    ctx.broadcast(
+      `Nearest ${kind}: ${String(hit.x)} ~ ${String(hit.z)} (${hit.dist.toFixed(0)}m)`,
+      '#80ff80',
+    );
     // Auto-create a waypoint so the minimap marks the structure.
     if (ctx.setWaypoint) {
       const wpName = `loc_${kind}`;
@@ -500,13 +571,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (sub === 'show') {
       const COLORS = ['pink', 'blue', 'red', 'green', 'yellow', 'purple', 'white'] as const;
       const STYLES = ['progress', 'notched_6', 'notched_10', 'notched_12', 'notched_20'] as const;
-      let color: typeof COLORS[number] = COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'purple';
-      let style: typeof STYLES[number] = 'progress';
+      let color: (typeof COLORS)[number] =
+        COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'purple';
+      let style: (typeof STYLES)[number] = 'progress';
       const rest: string[] = [];
       for (const a of args.slice(1)) {
         const lo = a.toLowerCase();
-        if ((COLORS as readonly string[]).includes(lo)) color = lo as typeof COLORS[number];
-        else if ((STYLES as readonly string[]).includes(lo)) style = lo as typeof STYLES[number];
+        if ((COLORS as readonly string[]).includes(lo)) color = lo as (typeof COLORS)[number];
+        else if ((STYLES as readonly string[]).includes(lo)) style = lo as (typeof STYLES)[number];
         else rest.push(a);
       }
       const name = rest.join(' ') || 'Test Boss';
@@ -514,7 +586,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Boss bar shown: ${name} (${color}, ${style})`, '#80ff80');
       return;
     }
-    ctx.broadcast('Usage: /bossbar <show [name] [color] [style] | hide>  styles: progress, notched_6/10/12/20', '#ff8080');
+    ctx.broadcast(
+      'Usage: /bossbar <show [name] [color] [style] | hide>  styles: progress, notched_6/10/12/20',
+      '#ff8080',
+    );
     return;
   }
   if (head === 'xp' || head === 'experience') {
@@ -571,7 +646,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.setHardcore?.(false);
       ctx.broadcast('Hardcore mode OFF.', '#80ff80');
     } else {
-      ctx.broadcast(`Hardcore: ${ctx.isHardcore?.() ? 'ON' : 'OFF'} — usage: /hardcore <on|off>`, '#cccccc');
+      ctx.broadcast(
+        `Hardcore: ${ctx.isHardcore?.() ? 'ON' : 'OFF'} — usage: /hardcore <on|off>`,
+        '#cccccc',
+      );
     }
     return;
   }
@@ -605,7 +683,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else if (r.reason === 'already_tamed') {
       ctx.broadcast(`${r.kind} is already tamed.`, '#ffd080');
     } else if (r.reason === 'wrong_item') {
-      ctx.broadcast(`Hold the right item: wolf=bone, cat=raw_fish/raw_salmon, parrot=seeds.`, '#ffd080');
+      ctx.broadcast(
+        `Hold the right item: wolf=bone, cat=raw_fish/raw_salmon, parrot=seeds.`,
+        '#ffd080',
+      );
     } else if (r.tamed) {
       ctx.broadcast(`Tamed ${r.kind}! ♥`, '#80ff80');
     } else {
@@ -634,7 +715,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'unleash') {
     const n = ctx.unleashAllMobs?.() ?? 0;
-    ctx.broadcast(n > 0 ? `Unleashed ${n} mob(s).` : 'No leashed mobs.', n > 0 ? '#80ff80' : '#ffd080');
+    ctx.broadcast(
+      n > 0 ? `Unleashed ${n} mob(s).` : 'No leashed mobs.',
+      n > 0 ? '#80ff80' : '#ffd080',
+    );
     return;
   }
   if (head === 'feed' || head === 'breed') {
@@ -648,7 +732,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     if (r.reason === 'wrong_item') {
-      ctx.broadcast(`${r.kind} doesn't want that. Try: cow/sheep=wheat, pig=carrot, chicken=seeds, rabbit=carrot.`, '#ffd080');
+      ctx.broadcast(
+        `${r.kind} doesn't want that. Try: cow/sheep=wheat, pig=carrot, chicken=seeds, rabbit=carrot.`,
+        '#ffd080',
+      );
     } else if (r.reason === 'cooldown') {
       ctx.broadcast(`${r.kind} is on breed cooldown.`, '#ffd080');
     } else if (r.reason === 'not_breedable') {
@@ -733,7 +820,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     void (ctx.copyToClipboard?.(text) ?? Promise.resolve(false)).then((ok) => {
-      ctx.broadcast(ok ? `Copied: ${text}` : 'Copy failed (clipboard blocked)', ok ? '#80ff80' : '#ff8080');
+      ctx.broadcast(
+        ok ? `Copied: ${text}` : 'Copy failed (clipboard blocked)',
+        ok ? '#80ff80' : '#ff8080',
+      );
     });
     return;
   }
@@ -805,7 +895,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const dx = ctx.playerPos.x;
     const dz = ctx.playerPos.z;
     const d = Math.hypot(dx, dz);
-    ctx.broadcast(`Distance from origin: ${d.toFixed(1)}m (Δx ${dx.toFixed(1)}, Δz ${dz.toFixed(1)})`, '#cccccc');
+    ctx.broadcast(
+      `Distance from origin: ${d.toFixed(1)}m (Δx ${dx.toFixed(1)}, Δz ${dz.toFixed(1)})`,
+      '#cccccc',
+    );
     return;
   }
   if (head === 'clearchat' || head === 'cc') {
@@ -837,12 +930,35 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     return;
   }
   if (head === 'listeffects') {
-    const all = ['regeneration', 'poison', 'instant_health', 'instant_damage',
-      'night_vision', 'speed', 'slowness', 'jump_boost', 'fire_resistance',
-      'water_breathing', 'invisibility', 'strength', 'resistance',
-      'slow_falling', 'haste', 'mining_fatigue', 'absorption', 'glowing',
-      'levitation', 'luck', 'unluck', 'wither', 'dolphins_grace', 'blindness',
-      'nausea', 'hunger', 'weakness'];
+    const all = [
+      'regeneration',
+      'poison',
+      'instant_health',
+      'instant_damage',
+      'night_vision',
+      'speed',
+      'slowness',
+      'jump_boost',
+      'fire_resistance',
+      'water_breathing',
+      'invisibility',
+      'strength',
+      'resistance',
+      'slow_falling',
+      'haste',
+      'mining_fatigue',
+      'absorption',
+      'glowing',
+      'levitation',
+      'luck',
+      'unluck',
+      'wither',
+      'dolphins_grace',
+      'blindness',
+      'nausea',
+      'hunger',
+      'weakness',
+    ];
     ctx.broadcast(`Effects: ${all.join(', ')}`, '#cccccc');
     return;
   }
@@ -908,31 +1024,61 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('— webmc —', '#ffd080');
     ctx.broadcast('Browser-native Minecraft-Java-Edition-equivalent voxel game', '#cccccc');
     ctx.broadcast('Clean-room AGPL-3.0 reimplementation. NOT affiliated with Mojang.', '#cccccc');
-    ctx.broadcast('Built with Three.js + TypeScript + Vite. Mobile + multiplayer ready.', '#cccccc');
+    ctx.broadcast(
+      'Built with Three.js + TypeScript + Vite. Mobile + multiplayer ready.',
+      '#cccccc',
+    );
     ctx.broadcast('https://github.com/anthropics/claude-code  ·  /tutorial /help', '#a0a0ff');
     return;
   }
   if (head === 'commands' || head === 'cmds') {
     ctx.broadcast('— Command categories — type /help for full list —', '#ffd080');
-    ctx.broadcast('Movement: /tp /back /up /down /spawn /home /jump /launch /speed /zoom', '#cccccc');
-    ctx.broadcast('World: /time /weather /day /night /sun /rain /storm /seed /biome /world', '#cccccc');
-    ctx.broadcast('Builders: /village /house /tower /pyramid /dungeon /sphere /cube /portal', '#cccccc');
+    ctx.broadcast(
+      'Movement: /tp /back /up /down /spawn /home /jump /launch /speed /zoom',
+      '#cccccc',
+    );
+    ctx.broadcast(
+      'World: /time /weather /day /night /sun /rain /storm /seed /biome /world',
+      '#cccccc',
+    );
+    ctx.broadcast(
+      'Builders: /village /house /tower /pyramid /dungeon /sphere /cube /portal',
+      '#cccccc',
+    );
     ctx.broadcast('  /roof /wall /bridge /pillar /tree /platform /clear area /replace', '#cccccc');
-    ctx.broadcast('Player: /heal /kill /clear /sort /fly /effect /milk /xp /equip /kit /starter', '#cccccc');
+    ctx.broadcast(
+      'Player: /heal /kill /clear /sort /fly /effect /milk /xp /equip /kit /starter',
+      '#cccccc',
+    );
     ctx.broadcast('  /nv /invis /god /glow', '#cccccc');
-    ctx.broadcast('Mobs: /summon /army /dragon /wither /tame /sit /feed /breed /leash /rename', '#cccccc');
+    ctx.broadcast(
+      'Mobs: /summon /army /dragon /wither /tame /sit /feed /breed /leash /rename',
+      '#cccccc',
+    );
     ctx.broadcast('  /killall', '#cccccc');
     ctx.broadcast('Items: /give /craft /cook /find /lookup /listblocks /listmobs', '#cccccc');
-    ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
-    ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
+    ctx.broadcast(
+      'UI: /chest /scoreboard /title /particle /firework /bossbar /achievements',
+      '#cccccc',
+    );
+    ctx.broadcast(
+      'Save: /save /export /import /worldborder /hardcore /datapack /waypoint',
+      '#cccccc',
+    );
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
   if (head === 'test' || head === 'sanitycheck') {
-    let pass = 0, fail = 0;
+    let pass = 0,
+      fail = 0;
     const check = (label: string, ok: boolean): void => {
-      if (ok) { pass++; ctx.broadcast(`✔ ${label}`, '#80ff80'); }
-      else { fail++; ctx.broadcast(`✘ ${label}`, '#ff8080'); }
+      if (ok) {
+        pass++;
+        ctx.broadcast(`✔ ${label}`, '#80ff80');
+      } else {
+        fail++;
+        ctx.broadcast(`✘ ${label}`, '#ff8080');
+      }
     };
     check('giveItem stone', ctx.giveItem('stone', 1));
     check('lookupItem oak_planks', ctx.lookupItem?.('oak_planks') ?? false);
@@ -944,15 +1090,27 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     check('seed positive', (ctx.seed?.() ?? 0) > 0);
     check('TPS available', ctx.getTpsStats !== undefined);
     check('giveAllBlocks reachable', ctx.giveAllBlocks !== undefined);
-    ctx.broadcast(`Sanity: ${String(pass)} ✔  ${String(fail)} ✘`, fail === 0 ? '#80ff80' : '#ff8080');
+    ctx.broadcast(
+      `Sanity: ${String(pass)} ✔  ${String(fail)} ✘`,
+      fail === 0 ? '#80ff80' : '#ff8080',
+    );
     return;
   }
   if (head === 'reset' && args[0] === 'gamerules') {
     if (!ctx.setGameRule || !ctx.listGameRules) return;
     const DEFAULTS: Record<string, boolean> = {
-      doDaylightCycle: true, doMobSpawning: true, doMobLoot: true, doTileDrops: true,
-      keepInventory: false, mobGriefing: true, naturalRegeneration: true, fallDamage: true,
-      drowningDamage: true, fireDamage: true, freezeDamage: true, doImmediateRespawn: false,
+      doDaylightCycle: true,
+      doMobSpawning: true,
+      doMobLoot: true,
+      doTileDrops: true,
+      keepInventory: false,
+      mobGriefing: true,
+      naturalRegeneration: true,
+      fallDamage: true,
+      drowningDamage: true,
+      fireDamage: true,
+      freezeDamage: true,
+      doImmediateRespawn: false,
       pvp: true,
     };
     for (const [k, v] of Object.entries(DEFAULTS)) ctx.setGameRule(k, v);
@@ -970,6 +1128,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'healmobs' || head === 'healall') {
+    if (!ctx.healMobsNear) return;
+    const r = parseFloat(args[0] ?? '32');
+    if (!Number.isFinite(r) || r < 1 || r > 256) {
+      ctx.broadcast('Usage: /healmobs [radius=32]', '#ff8080');
+      return;
+    }
+    const n = ctx.healMobsNear(r);
+    ctx.broadcast(`Healed ${String(n)} mobs within ${r.toFixed(0)}m`, '#80ff80');
     return;
   }
   if (head === 'clearmobs' || head === 'killnear') {
@@ -1047,7 +1216,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'name' || head === 'rename_self') {
     const newName = args.join(' ').trim();
     if (!newName || newName.length > 24) {
-      ctx.broadcast(`Current name: ${ctx.playerName ?? '(unset)'}  · usage: /name <new_name>`, '#cccccc');
+      ctx.broadcast(
+        `Current name: ${ctx.playerName ?? '(unset)'}  · usage: /name <new_name>`,
+        '#cccccc',
+      );
       return;
     }
     if (ctx.setPlayerName) {
@@ -1074,9 +1246,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'inventory' || head === 'inv') {
     if (!ctx.inventoryStats) return;
     const s = ctx.inventoryStats();
-    ctx.broadcast(`Inventory: ${String(s.filledSlots)}/${String(s.totalSlots)} slots · ${String(s.totalItems)} items · ${String(s.uniqueTypes)} unique`, '#cccccc');
+    ctx.broadcast(
+      `Inventory: ${String(s.filledSlots)}/${String(s.totalSlots)} slots · ${String(s.totalItems)} items · ${String(s.uniqueTypes)} unique`,
+      '#cccccc',
+    );
     if (s.topItems?.length) {
-      const list = s.topItems.slice(0, 5).map((t) => `${t.name}×${String(t.count)}`).join(', ');
+      const list = s.topItems
+        .slice(0, 5)
+        .map((t) => `${t.name}×${String(t.count)}`)
+        .join(', ');
       ctx.broadcast(`Top: ${list}`, '#cccccc');
     }
     return;
@@ -1092,7 +1270,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     ctx.broadcast(`— ${info.name} ×${String(info.count)} —`, '#ffd080');
-    ctx.broadcast(`stack ${String(info.maxStack)}  · dura ${info.durability ? `${String(info.durability.current)}/${String(info.durability.max)}` : 'n/a'}  · food ${info.food ? `+${String(info.food.hunger)} (${info.food.saturation.toFixed(1)})` : 'n/a'}`, '#cccccc');
+    ctx.broadcast(
+      `stack ${String(info.maxStack)}  · dura ${info.durability ? `${String(info.durability.current)}/${String(info.durability.max)}` : 'n/a'}  · food ${info.food ? `+${String(info.food.hunger)} (${info.food.saturation.toFixed(1)})` : 'n/a'}`,
+      '#cccccc',
+    );
     if (info.tags?.length) ctx.broadcast(`tags: ${info.tags.join(', ')}`, '#cccccc');
     return;
   }
@@ -1103,7 +1284,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast('Usage: /minimapzoom <in|out>', '#ff8080');
       return;
     }
-    ctx.minimapZoom(dir as 'in' | 'out');
+    ctx.minimapZoom(dir);
     ctx.broadcast(`Minimap zoom ${dir}`, '#80ff80');
     return;
   }
@@ -1201,7 +1382,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const kind = args[0] ?? 'pig';
     const count = parseInt(args[1] ?? '20', 10);
     const range = parseFloat(args[2] ?? '32');
-    if (!Number.isFinite(count) || count < 1 || count > 200 || !Number.isFinite(range) || range < 1 || range > 256) {
+    if (
+      !Number.isFinite(count) ||
+      count < 1 ||
+      count > 200 ||
+      !Number.isFinite(range) ||
+      range < 1 ||
+      range > 256
+    ) {
       ctx.broadcast('Usage: /spread <kind=pig> <count=20> <range=32>', '#ff8080');
       return;
     }
@@ -1222,16 +1410,28 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const s = ctx.entityStats();
-    ctx.broadcast(`mobs ${String(s.mobs)} (h${String(s.hostile)}/p${String(s.passive)}/n${String(s.neutral)}) drops ${String(s.drops)} xp ${String(s.xpOrbs)}`, '#cccccc');
+    ctx.broadcast(
+      `mobs ${String(s.mobs)} (h${String(s.hostile)}/p${String(s.passive)}/n${String(s.neutral)}) drops ${String(s.drops)} xp ${String(s.xpOrbs)}`,
+      '#cccccc',
+    );
     if (s.byKind.length > 0) {
-      ctx.broadcast(s.byKind.slice(0, 8).map((k) => `${k.kind}:${String(k.count)}`).join('  '), '#cccccc');
+      ctx.broadcast(
+        s.byKind
+          .slice(0, 8)
+          .map((k) => `${k.kind}:${String(k.count)}`)
+          .join('  '),
+        '#cccccc',
+      );
     }
     return;
   }
   if (head === 'chunkstats' || head === 'chunks') {
     if (!ctx.chunkStats) return;
     const s = ctx.chunkStats();
-    ctx.broadcast(`chunks loaded ${String(s.loaded)} pending ${String(s.pending)}  meshes ${String(s.meshes)}  tris ${s.triangles.toLocaleString()}`, '#cccccc');
+    ctx.broadcast(
+      `chunks loaded ${String(s.loaded)} pending ${String(s.pending)}  meshes ${String(s.meshes)}  tris ${s.triangles.toLocaleString()}`,
+      '#cccccc',
+    );
     return;
   }
   if (head === 'screenshot' || head === 'snap') {
@@ -1261,8 +1461,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     return;
   }
   if (head === 'where') {
-    ctx.broadcast(`Position: ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`, '#cccccc');
-    if (ctx.biomeAt) ctx.broadcast(`Biome: ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
+    ctx.broadcast(
+      `Position: ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`,
+      '#cccccc',
+    );
+    if (ctx.biomeAt)
+      ctx.broadcast(`Biome: ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
     return;
   }
   if (head === 'distance' && args[0]) {
@@ -1308,8 +1512,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast('Usage: /mark <a|b>', '#ff8080');
       return;
     }
-    ctx.markRegionPoint(p as 'a' | 'b');
-    ctx.broadcast(`Region point ${p.toUpperCase()} = ${ctx.playerPos.x.toFixed(0)} ${ctx.playerPos.y.toFixed(0)} ${ctx.playerPos.z.toFixed(0)}`, '#80ff80');
+    ctx.markRegionPoint(p);
+    ctx.broadcast(
+      `Region point ${p.toUpperCase()} = ${ctx.playerPos.x.toFixed(0)} ${ctx.playerPos.y.toFixed(0)} ${ctx.playerPos.z.toFixed(0)}`,
+      '#80ff80',
+    );
     return;
   }
   if (head === 'paste' || head === 'fillregion') {
@@ -1351,7 +1558,9 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'confetti' || head === 'celebrate') {
     if (!ctx.particle) return;
-    const px = ctx.playerPos.x, py = ctx.playerPos.y, pz = ctx.playerPos.z;
+    const px = ctx.playerPos.x,
+      py = ctx.playerPos.y,
+      pz = ctx.playerPos.z;
     for (let i = 0; i < 200; i++) {
       const ang = Math.random() * Math.PI * 2;
       const r = 0.5 + Math.random() * 6;
@@ -1401,7 +1610,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const tz = ctx.playerPos.z + Math.sin(ang) * dist;
     lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
     ctx.setPlayerPos(tx, ctx.playerPos.y + 100, tz);
-    ctx.broadcast(`Random TP → ${tx.toFixed(0)} ?? ${tz.toFixed(0)} (~${dist.toFixed(0)}m)`, '#80ff80');
+    ctx.broadcast(
+      `Random TP → ${tx.toFixed(0)} ?? ${tz.toFixed(0)} (~${dist.toFixed(0)}m)`,
+      '#80ff80',
+    );
     return;
   }
   if (head === 'safetp' || head === 'safe') {
@@ -1418,7 +1630,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'home' || head === 'sethome') {
     if (head === 'sethome') {
       ctx.setWaypoint?.('home', ctx.playerPos.x, ctx.playerPos.y, ctx.playerPos.z);
-      ctx.broadcast(`Home set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#80ff80');
+      ctx.broadcast(
+        `Home set @ ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`,
+        '#80ff80',
+      );
       return;
     }
     const name = args[0] ?? 'home';
@@ -1430,7 +1645,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (name === 'list') {
       const list = ctx.listWaypoints?.() ?? [];
       if (list.length === 0) ctx.broadcast('No homes. Use /sethome.', '#cccccc');
-      else for (const wp of list) ctx.broadcast(`${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`, '#cccccc');
+      else
+        for (const wp of list)
+          ctx.broadcast(
+            `${wp.name}: ${wp.x.toFixed(1)} ${wp.y.toFixed(1)} ${wp.z.toFixed(1)}`,
+            '#cccccc',
+          );
       return;
     }
     const wp = ctx.getWaypoint?.(name);
@@ -1475,7 +1695,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'invis' || head === 'invisible') {
     if (!ctx.applyEffect) return;
     const sec = parseInt(args[0] ?? '120', 10);
-    ctx.applyEffect('invisibility', 0, Math.max(1, Math.min(600, Number.isFinite(sec) ? sec : 120)));
+    ctx.applyEffect(
+      'invisibility',
+      0,
+      Math.max(1, Math.min(600, Number.isFinite(sec) ? sec : 120)),
+    );
     ctx.broadcast(`Invisible ${String(sec)}s`, '#80ff80');
     return;
   }
@@ -1520,18 +1744,31 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const s = ctx.getTpsStats();
-    const grade = s.tps >= 19.5 ? 'S' : s.tps >= 18 ? 'A' : s.tps >= 15 ? 'B' : s.tps >= 10 ? 'C' : 'D';
+    const grade =
+      s.tps >= 19.5 ? 'S' : s.tps >= 18 ? 'A' : s.tps >= 15 ? 'B' : s.tps >= 10 ? 'C' : 'D';
     const color = s.tps >= 18 ? '#80ff80' : s.tps >= 12 ? '#ffd080' : '#ff8080';
     ctx.broadcast(`— Performance ${grade} —`, color);
-    ctx.broadcast(`tps ${s.tps.toFixed(1)}/20 · mspt p50 ${s.p50ms.toFixed(1)} · p95 ${s.p95ms.toFixed(1)}`, color);
-    ctx.broadcast(s.lagging ? '⚠ Lagging — try /gamerule doMobSpawning false or smaller view distance' : 'Smooth.', '#cccccc');
+    ctx.broadcast(
+      `tps ${s.tps.toFixed(1)}/20 · mspt p50 ${s.p50ms.toFixed(1)} · p95 ${s.p95ms.toFixed(1)}`,
+      color,
+    );
+    ctx.broadcast(
+      s.lagging
+        ? '⚠ Lagging — try /gamerule doMobSpawning false or smaller view distance'
+        : 'Smooth.',
+      '#cccccc',
+    );
     return;
   }
   if (head === 'world' || head === 'info') {
     ctx.broadcast('— World info —', '#80ffff');
-    ctx.broadcast(`pos ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#cccccc');
+    ctx.broadcast(
+      `pos ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`,
+      '#cccccc',
+    );
     if (ctx.seed) ctx.broadcast(`seed ${String(ctx.seed())}`, '#cccccc');
-    if (ctx.biomeAt) ctx.broadcast(`biome ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
+    if (ctx.biomeAt)
+      ctx.broadcast(`biome ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
     if (ctx.getRoomCode) {
       const code = ctx.getRoomCode();
       if (code) ctx.broadcast(`room ${code}`, '#cccccc');
@@ -1539,9 +1776,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (ctx.uptimeMs) ctx.broadcast(`uptime ${(ctx.uptimeMs() / 60000).toFixed(1)}min`, '#cccccc');
     if (ctx.getTpsStats) {
       const s = ctx.getTpsStats();
-      ctx.broadcast(`tps ${s.tps.toFixed(1)} mspt ${s.p50ms.toFixed(1)}/p95 ${s.p95ms.toFixed(1)}`, s.lagging ? '#ff8080' : '#80ff80');
+      ctx.broadcast(
+        `tps ${s.tps.toFixed(1)} mspt ${s.p50ms.toFixed(1)}/p95 ${s.p95ms.toFixed(1)}`,
+        s.lagging ? '#ff8080' : '#80ff80',
+      );
     }
-    if (ctx.getWorldBorder) ctx.broadcast(`border ${ctx.getWorldBorder().toLocaleString()} blocks`, '#cccccc');
+    if (ctx.getWorldBorder)
+      ctx.broadcast(`border ${ctx.getWorldBorder().toLocaleString()} blocks`, '#cccccc');
     if (ctx.isHardcore) ctx.broadcast(`hardcore ${ctx.isHardcore() ? 'on' : 'off'}`, '#cccccc');
     return;
   }
@@ -1566,14 +1807,30 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const SMELT: Record<string, string> = {
-      raw_iron: 'iron_ingot', raw_gold: 'gold_ingot', raw_copper: 'copper_ingot',
-      iron_ore: 'iron_ingot', gold_ore: 'gold_ingot', copper_ore: 'copper_ingot',
-      ancient_debris: 'netherite_scrap', sand: 'glass', cobblestone: 'stone',
-      stone: 'smooth_stone', clay_ball: 'brick', netherrack: 'nether_brick_item',
-      raw_beef: 'cooked_beef', raw_porkchop: 'cooked_porkchop', raw_chicken: 'cooked_chicken',
-      raw_mutton: 'cooked_mutton', raw_rabbit: 'cooked_rabbit', cod: 'cooked_cod',
-      salmon: 'cooked_salmon', potato: 'baked_potato', kelp: 'dried_kelp',
-      cactus: 'green_dye', nether_quartz_ore: 'nether_quartz', oak_log: 'charcoal',
+      raw_iron: 'iron_ingot',
+      raw_gold: 'gold_ingot',
+      raw_copper: 'copper_ingot',
+      iron_ore: 'iron_ingot',
+      gold_ore: 'gold_ingot',
+      copper_ore: 'copper_ingot',
+      ancient_debris: 'netherite_scrap',
+      sand: 'glass',
+      cobblestone: 'stone',
+      stone: 'smooth_stone',
+      clay_ball: 'brick',
+      netherrack: 'nether_brick_item',
+      raw_beef: 'cooked_beef',
+      raw_porkchop: 'cooked_porkchop',
+      raw_chicken: 'cooked_chicken',
+      raw_mutton: 'cooked_mutton',
+      raw_rabbit: 'cooked_rabbit',
+      cod: 'cooked_cod',
+      salmon: 'cooked_salmon',
+      potato: 'baked_potato',
+      kelp: 'dried_kelp',
+      cactus: 'green_dye',
+      nether_quartz_ore: 'nether_quartz',
+      oak_log: 'charcoal',
     };
     const out = SMELT[item];
     if (!out) {
@@ -1589,21 +1846,57 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'tutorial' || head === 'guide') {
     ctx.broadcast('— webmc quick guide —', '#80ffff');
     ctx.broadcast('Move: WASD · Sprint: Ctrl or 2× W · Jump: Space · Sneak: Shift', '#cccccc');
-    ctx.broadcast('Mine: hold left-click · Place: right-click · Pick block: middle-click', '#cccccc');
+    ctx.broadcast(
+      'Mine: hold left-click · Place: right-click · Pick block: middle-click',
+      '#cccccc',
+    );
     ctx.broadcast('Hotbar: 1-9 keys or scroll · Inventory: E · Chat: T or /', '#cccccc');
     ctx.broadcast('F1=hide HUD · F3=debug · F5=camera · B=sleep at night', '#cccccc');
     ctx.broadcast('Try: /give all · /tree · /village · /tame (with bone)', '#cccccc');
-    ctx.broadcast('Mob right-click: feed (food), tame (tame-item), leash (lead), saddle (saddle)', '#cccccc');
-    ctx.broadcast('Survival: get wood → craft pickaxe → mine stone → coal → iron → build shelter', '#cccccc');
+    ctx.broadcast(
+      'Mob right-click: feed (food), tame (tame-item), leash (lead), saddle (saddle)',
+      '#cccccc',
+    );
+    ctx.broadcast(
+      'Survival: get wood → craft pickaxe → mine stone → coal → iron → build shelter',
+      '#cccccc',
+    );
     ctx.broadcast('Type /help for command list', '#a0a0ff');
     return;
   }
   if (head === 'starter') {
     if (!ctx.giveItem) return;
-    const KIT = ['oak_planks', 'crafting_table', 'wooden_pickaxe', 'wooden_sword', 'wooden_axe', 'wooden_shovel', 'bread', 'torch', 'oak_log', 'cobblestone'];
+    const KIT = [
+      'oak_planks',
+      'crafting_table',
+      'wooden_pickaxe',
+      'wooden_sword',
+      'wooden_axe',
+      'wooden_shovel',
+      'bread',
+      'torch',
+      'oak_log',
+      'cobblestone',
+    ];
     let n = 0;
     for (const item of KIT) {
-      if (ctx.giveItem(item, item === 'bread' ? 8 : item === 'oak_log' ? 16 : item === 'oak_planks' ? 32 : item === 'cobblestone' ? 32 : item === 'torch' ? 16 : 1)) n++;
+      if (
+        ctx.giveItem(
+          item,
+          item === 'bread'
+            ? 8
+            : item === 'oak_log'
+              ? 16
+              : item === 'oak_planks'
+                ? 32
+                : item === 'cobblestone'
+                  ? 32
+                  : item === 'torch'
+                    ? 16
+                    : 1,
+        )
+      )
+        n++;
     }
     ctx.broadcast(`Starter kit (${String(n)} items)`, '#80ff80');
     return;
@@ -1612,11 +1905,56 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (!ctx.giveItem) return;
     const which = (args[0] ?? 'iron').toLowerCase();
     const KITS: Record<string, string[]> = {
-      iron: ['iron_pickaxe', 'iron_sword', 'iron_axe', 'iron_shovel', 'iron_helmet', 'iron_chestplate', 'iron_leggings', 'iron_boots', 'cooked_beef', 'shield'],
-      diamond: ['diamond_pickaxe', 'diamond_sword', 'diamond_axe', 'diamond_shovel', 'diamond_helmet', 'diamond_chestplate', 'diamond_leggings', 'diamond_boots', 'cooked_beef', 'shield'],
-      netherite: ['netherite_pickaxe', 'netherite_sword', 'netherite_axe', 'netherite_shovel', 'cooked_beef', 'enchanted_golden_apple'],
-      mage: ['ender_pearl', 'experience_bottle', 'splash_potion_healing', 'potion_swiftness', 'potion_strength', 'potion_fire_resistance', 'glowstone'],
-      builder: ['cobblestone', 'stone', 'oak_planks', 'glass', 'glowstone', 'wool_white', 'crafting_table'],
+      iron: [
+        'iron_pickaxe',
+        'iron_sword',
+        'iron_axe',
+        'iron_shovel',
+        'iron_helmet',
+        'iron_chestplate',
+        'iron_leggings',
+        'iron_boots',
+        'cooked_beef',
+        'shield',
+      ],
+      diamond: [
+        'diamond_pickaxe',
+        'diamond_sword',
+        'diamond_axe',
+        'diamond_shovel',
+        'diamond_helmet',
+        'diamond_chestplate',
+        'diamond_leggings',
+        'diamond_boots',
+        'cooked_beef',
+        'shield',
+      ],
+      netherite: [
+        'netherite_pickaxe',
+        'netherite_sword',
+        'netherite_axe',
+        'netherite_shovel',
+        'cooked_beef',
+        'enchanted_golden_apple',
+      ],
+      mage: [
+        'ender_pearl',
+        'experience_bottle',
+        'splash_potion_healing',
+        'potion_swiftness',
+        'potion_strength',
+        'potion_fire_resistance',
+        'glowstone',
+      ],
+      builder: [
+        'cobblestone',
+        'stone',
+        'oak_planks',
+        'glass',
+        'glowstone',
+        'wool_white',
+        'crafting_table',
+      ],
     };
     const kit = KITS[which];
     if (!kit) {
@@ -1625,7 +1963,21 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     }
     let n = 0;
     for (const item of kit) {
-      if (ctx.giveItem(item, item === 'cooked_beef' ? 16 : item.includes('cobblestone') || item.includes('stone') || item.includes('plank') || item.includes('glass') || item === 'wool_white' ? 64 : 1)) n++;
+      if (
+        ctx.giveItem(
+          item,
+          item === 'cooked_beef'
+            ? 16
+            : item.includes('cobblestone') ||
+                item.includes('stone') ||
+                item.includes('plank') ||
+                item.includes('glass') ||
+                item === 'wool_white'
+              ? 64
+              : 1,
+        )
+      )
+        n++;
     }
     ctx.broadcast(`${which} kit (${String(n)} items)`, '#80ff80');
     return;
@@ -1642,7 +1994,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     for (let i = 0; i < 80; i++) {
       const ang = Math.random() * Math.PI * 2;
       const r = 1 + Math.random() * 5;
-      ctx.particle(px + Math.cos(ang) * r, burstY + (Math.random() - 0.5) * 4, pz + Math.sin(ang) * r);
+      ctx.particle(
+        px + Math.cos(ang) * r,
+        burstY + (Math.random() - 0.5) * 4,
+        pz + Math.sin(ang) * r,
+      );
     }
     ctx.broadcast('🎆 Firework!', '#ffd080');
     return;
@@ -1743,7 +2099,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const px = Math.floor(ctx.playerPos.x);
     const py = Math.floor(ctx.playerPos.y);
     const pz = Math.floor(ctx.playerPos.z);
-    const n = ctx.fillBlocks(px - radius, py - radius, pz - radius, px + radius, py + radius, pz + radius, args[1] ?? 'stone');
+    const n = ctx.fillBlocks(
+      px - radius,
+      py - radius,
+      pz - radius,
+      px + radius,
+      py + radius,
+      pz + radius,
+      args[1] ?? 'stone',
+    );
     ctx.broadcast(`Filled ${String(n)} blocks (replace approximation)`, '#80ff80');
     return;
   }
@@ -1775,7 +2139,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const len = parseInt(args[0] ?? '8', 10);
     const height = parseInt(args[1] ?? '4', 10);
     const block = args[2] ?? 'cobblestone';
-    if (!Number.isFinite(len) || len < 1 || len > 64 || !Number.isFinite(height) || height < 1 || height > 32) {
+    if (
+      !Number.isFinite(len) ||
+      len < 1 ||
+      len > 64 ||
+      !Number.isFinite(height) ||
+      height < 1 ||
+      height > 32
+    ) {
       ctx.broadcast('Usage: /wall <len=8> <h=4> [block=cobblestone]', '#ff8080');
       return;
     }
@@ -1783,7 +2154,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const py = Math.floor(ctx.playerPos.y);
     const pz = Math.floor(ctx.playerPos.z);
     const n = ctx.fillBlocks(px, py, pz, px + len - 1, py + height - 1, pz, block);
-    ctx.broadcast(`Wall ${String(len)}×${String(height)} of ${block} (${String(n)} blocks)`, '#80ff80');
+    ctx.broadcast(
+      `Wall ${String(len)}×${String(height)} of ${block} (${String(n)} blocks)`,
+      '#80ff80',
+    );
     return;
   }
   if (head === 'bridge') {
@@ -1901,9 +2275,25 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const RADIUS = 2;
     // Cobble shell with hollow interior + ladder column.
     for (let h = 0; h < HEIGHT; h++) {
-      ctx.fillBlocks(px - RADIUS, py + h, pz - RADIUS, px + RADIUS, py + h, pz + RADIUS, 'cobblestone');
+      ctx.fillBlocks(
+        px - RADIUS,
+        py + h,
+        pz - RADIUS,
+        px + RADIUS,
+        py + h,
+        pz + RADIUS,
+        'cobblestone',
+      );
     }
-    ctx.fillBlocks(px - RADIUS + 1, py + 1, pz - RADIUS + 1, px + RADIUS - 1, py + HEIGHT - 1, pz + RADIUS - 1, 'air');
+    ctx.fillBlocks(
+      px - RADIUS + 1,
+      py + 1,
+      pz - RADIUS + 1,
+      px + RADIUS - 1,
+      py + HEIGHT - 1,
+      pz + RADIUS - 1,
+      'air',
+    );
     // Ladder column on -Z wall (player can climb).
     for (let h = 1; h < HEIGHT - 1; h++) ctx.setBlock?.(px, py + h, pz - RADIUS + 1, 'oak_log');
     // Top crenellations + torch.
@@ -1918,7 +2308,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const pz = Math.floor(ctx.playerPos.z);
     const SIZE = 9;
     for (let h = 0; h < SIZE; h++) {
-      ctx.fillBlocks(px - SIZE + h, py + h, pz - SIZE + h, px + SIZE - h, py + h, pz + SIZE - h, 'sandstone');
+      ctx.fillBlocks(
+        px - SIZE + h,
+        py + h,
+        pz - SIZE + h,
+        px + SIZE - h,
+        py + h,
+        pz + SIZE - h,
+        'sandstone',
+      );
     }
     ctx.broadcast(`Built a ${SIZE}-step sandstone pyramid`, '#80ff80');
     return;
@@ -2001,8 +2399,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const y2 = parseCoord(args[4] ?? '', ctx.playerPos.y);
     const z2 = parseCoord(args[5] ?? '', ctx.playerPos.z);
     const name = args[6] ?? '';
-    if (!Number.isFinite(x1) || !Number.isFinite(y1) || !Number.isFinite(z1) ||
-        !Number.isFinite(x2) || !Number.isFinite(y2) || !Number.isFinite(z2) || !name) {
+    if (
+      !Number.isFinite(x1) ||
+      !Number.isFinite(y1) ||
+      !Number.isFinite(z1) ||
+      !Number.isFinite(x2) ||
+      !Number.isFinite(y2) ||
+      !Number.isFinite(z2) ||
+      !name
+    ) {
       ctx.broadcast('Invalid args', '#ff8080');
       return;
     }
@@ -2012,8 +2417,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const count = ctx.fillBlocks(
-      Math.floor(x1), Math.floor(y1), Math.floor(z1),
-      Math.floor(x2), Math.floor(y2), Math.floor(z2),
+      Math.floor(x1),
+      Math.floor(y1),
+      Math.floor(z1),
+      Math.floor(x2),
+      Math.floor(y2),
+      Math.floor(z2),
       name,
     );
     if (count < 0) ctx.broadcast(`Unknown block: ${name}`, '#ff8080');
@@ -2034,7 +2443,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const ok = ctx.setBlock(Math.floor(x), Math.floor(y), Math.floor(z), name);
-    if (ok) ctx.broadcast(`Set ${name} at ${String(Math.floor(x))} ${String(Math.floor(y))} ${String(Math.floor(z))}`, '#80ff80');
+    if (ok)
+      ctx.broadcast(
+        `Set ${name} at ${String(Math.floor(x))} ${String(Math.floor(y))} ${String(Math.floor(z))}`,
+        '#80ff80',
+      );
     else ctx.broadcast(`Unknown block: ${name}`, '#ff8080');
     return;
   }
@@ -2098,7 +2511,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     if (args[0]?.toLowerCase() !== 'set') {
-      ctx.broadcast('Usage: /time set <day|night|noon|midnight|ticks> | /time add <ticks>', '#ff8080');
+      ctx.broadcast(
+        'Usage: /time set <day|night|noon|midnight|ticks> | /time add <ticks>',
+        '#ff8080',
+      );
       return;
     }
     const v = args[1]?.toLowerCase() ?? '';
@@ -2146,7 +2562,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     const shown = list.slice(0, 20);
-    ctx.broadcast(`Blocks (${String(list.length)}): ${shown.join(', ')}${list.length > 20 ? '…' : ''}`, '#cccccc');
+    ctx.broadcast(
+      `Blocks (${String(list.length)}): ${shown.join(', ')}${list.length > 20 ? '…' : ''}`,
+      '#cccccc',
+    );
     return;
   }
   if (head === 'lookup') {

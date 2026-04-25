@@ -92,12 +92,7 @@ export function sweepMove(
   return out;
 }
 
-function tryStepUp(
-  pos: Vec3Lite,
-  box: AABB,
-  isSolid: SolidSampler,
-  stepHeight: number,
-): boolean {
+function tryStepUp(pos: Vec3Lite, box: AABB, isSolid: SolidSampler, stepHeight: number): boolean {
   const origY = pos.y;
   pos.y = origY + stepHeight;
   if (aabbIntersectsSolid(pos, box, isSolid)) {

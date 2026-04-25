@@ -26,7 +26,10 @@ export class PauseMenu {
   private readonly titleEl: HTMLDivElement;
   private readonly buttonsEl: HTMLDivElement;
 
-  constructor(parent: HTMLElement, private readonly cb: PauseMenuCallbacks) {
+  constructor(
+    parent: HTMLElement,
+    private readonly cb: PauseMenuCallbacks,
+  ) {
     this.root = document.createElement('div');
     this.root.setAttribute('data-testid', 'pause-menu');
     this.root.style.cssText = [
@@ -65,7 +68,9 @@ export class PauseMenu {
       switch (a) {
         case 'resume':
           b.setAttribute('data-testid', 'pause-resume');
-          b.addEventListener('click', () => this.cb.onResume());
+          b.addEventListener('click', () => {
+            this.cb.onResume();
+          });
           break;
         case 'options':
           b.addEventListener('click', () => this.cb.onOpenSettings?.());
@@ -73,7 +78,9 @@ export class PauseMenu {
         case 'save_and_quit':
         case 'disconnect':
           b.setAttribute('data-testid', 'pause-quit');
-          b.addEventListener('click', () => this.cb.onQuit());
+          b.addEventListener('click', () => {
+            this.cb.onQuit();
+          });
           break;
         case 'advancements':
           b.addEventListener('click', () => this.cb.onShowAchievements?.());

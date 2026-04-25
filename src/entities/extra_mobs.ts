@@ -36,7 +36,7 @@ export type ExtraMobKind =
 
 export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
   phantom: {
-    kind: 'phantom' as MobKind,
+    kind: 'phantom',
     aabb: { halfX: 0.45, halfY: 0.25, halfZ: 0.45 },
     walkSpeed: 0, // phantoms fly
     maxHealth: 20,
@@ -46,7 +46,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 64 * 64,
   },
   dolphin: {
-    kind: 'dolphin' as MobKind,
+    kind: 'dolphin',
     aabb: { halfX: 0.45, halfY: 0.3, halfZ: 0.45 },
     walkSpeed: 1.8,
     maxHealth: 10,
@@ -56,7 +56,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   turtle: {
-    kind: 'turtle' as MobKind,
+    kind: 'turtle',
     aabb: { halfX: 0.6, halfY: 0.2, halfZ: 0.6 },
     walkSpeed: 0.3,
     maxHealth: 30,
@@ -66,7 +66,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 0,
   },
   guardian: {
-    kind: 'guardian' as MobKind,
+    kind: 'guardian',
     aabb: { halfX: 0.425, halfY: 0.425, halfZ: 0.425 },
     walkSpeed: 0,
     maxHealth: 30,
@@ -76,7 +76,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   elder_guardian: {
-    kind: 'elder_guardian' as MobKind,
+    kind: 'elder_guardian',
     aabb: { halfX: 1, halfY: 1, halfZ: 1 },
     walkSpeed: 0,
     maxHealth: 80,
@@ -86,7 +86,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 32 * 32,
   },
   vex: {
-    kind: 'vex' as MobKind,
+    kind: 'vex',
     aabb: { halfX: 0.2, halfY: 0.4, halfZ: 0.2 },
     walkSpeed: 0,
     maxHealth: 14,
@@ -96,7 +96,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   breeze: {
-    kind: 'breeze' as MobKind,
+    kind: 'breeze',
     aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
     walkSpeed: 1.4,
     maxHealth: 30,
@@ -106,7 +106,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 24 * 24,
   },
   drowned: {
-    kind: 'drowned' as MobKind,
+    kind: 'drowned',
     aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
     walkSpeed: 1.8,
     maxHealth: 20,
@@ -116,7 +116,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   husk: {
-    kind: 'husk' as MobKind,
+    kind: 'husk',
     aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
     walkSpeed: 2,
     maxHealth: 20,
@@ -126,7 +126,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   stray: {
-    kind: 'stray' as MobKind,
+    kind: 'stray',
     aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
     walkSpeed: 1.8,
     maxHealth: 20,
@@ -136,7 +136,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   bogged: {
-    kind: 'bogged' as MobKind,
+    kind: 'bogged',
     aabb: { halfX: 0.3, halfY: 0.9, halfZ: 0.3 },
     walkSpeed: 1.8,
     maxHealth: 16,
@@ -146,7 +146,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   glow_squid: {
-    kind: 'glow_squid' as MobKind,
+    kind: 'glow_squid',
     aabb: { halfX: 0.4, halfY: 0.4, halfZ: 0.4 },
     walkSpeed: 0.6,
     maxHealth: 10,
@@ -156,7 +156,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 0,
   },
   slime: {
-    kind: 'slime' as MobKind,
+    kind: 'slime',
     aabb: { halfX: 0.5, halfY: 0.5, halfZ: 0.5 },
     walkSpeed: 1,
     maxHealth: 16,
@@ -166,7 +166,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   magma_cube: {
-    kind: 'magma_cube' as MobKind,
+    kind: 'magma_cube',
     aabb: { halfX: 0.5, halfY: 0.5, halfZ: 0.5 },
     walkSpeed: 1,
     maxHealth: 16,
@@ -176,7 +176,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   wandering_trader: {
-    kind: 'wandering_trader' as MobKind,
+    kind: 'wandering_trader',
     aabb: { halfX: 0.3, halfY: 0.95, halfZ: 0.3 },
     walkSpeed: 1.2,
     maxHealth: 20,
@@ -186,7 +186,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 0,
   },
   llama: {
-    kind: 'llama' as MobKind,
+    kind: 'llama',
     aabb: { halfX: 0.45, halfY: 0.9, halfZ: 0.45 },
     walkSpeed: 1.8,
     maxHealth: 22,
@@ -236,7 +236,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   panda: {
-    kind: 'panda' as MobKind,
+    kind: 'panda',
     aabb: { halfX: 0.65, halfY: 0.65, halfZ: 0.65 },
     walkSpeed: 1.2,
     maxHealth: 20,
@@ -246,7 +246,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 0,
   },
   hoglin: {
-    kind: 'hoglin' as MobKind,
+    kind: 'hoglin',
     aabb: { halfX: 0.7, halfY: 0.7, halfZ: 0.7 },
     walkSpeed: 2,
     maxHealth: 40,
@@ -256,7 +256,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   zoglin: {
-    kind: 'zoglin' as MobKind,
+    kind: 'zoglin',
     aabb: { halfX: 0.7, halfY: 0.7, halfZ: 0.7 },
     walkSpeed: 2,
     maxHealth: 40,
@@ -266,7 +266,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 16 * 16,
   },
   strider: {
-    kind: 'strider' as MobKind,
+    kind: 'strider',
     aabb: { halfX: 0.45, halfY: 0.85, halfZ: 0.45 },
     walkSpeed: 0.7,
     maxHealth: 20,
@@ -276,7 +276,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 0,
   },
   zombified_piglin: {
-    kind: 'zombified_piglin' as MobKind,
+    kind: 'zombified_piglin',
     aabb: { halfX: 0.3, halfY: 0.95, halfZ: 0.3 },
     walkSpeed: 2,
     maxHealth: 20,
@@ -286,7 +286,7 @@ export const EXTRA_MOB_DEFS: Record<ExtraMobKind, MobDef> = {
     aggroRangeSq: 35 * 35,
   },
   piglin_brute: {
-    kind: 'piglin_brute' as MobKind,
+    kind: 'piglin_brute',
     aabb: { halfX: 0.3, halfY: 0.95, halfZ: 0.3 },
     walkSpeed: 2.2,
     maxHealth: 50,

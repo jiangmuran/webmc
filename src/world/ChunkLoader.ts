@@ -123,7 +123,7 @@ export class ChunkLoader {
         if (vlen > 0.5) {
           const dist = Math.sqrt(priority);
           if (dist > 0) {
-            const dot = ((dx * playerVx + dz * playerVz) / (dist * vlen));
+            const dot = (dx * playerVx + dz * playerVz) / (dist * vlen);
             priority -= dot * 4;
           }
         }

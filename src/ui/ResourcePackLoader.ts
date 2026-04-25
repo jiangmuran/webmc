@@ -32,7 +32,10 @@ export class ResourcePackLoader {
   private readonly entryList: HTMLDivElement;
   private loadedPack: LoadedPackTextures | null = null;
 
-  constructor(parent: HTMLElement, private readonly cb: ResourcePackLoaderCallbacks) {
+  constructor(
+    parent: HTMLElement,
+    private readonly cb: ResourcePackLoaderCallbacks,
+  ) {
     this.root = document.createElement('div');
     this.root.setAttribute('data-testid', 'resource-pack-loader');
     this.root.style.cssText = [
@@ -68,14 +71,16 @@ export class ResourcePackLoader {
     title.style.cssText = 'font-size:18px;font-weight:600;';
 
     const hint = document.createElement('div');
-    hint.innerHTML = 'Load a vanilla-format <code>.zip</code> pack. webmc reads PNGs from <code>assets/*/textures/block/</code> and <code>item/</code>. Your upload stays in-browser.';
+    hint.innerHTML =
+      'Load a vanilla-format <code>.zip</code> pack. webmc reads PNGs from <code>assets/*/textures/block/</code> and <code>item/</code>. Your upload stays in-browser.';
     hint.style.cssText = 'opacity:0.75;font-size:12px;line-height:1.5;';
 
     this.fileInput = document.createElement('input');
     this.fileInput.type = 'file';
     this.fileInput.accept = '.zip,application/zip';
     this.fileInput.setAttribute('data-testid', 'pack-file');
-    this.fileInput.style.cssText = 'padding:6px;background:rgba(0,0,0,0.35);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:4px;font:inherit;';
+    this.fileInput.style.cssText =
+      'padding:6px;background:rgba(0,0,0,0.35);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:4px;font:inherit;';
     this.fileInput.addEventListener('change', () => void this.handleFile());
 
     this.status = document.createElement('div');
@@ -83,12 +88,16 @@ export class ResourcePackLoader {
     this.status.textContent = 'No pack loaded.';
 
     this.entryList = document.createElement('div');
-    this.entryList.style.cssText = 'max-height:240px;overflow-y:auto;padding:6px;background:rgba(0,0,0,0.35);border-radius:4px;font-size:11px;color:#a0c0ff;';
+    this.entryList.style.cssText =
+      'max-height:240px;overflow-y:auto;padding:6px;background:rgba(0,0,0,0.35);border-radius:4px;font-size:11px;color:#a0c0ff;';
 
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'align-self:flex-end;padding:4px 12px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
-    close.addEventListener('click', () => this.hide());
+    close.style.cssText =
+      'align-self:flex-end;padding:4px 12px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.addEventListener('click', () => {
+      this.hide();
+    });
 
     panel.append(title, hint, this.fileInput, this.status, this.entryList, close);
     this.root.appendChild(panel);
@@ -126,7 +135,10 @@ export class ResourcePackLoader {
         }
       }
       if (blockTextures.size === 0 && itemTextures.size === 0) {
-        this.setStatus(`No textures under known prefixes. (${entries.length} entries scanned)`, '#ffa060');
+        this.setStatus(
+          `No textures under known prefixes. (${entries.length} entries scanned)`,
+          '#ffa060',
+        );
         return;
       }
       const pack: LoadedPackTextures = {

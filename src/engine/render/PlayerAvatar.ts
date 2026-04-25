@@ -31,7 +31,13 @@ export class PlayerAvatar {
     this.group.visible = false;
   }
 
-  private makeLimb(geom: THREE.BoxGeometry, mat: THREE.Material, px: number, py: number, pz: number): THREE.Group {
+  private makeLimb(
+    geom: THREE.BoxGeometry,
+    mat: THREE.Material,
+    px: number,
+    py: number,
+    pz: number,
+  ): THREE.Group {
     const pivot = new THREE.Group();
     pivot.position.set(px, py, pz);
     const mesh = new THREE.Mesh(geom, mat);
@@ -67,7 +73,12 @@ export class PlayerAvatar {
     ctx.textAlign = 'center';
     ctx.fillText(name, c.width / 2, c.height / 2);
     const tex = new THREE.CanvasTexture(c);
-    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, depthWrite: false });
+    const mat = new THREE.SpriteMaterial({
+      map: tex,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+    });
     const sprite = new THREE.Sprite(mat);
     sprite.scale.set(1.2, 0.3, 1);
     sprite.position.set(0, 1.2, 0);

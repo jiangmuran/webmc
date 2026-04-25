@@ -31,8 +31,10 @@ export class ActiveEffectsHud {
     parent.appendChild(this.root);
   }
 
-  render(effects: ReadonlyArray<EffectEntry>): void {
-    const sig = effects.map((e) => `${e.id}:${String(e.amplifier)}:${Math.ceil(e.remainingSec)}`).join('|');
+  render(effects: readonly EffectEntry[]): void {
+    const sig = effects
+      .map((e) => `${e.id}:${String(e.amplifier)}:${Math.ceil(e.remainingSec)}`)
+      .join('|');
     if (sig === this.lastSig) return;
     this.lastSig = sig;
     const rows: HTMLDivElement[] = [];
@@ -60,7 +62,8 @@ export class ActiveEffectsHud {
       const sec = Math.ceil(e.remainingSec);
       const mins = Math.floor(sec / 60);
       const remS = sec % 60;
-      const timeStr = mins > 0 ? `${String(mins)}:${String(remS).padStart(2, '0')}` : `${String(remS)}s`;
+      const timeStr =
+        mins > 0 ? `${String(mins)}:${String(remS).padStart(2, '0')}` : `${String(remS)}s`;
       label.textContent = `${e.id}${amp} ${timeStr}`;
       row.appendChild(dot);
       row.appendChild(label);

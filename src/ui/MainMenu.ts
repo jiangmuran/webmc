@@ -8,7 +8,10 @@ export class MainMenu {
   readonly root: HTMLDivElement;
   private visible = true;
 
-  constructor(parent: HTMLElement, private readonly cb: MainMenuCallbacks) {
+  constructor(
+    parent: HTMLElement,
+    private readonly cb: MainMenuCallbacks,
+  ) {
     this.root = document.createElement('div');
     this.root.setAttribute('data-testid', 'main-menu');
     this.root.style.cssText = [
@@ -34,7 +37,9 @@ export class MainMenu {
     subtitle.style.cssText = 'opacity:0.6;font-size:12px;margin-bottom:24px;';
 
     const play = this.button('Singleplayer');
-    play.addEventListener('click', () => this.handlePlay());
+    play.addEventListener('click', () => {
+      this.handlePlay();
+    });
     play.setAttribute('data-testid', 'menu-play');
 
     const settings = this.button('Settings');
@@ -45,7 +50,8 @@ export class MainMenu {
 
     const footer = document.createElement('div');
     footer.style.cssText = 'position:absolute;bottom:10px;left:10px;font-size:10px;opacity:0.5;';
-    footer.textContent = 'WASD move · Space jump · Ctrl sprint · Shift sneak · E inventory · Q drop · B sleep · T chat · / command · F3 debug · F4 gamemode · F5 camera · ESC pause · R fly';
+    footer.textContent =
+      'WASD move · Space jump · Ctrl sprint · Shift sneak · E inventory · Q drop · B sleep · T chat · / command · F3 debug · F4 gamemode · F5 camera · ESC pause · R fly';
 
     this.root.append(title, subtitle, play, settings, resourcePacks, footer);
     parent.appendChild(this.root);

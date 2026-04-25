@@ -39,13 +39,16 @@ export class BossBarView {
     ].join(';');
 
     this.nameEl = document.createElement('div');
-    this.nameEl.style.cssText = 'color:#fff;font-size:14px;font-weight:600;text-shadow:1px 1px 0 rgba(0,0,0,0.85);';
+    this.nameEl.style.cssText =
+      'color:#fff;font-size:14px;font-weight:600;text-shadow:1px 1px 0 rgba(0,0,0,0.85);';
     this.root.appendChild(this.nameEl);
 
     this.bgEl = document.createElement('div');
-    this.bgEl.style.cssText = 'position:relative;width:280px;height:9px;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.25);border-radius:1px;';
+    this.bgEl.style.cssText =
+      'position:relative;width:280px;height:9px;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.25);border-radius:1px;';
     this.fillEl = document.createElement('div');
-    this.fillEl.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:#a060ff;transition:width 90ms;';
+    this.fillEl.style.cssText =
+      'position:absolute;left:0;top:0;bottom:0;background:#a060ff;transition:width 90ms;';
     this.bgEl.appendChild(this.fillEl);
     this.notchOverlay = document.createElement('div');
     this.notchOverlay.style.cssText = 'position:absolute;inset:0;pointer-events:none;';

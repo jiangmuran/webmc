@@ -79,7 +79,10 @@ export function applyPackToRegistry(
   return { blocksRecolored, missingTextures: missing };
 }
 
-function pickImage(pack: LoadedPackTextures, names: readonly string[]): HTMLImageElement | undefined {
+function pickImage(
+  pack: LoadedPackTextures,
+  names: readonly string[],
+): HTMLImageElement | undefined {
   for (const n of names) {
     const img = pack.blockTextures.get(n);
     if (img) return img;

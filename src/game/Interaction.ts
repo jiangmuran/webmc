@@ -116,8 +116,7 @@ export class InteractionController {
       return;
     }
     if (
-      this.breaking === null ||
-      this.breaking.bx !== hit.bx ||
+      this.breaking?.bx !== hit.bx ||
       this.breaking.by !== hit.by ||
       this.breaking.bz !== hit.bz
     ) {
@@ -151,7 +150,7 @@ export class InteractionController {
     const hit = this.castRay();
     if (!hit || hit.distance === 0) return;
     if (this.held === 'place') {
-      if (this.opts.onInteract && this.opts.onInteract(hit.bx, hit.by, hit.bz)) return;
+      if (this.opts.onInteract?.(hit.bx, hit.by, hit.bz)) return;
       if (this.selectedBlock === AIR) return;
       const n = faceNormal(hit.face);
       const tx = hit.bx + n[0];

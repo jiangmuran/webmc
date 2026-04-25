@@ -234,7 +234,17 @@ export class MobRenderer {
         nameSprite.scale.set(0.7, 0.13, 1);
         nameSprite.position.set(0, mob.def.aabb.halfY + 0.95, 0);
         group.add(nameSprite);
-        const visual: MobVisual = { group, bodyMat, headMat, headMesh: head, hpBar, hpMat, lastHpRatio: 1, nameSprite, nameMat };
+        const visual: MobVisual = {
+          group,
+          bodyMat,
+          headMat,
+          headMesh: head,
+          hpBar,
+          hpMat,
+          lastHpRatio: 1,
+          nameSprite,
+          nameMat,
+        };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
         vis = visual;
@@ -271,8 +281,9 @@ export class MobRenderer {
         vis.headMat.color.setRGB(rr, gg, bb);
       } else if (mob.def.behavior === 'creeper' && mob.fuseSec > 0) {
         // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
-        const phase = (1 - Math.min(1, mob.fuseSec / 1.5));
-        const k = (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
+        const phase = 1 - Math.min(1, mob.fuseSec / 1.5);
+        const k =
+          (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
         const base = COLORS['creeper'] ?? DEFAULT_COLOR;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;

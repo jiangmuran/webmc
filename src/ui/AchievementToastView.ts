@@ -56,7 +56,8 @@ export class AchievementToastView {
     ].join(';');
 
     this.headerEl = document.createElement('div');
-    this.headerEl.style.cssText = 'font-size:11px;color:#ffeb80;font-weight:600;letter-spacing:1px;';
+    this.headerEl.style.cssText =
+      'font-size:11px;color:#ffeb80;font-weight:600;letter-spacing:1px;';
     this.cardEl.appendChild(this.headerEl);
 
     this.titleEl = document.createElement('div');

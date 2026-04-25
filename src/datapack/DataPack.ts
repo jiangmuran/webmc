@@ -102,6 +102,10 @@ export function loadPack(
   let lootEntriesAdded = 0;
 
   for (const b of pack.blocks ?? []) {
+    if (registries.blocks.byName(b.name) !== undefined) {
+      errors.push(`block ${b.name}: duplicate`);
+      continue;
+    }
     try {
       const side: RGB = b.side ?? b.color ?? [200, 200, 200];
       registries.blocks.register({

@@ -85,7 +85,8 @@ export class SurvivalInventory {
     panel.appendChild(craftLabel);
 
     this.craftList = document.createElement('div');
-    this.craftList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:120px;overflow-y:auto;';
+    this.craftList.style.cssText =
+      'display:flex;flex-wrap:wrap;gap:4px;max-height:120px;overflow-y:auto;';
     panel.appendChild(this.craftList);
 
     const smeltLabel = document.createElement('div');
@@ -94,14 +95,16 @@ export class SurvivalInventory {
     panel.appendChild(smeltLabel);
 
     this.smeltList = document.createElement('div');
-    this.smeltList.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto;';
+    this.smeltList.style.cssText =
+      'display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto;';
     panel.appendChild(this.smeltList);
 
     const buttonRow = document.createElement('div');
     buttonRow.style.cssText = 'display:flex;gap:8px;align-self:flex-end;';
     const sortBtn = document.createElement('button');
     sortBtn.textContent = 'Sort';
-    sortBtn.style.cssText = 'padding:6px 14px;background:rgba(70,100,70,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    sortBtn.style.cssText =
+      'padding:6px 14px;background:rgba(70,100,70,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
     sortBtn.addEventListener('click', () => {
       this.sortInventory();
       this.refresh();
@@ -109,8 +112,11 @@ export class SurvivalInventory {
     buttonRow.appendChild(sortBtn);
     const close = document.createElement('button');
     close.textContent = 'Close';
-    close.style.cssText = 'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
-    close.addEventListener('click', () => { this.hide(); });
+    close.style.cssText =
+      'padding:6px 14px;background:rgba(50,80,110,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:12px;';
+    close.addEventListener('click', () => {
+      this.hide();
+    });
     buttonRow.appendChild(close);
     panel.appendChild(buttonRow);
 
@@ -122,7 +128,9 @@ export class SurvivalInventory {
   private readonly craftList!: HTMLDivElement;
   private readonly smeltList!: HTMLDivElement;
 
-  private renderSlot(stack: { itemId: number; count: number; damage: number } | null): HTMLDivElement {
+  private renderSlot(
+    stack: { itemId: number; count: number; damage: number } | null,
+  ): HTMLDivElement {
     const slot = document.createElement('div');
     slot.style.cssText = [
       'width:40px',
@@ -144,7 +152,8 @@ export class SurvivalInventory {
     const def = this.registry.get(stack.itemId);
     const label = document.createElement('div');
     label.textContent = def.name.replace(/^webmc:/, '').slice(0, 6);
-    label.style.cssText = 'position:absolute;top:2px;left:3px;font-size:8px;line-height:10px;color:#ddd;';
+    label.style.cssText =
+      'position:absolute;top:2px;left:3px;font-size:8px;line-height:10px;color:#ddd;';
     slot.appendChild(label);
     const count = document.createElement('div');
     count.textContent = String(stack.count);
@@ -154,7 +163,9 @@ export class SurvivalInventory {
     if (((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion) && this.cb.onEat) {
       slot.style.cursor = 'pointer';
       slot.style.borderColor = isPotion ? 'rgba(180,140,220,0.6)' : 'rgba(140,220,120,0.6)';
-      slot.title = isPotion ? 'Click to drink' : `Click to eat (+${String(def.hungerRestore)} hunger)`;
+      slot.title = isPotion
+        ? 'Click to drink'
+        : `Click to eat (+${String(def.hungerRestore)} hunger)`;
       slot.addEventListener('click', () => {
         if (!this.cb.onEat) return;
         const container = slot.parentElement;
@@ -215,7 +226,7 @@ export class SurvivalInventory {
     const coalId = this.registry.byName('webmc:coal');
     if (coalId === undefined) return;
     const hasCoal = this.inventoryCount(coalId) > 0;
-    const pairs: ReadonlyArray<readonly [string, string]> = [
+    const pairs: readonly (readonly [string, string])[] = [
       ['webmc:raw_beef', 'webmc:cooked_beef'],
       ['webmc:raw_porkchop', 'webmc:cooked_porkchop'],
       ['webmc:raw_chicken', 'webmc:cooked_chicken'],
@@ -227,7 +238,7 @@ export class SurvivalInventory {
       const has = this.inventoryCount(inId) > 0;
       if (!has || !hasCoal) continue;
       const btn = document.createElement('button');
-      btn.textContent = `${outName.replace(/^webmc:cooked_/, 'cook ')}`;
+      btn.textContent = outName.replace(/^webmc:cooked_/, 'cook ');
       btn.style.cssText = [
         'padding:4px 10px',
         'background:rgba(120,70,30,0.85)',

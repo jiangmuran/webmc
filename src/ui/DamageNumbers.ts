@@ -13,7 +13,8 @@ export class DamageNumbers {
 
   constructor(parent: HTMLElement) {
     this.layer = document.createElement('div');
-    this.layer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden;';
+    this.layer.style.cssText =
+      'position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden;';
     parent.appendChild(this.layer);
   }
 
@@ -37,7 +38,11 @@ export class DamageNumbers {
 
   tick(
     dtSec: number,
-    project: (x: number, y: number, z: number) => { sx: number; sy: number; visible: boolean } | null,
+    project: (
+      x: number,
+      y: number,
+      z: number,
+    ) => { sx: number; sy: number; visible: boolean } | null,
   ): void {
     for (let i = this.active.length - 1; i >= 0; i--) {
       const n = this.active[i]!;
@@ -49,7 +54,7 @@ export class DamageNumbers {
       }
       const t = n.ageSec / n.lifeSec;
       const p = project(n.worldX, n.worldY + t * 1.4, n.worldZ);
-      if (!p || !p.visible) {
+      if (!p?.visible) {
         n.el.style.display = 'none';
         continue;
       }

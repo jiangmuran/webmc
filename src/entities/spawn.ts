@@ -51,9 +51,8 @@ export class SpawnSystem {
     const rng = ctx.rng ?? Math.random;
     const biome = ctx.biomeAt?.(Math.floor(slot.x), Math.floor(slot.z)) ?? 'plains';
     const pick = pickSpawn(biome, 'monster', rng());
-    const kind = pick && this.isKnownMobKind(pick.mob)
-      ? (pick.mob as MobKind)
-      : this.fallbackHostile(rng());
+    const kind =
+      pick && this.isKnownMobKind(pick.mob) ? (pick.mob as MobKind) : this.fallbackHostile(rng());
     mobs.spawn(kind, slot);
   }
 
@@ -65,9 +64,8 @@ export class SpawnSystem {
     const rng = ctx.rng ?? Math.random;
     const biome = ctx.biomeAt?.(Math.floor(slot.x), Math.floor(slot.z)) ?? 'plains';
     const pick = pickSpawn(biome, 'creature', rng());
-    const kind = pick && this.isKnownMobKind(pick.mob)
-      ? (pick.mob as MobKind)
-      : this.fallbackPassive(rng());
+    const kind =
+      pick && this.isKnownMobKind(pick.mob) ? (pick.mob as MobKind) : this.fallbackPassive(rng());
     mobs.spawn(kind, slot);
   }
 
@@ -76,7 +74,15 @@ export class SpawnSystem {
   }
 
   private fallbackHostile(r: number): MobKind {
-    return r < 0.2 ? 'skeleton' : r < 0.4 ? 'creeper' : r < 0.6 ? 'spider' : r < 0.7 ? 'enderman' : 'zombie';
+    return r < 0.2
+      ? 'skeleton'
+      : r < 0.4
+        ? 'creeper'
+        : r < 0.6
+          ? 'spider'
+          : r < 0.7
+            ? 'enderman'
+            : 'zombie';
   }
 
   private fallbackPassive(r: number): MobKind {

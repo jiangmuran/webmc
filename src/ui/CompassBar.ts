@@ -40,7 +40,24 @@ export class CompassBar {
       'left:0',
       'transition:transform 0.05s linear',
     ].join(';');
-    const labels = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const labels = [
+      'N',
+      'NE',
+      'E',
+      'SE',
+      'S',
+      'SW',
+      'W',
+      'NW',
+      'N',
+      'NE',
+      'E',
+      'SE',
+      'S',
+      'SW',
+      'W',
+      'NW',
+    ];
     for (let i = 0; i < this.TICKS; i++) {
       const seg = document.createElement('div');
       seg.style.cssText = 'padding:0 6px;opacity:0.82;min-width:24px;text-align:center;';

@@ -85,7 +85,8 @@ export class Atlas {
         const r = Math.min(255, Math.round(color[0] * tint));
         const g = Math.min(255, Math.round(color[1] * tint));
         const b = Math.min(255, Math.round(color[2] * tint));
-        const edge = i === 0 || i === ATLAS_TILE_PX - 1 || j === 0 || j === ATLAS_TILE_PX - 1 ? 0.72 : 1;
+        const edge =
+          i === 0 || i === ATLAS_TILE_PX - 1 || j === 0 || j === ATLAS_TILE_PX - 1 ? 0.72 : 1;
         const k = (j * ATLAS_TILE_PX + i) * 4;
         img.data[k] = Math.round(r * edge);
         img.data[k + 1] = Math.round(g * edge);

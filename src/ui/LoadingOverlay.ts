@@ -35,9 +35,11 @@ export class LoadingOverlay {
     this.root.appendChild(this.stageEl);
 
     const bar = document.createElement('div');
-    bar.style.cssText = 'width:280px;height:6px;background:rgba(255,255,255,0.12);border-radius:3px;overflow:hidden;';
+    bar.style.cssText =
+      'width:280px;height:6px;background:rgba(255,255,255,0.12);border-radius:3px;overflow:hidden;';
     this.fillEl = document.createElement('div');
-    this.fillEl.style.cssText = 'height:100%;width:0%;background:linear-gradient(90deg,#5fa0ff,#7eff8a);transition:width 200ms ease-out;';
+    this.fillEl.style.cssText =
+      'height:100%;width:0%;background:linear-gradient(90deg,#5fa0ff,#7eff8a);transition:width 200ms ease-out;';
     bar.appendChild(this.fillEl);
     this.root.appendChild(bar);
 
@@ -64,7 +66,9 @@ export class LoadingOverlay {
     this.hidden = true;
     this.root.style.transition = 'opacity 400ms ease-out';
     this.root.style.opacity = '0';
-    setTimeout(() => this.root.remove(), 500);
+    setTimeout(() => {
+      this.root.remove();
+    }, 500);
   }
 
   isHidden(): boolean {

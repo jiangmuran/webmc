@@ -1,4 +1,9 @@
-import { displayedEntries, formatLine, widestName, type ScoreLine } from './scoreboard_sidebar_render';
+import {
+  displayedEntries,
+  formatLine,
+  widestName,
+  type ScoreLine,
+} from './scoreboard_sidebar_render';
 
 export class ScoreboardSidebarView {
   private readonly root: HTMLDivElement;
@@ -30,7 +35,8 @@ export class ScoreboardSidebarView {
     ].join(';');
 
     this.titleEl = document.createElement('div');
-    this.titleEl.style.cssText = 'padding:3px 8px;background:rgba(255,255,255,0.1);text-align:center;font-weight:600;';
+    this.titleEl.style.cssText =
+      'padding:3px 8px;background:rgba(255,255,255,0.1);text-align:center;font-weight:600;';
     this.titleEl.textContent = this.title;
     this.root.appendChild(this.titleEl);
 

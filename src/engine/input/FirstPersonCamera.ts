@@ -205,7 +205,8 @@ export class FirstPersonCamera {
   update(dtSec: number, opts: UpdateOptions = {}): void {
     const fly = this.input.fly;
     const baseSpeed = fly ? this.opts.flySpeed : this.opts.walkSpeed;
-    const speed = baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1) * this.speedMultiplier;
+    const speed =
+      baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1) * this.speedMultiplier;
 
     const sinY = Math.sin(this.yaw);
     const cosY = Math.cos(this.yaw);
@@ -252,7 +253,9 @@ export class FirstPersonCamera {
       const targetZ = hz * (submerged ? 0.5 : 1);
       const ground = this.onGround && !submerged;
       const baseResponseTime = ground ? 0.1 : submerged ? 0.25 : 0.5;
-      const responseTime = ground ? baseResponseTime * this.groundResponseMultiplier : baseResponseTime;
+      const responseTime = ground
+        ? baseResponseTime * this.groundResponseMultiplier
+        : baseResponseTime;
       const alpha = 1 - Math.exp(-dtSec / responseTime);
       this.velocity.x += (targetX - this.velocity.x) * alpha;
       this.velocity.z += (targetZ - this.velocity.z) * alpha;
@@ -313,7 +316,7 @@ export class FirstPersonCamera {
         this.velocity.z *= 0.3;
       }
       let dvx = this.velocity.x * dtSec;
-      let dvy = this.velocity.y * dtSec;
+      const dvy = this.velocity.y * dtSec;
       let dvz = this.velocity.z * dtSec;
 
       // Sneak edge cling: prevent walking off ledges per axis
@@ -322,10 +325,26 @@ export class FirstPersonCamera {
         const probeY = this.position.y - box.halfY - 0.05;
         const hasGroundAt = (cx: number, cz: number): boolean => {
           return (
-            opts.isSolid!(Math.floor(cx - box.halfX + 0.01), Math.floor(probeY), Math.floor(cz - box.halfZ + 0.01)) ||
-            opts.isSolid!(Math.floor(cx + box.halfX - 0.01), Math.floor(probeY), Math.floor(cz - box.halfZ + 0.01)) ||
-            opts.isSolid!(Math.floor(cx - box.halfX + 0.01), Math.floor(probeY), Math.floor(cz + box.halfZ - 0.01)) ||
-            opts.isSolid!(Math.floor(cx + box.halfX - 0.01), Math.floor(probeY), Math.floor(cz + box.halfZ - 0.01))
+            opts.isSolid!(
+              Math.floor(cx - box.halfX + 0.01),
+              Math.floor(probeY),
+              Math.floor(cz - box.halfZ + 0.01),
+            ) ||
+            opts.isSolid!(
+              Math.floor(cx + box.halfX - 0.01),
+              Math.floor(probeY),
+              Math.floor(cz - box.halfZ + 0.01),
+            ) ||
+            opts.isSolid!(
+              Math.floor(cx - box.halfX + 0.01),
+              Math.floor(probeY),
+              Math.floor(cz + box.halfZ - 0.01),
+            ) ||
+            opts.isSolid!(
+              Math.floor(cx + box.halfX - 0.01),
+              Math.floor(probeY),
+              Math.floor(cz + box.halfZ - 0.01),
+            )
           );
         };
         if (dvx !== 0 && !hasGroundAt(this.position.x + dvx, this.position.z)) dvx = 0;
@@ -336,7 +355,13 @@ export class FirstPersonCamera {
 
       const wasOnGround = this.onGround;
       const stepH = this.input.sneak ? 0 : 0.6;
-      const result = sweepMove(this.position, this.opts.box, { x: dvx, y: dvy, z: dvz }, opts.isSolid, stepH);
+      const result = sweepMove(
+        this.position,
+        this.opts.box,
+        { x: dvx, y: dvy, z: dvz },
+        opts.isSolid,
+        stepH,
+      );
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
@@ -386,7 +411,7 @@ export class FirstPersonCamera {
 
     // Sprint FOV kick — eased
     const actuallySprinting =
-      this.input.sprint && (Math.abs(this.velocity.x) + Math.abs(this.velocity.z)) > 0.5;
+      this.input.sprint && Math.abs(this.velocity.x) + Math.abs(this.velocity.z) > 0.5;
     const targetBoost = actuallySprinting ? 10 : 0;
     const fovAlpha = 1 - Math.exp(-dtSec / 0.15);
     this.sprintFovBoost += (targetBoost - this.sprintFovBoost) * fovAlpha;

@@ -31,6 +31,8 @@ export class Toast {
     this.root.textContent = text;
     this.root.style.color = color;
     this.root.style.opacity = '1';
-    setTimeout(() => { this.root.style.opacity = '0'; }, durationMs);
+    setTimeout(() => {
+      this.root.style.opacity = '0';
+    }, durationMs);
   }
 }

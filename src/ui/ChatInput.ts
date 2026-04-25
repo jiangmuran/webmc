@@ -40,7 +40,10 @@ export class ChatInput {
   private completionCycle: string[] = [];
   private completionLast = '';
 
-  constructor(parent: HTMLElement, private readonly cb: ChatInputCallbacks) {
+  constructor(
+    parent: HTMLElement,
+    private readonly cb: ChatInputCallbacks,
+  ) {
     this.root = document.createElement('div');
     this.root.style.cssText = [
       'position:fixed',
@@ -95,9 +98,7 @@ export class ChatInput {
         e.preventDefault();
         if (this.history.length === 0) return;
         this.historyCursor =
-          this.historyCursor < 0
-            ? this.history.length - 1
-            : Math.max(0, this.historyCursor - 1);
+          this.historyCursor < 0 ? this.history.length - 1 : Math.max(0, this.historyCursor - 1);
         this.input.value = this.history[this.historyCursor] ?? '';
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -141,7 +142,8 @@ export class ChatInput {
 
   addLine(text: string, color = '#ffffff'): void {
     const playerName = this.cb.getPlayerName?.() ?? '';
-    const isMention = playerName.length > 0 && detectMention({ message: text, playerName, aliases: [] });
+    const isMention =
+      playerName.length > 0 && detectMention({ message: text, playerName, aliases: [] });
     const segments = wrap(text, 80);
     for (const seg of segments) this.addRawLine(seg, color, isMention);
     if (isMention && this.cb.onMention) this.cb.onMention();
@@ -164,7 +166,8 @@ export class ChatInput {
         if (seg.format.includes('italic')) span.style.fontStyle = 'italic';
         if (seg.format.includes('underline')) span.style.textDecoration = 'underline';
         if (seg.format.includes('strikethrough')) {
-          span.style.textDecoration = (span.style.textDecoration ? span.style.textDecoration + ' ' : '') + 'line-through';
+          span.style.textDecoration =
+            (span.style.textDecoration ? span.style.textDecoration + ' ' : '') + 'line-through';
         }
         line.appendChild(span);
       }
@@ -178,7 +181,9 @@ export class ChatInput {
       if (!this.open && this.log.contains(line)) {
         line.style.opacity = '0';
         line.style.transition = 'opacity 1s';
-        setTimeout(() => line.remove(), 1200);
+        setTimeout(() => {
+          line.remove();
+        }, 1200);
       }
     }, 10000);
   }
