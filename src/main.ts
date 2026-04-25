@@ -2834,7 +2834,10 @@ const interaction = new InteractionController(
         void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         if (!dayNight.isDay) {
           dayNight.setTimeOfDayTicks(1000);
-          toast.show(`Spawn set. Day ${String(++dayCounter)}`, '#ffb0c0');
+          // The day-cycle watcher in frame() does dayCounter++ when
+          // isDay becomes true; show that pending value here without
+          // mutating dayCounter ourselves (was double-counting on sleep).
+          toast.show(`Spawn set. Day ${String(dayCounter + 1)}`, '#ffb0c0');
           chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
         } else {
           toast.show('Spawn set', '#ffb0c0', 1200);
