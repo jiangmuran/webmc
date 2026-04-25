@@ -2562,6 +2562,14 @@ function frame(): void {
   if (levitation) {
     fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
   }
+  // Nausea: FOV wobble for visual disorientation.
+  const nausea = playerState.effects.get('nausea');
+  if (nausea) {
+    const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
+    const wobble = Math.sin(performance.now() / 200) * 0.1 * intensity;
+    fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
+    fp.camera.updateProjectionMatrix();
+  }
   (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
   (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
   scene.background = skyColor;
