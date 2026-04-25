@@ -1131,6 +1131,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`📢 ${text}`, '#ffd080');
     return;
   }
+  if (head === 'cdoff' || head === 'noregen') {
+    ctx.setGameRule?.('naturalRegeneration', false);
+    ctx.broadcast('Natural HP regen disabled (PvP-style).', '#80ff80');
+    return;
+  }
+  if (head === 'cdon' || head === 'regen_on') {
+    ctx.setGameRule?.('naturalRegeneration', true);
+    ctx.broadcast('Natural HP regen enabled.', '#80ff80');
+    return;
+  }
+  if (head === 'fastday' || head === 'speedday') {
+    ctx.setGameRule?.('doDaylightCycle', true);
+    ctx.addTimeOfDay?.(2400);
+    ctx.broadcast('Time fast-forward 2 hours', '#ffd080');
+    return;
+  }
   if (head === 'gamemode_cycle' || head === 'gmc') {
     if (!ctx.setGameMode) return;
     const order = ['survival', 'creative', 'adventure', 'spectator'] as const;

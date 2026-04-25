@@ -4483,6 +4483,12 @@ const chatInput = new ChatInput(appEl, {
       '/controls',
       '/gamemode_cycle',
       '/gmc',
+      '/cdoff',
+      '/noregen',
+      '/cdon',
+      '/regen_on',
+      '/fastday',
+      '/speedday',
     ];
     return SLASH_CMDS;
   },
