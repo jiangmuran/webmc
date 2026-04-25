@@ -55,6 +55,7 @@ export class PlayerState {
   lastDeathCause: string | undefined;
   lastDamageSource: string | undefined;
   exhaustion = 0;
+  absorption = 0; // bonus HP buffer; depletes first
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -63,7 +64,13 @@ export class PlayerState {
     // Resistance reduces damage by 0.2 * (amplifier+1), clamped to 80% reduction.
     const resist = this.effects.get('resistance');
     const reduction = resist ? Math.min(0.8, 0.2 * (resist.amplifier + 1)) : 0;
-    const dmg = ev.amount * (1 - reduction);
+    let dmg = ev.amount * (1 - reduction);
+    // Absorption soaks damage first.
+    if (this.absorption > 0 && dmg > 0) {
+      const taken = Math.min(this.absorption, dmg);
+      this.absorption -= taken;
+      dmg -= taken;
+    }
     this.health = Math.max(0, this.health - dmg);
     this.hitImmuneSec = 0.5;
     if (ev.source !== undefined) this.lastDamageSource = ev.source;
@@ -148,6 +155,7 @@ export class PlayerState {
     } else {
       this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
     }
+    let absorptionTarget = 0;
     for (const [id, eff] of this.effects) {
       eff.remainingSec -= dtSec;
       if (eff.remainingSec <= 0) {
@@ -164,8 +172,16 @@ export class PlayerState {
       } else if (id === 'instant_damage') {
         this.takeDamage({ amount: 3 * (eff.amplifier + 1), source: 'harming' });
         this.effects.delete(id);
+      } else if (id === 'absorption') {
+        absorptionTarget = Math.max(absorptionTarget, 4 * (eff.amplifier + 1));
+      } else if (id === 'wither' && this.health > 0) {
+        this.takeDamage({ amount: 1 * (eff.amplifier + 1) * dtSec, source: 'wither' });
+      } else if (id === 'hunger') {
+        this.exhaustion += 0.1 * (eff.amplifier + 1) * dtSec;
       }
     }
+    // Absorption: bring up to target; never decay automatically (drained by damage).
+    if (absorptionTarget > this.absorption) this.absorption = absorptionTarget;
   }
 
   respawn(): void {
