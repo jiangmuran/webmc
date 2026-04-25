@@ -78,7 +78,7 @@ import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
 import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
-import { feed as animalFeed, isInLove, type AnimalLove } from './entities/animal_breed_love';
+import { feed as animalFeed, isInLove, onBreedComplete, canBreed, type AnimalLove } from './entities/animal_breed_love';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -3671,10 +3671,45 @@ function frame(): void {
   if (!tickFrozen) {
     worldTick += Math.max(1, Math.round(dtSec * 20));
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
+      const allMobs = [...mobWorld.all()];
+      const mobById = new Map(allMobs.map((m) => [m.id, m] as const));
+      const lovers: { mob: typeof allMobs[number]; love: AnimalLove }[] = [];
+      for (const [id, love] of lovingMobs) {
+        const m = mobById.get(id);
+        if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
+      }
+      const consumed = new Set<number>();
+      for (let i = 0; i < lovers.length; i++) {
+        const a = lovers[i]!;
+        if (consumed.has(a.mob.id)) continue;
+        for (let j = i + 1; j < lovers.length; j++) {
+          const b = lovers[j]!;
+          if (consumed.has(b.mob.id)) continue;
+          if (a.mob.def.kind !== b.mob.def.kind) continue;
+          const dx = a.mob.position.x - b.mob.position.x;
+          const dy = a.mob.position.y - b.mob.position.y;
+          const dz = a.mob.position.z - b.mob.position.z;
+          const d = Math.hypot(dx, dy, dz);
+          if (!canBreed(a.love, b.love, d, worldTick)) continue;
+          consumed.add(a.mob.id);
+          consumed.add(b.mob.id);
+          lovingMobs.set(a.mob.id, onBreedComplete(a.love, worldTick));
+          lovingMobs.set(b.mob.id, onBreedComplete(b.love, worldTick));
+          mobRenderer.setMobName(a.mob.id, a.mob.def.kind);
+          mobRenderer.setMobName(b.mob.id, b.mob.def.kind);
+          const midx = (a.mob.position.x + b.mob.position.x) * 0.5;
+          const midy = (a.mob.position.y + b.mob.position.y) * 0.5;
+          const midz = (a.mob.position.z + b.mob.position.z) * 0.5;
+          mobWorld.spawn(a.mob.def.kind, { x: midx, y: midy, z: midz });
+          xpOrbs.spawn(midx, midy + 0.5, midz, 1 + Math.floor(Math.random() * 7));
+          chatInput.addLine(`A baby ${a.mob.def.kind} was born!`, '#ff80c0');
+          break;
+        }
+      }
       for (const [mobId, love] of lovingMobs) {
         if (!isInLove(love, worldTick) && worldTick >= love.breedCooldownUntilTick) {
           lovingMobs.delete(mobId);
-          const m = [...mobWorld.all()].find((mm) => mm.id === mobId);
+          const m = mobById.get(mobId);
           if (m) mobRenderer.setMobName(mobId, m.def.kind);
         }
       }
