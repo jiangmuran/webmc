@@ -33,6 +33,7 @@ export interface CommandContext {
   toggleFly?: () => boolean;
   applyEffect?: (id: string, amplifier: number, durationSec: number) => void;
   clearEffects?: () => void;
+  setGameRule?: (rule: string, value: boolean) => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -110,6 +111,18 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'fly') {
     const flying = ctx.toggleFly?.();
     ctx.broadcast(`Fly: ${flying ? 'on' : 'off'}`, '#80ff80');
+    return;
+  }
+  if (head === 'gamerule') {
+    const rule = args[0];
+    const v = args[1];
+    if (!rule || (v !== 'true' && v !== 'false')) {
+      ctx.broadcast('Usage: /gamerule <rule> <true|false>', '#ff8080');
+      ctx.broadcast('Rules: keepInventory, doDaylightCycle, doMobSpawning', '#cccccc');
+      return;
+    }
+    ctx.setGameRule?.(rule, v === 'true');
+    ctx.broadcast(`${rule} = ${v}`, '#80ff80');
     return;
   }
   if (head === 'listeffects') {

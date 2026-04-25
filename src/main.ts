@@ -222,8 +222,8 @@ const inventory = new Inventory(itemRegistry);
 const playerState = new PlayerState({
   inventory,
   onDeath: () => {
-    // Peaceful mode keeps inventory (matches MC); snapshot+restore after respawn clears.
-    if (mobDamageMultiplier === 0) {
+    // Peaceful mode (or keepInventory=true) keeps inventory; snapshot+restore.
+    if (mobDamageMultiplier === 0 || gameRules.keepInventory) {
       const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
       const main = inventory.main.map((s) => (s ? { ...s } : null));
       queueMicrotask(() => {
@@ -347,6 +347,19 @@ let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather ro
 let autoWeatherEnabled = true;
 let minimapVisible = true;
 let mobDamageMultiplier = 1;
+const gameRules = {
+  keepInventory: false,
+  doDaylightCycle: true,
+  doMobSpawning: true,
+};
+void persistDB.getMeta('gameRules').then((saved) => {
+  if (saved && typeof saved === 'object') {
+    const g = saved as Record<string, unknown>;
+    if (typeof g['keepInventory'] === 'boolean') gameRules.keepInventory = g['keepInventory'];
+    if (typeof g['doDaylightCycle'] === 'boolean') gameRules.doDaylightCycle = g['doDaylightCycle'];
+    if (typeof g['doMobSpawning'] === 'boolean') gameRules.doMobSpawning = g['doMobSpawning'];
+  }
+});
 let currentPlayerName = 'Player';
 void persistDB.getMeta('difficulty').then((saved) => {
   if (saved === 'peaceful') mobDamageMultiplier = 0;
@@ -856,6 +869,12 @@ const chatInput = new ChatInput(appEl, {
         },
         clearEffects: () => {
           playerState.effects.clear();
+        },
+        setGameRule: (rule, val) => {
+          if (rule in gameRules) {
+            (gameRules as Record<string, boolean>)[rule] = val;
+            void persistDB.setMeta('gameRules', gameRules);
+          }
         },
         killAllMobs: () => {
           const ids: number[] = [];
@@ -1846,7 +1865,7 @@ function frame(): void {
       }
     }
   }
-  dayNight.tick(dtSec);
+  if (gameRules.doDaylightCycle) dayNight.tick(dtSec);
   timeSaveAccum += dtSec;
   if (timeSaveAccum > 10) {
     timeSaveAccum = 0;
@@ -2035,7 +2054,7 @@ function frame(): void {
     });
   }
 
-  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0) {
+  if (chunkRenderer.meshCount > 20 && mobDamageMultiplier > 0 && gameRules.doMobSpawning) {
     spawnSystem.tick(dtSec, mobWorld, {
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       isDay: dayNight.isDay,
