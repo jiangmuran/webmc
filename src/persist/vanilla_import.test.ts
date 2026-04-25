@@ -44,6 +44,9 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('data/minecraft/enchantment/sharpness.json')).toBe(
       'enchantment_json',
     );
+    expect(detectVanillaFileKind('data/minecraft/damage_type/drown.json')).toBe('damage_type_json');
+    expect(detectVanillaFileKind('data/minecraft/chat_type/chat.json')).toBe('chat_type_json');
+    expect(detectVanillaFileKind('assets/minecraft/texts/splashes.txt')).toBe('splashes_txt');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

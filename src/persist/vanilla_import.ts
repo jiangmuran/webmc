@@ -140,6 +140,21 @@ export {
   type ParsedEnchantment,
   type CostScale,
 } from './vanilla_enchantment_parse';
+export {
+  parseVanillaDamageType,
+  DamageTypeParseError,
+  type ParsedDamageType,
+  type DamageScaling,
+  type DamageEffectKind,
+} from './vanilla_damage_type_parse';
+export {
+  parseVanillaChatType,
+  ChatTypeParseError,
+  type ParsedChatType,
+  type ChatTypeDecoration,
+  type ChatTypeParameter,
+} from './vanilla_chat_type_parse';
+export { parseVanillaSplashes, pickSplash, type ParsedSplashes } from './vanilla_splashes_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -161,6 +176,9 @@ export type VanillaFileKind =
   | 'options_txt'
   | 'animation_mcmeta'
   | 'enchantment_json'
+  | 'damage_type_json'
+  | 'chat_type_json'
+  | 'splashes_txt'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -177,6 +195,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     return 'server_properties';
   if (n.endsWith('options.txt') || n.endsWith('/options.txt')) return 'options_txt';
   if (n.endsWith('.png.mcmeta')) return 'animation_mcmeta';
+  if (n.endsWith('splashes.txt') || n.endsWith('/splashes.txt')) return 'splashes_txt';
   if (n.endsWith('.json')) {
     // Best-effort routing: look at the path. recipes/, loot_tables/, tags/.
     if (/(\/|^)recipes?\//.test(n)) return 'recipe_json';
@@ -190,6 +209,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)lang\//.test(n)) return 'lang_json';
     if (n.endsWith('/sounds.json') || n === 'sounds.json') return 'sounds_json';
     if (/(\/|^)enchantment\//.test(n)) return 'enchantment_json';
+    if (/(\/|^)damage_type\//.test(n)) return 'damage_type_json';
+    if (/(\/|^)chat_type\//.test(n)) return 'chat_type_json';
   }
   return 'unknown';
 }
