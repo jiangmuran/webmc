@@ -72,6 +72,9 @@ describe('vanilla_import barrel', () => {
       'banner_pattern_json',
     );
     expect(detectVanillaFileKind('data/minecraft/instrument/ponder.json')).toBe('instrument_json');
+    expect(detectVanillaFileKind('assets/minecraft/atlases/blocks.json')).toBe('atlas_json');
+    expect(detectVanillaFileKind('data/minecraft/predicates/foo.json')).toBe('predicate_json');
+    expect(detectVanillaFileKind('assets/minecraft/font/default.json')).toBe('font_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

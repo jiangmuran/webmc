@@ -183,6 +183,25 @@ export {
   InstrumentParseError,
   type ParsedInstrument,
 } from './vanilla_instrument_parse';
+export {
+  parseVanillaAtlas,
+  AtlasParseError,
+  type ParsedAtlas,
+  type AtlasSource,
+  type AtlasSourceKind,
+} from './vanilla_atlas_parse';
+export {
+  parseVanillaPredicate,
+  PredicateParseError,
+  type ParsedPredicate,
+} from './vanilla_predicate_parse';
+export {
+  parseVanillaFont,
+  FontParseError,
+  type ParsedFont,
+  type FontProvider,
+  type FontProviderKind,
+} from './vanilla_font_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -218,6 +237,9 @@ export type VanillaFileKind =
   | 'chicken_variant_json'
   | 'banner_pattern_json'
   | 'instrument_json'
+  | 'atlas_json'
+  | 'predicate_json'
+  | 'font_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -261,6 +283,9 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)chicken_variant\//.test(n)) return 'chicken_variant_json';
     if (/(\/|^)banner_pattern\//.test(n)) return 'banner_pattern_json';
     if (/(\/|^)instrument\//.test(n)) return 'instrument_json';
+    if (/(\/|^)atlases\//.test(n)) return 'atlas_json';
+    if (/(\/|^)predicates?\//.test(n)) return 'predicate_json';
+    if (/(\/|^)font\//.test(n)) return 'font_json';
   }
   return 'unknown';
 }
