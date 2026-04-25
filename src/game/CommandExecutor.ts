@@ -56,6 +56,7 @@ export interface CommandContext {
   minimapZoom?: (dir: 'in' | 'out') => void;
   heldItemInfo?: () => { name: string; count: number; maxStack: number; durability?: { current: number; max: number }; food?: { hunger: number; saturation: number }; tags?: string[] } | null;
   inventoryStats?: () => { filledSlots: number; totalSlots: number; totalItems: number; uniqueTypes: number; topItems: { name: string; count: number }[] };
+  dropAllItems?: () => number;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -961,6 +962,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'dropall') {
+    if (!ctx.dropAllItems) return;
+    const n = ctx.dropAllItems();
+    ctx.broadcast(`Dropped ${String(n)} stacks at your feet`, '#80ff80');
     return;
   }
   if (head === 'inventory' || head === 'inv') {

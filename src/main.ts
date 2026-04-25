@@ -2819,6 +2819,23 @@ const chatInput = new ChatInput(appEl, {
         minimapZoom: (dir) => {
           if (dir === 'in') minimap.zoomIn(); else minimap.zoomOut();
         },
+        dropAllItems: () => {
+          let n = 0;
+          const drop = (slots: (typeof inventory.hotbar)[number][]): void => {
+            for (let i = 0; i < slots.length; i++) {
+              const s = slots[i];
+              if (!s) continue;
+              const def = itemRegistry.get(s.itemId);
+              const colorRgb = def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+              droppedItems.spawn(fp.position.x + (Math.random() - 0.5), fp.position.y, fp.position.z + (Math.random() - 0.5), { itemId: s.itemId, count: s.count, color: colorRgb }, 1.5);
+              slots[i] = null;
+              n++;
+            }
+          };
+          drop(inventory.hotbar);
+          drop(inventory.main);
+          return n;
+        },
         inventoryStats: () => {
           const counts = new Map<string, number>();
           let filled = 0, total = 0;
@@ -3142,7 +3159,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe', '/respawn', '/rs', '/fullness', '/noclip', '/screenshot', '/snap', '/fov', '/entities', '/mobs', '/chunkstats', '/chunks', '/spread', '/spreadplayers', '/lighting', '/creative_inventory', '/ci', '/freezemobs', '/safezone', '/peaceful', '/loadout', '/tps_target', '/tickrate', '/cyclecam', '/cyclecamera', '/minimap', '/minimapzoom', '/reset', '/mute_chat', '/broadcast', '/test', '/sanitycheck', '/item', '/itemstats', '/inventory', '/inv',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe', '/respawn', '/rs', '/fullness', '/noclip', '/screenshot', '/snap', '/fov', '/entities', '/mobs', '/chunkstats', '/chunks', '/spread', '/spreadplayers', '/lighting', '/creative_inventory', '/ci', '/freezemobs', '/safezone', '/peaceful', '/loadout', '/tps_target', '/tickrate', '/cyclecam', '/cyclecamera', '/minimap', '/minimapzoom', '/reset', '/mute_chat', '/broadcast', '/test', '/sanitycheck', '/item', '/itemstats', '/inventory', '/inv', '/dropall',
     ];
     return SLASH_CMDS;
   },
