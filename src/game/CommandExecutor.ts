@@ -1798,6 +1798,58 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built stable: 4 stalls, 4 horses, hay troughs', '#80ff80');
     return;
   }
+  if (head === 'tavern' || head === 'inn') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×9 oak tavern with bar counter, stools, fireplace, chest, lanterns.
+    ctx.fillBlocks(px - 4, py, pz - 4, px + 4, py + 4, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 3, pz + 3, 'air');
+    ctx.fillBlocks(px - 4, py - 1, pz - 4, px + 4, py - 1, pz + 4, 'oak_planks');
+    // Bar counter line.
+    ctx.fillBlocks(px - 3, py, pz + 1, px + 3, py, pz + 1, 'spruce_planks');
+    // Stools (oak slabs).
+    for (let i = -3; i <= 3; i += 2) ctx.setBlock(px + i, py, pz - 1, 'oak_slab');
+    // Fireplace.
+    ctx.setBlock(px - 3, py, pz + 3, 'campfire');
+    ctx.setBlock(px - 3, py + 1, pz + 3, 'air');
+    // Chest.
+    ctx.setBlock(px + 3, py, pz + 3, 'chest');
+    // Lanterns.
+    ctx.setBlock(px - 3, py + 3, pz - 3, 'lantern');
+    ctx.setBlock(px + 3, py + 3, pz - 3, 'lantern');
+    ctx.setBlock(px - 3, py + 3, pz + 3, 'lantern');
+    ctx.setBlock(px + 3, py + 3, pz + 3, 'lantern');
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 4, 'air');
+    ctx.setBlock(px, py + 2, pz - 4, 'air');
+    ctx.broadcast('Built tavern: bar, stools, fireplace, chest', '#80ff80');
+    return;
+  }
+  if (head === 'shop' || head === 'tradinghouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Small 7×5 shop with villager + counter + 3 chests + lectern.
+    ctx.fillBlocks(px - 3, py, pz - 2, px + 3, py + 3, pz + 2, 'oak_planks');
+    ctx.fillBlocks(px - 2, py, pz - 1, px + 2, py + 2, pz + 1, 'air');
+    ctx.fillBlocks(px - 3, py - 1, pz - 2, px + 3, py - 1, pz + 2, 'oak_planks');
+    // Counter.
+    ctx.fillBlocks(px - 2, py, pz, px + 2, py, pz, 'spruce_planks');
+    // Chests behind counter.
+    for (let i = -2; i <= 2; i += 2) ctx.setBlock(px + i, py, pz + 1, 'chest');
+    // Lectern.
+    ctx.setBlock(px, py + 1, pz, 'lectern');
+    // Villager.
+    ctx.summon('villager', px, py + 1, pz + 1);
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built shop: 3 chests, lectern, villager', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
