@@ -1174,6 +1174,39 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Wind charge: right-click block → AOE knockback in 3-block radius (MC 1.21+ Breeze drop).
+      if (heldName === 'wind_charge') {
+        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        for (let i = 0; i < 24; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 3, cy + Math.random() * 2, cz + (Math.random() - 0.5) * 3, [200, 220, 255]);
+        for (const m of mobWorld.all()) {
+          const dx = m.position.x - cx;
+          const dy = m.position.y - cy;
+          const dz = m.position.z - cz;
+          const d2 = dx * dx + dy * dy + dz * dz;
+          if (d2 > 9) continue;
+          const len = Math.max(0.001, Math.sqrt(d2));
+          m.velocity.x += (dx / len) * 8;
+          m.velocity.y += 5;
+          m.velocity.z += (dz / len) * 8;
+        }
+        // Player gets pushed away too.
+        const pdx = fp.position.x - cx;
+        const pdz = fp.position.z - cz;
+        const pd2 = pdx * pdx + pdz * pdz;
+        if (pd2 < 9) {
+          const len = Math.max(0.001, Math.sqrt(pd2));
+          fp.velocity.x += (pdx / len) * 6;
+          fp.velocity.y += 4;
+          fp.velocity.z += (pdz / len) * 6;
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const wcId = itemRegistry.byName('webmc:wind_charge');
+          if (wcId !== undefined) consumeInventoryItem(wcId, 1);
+        }
+        sfx.play('break');
+        subtitles.push('Wind charge!');
+        return true;
+      }
       // Trident with Riptide (active when player is in water OR rain): propel forward.
       if (heldName === 'trident' && (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')) {
         const look = fp.lookVector();
