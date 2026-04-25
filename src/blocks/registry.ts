@@ -40,9 +40,8 @@ export class BlockRegistry {
   }
 
   register(def: BlockDef): BlockId {
-    if (this._byName.has(def.name)) {
-      throw new Error(`BlockRegistry: duplicate name ${def.name}`);
-    }
+    const existing = this._byName.get(def.name);
+    if (existing !== undefined) return existing;
     const id: BlockId = this._defs.length;
     this._defs.push(def);
     this._byName.set(def.name, id);
