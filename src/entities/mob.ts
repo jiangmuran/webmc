@@ -420,7 +420,7 @@ const ATTACK_COOLDOWN_SEC = 0.8;
 export interface MobTickContext {
   isSolid: SolidSampler;
   playerPos: Vec3 | null;
-  damagePlayer: (amount: number) => void;
+  damagePlayer: (amount: number, attackerPos?: Vec3) => void;
   onCreeperExplode?: (x: number, y: number, z: number) => void;
   // True when the mob is in direct sunlight (day + top-of-world exposure).
   isSunlit?: (x: number, y: number, z: number) => boolean;
@@ -553,7 +553,7 @@ export class MobWorld {
           if (distSq <= mob.def.attackRangeSq) {
             mob.fuseSec += dtSec;
             if (mob.fuseSec >= 1.5) {
-              ctx.damagePlayer(mob.def.attackDamage);
+              ctx.damagePlayer(mob.def.attackDamage, mob.position);
               ctx.onCreeperExplode?.(mob.position.x, mob.position.y, mob.position.z);
               this.mobs.delete(mob.id);
               return;
@@ -562,7 +562,7 @@ export class MobWorld {
             mob.fuseSec = Math.max(0, mob.fuseSec - dtSec);
           }
         } else if (distSq <= mob.def.attackRangeSq && mob.attackCooldownSec === 0) {
-          ctx.damagePlayer(mob.def.attackDamage);
+          ctx.damagePlayer(mob.def.attackDamage, mob.position);
           mob.attackCooldownSec = ATTACK_COOLDOWN_SEC;
         }
 

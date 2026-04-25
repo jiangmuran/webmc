@@ -375,7 +375,14 @@ export class FirstPersonCamera {
     );
     this.camera.up.copy(UP);
     this.camera.rotation.order = 'YXZ';
-    this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
+    if (this.damageTiltSec > 0) {
+      this.damageTiltSec = Math.max(0, this.damageTiltSec - dtSec);
+      const k = this.damageTiltSec / 0.4;
+      const roll = Math.sin(k * Math.PI) * 0.35 * this.damageTiltSign;
+      this.camera.rotation.set(this.pitch, this.yaw, roll, 'YXZ');
+    } else {
+      this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
+    }
 
     // Sprint FOV kick — eased
     const actuallySprinting =
@@ -399,5 +406,12 @@ export class FirstPersonCamera {
   effectFovBoost = 0;
   setEffectFovBoost(deg: number): void {
     this.effectFovBoost = deg;
+  }
+
+  private damageTiltSec = 0;
+  private damageTiltSign = 1;
+  pulseDamageTilt(angleRad: number): void {
+    this.damageTiltSec = 0.4;
+    this.damageTiltSign = angleRad > 0 ? 1 : -1;
   }
 }

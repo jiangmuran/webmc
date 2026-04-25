@@ -81,6 +81,7 @@ import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState
 import { feed as animalFeed, isInLove, onBreedComplete, canBreed, type AnimalLove } from './entities/animal_breed_love';
 import { canLeash, tensionStep } from './entities/leash_tether';
 import { tick as babyTick, growFraction, type BabyState } from './game/baby_grow_speedup';
+import { damageTiltAngle } from './game/player_damage_tilt_direction';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -3817,7 +3818,7 @@ function frame(): void {
   if (!tickFrozen) mobWorld.tick(dtSec, {
     isSolid,
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-    damagePlayer: (amt) => {
+    damagePlayer: (amt, attackerPos) => {
       const scaled = amt * mobDamageMultiplier;
       const armorPts = computeArmorPoints();
       const toughnessPts = computeArmorToughness();
@@ -3825,6 +3826,16 @@ function frame(): void {
       if (finalDmg > 0) {
         playerState.takeDamage({ amount: finalDmg, source: 'mob' });
         if (armorPts > 0) consumeArmorDurability(scaled);
+        if (attackerPos) {
+          const angle = damageTiltAngle({
+            attackerX: attackerPos.x,
+            attackerZ: attackerPos.z,
+            playerX: fp.position.x,
+            playerZ: fp.position.z,
+            playerYaw: fp.yaw,
+          });
+          fp.pulseDamageTilt(angle);
+        }
       }
       if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
     },
