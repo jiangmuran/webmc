@@ -3478,6 +3478,18 @@ function frame(): void {
     if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
   }
   playerState.tick(dtSec, { inFluid: fp.inFluid });
+  // Walking through fire ignites the player (8s burn).
+  if ((gameMode === 'survival' || gameMode === 'adventure') && !playerState.effects.has('fire_resistance')) {
+    const fpx = Math.floor(fp.position.x);
+    const fpz = Math.floor(fp.position.z);
+    for (let dy = 0; dy <= 1; dy++) {
+      const s = world.get(fpx, Math.floor(fp.position.y) + dy, fpz);
+      if (s !== AIR && registry.get(stateId(s)).name === 'webmc:fire') {
+        playerState.fireRemainingSec = Math.max(playerState.fireRemainingSec, 8);
+        break;
+      }
+    }
+  }
 
   if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure') && gameRules.fallDamage) {
     const slowFalling = playerState.effects.has('slow_falling');
