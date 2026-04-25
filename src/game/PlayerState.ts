@@ -37,6 +37,7 @@ export class PlayerState {
   breath = BREATH_MAX_SEC;
   xpLevel = 0;
   xpProgress = 0;
+  private regenAccumSec = 0;
   readonly effects = new Map<string, { amplifier: number; remainingSec: number }>();
   readonly inventory: Inventory;
   private readonly onRespawn: () => void;
@@ -132,9 +133,18 @@ export class PlayerState {
     } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
       this.takeDamage({ amount: STARVE_DAMAGE_PER_SEC * dtSec, source: 'starvation' });
     }
-    if (this.hunger >= HUNGER_HEAL_MIN && this.saturation > 0 && this.health < MAX_HEALTH) {
-      this.heal(HP_REGEN_PER_SEC * dtSec);
-      this.saturation = Math.max(0, this.saturation - dtSec * 0.5);
+    if (this.hunger >= HUNGER_HEAL_MIN && this.health < MAX_HEALTH) {
+      this.regenAccumSec += dtSec;
+      // Fast regen: full hunger + saturation > 0 → heal 1 HP every 0.5s.
+      // Normal regen: hunger ≥ 18 → heal 1 HP every 4s.
+      const intervalSec = this.hunger >= 20 && this.saturation > 0 ? 0.5 : 4.0;
+      while (this.regenAccumSec >= intervalSec) {
+        this.regenAccumSec -= intervalSec;
+        this.heal(1);
+        this.addExhaustion(6);
+      }
+    } else {
+      this.regenAccumSec = 0;
     }
     const fireImmune = this.effects.has('fire_resistance');
     if (env.inFluid === 'lava') {
