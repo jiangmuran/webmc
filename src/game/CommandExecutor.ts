@@ -1444,6 +1444,67 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built 7×5×7 aquarium with sand and coral', '#80ff80');
     return;
   }
+  if (head === 'spiralstaircase' || head === 'spiral') {
+    if (!ctx.setBlock) return;
+    const turns = Math.max(1, Math.min(10, parseInt(args[0] ?? '3', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const r = 3;
+    let h = 0;
+    for (let t = 0; t < turns; t++) {
+      for (let i = 0; i < 16; i++) {
+        const a = (i / 16) * Math.PI * 2;
+        const x = px + Math.round(Math.cos(a) * r);
+        const z = pz + Math.round(Math.sin(a) * r);
+        ctx.setBlock(x, py + h, z, 'stone_bricks');
+        ctx.setBlock(x, py + h + 1, z, 'air');
+        ctx.setBlock(x, py + h + 2, z, 'air');
+        h++;
+      }
+    }
+    ctx.broadcast(`Spiral staircase: ${String(turns)} turns up`, '#80ff80');
+    return;
+  }
+  if (head === 'platform') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(2, Math.min(20, parseInt(args[0] ?? '5', 10)));
+    const block = args[1] ?? 'stone_bricks';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx * dx + dz * dz <= r * r) {
+          ctx.setBlock(px + dx, py - 1, pz + dz, block);
+          n++;
+        }
+      }
+    }
+    ctx.broadcast(`Platform: ${String(n)} ${block} blocks (r=${String(r)})`, '#80ff80');
+    return;
+  }
+  if (head === 'clearfloor') {
+    if (!ctx.fillBlocks) return;
+    const r = Math.max(2, Math.min(16, parseInt(args[0] ?? '6', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Flatten the floor and clear up 3 blocks.
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx * dx + dz * dz <= r * r) {
+          ctx.setBlock?.(px + dx, py - 1, pz + dz, 'grass_block');
+          for (let h = 0; h < 3; h++) ctx.setBlock?.(px + dx, py + h, pz + dz, 'air');
+          n++;
+        }
+      }
+    }
+    ctx.broadcast(`Cleared floor (r=${String(r)}, ${String(n)} cells)`, '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
