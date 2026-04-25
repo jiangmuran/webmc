@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>webmc — browser-native voxel game</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --accent: #80ff80;
+        --muted: #8b949e;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.6;
+      }
+      header {
+        padding: 6rem 2rem 4rem;
+        text-align: center;
+        background: radial-gradient(circle at 50% 30%, rgba(128, 255, 128, 0.12), transparent 60%);
+      }
+      h1 {
+        margin: 0;
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+      .tagline {
+        color: var(--muted);
+        font-size: 1.25rem;
+        margin: 0.6rem 0 2rem;
+      }
+      .cta {
+        display: inline-flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .cta a {
+        display: inline-block;
+        padding: 0.85rem 1.7rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #0d1117;
+        background: var(--accent);
+        transition: transform 0.1s;
+      }
+      .cta a.secondary {
+        background: transparent;
+        color: var(--fg);
+        border: 1px solid #30363d;
+      }
+      .cta a:hover {
+        transform: translateY(-1px);
+      }
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 6rem;
+      }
+      h2 {
+        margin: 3rem 0 1rem;
+        font-size: 1.6rem;
+        border-bottom: 1px solid #30363d;
+        padding-bottom: 0.5rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      .card {
+        padding: 1.2rem;
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+      }
+      .card h3 {
+        margin: 0 0 0.4rem;
+        color: var(--accent);
+        font-size: 1.1rem;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      pre {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+      code {
+        font-family: 'SF Mono', Menlo, Monaco, monospace;
+        font-size: 0.9em;
+        color: #ffaf80;
+      }
+      ul {
+        padding-left: 1.5rem;
+      }
+      footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+        border-top: 1px solid #30363d;
+      }
+      .pipeline {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.6rem;
+      }
+      .pipeline li {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        padding: 0.7rem 1rem;
+      }
+      .pipeline strong {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>webmc</h1>
+      <p class="tagline">Browser-native voxel game · clean-room · AGPL-3.0 · mobile + multiplayer</p>
+      <div class="cta">
+        <a href="./game.html">▶ Launch game</a>
+        <a class="secondary" href="https://github.com/jiangmuran/webmc">GitHub repo</a>
+        <a class="secondary" href="https://github.com/jiangmuran/webmc/issues">Issues</a>
+      </div>
+    </header>
+
+    <main>
+      <h2>What it is</h2>
+      <p>
+        webmc is a Minecraft-Java-Edition-equivalent voxel sandbox running entirely in modern
+        browsers — desktop and mobile, single-player and peer-based multiplayer. It is a
+        <strong>clean-room reimplementation</strong>: no decompiled Mojang source code, no Mojang
+        textures or audio shipped in this repo. Open-source under AGPL-3.0.
+      </p>
+
+      <h2>What's in the build</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>620+ blocks</h3>
+          <p>Wool, terracotta, concrete, glass, glazed terracotta, copper oxidation chain, ores, deepslate, sculk, amethyst, mushrooms, prismarine, all stone variants.</p>
+        </div>
+        <div class="card">
+          <h3>220+ items</h3>
+          <p>Tools, armor (incl. elytra, turtle shell), 14 potions + splash, 28 spawn eggs, 36 boat/sign variants, food, dyes, smithing templates, bottle o' enchanting.</p>
+        </div>
+        <div class="card">
+          <h3>71 mob defs</h3>
+          <p>Pig/cow/sheep/wolf/horse/cat/parrot/wither/dragon/warden/breeze/sniffer/armadillo/villager + biome-aware spawn tables.</p>
+        </div>
+        <div class="card">
+          <h3>180+ chat commands</h3>
+          <p>/tp /home /tame /breed /craft /village /tower /sphere /portal /firework /army /perf /test — type /help.</p>
+        </div>
+        <div class="card">
+          <h3>Mechanics shipped</h3>
+          <p>Farming + bone-meal, mob breeding + babies, elytra glide + firework boost, mace smash, trident riptide, splash potions, sponge soak, fishing, axe stripping, hoe tilling.</p>
+        </div>
+        <div class="card">
+          <h3>Performance</h3>
+          <p>Mesh-budget cap, movement-biased chunk priority, idempotent registries, palette+bitpacked storage. Optimized for low-end laptops/phones.</p>
+        </div>
+      </div>
+
+      <h2>Quick start (developers)</h2>
+      <pre><code>git clone https://github.com/jiangmuran/webmc.git
+cd webmc
+npm install
+npm run dev          # http://localhost:5173
+npm run typecheck    # strict TS
+npm run test         # 11500+ unit tests
+npm run lint         # eslint
+npm run build        # static dist/</code></pre>
+
+      <h2>Development pipeline (流水线)</h2>
+      <ul class="pipeline">
+        <li><strong>1. main</strong> — protected; only via PR; auto-deploys to GitHub Pages.</li>
+        <li><strong>2. dev</strong> — integration branch; CI gate before merging to main.</li>
+        <li><strong>3. feature/*</strong> — short-lived branches per feature; PR into <code>dev</code>.</li>
+        <li><strong>4. CI</strong> — typecheck → lint → format:check → unit tests (11593 vitest) → playwright e2e.</li>
+        <li><strong>5. Auto-merge</strong> — daily PR opens dev → main when CI green.</li>
+        <li><strong>6. Pages</strong> — every push to main builds + publishes <code>https://jiangmuran.github.io/webmc/</code>.</li>
+      </ul>
+
+      <h2>Clean-room IP</h2>
+      <p>
+        No decompiled Minecraft source code is ever read. No Mojang textures or audio are committed
+        to this repository. Behavioral references come exclusively from
+        <a href="https://minecraft.wiki" style="color: var(--accent)">minecraft.wiki</a> + the
+        user's natural-language descriptions. See the README + AGENT_CHARTER.md for the full policy.
+      </p>
+
+      <footer>
+        webmc · AGPL-3.0 · not affiliated with Mojang AB · made with Three.js + TypeScript + Vite
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+name: auto pr dev to main
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # 12:00 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Open PR if dev is ahead of main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! git ls-remote --heads origin dev | grep -q dev; then
+            echo "dev branch does not exist; nothing to PR"
+            exit 0
+          fi
+          git fetch origin dev main
+          AHEAD=$(git rev-list --count origin/main..origin/dev)
+          if [ "$AHEAD" = "0" ]; then
+            echo "dev is not ahead of main"
+            exit 0
+          fi
+          # Check if a PR already exists.
+          EXISTING=$(gh pr list --base main --head dev --json number --jq '.[0].number' || true)
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already open; refreshing"
+            gh pr edit "$EXISTING" --body "$(printf 'Daily roll-up of dev → main (auto-generated)\n\n%s commits ahead.\n\nMost recent commits:\n%s' "$AHEAD" "$(git log --oneline origin/main..origin/dev | head -20)")"
+          else
+            BODY=$(printf 'Daily roll-up of dev → main (auto-generated)\n\n%s commits ahead.\n\nMost recent commits:\n%s' "$AHEAD" "$(git log --oneline origin/main..origin/dev | head -20)")
+            gh pr create --base main --head dev --title "Daily merge: dev → main ($AHEAD commits)" --body "$BODY" --label "auto-pr"
+          fi
