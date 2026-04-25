@@ -2135,6 +2135,8 @@ function frame(): void {
       toast.show('Respawned', '#80ffa0', 1200);
       playerState.justDied = false;
     } else if (!deathScreen.isVisible()) {
+      const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
+      deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);
       deathScreen.show();
       fp.inputBlocked = true;
       document.exitPointerLock();

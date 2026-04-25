@@ -52,6 +52,8 @@ export class PlayerState {
   justDied = false;
   hitImmuneSec = 0;
   fireRemainingSec = 0;
+  lastDeathCause: string | undefined;
+  lastDamageSource: string | undefined;
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -63,8 +65,10 @@ export class PlayerState {
     const dmg = ev.amount * (1 - reduction);
     this.health = Math.max(0, this.health - dmg);
     this.hitImmuneSec = 0.5;
+    if (ev.source !== undefined) this.lastDamageSource = ev.source;
     if (this.health === 0) {
       this.justDied = true;
+      this.lastDeathCause = ev.source ?? this.lastDamageSource;
       this.respawn();
     }
   }
