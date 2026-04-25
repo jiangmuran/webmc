@@ -1176,6 +1176,25 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Bottle o' enchanting: spawn 3-11 XP orbs at hit point.
+      if (heldName === 'experience_bottle') {
+        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        const total = 3 + Math.floor(Math.random() * 9);
+        let remaining = total;
+        while (remaining > 0) {
+          const chunk = Math.min(remaining, 1 + Math.floor(Math.random() * 5));
+          xpOrbs.spawn(cx + (Math.random() - 0.5) * 1.5, cy + Math.random(), cz + (Math.random() - 0.5) * 1.5, chunk);
+          remaining -= chunk;
+        }
+        for (let i = 0; i < 16; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5), cy + Math.random(), cz + (Math.random() - 0.5), [220, 230, 80]);
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const xbId = itemRegistry.byName('webmc:experience_bottle');
+          if (xbId !== undefined) consumeInventoryItem(xbId, 1);
+        }
+        sfx.play('click');
+        subtitles.push(`Bottle o' enchanting (+${total} XP)`);
+        return true;
+      }
       // Fishing rod: cast at water; on water-block target, roll a fish drop after 5-30s wait.
       if (heldName === 'fishing_rod' && def.name === 'webmc:water') {
         consumeHeldToolDurability(1);
