@@ -41,6 +41,9 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('assets/minecraft/textures/block/water_still.png.mcmeta')).toBe(
       'animation_mcmeta',
     );
+    expect(detectVanillaFileKind('data/minecraft/enchantment/sharpness.json')).toBe(
+      'enchantment_json',
+    );
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

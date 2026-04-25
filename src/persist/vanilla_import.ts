@@ -134,6 +134,12 @@ export {
   type SkinLayout,
   type Rect,
 } from './vanilla_skin_layout';
+export {
+  parseVanillaEnchantment,
+  EnchantmentParseError,
+  type ParsedEnchantment,
+  type CostScale,
+} from './vanilla_enchantment_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -154,6 +160,7 @@ export type VanillaFileKind =
   | 'sounds_json'
   | 'options_txt'
   | 'animation_mcmeta'
+  | 'enchantment_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -182,6 +189,7 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)models\//.test(n)) return 'model_json';
     if (/(\/|^)lang\//.test(n)) return 'lang_json';
     if (n.endsWith('/sounds.json') || n === 'sounds.json') return 'sounds_json';
+    if (/(\/|^)enchantment\//.test(n)) return 'enchantment_json';
   }
   return 'unknown';
 }
