@@ -50,6 +50,7 @@ import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
+import { inThermalThrottle } from './engine/chunk_unload_strategy_thermal';
 import { kindFor as kindForWeather } from './engine/weather_particles';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
@@ -2321,6 +2322,10 @@ function frame(): void {
         false,
       );
       qualityLimit = Math.min(qualityLimit, powerLimit);
+    }
+    // Thermal-throttle: shrink view radius if FPS p95 < 25 or low battery (chunk_unload_strategy_thermal).
+    if (inThermalThrottle({ cpuTempCelsius: 50, fpsP95: p95Fps(fpsStats), battery: powerState.batteryLevel })) {
+      qualityLimit = Math.max(4, qualityLimit - 4);
     }
     loader.setViewRadius(qualityLimit);
     const lowTier = qualityLimit < 4;
