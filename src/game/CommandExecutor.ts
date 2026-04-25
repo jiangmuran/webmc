@@ -51,6 +51,12 @@ export interface CommandContext {
 
 let lastTpFrom: { x: number; y: number; z: number } | null = null;
 
+export function executeCommands(raw: string, ctx: CommandContext): void {
+  for (const part of raw.split(';').map((s) => s.trim()).filter((s) => s.length > 0)) {
+    executeCommand(part, ctx);
+  }
+}
+
 export function executeCommand(raw: string, ctx: CommandContext): void {
   const command = raw.startsWith('/') ? raw.slice(1) : raw;
   const tokens = command.split(/\s+/).filter((t) => t.length > 0);

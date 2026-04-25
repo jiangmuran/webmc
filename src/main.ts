@@ -67,7 +67,7 @@ import { SkyCelestials } from './engine/render/SkyCelestials';
 import { Stars } from './engine/render/Stars';
 import { applyPackToRegistry, buildPatternTextureFromPack } from './engine/render/ResourcePackApply';
 import { type GameMode, effectsFor, nextGameMode } from './game/GameMode';
-import { executeCommand } from './game/CommandExecutor';
+import { executeCommand, executeCommands } from './game/CommandExecutor';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const hudEl = document.querySelector<HTMLElement>('#hud');
@@ -769,7 +769,9 @@ let lastInFluid: 'water' | 'lava' | null = null;
 const chatInput = new ChatInput(appEl, {
   onSubmit: (text) => {
     if (text.startsWith('/')) {
-      executeCommand(text, {
+      const useChain = text.includes(';');
+      const exec = useChain ? executeCommands : executeCommand;
+      exec(text, {
         playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
         setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
         gameMode,
