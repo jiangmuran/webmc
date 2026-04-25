@@ -303,7 +303,6 @@ for (const def of registry.defs) {
 itemRegistry.register({ name: 'webmc:bucket', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:water_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:lava_bucket', maxStack: 1, durability: 0 });
-itemRegistry.register({ name: 'webmc:rotten_flesh', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:arrow', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
@@ -314,7 +313,6 @@ itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:spider_eye', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:stick', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:coal', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:iron_ingot', maxStack: 64, durability: 0 });
