@@ -150,7 +150,19 @@ export class MobRenderer {
     const seen = new Set<number>();
     for (const mob of mobs) {
       seen.add(mob.id);
+      // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
+      if (cameraPos) {
+        const dx = mob.position.x - cameraPos.x;
+        const dy = mob.position.y - cameraPos.y;
+        const dz = mob.position.z - cameraPos.z;
+        if (dx * dx + dy * dy + dz * dz > 96 * 96) {
+          const v = this.visuals.get(mob.id);
+          if (v) v.group.visible = false;
+          continue;
+        }
+      }
       let vis = this.visuals.get(mob.id);
+      if (vis) vis.group.visible = true;
       if (!vis) {
         const color = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
         const bodyMat = new THREE.MeshBasicMaterial({ color });
