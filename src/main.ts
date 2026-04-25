@@ -30,6 +30,7 @@ import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
+import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -113,9 +114,10 @@ const detectedGpuTier = ((): 'low' | 'mid' | 'high' => {
   }
 })();
 
+const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
 if (localStorage.getItem('webmc:settings') === null) {
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const recVD = recommendedChunkRadius(detectedGpuTier, !isMobile);
+  const recVD = recommendedChunkRadius(detectedGpuTier, !isMobileDevice);
   try {
     localStorage.setItem(
       'webmc:settings',
@@ -125,6 +127,30 @@ if (localStorage.getItem('webmc:settings') === null) {
     /* non-fatal */
   }
 }
+
+interface BatteryManager {
+  level: number;
+  charging: boolean;
+  addEventListener: (type: 'levelchange' | 'chargingchange', cb: () => void) => void;
+}
+type NavWithBattery = Navigator & { getBattery?: () => Promise<BatteryManager> };
+const powerState = { batteryLevel: 1, charging: true };
+void (async (): Promise<void> => {
+  const nav = navigator as NavWithBattery;
+  if (typeof nav.getBattery !== 'function') return;
+  try {
+    const b = await nav.getBattery();
+    const update = (): void => {
+      powerState.batteryLevel = b.level;
+      powerState.charging = b.charging;
+    };
+    update();
+    b.addEventListener('levelchange', update);
+    b.addEventListener('chargingchange', update);
+  } catch {
+    /* Battery API unavailable — non-fatal */
+  }
+})();
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8db5f0);
@@ -1927,14 +1953,25 @@ function frame(): void {
   const now = performance.now();
   const dtSec = Math.min(stats.frameMs / 1000, 0.1);
   if (perfMonitor.tick(dtSec)) {
-    loader.setViewRadius(perfMonitor.quality);
-    const lowTier = perfMonitor.quality < 4;
+    let qualityLimit = perfMonitor.quality;
+    if (isMobileDevice) {
+      const powerLimit = maxRenderDistanceChunks(
+        { batteryLevel: powerState.batteryLevel, charging: powerState.charging, thermalState: 'nominal' },
+        false,
+      );
+      qualityLimit = Math.min(qualityLimit, powerLimit);
+    }
+    loader.setViewRadius(qualityLimit);
+    const lowTier = qualityLimit < 4;
     clouds.mesh.visible = !lowTier;
     stars.points.visible = !lowTier;
     if (lowTier && rain.isActive()) rain.setActive(false);
     const basePx = Math.min(window.devicePixelRatio, 1.5);
     const targetPx = lowTier ? Math.min(basePx, 1.0) : basePx;
     if (Math.abs(renderer.getPixelRatio() - targetPx) > 0.01) renderer.setPixelRatio(targetPx);
+  }
+  if (shouldPauseRender({ batteryLevel: powerState.batteryLevel, charging: powerState.charging, thermalState: 'nominal' })) {
+    return;
   }
 
   if (touch) {
