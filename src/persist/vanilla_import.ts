@@ -218,6 +218,25 @@ export {
   type ParsedFlatPreset,
   type FlatLayer,
 } from './vanilla_flat_preset_parse';
+export {
+  parseVanillaConfiguredFeature,
+  parseVanillaPlacedFeature,
+  FeatureParseError,
+  type ParsedConfiguredFeature,
+  type ParsedPlacedFeature,
+  type PlacementModifier,
+} from './vanilla_feature_parse';
+export {
+  parseVanillaStructureJson,
+  StructureJsonParseError,
+  type ParsedStructureJson,
+} from './vanilla_structure_json_parse';
+export {
+  parseVanillaTemplatePool,
+  TemplatePoolParseError,
+  type ParsedTemplatePool,
+  type TemplatePoolEntry,
+} from './vanilla_template_pool_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -259,6 +278,10 @@ export type VanillaFileKind =
   | 'item_modifier_json'
   | 'world_preset_json'
   | 'flat_level_generator_preset_json'
+  | 'configured_feature_json'
+  | 'placed_feature_json'
+  | 'structure_json'
+  | 'template_pool_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -309,6 +332,10 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)worldgen\/world_preset\//.test(n)) return 'world_preset_json';
     if (/(\/|^)worldgen\/flat_level_generator_preset\//.test(n))
       return 'flat_level_generator_preset_json';
+    if (/(\/|^)worldgen\/configured_feature\//.test(n)) return 'configured_feature_json';
+    if (/(\/|^)worldgen\/placed_feature\//.test(n)) return 'placed_feature_json';
+    if (/(\/|^)worldgen\/structure\//.test(n)) return 'structure_json';
+    if (/(\/|^)worldgen\/template_pool\//.test(n)) return 'template_pool_json';
   }
   return 'unknown';
 }

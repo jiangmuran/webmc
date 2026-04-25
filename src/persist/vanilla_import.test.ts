@@ -86,6 +86,18 @@ describe('vanilla_import barrel', () => {
         'data/minecraft/worldgen/flat_level_generator_preset/classic_flat.json',
       ),
     ).toBe('flat_level_generator_preset_json');
+    expect(detectVanillaFileKind('data/minecraft/worldgen/configured_feature/oak.json')).toBe(
+      'configured_feature_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/worldgen/placed_feature/trees_oak.json')).toBe(
+      'placed_feature_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/worldgen/structure/village_plains.json')).toBe(
+      'structure_json',
+    );
+    expect(
+      detectVanillaFileKind('data/minecraft/worldgen/template_pool/village/plains/houses.json'),
+    ).toBe('template_pool_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
