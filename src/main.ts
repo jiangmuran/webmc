@@ -27,9 +27,14 @@ import { ActiveEffectsHud } from './ui/ActiveEffectsHud';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
-import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
+import {
+  CURRENT_SCHEMA_VERSION,
+  type WorldMeta,
+  type PersistedInventory,
+  type PersistedItemStack,
+} from './persist/types';
 import { RoomClient } from './net/RoomClient';
-import { ItemRegistry } from './items/item';
+import { ItemRegistry, type ItemStack } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
@@ -1120,11 +1125,37 @@ const lightOracle = {
 };
 
 const fp = new FirstPersonCamera(camera);
+function restoreStack(p: PersistedItemStack | null): ItemStack | null {
+  if (!p) return null;
+  const id = itemRegistry.byName(p.name);
+  if (id === undefined) return null; // item no longer exists in registry
+  return { itemId: id, count: Math.max(1, p.count), damage: Math.max(0, p.damage) };
+}
+function restoreInventory(snap: PersistedInventory): void {
+  for (let i = 0; i < inventory.hotbar.length; i++) {
+    inventory.hotbar[i] = i < snap.hotbar.length ? restoreStack(snap.hotbar[i] ?? null) : null;
+  }
+  for (let i = 0; i < inventory.main.length; i++) {
+    inventory.main[i] = i < snap.main.length ? restoreStack(snap.main[i] ?? null) : null;
+  }
+  for (let i = 0; i < inventory.armor.length; i++) {
+    inventory.armor[i] = i < snap.armor.length ? restoreStack(snap.armor[i] ?? null) : null;
+  }
+  inventory.offhand = restoreStack(snap.offhand);
+  if (
+    Number.isFinite(snap.selectedHotbar) &&
+    snap.selectedHotbar >= 0 &&
+    snap.selectedHotbar < inventory.hotbar.length
+  ) {
+    inventory.selectedHotbar = snap.selectedHotbar;
+  }
+}
 const savedPlayer = await persistDB.getPlayer(worldMeta.id);
 if (savedPlayer) {
   fp.position.set(savedPlayer.position.x, savedPlayer.position.y, savedPlayer.position.z);
   fp.yaw = savedPlayer.yaw;
   fp.pitch = savedPlayer.pitch;
+  if (savedPlayer.inventory) restoreInventory(savedPlayer.inventory);
 } else {
   const spawnHeight = Math.max(generator.surfaceAt(0, 0), 62) + 4;
   fp.position.set(worldMeta.spawn.x, spawnHeight, worldMeta.spawn.z);
@@ -5420,6 +5451,23 @@ const onUnload = (cx: number, cz: number): void => {
   lightCache.delete(lightKey(cx, cz));
 };
 
+function snapshotStack(stack: ItemStack | null): PersistedItemStack | null {
+  if (!stack) return null;
+  const def = itemRegistry.get(stack.itemId);
+  if (!def) return null;
+  return { name: def.name, count: stack.count, damage: stack.damage };
+}
+
+function snapshotInventory(): PersistedInventory {
+  return {
+    hotbar: inventory.hotbar.map(snapshotStack),
+    main: inventory.main.map(snapshotStack),
+    armor: inventory.armor.map(snapshotStack),
+    offhand: snapshotStack(inventory.offhand),
+    selectedHotbar: inventory.selectedHotbar,
+  };
+}
+
 async function savePlayerNow(): Promise<void> {
   if (!worldMeta) return;
   await persistDB.putPlayer({
@@ -5428,8 +5476,9 @@ async function savePlayerNow(): Promise<void> {
     yaw: fp.yaw,
     pitch: fp.pitch,
     hotbarSlots: [],
-    selectedSlot: 0,
+    selectedSlot: inventory.selectedHotbar,
     updatedAt: Date.now(),
+    inventory: snapshotInventory(),
   });
 }
 
