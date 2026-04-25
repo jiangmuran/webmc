@@ -34,6 +34,7 @@ import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budge
 import { kindFor as kindForWeather } from './engine/weather_particles';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
+import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -2022,6 +2023,30 @@ function frame(): void {
     }
     if (touch.state.jump) fp.input.jump = true;
   }
+
+  // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
+  // applies when no menus are open and the player is not in chat.
+  if (typeof navigator.getGamepads === 'function' && !chatInput.isOpen() && !pauseMenu.isVisible()) {
+    const pads = navigator.getGamepads();
+    const pad = pads ? Array.from(pads).find((p) => p && p.connected) : null;
+    if (pad) {
+      const intent = gamepadToIntent({
+        axes: [pad.axes[0] ?? 0, pad.axes[1] ?? 0, pad.axes[2] ?? 0, pad.axes[3] ?? 0],
+        buttons: pad.buttons.map((b) => b.pressed),
+      });
+      if (intent.forward !== 0 || intent.strafe !== 0) {
+        fp.input.forward = intent.forward;
+        fp.input.strafe = intent.strafe;
+      }
+      if (intent.jump) fp.input.jump = true;
+      if (intent.sneak) fp.input.sneak = true;
+      const lookSens = 0.04;
+      fp.yaw -= intent.look.yaw * lookSens;
+      fp.pitch -= intent.look.pitch * lookSens;
+      fp.pitch = Math.max(-Math.PI / 2 + 0.001, Math.min(Math.PI / 2 - 0.001, fp.pitch));
+    }
+  }
+
   fp.update(dtSec, { isSolid, isFluid, isClimbable });
   if (touch) {
     if (touch.state.primary) {
