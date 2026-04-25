@@ -155,6 +155,18 @@ export {
   type ChatTypeParameter,
 } from './vanilla_chat_type_parse';
 export { parseVanillaSplashes, pickSplash, type ParsedSplashes } from './vanilla_splashes_parse';
+export {
+  parseVanillaPaintingVariant,
+  PaintingVariantParseError,
+  type ParsedPaintingVariant,
+} from './vanilla_painting_variant_parse';
+export {
+  parseVanillaTrimPattern,
+  parseVanillaTrimMaterial,
+  TrimParseError,
+  type ParsedTrimPattern,
+  type ParsedTrimMaterial,
+} from './vanilla_trim_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -179,6 +191,9 @@ export type VanillaFileKind =
   | 'damage_type_json'
   | 'chat_type_json'
   | 'splashes_txt'
+  | 'painting_variant_json'
+  | 'trim_pattern_json'
+  | 'trim_material_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -211,6 +226,9 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)enchantment\//.test(n)) return 'enchantment_json';
     if (/(\/|^)damage_type\//.test(n)) return 'damage_type_json';
     if (/(\/|^)chat_type\//.test(n)) return 'chat_type_json';
+    if (/(\/|^)painting_variant\//.test(n)) return 'painting_variant_json';
+    if (/(\/|^)trim_pattern\//.test(n)) return 'trim_pattern_json';
+    if (/(\/|^)trim_material\//.test(n)) return 'trim_material_json';
   }
   return 'unknown';
 }

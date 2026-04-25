@@ -47,6 +47,15 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('data/minecraft/damage_type/drown.json')).toBe('damage_type_json');
     expect(detectVanillaFileKind('data/minecraft/chat_type/chat.json')).toBe('chat_type_json');
     expect(detectVanillaFileKind('assets/minecraft/texts/splashes.txt')).toBe('splashes_txt');
+    expect(detectVanillaFileKind('data/minecraft/painting_variant/bust.json')).toBe(
+      'painting_variant_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/trim_pattern/sentry.json')).toBe(
+      'trim_pattern_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/trim_material/iron.json')).toBe(
+      'trim_material_json',
+    );
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
