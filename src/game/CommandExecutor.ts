@@ -37,6 +37,7 @@ export interface CommandContext {
   listGameRules?: () => Record<string, boolean>;
   biomeAt?: (x: number, z: number) => string;
   findBlock?: (name: string, radius: number) => { x: number; y: number; z: number; dist: number } | null;
+  findMob?: (kind: string) => { x: number; y: number; z: number; dist: number } | null;
 }
 
 let lastTpFrom: { x: number; y: number; z: number } | null = null;
@@ -72,6 +73,23 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       `Pos ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`,
       '#cccccc',
     );
+    return;
+  }
+  if (head === 'findmob') {
+    const kind = args[0];
+    if (!kind || !ctx.findMob) {
+      ctx.broadcast('Usage: /findmob <kind>', '#ff8080');
+      return;
+    }
+    const hit = ctx.findMob(kind);
+    if (hit) {
+      ctx.broadcast(
+        `Nearest ${kind}: ${hit.x.toFixed(0)} ${hit.y.toFixed(0)} ${hit.z.toFixed(0)} (${hit.dist.toFixed(1)}m)`,
+        '#80ff80',
+      );
+    } else {
+      ctx.broadcast(`No ${kind} loaded`, '#ff8080');
+    }
     return;
   }
   if (head === 'find') {
