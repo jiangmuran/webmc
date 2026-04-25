@@ -860,6 +860,82 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'sphere') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '5', 10);
+    const block = args[1] ?? 'stone';
+    if (!Number.isFinite(r) || r < 1 || r > 32) {
+      ctx.broadcast('Usage: /sphere <radius=5> [block=stone]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dy = -r; dy <= r; dy++) {
+      for (let dz = -r; dz <= r; dz++) {
+        for (let dx = -r; dx <= r; dx++) {
+          if (dx * dx + dy * dy + dz * dz <= r * r) {
+            if (ctx.setBlock(px + dx, py + dy, pz + dz, block)) n++;
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Sphere of ${block} radius ${String(r)} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'cube') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '5', 10);
+    const block = args[1] ?? 'stone';
+    if (!Number.isFinite(r) || r < 1 || r > 32) {
+      ctx.broadcast('Usage: /cube <half-size=5> [block=stone]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px - r, py - r, pz - r, px + r, py + r, pz + r, block);
+    ctx.broadcast(`Cube of ${block} half=${String(r)} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'platform') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '8', 10);
+    const block = args[1] ?? 'stone';
+    if (!Number.isFinite(r) || r < 1 || r > 64) {
+      ctx.broadcast('Usage: /platform <half-size=8> [block=stone]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) - 1;
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(px - r, py, pz - r, px + r, py, pz + r, block);
+    ctx.broadcast(`Platform of ${block} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'portal' || head === 'netherportal') {
+    if (!ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 4-wide × 5-tall obsidian frame on +Z, fill with nether_portal blocks.
+    for (let h = 0; h < 5; h++) {
+      ctx.setBlock(px, py + h, pz, 'obsidian');
+      ctx.setBlock(px + 3, py + h, pz, 'obsidian');
+    }
+    for (let w = 0; w < 4; w++) {
+      ctx.setBlock(px + w, py, pz, 'obsidian');
+      ctx.setBlock(px + w, py + 4, pz, 'obsidian');
+    }
+    for (let h = 1; h < 4; h++) {
+      for (let w = 1; w < 3; w++) {
+        ctx.setBlock(px + w, py + h, pz, 'nether_portal');
+      }
+    }
+    ctx.broadcast('Nether portal frame built (lit).', '#80ff80');
+    return;
+  }
   if (head === 'tower') {
     if (!ctx.fillBlocks) return;
     const px = Math.floor(ctx.playerPos.x);
