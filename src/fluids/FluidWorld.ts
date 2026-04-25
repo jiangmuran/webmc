@@ -73,8 +73,22 @@ export class FluidWorld {
           changed.push(p);
         }
       } else {
-        this.world.set(p.x, p.y, p.z, this.blockStateFor(cell.kind));
-        changed.push(p);
+        // Don't overwrite a non-fluid block. If the player placed stone
+        // where a flowing water cell was previously registered, the cell
+        // map still iterates that position; without this guard, the next
+        // tick would re-spawn water on top of the stone. Drop the cell
+        // from the map instead.
+        const here = this.world.get(p.x, p.y, p.z);
+        const sameFluid = here === this.blockStateFor(cell.kind);
+        const placeable = here === AIR || sameFluid;
+        if (!placeable) {
+          this.cells.delete(k);
+          continue;
+        }
+        if (!sameFluid) {
+          this.world.set(p.x, p.y, p.z, this.blockStateFor(cell.kind));
+          changed.push(p);
+        }
       }
     }
     return { stabilized, changed };
