@@ -1589,6 +1589,32 @@ const interaction = new InteractionController(
           return true;
         }
       }
+      // Plant crops on farmland: seeds/carrot/potato/beetroot_seeds with farmland target → place crop block above.
+      if (def.name === 'webmc:farmland' && airAbove) {
+        const PLANT_MAP: Record<string, string> = {
+          wheat_seeds: 'webmc:wheat',
+          beetroot_seeds: 'webmc:beetroots',
+          carrot: 'webmc:carrots',
+          potato: 'webmc:potatoes',
+          torchflower_seeds: 'webmc:torchflower_crop',
+          pitcher_pod: 'webmc:pitcher_crop',
+        };
+        const cropName = PLANT_MAP[heldName];
+        if (cropName !== undefined) {
+          const cropId = registry.byName(cropName);
+          if (cropId !== undefined) {
+            world.set(bx, by + 1, bz, makeState(cropId, 0));
+            touchWorldEdit(bx, by + 1, bz, cropId);
+            if (gameMode === 'survival' || gameMode === 'adventure') {
+              const itemId = itemRegistry.byName(`webmc:${heldName}`);
+              if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+            }
+            sfx.play('place');
+            subtitles.push(`Planted ${heldName}`);
+            return true;
+          }
+        }
+      }
       // Bone meal on sapling: 50% advance growth → instant tree (simplified: replace sapling with 4-tall log+leaves).
       if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
         const wood = def.name.replace('webmc:', '').replace('_sapling', '');
