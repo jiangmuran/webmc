@@ -1392,6 +1392,58 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Pillar of ${String(h)} ${block}`, '#80ff80');
     return;
   }
+  if (head === 'road') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(120, parseInt(args[0] ?? '40', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Gravel path 3 wide with grass shoulder.
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'gravel');
+    ctx.fillBlocks(px - 2, py - 1, pz, px - 2, py - 1, pz + len - 1, 'grass_block');
+    ctx.fillBlocks(px + 2, py - 1, pz, px + 2, py - 1, pz + len - 1, 'grass_block');
+    // Lantern posts every 8 blocks.
+    for (let i = 4; i < len; i += 8) {
+      ctx.setBlock(px - 3, py, pz + i, 'oak_fence');
+      ctx.setBlock(px - 3, py + 1, pz + i, 'lantern');
+      ctx.setBlock(px + 3, py, pz + i, 'oak_fence');
+      ctx.setBlock(px + 3, py + 1, pz + i, 'lantern');
+    }
+    ctx.broadcast(`Built ${String(len)}-block road along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'tunnel') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(120, parseInt(args[0] ?? '40', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3 wide × 3 tall opening with torch every 6 blocks.
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py + 2, pz + len - 1, 'air');
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'cobblestone');
+    for (let i = 2; i < len; i += 6) ctx.setBlock(px - 1, py + 2, pz + i, 'torch');
+    ctx.broadcast(`Cleared ${String(len)}-block tunnel along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'aquarium') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×5×7 glass tank filled with water + a few coral.
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 4, pz + 3, 'glass');
+    ctx.fillBlocks(px - 2, py + 1, pz - 2, px + 2, py + 3, pz + 2, 'water');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py, pz + 2, 'sand');
+    if (ctx.summon) {
+      for (let i = 0; i < 4; i++) ctx.summon('cod', px - 1 + i, py + 2, pz);
+    }
+    ctx.setBlock(px - 1, py, pz - 1, 'tube_coral_block');
+    ctx.setBlock(px + 1, py, pz + 1, 'fire_coral_block');
+    ctx.setBlock(px + 1, py, pz - 1, 'horn_coral_block');
+    ctx.setBlock(px - 1, py, pz + 1, 'brain_coral_block');
+    ctx.broadcast('Built 7×5×7 aquarium with sand and coral', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
