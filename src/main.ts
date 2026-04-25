@@ -56,6 +56,7 @@ import { Weather as WeatherCycle } from './world/weather';
 import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
 import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
 import { frictionFor as blockFriction } from './physics/ice_slip_friction';
+import { requiredLevelFor as requiredMiningLevel } from './items/tool_tier';
 import { loadPack as loadDatapack, type DataPack } from './datapack/DataPack';
 import { createManifest as createExportManifest } from './persist/webmc_export_zip';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
@@ -910,7 +911,19 @@ const interaction = new InteractionController(
         const xp = oreXp(def.name);
         if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
       }
-      const drops = gameRules.doTileDrops ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
+      // Tool tier check: ores require correct mining level or no drops.
+      const blockShortName = def.name.replace(/^webmc:/, '');
+      const requiredLevel = requiredMiningLevel(blockShortName);
+      let toolLevel = 1;
+      const heldNameForTool = hotbar.selected?.name.toLowerCase() ?? '';
+      if (heldNameForTool.includes('netherite')) toolLevel = 5;
+      else if (heldNameForTool.includes('diamond')) toolLevel = 4;
+      else if (heldNameForTool.includes('iron')) toolLevel = 3;
+      else if (heldNameForTool.includes('stone')) toolLevel = 2;
+      else if (heldNameForTool.includes('wood') || heldNameForTool.includes('gold')) toolLevel = 1;
+      else toolLevel = 0; // bare hand
+      const dropsAllowed = (gameMode === 'creative') || (toolLevel >= requiredLevel);
+      const drops = (gameRules.doTileDrops && dropsAllowed) ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
       if (gameMode === 'survival' || gameMode === 'adventure') {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
