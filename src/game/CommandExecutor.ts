@@ -1142,6 +1142,41 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'totem' || head === 'undying') {
+    if (!ctx.giveItem) return;
+    ctx.giveItem('totem_of_undying', 1);
+    ctx.broadcast('Totem of Undying given (held = revive on lethal damage)', '#80ff80');
+    return;
+  }
+  if (head === 'meme' || head === 'noob') {
+    const memes = [
+      '⛏ Mining diamonds at y=12 with stone pickaxe',
+      '🐺 Why is your wolf staring at me',
+      '💀 Creeper landed in your house. Sorry.',
+      '🐉 Just punch it harder',
+      '🌋 Lava bucket = portable hot tub',
+      '🎣 Fishing rod = best mob mover',
+    ];
+    const m = memes[Math.floor(Math.random() * memes.length)] ?? '';
+    ctx.broadcast(m, '#ffd080');
+    return;
+  }
+  if (head === 'tipoftheday' || head === 'tip') {
+    const TIPS = [
+      'Press F3 to see coordinates and chunk info.',
+      'Right-click a sapling with bone meal to grow a tree instantly.',
+      'Walk away from a lit jukebox to silence the music.',
+      'Use /village to drop a starter house anywhere.',
+      'Trident with rain or water = riptide propulsion.',
+      'Sponge sucks up water in a 5×5×5 cube.',
+      'Bone meal on grass spawns flowers + tall grass.',
+      'Pressing B at night sleeps through to dawn.',
+      'Splash potions hit mobs in a 4-block AoE.',
+      'Type /test to run a 10-check sanity scan.',
+    ];
+    ctx.broadcast(`💡 ${TIPS[Math.floor(Math.random() * TIPS.length)] ?? ''}`, '#80a0ff');
+    return;
+  }
   if (head === 'kits' || head === 'listkits') {
     ctx.broadcast('Kits: starter, iron, diamond, netherite, mage, builder', '#cccccc');
     ctx.broadcast('Use /kit <name> to get one.', '#cccccc');

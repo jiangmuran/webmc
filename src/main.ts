@@ -4521,6 +4521,12 @@ const chatInput = new ChatInput(appEl, {
       '/enchantments',
       '/effects',
       '/allbuffs',
+      '/totem',
+      '/undying',
+      '/meme',
+      '/noob',
+      '/tipoftheday',
+      '/tip',
     ];
     return SLASH_CMDS;
   },
