@@ -41,6 +41,7 @@ import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
 import { screenshotFilename } from './game/screenshot_capture';
+import { TpsTracker } from './game/server_tps_metric';
 
 const MOON_GLYPHS = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔'];
 import { TutorialState, type HintId } from './game/tutorial_first_night';
@@ -684,6 +685,7 @@ const weatherCycle = new WeatherCycle(Math.random, {
   thunderMaxSec: 90,
 });
 const fpsStats = makeFpsStats(120);
+const tpsTracker = new TpsTracker(100);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
 const moodState = makeMoodState();
@@ -1322,6 +1324,12 @@ const chatInput = new ChatInput(appEl, {
         toggleScoreboard: () => scoreboard.toggle(),
         setTickFrozen: (frozen) => { tickFrozen = frozen; },
         isTickFrozen: () => tickFrozen,
+        getTpsStats: () => ({
+          tps: tpsTracker.tps(),
+          p50ms: tpsTracker.percentile(0.5),
+          p95ms: tpsTracker.percentile(0.95),
+          lagging: tpsTracker.isLagging(),
+        }),
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1549,7 +1557,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps',
     ];
     return SLASH_CMDS;
   },
@@ -2375,6 +2383,7 @@ const onLoad = (cx: number, cz: number): void => {
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
+  tpsTracker.pushMspt(stats.frameMs);
   currentTickCount++;
   const afkOn = isAfk({ lastInputTick, currentTick: currentTickCount, idleKickEnabled: false });
   if (afkOn !== (afkBadge.style.display === 'block')) {

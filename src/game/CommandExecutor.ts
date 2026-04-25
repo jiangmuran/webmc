@@ -29,6 +29,7 @@ export interface CommandContext {
   toggleGyro?: () => boolean;
   setTickFrozen?: (frozen: boolean) => void;
   isTickFrozen?: () => boolean;
+  getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -336,6 +337,19 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast('Usage: /tick <freeze|unfreeze|status>', '#ff8080');
     }
+    return;
+  }
+  if (head === 'tps') {
+    const s = ctx.getTpsStats?.();
+    if (!s) {
+      ctx.broadcast('TPS unavailable.', '#ff8080');
+      return;
+    }
+    const color = s.lagging ? '#ff8080' : '#80ff80';
+    ctx.broadcast(
+      `TPS ${s.tps.toFixed(1)} (target 20)  MSPT p50=${s.p50ms.toFixed(1)} p95=${s.p95ms.toFixed(1)}${s.lagging ? '  ⚠ lagging' : ''}`,
+      color,
+    );
     return;
   }
   if (head === 'scoreboard' || head === 'sb') {
