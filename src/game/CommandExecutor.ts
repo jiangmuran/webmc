@@ -1505,6 +1505,73 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Cleared floor (r=${String(r)}, ${String(n)} cells)`, '#80ff80');
     return;
   }
+  if (head === 'wall') {
+    if (!ctx.fillBlocks) return;
+    const len = Math.max(2, Math.min(80, parseInt(args[0] ?? '20', 10)));
+    const h = Math.max(2, Math.min(20, parseInt(args[1] ?? '4', 10)));
+    const block = args[2] ?? 'cobblestone';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px, py, pz, px, py + h - 1, pz + len - 1, block);
+    ctx.broadcast(`Wall: ${String(len)}×${String(h)} ${block} along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'dome') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(3, Math.min(16, parseInt(args[0] ?? '6', 10)));
+    const block = args[1] ?? 'glass';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dy = 0; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        for (let dz = -r; dz <= r; dz++) {
+          const d = dx * dx + dy * dy + dz * dz;
+          if (d <= r * r && d >= (r - 1) * (r - 1)) {
+            ctx.setBlock(px + dx, py + dy, pz + dz, block);
+            n++;
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Dome: r=${String(r)} ${block} (${String(n)} cells)`, '#80ff80');
+    return;
+  }
+  if (head === 'barn') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×7 oak barn with hay loft + 4 stalls + animals.
+    ctx.fillBlocks(px - 4, py, pz - 3, px + 4, py + 5, pz + 3, 'oak_planks');
+    ctx.fillBlocks(px - 3, py, pz - 2, px + 3, py + 3, pz + 2, 'air'); // hollow ground floor
+    ctx.fillBlocks(px - 3, py + 4, pz - 2, px + 3, py + 4, pz + 2, 'oak_planks'); // loft floor
+    ctx.fillBlocks(px - 3, py + 5, pz - 2, px + 3, py + 5, pz + 2, 'air'); // loft space
+    // Hay loft.
+    ctx.fillBlocks(px - 3, py + 5, pz + 1, px + 3, py + 5, pz + 2, 'hay_block');
+    // Stall fences.
+    for (let i = -3; i <= 3; i += 2) {
+      ctx.setBlock(px + i, py + 1, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 2, pz - 1, 'oak_fence');
+    }
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    // Roof gable.
+    for (let i = 0; i <= 3; i++) {
+      ctx.fillBlocks(px - 4 + i, py + 6 + i, pz - 3, px + 4 - i, py + 6 + i, pz + 3, 'oak_planks');
+    }
+    // Animals.
+    const ANIMALS = ['cow', 'pig', 'sheep', 'chicken'];
+    for (let i = 0; i < ANIMALS.length; i++) {
+      const a = ANIMALS[i] ?? 'cow';
+      ctx.summon(a, px - 2 + i * 2, py + 1, pz);
+    }
+    ctx.broadcast('Built barn with hay loft and 4 animals', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
