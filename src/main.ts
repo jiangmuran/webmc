@@ -7585,12 +7585,23 @@ function frame(): void {
   }
 
   // Autosave debouncer: 30s interval OR 64-edit threshold OR forced.
+  // Old impl only flushed chunkStore — player position, vitals, inventory,
+  // time of day, etc. relied on visibilitychange / beforeunload, so a
+  // browser crash mid-session would lose them. Now flushes the full set
+  // every autosave window (matching what /save does).
   const nowSaveMs = performance.now();
   if (
     shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
     shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })
   ) {
     beginSave(autosaveState, nowSaveMs);
+    void savePlayerNow();
+    void saveAllChestStorages();
+    void persistDB.setMeta('playerStats', playerStats);
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    void persistDB.setMeta('dayCounter', dayCounter);
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+    saveHotbarIfChanged();
     void chunkStore.flush().finally(() => {
       endSave(autosaveState);
     });
