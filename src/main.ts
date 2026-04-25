@@ -18,6 +18,7 @@ import {
 } from './world/workers/MesherClient';
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
+import { SubtitleView } from './ui/SubtitleView';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -311,6 +312,7 @@ const spawnSystem = new SpawnSystem();
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
 const crosshair = new Crosshair(appEl);
+const subtitles = new SubtitleView(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -488,6 +490,7 @@ const interaction = new InteractionController(
       const prevState = world.get(bx, by, bz);
       const prevBlockId = stateId(prevState);
       const def = registry.get(prevBlockId);
+      subtitles.push(`Block broken: ${def.name.replace(/^webmc:/, '')}`);
       blockParticles.emitBreak(bx, by, bz, def.color);
       // Mining XP for ores (matches MC: coal 0-2, iron 0 via smelt, diamond 3-7, redstone 1-5, lapis 2-5, emerald 3-7).
       if (gameMode === 'survival' || gameMode === 'adventure') {
@@ -517,6 +520,7 @@ const interaction = new InteractionController(
       const blockId = sel ? stateId(sel.state) : 0;
       if (sel) {
         const def = registry.get(stateId(sel.state));
+        subtitles.push(`Block placed: ${def.name.replace(/^webmc:/, '')}`);
         blockParticles.emitPlace(bx, by, bz, def.color);
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const itemId = itemRegistry.byName(def.name);
@@ -2162,7 +2166,9 @@ function frame(): void {
     hurtVignette.pulse(Math.min(0.95, 0.35 + delta * 0.08));
     screenShake.pulse(Math.min(1, 0.2 + delta * 0.1));
     sfx.play('hit');
+    subtitles.push('Player hurt');
   }
+  subtitles.tick();
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
