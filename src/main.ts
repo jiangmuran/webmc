@@ -80,6 +80,7 @@ import { MobWorld, MOB_DEFS } from './entities/mob';
 import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
 import { feed as animalFeed, isInLove, onBreedComplete, canBreed, type AnimalLove } from './entities/animal_breed_love';
 import { canLeash, tensionStep } from './entities/leash_tether';
+import { tick as babyTick, growFraction, type BabyState } from './game/baby_grow_speedup';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -546,6 +547,7 @@ const tamedMobs = new Map<number, TameableState>();
 const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
 const lovingMobs = new Map<number, AnimalLove>();
 const leashedMobs = new Set<number>();
+const babyMobs = new Map<number, BabyState>();
 let worldTick = 0;
 const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
@@ -3722,6 +3724,20 @@ function frame(): void {
 
   if (!tickFrozen) {
     worldTick += Math.max(1, Math.round(dtSec * 20));
+    if (babyMobs.size > 0) {
+      const ticksThisFrame = Math.max(1, Math.round(dtSec * 20));
+      for (const [id, st] of babyMobs) {
+        let next = st;
+        for (let i = 0; i < ticksThisFrame; i++) next = babyTick(next);
+        if (!next.isBaby) {
+          babyMobs.delete(id);
+          mobRenderer.setMobScale(id, 1);
+        } else {
+          babyMobs.set(id, next);
+          mobRenderer.setMobScale(id, 0.5 + 0.5 * growFraction(next));
+        }
+      }
+    }
     if (leashedMobs.size > 0) {
       const anchor = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
       const allMobs = [...mobWorld.all()];
@@ -3772,7 +3788,9 @@ function frame(): void {
           const midx = (a.mob.position.x + b.mob.position.x) * 0.5;
           const midy = (a.mob.position.y + b.mob.position.y) * 0.5;
           const midz = (a.mob.position.z + b.mob.position.z) * 0.5;
-          mobWorld.spawn(a.mob.def.kind, { x: midx, y: midy, z: midz });
+          const baby = mobWorld.spawn(a.mob.def.kind, { x: midx, y: midy, z: midz });
+          babyMobs.set(baby.id, { ageTicks: 0, isBaby: true });
+          mobRenderer.setMobScale(baby.id, 0.5);
           xpOrbs.spawn(midx, midy + 0.5, midz, 1 + Math.floor(Math.random() * 7));
           chatInput.addLine(`A baby ${a.mob.def.kind} was born!`, '#ff80c0');
           break;

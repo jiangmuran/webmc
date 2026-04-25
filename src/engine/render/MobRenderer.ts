@@ -121,6 +121,12 @@ export class MobRenderer {
   private readonly bodyGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly customNames = new Map<number, string>();
+  private readonly customScales = new Map<number, number>();
+
+  setMobScale(mobId: number, scale: number): void {
+    if (Math.abs(scale - 1) < 0.001) this.customScales.delete(mobId);
+    else this.customScales.set(mobId, scale);
+  }
   showNameplates = true;
 
   setMobName(mobId: number, name: string): void {
@@ -224,7 +230,7 @@ export class MobRenderer {
         vis.group.rotation.z = (1 - s) * Math.PI * 0.6;
         vis.group.rotation.x = 0;
       } else {
-        vis.group.scale.setScalar(1);
+        vis.group.scale.setScalar(this.customScales.get(mob.id) ?? 1);
         vis.group.rotation.z = 0;
         // Walk bob: lean forward/back based on horizontal velocity magnitude.
         const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
@@ -301,6 +307,8 @@ export class MobRenderer {
       vis.nameMat.dispose();
       this.group.remove(vis.group);
       this.visuals.delete(id);
+      this.customNames.delete(id);
+      this.customScales.delete(id);
     }
   }
 
