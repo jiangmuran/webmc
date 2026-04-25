@@ -2685,7 +2685,17 @@ function frame(): void {
 
   if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure')) {
     const slowFalling = playerState.effects.has('slow_falling');
-    const dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
+    const fx = Math.floor(fp.position.x);
+    const fy = Math.floor(fp.position.y - 1.05);
+    const fz = Math.floor(fp.position.z);
+    const landDef = registry.get(stateId(world.get(fx, fy, fz)));
+    if (landDef.name === 'webmc:hay_block' || landDef.name === 'webmc:honey_block') {
+      dmg = Math.floor(dmg * 0.2);
+    } else if (landDef.name === 'webmc:slime_block') {
+      dmg = 0;
+    }
     if (dmg > 0) playerState.takeDamage({ amount: dmg, source: 'fall' });
   }
   fp.lastLandFallBlocks = 0;
