@@ -27,6 +27,8 @@ export interface CommandContext {
   sortInventory?: () => void;
   toggleScoreboard?: () => boolean;
   toggleGyro?: () => boolean;
+  copyToClipboard?: (text: string) => Promise<boolean>;
+  getRoomCode?: () => string | null;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
   fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
@@ -321,6 +323,27 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'gyro' || head === 'tilt') {
     const on = ctx.toggleGyro?.() ?? false;
     ctx.broadcast(`Gyro look ${on ? 'on' : 'off'}`, '#80ff80');
+    return;
+  }
+  if (head === 'copy') {
+    const what = (args[0] ?? 'pos').toLowerCase();
+    let text: string | null = null;
+    if (what === 'pos' || what === 'xyz') {
+      text = `${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`;
+    } else if (what === 'seed' && ctx.seed) {
+      text = String(ctx.seed());
+    } else if (what === 'room' && ctx.getRoomCode) {
+      text = ctx.getRoomCode();
+    } else if (what === 'name' && ctx.playerName) {
+      text = ctx.playerName;
+    }
+    if (text === null) {
+      ctx.broadcast('Usage: /copy <pos|seed|room|name>', '#ff8080');
+      return;
+    }
+    void (ctx.copyToClipboard?.(text) ?? Promise.resolve(false)).then((ok) => {
+      ctx.broadcast(ok ? `Copied: ${text}` : 'Copy failed (clipboard blocked)', ok ? '#80ff80' : '#ff8080');
+    });
     return;
   }
   if (head === 'stats') {

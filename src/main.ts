@@ -41,6 +41,7 @@ import { phaseOfDay } from './game/time_format_day_count';
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
 import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
+import { BROWSER_CLIPBOARD } from './game/clipboard_util';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -1199,6 +1200,8 @@ const chatInput = new ChatInput(appEl, {
           }
           return gyroState.enabled;
         },
+        copyToClipboard: (text) => BROWSER_CLIPBOARD.writeText(text),
+        getRoomCode: () => roomCode ?? null,
         setBlock: (x, y, z, name) => {
           const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const id = registry.byName(full);
@@ -1393,7 +1396,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy',
     ];
     return SLASH_CMDS;
   },
