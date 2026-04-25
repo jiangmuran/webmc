@@ -31,6 +31,7 @@ export interface CommandContext {
   isTickFrozen?: () => boolean;
   getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
   getLastDeathPos?: () => { x: number; y: number; z: number } | null;
+  renameLookedAtMob?: (name: string) => string | null;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -352,6 +353,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Teleported to last death @ ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#80ff80');
     } else {
       ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
+    }
+    return;
+  }
+  if (head === 'rename' || head === 'nametag') {
+    const name = args.join(' ').trim();
+    if (!name || !ctx.renameLookedAtMob) {
+      ctx.broadcast('Usage: /rename <name> (look at a mob)', '#ff8080');
+      return;
+    }
+    const kind = ctx.renameLookedAtMob(name);
+    if (kind) {
+      ctx.broadcast(`Renamed ${kind} to "${name}"`, '#80ff80');
+    } else {
+      ctx.broadcast('No mob in reach.', '#ff8080');
     }
     return;
   }

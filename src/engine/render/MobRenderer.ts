@@ -120,7 +120,18 @@ export class MobRenderer {
   private readonly visuals = new Map<number, MobVisual>();
   private readonly bodyGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
+  private readonly customNames = new Map<number, string>();
   showNameplates = true;
+
+  setMobName(mobId: number, name: string): void {
+    this.customNames.set(mobId, name);
+    const vis = this.visuals.get(mobId);
+    if (vis) {
+      vis.nameMat.map?.dispose();
+      vis.nameMat.map = makeNameTexture(name);
+      vis.nameMat.needsUpdate = true;
+    }
+  }
 
   constructor() {
     this.group.name = 'webmc-mob-group';
@@ -188,8 +199,9 @@ export class MobRenderer {
         hpBar.scale.set(1.2, 0.15, 1);
         hpBar.position.set(0, mob.def.aabb.halfY + 0.6, 0);
         group.add(hpBar);
+        const nameLabel = this.customNames.get(mob.id) ?? mob.def.kind;
         const nameMat = new THREE.SpriteMaterial({
-          map: makeNameTexture(mob.def.kind),
+          map: makeNameTexture(nameLabel),
           transparent: true,
           depthTest: false,
           depthWrite: false,

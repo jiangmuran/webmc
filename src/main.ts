@@ -1342,6 +1342,25 @@ const chatInput = new ChatInput(appEl, {
           lagging: tpsTracker.isLagging(),
         }),
         getLastDeathPos: () => lastDeathPos,
+        renameLookedAtMob: (name) => {
+          const aimLook = fp.lookVector();
+          const reach = 6;
+          let best: { mob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M : never; dist: number } | null = null;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - camera.position.x;
+            const dy = m.position.y - camera.position.y;
+            const dz = m.position.z - camera.position.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > reach + 1) continue;
+            const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+            if (dot > 0.97 && (!best || d < best.dist)) {
+              best = { mob: m, dist: d };
+            }
+          }
+          if (!best) return null;
+          mobRenderer.setMobName(best.mob.id, name);
+          return best.mob.def.kind;
+        },
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1569,7 +1588,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag',
     ];
     return SLASH_CMDS;
   },
