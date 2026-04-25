@@ -44,6 +44,7 @@ import { makeMoodState, tickMood } from './game/daytime_mood';
 import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
 import { BROWSER_CLIPBOARD } from './game/clipboard_util';
 import { canSpawnPhantom } from './entities/phantom_day_despawn';
+import { Weather as WeatherCycle } from './world/weather';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -626,6 +627,14 @@ void persistDB.getMeta('playerStats').then((saved) => {
 let statsSaveAccum = 0;
 let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
+const weatherCycle = new WeatherCycle(Math.random, {
+  clearMinSec: 600,
+  clearMaxSec: 1500,
+  rainMinSec: 120,
+  rainMaxSec: 300,
+  thunderMinSec: 30,
+  thunderMaxSec: 90,
+});
 const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
@@ -2458,6 +2467,13 @@ function frame(): void {
       weatherTimer = 180 + Math.random() * 240;
     }
   }
+  // Auto weather cycle (only if user hasn't manually set "clear" recently — we let the natural cycle run).
+  const weatherChanged = weatherCycle.tick(dtSec);
+  if (weatherChanged && currentWeather !== weatherChanged) {
+    setWeather(weatherChanged);
+    chatInput.addLine(`Weather changes to ${weatherChanged}.`, '#a8c8ff');
+  }
+
   if (currentWeather === 'thunder') {
     lightningTimer -= dtSec;
     if (lightningTimer <= 0) {
