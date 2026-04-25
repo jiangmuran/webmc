@@ -336,6 +336,7 @@ let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather ro
 let autoWeatherEnabled = true;
 let minimapVisible = true;
 let mobDamageMultiplier = 1;
+let currentPlayerName = 'Player';
 void persistDB.getMeta('difficulty').then((saved) => {
   if (saved === 'peaceful') mobDamageMultiplier = 0;
   else if (saved === 'easy') mobDamageMultiplier = 0.5;
@@ -734,6 +735,7 @@ const chatInput = new ChatInput(appEl, {
         broadcast: (line, color) => { chatInput.addLine(line, color); },
         knownGameModes: ['survival', 'creative', 'adventure', 'spectator'] as const,
         knownItems: [],
+        playerName: currentPlayerName,
         heal: () => {
           playerState.heal(20);
           playerState.eat(20, 5);
@@ -917,7 +919,8 @@ const settingsPanel = new SettingsPanel(appEl, {
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
     if (v.showCrosshair) crosshair.show(); else crosshair.hide();
-    playerAvatar.setName(v.playerName.trim() || 'Player');
+    currentPlayerName = v.playerName.trim() || 'Player';
+    playerAvatar.setName(currentPlayerName);
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);

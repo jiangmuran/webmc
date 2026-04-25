@@ -26,6 +26,7 @@ export interface CommandContext {
   particle?: (x: number, y: number, z: number) => void;
   listAchievements?: () => ReadonlyArray<{ title: string; unlocked: boolean }>;
   setDifficulty?: (level: 'peaceful' | 'easy' | 'normal' | 'hard') => void;
+  playerName?: string;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -39,7 +40,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'me') {
     const action = args.join(' ');
-    if (action) ctx.broadcast(`* You ${action}`, '#cccccc');
+    if (action) ctx.broadcast(`* ${ctx.playerName ?? 'You'} ${action}`, '#cccccc');
+    return;
+  }
+  if (head === 'list') {
+    ctx.broadcast(`Players online: 1 (${ctx.playerName ?? 'Player'})`, '#cccccc');
+    return;
+  }
+  if (head === 'whoami') {
+    ctx.broadcast(`You are ${ctx.playerName ?? 'Player'}`, '#cccccc');
     return;
   }
   if (head === 'help') {
