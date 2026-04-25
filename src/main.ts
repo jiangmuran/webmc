@@ -2703,6 +2703,16 @@ const chatInput = new ChatInput(appEl, {
           mobRenderer.setMobName(best.mob.id, `♥ ${kind}`);
           return { kind, loved: true, itemUsed: heldName.replace(/^webmc:/, '') };
         },
+        toggleZoom: (factor) => {
+          const baseFov = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
+          fp.setBaseFov(baseFov === 70 || factor >= 0.99 ? 70 : 70);
+          // Use effect-fov-boost slot for negative offset (zoom narrows fov).
+          const targetBoost = factor >= 0.99 ? 0 : -baseFov * (1 - factor);
+          fp.setEffectFovBoost(targetBoost);
+        },
+        setWalkSpeed: (mul) => {
+          fp.speedMultiplier = mul;
+        },
         toggleSitLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -2956,7 +2966,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed',
     ];
     return SLASH_CMDS;
   },

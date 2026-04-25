@@ -34,6 +34,8 @@ export interface CommandContext {
   renameLookedAtMob?: (name: string) => string | null;
   tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
   toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
+  toggleZoom?: (factor: number) => void;
+  setWalkSpeed?: (mul: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -871,6 +873,31 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const y = args[1] !== undefined ? parseCoord(args[1], ctx.playerPos.y) : ctx.playerPos.y;
     const z = args[2] !== undefined ? parseCoord(args[2], ctx.playerPos.z) : ctx.playerPos.z;
     ctx.particle?.(x, y, z);
+    return;
+  }
+  if (head === 'zoom') {
+    if (!ctx.toggleZoom) return;
+    const factor = parseFloat(args[0] ?? '0.5');
+    if (!Number.isFinite(factor) || factor < 0.1 || factor > 1) {
+      ctx.broadcast('Usage: /zoom [factor=0.5] (0.1-1.0; off = /zoom 1)', '#ff8080');
+      return;
+    }
+    ctx.toggleZoom(factor);
+    ctx.broadcast(factor >= 0.99 ? 'Zoom off' : `Zoom ×${(1 / factor).toFixed(1)}`, '#80ff80');
+    return;
+  }
+  if (head === 'speed') {
+    if (!ctx.setWalkSpeed) {
+      ctx.broadcast('Speed-mod unavailable.', '#ff8080');
+      return;
+    }
+    const mul = parseFloat(args[0] ?? '1');
+    if (!Number.isFinite(mul) || mul < 0.1 || mul > 8) {
+      ctx.broadcast('Usage: /speed <0.1-8.0>', '#ff8080');
+      return;
+    }
+    ctx.setWalkSpeed(mul);
+    ctx.broadcast(`Walk speed ×${mul.toFixed(1)}`, '#80ff80');
     return;
   }
   if (head === 'perf' || head === 'benchmark') {
