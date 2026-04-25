@@ -1850,6 +1850,91 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built shop: 3 chests, lectern, villager', '#80ff80');
     return;
   }
+  if (head === 'library') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×9 stone_brick library with bookshelf walls + enchanting table + lectern.
+    ctx.fillBlocks(px - 4, py, pz - 4, px + 4, py + 4, pz + 4, 'stone_bricks');
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 3, pz + 3, 'air');
+    ctx.fillBlocks(px - 4, py - 1, pz - 4, px + 4, py - 1, pz + 4, 'oak_planks');
+    // Bookshelf walls (15-block enchanting power radius).
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 1, pz - 3, 'bookshelf');
+    ctx.fillBlocks(px - 3, py, pz + 3, px + 3, py + 1, pz + 3, 'bookshelf');
+    ctx.fillBlocks(px - 3, py, pz - 2, px - 3, py + 1, pz + 2, 'bookshelf');
+    ctx.fillBlocks(px + 3, py, pz - 2, px + 3, py + 1, pz + 2, 'bookshelf');
+    // Center enchanting table.
+    ctx.setBlock(px, py, pz, 'enchanting_table');
+    // Lectern at corner.
+    ctx.setBlock(px - 3, py, pz + 3, 'lectern');
+    ctx.setBlock(px + 3, py, pz + 3, 'lectern');
+    // Lanterns.
+    ctx.setBlock(px, py + 3, pz, 'lantern');
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 4, 'air');
+    ctx.setBlock(px, py + 2, pz - 4, 'air');
+    ctx.broadcast('Built library: enchanting table + bookshelf walls + lectern', '#80ff80');
+    return;
+  }
+  if (head === 'chess' || head === 'checkerboard') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(2, Math.min(12, parseInt(args[0] ?? '4', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        const c = ((dx + dz) % 2 === 0 ? 'wool_white' : 'wool_black') as string;
+        ctx.setBlock(px + dx, py - 1, pz + dz, c);
+        n++;
+      }
+    }
+    ctx.broadcast(`Chessboard: ${String((2 * r + 1) ** 2)} cells (${String(n)} placed)`, '#80ff80');
+    return;
+  }
+  if (head === 'fortress' || head === 'castle_walls') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = Math.max(6, Math.min(20, parseInt(args[0] ?? '12', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Square cobblestone walls 5 high with crenellations.
+    for (let dx = -r; dx <= r; dx++) {
+      ctx.fillBlocks(px + dx, py, pz - r, px + dx, py + 4, pz - r, 'cobblestone');
+      ctx.fillBlocks(px + dx, py, pz + r, px + dx, py + 4, pz + r, 'cobblestone');
+    }
+    for (let dz = -r; dz <= r; dz++) {
+      ctx.fillBlocks(px - r, py, pz + dz, px - r, py + 4, pz + dz, 'cobblestone');
+      ctx.fillBlocks(px + r, py, pz + dz, px + r, py + 4, pz + dz, 'cobblestone');
+    }
+    // Crenellations every 2 blocks.
+    for (let i = -r; i <= r; i += 2) {
+      ctx.setBlock(px + i, py + 5, pz - r, 'cobblestone');
+      ctx.setBlock(px + i, py + 5, pz + r, 'cobblestone');
+      ctx.setBlock(px - r, py + 5, pz + i, 'cobblestone');
+      ctx.setBlock(px + r, py + 5, pz + i, 'cobblestone');
+    }
+    // 4 corner watchtowers.
+    for (const [cx, cz] of [
+      [-r, -r],
+      [r, -r],
+      [-r, r],
+      [r, r],
+    ] as [number, number][]) {
+      ctx.fillBlocks(px + cx - 1, py, pz + cz - 1, px + cx + 1, py + 7, pz + cz + 1, 'cobblestone');
+      ctx.fillBlocks(px + cx, py, pz + cz, px + cx, py + 6, pz + cz, 'air');
+      ctx.setBlock(px + cx, py + 7, pz + cz, 'lantern');
+    }
+    // Gate at -Z.
+    ctx.fillBlocks(px - 1, py, pz - r, px + 1, py + 2, pz - r, 'air');
+    ctx.broadcast(
+      `Built fortress: ${String(2 * r + 1)}×${String(2 * r + 1)} walls + 4 towers`,
+      '#80ff80',
+    );
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
