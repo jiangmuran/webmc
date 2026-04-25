@@ -873,6 +873,19 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'perf' || head === 'benchmark') {
+    if (!ctx.getTpsStats) {
+      ctx.broadcast('Perf stats unavailable.', '#ff8080');
+      return;
+    }
+    const s = ctx.getTpsStats();
+    const grade = s.tps >= 19.5 ? 'S' : s.tps >= 18 ? 'A' : s.tps >= 15 ? 'B' : s.tps >= 10 ? 'C' : 'D';
+    const color = s.tps >= 18 ? '#80ff80' : s.tps >= 12 ? '#ffd080' : '#ff8080';
+    ctx.broadcast(`— Performance ${grade} —`, color);
+    ctx.broadcast(`tps ${s.tps.toFixed(1)}/20 · mspt p50 ${s.p50ms.toFixed(1)} · p95 ${s.p95ms.toFixed(1)}`, color);
+    ctx.broadcast(s.lagging ? '⚠ Lagging — try /gamerule doMobSpawning false or smaller view distance' : 'Smooth.', '#cccccc');
+    return;
+  }
   if (head === 'world' || head === 'info') {
     ctx.broadcast('— World info —', '#80ffff');
     ctx.broadcast(`pos ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#cccccc');
