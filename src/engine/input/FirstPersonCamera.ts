@@ -64,6 +64,7 @@ export class FirstPersonCamera {
   private jumpBufferTimer = 0;
   private wasJumpPressed = false;
   private sprintFovBoost = 0;
+  speedMultiplier = 1;
   private bobPhase = 0;
   bobEnabled = true;
   invertY = false;
@@ -201,7 +202,7 @@ export class FirstPersonCamera {
   update(dtSec: number, opts: UpdateOptions = {}): void {
     const fly = this.input.fly;
     const baseSpeed = fly ? this.opts.flySpeed : this.opts.walkSpeed;
-    const speed = baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1);
+    const speed = baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1) * this.speedMultiplier;
 
     const sinY = Math.sin(this.yaw);
     const cosY = Math.cos(this.yaw);

@@ -1868,6 +1868,9 @@ function frame(): void {
   (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
   const nightVision = playerState.effects.has('night_vision') ? 0.5 : 0;
   (uniforms['uAmbient'] as { value: number }).value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
+  // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
+  const speedEff = playerState.effects.get('speed');
+  fp.speedMultiplier = speedEff ? 1 + 0.2 * (speedEff.amplifier + 1) : 1;
   (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
   (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
   scene.background = skyColor;
