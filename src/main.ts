@@ -804,6 +804,10 @@ const chatInput = new ChatInput(appEl, {
           const def = registry.get(stateId(world.get(hit.bx, hit.by, hit.bz)));
           return { x: hit.bx, y: hit.by, z: hit.bz, name: def.name.replace(/^webmc:/, '') };
         },
+        setMute: (m) => {
+          audio.setMasterVolume(m ? 0 : 0.35);
+          sfx.setMasterVolume(m ? 0 : 0.35);
+        },
         showTitle: (text, color, durMs) => { toast.show(text, color ?? '#ffffff', durMs ?? 2000); },
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';

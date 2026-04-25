@@ -16,6 +16,7 @@ export interface CommandContext {
   listMobKinds?: () => readonly string[];
   uptimeMs?: () => number;
   lookAtBlock?: () => { x: number; y: number; z: number; name: string } | null;
+  setMute?: (mute: boolean) => void;
   showTitle?: (text: string, color?: string, durationMs?: number) => void;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
@@ -98,6 +99,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     }
     ctx.setBlock(hit.x, hit.y, hit.z, 'webmc:air');
     ctx.broadcast(`Destroyed ${hit.name}`, '#80ff80');
+    return;
+  }
+  if (head === 'mute') {
+    ctx.setMute?.(true);
+    ctx.broadcast('Muted.', '#cccccc');
+    return;
+  }
+  if (head === 'unmute') {
+    ctx.setMute?.(false);
+    ctx.broadcast('Unmuted.', '#cccccc');
     return;
   }
   if (head === 'lookat') {
