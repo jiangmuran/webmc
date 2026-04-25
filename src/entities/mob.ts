@@ -846,6 +846,28 @@ const GRAVITY = 32;
 const TERMINAL_VELOCITY = 50;
 const ATTACK_COOLDOWN_SEC = 0.8;
 
+// 16-step stepwise solidity check between two world positions. Used as a
+// cheap "can this mob see the player" gate so attacks don't pass through
+// walls. We sample at the entity heads (mob.y + halfY, player.y + 0.6)
+// rather than the feet, mirroring vanilla which casts from eye level.
+function hasLineOfSight(fromPos: Vec3, toPos: Vec3, isSolid: SolidSampler): boolean {
+  const fx = fromPos.x;
+  const fy = fromPos.y + 0.6;
+  const fz = fromPos.z;
+  const tx = toPos.x;
+  const ty = toPos.y + 0.6;
+  const tz = toPos.z;
+  const STEPS = 16;
+  for (let i = 1; i < STEPS; i++) {
+    const t = i / STEPS;
+    const x = Math.floor(fx + (tx - fx) * t);
+    const y = Math.floor(fy + (ty - fy) * t);
+    const z = Math.floor(fz + (tz - fz) * t);
+    if (isSolid(x, y, z)) return false;
+  }
+  return true;
+}
+
 export interface MobTickContext {
   isSolid: SolidSampler;
   playerPos: Vec3 | null;
@@ -1007,7 +1029,13 @@ export class MobWorld {
         mob.yaw += dYaw * Math.min(1, dtSec * 6);
 
         if (mob.def.behavior === 'creeper') {
-          if (distSq <= mob.def.attackRangeSq) {
+          // Creepers need LOS too — without it they'd tick the fuse from
+          // around a wall and detonate against the wall. Path of least
+          // surprise: only fuse-up when the player is actually visible.
+          if (
+            distSq <= mob.def.attackRangeSq &&
+            hasLineOfSight(mob.position, ctx.playerPos, ctx.isSolid)
+          ) {
             mob.fuseSec += dtSec;
             if (mob.fuseSec >= 1.5) {
               ctx.damagePlayer(mob.def.attackDamage, mob.position);
@@ -1018,7 +1046,15 @@ export class MobWorld {
           } else {
             mob.fuseSec = Math.max(0, mob.fuseSec - dtSec);
           }
-        } else if (distSq <= mob.def.attackRangeSq && mob.attackCooldownSec === 0) {
+        } else if (
+          distSq <= mob.def.attackRangeSq &&
+          mob.attackCooldownSec === 0 &&
+          // Line-of-sight gate: zombies were punching the player through
+          // a wall, skeletons were sniping through ceilings. Mobs only
+          // attack when there's a clear voxel path from their head to
+          // the player's head.
+          hasLineOfSight(mob.position, ctx.playerPos, ctx.isSolid)
+        ) {
           ctx.damagePlayer(mob.def.attackDamage, mob.position);
           mob.attackCooldownSec = ATTACK_COOLDOWN_SEC;
         }
