@@ -1707,6 +1707,97 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built carnival ring with jack_o_lantern column', '#80ff80');
     return;
   }
+  if (head === 'sky_island' || head === 'skyisland') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(4, Math.min(16, parseInt(args[0] ?? '8', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let cells = 0;
+    // Ellipsoid stone underbelly + grass top + 1 oak tree.
+    for (let dy = -3; dy <= 0; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        for (let dz = -r; dz <= r; dz++) {
+          const norm = (dx * dx + dz * dz) / (r * r) + (dy * dy) / 9;
+          if (norm <= 1) {
+            const block = dy === 0 ? 'grass_block' : dy <= -2 ? 'stone' : 'dirt';
+            ctx.setBlock(px + dx, py - 4 + dy, pz + dz, block);
+            cells++;
+          }
+        }
+      }
+    }
+    // Mini oak tree on top.
+    for (let h = 0; h < 5; h++) ctx.setBlock(px, py - 3 + h, pz, 'oak_log');
+    for (let dx = -2; dx <= 2; dx++) {
+      for (let dz = -2; dz <= 2; dz++) {
+        for (let dy = 0; dy < 3; dy++) {
+          if (dx * dx + dz * dz + dy * dy <= 7) {
+            ctx.setBlock(px + dx, py + 1 + dy, pz + dz, 'oak_leaves');
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Sky island: r=${String(r)} (${String(cells)} cells) with oak tree`, '#80ff80');
+    return;
+  }
+  if (head === 'forge') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone_brick floor + anvil + furnace + crafting_table + chest.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'stone_bricks');
+    ctx.setBlock(px - 1, py, pz, 'anvil');
+    ctx.setBlock(px + 1, py, pz, 'furnace');
+    ctx.setBlock(px, py, pz - 1, 'crafting_table');
+    ctx.setBlock(px, py, pz + 1, 'chest');
+    ctx.setBlock(px - 2, py, pz - 2, 'lantern');
+    ctx.setBlock(px + 2, py, pz + 2, 'lantern');
+    ctx.broadcast('Built forge: anvil + furnace + crafting_table + chest', '#80ff80');
+    return;
+  }
+  if (head === 'kitchen') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'oak_planks');
+    ctx.setBlock(px, py, pz - 2, 'furnace');
+    ctx.setBlock(px - 2, py, pz, 'campfire');
+    ctx.setBlock(px + 2, py, pz, 'furnace');
+    ctx.setBlock(px - 2, py, pz - 2, 'barrel');
+    ctx.setBlock(px + 2, py, pz - 2, 'barrel');
+    ctx.setBlock(px - 1, py, pz + 2, 'chest');
+    ctx.setBlock(px + 1, py, pz + 2, 'chest');
+    ctx.setBlock(px, py, pz, 'crafting_table');
+    ctx.broadcast('Built kitchen: furnace, campfire, barrels, chests', '#80ff80');
+    return;
+  }
+  if (head === 'stable') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 11×7 oak stable with 4 stalls + 4 horses + hay_block troughs.
+    ctx.fillBlocks(px - 5, py, pz - 3, px + 5, py + 4, pz + 3, 'oak_planks');
+    ctx.fillBlocks(px - 4, py, pz - 2, px + 4, py + 3, pz + 2, 'air');
+    // 4 stalls, fence dividers every 2 blocks.
+    for (let i = -3; i <= 3; i += 2) {
+      ctx.setBlock(px + i, py + 1, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 2, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 1, pz + 1, 'oak_fence');
+    }
+    // Hay troughs.
+    for (let i = -3; i <= 3; i += 2) ctx.setBlock(px + i, py, pz, 'hay_block');
+    // Horses.
+    for (let i = -3; i <= 3; i += 2) ctx.summon('horse', px + i + 1, py + 1, pz);
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    ctx.broadcast('Built stable: 4 stalls, 4 horses, hay troughs', '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
