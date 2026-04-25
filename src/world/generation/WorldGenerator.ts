@@ -45,7 +45,12 @@ interface OreBand {
 }
 
 const CAVE_FREQ = 1 / 24;
-const CAVE_THRESHOLD = 0.32;
+// Carve when noise is within ±THRESHOLD of zero (noodle-style passages).
+// 0.32 was way too wide — fbm3 clusters tightly around 0, so |n| < 0.32
+// carved ~50% of underground, leaving a swiss-cheese world. 0.03 keeps
+// caves to thin worm-like passages around noise zero-crossings (~10-20%
+// of underground volume).
+const CAVE_THRESHOLD = 0.03;
 const DEEPSLATE_Y = 4;
 const DUNGEON_CHANCE = 1 / 30;
 const DUNGEON_SALT = 0xd00f00d;
