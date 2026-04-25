@@ -21,6 +21,11 @@ function armorSlotName(idx: number): string {
 export interface SurvivalInventoryCallbacks {
   onClose: () => void;
   onEat?: (itemId: number, hungerRestore: number, saturation: number) => void;
+  // Returns the player's current hunger (0..20). UI uses it to gate
+  // out clicks on regular food when hunger is full — vanilla rejects
+  // eating at full hunger except for "always edible" items (handled
+  // by the eat handler itself).
+  getHunger?: () => number;
 }
 
 export class SurvivalInventory {
@@ -203,6 +208,17 @@ export class SurvivalInventory {
         const slots = whichList === 'hotbar' ? this.inventory.hotbar : this.inventory.main;
         const cur = slots[idx];
         if (!cur || cur.count <= 0) return;
+        // Full-hunger gate: regular food doesn't consume when you're full.
+        // Always-edible items (potions, golden apples, chorus, honey)
+        // bypass — those are about effects, not hunger.
+        const alwaysEdible =
+          isPotion ||
+          def.name === 'webmc:golden_apple' ||
+          def.name === 'webmc:enchanted_golden_apple' ||
+          def.name === 'webmc:chorus_fruit' ||
+          def.name === 'webmc:honey_bottle';
+        const hunger = this.cb.getHunger?.() ?? 0;
+        if (hunger >= 20 && !alwaysEdible) return;
         this.cb.onEat(def.id, def.hungerRestore ?? 0, def.saturation ?? 0);
         const after = cur.count - 1;
         slots[idx] = after <= 0 ? null : { ...cur, count: after };

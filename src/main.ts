@@ -5755,6 +5755,7 @@ const survivalInv = new SurvivalInventory(
     onEat: (id, hungerRestore, saturation) => {
       consumeFoodItem(id, hungerRestore, saturation);
     },
+    getHunger: () => playerState.hunger,
   },
   recipeRegistry,
 );
