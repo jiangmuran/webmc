@@ -31,10 +31,11 @@ describe('BlockRegistry', () => {
     expect(r.size).toBe(3);
   });
 
-  it('rejects duplicate names', () => {
+  it('returns existing id for duplicate names (idempotent)', () => {
     const r = new BlockRegistry();
-    r.register(def('test:dup'));
-    expect(() => r.register(def('test:dup'))).toThrow(/duplicate/);
+    const first = r.register(def('test:dup'));
+    const again = r.register(def('test:dup'));
+    expect(again).toBe(first);
   });
 
   it('throws on unknown id', () => {
