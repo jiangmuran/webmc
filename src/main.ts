@@ -10,7 +10,7 @@ import { World } from './world/World';
 import { CHUNK_HEIGHT, type Chunk } from './world/Chunk';
 import { WorldGenerator } from './world/generation/WorldGenerator';
 import { ChunkLoader } from './world/ChunkLoader';
-import { type ChunkLight, buildLight, flatLightForSection } from './world/lighting';
+import { type ChunkLight, buildLight, flatLightForSection, getLightByte } from './world/lighting';
 import {
   type BorderOpacity,
   createMesherClient,
@@ -3662,6 +3662,7 @@ let lastPhase: 'dawn' | 'day' | 'dusk' | 'night' = 'day';
 let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
+let lastNaturalSpawnAttemptMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
 let customBossBar: {
@@ -7716,6 +7717,75 @@ function frame(): void {
           subtitles.push('Zombie drowned');
         } catch {
           /* drowned not registered */
+        }
+      }
+    }
+
+    // Natural hostile mob spawning: every ~5s, attempt to place a hostile
+    // mob 24-48 blocks from the player at a dark, surface-air spot. Without
+    // this, survival had no naturally-spawned mobs at all — every zombie
+    // had to come from /summon, which made the night-survival loop empty.
+    const nowSpawnMs = performance.now();
+    if (
+      (gameMode === 'survival' || gameMode === 'adventure') &&
+      !dayNight.isDay &&
+      nowSpawnMs - lastNaturalSpawnAttemptMs > 5000
+    ) {
+      lastNaturalSpawnAttemptMs = nowSpawnMs;
+      let hostileCount = 0;
+      for (const m of mobWorld.all()) {
+        if (
+          m.def.behavior === 'hostile' ||
+          m.def.behavior === 'creeper' ||
+          (m.def.behavior === 'neutral' && m.provoked)
+        ) {
+          hostileCount++;
+        }
+      }
+      if (hostileCount < WORLD_MOB_CAPS.hostile) {
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 24 + Math.random() * 24;
+          const sx = Math.floor(fp.position.x + Math.cos(angle) * dist);
+          const sz = Math.floor(fp.position.z + Math.sin(angle) * dist);
+          // Find a surface: topmost solid with 2 air above.
+          let sy = -1;
+          for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
+            if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
+              sy = y + 1;
+              break;
+            }
+          }
+          if (sy < 0) continue;
+          // Light gate: don't spawn in a torch-lit area. Cheap heuristic — if
+          // we have lighting data for the chunk, require sky+block <= 7 (caves
+          // and night both fit). Without lighting data (chunk unloaded?),
+          // skip rather than spam-spawn at default-bright fallback.
+          const cx = sx >> 4;
+          const cz = sz >> 4;
+          const lx = sx & 0xf;
+          const lz = sz & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          if (!light) continue;
+          const lb = getLightByte(light, lx, sy, lz);
+          const sky = (lb >>> 4) & 0xf;
+          const block = lb & 0xf;
+          if (Math.max(sky, block) > 7) continue;
+          const choices: ('zombie' | 'skeleton' | 'creeper' | 'spider')[] = [
+            'zombie',
+            'zombie',
+            'skeleton',
+            'creeper',
+            'spider',
+          ];
+          const kind = choices[Math.floor(Math.random() * choices.length)];
+          if (!kind) continue;
+          try {
+            mobWorld.spawn(kind, { x: sx + 0.5, y: sy, z: sz + 0.5 });
+          } catch {
+            /* mob kind not registered */
+          }
+          break;
         }
       }
     }
