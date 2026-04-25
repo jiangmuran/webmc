@@ -45,7 +45,7 @@ export interface CommandContext {
   exportWorldManifest?: () => string;
   equipArmor?: (itemName: string) => string | null;
   giveXp?: (amount: number) => void;
-  showBossBar?: (name: string, hp: number, maxHp: number, color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white') => void;
+  showBossBar?: (name: string, hp: number, maxHp: number, color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white', style?: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20') => void;
   hideBossBar?: () => void;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
@@ -454,14 +454,23 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     if (sub === 'show') {
-      const name = args.slice(1).join(' ') || 'Test Boss';
       const COLORS = ['pink', 'blue', 'red', 'green', 'yellow', 'purple', 'white'] as const;
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'purple';
-      ctx.showBossBar?.(name, 100, 100, color);
-      ctx.broadcast(`Boss bar shown: ${name} (${color})`, '#80ff80');
+      const STYLES = ['progress', 'notched_6', 'notched_10', 'notched_12', 'notched_20'] as const;
+      let color: typeof COLORS[number] = COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'purple';
+      let style: typeof STYLES[number] = 'progress';
+      const rest: string[] = [];
+      for (const a of args.slice(1)) {
+        const lo = a.toLowerCase();
+        if ((COLORS as readonly string[]).includes(lo)) color = lo as typeof COLORS[number];
+        else if ((STYLES as readonly string[]).includes(lo)) style = lo as typeof STYLES[number];
+        else rest.push(a);
+      }
+      const name = rest.join(' ') || 'Test Boss';
+      ctx.showBossBar?.(name, 100, 100, color, style);
+      ctx.broadcast(`Boss bar shown: ${name} (${color}, ${style})`, '#80ff80');
       return;
     }
-    ctx.broadcast('Usage: /bossbar <show [name] | hide>', '#ff8080');
+    ctx.broadcast('Usage: /bossbar <show [name] [color] [style] | hide>  styles: progress, notched_6/10/12/20', '#ff8080');
     return;
   }
   if (head === 'xp' || head === 'experience') {

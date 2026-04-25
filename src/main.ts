@@ -1324,7 +1324,7 @@ let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
-let customBossBar: { name: string; hp: number; maxHp: number; color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white' } | null = null;
+let customBossBar: { name: string; hp: number; maxHp: number; color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white'; style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20' } | null = null;
 let hardcoreMode = false;
 void persistDB.getMeta('hardcore').then((saved) => {
   if (saved === true) hardcoreMode = true;
@@ -1471,8 +1471,8 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
-        showBossBar: (name, hp, maxHp, color) => {
-          customBossBar = { name, hp, maxHp, color };
+        showBossBar: (name, hp, maxHp, color, style) => {
+          customBossBar = { name, hp, maxHp, color, style: style ?? 'progress' };
         },
         hideBossBar: () => { customBossBar = null; },
         giveXp: (amount) => {
@@ -3493,12 +3493,17 @@ function frame(): void {
   }
   if (bossM) {
     const color = bossM.kind === 'ender_dragon' ? 'purple' : bossM.kind === 'warden' ? 'red' : bossM.kind === 'wither' ? 'red' : 'pink';
+    const style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20' =
+      bossM.kind === 'ender_dragon' ? 'notched_10'
+      : bossM.kind === 'warden' ? 'notched_20'
+      : bossM.kind === 'wither' ? 'notched_6'
+      : 'progress';
     bossBar.set({
       name: bossM.name,
       hp: bossM.health,
       maxHp: bossM.maxHealth,
       color,
-      style: 'progress',
+      style,
       visible: true,
     });
   } else if (customBossBar) {
@@ -3507,7 +3512,7 @@ function frame(): void {
       hp: customBossBar.hp,
       maxHp: customBossBar.maxHp,
       color: customBossBar.color,
-      style: 'progress',
+      style: customBossBar.style,
       visible: true,
     });
   } else {
