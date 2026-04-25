@@ -4991,7 +4991,12 @@ const chatInput = new ChatInput(appEl, {
         },
       });
     } else {
-      chatInput.addLine(`<You> ${text}`);
+      // Local echo. Show under the player's actual name (so the local view
+      // matches what other peers see) instead of the static '<You>' label
+      // — and broadcast to room peers if connected. Multiplayer chat was
+      // one-way: receivers got the messages but never sent.
+      chatInput.addLine(`<${currentPlayerName}> ${text}`);
+      roomClient?.sendChat(text);
     }
   },
   onOpenChanged: (open) => {
