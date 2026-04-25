@@ -66,6 +66,7 @@ import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_ti
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { inThermalThrottle } from './engine/chunk_unload_strategy_thermal';
 import { kindFor as kindForWeather } from './engine/weather_particles';
+import { adjustedTemperature } from './world/biome_precipitation';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -813,8 +814,10 @@ function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   } else {
     const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
     const biomeName = biomeId === 1 ? 'forest' : 'plains';
-    const temp = biomeTemperature(biomeName);
-    const kind = kindForWeather({ raining: true, intensity: 1, biomeTemperature: temp });
+    const baseTemp = biomeTemperature(biomeName);
+    // Altitude lowers temperature (MC: 0.00166 per block above Y=64).
+    const adjTemp = adjustedTemperature({ baseTemperature: baseTemp, hasPrecipitation: true }, fp.position.y);
+    const kind = kindForWeather({ raining: true, intensity: 1, biomeTemperature: adjTemp });
     if (kind === 'none') {
       rain.setActive(false);
     } else {
