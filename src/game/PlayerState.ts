@@ -58,7 +58,7 @@ export class PlayerState {
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
     if (this.health <= 0) return;
-    if (this.hitImmuneSec > 0 && ev.source !== 'starvation' && ev.source !== 'drown') return;
+    if (this.hitImmuneSec > 0 && ev.source !== 'starvation' && ev.source !== 'drown' && ev.source !== 'suffocation' && ev.source !== 'void' && ev.source !== 'lava' && ev.source !== 'fire' && ev.source !== 'poison') return;
     // Resistance reduces damage by 0.2 * (amplifier+1), clamped to 80% reduction.
     const resist = this.effects.get('resistance');
     const reduction = resist ? Math.min(0.8, 0.2 * (resist.amplifier + 1)) : 0;

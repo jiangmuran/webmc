@@ -2125,6 +2125,15 @@ function frame(): void {
     playerState.takeDamage({ amount: 4, source: 'void' });
   }
 
+  if (gameMode === 'survival' || gameMode === 'adventure') {
+    const headX = Math.floor(fp.position.x);
+    const headY = Math.floor(fp.position.y + 1.55);
+    const headZ = Math.floor(fp.position.z);
+    if (isSolid(headX, headY, headZ)) {
+      playerState.takeDamage({ amount: 1 * dtSec, source: 'suffocation' });
+    }
+  }
+
   if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
     if (!starvingShown) {
       starvingShown = true;
