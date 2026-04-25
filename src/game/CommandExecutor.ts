@@ -1897,6 +1897,102 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built brewery: 3 brewing_stands + cauldron + chest', '#80ff80');
     return;
   }
+  if (head === 'observatory') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×7 stone_brick base, 5 high tower, glass dome on top.
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 4, pz + 3, 'stone_bricks');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 3, pz + 2, 'air');
+    // Glass dome.
+    for (let dy = 0; dy <= 3; dy++) {
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          const d2 = dx * dx + dy * dy + dz * dz;
+          if (d2 <= 9 && d2 >= 7) ctx.setBlock(px + dx, py + 5 + dy, pz + dz, 'glass');
+        }
+      }
+    }
+    // Telescope (anvil + chain pillar).
+    ctx.setBlock(px, py + 1, pz, 'anvil');
+    ctx.setBlock(px, py + 2, pz, 'iron_block');
+    // Lanterns + door.
+    ctx.setBlock(px - 3, py + 4, pz - 3, 'lantern');
+    ctx.setBlock(px + 3, py + 4, pz + 3, 'lantern');
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    ctx.broadcast('Built observatory: stone tower + glass dome + telescope', '#80ff80');
+    return;
+  }
+  if (head === 'oasis') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Sand around with small water pond and palm-like trees.
+    for (let dx = -8; dx <= 8; dx++) {
+      for (let dz = -8; dz <= 8; dz++) {
+        const d2 = dx * dx + dz * dz;
+        if (d2 <= 64) ctx.setBlock(px + dx, py - 1, pz + dz, 'sand');
+      }
+    }
+    // Pond.
+    for (let dx = -3; dx <= 3; dx++) {
+      for (let dz = -3; dz <= 3; dz++) {
+        if (dx * dx + dz * dz <= 9) {
+          ctx.setBlock(px + dx, py - 1, pz + dz, 'water');
+          ctx.setBlock(px + dx, py - 2, pz + dz, 'sand');
+        }
+      }
+    }
+    // Palm trees.
+    for (const [tx, tz] of [
+      [-7, 0],
+      [7, 0],
+      [0, -7],
+      [0, 7],
+      [-5, -5],
+      [5, 5],
+    ] as [number, number][]) {
+      for (let h = 0; h < 5; h++) ctx.setBlock(px + tx, py + h, pz + tz, 'jungle_log');
+      // Leaf crown.
+      for (let dx = -2; dx <= 2; dx++) {
+        for (let dz = -2; dz <= 2; dz++) {
+          if (dx * dx + dz * dz <= 4) {
+            ctx.setBlock(px + tx + dx, py + 5, pz + tz + dz, 'jungle_leaves');
+          }
+        }
+      }
+    }
+    ctx.broadcast('Built oasis: sand circle, pond, 6 palm trees', '#80ff80');
+    return;
+  }
+  if (head === 'desert_temple' || head === 'sandtemple') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Sandstone pyramid 9×9 base × 5 high with 4 chest niches.
+    for (let h = 0; h < 5; h++) {
+      const r = 4 - h;
+      ctx.fillBlocks(px - r, py + h, pz - r, px + r, py + h, pz + r, 'sandstone');
+    }
+    // Hollow center 1×3 chamber under the apex.
+    ctx.fillBlocks(px, py, pz, px, py + 2, pz, 'air');
+    // 4 chest niches around base.
+    for (const [cx, cz] of [
+      [-3, 0],
+      [3, 0],
+      [0, -3],
+      [0, 3],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py, pz + cz, 'chest');
+    }
+    ctx.setBlock(px, py + 4, pz, 'gold_block');
+    ctx.broadcast('Built desert_temple: 9×9 sandstone pyramid + 4 chests + gold apex', '#80ff80');
+    return;
+  }
   if (head === 'chess' || head === 'checkerboard') {
     if (!ctx.setBlock) return;
     const r = Math.max(2, Math.min(12, parseInt(args[0] ?? '4', 10)));
