@@ -1143,6 +1143,49 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'lake') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '6', 10);
+    if (!Number.isFinite(r) || r < 2 || r > 32) {
+      ctx.broadcast('Usage: /lake <r=6>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let dy = 0; dy < 4; dy++) {
+      const lr = r - dy;
+      ctx.fillBlocks(px - lr, py - dy - 1, pz - lr, px + lr, py - dy - 1, pz + lr, 'water');
+    }
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        const d = Math.sqrt(dx * dx + dz * dz);
+        if (d > r - 1 && d <= r) ctx.setBlock?.(px + dx, py - 1, pz + dz, 'sand');
+      }
+    }
+    ctx.broadcast(`Lake r=${String(r)} dug + filled`, '#80ff80');
+    return;
+  }
+  if (head === 'road') {
+    if (!ctx.fillBlocks) return;
+    const len = parseInt(args[0] ?? '32', 10);
+    const block = args[1] ?? 'gravel';
+    if (!Number.isFinite(len) || len < 1 || len > 256) {
+      ctx.broadcast('Usage: /road <length=32> [block=gravel]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y) - 1;
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py, pz + len - 1, block);
+    for (let i = 4; i < len; i += 8) {
+      ctx.setBlock?.(px - 2, py + 1, pz + i, 'oak_fence');
+      ctx.setBlock?.(px - 2, py + 2, pz + i, 'oak_fence');
+      ctx.setBlock?.(px - 2, py + 3, pz + i, 'lantern');
+    }
+    ctx.broadcast(`Road ${String(len)} long, lit every 8 blocks`, '#80ff80');
+    return;
+  }
   if (head === 'island') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '8', 10);
