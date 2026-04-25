@@ -1143,6 +1143,29 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'levelup' || head === 'lvlup') {
+    ctx.giveXp?.(50);
+    if (ctx.showTitle) ctx.showTitle('LEVEL UP', '#80ff80', 1500);
+    ctx.broadcast('+50 XP', '#80ff80');
+    return;
+  }
+  if (head === 'tankmode' || head === 'tank') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('resistance', 4, 600);
+    ctx.applyEffect('absorption', 3, 600);
+    ctx.applyEffect('regeneration', 1, 600);
+    ctx.broadcast('Tank: RES V + ABS IV + REGEN II for 10min', '#80a0ff');
+    return;
+  }
+  if (head === 'speedrun_pro' || head === 'srpro') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('speed', 4, 600);
+    ctx.applyEffect('jump_boost', 3, 600);
+    ctx.applyEffect('saturation', 9, 600);
+    ctx.applyEffect('regeneration', 1, 600);
+    ctx.broadcast('Speedrun: SPEED V + JUMP IV + SATURATION + REGEN for 10min', '#80ff80');
+    return;
+  }
   if (head === 'showcase' || head === 'demoworld') {
     if (!ctx.fillBlocks) return;
     const px = Math.floor(ctx.playerPos.x);
