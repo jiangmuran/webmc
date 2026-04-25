@@ -3191,7 +3191,7 @@ function frame(): void {
   scene.background = skyColor;
   if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
 
-  const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad);
+  const loaderStats = loader.update(fp.position.x, fp.position.z, onUnload, onLoad, fp.velocity.x, fp.velocity.z);
 
   const sel = hotbar.selected;
   if (sel) {

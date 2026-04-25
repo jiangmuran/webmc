@@ -62,6 +62,8 @@ export class ChunkLoader {
     playerWz: number,
     onUnload: (cx: number, cz: number) => void,
     onLoad: (cx: number, cz: number) => void = () => undefined,
+    playerVx = 0,
+    playerVz = 0,
   ): ChunkLoaderStats {
     const cx = Math.floor(playerWx / 16);
     const cz = Math.floor(playerWz / 16);
@@ -69,7 +71,7 @@ export class ChunkLoader {
     if (cx !== this.lastCx || cz !== this.lastCz) {
       this.lastCx = cx;
       this.lastCz = cz;
-      this.rebuildPending(cx, cz);
+      this.rebuildPending(cx, cz, playerVx, playerVz);
       this.unloadDistant(cx, cz, onUnload);
     }
 
@@ -104,15 +106,23 @@ export class ChunkLoader {
     };
   }
 
-  private rebuildPending(centerCx: number, centerCz: number): void {
+  private rebuildPending(centerCx: number, centerCz: number, playerVx = 0, playerVz = 0): void {
     this.pending.length = 0;
     const r = this.opts.viewRadius;
+    const vlen = Math.hypot(playerVx, playerVz);
     for (let dz = -r; dz <= r; dz++) {
       for (let dx = -r; dx <= r; dx++) {
         const cx = centerCx + dx;
         const cz = centerCz + dz;
         if (this.world.has(cx, cz)) continue;
-        const priority = dx * dx + dz * dz;
+        let priority = dx * dx + dz * dz;
+        if (vlen > 0.5) {
+          const dist = Math.sqrt(priority);
+          if (dist > 0) {
+            const dot = ((dx * playerVx + dz * playerVz) / (dist * vlen));
+            priority -= dot * 4;
+          }
+        }
         this.pending.push({ cx, cz, priority });
       }
     }
