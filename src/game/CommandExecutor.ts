@@ -135,6 +135,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     return;
   }
   if (head === 'spawn') {
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
     ctx.teleportSpawn?.();
     ctx.broadcast('Teleported to spawn.', '#80ff80');
     return;
