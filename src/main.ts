@@ -1312,6 +1312,27 @@ const babyMobs = new Map<number, BabyState>();
 let worldTick = 0;
 const eatState: EatState = makeEatState();
 let rightClickHeldForEat = false;
+
+// Per-block-position chest storage. Old code shared one global 27-slot array
+// across every chest in the world (the comment in ChestUI flagged this as
+// "simplified ender chest" until per-block landed). Now: ender chests share
+// one shared store across positions (vanilla behaviour); regular chests,
+// trapped chests, barrels, and shulker boxes are keyed by (x,y,z).
+const enderChestStorage: (ItemStack | null)[] = new Array(27).fill(null);
+const chestStoragesByPos = new Map<string, (ItemStack | null)[]>();
+function chestKey(x: number, y: number, z: number): string {
+  return `${x},${y},${z}`;
+}
+function getChestStorage(blockName: string, x: number, y: number, z: number): (ItemStack | null)[] {
+  if (blockName === 'webmc:ender_chest') return enderChestStorage;
+  const k = chestKey(x, y, z);
+  let s = chestStoragesByPos.get(k);
+  if (!s) {
+    s = new Array<ItemStack | null>(27).fill(null);
+    chestStoragesByPos.set(k, s);
+  }
+  return s;
+}
 const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
   sheep: ['webmc:wheat'],
@@ -3007,6 +3028,7 @@ const interaction = new InteractionController(
         def.name.endsWith('_shulker_box') ||
         def.name === 'webmc:shulker_box'
       ) {
+        chestUI.setStorage(getChestStorage(def.name, bx, by, bz));
         chestUI.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
@@ -4678,7 +4700,7 @@ const chatInput = new ChatInput(appEl, {
           // their next periodic timer / visibilitychange.
           void savePlayerNow();
           void chunkStore.flush();
-          void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
+          void saveAllChestStorages();
           void persistDB.setMeta('playerStats', playerStats);
           void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
           void persistDB.setMeta('dayCounter', dayCounter);
@@ -4694,6 +4716,9 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         openChest: () => {
+          // Debug command — open the shared ender chest store. Per-block
+          // chests have their own storage opened via right-clicking them.
+          chestUI.setStorage(enderChestStorage);
           chestUI.show();
           fp.inputBlocked = true;
           document.exitPointerLock();
@@ -5447,23 +5472,36 @@ const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
-    void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
+    void saveAllChestStorages();
   },
 });
-void persistDB.getMeta('chestStorage').then((saved) => {
-  if (!Array.isArray(saved)) return;
-  for (let i = 0; i < Math.min(27, saved.length); i++) {
-    const v = saved[i];
-    if (v && typeof v === 'object' && typeof (v as PersistedItemStack).name === 'string') {
-      chestUI.storage[i] = restoreStack(v as PersistedItemStack);
-    } else if (v && typeof v === 'object' && typeof (v as ItemStack).itemId === 'number') {
-      // Legacy save (numeric itemId) — keep as-is so existing chests don't
-      // disappear; gets re-persisted in name form on next close.
-      chestUI.storage[i] = v as ItemStack;
-    } else {
-      chestUI.storage[i] = null;
+// New per-position chest storage. Falls back to the legacy single-array
+// 'chestStorage' meta if the v2 'chestStorages' meta isn't present, so
+// existing saves load their old shared chest contents into the ender chest
+// (closest equivalent — was effectively a global shared store).
+void persistDB.getMeta('chestStorages').then((saved) => {
+  if (
+    saved &&
+    typeof saved === 'object' &&
+    !Array.isArray(saved) &&
+    'ender' in (saved as Record<string, unknown>)
+  ) {
+    const s = saved as { ender?: unknown; byPos?: Record<string, unknown> };
+    const ender = restoreChestSlots(s.ender);
+    for (let i = 0; i < 27; i++) enderChestStorage[i] = ender[i] ?? null;
+    if (s.byPos && typeof s.byPos === 'object') {
+      for (const [k, v] of Object.entries(s.byPos)) {
+        chestStoragesByPos.set(k, restoreChestSlots(v));
+      }
     }
+    return;
   }
+  // Legacy migration: old single-array chest storage → ender chest store.
+  void persistDB.getMeta('chestStorage').then((legacy) => {
+    if (!Array.isArray(legacy)) return;
+    const restored = restoreChestSlots(legacy);
+    for (let i = 0; i < 27; i++) enderChestStorage[i] = restored[i] ?? null;
+  });
 });
 
 const survivalInv = new SurvivalInventory(
@@ -5818,6 +5856,39 @@ function snapshotStack(stack: ItemStack | null): PersistedItemStack | null {
   return { name: def.name, count: stack.count, damage: stack.damage };
 }
 
+function snapshotChestSlots(slots: (ItemStack | null)[]): (PersistedItemStack | null)[] {
+  return slots.map(snapshotStack);
+}
+function restoreChestSlots(saved: unknown): (ItemStack | null)[] {
+  const out = new Array<ItemStack | null>(27).fill(null);
+  if (!Array.isArray(saved)) return out;
+  for (let i = 0; i < Math.min(27, saved.length); i++) {
+    const v = saved[i];
+    if (v && typeof v === 'object' && typeof (v as PersistedItemStack).name === 'string') {
+      out[i] = restoreStack(v as PersistedItemStack);
+    } else if (v && typeof v === 'object' && typeof (v as ItemStack).itemId === 'number') {
+      // Legacy save (numeric itemId) — keep as-is so existing chests don't
+      // disappear; gets re-persisted in name form on next close.
+      out[i] = v as ItemStack;
+    }
+  }
+  return out;
+}
+// Snapshot every per-position chest plus the shared ender-chest store.
+// Empty-everywhere chests are skipped to keep the saved blob small.
+function saveAllChestStorages(): Promise<void> {
+  const byPos: Record<string, (PersistedItemStack | null)[]> = {};
+  for (const [k, slots] of chestStoragesByPos) {
+    if (slots.every((s) => s === null)) continue;
+    byPos[k] = snapshotChestSlots(slots);
+  }
+  return persistDB.setMeta('chestStorages', {
+    version: 2,
+    ender: snapshotChestSlots(enderChestStorage),
+    byPos,
+  });
+}
+
 function snapshotInventory(): PersistedInventory {
   return {
     hotbar: inventory.hotbar.map(snapshotStack),
@@ -5913,7 +5984,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     void chunkStore.flush();
     void savePlayerNow();
-    void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
+    void saveAllChestStorages();
     void persistDB.setMeta('playerStats', playerStats);
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
     void persistDB.setMeta('dayCounter', dayCounter);
@@ -5929,7 +6000,7 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('beforeunload', () => {
   void chunkStore.flush();
   void savePlayerNow();
-  void persistDB.setMeta('chestStorage', chestUI.storage.map(snapshotStack));
+  void saveAllChestStorages();
   void persistDB.setMeta('playerStats', playerStats);
   void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
   void persistDB.setMeta('dayCounter', dayCounter);

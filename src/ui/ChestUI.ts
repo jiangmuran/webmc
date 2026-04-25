@@ -5,15 +5,24 @@ export interface ChestUICallbacks {
   onClose: () => void;
 }
 
-// Simple shared storage: one 27-slot array keyed by block position. All chests
-// share the same storage (a simplified "ender chest" for now) until per-block
-// persistence lands.
+// 27-slot storage for the currently-open chest. The active array is swapped
+// in via setStorage() before show(); main.ts keeps the per-position map and
+// passes the right one when the player opens a chest. Ender chests share one
+// shared array across positions; regular/trapped chests, barrels, shulker
+// boxes are per-block-position.
 export class ChestUI {
   private readonly root: HTMLDivElement;
   private readonly grid: HTMLDivElement;
   private readonly invGrid: HTMLDivElement;
   private visible = false;
-  readonly storage: (ItemStack | null)[] = new Array(27).fill(null);
+  private _storage: (ItemStack | null)[] = new Array(27).fill(null);
+  get storage(): (ItemStack | null)[] {
+    return this._storage;
+  }
+  setStorage(slots: (ItemStack | null)[]): void {
+    this._storage = slots;
+    if (this.visible) this.refresh();
+  }
 
   constructor(
     parent: HTMLElement,
