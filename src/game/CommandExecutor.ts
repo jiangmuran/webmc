@@ -59,6 +59,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`You are ${ctx.playerName ?? 'Player'}`, '#cccccc');
     return;
   }
+  if (head === 'pos' || head === 'where') {
+    ctx.broadcast(
+      `Pos ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`,
+      '#cccccc',
+    );
+    return;
+  }
   if (head === 'help') {
     ctx.broadcast('/gamemode <survival|creative|adventure|spectator>', '#cccccc');
     ctx.broadcast('/tp <x> <y> <z>', '#cccccc');
