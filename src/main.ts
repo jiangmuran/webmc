@@ -2490,16 +2490,26 @@ const chatInput = new ChatInput(appEl, {
           return ok;
         },
         locateStructure: (kind) => {
-          if (kind !== 'stronghold') return null;
-          // Use the first ring of strongholds (3 positions) deterministic from world seed.
-          const positions = strongholdsInRing(WORLD_SEED, 0);
-          if (positions.length === 0) return null;
-          let best: { x: number; z: number; dist: number } | null = null;
-          for (const p of positions) {
-            const d = Math.hypot(p.x - fp.position.x, p.z - fp.position.z);
-            if (!best || d < best.dist) best = { x: p.x, z: p.z, dist: d };
+          if (kind === 'stronghold') {
+            const positions = strongholdsInRing(WORLD_SEED, 0);
+            if (positions.length === 0) return null;
+            let best: { x: number; z: number; dist: number } | null = null;
+            for (const p of positions) {
+              const d = Math.hypot(p.x - fp.position.x, p.z - fp.position.z);
+              if (!best || d < best.dist) best = { x: p.x, z: p.z, dist: d };
+            }
+            return best;
           }
-          return best;
+          // Deterministic pseudo-locate for other structures: derive an offset from worldSeed + kind hash.
+          const KNOWN = ['village', 'monument', 'fortress', 'mansion', 'pyramid', 'desert_temple', 'jungle_temple', 'igloo', 'shipwreck', 'buried_treasure', 'ocean_ruin', 'pillager_outpost', 'ancient_city', 'trail_ruins', 'trial_chambers', 'bastion', 'mineshaft', 'end_city', 'ruined_portal', 'spawner', 'witch_hut'];
+          if (!KNOWN.includes(kind)) return null;
+          let h = WORLD_SEED >>> 0;
+          for (let i = 0; i < kind.length; i++) h = ((h ^ kind.charCodeAt(i)) * 0x01000193) >>> 0;
+          const ang = ((h & 0xffff) / 65535) * Math.PI * 2;
+          const dist = 200 + ((h >>> 16) % 1500);
+          const tx = Math.round(fp.position.x + Math.cos(ang) * dist);
+          const tz = Math.round(fp.position.z + Math.sin(ang) * dist);
+          return { x: tx, z: tz, dist };
         },
         rollLootTable: (table) => {
           const tables: Record<string, ReadonlyArray<{ id: string; w: number }>> = {
