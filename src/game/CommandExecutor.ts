@@ -66,7 +66,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
     ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
     ctx.broadcast('/chest | /spawn | /seed | /killall', '#cccccc');
-    ctx.broadcast('/stats | /save', '#cccccc');
+    ctx.broadcast('/stats | /save | /setspawn | /clearchat', '#cccccc');
+    ctx.broadcast('/me <action> | /list | /whoami | /fly', '#cccccc');
+    ctx.broadcast('/effect <id> [s] [amp] | /particle [x y z]', '#cccccc');
+    ctx.broadcast('/difficulty <peaceful|easy|normal|hard>', '#cccccc');
+    ctx.broadcast('/achievements (/ach)', '#cccccc');
     return;
   }
   if (head === 'heal') {
