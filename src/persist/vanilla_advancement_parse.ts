@@ -13,6 +13,7 @@
 // Source: minecraft.wiki "Advancement". Behavioral spec — clean-room.
 
 import { mapVanillaItemName } from './vanilla_item_map';
+import { flattenTextComponent } from './text_component';
 
 export type AdvancementFrame = 'task' | 'goal' | 'challenge';
 
@@ -33,21 +34,7 @@ export interface ParsedAdvancement {
 
 export class AdvancementParseError extends Error {}
 
-function flatten(c: unknown): string {
-  if (c === null || c === undefined) return '';
-  if (typeof c === 'string') return c;
-  if (typeof c === 'number' || typeof c === 'boolean') return String(c);
-  if (Array.isArray(c)) return c.map(flatten).join('');
-  if (typeof c === 'object') {
-    const obj = c as Record<string, unknown>;
-    let out = '';
-    if (typeof obj['text'] === 'string') out += obj['text'];
-    if (typeof obj['translate'] === 'string' && !out) out += obj['translate'];
-    if (Array.isArray(obj['extra'])) out += flatten(obj['extra']);
-    return out;
-  }
-  return '';
-}
+const flatten = flattenTextComponent;
 
 function asFrame(s: string): AdvancementFrame {
   return s === 'goal' || s === 'challenge' ? s : 'task';

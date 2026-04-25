@@ -59,6 +59,7 @@ export {
   type AdvancementFrame,
 } from './vanilla_advancement_parse';
 export { parseVanillaFunction, type ParsedFunction } from './vanilla_function_parse';
+export { flattenTextComponent } from './text_component';
 
 export type VanillaFileKind =
   | 'level_dat'

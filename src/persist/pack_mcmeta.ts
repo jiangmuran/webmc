@@ -4,9 +4,11 @@
 //
 // Vanilla "description" can be a plain string or a JSON-text-component
 // (object or array). We coerce all variants to a flat string for
-// display.
+// display via the shared text-component flattener.
 //
 // Source: minecraft.wiki "Resource pack". Behavioral spec — clean-room.
+
+import { flattenTextComponent } from './text_component';
 
 export interface PackMeta {
   packFormat: number;
@@ -14,21 +16,6 @@ export interface PackMeta {
   // Optional supported_formats (1.20.2+) as either int or {min_inclusive, max_inclusive}.
   supportedFormatsMin: number | null;
   supportedFormatsMax: number | null;
-}
-
-function flattenComponent(c: unknown): string {
-  if (c === null || c === undefined) return '';
-  if (typeof c === 'string') return c;
-  if (typeof c === 'number' || typeof c === 'boolean') return String(c);
-  if (Array.isArray(c)) return c.map(flattenComponent).join('');
-  if (typeof c === 'object') {
-    const obj = c as Record<string, unknown>;
-    let out = '';
-    if (typeof obj['text'] === 'string') out += obj['text'];
-    if (Array.isArray(obj['extra'])) out += flattenComponent(obj['extra']);
-    return out;
-  }
-  return '';
 }
 
 export class PackMetaError extends Error {}
@@ -47,7 +34,7 @@ export function parsePackMcmeta(text: string): PackMeta {
   const p = pack as Record<string, unknown>;
   const packFormat = Number(p['pack_format']);
   if (!Number.isFinite(packFormat)) throw new PackMetaError('"pack_format" must be a number');
-  const description = flattenComponent(p['description']);
+  const description = flattenTextComponent(p['description']);
   let supportedMin: number | null = null;
   let supportedMax: number | null = null;
   const sf = p['supported_formats'];
