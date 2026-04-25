@@ -1143,6 +1143,61 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'spawnvillage' || head === 'autotown') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3×3 grid of cabins around a central well.
+    const SPACING = 7;
+    let n = 0;
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue;
+        const cx = px + i * SPACING;
+        const cz = pz + j * SPACING;
+        ctx.fillBlocks(cx, py - 1, cz, cx + 2, py - 1, cz + 2, 'oak_planks');
+        ctx.fillBlocks(cx, py, cz, cx + 2, py + 2, cz, 'oak_planks');
+        ctx.fillBlocks(cx, py, cz + 2, cx + 2, py + 2, cz + 2, 'oak_planks');
+        ctx.fillBlocks(cx, py, cz, cx, py + 2, cz + 2, 'oak_planks');
+        ctx.fillBlocks(cx + 2, py, cz, cx + 2, py + 2, cz + 2, 'oak_planks');
+        ctx.fillBlocks(cx, py + 3, cz, cx + 2, py + 3, cz + 2, 'oak_planks');
+        ctx.fillBlocks(cx + 1, py, cz, cx + 1, py + 1, cz, 'air');
+        ctx.setBlock?.(cx + 1, py + 2, cz - 1, 'torch');
+        n++;
+      }
+    }
+    // Central well.
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py + 1, pz + 1, 'cobblestone');
+    ctx.setBlock?.(px, py, pz, 'water');
+    ctx.broadcast(`Built a village (${String(n)} cabins + well)`, '#80ff80');
+    return;
+  }
+  if (head === 'maze') {
+    if (!ctx.fillBlocks) return;
+    const size = parseInt(args[0] ?? '15', 10);
+    if (!Number.isFinite(size) || size < 5 || size > 64) {
+      ctx.broadcast('Usage: /maze <size=15>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Outer wall.
+    ctx.fillBlocks(px, py, pz, px + size - 1, py + 2, pz + size - 1, 'cobblestone');
+    ctx.fillBlocks(px + 1, py, pz + 1, px + size - 2, py + 2, pz + size - 2, 'air');
+    // Random interior walls (~30% density).
+    for (let z = 1; z < size - 1; z++) {
+      for (let x = 1; x < size - 1; x++) {
+        if ((x ^ z) % 3 === 0 && Math.random() < 0.5) {
+          ctx.setBlock?.(px + x, py, pz + z, 'cobblestone');
+          ctx.setBlock?.(px + x, py + 1, pz + z, 'cobblestone');
+        }
+      }
+    }
+    ctx.broadcast(`Maze ${String(size)}×${String(size)}`, '#80ff80');
+    return;
+  }
   if (head === 'fountain') {
     if (!ctx.fillBlocks) return;
     const px = Math.floor(ctx.playerPos.x);
