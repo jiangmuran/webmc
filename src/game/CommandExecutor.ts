@@ -47,6 +47,9 @@ export interface CommandContext {
   entityStats?: () => { mobs: number; hostile: number; passive: number; neutral: number; drops: number; xpOrbs: number; byKind: { kind: string; count: number }[] };
   chunkStats?: () => { loaded: number; pending: number; meshes: number; triangles: number };
   openCreativeInventory?: () => void;
+  saveLoadout?: (name: string) => void;
+  loadLoadout?: (name: string) => boolean;
+  listLoadouts?: () => string[];
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -908,6 +911,30 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'loadout') {
+    if (!ctx.saveLoadout || !ctx.loadLoadout) return;
+    const sub = (args[0] ?? 'list').toLowerCase();
+    const name = args[1] ?? 'default';
+    if (sub === 'save') {
+      ctx.saveLoadout(name);
+      ctx.broadcast(`Loadout '${name}' saved`, '#80ff80');
+      return;
+    }
+    if (sub === 'load' || sub === 'restore') {
+      const ok = ctx.loadLoadout(name);
+      if (ok) ctx.broadcast(`Loadout '${name}' restored`, '#80ff80');
+      else ctx.broadcast(`No loadout '${name}'`, '#ff8080');
+      return;
+    }
+    if (sub === 'list') {
+      const list = ctx.listLoadouts?.() ?? [];
+      if (list.length === 0) ctx.broadcast('No loadouts. Use /loadout save <name>.', '#cccccc');
+      else ctx.broadcast(`Loadouts: ${list.join(', ')}`, '#cccccc');
+      return;
+    }
+    ctx.broadcast('Usage: /loadout <save|load|list> [name=default]', '#ff8080');
     return;
   }
   if (head === 'freezemobs') {
