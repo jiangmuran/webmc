@@ -2572,8 +2572,9 @@ function frame(): void {
   playerState.tick(dtSec, { inFluid: fp.inFluid });
 
   if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure')) {
-    const dmg = fp.lastLandFallBlocks - 3;
-    playerState.takeDamage({ amount: dmg, source: 'fall' });
+    const slowFalling = playerState.effects.has('slow_falling');
+    const dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    if (dmg > 0) playerState.takeDamage({ amount: dmg, source: 'fall' });
   }
   fp.lastLandFallBlocks = 0;
 
