@@ -2115,7 +2115,7 @@ function igniteTnt(bx: number, by: number, bz: number): void {
     const light = lightCache.get(lightKey(cx, cz)) ?? null;
     chunkStore.markDirty(chunk, light);
   }
-  primedTnt.push({ bx, by, bz, remainingSec: 1.5 });
+  primedTnt.push({ bx, by, bz, remainingSec: 4 }); // MC canonical 4s fuse
   chatInput.addLine(`TNT primed!`, '#ff8040');
   sfx.play('click');
 }
