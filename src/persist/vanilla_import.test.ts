@@ -37,6 +37,10 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('server.properties')).toBe('server_properties');
     expect(detectVanillaFileKind('assets/minecraft/lang/en_us.json')).toBe('lang_json');
     expect(detectVanillaFileKind('assets/minecraft/sounds.json')).toBe('sounds_json');
+    expect(detectVanillaFileKind('options.txt')).toBe('options_txt');
+    expect(detectVanillaFileKind('assets/minecraft/textures/block/water_still.png.mcmeta')).toBe(
+      'animation_mcmeta',
+    );
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

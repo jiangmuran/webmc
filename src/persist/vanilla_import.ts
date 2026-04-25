@@ -108,6 +108,19 @@ export {
   KNOWN_RESOURCE_PACK_FORMATS,
   KNOWN_DATA_PACK_FORMATS,
 } from './pack_format_versions';
+export {
+  parseVanillaOptionsTxt,
+  type ParsedOptionsTxt,
+  type OptionValue,
+} from './vanilla_options_parse';
+export {
+  parseVanillaAnimationMcmeta,
+  frameDurations,
+  totalAnimationTicks,
+  AnimationMcmetaParseError,
+  type ParsedAnimationMcmeta,
+  type AnimationFrame,
+} from './vanilla_animation_mcmeta_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -126,6 +139,8 @@ export type VanillaFileKind =
   | 'server_properties'
   | 'lang_json'
   | 'sounds_json'
+  | 'options_txt'
+  | 'animation_mcmeta'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -140,6 +155,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
   if (n.endsWith('.mcfunction')) return 'function_mcfunction';
   if (n.endsWith('server.properties') || n.endsWith('/server.properties'))
     return 'server_properties';
+  if (n.endsWith('options.txt') || n.endsWith('/options.txt')) return 'options_txt';
+  if (n.endsWith('.png.mcmeta')) return 'animation_mcmeta';
   if (n.endsWith('.json')) {
     // Best-effort routing: look at the path. recipes/, loot_tables/, tags/.
     if (/(\/|^)recipes?\//.test(n)) return 'recipe_json';
