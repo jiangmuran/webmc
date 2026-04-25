@@ -1183,6 +1183,8 @@ let lastPhantomCheckMs = 0;
 let tickFrozen = false;
 const chickenEggTimers = new Map<number, number>(); // mob id → next-egg-ms timestamp
 let lastEggCheckMs = 0;
+const zombieDrownTimers = new Map<number, number>(); // zombie id → ms in water
+let lastDrownCheckMs = 0;
 void persistDB.getMeta('dayCounter').then((saved) => {
   if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
 });
@@ -3108,6 +3110,36 @@ function frame(): void {
         for (const id of chickenEggTimers.keys()) {
           if (!Array.from(mobWorld.all()).some((m) => m.id === id)) chickenEggTimers.delete(id);
         }
+      }
+    }
+
+    // Zombie → drowned conversion after ~30s underwater.
+    const nowDrownMs = performance.now();
+    if (nowDrownMs - lastDrownCheckMs > 1000) {
+      const dt = nowDrownMs - lastDrownCheckMs;
+      lastDrownCheckMs = nowDrownMs;
+      const toConvert: { id: number; pos: { x: number; y: number; z: number } }[] = [];
+      for (const m of mobWorld.all()) {
+        if (m.def.kind !== 'zombie') continue;
+        const headY = Math.floor(m.position.y + m.def.aabb.halfY);
+        const headBlock = world.get(Math.floor(m.position.x), headY, Math.floor(m.position.z));
+        const headDef = registry.get(stateId(headBlock));
+        const inWater = headDef.name === 'webmc:water';
+        if (inWater) {
+          const cur = (zombieDrownTimers.get(m.id) ?? 0) + dt;
+          zombieDrownTimers.set(m.id, cur);
+          if (cur >= 30_000) toConvert.push({ id: m.id, pos: { x: m.position.x, y: m.position.y, z: m.position.z } });
+        } else if (zombieDrownTimers.has(m.id)) {
+          zombieDrownTimers.delete(m.id);
+        }
+      }
+      for (const c of toConvert) {
+        try {
+          mobWorld.spawn('drowned' as Parameters<typeof mobWorld.spawn>[0], c.pos);
+          mobWorld.remove(c.id);
+          zombieDrownTimers.delete(c.id);
+          subtitles.push('Zombie drowned');
+        } catch { /* drowned not registered */ }
       }
     }
 
