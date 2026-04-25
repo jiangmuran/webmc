@@ -437,6 +437,8 @@ itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability:
 // MC 1.21+ items.
 itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:name_tag', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rail', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:elytra', maxStack: 1, durability: 432 });
@@ -1365,6 +1367,68 @@ window.addEventListener('mousemove', (e) => {
 
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
+  if (e.button === 2) {
+    // Right-click: if aimed at a mob, try feed → tame → leash with held item.
+    const aimLook = fp.lookVector();
+    let aimedMob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M | null : null = null;
+    let bestDist = Infinity;
+    for (const m of mobWorld.all()) {
+      const dx = m.position.x - camera.position.x;
+      const dy = m.position.y - camera.position.y;
+      const dz = m.position.z - camera.position.z;
+      const d = Math.hypot(dx, dy, dz);
+      if (d > 6 + 1) continue;
+      const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+      if (dot > 0.97 && d < bestDist) {
+        bestDist = d;
+        aimedMob = m;
+      }
+    }
+    if (aimedMob) {
+      const sel = hotbar.selected;
+      const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
+      const kind = aimedMob.def.kind;
+      const breedFood = BREED_FOOD[kind];
+      if (breedFood && breedFood.includes(heldName)) {
+        const prev = lovingMobs.get(aimedMob.id) ?? { inLoveUntilTick: 0, breedCooldownUntilTick: 0 };
+        if (worldTick >= prev.breedCooldownUntilTick) {
+          const next = animalFeed(prev, worldTick);
+          lovingMobs.set(aimedMob.id, next);
+          const itemId = itemRegistry.byName(heldName);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
+          chatInput.addLine(`${kind} entered love mode ♥`, '#ff80c0');
+        }
+        return;
+      }
+      if (TAMEABLE_KINDS.has(kind)) {
+        let st = tamedMobs.get(aimedMob.id);
+        if (!st) {
+          st = makeTameable(kind as TameableKind);
+          tamedMobs.set(aimedMob.id, st);
+        }
+        if (st.ownerId === null) {
+          const result = tryTame(st, 1, heldName);
+          if (result.consumed) {
+            const itemId = itemRegistry.byName(heldName);
+            if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+            if (result.tamed) {
+              mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
+              chatInput.addLine(`Tamed ${kind}! ♥`, '#80ff80');
+            }
+            return;
+          }
+        }
+      }
+      if (heldName === 'webmc:lead' && canLeash(kind) && !leashedMobs.has(aimedMob.id)) {
+        leashedMobs.add(aimedMob.id);
+        mobRenderer.setMobName(aimedMob.id, `🪢 ${kind}`);
+        chatInput.addLine(`Leashed ${kind}`, '#80ff80');
+        return;
+      }
+    }
+    return;
+  }
   if (e.button === 1) {
     e.preventDefault();
     const hit = interaction.castRay();
