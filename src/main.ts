@@ -5651,14 +5651,27 @@ for (const name of ['webmc:sand', 'webmc:gravel', 'webmc:red_sand']) {
 // below a fallable-block column is removed. Drops the column one step and
 // recursively checks the block above.
 function cascadeFalling(bx: number, by: number, bz: number): void {
+  // Drop the whole column of fallable blocks above (bx, by, bz) onto the
+  // surface below them. Old impl only checked "is the cell directly
+  // below air?" which broke after the first drop because the just-dropped
+  // sand became "the cell below" for the next iteration — so only the
+  // bottom block in a stack ever fell, instead of the whole pile.
+  let dropTarget = by; // first known air cell to drop the next solid into
   let y = by + 1;
   while (y < CHUNK_HEIGHT) {
     const s = world.get(bx, y, bz);
-    if (s === AIR) break;
+    if (s === AIR) {
+      // Found another air pocket — future sands above can fall further.
+      // dropTarget stays the same; we still want the next sand to land
+      // on the lowest empty cell, which is dropTarget.
+      y++;
+      continue;
+    }
     if (!fallableIds.has(stateId(s))) break;
-    if (world.get(bx, y - 1, bz) !== AIR) break;
-    world.set(bx, y - 1, bz, s);
+    if (dropTarget >= y) break; // no air below — pile is already settled
+    world.set(bx, dropTarget, bz, s);
     world.set(bx, y, bz, AIR);
+    dropTarget++;
     y++;
   }
 }
