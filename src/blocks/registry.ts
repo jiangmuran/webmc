@@ -344,6 +344,7 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:oxeye_daisy', solid: false, opaque: false, color: [240, 240, 230] as RGB, hardness: 0 },
     { name: 'webmc:cornflower', solid: false, opaque: false, color: [85, 110, 220] as RGB, hardness: 0 },
     { name: 'webmc:lily_of_the_valley', solid: false, opaque: false, color: [240, 245, 230] as RGB, hardness: 0 },
+    { name: 'webmc:fire', solid: false, opaque: false, color: [255, 140, 30] as RGB, hardness: 0, lightEmission: 15 },
     { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
     { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
     {

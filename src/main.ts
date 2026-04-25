@@ -425,6 +425,7 @@ itemRegistry.register({ name: 'webmc:bow', maxStack: 1, durability: 384 });
 itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
+itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:compass', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:clock', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability: 0 });
@@ -1117,6 +1118,31 @@ const interaction = new InteractionController(
             subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
             return true;
           }
+        }
+      }
+      // Flint and steel: ignite block above with fire.
+      if (heldName === 'flint_and_steel' && airAbove) {
+        const fireId = registry.byName('webmc:fire');
+        if (fireId !== undefined) {
+          world.set(bx, by + 1, bz, makeState(fireId, 0));
+          touchWorldEdit(bx, by + 1, bz, fireId);
+          consumeHeldToolDurability(1);
+          sfx.play('click');
+          subtitles.push('Ignited');
+          return true;
+        }
+      }
+      // Fire charge: same as flint+steel, consumes the item.
+      if (heldName === 'fire_charge' && airAbove) {
+        const fireId = registry.byName('webmc:fire');
+        const fcId = itemRegistry.byName('webmc:fire_charge');
+        if (fireId !== undefined) {
+          world.set(bx, by + 1, bz, makeState(fireId, 0));
+          touchWorldEdit(bx, by + 1, bz, fireId);
+          if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(fcId, 1);
+          sfx.play('click');
+          subtitles.push('Ignited');
+          return true;
         }
       }
       // Bucket fill: right-click water/lava with empty bucket.
