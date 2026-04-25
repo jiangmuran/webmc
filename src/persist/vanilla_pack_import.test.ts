@@ -116,6 +116,114 @@ describe('vanilla pack importer', () => {
     expect(r.unknown).toEqual([]);
   });
 
+  it('routes worldgen + variant content into the new buckets', () => {
+    const r = importVanillaPack([
+      {
+        path: 'data/minecraft/painting_variant/bust.json',
+        text: JSON.stringify({ asset_id: 'minecraft:bust', width: 2, height: 2 }),
+      },
+      {
+        path: 'data/minecraft/trim_pattern/sentry.json',
+        text: JSON.stringify({ asset_id: 'minecraft:sentry' }),
+      },
+      {
+        path: 'data/minecraft/trim_material/iron.json',
+        text: JSON.stringify({ asset_name: 'iron', ingredient: 'minecraft:iron_ingot' }),
+      },
+      {
+        path: 'data/minecraft/wolf_variant/pale.json',
+        text: JSON.stringify({ asset_id: 'minecraft:entity/wolf/wolf_pale' }),
+      },
+      {
+        path: 'data/minecraft/banner_pattern/bricks.json',
+        text: JSON.stringify({ asset_id: 'minecraft:bricks' }),
+      },
+      {
+        path: 'data/minecraft/instrument/ponder.json',
+        text: JSON.stringify({ sound_event: 'minecraft:item.goat_horn.sound.0' }),
+      },
+      {
+        path: 'assets/minecraft/atlases/blocks.json',
+        text: JSON.stringify({ sources: [{ type: 'minecraft:directory', source: 'block' }] }),
+      },
+      {
+        path: 'data/minecraft/predicates/chance.json',
+        text: JSON.stringify({ condition: 'minecraft:random_chance', chance: 0.5 }),
+      },
+      {
+        path: 'assets/minecraft/font/default.json',
+        text: JSON.stringify({ providers: [{ type: 'bitmap' }] }),
+      },
+      {
+        path: 'data/minecraft/item_modifiers/foo.json',
+        text: JSON.stringify({ function: 'minecraft:set_count', count: 3 }),
+      },
+      {
+        path: 'data/minecraft/worldgen/world_preset/normal.json',
+        text: JSON.stringify({ dimensions: {} }),
+      },
+      {
+        path: 'data/minecraft/worldgen/flat_level_generator_preset/classic_flat.json',
+        text: JSON.stringify({ biome: 'minecraft:plains', layers: [] }),
+      },
+      {
+        path: 'data/minecraft/worldgen/configured_feature/oak.json',
+        text: JSON.stringify({ type: 'minecraft:tree' }),
+      },
+      {
+        path: 'data/minecraft/worldgen/placed_feature/trees_oak.json',
+        text: JSON.stringify({ feature: 'minecraft:trees_oak', placement: [] }),
+      },
+      {
+        path: 'data/minecraft/worldgen/structure/village.json',
+        text: JSON.stringify({ type: 'minecraft:jigsaw' }),
+      },
+      {
+        path: 'data/minecraft/worldgen/template_pool/houses.json',
+        text: JSON.stringify({ name: 'minecraft:houses', fallback: 'minecraft:empty' }),
+      },
+      {
+        path: 'data/minecraft/worldgen/processor_list/foo.json',
+        text: JSON.stringify({ processors: [{ processor_type: 'minecraft:rule' }] }),
+      },
+      {
+        path: 'data/minecraft/worldgen/noise_settings/overworld.json',
+        text: JSON.stringify({ sea_level: 63 }),
+      },
+      {
+        path: 'data/minecraft/worldgen/multi_noise_biome_source_parameter_list/overworld.json',
+        text: JSON.stringify({ preset: 'minecraft:overworld' }),
+      },
+      { path: 'data/minecraft/worldgen/density_function/foo.json', text: '0.5' },
+      {
+        path: 'data/minecraft/jukebox_song/13.json',
+        text: JSON.stringify({ sound_event: 'minecraft:music_disc.13' }),
+      },
+    ]);
+    expect(r.paintingVariants).toHaveLength(1);
+    expect(r.trimPatterns).toHaveLength(1);
+    expect(r.trimMaterials).toHaveLength(1);
+    expect(r.mobVariants).toHaveLength(1);
+    expect(r.bannerPatterns).toHaveLength(1);
+    expect(r.instruments).toHaveLength(1);
+    expect(r.atlases).toHaveLength(1);
+    expect(r.predicates).toHaveLength(1);
+    expect(r.fonts).toHaveLength(1);
+    expect(r.itemModifiers).toHaveLength(1);
+    expect(r.worldPresets).toHaveLength(1);
+    expect(r.flatPresets).toHaveLength(1);
+    expect(r.configuredFeatures).toHaveLength(1);
+    expect(r.placedFeatures).toHaveLength(1);
+    expect(r.structures).toHaveLength(1);
+    expect(r.templatePools).toHaveLength(1);
+    expect(r.processorLists).toHaveLength(1);
+    expect(r.noiseSettings).toHaveLength(1);
+    expect(r.multiNoiseSources).toHaveLength(1);
+    expect(r.densityFunctions).toHaveLength(1);
+    expect(r.jukeboxSongs).toHaveLength(1);
+    expect(r.errors).toEqual([]);
+  });
+
   it('routes 1.20.5+ datapack content (enchantments, damage_type, chat_type, splashes)', () => {
     const r = importVanillaPack([
       {
