@@ -1144,6 +1144,43 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'lookuprich' || head === 'lr') {
+    const name = (args[0] ?? '').toLowerCase();
+    if (!name) {
+      ctx.broadcast('Usage: /lookuprich <name>', '#ff8080');
+      return;
+    }
+    const isBlock = ctx.lookupBlock?.(name) ?? false;
+    const isItem = ctx.lookupItem?.(name) ?? false;
+    if (!isBlock && !isItem) {
+      ctx.broadcast(`✘ ${name}: not found`, '#ff8080');
+      return;
+    }
+    ctx.broadcast(`${isBlock ? '🟧 block ' : ''}${isItem ? '🎒 item ' : ''}${name}`, '#80ff80');
+    return;
+  }
+  if (head === 'gridmark') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '32', 10);
+    const block = args[1] ?? 'glowstone';
+    const step = parseInt(args[2] ?? '8', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64 || !Number.isFinite(step) || step < 2 || step > 32) {
+      ctx.broadcast('Usage: /gridmark <r=32> [block=glowstone] [step=8]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dx = -r; dx <= r; dx += step) {
+      for (let dz = -r; dz <= r; dz += step) {
+        ctx.setBlock?.(px + dx, py - 1, pz + dz, block);
+        n++;
+      }
+    }
+    ctx.broadcast(`Grid markers: ${String(n)} ${block} at every ${String(step)}`, '#80ff80');
+    return;
+  }
   if (head === 'wisdom' || head === 'fortune') {
     const SAYINGS = [
       'A diamond is a piece of coal that handled stress well.',
