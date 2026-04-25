@@ -27,7 +27,7 @@ export class ChatInput {
     this.log = document.createElement('div');
     this.log.setAttribute('data-testid', 'chat-log');
     this.log.style.cssText =
-      'display:flex;flex-direction:column;gap:1px;max-height:140px;overflow:hidden;margin-bottom:6px;';
+      'display:flex;flex-direction:column;gap:1px;max-height:240px;overflow-y:auto;margin-bottom:6px;pointer-events:auto;';
     this.root.appendChild(this.log);
 
     this.input = document.createElement('input');
@@ -92,6 +92,7 @@ export class ChatInput {
     line.style.cssText = `background:rgba(0,0,0,0.55);padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;`;
     this.log.appendChild(line);
     while (this.log.children.length > 40) this.log.removeChild(this.log.firstChild!);
+    this.log.scrollTop = this.log.scrollHeight;
     setTimeout(() => {
       if (!this.open && this.log.contains(line)) {
         line.style.opacity = '0';
