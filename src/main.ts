@@ -1173,6 +1173,29 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Firework rocket: launch upward with a colored particle burst.
+      if (heldName === 'firework_rocket') {
+        const px = bx + 0.5;
+        const pz = bz + 0.5;
+        for (let h = 0; h < 8; h++) {
+          for (let i = 0; i < 3; i++) blockParticles.emitPlace(px + (Math.random() - 0.5) * 0.5, by + h, pz + (Math.random() - 0.5) * 0.5, [255, 220, 80]);
+        }
+        const COLORS: [number, number, number][] = [[255, 80, 80], [80, 255, 80], [80, 80, 255], [255, 255, 80], [255, 80, 255], [80, 255, 255]];
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)] ?? [255, 220, 80];
+        const burstY = by + 8;
+        for (let i = 0; i < 60; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const r = 1 + Math.random() * 4;
+          blockParticles.emitPlace(px + Math.cos(ang) * r, burstY + (Math.random() - 0.5) * 4, pz + Math.sin(ang) * r, color);
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const fwId = itemRegistry.byName('webmc:firework_rocket');
+          if (fwId !== undefined) consumeInventoryItem(fwId, 1);
+        }
+        sfx.play('break');
+        subtitles.push('Firework!');
+        return true;
+      }
       // Splash potion: hit target with effect AOE.
       if (heldName.startsWith('splash_potion_')) {
         const ptype = SPLASH_POTIONS.find((p) => p.name === `webmc:${heldName}`);
