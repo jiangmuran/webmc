@@ -63,6 +63,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     if (action) ctx.broadcast(`* ${ctx.playerName ?? 'You'} ${action}`, '#cccccc');
     return;
   }
+  if (head === 'echo') {
+    const text = args.join(' ');
+    ctx.broadcast(text, '#ffffff');
+    return;
+  }
   if (head === 'list') {
     ctx.broadcast(`Players online: 1 (${ctx.playerName ?? 'Player'})`, '#cccccc');
     return;
