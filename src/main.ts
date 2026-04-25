@@ -32,6 +32,7 @@ import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
+import { critMultiplier } from './game/critical_hit';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -882,7 +883,15 @@ canvas.addEventListener('mousedown', (e) => {
     if (sinceMs < 60) return; // hard floor on click rate
     lastPlayerAttackAt = nowMs;
     const strengthEff = playerState.effects.get('strength');
-    const baseDmg = (2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0)) * damageMult;
+    const critMult = critMultiplier({
+      velocityY: fp.velocity.y,
+      onGround: fp.onGround,
+      sprinting: fp.input.sprint,
+      inWater: fp.inFluid === 'water',
+      hasBlindness: playerState.effects.has('blindness'),
+    });
+    const baseDmg = (2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0)) * damageMult * critMult;
+    if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
     sfx.play('hit');
