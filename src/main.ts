@@ -35,6 +35,7 @@ import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
 import { critMultiplier, sweepingAttack } from './game/critical_hit';
+import { smashDamage } from './items/mace_combat';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
@@ -757,6 +758,7 @@ void persistDB.getMeta('difficulty').then((saved) => {
 let sprintDustAccum = 0;
 let prevOnGround = true;
 let prevInWater = false;
+let maceFallStartY = 0;
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -1699,8 +1701,20 @@ canvas.addEventListener('mousedown', (e) => {
       if (heldName.includes('netherite')) weaponBase = 10;
       else if (heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond')) weaponBase = 9;
       else weaponBase = 7;
+    } else if (heldName.includes('mace')) {
+      weaponBase = 6;
+    } else if (heldName.includes('trident')) {
+      weaponBase = 9;
     }
-    const baseDmg = Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult;
+    // Mace smash: bonus damage scaled by fall distance (>1.5 blocks falling, capped +24 dmg).
+    let maceBonus = 0;
+    if (heldName.includes('mace') && fp.lastLandFallBlocks <= 0 && !fp.onGround && fp.velocity.y < -1) {
+      // Approximate fall distance via airborneStartY tracking — use camera height + a simple counter.
+      const fallDist = Math.max(0, maceFallStartY - fp.position.y);
+      maceBonus = smashDamage({ fallDistance: fallDist, densityBonus: 0, windBurstLevel: 0, breachLevel: 0, baseDamage: 0 });
+      if (maceBonus > 0) subtitles.push(`Smash +${maceBonus.toFixed(0)}`);
+    }
+    const baseDmg = (Math.max(0, (weaponBase + strengthBonus + weaknessReduce)) * damageMult * critMult) + maceBonus;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
@@ -3625,6 +3639,9 @@ function frame(): void {
   if (prevOnGround && !fp.onGround && fp.velocity.y > 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
+  // Track airborne peak Y for mace smash damage calc.
+  if (fp.onGround) maceFallStartY = fp.position.y;
+  else if (fp.position.y > maceFallStartY) maceFallStartY = fp.position.y;
   prevOnGround = fp.onGround;
   // Swim exhaustion: 0.01 per meter swum.
   if (fp.inFluid === 'water' && (gameMode === 'survival' || gameMode === 'adventure')) {
