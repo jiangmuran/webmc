@@ -44,7 +44,8 @@ export class ItemRegistry {
   }
 
   register(def: Omit<ItemDef, 'id'> & { id?: ItemId }): ItemId {
-    if (this._byName.has(def.name)) throw new Error(`ItemRegistry: duplicate ${def.name}`);
+    const existing = this._byName.get(def.name);
+    if (existing !== undefined) return existing;
     const id = def.id ?? this._defs.length;
     if (id !== this._defs.length) {
       throw new Error(`ItemRegistry: non-sequential id ${String(id)}`);
