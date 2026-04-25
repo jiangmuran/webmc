@@ -7282,14 +7282,25 @@ function frame(): void {
     fluidTickAccum -= FLUID_TICK_SEC;
     const { changed } = fluidWorld.tick();
     if (changed.length > 0) {
-      // Dedupe per-chunk so we only rebuild meshes/lights once per chunk.
-      const touched = new Set<string>();
+      // Per-chunk: rebuild light once. Per-section (cy): mark mesh dirty
+      // — markChunkAllDirty was rebuilding all 24 sections of every
+      // touched chunk every fluid tick, costing 24x what it should.
+      const chunksToRelight = new Set<string>();
+      const sectionsToRemesh = new Map<string, Set<number>>();
       for (const p of changed) {
         const cx = Math.floor(p.x / 16);
         const cz = Math.floor(p.z / 16);
-        touched.add(`${String(cx)},${String(cz)}`);
+        const cy = Math.floor(p.y / 16);
+        const ck = `${String(cx)},${String(cz)}`;
+        chunksToRelight.add(ck);
+        let s = sectionsToRemesh.get(ck);
+        if (!s) {
+          s = new Set();
+          sectionsToRemesh.set(ck, s);
+        }
+        s.add(cy);
       }
-      for (const k of touched) {
+      for (const k of chunksToRelight) {
         const [cxS, czS] = k.split(',');
         const cxN = Number(cxS);
         const czN = Number(czS);
@@ -7297,10 +7308,13 @@ function frame(): void {
         if (!chunk) continue;
         const oldLight = lightCache.get(lightKey(cxN, czN)) ?? null;
         chunkStore.markDirty(chunk, oldLight);
-        // Rebuild light + mark mesh dirty so the spread is visible this frame.
         const newLight = buildLight(chunk, lightOracle);
         lightCache.set(lightKey(cxN, czN), newLight);
-        markChunkAllDirty(chunk);
+        const sections = sectionsToRemesh.get(k);
+        if (!sections) continue;
+        for (const cy of sections) {
+          if (chunk.section(cy)) chunk.markMeshDirty(cy);
+        }
       }
     }
   }
