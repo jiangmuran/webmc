@@ -1142,6 +1142,34 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'goals' || head === 'objectives') {
+    ctx.broadcast('— Suggested goals —', '#80ffff');
+    ctx.broadcast('1. Punch trees → 4 oak_planks → /craft crafting_table', '#cccccc');
+    ctx.broadcast('2. Make wooden tools → mine 8 cobblestone → stone tools', '#cccccc');
+    ctx.broadcast('3. Find iron at y<60 → smelt 3 iron_ingot → iron pickaxe', '#cccccc');
+    ctx.broadcast('4. Build shelter at /sethome before nightfall', '#cccccc');
+    ctx.broadcast('5. Mine 10 redstone, 5 diamond → power circuits', '#cccccc');
+    ctx.broadcast('6. /portal to nether (need flint_and_steel)', '#cccccc');
+    ctx.broadcast('7. /dragon for endgame', '#cccccc');
+    return;
+  }
+  if (head === 'achievements_progress' || head === 'progress') {
+    if (!ctx.listAchievements) return;
+    const list = ctx.listAchievements();
+    const got = list.filter((a) => a.unlocked).length;
+    ctx.broadcast(
+      `Progress: ${String(got)}/${String(list.length)} achievements`,
+      got === list.length ? '#80ff80' : '#cccccc',
+    );
+    return;
+  }
+  if (head === 'recipes' || head === 'recipebook') {
+    ctx.broadcast(
+      'Recipes: open inventory (E) and use the crafting grid; auto-suggest depends on held materials.',
+      '#cccccc',
+    );
+    return;
+  }
   if (head === 'totem' || head === 'undying') {
     if (!ctx.giveItem) return;
     ctx.giveItem('totem_of_undying', 1);

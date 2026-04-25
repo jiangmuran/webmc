@@ -4527,6 +4527,12 @@ const chatInput = new ChatInput(appEl, {
       '/noob',
       '/tipoftheday',
       '/tip',
+      '/goals',
+      '/objectives',
+      '/achievements_progress',
+      '/progress',
+      '/recipes',
+      '/recipebook',
     ];
     return SLASH_CMDS;
   },
