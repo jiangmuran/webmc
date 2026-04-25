@@ -3521,13 +3521,17 @@ function frame(): void {
       const def2 = registry.get(stateId(world.get(aim2.bx, aim2.by, aim2.bz)));
       const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
       const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
+      // Aqua Affinity: helmet item with name including "turtle" gives free aqua affinity (turtle shell).
+      const helmet = inventory.armor[0];
+      const helmetName = helmet ? itemRegistry.get(helmet.itemId).name : '';
+      const aquaAffinity = helmetName.includes('turtle');
       const t = breakTicksFor({
         hardness: Math.max(0.1, def2.hardness),
         correctTool: true,
         toolSpeed: 1,
         onGround: fp.onGround,
         underwater: fp.inFluid === 'water',
-        hasAquaAffinity: false,
+        hasAquaAffinity: aquaAffinity,
         hasteLevel: hasteAmp + (hasteAmp > 0 ? 1 : 0),
         fatigueLevel: fatigueAmp + (fatigueAmp > 0 ? 1 : 0),
         efficiencyBonus: 0,
