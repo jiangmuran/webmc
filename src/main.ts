@@ -39,6 +39,7 @@ import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { rollXp as rollMobXp } from './game/experience_gain';
+import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
 import { screenshotFilename } from './game/screenshot_capture';
@@ -1155,7 +1156,15 @@ canvas.addEventListener('mousedown', (e) => {
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
       const xpAmount = rollMobXp({ source: { kind: 'mob', mob: result.kind }, rng: Math.random });
-      for (let k = 0; k < xpAmount; k++) xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+      // MC-style XP chunks (2477, 1237, 617, 307, 149, 73, 37, 17, 7, 3, 1) — fewer orbs for huge drops.
+      for (const chunk of splitXp(xpAmount)) {
+        xpOrbs.spawn(
+          result.position.x + (Math.random() - 0.5) * 0.3,
+          result.position.y + 0.8,
+          result.position.z + (Math.random() - 0.5) * 0.3,
+          chunk,
+        );
+      }
       blockParticles.emitBreak(
         Math.floor(result.position.x),
         Math.floor(result.position.y),
