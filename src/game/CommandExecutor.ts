@@ -30,6 +30,7 @@ export interface CommandContext {
   setTickFrozen?: (frozen: boolean) => void;
   isTickFrozen?: () => boolean;
   getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
+  getLastDeathPos?: () => { x: number; y: number; z: number } | null;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
   importWorldFile?: () => void;
@@ -337,6 +338,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast('Usage: /tick <freeze|unfreeze|status>', '#ff8080');
     }
+    return;
+  }
+  if (head === 'deathloc' || head === 'lastdeath') {
+    const p = ctx.getLastDeathPos?.() ?? null;
+    if (!p) {
+      ctx.broadcast('No death recorded yet.', '#ff8080');
+      return;
+    }
+    ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#cccccc');
     return;
   }
   if (head === 'tps') {

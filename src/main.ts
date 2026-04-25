@@ -1222,6 +1222,15 @@ let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let tickFrozen = false;
+let lastDeathPos: { x: number; y: number; z: number } | null = null;
+void persistDB.getMeta('lastDeathPos').then((saved) => {
+  if (saved && typeof saved === 'object') {
+    const p = saved as { x?: unknown; y?: unknown; z?: unknown };
+    if (typeof p.x === 'number' && typeof p.y === 'number' && typeof p.z === 'number') {
+      lastDeathPos = { x: p.x, y: p.y, z: p.z };
+    }
+  }
+});
 const chickenEggTimers = new Map<number, number>(); // mob id → next-egg-ms timestamp
 let lastEggCheckMs = 0;
 const zombieDrownTimers = new Map<number, number>(); // zombie id → ms in water
@@ -1332,6 +1341,7 @@ const chatInput = new ChatInput(appEl, {
           p95ms: tpsTracker.percentile(0.95),
           lagging: tpsTracker.isLagging(),
         }),
+        getLastDeathPos: () => lastDeathPos,
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1559,7 +1569,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath',
     ];
     return SLASH_CMDS;
   },
@@ -2885,6 +2895,8 @@ function frame(): void {
     starvingShown = false;
   }
   if (playerState.justDied && !playerState.invulnerable) {
+    lastDeathPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+    void persistDB.setMeta('lastDeathPos', lastDeathPos);
     if (gameRules.doImmediateRespawn) {
       // Skip death screen; world spawn already happened during respawn().
       toast.show('Respawned', '#80ffa0', 1200);
