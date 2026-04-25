@@ -1351,6 +1351,8 @@ const chatInput = new ChatInput(appEl, {
     ];
     return SLASH_CMDS;
   },
+  getPlayerName: () => currentPlayerName,
+  onMention: () => sfx.play('click'),
 });
 
 const pauseMenu = new PauseMenu(appEl, {

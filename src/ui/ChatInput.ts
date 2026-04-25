@@ -1,6 +1,7 @@
 import { completions, nextCompletion } from './chat_tab_complete';
 import { wrap } from './chat_line_wrap';
 import { parseFormatted } from '../game/chat_color_formatter';
+import { detectMention } from '../game/chat_mention_highlight';
 
 const COLOR_HEX: Record<string, string> = {
   black: '#000000',
@@ -25,6 +26,8 @@ export interface ChatInputCallbacks {
   onSubmit: (text: string) => void;
   onOpenChanged?: (open: boolean) => void;
   getCompletions?: (input: string) => string[];
+  onMention?: () => void;
+  getPlayerName?: () => string;
 }
 
 export class ChatInput {
@@ -137,13 +140,18 @@ export class ChatInput {
   }
 
   addLine(text: string, color = '#ffffff'): void {
+    const playerName = this.cb.getPlayerName?.() ?? '';
+    const isMention = playerName.length > 0 && detectMention({ message: text, playerName, aliases: [] });
     const segments = wrap(text, 80);
-    for (const seg of segments) this.addRawLine(seg, color);
+    for (const seg of segments) this.addRawLine(seg, color, isMention);
+    if (isMention && this.cb.onMention) this.cb.onMention();
   }
 
-  private addRawLine(text: string, color: string): void {
+  private addRawLine(text: string, color: string, isMention = false): void {
     const line = document.createElement('div');
-    line.style.cssText = `background:rgba(0,0,0,0.55);padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;`;
+    const bg = isMention ? 'rgba(120,90,20,0.7)' : 'rgba(0,0,0,0.55)';
+    const border = isMention ? 'border-left:3px solid #ffd080;' : '';
+    line.style.cssText = `background:${bg};padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;${border}`;
     if (text.includes('§')) {
       for (const seg of parseFormatted(text)) {
         const span = document.createElement('span');
