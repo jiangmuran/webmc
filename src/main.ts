@@ -4513,6 +4513,14 @@ const chatInput = new ChatInput(appEl, {
       '/infinitexp',
       '/naked',
       '/unequip',
+      '/kits',
+      '/listkits',
+      '/modes',
+      '/gamemodes',
+      '/enchants',
+      '/enchantments',
+      '/effects',
+      '/allbuffs',
     ];
     return SLASH_CMDS;
   },

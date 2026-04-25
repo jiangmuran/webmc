@@ -1142,6 +1142,42 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'kits' || head === 'listkits') {
+    ctx.broadcast('Kits: starter, iron, diamond, netherite, mage, builder', '#cccccc');
+    ctx.broadcast('Use /kit <name> to get one.', '#cccccc');
+    return;
+  }
+  if (head === 'modes' || head === 'gamemodes') {
+    ctx.broadcast('Modes: survival, creative, adventure, spectator', '#cccccc');
+    ctx.broadcast('Switch with /gamemode <name> or /gmc to cycle.', '#cccccc');
+    return;
+  }
+  if (head === 'enchants' || head === 'enchantments') {
+    ctx.broadcast(
+      'Enchantments registered: protection, sharpness, fortune, mending, unbreaking, infinity, fire_aspect, knockback, flame, power, sweeping, looting (visual-only IDs).',
+      '#cccccc',
+    );
+    return;
+  }
+  if (head === 'effects' || head === 'allbuffs') {
+    if (!ctx.applyEffect) return;
+    const buffs = [
+      'speed',
+      'jump_boost',
+      'strength',
+      'regeneration',
+      'resistance',
+      'fire_resistance',
+      'water_breathing',
+      'night_vision',
+      'haste',
+      'absorption',
+      'saturation',
+    ];
+    for (const b of buffs) ctx.applyEffect(b, 1, 600);
+    ctx.broadcast(`Applied 11 buffs (10min)`, '#80ff80');
+    return;
+  }
   if (head === 'maxlevel' || head === 'maxxp') {
     ctx.setXpLevel?.(100);
     ctx.broadcast('XP level set to 100', '#80ff80');
