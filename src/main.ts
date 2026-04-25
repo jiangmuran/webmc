@@ -36,6 +36,7 @@ import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
 import { rumbleForDamage } from './engine/input/gamepad_rumble';
+import { init as initGyro, onSample as onGyroSample, setEnabled as setGyroEnabled, type GyroSmoothed } from './engine/input/gyro_assist';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -120,6 +121,17 @@ const detectedGpuTier = ((): 'low' | 'mid' | 'high' => {
 })();
 
 const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+let gyroState: GyroSmoothed = initGyro();
+let gyroYawAccum = 0;
+if (isMobileDevice) {
+  window.addEventListener('deviceorientation', (e) => {
+    if (typeof e.alpha !== 'number') return;
+    const result = onGyroSample(gyroState, { alpha: e.alpha, beta: e.beta ?? 0, gamma: e.gamma ?? 0 });
+    gyroState = result.state;
+    gyroYawAccum += result.yawDelta * 0.0035;
+  });
+}
 
 if (localStorage.getItem('webmc:settings') === null) {
   const recVD = recommendedChunkRadius(detectedGpuTier, !isMobileDevice);
@@ -978,6 +990,13 @@ const chatInput = new ChatInput(appEl, {
           inventory.sortMain();
         },
         toggleScoreboard: () => scoreboard.toggle(),
+        toggleGyro: () => {
+          gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
+          if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
+            void (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission().catch(() => undefined);
+          }
+          return gyroState.enabled;
+        },
         setBlock: (x, y, z, name) => {
           const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const id = registry.byName(full);
@@ -1172,7 +1191,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt',
     ];
     return SLASH_CMDS;
   },
@@ -2023,6 +2042,11 @@ function frame(): void {
       fp.input.strafe = touch.state.moveStrafe;
     }
     if (touch.state.jump) fp.input.jump = true;
+  }
+
+  if (gyroYawAccum !== 0) {
+    fp.yaw -= gyroYawAccum;
+    gyroYawAccum = 0;
   }
 
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
