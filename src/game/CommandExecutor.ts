@@ -1144,6 +1144,48 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'sea' || head === 'flood') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '12', 10);
+    const fluid = (args[1] ?? 'water').toLowerCase();
+    if (!Number.isFinite(r) || r < 4 || r > 64) {
+      ctx.broadcast('Usage: /sea <r=12> [water|lava]', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const n = ctx.fillBlocks(
+      px - r,
+      py,
+      pz - r,
+      px + r,
+      py,
+      pz + r,
+      fluid === 'lava' ? 'lava' : 'water',
+    );
+    ctx.broadcast(
+      `Flooded with ${fluid}: ${String(n)} blocks`,
+      fluid === 'lava' ? '#ff8080' : '#80a0ff',
+    );
+    return;
+  }
+  if (head === 'desert_world' || head === 'sand') {
+    if (!ctx.fillBlocks) return;
+    const r = parseInt(args[0] ?? '24', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'sand');
+    for (let i = 0; i < 8; i++) {
+      const x = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const z = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      ctx.setBlock?.(x, py, z, 'cactus');
+    }
+    ctx.broadcast(`Desert biome ${String((r * 2 + 1) ** 2)} tiles + 8 cactus`, '#ffd080');
+    return;
+  }
   if (head === 'lookuprich' || head === 'lr') {
     const name = (args[0] ?? '').toLowerCase();
     if (!name) {

@@ -398,6 +398,20 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 0,
     },
     {
+      name: 'webmc:cactus',
+      solid: true,
+      opaque: false,
+      color: [85, 130, 50] as RGB,
+      hardness: 0.4,
+    },
+    {
+      name: 'webmc:dead_bush',
+      solid: false,
+      opaque: false,
+      color: [120, 90, 50] as RGB,
+      hardness: 0,
+    },
+    {
       name: 'webmc:fire',
       solid: false,
       opaque: false,
