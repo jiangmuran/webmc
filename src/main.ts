@@ -42,6 +42,7 @@ import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
 import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
 import { BROWSER_CLIPBOARD } from './game/clipboard_util';
+import { canSpawnPhantom } from './entities/phantom_day_despawn';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -1116,6 +1117,8 @@ let lastXpLevel = 0;
 let lastIsDay = true;
 let lastPhase: 'dawn' | 'day' | 'dusk' | 'night' = 'day';
 let dayCounter = 1;
+let lastSleepDay = 0;
+let lastPhantomCheckMs = 0;
 void persistDB.getMeta('dayCounter').then((saved) => {
   if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
 });
@@ -1753,6 +1756,7 @@ document.addEventListener(
         dayNight.setTimeOfDayTicks(1000);
         chatInput.addLine('You slept through the night.', '#d0d0ff');
         sfx.play('click');
+        lastSleepDay = dayCounter;
       } else {
         chatInput.addLine('You can only sleep at night.', '#ffd080');
       }
@@ -2858,6 +2862,36 @@ function frame(): void {
       surfaceAt: (x, z) => generator.surfaceAt(x, z),
       isSolid,
     });
+
+    // Phantom spawning: 3+ days without sleep, at night, sky-exposed.
+    const nowPhantomMs = performance.now();
+    if (nowPhantomMs - lastPhantomCheckMs > 8000) {
+      lastPhantomCheckMs = nowPhantomMs;
+      const daysSinceSleep = dayCounter - lastSleepDay;
+      const px2 = Math.floor(fp.position.x);
+      const pz2 = Math.floor(fp.position.z);
+      let inSky = true;
+      for (let yy = Math.floor(fp.position.y) + 2; yy < CHUNK_HEIGHT; yy++) {
+        if (isSolid(px2, yy, pz2)) { inSky = false; break; }
+      }
+      if (canSpawnPhantom({
+        daysSinceSleep,
+        worldTick: Math.floor(dayNight.timeOfDay * 24000),
+        playerInSkyView: inSky,
+        rand: Math.random,
+      })) {
+        try {
+          mobWorld.spawn('phantom' as Parameters<typeof mobWorld.spawn>[0], {
+            x: fp.position.x + (Math.random() - 0.5) * 30,
+            y: fp.position.y + 14,
+            z: fp.position.z + (Math.random() - 0.5) * 30,
+          });
+          subtitles.push('Phantom screech');
+        } catch {
+          /* phantom not registered, non-fatal */
+        }
+      }
+    }
   }
 
   fluidTickAccum += dtSec;
