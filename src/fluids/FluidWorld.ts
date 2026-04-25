@@ -66,6 +66,10 @@ export class FluidWorld {
     const changed: { x: number; y: number; z: number }[] = [];
     for (const [k, cell] of updates) {
       const p = parseKey(k);
+      // Skip writebacks to unloaded chunks. world.set on a non-AIR
+      // state would call ensureChunk and materialise an empty chunk
+      // far away, leaking memory and corrupting future generation.
+      if (!this.world.has(p.x >> 4, p.z >> 4)) continue;
       if (cell === null) {
         const existing = this.world.get(p.x, p.y, p.z);
         if (existing === this.waterState || existing === this.lavaState) {
