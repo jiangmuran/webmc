@@ -1351,10 +1351,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     for (let h = 3; h <= 10; h++) ctx.setBlock(px, py + h, pz, 'oak_log');
     // 4 blades extending from hub.
     for (let i = 1; i <= 4; i++) {
-      ctx.setBlock(px + i, py + 10, pz, 'white_wool');
-      ctx.setBlock(px - i, py + 10, pz, 'white_wool');
-      ctx.setBlock(px, py + 10, pz + i, 'white_wool');
-      ctx.setBlock(px, py + 10, pz - i, 'white_wool');
+      ctx.setBlock(px + i, py + 10, pz, 'wool_white');
+      ctx.setBlock(px - i, py + 10, pz, 'wool_white');
+      ctx.setBlock(px, py + 10, pz + i, 'wool_white');
+      ctx.setBlock(px, py + 10, pz - i, 'wool_white');
     }
     ctx.setBlock(px, py + 1, pz - 2, 'air'); // door
     ctx.setBlock(px, py + 2, pz - 2, 'air');
@@ -1570,6 +1570,78 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.summon(a, px - 2 + i * 2, py + 1, pz);
     }
     ctx.broadcast('Built barn with hay loft and 4 animals', '#80ff80');
+    return;
+  }
+  if (head === 'watchtower') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 cobblestone tower 12 high with 4 archery slits + crenellations + ladder.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 11, pz + 2, 'cobblestone');
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py + 11, pz + 1, 'air');
+    // Archery slits.
+    for (let h = 8; h <= 9; h++) {
+      ctx.setBlock(px - 2, py + h, pz, 'air');
+      ctx.setBlock(px + 2, py + h, pz, 'air');
+      ctx.setBlock(px, py + h, pz - 2, 'air');
+      ctx.setBlock(px, py + h, pz + 2, 'air');
+    }
+    // Crenellated top.
+    for (let i = -2; i <= 2; i++) {
+      if ((i + 2) % 2 === 0) continue;
+      ctx.setBlock(px + i, py + 12, pz - 2, 'cobblestone');
+      ctx.setBlock(px + i, py + 12, pz + 2, 'cobblestone');
+      ctx.setBlock(px - 2, py + 12, pz + i, 'cobblestone');
+      ctx.setBlock(px + 2, py + 12, pz + i, 'cobblestone');
+    }
+    // Door + ladder.
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    for (let h = 0; h < 11; h++) ctx.setBlock(px, py + h, pz + 1, 'ladder');
+    ctx.broadcast('Built watchtower with archery slits and crenellations', '#80ff80');
+    return;
+  }
+  if (head === 'rainbow_path' || head === 'rainbowpath') {
+    if (!ctx.setBlock) return;
+    const len = Math.max(7, Math.min(56, parseInt(args[0] ?? '14', 10)));
+    const COLORS = [
+      'wool_red',
+      'wool_orange',
+      'wool_yellow',
+      'wool_lime',
+      'wool_cyan',
+      'wool_blue',
+      'wool_magenta',
+    ];
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let i = 0; i < len; i++) {
+      const c = COLORS[i % COLORS.length] ?? 'wool_white';
+      ctx.setBlock(px, py - 1, pz + i, c);
+    }
+    ctx.broadcast(`Rainbow path: ${String(len)} wool blocks`, '#80ff80');
+    return;
+  }
+  if (head === 'test_blocks' || head === 'blockgrid') {
+    if (!ctx.setBlock || !ctx.listBlocks) return;
+    const blocks = ctx.listBlocks();
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const SIDE = Math.ceil(Math.sqrt(blocks.length));
+    let placed = 0;
+    for (let i = 0; i < blocks.length; i++) {
+      const dx = i % SIDE;
+      const dz = Math.floor(i / SIDE);
+      const name = blocks[i] ?? 'stone';
+      if (ctx.setBlock(px + dx, py - 1, pz + dz, name)) placed++;
+    }
+    ctx.broadcast(
+      `Block grid: ${String(placed)}/${String(blocks.length)} placed (${String(SIDE)}×${String(SIDE)})`,
+      '#80ff80',
+    );
     return;
   }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
