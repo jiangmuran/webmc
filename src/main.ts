@@ -23,6 +23,7 @@ import { BossBarView } from './ui/BossBarView';
 import { ScoreboardSidebarView } from './ui/ScoreboardSidebarView';
 import { AchievementToastView } from './ui/AchievementToastView';
 import { LoadingOverlay } from './ui/LoadingOverlay';
+import { ActiveEffectsHud } from './ui/ActiveEffectsHud';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -523,6 +524,7 @@ const scoreboard = new ScoreboardSidebarView(appEl);
 const achievementToast = new AchievementToastView(appEl);
 const loadingOverlay = new LoadingOverlay(appEl);
 loadingOverlay.set('init', 0.5);
+const activeEffectsHud = new ActiveEffectsHud(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -2918,6 +2920,7 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
+  activeEffectsHud.render(Array.from(playerState.effects, ([id, e]) => ({ id, amplifier: e.amplifier, remainingSec: e.remainingSec })));
 
   // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
   let aimTint: string | null = null;
