@@ -346,7 +346,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast('No death recorded yet.', '#ff8080');
       return;
     }
-    ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#cccccc');
+    if (args[0] === 'tp') {
+      lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+      ctx.setPlayerPos(p.x, p.y, p.z);
+      ctx.broadcast(`Teleported to last death @ ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)}`, '#80ff80');
+    } else {
+      ctx.broadcast(`Last death: ${p.x.toFixed(1)} ${p.y.toFixed(1)} ${p.z.toFixed(1)} (use /deathloc tp to go)`, '#cccccc');
+    }
     return;
   }
   if (head === 'tps') {
