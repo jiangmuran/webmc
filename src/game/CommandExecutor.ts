@@ -53,6 +53,7 @@ export interface CommandContext {
   setTickRate?: (tps: number) => void;
   cycleCamera?: () => string;
   toggleMinimap?: () => boolean;
+  minimapZoom?: (dir: 'in' | 'out') => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -958,6 +959,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'minimapzoom') {
+    if (!ctx.minimapZoom) return;
+    const dir = (args[0] ?? 'in').toLowerCase();
+    if (dir !== 'in' && dir !== 'out') {
+      ctx.broadcast('Usage: /minimapzoom <in|out>', '#ff8080');
+      return;
+    }
+    ctx.minimapZoom(dir as 'in' | 'out');
+    ctx.broadcast(`Minimap zoom ${dir}`, '#80ff80');
     return;
   }
   if (head === 'cyclecam' || head === 'cyclecamera') {
