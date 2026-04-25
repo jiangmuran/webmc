@@ -867,6 +867,38 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'firework' || head === 'fw') {
+    if (!ctx.particle) return;
+    const px = ctx.playerPos.x;
+    const py = ctx.playerPos.y;
+    const pz = ctx.playerPos.z;
+    const burstY = py + 12;
+    for (let h = 0; h < 12; h++) {
+      ctx.particle(px, py + h, pz);
+    }
+    for (let i = 0; i < 80; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const r = 1 + Math.random() * 5;
+      ctx.particle(px + Math.cos(ang) * r, burstY + (Math.random() - 0.5) * 4, pz + Math.sin(ang) * r);
+    }
+    ctx.broadcast('🎆 Firework!', '#ffd080');
+    return;
+  }
+  if (head === 'rain') {
+    ctx.setWeather('rain');
+    ctx.broadcast('Weather: rain', '#80a0ff');
+    return;
+  }
+  if (head === 'storm' || head === 'thunder') {
+    ctx.setWeather('thunder');
+    ctx.broadcast('Weather: thunder', '#80a0ff');
+    return;
+  }
+  if (head === 'sun') {
+    ctx.setWeather('clear');
+    ctx.broadcast('Weather: clear', '#80a0ff');
+    return;
+  }
   if (head === 'dragon' || head === 'enderdragon') {
     if (!ctx.summon) return;
     const ok = ctx.summon('ender_dragon', ctx.playerPos.x, ctx.playerPos.y + 30, ctx.playerPos.z);
