@@ -1,5 +1,25 @@
 import { completions, nextCompletion } from './chat_tab_complete';
 import { wrap } from './chat_line_wrap';
+import { parseFormatted } from '../game/chat_color_formatter';
+
+const COLOR_HEX: Record<string, string> = {
+  black: '#000000',
+  dark_blue: '#0000aa',
+  dark_green: '#00aa00',
+  dark_aqua: '#00aaaa',
+  dark_red: '#aa0000',
+  dark_purple: '#aa00aa',
+  gold: '#ffaa00',
+  gray: '#aaaaaa',
+  dark_gray: '#555555',
+  blue: '#5555ff',
+  green: '#55ff55',
+  aqua: '#55ffff',
+  red: '#ff5555',
+  light_purple: '#ff55ff',
+  yellow: '#ffff55',
+  white: '#ffffff',
+};
 
 export interface ChatInputCallbacks {
   onSubmit: (text: string) => void;
@@ -123,8 +143,26 @@ export class ChatInput {
 
   private addRawLine(text: string, color: string): void {
     const line = document.createElement('div');
-    line.textContent = text;
     line.style.cssText = `background:rgba(0,0,0,0.55);padding:2px 6px;color:${color};max-width:max-content;border-radius:2px;white-space:pre-wrap;`;
+    if (text.includes('§')) {
+      for (const seg of parseFormatted(text)) {
+        const span = document.createElement('span');
+        span.textContent = seg.text;
+        if (seg.color !== undefined) {
+          const hex = COLOR_HEX[seg.color];
+          if (hex) span.style.color = hex;
+        }
+        if (seg.format.includes('bold')) span.style.fontWeight = '700';
+        if (seg.format.includes('italic')) span.style.fontStyle = 'italic';
+        if (seg.format.includes('underline')) span.style.textDecoration = 'underline';
+        if (seg.format.includes('strikethrough')) {
+          span.style.textDecoration = (span.style.textDecoration ? span.style.textDecoration + ' ' : '') + 'line-through';
+        }
+        line.appendChild(span);
+      }
+    } else {
+      line.textContent = text;
+    }
     this.log.appendChild(line);
     while (this.log.children.length > 40) this.log.removeChild(this.log.firstChild!);
     this.log.scrollTop = this.log.scrollHeight;
