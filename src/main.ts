@@ -1575,6 +1575,44 @@ const interaction = new InteractionController(
           return true;
         }
       }
+      // Bone meal on sapling: 50% advance growth → instant tree (simplified: replace sapling with 4-tall log+leaves).
+      if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
+        const wood = def.name.replace('webmc:', '').replace('_sapling', '');
+        const logId = registry.byName(`webmc:${wood}_log`);
+        const leavesId = registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
+        if (logId !== undefined && leavesId !== undefined) {
+          const trunkH = 4 + Math.floor(Math.random() * 3);
+          for (let h = 0; h < trunkH; h++) {
+            const above = world.get(bx, by + h, bz);
+            if (above === AIR || registry.get(stateId(above)).name.endsWith('_sapling')) {
+              world.set(bx, by + h, bz, makeState(logId, 0));
+              touchWorldEdit(bx, by + h, bz, logId);
+            }
+          }
+          for (let dx = -2; dx <= 2; dx++) {
+            for (let dz = -2; dz <= 2; dz++) {
+              for (let dy = trunkH - 2; dy <= trunkH; dy++) {
+                if (dx === 0 && dz === 0 && dy < trunkH) continue;
+                if (Math.abs(dx) + Math.abs(dz) > 3) continue;
+                const lx = bx + dx, ly = by + dy, lz = bz + dz;
+                if (world.get(lx, ly, lz) !== AIR) continue;
+                if (Math.random() < 0.85) {
+                  world.set(lx, ly, lz, makeState(leavesId, 0));
+                  touchWorldEdit(lx, ly, lz, leavesId);
+                }
+              }
+            }
+          }
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const bmId = itemRegistry.byName('webmc:bone_meal');
+            if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+          }
+          for (let i = 0; i < 18; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5) * 3, by + Math.random() * trunkH, bz + (Math.random() - 0.5) * 3, [200, 220, 80]);
+          subtitles.push('Tree grown');
+          sfx.play('place');
+          return true;
+        }
+      }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
