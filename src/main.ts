@@ -1119,6 +1119,43 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Bucket fill: right-click water/lava with empty bucket.
+      if (heldName === 'bucket' && (def.name === 'webmc:water' || def.name === 'webmc:lava')) {
+        const filled = def.name === 'webmc:water' ? 'webmc:water_bucket' : 'webmc:lava_bucket';
+        const filledItemId = itemRegistry.byName(filled);
+        const emptyItemId = itemRegistry.byName('webmc:bucket');
+        if (filledItemId !== undefined && emptyItemId !== undefined) {
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            consumeInventoryItem(emptyItemId, 1);
+            inventory.add({ itemId: filledItemId, count: 1, damage: 0 });
+          }
+          world.set(bx, by, bz, AIR);
+          touchWorldEdit(bx, by, bz, 0);
+          sfx.play('click');
+          subtitles.push(def.name === 'webmc:water' ? 'Filled water bucket' : 'Filled lava bucket');
+          return true;
+        }
+      }
+      // Bucket empty: right-click block with water/lava bucket places fluid in adjacent air space above.
+      if ((heldName === 'water_bucket' || heldName === 'lava_bucket') && airAbove) {
+        const fluidName = heldName === 'water_bucket' ? 'webmc:water' : 'webmc:lava';
+        const fluidId = registry.byName(fluidName);
+        if (fluidId !== undefined) {
+          world.set(bx, by + 1, bz, makeState(fluidId, 0));
+          touchWorldEdit(bx, by + 1, bz, fluidId);
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const heldItemId = itemRegistry.byName(`webmc:${heldName}`);
+            const emptyId = itemRegistry.byName('webmc:bucket');
+            if (heldItemId !== undefined && emptyId !== undefined) {
+              consumeInventoryItem(heldItemId, 1);
+              inventory.add({ itemId: emptyId, count: 1, damage: 0 });
+            }
+          }
+          sfx.play('place');
+          subtitles.push(heldName === 'water_bucket' ? 'Placed water' : 'Placed lava');
+          return true;
+        }
+      }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
