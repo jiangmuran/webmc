@@ -41,6 +41,7 @@ import { phaseOfDay } from './game/time_format_day_count';
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
+import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -2580,6 +2581,28 @@ function frame(): void {
   if (m.triggered) {
     sfx.play('cave');
     subtitles.push('Cave ambience');
+  }
+
+  // Per-block break duration: hardness * tool factor (break_speed helper).
+  if (gameMode !== 'creative') {
+    const aim2 = interaction.castRay();
+    if (aim2) {
+      const def2 = registry.get(stateId(world.get(aim2.bx, aim2.by, aim2.bz)));
+      const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
+      const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
+      const t = breakTicksFor({
+        hardness: Math.max(0.1, def2.hardness),
+        correctTool: true,
+        toolSpeed: 1,
+        onGround: fp.onGround,
+        underwater: fp.inFluid === 'water',
+        hasAquaAffinity: false,
+        hasteLevel: hasteAmp + (hasteAmp > 0 ? 1 : 0),
+        fatigueLevel: fatigueAmp + (fatigueAmp > 0 ? 1 : 0),
+        efficiencyBonus: 0,
+      });
+      interaction.breakDurationSec = Math.min(5, Math.max(0.1, t / 20));
+    }
   }
 
   // Autosave debouncer: 30s interval OR 64-edit threshold OR forced.
