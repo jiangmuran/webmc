@@ -658,6 +658,11 @@ interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
 let lastPlayerAttackAt = 0;
+window.addEventListener('mousemove', (e) => {
+  if (document.pointerLockElement !== canvas) return;
+  hand.applyMouseDelta(e.movementX, e.movementY);
+});
+
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
   if (e.button === 1) {

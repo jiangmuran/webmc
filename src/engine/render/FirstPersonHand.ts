@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { onMouseDelta, reset, settle, type SwayState } from '../held_item_sway';
 
 export class FirstPersonHand {
   readonly group: THREE.Group;
@@ -6,6 +7,7 @@ export class FirstPersonHand {
   private readonly geom: THREE.BoxGeometry;
   private readonly color = new THREE.Color(0xffffff);
   private swingSec = 0;
+  private sway: SwayState = reset();
 
   constructor() {
     this.group = new THREE.Group();
@@ -40,16 +42,24 @@ export class FirstPersonHand {
     return this.swingSec > 0;
   }
 
+  applyMouseDelta(dx: number, dy: number): void {
+    this.sway = onMouseDelta(this.sway, dx, dy);
+  }
+
   update(dtSec: number): void {
+    this.sway = settle(this.sway);
+    const swayOffsetX = this.sway.x * 0.15;
+    const swayOffsetY = this.sway.y * 0.1;
+    this.group.position.x = 0.45 + swayOffsetX;
     if (this.swingSec > 0) {
       this.swingSec = Math.max(0, this.swingSec - dtSec);
       const phase = 1 - this.swingSec / 0.25;
       const angle = Math.sin(phase * Math.PI) * 0.6;
       this.group.rotation.z = 0.2 - angle * 0.8;
-      this.group.position.y = -0.45 - Math.sin(phase * Math.PI) * 0.12;
+      this.group.position.y = -0.45 - Math.sin(phase * Math.PI) * 0.12 + swayOffsetY;
     } else {
       this.group.rotation.z = 0.2;
-      this.group.position.y = -0.45;
+      this.group.position.y = -0.45 + swayOffsetY;
     }
   }
 }
