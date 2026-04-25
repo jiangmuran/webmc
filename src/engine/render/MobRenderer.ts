@@ -160,6 +160,16 @@ export class MobRenderer {
         const bb = b * (1 - k) + 0.2 * k;
         vis.bodyMat.color.setRGB(rr, gg, bb);
         vis.headMat.color.setRGB(rr, gg, bb);
+      } else if (mob.def.behavior === 'creeper' && mob.fuseSec > 0) {
+        // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
+        const phase = (1 - Math.min(1, mob.fuseSec / 1.5));
+        const k = (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
+        const base = COLORS.creeper;
+        const r = ((base >> 16) & 0xff) / 255;
+        const g = ((base >> 8) & 0xff) / 255;
+        const b = (base & 0xff) / 255;
+        vis.bodyMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
+        vis.headMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
       } else {
         vis.bodyMat.color.setHex(COLORS[mob.def.kind]);
         vis.headMat.color.setHex(COLORS[mob.def.kind]);
