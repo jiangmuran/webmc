@@ -17,6 +17,10 @@ export interface InteractionOptions {
   // Returning false halts the break attempt before any damage accrues —
   // used to gate bedrock and other indestructible blocks (hardness < 0).
   canBreak?: (bx: number, by: number, bz: number) => boolean;
+  // Returning a duration overrides breakDurationSec for the target block.
+  // Lets main.ts scale by block hardness × tool break-speed (vanilla
+  // behaviour: stone takes 7.5s with bare hands, ~1.5s with wood pickaxe).
+  getBreakDurationSec?: (bx: number, by: number, bz: number) => number;
   onInteract?: (bx: number, by: number, bz: number) => boolean;
 }
 
@@ -129,7 +133,10 @@ export class InteractionController {
     ) {
       this.breaking = { bx: hit.bx, by: hit.by, bz: hit.bz, progress01: 0 };
     }
-    const duration = Math.max(0.0001, this.breakDurationSec);
+    const duration = Math.max(
+      0.0001,
+      this.opts.getBreakDurationSec?.(hit.bx, hit.by, hit.bz) ?? this.breakDurationSec,
+    );
     this.breaking.progress01 = Math.min(1, this.breaking.progress01 + dtSec / duration);
     this.opts.onBreakProgress?.(hit.bx, hit.by, hit.bz, this.breaking.progress01);
     if (this.breaking.progress01 >= 1) {

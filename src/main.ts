@@ -2292,6 +2292,88 @@ const interaction = new InteractionController(
       const def = registry.get(stateId(s));
       return def.hardness >= 0;
     },
+    getBreakDurationSec: (bx, by, bz) => {
+      // Vanilla MC formula: timeSec = 1.5 × hardness / toolSpeed when the
+      // tool can harvest, 5 × hardness / toolSpeed otherwise. Tool speed
+      // is 1 (hand), 2 (wood), 4 (stone), 6 (iron), 8 (diamond), 9
+      // (netherite), 12 (gold). Without this, every block took the flat
+      // 0.4s default — mining stone and dirt with bare hands felt
+      // identical, and netherite blocks broke as fast as wool.
+      if (gameMode === 'creative') return 0.001;
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return 0.4;
+      const def = registry.get(stateId(s));
+      const hardness = Math.max(0, def.hardness);
+      if (hardness === 0) return 0.05; // wool / leaves / flowers / instant blocks
+      const heldName = heldNameLower();
+      // Tool kind matching: pickaxe for stone/ore, axe for wood/log, shovel
+      // for dirt/sand/gravel/snow, sword for cobwebs. Anything else is hand.
+      const blockShortName = def.name.replace(/^webmc:/, '');
+      const isStoneLike =
+        blockShortName.includes('stone') ||
+        blockShortName.includes('ore') ||
+        blockShortName.includes('cobble') ||
+        blockShortName.includes('brick') ||
+        blockShortName.includes('basalt') ||
+        blockShortName === 'obsidian' ||
+        blockShortName === 'crying_obsidian' ||
+        blockShortName === 'glowstone' ||
+        blockShortName === 'iron_block' ||
+        blockShortName === 'gold_block' ||
+        blockShortName === 'diamond_block' ||
+        blockShortName === 'netherite_block' ||
+        blockShortName === 'lapis_block' ||
+        blockShortName === 'redstone_block' ||
+        blockShortName === 'emerald_block' ||
+        blockShortName === 'coal_block' ||
+        blockShortName === 'ancient_debris';
+      const isWoodLike =
+        blockShortName.endsWith('_log') ||
+        blockShortName.endsWith('_planks') ||
+        blockShortName.endsWith('_wood') ||
+        blockShortName === 'oak_log' ||
+        blockShortName === 'crafting_table' ||
+        blockShortName.endsWith('_door') ||
+        blockShortName.endsWith('_fence') ||
+        blockShortName.endsWith('_trapdoor');
+      const isDirtLike =
+        blockShortName === 'dirt' ||
+        blockShortName === 'grass_block' ||
+        blockShortName === 'sand' ||
+        blockShortName === 'gravel' ||
+        blockShortName === 'snow' ||
+        blockShortName === 'soul_sand' ||
+        blockShortName === 'soul_soil' ||
+        blockShortName === 'farmland' ||
+        blockShortName === 'mycelium' ||
+        blockShortName === 'podzol' ||
+        blockShortName === 'clay';
+      const correctTool =
+        (isStoneLike && heldName.includes('pickaxe')) ||
+        (isWoodLike && heldName.includes('axe') && !heldName.includes('pickaxe')) ||
+        (isDirtLike && heldName.includes('shovel'));
+      let toolSpeed = 1;
+      if (heldName.includes('netherite')) toolSpeed = 9;
+      else if (heldName.includes('diamond')) toolSpeed = 8;
+      else if (heldName.includes('gold')) toolSpeed = 12;
+      else if (heldName.includes('iron')) toolSpeed = 6;
+      else if (heldName.includes('stone')) toolSpeed = 4;
+      else if (heldName.includes('wood')) toolSpeed = 2;
+      // Tool only contributes its speed when it's the correct kind.
+      const speed = correctTool ? toolSpeed : 1;
+      // Tool tier requirement: if the player can't harvest this block at
+      // all (e.g. wood pickaxe on diamond), use the slow no-harvest formula.
+      const requiredLevel = requiredMiningLevel(blockShortName);
+      let toolLevel = 0;
+      if (heldName.includes('netherite')) toolLevel = 5;
+      else if (heldName.includes('diamond')) toolLevel = 4;
+      else if (heldName.includes('iron')) toolLevel = 3;
+      else if (heldName.includes('stone')) toolLevel = 2;
+      else if (heldName.includes('wood') || heldName.includes('gold')) toolLevel = 1;
+      const canHarvest = correctTool && toolLevel >= requiredLevel;
+      const factor = canHarvest ? 1.5 : 5;
+      return (hardness * factor) / speed;
+    },
     onInteract: (bx, by, bz) => {
       const state = world.get(bx, by, bz);
       if (state === AIR) return false;
