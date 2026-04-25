@@ -1144,6 +1144,39 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'wisdom' || head === 'fortune') {
+    const SAYINGS = [
+      'A diamond is a piece of coal that handled stress well.',
+      'In Minecraft, the sun rises every 20 minutes — make it count.',
+      'The best time to plant a tree was 20 minutes ago. The next best time is now.',
+      'Creepers respect personal space. Give them yours.',
+      'Build like nobody is watching. Mine like everyone is.',
+      'The cave is dark and full of terrors.',
+      'Survival starts at the second cobblestone.',
+      'Sleep when the sun sets, dig when the sun rises.',
+      'Every redstone circuit is a story untold.',
+      'The world is your sandbox.',
+    ];
+    const s = SAYINGS[Math.floor(Math.random() * SAYINGS.length)] ?? '';
+    ctx.broadcast(`🥠 ${s}`, '#ffd080');
+    return;
+  }
+  if (head === 'compliment') {
+    const C = [
+      'You are a master builder.',
+      'Your aim is legendary.',
+      'You smell like victory.',
+      'Your mining technique is poetry.',
+      'You are tougher than netherite.',
+    ];
+    ctx.broadcast(`✨ ${C[Math.floor(Math.random() * C.length)] ?? ''}`, '#ff80c0');
+    return;
+  }
+  if (head === 'salute' || head === 'gg') {
+    if (ctx.showTitle) ctx.showTitle('GG!', '#80ff80', 1500);
+    ctx.broadcast('🫡 GG', '#80ff80');
+    return;
+  }
   if (head === 'note' || head === 'memo') {
     const text = args.join(' ').trim();
     if (!text) {
