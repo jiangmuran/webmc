@@ -38,6 +38,7 @@ import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
+import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -566,6 +567,24 @@ let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
+const tutorial = new TutorialState();
+const TUTORIAL_TEXT: Record<HintId, string> = {
+  welcome: 'Welcome to webmc! Use WASD to move, mouse to look. Press E for inventory.',
+  break_tree: 'Tip: Hold left-click on a tree to chop wood.',
+  craft_planks: 'Tip: Open inventory (E) to craft planks from logs.',
+  craft_sticks: 'Tip: Two planks → 4 sticks.',
+  craft_crafting_table: 'Tip: Place a crafting table for 3×3 recipes.',
+  make_pickaxe: 'Tip: 3 planks + 2 sticks = wooden pickaxe.',
+  mine_stone: 'Tip: With a pickaxe, mine stone for cobblestone.',
+  build_shelter: 'Tip: Build walls before night — zombies are coming!',
+  fight_mobs: 'Tip: Sword damages mobs faster. Hold attack to charge.',
+};
+function fireTutorial(event: string): void {
+  for (const id of tutorial.fire(event)) {
+    const text = TUTORIAL_TEXT[id];
+    if (text) chatInput.addLine(`📘 ${text}`, '#80c8ff');
+  }
+}
 let lastInputTick = 0;
 let currentTickCount = 0;
 
@@ -718,6 +737,8 @@ const interaction = new InteractionController(
       hand.swing();
       playerStats.blocksBroken++;
       if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.005);
+      if (def.name === 'webmc:oak_log') fireTutorial('collected_log');
+      if (def.name === 'webmc:cobblestone' || def.name === 'webmc:cobble') fireTutorial('collected_cobblestone');
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
@@ -986,6 +1007,7 @@ let starvingShown = false;
 const bootTime = performance.now();
 let lastXpLevel = 0;
 let lastIsDay = true;
+let lastPhase: 'dawn' | 'day' | 'dusk' | 'night' = 'day';
 let dayCounter = 1;
 void persistDB.getMeta('dayCounter').then((saved) => {
   if (typeof saved === 'number' && Number.isFinite(saved)) dayCounter = saved;
@@ -1411,6 +1433,8 @@ const mainMenu = new MainMenu(appEl, {
     void canvas.requestPointerLock();
     const tip = TIPS[Math.floor(Math.random() * TIPS.length)] ?? TIPS[0];
     if (tip) toast.show(tip, '#eef3ff', 3000);
+    fireTutorial('world_loaded');
+    fireTutorial('spawn_finished');
   },
   onOpenSettings: () => { settingsPanel.show(); },
   onOpenResourcePacks: () => { resourcePackLoader.show(); },
@@ -2528,6 +2552,11 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
+  const nowPhase = phaseOfDay(Math.floor(dayNight.timeOfDay * 24000));
+  if (nowPhase !== lastPhase) {
+    if (nowPhase === 'dusk') fireTutorial('sunset');
+    lastPhase = nowPhase;
+  }
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
