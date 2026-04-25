@@ -1121,6 +1121,16 @@ document.addEventListener(
       minimap.setVisible(minimapVisible);
       toast.show(`Minimap: ${minimapVisible ? 'on' : 'off'}`, '#cccccc', 1000);
     }
+    if (e.code === 'Equal' || e.code === 'NumpadAdd') {
+      e.preventDefault();
+      minimap.zoomIn();
+      toast.show(`Minimap zoom ±${String(minimap.currentRange)}m`, '#cccccc', 800);
+    }
+    if (e.code === 'Minus' || e.code === 'NumpadSubtract') {
+      e.preventDefault();
+      minimap.zoomOut();
+      toast.show(`Minimap zoom ±${String(minimap.currentRange)}m`, '#cccccc', 800);
+    }
     if (e.code === 'F1') {
       e.preventDefault();
       controlsHelp.toggle();

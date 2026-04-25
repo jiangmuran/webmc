@@ -10,7 +10,7 @@ export class MinimapView {
   readonly root: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D | null;
   private readonly size = 96;
-  private readonly range = 48;
+  private range = 48;
   private updateAccum = 0;
 
   constructor(parent: HTMLElement) {
@@ -36,6 +36,20 @@ export class MinimapView {
 
   setVisible(on: boolean): void {
     this.root.style.display = on ? '' : 'none';
+  }
+
+  zoomIn(): void {
+    this.range = Math.max(16, Math.floor(this.range * 0.5));
+    this.updateAccum = 1;
+  }
+
+  zoomOut(): void {
+    this.range = Math.min(256, Math.floor(this.range * 2));
+    this.updateAccum = 1;
+  }
+
+  get currentRange(): number {
+    return this.range;
   }
 
   tick(

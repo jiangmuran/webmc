@@ -24,6 +24,7 @@ const BINDINGS: readonly { key: string; action: string }[] = [
   { key: 'F6', action: 'Toggle view bob' },
   { key: 'F7', action: 'Toggle auto weather' },
   { key: 'M', action: 'Toggle minimap' },
+  { key: '+ / -', action: 'Minimap zoom' },
   { key: 'ESC', action: 'Pause menu' },
 ];
 
