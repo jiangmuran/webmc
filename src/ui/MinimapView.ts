@@ -105,5 +105,12 @@ export class MinimapView {
     // Player marker.
     ctx.fillStyle = '#ffff80';
     ctx.fillRect(sz / 2 - 2, sz / 2 - 2, 4, 4);
+    // Range label bottom-right.
+    ctx.fillStyle = 'rgba(0,0,0,0.65)';
+    ctx.fillRect(sz - 38, sz - 12, 36, 10);
+    ctx.fillStyle = '#fff';
+    ctx.font = '8px monospace';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`±${String(r)}m`, sz - 36, sz - 11);
   }
 }
