@@ -2462,6 +2462,29 @@ function frame(): void {
     lightningTimer -= dtSec;
     if (lightningTimer <= 0) {
       lightningFlash();
+      // 25% chance to strike a random mob within 32 blocks: charge creepers, convert pigs.
+      const strikeCandidates = Array.from(mobWorld.all()).filter((m) => {
+        const dx = m.position.x - fp.position.x;
+        const dz = m.position.z - fp.position.z;
+        return dx * dx + dz * dz < 32 * 32;
+      });
+      if (strikeCandidates.length > 0 && Math.random() < 0.25) {
+        const target = strikeCandidates[Math.floor(Math.random() * strikeCandidates.length)];
+        if (target) {
+          subtitles.push(`Lightning struck ${target.def.kind}`);
+          if (target.def.kind === 'pig') {
+            try {
+              mobWorld.spawn('zombified_piglin' as Parameters<typeof mobWorld.spawn>[0], target.position);
+              mobWorld.remove(target.id);
+            } catch { /* zombified_piglin not registered */ }
+          } else if (target.def.kind === 'creeper') {
+            // Mark for charged behavior; webmc doesn't track charged state, so just damage as visual.
+            mobWorld.damage(target.id, 5);
+          } else {
+            mobWorld.damage(target.id, 5);
+          }
+        }
+      }
       lightningTimer = 20 + Math.random() * 40;
     }
   } else {
