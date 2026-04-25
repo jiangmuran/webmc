@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Mob, MobKind } from '@/entities/mob';
 
-const COLORS: Record<MobKind, number> = {
+const COLORS: Record<string, number> = {
   pig: 0xf4a4b8,
   cow: 0x8b5a3c,
   sheep: 0xeeeeee,
@@ -34,7 +34,36 @@ const COLORS: Record<MobKind, number> = {
   squid: 0x6a3f63,
   cat: 0xc0a577,
   parrot: 0x5ec1ff,
+  phantom: 0x4a4070,
+  dolphin: 0x9ec4d6,
+  turtle: 0x6db96a,
+  guardian: 0x607a6a,
+  elder_guardian: 0x8895a0,
+  vex: 0xb8c0d0,
+  breeze: 0xb8e8ff,
+  drowned: 0x4a8a78,
+  husk: 0xb8a878,
+  stray: 0xd8e0e8,
+  bogged: 0xa8c0a0,
+  glow_squid: 0x4ee0ff,
+  slime: 0x6ad06a,
+  magma_cube: 0xff6a30,
+  wandering_trader: 0x4a4a8a,
+  llama: 0xe8d8b8,
+  trader_llama: 0xc89878,
+  ravager: 0x484038,
+  ocelot: 0xe0c878,
+  polar_bear: 0xfcfcfc,
+  panda: 0xf0f0f0,
+  hoglin: 0xc06070,
+  zoglin: 0xa05060,
+  strider: 0xc04848,
+  zombified_piglin: 0x80a060,
+  piglin_brute: 0xb09070,
+  camel: 0xe0c898,
 };
+
+const DEFAULT_COLOR = 0xc8c8c8;
 
 interface MobVisual {
   group: THREE.Group;
@@ -123,7 +152,7 @@ export class MobRenderer {
       seen.add(mob.id);
       let vis = this.visuals.get(mob.id);
       if (!vis) {
-        const color = COLORS[mob.def.kind];
+        const color = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
         const bodyMat = new THREE.MeshBasicMaterial({ color });
         const headMat = new THREE.MeshBasicMaterial({ color });
         const group = new THREE.Group();
@@ -183,7 +212,7 @@ export class MobRenderer {
         }
       }
       if (mob.hurtFlashSec > 0) {
-        const base = COLORS[mob.def.kind];
+        const base = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
@@ -197,15 +226,16 @@ export class MobRenderer {
         // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
         const phase = (1 - Math.min(1, mob.fuseSec / 1.5));
         const k = (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
-        const base = COLORS.creeper;
+        const base = COLORS['creeper'] ?? DEFAULT_COLOR;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
         vis.bodyMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
         vis.headMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
       } else {
-        vis.bodyMat.color.setHex(COLORS[mob.def.kind]);
-        vis.headMat.color.setHex(COLORS[mob.def.kind]);
+        const c = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
+        vis.bodyMat.color.setHex(c);
+        vis.headMat.color.setHex(c);
       }
 
       vis.nameSprite.visible = this.showNameplates;
