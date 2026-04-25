@@ -70,6 +70,8 @@ import { adjustedTemperature } from './world/biome_precipitation';
 import { skyOf } from './world/sky_color';
 import { bedlessRespawn } from './world/spawn_safety';
 import { useAxe } from './items/axe_strip';
+import { useShovel } from './items/shovel_path';
+import { useHoe } from './items/hoe_till';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -1066,8 +1068,9 @@ const interaction = new InteractionController(
       if (state === AIR) return false;
       const id = stateId(state);
       const def = registry.get(id);
-      // Axe: strip logs / un-wax / scrape copper.
+      // Axe / Shovel / Hoe: tool-on-block interactions.
       const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+      const airAbove = world.get(bx, by + 1, bz) === AIR;
       if (heldName.includes('axe') && !heldName.includes('pickaxe')) {
         const result = useAxe(def.name);
         if (result.kind !== 'none') {
@@ -1080,6 +1083,37 @@ const interaction = new InteractionController(
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             const verb = result.kind === 'strip' ? 'Stripped' : result.kind === 'unwax' ? 'Un-waxed' : 'Scraped';
             subtitles.push(`${verb}`);
+            return true;
+          }
+        }
+      }
+      if (heldName.includes('shovel') && airAbove) {
+        const result = useShovel({ targetBlockName: def.name, airAbove: true, campfireLit: false });
+        if (result.kind === 'place_path') {
+          const newId = registry.byName(result.newBlock);
+          if (newId !== undefined) {
+            world.set(bx, by, bz, makeState(newId, 0));
+            touchWorldEdit(bx, by, bz, newId);
+            consumeHeldToolDurability(1);
+            sfx.play('break');
+            blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
+            subtitles.push('Made path');
+            return true;
+          }
+        }
+      }
+      if (heldName.includes('hoe') && airAbove) {
+        const result = useHoe({ targetBlockName: def.name, airAbove: true });
+        if (result.tilled) {
+          const newName = result.tilled === 'farmland' ? 'webmc:farmland' : 'webmc:dirt';
+          const newId = registry.byName(newName);
+          if (newId !== undefined) {
+            world.set(bx, by, bz, makeState(newId, 0));
+            touchWorldEdit(bx, by, bz, newId);
+            consumeHeldToolDurability(result.durabilityCost);
+            sfx.play('break');
+            blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
+            subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
             return true;
           }
         }
