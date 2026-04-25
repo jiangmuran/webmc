@@ -5786,7 +5786,9 @@ async function initMultiplayer(): Promise<void> {
   const client = new RoomClient({
     signalingUrl,
     world,
-    name: 'Player',
+    // Use the persisted player name (was always 'Player' so every peer
+    // showed up nameless in chat).
+    name: currentPlayerName,
     onRoom: (code) => {
       roomCode = code;
     },
