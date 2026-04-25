@@ -346,6 +346,7 @@ let lastEmptyPlaceWarnAt = 0;
 let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
 let autoWeatherEnabled = true;
 let minimapVisible = true;
+let compassBarVisible = true;
 let mobDamageMultiplier = 1;
 const gameRules = {
   keepInventory: false,
@@ -1190,6 +1191,13 @@ document.addEventListener(
       e.preventDefault();
       autoWeatherEnabled = !autoWeatherEnabled;
       toast.show(`Auto weather: ${autoWeatherEnabled ? 'on' : 'off'}`, '#a0d0ff', 1200);
+    }
+    if (e.code === 'F9') {
+      e.preventDefault();
+      compassBarVisible = !compassBarVisible;
+      if (compassBarVisible) compassBar.show();
+      else compassBar.hide();
+      toast.show(`Compass: ${compassBarVisible ? 'on' : 'off'}`, '#cccccc', 1000);
     }
     if (e.code === 'KeyM') {
       e.preventDefault();
