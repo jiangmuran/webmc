@@ -1144,6 +1144,41 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'beacon_pyramid' || head === 'beaconbase') {
+    if (!ctx.fillBlocks) return;
+    const tier = parseInt(args[0] ?? '4', 10);
+    if (!Number.isFinite(tier) || tier < 1 || tier > 4) {
+      ctx.broadcast('Usage: /beacon_pyramid <tier=4>', '#ff8080');
+      return;
+    }
+    const block = args[1] ?? 'iron_block';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let t = 0; t < tier; t++) {
+      const r = tier - t;
+      ctx.fillBlocks(px - r, py - tier + t, pz - r, px + r, py - tier + t, pz + r, block);
+    }
+    ctx.setBlock?.(px, py, pz, 'beacon');
+    ctx.broadcast(`Beacon tier ${String(tier)} pyramid + beacon on top`, '#80ffff');
+    return;
+  }
+  if (head === 'campfire_circle' || head === 'cfc') {
+    if (!ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.setBlock(px, py, pz, 'campfire');
+    for (let i = 0; i < 8; i++) {
+      const ang = (i / 8) * Math.PI * 2;
+      const r = 3;
+      const cx = px + Math.round(Math.cos(ang) * r);
+      const cz = pz + Math.round(Math.sin(ang) * r);
+      ctx.setBlock(cx, py, cz, 'oak_log');
+    }
+    ctx.broadcast('Campfire circle: campfire center + 8 log seats', '#ff8080');
+    return;
+  }
   if (head === 'animalpen' || head === 'pen') {
     if (!ctx.fillBlocks || !ctx.summon) return;
     const kind = args[0] ?? 'cow';
