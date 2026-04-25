@@ -149,6 +149,28 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     return;
   }
   if (head === 'help') {
+    if (args[0]) {
+      const topic = args[0].toLowerCase();
+      const HELP: Record<string, string> = {
+        gamemode: '/gamemode <survival|creative|adventure|spectator> — switch mode',
+        tp: '/tp <x> <y> <z> — teleport (use ~ for relative)',
+        time: '/time set <day|night|noon|midnight|ticks> | /time add <ticks>',
+        weather: '/weather <clear|rain|thunder|random>',
+        give: '/give <item> [count] | /give all',
+        find: '/find <block> [radius=32] — locate nearest matching block',
+        findmob: '/findmob <kind> — locate nearest mob of kind',
+        effect: '/effect <id|clear> [seconds=30] [amplifier=0]',
+        gamerule: '/gamerule [rule] [true|false]',
+        difficulty: '/difficulty <peaceful|easy|normal|hard>',
+        spawn: '/spawn — teleport to spawn point',
+        setspawn: '/setspawn — save current pos as spawn',
+        title: '/title <text> — flash text on screen',
+      };
+      const line = HELP[topic];
+      if (line) ctx.broadcast(line, '#cccccc');
+      else ctx.broadcast(`No help for '${topic}'.`, '#ff8080');
+      return;
+    }
     ctx.broadcast('/gamemode <survival|creative|adventure|spectator>', '#cccccc');
     ctx.broadcast('/tp <x> <y> <z>', '#cccccc');
     ctx.broadcast('/time set <day|night|noon|midnight|ticks>', '#cccccc');
