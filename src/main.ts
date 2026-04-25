@@ -7106,6 +7106,38 @@ function frame(): void {
     } else {
       fp.groundResponseMultiplier = 1;
     }
+    // Cactus + sweet berry bush contact damage. Hit-immune frame throttles
+    // the apparent damage to 1 HP per 0.5s (vanilla cactus rate), so the
+    // per-frame loop doesn't burn down a heart in a single tick. We sweep
+    // the player AABB across the 8 corner blocks since a 0.6×2.52 player
+    // can occupy up to 2x1x2 blocks straddling boundaries.
+    const minX = Math.floor(fp.position.x - 0.3);
+    const maxX = Math.floor(fp.position.x + 0.3);
+    const minZ = Math.floor(fp.position.z - 0.3);
+    const maxZ = Math.floor(fp.position.z + 0.3);
+    const minY = Math.floor(fp.position.y - 1.62);
+    const maxY = Math.floor(fp.position.y + 0.9);
+    let touchedCactus = false;
+    let touchedBerry = false;
+    for (let by2 = minY; by2 <= maxY; by2++) {
+      for (let bz2 = minZ; bz2 <= maxZ; bz2++) {
+        for (let bx2 = minX; bx2 <= maxX; bx2++) {
+          const s = world.get(bx2, by2, bz2);
+          if (s === AIR) continue;
+          const d2 = registry.get(stateId(s));
+          if (d2.name === 'webmc:cactus') touchedCactus = true;
+          else if (d2.name === 'webmc:sweet_berry_bush') touchedBerry = true;
+        }
+      }
+    }
+    if (touchedCactus) {
+      playerState.takeDamage({ amount: 1, source: 'cactus' });
+    } else if (touchedBerry) {
+      // Berry bushes only damage on movement (vanilla: when entity moves
+      // while inside). Approximate: damage if there's horizontal motion.
+      const moving = Math.hypot(fp.velocity.x, fp.velocity.z) > 0.05;
+      if (moving) playerState.takeDamage({ amount: 1, source: 'sweet_berry' });
+    }
   }
 
   if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
