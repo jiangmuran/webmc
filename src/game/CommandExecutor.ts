@@ -59,6 +59,10 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`Players online: 1 (${ctx.playerName ?? 'Player'})`, '#cccccc');
     return;
   }
+  if (head === 'ping') {
+    ctx.broadcast('pong (0ms, single-player)', '#cccccc');
+    return;
+  }
   if (head === 'whoami') {
     ctx.broadcast(`You are ${ctx.playerName ?? 'Player'}`, '#cccccc');
     return;
