@@ -37,6 +37,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('empty command', '#ff8080');
     return;
   }
+  if (head === 'me') {
+    const action = args.join(' ');
+    if (action) ctx.broadcast(`* You ${action}`, '#cccccc');
+    return;
+  }
   if (head === 'help') {
     ctx.broadcast('/gamemode <survival|creative|adventure|spectator>', '#cccccc');
     ctx.broadcast('/tp <x> <y> <z>', '#cccccc');
