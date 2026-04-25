@@ -102,6 +102,12 @@ export {
   type SoundEvent,
   type SoundVariant,
 } from './vanilla_sounds_parse';
+export {
+  resourcePackVersion,
+  dataPackVersion,
+  KNOWN_RESOURCE_PACK_FORMATS,
+  KNOWN_DATA_PACK_FORMATS,
+} from './pack_format_versions';
 
 export type VanillaFileKind =
   | 'level_dat'
