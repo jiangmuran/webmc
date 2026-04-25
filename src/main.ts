@@ -7834,6 +7834,21 @@ function frame(): void {
               playerYaw: fp.yaw,
             });
             fp.pulseDamageTilt(angle);
+            // Knockback: push player away from attacker. Vanilla mob hit
+            // imparts ~0.4 horizontal + 0.4 vertical kick (modulated by
+            // knockback resistance, which we don't track yet). Without
+            // this, mobs felt completely weightless — you'd take damage
+            // but never get pushed back, so you could outrun zombies
+            // by walking into them.
+            const dx = fp.position.x - attackerPos.x;
+            const dz = fp.position.z - attackerPos.z;
+            const horiz = Math.hypot(dx, dz);
+            if (horiz > 0.0001) {
+              const KB = 6.0;
+              fp.velocity.x += (dx / horiz) * KB;
+              fp.velocity.z += (dz / horiz) * KB;
+              fp.velocity.y = Math.max(fp.velocity.y, 4.0);
+            }
           }
         }
         if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
