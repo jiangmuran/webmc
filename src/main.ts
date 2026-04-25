@@ -4547,6 +4547,12 @@ const chatInput = new ChatInput(appEl, {
       '/currentchunk',
       '/gpu',
       '/renderer',
+      '/randomblock',
+      '/rb',
+      '/randommob',
+      '/rmob',
+      '/mobcount',
+      '/mc',
     ];
     return SLASH_CMDS;
   },

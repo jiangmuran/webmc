@@ -1143,6 +1143,33 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'randomblock' || head === 'rb') {
+    if (!ctx.listBlocks || !ctx.giveItem) return;
+    const blocks = ctx.listBlocks();
+    if (blocks.length === 0) return;
+    const pick = blocks[Math.floor(Math.random() * blocks.length)];
+    if (!pick) return;
+    const ok = ctx.giveItem(pick.replace(/^webmc:/, ''), 1);
+    if (ok) ctx.broadcast(`🎲 Got ${pick}`, '#80ff80');
+    return;
+  }
+  if (head === 'randommob' || head === 'rmob') {
+    if (!ctx.summon || !ctx.listMobKinds) return;
+    const list = ctx.listMobKinds();
+    const pick = list[Math.floor(Math.random() * list.length)] ?? 'pig';
+    const ok = ctx.summon(pick, ctx.playerPos.x + 2, ctx.playerPos.y, ctx.playerPos.z + 2);
+    if (ok) ctx.broadcast(`🎲 Spawned ${pick}`, '#80ff80');
+    return;
+  }
+  if (head === 'mobcount' || head === 'mc') {
+    if (!ctx.entityStats) return;
+    const s = ctx.entityStats();
+    ctx.broadcast(
+      `Mobs: ${String(s.mobs)} (${String(s.hostile)} hostile / ${String(s.passive)} passive / ${String(s.neutral)} neutral)`,
+      '#cccccc',
+    );
+    return;
+  }
   if (head === 'chunk' || head === 'currentchunk') {
     const cx = Math.floor(ctx.playerPos.x / 16);
     const cz = Math.floor(ctx.playerPos.z / 16);
