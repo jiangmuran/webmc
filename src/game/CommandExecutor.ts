@@ -901,6 +901,25 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'confetti' || head === 'celebrate') {
+    if (!ctx.particle) return;
+    const px = ctx.playerPos.x, py = ctx.playerPos.y, pz = ctx.playerPos.z;
+    for (let i = 0; i < 200; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const r = 0.5 + Math.random() * 6;
+      ctx.particle(px + Math.cos(ang) * r, py + Math.random() * 4, pz + Math.sin(ang) * r);
+    }
+    if (ctx.showTitle) ctx.showTitle('🎉 GG!', '#ffd080', 1500);
+    return;
+  }
+  if (head === 'panic') {
+    if (ctx.killAllMobs) {
+      const n = ctx.killAllMobs();
+      ctx.broadcast(`Killed ${String(n)} mobs`, '#ff8080');
+    }
+    if (ctx.heal) ctx.heal();
+    return;
+  }
   if (head === 'buildmode' || head === 'build') {
     if (ctx.setGameMode) ctx.setGameMode('creative');
     if (ctx.applyEffect) ctx.applyEffect('night_vision', 0, 600);
