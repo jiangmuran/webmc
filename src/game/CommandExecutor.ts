@@ -118,7 +118,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const v = args[1];
     if (!rule || (v !== 'true' && v !== 'false')) {
       ctx.broadcast('Usage: /gamerule <rule> <true|false>', '#ff8080');
-      ctx.broadcast('Rules: keepInventory, doDaylightCycle, doMobSpawning', '#cccccc');
+      ctx.broadcast('Rules: keepInventory, doDaylightCycle, doMobSpawning, doImmediateRespawn', '#cccccc');
       return;
     }
     ctx.setGameRule?.(rule, v === 'true');

@@ -351,6 +351,7 @@ const gameRules = {
   keepInventory: false,
   doDaylightCycle: true,
   doMobSpawning: true,
+  doImmediateRespawn: false,
 };
 void persistDB.getMeta('gameRules').then((saved) => {
   if (saved && typeof saved === 'object') {
@@ -358,6 +359,7 @@ void persistDB.getMeta('gameRules').then((saved) => {
     if (typeof g['keepInventory'] === 'boolean') gameRules.keepInventory = g['keepInventory'];
     if (typeof g['doDaylightCycle'] === 'boolean') gameRules.doDaylightCycle = g['doDaylightCycle'];
     if (typeof g['doMobSpawning'] === 'boolean') gameRules.doMobSpawning = g['doMobSpawning'];
+    if (typeof g['doImmediateRespawn'] === 'boolean') gameRules.doImmediateRespawn = g['doImmediateRespawn'];
   }
 });
 let currentPlayerName = 'Player';
@@ -2009,11 +2011,17 @@ function frame(): void {
   } else {
     starvingShown = false;
   }
-  if (playerState.justDied && !deathScreen.isVisible() && !playerState.invulnerable) {
-    deathScreen.show();
-    fp.inputBlocked = true;
-    document.exitPointerLock();
-    playerState.justDied = false;
+  if (playerState.justDied && !playerState.invulnerable) {
+    if (gameRules.doImmediateRespawn) {
+      // Skip death screen; world spawn already happened during respawn().
+      toast.show('Respawned', '#80ffa0', 1200);
+      playerState.justDied = false;
+    } else if (!deathScreen.isVisible()) {
+      deathScreen.show();
+      fp.inputBlocked = true;
+      document.exitPointerLock();
+      playerState.justDied = false;
+    }
   }
 
   if (playerState.health < lastPlayerHealth - 0.05) {
