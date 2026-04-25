@@ -21,6 +21,7 @@ import { Hotbar } from './ui/Hotbar';
 import { SubtitleView } from './ui/SubtitleView';
 import { BossBarView } from './ui/BossBarView';
 import { ScoreboardSidebarView } from './ui/ScoreboardSidebarView';
+import { AchievementToastView } from './ui/AchievementToastView';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -421,6 +422,7 @@ const crosshair = new Crosshair(appEl);
 const subtitles = new SubtitleView(appEl);
 const bossBar = new BossBarView(appEl);
 const scoreboard = new ScoreboardSidebarView(appEl);
+const achievementToast = new AchievementToastView(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -536,7 +538,7 @@ function checkAchievements(): void {
   for (const a of achievements) {
     if (!achievedSet.has(a.id) && a.check()) {
       achievedSet.add(a.id);
-      toast.show(`🏆 ${a.title}`, '#ffd080', 2500);
+      achievementToast.push('advancement_task', a.title);
       chatInput.addLine(`Achievement: ${a.title}`, '#ffd080');
       void persistDB.setMeta('achievements', Array.from(achievedSet));
     }
@@ -2476,6 +2478,7 @@ function frame(): void {
     }
   }
   subtitles.tick();
+  achievementToast.tick();
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
