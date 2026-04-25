@@ -1872,7 +1872,11 @@ function frame(): void {
   (uniforms['uAmbient'] as { value: number }).value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
   // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
   const speedEff = playerState.effects.get('speed');
-  fp.speedMultiplier = speedEff ? 1 + 0.2 * (speedEff.amplifier + 1) : 1;
+  const slowEff = playerState.effects.get('slowness');
+  let mul = 1;
+  if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
+  if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
+  fp.speedMultiplier = mul;
   const jumpEff = playerState.effects.get('jump_boost');
   fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
   (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
