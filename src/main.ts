@@ -6731,8 +6731,12 @@ function frame(): void {
   }
 
   if (gameMode === 'survival' || gameMode === 'adventure') {
+    // Suffocation when the head cell is solid. position.y is the body
+    // center (halfY=0.9), eyes ~0.72 above (eyeHeight 1.62 from feet).
+    // The previous +1.55 was a full cell ABOVE the head — suffocation
+    // never fired when a block was placed where the player's head was.
     const headX = Math.floor(fp.position.x);
-    const headY = Math.floor(fp.position.y + 1.55);
+    const headY = Math.floor(fp.position.y + 0.72);
     const headZ = Math.floor(fp.position.z);
     if (isSolid(headX, headY, headZ)) {
       playerState.takeDamage({ amount: 1 * dtSec, source: 'suffocation' });
