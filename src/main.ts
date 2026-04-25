@@ -31,6 +31,7 @@ import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
+import { kindFor as kindForWeather } from './engine/weather_particles';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -516,8 +517,28 @@ let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
-  rain.setActive(w !== 'clear');
+  if (w === 'clear') {
+    rain.setActive(false);
+  } else {
+    const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
+    const biomeName = biomeId === 1 ? 'forest' : 'plains';
+    const temp = biomeTemperature(biomeName);
+    const kind = kindForWeather({ raining: true, intensity: 1, biomeTemperature: temp });
+    if (kind === 'none') {
+      rain.setActive(false);
+    } else {
+      rain.setKind(kind);
+      rain.setActive(true);
+    }
+  }
   void persistDB.setMeta('weather', w);
+}
+
+function biomeTemperature(biome: string): number {
+  if (biome.includes('desert') || biome.includes('savanna')) return 1.6;
+  if (biome.includes('snow') || biome.includes('frozen') || biome.includes('ice') || biome.includes('taiga')) return 0.05;
+  if (biome.includes('jungle') || biome.includes('swamp')) return 0.95;
+  return 0.7;
 }
 void persistDB.getMeta('weather').then((saved) => {
   if (saved === 'clear' || saved === 'rain' || saved === 'thunder') setWeather(saved);

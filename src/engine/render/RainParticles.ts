@@ -47,6 +47,20 @@ export class RainParticles {
     this.group.visible = on;
   }
 
+  setKind(kind: 'rain' | 'snow'): void {
+    if (kind === 'snow') {
+      this.opts.color = 0xffffff;
+      this.opts.fallSpeed = 1.5;
+    } else {
+      this.opts.color = 0xa0c6ff;
+      this.opts.fallSpeed = 26;
+    }
+    const mat = this.group.material as THREE.PointsMaterial;
+    mat.color.setHex(this.opts.color);
+    mat.size = kind === 'snow' ? 0.4 : 0.25;
+    mat.needsUpdate = true;
+  }
+
   isActive(): boolean {
     return this.active;
   }
