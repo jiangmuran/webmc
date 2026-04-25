@@ -55,6 +55,7 @@ export interface CommandContext {
   toggleMinimap?: () => boolean;
   minimapZoom?: (dir: 'in' | 'out') => void;
   heldItemInfo?: () => { name: string; count: number; maxStack: number; durability?: { current: number; max: number }; food?: { hunger: number; saturation: number }; tags?: string[] } | null;
+  inventoryStats?: () => { filledSlots: number; totalSlots: number; totalItems: number; uniqueTypes: number; topItems: { name: string; count: number }[] };
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -960,6 +961,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'inventory' || head === 'inv') {
+    if (!ctx.inventoryStats) return;
+    const s = ctx.inventoryStats();
+    ctx.broadcast(`Inventory: ${String(s.filledSlots)}/${String(s.totalSlots)} slots · ${String(s.totalItems)} items · ${String(s.uniqueTypes)} unique`, '#cccccc');
+    if (s.topItems?.length) {
+      const list = s.topItems.slice(0, 5).map((t) => `${t.name}×${String(t.count)}`).join(', ');
+      ctx.broadcast(`Top: ${list}`, '#cccccc');
+    }
     return;
   }
   if (head === 'item' || head === 'itemstats') {
