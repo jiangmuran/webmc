@@ -345,9 +345,27 @@ export class SurvivalInventory {
 
   private refreshSmeltList(): void {
     this.smeltList.textContent = '';
-    const coalId = this.registry.byName('webmc:coal');
-    if (coalId === undefined) return;
-    const hasCoal = this.inventoryCount(coalId) > 0;
+    // Accept any vanilla furnace fuel, not just coal. Players smelting
+    // logs into charcoal then needing the charcoal to smelt more was
+    // frustrating: the panel always said "need coal" even when they had
+    // 64 charcoal in their hotbar.
+    const FUEL_NAMES: readonly string[] = [
+      'webmc:coal',
+      'webmc:charcoal',
+      'webmc:coal_block',
+      'webmc:lava_bucket',
+      'webmc:blaze_rod',
+      'webmc:dried_kelp_block',
+    ];
+    let fuelId: number | undefined;
+    for (const name of FUEL_NAMES) {
+      const id = this.registry.byName(name);
+      if (id !== undefined && this.inventoryCount(id) > 0) {
+        fuelId = id;
+        break;
+      }
+    }
+    const hasFuel = fuelId !== undefined;
     // Full vanilla furnace recipe set (the common ones). Was just the 3
     // meats — players couldn't smelt iron, gold, copper, sand→glass,
     // cobble→stone, clay→brick, fish, mutton, rabbit, potato, kelp,
@@ -399,7 +417,7 @@ export class SurvivalInventory {
       const outId = this.registry.byName(outName);
       if (inId === undefined || outId === undefined) continue;
       const has = this.inventoryCount(inId) > 0;
-      if (!has || !hasCoal) continue;
+      if (!has || !hasFuel) continue;
       const btn = document.createElement('button');
       const shortIn = inName.replace(/^webmc:/, '');
       const shortOut = outName.replace(/^webmc:/, '');
@@ -416,15 +434,27 @@ export class SurvivalInventory {
       ].join(';');
       btn.addEventListener('click', () => {
         this.consumeItem(inId, 1);
-        this.consumeItem(coalId, 1);
+        // Re-resolve the cheapest available fuel at click time so a stack
+        // exhausted between refresh and click doesn't crash. Default to
+        // coal which we'd already validated as the panel's "need fuel"
+        // baseline.
+        let useFuel = fuelId;
+        for (const name of FUEL_NAMES) {
+          const id = this.registry.byName(name);
+          if (id !== undefined && this.inventoryCount(id) > 0) {
+            useFuel = id;
+            break;
+          }
+        }
+        if (useFuel !== undefined) this.consumeItem(useFuel, 1);
         this.inventory.add({ itemId: outId, count: 1, damage: 0 });
         this.refresh();
       });
       this.smeltList.appendChild(btn);
     }
-    if (!hasCoal) {
+    if (!hasFuel) {
       const hint = document.createElement('div');
-      hint.textContent = 'Need coal to smelt.';
+      hint.textContent = 'Need fuel (coal, charcoal, lava bucket, blaze rod, ...) to smelt.';
       hint.style.cssText = 'opacity:0.6;font-size:11px;';
       this.smeltList.appendChild(hint);
     }
