@@ -580,6 +580,7 @@ const tamedMobs = new Map<number, TameableState>();
 const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
 const lovingMobs = new Map<number, AnimalLove>();
 const leashedMobs = new Set<number>();
+const saddledMobs = new Set<number>();
 const babyMobs = new Map<number, BabyState>();
 let worldTick = 0;
 const BREED_FOOD: Record<string, readonly string[]> = {
@@ -1424,6 +1425,21 @@ canvas.addEventListener('mousedown', (e) => {
         leashedMobs.add(aimedMob.id);
         mobRenderer.setMobName(aimedMob.id, `🪢 ${kind}`);
         chatInput.addLine(`Leashed ${kind}`, '#80ff80');
+        return;
+      }
+      if (heldName === 'webmc:saddle' && (kind === 'pig' || kind === 'horse')) {
+        if (!saddledMobs.has(aimedMob.id)) {
+          saddledMobs.add(aimedMob.id);
+          mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
+          const sId = itemRegistry.byName('webmc:saddle');
+          if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure')) consumeInventoryItem(sId, 1);
+          chatInput.addLine(`Saddled ${kind}`, '#80ff80');
+          return;
+        }
+      }
+      if (heldName === 'webmc:name_tag' && sel) {
+        // Tag with a quick name; open chat for custom rename.
+        chatInput.openChat('/rename ');
         return;
       }
     }
