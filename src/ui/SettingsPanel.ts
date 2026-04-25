@@ -9,6 +9,7 @@ export interface SettingsValues {
   brightness: number;
   showCrosshair: boolean;
   playerName: string;
+  showMobNames: boolean;
 }
 
 export const DEFAULT_SETTINGS: SettingsValues = {
@@ -22,6 +23,7 @@ export const DEFAULT_SETTINGS: SettingsValues = {
   brightness: 1.0,
   showCrosshair: true,
   playerName: 'Player',
+  showMobNames: true,
 };
 
 const STORAGE_KEY = 'webmc:settings';
@@ -102,6 +104,7 @@ export class SettingsPanel {
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
     this.checkbox(panel, 'Show crosshair', 'showCrosshair');
+    this.checkbox(panel, 'Show mob names', 'showMobNames');
     this.textInput(panel, 'Player name', 'playerName');
 
     const presetRow = document.createElement('div');

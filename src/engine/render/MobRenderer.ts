@@ -91,6 +91,7 @@ export class MobRenderer {
   private readonly visuals = new Map<number, MobVisual>();
   private readonly bodyGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
+  showNameplates = true;
 
   constructor() {
     this.group.name = 'webmc-mob-group';
@@ -207,6 +208,7 @@ export class MobRenderer {
         vis.headMat.color.setHex(COLORS[mob.def.kind]);
       }
 
+      vis.nameSprite.visible = this.showNameplates;
       const hpRatio = Math.max(0, mob.health / mob.def.maxHealth);
       const showBar = hpRatio < 1 && mob.dyingSec === 0;
       if (showBar) {

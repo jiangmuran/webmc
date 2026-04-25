@@ -1022,6 +1022,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     currentPlayerName = v.playerName.trim() || 'Player';
     playerAvatar.setName(currentPlayerName);
     document.title = `webmc · ${worldMeta.name} · ${currentPlayerName}`;
+    mobRenderer.showNameplates = v.showMobNames;
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
