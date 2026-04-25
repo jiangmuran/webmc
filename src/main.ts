@@ -32,6 +32,7 @@ import {
   type WorldMeta,
   type PersistedInventory,
   type PersistedItemStack,
+  type PersistedVitals,
 } from './persist/types';
 import { RoomClient } from './net/RoomClient';
 import { ItemRegistry, type ItemStack } from './items/item';
@@ -1150,12 +1151,36 @@ function restoreInventory(snap: PersistedInventory): void {
     inventory.selectedHotbar = snap.selectedHotbar;
   }
 }
+function restoreVitals(v: PersistedVitals): void {
+  if (Number.isFinite(v.health)) playerState.health = Math.max(0, Math.min(20, v.health));
+  if (Number.isFinite(v.hunger)) playerState.hunger = Math.max(0, Math.min(20, v.hunger));
+  if (Number.isFinite(v.saturation)) playerState.saturation = Math.max(0, v.saturation);
+  if (Number.isFinite(v.breath)) playerState.breath = Math.max(0, v.breath);
+  if (Number.isFinite(v.xpLevel)) playerState.xpLevel = Math.max(0, Math.trunc(v.xpLevel));
+  if (Number.isFinite(v.xpProgress)) playerState.xpProgress = Math.max(0, v.xpProgress);
+  if (Number.isFinite(v.exhaustion)) playerState.exhaustion = Math.max(0, v.exhaustion);
+  if (Number.isFinite(v.absorption)) playerState.absorption = Math.max(0, v.absorption);
+  if (Number.isFinite(v.fireRemainingSec))
+    playerState.fireRemainingSec = Math.max(0, v.fireRemainingSec);
+  playerState.effects.clear();
+  if (Array.isArray(v.effects)) {
+    for (const e of v.effects) {
+      if (typeof e?.id === 'string' && e.remainingSec > 0) {
+        playerState.effects.set(e.id, {
+          amplifier: Math.max(0, Math.trunc(e.amplifier ?? 0)),
+          remainingSec: e.remainingSec,
+        });
+      }
+    }
+  }
+}
 const savedPlayer = await persistDB.getPlayer(worldMeta.id);
 if (savedPlayer) {
   fp.position.set(savedPlayer.position.x, savedPlayer.position.y, savedPlayer.position.z);
   fp.yaw = savedPlayer.yaw;
   fp.pitch = savedPlayer.pitch;
   if (savedPlayer.inventory) restoreInventory(savedPlayer.inventory);
+  if (savedPlayer.vitals) restoreVitals(savedPlayer.vitals);
 } else {
   const spawnHeight = Math.max(generator.surfaceAt(0, 0), 62) + 4;
   fp.position.set(worldMeta.spawn.x, spawnHeight, worldMeta.spawn.z);
@@ -5468,6 +5493,25 @@ function snapshotInventory(): PersistedInventory {
   };
 }
 
+function snapshotVitals(): PersistedVitals {
+  const effs: PersistedVitals['effects'] = [];
+  for (const [id, e] of playerState.effects) {
+    effs.push({ id, amplifier: e.amplifier, remainingSec: e.remainingSec });
+  }
+  return {
+    health: playerState.health,
+    hunger: playerState.hunger,
+    saturation: playerState.saturation,
+    breath: playerState.breath,
+    xpLevel: playerState.xpLevel,
+    xpProgress: playerState.xpProgress,
+    exhaustion: playerState.exhaustion,
+    absorption: playerState.absorption,
+    fireRemainingSec: playerState.fireRemainingSec,
+    effects: effs,
+  };
+}
+
 async function savePlayerNow(): Promise<void> {
   if (!worldMeta) return;
   await persistDB.putPlayer({
@@ -5479,6 +5523,7 @@ async function savePlayerNow(): Promise<void> {
     selectedSlot: inventory.selectedHotbar,
     updatedAt: Date.now(),
     inventory: snapshotInventory(),
+    vitals: snapshotVitals(),
   });
 }
 

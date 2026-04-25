@@ -32,6 +32,25 @@ export interface PersistedInventory {
   selectedHotbar: number;
 }
 
+export interface PersistedEffect {
+  id: string;
+  amplifier: number;
+  remainingSec: number;
+}
+
+export interface PersistedVitals {
+  health: number;
+  hunger: number;
+  saturation: number;
+  breath: number;
+  xpLevel: number;
+  xpProgress: number;
+  exhaustion: number;
+  absorption: number;
+  fireRemainingSec: number;
+  effects: PersistedEffect[];
+}
+
 export interface PlayerState {
   worldId: string;
   position: { x: number; y: number; z: number };
@@ -43,6 +62,9 @@ export interface PlayerState {
   // Optional: full inventory snapshot. Older saves without this field
   // restore an empty inventory (legacy hotbarSlots was never populated).
   inventory?: PersistedInventory;
+  // Optional: vitals (health, hunger, breath, xp, effects). Older saves
+  // without this field restore to fresh defaults.
+  vitals?: PersistedVitals;
 }
 
 export const CURRENT_SCHEMA_VERSION = 1;
