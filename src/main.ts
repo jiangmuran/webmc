@@ -2713,6 +2713,17 @@ const chatInput = new ChatInput(appEl, {
         setWalkSpeed: (mul) => {
           fp.speedMultiplier = mul;
         },
+        applyVelocity: (dx, dy, dz) => {
+          if (dx !== 0 || dz !== 0) {
+            const look = fp.lookVector();
+            fp.velocity.x += look.x * dx;
+            fp.velocity.z += look.z * dx;
+          }
+          fp.velocity.y += dy;
+          if (dz !== 0) {
+            // dz is reserved for sideways; kept simple = ignore.
+          }
+        },
         toggleSitLookedAtMob: () => {
           const aimLook = fp.lookVector();
           const reach = 6;
@@ -2966,7 +2977,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode',
     ];
     return SLASH_CMDS;
   },

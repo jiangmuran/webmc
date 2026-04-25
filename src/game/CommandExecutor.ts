@@ -36,6 +36,7 @@ export interface CommandContext {
   toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
   toggleZoom?: (factor: number) => void;
   setWalkSpeed?: (mul: number) => void;
+  applyVelocity?: (dx: number, dy: number, dz: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -873,6 +874,52 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const y = args[1] !== undefined ? parseCoord(args[1], ctx.playerPos.y) : ctx.playerPos.y;
     const z = args[2] !== undefined ? parseCoord(args[2], ctx.playerPos.z) : ctx.playerPos.z;
     ctx.particle?.(x, y, z);
+    return;
+  }
+  if (head === 'jump') {
+    if (!ctx.applyVelocity) return;
+    const power = parseFloat(args[0] ?? '12');
+    if (!Number.isFinite(power) || power < 0 || power > 50) {
+      ctx.broadcast('Usage: /jump [power=12]', '#ff8080');
+      return;
+    }
+    ctx.applyVelocity(0, power, 0);
+    ctx.broadcast(`Boosted ${power.toFixed(0)} m/s up`, '#80ff80');
+    return;
+  }
+  if (head === 'launch') {
+    if (!ctx.applyVelocity) return;
+    const fwd = parseFloat(args[0] ?? '20');
+    const up = parseFloat(args[1] ?? '15');
+    if (!Number.isFinite(fwd) || !Number.isFinite(up)) {
+      ctx.broadcast('Usage: /launch [fwd=20] [up=15]', '#ff8080');
+      return;
+    }
+    ctx.applyVelocity(fwd, up, 0);
+    ctx.broadcast(`Launched ${fwd.toFixed(0)} fwd, ${up.toFixed(0)} up`, '#80ff80');
+    return;
+  }
+  if (head === 'nv' || head === 'nightvision') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('night_vision', 0, 600);
+    ctx.broadcast('Night vision 10min', '#80ff80');
+    return;
+  }
+  if (head === 'invis' || head === 'invisible') {
+    if (!ctx.applyEffect) return;
+    const sec = parseInt(args[0] ?? '120', 10);
+    ctx.applyEffect('invisibility', 0, Math.max(1, Math.min(600, Number.isFinite(sec) ? sec : 120)));
+    ctx.broadcast(`Invisible ${String(sec)}s`, '#80ff80');
+    return;
+  }
+  if (head === 'god' || head === 'godmode') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('resistance', 4, 600);
+    ctx.applyEffect('regeneration', 4, 600);
+    ctx.applyEffect('saturation', 9, 600);
+    ctx.applyEffect('water_breathing', 0, 600);
+    ctx.applyEffect('fire_resistance', 0, 600);
+    ctx.broadcast('God mode for 10min (resist 5 + regen 5 + sat + water + fire)', '#80ff80');
     return;
   }
   if (head === 'zoom') {
