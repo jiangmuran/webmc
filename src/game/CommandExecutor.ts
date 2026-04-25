@@ -34,6 +34,7 @@ export interface CommandContext {
   applyEffect?: (id: string, amplifier: number, durationSec: number) => void;
   clearEffects?: () => void;
   setGameRule?: (rule: string, value: boolean) => void;
+  listGameRules?: () => Record<string, boolean>;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -116,9 +117,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'gamerule') {
     const rule = args[0];
     const v = args[1];
-    if (!rule || (v !== 'true' && v !== 'false')) {
+    if (!rule) {
+      const rules = ctx.listGameRules?.() ?? {};
       ctx.broadcast('Usage: /gamerule <rule> <true|false>', '#ff8080');
-      ctx.broadcast('Rules: keepInventory, doDaylightCycle, doMobSpawning, doImmediateRespawn', '#cccccc');
+      for (const [k, val] of Object.entries(rules)) {
+        ctx.broadcast(`${k} = ${String(val)}`, '#cccccc');
+      }
+      return;
+    }
+    if (v !== 'true' && v !== 'false') {
+      ctx.broadcast('Usage: /gamerule <rule> <true|false>', '#ff8080');
       return;
     }
     ctx.setGameRule?.(rule, v === 'true');
