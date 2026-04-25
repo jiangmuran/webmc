@@ -196,7 +196,11 @@ export function createDefaultRegistry(): BlockRegistry {
     {
       name: 'webmc:torch',
       solid: false,
-      opaque: true,
+      // Torch is a small post — light passes around it. opaque:true here
+      // (combined with the registry being idempotent on duplicate names)
+      // overrode the second webmc:torch definition further down that
+      // already had opaque:false, so torches were carving dark pockets.
+      opaque: false,
       color: [245, 215, 110] as RGB,
       lightEmission: 14,
       hardness: 0,
