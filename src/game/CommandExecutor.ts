@@ -433,6 +433,12 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     ctx.broadcast(`Nearest ${kind}: ${String(hit.x)} ~ ${String(hit.z)} (${hit.dist.toFixed(0)}m)`, '#80ff80');
+    // Auto-create a waypoint so the minimap marks the structure.
+    if (ctx.setWaypoint) {
+      const wpName = `loc_${kind}`;
+      ctx.setWaypoint(wpName, hit.x, ctx.playerPos.y, hit.z);
+      ctx.broadcast(`Waypoint '${wpName}' set — see minimap`, '#80c0ff');
+    }
     return;
   }
   if (head === 'loot') {
