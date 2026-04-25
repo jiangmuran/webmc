@@ -319,6 +319,13 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/day | /night | /noon | /midnight', '#cccccc');
     ctx.broadcast('/up [n] | /down [n] | /distance | /spawnpoint', '#cccccc');
     ctx.broadcast('/uptime | /version | /ping', '#cccccc');
+    ctx.broadcast('Builders: /village /house /tower /pyramid /dungeon', '#cccccc');
+    ctx.broadcast('  /sphere /cube /platform /portal /roof /wall /bridge /pillar /tree', '#cccccc');
+    ctx.broadcast('Mob: /tame /sit /stand /feed /breed /leash /unleash /rename', '#cccccc');
+    ctx.broadcast('  /army <kind> <n> /dragon /wither', '#cccccc');
+    ctx.broadcast('XP/Boss: /xp <n> /bossbar /enchant', '#cccccc');
+    ctx.broadcast('Misc: /equip /datapack /export /import /hardcore /worldborder', '#cccccc');
+    ctx.broadcast('  /waypoint /locate /milk /tps /tick /loot /scoreboard /sb', '#cccccc');
     ctx.broadcast('Use ; to chain: /heal; /spawn', '#cccccc');
     return;
   }
