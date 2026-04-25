@@ -867,6 +867,24 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'world' || head === 'info') {
+    ctx.broadcast('— World info —', '#80ffff');
+    ctx.broadcast(`pos ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`, '#cccccc');
+    if (ctx.seed) ctx.broadcast(`seed ${String(ctx.seed())}`, '#cccccc');
+    if (ctx.biomeAt) ctx.broadcast(`biome ${ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z)}`, '#cccccc');
+    if (ctx.getRoomCode) {
+      const code = ctx.getRoomCode();
+      if (code) ctx.broadcast(`room ${code}`, '#cccccc');
+    }
+    if (ctx.uptimeMs) ctx.broadcast(`uptime ${(ctx.uptimeMs() / 60000).toFixed(1)}min`, '#cccccc');
+    if (ctx.getTpsStats) {
+      const s = ctx.getTpsStats();
+      ctx.broadcast(`tps ${s.tps.toFixed(1)} mspt ${s.p50ms.toFixed(1)}/p95 ${s.p95ms.toFixed(1)}`, s.lagging ? '#ff8080' : '#80ff80');
+    }
+    if (ctx.getWorldBorder) ctx.broadcast(`border ${ctx.getWorldBorder().toLocaleString()} blocks`, '#cccccc');
+    if (ctx.isHardcore) ctx.broadcast(`hardcore ${ctx.isHardcore() ? 'on' : 'off'}`, '#cccccc');
+    return;
+  }
   if (head === 'craft') {
     if (!ctx.giveItem) return;
     const item = args[0];
