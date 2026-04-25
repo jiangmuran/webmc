@@ -411,6 +411,8 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [120, 90, 50] as RGB,
       hardness: 0,
     },
+    { name: 'webmc:mycelium', color: [110, 95, 130] as RGB, hardness: 0.6 },
+    { name: 'webmc:podzol', color: [120, 80, 50] as RGB, hardness: 0.5 },
     {
       name: 'webmc:fire',
       solid: false,

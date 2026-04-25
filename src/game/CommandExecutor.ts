@@ -1144,6 +1144,49 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'end_world' || head === 'end_island') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '24', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'end_stone');
+    for (const [dx, dz] of [
+      [-r + 4, -r + 4],
+      [r - 4, -r + 4],
+      [-r + 4, r - 4],
+      [r - 4, r - 4],
+    ] as const) {
+      for (let h = 0; h < 12; h++) ctx.setBlock(px + dx, py + h, pz + dz, 'obsidian');
+      ctx.setBlock(px + dx, py + 12, pz + dz, 'end_crystal');
+    }
+    ctx.broadcast('End island with 4 obsidian pillars + crystals', '#a060ff');
+    return;
+  }
+  if (head === 'mushroom_world' || head === 'mushroomland') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(r) || r < 4 || r > 64) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - r, py - 1, pz - r, px + r, py - 1, pz + r, 'mycelium');
+    for (let i = 0; i < 16; i++) {
+      const cx = px + Math.floor((Math.random() - 0.5) * 2 * r);
+      const cz = pz + Math.floor((Math.random() - 0.5) * 2 * r);
+      const trunkH = 3 + Math.floor(Math.random() * 3);
+      for (let h = 0; h < trunkH; h++) ctx.setBlock(cx, py + h, cz, 'mushroom_stem');
+      const cap = Math.random() < 0.5 ? 'red_mushroom_block' : 'brown_mushroom_block';
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dz = -1; dz <= 1; dz++) {
+          ctx.setBlock(cx + dx, py + trunkH, cz + dz, cap);
+        }
+      }
+    }
+    ctx.broadcast('Mushroom biome with 16 giant mushrooms', '#ff80c0');
+    return;
+  }
   if (head === 'nether_world' || head === 'nether') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[0] ?? '20', 10);
