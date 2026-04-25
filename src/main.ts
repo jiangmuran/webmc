@@ -466,6 +466,19 @@ itemRegistry.register({ name: 'webmc:ghast_tear', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:magma_cream', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rabbit_foot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:turtle_helmet_scute', maxStack: 64, durability: 0 });
+// Splash + lingering potion variants (drinkable as area-effect on use).
+const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec: number }[] = [
+  { name: 'webmc:splash_potion_healing', effect: 'instant_health', amplifier: 0, durSec: 0 },
+  { name: 'webmc:splash_potion_harming', effect: 'instant_damage', amplifier: 0, durSec: 0 },
+  { name: 'webmc:splash_potion_poison', effect: 'poison', amplifier: 0, durSec: 30 },
+  { name: 'webmc:splash_potion_slowness', effect: 'slowness', amplifier: 0, durSec: 60 },
+  { name: 'webmc:splash_potion_swiftness', effect: 'speed', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_strength', effect: 'strength', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_weakness', effect: 'weakness', amplifier: 0, durSec: 70 },
+];
+for (const p of SPLASH_POTIONS) {
+  itemRegistry.register({ name: p.name, maxStack: 1, durability: 0 });
+}
 // MC 1.21+ items.
 itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
@@ -1158,6 +1171,41 @@ const interaction = new InteractionController(
             subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
             return true;
           }
+        }
+      }
+      // Splash potion: hit target with effect AOE.
+      if (heldName.startsWith('splash_potion_')) {
+        const ptype = SPLASH_POTIONS.find((p) => p.name === `webmc:${heldName}`);
+        if (ptype) {
+          const cx = bx + 0.5, cy = by + 0.5, cz = bz + 0.5;
+          let affected = 0;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - cx;
+            const dy = m.position.y - cy;
+            const dz = m.position.z - cz;
+            if (dx * dx + dy * dy + dz * dz > 16) continue;
+            if (ptype.effect === 'instant_damage') mobWorld.damage(m.id, 6);
+            else if (ptype.effect === 'instant_health') mobWorld.damage(m.id, -4);
+            // Persistent effects on mobs not modeled; visual only.
+            affected++;
+          }
+          // Also affect player if in radius.
+          const pdx = fp.position.x - cx;
+          const pdy = fp.position.y - cy;
+          const pdz = fp.position.z - cz;
+          if (pdx * pdx + pdy * pdy + pdz * pdz <= 16) {
+            if (ptype.effect === 'instant_health') playerState.heal(4);
+            else if (ptype.effect === 'instant_damage') playerState.takeDamage({ amount: 6, source: 'harming' });
+            else playerState.applyEffect(ptype.effect, ptype.amplifier, Math.floor(ptype.durSec * 0.75));
+          }
+          for (let i = 0; i < 24; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 4, cy + Math.random() * 2, cz + (Math.random() - 0.5) * 4, [180, 100, 220]);
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const sId = itemRegistry.byName(`webmc:${heldName}`);
+            if (sId !== undefined) consumeInventoryItem(sId, 1);
+          }
+          subtitles.push(`Splash potion (${affected})`);
+          sfx.play('break');
+          return true;
         }
       }
       // Spawn egg: spawn matching mob above target block.
