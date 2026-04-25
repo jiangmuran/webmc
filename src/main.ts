@@ -37,6 +37,7 @@ import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
 import { rumbleForDamage } from './engine/input/gamepad_rumble';
 import { init as initGyro, onSample as onGyroSample, setEnabled as setGyroEnabled, type GyroSmoothed } from './engine/input/gyro_assist';
+import { startPinch, updateFov, type PinchState } from './engine/input/touch_pinch_zoom';
 import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
@@ -131,6 +132,28 @@ if (isMobileDevice) {
     gyroState = result.state;
     gyroYawAccum += result.yawDelta * 0.0035;
   });
+
+  let pinch: PinchState | null = null;
+  window.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      const t0 = e.touches[0]!;
+      const t1 = e.touches[1]!;
+      const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      pinch = startPinch(fp.camera.fov, d);
+    }
+  }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && pinch) {
+      const t0 = e.touches[0]!;
+      const t1 = e.touches[1]!;
+      const d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      pinch = updateFov(pinch, d);
+      fp.setBaseFov(pinch.currentFov);
+    }
+  }, { passive: true });
+  window.addEventListener('touchend', () => {
+    if (pinch) pinch = null;
+  }, { passive: true });
 }
 
 if (localStorage.getItem('webmc:settings') === null) {
