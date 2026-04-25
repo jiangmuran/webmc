@@ -187,12 +187,17 @@ export class TouchControls {
         if (mag < STICK_DEAD_PX) {
           this.state.moveStrafe = 0;
           this.state.moveForward = 0;
+          this.state.sprint = false;
         } else {
           const clampMag = Math.min(mag, STICK_BASE_PX);
           const nx = (dx / mag) * (clampMag / STICK_BASE_PX);
           const ny = (dy / mag) * (clampMag / STICK_BASE_PX);
           this.state.moveStrafe = nx;
           this.state.moveForward = -ny;
+          // Auto-sprint: pushing the stick to its forward edge sustains
+          // sprint while the stick stays there. No HUD button needed.
+          // Only forward sprint (vanilla — sideways sprint is forbidden).
+          this.state.sprint = -ny > 0.9 && Math.abs(nx) < 0.5;
           if (this.stickKnob) {
             this.stickKnob.style.left = `${(24 + nx * 24).toString()}px`;
             this.stickKnob.style.top = `${(24 + ny * 24).toString()}px`;
@@ -216,6 +221,7 @@ export class TouchControls {
         this.stickTouch = null;
         this.state.moveForward = 0;
         this.state.moveStrafe = 0;
+        this.state.sprint = false;
         if (this.stickBase) this.stickBase.style.display = 'none';
         if (this.stickKnob) {
           this.stickKnob.style.left = '24px';

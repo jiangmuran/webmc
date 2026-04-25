@@ -6532,6 +6532,10 @@ function frame(): void {
       fp.input.strafe = touch.state.moveStrafe;
     }
     if (touch.state.jump) fp.input.jump = true;
+    // Touch sprint: the auto-sprint flag from TouchControls (full-edge
+    // forward push) was declared in the input shape but never read into
+    // fp.input — touch users could never sprint. Now wired.
+    if (touch.state.sprint) fp.input.sprint = true;
   }
 
   if (gyroYawAccum !== 0) {
