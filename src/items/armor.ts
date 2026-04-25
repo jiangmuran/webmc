@@ -109,6 +109,13 @@ export const ARMOR_DEFS: Record<string, ArmorDef> = {
     toughness: 3,
     durability: 592,
   },
+  turtle_shell: {
+    name: 'webmc:turtle_shell',
+    slot: 'helmet',
+    defense: 2,
+    toughness: 0,
+    durability: 275,
+  },
 };
 
 export interface ArmorPiece {

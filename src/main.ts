@@ -697,6 +697,7 @@ void persistDB.getMeta('difficulty').then((saved) => {
 });
 let sprintDustAccum = 0;
 let prevOnGround = true;
+let prevInWater = false;
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -3139,6 +3140,15 @@ function frame(): void {
   if (fp.inFluid === 'water' && (gameMode === 'survival' || gameMode === 'adventure')) {
     playerState.addExhaustion(0.01 * horizSpeed * dtSec);
   }
+  // Turtle Shell helmet: 10s of Water Breathing on emerging from water.
+  const inWater = fp.inFluid === 'water';
+  if (prevInWater && !inWater) {
+    const helmetItem = inventory.armor[0];
+    if (helmetItem && itemRegistry.get(helmetItem.itemId).name === 'webmc:turtle_shell') {
+      playerState.applyEffect('water_breathing', 0, 10);
+    }
+  }
+  prevInWater = inWater;
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
