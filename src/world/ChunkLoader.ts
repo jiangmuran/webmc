@@ -57,6 +57,10 @@ export class ChunkLoader {
     return this.opts.viewRadius;
   }
 
+  get perFrameBudget(): number {
+    return this.opts.perFrameBudget;
+  }
+
   update(
     playerWx: number,
     playerWz: number,

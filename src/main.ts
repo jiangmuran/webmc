@@ -3414,11 +3414,24 @@ function markChunkAllDirty(chunk: Chunk): void {
 }
 
 function flushDirty(): void {
+  // Cap mesh re-builds per frame to keep the main thread responsive.
+  // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
+  const budget = Math.max(1, loader.perFrameBudget * 3);
+  let dispatched = 0;
   for (const chunk of world.chunks()) {
     if (chunk.meshDirty.size === 0) continue;
+    if (dispatched >= budget) break;
     const dirty = Array.from(chunk.meshDirty);
-    chunk.clearMeshDirty();
+    // Sort so closer-to-player sections process first.
+    const px = fp.position.x, py = fp.position.y, pz = fp.position.z;
+    dirty.sort((a, b) => {
+      const dxA = chunk.cx * 16 - px, dzA = chunk.cz * 16 - pz, dyA = a * 16 - py;
+      const dxB = chunk.cx * 16 - px, dzB = chunk.cz * 16 - pz, dyB = b * 16 - py;
+      return (dxA * dxA + dyA * dyA + dzA * dzA) - (dxB * dxB + dyB * dyB + dzB * dzB);
+    });
     for (const cy of dirty) {
+      if (dispatched >= budget) break;
+      (chunk.meshDirty as Set<number>).delete(cy);
       const section = chunk.section(cy);
       if (!section) {
         chunkRenderer.remove(chunk.cx, cy, chunk.cz);
@@ -3435,6 +3448,7 @@ function flushDirty(): void {
         .then((response) => {
           chunkRenderer.apply(response);
         });
+      dispatched++;
     }
   }
 }
