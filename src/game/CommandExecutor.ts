@@ -964,6 +964,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`📢 ${text}`, '#ffd080');
     return;
   }
+  if (head === 'count' || head === 'commandcount') {
+    ctx.broadcast(`webmc has 167+ chat commands. Try /commands for categories.`, '#80a0ff');
+    return;
+  }
+  if (head === 'pick' && args.length > 0) {
+    const choice = args[Math.floor(Math.random() * args.length)] ?? '';
+    ctx.broadcast(`🎯 ${choice}`, '#80ff80');
+    return;
+  }
   if (head === 'dropall') {
     if (!ctx.dropAllItems) return;
     const n = ctx.dropAllItems();
