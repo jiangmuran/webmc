@@ -1144,6 +1144,39 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'monument' || head === 'oceanmonument') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 10×10×10 prismarine monument structure.
+    ctx.fillBlocks(px, py, pz, px + 9, py + 9, pz + 9, 'prismarine');
+    ctx.fillBlocks(px + 1, py + 1, pz + 1, px + 8, py + 8, pz + 8, 'prismarine_bricks');
+    ctx.fillBlocks(px + 2, py + 2, pz + 2, px + 7, py + 7, pz + 7, 'air');
+    ctx.fillBlocks(px + 4, py + 4, pz + 4, px + 5, py + 5, pz + 5, 'sea_lantern');
+    ctx.broadcast('Ocean monument: 10×10×10 prismarine + sea_lantern core', '#80c0ff');
+    return;
+  }
+  if (head === 'stronghold') {
+    if (!ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Cobble end-portal frame (3×3 ring) on stone_bricks plaza.
+    ctx.fillBlocks(px - 3, py - 1, pz - 3, px + 3, py - 1, pz + 3, 'stone_bricks');
+    // Frame: 12 end_portal_frame blocks ringing 3×3 hollow.
+    for (let dx = -1; dx <= 1; dx++) {
+      ctx.setBlock?.(px + dx, py, pz - 1, 'end_portal_frame');
+      ctx.setBlock?.(px + dx, py, pz + 1, 'end_portal_frame');
+    }
+    for (let dz = -1; dz <= 1; dz++) {
+      ctx.setBlock?.(px - 1, py, pz + dz, 'end_portal_frame');
+      ctx.setBlock?.(px + 1, py, pz + dz, 'end_portal_frame');
+    }
+    ctx.fillBlocks(px, py, pz, px, py, pz, 'end_portal');
+    ctx.broadcast('Stronghold portal room: 3×3 frame + end_portal core', '#a060ff');
+    return;
+  }
   if (head === 'cherry_world' || head === 'sakura') {
     if (!ctx.fillBlocks || !ctx.setBlock) return;
     const r = parseInt(args[0] ?? '20', 10);
