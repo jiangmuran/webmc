@@ -33,6 +33,7 @@ export interface CommandContext {
   getLastDeathPos?: () => { x: number; y: number; z: number } | null;
   renameLookedAtMob?: (name: string) => string | null;
   tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
+  toggleSitLookedAtMob?: () => { kind: string; sitting: boolean } | null;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
   setHardcore?: (on: boolean) => void;
@@ -554,6 +555,19 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`${r.kind} ate the ${r.itemUsed} but resisted taming. Try again.`, '#ffd080');
     }
+    return;
+  }
+  if (head === 'sit' || head === 'stand') {
+    if (!ctx.toggleSitLookedAtMob) {
+      ctx.broadcast('Sit not available.', '#ff8080');
+      return;
+    }
+    const r = ctx.toggleSitLookedAtMob();
+    if (!r) {
+      ctx.broadcast('No tamed pet in reach.', '#ff8080');
+      return;
+    }
+    ctx.broadcast(`${r.kind} ${r.sitting ? 'sat down' : 'stood up'}.`, '#80ff80');
     return;
   }
   if (head === 'rename' || head === 'nametag') {

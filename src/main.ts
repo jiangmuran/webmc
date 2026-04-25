@@ -77,7 +77,7 @@ import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
-import { makeTameable, tryTame, type TameableKind, type TameableState } from './entities/tameable';
+import { makeTameable, toggleSit, tryTame, type TameableKind, type TameableState } from './entities/tameable';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -1616,6 +1616,28 @@ const chatInput = new ChatInput(appEl, {
           }
           return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
         },
+        toggleSitLookedAtMob: () => {
+          const aimLook = fp.lookVector();
+          const reach = 6;
+          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - camera.position.x;
+            const dy = m.position.y - camera.position.y;
+            const dz = m.position.z - camera.position.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > reach + 1) continue;
+            const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+            if (dot > 0.97 && (!best || d < best.dist)) {
+              best = { mob: m, dist: d };
+            }
+          }
+          if (!best) return null;
+          const state = tamedMobs.get(best.mob.id);
+          if (!state || state.ownerId === null) return null;
+          toggleSit(state, 1);
+          mobRenderer.setMobName(best.mob.id, `${state.sitting ? '○' : '♥'} ${best.mob.def.kind}`);
+          return { kind: best.mob.def.kind, sitting: state.sitting };
+        },
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1843,7 +1865,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand',
     ];
     return SLASH_CMDS;
   },
