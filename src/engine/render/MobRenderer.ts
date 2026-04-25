@@ -44,6 +44,27 @@ interface MobVisual {
   hpBar: THREE.Sprite;
   hpMat: THREE.SpriteMaterial;
   lastHpRatio: number;
+  nameSprite: THREE.Sprite;
+  nameMat: THREE.SpriteMaterial;
+}
+
+function makeNameTexture(label: string): THREE.CanvasTexture {
+  const w = 128;
+  const h = 24;
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  const ctx = c.getContext('2d');
+  if (ctx) {
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = '700 14px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, w / 2, h / 2);
+  }
+  return new THREE.CanvasTexture(c);
 }
 
 function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
@@ -125,7 +146,18 @@ export class MobRenderer {
         hpBar.scale.set(1.2, 0.15, 1);
         hpBar.position.set(0, mob.def.aabb.halfY + 0.6, 0);
         group.add(hpBar);
-        const visual: MobVisual = { group, bodyMat, headMat, headMesh: head, hpBar, hpMat, lastHpRatio: 1 };
+        const nameMat = new THREE.SpriteMaterial({
+          map: makeNameTexture(mob.def.kind),
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+          opacity: 0.9,
+        });
+        const nameSprite = new THREE.Sprite(nameMat);
+        nameSprite.scale.set(0.7, 0.13, 1);
+        nameSprite.position.set(0, mob.def.aabb.halfY + 0.95, 0);
+        group.add(nameSprite);
+        const visual: MobVisual = { group, bodyMat, headMat, headMesh: head, hpBar, hpMat, lastHpRatio: 1, nameSprite, nameMat };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
         vis = visual;
@@ -194,6 +226,8 @@ export class MobRenderer {
       vis.headMat.dispose();
       vis.hpMat.map?.dispose();
       vis.hpMat.dispose();
+      vis.nameMat.map?.dispose();
+      vis.nameMat.dispose();
       this.group.remove(vis.group);
       this.visuals.delete(id);
     }
@@ -205,6 +239,8 @@ export class MobRenderer {
       vis.headMat.dispose();
       vis.hpMat.map?.dispose();
       vis.hpMat.dispose();
+      vis.nameMat.map?.dispose();
+      vis.nameMat.dispose();
       this.group.remove(vis.group);
     }
     this.visuals.clear();
