@@ -1589,6 +1589,53 @@ const interaction = new InteractionController(
           return true;
         }
       }
+      // Eat cake: right-click cake block → +2 hunger per slice (7 slices).
+      if (def.name === 'webmc:cake' && playerState.hunger < 20) {
+        const props = (state >>> 16) + 1;
+        if (props >= 7) {
+          world.set(bx, by, bz, AIR);
+          touchWorldEdit(bx, by, bz, 0);
+        } else {
+          world.set(bx, by, bz, makeState(id, props));
+        }
+        playerState.eat(2, 0.4);
+        sfx.play('click');
+        subtitles.push('Ate cake slice');
+        return true;
+      }
+      // Composter: right-click with compostable food/plant → fill chance per item.
+      if (def.name === 'webmc:composter') {
+        const COMPOSTABLES: Record<string, number> = {
+          wheat: 0.65, wheat_seeds: 0.30, beetroot_seeds: 0.30, melon_seeds: 0.30, pumpkin_seeds: 0.30,
+          carrot: 0.65, potato: 0.65, beetroot: 0.65, apple: 0.65, bread: 0.85, cookie: 0.85,
+          cactus: 0.5, sugar_cane: 0.5, kelp: 0.30, dried_kelp: 0.85, sweet_berries: 0.30,
+          glow_berries: 0.30, melon_slice: 0.5, pumpkin_pie: 1.0, baked_potato: 0.85,
+        };
+        const chance = COMPOSTABLES[heldName];
+        if (chance !== undefined) {
+          if (Math.random() < chance) {
+            const props = ((state >>> 16) & 0x07) + 1;
+            if (props >= 8) {
+              // Output bone meal.
+              const bmId = itemRegistry.byName('webmc:bone_meal');
+              if (bmId !== undefined) inventory.add({ itemId: bmId, count: 1, damage: 0 });
+              world.set(bx, by, bz, makeState(id, 0));
+              subtitles.push('Composter full → 1 bone meal');
+            } else {
+              world.set(bx, by, bz, makeState(id, props));
+              subtitles.push(`Composter level ${props}/7`);
+            }
+          } else {
+            subtitles.push('Compost failed');
+          }
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const itemId = itemRegistry.byName(`webmc:${heldName}`);
+            if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          }
+          sfx.play('click');
+          return true;
+        }
+      }
       // Plant crops on farmland: seeds/carrot/potato/beetroot_seeds with farmland target → place crop block above.
       if (def.name === 'webmc:farmland' && airAbove) {
         const PLANT_MAP: Record<string, string> = {
