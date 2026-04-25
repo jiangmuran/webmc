@@ -879,6 +879,7 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         listGameRules: () => ({ ...gameRules }),
+        biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
         killAllMobs: () => {
           const ids: number[] = [];
           for (const m of mobWorld.all()) ids.push(m.id);

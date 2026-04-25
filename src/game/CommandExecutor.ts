@@ -35,6 +35,7 @@ export interface CommandContext {
   clearEffects?: () => void;
   setGameRule?: (rule: string, value: boolean) => void;
   listGameRules?: () => Record<string, boolean>;
+  biomeAt?: (x: number, z: number) => string;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -64,6 +65,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       `Pos ${ctx.playerPos.x.toFixed(2)} ${ctx.playerPos.y.toFixed(2)} ${ctx.playerPos.z.toFixed(2)}`,
       '#cccccc',
     );
+    return;
+  }
+  if (head === 'biome') {
+    const b = ctx.biomeAt?.(Math.floor(ctx.playerPos.x), Math.floor(ctx.playerPos.z)) ?? 'unknown';
+    ctx.broadcast(`Biome: ${b}`, '#cccccc');
     return;
   }
   if (head === 'help') {
