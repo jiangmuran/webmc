@@ -90,6 +90,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(text, '#ffffff');
     return;
   }
+  if (head === 'random' || head === 'roll') {
+    const max = args[0] !== undefined ? Math.max(1, Math.floor(Number(args[0]))) : 100;
+    if (!Number.isFinite(max)) {
+      ctx.broadcast('Usage: /random [max=100]', '#ff8080');
+      return;
+    }
+    const r = 1 + Math.floor(Math.random() * max);
+    ctx.broadcast(`🎲 ${String(r)} (1-${String(max)})`, '#cccccc');
+    return;
+  }
   if (head === 'list') {
     ctx.broadcast(`Players online: 1 (${ctx.playerName ?? 'Player'})`, '#cccccc');
     return;
