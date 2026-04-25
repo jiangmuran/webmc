@@ -1801,6 +1801,59 @@ function heldNameLower(): string {
   return hotbar.selected?.name.toLowerCase() ?? '';
 }
 
+// Resolves the BlockState the player is about to place from hotbar slot `i`.
+// In survival/adventure this comes from the inventory hotbar slot (the item
+// must have a blockId — swords/foods are non-placeable). In creative it
+// comes from the canned UI Hotbar entry (the creative quick-pick selector).
+// Returns null if the slot holds nothing placeable.
+function placeableFromSlot(
+  i: number,
+): { state: BlockState; blockId: number; itemId: number | null } | null {
+  if (gameMode === 'creative') {
+    const entry = hotbar.getEntry(i);
+    if (!entry) return null;
+    return { state: entry.state, blockId: stateId(entry.state), itemId: null };
+  }
+  const stack = inventory.hotbar[i];
+  if (!stack) return null;
+  const itemDef = itemRegistry.get(stack.itemId);
+  if (itemDef.blockId === undefined) return null;
+  return { state: makeState(itemDef.blockId, 0), blockId: itemDef.blockId, itemId: stack.itemId };
+}
+
+// Mirror inventory.hotbar into the visible Hotbar UI in survival/adventure.
+// Without this the player saw 9 hardcoded creative blocks (stone/dirt/...)
+// regardless of what they actually had — meaning they could only ever place
+// blocks that happened to be on the canned list. Now picking up sandstone
+// puts sandstone in the visible hotbar and lets you place it. Skips no-op
+// updates so we don't thrash the DOM each frame.
+function syncVisibleHotbarFromInventory(): void {
+  if (gameMode !== 'survival' && gameMode !== 'adventure') return;
+  for (let i = 0; i < 9; i++) {
+    const stack = inventory.hotbar[i];
+    const cur = hotbar.getEntry(i);
+    if (!stack) {
+      if (cur && stateId(cur.state) === 0 && cur.name === '(empty)') continue;
+      hotbar.setEntry(i, { state: AIR, name: '(empty)', color: [40, 44, 52] });
+      continue;
+    }
+    const itemDef = itemRegistry.get(stack.itemId);
+    if (itemDef.blockId !== undefined) {
+      if (cur && stateId(cur.state) === itemDef.blockId) continue;
+      const blockDef = registry.get(itemDef.blockId);
+      hotbar.setEntry(i, {
+        state: makeState(itemDef.blockId, 0),
+        name: blockDef.name.replace(/^webmc:/, ''),
+        color: blockDef.color,
+      });
+    } else {
+      const itemShortName = itemDef.name.replace(/^webmc:/, '');
+      if (cur && cur.name === itemShortName && stateId(cur.state) === 0) continue;
+      hotbar.setEntry(i, { state: AIR, name: itemShortName, color: [120, 100, 80] });
+    }
+  }
+}
+
 function consumeHeldToolDurability(amount = 1): void {
   if (gameMode === 'creative') return;
   const sel = inventory.hotbar[inventory.selectedHotbar];
@@ -1993,63 +2046,60 @@ const interaction = new InteractionController(
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
       sfx.play('place');
-      const sel = hotbar.selected;
-      const blockId = sel ? stateId(sel.state) : 0;
-      if (sel) {
-        const def = registry.get(stateId(sel.state));
-        subtitles.push(
-          `Block placed: ${def.name.replace(/^webmc:/, '')}`,
-          directionFromPlayer(bx + 0.5, bz + 0.5),
-        );
-        blockParticles.emitPlace(bx, by, bz, def.color);
-        // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
-        if (def.name === 'webmc:sponge') {
-          const waterId = registry.byName('webmc:water');
-          const wetSpongeId = registry.byName('webmc:wet_sponge');
-          if (waterId !== undefined && wetSpongeId !== undefined) {
-            let absorbed = 0;
-            for (let dy = -2; dy <= 2; dy++) {
-              for (let dz = -2; dz <= 2; dz++) {
-                for (let dx = -2; dx <= 2; dx++) {
-                  const s = world.get(bx + dx, by + dy, bz + dz);
-                  if (s !== AIR && stateId(s) === waterId) {
-                    world.set(bx + dx, by + dy, bz + dz, AIR);
-                    touchWorldEdit(bx + dx, by + dy, bz + dz, 0);
-                    absorbed++;
-                  }
+      const placeable = placeableFromSlot(hotbar.selectedIndex);
+      if (!placeable) return;
+      const def = registry.get(placeable.blockId);
+      subtitles.push(
+        `Block placed: ${def.name.replace(/^webmc:/, '')}`,
+        directionFromPlayer(bx + 0.5, bz + 0.5),
+      );
+      blockParticles.emitPlace(bx, by, bz, def.color);
+      // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
+      if (def.name === 'webmc:sponge') {
+        const waterId = registry.byName('webmc:water');
+        const wetSpongeId = registry.byName('webmc:wet_sponge');
+        if (waterId !== undefined && wetSpongeId !== undefined) {
+          let absorbed = 0;
+          for (let dy = -2; dy <= 2; dy++) {
+            for (let dz = -2; dz <= 2; dz++) {
+              for (let dx = -2; dx <= 2; dx++) {
+                const s = world.get(bx + dx, by + dy, bz + dz);
+                if (s !== AIR && stateId(s) === waterId) {
+                  world.set(bx + dx, by + dy, bz + dz, AIR);
+                  touchWorldEdit(bx + dx, by + dy, bz + dz, 0);
+                  absorbed++;
                 }
               }
             }
-            if (absorbed > 0) {
-              world.set(bx, by, bz, makeState(wetSpongeId, 0));
-              touchWorldEdit(bx, by, bz, wetSpongeId);
-              subtitles.push(`Sponge absorbed ${absorbed} water`);
-            }
+          }
+          if (absorbed > 0) {
+            world.set(bx, by, bz, makeState(wetSpongeId, 0));
+            touchWorldEdit(bx, by, bz, wetSpongeId);
+            subtitles.push(`Sponge absorbed ${absorbed} water`);
           }
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
-          const itemId = itemRegistry.byName(def.name);
-          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
-        }
       }
-      touchWorldEdit(bx, by, bz, blockId);
+      if ((gameMode === 'survival' || gameMode === 'adventure') && placeable.itemId !== null) {
+        consumeInventoryItem(placeable.itemId, 1);
+      }
+      touchWorldEdit(bx, by, bz, placeable.blockId);
       hand.swing();
       playerStats.blocksPlaced++;
       markSaveDirty(autosaveState);
     },
     canPlace: () => {
       if (gameMode === 'creative') return true;
-      const sel = hotbar.selected;
-      if (!sel) return false;
-      const def = registry.get(stateId(sel.state));
-      const itemId = itemRegistry.byName(def.name);
-      if (itemId === undefined) return false;
-      const ok = countInventoryItem(itemId) > 0;
-      if (!ok && performance.now() - lastEmptyPlaceWarnAt > 800) {
+      const placeable = placeableFromSlot(hotbar.selectedIndex);
+      if (placeable) return true;
+      if (performance.now() - lastEmptyPlaceWarnAt > 800) {
         lastEmptyPlaceWarnAt = performance.now();
-        chatInput.addLine(`No ${def.name.replace(/^webmc:/, '')} in inventory`, '#ffb080');
+        const stk = inventory.hotbar[hotbar.selectedIndex];
+        const msg = stk
+          ? `${itemRegistry.get(stk.itemId).name.replace(/^webmc:/, '')} can't be placed`
+          : 'Nothing in hand';
+        chatInput.addLine(msg, '#ffb080');
       }
-      return ok;
+      return false;
     },
     onInteract: (bx, by, bz) => {
       const state = world.get(bx, by, bz);
@@ -6632,10 +6682,16 @@ function frame(): void {
     fp.velocity.z,
   );
 
-  const sel = hotbar.selected;
-  if (sel) {
-    interaction.selectedBlock = sel.state;
-    hand.setHeldBlockColor(sel.color);
+  syncVisibleHotbarFromInventory();
+  const placeable = placeableFromSlot(hotbar.selectedIndex);
+  if (placeable) {
+    interaction.selectedBlock = placeable.state;
+    hand.setHeldBlockColor(registry.get(placeable.blockId).color);
+  } else {
+    interaction.selectedBlock = AIR;
+    // Holding a tool/food in survival — neutral hand color so the cube
+    // doesn't visually lie about being something placeable.
+    hand.setHeldBlockColor([180, 130, 100]);
   }
   hand.update(dtSec);
   interaction.tick(now);
@@ -6643,17 +6699,11 @@ function frame(): void {
   if (gameMode === 'creative') {
     hotbar.setCounts([], 'infinite');
   } else {
+    // Visible hotbar mirrors inventory.hotbar in survival/adventure, so the
+    // count under each slot is just that slot's stack count, not the all-
+    // inventory total of the entry's name (which used to double-count).
     const counts: number[] = [];
-    for (let i = 0; i < 9; i++) {
-      const entry = hotbar.getEntry(i);
-      if (!entry) {
-        counts.push(0);
-        continue;
-      }
-      const def = registry.get(stateId(entry.state));
-      const itemId = itemRegistry.byName(def.name);
-      counts.push(itemId === undefined ? 0 : countInventoryItem(itemId));
-    }
+    for (let i = 0; i < 9; i++) counts.push(inventory.hotbar[i]?.count ?? 0);
     hotbar.setCounts(counts);
   }
 
@@ -7689,7 +7739,7 @@ function frame(): void {
         return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`;
       })()}\n` +
       `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
-      `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
+      `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
   requestAnimationFrame(frame);
 }
