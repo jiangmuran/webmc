@@ -57,7 +57,11 @@ export class PlayerState {
     if (this.invulnerable) return;
     if (this.health <= 0) return;
     if (this.hitImmuneSec > 0 && ev.source !== 'starvation' && ev.source !== 'drown') return;
-    this.health = Math.max(0, this.health - ev.amount);
+    // Resistance reduces damage by 0.2 * (amplifier+1), clamped to 80% reduction.
+    const resist = this.effects.get('resistance');
+    const reduction = resist ? Math.min(0.8, 0.2 * (resist.amplifier + 1)) : 0;
+    const dmg = ev.amount * (1 - reduction);
+    this.health = Math.max(0, this.health - dmg);
     this.hitImmuneSec = 0.5;
     if (this.health === 0) {
       this.justDied = true;
