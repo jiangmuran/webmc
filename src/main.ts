@@ -666,6 +666,7 @@ const interaction = new InteractionController(
       touchWorldEdit(bx, by, bz, 0);
       hand.swing();
       playerStats.blocksBroken++;
+      if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.005);
     },
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
@@ -834,6 +835,7 @@ canvas.addEventListener('mousedown', (e) => {
     const strengthEff = playerState.effects.get('strength');
     const baseDmg = 2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0);
     const result = mobWorld.damage(bestId, baseDmg);
+    if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
     sfx.play('hit');
     interaction.setHeld(null);
     screenShake.pulse(0.15);
@@ -2075,6 +2077,10 @@ function frame(): void {
   // MC sprint rule: cannot sprint if hunger ≤ 6.
   if (fp.input.sprint && playerState.hunger <= 6 && (gameMode === 'survival' || gameMode === 'adventure')) {
     fp.input.sprint = false;
+  }
+  if (fp.input.sprint && (gameMode === 'survival' || gameMode === 'adventure')) {
+    // Sprint exhaustion: 0.1 per meter sprinted. Approximate via dtSec * 5 m/s.
+    playerState.addExhaustion(0.1 * dtSec * 5);
   }
 
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only

@@ -54,6 +54,7 @@ export class PlayerState {
   fireRemainingSec = 0;
   lastDeathCause: string | undefined;
   lastDamageSource: string | undefined;
+  exhaustion = 0;
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -76,6 +77,15 @@ export class PlayerState {
   eat(hungerRestore: number, saturationAdd: number): void {
     this.hunger = Math.min(MAX_HUNGER, this.hunger + hungerRestore);
     this.saturation = Math.min(this.hunger, this.saturation + saturationAdd);
+  }
+
+  addExhaustion(amount: number): void {
+    this.exhaustion += amount;
+    while (this.exhaustion >= 4) {
+      this.exhaustion -= 4;
+      if (this.saturation > 0) this.saturation = Math.max(0, this.saturation - 1);
+      else this.hunger = Math.max(0, this.hunger - 1);
+    }
   }
 
   heal(amount: number): void {
