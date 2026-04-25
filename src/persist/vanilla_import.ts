@@ -167,6 +167,22 @@ export {
   type ParsedTrimPattern,
   type ParsedTrimMaterial,
 } from './vanilla_trim_parse';
+export {
+  parseVanillaMobVariant,
+  MobVariantParseError,
+  type ParsedMobVariant,
+  type VariantSpawnCondition,
+} from './vanilla_mob_variant_parse';
+export {
+  parseVanillaBannerPattern,
+  BannerPatternParseError,
+  type ParsedBannerPattern,
+} from './vanilla_banner_pattern_parse';
+export {
+  parseVanillaInstrument,
+  InstrumentParseError,
+  type ParsedInstrument,
+} from './vanilla_instrument_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -194,6 +210,14 @@ export type VanillaFileKind =
   | 'painting_variant_json'
   | 'trim_pattern_json'
   | 'trim_material_json'
+  | 'wolf_variant_json'
+  | 'cat_variant_json'
+  | 'frog_variant_json'
+  | 'pig_variant_json'
+  | 'cow_variant_json'
+  | 'chicken_variant_json'
+  | 'banner_pattern_json'
+  | 'instrument_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -229,6 +253,14 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)painting_variant\//.test(n)) return 'painting_variant_json';
     if (/(\/|^)trim_pattern\//.test(n)) return 'trim_pattern_json';
     if (/(\/|^)trim_material\//.test(n)) return 'trim_material_json';
+    if (/(\/|^)wolf_variant\//.test(n)) return 'wolf_variant_json';
+    if (/(\/|^)cat_variant\//.test(n)) return 'cat_variant_json';
+    if (/(\/|^)frog_variant\//.test(n)) return 'frog_variant_json';
+    if (/(\/|^)pig_variant\//.test(n)) return 'pig_variant_json';
+    if (/(\/|^)cow_variant\//.test(n)) return 'cow_variant_json';
+    if (/(\/|^)chicken_variant\//.test(n)) return 'chicken_variant_json';
+    if (/(\/|^)banner_pattern\//.test(n)) return 'banner_pattern_json';
+    if (/(\/|^)instrument\//.test(n)) return 'instrument_json';
   }
   return 'unknown';
 }

@@ -56,6 +56,22 @@ describe('vanilla_import barrel', () => {
     expect(detectVanillaFileKind('data/minecraft/trim_material/iron.json')).toBe(
       'trim_material_json',
     );
+    expect(detectVanillaFileKind('data/minecraft/wolf_variant/pale.json')).toBe(
+      'wolf_variant_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/cat_variant/black.json')).toBe('cat_variant_json');
+    expect(detectVanillaFileKind('data/minecraft/frog_variant/cold.json')).toBe(
+      'frog_variant_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/pig_variant/cold.json')).toBe('pig_variant_json');
+    expect(detectVanillaFileKind('data/minecraft/cow_variant/cold.json')).toBe('cow_variant_json');
+    expect(detectVanillaFileKind('data/minecraft/chicken_variant/cold.json')).toBe(
+      'chicken_variant_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/banner_pattern/bricks.json')).toBe(
+      'banner_pattern_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/instrument/ponder.json')).toBe('instrument_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
