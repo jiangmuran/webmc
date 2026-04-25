@@ -35,6 +35,8 @@ describe('vanilla_import barrel', () => {
     );
     expect(detectVanillaFileKind('assets/minecraft/models/block/stone.json')).toBe('model_json');
     expect(detectVanillaFileKind('server.properties')).toBe('server_properties');
+    expect(detectVanillaFileKind('assets/minecraft/lang/en_us.json')).toBe('lang_json');
+    expect(detectVanillaFileKind('assets/minecraft/sounds.json')).toBe('sounds_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 

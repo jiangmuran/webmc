@@ -94,6 +94,14 @@ export {
   type ParsedServerProperties,
   type PropertyValue,
 } from './server_properties_parse';
+export { parseVanillaLang, translate, LangParseError, type ParsedLang } from './vanilla_lang_parse';
+export {
+  parseVanillaSoundsJson,
+  SoundsParseError,
+  type ParsedSoundsJson,
+  type SoundEvent,
+  type SoundVariant,
+} from './vanilla_sounds_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -110,6 +118,8 @@ export type VanillaFileKind =
   | 'blockstate_json'
   | 'model_json'
   | 'server_properties'
+  | 'lang_json'
+  | 'sounds_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -134,6 +144,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)dimension\//.test(n)) return 'dimension_json';
     if (/(\/|^)blockstates\//.test(n)) return 'blockstate_json';
     if (/(\/|^)models\//.test(n)) return 'model_json';
+    if (/(\/|^)lang\//.test(n)) return 'lang_json';
+    if (n.endsWith('/sounds.json') || n === 'sounds.json') return 'sounds_json';
   }
   return 'unknown';
 }
