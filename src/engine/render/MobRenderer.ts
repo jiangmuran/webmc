@@ -61,6 +61,23 @@ const COLORS: Record<string, number> = {
   zombified_piglin: 0x80a060,
   piglin_brute: 0xb09070,
   camel: 0xe0c898,
+  witch: 0x3a3144,
+  mooshroom: 0xa12a1e,
+  donkey: 0x6b563f,
+  mule: 0x4a3826,
+  salmon: 0xd06a4a,
+  cod: 0xc4a06a,
+  pufferfish: 0xeed060,
+  tropical_fish: 0xff8040,
+  silverfish: 0x707070,
+  cave_spider: 0x1a4a5a,
+  sniffer: 0x5a8a40,
+  armadillo: 0xa68868,
+  bat: 0x402a18,
+  allay: 0x66c0e0,
+  villager: 0x9b6a4a,
+  zombie_villager: 0x4a7a4d,
+  wither: 0x222226,
 };
 
 const DEFAULT_COLOR = 0xc8c8c8;
