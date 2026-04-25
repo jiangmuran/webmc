@@ -357,8 +357,12 @@ const WORLD_SEED = worldMeta.seed;
 const generator = new WorldGenerator(WORLD_SEED, registry);
 const chunkStore = new ChunkStore(persistDB, { worldId: worldMeta.id });
 chunkStore.startAutoFlush();
+// Initial view radius — perfMonitor will adapt up/down based on FPS, but
+// starting too low (was 6) makes the first 3s of gameplay feel cramped.
+// Desktop opens at 8 (~128 block sight); mobile keeps 4 to be kind to
+// thermals. The dynamic loop in perfMonitor takes over after ~3s.
 const loader = new ChunkLoader(world, generator, {
-  viewRadius: 6,
+  viewRadius: isMobileDevice ? 4 : 8,
   unloadPadding: 2,
   perFrameBudget: 4,
 });
@@ -5451,7 +5455,7 @@ function cascadeFalling(bx: number, by: number, bz: number): void {
 }
 
 const perfMonitor = new PerfMonitor({
-  startQuality: 6,
+  startQuality: isMobileDevice ? 4 : 8,
   minQuality: 2,
   maxQuality: 12,
   upShiftThresholdSec: 0.033,

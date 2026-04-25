@@ -1,5 +1,5 @@
 import type { Inventory } from '@/items/Inventory';
-import type { ItemRegistry } from '@/items/item';
+import type { ItemRegistry, ItemStack } from '@/items/item';
 
 export interface ChestUICallbacks {
   onClose: () => void;
@@ -13,7 +13,7 @@ export class ChestUI {
   private readonly grid: HTMLDivElement;
   private readonly invGrid: HTMLDivElement;
   private visible = false;
-  readonly storage: (import('@/items/item').ItemStack | null)[] = new Array(27).fill(null);
+  readonly storage: (ItemStack | null)[] = new Array(27).fill(null);
 
   constructor(
     parent: HTMLElement,
@@ -118,7 +118,7 @@ export class ChestUI {
   }
 
   private renderSlot(
-    stack: import('@/items/item').ItemStack | null,
+    stack: ItemStack | null,
     which: 'chest' | 'main',
     idx: number,
   ): HTMLDivElement {
