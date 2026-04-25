@@ -4060,34 +4060,70 @@ const chatInput = new ChatInput(appEl, {
                       chatInput.addLine('Internal: registry missing air/stone', '#ff8080');
                       return;
                     }
-                    let found = 0;
-                    let totalPalette = 0;
-                    for (let cx = 0; cx < 32 && found < 3; cx++) {
-                      for (let cz = 0; cz < 32 && found < 3; cz++) {
-                        const out = await importVanillaChunk(buf, cx, cz, {
+                    // Paste imported chunks centered on the player's current
+                    // chunk so they land in view. The .mca holds 32x32 chunks
+                    // at local (0..31, 0..31); we anchor (0,0) at the player.
+                    const anchorCx = Math.floor(camera.position.x / 16);
+                    const anchorCz = Math.floor(camera.position.z / 16);
+                    let placed = 0;
+                    let chunksWritten = 0;
+                    const chunksTouched = new Set<string>();
+                    const MAX_CHUNKS = 32;
+                    for (let lx = 0; lx < 32 && chunksWritten < MAX_CHUNKS; lx++) {
+                      for (let lz = 0; lz < 32 && chunksWritten < MAX_CHUNKS; lz++) {
+                        const out = await importVanillaChunk(buf, lx, lz, {
                           byName: (n) => registry.byName(n),
                           airId,
                           fallbackId: stoneId,
                         });
-                        if (out) {
-                          chatInput.addLine(
-                            `chunk(${String(cx)},${String(cz)}): ${String(out.ids.length)} blocks, palette=${String(out.paletteSize)}, y=${String(out.yMin)}..${String(out.yMax)}`,
-                            '#80ff80',
-                          );
-                          found++;
-                          totalPalette += out.paletteSize;
+                        if (!out) continue;
+                        const destCx = anchorCx + lx;
+                        const destCz = anchorCz + lz;
+                        const baseX = destCx * 16;
+                        const baseZ = destCz * 16;
+                        // ids array is laid out Y*256 + Z*16 + X with Y in
+                        // 0..(yMax - yMin); destination Y = yMin + ly.
+                        const yRange = out.yMax - out.yMin + 1;
+                        for (let ly = 0; ly < yRange; ly++) {
+                          const destY = out.yMin + ly;
+                          if (destY < 0 || destY >= CHUNK_HEIGHT) continue;
+                          for (let lzz = 0; lzz < 16; lzz++) {
+                            for (let lxx = 0; lxx < 16; lxx++) {
+                              const srcIdx = (ly << 8) | (lzz << 4) | lxx;
+                              const blockId: number = out.ids[srcIdx] ?? airId;
+                              if (blockId === airId) continue;
+                              world.set(baseX + lxx, destY, baseZ + lzz, makeState(blockId, 0));
+                              placed++;
+                            }
+                          }
                         }
+                        chunksTouched.add(`${String(destCx)},${String(destCz)}`);
+                        chunksWritten++;
                       }
                     }
-                    if (found === 0) {
+                    // Single chunk-rebuild pass, like fillBlocks does.
+                    for (const k of chunksTouched) {
+                      const [cxS, czS] = k.split(',');
+                      const cxN = Number(cxS);
+                      const czN = Number(czS);
+                      const ch = world.getChunk(cxN, czN);
+                      if (ch) {
+                        const oldLight = lightCache.get(lightKey(cxN, czN)) ?? null;
+                        chunkStore.markDirty(ch, oldLight);
+                        const newLight = buildLight(ch, lightOracle);
+                        lightCache.set(lightKey(cxN, czN), newLight);
+                        markChunkAllDirty(ch);
+                      }
+                    }
+                    if (chunksWritten === 0) {
                       chatInput.addLine(
                         '.mca: no chunks decoded (file empty or unsupported format)',
                         '#ffd080',
                       );
                     } else {
                       chatInput.addLine(
-                        `Decoded ${String(found)} preview chunks (total palette=${String(totalPalette)}). Full import wiring TBD.`,
-                        '#cccccc',
+                        `.mca: pasted ${String(placed)} blocks across ${String(chunksWritten)} chunks at (${String(anchorCx)},${String(anchorCz)})${chunksWritten === MAX_CHUNKS ? ` [capped at ${String(MAX_CHUNKS)}]` : ''}`,
+                        '#80ff80',
                       );
                     }
                   } catch (e) {
