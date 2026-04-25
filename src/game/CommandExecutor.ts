@@ -93,6 +93,7 @@ export interface CommandContext {
   killMobsNear?: (radius: number) => number;
   healMobsNear?: (radius: number) => number;
   saveStateInfo?: () => { dirtyChunks: number; lastSaveSec: number };
+  tpAllMobsTo?: () => number;
   unequipAll?: () => number;
   gpuInfo?: () => { gl: string; vendor: string; renderer: string };
   feedLookedAtMob?: () => {
@@ -1141,6 +1142,25 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'cdon' || head === 'regen_on') {
     ctx.setGameRule?.('naturalRegeneration', true);
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
+    return;
+  }
+  if (head === 'unpause' || head === 'play') {
+    if (ctx.setTickFrozen) ctx.setTickFrozen(false);
+    ctx.broadcast('▶ Game un-paused.', '#80ff80');
+    return;
+  }
+  if (head === 'pausegame') {
+    if (ctx.setTickFrozen) ctx.setTickFrozen(true);
+    ctx.broadcast('⏸ Game paused (tick frozen).', '#ffd080');
+    return;
+  }
+  if (head === 'tpall' || head === 'tpmobs') {
+    if (!ctx.tpAllMobsTo) {
+      ctx.broadcast('TP-mobs unavailable.', '#ff8080');
+      return;
+    }
+    const n = ctx.tpAllMobsTo();
+    ctx.broadcast(`Teleported ${String(n)} mobs to your position`, '#80ff80');
     return;
   }
   if (head === 'levelup' || head === 'lvlup') {

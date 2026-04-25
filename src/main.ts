@@ -3798,6 +3798,16 @@ const chatInput = new ChatInput(appEl, {
           for (const id of toKill) mobWorld.remove(id);
           return toKill.length;
         },
+        tpAllMobsTo: () => {
+          let n = 0;
+          for (const m of mobWorld.all()) {
+            m.position.x = fp.position.x + (Math.random() - 0.5) * 4;
+            m.position.y = fp.position.y;
+            m.position.z = fp.position.z + (Math.random() - 0.5) * 4;
+            n++;
+          }
+          return n;
+        },
         saveStateInfo: () => ({
           dirtyChunks: autosaveState.dirtyCount,
           lastSaveSec:
@@ -4581,6 +4591,11 @@ const chatInput = new ChatInput(appEl, {
       '/tank',
       '/speedrun_pro',
       '/srpro',
+      '/unpause',
+      '/play',
+      '/pausegame',
+      '/tpall',
+      '/tpmobs',
       '/island',
       '/mountain',
       '/sky',
