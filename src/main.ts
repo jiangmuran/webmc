@@ -2740,6 +2740,19 @@ function frame(): void {
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
+
+  // Underwater fog: shorten render distance and tint when submerged.
+  if (scene.fog instanceof THREE.Fog) {
+    if (fp.inFluid === 'water') {
+      scene.fog.color.setRGB(0.24, 0.4, 0.6);
+      scene.fog.near = 1;
+      scene.fog.far = 20;
+    } else if (!fp.inFluid && scene.fog.far <= 20.1) {
+      // Restore based on view distance (handled elsewhere on settings change).
+      scene.fog.near = (loader.viewRadius ?? 6) * 16 * 0.6;
+      scene.fog.far = (loader.viewRadius ?? 6) * 16;
+    }
+  }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse
   if (fp.inFluid === 'water' && playerState.breath < 2) {
     hurtVignette.pulse(0.15);
