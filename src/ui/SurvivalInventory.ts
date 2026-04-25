@@ -150,10 +150,11 @@ export class SurvivalInventory {
     count.textContent = String(stack.count);
     count.style.cssText = 'font-size:11px;font-weight:700;text-shadow:1px 1px 0 rgba(0,0,0,0.8);';
     slot.appendChild(count);
-    if (def.hungerRestore !== undefined && def.hungerRestore > 0 && this.cb.onEat) {
+    const isPotion = def.name.includes('potion_') || def.name === 'webmc:awkward_potion';
+    if (((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion) && this.cb.onEat) {
       slot.style.cursor = 'pointer';
-      slot.style.borderColor = 'rgba(140,220,120,0.6)';
-      slot.title = `Click to eat (+${String(def.hungerRestore)} hunger)`;
+      slot.style.borderColor = isPotion ? 'rgba(180,140,220,0.6)' : 'rgba(140,220,120,0.6)';
+      slot.title = isPotion ? 'Click to drink' : `Click to eat (+${String(def.hungerRestore)} hunger)`;
       slot.addEventListener('click', () => {
         if (!this.cb.onEat) return;
         const container = slot.parentElement;

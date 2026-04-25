@@ -434,6 +434,38 @@ for (const mob of SPAWN_EGG_MOBS) {
 itemRegistry.register({ name: 'webmc:compass', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:clock', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability: 0 });
+// Potions — drinkable in inventory, apply effect.
+const POTION_TYPES: { name: string; effect: string; amplifier: number; durSec: number }[] = [
+  { name: 'webmc:potion_healing', effect: 'instant_health', amplifier: 0, durSec: 0 },
+  { name: 'webmc:potion_swiftness', effect: 'speed', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_strength', effect: 'strength', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_regeneration', effect: 'regeneration', amplifier: 0, durSec: 45 },
+  { name: 'webmc:potion_fire_resistance', effect: 'fire_resistance', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_water_breathing', effect: 'water_breathing', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_night_vision', effect: 'night_vision', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_invisibility', effect: 'invisibility', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_leaping', effect: 'jump_boost', amplifier: 0, durSec: 180 },
+  { name: 'webmc:potion_slow_falling', effect: 'slow_falling', amplifier: 0, durSec: 90 },
+  { name: 'webmc:potion_poison', effect: 'poison', amplifier: 0, durSec: 45 },
+  { name: 'webmc:potion_weakness', effect: 'weakness', amplifier: 0, durSec: 90 },
+  { name: 'webmc:potion_harming', effect: 'instant_damage', amplifier: 0, durSec: 0 },
+  { name: 'webmc:potion_slowness', effect: 'slowness', amplifier: 0, durSec: 90 },
+];
+for (const p of POTION_TYPES) {
+  itemRegistry.register({ name: p.name, maxStack: 1, durability: 0 });
+}
+itemRegistry.register({ name: 'webmc:glass_bottle', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:water_bottle', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:awkward_potion', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:blaze_powder', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:nether_wart', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:fermented_spider_eye', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:dragon_breath', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:ghast_tear', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:magma_cream', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:rabbit_foot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:turtle_helmet_scute', maxStack: 64, durability: 0 });
 // MC 1.21+ items.
 itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
@@ -2471,6 +2503,19 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
     sfx.play('click');
     // Item-specific food effects.
     const itemName = itemRegistry.get(id).name;
+    // Potion drinks: apply effect, return glass bottle.
+    if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
+      const ptype = POTION_TYPES.find((p) => p.name === itemName);
+      if (ptype) {
+        if (ptype.effect === 'instant_health') playerState.heal(4);
+        else if (ptype.effect === 'instant_damage') playerState.takeDamage({ amount: 6, source: 'harming' });
+        else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
+        const glassId = itemRegistry.byName('webmc:glass_bottle');
+        if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
+        subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
+      }
+      return;
+    }
     if (itemName === 'webmc:honey_bottle') {
       playerState.effects.delete('poison');
     } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
