@@ -121,6 +121,12 @@ export {
   type ParsedAnimationMcmeta,
   type AnimationFrame,
 } from './vanilla_animation_mcmeta_parse';
+export {
+  importVanillaPack,
+  type PackImportEntry,
+  type PackImportReport,
+  type PackImportError,
+} from './vanilla_pack_import';
 
 export type VanillaFileKind =
   | 'level_dat'
