@@ -50,6 +50,7 @@ export interface CommandContext {
   saveLoadout?: (name: string) => void;
   loadLoadout?: (name: string) => boolean;
   listLoadouts?: () => string[];
+  setTickRate?: (tps: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -911,6 +912,20 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'tps_target' || head === 'tickrate') {
+    if (!ctx.setTickRate) {
+      ctx.broadcast('Tick-rate adjustment unavailable.', '#ff8080');
+      return;
+    }
+    const v = parseFloat(args[0] ?? '20');
+    if (!Number.isFinite(v) || v < 1 || v > 100) {
+      ctx.broadcast('Usage: /tickrate <1-100>', '#ff8080');
+      return;
+    }
+    ctx.setTickRate(v);
+    ctx.broadcast(`Target TPS ${v.toFixed(0)}`, '#80ff80');
     return;
   }
   if (head === 'loadout') {
