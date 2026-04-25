@@ -66,6 +66,7 @@ export class FirstPersonCamera {
   private sprintFovBoost = 0;
   speedMultiplier = 1;
   jumpVelocityMultiplier = 1;
+  groundResponseMultiplier = 1; // higher = slipperier (ice ≈ 5, honey ≈ 0.4)
   private bobPhase = 0;
   bobEnabled = true;
   invertY = false;
@@ -250,7 +251,8 @@ export class FirstPersonCamera {
       const targetX = hx * (submerged ? 0.5 : 1);
       const targetZ = hz * (submerged ? 0.5 : 1);
       const ground = this.onGround && !submerged;
-      const responseTime = ground ? 0.1 : submerged ? 0.25 : 0.5;
+      const baseResponseTime = ground ? 0.1 : submerged ? 0.25 : 0.5;
+      const responseTime = ground ? baseResponseTime * this.groundResponseMultiplier : baseResponseTime;
       const alpha = 1 - Math.exp(-dtSec / responseTime);
       this.velocity.x += (targetX - this.velocity.x) * alpha;
       this.velocity.z += (targetZ - this.velocity.z) * alpha;

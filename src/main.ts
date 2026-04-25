@@ -55,6 +55,7 @@ import { canSpawnPhantom } from './entities/phantom_day_despawn';
 import { Weather as WeatherCycle } from './world/weather';
 import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
 import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
+import { frictionFor as blockFriction } from './physics/ice_slip_friction';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -3016,6 +3017,13 @@ function frame(): void {
         fp.velocity.x *= 0.6;
         fp.velocity.z *= 0.6;
       }
+      // Surface friction (ice slippery, honey sticky) via ground response multiplier.
+      const blockId = belowDef.name.replace(/^webmc:/, '');
+      const f = blockFriction(blockId);
+      // Default friction 0.6 → mult 1; ice 0.98 → mult ~5 (slippery); honey 0.4 → mult ~0.5 (sticky).
+      fp.groundResponseMultiplier = f >= 0.95 ? 5 : f <= 0.5 ? 0.5 : 1;
+    } else {
+      fp.groundResponseMultiplier = 1;
     }
   }
 
