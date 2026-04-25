@@ -1174,6 +1174,19 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Trident with Riptide (active when player is in water OR rain): propel forward.
+      if (heldName === 'trident' && (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')) {
+        const look = fp.lookVector();
+        const power = 18;
+        fp.velocity.x += look.x * power;
+        fp.velocity.y += look.y * power;
+        fp.velocity.z += look.z * power;
+        consumeHeldToolDurability(1);
+        for (let i = 0; i < 24; i++) blockParticles.emitPlace(fp.position.x + (Math.random() - 0.5), fp.position.y + Math.random() * 2, fp.position.z + (Math.random() - 0.5), [180, 220, 255]);
+        sfx.play('break');
+        subtitles.push('Riptide!');
+        return true;
+      }
       // Snowball / egg: small visual hit at target, no projectile arc.
       if (heldName === 'snowball' || heldName === 'egg') {
         const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
