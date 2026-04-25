@@ -1311,6 +1311,10 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('beforeunload', () => {
   void chunkStore.flush();
   void savePlayerNow();
+  void persistDB.setMeta('chestStorage', chestUI.storage);
+  void persistDB.setMeta('playerStats', playerStats);
+  void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+  void persistDB.setMeta('dayCounter', dayCounter);
 });
 
 const urlParams = new URLSearchParams(window.location.search);
