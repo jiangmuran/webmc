@@ -33,7 +33,46 @@ export type MobKind =
   | 'rabbit'
   | 'squid'
   | 'cat'
-  | 'parrot';
+  | 'parrot'
+  | 'witch'
+  | 'mooshroom'
+  | 'donkey'
+  | 'mule'
+  | 'llama'
+  | 'panda'
+  | 'turtle'
+  | 'phantom'
+  | 'salmon'
+  | 'cod'
+  | 'pufferfish'
+  | 'tropical_fish'
+  | 'dolphin'
+  | 'guardian'
+  | 'elder_guardian'
+  | 'glow_squid'
+  | 'magma_cube'
+  | 'slime'
+  | 'silverfish'
+  | 'cave_spider'
+  | 'husk'
+  | 'drowned'
+  | 'stray'
+  | 'bogged'
+  | 'breeze'
+  | 'sniffer'
+  | 'armadillo'
+  | 'bat'
+  | 'allay'
+  | 'vex'
+  | 'wandering_trader'
+  | 'villager'
+  | 'zombie_villager'
+  | 'zoglin'
+  | 'hoglin'
+  | 'strider'
+  | 'piglin_brute'
+  | 'zombified_piglin'
+  | 'wither';
 
 export type MobBehavior = 'passive' | 'hostile' | 'neutral' | 'creeper' | 'enderman';
 
@@ -367,16 +406,46 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     attackRangeSq: 1.5 * 1.5,
     aggroRangeSq: 8 * 8,
   },
-  parrot: {
-    kind: 'parrot',
-    aabb: SMALL_BOX,
-    walkSpeed: 1.4,
-    maxHealth: 6,
-    behavior: 'passive',
-    attackDamage: 0,
-    attackRangeSq: 0,
-    aggroRangeSq: 0,
-  },
+  parrot: { kind: 'parrot', aabb: SMALL_BOX, walkSpeed: 1.4, maxHealth: 6, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  witch: { kind: 'witch', aabb: TALL_BOX, walkSpeed: 1.5, maxHealth: 26, behavior: 'hostile', attackDamage: 4, attackRangeSq: 25, aggroRangeSq: 256 },
+  mooshroom: { kind: 'mooshroom', aabb: MEDIUM_BOX, walkSpeed: 1.0, maxHealth: 10, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  donkey: { kind: 'donkey', aabb: TALL_BOX, walkSpeed: 1.7, maxHealth: 16, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  mule: { kind: 'mule', aabb: TALL_BOX, walkSpeed: 1.7, maxHealth: 16, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  llama: { kind: 'llama', aabb: TALL_BOX, walkSpeed: 1.6, maxHealth: 22, behavior: 'neutral', attackDamage: 1, attackRangeSq: 9, aggroRangeSq: 64 },
+  panda: { kind: 'panda', aabb: MEDIUM_BOX, walkSpeed: 0.9, maxHealth: 20, behavior: 'neutral', attackDamage: 6, attackRangeSq: 4, aggroRangeSq: 100 },
+  turtle: { kind: 'turtle', aabb: SMALL_BOX, walkSpeed: 0.5, maxHealth: 30, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  phantom: { kind: 'phantom', aabb: MEDIUM_BOX, walkSpeed: 1.8, maxHealth: 20, behavior: 'hostile', attackDamage: 6, attackRangeSq: 4, aggroRangeSq: 256 },
+  salmon: { kind: 'salmon', aabb: SMALL_BOX, walkSpeed: 1.3, maxHealth: 3, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  cod: { kind: 'cod', aabb: SMALL_BOX, walkSpeed: 1.3, maxHealth: 3, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  pufferfish: { kind: 'pufferfish', aabb: SMALL_BOX, walkSpeed: 0.8, maxHealth: 3, behavior: 'neutral', attackDamage: 1, attackRangeSq: 4, aggroRangeSq: 16 },
+  tropical_fish: { kind: 'tropical_fish', aabb: SMALL_BOX, walkSpeed: 1.3, maxHealth: 3, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  dolphin: { kind: 'dolphin', aabb: MEDIUM_BOX, walkSpeed: 1.5, maxHealth: 10, behavior: 'neutral', attackDamage: 3, attackRangeSq: 9, aggroRangeSq: 144 },
+  guardian: { kind: 'guardian', aabb: MEDIUM_BOX, walkSpeed: 1.0, maxHealth: 30, behavior: 'hostile', attackDamage: 6, attackRangeSq: 64, aggroRangeSq: 256 },
+  elder_guardian: { kind: 'elder_guardian', aabb: TALL_BOX, walkSpeed: 1.0, maxHealth: 80, behavior: 'hostile', attackDamage: 8, attackRangeSq: 100, aggroRangeSq: 400 },
+  glow_squid: { kind: 'glow_squid', aabb: MEDIUM_BOX, walkSpeed: 0.7, maxHealth: 10, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  magma_cube: { kind: 'magma_cube', aabb: MEDIUM_BOX, walkSpeed: 0.8, maxHealth: 16, behavior: 'hostile', attackDamage: 5, attackRangeSq: 4, aggroRangeSq: 100 },
+  slime: { kind: 'slime', aabb: MEDIUM_BOX, walkSpeed: 0.7, maxHealth: 16, behavior: 'hostile', attackDamage: 4, attackRangeSq: 4, aggroRangeSq: 100 },
+  silverfish: { kind: 'silverfish', aabb: SMALL_BOX, walkSpeed: 1.4, maxHealth: 8, behavior: 'hostile', attackDamage: 1, attackRangeSq: 2, aggroRangeSq: 64 },
+  cave_spider: { kind: 'cave_spider', aabb: SMALL_BOX, walkSpeed: 1.6, maxHealth: 12, behavior: 'hostile', attackDamage: 2, attackRangeSq: 3, aggroRangeSq: 100 },
+  husk: { kind: 'husk', aabb: TALL_BOX, walkSpeed: 1.1, maxHealth: 20, behavior: 'hostile', attackDamage: 3, attackRangeSq: 4, aggroRangeSq: 144 },
+  drowned: { kind: 'drowned', aabb: TALL_BOX, walkSpeed: 1.0, maxHealth: 20, behavior: 'hostile', attackDamage: 3, attackRangeSq: 4, aggroRangeSq: 144 },
+  stray: { kind: 'stray', aabb: TALL_BOX, walkSpeed: 1.2, maxHealth: 20, behavior: 'hostile', attackDamage: 3, attackRangeSq: 100, aggroRangeSq: 256 },
+  bogged: { kind: 'bogged', aabb: TALL_BOX, walkSpeed: 1.2, maxHealth: 16, behavior: 'hostile', attackDamage: 3, attackRangeSq: 100, aggroRangeSq: 256 },
+  breeze: { kind: 'breeze', aabb: TALL_BOX, walkSpeed: 1.5, maxHealth: 30, behavior: 'hostile', attackDamage: 6, attackRangeSq: 64, aggroRangeSq: 256 },
+  sniffer: { kind: 'sniffer', aabb: TALL_BOX, walkSpeed: 0.5, maxHealth: 14, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  armadillo: { kind: 'armadillo', aabb: SMALL_BOX, walkSpeed: 0.6, maxHealth: 12, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  bat: { kind: 'bat', aabb: SMALL_BOX, walkSpeed: 0.8, maxHealth: 6, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  allay: { kind: 'allay', aabb: SMALL_BOX, walkSpeed: 1.2, maxHealth: 20, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  vex: { kind: 'vex', aabb: SMALL_BOX, walkSpeed: 1.6, maxHealth: 14, behavior: 'hostile', attackDamage: 5, attackRangeSq: 4, aggroRangeSq: 100 },
+  wandering_trader: { kind: 'wandering_trader', aabb: TALL_BOX, walkSpeed: 1.0, maxHealth: 20, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  villager: { kind: 'villager', aabb: TALL_BOX, walkSpeed: 1.0, maxHealth: 20, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  zombie_villager: { kind: 'zombie_villager', aabb: TALL_BOX, walkSpeed: 1.1, maxHealth: 20, behavior: 'hostile', attackDamage: 3, attackRangeSq: 4, aggroRangeSq: 144 },
+  zoglin: { kind: 'zoglin', aabb: TALL_BOX, walkSpeed: 1.4, maxHealth: 40, behavior: 'hostile', attackDamage: 6, attackRangeSq: 4, aggroRangeSq: 256 },
+  hoglin: { kind: 'hoglin', aabb: TALL_BOX, walkSpeed: 1.4, maxHealth: 40, behavior: 'neutral', attackDamage: 6, attackRangeSq: 4, aggroRangeSq: 256 },
+  strider: { kind: 'strider', aabb: TALL_BOX, walkSpeed: 0.7, maxHealth: 20, behavior: 'passive', attackDamage: 0, attackRangeSq: 0, aggroRangeSq: 0 },
+  piglin_brute: { kind: 'piglin_brute', aabb: TALL_BOX, walkSpeed: 1.4, maxHealth: 50, behavior: 'hostile', attackDamage: 13, attackRangeSq: 4, aggroRangeSq: 256 },
+  zombified_piglin: { kind: 'zombified_piglin', aabb: TALL_BOX, walkSpeed: 1.2, maxHealth: 20, behavior: 'neutral', attackDamage: 5, attackRangeSq: 4, aggroRangeSq: 256 },
+  wither: { kind: 'wither', aabb: TALL_BOX, walkSpeed: 1.4, maxHealth: 300, behavior: 'hostile', attackDamage: 12, attackRangeSq: 100, aggroRangeSq: 400 },
 };
 
 export type MobId = number;
