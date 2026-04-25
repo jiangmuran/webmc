@@ -989,6 +989,7 @@ canvas.addEventListener('mousedown', (e) => {
     if (sinceMs < 60) return; // hard floor on click rate
     lastPlayerAttackAt = nowMs;
     const strengthEff = playerState.effects.get('strength');
+    const weaknessEff = playerState.effects.get('weakness');
     const critMult = critMultiplier({
       velocityY: fp.velocity.y,
       onGround: fp.onGround,
@@ -996,7 +997,9 @@ canvas.addEventListener('mousedown', (e) => {
       inWater: fp.inFluid === 'water',
       hasBlindness: playerState.effects.has('blindness'),
     });
-    const baseDmg = (2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0)) * damageMult * critMult;
+    const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
+    const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
+    const baseDmg = Math.max(0, (2 + strengthBonus + weaknessReduce)) * damageMult * critMult;
     if (critMult > 1) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.1);
@@ -2474,6 +2477,11 @@ function frame(): void {
   fp.speedMultiplier = mul;
   const jumpEff = playerState.effects.get('jump_boost');
   fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
+  // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).
+  const levitation = playerState.effects.get('levitation');
+  if (levitation) {
+    fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
+  }
   (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
   (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
   scene.background = skyColor;
