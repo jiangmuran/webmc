@@ -109,6 +109,39 @@ export class Inventory {
     this.offhand = null;
   }
 
+  // Stack same-item slots together and sort the main inventory by item name.
+  // Hotbar is left alone (player muscle-memory).
+  sortMain(): void {
+    const slots = this.main.filter((s): s is ItemStack => s !== null);
+    if (slots.length === 0) return;
+    const buckets = new Map<string, { itemId: number; damage: number; count: number }>();
+    for (const s of slots) {
+      const key = `${String(s.itemId)}:${String(s.damage)}`;
+      const prev = buckets.get(key);
+      if (prev) prev.count += s.count;
+      else buckets.set(key, { itemId: s.itemId, damage: s.damage, count: s.count });
+    }
+    const entries = Array.from(buckets.values());
+    entries.sort((a, b) => {
+      const an = this.registry.get(a.itemId).name;
+      const bn = this.registry.get(b.itemId).name;
+      return an.localeCompare(bn);
+    });
+    const out: (ItemStack | null)[] = [];
+    for (const e of entries) {
+      const max = this.registry.maxStack(e.itemId);
+      let remaining = e.count;
+      while (remaining > 0) {
+        const take = Math.min(remaining, max);
+        out.push(stack(e.itemId, take, e.damage));
+        remaining -= take;
+      }
+    }
+    while (out.length < this.main.length) out.push(null);
+    if (out.length > this.main.length) out.length = this.main.length;
+    for (let i = 0; i < this.main.length; i++) this.main[i] = out[i] ?? null;
+  }
+
   get isFull(): boolean {
     return this.hotbar.every((s) => s !== null) && this.main.every((s) => s !== null);
   }

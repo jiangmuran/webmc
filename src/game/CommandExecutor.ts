@@ -24,6 +24,7 @@ export interface CommandContext {
   heal?: () => void;
   kill?: () => void;
   clearInventory?: () => void;
+  sortInventory?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
   fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
@@ -269,7 +270,7 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/time set <day|night|noon|midnight|ticks>', '#cccccc');
     ctx.broadcast('/weather <clear|rain|thunder>', '#cccccc');
     ctx.broadcast('/give <item> [count]', '#cccccc');
-    ctx.broadcast('/heal | /kill | /clear', '#cccccc');
+    ctx.broadcast('/heal | /kill | /clear | /sort', '#cccccc');
     ctx.broadcast('/setblock <x> <y> <z> <block>', '#cccccc');
     ctx.broadcast('/fill <x1> <y1> <z1> <x2> <y2> <z2> <block>', '#cccccc');
     ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
@@ -303,6 +304,11 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'clear') {
     ctx.clearInventory?.();
     ctx.broadcast('Inventory cleared.', '#80ff80');
+    return;
+  }
+  if (head === 'sort') {
+    ctx.sortInventory?.();
+    ctx.broadcast('Inventory sorted.', '#80ff80');
     return;
   }
   if (head === 'stats') {

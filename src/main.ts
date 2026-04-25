@@ -850,6 +850,9 @@ const chatInput = new ChatInput(appEl, {
         clearInventory: () => {
           inventory.clear();
         },
+        sortInventory: () => {
+          inventory.sortMain();
+        },
         setBlock: (x, y, z, name) => {
           const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const id = registry.byName(full);
@@ -1044,7 +1047,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort',
     ];
     return SLASH_CMDS;
   },
