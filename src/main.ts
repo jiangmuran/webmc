@@ -2391,10 +2391,8 @@ const chatInput = new ChatInput(appEl, {
         },
         giveAllBlocks: () => {
           let n = 0;
-          for (const def of registry.defs) {
-            if (def.name === 'webmc:air') continue;
-            const id = itemRegistry.byName(def.name);
-            if (id === undefined) continue;
+          // Include every registered item: covers blocks-with-items, tools, foods, dyes, etc.
+          for (let id = 1; id < itemRegistry.size; id++) {
             inventory.add({ itemId: id, count: 1, damage: 0 });
             n++;
           }
