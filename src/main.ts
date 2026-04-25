@@ -40,6 +40,7 @@ import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
+import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -570,6 +571,7 @@ const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
 const moodState = makeMoodState();
+const autosaveState = makeSaveState();
 const TUTORIAL_TEXT: Record<HintId, string> = {
   welcome: 'Welcome to webmc! Use WASD to move, mouse to look. Press E for inventory.',
   break_tree: 'Tip: Hold left-click on a tree to chop wood.',
@@ -738,6 +740,7 @@ const interaction = new InteractionController(
       touchWorldEdit(bx, by, bz, 0);
       hand.swing();
       playerStats.blocksBroken++;
+      markSaveDirty(autosaveState);
       if (gameMode === 'survival' || gameMode === 'adventure') playerState.addExhaustion(0.005);
       if (def.name === 'webmc:oak_log') fireTutorial('collected_log');
       if (def.name === 'webmc:cobblestone' || def.name === 'webmc:cobble') fireTutorial('collected_cobblestone');
@@ -759,6 +762,7 @@ const interaction = new InteractionController(
       touchWorldEdit(bx, by, bz, blockId);
       hand.swing();
       playerStats.blocksPlaced++;
+      markSaveDirty(autosaveState);
     },
     canPlace: () => {
       if (gameMode === 'creative') return true;
@@ -2576,6 +2580,14 @@ function frame(): void {
   if (m.triggered) {
     sfx.play('cave');
     subtitles.push('Cave ambience');
+  }
+
+  // Autosave debouncer: 30s interval OR 64-edit threshold OR forced.
+  const nowSaveMs = performance.now();
+  if (shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
+      shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })) {
+    beginSave(autosaveState, nowSaveMs);
+    void chunkStore.flush().finally(() => endSave(autosaveState));
   }
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
 
