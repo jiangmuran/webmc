@@ -37,6 +37,7 @@ export interface CommandContext {
   toggleZoom?: (factor: number) => void;
   setWalkSpeed?: (mul: number) => void;
   applyVelocity?: (dx: number, dy: number, dz: number) => void;
+  surfaceAt?: (x: number, z: number) => number;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -898,6 +899,32 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'rtp' || head === 'randomtp') {
+    const r = parseInt(args[0] ?? '500', 10);
+    if (!Number.isFinite(r) || r < 50 || r > 50000) {
+      ctx.broadcast('Usage: /rtp [radius=500] (50–50000)', '#ff8080');
+      return;
+    }
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 50 + Math.random() * (r - 50);
+    const tx = ctx.playerPos.x + Math.cos(ang) * dist;
+    const tz = ctx.playerPos.z + Math.sin(ang) * dist;
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(tx, ctx.playerPos.y + 100, tz);
+    ctx.broadcast(`Random TP → ${tx.toFixed(0)} ?? ${tz.toFixed(0)} (~${dist.toFixed(0)}m)`, '#80ff80');
+    return;
+  }
+  if (head === 'safetp' || head === 'safe') {
+    const surface = ctx.surfaceAt?.(Math.floor(ctx.playerPos.x), Math.floor(ctx.playerPos.z));
+    if (surface === undefined) {
+      ctx.broadcast('Surface lookup unavailable.', '#ff8080');
+      return;
+    }
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(ctx.playerPos.x, surface + 2, ctx.playerPos.z);
+    ctx.broadcast(`Snapped to surface y=${String(surface + 2)}`, '#80ff80');
     return;
   }
   if (head === 'home' || head === 'sethome') {
