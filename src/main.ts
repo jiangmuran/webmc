@@ -1048,6 +1048,47 @@ const dropRegistry = new BlockDropRegistry();
 for (const [blockId, itemId] of blockToItem) {
   dropRegistry.register(blockId, [{ itemId, min: 1, max: 1 }]);
 }
+// Vanilla overrides for blocks that drop something other than themselves
+// without silk touch. Without these, mining stone gave you stone-block
+// item (which can't be smelted, can't be used as a building primitive in
+// the same way) instead of cobblestone — broke the canonical wood→stone
+// pickaxe progression. Same story for ore blocks dropping the raw item.
+const DROP_OVERRIDES: Record<string, { drop: string; min?: number; max?: number }[]> = {
+  'webmc:stone': [{ drop: 'webmc:cobblestone' }],
+  'webmc:grass_block': [{ drop: 'webmc:dirt' }],
+  'webmc:gravel': [{ drop: 'webmc:gravel' }],
+  'webmc:coal_ore': [{ drop: 'webmc:coal' }],
+  'webmc:deepslate_coal_ore': [{ drop: 'webmc:coal' }],
+  'webmc:iron_ore': [{ drop: 'webmc:raw_iron' }],
+  'webmc:deepslate_iron_ore': [{ drop: 'webmc:raw_iron' }],
+  'webmc:gold_ore': [{ drop: 'webmc:raw_gold' }],
+  'webmc:deepslate_gold_ore': [{ drop: 'webmc:raw_gold' }],
+  'webmc:diamond_ore': [{ drop: 'webmc:diamond' }],
+  'webmc:deepslate_diamond_ore': [{ drop: 'webmc:diamond' }],
+  'webmc:emerald_ore': [{ drop: 'webmc:emerald' }],
+  'webmc:deepslate_emerald_ore': [{ drop: 'webmc:emerald' }],
+  'webmc:redstone_ore': [{ drop: 'webmc:redstone', min: 4, max: 5 }],
+  'webmc:deepslate_redstone_ore': [{ drop: 'webmc:redstone', min: 4, max: 5 }],
+  'webmc:lapis_ore': [{ drop: 'webmc:lapis_lazuli', min: 4, max: 9 }],
+  'webmc:deepslate_lapis_ore': [{ drop: 'webmc:lapis_lazuli', min: 4, max: 9 }],
+  'webmc:nether_quartz_ore': [{ drop: 'webmc:quartz' }],
+  'webmc:nether_gold_ore': [{ drop: 'webmc:gold_nugget', min: 2, max: 6 }],
+  'webmc:ancient_debris': [{ drop: 'webmc:ancient_debris' }],
+  'webmc:copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
+  'webmc:deepslate_copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
+  'webmc:glowstone': [{ drop: 'webmc:glowstone_dust', min: 2, max: 4 }],
+};
+for (const [blockName, drops] of Object.entries(DROP_OVERRIDES)) {
+  const blockId = registry.byName(blockName);
+  if (blockId === undefined) continue;
+  const resolved: { itemId: number; min: number; max: number }[] = [];
+  for (const d of drops) {
+    const dropItemId = itemRegistry.byName(d.drop);
+    if (dropItemId === undefined) continue;
+    resolved.push({ itemId: dropItemId, min: d.min ?? 1, max: d.max ?? 1 });
+  }
+  if (resolved.length > 0) dropRegistry.register(blockId, resolved);
+}
 
 const inventory = new Inventory(itemRegistry);
 const playerState = new PlayerState({
