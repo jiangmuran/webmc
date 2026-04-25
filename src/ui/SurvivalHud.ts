@@ -1,4 +1,5 @@
 import { armorIcons, visible as armorVisible } from './armor_bar_icons';
+import { shakeOnLowFood } from './food_bar_hunger';
 
 export interface SurvivalFrame {
   health: number;
@@ -317,12 +318,21 @@ export class SurvivalHud {
     }
 
     const hungerPer = frame.maxHunger / DRUMSTICKS;
+    const shake = shakeOnLowFood(frame.hunger);
+    const t = performance.now();
     for (let i = 0; i < DRUMSTICKS; i++) {
       const start = i * hungerPer;
       const v = Math.max(0, Math.min(hungerPer, frame.hunger - start));
       const name: IconName =
         v >= hungerPer * 0.9 ? 'drum_full' : v >= hungerPer * 0.4 ? 'drum_half' : 'drum_empty';
       this.blit(this.hungers[i]!, name);
+      if (shake) {
+        const ox = ((Math.sin(t * 0.04 + i * 1.7) * 2) | 0);
+        const oy = ((Math.cos(t * 0.05 + i * 0.9) * 2) | 0);
+        this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+      } else {
+        this.hungers[i]!.style.transform = '';
+      }
     }
 
     const armorPts = frame.armorPoints ?? 0;
