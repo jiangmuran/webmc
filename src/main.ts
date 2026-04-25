@@ -797,6 +797,7 @@ const chatInput = new ChatInput(appEl, {
         },
         listMobKinds: () => Object.keys(MOB_DEFS),
         uptimeMs: () => performance.now() - bootTime,
+        showTitle: (text, color, durMs) => { toast.show(text, color ?? '#ffffff', durMs ?? 2000); },
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';
           const out: string[] = [];

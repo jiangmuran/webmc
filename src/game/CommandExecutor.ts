@@ -15,6 +15,7 @@ export interface CommandContext {
   listBlocks?: (filter?: string) => readonly string[];
   listMobKinds?: () => readonly string[];
   uptimeMs?: () => number;
+  showTitle?: (text: string, color?: string, durationMs?: number) => void;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -68,6 +69,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   }
   if (head === 'ping') {
     ctx.broadcast('pong (0ms, single-player)', '#cccccc');
+    return;
+  }
+  if (head === 'title') {
+    const text = args.join(' ');
+    if (!text) {
+      ctx.broadcast('Usage: /title <text>', '#ff8080');
+      return;
+    }
+    ctx.showTitle?.(text, '#ffffff', 2000);
     return;
   }
   if (head === 'uptime') {
