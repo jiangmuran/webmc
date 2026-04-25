@@ -103,6 +103,16 @@ export class Hotbar {
     this.showLabel();
 
     this.onKey = (e) => {
+      // Don't intercept when typing in chat / search input or any text field
+      // (was eating digit keys typed into messages and silently switching slots).
+      const tgt = e.target as Element | null;
+      if (tgt) {
+        const tag = tgt.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || (tgt as HTMLElement).isContentEditable) return;
+      }
+      // Skip when no pointer lock — same gate as the wheel handler so menus/UI
+      // overlays don't get hijacked.
+      if (document.pointerLockElement === null) return;
       const code = e.code;
       if (code.startsWith('Digit')) {
         const n = Number(code.slice(5));
