@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { crackStage } from '../../game/block_break_progress';
 
 export class BlockOutline {
   readonly group: THREE.Group;
@@ -36,7 +37,9 @@ export class BlockOutline {
   setHit(bx: number, by: number, bz: number, breakProgress01 = 0): void {
     this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
     this.group.visible = true;
-    this.crackMat.opacity = breakProgress01 > 0 ? Math.min(0.65, breakProgress01 * 0.75) : 0;
+    // Snap to 10 MC-style crack stages so the visual ticks visibly forward.
+    const stage = crackStage(breakProgress01);
+    this.crackMat.opacity = stage > 0 ? Math.min(0.65, (stage / 9) * 0.7) : 0;
     // Subtle breathing scale so the outline feels alive.
     const s = 1 + Math.sin(performance.now() * 0.005) * 0.003;
     this.group.scale.setScalar(s);
