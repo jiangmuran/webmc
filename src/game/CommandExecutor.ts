@@ -275,10 +275,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/summon <kind> [x y z]', '#cccccc');
     ctx.broadcast('/chest | /spawn | /seed | /killall', '#cccccc');
     ctx.broadcast('/stats | /save | /setspawn | /clearchat', '#cccccc');
-    ctx.broadcast('/me <action> | /list | /whoami | /fly', '#cccccc');
-    ctx.broadcast('/effect <id> [s] [amp] | /particle [x y z]', '#cccccc');
+    ctx.broadcast('/me <action> | /list | /whoami | /fly | /pos | /biome', '#cccccc');
+    ctx.broadcast('/effect <id> [s] [amp] | /listeffects | /particle [x y z]', '#cccccc');
     ctx.broadcast('/difficulty <peaceful|easy|normal|hard>', '#cccccc');
     ctx.broadcast('/achievements (/ach)', '#cccccc');
+    ctx.broadcast('/find <block> | /findmob <kind> | /lookup <name>', '#cccccc');
+    ctx.broadcast('/listblocks [filter] | /listmobs | /lookat | /destroy', '#cccccc');
+    ctx.broadcast('/back | /freeze | /unfreeze | /mute | /unmute', '#cccccc');
+    ctx.broadcast('/title <text> | /echo <text> | /repeat <n> <cmd>', '#cccccc');
+    ctx.broadcast('/random [max] | /coin | /8ball', '#cccccc');
+    ctx.broadcast('/uptime | /version | /ping', '#cccccc');
+    ctx.broadcast('Use ; to chain: /heal; /spawn', '#cccccc');
     return;
   }
   if (head === 'heal') {
