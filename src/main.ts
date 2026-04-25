@@ -39,6 +39,7 @@ import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
 import { TutorialState, type HintId } from './game/tutorial_first_night';
+import { makeMoodState, tickMood } from './game/daytime_mood';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -568,6 +569,7 @@ let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
 const tutorial = new TutorialState();
+const moodState = makeMoodState();
 const TUTORIAL_TEXT: Record<HintId, string> = {
   welcome: 'Welcome to webmc! Use WASD to move, mouse to look. Press E for inventory.',
   break_tree: 'Tip: Hold left-click on a tree to chop wood.',
@@ -2556,6 +2558,24 @@ function frame(): void {
   if (nowPhase !== lastPhase) {
     if (nowPhase === 'dusk') fireTutorial('sunset');
     lastPhase = nowPhase;
+  }
+
+  // Cave-mood ambient: when player has no sky access above and it's dark.
+  let skyBlocked = false;
+  const px = Math.floor(fp.position.x);
+  const py = Math.floor(fp.position.y);
+  const pz = Math.floor(fp.position.z);
+  for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
+    if (isSolid(px, yy, pz)) { skyBlocked = true; break; }
+  }
+  const m = tickMood(moodState, {
+    skyLight: skyBlocked ? 0 : 15,
+    blockLight: nowPhase === 'night' && skyBlocked ? 4 : 12,
+    dtMs: dtSec * 1000,
+  });
+  if (m.triggered) {
+    sfx.play('cave');
+    subtitles.push('Cave ambience');
   }
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
 
