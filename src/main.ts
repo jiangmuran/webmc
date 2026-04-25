@@ -536,6 +536,20 @@ itemRegistry.register({ name: 'webmc:chest_minecart', maxStack: 1, durability: 0
 itemRegistry.register({ name: 'webmc:furnace_minecart', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:hopper_minecart', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:tnt_minecart', maxStack: 1, durability: 0 });
+// Seeds + crops.
+itemRegistry.register({ name: 'webmc:wheat_seeds', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:beetroot_seeds', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:melon_seeds', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:pumpkin_seeds', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:torchflower_seeds', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:pitcher_pod', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:beetroot', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 1.2 });
+itemRegistry.register({ name: 'webmc:beetroot_soup', maxStack: 1, durability: 0, hungerRestore: 6, saturation: 7.2 });
+itemRegistry.register({ name: 'webmc:melon_slice', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 1.2 });
+itemRegistry.register({ name: 'webmc:glistering_melon_slice', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:sweet_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({ name: 'webmc:glow_berries', maxStack: 64, durability: 0, hungerRestore: 2, saturation: 0.4 });
+itemRegistry.register({ name: 'webmc:dried_kelp', maxStack: 64, durability: 0, hungerRestore: 1, saturation: 0.6 });
 itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
 itemRegistry.register({ name: 'webmc:music_disc_13', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:firework_rocket', maxStack: 64, durability: 0 });
@@ -1612,6 +1626,36 @@ const interaction = new InteractionController(
           sfx.play('place');
           return true;
         }
+      }
+      // Bone meal on crops: jump straight to harvestable form (wheat, carrots, potatoes, beetroots).
+      if (heldName === 'bone_meal' && (def.name === 'webmc:wheat' || def.name === 'webmc:carrots' || def.name === 'webmc:potatoes' || def.name === 'webmc:beetroots')) {
+        // Drop the corresponding harvested item.
+        const dropMap: Record<string, string[]> = {
+          'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
+          'webmc:carrots': ['webmc:carrot'],
+          'webmc:potatoes': ['webmc:potato'],
+          'webmc:beetroots': ['webmc:beetroot', 'webmc:beetroot_seeds'],
+        };
+        const drops = dropMap[def.name] ?? [];
+        for (const dropName of drops) {
+          const dropId = itemRegistry.byName(dropName);
+          if (dropId === undefined) continue;
+          const count = 1 + Math.floor(Math.random() * 3);
+          inventory.add({ itemId: dropId, count, damage: 0 });
+        }
+        // Replace crop with farmland.
+        const farmlandId = registry.byName('webmc:farmland');
+        if (farmlandId !== undefined) {
+          world.set(bx, by, bz, makeState(farmlandId, 0));
+          touchWorldEdit(bx, by, bz, farmlandId);
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const bmId = itemRegistry.byName('webmc:bone_meal');
+          if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+        }
+        for (let i = 0; i < 12; i++) blockParticles.emitPlace(bx + (Math.random() - 0.5), by + 0.5 + Math.random() * 0.6, bz + (Math.random() - 0.5), [200, 220, 80]);
+        subtitles.push('Crop matured');
+        return true;
       }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
