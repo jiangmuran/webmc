@@ -2772,6 +2772,26 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
+
+  // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
+  let aimTint: string | null = null;
+  const aimReach = 5.5;
+  const aimLook2 = fp.lookVector();
+  for (const m of mobWorld.all()) {
+    const dx = m.position.x - camera.position.x;
+    const dy = m.position.y - camera.position.y;
+    const dz = m.position.z - camera.position.z;
+    const d = Math.hypot(dx, dy, dz);
+    if (d > aimReach + 1) continue;
+    const dot = (dx * aimLook2.x + dy * aimLook2.y + dz * aimLook2.z) / Math.max(0.001, d);
+    if (dot > 0.97) {
+      const beh = m.def.behavior;
+      aimTint = (beh === 'hostile' || beh === 'creeper') ? 'rgba(255,140,140,0.9)' : 'rgba(160,255,160,0.9)';
+      break;
+    }
+  }
+  crosshair.setTint(aimTint);
+
   if (!loadingOverlay.isHidden()) {
     const meshes = chunkRenderer.meshCount;
     if (meshes >= 25) {
