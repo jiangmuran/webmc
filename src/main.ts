@@ -940,6 +940,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     if (v.showCrosshair) crosshair.show(); else crosshair.hide();
     currentPlayerName = v.playerName.trim() || 'Player';
     playerAvatar.setName(currentPlayerName);
+    document.title = `webmc · ${worldMeta.name} · ${currentPlayerName}`;
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
