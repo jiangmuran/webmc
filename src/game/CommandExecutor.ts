@@ -59,6 +59,8 @@ export interface CommandContext {
   dropAllItems?: () => number;
   setPlayerName?: (name: string) => void;
   remeshAllChunks?: () => number;
+  setHealth?: (hp: number) => void;
+  setHunger?: (h: number) => void;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -964,6 +966,28 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     const text = args.join(' ');
     ctx.showTitle(text, '#ffd080', 3000);
     ctx.broadcast(`📢 ${text}`, '#ffd080');
+    return;
+  }
+  if (head === 'health' || head === 'hp') {
+    if (!ctx.setHealth) return;
+    const v = parseFloat(args[0] ?? '20');
+    if (!Number.isFinite(v) || v < 0 || v > 200) {
+      ctx.broadcast('Usage: /health <0-200>', '#ff8080');
+      return;
+    }
+    ctx.setHealth(v);
+    ctx.broadcast(`HP set to ${v.toFixed(0)}`, '#80ff80');
+    return;
+  }
+  if (head === 'hunger' || head === 'food') {
+    if (!ctx.setHunger) return;
+    const v = parseFloat(args[0] ?? '20');
+    if (!Number.isFinite(v) || v < 0 || v > 20) {
+      ctx.broadcast('Usage: /hunger <0-20>', '#ff8080');
+      return;
+    }
+    ctx.setHunger(v);
+    ctx.broadcast(`Hunger set to ${v.toFixed(0)}`, '#80ff80');
     return;
   }
   if (head === 'reload' || head === 'remesh') {
