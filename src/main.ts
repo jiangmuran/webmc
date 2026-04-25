@@ -794,6 +794,16 @@ const chatInput = new ChatInput(appEl, {
           const candidates = [name, `webmc:${name}`];
           return candidates.some((c) => registry.byName(c) !== undefined);
         },
+        listBlocks: (filter) => {
+          const f = filter?.toLowerCase() ?? '';
+          const out: string[] = [];
+          for (const def of registry.defs) {
+            if (def.name === 'webmc:air') continue;
+            const short = def.name.replace(/^webmc:/, '');
+            if (!f || short.includes(f)) out.push(short);
+          }
+          return out;
+        },
         giveAllBlocks: () => {
           let n = 0;
           for (const def of registry.defs) {

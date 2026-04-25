@@ -12,6 +12,7 @@ export interface CommandContext {
   giveAllBlocks?: () => number;
   lookupItem?: (name: string) => boolean;
   lookupBlock?: (name: string) => boolean;
+  listBlocks?: (filter?: string) => readonly string[];
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
   knownItems: readonly string[];
@@ -421,6 +422,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast('Usage: /weather <clear|rain|thunder|random>', '#ff8080');
     }
+    return;
+  }
+  if (head === 'listblocks') {
+    const list = ctx.listBlocks?.(args[0]) ?? [];
+    if (list.length === 0) {
+      ctx.broadcast(args[0] ? `No blocks match "${args[0]}"` : 'No blocks loaded', '#ff8080');
+      return;
+    }
+    const shown = list.slice(0, 20);
+    ctx.broadcast(`Blocks (${String(list.length)}): ${shown.join(', ')}${list.length > 20 ? '…' : ''}`, '#cccccc');
     return;
   }
   if (head === 'lookup') {
