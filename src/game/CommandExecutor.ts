@@ -2032,6 +2032,41 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built pale_garden: 4 pale_oak trees + creaking hearts + flowers', '#80ff80');
     return;
   }
+  if (head === 'trial_chamber' || head === 'trialchamber') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 11×7×11 tuff_brick chamber with trial_spawner center, vault corners, copper_bulb lights.
+    ctx.fillBlocks(px - 5, py, pz - 5, px + 5, py + 6, pz + 5, 'tuff_bricks');
+    ctx.fillBlocks(px - 4, py + 1, pz - 4, px + 4, py + 5, pz + 4, 'air');
+    ctx.fillBlocks(px - 5, py, pz - 5, px + 5, py, pz + 5, 'polished_tuff');
+    // Center trial_spawner.
+    ctx.setBlock(px, py + 1, pz, 'trial_spawner');
+    // 4 vault corners.
+    for (const [cx, cz] of [
+      [-4, -4],
+      [4, -4],
+      [-4, 4],
+      [4, 4],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py + 1, pz + cz, 'vault');
+    }
+    // Copper_bulb lights overhead.
+    for (const [cx, cz] of [
+      [-3, 0],
+      [3, 0],
+      [0, -3],
+      [0, 3],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py + 5, pz + cz, 'copper_bulb');
+    }
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 5, 'air');
+    ctx.setBlock(px, py + 2, pz - 5, 'air');
+    ctx.broadcast('Built trial_chamber: trial_spawner + 4 vaults + copper bulbs', '#80ff80');
+    return;
+  }
   if (head === 'chess' || head === 'checkerboard') {
     if (!ctx.setBlock) return;
     const r = Math.max(2, Math.min(12, parseInt(args[0] ?? '4', 10)));
