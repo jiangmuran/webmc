@@ -106,7 +106,7 @@ export class ProceduralSfx {
     osc.stop(now + duration + 0.01);
   }
 
-  footstepIfMoving(moving: boolean, dtSec: number): void {
+  footstepIfMoving(moving: boolean, dtSec: number, material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water'): void {
     if (!moving) {
       this.stepAccum = 0;
       return;
@@ -114,8 +114,42 @@ export class ProceduralSfx {
     this.stepAccum += dtSec;
     if (this.stepAccum >= 0.42) {
       this.stepAccum = 0;
-      this.play('step');
+      this.playStep(material);
     }
+  }
+
+  private playStep(material?: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water'): void {
+    this.ensureCtx();
+    const ctx = this.ctx;
+    const master = this.master;
+    if (!ctx || !master) return;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain).connect(master);
+    let freq = 140 + Math.random() * 40;
+    let peak = 0.12;
+    let type: OscillatorType = 'sawtooth';
+    switch (material) {
+      case 'wood': freq = 280 + Math.random() * 50; type = 'triangle'; peak = 0.13; break;
+      case 'stone': freq = 110 + Math.random() * 30; type = 'square'; peak = 0.14; break;
+      case 'gravel': freq = 200 + Math.random() * 100; type = 'sawtooth'; peak = 0.12; break;
+      case 'sand': freq = 240 + Math.random() * 60; type = 'sine'; peak = 0.08; break;
+      case 'snow': freq = 320 + Math.random() * 60; type = 'sine'; peak = 0.06; break;
+      case 'wool': freq = 180 + Math.random() * 30; type = 'triangle'; peak = 0.05; break;
+      case 'metal': freq = 380 + Math.random() * 80; type = 'square'; peak = 0.16; break;
+      case 'water': freq = 90 + Math.random() * 30; type = 'sine'; peak = 0.09; break;
+      // grass/default
+      default: freq = 140 + Math.random() * 40; type = 'sawtooth'; peak = 0.12; break;
+    }
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.5), now + 0.05);
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(peak, now + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+    osc.start(now);
+    osc.stop(now + 0.06);
   }
   private stepAccum = 0;
 }

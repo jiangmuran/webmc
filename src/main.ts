@@ -2510,7 +2510,22 @@ function frame(): void {
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
-  sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec);
+  // Surface-aware footsteps: pick material from block under feet.
+  let stepMat: 'wood' | 'stone' | 'gravel' | 'grass' | 'sand' | 'snow' | 'wool' | 'metal' | 'water' | undefined;
+  if (fp.onGround) {
+    const fname = registry.get(stateId(world.get(Math.floor(fp.position.x), Math.floor(fp.position.y - 1.05), Math.floor(fp.position.z)))).name;
+    if (fname.includes('log') || fname.includes('plank')) stepMat = 'wood';
+    else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick')) stepMat = 'stone';
+    else if (fname.includes('gravel')) stepMat = 'gravel';
+    else if (fname.includes('sand')) stepMat = 'sand';
+    else if (fname.includes('snow')) stepMat = 'snow';
+    else if (fname.includes('wool')) stepMat = 'wool';
+    else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper')) stepMat = 'metal';
+    else if (fname.includes('grass') || fname.includes('dirt')) stepMat = 'grass';
+  } else if (fp.inFluid === 'water') {
+    stepMat = 'water';
+  }
+  sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
