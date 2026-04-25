@@ -754,6 +754,13 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:black_concrete_powder', color: [25, 25, 30] as RGB, hardness: 0.5 },
     { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
     { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
+    { name: 'webmc:spruce_leaves', color: [56, 92, 38] as RGB, hardness: 0.2 },
+    { name: 'webmc:birch_leaves', color: [120, 167, 76] as RGB, hardness: 0.2 },
+    { name: 'webmc:jungle_leaves', color: [76, 152, 41] as RGB, hardness: 0.2 },
+    { name: 'webmc:acacia_leaves', color: [106, 165, 60] as RGB, hardness: 0.2 },
+    { name: 'webmc:dark_oak_leaves', color: [62, 110, 36] as RGB, hardness: 0.2 },
+    { name: 'webmc:mangrove_leaves', color: [60, 132, 50] as RGB, hardness: 0.2 },
+    { name: 'webmc:flowering_azalea_leaves', color: [180, 80, 175] as RGB, hardness: 0.2 },
     {
       name: 'webmc:bamboo',
       solid: false,
