@@ -57,6 +57,7 @@ import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorde
 import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
 import { frictionFor as blockFriction } from './physics/ice_slip_friction';
 import { loadPack as loadDatapack, type DataPack } from './datapack/DataPack';
+import { createManifest as createExportManifest } from './persist/webmc_export_zip';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -1383,6 +1384,17 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
+        exportWorldManifest: () => {
+          const m = createExportManifest({
+            worldName: worldMeta.name,
+            seed: String(WORLD_SEED),
+            createdMs: worldMeta.createdAt ?? Date.now(),
+            lastPlayedMs: Date.now(),
+            chunkCount: chunkRenderer.meshCount,
+            playerCount: 1,
+          });
+          return JSON.stringify(m, null, 2);
+        },
         loadDatapackDemo: () => {
           const demoPack: DataPack = {
             meta: { name: 'webmc-demo-pack', version: '1.0', author: 'webmc', description: 'Built-in demo' },
@@ -1708,7 +1720,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export',
     ];
     return SLASH_CMDS;
   },

@@ -37,6 +37,7 @@ export interface CommandContext {
   setHardcore?: (on: boolean) => void;
   isHardcore?: () => boolean;
   loadDatapackDemo?: () => string;
+  exportWorldManifest?: () => string;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -434,6 +435,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
     }
+    return;
+  }
+  if (head === 'export') {
+    const manifest = ctx.exportWorldManifest?.() ?? '';
+    if (!manifest) {
+      ctx.broadcast('Export unavailable.', '#ff8080');
+      return;
+    }
+    ctx.broadcast('World manifest:', '#cccccc');
+    for (const line of manifest.split('\n')) ctx.broadcast(line, '#cccccc');
+    ctx.broadcast('Use Main Menu → Export to download a .webmc file.', '#cccccc');
     return;
   }
   if (head === 'datapack' || head === 'dp') {
