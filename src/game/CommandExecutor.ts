@@ -910,6 +910,31 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
     return;
   }
+  if (head === 'freezemobs') {
+    ctx.setGameRule?.('doMobSpawning', false);
+    if (ctx.killAllMobs) {
+      const n = ctx.killAllMobs();
+      ctx.broadcast(`Mob spawning off + cleared ${String(n)} mobs`, '#80ff80');
+    }
+    return;
+  }
+  if (head === 'safezone') {
+    ctx.setGameRule?.('doMobSpawning', false);
+    if (ctx.applyEffect) {
+      ctx.applyEffect('regeneration', 1, 600);
+      ctx.applyEffect('saturation', 9, 600);
+    }
+    if (ctx.killAllMobs) ctx.killAllMobs();
+    if (ctx.heal) ctx.heal();
+    ctx.broadcast('Safe zone: spawning off + regen + saturation 10min', '#80ff80');
+    return;
+  }
+  if (head === 'difficultypeaceful' || head === 'peaceful') {
+    if (ctx.setDifficulty) ctx.setDifficulty('peaceful');
+    if (ctx.killAllMobs) ctx.killAllMobs();
+    ctx.broadcast('Difficulty: peaceful · all hostile mobs cleared', '#80ff80');
+    return;
+  }
   if (head === 'lighting') {
     if (!ctx.applyEffect) return;
     ctx.applyEffect('night_vision', 0, 9999);
