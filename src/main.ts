@@ -77,6 +77,7 @@ import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
 import { MobWorld, MOB_DEFS } from './entities/mob';
+import { makeTameable, tryTame, type TameableKind, type TameableState } from './entities/tameable';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
 import { DroppedItemWorld } from './entities/DroppedItems';
@@ -539,6 +540,8 @@ const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
 
 const mobWorld = new MobWorld();
 const mobRenderer = new MobRenderer();
+const tamedMobs = new Map<number, TameableState>();
+const TAMEABLE_KINDS: ReadonlySet<string> = new Set(['wolf', 'cat', 'parrot', 'horse', 'donkey', 'mule', 'llama']);
 const droppedItems = new DroppedItemWorld();
 const xpOrbs = new XpOrbWorld();
 scene.add(mobRenderer.group);
@@ -1570,6 +1573,49 @@ const chatInput = new ChatInput(appEl, {
           mobRenderer.setMobName(best.mob.id, name);
           return best.mob.def.kind;
         },
+        tameLookedAtMob: () => {
+          const aimLook = fp.lookVector();
+          const reach = 6;
+          let best: { mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never; dist: number } | null = null;
+          for (const m of mobWorld.all()) {
+            const dx = m.position.x - camera.position.x;
+            const dy = m.position.y - camera.position.y;
+            const dz = m.position.z - camera.position.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > reach + 1) continue;
+            const dot = (dx * aimLook.x + dy * aimLook.y + dz * aimLook.z) / Math.max(0.001, d);
+            if (dot > 0.97 && (!best || d < best.dist)) {
+              best = { mob: m, dist: d };
+            }
+          }
+          if (!best) return null;
+          const kind = best.mob.def.kind;
+          if (!TAMEABLE_KINDS.has(kind)) {
+            return { kind, tamed: false, itemUsed: null, reason: 'untameable' };
+          }
+          let state = tamedMobs.get(best.mob.id);
+          if (!state) {
+            state = makeTameable(kind as TameableKind);
+            tamedMobs.set(best.mob.id, state);
+          }
+          if (state.ownerId !== null) {
+            return { kind, tamed: false, itemUsed: null, reason: 'already_tamed' };
+          }
+          const sel = hotbar.selected;
+          const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
+          const result = tryTame(state, 1, heldName);
+          if (!result.consumed) {
+            return { kind, tamed: false, itemUsed: null, reason: 'wrong_item' };
+          }
+          if (sel) {
+            const itemId = itemRegistry.byName(`webmc:${sel.name.toLowerCase()}`);
+            if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          }
+          if (result.tamed) {
+            mobRenderer.setMobName(best.mob.id, `♥ ${kind}`);
+          }
+          return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
+        },
         toggleGyro: () => {
           gyroState = setGyroEnabled(gyroState, !gyroState.enabled);
           if (gyroState.enabled && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
@@ -1797,7 +1843,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame',
     ];
     return SLASH_CMDS;
   },

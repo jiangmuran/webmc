@@ -32,6 +32,7 @@ export interface CommandContext {
   getTpsStats?: () => { tps: number; p50ms: number; p95ms: number; lagging: boolean };
   getLastDeathPos?: () => { x: number; y: number; z: number } | null;
   renameLookedAtMob?: (name: string) => string | null;
+  tameLookedAtMob?: () => { kind: string; tamed: boolean; itemUsed: string | null; reason?: string } | null;
   setWorldBorder?: (diameter: number) => void;
   getWorldBorder?: () => number;
   setHardcore?: (on: boolean) => void;
@@ -530,6 +531,29 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     }
     ctx.setWorldBorder?.(d);
     ctx.broadcast(`World border set to ${d.toLocaleString()} blocks`, '#80ff80');
+    return;
+  }
+  if (head === 'tame') {
+    if (!ctx.tameLookedAtMob) {
+      ctx.broadcast('Tame not available.', '#ff8080');
+      return;
+    }
+    const r = ctx.tameLookedAtMob();
+    if (!r) {
+      ctx.broadcast('No mob in reach. Aim at a wolf, cat, parrot, horse or llama.', '#ff8080');
+      return;
+    }
+    if (r.reason === 'untameable') {
+      ctx.broadcast(`${r.kind} is not tameable.`, '#ff8080');
+    } else if (r.reason === 'already_tamed') {
+      ctx.broadcast(`${r.kind} is already tamed.`, '#ffd080');
+    } else if (r.reason === 'wrong_item') {
+      ctx.broadcast(`Hold the right item: wolf=bone, cat=raw_fish/raw_salmon, parrot=seeds.`, '#ffd080');
+    } else if (r.tamed) {
+      ctx.broadcast(`Tamed ${r.kind}! ♥`, '#80ff80');
+    } else {
+      ctx.broadcast(`${r.kind} ate the ${r.itemUsed} but resisted taming. Try again.`, '#ffd080');
+    }
     return;
   }
   if (head === 'rename' || head === 'nametag') {
