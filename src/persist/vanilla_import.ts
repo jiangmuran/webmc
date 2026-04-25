@@ -89,6 +89,11 @@ export {
   type ModelElement,
   type ModelFace,
 } from './vanilla_model_parse';
+export {
+  parseServerProperties,
+  type ParsedServerProperties,
+  type PropertyValue,
+} from './server_properties_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -104,6 +109,7 @@ export type VanillaFileKind =
   | 'dimension_json'
   | 'blockstate_json'
   | 'model_json'
+  | 'server_properties'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -116,6 +122,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
   if (n.endsWith('.nbt')) return 'structure_nbt';
   if (n === 'pack.mcmeta' || n.endsWith('/pack.mcmeta')) return 'pack_mcmeta';
   if (n.endsWith('.mcfunction')) return 'function_mcfunction';
+  if (n.endsWith('server.properties') || n.endsWith('/server.properties'))
+    return 'server_properties';
   if (n.endsWith('.json')) {
     // Best-effort routing: look at the path. recipes/, loot_tables/, tags/.
     if (/(\/|^)recipes?\//.test(n)) return 'recipe_json';

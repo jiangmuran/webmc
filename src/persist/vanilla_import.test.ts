@@ -34,6 +34,7 @@ describe('vanilla_import barrel', () => {
       'blockstate_json',
     );
     expect(detectVanillaFileKind('assets/minecraft/models/block/stone.json')).toBe('model_json');
+    expect(detectVanillaFileKind('server.properties')).toBe('server_properties');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
