@@ -29,6 +29,7 @@ export interface CommandContext {
   toggleGyro?: () => boolean;
   copyToClipboard?: (text: string) => Promise<boolean>;
   getRoomCode?: () => string | null;
+  importWorldFile?: () => void;
   setBlock?: (x: number, y: number, z: number, name: string) => boolean;
   fillBlocks?: (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, name: string) => number;
   save?: () => void;
@@ -323,6 +324,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'gyro' || head === 'tilt') {
     const on = ctx.toggleGyro?.() ?? false;
     ctx.broadcast(`Gyro look ${on ? 'on' : 'off'}`, '#80ff80');
+    return;
+  }
+  if (head === 'import') {
+    if (!ctx.importWorldFile) {
+      ctx.broadcast('Import not available.', '#ff8080');
+      return;
+    }
+    ctx.importWorldFile();
     return;
   }
   if (head === 'copy') {

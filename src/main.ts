@@ -1226,6 +1226,30 @@ const chatInput = new ChatInput(appEl, {
         },
         copyToClipboard: (text) => BROWSER_CLIPBOARD.writeText(text),
         getRoomCode: () => roomCode ?? null,
+        importWorldFile: () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = '.zip,.mca,.dat,.webmc';
+          input.style.display = 'none';
+          document.body.appendChild(input);
+          input.addEventListener('change', () => {
+            const f = input.files?.[0];
+            input.remove();
+            if (!f) return;
+            chatInput.addLine(`Detecting format of ${f.name} (${(f.size / 1024).toFixed(1)} kB)…`, '#cccccc');
+            if (f.name.endsWith('.mca') || f.name.endsWith('.dat')) {
+              chatInput.addLine('Detected Anvil region/level. Native import scaffold present (full NBT decode TBD).', '#ffd080');
+              chatInput.addLine('User uploads at own licensing risk; webmc never ships Mojang data.', '#888888');
+            } else if (f.name.endsWith('.webmc')) {
+              chatInput.addLine('webmc save detected. Use Main Menu → Import to load.', '#80ff80');
+            } else if (f.name.endsWith('.zip')) {
+              chatInput.addLine('ZIP: drop in resource-pack uploader for textures or main-menu import for save.', '#ffd080');
+            } else {
+              chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
+            }
+          }, { once: true });
+          input.click();
+        },
         setBlock: (x, y, z, name) => {
           const full = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const id = registry.byName(full);
@@ -1420,7 +1444,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import',
     ];
     return SLASH_CMDS;
   },
