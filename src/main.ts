@@ -2189,6 +2189,7 @@ function frame(): void {
     subtitles.push('Player hurt');
   }
   subtitles.tick();
+  crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);

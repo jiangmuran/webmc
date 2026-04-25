@@ -12,6 +12,10 @@ const DEFAULTS: CrosshairOpts = {
 
 export class Crosshair {
   readonly root: HTMLDivElement;
+  private readonly ring: SVGCircleElement;
+  private readonly ringSvg: SVGSVGElement;
+  private readonly ringCircumference: number;
+  private lastFraction = 1;
 
   constructor(parent: HTMLElement, opts: Partial<CrosshairOpts> = {}) {
     const o = { ...DEFAULTS, ...opts };
@@ -50,7 +54,46 @@ export class Crosshair {
       'mix-blend-mode:difference',
     ].join(';');
     this.root.append(horiz, vert);
+
+    const ringRadius = o.size + 4;
+    const ringSize = ringRadius * 2 + 4;
+    this.ringCircumference = 2 * Math.PI * ringRadius;
+    this.ringSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this.ringSvg.setAttribute('width', String(ringSize));
+    this.ringSvg.setAttribute('height', String(ringSize));
+    this.ringSvg.setAttribute('viewBox', `0 0 ${String(ringSize)} ${String(ringSize)}`);
+    this.ringSvg.style.cssText = [
+      'position:absolute',
+      'left:50%',
+      'top:50%',
+      `width:${String(ringSize)}px`,
+      `height:${String(ringSize)}px`,
+      'transform:translate(-50%,-50%) rotate(-90deg)',
+      'opacity:0',
+      'transition:opacity 120ms',
+    ].join(';');
+    this.ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    this.ring.setAttribute('cx', String(ringSize / 2));
+    this.ring.setAttribute('cy', String(ringSize / 2));
+    this.ring.setAttribute('r', String(ringRadius));
+    this.ring.setAttribute('fill', 'none');
+    this.ring.setAttribute('stroke', '#ffffffcc');
+    this.ring.setAttribute('stroke-width', '2');
+    this.ring.setAttribute('stroke-dasharray', String(this.ringCircumference));
+    this.ring.setAttribute('stroke-dashoffset', String(this.ringCircumference));
+    this.ringSvg.appendChild(this.ring);
+    this.root.appendChild(this.ringSvg);
+
     parent.appendChild(this.root);
+  }
+
+  setCooldown(fraction: number): void {
+    const f = Math.max(0, Math.min(1, fraction));
+    if (Math.abs(f - this.lastFraction) < 0.01) return;
+    this.lastFraction = f;
+    this.ring.setAttribute('stroke-dashoffset', String(this.ringCircumference * (1 - f)));
+    this.ring.setAttribute('stroke', f >= 0.95 ? '#80ffa0' : '#ffffffcc');
+    this.ringSvg.style.opacity = f >= 0.999 ? '0' : '1';
   }
 
   hide(): void {
@@ -64,6 +107,7 @@ export class Crosshair {
   setTint(color: string | null): void {
     const children = Array.from(this.root.children) as HTMLElement[];
     for (const el of children) {
+      if (el.tagName === 'svg') continue;
       if (color === null) {
         el.style.background = '#ffffffcc';
         el.style.mixBlendMode = 'difference';
