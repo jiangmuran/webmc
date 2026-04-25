@@ -797,6 +797,12 @@ const chatInput = new ChatInput(appEl, {
         },
         listMobKinds: () => Object.keys(MOB_DEFS),
         uptimeMs: () => performance.now() - bootTime,
+        lookAtBlock: () => {
+          const hit = interaction.castRay();
+          if (!hit) return null;
+          const def = registry.get(stateId(world.get(hit.bx, hit.by, hit.bz)));
+          return { x: hit.bx, y: hit.by, z: hit.bz, name: def.name.replace(/^webmc:/, '') };
+        },
         showTitle: (text, color, durMs) => { toast.show(text, color ?? '#ffffff', durMs ?? 2000); },
         listBlocks: (filter) => {
           const f = filter?.toLowerCase() ?? '';

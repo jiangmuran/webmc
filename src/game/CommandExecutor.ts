@@ -15,6 +15,7 @@ export interface CommandContext {
   listBlocks?: (filter?: string) => readonly string[];
   listMobKinds?: () => readonly string[];
   uptimeMs?: () => number;
+  lookAtBlock?: () => { x: number; y: number; z: number; name: string } | null;
   showTitle?: (text: string, color?: string, durationMs?: number) => void;
   broadcast: (line: string, color?: string) => void;
   knownGameModes: readonly GameMode[];
@@ -87,6 +88,18 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       return;
     }
     ctx.showTitle?.(text, '#ffffff', 2000);
+    return;
+  }
+  if (head === 'lookat') {
+    const hit = ctx.lookAtBlock?.();
+    if (hit) {
+      ctx.broadcast(
+        `Looking at ${hit.name} @ ${String(hit.x)} ${String(hit.y)} ${String(hit.z)}`,
+        '#cccccc',
+      );
+    } else {
+      ctx.broadcast('Nothing in reach.', '#cccccc');
+    }
     return;
   }
   if (head === 'uptime') {
