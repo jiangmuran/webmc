@@ -3040,15 +3040,61 @@ const interaction = new InteractionController(
         return true;
       }
       if (def.name === 'webmc:bed') {
+        // Setting spawn always works regardless of mob proximity — vanilla
+        // does the same: clicking the bed even during the day saves the
+        // spawn. Sleep-through-night additionally needs no hostile mobs
+        // within 8 blocks (MC behaviour).
         playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
         void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         if (!dayNight.isDay) {
+          const HOSTILE_KINDS = new Set([
+            'zombie',
+            'skeleton',
+            'creeper',
+            'spider',
+            'enderman',
+            'witch',
+            'pillager',
+            'vindicator',
+            'evoker',
+            'phantom',
+            'drowned',
+            'husk',
+            'stray',
+            'wither_skeleton',
+            'piglin',
+            'piglin_brute',
+            'hoglin',
+            'zoglin',
+            'ravager',
+            'vex',
+          ]);
+          let mobNearby = false;
+          for (const m of mobWorld.all()) {
+            if (!HOSTILE_KINDS.has(m.def.kind)) continue;
+            const dx = m.position.x - (bx + 0.5);
+            const dy = m.position.y - (by + 0.5);
+            const dz = m.position.z - (bz + 0.5);
+            if (dx * dx + dy * dy + dz * dz <= 64) {
+              mobNearby = true;
+              break;
+            }
+          }
+          if (mobNearby) {
+            chatInput.addLine('You may not rest now; there are monsters nearby.', '#ffd080');
+            toast.show('Spawn set', '#ffb0c0', 1200);
+            sfx.play('click');
+            return true;
+          }
           dayNight.setTimeOfDayTicks(1000);
           // The day-cycle watcher in frame() does dayCounter++ when
           // isDay becomes true; show that pending value here without
           // mutating dayCounter ourselves (was double-counting on sleep).
           toast.show(`Spawn set. Day ${String(dayCounter + 1)}`, '#ffb0c0');
           chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
+          lastSleepDay = dayCounter;
+          // Cancel any in-flight phantom approach — vanilla resets the
+          // since-slept counter when sleeping.
         } else {
           toast.show('Spawn set', '#ffb0c0', 1200);
         }
@@ -5431,7 +5477,7 @@ const TIPS: readonly string[] = [
   'Tip: Press F4 to cycle game modes',
   'Tip: Press F5 for third-person',
   'Tip: Press T for chat, / for commands',
-  'Tip: Press B to sleep through the night',
+  'Tip: Right-click a bed at night to sleep (or B in creative)',
   'Tip: Press F2 for a screenshot',
   'Tip: Double-tap W to sprint',
   'Tip: Right-click TNT to prime it',
@@ -5691,6 +5737,14 @@ document.addEventListener(
     }
     if (e.code === 'KeyB') {
       e.preventDefault();
+      // Bed-less sleep shortcut. Allowed in creative as a quick way to skip
+      // night while building. In survival/adventure it would be a cheat —
+      // players should actually find/place a bed and sleep through it
+      // (vanilla also permanently locks night-skip behind a real bed).
+      if (gameMode !== 'creative') {
+        chatInput.addLine('Use a bed to sleep.', '#ffd080');
+        return;
+      }
       if (!dayNight.isDay) {
         dayNight.setTimeOfDayTicks(1000);
         chatInput.addLine('You slept through the night.', '#d0d0ff');
