@@ -237,6 +237,24 @@ export {
   type ParsedTemplatePool,
   type TemplatePoolEntry,
 } from './vanilla_template_pool_parse';
+export {
+  parseVanillaProcessorList,
+  ProcessorListParseError,
+  type ParsedProcessorList,
+  type ParsedProcessor,
+} from './vanilla_processor_list_parse';
+export {
+  parseVanillaNoiseSettings,
+  NoiseSettingsParseError,
+  type ParsedNoiseSettings,
+  type NoiseShape,
+} from './vanilla_noise_settings_parse';
+export {
+  parseVanillaMultiNoise,
+  MultiNoiseParseError,
+  type ParsedMultiNoiseBiomeSource,
+  type MultiNoiseBiomeEntry,
+} from './vanilla_multi_noise_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -282,6 +300,9 @@ export type VanillaFileKind =
   | 'placed_feature_json'
   | 'structure_json'
   | 'template_pool_json'
+  | 'processor_list_json'
+  | 'noise_settings_json'
+  | 'multi_noise_biome_source_parameter_list_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -336,6 +357,10 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)worldgen\/placed_feature\//.test(n)) return 'placed_feature_json';
     if (/(\/|^)worldgen\/structure\//.test(n)) return 'structure_json';
     if (/(\/|^)worldgen\/template_pool\//.test(n)) return 'template_pool_json';
+    if (/(\/|^)worldgen\/processor_list\//.test(n)) return 'processor_list_json';
+    if (/(\/|^)worldgen\/noise_settings\//.test(n)) return 'noise_settings_json';
+    if (/(\/|^)worldgen\/multi_noise_biome_source_parameter_list\//.test(n))
+      return 'multi_noise_biome_source_parameter_list_json';
   }
   return 'unknown';
 }

@@ -98,6 +98,17 @@ describe('vanilla_import barrel', () => {
     expect(
       detectVanillaFileKind('data/minecraft/worldgen/template_pool/village/plains/houses.json'),
     ).toBe('template_pool_json');
+    expect(detectVanillaFileKind('data/minecraft/worldgen/processor_list/zombie_plains.json')).toBe(
+      'processor_list_json',
+    );
+    expect(detectVanillaFileKind('data/minecraft/worldgen/noise_settings/overworld.json')).toBe(
+      'noise_settings_json',
+    );
+    expect(
+      detectVanillaFileKind(
+        'data/minecraft/worldgen/multi_noise_biome_source_parameter_list/overworld.json',
+      ),
+    ).toBe('multi_noise_biome_source_parameter_list_json');
     expect(detectVanillaFileKind('readme.md')).toBe('unknown');
   });
 
