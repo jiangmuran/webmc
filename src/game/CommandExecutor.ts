@@ -867,6 +867,47 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'craft') {
+    if (!ctx.giveItem) return;
+    const item = args[0];
+    if (!item) {
+      ctx.broadcast('Usage: /craft <item> — bypass crafting grid in creative-style', '#ff8080');
+      return;
+    }
+    const count = parseInt(args[1] ?? '1', 10);
+    const ok = ctx.giveItem(item, Math.max(1, Math.min(64, Number.isFinite(count) ? count : 1)));
+    if (ok) ctx.broadcast(`Crafted ${item} ×${String(count)}`, '#80ff80');
+    else ctx.broadcast(`Unknown item: ${item}`, '#ff8080');
+    return;
+  }
+  if (head === 'cook' || head === 'smelt') {
+    if (!ctx.giveItem) return;
+    const item = args[0];
+    if (!item) {
+      ctx.broadcast('Usage: /cook <item> [count] — smelt instantly', '#ff8080');
+      return;
+    }
+    const SMELT: Record<string, string> = {
+      raw_iron: 'iron_ingot', raw_gold: 'gold_ingot', raw_copper: 'copper_ingot',
+      iron_ore: 'iron_ingot', gold_ore: 'gold_ingot', copper_ore: 'copper_ingot',
+      ancient_debris: 'netherite_scrap', sand: 'glass', cobblestone: 'stone',
+      stone: 'smooth_stone', clay_ball: 'brick', netherrack: 'nether_brick_item',
+      raw_beef: 'cooked_beef', raw_porkchop: 'cooked_porkchop', raw_chicken: 'cooked_chicken',
+      raw_mutton: 'cooked_mutton', raw_rabbit: 'cooked_rabbit', cod: 'cooked_cod',
+      salmon: 'cooked_salmon', potato: 'baked_potato', kelp: 'dried_kelp',
+      cactus: 'green_dye', nether_quartz_ore: 'nether_quartz', oak_log: 'charcoal',
+    };
+    const out = SMELT[item];
+    if (!out) {
+      ctx.broadcast(`Cannot smelt: ${item}`, '#ff8080');
+      return;
+    }
+    const count = parseInt(args[1] ?? '1', 10);
+    const c = Math.max(1, Math.min(64, Number.isFinite(count) ? count : 1));
+    ctx.giveItem(out, c);
+    ctx.broadcast(`Smelted ${item} → ${out} ×${String(c)}`, '#80ff80');
+    return;
+  }
   if (head === 'tutorial' || head === 'guide') {
     ctx.broadcast('— webmc quick guide —', '#80ffff');
     ctx.broadcast('Move: WASD · Sprint: Ctrl or 2× W · Jump: Space · Sneak: Shift', '#cccccc');
