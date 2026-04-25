@@ -33,6 +33,7 @@ import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
 import { critMultiplier } from './game/critical_hit';
+import { computeKnockback } from './game/combat_knockback';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -902,11 +903,17 @@ canvas.addEventListener('mousedown', (e) => {
     // Knockback: push mob away from player along horizontal look vector.
     const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
     if (mobHit) {
-      const look = fp.lookVector();
-      const kbMag = 5;
-      mobHit.velocity.x += look.x * kbMag;
-      mobHit.velocity.z += look.z * kbMag;
-      mobHit.velocity.y = Math.max(mobHit.velocity.y, 3);
+      const kb = computeKnockback({
+        attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+        targetPos: { x: mobHit.position.x, y: mobHit.position.y, z: mobHit.position.z },
+        sprinting: fp.input.sprint,
+        knockbackLevel: 0,
+        knockbackResistance: 0,
+      });
+      const KB_SCALE = 12;
+      mobHit.velocity.x += kb.x * KB_SCALE;
+      mobHit.velocity.z += kb.z * KB_SCALE;
+      mobHit.velocity.y = Math.max(mobHit.velocity.y, kb.y * KB_SCALE);
     }
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
