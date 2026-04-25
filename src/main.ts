@@ -687,6 +687,11 @@ const toast = new Toast(appEl);
 const controlsHelp = new ControlsHelp(appEl);
 const damageNumbers = new DamageNumbers(appEl);
 const minimap = new MinimapView(appEl);
+void persistDB.getMeta('minimapRange').then((saved) => {
+  if (typeof saved !== 'number') return;
+  while (minimap.currentRange > saved && minimap.currentRange > 16) minimap.zoomIn();
+  while (minimap.currentRange < saved && minimap.currentRange < 256) minimap.zoomOut();
+});
 deathScreen.setOnRespawn(() => {
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
@@ -1124,11 +1129,13 @@ document.addEventListener(
     if (e.code === 'Equal' || e.code === 'NumpadAdd') {
       e.preventDefault();
       minimap.zoomIn();
+      void persistDB.setMeta('minimapRange', minimap.currentRange);
       toast.show(`Minimap zoom ±${String(minimap.currentRange)}m`, '#cccccc', 800);
     }
     if (e.code === 'Minus' || e.code === 'NumpadSubtract') {
       e.preventDefault();
       minimap.zoomOut();
+      void persistDB.setMeta('minimapRange', minimap.currentRange);
       toast.show(`Minimap zoom ±${String(minimap.currentRange)}m`, '#cccccc', 800);
     }
     if (e.code === 'F1') {
