@@ -42,6 +42,7 @@ import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
+import { searchRespawnSpot } from './game/bed_obstructed';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -370,7 +371,14 @@ const playerState = new PlayerState({
   },
   onRespawn: () => {
     if (playerSpawnPoint) {
-      fp.position.set(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+      const safe = findSafeRespawnNear(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+      if (safe) {
+        fp.position.set(safe.x, safe.y, safe.z);
+      } else {
+        chatInput.addLine('Your home bed was missing or obstructed.', '#ffd080');
+        const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
+        fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+      }
     } else {
       const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
       fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
@@ -667,6 +675,30 @@ function lightningFlash(): void {
 const mesherClient = createMesherClient();
 const audio = new AudioBus({ masterVolume: 0.35 });
 audio.attachUnlock(document.body);
+
+function findSafeRespawnNear(x: number, y: number, z: number): { x: number; y: number; z: number } | null {
+  const candidates: { x: number; y: number; z: number; solidBelow: boolean; airAt: boolean; airAbove: boolean }[] = [];
+  const RADIUS = 3;
+  for (let dy = 0; dy <= 1; dy++) {
+    for (let dx = -RADIUS; dx <= RADIUS; dx++) {
+      for (let dz = -RADIUS; dz <= RADIUS; dz++) {
+        const cx = Math.floor(x) + dx;
+        const cy = Math.floor(y) + dy;
+        const cz = Math.floor(z) + dz;
+        candidates.push({
+          x: cx + 0.5,
+          y: cy,
+          z: cz + 0.5,
+          solidBelow: isSolid(cx, cy - 1, cz),
+          airAt: !isSolid(cx, cy, cz),
+          airAbove: !isSolid(cx, cy + 1, cz),
+        });
+      }
+    }
+  }
+  const safe = searchRespawnSpot(candidates);
+  return safe ? { x: safe.x, y: safe.y, z: safe.z } : null;
+}
 
 function computeArmorPoints(): number {
   let pts = 0;
