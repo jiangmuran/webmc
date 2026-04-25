@@ -1143,6 +1143,36 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'wave' || head === 'crowd') {
+    if (!ctx.summon) return;
+    const count = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(count) || count < 1 || count > 100) {
+      ctx.broadcast('Usage: /wave <count=20>', '#ff8080');
+      return;
+    }
+    const KINDS = ['zombie', 'skeleton', 'spider', 'creeper', 'enderman'];
+    let n = 0;
+    for (let i = 0; i < count; i++) {
+      const kind = KINDS[Math.floor(Math.random() * KINDS.length)] ?? 'zombie';
+      const ang = (i / count) * Math.PI * 2;
+      const r = 6 + Math.random() * 6;
+      const x = ctx.playerPos.x + Math.cos(ang) * r;
+      const z = ctx.playerPos.z + Math.sin(ang) * r;
+      if (ctx.summon(kind, x, ctx.playerPos.y + 1, z)) n++;
+    }
+    if (ctx.showTitle) ctx.showTitle(`Wave incoming! ${String(n)} mobs`, '#ff8080', 2500);
+    ctx.broadcast(`⚔ Wave: ${String(n)} mixed hostile mobs spawned in a ring`, '#ff8080');
+    return;
+  }
+  if (head === 'rampage') {
+    if (!ctx.applyEffect) return;
+    ctx.applyEffect('strength', 4, 60);
+    ctx.applyEffect('speed', 2, 60);
+    ctx.applyEffect('resistance', 2, 60);
+    if (ctx.showTitle) ctx.showTitle('RAMPAGE', '#ff8080', 2000);
+    ctx.broadcast('Rampage: STR V + SPEED III + RES III for 60s', '#ff8080');
+    return;
+  }
   if (head === 'timer') {
     const sec = parseInt(args[0] ?? '60', 10);
     if (!Number.isFinite(sec) || sec < 1 || sec > 3600) {
