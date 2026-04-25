@@ -3900,6 +3900,36 @@ function frame(): void {
     if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
   }
   playerState.tick(dtSec, { inFluid: fp.inFluid });
+  // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
+  {
+    const chest = inventory.armor[1];
+    const chestName = chest ? itemRegistry.get(chest.itemId).name : '';
+    const wearingElytra = chestName === 'webmc:elytra';
+    if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
+      const look = fp.lookVector();
+      // Slow descent: clamp downward velocity.
+      const minFallY = -3 + look.y * 8;
+      if (fp.velocity.y < minFallY) fp.velocity.y = fp.velocity.y * 0.7 + minFallY * 0.3;
+      // Forward thrust along look horizontal.
+      const horiz = Math.hypot(look.x, look.z);
+      if (horiz > 0.001) {
+        const speedFactor = 8 + Math.max(0, -look.y) * 12;
+        fp.velocity.x = fp.velocity.x * 0.85 + (look.x / horiz) * speedFactor * 0.15;
+        fp.velocity.z = fp.velocity.z * 0.85 + (look.z / horiz) * speedFactor * 0.15;
+      }
+      // Drain durability ~1/sec.
+      if (Math.random() < dtSec) {
+        const newDamage = (chest?.damage ?? 0) + 1;
+        const def = itemRegistry.get(inventory.armor[1]!.itemId);
+        if (newDamage >= def.durability) {
+          inventory.armor[1] = null;
+          chatInput.addLine('Your elytra broke!', '#ff8080');
+        } else {
+          inventory.armor[1] = { ...inventory.armor[1]!, damage: newDamage };
+        }
+      }
+    }
+  }
   // Walking through fire ignites the player (8s burn).
   if ((gameMode === 'survival' || gameMode === 'adventure') && !playerState.effects.has('fire_resistance')) {
     const fpx = Math.floor(fp.position.x);

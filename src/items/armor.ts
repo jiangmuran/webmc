@@ -116,6 +116,13 @@ export const ARMOR_DEFS: Record<string, ArmorDef> = {
     toughness: 0,
     durability: 275,
   },
+  elytra: {
+    name: 'webmc:elytra',
+    slot: 'chestplate',
+    defense: 0,
+    toughness: 0,
+    durability: 432,
+  },
 };
 
 export interface ArmorPiece {
