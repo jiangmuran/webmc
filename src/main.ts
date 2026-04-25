@@ -633,12 +633,14 @@ canvas.addEventListener('mousedown', (e) => {
     const nowMs = performance.now();
     if (nowMs - lastPlayerAttackAt < 400) return;
     lastPlayerAttackAt = nowMs;
-    const result = mobWorld.damage(bestId, 2);
+    const strengthEff = playerState.effects.get('strength');
+    const baseDmg = 2 + (strengthEff ? 3 * (strengthEff.amplifier + 1) : 0);
+    const result = mobWorld.damage(bestId, baseDmg);
     sfx.play('hit');
     interaction.setHeld(null);
     screenShake.pulse(0.15);
     hand.swing();
-    if (result) damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, 2);
+    if (result) damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, baseDmg);
     // Knockback: push mob away from player along horizontal look vector.
     const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
     if (mobHit) {
