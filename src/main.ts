@@ -2188,6 +2188,7 @@ const interaction = new InteractionController(
       markSaveDirty(autosaveState);
     },
     canPlace: () => {
+      if (gameMode === 'spectator') return false;
       if (gameMode === 'creative') return true;
       const placeable = placeableFromSlot(hotbar.selectedIndex);
       if (placeable) return true;
@@ -2202,6 +2203,8 @@ const interaction = new InteractionController(
       return false;
     },
     canBreak: (bx, by, bz) => {
+      // Spectator: ghost mode, no block edits at all (vanilla parity).
+      if (gameMode === 'spectator') return false;
       // Bedrock and other indestructible blocks (hardness < 0) are
       // breakable in creative only — vanilla parity. Without this gate
       // bedrock could be punched through after the standard 0.4s timer
