@@ -416,6 +416,30 @@ itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 
 itemRegistry.register({ name: 'webmc:compass', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:clock', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:totem_of_undying', maxStack: 1, durability: 0 });
+// MC 1.21+ items.
+itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:rail', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:lead', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:elytra', maxStack: 1, durability: 432 });
+itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
+itemRegistry.register({ name: 'webmc:music_disc_13', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:firework_rocket', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:firework_star', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:end_crystal', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:nautilus_shell', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:heart_of_the_sea', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:scute', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:armadillo_scute', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:wind_charge', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:breeze_rod', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:echo_shard', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:goat_horn', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:disc_fragment_5', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
+itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
