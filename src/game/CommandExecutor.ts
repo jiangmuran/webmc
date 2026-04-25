@@ -36,6 +36,7 @@ export interface CommandContext {
   getWorldBorder?: () => number;
   setHardcore?: (on: boolean) => void;
   isHardcore?: () => boolean;
+  loadDatapackDemo?: () => string;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -432,6 +433,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       ctx.broadcast(`Rolled ${item} from ${table} table`, '#80ff80');
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
+    }
+    return;
+  }
+  if (head === 'datapack' || head === 'dp') {
+    const sub = (args[0] ?? 'help').toLowerCase();
+    if (sub === 'demo') {
+      const report = ctx.loadDatapackDemo?.() ?? 'datapack support unavailable';
+      ctx.broadcast(`Datapack demo: ${report}`, '#80c8ff');
+    } else {
+      ctx.broadcast('Usage: /datapack demo (loads a built-in test datapack)', '#cccccc');
     }
     return;
   }

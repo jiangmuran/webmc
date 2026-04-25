@@ -56,6 +56,7 @@ import { Weather as WeatherCycle } from './world/weather';
 import { checkPosition as checkWorldBorder, makeWorldBorder, setSize as setBorderSize } from './world/world_border';
 import { generateStrongholdPositions as strongholdsInRing } from './world/stronghold_locate';
 import { frictionFor as blockFriction } from './physics/ice_slip_friction';
+import { loadPack as loadDatapack, type DataPack } from './datapack/DataPack';
 import { beginSave, endSave, makeSaveState, markDirty as markSaveDirty, shouldSave } from './game/autosave_debounce';
 import { ticksToBreak as breakTicksFor } from './game/break_speed';
 import { searchRespawnSpot } from './game/bed_obstructed';
@@ -1382,6 +1383,17 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
+        loadDatapackDemo: () => {
+          const demoPack: DataPack = {
+            meta: { name: 'webmc-demo-pack', version: '1.0', author: 'webmc', description: 'Built-in demo' },
+            blocks: [
+              { name: 'webmc:demo_pink', color: [255, 100, 200], hardness: 0.5, opaque: true, solid: true },
+              { name: 'webmc:demo_cyan', color: [100, 255, 240], hardness: 0.5, opaque: true, solid: true, lightEmission: 8 },
+            ],
+          };
+          const report = loadDatapack(demoPack, { blocks: registry, items: itemRegistry, recipes: recipeRegistry });
+          return `+${String(report.blocksAdded)} blocks +${String(report.recipesAdded)} recipes${report.errors.length ? ` (${String(report.errors.length)} errors)` : ''}`;
+        },
         setWaypoint: (name, x, y, z) => {
           waypoints.set(name, { x, y, z });
           persistWaypoints();
@@ -1696,7 +1708,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp',
     ];
     return SLASH_CMDS;
   },
