@@ -1131,6 +1131,15 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast(`📢 ${text}`, '#ffd080');
     return;
   }
+  if (head === 'gamemode_cycle' || head === 'gmc') {
+    if (!ctx.setGameMode) return;
+    const order = ['survival', 'creative', 'adventure', 'spectator'] as const;
+    const idx = order.indexOf(ctx.gameMode as (typeof order)[number]);
+    const next = order[(idx + 1) % order.length] ?? 'survival';
+    ctx.setGameMode(next);
+    ctx.broadcast(`Mode: ${next}`, '#80ff80');
+    return;
+  }
   if (head === 'keys' || head === 'keybinds') {
     ctx.broadcast('— Keyboard —', '#80ffff');
     ctx.broadcast('WASD move · Space jump · Shift sneak · Ctrl/2×W sprint', '#cccccc');

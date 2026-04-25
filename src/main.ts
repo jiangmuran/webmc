@@ -4481,6 +4481,8 @@ const chatInput = new ChatInput(appEl, {
       '/keys',
       '/keybinds',
       '/controls',
+      '/gamemode_cycle',
+      '/gmc',
     ];
     return SLASH_CMDS;
   },
