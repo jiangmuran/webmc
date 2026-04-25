@@ -38,6 +38,8 @@ export interface CommandContext {
   setWalkSpeed?: (mul: number) => void;
   applyVelocity?: (dx: number, dy: number, dz: number) => void;
   surfaceAt?: (x: number, z: number) => number;
+  repairHeld?: () => boolean;
+  heldDurability?: () => { name: string; current: number; max: number } | null;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -899,6 +901,28 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'repair') {
+    if (!ctx.repairHeld) {
+      ctx.broadcast('Repair unavailable.', '#ff8080');
+      return;
+    }
+    const ok = ctx.repairHeld();
+    if (ok) ctx.broadcast('Held item fully repaired.', '#80ff80');
+    else ctx.broadcast('Held item is not damageable.', '#ffd080');
+    return;
+  }
+  if (head === 'durability' || head === 'dura') {
+    if (!ctx.heldDurability) return;
+    const d = ctx.heldDurability();
+    if (!d) {
+      ctx.broadcast('Held item has no durability.', '#cccccc');
+      return;
+    }
+    const pct = Math.round((d.current / d.max) * 100);
+    const color = pct > 50 ? '#80ff80' : pct > 20 ? '#ffd080' : '#ff8080';
+    ctx.broadcast(`${d.name}: ${String(d.current)}/${String(d.max)} (${String(pct)}%)`, color);
     return;
   }
   if (head === 'confetti' || head === 'celebrate') {
