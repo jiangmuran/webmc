@@ -5285,6 +5285,12 @@ const creativeInv = new CreativeInventory(appEl, registry, {
     interaction.selectedBlock = entry.state;
     chatInput.addLine(`Picked ${entry.shortName}`, '#80d080');
   },
+  // Close button bypasses the keydown handler in main.ts; without an
+  // onClose hook the player got stuck with inputBlocked=true.
+  onClose: () => {
+    fp.inputBlocked = false;
+    void canvas.requestPointerLock();
+  },
 });
 
 document.addEventListener(
