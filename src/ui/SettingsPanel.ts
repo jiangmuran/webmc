@@ -8,6 +8,7 @@ export interface SettingsValues {
   sprintToggle: boolean;
   brightness: number;
   showCrosshair: boolean;
+  playerName: string;
 }
 
 export const DEFAULT_SETTINGS: SettingsValues = {
@@ -20,6 +21,7 @@ export const DEFAULT_SETTINGS: SettingsValues = {
   sprintToggle: false,
   brightness: 1.0,
   showCrosshair: true,
+  playerName: 'Player',
 };
 
 const STORAGE_KEY = 'webmc:settings';
@@ -100,6 +102,7 @@ export class SettingsPanel {
     this.checkbox(panel, 'Invert Y', 'invertY');
     this.checkbox(panel, 'Sprint toggle (vs hold)', 'sprintToggle');
     this.checkbox(panel, 'Show crosshair', 'showCrosshair');
+    this.textInput(panel, 'Player name', 'playerName');
 
     const presetRow = document.createElement('div');
     presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;';
@@ -187,6 +190,29 @@ export class SettingsPanel {
       const v = this.values[key] as number;
       input.value = String(v);
       valueSpan.textContent = `= ${formatValue(v)}`;
+    });
+  }
+
+  private textInput(parent: HTMLElement, label: string, key: keyof SettingsValues): void {
+    const row = document.createElement('label');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;';
+    const lbl = document.createElement('span');
+    lbl.textContent = label;
+    lbl.style.cssText = 'opacity:0.85;';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 20;
+    input.value = String(this.values[key]);
+    input.style.cssText = 'flex:1;padding:4px 6px;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;font:inherit;font-size:12px;';
+    input.addEventListener('change', () => {
+      (this.values as unknown as Record<string, string>)[key as string] = input.value;
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+    });
+    row.append(lbl, input);
+    parent.appendChild(row);
+    this.uiResetters.push(() => {
+      input.value = String(this.values[key]);
     });
   }
 

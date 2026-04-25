@@ -917,6 +917,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
     if (v.showCrosshair) crosshair.show(); else crosshair.hide();
+    playerAvatar.setName(v.playerName.trim() || 'Player');
     audio.setMasterVolume(v.masterVolume);
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
