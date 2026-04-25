@@ -3544,6 +3544,14 @@ void persistDB.getMeta('hotbarSelected').then((saved) => {
 inventory.selectedHotbar = hotbar.selectedIndex;
 hotbar.onSelect((index) => {
   inventory.selectedHotbar = index;
+  // Switching hotbar slot mid-eat cancels the bite — vanilla does the
+  // same. Without this, you could start eating bread, switch to a
+  // pickaxe, and still get the food effect when the timer completed
+  // (consuming the bread that was no longer in your hand).
+  if (eatState.itemId !== null) {
+    cancelEating(eatState);
+    rightClickHeldForEat = false;
+  }
 });
 let lastHotbarSavedIndex = hotbar.selectedIndex;
 function saveHotbarIfChanged(): void {
@@ -7216,6 +7224,11 @@ function frame(): void {
     starvingShown = false;
   }
   if (playerState.justDied && !playerState.invulnerable) {
+    // Cancel any in-progress eat — corpse shouldn't be munching.
+    if (eatState.itemId !== null) {
+      cancelEating(eatState);
+      rightClickHeldForEat = false;
+    }
     // Totem of Undying: if held in hotbar, consume to revive at 1 HP + Regen II + Absorption II.
     const totemId = itemRegistry.byName('webmc:totem_of_undying');
     if (totemId !== undefined && countInventoryItem(totemId) > 0) {
