@@ -348,10 +348,51 @@ export class SurvivalInventory {
     const coalId = this.registry.byName('webmc:coal');
     if (coalId === undefined) return;
     const hasCoal = this.inventoryCount(coalId) > 0;
+    // Full vanilla furnace recipe set (the common ones). Was just the 3
+    // meats — players couldn't smelt iron, gold, copper, sand→glass,
+    // cobble→stone, clay→brick, fish, mutton, rabbit, potato, kelp,
+    // raw cactus, log→charcoal. Made the entire mid-game iron progression
+    // impossible from the inventory UI.
     const pairs: readonly (readonly [string, string])[] = [
       ['webmc:raw_beef', 'webmc:cooked_beef'],
       ['webmc:raw_porkchop', 'webmc:cooked_porkchop'],
       ['webmc:raw_chicken', 'webmc:cooked_chicken'],
+      ['webmc:raw_mutton', 'webmc:cooked_mutton'],
+      ['webmc:raw_rabbit', 'webmc:cooked_rabbit'],
+      ['webmc:cod', 'webmc:cooked_cod'],
+      ['webmc:salmon', 'webmc:cooked_salmon'],
+      ['webmc:potato', 'webmc:baked_potato'],
+      ['webmc:kelp', 'webmc:dried_kelp'],
+      ['webmc:raw_iron', 'webmc:iron_ingot'],
+      ['webmc:iron_ore', 'webmc:iron_ingot'],
+      ['webmc:deepslate_iron_ore', 'webmc:iron_ingot'],
+      ['webmc:raw_gold', 'webmc:gold_ingot'],
+      ['webmc:gold_ore', 'webmc:gold_ingot'],
+      ['webmc:deepslate_gold_ore', 'webmc:gold_ingot'],
+      ['webmc:raw_copper', 'webmc:copper_ingot'],
+      ['webmc:copper_ore', 'webmc:copper_ingot'],
+      ['webmc:deepslate_copper_ore', 'webmc:copper_ingot'],
+      ['webmc:sand', 'webmc:glass'],
+      ['webmc:red_sand', 'webmc:glass'],
+      ['webmc:cobblestone', 'webmc:stone'],
+      ['webmc:stone', 'webmc:smooth_stone'],
+      ['webmc:cobbled_deepslate', 'webmc:deepslate'],
+      ['webmc:clay_ball', 'webmc:brick'],
+      ['webmc:clay', 'webmc:terracotta'],
+      ['webmc:netherrack', 'webmc:nether_brick'],
+      ['webmc:nether_quartz_ore', 'webmc:quartz'],
+      ['webmc:cactus', 'webmc:green_dye'],
+      ['webmc:oak_log', 'webmc:charcoal'],
+      ['webmc:spruce_log', 'webmc:charcoal'],
+      ['webmc:birch_log', 'webmc:charcoal'],
+      ['webmc:jungle_log', 'webmc:charcoal'],
+      ['webmc:acacia_log', 'webmc:charcoal'],
+      ['webmc:dark_oak_log', 'webmc:charcoal'],
+      ['webmc:cherry_log', 'webmc:charcoal'],
+      ['webmc:mangrove_log', 'webmc:charcoal'],
+      ['webmc:wet_sponge', 'webmc:sponge'],
+      ['webmc:chorus_fruit', 'webmc:popped_chorus_fruit'],
+      ['webmc:sea_pickle', 'webmc:lime_dye'],
     ];
     for (const [inName, outName] of pairs) {
       const inId = this.registry.byName(inName);
@@ -360,7 +401,9 @@ export class SurvivalInventory {
       const has = this.inventoryCount(inId) > 0;
       if (!has || !hasCoal) continue;
       const btn = document.createElement('button');
-      btn.textContent = outName.replace(/^webmc:cooked_/, 'cook ');
+      const shortIn = inName.replace(/^webmc:/, '');
+      const shortOut = outName.replace(/^webmc:/, '');
+      btn.textContent = `${shortIn} → ${shortOut}`;
       btn.style.cssText = [
         'padding:4px 10px',
         'background:rgba(120,70,30,0.85)',
