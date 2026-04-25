@@ -2121,6 +2121,10 @@ function frame(): void {
   }
   fp.lastLandFallBlocks = 0;
 
+  if (fp.position.y < -64 && (gameMode === 'survival' || gameMode === 'adventure')) {
+    playerState.takeDamage({ amount: 4, source: 'void' });
+  }
+
   if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
     if (!starvingShown) {
       starvingShown = true;
