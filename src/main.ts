@@ -1144,8 +1144,38 @@ const interaction = new InteractionController(
         'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
         'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
       };
+      // Leaf drops: 5% chance for sapling matching wood, 2% sticks, 0.5% apple (oak only).
+      const LEAF_TO_SAPLING: Record<string, string> = {
+        'webmc:oak_leaves': 'webmc:oak_sapling',
+        'webmc:spruce_leaves': 'webmc:spruce_sapling',
+        'webmc:birch_leaves': 'webmc:birch_sapling',
+        'webmc:jungle_leaves': 'webmc:jungle_sapling',
+        'webmc:acacia_leaves': 'webmc:acacia_sapling',
+        'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
+        'webmc:cherry_leaves': 'webmc:cherry_sapling',
+        'webmc:azalea_leaves': 'webmc:azalea',
+      };
+      let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
+      const sapName = LEAF_TO_SAPLING[def.name];
+      if (sapName !== undefined && dropsAllowed) {
+        leafDrops = [];
+        if (Math.random() < 0.05) {
+          const sId = itemRegistry.byName(sapName);
+          if (sId !== undefined) leafDrops.push({ itemId: sId, count: 1, damage: 0 });
+        }
+        if (Math.random() < 0.02) {
+          const stickId = itemRegistry.byName('webmc:stick');
+          if (stickId !== undefined) leafDrops.push({ itemId: stickId, count: 1, damage: 0 });
+        }
+        if (def.name === 'webmc:oak_leaves' && Math.random() < 0.005) {
+          const aId = itemRegistry.byName('webmc:apple');
+          if (aId !== undefined) leafDrops.push({ itemId: aId, count: 1, damage: 0 });
+        }
+      }
       const cropDrop = CROP_DROP[def.name];
-      const drops = cropDrop && dropsAllowed
+      const drops = leafDrops !== null
+        ? leafDrops
+        : cropDrop && dropsAllowed
         ? cropDrop.flatMap((d) => {
             const id = itemRegistry.byName(d.id);
             if (id === undefined) return [];
