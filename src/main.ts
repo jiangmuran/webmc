@@ -3250,7 +3250,7 @@ function frame(): void {
         const dz = fp.position.z - worldMeta.spawn.z;
         return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`;
       })()}\n` +
-      `HP ${playerState.health.toFixed(0)}/20  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
+      `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
       `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
   requestAnimationFrame(frame);
