@@ -347,6 +347,24 @@ let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather ro
 let autoWeatherEnabled = true;
 let minimapVisible = true;
 let compassBarVisible = true;
+let zoomHeld = false;
+const SETTINGS_FOV_KEY = 'webmc:settings';
+function readSavedFov(): number {
+  try {
+    const raw = localStorage.getItem(SETTINGS_FOV_KEY);
+    if (!raw) return 70;
+    const parsed = JSON.parse(raw) as { fov?: unknown };
+    return typeof parsed.fov === 'number' ? parsed.fov : 70;
+  } catch {
+    return 70;
+  }
+}
+window.addEventListener('keyup', (e) => {
+  if (e.code === 'KeyC' && zoomHeld) {
+    zoomHeld = false;
+    fp.setBaseFov(readSavedFov());
+  }
+});
 let mobDamageMultiplier = 1;
 const gameRules = {
   keepInventory: false,
@@ -1198,6 +1216,11 @@ document.addEventListener(
       if (compassBarVisible) compassBar.show();
       else compassBar.hide();
       toast.show(`Compass: ${compassBarVisible ? 'on' : 'off'}`, '#cccccc', 1000);
+    }
+    if (e.code === 'KeyC' && !e.repeat) {
+      e.preventDefault();
+      zoomHeld = true;
+      fp.setBaseFov(30);
     }
     if (e.code === 'KeyM') {
       e.preventDefault();
