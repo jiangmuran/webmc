@@ -867,6 +867,50 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'tutorial' || head === 'guide') {
+    ctx.broadcast('— webmc quick guide —', '#80ffff');
+    ctx.broadcast('Move: WASD · Sprint: Ctrl or 2× W · Jump: Space · Sneak: Shift', '#cccccc');
+    ctx.broadcast('Mine: hold left-click · Place: right-click · Pick block: middle-click', '#cccccc');
+    ctx.broadcast('Hotbar: 1-9 keys or scroll · Inventory: E · Chat: T or /', '#cccccc');
+    ctx.broadcast('F1=hide HUD · F3=debug · F5=camera · B=sleep at night', '#cccccc');
+    ctx.broadcast('Try: /give all · /tree · /village · /tame (with bone)', '#cccccc');
+    ctx.broadcast('Mob right-click: feed (food), tame (tame-item), leash (lead), saddle (saddle)', '#cccccc');
+    ctx.broadcast('Survival: get wood → craft pickaxe → mine stone → coal → iron → build shelter', '#cccccc');
+    ctx.broadcast('Type /help for command list', '#a0a0ff');
+    return;
+  }
+  if (head === 'starter') {
+    if (!ctx.giveItem) return;
+    const KIT = ['oak_planks', 'crafting_table', 'wooden_pickaxe', 'wooden_sword', 'wooden_axe', 'wooden_shovel', 'bread', 'torch', 'oak_log', 'cobblestone'];
+    let n = 0;
+    for (const item of KIT) {
+      if (ctx.giveItem(item, item === 'bread' ? 8 : item === 'oak_log' ? 16 : item === 'oak_planks' ? 32 : item === 'cobblestone' ? 32 : item === 'torch' ? 16 : 1)) n++;
+    }
+    ctx.broadcast(`Starter kit (${String(n)} items)`, '#80ff80');
+    return;
+  }
+  if (head === 'kit') {
+    if (!ctx.giveItem) return;
+    const which = (args[0] ?? 'iron').toLowerCase();
+    const KITS: Record<string, string[]> = {
+      iron: ['iron_pickaxe', 'iron_sword', 'iron_axe', 'iron_shovel', 'iron_helmet', 'iron_chestplate', 'iron_leggings', 'iron_boots', 'cooked_beef', 'shield'],
+      diamond: ['diamond_pickaxe', 'diamond_sword', 'diamond_axe', 'diamond_shovel', 'diamond_helmet', 'diamond_chestplate', 'diamond_leggings', 'diamond_boots', 'cooked_beef', 'shield'],
+      netherite: ['netherite_pickaxe', 'netherite_sword', 'netherite_axe', 'netherite_shovel', 'cooked_beef', 'enchanted_golden_apple'],
+      mage: ['ender_pearl', 'experience_bottle', 'splash_potion_healing', 'potion_swiftness', 'potion_strength', 'potion_fire_resistance', 'glowstone'],
+      builder: ['cobblestone', 'stone', 'oak_planks', 'glass', 'glowstone', 'wool_white', 'crafting_table'],
+    };
+    const kit = KITS[which];
+    if (!kit) {
+      ctx.broadcast(`Usage: /kit <iron|diamond|netherite|mage|builder>`, '#ff8080');
+      return;
+    }
+    let n = 0;
+    for (const item of kit) {
+      if (ctx.giveItem(item, item === 'cooked_beef' ? 16 : item.includes('cobblestone') || item.includes('stone') || item.includes('plank') || item.includes('glass') || item === 'wool_white' ? 64 : 1)) n++;
+    }
+    ctx.broadcast(`${which} kit (${String(n)} items)`, '#80ff80');
+    return;
+  }
   if (head === 'firework' || head === 'fw') {
     if (!ctx.particle) return;
     const px = ctx.playerPos.x;
