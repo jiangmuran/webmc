@@ -222,6 +222,16 @@ const inventory = new Inventory(itemRegistry);
 const playerState = new PlayerState({
   inventory,
   onDeath: () => {
+    // Peaceful mode keeps inventory (matches MC); snapshot+restore after respawn clears.
+    if (mobDamageMultiplier === 0) {
+      const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
+      const main = inventory.main.map((s) => (s ? { ...s } : null));
+      queueMicrotask(() => {
+        for (let i = 0; i < hot.length; i++) inventory.hotbar[i] = hot[i] ?? null;
+        for (let i = 0; i < main.length; i++) inventory.main[i] = main[i] ?? null;
+      });
+      return;
+    }
     const px = fp.position.x;
     const py = fp.position.y;
     const pz = fp.position.z;
