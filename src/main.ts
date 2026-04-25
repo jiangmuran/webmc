@@ -1421,6 +1421,26 @@ const chatInput = new ChatInput(appEl, {
           void persistDB.setMeta('hardcore', on);
         },
         isHardcore: () => hardcoreMode,
+        giveXp: (amount) => {
+          if (amount > 0) playerState.addXP(amount);
+          else if (amount < 0) {
+            // Drain XP — go down levels.
+            let remaining = -amount;
+            while (remaining > 0 && (playerState.xpProgress > 0 || playerState.xpLevel > 0)) {
+              if (playerState.xpProgress >= remaining) {
+                playerState.xpProgress -= remaining;
+                remaining = 0;
+              } else {
+                remaining -= playerState.xpProgress;
+                playerState.xpProgress = 0;
+                if (playerState.xpLevel > 0) {
+                  playerState.xpLevel -= 1;
+                  playerState.xpProgress = xpToNext(playerState.xpLevel) - 0.001;
+                }
+              }
+            }
+          }
+        },
         equipArmor: (name) => {
           const fullName = name.startsWith('webmc:') ? name : `webmc:${name}`;
           const itemId = itemRegistry.byName(fullName);
@@ -1772,7 +1792,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience',
     ];
     return SLASH_CMDS;
   },

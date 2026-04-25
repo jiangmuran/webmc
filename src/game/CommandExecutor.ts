@@ -39,6 +39,7 @@ export interface CommandContext {
   loadDatapackDemo?: () => string;
   exportWorldManifest?: () => string;
   equipArmor?: (itemName: string) => string | null;
+  giveXp?: (amount: number) => void;
   rollLootTable?: (table: string) => string | null;
   locateStructure?: (kind: string) => { x: number; z: number; dist: number } | null;
   setWaypoint?: (name: string, x: number, y: number, z: number) => void;
@@ -436,6 +437,16 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     } else {
       ctx.broadcast(`Rolled ${item} but couldn't add to inventory.`, '#ffd080');
     }
+    return;
+  }
+  if (head === 'xp' || head === 'experience') {
+    const amount = args[0] !== undefined ? Math.floor(Number(args[0])) : 1;
+    if (!Number.isFinite(amount) || amount === 0) {
+      ctx.broadcast('Usage: /xp <amount>', '#ff8080');
+      return;
+    }
+    ctx.giveXp?.(amount);
+    ctx.broadcast(`+${String(amount)} XP`, amount > 0 ? '#80ff80' : '#ffd080');
     return;
   }
   if (head === 'equip') {
