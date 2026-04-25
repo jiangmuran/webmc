@@ -31,6 +31,7 @@ import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
+import { isAfk } from './game/afk_idle_kick';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -559,6 +560,36 @@ let lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const fpsStats = makeFpsStats(120);
 let lastMemoryWarnAt = 0;
+let lastInputTick = 0;
+let currentTickCount = 0;
+
+const afkBadge = (() => {
+  const el = document.createElement('div');
+  el.setAttribute('data-testid', 'afk-badge');
+  el.textContent = 'AFK';
+  el.style.cssText = [
+    'position:fixed',
+    'left:50%',
+    'top:14px',
+    'transform:translateX(-50%)',
+    'padding:3px 14px',
+    'background:rgba(60,40,20,0.85)',
+    'color:#ffd080',
+    'border:1px solid rgba(255,180,80,0.5)',
+    'border-radius:3px',
+    'font-family:sans-serif',
+    'font-size:12px',
+    'pointer-events:none',
+    'z-index:530',
+    'display:none',
+  ].join(';');
+  document.body.appendChild(el);
+  return el;
+})();
+
+window.addEventListener('mousemove', () => { lastInputTick = currentTickCount; }, { passive: true });
+window.addEventListener('keydown', () => { lastInputTick = currentTickCount; }, { passive: true });
+window.addEventListener('touchstart', () => { lastInputTick = currentTickCount; }, { passive: true });
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
   if (w === 'clear') {
@@ -2040,6 +2071,11 @@ const onLoad = (cx: number, cz: number): void => {
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
+  currentTickCount++;
+  const afkOn = isAfk({ lastInputTick, currentTick: currentTickCount, idleKickEnabled: false });
+  if (afkOn !== (afkBadge.style.display === 'block')) {
+    afkBadge.style.display = afkOn ? 'block' : 'none';
+  }
   const perfMem = (performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
   if (perfMem) {
     const lvl = memPressureLevel({ heapUsed: perfMem.usedJSHeapSize, heapLimit: perfMem.jsHeapSizeLimit });
