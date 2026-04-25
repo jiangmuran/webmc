@@ -1993,6 +1993,45 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Built desert_temple: 9×9 sandstone pyramid + 4 chests + gold apex', '#80ff80');
     return;
   }
+  if (head === 'pale_garden' || head === 'palegarden') {
+    if (!ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 4 pale_oak trees with creaking_heart core + scattered eyeblossom and firefly_bush.
+    const TREES: [number, number][] = [
+      [-6, -6],
+      [6, -6],
+      [-6, 6],
+      [6, 6],
+    ];
+    for (const [tx, tz] of TREES) {
+      // Trunk.
+      for (let h = 0; h < 8; h++) ctx.setBlock(px + tx, py + h, pz + tz, 'pale_oak_log');
+      // Creaking heart at base.
+      ctx.setBlock(px + tx + 1, py, pz + tz, 'creaking_heart');
+      // Leaf cap.
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          for (let dy = 0; dy <= 2; dy++) {
+            if (dx * dx + dz * dz + dy * dy <= 10) {
+              ctx.setBlock(px + tx + dx, py + 7 + dy, pz + tz + dz, 'pale_oak_leaves');
+            }
+          }
+        }
+      }
+    }
+    // Floor of eyeblossom + firefly_bush patches.
+    const flowers = ['eyeblossom', 'closed_eyeblossom', 'firefly_bush', 'pink_petals'];
+    for (let i = 0; i < 24; i++) {
+      const dx = Math.floor((Math.sin(i * 1.7) + 1) * 7) - 7;
+      const dz = Math.floor((Math.cos(i * 2.1) + 1) * 7) - 7;
+      const f = flowers[i % flowers.length] ?? 'eyeblossom';
+      ctx.setBlock(px + dx, py, pz + dz, f);
+    }
+    ctx.broadcast('Built pale_garden: 4 pale_oak trees + creaking hearts + flowers', '#80ff80');
+    return;
+  }
   if (head === 'chess' || head === 'checkerboard') {
     if (!ctx.setBlock) return;
     const r = Math.max(2, Math.min(12, parseInt(args[0] ?? '4', 10)));

@@ -4690,6 +4690,8 @@ const chatInput = new ChatInput(appEl, {
       '/oasis',
       '/desert_temple',
       '/sandtemple',
+      '/pale_garden',
+      '/palegarden',
       '/compliment',
       '/salute',
       '/gg',
