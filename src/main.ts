@@ -3153,7 +3153,20 @@ function frame(): void {
     );
   });
   xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {
-    playerState.addXP(xp);
+    // Mending-style auto-repair: damaged held tool gets durability from XP first.
+    let remaining = xp;
+    const sel = inventory.hotbar[inventory.selectedHotbar];
+    if (sel && sel.damage > 0) {
+      const def = itemRegistry.get(sel.itemId);
+      if (def.durability > 0) {
+        const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
+        const repair = xpToFix * 2;
+        const newDamage = Math.max(0, sel.damage - repair);
+        inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
+        remaining -= xpToFix;
+      }
+    }
+    if (remaining > 0) playerState.addXP(remaining);
     sfx.play('click');
   });
   if (playerState.xpLevel > lastXpLevel) {
