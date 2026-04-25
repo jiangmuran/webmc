@@ -99,5 +99,12 @@ export class SkyCelestials {
     );
     this.sun.visible = sunDir.y > -0.05;
     this.moon.visible = sunDir.y < 0.05;
+    // Tint sun warmer near horizon: sunDir.y close to 0 → orange/red.
+    const sunMat = this.sun.material as THREE.SpriteMaterial;
+    const horizonness = 1 - Math.min(1, Math.max(0, sunDir.y) * 1.5);
+    const r = 1;
+    const g = 1 - horizonness * 0.45;
+    const b = 1 - horizonness * 0.85;
+    sunMat.color.setRGB(r, g, b);
   }
 }
