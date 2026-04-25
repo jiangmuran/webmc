@@ -40,6 +40,13 @@ import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
+import {
+  type EatState,
+  cancelEating,
+  makeEatState,
+  startEating,
+  tickEating,
+} from './game/eat_animation';
 import { critMultiplier, sweepingAttack } from './game/critical_hit';
 import { smashDamage } from './items/mace_combat';
 import { computeKnockback } from './game/combat_knockback';
@@ -1303,6 +1310,8 @@ const leashedMobs = new Set<number>();
 const saddledMobs = new Set<number>();
 const babyMobs = new Map<number, BabyState>();
 let worldTick = 0;
+const eatState: EatState = makeEatState();
+let rightClickHeldForEat = false;
 const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
   sheep: ['webmc:wheat'],
@@ -1852,6 +1861,76 @@ function syncVisibleHotbarFromInventory(): void {
       hotbar.setEntry(i, { state: AIR, name: itemShortName, color: [120, 100, 80] });
     }
   }
+}
+
+// Apply hunger/saturation + item-specific side effects (potions, golden apple
+// regen, rotten flesh hunger, chorus warp, ...) for one food item. Both the
+// survival inventory UI and the right-click hold-to-eat path go through here
+// so the effects stay consistent. Caller is responsible for consuming the
+// item from inventory and starting/animating the eat — this just applies
+// the gameplay payload.
+function consumeFoodItem(id: number, hungerRestore: number, saturation: number): void {
+  playerState.eat(hungerRestore, saturation);
+  sfx.play('click');
+  const itemName = itemRegistry.get(id).name;
+  if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
+    const ptype = POTION_TYPES.find((p) => p.name === itemName);
+    if (ptype) {
+      if (ptype.effect === 'instant_health') playerState.heal(4);
+      else if (ptype.effect === 'instant_damage')
+        playerState.takeDamage({ amount: 6, source: 'harming' });
+      else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
+      const glassId = itemRegistry.byName('webmc:glass_bottle');
+      if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
+      subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
+    }
+    return;
+  }
+  if (itemName === 'webmc:honey_bottle') {
+    playerState.effects.delete('poison');
+  } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
+    playerState.applyEffect('hunger', 0, 30);
+  } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
+    playerState.applyEffect('poison', 0, 5);
+  } else if (itemName === 'webmc:spider_eye') {
+    playerState.applyEffect('poison', 0, 4);
+  } else if (itemName === 'webmc:golden_apple') {
+    playerState.applyEffect('regeneration', 1, 5);
+    playerState.applyEffect('absorption', 0, 120);
+  } else if (itemName === 'webmc:enchanted_golden_apple') {
+    playerState.applyEffect('regeneration', 1, 20);
+    playerState.applyEffect('absorption', 3, 120);
+    playerState.applyEffect('fire_resistance', 0, 300);
+    playerState.applyEffect('resistance', 0, 300);
+  } else if (itemName === 'webmc:chorus_fruit') {
+    let placed = false;
+    for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
+      const trial = pickTrial(fp.position, Math.random);
+      const tx = Math.floor(trial.x);
+      const ty = Math.floor(trial.y);
+      const tz = Math.floor(trial.z);
+      const here = world.get(tx, ty, tz);
+      const above = world.get(tx, ty + 1, tz);
+      const below = world.get(tx, ty - 1, tz);
+      const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
+      const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
+      const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
+      if (isAirHere && isAirAbove && solidBelow) {
+        fp.position.set(tx + 0.5, ty, tz + 0.5);
+        subtitles.push('Chorus warp');
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) subtitles.push('Chorus fizzle');
+  }
+  const look = fp.lookVector();
+  blockParticles.emitPlace(
+    fp.position.x + look.x * 0.6,
+    fp.position.y + look.y * 0.5,
+    fp.position.z + look.z * 0.6,
+    [180, 140, 80],
+  );
 }
 
 function consumeHeldToolDurability(amount = 1): void {
@@ -3015,6 +3094,16 @@ function consumeInventoryItem(itemId: number, count: number): boolean {
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
+// Right-click release cancels in-progress eating. Listen on window so
+// releasing outside the canvas also stops eating (otherwise the player
+// could "eat" forever by releasing off-canvas, with no consume).
+window.addEventListener('mouseup', (e) => {
+  if (e.button === 2 && rightClickHeldForEat) {
+    cancelEating(eatState);
+    rightClickHeldForEat = false;
+  }
+});
+
 let lastPlayerAttackAt = 0;
 function heldAttackFullChargeMs(heldName: string): number {
   let attacksPerSec = 4.0;
@@ -3118,6 +3207,29 @@ canvas.addEventListener('mousedown', (e) => {
         // Tag with a quick name; open chat for custom rename.
         chatInput.openChat('/rename ');
         return;
+      }
+    }
+    // No mob in front — try hold-to-eat. Right-click on a food item starts
+    // the 1.6s eat animation; mouseup cancels. Fully restored hunger gates
+    // out unless the item bypasses (golden apple / chorus fruit / honey).
+    if (gameMode === 'survival' || gameMode === 'adventure') {
+      const stk = inventory.hotbar[inventory.selectedHotbar];
+      if (stk) {
+        const itemDef = itemRegistry.get(stk.itemId);
+        const restore = itemDef.hungerRestore ?? 0;
+        const itemName = itemDef.name;
+        const alwaysEdible =
+          itemName === 'webmc:golden_apple' ||
+          itemName === 'webmc:enchanted_golden_apple' ||
+          itemName === 'webmc:chorus_fruit' ||
+          itemName === 'webmc:honey_bottle' ||
+          itemName.includes('potion_') ||
+          itemName === 'webmc:awkward_potion';
+        if (restore > 0 && (playerState.hunger < 20 || alwaysEdible)) {
+          if (startEating(eatState, { itemId: itemName })) {
+            rightClickHeldForEat = true;
+          }
+        }
       }
     }
     return;
@@ -5364,70 +5476,7 @@ const survivalInv = new SurvivalInventory(
       void canvas.requestPointerLock();
     },
     onEat: (id, hungerRestore, saturation) => {
-      playerState.eat(hungerRestore, saturation);
-      sfx.play('click');
-      // Item-specific food effects.
-      const itemName = itemRegistry.get(id).name;
-      // Potion drinks: apply effect, return glass bottle.
-      if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
-        const ptype = POTION_TYPES.find((p) => p.name === itemName);
-        if (ptype) {
-          if (ptype.effect === 'instant_health') playerState.heal(4);
-          else if (ptype.effect === 'instant_damage')
-            playerState.takeDamage({ amount: 6, source: 'harming' });
-          else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
-          const glassId = itemRegistry.byName('webmc:glass_bottle');
-          if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
-          subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
-        }
-        return;
-      }
-      if (itemName === 'webmc:honey_bottle') {
-        playerState.effects.delete('poison');
-      } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
-        playerState.applyEffect('hunger', 0, 30);
-      } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
-        playerState.applyEffect('poison', 0, 5);
-      } else if (itemName === 'webmc:spider_eye') {
-        playerState.applyEffect('poison', 0, 4);
-      } else if (itemName === 'webmc:golden_apple') {
-        playerState.applyEffect('regeneration', 1, 5);
-        playerState.applyEffect('absorption', 0, 120);
-      } else if (itemName === 'webmc:enchanted_golden_apple') {
-        playerState.applyEffect('regeneration', 1, 20);
-        playerState.applyEffect('absorption', 3, 120);
-        playerState.applyEffect('fire_resistance', 0, 300);
-        playerState.applyEffect('resistance', 0, 300);
-      } else if (itemName === 'webmc:chorus_fruit') {
-        // MC-accurate: 16 attempts to find a safe spot within ±8 blocks.
-        let placed = false;
-        for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
-          const trial = pickTrial(fp.position, Math.random);
-          const tx = Math.floor(trial.x);
-          const ty = Math.floor(trial.y);
-          const tz = Math.floor(trial.z);
-          const here = world.get(tx, ty, tz);
-          const above = world.get(tx, ty + 1, tz);
-          const below = world.get(tx, ty - 1, tz);
-          const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
-          const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
-          const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
-          if (isAirHere && isAirAbove && solidBelow) {
-            fp.position.set(tx + 0.5, ty, tz + 0.5);
-            subtitles.push('Chorus warp');
-            placed = true;
-            break;
-          }
-        }
-        if (!placed) subtitles.push('Chorus fizzle');
-      }
-      const look = fp.lookVector();
-      blockParticles.emitPlace(
-        fp.position.x + look.x * 0.6,
-        fp.position.y + look.y * 0.5,
-        fp.position.z + look.z * 0.6,
-        [180, 140, 80],
-      );
+      consumeFoodItem(id, hungerRestore, saturation);
     },
   },
   recipeRegistry,
@@ -7483,6 +7532,46 @@ function frame(): void {
 
   if (!tickFrozen) {
     worldTick += Math.max(1, Math.round(dtSec * 20));
+    // Advance hold-to-eat. Tick at 20 Hz to match PlayerState; complete
+    // after totalTicks (32 = 1.6s default). On completion: apply hunger,
+    // saturation, side effects, consume one item, re-arm if still holding
+    // right-click and still have the same food (lets you eat a stack).
+    if (eatState.itemId !== null) {
+      const eatTicks = Math.max(1, Math.round(dtSec * 20));
+      for (let i = 0; i < eatTicks; i++) {
+        const result = tickEating(eatState);
+        if (!result.completed) continue;
+        const consumedName = result.itemConsumed;
+        if (consumedName === null) break;
+        const itemId = itemRegistry.byName(consumedName);
+        if (itemId === undefined) break;
+        const itemDef = itemRegistry.get(itemId);
+        consumeFoodItem(itemId, itemDef.hungerRestore ?? 0, itemDef.saturation ?? 0);
+        consumeInventoryItem(itemId, 1);
+        // Re-arm: if the player is still holding right-click and still has
+        // the same food in the held slot, start the next bite. Vanilla MC
+        // does the same — you can graze a stack of bread without re-clicking.
+        if (rightClickHeldForEat) {
+          const stk = inventory.hotbar[inventory.selectedHotbar];
+          if (stk?.itemId === itemId) {
+            const restore = itemDef.hungerRestore ?? 0;
+            const alwaysEdible =
+              consumedName === 'webmc:golden_apple' ||
+              consumedName === 'webmc:enchanted_golden_apple' ||
+              consumedName === 'webmc:chorus_fruit' ||
+              consumedName === 'webmc:honey_bottle' ||
+              consumedName.includes('potion_') ||
+              consumedName === 'webmc:awkward_potion';
+            if (restore > 0 && (playerState.hunger < 20 || alwaysEdible)) {
+              startEating(eatState, { itemId: consumedName });
+              continue;
+            }
+          }
+          rightClickHeldForEat = false;
+        }
+        break;
+      }
+    }
     if (babyMobs.size > 0) {
       const ticksThisFrame = Math.max(1, Math.round(dtSec * 20));
       for (const [id, st] of babyMobs) {
