@@ -2,6 +2,7 @@ export class CompassBar {
   private readonly root: HTMLDivElement;
   private readonly strip: HTMLDivElement;
   private readonly needle: HTMLDivElement;
+  private readonly spawnMarker: HTMLDivElement;
   private readonly WIDTH = 260;
   private readonly TICKS = 16;
 
@@ -60,7 +61,43 @@ export class CompassBar {
     ].join(';');
     this.root.appendChild(this.needle);
 
+    this.spawnMarker = document.createElement('div');
+    this.spawnMarker.title = 'Spawn';
+    this.spawnMarker.style.cssText = [
+      'position:absolute',
+      'top:1px',
+      'width:8px',
+      'height:8px',
+      'border-radius:50%',
+      'background:#80ffa0',
+      'border:1px solid rgba(0,0,0,0.6)',
+      'transform:translateX(-50%)',
+      'display:none',
+      'pointer-events:none',
+    ].join(';');
+    this.root.appendChild(this.spawnMarker);
+
     parent.appendChild(this.root);
+  }
+
+  setSpawnDir(angleToSpawn: number | null, playerYaw: number): void {
+    if (angleToSpawn === null) {
+      this.spawnMarker.style.display = 'none';
+      return;
+    }
+    // Compute relative angle in [-PI, PI].
+    let rel = angleToSpawn - playerYaw;
+    while (rel > Math.PI) rel -= 2 * Math.PI;
+    while (rel < -Math.PI) rel += 2 * Math.PI;
+    // Visible range: ±90° (-π/2 to π/2). Beyond: hide.
+    if (rel < -Math.PI / 2 || rel > Math.PI / 2) {
+      this.spawnMarker.style.display = 'none';
+      return;
+    }
+    this.spawnMarker.style.display = 'block';
+    const halfW = this.WIDTH / 2;
+    const px = halfW + (rel / (Math.PI / 2)) * halfW;
+    this.spawnMarker.style.left = `${px.toFixed(1)}px`;
   }
 
   setYaw(yaw: number): void {

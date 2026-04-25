@@ -3074,6 +3074,19 @@ function frame(): void {
     lastInFluid = fp.inFluid;
   }
   compassBar.setYaw(fp.yaw);
+  // Spawn-direction marker: relative angle to playerSpawnPoint (or world spawn).
+  {
+    const sp = playerSpawnPoint ?? worldMeta?.spawn ?? null;
+    if (sp) {
+      const dx = sp.x - fp.position.x;
+      const dz = sp.z - fp.position.z;
+      // CompassBar.setYaw treats yaw as MC-style; use atan2 with -dx,dz to align with strip.
+      const angleWorld = Math.atan2(-dx, dz);
+      compassBar.setSpawnDir(angleWorld, fp.yaw);
+    } else {
+      compassBar.setSpawnDir(null, fp.yaw);
+    }
+  }
   if (gameMode === 'survival' || gameMode === 'adventure') {
     survivalHud.render({
       health: playerState.health,
