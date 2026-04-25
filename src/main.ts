@@ -3664,6 +3664,7 @@ function frame(): void {
       isDay: dayNight.isDay,
       surfaceAt: (x, z) => generator.surfaceAt(x, z),
       isSolid,
+      biomeAt: (x, z) => generator.biomeAt(x, z) === 1 ? 'forest' : 'plains',
     });
 
     // Chicken egg laying: every 5–10 min per chicken, drop an egg item.

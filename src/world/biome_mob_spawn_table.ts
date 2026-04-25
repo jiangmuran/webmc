@@ -25,6 +25,23 @@ export interface SpawnEntry {
 type BiomeCategoryPool = Partial<Record<MobCategory, readonly SpawnEntry[]>>;
 
 const BIOMES: Record<string, BiomeCategoryPool> = {
+  forest: {
+    creature: [
+      { mob: 'sheep', weight: 12, minGroup: 4, maxGroup: 4 },
+      { mob: 'pig', weight: 10, minGroup: 4, maxGroup: 4 },
+      { mob: 'chicken', weight: 10, minGroup: 4, maxGroup: 4 },
+      { mob: 'cow', weight: 8, minGroup: 4, maxGroup: 4 },
+      { mob: 'wolf', weight: 5, minGroup: 4, maxGroup: 4 },
+      { mob: 'fox', weight: 5, minGroup: 2, maxGroup: 4 },
+    ],
+    monster: [
+      { mob: 'zombie', weight: 95, minGroup: 4, maxGroup: 4 },
+      { mob: 'skeleton', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'creeper', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'spider', weight: 100, minGroup: 4, maxGroup: 4 },
+      { mob: 'enderman', weight: 10, minGroup: 1, maxGroup: 4 },
+    ],
+  },
   plains: {
     creature: [
       { mob: 'sheep', weight: 12, minGroup: 4, maxGroup: 4 },

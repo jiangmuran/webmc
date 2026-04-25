@@ -1,4 +1,5 @@
-import { type MobKind, type MobWorld, type Vec3 } from './mob';
+import { type MobKind, MOB_DEFS, type MobWorld, type Vec3 } from './mob';
+import { pickSpawn } from '../world/biome_mob_spawn_table';
 
 export interface SpawnOptions {
   maxHostile: number;
@@ -21,6 +22,7 @@ export interface SpawnContext {
   isDay: boolean;
   surfaceAt: (x: number, z: number) => number;
   isSolid: (x: number, y: number, z: number) => boolean;
+  biomeAt?: (x: number, z: number) => string;
   rng?: () => number;
 }
 
@@ -46,17 +48,12 @@ export class SpawnSystem {
     if (current >= this.opts.maxHostile) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
-    const r = (ctx.rng ?? Math.random)();
-    const kind: MobKind =
-      r < 0.2
-        ? 'skeleton'
-        : r < 0.4
-          ? 'creeper'
-          : r < 0.6
-            ? 'spider'
-            : r < 0.7
-              ? 'enderman'
-              : 'zombie';
+    const rng = ctx.rng ?? Math.random;
+    const biome = ctx.biomeAt?.(Math.floor(slot.x), Math.floor(slot.z)) ?? 'plains';
+    const pick = pickSpawn(biome, 'monster', rng());
+    const kind = pick && this.isKnownMobKind(pick.mob)
+      ? (pick.mob as MobKind)
+      : this.fallbackHostile(rng());
     mobs.spawn(kind, slot);
   }
 
@@ -65,9 +62,25 @@ export class SpawnSystem {
     if (current >= this.opts.maxPassive) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
-    const r = (ctx.rng ?? Math.random)();
-    const kind: MobKind = r < 0.25 ? 'pig' : r < 0.5 ? 'cow' : r < 0.75 ? 'sheep' : 'chicken';
+    const rng = ctx.rng ?? Math.random;
+    const biome = ctx.biomeAt?.(Math.floor(slot.x), Math.floor(slot.z)) ?? 'plains';
+    const pick = pickSpawn(biome, 'creature', rng());
+    const kind = pick && this.isKnownMobKind(pick.mob)
+      ? (pick.mob as MobKind)
+      : this.fallbackPassive(rng());
     mobs.spawn(kind, slot);
+  }
+
+  private isKnownMobKind(name: string): boolean {
+    return Object.prototype.hasOwnProperty.call(MOB_DEFS, name);
+  }
+
+  private fallbackHostile(r: number): MobKind {
+    return r < 0.2 ? 'skeleton' : r < 0.4 ? 'creeper' : r < 0.6 ? 'spider' : r < 0.7 ? 'enderman' : 'zombie';
+  }
+
+  private fallbackPassive(r: number): MobKind {
+    return r < 0.25 ? 'pig' : r < 0.5 ? 'cow' : r < 0.75 ? 'sheep' : 'chicken';
   }
 
   private findSpawnSlot(ctx: SpawnContext): Vec3 | null {
