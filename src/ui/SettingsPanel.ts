@@ -108,7 +108,25 @@ export class SettingsPanel {
     this.textInput(panel, 'Player name', 'playerName');
 
     const presetRow = document.createElement('div');
-    presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;';
+    presetRow.style.cssText = 'display:flex;gap:6px;align-self:flex-start;flex-wrap:wrap;';
+    const potatoBtn = document.createElement('button');
+    potatoBtn.textContent = 'Potato preset';
+    potatoBtn.style.cssText = 'padding:4px 10px;background:rgba(100,50,30,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    potatoBtn.addEventListener('click', () => {
+      Object.assign(this.values, {
+        ...DEFAULT_SETTINGS,
+        viewDistance: 3,
+        chunkUploadBudget: 1,
+        masterVolume: 0,
+        showMobNames: false,
+        brightness: 1.4,
+        fov: 65,
+      });
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+      for (const r of this.uiResetters) r();
+    });
+    presetRow.appendChild(potatoBtn);
     const fastBtn = document.createElement('button');
     fastBtn.textContent = 'Fast preset';
     fastBtn.style.cssText = 'padding:4px 10px;background:rgba(80,60,40,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
@@ -129,6 +147,22 @@ export class SettingsPanel {
       for (const r of this.uiResetters) r();
     });
     presetRow.appendChild(qualityBtn);
+    const ultraBtn = document.createElement('button');
+    ultraBtn.textContent = 'Ultra preset';
+    ultraBtn.style.cssText = 'padding:4px 10px;background:rgba(60,30,100,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:3px;cursor:pointer;font:inherit;font-size:11px;';
+    ultraBtn.addEventListener('click', () => {
+      Object.assign(this.values, {
+        ...DEFAULT_SETTINGS,
+        viewDistance: 16,
+        chunkUploadBudget: 12,
+        masterVolume: 0.6,
+        fov: 75,
+      });
+      saveSettings(this.values);
+      this.cb.onChange({ ...this.values });
+      for (const r of this.uiResetters) r();
+    });
+    presetRow.appendChild(ultraBtn);
     panel.appendChild(presetRow);
 
     const buttonRow = document.createElement('div');
