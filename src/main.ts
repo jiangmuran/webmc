@@ -39,6 +39,9 @@ import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
+import { moonPhase } from './items/clock_item';
+
+const MOON_GLYPHS = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔'];
 import { TutorialState, type HintId } from './game/tutorial_first_night';
 import { makeMoodState, tickMood } from './game/daytime_mood';
 import { tickUnderwater, type AmbientState as UnderwaterAmbientState } from './engine/audio/ambient_underwater';
@@ -3400,7 +3403,7 @@ function frame(): void {
     }
     hud.textContent =
       `webmc — F3 debug · F5 cam · F1 help\n` +
-      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${phaseOfDay(Math.floor(dayNight.timeOfDay * 24000))}  d${String(dayCounter)}\n` +
+      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${phaseOfDay(Math.floor(dayNight.timeOfDay * 24000))}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
       `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => {
         if (!worldMeta) return '';
         const dx = fp.position.x - worldMeta.spawn.x;
