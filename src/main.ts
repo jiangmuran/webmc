@@ -4642,6 +4642,8 @@ const chatInput = new ChatInput(appEl, {
       '/beaconbase',
       '/campfire_circle',
       '/cfc',
+      '/zoo',
+      '/parkour',
       '/compliment',
       '/salute',
       '/gg',

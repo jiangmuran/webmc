@@ -1144,6 +1144,72 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'zoo') {
+    if (!ctx.fillBlocks || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const KINDS = [
+      'pig',
+      'cow',
+      'sheep',
+      'chicken',
+      'wolf',
+      'horse',
+      'cat',
+      'rabbit',
+      'goat',
+      'fox',
+      'bee',
+      'parrot',
+    ];
+    for (let i = 0; i < KINDS.length; i++) {
+      const ox = (i % 4) * 8;
+      const oz = Math.floor(i / 4) * 8;
+      // Fenced 6×6 enclosure.
+      for (let dx = 0; dx <= 5; dx++) {
+        ctx.setBlock?.(px + ox + dx, py, pz + oz, 'oak_fence');
+        ctx.setBlock?.(px + ox + dx, py, pz + oz + 5, 'oak_fence');
+      }
+      for (let dz = 0; dz <= 5; dz++) {
+        ctx.setBlock?.(px + ox, py, pz + oz + dz, 'oak_fence');
+        ctx.setBlock?.(px + ox + 5, py, pz + oz + dz, 'oak_fence');
+      }
+      ctx.fillBlocks(
+        px + ox + 1,
+        py - 1,
+        pz + oz + 1,
+        px + ox + 4,
+        py - 1,
+        pz + oz + 4,
+        'grass_block',
+      );
+      const kind = KINDS[i] ?? 'pig';
+      for (let m = 0; m < 2; m++) ctx.summon(kind, px + ox + 2.5, py, pz + oz + 2.5);
+    }
+    ctx.broadcast(`Built zoo with ${String(KINDS.length)} enclosures`, '#80ff80');
+    return;
+  }
+  if (head === 'parkour') {
+    if (!ctx.setBlock) return;
+    const len = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(len) || len < 4 || len > 64) {
+      ctx.broadcast('Usage: /parkour <length=20>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let cy = py;
+    for (let i = 0; i < len; i++) {
+      const dz = i * 3;
+      const dx = (i % 3) - 1;
+      cy = py + Math.floor(Math.sin(i * 0.5) * 3);
+      ctx.setBlock(px + dx, cy, pz + dz, 'oak_planks');
+    }
+    ctx.broadcast(`Parkour course: ${String(len)} jumps along +Z`, '#80ff80');
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
