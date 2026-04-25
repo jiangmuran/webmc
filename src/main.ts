@@ -823,6 +823,10 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         seed: () => WORLD_SEED,
+        setSpawnHere: () => {
+          playerSpawnPoint = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+          void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
+        },
         killAllMobs: () => {
           const ids: number[] = [];
           for (const m of mobWorld.all()) ids.push(m.id);

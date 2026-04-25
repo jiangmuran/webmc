@@ -27,6 +27,7 @@ export interface CommandContext {
   listAchievements?: () => ReadonlyArray<{ title: string; unlocked: boolean }>;
   setDifficulty?: (level: 'peaceful' | 'easy' | 'normal' | 'hard') => void;
   playerName?: string;
+  setSpawnHere?: () => void;
 }
 
 export function executeCommand(raw: string, ctx: CommandContext): void {
@@ -91,6 +92,14 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'spawn') {
     ctx.teleportSpawn?.();
     ctx.broadcast('Teleported to spawn.', '#80ff80');
+    return;
+  }
+  if (head === 'setspawn') {
+    ctx.setSpawnHere?.();
+    ctx.broadcast(
+      `Spawn set at ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`,
+      '#80ff80',
+    );
     return;
   }
   if (head === 'seed') {
