@@ -1,13 +1,30 @@
+import { availableButtons, type PauseAction } from './pause_menu_buttons';
+
 export interface PauseMenuCallbacks {
   onResume: () => void;
   onQuit: () => void;
   onOpenSettings?: () => void;
+  onShowAchievements?: () => void;
+  onShowStats?: () => void;
 }
+
+const ACTION_LABEL: Record<PauseAction, string> = {
+  resume: 'Resume',
+  advancements: 'Advancements',
+  stats: 'Statistics',
+  options: 'Settings',
+  open_to_lan: 'Open to LAN',
+  feedback: 'Send feedback',
+  achievements: 'Achievements',
+  save_and_quit: 'Save & Quit',
+  disconnect: 'Disconnect',
+};
 
 export class PauseMenu {
   readonly root: HTMLDivElement;
   private visible = false;
   private readonly titleEl: HTMLDivElement;
+  private readonly buttonsEl: HTMLDivElement;
 
   constructor(parent: HTMLElement, private readonly cb: PauseMenuCallbacks) {
     this.root = document.createElement('div');
@@ -32,19 +49,49 @@ export class PauseMenu {
     title.textContent = 'Game Menu';
     title.style.cssText = 'font-size:28px;margin-bottom:8px;';
 
-    const resume = this.button('Resume');
-    resume.addEventListener('click', () => this.cb.onResume());
-    resume.setAttribute('data-testid', 'pause-resume');
+    this.buttonsEl = document.createElement('div');
+    this.buttonsEl.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:8px;';
 
-    const settings = this.button('Settings');
-    settings.addEventListener('click', () => this.cb.onOpenSettings?.());
-
-    const quit = this.button('Save & Quit');
-    quit.addEventListener('click', () => this.cb.onQuit());
-    quit.setAttribute('data-testid', 'pause-quit');
-
-    this.root.append(title, resume, settings, quit);
+    this.root.append(title, this.buttonsEl);
     parent.appendChild(this.root);
+    this.rebuildButtons({ isMultiplayer: false, isHost: true });
+  }
+
+  rebuildButtons(ctx: { isMultiplayer: boolean; isHost: boolean }): void {
+    const actions = availableButtons(ctx);
+    const els: HTMLButtonElement[] = [];
+    for (const a of actions) {
+      const b = this.button(ACTION_LABEL[a]);
+      switch (a) {
+        case 'resume':
+          b.setAttribute('data-testid', 'pause-resume');
+          b.addEventListener('click', () => this.cb.onResume());
+          break;
+        case 'options':
+          b.addEventListener('click', () => this.cb.onOpenSettings?.());
+          break;
+        case 'save_and_quit':
+        case 'disconnect':
+          b.setAttribute('data-testid', 'pause-quit');
+          b.addEventListener('click', () => this.cb.onQuit());
+          break;
+        case 'advancements':
+          b.addEventListener('click', () => this.cb.onShowAchievements?.());
+          break;
+        case 'stats':
+          b.addEventListener('click', () => this.cb.onShowStats?.());
+          break;
+        case 'achievements':
+          b.addEventListener('click', () => this.cb.onShowAchievements?.());
+          break;
+        default:
+          b.disabled = true;
+          b.style.opacity = '0.4';
+          b.style.cursor = 'not-allowed';
+      }
+      els.push(b);
+    }
+    this.buttonsEl.replaceChildren(...els);
   }
 
   private button(label: string): HTMLButtonElement {

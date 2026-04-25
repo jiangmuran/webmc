@@ -1099,6 +1099,21 @@ const pauseMenu = new PauseMenu(appEl, {
     void chunkStore.flush();
   },
   onOpenSettings: () => { settingsPanel.show(); },
+  onShowAchievements: () => {
+    chatInput.addLine('— Achievements —', '#ffeb80');
+    for (const a of achievements) {
+      const got = achievedSet.has(a.id);
+      chatInput.addLine(`${got ? '✔' : '✗'} ${a.title}`, got ? '#80ff80' : '#888888');
+    }
+  },
+  onShowStats: () => {
+    chatInput.addLine('— Statistics —', '#ffeb80');
+    chatInput.addLine(`Blocks broken: ${String(playerStats.blocksBroken)}`, '#cccccc');
+    chatInput.addLine(`Blocks placed: ${String(playerStats.blocksPlaced)}`, '#cccccc');
+    chatInput.addLine(`Mobs killed: ${String(playerStats.mobsKilled)}`, '#cccccc');
+    chatInput.addLine(`Distance walked: ${playerStats.distanceWalked.toFixed(0)}m`, '#cccccc');
+    chatInput.addLine(`Playtime: ${(playerStats.playtimeSec / 60).toFixed(1)}min`, '#cccccc');
+  },
 });
 pauseMenu.setSubtitle(`Paused — ${worldNameForUI}`);
 
