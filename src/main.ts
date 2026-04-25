@@ -1881,6 +1881,11 @@ function tickTnt(dtSec: number): void {
   }
 }
 
+// dropsAfterBlast wraps explosion_block_drop helper for explicit MC behavior.
+function explosionDrops(power: number): boolean {
+  return Math.random() < 1 / Math.max(1, power);
+}
+
 function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   const r2 = radius * radius;
   const airState = AIR;
@@ -1909,7 +1914,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
         const falloff = 1 - dSq / r2;
         if (Math.random() > falloff * 0.9) continue;
         world.set(x, y, z, airState);
-        if (Math.random() < 0.25) {
+        if (explosionDrops(radius)) {
           blockParticles.emitBreak(x, y, z, def2.color);
           const itemId = itemRegistry.byName(def2.name);
           if (itemId !== undefined) {
