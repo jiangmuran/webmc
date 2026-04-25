@@ -29,6 +29,7 @@ import { RoomClient } from './net/RoomClient';
 import { ItemRegistry } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
+import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { classify as classifyGpu, recommendedChunkRadius } from './engine/gpu_tier_detect';
 import { maxRenderDistanceChunks, shouldPauseRender } from './engine/power_budget';
 import { kindFor as kindForWeather } from './engine/weather_particles';
@@ -613,6 +614,17 @@ function computeArmorPoints(): number {
     if (armorDef) pts += armorDef.defense;
   }
   return pts;
+}
+
+function computeArmorToughness(): number {
+  let t = 0;
+  for (const slot of inventory.armor) {
+    if (!slot) continue;
+    const def = itemRegistry.get(slot.itemId);
+    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    if (armorDef) t += armorDef.toughness;
+  }
+  return t;
 }
 
 function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right' | 'center' {
@@ -2563,7 +2575,10 @@ function frame(): void {
     playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
     damagePlayer: (amt) => {
       const scaled = amt * mobDamageMultiplier;
-      if (scaled > 0) playerState.takeDamage({ amount: scaled, source: 'mob' });
+      const armorPts = computeArmorPoints();
+      const toughnessPts = computeArmorToughness();
+      const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
+      if (finalDmg > 0) playerState.takeDamage({ amount: finalDmg, source: 'mob' });
       if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
     },
     onCreeperExplode: (x, y, z) => {
