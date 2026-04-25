@@ -3134,6 +3134,17 @@ const hotbar = new Hotbar(appEl, registry, [
   { state: SAND, name: 'sand', color: colorOf(SAND) },
   { state: GLOW, name: 'glow', color: colorOf(GLOW) },
 ]);
+// Persist hotbar selection so the chosen slot survives a reload.
+void persistDB.getMeta('hotbarSelected').then((saved) => {
+  if (typeof saved === 'number' && saved >= 0 && saved < 9) hotbar.select(saved);
+});
+let lastHotbarSavedIndex = hotbar.selectedIndex;
+function saveHotbarIfChanged(): void {
+  if (hotbar.selectedIndex !== lastHotbarSavedIndex) {
+    lastHotbarSavedIndex = hotbar.selectedIndex;
+    void persistDB.setMeta('hotbarSelected', lastHotbarSavedIndex);
+  }
+}
 
 let gameMode: GameMode = 'creative';
 function applyGameMode(m: GameMode): void {
@@ -5580,6 +5591,7 @@ document.addEventListener('visibilitychange', () => {
     void persistDB.setMeta('playerStats', playerStats);
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
     void persistDB.setMeta('dayCounter', dayCounter);
+    saveHotbarIfChanged();
     if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
@@ -6369,6 +6381,7 @@ function frame(): void {
   if (timeSaveAccum > 10) {
     timeSaveAccum = 0;
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    saveHotbarIfChanged();
   }
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
