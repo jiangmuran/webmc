@@ -1085,6 +1085,51 @@ const playerState = new PlayerState({
         3,
       );
     }
+    // Armor and offhand were silently lost on death — drop them too.
+    for (const slot of inventory.armor) {
+      if (!slot) continue;
+      const def = itemRegistry.get(slot.itemId);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        3,
+      );
+    }
+    if (inventory.offhand) {
+      const def = itemRegistry.get(inventory.offhand.itemId);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        {
+          itemId: inventory.offhand.itemId,
+          count: inventory.offhand.count,
+          color: colorRgb,
+        },
+        3,
+      );
+    }
+    // XP drops as orbs (vanilla: 7 per level capped at 100). PlayerState.respawn
+    // will then reset xpLevel/xpProgress; we capture here pre-reset.
+    const xpToDrop = Math.min(
+      100,
+      playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7),
+    );
+    if (xpToDrop > 0) {
+      // Spawn a few orbs spread out so they're easier to pick up.
+      let remaining = xpToDrop;
+      while (remaining > 0) {
+        const chunkXp = Math.min(remaining, 7);
+        xpOrbs.spawn(px, py, pz, chunkXp);
+        remaining -= chunkXp;
+      }
+    }
   },
   onRespawn: () => {
     if (playerSpawnPoint) {
