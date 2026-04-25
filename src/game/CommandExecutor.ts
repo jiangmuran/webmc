@@ -860,6 +860,39 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.particle?.(x, y, z);
     return;
   }
+  if (head === 'dragon' || head === 'enderdragon') {
+    if (!ctx.summon) return;
+    const ok = ctx.summon('ender_dragon', ctx.playerPos.x, ctx.playerPos.y + 30, ctx.playerPos.z);
+    if (ok) ctx.broadcast('Ender Dragon summoned!', '#a060ff');
+    else ctx.broadcast('Could not summon dragon', '#ff8080');
+    return;
+  }
+  if (head === 'wither' || head === 'witherboss') {
+    if (!ctx.summon) return;
+    const ok = ctx.summon('wither', ctx.playerPos.x, ctx.playerPos.y + 5, ctx.playerPos.z);
+    if (ok) ctx.broadcast('Wither summoned!', '#404040');
+    else ctx.broadcast('Could not summon wither', '#ff8080');
+    return;
+  }
+  if (head === 'army') {
+    if (!ctx.summon) return;
+    const kind = args[0] ?? 'zombie';
+    const count = parseInt(args[1] ?? '8', 10);
+    if (!Number.isFinite(count) || count < 1 || count > 32) {
+      ctx.broadcast('Usage: /army <kind=zombie> <count=8>', '#ff8080');
+      return;
+    }
+    let n = 0;
+    for (let i = 0; i < count; i++) {
+      const ang = (i / count) * Math.PI * 2;
+      const r = 4;
+      const x = ctx.playerPos.x + Math.cos(ang) * r;
+      const z = ctx.playerPos.z + Math.sin(ang) * r;
+      if (ctx.summon(kind, x, ctx.playerPos.y, z)) n++;
+    }
+    ctx.broadcast(`Spawned ${String(n)} ${kind} in a ring`, '#80ff80');
+    return;
+  }
   if (head === 'clear' && args[0]?.toLowerCase() === 'area') {
     if (!ctx.fillBlocks) return;
     const r = parseInt(args[1] ?? '8', 10);
