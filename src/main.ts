@@ -1127,7 +1127,32 @@ const interaction = new InteractionController(
       else if (heldNameForTool.includes('wood') || heldNameForTool.includes('gold')) toolLevel = 1;
       else toolLevel = 0; // bare hand
       const dropsAllowed = (gameMode === 'creative') || (toolLevel >= requiredLevel);
-      const drops = (gameRules.doTileDrops && dropsAllowed) ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
+      // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
+      const CROP_DROP: Record<string, { id: string; min: number; max: number }[]> = {
+        'webmc:wheat': [{ id: 'webmc:wheat', min: 1, max: 1 }, { id: 'webmc:wheat_seeds', min: 0, max: 3 }],
+        'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
+        'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
+        'webmc:beetroots': [{ id: 'webmc:beetroot', min: 1, max: 1 }, { id: 'webmc:beetroot_seeds', min: 1, max: 3 }],
+        'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+        'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+        'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
+        'webmc:cocoa': [{ id: 'webmc:cocoa_beans', min: 1, max: 3 }],
+        'webmc:melon': [{ id: 'webmc:melon_slice', min: 3, max: 7 }],
+        'webmc:pumpkin': [{ id: 'webmc:pumpkin_seeds', min: 1, max: 4 }],
+        'webmc:torchflower_crop': [{ id: 'webmc:torchflower_seeds', min: 1, max: 1 }],
+        'webmc:pitcher_crop': [{ id: 'webmc:pitcher_pod', min: 1, max: 1 }],
+        'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
+        'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
+      };
+      const cropDrop = CROP_DROP[def.name];
+      const drops = cropDrop && dropsAllowed
+        ? cropDrop.flatMap((d) => {
+            const id = itemRegistry.byName(d.id);
+            if (id === undefined) return [];
+            const c = d.min + Math.floor(Math.random() * (d.max - d.min + 1));
+            return c > 0 ? [{ itemId: id, count: c, damage: 0 }] : [];
+          })
+        : (gameRules.doTileDrops && dropsAllowed) ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
       if (gameMode === 'survival' || gameMode === 'adventure') {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
