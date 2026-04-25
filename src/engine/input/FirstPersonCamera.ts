@@ -98,8 +98,9 @@ export class FirstPersonCamera {
     };
     this.mouseMove = (e) => {
       if (!this.locked || this.inputBlocked) return;
-      this.yaw -= e.movementX * this.opts.lookSensitivity;
-      const pitchDelta = e.movementY * this.opts.lookSensitivity;
+      const sensScale = this.input.sneak ? 0.45 : 1;
+      this.yaw -= e.movementX * this.opts.lookSensitivity * sensScale;
+      const pitchDelta = e.movementY * this.opts.lookSensitivity * sensScale;
       this.pitch -= this.invertY ? -pitchDelta : pitchDelta;
       this.pitch = Math.max(-PITCH_MAX, Math.min(PITCH_MAX, this.pitch));
     };
