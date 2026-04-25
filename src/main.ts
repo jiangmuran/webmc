@@ -73,6 +73,7 @@ import { useAxe } from './items/axe_strip';
 import { useShovel } from './items/shovel_path';
 import { useHoe } from './items/hoe_till';
 import { applyBoneMeal } from './items/bone_meal';
+import { pickTrial, CHORUS_MAX_ATTEMPTS } from './items/chorus_fruit_teleport';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -2374,12 +2375,27 @@ const survivalInv = new SurvivalInventory(appEl, inventory, itemRegistry, {
       playerState.applyEffect('fire_resistance', 0, 300);
       playerState.applyEffect('resistance', 0, 300);
     } else if (itemName === 'webmc:chorus_fruit') {
-      // Random teleport ±8 blocks.
-      const tx = fp.position.x + (Math.random() - 0.5) * 16;
-      const tz = fp.position.z + (Math.random() - 0.5) * 16;
-      const ty = Math.max(generator.surfaceAt(Math.floor(tx), Math.floor(tz)) + 2, fp.position.y);
-      fp.position.set(tx, ty, tz);
-      subtitles.push('Chorus warp');
+      // MC-accurate: 16 attempts to find a safe spot within ±8 blocks.
+      let placed = false;
+      for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
+        const trial = pickTrial(fp.position, Math.random);
+        const tx = Math.floor(trial.x);
+        const ty = Math.floor(trial.y);
+        const tz = Math.floor(trial.z);
+        const here = world.get(tx, ty, tz);
+        const above = world.get(tx, ty + 1, tz);
+        const below = world.get(tx, ty - 1, tz);
+        const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
+        const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
+        const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
+        if (isAirHere && isAirAbove && solidBelow) {
+          fp.position.set(tx + 0.5, ty, tz + 0.5);
+          subtitles.push('Chorus warp');
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) subtitles.push('Chorus fizzle');
     }
     const look = fp.lookVector();
     blockParticles.emitPlace(
