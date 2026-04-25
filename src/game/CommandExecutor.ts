@@ -6,6 +6,7 @@ export interface CommandContext {
   gameMode: GameMode;
   setGameMode: (m: GameMode) => void;
   setTimeOfDay: (ticks: number) => void;
+  addTimeOfDay?: (ticks: number) => void;
   setWeather: (w: 'clear' | 'rain' | 'thunder') => void;
   giveItem: (name: string, count: number) => boolean;
   broadcast: (line: string, color?: string) => void;
@@ -259,8 +260,18 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     return;
   }
   if (head === 'time') {
+    if (args[0]?.toLowerCase() === 'add') {
+      const n = Number(args[1] ?? '');
+      if (Number.isFinite(n)) {
+        ctx.addTimeOfDay?.(n);
+        ctx.broadcast(`+${String(n)} ticks`, '#80ff80');
+      } else {
+        ctx.broadcast('Usage: /time add <ticks>', '#ff8080');
+      }
+      return;
+    }
     if (args[0]?.toLowerCase() !== 'set') {
-      ctx.broadcast('Usage: /time set <day|night|noon|midnight|ticks>', '#ff8080');
+      ctx.broadcast('Usage: /time set <day|night|noon|midnight|ticks> | /time add <ticks>', '#ff8080');
       return;
     }
     const v = args[1]?.toLowerCase() ?? '';

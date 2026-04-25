@@ -737,6 +737,7 @@ const chatInput = new ChatInput(appEl, {
         gameMode,
         setGameMode: (m) => { applyGameMode(m); },
         setTimeOfDay: (t) => { dayNight.setTimeOfDayTicks(t); },
+        addTimeOfDay: (n) => { dayNight.setTimeOfDayTicks(Math.floor(dayNight.timeOfDay * 24000) + n); },
         setWeather: (w) => { setWeather(w); },
         giveItem: (name, count) => {
           const candidates = [name, `webmc:${name}`, `webmc:${name}_block`];
