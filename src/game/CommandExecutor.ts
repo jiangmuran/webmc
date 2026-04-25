@@ -284,6 +284,8 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('/back | /freeze | /unfreeze | /mute | /unmute', '#cccccc');
     ctx.broadcast('/title <text> | /echo <text> | /repeat <n> <cmd>', '#cccccc');
     ctx.broadcast('/random [max] | /coin | /8ball', '#cccccc');
+    ctx.broadcast('/day | /night | /noon | /midnight', '#cccccc');
+    ctx.broadcast('/up [n] | /down [n] | /distance | /spawnpoint', '#cccccc');
     ctx.broadcast('/uptime | /version | /ping', '#cccccc');
     ctx.broadcast('Use ; to chain: /heal; /spawn', '#cccccc');
     return;
@@ -315,6 +317,63 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
     ctx.teleportSpawn?.();
     ctx.broadcast('Teleported to spawn.', '#80ff80');
+    return;
+  }
+  if (head === 'day' || head === 'sun') {
+    ctx.setTimeOfDay(1000);
+    ctx.broadcast('☀ Day.', '#ffeb80');
+    return;
+  }
+  if (head === 'night' || head === 'moon') {
+    ctx.setTimeOfDay(13000);
+    ctx.broadcast('🌙 Night.', '#80a0ff');
+    return;
+  }
+  if (head === 'noon') {
+    ctx.setTimeOfDay(6000);
+    ctx.broadcast('☀ Noon.', '#ffeb80');
+    return;
+  }
+  if (head === 'midnight') {
+    ctx.setTimeOfDay(18000);
+    ctx.broadcast('🌑 Midnight.', '#404060');
+    return;
+  }
+  if (head === 'up') {
+    const n = args[0] !== undefined ? Math.max(1, Math.min(64, Number(args[0]))) : 10;
+    if (!Number.isFinite(n)) {
+      ctx.broadcast('Usage: /up [blocks=10]', '#ff8080');
+      return;
+    }
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(ctx.playerPos.x, ctx.playerPos.y + n, ctx.playerPos.z);
+    ctx.broadcast(`↑ ${String(n)}m`, '#80ff80');
+    return;
+  }
+  if (head === 'down') {
+    const n = args[0] !== undefined ? Math.max(1, Math.min(64, Number(args[0]))) : 10;
+    if (!Number.isFinite(n)) {
+      ctx.broadcast('Usage: /down [blocks=10]', '#ff8080');
+      return;
+    }
+    lastTpFrom = { x: ctx.playerPos.x, y: ctx.playerPos.y, z: ctx.playerPos.z };
+    ctx.setPlayerPos(ctx.playerPos.x, ctx.playerPos.y - n, ctx.playerPos.z);
+    ctx.broadcast(`↓ ${String(n)}m`, '#80ff80');
+    return;
+  }
+  if (head === 'spawnpoint' || head === 'setworldspawn') {
+    ctx.setSpawnHere?.();
+    ctx.broadcast(
+      `Spawn set at ${ctx.playerPos.x.toFixed(1)} ${ctx.playerPos.y.toFixed(1)} ${ctx.playerPos.z.toFixed(1)}`,
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'distance' || head === 'dist') {
+    const dx = ctx.playerPos.x;
+    const dz = ctx.playerPos.z;
+    const d = Math.hypot(dx, dz);
+    ctx.broadcast(`Distance from origin: ${d.toFixed(1)}m (Δx ${dx.toFixed(1)}, Δz ${dz.toFixed(1)})`, '#cccccc');
     return;
   }
   if (head === 'clearchat' || head === 'cc') {
