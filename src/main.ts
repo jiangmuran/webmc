@@ -3805,6 +3805,11 @@ const chatInput = new ChatInput(appEl, {
               ? (performance.now() - autosaveState.lastSaveMs) / 1000
               : 0,
         }),
+        gpuInfo: () => ({
+          gl: rendererInfo.gl,
+          vendor: 'WebGL2',
+          renderer: rendererInfo.rend,
+        }),
         unequipAll: () => {
           let n = 0;
           for (let i = 0; i < 4; i++) {
@@ -4538,6 +4543,10 @@ const chatInput = new ChatInput(appEl, {
       '/speedrun',
       '/creator',
       '/authorinfo',
+      '/chunk',
+      '/currentchunk',
+      '/gpu',
+      '/renderer',
     ];
     return SLASH_CMDS;
   },

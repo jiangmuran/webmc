@@ -94,6 +94,7 @@ export interface CommandContext {
   healMobsNear?: (radius: number) => number;
   saveStateInfo?: () => { dirtyChunks: number; lastSaveSec: number };
   unequipAll?: () => number;
+  gpuInfo?: () => { gl: string; vendor: string; renderer: string };
   feedLookedAtMob?: () => {
     kind: string;
     loved: boolean;
@@ -1140,6 +1141,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'cdon' || head === 'regen_on') {
     ctx.setGameRule?.('naturalRegeneration', true);
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
+    return;
+  }
+  if (head === 'chunk' || head === 'currentchunk') {
+    const cx = Math.floor(ctx.playerPos.x / 16);
+    const cz = Math.floor(ctx.playerPos.z / 16);
+    const cy = Math.floor(ctx.playerPos.y / 16);
+    ctx.broadcast(
+      `Chunk (${String(cx)}, ${String(cz)}) · sub-chunk y=${String(cy)} · pos within ${(ctx.playerPos.x - cx * 16).toFixed(1)},${(ctx.playerPos.y - cy * 16).toFixed(1)},${(ctx.playerPos.z - cz * 16).toFixed(1)}`,
+      '#cccccc',
+    );
+    return;
+  }
+  if (head === 'gpu' || head === 'renderer') {
+    if (!ctx.gpuInfo) return;
+    const g = ctx.gpuInfo();
+    ctx.broadcast(`GPU: ${g.gl} / ${g.vendor} / ${g.renderer}`, '#cccccc');
     return;
   }
   if (head === 'devmode' || head === 'dev') {
