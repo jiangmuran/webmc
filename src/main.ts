@@ -4032,28 +4032,82 @@ const chatInput = new ChatInput(appEl, {
                 `Detecting format of ${f.name} (${(f.size / 1024).toFixed(1)} kB)…`,
                 '#cccccc',
               );
-              if (f.name.endsWith('.mca') || f.name.endsWith('.dat')) {
-                chatInput.addLine(
-                  'Detected Anvil region/level. Native import scaffold present (full NBT decode TBD).',
-                  '#ffd080',
-                );
-                chatInput.addLine(
-                  'User uploads at own licensing risk; webmc never ships Mojang data.',
-                  '#888888',
-                );
-              } else if (f.name.endsWith('.webmc')) {
-                chatInput.addLine(
-                  'webmc save detected. Use Main Menu → Import to load.',
-                  '#80ff80',
-                );
-              } else if (f.name.endsWith('.zip')) {
-                chatInput.addLine(
-                  'ZIP: drop in resource-pack uploader for textures or main-menu import for save.',
-                  '#ffd080',
-                );
-              } else {
-                chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
-              }
+              const handle = async (): Promise<void> => {
+                const buf = new Uint8Array(await f.arrayBuffer());
+                if (f.name.endsWith('.dat')) {
+                  try {
+                    const { gunzip } = await import('./persist/nbt_gzip');
+                    const { parseLevelDat } = await import('./persist/level_dat_fields');
+                    const raw = await gunzip(buf);
+                    const sanitized = parseLevelDat(raw);
+                    chatInput.addLine(
+                      `level.dat: seed=${sanitized.seed} spawn=(${String(sanitized.spawnX)},${String(sanitized.spawnY)},${String(sanitized.spawnZ)}) diff=${sanitized.difficulty}`,
+                      '#80ff80',
+                    );
+                    chatInput.addLine(
+                      `time=${String(sanitized.gameTime)} dayTime=${String(sanitized.dayTime)} hardcore=${String(sanitized.hardcore)}`,
+                      '#cccccc',
+                    );
+                  } catch (e) {
+                    chatInput.addLine(`level.dat parse failed: ${String(e)}`, '#ff8080');
+                  }
+                } else if (f.name.endsWith('.mca')) {
+                  try {
+                    const { importVanillaChunk } = await import('./persist/anvil_chunk_to_webmc');
+                    const airId = registry.byName('webmc:air');
+                    const stoneId = registry.byName('webmc:stone');
+                    if (airId === undefined || stoneId === undefined) {
+                      chatInput.addLine('Internal: registry missing air/stone', '#ff8080');
+                      return;
+                    }
+                    let found = 0;
+                    let totalPalette = 0;
+                    for (let cx = 0; cx < 32 && found < 3; cx++) {
+                      for (let cz = 0; cz < 32 && found < 3; cz++) {
+                        const out = await importVanillaChunk(buf, cx, cz, {
+                          byName: (n) => registry.byName(n),
+                          airId,
+                          fallbackId: stoneId,
+                        });
+                        if (out) {
+                          chatInput.addLine(
+                            `chunk(${String(cx)},${String(cz)}): ${String(out.ids.length)} blocks, palette=${String(out.paletteSize)}, y=${String(out.yMin)}..${String(out.yMax)}`,
+                            '#80ff80',
+                          );
+                          found++;
+                          totalPalette += out.paletteSize;
+                        }
+                      }
+                    }
+                    if (found === 0) {
+                      chatInput.addLine(
+                        '.mca: no chunks decoded (file empty or unsupported format)',
+                        '#ffd080',
+                      );
+                    } else {
+                      chatInput.addLine(
+                        `Decoded ${String(found)} preview chunks (total palette=${String(totalPalette)}). Full import wiring TBD.`,
+                        '#cccccc',
+                      );
+                    }
+                  } catch (e) {
+                    chatInput.addLine(`.mca parse failed: ${String(e)}`, '#ff8080');
+                  }
+                } else if (f.name.endsWith('.webmc')) {
+                  chatInput.addLine(
+                    'webmc save detected. Use Main Menu → Import to load.',
+                    '#80ff80',
+                  );
+                } else if (f.name.endsWith('.zip')) {
+                  chatInput.addLine(
+                    'ZIP: drop in resource-pack uploader for textures or main-menu import for save.',
+                    '#ffd080',
+                  );
+                } else {
+                  chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
+                }
+              };
+              void handle();
             },
             { once: true },
           );
