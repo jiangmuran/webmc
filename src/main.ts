@@ -43,6 +43,7 @@ import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
 import { screenshotFilename } from './game/screenshot_capture';
 import { TpsTracker } from './game/server_tps_metric';
+import { sanitize as sanitizePlayerName } from './game/player_name_sanitize';
 
 const MOON_GLYPHS = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔'];
 import { TutorialState, type HintId } from './game/tutorial_first_night';
@@ -1679,7 +1680,7 @@ const settingsPanel = new SettingsPanel(appEl, {
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
     if (v.showCrosshair) crosshair.show(); else crosshair.hide();
-    currentPlayerName = v.playerName.trim() || 'Player';
+    currentPlayerName = sanitizePlayerName(v.playerName) || 'Player';
     playerAvatar.setName(currentPlayerName);
     document.title = `webmc · ${worldMeta.name} · ${currentPlayerName}`;
     mobRenderer.showNameplates = v.showMobNames;
