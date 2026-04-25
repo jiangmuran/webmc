@@ -40,6 +40,8 @@ export interface CommandContext {
   surfaceAt?: (x: number, z: number) => number;
   repairHeld?: () => boolean;
   heldDurability?: () => { name: string; current: number; max: number } | null;
+  markRegionPoint?: (point: 'a' | 'b') => void;
+  fillRegion?: (block: string) => number;
   feedLookedAtMob?: () => { kind: string; loved: boolean; itemUsed: string | null; reason?: string } | null;
   leashLookedAtMob?: () => { kind: string; leashed: boolean; reason?: string } | null;
   unleashAllMobs?: () => number;
@@ -901,6 +903,32 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('UI: /chest /scoreboard /title /particle /firework /bossbar /achievements', '#cccccc');
     ctx.broadcast('Save: /save /export /import /worldborder /hardcore /datapack /waypoint', '#cccccc');
     ctx.broadcast('Debug: /tps /perf /tick /freeze /unfreeze /spawnpoint /version', '#cccccc');
+    return;
+  }
+  if (head === 'mark') {
+    if (!ctx.markRegionPoint) return;
+    const p = (args[0] ?? 'a').toLowerCase();
+    if (p !== 'a' && p !== 'b') {
+      ctx.broadcast('Usage: /mark <a|b>', '#ff8080');
+      return;
+    }
+    ctx.markRegionPoint(p as 'a' | 'b');
+    ctx.broadcast(`Region point ${p.toUpperCase()} = ${ctx.playerPos.x.toFixed(0)} ${ctx.playerPos.y.toFixed(0)} ${ctx.playerPos.z.toFixed(0)}`, '#80ff80');
+    return;
+  }
+  if (head === 'paste' || head === 'fillregion') {
+    if (!ctx.fillRegion) return;
+    const block = args[0] ?? 'stone';
+    const n = ctx.fillRegion(block);
+    if (n < 0) ctx.broadcast('Use /mark a then /mark b first.', '#ff8080');
+    else ctx.broadcast(`Filled region with ${block} (${String(n)} blocks)`, '#80ff80');
+    return;
+  }
+  if (head === 'wipe') {
+    if (!ctx.fillRegion) return;
+    const n = ctx.fillRegion('air');
+    if (n < 0) ctx.broadcast('Use /mark a then /mark b first.', '#ff8080');
+    else ctx.broadcast(`Wiped ${String(n)} blocks`, '#80ff80');
     return;
   }
   if (head === 'repair') {

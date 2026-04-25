@@ -851,6 +851,7 @@ let prevOnGround = true;
 let prevInWater = false;
 let maceFallStartY = 0;
 let isGliding = false;
+const regionPoints: { a: { x: number; y: number; z: number } | null; b: { x: number; y: number; z: number } | null } = { a: null, b: null };
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
 let brightnessMul = 1.0;
@@ -2715,6 +2716,42 @@ const chatInput = new ChatInput(appEl, {
           fp.speedMultiplier = mul;
         },
         surfaceAt: (x, z) => generator.surfaceAt(x, z),
+        markRegionPoint: (point) => {
+          regionPoints[point] = { x: Math.floor(fp.position.x), y: Math.floor(fp.position.y), z: Math.floor(fp.position.z) };
+        },
+        fillRegion: (block) => {
+          if (!regionPoints.a || !regionPoints.b) return -1;
+          const isAir = block === 'air' || block === 'webmc:air';
+          let state = AIR;
+          if (!isAir) {
+            const full = block.startsWith('webmc:') ? block : `webmc:${block}`;
+            const id = registry.byName(full);
+            if (id === undefined) return -1;
+            state = makeState(id, 0);
+          }
+          const a = regionPoints.a, b = regionPoints.b;
+          const sx = Math.min(a.x, b.x), ex = Math.max(a.x, b.x);
+          const sy = Math.min(a.y, b.y), ey = Math.max(a.y, b.y);
+          const sz = Math.min(a.z, b.z), ez = Math.max(a.z, b.z);
+          let n = 0;
+          const chunksTouched = new Set<string>();
+          for (let y = sy; y <= ey; y++) {
+            for (let z = sz; z <= ez; z++) {
+              for (let x = sx; x <= ex; x++) {
+                if (y < 0 || y >= CHUNK_HEIGHT) continue;
+                world.set(x, y, z, state);
+                n++;
+                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+              }
+            }
+          }
+          for (const k of chunksTouched) {
+            const [cxS, czS] = k.split(',');
+            const c = world.getChunk(Number(cxS), Number(czS));
+            if (c) markChunkAllDirty(c);
+          }
+          return n;
+        },
         repairHeld: () => {
           const sel = inventory.hotbar[inventory.selectedHotbar];
           if (!sel) return false;
@@ -2994,7 +3031,7 @@ const chatInput = new ChatInput(appEl, {
       '/freeze', '/unfreeze', '/mute', '/unmute', '/title', '/echo', '/repeat',
       '/random', '/roll', '/coin', '/flip', '/8ball', '/uptime', '/version',
       '/v', '/ping', '/day', '/sun', '/night', '/moon', '/noon', '/midnight',
-      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura',
+      '/up', '/down', '/distance', '/dist', '/gamerule', '/sort', '/scoreboard', '/sb', '/gyro', '/tilt', '/copy', '/import', '/milk', '/tick', '/tps', '/deathloc', '/lastdeath', '/rename', '/nametag', '/worldborder', '/wb', '/loot', '/locate', '/waypoint', '/wp', '/hardcore', '/datapack', '/dp', '/export', '/equip', '/xp', '/experience', '/bossbar', '/tame', '/sit', '/stand', '/feed', '/breed', '/leash', '/unleash', '/village', '/house', '/tower', '/pyramid', '/dungeon', '/sphere', '/cube', '/platform', '/portal', '/netherportal', '/roof', '/wall', '/bridge', '/pillar', '/tree', '/glow', '/replace', '/dragon', '/wither', '/army', '/firework', '/fw', '/rain', '/storm', '/sun', '/tutorial', '/guide', '/starter', '/kit', '/craft', '/cook', '/smelt', '/world', '/info', '/perf', '/benchmark', '/zoom', '/speed', '/jump', '/launch', '/nv', '/nightvision', '/invis', '/invisible', '/god', '/godmode', '/home', '/sethome', '/about', '/credits', '/commands', '/cmds', '/rtp', '/randomtp', '/safetp', '/safe', '/buildmode', '/build', '/survivalmode', '/sm', '/spectate', '/sp', '/confetti', '/celebrate', '/panic', '/repair', '/durability', '/dura', '/mark', '/paste', '/fillregion', '/wipe',
     ];
     return SLASH_CMDS;
   },
