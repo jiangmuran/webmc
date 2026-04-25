@@ -861,7 +861,7 @@ const interaction = new InteractionController(
         const xp = oreXp(def.name);
         if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
       }
-      const drops = dropRegistry.drops(prevBlockId, undefined, 99);
+      const drops = gameRules.doTileDrops ? dropRegistry.drops(prevBlockId, undefined, 99) : [];
       if (gameMode === 'survival' || gameMode === 'adventure') {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
@@ -3111,7 +3111,14 @@ function frame(): void {
       if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
     },
     onCreeperExplode: (x, y, z) => {
-      explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+      // mobGriefing=false: creepers explode but don't break terrain.
+      if (gameRules.mobGriefing) {
+        explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+      } else {
+        // Visual-only burst.
+        for (let i = 0; i < 12; i++) blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
+        screenShake.pulse(0.4);
+      }
     },
     isSunlit: (x, y, z) => {
       if (!dayNight.isDay) return false;
