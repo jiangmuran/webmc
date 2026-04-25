@@ -93,6 +93,7 @@ export interface CommandContext {
   killMobsNear?: (radius: number) => number;
   healMobsNear?: (radius: number) => number;
   saveStateInfo?: () => { dirtyChunks: number; lastSaveSec: number };
+  unequipAll?: () => number;
   feedLookedAtMob?: () => {
     kind: string;
     loved: boolean;
@@ -1139,6 +1140,22 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
   if (head === 'cdon' || head === 'regen_on') {
     ctx.setGameRule?.('naturalRegeneration', true);
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
+    return;
+  }
+  if (head === 'maxlevel' || head === 'maxxp') {
+    ctx.setXpLevel?.(100);
+    ctx.broadcast('XP level set to 100', '#80ff80');
+    return;
+  }
+  if (head === 'godxp' || head === 'infinitexp') {
+    ctx.giveXp?.(10000);
+    ctx.broadcast('+10000 XP (level up flood)', '#80ff80');
+    return;
+  }
+  if (head === 'naked' || head === 'unequip') {
+    if (!ctx.unequipAll) return;
+    const n = ctx.unequipAll();
+    ctx.broadcast(`Unequipped ${String(n)} armor pieces (back to inventory)`, '#80ff80');
     return;
   }
   if (head === 'fastnight' || head === 'speednight') {

@@ -3805,6 +3805,18 @@ const chatInput = new ChatInput(appEl, {
               ? (performance.now() - autosaveState.lastSaveMs) / 1000
               : 0,
         }),
+        unequipAll: () => {
+          let n = 0;
+          for (let i = 0; i < 4; i++) {
+            const piece = inventory.armor[i];
+            if (piece) {
+              inventory.add(piece);
+              inventory.armor[i] = null;
+              n++;
+            }
+          }
+          return n;
+        },
         healMobsNear: (radius) => {
           const r2 = radius * radius;
           let n = 0;
@@ -4495,6 +4507,12 @@ const chatInput = new ChatInput(appEl, {
       '/bn',
       '/distancetraveled',
       '/dt',
+      '/maxlevel',
+      '/maxxp',
+      '/godxp',
+      '/infinitexp',
+      '/naked',
+      '/unequip',
     ];
     return SLASH_CMDS;
   },
