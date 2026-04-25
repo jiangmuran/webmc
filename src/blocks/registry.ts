@@ -323,6 +323,12 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:mud', color: [67, 54, 52] as RGB, hardness: 0.5 },
     { name: 'webmc:mangrove_log', color: [92, 55, 53] as RGB, hardness: 2 },
     { name: 'webmc:cherry_log', color: [80, 58, 60] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_oak_log', color: [188, 152, 98] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_spruce_log', color: [115, 85, 49] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_birch_log', color: [205, 192, 145] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_jungle_log', color: [167, 124, 79] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_mangrove_log', color: [120, 73, 60] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_cherry_log', color: [220, 175, 165] as RGB, hardness: 2 },
     { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
     { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
     {

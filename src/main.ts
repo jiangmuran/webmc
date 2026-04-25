@@ -69,6 +69,7 @@ import { kindFor as kindForWeather } from './engine/weather_particles';
 import { adjustedTemperature } from './world/biome_precipitation';
 import { skyOf } from './world/sky_color';
 import { bedlessRespawn } from './world/spawn_safety';
+import { useAxe } from './items/axe_strip';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
 import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
@@ -1065,6 +1066,24 @@ const interaction = new InteractionController(
       if (state === AIR) return false;
       const id = stateId(state);
       const def = registry.get(id);
+      // Axe: strip logs / un-wax / scrape copper.
+      const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+      if (heldName.includes('axe') && !heldName.includes('pickaxe')) {
+        const result = useAxe(def.name);
+        if (result.kind !== 'none') {
+          const newId = registry.byName(result.newBlock);
+          if (newId !== undefined) {
+            world.set(bx, by, bz, makeState(newId, 0));
+            touchWorldEdit(bx, by, bz, newId);
+            consumeHeldToolDurability(1);
+            sfx.play('break');
+            blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
+            const verb = result.kind === 'strip' ? 'Stripped' : result.kind === 'unwax' ? 'Un-waxed' : 'Scraped';
+            subtitles.push(`${verb}`);
+            return true;
+          }
+        }
+      }
       // Doors / trapdoors / levers / buttons: toggle the "powered/open" bit.
       const interactable =
         def.name.endsWith('_door') ||
