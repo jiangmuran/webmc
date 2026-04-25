@@ -19,6 +19,7 @@ import {
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
 import { SubtitleView } from './ui/SubtitleView';
+import { BossBarView } from './ui/BossBarView';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
@@ -313,6 +314,7 @@ const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
 const crosshair = new Crosshair(appEl);
 const subtitles = new SubtitleView(appEl);
+const bossBar = new BossBarView(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
 const rain = new RainParticles();
@@ -2190,6 +2192,35 @@ function frame(): void {
   }
   subtitles.tick();
   crosshair.setCooldown((performance.now() - lastPlayerAttackAt) / 400);
+
+  // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
+  let bossM: typeof bossCandidate | null = null;
+  let bossDistSq = 32 * 32;
+  type BossCandidate = { name: string; health: number; maxHealth: number; kind: string };
+  let bossCandidate: BossCandidate | null = null;
+  for (const m of mobWorld.all()) {
+    if (m.def.maxHealth < 40) continue;
+    const dx = m.position.x - fp.position.x;
+    const dz = m.position.z - fp.position.z;
+    const d2 = dx * dx + dz * dz;
+    if (d2 > bossDistSq) continue;
+    bossDistSq = d2;
+    bossCandidate = { name: m.def.kind, health: m.health, maxHealth: m.def.maxHealth, kind: m.def.kind };
+    bossM = bossCandidate;
+  }
+  if (bossM) {
+    const color = bossM.kind === 'ender_dragon' ? 'purple' : bossM.kind === 'warden' ? 'red' : bossM.kind === 'wither' ? 'red' : 'pink';
+    bossBar.set({
+      name: bossM.name,
+      hp: bossM.health,
+      maxHp: bossM.maxHealth,
+      color,
+      style: 'progress',
+      visible: true,
+    });
+  } else {
+    bossBar.hide();
+  }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
   fluidOverlay.set(fp.inFluid);
