@@ -1141,6 +1141,23 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'fastnight' || head === 'speednight') {
+    ctx.setGameRule?.('doDaylightCycle', true);
+    ctx.addTimeOfDay?.(12000);
+    ctx.broadcast('Time fast-forward to night (+10 hours)', '#80a0ff');
+    return;
+  }
+  if (head === 'biomename' || head === 'bn') {
+    if (!ctx.biomeAt) return;
+    const b = ctx.biomeAt(ctx.playerPos.x, ctx.playerPos.z);
+    ctx.broadcast(`Biome here: ${b}`, '#cccccc');
+    return;
+  }
+  if (head === 'distancetraveled' || head === 'dt') {
+    if (!ctx.showStats) return;
+    ctx.showStats();
+    return;
+  }
   if (head === 'fastday' || head === 'speedday') {
     ctx.setGameRule?.('doDaylightCycle', true);
     ctx.addTimeOfDay?.(2400);

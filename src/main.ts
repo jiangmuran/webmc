@@ -4489,6 +4489,12 @@ const chatInput = new ChatInput(appEl, {
       '/regen_on',
       '/fastday',
       '/speedday',
+      '/fastnight',
+      '/speednight',
+      '/biomename',
+      '/bn',
+      '/distancetraveled',
+      '/dt',
     ];
     return SLASH_CMDS;
   },
