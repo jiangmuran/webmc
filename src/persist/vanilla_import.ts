@@ -74,6 +74,21 @@ export {
   type ParsedDimension,
   type GeneratorKind,
 } from './vanilla_dimension_parse';
+export {
+  parseVanillaBlockstate,
+  BlockstateParseError,
+  type ParsedBlockstate,
+  type ModelRef,
+  type VariantBranch,
+  type MultipartCase,
+} from './vanilla_blockstate_parse';
+export {
+  parseVanillaModel,
+  ModelParseError,
+  type ParsedModel,
+  type ModelElement,
+  type ModelFace,
+} from './vanilla_model_parse';
 
 export type VanillaFileKind =
   | 'level_dat'
@@ -87,6 +102,8 @@ export type VanillaFileKind =
   | 'function_mcfunction'
   | 'biome_json'
   | 'dimension_json'
+  | 'blockstate_json'
+  | 'model_json'
   | 'unknown';
 
 // Heuristic: detect a vanilla file kind from its filename. Useful for
@@ -107,6 +124,8 @@ export function detectVanillaFileKind(name: string): VanillaFileKind {
     if (/(\/|^)advancements?\//.test(n)) return 'advancement_json';
     if (/(\/|^)worldgen\/biome\//.test(n)) return 'biome_json';
     if (/(\/|^)dimension\//.test(n)) return 'dimension_json';
+    if (/(\/|^)blockstates\//.test(n)) return 'blockstate_json';
+    if (/(\/|^)models\//.test(n)) return 'model_json';
   }
   return 'unknown';
 }
