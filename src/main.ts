@@ -555,14 +555,23 @@ const gameRules = {
   doDaylightCycle: true,
   doMobSpawning: true,
   doImmediateRespawn: false,
+  doWeatherCycle: true,
+  naturalRegeneration: true,
+  mobGriefing: true,
+  fallDamage: true,
+  fireDamage: true,
+  drowningDamage: true,
+  doTileDrops: true,
+  showDeathMessages: true,
+  doEntityDrops: true,
 };
 void persistDB.getMeta('gameRules').then((saved) => {
   if (saved && typeof saved === 'object') {
     const g = saved as Record<string, unknown>;
-    if (typeof g['keepInventory'] === 'boolean') gameRules.keepInventory = g['keepInventory'];
-    if (typeof g['doDaylightCycle'] === 'boolean') gameRules.doDaylightCycle = g['doDaylightCycle'];
-    if (typeof g['doMobSpawning'] === 'boolean') gameRules.doMobSpawning = g['doMobSpawning'];
-    if (typeof g['doImmediateRespawn'] === 'boolean') gameRules.doImmediateRespawn = g['doImmediateRespawn'];
+    for (const k of Object.keys(gameRules) as (keyof typeof gameRules)[]) {
+      const v = g[k];
+      if (typeof v === 'boolean') gameRules[k] = v;
+    }
   }
 });
 let currentPlayerName = 'Player';
@@ -2510,11 +2519,13 @@ function frame(): void {
       weatherTimer = 180 + Math.random() * 240;
     }
   }
-  // Auto weather cycle (only if user hasn't manually set "clear" recently — we let the natural cycle run).
-  const weatherChanged = weatherCycle.tick(dtSec);
-  if (weatherChanged && currentWeather !== weatherChanged) {
-    setWeather(weatherChanged);
-    chatInput.addLine(`Weather changes to ${weatherChanged}.`, '#a8c8ff');
+  // Auto weather cycle (gated by gamerule).
+  if (gameRules.doWeatherCycle) {
+    const weatherChanged = weatherCycle.tick(dtSec);
+    if (weatherChanged && currentWeather !== weatherChanged) {
+      setWeather(weatherChanged);
+      chatInput.addLine(`Weather changes to ${weatherChanged}.`, '#a8c8ff');
+    }
   }
 
   if (currentWeather === 'thunder') {
@@ -2741,7 +2752,7 @@ function frame(): void {
   }
   playerState.tick(dtSec, { inFluid: fp.inFluid });
 
-  if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (fp.lastLandFallBlocks > 3 && (gameMode === 'survival' || gameMode === 'adventure') && gameRules.fallDamage) {
     const slowFalling = playerState.effects.has('slow_falling');
     let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
