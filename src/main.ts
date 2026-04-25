@@ -40,6 +40,7 @@ import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
+import { screenshotFilename } from './game/screenshot_capture';
 
 const MOON_GLYPHS = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔'];
 import { TutorialState, type HintId } from './game/tutorial_first_night';
@@ -1897,11 +1898,9 @@ document.addEventListener(
       const data = canvas.toDataURL('image/png');
       const a = document.createElement('a');
       a.href = data;
-      const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-      const safeName = currentPlayerName.replace(/[^A-Za-z0-9_-]/g, '_');
-      a.download = `webmc-${safeName}-${ts}.png`;
+      a.download = screenshotFilename(new Date());
       a.click();
-      chatInput.addLine('Screenshot saved.', '#d0ff80');
+      chatInput.addLine(`Screenshot saved: ${a.download}`, '#d0ff80');
     }
     if (e.code === 'KeyB') {
       e.preventDefault();
