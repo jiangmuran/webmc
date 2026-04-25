@@ -1142,6 +1142,47 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'devmode' || head === 'dev') {
+    if (!ctx.setGameMode || !ctx.applyEffect) return;
+    ctx.setGameMode('creative');
+    ctx.applyEffect('night_vision', 0, 9999);
+    ctx.applyEffect('saturation', 9, 9999);
+    ctx.applyEffect('regeneration', 4, 9999);
+    ctx.giveAllBlocks?.();
+    if (ctx.toggleFly) ctx.toggleFly();
+    if (ctx.setWalkSpeed) ctx.setWalkSpeed(2.5);
+    ctx.broadcast(
+      'Dev mode: creative + night vision + regen + fly + 2.5× speed + all blocks',
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'speedrun') {
+    if (!ctx.setGameMode || !ctx.giveItem) return;
+    ctx.setGameMode('survival');
+    if (ctx.heal) ctx.heal();
+    const KIT = [
+      'diamond_sword',
+      'diamond_pickaxe',
+      'diamond_axe',
+      'diamond_shovel',
+      'cooked_beef',
+      'enchanted_golden_apple',
+      'ender_pearl',
+      'flint_and_steel',
+    ];
+    for (const k of KIT) ctx.giveItem(k, k === 'cooked_beef' ? 16 : k === 'ender_pearl' ? 16 : 1);
+    ctx.broadcast(
+      'Speedrun kit: diamond tools + ender_pearls + golden_apple + flint_and_steel',
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'creator' || head === 'authorinfo') {
+    ctx.broadcast('webmc: clean-room AGPL-3.0 reimplementation of MC by jmr + AI agent', '#ffd080');
+    ctx.broadcast('GitHub: jiangmuran/webmc · Pages: jiangmuran.github.io/webmc/', '#cccccc');
+    return;
+  }
   if (head === 'goals' || head === 'objectives') {
     ctx.broadcast('— Suggested goals —', '#80ffff');
     ctx.broadcast('1. Punch trees → 4 oak_planks → /craft crafting_table', '#cccccc');

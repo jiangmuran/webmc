@@ -4533,6 +4533,11 @@ const chatInput = new ChatInput(appEl, {
       '/progress',
       '/recipes',
       '/recipebook',
+      '/devmode',
+      '/dev',
+      '/speedrun',
+      '/creator',
+      '/authorinfo',
     ];
     return SLASH_CMDS;
   },
