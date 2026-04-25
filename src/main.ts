@@ -1177,6 +1177,33 @@ const interaction = new InteractionController(
           }
         }
       }
+      // End crystal: place hovering crystal that explodes on hit (visual only — no projectile path).
+      if (heldName === 'end_crystal' && def.name === 'webmc:obsidian' && airAbove) {
+        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        // Hovering visual: pillar of magenta particles, then a "primed" subtitle.
+        for (let h = 0; h < 12; h++) {
+          for (let i = 0; i < 4; i++) blockParticles.emitPlace(cx + (Math.random() - 0.5) * 0.8, cy + h * 0.2, cz + (Math.random() - 0.5) * 0.8, [220, 100, 220]);
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const eId = itemRegistry.byName('webmc:end_crystal');
+          if (eId !== undefined) consumeInventoryItem(eId, 1);
+        }
+        sfx.play('click');
+        subtitles.push('End crystal placed');
+        return true;
+      }
+      // Echo shard: ping subtitles + radial blue particles (warden / sculk audio cue).
+      if (heldName === 'echo_shard') {
+        const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
+        for (let i = 0; i < 32; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const r = 1 + Math.random() * 5;
+          blockParticles.emitPlace(cx + Math.cos(ang) * r, cy + (Math.random() - 0.5) * 2, cz + Math.sin(ang) * r, [80, 200, 220]);
+        }
+        sfx.play('break');
+        subtitles.push('Echo ping…');
+        return true;
+      }
       // Bottle o' enchanting: spawn 3-11 XP orbs at hit point.
       if (heldName === 'experience_bottle') {
         const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
