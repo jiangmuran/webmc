@@ -1176,6 +1176,24 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Goat horn: blow a long droning note + ripple particles.
+      if (heldName === 'goat_horn') {
+        sfx.play('break');
+        for (let i = 0; i < 30; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const r = 1 + Math.random() * 6;
+          blockParticles.emitPlace(fp.position.x + Math.cos(ang) * r, fp.position.y + 0.5 + (Math.random() - 0.5) * 1.2, fp.position.z + Math.sin(ang) * r, [220, 200, 130]);
+        }
+        subtitles.push('Goat horn sounds');
+        return true;
+      }
+      // Music disc: short particle play; placed-on-jukebox not yet wired.
+      if (heldName.startsWith('music_disc_')) {
+        sfx.play('click');
+        for (let i = 0; i < 18; i++) blockParticles.emitPlace(bx + 0.5 + (Math.random() - 0.5), by + 1 + Math.random(), bz + 0.5 + (Math.random() - 0.5), [180, 120, 220]);
+        subtitles.push(`Now playing: ${heldName.replace('music_disc_', '')}`);
+        return true;
+      }
       // Wind charge: right-click block → AOE knockback in 3-block radius (MC 1.21+ Breeze drop).
       if (heldName === 'wind_charge') {
         const cx = bx + 0.5, cy = by + 1, cz = bz + 0.5;
