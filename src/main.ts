@@ -7633,16 +7633,21 @@ function frame(): void {
     else if (lastTouchJump) fp.input.jump = false;
     lastTouchJump = touch.state.jump;
     if (touch.state.sprint) fp.input.sprint = true;
-    if (touch.state.sneak) fp.input.sneak = true;
-    else if (lastTouchSneak) fp.input.sneak = false;
-    lastTouchSneak = touch.state.sneak;
     // Fly-mode vertical: keyboard maps Space → vertical=+1, Shift →
     // vertical=-1. Touch only ever set fp.input.sneak which the camera
     // ignores in fly mode — touch fliers had no way to descend. Map
-    // touch jump → +1, touch sneak → -1 when flying.
+    // touch jump → +1, touch sneak → -1 when flying. AND don't set
+    // sneak in fly mode (sneak narrows mouse sensitivity by 0.45,
+    // making touch look feel painfully slow during a fly descent).
     if (fp.input.fly) {
       const v = touch.state.jump ? 1 : touch.state.sneak ? -1 : 0;
       fp.input.vertical = v;
+      fp.input.sneak = false;
+      lastTouchSneak = false;
+    } else {
+      if (touch.state.sneak) fp.input.sneak = true;
+      else if (lastTouchSneak) fp.input.sneak = false;
+      lastTouchSneak = touch.state.sneak;
     }
     // Edge-triggered touch buttons (Inv / Drop). Cleared after handling
     // so they fire once per tap. Without these, touch users had no way
