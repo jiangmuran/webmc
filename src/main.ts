@@ -1534,9 +1534,14 @@ playerAvatar.setName('Player');
 scene.add(playerAvatar.group);
 type CameraMode = 'fp' | 'tp_back' | 'tp_front';
 let cameraMode: CameraMode = 'fp';
+function refreshHandVisibility(): void {
+  // FP hand visible only in first-person AND not spectator. Spectators
+  // have no body in vanilla, including no held-item / hand model.
+  hand.group.visible = cameraMode === 'fp' && gameMode !== 'spectator';
+}
 function cycleCamera(): void {
   cameraMode = cameraMode === 'fp' ? 'tp_back' : cameraMode === 'tp_back' ? 'tp_front' : 'fp';
-  hand.group.visible = cameraMode === 'fp';
+  refreshHandVisibility();
   playerAvatar.setVisible(cameraMode !== 'fp');
 }
 let lastTouchPrimary = false;
@@ -3897,6 +3902,8 @@ function applyGameMode(m: GameMode): void {
   playerState.invulnerable = eff.invulnerable;
   survivalHud.setVisible(m === 'survival' || m === 'adventure');
   interaction.breakDurationSec = m === 'creative' ? 0.001 : 0.4;
+  // Spectator → no FP hand. Other modes show the hand in first-person.
+  refreshHandVisibility();
 }
 
 const survivalHud = new SurvivalHud(appEl);
