@@ -3957,7 +3957,12 @@ const chatInput = new ChatInput(appEl, {
       const exec = useChain ? executeCommands : executeCommand;
       exec(text, {
         playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-        setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
+        setPlayerPos: (x, y, z) => {
+          fp.position.set(x, y, z);
+          // Zero velocity so /tp doesn't preserve fall speed and instantly
+          // damage the player on landing at the destination.
+          fp.velocity.set(0, 0, 0);
+        },
         gameMode,
         setGameMode: (m) => {
           applyGameMode(m);
