@@ -557,6 +557,13 @@ export class SurvivalHud {
   // frame for nothing.
   private heartShakeActive = false;
   private hungerShakeActive = false;
+  // Diff caches for the per-frame display + xp + label writes.
+  // Each style/text write triggers browser invalidation; cumulative
+  // ~60Hz × per-element waste in steady state.
+  private lastArmorVisible = false;
+  private lastBubblesVisible = false;
+  private lastXpFillPct = -1;
+  private lastXpLabel = '';
 
   render(frame: SurvivalFrame): void {
     if (!this.visible) return;
@@ -605,7 +612,10 @@ export class SurvivalHud {
 
     const armorPts = frame.armorPoints ?? 0;
     if (armorVisible(armorPts)) {
-      this.armorRow.style.display = 'flex';
+      if (!this.lastArmorVisible) {
+        this.armorRow.style.display = 'flex';
+        this.lastArmorVisible = true;
+      }
       const icons = armorIcons(armorPts);
       for (let i = 0; i < ARMORS; i++) {
         const which = icons[i];
@@ -613,28 +623,40 @@ export class SurvivalHud {
           which === 'full' ? 'armor_full' : which === 'half' ? 'armor_half' : 'armor_empty';
         this.blit(this.armors[i]!, name);
       }
-    } else {
+    } else if (this.lastArmorVisible) {
       this.armorRow.style.display = 'none';
+      this.lastArmorVisible = false;
     }
 
     const showBubbles = frame.underwater || frame.breathSec < frame.maxBreathSec;
     if (showBubbles) {
       const breathPer = frame.maxBreathSec / BUBBLES;
+      const turningOn = !this.lastBubblesVisible;
       for (let i = 0; i < BUBBLES; i++) {
         const start = i * breathPer;
         const v = Math.max(0, Math.min(breathPer, frame.breathSec - start));
         const name: IconName = v > breathPer * 0.5 ? 'bubble_full' : 'bubble_empty';
         const el = this.bubbles[i]!;
-        el.style.display = 'inline-block';
+        if (turningOn) el.style.display = 'inline-block';
         this.blit(el, name);
       }
-    } else {
+      this.lastBubblesVisible = true;
+    } else if (this.lastBubblesVisible) {
       for (const c of this.bubbles) c.style.display = 'none';
+      this.lastBubblesVisible = false;
     }
 
     const pct = frame.xpToNext > 0 ? frame.xpProgress / frame.xpToNext : 0;
-    this.xpFill.style.width = `${String(Math.round(Math.max(0, Math.min(1, pct)) * 100))}%`;
-    this.xpLabel.textContent = frame.xpLevel > 0 ? String(frame.xpLevel) : '';
+    const pctRounded = Math.round(Math.max(0, Math.min(1, pct)) * 100);
+    if (pctRounded !== this.lastXpFillPct) {
+      this.xpFill.style.width = `${String(pctRounded)}%`;
+      this.lastXpFillPct = pctRounded;
+    }
+    const label = frame.xpLevel > 0 ? String(frame.xpLevel) : '';
+    if (label !== this.lastXpLabel) {
+      this.xpLabel.textContent = label;
+      this.lastXpLabel = label;
+    }
   }
 
   private readonly lastBlit = new WeakMap<HTMLCanvasElement, IconName>();
