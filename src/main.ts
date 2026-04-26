@@ -9091,7 +9091,18 @@ function frame(): void {
       if (saddledMobs.has(m.id)) continue;
       farMobs.push(m.id);
     }
-    for (const id of farMobs) mobWorld.remove(id);
+    for (const id of farMobs) {
+      // Clean up companion state for the despawned id. Without this,
+      // baby growth timers, drown timers, and egg timers all kept
+      // ticking against ids that no longer exist — slow leak via Map
+      // grow-only over a long session.
+      mobWorld.remove(id);
+      babyMobs.delete(id);
+      chickenEggTimers.delete(id);
+      zombieDrownTimers.delete(id);
+      tamedMobs.delete(id);
+      lovingMobs.delete(id);
+    }
 
     spawnSystemCtx.playerPos.x = fp.position.x;
     spawnSystemCtx.playerPos.y = fp.position.y;
