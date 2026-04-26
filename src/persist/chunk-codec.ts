@@ -195,10 +195,11 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
     // section. Decode is now O(words) instead of O(volume).
     chunk.setSection(cy, SubChunk.fromRaw(paletteStates, bits, indices));
     if (hasLight && light) {
-      const lightBytes = new Uint8Array(SUBCHUNK_VOLUME);
-      for (let i = 0; i < SUBCHUNK_VOLUME; i++) lightBytes[i] = bytes[offset + i] ?? 0;
+      // Per-byte copy was O(N) JS interpreter overhead — slice() is a
+      // single typed-array memcpy. Same correctness (independent
+      // copy, owns its own buffer).
+      light.sections[cy] = bytes.slice(offset, offset + SUBCHUNK_VOLUME);
       offset += SUBCHUNK_VOLUME;
-      light.sections[cy] = lightBytes;
     }
   }
 
