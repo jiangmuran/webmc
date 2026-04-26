@@ -359,6 +359,101 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   }
   // Stick-from-bamboo (1 bamboo → 1 stick, vanilla 1.14+).
   L(['webmc:bamboo'], 'webmc:stick');
+  // Smoker / blast furnace.
+  for (const w of WOODS) {
+    S([' L ', 'LFL', ' L '], { L: `webmc:${w}_log`, F: 'webmc:furnace' }, 'webmc:smoker');
+  }
+  S(
+    ['III', 'IFI', 'SSS'],
+    { I: 'webmc:iron_ingot', F: 'webmc:furnace', S: 'webmc:smooth_stone' },
+    'webmc:blast_furnace',
+  );
+  // Beacon — 5 glass + 3 obsidian + nether_star (registered + dropped
+  // by wither). Hard recipe to acquire but registered now.
+  S(
+    ['GGG', 'GNG', 'OOO'],
+    {
+      G: 'webmc:glass',
+      N: 'webmc:nether_star',
+      O: 'webmc:obsidian',
+    },
+    'webmc:beacon',
+  );
+  // Cauldron.
+  S(['I I', 'I I', 'III'], { I: 'webmc:iron_ingot' }, 'webmc:cauldron');
+  // Brewing stand.
+  S([' B ', 'CCC'], { B: 'webmc:blaze_rod', C: 'webmc:cobblestone' }, 'webmc:brewing_stand');
+  // Enchanting table.
+  S(
+    [' B ', 'DOD', 'OOO'],
+    {
+      B: 'webmc:book',
+      D: 'webmc:diamond',
+      O: 'webmc:obsidian',
+    },
+    'webmc:enchanting_table',
+  );
+  // Jukebox.
+  S(['PPP', 'PDP', 'PPP'], { P: 'webmc:oak_planks', D: 'webmc:diamond' }, 'webmc:jukebox');
+  // Note block (8 planks + 1 redstone).
+  S(['PPP', 'PRP', 'PPP'], { P: 'webmc:oak_planks', R: 'webmc:redstone' }, 'webmc:noteblock');
+  // Loom.
+  S(['SS', 'PP'], { S: 'webmc:string', P: 'webmc:oak_planks' }, 'webmc:loom');
+  // Cartography table.
+  S(['SS', 'PP', 'PP'], { S: 'webmc:paper', P: 'webmc:oak_planks' }, 'webmc:cartography_table');
+  // Stonecutter.
+  S([' I ', 'SSS'], { I: 'webmc:iron_ingot', S: 'webmc:stone' }, 'webmc:stonecutter');
+  // Grindstone.
+  S(
+    ['SIS', 'P P'],
+    { S: 'webmc:stick', I: 'webmc:iron_ingot', P: 'webmc:oak_planks' },
+    'webmc:grindstone',
+  );
+  // Lectern.
+  S(['SSS', ' B ', ' S '], { S: 'webmc:oak_slab', B: 'webmc:bookshelf' }, 'webmc:lectern');
+  // Fletching table.
+  S(['FF', 'PP', 'PP'], { F: 'webmc:flint', P: 'webmc:oak_planks' }, 'webmc:fletching_table');
+  // Trapped chest.
+  L(['webmc:chest', 'webmc:tripwire_hook'], 'webmc:trapped_chest');
+  // Daylight detector.
+  S(
+    ['GGG', 'QQQ', 'SSS'],
+    { G: 'webmc:glass', Q: 'webmc:quartz', S: 'webmc:oak_slab' },
+    'webmc:daylight_detector',
+  );
+  // Observer.
+  S(
+    ['CCC', 'RRQ', 'CCC'],
+    {
+      C: 'webmc:cobblestone',
+      R: 'webmc:redstone',
+      Q: 'webmc:quartz',
+    },
+    'webmc:observer',
+  );
+  // Hopper minecart, chest minecart, furnace minecart, TNT minecart.
+  S(['M', 'C'], { M: 'webmc:minecart', C: 'webmc:chest' }, 'webmc:chest_minecart');
+  S(['M', 'F'], { M: 'webmc:minecart', F: 'webmc:furnace' }, 'webmc:furnace_minecart');
+  S(['M', 'H'], { M: 'webmc:minecart', H: 'webmc:hopper' }, 'webmc:hopper_minecart');
+  S(['M', 'T'], { M: 'webmc:minecart', T: 'webmc:tnt' }, 'webmc:tnt_minecart');
+  // Minecart.
+  S(['I I', 'III'], { I: 'webmc:iron_ingot' }, 'webmc:minecart');
+  // Rails (16 from 6 ingots + 1 stick).
+  S(['I I', 'ISI', 'I I'], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:rail', 16);
+  // Powered rail (6 gold + 1 stick + 1 redstone → 6 powered rails).
+  S(
+    ['G G', 'GSG', 'GRG'],
+    { G: 'webmc:gold_ingot', S: 'webmc:stick', R: 'webmc:redstone' },
+    'webmc:powered_rail',
+    6,
+  );
+  // Detector rail.
+  S(
+    ['I I', 'IPI', 'IRI'],
+    { I: 'webmc:iron_ingot', P: 'webmc:stone_pressure_plate', R: 'webmc:redstone' },
+    'webmc:detector_rail',
+    6,
+  );
 
   return count;
 }
