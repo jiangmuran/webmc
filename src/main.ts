@@ -2359,6 +2359,19 @@ const consumeFoodLookTmp = new THREE.Vector3();
 const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
 // Hoisted egg color — was a fresh tuple per egg lay.
 const EGG_COLOR: readonly [number, number, number] = [240, 230, 200];
+// Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
+// def.name.replace(/^webmc:/, '') was firing per-frame in
+// getBreakDurationSec (every break tick) and other hot paths; the
+// regex + new string were both pure overhead since the name never
+// changes for a given id.
+const BLOCK_SHORT_NAME_BY_ID: string[] = [];
+function blockShortNameFn(id: number): string {
+  let s = BLOCK_SHORT_NAME_BY_ID[id];
+  if (s !== undefined) return s;
+  s = registry.get(id).name.replace(/^webmc:/, '');
+  BLOCK_SHORT_NAME_BY_ID[id] = s;
+  return s;
+}
 // Reused inventory.add input scratch. Inventory.add reads itemId +
 // count + damage synchronously and stores fresh stack() copies into
 // slots; no reference retention. Most event-handler add() callers
@@ -2646,7 +2659,7 @@ const interaction = new InteractionController(
         if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
       }
       // Tool tier check: ores require correct mining level or no drops.
-      const blockShortName = def.name.replace(/^webmc:/, '');
+      const blockShortName = blockShortNameFn(prevBlockId);
       const requiredLevel = requiredMiningLevel(blockShortName);
       let toolLevel = 1;
       const heldNameForTool = heldNameLower();
@@ -2903,13 +2916,14 @@ const interaction = new InteractionController(
       if (gameMode === 'creative') return 0.001;
       const s = world.get(bx, by, bz);
       if (s === AIR) return 0.4;
-      const def = registry.get(stateId(s));
+      const blockId = stateId(s);
+      const def = registry.get(blockId);
       const hardness = Math.max(0, def.hardness);
       if (hardness === 0) return 0.05; // wool / leaves / flowers / instant blocks
       const heldName = heldNameLower();
       // Tool kind matching: pickaxe for stone/ore, axe for wood/log, shovel
       // for dirt/sand/gravel/snow, sword for cobwebs. Anything else is hand.
-      const blockShortName = def.name.replace(/^webmc:/, '');
+      const blockShortName = blockShortNameFn(blockId);
       const isStoneLike =
         blockShortName.includes('stone') ||
         blockShortName.includes('ore') ||
