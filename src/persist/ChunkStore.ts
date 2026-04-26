@@ -67,8 +67,22 @@ export class ChunkStore {
   // Drain the entire dirty queue regardless of batch cap. Used on
   // tab close where flushBatch=32 would silently drop the rest of
   // a 100+ dirty queue.
+  //
+  // If a regular flush is currently in flight, wait for it to settle
+  // first and then drain — without this, flushAll could race the
+  // 1Hz auto-flush and skip half the queue.
   async flushAll(): Promise<number> {
-    return this.flushInternal(Infinity);
+    let total = 0;
+    // Loop in case multiple drains are needed (would happen if dirty
+    // grows during the await — unlikely in close handlers but safe).
+    for (let attempt = 0; attempt < 8; attempt++) {
+      while (this.inFlight) {
+        await Promise.resolve();
+      }
+      if (this.dirty.size === 0) break;
+      total += await this.flushInternal(Infinity);
+    }
+    return total;
   }
 
   private async flushInternal(cap: number): Promise<number> {
