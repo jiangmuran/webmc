@@ -3458,6 +3458,9 @@ const interaction = new InteractionController(
       // Bone meal on bamboo: grow 1-2 stalks immediately (vanilla).
       if (heldName === 'bone_meal' && def.name === 'webmc:bamboo') {
         const bambooId = id;
+        // Walk both up and down from the clicked stalk so the height
+        // cap counts the full column, not just from-click-up. Was
+        // letting players bone-meal middle-of-column past the 16-cap.
         let topY = by;
         for (let h = 1; h <= 16; h++) {
           const above = world.get(bx, by + h, bz);
@@ -3465,7 +3468,15 @@ const interaction = new InteractionController(
           if (registry.get(stateId(above)).name !== 'webmc:bamboo') break;
           topY = by + h;
         }
-        if (topY - by < 15) {
+        let bottomY = by;
+        for (let h = 1; h <= 16; h++) {
+          const below = world.get(bx, by - h, bz);
+          if (below === AIR) break;
+          if (registry.get(stateId(below)).name !== 'webmc:bamboo') break;
+          bottomY = by - h;
+        }
+        const totalHeight = topY - bottomY + 1;
+        if (totalHeight < 16) {
           const grow = 1 + Math.floor(Math.random() * 2);
           let added = 0;
           for (let h = 1; h <= grow; h++) {
@@ -3496,14 +3507,15 @@ const interaction = new InteractionController(
           if (registry.get(stateId(above)).name !== 'webmc:sugar_cane') break;
           topY = by + h;
         }
-        let currentH = 1;
-        for (let dyDown = 1; dyDown <= 3; dyDown++) {
-          const below = world.get(bx, by - dyDown, bz);
+        let bottomY = by;
+        for (let h = 1; h <= 3; h++) {
+          const below = world.get(bx, by - h, bz);
           if (below === AIR) break;
           if (registry.get(stateId(below)).name !== 'webmc:sugar_cane') break;
-          currentH++;
+          bottomY = by - h;
         }
-        if (currentH < 3 && world.get(bx, topY + 1, bz) === AIR) {
+        const totalHeight = topY - bottomY + 1;
+        if (totalHeight < 3 && world.get(bx, topY + 1, bz) === AIR) {
           world.set(bx, topY + 1, bz, makeState(caneId, 0));
           touchWorldEdit(bx, topY + 1, bz, caneId);
           if (gameMode === 'survival' || gameMode === 'adventure') {
