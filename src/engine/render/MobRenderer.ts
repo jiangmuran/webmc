@@ -102,6 +102,15 @@ interface MobVisual {
   // tint, so the next "normal" frame must force a re-set even if the
   // base palette color hasn't changed.
   needsColorRestore: boolean;
+  // Cached transform values — three.js Euler fires _onChangeCallback
+  // (quaternion.setFromEuler — 6 trig + multiple muls) on every per-
+  // axis set, so writing rotation.x=0 + rotation.y=yaw + rotation.z=0
+  // fires the recompute three times per mob per frame even when the
+  // values didn't change. Diff-skip the whole rotation via .set().
+  lastRotX: number;
+  lastRotY: number;
+  lastRotZ: number;
+  lastScale: number;
 }
 
 // Cache by label string. Mob nameplates with the same name (e.g.
@@ -294,29 +303,49 @@ export class MobRenderer {
           nameMat,
           lastNormalColorHex: color,
           needsColorRestore: false,
+          lastRotX: 0,
+          lastRotY: 0,
+          lastRotZ: 0,
+          lastScale: 1,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
         vis = visual;
       }
       vis.group.position.set(mob.position.x, mob.position.y, mob.position.z);
-      vis.group.rotation.y = mob.yaw;
+      let targetRotX: number;
+      let targetRotZ: number;
+      let targetScale: number;
       if (mob.dyingSec > 0) {
         const s = mob.dyingSec / 0.35;
-        vis.group.scale.setScalar(Math.max(0.01, s));
-        vis.group.rotation.z = (1 - s) * Math.PI * 0.6;
-        vis.group.rotation.x = 0;
+        targetScale = Math.max(0.01, s);
+        targetRotZ = (1 - s) * Math.PI * 0.6;
+        targetRotX = 0;
       } else {
-        vis.group.scale.setScalar(this.customScales.get(mob.id) ?? 1);
-        vis.group.rotation.z = 0;
-        // Walk bob: lean forward/back based on horizontal velocity magnitude.
+        targetScale = this.customScales.get(mob.id) ?? 1;
+        targetRotZ = 0;
         const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
         if (vh > 0.3) {
           const phase = nowMs * 0.012 + mob.id * 0.37;
-          vis.group.rotation.x = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
+          targetRotX = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
         } else {
-          vis.group.rotation.x = 0;
+          targetRotX = 0;
         }
+      }
+      if (vis.lastScale !== targetScale) {
+        vis.group.scale.setScalar(targetScale);
+        vis.lastScale = targetScale;
+      }
+      const targetRotY = mob.yaw;
+      if (
+        vis.lastRotX !== targetRotX ||
+        vis.lastRotY !== targetRotY ||
+        vis.lastRotZ !== targetRotZ
+      ) {
+        vis.group.rotation.set(targetRotX, targetRotY, targetRotZ);
+        vis.lastRotX = targetRotX;
+        vis.lastRotY = targetRotY;
+        vis.lastRotZ = targetRotZ;
       }
       if (mob.hurtFlashSec > 0) {
         const base = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
