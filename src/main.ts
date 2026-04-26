@@ -8574,7 +8574,7 @@ function frame(): void {
     } else if (touch.state.primary) {
       if (!lastTouchPrimary) {
         const origin = camera.position;
-        const look = fp.lookVector();
+        const look = fp.lookVector(frameLookTmp);
         let bestId: number | null = null;
         let bestDist = Infinity;
         for (const mob of mobWorld.all()) {
