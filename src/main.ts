@@ -56,6 +56,7 @@ import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_grow
 import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
 import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
 import { tickFire, isFlammable } from './blocks/fire_spread';
+import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -8985,6 +8986,22 @@ function frame(): void {
             growTreeAt(x, y, z, name);
           } else if (result.stage !== stage) {
             world.set(x, y, z, makeState(id, result.stage));
+          }
+        } else if (name === 'webmc:bamboo') {
+          // Bamboo column growth — same upward-stack pattern as sugar
+          // cane but max 16 tall (vs 3) and slower per-tick chance.
+          // Was unwired despite the bamboo_plant_growth module shipping.
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          let totalHeight = 1;
+          for (let dyDown = 1; dyDown <= 16; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            if (below === AIR || registry.get(stateId(below)).name !== 'webmc:bamboo') break;
+            totalHeight++;
+          }
+          if (totalHeight >= BAMBOO_MAX_H) continue;
+          if (bambooGrow({ totalHeight, ageBoost: false }, Math.random)) {
+            world.set(x, y + 1, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, id);
           }
         } else if (sugarCaneId !== undefined && id === sugarCaneId) {
           // Sugar cane grows up to 3 stalks tall when air is above.
