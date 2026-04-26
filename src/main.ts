@@ -7595,6 +7595,11 @@ function frame(): void {
   ) {
     const slowFalling = playerState.effects.has('slow_falling');
     let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    // Vanilla MC: landing in water (or while underwater) cancels all
+    // fall damage. fp.inFluid is sampled at body center, so even shallow
+    // water counts. Without this, jumping into a 1-block pool from a
+    // 30-block tower still killed the player.
+    if (fp.inFluid === 'water') dmg = 0;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
     const fx = Math.floor(fp.position.x);
     const fy = Math.floor(fp.position.y - 1.05);
