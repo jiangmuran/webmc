@@ -1810,6 +1810,22 @@ const torchIdCached = registry.byName('webmc:torch');
 const glowstoneIdCached = registry.byName('webmc:glowstone');
 const iceIdCached = registry.byName('webmc:ice');
 const farmlandIdCached = registry.byName('webmc:farmland');
+// Cached IDs for the per-frame contact-effect AABB sweep (cactus,
+// sweet-berry, cobweb, powder-snow, fire). Replaces the per-cell
+// registry.get(stateId(s)).name === 'webmc:X' string compares — for a
+// 16-cell sweep that was 16 × (registry.get + 4 string equality
+// checks) per frame even when the player wasn't near any of these.
+// undefined here means the block isn't registered (skipped at compare).
+const cactusIdCached = registry.byName('webmc:cactus');
+const sweetBerryBushIdCached = registry.byName('webmc:sweet_berry_bush');
+const cobwebIdCached = registry.byName('webmc:cobweb');
+const powderSnowIdCached = registry.byName('webmc:powder_snow');
+const fireIdCached = registry.byName('webmc:fire');
+const magmaBlockIdCached = registry.byName('webmc:magma_block');
+const soulSandIdCached = registry.byName('webmc:soul_sand');
+const hayBlockIdCached = registry.byName('webmc:hay_block');
+const honeyBlockIdCached = registry.byName('webmc:honey_block');
+const slimeBlockIdCached = registry.byName('webmc:slime_block');
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -9241,7 +9257,7 @@ function frame(): void {
     const fpz = Math.floor(fp.position.z);
     for (let dy = 0; dy <= 1; dy++) {
       const s = world.get(fpx, Math.floor(fp.position.y) + dy, fpz);
-      if (s !== AIR && registry.get(stateId(s)).name === 'webmc:fire') {
+      if (s !== AIR && stateId(s) === fireIdCached) {
         playerState.fireRemainingSec = Math.max(playerState.fireRemainingSec, 8);
         break;
       }
@@ -9264,10 +9280,10 @@ function frame(): void {
     const fx = Math.floor(fp.position.x);
     const fy = Math.floor(fp.position.y - 1.05);
     const fz = Math.floor(fp.position.z);
-    const landDef = registry.get(stateId(world.get(fx, fy, fz)));
-    if (landDef.name === 'webmc:hay_block' || landDef.name === 'webmc:honey_block') {
+    const landId = stateId(world.get(fx, fy, fz));
+    if (landId === hayBlockIdCached || landId === honeyBlockIdCached) {
       dmg = Math.floor(dmg * 0.2);
-    } else if (landDef.name === 'webmc:slime_block') {
+    } else if (landId === slimeBlockIdCached) {
       dmg = 0;
       // Vanilla bounces the player upward proportional to fall velocity
       // (unless they're sneaking, which absorbs the bounce). Without
@@ -9313,16 +9329,15 @@ function frame(): void {
       const fy = Math.floor(fp.position.y - 1.05);
       const fz = Math.floor(fp.position.z);
       const belowBlockId = stateId(world.get(fx, fy, fz));
-      const belowDef = registry.get(belowBlockId);
       if (
-        belowDef.name === 'webmc:magma_block' &&
+        belowBlockId === magmaBlockIdCached &&
         !fp.input.sneak &&
         !playerState.effects.has('fire_resistance')
       ) {
         envTakeDamage(1 * dtSec, 'fire');
       }
       // Soul sand slows player to 60% horizontal velocity (matches MC).
-      if (belowDef.name === 'webmc:soul_sand') {
+      if (belowBlockId === soulSandIdCached) {
         fp.velocity.x *= 0.6;
         fp.velocity.z *= 0.6;
       }
@@ -9355,11 +9370,11 @@ function frame(): void {
         for (let bx2 = minX; bx2 <= maxX; bx2++) {
           const s = world.get(bx2, by2, bz2);
           if (s === AIR) continue;
-          const d2 = registry.get(stateId(s));
-          if (d2.name === 'webmc:cactus') touchedCactus = true;
-          else if (d2.name === 'webmc:sweet_berry_bush') touchedBerry = true;
-          else if (d2.name === 'webmc:cobweb') touchedCobweb = true;
-          else if (d2.name === 'webmc:powder_snow') touchedPowderSnow = true;
+          const id = stateId(s);
+          if (id === cactusIdCached) touchedCactus = true;
+          else if (id === sweetBerryBushIdCached) touchedBerry = true;
+          else if (id === cobwebIdCached) touchedCobweb = true;
+          else if (id === powderSnowIdCached) touchedPowderSnow = true;
         }
       }
     }
