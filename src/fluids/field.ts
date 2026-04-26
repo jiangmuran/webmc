@@ -84,6 +84,25 @@ const TICK_RESULT_SCRATCH: FluidTickResult = {
 // synchronously and don't recurse into parseKey.
 const TICK_POS_SCRATCH: PosKey = { x: 0, y: 0, z: 0 };
 
+// Module-scope snapshot helper. Was a fresh arrow closure allocated
+// per tickFluid call, capturing the per-tick `cells` + `updates`
+// maps. Pulling it out to a free function with explicit args
+// eliminates the closure allocation (one per fluid tick = 4Hz
+// baseline) while keeping the same fast-path: post-update value
+// shadows the pre-tick cell value.
+function snapshotCell(
+  cells: ReadonlyMap<string, FluidCell>,
+  updates: Map<string, FluidCell | null>,
+  x: number,
+  y: number,
+  z: number,
+): FluidCell | null {
+  const k = keyOfXYZ(x, y, z);
+  const u = updates.get(k);
+  if (u !== undefined) return u;
+  return cells.get(k) ?? null;
+}
+
 // One fluid tick. Given sources (current fluid cells) + a solid-block sampler,
 // returns the new/changed cells. Horizontal flow decreases level by
 // attenuation per step; downward flow is unconditional at full level.
@@ -93,14 +112,6 @@ export function tickFluid(
 ): FluidTickResult {
   const updates = TICK_UPDATES_SCRATCH;
   updates.clear();
-  const snapshot: FluidSampler = (x, y, z) => {
-    // Compute the key once; was building two {x,y,z} literals + two
-    // template strings per snapshot lookup.
-    const k = keyOfXYZ(x, y, z);
-    const u = updates.get(k);
-    if (u !== undefined) return u;
-    return cells.get(k) ?? null;
-  };
 
   for (const [key, cell] of cells) {
     if (cell.level <= 0) continue;
@@ -111,7 +122,7 @@ export function tickFluid(
     const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
     const belowSolid = isSolid(pos.x, pos.y - 1, pos.z);
     if (!belowSolid) {
-      const below = snapshot(pos.x, pos.y - 1, pos.z);
+      const below = snapshotCell(cells, updates, pos.x, pos.y - 1, pos.z);
       const targetLevel = cell.source ? LEVEL_SOURCE - 1 : Math.max(cell.level, LEVEL_SOURCE - 1);
       if (below?.kind !== cell.kind || below.level < targetLevel) {
         updates.set(belowKey, {
@@ -127,7 +138,7 @@ export function tickFluid(
     // fresh arrow allocated per cell that wasn't directly solid-supported.
     let supported = belowSolid;
     if (!supported) {
-      const b = snapshot(pos.x, pos.y - 1, pos.z);
+      const b = snapshotCell(cells, updates, pos.x, pos.y - 1, pos.z);
       supported = b !== null && b.kind === cell.kind;
     }
     if (!supported) continue;
@@ -141,7 +152,7 @@ export function tickFluid(
       const ny = pos.y;
       const nz = pos.z + dz;
       if (isSolid(nx, ny, nz)) continue;
-      const neighbour = snapshot(nx, ny, nz);
+      const neighbour = snapshotCell(cells, updates, nx, ny, nz);
       if (neighbour && neighbour.kind !== cell.kind) continue;
       if (neighbour && neighbour.level >= outLevel) continue;
       updates.set(keyOfXYZ(nx, ny, nz), {
