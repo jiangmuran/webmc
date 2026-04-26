@@ -7006,6 +7006,13 @@ let fluidTickAccum = 0;
 let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
 const CROP_TICK_SEC = 1;
+const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
+  'webmc:wheat': 'wheat',
+  'webmc:carrots': 'carrot',
+  'webmc:potatoes': 'potato',
+  'webmc:beetroots': 'beetroot',
+  'webmc:nether_wart': 'nether_wart',
+};
 const NEIGHBOR_OFFSETS_6: readonly (readonly [number, number, number])[] = [
   [1, 0, 0],
   [-1, 0, 0],
@@ -9394,13 +9401,6 @@ function frame(): void {
   if (cropTickAccum >= CROP_TICK_SEC) {
     cropTickAccum -= CROP_TICK_SEC;
     if (gameMode !== 'spectator') {
-      const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
-        'webmc:wheat': 'wheat',
-        'webmc:carrots': 'carrot',
-        'webmc:potatoes': 'potato',
-        'webmc:beetroots': 'beetroot',
-        'webmc:nether_wart': 'nether_wart',
-      };
       const px = Math.floor(fp.position.x);
       const py = Math.floor(fp.position.y);
       const pz = Math.floor(fp.position.z);
