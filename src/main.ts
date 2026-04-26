@@ -2444,6 +2444,30 @@ const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: numbe
 // Bamboo growth ctx scratch — same pattern, fresh literal per
 // bamboo block per random tick.
 const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
+// Fire-tick ctx scratch + stateful neighborAt closure. The random-
+// tick scan calls tickFire for every fire block; was building a
+// fresh ctx + 5 closures per fire block per second.
+const fireCtxPos = { x: 0, y: 0, z: 0 };
+function fireNeighborAt(dx: number, dy: number, dz: number): string {
+  const ns = world.get(fireCtxPos.x + dx, fireCtxPos.y + dy, fireCtxPos.z + dz);
+  if (ns === AIR) return 'webmc:air';
+  return registry.get(stateId(ns)).name;
+}
+const fireCtxScratch: {
+  pos: { x: number; y: number; z: number };
+  age: number;
+  fireTickAllowed: boolean;
+  humidity: number;
+  neighborAt: (dx: number, dy: number, dz: number) => string;
+  rng: () => number;
+} = {
+  pos: fireCtxPos,
+  age: 0,
+  fireTickAllowed: true,
+  humidity: 0.4,
+  neighborAt: fireNeighborAt,
+  rng: Math.random,
+};
 // Reused per-frame hotbar-counts list. Was a fresh number[] every
 // frame in survival/adventure (and a fresh empty [] every frame in
 // creative for the 'infinite' marker).
@@ -9997,18 +10021,13 @@ function frame(): void {
           // ages on each random tick, ignites flammable neighbors.
           const fireId = id;
           const age = stateProps(s);
-          const r = tickFire({
-            pos: { x, y, z },
-            age,
-            fireTickAllowed: true,
-            humidity: 0.4,
-            neighborAt: (dx, dy, dz) => {
-              const ns = world.get(x + dx, y + dy, z + dz);
-              if (ns === AIR) return 'webmc:air';
-              return registry.get(stateId(ns)).name;
-            },
-            rng: Math.random,
-          });
+          fireCtxPos.x = x;
+          fireCtxPos.y = y;
+          fireCtxPos.z = z;
+          fireCtxScratch.age = age;
+          fireCtxScratch.fireTickAllowed = true;
+          fireCtxScratch.humidity = 0.4;
+          const r = tickFire(fireCtxScratch);
           if (r.extinguish) {
             world.set(x, y, z, AIR);
             touchWorldEdit(x, y, z, 0);
