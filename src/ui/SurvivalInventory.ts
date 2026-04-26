@@ -190,6 +190,34 @@ export class SurvivalInventory {
     count.textContent = String(stack.count);
     count.style.cssText = 'font-size:11px;font-weight:700;text-shadow:1px 1px 0 rgba(0,0,0,0.8);';
     slot.appendChild(count);
+    // Durability bar at the bottom of the slot, when the item is a tool
+    // and has been used at least once. Vanilla shows this as a colored bar
+    // beneath each item icon. Without this, players had no UI feedback on
+    // how much life their pickaxe had left until it broke.
+    if (def.durability > 0 && stack.damage > 0) {
+      const ratio = Math.max(0, 1 - stack.damage / def.durability);
+      const bar = document.createElement('div');
+      const r = Math.round(255 * (1 - ratio));
+      const g = Math.round(255 * ratio);
+      bar.style.cssText = [
+        'position:absolute',
+        'left:2px',
+        'right:2px',
+        'bottom:1px',
+        'height:3px',
+        'background:rgba(0,0,0,0.6)',
+        'border-radius:1px',
+        'overflow:hidden',
+      ].join(';');
+      const fill = document.createElement('div');
+      fill.style.cssText = [
+        'height:100%',
+        `width:${(ratio * 100).toFixed(0)}%`,
+        `background:rgb(${r},${g},0)`,
+      ].join(';');
+      bar.appendChild(fill);
+      slot.appendChild(bar);
+    }
     const isPotion = def.name.includes('potion_') || def.name === 'webmc:awkward_potion';
     const armorSlotIdx = armorSlotForName(def.name);
     if (((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion) && this.cb.onEat) {

@@ -1050,6 +1050,16 @@ itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
+// Armor pieces. ARMOR_DEFS is the source of truth (defense / toughness /
+// durability), but every entry needs to be in itemRegistry too so /give,
+// crafting recipes, the survival inventory equip-on-click, and droppers
+// can refer to them by item id. Without this loop, leather_helmet etc.
+// existed as armor metadata but `itemRegistry.byName('webmc:leather_helmet')`
+// returned undefined — equipArmor command silently no-op'd, recipe outputs
+// failed to register, mob death drops referencing helmets dropped nothing.
+for (const armorDef of Object.values(ARMOR_DEFS)) {
+  itemRegistry.register({ name: armorDef.name, maxStack: 1, durability: armorDef.durability });
+}
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
