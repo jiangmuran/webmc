@@ -7108,10 +7108,14 @@ document.addEventListener('visibilitychange', () => {
     void chunkStore.flush();
     void savePlayerNow();
     void saveAllChestStorages();
-    void persistDB.setMeta('playerStats', playerStats);
-    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
-    void persistDB.setMeta('dayCounter', dayCounter);
-    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+    // Batch the meta writes — was 4 separate IDB transactions racing
+    // tab teardown; now a single transaction.
+    void persistDB.setMetas([
+      { key: 'playerStats', value: playerStats },
+      { key: 'timeOfDay', value: dayNight.timeOfDay },
+      { key: 'dayCounter', value: dayCounter },
+      { key: 'fluidCells', value: fluidWorld.serialize() },
+    ]);
     saveHotbarIfChanged();
     if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
       pauseMenu.show();
@@ -7124,12 +7128,16 @@ window.addEventListener('beforeunload', () => {
   void chunkStore.flush();
   void savePlayerNow();
   void saveAllChestStorages();
-  void persistDB.setMeta('playerStats', playerStats);
-  void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
-  void persistDB.setMeta('dayCounter', dayCounter);
+  // Single batched meta transaction — beforeunload fires once and the
+  // browser may kill the tab before independent transactions complete.
   // Was missing fluidCells and hotbarSelected — closing the tab during
   // active fluid placement or after switching hotbar slot lost both.
-  void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+  void persistDB.setMetas([
+    { key: 'playerStats', value: playerStats },
+    { key: 'timeOfDay', value: dayNight.timeOfDay },
+    { key: 'dayCounter', value: dayCounter },
+    { key: 'fluidCells', value: fluidWorld.serialize() },
+  ]);
   saveHotbarIfChanged();
 });
 
