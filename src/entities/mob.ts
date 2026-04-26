@@ -960,6 +960,12 @@ export class MobWorld {
           // Random chance ~ 1/120s at the 32-block boundary — half-life
           // around 4 minutes for distant mobs.
           toRemove.push(m.id);
+        } else if (m.position.y < -64) {
+          // Void cleanup. Mobs that fell off the world (player digs a 1-
+          // block hole, enemies fall in, world generates with caves to
+          // -64) used to live forever at y=-Infinity, ticking gravity
+          // every frame. Drop them immediately like vanilla void damage.
+          toRemove.push(m.id);
         }
       }
       for (const id of toRemove) this.mobs.delete(id);
