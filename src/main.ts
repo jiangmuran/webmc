@@ -7630,6 +7630,14 @@ function frame(): void {
     if (touch.state.sneak) fp.input.sneak = true;
     else if (lastTouchSneak) fp.input.sneak = false;
     lastTouchSneak = touch.state.sneak;
+    // Fly-mode vertical: keyboard maps Space → vertical=+1, Shift →
+    // vertical=-1. Touch only ever set fp.input.sneak which the camera
+    // ignores in fly mode — touch fliers had no way to descend. Map
+    // touch jump → +1, touch sneak → -1 when flying.
+    if (fp.input.fly) {
+      const v = touch.state.jump ? 1 : touch.state.sneak ? -1 : 0;
+      fp.input.vertical = v;
+    }
     // Edge-triggered touch buttons (Inv / Drop). Cleared after handling
     // so they fire once per tap. Without these, touch users had no way
     // to open inventory or drop the held stack.
@@ -9322,7 +9330,15 @@ function frame(): void {
             // block directly.
             const target = world.get(nx, ny, nz);
             if (target === AIR) continue;
-            if (!isFlammable(registry.get(stateId(target)).name)) continue;
+            const targetName = registry.get(stateId(target)).name;
+            if (!isFlammable(targetName)) continue;
+            // TNT ignited by fire: prime it instead of just replacing
+            // with fire (vanilla — fire-on-TNT detonates after fuse).
+            // Without this, fire just deleted TNT silently.
+            if (targetName === 'webmc:tnt') {
+              igniteTnt(nx, ny, nz);
+              continue;
+            }
             world.set(nx, ny, nz, makeState(fireId, 0));
             touchWorldEdit(nx, ny, nz, fireId);
           }
