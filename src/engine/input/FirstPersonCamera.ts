@@ -187,7 +187,11 @@ export class FirstPersonCamera {
         }
         break;
       case 'KeyR':
-        if (down) this.toggleFly();
+        // Was an unconditional toggleFly() — let survival players turn on
+        // creative-mode flight by tapping R. Gate on canFly to match the
+        // double-tap-space path (and vanilla, which has no key for fly
+        // toggle outside creative).
+        if (down && this.canFly) this.toggleFly();
         break;
       case 'ControlLeft':
       case 'ControlRight':
