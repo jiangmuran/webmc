@@ -7870,7 +7870,11 @@ function frame(): void {
   fp.lastLandFallBlocks = 0;
 
   if (fp.position.y < -64 && (gameMode === 'survival' || gameMode === 'adventure')) {
-    playerState.takeDamage({ amount: 4, source: 'void' });
+    // Vanilla: 4 dmg per game tick (20Hz) ≈ 80 dmg/s. takeDamage's
+    // i-frame bypass for 'void' was firing every render frame instead,
+    // so at 60FPS we were applying 240 dmg/s — enough to instantly
+    // erase totem-of-undying revivals via the same-frame re-damage.
+    playerState.takeDamage({ amount: 80 * dtSec, source: 'void' });
   }
 
   if (gameMode === 'survival' || gameMode === 'adventure') {
