@@ -3517,6 +3517,14 @@ const interaction = new InteractionController(
         def.name.endsWith('_shulker_box') ||
         def.name === 'webmc:shulker_box'
       ) {
+        // Vanilla "shiftBypassesUse": sneaking while holding a placeable
+        // block bypasses the chest open so you can stack blocks on top
+        // of the chest. Without this, you couldn't put a torch on top of
+        // your chest in survival without alt-tabbing the chest UI shut.
+        const heldStack = inventory.hotbar[inventory.selectedHotbar] ?? null;
+        const heldIsPlaceable =
+          heldStack !== null && itemRegistry.get(heldStack.itemId).blockId !== undefined;
+        if (fp.input.sneak && heldIsPlaceable) return false;
         chestUI.setStorage(getChestStorage(def.name, bx, by, bz));
         chestUI.show();
         fp.inputBlocked = true;
