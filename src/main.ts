@@ -3024,6 +3024,7 @@ const interaction = new InteractionController(
           }
           subtitles.push(`Spawned ${mobKind}`);
           sfx.play('click');
+          hand.swing();
           return true;
         } catch {
           /* unknown mob kind */
@@ -3273,6 +3274,7 @@ const interaction = new InteractionController(
             );
           subtitles.push('Tree grown');
           sfx.play('place');
+          hand.swing();
           return true;
         }
       }
@@ -3316,6 +3318,7 @@ const interaction = new InteractionController(
             [200, 220, 80],
           );
         subtitles.push('Crop matured');
+        hand.swing();
         return true;
       }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
@@ -3365,6 +3368,7 @@ const interaction = new InteractionController(
                 [200, 220, 80],
               );
             subtitles.push('Bone meal applied');
+            hand.swing();
             return true;
           }
         }
