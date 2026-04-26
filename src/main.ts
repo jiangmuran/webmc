@@ -6879,7 +6879,12 @@ function flushDirty(): void {
       if (dispatched >= budget) break;
       (chunk.meshDirty as Set<number>).delete(cy);
       const section = chunk.section(cy);
-      if (!section) {
+      if (!section || section.nonAirCount === 0) {
+        // All-air section: remove any prior mesh and skip dispatch.
+        // The mesher would correctly emit zero quads but spends ~5ms on
+        // the empty traversal + worker round-trip per call. Worth it
+        // for tall sky sections that toggle empty/non-empty as the
+        // player builds upward.
         chunkRenderer.remove(chunk.cx, cy, chunk.cz);
         continue;
       }
