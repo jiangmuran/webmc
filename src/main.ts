@@ -1636,6 +1636,8 @@ function cycleCamera(): void {
   playerAvatar.setVisible(cameraMode !== 'fp');
 }
 let lastTouchPrimary = false;
+let lastTouchJump = false;
+let lastTouchSneak = false;
 const sky = new SkyCelestials();
 sky.addTo(scene);
 const stars = new Stars();
@@ -7450,15 +7452,19 @@ function frame(): void {
       fp.input.forward = touch.state.moveForward;
       fp.input.strafe = touch.state.moveStrafe;
     }
+    // Touch sneak/jump need to clear on release — without it, the touch
+    // button setting fp.input.sneak=true had no path to false (keyboard
+    // ShiftLeft-up was the only setter), so tapping touch sneak left
+    // the player permanently sneaking. Track previous-frame touch state
+    // and clear fp.input on the falling edge so keyboard input still
+    // overlays correctly the rest of the time.
     if (touch.state.jump) fp.input.jump = true;
-    // Touch sprint: the auto-sprint flag from TouchControls (full-edge
-    // forward push) was declared in the input shape but never read into
-    // fp.input — touch users could never sprint. Now wired.
+    else if (lastTouchJump) fp.input.jump = false;
+    lastTouchJump = touch.state.jump;
     if (touch.state.sprint) fp.input.sprint = true;
-    // Touch sneak (the new HUD button) — used to be no way to sneak on
-    // touch, so edge-cling, shift-bypass-use on chests, and stealth past
-    // mobs were all desktop-only.
     if (touch.state.sneak) fp.input.sneak = true;
+    else if (lastTouchSneak) fp.input.sneak = false;
+    lastTouchSneak = touch.state.sneak;
     // Edge-triggered touch buttons (Inv / Drop). Cleared after handling
     // so they fire once per tap. Without these, touch users had no way
     // to open inventory or drop the held stack.
