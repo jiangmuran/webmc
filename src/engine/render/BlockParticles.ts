@@ -29,6 +29,12 @@ export class BlockParticles {
   // active particle budget would imply.
   private readonly pool: Particle[] = [];
   private readonly capacity: number;
+  // Tracks how many particles flush() last wrote. When this frame's
+  // count is 0 and the previous one was 0, the buffers and drawRange
+  // are already zeroed — skip the setDrawRange + three needsUpdate
+  // writes entirely. The common case (player not breaking blocks) hits
+  // this path every frame.
+  private lastFlushedCount = 0;
 
   constructor(capacity = 512) {
     this.capacity = capacity;
@@ -143,6 +149,7 @@ export class BlockParticles {
 
   private flush(): void {
     const n = this.alive.length;
+    if (n === 0 && this.lastFlushedCount === 0) return;
     for (let i = 0; i < n; i++) {
       const p = this.alive[i]!;
       const base = i * 3;
@@ -162,5 +169,6 @@ export class BlockParticles {
     if (pos instanceof THREE.BufferAttribute) pos.needsUpdate = true;
     if (col instanceof THREE.BufferAttribute) col.needsUpdate = true;
     if (siz instanceof THREE.BufferAttribute) siz.needsUpdate = true;
+    this.lastFlushedCount = n;
   }
 }
