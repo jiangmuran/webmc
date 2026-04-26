@@ -100,12 +100,20 @@ export class PlayerAvatar {
       this.rightArm.rotation.x = -swing * 0.8;
       this.leftLeg.rotation.x = -swing * 0.9;
       this.rightLeg.rotation.x = swing * 0.9;
-    } else {
+      this.idleWritten = false;
+    } else if (!this.idleWritten) {
+      // Edge-trigger the idle pose: writing rotation.x = 0 on each
+      // limb fires Euler._onChangeCallback (quaternion.setFromEuler —
+      // 6 trig + multiple muls per axis). Once we've written the
+      // zero pose once, subsequent idle frames skip the 4 callbacks.
       this.walkPhase = 0;
       this.leftArm.rotation.x = 0;
       this.rightArm.rotation.x = 0;
       this.leftLeg.rotation.x = 0;
       this.rightLeg.rotation.x = 0;
+      this.idleWritten = true;
     }
   }
+
+  private idleWritten = false;
 }
