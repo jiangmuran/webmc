@@ -189,7 +189,9 @@ export class TouchControls {
       onState(true);
     });
     const release = (e: TouchEvent): void => {
-      for (const t of Array.from(e.changedTouches)) {
+      const tl = e.changedTouches;
+      for (let i = 0; i < tl.length; i++) {
+        const t = tl[i]!;
         if (t.identifier === activeId) {
           activeId = null;
           btn.style.background = 'rgba(255,255,255,0.18)';
@@ -209,7 +211,12 @@ export class TouchControls {
   }
 
   private handleStart(e: TouchEvent): void {
-    for (const t of Array.from(e.changedTouches)) {
+    // Avoid Array.from(e.changedTouches) on every touch event — touchmove
+    // fires at ~60Hz on iOS so this would generate ~60 throwaway arrays
+    // per second. Iterate via TouchList index instead.
+    const tl = e.changedTouches;
+    for (let i = 0; i < tl.length; i++) {
+      const t = tl[i]!;
       if (this.isLeftHalf(t.clientX) && this.stickTouch === null) {
         this.stickTouch = t.identifier;
         this.stickOrigin = { x: t.clientX, y: t.clientY };
@@ -228,7 +235,9 @@ export class TouchControls {
   }
 
   private handleMove(e: TouchEvent): void {
-    for (const t of Array.from(e.changedTouches)) {
+    const tl = e.changedTouches;
+    for (let i = 0; i < tl.length; i++) {
+      const t = tl[i]!;
       if (t.identifier === this.stickTouch) {
         const dx = t.clientX - this.stickOrigin.x;
         const dy = t.clientY - this.stickOrigin.y;
@@ -265,7 +274,9 @@ export class TouchControls {
   }
 
   private handleEnd(e: TouchEvent): void {
-    for (const t of Array.from(e.changedTouches)) {
+    const tl = e.changedTouches;
+    for (let i = 0; i < tl.length; i++) {
+      const t = tl[i]!;
       if (t.identifier === this.stickTouch) {
         this.stickTouch = null;
         this.state.moveForward = 0;
