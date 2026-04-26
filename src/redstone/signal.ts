@@ -78,10 +78,10 @@ export function computePower(
       const n = lookup(nx, ny, nz);
       if (n.kind === 'dust') {
         const seed = Math.max(level - 1, MIN_POWER);
-        insertIfHigher(power, { x: nx, y: ny, z: nz }, seed);
+        insertIfHigherXYZ(power, nx, ny, nz, seed);
         frontier.push({ pos: { x: nx, y: ny, z: nz }, level: seed });
       } else if (n.opaque || n.kind === 'door') {
-        insertIfHigher(power, { x: nx, y: ny, z: nz }, level);
+        insertIfHigherXYZ(power, nx, ny, nz, level);
       }
     }
   }
@@ -102,12 +102,12 @@ export function computePower(
       const nz = item.pos.z + dz;
       const n = lookup(nx, ny, nz);
       if (n.kind === 'dust') {
-        if (insertIfHigher(power, { x: nx, y: ny, z: nz }, nextLevel)) {
+        if (insertIfHigherXYZ(power, nx, ny, nz, nextLevel)) {
           frontier.push({ pos: { x: nx, y: ny, z: nz }, level: nextLevel });
         }
       } else if (n.kind === 'door' || (n.opaque && dy === -1)) {
         // dust weakly powers the block beneath it
-        insertIfHigher(power, { x: nx, y: ny, z: nz }, nextLevel);
+        insertIfHigherXYZ(power, nx, ny, nz, nextLevel);
       }
     }
   }
@@ -115,8 +115,19 @@ export function computePower(
   return power;
 }
 
-function insertIfHigher(map: Map<string, PowerLevel>, pos: PosKey, level: PowerLevel): boolean {
-  const k = keyOf(pos);
+// Coord-direct variant. The per-neighbor pattern was building a fresh
+// {x,y,z} PosKey just so insertIfHigher could pass it to keyOf — the
+// PosKey itself was never stored, only its key form. For a long
+// redstone wire (~50 dust segments × 6 neighbors = 300+ visits per
+// recompute, fired at 10Hz), each saved literal compounds.
+function insertIfHigherXYZ(
+  map: Map<string, PowerLevel>,
+  x: number,
+  y: number,
+  z: number,
+  level: PowerLevel,
+): boolean {
+  const k = `${x.toString()},${y.toString()},${z.toString()}`;
   const existing = map.get(k) ?? MIN_POWER;
   if (level > existing) {
     map.set(k, level);
