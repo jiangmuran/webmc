@@ -4223,7 +4223,8 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       kelp: 'dried_kelp',
       cactus: 'green_dye',
       nether_quartz_ore: 'nether_quartz',
-      // Was oak_log only — now any log type cooks to charcoal (vanilla).
+      // Was oak_log only — now any flammable log type cooks to charcoal
+      // (vanilla). Crimson + warped stems are non-flammable so excluded.
       oak_log: 'charcoal',
       spruce_log: 'charcoal',
       birch_log: 'charcoal',
@@ -4232,8 +4233,6 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       dark_oak_log: 'charcoal',
       cherry_log: 'charcoal',
       mangrove_log: 'charcoal',
-      crimson_stem: 'charcoal',
-      warped_stem: 'charcoal',
       pale_oak_log: 'charcoal',
     };
     const out = SMELT[item];

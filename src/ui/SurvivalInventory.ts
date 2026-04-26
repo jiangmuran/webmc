@@ -436,6 +436,9 @@ export class SurvivalInventory {
       ['webmc:dark_oak_log', 'webmc:charcoal'],
       ['webmc:cherry_log', 'webmc:charcoal'],
       ['webmc:mangrove_log', 'webmc:charcoal'],
+      ['webmc:pale_oak_log', 'webmc:charcoal'],
+      // Crimson + warped stems are technically not flammable in vanilla
+      // (so don't smelt to charcoal). Skip those.
       ['webmc:wet_sponge', 'webmc:sponge'],
       ['webmc:chorus_fruit', 'webmc:popped_chorus_fruit'],
       ['webmc:sea_pickle', 'webmc:lime_dye'],
