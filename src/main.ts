@@ -6515,6 +6515,18 @@ document.addEventListener(
       );
       sfx.play('click');
     }
+    if (e.code === 'KeyF') {
+      e.preventDefault();
+      // F key: swap mainhand ↔ offhand. Vanilla shortcut. Was missing —
+      // touch users have no offhand UI either, so the offhand slot was
+      // effectively inaccessible from gameplay (only via inventory UI).
+      const slotIdx = inventory.selectedHotbar;
+      const main = inventory.hotbar[slotIdx];
+      const off = inventory.offhand;
+      inventory.hotbar[slotIdx] = off;
+      inventory.offhand = main ?? null;
+      sfx.play('click');
+    }
   },
   true,
 );
