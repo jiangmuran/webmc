@@ -1510,16 +1510,25 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   ],
   rabbit: ['webmc:carrot', 'webmc:dandelion'],
   wolf: [
+    // Raw + cooked meats. The mob-drop tables emit raw_* (e.g. cow drops
+    // raw_beef), so without the raw_* entries here, players couldn't
+    // feed the meat they actually had to wolves.
+    'webmc:raw_beef',
     'webmc:beef',
     'webmc:cooked_beef',
+    'webmc:raw_porkchop',
     'webmc:porkchop',
     'webmc:cooked_porkchop',
+    'webmc:raw_chicken',
     'webmc:chicken',
     'webmc:cooked_chicken',
+    'webmc:raw_mutton',
     'webmc:mutton',
     'webmc:cooked_mutton',
+    'webmc:raw_rabbit',
     'webmc:rabbit',
     'webmc:cooked_rabbit',
+    'webmc:rotten_flesh',
   ],
   // 1.13+ renamed raw_fish→cod and raw_salmon→salmon — both legacy names
   // were never registered in this project. cod/salmon are.
