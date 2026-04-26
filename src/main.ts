@@ -9900,13 +9900,14 @@ function frame(): void {
       // Per-chunk: rebuild light once. Per-section (cy): mark mesh dirty
       // — markChunkAllDirty was rebuilding all 24 sections of every
       // touched chunk every fluid tick, costing 24x what it should.
-      const chunksToRelight = new Set<string>();
-      const sectionsToRemesh = new Map<string, Set<number>>();
+      // Numeric packed key avoids per-update string alloc + split-back.
+      const chunksToRelight = new Set<number>();
+      const sectionsToRemesh = new Map<number, Set<number>>();
       for (const p of changed) {
         const cx = Math.floor(p.x / 16);
         const cz = Math.floor(p.z / 16);
         const cy = Math.floor(p.y / 16);
-        const ck = `${String(cx)},${String(cz)}`;
+        const ck = lightKey(cx, cz);
         chunksToRelight.add(ck);
         let s = sectionsToRemesh.get(ck);
         if (!s) {
@@ -9916,13 +9917,13 @@ function frame(): void {
         s.add(cy);
       }
       for (const k of chunksToRelight) {
-        const [cxS, czS] = k.split(',');
-        const cxN = Number(cxS);
-        const czN = Number(czS);
+        // Unpack the numeric key back into (cx, cz).
+        const cxN = Math.floor(k / 65536) - 32768;
+        const czN = (k & 0xffff) - 32768;
         const chunk = world.getChunk(cxN, czN);
         if (!chunk) continue;
         const newLight = buildLight(chunk, lightOracle);
-        lightCache.set(lightKey(cxN, czN), newLight);
+        lightCache.set(k, newLight);
         // Save the freshly-built light, not the stale pre-tick version.
         chunkStore.markDirty(chunk, newLight);
         const sections = sectionsToRemesh.get(k);
