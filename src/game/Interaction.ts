@@ -26,6 +26,11 @@ export interface InteractionOptions {
   // allow underwater building.
   isReplaceable?: (bx: number, by: number, bz: number) => boolean;
   onInteract?: (bx: number, by: number, bz: number) => boolean;
+  // Right-click with no block hit. Used for fire-into-the-sky actions
+  // like bow / crossbow firing — without this they only worked when
+  // aimed at a block (bow only fired on existing surfaces, never the
+  // open sky).
+  onAirInteract?: () => boolean;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -166,7 +171,12 @@ export class InteractionController {
   private act(nowMs = performance.now()): void {
     this.lastActionAt = nowMs;
     const hit = this.castRay();
-    if (!hit || hit.distance === 0) return;
+    if (!hit || hit.distance === 0) {
+      // Air right-click: lets onAirInteract handle bow / crossbow firing
+      // and the like. Returning true consumes the action.
+      if (this.held === 'place') this.opts.onAirInteract?.();
+      return;
+    }
     if (this.held === 'place') {
       if (this.opts.onInteract?.(hit.bx, hit.by, hit.bz)) return;
       if (this.selectedBlock === AIR) return;

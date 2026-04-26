@@ -2908,86 +2908,8 @@ const interaction = new InteractionController(
         subtitles.push('Riptide!');
         return true;
       }
-      // Bow / crossbow: instant-hit hitscan. Was registered as an item
-      // since M2 but never wired to fire — drawing a bow did nothing.
-      // Vanilla has draw-charge + arc, but webmc trades that for hitscan
-      // matching how snowball/egg already work. Damage = 6 (full-draw
-      // ceil(speed*2) from arrow_trajectory). Consumes 1 arrow in
-      // survival/adventure (creative is free), bow loses 1 durability.
       if (heldName === 'bow' || heldName === 'crossbow') {
-        const arrowId = itemRegistry.byName('webmc:arrow');
-        const isSurvival = gameMode === 'survival' || gameMode === 'adventure';
-        if (isSurvival && (arrowId === undefined || countInventoryItem(arrowId) === 0)) {
-          subtitles.push('Out of arrows');
-          return false;
-        }
-        const origin = camera.position;
-        const look = fp.lookVector();
-        let bestId: number | null = null;
-        let bestDist = Infinity;
-        for (const m of mobWorld.all()) {
-          const box = {
-            minX: m.position.x - m.def.aabb.halfX,
-            minY: m.position.y - m.def.aabb.halfY,
-            minZ: m.position.z - m.def.aabb.halfZ,
-            maxX: m.position.x + m.def.aabb.halfX,
-            maxY: m.position.y + m.def.aabb.halfY,
-            maxZ: m.position.z + m.def.aabb.halfZ,
-          };
-          const hit = intersectRayAABB(origin, look, box, 50);
-          if (hit && hit.tMin < bestDist) {
-            bestDist = hit.tMin;
-            bestId = m.id;
-          }
-        }
-        const dmg = 6;
-        if (bestId !== null) {
-          const result = mobWorld.damage(bestId, dmg);
-          if (result) {
-            damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
-            // Trail particles between origin and impact (visual arrow path).
-            const ix = origin.x + look.x * bestDist;
-            const iy = origin.y + look.y * bestDist;
-            const iz = origin.z + look.z * bestDist;
-            for (let k = 0; k < 6; k++) {
-              const t = (k + 1) / 7;
-              blockParticles.emitPlace(
-                origin.x + (ix - origin.x) * t,
-                origin.y + (iy - origin.y) * t,
-                origin.z + (iz - origin.z) * t,
-                [220, 200, 160],
-              );
-            }
-            if (result.killed) {
-              spawnMobDrops(result.kind, result.position);
-              const xpAmount = rollMobXp({
-                source: { kind: 'mob', mob: result.kind },
-                rng: Math.random,
-              });
-              for (const chunk of splitXp(xpAmount)) {
-                xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
-              }
-              playerStats.mobsKilled++;
-            }
-          }
-        } else {
-          // Visual: dust trail forward 20 blocks.
-          for (let k = 0; k < 6; k++) {
-            const t = ((k + 1) / 7) * 20;
-            blockParticles.emitPlace(
-              origin.x + look.x * t,
-              origin.y + look.y * t,
-              origin.z + look.z * t,
-              [220, 200, 160],
-            );
-          }
-        }
-        if (isSurvival && arrowId !== undefined) consumeInventoryItem(arrowId, 1);
-        // Bow durability — only the bow itself, not arrows.
-        consumeHeldToolDurability(1);
-        sfx.play('break');
-        hand.swing();
-        return true;
+        return fireBowOrCrossbow();
       }
       // Snowball / egg: small visual hit at target, no projectile arc.
       if (heldName === 'snowball' || heldName === 'egg') {
@@ -3643,6 +3565,17 @@ const interaction = new InteractionController(
       }
       return false;
     },
+    onAirInteract: () => {
+      // Right-click into the open sky / void (no block hit). Bow firing
+      // works here too — vanilla shoots wherever you're aimed. Spectator
+      // is gated out (matches the onInteract spectator gate).
+      if (gameMode === 'spectator') return false;
+      const heldName = heldNameLower();
+      if (heldName === 'bow' || heldName === 'crossbow') {
+        return fireBowOrCrossbow();
+      }
+      return false;
+    },
   },
 );
 
@@ -3693,6 +3626,86 @@ function growTreeAt(bx: number, by: number, bz: number, saplingName: string): bo
       bz + (Math.random() - 0.5) * 3,
       [200, 220, 80],
     );
+  return true;
+}
+
+// Bow / crossbow instant-hit hitscan. Was registered as an item since
+// M2 but never wired to fire — drawing a bow did nothing. Vanilla has
+// draw-charge + arc, but webmc trades that for hitscan matching how
+// snowball/egg already work. Damage = 6 (full-draw ceil(speed*2) from
+// arrow_trajectory). Consumes 1 arrow in survival/adventure (creative
+// is free), bow loses 1 durability. Called from both onInteract (when
+// aimed at a block) and onAirInteract (firing into the open sky).
+function fireBowOrCrossbow(): boolean {
+  const arrowId = itemRegistry.byName('webmc:arrow');
+  const isSurvival = gameMode === 'survival' || gameMode === 'adventure';
+  if (isSurvival && (arrowId === undefined || countInventoryItem(arrowId) === 0)) {
+    subtitles.push('Out of arrows');
+    return false;
+  }
+  const origin = camera.position;
+  const look = fp.lookVector();
+  let bestId: number | null = null;
+  let bestDist = Infinity;
+  for (const m of mobWorld.all()) {
+    const box = {
+      minX: m.position.x - m.def.aabb.halfX,
+      minY: m.position.y - m.def.aabb.halfY,
+      minZ: m.position.z - m.def.aabb.halfZ,
+      maxX: m.position.x + m.def.aabb.halfX,
+      maxY: m.position.y + m.def.aabb.halfY,
+      maxZ: m.position.z + m.def.aabb.halfZ,
+    };
+    const hit = intersectRayAABB(origin, look, box, 50);
+    if (hit && hit.tMin < bestDist) {
+      bestDist = hit.tMin;
+      bestId = m.id;
+    }
+  }
+  const dmg = 6;
+  if (bestId !== null) {
+    const result = mobWorld.damage(bestId, dmg);
+    if (result) {
+      damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
+      const ix = origin.x + look.x * bestDist;
+      const iy = origin.y + look.y * bestDist;
+      const iz = origin.z + look.z * bestDist;
+      for (let k = 0; k < 6; k++) {
+        const t = (k + 1) / 7;
+        blockParticles.emitPlace(
+          origin.x + (ix - origin.x) * t,
+          origin.y + (iy - origin.y) * t,
+          origin.z + (iz - origin.z) * t,
+          [220, 200, 160],
+        );
+      }
+      if (result.killed) {
+        spawnMobDrops(result.kind, result.position);
+        const xpAmount = rollMobXp({
+          source: { kind: 'mob', mob: result.kind },
+          rng: Math.random,
+        });
+        for (const chunk of splitXp(xpAmount)) {
+          xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
+        }
+        playerStats.mobsKilled++;
+      }
+    }
+  } else {
+    for (let k = 0; k < 6; k++) {
+      const t = ((k + 1) / 7) * 20;
+      blockParticles.emitPlace(
+        origin.x + look.x * t,
+        origin.y + look.y * t,
+        origin.z + look.z * t,
+        [220, 200, 160],
+      );
+    }
+  }
+  if (isSurvival && arrowId !== undefined) consumeInventoryItem(arrowId, 1);
+  consumeHeldToolDurability(1);
+  sfx.play('break');
+  hand.swing();
   return true;
 }
 
