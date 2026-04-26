@@ -5108,7 +5108,7 @@ const chatInput = new ChatInput(appEl, {
           };
         },
         chunkStats: () => ({
-          loaded: Array.from(world.chunks()).length,
+          loaded: world.chunkCount,
           pending: 0,
           meshes: chunkRenderer.meshCount,
           triangles: chunkRenderer.triangleCount,
