@@ -6,6 +6,13 @@ export class FirstPersonHand {
   private mesh: THREE.Mesh | null = null;
   private readonly geom: THREE.BoxGeometry;
   private readonly color = new THREE.Color(0xffffff);
+  // Diff-cache for the per-frame setHeldBlockColor write — held color
+  // only changes when the player swaps hotbar slots or picks up a new
+  // placeable. Was doing 3 divides + 3 setRGB writes + a Color.copy
+  // every frame for the same value.
+  private lastColorR = -1;
+  private lastColorG = -1;
+  private lastColorB = -1;
   private swingSec = 0;
   private sway: SwayState = reset();
 
@@ -18,7 +25,16 @@ export class FirstPersonHand {
   }
 
   setHeldBlockColor(rgb: readonly [number, number, number]): void {
-    this.color.setRGB(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255);
+    const r = rgb[0];
+    const g = rgb[1];
+    const b = rgb[2];
+    if (r === this.lastColorR && g === this.lastColorG && b === this.lastColorB && this.mesh) {
+      return;
+    }
+    this.lastColorR = r;
+    this.lastColorG = g;
+    this.lastColorB = b;
+    this.color.setRGB(r / 255, g / 255, b / 255);
     if (this.mesh) {
       (this.mesh.material as THREE.MeshBasicMaterial).color.copy(this.color);
       return;
