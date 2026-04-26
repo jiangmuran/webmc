@@ -7887,13 +7887,12 @@ function frame(): void {
     }
 
     // Natural hostile mob spawning: every ~5s, attempt to place a hostile
-    // mob 24-48 blocks from the player at a dark, surface-air spot. Without
-    // this, survival had no naturally-spawned mobs at all — every zombie
-    // had to come from /summon, which made the night-survival loop empty.
+    // mob 24-48 blocks from the player at a dark spot. Tries surface first,
+    // then random Y for cave spawning. Without this, survival had no
+    // naturally-spawned mobs (only /summon).
     const nowSpawnMs = performance.now();
     if (
       (gameMode === 'survival' || gameMode === 'adventure') &&
-      !dayNight.isDay &&
       nowSpawnMs - lastNaturalSpawnAttemptMs > 5000
     ) {
       lastNaturalSpawnAttemptMs = nowSpawnMs;
@@ -7908,17 +7907,33 @@ function frame(): void {
         }
       }
       if (hostileCount < WORLD_MOB_CAPS.hostile) {
-        for (let attempt = 0; attempt < 3; attempt++) {
+        for (let attempt = 0; attempt < 6; attempt++) {
           const angle = Math.random() * Math.PI * 2;
           const dist = 24 + Math.random() * 24;
           const sx = Math.floor(fp.position.x + Math.cos(angle) * dist);
           const sz = Math.floor(fp.position.z + Math.sin(angle) * dist);
-          // Find a surface: topmost solid with 2 air above.
+          // Half attempts target surface (covers night), half pick a random Y
+          // between 5 and surface for cave spawning. Caves stay dark even
+          // during the day so this gives the player something to fight when
+          // they're spelunking.
           let sy = -1;
-          for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
-            if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
-              sy = y + 1;
-              break;
+          if (attempt < 3) {
+            // Surface scan.
+            for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
+              if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
+                sy = y + 1;
+                break;
+              }
+            }
+          } else {
+            // Random Y. Probe for a solid floor with 2 air above.
+            const probeY = 5 + Math.floor(Math.random() * 60);
+            if (
+              isSolid(sx, probeY - 1, sz) &&
+              !isSolid(sx, probeY, sz) &&
+              !isSolid(sx, probeY + 1, sz)
+            ) {
+              sy = probeY;
             }
           }
           if (sy < 0) continue;
@@ -7936,6 +7951,9 @@ function frame(): void {
           const sky = (lb >>> 4) & 0xf;
           const block = lb & 0xf;
           if (Math.max(sky, block) > 7) continue;
+          // Skip when it's broad daylight AND we're spawning at the surface
+          // (sky light max). Caves stay dark so still spawn there.
+          if (dayNight.isDay && sky > 7) continue;
           const choices: ('zombie' | 'skeleton' | 'creeper' | 'spider')[] = [
             'zombie',
             'zombie',
