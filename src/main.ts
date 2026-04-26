@@ -6916,6 +6916,21 @@ function markChunkAllDirty(chunk: Chunk): void {
 // Scratch dirty-section list reused across flushDirty calls; sized
 // for max sections per chunk (24).
 const dirtyScratch: number[] = new Array<number>(24);
+// Reused across flushDirty mesh dispatches:
+//  - emptyLightSlice: returned when this chunk has no lighting yet
+//    (mesher.worker falls back to its DEFAULT_FLAT_SKY/BLOCK constants);
+//  - mesherLightOpts: the {flatSkyLight, flatBlockLight} options
+//    object passed into mesherClient.mesh — its fields are read
+//    synchronously and the typed arrays themselves get transferred to
+//    the worker; the wrapper just needs to be a stable mutable shell.
+const emptyLightSlice: { sky: Uint8Array | null; block: Uint8Array | null } = {
+  sky: null,
+  block: null,
+};
+const mesherLightOpts: { flatSkyLight: Uint8Array | null; flatBlockLight: Uint8Array | null } = {
+  flatSkyLight: null,
+  flatBlockLight: null,
+};
 function flushDirty(): void {
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
@@ -6979,14 +6994,11 @@ function flushDirty(): void {
         continue;
       }
       const borders = borderFor(chunk.cx, cy, chunk.cz);
-      const lightSlice = chunkLight
-        ? flatLightForSection(chunkLight, cy)
-        : { sky: null, block: null };
+      const lightSlice = chunkLight ? flatLightForSection(chunkLight, cy) : emptyLightSlice;
+      mesherLightOpts.flatSkyLight = lightSlice.sky;
+      mesherLightOpts.flatBlockLight = lightSlice.block;
       void mesherClient
-        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, {
-          flatSkyLight: lightSlice.sky,
-          flatBlockLight: lightSlice.block,
-        })
+        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, mesherLightOpts)
         .then((response) => {
           // Stale-response guard: chunk may have unloaded while the
           // mesher worker was still building. Without this, the late

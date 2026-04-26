@@ -224,6 +224,17 @@ export function buildLight(chunk: Chunk, oracle: LightOracle): ChunkLight {
   return light;
 }
 
+// Shared mutable result wrapper. The Uint8Arrays themselves are
+// allocated fresh per call because they're transferred to the mesher
+// worker (and become detached on the main thread after postMessage),
+// but the wrapping {sky, block} object is just a temp shell — the
+// caller reads it synchronously and copies the typed-array refs into
+// its own dispatch options. Avoids a per-mesh-dispatch object literal.
+const flatLightSliceScratch: { sky: Uint8Array; block: Uint8Array } = {
+  sky: new Uint8Array(0),
+  block: new Uint8Array(0),
+};
+
 export function flatLightForSection(
   light: ChunkLight,
   cy: number,
@@ -233,13 +244,17 @@ export function flatLightForSection(
   const block = new Uint8Array(SUBCHUNK_VOLUME);
   if (!sec) {
     sky.fill(MAX_LIGHT);
-    return { sky, block };
+    flatLightSliceScratch.sky = sky;
+    flatLightSliceScratch.block = block;
+    return flatLightSliceScratch;
   }
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
     const b = sec[i] ?? 0;
     sky[i] = unpackSky(b);
     block[i] = unpackBlock(b);
   }
-  return { sky, block };
+  flatLightSliceScratch.sky = sky;
+  flatLightSliceScratch.block = block;
+  return flatLightSliceScratch;
 }
 void SUBCHUNK_DIM;
