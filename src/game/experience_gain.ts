@@ -33,6 +33,24 @@ const MOB_XP: Record<string, [number, number]> = {
   pillager: [5, 5],
   shulker: [5, 5],
   breeze: [10, 10],
+  // Vanilla XP for hostiles that webmc spawns but the table missed —
+  // husk / stray / drowned / bogged / zombie_villager / cave_spider /
+  // silverfish / phantom / magma_cube / slime / piglin_brute /
+  // zombified_piglin / vex / zoglin all drop XP per vanilla.
+  husk: [5, 5],
+  stray: [5, 5],
+  drowned: [5, 5],
+  bogged: [5, 5],
+  zombie_villager: [5, 5],
+  cave_spider: [5, 5],
+  silverfish: [5, 5],
+  phantom: [5, 5],
+  magma_cube: [4, 4],
+  slime: [4, 4],
+  piglin_brute: [20, 20],
+  zombified_piglin: [5, 5],
+  vex: [3, 3],
+  zoglin: [5, 5],
 };
 
 const ORE_XP: Record<string, [number, number]> = {
