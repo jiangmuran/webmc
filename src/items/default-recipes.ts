@@ -273,6 +273,92 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
       'webmc:smithing_table',
     );
   }
+  // Wood-family blocks: door / trapdoor / slab / stairs / fence /
+  // fence_gate / button / pressure_plate / sign for every plank type.
+  // All registered as blocks since M3 but unrecipeable — players had
+  // to /give to test even basic builds.
+  for (const w of WOODS) {
+    const P = `webmc:${w}_planks`;
+    // 6 planks → 3 doors.
+    S(['PP', 'PP', 'PP'], { P }, `webmc:${w}_door`, 3);
+    // 6 planks → 2 trapdoors.
+    S(['PPP', 'PPP'], { P }, `webmc:${w}_trapdoor`, 2);
+    // 3 planks → 6 slabs.
+    S(['PPP'], { P }, `webmc:${w}_slab`, 6);
+    // 6 planks → 4 stairs.
+    S(['P  ', 'PP ', 'PPP'], { P }, `webmc:${w}_stairs`, 4);
+    // 4 planks + 2 sticks → 3 fences.
+    S(['PSP', 'PSP'], { P, S: 'webmc:stick' }, `webmc:${w}_fence`, 3);
+    // 4 planks + 2 sticks → 1 fence gate (vanilla shape).
+    S(['SPS', 'SPS'], { P, S: 'webmc:stick' }, `webmc:${w}_fence_gate`);
+    // 1 plank → 1 button (shapeless).
+    L([P], `webmc:${w}_button`);
+    // 2 planks → 1 pressure plate.
+    S(['PP'], { P }, `webmc:${w}_pressure_plate`);
+    // 6 planks + 1 stick → 3 signs.
+    S(['PPP', 'PPP', ' S '], { P, S: 'webmc:stick' }, `webmc:${w}_sign`, 3);
+  }
+  // Stone family — slab / stairs / wall / button / pressure plate.
+  // Same vanilla shapes as wood but with stone material. Was missing
+  // for cobblestone, stone, mossy_cobblestone, andesite, granite, diorite.
+  const STONES = [
+    'cobblestone',
+    'mossy_cobblestone',
+    'stone',
+    'smooth_stone',
+    'sandstone',
+    'red_sandstone',
+    'stone_bricks',
+    'mossy_stone_bricks',
+    'andesite',
+    'polished_andesite',
+    'granite',
+    'polished_granite',
+    'diorite',
+    'polished_diorite',
+    'deepslate',
+    'cobbled_deepslate',
+    'polished_deepslate',
+    'deepslate_bricks',
+    'nether_brick',
+    'red_nether_brick',
+    'blackstone',
+    'polished_blackstone',
+    'quartz_block',
+    'purpur_block',
+    'prismarine',
+    'prismarine_bricks',
+    'dark_prismarine',
+    'end_stone_bricks',
+    'bricks',
+  ];
+  for (const s of STONES) {
+    const M = `webmc:${s}`;
+    S(['MMM'], { M }, `webmc:${s}_slab`, 6);
+    S(['M  ', 'MM ', 'MMM'], { M }, `webmc:${s}_stairs`, 4);
+    S(['MMM', 'MMM'], { M }, `webmc:${s}_wall`, 6);
+  }
+  // Stone button + pressure plate (vanilla only stone, not cobble etc.).
+  L(['webmc:stone'], 'webmc:stone_button');
+  S(['MM'], { M: 'webmc:stone' }, 'webmc:stone_pressure_plate');
+  // Iron / gold pressure plate (1 ingot wide pair).
+  S(['MM'], { M: 'webmc:iron_ingot' }, 'webmc:heavy_weighted_pressure_plate');
+  S(['MM'], { M: 'webmc:gold_ingot' }, 'webmc:light_weighted_pressure_plate');
+  // Glass family — pane (already have generic) + colored stained glass
+  // (skip color crafting — would need dye recipes wired). Iron door +
+  // trapdoor:
+  S(['II', 'II', 'II'], { I: 'webmc:iron_ingot' }, 'webmc:iron_door', 3);
+  S(['II', 'II'], { I: 'webmc:iron_ingot' }, 'webmc:iron_trapdoor');
+  // Item frame.
+  S(['SSS', 'SLS', 'SSS'], { S: 'webmc:stick', L: 'webmc:leather' }, 'webmc:item_frame');
+  // Painting (8 sticks + 1 wool).
+  S(['SSS', 'SWS', 'SSS'], { S: 'webmc:stick', W: 'webmc:wool' }, 'webmc:painting');
+  // Boat (5 planks).
+  for (const w of WOODS) {
+    S(['P P', 'PPP'], { P: `webmc:${w}_planks` }, `webmc:${w}_boat`);
+  }
+  // Stick-from-bamboo (1 bamboo → 1 stick, vanilla 1.14+).
+  L(['webmc:bamboo'], 'webmc:stick');
 
   return count;
 }
