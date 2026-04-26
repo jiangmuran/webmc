@@ -1007,15 +1007,29 @@ export class MobWorld {
     if (mob.hurtFlashSec > 0) mob.hurtFlashSec = Math.max(0, mob.hurtFlashSec - dtSec);
     if (mob.fleeingSec > 0) mob.fleeingSec = Math.max(0, mob.fleeingSec - dtSec);
 
-    // Sunlight burn for undead hostile mobs (zombie/skeleton).
-    if (
-      ctx.isSunlit &&
-      (mob.def.kind === 'zombie' || mob.def.kind === 'skeleton') &&
-      ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)
-    ) {
-      mob.health -= 0.5 * dtSec;
-      if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
-      if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+    // Sunlight burn for undead hostile mobs. Vanilla list: zombie,
+    // skeleton, stray, zombie_villager, drowned (only out of water),
+    // phantom. Husks + zombified_piglin DON'T burn (their thing).
+    // Was only catching zombie + skeleton — strays/drowned/phantoms/zombie
+    // villagers all happily strolled around in noon sun unburnt.
+    if (ctx.isSunlit) {
+      const kind = mob.def.kind;
+      const drownedInWater =
+        kind === 'drowned' &&
+        ctx.isFluid?.(mob.position.x, mob.position.y, mob.position.z) === 'water';
+      const burns =
+        !drownedInWater &&
+        (kind === 'zombie' ||
+          kind === 'skeleton' ||
+          kind === 'stray' ||
+          kind === 'zombie_villager' ||
+          kind === 'phantom' ||
+          kind === 'drowned');
+      if (burns && ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)) {
+        mob.health -= 0.5 * dtSec;
+        if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
+        if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+      }
     }
 
     // Passive mobs flee from player while fleeingSec > 0.
