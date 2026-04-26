@@ -233,6 +233,80 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   L(['webmc:bone_block'], 'webmc:bone_meal', 9);
   // Bone meal from bone (1 bone → 3 bone meal).
   L(['webmc:bone'], 'webmc:bone_meal', 3);
+  // Golden apple — 8 gold ingots + 1 apple.
+  S(['GGG', 'GAG', 'GGG'], { G: 'webmc:gold_ingot', A: 'webmc:apple' }, 'webmc:golden_apple');
+  // Golden carrot — 8 gold nuggets + 1 carrot.
+  S(
+    ['NNN', 'NCN', 'NNN'],
+    { N: 'webmc:gold_nugget', C: 'webmc:carrot' },
+    'webmc:golden_carrot',
+  );
+  // Glistering melon — 8 gold nuggets + 1 melon_slice.
+  S(
+    ['NNN', 'NMN', 'NNN'],
+    { N: 'webmc:gold_nugget', M: 'webmc:melon_slice' },
+    'webmc:glistering_melon_slice',
+  );
+  // Melon block — 9 melon slices.
+  S(['MMM', 'MMM', 'MMM'], { M: 'webmc:melon_slice' }, 'webmc:melon');
+  // Pumpkin pie — pumpkin + sugar + egg.
+  L(['webmc:pumpkin', 'webmc:sugar', 'webmc:egg'], 'webmc:pumpkin_pie');
+  // Mushroom stew.
+  L(
+    ['webmc:bowl', 'webmc:red_mushroom', 'webmc:brown_mushroom'],
+    'webmc:mushroom_stew',
+  );
+  // Beetroot soup.
+  L(
+    [
+      'webmc:bowl',
+      'webmc:beetroot',
+      'webmc:beetroot',
+      'webmc:beetroot',
+      'webmc:beetroot',
+      'webmc:beetroot',
+      'webmc:beetroot',
+    ],
+    'webmc:beetroot_soup',
+  );
+  // Rabbit stew.
+  L(
+    [
+      'webmc:bowl',
+      'webmc:cooked_rabbit',
+      'webmc:baked_potato',
+      'webmc:carrot',
+      'webmc:brown_mushroom',
+    ],
+    'webmc:rabbit_stew',
+  );
+  // Suspicious stew (mushroom stew + flower).
+  L(
+    ['webmc:bowl', 'webmc:red_mushroom', 'webmc:brown_mushroom', 'webmc:dandelion'],
+    'webmc:suspicious_stew',
+  );
+  // Bowl from planks.
+  for (const w of WOODS) {
+    S(['P P', ' P '], { P: `webmc:${w}_planks` }, 'webmc:bowl', 4);
+  }
+  // Sugar from honey bottle.
+  L(['webmc:honey_bottle'], 'webmc:sugar', 3);
+  // Honey block from 4 honey bottles.
+  S(['HH', 'HH'], { H: 'webmc:honey_bottle' }, 'webmc:honey_block');
+  // Honeycomb block from 4 honeycomb.
+  S(['HH', 'HH'], { H: 'webmc:honeycomb' }, 'webmc:honeycomb_block');
+  // Magma cream — slime + blaze powder.
+  L(['webmc:slime_ball', 'webmc:blaze_powder'], 'webmc:magma_cream');
+  // Blaze powder — 1 blaze rod → 2 blaze powder.
+  L(['webmc:blaze_rod'], 'webmc:blaze_powder', 2);
+  // Fire charge — gunpowder + blaze powder + coal/charcoal → 3 fire charges.
+  L(
+    ['webmc:gunpowder', 'webmc:blaze_powder', 'webmc:coal'],
+    'webmc:fire_charge',
+    3,
+  );
+  // Bottle from glass (3 glass → 3 glass bottles).
+  S(['G G', ' G '], { G: 'webmc:glass' }, 'webmc:glass_bottle', 3);
   // Iron nuggets from iron ingot.
   L(['webmc:iron_ingot'], 'webmc:iron_nugget', 9);
   // Gold nuggets from gold ingot + reverse.
