@@ -2452,6 +2452,8 @@ const iceCtxScratch = {
   nearbyWarmBlock: false,
   lightLevel: 0,
 };
+// Shared leaf-decay query scratch.
+const leafDecayScratch = { persistent: false, distance: 0 };
 // Fire-tick ctx scratch + stateful neighborAt closure. The random-
 // tick scan calls tickFire for every fire block; was building a
 // fresh ctx + 5 closures per fire block per second.
@@ -10111,7 +10113,9 @@ function frame(): void {
                 stackD.push(cd2 + 1);
               }
             }
-            if (leafShouldDecay({ persistent: false, distance: found ? 0 : LEAF_MAX_DIST })) {
+            leafDecayScratch.persistent = false;
+            leafDecayScratch.distance = found ? 0 : LEAF_MAX_DIST;
+            if (leafShouldDecay(leafDecayScratch)) {
               const def2 = registry.get(id);
               const drops: { itemId: number; count: number; color?: number }[] = [];
               if (Math.random() < 0.05) {
