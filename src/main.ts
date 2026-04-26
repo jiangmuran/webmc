@@ -1777,6 +1777,10 @@ void persistDB.getMeta('loadouts').then((saved) => {
 });
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
+// Cached IDs for ember scans — was registry.byName(...) every tick.
+const torchIdCached = registry.byName('webmc:torch');
+const glowstoneIdCached = registry.byName('webmc:glowstone');
+const lavaIdCached = registry.byName('webmc:lava');
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -8092,8 +8096,8 @@ function frame(): void {
   torchEmberAccum += dtSec;
   if (torchEmberAccum > 0.3) {
     torchEmberAccum = 0;
-    const torchId = registry.byName('webmc:torch');
-    const glowId = registry.byName('webmc:glowstone');
+    const torchId = torchIdCached;
+    const glowId = glowstoneIdCached;
     if (torchId !== undefined || glowId !== undefined) {
       const px = Math.floor(fp.position.x);
       const py = Math.floor(fp.position.y);
@@ -8118,7 +8122,7 @@ function frame(): void {
   lavaEmberAccum += dtSec;
   if (lavaEmberAccum > 0.18) {
     lavaEmberAccum = 0;
-    const lavaId = registry.byName('webmc:lava');
+    const lavaId = lavaIdCached;
     if (lavaId !== undefined) {
       const px = Math.floor(fp.position.x);
       const py = Math.floor(fp.position.y);
