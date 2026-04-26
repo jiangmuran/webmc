@@ -2628,6 +2628,7 @@ const interaction = new InteractionController(
           if (eId !== undefined) consumeInventoryItem(eId, 1);
         }
         sfx.play('click');
+        hand.swing();
         subtitles.push('End crystal placed');
         return true;
       }
@@ -2916,6 +2917,7 @@ const interaction = new InteractionController(
             [255, 200, 100],
           );
         sfx.play('break');
+        hand.swing();
         subtitles.push('Firework boost!');
         return true;
       }
@@ -2957,6 +2959,7 @@ const interaction = new InteractionController(
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Firework!');
         return true;
       }
@@ -3006,6 +3009,7 @@ const interaction = new InteractionController(
           }
           subtitles.push(`Splash potion (${affected})`);
           sfx.play('break');
+          hand.swing();
           return true;
         }
       }
