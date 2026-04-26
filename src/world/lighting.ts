@@ -1,6 +1,6 @@
 import type { BlockState } from '@/blocks/state';
 import { SUBCHUNK_DIM, SUBCHUNK_VOLUME, localIndex } from './SubChunk';
-import { CHUNK_DIM, CHUNK_HEIGHT, type Chunk } from './Chunk';
+import { CHUNK_DIM, CHUNK_HEIGHT, CHUNK_SECTIONS, type Chunk } from './Chunk';
 
 export const MAX_LIGHT = 15;
 
@@ -83,19 +83,36 @@ interface LightNode {
 // Scoped to a single chunk for M3 — cross-chunk bleed is an upgrade.
 export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
   const queue: LightNode[] = [];
-  for (let y = 0; y < CHUNK_HEIGHT; y++) {
-    const cy = y >> 4;
+  // Scan section-by-section. Skip whole sections that can't contain any
+  // emissive voxel — uniform sections with non-emissive palette[0] (most
+  // sky/stone/grass sections), and palette-mixed sections where every
+  // palette entry has emission 0. Saves ~98K chunk.get + lightEmission
+  // calls per chunk for the common no-light-block case.
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     const sec = chunk.section(cy);
     if (!sec) continue;
-    for (let lx = 0; lx < CHUNK_DIM; lx++) {
-      for (let lz = 0; lz < CHUNK_DIM; lz++) {
-        const state = chunk.get(lx, y, lz);
-        const e = oracle.lightEmission(state);
-        if (e > 0) {
-          const lightSec = ensureSection(light, cy, 0);
-          const prev = lightSec[localIndex(lx, y & 0xf, lz)] ?? 0;
-          lightSec[localIndex(lx, y & 0xf, lz)] = packLight(unpackSky(prev), e);
-          queue.push({ x: lx, y, z: lz, value: e });
+    let sectionHasEmissive = false;
+    const palette = sec.palette;
+    for (let i = 0; i < palette.size; i++) {
+      if (oracle.lightEmission(palette.get(i)) > 0) {
+        sectionHasEmissive = true;
+        break;
+      }
+    }
+    if (!sectionHasEmissive) continue;
+    const yBase = cy * SUBCHUNK_DIM;
+    for (let dy = 0; dy < SUBCHUNK_DIM; dy++) {
+      const y = yBase + dy;
+      for (let lx = 0; lx < CHUNK_DIM; lx++) {
+        for (let lz = 0; lz < CHUNK_DIM; lz++) {
+          const state = chunk.get(lx, y, lz);
+          const e = oracle.lightEmission(state);
+          if (e > 0) {
+            const lightSec = ensureSection(light, cy, 0);
+            const prev = lightSec[localIndex(lx, y & 0xf, lz)] ?? 0;
+            lightSec[localIndex(lx, y & 0xf, lz)] = packLight(unpackSky(prev), e);
+            queue.push({ x: lx, y, z: lz, value: e });
+          }
         }
       }
     }
