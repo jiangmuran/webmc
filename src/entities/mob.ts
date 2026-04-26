@@ -883,6 +883,10 @@ export interface MobTickContext {
   // invisible at >16 blocks if sneaking). When true, aggroRangeSq is
   // multiplied by ~0.5 to halve the detection distance.
   playerSneaking?: boolean;
+  // Vanilla MC: invisible players are detected at ~1/8 the normal range
+  // (still ~2 blocks at default 16-block aggro). Wearing armor reduces
+  // the bonus, but the per-piece reduction isn't tracked here yet.
+  playerInvisible?: boolean;
 }
 
 export class MobWorld {
@@ -1037,10 +1041,10 @@ export class MobWorld {
       // Sneak reduces aggro radius. Vanilla applies a ~0.5x factor on the
       // detection range when the player is sneaking (effective ~half-radius
       // squared); without this, sneaking through a cave was indistinguishable
-      // from sprinting in.
-      const effectiveAggroSq = ctx.playerSneaking
-        ? mob.def.aggroRangeSq * 0.25
-        : mob.def.aggroRangeSq;
+      // from sprinting in. Invisibility stacks: 1/8 base, then * sneak.
+      let effectiveAggroSq = mob.def.aggroRangeSq;
+      if (ctx.playerInvisible) effectiveAggroSq *= 0.0156; // (1/8)² ≈ 0.0156
+      if (ctx.playerSneaking) effectiveAggroSq *= 0.25;
       if (distSq <= effectiveAggroSq) {
         // Movement velocity uses horizontal-only direction so mobs don't
         // crawl when the player is high above (e.g. on a 3-block tower).
