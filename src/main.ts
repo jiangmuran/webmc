@@ -6233,7 +6233,11 @@ document.addEventListener('pointerlockchange', () => {
       !resourcePackLoader.isVisible() &&
       !creativeInv.isVisible() &&
       !survivalInv.isVisible() &&
-      !chestUI.isVisible()
+      !chestUI.isVisible() &&
+      // Death screen owns the modal stack while it's up — auto-showing
+      // the pause menu over it would stack two overlays and the player
+      // couldn't reach either's button.
+      !deathScreen.isVisible()
     ) {
       pauseMenu.show();
       fp.inputBlocked = true;
