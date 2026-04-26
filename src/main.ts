@@ -423,13 +423,50 @@ itemRegistry.register({ name: 'webmc:axolotl_bucket', maxStack: 1, durability: 0
 itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:arrow', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_porkchop', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_beef', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_chicken', maxStack: 64, durability: 0 });
+// Raw meats — were registered with hungerRestore=0, so eating raw beef
+// dropped from a cow did literally nothing. Vanilla nutrition values:
+//   raw beef:    3 hunger / 1.8 sat
+//   raw porkchop: 3 / 1.8
+//   raw chicken: 2 / 1.2 (+ 30% food poisoning, omitted here)
+//   raw mutton:  2 / 1.2
+//   raw rabbit:  3 / 1.8
+itemRegistry.register({
+  name: 'webmc:raw_porkchop',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:raw_beef',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:raw_chicken',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
 // Was missing: raw_mutton, raw_rabbit. Sheep/rabbit drops referenced
 // these names but the items didn't exist — drops silently failed.
-itemRegistry.register({ name: 'webmc:raw_mutton', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_rabbit', maxStack: 64, durability: 0 });
+itemRegistry.register({
+  name: 'webmc:raw_mutton',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:raw_rabbit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
 itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
