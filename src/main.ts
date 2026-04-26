@@ -16,6 +16,7 @@ import {
   createMesherClient,
   extractBorderFromSubChunk,
 } from './world/workers/MesherClient';
+import type { MesherResponse } from './world/workers/mesher.protocol';
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
 import { SubtitleView } from './ui/SubtitleView';
@@ -7101,6 +7102,17 @@ const mesherLightOpts: { flatSkyLight: Uint8Array | null; flatBlockLight: Uint8A
   flatSkyLight: null,
   flatBlockLight: null,
 };
+// Stable .then() callback for the mesher response. Was an inline
+// arrow per dispatch; chunk streaming hits this hundreds of times
+// per second at startup. Stale-response guard: chunk may have
+// unloaded while the mesher worker was still building. Without it,
+// the late response re-adds a phantom mesh into the scene-graph that
+// onUnload already cleared — leaking GPU memory and drawing outside
+// view distance until the next radius shrink.
+const applyMeshResponse = (response: MesherResponse): void => {
+  if (!world.has(response.cx, response.cz)) return;
+  chunkRenderer.apply(response);
+};
 function flushDirty(): void {
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
@@ -7169,15 +7181,7 @@ function flushDirty(): void {
       mesherLightOpts.flatBlockLight = lightSlice.block;
       void mesherClient
         .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, mesherLightOpts)
-        .then((response) => {
-          // Stale-response guard: chunk may have unloaded while the
-          // mesher worker was still building. Without this, the late
-          // response re-adds a phantom mesh into the scene-graph that
-          // onUnload already cleared — leaking GPU memory and drawing
-          // outside view distance until the next radius shrink.
-          if (!world.has(response.cx, response.cz)) return;
-          chunkRenderer.apply(response);
-        });
+        .then(applyMeshResponse);
       dispatched++;
     }
     // If we drained all dirty sections this frame, remove the chunk
