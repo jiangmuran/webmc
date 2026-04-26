@@ -2040,6 +2040,11 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
       const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
       if (isAirHere && isAirAbove && solidBelow) {
         fp.position.set(tx + 0.5, ty, tz + 0.5);
+        // Zero velocity on teleport so the player doesn't keep any
+        // momentum / fall speed from before the warp. Without this,
+        // chorus-fruiting mid-fall left you accelerating downward into
+        // the new spot — vanilla resets motion.
+        fp.velocity.set(0, 0, 0);
         subtitles.push('Chorus warp');
         placed = true;
         break;
@@ -2948,6 +2953,10 @@ const interaction = new InteractionController(
       if (heldName === 'ender_pearl') {
         if (airAbove) {
           fp.position.set(bx + 0.5, by + 1, bz + 0.5);
+          // Vanilla zeros velocity on pearl teleport — without this the
+          // player kept their pre-throw fall speed and started instantly
+          // taking fall damage at the destination.
+          fp.velocity.set(0, 0, 0);
           if (gameMode === 'survival' || gameMode === 'adventure') {
             playerState.takeDamage({ amount: 5, source: 'pearl' });
             const pearlId = itemRegistry.byName('webmc:ender_pearl');
