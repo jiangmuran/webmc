@@ -7645,6 +7645,84 @@ const onLoad = (cx: number, cz: number): void => {
   }
 };
 
+// Reusable mob-tick context. Hoisted because the original was a fresh
+// object literal + 5 closures allocated every frame (60Hz × 6 alloc =
+// 360/sec). The closures all capture module-scope refs so hoisting
+// behavior is unchanged.
+const mobTickCtx: import('./entities/mob').MobTickContext = {
+  isSolid,
+  isFluid,
+  playerPos: { x: 0, y: 0, z: 0 },
+  playerSneaking: false,
+  playerInvisible: false,
+  damagePlayer: (amt, attackerPos) => {
+    const scaled = amt * mobDamageMultiplier;
+    const armorPts = computeArmorPoints();
+    const toughnessPts = computeArmorToughness();
+    const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
+    if (finalDmg > 0) {
+      playerState.takeDamage({ amount: finalDmg, source: 'mob' });
+      if (armorPts > 0) consumeArmorDurability(scaled);
+      if (attackerPos) {
+        const angle = damageTiltAngle({
+          attackerX: attackerPos.x,
+          attackerZ: attackerPos.z,
+          playerX: fp.position.x,
+          playerZ: fp.position.z,
+          playerYaw: fp.yaw,
+        });
+        fp.pulseDamageTilt(angle);
+        const dx = fp.position.x - attackerPos.x;
+        const dz = fp.position.z - attackerPos.z;
+        const horiz = Math.hypot(dx, dz);
+        if (horiz > 0.0001) {
+          const KB = 6.0;
+          fp.velocity.x += (dx / horiz) * KB;
+          fp.velocity.z += (dz / horiz) * KB;
+          fp.velocity.y = Math.max(fp.velocity.y, 4.0);
+        }
+      }
+    }
+    if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
+  },
+  onCreeperExplode: (x, y, z) => {
+    if (gameRules.mobGriefing) {
+      explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+    } else {
+      for (let i = 0; i < 12; i++)
+        blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
+      screenShake.pulse(0.4);
+    }
+  },
+  isSunlit: (x, y, z) => {
+    if (!dayNight.isDay) return false;
+    if (currentWeather === 'thunder') return false;
+    const bx = Math.floor(x);
+    const by = Math.floor(y + 0.5);
+    const bz = Math.floor(z);
+    const cx = bx >> 4;
+    const cz = bz >> 4;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (lt) {
+      const lb = getLightByte(lt, bx & 0xf, by, bz & 0xf);
+      return ((lb >>> 4) & 0xf) === 15;
+    }
+    for (let yy = by; yy < CHUNK_HEIGHT; yy++) {
+      const s = world.get(bx, yy, bz);
+      if (s === AIR) continue;
+      if (registry.get(stateId(s)).opaque) return false;
+    }
+    return true;
+  },
+  onMobDeath: (kind, position) => {
+    spawnMobDrops(kind, position);
+    const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
+    for (const chunk of splitXp(xpAmount)) {
+      xpOrbs.spawn(position.x, position.y + 0.8, position.z, chunk);
+    }
+  },
+};
+
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
@@ -9819,105 +9897,22 @@ function frame(): void {
       }
     }
   }
-  if (!tickFrozen)
-    mobWorld.tick(dtSec * tickRateMultiplier, {
-      isSolid,
-      isFluid,
-      // Spectator: hide the player position from mob aggro entirely.
-      // Vanilla MC mobs ignore spectators (no detection, no chase).
-      // Without this, mobs still tracked + chased the spectator's body
-      // even though the body was passing through walls and dealing no
-      // damage — wasted CPU on a target that can't be engaged.
-      playerPos:
-        gameMode === 'spectator' ? null : { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      playerSneaking: fp.input.sneak,
-      playerInvisible: playerState.effects.has('invisibility'),
-      damagePlayer: (amt, attackerPos) => {
-        const scaled = amt * mobDamageMultiplier;
-        const armorPts = computeArmorPoints();
-        const toughnessPts = computeArmorToughness();
-        const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
-        if (finalDmg > 0) {
-          playerState.takeDamage({ amount: finalDmg, source: 'mob' });
-          if (armorPts > 0) consumeArmorDurability(scaled);
-          if (attackerPos) {
-            const angle = damageTiltAngle({
-              attackerX: attackerPos.x,
-              attackerZ: attackerPos.z,
-              playerX: fp.position.x,
-              playerZ: fp.position.z,
-              playerYaw: fp.yaw,
-            });
-            fp.pulseDamageTilt(angle);
-            // Knockback: push player away from attacker. Vanilla mob hit
-            // imparts ~0.4 horizontal + 0.4 vertical kick (modulated by
-            // knockback resistance, which we don't track yet). Without
-            // this, mobs felt completely weightless — you'd take damage
-            // but never get pushed back, so you could outrun zombies
-            // by walking into them.
-            const dx = fp.position.x - attackerPos.x;
-            const dz = fp.position.z - attackerPos.z;
-            const horiz = Math.hypot(dx, dz);
-            if (horiz > 0.0001) {
-              const KB = 6.0;
-              fp.velocity.x += (dx / horiz) * KB;
-              fp.velocity.z += (dz / horiz) * KB;
-              fp.velocity.y = Math.max(fp.velocity.y, 4.0);
-            }
-          }
-        }
-        if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
-      },
-      onCreeperExplode: (x, y, z) => {
-        // mobGriefing=false: creepers explode but don't break terrain.
-        if (gameRules.mobGriefing) {
-          explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
-        } else {
-          // Visual-only burst.
-          for (let i = 0; i < 12; i++)
-            blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
-          screenShake.pulse(0.4);
-        }
-      },
-      isSunlit: (x, y, z) => {
-        if (!dayNight.isDay) return false;
-        if (currentWeather === 'thunder') return false;
-        // Use sky-light byte at the mob's head: skyLight=15 means
-        // direct sky exposure (no opaque block between this voxel and
-        // the sky). Was scanning every Y from mob to CHUNK_HEIGHT —
-        // ~320 world.get calls per sunburn check per mob per tick.
-        // O(1) lookup via lighting cache instead.
-        const bx = Math.floor(x);
-        const by = Math.floor(y + 0.5);
-        const bz = Math.floor(z);
-        const cx = bx >> 4;
-        const cz = bz >> 4;
-        const lt = lightCache.get(lightKey(cx, cz));
-        if (lt) {
-          const lb = getLightByte(lt, bx & 0xf, by, bz & 0xf);
-          return ((lb >>> 4) & 0xf) === 15;
-        }
-        // Fallback: lighting not loaded for this chunk yet. Scan once;
-        // mobs in unloaded chunks are rare (despawn radius), so this
-        // path is cold.
-        for (let yy = by; yy < CHUNK_HEIGHT; yy++) {
-          const s = world.get(bx, yy, bz);
-          if (s === AIR) continue;
-          if (registry.get(stateId(s)).opaque) return false;
-        }
-        return true;
-      },
-      onMobDeath: (kind, position) => {
-        // Environmental kills (sunburn, lava, void). Drop the same loot
-        // table the player-attack path uses, plus an XP roll. Skipped
-        // for player kills via dropsHandled flag in mob.damage().
-        spawnMobDrops(kind, position);
-        const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
-        for (const chunk of splitXp(xpAmount)) {
-          xpOrbs.spawn(position.x, position.y + 0.8, position.z, chunk);
-        }
-      },
-    });
+  if (!tickFrozen) {
+    // Mutate the hoisted context fields. The whole literal + 5 closures
+    // were being allocated every frame previously — at 60Hz that's
+    // 360 closures/sec just for the mob tick.
+    if (gameMode === 'spectator') {
+      mobTickCtx.playerPos = null;
+    } else {
+      if (mobTickCtx.playerPos === null) mobTickCtx.playerPos = { x: 0, y: 0, z: 0 };
+      mobTickCtx.playerPos.x = fp.position.x;
+      mobTickCtx.playerPos.y = fp.position.y;
+      mobTickCtx.playerPos.z = fp.position.z;
+    }
+    mobTickCtx.playerSneaking = fp.input.sneak;
+    mobTickCtx.playerInvisible = playerState.effects.has('invisibility');
+    mobWorld.tick(dtSec * tickRateMultiplier, mobTickCtx);
+  }
   mobRenderer.sync(mobWorld.all(), camera.position);
 
   damageNumbers.tick(dtSec, (wx, wy, wz) => {
