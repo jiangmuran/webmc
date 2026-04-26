@@ -57,6 +57,7 @@ import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
 import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
+import { tickGrassBlock } from './blocks/grass_spread';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -9084,6 +9085,43 @@ function frame(): void {
             touchWorldEdit(x, y + 1, z, sugarCaneId);
           } else if (result === 'age_inc') {
             world.set(x, y, z, makeState(id, tickState.age));
+          }
+        } else if (name === 'webmc:grass_block' || name === 'webmc:dirt') {
+          // Grass spreads to adjacent dirt (light >= 9, no opaque
+          // above), grass with opaque above reverts to dirt. Was
+          // unwired — broken trees stayed dirt forever, mowed grass
+          // never re-grew.
+          const placements = tickGrassBlock({
+            center: { x, y, z },
+            lookup: {
+              isGrass: (gx, gy, gz) =>
+                registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:grass_block',
+              isDirt: (gx, gy, gz) =>
+                registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:dirt',
+              lightAbove: (gx, gy, gz) => {
+                const cx = gx >> 4;
+                const cz = gz >> 4;
+                const lx = gx & 0xf;
+                const lz = gz & 0xf;
+                const lt = lightCache.get(lightKey(cx, cz));
+                if (!lt) return 0;
+                const lb = getLightByte(lt, lx, gy, lz);
+                return Math.max((lb >>> 4) & 0xf, lb & 0xf);
+              },
+              hasOpaqueAbove: (gx, gy, gz) => {
+                const ss = world.get(gx, gy, gz);
+                if (ss === AIR) return false;
+                return registry.get(stateId(ss)).opaque;
+              },
+            },
+            rng: Math.random,
+          });
+          for (const p of placements) {
+            const blockId = registry.byName(p.block);
+            if (blockId !== undefined) {
+              world.set(p.pos.x, p.pos.y, p.pos.z, makeState(blockId, 0));
+              touchWorldEdit(p.pos.x, p.pos.y, p.pos.z, blockId);
+            }
           }
         } else if (name === 'webmc:fire' && gameRules.doFireTick) {
           // Fire spread + age. The fire_spread module + tests have
