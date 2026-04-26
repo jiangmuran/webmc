@@ -337,11 +337,22 @@ const colorOf = (state: BlockState): readonly [number, number, number] =>
 const isSolid = (x: number, y: number, z: number): boolean =>
   y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
 const ladderId = registry.byName('webmc:ladder');
+const vineId = registry.byName('webmc:vine');
+const scaffoldingId = registry.byName('webmc:scaffolding');
+const twistingVinesId = registry.byName('webmc:twisting_vines');
+const weepingVinesId = registry.byName('webmc:weeping_vines');
+const climbableIds = new Set<number>();
+for (const id of [ladderId, vineId, scaffoldingId, twistingVinesId, weepingVinesId]) {
+  if (id !== undefined) climbableIds.add(id);
+}
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
   if (s === AIR) return false;
-  return ladderId !== undefined && stateId(s) === ladderId;
+  // Was ladder-only — vines, scaffolding, twisting/weeping vines are
+  // also climbable in vanilla. Without this you couldn't climb out of
+  // jungles or use scaffolding for builds.
+  return climbableIds.has(stateId(s));
 };
 
 const world = new World();
