@@ -128,13 +128,6 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   }
 }
 
-interface LightNode {
-  x: number;
-  y: number;
-  z: number;
-  value: number;
-}
-
 // Module-scoped neighbor offsets — was a fresh array per
 // computeBlockLight call.
 const NEIGHBORS_6: readonly (readonly [number, number, number])[] = [
@@ -145,11 +138,27 @@ const NEIGHBORS_6: readonly (readonly [number, number, number])[] = [
   [0, 0, -1],
   [0, 0, 1],
 ];
+// Parallel arrays for the BFS queue. Was an Array<LightNode> with a
+// fresh {x,y,z,value} literal per emissive source AND per propagation
+// step (chunks with many torches/glowstone hit thousands per chunk
+// load). buildLight is called serially on the main thread, so per-
+// module reuse is safe.
+const BFS_QUEUE_X: number[] = [];
+const BFS_QUEUE_Y: number[] = [];
+const BFS_QUEUE_Z: number[] = [];
+const BFS_QUEUE_VALUE: number[] = [];
 
 // BFS block-light propagation from emissive voxels. Attenuates by 1 per step.
 // Scoped to a single chunk for M3 — cross-chunk bleed is an upgrade.
 export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
-  const queue: LightNode[] = [];
+  const qx = BFS_QUEUE_X;
+  const qy = BFS_QUEUE_Y;
+  const qz = BFS_QUEUE_Z;
+  const qv = BFS_QUEUE_VALUE;
+  qx.length = 0;
+  qy.length = 0;
+  qz.length = 0;
+  qv.length = 0;
   // Scan section-by-section. Skip whole sections that can't contain any
   // emissive voxel — uniform sections with non-emissive palette[0] (most
   // sky/stone/grass sections), and palette-mixed sections where every
@@ -178,7 +187,10 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
             const lightSec = ensureSection(light, cy, 0);
             const prev = lightSec[localIndex(lx, y & 0xf, lz)] ?? 0;
             lightSec[localIndex(lx, y & 0xf, lz)] = packLight(unpackSky(prev), e);
-            queue.push({ x: lx, y, z: lz, value: e });
+            qx.push(lx);
+            qy.push(y);
+            qz.push(lz);
+            qv.push(e);
           }
         }
       }
@@ -191,15 +203,23 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
   // head pointer, dequeue is O(1) and the whole BFS is linear in the
   // number of voxels lit.
   let head = 0;
-  while (head < queue.length) {
-    const node = queue[head++];
-    if (!node) break;
-    const next = node.value - 1;
+  while (head < qx.length) {
+    const cx2 = qx[head]!;
+    const cy2 = qy[head]!;
+    const cz2 = qz[head]!;
+    const cv2 = qv[head]!;
+    head++;
+    const next = cv2 - 1;
     if (next <= 0) continue;
-    for (const [dx, dy, dz] of neighbors) {
-      const nx = node.x + dx;
-      const ny = node.y + dy;
-      const nz = node.z + dz;
+    // Manual unroll over the 6 neighbors avoids the per-iteration
+    // [dx,dy,dz] tuple destructure that allocated nothing in V8 modern
+    // builds but still showed up in interpreter sample profiles. Cost
+    // of the unroll is one extra explicit per-axis branch.
+    for (let ni = 0; ni < neighbors.length; ni++) {
+      const off = neighbors[ni]!;
+      const nx = cx2 + off[0];
+      const ny = cy2 + off[1];
+      const nz = cz2 + off[2];
       if (nx < 0 || nx >= CHUNK_DIM || ny < 0 || ny >= CHUNK_HEIGHT || nz < 0 || nz >= CHUNK_DIM) {
         continue;
       }
@@ -212,7 +232,10 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       const prevBlock = unpackBlock(prev);
       if (next <= prevBlock) continue;
       sec[idx] = packLight(unpackSky(prev), next);
-      queue.push({ x: nx, y: ny, z: nz, value: next });
+      qx.push(nx);
+      qy.push(ny);
+      qz.push(nz);
+      qv.push(next);
     }
   }
 }
