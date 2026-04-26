@@ -16,6 +16,8 @@ export class Crosshair {
   private readonly ringSvg: SVGSVGElement;
   private readonly ringCircumference: number;
   private lastFraction = 1;
+  private lastTint: string | null | undefined = undefined;
+  private tintTargets: HTMLElement[] = [];
 
   constructor(parent: HTMLElement, opts: Partial<CrosshairOpts> = {}) {
     const o = { ...DEFAULTS, ...opts };
@@ -110,13 +112,23 @@ export class Crosshair {
   }
 
   setTint(color: string | null): void {
-    const children = Array.from(this.root.children) as HTMLElement[];
-    for (const el of children) {
-      if (el.tagName === 'svg') continue;
-      if (color === null) {
+    // Hot path — called every frame. Skip when nothing changed; cache
+    // the non-svg child list since the children are static after init.
+    if (color === this.lastTint) return;
+    this.lastTint = color;
+    if (this.tintTargets.length === 0) {
+      for (const el of this.root.children) {
+        if (el.tagName === 'svg') continue;
+        this.tintTargets.push(el as HTMLElement);
+      }
+    }
+    if (color === null) {
+      for (const el of this.tintTargets) {
         el.style.background = '#ffffffcc';
         el.style.mixBlendMode = 'difference';
-      } else {
+      }
+    } else {
+      for (const el of this.tintTargets) {
         el.style.background = color;
         el.style.mixBlendMode = 'normal';
       }
