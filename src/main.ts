@@ -9533,12 +9533,17 @@ function frame(): void {
   let aimTint: string | null = null;
   const aimReach = 5.5;
   const aimLook2 = fp.lookVector(frameLookTmp);
+  // Square the cull distance once so the inner test is integer-vs-FP
+  // compare without a per-mob Math.hypot. The sqrt only runs for mobs
+  // that actually pass the range check.
+  const aimCullSq = (aimReach + 1) * (aimReach + 1);
   for (const m of mobWorld.all()) {
     const dx = m.position.x - camera.position.x;
     const dy = m.position.y - camera.position.y;
     const dz = m.position.z - camera.position.z;
-    const d = Math.hypot(dx, dy, dz);
-    if (d > aimReach + 1) continue;
+    const dSq = dx * dx + dy * dy + dz * dz;
+    if (dSq > aimCullSq) continue;
+    const d = Math.sqrt(dSq);
     const dot = (dx * aimLook2.x + dy * aimLook2.y + dz * aimLook2.z) / Math.max(0.001, d);
     if (dot > 0.97) {
       const beh = m.def.behavior;
