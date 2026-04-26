@@ -3556,28 +3556,6 @@ const interaction = new InteractionController(
       }
       // Composter: right-click with compostable food/plant → fill chance per item.
       if (def.name === 'webmc:composter') {
-        const COMPOSTABLES: Record<string, number> = {
-          wheat: 0.65,
-          wheat_seeds: 0.3,
-          beetroot_seeds: 0.3,
-          melon_seeds: 0.3,
-          pumpkin_seeds: 0.3,
-          carrot: 0.65,
-          potato: 0.65,
-          beetroot: 0.65,
-          apple: 0.65,
-          bread: 0.85,
-          cookie: 0.85,
-          cactus: 0.5,
-          sugar_cane: 0.5,
-          kelp: 0.3,
-          dried_kelp: 0.85,
-          sweet_berries: 0.3,
-          glow_berries: 0.3,
-          melon_slice: 0.5,
-          pumpkin_pie: 1.0,
-          baked_potato: 0.85,
-        };
         const chance = COMPOSTABLES[heldName];
         if (chance !== undefined) {
           if (Math.random() < chance) {
@@ -3607,14 +3585,6 @@ const interaction = new InteractionController(
       }
       // Plant crops on farmland: seeds/carrot/potato/beetroot_seeds with farmland target → place crop block above.
       if (def.name === 'webmc:farmland' && airAbove) {
-        const PLANT_MAP: Record<string, string> = {
-          wheat_seeds: 'webmc:wheat',
-          beetroot_seeds: 'webmc:beetroots',
-          carrot: 'webmc:carrots',
-          potato: 'webmc:potatoes',
-          torchflower_seeds: 'webmc:torchflower_crop',
-          pitcher_pod: 'webmc:pitcher_crop',
-        };
         const cropName = PLANT_MAP[heldName];
         if (cropName !== undefined) {
           const cropId = registry.byName(cropName);
@@ -3653,13 +3623,7 @@ const interaction = new InteractionController(
           def.name === 'webmc:beetroots')
       ) {
         // Drop the corresponding harvested item.
-        const dropMap: Record<string, string[]> = {
-          'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
-          'webmc:carrots': ['webmc:carrot'],
-          'webmc:potatoes': ['webmc:potato'],
-          'webmc:beetroots': ['webmc:beetroot', 'webmc:beetroot_seeds'],
-        };
-        const drops = dropMap[def.name] ?? [];
+        const drops = BONEMEAL_DROP_MAP[def.name] ?? [];
         for (const dropName of drops) {
           const dropId = itemRegistry.byName(dropName);
           if (dropId === undefined) continue;
@@ -7296,6 +7260,46 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
 // player-break path. Was being rebuilt as a fresh literal on every
 // block-break right-click.
 const LEAF_TO_SAPLING = LEAF_TO_SAPLING_FOR_DECAY;
+// Composter input → fill chance. Was being rebuilt on every
+// composter right-click.
+const COMPOSTABLES: Record<string, number> = {
+  wheat: 0.65,
+  wheat_seeds: 0.3,
+  beetroot_seeds: 0.3,
+  melon_seeds: 0.3,
+  pumpkin_seeds: 0.3,
+  carrot: 0.65,
+  potato: 0.65,
+  beetroot: 0.65,
+  apple: 0.65,
+  bread: 0.85,
+  cookie: 0.85,
+  cactus: 0.5,
+  sugar_cane: 0.5,
+  kelp: 0.3,
+  dried_kelp: 0.85,
+  sweet_berries: 0.3,
+  glow_berries: 0.3,
+  melon_slice: 0.5,
+  pumpkin_pie: 1.0,
+  baked_potato: 0.85,
+};
+// Seed → crop block. Right-click on farmland — was rebuilt per click.
+const PLANT_MAP: Record<string, string> = {
+  wheat_seeds: 'webmc:wheat',
+  beetroot_seeds: 'webmc:beetroots',
+  carrot: 'webmc:carrots',
+  potato: 'webmc:potatoes',
+  torchflower_seeds: 'webmc:torchflower_crop',
+  pitcher_pod: 'webmc:pitcher_crop',
+};
+// Crop → harvest item names for bone-meal-on-crop instant ripen.
+const BONEMEAL_DROP_MAP: Record<string, readonly string[]> = {
+  'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
+  'webmc:carrots': ['webmc:carrot'],
+  'webmc:potatoes': ['webmc:potato'],
+  'webmc:beetroots': ['webmc:beetroot', 'webmc:beetroot_seeds'],
+};
 // Crop block → harvest drop table. Was being rebuilt as a fresh
 // Record literal on every block-break right-click on a crop.
 const CROP_DROP: Record<string, readonly { id: string; min: number; max: number }[]> = {
