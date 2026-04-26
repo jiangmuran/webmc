@@ -84,8 +84,7 @@ export class ChunkStore {
       // because it serializes inside the world tick, but we await IDB.
       for (const b of blobs) {
         const k = this.key(b.cx, b.cz);
-        const cur = this.dirty.get(k);
-        if (cur && cur.chunk.version === b.version) this.dirty.delete(k);
+        if (this.dirty.get(k)?.chunk.version === b.version) this.dirty.delete(k);
       }
       return blobs.length;
     } finally {

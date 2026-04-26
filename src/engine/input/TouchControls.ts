@@ -189,9 +189,9 @@ export class TouchControls {
       onState(true);
     });
     const release = (e: TouchEvent): void => {
-      const tl = e.changedTouches;
-      for (let i = 0; i < tl.length; i++) {
-        const t = tl[i]!;
+      // for...of on TouchList iterates directly without the Array.from
+      // allocation that the original code had per touch event.
+      for (const t of e.changedTouches) {
         if (t.identifier === activeId) {
           activeId = null;
           btn.style.background = 'rgba(255,255,255,0.18)';
@@ -211,12 +211,10 @@ export class TouchControls {
   }
 
   private handleStart(e: TouchEvent): void {
-    // Avoid Array.from(e.changedTouches) on every touch event — touchmove
-    // fires at ~60Hz on iOS so this would generate ~60 throwaway arrays
-    // per second. Iterate via TouchList index instead.
-    const tl = e.changedTouches;
-    for (let i = 0; i < tl.length; i++) {
-      const t = tl[i]!;
+    // for...of on TouchList iterates directly. Original code wrapped in
+    // Array.from per event — at ~60Hz touchmove that was 60 throwaway
+    // arrays per second.
+    for (const t of e.changedTouches) {
       if (this.isLeftHalf(t.clientX) && this.stickTouch === null) {
         this.stickTouch = t.identifier;
         this.stickOrigin = { x: t.clientX, y: t.clientY };
@@ -235,9 +233,7 @@ export class TouchControls {
   }
 
   private handleMove(e: TouchEvent): void {
-    const tl = e.changedTouches;
-    for (let i = 0; i < tl.length; i++) {
-      const t = tl[i]!;
+    for (const t of e.changedTouches) {
       if (t.identifier === this.stickTouch) {
         const dx = t.clientX - this.stickOrigin.x;
         const dy = t.clientY - this.stickOrigin.y;
@@ -274,9 +270,7 @@ export class TouchControls {
   }
 
   private handleEnd(e: TouchEvent): void {
-    const tl = e.changedTouches;
-    for (let i = 0; i < tl.length; i++) {
-      const t = tl[i]!;
+    for (const t of e.changedTouches) {
       if (t.identifier === this.stickTouch) {
         this.stickTouch = null;
         this.state.moveForward = 0;
