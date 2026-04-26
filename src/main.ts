@@ -5788,8 +5788,19 @@ const pauseMenu = new PauseMenu(appEl, {
     mainMenu.show();
     fp.inputBlocked = true;
     document.exitPointerLock();
+    // Was only saving player + chunks — chest contents, fluid cells,
+    // day counter, time of day, player stats, hotbar selection were
+    // left to their next periodic flush. Quitting to main menu and
+    // immediately closing the tab lost them. Mirror the full /save +
+    // visibilitychange flush set.
     void savePlayerNow();
     void chunkStore.flush();
+    void saveAllChestStorages();
+    void persistDB.setMeta('playerStats', playerStats);
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    void persistDB.setMeta('dayCounter', dayCounter);
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+    saveHotbarIfChanged();
   },
   onOpenSettings: () => {
     settingsPanel.show();
