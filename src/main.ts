@@ -6551,17 +6551,18 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
         world.set(x, y, z, airState);
         if (explosionDrops(radius)) {
           blockParticles.emitBreak(x, y, z, def2.color);
-          const itemId = itemRegistry.byName(def2.name);
-          if (itemId !== undefined) {
+          // Use the same drop registry the regular break path uses so
+          // stone → cobblestone, ores → raw items, glass → nothing
+          // (silk-touch only). Old code dropped the block-item directly,
+          // which gave players "stone block" item from an explosion when
+          // vanilla would've dropped cobblestone.
+          const drops = dropRegistry.drops(id2, undefined, 99);
+          for (const s of drops) {
             droppedItems.spawn(
               x + 0.5,
               y + 0.5,
               z + 0.5,
-              {
-                itemId,
-                count: 1,
-                color: def2.color,
-              },
+              { itemId: s.itemId, count: s.count, color: def2.color },
               3,
             );
           }
