@@ -9256,7 +9256,8 @@ function frame(): void {
       const fx = Math.floor(fp.position.x);
       const fy = Math.floor(fp.position.y - 1.05);
       const fz = Math.floor(fp.position.z);
-      const belowDef = registry.get(stateId(world.get(fx, fy, fz)));
+      const belowBlockId = stateId(world.get(fx, fy, fz));
+      const belowDef = registry.get(belowBlockId);
       if (
         belowDef.name === 'webmc:magma_block' &&
         !fp.input.sneak &&
@@ -9269,9 +9270,10 @@ function frame(): void {
         fp.velocity.x *= 0.6;
         fp.velocity.z *= 0.6;
       }
-      // Surface friction (ice slippery, honey sticky) via ground response multiplier.
-      const blockId = belowDef.name.replace(/^webmc:/, '');
-      const f = blockFriction(blockId);
+      // Surface friction (ice slippery, honey sticky) via ground response
+      // multiplier. Use the memoized short name — was a fresh
+      // .replace(/^webmc:/, '') alloc per frame on ground.
+      const f = blockFriction(blockShortNameFn(belowBlockId));
       // Default friction 0.6 → mult 1; ice 0.98 → mult ~5 (slippery); honey 0.4 → mult ~0.5 (sticky).
       fp.groundResponseMultiplier = f >= 0.95 ? 5 : f <= 0.5 ? 0.5 : 1;
     } else {
