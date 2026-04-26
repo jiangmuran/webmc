@@ -21,6 +21,13 @@ export class BlockParticles {
   private readonly colors: Float32Array;
   private readonly sizes: Float32Array;
   private readonly alive: Particle[] = [];
+  // Pool of dead particle objects for reuse. emit was allocating
+  // 8..18 fresh Particles per call; mining a vein of stone or a TNT
+  // burst can churn hundreds of objects per second. Particles cycle
+  // through alive → pool → alive without ever being GC'd in steady
+  // state. Pool is bounded by capacity so we never hold more than the
+  // active particle budget would imply.
+  private readonly pool: Particle[] = [];
   private readonly capacity: number;
 
   constructor(capacity = 512) {
@@ -45,24 +52,43 @@ export class BlockParticles {
     this.group.frustumCulled = false;
   }
 
+  private acquire(): Particle {
+    return (
+      this.pool.pop() ?? {
+        x: 0,
+        y: 0,
+        z: 0,
+        vx: 0,
+        vy: 0,
+        vz: 0,
+        r: 0,
+        g: 0,
+        b: 0,
+        ageSec: 0,
+        lifeSec: 0,
+        size: 0,
+      }
+    );
+  }
+
   emitBreak(bx: number, by: number, bz: number, rgb: readonly [number, number, number]): void {
     const [r, g, b] = rgb;
     for (let i = 0; i < 18; i++) {
       if (this.alive.length >= this.capacity) break;
-      this.alive.push({
-        x: bx + 0.15 + Math.random() * 0.7,
-        y: by + 0.15 + Math.random() * 0.7,
-        z: bz + 0.15 + Math.random() * 0.7,
-        vx: (Math.random() - 0.5) * 2.5,
-        vy: 2.5 + Math.random() * 1.8,
-        vz: (Math.random() - 0.5) * 2.5,
-        r: (r / 255) * (0.78 + Math.random() * 0.22),
-        g: (g / 255) * (0.78 + Math.random() * 0.22),
-        b: (b / 255) * (0.78 + Math.random() * 0.22),
-        ageSec: 0,
-        lifeSec: 0.6 + Math.random() * 0.45,
-        size: 0.9 + Math.random() * 0.6,
-      });
+      const p = this.acquire();
+      p.x = bx + 0.15 + Math.random() * 0.7;
+      p.y = by + 0.15 + Math.random() * 0.7;
+      p.z = bz + 0.15 + Math.random() * 0.7;
+      p.vx = (Math.random() - 0.5) * 2.5;
+      p.vy = 2.5 + Math.random() * 1.8;
+      p.vz = (Math.random() - 0.5) * 2.5;
+      p.r = (r / 255) * (0.78 + Math.random() * 0.22);
+      p.g = (g / 255) * (0.78 + Math.random() * 0.22);
+      p.b = (b / 255) * (0.78 + Math.random() * 0.22);
+      p.ageSec = 0;
+      p.lifeSec = 0.6 + Math.random() * 0.45;
+      p.size = 0.9 + Math.random() * 0.6;
+      this.alive.push(p);
     }
   }
 
@@ -70,20 +96,20 @@ export class BlockParticles {
     const [r, g, b] = rgb;
     for (let i = 0; i < 8; i++) {
       if (this.alive.length >= this.capacity) break;
-      this.alive.push({
-        x: bx + 0.5 + (Math.random() - 0.5) * 0.9,
-        y: by + Math.random() * 0.15,
-        z: bz + 0.5 + (Math.random() - 0.5) * 0.9,
-        vx: (Math.random() - 0.5) * 1.4,
-        vy: 1.2 + Math.random() * 0.8,
-        vz: (Math.random() - 0.5) * 1.4,
-        r: (r / 255) * 0.85,
-        g: (g / 255) * 0.85,
-        b: (b / 255) * 0.85,
-        ageSec: 0,
-        lifeSec: 0.35 + Math.random() * 0.25,
-        size: 0.7 + Math.random() * 0.3,
-      });
+      const p = this.acquire();
+      p.x = bx + 0.5 + (Math.random() - 0.5) * 0.9;
+      p.y = by + Math.random() * 0.15;
+      p.z = bz + 0.5 + (Math.random() - 0.5) * 0.9;
+      p.vx = (Math.random() - 0.5) * 1.4;
+      p.vy = 1.2 + Math.random() * 0.8;
+      p.vz = (Math.random() - 0.5) * 1.4;
+      p.r = (r / 255) * 0.85;
+      p.g = (g / 255) * 0.85;
+      p.b = (b / 255) * 0.85;
+      p.ageSec = 0;
+      p.lifeSec = 0.35 + Math.random() * 0.25;
+      p.size = 0.7 + Math.random() * 0.3;
+      this.alive.push(p);
     }
   }
 
@@ -100,6 +126,9 @@ export class BlockParticles {
         const last = this.alive.length - 1;
         if (i !== last) this.alive[i] = this.alive[last]!;
         this.alive.pop();
+        // Recycle the dead particle for a future emit. Cap pool at
+        // capacity so a one-time mega-burst doesn't bloat the pool.
+        if (this.pool.length < this.capacity) this.pool.push(p);
         continue;
       }
       p.vy -= gravity * dtSec;
