@@ -714,6 +714,7 @@ itemRegistry.register({ name: 'webmc:turtle_shell', maxStack: 1, durability: 275
 itemRegistry.register({ name: 'webmc:glass_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:glowstone_dust', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:bow', maxStack: 1, durability: 384 });
+itemRegistry.register({ name: 'webmc:crossbow', maxStack: 1, durability: 465 });
 itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
@@ -1984,6 +1985,42 @@ function heldNameLower(): string {
   return hotbar.selected?.name.toLowerCase() ?? '';
 }
 
+// Vanilla weapon-tier base damage. Touch attack handler reused a hard-coded
+// `2` and ignored the held tool entirely, so an iron sword tap dealt the
+// same damage as a bare-hand tap. Now both code paths read this table.
+function weaponBaseDamageFor(heldName: string): number {
+  if (heldName.includes('sword')) {
+    if (heldName.includes('netherite')) return 8;
+    if (heldName.includes('diamond')) return 7;
+    if (heldName.includes('iron')) return 6;
+    if (heldName.includes('stone')) return 5;
+    return 4; // wood/gold
+  }
+  if (heldName.includes('pickaxe')) {
+    if (heldName.includes('netherite')) return 6;
+    if (heldName.includes('diamond')) return 5;
+    if (heldName.includes('iron')) return 4;
+    if (heldName.includes('stone')) return 3;
+    return 2; // wood/gold
+  }
+  if (heldName.includes('shovel')) {
+    if (heldName.includes('netherite')) return 7;
+    if (heldName.includes('diamond')) return 6;
+    if (heldName.includes('iron')) return 5;
+    if (heldName.includes('stone')) return 4;
+    return 3; // wood/gold
+  }
+  if (heldName.includes('axe')) {
+    if (heldName.includes('netherite')) return 10;
+    if (heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond'))
+      return 9;
+    return 7;
+  }
+  if (heldName.includes('mace')) return 6;
+  if (heldName.includes('trident')) return 9;
+  return 1; // fist
+}
+
 // Resolves the BlockState the player is about to place from hotbar slot `i`.
 // In survival/adventure this comes from the inventory hotbar slot (the item
 // must have a blockId — swords/foods are non-placeable). In creative it
@@ -2844,6 +2881,87 @@ const interaction = new InteractionController(
         sfx.play('break');
         hand.swing();
         subtitles.push('Riptide!');
+        return true;
+      }
+      // Bow / crossbow: instant-hit hitscan. Was registered as an item
+      // since M2 but never wired to fire — drawing a bow did nothing.
+      // Vanilla has draw-charge + arc, but webmc trades that for hitscan
+      // matching how snowball/egg already work. Damage = 6 (full-draw
+      // ceil(speed*2) from arrow_trajectory). Consumes 1 arrow in
+      // survival/adventure (creative is free), bow loses 1 durability.
+      if (heldName === 'bow' || heldName === 'crossbow') {
+        const arrowId = itemRegistry.byName('webmc:arrow');
+        const isSurvival = gameMode === 'survival' || gameMode === 'adventure';
+        if (isSurvival && (arrowId === undefined || countInventoryItem(arrowId) === 0)) {
+          subtitles.push('Out of arrows');
+          return false;
+        }
+        const origin = camera.position;
+        const look = fp.lookVector();
+        let bestId: number | null = null;
+        let bestDist = Infinity;
+        for (const m of mobWorld.all()) {
+          const box = {
+            minX: m.position.x - m.def.aabb.halfX,
+            minY: m.position.y - m.def.aabb.halfY,
+            minZ: m.position.z - m.def.aabb.halfZ,
+            maxX: m.position.x + m.def.aabb.halfX,
+            maxY: m.position.y + m.def.aabb.halfY,
+            maxZ: m.position.z + m.def.aabb.halfZ,
+          };
+          const hit = intersectRayAABB(origin, look, box, 50);
+          if (hit && hit.tMin < bestDist) {
+            bestDist = hit.tMin;
+            bestId = m.id;
+          }
+        }
+        const dmg = 6;
+        if (bestId !== null) {
+          const result = mobWorld.damage(bestId, dmg);
+          if (result) {
+            damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
+            // Trail particles between origin and impact (visual arrow path).
+            const ix = origin.x + look.x * bestDist;
+            const iy = origin.y + look.y * bestDist;
+            const iz = origin.z + look.z * bestDist;
+            for (let k = 0; k < 6; k++) {
+              const t = (k + 1) / 7;
+              blockParticles.emitPlace(
+                origin.x + (ix - origin.x) * t,
+                origin.y + (iy - origin.y) * t,
+                origin.z + (iz - origin.z) * t,
+                [220, 200, 160],
+              );
+            }
+            if (result.killed) {
+              spawnMobDrops(result.kind, result.position);
+              const xpAmount = rollMobXp({
+                source: { kind: 'mob', mob: result.kind },
+                rng: Math.random,
+              });
+              for (const chunk of splitXp(xpAmount)) {
+                xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
+              }
+              playerStats.mobsKilled++;
+            }
+          }
+        } else {
+          // Visual: dust trail forward 20 blocks.
+          for (let k = 0; k < 6; k++) {
+            const t = ((k + 1) / 7) * 20;
+            blockParticles.emitPlace(
+              origin.x + look.x * t,
+              origin.y + look.y * t,
+              origin.z + look.z * t,
+              [220, 200, 160],
+            );
+          }
+        }
+        if (isSurvival && arrowId !== undefined) consumeInventoryItem(arrowId, 1);
+        // Bow durability — only the bow itself, not arrows.
+        consumeHeldToolDurability(1);
+        sfx.play('break');
+        hand.swing();
         return true;
       }
       // Snowball / egg: small visual hit at target, no projectile arc.
@@ -3793,50 +3911,8 @@ canvas.addEventListener('mousedown', (e) => {
     });
     const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
     const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
-    // Weapon tier damage (held item determines base). Vanilla MC values:
-    //   sword: 4 / 5 / 6 / 7 / 8 / 4    (wood/stone/iron/diamond/netherite/gold)
-    //   axe:   7 / 9 / 9 / 9 / 10 / 7
-    //   pickaxe: 2 / 3 / 4 / 5 / 6 / 2
-    //   shovel:  3 / 4 / 5 / 6 / 6.5 / 3 (we round to int)
-    //   hoe:     1 across all tiers
-    //   mace: 6, trident: 9, fist: 1.
-    // Pickaxes / shovels were defaulting to fist (1) — using a diamond
-    // pickaxe as a melee weapon in a pinch should still hit harder than
-    // bare hands.
-    let weaponBase = 1; // fist
     const heldName = heldNameLower();
-    if (heldName.includes('sword')) {
-      if (heldName.includes('netherite')) weaponBase = 8;
-      else if (heldName.includes('diamond')) weaponBase = 7;
-      else if (heldName.includes('iron')) weaponBase = 6;
-      else if (heldName.includes('stone')) weaponBase = 5;
-      else weaponBase = 4; // wood/gold
-    } else if (heldName.includes('pickaxe')) {
-      if (heldName.includes('netherite')) weaponBase = 6;
-      else if (heldName.includes('diamond')) weaponBase = 5;
-      else if (heldName.includes('iron')) weaponBase = 4;
-      else if (heldName.includes('stone')) weaponBase = 3;
-      else weaponBase = 2; // wood/gold
-    } else if (heldName.includes('shovel')) {
-      if (heldName.includes('netherite')) weaponBase = 7;
-      else if (heldName.includes('diamond')) weaponBase = 6;
-      else if (heldName.includes('iron')) weaponBase = 5;
-      else if (heldName.includes('stone')) weaponBase = 4;
-      else weaponBase = 3; // wood/gold
-    } else if (heldName.includes('axe')) {
-      if (heldName.includes('netherite')) weaponBase = 10;
-      else if (
-        heldName.includes('iron') ||
-        heldName.includes('stone') ||
-        heldName.includes('diamond')
-      )
-        weaponBase = 9;
-      else weaponBase = 7;
-    } else if (heldName.includes('mace')) {
-      weaponBase = 6;
-    } else if (heldName.includes('trident')) {
-      weaponBase = 9;
-    }
+    const weaponBase = weaponBaseDamageFor(heldName);
     // Mace smash: bonus damage scaled by fall distance (>1.5 blocks falling, capped +24 dmg).
     let maceBonus = 0;
     if (
@@ -7196,23 +7272,85 @@ function frame(): void {
           }
         }
         if (bestId !== null) {
-          const result = mobWorld.damage(bestId, 2);
+          // Touch attacks used to deal a flat 2 damage no matter what — an
+          // iron sword tap and a bare-hand tap killed mobs at the same
+          // rate. Now match the desktop formula (weapon tier × charge ×
+          // strength/weakness/crit), but with charge=1 (no charge meter on
+          // mobile) and no critical (no falling/airborne tap on touch).
+          const heldName = heldNameLower();
+          const weaponBase = weaponBaseDamageFor(heldName);
+          const strengthEff = playerState.effects.get('strength');
+          const weaknessEff = playerState.effects.get('weakness');
+          const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
+          const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
+          const dmg = Math.max(0, weaponBase + strengthBonus + weaknessReduce);
+          const result = mobWorld.damage(bestId, dmg);
+          // Touch combat durability + exhaustion (parity with desktop).
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            playerState.addExhaustion(0.1);
+            if (
+              heldName.includes('sword') ||
+              heldName.includes('mace') ||
+              heldName.includes('trident')
+            ) {
+              consumeHeldToolDurability(1);
+            } else if (
+              heldName.includes('pickaxe') ||
+              heldName.includes('axe') ||
+              heldName.includes('shovel') ||
+              heldName.includes('hoe')
+            ) {
+              consumeHeldToolDurability(2);
+            }
+          }
           sfx.play('hit');
           screenShake.pulse(0.15);
           // Touch attacks were missing the hand swing animation that
           // desktop's left-click attack path includes. Mobile players got
           // no visual feedback when they tapped a mob.
           hand.swing();
+          if (result)
+            damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
+          // Touch knockback was missing — mobs took damage but didn't
+          // get pushed back, so they could grind through the player
+          // without ever losing tempo.
+          const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+          if (mobHit) {
+            const kb = computeKnockback({
+              attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+              targetPos: { x: mobHit.position.x, y: mobHit.position.y, z: mobHit.position.z },
+              sprinting: fp.input.sprint,
+              knockbackLevel: 0,
+              knockbackResistance: 0,
+            });
+            const KB_SCALE = 12;
+            mobHit.velocity.x += kb.x * KB_SCALE;
+            mobHit.velocity.z += kb.z * KB_SCALE;
+            mobHit.velocity.y = Math.max(mobHit.velocity.y, kb.y * KB_SCALE);
+          }
           if (result?.killed) {
             spawnMobDrops(result.kind, result.position);
-            for (let k = 0; k < 3; k++)
-              xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+            // Touch kills used to drop a flat 3 × 1-XP orbs instead of
+            // the per-mob XP roll + chunked split that desktop uses.
+            const xpAmount = rollMobXp({
+              source: { kind: 'mob', mob: result.kind },
+              rng: Math.random,
+            });
+            for (const chunk of splitXp(xpAmount)) {
+              xpOrbs.spawn(
+                result.position.x + (Math.random() - 0.5) * 0.3,
+                result.position.y + 0.8,
+                result.position.z + (Math.random() - 0.5) * 0.3,
+                chunk,
+              );
+            }
             blockParticles.emitBreak(
               Math.floor(result.position.x),
               Math.floor(result.position.y),
               Math.floor(result.position.z),
               [180, 40, 40],
             );
+            playerStats.mobsKilled++;
           }
         } else {
           interaction.setHeld('break');
