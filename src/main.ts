@@ -9193,8 +9193,9 @@ function frame(): void {
   // both leave the avatar hidden.
   if (avatarVisible) {
     playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
-    const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
-    playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
+    // horizSpeed (Math.hypot of velocity.xz) was already computed for
+    // footstep + exhaustion above; no need to redo the hypot per frame.
+    playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? horizSpeed : 0);
   }
   if (cameraMode !== 'fp') {
     const look = fp.lookVector(frameLookTmp);
@@ -9390,9 +9391,9 @@ function frame(): void {
       envTakeDamage(1, 'cactus');
     } else if (touchedBerry) {
       // Berry bushes only damage on movement (vanilla: when entity moves
-      // while inside). Approximate: damage if there's horizontal motion.
-      const moving = Math.hypot(fp.velocity.x, fp.velocity.z) > 0.05;
-      if (moving) envTakeDamage(1, 'sweet_berry');
+      // while inside). Reuse horizSpeed from the footstep block above
+      // instead of a third Math.hypot on the same velocity per frame.
+      if (horizSpeed > 0.05) envTakeDamage(1, 'sweet_berry');
     }
     // Cobweb: vanilla slows entities to 1/8 horizontal speed and slows
     // gravity. Was unwired — cobweb was just an air block visually.
