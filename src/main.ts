@@ -7750,6 +7750,14 @@ function frame(): void {
         playerState.respawn();
         toast.show('Respawned', '#80ffa0', 1200);
       } else if (!deathScreen.isVisible()) {
+        // Close any open inventory / chest / settings overlays before
+        // showing the death screen — otherwise dying with chest UI open
+        // stacked the death screen on top and the player couldn't reach
+        // either's button.
+        if (chestUI.isVisible()) chestUI.hide();
+        if (creativeInv.isVisible()) creativeInv.hide();
+        if (survivalInv.isVisible()) survivalInv.hide();
+        if (settingsPanel.isVisible()) settingsPanel.hide();
         const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
         deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);
         deathScreen.show();
