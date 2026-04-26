@@ -358,36 +358,17 @@ export class FirstPersonCamera {
       const dvy = this.velocity.y * dtSec;
       let dvz = this.velocity.z * dtSec;
 
-      // Sneak edge cling: prevent walking off ledges per axis
+      // Sneak edge cling: prevent walking off ledges per axis. Inner
+      // ground probe was a fresh arrow closure allocated every frame the
+      // player was sneaking on ground (capturing opts/box/probeY/this) —
+      // a player sneaking around their base for minutes pays for one
+      // closure per frame for nothing. Hoisted to a private method.
       if (this.input.sneak && this.onGround) {
         const box = this.opts.box;
         const probeY = this.position.y - box.halfY - 0.05;
-        const hasGroundAt = (cx: number, cz: number): boolean => {
-          return (
-            opts.isSolid!(
-              Math.floor(cx - box.halfX + 0.01),
-              Math.floor(probeY),
-              Math.floor(cz - box.halfZ + 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx + box.halfX - 0.01),
-              Math.floor(probeY),
-              Math.floor(cz - box.halfZ + 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx - box.halfX + 0.01),
-              Math.floor(probeY),
-              Math.floor(cz + box.halfZ - 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx + box.halfX - 0.01),
-              Math.floor(probeY),
-              Math.floor(cz + box.halfZ - 0.01),
-            )
-          );
-        };
-        if (dvx !== 0 && !hasGroundAt(this.position.x + dvx, this.position.z)) dvx = 0;
-        if (dvz !== 0 && !hasGroundAt(this.position.x, this.position.z + dvz)) dvz = 0;
+        const isSolid = opts.isSolid;
+        if (dvx !== 0 && !this.hasGroundAtSneak(this.position.x + dvx, this.position.z, probeY, isSolid, box)) dvx = 0;
+        if (dvz !== 0 && !this.hasGroundAtSneak(this.position.x, this.position.z + dvz, probeY, isSolid, box)) dvz = 0;
         this.velocity.x = dvx / Math.max(dtSec, 0.0001);
         this.velocity.z = dvz / Math.max(dtSec, 0.0001);
       }
@@ -474,5 +455,25 @@ export class FirstPersonCamera {
   pulseDamageTilt(angleRad: number): void {
     this.damageTiltSec = 0.4;
     this.damageTiltSign = angleRad > 0 ? 1 : -1;
+  }
+
+  private hasGroundAtSneak(
+    cx: number,
+    cz: number,
+    probeY: number,
+    isSolid: SolidSampler,
+    box: AABB,
+  ): boolean {
+    const flooredY = Math.floor(probeY);
+    const minX = Math.floor(cx - box.halfX + 0.01);
+    const maxX = Math.floor(cx + box.halfX - 0.01);
+    const minZ = Math.floor(cz - box.halfZ + 0.01);
+    const maxZ = Math.floor(cz + box.halfZ - 0.01);
+    return (
+      isSolid(minX, flooredY, minZ) ||
+      isSolid(maxX, flooredY, minZ) ||
+      isSolid(minX, flooredY, maxZ) ||
+      isSolid(maxX, flooredY, maxZ)
+    );
   }
 }
