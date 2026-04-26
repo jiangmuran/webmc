@@ -2537,6 +2537,11 @@ const interaction = new InteractionController(
       return durationSec;
     },
     onInteract: (bx, by, bz) => {
+      // Spectator: no block interactions at all (vanilla parity).
+      // Without this gate, spectators could toggle doors, light TNT,
+      // strip logs, place water, ignite fires, set spawn at beds, etc. —
+      // anything in the long onInteract chain below.
+      if (gameMode === 'spectator') return false;
       const state = world.get(bx, by, bz);
       if (state === AIR) return false;
       const id = stateId(state);
@@ -3374,10 +3379,6 @@ const interaction = new InteractionController(
         def.name.endsWith('_shulker_box') ||
         def.name === 'webmc:shulker_box'
       ) {
-        // Spectator can't open chests — ChestUI doesn't have a read-only
-        // mode and vanilla spectators don't modify world state. Without
-        // this gate, spectators could pull items out of any chest.
-        if (gameMode === 'spectator') return false;
         chestUI.setStorage(getChestStorage(def.name, bx, by, bz));
         chestUI.show();
         fp.inputBlocked = true;
@@ -3474,9 +3475,6 @@ const interaction = new InteractionController(
         'webmc:conduit',
       ]);
       if (WORKSTATIONS.has(def.name)) {
-        // Spectator can't open workstations either — vanilla parity with
-        // the chest gate above.
-        if (gameMode === 'spectator') return false;
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
@@ -3550,6 +3548,9 @@ window.addEventListener('mousemove', (e) => {
 
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
+  // Spectator: no entity / world right-click interactions. Mob feed,
+  // tame, leash, saddle, name-tag, hold-to-eat all bypass otherwise.
+  if (e.button === 2 && gameMode === 'spectator') return;
   if (e.button === 2) {
     // Right-click: if aimed at a mob, try feed → tame → leash with held item.
     const aimLook = fp.lookVector();
