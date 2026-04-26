@@ -52,6 +52,13 @@ export class MinimapView {
     return this.range;
   }
 
+  // True when the next tick(dtSec) call will actually redraw. Lets
+  // callers skip building expensive marker arrays on frames the
+  // minimap will skip (it's throttled to 2Hz).
+  willRedraw(dtSec: number): boolean {
+    return this.updateAccum + dtSec >= 0.5;
+  }
+
   tick(
     dtSec: number,
     camX: number,

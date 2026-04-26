@@ -9921,24 +9921,36 @@ function frame(): void {
     return { sx, sy, visible: true };
   });
 
-  const markers: { x: number; z: number; color: string; size?: number }[] = [];
-  for (const m of mobWorld.all()) {
-    const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
-    markers.push({ x: m.position.x, z: m.position.z, color: isHostile ? '#ff5050' : '#a0ffa0' });
+  // Minimap is throttled to 2Hz internally — skip building the full
+  // marker list (mobs + dropped items + xp orbs + waypoints) on the
+  // ~28/30 frames where it's a no-op. Saves ~200 object allocs per
+  // frame at typical mob/item density.
+  if (minimap.willRedraw(dtSec)) {
+    const markers: { x: number; z: number; color: string; size?: number }[] = [];
+    for (const m of mobWorld.all()) {
+      const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
+      markers.push({
+        x: m.position.x,
+        z: m.position.z,
+        color: isHostile ? '#ff5050' : '#a0ffa0',
+      });
+    }
+    for (const p of droppedItems.positions()) {
+      markers.push({ x: p.x, z: p.z, color: '#e0e0a0', size: 1 });
+    }
+    for (const p of xpOrbs.positions()) {
+      markers.push({ x: p.x, z: p.z, color: '#80ff40', size: 1 });
+    }
+    if (playerSpawnPoint) {
+      markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
+    }
+    for (const v of waypoints.values()) {
+      markers.push({ x: v.x, z: v.z, color: '#80c0ff', size: 3 });
+    }
+    minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
+  } else {
+    minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator);
   }
-  for (const p of droppedItems.positions()) {
-    markers.push({ x: p.x, z: p.z, color: '#e0e0a0', size: 1 });
-  }
-  for (const p of xpOrbs.positions()) {
-    markers.push({ x: p.x, z: p.z, color: '#80ff40', size: 1 });
-  }
-  if (playerSpawnPoint) {
-    markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
-  }
-  for (const v of waypoints.values()) {
-    markers.push({ x: v.x, z: v.z, color: '#80c0ff', size: 3 });
-  }
-  minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
   droppedItems.tick(
     dtSec,
     isSolid,
