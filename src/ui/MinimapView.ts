@@ -59,6 +59,10 @@ export class MinimapView {
     return this.updateAccum + dtSec >= 0.5;
   }
 
+  private lastTerrainPxW = Number.NaN;
+  private lastTerrainPzW = Number.NaN;
+  private cachedImg: ImageData | null = null;
+
   tick(
     dtSec: number,
     camX: number,
@@ -77,31 +81,43 @@ export class MinimapView {
     const r = this.range;
     const pxW = Math.floor(camX);
     const pzW = Math.floor(camZ);
-    const img = ctx.createImageData(sz, sz);
-    const scale = r / (sz / 2);
-    for (let y = 0; y < sz; y++) {
-      for (let x = 0; x < sz; x++) {
-        const wx = pxW + Math.floor((x - sz / 2) * scale);
-        const wz = pzW + Math.floor((y - sz / 2) * scale);
-        const topY = height.surfaceAt(wx, wz);
-        let rr = 30,
-          gg = 30,
-          bb = 30;
-        const s = world.get(wx, topY, wz);
-        const id = s === AIR ? 0 : stateId(s);
-        const def = registry.get(id);
-        const shade = Math.max(0.35, Math.min(1, topY / 100));
-        rr = Math.round(def.color[0] * shade);
-        gg = Math.round(def.color[1] * shade);
-        bb = Math.round(def.color[2] * shade);
-        const idx = (y * sz + x) * 4;
-        img.data[idx] = rr;
-        img.data[idx + 1] = gg;
-        img.data[idx + 2] = bb;
-        img.data[idx + 3] = 255;
+    // Reuse last terrain image when camera hasn't moved 1 block. Each
+    // redraw was sampling height.surfaceAt sz×sz times — at sz=128 that's
+    // 16K noise evals per redraw + 16K world.get + registry.get. When
+    // standing still (e.g., crafting) we'd burn that for nothing.
+    let img: ImageData;
+    if (
+      pxW === this.lastTerrainPxW &&
+      pzW === this.lastTerrainPzW &&
+      this.cachedImg !== null &&
+      this.cachedImg.width === sz
+    ) {
+      img = this.cachedImg;
+    } else {
+      img = ctx.createImageData(sz, sz);
+      const scale = r / (sz / 2);
+      for (let y = 0; y < sz; y++) {
+        for (let x = 0; x < sz; x++) {
+          const wx = pxW + Math.floor((x - sz / 2) * scale);
+          const wz = pzW + Math.floor((y - sz / 2) * scale);
+          const topY = height.surfaceAt(wx, wz);
+          const s = world.get(wx, topY, wz);
+          const id = s === AIR ? 0 : stateId(s);
+          const def = registry.get(id);
+          const shade = Math.max(0.35, Math.min(1, topY / 100));
+          const idx = (y * sz + x) * 4;
+          img.data[idx] = Math.round(def.color[0] * shade);
+          img.data[idx + 1] = Math.round(def.color[1] * shade);
+          img.data[idx + 2] = Math.round(def.color[2] * shade);
+          img.data[idx + 3] = 255;
+        }
       }
+      this.cachedImg = img;
+      this.lastTerrainPxW = pxW;
+      this.lastTerrainPzW = pzW;
     }
     ctx.putImageData(img, 0, 0);
+    const scale = r / (sz / 2);
     // Mob markers.
     for (const m of markers) {
       const mx = (m.x - camX) / scale + sz / 2;
