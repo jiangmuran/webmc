@@ -5545,10 +5545,11 @@ const chatInput = new ChatInput(appEl, {
                       const czN = Number(czS);
                       const ch = world.getChunk(cxN, czN);
                       if (ch) {
-                        const oldLight = lightCache.get(lightKey(cxN, czN)) ?? null;
-                        chunkStore.markDirty(ch, oldLight);
                         const newLight = buildLight(ch, lightOracle);
                         lightCache.set(lightKey(cxN, czN), newLight);
+                        // Save the freshly-built light, not the stale
+                        // pre-edit version.
+                        chunkStore.markDirty(ch, newLight);
                         markChunkAllDirty(ch);
                       }
                     }
@@ -5683,10 +5684,11 @@ const chatInput = new ChatInput(appEl, {
               czN = Number(czS);
             const chunk = world.getChunk(cxN, czN);
             if (chunk) {
-              const light = lightCache.get(lightKey(cxN, czN)) ?? null;
-              chunkStore.markDirty(chunk, light);
               const newLight = buildLight(chunk, lightOracle);
               lightCache.set(lightKey(cxN, czN), newLight);
+              // markDirty AFTER rebuild so the saved blob has the new
+              // light, not the stale pre-edit version.
+              chunkStore.markDirty(chunk, newLight);
               markChunkAllDirty(chunk);
             }
           }
@@ -9840,10 +9842,10 @@ function frame(): void {
         const czN = Number(czS);
         const chunk = world.getChunk(cxN, czN);
         if (!chunk) continue;
-        const oldLight = lightCache.get(lightKey(cxN, czN)) ?? null;
-        chunkStore.markDirty(chunk, oldLight);
         const newLight = buildLight(chunk, lightOracle);
         lightCache.set(lightKey(cxN, czN), newLight);
+        // Save the freshly-built light, not the stale pre-tick version.
+        chunkStore.markDirty(chunk, newLight);
         const sections = sectionsToRemesh.get(k);
         if (!sections) continue;
         for (const cy of sections) {
