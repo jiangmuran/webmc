@@ -73,7 +73,10 @@ export class ChunkRenderer {
       response.cy * SUBCHUNK_DIM,
       response.cz * SUBCHUNK_DIM,
     );
-    mesh.name = `chunk-${String(response.cx)},${String(response.cy)},${String(response.cz)}`;
+    // Skip mesh.name — was a `chunk-${cx},${cy},${cz}` template
+    // literal allocated per apply for debug introspection only;
+    // three.js doesn't use it for rendering and chunk streaming
+    // hits this path hundreds of times per second at startup.
     mesh.matrixAutoUpdate = false;
     mesh.updateMatrix();
     this.meshes.set(key, mesh);

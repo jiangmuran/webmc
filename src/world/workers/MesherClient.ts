@@ -1,5 +1,4 @@
 import type { BlockState } from '@/blocks/state';
-import type { BitsPerIndex } from '../packed-indices';
 import { SUBCHUNK_DIM, type SubChunk } from '../SubChunk';
 import { type FaceColors, serializePalette } from '../meshing/snapshot';
 import type { FromWorker, MesherRequest, MesherResponse } from './mesher.protocol';
@@ -86,6 +85,32 @@ export interface BuildOptions {
   flatBlockLight: Uint8Array | null;
 }
 
+// Reused MesherRequest wrapper. postMessage structured-clones the
+// request into the worker and transfers the typed-array buffers
+// (detaching them on the main thread); the original wrapper here is
+// not retained by anyone after that. Refilling its fields per call
+// avoids a fresh 19-field object literal per chunk dispatch.
+const SHARED_MESHER_REQ: MesherRequest = {
+  type: 'mesh',
+  id: 0,
+  cx: 0,
+  cy: 0,
+  cz: 0,
+  paletteOpaque: new Uint8Array(0),
+  paletteColor: new Uint8Array(0),
+  bitsPerIndex: 0,
+  indices: null,
+  neighborNX: null,
+  neighborPX: null,
+  neighborNY: null,
+  neighborPY: null,
+  neighborNZ: null,
+  neighborPZ: null,
+  flatSkyLight: null,
+  flatBlockLight: null,
+};
+const EMPTY_BUILD_OPTIONS: BuildOptions = { flatSkyLight: null, flatBlockLight: null };
+
 export function buildMesherRequest(
   id: number,
   cx: number,
@@ -95,29 +120,27 @@ export function buildMesherRequest(
   isOpaque: (s: BlockState) => boolean,
   faceColorsOf: (s: BlockState) => FaceColors,
   borders: BorderOpacity,
-  light: BuildOptions = { flatSkyLight: null, flatBlockLight: null },
+  light: BuildOptions = EMPTY_BUILD_OPTIONS,
 ): MesherRequest {
   const blob = serializePalette(self, isOpaque, faceColorsOf);
-  const bitsPerIndex: BitsPerIndex = blob.bitsPerIndex;
-  return {
-    type: 'mesh',
-    id,
-    cx,
-    cy,
-    cz,
-    paletteOpaque: blob.paletteOpaque,
-    paletteColor: blob.paletteColor,
-    bitsPerIndex,
-    indices: blob.indices,
-    neighborNX: borders.nx,
-    neighborPX: borders.px,
-    neighborNY: borders.ny,
-    neighborPY: borders.py,
-    neighborNZ: borders.nz,
-    neighborPZ: borders.pz,
-    flatSkyLight: light.flatSkyLight,
-    flatBlockLight: light.flatBlockLight,
-  };
+  const req = SHARED_MESHER_REQ;
+  req.id = id;
+  req.cx = cx;
+  req.cy = cy;
+  req.cz = cz;
+  req.paletteOpaque = blob.paletteOpaque;
+  req.paletteColor = blob.paletteColor;
+  req.bitsPerIndex = blob.bitsPerIndex;
+  req.indices = blob.indices;
+  req.neighborNX = borders.nx;
+  req.neighborPX = borders.px;
+  req.neighborNY = borders.ny;
+  req.neighborPY = borders.py;
+  req.neighborNZ = borders.nz;
+  req.neighborPZ = borders.pz;
+  req.flatSkyLight = light.flatSkyLight;
+  req.flatBlockLight = light.flatBlockLight;
+  return req;
 }
 
 export interface MesherJob {
