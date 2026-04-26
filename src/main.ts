@@ -58,6 +58,7 @@ import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
+import { absorbWater } from './blocks/sponge';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -2492,28 +2493,32 @@ const interaction = new InteractionController(
         directionFromPlayer(bx + 0.5, bz + 0.5),
       );
       blockParticles.emitPlace(bx, by, bz, def.color);
-      // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
+      // Sponge soak: BFS through connected water cells, up to 65 blocks
+      // within 7-block reach. Was a flat 5×5×5 box (125 cells max but
+      // capped by water density) which missed water past the box edge
+      // even when reachable through connected cells. Vanilla uses BFS.
       if (def.name === 'webmc:sponge') {
         const waterId = registry.byName('webmc:water');
         const wetSpongeId = registry.byName('webmc:wet_sponge');
         if (waterId !== undefined && wetSpongeId !== undefined) {
-          let absorbed = 0;
-          for (let dy = -2; dy <= 2; dy++) {
-            for (let dz = -2; dz <= 2; dz++) {
-              for (let dx = -2; dx <= 2; dx++) {
-                const s = world.get(bx + dx, by + dy, bz + dz);
-                if (s !== AIR && stateId(s) === waterId) {
-                  world.set(bx + dx, by + dy, bz + dz, AIR);
-                  touchWorldEdit(bx + dx, by + dy, bz + dz, 0);
-                  absorbed++;
-                }
-              }
-            }
+          const positions = absorbWater(
+            { x: bx, y: by, z: bz },
+            {
+              isWaterSource: (x, y, z) => {
+                const s = world.get(x, y, z);
+                return s !== AIR && stateId(s) === waterId;
+              },
+            },
+          );
+          for (const p of positions) {
+            world.set(p.x, p.y, p.z, AIR);
+            touchWorldEdit(p.x, p.y, p.z, 0);
           }
-          if (absorbed > 0) {
+          if (positions.length > 0) {
             world.set(bx, by, bz, makeState(wetSpongeId, 0));
             touchWorldEdit(bx, by, bz, wetSpongeId);
-            subtitles.push(`Sponge absorbed ${absorbed} water`);
+            fluidWorld.clear(bx, by, bz);
+            subtitles.push(`Sponge absorbed ${positions.length} water`);
           }
         }
       }
