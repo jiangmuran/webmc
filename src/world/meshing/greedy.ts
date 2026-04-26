@@ -60,6 +60,12 @@ const POSITIONS_SCRATCH: number[] = [];
 const NORMALS_SCRATCH: number[] = [];
 const COLORS_SCRATCH: number[] = [];
 const INDICES_SCRATCH: number[] = [];
+// Reused per-slice mask. Was a fresh `new Int32Array(D * D)` per
+// meshSnapshot call (1024 bytes); chunk streaming hits ~100 sections
+// per second at startup, so the allocation churn was ~100KB/sec on
+// each worker thread. Filled with -1 at the start of every w loop, so
+// previous-call contents don't leak.
+const MASK_SCRATCH = new Int32Array(SUBCHUNK_DIM * SUBCHUNK_DIM);
 
 // Classical greedy meshing (Mikola-Lysenko style): 2D greedy merge per slice
 // per axis. Neighbor-aware at chunk borders so seams disappear.
@@ -102,7 +108,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
     return (paletteOpaque[pIdx] ?? 0) !== 0;
   };
 
-  const mask = new Int32Array(D * D);
+  const mask = MASK_SCRATCH;
   let quadCount = 0;
   // Function-scoped pos/npos/lightPos scratches — were per-iteration
   // [0,0,0] arrays before. greedy meshing iterates ~96 times per
