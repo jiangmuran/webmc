@@ -36,6 +36,19 @@ export class XpOrbWorld {
   }
 
   spawn(x: number, y: number, z: number, xp: number): void {
+    // Merge with a nearby fresh orb of similar value to keep entity
+    // counts low at busy XP farms (each kill spawns ~5 chunks; chained
+    // kills can leave hundreds of identical-value orbs cluttering
+    // memory + scene-graph). Vanilla MC merges within ~1 block.
+    for (const existing of this.orbs.values()) {
+      if (existing.ageSec > 1.5) continue;
+      const dx = existing.x - x;
+      const dy = existing.y - (y + 0.25);
+      const dz = existing.z - z;
+      if (dx * dx + dy * dy + dz * dz > 1.0 * 1.0) continue;
+      existing.xp += xp;
+      return;
+    }
     const orb: XpOrb = {
       id: this.nextId++,
       x,
