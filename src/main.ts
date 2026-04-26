@@ -7762,6 +7762,14 @@ function frame(): void {
     screenShake.pulse(Math.min(1, 0.2 + delta * 0.1));
     sfx.play('hit');
     subtitles.push('Player hurt');
+    // Damage cancels eating (vanilla — getting hit interrupts the bite).
+    // Without this, you could keep eating bread while a zombie chewed
+    // through your face. The held-right-click and hotbar-swap paths
+    // already cancel; this covers the take-damage path that didn't.
+    if (eatState.itemId !== null) {
+      cancelEating(eatState);
+      rightClickHeldForEat = false;
+    }
     if (typeof navigator.getGamepads === 'function') {
       const pad = (navigator.getGamepads() ?? []).find((p) => p && p.connected);
       const actuator = (
