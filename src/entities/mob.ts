@@ -991,6 +991,10 @@ export class MobWorld {
     kind: 'pig' as MobKind,
     position: this.damageResultPosition,
   };
+  // Shared scratch for the onMobDeath callback. Caller (main.ts)
+  // reads position.x/y/z synchronously (spawnMobDrops + xpOrbs.spawn
+  // loop) and doesn't retain the reference.
+  private readonly deathPosScratch: Vec3 = { x: 0, y: 0, z: 0 };
 
   damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
     const m = this.mobs.get(id);
@@ -1078,7 +1082,10 @@ export class MobWorld {
         // this gate, environmental kills now get drops, but player kills
         // would double-drop. dropsHandled is set true by damage() above.
         if (!mob.dropsHandled) {
-          ctx.onMobDeath?.(mob.def.kind, { ...mob.position });
+          this.deathPosScratch.x = mob.position.x;
+          this.deathPosScratch.y = mob.position.y;
+          this.deathPosScratch.z = mob.position.z;
+          ctx.onMobDeath?.(mob.def.kind, this.deathPosScratch);
         }
         this.removeInternal(mob.id);
       }
