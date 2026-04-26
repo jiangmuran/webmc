@@ -1113,7 +1113,21 @@ export class MobWorld {
     mob.onGround = result.onGround;
     if (!wasOnGround && mob.onGround && mob.airborneStartY !== null) {
       const fall = mob.airborneStartY - mob.position.y;
-      if (fall > 3) {
+      // Vanilla MC: chickens, parrots, bats, allay, bees, vexes don't
+      // take fall damage; cats take half. Without this, dropping a
+      // chicken from any height killed it instantly. Use kind to gate
+      // — cleaner than per-mob def flags for this small list.
+      const noFall =
+        mob.def.kind === 'chicken' ||
+        mob.def.kind === 'parrot' ||
+        mob.def.kind === 'bat' ||
+        mob.def.kind === 'allay' ||
+        mob.def.kind === 'bee' ||
+        mob.def.kind === 'vex' ||
+        mob.def.kind === 'phantom' ||
+        mob.def.kind === 'ghast' ||
+        mob.def.kind === 'blaze';
+      if (fall > 3 && !noFall) {
         mob.health -= fall - 3;
         mob.hurtFlashSec = 0.18;
         if (mob.health <= 0) mob.dyingSec = 0.35;
