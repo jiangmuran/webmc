@@ -209,6 +209,70 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   for (const w of WOODS) {
     S(['PIP', 'PPP', ' P '], { P: `webmc:${w}_planks`, I: 'webmc:iron_ingot' }, 'webmc:shield');
   }
+  // Armor sets — were unrecipeable. Only ARMOR_DEFS metadata + the
+  // item-registry loop existed, so /give worked but crafting did not.
+  // Vanilla shapes:
+  //   helmet:     XXX / X X
+  //   chestplate: X X / XXX / XXX
+  //   leggings:   XXX / X X / X X
+  //   boots:      X X / X X
+  // Where X is the material ingot/leather/diamond. Netherite is upgraded
+  // via smithing template (M12) and isn't auto-craftable from ingots.
+  const ARMOR_MATS: { mat: string; tier: string }[] = [
+    { mat: 'webmc:leather', tier: 'leather' },
+    { mat: 'webmc:iron_ingot', tier: 'iron' },
+    { mat: 'webmc:gold_ingot', tier: 'gold' },
+    { mat: 'webmc:diamond', tier: 'diamond' },
+  ];
+  for (const { mat, tier } of ARMOR_MATS) {
+    S(['XXX', 'X X'], { X: mat }, `webmc:${tier}_helmet`);
+    S(['X X', 'XXX', 'XXX'], { X: mat }, `webmc:${tier}_chestplate`);
+    S(['XXX', 'X X', 'X X'], { X: mat }, `webmc:${tier}_leggings`);
+    S(['X X', 'X X'], { X: mat }, `webmc:${tier}_boots`);
+  }
+  // Hopper.
+  S(['I I', 'ICI', ' I '], { I: 'webmc:iron_ingot', C: 'webmc:chest' }, 'webmc:hopper');
+  // Anvil.
+  S(['III', ' I ', 'III'], { I: 'webmc:iron_ingot' }, 'webmc:anvil');
+  // Iron bars (16 from 6 ingots).
+  S(['III', 'III'], { I: 'webmc:iron_ingot' }, 'webmc:iron_bars', 16);
+  // Piston.
+  S(
+    ['PPP', 'CIC', 'CRC'],
+    {
+      P: 'webmc:oak_planks',
+      C: 'webmc:cobblestone',
+      I: 'webmc:iron_ingot',
+      R: 'webmc:redstone',
+    },
+    'webmc:piston',
+  );
+  // Sticky piston.
+  S([' S ', ' P '], { S: 'webmc:slime_ball', P: 'webmc:piston' }, 'webmc:sticky_piston');
+  // Repeater.
+  S(
+    ['TRT', 'SSS'],
+    { T: 'webmc:redstone_torch', R: 'webmc:redstone', S: 'webmc:stone' },
+    'webmc:repeater',
+  );
+  // Comparator.
+  S(
+    ['TTT', 'TQT', 'SSS'],
+    { T: 'webmc:redstone_torch', Q: 'webmc:quartz', S: 'webmc:stone' },
+    'webmc:comparator',
+  );
+  // Lever.
+  S(['S', 'C'], { S: 'webmc:stick', C: 'webmc:cobblestone' }, 'webmc:lever');
+  // Redstone torch.
+  S(['R', 'S'], { R: 'webmc:redstone', S: 'webmc:stick' }, 'webmc:redstone_torch');
+  // Smithing table — basic plank+iron recipe.
+  for (const w of WOODS) {
+    S(
+      ['II ', 'PP ', 'PP '],
+      { I: 'webmc:iron_ingot', P: `webmc:${w}_planks` },
+      'webmc:smithing_table',
+    );
+  }
 
   return count;
 }

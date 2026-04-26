@@ -102,12 +102,96 @@ export const ARMOR_DEFS: Record<string, ArmorDef> = {
     toughness: 2,
     durability: 429,
   },
+  // Gold (golden) armor — was missing entirely; players smelting gold
+  // ingots had no way to actually wear them. Vanilla stats: helmet 2,
+  // chestplate 5, leggings 3, boots 1, all at toughness 0, low durability.
+  gold_helmet: {
+    name: 'webmc:gold_helmet',
+    slot: 'helmet',
+    defense: 2,
+    toughness: 0,
+    durability: 77,
+  },
+  gold_chestplate: {
+    name: 'webmc:gold_chestplate',
+    slot: 'chestplate',
+    defense: 5,
+    toughness: 0,
+    durability: 112,
+  },
+  gold_leggings: {
+    name: 'webmc:gold_leggings',
+    slot: 'leggings',
+    defense: 3,
+    toughness: 0,
+    durability: 105,
+  },
+  gold_boots: {
+    name: 'webmc:gold_boots',
+    slot: 'boots',
+    defense: 1,
+    toughness: 0,
+    durability: 91,
+  },
+  // Chainmail — also missing, available via /give in vanilla. Same
+  // defense as iron but no crafting recipe (vanilla parity).
+  chainmail_helmet: {
+    name: 'webmc:chainmail_helmet',
+    slot: 'helmet',
+    defense: 2,
+    toughness: 0,
+    durability: 165,
+  },
+  chainmail_chestplate: {
+    name: 'webmc:chainmail_chestplate',
+    slot: 'chestplate',
+    defense: 5,
+    toughness: 0,
+    durability: 240,
+  },
+  chainmail_leggings: {
+    name: 'webmc:chainmail_leggings',
+    slot: 'leggings',
+    defense: 4,
+    toughness: 0,
+    durability: 225,
+  },
+  chainmail_boots: {
+    name: 'webmc:chainmail_boots',
+    slot: 'boots',
+    defense: 1,
+    toughness: 0,
+    durability: 195,
+  },
+  netherite_helmet: {
+    name: 'webmc:netherite_helmet',
+    slot: 'helmet',
+    defense: 3,
+    toughness: 3,
+    durability: 407,
+  },
   netherite_chestplate: {
     name: 'webmc:netherite_chestplate',
     slot: 'chestplate',
     defense: 8,
     toughness: 3,
     durability: 592,
+  },
+  // Was missing the rest of the netherite set — players upgrading from
+  // diamond had only a chestplate option. Now the full set.
+  netherite_leggings: {
+    name: 'webmc:netherite_leggings',
+    slot: 'leggings',
+    defense: 6,
+    toughness: 3,
+    durability: 555,
+  },
+  netherite_boots: {
+    name: 'webmc:netherite_boots',
+    slot: 'boots',
+    defense: 3,
+    toughness: 3,
+    durability: 481,
   },
   turtle_shell: {
     name: 'webmc:turtle_shell',
