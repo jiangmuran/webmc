@@ -7707,13 +7707,14 @@ function oreXp(blockName: string): number {
   return xpForOre(blockName.replace(/^webmc:/, ''), Math.random, false);
 }
 
-function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
-  const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
-  const dropTables: Record<
-    string,
-    readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
-  > = {
-    zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+// Mob drop tables — was a fresh literal on every spawnMobDrops call,
+// allocating ~130 entry objects + ~130 color tuples per mob death.
+// Hoist as a module-scope constant; spawnMobDrops just indexes it.
+const MOB_DROP_TABLES: Record<
+  string,
+  readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
+> = {
+  zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
     skeleton: [
       { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
       { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
@@ -7839,17 +7840,23 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
       { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
       { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
     ],
-    warden: [{ name: 'echo_shard', min: 0, max: 0, color: [80, 200, 220] }],
-    ender_dragon: [{ name: 'dragon_scale', min: 1, max: 1, color: [60, 50, 80] }],
-    wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
-  };
-  const table = dropTables[kind];
+  warden: [{ name: 'echo_shard', min: 0, max: 0, color: [80, 200, 220] }],
+  ender_dragon: [{ name: 'dragon_scale', min: 1, max: 1, color: [60, 50, 80] }],
+  wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
+};
+
+function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
+  const table = MOB_DROP_TABLES[kind];
   if (!table) return;
   for (const entry of table) {
     const count = entry.min + Math.floor(Math.random() * (entry.max - entry.min + 1));
     if (count <= 0) continue;
-    const itemId = lookup(entry.name);
+    const itemId = itemRegistry.byName(`webmc:${entry.name}`);
     if (itemId === undefined) continue;
+    // droppedItems.spawn stores `data` by reference in the dropped
+    // entity, so this MUST be a fresh literal per entry — sharing a
+    // scratch would link every dropped item's data to the same
+    // object, breaking pickup count/color tracking.
     droppedItems.spawn(pos.x, pos.y + 0.5, pos.z, { itemId, count, color: entry.color });
   }
 }
