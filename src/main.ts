@@ -2444,6 +2444,14 @@ const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: numbe
 // Bamboo growth ctx scratch — same pattern, fresh literal per
 // bamboo block per random tick.
 const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
+// Shared ice melt/freeze ctx — same shape for both helpers.
+const iceCtxScratch = {
+  biomeTemperature: 0,
+  isNight: false,
+  hasSkyLight: true,
+  nearbyWarmBlock: false,
+  lightLevel: 0,
+};
 // Fire-tick ctx scratch + stateful neighborAt closure. The random-
 // tick scan calls tickFire for every fire block; was building a
 // fresh ctx + 5 closures per fire block per second.
@@ -10144,16 +10152,12 @@ function frame(): void {
           const lightHere = Math.max((lbIce >>> 4) & 0xf, lbIce & 0xf);
           const biomeIdIce = generator.biomeAt(x, z);
           const biomeNameIce = biomeIdIce === 1 ? 'forest' : 'plains';
-          if (
-            !hasSolidAbove &&
-            shouldMeltIce({
-              biomeTemperature: biomeTemperature(biomeNameIce),
-              isNight: dayNight.timeOfDay > 0.5,
-              hasSkyLight: true,
-              nearbyWarmBlock: false,
-              lightLevel: lightHere,
-            })
-          ) {
+          iceCtxScratch.biomeTemperature = biomeTemperature(biomeNameIce);
+          iceCtxScratch.isNight = dayNight.timeOfDay > 0.5;
+          iceCtxScratch.hasSkyLight = true;
+          iceCtxScratch.nearbyWarmBlock = false;
+          iceCtxScratch.lightLevel = lightHere;
+          if (!hasSolidAbove && shouldMeltIce(iceCtxScratch)) {
             if (waterId !== undefined) {
               world.set(x, y, z, makeState(waterId, 0));
               touchWorldEdit(x, y, z, waterId);
@@ -10173,16 +10177,12 @@ function frame(): void {
             const lightHereFr = Math.max((lbFr >>> 4) & 0xf, lbFr & 0xf);
             const biomeIdFr = generator.biomeAt(x, z);
             const biomeNameFr = biomeIdFr === 1 ? 'forest' : 'plains';
-            if (
-              hasSky &&
-              shouldFreezeWater({
-                biomeTemperature: biomeTemperature(biomeNameFr),
-                isNight: dayNight.timeOfDay > 0.5,
-                hasSkyLight: true,
-                nearbyWarmBlock: false,
-                lightLevel: lightHereFr,
-              })
-            ) {
+            iceCtxScratch.biomeTemperature = biomeTemperature(biomeNameFr);
+            iceCtxScratch.isNight = dayNight.timeOfDay > 0.5;
+            iceCtxScratch.hasSkyLight = true;
+            iceCtxScratch.nearbyWarmBlock = false;
+            iceCtxScratch.lightLevel = lightHereFr;
+            if (hasSky && shouldFreezeWater(iceCtxScratch)) {
               if (iceIdCached !== undefined) {
                 world.set(x, y, z, makeState(iceIdCached, 0));
                 touchWorldEdit(x, y, z, iceIdCached);
