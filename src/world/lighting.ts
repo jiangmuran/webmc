@@ -108,8 +108,14 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
     [0, 0, -1],
     [0, 0, 1],
   ];
-  while (queue.length > 0) {
-    const node = queue.shift();
+  // Head-pointer dequeue (FIFO without shift). The original
+  // queue.shift() is O(N) per pop, so a chunk with N emissive sources
+  // and ~10K total propagation nodes ran O(N^2) ≈ 100M ops. With the
+  // head pointer, dequeue is O(1) and the whole BFS is linear in the
+  // number of voxels lit.
+  let head = 0;
+  while (head < queue.length) {
+    const node = queue[head++];
     if (!node) break;
     const next = node.value - 1;
     if (next <= 0) continue;
