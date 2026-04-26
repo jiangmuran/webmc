@@ -4211,7 +4211,9 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       cobbled_deepslate: 'deepslate',
       clay_ball: 'brick',
       clay: 'terracotta',
-      netherrack: 'nether_brick_item',
+      // 'nether_brick_item' is a vanilla NBT distinction (item vs block)
+      // that webmc doesn't separate — both are 'nether_brick' here.
+      netherrack: 'nether_brick',
       raw_beef: 'cooked_beef',
       raw_porkchop: 'cooked_porkchop',
       raw_chicken: 'cooked_chicken',
