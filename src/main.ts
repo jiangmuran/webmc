@@ -8189,6 +8189,8 @@ function frame(): void {
     const maxY = Math.floor(fp.position.y + 0.9);
     let touchedCactus = false;
     let touchedBerry = false;
+    let touchedCobweb = false;
+    let touchedPowderSnow = false;
     for (let by2 = minY; by2 <= maxY; by2++) {
       for (let bz2 = minZ; bz2 <= maxZ; bz2++) {
         for (let bx2 = minX; bx2 <= maxX; bx2++) {
@@ -8197,6 +8199,8 @@ function frame(): void {
           const d2 = registry.get(stateId(s));
           if (d2.name === 'webmc:cactus') touchedCactus = true;
           else if (d2.name === 'webmc:sweet_berry_bush') touchedBerry = true;
+          else if (d2.name === 'webmc:cobweb') touchedCobweb = true;
+          else if (d2.name === 'webmc:powder_snow') touchedPowderSnow = true;
         }
       }
     }
@@ -8207,6 +8211,25 @@ function frame(): void {
       // while inside). Approximate: damage if there's horizontal motion.
       const moving = Math.hypot(fp.velocity.x, fp.velocity.z) > 0.05;
       if (moving) playerState.takeDamage({ amount: 1, source: 'sweet_berry' });
+    }
+    // Cobweb: vanilla slows entities to 1/8 horizontal speed and slows
+    // gravity. Was unwired — cobweb was just an air block visually.
+    if (touchedCobweb) {
+      fp.velocity.x *= 0.25;
+      fp.velocity.z *= 0.25;
+      // Slow gravity (vanilla makes you float-fall in cobweb).
+      if (fp.velocity.y < 0) fp.velocity.y *= 0.5;
+    }
+    // Powder snow: slow + sink unless wearing leather boots. Vanilla
+    // freezing damage isn't tracked yet — just the movement effect.
+    if (touchedPowderSnow) {
+      const boots = inventory.armor[3];
+      const wearingLeather = boots && itemRegistry.get(boots.itemId).name === 'webmc:leather_boots';
+      if (!wearingLeather) {
+        fp.velocity.x *= 0.5;
+        fp.velocity.z *= 0.5;
+        if (fp.velocity.y < 0) fp.velocity.y *= 0.4;
+      }
     }
   }
 
