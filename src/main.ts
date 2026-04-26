@@ -2454,6 +2454,14 @@ const iceCtxScratch = {
 };
 // Shared leaf-decay query scratch.
 const leafDecayScratch = { persistent: false, distance: 0 };
+// Reused active-effects HUD scratch + entry pool. ActiveEffectsHud
+// .render diffs by signature internally so sharing the entries
+// across calls is safe (it doesn't retain references). Skip the
+// whole allocation when the player has no active effects (the common
+// case — no potions, no enchantments triggering effects).
+const activeEffectsScratch: { id: string; amplifier: number; remainingSec: number }[] = [];
+const activeEffectsPool: { id: string; amplifier: number; remainingSec: number }[] = [];
+const ACTIVE_EFFECTS_EMPTY: readonly { id: string; amplifier: number; remainingSec: number }[] = [];
 // Reused minimap markers list + pool of marker objects. Was a fresh
 // array of ~130 marker literals at every minimap redraw (2Hz, gated
 // by minimap.willRedraw). At busy mob farms the per-redraw
@@ -9267,13 +9275,22 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
-  activeEffectsHud.render(
-    Array.from(playerState.effects, ([id, e]) => ({
-      id,
-      amplifier: e.amplifier,
-      remainingSec: e.remainingSec,
-    })),
-  );
+  if (playerState.effects.size === 0) {
+    activeEffectsHud.render(ACTIVE_EFFECTS_EMPTY);
+  } else {
+    const entries = activeEffectsScratch;
+    // Recycle previous-frame entries.
+    for (let i = 0; i < entries.length; i++) activeEffectsPool.push(entries[i]!);
+    entries.length = 0;
+    for (const [id, e] of playerState.effects) {
+      const slot = activeEffectsPool.pop() ?? { id: '', amplifier: 0, remainingSec: 0 };
+      slot.id = id;
+      slot.amplifier = e.amplifier;
+      slot.remainingSec = e.remainingSec;
+      entries.push(slot);
+    }
+    activeEffectsHud.render(entries);
+  }
 
   // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
   let aimTint: string | null = null;
