@@ -111,6 +111,12 @@ interface MobVisual {
   lastRotY: number;
   lastRotZ: number;
   lastScale: number;
+  // Pre-resolved base color hex for this mob's kind. Kind never
+  // changes after construction, so we can skip the per-frame
+  // `COLORS[kind] ?? DEFAULT_COLOR` Record lookup + fallback in the
+  // hurt-flash, creeper-fuse, and normal-restore paths. Saves ~50
+  // (mobs) × 60 (Hz) = 3000 string-keyed lookups/sec at busy worlds.
+  kindBaseHex: number;
 }
 
 // Cache by label string. Mob nameplates with the same name (e.g.
@@ -307,6 +313,7 @@ export class MobRenderer {
           lastRotY: 0,
           lastRotZ: 0,
           lastScale: 1,
+          kindBaseHex: color,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
@@ -348,7 +355,7 @@ export class MobRenderer {
         vis.lastRotZ = targetRotZ;
       }
       if (mob.hurtFlashSec > 0) {
-        const base = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
+        const base = vis.kindBaseHex;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
@@ -364,7 +371,9 @@ export class MobRenderer {
         const phase = 1 - Math.min(1, mob.fuseSec / 1.5);
         const k =
           (Math.sin(nowMs * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
-        const base = COLORS['creeper'] ?? DEFAULT_COLOR;
+        // creeper visuals are guaranteed to be a creeper kind, so
+        // kindBaseHex is the same as COLORS['creeper'].
+        const base = vis.kindBaseHex;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
@@ -375,7 +384,7 @@ export class MobRenderer {
         // Normal palette color. Mobs spend most of their life in this
         // state, so skip the setHex (which still writes through the
         // material color and flags it dirty) when nothing changed.
-        const c = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
+        const c = vis.kindBaseHex;
         if (vis.needsColorRestore || vis.lastNormalColorHex !== c) {
           vis.bodyMat.color.setHex(c);
           vis.headMat.color.setHex(c);
