@@ -759,6 +759,7 @@ itemRegistry.register({ name: 'webmc:crossbow', maxStack: 1, durability: 465 });
 itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
+itemRegistry.register({ name: 'webmc:shears', maxStack: 1, durability: 238 });
 itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
 const SPAWN_EGG_MOBS = [
   'pig',
@@ -3838,6 +3839,50 @@ canvas.addEventListener('mousedown', (e) => {
       const sel = hotbar.selected;
       const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
       const kind = aimedMob.def.kind;
+      // Cow / goat milking: empty bucket → milk_bucket. Vanilla mechanic
+      // never wired in webmc — players had no way to make milk despite
+      // milk_bucket being a registered item used by 5 recipes (cake)
+      // and the all-effects-clear cure.
+      if (
+        heldName === 'webmc:bucket' &&
+        (kind === 'cow' || kind === 'goat' || kind === 'mooshroom')
+      ) {
+        const milkId = itemRegistry.byName('webmc:milk_bucket');
+        const stewId = itemRegistry.byName('webmc:mushroom_stew');
+        const bucketId = itemRegistry.byName('webmc:bucket');
+        if (kind === 'mooshroom' && stewId !== undefined && bucketId !== undefined) {
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            consumeInventoryItem(bucketId, 1);
+          }
+          inventory.add({ itemId: stewId, count: 1, damage: 0 });
+          chatInput.addLine('Got mushroom stew', '#a0e0ff');
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+        if (milkId !== undefined && bucketId !== undefined) {
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            consumeInventoryItem(bucketId, 1);
+          }
+          inventory.add({ itemId: milkId, count: 1, damage: 0 });
+          chatInput.addLine(`Milked ${kind}`, '#a0e0ff');
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+      }
+      // Sheep shearing: shears + sheep → wool drops + sheep marked sheared.
+      if (heldName === 'webmc:shears' && kind === 'sheep') {
+        const woolId = itemRegistry.byName('webmc:wool');
+        if (woolId !== undefined) {
+          inventory.add({ itemId: woolId, count: 1 + Math.floor(Math.random() * 3), damage: 0 });
+          chatInput.addLine('Sheared sheep', '#e0e0e0');
+          consumeHeldToolDurability(1);
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+      }
       const breedFood = BREED_FOOD[kind];
       if (breedFood?.includes(heldName)) {
         const prev = lovingMobs.get(aimedMob.id) ?? {
@@ -6299,13 +6344,9 @@ document.addEventListener(
     if (survivalInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
+        // hide() fires the onClose callback which releases inputBlocked
+        // and re-requests pointer lock — no need to duplicate that here.
         survivalInv.hide();
-        // The creative-inv branch above releases input + relocks pointer,
-        // but survival/chest didn't — closing those overlays froze the
-        // player in place until they alt-tabbed and clicked back into the
-        // canvas.
-        fp.inputBlocked = false;
-        void canvas.requestPointerLock();
       }
       return;
     }
@@ -6313,8 +6354,6 @@ document.addEventListener(
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
         chestUI.hide();
-        fp.inputBlocked = false;
-        void canvas.requestPointerLock();
       }
       return;
     }
