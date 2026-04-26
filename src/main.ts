@@ -2558,6 +2558,11 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(1);
             sfx.play('break');
+            // Hand swing for tool-on-block interactions (strip / unwax /
+            // scrape / make path / till). Vanilla MC swings the hand on
+            // every right-click that consumes durability; without it,
+            // axe-stripping a log gave no animation feedback.
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             const verb =
               result.kind === 'strip'
@@ -2579,6 +2584,7 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(1);
             sfx.play('break');
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             subtitles.push('Made path');
             return true;
@@ -2595,6 +2601,7 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(result.durabilityCost);
             sfx.play('break');
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
             return true;
