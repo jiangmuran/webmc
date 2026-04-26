@@ -409,6 +409,14 @@ for (const def of registry.defs) {
 itemRegistry.register({ name: 'webmc:bucket', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:water_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:lava_bucket', maxStack: 1, durability: 0 });
+// Mob buckets — same physical 'bucket of <fish>' shape vanilla uses for
+// catching aquatic mobs. Required for axolotl breeding (BREED_FOOD lists
+// tropical_fish_bucket) and the catch-fish-in-bucket interaction.
+itemRegistry.register({ name: 'webmc:tropical_fish_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:cod_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:salmon_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:pufferfish_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:axolotl_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:arrow', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
@@ -1483,7 +1491,9 @@ const BREED_FOOD: Record<string, readonly string[]> = {
     'webmc:rabbit',
     'webmc:cooked_rabbit',
   ],
-  cat: ['webmc:raw_fish', 'webmc:raw_salmon', 'webmc:cod', 'webmc:salmon'],
+  // 1.13+ renamed raw_fish→cod and raw_salmon→salmon — both legacy names
+  // were never registered in this project. cod/salmon are.
+  cat: ['webmc:cod', 'webmc:salmon'],
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   goat: ['webmc:wheat'],
   bee: ['webmc:dandelion', 'webmc:poppy'],
