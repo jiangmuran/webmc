@@ -51,10 +51,42 @@ function ensureSection(light: ChunkLight, cy: number, skyInit: number): Uint8Arr
 // Above that, skyLight = MAX_LIGHT. At and below, 0 (no horizontal bleed in
 // M3; diagonal/under-overhang darkening is a post-M3 upgrade).
 export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
+  // Find the highest section that contains any opaque blocks. Above it
+  // every column is fully sky-lit (skip the top-search for those
+  // columns entirely). Was scanning from y=383 down through 300+ air
+  // cells per column for typical surface-altitude chunks — 16x16x300
+  // = 76K wasted chunk.get calls per column-search pass.
+  let highestNonEmptySection = -1;
+  for (let cy = CHUNK_SECTIONS - 1; cy >= 0; cy--) {
+    const sec = chunk.section(cy);
+    if (sec && sec.nonAirCount > 0) {
+      // Also check palette has at least one opaque block — sections of
+      // pure non-opaque (water-only, leaves-only) don't block sky.
+      let anyOpaque = false;
+      const pal = sec.palette;
+      for (let i = 0; i < pal.size; i++) {
+        if (oracle.isOpaque(pal.get(i))) {
+          anyOpaque = true;
+          break;
+        }
+      }
+      if (anyOpaque) {
+        highestNonEmptySection = cy;
+        break;
+      }
+    }
+  }
+  // Top of the world for the search start. Below this is where we
+  // scan; everything above is fully lit.
+  const searchTopY =
+    highestNonEmptySection < 0
+      ? -1
+      : (highestNonEmptySection + 1) * SUBCHUNK_DIM - 1;
+
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
       let topOpaque = -1;
-      for (let y = CHUNK_HEIGHT - 1; y >= 0; y--) {
+      for (let y = searchTopY; y >= 0; y--) {
         const state = chunk.get(lx, y, lz);
         if (oracle.isOpaque(state)) {
           topOpaque = y;
