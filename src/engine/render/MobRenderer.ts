@@ -113,7 +113,17 @@ function makeNameTexture(label: string): THREE.CanvasTexture {
   return new THREE.CanvasTexture(c);
 }
 
+// Texture cache keyed by 21-bucket ratio (0%, 5%, 10%, ..., 100%). Was
+// creating + disposing a CanvasTexture per mob per damage event — 50
+// damaged mobs taking damage each tick allocated 50 textures/sec. Now
+// shared: at most 21 textures total, never disposed.
+const HP_BAR_BUCKETS = 21;
+const hpBarTextureCache = new Map<number, THREE.CanvasTexture>();
 function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
+  const r = Math.max(0, Math.min(1, ratio));
+  const bucket = Math.round(r * (HP_BAR_BUCKETS - 1));
+  const cached = hpBarTextureCache.get(bucket);
+  if (cached) return cached;
   const w = 64;
   const h = 8;
   const c = document.createElement('canvas');
@@ -124,12 +134,14 @@ function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
     ctx.fillStyle = '#300';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#f33';
-    ctx.fillRect(0, 0, Math.round(w * Math.max(0, Math.min(1, ratio))), h);
+    ctx.fillRect(0, 0, Math.round((w * bucket) / (HP_BAR_BUCKETS - 1)), h);
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, w, 1);
     ctx.fillRect(0, h - 1, w, 1);
   }
-  return new THREE.CanvasTexture(c);
+  const tex = new THREE.CanvasTexture(c);
+  hpBarTextureCache.set(bucket, tex);
+  return tex;
 }
 
 export class MobRenderer {
@@ -316,7 +328,7 @@ export class MobRenderer {
       const showBar = hpRatio < 1 && mob.dyingSec === 0;
       if (showBar) {
         if (Math.abs(vis.lastHpRatio - hpRatio) > 0.02 || vis.hpMat.opacity === 0) {
-          if (vis.hpMat.map) vis.hpMat.map.dispose();
+          // Don't dispose old map — it's shared from the bucket cache.
           vis.hpMat.map = makeHpBarTexture(hpRatio);
           vis.lastHpRatio = hpRatio;
         }
@@ -329,7 +341,7 @@ export class MobRenderer {
       if (seen.has(id)) continue;
       vis.bodyMat.dispose();
       vis.headMat.dispose();
-      vis.hpMat.map?.dispose();
+      // hpMat.map is shared (bucket cache) — don't dispose here.
       vis.hpMat.dispose();
       vis.nameMat.map?.dispose();
       vis.nameMat.dispose();
@@ -344,7 +356,7 @@ export class MobRenderer {
     for (const vis of this.visuals.values()) {
       vis.bodyMat.dispose();
       vis.headMat.dispose();
-      vis.hpMat.map?.dispose();
+      // hpMat.map is shared (bucket cache) — don't dispose.
       vis.hpMat.dispose();
       vis.nameMat.map?.dispose();
       vis.nameMat.dispose();
