@@ -24,6 +24,8 @@ export class XpOrbWorld {
   private readonly sharedGeom: THREE.SphereGeometry;
   private readonly sharedMat: THREE.MeshBasicMaterial;
   private nextId = 1;
+  // Reused per-tick scratch list — was allocated fresh each call.
+  private readonly toRemoveScratch: number[] = [];
 
   constructor() {
     this.group = new THREE.Group();
@@ -73,7 +75,8 @@ export class XpOrbWorld {
     playerPos: { x: number; y: number; z: number },
     onPickup: (xp: number) => void,
   ): void {
-    const toRemove: number[] = [];
+    const toRemove = this.toRemoveScratch;
+    toRemove.length = 0;
     for (const orb of this.orbs.values()) {
       orb.ageSec += dtSec;
       if (orb.ageSec > MAX_LIFETIME_SEC) {
