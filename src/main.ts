@@ -2279,12 +2279,12 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     }
     if (!placed) subtitles.push('Chorus fizzle');
   }
-  const look = fp.lookVector();
+  const look = fp.lookVector(consumeFoodLookTmp);
   blockParticles.emitPlace(
     fp.position.x + look.x * 0.6,
     fp.position.y + look.y * 0.5,
     fp.position.z + look.z * 0.6,
-    [180, 140, 80],
+    FOOD_PARTICLE_COLOR,
   );
 }
 
@@ -2354,6 +2354,9 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
 // call (4+ per frame including the per-frame block-outline cast).
 const interactionLookScratch = { x: 0, y: 0, z: 0 };
 const interactionLookTmp = new THREE.Vector3();
+// Reused for the food-consumption particle emit position.
+const consumeFoodLookTmp = new THREE.Vector3();
+const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
 // Reused per-mob AABB scratch for ray picking. Was allocated fresh per
 // mob per call: hover-aim cast every frame O(mobs), attack cast on
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
@@ -4183,18 +4186,29 @@ function fireBowOrCrossbow(): boolean {
 
 function consumeInventoryItem(itemId: number, count: number): boolean {
   let remaining = count;
-  const go = (slots: (typeof inventory.hotbar)[number][]): void => {
-    for (let i = 0; i < slots.length && remaining > 0; i++) {
-      const s = slots[i];
+  // Inline both pool walks — was allocating a `go` arrow closure
+  // (capturing remaining + itemId) per call. Hot path: every food
+  // eaten / arrow fired / torch placed / ingredient brewed.
+  const hotbar = inventory.hotbar;
+  for (let i = 0; i < hotbar.length && remaining > 0; i++) {
+    const s = hotbar[i];
+    if (s?.itemId !== itemId) continue;
+    const take = Math.min(s.count, remaining);
+    const after = s.count - take;
+    hotbar[i] = after <= 0 ? null : { ...s, count: after };
+    remaining -= take;
+  }
+  if (remaining > 0) {
+    const main = inventory.main;
+    for (let i = 0; i < main.length && remaining > 0; i++) {
+      const s = main[i];
       if (s?.itemId !== itemId) continue;
       const take = Math.min(s.count, remaining);
       const after = s.count - take;
-      slots[i] = after <= 0 ? null : { ...s, count: after };
+      main[i] = after <= 0 ? null : { ...s, count: after };
       remaining -= take;
     }
-  };
-  go(inventory.hotbar);
-  if (remaining > 0) go(inventory.main);
+  }
   return remaining === 0;
 }
 interaction.attach(canvas);
