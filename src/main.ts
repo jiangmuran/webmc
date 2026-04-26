@@ -7665,6 +7665,10 @@ loader.setPopulate(async (chunk) => {
   } else {
     generator.generateChunk(chunk);
     const light = buildLight(chunk, lightOracle);
+    // Cache the freshly-built light so onLoad below doesn't rebuild it
+    // a second time. Was effectively running buildLight twice for every
+    // freshly-generated (vs restored) chunk.
+    lightCache.set(lightKey(chunk.cx, chunk.cz), light);
     chunkStore.markDirty(chunk, light);
   }
 });
