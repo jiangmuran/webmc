@@ -82,12 +82,13 @@ export class World {
       this._cacheCx = Number.NaN;
       this._cacheCz = Number.NaN;
     }
-    const c = this._chunks.get(chunkKey(cx, cz));
+    const key = chunkKey(cx, cz);
+    const c = this._chunks.get(key);
     if (c) {
       this._dirtyChunks.delete(c);
       c.onMeshDirty = null;
     }
-    return this._chunks.delete(chunkKey(cx, cz));
+    return this._chunks.delete(key);
   }
 
   // Caller iterates this set + clears entries via clearDirty(chunk)
