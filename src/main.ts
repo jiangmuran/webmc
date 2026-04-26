@@ -4971,9 +4971,8 @@ const chatInput = new ChatInput(appEl, {
         },
         unleashAllMobs: () => {
           const n = leashedMobs.size;
-          const allMobs = [...mobWorld.all()];
           for (const id of leashedMobs) {
-            const m = allMobs.find((mm) => mm.id === id);
+            const m = mobWorld.byId(id);
             if (m) mobRenderer.setMobName(id, m.def.kind);
           }
           leashedMobs.clear();
@@ -9743,10 +9742,9 @@ function frame(): void {
     }
     if (leashedMobs.size > 0) {
       const anchor = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
-      const allMobs = [...mobWorld.all()];
       const broken: number[] = [];
       for (const id of leashedMobs) {
-        const m = allMobs.find((mm) => mm.id === id);
+        const m = mobWorld.byId(id);
         if (!m) {
           broken.push(id);
           continue;
@@ -9765,11 +9763,10 @@ function frame(): void {
       for (const id of broken) leashedMobs.delete(id);
     }
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
-      const allMobs = [...mobWorld.all()];
-      const mobById = new Map(allMobs.map((m) => [m.id, m] as const));
-      const lovers: { mob: (typeof allMobs)[number]; love: AnimalLove }[] = [];
+      const lovers: { mob: NonNullable<ReturnType<typeof mobWorld.byId>>; love: AnimalLove }[] =
+        [];
       for (const [id, love] of lovingMobs) {
-        const m = mobById.get(id);
+        const m = mobWorld.byId(id);
         if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
       }
       const consumed = new Set<number>();
@@ -9805,7 +9802,7 @@ function frame(): void {
       for (const [mobId, love] of lovingMobs) {
         if (!isInLove(love, worldTick) && worldTick >= love.breedCooldownUntilTick) {
           lovingMobs.delete(mobId);
-          const m = mobById.get(mobId);
+          const m = mobWorld.byId(mobId);
           if (m) mobRenderer.setMobName(mobId, m.def.kind);
         }
       }
