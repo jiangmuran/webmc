@@ -104,9 +104,14 @@ export class Clouds {
   }
 
   update(dtSec: number, camX: number, camZ: number, weather: 'clear' | 'rain' | 'thunder'): void {
-    const speed = cloudScrollSpeed() * 50;
-    this.scrollX += dtSec * speed * 0.1;
-    this.scrollZ += dtSec * speed * 0.035;
+    // Skip per-frame texture/material/position writes when the
+    // cloud layer is hidden (low-tier potato preset). Each three.js
+    // setter fires GPU-side invalidation; cumulative on already-
+    // strained hardware. Scroll continues to advance though, so
+    // clouds resume mid-flow when toggled back on.
+    this.scrollX += dtSec * cloudScrollSpeed() * 50 * 0.1;
+    this.scrollZ += dtSec * cloudScrollSpeed() * 50 * 0.035;
+    if (!this.mesh.visible) return;
     this.texture.offset.set(this.scrollX * 0.01, this.scrollZ * 0.01);
     this.mesh.position.x = Math.floor(camX / 16) * 16;
     this.mesh.position.z = Math.floor(camZ / 16) * 16;

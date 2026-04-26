@@ -37,6 +37,10 @@ export class Stars {
   }
 
   update(camPos: THREE.Vector3, sunDirY: number): void {
+    // Skip per-frame writes when stars are hidden (low-tier preset
+    // toggles points.visible off). Saves position.copy + setter
+    // hits on already-strained hardware.
+    if (!this.points.visible) return;
     this.points.position.copy(camPos);
     this.material.opacity = Math.max(0, Math.min(1, (-sunDirY - 0.05) * 1.5));
     this.material.needsUpdate = false;
