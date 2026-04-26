@@ -1231,7 +1231,7 @@ const playerState = new PlayerState({
         px,
         py,
         pz,
-        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
         3,
       );
     }
@@ -1244,7 +1244,7 @@ const playerState = new PlayerState({
         px,
         py,
         pz,
-        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
         3,
       );
     }
@@ -1258,7 +1258,7 @@ const playerState = new PlayerState({
         px,
         py,
         pz,
-        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
         3,
       );
     }
@@ -1274,6 +1274,7 @@ const playerState = new PlayerState({
           itemId: inventory.offhand.itemId,
           count: inventory.offhand.count,
           color: colorRgb,
+          damage: inventory.offhand.damage,
         },
         3,
       );
@@ -2372,7 +2373,7 @@ const interaction = new InteractionController(
               bx + 0.5,
               by + 0.5,
               bz + 0.5,
-              { itemId: stk.itemId, count: stk.count, color: colorRgb },
+              { itemId: stk.itemId, count: stk.count, color: colorRgb, damage: stk.damage },
               2.5,
             );
           }
@@ -4887,7 +4888,7 @@ const chatInput = new ChatInput(appEl, {
                 fp.position.x + (Math.random() - 0.5),
                 fp.position.y,
                 fp.position.z + (Math.random() - 0.5),
-                { itemId: s.itemId, count: s.count, color: colorRgb },
+                { itemId: s.itemId, count: s.count, color: colorRgb, damage: s.damage },
                 1.5,
               );
               slots[i] = null;
@@ -6362,7 +6363,7 @@ document.addEventListener(
         fp.position.x + look.x * 1.2,
         fp.position.y,
         fp.position.z + look.z * 1.2,
-        { itemId: stk.itemId, count: actualCount, color },
+        { itemId: stk.itemId, count: actualCount, color, damage: stk.damage },
         1.5,
       );
       sfx.play('click');
@@ -6793,7 +6794,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
                 x + 0.5,
                 y + 0.5,
                 z + 0.5,
-                { itemId: stk.itemId, count: stk.count, color: colorRgb },
+                { itemId: stk.itemId, count: stk.count, color: colorRgb, damage: stk.damage },
                 3,
               );
             }
@@ -8883,7 +8884,13 @@ function frame(): void {
     // tick treats the player as out of range for the magnetic grab.
     fp.input.sneak || gameMode === 'spectator' ? { x: -9999, y: 0, z: 0 } : fp.position,
     (out) => {
-      const leftover = inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
+      // Preserve damage on pickup. Was hard-coded to 0, so dropping a
+      // 50% durability tool and walking back over it healed it for free.
+      const leftover = inventory.add({
+        itemId: out.itemId,
+        count: out.count,
+        damage: out.damage ?? 0,
+      });
       const taken = out.count - leftover;
       if (taken > 0) {
         sfx.play('click');

@@ -5,6 +5,10 @@ export interface DroppedItemData {
   itemId: number;
   count: number;
   color: readonly [number, number, number];
+  // Tool/armor damage. Was missing — dropping a 50% diamond sword and
+  // picking it back up returned a fresh full-durability one. Default 0
+  // (intact) so non-tool items don't have to pass it.
+  damage?: number;
 }
 
 interface DroppedItem {
@@ -28,6 +32,7 @@ const ITEM_SIZE = 0.25;
 export interface PickupOutcome {
   itemId: number;
   count: number;
+  damage?: number;
 }
 
 export class DroppedItemWorld {
@@ -140,7 +145,9 @@ export class DroppedItemWorld {
           it.y += pullY;
           it.z += pullZ;
           if (distSq < 0.5 * 0.5) {
-            const leftover = onPickup({ itemId: it.data.itemId, count: it.data.count });
+            const out: PickupOutcome = { itemId: it.data.itemId, count: it.data.count };
+            if (it.data.damage !== undefined) out.damage = it.data.damage;
+            const leftover = onPickup(out);
             if (leftover === undefined || leftover <= 0) {
               toRemove.push(it.id);
             } else if (leftover < it.data.count) {
@@ -180,6 +187,10 @@ export class DroppedItemWorld {
         if (!b) continue;
         if (!this.items.has(b.id)) continue;
         if (a.data.itemId !== b.data.itemId) continue;
+        // Only merge stacks with identical durability — otherwise two
+        // damaged tools would coalesce and the worse one's wear value
+        // would be silently lost.
+        if ((a.data.damage ?? 0) !== (b.data.damage ?? 0)) continue;
         const dx = a.x - b.x;
         const dy = a.y - b.y;
         const dz = a.z - b.z;
