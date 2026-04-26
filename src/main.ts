@@ -8172,6 +8172,7 @@ function frame(): void {
   if (!tickFrozen)
     mobWorld.tick(dtSec * tickRateMultiplier, {
       isSolid,
+      isFluid,
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       damagePlayer: (amt, attackerPos) => {
         const scaled = amt * mobDamageMultiplier;

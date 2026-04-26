@@ -875,6 +875,10 @@ export interface MobTickContext {
   onCreeperExplode?: (x: number, y: number, z: number) => void;
   // True when the mob is in direct sunlight (day + top-of-world exposure).
   isSunlit?: (x: number, y: number, z: number) => boolean;
+  // Returns 'water' / 'lava' / null at a voxel position. Used for mob
+  // buoyancy — without it, mobs sank to the bottom of any water and
+  // walked along the floor like the seafloor was a road.
+  isFluid?: (x: number, y: number, z: number) => 'water' | 'lava' | null;
 }
 
 export class MobWorld {
@@ -1078,7 +1082,26 @@ export class MobWorld {
       mob.velocity.z *= 0.9;
     }
 
-    mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
+    // Buoyancy in water: gentle upward velocity + drag. Vanilla mobs
+    // bob up to the surface instead of sinking to the floor; without
+    // this, cows that walked into a river sat on the riverbed forever.
+    // Lava: same but slower (vanilla parity for mobs that don't burn).
+    const inFluidHere = ctx.isFluid?.(
+      Math.floor(mob.position.x),
+      Math.floor(mob.position.y),
+      Math.floor(mob.position.z),
+    );
+    if (inFluidHere === 'water') {
+      mob.velocity.y = Math.min(mob.velocity.y + 12 * dtSec, 4);
+      mob.velocity.x *= Math.max(0, 1 - dtSec * 4);
+      mob.velocity.z *= Math.max(0, 1 - dtSec * 4);
+    } else if (inFluidHere === 'lava') {
+      mob.velocity.y = Math.min(mob.velocity.y + 6 * dtSec, 2);
+      mob.velocity.x *= Math.max(0, 1 - dtSec * 6);
+      mob.velocity.z *= Math.max(0, 1 - dtSec * 6);
+    } else {
+      mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
+    }
 
     const dv = {
       x: mob.velocity.x * dtSec,
