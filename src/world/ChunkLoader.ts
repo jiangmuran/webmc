@@ -104,13 +104,18 @@ export class ChunkLoader {
       const result = this.populate(chunk);
       if (result instanceof Promise) {
         this.inFlight++;
+        let failed = false;
         void result
           .catch((err: unknown) => {
+            failed = true;
+            // Drop the empty chunk that ensureChunk created — leaving
+            // it in world produces a void hole until the player edits.
+            this.world.removeChunk(entry.cx, entry.cz);
             console.error('[ChunkLoader] populate failed', err);
           })
           .finally(() => {
             this.inFlight--;
-            onLoad(entry.cx, entry.cz);
+            if (!failed) onLoad(entry.cx, entry.cz);
           });
         generated++;
         continue;
