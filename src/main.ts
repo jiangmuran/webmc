@@ -3886,8 +3886,9 @@ canvas.addEventListener('mousedown', (e) => {
       // durability when used as makeshift weapons, so a stone shovel
       // could last forever on combat-only sessions.
       const heldNow = heldNameLower();
-      if (heldNow.includes('sword')) consumeHeldToolDurability(1);
-      else if (
+      if (heldNow.includes('sword') || heldNow.includes('mace') || heldNow.includes('trident')) {
+        consumeHeldToolDurability(1);
+      } else if (
         heldNow.includes('pickaxe') ||
         heldNow.includes('axe') ||
         heldNow.includes('shovel') ||
