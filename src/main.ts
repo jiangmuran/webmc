@@ -3611,6 +3611,10 @@ const interaction = new InteractionController(
             playerState.health = 20;
           }
           playerState.fireRemainingSec = 0;
+          // Vanilla also clears rain/thunder when sleeping through night.
+          // Without this, sleeping during a thunderstorm woke you to the
+          // same storm — no escape from a multi-day storm except waiting.
+          if (currentWeather !== 'clear') setWeather('clear');
           // Cancel any in-flight phantom approach — vanilla resets the
           // since-slept counter when sleeping.
         } else {
