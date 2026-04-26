@@ -41,8 +41,11 @@ export class ItemEntityWorld {
   private nextId = 1;
   // Reused per-tick scratches. toDelete + dv were allocated fresh
   // every tick, and the Array.from snapshot below was a fresh copy of
-  // the entire item collection.
+  // the entire item collection. The Set mirror of toDelete makes the
+  // merge + pickup loops O(1)-membership instead of O(N) .includes —
+  // matters at busy mob farms with 100+ floating items.
   private readonly deleteScratch: number[] = [];
+  private readonly deleteSetScratch = new Set<number>();
   private readonly dvScratch: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
   private readonly entitiesScratch: ItemEntity[] = [];
 
@@ -75,6 +78,12 @@ export class ItemEntityWorld {
   tick(dtSec: number, ctx: ItemEntityTickContext): void {
     const toDelete = this.deleteScratch;
     toDelete.length = 0;
+    const deleted = this.deleteSetScratch;
+    deleted.clear();
+    const markDeleted = (id: number): void => {
+      toDelete.push(id);
+      deleted.add(id);
+    };
     // Refill the snapshot array in place. Was a fresh Array.from
     // every tick. We need a snapshot (not iterating items.values()
     // directly) because the merge pass below mutates items via
@@ -88,7 +97,7 @@ export class ItemEntityWorld {
       e.ageSec += dtSec;
       if (e.pickupDelaySec > 0) e.pickupDelaySec = Math.max(0, e.pickupDelaySec - dtSec);
       if (e.ageSec >= DESPAWN_SEC) {
-        toDelete.push(e.id);
+        markDeleted(e.id);
         continue;
       }
 
@@ -110,13 +119,15 @@ export class ItemEntityWorld {
       }
     }
 
-    // Merge co-located identical stacks.
+    // Merge co-located identical stacks. Use Set for O(1) deletion
+    // membership instead of toDelete.includes (was O(N) per check; at
+    // 100+ floating items the merge pass was O(N^3)).
     for (let i = 0; i < entities.length; i++) {
       const a = entities[i];
-      if (!a || toDelete.includes(a.id)) continue;
+      if (!a || deleted.has(a.id)) continue;
       for (let j = i + 1; j < entities.length; j++) {
         const b = entities[j];
-        if (!b || toDelete.includes(b.id)) continue;
+        if (!b || deleted.has(b.id)) continue;
         if (a.stack.itemId !== b.stack.itemId || a.stack.damage !== b.stack.damage) continue;
         const dx = a.position.x - b.position.x;
         const dy = a.position.y - b.position.y;
@@ -125,7 +136,7 @@ export class ItemEntityWorld {
         const cap = ctx.maxStack(a.stack.itemId);
         if (a.stack.count + b.stack.count > cap) continue;
         a.stack = { ...a.stack, count: a.stack.count + b.stack.count };
-        toDelete.push(b.id);
+        markDeleted(b.id);
       }
     }
 
@@ -133,13 +144,13 @@ export class ItemEntityWorld {
     if (ctx.playerPos) {
       const radiusSq = ctx.pickupRadius * ctx.pickupRadius;
       for (const e of entities) {
-        if (toDelete.includes(e.id)) continue;
+        if (deleted.has(e.id)) continue;
         if (e.pickupDelaySec > 0) continue;
         const dx = ctx.playerPos.x - e.position.x;
         const dy = ctx.playerPos.y - e.position.y;
         const dz = ctx.playerPos.z - e.position.z;
         if (dx * dx + dy * dy + dz * dz > radiusSq) continue;
-        if (ctx.pickup(e.stack)) toDelete.push(e.id);
+        if (ctx.pickup(e.stack)) markDeleted(e.id);
       }
     }
 
