@@ -760,6 +760,8 @@ itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:shears', maxStack: 1, durability: 238 });
+itemRegistry.register({ name: 'webmc:carrot_on_a_stick', maxStack: 1, durability: 25 });
+itemRegistry.register({ name: 'webmc:warped_fungus_on_a_stick', maxStack: 1, durability: 100 });
 itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
 const SPAWN_EGG_MOBS = [
   'pig',

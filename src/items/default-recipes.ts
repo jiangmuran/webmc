@@ -159,6 +159,24 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   S(['GGG', 'GGG'], { G: 'webmc:glass' }, 'webmc:glass_pane', 16);
   // Ladder.
   S(['S S', 'SSS', 'S S'], { S: 'webmc:stick' }, 'webmc:ladder', 3);
+  // Shears: 2 iron diagonal. Vanilla recipe.
+  S([' I', 'I '], { I: 'webmc:iron_ingot' }, 'webmc:shears');
+  // Flint and steel.
+  S([' I', 'F '], { I: 'webmc:iron_ingot', F: 'webmc:flint' }, 'webmc:flint_and_steel');
+  // Bucket.
+  S(['I I', ' I '], { I: 'webmc:iron_ingot' }, 'webmc:bucket');
+  // Compass.
+  S([' I ', 'IRI', ' I '], { I: 'webmc:iron_ingot', R: 'webmc:redstone' }, 'webmc:compass');
+  // Clock.
+  S([' G ', 'GRG', ' G '], { G: 'webmc:gold_ingot', R: 'webmc:redstone' }, 'webmc:clock');
+  // Fishing rod.
+  S(['  S', ' SL', 'S L'], { S: 'webmc:stick', L: 'webmc:string' }, 'webmc:fishing_rod');
+  // Lead.
+  S(['SS ', 'SB ', '  S'], { S: 'webmc:string', B: 'webmc:slime_ball' }, 'webmc:lead', 2);
+  // Carrot on a stick.
+  S(['F ', ' C'], { F: 'webmc:fishing_rod', C: 'webmc:carrot' }, 'webmc:carrot_on_a_stick');
+  // Saddle (vanilla doesn't have a recipe — only via dungeon loot — but webmc
+  // can offer one for crafting completeness). Skip for now.
   // Bed + bookshelf from any plank type. Was 'webmc:wool_white' which
   // isn't actually registered in the item registry — only 'webmc:wool'
   // is — so the bed recipe silently failed to register entirely. Fixed.
