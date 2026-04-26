@@ -1556,9 +1556,12 @@ let rightClickHeldForEat = false;
 // one shared store across positions (vanilla behaviour); regular chests,
 // trapped chests, barrels, and shulker boxes are keyed by (x,y,z).
 const enderChestStorage: (ItemStack | null)[] = new Array(27).fill(null);
-const chestStoragesByPos = new Map<string, (ItemStack | null)[]>();
-function chestKey(x: number, y: number, z: number): string {
-  return `${x},${y},${z}`;
+const chestStoragesByPos = new Map<number, (ItemStack | null)[]>();
+// Numeric packed (x, z, y) — same encoding as the leaf-decay BFS:
+// 22 bits x (±2M) + 22 bits z (±2M) + 9 bits y (0..511). Fits inside
+// safe-int. Was a template literal per chest access.
+function chestKey(x: number, y: number, z: number): number {
+  return ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff);
 }
 function getChestStorage(blockName: string, x: number, y: number, z: number): (ItemStack | null)[] {
   if (blockName === 'webmc:ender_chest') return enderChestStorage;
@@ -6669,7 +6672,20 @@ void persistDB.getMeta('chestStorages').then((saved) => {
     for (let i = 0; i < 27; i++) enderChestStorage[i] = ender[i] ?? null;
     if (s.byPos && typeof s.byPos === 'object') {
       for (const [k, v] of Object.entries(s.byPos)) {
-        chestStoragesByPos.set(k, restoreChestSlots(v));
+        // Backward compat: pre-numeric-key saves used "x,y,z" strings;
+        // re-pack them through chestKey so existing worlds don't lose
+        // their chests when the new code loads them.
+        let nk: number;
+        if (k.includes(',')) {
+          const parts = k.split(',');
+          const px = Number(parts[0] ?? 0);
+          const py = Number(parts[1] ?? 0);
+          const pz = Number(parts[2] ?? 0);
+          nk = chestKey(px, py, pz);
+        } else {
+          nk = Number(k);
+        }
+        chestStoragesByPos.set(nk, restoreChestSlots(v));
       }
     }
     return;
