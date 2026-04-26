@@ -31,6 +31,10 @@ export interface InteractionOptions {
   // aimed at a block (bow only fired on existing surfaces, never the
   // open sky).
   onAirInteract?: () => boolean;
+  // Returning true blocks placement at (bx,by,bz) because a mob occupies
+  // that space — vanilla rule, prevents trapping/suffocating mobs by
+  // placing blocks inside their AABB.
+  collidesWithMob?: (bx: number, by: number, bz: number) => boolean;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -191,6 +195,7 @@ export class InteractionController {
       const target = this.world.get(tx, ty, tz);
       if (target !== AIR && !(this.opts.isReplaceable?.(tx, ty, tz) ?? false)) return;
       if (this.collidesWithPlayer(tx, ty, tz)) return;
+      if (this.opts.collidesWithMob?.(tx, ty, tz)) return;
       if (this.opts.canPlace && !this.opts.canPlace()) return;
       this.world.set(tx, ty, tz, this.selectedBlock);
       this.opts.onPlace?.(tx, ty, tz);

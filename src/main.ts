@@ -2568,6 +2568,27 @@ const interaction = new InteractionController(
       ]);
       return REPLACEABLE_NAMES.has(def.name);
     },
+    collidesWithMob: (bx, by, bz) => {
+      // Vanilla blocks placement inside a mob AABB. Without this you
+      // could trap / suffocate any mob by stacking blocks on its head.
+      const minX = bx;
+      const maxX = bx + 1;
+      const minY = by;
+      const maxY = by + 1;
+      const minZ = bz;
+      const maxZ = bz + 1;
+      for (const m of mobWorld.all()) {
+        const mMinX = m.position.x - m.def.aabb.halfX;
+        const mMaxX = m.position.x + m.def.aabb.halfX;
+        const mMinY = m.position.y - m.def.aabb.halfY;
+        const mMaxY = m.position.y + m.def.aabb.halfY;
+        const mMinZ = m.position.z - m.def.aabb.halfZ;
+        const mMaxZ = m.position.z + m.def.aabb.halfZ;
+        if (mMaxX > minX && mMinX < maxX && mMaxY > minY && mMinY < maxY && mMaxZ > minZ && mMinZ < maxZ)
+          return true;
+      }
+      return false;
+    },
     canBreak: (bx, by, bz) => {
       // Spectator: ghost mode, no block edits at all (vanilla parity).
       if (gameMode === 'spectator') return false;
