@@ -2350,6 +2350,25 @@ const interactionLookTmp = new THREE.Vector3();
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
 // throwaway box objects/sec just for the crosshair.
 const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
+// Reused knockback ctx + nested attacker/target Vec3 scratches. Was
+// allocating four fresh literals per melee hit (touch + desktop
+// attack paths each built the full triple). computeKnockback reads
+// the fields synchronously and doesn't keep the reference.
+const knockbackAttackerPos = { x: 0, y: 0, z: 0 };
+const knockbackTargetPos = { x: 0, y: 0, z: 0 };
+const knockbackQueryScratch: {
+  attackerPos: { x: number; y: number; z: number };
+  targetPos: { x: number; y: number; z: number };
+  sprinting: boolean;
+  knockbackLevel: number;
+  knockbackResistance: number;
+} = {
+  attackerPos: knockbackAttackerPos,
+  targetPos: knockbackTargetPos,
+  sprinting: false,
+  knockbackLevel: 0,
+  knockbackResistance: 0,
+};
 // Reused per-frame look-vector scratch (third-person camera offset,
 // elytra glide thrust). Was new THREE.Vector3() per call.
 const frameLookTmp = new THREE.Vector3();
@@ -4505,13 +4524,16 @@ canvas.addEventListener('mousedown', (e) => {
     // Knockback: push mob away from player along horizontal look vector.
     const mobHit = mobWorld.byId(bestId);
     if (mobHit) {
-      const kb = computeKnockback({
-        attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-        targetPos: { x: mobHit.position.x, y: mobHit.position.y, z: mobHit.position.z },
-        sprinting: fp.input.sprint,
-        knockbackLevel: 0,
-        knockbackResistance: 0,
-      });
+      knockbackAttackerPos.x = fp.position.x;
+      knockbackAttackerPos.y = fp.position.y;
+      knockbackAttackerPos.z = fp.position.z;
+      knockbackTargetPos.x = mobHit.position.x;
+      knockbackTargetPos.y = mobHit.position.y;
+      knockbackTargetPos.z = mobHit.position.z;
+      knockbackQueryScratch.sprinting = fp.input.sprint;
+      knockbackQueryScratch.knockbackLevel = 0;
+      knockbackQueryScratch.knockbackResistance = 0;
+      const kb = computeKnockback(knockbackQueryScratch);
       const KB_SCALE = 12;
       mobHit.velocity.x += kb.x * KB_SCALE;
       mobHit.velocity.z += kb.z * KB_SCALE;
@@ -8373,13 +8395,16 @@ function frame(): void {
           // without ever losing tempo.
           const mobHit = mobWorld.byId(bestId);
           if (mobHit) {
-            const kb = computeKnockback({
-              attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-              targetPos: { x: mobHit.position.x, y: mobHit.position.y, z: mobHit.position.z },
-              sprinting: fp.input.sprint,
-              knockbackLevel: 0,
-              knockbackResistance: 0,
-            });
+            knockbackAttackerPos.x = fp.position.x;
+            knockbackAttackerPos.y = fp.position.y;
+            knockbackAttackerPos.z = fp.position.z;
+            knockbackTargetPos.x = mobHit.position.x;
+            knockbackTargetPos.y = mobHit.position.y;
+            knockbackTargetPos.z = mobHit.position.z;
+            knockbackQueryScratch.sprinting = fp.input.sprint;
+            knockbackQueryScratch.knockbackLevel = 0;
+            knockbackQueryScratch.knockbackResistance = 0;
+            const kb = computeKnockback(knockbackQueryScratch);
             const KB_SCALE = 12;
             mobHit.velocity.x += kb.x * KB_SCALE;
             mobHit.velocity.z += kb.z * KB_SCALE;
