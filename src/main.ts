@@ -5093,6 +5093,12 @@ const chatInput = new ChatInput(appEl, {
       fp.input.vertical = 0;
       fp.input.sprint = false;
       fp.input.jump = false;
+      // Sneak/fly were missing — if the player held Shift to sneak then
+      // pressed T to chat, sneak persisted because keyDown is gated on
+      // !inputBlocked but the held state was never cleared. Closed chat
+      // would still apply the lower eye height + edge cling until the
+      // player tapped Shift again.
+      fp.input.sneak = false;
       document.exitPointerLock();
     }
   },
