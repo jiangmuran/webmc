@@ -7705,6 +7705,21 @@ function spawnLightningKillRewards(kind: string, pos: { x: number; y: number; z:
   }
 }
 
+// Reused per-edit chunk-coord scratches. touchWorldEdit fires on every
+// place/break (and synthetic edits like fluid spread/cascade fall), and
+// previously allocated up to 5 fresh {cx,cz} literals + a 3-element
+// [cy-1, cy, cy+1] array PER edit. Heavy mining sessions (10+ edits/sec)
+// burned a steady stream of throwaway objects.
+const touchAffectedCx = new Int32Array(5);
+const touchAffectedCz = new Int32Array(5);
+const touchWorldEditApplyArg: { x: number; y: number; z: number; block: number; meta: number } = {
+  x: 0,
+  y: 0,
+  z: 0,
+  block: 0,
+  meta: 0,
+};
+
 const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
   // Cascade fallable-block stacks above the edited cell.
   cascadeFalling(bx, by, bz);
@@ -7722,23 +7737,31 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     // placements cheap (1 chunk rebuild instead of 5).
     const emitsNew = block !== 0 && registry.get(block).lightEmission > 0;
     const wasBreak = block === 0;
-    const affected: { cx: number; cz: number }[] =
-      emitsNew || wasBreak
-        ? [
-            { cx, cz },
-            { cx: cx - 1, cz },
-            { cx: cx + 1, cz },
-            { cx, cz: cz - 1 },
-            { cx, cz: cz + 1 },
-          ]
-        : [{ cx, cz }];
+    let affectedLen: number;
+    if (emitsNew || wasBreak) {
+      touchAffectedCx[0] = cx;
+      touchAffectedCz[0] = cz;
+      touchAffectedCx[1] = cx - 1;
+      touchAffectedCz[1] = cz;
+      touchAffectedCx[2] = cx + 1;
+      touchAffectedCz[2] = cz;
+      touchAffectedCx[3] = cx;
+      touchAffectedCz[3] = cz - 1;
+      touchAffectedCx[4] = cx;
+      touchAffectedCz[4] = cz + 1;
+      affectedLen = 5;
+    } else {
+      touchAffectedCx[0] = cx;
+      touchAffectedCz[0] = cz;
+      affectedLen = 1;
+    }
     // For non-light edits within the player chunk we only need to remesh
     // the section the block is in (and adjacent sections for AO across
     // section borders), not all 24 sections. Was rebuilding all 24 per
     // single block place — costly on 12-radius views (5 chunks × 24 =
     // 120 mesh rebuilds for one block placement).
     const editCy = Math.floor(by / 16);
-    const onlyLocal = !emitsNew && !wasBreak && affected.length === 1;
+    const onlyLocal = !emitsNew && !wasBreak && affectedLen === 1;
     // Skip the full chunk-light BFS when the edit can't change light:
     // - placement: opaque blocks block skylight, so always rebuild
     // - non-opaque non-light placement (glass, fence, stairs, crop
@@ -7748,21 +7771,26 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     const placementChangesLight =
       block !== 0 && (emitsNew || newDef?.opaque === true);
     const lightUnchanged = !wasBreak && !placementChangesLight;
-    for (const a of affected) {
-      const c = world.getChunk(a.cx, a.cz);
+    for (let i = 0; i < affectedLen; i++) {
+      const acx = touchAffectedCx[i]!;
+      const acz = touchAffectedCz[i]!;
+      const c = world.getChunk(acx, acz);
       if (!c) continue;
-      let cachedLight = lightCache.get(lightKey(a.cx, a.cz));
+      let cachedLight = lightCache.get(lightKey(acx, acz));
       const lightWasRebuilt = !lightUnchanged || !cachedLight;
       if (lightWasRebuilt) {
         cachedLight = buildLight(c, lightOracle);
-        lightCache.set(lightKey(a.cx, a.cz), cachedLight);
+        lightCache.set(lightKey(acx, acz), cachedLight);
       }
-      if (onlyLocal && a.cx === cx && a.cz === cz) {
+      if (onlyLocal && acx === cx && acz === cz) {
         // Mark only the touched section + immediate vertical neighbors
-        // (for AO at section borders).
-        for (const cy of [editCy - 1, editCy, editCy + 1]) {
-          if (cy >= 0 && cy < 24 && c.section(cy)) c.markMeshDirty(cy);
-        }
+        // (for AO at section borders). Manual unroll avoids the 3-element
+        // literal array that ran on every edit.
+        const cyBelow = editCy - 1;
+        if (cyBelow >= 0 && c.section(cyBelow)) c.markMeshDirty(cyBelow);
+        if (editCy >= 0 && editCy < 24 && c.section(editCy)) c.markMeshDirty(editCy);
+        const cyAbove = editCy + 1;
+        if (cyAbove < 24 && c.section(cyAbove)) c.markMeshDirty(cyAbove);
       } else {
         markChunkAllDirty(c);
       }
@@ -7770,13 +7798,20 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
       // actually changed (torch placed/broken near a chunk border
       // propagates light into the neighbor; without this the neighbor
       // saved stale pre-edit light).
-      if (lightWasRebuilt && (a.cx !== cx || a.cz !== cz)) {
+      if (lightWasRebuilt && (acx !== cx || acz !== cz)) {
         chunkStore.markDirty(c, cachedLight ?? null);
       }
     }
     chunkStore.markDirty(chunk, lightCache.get(lightKey(cx, cz)) ?? null);
   }
-  roomClient?.applyLocalBlockEdit({ x: bx, y: by, z: bz, block, meta: 0 });
+  if (roomClient) {
+    touchWorldEditApplyArg.x = bx;
+    touchWorldEditApplyArg.y = by;
+    touchWorldEditApplyArg.z = bz;
+    touchWorldEditApplyArg.block = block;
+    touchWorldEditApplyArg.meta = 0;
+    roomClient.applyLocalBlockEdit(touchWorldEditApplyArg);
+  }
 };
 
 window.addEventListener('resize', () => {
