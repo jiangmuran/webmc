@@ -2372,7 +2372,21 @@ const interaction = new InteractionController(
       else if (heldName.includes('wood') || heldName.includes('gold')) toolLevel = 1;
       const canHarvest = correctTool && toolLevel >= requiredLevel;
       const factor = canHarvest ? 1.5 : 5;
-      return (hardness * factor) / speed;
+      let durationSec = (hardness * factor) / speed;
+      // Vanilla mining-speed penalties:
+      //   Underwater × 5 (no aqua affinity yet)
+      //   Mid-air × 5 (not on ground)
+      //   Haste / mining fatigue effects (not yet)
+      // Without these the player could mine just as fast while swimming
+      // or jumping straight up, then place blocks normally — easy iron
+      // farming abuse.
+      if (fp.inFluidEyes === 'water') durationSec *= 5;
+      if (!fp.onGround) durationSec *= 5;
+      const haste = playerState.effects.get('haste');
+      if (haste) durationSec /= 1 + 0.2 * (haste.amplifier + 1);
+      const fatigue = playerState.effects.get('mining_fatigue');
+      if (fatigue) durationSec *= 1 + 0.3 * (fatigue.amplifier + 1) * 10;
+      return durationSec;
     },
     onInteract: (bx, by, bz) => {
       const state = world.get(bx, by, bz);
