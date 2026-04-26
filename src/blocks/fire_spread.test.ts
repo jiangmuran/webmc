@@ -7,7 +7,7 @@ describe('fire spread', () => {
   });
 
   it('wool is very flammable', () => {
-    const def = flammabilityOf('webmc:wool_white');
+    const def = flammabilityOf('webmc:wool');
     expect(def.encouragement).toBeGreaterThan(0);
   });
 
@@ -42,7 +42,7 @@ describe('fire spread', () => {
       age: 0,
       fireTickAllowed: true,
       humidity: 0,
-      neighborAt: () => 'webmc:wool_white',
+      neighborAt: () => 'webmc:wool',
       rng: () => 0.001,
     });
     expect(r.ignitions.length).toBeGreaterThan(0);

@@ -9,16 +9,33 @@ export interface FlammableDef {
 }
 
 const FLAMMABLE: Record<string, FlammableDef> = {
-  'webmc:oak_log': { encouragement: 5, flammability: 5 },
-  'webmc:oak_planks': { encouragement: 5, flammability: 20 },
-  'webmc:oak_leaves': { encouragement: 30, flammability: 60 },
-  'webmc:wool_white': { encouragement: 30, flammability: 60 },
+  'webmc:wool': { encouragement: 30, flammability: 60 },
   'webmc:tnt': { encouragement: 15, flammability: 100 },
   'webmc:coal_block': { encouragement: 5, flammability: 5 },
   'webmc:bookshelf': { encouragement: 30, flammability: 20 },
   'webmc:hay_block': { encouragement: 60, flammability: 20 },
   'webmc:dried_kelp_block': { encouragement: 30, flammability: 60 },
 };
+// Was oak-only — fire would happily ignite an oak forest but the same
+// fire next to a spruce log did nothing. Add all log + planks + leaves
+// variants. Crimson + warped are vanilla-explicit non-flammable.
+const FLAMMABLE_WOODS = [
+  'oak',
+  'spruce',
+  'birch',
+  'jungle',
+  'acacia',
+  'dark_oak',
+  'cherry',
+  'mangrove',
+  'pale_oak',
+];
+for (const w of FLAMMABLE_WOODS) {
+  FLAMMABLE[`webmc:${w}_log`] = { encouragement: 5, flammability: 5 };
+  FLAMMABLE[`webmc:${w}_planks`] = { encouragement: 5, flammability: 20 };
+  FLAMMABLE[`webmc:${w}_leaves`] = { encouragement: 30, flammability: 60 };
+  FLAMMABLE[`webmc:stripped_${w}_log`] = { encouragement: 5, flammability: 5 };
+}
 
 export function flammabilityOf(blockId: string): FlammableDef {
   return FLAMMABLE[blockId] ?? { encouragement: 0, flammability: 0 };

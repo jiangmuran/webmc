@@ -55,6 +55,7 @@ import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
 import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
 import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
+import { tickFire, isFlammable } from './blocks/fire_spread';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -1676,6 +1677,7 @@ const gameRules = {
   doTileDrops: true,
   showDeathMessages: true,
   doEntityDrops: true,
+  doFireTick: true,
 };
 void persistDB.getMeta('gameRules').then((saved) => {
   if (saved && typeof saved === 'object') {
@@ -8849,6 +8851,45 @@ function frame(): void {
             touchWorldEdit(x, y + 1, z, sugarCaneId);
           } else if (result === 'age_inc') {
             world.set(x, y, z, makeState(id, tickState.age));
+          }
+        } else if (name === 'webmc:fire' && gameRules.doFireTick) {
+          // Fire spread + age. The fire_spread module + tests have
+          // shipped since M2 but were never invoked — fire just sat
+          // there forever, never spreading, never burning out. Now
+          // ages on each random tick, ignites flammable neighbors.
+          const fireId = id;
+          const age = stateProps(s);
+          const r = tickFire({
+            pos: { x, y, z },
+            age,
+            fireTickAllowed: true,
+            humidity: 0.4,
+            neighborAt: (dx, dy, dz) => {
+              const ns = world.get(x + dx, y + dy, z + dz);
+              if (ns === AIR) return 'webmc:air';
+              return registry.get(stateId(ns)).name;
+            },
+            rng: Math.random,
+          });
+          if (r.extinguish) {
+            world.set(x, y, z, AIR);
+            touchWorldEdit(x, y, z, 0);
+          } else if (r.newAge !== age) {
+            world.set(x, y, z, makeState(fireId, r.newAge));
+          }
+          for (const ig of r.ignitions) {
+            const nx = x + ig.offset.x;
+            const ny = y + ig.offset.y;
+            const nz = z + ig.offset.z;
+            // Only ignite into air cells adjacent to the burned block
+            // — the actual ignition point is the air next to the
+            // flammable. But a simpler model: just light the flammable
+            // block directly.
+            const target = world.get(nx, ny, nz);
+            if (target === AIR) continue;
+            if (!isFlammable(registry.get(stateId(target)).name)) continue;
+            world.set(nx, ny, nz, makeState(fireId, 0));
+            touchWorldEdit(nx, ny, nz, fireId);
           }
         }
       }
