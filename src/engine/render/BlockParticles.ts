@@ -35,6 +35,13 @@ export class BlockParticles {
   // writes entirely. The common case (player not breaking blocks) hits
   // this path every frame.
   private lastFlushedCount = 0;
+  // Cached BufferAttribute refs. flush() did three getAttribute lookups
+  // + three instanceof checks per call; the attributes are set once at
+  // construction and never replaced. Cache them and write needsUpdate
+  // through the typed-array refs directly.
+  private readonly positionAttr: THREE.BufferAttribute;
+  private readonly colorAttr: THREE.BufferAttribute;
+  private readonly sizeAttr: THREE.BufferAttribute;
 
   constructor(capacity = 512) {
     this.capacity = capacity;
@@ -42,9 +49,12 @@ export class BlockParticles {
     this.colors = new Float32Array(capacity * 3);
     this.sizes = new Float32Array(capacity);
     const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
-    geom.setAttribute('color', new THREE.BufferAttribute(this.colors, 3));
-    geom.setAttribute('size', new THREE.BufferAttribute(this.sizes, 1));
+    this.positionAttr = new THREE.BufferAttribute(this.positions, 3);
+    this.colorAttr = new THREE.BufferAttribute(this.colors, 3);
+    this.sizeAttr = new THREE.BufferAttribute(this.sizes, 1);
+    geom.setAttribute('position', this.positionAttr);
+    geom.setAttribute('color', this.colorAttr);
+    geom.setAttribute('size', this.sizeAttr);
     geom.setDrawRange(0, 0);
     const mat = new THREE.PointsMaterial({
       size: 0.18,
@@ -161,14 +171,10 @@ export class BlockParticles {
       this.colors[base + 2] = p.b;
       this.sizes[i] = p.size;
     }
-    const geom = this.group.geometry;
-    geom.setDrawRange(0, n);
-    const pos = geom.getAttribute('position');
-    const col = geom.getAttribute('color');
-    const siz = geom.getAttribute('size');
-    if (pos instanceof THREE.BufferAttribute) pos.needsUpdate = true;
-    if (col instanceof THREE.BufferAttribute) col.needsUpdate = true;
-    if (siz instanceof THREE.BufferAttribute) siz.needsUpdate = true;
+    this.group.geometry.setDrawRange(0, n);
+    this.positionAttr.needsUpdate = true;
+    this.colorAttr.needsUpdate = true;
+    this.sizeAttr.needsUpdate = true;
     this.lastFlushedCount = n;
   }
 }
