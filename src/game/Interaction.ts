@@ -58,6 +58,12 @@ export class InteractionController {
   selectedBlock: BlockState = AIR;
   breaking: BreakProgress | null = null;
   breakDurationSec: number;
+  // Reused BreakProgress scratch — was a fresh literal each time the
+  // player's aim moved to a different block mid-mine. Mining a vein
+  // (5-10 block transitions/sec) churned an object per transition.
+  // External readers (main.ts hand swing + outline match) only read
+  // fields synchronously, so a single scratch is safe.
+  private readonly breakingScratch: BreakProgress = { bx: 0, by: 0, bz: 0, progress01: 0 };
 
   setHeld(kind: 'break' | 'place' | null): void {
     const prev = this.held;
@@ -144,7 +150,11 @@ export class InteractionController {
       this.breaking.by !== hit.by ||
       this.breaking.bz !== hit.bz
     ) {
-      this.breaking = { bx: hit.bx, by: hit.by, bz: hit.bz, progress01: 0 };
+      this.breakingScratch.bx = hit.bx;
+      this.breakingScratch.by = hit.by;
+      this.breakingScratch.bz = hit.bz;
+      this.breakingScratch.progress01 = 0;
+      this.breaking = this.breakingScratch;
     }
     const duration = Math.max(
       0.0001,
