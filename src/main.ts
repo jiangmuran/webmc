@@ -2751,6 +2751,9 @@ const interaction = new InteractionController(
             [200, 220, 240],
           );
         sfx.play('click');
+        // Cast was silent on the arm — every other right-click consume in
+        // this file swings the hand; fishing-rod was the holdout.
+        hand.swing();
         subtitles.push('Cast line');
         // Schedule a fish drop in 5-30s.
         const waitMs = 5000 + Math.random() * 25000;
@@ -6210,6 +6213,12 @@ document.addEventListener(
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
         survivalInv.hide();
+        // The creative-inv branch above releases input + relocks pointer,
+        // but survival/chest didn't — closing those overlays froze the
+        // player in place until they alt-tabbed and clicked back into the
+        // canvas.
+        fp.inputBlocked = false;
+        void canvas.requestPointerLock();
       }
       return;
     }
@@ -6217,6 +6226,8 @@ document.addEventListener(
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
         chestUI.hide();
+        fp.inputBlocked = false;
+        void canvas.requestPointerLock();
       }
       return;
     }
