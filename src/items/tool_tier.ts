@@ -35,6 +35,14 @@ export function canMine(toolLevel: number, requiredLevel: number): boolean {
 }
 
 export function requiredLevelFor(blockId: string): number {
+  // Vanilla MC mining levels (Level 0 = no tool required to drop):
+  //   4 = diamond pickaxe (obsidian, ancient_debris, netherite_block)
+  //   3 = iron pickaxe (diamond/gold/redstone/emerald ores)
+  //   2 = stone pickaxe (iron/lapis/copper, deepslate)
+  //   1 = wood pickaxe (stone, coal, andesite, granite, diorite, brick blocks)
+  //   0 = bare hand OK (wood, dirt, plants, wool, leaves, sand, gravel, ...)
+  // Old default was 1, so every wood/dirt block silently dropped nothing
+  // when the player had no tool — bare-fist log/dirt/sand all returned air.
   if (blockId === 'obsidian' || blockId === 'crying_obsidian') return 4;
   if (blockId === 'ancient_debris' || blockId === 'netherite_block') return 4;
   if (blockId === 'diamond_ore' || blockId === 'deepslate_diamond_ore') return 3;
@@ -44,5 +52,64 @@ export function requiredLevelFor(blockId: string): number {
   if (blockId === 'iron_ore' || blockId === 'deepslate_iron_ore') return 2;
   if (blockId === 'lapis_ore' || blockId === 'deepslate_lapis_ore') return 2;
   if (blockId === 'copper_ore' || blockId === 'deepslate_copper_ore') return 2;
-  return 1;
+  // Stone-family + bricks need wood-tier pickaxe to drop.
+  if (
+    blockId === 'stone' ||
+    blockId === 'cobblestone' ||
+    blockId === 'mossy_cobblestone' ||
+    blockId === 'andesite' ||
+    blockId === 'granite' ||
+    blockId === 'diorite' ||
+    blockId === 'polished_andesite' ||
+    blockId === 'polished_granite' ||
+    blockId === 'polished_diorite' ||
+    blockId === 'smooth_stone' ||
+    blockId === 'sandstone' ||
+    blockId === 'red_sandstone' ||
+    blockId === 'stone_bricks' ||
+    blockId === 'mossy_stone_bricks' ||
+    blockId === 'cracked_stone_bricks' ||
+    blockId === 'chiseled_stone_bricks' ||
+    blockId === 'bricks' ||
+    blockId === 'nether_bricks' ||
+    blockId === 'red_nether_bricks' ||
+    blockId === 'end_stone' ||
+    blockId === 'end_stone_bricks' ||
+    blockId === 'prismarine' ||
+    blockId === 'prismarine_bricks' ||
+    blockId === 'dark_prismarine' ||
+    blockId === 'purpur_block' ||
+    blockId === 'purpur_pillar' ||
+    blockId === 'quartz_block' ||
+    blockId === 'quartz_pillar' ||
+    blockId === 'quartz_bricks' ||
+    blockId === 'chiseled_quartz_block' ||
+    blockId === 'smooth_quartz' ||
+    blockId === 'coal_ore' ||
+    blockId === 'deepslate_coal_ore' ||
+    blockId === 'nether_quartz_ore' ||
+    blockId === 'nether_gold_ore' ||
+    blockId === 'magma_block' ||
+    blockId === 'glowstone' ||
+    blockId === 'sea_lantern' ||
+    blockId === 'iron_block' ||
+    blockId === 'gold_block' ||
+    blockId === 'diamond_block' ||
+    blockId === 'emerald_block' ||
+    blockId === 'lapis_block' ||
+    blockId === 'redstone_block' ||
+    blockId === 'coal_block' ||
+    blockId === 'copper_block' ||
+    blockId === 'amethyst_block' ||
+    blockId === 'amethyst_cluster' ||
+    blockId === 'basalt' ||
+    blockId === 'blackstone' ||
+    blockId === 'deepslate' ||
+    blockId === 'cobbled_deepslate'
+  ) {
+    return 1;
+  }
+  // Everything else (logs, planks, dirt, sand, leaves, wool, glass-as-dropped,
+  // crops, flowers, snow, ...) drops freely with bare hands.
+  return 0;
 }
