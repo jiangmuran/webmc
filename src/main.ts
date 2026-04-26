@@ -4333,7 +4333,7 @@ canvas.addEventListener('mousedown', (e) => {
         attackChargedRatio: charge,
       });
       if (sweep.sweeps && sweep.sweepDamage > 0) {
-        const primary = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+        const primary = mobWorld.byId(bestId);
         if (primary) {
           let extras = 0;
           for (const m of mobWorld.all()) {
@@ -4377,7 +4377,7 @@ canvas.addEventListener('mousedown', (e) => {
     if (result)
       damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, baseDmg);
     // Knockback: push mob away from player along horizontal look vector.
-    const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+    const mobHit = mobWorld.byId(bestId);
     if (mobHit) {
       const kb = computeKnockback({
         attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
@@ -7921,7 +7921,7 @@ function frame(): void {
           // Touch knockback was missing — mobs took damage but didn't
           // get pushed back, so they could grind through the player
           // without ever losing tempo.
-          const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+          const mobHit = mobWorld.byId(bestId);
           if (mobHit) {
             const kb = computeKnockback({
               attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
@@ -8995,7 +8995,7 @@ function frame(): void {
         }
         // Drop stale entries.
         for (const id of chickenEggTimers.keys()) {
-          if (!Array.from(mobWorld.all()).some((m) => m.id === id)) chickenEggTimers.delete(id);
+          if (mobWorld.byId(id) === null) chickenEggTimers.delete(id);
         }
       }
     }

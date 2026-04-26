@@ -935,6 +935,10 @@ export class MobWorld {
     return this.mobs.values();
   }
 
+  byId(id: MobId): Mob | null {
+    return this.mobs.get(id) ?? null;
+  }
+
   get size(): number {
     return this.mobs.size;
   }
