@@ -161,6 +161,20 @@ describe('PlayerState', () => {
     expect(p.effects.size).toBe(0);
   });
 
+  it('drainHunger=false keeps hunger and breath full (creative parity)', () => {
+    const p = build();
+    p.hunger = 20;
+    p.saturation = 5;
+    p.sprinting = true;
+    for (let i = 0; i < 60; i++) p.tick(1, { drainHunger: false });
+    expect(p.hunger).toBe(20);
+    expect(p.saturation).toBe(5);
+    p.breath = 5;
+    for (let i = 0; i < 30; i++) p.tick(1, { inFluid: 'water', drainHunger: false });
+    expect(p.breath).toBe(15);
+    expect(p.health).toBe(20);
+  });
+
   it('wither effect ticks past i-frames', () => {
     const p = build();
     p.hunger = 20;

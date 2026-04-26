@@ -2173,6 +2173,10 @@ function consumeHeldToolDurability(amount = 1): void {
 }
 
 function consumeArmorDurability(damageAmount: number): void {
+  // Vanilla parity: creative armor doesn't degrade. Without this gate,
+  // creative players accumulated durability damage on every hit and
+  // their cosmetic armor could break / disappear.
+  if (gameMode === 'creative') return;
   const cost = Math.max(1, Math.floor(damageAmount / 4));
   for (let i = 0; i < inventory.armor.length; i++) {
     const slot = inventory.armor[i];
@@ -7725,8 +7729,10 @@ function frame(): void {
     if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
   }
   // Drowning is gated by what's at eye level, not the body center —
-  // walking through 1-deep water shouldn't drain breath.
-  playerState.tick(dtSec, { inFluid: fp.inFluidEyes });
+  // walking through 1-deep water shouldn't drain breath. Creative +
+  // spectator skip vital drains (hunger, breath) entirely.
+  const vitalsActive = gameMode === 'survival' || gameMode === 'adventure';
+  playerState.tick(dtSec, { inFluid: fp.inFluidEyes, drainHunger: vitalsActive });
   // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
   {
     const chest = inventory.armor[1];
@@ -7746,8 +7752,9 @@ function frame(): void {
         fp.velocity.x = fp.velocity.x * 0.85 + (look.x / horiz) * speedFactor * 0.15;
         fp.velocity.z = fp.velocity.z * 0.85 + (look.z / horiz) * speedFactor * 0.15;
       }
-      // Drain durability ~1/sec.
-      if (Math.random() < dtSec) {
+      // Drain durability ~1/sec. Skip in creative — vanilla creative
+      // elytra never wears out so unlimited cosmetic gliding works.
+      if (gameMode !== 'creative' && Math.random() < dtSec) {
         const newDamage = (chest?.damage ?? 0) + 1;
         const def = itemRegistry.get(inventory.armor[1]!.itemId);
         if (newDamage >= def.durability) {

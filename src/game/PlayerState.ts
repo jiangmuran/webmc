@@ -145,17 +145,30 @@ export class PlayerState {
     this.effects.set(id, { amplifier, remainingSec: durationSec });
   }
 
-  tick(dtSec: number, env: { inFluid?: 'water' | 'lava' | null } = {}): void {
+  tick(
+    dtSec: number,
+    env: {
+      inFluid?: 'water' | 'lava' | null;
+      // Creative + spectator skip hunger / breath drain. Without this,
+      // creative still ticks hunger to 0 (silently, since invulnerable
+      // blocks the starve damage), and switching back to survival left
+      // the player at empty hunger immediately.
+      drainHunger?: boolean;
+    } = {},
+  ): void {
     if (this.hitImmuneSec > 0) this.hitImmuneSec = Math.max(0, this.hitImmuneSec - dtSec);
     if (this.health <= 0) return;
-    let decay = HUNGER_DECAY_PER_SEC;
-    if (this.sprinting) decay *= 4;
-    if (this.saturation > 0) {
-      this.saturation = Math.max(0, this.saturation - decay);
-    } else if (this.hunger > 0) {
-      this.hunger = Math.max(0, this.hunger - decay);
-    } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
-      this.takeDamage({ amount: STARVE_DAMAGE_PER_SEC * dtSec, source: 'starvation' });
+    const drainHunger = env.drainHunger ?? true;
+    if (drainHunger) {
+      let decay = HUNGER_DECAY_PER_SEC;
+      if (this.sprinting) decay *= 4;
+      if (this.saturation > 0) {
+        this.saturation = Math.max(0, this.saturation - decay);
+      } else if (this.hunger > 0) {
+        this.hunger = Math.max(0, this.hunger - decay);
+      } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
+        this.takeDamage({ amount: STARVE_DAMAGE_PER_SEC * dtSec, source: 'starvation' });
+      }
     }
     if (this.hunger >= HUNGER_HEAL_MIN && this.health < MAX_HEALTH) {
       this.regenAccumSec += dtSec;
@@ -181,7 +194,9 @@ export class PlayerState {
       if (!fireImmune) this.takeDamage({ amount: 1 * dtSec, source: 'fire' });
     }
     const waterBreathing = this.effects.has('water_breathing');
-    if (env.inFluid === 'water' && !waterBreathing) {
+    // drainHunger doubles as the "vital drains apply" gate: creative /
+    // spectator should neither lose air nor drown.
+    if (drainHunger && env.inFluid === 'water' && !waterBreathing) {
       this.breath = Math.max(0, this.breath - dtSec);
       if (this.breath <= 0) {
         this.takeDamage({ amount: DROWN_DAMAGE_PER_SEC * dtSec, source: 'drown' });
