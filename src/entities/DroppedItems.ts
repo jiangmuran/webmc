@@ -44,6 +44,8 @@ export class DroppedItemWorld {
   private nextId = 1;
   private mergeAccumSec = 0;
   private mergeDirty = false;
+  // Reused per-tick scratch list — was allocated fresh each call.
+  private readonly toRemoveScratch: number[] = [];
 
   constructor() {
     this.group = new THREE.Group();
@@ -101,7 +103,8 @@ export class DroppedItemWorld {
     playerPos: { x: number; y: number; z: number },
     onPickup: (out: PickupOutcome) => number | undefined,
   ): void {
-    const toRemove: number[] = [];
+    const toRemove = this.toRemoveScratch;
+    toRemove.length = 0;
     const twoPi = Math.PI * 2;
     // O(n^2) merge ran every tick — at chest break / mob farm sites this
     // burned big CPU. Run only on dirty (new spawn) or every 0.5s for
