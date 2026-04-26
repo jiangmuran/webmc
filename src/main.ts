@@ -1961,6 +1961,14 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
   }
   if (itemName === 'webmc:honey_bottle') {
     playerState.effects.delete('poison');
+  } else if (itemName === 'webmc:milk_bucket') {
+    // Vanilla MC: drinking milk clears all status effects (positive AND
+    // negative). Replace the bucket with an empty bucket. Without this
+    // wired, milk was inert — players had no way to cure poison/wither.
+    playerState.effects.clear();
+    const bucketId = itemRegistry.byName('webmc:bucket');
+    if (bucketId !== undefined) inventory.add({ itemId: bucketId, count: 1, damage: 0 });
+    subtitles.push('Drank milk');
   } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
     playerState.applyEffect('hunger', 0, 30);
   } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
@@ -3489,9 +3497,12 @@ canvas.addEventListener('mousedown', (e) => {
           itemName === 'webmc:enchanted_golden_apple' ||
           itemName === 'webmc:chorus_fruit' ||
           itemName === 'webmc:honey_bottle' ||
+          itemName === 'webmc:milk_bucket' ||
           itemName.includes('potion_') ||
           itemName === 'webmc:awkward_potion';
-        if (restore > 0 && (playerState.hunger < 20 || alwaysEdible)) {
+        // Milk has zero hunger restore but is drinkable for the effect-clear.
+        const drinkable = restore > 0 || itemName === 'webmc:milk_bucket';
+        if (drinkable && (playerState.hunger < 20 || alwaysEdible)) {
           if (startEating(eatState, { itemId: itemName })) {
             rightClickHeldForEat = true;
           }
