@@ -26,6 +26,13 @@ export class ChunkRenderer {
   readonly group = new THREE.Group();
   readonly material: THREE.ShaderMaterial;
   private readonly meshes = new Map<number, THREE.Mesh>();
+  // Cached cumulative triangle count + per-key contribution. The old
+  // triangleCount getter walked all meshes (500+ at 12-radius) on every
+  // call — the debug HUD reads this at 5Hz, so 2500+ getIndex() calls
+  // per second for nothing on most frames. Mesh count only changes on
+  // apply/remove; track the delta there and read from cache.
+  private _triangleCount = 0;
+  private readonly trianglesByKey = new Map<number, number>();
 
   constructor(material: THREE.ShaderMaterial = createChunkMaterial()) {
     this.material = material;
@@ -42,12 +49,7 @@ export class ChunkRenderer {
   }
 
   get triangleCount(): number {
-    let total = 0;
-    for (const m of this.meshes.values()) {
-      const idx = m.geometry.getIndex();
-      if (idx) total += idx.count / 3;
-    }
-    return total;
+    return this._triangleCount;
   }
 
   apply(response: MesherResponse): void {
@@ -57,6 +59,9 @@ export class ChunkRenderer {
       old.geometry.dispose();
       this.group.remove(old);
       this.meshes.delete(key);
+      const oldTris = this.trianglesByKey.get(key) ?? 0;
+      this._triangleCount -= oldTris;
+      this.trianglesByKey.delete(key);
     }
     if (response.quadCount === 0) return;
 
@@ -81,6 +86,10 @@ export class ChunkRenderer {
     mesh.updateMatrix();
     this.meshes.set(key, mesh);
     this.group.add(mesh);
+    // 6 indices per quad = 2 triangles per quad.
+    const tris = response.quadCount * 2;
+    this.trianglesByKey.set(key, tris);
+    this._triangleCount += tris;
   }
 
   remove(cx: number, cy: number, cz: number): void {
@@ -90,6 +99,9 @@ export class ChunkRenderer {
     m.geometry.dispose();
     this.group.remove(m);
     this.meshes.delete(key);
+    const oldTris = this.trianglesByKey.get(key) ?? 0;
+    this._triangleCount -= oldTris;
+    this.trianglesByKey.delete(key);
   }
 
   clear(): void {
@@ -98,5 +110,7 @@ export class ChunkRenderer {
       this.group.remove(m);
     }
     this.meshes.clear();
+    this.trianglesByKey.clear();
+    this._triangleCount = 0;
   }
 }
