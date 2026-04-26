@@ -37,6 +37,10 @@ export class SubtitleView {
       if (this.root.children.length > 0) this.root.replaceChildren();
       return;
     }
+    // Skip render when there's nothing queued AND nothing currently
+    // displayed — the per-frame rebuild was allocating empty rows
+    // arrays and calling replaceChildren even when both were empty.
+    if (this.queue.entries.length === 0 && this.root.children.length === 0) return;
     prune(this.queue, performance.now());
     this.render();
   }
