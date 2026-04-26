@@ -2340,6 +2340,29 @@ const interaction = new InteractionController(
       }
       return false;
     },
+    isReplaceable: (bx, by, bz) => {
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return true;
+      const def = registry.get(stateId(s));
+      // Vanilla MC replaceable blocks: fluids (water, lava), tall_grass,
+      // short_grass, fern, dead_bush, fire, snow_layer (depth 0). Without
+      // these, underwater building is impossible and you can't place a
+      // block over tall grass / fire.
+      const REPLACEABLE_NAMES = new Set([
+        'webmc:water',
+        'webmc:lava',
+        'webmc:short_grass',
+        'webmc:tall_grass',
+        'webmc:fern',
+        'webmc:large_fern',
+        'webmc:dead_bush',
+        'webmc:fire',
+        'webmc:soul_fire',
+        'webmc:snow',
+        'webmc:vine',
+      ]);
+      return REPLACEABLE_NAMES.has(def.name);
+    },
     canBreak: (bx, by, bz) => {
       // Spectator: ghost mode, no block edits at all (vanilla parity).
       if (gameMode === 'spectator') return false;

@@ -21,6 +21,10 @@ export interface InteractionOptions {
   // Lets main.ts scale by block hardness × tool break-speed (vanilla
   // behaviour: stone takes 7.5s with bare hands, ~1.5s with wood pickaxe).
   getBreakDurationSec?: (bx: number, by: number, bz: number) => number;
+  // Returning true means the block at (bx,by,bz) can be replaced by a
+  // placement (water, lava, tall grass, fire, snow layer, etc.). Used to
+  // allow underwater building.
+  isReplaceable?: (bx: number, by: number, bz: number) => boolean;
   onInteract?: (bx: number, by: number, bz: number) => boolean;
 }
 
@@ -170,7 +174,12 @@ export class InteractionController {
       const tx = hit.bx + n[0];
       const ty = hit.by + n[1];
       const tz = hit.bz + n[2];
-      if (this.world.get(tx, ty, tz) !== AIR) return;
+      // Was strictly AIR — couldn't place a block where water was, so
+      // underwater building was impossible. Allow replacing fluids
+      // (water/lava). canPlace can override per-game-mode if we ever
+      // want to forbid e.g. lava-replacement in adventure.
+      const target = this.world.get(tx, ty, tz);
+      if (target !== AIR && !(this.opts.isReplaceable?.(tx, ty, tz) ?? false)) return;
       if (this.collidesWithPlayer(tx, ty, tz)) return;
       if (this.opts.canPlace && !this.opts.canPlace()) return;
       this.world.set(tx, ty, tz, this.selectedBlock);
