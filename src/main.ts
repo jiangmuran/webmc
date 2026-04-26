@@ -415,6 +415,10 @@ itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:raw_porkchop', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:raw_beef', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:raw_chicken', maxStack: 64, durability: 0 });
+// Was missing: raw_mutton, raw_rabbit. Sheep/rabbit drops referenced
+// these names but the items didn't exist — drops silently failed.
+itemRegistry.register({ name: 'webmc:raw_mutton', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_rabbit', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
@@ -1066,6 +1070,13 @@ itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
 // failed to register, mob death drops referencing helmets dropped nothing.
 for (const armorDef of Object.values(ARMOR_DEFS)) {
   itemRegistry.register({ name: armorDef.name, maxStack: 1, durability: armorDef.durability });
+}
+// Spawn eggs for every mob kind. The right-click handler at the top of
+// main.ts checks `heldName.endsWith('_spawn_egg')` and uses the prefix
+// as the kind — but no spawn eggs were ever registered as items, so
+// /give @s zombie_spawn_egg always failed and the egg path never fired.
+for (const kind of Object.keys(MOB_DEFS) as (keyof typeof MOB_DEFS)[]) {
+  itemRegistry.register({ name: `webmc:${kind}_spawn_egg`, maxStack: 64, durability: 0 });
 }
 
 const recipeRegistry = new RecipeRegistry();
