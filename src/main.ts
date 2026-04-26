@@ -3486,6 +3486,35 @@ const interaction = new InteractionController(
           }
         }
       }
+      // Bone meal on sugar_cane: grow up to 3 stalks (vanilla parity).
+      if (heldName === 'bone_meal' && def.name === 'webmc:sugar_cane') {
+        const caneId = id;
+        let topY = by;
+        for (let h = 1; h <= 3; h++) {
+          const above = world.get(bx, by + h, bz);
+          if (above === AIR) break;
+          if (registry.get(stateId(above)).name !== 'webmc:sugar_cane') break;
+          topY = by + h;
+        }
+        let currentH = 1;
+        for (let dyDown = 1; dyDown <= 3; dyDown++) {
+          const below = world.get(bx, by - dyDown, bz);
+          if (below === AIR) break;
+          if (registry.get(stateId(below)).name !== 'webmc:sugar_cane') break;
+          currentH++;
+        }
+        if (currentH < 3 && world.get(bx, topY + 1, bz) === AIR) {
+          world.set(bx, topY + 1, bz, makeState(caneId, 0));
+          touchWorldEdit(bx, topY + 1, bz, caneId);
+          if (gameMode === 'survival' || gameMode === 'adventure') {
+            const bmId = itemRegistry.byName('webmc:bone_meal');
+            if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+          }
+          sfx.play('place');
+          hand.swing();
+          return true;
+        }
+      }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
