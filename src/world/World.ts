@@ -26,6 +26,14 @@ export function chunkKey(cx: number, cz: number): string {
 
 export class World {
   private readonly _chunks = new Map<string, Chunk>();
+  // Single-slot last-accessed cache. ~95% of consecutive get/set
+  // calls hit the same chunk (mob AABB sweep, particle physics,
+  // raycasts), and the Map<string,Chunk> lookup costs a string
+  // allocation `${cx},${cz}` per call — pre-cache, that was ~600K
+  // throwaway strings per second under normal load.
+  private _cacheCx = Number.NaN;
+  private _cacheCz = Number.NaN;
+  private _cacheChunk: Chunk | null = null;
 
   get chunkCount(): number {
     return this._chunks.size;
@@ -40,7 +48,12 @@ export class World {
   }
 
   getChunk(cx: number, cz: number): Chunk | null {
-    return this._chunks.get(chunkKey(cx, cz)) ?? null;
+    if (cx === this._cacheCx && cz === this._cacheCz) return this._cacheChunk;
+    const c = this._chunks.get(chunkKey(cx, cz)) ?? null;
+    this._cacheCx = cx;
+    this._cacheCz = cz;
+    this._cacheChunk = c;
+    return c;
   }
 
   ensureChunk(cx: number, cz: number): Chunk {
@@ -49,10 +62,16 @@ export class World {
     if (existing) return existing;
     const c = new Chunk(cx, cz);
     this._chunks.set(key, c);
+    if (cx === this._cacheCx && cz === this._cacheCz) this._cacheChunk = c;
     return c;
   }
 
   removeChunk(cx: number, cz: number): boolean {
+    if (cx === this._cacheCx && cz === this._cacheCz) {
+      this._cacheChunk = null;
+      this._cacheCx = Number.NaN;
+      this._cacheCz = Number.NaN;
+    }
     return this._chunks.delete(chunkKey(cx, cz));
   }
 
