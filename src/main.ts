@@ -3291,12 +3291,16 @@ const interaction = new InteractionController(
           }
         }
       }
-      // Doors / trapdoors / levers / buttons: toggle the "powered/open" bit.
+      // Doors / trapdoors / levers / buttons / fence gates: toggle the
+      // "powered/open" bit. Fence gates were missing — players couldn't
+      // open them by right-click, so any fenced enclosure with a gate
+      // was effectively a permanent fence.
       const interactable =
         def.name.endsWith('_door') ||
         def.name.endsWith('_trapdoor') ||
         def.name.endsWith('_button') ||
         def.name.endsWith('_pressure_plate') ||
+        def.name.endsWith('_fence_gate') ||
         def.name === 'webmc:lever';
       if (interactable) {
         const props = (state >>> 16) ^ 1;
