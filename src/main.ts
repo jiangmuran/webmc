@@ -6821,7 +6821,35 @@ let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
 const CROP_TICK_SEC = 1;
 const fallableIds = new Set<number>();
-for (const name of ['webmc:sand', 'webmc:gravel', 'webmc:red_sand']) {
+const FALLABLE_BLOCKS = [
+  'webmc:sand',
+  'webmc:gravel',
+  'webmc:red_sand',
+  'webmc:suspicious_sand',
+  'webmc:suspicious_gravel',
+  'webmc:anvil',
+  'webmc:chipped_anvil',
+  'webmc:damaged_anvil',
+  // Concrete powder — all 16 colors. Was missing entirely so a stack of
+  // concrete_powder placed mid-air just hung there instead of falling.
+  'webmc:white_concrete_powder',
+  'webmc:orange_concrete_powder',
+  'webmc:magenta_concrete_powder',
+  'webmc:light_blue_concrete_powder',
+  'webmc:yellow_concrete_powder',
+  'webmc:lime_concrete_powder',
+  'webmc:pink_concrete_powder',
+  'webmc:gray_concrete_powder',
+  'webmc:light_gray_concrete_powder',
+  'webmc:cyan_concrete_powder',
+  'webmc:purple_concrete_powder',
+  'webmc:blue_concrete_powder',
+  'webmc:brown_concrete_powder',
+  'webmc:green_concrete_powder',
+  'webmc:red_concrete_powder',
+  'webmc:black_concrete_powder',
+];
+for (const name of FALLABLE_BLOCKS) {
   const id = registry.byName(name);
   if (id !== undefined) fallableIds.add(id);
 }
