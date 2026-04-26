@@ -3,8 +3,15 @@ import { SUBCHUNK_DIM } from '@/world/SubChunk';
 import type { MesherResponse } from '@/world/workers/mesher.protocol';
 import { createChunkMaterial } from './ChunkShader';
 
-export function chunkKey(cx: number, cy: number, cz: number): string {
-  return `${cx.toString()},${cy.toString()},${cz.toString()}`;
+// Pack (cx, cy, cz) into a single safe-integer key. Mesh apply +
+// remove are hot during chunk streaming; was a template-literal
+// allocation per Map lookup. Pack: cx16 | cz16 | cy8 — fits well
+// within Number.MAX_SAFE_INTEGER (2^53) for any sensible world size.
+export function chunkKey(cx: number, cy: number, cz: number): number {
+  const xc = (cx + 32768) & 0xffff;
+  const zc = (cz + 32768) & 0xffff;
+  const yc = cy & 0xff;
+  return xc * 65536 + zc + yc * 4294967296;
 }
 
 // All sub-chunks have the same local bounding sphere (centered at the
@@ -18,7 +25,7 @@ const SHARED_CHUNK_BOUNDING_SPHERE = new THREE.Sphere(
 export class ChunkRenderer {
   readonly group = new THREE.Group();
   readonly material: THREE.ShaderMaterial;
-  private readonly meshes = new Map<string, THREE.Mesh>();
+  private readonly meshes = new Map<number, THREE.Mesh>();
 
   constructor(material: THREE.ShaderMaterial = createChunkMaterial()) {
     this.material = material;
@@ -61,7 +68,7 @@ export class ChunkRenderer {
       response.cy * SUBCHUNK_DIM,
       response.cz * SUBCHUNK_DIM,
     );
-    mesh.name = `chunk-${key}`;
+    mesh.name = `chunk-${String(response.cx)},${String(response.cy)},${String(response.cz)}`;
     mesh.matrixAutoUpdate = false;
     mesh.updateMatrix();
     this.meshes.set(key, mesh);
