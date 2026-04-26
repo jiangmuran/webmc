@@ -22,13 +22,19 @@ function neighborsOf(req: MesherRequest): MesherNeighbors {
   };
 }
 
+// Shared "fully sky-lit" / "no block light" defaults — only read by the
+// greedy mesher, so one immutable copy per worker is safe and avoids
+// allocating 8 KB on every cold meshing job (light=undefined cases).
+const DEFAULT_FLAT_SKY_LIGHT = new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+const DEFAULT_FLAT_BLOCK_LIGHT = new Uint8Array(SUBCHUNK_VOLUME);
+
 function unpackSnapshot(req: MesherRequest): Snapshot {
   const flatIdx = new Uint16Array(SUBCHUNK_VOLUME);
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
     flatIdx[i] = readIndex(req.indices, i, req.bitsPerIndex);
   }
-  const flatSkyLight = req.flatSkyLight ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
-  const flatBlockLight = req.flatBlockLight ?? new Uint8Array(SUBCHUNK_VOLUME);
+  const flatSkyLight = req.flatSkyLight ?? DEFAULT_FLAT_SKY_LIGHT;
+  const flatBlockLight = req.flatBlockLight ?? DEFAULT_FLAT_BLOCK_LIGHT;
   return {
     flatIdx,
     paletteOpaque: req.paletteOpaque,

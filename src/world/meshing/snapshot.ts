@@ -33,6 +33,13 @@ export const TILE_OFFSET_TOP = 0;
 export const TILE_OFFSET_SIDE = 1;
 export const TILE_OFFSET_BOTTOM = 2;
 
+// Shared "fully sky-lit" / "no block light" defaults for snapshots that
+// don't carry computed light yet (cold meshing, tests, perf bench). The
+// greedy mesher only READS these arrays, so sharing one immutable copy
+// across the whole process avoids a 4 KB allocation per call.
+const DEFAULT_FLAT_SKY_LIGHT = new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+const DEFAULT_FLAT_BLOCK_LIGHT = new Uint8Array(SUBCHUNK_VOLUME);
+
 export interface PaletteBlob {
   readonly paletteStates: Uint32Array;
   readonly paletteOpaque: Uint8Array;
@@ -83,8 +90,8 @@ export function snapshotSubChunk(
     }
   }
 
-  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
-  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
+  const flatSkyLight = light?.sky ?? DEFAULT_FLAT_SKY_LIGHT;
+  const flatBlockLight = light?.block ?? DEFAULT_FLAT_BLOCK_LIGHT;
 
   return { flatIdx, paletteOpaque, paletteColor, paletteSize: n, flatSkyLight, flatBlockLight };
 }
@@ -129,8 +136,8 @@ export function snapshotFromBlob(
     }
     flatIdx[i] = idx;
   }
-  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
-  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
+  const flatSkyLight = light?.sky ?? DEFAULT_FLAT_SKY_LIGHT;
+  const flatBlockLight = light?.block ?? DEFAULT_FLAT_BLOCK_LIGHT;
   return {
     flatIdx,
     paletteOpaque: blob.paletteOpaque,
