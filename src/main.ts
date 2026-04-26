@@ -7512,12 +7512,27 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
             { cx, cz: cz + 1 },
           ]
         : [{ cx, cz }];
+    // For non-light edits within the player chunk we only need to remesh
+    // the section the block is in (and adjacent sections for AO across
+    // section borders), not all 24 sections. Was rebuilding all 24 per
+    // single block place — costly on 12-radius views (5 chunks × 24 =
+    // 120 mesh rebuilds for one block placement).
+    const editCy = Math.floor(by / 16);
+    const onlyLocal = !emitsNew && !wasBreak && affected.length === 1;
     for (const a of affected) {
       const c = world.getChunk(a.cx, a.cz);
       if (!c) continue;
       const newLight = buildLight(c, lightOracle);
       lightCache.set(lightKey(a.cx, a.cz), newLight);
-      markChunkAllDirty(c);
+      if (onlyLocal && a.cx === cx && a.cz === cz) {
+        // Mark only the touched section + immediate vertical neighbors
+        // (for AO at section borders).
+        for (const cy of [editCy - 1, editCy, editCy + 1]) {
+          if (cy >= 0 && cy < 24 && c.section(cy)) c.markMeshDirty(cy);
+        }
+      } else {
+        markChunkAllDirty(c);
+      }
     }
     const light = lightCache.get(lightKey(cx, cz)) ?? null;
     chunkStore.markDirty(chunk, light);
