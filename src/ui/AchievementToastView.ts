@@ -81,8 +81,11 @@ export class AchievementToastView {
     sortQueueByPriority(this.state);
   }
 
+  // Reused tick context — was allocated per frame.
+  private readonly tickCtx = { nowSec: 0 };
   tick(): void {
-    const result = tickToasts(this.state, { nowSec: performance.now() / 1000 });
+    this.tickCtx.nowSec = performance.now() / 1000;
+    const result = tickToasts(this.state, this.tickCtx);
     if (result.justShown) {
       const t = result.justShown;
       this.headerEl.textContent = KIND_LABEL[t.kind];
