@@ -6034,6 +6034,9 @@ document.addEventListener(
     // still mashing through hotkeys behind it. Only ESC should pass
     // through (handled below to close the menu).
     if (pauseMenu.isVisible() && e.code !== 'Escape') return;
+    // Death screen had the same passthrough issue — pressing E or T
+    // during the death overlay opened inventory or chat over a corpse.
+    if (deathScreen.isVisible()) return;
     if (creativeInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
