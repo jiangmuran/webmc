@@ -9035,7 +9035,11 @@ function frame(): void {
               consumedName === 'webmc:honey_bottle' ||
               consumedName.includes('potion_') ||
               consumedName === 'webmc:awkward_potion';
-            if (restore > 0 && (playerState.hunger < 20 || alwaysEdible)) {
+            // Milk bucket is drinkable for the cure-effect even with
+            // hungerRestore=0; the eat-re-arm gate was missing it, so
+            // holding right-click only drank 1 bucket then stopped.
+            const drinkable = restore > 0 || consumedName === 'webmc:milk_bucket';
+            if (drinkable && (playerState.hunger < 20 || alwaysEdible)) {
               startEating(eatState, { itemId: consumedName });
               continue;
             }
