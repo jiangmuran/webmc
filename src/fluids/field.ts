@@ -27,8 +27,23 @@ export function keyOfXYZ(x: number, y: number, z: number): string {
 }
 
 export function parseKey(k: string): PosKey {
-  const [x, y, z] = k.split(',').map(Number);
-  return { x: x ?? 0, y: y ?? 0, z: z ?? 0 };
+  const out: PosKey = { x: 0, y: 0, z: 0 };
+  parseKeyInto(k, out);
+  return out;
+}
+
+// In-place variant that mutates `out` instead of allocating. The split
+// + map(Number) version allocated a string array, a number array, AND
+// a {x,y,z} literal per call — for a 5k-cell lava lake that was 15k
+// throwaway objects per tick. tickFluid uses a module-scope scratch
+// across both the per-cell loop and the BFS dry-up.
+export function parseKeyInto(k: string, out: PosKey): PosKey {
+  const c1 = k.indexOf(',');
+  const c2 = k.indexOf(',', c1 + 1);
+  out.x = +k.substring(0, c1);
+  out.y = +k.substring(c1 + 1, c2);
+  out.z = +k.substring(c2 + 1);
+  return out;
 }
 
 export type SolidSampler = (x: number, y: number, z: number) => boolean;
@@ -64,6 +79,10 @@ const TICK_RESULT_SCRATCH: FluidTickResult = {
   updates: TICK_UPDATES_SCRATCH,
   stabilized: false,
 };
+// Per-cell parseKey scratch — see parseKeyInto. Single instance is
+// safe because the per-cell + BFS loops below read pos.x/y/z
+// synchronously and don't recurse into parseKey.
+const TICK_POS_SCRATCH: PosKey = { x: 0, y: 0, z: 0 };
 
 // One fluid tick. Given sources (current fluid cells) + a solid-block sampler,
 // returns the new/changed cells. Horizontal flow decreases level by
@@ -85,12 +104,13 @@ export function tickFluid(
 
   for (const [key, cell] of cells) {
     if (cell.level <= 0) continue;
-    const pos = parseKey(key);
+    const pos = parseKeyInto(key, TICK_POS_SCRATCH);
 
     // Downward flow: if below is empty and not solid, fill at this cell's
     // level (capped). Source cells spread downward at full level.
     const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
-    if (!isSolid(pos.x, pos.y - 1, pos.z)) {
+    const belowSolid = isSolid(pos.x, pos.y - 1, pos.z);
+    if (!belowSolid) {
       const below = snapshot(pos.x, pos.y - 1, pos.z);
       const targetLevel = cell.source ? LEVEL_SOURCE - 1 : Math.max(cell.level, LEVEL_SOURCE - 1);
       if (below?.kind !== cell.kind || below.level < targetLevel) {
@@ -103,13 +123,13 @@ export function tickFluid(
     }
 
     // Horizontal flow only if there's a surface under this cell (it can't
-    // flow horizontally mid-air).
-    const supported =
-      isSolid(pos.x, pos.y - 1, pos.z) ||
-      (() => {
-        const b = snapshot(pos.x, pos.y - 1, pos.z);
-        return b !== null && b.kind === cell.kind;
-      })();
+    // flow horizontally mid-air). Inlined the previous IIFE — was a
+    // fresh arrow allocated per cell that wasn't directly solid-supported.
+    let supported = belowSolid;
+    if (!supported) {
+      const b = snapshot(pos.x, pos.y - 1, pos.z);
+      supported = b !== null && b.kind === cell.kind;
+    }
     if (!supported) continue;
 
     const step = attenuation(cell.kind);
@@ -162,7 +182,7 @@ export function tickFluid(
     if (k === undefined) break;
     const c = merged.get(k);
     if (c === undefined) continue;
-    const pos = parseKey(k);
+    const pos = parseKeyInto(k, TICK_POS_SCRATCH);
     const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
     if (!reachable.has(belowKey)) {
       if (merged.get(belowKey)?.kind === c.kind) {
