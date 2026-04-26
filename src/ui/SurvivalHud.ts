@@ -551,6 +551,13 @@ export class SurvivalHud {
     this.root.style.display = on ? 'flex' : 'none';
   }
 
+  // Edge-trigger flags for the shake-clear writes. Most frames the
+  // player isn't at low HP / low hunger, and the inner else branch
+  // was writing transform='' to all 10 hearts + 10 hungers every
+  // frame for nothing.
+  private heartShakeActive = false;
+  private hungerShakeActive = false;
+
   render(frame: SurvivalFrame): void {
     if (!this.visible) return;
     const hpPerHeart = frame.maxHealth / HEARTS;
@@ -569,10 +576,13 @@ export class SurvivalHud {
         const ox = (Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0;
         const oy = (Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0;
         this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
-      } else {
+      } else if (this.heartShakeActive) {
+        // Only clear once on the falling edge — was writing
+        // transform='' every frame the player wasn't at low HP.
         this.hearts[i]!.style.transform = '';
       }
     }
+    this.heartShakeActive = heartShake;
 
     const hungerPer = frame.maxHunger / DRUMSTICKS;
     const shake = shakeOnLowFood(frame.hunger);
@@ -587,10 +597,11 @@ export class SurvivalHud {
         const ox = (Math.sin(t * 0.04 + i * 1.7) * 2) | 0;
         const oy = (Math.cos(t * 0.05 + i * 0.9) * 2) | 0;
         this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
-      } else {
+      } else if (this.hungerShakeActive) {
         this.hungers[i]!.style.transform = '';
       }
     }
+    this.hungerShakeActive = shake;
 
     const armorPts = frame.armorPoints ?? 0;
     if (armorVisible(armorPts)) {
