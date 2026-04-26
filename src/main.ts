@@ -8675,14 +8675,26 @@ function frame(): void {
   }
 
   // Cave-mood ambient: when player has no sky access above and it's dark.
+  // O(1) sky-light lookup (skyLight=15 means clear path to sky) instead of
+  // scanning every Y up to CHUNK_HEIGHT every frame.
   let skyBlocked = false;
   const px = Math.floor(fp.position.x);
   const py = Math.floor(fp.position.y);
   const pz = Math.floor(fp.position.z);
-  for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
-    if (isSolid(px, yy, pz)) {
-      skyBlocked = true;
-      break;
+  {
+    const cx = px >> 4;
+    const cz = pz >> 4;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (lt) {
+      const lb = getLightByte(lt, px & 0xf, py + 2, pz & 0xf);
+      skyBlocked = ((lb >>> 4) & 0xf) !== 15;
+    } else {
+      for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
+        if (isSolid(px, yy, pz)) {
+          skyBlocked = true;
+          break;
+        }
+      }
     }
   }
   const m = tickMood(moodState, {
@@ -9180,12 +9192,23 @@ function frame(): void {
       lastPhantomCheckMs = nowPhantomMs;
       const daysSinceSleep = dayCounter - lastSleepDay;
       const px2 = Math.floor(fp.position.x);
+      const py2 = Math.floor(fp.position.y);
       const pz2 = Math.floor(fp.position.z);
       let inSky = true;
-      for (let yy = Math.floor(fp.position.y) + 2; yy < CHUNK_HEIGHT; yy++) {
-        if (isSolid(px2, yy, pz2)) {
-          inSky = false;
-          break;
+      {
+        const cx = px2 >> 4;
+        const cz = pz2 >> 4;
+        const lt = lightCache.get(lightKey(cx, cz));
+        if (lt) {
+          const lb = getLightByte(lt, px2 & 0xf, py2 + 2, pz2 & 0xf);
+          inSky = ((lb >>> 4) & 0xf) === 15;
+        } else {
+          for (let yy = py2 + 2; yy < CHUNK_HEIGHT; yy++) {
+            if (isSolid(px2, yy, pz2)) {
+              inSky = false;
+              break;
+            }
+          }
         }
       }
       if (
@@ -9841,11 +9864,25 @@ function frame(): void {
       isSunlit: (x, y, z) => {
         if (!dayNight.isDay) return false;
         if (currentWeather === 'thunder') return false;
-        // Check nothing opaque above the mob's head out to the top of the world.
+        // Use sky-light byte at the mob's head: skyLight=15 means
+        // direct sky exposure (no opaque block between this voxel and
+        // the sky). Was scanning every Y from mob to CHUNK_HEIGHT —
+        // ~320 world.get calls per sunburn check per mob per tick.
+        // O(1) lookup via lighting cache instead.
         const bx = Math.floor(x);
+        const by = Math.floor(y + 0.5);
         const bz = Math.floor(z);
-        const startY = Math.floor(y + 0.5);
-        for (let yy = startY; yy < CHUNK_HEIGHT; yy++) {
+        const cx = bx >> 4;
+        const cz = bz >> 4;
+        const lt = lightCache.get(lightKey(cx, cz));
+        if (lt) {
+          const lb = getLightByte(lt, bx & 0xf, by, bz & 0xf);
+          return ((lb >>> 4) & 0xf) === 15;
+        }
+        // Fallback: lighting not loaded for this chunk yet. Scan once;
+        // mobs in unloaded chunks are rare (despawn radius), so this
+        // path is cold.
+        for (let yy = by; yy < CHUNK_HEIGHT; yy++) {
           const s = world.get(bx, yy, bz);
           if (s === AIR) continue;
           if (registry.get(stateId(s)).opaque) return false;
