@@ -6861,8 +6861,15 @@ function flushDirty(): void {
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
   const budget = Math.max(1, loader.perFrameBudget * 3);
   let dispatched = 0;
-  for (const chunk of world.chunks()) {
-    if (chunk.meshDirty.size === 0) continue;
+  // Iterate only chunks with dirty meshes (maintained by World via
+  // Chunk.onMeshDirty). Was iterating every loaded chunk every frame
+  // just to find the dirty ones — 576+ size checks per frame at
+  // 12-radius for nothing in steady state.
+  for (const chunk of world.dirtyChunks()) {
+    if (chunk.meshDirty.size === 0) {
+      world.clearDirty(chunk);
+      continue;
+    }
     if (dispatched >= budget) break;
     const dirty = Array.from(chunk.meshDirty);
     // Sort so closer-to-player sections process first. Old impl re-
@@ -6912,6 +6919,9 @@ function flushDirty(): void {
         });
       dispatched++;
     }
+    // If we drained all dirty sections this frame, remove the chunk
+    // from the dirty-chunks set so future iterations skip it.
+    if (chunk.meshDirty.size === 0) world.clearDirty(chunk);
   }
 }
 

@@ -26,6 +26,11 @@ export function chunkKey(cx: number, cz: number): string {
 
 export class World {
   private readonly _chunks = new Map<string, Chunk>();
+  // Set of chunks with at least one dirty mesh section. Maintained via
+  // Chunk.onMeshDirty so the per-frame mesh flush iterates only
+  // dirty chunks instead of every loaded one (was 576 iterations per
+  // frame at 12-radius just to find dirty ones).
+  private readonly _dirtyChunks = new Set<Chunk>();
   // Single-slot last-accessed cache. ~95% of consecutive get/set
   // calls hit the same chunk (mob AABB sweep, particle physics,
   // raycasts), and the Map<string,Chunk> lookup costs a string
@@ -61,6 +66,7 @@ export class World {
     const existing = this._chunks.get(key);
     if (existing) return existing;
     const c = new Chunk(cx, cz);
+    c.onMeshDirty = (chunk) => this._dirtyChunks.add(chunk);
     this._chunks.set(key, c);
     if (cx === this._cacheCx && cz === this._cacheCz) this._cacheChunk = c;
     return c;
@@ -72,7 +78,23 @@ export class World {
       this._cacheCx = Number.NaN;
       this._cacheCz = Number.NaN;
     }
+    const c = this._chunks.get(chunkKey(cx, cz));
+    if (c) {
+      this._dirtyChunks.delete(c);
+      c.onMeshDirty = null;
+    }
     return this._chunks.delete(chunkKey(cx, cz));
+  }
+
+  // Caller iterates this set + clears entries via clearDirty(chunk)
+  // when the chunk's meshDirty becomes empty. Saves the per-frame
+  // walk over all loaded chunks just to find ones with dirty sections.
+  dirtyChunks(): IterableIterator<Chunk> {
+    return this._dirtyChunks.values();
+  }
+
+  clearDirty(chunk: Chunk): void {
+    this._dirtyChunks.delete(chunk);
   }
 
   get(wx: number, wy: number, wz: number): BlockState {

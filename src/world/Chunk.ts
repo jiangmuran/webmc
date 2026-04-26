@@ -31,10 +31,18 @@ export class Chunk {
   );
   private readonly _meshDirty = new Set<number>();
   private _version = 0;
+  // Optional callback fired whenever this chunk's meshDirty set grows.
+  // World uses this to maintain a dirty-chunk set so the per-frame
+  // flush doesn't iterate every loaded chunk just to find dirty ones.
+  onMeshDirty: ((self: Chunk) => void) | null = null;
 
   constructor(cx: number, cz: number) {
     this.cx = cx;
     this.cz = cz;
+  }
+
+  private notifyDirty(): void {
+    this.onMeshDirty?.(this);
   }
 
   get sections(): readonly (SubChunk | null)[] {
@@ -65,6 +73,7 @@ export class Chunk {
     this._sections[cy] = sc;
     this._meshDirty.add(cy);
     this._version += 1;
+    this.notifyDirty();
   }
 
   ensureSection(cy: number): SubChunk {
@@ -101,6 +110,7 @@ export class Chunk {
       this._meshDirty.add(cy + 1);
     }
     this._version += 1;
+    this.notifyDirty();
   }
 
   clearMeshDirty(cy?: number): void {
@@ -109,6 +119,9 @@ export class Chunk {
   }
 
   markMeshDirty(cy: number): void {
-    if (cy >= 0 && cy < CHUNK_SECTIONS) this._meshDirty.add(cy);
+    if (cy >= 0 && cy < CHUNK_SECTIONS) {
+      this._meshDirty.add(cy);
+      this.notifyDirty();
+    }
   }
 }
