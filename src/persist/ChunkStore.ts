@@ -22,7 +22,10 @@ interface DirtyEntry {
 
 export class ChunkStore {
   private readonly opts: ChunkStoreOptions;
-  private readonly dirty = new Map<string, DirtyEntry>();
+  // Numeric packed key (same as lightCache) — was a template-literal
+  // string per markDirty + per flush iteration. Heavy edits churn
+  // hundreds of these per second.
+  private readonly dirty = new Map<number, DirtyEntry>();
   private flushTimer: ReturnType<typeof setInterval> | null = null;
   private inFlight = false;
 
@@ -33,8 +36,10 @@ export class ChunkStore {
     this.opts = { ...DEFAULTS, ...opts };
   }
 
-  key(cx: number, cz: number): string {
-    return `${cx.toString()},${cz.toString()}`;
+  // Public for tests; numeric so Map.get is fast and the key isn't
+  // allocated as a string each call.
+  key(cx: number, cz: number): number {
+    return ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
   }
 
   markDirty(chunk: Chunk, light: ChunkLight | null): void {
