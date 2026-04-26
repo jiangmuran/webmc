@@ -7883,6 +7883,16 @@ const playerTickEnv: { inFluid: 'water' | 'lava' | null; drainHunger: boolean } 
 // Off-world sentinel for droppedItems/xpOrbs pickup-blocked path. Was
 // allocated per frame as a fresh {x:-9999,y:0,z:0} literal.
 const FAR_POS_BLOCK_PICKUP = { x: -9999, y: 0, z: 0 };
+// Reused scoreboard rows — was a fresh array of 6 literals per frame
+// (when visible).
+const scoreboardRows: { name: string; score: number }[] = [
+  { name: 'Broken', score: 0 },
+  { name: 'Placed', score: 0 },
+  { name: 'Killed', score: 0 },
+  { name: 'Walked', score: 0 },
+  { name: 'Time', score: 0 },
+  { name: 'Level', score: 0 },
+];
 // Reused per-frame arg for shouldPauseRender (battery / charging /
 // thermalState fixed).
 const pauseRenderArg = { batteryLevel: 1, charging: true, thermalState: 'nominal' as const };
@@ -9104,14 +9114,14 @@ function frame(): void {
   }
 
   if (scoreboard.isVisible()) {
-    scoreboard.render([
-      { name: 'Broken', score: playerStats.blocksBroken },
-      { name: 'Placed', score: playerStats.blocksPlaced },
-      { name: 'Killed', score: playerStats.mobsKilled },
-      { name: 'Walked', score: Math.floor(playerStats.distanceWalked) },
-      { name: 'Time', score: Math.floor(playerStats.playtimeSec) },
-      { name: 'Level', score: playerState.xpLevel },
-    ]);
+    // Reused entries — was a fresh array of 6 literals per frame.
+    scoreboardRows[0]!.score = playerStats.blocksBroken;
+    scoreboardRows[1]!.score = playerStats.blocksPlaced;
+    scoreboardRows[2]!.score = playerStats.mobsKilled;
+    scoreboardRows[3]!.score = Math.floor(playerStats.distanceWalked);
+    scoreboardRows[4]!.score = Math.floor(playerStats.playtimeSec);
+    scoreboardRows[5]!.score = playerState.xpLevel;
+    scoreboard.render(scoreboardRows);
   }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
