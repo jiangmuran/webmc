@@ -16,6 +16,8 @@ export class Hotbar {
   private readonly label: HTMLElement;
   private labelHideAt = 0;
   private _selected = 0;
+  private lastCounts: number[] = [];
+  private lastEmptyBehavior: 'dim' | 'infinite' | null = null;
   // Listeners notified whenever the selection changes (1-9 keys, scroll
   // wheel, or programmatic select). Used by main.ts to keep the parallel
   // inventory.selectedHotbar in sync — a held pickaxe needs the same
@@ -193,11 +195,17 @@ export class Hotbar {
   }
 
   setCounts(counts: readonly number[], emptyBehavior: 'dim' | 'infinite' = 'dim'): void {
+    // Hot path — called every frame from main. Skip per-slot DOM writes
+    // when nothing changed since the last call. Each .textContent /
+    // .style.filter write hits browser style invalidation; cumulative
+    // ~9*60 = 540 writes/sec for nothing.
     for (let i = 0; i < this.slotEls.length; i++) {
       const el = this.slotEls[i];
       const countEl = this.countEls[i];
       if (!el || !countEl) continue;
       const n = counts[i] ?? 0;
+      if (emptyBehavior === this.lastEmptyBehavior && this.lastCounts[i] === n) continue;
+      this.lastCounts[i] = n;
       if (emptyBehavior === 'infinite') {
         countEl.textContent = '';
         el.style.filter = 'none';
@@ -211,6 +219,7 @@ export class Hotbar {
         el.style.filter = 'none';
       }
     }
+    this.lastEmptyBehavior = emptyBehavior;
   }
 
   private refreshHighlight(): void {
