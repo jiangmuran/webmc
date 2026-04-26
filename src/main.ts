@@ -7883,6 +7883,9 @@ const playerTickEnv: { inFluid: 'water' | 'lava' | null; drainHunger: boolean } 
 // Off-world sentinel for droppedItems/xpOrbs pickup-blocked path. Was
 // allocated per frame as a fresh {x:-9999,y:0,z:0} literal.
 const FAR_POS_BLOCK_PICKUP = { x: -9999, y: 0, z: 0 };
+// Reused per-frame arg for shouldPauseRender (battery / charging /
+// thermalState fixed).
+const pauseRenderArg = { batteryLevel: 1, charging: true, thermalState: 'nominal' as const };
 // Reused inventory.add arg for dropped-item pickups. Mutable (cast)
 // because ItemStack's fields are nominally readonly but inventory.add
 // only reads them.
@@ -7963,13 +7966,9 @@ function frame(): void {
     const targetPx = lowTier ? Math.min(basePx, 1.0) : basePx;
     if (Math.abs(renderer.getPixelRatio() - targetPx) > 0.01) renderer.setPixelRatio(targetPx);
   }
-  if (
-    shouldPauseRender({
-      batteryLevel: powerState.batteryLevel,
-      charging: powerState.charging,
-      thermalState: 'nominal',
-    })
-  ) {
+  pauseRenderArg.batteryLevel = powerState.batteryLevel;
+  pauseRenderArg.charging = powerState.charging;
+  if (shouldPauseRender(pauseRenderArg)) {
     return;
   }
 
