@@ -7928,10 +7928,20 @@ function frame(): void {
       cancelEating(eatState);
       rightClickHeldForEat = false;
     }
-    // Totem of Undying: if held in hotbar, consume to revive at 1 HP + Regen II + Absorption II.
+    // Totem of Undying: vanilla checks main-hand AND offhand slot. webmc
+    // only scanned the inventory grids — a totem in offhand silently
+    // failed to save you.
     const totemId = itemRegistry.byName('webmc:totem_of_undying');
-    if (totemId !== undefined && countInventoryItem(totemId) > 0) {
-      consumeInventoryItem(totemId, 1);
+    const totemInOffhand = totemId !== undefined && inventory.offhand?.itemId === totemId;
+    const totemInInventory = totemId !== undefined && countInventoryItem(totemId) > 0;
+    if (totemId !== undefined && (totemInInventory || totemInOffhand)) {
+      if (totemInOffhand) {
+        const off = inventory.offhand!;
+        const after = off.count - 1;
+        inventory.offhand = after > 0 ? { ...off, count: after } : null;
+      } else {
+        consumeInventoryItem(totemId, 1);
+      }
       playerState.health = 1;
       playerState.justDied = false;
       playerState.applyEffect('regeneration', 1, 45);
