@@ -96,6 +96,19 @@ export function snapshotSubChunk(
   return { flatIdx, paletteOpaque, paletteColor, paletteSize: n, flatSkyLight, flatBlockLight };
 }
 
+// Reused PaletteBlob wrapper. The typed-array fields inside MUST be
+// fresh per call because they're transferred to the mesher worker
+// (and detach on the main thread); the wrapper itself is just a
+// disposable shell read synchronously by buildMesherRequest.
+type MutablePaletteBlob = { -readonly [K in keyof PaletteBlob]: PaletteBlob[K] };
+const SERIALIZE_PALETTE_BLOB: MutablePaletteBlob = {
+  paletteStates: new Uint32Array(0),
+  paletteOpaque: new Uint8Array(0),
+  paletteColor: new Uint8Array(0),
+  bitsPerIndex: 0,
+  indices: null,
+};
+
 export function serializePalette(
   self: SubChunk,
   isOpaque: (state: BlockState) => boolean,
@@ -114,13 +127,12 @@ export function serializePalette(
   }
   const indicesSrc = self.indices;
   const indices = indicesSrc ? new Uint32Array(indicesSrc) : null;
-  return {
-    paletteStates,
-    paletteOpaque,
-    paletteColor,
-    bitsPerIndex: self.bitsPerIndex,
-    indices,
-  };
+  SERIALIZE_PALETTE_BLOB.paletteStates = paletteStates;
+  SERIALIZE_PALETTE_BLOB.paletteOpaque = paletteOpaque;
+  SERIALIZE_PALETTE_BLOB.paletteColor = paletteColor;
+  SERIALIZE_PALETTE_BLOB.bitsPerIndex = self.bitsPerIndex;
+  SERIALIZE_PALETTE_BLOB.indices = indices;
+  return SERIALIZE_PALETTE_BLOB;
 }
 
 export function snapshotFromBlob(
