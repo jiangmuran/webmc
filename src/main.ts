@@ -8497,6 +8497,19 @@ const pickupAddArg = { itemId: 0, count: 0, damage: 0 } as {
   count: number;
   damage: number;
 };
+// Reused contexts for the per-quality-decision power + thermal checks.
+// Both helpers read fields synchronously and return primitives; refilling
+// in place skips one fresh literal each per perfMonitor.tick fire.
+const powerCtxScratch: {
+  batteryLevel: number;
+  charging: boolean;
+  thermalState: 'nominal' | 'fair' | 'serious' | 'critical';
+} = { batteryLevel: 1, charging: true, thermalState: 'nominal' };
+const thermalCtxScratch: { cpuTempCelsius: number; fpsP95: number; battery: number } = {
+  cpuTempCelsius: 50,
+  fpsP95: 60,
+  battery: 1,
+};
 function biomeIdAtPlayerColumn(): number {
   const bx = Math.floor(fp.position.x);
   const bz = Math.floor(fp.position.z);
@@ -8541,24 +8554,17 @@ function frame(): void {
   if (perfMonitor.tick(dtSec)) {
     let qualityLimit = perfMonitor.quality;
     if (isMobileDevice) {
-      const powerLimit = maxRenderDistanceChunks(
-        {
-          batteryLevel: powerState.batteryLevel,
-          charging: powerState.charging,
-          thermalState: 'nominal',
-        },
-        false,
-      );
+      powerCtxScratch.batteryLevel = powerState.batteryLevel;
+      powerCtxScratch.charging = powerState.charging;
+      powerCtxScratch.thermalState = 'nominal';
+      const powerLimit = maxRenderDistanceChunks(powerCtxScratch, false);
       qualityLimit = Math.min(qualityLimit, powerLimit);
     }
     // Thermal-throttle: shrink view radius if FPS p95 < 25 or low battery (chunk_unload_strategy_thermal).
-    if (
-      inThermalThrottle({
-        cpuTempCelsius: 50,
-        fpsP95: p95Fps(fpsStats),
-        battery: powerState.batteryLevel,
-      })
-    ) {
+    thermalCtxScratch.cpuTempCelsius = 50;
+    thermalCtxScratch.fpsP95 = p95Fps(fpsStats);
+    thermalCtxScratch.battery = powerState.batteryLevel;
+    if (inThermalThrottle(thermalCtxScratch)) {
       qualityLimit = Math.max(4, qualityLimit - 4);
     }
     loader.setViewRadius(qualityLimit);
