@@ -4,7 +4,7 @@ import { DayNightCycle } from './engine/time/DayNightCycle';
 import { FirstPersonCamera } from './engine/input/FirstPersonCamera';
 import { TouchControls, isTouchDevice } from './engine/input/TouchControls';
 import { ChunkRenderer } from './engine/render/ChunkRenderer';
-import { type BlockState, AIR, makeState, stateId } from './blocks/state';
+import { type BlockState, AIR, makeState, stateId, stateProps } from './blocks/state';
 import { createDefaultRegistry } from './blocks/registry';
 import { World } from './world/World';
 import { CHUNK_HEIGHT, type Chunk } from './world/Chunk';
@@ -52,6 +52,7 @@ import { smashDamage } from './items/mace_combat';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
+import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -6598,7 +6599,9 @@ async function savePlayerNow(): Promise<void> {
 
 let lastPlayerSaveAt = performance.now();
 let fluidTickAccum = 0;
+let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
+const CROP_TICK_SEC = 1;
 const fallableIds = new Set<number>();
 for (const name of ['webmc:sand', 'webmc:gravel', 'webmc:red_sand']) {
   const id = registry.byName(name);
@@ -8603,6 +8606,87 @@ function frame(): void {
           subtitles.push('Phantom screech');
         } catch {
           /* phantom not registered, non-fatal */
+        }
+      }
+    }
+  }
+
+  // Crop random tick. The crop_growth_random_tick module + its tests have
+  // existed since M3 but were never invoked — wheat / carrots / potatoes /
+  // beetroots / sweet_berry / nether_wart you planted just sat at age 0
+  // forever. Now ticks every CROP_TICK_SEC: scans a small radius around
+  // the player for crop blocks, picks ~ randomTickSpeed per chunk-section,
+  // advances age by 1 if the growth roll succeeds.
+  cropTickAccum += dtSec;
+  if (cropTickAccum >= CROP_TICK_SEC) {
+    cropTickAccum -= CROP_TICK_SEC;
+    if (gameMode !== 'spectator') {
+      const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
+        'webmc:wheat': 'wheat',
+        'webmc:carrots': 'carrot',
+        'webmc:potatoes': 'potato',
+        'webmc:beetroots': 'beetroot',
+        'webmc:nether_wart': 'nether_wart',
+      };
+      const px = Math.floor(fp.position.x);
+      const py = Math.floor(fp.position.y);
+      const pz = Math.floor(fp.position.z);
+      const RADIUS = 24;
+      const SAMPLES = 80;
+      const farmlandId = registry.byName('webmc:farmland');
+      for (let i = 0; i < SAMPLES; i++) {
+        const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const dy = Math.floor((Math.random() - 0.5) * 8);
+        const dz = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const x = px + dx;
+        const y = py + dy;
+        const z = pz + dz;
+        const s = world.get(x, y, z);
+        if (s === AIR) continue;
+        const id = stateId(s);
+        const name = registry.get(id).name;
+        const cropKind = CROP_BLOCKS[name];
+        if (!cropKind) continue;
+        const age = stateProps(s);
+        const cx = x >> 4;
+        const cz = z >> 4;
+        const lx = x & 0xf;
+        const lz = z & 0xf;
+        const light = lightCache.get(lightKey(cx, cz));
+        const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
+        const skyL = (lb >>> 4) & 0xf;
+        const blockL = lb & 0xf;
+        const lightAbove = Math.max(skyL, blockL);
+        // Hydrated when on farmland with water within 4 horizontally.
+        let hydrated = false;
+        if (farmlandId !== undefined) {
+          const groundId = stateId(world.get(x, y - 1, z));
+          if (groundId === farmlandId) {
+            // Vanilla farmland tracks moisture in props; webmc just checks
+            // adjacent water as a coarse heuristic.
+            const waterId = registry.byName('webmc:water');
+            outer: for (let wdx = -4; wdx <= 4; wdx++) {
+              for (let wdz = -4; wdz <= 4; wdz++) {
+                const ws = world.get(x + wdx, y - 1, z + wdz);
+                if (ws !== AIR && stateId(ws) === waterId) {
+                  hydrated = true;
+                  break outer;
+                }
+              }
+            }
+          }
+        }
+        const result = cropRandomTick({
+          crop: cropKind,
+          age,
+          lightAbove,
+          hydrated,
+          inRowWithSameCrop: false,
+          rand: Math.random,
+        });
+        if (result === 'grew') {
+          world.set(x, y, z, makeState(id, age + 1));
+          touchWorldEdit(x, y, z, id);
         }
       }
     }
