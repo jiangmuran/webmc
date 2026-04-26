@@ -8497,6 +8497,12 @@ const pickupAddArg = { itemId: 0, count: 0, damage: 0 } as {
   count: number;
   damage: number;
 };
+// Hoisted neutral RGB for the first-person hand cube when the held
+// item isn't a placeable block (tools, food). Was a fresh
+// `[180, 130, 100]` literal every frame in survival mode the player
+// wasn't holding a placeable. setHeldBlockColor only reads the array
+// values synchronously into a Color, so a shared readonly tuple is safe.
+const NEUTRAL_HAND_COLOR: readonly [number, number, number] = [180, 130, 100];
 // Reused contexts for the per-quality-decision power + thermal checks.
 // Both helpers read fields synchronously and return primitives; refilling
 // in place skips one fresh literal each per perfMonitor.tick fire.
@@ -9127,7 +9133,7 @@ function frame(): void {
     interaction.selectedBlock = AIR;
     // Holding a tool/food in survival — neutral hand color so the cube
     // doesn't visually lie about being something placeable.
-    hand.setHeldBlockColor([180, 130, 100]);
+    hand.setHeldBlockColor(NEUTRAL_HAND_COLOR);
   }
   hand.update(dtSec);
   interaction.tick(now);
