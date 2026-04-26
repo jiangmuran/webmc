@@ -7077,7 +7077,11 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
       { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
       { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
     ],
-    sheep: [{ name: 'wool', min: 1, max: 1, color: [240, 240, 240] }],
+    sheep: [
+      { name: 'wool', min: 1, max: 1, color: [240, 240, 240] },
+      // Vanilla also drops 1-2 raw_mutton on kill — was missing.
+      { name: 'raw_mutton', min: 1, max: 2, color: [180, 90, 90] },
+    ],
     chicken: [
       { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
       { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
@@ -7098,8 +7102,15 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
       { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
     ],
     rabbit: [
-      { name: 'rabbit', min: 0, max: 1, color: [200, 160, 130] },
+      // 'rabbit' was the cooked-meat item id — drops should use the
+      // raw form (raw_rabbit). Other passive drops (raw_beef etc) all
+      // use the raw_* convention, so this was the lone outlier.
+      { name: 'raw_rabbit', min: 0, max: 1, color: [200, 160, 130] },
       { name: 'rabbit_hide', min: 0, max: 1, color: [180, 140, 110] },
+      // Vanilla 10% drop chance for rabbit_foot — needed for leaping
+      // potion brewing (M12) but already a registered item, just was
+      // missing from the drop table.
+      { name: 'rabbit_foot', min: 0, max: 1, color: [220, 180, 150] },
     ],
     fox: [],
     horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
