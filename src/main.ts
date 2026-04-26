@@ -7875,6 +7875,7 @@ const mobTickCtx: MobTickContext = {
 // Reused per-frame argument objects.
 const afkArg = { lastInputTick: 0, currentTick: 0, idleKickEnabled: false };
 const memArg = { heapUsed: 0, heapLimit: 0 };
+const moodCtx = { skyLight: 15, blockLight: 12, dtMs: 0 };
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
@@ -8947,19 +8948,20 @@ function frame(): void {
       }
     }
   }
-  const m = tickMood(moodState, {
-    skyLight: skyBlocked ? 0 : 15,
-    blockLight: nowPhase === 'night' && skyBlocked ? 4 : 12,
-    dtMs: dtSec * 1000,
-  });
+  // Reused per-frame ctx — was a fresh literal each call.
+  moodCtx.skyLight = skyBlocked ? 0 : 15;
+  moodCtx.blockLight = nowPhase === 'night' && skyBlocked ? 4 : 12;
+  moodCtx.dtMs = dtSec * 1000;
+  const m = tickMood(moodState, moodCtx);
   if (m.triggered) {
     sfx.play('cave');
     subtitles.push('Cave ambience');
   }
 
   // Underwater ambient — runs once per real-time tick equivalent.
-  // Use eye-level fluid: ambient kicks in when head is submerged.
-  underwaterAmbient = { ...underwaterAmbient, submerged: fp.inFluidEyes === 'water' };
+  // Use eye-level fluid: ambient kicks in when head is submerged. Mutate
+  // in place to skip the per-frame spread {...underwaterAmbient}.
+  underwaterAmbient.submerged = fp.inFluidEyes === 'water';
   const ua = tickUnderwater(underwaterAmbient, Math.random);
   underwaterAmbient = ua.state;
   if (ua.play) {
