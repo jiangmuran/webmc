@@ -10117,28 +10117,44 @@ function frame(): void {
             leafDecayScratch.distance = found ? 0 : LEAF_MAX_DIST;
             if (leafShouldDecay(leafDecayScratch)) {
               const def2 = registry.get(id);
-              const drops: { itemId: number; count: number; color?: number }[] = [];
+              // Spawn drops directly — was collecting into an
+              // intermediate `drops[]` then iterating to spawn.
+              // droppedItems.spawn stores its data arg by reference, so
+              // each spawn call still needs a fresh literal, but
+              // skipping the intermediate array + {itemId, count}
+              // wrappers cuts ~3 throwaway objects per decay event.
               if (Math.random() < 0.05) {
                 const sapName = LEAF_TO_SAPLING_FOR_DECAY[name];
                 if (sapName !== undefined) {
                   const sId = itemRegistry.byName(sapName);
-                  if (sId !== undefined) drops.push({ itemId: sId, count: 1 });
+                  if (sId !== undefined) {
+                    droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                      itemId: sId,
+                      count: 1,
+                      color: def2.color,
+                    });
+                  }
                 }
               }
               if (Math.random() < 0.02) {
                 const stickId = itemRegistry.byName('webmc:stick');
-                if (stickId !== undefined) drops.push({ itemId: stickId, count: 1 });
+                if (stickId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: stickId,
+                    count: 1,
+                    color: def2.color,
+                  });
+                }
               }
               if (name === 'webmc:oak_leaves' && Math.random() < 0.005) {
                 const aId = itemRegistry.byName('webmc:apple');
-                if (aId !== undefined) drops.push({ itemId: aId, count: 1 });
-              }
-              for (const d of drops) {
-                droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
-                  itemId: d.itemId,
-                  count: d.count,
-                  color: def2.color,
-                });
+                if (aId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: aId,
+                    count: 1,
+                    color: def2.color,
+                  });
+                }
               }
               world.set(x, y, z, AIR);
               touchWorldEdit(x, y, z, 0);
