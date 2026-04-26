@@ -3692,7 +3692,15 @@ function growTreeAt(bx: number, by: number, bz: number, saplingName: string): bo
 function fireBowOrCrossbow(): boolean {
   const arrowId = itemRegistry.byName('webmc:arrow');
   const isSurvival = gameMode === 'survival' || gameMode === 'adventure';
-  if (isSurvival && (arrowId === undefined || countInventoryItem(arrowId) === 0)) {
+  // Vanilla checks both main inventory AND offhand for arrows. webmc was
+  // hotbar+main only, so a stack of arrows in the offhand silently
+  // failed to fire — players had to manually swap them to hotbar first.
+  const arrowInOffhand =
+    arrowId !== undefined && inventory.offhand?.itemId === arrowId && inventory.offhand.count > 0;
+  if (
+    isSurvival &&
+    (arrowId === undefined || (countInventoryItem(arrowId) === 0 && !arrowInOffhand))
+  ) {
     subtitles.push('Out of arrows');
     return false;
   }
@@ -3755,7 +3763,16 @@ function fireBowOrCrossbow(): boolean {
       );
     }
   }
-  if (isSurvival && arrowId !== undefined) consumeInventoryItem(arrowId, 1);
+  if (isSurvival && arrowId !== undefined) {
+    // Vanilla pulls from main first, then offhand. Match that order so
+    // hotbar arrows deplete before offhand backup quivers.
+    if (countInventoryItem(arrowId) > 0) {
+      consumeInventoryItem(arrowId, 1);
+    } else if (arrowInOffhand && inventory.offhand) {
+      const after = inventory.offhand.count - 1;
+      inventory.offhand = after > 0 ? { ...inventory.offhand, count: after } : null;
+    }
+  }
   consumeHeldToolDurability(1);
   sfx.play('break');
   hand.swing();
