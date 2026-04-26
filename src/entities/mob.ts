@@ -980,6 +980,18 @@ export class MobWorld {
     return this._passiveCount;
   }
 
+  // Shared mutable damage-result + nested position scratch. Per-call
+  // result wrapper + {...m.position} spread were allocated on every
+  // hit. Callers consume fields synchronously (drops, knockback, XP
+  // split, damage numbers) and don't keep the reference past their
+  // current attack handler.
+  private readonly damageResultPosition: Vec3 = { x: 0, y: 0, z: 0 };
+  private readonly damageResult: { killed: boolean; kind: MobKind; position: Vec3 } = {
+    killed: false,
+    kind: 'pig' as MobKind,
+    position: this.damageResultPosition,
+  };
+
   damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
     const m = this.mobs.get(id);
     if (!m || m.dyingSec > 0) return null;
@@ -987,15 +999,21 @@ export class MobWorld {
     m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
     if (m.def.behavior === 'passive') m.fleeingSec = 5;
+    this.damageResultPosition.x = m.position.x;
+    this.damageResultPosition.y = m.position.y;
+    this.damageResultPosition.z = m.position.z;
+    this.damageResult.kind = m.def.kind;
     if (m.health <= 0) {
       m.dyingSec = 0.35;
       // Caller (e.g. main.ts player attack handler) handles drops/XP for
       // this kill. Setting dropsHandled prevents the dyingSec timer's
       // onMobDeath callback from also firing drops.
       m.dropsHandled = true;
-      return { killed: true, kind: m.def.kind, position: { ...m.position } };
+      this.damageResult.killed = true;
+    } else {
+      this.damageResult.killed = false;
     }
-    return { killed: false, kind: m.def.kind, position: { ...m.position } };
+    return this.damageResult;
   }
 
   tick(dtSec: number, ctx: MobTickContext): void {
