@@ -2842,6 +2842,7 @@ const interaction = new InteractionController(
             [180, 220, 255],
           );
         sfx.play('break');
+        hand.swing();
         subtitles.push('Riptide!');
         return true;
       }
