@@ -1392,7 +1392,11 @@ function restoreStack(p: PersistedItemStack | null): ItemStack | null {
   if (!p) return null;
   const id = itemRegistry.byName(p.name);
   if (id === undefined) return null; // item no longer exists in registry
-  return { itemId: id, count: Math.max(1, p.count), damage: Math.max(0, p.damage) };
+  // count===0 means an empty slot was saved as a stack — should be null,
+  // not a phantom 1-count item. Old code did Math.max(1, count) which
+  // resurrected zeros into ghost items in saves.
+  if (p.count <= 0) return null;
+  return { itemId: id, count: p.count, damage: Math.max(0, p.damage) };
 }
 function restoreInventory(snap: PersistedInventory): void {
   for (let i = 0; i < inventory.hotbar.length; i++) {
