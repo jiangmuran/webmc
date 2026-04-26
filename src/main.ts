@@ -2369,6 +2369,20 @@ const consumeFoodLookTmp = new THREE.Vector3();
 const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
 // Hoisted egg color — was a fresh tuple per egg lay.
 const EGG_COLOR: readonly [number, number, number] = [240, 230, 200];
+// Reused break-ticks ctx scratch. ticksToBreak fires every frame
+// while the player is breaking a block — was building a fresh
+// 9-field BreakCtx literal per frame.
+const breakTicksCtxScratch = {
+  hardness: 0,
+  correctTool: true,
+  toolSpeed: 1,
+  onGround: false,
+  underwater: false,
+  hasAquaAffinity: false,
+  hasteLevel: 0,
+  fatigueLevel: 0,
+  efficiencyBonus: 0,
+};
 // Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
 // def.name.replace(/^webmc:/, '') was firing per-frame in
 // getBreakDurationSec (every break tick) and other hot paths; the
@@ -9506,19 +9520,18 @@ function frame(): void {
       const helmet = inventory.armor[0];
       const helmetName = helmet ? itemRegistry.get(helmet.itemId).name : '';
       const aquaAffinity = helmetName.includes('turtle');
-      const t = breakTicksFor({
-        hardness: Math.max(0.1, def2.hardness),
-        correctTool: true,
-        toolSpeed: 1,
-        onGround: fp.onGround,
-        // Mining-speed underwater penalty applies when the head is in
-        // water (vanilla rule); aquaAffinity removes it.
-        underwater: fp.inFluidEyes === 'water',
-        hasAquaAffinity: aquaAffinity,
-        hasteLevel: hasteAmp + (hasteAmp > 0 ? 1 : 0),
-        fatigueLevel: fatigueAmp + (fatigueAmp > 0 ? 1 : 0),
-        efficiencyBonus: 0,
-      });
+      breakTicksCtxScratch.hardness = Math.max(0.1, def2.hardness);
+      breakTicksCtxScratch.correctTool = true;
+      breakTicksCtxScratch.toolSpeed = 1;
+      breakTicksCtxScratch.onGround = fp.onGround;
+      // Mining-speed underwater penalty applies when the head is in
+      // water (vanilla rule); aquaAffinity removes it.
+      breakTicksCtxScratch.underwater = fp.inFluidEyes === 'water';
+      breakTicksCtxScratch.hasAquaAffinity = aquaAffinity;
+      breakTicksCtxScratch.hasteLevel = hasteAmp + (hasteAmp > 0 ? 1 : 0);
+      breakTicksCtxScratch.fatigueLevel = fatigueAmp + (fatigueAmp > 0 ? 1 : 0);
+      breakTicksCtxScratch.efficiencyBonus = 0;
+      const t = breakTicksFor(breakTicksCtxScratch);
       interaction.breakDurationSec = Math.min(5, Math.max(0.1, t / 20));
     }
   }
