@@ -2379,6 +2379,10 @@ const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimba
   isFluid,
   isClimbable,
 };
+// Reused per-frame far-mob despawn list. Was allocated fresh every
+// frame when overall mob caps weren't full — a 50-mob world would
+// trash one Array per frame just to walk distances.
+const farMobsScratch: number[] = [];
 // Reused leaf-decay BFS scratches. Was allocating a fresh
 // visited:Set<string>, a stack:Array<{x,y,z,d}>, and ~150 stack
 // entries per scan. Fires several times per sec in a forest under
@@ -9431,7 +9435,8 @@ function frame(): void {
     // Tamed pets, leashed mobs, name-tagged mobs, and saddled mounts get
     // a free pass — vanilla MC keeps these loaded indefinitely; otherwise
     // your wolf would vanish the moment you walked across a chunk.
-    const farMobs: number[] = [];
+    const farMobs = farMobsScratch;
+    farMobs.length = 0;
     for (const m of mobWorld.all()) {
       const dx = m.position.x - fp.position.x;
       const dz = m.position.z - fp.position.z;
