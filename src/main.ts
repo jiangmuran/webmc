@@ -1196,12 +1196,26 @@ const playerState = new PlayerState({
   inventory,
   onDeath: () => {
     // Peaceful mode (or keepInventory=true) keeps inventory; snapshot+restore.
-    if (mobDamageMultiplier === 0 || gameRules.keepInventory) {
+    // Armor + offhand were missing from the snapshot, so peaceful death wiped
+    // them silently — players woke up unarmored even though their hotbar
+    // came back. Now snapshots all four slot groups.
+    // Creative + spectator are also "keepInventory" modes per vanilla:
+    // /kill or void death in creative used to wipe a builder's hotbar.
+    const keepOnDeath =
+      mobDamageMultiplier === 0 ||
+      gameRules.keepInventory ||
+      gameMode === 'creative' ||
+      gameMode === 'spectator';
+    if (keepOnDeath) {
       const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
       const main = inventory.main.map((s) => (s ? { ...s } : null));
+      const armor = inventory.armor.map((s) => (s ? { ...s } : null));
+      const offhand = inventory.offhand ? { ...inventory.offhand } : null;
       queueMicrotask(() => {
         for (let i = 0; i < hot.length; i++) inventory.hotbar[i] = hot[i] ?? null;
         for (let i = 0; i < main.length; i++) inventory.main[i] = main[i] ?? null;
+        for (let i = 0; i < armor.length; i++) inventory.armor[i] = armor[i] ?? null;
+        inventory.offhand = offhand;
       });
       return;
     }
