@@ -7645,6 +7645,30 @@ const onLoad = (cx: number, cz: number): void => {
   }
 };
 
+// Reused world-to-screen projector for damage numbers etc. Hoisted
+// to avoid per-call closure + Vector3 allocation in the per-frame
+// damageNumbers.tick loop. Returns a stable object too — caller copies.
+const tmpProject = new THREE.Vector3();
+const tmpProjectResult = { sx: 0, sy: 0, visible: false };
+function projectWorldToScreen(
+  wx: number,
+  wy: number,
+  wz: number,
+): { sx: number; sy: number; visible: boolean } {
+  tmpProject.set(wx, wy, wz);
+  tmpProject.project(camera);
+  if (tmpProject.z > 1) {
+    tmpProjectResult.sx = 0;
+    tmpProjectResult.sy = 0;
+    tmpProjectResult.visible = false;
+    return tmpProjectResult;
+  }
+  tmpProjectResult.sx = (tmpProject.x + 1) * 0.5 * window.innerWidth;
+  tmpProjectResult.sy = (-tmpProject.y + 1) * 0.5 * window.innerHeight;
+  tmpProjectResult.visible = true;
+  return tmpProjectResult;
+}
+
 // Reusable mob-tick context. Hoisted because the original was a fresh
 // object literal + 5 closures allocated every frame (60Hz × 6 alloc =
 // 360/sec). The closures all capture module-scope refs so hoisting
@@ -9915,14 +9939,7 @@ function frame(): void {
   }
   mobRenderer.sync(mobWorld.all(), camera.position);
 
-  damageNumbers.tick(dtSec, (wx, wy, wz) => {
-    const v = new THREE.Vector3(wx, wy, wz);
-    v.project(camera);
-    if (v.z > 1) return { sx: 0, sy: 0, visible: false };
-    const sx = (v.x + 1) * 0.5 * window.innerWidth;
-    const sy = (-v.y + 1) * 0.5 * window.innerHeight;
-    return { sx, sy, visible: true };
-  });
+  damageNumbers.tick(dtSec, projectWorldToScreen);
 
   // Minimap is throttled to 2Hz internally — skip building the full
   // marker list (mobs + dropped items + xp orbs + waypoints) on the
