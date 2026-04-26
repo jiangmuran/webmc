@@ -7320,6 +7320,10 @@ function frame(): void {
     // forward push) was declared in the input shape but never read into
     // fp.input — touch users could never sprint. Now wired.
     if (touch.state.sprint) fp.input.sprint = true;
+    // Touch sneak (the new HUD button) — used to be no way to sneak on
+    // touch, so edge-cling, shift-bypass-use on chests, and stealth past
+    // mobs were all desktop-only.
+    if (touch.state.sneak) fp.input.sneak = true;
   }
 
   if (gyroYawAccum !== 0) {

@@ -11,6 +11,10 @@ export interface TouchInputState {
   secondary: boolean;
   jump: boolean;
   sprint: boolean;
+  // Sneak is an explicit touch button now — without it, touch users
+  // couldn't open shulker boxes through the chest UI shift-bypass,
+  // couldn't edge-cling at cliffs, and couldn't sneak past mobs.
+  sneak: boolean;
 }
 
 export class TouchControls {
@@ -23,6 +27,7 @@ export class TouchControls {
     secondary: false,
     jump: false,
     sprint: false,
+    sneak: false,
   };
 
   private container: HTMLElement | null = null;
@@ -104,6 +109,9 @@ export class TouchControls {
     });
     this.addHoldButton(container, 'Jump', '92%', '70%', (down) => {
       this.state.jump = down;
+    });
+    this.addHoldButton(container, 'Sneak', '92%', '85%', (down) => {
+      this.state.sneak = down;
     });
 
     window.addEventListener('touchstart', this.onTouchStart, { passive: false });
