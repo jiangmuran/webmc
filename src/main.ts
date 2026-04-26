@@ -61,7 +61,7 @@ import { tickGrassBlock } from './blocks/grass_spread';
 import { absorbWater } from './blocks/sponge';
 import { shouldDecay as leafShouldDecay, MAX_DISTANCE as LEAF_MAX_DIST } from './blocks/leaf_decay';
 import { shouldFreezeWater, shouldMeltIce, FREEZE_RANDOM_TICK_CHANCE } from './blocks/ice_form_melt';
-import { rollXp as rollMobXp } from './game/experience_gain';
+import { rollMobXpFor } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
@@ -4156,10 +4156,7 @@ function fireBowOrCrossbow(): boolean {
       }
       if (result.killed) {
         spawnMobDrops(result.kind, result.position);
-        const xpAmount = rollMobXp({
-          source: { kind: 'mob', mob: result.kind },
-          rng: Math.random,
-        });
+        const xpAmount = rollMobXpFor(result.kind, Math.random);
         for (const chunk of splitXp(xpAmount)) {
           xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
         }
@@ -4627,7 +4624,7 @@ canvas.addEventListener('mousedown', (e) => {
     }
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
-      const xpAmount = rollMobXp({ source: { kind: 'mob', mob: result.kind }, rng: Math.random });
+      const xpAmount = rollMobXpFor(result.kind, Math.random);
       // MC-style XP chunks (2477, 1237, 617, 307, 149, 73, 37, 17, 7, 3, 1) — fewer orbs for huge drops.
       for (const chunk of splitXp(xpAmount)) {
         xpOrbs.spawn(
@@ -7692,10 +7689,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
     // explosion kills since the caller (this function) is responsible.
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
-      const xpAmount = rollMobXp({
-        source: { kind: 'mob', mob: result.kind },
-        rng: Math.random,
-      });
+      const xpAmount = rollMobXpFor(result.kind, Math.random);
       for (const chunk of splitXp(xpAmount)) {
         xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
       }
@@ -7867,7 +7861,7 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
 // drops themselves.
 function spawnLightningKillRewards(kind: string, pos: { x: number; y: number; z: number }): void {
   spawnMobDrops(kind, pos);
-  const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
+  const xpAmount = rollMobXpFor(kind, Math.random);
   for (const chunk of splitXp(xpAmount)) {
     xpOrbs.spawn(pos.x, pos.y + 0.8, pos.z, chunk);
   }
@@ -8161,7 +8155,7 @@ const mobTickCtx: MobTickContext = {
   },
   onMobDeath: (kind, position) => {
     spawnMobDrops(kind, position);
-    const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
+    const xpAmount = rollMobXpFor(kind, Math.random);
     for (const chunk of splitXp(xpAmount)) {
       xpOrbs.spawn(position.x, position.y + 0.8, position.z, chunk);
     }
@@ -8528,10 +8522,7 @@ function frame(): void {
             spawnMobDrops(result.kind, result.position);
             // Touch kills used to drop a flat 3 × 1-XP orbs instead of
             // the per-mob XP roll + chunked split that desktop uses.
-            const xpAmount = rollMobXp({
-              source: { kind: 'mob', mob: result.kind },
-              rng: Math.random,
-            });
+            const xpAmount = rollMobXpFor(result.kind, Math.random);
             for (const chunk of splitXp(xpAmount)) {
               xpOrbs.spawn(
                 result.position.x + (Math.random() - 0.5) * 0.3,

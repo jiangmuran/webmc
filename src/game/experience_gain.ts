@@ -116,6 +116,15 @@ export function rollXp(q: XpRollQuery): number {
   }
 }
 
+// Allocation-free variant for the dominant mob-kill case. Skips the
+// {source: {kind: 'mob', mob}, rng} literals that rollXp's callers
+// were building per kill (chained sweeping-edge attacks fire many
+// rollMobXp's per tick).
+export function rollMobXpFor(mob: string, rng: () => number): number {
+  const range = MOB_XP[mob] ?? [0, 0];
+  return range[0] + Math.floor(rng() * (range[1] - range[0] + 1));
+}
+
 export function mobXpRange(mob: string): [number, number] {
   return MOB_XP[mob] ?? [0, 0];
 }
