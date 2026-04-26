@@ -145,12 +145,15 @@ export class TouchControls {
     this.container = null;
   }
 
+  // Reused result object — was allocated fresh per frame on touch
+  // devices where the per-frame loop calls this.
+  private readonly _consumeLookResult = { dx: 0, dy: 0 };
   consumeLook(): { dx: number; dy: number } {
-    const dx = this.state.lookDx;
-    const dy = this.state.lookDy;
+    this._consumeLookResult.dx = this.state.lookDx;
+    this._consumeLookResult.dy = this.state.lookDy;
     this.state.lookDx = 0;
     this.state.lookDy = 0;
-    return { dx, dy };
+    return this._consumeLookResult;
   }
 
   private addHoldButton(
