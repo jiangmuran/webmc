@@ -6628,6 +6628,38 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
         }
         const falloff = 1 - dSq / r2;
         if (Math.random() > falloff * 0.9) continue;
+        // Chest-style block destroyed by explosion: dump its contents
+        // before the world.set wipes it. Without this, a creeper next to
+        // a chest deleted every item inside silently — the chestStoragesByPos
+        // entry stayed orphaned at a position with no chest.
+        const isChestBlock =
+          def2.name === 'webmc:chest' ||
+          def2.name === 'webmc:trapped_chest' ||
+          def2.name === 'webmc:barrel' ||
+          def2.name.endsWith('_shulker_box') ||
+          def2.name === 'webmc:shulker_box';
+        if (isChestBlock) {
+          const k = chestKey(x, y, z);
+          const slots = chestStoragesByPos.get(k);
+          if (slots) {
+            for (const stk of slots) {
+              if (!stk || stk.count <= 0) continue;
+              const itemDef = itemRegistry.get(stk.itemId);
+              const colorRgb =
+                itemDef.blockId !== undefined
+                  ? registry.get(itemDef.blockId).color
+                  : ([200, 200, 200] as const);
+              droppedItems.spawn(
+                x + 0.5,
+                y + 0.5,
+                z + 0.5,
+                { itemId: stk.itemId, count: stk.count, color: colorRgb },
+                3,
+              );
+            }
+            chestStoragesByPos.delete(k);
+          }
+        }
         world.set(x, y, z, airState);
         if (explosionDrops(radius)) {
           blockParticles.emitBreak(x, y, z, def2.color);
