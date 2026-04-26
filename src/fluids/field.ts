@@ -49,12 +49,12 @@ export function parseKeyInto(k: string, out: PosKey): PosKey {
 export type SolidSampler = (x: number, y: number, z: number) => boolean;
 export type FluidSampler = (x: number, y: number, z: number) => FluidCell | null;
 
-const HORIZ: readonly (readonly [number, number])[] = [
-  [-1, 0],
-  [1, 0],
-  [0, -1],
-  [0, 1],
-];
+// Parallel horizontal-neighbor arrays. Was a tuple-of-tuples requiring
+// `for (const [dx, dz] of HORIZ)` per iteration — paid iterator
+// + destructure overhead per neighbor visit. tickFluid hits these
+// loops 4 times per cell × 5000+ cells per tick at active flow.
+const HORIZ_DX: readonly number[] = [-1, 1, 0, 0];
+const HORIZ_DZ: readonly number[] = [0, 0, -1, 1];
 
 export interface FluidTickResult {
   updates: Map<string, FluidCell | null>;
@@ -147,10 +147,10 @@ export function tickFluid(
     const outLevel = cell.source ? LEVEL_SOURCE - step : cell.level - step;
     if (outLevel <= 0) continue;
 
-    for (const [dx, dz] of HORIZ) {
-      const nx = pos.x + dx;
+    for (let ni = 0; ni < 4; ni++) {
+      const nx = pos.x + HORIZ_DX[ni]!;
       const ny = pos.y;
-      const nz = pos.z + dz;
+      const nz = pos.z + HORIZ_DZ[ni]!;
       if (isSolid(nx, ny, nz)) continue;
       const neighbour = snapshotCell(cells, updates, nx, ny, nz);
       if (neighbour && neighbour.kind !== cell.kind) continue;
@@ -201,8 +201,8 @@ export function tickFluid(
         queue.push(belowKey);
       }
     }
-    for (const [dx, dz] of HORIZ) {
-      const nk = keyOfXYZ(pos.x + dx, pos.y, pos.z + dz);
+    for (let ni = 0; ni < 4; ni++) {
+      const nk = keyOfXYZ(pos.x + HORIZ_DX[ni]!, pos.y, pos.z + HORIZ_DZ[ni]!);
       if (reachable.has(nk)) continue;
       const nc = merged.get(nk);
       if (nc?.kind !== c.kind) continue;
