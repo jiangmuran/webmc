@@ -137,19 +137,42 @@ export class XpOrbWorld {
     }
   }
 
+  // Reused iterator + value scratches for the minimap. Same pattern
+  // as DroppedItems.positions — was allocating wrapper, iterator,
+  // result, AND value object per iteration.
+  private readonly positionsIterValue = { x: 0, z: 0 };
+  private readonly positionsIterResult: IteratorResult<{ x: number; z: number }> = {
+    done: false,
+    value: this.positionsIterValue,
+  };
+  private positionsIterMapIter: IterableIterator<XpOrb> | null = null;
+  private readonly positionsIter: Iterator<{ x: number; z: number }> = {
+    next: (): IteratorResult<{ x: number; z: number }> => {
+      const it = this.positionsIterMapIter;
+      if (!it) {
+        return { done: true, value: undefined };
+      }
+      const n = it.next();
+      if (n.done) {
+        this.positionsIterMapIter = null;
+        return { done: true, value: undefined };
+      }
+      this.positionsIterValue.x = n.value.x;
+      this.positionsIterValue.z = n.value.z;
+      this.positionsIterResult.done = false;
+      this.positionsIterResult.value = this.positionsIterValue;
+      return this.positionsIterResult;
+    },
+  };
+  private readonly positionsIterable: Iterable<{ x: number; z: number }> = {
+    [Symbol.iterator]: (): Iterator<{ x: number; z: number }> => {
+      this.positionsIterMapIter = this.orbs.values();
+      return this.positionsIter;
+    },
+  };
+
   positions(): Iterable<{ x: number; z: number }> {
-    const vals = this.orbs.values();
-    return {
-      [Symbol.iterator](): Iterator<{ x: number; z: number }> {
-        return {
-          next(): IteratorResult<{ x: number; z: number }> {
-            const n = vals.next();
-            if (n.done) return { done: true, value: undefined };
-            return { done: false, value: { x: n.value.x, z: n.value.z } };
-          },
-        };
-      },
-    };
+    return this.positionsIterable;
   }
 
   get size(): number {
