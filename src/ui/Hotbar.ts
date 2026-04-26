@@ -40,7 +40,10 @@ export class Hotbar {
       'background:rgba(10,14,20,0.7)',
       'border:1px solid rgba(230,237,243,0.12)',
       'border-radius:6px',
-      'pointer-events:none',
+      // Was pointer-events:none — touch users had no way to switch
+      // hotbar slots without keyboard 1-9 or scroll wheel. Slots are
+      // now clickable as a per-slot tap-to-select.
+      'pointer-events:auto',
       'user-select:none',
       'z-index:10',
     ].join(';');
@@ -76,7 +79,14 @@ export class Hotbar {
         'line-height:12px',
       ].join(';');
       slot.style.position = 'relative';
+      slot.style.cursor = 'pointer';
       slot.appendChild(countEl);
+      const slotIdx = i;
+      slot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.select(slotIdx);
+      });
       this.container.appendChild(slot);
       this.slotEls.push(slot);
       this.countEls.push(countEl);
