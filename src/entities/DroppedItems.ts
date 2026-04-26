@@ -49,6 +49,10 @@ export class DroppedItemWorld {
 
   constructor() {
     this.group = new THREE.Group();
+    // Group sits at world origin; per-item meshes carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
     this.sharedGeom = new THREE.BoxGeometry(ITEM_SIZE, ITEM_SIZE, ITEM_SIZE);
   }
 

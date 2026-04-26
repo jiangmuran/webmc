@@ -29,6 +29,10 @@ export class XpOrbWorld {
 
   constructor() {
     this.group = new THREE.Group();
+    // Group sits at world origin; per-orb meshes carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
     this.sharedGeom = new THREE.SphereGeometry(ORB_SIZE, 8, 6);
     this.sharedMat = new THREE.MeshBasicMaterial({
       color: 0xbfff50,

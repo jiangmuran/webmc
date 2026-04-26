@@ -181,6 +181,10 @@ export class MobRenderer {
 
   constructor() {
     this.group.name = 'webmc-mob-group';
+    // Group sits at world origin; per-mob visuals carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
   }
 
   private bodyGeomFor(mob: Mob): THREE.BoxGeometry {
