@@ -1604,6 +1604,19 @@ scene.add(droppedItems.group);
 scene.add(xpOrbs.group);
 const spawnSystem = new SpawnSystem();
 
+// Reusable spawnSystem.tick context object — fields mutated each frame
+// vs allocating a fresh literal + 2 closures per frame. Hoisted because
+// the per-frame allocation showed up in heap snapshots.
+const spawnSystemCtx = {
+  playerPos: { x: 0, y: 0, z: 0 },
+  isDay: false,
+  surfaceAt: (x: number, z: number): number => generator.surfaceAt(x, z),
+  isSolid: (x: number, y: number, z: number): boolean =>
+    y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid,
+  biomeAt: (x: number, z: number): 'forest' | 'plains' =>
+    generator.biomeAt(x, z) === 1 ? 'forest' : 'plains',
+};
+
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
 const crosshair = new Crosshair(appEl);
@@ -8961,13 +8974,11 @@ function frame(): void {
     }
     for (const id of farMobs) mobWorld.remove(id);
 
-    spawnSystem.tick(dtSec, mobWorld, {
-      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      isDay: dayNight.isDay,
-      surfaceAt: (x, z) => generator.surfaceAt(x, z),
-      isSolid,
-      biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
-    });
+    spawnSystemCtx.playerPos.x = fp.position.x;
+    spawnSystemCtx.playerPos.y = fp.position.y;
+    spawnSystemCtx.playerPos.z = fp.position.z;
+    spawnSystemCtx.isDay = dayNight.isDay;
+    spawnSystem.tick(dtSec, mobWorld, spawnSystemCtx);
 
     // Chicken egg laying: every 5–10 min per chicken, drop an egg item.
     const nowEggMs = performance.now();
