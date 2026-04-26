@@ -6892,6 +6892,12 @@ function flushDirty(): void {
           flatBlockLight: lightSlice.block,
         })
         .then((response) => {
+          // Stale-response guard: chunk may have unloaded while the
+          // mesher worker was still building. Without this, the late
+          // response re-adds a phantom mesh into the scene-graph that
+          // onUnload already cleared — leaking GPU memory and drawing
+          // outside view distance until the next radius shrink.
+          if (!world.has(response.cx, response.cz)) return;
           chunkRenderer.apply(response);
         });
       dispatched++;
