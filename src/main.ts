@@ -7519,11 +7519,23 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     // 120 mesh rebuilds for one block placement).
     const editCy = Math.floor(by / 16);
     const onlyLocal = !emitsNew && !wasBreak && affected.length === 1;
+    // Skip the full chunk-light BFS when the edit can't change light:
+    // - placement: opaque blocks block skylight, so always rebuild
+    // - non-opaque non-light placement (glass, fence, stairs, crop
+    //   age update): light unchanged, reuse cached
+    // - break: removed block might've been blocking skylight, rebuild
+    const newDef = block !== 0 ? registry.get(block) : null;
+    const placementChangesLight =
+      block !== 0 && (emitsNew || newDef?.opaque === true);
+    const lightUnchanged = !wasBreak && !placementChangesLight;
     for (const a of affected) {
       const c = world.getChunk(a.cx, a.cz);
       if (!c) continue;
-      const newLight = buildLight(c, lightOracle);
-      lightCache.set(lightKey(a.cx, a.cz), newLight);
+      let cachedLight = lightCache.get(lightKey(a.cx, a.cz));
+      if (!lightUnchanged || !cachedLight) {
+        cachedLight = buildLight(c, lightOracle);
+        lightCache.set(lightKey(a.cx, a.cz), cachedLight);
+      }
       if (onlyLocal && a.cx === cx && a.cz === cz) {
         // Mark only the touched section + immediate vertical neighbors
         // (for AO at section borders).
