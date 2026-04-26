@@ -203,12 +203,15 @@ export class MobRenderer {
         const dz = mob.position.z - cameraPos.z;
         if (dx * dx + dy * dy + dz * dz > 96 * 96) {
           const v = this.visuals.get(mob.id);
-          if (v) v.group.visible = false;
+          // Skip the visible=false write when already hidden — three.js
+          // setter triggers matrix-update flagging and per-frame writes
+          // for nothing add up at high mob count.
+          if (v && v.group.visible) v.group.visible = false;
           continue;
         }
       }
       let vis = this.visuals.get(mob.id);
-      if (vis) vis.group.visible = true;
+      if (vis && !vis.group.visible) vis.group.visible = true;
       if (!vis) {
         const color = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
         const bodyMat = new THREE.MeshBasicMaterial({ color });
