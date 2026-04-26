@@ -29,6 +29,9 @@ export class ChunkLoader {
   private lastCz = Number.NaN;
   private generating = false;
   private populate: PopulateFn;
+  // Stable stats object returned by update(). Was allocating a fresh
+  // {loaded, pending, generating} literal every frame.
+  private readonly statsObj: ChunkLoaderStats = { loaded: 0, pending: 0, generating: false };
 
   constructor(world: World, generator: WorldGenerator, opts: Partial<ChunkLoaderOptions> = {}) {
     this.world = world;
@@ -103,11 +106,10 @@ export class ChunkLoader {
       generated++;
     }
 
-    return {
-      loaded: this.world.chunkCount,
-      pending: this.pending.length,
-      generating: this.generating,
-    };
+    this.statsObj.loaded = this.world.chunkCount;
+    this.statsObj.pending = this.pending.length;
+    this.statsObj.generating = this.generating;
+    return this.statsObj;
   }
 
   private rebuildPending(centerCx: number, centerCz: number, playerVx = 0, playerVz = 0): void {
