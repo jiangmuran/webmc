@@ -107,8 +107,10 @@ export function generateFortress(q: FortressQuery): PlacedFortressPiece[] {
   const order: FortressPiece[] = ['corridor'];
   let pos = { ...q.origin };
 
-  while (out.length < q.maxPieces && order.length > 0) {
-    const cur = order.shift();
+  // Head-pointer dequeue (Array.shift O(N)).
+  let qHead = 0;
+  while (out.length < q.maxPieces && qHead < order.length) {
+    const cur = order[qHead++];
     if (!cur) break;
     const def = FORTRESS_PIECES[cur];
     out.push({ kind: cur, pos: { ...pos } });

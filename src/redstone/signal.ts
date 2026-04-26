@@ -86,9 +86,11 @@ export function computePower(
     }
   }
 
-  // BFS dust paths.
-  while (frontier.length > 0) {
-    const item = frontier.shift();
+  // BFS dust paths. Head-pointer dequeue (Array.shift is O(N) per pop;
+  // a long redstone wire propagation could push hundreds of nodes).
+  let qHead = 0;
+  while (qHead < frontier.length) {
+    const item = frontier[qHead++];
     if (!item) break;
     if (item.level <= 1) continue;
     const here = lookup(item.pos.x, item.pos.y, item.pos.z);
