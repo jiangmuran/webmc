@@ -1091,6 +1091,7 @@ const DROP_OVERRIDES: Record<string, { drop: string; min?: number; max?: number 
   'webmc:snow': [{ drop: 'webmc:snowball', min: 1, max: 1 }],
   'webmc:snow_block': [{ drop: 'webmc:snowball', min: 4, max: 4 }],
   'webmc:melon': [{ drop: 'webmc:melon_slice', min: 3, max: 7 }],
+  'webmc:bookshelf': [{ drop: 'webmc:book', min: 3, max: 3 }],
 };
 // Blocks that drop nothing without silk touch (which we don't track yet,
 // so they always drop nothing). Vanilla list — without these, breaking
@@ -1122,7 +1123,6 @@ const DROP_NOTHING: readonly string[] = [
   'webmc:frosted_ice',
   'webmc:turtle_egg',
   'webmc:sea_lantern',
-  'webmc:bookshelf',
   'webmc:cake',
   'webmc:cobweb',
 ];
