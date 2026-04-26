@@ -2388,6 +2388,11 @@ const breakTicksCtxScratch = {
 // literals every frame.
 const shouldSaveTimerArg: { nowMs: number; trigger: 'timer' } = { nowMs: 0, trigger: 'timer' };
 const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = { nowMs: 0, trigger: 'threshold' };
+// Reused mobWorld.spawn position scratch. spawn() copies the input
+// via spread, so passing a shared scratch is safe and avoids fresh
+// {x,y,z} literals per spawn (egg hatch, /summon, natural spawning,
+// breeding, phantom).
+const mobSpawnPosScratch = { x: 0, y: 0, z: 0 };
 // Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
 // def.name.replace(/^webmc:/, '') was firing per-frame in
 // getBreakDurationSec (every break tick) and other hot paths; the
@@ -3398,7 +3403,10 @@ const interaction = new InteractionController(
         // Egg: 12.5% chance to hatch a chicken at impact.
         if (heldName === 'egg' && Math.random() < 0.125) {
           try {
-            mobWorld.spawn('chicken', { x: cx, y: cy, z: cz });
+            mobSpawnPosScratch.x = cx;
+            mobSpawnPosScratch.y = cy;
+            mobSpawnPosScratch.z = cz;
+            mobWorld.spawn('chicken', mobSpawnPosScratch);
           } catch {
             /* ignore */
           }
@@ -3536,11 +3544,10 @@ const interaction = new InteractionController(
       if (heldName.endsWith('_spawn_egg') && airAbove) {
         const mobKind = heldName.replace(/_spawn_egg$/, '');
         try {
-          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], {
-            x: bx + 0.5,
-            y: by + 1,
-            z: bz + 0.5,
-          });
+          mobSpawnPosScratch.x = bx + 0.5;
+          mobSpawnPosScratch.y = by + 1;
+          mobSpawnPosScratch.z = bz + 0.5;
+          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], mobSpawnPosScratch);
           if (gameMode === 'survival' || gameMode === 'adventure') {
             const eggId = itemRegistry.byName(`webmc:${heldName}`);
             if (eggId !== undefined) consumeInventoryItem(eggId, 1);
@@ -5984,7 +5991,10 @@ const chatInput = new ChatInput(appEl, {
         },
         summon: (kind, x, y, z) => {
           try {
-            mobWorld.spawn(kind as Parameters<typeof mobWorld.spawn>[0], { x, y, z });
+            mobSpawnPosScratch.x = x;
+            mobSpawnPosScratch.y = y;
+            mobSpawnPosScratch.z = z;
+            mobWorld.spawn(kind as Parameters<typeof mobWorld.spawn>[0], mobSpawnPosScratch);
             return true;
           } catch {
             return false;
@@ -9907,7 +9917,10 @@ function frame(): void {
           const kind = choices[Math.floor(Math.random() * choices.length)];
           if (!kind) continue;
           try {
-            mobWorld.spawn(kind, { x: sx + 0.5, y: sy, z: sz + 0.5 });
+            mobSpawnPosScratch.x = sx + 0.5;
+            mobSpawnPosScratch.y = sy;
+            mobSpawnPosScratch.z = sz + 0.5;
+            mobWorld.spawn(kind, mobSpawnPosScratch);
           } catch {
             /* mob kind not registered */
           }
@@ -9966,11 +9979,10 @@ function frame(): void {
             // Spawn a small herd (2-4) of the same kind, vanilla style.
             const herd = 2 + Math.floor(Math.random() * 3);
             for (let h = 0; h < herd; h++) {
-              mobWorld.spawn(kind, {
-                x: sx + 0.5 + (Math.random() - 0.5) * 2,
-                y: sy,
-                z: sz + 0.5 + (Math.random() - 0.5) * 2,
-              });
+              mobSpawnPosScratch.x = sx + 0.5 + (Math.random() - 0.5) * 2;
+              mobSpawnPosScratch.y = sy;
+              mobSpawnPosScratch.z = sz + 0.5 + (Math.random() - 0.5) * 2;
+              mobWorld.spawn(kind, mobSpawnPosScratch);
             }
           } catch {
             /* mob kind not registered */
@@ -10014,11 +10026,10 @@ function frame(): void {
         })
       ) {
         try {
-          mobWorld.spawn('phantom', {
-            x: fp.position.x + (Math.random() - 0.5) * 30,
-            y: fp.position.y + 14,
-            z: fp.position.z + (Math.random() - 0.5) * 30,
-          });
+          mobSpawnPosScratch.x = fp.position.x + (Math.random() - 0.5) * 30;
+          mobSpawnPosScratch.y = fp.position.y + 14;
+          mobSpawnPosScratch.z = fp.position.z + (Math.random() - 0.5) * 30;
+          mobWorld.spawn('phantom', mobSpawnPosScratch);
           subtitles.push('Phantom screech');
         } catch {
           /* phantom not registered, non-fatal */
@@ -10578,7 +10589,10 @@ function frame(): void {
           const midx = (a.mob.position.x + b.mob.position.x) * 0.5;
           const midy = (a.mob.position.y + b.mob.position.y) * 0.5;
           const midz = (a.mob.position.z + b.mob.position.z) * 0.5;
-          const baby = mobWorld.spawn(a.mob.def.kind, { x: midx, y: midy, z: midz });
+          mobSpawnPosScratch.x = midx;
+          mobSpawnPosScratch.y = midy;
+          mobSpawnPosScratch.z = midz;
+          const baby = mobWorld.spawn(a.mob.def.kind, mobSpawnPosScratch);
           babyMobs.set(baby.id, { ageTicks: 0, isBaby: true });
           mobRenderer.setMobScale(baby.id, 0.5);
           xpOrbs.spawn(midx, midy + 0.5, midz, 1 + Math.floor(Math.random() * 7));
