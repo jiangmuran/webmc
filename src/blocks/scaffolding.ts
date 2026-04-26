@@ -29,8 +29,10 @@ export function distanceToSupport(pos: Vec3, lookup: ScaffoldingLookup): number 
   const queue: Q[] = [{ x: pos.x, z: pos.z, d: 0 }];
   const key = (x: number, z: number): string => `${x.toString()},${z.toString()}`;
   visited.add(key(pos.x, pos.z));
-  while (queue.length > 0) {
-    const head = queue.shift();
+  // Head-pointer dequeue (Array.shift is O(N) per pop).
+  let qHead = 0;
+  while (qHead < queue.length) {
+    const head = queue[qHead++];
     if (!head) break;
     if (head.d >= MAX_DISTANCE) continue;
     for (const [dx, dz] of [

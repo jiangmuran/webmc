@@ -64,8 +64,10 @@ export function assembleJigsaw(q: AssembleQuery): PlacedTemplate[] {
   }
   const queue: Pending[] = [{ tpl: start, at: { ...q.origin }, depth: 0 }];
 
-  while (queue.length > 0) {
-    const cur = queue.shift();
+  // Head-pointer dequeue (Array.shift is O(N) per pop).
+  let qHead = 0;
+  while (qHead < queue.length) {
+    const cur = queue[qHead++];
     if (!cur || cur.depth >= q.maxDepth) continue;
     for (const c of cur.tpl.connectors) {
       const pool = q.registry.pools.get(c.targetPool);

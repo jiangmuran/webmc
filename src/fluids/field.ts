@@ -123,8 +123,12 @@ export function tickFluid(
       queue.push(k);
     }
   }
-  while (queue.length > 0) {
-    const k = queue.shift();
+  // Head-pointer dequeue: queue.shift() is O(N) per pop, making
+  // this BFS O(N^2) in fluid-cell count. Big lava lake or an aqueduct
+  // can have ~5000 cells; head pointer keeps it linear.
+  let qHead = 0;
+  while (qHead < queue.length) {
+    const k = queue[qHead++];
     if (k === undefined) break;
     const c = merged.get(k);
     if (c === undefined) continue;

@@ -11,8 +11,12 @@ export function propagateBlockLight(
 ): Map<string, number> {
   const result = new Map<string, number>();
   const queue: LightNode[] = [...sources];
-  while (queue.length > 0) {
-    const n = queue.shift();
+  // Head-pointer dequeue: Array.shift is O(N) per pop, making BFS
+  // quadratic in node count. With light propagating up to 15 levels
+  // through a 30³ region, this is ~25K nodes — quadratic is unusable.
+  let qHead = 0;
+  while (qHead < queue.length) {
+    const n = queue[qHead++];
     if (n === undefined) break;
     const key = `${n.x},${n.y},${n.z}`;
     const existing = result.get(key) ?? 0;

@@ -17,8 +17,10 @@ export function absorbFrom(q: AbsorbQuery): { positions: [number, number, number
   const visited = new Set<string>();
   const queue: QEntry[] = [[q.sx, q.sy, q.sz, 0]];
   const absorbed: [number, number, number][] = [];
-  while (queue.length > 0 && absorbed.length < ABSORB_LIMIT) {
-    const entry = queue.shift();
+  // Head-pointer dequeue (Array.shift is O(N) per pop).
+  let qHead = 0;
+  while (qHead < queue.length && absorbed.length < ABSORB_LIMIT) {
+    const entry = queue[qHead++];
     if (!entry) break;
     const [x, y, z, d] = entry;
     const key = `${x},${y},${z}`;

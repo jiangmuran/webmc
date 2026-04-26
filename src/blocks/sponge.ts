@@ -22,8 +22,11 @@ export function absorbWater(spongePos: Vec3, lookup: SpongeLookup): readonly Vec
   const queue: { pos: Vec3; depth: number }[] = [{ pos: spongePos, depth: 0 }];
   const key = (p: Vec3): string => `${p.x.toString()},${p.y.toString()},${p.z.toString()}`;
   visited.add(key(spongePos));
-  while (queue.length > 0 && absorbed.length < MAX_ABSORBED) {
-    const head = queue.shift();
+  // Head-pointer dequeue (was queue.shift O(N) per pop). With
+  // MAX_ABSORBED=65 and depth-7 BFS, the queue can hit ~300 nodes.
+  let qHead = 0;
+  while (qHead < queue.length && absorbed.length < MAX_ABSORBED) {
+    const head = queue[qHead++];
     if (!head) break;
     if (head.depth > ABSORB_REACH) continue;
     for (const [dx, dy, dz] of [
