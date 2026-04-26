@@ -1910,6 +1910,11 @@ const lastStatsPos = { x: 0, y: 0, z: 0 };
 // Tracks whether the underwater fog override is currently active so
 // we only re-set the color/near/far on transition (not every frame).
 let lastUnderwaterFog = false;
+// Throttle the debug-overlay + fallback HUD textContent rebuild to
+// ~5Hz. Both paths build large per-frame strings (~10 toFixed calls
+// each); player can't visually distinguish 60Hz vs 5Hz updates on
+// numeric stats display, so cap at 0.2s.
+let hudUpdateAccumSec = 0;
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const weatherCycle = new WeatherCycle(Math.random, {
   clearMinSec: 600,
@@ -10739,7 +10744,10 @@ function frame(): void {
     });
   }
 
-  if (debugOverlay.isEnabled()) {
+  hudUpdateAccumSec += dtSec;
+  const updateHudText = hudUpdateAccumSec >= 0.2;
+  if (updateHudText) hudUpdateAccumSec = 0;
+  if (debugOverlay.isEnabled() && updateHudText) {
     debugFramePayload.fps = stats.fps;
     debugFramePayload.frameMs = stats.frameMs;
     debugFramePos.x = fp.position.x;
@@ -10773,7 +10781,7 @@ function frame(): void {
         : 'plains';
     debugOverlay.render(debugFramePayload);
     hud.textContent = '';
-  } else {
+  } else if (updateHudText) {
     const hour = Math.floor(((dayNight.timeOfDay + 0.25) * 24) % 24);
     const minute = Math.floor((((dayNight.timeOfDay + 0.25) * 24) % 1) * 60);
     const clock = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
