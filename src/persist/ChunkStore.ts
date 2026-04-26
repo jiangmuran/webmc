@@ -68,7 +68,16 @@ export class ChunkStore {
         version: d.chunk.version,
       }));
       await this.db.putChunks(blobs);
-      for (const b of blobs) this.dirty.delete(this.key(b.cx, b.cz));
+      // Only delete the dirty entry if the chunk's version hasn't moved
+      // forward during the async putChunks. Otherwise edits made during
+      // the await would be silently dropped — chunk would appear "clean"
+      // until the next edit re-marks it. Vanilla doesn't have this race
+      // because it serializes inside the world tick, but we await IDB.
+      for (const b of blobs) {
+        const k = this.key(b.cx, b.cz);
+        const cur = this.dirty.get(k);
+        if (cur && cur.chunk.version === b.version) this.dirty.delete(k);
+      }
       return blobs.length;
     } finally {
       this.inFlight = false;
