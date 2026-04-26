@@ -13,6 +13,10 @@ export class FirstPersonHand {
   private lastColorR = -1;
   private lastColorG = -1;
   private lastColorB = -1;
+  // Diff cache for the group's rotation.z. Idle (swingSec <= 0) writes
+  // 0.2 every frame, firing Euler._onChangeCallback for nothing. NaN
+  // sentinel guarantees a write on the first call.
+  private lastRotZ = NaN;
   private swingSec = 0;
   private sway: SwayState = reset();
 
@@ -76,10 +80,17 @@ export class FirstPersonHand {
       this.swingSec = Math.max(0, this.swingSec - dtSec);
       const phase = 1 - this.swingSec / 0.25;
       const angle = Math.sin(phase * Math.PI) * 0.6;
-      this.group.rotation.z = 0.2 - angle * 0.8;
+      const targetRotZ = 0.2 - angle * 0.8;
+      if (targetRotZ !== this.lastRotZ) {
+        this.group.rotation.z = targetRotZ;
+        this.lastRotZ = targetRotZ;
+      }
       this.group.position.y = -0.45 - Math.sin(phase * Math.PI) * 0.12 + swayOffsetY;
     } else {
-      this.group.rotation.z = 0.2;
+      if (this.lastRotZ !== 0.2) {
+        this.group.rotation.z = 0.2;
+        this.lastRotZ = 0.2;
+      }
       this.group.position.y = -0.45 + swayOffsetY;
     }
   }
