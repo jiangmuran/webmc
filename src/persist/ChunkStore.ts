@@ -59,14 +59,23 @@ export class ChunkStore {
     if (this.dirty.size === 0 || this.inFlight) return 0;
     this.inFlight = true;
     try {
-      const toWrite = Array.from(this.dirty.values()).slice(0, this.opts.flushBatch);
-      const blobs: ChunkBlob[] = toWrite.map((d) => ({
-        worldId: this.opts.worldId,
-        cx: d.chunk.cx,
-        cz: d.chunk.cz,
-        payload: encodeChunk(d.chunk, d.light ?? undefined),
-        version: d.chunk.version,
-      }));
+      // Walk the dirty Map directly with a manual cap — Array.from + slice
+      // allocated the full dirty list every flush even when only 32
+      // would be written. With 500+ dirty chunks during heavy edits
+      // (terraforming, explosions), that's a 500-entry array trashed
+      // every second.
+      const blobs: ChunkBlob[] = [];
+      const cap = this.opts.flushBatch;
+      for (const d of this.dirty.values()) {
+        if (blobs.length >= cap) break;
+        blobs.push({
+          worldId: this.opts.worldId,
+          cx: d.chunk.cx,
+          cz: d.chunk.cz,
+          payload: encodeChunk(d.chunk, d.light ?? undefined),
+          version: d.chunk.version,
+        });
+      }
       await this.db.putChunks(blobs);
       // Only delete the dirty entry if the chunk's version hasn't moved
       // forward during the async putChunks. Otherwise edits made during
