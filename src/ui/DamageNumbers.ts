@@ -49,7 +49,9 @@ export class DamageNumbers {
       n.ageSec += dtSec;
       if (n.ageSec >= n.lifeSec) {
         n.el.remove();
-        this.active.splice(i, 1);
+        const last = this.active.length - 1;
+        if (i !== last) this.active[i] = this.active[last]!;
+        this.active.pop();
         continue;
       }
       const t = n.ageSec / n.lifeSec;

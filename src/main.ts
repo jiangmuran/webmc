@@ -7166,7 +7166,9 @@ function tickTnt(dtSec: number): void {
     }
     if (t.remainingSec <= 0) {
       explodeAt(t.bx, t.by, t.bz, 4);
-      primedTnt.splice(i, 1);
+      const last = primedTnt.length - 1;
+      if (i !== last) primedTnt[i] = primedTnt[last]!;
+      primedTnt.pop();
     }
   }
 }
