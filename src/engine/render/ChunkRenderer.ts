@@ -30,6 +30,11 @@ export class ChunkRenderer {
   constructor(material: THREE.ShaderMaterial = createChunkMaterial()) {
     this.material = material;
     this.group.name = 'webmc-chunk-group';
+    // Group is at world origin and never moves; skip three.js's per-frame
+    // updateMatrix call. Mesh-level matrices are also frozen via
+    // matrixAutoUpdate=false in apply().
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
   }
 
   get meshCount(): number {
