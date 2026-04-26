@@ -2679,6 +2679,7 @@ const interaction = new InteractionController(
           if (xbId !== undefined) consumeInventoryItem(xbId, 1);
         }
         sfx.play('click');
+        hand.swing();
         subtitles.push(`Bottle o' enchanting (+${total} XP)`);
         return true;
       }
@@ -2817,6 +2818,7 @@ const interaction = new InteractionController(
           if (wcId !== undefined) consumeInventoryItem(wcId, 1);
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Wind charge!');
         return true;
       }
@@ -3048,6 +3050,7 @@ const interaction = new InteractionController(
               [60, 200, 180],
             );
           sfx.play('click');
+          hand.swing();
           subtitles.push('Pearl warped');
           return true;
         }
@@ -3060,6 +3063,7 @@ const interaction = new InteractionController(
           touchWorldEdit(bx, by + 1, bz, fireId);
           consumeHeldToolDurability(1);
           sfx.play('click');
+          hand.swing();
           subtitles.push('Ignited');
           return true;
         }
@@ -3074,6 +3078,7 @@ const interaction = new InteractionController(
           if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
             consumeInventoryItem(fcId, 1);
           sfx.play('click');
+          hand.swing();
           subtitles.push('Ignited');
           return true;
         }
