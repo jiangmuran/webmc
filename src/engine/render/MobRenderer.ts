@@ -206,6 +206,9 @@ export class MobRenderer {
   sync(mobs: IterableIterator<Mob>, cameraPos?: { x: number; y: number; z: number }): void {
     const seen = this.seenScratch;
     seen.clear();
+    // Hoist per-frame time + creeper-fuse phase basis. Was calling
+    // performance.now() per mob inside the per-mob loop.
+    const nowMs = performance.now();
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
@@ -289,7 +292,7 @@ export class MobRenderer {
         // Walk bob: lean forward/back based on horizontal velocity magnitude.
         const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
         if (vh > 0.3) {
-          const phase = performance.now() * 0.012 + mob.id * 0.37;
+          const phase = nowMs * 0.012 + mob.id * 0.37;
           vis.group.rotation.x = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
         } else {
           vis.group.rotation.x = 0;
@@ -310,7 +313,7 @@ export class MobRenderer {
         // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
         const phase = 1 - Math.min(1, mob.fuseSec / 1.5);
         const k =
-          (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
+          (Math.sin(nowMs * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
         const base = COLORS['creeper'] ?? DEFAULT_COLOR;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
