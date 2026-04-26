@@ -44,8 +44,7 @@ export class SpawnSystem {
   }
 
   private spawnHostile(mobs: MobWorld, ctx: SpawnContext): void {
-    const current = this.countHostile(mobs);
-    if (current >= this.opts.maxHostile) return;
+    if (mobs.hostileCount >= this.opts.maxHostile) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
     const rng = ctx.rng ?? Math.random;
@@ -57,8 +56,7 @@ export class SpawnSystem {
   }
 
   private spawnPassive(mobs: MobWorld, ctx: SpawnContext): void {
-    const current = this.countPassive(mobs);
-    if (current >= this.opts.maxPassive) return;
+    if (mobs.passiveCount >= this.opts.maxPassive) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
     const rng = ctx.rng ?? Math.random;
@@ -116,19 +114,4 @@ export class SpawnSystem {
     for (const id of toDrop) mobs.remove(id);
   }
 
-  private countHostile(mobs: MobWorld): number {
-    let n = 0;
-    for (const mob of mobs.all()) {
-      if (mob.def.behavior === 'hostile' || mob.def.behavior === 'creeper') n++;
-    }
-    return n;
-  }
-
-  private countPassive(mobs: MobWorld): number {
-    let n = 0;
-    for (const mob of mobs.all()) {
-      if (mob.def.behavior === 'passive') n++;
-    }
-    return n;
-  }
 }
