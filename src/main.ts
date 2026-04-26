@@ -4522,6 +4522,20 @@ function applyGameMode(m: GameMode): void {
 }
 
 const survivalHud = new SurvivalHud(appEl);
+// Reused per-frame survival HUD frame object.
+const survivalHudFrame: Parameters<typeof survivalHud.render>[0] = {
+  health: 20,
+  maxHealth: 20,
+  hunger: 20,
+  maxHunger: 20,
+  breathSec: BREATH_MAX_SEC,
+  maxBreathSec: BREATH_MAX_SEC,
+  underwater: false,
+  xpLevel: 0,
+  xpProgress: 0,
+  xpToNext: 0,
+  armorPoints: 0,
+};
 const hurtVignette = new HurtVignette(appEl);
 const fluidOverlay = new FluidOverlay(appEl);
 const deathScreen = new DeathScreen(appEl);
@@ -9138,19 +9152,16 @@ function frame(): void {
     }
   }
   if (gameMode === 'survival' || gameMode === 'adventure') {
-    survivalHud.render({
-      health: playerState.health,
-      maxHealth: 20,
-      hunger: playerState.hunger,
-      maxHunger: 20,
-      breathSec: playerState.breath,
-      maxBreathSec: BREATH_MAX_SEC,
-      underwater: fp.inFluid === 'water',
-      xpLevel: playerState.xpLevel,
-      xpProgress: playerState.xpProgress,
-      xpToNext: xpToNext(playerState.xpLevel),
-      armorPoints: computeArmorPoints(),
-    });
+    // Reuse a stable frame object — was a fresh literal per frame.
+    survivalHudFrame.health = playerState.health;
+    survivalHudFrame.hunger = playerState.hunger;
+    survivalHudFrame.breathSec = playerState.breath;
+    survivalHudFrame.underwater = fp.inFluid === 'water';
+    survivalHudFrame.xpLevel = playerState.xpLevel;
+    survivalHudFrame.xpProgress = playerState.xpProgress;
+    survivalHudFrame.xpToNext = xpToNext(playerState.xpLevel);
+    survivalHudFrame.armorPoints = computeArmorPoints();
+    survivalHud.render(survivalHudFrame);
   }
 
   // Per-category mob cap (MC-style WORLD_CAPS). Was iterating all mobs
