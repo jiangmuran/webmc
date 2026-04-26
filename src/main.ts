@@ -112,7 +112,7 @@ import { applyBoneMeal } from './items/bone_meal';
 import { pickTrial, CHORUS_MAX_ATTEMPTS } from './items/chorus_fruit_teleport';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
-import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
+import { toIntentInto as gamepadToIntentInto } from './engine/input/gamepad_mapping';
 import { rumbleForDamage } from './engine/input/gamepad_rumble';
 import {
   init as initGyro,
@@ -2350,6 +2350,22 @@ const interactionLookTmp = new THREE.Vector3();
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
 // throwaway box objects/sec just for the crosshair.
 const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
+// Reused gamepad poll scratch. Was allocating a state {axes, buttons},
+// a fresh axes literal, a fresh buttons.map(), an intent, and an inner
+// look {yaw, pitch} every frame for connected pads.
+const gamepadStateScratch: { axes: [number, number, number, number]; buttons: boolean[] } = {
+  axes: [0, 0, 0, 0],
+  buttons: [],
+};
+const gamepadIntentScratch = {
+  forward: 0,
+  strafe: 0,
+  look: { yaw: 0, pitch: 0 },
+  jump: false,
+  sneak: false,
+  attack: false,
+  use: false,
+};
 const interaction = new InteractionController(
   camera,
   () => {
@@ -8096,12 +8112,36 @@ function frame(): void {
     !pauseMenu.isVisible()
   ) {
     const pads = navigator.getGamepads();
-    const pad = pads ? Array.from(pads).find((p) => p?.connected) : null;
+    let pad: Gamepad | null = null;
+    if (pads) {
+      // Walk the GamepadList directly — Array.from + .find allocated a
+      // wrapper array every frame just to skip nulls.
+      for (let i = 0; i < pads.length; i++) {
+        const p = pads[i];
+        if (p?.connected) {
+          pad = p;
+          break;
+        }
+      }
+    }
     if (pad) {
-      const intent = gamepadToIntent({
-        axes: [pad.axes[0] ?? 0, pad.axes[1] ?? 0, pad.axes[2] ?? 0, pad.axes[3] ?? 0],
-        buttons: pad.buttons.map((b) => b.pressed),
-      });
+      // Reused scratch state + result objects (defined at module scope).
+      // The previous code allocated a fresh axes array, a buttons.map()
+      // array, a state object, an intent object, and an inner look
+      // object every single frame the gamepad was connected.
+      gamepadStateScratch.axes[0] = pad.axes[0] ?? 0;
+      gamepadStateScratch.axes[1] = pad.axes[1] ?? 0;
+      gamepadStateScratch.axes[2] = pad.axes[2] ?? 0;
+      gamepadStateScratch.axes[3] = pad.axes[3] ?? 0;
+      const padButtons = pad.buttons;
+      const buttonsScratch = gamepadStateScratch.buttons;
+      // Only the buttons we actually read are mapped (matches toIntent).
+      buttonsScratch[0] = padButtons[0]?.pressed ?? false;
+      buttonsScratch[6] = padButtons[6]?.pressed ?? false;
+      buttonsScratch[7] = padButtons[7]?.pressed ?? false;
+      buttonsScratch[10] = padButtons[10]?.pressed ?? false;
+      gamepadToIntentInto(gamepadStateScratch, gamepadIntentScratch);
+      const intent = gamepadIntentScratch;
       if (intent.forward !== 0 || intent.strafe !== 0) {
         fp.input.forward = intent.forward;
         fp.input.strafe = intent.strafe;
