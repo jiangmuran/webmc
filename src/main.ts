@@ -9118,7 +9118,16 @@ function frame(): void {
     const originP = camera.position;
     const lookP = fp.lookVector(frameLookTmp);
     let hitMob = false;
+    // Ray length is 5 blocks; the largest mob AABB half-extent is well
+    // under 2 (even ravager/iron-golem sit at ~1.5). Any mob whose center
+    // is > 7 blocks from the camera cannot intersect — skip the 6 AABB
+    // writes + intersectRayAABB slab test entirely. Worlds with hundreds
+    // of distant mobs were paying the full ray cost per mob per frame.
     for (const mob of mobWorld.all()) {
+      const mdx = mob.position.x - originP.x;
+      const mdy = mob.position.y - originP.y;
+      const mdz = mob.position.z - originP.z;
+      if (mdx * mdx + mdy * mdy + mdz * mdz > 49) continue;
       mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
       mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
       mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
