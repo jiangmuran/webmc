@@ -1233,6 +1233,11 @@ const playerState = new PlayerState({
     }
   },
   onRespawn: () => {
+    // Always reset velocity on respawn — same teleport-velocity-leak fix
+    // pattern as /tp, /spawn, chorus, ender_pearl. Respawning into a bed
+    // mid-fall would otherwise carry the death's downward velocity into
+    // the new life and tank fall damage immediately.
+    fp.velocity.set(0, 0, 0);
     if (playerSpawnPoint) {
       const safe = findSafeRespawnNear(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
       if (safe) {
