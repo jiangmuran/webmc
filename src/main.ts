@@ -2454,6 +2454,22 @@ const iceCtxScratch = {
 };
 // Shared leaf-decay query scratch.
 const leafDecayScratch = { persistent: false, distance: 0 };
+// Reused minimap markers list + pool of marker objects. Was a fresh
+// array of ~130 marker literals at every minimap redraw (2Hz, gated
+// by minimap.willRedraw). At busy mob farms the per-redraw
+// allocation count was the dominant minimap cost.
+type MinimapMarker = { x: number; z: number; color: string; size?: number };
+const minimapMarkersScratch: MinimapMarker[] = [];
+const minimapMarkerPool: MinimapMarker[] = [];
+function minimapMarker(x: number, z: number, color: string, size?: number): MinimapMarker {
+  const m = minimapMarkerPool.pop() ?? { x: 0, z: 0, color: '' };
+  m.x = x;
+  m.z = z;
+  m.color = color;
+  if (size === undefined) delete m.size;
+  else m.size = size;
+  return m;
+}
 // Fire-tick ctx scratch + stateful neighborAt closure. The random-
 // tick scan calls tickFire for every fire block; was building a
 // fresh ctx + 5 closures per fire block per second.
@@ -10451,26 +10467,25 @@ function frame(): void {
   // ~28/30 frames where it's a no-op. Saves ~200 object allocs per
   // frame at typical mob/item density.
   if (minimap.willRedraw(dtSec)) {
-    const markers: { x: number; z: number; color: string; size?: number }[] = [];
+    const markers = minimapMarkersScratch;
+    // Recycle previous-frame markers back into the pool.
+    for (let i = 0; i < markers.length; i++) minimapMarkerPool.push(markers[i]!);
+    markers.length = 0;
     for (const m of mobWorld.all()) {
       const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
-      markers.push({
-        x: m.position.x,
-        z: m.position.z,
-        color: isHostile ? '#ff5050' : '#a0ffa0',
-      });
+      markers.push(minimapMarker(m.position.x, m.position.z, isHostile ? '#ff5050' : '#a0ffa0'));
     }
     for (const p of droppedItems.positions()) {
-      markers.push({ x: p.x, z: p.z, color: '#e0e0a0', size: 1 });
+      markers.push(minimapMarker(p.x, p.z, '#e0e0a0', 1));
     }
     for (const p of xpOrbs.positions()) {
-      markers.push({ x: p.x, z: p.z, color: '#80ff40', size: 1 });
+      markers.push(minimapMarker(p.x, p.z, '#80ff40', 1));
     }
     if (playerSpawnPoint) {
-      markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
+      markers.push(minimapMarker(playerSpawnPoint.x, playerSpawnPoint.z, '#ffc0e0', 4));
     }
     for (const v of waypoints.values()) {
-      markers.push({ x: v.x, z: v.z, color: '#80c0ff', size: 3 });
+      markers.push(minimapMarker(v.x, v.z, '#80c0ff', 3));
     }
     minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
   } else {
