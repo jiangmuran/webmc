@@ -42,6 +42,8 @@ export class DroppedItemWorld {
   private readonly sharedGeom: THREE.BoxGeometry;
   private readonly materialPool = new Map<number, THREE.MeshBasicMaterial>();
   private nextId = 1;
+  private mergeAccumSec = 0;
+  private mergeDirty = false;
 
   constructor() {
     this.group = new THREE.Group();
@@ -74,6 +76,7 @@ export class DroppedItemWorld {
       data,
     };
     this.items.set(it.id, it);
+    this.mergeDirty = true;
     const [r, g, b] = data.color;
     const mesh = new THREE.Mesh(this.sharedGeom, this.materialFor(r, g, b));
     mesh.position.set(it.x, it.y, it.z);
@@ -100,7 +103,15 @@ export class DroppedItemWorld {
   ): void {
     const toRemove: number[] = [];
     const twoPi = Math.PI * 2;
-    this.mergeNearby();
+    // O(n^2) merge ran every tick — at chest break / mob farm sites this
+    // burned big CPU. Run only on dirty (new spawn) or every 0.5s for
+    // moving-into-each-other items, and only when there are enough items.
+    this.mergeAccumSec += dtSec;
+    if (this.items.size >= 2 && (this.mergeDirty || this.mergeAccumSec >= 0.5)) {
+      this.mergeAccumSec = 0;
+      this.mergeDirty = false;
+      this.mergeNearby();
+    }
     for (const it of this.items.values()) {
       it.ageSec += dtSec;
       it.pickupDelaySec = Math.max(0, it.pickupDelaySec - dtSec);
