@@ -135,6 +135,17 @@ interface LightNode {
   value: number;
 }
 
+// Module-scoped neighbor offsets — was a fresh array per
+// computeBlockLight call.
+const NEIGHBORS_6: readonly (readonly [number, number, number])[] = [
+  [-1, 0, 0],
+  [1, 0, 0],
+  [0, -1, 0],
+  [0, 1, 0],
+  [0, 0, -1],
+  [0, 0, 1],
+];
+
 // BFS block-light propagation from emissive voxels. Attenuates by 1 per step.
 // Scoped to a single chunk for M3 — cross-chunk bleed is an upgrade.
 export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
@@ -173,14 +184,7 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       }
     }
   }
-  const neighbors: [number, number, number][] = [
-    [-1, 0, 0],
-    [1, 0, 0],
-    [0, -1, 0],
-    [0, 1, 0],
-    [0, 0, -1],
-    [0, 0, 1],
-  ];
+  const neighbors = NEIGHBORS_6;
   // Head-pointer dequeue (FIFO without shift). The original
   // queue.shift() is O(N) per pop, so a chunk with N emissive sources
   // and ~10K total propagation nodes ran O(N^2) ≈ 100M ops. With the
