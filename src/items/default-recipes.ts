@@ -68,40 +68,78 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
     if (shapeless(reg, items, ingredients, out, n)) count++;
   };
 
-  // Planks from logs (one log → 4 planks).
-  L(['webmc:oak_log'], 'webmc:oak_planks', 4);
-  // Sticks (two planks → 4 sticks).
-  S(['P', 'P'], { P: 'webmc:oak_planks' }, 'webmc:stick', 4);
-  // Crafting table.
-  S(['PP', 'PP'], { P: 'webmc:oak_planks' }, 'webmc:crafting_table');
+  // Planks from logs (one log → 4 planks). Was oak-only — players with
+  // spruce / birch / jungle / acacia / dark_oak / cherry / mangrove /
+  // crimson / warped logs had no way to turn them into planks.
+  const WOODS = [
+    'oak',
+    'spruce',
+    'birch',
+    'jungle',
+    'acacia',
+    'dark_oak',
+    'cherry',
+    'mangrove',
+    'crimson',
+    'warped',
+    'pale_oak',
+    'bamboo',
+  ];
+  for (const w of WOODS) {
+    L([`webmc:${w}_log`], `webmc:${w}_planks`, 4);
+    // Also: stripped logs craft to the same planks.
+    L([`webmc:stripped_${w}_log`], `webmc:${w}_planks`, 4);
+  }
+  // Sticks + crafting table from any plank type. Registering one-per-wood
+  // works even though the recipe matcher is exact-id (it tries each
+  // recipe in turn). Was oak-only — players with a spruce or birch
+  // base couldn't craft a crafting table or sticks.
+  for (const w of WOODS) {
+    S(['P', 'P'], { P: `webmc:${w}_planks` }, 'webmc:stick', 4);
+    S(['PP', 'PP'], { P: `webmc:${w}_planks` }, 'webmc:crafting_table');
+  }
   // Furnace.
   S(['CCC', 'C C', 'CCC'], { C: 'webmc:cobblestone' }, 'webmc:furnace');
-  // Chest.
-  S(['PPP', 'P P', 'PPP'], { P: 'webmc:oak_planks' }, 'webmc:chest');
-  // Torch — coal + stick.
+  // Chest from any plank type.
+  for (const w of WOODS) {
+    S(['PPP', 'P P', 'PPP'], { P: `webmc:${w}_planks` }, 'webmc:chest');
+  }
+  // Torch — coal + stick. Charcoal also works (vanilla).
   S(['C', 'S'], { C: 'webmc:coal', S: 'webmc:stick' }, 'webmc:torch', 4);
-  // Wood pickaxe.
-  S(['PPP', ' S ', ' S '], { P: 'webmc:oak_planks', S: 'webmc:stick' }, 'webmc:wood_pickaxe');
-  // Stone pickaxe.
+  S(['C', 'S'], { C: 'webmc:charcoal', S: 'webmc:stick' }, 'webmc:torch', 4);
+  // Wood pickaxe / sword / axe / shovel / hoe from any plank type. Was
+  // oak-only, breaking the wood→stone progression for non-oak biomes.
+  for (const w of WOODS) {
+    S(['PPP', ' S ', ' S '], { P: `webmc:${w}_planks`, S: 'webmc:stick' }, 'webmc:wood_pickaxe');
+    S(['P', 'P', 'S'], { P: `webmc:${w}_planks`, S: 'webmc:stick' }, 'webmc:wood_sword');
+    S(['PP ', 'PS ', ' S '], { P: `webmc:${w}_planks`, S: 'webmc:stick' }, 'webmc:wood_axe');
+    S(['P', 'S', 'S'], { P: `webmc:${w}_planks`, S: 'webmc:stick' }, 'webmc:wood_shovel');
+    S(['PP ', ' S ', ' S '], { P: `webmc:${w}_planks`, S: 'webmc:stick' }, 'webmc:wood_hoe');
+  }
+  // Stone pickaxe / sword / axe / shovel / hoe.
   S(['CCC', ' S ', ' S '], { C: 'webmc:cobblestone', S: 'webmc:stick' }, 'webmc:stone_pickaxe');
-  // Iron pickaxe.
-  S(['III', ' S ', ' S '], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_pickaxe');
-  // Gold pickaxe.
-  S(['GGG', ' S ', ' S '], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_pickaxe');
-  // Diamond pickaxe.
-  S(['DDD', ' S ', ' S '], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_pickaxe');
-  // Wood sword.
-  S(['P', 'P', 'S'], { P: 'webmc:oak_planks', S: 'webmc:stick' }, 'webmc:wood_sword');
-  // Stone sword.
   S(['C', 'C', 'S'], { C: 'webmc:cobblestone', S: 'webmc:stick' }, 'webmc:stone_sword');
-  // Iron sword.
+  S(['CC ', 'CS ', ' S '], { C: 'webmc:cobblestone', S: 'webmc:stick' }, 'webmc:stone_axe');
+  S(['C', 'S', 'S'], { C: 'webmc:cobblestone', S: 'webmc:stick' }, 'webmc:stone_shovel');
+  S(['CC ', ' S ', ' S '], { C: 'webmc:cobblestone', S: 'webmc:stick' }, 'webmc:stone_hoe');
+  // Iron pickaxe / sword / axe / shovel / hoe.
+  S(['III', ' S ', ' S '], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_pickaxe');
   S(['I', 'I', 'S'], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_sword');
-  // Diamond sword.
-  S(['D', 'D', 'S'], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_sword');
-  // Iron axe.
   S(['II ', 'IS ', ' S '], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_axe');
-  // Shovel.
   S(['I', 'S', 'S'], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_shovel');
+  S(['II ', ' S ', ' S '], { I: 'webmc:iron_ingot', S: 'webmc:stick' }, 'webmc:iron_hoe');
+  // Gold pickaxe / sword / axe / shovel / hoe.
+  S(['GGG', ' S ', ' S '], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_pickaxe');
+  S(['G', 'G', 'S'], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_sword');
+  S(['GG ', 'GS ', ' S '], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_axe');
+  S(['G', 'S', 'S'], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_shovel');
+  S(['GG ', ' S ', ' S '], { G: 'webmc:gold_ingot', S: 'webmc:stick' }, 'webmc:gold_hoe');
+  // Diamond pickaxe / sword / axe / shovel / hoe.
+  S(['DDD', ' S ', ' S '], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_pickaxe');
+  S(['D', 'D', 'S'], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_sword');
+  S(['DD ', 'DS ', ' S '], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_axe');
+  S(['D', 'S', 'S'], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_shovel');
+  S(['DD ', ' S ', ' S '], { D: 'webmc:diamond', S: 'webmc:stick' }, 'webmc:diamond_hoe');
   // Bread.
   S(['WWW'], { W: 'webmc:wheat' }, 'webmc:bread');
   // Cookie.
