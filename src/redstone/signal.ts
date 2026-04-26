@@ -40,14 +40,14 @@ export function parseKey(key: string): PosKey {
   };
 }
 
-const NEIGHBORS: readonly (readonly [number, number, number])[] = [
-  [-1, 0, 0],
-  [1, 0, 0],
-  [0, -1, 0],
-  [0, 1, 0],
-  [0, 0, -1],
-  [0, 0, 1],
-];
+// Parallel neighbor-offset arrays. Was a tuple-of-tuples requiring
+// `for (const [dx, dy, dz] of NEIGHBORS)` per iteration — that's
+// iterator-protocol + destructure overhead per neighbor visit.
+// Index-based access on three flat arrays is straightforward inline
+// reads.
+const NEIGHBORS_DX: readonly number[] = [-1, 1, 0, 0, 0, 0];
+const NEIGHBORS_DY: readonly number[] = [0, 0, -1, 1, 0, 0];
+const NEIGHBORS_DZ: readonly number[] = [0, 0, 0, 0, -1, 1];
 
 export type BlockLookup = (x: number, y: number, z: number) => RedstoneBlock;
 
@@ -90,10 +90,10 @@ export function computePower(
     if (level <= 0) continue;
     // Source seeds neighbors at their own level (dust neighbor gets level-1,
     // non-dust conductor gets level directly as "strong power").
-    for (const [dx, dy, dz] of NEIGHBORS) {
-      const nx = src.x + dx;
-      const ny = src.y + dy;
-      const nz = src.z + dz;
+    for (let ni = 0; ni < 6; ni++) {
+      const nx = src.x + NEIGHBORS_DX[ni]!;
+      const ny = src.y + NEIGHBORS_DY[ni]!;
+      const nz = src.z + NEIGHBORS_DZ[ni]!;
       const n = lookup(nx, ny, nz);
       if (n.kind === 'dust') {
         const seed = Math.max(level - 1, MIN_POWER);
@@ -121,10 +121,11 @@ export function computePower(
     const here = lookup(ix, iy, iz);
     if (here.kind !== 'dust') continue;
     const nextLevel = ilevel - 1;
-    for (const [dx, dy, dz] of NEIGHBORS) {
-      const nx = ix + dx;
+    for (let ni = 0; ni < 6; ni++) {
+      const dy = NEIGHBORS_DY[ni]!;
+      const nx = ix + NEIGHBORS_DX[ni]!;
       const ny = iy + dy;
-      const nz = iz + dz;
+      const nz = iz + NEIGHBORS_DZ[ni]!;
       const n = lookup(nx, ny, nz);
       if (n.kind === 'dust') {
         if (insertIfHigherXYZ(power, nx, ny, nz, nextLevel)) {
