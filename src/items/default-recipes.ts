@@ -159,10 +159,13 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   S(['GGG', 'GGG'], { G: 'webmc:glass' }, 'webmc:glass_pane', 16);
   // Ladder.
   S(['S S', 'SSS', 'S S'], { S: 'webmc:stick' }, 'webmc:ladder', 3);
-  // Bed.
-  S(['WWW', 'PPP'], { W: 'webmc:wool_white', P: 'webmc:oak_planks' }, 'webmc:bed');
-  // Bookshelf.
-  S(['PPP', 'BBB', 'PPP'], { P: 'webmc:oak_planks', B: 'webmc:book' }, 'webmc:bookshelf');
+  // Bed + bookshelf from any plank type. Was 'webmc:wool_white' which
+  // isn't actually registered in the item registry — only 'webmc:wool'
+  // is — so the bed recipe silently failed to register entirely. Fixed.
+  for (const w of WOODS) {
+    S(['WWW', 'PPP'], { W: 'webmc:wool', P: `webmc:${w}_planks` }, 'webmc:bed');
+    S(['PPP', 'BBB', 'PPP'], { P: `webmc:${w}_planks`, B: 'webmc:book' }, 'webmc:bookshelf');
+  }
   // Book.
   L(['webmc:paper', 'webmc:paper', 'webmc:paper', 'webmc:leather'], 'webmc:book');
   // Paper from sugar cane.
@@ -184,8 +187,10 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   S(['F', 'S', 'E'], { F: 'webmc:flint', S: 'webmc:stick', E: 'webmc:feather' }, 'webmc:arrow', 4);
   // TNT.
   S(['GSG', 'SGS', 'GSG'], { G: 'webmc:gunpowder', S: 'webmc:sand' }, 'webmc:tnt');
-  // Shield.
-  S(['PIP', 'PPP', ' P '], { P: 'webmc:oak_planks', I: 'webmc:iron_ingot' }, 'webmc:shield');
+  // Shield from any plank type.
+  for (const w of WOODS) {
+    S(['PIP', 'PPP', ' P '], { P: `webmc:${w}_planks`, I: 'webmc:iron_ingot' }, 'webmc:shield');
+  }
 
   return count;
 }
