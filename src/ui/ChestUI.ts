@@ -172,30 +172,32 @@ export class ChestUI {
       const leftover = this.inventory.add(stack);
       this.storage[idx] = leftover > 0 ? { ...stack, count: leftover } : null;
     } else {
+      // Move from inventory to chest, respecting max-stack on the target
+      // slot. Old code did `target.count + stack.count` blindly, so a
+      // stack of stone could push past 64 in a chest slot, and partial
+      // moves silently dropped the leftover.
       const stack = this.inventory.main[idx];
       if (!stack || stack.count <= 0) return;
-      const slotIdx = this.findChestSlot(stack.itemId);
-      if (slotIdx === -1) return;
-      const target = this.storage[slotIdx];
-      if (!target) {
-        this.storage[slotIdx] = { ...stack };
-        this.inventory.main[idx] = null;
-      } else {
-        const total = target.count + stack.count;
-        this.storage[slotIdx] = { ...target, count: total };
-        this.inventory.main[idx] = null;
+      const max = this.registry.maxStack(stack.itemId);
+      let remaining = stack.count;
+      // Try to fill any matching stacks (same item + same damage) first.
+      for (let i = 0; i < 27 && remaining > 0; i++) {
+        const t = this.storage[i];
+        if (t?.itemId !== stack.itemId || t.damage !== stack.damage) continue;
+        const space = max - t.count;
+        if (space <= 0) continue;
+        const take = Math.min(space, remaining);
+        this.storage[i] = { ...t, count: t.count + take };
+        remaining -= take;
       }
+      // Then place into empty slots.
+      for (let i = 0; i < 27 && remaining > 0; i++) {
+        if (this.storage[i]) continue;
+        const take = Math.min(max, remaining);
+        this.storage[i] = { ...stack, count: take };
+        remaining -= take;
+      }
+      this.inventory.main[idx] = remaining > 0 ? { ...stack, count: remaining } : null;
     }
-  }
-
-  private findChestSlot(itemId: number): number {
-    for (let i = 0; i < 27; i++) {
-      const s = this.storage[i];
-      if (s?.itemId === itemId) return i;
-    }
-    for (let i = 0; i < 27; i++) {
-      if (!this.storage[i]) return i;
-    }
-    return -1;
   }
 }
