@@ -84,6 +84,13 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
 
   const mask = new Int32Array(D * D);
   let quadCount = 0;
+  // Function-scoped pos/npos/lightPos scratches — were per-iteration
+  // [0,0,0] arrays before. greedy meshing iterates ~96 times per
+  // axis-pass (3 axes × 2 dirs × 16 slices) and the lightPos was
+  // allocated per quad (hundreds per chunk).
+  const pos: [number, number, number] = [0, 0, 0];
+  const npos: [number, number, number] = [0, 0, 0];
+  const lightPos: [number, number, number] = [0, 0, 0];
 
   for (let d = 0; d < 3; d++) {
     const u = (d + 1) % 3;
@@ -98,8 +105,6 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
       for (let w = 0; w < D; w++) {
         mask.fill(-1);
 
-        const pos = [0, 0, 0];
-        const npos = [0, 0, 0];
         for (let iv = 0; iv < D; iv++) {
           for (let iu = 0; iu < D; iu++) {
             pos[d] = w;
@@ -165,11 +170,13 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             const g = paletteColor[base3 + 1] ?? 0;
             const b = paletteColor[base3 + 2] ?? 0;
 
-            const lightPos = [0, 0, 0];
+            lightPos[0] = 0;
+            lightPos[1] = 0;
+            lightPos[2] = 0;
             lightPos[d] = w + sign;
             lightPos[u] = iu;
             lightPos[v] = iv;
-            const faceLight = lightAt(lightPos[0] ?? 0, lightPos[1] ?? 0, lightPos[2] ?? 0);
+            const faceLight = lightAt(lightPos[0]!, lightPos[1]!, lightPos[2]!);
             const lightAlpha = Math.round((faceLight / 15) * 255);
 
             if (s === 1) {
