@@ -3733,6 +3733,41 @@ const interaction = new InteractionController(
       if (heldName === 'bow' || heldName === 'crossbow') {
         return fireBowOrCrossbow();
       }
+      // Snowball / egg / ender_pearl thrown into the air — project the
+      // impact point along the look ray. Vanilla mechanics. Without
+      // this, throwing snowballs at the sky did nothing because the
+      // onInteract path required a target block.
+      if (heldName === 'snowball' || heldName === 'egg' || heldName === 'ender_pearl') {
+        const look = fp.lookVector();
+        const impactDist = 30;
+        const ix = fp.position.x + look.x * impactDist;
+        const iy = fp.position.y + look.y * impactDist;
+        const iz = fp.position.z + look.z * impactDist;
+        for (let k = 0; k < 8; k++) {
+          const t = (k + 1) / 9;
+          blockParticles.emitPlace(
+            fp.position.x + (ix - fp.position.x) * t,
+            fp.position.y + (iy - fp.position.y) * t,
+            fp.position.z + (iz - fp.position.z) * t,
+            heldName === 'snowball' ? [240, 250, 255] : heldName === 'egg' ? [240, 220, 180] : [60, 200, 180],
+          );
+        }
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          const itemId = itemRegistry.byName(`webmc:${heldName}`);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+        }
+        sfx.play('click');
+        hand.swing();
+        if (heldName === 'ender_pearl') {
+          // Air-pearl: just consume + impact particles, no teleport
+          // (no surface to land on). Match vanilla — pearl hitting only
+          // sky is effectively wasted.
+          subtitles.push('Pearl flew off');
+        } else {
+          subtitles.push(heldName === 'snowball' ? 'Snowball thrown' : 'Egg thrown');
+        }
+        return true;
+      }
       return false;
     },
   },
