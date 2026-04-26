@@ -7880,6 +7880,17 @@ const playerTickEnv: { inFluid: 'water' | 'lava' | null; drainHunger: boolean } 
   inFluid: null,
   drainHunger: true,
 };
+// Off-world sentinel for droppedItems/xpOrbs pickup-blocked path. Was
+// allocated per frame as a fresh {x:-9999,y:0,z:0} literal.
+const FAR_POS_BLOCK_PICKUP = { x: -9999, y: 0, z: 0 };
+// Reused inventory.add arg for dropped-item pickups. Mutable (cast)
+// because ItemStack's fields are nominally readonly but inventory.add
+// only reads them.
+const pickupAddArg = { itemId: 0, count: 0, damage: 0 } as {
+  itemId: number;
+  count: number;
+  damage: number;
+};
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
@@ -10103,15 +10114,16 @@ function frame(): void {
     // Spectator suppresses pickup entirely — vanilla spectators are
     // observers, not collectors. Pass an unreachable far position so the
     // tick treats the player as out of range for the magnetic grab.
-    fp.input.sneak || gameMode === 'spectator' ? { x: -9999, y: 0, z: 0 } : fp.position,
+    // FAR_POS_BLOCK_PICKUP is reused across frames vs allocating
+    // {x:-9999,y:0,z:0} per frame.
+    fp.input.sneak || gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
     (out) => {
       // Preserve damage on pickup. Was hard-coded to 0, so dropping a
       // 50% durability tool and walking back over it healed it for free.
-      const leftover = inventory.add({
-        itemId: out.itemId,
-        count: out.count,
-        damage: out.damage ?? 0,
-      });
+      pickupAddArg.itemId = out.itemId;
+      pickupAddArg.count = out.count;
+      pickupAddArg.damage = out.damage ?? 0;
+      const leftover = inventory.add(pickupAddArg);
       const taken = out.count - leftover;
       if (taken > 0) {
         sfx.play('click');
@@ -10129,7 +10141,7 @@ function frame(): void {
   xpOrbs.tick(
     dtSec,
     isSolid,
-    gameMode === 'spectator' ? { x: -9999, y: 0, z: 0 } : fp.position,
+    gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
     (xp) => {
       // Mending-style auto-repair: damaged held tool gets durability from XP first.
       let remaining = xp;
