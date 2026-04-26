@@ -7164,6 +7164,10 @@ function frame(): void {
           const result = mobWorld.damage(bestId, 2);
           sfx.play('hit');
           screenShake.pulse(0.15);
+          // Touch attacks were missing the hand swing animation that
+          // desktop's left-click attack path includes. Mobile players got
+          // no visual feedback when they tapped a mob.
+          hand.swing();
           if (result?.killed) {
             spawnMobDrops(result.kind, result.position);
             for (let k = 0; k < 3; k++)
