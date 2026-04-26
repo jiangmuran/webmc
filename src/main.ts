@@ -2365,7 +2365,16 @@ const interaction = new InteractionController(
       };
       let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
       const sapName = LEAF_TO_SAPLING[def.name];
-      if (sapName !== undefined && dropsAllowed) {
+      const heldNameAtBreak = heldNameLower();
+      const usingShears = heldNameAtBreak === 'shears';
+      // Shears on leaves drop the leaf block itself (silk-touch parity).
+      if (sapName !== undefined && usingShears && dropsAllowed) {
+        const leafId = itemRegistry.byName(def.name);
+        if (leafId !== undefined) {
+          leafDrops = [{ itemId: leafId, count: 1, damage: 0 }];
+          consumeHeldToolDurability(1);
+        }
+      } else if (sapName !== undefined && dropsAllowed) {
         leafDrops = [];
         if (Math.random() < 0.05) {
           const sId = itemRegistry.byName(sapName);
@@ -2378,6 +2387,15 @@ const interaction = new InteractionController(
         if (def.name === 'webmc:oak_leaves' && Math.random() < 0.005) {
           const aId = itemRegistry.byName('webmc:apple');
           if (aId !== undefined) leafDrops.push({ itemId: aId, count: 1, damage: 0 });
+        }
+      }
+      // Shears on cobweb drop string (vanilla — without it cobweb gave
+      // nothing from sword, only string from shears).
+      if (def.name === 'webmc:cobweb' && usingShears && dropsAllowed && leafDrops === null) {
+        const stringId = itemRegistry.byName('webmc:string');
+        if (stringId !== undefined) {
+          leafDrops = [{ itemId: stringId, count: 1, damage: 0 }];
+          consumeHeldToolDurability(1);
         }
       }
       const cropDrop = CROP_DROP[def.name];
@@ -2610,10 +2628,20 @@ const interaction = new InteractionController(
         blockShortName === 'mycelium' ||
         blockShortName === 'podzol' ||
         blockShortName === 'clay';
+      // Sword + cobweb: vanilla breaks cobweb 15x faster with sword.
+      // Shears + wool / leaves / cobweb: instant-ish (15x).
+      const isCobweb = blockShortName === 'cobweb';
+      const isWool = blockShortName === 'wool' || blockShortName.endsWith('_wool');
+      const isLeaves = blockShortName.endsWith('_leaves');
+      const isShears = heldName === 'shears';
+      const isSword = heldName.includes('sword');
       const correctTool =
         (isStoneLike && heldName.includes('pickaxe')) ||
         (isWoodLike && heldName.includes('axe') && !heldName.includes('pickaxe')) ||
-        (isDirtLike && heldName.includes('shovel'));
+        (isDirtLike && heldName.includes('shovel')) ||
+        (isCobweb && (isSword || isShears)) ||
+        (isWool && isShears) ||
+        (isLeaves && isShears);
       let toolSpeed = 1;
       if (heldName.includes('netherite')) toolSpeed = 9;
       else if (heldName.includes('diamond')) toolSpeed = 8;
@@ -2621,6 +2649,9 @@ const interaction = new InteractionController(
       else if (heldName.includes('iron')) toolSpeed = 6;
       else if (heldName.includes('stone')) toolSpeed = 4;
       else if (heldName.includes('wood')) toolSpeed = 2;
+      // Sword cuts cobweb at 15x speed; shears cut wool/leaves/cobweb at 15x.
+      if (isCobweb && (isSword || isShears)) toolSpeed = Math.max(toolSpeed, 15);
+      else if ((isWool || isLeaves) && isShears) toolSpeed = Math.max(toolSpeed, 15);
       // Tool only contributes its speed when it's the correct kind.
       const speed = correctTool ? toolSpeed : 1;
       // Tool tier requirement: if the player can't harvest this block at
