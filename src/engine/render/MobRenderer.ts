@@ -206,7 +206,7 @@ export class MobRenderer {
           // Skip the visible=false write when already hidden — three.js
           // setter triggers matrix-update flagging and per-frame writes
           // for nothing add up at high mob count.
-          if (v && v.group.visible) v.group.visible = false;
+          if (v?.group.visible) v.group.visible = false;
           continue;
         }
       }

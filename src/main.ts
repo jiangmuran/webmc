@@ -125,7 +125,7 @@ import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
-import { MobWorld, MOB_DEFS } from './entities/mob';
+import { MobWorld, MOB_DEFS, type MobTickContext } from './entities/mob';
 import {
   makeTameable,
   toggleSit,
@@ -7673,7 +7673,7 @@ function projectWorldToScreen(
 // object literal + 5 closures allocated every frame (60Hz × 6 alloc =
 // 360/sec). The closures all capture module-scope refs so hoisting
 // behavior is unchanged.
-const mobTickCtx: import('./entities/mob').MobTickContext = {
+const mobTickCtx: MobTickContext = {
   isSolid,
   isFluid,
   playerPos: { x: 0, y: 0, z: 0 },
