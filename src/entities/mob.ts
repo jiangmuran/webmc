@@ -1027,8 +1027,13 @@ export class MobWorld {
     const aggro = this.isAggroTarget(mob);
     if (aggro && ctx.playerPos) {
       const dx = ctx.playerPos.x - mob.position.x;
+      const dy = ctx.playerPos.y - mob.position.y;
       const dz = ctx.playerPos.z - mob.position.z;
-      const distSq = dx * dx + dz * dz;
+      // 3D distance for aggro check — old code used horizontal-only, so a
+      // zombie 50 blocks below the player could still chase up through
+      // walls because horizontal dx² + dz² alone was within aggro range.
+      // Vanilla uses full 3D bounding-box distance.
+      const distSq = dx * dx + dy * dy + dz * dz;
       // Sneak reduces aggro radius. Vanilla applies a ~0.5x factor on the
       // detection range when the player is sneaking (effective ~half-radius
       // squared); without this, sneaking through a cave was indistinguishable
@@ -1037,9 +1042,13 @@ export class MobWorld {
         ? mob.def.aggroRangeSq * 0.25
         : mob.def.aggroRangeSq;
       if (distSq <= effectiveAggroSq) {
-        const len = Math.sqrt(distSq) || 1;
-        const nx = dx / len;
-        const nz = dz / len;
+        // Movement velocity uses horizontal-only direction so mobs don't
+        // crawl when the player is high above (e.g. on a 3-block tower).
+        // Aggro distSq above is 3D for vanilla parity, but the chase
+        // direction stays in the xz plane.
+        const horizLen = Math.hypot(dx, dz) || 1;
+        const nx = dx / horizLen;
+        const nz = dz / horizLen;
         mob.velocity.x = nx * mob.def.walkSpeed;
         mob.velocity.z = nz * mob.def.walkSpeed;
         const targetYaw = Math.atan2(nx, nz);
