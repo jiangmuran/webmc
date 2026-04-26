@@ -2390,6 +2390,52 @@ const farMobsScratch: number[] = [];
 // explosions in rapid succession; was allocating a fresh
 // Set<string> + per-cell template-literal keys per blast.
 const explodeChangedChunksScratch = new Set<number>();
+// Reused per-call grass-spread ctx + nested center + lookup with
+// stateful closures. Was allocating 6 objects per grass random
+// tick (ctx, center, lookup, isGrass, isDirt, lightAbove,
+// hasOpaqueAbove). With 80 random-tick samples/sec the grass-block
+// branch alone churned dozens of object/closure allocs per sec in
+// plains biomes.
+const grassCtxCenter = { x: 0, y: 0, z: 0 };
+const grassCtxLookup = {
+  isGrass(gx: number, gy: number, gz: number): boolean {
+    return registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:grass_block';
+  },
+  isDirt(gx: number, gy: number, gz: number): boolean {
+    return registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:dirt';
+  },
+  lightAbove(gx: number, gy: number, gz: number): number {
+    const cx = gx >> 4;
+    const cz = gz >> 4;
+    const lx = gx & 0xf;
+    const lz = gz & 0xf;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (!lt) return 0;
+    const lb = getLightByte(lt, lx, gy, lz);
+    return Math.max((lb >>> 4) & 0xf, lb & 0xf);
+  },
+  hasOpaqueAbove(gx: number, gy: number, gz: number): boolean {
+    const ss = world.get(gx, gy, gz);
+    if (ss === AIR) return false;
+    return registry.get(stateId(ss)).opaque;
+  },
+};
+const grassCtxScratch: {
+  center: typeof grassCtxCenter;
+  lookup: typeof grassCtxLookup;
+  rng: () => number;
+} = {
+  center: grassCtxCenter,
+  lookup: grassCtxLookup,
+  rng: Math.random,
+};
+// Sugar-cane query scratch — was allocating tickState {age} and the
+// outer {state, currentHeight} ctx per cane every random tick.
+const caneTickStateScratch = { age: 0 };
+const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: number } = {
+  state: caneTickStateScratch,
+  currentHeight: 1,
+};
 // Reused per-frame hotbar-counts list. Was a fresh number[] every
 // frame in survival/adventure (and a fresh empty [] every frame in
 // creative for the 'infinite' marker).
@@ -9903,45 +9949,25 @@ function frame(): void {
             currentHeight++;
           }
           const age = stateProps(s);
-          const tickState = { age };
-          const result = caneRandomTick({ state: tickState, currentHeight });
+          caneTickStateScratch.age = age;
+          caneCtxScratch.currentHeight = currentHeight;
+          const result = caneRandomTick(caneCtxScratch);
           if (result === 'grow_up' && currentHeight < CANE_MAX_H) {
             world.set(x, y + 1, z, makeState(sugarCaneId, 0));
             world.set(x, y, z, makeState(id, 0));
             touchWorldEdit(x, y + 1, z, sugarCaneId);
           } else if (result === 'age_inc') {
-            world.set(x, y, z, makeState(id, tickState.age));
+            world.set(x, y, z, makeState(id, caneTickStateScratch.age));
           }
         } else if (name === 'webmc:grass_block' || name === 'webmc:dirt') {
           // Grass spreads to adjacent dirt (light >= 9, no opaque
           // above), grass with opaque above reverts to dirt. Was
           // unwired — broken trees stayed dirt forever, mowed grass
           // never re-grew.
-          const placements = tickGrassBlock({
-            center: { x, y, z },
-            lookup: {
-              isGrass: (gx, gy, gz) =>
-                registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:grass_block',
-              isDirt: (gx, gy, gz) =>
-                registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:dirt',
-              lightAbove: (gx, gy, gz) => {
-                const cx = gx >> 4;
-                const cz = gz >> 4;
-                const lx = gx & 0xf;
-                const lz = gz & 0xf;
-                const lt = lightCache.get(lightKey(cx, cz));
-                if (!lt) return 0;
-                const lb = getLightByte(lt, lx, gy, lz);
-                return Math.max((lb >>> 4) & 0xf, lb & 0xf);
-              },
-              hasOpaqueAbove: (gx, gy, gz) => {
-                const ss = world.get(gx, gy, gz);
-                if (ss === AIR) return false;
-                return registry.get(stateId(ss)).opaque;
-              },
-            },
-            rng: Math.random,
-          });
+          grassCtxCenter.x = x;
+          grassCtxCenter.y = y;
+          grassCtxCenter.z = z;
+          const placements = tickGrassBlock(grassCtxScratch);
           for (const p of placements) {
             const blockId = registry.byName(p.block);
             if (blockId !== undefined) {
