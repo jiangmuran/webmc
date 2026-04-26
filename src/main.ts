@@ -8360,11 +8360,19 @@ function frame(): void {
     !(overHostileCap && overPassiveCap)
   ) {
     // Despawn mobs >128 blocks away from player to bound entity count.
+    // Tamed pets, leashed mobs, name-tagged mobs, and saddled mounts get
+    // a free pass — vanilla MC keeps these loaded indefinitely; otherwise
+    // your wolf would vanish the moment you walked across a chunk.
     const farMobs: number[] = [];
     for (const m of mobWorld.all()) {
       const dx = m.position.x - fp.position.x;
       const dz = m.position.z - fp.position.z;
-      if (dx * dx + dz * dz > 128 * 128) farMobs.push(m.id);
+      if (dx * dx + dz * dz <= 128 * 128) continue;
+      const tame = tamedMobs.get(m.id);
+      if (tame && tame.ownerId !== null) continue;
+      if (leashedMobs.has(m.id)) continue;
+      if (saddledMobs.has(m.id)) continue;
+      farMobs.push(m.id);
     }
     for (const id of farMobs) mobWorld.remove(id);
 
