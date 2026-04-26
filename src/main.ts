@@ -2665,7 +2665,10 @@ const interaction = new InteractionController(
         const waitMs = 5000 + Math.random() * 25000;
         setTimeout(() => {
           if (gameMode !== 'survival' && gameMode !== 'adventure') return;
-          const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:raw_fish', 'webmc:tropical_fish'];
+          // Vanilla 1.13+ fishing pool: cod, salmon, pufferfish, tropical_fish.
+          // 'webmc:raw_fish' was a 1.12 legacy name that was never registered
+          // here, so 25% of fishing rolls dropped nothing silently.
+          const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:pufferfish', 'webmc:tropical_fish'];
           const treasure = [
             'webmc:bow',
             'webmc:enchanted_book',
