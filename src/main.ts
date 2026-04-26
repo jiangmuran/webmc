@@ -2380,6 +2380,15 @@ const bossBarPayload: {
 // Reused per-frame DebugFrame payload — was a 22-field object literal
 // (with three nested {x,y,z}/{cx,cz}/{yaw,pitch} sub-objects) on every
 // frame the F3 debug overlay was open.
+// Reused per-frame leash-tension scratches. Was allocating an anchor
+// {x,y,z}, a broken[] list, AND a per-mob ctx literal every frame any
+// time the player had a leashed mob (walking your wolf around).
+const leashAnchorScratch = { x: 0, y: 0, z: 0 };
+const leashBrokenScratch: number[] = [];
+const leashCtxScratch: { anchorPos: { x: number; y: number; z: number }; mobPos: { x: number; y: number; z: number } } = {
+  anchorPos: leashAnchorScratch,
+  mobPos: { x: 0, y: 0, z: 0 },
+};
 const debugFramePos = { x: 0, y: 0, z: 0 };
 const debugFrameLook = { yaw: 0, pitch: 0 };
 const debugFrameChunkPos = { cx: 0, cz: 0 };
@@ -10162,15 +10171,19 @@ function frame(): void {
       }
     }
     if (leashedMobs.size > 0) {
-      const anchor = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
-      const broken: number[] = [];
+      leashAnchorScratch.x = fp.position.x;
+      leashAnchorScratch.y = fp.position.y;
+      leashAnchorScratch.z = fp.position.z;
+      const broken = leashBrokenScratch;
+      broken.length = 0;
       for (const id of leashedMobs) {
         const m = mobWorld.byId(id);
         if (!m) {
           broken.push(id);
           continue;
         }
-        const r = tensionStep({ anchorPos: anchor, mobPos: m.position });
+        leashCtxScratch.mobPos = m.position;
+        const r = tensionStep(leashCtxScratch);
         if (r.broken) {
           broken.push(id);
           mobRenderer.setMobName(id, m.def.kind);
