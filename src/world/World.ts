@@ -53,6 +53,11 @@ export class World {
   }
 
   has(cx: number, cz: number): boolean {
+    // Fast path via the same single-slot cache getChunk uses — most
+    // calls to has() are followed by getChunk() at the same coords
+    // (e.g. World.set checks has then ensureChunk). Without the cache
+    // hit, has + getChunk would be two Map lookups for the same key.
+    if (cx === this._cacheCx && cz === this._cacheCz) return this._cacheChunk !== null;
     return this._chunks.has(chunkKey(cx, cz));
   }
 
