@@ -160,4 +160,18 @@ describe('PlayerState', () => {
     expect(p.xpLevel).toBe(0);
     expect(p.effects.size).toBe(0);
   });
+
+  it('wither effect ticks past i-frames', () => {
+    const p = build();
+    p.hunger = 20;
+    p.saturation = 20;
+    // Simulate fresh hit-immunity from a zombie strike.
+    p.takeDamage({ amount: 1, source: 'mob' });
+    expect(p.hitImmuneSec).toBeGreaterThan(0);
+    const before = p.health;
+    p.applyEffect('wither', 1, 10);
+    p.tick(0.1);
+    // Wither should have actually applied damage despite i-frames.
+    expect(p.health).toBeLessThan(before);
+  });
 });

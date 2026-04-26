@@ -69,7 +69,12 @@ export class PlayerState {
       ev.source !== 'void' &&
       ev.source !== 'lava' &&
       ev.source !== 'fire' &&
-      ev.source !== 'poison'
+      ev.source !== 'poison' &&
+      // Wither effect (and magic damage) ticks past i-frames in vanilla —
+      // listing wither alongside poison so a wither II potion + a hit
+      // doesn't silently skip every wither tick during the 0.5s window.
+      ev.source !== 'wither' &&
+      ev.source !== 'magic'
     )
       return;
     // Resistance reduces damage by 0.2 * (amplifier+1), clamped to 80% reduction.
