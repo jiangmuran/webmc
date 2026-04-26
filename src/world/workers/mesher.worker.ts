@@ -1,6 +1,5 @@
 /// <reference lib="webworker" />
 import { SUBCHUNK_VOLUME } from '../SubChunk';
-import { readIndex } from '../packed-indices';
 import type { Snapshot } from '../meshing/snapshot';
 import { type MesherNeighbors, meshSnapshot } from '../meshing/greedy';
 import type { FromWorker, MesherRequest } from './mesher.protocol';
@@ -51,8 +50,23 @@ const SNAPSHOT_SCRATCH: MutableSnapshot = {
 };
 
 function unpackSnapshot(req: MesherRequest): Snapshot {
-  for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
-    FLAT_IDX_SCRATCH[i] = readIndex(req.indices, i, req.bitsPerIndex);
+  // Inline the bitpack read instead of calling readIndex per cell.
+  // SUBCHUNK_VOLUME = 4096 cells per request; bitsPerIndex (4/8/16)
+  // and the mask are constants over a section, so hoisting them out
+  // of the loop + dropping the function-call overhead is a real win
+  // on the worker-side hot path. 32 is divisible by 4/8/16 so each
+  // value fits within a single Uint32 word — no cross-word handling.
+  const bits = req.bitsPerIndex;
+  const arr = req.indices;
+  if (bits === 0 || arr === null) {
+    FLAT_IDX_SCRATCH.fill(0);
+  } else {
+    const mask = (1 << bits) - 1;
+    for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
+      const bitPos = i * bits;
+      const word = arr[bitPos >>> 5] ?? 0;
+      FLAT_IDX_SCRATCH[i] = (word >>> (bitPos & 31)) & mask;
+    }
   }
   SNAPSHOT_SCRATCH.paletteOpaque = req.paletteOpaque;
   SNAPSHOT_SCRATCH.paletteColor = req.paletteColor;
