@@ -46,6 +46,13 @@ export class DroppedItemWorld {
   private mergeDirty = false;
   // Reused per-tick scratch list — was allocated fresh each call.
   private readonly toRemoveScratch: number[] = [];
+  // Reused PickupOutcome scratch passed to the onPickup callback.
+  // The callback reads itemId/count/damage synchronously into its own
+  // scratch (main's pickupAddArg) and never retains the reference, so
+  // a single shared object is safe and skips one fresh literal per
+  // pickup attempt — meaningful when the player walks through a pile
+  // of dropped items at a mob farm or chest break.
+  private readonly pickupOutScratch: PickupOutcome = { itemId: 0, count: 0 };
 
   constructor() {
     this.group = new THREE.Group();
@@ -163,8 +170,13 @@ export class DroppedItemWorld {
           it.y += pullY;
           it.z += pullZ;
           if (distSq < 0.5 * 0.5) {
-            const out: PickupOutcome = { itemId: it.data.itemId, count: it.data.count };
-            if (it.data.damage !== undefined) out.damage = it.data.damage;
+            const out = this.pickupOutScratch;
+            out.itemId = it.data.itemId;
+            out.count = it.data.count;
+            // The callback reads damage with `?? 0`, so passing 0 for
+            // missing damage is observationally identical and keeps the
+            // scratch fields strictly typed as numbers.
+            out.damage = it.data.damage ?? 0;
             const leftover = onPickup(out);
             if (leftover === undefined || leftover <= 0) {
               toRemove.push(it.id);
