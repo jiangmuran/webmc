@@ -17,17 +17,33 @@ export interface EncodedChunk {
   sectionCount: number;
 }
 
-function collectSections(chunk: Chunk): number[] {
-  const indices: number[] = [];
+// Reused per-encode scratches. encodeChunk runs on every chunkStore
+// flush (1Hz baseline; up to 32 chunks per batch). Each call previously
+// allocated a fresh ys[], a fresh sectionMetas[] of {cy, sec, bits, ...}
+// objects, AND a fresh array-of-{bits,paletteSize,hasLight} for the
+// length estimator pass. Encoding is synchronous and single-threaded
+// on the main thread, so module-scope reuse is safe.
+const collectSectionsScratch: number[] = [];
+interface SectionMeta {
+  cy: number;
+  sec: SubChunk;
+  bits: BitsPerIndex;
+  paletteSize: number;
+  hasLight: boolean;
+}
+const sectionMetasScratch: SectionMeta[] = [];
+
+function collectSectionsInto(chunk: Chunk, out: number[]): number[] {
+  out.length = 0;
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     const sec = chunk.section(cy);
     // Skip null AND all-air sections. Common after dig-down or initial
     // sky sections — same on reload (decoder treats missing section as
     // air via sectionMask bit unset). Saves ~7 bytes per skipped section
     // and one per-section traversal in encode/decode.
-    if (sec && sec.nonAirCount > 0) indices.push(cy);
+    if (sec && sec.nonAirCount > 0) out.push(cy);
   }
-  return indices;
+  return out;
 }
 
 function validBits(bits: number): BitsPerIndex {
@@ -35,9 +51,7 @@ function validBits(bits: number): BitsPerIndex {
   throw new Error(`chunk-codec: invalid bitsPerIndex ${String(bits)}`);
 }
 
-function estimateEncodedLength(
-  sections: readonly { bits: BitsPerIndex; paletteSize: number; hasLight: boolean }[],
-): number {
+function estimateEncodedLengthFromMetas(sections: readonly SectionMeta[]): number {
   let total = HEADER_BYTES;
   total += 4; // CRC
   for (const s of sections) {
@@ -49,28 +63,36 @@ function estimateEncodedLength(
 }
 
 export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
-  const ys = collectSections(chunk);
+  const ys = collectSectionsInto(chunk, collectSectionsScratch);
   let sectionMask = 0;
   for (const cy of ys) sectionMask |= 1 << cy;
 
-  const sectionMetas = ys.map((cy) => {
+  // Refill sectionMetasScratch in place. Was a chained .map().map() that
+  // built two fresh arrays of throwaway objects on every chunk encode.
+  const sectionMetas = sectionMetasScratch;
+  while (sectionMetas.length > ys.length) sectionMetas.pop();
+  let anyLight = false;
+  for (let i = 0; i < ys.length; i++) {
+    const cy = ys[i]!;
     const sec = chunk.section(cy);
     if (!sec) throw new Error('unreachable: section missing after collect');
-    return {
-      cy,
-      sec,
-      bits: sec.bitsPerIndex,
-      paletteSize: sec.palette.size,
-      hasLight: !!light?.sections[cy],
-    };
-  });
-
-  const anyLight = sectionMetas.some((m) => m.hasLight);
+    const hasLight = !!light?.sections[cy];
+    if (hasLight) anyLight = true;
+    let m = sectionMetas[i];
+    if (!m) {
+      m = { cy, sec, bits: sec.bitsPerIndex, paletteSize: sec.palette.size, hasLight };
+      sectionMetas.push(m);
+    } else {
+      m.cy = cy;
+      m.sec = sec;
+      m.bits = sec.bitsPerIndex;
+      m.paletteSize = sec.palette.size;
+      m.hasLight = hasLight;
+    }
+  }
   const flags = anyLight ? FLAG_LIGHT : 0;
 
-  const lengthEstimate = estimateEncodedLength(
-    sectionMetas.map((m) => ({ bits: m.bits, paletteSize: m.paletteSize, hasLight: m.hasLight })),
-  );
+  const lengthEstimate = estimateEncodedLengthFromMetas(sectionMetas);
   const buf = new ArrayBuffer(lengthEstimate);
   const view = new DataView(buf);
   const u8 = new Uint8Array(buf);
