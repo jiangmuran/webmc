@@ -25,9 +25,13 @@ export type PopulateFn = (chunk: Chunk) => Promise<void> | void;
 export class ChunkLoader {
   private readonly opts: ChunkLoaderOptions;
   private readonly pending: { cx: number; cz: number; priority: number }[] = [];
+  private pendingHead = 0; // index into pending[] — avoids O(N) shift
   private lastCx = Number.NaN;
   private lastCz = Number.NaN;
-  private generating = false;
+  // Number of in-flight populate Promises (async path only). Allows up
+  // to perFrameBudget concurrent IDB loads instead of serializing one
+  // chunk at a time. Sync populate doesn't increment this.
+  private inFlight = 0;
   private populate: PopulateFn;
   // Stable stats object returned by update(). Was allocating a fresh
   // {loaded, pending, generating} literal every frame.
@@ -82,38 +86,54 @@ export class ChunkLoader {
       this.unloadDistant(cx, cz, onUnload);
     }
 
+    // Allow up to perFrameBudget concurrent in-flight populates, and
+    // walk the pending list with a head pointer (vs O(N) shift). Was
+    // serializing one async populate at a time, bottlenecked on IDB
+    // read latency — perFrameBudget=4 chunks/frame in spec but only 1
+    // effective.
     let generated = 0;
-    while (generated < this.opts.perFrameBudget && this.pending.length > 0 && !this.generating) {
-      const entry = this.pending.shift();
+    while (
+      generated < this.opts.perFrameBudget &&
+      this.inFlight < this.opts.perFrameBudget &&
+      this.pendingHead < this.pending.length
+    ) {
+      const entry = this.pending[this.pendingHead++];
       if (!entry) break;
       if (this.world.has(entry.cx, entry.cz)) continue;
       const chunk = this.world.ensureChunk(entry.cx, entry.cz);
       const result = this.populate(chunk);
       if (result instanceof Promise) {
-        this.generating = true;
+        this.inFlight++;
         void result
           .catch((err: unknown) => {
             console.error('[ChunkLoader] populate failed', err);
           })
           .finally(() => {
-            this.generating = false;
+            this.inFlight--;
             onLoad(entry.cx, entry.cz);
           });
         generated++;
-        break;
+        continue;
       }
       onLoad(entry.cx, entry.cz);
       generated++;
     }
+    // Compact the pending array once head crosses past half so we
+    // don't grow memory unbounded across rebuilds.
+    if (this.pendingHead > 64 && this.pendingHead > this.pending.length / 2) {
+      this.pending.splice(0, this.pendingHead);
+      this.pendingHead = 0;
+    }
 
     this.statsObj.loaded = this.world.chunkCount;
-    this.statsObj.pending = this.pending.length;
-    this.statsObj.generating = this.generating;
+    this.statsObj.pending = this.pending.length - this.pendingHead;
+    this.statsObj.generating = this.inFlight > 0;
     return this.statsObj;
   }
 
   private rebuildPending(centerCx: number, centerCz: number, playerVx = 0, playerVz = 0): void {
     this.pending.length = 0;
+    this.pendingHead = 0;
     const r = this.opts.viewRadius;
     const vlen = Math.hypot(playerVx, playerVz);
     for (let dz = -r; dz <= r; dz++) {
