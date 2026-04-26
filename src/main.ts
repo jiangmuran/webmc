@@ -10875,7 +10875,11 @@ function frame(): void {
     }
     hud.textContent =
       `webmc — F3 debug · F5 cam · F1 help\n` +
-      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${phaseOfDay(Math.floor(dayNight.timeOfDay * 24000))}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
+      // nowPhase + the equivalent Math.floor(timeOfDay*24000) phaseOfDay
+      // are already computed at the top of frame() — reuse instead of
+      // duplicating the multiply + floor + 4-comparison phaseOfDay call
+      // every HUD tick.
+      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${nowPhase}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
       `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${spawnSuffix}\n` +
       `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
       `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
