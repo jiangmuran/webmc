@@ -34,6 +34,12 @@ export class ChunkStore {
   // guards against parallel flushes), so a single shared scratch is
   // safe.
   private readonly flushBlobsScratch: ChunkBlob[] = [];
+  // Pool of ChunkBlob wrappers — was a fresh literal per dirty chunk
+  // per flush. After db.putChunks resolves, IDB has structured-cloned
+  // the data and the original wrappers are no longer needed; recycle
+  // them through this pool. inFlight prevents parallel flushes so
+  // wrapper lifetimes don't overlap.
+  private readonly flushBlobPool: ChunkBlob[] = [];
 
   constructor(
     private readonly db: PersistDB,
@@ -101,16 +107,24 @@ export class ChunkStore {
       // (terraforming, explosions), that's a 500-entry array trashed
       // every second. Recycle the blobs array across calls.
       const blobs = this.flushBlobsScratch;
+      // Recycle previous-flush wrappers into the pool.
+      for (let i = 0; i < blobs.length; i++) this.flushBlobPool.push(blobs[i]!);
       blobs.length = 0;
       for (const d of this.dirty.values()) {
         if (blobs.length >= cap) break;
-        blobs.push({
+        const blob = this.flushBlobPool.pop() ?? {
           worldId: this.opts.worldId,
-          cx: d.chunk.cx,
-          cz: d.chunk.cz,
-          payload: encodeChunk(d.chunk, d.light ?? undefined),
-          version: d.chunk.version,
-        });
+          cx: 0,
+          cz: 0,
+          payload: new Uint8Array(0),
+          version: 0,
+        };
+        blob.worldId = this.opts.worldId;
+        blob.cx = d.chunk.cx;
+        blob.cz = d.chunk.cz;
+        blob.payload = encodeChunk(d.chunk, d.light ?? undefined);
+        blob.version = d.chunk.version;
+        blobs.push(blob);
       }
       await this.db.putChunks(blobs);
       // Only delete the dirty entry if the chunk's version hasn't moved
