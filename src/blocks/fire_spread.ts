@@ -78,6 +78,17 @@ const DIRS: readonly Vec3[] = [
 // Reused per-call result + ignitions list. tickFire is called from the
 // random-tick scan for every fire block found; caller reads the result
 // fields synchronously and doesn't keep the reference.
+//
+// Per-ignition slot pool: was a fresh {offset, blockBurned} literal
+// for every neighbor that caught fire (up to 6 per fire block per
+// random tick). A spreading forest fire churns dozens per second.
+// Pool 6 persistent slots; each call resets SHARED_IGNITIONS.length=0
+// (drops only the references, not the pool entries) and refills via
+// pool slots.
+const IGNITION_POOL: { offset: Vec3; blockBurned: string }[] = [];
+for (let i = 0; i < 6; i++) {
+  IGNITION_POOL.push({ offset: { x: 0, y: 0, z: 0 }, blockBurned: '' });
+}
 const SHARED_IGNITIONS: { offset: Vec3; blockBurned: string }[] = [];
 const SHARED_RESULT: FireTickResult = {
   newAge: 0,
@@ -97,6 +108,7 @@ export function tickFire(ctx: FireTickCtx): FireTickResult {
   if (result.newAge >= 15 && ctx.rng() < 0.04) {
     result.extinguish = true;
   }
+  let poolIdx = 0;
   for (let i = 0; i < DIRS.length; i++) {
     const d = DIRS[i]!;
     const block = ctx.neighborAt(d.x, d.y, d.z);
@@ -104,7 +116,10 @@ export function tickFire(ctx: FireTickCtx): FireTickResult {
     if (def.encouragement === 0) continue;
     const spreadChance = ((def.encouragement + 40) / 500) * (1 - ctx.humidity * 0.5);
     if (ctx.rng() < spreadChance) {
-      SHARED_IGNITIONS.push({ offset: d, blockBurned: block });
+      const slot = IGNITION_POOL[poolIdx++]!;
+      slot.offset = d;
+      slot.blockBurned = block;
+      SHARED_IGNITIONS.push(slot);
     }
   }
   return result;
