@@ -2095,8 +2095,7 @@ function computeArmorPoints(): number {
   let pts = 0;
   for (const slot of inventory.armor) {
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (armorDef) pts += armorDef.defense;
   }
   return pts;
@@ -2327,13 +2326,12 @@ function consumeArmorDurability(damageAmount: number): void {
   for (let i = 0; i < inventory.armor.length; i++) {
     const slot = inventory.armor[i];
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (!armorDef) continue;
     const newDamage = slot.damage + cost;
     if (newDamage >= armorDef.durability) {
       inventory.armor[i] = null;
-      chatInput.addLine(`${def.name.replace(/^webmc:/, '')} broke!`, '#ff8080');
+      chatInput.addLine(`${itemShortNameLower(slot.itemId)} broke!`, '#ff8080');
     } else {
       inventory.armor[i] = { ...slot, damage: newDamage };
     }
@@ -2344,8 +2342,7 @@ function computeArmorToughness(): number {
   let t = 0;
   for (const slot of inventory.armor) {
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (armorDef) t += armorDef.toughness;
   }
   return t;
