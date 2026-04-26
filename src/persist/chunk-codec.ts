@@ -32,6 +32,11 @@ interface SectionMeta {
   hasLight: boolean;
 }
 const sectionMetasScratch: SectionMeta[] = [];
+// Reused per-section palette state buffer for decodeChunk. Palette's
+// constructor spread-copies its input, so this can be refilled across
+// sections and across calls without affecting previously-decoded
+// chunks. Was a fresh BlockState[] per section.
+const decodePaletteScratch: BlockState[] = [];
 
 function collectSectionsInto(chunk: Chunk, out: number[]): number[] {
   out.length = 0;
@@ -198,9 +203,14 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
     offset += 1;
     const paletteSize = view.getUint16(offset, true);
     offset += 2;
-    const paletteStates: BlockState[] = [];
+    // Reused per-section palette scratch — Palette constructor copies
+    // the array via spread, so we can refill in place across sections
+    // and across decodeChunk calls. Was a fresh BlockState[] per
+    // section per chunk load.
+    const paletteStates = decodePaletteScratch;
+    paletteStates.length = paletteSize;
     for (let i = 0; i < paletteSize; i++) {
-      paletteStates.push(view.getUint32(offset, true));
+      paletteStates[i] = view.getUint32(offset, true);
       offset += 4;
     }
     let indices: Uint32Array | null = null;
