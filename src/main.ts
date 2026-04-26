@@ -2223,7 +2223,7 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
         playerState.takeDamage({ amount: 6, source: 'harming' });
       else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
       const glassId = itemRegistry.byName('webmc:glass_bottle');
-      if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
+      if (glassId !== undefined) addOneToInventory(glassId);
       subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
     }
     return;
@@ -2236,7 +2236,7 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     // wired, milk was inert — players had no way to cure poison/wither.
     playerState.effects.clear();
     const bucketId = itemRegistry.byName('webmc:bucket');
-    if (bucketId !== undefined) inventory.add({ itemId: bucketId, count: 1, damage: 0 });
+    if (bucketId !== undefined) addOneToInventory(bucketId);
     subtitles.push('Drank milk');
   } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
     playerState.applyEffect('hunger', 0, 30);
@@ -2359,6 +2359,21 @@ const consumeFoodLookTmp = new THREE.Vector3();
 const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
 // Hoisted egg color — was a fresh tuple per egg lay.
 const EGG_COLOR: readonly [number, number, number] = [240, 230, 200];
+// Reused inventory.add input scratch. Inventory.add reads itemId +
+// count + damage synchronously and stores fresh stack() copies into
+// slots; no reference retention. Most event-handler add() callers
+// were building a fresh {itemId, count: 1, damage: 0} literal.
+const inventoryAddArg: { itemId: number; count: number; damage: number } = {
+  itemId: 0,
+  count: 0,
+  damage: 0,
+};
+function addOneToInventory(itemId: number, damage = 0): number {
+  inventoryAddArg.itemId = itemId;
+  inventoryAddArg.count = 1;
+  inventoryAddArg.damage = damage;
+  return inventory.add(inventoryAddArg);
+}
 // Reused per-mob AABB scratch for ray picking. Was allocated fresh per
 // mob per call: hover-aim cast every frame O(mobs), attack cast on
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
@@ -3166,7 +3181,7 @@ const interaction = new InteractionController(
           const pickName = pool[Math.floor(Math.random() * pool.length)] ?? 'webmc:cod';
           const itemId = itemRegistry.byName(pickName);
           if (itemId !== undefined) {
-            inventory.add({ itemId, count: 1, damage: 0 });
+            addOneToInventory(itemId);
             const def2 = itemRegistry.get(itemId);
             chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, '#a0e0ff');
             sfx.play('click');
@@ -3551,7 +3566,7 @@ const interaction = new InteractionController(
         if (filledItemId !== undefined && emptyItemId !== undefined) {
           if (gameMode === 'survival' || gameMode === 'adventure') {
             consumeInventoryItem(emptyItemId, 1);
-            inventory.add({ itemId: filledItemId, count: 1, damage: 0 });
+            addOneToInventory(filledItemId);
           }
           // Drop fluid registration so the cell stops ticking + flowing.
           fluidWorld.clear(bx, by, bz);
@@ -3571,7 +3586,7 @@ const interaction = new InteractionController(
           const eId = itemRegistry.byName('webmc:bucket');
           if (wbId !== undefined && eId !== undefined) {
             consumeInventoryItem(wbId, 1);
-            inventory.add({ itemId: eId, count: 1, damage: 0 });
+            addOneToInventory(eId);
           }
         }
         sfx.play('break');
@@ -3594,7 +3609,7 @@ const interaction = new InteractionController(
             const emptyId = itemRegistry.byName('webmc:bucket');
             if (heldItemId !== undefined && emptyId !== undefined) {
               consumeInventoryItem(heldItemId, 1);
-              inventory.add({ itemId: emptyId, count: 1, damage: 0 });
+              addOneToInventory(emptyId);
             }
           }
           sfx.play('place');
@@ -3627,7 +3642,7 @@ const interaction = new InteractionController(
             if (props >= 8) {
               // Output bone meal.
               const bmId = itemRegistry.byName('webmc:bone_meal');
-              if (bmId !== undefined) inventory.add({ itemId: bmId, count: 1, damage: 0 });
+              if (bmId !== undefined) addOneToInventory(bmId);
               world.set(bx, by, bz, makeState(id, 0));
               subtitles.push('Composter full → 1 bone meal');
             } else {
@@ -4291,7 +4306,7 @@ canvas.addEventListener('mousedown', (e) => {
           if (gameMode === 'survival' || gameMode === 'adventure') {
             consumeInventoryItem(bucketId, 1);
           }
-          inventory.add({ itemId: stewId, count: 1, damage: 0 });
+          addOneToInventory(stewId);
           chatInput.addLine('Got mushroom stew', '#a0e0ff');
           sfx.play('click');
           hand.swing();
@@ -4301,7 +4316,7 @@ canvas.addEventListener('mousedown', (e) => {
           if (gameMode === 'survival' || gameMode === 'adventure') {
             consumeInventoryItem(bucketId, 1);
           }
-          inventory.add({ itemId: milkId, count: 1, damage: 0 });
+          addOneToInventory(milkId);
           chatInput.addLine(`Milked ${kind}`, '#a0e0ff');
           sfx.play('click');
           hand.swing();
@@ -4888,7 +4903,7 @@ const chatInput = new ChatInput(appEl, {
           let n = 0;
           // Include every registered item: covers blocks-with-items, tools, foods, dyes, etc.
           for (let id = 1; id < itemRegistry.size; id++) {
-            inventory.add({ itemId: id, count: 1, damage: 0 });
+            addOneToInventory(id);
             n++;
           }
           return n;
