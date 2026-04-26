@@ -2345,6 +2345,11 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
 // call (4+ per frame including the per-frame block-outline cast).
 const interactionLookScratch = { x: 0, y: 0, z: 0 };
 const interactionLookTmp = new THREE.Vector3();
+// Reused per-mob AABB scratch for ray picking. Was allocated fresh per
+// mob per call: hover-aim cast every frame O(mobs), attack cast on
+// every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
+// throwaway box objects/sec just for the crosshair.
+const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
 const interaction = new InteractionController(
   camera,
   () => {
@@ -3938,15 +3943,13 @@ function fireBowOrCrossbow(): boolean {
   let bestId: number | null = null;
   let bestDist = Infinity;
   for (const m of mobWorld.all()) {
-    const box = {
-      minX: m.position.x - m.def.aabb.halfX,
-      minY: m.position.y - m.def.aabb.halfY,
-      minZ: m.position.z - m.def.aabb.halfZ,
-      maxX: m.position.x + m.def.aabb.halfX,
-      maxY: m.position.y + m.def.aabb.halfY,
-      maxZ: m.position.z + m.def.aabb.halfZ,
-    };
-    const hit = intersectRayAABB(origin, look, box, 50);
+    mobAabbScratch.minX = m.position.x - m.def.aabb.halfX;
+    mobAabbScratch.minY = m.position.y - m.def.aabb.halfY;
+    mobAabbScratch.minZ = m.position.z - m.def.aabb.halfZ;
+    mobAabbScratch.maxX = m.position.x + m.def.aabb.halfX;
+    mobAabbScratch.maxY = m.position.y + m.def.aabb.halfY;
+    mobAabbScratch.maxZ = m.position.z + m.def.aabb.halfZ;
+    const hit = intersectRayAABB(origin, look, mobAabbScratch, 50);
     if (hit && hit.tMin < bestDist) {
       bestDist = hit.tMin;
       bestId = m.id;
@@ -4307,15 +4310,13 @@ canvas.addEventListener('mousedown', (e) => {
   let bestId: number | null = null;
   let bestDist = Infinity;
   for (const mob of mobWorld.all()) {
-    const box = {
-      minX: mob.position.x - mob.def.aabb.halfX,
-      minY: mob.position.y - mob.def.aabb.halfY,
-      minZ: mob.position.z - mob.def.aabb.halfZ,
-      maxX: mob.position.x + mob.def.aabb.halfX,
-      maxY: mob.position.y + mob.def.aabb.halfY,
-      maxZ: mob.position.z + mob.def.aabb.halfZ,
-    };
-    const hit = intersectRayAABB(origin, look, box, reach);
+    mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
+    mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
+    mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
+    mobAabbScratch.maxX = mob.position.x + mob.def.aabb.halfX;
+    mobAabbScratch.maxY = mob.position.y + mob.def.aabb.halfY;
+    mobAabbScratch.maxZ = mob.position.z + mob.def.aabb.halfZ;
+    const hit = intersectRayAABB(origin, look, mobAabbScratch, reach);
     if (hit && hit.tMin < bestDist) {
       bestDist = hit.tMin;
       bestId = mob.id;
@@ -8128,15 +8129,13 @@ function frame(): void {
         let bestId: number | null = null;
         let bestDist = Infinity;
         for (const mob of mobWorld.all()) {
-          const box = {
-            minX: mob.position.x - mob.def.aabb.halfX,
-            minY: mob.position.y - mob.def.aabb.halfY,
-            minZ: mob.position.z - mob.def.aabb.halfZ,
-            maxX: mob.position.x + mob.def.aabb.halfX,
-            maxY: mob.position.y + mob.def.aabb.halfY,
-            maxZ: mob.position.z + mob.def.aabb.halfZ,
-          };
-          const hit = intersectRayAABB(origin, look, box, 5);
+          mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
+          mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
+          mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
+          mobAabbScratch.maxX = mob.position.x + mob.def.aabb.halfX;
+          mobAabbScratch.maxY = mob.position.y + mob.def.aabb.halfY;
+          mobAabbScratch.maxZ = mob.position.z + mob.def.aabb.halfZ;
+          const hit = intersectRayAABB(origin, look, mobAabbScratch, 5);
           if (hit && hit.tMin < bestDist) {
             bestDist = hit.tMin;
             bestId = mob.id;
@@ -8538,15 +8537,13 @@ function frame(): void {
     const lookP = fp.lookVector();
     let hitMob = false;
     for (const mob of mobWorld.all()) {
-      const box = {
-        minX: mob.position.x - mob.def.aabb.halfX,
-        minY: mob.position.y - mob.def.aabb.halfY,
-        minZ: mob.position.z - mob.def.aabb.halfZ,
-        maxX: mob.position.x + mob.def.aabb.halfX,
-        maxY: mob.position.y + mob.def.aabb.halfY,
-        maxZ: mob.position.z + mob.def.aabb.halfZ,
-      };
-      if (intersectRayAABB(originP, lookP, box, 5)) {
+      mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
+      mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
+      mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
+      mobAabbScratch.maxX = mob.position.x + mob.def.aabb.halfX;
+      mobAabbScratch.maxY = mob.position.y + mob.def.aabb.halfY;
+      mobAabbScratch.maxZ = mob.position.z + mob.def.aabb.halfZ;
+      if (intersectRayAABB(originP, lookP, mobAabbScratch, 5)) {
         hitMob = true;
         break;
       }
