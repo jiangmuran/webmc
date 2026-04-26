@@ -1903,6 +1903,9 @@ let statsSaveAccum = 0;
 // Mutated in place every frame — was being reassigned to a fresh
 // {x,y,z} literal per frame.
 const lastStatsPos = { x: 0, y: 0, z: 0 };
+// Tracks whether the underwater fog override is currently active so
+// we only re-set the color/near/far on transition (not every frame).
+let lastUnderwaterFog = false;
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const weatherCycle = new WeatherCycle(Math.random, {
   clearMinSec: 600,
@@ -9663,9 +9666,16 @@ function frame(): void {
   // Underwater fog: shorten render distance and tint when submerged.
   if (scene.fog instanceof THREE.Fog) {
     if (fp.inFluidEyes === 'water') {
-      scene.fog.color.setRGB(0.24, 0.4, 0.6);
-      scene.fog.near = 1;
-      scene.fog.far = 20;
+      // Skip the per-frame setRGB / fog.near / fog.far writes when
+      // we're already in the underwater state. Each setter triggers
+      // three.js material/scene invalidation; cumulative cost adds
+      // up across underwater traversals.
+      if (!lastUnderwaterFog) {
+        scene.fog.color.setRGB(0.24, 0.4, 0.6);
+        scene.fog.near = 1;
+        scene.fog.far = 20;
+        lastUnderwaterFog = true;
+      }
     } else {
       // Restore based on view distance, with weather-aware tightening.
       const baseFar = (loader.viewRadius ?? 6) * 16;
@@ -9677,6 +9687,7 @@ function frame(): void {
         scene.fog.near = targetFar * 0.6;
         scene.fog.far = targetFar;
       }
+      lastUnderwaterFog = false;
     }
   }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse.
