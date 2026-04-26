@@ -83,6 +83,11 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
       ? -1
       : (highestNonEmptySection + 1) * SUBCHUNK_DIM - 1;
 
+  // First pass: compute topOpaque per column + track the global max so
+  // we can wholesale-fill sections that are entirely above max with
+  // skyLight=15.
+  const topByCol = new Int16Array(CHUNK_DIM * CHUNK_DIM);
+  let maxTopOpaque = -1;
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
       let topOpaque = -1;
@@ -93,12 +98,31 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
           break;
         }
       }
-      for (let y = 0; y < CHUNK_HEIGHT; y++) {
+      topByCol[lx * CHUNK_DIM + lz] = topOpaque;
+      if (topOpaque > maxTopOpaque) maxTopOpaque = topOpaque;
+    }
+  }
+  // Sections wholly above maxTopOpaque (section min y > max) get filled
+  // with the all-lit byte (skyLight=15 << 4 | 0). The straddling section
+  // (containing maxTopOpaque) needs per-column handling.
+  const ALL_LIT = packLight(MAX_LIGHT, 0);
+  const firstFullyLitCy = Math.floor(maxTopOpaque / SUBCHUNK_DIM) + 1;
+  for (let cy = firstFullyLitCy; cy < CHUNK_SECTIONS; cy++) {
+    const sec = ensureSection(light, cy, 0);
+    sec.fill(ALL_LIT);
+  }
+  // Per-column write for the remaining cells (≤ end of straddling
+  // section). computeBlockLight runs after, so unpackBlock is always
+  // 0 here — write the packed byte directly.
+  const writeUntilY = Math.min(CHUNK_HEIGHT - 1, firstFullyLitCy * SUBCHUNK_DIM - 1);
+  for (let lx = 0; lx < CHUNK_DIM; lx++) {
+    for (let lz = 0; lz < CHUNK_DIM; lz++) {
+      const topOpaque = topByCol[lx * CHUNK_DIM + lz] ?? -1;
+      for (let y = 0; y <= writeUntilY; y++) {
         const cy = y >> 4;
         const sec = ensureSection(light, cy, 0);
         const skyVal = y > topOpaque ? MAX_LIGHT : 0;
-        const prev = sec[localIndex(lx, y & 0xf, lz)] ?? 0;
-        sec[localIndex(lx, y & 0xf, lz)] = packLight(skyVal, unpackBlock(prev));
+        sec[localIndex(lx, y & 0xf, lz)] = packLight(skyVal, 0);
       }
     }
   }
