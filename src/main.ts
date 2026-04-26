@@ -2383,6 +2383,10 @@ const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimba
 // frame when overall mob caps weren't full — a 50-mob world would
 // trash one Array per frame just to walk distances.
 const farMobsScratch: number[] = [];
+// Reused per-explosion changed-chunks set. TNT chains can fire many
+// explosions in rapid succession; was allocating a fresh
+// Set<string> + per-cell template-literal keys per blast.
+const explodeChangedChunksScratch = new Set<number>();
 // Reused per-frame hotbar-counts list. Was a fresh number[] every
 // frame in survival/adventure (and a fresh empty [] every frame in
 // creative for the 'infinite' marker).
@@ -5250,20 +5254,21 @@ const chatInput = new ChatInput(appEl, {
           const sz = Math.min(a.z, b.z),
             ez = Math.max(a.z, b.z);
           let n = 0;
-          const chunksTouched = new Set<string>();
+          const chunksTouched = new Set<number>();
           for (let y = sy; y <= ey; y++) {
             for (let z = sz; z <= ez; z++) {
               for (let x = sx; x <= ex; x++) {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 n++;
-                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+                chunksTouched.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
               }
             }
           }
           for (const k of chunksTouched) {
-            const [cxS, czS] = k.split(',');
-            const c = world.getChunk(Number(cxS), Number(czS));
+            const cx = Math.floor(k / 65536) - 32768;
+            const cz = (k & 0xffff) - 32768;
+            const c = world.getChunk(cx, cz);
             if (c) markChunkAllDirty(c);
           }
           return n;
@@ -5650,7 +5655,7 @@ const chatInput = new ChatInput(appEl, {
                     const anchorCz = Math.floor(camera.position.z / 16);
                     let placed = 0;
                     let chunksWritten = 0;
-                    const chunksTouched = new Set<string>();
+                    const chunksTouched = new Set<number>();
                     const MAX_CHUNKS = 32;
                     for (let lx = 0; lx < 32 && chunksWritten < MAX_CHUNKS; lx++) {
                       for (let lz = 0; lz < 32 && chunksWritten < MAX_CHUNKS; lz++) {
@@ -5680,19 +5685,18 @@ const chatInput = new ChatInput(appEl, {
                             }
                           }
                         }
-                        chunksTouched.add(`${String(destCx)},${String(destCz)}`);
+                        chunksTouched.add(lightKey(destCx, destCz));
                         chunksWritten++;
                       }
                     }
                     // Single chunk-rebuild pass, like fillBlocks does.
                     for (const k of chunksTouched) {
-                      const [cxS, czS] = k.split(',');
-                      const cxN = Number(cxS);
-                      const czN = Number(czS);
+                      const cxN = Math.floor(k / 65536) - 32768;
+                      const czN = (k & 0xffff) - 32768;
                       const ch = world.getChunk(cxN, czN);
                       if (ch) {
                         const newLight = buildLight(ch, lightOracle);
-                        lightCache.set(lightKey(cxN, czN), newLight);
+                        lightCache.set(k, newLight);
                         // Save the freshly-built light, not the stale
                         // pre-edit version.
                         chunkStore.markDirty(ch, newLight);
@@ -5813,25 +5817,24 @@ const chatInput = new ChatInput(appEl, {
           const sz = Math.min(z1, z2),
             ez = Math.max(z1, z2);
           let count = 0;
-          const chunksTouched = new Set<string>();
+          const chunksTouched = new Set<number>();
           for (let y = sy; y <= ey; y++) {
             for (let z = sz; z <= ez; z++) {
               for (let x = sx; x <= ex; x++) {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 count++;
-                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+                chunksTouched.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
               }
             }
           }
           for (const k of chunksTouched) {
-            const [cxS, czS] = k.split(',');
-            const cxN = Number(cxS),
-              czN = Number(czS);
+            const cxN = Math.floor(k / 65536) - 32768;
+            const czN = (k & 0xffff) - 32768;
             const chunk = world.getChunk(cxN, czN);
             if (chunk) {
               const newLight = buildLight(chunk, lightOracle);
-              lightCache.set(lightKey(cxN, czN), newLight);
+              lightCache.set(k, newLight);
               // markDirty AFTER rebuild so the saved blob has the new
               // light, not the stale pre-edit version.
               chunkStore.markDirty(chunk, newLight);
@@ -7463,7 +7466,12 @@ function explosionDrops(power: number): boolean {
 function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   const r2 = radius * radius;
   const airState = AIR;
-  const changedChunks = new Set<string>();
+  // Numeric packed (cx, cz) keys instead of template-literal strings —
+  // a TNT chain at a creeper farm can hit hundreds of cells per blast,
+  // each previously building two strings (one to add, one to split
+  // back via .split + Number).
+  const changedChunks = explodeChangedChunksScratch;
+  changedChunks.clear();
   for (let dy = -radius; dy <= radius; dy++) {
     for (let dz = -radius; dz <= radius; dz++) {
       for (let dx = -radius; dx <= radius; dx++) {
@@ -7482,7 +7490,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
           // Cascading TNT: remove as block, schedule fuse with random delay.
           world.set(x, y, z, airState);
           primedTnt.push({ bx: x, by: y, bz: z, remainingSec: 0.3 + Math.random() * 0.6 });
-          changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+          changedChunks.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
           continue;
         }
         const falloff = 1 - dSq / r2;
@@ -7538,17 +7546,19 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
             );
           }
         }
-        changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+        changedChunks.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
       }
     }
   }
   for (const k of changedChunks) {
-    const [cxS, czS] = k.split(',');
-    const cx = Number(cxS);
-    const cz = Number(czS);
+    // Unpack the numeric key back into (cx, cz). Same encoding as
+    // World.chunkKey / lightKey: ((cx + 32768) & 0xffff) * 65536 +
+    // ((cz + 32768) & 0xffff).
+    const cx = Math.floor(k / 65536) - 32768;
+    const cz = (k & 0xffff) - 32768;
     const chunk = world.getChunk(cx, cz);
     if (chunk) {
-      const light = lightCache.get(lightKey(cx, cz)) ?? null;
+      const light = lightCache.get(k) ?? null;
       chunkStore.markDirty(chunk, light);
     }
   }
