@@ -20,6 +20,7 @@ const DEFAULTS: RedstoneTickOptions = {
 
 interface ButtonEvent {
   key: string;
+  pos: PosKey;
   releaseAt: number;
 }
 
@@ -28,7 +29,10 @@ interface ButtonEvent {
 // every redstone tick, recomputes the BFS power map for all loaded dust +
 // conductors.
 export class RedstoneWorld {
-  private readonly leverOn = new Set<string>();
+  // Store PosKey alongside the string key so recomputePower can push
+  // the existing reference into `sources` instead of re-parsing the
+  // string into a fresh {x,y,z} per tick.
+  private readonly leverOn = new Map<string, PosKey>();
   private readonly buttonPress: ButtonEvent[] = [];
   private readonly torches = new Map<string, PosKey>();
   private readonly plates = new Map<string, PosKey>();
@@ -37,6 +41,10 @@ export class RedstoneWorld {
   private accumulator = 0;
   private nowSec = 0;
   private readonly opts: RedstoneTickOptions;
+  // Reused per-tick sources array. computePower iterates synchronously
+  // and doesn't retain the reference; refilling in place across ticks
+  // avoids the per-tick array literal at 10Hz baseline.
+  private readonly sourcesScratch: PosKey[] = [];
 
   constructor(opts: Partial<RedstoneTickOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
@@ -73,12 +81,16 @@ export class RedstoneWorld {
       this.leverOn.delete(k);
       return false;
     }
-    this.leverOn.add(k);
+    this.leverOn.set(k, pos);
     return true;
   }
 
   pressButton(pos: PosKey): void {
-    this.buttonPress.push({ key: keyOf(pos), releaseAt: this.nowSec + this.opts.buttonHoldSec });
+    this.buttonPress.push({
+      key: keyOf(pos),
+      pos,
+      releaseAt: this.nowSec + this.opts.buttonHoldSec,
+    });
   }
 
   isDoorOpen(pos: PosKey): boolean {
@@ -111,9 +123,13 @@ export class RedstoneWorld {
   }
 
   private recomputePower(lookup: BlockLookup): Map<string, PowerLevel> {
-    const sources: PosKey[] = [];
-    for (const k of this.leverOn) sources.push(posFromKey(k));
-    for (const ev of this.buttonPress) sources.push(posFromKey(ev.key));
+    const sources = this.sourcesScratch;
+    sources.length = 0;
+    // PosKey references are stored alongside the string key, so we
+    // push the existing object rather than re-parsing the key into a
+    // fresh {x,y,z} per source per tick.
+    for (const pos of this.leverOn.values()) sources.push(pos);
+    for (const ev of this.buttonPress) sources.push(ev.pos);
     for (const pos of this.plates.values()) sources.push(pos);
     // Torch: emits when the mount block is unpowered. To avoid circular
     // evaluation, first compute power without torches and then check mount
@@ -121,15 +137,6 @@ export class RedstoneWorld {
     for (const pos of this.torches.values()) sources.push(pos);
     return computePower(sources, lookup);
   }
-}
-
-function posFromKey(k: string): PosKey {
-  const parts = k.split(',');
-  return {
-    x: Number(parts[0] ?? 0),
-    y: Number(parts[1] ?? 0),
-    z: Number(parts[2] ?? 0),
-  };
 }
 
 export type { BlockLookup, RedstoneBlock, RedstoneKind };
