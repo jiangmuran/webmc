@@ -2360,6 +2360,23 @@ const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimba
   isFluid,
   isClimbable,
 };
+// Reused per-frame boss-bar update payload. Was a fresh object
+// literal per frame any time a boss/custom-boss-bar was visible.
+const bossBarPayload: {
+  name: string;
+  hp: number;
+  maxHp: number;
+  color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white';
+  style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20';
+  visible: boolean;
+} = {
+  name: '',
+  hp: 0,
+  maxHp: 1,
+  color: 'purple',
+  style: 'progress',
+  visible: false,
+};
 // Reused gamepad poll scratch. Was allocating a state {axes, buttons},
 // a fresh axes literal, a fresh buttons.map(), an intent, and an inner
 // look {yaw, pitch} every frame for connected pads.
@@ -9170,23 +9187,21 @@ function frame(): void {
           : bossM.kind === 'wither'
             ? 'notched_6'
             : 'progress';
-    bossBar.set({
-      name: bossM.name,
-      hp: bossM.health,
-      maxHp: bossM.maxHealth,
-      color,
-      style,
-      visible: true,
-    });
+    bossBarPayload.name = bossM.name;
+    bossBarPayload.hp = bossM.health;
+    bossBarPayload.maxHp = bossM.maxHealth;
+    bossBarPayload.color = color;
+    bossBarPayload.style = style;
+    bossBarPayload.visible = true;
+    bossBar.set(bossBarPayload);
   } else if (customBossBar) {
-    bossBar.set({
-      name: customBossBar.name,
-      hp: customBossBar.hp,
-      maxHp: customBossBar.maxHp,
-      color: customBossBar.color,
-      style: customBossBar.style,
-      visible: true,
-    });
+    bossBarPayload.name = customBossBar.name;
+    bossBarPayload.hp = customBossBar.hp;
+    bossBarPayload.maxHp = customBossBar.maxHp;
+    bossBarPayload.color = customBossBar.color;
+    bossBarPayload.style = customBossBar.style;
+    bossBarPayload.visible = true;
+    bossBar.set(bossBarPayload);
   } else {
     bossBar.hide();
   }
