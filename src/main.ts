@@ -2374,6 +2374,12 @@ function addOneToInventory(itemId: number, damage = 0): number {
   inventoryAddArg.damage = damage;
   return inventory.add(inventoryAddArg);
 }
+function addToInventory(itemId: number, count: number, damage = 0): number {
+  inventoryAddArg.itemId = itemId;
+  inventoryAddArg.count = count;
+  inventoryAddArg.damage = damage;
+  return inventory.add(inventoryAddArg);
+}
 // Reused per-mob AABB scratch for ray picking. Was allocated fresh per
 // mob per call: hover-aim cast every frame O(mobs), attack cast on
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
@@ -3707,7 +3713,7 @@ const interaction = new InteractionController(
           const dropId = itemRegistry.byName(dropName);
           if (dropId === undefined) continue;
           const count = 1 + Math.floor(Math.random() * 3);
-          inventory.add({ itemId: dropId, count, damage: 0 });
+          addToInventory(dropId, count);
         }
         // Replace crop with farmland.
         if (farmlandIdCached !== undefined) {
@@ -4327,7 +4333,7 @@ canvas.addEventListener('mousedown', (e) => {
       if (heldName === 'webmc:shears' && kind === 'sheep') {
         const woolId = itemRegistry.byName('webmc:wool');
         if (woolId !== undefined) {
-          inventory.add({ itemId: woolId, count: 1 + Math.floor(Math.random() * 3), damage: 0 });
+          addToInventory(woolId, 1 + Math.floor(Math.random() * 3));
           chatInput.addLine('Sheared sheep', '#e0e0e0');
           consumeHeldToolDurability(1);
           sfx.play('click');
@@ -4340,7 +4346,7 @@ canvas.addEventListener('mousedown', (e) => {
       if (heldName === 'webmc:shears' && kind === 'mooshroom') {
         const mushId = itemRegistry.byName('webmc:red_mushroom');
         if (mushId !== undefined) {
-          inventory.add({ itemId: mushId, count: 5, damage: 0 });
+          addToInventory(mushId, 5);
         }
         // Replace mooshroom with cow at the same position.
         try {
@@ -4863,7 +4869,7 @@ const chatInput = new ChatInput(appEl, {
             if (id !== undefined) break;
           }
           if (id === undefined) return false;
-          const leftover = inventory.add({ itemId: id, count, damage: 0 });
+          const leftover = addToInventory(id, count);
           return leftover < count;
         },
         lookupItem: (name) => {
