@@ -219,13 +219,26 @@ export class SurvivalInventory {
       slot.appendChild(bar);
     }
     const isPotion = def.name.includes('potion_') || def.name === 'webmc:awkward_potion';
+    const isMilk = def.name === 'webmc:milk_bucket';
     const armorSlotIdx = armorSlotForName(def.name);
-    if (((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion) && this.cb.onEat) {
+    // Milk has 0 hunger restore but is drinkable for the cure-effect.
+    // Was excluded from the click handler so players couldn't cure
+    // poison/wither from inventory — only via held-right-click.
+    if (
+      ((def.hungerRestore !== undefined && def.hungerRestore > 0) || isPotion || isMilk) &&
+      this.cb.onEat
+    ) {
       slot.style.cursor = 'pointer';
-      slot.style.borderColor = isPotion ? 'rgba(180,140,220,0.6)' : 'rgba(140,220,120,0.6)';
+      slot.style.borderColor = isPotion
+        ? 'rgba(180,140,220,0.6)'
+        : isMilk
+          ? 'rgba(220,220,220,0.7)'
+          : 'rgba(140,220,120,0.6)';
       slot.title = isPotion
         ? 'Click to drink'
-        : `Click to eat (+${String(def.hungerRestore)} hunger)`;
+        : isMilk
+          ? 'Click to drink (clears all effects)'
+          : `Click to eat (+${String(def.hungerRestore)} hunger)`;
       slot.addEventListener('click', () => {
         if (!this.cb.onEat) return;
         const container = slot.parentElement;
@@ -241,6 +254,7 @@ export class SurvivalInventory {
         // bypass — those are about effects, not hunger.
         const alwaysEdible =
           isPotion ||
+          isMilk ||
           def.name === 'webmc:golden_apple' ||
           def.name === 'webmc:enchanted_golden_apple' ||
           def.name === 'webmc:chorus_fruit' ||
