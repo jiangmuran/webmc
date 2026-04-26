@@ -11,6 +11,12 @@ export interface FpsStats {
   emaFps: number;
   alpha: number;
   sum: number;
+  // Reused sort buffer for p95Fps. Was a fresh Float64Array(s.size)
+  // allocated on every call (~960 bytes at the default 120-sample
+  // window); the call fires from the per-frame thermal-throttle check
+  // and the 5Hz HUD readout. Pre-allocating once cuts the steady-
+  // state alloc churn on the main thread.
+  sortScratch: Float64Array;
 }
 
 export function makeStats(windowSize = 120, alpha = 0.1): FpsStats {
@@ -22,6 +28,7 @@ export function makeStats(windowSize = 120, alpha = 0.1): FpsStats {
     emaFps: 60,
     alpha,
     sum: 0,
+    sortScratch: new Float64Array(windowSize),
   };
 }
 
@@ -40,14 +47,15 @@ export function onFrame(s: FpsStats, frameMs: number): void {
 
 export function p95Fps(s: FpsStats): number {
   if (s.size === 0) return 0;
-  const sorted = new Float64Array(s.size);
   for (let i = 0; i < s.size; i++) {
     const idx = (s.head - s.size + i + s.windowSize) % s.windowSize;
-    sorted[i] = s.samples[idx] ?? 0;
+    s.sortScratch[i] = s.samples[idx] ?? 0;
   }
-  sorted.sort();
+  // In-place sort over the size-prefixed view; no allocation.
+  const view = s.sortScratch.subarray(0, s.size);
+  view.sort();
   const idx = Math.floor(s.size * 0.05);
-  return sorted[idx] ?? 0;
+  return view[idx] ?? 0;
 }
 
 export function avgFps(s: FpsStats): number {
