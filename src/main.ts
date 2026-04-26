@@ -7688,6 +7688,14 @@ function frame(): void {
       qualityLimit = Math.max(4, qualityLimit - 4);
     }
     loader.setViewRadius(qualityLimit);
+    // Per-frame chunk-upload budget: scale with view radius. A 12-radius
+    // world has 4x the chunks of a 3-radius world; using budget=4 for
+    // both means tiny worlds finish populating in 30ms while huge ones
+    // take 30s. Big budgets on potato hardware also stutter the main
+    // thread when the chunk-mesh queue drains. Heuristic: budget = max(1,
+    // floor(qualityLimit/2)) — 8 view = 4/frame, 4 view = 2/frame, 2
+    // view = 1/frame. Keeps mesh-upload work proportional to load.
+    loader.setPerFrameBudget(Math.max(1, Math.floor(qualityLimit / 2)));
     const lowTier = qualityLimit < 4;
     clouds.mesh.visible = !lowTier;
     stars.points.visible = !lowTier;
