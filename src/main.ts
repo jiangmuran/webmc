@@ -6841,7 +6841,12 @@ function frame(): void {
 
   fp.update(dtSec, { isSolid, isFluid, isClimbable });
   if (touch) {
-    if (touch.state.primary) {
+    if (touch.state.primary && gameMode === 'spectator') {
+      // Spectator can't attack/break — same gate as the desktop attack
+      // handler, otherwise tap-to-break would still work via the
+      // setHeld('break') fallback.
+      interaction.setHeld(null);
+    } else if (touch.state.primary) {
       if (!lastTouchPrimary) {
         const origin = camera.position;
         const look = fp.lookVector();
