@@ -2573,39 +2573,7 @@ const interaction = new InteractionController(
       else toolLevel = 0; // bare hand
       const dropsAllowed = gameMode === 'creative' || toolLevel >= requiredLevel;
       // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
-      const CROP_DROP: Record<string, { id: string; min: number; max: number }[]> = {
-        'webmc:wheat': [
-          { id: 'webmc:wheat', min: 1, max: 1 },
-          { id: 'webmc:wheat_seeds', min: 0, max: 3 },
-        ],
-        'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
-        'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
-        'webmc:beetroots': [
-          { id: 'webmc:beetroot', min: 1, max: 1 },
-          { id: 'webmc:beetroot_seeds', min: 1, max: 3 },
-        ],
-        'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
-        'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
-        'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
-        'webmc:cocoa': [{ id: 'webmc:cocoa_beans', min: 1, max: 3 }],
-        'webmc:melon': [{ id: 'webmc:melon_slice', min: 3, max: 7 }],
-        'webmc:pumpkin': [{ id: 'webmc:pumpkin_seeds', min: 1, max: 4 }],
-        'webmc:torchflower_crop': [{ id: 'webmc:torchflower_seeds', min: 1, max: 1 }],
-        'webmc:pitcher_crop': [{ id: 'webmc:pitcher_pod', min: 1, max: 1 }],
-        'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
-        'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
-      };
-      // Leaf drops: 5% chance for sapling matching wood, 2% sticks, 0.5% apple (oak only).
-      const LEAF_TO_SAPLING: Record<string, string> = {
-        'webmc:oak_leaves': 'webmc:oak_sapling',
-        'webmc:spruce_leaves': 'webmc:spruce_sapling',
-        'webmc:birch_leaves': 'webmc:birch_sapling',
-        'webmc:jungle_leaves': 'webmc:jungle_sapling',
-        'webmc:acacia_leaves': 'webmc:acacia_sapling',
-        'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
-        'webmc:cherry_leaves': 'webmc:cherry_sapling',
-        'webmc:azalea_leaves': 'webmc:azalea',
-      };
+      // (CROP_DROP + LEAF_TO_SAPLING hoisted to module scope below.)
       let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
       const sapName = LEAF_TO_SAPLING[def.name];
       const heldNameAtBreak = heldNameLower();
@@ -7323,6 +7291,34 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
   'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
   'webmc:cherry_leaves': 'webmc:cherry_sapling',
   'webmc:azalea_leaves': 'webmc:azalea',
+};
+// Same leaf→sapling map as LEAF_TO_SAPLING_FOR_DECAY, reused for the
+// player-break path. Was being rebuilt as a fresh literal on every
+// block-break right-click.
+const LEAF_TO_SAPLING = LEAF_TO_SAPLING_FOR_DECAY;
+// Crop block → harvest drop table. Was being rebuilt as a fresh
+// Record literal on every block-break right-click on a crop.
+const CROP_DROP: Record<string, readonly { id: string; min: number; max: number }[]> = {
+  'webmc:wheat': [
+    { id: 'webmc:wheat', min: 1, max: 1 },
+    { id: 'webmc:wheat_seeds', min: 0, max: 3 },
+  ],
+  'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
+  'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
+  'webmc:beetroots': [
+    { id: 'webmc:beetroot', min: 1, max: 1 },
+    { id: 'webmc:beetroot_seeds', min: 1, max: 3 },
+  ],
+  'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+  'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+  'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
+  'webmc:cocoa': [{ id: 'webmc:cocoa_beans', min: 1, max: 3 }],
+  'webmc:melon': [{ id: 'webmc:melon_slice', min: 3, max: 7 }],
+  'webmc:pumpkin': [{ id: 'webmc:pumpkin_seeds', min: 1, max: 4 }],
+  'webmc:torchflower_crop': [{ id: 'webmc:torchflower_seeds', min: 1, max: 1 }],
+  'webmc:pitcher_crop': [{ id: 'webmc:pitcher_pod', min: 1, max: 1 }],
+  'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
+  'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
 };
 const fallableIds = new Set<number>();
 const FALLABLE_BLOCKS = [
