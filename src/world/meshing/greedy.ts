@@ -10,15 +10,20 @@ import {
   snapshotSubChunk,
 } from './snapshot';
 
-export type OpaqueSampler = (u: number, v: number) => boolean;
+// Border-opacity slices indexed as arr[a * SUBCHUNK_DIM + b]. Was a
+// per-face OpaqueSampler closure (`(a, b) => arr[a*D+b] != 0`) — that
+// meant 6 fresh closures per mesher request, ~600/sec at chunk
+// streaming startup. Holding the raw typed array eliminates the
+// closure churn; the inner-loop index math moves into neighborSampler.
+export type OpaqueSampler = Uint8Array | null;
 
 export interface MesherNeighbors {
-  nx: OpaqueSampler | null;
-  px: OpaqueSampler | null;
-  ny: OpaqueSampler | null;
-  py: OpaqueSampler | null;
-  nz: OpaqueSampler | null;
-  pz: OpaqueSampler | null;
+  nx: OpaqueSampler;
+  px: OpaqueSampler;
+  ny: OpaqueSampler;
+  py: OpaqueSampler;
+  nz: OpaqueSampler;
+  pz: OpaqueSampler;
 }
 
 export interface MesherInput {
@@ -82,8 +87,8 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
   indices.length = 0;
 
   const neighborSampler = (dir: keyof MesherNeighbors, a: number, b: number): boolean => {
-    const s = neighbors[dir];
-    return s ? s(a, b) : false;
+    const arr = neighbors[dir];
+    return arr ? (arr[a * D + b] ?? 0) !== 0 : false;
   };
 
   const opaqueAt = (x: number, y: number, z: number): boolean => {

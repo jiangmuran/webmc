@@ -1,19 +1,15 @@
 /// <reference lib="webworker" />
-import { SUBCHUNK_DIM, SUBCHUNK_VOLUME } from '../SubChunk';
+import { SUBCHUNK_VOLUME } from '../SubChunk';
 import { readIndex } from '../packed-indices';
 import type { Snapshot } from '../meshing/snapshot';
-import { type MesherNeighbors, type OpaqueSampler, meshSnapshot } from '../meshing/greedy';
+import { type MesherNeighbors, meshSnapshot } from '../meshing/greedy';
 import type { FromWorker, MesherRequest } from './mesher.protocol';
 import { transferablesOfResponse } from './mesher.protocol';
 
-function sampler(arr: Uint8Array | null): OpaqueSampler | null {
-  if (!arr) return null;
-  return (a, b) => (arr[a * SUBCHUNK_DIM + b] ?? 0) !== 0;
-}
-
-// Reused per-job neighbors wrapper. The OpaqueSampler closures inside
-// still allocate per call (each captures its own `arr`), but skipping
-// the wrapper literal saves one allocation per dispatch.
+// Reused per-job neighbors wrapper. MesherNeighbors now holds raw
+// Uint8Arrays directly (was OpaqueSampler closures, which meant 6
+// fresh arrows per mesher request just to wrap the index lookup);
+// the wrapper itself is also recycled.
 const NEIGHBORS_SCRATCH: MesherNeighbors = {
   nx: null,
   px: null,
@@ -24,12 +20,12 @@ const NEIGHBORS_SCRATCH: MesherNeighbors = {
 };
 
 function neighborsOf(req: MesherRequest): MesherNeighbors {
-  NEIGHBORS_SCRATCH.nx = sampler(req.neighborNX);
-  NEIGHBORS_SCRATCH.px = sampler(req.neighborPX);
-  NEIGHBORS_SCRATCH.ny = sampler(req.neighborNY);
-  NEIGHBORS_SCRATCH.py = sampler(req.neighborPY);
-  NEIGHBORS_SCRATCH.nz = sampler(req.neighborNZ);
-  NEIGHBORS_SCRATCH.pz = sampler(req.neighborPZ);
+  NEIGHBORS_SCRATCH.nx = req.neighborNX;
+  NEIGHBORS_SCRATCH.px = req.neighborPX;
+  NEIGHBORS_SCRATCH.ny = req.neighborNY;
+  NEIGHBORS_SCRATCH.py = req.neighborPY;
+  NEIGHBORS_SCRATCH.nz = req.neighborNZ;
+  NEIGHBORS_SCRATCH.pz = req.neighborPZ;
   return NEIGHBORS_SCRATCH;
 }
 
