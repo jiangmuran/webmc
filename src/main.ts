@@ -8893,10 +8893,11 @@ function frame(): void {
   }
 
   // Per-block break duration: hardness * tool factor (break_speed helper).
+  // Reuse `aim` from the block-outline raycast above — fp.position
+  // doesn't move between the two casts so the result is identical.
   if (gameMode !== 'creative') {
-    const aim2 = interaction.castRay();
-    if (aim2) {
-      const def2 = registry.get(stateId(world.get(aim2.bx, aim2.by, aim2.bz)));
+    if (aim) {
+      const def2 = registry.get(stateId(world.get(aim.bx, aim.by, aim.bz)));
       const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
       const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
       // Aqua Affinity: helmet item with name including "turtle" gives free aqua affinity (turtle shell).
