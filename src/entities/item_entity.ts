@@ -39,6 +39,12 @@ export interface ItemEntityTickContext {
 export class ItemEntityWorld {
   private readonly items = new Map<number, ItemEntity>();
   private nextId = 1;
+  // Reused per-tick scratches. toDelete + dv were allocated fresh
+  // every tick, and the Array.from snapshot below was a fresh copy of
+  // the entire item collection.
+  private readonly deleteScratch: number[] = [];
+  private readonly dvScratch: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
+  private readonly entitiesScratch: ItemEntity[] = [];
 
   spawn(stack: ItemStack, at: Vec3, vel: Vec3 = { x: 0, y: 0.2, z: 0 }): ItemEntity {
     const e: ItemEntity = {
@@ -67,8 +73,16 @@ export class ItemEntityWorld {
   }
 
   tick(dtSec: number, ctx: ItemEntityTickContext): void {
-    const toDelete: number[] = [];
-    const entities = Array.from(this.items.values());
+    const toDelete = this.deleteScratch;
+    toDelete.length = 0;
+    // Refill the snapshot array in place. Was a fresh Array.from
+    // every tick. We need a snapshot (not iterating items.values()
+    // directly) because the merge pass below mutates items via
+    // toDelete and we don't want to skip an entity while shifting
+    // around inside the same iteration.
+    const entities = this.entitiesScratch;
+    entities.length = 0;
+    for (const e of this.items.values()) entities.push(e);
 
     for (const e of entities) {
       e.ageSec += dtSec;
@@ -82,12 +96,10 @@ export class ItemEntityWorld {
       e.velocity.z *= DRAG;
       e.velocity.y -= GRAVITY * dtSec;
 
-      const dv = {
-        x: e.velocity.x * dtSec,
-        y: e.velocity.y * dtSec,
-        z: e.velocity.z * dtSec,
-      };
-      const r = sweepMove(e.position, AABB_BOX, dv, ctx.isSolid);
+      this.dvScratch.x = e.velocity.x * dtSec;
+      this.dvScratch.y = e.velocity.y * dtSec;
+      this.dvScratch.z = e.velocity.z * dtSec;
+      const r = sweepMove(e.position, AABB_BOX, this.dvScratch, ctx.isSolid);
       if (r.hitX) e.velocity.x = 0;
       if (r.hitY) e.velocity.y = 0;
       if (r.hitZ) e.velocity.z = 0;

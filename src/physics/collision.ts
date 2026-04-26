@@ -38,6 +38,14 @@ export interface SweepResult {
   onGround: boolean;
 }
 
+// Shared mutable result + ground-probe scratch. Player + mob movement +
+// projectile + dropped-item physics each call sweepMove every tick;
+// callers all read result fields synchronously and don't keep the
+// reference, so reusing one object cuts ~hundreds of allocations/sec
+// at busy mob scenes.
+const SHARED_RESULT: SweepResult = { hitX: false, hitY: false, hitZ: false, onGround: false };
+const SHARED_GROUND_PROBE: Vec3Lite = { x: 0, y: 0, z: 0 };
+
 // Per-axis separating-axis resolution. For the low velocities we see in M1
 // (≤ ~15 m/s at 60 FPS = ~0.25 m/frame) this does not tunnel through 1m
 // voxels. When M7's fast mobs arrive we upgrade to swept collision.
@@ -48,12 +56,15 @@ export function sweepMove(
   isSolid: SolidSampler,
   stepHeight = 0,
 ): SweepResult {
-  const out: SweepResult = { hitX: false, hitY: false, hitZ: false, onGround: false };
-  const onGroundBefore = aabbIntersectsSolid(
-    { x: pos.x, y: pos.y - 2 * EPS, z: pos.z },
-    box,
-    isSolid,
-  );
+  const out = SHARED_RESULT;
+  out.hitX = false;
+  out.hitY = false;
+  out.hitZ = false;
+  out.onGround = false;
+  SHARED_GROUND_PROBE.x = pos.x;
+  SHARED_GROUND_PROBE.y = pos.y - 2 * EPS;
+  SHARED_GROUND_PROBE.z = pos.z;
+  const onGroundBefore = aabbIntersectsSolid(SHARED_GROUND_PROBE, box, isSolid);
   const canStep = stepHeight > 0 && onGroundBefore && dv.y <= 0;
 
   const px = pos.x;

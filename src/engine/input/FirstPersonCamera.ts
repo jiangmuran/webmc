@@ -32,6 +32,12 @@ export const JUMP_BUFFER_SEC = 0.12;
 const UP = new THREE.Vector3(0, 1, 0);
 const PITCH_MAX = Math.PI / 2 - 0.0001;
 
+// Reused per-frame movement-delta scratch for sweepMove. sweepMove
+// mutates dv.x/y/z to zero on hit, but the caller doesn't read those
+// fields again — safe to share across the two sweepMove call sites
+// (fly + walk are mutually exclusive per frame).
+const MOVE_DV: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
+
 export type FluidKind = 'water' | 'lava';
 export type FluidSampler = (x: number, y: number, z: number) => FluidKind | null;
 
@@ -271,16 +277,10 @@ export class FirstPersonCamera {
     } else if (fly) {
       // Creative-mode fly: no gravity, vertical input drives Y, but
       // collision still applies — sweepMove blocks against walls.
-      const dvx = hx * dtSec;
-      const dvy = this.input.vertical * speed * dtSec;
-      const dvz = hz * dtSec;
-      const result = sweepMove(
-        this.position,
-        this.opts.box,
-        { x: dvx, y: dvy, z: dvz },
-        opts.isSolid,
-        0,
-      );
+      MOVE_DV.x = hx * dtSec;
+      MOVE_DV.y = this.input.vertical * speed * dtSec;
+      MOVE_DV.z = hz * dtSec;
+      const result = sweepMove(this.position, this.opts.box, MOVE_DV, opts.isSolid, 0);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
@@ -394,13 +394,10 @@ export class FirstPersonCamera {
 
       const wasOnGround = this.onGround;
       const stepH = this.input.sneak ? 0 : 0.6;
-      const result = sweepMove(
-        this.position,
-        this.opts.box,
-        { x: dvx, y: dvy, z: dvz },
-        opts.isSolid,
-        stepH,
-      );
+      MOVE_DV.x = dvx;
+      MOVE_DV.y = dvy;
+      MOVE_DV.z = dvz;
+      const result = sweepMove(this.position, this.opts.box, MOVE_DV, opts.isSolid, stepH);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;

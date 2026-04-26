@@ -908,6 +908,10 @@ export class MobWorld {
   // Reused per-tick scratch list for despawn — was allocated fresh each
   // call.
   private readonly tickRemoveScratch: MobId[] = [];
+  // Reused per-mob movement-delta scratch for sweepMove. Was a fresh
+  // {x,y,z} literal per mob per tick; with 50 mobs that's 50 throwaway
+  // objects per tick.
+  private readonly mobDvScratch: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
 
   private behaviorBucket(b: MobBehavior): 'hostile' | 'passive' | null {
     if (b === 'hostile' || b === 'creeper') return 'hostile';
@@ -1229,17 +1233,15 @@ export class MobWorld {
       mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
     }
 
-    const dv = {
-      x: mob.velocity.x * dtSec,
-      y: mob.velocity.y * dtSec,
-      z: mob.velocity.z * dtSec,
-    };
+    this.mobDvScratch.x = mob.velocity.x * dtSec;
+    this.mobDvScratch.y = mob.velocity.y * dtSec;
+    this.mobDvScratch.z = mob.velocity.z * dtSec;
     const wasOnGround = mob.onGround;
     // Mob step height was 0.6 (matched the player) so 1-block-tall walls
     // brick-walled every hostile mob — zombies would just shove against
     // the wall of a player's shelter forever. Vanilla mobs step up 1.0
     // (vex/horse/etc. step higher; we use a flat 1 here for simplicity).
-    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 1.0);
+    const result = sweepMove(mob.position, mob.def.aabb, this.mobDvScratch, ctx.isSolid, 1.0);
     // Auto-jump when blocked by a wall while chasing. Step-up handles 1-
     // block ledges, but anything taller (2-block fence, terrace, snow
     // pile) needs an actual jump. Vanilla zombies/skeletons hop when
