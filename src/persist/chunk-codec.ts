@@ -20,7 +20,12 @@ export interface EncodedChunk {
 function collectSections(chunk: Chunk): number[] {
   const indices: number[] = [];
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
-    if (chunk.section(cy)) indices.push(cy);
+    const sec = chunk.section(cy);
+    // Skip null AND all-air sections. Common after dig-down or initial
+    // sky sections — same on reload (decoder treats missing section as
+    // air via sectionMask bit unset). Saves ~7 bytes per skipped section
+    // and one per-section traversal in encode/decode.
+    if (sec && sec.nonAirCount > 0) indices.push(cy);
   }
   return indices;
 }
