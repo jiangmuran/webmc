@@ -4136,6 +4136,7 @@ let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
 let lastNaturalSpawnAttemptMs = 0;
+let lastPassiveSpawnAttemptMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
 let customBossBar: {
@@ -8465,6 +8466,74 @@ function frame(): void {
           if (!kind) continue;
           try {
             mobWorld.spawn(kind, { x: sx + 0.5, y: sy, z: sz + 0.5 });
+          } catch {
+            /* mob kind not registered */
+          }
+          break;
+        }
+      }
+    }
+
+    // Passive mob spawning. Vanilla scatters cow / pig / sheep / chicken
+    // at chunkgen but webmc has no chunkgen-time spawner — without an
+    // active loop, the world never had any livestock once the original
+    // herds were killed. Slow cycle (~20s) at high light level only.
+    if (
+      (gameMode === 'survival' || gameMode === 'adventure') &&
+      nowSpawnMs - lastPassiveSpawnAttemptMs > 20000
+    ) {
+      lastPassiveSpawnAttemptMs = nowSpawnMs;
+      let passiveCount = 0;
+      for (const m of mobWorld.all()) {
+        if (m.def.behavior === 'passive') passiveCount++;
+      }
+      if (passiveCount < WORLD_MOB_CAPS.passive) {
+        for (let attempt = 0; attempt < 4; attempt++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 24 + Math.random() * 32;
+          const sx = Math.floor(fp.position.x + Math.cos(angle) * dist);
+          const sz = Math.floor(fp.position.z + Math.sin(angle) * dist);
+          let sy = -1;
+          for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
+            if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
+              sy = y + 1;
+              break;
+            }
+          }
+          if (sy < 0) continue;
+          // Vanilla: passives need light >= 9 AND a grass block beneath.
+          const cx = sx >> 4;
+          const cz = sz >> 4;
+          const lx = sx & 0xf;
+          const lz = sz & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          if (!light) continue;
+          const lb = getLightByte(light, lx, sy, lz);
+          const sky = (lb >>> 4) & 0xf;
+          const block = lb & 0xf;
+          if (Math.max(sky, block) < 9) continue;
+          const groundDef = registry.get(stateId(world.get(sx, sy - 1, sz)));
+          if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:grass') continue;
+          const passiveChoices: ('pig' | 'cow' | 'sheep' | 'chicken' | 'rabbit')[] = [
+            'pig',
+            'cow',
+            'sheep',
+            'sheep',
+            'chicken',
+            'rabbit',
+          ];
+          const kind = passiveChoices[Math.floor(Math.random() * passiveChoices.length)];
+          if (!kind) continue;
+          try {
+            // Spawn a small herd (2-4) of the same kind, vanilla style.
+            const herd = 2 + Math.floor(Math.random() * 3);
+            for (let h = 0; h < herd; h++) {
+              mobWorld.spawn(kind, {
+                x: sx + 0.5 + (Math.random() - 0.5) * 2,
+                y: sy,
+                z: sz + 0.5 + (Math.random() - 0.5) * 2,
+              });
+            }
           } catch {
             /* mob kind not registered */
           }
