@@ -30,6 +30,14 @@ export function extractBorderFromSubChunk(
 ): Uint8Array {
   const D = SUBCHUNK_DIM;
   const out = new Uint8Array(D * D);
+  // Uniform section fast path: every cell is the same block, so the
+  // border is solid 1 or solid 0. Avoids 256 self.get calls per face
+  // (6 faces per remesh × thousands of remeshes per chunk-stream).
+  if (self.isUniform) {
+    const v = isOpaque(self.palette.get(0)) ? 1 : 0;
+    if (v !== 0) out.fill(v);
+    return out;
+  }
   for (let a = 0; a < D; a++) {
     for (let b = 0; b < D; b++) {
       let x = 0;
