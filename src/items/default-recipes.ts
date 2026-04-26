@@ -199,6 +199,75 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   // Diamond block.
   S(['DDD', 'DDD', 'DDD'], { D: 'webmc:diamond' }, 'webmc:diamond_block');
   L(['webmc:diamond_block'], 'webmc:diamond', 9);
+  // Redstone block + reverse.
+  S(['RRR', 'RRR', 'RRR'], { R: 'webmc:redstone' }, 'webmc:redstone_block');
+  L(['webmc:redstone_block'], 'webmc:redstone', 9);
+  // Lapis block + reverse.
+  S(['LLL', 'LLL', 'LLL'], { L: 'webmc:lapis_lazuli' }, 'webmc:lapis_block');
+  L(['webmc:lapis_block'], 'webmc:lapis_lazuli', 9);
+  // Coal block + reverse.
+  S(['CCC', 'CCC', 'CCC'], { C: 'webmc:coal' }, 'webmc:coal_block');
+  L(['webmc:coal_block'], 'webmc:coal', 9);
+  // Emerald block + reverse.
+  S(['EEE', 'EEE', 'EEE'], { E: 'webmc:emerald' }, 'webmc:emerald_block');
+  L(['webmc:emerald_block'], 'webmc:emerald', 9);
+  // Copper block + reverse.
+  S(['CCC', 'CCC', 'CCC'], { C: 'webmc:copper_ingot' }, 'webmc:copper_block');
+  L(['webmc:copper_block'], 'webmc:copper_ingot', 9);
+  // Quartz block (4 quartz items → 1 block).
+  S(['QQ', 'QQ'], { Q: 'webmc:quartz' }, 'webmc:quartz_block');
+  // Amethyst block (4 shards → 1 block).
+  S(['AA', 'AA'], { A: 'webmc:amethyst_shard' }, 'webmc:amethyst_block');
+  // Slime block + reverse.
+  S(['SSS', 'SSS', 'SSS'], { S: 'webmc:slime_ball' }, 'webmc:slime_block');
+  L(['webmc:slime_block'], 'webmc:slime_ball', 9);
+  // Honey block (4 bottles → 1 block).
+  S(['HH', 'HH'], { H: 'webmc:honey_bottle' }, 'webmc:honey_block');
+  // Hay bale + reverse.
+  S(['WWW', 'WWW', 'WWW'], { W: 'webmc:wheat' }, 'webmc:hay_block');
+  L(['webmc:hay_block'], 'webmc:wheat', 9);
+  // Magma block (4 magma cream → 1 block).
+  S(['MM', 'MM'], { M: 'webmc:magma_cream' }, 'webmc:magma_block');
+  // Bone block (9 bone meal → 1 block) + reverse.
+  S(['BBB', 'BBB', 'BBB'], { B: 'webmc:bone_meal' }, 'webmc:bone_block');
+  L(['webmc:bone_block'], 'webmc:bone_meal', 9);
+  // Bone meal from bone (1 bone → 3 bone meal).
+  L(['webmc:bone'], 'webmc:bone_meal', 3);
+  // Iron nuggets from iron ingot.
+  L(['webmc:iron_ingot'], 'webmc:iron_nugget', 9);
+  // Gold nuggets from gold ingot + reverse.
+  L(['webmc:gold_ingot'], 'webmc:gold_nugget', 9);
+  S(['NNN', 'NNN', 'NNN'], { N: 'webmc:gold_nugget' }, 'webmc:gold_ingot');
+  // Sugar from cane.
+  L(['webmc:sugar_cane'], 'webmc:sugar');
+  // Wool from 4 string.
+  S(['SS', 'SS'], { S: 'webmc:string' }, 'webmc:wool');
+  // Glowstone block from 4 glowstone dust.
+  S(['DD', 'DD'], { D: 'webmc:glowstone_dust' }, 'webmc:glowstone');
+  // Sandstone (4 sand → 1 sandstone).
+  S(['SS', 'SS'], { S: 'webmc:sand' }, 'webmc:sandstone');
+  // Red sandstone.
+  S(['SS', 'SS'], { S: 'webmc:red_sand' }, 'webmc:red_sandstone');
+  // Stone bricks (4 stone → 4 bricks).
+  S(['SS', 'SS'], { S: 'webmc:stone' }, 'webmc:stone_bricks', 4);
+  // Bricks from clay-fired-brick.
+  S(['BB', 'BB'], { B: 'webmc:brick' }, 'webmc:bricks');
+  // Polished granite/diorite/andesite/blackstone/deepslate (4 → 4 polished).
+  S(['SS', 'SS'], { S: 'webmc:granite' }, 'webmc:polished_granite', 4);
+  S(['SS', 'SS'], { S: 'webmc:diorite' }, 'webmc:polished_diorite', 4);
+  S(['SS', 'SS'], { S: 'webmc:andesite' }, 'webmc:polished_andesite', 4);
+  S(['SS', 'SS'], { S: 'webmc:blackstone' }, 'webmc:polished_blackstone', 4);
+  S(['SS', 'SS'], { S: 'webmc:cobbled_deepslate' }, 'webmc:polished_deepslate', 4);
+  S(['SS', 'SS'], { S: 'webmc:polished_deepslate' }, 'webmc:deepslate_bricks', 4);
+  S(['SS', 'SS'], { S: 'webmc:polished_deepslate' }, 'webmc:deepslate_tiles', 4);
+  // Granite/diorite/andesite craftable from raw materials.
+  L(['webmc:diorite', 'webmc:nether_quartz'], 'webmc:granite');
+  L(
+    ['webmc:cobblestone', 'webmc:cobblestone', 'webmc:nether_quartz', 'webmc:nether_quartz'],
+    'webmc:diorite',
+    2,
+  );
+  L(['webmc:diorite', 'webmc:cobblestone'], 'webmc:andesite', 2);
   // Bow.
   S([' SL', 'S L', ' SL'], { S: 'webmc:stick', L: 'webmc:string' }, 'webmc:bow');
   // Crossbow — simplified (vanilla also needs tripwire_hook which webmc
