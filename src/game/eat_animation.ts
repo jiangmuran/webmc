@@ -42,9 +42,23 @@ export interface EatTickResult {
   particlesSpawnedThisTick: number;
 }
 
+// Shared mutable result — caller reads completed / itemConsumed /
+// particlesSpawnedThisTick synchronously and stores scalars (never
+// the reference). The eat loop in main.ts can hit this 1-3 times
+// per frame while the player holds right-click on food.
+const SHARED_RESULT: EatTickResult = {
+  completed: false,
+  itemConsumed: null,
+  particlesSpawnedThisTick: 0,
+};
+
 export function tickEating(state: EatState): EatTickResult {
+  const out = SHARED_RESULT;
   if (state.itemId === null) {
-    return { completed: false, itemConsumed: null, particlesSpawnedThisTick: 0 };
+    out.completed = false;
+    out.itemConsumed = null;
+    out.particlesSpawnedThisTick = 0;
+    return out;
   }
   state.ticksRemaining--;
   const ticksElapsed = state.totalTicks - state.ticksRemaining;
@@ -60,17 +74,15 @@ export function tickEating(state: EatState): EatTickResult {
     state.ticksRemaining = 0;
     state.totalTicks = 0;
     state.particlesSpawnedCount = 0;
-    return {
-      completed: true,
-      itemConsumed: consumed,
-      particlesSpawnedThisTick: spawned,
-    };
+    out.completed = true;
+    out.itemConsumed = consumed;
+    out.particlesSpawnedThisTick = spawned;
+    return out;
   }
-  return {
-    completed: false,
-    itemConsumed: null,
-    particlesSpawnedThisTick: spawned,
-  };
+  out.completed = false;
+  out.itemConsumed = null;
+  out.particlesSpawnedThisTick = spawned;
+  return out;
 }
 
 // Cancel eating (release right-click, sprint, damage).
