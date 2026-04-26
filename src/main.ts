@@ -3822,10 +3822,23 @@ canvas.addEventListener('mousedown', (e) => {
     }
     if (gameMode === 'survival' || gameMode === 'adventure') {
       playerState.addExhaustion(0.1);
-      // Sword takes 1 durability per hit; axe takes 2.
+      // Vanilla per-attack durability:
+      //   sword: 1
+      //   pickaxe / axe / shovel / hoe: 2
+      //   bare hand: 0
+      // Was only catching sword + axe — pickaxes/shovels/hoes never lost
+      // durability when used as makeshift weapons, so a stone shovel
+      // could last forever on combat-only sessions.
       const heldNow = heldNameLower();
       if (heldNow.includes('sword')) consumeHeldToolDurability(1);
-      else if (heldNow.includes('axe')) consumeHeldToolDurability(2);
+      else if (
+        heldNow.includes('pickaxe') ||
+        heldNow.includes('axe') ||
+        heldNow.includes('shovel') ||
+        heldNow.includes('hoe')
+      ) {
+        consumeHeldToolDurability(2);
+      }
     }
     sfx.play('hit');
     interaction.setHeld(null);
