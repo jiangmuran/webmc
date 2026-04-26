@@ -90,11 +90,16 @@ export class BlockParticles {
   tick(dtSec: number): void {
     const gravity = 22;
     const drag = Math.exp(-dtSec * 3.2);
+    // Swap-remove dead particles: splice(i,1) was O(N) per dead particle,
+    // so heavy explosion bursts (200+ particles) cost O(N^2) per tick.
+    // Swap-with-last + pop is O(1) and order doesn't matter for points.
     for (let i = this.alive.length - 1; i >= 0; i--) {
       const p = this.alive[i]!;
       p.ageSec += dtSec;
       if (p.ageSec >= p.lifeSec) {
-        this.alive.splice(i, 1);
+        const last = this.alive.length - 1;
+        if (i !== last) this.alive[i] = this.alive[last]!;
+        this.alive.pop();
         continue;
       }
       p.vy -= gravity * dtSec;
