@@ -67,6 +67,15 @@ export class XpOrbWorld {
         toRemove.push(orb.id);
         continue;
       }
+      // Void cleanup. XP orbs that fell off the world (player kills mob
+      // over a 1-block hole, orbs fall through, etc.) used to live to
+      // age-out at 5 minutes — meanwhile gravity-ticking forever at
+      // y=-Infinity. Drop them at the same threshold as void player
+      // damage.
+      if (orb.y < -64) {
+        toRemove.push(orb.id);
+        continue;
+      }
       const groundBelow = isSolid(Math.floor(orb.x), Math.floor(orb.y - 0.1), Math.floor(orb.z));
       if (groundBelow && orb.vy <= 0) {
         orb.vy = 0;
