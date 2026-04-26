@@ -1,8 +1,7 @@
 import type { BlockState } from '@/blocks/state';
-import { AIR } from '@/blocks/state';
 import { CHUNK_SECTIONS, Chunk } from '@/world/Chunk';
-import { SUBCHUNK_VOLUME } from '@/world/SubChunk';
-import { type BitsPerIndex, readIndex, wordsNeeded } from '@/world/packed-indices';
+import { SubChunk, SUBCHUNK_VOLUME } from '@/world/SubChunk';
+import { type BitsPerIndex, wordsNeeded } from '@/world/packed-indices';
 import type { ChunkLight } from '@/world/lighting';
 import { newChunkLight } from '@/world/lighting';
 
@@ -177,31 +176,19 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
       paletteStates.push(view.getUint32(offset, true));
       offset += 4;
     }
-    const sec = chunk.ensureSection(cy);
-    for (let i = 0; i < paletteSize; i++) {
-      if (i === 0) continue;
-      sec.palette.add(paletteStates[i] ?? AIR);
-    }
-    if (paletteStates[0] !== undefined && paletteStates[0] !== AIR) {
-      sec.fill(paletteStates[0]);
-      for (let i = 1; i < paletteSize; i++) sec.palette.add(paletteStates[i] ?? AIR);
-    }
+    let indices: Uint32Array | null = null;
     if (bits > 0) {
       const words = wordsNeeded(SUBCHUNK_VOLUME, bits);
-      const indices = new Uint32Array(words);
+      indices = new Uint32Array(words);
       for (let i = 0; i < words; i++) {
         indices[i] = view.getUint32(offset, true);
         offset += 4;
       }
-      for (let pos = 0; pos < SUBCHUNK_VOLUME; pos++) {
-        const idx = readIndex(indices, pos, bits);
-        const state = paletteStates[idx] ?? AIR;
-        const x = pos & 15;
-        const z = (pos >> 4) & 15;
-        const y = (pos >> 8) & 15;
-        if (state !== AIR) sec.set(x, y, z, state);
-      }
     }
+    // Bulk-construct the SubChunk from the wire data instead of per-
+    // cell sec.set() — saved ~4096 palette+bitpack ops per non-empty
+    // section. Decode is now O(words) instead of O(volume).
+    chunk.setSection(cy, SubChunk.fromRaw(paletteStates, bits, indices));
     if (hasLight && light) {
       const lightBytes = new Uint8Array(SUBCHUNK_VOLUME);
       for (let i = 0; i < SUBCHUNK_VOLUME; i++) lightBytes[i] = bytes[offset + i] ?? 0;

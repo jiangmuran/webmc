@@ -100,4 +100,31 @@ export class SubChunk {
     this._nonAir = state === AIR ? 0 : SUBCHUNK_VOLUME;
     this._version += 1;
   }
+
+  // Bulk-load from pre-computed palette + indices (used by chunk-codec
+  // decode). Bypasses the per-cell sec.set() loop which paid palette
+  // lookup + bit-pack write for every of 4096 cells. Direct assignment
+  // is microseconds. Counts non-air for the inventory-stat tracking.
+  static fromRaw(
+    palette: BlockState[],
+    bits: BitsPerIndex,
+    indices: Uint32Array | null,
+  ): SubChunk {
+    const sc = new SubChunk(AIR);
+    sc._palette = new Palette(palette);
+    sc._bits = bits;
+    sc._indices = indices;
+    if (indices === null) {
+      // Uniform — non-air count is full-volume if palette[0] != AIR.
+      sc._nonAir = palette[0] !== AIR && palette[0] !== undefined ? SUBCHUNK_VOLUME : 0;
+    } else {
+      let n = 0;
+      for (let pos = 0; pos < SUBCHUNK_VOLUME; pos++) {
+        const idx = readIndex(indices, pos, bits);
+        if ((palette[idx] ?? AIR) !== AIR) n++;
+      }
+      sc._nonAir = n;
+    }
+    return sc;
+  }
 }
