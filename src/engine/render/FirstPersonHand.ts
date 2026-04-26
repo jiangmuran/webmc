@@ -47,6 +47,11 @@ export class FirstPersonHand {
   }
 
   update(dtSec: number): void {
+    // Skip per-frame transform writes when the hand isn't rendered
+    // (third-person camera, spectator). The sway settles here too,
+    // but a frame of stale sway when switching back to first-person
+    // is unnoticeable.
+    if (!this.group.visible) return;
     this.sway = settle(this.sway);
     const swayOffsetX = this.sway.x * 0.15;
     const swayOffsetY = this.sway.y * 0.1;
