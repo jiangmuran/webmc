@@ -3629,6 +3629,11 @@ const interaction = new InteractionController(
         'webmc:conduit',
       ]);
       if (WORKSTATIONS.has(def.name)) {
+        // Sneak+placeable bypasses workstation open too (vanilla parity).
+        const heldStack = inventory.hotbar[inventory.selectedHotbar] ?? null;
+        const heldIsPlaceable =
+          heldStack !== null && itemRegistry.get(heldStack.itemId).blockId !== undefined;
+        if (fp.input.sneak && heldIsPlaceable) return false;
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
