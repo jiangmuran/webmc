@@ -45,6 +45,17 @@ export const EMPTY_NEIGHBORS: MesherNeighbors = {
   pz: null,
 };
 
+// Reused vertex-buffer scratches. meshSnapshot is called once per
+// dispatched chunk (worker side); the resulting number[]s get copied
+// into typed arrays at the end and the typed arrays are returned/
+// transferred. The intermediate number[]s themselves don't need to
+// live across calls. Per-worker module scope is safe (single-threaded
+// per worker).
+const POSITIONS_SCRATCH: number[] = [];
+const NORMALS_SCRATCH: number[] = [];
+const COLORS_SCRATCH: number[] = [];
+const INDICES_SCRATCH: number[] = [];
+
 // Classical greedy meshing (Mikola-Lysenko style): 2D greedy merge per slice
 // per axis. Neighbor-aware at chunk borders so seams disappear.
 // A future micro-milestone can replace this with binary-bitmask greedy
@@ -61,10 +72,14 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
     return sky > block ? sky : block;
   };
 
-  const positions: number[] = [];
-  const normals: number[] = [];
-  const colors: number[] = [];
-  const indices: number[] = [];
+  const positions = POSITIONS_SCRATCH;
+  const normals = NORMALS_SCRATCH;
+  const colors = COLORS_SCRATCH;
+  const indices = INDICES_SCRATCH;
+  positions.length = 0;
+  normals.length = 0;
+  colors.length = 0;
+  indices.length = 0;
 
   const neighborSampler = (dir: keyof MesherNeighbors, a: number, b: number): boolean => {
     const s = neighbors[dir];
