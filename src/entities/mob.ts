@@ -901,6 +901,16 @@ export interface MobTickContext {
 export class MobWorld {
   private readonly mobs = new Map<MobId, Mob>();
   private nextId: MobId = 1;
+  // Per-behavior counters maintained on spawn/remove so the mob-cap
+  // check in main doesn't need to iterate all mobs every frame.
+  private _hostileCount = 0;
+  private _passiveCount = 0;
+
+  private behaviorBucket(b: MobBehavior): 'hostile' | 'passive' | null {
+    if (b === 'hostile' || b === 'creeper') return 'hostile';
+    if (b === 'passive') return 'passive';
+    return null;
+  }
 
   spawn(kind: MobKind, position: Vec3): Mob {
     const def = MOB_DEFS[kind];
@@ -924,10 +934,22 @@ export class MobWorld {
       dropsHandled: false,
     };
     this.mobs.set(mob.id, mob);
+    const bucket = this.behaviorBucket(def.behavior);
+    if (bucket === 'hostile') this._hostileCount++;
+    else if (bucket === 'passive') this._passiveCount++;
     return mob;
   }
 
   remove(id: MobId): void {
+    this.removeInternal(id);
+  }
+
+  private removeInternal(id: MobId): void {
+    const m = this.mobs.get(id);
+    if (!m) return;
+    const bucket = this.behaviorBucket(m.def.behavior);
+    if (bucket === 'hostile') this._hostileCount--;
+    else if (bucket === 'passive') this._passiveCount--;
     this.mobs.delete(id);
   }
 
@@ -941,6 +963,14 @@ export class MobWorld {
 
   get size(): number {
     return this.mobs.size;
+  }
+
+  get hostileCount(): number {
+    return this._hostileCount;
+  }
+
+  get passiveCount(): number {
+    return this._passiveCount;
   }
 
   damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
@@ -994,7 +1024,7 @@ export class MobWorld {
           toRemove.push(m.id);
         }
       }
-      for (const id of toRemove) this.mobs.delete(id);
+      for (const id of toRemove) this.removeInternal(id);
     }
     for (const mob of this.mobs.values()) this.tickMob(mob, dtSec, ctx);
   }
@@ -1024,7 +1054,7 @@ export class MobWorld {
         if (!mob.dropsHandled) {
           ctx.onMobDeath?.(mob.def.kind, { ...mob.position });
         }
-        this.mobs.delete(mob.id);
+        this.removeInternal(mob.id);
       }
       return;
     }
@@ -1116,7 +1146,7 @@ export class MobWorld {
             if (mob.fuseSec >= 1.5) {
               ctx.damagePlayer(mob.def.attackDamage, mob.position);
               ctx.onCreeperExplode?.(mob.position.x, mob.position.y, mob.position.z);
-              this.mobs.delete(mob.id);
+              this.removeInternal(mob.id);
               return;
             }
           } else {

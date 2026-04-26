@@ -9044,15 +9044,10 @@ function frame(): void {
     });
   }
 
-  // Per-category mob cap (MC-style WORLD_CAPS).
-  let hostileCount = 0;
-  let passiveCount = 0;
-  for (const m of mobWorld.all()) {
-    if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') hostileCount++;
-    else if (m.def.behavior === 'passive') passiveCount++;
-  }
-  const overHostileCap = hostileCount >= WORLD_MOB_CAPS.hostile;
-  const overPassiveCap = passiveCount >= WORLD_MOB_CAPS.passive;
+  // Per-category mob cap (MC-style WORLD_CAPS). Was iterating all mobs
+  // every frame to recount; MobWorld now maintains incremental counters.
+  const overHostileCap = mobWorld.hostileCount >= WORLD_MOB_CAPS.hostile;
+  const overPassiveCap = mobWorld.passiveCount >= WORLD_MOB_CAPS.passive;
   if (
     chunkRenderer.meshCount > 20 &&
     mobDamageMultiplier > 0 &&
@@ -9249,11 +9244,7 @@ function frame(): void {
       nowSpawnMs - lastPassiveSpawnAttemptMs > 20000
     ) {
       lastPassiveSpawnAttemptMs = nowSpawnMs;
-      let passiveCount = 0;
-      for (const m of mobWorld.all()) {
-        if (m.def.behavior === 'passive') passiveCount++;
-      }
-      if (passiveCount < WORLD_MOB_CAPS.passive) {
+      if (mobWorld.passiveCount < WORLD_MOB_CAPS.passive) {
         for (let attempt = 0; attempt < 4; attempt++) {
           const angle = Math.random() * Math.PI * 2;
           const dist = 24 + Math.random() * 32;
