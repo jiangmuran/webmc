@@ -11,15 +11,26 @@ function sampler(arr: Uint8Array | null): OpaqueSampler | null {
   return (a, b) => (arr[a * SUBCHUNK_DIM + b] ?? 0) !== 0;
 }
 
+// Reused per-job neighbors wrapper. The OpaqueSampler closures inside
+// still allocate per call (each captures its own `arr`), but skipping
+// the wrapper literal saves one allocation per dispatch.
+const NEIGHBORS_SCRATCH: MesherNeighbors = {
+  nx: null,
+  px: null,
+  ny: null,
+  py: null,
+  nz: null,
+  pz: null,
+};
+
 function neighborsOf(req: MesherRequest): MesherNeighbors {
-  return {
-    nx: sampler(req.neighborNX),
-    px: sampler(req.neighborPX),
-    ny: sampler(req.neighborNY),
-    py: sampler(req.neighborPY),
-    nz: sampler(req.neighborNZ),
-    pz: sampler(req.neighborPZ),
-  };
+  NEIGHBORS_SCRATCH.nx = sampler(req.neighborNX);
+  NEIGHBORS_SCRATCH.px = sampler(req.neighborPX);
+  NEIGHBORS_SCRATCH.ny = sampler(req.neighborNY);
+  NEIGHBORS_SCRATCH.py = sampler(req.neighborPY);
+  NEIGHBORS_SCRATCH.nz = sampler(req.neighborNZ);
+  NEIGHBORS_SCRATCH.pz = sampler(req.neighborPZ);
+  return NEIGHBORS_SCRATCH;
 }
 
 // Shared "fully sky-lit" / "no block light" defaults — only read by the
@@ -27,22 +38,32 @@ function neighborsOf(req: MesherRequest): MesherNeighbors {
 // allocating 8 KB on every cold meshing job (light=undefined cases).
 const DEFAULT_FLAT_SKY_LIGHT = new Uint8Array(SUBCHUNK_VOLUME).fill(15);
 const DEFAULT_FLAT_BLOCK_LIGHT = new Uint8Array(SUBCHUNK_VOLUME);
+// Reused per-worker flatIdx scratch + Snapshot wrapper. flatIdx is
+// only READ by the greedy mesher (never escaped from the worker), and
+// each worker is single-threaded — refilling in place is safe. Cast
+// away `readonly` for mutation; the public Snapshot interface is
+// still readonly to discourage external mutation.
+type MutableSnapshot = { -readonly [K in keyof Snapshot]: Snapshot[K] };
+const FLAT_IDX_SCRATCH = new Uint16Array(SUBCHUNK_VOLUME);
+const SNAPSHOT_SCRATCH: MutableSnapshot = {
+  flatIdx: FLAT_IDX_SCRATCH,
+  paletteOpaque: new Uint8Array(0),
+  paletteColor: new Uint8Array(0),
+  paletteSize: 0,
+  flatSkyLight: DEFAULT_FLAT_SKY_LIGHT,
+  flatBlockLight: DEFAULT_FLAT_BLOCK_LIGHT,
+};
 
 function unpackSnapshot(req: MesherRequest): Snapshot {
-  const flatIdx = new Uint16Array(SUBCHUNK_VOLUME);
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
-    flatIdx[i] = readIndex(req.indices, i, req.bitsPerIndex);
+    FLAT_IDX_SCRATCH[i] = readIndex(req.indices, i, req.bitsPerIndex);
   }
-  const flatSkyLight = req.flatSkyLight ?? DEFAULT_FLAT_SKY_LIGHT;
-  const flatBlockLight = req.flatBlockLight ?? DEFAULT_FLAT_BLOCK_LIGHT;
-  return {
-    flatIdx,
-    paletteOpaque: req.paletteOpaque,
-    paletteColor: req.paletteColor,
-    paletteSize: req.paletteOpaque.length,
-    flatSkyLight,
-    flatBlockLight,
-  };
+  SNAPSHOT_SCRATCH.paletteOpaque = req.paletteOpaque;
+  SNAPSHOT_SCRATCH.paletteColor = req.paletteColor;
+  SNAPSHOT_SCRATCH.paletteSize = req.paletteOpaque.length;
+  SNAPSHOT_SCRATCH.flatSkyLight = req.flatSkyLight ?? DEFAULT_FLAT_SKY_LIGHT;
+  SNAPSHOT_SCRATCH.flatBlockLight = req.flatBlockLight ?? DEFAULT_FLAT_BLOCK_LIGHT;
+  return SNAPSHOT_SCRATCH;
 }
 
 self.addEventListener('message', (e: MessageEvent<MesherRequest>) => {
