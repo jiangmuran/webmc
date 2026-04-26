@@ -1099,6 +1099,26 @@ export class MobWorld {
       mob.velocity.y = Math.min(mob.velocity.y + 6 * dtSec, 2);
       mob.velocity.x *= Math.max(0, 1 - dtSec * 6);
       mob.velocity.z *= Math.max(0, 1 - dtSec * 6);
+      // Lava burn damage. Vanilla MC: most mobs take 4 HP/sec in lava.
+      // Fire-immune mobs (nether natives + the wither / ender dragon)
+      // are unaffected. Without this, mobs walked through lava fields
+      // without harm — easy farming abuse if you funneled them in.
+      const fireImmune =
+        mob.def.kind === 'blaze' ||
+        mob.def.kind === 'ghast' ||
+        mob.def.kind === 'magma_cube' ||
+        mob.def.kind === 'strider' ||
+        mob.def.kind === 'zombified_piglin' ||
+        mob.def.kind === 'piglin' ||
+        mob.def.kind === 'piglin_brute' ||
+        mob.def.kind === 'wither' ||
+        mob.def.kind === 'wither_skeleton' ||
+        mob.def.kind === 'ender_dragon';
+      if (!fireImmune) {
+        mob.health -= 4 * dtSec;
+        mob.hurtFlashSec = Math.max(mob.hurtFlashSec, 0.18);
+        if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+      }
     } else {
       mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
     }
