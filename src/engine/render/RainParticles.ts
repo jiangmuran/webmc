@@ -21,6 +21,10 @@ export class RainParticles {
   private active = false;
   private readonly opts: RainOptions;
   private readonly positions: Float32Array;
+  // Cached BufferAttribute ref. update() called geometry.getAttribute
+  // + instanceof per frame; attribute is set once at construction and
+  // never replaced.
+  private readonly positionAttr: THREE.BufferAttribute;
 
   constructor(opts: Partial<RainOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
@@ -28,7 +32,8 @@ export class RainParticles {
     this.positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) this.respawn(i, Math.random() * this.opts.height);
     const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.positionAttr = new THREE.BufferAttribute(this.positions, 3);
+    geom.setAttribute('position', this.positionAttr);
     const mat = new THREE.PointsMaterial({
       color: this.opts.color,
       size: 0.25,
@@ -79,8 +84,7 @@ export class RainParticles {
         this.positions[base + 2] = centerZ + (Math.random() - 0.5) * this.opts.spawnRadius * 2;
       }
     }
-    const attr = this.group.geometry.getAttribute('position');
-    if (attr instanceof THREE.BufferAttribute) attr.needsUpdate = true;
+    this.positionAttr.needsUpdate = true;
   }
 
   private respawn(i: number, existingY: number): void {
