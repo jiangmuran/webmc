@@ -840,6 +840,10 @@ export interface Mob {
   airborneStartY: number | null;
   // Flee timer: passive mobs that took damage run away for this many seconds.
   fleeingSec: number;
+  // True once damage() has reported a kill — caller is responsible for
+  // drops/XP. The dyingSec timer uses this to decide whether to also
+  // fire onMobDeath, so player attacks don't double-drop.
+  dropsHandled: boolean;
 }
 
 const GRAVITY = 32;
@@ -887,6 +891,11 @@ export interface MobTickContext {
   // (still ~2 blocks at default 16-block aggro). Wearing armor reduces
   // the bonus, but the per-piece reduction isn't tracked here yet.
   playerInvisible?: boolean;
+  // Fired exactly once when a mob's death animation finishes. Lets the
+  // host (main.ts) spawn drops + xp for environmental kills (sunburn,
+  // lava). Without this, a zombie that burned to death in the sun
+  // dropped no rotten flesh and no XP — only player-attack kills did.
+  onMobDeath?: (kind: MobKind, position: Vec3) => void;
 }
 
 export class MobWorld {
@@ -912,6 +921,7 @@ export class MobWorld {
       dyingSec: 0,
       airborneStartY: null,
       fleeingSec: 0,
+      dropsHandled: false,
     };
     this.mobs.set(mob.id, mob);
     return mob;
@@ -938,6 +948,10 @@ export class MobWorld {
     if (m.def.behavior === 'passive') m.fleeingSec = 5;
     if (m.health <= 0) {
       m.dyingSec = 0.35;
+      // Caller (e.g. main.ts player attack handler) handles drops/XP for
+      // this kill. Setting dropsHandled prevents the dyingSec timer's
+      // onMobDeath callback from also firing drops.
+      m.dropsHandled = true;
       return { killed: true, kind: m.def.kind, position: { ...m.position } };
     }
     return { killed: false, kind: m.def.kind, position: { ...m.position } };
@@ -997,7 +1011,17 @@ export class MobWorld {
   private tickMob(mob: Mob, dtSec: number, ctx: MobTickContext): void {
     if (mob.dyingSec > 0) {
       mob.dyingSec = Math.max(0, mob.dyingSec - dtSec);
-      if (mob.dyingSec === 0) this.mobs.delete(mob.id);
+      if (mob.dyingSec === 0) {
+        // Fire onMobDeath only when no other code path has already
+        // handled drops (e.g. player attack — main.ts spawns those
+        // synchronously off of damage()'s killed=true return). Without
+        // this gate, environmental kills now get drops, but player kills
+        // would double-drop. dropsHandled is set true by damage() above.
+        if (!mob.dropsHandled) {
+          ctx.onMobDeath?.(mob.def.kind, { ...mob.position });
+        }
+        this.mobs.delete(mob.id);
+      }
       return;
     }
     if (mob.attackCooldownSec > 0)

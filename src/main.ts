@@ -9119,6 +9119,16 @@ function frame(): void {
         }
         return true;
       },
+      onMobDeath: (kind, position) => {
+        // Environmental kills (sunburn, lava, void). Drop the same loot
+        // table the player-attack path uses, plus an XP roll. Skipped
+        // for player kills via dropsHandled flag in mob.damage().
+        spawnMobDrops(kind, position);
+        const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
+        for (const chunk of splitXp(xpAmount)) {
+          xpOrbs.spawn(position.x, position.y + 0.8, position.z, chunk);
+        }
+      },
     });
   mobRenderer.sync(mobWorld.all(), camera.position);
 
