@@ -433,8 +433,19 @@ itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:stick', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:coal', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:charcoal', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:iron_ingot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gold_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:copper_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:netherite_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:netherite_scrap', maxStack: 64, durability: 0 });
+// Raw ore items (1.17+ — ores drop these instead of the block, then smelt
+// to ingots). DROP_OVERRIDES + smelt panel both reference these names but
+// they were never registered, so iron/gold/copper ore mining fell back to
+// the default block-item drop and the smelt list silently dropped 6 entries.
+itemRegistry.register({ name: 'webmc:raw_iron', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_gold', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_copper', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:diamond', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wheat', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:cocoa_beans', maxStack: 64, durability: 0 });
