@@ -226,16 +226,13 @@ export class MobRenderer {
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
-      // Cache the camera-relative offset for the nameplate-fade block
-      // below — was computing dx/dy/dz twice per mob per frame.
-      let cdx = 0;
-      let cdy = 0;
-      let cdz = 0;
+      // Cache distSq for the nameplate-fade block below — was
+      // recomputing dx/dy/dz + Math.hypot once more per mob per frame.
       let cDistSq = -1;
       if (cameraPos) {
-        cdx = mob.position.x - cameraPos.x;
-        cdy = mob.position.y - cameraPos.y;
-        cdz = mob.position.z - cameraPos.z;
+        const cdx = mob.position.x - cameraPos.x;
+        const cdy = mob.position.y - cameraPos.y;
+        const cdz = mob.position.z - cameraPos.z;
         cDistSq = cdx * cdx + cdy * cdy + cdz * cdz;
         if (cDistSq > 96 * 96) {
           const v = this.visuals.get(mob.id);
