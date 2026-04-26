@@ -7876,6 +7876,10 @@ const mobTickCtx: MobTickContext = {
 const afkArg = { lastInputTick: 0, currentTick: 0, idleKickEnabled: false };
 const memArg = { heapUsed: 0, heapLimit: 0 };
 const moodCtx = { skyLight: 15, blockLight: 12, dtMs: 0 };
+const playerTickEnv: { inFluid: 'water' | 'lava' | null; drainHunger: boolean } = {
+  inFluid: null,
+  drainHunger: true,
+};
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
@@ -8578,7 +8582,9 @@ function frame(): void {
   // walking through 1-deep water shouldn't drain breath. Creative +
   // spectator skip vital drains (hunger, breath) entirely.
   const vitalsActive = gameMode === 'survival' || gameMode === 'adventure';
-  playerState.tick(dtSec, { inFluid: fp.inFluidEyes, drainHunger: vitalsActive });
+  playerTickEnv.inFluid = fp.inFluidEyes;
+  playerTickEnv.drainHunger = vitalsActive;
+  playerState.tick(dtSec, playerTickEnv);
   // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
   {
     const chest = inventory.armor[1];
