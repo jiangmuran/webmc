@@ -1880,6 +1880,10 @@ void persistDB.getMeta('achievements').then((saved) => {
   }
 });
 function checkAchievements(): void {
+  // Skip the per-frame iteration once the player has earned them
+  // all — the loop below would otherwise still call .has() on every
+  // achievement every frame for the rest of the session.
+  if (achievedSet.size >= achievements.length) return;
   for (const a of achievements) {
     if (!achievedSet.has(a.id) && a.check()) {
       achievedSet.add(a.id);
