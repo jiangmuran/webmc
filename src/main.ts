@@ -1383,8 +1383,14 @@ const playerState = new PlayerState({
   },
 });
 
-const lightCache = new Map<string, ChunkLight>();
-const lightKey = (cx: number, cz: number): string => `${cx.toString()},${cz.toString()}`;
+const lightCache = new Map<number, ChunkLight>();
+// Numeric packed key — pack two 16-bit signed coords into a 32-bit
+// unsigned. Was a template-literal string per call (27+ callsites,
+// hot in flushDirty + fluid tick); strings allocated and GC'd
+// every chunk lookup. Safe for chunk coords up to ±32K (way beyond
+// the world border).
+const lightKey = (cx: number, cz: number): number =>
+  ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
 const lightOracle = {
   isOpaque,
   lightEmission: (s: BlockState) => (s === AIR ? 0 : registry.get(stateId(s)).lightEmission),
