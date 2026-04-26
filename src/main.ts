@@ -1926,6 +1926,14 @@ const lastStatsPos = { x: 0, y: 0, z: 0 };
 // Tracks whether the underwater fog override is currently active so
 // we only re-set the color/near/far on transition (not every frame).
 let lastUnderwaterFog = false;
+// Boss-bar candidate scratch — see the loop in frame() for safety
+// rationale (bossBar.set copies synchronously, no retention).
+const bossCandidateScratch: { name: string; health: number; maxHealth: number; kind: string } = {
+  name: '',
+  health: 0,
+  maxHealth: 0,
+  kind: '',
+};
 // Per-frame biome lookup cache. biomeAt() does fbm2 with octaves=2
 // (~30+ floating-point ops). frame() calls it twice each tick (sky/fog
 // tint + debug overlay), and the result only changes when the player
@@ -9676,16 +9684,14 @@ function frame(): void {
     (performance.now() - lastPlayerAttackAt) / heldAttackFullChargeMs(heldNameLower()),
   );
 
-  // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
-  let bossM: typeof bossCandidate | null = null;
+  // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks. Reuse
+  // a scratch object — bossBar.set() copies fields into bossBarPayload
+  // synchronously and never retains the reference, so a single shared
+  // scratch is safe and saves one fresh literal allocation per frame
+  // for every frame a boss is in range (e.g. the entire ender dragon /
+  // warden / wither fight).
+  let bossM: typeof bossCandidateScratch | null = null;
   let bossDistSq = 32 * 32;
-  interface BossCandidate {
-    name: string;
-    health: number;
-    maxHealth: number;
-    kind: string;
-  }
-  let bossCandidate: BossCandidate | null = null;
   for (const m of mobWorld.all()) {
     if (m.def.maxHealth < 40) continue;
     const dx = m.position.x - fp.position.x;
@@ -9693,13 +9699,11 @@ function frame(): void {
     const d2 = dx * dx + dz * dz;
     if (d2 > bossDistSq) continue;
     bossDistSq = d2;
-    bossCandidate = {
-      name: m.def.kind,
-      health: m.health,
-      maxHealth: m.def.maxHealth,
-      kind: m.def.kind,
-    };
-    bossM = bossCandidate;
+    bossCandidateScratch.name = m.def.kind;
+    bossCandidateScratch.health = m.health;
+    bossCandidateScratch.maxHealth = m.def.maxHealth;
+    bossCandidateScratch.kind = m.def.kind;
+    bossM = bossCandidateScratch;
   }
   if (bossM) {
     const color =
