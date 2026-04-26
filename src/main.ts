@@ -2145,7 +2145,7 @@ function syncVisibleHotbarFromInventory(): void {
       });
     } else {
       const itemShortName = itemDef.name.replace(/^webmc:/, '');
-      if (cur && cur.name === itemShortName && stateId(cur.state) === 0) continue;
+      if (cur?.name === itemShortName && stateId(cur.state) === 0) continue;
       hotbar.setEntry(i, { state: AIR, name: itemShortName, color: [120, 100, 80] });
     }
   }
@@ -5352,7 +5352,7 @@ const chatInput = new ChatInput(appEl, {
           }
           if (!best) return null;
           const state = tamedMobs.get(best.mob.id);
-          if (!state || state.ownerId === null) return null;
+          if (state?.ownerId == null) return null;
           toggleSit(state, 1);
           mobRenderer.setMobName(best.mob.id, `${state.sitting ? '○' : '♥'} ${best.mob.def.kind}`);
           return { kind: best.mob.def.kind, sitting: state.sitting };
@@ -7720,7 +7720,7 @@ function frame(): void {
     !pauseMenu.isVisible()
   ) {
     const pads = navigator.getGamepads();
-    const pad = pads ? Array.from(pads).find((p) => p && p.connected) : null;
+    const pad = pads ? Array.from(pads).find((p) => p?.connected) : null;
     if (pad) {
       const intent = gamepadToIntent({
         axes: [pad.axes[0] ?? 0, pad.axes[1] ?? 0, pad.axes[2] ?? 0, pad.axes[3] ?? 0],
@@ -8505,7 +8505,7 @@ function frame(): void {
       rightClickHeldForEat = false;
     }
     if (typeof navigator.getGamepads === 'function') {
-      const pad = (navigator.getGamepads() ?? []).find((p) => p && p.connected);
+      const pad = (navigator.getGamepads() ?? []).find((p) => p?.connected);
       const actuator = (
         pad as
           | (Gamepad & {
