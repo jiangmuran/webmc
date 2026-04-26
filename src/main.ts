@@ -1793,11 +1793,13 @@ void persistDB.getMeta('loadouts').then((saved) => {
 });
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
-// Cached IDs for ember scans + ice formation — was registry.byName(...)
-// every tick. (waterId, lavaId already cached above near fluid setup.)
+// Cached IDs for ember scans + ice formation + crop tick — was
+// registry.byName(...) every tick. (waterId, lavaId already cached
+// above near fluid setup.)
 const torchIdCached = registry.byName('webmc:torch');
 const glowstoneIdCached = registry.byName('webmc:glowstone');
 const iceIdCached = registry.byName('webmc:ice');
+const farmlandIdCached = registry.byName('webmc:farmland');
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -3497,10 +3499,9 @@ const interaction = new InteractionController(
           inventory.add({ itemId: dropId, count, damage: 0 });
         }
         // Replace crop with farmland.
-        const farmlandId = registry.byName('webmc:farmland');
-        if (farmlandId !== undefined) {
-          world.set(bx, by, bz, makeState(farmlandId, 0));
-          touchWorldEdit(bx, by, bz, farmlandId);
+        if (farmlandIdCached !== undefined) {
+          world.set(bx, by, bz, makeState(farmlandIdCached, 0));
+          touchWorldEdit(bx, by, bz, farmlandIdCached);
         }
         if (gameMode === 'survival' || gameMode === 'adventure') {
           const bmId = itemRegistry.byName('webmc:bone_meal');
@@ -9434,7 +9435,7 @@ function frame(): void {
       const pz = Math.floor(fp.position.z);
       const RADIUS = 24;
       const SAMPLES = 80;
-      const farmlandId = registry.byName('webmc:farmland');
+      const farmlandId = farmlandIdCached;
       for (let i = 0; i < SAMPLES; i++) {
         const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
         const dy = Math.floor((Math.random() - 0.5) * 8);
