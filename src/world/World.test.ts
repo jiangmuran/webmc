@@ -41,9 +41,13 @@ describe('World coordinate math', () => {
   });
 
   it('chunkKey is deterministic and unique per (cx, cz)', () => {
-    expect(chunkKey(0, 0)).toBe('0,0');
-    expect(chunkKey(-3, 5)).toBe('-3,5');
+    // Numeric pack — was a string `cx,cz` before; now a 32-bit unsigned
+    // for allocation-free Map keys. Determinism + uniqueness preserved.
+    expect(chunkKey(0, 0)).toBe(chunkKey(0, 0));
+    expect(chunkKey(-3, 5)).toBe(chunkKey(-3, 5));
     expect(chunkKey(1, 2)).not.toBe(chunkKey(2, 1));
+    expect(chunkKey(0, 0)).not.toBe(chunkKey(1, 0));
+    expect(chunkKey(0, 0)).not.toBe(chunkKey(0, 1));
   });
 });
 
@@ -106,6 +110,6 @@ describe('World', () => {
     w.set(16, 0, 0, STONE);
     w.set(-1, 0, -1, STONE);
     const keys = new Set(Array.from(w.chunks()).map((c) => chunkKey(c.cx, c.cz)));
-    expect(keys).toEqual(new Set(['0,0', '1,0', '-1,-1']));
+    expect(keys).toEqual(new Set([chunkKey(0, 0), chunkKey(1, 0), chunkKey(-1, -1)]));
   });
 });

@@ -20,12 +20,16 @@ export function localZOf(wz: number): number {
   return wz & (CHUNK_DIM - 1);
 }
 
-export function chunkKey(cx: number, cz: number): string {
-  return `${cx.toString()},${cz.toString()}`;
+// Pack two 16-bit signed coords into a 32-bit unsigned number. Was a
+// template-literal string per Map lookup — World.has/getChunk/etc are
+// hot in mob ticks and physics. The single-slot getChunk cache covers
+// most hits, but cold lookups still allocated.
+export function chunkKey(cx: number, cz: number): number {
+  return ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
 }
 
 export class World {
-  private readonly _chunks = new Map<string, Chunk>();
+  private readonly _chunks = new Map<number, Chunk>();
   // Set of chunks with at least one dirty mesh section. Maintained via
   // Chunk.onMeshDirty so the per-frame mesh flush iterates only
   // dirty chunks instead of every loaded one (was 576 iterations per
