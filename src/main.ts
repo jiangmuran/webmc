@@ -6754,8 +6754,10 @@ function restoreChestSlots(saved: unknown): (ItemStack | null)[] {
       out[i] = restoreStack(v as PersistedItemStack);
     } else if (v && typeof v === 'object' && typeof (v as ItemStack).itemId === 'number') {
       // Legacy save (numeric itemId) — keep as-is so existing chests don't
-      // disappear; gets re-persisted in name form on next close.
-      out[i] = v as ItemStack;
+      // disappear; gets re-persisted in name form on next close. Filter
+      // out count=0 stacks though (same ghost-item issue as restoreStack).
+      const stk = v as ItemStack;
+      out[i] = stk.count > 0 ? stk : null;
     }
   }
   return out;
