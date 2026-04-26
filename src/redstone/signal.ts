@@ -51,6 +51,21 @@ const NEIGHBORS: readonly (readonly [number, number, number])[] = [
 
 export type BlockLookup = (x: number, y: number, z: number) => RedstoneBlock;
 
+// Parallel BFS-frontier scratches. Was `frontier.push({pos: {x,y,z},
+// level})` per propagation step — one fresh QueueItem + one nested
+// PosKey per push, hundreds per recompute on a long wire (10Hz). Now
+// 4 numeric pushes into parallel int arrays. Caller (RedstoneWorld
+// tick / currentPower) runs computePower synchronously, so per-module
+// reuse is safe.
+const FRONTIER_X: number[] = [];
+const FRONTIER_Y: number[] = [];
+const FRONTIER_Z: number[] = [];
+const FRONTIER_LEVEL: number[] = [];
+// Returned power map. Caller reads synchronously and discards before
+// the next computePower call — share the Map and clear at the start.
+// CONTRACT: the returned Map is invalidated by the next computePower call.
+const POWER_SCRATCH = new Map<string, PowerLevel>();
+
 // computePower: flood-fill dust power from all sources within the given
 // bounded region. Returns a Map<posKey, PowerLevel> that callers can use to
 // drive mechanism state (doors, pistons, lamps).
@@ -59,12 +74,16 @@ export function computePower(
   lookup: BlockLookup,
   sourceLevel: (pos: PosKey) => PowerLevel = () => MAX_POWER,
 ): Map<string, PowerLevel> {
-  const power = new Map<string, PowerLevel>();
-  interface QueueItem {
-    pos: PosKey;
-    level: PowerLevel;
-  }
-  const frontier: QueueItem[] = [];
+  const power = POWER_SCRATCH;
+  power.clear();
+  const fx = FRONTIER_X;
+  const fy = FRONTIER_Y;
+  const fz = FRONTIER_Z;
+  const fl = FRONTIER_LEVEL;
+  fx.length = 0;
+  fy.length = 0;
+  fz.length = 0;
+  fl.length = 0;
 
   for (const src of sources) {
     const level = sourceLevel(src);
@@ -79,7 +98,10 @@ export function computePower(
       if (n.kind === 'dust') {
         const seed = Math.max(level - 1, MIN_POWER);
         insertIfHigherXYZ(power, nx, ny, nz, seed);
-        frontier.push({ pos: { x: nx, y: ny, z: nz }, level: seed });
+        fx.push(nx);
+        fy.push(ny);
+        fz.push(nz);
+        fl.push(seed);
       } else if (n.opaque || n.kind === 'door') {
         insertIfHigherXYZ(power, nx, ny, nz, level);
       }
@@ -89,21 +111,27 @@ export function computePower(
   // BFS dust paths. Head-pointer dequeue (Array.shift is O(N) per pop;
   // a long redstone wire propagation could push hundreds of nodes).
   let qHead = 0;
-  while (qHead < frontier.length) {
-    const item = frontier[qHead++];
-    if (!item) break;
-    if (item.level <= 1) continue;
-    const here = lookup(item.pos.x, item.pos.y, item.pos.z);
+  while (qHead < fx.length) {
+    const ix = fx[qHead]!;
+    const iy = fy[qHead]!;
+    const iz = fz[qHead]!;
+    const ilevel = fl[qHead]!;
+    qHead++;
+    if (ilevel <= 1) continue;
+    const here = lookup(ix, iy, iz);
     if (here.kind !== 'dust') continue;
-    const nextLevel = item.level - 1;
+    const nextLevel = ilevel - 1;
     for (const [dx, dy, dz] of NEIGHBORS) {
-      const nx = item.pos.x + dx;
-      const ny = item.pos.y + dy;
-      const nz = item.pos.z + dz;
+      const nx = ix + dx;
+      const ny = iy + dy;
+      const nz = iz + dz;
       const n = lookup(nx, ny, nz);
       if (n.kind === 'dust') {
         if (insertIfHigherXYZ(power, nx, ny, nz, nextLevel)) {
-          frontier.push({ pos: { x: nx, y: ny, z: nz }, level: nextLevel });
+          fx.push(nx);
+          fy.push(ny);
+          fz.push(nz);
+          fl.push(nextLevel);
         }
       } else if (n.kind === 'door' || (n.opaque && dy === -1)) {
         // dust weakly powers the block beneath it
