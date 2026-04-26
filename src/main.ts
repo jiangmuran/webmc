@@ -2889,6 +2889,10 @@ const interaction = new InteractionController(
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
         }
         sfx.play('click');
+        // Hand swing for projectile-style throws (snowball / egg). Vanilla
+        // animates the throw arm; was missing here so throws looked like
+        // teleporting particles with no avatar feedback.
+        hand.swing();
         return true;
       }
       // Firework rocket while gliding → forward thrust boost.
