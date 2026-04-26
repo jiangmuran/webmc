@@ -1,5 +1,5 @@
 import type { ItemRegistry, ItemStack } from './item';
-import { canMerge, isEmpty, stack } from './item';
+import { isEmpty, stack } from './item';
 
 export const HOTBAR_SIZE = 9;
 export const MAIN_SIZE = 27;
@@ -50,7 +50,9 @@ export class Inventory {
     let remaining = count;
     for (let i = 0; i < slots.length && remaining > 0; i++) {
       const s = slots[i];
-      if (!s || !canMerge(s, { itemId, count: 1, damage })) continue;
+      // Inline canMerge — was building a fresh {itemId, count, damage}
+      // literal per slot just to compare two scalars.
+      if (!s || s.itemId !== itemId || s.damage !== damage) continue;
       const space = max - s.count;
       if (space <= 0) continue;
       const take = Math.min(space, remaining);
