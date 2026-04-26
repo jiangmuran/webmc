@@ -38,7 +38,9 @@ export class SpawnSystem {
     this.sinceCheck += dtSec;
     if (this.sinceCheck < this.opts.checkIntervalSec) return;
     this.sinceCheck = 0;
-    this.despawnFar(mobs, ctx);
+    // Despawn-far is handled by the host (main.ts) which knows about
+    // tame / leash / saddled / baby exemptions. Doing it here would
+    // bypass those exemptions and silently delete the player's wolf.
     if (ctx.isDay) this.spawnPassive(mobs, ctx);
     else this.spawnHostile(mobs, ctx);
   }
@@ -101,17 +103,6 @@ export class SpawnSystem {
       return { x: x + 0.5, y, z: z + 0.5 };
     }
     return null;
-  }
-
-  private despawnFar(mobs: MobWorld, ctx: SpawnContext): void {
-    const max = this.opts.maxDistanceSq * 2;
-    const toDrop: number[] = [];
-    for (const mob of mobs.all()) {
-      const dx = mob.position.x - ctx.playerPos.x;
-      const dz = mob.position.z - ctx.playerPos.z;
-      if (dx * dx + dz * dz > max) toDrop.push(mob.id);
-    }
-    for (const id of toDrop) mobs.remove(id);
   }
 
 }
