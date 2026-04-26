@@ -7,6 +7,14 @@ export function chunkKey(cx: number, cy: number, cz: number): string {
   return `${cx.toString()},${cy.toString()},${cz.toString()}`;
 }
 
+// All sub-chunks have the same local bounding sphere (centered at the
+// section midpoint, radius = half-diagonal). Allocate once and share —
+// was a fresh Sphere + Vector3 per chunk apply().
+const SHARED_CHUNK_BOUNDING_SPHERE = new THREE.Sphere(
+  new THREE.Vector3(SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2),
+  (SUBCHUNK_DIM * Math.sqrt(3)) / 2,
+);
+
 export class ChunkRenderer {
   readonly group = new THREE.Group();
   readonly material: THREE.ShaderMaterial;
@@ -45,10 +53,7 @@ export class ChunkRenderer {
     geom.setAttribute('normal', new THREE.BufferAttribute(response.normals, 3, true));
     geom.setAttribute('color', new THREE.BufferAttribute(response.colors, 4, true));
     geom.setIndex(new THREE.BufferAttribute(response.indices, 1));
-    geom.boundingSphere = new THREE.Sphere(
-      new THREE.Vector3(SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2, SUBCHUNK_DIM / 2),
-      (SUBCHUNK_DIM * Math.sqrt(3)) / 2,
-    );
+    geom.boundingSphere = SHARED_CHUNK_BOUNDING_SPHERE;
 
     const mesh = new THREE.Mesh(geom, this.material);
     mesh.position.set(
