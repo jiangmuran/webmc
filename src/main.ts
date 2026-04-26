@@ -1088,7 +1088,44 @@ const DROP_OVERRIDES: Record<string, { drop: string; min?: number; max?: number 
   'webmc:copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
   'webmc:deepslate_copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
   'webmc:glowstone': [{ drop: 'webmc:glowstone_dust', min: 2, max: 4 }],
+  'webmc:snow': [{ drop: 'webmc:snowball', min: 1, max: 1 }],
+  'webmc:snow_block': [{ drop: 'webmc:snowball', min: 4, max: 4 }],
+  'webmc:melon': [{ drop: 'webmc:melon_slice', min: 3, max: 7 }],
 };
+// Blocks that drop nothing without silk touch (which we don't track yet,
+// so they always drop nothing). Vanilla list — without these, breaking
+// glass / ice / similar gave you the block-item back, which trivially
+// converts mid-game ice/glass farming into infinite supply.
+const DROP_NOTHING: readonly string[] = [
+  'webmc:glass',
+  'webmc:tinted_glass',
+  'webmc:white_stained_glass',
+  'webmc:orange_stained_glass',
+  'webmc:magenta_stained_glass',
+  'webmc:light_blue_stained_glass',
+  'webmc:yellow_stained_glass',
+  'webmc:lime_stained_glass',
+  'webmc:pink_stained_glass',
+  'webmc:gray_stained_glass',
+  'webmc:light_gray_stained_glass',
+  'webmc:cyan_stained_glass',
+  'webmc:purple_stained_glass',
+  'webmc:blue_stained_glass',
+  'webmc:brown_stained_glass',
+  'webmc:green_stained_glass',
+  'webmc:red_stained_glass',
+  'webmc:black_stained_glass',
+  'webmc:glass_pane',
+  'webmc:ice',
+  'webmc:packed_ice',
+  'webmc:blue_ice',
+  'webmc:frosted_ice',
+  'webmc:turtle_egg',
+  'webmc:sea_lantern',
+  'webmc:bookshelf',
+  'webmc:cake',
+  'webmc:cobweb',
+];
 for (const [blockName, drops] of Object.entries(DROP_OVERRIDES)) {
   const blockId = registry.byName(blockName);
   if (blockId === undefined) continue;
@@ -1099,6 +1136,11 @@ for (const [blockName, drops] of Object.entries(DROP_OVERRIDES)) {
     resolved.push({ itemId: dropItemId, min: d.min ?? 1, max: d.max ?? 1 });
   }
   if (resolved.length > 0) dropRegistry.register(blockId, resolved);
+}
+for (const blockName of DROP_NOTHING) {
+  const blockId = registry.byName(blockName);
+  if (blockId === undefined) continue;
+  dropRegistry.register(blockId, []);
 }
 
 const inventory = new Inventory(itemRegistry);
