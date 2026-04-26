@@ -2398,6 +2398,18 @@ const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = { nowMs:
 // {x,y,z} literals per spawn (egg hatch, /summon, natural spawning,
 // breeding, phantom).
 const mobSpawnPosScratch = { x: 0, y: 0, z: 0 };
+// Reused per-frame env damage event. Void / world-border /
+// suffocation each fired playerState.takeDamage with a fresh
+// {amount, source} literal every frame the condition held.
+// playerState.takeDamage reads ev.amount + ev.source synchronously
+// and never re-enters with a different ev (its internal effect-
+// damage path uses its own class-scoped scratch).
+const envDamageEv: { amount: number; source: string } = { amount: 0, source: '' };
+function envTakeDamage(amount: number, source: string): void {
+  envDamageEv.amount = amount;
+  envDamageEv.source = source;
+  playerState.takeDamage(envDamageEv);
+}
 // Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
 // def.name.replace(/^webmc:/, '') was firing per-frame in
 // getBreakDurationSec (every break tick) and other hot paths; the
@@ -9209,7 +9221,7 @@ function frame(): void {
         fp.velocity.y = -fp.velocity.y * 0.8;
       }
     }
-    if (dmg > 0) playerState.takeDamage({ amount: dmg, source: 'fall' });
+    if (dmg > 0) envTakeDamage(dmg, 'fall');
   }
   fp.lastLandFallBlocks = 0;
 
@@ -9218,13 +9230,13 @@ function frame(): void {
     // i-frame bypass for 'void' was firing every render frame instead,
     // so at 60FPS we were applying 240 dmg/s — enough to instantly
     // erase totem-of-undying revivals via the same-frame re-damage.
-    playerState.takeDamage({ amount: 80 * dtSec, source: 'void' });
+    envTakeDamage(80 * dtSec, 'void');
   }
 
   if (gameMode === 'survival' || gameMode === 'adventure') {
     const wb = checkWorldBorder(worldBorder, fp.position.x, fp.position.z);
     if (!wb.insideBorder && wb.damagePerSec > 0) {
-      playerState.takeDamage({ amount: wb.damagePerSec * dtSec, source: 'void' });
+      envTakeDamage(wb.damagePerSec * dtSec, 'void');
     }
   }
 
@@ -9237,7 +9249,7 @@ function frame(): void {
     const headY = Math.floor(fp.position.y + 0.72);
     const headZ = Math.floor(fp.position.z);
     if (isSolid(headX, headY, headZ)) {
-      playerState.takeDamage({ amount: 1 * dtSec, source: 'suffocation' });
+      envTakeDamage(1 * dtSec, 'suffocation');
     }
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
@@ -9250,7 +9262,7 @@ function frame(): void {
         !fp.input.sneak &&
         !playerState.effects.has('fire_resistance')
       ) {
-        playerState.takeDamage({ amount: 1 * dtSec, source: 'fire' });
+        envTakeDamage(1 * dtSec, 'fire');
       }
       // Soul sand slows player to 60% horizontal velocity (matches MC).
       if (belowDef.name === 'webmc:soul_sand') {
@@ -9294,12 +9306,12 @@ function frame(): void {
       }
     }
     if (touchedCactus) {
-      playerState.takeDamage({ amount: 1, source: 'cactus' });
+      envTakeDamage(1, 'cactus');
     } else if (touchedBerry) {
       // Berry bushes only damage on movement (vanilla: when entity moves
       // while inside). Approximate: damage if there's horizontal motion.
       const moving = Math.hypot(fp.velocity.x, fp.velocity.z) > 0.05;
-      if (moving) playerState.takeDamage({ amount: 1, source: 'sweet_berry' });
+      if (moving) envTakeDamage(1, 'sweet_berry');
     }
     // Cobweb: vanilla slows entities to 1/8 horizontal speed and slows
     // gravity. Was unwired — cobweb was just an air block visually.
