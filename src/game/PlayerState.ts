@@ -57,6 +57,15 @@ export class PlayerState {
   lastDamageSource: string | undefined;
   exhaustion = 0;
   absorption = 0; // bonus HP buffer; depletes first
+  // Reused per-internal-takeDamage event scratch. PlayerState.tick can
+  // call takeDamage 3-5 times per frame (lava + fire + drown + poison
+  // + wither + starvation), each previously allocating a fresh
+  // {amount, source} literal. takeDamage reads ev.amount + ev.source
+  // synchronously and never re-enters with a different ev, so a
+  // single class-scoped scratch is safe for INTERNAL ticks. External
+  // callers (main.ts attack handlers etc.) keep building fresh
+  // literals to avoid cross-call clobbering of the scratch.
+  private readonly tickDamageEv: DamageEvent = { amount: 0, source: '' };
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -167,7 +176,9 @@ export class PlayerState {
       } else if (this.hunger > 0) {
         this.hunger = Math.max(0, this.hunger - decay);
       } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
-        this.takeDamage({ amount: STARVE_DAMAGE_PER_SEC * dtSec, source: 'starvation' });
+        this.tickDamageEv.amount = STARVE_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'starvation';
+        this.takeDamage(this.tickDamageEv);
       }
     }
     if (this.hunger >= HUNGER_HEAL_MIN && this.health < MAX_HEALTH) {
@@ -185,13 +196,21 @@ export class PlayerState {
     }
     const fireImmune = this.effects.has('fire_resistance');
     if (env.inFluid === 'lava') {
-      if (!fireImmune) this.takeDamage({ amount: LAVA_DAMAGE_PER_SEC * dtSec, source: 'lava' });
+      if (!fireImmune) {
+        this.tickDamageEv.amount = LAVA_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'lava';
+        this.takeDamage(this.tickDamageEv);
+      }
       if (!fireImmune) this.fireRemainingSec = 5;
     } else if (env.inFluid === 'water') {
       this.fireRemainingSec = 0;
     } else if (this.fireRemainingSec > 0) {
       this.fireRemainingSec = Math.max(0, this.fireRemainingSec - dtSec);
-      if (!fireImmune) this.takeDamage({ amount: 1 * dtSec, source: 'fire' });
+      if (!fireImmune) {
+        this.tickDamageEv.amount = 1 * dtSec;
+        this.tickDamageEv.source = 'fire';
+        this.takeDamage(this.tickDamageEv);
+      }
     }
     const waterBreathing = this.effects.has('water_breathing');
     // drainHunger doubles as the "vital drains apply" gate: creative /
@@ -199,7 +218,9 @@ export class PlayerState {
     if (drainHunger && env.inFluid === 'water' && !waterBreathing) {
       this.breath = Math.max(0, this.breath - dtSec);
       if (this.breath <= 0) {
-        this.takeDamage({ amount: DROWN_DAMAGE_PER_SEC * dtSec, source: 'drown' });
+        this.tickDamageEv.amount = DROWN_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'drown';
+        this.takeDamage(this.tickDamageEv);
       }
     } else {
       this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
@@ -214,17 +235,23 @@ export class PlayerState {
       if (id === 'regeneration') {
         this.heal(0.5 * (eff.amplifier + 1) * dtSec);
       } else if (id === 'poison' && this.health > 1) {
-        this.takeDamage({ amount: 0.5 * (eff.amplifier + 1) * dtSec, source: 'poison' });
+        this.tickDamageEv.amount = 0.5 * (eff.amplifier + 1) * dtSec;
+        this.tickDamageEv.source = 'poison';
+        this.takeDamage(this.tickDamageEv);
       } else if (id === 'instant_health') {
         this.heal(4 * (eff.amplifier + 1));
         this.effects.delete(id);
       } else if (id === 'instant_damage') {
-        this.takeDamage({ amount: 3 * (eff.amplifier + 1), source: 'harming' });
+        this.tickDamageEv.amount = 3 * (eff.amplifier + 1);
+        this.tickDamageEv.source = 'harming';
+        this.takeDamage(this.tickDamageEv);
         this.effects.delete(id);
       } else if (id === 'absorption') {
         absorptionTarget = Math.max(absorptionTarget, 4 * (eff.amplifier + 1));
       } else if (id === 'wither' && this.health > 0) {
-        this.takeDamage({ amount: 1 * (eff.amplifier + 1) * dtSec, source: 'wither' });
+        this.tickDamageEv.amount = 1 * (eff.amplifier + 1) * dtSec;
+        this.tickDamageEv.source = 'wither';
+        this.takeDamage(this.tickDamageEv);
       } else if (id === 'hunger') {
         this.exhaustion += 0.1 * (eff.amplifier + 1) * dtSec;
       }
