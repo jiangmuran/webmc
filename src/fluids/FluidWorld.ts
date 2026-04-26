@@ -33,6 +33,12 @@ export class FluidWorld {
     stabilized: boolean;
     changed: readonly { x: number; y: number; z: number }[];
   } = { stabilized: false, changed: this.changedScratch };
+  // Stable bound isSolid closure — was allocated fresh as
+  // `(x, y, z) => this.isSolid(...)` on every tick() call. tickFluid
+  // can fire hundreds of times per second during active lava/water
+  // flow; eating one closure per call is pure GC pressure.
+  private readonly isSolidBound = (x: number, y: number, z: number): boolean =>
+    this.isSolid(x, y, z);
 
   constructor(opts: FluidWorldOptions) {
     this.world = opts.world;
@@ -72,7 +78,7 @@ export class FluidWorld {
   }
 
   tick(): { stabilized: boolean; changed: readonly { x: number; y: number; z: number }[] } {
-    const { updates, stabilized } = tickFluid(this.cells, (x, y, z) => this.isSolid(x, y, z));
+    const { updates, stabilized } = tickFluid(this.cells, this.isSolidBound);
     applyFluidUpdates(this.cells, updates);
     // Recycle the previous tick's changed entries back into the pool.
     const changed = this.changedScratch;
