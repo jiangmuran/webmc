@@ -7573,17 +7573,13 @@ const rendererInfo = ((): { gl: string; rend: string } => {
 loader.setPopulate(async (chunk) => {
   const saved = await chunkStore.load(chunk.cx, chunk.cz);
   if (saved) {
+    // Bulk swap pre-built SubChunks in. Old per-cell loop did 4096
+    // chunk.set calls per non-empty section (each walking the palette
+    // and rewriting the bit-packed indices) — ~50ms per loaded chunk.
+    // Direct swap is microseconds.
     for (let cy = 0; cy < 24; cy++) {
       const src = saved.chunk.section(cy);
-      if (!src) continue;
-      for (let y = 0; y < 16; y++) {
-        for (let z = 0; z < 16; z++) {
-          for (let x = 0; x < 16; x++) {
-            const state = src.get(x, y, z);
-            if (state !== AIR) chunk.set(x, cy * 16 + y, z, state);
-          }
-        }
-      }
+      if (src) chunk.setSection(cy, src);
     }
   } else {
     generator.generateChunk(chunk);

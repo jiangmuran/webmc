@@ -54,6 +54,19 @@ export class Chunk {
     return this._sections[cy] ?? null;
   }
 
+  // Bulk-install a pre-built SubChunk. Used by chunk-save restore to
+  // skip the per-cell palette + bitpack work — restoring a 4096-cell
+  // section via .set() takes ~50ms because each call walks the palette
+  // and rewrites the bit-packed indices. Direct swap-in is microseconds.
+  setSection(cy: number, sc: SubChunk | null): void {
+    if (cy < 0 || cy >= CHUNK_SECTIONS) {
+      throw new RangeError(`Chunk: section index out of range (${cy})`);
+    }
+    this._sections[cy] = sc;
+    this._meshDirty.add(cy);
+    this._version += 1;
+  }
+
   ensureSection(cy: number): SubChunk {
     if (cy < 0 || cy >= CHUNK_SECTIONS) {
       throw new RangeError(`Chunk: section index out of range (${cy})`);
