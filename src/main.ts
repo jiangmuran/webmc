@@ -1777,10 +1777,11 @@ void persistDB.getMeta('loadouts').then((saved) => {
 });
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
-// Cached IDs for ember scans — was registry.byName(...) every tick.
+// Cached IDs for ember scans + ice formation — was registry.byName(...)
+// every tick. (waterId, lavaId already cached above near fluid setup.)
 const torchIdCached = registry.byName('webmc:torch');
 const glowstoneIdCached = registry.byName('webmc:glowstone');
-const lavaIdCached = registry.byName('webmc:lava');
+const iceIdCached = registry.byName('webmc:ice');
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -8122,7 +8123,6 @@ function frame(): void {
   lavaEmberAccum += dtSec;
   if (lavaEmberAccum > 0.18) {
     lavaEmberAccum = 0;
-    const lavaId = lavaIdCached;
     if (lavaId !== undefined) {
       const px = Math.floor(fp.position.x);
       const py = Math.floor(fp.position.y);
@@ -9402,8 +9402,8 @@ function frame(): void {
           const groundId = stateId(world.get(x, y - 1, z));
           if (groundId === farmlandId) {
             // Vanilla farmland tracks moisture in props; webmc just checks
-            // adjacent water as a coarse heuristic.
-            const waterId = registry.byName('webmc:water');
+            // adjacent water as a coarse heuristic. waterId is cached at
+            // module scope.
             outer: for (let wdx = -4; wdx <= 4; wdx++) {
               for (let wdz = -4; wdz <= 4; wdz++) {
                 const ws = world.get(x + wdx, y - 1, z + wdz);
@@ -9676,7 +9676,6 @@ function frame(): void {
               lightLevel: lightHere,
             })
           ) {
-            const waterId = registry.byName('webmc:water');
             if (waterId !== undefined) {
               world.set(x, y, z, makeState(waterId, 0));
               touchWorldEdit(x, y, z, waterId);
@@ -9706,10 +9705,9 @@ function frame(): void {
                 lightLevel: lightHereFr,
               })
             ) {
-              const iceId = registry.byName('webmc:ice');
-              if (iceId !== undefined) {
-                world.set(x, y, z, makeState(iceId, 0));
-                touchWorldEdit(x, y, z, iceId);
+              if (iceIdCached !== undefined) {
+                world.set(x, y, z, makeState(iceIdCached, 0));
+                touchWorldEdit(x, y, z, iceIdCached);
               }
             }
           }
