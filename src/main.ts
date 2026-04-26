@@ -53,6 +53,7 @@ import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
+import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -3382,46 +3383,11 @@ const interaction = new InteractionController(
       }
       // Bone meal on sapling: 50% advance growth → instant tree (simplified: replace sapling with 4-tall log+leaves).
       if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
-        const wood = def.name.replace('webmc:', '').replace('_sapling', '');
-        const logId = registry.byName(`webmc:${wood}_log`);
-        const leavesId =
-          registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
-        if (logId !== undefined && leavesId !== undefined) {
-          const trunkH = 4 + Math.floor(Math.random() * 3);
-          for (let h = 0; h < trunkH; h++) {
-            const above = world.get(bx, by + h, bz);
-            if (above === AIR || registry.get(stateId(above)).name.endsWith('_sapling')) {
-              world.set(bx, by + h, bz, makeState(logId, 0));
-              touchWorldEdit(bx, by + h, bz, logId);
-            }
-          }
-          for (let dx = -2; dx <= 2; dx++) {
-            for (let dz = -2; dz <= 2; dz++) {
-              for (let dy = trunkH - 2; dy <= trunkH; dy++) {
-                if (dx === 0 && dz === 0 && dy < trunkH) continue;
-                if (Math.abs(dx) + Math.abs(dz) > 3) continue;
-                const lx = bx + dx,
-                  ly = by + dy,
-                  lz = bz + dz;
-                if (world.get(lx, ly, lz) !== AIR) continue;
-                if (Math.random() < 0.85) {
-                  world.set(lx, ly, lz, makeState(leavesId, 0));
-                  touchWorldEdit(lx, ly, lz, leavesId);
-                }
-              }
-            }
-          }
+        if (growTreeAt(bx, by, bz, def.name)) {
           if (gameMode === 'survival' || gameMode === 'adventure') {
             const bmId = itemRegistry.byName('webmc:bone_meal');
             if (bmId !== undefined) consumeInventoryItem(bmId, 1);
           }
-          for (let i = 0; i < 18; i++)
-            blockParticles.emitPlace(
-              bx + (Math.random() - 0.5) * 3,
-              by + Math.random() * trunkH,
-              bz + (Math.random() - 0.5) * 3,
-              [200, 220, 80],
-            );
           subtitles.push('Tree grown');
           sfx.play('place');
           hand.swing();
@@ -3671,6 +3637,49 @@ function countInventoryItem(itemId: number): number {
   for (const s of inventory.hotbar) if (s?.itemId === itemId) total += s.count;
   for (const s of inventory.main) if (s?.itemId === itemId) total += s.count;
   return total;
+}
+
+// Grow a tree by replacing a sapling with a 4-6 log trunk + leaf canopy.
+// Pulled out of the bone-meal handler so the random-tick path can call it
+// too — saplings shipped with no growth wiring, so a planted sapling just
+// stayed a knee-high stick forever unless you bone-mealed it.
+function growTreeAt(bx: number, by: number, bz: number, saplingName: string): boolean {
+  const wood = saplingName.replace('webmc:', '').replace('_sapling', '');
+  const logId = registry.byName(`webmc:${wood}_log`);
+  const leavesId = registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
+  if (logId === undefined || leavesId === undefined) return false;
+  const trunkH = 4 + Math.floor(Math.random() * 3);
+  for (let h = 0; h < trunkH; h++) {
+    const above = world.get(bx, by + h, bz);
+    if (above === AIR || registry.get(stateId(above)).name.endsWith('_sapling')) {
+      world.set(bx, by + h, bz, makeState(logId, 0));
+      touchWorldEdit(bx, by + h, bz, logId);
+    }
+  }
+  for (let dx = -2; dx <= 2; dx++) {
+    for (let dz = -2; dz <= 2; dz++) {
+      for (let dy = trunkH - 2; dy <= trunkH; dy++) {
+        if (dx === 0 && dz === 0 && dy < trunkH) continue;
+        if (Math.abs(dx) + Math.abs(dz) > 3) continue;
+        const lx = bx + dx;
+        const ly = by + dy;
+        const lz = bz + dz;
+        if (world.get(lx, ly, lz) !== AIR) continue;
+        if (Math.random() < 0.85) {
+          world.set(lx, ly, lz, makeState(leavesId, 0));
+          touchWorldEdit(lx, ly, lz, leavesId);
+        }
+      }
+    }
+  }
+  for (let i = 0; i < 18; i++)
+    blockParticles.emitPlace(
+      bx + (Math.random() - 0.5) * 3,
+      by + Math.random() * trunkH,
+      bz + (Math.random() - 0.5) * 3,
+      [200, 220, 80],
+    );
+  return true;
 }
 
 function consumeInventoryItem(itemId: number, count: number): boolean {
@@ -8687,6 +8696,46 @@ function frame(): void {
         if (result === 'grew') {
           world.set(x, y, z, makeState(id, age + 1));
           touchWorldEdit(x, y, z, id);
+        }
+      }
+      // Sapling growth: same scan, separate registry. Was the other gap
+      // — saplings just sat as decorative foliage forever unless bone-mealed.
+      for (let i = 0; i < SAMPLES; i++) {
+        const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const dy = Math.floor((Math.random() - 0.5) * 8);
+        const dz = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const x = px + dx;
+        const y = py + dy;
+        const z = pz + dz;
+        const s = world.get(x, y, z);
+        if (s === AIR) continue;
+        const id = stateId(s);
+        const name = registry.get(id).name;
+        if (!name.endsWith('_sapling')) continue;
+        const stage = stateProps(s) & 1;
+        const cx = x >> 4;
+        const cz = z >> 4;
+        const lx = x & 0xf;
+        const lz = z & 0xf;
+        const light = lightCache.get(lightKey(cx, cz));
+        const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
+        const skyL = (lb >>> 4) & 0xf;
+        const blockL = lb & 0xf;
+        const lightLevel = Math.max(skyL, blockL);
+        // Vertical clearance: count consecutive air above.
+        let clearance = 0;
+        for (let h = 1; h <= 8; h++) {
+          if (world.get(x, y + h, z) !== AIR) break;
+          clearance++;
+        }
+        const result = saplingRandomTick(
+          { stage: stage as 0 | 1, lightLevel, verticalClearance: clearance },
+          Math.random,
+        );
+        if (result === 'grow_tree') {
+          growTreeAt(x, y, z, name);
+        } else if (result.stage !== stage) {
+          world.set(x, y, z, makeState(id, result.stage));
         }
       }
     }
