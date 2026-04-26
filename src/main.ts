@@ -2357,6 +2357,8 @@ const interactionLookTmp = new THREE.Vector3();
 // Reused for the food-consumption particle emit position.
 const consumeFoodLookTmp = new THREE.Vector3();
 const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
+// Hoisted egg color — was a fresh tuple per egg lay.
+const EGG_COLOR: readonly [number, number, number] = [240, 230, 200];
 // Reused per-mob AABB scratch for ray picking. Was allocated fresh per
 // mob per call: hover-aim cast every frame O(mobs), attack cast on
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
@@ -7958,14 +7960,28 @@ const MOB_DROP_TABLES: Record<
   wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
 };
 
+// Memoized name → itemId cache for mob-drop lookups. Skips the
+// `webmc:${name}` template literal alloc per drop entry per kill.
+// Map.get returns undefined for unresolved names, distinct from -1
+// for "looked up, not registered" so we can negative-cache misses.
+const MOB_DROP_ITEM_ID: Map<string, number> = new Map();
+function resolveMobDropItemId(name: string): number {
+  let id = MOB_DROP_ITEM_ID.get(name);
+  if (id === undefined) {
+    id = itemRegistry.byName(`webmc:${name}`) ?? -1;
+    MOB_DROP_ITEM_ID.set(name, id);
+  }
+  return id;
+}
+
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
   const table = MOB_DROP_TABLES[kind];
   if (!table) return;
   for (const entry of table) {
     const count = entry.min + Math.floor(Math.random() * (entry.max - entry.min + 1));
     if (count <= 0) continue;
-    const itemId = itemRegistry.byName(`webmc:${entry.name}`);
-    if (itemId === undefined) continue;
+    const itemId = resolveMobDropItemId(entry.name);
+    if (itemId < 0) continue;
     // droppedItems.spawn stores `data` by reference in the dropped
     // entity, so this MUST be a fresh literal per entry — sharing a
     // scratch would link every dropped item's data to the same
@@ -9695,7 +9711,7 @@ function frame(): void {
             droppedItems.spawn(m.position.x, m.position.y + 0.4, m.position.z, {
               itemId: eggItemId,
               count: 1,
-              color: [240, 230, 200],
+              color: EGG_COLOR,
             });
             chickenEggTimers.set(m.id, nowEggMs + 300_000 + Math.random() * 300_000);
           }
