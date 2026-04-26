@@ -557,6 +557,10 @@ export class SurvivalHud {
   // frame for nothing.
   private heartShakeActive = false;
   private hungerShakeActive = false;
+  // Per-heart opacity diff cache. style.opacity was being written
+  // every frame even at full HP (pulse=1 → '1.00' for non-empty
+  // hearts), invalidating browser style for nothing.
+  private readonly lastHeartOpacity: string[] = new Array<string>(HEARTS).fill('');
   // Diff caches for the per-frame display + xp + label writes.
   // Each style/text write triggers browser invalidation; cumulative
   // ~60Hz × per-element waste in steady state.
@@ -578,7 +582,11 @@ export class SurvivalHud {
       const name: IconName =
         v >= hpPerHeart * 0.9 ? 'heart_full' : v >= hpPerHeart * 0.4 ? 'heart_half' : 'heart_empty';
       this.blit(this.hearts[i]!, name);
-      this.hearts[i]!.style.opacity = name === 'heart_empty' ? '1' : String(pulse.toFixed(2));
+      const opacity = name === 'heart_empty' ? '1' : pulse.toFixed(2);
+      if (this.lastHeartOpacity[i] !== opacity) {
+        this.hearts[i]!.style.opacity = opacity;
+        this.lastHeartOpacity[i] = opacity;
+      }
       if (heartShake) {
         const ox = (Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0;
         const oy = (Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0;
