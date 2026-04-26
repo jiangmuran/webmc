@@ -7941,15 +7941,17 @@ const onLoad = (cx: number, cz: number): void => {
     lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
   }
   markChunkAllDirty(chunk);
-  for (const [ncx, ncz] of [
-    [cx - 1, cz],
-    [cx + 1, cz],
-    [cx, cz - 1],
-    [cx, cz + 1],
-  ] as const) {
-    const neighbor = world.getChunk(ncx, ncz);
-    if (neighbor) markChunkAllDirty(neighbor);
-  }
+  // Manual unroll — inner array literal allocated 4 fresh tuples per
+  // chunk load. At chunk-streaming startup this fires hundreds of
+  // times, churning ~1600 throwaway tuples for nothing.
+  const nxN = world.getChunk(cx - 1, cz);
+  if (nxN) markChunkAllDirty(nxN);
+  const pxN = world.getChunk(cx + 1, cz);
+  if (pxN) markChunkAllDirty(pxN);
+  const nzN = world.getChunk(cx, cz - 1);
+  if (nzN) markChunkAllDirty(nzN);
+  const pzN = world.getChunk(cx, cz + 1);
+  if (pzN) markChunkAllDirty(pzN);
 };
 
 // Reused world-to-screen projector for damage numbers etc. Hoisted
