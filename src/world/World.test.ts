@@ -112,4 +112,25 @@ describe('World', () => {
     const keys = new Set(Array.from(w.chunks()).map((c) => chunkKey(c.cx, c.cz)));
     expect(keys).toEqual(new Set([chunkKey(0, 0), chunkKey(1, 0), chunkKey(-1, -1)]));
   });
+
+  it('dirtyChunks() yields chunks whose mesh was edited', () => {
+    const w = new World();
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
+    w.set(0, 0, 0, STONE);
+    const dirty = Array.from(w.dirtyChunks());
+    expect(dirty).toHaveLength(1);
+    expect(dirty[0]?.cx).toBe(0);
+    expect(dirty[0]?.cz).toBe(0);
+    // clearDirty removes from set; subsequent iterations skip the chunk.
+    w.clearDirty(dirty[0]!);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
+  });
+
+  it('dirtyChunks() drops removed chunks', () => {
+    const w = new World();
+    w.set(0, 0, 0, STONE);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(1);
+    w.removeChunk(0, 0);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
+  });
 });
