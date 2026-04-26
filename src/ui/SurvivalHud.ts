@@ -626,13 +626,19 @@ export class SurvivalHud {
     this.xpLabel.textContent = frame.xpLevel > 0 ? String(frame.xpLevel) : '';
   }
 
+  private readonly lastBlit = new WeakMap<HTMLCanvasElement, IconName>();
   private blit(target: HTMLCanvasElement, name: IconName): void {
+    // Skip identical re-blit. Hot path: render() runs every frame and
+    // most heart/hunger/armor icons stay the same icon for many frames
+    // in a row. clearRect + drawImage triggers a GPU upload each time.
+    if (this.lastBlit.get(target) === name) return;
     const src = this.atlas.get(name);
     const ctx = target.getContext('2d');
     if (!ctx || !src) return;
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, target.width, target.height);
     ctx.drawImage(src, 0, 0);
+    this.lastBlit.set(target, name);
   }
 }
 
