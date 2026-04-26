@@ -48,6 +48,7 @@ export class PlayerAvatar {
   }
 
   setVisible(v: boolean): void {
+    if (this.group.visible === v) return;
     this.group.visible = v;
   }
 

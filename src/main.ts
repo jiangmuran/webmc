@@ -9114,14 +9114,20 @@ function frame(): void {
 
   // Third-person camera modes orbit around the player's eye position.
   // Avatar group center + 0.18 puts its feet (y=-1.08 local) at fp.position.y - 0.9.
-  playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
-  const invisible = playerState.effects.has('invisibility');
   // Spectators are invisible in vanilla — without this, the third-person
   // body still rendered while in spectator mode, which broke the ghost
   // illusion (you could see your own body floating through walls).
-  playerAvatar.setVisible(cameraMode !== 'fp' && !invisible && gameMode !== 'spectator');
-  const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
-  playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
+  const invisible = playerState.effects.has('invisibility');
+  const avatarVisible = cameraMode !== 'fp' && !invisible && gameMode !== 'spectator';
+  playerAvatar.setVisible(avatarVisible);
+  // Skip pose + animate per-frame writes when the avatar isn't being
+  // rendered. First-person + spectator are the dominant cases, and
+  // both leave the avatar hidden.
+  if (avatarVisible) {
+    playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
+    const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+    playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
+  }
   if (cameraMode !== 'fp') {
     const look = fp.lookVector(frameLookTmp);
     const back = cameraMode === 'tp_back' ? -3 : 3;
