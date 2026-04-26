@@ -8322,7 +8322,11 @@ function frame(): void {
   droppedItems.tick(
     dtSec,
     isSolid,
-    fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position,
+    // Sneak suppresses pickup (stand over an item without grabbing it).
+    // Spectator suppresses pickup entirely — vanilla spectators are
+    // observers, not collectors. Pass an unreachable far position so the
+    // tick treats the player as out of range for the magnetic grab.
+    fp.input.sneak || gameMode === 'spectator' ? { x: -9999, y: 0, z: 0 } : fp.position,
     (out) => {
       const leftover = inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
       const taken = out.count - leftover;
@@ -8339,23 +8343,28 @@ function frame(): void {
       return leftover;
     },
   );
-  xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {
-    // Mending-style auto-repair: damaged held tool gets durability from XP first.
-    let remaining = xp;
-    const sel = inventory.hotbar[inventory.selectedHotbar];
-    if (sel && sel.damage > 0) {
-      const def = itemRegistry.get(sel.itemId);
-      if (def.durability > 0) {
-        const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
-        const repair = xpToFix * 2;
-        const newDamage = Math.max(0, sel.damage - repair);
-        inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
-        remaining -= xpToFix;
+  xpOrbs.tick(
+    dtSec,
+    isSolid,
+    gameMode === 'spectator' ? { x: -9999, y: 0, z: 0 } : fp.position,
+    (xp) => {
+      // Mending-style auto-repair: damaged held tool gets durability from XP first.
+      let remaining = xp;
+      const sel = inventory.hotbar[inventory.selectedHotbar];
+      if (sel && sel.damage > 0) {
+        const def = itemRegistry.get(sel.itemId);
+        if (def.durability > 0) {
+          const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
+          const repair = xpToFix * 2;
+          const newDamage = Math.max(0, sel.damage - repair);
+          inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
+          remaining -= xpToFix;
+        }
       }
-    }
-    if (remaining > 0) playerState.addXP(remaining);
-    sfx.play('click');
-  });
+      if (remaining > 0) playerState.addXP(remaining);
+      sfx.play('click');
+    },
+  );
   if (playerState.xpLevel > lastXpLevel) {
     sfx.play('place');
     chatInput.addLine(`Level up! Level ${String(playerState.xpLevel)}`, '#80ffa0');
