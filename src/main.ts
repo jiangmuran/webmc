@@ -3455,6 +3455,37 @@ const interaction = new InteractionController(
         hand.swing();
         return true;
       }
+      // Bone meal on bamboo: grow 1-2 stalks immediately (vanilla).
+      if (heldName === 'bone_meal' && def.name === 'webmc:bamboo') {
+        const bambooId = id;
+        let topY = by;
+        for (let h = 1; h <= 16; h++) {
+          const above = world.get(bx, by + h, bz);
+          if (above === AIR) break;
+          if (registry.get(stateId(above)).name !== 'webmc:bamboo') break;
+          topY = by + h;
+        }
+        if (topY - by < 15) {
+          const grow = 1 + Math.floor(Math.random() * 2);
+          let added = 0;
+          for (let h = 1; h <= grow; h++) {
+            const target = topY + h;
+            if (world.get(bx, target, bz) !== AIR) break;
+            world.set(bx, target, bz, makeState(bambooId, 0));
+            touchWorldEdit(bx, target, bz, bambooId);
+            added++;
+          }
+          if (added > 0) {
+            if (gameMode === 'survival' || gameMode === 'adventure') {
+              const bmId = itemRegistry.byName('webmc:bone_meal');
+              if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+            }
+            sfx.play('place');
+            hand.swing();
+            return true;
+          }
+        }
+      }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
