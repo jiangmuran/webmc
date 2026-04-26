@@ -50,6 +50,21 @@ function attenuation(kind: FluidKind): number {
   return kind === 'water' ? 1 : 2;
 }
 
+// Reused per-call scratches. tickFluid is called from FluidWorld.tick
+// synchronously; the caller drains `updates` via applyFluidUpdates and
+// reads `stabilized` immediately, then doesn't keep references. All
+// four collections grow with active fluid cells (5000+ at big lakes),
+// so recycling rather than re-allocating each tick saves substantial
+// GC pressure.
+const TICK_UPDATES_SCRATCH = new Map<string, FluidCell | null>();
+const TICK_MERGED_SCRATCH = new Map<string, FluidCell>();
+const TICK_REACHABLE_SCRATCH = new Set<string>();
+const TICK_QUEUE_SCRATCH: string[] = [];
+const TICK_RESULT_SCRATCH: FluidTickResult = {
+  updates: TICK_UPDATES_SCRATCH,
+  stabilized: false,
+};
+
 // One fluid tick. Given sources (current fluid cells) + a solid-block sampler,
 // returns the new/changed cells. Horizontal flow decreases level by
 // attenuation per step; downward flow is unconditional at full level.
@@ -57,7 +72,8 @@ export function tickFluid(
   cells: ReadonlyMap<string, FluidCell>,
   isSolid: SolidSampler,
 ): FluidTickResult {
-  const updates = new Map<string, FluidCell | null>();
+  const updates = TICK_UPDATES_SCRATCH;
+  updates.clear();
   const snapshot: FluidSampler = (x, y, z) => {
     // Compute the key once; was building two {x,y,z} literals + two
     // template strings per snapshot lookup.
@@ -120,14 +136,17 @@ export function tickFluid(
   // reached (disconnected puddles) are removed. A neighbour is reachable
   // below unconditionally (gravity) or horizontally if strictly lower
   // level (downhill flow).
-  const merged = new Map<string, FluidCell>();
+  const merged = TICK_MERGED_SCRATCH;
+  merged.clear();
   for (const [k, c] of cells) merged.set(k, c);
   for (const [k, u] of updates) {
     if (u === null) merged.delete(k);
     else merged.set(k, u);
   }
-  const reachable = new Set<string>();
-  const queue: string[] = [];
+  const reachable = TICK_REACHABLE_SCRATCH;
+  reachable.clear();
+  const queue = TICK_QUEUE_SCRATCH;
+  queue.length = 0;
   for (const [k, c] of merged) {
     if (c.source) {
       reachable.add(k);
@@ -167,7 +186,8 @@ export function tickFluid(
     updates.set(k, null);
   }
 
-  return { updates, stabilized: updates.size === 0 };
+  TICK_RESULT_SCRATCH.stabilized = updates.size === 0;
+  return TICK_RESULT_SCRATCH;
 }
 
 export function applyFluidUpdates(
