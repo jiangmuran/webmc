@@ -430,17 +430,24 @@ itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:snowball', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:milk_bucket', maxStack: 1, durability: 0 });
-itemRegistry.register({ name: 'webmc:wood_pickaxe', maxStack: 1, durability: 60 });
-itemRegistry.register({ name: 'webmc:stone_pickaxe', maxStack: 1, durability: 132 });
-itemRegistry.register({ name: 'webmc:iron_pickaxe', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:gold_pickaxe', maxStack: 1, durability: 33 });
-itemRegistry.register({ name: 'webmc:diamond_pickaxe', maxStack: 1, durability: 1562 });
-itemRegistry.register({ name: 'webmc:wood_sword', maxStack: 1, durability: 60 });
-itemRegistry.register({ name: 'webmc:stone_sword', maxStack: 1, durability: 132 });
-itemRegistry.register({ name: 'webmc:iron_sword', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:diamond_sword', maxStack: 1, durability: 1562 });
-itemRegistry.register({ name: 'webmc:iron_axe', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:iron_shovel', maxStack: 1, durability: 251 });
+// Tool tier table. Vanilla durability values per tier.
+const TOOL_DURABILITY: Record<string, number> = {
+  wood: 60,
+  stone: 132,
+  iron: 251,
+  gold: 33,
+  diamond: 1562,
+  netherite: 2032,
+};
+// Generated tool registrations. Was hand-rolled and patchy: only iron
+// had axe + shovel registered, no hoes existed at all, several tiers
+// missing for sword (gold/netherite). Loop covers every (tier, kind).
+for (const tier of Object.keys(TOOL_DURABILITY) as (keyof typeof TOOL_DURABILITY)[]) {
+  const dur = TOOL_DURABILITY[tier]!;
+  for (const kind of ['pickaxe', 'sword', 'axe', 'shovel', 'hoe'] as const) {
+    itemRegistry.register({ name: `webmc:${tier}_${kind}`, maxStack: 1, durability: dur });
+  }
+}
 itemRegistry.register({
   name: 'webmc:bread',
   maxStack: 64,
