@@ -3616,6 +3616,7 @@ canvas.addEventListener('mousedown', (e) => {
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
           mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
           chatInput.addLine(`${kind} entered love mode ♥`, '#ff80c0');
+          hand.swing();
         }
         return;
       }
@@ -3634,6 +3635,7 @@ canvas.addEventListener('mousedown', (e) => {
               mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
               chatInput.addLine(`Tamed ${kind}! ♥`, '#80ff80');
             }
+            hand.swing();
             return;
           }
         }
@@ -3642,6 +3644,7 @@ canvas.addEventListener('mousedown', (e) => {
         leashedMobs.add(aimedMob.id);
         mobRenderer.setMobName(aimedMob.id, `🪢 ${kind}`);
         chatInput.addLine(`Leashed ${kind}`, '#80ff80');
+        hand.swing();
         return;
       }
       if (heldName === 'webmc:saddle' && (kind === 'pig' || kind === 'horse')) {
@@ -3652,6 +3655,7 @@ canvas.addEventListener('mousedown', (e) => {
           if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
             consumeInventoryItem(sId, 1);
           chatInput.addLine(`Saddled ${kind}`, '#80ff80');
+          hand.swing();
           return;
         }
       }
