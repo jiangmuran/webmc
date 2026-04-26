@@ -3611,6 +3611,14 @@ const interaction = new InteractionController(
           toast.show(`Spawn set. Day ${String(dayCounter + 1)}`, '#ffb0c0');
           chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
           lastSleepDay = dayCounter;
+          // Vanilla heals the sleeper to full HP if hunger >= 9 (no hunger
+          // restored). Sleep also clears the on-fire timer. Without this,
+          // beds were just a spawn-setter — the heal-on-rest gameplay loop
+          // (which makes early-game sustainable) didn't exist.
+          if (playerState.hunger >= 9) {
+            playerState.health = 20;
+          }
+          playerState.fireRemainingSec = 0;
           // Cancel any in-flight phantom approach — vanilla resets the
           // since-slept counter when sleeping.
         } else {
