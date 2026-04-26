@@ -3392,6 +3392,7 @@ const interaction = new InteractionController(
         const props = (state >>> 16) ^ 1;
         world.set(bx, by, bz, makeState(id, props));
         sfx.play('click');
+        hand.swing();
         touchWorldEdit(bx, by, bz, id);
         return true;
       }
