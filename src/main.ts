@@ -3098,6 +3098,7 @@ const interaction = new InteractionController(
           fluidWorld.clear(bx, by, bz);
           touchWorldEdit(bx, by, bz, 0);
           sfx.play('click');
+          hand.swing();
           subtitles.push(def.name === 'webmc:water' ? 'Filled water bucket' : 'Filled lava bucket');
           return true;
         }
@@ -3115,6 +3116,7 @@ const interaction = new InteractionController(
           }
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Extinguished fire');
         return true;
       }
@@ -3137,6 +3139,7 @@ const interaction = new InteractionController(
             }
           }
           sfx.play('place');
+          hand.swing();
           subtitles.push(heldName === 'water_bucket' ? 'Placed water' : 'Placed lava');
           return true;
         }
@@ -3152,6 +3155,7 @@ const interaction = new InteractionController(
         }
         playerState.eat(2, 0.4);
         sfx.play('click');
+        hand.swing();
         subtitles.push('Ate cake slice');
         return true;
       }
