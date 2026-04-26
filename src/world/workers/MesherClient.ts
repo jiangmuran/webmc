@@ -127,24 +127,39 @@ export interface MesherJob {
 }
 
 export class MesherClient {
-  private readonly worker: Worker;
+  // Pool of workers for parallel meshing across cores. Chunks stream
+  // ~10-15ms per section in the worker; with one worker, perFrameBudget
+  // chunks per frame queues serially behind a single thread. With N
+  // workers, sections fan out across cores. Round-robin dispatch keeps
+  // load balanced; each worker tracks its own jobs by id so responses
+  // route back correctly.
+  private readonly workers: Worker[];
   private readonly jobs = new Map<number, MesherJob>();
   private _nextId = 1;
+  private _nextWorker = 0;
 
-  constructor(workerFactory: () => Worker) {
-    this.worker = workerFactory();
-    this.worker.addEventListener('message', (e: MessageEvent<FromWorker>) => {
-      const msg = e.data;
-      const job = this.jobs.get(msg.id);
-      if (!job) return;
-      this.jobs.delete(msg.id);
-      if (msg.type === 'mesh-result') job.resolve(msg);
-      else job.reject(new Error(msg.message));
-    });
-    this.worker.addEventListener('error', (e) => {
-      for (const job of this.jobs.values()) job.reject(new Error(e.message));
-      this.jobs.clear();
-    });
+  constructor(workerFactory: () => Worker, poolSize = 1) {
+    const size = Math.max(1, Math.floor(poolSize));
+    this.workers = new Array<Worker>(size);
+    for (let i = 0; i < size; i++) {
+      const worker = workerFactory();
+      worker.addEventListener('message', (e: MessageEvent<FromWorker>) => {
+        const msg = e.data;
+        const job = this.jobs.get(msg.id);
+        if (!job) return;
+        this.jobs.delete(msg.id);
+        if (msg.type === 'mesh-result') job.resolve(msg);
+        else job.reject(new Error(msg.message));
+      });
+      worker.addEventListener('error', (e) => {
+        // A worker crash loses its in-flight jobs. Reject all pending
+        // (we don't track which worker holds which job — overkill at
+        // this scale); the chunk loader will re-dispatch on next dirty.
+        for (const job of this.jobs.values()) job.reject(new Error(e.message));
+        this.jobs.clear();
+      });
+      this.workers[i] = worker;
+    }
   }
 
   mesh(
@@ -159,19 +174,38 @@ export class MesherClient {
   ): Promise<MesherResponse> {
     const id = this._nextId++;
     const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, faceColorsOf, borders, light);
+    const worker = this.workers[this._nextWorker]!;
+    this._nextWorker = (this._nextWorker + 1) % this.workers.length;
     return new Promise<MesherResponse>((resolve, reject) => {
       this.jobs.set(id, { id, resolve, reject });
-      this.worker.postMessage(req, transferablesOfRequest(req));
+      worker.postMessage(req, transferablesOfRequest(req));
     });
   }
 
   terminate(): void {
-    this.worker.terminate();
+    for (const worker of this.workers) worker.terminate();
     for (const job of this.jobs.values()) {
       job.reject(new Error('MesherClient terminated'));
     }
     this.jobs.clear();
   }
+
+  get poolSize(): number {
+    return this.workers.length;
+  }
+}
+
+// Plan: N-1 cores capped at 4 on mobile (per Master Plan). Mobile
+// detection here is light to avoid pulling in the full UA matcher.
+function computePoolSize(): number {
+  const cores =
+    typeof navigator !== 'undefined' && typeof navigator.hardwareConcurrency === 'number'
+      ? navigator.hardwareConcurrency
+      : 4;
+  const isMobile =
+    typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const cap = isMobile ? 2 : 4;
+  return Math.max(1, Math.min(cap, cores - 1));
 }
 
 export function createMesherClient(): MesherClient {
@@ -180,5 +214,6 @@ export function createMesherClient(): MesherClient {
       new Worker(new URL('./mesher.worker.ts', import.meta.url), {
         type: 'module',
       }),
+    computePoolSize(),
   );
 }
