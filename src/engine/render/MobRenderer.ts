@@ -160,6 +160,8 @@ export class MobRenderer {
   private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly customNames = new Map<number, string>();
   private readonly customScales = new Map<number, number>();
+  // Reused 'seen this frame' scratch set — was allocated per sync().
+  private readonly seenScratch = new Set<number>();
 
   setMobScale(mobId: number, scale: number): void {
     if (Math.abs(scale - 1) < 0.001) this.customScales.delete(mobId);
@@ -202,7 +204,8 @@ export class MobRenderer {
   }
 
   sync(mobs: IterableIterator<Mob>, cameraPos?: { x: number; y: number; z: number }): void {
-    const seen = new Set<number>();
+    const seen = this.seenScratch;
+    seen.clear();
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
