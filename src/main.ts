@@ -1464,6 +1464,22 @@ touch?.attach(appEl);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
+// Cached uniform refs to skip the per-frame string-keyed lookup +
+// runtime cast overhead. Uniform objects themselves are stable for
+// the material's lifetime.
+const chunkUniforms = chunkRenderer.material.uniforms as Record<
+  string,
+  { value: THREE.Vector3 | THREE.Color | number | THREE.Texture | null }
+>;
+const uSunDirRef = chunkUniforms['uSunDir'] as { value: THREE.Vector3 };
+const uSkyColorRef = chunkUniforms['uSkyColor'] as { value: THREE.Color };
+const uAmbientRef = chunkUniforms['uAmbient'] as { value: number };
+const uFogColorRef = chunkUniforms['uFogColor'] as { value: THREE.Color };
+const uCameraPosWRef = chunkUniforms['uCameraPosW'] as { value: THREE.Vector3 };
+const uFogFarRef = chunkUniforms['uFogFar'] as { value: number };
+const uFogNearRef = chunkUniforms['uFogNear'] as { value: number };
+const uPatternRef = chunkUniforms['uPattern'] as { value: THREE.Texture | null };
+const uPatternStrengthRef = chunkUniforms['uPatternStrength'] as { value: number };
 
 const fluidWorld = new FluidWorld({ world, registry });
 // Lazy-register fluid blocks (sea water from worldgen, loaded saves)
@@ -6355,12 +6371,10 @@ const resourcePackLoader = new ResourcePackLoader(appEl, {
     const result = applyPackToRegistry(registry, pack);
     const newPattern = buildPatternTextureFromPack(pack);
     if (newPattern) {
-      const oldTex = (
-        chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture | null }
-      ).value;
+      const oldTex = uPatternRef.value;
       if (oldTex) oldTex.dispose();
-      (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture }).value = newPattern;
-      (chunkRenderer.material.uniforms['uPatternStrength'] as { value: number }).value = 0.9;
+      uPatternRef.value = newPattern;
+      uPatternStrengthRef.value = 0.9;
     }
     for (const chunk of world.chunks()) markChunkAllDirty(chunk);
     chatInput.addLine(
@@ -6414,8 +6428,8 @@ const settingsPanel = new SettingsPanel(appEl, {
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
     const far = v.viewDistance * 16;
-    (chunkRenderer.material.uniforms['uFogFar'] as { value: number }).value = far;
-    (chunkRenderer.material.uniforms['uFogNear'] as { value: number }).value = far * 0.6;
+    uFogFarRef.value = far;
+    uFogNearRef.value = far * 0.6;
     if (scene.fog instanceof THREE.Fog) {
       scene.fog.near = far * 0.6;
       scene.fog.far = far;
@@ -8310,12 +8324,10 @@ function frame(): void {
   tmpFogColor.b = tmpFogColor.b * (1 - TINT) + (biomePalette.fog[2] / 255) * TINT;
   const skyColor = tmpSkyColor;
   const fogColor = tmpFogColor;
-  const uniforms = chunkRenderer.material.uniforms;
-  (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
-  (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
+  uSunDirRef.value.copy(dayNight.sunDir);
+  uSkyColorRef.value.copy(skyColor);
   const nightVision = playerState.effects.has('night_vision') ? 0.5 : 0;
-  (uniforms['uAmbient'] as { value: number }).value =
-    (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
+  uAmbientRef.value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
   // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
   const speedEff = playerState.effects.get('speed');
   const slowEff = playerState.effects.get('slowness');
@@ -8343,8 +8355,8 @@ function frame(): void {
     fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
     fp.camera.updateProjectionMatrix();
   }
-  (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
-  (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
+  uFogColorRef.value.copy(fogColor);
+  uCameraPosWRef.value.copy(fp.position);
   scene.background = skyColor;
   if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
 
