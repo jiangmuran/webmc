@@ -22,6 +22,17 @@ export class FluidWorld {
   private readonly cells = new Map<string, FluidCell>();
   private readonly waterState: BlockState;
   private readonly lavaState: BlockState;
+  // Reused per-tick scratches. The result wrapper + changed[] +
+  // per-cell parseKey result were all fresh on every fluid tick (4Hz
+  // baseline; way more often near active lava lakes / flowing
+  // rivers). Caller iterates `changed` synchronously and doesn't keep
+  // the reference, so reusing one array is safe.
+  private readonly changedScratch: { x: number; y: number; z: number }[] = [];
+  private readonly changedPool: { x: number; y: number; z: number }[] = [];
+  private readonly tickResultScratch: {
+    stabilized: boolean;
+    changed: readonly { x: number; y: number; z: number }[];
+  } = { stabilized: false, changed: this.changedScratch };
 
   constructor(opts: FluidWorldOptions) {
     this.world = opts.world;
@@ -63,19 +74,31 @@ export class FluidWorld {
   tick(): { stabilized: boolean; changed: readonly { x: number; y: number; z: number }[] } {
     const { updates, stabilized } = tickFluid(this.cells, (x, y, z) => this.isSolid(x, y, z));
     applyFluidUpdates(this.cells, updates);
-    const changed: { x: number; y: number; z: number }[] = [];
+    // Recycle the previous tick's changed entries back into the pool.
+    const changed = this.changedScratch;
+    for (let i = 0; i < changed.length; i++) {
+      this.changedPool.push(changed[i]!);
+    }
+    changed.length = 0;
     for (const [k, cell] of updates) {
       const p = parseKey(k);
       // Skip writebacks to unloaded chunks. world.set on a non-AIR
       // state would call ensureChunk and materialise an empty chunk
       // far away, leaking memory and corrupting future generation.
       if (!this.world.has(p.x >> 4, p.z >> 4)) continue;
+      const recycled = this.changedPool.pop();
+      const slot = recycled ?? { x: 0, y: 0, z: 0 };
+      slot.x = p.x;
+      slot.y = p.y;
+      slot.z = p.z;
       if (cell === null) {
         const existing = this.world.get(p.x, p.y, p.z);
         if (existing === this.waterState || existing === this.lavaState) {
           this.world.set(p.x, p.y, p.z, AIR);
-          changed.push(p);
+          changed.push(slot);
+          continue;
         }
+        this.changedPool.push(slot);
       } else {
         // Don't overwrite a non-fluid block. If the player placed stone
         // where a flowing water cell was previously registered, the cell
@@ -87,15 +110,19 @@ export class FluidWorld {
         const placeable = here === AIR || sameFluid;
         if (!placeable) {
           this.cells.delete(k);
+          this.changedPool.push(slot);
           continue;
         }
         if (!sameFluid) {
           this.world.set(p.x, p.y, p.z, this.blockStateFor(cell.kind));
-          changed.push(p);
+          changed.push(slot);
+        } else {
+          this.changedPool.push(slot);
         }
       }
     }
-    return { stabilized, changed };
+    this.tickResultScratch.stabilized = stabilized;
+    return this.tickResultScratch;
   }
 
   private isSolid(x: number, y: number, z: number): boolean {
