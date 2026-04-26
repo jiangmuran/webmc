@@ -3885,6 +3885,26 @@ canvas.addEventListener('mousedown', (e) => {
           return;
         }
       }
+      // Mooshroom shearing: shears + mooshroom → 5 red mushrooms +
+      // mooshroom turns into a regular cow. Vanilla mechanic.
+      if (heldName === 'webmc:shears' && kind === 'mooshroom') {
+        const mushId = itemRegistry.byName('webmc:red_mushroom');
+        if (mushId !== undefined) {
+          inventory.add({ itemId: mushId, count: 5, damage: 0 });
+        }
+        // Replace mooshroom with cow at the same position.
+        try {
+          mobWorld.spawn('cow', aimedMob.position);
+        } catch {
+          /* cow not registered, leave mooshroom alone */
+        }
+        mobWorld.remove(aimedMob.id);
+        chatInput.addLine('Sheared mooshroom → cow', '#e0a0a0');
+        consumeHeldToolDurability(1);
+        sfx.play('click');
+        hand.swing();
+        return;
+      }
       const breedFood = BREED_FOOD[kind];
       if (breedFood?.includes(heldName)) {
         const prev = lovingMobs.get(aimedMob.id) ?? {
