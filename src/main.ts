@@ -3749,7 +3749,16 @@ canvas.addEventListener('mousedown', (e) => {
     });
     const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
     const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
-    // Weapon tier damage (held item determines base).
+    // Weapon tier damage (held item determines base). Vanilla MC values:
+    //   sword: 4 / 5 / 6 / 7 / 8 / 4    (wood/stone/iron/diamond/netherite/gold)
+    //   axe:   7 / 9 / 9 / 9 / 10 / 7
+    //   pickaxe: 2 / 3 / 4 / 5 / 6 / 2
+    //   shovel:  3 / 4 / 5 / 6 / 6.5 / 3 (we round to int)
+    //   hoe:     1 across all tiers
+    //   mace: 6, trident: 9, fist: 1.
+    // Pickaxes / shovels were defaulting to fist (1) — using a diamond
+    // pickaxe as a melee weapon in a pinch should still hit harder than
+    // bare hands.
     let weaponBase = 1; // fist
     const heldName = heldNameLower();
     if (heldName.includes('sword')) {
@@ -3758,6 +3767,18 @@ canvas.addEventListener('mousedown', (e) => {
       else if (heldName.includes('iron')) weaponBase = 6;
       else if (heldName.includes('stone')) weaponBase = 5;
       else weaponBase = 4; // wood/gold
+    } else if (heldName.includes('pickaxe')) {
+      if (heldName.includes('netherite')) weaponBase = 6;
+      else if (heldName.includes('diamond')) weaponBase = 5;
+      else if (heldName.includes('iron')) weaponBase = 4;
+      else if (heldName.includes('stone')) weaponBase = 3;
+      else weaponBase = 2; // wood/gold
+    } else if (heldName.includes('shovel')) {
+      if (heldName.includes('netherite')) weaponBase = 7;
+      else if (heldName.includes('diamond')) weaponBase = 6;
+      else if (heldName.includes('iron')) weaponBase = 5;
+      else if (heldName.includes('stone')) weaponBase = 4;
+      else weaponBase = 3; // wood/gold
     } else if (heldName.includes('axe')) {
       if (heldName.includes('netherite')) weaponBase = 10;
       else if (
