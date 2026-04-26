@@ -10643,15 +10643,18 @@ function frame(): void {
     for (const [id, eff] of playerState.effects) {
       effectStr += ` ${id}${eff.amplifier > 0 ? `+${String(eff.amplifier)}` : ''}(${eff.remainingSec.toFixed(0)}s)`;
     }
+    // Inline the spawn-distance formatter — was an IIFE arrow function
+    // allocated per frame just to compute one optional suffix.
+    let spawnSuffix = '';
+    if (worldMeta) {
+      const sdx = fp.position.x - worldMeta.spawn.x;
+      const sdz = fp.position.z - worldMeta.spawn.z;
+      spawnSuffix = `(${Math.hypot(sdx, sdz).toFixed(0)}m from spawn)`;
+    }
     hud.textContent =
       `webmc — F3 debug · F5 cam · F1 help\n` +
       `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${phaseOfDay(Math.floor(dayNight.timeOfDay * 24000))}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
-      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => {
-        if (!worldMeta) return '';
-        const dx = fp.position.x - worldMeta.spawn.x;
-        const dz = fp.position.z - worldMeta.spawn.z;
-        return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`;
-      })()}\n` +
+      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${spawnSuffix}\n` +
       `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
       `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
