@@ -6872,6 +6872,9 @@ function markChunkAllDirty(chunk: Chunk): void {
   }
 }
 
+// Scratch dirty-section list reused across flushDirty calls; sized
+// for max sections per chunk (24).
+const dirtyScratch: number[] = new Array<number>(24);
 function flushDirty(): void {
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
@@ -6887,22 +6890,41 @@ function flushDirty(): void {
       continue;
     }
     if (dispatched >= budget) break;
-    const dirty = Array.from(chunk.meshDirty);
+    // Reuse scratch list — Array.from(chunk.meshDirty) was allocating
+    // a fresh array per dirty chunk per frame. Fill scratch then take
+    // a subarray-style view via length.
+    let dirtyLen = 0;
+    for (const cy of chunk.meshDirty) {
+      dirtyScratch[dirtyLen++] = cy;
+    }
+    const dirty = dirtyScratch;
+    const dirtyEnd = dirtyLen;
     // Sort so closer-to-player sections process first. Old impl re-
     // computed dxA/dzA/dxB/dzB inside the comparator from chunk.cx/cz
     // (same for both a and b, since they're sections of the same chunk)
-    // — wasted work. Now compares only the per-section dy.
+    // — wasted work. Now compares only the per-section dy. Insertion
+    // sort over the first dirtyEnd elements (max 24, so cost is tiny
+    // and avoids Array.sort's allocation for the comparator state).
     const py = fp.position.y;
-    dirty.sort((a, b) => {
-      const dyA = a * 16 - py;
-      const dyB = b * 16 - py;
-      return dyA * dyA - dyB * dyB;
-    });
+    for (let i = 1; i < dirtyEnd; i++) {
+      const v = dirty[i]!;
+      const vKey = (v * 16 - py) * (v * 16 - py);
+      let j = i - 1;
+      while (j >= 0) {
+        const cmp = dirty[j]!;
+        const cmpKey = (cmp * 16 - py) * (cmp * 16 - py);
+        if (cmpKey <= vKey) break;
+        dirty[j + 1] = cmp;
+        j--;
+      }
+      dirty[j + 1] = v;
+    }
     // Hoist lightCache lookup out of the cy loop — chunk light is per-
     // chunk, not per-section, so all 24 dirty sections of a chunk would
     // independently re-do the lookup.
     const chunkLight = lightCache.get(lightKey(chunk.cx, chunk.cz));
-    for (const cy of dirty) {
+    for (let di = 0; di < dirtyEnd; di++) {
+      const cy = dirty[di]!;
       if (dispatched >= budget) break;
       (chunk.meshDirty as Set<number>).delete(cy);
       const section = chunk.section(cy);
