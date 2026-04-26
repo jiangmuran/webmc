@@ -54,6 +54,7 @@ import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
 import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
+import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -8700,6 +8701,7 @@ function frame(): void {
       }
       // Sapling growth: same scan, separate registry. Was the other gap
       // — saplings just sat as decorative foliage forever unless bone-mealed.
+      const sugarCaneId = registry.byName('webmc:sugar_cane');
       for (let i = 0; i < SAMPLES; i++) {
         const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
         const dy = Math.floor((Math.random() - 0.5) * 8);
@@ -8711,31 +8713,53 @@ function frame(): void {
         if (s === AIR) continue;
         const id = stateId(s);
         const name = registry.get(id).name;
-        if (!name.endsWith('_sapling')) continue;
-        const stage = stateProps(s) & 1;
-        const cx = x >> 4;
-        const cz = z >> 4;
-        const lx = x & 0xf;
-        const lz = z & 0xf;
-        const light = lightCache.get(lightKey(cx, cz));
-        const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
-        const skyL = (lb >>> 4) & 0xf;
-        const blockL = lb & 0xf;
-        const lightLevel = Math.max(skyL, blockL);
-        // Vertical clearance: count consecutive air above.
-        let clearance = 0;
-        for (let h = 1; h <= 8; h++) {
-          if (world.get(x, y + h, z) !== AIR) break;
-          clearance++;
-        }
-        const result = saplingRandomTick(
-          { stage: stage as 0 | 1, lightLevel, verticalClearance: clearance },
-          Math.random,
-        );
-        if (result === 'grow_tree') {
-          growTreeAt(x, y, z, name);
-        } else if (result.stage !== stage) {
-          world.set(x, y, z, makeState(id, result.stage));
+        if (name.endsWith('_sapling')) {
+          const stage = stateProps(s) & 1;
+          const cx = x >> 4;
+          const cz = z >> 4;
+          const lx = x & 0xf;
+          const lz = z & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
+          const skyL = (lb >>> 4) & 0xf;
+          const blockL = lb & 0xf;
+          const lightLevel = Math.max(skyL, blockL);
+          let clearance = 0;
+          for (let h = 1; h <= 8; h++) {
+            if (world.get(x, y + h, z) !== AIR) break;
+            clearance++;
+          }
+          const result = saplingRandomTick(
+            { stage: stage as 0 | 1, lightLevel, verticalClearance: clearance },
+            Math.random,
+          );
+          if (result === 'grow_tree') {
+            growTreeAt(x, y, z, name);
+          } else if (result.stage !== stage) {
+            world.set(x, y, z, makeState(id, result.stage));
+          }
+        } else if (sugarCaneId !== undefined && id === sugarCaneId) {
+          // Sugar cane grows up to 3 stalks tall when air is above.
+          // Count current height from this position upward (this stalk
+          // is the topmost only when air is above).
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          // Count height down: this stalk + however many stalks below.
+          let currentHeight = 1;
+          for (let dyDown = 1; dyDown <= 3; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            if (below === AIR || stateId(below) !== sugarCaneId) break;
+            currentHeight++;
+          }
+          const age = stateProps(s);
+          const tickState = { age };
+          const result = caneRandomTick({ state: tickState, currentHeight });
+          if (result === 'grow_up' && currentHeight < CANE_MAX_H) {
+            world.set(x, y + 1, z, makeState(sugarCaneId, 0));
+            world.set(x, y, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, sugarCaneId);
+          } else if (result === 'age_inc') {
+            world.set(x, y, z, makeState(id, tickState.age));
+          }
         }
       }
     }
