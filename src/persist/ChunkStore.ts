@@ -28,6 +28,12 @@ export class ChunkStore {
   private readonly dirty = new Map<number, DirtyEntry>();
   private flushTimer: ReturnType<typeof setInterval> | null = null;
   private inFlight = false;
+  // Reused per-flush blobs scratch — was a fresh array allocated every
+  // 1Hz flush (and on every flushAll attempt). The array gets handed
+  // off to db.putChunks but isn't held after that resolves (inFlight
+  // guards against parallel flushes), so a single shared scratch is
+  // safe.
+  private readonly flushBlobsScratch: ChunkBlob[] = [];
 
   constructor(
     private readonly db: PersistDB,
@@ -93,8 +99,9 @@ export class ChunkStore {
       // allocated the full dirty list every flush even when only 32
       // would be written. With 500+ dirty chunks during heavy edits
       // (terraforming, explosions), that's a 500-entry array trashed
-      // every second.
-      const blobs: ChunkBlob[] = [];
+      // every second. Recycle the blobs array across calls.
+      const blobs = this.flushBlobsScratch;
+      blobs.length = 0;
       for (const d of this.dirty.values()) {
         if (blobs.length >= cap) break;
         blobs.push({
