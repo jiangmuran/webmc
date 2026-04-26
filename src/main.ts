@@ -2102,12 +2102,22 @@ function computeArmorPoints(): number {
 // back to the canned Hotbar-UI entry (creative-mode block selector).
 // Strips the webmc: prefix so the existing `.includes('diamond')` etc.
 // checks keep working.
+// Memoize the per-item-id stripped + lowercased name. Called from
+// every break tick and many event handlers; the regex + toLowerCase
+// + new string were the actual cost. Item names never change for a
+// given id.
+const ITEM_SHORT_NAME_LOWER: string[] = [];
+function itemShortNameLower(id: number): string {
+  let s = ITEM_SHORT_NAME_LOWER[id];
+  if (s !== undefined) return s;
+  const def = itemRegistry.get(id);
+  s = def ? def.name.replace(/^webmc:/, '').toLowerCase() : '';
+  ITEM_SHORT_NAME_LOWER[id] = s;
+  return s;
+}
 function heldNameLower(): string {
   const stack = inventory.hotbar[inventory.selectedHotbar];
-  if (stack) {
-    const def = itemRegistry.get(stack.itemId);
-    if (def) return def.name.replace(/^webmc:/, '').toLowerCase();
-  }
+  if (stack) return itemShortNameLower(stack.itemId);
   return hotbar.selected?.name.toLowerCase() ?? '';
 }
 
