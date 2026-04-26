@@ -2172,6 +2172,11 @@ function placeableFromSlot(
 // blocks that happened to be on the canned list. Now picking up sandstone
 // puts sandstone in the visible hotbar and lets you place it. Skips no-op
 // updates so we don't thrash the DOM each frame.
+// Constant colors for empty + non-block hotbar entries. Were fresh
+// [r,g,b] literals per setEntry call.
+const HOTBAR_EMPTY_COLOR: readonly [number, number, number] = [40, 44, 52];
+const HOTBAR_ITEM_COLOR: readonly [number, number, number] = [120, 100, 80];
+
 function syncVisibleHotbarFromInventory(): void {
   if (gameMode !== 'survival' && gameMode !== 'adventure') return;
   for (let i = 0; i < 9; i++) {
@@ -2179,7 +2184,7 @@ function syncVisibleHotbarFromInventory(): void {
     const cur = hotbar.getEntry(i);
     if (!stack) {
       if (cur && stateId(cur.state) === 0 && cur.name === '(empty)') continue;
-      hotbar.setEntry(i, { state: AIR, name: '(empty)', color: [40, 44, 52] });
+      hotbar.setEntry(i, { state: AIR, name: '(empty)', color: HOTBAR_EMPTY_COLOR });
       continue;
     }
     const itemDef = itemRegistry.get(stack.itemId);
@@ -2194,7 +2199,7 @@ function syncVisibleHotbarFromInventory(): void {
     } else {
       const itemShortName = itemDef.name.replace(/^webmc:/, '');
       if (cur?.name === itemShortName && stateId(cur.state) === 0) continue;
-      hotbar.setEntry(i, { state: AIR, name: itemShortName, color: [120, 100, 80] });
+      hotbar.setEntry(i, { state: AIR, name: itemShortName, color: HOTBAR_ITEM_COLOR });
     }
   }
 }
@@ -7504,6 +7509,13 @@ function igniteTnt(bx: number, by: number, bz: number): void {
 }
 
 let tntSmokeAccum = 0;
+// Constant colors for ambient particles. Were fresh [r,g,b] literals
+// per emit; firing at 3-6Hz across torches + lava + TNT during normal
+// play.
+const TNT_SMOKE_COLOR: readonly [number, number, number] = [90, 90, 90];
+const TORCH_EMBER_COLOR: readonly [number, number, number] = [255, 235, 140];
+const LAVA_EMBER_COLOR: readonly [number, number, number] = [255, 160, 60];
+
 function tickTnt(dtSec: number): void {
   tntSmokeAccum += dtSec;
   const emitNow = tntSmokeAccum > 0.1;
@@ -7512,7 +7524,7 @@ function tickTnt(dtSec: number): void {
     const t = primedTnt[i]!;
     t.remainingSec -= dtSec;
     if (emitNow) {
-      blockParticles.emitPlace(t.bx + 0.5, t.by + 0.8, t.bz + 0.5, [90, 90, 90]);
+      blockParticles.emitPlace(t.bx + 0.5, t.by + 0.8, t.bz + 0.5, TNT_SMOKE_COLOR);
     }
     if (t.remainingSec <= 0) {
       explodeAt(t.bx, t.by, t.bz, 4);
@@ -8570,7 +8582,7 @@ function frame(): void {
             const id = stateId(s);
             if (id !== torchId && id !== glowId) continue;
             if (Math.random() > 0.12) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 0.9, pz + dz + 0.5, [255, 235, 140]);
+            blockParticles.emitPlace(px + dx + 0.5, py + dy + 0.9, pz + dz + 0.5, TORCH_EMBER_COLOR);
             emitted++;
           }
         }
@@ -8593,7 +8605,7 @@ function frame(): void {
             if (s === AIR) continue;
             if (stateId(s) !== lavaId) continue;
             if (Math.random() > 0.05) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 1.1, pz + dz + 0.5, [255, 160, 60]);
+            blockParticles.emitPlace(px + dx + 0.5, py + dy + 1.1, pz + dz + 0.5, LAVA_EMBER_COLOR);
             emitted++;
           }
         }
