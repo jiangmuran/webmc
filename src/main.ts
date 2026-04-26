@@ -2383,6 +2383,11 @@ const breakTicksCtxScratch = {
   fatigueLevel: 0,
   efficiencyBonus: 0,
 };
+// Reused autosave-trigger scratches (timer + threshold). shouldSave
+// fires both per frame; was building two fresh {nowMs, trigger}
+// literals every frame.
+const shouldSaveTimerArg: { nowMs: number; trigger: 'timer' } = { nowMs: 0, trigger: 'timer' };
+const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = { nowMs: 0, trigger: 'threshold' };
 // Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
 // def.name.replace(/^webmc:/, '') was firing per-frame in
 // getBreakDurationSec (every break tick) and other hot paths; the
@@ -9542,9 +9547,11 @@ function frame(): void {
   // browser crash mid-session would lose them. Now flushes the full set
   // every autosave window (matching what /save does).
   const nowSaveMs = performance.now();
+  shouldSaveTimerArg.nowMs = nowSaveMs;
+  shouldSaveThresholdArg.nowMs = nowSaveMs;
   if (
-    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
-    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })
+    shouldSave(autosaveState, shouldSaveTimerArg) ||
+    shouldSave(autosaveState, shouldSaveThresholdArg)
   ) {
     beginSave(autosaveState, nowSaveMs);
     void savePlayerNow();
