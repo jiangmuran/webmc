@@ -8032,6 +8032,13 @@ function frame(): void {
       dmg = Math.floor(dmg * 0.2);
     } else if (landDef.name === 'webmc:slime_block') {
       dmg = 0;
+      // Vanilla bounces the player upward proportional to fall velocity
+      // (unless they're sneaking, which absorbs the bounce). Without
+      // this, slime blocks were just hay-bale-tier — fall reduction but
+      // no jumping mechanic. Bounce velocity = -velocity.y * 0.8.
+      if (!fp.input.sneak && fp.velocity.y < 0) {
+        fp.velocity.y = -fp.velocity.y * 0.8;
+      }
     }
     if (dmg > 0) playerState.takeDamage({ amount: dmg, source: 'fall' });
   }
