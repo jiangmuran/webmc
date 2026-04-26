@@ -44,8 +44,15 @@ export class ChunkStore {
   async load(cx: number, cz: number): Promise<{ chunk: Chunk; light: ChunkLight | null } | null> {
     const blob = await this.db.getChunk(this.opts.worldId, cx, cz);
     if (!blob) return null;
-    const decoded = decodeChunk(blob.payload);
-    return { chunk: decoded.chunk, light: decoded.light };
+    // Corrupt or future-version blob → return null so the loader
+    // regenerates the chunk fresh, instead of crashing the world load.
+    try {
+      const decoded = decodeChunk(blob.payload);
+      return { chunk: decoded.chunk, light: decoded.light };
+    } catch (err) {
+      console.warn(`[ChunkStore] failed to decode chunk (${cx}, ${cz}) — regenerating:`, err);
+      return null;
+    }
   }
 
   async flush(): Promise<number> {

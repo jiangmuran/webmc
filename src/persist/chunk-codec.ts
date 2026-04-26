@@ -141,6 +141,14 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
   if (magic !== MAGIC) throw new Error(`chunk-codec: bad magic 0x${magic.toString(16)}`);
   const schemaVersion = view.getUint16(offset, true);
   offset += 2;
+  // Future-version chunks would silently miscount fields. Throw a clear
+  // error so the chunk is regenerated rather than corrupting the world.
+  // Old saves with same/lower version are still readable.
+  if (schemaVersion > SCHEMA_VERSION) {
+    throw new Error(
+      `chunk-codec: schema version ${String(schemaVersion)} > supported ${String(SCHEMA_VERSION)}`,
+    );
+  }
   const flags = view.getUint16(offset, true);
   offset += 2;
   const cx = view.getInt32(offset, true);
