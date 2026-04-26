@@ -151,6 +151,14 @@ export class PlayerState {
   applyEffect(id: string, amplifier: number, durationSec: number): void {
     const cur = this.effects.get(id);
     if (cur && cur.amplifier >= amplifier && cur.remainingSec > durationSec) return;
+    if (cur) {
+      // Mutate the existing entry instead of allocating a fresh one —
+      // the Map holds it by reference and re-application is the
+      // common case (drinking same potion again, periodic re-apply).
+      cur.amplifier = amplifier;
+      cur.remainingSec = durationSec;
+      return;
+    }
     this.effects.set(id, { amplifier, remainingSec: durationSec });
   }
 
