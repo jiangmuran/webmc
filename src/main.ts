@@ -2379,6 +2379,22 @@ const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimba
   isFluid,
   isClimbable,
 };
+// Reused leaf-decay BFS scratches. Was allocating a fresh
+// visited:Set<string>, a stack:Array<{x,y,z,d}>, and ~150 stack
+// entries per scan. Fires several times per sec in a forest under
+// the 1/8 random-tick gate. Use parallel typed arrays for the
+// stack and a numeric packed key for the visited set.
+const leafBfsVisitedScratch = new Set<number>();
+const leafBfsStackX: number[] = [];
+const leafBfsStackY: number[] = [];
+const leafBfsStackZ: number[] = [];
+const leafBfsStackD: number[] = [];
+// Pack (x, y, z) into one Number safely. y fits in 9 bits (0..383);
+// x and z get 22 bits each (±2M). Same encoding the chunk renderer
+// uses elsewhere — fits in Number.MAX_SAFE_INTEGER.
+function leafBfsKey(x: number, y: number, z: number): number {
+  return ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff);
+}
 // Reused per-frame boss-bar update payload. Was a fresh object
 // literal per frame any time a boss/custom-boss-bar was visible.
 const bossBarPayload: {
@@ -9953,32 +9969,43 @@ function frame(): void {
           // 1-in-8 chance per scan to keep the cost bounded.
           if (Math.random() < 1 / 8) {
             let found = false;
-            const visited = new Set<string>();
-            const stack: { x: number; y: number; z: number; d: number }[] = [
-              { x, y, z, d: 0 },
-            ];
-            while (stack.length > 0) {
-              const cur = stack.pop();
-              if (!cur) break;
-              const key = `${String(cur.x)},${String(cur.y)},${String(cur.z)}`;
-              if (visited.has(key)) continue;
-              visited.add(key);
-              const ss = world.get(cur.x, cur.y, cur.z);
+            const visited = leafBfsVisitedScratch;
+            visited.clear();
+            const stackX = leafBfsStackX;
+            const stackY = leafBfsStackY;
+            const stackZ = leafBfsStackZ;
+            const stackD = leafBfsStackD;
+            stackX.length = 0;
+            stackY.length = 0;
+            stackZ.length = 0;
+            stackD.length = 0;
+            stackX.push(x);
+            stackY.push(y);
+            stackZ.push(z);
+            stackD.push(0);
+            while (stackX.length > 0) {
+              const cx2 = stackX.pop()!;
+              const cy2 = stackY.pop()!;
+              const cz2 = stackZ.pop()!;
+              const cd2 = stackD.pop()!;
+              const k = leafBfsKey(cx2, cy2, cz2);
+              if (visited.has(k)) continue;
+              visited.add(k);
+              const ss = world.get(cx2, cy2, cz2);
               if (ss === AIR) continue;
               const sn = registry.get(stateId(ss)).name;
               if (sn.endsWith('_log') || sn.endsWith('_wood')) {
                 found = true;
                 break;
               }
-              if (cur.d >= LEAF_MAX_DIST - 1) continue;
-              if (cur.d > 0 && !sn.endsWith('_leaves')) continue;
-              for (const [dx, dy, dz] of NEIGHBOR_OFFSETS_6) {
-                stack.push({
-                  x: cur.x + dx,
-                  y: cur.y + dy,
-                  z: cur.z + dz,
-                  d: cur.d + 1,
-                });
+              if (cd2 >= LEAF_MAX_DIST - 1) continue;
+              if (cd2 > 0 && !sn.endsWith('_leaves')) continue;
+              for (let ni = 0; ni < NEIGHBOR_OFFSETS_6.length; ni++) {
+                const off = NEIGHBOR_OFFSETS_6[ni]!;
+                stackX.push(cx2 + off[0]);
+                stackY.push(cy2 + off[1]);
+                stackZ.push(cz2 + off[2]);
+                stackD.push(cd2 + 1);
               }
             }
             if (leafShouldDecay({ persistent: false, distance: found ? 0 : LEAF_MAX_DIST })) {
