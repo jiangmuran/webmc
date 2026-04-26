@@ -2353,6 +2353,13 @@ const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
 // Reused per-frame look-vector scratch (third-person camera offset,
 // elytra glide thrust). Was new THREE.Vector3() per call.
 const frameLookTmp = new THREE.Vector3();
+// Reused per-frame fp.update options object — was a fresh object
+// literal per frame, ~60 throwaway objects/sec for nothing.
+const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimbable: typeof isClimbable } = {
+  isSolid,
+  isFluid,
+  isClimbable,
+};
 // Reused gamepad poll scratch. Was allocating a state {axes, buttons},
 // a fresh axes literal, a fresh buttons.map(), an intent, and an inner
 // look {yaw, pitch} every frame for connected pads.
@@ -8158,7 +8165,7 @@ function frame(): void {
     }
   }
 
-  fp.update(dtSec, { isSolid, isFluid, isClimbable });
+  fp.update(dtSec, fpUpdateOpts);
   if (touch) {
     if (touch.state.primary && gameMode === 'spectator') {
       // Spectator can't attack/break — same gate as the desktop attack

@@ -23,6 +23,12 @@ const FACE_FROM_AXIS_AND_STEP: Record<number, Record<number, BlockFace>> = {
   2: { 1: FACE_NZ, [-1]: FACE_PZ },
 };
 
+// Shared mutable hit. Block-outline cast runs every frame and act()
+// runs on every place/break. All callers consume the result fields
+// synchronously without keeping the reference, so reusing one object
+// avoids ~60 throwaway hit objects/sec.
+const SHARED_HIT: RayHit = { bx: 0, by: 0, bz: 0, face: FACE_PY, distance: 0 };
+
 // Amanatides–Woo voxel ray traversal. Walks voxels in order along a ray
 // until maxDistance, stopping at the first solid cell. Face is the one the
 // ray entered through.
@@ -59,7 +65,12 @@ export function raycastVoxels(
   // face=FACE_PY as a sentinel in that case and distance=0. Most callers
   // should check distance > 0 before using face.
   if (isSolid(vx, vy, vz)) {
-    return { bx: vx, by: vy, bz: vz, face: FACE_PY, distance: 0 };
+    SHARED_HIT.bx = vx;
+    SHARED_HIT.by = vy;
+    SHARED_HIT.bz = vz;
+    SHARED_HIT.face = FACE_PY;
+    SHARED_HIT.distance = 0;
+    return SHARED_HIT;
   }
 
   let distance = 0;
@@ -99,7 +110,12 @@ export function raycastVoxels(
     if (distance > maxDistance) return null;
     if (isSolid(vx, vy, vz)) {
       const face = FACE_FROM_AXIS_AND_STEP[enteredAxis]?.[enteredStep] ?? FACE_PY;
-      return { bx: vx, by: vy, bz: vz, face, distance };
+      SHARED_HIT.bx = vx;
+      SHARED_HIT.by = vy;
+      SHARED_HIT.bz = vz;
+      SHARED_HIT.face = face;
+      SHARED_HIT.distance = distance;
+      return SHARED_HIT;
     }
   }
   return null;
