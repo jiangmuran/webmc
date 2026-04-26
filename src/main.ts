@@ -59,6 +59,8 @@ import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
 import { absorbWater } from './blocks/sponge';
+import { shouldDecay as leafShouldDecay, MAX_DISTANCE as LEAF_MAX_DIST } from './blocks/leaf_decay';
+import { shouldFreezeWater, shouldMeltIce, FREEZE_RANDOM_TICK_CHANCE } from './blocks/ice_form_melt';
 import { rollXp as rollMobXp } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -6962,6 +6964,24 @@ let fluidTickAccum = 0;
 let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
 const CROP_TICK_SEC = 1;
+const NEIGHBOR_OFFSETS_6: readonly (readonly [number, number, number])[] = [
+  [1, 0, 0],
+  [-1, 0, 0],
+  [0, 1, 0],
+  [0, -1, 0],
+  [0, 0, 1],
+  [0, 0, -1],
+];
+const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
+  'webmc:oak_leaves': 'webmc:oak_sapling',
+  'webmc:spruce_leaves': 'webmc:spruce_sapling',
+  'webmc:birch_leaves': 'webmc:birch_sapling',
+  'webmc:jungle_leaves': 'webmc:jungle_sapling',
+  'webmc:acacia_leaves': 'webmc:acacia_sapling',
+  'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
+  'webmc:cherry_leaves': 'webmc:cherry_sapling',
+  'webmc:azalea_leaves': 'webmc:azalea',
+};
 const fallableIds = new Set<number>();
 const FALLABLE_BLOCKS = [
   'webmc:sand',
@@ -9428,6 +9448,130 @@ function frame(): void {
             }
             world.set(nx, ny, nz, makeState(fireId, 0));
             touchWorldEdit(nx, ny, nz, fireId);
+          }
+        } else if (name.endsWith('_leaves')) {
+          // Leaf decay: BFS up to LEAF_MAX_DIST-1 looking for any log.
+          // If none found within that radius, the leaf is "disconnected"
+          // — it falls (drops + becomes air). Was unwired since M3, so
+          // chopped trees left their leaf canopies floating forever.
+          // 1-in-8 chance per scan to keep the cost bounded.
+          if (Math.random() < 1 / 8) {
+            let found = false;
+            const visited = new Set<string>();
+            const stack: { x: number; y: number; z: number; d: number }[] = [
+              { x, y, z, d: 0 },
+            ];
+            while (stack.length > 0) {
+              const cur = stack.pop();
+              if (!cur) break;
+              const key = `${String(cur.x)},${String(cur.y)},${String(cur.z)}`;
+              if (visited.has(key)) continue;
+              visited.add(key);
+              const ss = world.get(cur.x, cur.y, cur.z);
+              if (ss === AIR) continue;
+              const sn = registry.get(stateId(ss)).name;
+              if (sn.endsWith('_log') || sn.endsWith('_wood')) {
+                found = true;
+                break;
+              }
+              if (cur.d >= LEAF_MAX_DIST - 1) continue;
+              if (cur.d > 0 && !sn.endsWith('_leaves')) continue;
+              for (const [dx, dy, dz] of NEIGHBOR_OFFSETS_6) {
+                stack.push({
+                  x: cur.x + dx,
+                  y: cur.y + dy,
+                  z: cur.z + dz,
+                  d: cur.d + 1,
+                });
+              }
+            }
+            if (leafShouldDecay({ persistent: false, distance: found ? 0 : LEAF_MAX_DIST })) {
+              const def2 = registry.get(id);
+              const drops: { itemId: number; count: number; color?: number }[] = [];
+              if (Math.random() < 0.05) {
+                const sapName = LEAF_TO_SAPLING_FOR_DECAY[name];
+                if (sapName !== undefined) {
+                  const sId = itemRegistry.byName(sapName);
+                  if (sId !== undefined) drops.push({ itemId: sId, count: 1 });
+                }
+              }
+              if (Math.random() < 0.02) {
+                const stickId = itemRegistry.byName('webmc:stick');
+                if (stickId !== undefined) drops.push({ itemId: stickId, count: 1 });
+              }
+              if (name === 'webmc:oak_leaves' && Math.random() < 0.005) {
+                const aId = itemRegistry.byName('webmc:apple');
+                if (aId !== undefined) drops.push({ itemId: aId, count: 1 });
+              }
+              for (const d of drops) {
+                droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                  itemId: d.itemId,
+                  count: d.count,
+                  color: def2.color,
+                });
+              }
+              world.set(x, y, z, AIR);
+              touchWorldEdit(x, y, z, 0);
+            }
+          }
+        } else if (name === 'webmc:ice') {
+          // Ice melt: light > 11 and no solid above. Was unwired —
+          // ice in well-lit caves never melted to water.
+          const above = world.get(x, y + 1, z);
+          const hasSolidAbove = above !== AIR && registry.get(stateId(above)).opaque;
+          const cxIce = x >> 4;
+          const czIce = z >> 4;
+          const ltIce = lightCache.get(lightKey(cxIce, czIce));
+          const lbIce = ltIce ? getLightByte(ltIce, x & 0xf, y, z & 0xf) : 0xff;
+          const lightHere = Math.max((lbIce >>> 4) & 0xf, lbIce & 0xf);
+          const biomeIdIce = generator.biomeAt(x, z);
+          const biomeNameIce = biomeIdIce === 1 ? 'forest' : 'plains';
+          if (
+            !hasSolidAbove &&
+            shouldMeltIce({
+              biomeTemperature: biomeTemperature(biomeNameIce),
+              isNight: dayNight.timeOfDay > 0.5,
+              hasSkyLight: true,
+              nearbyWarmBlock: false,
+              lightLevel: lightHere,
+            })
+          ) {
+            const waterId = registry.byName('webmc:water');
+            if (waterId !== undefined) {
+              world.set(x, y, z, makeState(waterId, 0));
+              touchWorldEdit(x, y, z, waterId);
+            }
+          }
+        } else if (name === 'webmc:water') {
+          // Ice form: cold biome + night + sky exposed + low light.
+          // No-op in plains/forest (temperatures too warm); wired so
+          // it just works when cold biome generator ships in M10.
+          if (Math.random() < FREEZE_RANDOM_TICK_CHANCE) {
+            const above = world.get(x, y + 1, z);
+            const hasSky = above === AIR;
+            const cxFr = x >> 4;
+            const czFr = z >> 4;
+            const ltFr = lightCache.get(lightKey(cxFr, czFr));
+            const lbFr = ltFr ? getLightByte(ltFr, x & 0xf, y, z & 0xf) : 0xff;
+            const lightHereFr = Math.max((lbFr >>> 4) & 0xf, lbFr & 0xf);
+            const biomeIdFr = generator.biomeAt(x, z);
+            const biomeNameFr = biomeIdFr === 1 ? 'forest' : 'plains';
+            if (
+              hasSky &&
+              shouldFreezeWater({
+                biomeTemperature: biomeTemperature(biomeNameFr),
+                isNight: dayNight.timeOfDay > 0.5,
+                hasSkyLight: true,
+                nearbyWarmBlock: false,
+                lightLevel: lightHereFr,
+              })
+            ) {
+              const iceId = registry.byName('webmc:ice');
+              if (iceId !== undefined) {
+                world.set(x, y, z, makeState(iceId, 0));
+                touchWorldEdit(x, y, z, iceId);
+              }
+            }
           }
         }
       }
