@@ -3529,6 +3529,10 @@ canvas.addEventListener('mousedown', (e) => {
     return;
   }
   if (e.button !== 0) return;
+  // Spectator: ghost mode, no damage to mobs (matches the canBreak gate
+  // I added for blocks). Without this, spectators could one-shot any mob
+  // they aimed at — not vanilla behaviour.
+  if (gameMode === 'spectator') return;
   const origin = camera.position;
   const look = fp.lookVector();
   const reach = 5;
