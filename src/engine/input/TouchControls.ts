@@ -15,6 +15,12 @@ export interface TouchInputState {
   // couldn't open shulker boxes through the chest UI shift-bypass,
   // couldn't edge-cling at cliffs, and couldn't sneak past mobs.
   sneak: boolean;
+  // Edge-triggered: true once when the user taps the inventory button.
+  // The host clears it back to false after handling. Touch users had
+  // no way to open the inventory at all before this.
+  inventoryToggle: boolean;
+  // Edge-triggered: tap to drop the held stack (vanilla Q).
+  drop: boolean;
 }
 
 export class TouchControls {
@@ -28,6 +34,8 @@ export class TouchControls {
     jump: false,
     sprint: false,
     sneak: false,
+    inventoryToggle: false,
+    drop: false,
   };
 
   private container: HTMLElement | null = null;
@@ -112,6 +120,14 @@ export class TouchControls {
     });
     this.addHoldButton(container, 'Sneak', '92%', '85%', (down) => {
       this.state.sneak = down;
+    });
+    // Inventory + drop are tap-to-edge-fire: the host reads the flag
+    // then clears it. Hold-buttons would re-fire every frame.
+    this.addHoldButton(container, 'Inv', '70%', '70%', (down) => {
+      if (down) this.state.inventoryToggle = true;
+    });
+    this.addHoldButton(container, 'Drop', '84%', '70%', (down) => {
+      if (down) this.state.drop = true;
     });
 
     window.addEventListener('touchstart', this.onTouchStart, { passive: false });

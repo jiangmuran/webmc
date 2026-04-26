@@ -7429,6 +7429,54 @@ function frame(): void {
     // touch, so edge-cling, shift-bypass-use on chests, and stealth past
     // mobs were all desktop-only.
     if (touch.state.sneak) fp.input.sneak = true;
+    // Edge-triggered touch buttons (Inv / Drop). Cleared after handling
+    // so they fire once per tap. Without these, touch users had no way
+    // to open inventory or drop the held stack.
+    if (touch.state.inventoryToggle) {
+      touch.state.inventoryToggle = false;
+      if (
+        !chestUI.isVisible() &&
+        !creativeInv.isVisible() &&
+        !survivalInv.isVisible() &&
+        !pauseMenu.isVisible() &&
+        !deathScreen.isVisible() &&
+        !chatInput.isOpen()
+      ) {
+        if (gameMode === 'creative') creativeInv.show();
+        else if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
+        fp.inputBlocked = true;
+      } else if (survivalInv.isVisible()) {
+        survivalInv.hide();
+      } else if (creativeInv.isVisible()) {
+        creativeInv.hide();
+      } else if (chestUI.isVisible()) {
+        chestUI.hide();
+      }
+    }
+    if (touch.state.drop) {
+      touch.state.drop = false;
+      if (gameMode === 'survival' || gameMode === 'adventure') {
+        const slotIdx = inventory.selectedHotbar;
+        const stk = inventory.hotbar[slotIdx];
+        if (stk && stk.count > 0) {
+          const itemDef = itemRegistry.get(stk.itemId);
+          const dropCount = 1;
+          const remaining = stk.count - dropCount;
+          inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
+          const look = fp.lookVector();
+          const color: readonly [number, number, number] =
+            itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 140, 80];
+          droppedItems.spawn(
+            fp.position.x + look.x * 1.2,
+            fp.position.y,
+            fp.position.z + look.z * 1.2,
+            { itemId: stk.itemId, count: dropCount, color, damage: stk.damage },
+            1.5,
+          );
+          sfx.play('click');
+        }
+      }
+    }
   }
 
   if (gyroYawAccum !== 0) {
