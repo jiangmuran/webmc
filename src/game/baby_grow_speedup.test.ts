@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { feed, tick, growFraction, GROW_TICKS_DEFAULT, type BabyState } from './baby_grow_speedup';
 
-const baby: BabyState = { ageTicks: 0, isBaby: true };
+// tick mutates in place; build a fresh baby per test to keep them hermetic.
+const newBaby = (): BabyState => ({ ageTicks: 0, isBaby: true });
 
 describe('baby grow speedup', () => {
   it('feed ages baby', () => {
-    expect(feed(baby).ageTicks).toBeGreaterThan(0);
+    expect(feed(newBaby()).ageTicks).toBeGreaterThan(0);
   });
 
   it('adult ignores food', () => {
@@ -14,7 +15,7 @@ describe('baby grow speedup', () => {
   });
 
   it('tick ages', () => {
-    expect(tick(baby).ageTicks).toBe(1);
+    expect(tick(newBaby()).ageTicks).toBe(1);
   });
 
   it('matures at threshold', () => {
