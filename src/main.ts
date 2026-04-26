@@ -6875,6 +6875,10 @@ function flushDirty(): void {
       const dyB = b * 16 - py;
       return dyA * dyA - dyB * dyB;
     });
+    // Hoist lightCache lookup out of the cy loop — chunk light is per-
+    // chunk, not per-section, so all 24 dirty sections of a chunk would
+    // independently re-do the lookup.
+    const chunkLight = lightCache.get(lightKey(chunk.cx, chunk.cz));
     for (const cy of dirty) {
       if (dispatched >= budget) break;
       (chunk.meshDirty as Set<number>).delete(cy);
@@ -6889,8 +6893,9 @@ function flushDirty(): void {
         continue;
       }
       const borders = borderFor(chunk.cx, cy, chunk.cz);
-      const light = lightCache.get(lightKey(chunk.cx, chunk.cz));
-      const lightSlice = light ? flatLightForSection(light, cy) : { sky: null, block: null };
+      const lightSlice = chunkLight
+        ? flatLightForSection(chunkLight, cy)
+        : { sky: null, block: null };
       void mesherClient
         .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, {
           flatSkyLight: lightSlice.sky,
