@@ -9,14 +9,18 @@ export interface SwayState {
 export const SWAY_SMOOTHING = 0.2;
 export const SWAY_MAX = 0.5;
 
+// In-place mutation — was returning fresh {x, y} per call. settle is
+// per-frame; original allocation showed up in heap snapshots.
 export function onMouseDelta(s: SwayState, dx: number, dy: number): SwayState {
-  const nx = s.x - dx * 0.002;
-  const ny = s.y + dy * 0.002;
-  return { x: clamp(nx), y: clamp(ny) };
+  s.x = clamp(s.x - dx * 0.002);
+  s.y = clamp(s.y + dy * 0.002);
+  return s;
 }
 
 export function settle(s: SwayState): SwayState {
-  return { x: s.x * (1 - SWAY_SMOOTHING), y: s.y * (1 - SWAY_SMOOTHING) };
+  s.x *= 1 - SWAY_SMOOTHING;
+  s.y *= 1 - SWAY_SMOOTHING;
+  return s;
 }
 
 function clamp(v: number): number {
