@@ -3661,6 +3661,8 @@ canvas.addEventListener('mousedown', (e) => {
   }
   if (e.button === 1) {
     e.preventDefault();
+    // Spectator: no inventory mutation, no held-block change.
+    if (gameMode === 'spectator') return;
     const hit = interaction.castRay();
     if (!hit) return;
     const pickedState = world.get(hit.bx, hit.by, hit.bz);
