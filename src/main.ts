@@ -9250,7 +9250,11 @@ function frame(): void {
         if (itemId === undefined) break;
         const itemDef = itemRegistry.get(itemId);
         consumeFoodItem(itemId, itemDef.hungerRestore ?? 0, itemDef.saturation ?? 0);
-        consumeInventoryItem(itemId, 1);
+        // Creative players don't lose food when eating (vanilla parity).
+        // Was unconditional — eating in creative still depleted hotbar.
+        if (gameMode === 'survival' || gameMode === 'adventure') {
+          consumeInventoryItem(itemId, 1);
+        }
         // Re-arm: if the player is still holding right-click and still has
         // the same food in the held slot, start the next bite. Vanilla MC
         // does the same — you can graze a stack of bread without re-clicking.
