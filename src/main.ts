@@ -7112,6 +7112,13 @@ let fluidTickAccum = 0;
 let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
 const CROP_TICK_SEC = 1;
+// Reused per-fluid-tick scratches. Were allocated fresh on every
+// fluid tick (every 0.25s, much more frequent at active lava lakes /
+// flowing rivers): a Set of touched chunk keys and a Map of chunk →
+// Set of dirty cy slots inside that chunk.
+const fluidChunksToRelightScratch = new Set<number>();
+const fluidSectionsToRemeshScratch = new Map<number, Set<number>>();
+const fluidSectionSetPool: Set<number>[] = [];
 const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
   'webmc:wheat': 'wheat',
   'webmc:carrots': 'carrot',
@@ -9960,8 +9967,17 @@ function frame(): void {
       // — markChunkAllDirty was rebuilding all 24 sections of every
       // touched chunk every fluid tick, costing 24x what it should.
       // Numeric packed key avoids per-update string alloc + split-back.
-      const chunksToRelight = new Set<number>();
-      const sectionsToRemesh = new Map<number, Set<number>>();
+      // Recycle the per-tick Set + Map across calls; the inner per-chunk
+      // Sets go back into a small pool to avoid re-allocating them at
+      // active lava lakes.
+      const chunksToRelight = fluidChunksToRelightScratch;
+      chunksToRelight.clear();
+      const sectionsToRemesh = fluidSectionsToRemeshScratch;
+      for (const inner of sectionsToRemesh.values()) {
+        inner.clear();
+        fluidSectionSetPool.push(inner);
+      }
+      sectionsToRemesh.clear();
       for (const p of changed) {
         const cx = Math.floor(p.x / 16);
         const cz = Math.floor(p.z / 16);
@@ -9970,7 +9986,7 @@ function frame(): void {
         chunksToRelight.add(ck);
         let s = sectionsToRemesh.get(ck);
         if (!s) {
-          s = new Set();
+          s = fluidSectionSetPool.pop() ?? new Set<number>();
           sectionsToRemesh.set(ck, s);
         }
         s.add(cy);
