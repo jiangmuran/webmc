@@ -7061,6 +7061,10 @@ window.addEventListener('beforeunload', () => {
   void persistDB.setMeta('playerStats', playerStats);
   void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
   void persistDB.setMeta('dayCounter', dayCounter);
+  // Was missing fluidCells and hotbarSelected — closing the tab during
+  // active fluid placement or after switching hotbar slot lost both.
+  void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+  saveHotbarIfChanged();
 });
 
 const urlParams = new URLSearchParams(window.location.search);
