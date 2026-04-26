@@ -2439,6 +2439,42 @@ function blockShortNameFn(id: number): string {
   BLOCK_SHORT_NAME_BY_ID[id] = s;
   return s;
 }
+type FootStepMat =
+  | 'wood'
+  | 'stone'
+  | 'gravel'
+  | 'grass'
+  | 'sand'
+  | 'snow'
+  | 'wool'
+  | 'metal'
+  | undefined;
+// Per-block-id memo for the footstep-material classifier. The frame
+// loop runs the name.includes() chain (7 scans on a stable string)
+// every tick the player is onGround, even when standing still on a
+// constant block — pure overhead. Map stateId → material once and
+// reuse forever. null sentinel = computed but no match (so we don't
+// re-scan blocks that classify as undefined).
+const FOOT_STEP_MAT_BY_ID: (FootStepMat | null)[] = [];
+function footStepMatForStateId(stateId: number): FootStepMat {
+  const v = FOOT_STEP_MAT_BY_ID[stateId];
+  if (v === null) return undefined;
+  if (v !== undefined) return v;
+  const fname = registry.get(stateId).name;
+  let mat: FootStepMat;
+  if (fname.includes('log') || fname.includes('plank')) mat = 'wood';
+  else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick'))
+    mat = 'stone';
+  else if (fname.includes('gravel')) mat = 'gravel';
+  else if (fname.includes('sand')) mat = 'sand';
+  else if (fname.includes('snow')) mat = 'snow';
+  else if (fname.includes('wool')) mat = 'wool';
+  else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper'))
+    mat = 'metal';
+  else if (fname.includes('grass') || fname.includes('dirt')) mat = 'grass';
+  FOOT_STEP_MAT_BY_ID[stateId] = mat ?? null;
+  return mat;
+}
 // Reused inventory.add input scratch. Inventory.add reads itemId +
 // count + damage synchronously and stores fresh stack() copies into
 // slots; no reference retention. Most event-handler add() callers
@@ -8907,19 +8943,9 @@ function frame(): void {
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   // Surface-aware footsteps: pick material from block under feet.
-  let stepMat:
-    | 'wood'
-    | 'stone'
-    | 'gravel'
-    | 'grass'
-    | 'sand'
-    | 'snow'
-    | 'wool'
-    | 'metal'
-    | 'water'
-    | undefined;
+  let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
-    const fname = registry.get(
+    stepMat = footStepMatForStateId(
       stateId(
         world.get(
           Math.floor(fp.position.x),
@@ -8927,17 +8953,7 @@ function frame(): void {
           Math.floor(fp.position.z),
         ),
       ),
-    ).name;
-    if (fname.includes('log') || fname.includes('plank')) stepMat = 'wood';
-    else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick'))
-      stepMat = 'stone';
-    else if (fname.includes('gravel')) stepMat = 'gravel';
-    else if (fname.includes('sand')) stepMat = 'sand';
-    else if (fname.includes('snow')) stepMat = 'snow';
-    else if (fname.includes('wool')) stepMat = 'wool';
-    else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper'))
-      stepMat = 'metal';
-    else if (fname.includes('grass') || fname.includes('dirt')) stepMat = 'grass';
+    );
   } else if (fp.inFluid === 'water') {
     stepMat = 'water';
   }
