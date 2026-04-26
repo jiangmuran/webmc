@@ -7746,6 +7746,22 @@ function spawnLightningKillRewards(kind: string, pos: { x: number; y: number; z:
 // burned a steady stream of throwaway objects.
 const touchAffectedCx = new Int32Array(5);
 const touchAffectedCz = new Int32Array(5);
+// Reused per-sample crop query scratch. Random-tick scan does 80
+// crop samples per second; was a fresh literal per sample.
+const cropQueryScratch: CropQuery = {
+  crop: 'wheat',
+  age: 0,
+  lightAbove: 0,
+  hydrated: false,
+  inRowWithSameCrop: false,
+  rand: Math.random,
+};
+// Same idea for the sapling stage/light/clearance ctx.
+const saplingQueryScratch: { stage: 0 | 1; lightLevel: number; verticalClearance: number } = {
+  stage: 0,
+  lightLevel: 0,
+  verticalClearance: 0,
+};
 const touchWorldEditApplyArg: { x: number; y: number; z: number; block: number; meta: number } = {
   x: 0,
   y: 0,
@@ -9729,14 +9745,13 @@ function frame(): void {
             }
           }
         }
-        const result = cropRandomTick({
-          crop: cropKind,
-          age,
-          lightAbove,
-          hydrated,
-          inRowWithSameCrop: false,
-          rand: Math.random,
-        });
+        cropQueryScratch.crop = cropKind;
+        cropQueryScratch.age = age;
+        cropQueryScratch.lightAbove = lightAbove;
+        cropQueryScratch.hydrated = hydrated;
+        cropQueryScratch.inRowWithSameCrop = false;
+        cropQueryScratch.rand = Math.random;
+        const result = cropRandomTick(cropQueryScratch);
         if (result === 'grew') {
           world.set(x, y, z, makeState(id, age + 1));
           touchWorldEdit(x, y, z, id);
@@ -9772,10 +9787,10 @@ function frame(): void {
             if (world.get(x, y + h, z) !== AIR) break;
             clearance++;
           }
-          const result = saplingRandomTick(
-            { stage: stage as 0 | 1, lightLevel, verticalClearance: clearance },
-            Math.random,
-          );
+          saplingQueryScratch.stage = stage as 0 | 1;
+          saplingQueryScratch.lightLevel = lightLevel;
+          saplingQueryScratch.verticalClearance = clearance;
+          const result = saplingRandomTick(saplingQueryScratch, Math.random);
           if (result === 'grow_tree') {
             growTreeAt(x, y, z, name);
           } else if (result.stage !== stage) {
