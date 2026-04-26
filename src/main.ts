@@ -2436,6 +2436,9 @@ const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: numbe
   state: caneTickStateScratch,
   currentHeight: 1,
 };
+// Bamboo growth ctx scratch — same pattern, fresh literal per
+// bamboo block per random tick.
+const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
 // Reused per-frame hotbar-counts list. Was a fresh number[] every
 // frame in survival/adventure (and a fresh empty [] every frame in
 // creative for the 'infinite' marker).
@@ -9932,7 +9935,9 @@ function frame(): void {
             totalHeight++;
           }
           if (totalHeight >= BAMBOO_MAX_H) continue;
-          if (bambooGrow({ totalHeight, ageBoost: false }, Math.random)) {
+          bambooCtxScratch.totalHeight = totalHeight;
+          bambooCtxScratch.ageBoost = false;
+          if (bambooGrow(bambooCtxScratch, Math.random)) {
             world.set(x, y + 1, z, makeState(id, 0));
             touchWorldEdit(x, y + 1, z, id);
           }
