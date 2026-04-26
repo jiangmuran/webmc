@@ -879,6 +879,10 @@ export interface MobTickContext {
   // buoyancy — without it, mobs sank to the bottom of any water and
   // walked along the floor like the seafloor was a road.
   isFluid?: (x: number, y: number, z: number) => 'water' | 'lava' | null;
+  // Vanilla MC: sneaking reduces mob detection range by ~4 blocks (fully
+  // invisible at >16 blocks if sneaking). When true, aggroRangeSq is
+  // multiplied by ~0.5 to halve the detection distance.
+  playerSneaking?: boolean;
 }
 
 export class MobWorld {
@@ -1025,7 +1029,14 @@ export class MobWorld {
       const dx = ctx.playerPos.x - mob.position.x;
       const dz = ctx.playerPos.z - mob.position.z;
       const distSq = dx * dx + dz * dz;
-      if (distSq <= mob.def.aggroRangeSq) {
+      // Sneak reduces aggro radius. Vanilla applies a ~0.5x factor on the
+      // detection range when the player is sneaking (effective ~half-radius
+      // squared); without this, sneaking through a cave was indistinguishable
+      // from sprinting in.
+      const effectiveAggroSq = ctx.playerSneaking
+        ? mob.def.aggroRangeSq * 0.25
+        : mob.def.aggroRangeSq;
+      if (distSq <= effectiveAggroSq) {
         const len = Math.sqrt(distSq) || 1;
         const nx = dx / len;
         const nz = dz / len;

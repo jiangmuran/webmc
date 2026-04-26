@@ -8434,6 +8434,7 @@ function frame(): void {
       isSolid,
       isFluid,
       playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+      playerSneaking: fp.input.sneak,
       damagePlayer: (amt, attackerPos) => {
         const scaled = amt * mobDamageMultiplier;
         const armorPts = computeArmorPoints();
