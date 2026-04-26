@@ -18,6 +18,14 @@ export function keyOf(p: PosKey): string {
   return `${p.x.toString()},${p.y.toString()},${p.z.toString()}`;
 }
 
+// Same encoding as keyOf but takes raw coords — saves callers building
+// a {x,y,z} literal just to pass through. The hot tickFluid path hits
+// this dozens of times per cell per tick (downward, four horizontal
+// neighbors, snapshot-during-flow, BFS dry-up).
+export function keyOfXYZ(x: number, y: number, z: number): string {
+  return `${x.toString()},${y.toString()},${z.toString()}`;
+}
+
 export function parseKey(k: string): PosKey {
   const [x, y, z] = k.split(',').map(Number);
   return { x: x ?? 0, y: y ?? 0, z: z ?? 0 };
@@ -51,9 +59,12 @@ export function tickFluid(
 ): FluidTickResult {
   const updates = new Map<string, FluidCell | null>();
   const snapshot: FluidSampler = (x, y, z) => {
-    const u = updates.get(keyOf({ x, y, z }));
+    // Compute the key once; was building two {x,y,z} literals + two
+    // template strings per snapshot lookup.
+    const k = keyOfXYZ(x, y, z);
+    const u = updates.get(k);
     if (u !== undefined) return u;
-    return cells.get(keyOf({ x, y, z })) ?? null;
+    return cells.get(k) ?? null;
   };
 
   for (const [key, cell] of cells) {
@@ -62,7 +73,7 @@ export function tickFluid(
 
     // Downward flow: if below is empty and not solid, fill at this cell's
     // level (capped). Source cells spread downward at full level.
-    const belowKey = keyOf({ x: pos.x, y: pos.y - 1, z: pos.z });
+    const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
     if (!isSolid(pos.x, pos.y - 1, pos.z)) {
       const below = snapshot(pos.x, pos.y - 1, pos.z);
       const targetLevel = cell.source ? LEVEL_SOURCE - 1 : Math.max(cell.level, LEVEL_SOURCE - 1);
@@ -97,7 +108,7 @@ export function tickFluid(
       const neighbour = snapshot(nx, ny, nz);
       if (neighbour && neighbour.kind !== cell.kind) continue;
       if (neighbour && neighbour.level >= outLevel) continue;
-      updates.set(keyOf({ x: nx, y: ny, z: nz }), {
+      updates.set(keyOfXYZ(nx, ny, nz), {
         kind: cell.kind,
         level: outLevel,
         source: false,
@@ -133,7 +144,7 @@ export function tickFluid(
     const c = merged.get(k);
     if (c === undefined) continue;
     const pos = parseKey(k);
-    const belowKey = keyOf({ x: pos.x, y: pos.y - 1, z: pos.z });
+    const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
     if (!reachable.has(belowKey)) {
       if (merged.get(belowKey)?.kind === c.kind) {
         reachable.add(belowKey);
@@ -141,7 +152,7 @@ export function tickFluid(
       }
     }
     for (const [dx, dz] of HORIZ) {
-      const nk = keyOf({ x: pos.x + dx, y: pos.y, z: pos.z + dz });
+      const nk = keyOfXYZ(pos.x + dx, pos.y, pos.z + dz);
       if (reachable.has(nk)) continue;
       const nc = merged.get(nk);
       if (nc?.kind !== c.kind) continue;

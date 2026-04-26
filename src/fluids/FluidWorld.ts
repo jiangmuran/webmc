@@ -6,7 +6,7 @@ import {
   type FluidKind,
   LEVEL_SOURCE,
   applyFluidUpdates,
-  keyOf,
+  keyOfXYZ,
   parseKey,
   tickFluid,
 } from './field';
@@ -52,19 +52,19 @@ export class FluidWorld {
   }
 
   setSource(x: number, y: number, z: number, kind: FluidKind): void {
-    const k = keyOf({ x, y, z });
+    const k = keyOfXYZ(x, y, z);
     this.cells.set(k, { kind, level: LEVEL_SOURCE, source: true });
     this.world.set(x, y, z, this.blockStateFor(kind));
   }
 
   clear(x: number, y: number, z: number): void {
-    const k = keyOf({ x, y, z });
+    const k = keyOfXYZ(x, y, z);
     this.cells.delete(k);
     this.world.set(x, y, z, AIR);
   }
 
   get(x: number, y: number, z: number): FluidCell | null {
-    return this.cells.get(keyOf({ x, y, z })) ?? null;
+    return this.cells.get(keyOfXYZ(x, y, z)) ?? null;
   }
 
   size(): number {
@@ -172,7 +172,7 @@ export class FluidWorld {
     for (const c of cells) {
       const here = this.world.get(c.x, c.y, c.z);
       if (here !== this.blockStateFor(c.kind)) continue;
-      this.cells.set(keyOf({ x: c.x, y: c.y, z: c.z }), {
+      this.cells.set(keyOfXYZ(c.x, c.y, c.z), {
         kind: c.kind,
         level: c.level,
         source: c.source,
