@@ -2377,6 +2377,31 @@ const bossBarPayload: {
   style: 'progress',
   visible: false,
 };
+// Reused per-frame DebugFrame payload — was a 22-field object literal
+// (with three nested {x,y,z}/{cx,cz}/{yaw,pitch} sub-objects) on every
+// frame the F3 debug overlay was open.
+const debugFramePos = { x: 0, y: 0, z: 0 };
+const debugFrameLook = { yaw: 0, pitch: 0 };
+const debugFrameChunkPos = { cx: 0, cz: 0 };
+const debugFramePayload: import('./ui/DebugOverlay').DebugFrame = {
+  fps: 0,
+  frameMs: 0,
+  position: debugFramePos,
+  look: debugFrameLook,
+  chunkPos: debugFrameChunkPos,
+  meshCount: 0,
+  triangles: 0,
+  pendingChunks: 0,
+  gameMode: 'creative',
+  timeOfDay: 0,
+  health: 0,
+  hunger: 0,
+  fly: false,
+  onGround: false,
+  fluid: null,
+  viewDistance: 0,
+  rendererName: '',
+};
 // Reused gamepad poll scratch. Was allocating a state {axes, buttons},
 // a fresh axes literal, a fresh buttons.map(), an intent, and an inner
 // look {yaw, pitch} every frame for connected pads.
@@ -10341,35 +10366,38 @@ function frame(): void {
   }
 
   if (debugOverlay.isEnabled()) {
-    debugOverlay.render({
-      fps: stats.fps,
-      frameMs: stats.frameMs,
-      position: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      look: { yaw: fp.yaw, pitch: fp.pitch },
-      chunkPos: { cx: Math.floor(fp.position.x / 16), cz: Math.floor(fp.position.z / 16) },
-      meshCount: chunkRenderer.meshCount,
-      triangles: chunkRenderer.triangleCount,
-      pendingChunks: loaderStats.pending,
-      gameMode,
-      timeOfDay: dayNight.timeOfDay,
-      health: playerState.health,
-      hunger: playerState.hunger,
-      fly: fp.input.fly,
-      onGround: fp.onGround,
-      fluid: fp.inFluid,
-      viewDistance: loader.viewRadius,
-      rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
-      mobs: mobWorld.size,
-      hostile: mobWorld.hostileCount,
-      passive: mobWorld.passiveCount,
-      drops: droppedItems.size,
-      xpOrbs: xpOrbs.size,
-      seed: WORLD_SEED,
-      biome:
-        generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1
-          ? 'forest'
-          : 'plains',
-    });
+    debugFramePayload.fps = stats.fps;
+    debugFramePayload.frameMs = stats.frameMs;
+    debugFramePos.x = fp.position.x;
+    debugFramePos.y = fp.position.y;
+    debugFramePos.z = fp.position.z;
+    debugFrameLook.yaw = fp.yaw;
+    debugFrameLook.pitch = fp.pitch;
+    debugFrameChunkPos.cx = Math.floor(fp.position.x / 16);
+    debugFrameChunkPos.cz = Math.floor(fp.position.z / 16);
+    debugFramePayload.meshCount = chunkRenderer.meshCount;
+    debugFramePayload.triangles = chunkRenderer.triangleCount;
+    debugFramePayload.pendingChunks = loaderStats.pending;
+    debugFramePayload.gameMode = gameMode;
+    debugFramePayload.timeOfDay = dayNight.timeOfDay;
+    debugFramePayload.health = playerState.health;
+    debugFramePayload.hunger = playerState.hunger;
+    debugFramePayload.fly = fp.input.fly;
+    debugFramePayload.onGround = fp.onGround;
+    debugFramePayload.fluid = fp.inFluid;
+    debugFramePayload.viewDistance = loader.viewRadius;
+    debugFramePayload.rendererName = `${rendererInfo.gl}  ${rendererInfo.rend}`;
+    debugFramePayload.mobs = mobWorld.size;
+    debugFramePayload.hostile = mobWorld.hostileCount;
+    debugFramePayload.passive = mobWorld.passiveCount;
+    debugFramePayload.drops = droppedItems.size;
+    debugFramePayload.xpOrbs = xpOrbs.size;
+    debugFramePayload.seed = WORLD_SEED;
+    debugFramePayload.biome =
+      generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1
+        ? 'forest'
+        : 'plains';
+    debugOverlay.render(debugFramePayload);
     hud.textContent = '';
   } else {
     const hour = Math.floor(((dayNight.timeOfDay + 0.25) * 24) % 24);
