@@ -7127,6 +7127,43 @@ const applyMeshResponse = (response: MesherResponse): void => {
   if (!world.has(response.cx, response.cz)) return;
   chunkRenderer.apply(response);
 };
+// Stable per-frame pickup callbacks for droppedItems.tick + xpOrbs
+// .tick. Were inline arrow closures allocated per frame.
+const droppedItemPickupCallback = (out: { itemId: number; count: number; damage?: number }): number => {
+  // Preserve damage on pickup. Was hard-coded to 0, so dropping a
+  // 50% durability tool and walking back over it healed it for free.
+  pickupAddArg.itemId = out.itemId;
+  pickupAddArg.count = out.count;
+  pickupAddArg.damage = out.damage ?? 0;
+  const leftover = inventory.add(pickupAddArg);
+  const taken = out.count - leftover;
+  if (taken > 0) {
+    sfx.play('click');
+    const itemDef = itemRegistry.get(out.itemId);
+    chatInput.addLine(`+ ${String(taken)} ${itemDef.name.replace(/^webmc:/, '')}`, '#d2ff80');
+  }
+  // Tell DroppedItems how much we couldn't accept; it'll either
+  // delete the entity (leftover === 0) or reduce its count + re-arm
+  // pickup delay (leftover > 0).
+  return leftover;
+};
+const xpOrbPickupCallback = (xp: number): void => {
+  // Mending-style auto-repair: damaged held tool gets durability from XP first.
+  let remaining = xp;
+  const sel = inventory.hotbar[inventory.selectedHotbar];
+  if (sel && sel.damage > 0) {
+    const def = itemRegistry.get(sel.itemId);
+    if (def.durability > 0) {
+      const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
+      const repair = xpToFix * 2;
+      const newDamage = Math.max(0, sel.damage - repair);
+      inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
+      remaining -= xpToFix;
+    }
+  }
+  if (remaining > 0) playerState.addXP(remaining);
+  sfx.play('click');
+};
 function flushDirty(): void {
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
@@ -10536,48 +10573,13 @@ function frame(): void {
     // FAR_POS_BLOCK_PICKUP is reused across frames vs allocating
     // {x:-9999,y:0,z:0} per frame.
     fp.input.sneak || gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
-    (out) => {
-      // Preserve damage on pickup. Was hard-coded to 0, so dropping a
-      // 50% durability tool and walking back over it healed it for free.
-      pickupAddArg.itemId = out.itemId;
-      pickupAddArg.count = out.count;
-      pickupAddArg.damage = out.damage ?? 0;
-      const leftover = inventory.add(pickupAddArg);
-      const taken = out.count - leftover;
-      if (taken > 0) {
-        sfx.play('click');
-        const itemDef = itemRegistry.get(out.itemId);
-        chatInput.addLine(`+ ${String(taken)} ${itemDef.name.replace(/^webmc:/, '')}`, '#d2ff80');
-      }
-      // Tell DroppedItems how much we couldn't accept; it'll either
-      // delete the entity (leftover === 0) or reduce its count + re-arm
-      // pickup delay (leftover > 0). Cleaner than the old re-spawn
-      // workaround which created a new mesh + new id every full-inventory
-      // attempt and slowly piled stacks at the player's feet.
-      return leftover;
-    },
+    droppedItemPickupCallback,
   );
   xpOrbs.tick(
     dtSec,
     isSolid,
     gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
-    (xp) => {
-      // Mending-style auto-repair: damaged held tool gets durability from XP first.
-      let remaining = xp;
-      const sel = inventory.hotbar[inventory.selectedHotbar];
-      if (sel && sel.damage > 0) {
-        const def = itemRegistry.get(sel.itemId);
-        if (def.durability > 0) {
-          const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
-          const repair = xpToFix * 2;
-          const newDamage = Math.max(0, sel.damage - repair);
-          inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
-          remaining -= xpToFix;
-        }
-      }
-      if (remaining > 0) playerState.addXP(remaining);
-      sfx.play('click');
-    },
+    xpOrbPickupCallback,
   );
   if (playerState.xpLevel > lastXpLevel) {
     sfx.play('place');
