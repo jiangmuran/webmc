@@ -7872,12 +7872,17 @@ const mobTickCtx: MobTickContext = {
   },
 };
 
+// Reused per-frame argument objects.
+const afkArg = { lastInputTick: 0, currentTick: 0, idleKickEnabled: false };
+const memArg = { heapUsed: 0, heapLimit: 0 };
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
   tpsTracker.pushMspt(stats.frameMs);
   currentTickCount++;
-  const afkOn = isAfk({ lastInputTick, currentTick: currentTickCount, idleKickEnabled: false });
+  afkArg.lastInputTick = lastInputTick;
+  afkArg.currentTick = currentTickCount;
+  const afkOn = isAfk(afkArg);
   if (afkOn !== (afkBadge.style.display === 'block')) {
     afkBadge.style.display = afkOn ? 'block' : 'none';
   }
@@ -7885,10 +7890,9 @@ function frame(): void {
     performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }
   ).memory;
   if (perfMem) {
-    const lvl = memPressureLevel({
-      heapUsed: perfMem.usedJSHeapSize,
-      heapLimit: perfMem.jsHeapSizeLimit,
-    });
+    memArg.heapUsed = perfMem.usedJSHeapSize;
+    memArg.heapLimit = perfMem.jsHeapSizeLimit;
+    const lvl = memPressureLevel(memArg);
     if (lvl === 'critical' && performance.now() - lastMemoryWarnAt > 30000) {
       lastMemoryWarnAt = performance.now();
       toast.show('High memory pressure — flushing chunks', '#ffd080', 3000);
