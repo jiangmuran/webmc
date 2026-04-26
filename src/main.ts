@@ -1910,6 +1910,16 @@ const lastStatsPos = { x: 0, y: 0, z: 0 };
 // Tracks whether the underwater fog override is currently active so
 // we only re-set the color/near/far on transition (not every frame).
 let lastUnderwaterFog = false;
+// Per-frame biome lookup cache. biomeAt() does fbm2 with octaves=2
+// (~30+ floating-point ops). frame() calls it twice each tick (sky/fog
+// tint + debug overlay), and the result only changes when the player
+// crosses a block-column boundary — block transitions happen ~10x/sec
+// while frames render at 60Hz, so the cache hits ~83% of frames in
+// motion and 100% when standing still. Sentinel value Number.MAX_SAFE_INTEGER
+// guarantees a miss on the first call after world spawn.
+let cachedBiomeBx = Number.MAX_SAFE_INTEGER;
+let cachedBiomeBz = Number.MAX_SAFE_INTEGER;
+let cachedBiomeId = 0;
 // Throttle the debug-overlay + fallback HUD textContent rebuild to
 // ~5Hz. Both paths build large per-frame strings (~10 toFixed calls
 // each); player can't visually distinguish 60Hz vs 5Hz updates on
@@ -8427,6 +8437,15 @@ const pickupAddArg = { itemId: 0, count: 0, damage: 0 } as {
   count: number;
   damage: number;
 };
+function biomeIdAtPlayerColumn(): number {
+  const bx = Math.floor(fp.position.x);
+  const bz = Math.floor(fp.position.z);
+  if (bx === cachedBiomeBx && bz === cachedBiomeBz) return cachedBiomeId;
+  cachedBiomeBx = bx;
+  cachedBiomeBz = bz;
+  cachedBiomeId = generator.biomeAt(bx, bz);
+  return cachedBiomeId;
+}
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
@@ -8994,7 +9013,7 @@ function frame(): void {
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
-  const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
+  const biomeId = biomeIdAtPlayerColumn();
   const biomeName = biomeId === 1 ? 'forest' : 'plains';
   const biomePalette = skyOf(biomeName);
   const TINT = 0.18;
@@ -10781,10 +10800,7 @@ function frame(): void {
     debugFramePayload.drops = droppedItems.size;
     debugFramePayload.xpOrbs = xpOrbs.size;
     debugFramePayload.seed = WORLD_SEED;
-    debugFramePayload.biome =
-      generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1
-        ? 'forest'
-        : 'plains';
+    debugFramePayload.biome = biomeIdAtPlayerColumn() === 1 ? 'forest' : 'plains';
     debugOverlay.render(debugFramePayload);
     hud.textContent = '';
   } else if (updateHudText) {
