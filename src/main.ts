@@ -4274,9 +4274,15 @@ canvas.addEventListener('mousedown', (e) => {
       });
       if (maceBonus > 0) subtitles.push(`Smash +${maceBonus.toFixed(0)}`);
     }
+    // Vanilla creative: left-click insta-kills any mob (any weapon, any
+    // damage). Without the override, creative players had to grind down
+    // a wither's 600 HP one normal hit at a time.
     const baseDmg =
-      Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult + maceBonus;
-    if (critMult > 1) subtitles.push('Critical hit!');
+      gameMode === 'creative'
+        ? 9999
+        : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
+          maceBonus;
+    if (critMult > 1 && gameMode !== 'creative') subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
     if (heldNameLow.includes('sword') && charge >= 0.9 && critMult === 1 && !fp.input.sprint) {
@@ -7773,7 +7779,11 @@ function frame(): void {
           const weaknessEff = playerState.effects.get('weakness');
           const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
           const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
-          const dmg = Math.max(0, weaponBase + strengthBonus + weaknessReduce);
+          // Creative insta-kill (touch parity with desktop).
+          const dmg =
+            gameMode === 'creative'
+              ? 9999
+              : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
           const result = mobWorld.damage(bestId, dmg);
           // Touch combat durability + exhaustion (parity with desktop).
           if (gameMode === 'survival' || gameMode === 'adventure') {
