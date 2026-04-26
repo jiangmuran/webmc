@@ -92,6 +92,16 @@ interface MobVisual {
   lastHpRatio: number;
   nameSprite: THREE.Sprite;
   nameMat: THREE.SpriteMaterial;
+  // -1 = unknown / dirty (force a re-set). Otherwise the last "normal"
+  // hex applied. Used to skip setHex(c) every frame when the color
+  // didn't change — mobs spend most of their life in non-hurt,
+  // non-fusing state and a constant-color setHex still writes through
+  // three.js's material color and flags the material dirty.
+  lastNormalColorHex: number;
+  // True when the previous frame applied a hurt-flash / fuse-pulse
+  // tint, so the next "normal" frame must force a re-set even if the
+  // base palette color hasn't changed.
+  needsColorRestore: boolean;
 }
 
 // Cache by label string. Mob nameplates with the same name (e.g.
@@ -216,11 +226,18 @@ export class MobRenderer {
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
+      // Cache the camera-relative offset for the nameplate-fade block
+      // below — was computing dx/dy/dz twice per mob per frame.
+      let cdx = 0;
+      let cdy = 0;
+      let cdz = 0;
+      let cDistSq = -1;
       if (cameraPos) {
-        const dx = mob.position.x - cameraPos.x;
-        const dy = mob.position.y - cameraPos.y;
-        const dz = mob.position.z - cameraPos.z;
-        if (dx * dx + dy * dy + dz * dz > 96 * 96) {
+        cdx = mob.position.x - cameraPos.x;
+        cdy = mob.position.y - cameraPos.y;
+        cdz = mob.position.z - cameraPos.z;
+        cDistSq = cdx * cdx + cdy * cdy + cdz * cdz;
+        if (cDistSq > 96 * 96) {
           const v = this.visuals.get(mob.id);
           // Skip the visible=false write when already hidden — three.js
           // setter triggers matrix-update flagging and per-frame writes
@@ -278,6 +295,8 @@ export class MobRenderer {
           lastHpRatio: 1,
           nameSprite,
           nameMat,
+          lastNormalColorHex: color,
+          needsColorRestore: false,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
@@ -313,6 +332,7 @@ export class MobRenderer {
         const bb = b * (1 - k) + 0.2 * k;
         vis.bodyMat.color.setRGB(rr, gg, bb);
         vis.headMat.color.setRGB(rr, gg, bb);
+        vis.needsColorRestore = true;
       } else if (mob.def.behavior === 'creeper' && mob.fuseSec > 0) {
         // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
         const phase = 1 - Math.min(1, mob.fuseSec / 1.5);
@@ -324,24 +344,35 @@ export class MobRenderer {
         const b = (base & 0xff) / 255;
         vis.bodyMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
         vis.headMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
+        vis.needsColorRestore = true;
       } else {
+        // Normal palette color. Mobs spend most of their life in this
+        // state, so skip the setHex (which still writes through the
+        // material color and flags it dirty) when nothing changed.
         const c = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
-        vis.bodyMat.color.setHex(c);
-        vis.headMat.color.setHex(c);
+        if (vis.needsColorRestore || vis.lastNormalColorHex !== c) {
+          vis.bodyMat.color.setHex(c);
+          vis.headMat.color.setHex(c);
+          vis.lastNormalColorHex = c;
+          vis.needsColorRestore = false;
+        }
       }
 
       // Distance-aware nameplate visibility: fade past 28 blocks, hide past 64.
       if (this.showNameplates && cameraPos) {
-        const dx = mob.position.x - cameraPos.x;
-        const dy = mob.position.y - cameraPos.y;
-        const dz = mob.position.z - cameraPos.z;
-        const dist = Math.hypot(dx, dy, dz);
-        if (dist > 64) {
-          vis.nameSprite.visible = false;
+        // Reuse the LOD distSq above instead of recomputing dx/dy/dz +
+        // sqrt for every mob. Compare against squared cutoffs first so
+        // we only sqrt for mobs in the fade band.
+        if (cDistSq > 64 * 64) {
+          if (vis.nameSprite.visible) vis.nameSprite.visible = false;
         } else {
-          vis.nameSprite.visible = true;
-          const fade = dist > 28 ? Math.max(0, 1 - (dist - 28) / 36) : 1;
-          vis.nameMat.opacity = 0.9 * fade;
+          if (!vis.nameSprite.visible) vis.nameSprite.visible = true;
+          if (cDistSq > 28 * 28) {
+            const dist = Math.sqrt(cDistSq);
+            vis.nameMat.opacity = 0.9 * Math.max(0, 1 - (dist - 28) / 36);
+          } else {
+            vis.nameMat.opacity = 0.9;
+          }
         }
       } else {
         vis.nameSprite.visible = this.showNameplates;
