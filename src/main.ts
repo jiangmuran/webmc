@@ -9088,11 +9088,13 @@ function frame(): void {
   if (levitation) {
     fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
   }
-  // Nausea: FOV wobble for visual disorientation.
+  // Nausea: FOV wobble for visual disorientation. Reuse `now` so the
+  // wobble phase is consistent with other per-frame time-based effects
+  // (and skips one performance.now() syscall).
   const nausea = playerState.effects.get('nausea');
   if (nausea) {
     const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
-    const wobble = Math.sin(performance.now() / 200) * 0.1 * intensity;
+    const wobble = Math.sin(now / 200) * 0.1 * intensity;
     fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
     fp.camera.updateProjectionMatrix();
   }
@@ -9661,15 +9663,16 @@ function frame(): void {
   // Old impl only flushed chunkStore — player position, vitals, inventory,
   // time of day, etc. relied on visibilitychange / beforeunload, so a
   // browser crash mid-session would lose them. Now flushes the full set
-  // every autosave window (matching what /save does).
-  const nowSaveMs = performance.now();
-  shouldSaveTimerArg.nowMs = nowSaveMs;
-  shouldSaveThresholdArg.nowMs = nowSaveMs;
+  // every autosave window (matching what /save does). Reuse `now` from
+  // the top of frame — the few-tens-of-microseconds drift is well under
+  // the 30s autosave threshold, and it saves a syscall.
+  shouldSaveTimerArg.nowMs = now;
+  shouldSaveThresholdArg.nowMs = now;
   if (
     shouldSave(autosaveState, shouldSaveTimerArg) ||
     shouldSave(autosaveState, shouldSaveThresholdArg)
   ) {
-    beginSave(autosaveState, nowSaveMs);
+    beginSave(autosaveState, now);
     void savePlayerNow();
     void saveAllChestStorages();
     void persistDB.setMeta('playerStats', playerStats);
@@ -9681,9 +9684,7 @@ function frame(): void {
       endSave(autosaveState);
     });
   }
-  crosshair.setCooldown(
-    (performance.now() - lastPlayerAttackAt) / heldAttackFullChargeMs(heldNameLower()),
-  );
+  crosshair.setCooldown((now - lastPlayerAttackAt) / heldAttackFullChargeMs(heldNameLower()));
 
   // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks. Reuse
   // a scratch object — bossBar.set() copies fields into bossBarPayload
