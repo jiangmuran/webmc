@@ -66,34 +66,47 @@ export interface FireTickResult {
   ignitions: readonly { offset: Vec3; blockBurned: string }[];
 }
 
+// Module-scope constant — was a fresh array of 6 literals every tickFire call.
+const DIRS: readonly Vec3[] = [
+  { x: 1, y: 0, z: 0 },
+  { x: -1, y: 0, z: 0 },
+  { x: 0, y: 1, z: 0 },
+  { x: 0, y: -1, z: 0 },
+  { x: 0, y: 0, z: 1 },
+  { x: 0, y: 0, z: -1 },
+];
+// Reused per-call result + ignitions list. tickFire is called from the
+// random-tick scan for every fire block found; caller reads the result
+// fields synchronously and doesn't keep the reference.
+const SHARED_IGNITIONS: { offset: Vec3; blockBurned: string }[] = [];
+const SHARED_RESULT: FireTickResult = {
+  newAge: 0,
+  extinguish: false,
+  ignitions: SHARED_IGNITIONS,
+};
+
 // Per-tick spread. Fire ages up by 1; chance to ignite each neighbor
 // proportional to (encouragement + 40) / 500 modulated by humidity.
 export function tickFire(ctx: FireTickCtx): FireTickResult {
-  const result: FireTickResult = { newAge: ctx.age, extinguish: false, ignitions: [] };
+  const result = SHARED_RESULT;
+  result.newAge = ctx.age;
+  result.extinguish = false;
+  SHARED_IGNITIONS.length = 0;
   if (!ctx.fireTickAllowed) return result;
   result.newAge = Math.min(15, ctx.age + 1);
   if (result.newAge >= 15 && ctx.rng() < 0.04) {
     result.extinguish = true;
   }
-  const ignitions: { offset: Vec3; blockBurned: string }[] = [];
-  const DIRS: Vec3[] = [
-    { x: 1, y: 0, z: 0 },
-    { x: -1, y: 0, z: 0 },
-    { x: 0, y: 1, z: 0 },
-    { x: 0, y: -1, z: 0 },
-    { x: 0, y: 0, z: 1 },
-    { x: 0, y: 0, z: -1 },
-  ];
-  for (const d of DIRS) {
+  for (let i = 0; i < DIRS.length; i++) {
+    const d = DIRS[i]!;
     const block = ctx.neighborAt(d.x, d.y, d.z);
     const def = flammabilityOf(block);
     if (def.encouragement === 0) continue;
     const spreadChance = ((def.encouragement + 40) / 500) * (1 - ctx.humidity * 0.5);
     if (ctx.rng() < spreadChance) {
-      ignitions.push({ offset: d, blockBurned: block });
+      SHARED_IGNITIONS.push({ offset: d, blockBurned: block });
     }
   }
-  result.ignitions = ignitions;
   return result;
 }
 
