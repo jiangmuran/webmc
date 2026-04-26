@@ -6027,6 +6027,13 @@ document.addEventListener(
     }
     if (mainMenu.isVisible()) return;
     if (chatInput.isOpen()) return;
+    // Pause menu was missing from the early-return chain — pressing E /
+    // T / F4 / etc. while paused fired the in-game keybinds (opened
+    // inventory, opened chat, cycled gamemode), which made the pause
+    // menu inert in the worst way: it looked paused but the player was
+    // still mashing through hotkeys behind it. Only ESC should pass
+    // through (handled below to close the menu).
+    if (pauseMenu.isVisible() && e.code !== 'Escape') return;
     if (creativeInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
