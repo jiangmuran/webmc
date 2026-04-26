@@ -8518,7 +8518,13 @@ function frame(): void {
     mobWorld.tick(dtSec * tickRateMultiplier, {
       isSolid,
       isFluid,
-      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
+      // Spectator: hide the player position from mob aggro entirely.
+      // Vanilla MC mobs ignore spectators (no detection, no chase).
+      // Without this, mobs still tracked + chased the spectator's body
+      // even though the body was passing through walls and dealing no
+      // damage — wasted CPU on a target that can't be engaged.
+      playerPos:
+        gameMode === 'spectator' ? null : { x: fp.position.x, y: fp.position.y, z: fp.position.z },
       playerSneaking: fp.input.sneak,
       playerInvisible: playerState.effects.has('invisibility'),
       damagePlayer: (amt, attackerPos) => {
