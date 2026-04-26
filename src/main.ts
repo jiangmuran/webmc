@@ -2383,6 +2383,11 @@ const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimba
 // frame when overall mob caps weren't full — a 50-mob world would
 // trash one Array per frame just to walk distances.
 const farMobsScratch: number[] = [];
+// Reused per-frame hotbar-counts list. Was a fresh number[] every
+// frame in survival/adventure (and a fresh empty [] every frame in
+// creative for the 'infinite' marker).
+const hotbarCountsScratch: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+const hotbarCountsEmpty: number[] = [];
 // Reused leaf-decay BFS scratches. Was allocating a fresh
 // visited:Set<string>, a stack:Array<{x,y,z,d}>, and ~150 stack
 // entries per scan. Fires several times per sec in a forest under
@@ -8748,14 +8753,13 @@ function frame(): void {
   interaction.tick(now);
 
   if (gameMode === 'creative') {
-    hotbar.setCounts([], 'infinite');
+    hotbar.setCounts(hotbarCountsEmpty, 'infinite');
   } else {
     // Visible hotbar mirrors inventory.hotbar in survival/adventure, so the
     // count under each slot is just that slot's stack count, not the all-
     // inventory total of the entry's name (which used to double-count).
-    const counts: number[] = [];
-    for (let i = 0; i < 9; i++) counts.push(inventory.hotbar[i]?.count ?? 0);
-    hotbar.setCounts(counts);
+    for (let i = 0; i < 9; i++) hotbarCountsScratch[i] = inventory.hotbar[i]?.count ?? 0;
+    hotbar.setCounts(hotbarCountsScratch);
   }
 
   interaction.tickBreak(dtSec);
