@@ -1900,7 +1900,9 @@ void persistDB.getMeta('playerStats').then((saved) => {
   }
 });
 let statsSaveAccum = 0;
-let lastStatsPos = { x: 0, y: 0, z: 0 };
+// Mutated in place every frame — was being reassigned to a fresh
+// {x,y,z} literal per frame.
+const lastStatsPos = { x: 0, y: 0, z: 0 };
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const weatherCycle = new WeatherCycle(Math.random, {
   clearMinSec: 600,
@@ -8933,7 +8935,9 @@ function frame(): void {
       const moved = Math.hypot(dpx, dpz);
       if (moved > 0 && moved < 2) playerStats.distanceWalked += moved;
     }
-    lastStatsPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+    lastStatsPos.x = fp.position.x;
+    lastStatsPos.y = fp.position.y;
+    lastStatsPos.z = fp.position.z;
     playerStats.playtimeSec += dtSec;
     statsSaveAccum += dtSec;
     if (statsSaveAccum > 30) {
