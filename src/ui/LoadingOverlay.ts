@@ -1,10 +1,24 @@
 import { overallProgress, type LoadStage } from '../game/loading_screen_progress';
 
+// Hoisted out of LoadingOverlay.set — was allocated as a fresh Record
+// literal every frame the loading overlay was visible (main.frame
+// fires set() per frame until meshCount >= 25).
+const STAGE_LABELS: Record<LoadStage, string> = {
+  init: 'Initializing…',
+  world: 'Loading world…',
+  terrain: 'Streaming terrain…',
+  light: 'Building lighting…',
+  entities: 'Loading entities…',
+  ready: 'Ready.',
+};
+
 export class LoadingOverlay {
   private readonly root: HTMLDivElement;
   private readonly fillEl: HTMLDivElement;
   private readonly stageEl: HTMLDivElement;
   private hidden = false;
+  private lastStage: LoadStage | null = null;
+  private lastWidthPercent = -1;
 
   constructor(parent: HTMLElement) {
     this.root = document.createElement('div');
@@ -48,17 +62,16 @@ export class LoadingOverlay {
 
   set(stage: LoadStage, stageFraction: number): void {
     if (this.hidden) return;
-    const STAGE_LABELS: Record<LoadStage, string> = {
-      init: 'Initializing…',
-      world: 'Loading world…',
-      terrain: 'Streaming terrain…',
-      light: 'Building lighting…',
-      entities: 'Loading entities…',
-      ready: 'Ready.',
-    };
-    this.stageEl.textContent = STAGE_LABELS[stage];
+    if (stage !== this.lastStage) {
+      this.stageEl.textContent = STAGE_LABELS[stage];
+      this.lastStage = stage;
+    }
     const overall = overallProgress(stage, stageFraction);
-    this.fillEl.style.width = `${(overall * 100).toFixed(0)}%`;
+    const widthPercent = Math.round(overall * 100);
+    if (widthPercent !== this.lastWidthPercent) {
+      this.lastWidthPercent = widthPercent;
+      this.fillEl.style.width = `${String(widthPercent)}%`;
+    }
   }
 
   hide(): void {
