@@ -94,7 +94,14 @@ interface MobVisual {
   nameMat: THREE.SpriteMaterial;
 }
 
+// Cache by label string. Mob nameplates with the same name (e.g.
+// every 'zombie') were each getting a fresh canvas + texture. With
+// ~70 mob kinds + custom names this caps the texture count to the
+// number of unique labels (~80) rather than mob count (~200).
+const nameTextureCache = new Map<string, THREE.CanvasTexture>();
 function makeNameTexture(label: string): THREE.CanvasTexture {
+  const cached = nameTextureCache.get(label);
+  if (cached) return cached;
   const w = 128;
   const h = 24;
   const c = document.createElement('canvas');
@@ -110,7 +117,9 @@ function makeNameTexture(label: string): THREE.CanvasTexture {
     ctx.textBaseline = 'middle';
     ctx.fillText(label, w / 2, h / 2);
   }
-  return new THREE.CanvasTexture(c);
+  const tex = new THREE.CanvasTexture(c);
+  nameTextureCache.set(label, tex);
+  return tex;
 }
 
 // Texture cache keyed by 21-bucket ratio (0%, 5%, 10%, ..., 100%). Was
@@ -162,7 +171,7 @@ export class MobRenderer {
     this.customNames.set(mobId, name);
     const vis = this.visuals.get(mobId);
     if (vis) {
-      vis.nameMat.map?.dispose();
+      // Don't dispose the previous map — it's shared from the cache.
       vis.nameMat.map = makeNameTexture(name);
       vis.nameMat.needsUpdate = true;
     }
@@ -346,7 +355,7 @@ export class MobRenderer {
       vis.headMat.dispose();
       // hpMat.map is shared (bucket cache) — don't dispose here.
       vis.hpMat.dispose();
-      vis.nameMat.map?.dispose();
+      // nameMat.map is shared (label cache) — don't dispose.
       vis.nameMat.dispose();
       this.group.remove(vis.group);
       this.visuals.delete(id);
@@ -361,7 +370,7 @@ export class MobRenderer {
       vis.headMat.dispose();
       // hpMat.map is shared (bucket cache) — don't dispose.
       vis.hpMat.dispose();
-      vis.nameMat.map?.dispose();
+      // nameMat.map is shared (label cache) — don't dispose.
       vis.nameMat.dispose();
       this.group.remove(vis.group);
     }
