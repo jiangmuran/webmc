@@ -8068,6 +8068,11 @@ function frame(): void {
     const nowSpawnMs = performance.now();
     if (
       (gameMode === 'survival' || gameMode === 'adventure') &&
+      // Peaceful difficulty (mobDamageMultiplier === 0) suppresses hostile
+      // spawning entirely. Vanilla MC behaviour. Without this gate,
+      // peaceful players still got zombies spawning around them at night
+      // — the spawn-gen cycle was independent of difficulty.
+      mobDamageMultiplier > 0 &&
       nowSpawnMs - lastNaturalSpawnAttemptMs > 5000
     ) {
       lastNaturalSpawnAttemptMs = nowSpawnMs;
