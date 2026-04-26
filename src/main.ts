@@ -2350,6 +2350,9 @@ const interactionLookTmp = new THREE.Vector3();
 // every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
 // throwaway box objects/sec just for the crosshair.
 const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
+// Reused per-frame look-vector scratch (third-person camera offset,
+// elytra glide thrust). Was new THREE.Vector3() per call.
+const frameLookTmp = new THREE.Vector3();
 // Reused gamepad poll scratch. Was allocating a state {axes, buttons},
 // a fresh axes literal, a fresh buttons.map(), an intent, and an inner
 // look {yaw, pitch} every frame for connected pads.
@@ -8574,7 +8577,7 @@ function frame(): void {
   // Crosshair tint: red when aiming at a mob in range
   {
     const originP = camera.position;
-    const lookP = fp.lookVector();
+    const lookP = fp.lookVector(frameLookTmp);
     let hitMob = false;
     for (const mob of mobWorld.all()) {
       mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
@@ -8616,7 +8619,7 @@ function frame(): void {
   const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
   playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
   if (cameraMode !== 'fp') {
-    const look = fp.lookVector();
+    const look = fp.lookVector(frameLookTmp);
     const back = cameraMode === 'tp_back' ? -3 : 3;
     camera.position.x += look.x * back;
     camera.position.y += look.y * back;
@@ -8650,7 +8653,7 @@ function frame(): void {
     isGliding =
       wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
     if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
-      const look = fp.lookVector();
+      const look = fp.lookVector(frameLookTmp);
       // Slow descent: clamp downward velocity.
       const minFallY = -3 + look.y * 8;
       if (fp.velocity.y < minFallY) fp.velocity.y = fp.velocity.y * 0.7 + minFallY * 0.3;
@@ -8949,7 +8952,7 @@ function frame(): void {
   // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
   let aimTint: string | null = null;
   const aimReach = 5.5;
-  const aimLook2 = fp.lookVector();
+  const aimLook2 = fp.lookVector(frameLookTmp);
   for (const m of mobWorld.all()) {
     const dx = m.position.x - camera.position.x;
     const dy = m.position.y - camera.position.y;
