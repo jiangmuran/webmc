@@ -201,6 +201,16 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   L(['webmc:diamond_block'], 'webmc:diamond', 9);
   // Bow.
   S([' SL', 'S L', ' SL'], { S: 'webmc:stick', L: 'webmc:string' }, 'webmc:bow');
+  // Crossbow — simplified (vanilla also needs tripwire_hook which webmc
+  // doesn't register). Without this, crossbow was unrecipeable so the
+  // just-wired bow/crossbow firing path was diamond-only via /give.
+  // Pattern: 3 stick + 2 string + 1 iron, replacing the tripwire-hook
+  // slot with another iron.
+  S(
+    ['SIS', 'LIL', ' S '],
+    { S: 'webmc:stick', I: 'webmc:iron_ingot', L: 'webmc:string' },
+    'webmc:crossbow',
+  );
   // Arrow.
   S(['F', 'S', 'E'], { F: 'webmc:flint', S: 'webmc:stick', E: 'webmc:feather' }, 'webmc:arrow', 4);
   // TNT.
