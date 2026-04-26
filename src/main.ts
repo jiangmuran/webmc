@@ -7634,7 +7634,8 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
       const c = world.getChunk(a.cx, a.cz);
       if (!c) continue;
       let cachedLight = lightCache.get(lightKey(a.cx, a.cz));
-      if (!lightUnchanged || !cachedLight) {
+      const lightWasRebuilt = !lightUnchanged || !cachedLight;
+      if (lightWasRebuilt) {
         cachedLight = buildLight(c, lightOracle);
         lightCache.set(lightKey(a.cx, a.cz), cachedLight);
       }
@@ -7647,9 +7648,15 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
       } else {
         markChunkAllDirty(c);
       }
+      // Also mark neighbor chunks dirty for save when their lighting
+      // actually changed (torch placed/broken near a chunk border
+      // propagates light into the neighbor; without this the neighbor
+      // saved stale pre-edit light).
+      if (lightWasRebuilt && (a.cx !== cx || a.cz !== cz)) {
+        chunkStore.markDirty(c, cachedLight ?? null);
+      }
     }
-    const light = lightCache.get(lightKey(cx, cz)) ?? null;
-    chunkStore.markDirty(chunk, light);
+    chunkStore.markDirty(chunk, lightCache.get(lightKey(cx, cz)) ?? null);
   }
   roomClient?.applyLocalBlockEdit({ x: bx, y: by, z: bz, block, meta: 0 });
 };
