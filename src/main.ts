@@ -6870,15 +6870,27 @@ document.addEventListener('pointerlockchange', () => {
   }
 });
 
+// Reused per-dispatch BorderOpacity wrapper. Each face's Uint8Array
+// is allocated fresh by extractBorderFromSubChunk because that array
+// gets transferred to the mesher worker (and detaches on the main
+// thread); the wrapper itself just needs a stable mutable shell.
+const borderForScratch: BorderOpacity = {
+  nx: null,
+  px: null,
+  ny: null,
+  py: null,
+  nz: null,
+  pz: null,
+};
+
 function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
-  const b: BorderOpacity = {
-    nx: null,
-    px: null,
-    ny: null,
-    py: null,
-    nz: null,
-    pz: null,
-  };
+  const b = borderForScratch;
+  b.nx = null;
+  b.px = null;
+  b.ny = null;
+  b.py = null;
+  b.nz = null;
+  b.pz = null;
   const here = world.getChunk(cx, cz);
   if (!here) return b;
 
