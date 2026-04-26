@@ -258,11 +258,32 @@ export class FirstPersonCamera {
         )
       : false;
 
-    if (fly || !opts.isSolid) {
+    if (this.passThroughBlocks || !opts.isSolid) {
+      // True noclip — only spectator (passThroughBlocks=true). Creative
+      // flyers in vanilla still collide with blocks; the previous
+      // implementation noclipped on `fly || !isSolid`, letting creative
+      // mode phase straight through walls.
       this.position.x += hx * dtSec;
       this.position.z += hz * dtSec;
       this.position.y += this.input.vertical * speed * dtSec;
       this.velocity.set(0, 0, 0);
+      this.onGround = false;
+    } else if (fly) {
+      // Creative-mode fly: no gravity, vertical input drives Y, but
+      // collision still applies — sweepMove blocks against walls.
+      const dvx = hx * dtSec;
+      const dvy = this.input.vertical * speed * dtSec;
+      const dvz = hz * dtSec;
+      const result = sweepMove(
+        this.position,
+        this.opts.box,
+        { x: dvx, y: dvy, z: dvz },
+        opts.isSolid,
+        0,
+      );
+      if (result.hitX) this.velocity.x = 0;
+      if (result.hitY) this.velocity.y = 0;
+      if (result.hitZ) this.velocity.z = 0;
       this.onGround = false;
     } else {
       const submerged = this.inFluid !== null;
