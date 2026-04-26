@@ -2987,7 +2987,8 @@ const interaction = new InteractionController(
             heldName === 'snowball' &&
             (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')
           ) {
-            mobWorld.damage(m.id, 3);
+            const r = mobWorld.damage(m.id, 3);
+            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           } else {
             // Just knockback.
             const len = Math.max(0.001, Math.hypot(dx, dz));
@@ -3094,8 +3095,10 @@ const interaction = new InteractionController(
             const dy = m.position.y - cy;
             const dz = m.position.z - cz;
             if (dx * dx + dy * dy + dz * dz > 16) continue;
-            if (ptype.effect === 'instant_damage') mobWorld.damage(m.id, 6);
-            else if (ptype.effect === 'instant_health') mobWorld.damage(m.id, -4);
+            if (ptype.effect === 'instant_damage') {
+              const r = mobWorld.damage(m.id, 6);
+              if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
+            } else if (ptype.effect === 'instant_health') mobWorld.damage(m.id, -4);
             // Persistent effects on mobs not modeled; visual only.
             affected++;
           }
@@ -7080,7 +7083,20 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
     const fall = 1 - dist / blastRange;
     const baseDmg = fall * (2 * radius) + 1;
     const dmg = (baseDmg * baseDmg) / 2;
-    mobWorld.damage(m.id, dmg);
+    const result = mobWorld.damage(m.id, dmg);
+    // mobWorld.damage marks dropsHandled=true, so the dyingSec
+    // onMobDeath callback won't fire drops. Spawn them here for
+    // explosion kills since the caller (this function) is responsible.
+    if (result?.killed) {
+      spawnMobDrops(result.kind, result.position);
+      const xpAmount = rollMobXp({
+        source: { kind: 'mob', mob: result.kind },
+        rng: Math.random,
+      });
+      for (const chunk of splitXp(xpAmount)) {
+        xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
+      }
+    }
     if (dist > 0.0001) {
       const KB = fall * 14;
       m.velocity.x += (dx / dist) * KB;
@@ -7238,6 +7254,19 @@ function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): 
     const itemId = lookup(entry.name);
     if (itemId === undefined) continue;
     droppedItems.spawn(pos.x, pos.y + 0.5, pos.z, { itemId, count, color: entry.color });
+  }
+}
+
+// Shared helper for environmental kills (lightning / explosion / sunburn /
+// lava / void) that need to spawn drops + XP. mobWorld.damage() marks
+// dropsHandled=true on its return, gating the dyingSec onMobDeath
+// callback off — so callers that route through damage() must spawn
+// drops themselves.
+function spawnLightningKillRewards(kind: string, pos: { x: number; y: number; z: number }): void {
+  spawnMobDrops(kind, pos);
+  const xpAmount = rollMobXp({ source: { kind: 'mob', mob: kind }, rng: Math.random });
+  for (const chunk of splitXp(xpAmount)) {
+    xpOrbs.spawn(pos.x, pos.y + 0.8, pos.z, chunk);
   }
 }
 
@@ -7733,9 +7762,11 @@ function frame(): void {
             }
           } else if (target.def.kind === 'creeper') {
             // Mark for charged behavior; webmc doesn't track charged state, so just damage as visual.
-            mobWorld.damage(target.id, 5);
+            const r = mobWorld.damage(target.id, 5);
+            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           } else {
-            mobWorld.damage(target.id, 5);
+            const r = mobWorld.damage(target.id, 5);
+            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           }
         }
       }
