@@ -3321,6 +3321,8 @@ const interaction = new InteractionController(
             if (itemId !== undefined) consumeInventoryItem(itemId, 1);
           }
           sfx.play('click');
+          // Composter consume animation was missing the hand swing.
+          hand.swing();
           return true;
         }
       }
