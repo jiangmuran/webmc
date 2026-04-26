@@ -7121,7 +7121,9 @@ const perfMonitor = new PerfMonitor({
 });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
-    void chunkStore.flush();
+    // Drain entire dirty queue, not just one batch — tab may close
+    // before the next setInterval fires.
+    void chunkStore.flushAll();
     void savePlayerNow();
     void saveAllChestStorages();
     // Batch the meta writes — was 4 separate IDB transactions racing
@@ -7141,7 +7143,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 window.addEventListener('beforeunload', () => {
-  void chunkStore.flush();
+  void chunkStore.flushAll();
   void savePlayerNow();
   void saveAllChestStorages();
   // Single batched meta transaction — beforeunload fires once and the

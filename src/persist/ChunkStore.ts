@@ -56,6 +56,17 @@ export class ChunkStore {
   }
 
   async flush(): Promise<number> {
+    return this.flushInternal(this.opts.flushBatch);
+  }
+
+  // Drain the entire dirty queue regardless of batch cap. Used on
+  // tab close where flushBatch=32 would silently drop the rest of
+  // a 100+ dirty queue.
+  async flushAll(): Promise<number> {
+    return this.flushInternal(Infinity);
+  }
+
+  private async flushInternal(cap: number): Promise<number> {
     if (this.dirty.size === 0 || this.inFlight) return 0;
     this.inFlight = true;
     try {
@@ -65,7 +76,6 @@ export class ChunkStore {
       // (terraforming, explosions), that's a 500-entry array trashed
       // every second.
       const blobs: ChunkBlob[] = [];
-      const cap = this.opts.flushBatch;
       for (const d of this.dirty.values()) {
         if (blobs.length >= cap) break;
         blobs.push({
