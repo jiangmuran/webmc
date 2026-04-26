@@ -3374,6 +3374,10 @@ const interaction = new InteractionController(
         def.name.endsWith('_shulker_box') ||
         def.name === 'webmc:shulker_box'
       ) {
+        // Spectator can't open chests — ChestUI doesn't have a read-only
+        // mode and vanilla spectators don't modify world state. Without
+        // this gate, spectators could pull items out of any chest.
+        if (gameMode === 'spectator') return false;
         chestUI.setStorage(getChestStorage(def.name, bx, by, bz));
         chestUI.show();
         fp.inputBlocked = true;
@@ -3470,6 +3474,9 @@ const interaction = new InteractionController(
         'webmc:conduit',
       ]);
       if (WORKSTATIONS.has(def.name)) {
+        // Spectator can't open workstations either — vanilla parity with
+        // the chest gate above.
+        if (gameMode === 'spectator') return false;
         if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
