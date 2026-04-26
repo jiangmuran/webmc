@@ -2341,11 +2341,18 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
   return 'center';
 }
 
+// Reused look-vector scratch object — was allocated fresh per castRay
+// call (4+ per frame including the per-frame block-outline cast).
+const interactionLookScratch = { x: 0, y: 0, z: 0 };
+const interactionLookTmp = new THREE.Vector3();
 const interaction = new InteractionController(
   camera,
   () => {
-    const l = fp.lookVector();
-    return { x: l.x, y: l.y, z: l.z };
+    fp.lookVector(interactionLookTmp);
+    interactionLookScratch.x = interactionLookTmp.x;
+    interactionLookScratch.y = interactionLookTmp.y;
+    interactionLookScratch.z = interactionLookTmp.z;
+    return interactionLookScratch;
   },
   world,
   isSolid,
