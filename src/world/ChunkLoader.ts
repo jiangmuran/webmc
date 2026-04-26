@@ -36,6 +36,10 @@ export class ChunkLoader {
   // Stable stats object returned by update(). Was allocating a fresh
   // {loaded, pending, generating} literal every frame.
   private readonly statsObj: ChunkLoaderStats = { loaded: 0, pending: 0, generating: false };
+  // Parallel cx/cz arrays for unloadDistant — was allocating a
+  // [number, number][] of fresh tuples per chunk-boundary cross.
+  private readonly toDropCx: number[] = [];
+  private readonly toDropCz: number[] = [];
 
   constructor(world: World, generator: WorldGenerator, opts: Partial<ChunkLoaderOptions> = {}) {
     this.world = world;
@@ -167,13 +171,24 @@ export class ChunkLoader {
   ): void {
     const maxR = this.opts.viewRadius + this.opts.unloadPadding;
     const maxRSq = maxR * maxR;
-    const toDrop: [number, number][] = [];
+    // Reuse parallel cx/cz scratches; iterating world.chunks() while
+    // removing chunks would corrupt the iterator, so we still need to
+    // collect first.
+    const toDropCx = this.toDropCx;
+    const toDropCz = this.toDropCz;
+    toDropCx.length = 0;
+    toDropCz.length = 0;
     for (const chunk of this.world.chunks()) {
       const dx = chunk.cx - centerCx;
       const dz = chunk.cz - centerCz;
-      if (dx * dx + dz * dz > maxRSq) toDrop.push([chunk.cx, chunk.cz]);
+      if (dx * dx + dz * dz > maxRSq) {
+        toDropCx.push(chunk.cx);
+        toDropCz.push(chunk.cz);
+      }
     }
-    for (const [cx, cz] of toDrop) {
+    for (let i = 0; i < toDropCx.length; i++) {
+      const cx = toDropCx[i]!;
+      const cz = toDropCz[i]!;
       this.world.removeChunk(cx, cz);
       onUnload(cx, cz);
     }
