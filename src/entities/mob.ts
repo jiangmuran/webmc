@@ -905,6 +905,9 @@ export class MobWorld {
   // check in main doesn't need to iterate all mobs every frame.
   private _hostileCount = 0;
   private _passiveCount = 0;
+  // Reused per-tick scratch list for despawn — was allocated fresh each
+  // call.
+  private readonly tickRemoveScratch: MobId[] = [];
 
   private behaviorBucket(b: MobBehavior): 'hostile' | 'passive' | null {
     if (b === 'hostile' || b === 'creeper') return 'hostile';
@@ -1000,7 +1003,8 @@ export class MobWorld {
       const px = ctx.playerPos.x;
       const py = ctx.playerPos.y;
       const pz = ctx.playerPos.z;
-      const toRemove: MobId[] = [];
+      const toRemove = this.tickRemoveScratch;
+      toRemove.length = 0;
       for (const m of this.mobs.values()) {
         if (m.dyingSec > 0) continue;
         // Persistent mobs (named, tamed, baby, leashed, breeding) stay
