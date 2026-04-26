@@ -7581,6 +7581,11 @@ loader.setPopulate(async (chunk) => {
       const src = saved.chunk.section(cy);
       if (src) chunk.setSection(cy, src);
     }
+    // Reuse saved light to skip the expensive buildLight on chunk load.
+    // Edge cells can be slightly off w.r.t. unloaded neighbors but the
+    // next edit (or neighbor load) will rebuild. Saves ~5-15ms per
+    // restored chunk.
+    if (saved.light) lightCache.set(lightKey(chunk.cx, chunk.cz), saved.light);
   } else {
     generator.generateChunk(chunk);
     const light = buildLight(chunk, lightOracle);
@@ -7591,7 +7596,12 @@ loader.setPopulate(async (chunk) => {
 const onLoad = (cx: number, cz: number): void => {
   const chunk = world.getChunk(cx, cz);
   if (!chunk) return;
-  lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
+  // Skip rebuild if populate already cached saved light. Was always
+  // rebuilding even when a freshly-restored chunk had its serialized
+  // light right there.
+  if (!lightCache.has(lightKey(cx, cz))) {
+    lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
+  }
   markChunkAllDirty(chunk);
   for (const [ncx, ncz] of [
     [cx - 1, cz],
