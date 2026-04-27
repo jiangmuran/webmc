@@ -2463,6 +2463,12 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
 // straight through to raycastVoxels. THREE.Vector3 satisfies Vec3Lite
 // structurally so no copy step is needed.
 const interactionLookTmp = new THREE.Vector3();
+// Shared event-handler look-vector scratch. Was a fresh THREE.Vector3
+// per `fp.lookVector()` call in mousedown / right-click / command
+// callbacks (~14 distinct call sites) — each click allocated one
+// Vector3 just to read x/y/z. JS is single-threaded so a shared
+// scratch is safe across event handlers.
+const eventLookTmp = new THREE.Vector3();
 // Reused for the food-consumption particle emit position.
 const consumeFoodLookTmp = new THREE.Vector3();
 const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
@@ -3493,7 +3499,7 @@ const interaction = new InteractionController(
         heldName === 'trident' &&
         (fp.inFluid === 'water' || isRain || isThunder)
       ) {
-        const look = fp.lookVector();
+        const look = fp.lookVector(eventLookTmp);
         const power = 18;
         fp.velocity.x += look.x * power;
         fp.velocity.y += look.y * power;
@@ -3573,7 +3579,7 @@ const interaction = new InteractionController(
       }
       // Firework rocket while gliding → forward thrust boost.
       if (heldName === 'firework_rocket' && isGliding) {
-        const look = fp.lookVector();
+        const look = fp.lookVector(eventLookTmp);
         const power = 18;
         fp.velocity.x += look.x * power;
         fp.velocity.y += look.y * power * 0.6;
@@ -4228,7 +4234,7 @@ const interaction = new InteractionController(
       // this, throwing snowballs at the sky did nothing because the
       // onInteract path required a target block.
       if (heldName === 'snowball' || heldName === 'egg' || heldName === 'ender_pearl') {
-        const look = fp.lookVector();
+        const look = fp.lookVector(eventLookTmp);
         const impactDist = 30;
         const ix = fp.position.x + look.x * impactDist;
         const iy = fp.position.y + look.y * impactDist;
@@ -4336,7 +4342,7 @@ function fireBowOrCrossbow(): boolean {
     return false;
   }
   const origin = camera.position;
-  const look = fp.lookVector();
+  const look = fp.lookVector(eventLookTmp);
   let bestId: number | null = null;
   let bestDist = Infinity;
   for (const m of mobWorld.all()) {
@@ -4475,7 +4481,7 @@ canvas.addEventListener('mousedown', (e) => {
   if (e.button === 2 && isSpectator) return;
   if (e.button === 2) {
     // Right-click: if aimed at a mob, try feed → tame → leash with held item.
-    const aimLook = fp.lookVector();
+    const aimLook = fp.lookVector(eventLookTmp);
     let aimedMob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M | null : null =
       null;
     let bestDist = Infinity;
@@ -4710,7 +4716,7 @@ canvas.addEventListener('mousedown', (e) => {
   // they aimed at — not vanilla behaviour.
   if (isSpectator) return;
   const origin = camera.position;
-  const look = fp.lookVector();
+  const look = fp.lookVector(eventLookTmp);
   const reach = 5;
   let bestId: number | null = null;
   let bestDist = Infinity;
@@ -5359,7 +5365,7 @@ const chatInput = new ChatInput(appEl, {
           return valid[valid.length - 1]!.id.replace(/^webmc:/, '');
         },
         renameLookedAtMob: (name) => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M : never;
@@ -5381,7 +5387,7 @@ const chatInput = new ChatInput(appEl, {
           return best.mob.def.kind;
         },
         tameLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -5427,7 +5433,7 @@ const chatInput = new ChatInput(appEl, {
           return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
         },
         leashLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -5463,7 +5469,7 @@ const chatInput = new ChatInput(appEl, {
           return n;
         },
         feedLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -5847,7 +5853,7 @@ const chatInput = new ChatInput(appEl, {
         },
         applyVelocity: (dx, dy, dz) => {
           if (dx !== 0 || dz !== 0) {
-            const look = fp.lookVector();
+            const look = fp.lookVector(eventLookTmp);
             fp.velocity.x += look.x * dx;
             fp.velocity.z += look.z * dx;
           }
@@ -5857,7 +5863,7 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         toggleSitLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -7223,7 +7229,7 @@ document.addEventListener(
       const actualCount = Math.min(dropCount, stk.count);
       const remaining = stk.count - actualCount;
       inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
-      const look = fp.lookVector();
+      const look = fp.lookVector(eventLookTmp);
       const color: readonly [number, number, number] =
         itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 130, 100];
       droppedItems.spawn(
@@ -8751,7 +8757,7 @@ function frame(): void {
           const dropCount = 1;
           const remaining = stk.count - dropCount;
           inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
-          const look = fp.lookVector();
+          const look = fp.lookVector(eventLookTmp);
           const color: readonly [number, number, number] =
             itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 140, 80];
           droppedItems.spawn(
