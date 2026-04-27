@@ -8777,10 +8777,12 @@ function frame(): void {
   fp.update(dtSec, fpUpdateOpts);
   // Hoist after fp.update so fp.position is final for the rest of the
   // tick. Replaces ~28 redundant Math.floor calls (particle scans,
-  // fire/contact AABB sweeps, debug overlay) and ~4 effects.has Map
-  // hashes (fire-ignite + lava-walk + avatar visibility + mob ctx).
+  // fire/contact AABB sweeps, debug overlay) and ~5 effects.has Map
+  // hashes (fire-ignite + lava-walk + avatar visibility + mob ctx +
+  // night-vision ambient).
   const fireResistant = playerState.effects.has('fire_resistance');
   const playerInvisible = playerState.effects.has('invisibility');
+  const hasNightVision = playerState.effects.has('night_vision');
   const playerBlockX = Math.floor(fp.position.x);
   const playerBlockY = Math.floor(fp.position.y);
   const playerBlockZ = Math.floor(fp.position.z);
@@ -9118,7 +9120,7 @@ function frame(): void {
   const fogColor = tmpFogColor;
   uSunDirRef.value.copy(dayNight.sunDir);
   uSkyColorRef.value.copy(skyColor);
-  const nightVision = playerState.effects.has('night_vision') ? 0.5 : 0;
+  const nightVision = hasNightVision ? 0.5 : 0;
   uAmbientRef.value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
   // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
   const speedEff = playerState.effects.get('speed');
