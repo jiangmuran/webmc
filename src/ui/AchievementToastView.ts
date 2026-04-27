@@ -84,6 +84,11 @@ export class AchievementToastView {
   // Reused tick context — was allocated per frame.
   private readonly tickCtx = { nowSec: 0 };
   tick(): void {
+    // Skip the syscall + tickToasts call entirely when nothing's
+    // queued and nothing's visible — the dominant case during normal
+    // play (toasts are rare events). tickToasts wouldn't do anything
+    // either, but the performance.now() syscall + map deref still cost.
+    if (this.state.visibleId === null && this.state.queue.length === 0) return;
     this.tickCtx.nowSec = performance.now() / 1000;
     const result = tickToasts(this.state, this.tickCtx);
     if (result.justShown) {
