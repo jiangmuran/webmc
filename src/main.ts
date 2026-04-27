@@ -9000,6 +9000,13 @@ function frame(): void {
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
   const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+  // Cache fluid-state booleans for the rest of the frame. fp.inFluid +
+  // fp.inFluidEyes are sampled once in fp.update and stay stable for
+  // the remainder of frame() — was being string-equality-compared 14+
+  // times for swim/footstep/break-speed/fog/HUD/etc. gates.
+  const inWaterBody = fp.inFluid === 'water';
+  const inLavaBody = fp.inFluid === 'lava';
+  const inWaterEyes = fp.inFluidEyes === 'water';
   // Surface-aware footsteps: pick material from block under feet.
   let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
@@ -9012,7 +9019,7 @@ function frame(): void {
         ),
       ),
     );
-  } else if (fp.inFluid === 'water') {
+  } else if (inWaterBody) {
     stepMat = 'water';
   }
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
@@ -9030,18 +9037,17 @@ function frame(): void {
   else if (fp.position.y > maceFallStartY) maceFallStartY = fp.position.y;
   prevOnGround = fp.onGround;
   // Swim exhaustion: 0.01 per meter swum.
-  if (fp.inFluid === 'water' && (vitalsActive)) {
+  if (inWaterBody && vitalsActive) {
     playerState.addExhaustion(0.01 * horizSpeed * dtSec);
   }
   // Turtle Shell helmet: 10s of Water Breathing on emerging from water.
-  const inWater = fp.inFluid === 'water';
-  if (prevInWater && !inWater) {
+  if (prevInWater && !inWaterBody) {
     const helmetItem = inventory.armor[0];
     if (helmetItem && itemRegistry.get(helmetItem.itemId).name === 'webmc:turtle_shell') {
       playerState.applyEffect('water_breathing', 0, 10);
     }
   }
-  prevInWater = inWater;
+  prevInWater = inWaterBody;
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
@@ -9321,7 +9327,7 @@ function frame(): void {
     // fall damage. fp.inFluid is sampled at body center, so even shallow
     // water counts. Without this, jumping into a 1-block pool from a
     // 30-block tower still killed the player.
-    if (fp.inFluid === 'water') dmg = 0;
+    if (inWaterBody) dmg = 0;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
     const fx = Math.floor(fp.position.x);
     const fy = Math.floor(fp.position.y - 1.05);
@@ -9658,7 +9664,7 @@ function frame(): void {
   // Underwater ambient — runs once per real-time tick equivalent.
   // Use eye-level fluid: ambient kicks in when head is submerged. Mutate
   // in place to skip the per-frame spread {...underwaterAmbient}.
-  underwaterAmbient.submerged = fp.inFluidEyes === 'water';
+  underwaterAmbient.submerged = inWaterEyes;
   const ua = tickUnderwater(underwaterAmbient, Math.random);
   underwaterAmbient = ua.state;
   if (ua.play) {
@@ -9684,7 +9690,7 @@ function frame(): void {
       breakTicksCtxScratch.onGround = fp.onGround;
       // Mining-speed underwater penalty applies when the head is in
       // water (vanilla rule); aquaAffinity removes it.
-      breakTicksCtxScratch.underwater = fp.inFluidEyes === 'water';
+      breakTicksCtxScratch.underwater = inWaterEyes;
       breakTicksCtxScratch.hasAquaAffinity = aquaAffinity;
       breakTicksCtxScratch.hasteLevel = hasteAmp + (hasteAmp > 0 ? 1 : 0);
       breakTicksCtxScratch.fatigueLevel = fatigueAmp + (fatigueAmp > 0 ? 1 : 0);
@@ -9795,7 +9801,7 @@ function frame(): void {
   fluidOverlay.set(fp.inFluidEyes);
 
   // Underwater fog: shorten render distance and tint when submerged.
-  if (fp.inFluidEyes === 'water') {
+  if (inWaterEyes) {
     // Skip the per-frame setRGB / fog.near / fog.far writes when
     // we're already in the underwater state. Each setter triggers
     // three.js material/scene invalidation; cumulative cost adds
@@ -9821,16 +9827,16 @@ function frame(): void {
   }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse.
   // Eye-level water: vignette only fires when head is actually submerged.
-  if (fp.inFluidEyes === 'water' && playerState.breath < 2) {
+  if (inWaterEyes && playerState.breath < 2) {
     hurtVignette.pulse(0.15);
   }
   // Residual lava fire: orange vignette while burning outside lava
-  if (playerState.fireRemainingSec > 0 && fp.inFluid !== 'lava') {
+  if (playerState.fireRemainingSec > 0 && !inLavaBody) {
     hurtVignette.pulse(Math.min(0.4, playerState.fireRemainingSec * 0.08));
   }
   if (fp.inFluid !== lastInFluid) {
-    if (fp.inFluid === 'water') sfx.play('step');
-    else if (fp.inFluid === 'lava') sfx.play('hit');
+    if (inWaterBody) sfx.play('step');
+    else if (inLavaBody) sfx.play('hit');
     lastInFluid = fp.inFluid;
   }
   compassBar.setYaw(fp.yaw);
@@ -9859,7 +9865,7 @@ function frame(): void {
     survivalHudFrame.health = playerState.health;
     survivalHudFrame.hunger = playerState.hunger;
     survivalHudFrame.breathSec = playerState.breath;
-    survivalHudFrame.underwater = fp.inFluid === 'water';
+    survivalHudFrame.underwater = inWaterBody;
     survivalHudFrame.xpLevel = playerState.xpLevel;
     survivalHudFrame.xpProgress = playerState.xpProgress;
     survivalHudFrame.xpToNext = xpToNext(playerState.xpLevel);
