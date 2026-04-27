@@ -10171,20 +10171,17 @@ function frame(): void {
     if (nowPhantomMs - lastPhantomCheckMs > 8000) {
       lastPhantomCheckMs = nowPhantomMs;
       const daysSinceSleep = dayCounter - lastSleepDay;
-      const px2 = Math.floor(fp.position.x);
-      const py2 = Math.floor(fp.position.y);
-      const pz2 = Math.floor(fp.position.z);
       let inSky = true;
       {
-        const cx = px2 >> 4;
-        const cz = pz2 >> 4;
+        const cx = playerBlockX >> 4;
+        const cz = playerBlockZ >> 4;
         const lt = lightCache.get(lightKey(cx, cz));
         if (lt) {
-          const lb = getLightByte(lt, px2 & 0xf, py2 + 2, pz2 & 0xf);
+          const lb = getLightByte(lt, playerBlockX & 0xf, playerBlockY + 2, playerBlockZ & 0xf);
           inSky = ((lb >>> 4) & 0xf) === 15;
         } else {
-          for (let yy = py2 + 2; yy < CHUNK_HEIGHT; yy++) {
-            if (isSolid(px2, yy, pz2)) {
+          for (let yy = playerBlockY + 2; yy < CHUNK_HEIGHT; yy++) {
+            if (isSolid(playerBlockX, yy, playerBlockZ)) {
               inSky = false;
               break;
             }
@@ -10222,9 +10219,12 @@ function frame(): void {
   if (cropTickAccum >= CROP_TICK_SEC) {
     cropTickAccum -= CROP_TICK_SEC;
     if (!isSpectator) {
-      const px = Math.floor(fp.position.x);
-      const py = Math.floor(fp.position.y);
-      const pz = Math.floor(fp.position.z);
+      // Reuse the hoisted block-coords from the top of frame() instead
+      // of Math.floor-ing fp.position again. The crop tick samples
+      // around playerBlockX/Y/Z anyway.
+      const px = playerBlockX;
+      const py = playerBlockY;
+      const pz = playerBlockZ;
       const RADIUS = 24;
       const SAMPLES = 80;
       const farmlandId = farmlandIdCached;
