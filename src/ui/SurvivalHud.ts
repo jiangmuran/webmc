@@ -561,6 +561,14 @@ export class SurvivalHud {
   // every frame even at full HP (pulse=1 → '1.00' for non-empty
   // hearts), invalidating browser style for nothing.
   private readonly lastHeartOpacity: string[] = new Array<string>(HEARTS).fill('');
+  // Per-heart shake-transform diff caches. The shake offsets are
+  // already integer-bucketed (`| 0` over a [-1.5, 1.5] sin range = 5
+  // distinct ints), so the same transform string is rewritten many
+  // frames in a row. NaN sentinels force first-frame writes.
+  private readonly lastHeartShakeX: number[] = new Array<number>(HEARTS).fill(NaN);
+  private readonly lastHeartShakeY: number[] = new Array<number>(HEARTS).fill(NaN);
+  private readonly lastHungerShakeX: number[] = new Array<number>(DRUMSTICKS).fill(NaN);
+  private readonly lastHungerShakeY: number[] = new Array<number>(DRUMSTICKS).fill(NaN);
   // Diff caches for the per-frame display + xp + label writes.
   // Each style/text write triggers browser invalidation; cumulative
   // ~60Hz × per-element waste in steady state.
@@ -594,11 +602,17 @@ export class SurvivalHud {
       if (heartShake) {
         const ox = (Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0;
         const oy = (Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0;
-        this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+        if (ox !== this.lastHeartShakeX[i] || oy !== this.lastHeartShakeY[i]) {
+          this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+          this.lastHeartShakeX[i] = ox;
+          this.lastHeartShakeY[i] = oy;
+        }
       } else if (this.heartShakeActive) {
         // Only clear once on the falling edge — was writing
         // transform='' every frame the player wasn't at low HP.
         this.hearts[i]!.style.transform = '';
+        this.lastHeartShakeX[i] = NaN;
+        this.lastHeartShakeY[i] = NaN;
       }
     }
     this.heartShakeActive = heartShake;
@@ -615,9 +629,15 @@ export class SurvivalHud {
       if (shake) {
         const ox = (Math.sin(t * 0.04 + i * 1.7) * 2) | 0;
         const oy = (Math.cos(t * 0.05 + i * 0.9) * 2) | 0;
-        this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+        if (ox !== this.lastHungerShakeX[i] || oy !== this.lastHungerShakeY[i]) {
+          this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+          this.lastHungerShakeX[i] = ox;
+          this.lastHungerShakeY[i] = oy;
+        }
       } else if (this.hungerShakeActive) {
         this.hungers[i]!.style.transform = '';
+        this.lastHungerShakeX[i] = NaN;
+        this.lastHungerShakeY[i] = NaN;
       }
     }
     this.hungerShakeActive = shake;
