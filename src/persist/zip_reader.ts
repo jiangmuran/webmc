@@ -11,6 +11,12 @@ const EOCD_SIGNATURE = 0x06054b50;
 const CEN_SIGNATURE = 0x02014b50;
 const LFH_SIGNATURE = 0x04034b50;
 
+// Shared decoder for ZIP entry names — was a fresh TextDecoder per
+// entry. A typical resource-pack ZIP has 100s of entries; reusing one
+// decoder cuts allocs without changing semantics (TextDecoder has no
+// per-call state when no streams are active).
+const SHARED_NAME_DECODER = new TextDecoder();
+
 function findEOCD(bytes: Uint8Array): number {
   for (let i = bytes.length - 22; i >= 0; i--) {
     const sig = bytes[i]! | (bytes[i + 1]! << 8) | (bytes[i + 2]! << 16) | (bytes[i + 3]! << 24);
@@ -51,7 +57,7 @@ export async function readZip(bytes: Uint8Array): Promise<readonly ZipEntry[]> {
     const commentLen = u16(bytes, p + 32);
     const localHeaderOff = u32(bytes, p + 42);
     const nameBytes = bytes.subarray(p + 46, p + 46 + nameLen);
-    const name = new TextDecoder().decode(nameBytes);
+    const name = SHARED_NAME_DECODER.decode(nameBytes);
     p += 46 + nameLen + extraLen + commentLen;
 
     const lh = localHeaderOff;
