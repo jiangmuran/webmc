@@ -321,7 +321,11 @@ void (async (): Promise<void> => {
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8db5f0);
-scene.fog = new THREE.Fog(0x8db5f0, 80, 260);
+// Hoisted typed reference. frame() does `scene.fog instanceof THREE.Fog`
+// twice per tick; the fog is created once here and never replaced. Use
+// the typed local at hot call sites to skip the per-frame instanceof.
+const sceneFog = new THREE.Fog(0x8db5f0, 80, 260);
+scene.fog = sceneFog;
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -6816,10 +6820,8 @@ const settingsPanel = new SettingsPanel(appEl, {
     const far = v.viewDistance * 16;
     uFogFarRef.value = far;
     uFogNearRef.value = far * 0.6;
-    if (scene.fog instanceof THREE.Fog) {
-      scene.fog.near = far * 0.6;
-      scene.fog.far = far;
-    }
+    sceneFog.near = far * 0.6;
+    sceneFog.far = far;
     document.body.classList.toggle('webmc-high-contrast', v.highContrast);
     document.body.classList.toggle('webmc-large-text', v.largeText);
     document.body.classList.toggle('webmc-reduce-motion', v.reduceMotion);
@@ -9113,7 +9115,7 @@ function frame(): void {
   uFogColorRef.value.copy(fogColor);
   uCameraPosWRef.value.copy(fp.position);
   scene.background = skyColor;
-  if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
+  sceneFog.color.copy(fogColor);
 
   const loaderStats = loader.update(
     fp.position.x,
@@ -9772,31 +9774,29 @@ function frame(): void {
   fluidOverlay.set(fp.inFluidEyes);
 
   // Underwater fog: shorten render distance and tint when submerged.
-  if (scene.fog instanceof THREE.Fog) {
-    if (fp.inFluidEyes === 'water') {
-      // Skip the per-frame setRGB / fog.near / fog.far writes when
-      // we're already in the underwater state. Each setter triggers
-      // three.js material/scene invalidation; cumulative cost adds
-      // up across underwater traversals.
-      if (!lastUnderwaterFog) {
-        scene.fog.color.setRGB(0.24, 0.4, 0.6);
-        scene.fog.near = 1;
-        scene.fog.far = 20;
-        lastUnderwaterFog = true;
-      }
-    } else {
-      // Restore based on view distance, with weather-aware tightening.
-      const baseFar = (loader.viewRadius ?? 6) * 16;
-      let mul = 1;
-      if (currentWeather === 'thunder') mul = 0.55;
-      else if (currentWeather === 'rain') mul = 0.75;
-      const targetFar = baseFar * mul;
-      if (Math.abs(scene.fog.far - targetFar) > 1) {
-        scene.fog.near = targetFar * 0.6;
-        scene.fog.far = targetFar;
-      }
-      lastUnderwaterFog = false;
+  if (fp.inFluidEyes === 'water') {
+    // Skip the per-frame setRGB / fog.near / fog.far writes when
+    // we're already in the underwater state. Each setter triggers
+    // three.js material/scene invalidation; cumulative cost adds
+    // up across underwater traversals.
+    if (!lastUnderwaterFog) {
+      sceneFog.color.setRGB(0.24, 0.4, 0.6);
+      sceneFog.near = 1;
+      sceneFog.far = 20;
+      lastUnderwaterFog = true;
     }
+  } else {
+    // Restore based on view distance, with weather-aware tightening.
+    const baseFar = (loader.viewRadius ?? 6) * 16;
+    let mul = 1;
+    if (currentWeather === 'thunder') mul = 0.55;
+    else if (currentWeather === 'rain') mul = 0.75;
+    const targetFar = baseFar * mul;
+    if (Math.abs(sceneFog.far - targetFar) > 1) {
+      sceneFog.near = targetFar * 0.6;
+      sceneFog.far = targetFar;
+    }
+    lastUnderwaterFog = false;
   }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse.
   // Eye-level water: vignette only fires when head is actually submerged.
