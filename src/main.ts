@@ -2275,37 +2275,57 @@ function heldNameLower(): string {
 // Vanilla weapon-tier base damage. Touch attack handler reused a hard-coded
 // `2` and ignored the held tool entirely, so an iron sword tap dealt the
 // same damage as a bare-hand tap. Now both code paths read this table.
+// Memoize the base-damage lookup. Was running up to 7 string
+// .includes() calls per attack event; result is stable per held-name
+// string and the cache grows only with distinct tool names.
+const WEAPON_BASE_DAMAGE_CACHE = new Map<string, number>();
 function weaponBaseDamageFor(heldName: string): number {
+  const cached = WEAPON_BASE_DAMAGE_CACHE.get(heldName);
+  if (cached !== undefined) return cached;
+  let result = 1; // fist
   if (heldName.includes('sword')) {
-    if (heldName.includes('netherite')) return 8;
-    if (heldName.includes('diamond')) return 7;
-    if (heldName.includes('iron')) return 6;
-    if (heldName.includes('stone')) return 5;
-    return 4; // wood/gold
+    result = heldName.includes('netherite')
+      ? 8
+      : heldName.includes('diamond')
+        ? 7
+        : heldName.includes('iron')
+          ? 6
+          : heldName.includes('stone')
+            ? 5
+            : 4; // wood/gold
+  } else if (heldName.includes('pickaxe')) {
+    result = heldName.includes('netherite')
+      ? 6
+      : heldName.includes('diamond')
+        ? 5
+        : heldName.includes('iron')
+          ? 4
+          : heldName.includes('stone')
+            ? 3
+            : 2; // wood/gold
+  } else if (heldName.includes('shovel')) {
+    result = heldName.includes('netherite')
+      ? 7
+      : heldName.includes('diamond')
+        ? 6
+        : heldName.includes('iron')
+          ? 5
+          : heldName.includes('stone')
+            ? 4
+            : 3; // wood/gold
+  } else if (heldName.includes('axe')) {
+    result = heldName.includes('netherite')
+      ? 10
+      : heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond')
+        ? 9
+        : 7;
+  } else if (heldName.includes('mace')) {
+    result = 6;
+  } else if (heldName.includes('trident')) {
+    result = 9;
   }
-  if (heldName.includes('pickaxe')) {
-    if (heldName.includes('netherite')) return 6;
-    if (heldName.includes('diamond')) return 5;
-    if (heldName.includes('iron')) return 4;
-    if (heldName.includes('stone')) return 3;
-    return 2; // wood/gold
-  }
-  if (heldName.includes('shovel')) {
-    if (heldName.includes('netherite')) return 7;
-    if (heldName.includes('diamond')) return 6;
-    if (heldName.includes('iron')) return 5;
-    if (heldName.includes('stone')) return 4;
-    return 3; // wood/gold
-  }
-  if (heldName.includes('axe')) {
-    if (heldName.includes('netherite')) return 10;
-    if (heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond'))
-      return 9;
-    return 7;
-  }
-  if (heldName.includes('mace')) return 6;
-  if (heldName.includes('trident')) return 9;
-  return 1; // fist
+  WEAPON_BASE_DAMAGE_CACHE.set(heldName, result);
+  return result;
 }
 
 // Resolves the BlockState the player is about to place from hotbar slot `i`.
