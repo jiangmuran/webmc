@@ -15,6 +15,8 @@ const COLOR_DAWN = new THREE.Color(0xffad6b);
 const COLOR_DAY = new THREE.Color(0x8db5f0);
 const COLOR_DUSK = new THREE.Color(0xff7a48);
 
+type SkyZone = 'night' | 'dawn-dusk-low' | 'dawn-dusk-high' | 'day' | 'init';
+
 export class DayNightCycle {
   readonly sunDir = new THREE.Vector3(0.5, 0.9, 0.3).normalize();
   readonly skyColor = new THREE.Color();
@@ -22,6 +24,11 @@ export class DayNightCycle {
   ambient = 0.08;
   timeOfDay: number;
   private opts: DayNightOptions;
+  // Diff-cache for the constant-color zones. During deep day or deep
+  // night the skyColor.copy + ambient = 0.04 / 0.3 writes fired every
+  // frame for the same value. Track the zone and skip the writes when
+  // it hasn't changed AND the zone is one of the constant-color ones.
+  private lastZone: SkyZone = 'init';
 
   constructor(opts: Partial<DayNightOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
@@ -45,19 +52,34 @@ export class DayNightCycle {
 
     const sun = Math.sin(sunAngle);
     if (sun < -0.25) {
-      this.skyColor.copy(COLOR_NIGHT);
-      this.ambient = 0.04;
-    } else if (sun < 0) {
+      // Constant-color zone — skip the copy when we've already painted it.
+      if (this.lastZone !== 'night') {
+        this.skyColor.copy(COLOR_NIGHT);
+        this.ambient = 0.04;
+        this.fogColor.copy(this.skyColor);
+        this.lastZone = 'night';
+      }
+      return;
+    }
+    if (sun < 0) {
       const k = (sun + 0.25) / 0.25;
       this.skyColor.copy(COLOR_NIGHT).lerp(sun < -0.125 ? COLOR_DAWN : COLOR_DUSK, k);
       this.ambient = 0.04 + 0.04 * k;
+      this.lastZone = 'dawn-dusk-low';
     } else if (sun < 0.2) {
       const k = sun / 0.2;
       this.skyColor.copy(t < 0.5 ? COLOR_DAWN : COLOR_DUSK).lerp(COLOR_DAY, k);
       this.ambient = 0.08 + 0.22 * k;
+      this.lastZone = 'dawn-dusk-high';
     } else {
-      this.skyColor.copy(COLOR_DAY);
-      this.ambient = 0.3;
+      // Constant-color zone — skip the copy when we've already painted it.
+      if (this.lastZone !== 'day') {
+        this.skyColor.copy(COLOR_DAY);
+        this.ambient = 0.3;
+        this.fogColor.copy(this.skyColor);
+        this.lastZone = 'day';
+      }
+      return;
     }
     this.fogColor.copy(this.skyColor);
   }
