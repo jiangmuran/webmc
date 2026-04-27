@@ -8566,7 +8566,7 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     // Decide scope: neighbor rebuild only if the block emits light or we're
     // breaking (block=0, might have removed a light source). Keeps common
     // placements cheap (1 chunk rebuild instead of 5).
-    const emitsNew = block !== 0 && registry.get(block).lightEmission > 0;
+    const emitsNew = block !== 0 && (LIGHT_EMISSION_BY_ID[block] ?? 0) > 0;
     const wasBreak = block === 0;
     let affectedLen: number;
     if (emitsNew || wasBreak) {
