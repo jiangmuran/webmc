@@ -49,14 +49,22 @@ export interface BorderCheck {
   damagePerSec: number;
 }
 
+// Reused result. checkPosition fires per frame; the caller reads
+// fields synchronously and doesn't retain the reference. Was a fresh
+// {insideBorder, damagePerSec} literal per call.
+const SHARED_BORDER_CHECK: BorderCheck = { insideBorder: true, damagePerSec: 0 };
 export function checkPosition(border: WorldBorder, x: number, z: number): BorderCheck {
   const halfExtent = border.diameter / 2;
   const dx = Math.abs(x - border.centerX);
   const dz = Math.abs(z - border.centerZ);
   const outside = Math.max(0, Math.max(dx, dz) - halfExtent);
-  if (outside <= border.damageBuffer) return { insideBorder: true, damagePerSec: 0 };
-  return {
-    insideBorder: false,
-    damagePerSec: (outside - border.damageBuffer) * border.damagePerBlockOutside,
-  };
+  if (outside <= border.damageBuffer) {
+    SHARED_BORDER_CHECK.insideBorder = true;
+    SHARED_BORDER_CHECK.damagePerSec = 0;
+    return SHARED_BORDER_CHECK;
+  }
+  SHARED_BORDER_CHECK.insideBorder = false;
+  SHARED_BORDER_CHECK.damagePerSec =
+    (outside - border.damageBuffer) * border.damagePerBlockOutside;
+  return SHARED_BORDER_CHECK;
 }
