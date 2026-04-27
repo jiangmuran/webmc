@@ -849,6 +849,18 @@ export interface Mob {
 const GRAVITY = 32;
 const TERMINAL_VELOCITY = 50;
 const ATTACK_COOLDOWN_SEC = 0.8;
+// Sunlight-burn mob kinds (vanilla parity for undead). Per mob per
+// tick during daylight; Set.has beats the 6-way `||` chain for the
+// dominant non-undead case (zombies + skeletons are <30% of any mob
+// pop).
+const SUNLIGHT_BURN_KINDS: ReadonlySet<string> = new Set([
+  'zombie',
+  'skeleton',
+  'stray',
+  'zombie_villager',
+  'phantom',
+  'drowned',
+]);
 // Lava-immune mob kinds (vanilla parity). Hoisted to a Set so the
 // per-tick lava-burn check is one hash lookup instead of a 10-way
 // `||` chain that always had to walk all 10 string compares for the
@@ -1139,14 +1151,11 @@ export class MobWorld {
       const drownedInWater =
         kind === 'drowned' &&
         ctx.isFluid?.(mob.position.x, mob.position.y, mob.position.z) === 'water';
-      const burns =
-        !drownedInWater &&
-        (kind === 'zombie' ||
-          kind === 'skeleton' ||
-          kind === 'stray' ||
-          kind === 'zombie_villager' ||
-          kind === 'phantom' ||
-          kind === 'drowned');
+      // Set lookup vs the 6-way `||` chain: per mob per tick during
+      // daylight, the chain walked all 6 string compares for non-undead
+      // (the dominant case). Hoisted SUNLIGHT_BURN_KINDS at module
+      // scope.
+      const burns = !drownedInWater && SUNLIGHT_BURN_KINDS.has(kind);
       if (burns && ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)) {
         mob.health -= 0.5 * dtSec;
         if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
