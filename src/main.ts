@@ -9699,10 +9699,11 @@ function frame(): void {
       const def2 = registry.get(stateId(world.get(aim.bx, aim.by, aim.bz)));
       const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
       const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
-      // Aqua Affinity: helmet item with name including "turtle" gives free aqua affinity (turtle shell).
+      // Aqua Affinity: turtle_shell helmet grants the free water mining
+      // boost. Compare cached itemId — was a Map.get + property read +
+      // .includes() string scan per frame the player was mining.
       const helmet = inventory.armor[0];
-      const helmetName = helmet ? itemRegistry.get(helmet.itemId).name : '';
-      const aquaAffinity = helmetName.includes('turtle');
+      const aquaAffinity = helmet != null && helmet.itemId === turtleShellItemIdCached;
       breakTicksCtxScratch.hardness = Math.max(0.1, def2.hardness);
       breakTicksCtxScratch.correctTool = true;
       breakTicksCtxScratch.toolSpeed = 1;
