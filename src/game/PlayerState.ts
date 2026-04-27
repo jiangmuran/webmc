@@ -233,6 +233,9 @@ export class PlayerState {
     } else {
       this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
     }
+    // Effects loop is gated — common case is no active potions, so skip
+    // the Map iteration + string-equality dispatch cascade entirely.
+    if (this.effects.size === 0) return;
     let absorptionTarget = 0;
     for (const [id, eff] of this.effects) {
       eff.remainingSec -= dtSec;
