@@ -7788,6 +7788,13 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
 // player-break path. Was being rebuilt as a fresh literal on every
 // block-break right-click.
 const LEAF_TO_SAPLING = LEAF_TO_SAPLING_FOR_DECAY;
+// Precomputed leaf-name → sapling itemId for the per-decay drop path —
+// avoids the inner itemRegistry.byName(sapName) call inside the random
+// tick loop (was hitting the byName Map every time a leaf decayed).
+const LEAF_TO_SAPLING_ID: Record<string, number | undefined> = {};
+for (const [leafName, sapName] of Object.entries(LEAF_TO_SAPLING_FOR_DECAY)) {
+  LEAF_TO_SAPLING_ID[leafName] = itemRegistry.byName(sapName);
+}
 // Composter input → fill chance. Was being rebuilt on every
 // composter right-click.
 const COMPOSTABLES: Record<string, number> = {
@@ -10679,16 +10686,13 @@ function frame(): void {
               // skipping the intermediate array + {itemId, count}
               // wrappers cuts ~3 throwaway objects per decay event.
               if (Math.random() < 0.05) {
-                const sapName = LEAF_TO_SAPLING_FOR_DECAY[name];
-                if (sapName !== undefined) {
-                  const sId = itemRegistry.byName(sapName);
-                  if (sId !== undefined) {
-                    droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
-                      itemId: sId,
-                      count: 1,
-                      color: def2.color,
-                    });
-                  }
+                const sId = LEAF_TO_SAPLING_ID[name];
+                if (sId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: sId,
+                    count: 1,
+                    color: def2.color,
+                  });
                 }
               }
               if (Math.random() < 0.02) {
