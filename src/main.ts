@@ -348,8 +348,15 @@ const isOpaque = (state: BlockState): boolean => {
 const faceColorsOf = (state: BlockState) => registry.get(stateId(state)).faceColors;
 const colorOf = (state: BlockState): readonly [number, number, number] =>
   registry.get(stateId(state)).color;
-const isSolid = (x: number, y: number, z: number): boolean =>
-  y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
+const isSolid = (x: number, y: number, z: number): boolean => {
+  if (y < 0 || y >= CHUNK_HEIGHT) return false;
+  const s = world.get(x, y, z);
+  // AIR fast path. Most physics probes (player AABB, mob AABB, raycast,
+  // pathfinding) land in air at typical play altitudes; the stateId +
+  // registry.get + .solid chain dominates only for the rare solid hit.
+  if (s === AIR) return false;
+  return registry.get(stateId(s)).solid;
+};
 const ladderId = registry.byName('webmc:ladder');
 const vineId = registry.byName('webmc:vine');
 const scaffoldingId = registry.byName('webmc:scaffolding');
