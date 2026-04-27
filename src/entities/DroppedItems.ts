@@ -114,6 +114,10 @@ export class DroppedItemWorld {
     playerPos: { x: number; y: number; z: number },
     onPickup: (out: PickupOutcome) => number | undefined,
   ): void {
+    // Skip the entire tick when no items exist. The per-tick scratches
+    // (toRemove + mergeAccumSec) only matter if we do work; otherwise
+    // we'd just clear, no-op iterate, and clear again.
+    if (this.items.size === 0) return;
     const toRemove = this.toRemoveScratch;
     toRemove.length = 0;
     const twoPi = Math.PI * 2;

@@ -79,6 +79,10 @@ export class XpOrbWorld {
     playerPos: { x: number; y: number; z: number },
     onPickup: (xp: number) => void,
   ): void {
+    // Skip the tick entirely when no orbs exist. The inner loops
+    // already short-circuit on the empty Map, but the early return
+    // also skips the toRemove scratch reset.
+    if (this.orbs.size === 0) return;
     const toRemove = this.toRemoveScratch;
     toRemove.length = 0;
     for (const orb of this.orbs.values()) {
