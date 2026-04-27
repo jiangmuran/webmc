@@ -6,6 +6,16 @@ export class CompassBar {
   private readonly deathMarker: HTMLDivElement;
   private readonly WIDTH = 260;
   private readonly TICKS = 16;
+  // Pre-computed per-frame constants. Was recomputing
+  // segmentWidth = WIDTH * 4 / TICKS, fullLoop = segmentWidth * 8,
+  // center = WIDTH/2 - segmentWidth/2 inside setYaw on every call.
+  // These derive from compile-time constants (WIDTH, TICKS), so
+  // hoisting them to instance fields makes setYaw pure arithmetic
+  // over the input.
+  private readonly segmentWidth = (this.WIDTH * 4) / this.TICKS;
+  private readonly fullLoop = this.segmentWidth * 8;
+  private readonly halfFullLoop = this.fullLoop / 2;
+  private readonly center = this.WIDTH / 2 - this.segmentWidth / 2;
   // Diff caches to skip transform / left writes when the rounded
   // value hasn't changed. setYaw fires every frame and most frames
   // the player isn't turning fast enough to move a tenth of a pixel.
@@ -187,12 +197,9 @@ export class CompassBar {
   setYaw(yaw: number): void {
     const twoPi = Math.PI * 2;
     const normalized = ((yaw % twoPi) + twoPi) % twoPi;
-    const segmentWidth = (this.WIDTH * 4) / this.TICKS;
-    const fullLoop = segmentWidth * 8;
-    const center = this.WIDTH / 2 - segmentWidth / 2;
-    const offset = (normalized / twoPi) * fullLoop;
-    let px = (center + offset) % fullLoop;
-    if (px > fullLoop / 2) px -= fullLoop;
+    const offset = (normalized / twoPi) * this.fullLoop;
+    let px = (this.center + offset) % this.fullLoop;
+    if (px > this.halfFullLoop) px -= this.fullLoop;
     // Round to one-decimal pixel grid; skip the transform write
     // when the rounded value hasn't moved.
     const rounded = Math.round(px * 10) / 10;
