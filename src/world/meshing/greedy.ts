@@ -197,20 +197,29 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
           // visit + per-width-extend + per-height-extend + per-clear.
           const ivBase = iv << 4;
           for (let iu = 0; iu < D; ) {
-            const val = mask[ivBase + iu] ?? -1;
+            // mask is Int32Array; indices always in range. The `?? -1`
+            // patterns were TS narrowing only — `!` skips the per-cell
+            // coalesce. The sentinel -1 still comes from `mask.fill(-1)`
+            // at the top of each w-loop, just no per-read fallback.
+            const val = mask[ivBase + iu]!;
             if (val < 0) {
               iu++;
               continue;
             }
 
             let width = 1;
-            while (iu + width < D && (mask[ivBase + iu + width] ?? -1) === val) width++;
+            while (iu + width < D) {
+              const m = mask[ivBase + iu + width]!;
+              if (m !== val) break;
+              width++;
+            }
 
             let height = 1;
             heightLoop: while (iv + height < D) {
               const rowBase = (iv + height) << 4;
               for (let k = 0; k < width; k++) {
-                if ((mask[rowBase + iu + k] ?? -1) !== val) break heightLoop;
+                const m = mask[rowBase + iu + k]!;
+                if (m !== val) break heightLoop;
               }
               height++;
             }
