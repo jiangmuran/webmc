@@ -2975,7 +2975,7 @@ const interaction = new InteractionController(
           }
         }
       }
-      if ((vitalsActive) && placeable.itemId !== null) {
+      if (vitalsActive && placeable.itemId !== null) {
         consumeInventoryItem(placeable.itemId, 1);
       }
       touchWorldEdit(bx, by, bz, placeable.blockId);
@@ -9337,7 +9337,7 @@ function frame(): void {
   }
   // Walking through fire ignites the player (8s burn).
   if (
-    (vitalsActive) &&
+    vitalsActive &&
     !fireResistant
   ) {
     for (let dy = 0; dy <= 1; dy++) {
@@ -9351,7 +9351,7 @@ function frame(): void {
 
   if (
     fp.lastLandFallBlocks > 3 &&
-    (vitalsActive) &&
+    vitalsActive &&
     gameRules.fallDamage
   ) {
     const slowFalling = playerState.effects.has('slow_falling');
@@ -10014,7 +10014,7 @@ function frame(): void {
     // naturally-spawned mobs (only /summon).
     const nowSpawnMs = performance.now();
     if (
-      (vitalsActive) &&
+      vitalsActive &&
       // Peaceful difficulty (mobDamageMultiplier === 0) suppresses hostile
       // spawning entirely. Vanilla MC behaviour. Without this gate,
       // peaceful players still got zombies spawning around them at night
@@ -10108,7 +10108,7 @@ function frame(): void {
     // active loop, the world never had any livestock once the original
     // herds were killed. Slow cycle (~20s) at high light level only.
     if (
-      (vitalsActive) &&
+      vitalsActive &&
       nowSpawnMs - lastPassiveSpawnAttemptMs > 20000
     ) {
       lastPassiveSpawnAttemptMs = nowSpawnMs;
