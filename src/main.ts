@@ -2785,7 +2785,7 @@ const interaction = new InteractionController(
       );
       blockParticles.emitBreak(bx, by, bz, def.color);
       // Mining XP for ores (matches MC: coal 0-2, iron 0 via smelt, diamond 3-7, redstone 1-5, lapis 2-5, emerald 3-7).
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         const xp = oreXp(def.name);
         if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
       }
@@ -2852,7 +2852,7 @@ const interaction = new InteractionController(
             : gameRules.doTileDrops && dropsAllowed
               ? dropRegistry.drops(prevBlockId, undefined, 99)
               : [];
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
             itemId: s.itemId,
@@ -2909,7 +2909,7 @@ const interaction = new InteractionController(
       hand.swing();
       playerStats.blocksBroken++;
       markSaveDirty(autosaveState);
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         playerState.addExhaustion(0.005);
         consumeHeldToolDurability(1);
       }
@@ -2957,7 +2957,7 @@ const interaction = new InteractionController(
           }
         }
       }
-      if ((gameMode === 'survival' || gameMode === 'adventure') && placeable.itemId !== null) {
+      if ((vitalsActive) && placeable.itemId !== null) {
         consumeInventoryItem(placeable.itemId, 1);
       }
       touchWorldEdit(bx, by, bz, placeable.blockId);
@@ -3234,7 +3234,7 @@ const interaction = new InteractionController(
               [220, 100, 220],
             );
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const eId = itemRegistry.byName('webmc:end_crystal');
           if (eId !== undefined) consumeInventoryItem(eId, 1);
         }
@@ -3286,7 +3286,7 @@ const interaction = new InteractionController(
             cz + (Math.random() - 0.5),
             [220, 230, 80],
           );
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const xbId = itemRegistry.byName('webmc:experience_bottle');
           if (xbId !== undefined) consumeInventoryItem(xbId, 1);
         }
@@ -3376,7 +3376,7 @@ const interaction = new InteractionController(
           `${note} Now playing: ${heldName.replace('music_disc_', 'C418 - ')}`,
           '#d0a0ff',
         );
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const dId = itemRegistry.byName(`webmc:${heldName}`);
           if (dId !== undefined) consumeInventoryItem(dId, 1);
         }
@@ -3428,7 +3428,7 @@ const interaction = new InteractionController(
           fp.velocity.y += 4;
           fp.velocity.z += (pdz / len) * 6;
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const wcId = itemRegistry.byName('webmc:wind_charge');
           if (wcId !== undefined) consumeInventoryItem(wcId, 1);
         }
@@ -3509,7 +3509,7 @@ const interaction = new InteractionController(
           }
           subtitles.push('Egg hatched!');
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const itemId = itemRegistry.byName(`webmc:${heldName}`);
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
         }
@@ -3527,7 +3527,7 @@ const interaction = new InteractionController(
         fp.velocity.x += look.x * power;
         fp.velocity.y += look.y * power * 0.6;
         fp.velocity.z += look.z * power;
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
@@ -3576,7 +3576,7 @@ const interaction = new InteractionController(
             color,
           );
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
@@ -3627,7 +3627,7 @@ const interaction = new InteractionController(
               cz + (Math.random() - 0.5) * 4,
               [180, 100, 220],
             );
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const sId = itemRegistry.byName(`webmc:${heldName}`);
             if (sId !== undefined) consumeInventoryItem(sId, 1);
           }
@@ -3645,7 +3645,7 @@ const interaction = new InteractionController(
           mobSpawnPosScratch.y = by + 1;
           mobSpawnPosScratch.z = bz + 0.5;
           mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], mobSpawnPosScratch);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const eggId = itemRegistry.byName(`webmc:${heldName}`);
             if (eggId !== undefined) consumeInventoryItem(eggId, 1);
           }
@@ -3665,7 +3665,7 @@ const interaction = new InteractionController(
           // player kept their pre-throw fall speed and started instantly
           // taking fall damage at the destination.
           fp.velocity.set(0, 0, 0);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             playerState.takeDamage({ amount: 5, source: 'pearl' });
             const pearlId = itemRegistry.byName('webmc:ender_pearl');
             if (pearlId !== undefined) consumeInventoryItem(pearlId, 1);
@@ -3703,7 +3703,7 @@ const interaction = new InteractionController(
         if (fireId !== undefined) {
           world.set(bx, by + 1, bz, makeState(fireId, 0));
           touchWorldEdit(bx, by + 1, bz, fireId);
-          if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+          if (fcId !== undefined && (vitalsActive))
             consumeInventoryItem(fcId, 1);
           sfx.play('click');
           hand.swing();
@@ -3717,7 +3717,7 @@ const interaction = new InteractionController(
         const filledItemId = itemRegistry.byName(filled);
         const emptyItemId = itemRegistry.byName('webmc:bucket');
         if (filledItemId !== undefined && emptyItemId !== undefined) {
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             consumeInventoryItem(emptyItemId, 1);
             addOneToInventory(filledItemId);
           }
@@ -3734,7 +3734,7 @@ const interaction = new InteractionController(
       if (heldName === 'water_bucket' && def.name === 'webmc:fire') {
         world.set(bx, by, bz, AIR);
         touchWorldEdit(bx, by, bz, 0);
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const wbId = itemRegistry.byName('webmc:water_bucket');
           const eId = itemRegistry.byName('webmc:bucket');
           if (wbId !== undefined && eId !== undefined) {
@@ -3757,7 +3757,7 @@ const interaction = new InteractionController(
           // was the long-standing bug where bucketed water sat still.
           fluidWorld.setSource(bx, by + 1, bz, heldName === 'water_bucket' ? 'water' : 'lava');
           touchWorldEdit(bx, by + 1, bz, fluidId);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const heldItemId = itemRegistry.byName(`webmc:${heldName}`);
             const emptyId = itemRegistry.byName('webmc:bucket');
             if (heldItemId !== undefined && emptyId !== undefined) {
@@ -3805,7 +3805,7 @@ const interaction = new InteractionController(
           } else {
             subtitles.push('Compost failed');
           }
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const itemId = itemRegistry.byName(`webmc:${heldName}`);
             if (itemId !== undefined) consumeInventoryItem(itemId, 1);
           }
@@ -3823,7 +3823,7 @@ const interaction = new InteractionController(
           if (cropId !== undefined) {
             world.set(bx, by + 1, bz, makeState(cropId, 0));
             touchWorldEdit(bx, by + 1, bz, cropId);
-            if (gameMode === 'survival' || gameMode === 'adventure') {
+            if (vitalsActive) {
               const itemId = itemRegistry.byName(`webmc:${heldName}`);
               if (itemId !== undefined) consumeInventoryItem(itemId, 1);
             }
@@ -3836,7 +3836,7 @@ const interaction = new InteractionController(
       // Bone meal on sapling: 50% advance growth → instant tree (simplified: replace sapling with 4-tall log+leaves).
       if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
         if (growTreeAt(bx, by, bz, def.name)) {
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const bmId = itemRegistry.byName('webmc:bone_meal');
             if (bmId !== undefined) consumeInventoryItem(bmId, 1);
           }
@@ -3867,7 +3867,7 @@ const interaction = new InteractionController(
           world.set(bx, by, bz, makeState(farmlandIdCached, 0));
           touchWorldEdit(bx, by, bz, farmlandIdCached);
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const bmId = itemRegistry.byName('webmc:bone_meal');
           if (bmId !== undefined) consumeInventoryItem(bmId, 1);
         }
@@ -3914,7 +3914,7 @@ const interaction = new InteractionController(
             added++;
           }
           if (added > 0) {
-            if (gameMode === 'survival' || gameMode === 'adventure') {
+            if (vitalsActive) {
               const bmId = itemRegistry.byName('webmc:bone_meal');
               if (bmId !== undefined) consumeInventoryItem(bmId, 1);
             }
@@ -3945,7 +3945,7 @@ const interaction = new InteractionController(
         if (totalHeight < 3 && world.get(bx, topY + 1, bz) === AIR) {
           world.set(bx, topY + 1, bz, makeState(caneId, 0));
           touchWorldEdit(bx, topY + 1, bz, caneId);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const bmId = itemRegistry.byName('webmc:bone_meal');
             if (bmId !== undefined) consumeInventoryItem(bmId, 1);
           }
@@ -3991,7 +3991,7 @@ const interaction = new InteractionController(
           }
           if (spawned > 0) {
             const itemId = itemRegistry.byName('webmc:bone_meal');
-            if (itemId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+            if (itemId !== undefined && (vitalsActive))
               consumeInventoryItem(itemId, 1);
             for (let i = 0; i < 12; i++)
               blockParticles.emitPlace(
@@ -4154,7 +4154,7 @@ const interaction = new InteractionController(
         const heldIsPlaceable =
           heldStack !== null && itemRegistry.get(heldStack.itemId).blockId !== undefined;
         if (fp.input.sneak && heldIsPlaceable) return false;
-        if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
+        if (vitalsActive) survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
@@ -4191,7 +4191,7 @@ const interaction = new InteractionController(
             heldName === 'snowball' ? [240, 250, 255] : heldName === 'egg' ? [240, 220, 180] : [60, 200, 180],
           );
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const itemId = itemRegistry.byName(`webmc:${heldName}`);
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
         }
@@ -4271,7 +4271,7 @@ function growTreeAt(bx: number, by: number, bz: number, saplingName: string): bo
 // aimed at a block) and onAirInteract (firing into the open sky).
 function fireBowOrCrossbow(): boolean {
   const arrowId = itemRegistry.byName('webmc:arrow');
-  const isSurvival = gameMode === 'survival' || gameMode === 'adventure';
+  const isSurvival = vitalsActive;
   // Vanilla checks both main inventory AND offhand for arrows. webmc was
   // hotbar+main only, so a stack of arrows in the offhand silently
   // failed to fire — players had to manually swap them to hotbar first.
@@ -4456,7 +4456,7 @@ canvas.addEventListener('mousedown', (e) => {
         const stewId = itemRegistry.byName('webmc:mushroom_stew');
         const bucketId = itemRegistry.byName('webmc:bucket');
         if (kind === 'mooshroom' && stewId !== undefined && bucketId !== undefined) {
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             consumeInventoryItem(bucketId, 1);
           }
           addOneToInventory(stewId);
@@ -4466,7 +4466,7 @@ canvas.addEventListener('mousedown', (e) => {
           return;
         }
         if (milkId !== undefined && bucketId !== undefined) {
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             consumeInventoryItem(bucketId, 1);
           }
           addOneToInventory(milkId);
@@ -4557,7 +4557,7 @@ canvas.addEventListener('mousedown', (e) => {
           saddledMobs.add(aimedMob.id);
           mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
           const sId = itemRegistry.byName('webmc:saddle');
-          if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
+          if (sId !== undefined && (vitalsActive))
             consumeInventoryItem(sId, 1);
           chatInput.addLine(`Saddled ${kind}`, '#80ff80');
           hand.swing();
@@ -4573,7 +4573,7 @@ canvas.addEventListener('mousedown', (e) => {
     // No mob in front — try hold-to-eat. Right-click on a food item starts
     // the 1.6s eat animation; mouseup cancels. Fully restored hunger gates
     // out unless the item bypasses (golden apple / chorus fruit / honey).
-    if (gameMode === 'survival' || gameMode === 'adventure') {
+    if (vitalsActive) {
       const stk = inventory.hotbar[inventory.selectedHotbar];
       if (stk) {
         const itemDef = itemRegistry.get(stk.itemId);
@@ -4752,7 +4752,7 @@ canvas.addEventListener('mousedown', (e) => {
         }
       }
     }
-    if (gameMode === 'survival' || gameMode === 'adventure') {
+    if (vitalsActive) {
       playerState.addExhaustion(0.1);
       // Vanilla per-attack durability:
       //   sword: 1
@@ -4864,8 +4864,15 @@ function saveHotbarIfChanged(): void {
 }
 
 let gameMode: GameMode = 'creative';
+// Shared boolean derived from gameMode. Replaces dozens of inline
+// `vitalsActive` chains —
+// dominant frame() check for hunger/exhaustion/contact-effect/save-
+// vitals gates. Updated whenever gameMode changes (applyGameMode + the
+// world-load fast path).
+let vitalsActive = false;
 function applyGameMode(m: GameMode): void {
   gameMode = m;
+  vitalsActive = m === 'survival' || m === 'adventure';
   // Persist so the next reload doesn't drop the player back into creative.
   void persistDB.setMeta('gameMode', m);
   const eff = effectsFor(m);
@@ -7931,7 +7938,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   // (TNT) → 14HP for radius 5 (charged creeper). Pre-fix the player took
   // zero damage from explosions; you could stand on top of a creeper and
   // walk away with full HP after blocks vanished underfoot.
-  if (gameMode === 'survival' || gameMode === 'adventure') {
+  if (vitalsActive) {
     const dx = fp.position.x - (bx + 0.5);
     const dy = fp.position.y - (by + 0.5);
     const dz = fp.position.z - (bz + 0.5);
@@ -8649,7 +8656,7 @@ function frame(): void {
         !chatInput.isOpen()
       ) {
         if (gameMode === 'creative') creativeInv.show();
-        else if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
+        else if (vitalsActive) survivalInv.show();
         fp.inputBlocked = true;
       } else if (survivalInv.isVisible()) {
         survivalInv.hide();
@@ -8661,7 +8668,7 @@ function frame(): void {
     }
     if (touch.state.drop) {
       touch.state.drop = false;
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         const slotIdx = inventory.selectedHotbar;
         const stk = inventory.hotbar[slotIdx];
         if (stk && stk.count > 0) {
@@ -8694,11 +8701,11 @@ function frame(): void {
   if (
     fp.input.sprint &&
     playerState.hunger <= 6 &&
-    (gameMode === 'survival' || gameMode === 'adventure')
+    (vitalsActive)
   ) {
     fp.input.sprint = false;
   }
-  if (fp.input.sprint && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (fp.input.sprint && (vitalsActive)) {
     // Sprint exhaustion: 0.1 per meter sprinted. Approximate via dtSec * 5 m/s.
     playerState.addExhaustion(0.1 * dtSec * 5);
   }
@@ -8799,7 +8806,7 @@ function frame(): void {
               : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
           const result = mobWorld.damage(bestId, dmg);
           // Touch combat durability + exhaustion (parity with desktop).
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             playerState.addExhaustion(0.1);
             if (
               heldName.includes('sword') ||
@@ -9001,7 +9008,7 @@ function frame(): void {
     prevOnGround &&
     !fp.onGround &&
     fp.velocity.y > 0 &&
-    (gameMode === 'survival' || gameMode === 'adventure')
+    (vitalsActive)
   ) {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
@@ -9010,7 +9017,7 @@ function frame(): void {
   else if (fp.position.y > maceFallStartY) maceFallStartY = fp.position.y;
   prevOnGround = fp.onGround;
   // Swim exhaustion: 0.01 per meter swum.
-  if (fp.inFluid === 'water' && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (fp.inFluid === 'water' && (vitalsActive)) {
     playerState.addExhaustion(0.01 * horizSpeed * dtSec);
   }
   // Turtle Shell helmet: 10s of Water Breathing on emerging from water.
@@ -9236,7 +9243,8 @@ function frame(): void {
   // Drowning is gated by what's at eye level, not the body center —
   // walking through 1-deep water shouldn't drain breath. Creative +
   // spectator skip vital drains (hunger, breath) entirely.
-  const vitalsActive = gameMode === 'survival' || gameMode === 'adventure';
+  // vitalsActive is now a module-scope cache updated whenever gameMode
+  // changes — see applyGameMode.
   playerTickEnv.inFluid = fp.inFluidEyes;
   playerTickEnv.drainHunger = vitalsActive;
   playerState.tick(dtSec, playerTickEnv);
@@ -9275,7 +9283,7 @@ function frame(): void {
   }
   // Walking through fire ignites the player (8s burn).
   if (
-    (gameMode === 'survival' || gameMode === 'adventure') &&
+    (vitalsActive) &&
     !playerState.effects.has('fire_resistance')
   ) {
     const fpx = Math.floor(fp.position.x);
@@ -9291,7 +9299,7 @@ function frame(): void {
 
   if (
     fp.lastLandFallBlocks > 3 &&
-    (gameMode === 'survival' || gameMode === 'adventure') &&
+    (vitalsActive) &&
     gameRules.fallDamage
   ) {
     const slowFalling = playerState.effects.has('slow_falling');
@@ -9322,7 +9330,7 @@ function frame(): void {
   }
   fp.lastLandFallBlocks = 0;
 
-  if (fp.position.y < -64 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (fp.position.y < -64 && (vitalsActive)) {
     // Vanilla: 4 dmg per game tick (20Hz) ≈ 80 dmg/s. takeDamage's
     // i-frame bypass for 'void' was firing every render frame instead,
     // so at 60FPS we were applying 240 dmg/s — enough to instantly
@@ -9330,14 +9338,14 @@ function frame(): void {
     envTakeDamage(80 * dtSec, 'void');
   }
 
-  if (gameMode === 'survival' || gameMode === 'adventure') {
+  if (vitalsActive) {
     const wb = checkWorldBorder(worldBorder, fp.position.x, fp.position.z);
     if (!wb.insideBorder && wb.damagePerSec > 0) {
       envTakeDamage(wb.damagePerSec * dtSec, 'void');
     }
   }
 
-  if (gameMode === 'survival' || gameMode === 'adventure') {
+  if (vitalsActive) {
     // Suffocation when the head cell is solid. position.y is the body
     // center (halfY=0.9), eyes ~0.72 above (eyeHeight 1.62 from feet).
     // The previous +1.55 was a full cell ABOVE the head — suffocation
@@ -9432,7 +9440,7 @@ function frame(): void {
     }
   }
 
-  if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (playerState.hunger <= 0 && (vitalsActive)) {
     if (!starvingShown) {
       starvingShown = true;
       toast.show('Starving!', '#ff6060', 2000);
@@ -9833,7 +9841,7 @@ function frame(): void {
       compassBar.setDeathDir(null, fp.yaw);
     }
   }
-  if (gameMode === 'survival' || gameMode === 'adventure') {
+  if (vitalsActive) {
     // Reuse a stable frame object — was a fresh literal per frame.
     survivalHudFrame.health = playerState.health;
     survivalHudFrame.hunger = playerState.hunger;
@@ -9963,7 +9971,7 @@ function frame(): void {
     // naturally-spawned mobs (only /summon).
     const nowSpawnMs = performance.now();
     if (
-      (gameMode === 'survival' || gameMode === 'adventure') &&
+      (vitalsActive) &&
       // Peaceful difficulty (mobDamageMultiplier === 0) suppresses hostile
       // spawning entirely. Vanilla MC behaviour. Without this gate,
       // peaceful players still got zombies spawning around them at night
@@ -10057,7 +10065,7 @@ function frame(): void {
     // active loop, the world never had any livestock once the original
     // herds were killed. Slow cycle (~20s) at high light level only.
     if (
-      (gameMode === 'survival' || gameMode === 'adventure') &&
+      (vitalsActive) &&
       nowSpawnMs - lastPassiveSpawnAttemptMs > 20000
     ) {
       lastPassiveSpawnAttemptMs = nowSpawnMs;
@@ -10612,7 +10620,7 @@ function frame(): void {
         consumeFoodItem(itemId, itemDef.hungerRestore ?? 0, itemDef.saturation ?? 0);
         // Creative players don't lose food when eating (vanilla parity).
         // Was unconditional — eating in creative still depleted hotbar.
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           consumeInventoryItem(itemId, 1);
         }
         // Re-arm: if the player is still holding right-click and still has
