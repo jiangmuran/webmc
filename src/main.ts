@@ -9773,19 +9773,25 @@ function frame(): void {
   // for every frame a boss is in range (e.g. the entire ender dragon /
   // warden / wither fight).
   let bossM: typeof bossCandidateScratch | null = null;
-  let bossDistSq = 32 * 32;
-  for (const m of mobWorld.all()) {
-    if (m.def.maxHealth < 40) continue;
-    const dx = m.position.x - fp.position.x;
-    const dz = m.position.z - fp.position.z;
-    const d2 = dx * dx + dz * dz;
-    if (d2 > bossDistSq) continue;
-    bossDistSq = d2;
-    bossCandidateScratch.name = m.def.kind;
-    bossCandidateScratch.health = m.health;
-    bossCandidateScratch.maxHealth = m.def.maxHealth;
-    bossCandidateScratch.kind = m.def.kind;
-    bossM = bossCandidateScratch;
+  // Skip the per-frame mob walk entirely when no boss-class mob exists
+  // (the dominant case — bosses are rare, this loop fired 60Hz over
+  // every mob in the world for nothing). MobWorld now tracks the count
+  // incrementally in spawn/remove.
+  if (mobWorld.bossCount > 0) {
+    let bossDistSq = 32 * 32;
+    for (const m of mobWorld.all()) {
+      if (m.def.maxHealth < 40) continue;
+      const dx = m.position.x - fp.position.x;
+      const dz = m.position.z - fp.position.z;
+      const d2 = dx * dx + dz * dz;
+      if (d2 > bossDistSq) continue;
+      bossDistSq = d2;
+      bossCandidateScratch.name = m.def.kind;
+      bossCandidateScratch.health = m.health;
+      bossCandidateScratch.maxHealth = m.def.maxHealth;
+      bossCandidateScratch.kind = m.def.kind;
+      bossM = bossCandidateScratch;
+    }
   }
   if (bossM) {
     const color =

@@ -905,6 +905,11 @@ export class MobWorld {
   // check in main doesn't need to iterate all mobs every frame.
   private _hostileCount = 0;
   private _passiveCount = 0;
+  // Boss counter — mobs with maxHealth >= 40 (ender_dragon, wither,
+  // warden, elder_guardian). main.ts walks all mobs every frame to
+  // find the closest boss for the boss-bar HUD; with this counter it
+  // can early-return when no bosses exist (the common case).
+  private _bossCount = 0;
   // Reused per-tick scratch list for despawn — was allocated fresh each
   // call.
   private readonly tickRemoveScratch: MobId[] = [];
@@ -944,6 +949,7 @@ export class MobWorld {
     const bucket = this.behaviorBucket(def.behavior);
     if (bucket === 'hostile') this._hostileCount++;
     else if (bucket === 'passive') this._passiveCount++;
+    if (def.maxHealth >= 40) this._bossCount++;
     return mob;
   }
 
@@ -957,6 +963,7 @@ export class MobWorld {
     const bucket = this.behaviorBucket(m.def.behavior);
     if (bucket === 'hostile') this._hostileCount--;
     else if (bucket === 'passive') this._passiveCount--;
+    if (m.def.maxHealth >= 40) this._bossCount--;
     this.mobs.delete(id);
   }
 
@@ -978,6 +985,10 @@ export class MobWorld {
 
   get passiveCount(): number {
     return this._passiveCount;
+  }
+
+  get bossCount(): number {
+    return this._bossCount;
   }
 
   // Shared mutable damage-result + nested position scratch. Per-call
