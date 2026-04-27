@@ -34,7 +34,18 @@ export function canMine(toolLevel: number, requiredLevel: number): boolean {
   return toolLevel >= requiredLevel;
 }
 
+// Memoize the level lookup. Was running ~50 string comparisons per
+// call from getBreakDurationSec (per frame while breaking) for a
+// stable per-block result. Cache grows only with distinct block names.
+const REQUIRED_LEVEL_CACHE = new Map<string, number>();
 export function requiredLevelFor(blockId: string): number {
+  const cached = REQUIRED_LEVEL_CACHE.get(blockId);
+  if (cached !== undefined) return cached;
+  const result = computeRequiredLevelFor(blockId);
+  REQUIRED_LEVEL_CACHE.set(blockId, result);
+  return result;
+}
+function computeRequiredLevelFor(blockId: string): number {
   // Vanilla MC mining levels (Level 0 = no tool required to drop):
   //   4 = diamond pickaxe (obsidian, ancient_debris, netherite_block)
   //   3 = iron pickaxe (diamond/gold/redstone/emerald ores)
