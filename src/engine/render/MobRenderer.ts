@@ -447,7 +447,11 @@ export class MobRenderer {
             vis.lastNameOpacity = targetOpacity;
           }
         }
-      } else {
+      } else if (vis.nameSprite.visible !== this.showNameplates) {
+        // Diff-cache: when the player has nameplates disabled (or no
+        // cameraPos was passed), this branch fires per mob per frame
+        // and was writing the same boolean every time, flagging the
+        // sprite for recompose.
         vis.nameSprite.visible = this.showNameplates;
       }
       const hpRatio = Math.max(0, mob.health / mob.def.maxHealth);
