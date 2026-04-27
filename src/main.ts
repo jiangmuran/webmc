@@ -345,9 +345,23 @@ const GLOW = nameToState('webmc:glowstone');
 const SAND = nameToState('webmc:sand');
 const PLANKS = nameToState('webmc:oak_planks');
 
+// Pre-resolved opaque/solid lookup tables — props don't affect either
+// in this build, so an id-indexed Uint8Array suffices. The registry is
+// fully populated by `createDefaultRegistry()` and never mutated again
+// (no runtime block registrations), so the table is stable. Replaces
+// `registry.get(stateId(s)).opaque/solid` chains in the lighting BFS,
+// physics AABB sweeps, and mesher border extraction — call counts are
+// in the hundreds-of-thousands per chunk-light rebuild.
+const OPAQUE_BY_ID = new Uint8Array(registry.defs.length);
+const SOLID_BY_ID = new Uint8Array(registry.defs.length);
+for (let i = 0; i < registry.defs.length; i++) {
+  const def = registry.defs[i]!;
+  if (def.opaque) OPAQUE_BY_ID[i] = 1;
+  if (def.solid) SOLID_BY_ID[i] = 1;
+}
 const isOpaque = (state: BlockState): boolean => {
   if (state === AIR) return false;
-  return registry.get(stateId(state)).opaque;
+  return OPAQUE_BY_ID[stateId(state)] === 1;
 };
 const faceColorsOf = (state: BlockState) => registry.get(stateId(state)).faceColors;
 const colorOf = (state: BlockState): readonly [number, number, number] =>
@@ -356,10 +370,9 @@ const isSolid = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
   // AIR fast path. Most physics probes (player AABB, mob AABB, raycast,
-  // pathfinding) land in air at typical play altitudes; the stateId +
-  // registry.get + .solid chain dominates only for the rare solid hit.
+  // pathfinding) land in air at typical play altitudes.
   if (s === AIR) return false;
-  return registry.get(stateId(s)).solid;
+  return SOLID_BY_ID[stateId(s)] === 1;
 };
 const ladderId = registry.byName('webmc:ladder');
 const vineId = registry.byName('webmc:vine');
