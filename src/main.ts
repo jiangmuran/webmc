@@ -5535,7 +5535,7 @@ const chatInput = new ChatInput(appEl, {
             }
           }
           for (const k of chunksTouched) {
-            const cx = Math.floor(k / 65536) - 32768;
+            const cx = (k >>> 16) - 32768;
             const cz = (k & 0xffff) - 32768;
             const c = world.getChunk(cx, cz);
             if (c) markChunkAllDirty(c);
@@ -5960,7 +5960,7 @@ const chatInput = new ChatInput(appEl, {
                     }
                     // Single chunk-rebuild pass, like fillBlocks does.
                     for (const k of chunksTouched) {
-                      const cxN = Math.floor(k / 65536) - 32768;
+                      const cxN = (k >>> 16) - 32768;
                       const czN = (k & 0xffff) - 32768;
                       const ch = world.getChunk(cxN, czN);
                       if (ch) {
@@ -6098,7 +6098,7 @@ const chatInput = new ChatInput(appEl, {
             }
           }
           for (const k of chunksTouched) {
-            const cxN = Math.floor(k / 65536) - 32768;
+            const cxN = (k >>> 16) - 32768;
             const czN = (k & 0xffff) - 32768;
             const chunk = world.getChunk(cxN, czN);
             if (chunk) {
@@ -7960,9 +7960,9 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   }
   for (const k of changedChunks) {
     // Unpack the numeric key back into (cx, cz). Same encoding as
-    // World.chunkKey / lightKey: ((cx + 32768) & 0xffff) * 65536 +
-    // ((cz + 32768) & 0xffff).
-    const cx = Math.floor(k / 65536) - 32768;
+    // World.chunkKey / lightKey. `>>> 16` matches Math.floor(k / 65536)
+    // for valid keys (bounded to 32 bits) and skips the divide.
+    const cx = (k >>> 16) - 32768;
     const cz = (k & 0xffff) - 32768;
     const chunk = world.getChunk(cx, cz);
     if (chunk) {
