@@ -9251,11 +9251,16 @@ function frame(): void {
   const inLavaBody = fp.inFluid === 'lava';
   const inWaterEyes = fp.inFluidEyes === 'water';
   // Surface-aware footsteps: pick material from block under feet.
+  // Hoist the foot-block id once — was being computed twice per frame
+  // (here for footstep material, again below for magma/soul_sand/
+  // friction surface contact). Both call sites are fp.onGround-gated.
+  let footBlockId = -1;
+  if (fp.onGround) {
+    footBlockId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
+  }
   let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
-    stepMat = footStepMatForStateId(
-      stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ)),
-    );
+    stepMat = footStepMatForStateId(footBlockId);
   } else if (inWaterBody) {
     stepMat = 'water';
   }
@@ -9583,7 +9588,8 @@ function frame(): void {
     }
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
-      const belowBlockId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
+      // Reuse the footBlockId computed above (same world.get).
+      const belowBlockId = footBlockId;
       if (belowBlockId === magmaBlockIdCached && !fp.input.sneak && !fireResistant) {
         envTakeDamage(1 * dtSec, 'fire');
       }
