@@ -120,6 +120,14 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
         if (!sc) continue;
         const yMin = cy << 4;
         const yMax = Math.min(searchTopY, yMin + 15);
+        // Uniform-section fast path: if the entire section is one
+        // state (bits=0) and that state is opaque (the per-cy flag
+        // already confirmed at least one opaque palette entry), the
+        // topmost opaque is yMax — skip the cell-by-cell scan.
+        if (sc.isUniform) {
+          topOpaque = yMax;
+          break;
+        }
         for (let y = yMax; y >= yMin; y--) {
           if (oracle.isOpaque(sc.get(lx, y & 0xf, lz))) {
             topOpaque = y;
