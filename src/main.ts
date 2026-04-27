@@ -9908,8 +9908,11 @@ function frame(): void {
   if (!isCreative) {
     if (aim) {
       const def2 = registry.get(stateId(world.get(aim.bx, aim.by, aim.bz)));
-      const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
-      const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
+      // Skip the 2 Map.get hashes when no effects are active.
+      const hasteAmp = hasAnyEffect ? (playerState.effects.get('haste')?.amplifier ?? 0) : 0;
+      const fatigueAmp = hasAnyEffect
+        ? (playerState.effects.get('mining_fatigue')?.amplifier ?? 0)
+        : 0;
       // Aqua Affinity: turtle_shell helmet grants the free water mining
       // boost. Compare cached itemId — was a Map.get + property read +
       // .includes() string scan per frame the player was mining.
