@@ -88,7 +88,15 @@ export class PlayerAvatar {
   }
 
   setPose(x: number, y: number, z: number, yaw: number): void {
-    this.group.position.set(x, y, z);
+    // Diff-cache the position write — Vector3.set fires the
+    // _onChangeCallback (matrixWorldNeedsUpdate) every call. Standing
+    // still in third-person was repainting the same x/y/z each frame.
+    if (x !== this.lastPosX || y !== this.lastPosY || z !== this.lastPosZ) {
+      this.group.position.set(x, y, z);
+      this.lastPosX = x;
+      this.lastPosY = y;
+      this.lastPosZ = z;
+    }
     // Euler rotation.y= fires _onChangeCallback (quaternion.setFromEuler:
     // 6 trig + multiple muls). Skip when yaw is unchanged — common in
     // third-person view while standing still.
@@ -98,6 +106,9 @@ export class PlayerAvatar {
     }
   }
   private lastYaw = NaN;
+  private lastPosX = NaN;
+  private lastPosY = NaN;
+  private lastPosZ = NaN;
 
   animate(dtSec: number, walkSpeed: number): void {
     if (walkSpeed > 0.4) {
