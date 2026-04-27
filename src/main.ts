@@ -10772,7 +10772,12 @@ function frame(): void {
     mobTickCtx.playerInvisible = playerInvisible;
     mobWorld.tick(dtSec * tickRateMultiplier, mobTickCtx);
   }
-  mobRenderer.sync(mobWorld.all(), camera.position);
+  // Skip the sync entirely when there are no mobs AND no visuals to
+  // clean up. Saves the iterator construction + seenScratch.clear()
+  // + performance.now() syscall in fully-empty mob worlds.
+  if (mobWorld.size > 0 || mobRenderer.count > 0) {
+    mobRenderer.sync(mobWorld.all(), camera.position);
+  }
 
   damageNumbers.tick(dtSec, projectWorldToScreen);
 
