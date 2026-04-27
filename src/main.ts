@@ -7843,6 +7843,18 @@ const LEAF_TO_SAPLING_ID: Record<string, number | undefined> = {};
 for (const [leafName, sapName] of Object.entries(LEAF_TO_SAPLING_FOR_DECAY)) {
   LEAF_TO_SAPLING_ID[leafName] = itemRegistry.byName(sapName);
 }
+// Pre-resolved id sets for the leaf-decay BFS. The hot inner loop did
+// `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')` per
+// visited cell — a full BlockDef fetch + 3 string comparisons. Resolve
+// once at module init by iterating the registry's defs array; runtime
+// becomes a Set.has on a numeric id.
+const LEAF_BFS_LOG_OR_WOOD_IDS = new Set<number>();
+const LEAF_BFS_LEAVES_IDS = new Set<number>();
+for (let i = 0; i < registry.defs.length; i++) {
+  const n = registry.defs[i]!.name;
+  if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD_IDS.add(i);
+  else if (n.endsWith('_leaves')) LEAF_BFS_LEAVES_IDS.add(i);
+}
 // Composter input → fill chance. Was being rebuilt on every
 // composter right-click.
 const COMPOSTABLES: Record<string, number> = {
@@ -10746,13 +10758,15 @@ function frame(): void {
               visited.add(k);
               const ss = world.get(cx2, cy2, cz2);
               if (ss === AIR) continue;
-              const sn = registry.get(stateId(ss)).name;
-              if (sn.endsWith('_log') || sn.endsWith('_wood')) {
+              // Numeric-id Set.has avoids the per-visit registry.get
+              // + .name string fetch + 2-3 .endsWith string ops.
+              const sId = stateId(ss);
+              if (LEAF_BFS_LOG_OR_WOOD_IDS.has(sId)) {
                 found = true;
                 break;
               }
               if (cd2 >= LEAF_MAX_DIST - 1) continue;
-              if (cd2 > 0 && !sn.endsWith('_leaves')) continue;
+              if (cd2 > 0 && !LEAF_BFS_LEAVES_IDS.has(sId)) continue;
               for (let ni = 0; ni < 6; ni++) {
                 stackX.push(cx2 + NEIGHBOR_OFFSETS_DX_6[ni]!);
                 stackY.push(cy2 + NEIGHBOR_OFFSETS_DY_6[ni]!);
