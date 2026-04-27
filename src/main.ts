@@ -437,6 +437,31 @@ for (const name of WORKSTATION_BLOCKS) {
   const id = registry.byName(name);
   if (id !== undefined) WORKSTATION_BY_ID[id] = 1;
 }
+// Vanilla MC bed-sleep block list: monsters within 8 blocks prevent
+// sleep. Was being rebuilt as a fresh string-Set per right-click on
+// a bed during the night.
+const BED_SLEEP_HOSTILE_KINDS: ReadonlySet<string> = new Set([
+  'zombie',
+  'skeleton',
+  'creeper',
+  'spider',
+  'enderman',
+  'witch',
+  'pillager',
+  'vindicator',
+  'evoker',
+  'phantom',
+  'drowned',
+  'husk',
+  'stray',
+  'wither_skeleton',
+  'piglin',
+  'piglin_brute',
+  'hoglin',
+  'zoglin',
+  'ravager',
+  'vex',
+]);
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
@@ -4354,31 +4379,11 @@ const interaction = new InteractionController(
         playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
         void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         if (!dayNight.isDay) {
-          const HOSTILE_KINDS = new Set([
-            'zombie',
-            'skeleton',
-            'creeper',
-            'spider',
-            'enderman',
-            'witch',
-            'pillager',
-            'vindicator',
-            'evoker',
-            'phantom',
-            'drowned',
-            'husk',
-            'stray',
-            'wither_skeleton',
-            'piglin',
-            'piglin_brute',
-            'hoglin',
-            'zoglin',
-            'ravager',
-            'vex',
-          ]);
           let mobNearby = false;
           for (const m of mobWorld.all()) {
-            if (!HOSTILE_KINDS.has(m.def.kind)) continue;
+            // Module-scope BED_SLEEP_HOSTILE_KINDS Set — was a fresh
+            // 20-string Set per right-click on a bed at night.
+            if (!BED_SLEEP_HOSTILE_KINDS.has(m.def.kind)) continue;
             const dx = m.position.x - (bx + 0.5);
             const dy = m.position.y - (by + 0.5);
             const dz = m.position.z - (bz + 0.5);
