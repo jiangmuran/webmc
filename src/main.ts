@@ -1704,6 +1704,18 @@ scene.add(stars.points);
 // fire per frame for the gamepad poll otherwise — the result never
 // changes for the lifetime of the page.
 const hasGamepadApi = typeof navigator.getGamepads === 'function';
+// Track whether any gamepad has ever connected. Without this, the
+// per-frame `navigator.getGamepads()` walk fires for every desktop
+// session — vast majority of users have no gamepad, so the call +
+// 4-slot loop happens 60Hz forever for nothing. Set true on the first
+// connect event and stays true (we still need to handle disconnects
+// inside the poll itself).
+let anyGamepadEverConnected = false;
+if (hasGamepadApi && typeof window.addEventListener === 'function') {
+  window.addEventListener('gamepadconnected', () => {
+    anyGamepadEverConnected = true;
+  });
+}
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 // Cached booleans derived from currentWeather. Updated in setWeather()
 // — the only mutation site. Replaces ~6 inline string-equality checks
@@ -8757,8 +8769,11 @@ function frame(): void {
 
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
   // applies when no menus are open and the player is not in chat.
+  // anyGamepadEverConnected gates the entire poll — desktop users with
+  // no gamepad skip the navigator.getGamepads() call + 4-slot scan.
   if (
     hasGamepadApi &&
+    anyGamepadEverConnected &&
     !chatInput.isOpen() &&
     !pauseMenu.isVisible()
   ) {
