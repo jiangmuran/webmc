@@ -117,7 +117,7 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // Per-column write for the remaining cells (≤ end of straddling
   // section). computeBlockLight runs after, so unpackBlock is always
   // 0 here — write the packed byte directly.
-  const writeUntilY = Math.min(CHUNK_HEIGHT - 1, firstFullyLitCy * SUBCHUNK_DIM - 1);
+  const writeUntilY = Math.min(CHUNK_HEIGHT - 1, (firstFullyLitCy << 4) - 1);
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
       const topOpaque = topByCol[lx * CHUNK_DIM + lz] ?? -1;
@@ -181,17 +181,23 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       }
     }
     if (!sectionHasEmissive) continue;
-    const yBase = cy * SUBCHUNK_DIM;
+    // cy is in [0, CHUNK_SECTIONS-1] so `<< 4` matches `* SUBCHUNK_DIM`
+    // without the multiply.
+    const yBase = cy << 4;
     for (let dy = 0; dy < SUBCHUNK_DIM; dy++) {
       const y = yBase + dy;
+      const localY = y & 0xf;
       for (let lx = 0; lx < CHUNK_DIM; lx++) {
         for (let lz = 0; lz < CHUNK_DIM; lz++) {
           const state = chunk.get(lx, y, lz);
           const e = oracle.lightEmission(state);
           if (e > 0) {
             const lightSec = ensureSection(light, cy, 0);
-            const prev = lightSec[localIndex(lx, y & 0xf, lz)] ?? 0;
-            lightSec[localIndex(lx, y & 0xf, lz)] = packLight(unpackSky(prev), e);
+            // Cache the localIndex result — was computed twice (read +
+            // write) per emissive voxel.
+            const idx = localIndex(lx, localY, lz);
+            const prev = lightSec[idx] ?? 0;
+            lightSec[idx] = packLight(unpackSky(prev), e);
             qx.push(lx);
             qy.push(y);
             qz.push(lz);
