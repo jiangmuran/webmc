@@ -1672,8 +1672,10 @@ const spawnSystemCtx = {
   playerPos: { x: 0, y: 0, z: 0 },
   isDay: false,
   surfaceAt: (x: number, z: number): number => generator.surfaceAt(x, z),
-  isSolid: (x: number, y: number, z: number): boolean =>
-    y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid,
+  // Use the module-scope isSolid directly — same semantics (AIR check
+  // + SOLID_BY_ID id-table) without the wrapper closure that
+  // re-implemented the chain.
+  isSolid,
   biomeAt: (x: number, z: number): 'forest' | 'plains' =>
     generator.biomeAt(x, z) === 1 ? 'forest' : 'plains',
 };
