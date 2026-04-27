@@ -4,10 +4,11 @@ import { AIR, type BlockState, makeState, stateId } from '@/blocks/state';
 import {
   type FluidCell,
   type FluidKind,
+  type PosKey,
   LEVEL_SOURCE,
   applyFluidUpdates,
   keyOfXYZ,
-  parseKey,
+  parseKeyInto,
   tickFluid,
 } from './field';
 
@@ -39,6 +40,10 @@ export class FluidWorld {
   // flow; eating one closure per call is pure GC pressure.
   private readonly isSolidBound = (x: number, y: number, z: number): boolean =>
     this.isSolid(x, y, z);
+  // Per-cell parseKey scratch for tick() + deserialize(). field.ts
+  // already exposes parseKeyInto for in-place writes; the caller reads
+  // p.x/y/z synchronously and never retains the ref.
+  private readonly posScratch: PosKey = { x: 0, y: 0, z: 0 };
 
   constructor(opts: FluidWorldOptions) {
     this.world = opts.world;
@@ -87,7 +92,7 @@ export class FluidWorld {
     }
     changed.length = 0;
     for (const [k, cell] of updates) {
-      const p = parseKey(k);
+      const p = parseKeyInto(k, this.posScratch);
       // Skip writebacks to unloaded chunks. world.set on a non-AIR
       // state would call ensureChunk and materialise an empty chunk
       // far away, leaking memory and corrupting future generation.
@@ -156,7 +161,7 @@ export class FluidWorld {
       source: boolean;
     }[] = [];
     for (const [k, c] of this.cells) {
-      const p = parseKey(k);
+      const p = parseKeyInto(k, this.posScratch);
       out.push({ x: p.x, y: p.y, z: p.z, kind: c.kind, level: c.level, source: c.source });
     }
     return out;
