@@ -4585,7 +4585,14 @@ window.addEventListener('mouseup', (e) => {
 });
 
 let lastPlayerAttackAt = 0;
+// Memoize attack-charge-ms by held-name. Called every frame from
+// crosshair.setCooldown — was running 12+ string .includes() per call
+// for a stable per-tool result. The cache grows only with distinct
+// tool name strings (~100 max).
+const HELD_ATTACK_CHARGE_MS_CACHE = new Map<string, number>();
 function heldAttackFullChargeMs(heldName: string): number {
+  const cached = HELD_ATTACK_CHARGE_MS_CACHE.get(heldName);
+  if (cached !== undefined) return cached;
   let attacksPerSec = 4.0;
   if (heldName.includes('sword')) attacksPerSec = 1.6;
   else if (heldName.includes('netherite_axe')) attacksPerSec = 1.0;
@@ -4600,7 +4607,9 @@ function heldAttackFullChargeMs(heldName: string): number {
     else attacksPerSec = 1.0;
   } else if (heldName.includes('trident')) attacksPerSec = 1.1;
   else if (heldName.includes('mace')) attacksPerSec = 0.5;
-  return Math.max(50, 1000 / attacksPerSec);
+  const result = Math.max(50, 1000 / attacksPerSec);
+  HELD_ATTACK_CHARGE_MS_CACHE.set(heldName, result);
+  return result;
 }
 window.addEventListener('mousemove', (e) => {
   if (document.pointerLockElement !== canvas) return;
