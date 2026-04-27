@@ -238,9 +238,12 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             const faceOffset =
               d === 1 ? (s === 1 ? COLOR_OFFSET_TOP : COLOR_OFFSET_BOTTOM) : COLOR_OFFSET_SIDE;
             const base3 = val * COLOR_STRIDE + faceOffset;
-            const r = paletteColor[base3] ?? 0;
-            const g = paletteColor[base3 + 1] ?? 0;
-            const b = paletteColor[base3 + 2] ?? 0;
+            // paletteColor is Uint8Array; valid indices always return
+            // a number. The `?? 0` was TS narrowing only (noUnchecked-
+            // IndexedAccess). `!` skips the per-quad fallback eval.
+            const r = paletteColor[base3]!;
+            const g = paletteColor[base3 + 1]!;
+            const b = paletteColor[base3 + 2]!;
 
             lightPos[0] = 0;
             lightPos[1] = 0;
