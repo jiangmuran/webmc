@@ -4491,9 +4491,9 @@ function growTreeAt(bx: number, by: number, bz: number, saplingName: string): bo
   const trunkH = 4 + Math.floor(Math.random() * 3);
   for (let h = 0; h < trunkH; h++) {
     const above = world.get(bx, by + h, bz);
-    // SAPLING_IDS Set is pre-resolved at module init — skip the
+    // IS_SAPLING table is pre-resolved at module init — skip the
     // registry.get(...).name string fetch + endsWith check per cell.
-    if (above === AIR || SAPLING_IDS.has(stateId(above))) {
+    if (above === AIR || IS_SAPLING[stateId(above)] === 1) {
       world.set(bx, by + h, bz, makeState(logId, 0));
       touchWorldEdit(bx, by + h, bz, logId);
     }
@@ -7857,32 +7857,33 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
   'webmc:cherry_leaves': 'webmc:cherry_sapling',
   'webmc:azalea_leaves': 'webmc:azalea',
 };
-// Pre-resolved id sets for the leaf-decay BFS. The hot inner loop did
-// `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')` per
-// visited cell — a full BlockDef fetch + 3 string comparisons. Resolve
+// Pre-resolved id tables for the leaf-decay BFS. The hot inner loop
+// did `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')`
+// per visited cell — full BlockDef fetch + 3 string compares. Resolve
 // once at module init by iterating the registry's defs array; runtime
-// becomes a Set.has on a numeric id.
-const LEAF_BFS_LOG_OR_WOOD_IDS = new Set<number>();
-const LEAF_BFS_LEAVES_IDS = new Set<number>();
+// becomes a single Uint8Array index (faster than Set.has hashing for
+// hot paths).
+const LEAF_BFS_LOG_OR_WOOD = new Uint8Array(registry.defs.length);
+const LEAF_BFS_LEAVES = new Uint8Array(registry.defs.length);
 // Same pattern for the sapling random-tick branch — was running
 // `name.endsWith('_sapling')` per sample.
-const SAPLING_IDS = new Set<number>();
+const IS_SAPLING = new Uint8Array(registry.defs.length);
 // Per-leaf-id sapling drop lookup. Numeric-id parallel map; the
 // previous string-keyed version was an intermediate step.
 const LEAF_TO_SAPLING_BY_ID: (number | undefined)[] = [];
 const OAK_LEAVES_ID = registry.byName('webmc:oak_leaves') ?? -1;
 for (let i = 0; i < registry.defs.length; i++) {
   const n = registry.defs[i]!.name;
-  if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD_IDS.add(i);
+  if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD[i] = 1;
   else if (n.endsWith('_leaves')) {
-    LEAF_BFS_LEAVES_IDS.add(i);
+    LEAF_BFS_LEAVES[i] = 1;
     const sapName = LEAF_TO_SAPLING_FOR_DECAY[n];
     if (sapName !== undefined) {
       const sapItemId = itemRegistry.byName(sapName);
       if (sapItemId !== undefined) LEAF_TO_SAPLING_BY_ID[i] = sapItemId;
     }
   } else if (n.endsWith('_sapling')) {
-    SAPLING_IDS.add(i);
+    IS_SAPLING[i] = 1;
   }
 }
 // Composter input → fill chance. Was being rebuilt on every
@@ -10632,7 +10633,7 @@ function frame(): void {
         // ~560 string ops/sec for branches that mostly aren't taken.
         // Pre-resolved Set/numeric checks first; fetch name only inside
         // branches that actually need it (sapling growTreeAt).
-        if (SAPLING_IDS.has(id)) {
+        if (IS_SAPLING[id] === 1) {
           const name = registry.get(id).name;
           const stage = stateProps(s) & 1;
           const cx = x >> 4;
@@ -10762,7 +10763,7 @@ function frame(): void {
             world.set(nx, ny, nz, makeState(fireId, 0));
             touchWorldEdit(nx, ny, nz, fireId);
           }
-        } else if (LEAF_BFS_LEAVES_IDS.has(id)) {
+        } else if (LEAF_BFS_LEAVES[id] === 1) {
           // Leaf decay: BFS up to LEAF_MAX_DIST-1 looking for any log.
           // If none found within that radius, the leaf is "disconnected"
           // — it falls (drops + becomes air). Was unwired since M3, so
@@ -10797,12 +10798,12 @@ function frame(): void {
               // Numeric-id Set.has avoids the per-visit registry.get
               // + .name string fetch + 2-3 .endsWith string ops.
               const sId = stateId(ss);
-              if (LEAF_BFS_LOG_OR_WOOD_IDS.has(sId)) {
+              if (LEAF_BFS_LOG_OR_WOOD[sId] === 1) {
                 found = true;
                 break;
               }
               if (cd2 >= LEAF_MAX_DIST - 1) continue;
-              if (cd2 > 0 && !LEAF_BFS_LEAVES_IDS.has(sId)) continue;
+              if (cd2 > 0 && LEAF_BFS_LEAVES[sId] !== 1) continue;
               for (let ni = 0; ni < 6; ni++) {
                 stackX.push(cx2 + NEIGHBOR_OFFSETS_DX_6[ni]!);
                 stackY.push(cy2 + NEIGHBOR_OFFSETS_DY_6[ni]!);
