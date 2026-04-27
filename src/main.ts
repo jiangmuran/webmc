@@ -1399,7 +1399,7 @@ const playerState = new PlayerState({
         isOpaque: (x, y, z) => {
           const s = world.get(x, y, z);
           if (s === AIR) return false;
-          return registry.get(stateId(s)).opaque;
+          return OPAQUE_BY_ID[stateId(s)] === 1;
         },
       },
       Math.random,
@@ -2529,9 +2529,9 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
       const here = world.get(tx, ty, tz);
       const above = world.get(tx, ty + 1, tz);
       const below = world.get(tx, ty - 1, tz);
-      const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
-      const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
-      const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
+      const isAirHere = here === AIR || SOLID_BY_ID[stateId(here)] !== 1;
+      const isAirAbove = above === AIR || SOLID_BY_ID[stateId(above)] !== 1;
+      const solidBelow = below !== AIR && SOLID_BY_ID[stateId(below)] === 1;
       if (isAirHere && isAirAbove && solidBelow) {
         fp.position.set(tx + 0.5, ty, tz + 0.5);
         // Zero velocity on teleport so the player doesn't keep any
