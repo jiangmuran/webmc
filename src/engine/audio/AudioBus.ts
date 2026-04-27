@@ -110,15 +110,25 @@ export class AudioBus {
     const dx = x - this.listener.x;
     const dy = y - this.listener.y;
     const dz = z - this.listener.z;
-    const dist = Math.hypot(dx, dy, dz);
-    const attenuation =
-      dist <= this.opts.attenuationStart
-        ? 1
-        : dist >= this.opts.attenuationMax
-          ? 0
-          : 1 -
-            (dist - this.opts.attenuationStart) /
-              (this.opts.attenuationMax - this.opts.attenuationStart);
+    // Compare squared distances first; only sqrt for sounds that fall
+    // in the attenuation band. Sounds at the listener (dominant case
+    // for player-emitted sfx) skip the sqrt entirely, and far-away
+    // sounds early-return without sqrt either.
+    const distSq = dx * dx + dy * dy + dz * dz;
+    const startSq = this.opts.attenuationStart * this.opts.attenuationStart;
+    const maxSq = this.opts.attenuationMax * this.opts.attenuationMax;
+    let attenuation: number;
+    if (distSq <= startSq) {
+      attenuation = 1;
+    } else if (distSq >= maxSq) {
+      return;
+    } else {
+      const dist = Math.sqrt(distSq);
+      attenuation =
+        1 -
+        (dist - this.opts.attenuationStart) /
+          (this.opts.attenuationMax - this.opts.attenuationStart);
+    }
     if (attenuation <= 0) return;
     const sound = SOUNDS[name];
     const gate = ctx.createGain();
