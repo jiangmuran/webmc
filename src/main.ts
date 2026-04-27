@@ -10894,8 +10894,10 @@ function frame(): void {
     debugFramePos.z = fp.position.z;
     debugFrameLook.yaw = fp.yaw;
     debugFrameLook.pitch = fp.pitch;
-    debugFrameChunkPos.cx = Math.floor(fp.position.x / 16);
-    debugFrameChunkPos.cz = Math.floor(fp.position.z / 16);
+    // playerBlockX/Z are already Math.floor(fp.position.{x,z}); chunk
+    // coord is just >> 4 (sign-correct for negative ints).
+    debugFrameChunkPos.cx = playerBlockX >> 4;
+    debugFrameChunkPos.cz = playerBlockZ >> 4;
     debugFramePayload.meshCount = chunkRenderer.meshCount;
     debugFramePayload.triangles = chunkRenderer.triangleCount;
     debugFramePayload.pendingChunks = loaderStats.pending;
