@@ -7,6 +7,12 @@ export class Stars {
   // deep night — long stretches of identical writes. Diff-cache to
   // skip the material setter (which flags the material dirty).
   private lastOpacity = -1;
+  // Position diff-cache. Vector3.copy fires onChange (matrixWorld
+  // flag); when player is stationary we'd write the same camPos every
+  // frame for nothing.
+  private lastPosX = NaN;
+  private lastPosY = NaN;
+  private lastPosZ = NaN;
 
   constructor(count = 320, radius = 400) {
     const positions = new Float32Array(count * 3);
@@ -45,7 +51,15 @@ export class Stars {
     // toggles points.visible off). Saves position.copy + setter
     // hits on already-strained hardware.
     if (!this.points.visible) return;
-    this.points.position.copy(camPos);
+    // Diff-cache the camPos copy — was firing onChange every frame
+    // even when the player was stationary (the dominant case for the
+    // duration of dawn/dusk transitions).
+    if (camPos.x !== this.lastPosX || camPos.y !== this.lastPosY || camPos.z !== this.lastPosZ) {
+      this.points.position.copy(camPos);
+      this.lastPosX = camPos.x;
+      this.lastPosY = camPos.y;
+      this.lastPosZ = camPos.z;
+    }
     const op = Math.max(0, Math.min(1, (-sunDirY - 0.05) * 1.5));
     if (op !== this.lastOpacity) {
       this.material.opacity = op;
