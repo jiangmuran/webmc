@@ -7553,14 +7553,12 @@ const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
   'webmc:beetroots': 'beetroot',
   'webmc:nether_wart': 'nether_wart',
 };
-const NEIGHBOR_OFFSETS_6: readonly (readonly [number, number, number])[] = [
-  [1, 0, 0],
-  [-1, 0, 0],
-  [0, 1, 0],
-  [0, -1, 0],
-  [0, 0, 1],
-  [0, 0, -1],
-];
+// Parallel neighbor-offset arrays (6 axis-aligned). Was a tuple-of-
+// tuples that the leaf-decay BFS deref'd as `off[0]/off[1]/off[2]`
+// per neighbor visit. Three flat number[] reads are simpler.
+const NEIGHBOR_OFFSETS_DX_6: readonly number[] = [1, -1, 0, 0, 0, 0];
+const NEIGHBOR_OFFSETS_DY_6: readonly number[] = [0, 0, 1, -1, 0, 0];
+const NEIGHBOR_OFFSETS_DZ_6: readonly number[] = [0, 0, 0, 0, 1, -1];
 const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
   'webmc:oak_leaves': 'webmc:oak_sapling',
   'webmc:spruce_leaves': 'webmc:spruce_sapling',
@@ -10435,11 +10433,10 @@ function frame(): void {
               }
               if (cd2 >= LEAF_MAX_DIST - 1) continue;
               if (cd2 > 0 && !sn.endsWith('_leaves')) continue;
-              for (let ni = 0; ni < NEIGHBOR_OFFSETS_6.length; ni++) {
-                const off = NEIGHBOR_OFFSETS_6[ni]!;
-                stackX.push(cx2 + off[0]);
-                stackY.push(cy2 + off[1]);
-                stackZ.push(cz2 + off[2]);
+              for (let ni = 0; ni < 6; ni++) {
+                stackX.push(cx2 + NEIGHBOR_OFFSETS_DX_6[ni]!);
+                stackY.push(cy2 + NEIGHBOR_OFFSETS_DY_6[ni]!);
+                stackZ.push(cz2 + NEIGHBOR_OFFSETS_DZ_6[ni]!);
                 stackD.push(cd2 + 1);
               }
             }
