@@ -130,6 +130,10 @@ export class BlockParticles {
   }
 
   tick(dtSec: number): void {
+    // Fast path: no live particles AND nothing flushed last frame
+    // means the buffers are already zeroed and there's nothing to
+    // simulate. Skips the per-frame Math.exp + flush no-op.
+    if (this.alive.length === 0 && this.lastFlushedCount === 0) return;
     const gravity = 22;
     const drag = Math.exp(-dtSec * 3.2);
     // Swap-remove dead particles: splice(i,1) was O(N) per dead particle,
