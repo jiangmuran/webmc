@@ -9319,9 +9319,12 @@ function frame(): void {
   {
     const chest = inventory.armor[1];
     const wearingElytra = chest != null && chest.itemId === elytraItemIdCached;
-    isGliding =
+    // Compute once instead of evaluating the same 5-term condition
+    // twice (once for `isGliding` assignment, once for the if-gate).
+    const glidingNow =
       wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
-    if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
+    isGliding = glidingNow;
+    if (glidingNow) {
       const look = fp.lookVector(frameLookTmp);
       // Slow descent: clamp downward velocity.
       const minFallY = -3 + look.y * 8;
