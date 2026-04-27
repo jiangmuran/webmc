@@ -1693,6 +1693,10 @@ const sky = new SkyCelestials();
 sky.addTo(scene);
 const stars = new Stars();
 scene.add(stars.points);
+// Capability detected once at boot. typeof checks against navigator
+// fire per frame for the gamepad poll otherwise — the result never
+// changes for the lifetime of the page.
+const hasGamepadApi = typeof navigator.getGamepads === 'function';
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
 // Cached booleans derived from currentWeather. Updated in setWeather()
 // — the only mutation site. Replaces ~6 inline string-equality checks
@@ -8733,7 +8737,7 @@ function frame(): void {
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
   // applies when no menus are open and the player is not in chat.
   if (
-    typeof navigator.getGamepads === 'function' &&
+    hasGamepadApi &&
     !chatInput.isOpen() &&
     !pauseMenu.isVisible()
   ) {
@@ -9563,7 +9567,7 @@ function frame(): void {
       cancelEating(eatState);
       rightClickHeldForEat = false;
     }
-    if (typeof navigator.getGamepads === 'function') {
+    if (hasGamepadApi) {
       const pad = (navigator.getGamepads() ?? []).find((p) => p?.connected);
       const actuator = (
         pad as
