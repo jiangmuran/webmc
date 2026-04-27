@@ -89,13 +89,16 @@ export class FirstPersonHand {
     if (this.swingSec > 0) {
       this.swingSec = Math.max(0, this.swingSec - dtSec);
       const phase = 1 - this.swingSec / 0.25;
-      const angle = Math.sin(phase * Math.PI) * 0.6;
+      // sin(phase * PI) was being computed twice per swinging frame
+      // (once for rotZ angle, once for posY drop). Cache once.
+      const sinPhasePi = Math.sin(phase * Math.PI);
+      const angle = sinPhasePi * 0.6;
       const targetRotZ = 0.2 - angle * 0.8;
       if (targetRotZ !== this.lastRotZ) {
         this.group.rotation.z = targetRotZ;
         this.lastRotZ = targetRotZ;
       }
-      targetPosY = -0.45 - Math.sin(phase * Math.PI) * 0.12 + swayOffsetY;
+      targetPosY = -0.45 - sinPhasePi * 0.12 + swayOffsetY;
     } else {
       if (this.lastRotZ !== 0.2) {
         this.group.rotation.z = 0.2;
