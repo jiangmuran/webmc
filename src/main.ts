@@ -2799,10 +2799,14 @@ const explodeChangedChunksScratch = new Set<number>();
 const grassCtxCenter = { x: 0, y: 0, z: 0 };
 const grassCtxLookup = {
   isGrass(gx: number, gy: number, gz: number): boolean {
-    return registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:grass_block';
+    // Numeric id compare — was registry.get + name-string equality
+    // per cell of the 27-iteration grass-spread BFS.
+    const s = world.get(gx, gy, gz);
+    return s !== AIR && stateId(s) === grassBlockIdCached;
   },
   isDirt(gx: number, gy: number, gz: number): boolean {
-    return registry.get(stateId(world.get(gx, gy, gz))).name === 'webmc:dirt';
+    const s = world.get(gx, gy, gz);
+    return s !== AIR && stateId(s) === dirtIdCached;
   },
   lightAbove(gx: number, gy: number, gz: number): number {
     const cx = gx >> 4;
@@ -4080,14 +4084,14 @@ const interaction = new InteractionController(
         for (let h = 1; h <= 16; h++) {
           const above = world.get(bx, by + h, bz);
           if (above === AIR) break;
-          if (registry.get(stateId(above)).name !== 'webmc:bamboo') break;
+          if (stateId(above) !== bambooIdCached) break;
           topY = by + h;
         }
         let bottomY = by;
         for (let h = 1; h <= 16; h++) {
           const below = world.get(bx, by - h, bz);
           if (below === AIR) break;
-          if (registry.get(stateId(below)).name !== 'webmc:bamboo') break;
+          if (stateId(below) !== bambooIdCached) break;
           bottomY = by - h;
         }
         const totalHeight = topY - bottomY + 1;
@@ -4119,14 +4123,14 @@ const interaction = new InteractionController(
         for (let h = 1; h <= 3; h++) {
           const above = world.get(bx, by + h, bz);
           if (above === AIR) break;
-          if (registry.get(stateId(above)).name !== 'webmc:sugar_cane') break;
+          if (stateId(above) !== sugarCaneIdCached) break;
           topY = by + h;
         }
         let bottomY = by;
         for (let h = 1; h <= 3; h++) {
           const below = world.get(bx, by - h, bz);
           if (below === AIR) break;
-          if (registry.get(stateId(below)).name !== 'webmc:sugar_cane') break;
+          if (stateId(below) !== sugarCaneIdCached) break;
           bottomY = by - h;
         }
         const totalHeight = topY - bottomY + 1;
