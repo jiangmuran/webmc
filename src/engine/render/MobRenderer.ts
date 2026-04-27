@@ -117,6 +117,11 @@ interface MobVisual {
   // hurt-flash, creeper-fuse, and normal-restore paths. Saves ~50
   // (mobs) × 60 (Hz) = 3000 string-keyed lookups/sec at busy worlds.
   kindBaseHex: number;
+  // Diff-cache for the nameplate opacity. Mobs within 28 blocks all
+  // write 0.9 every frame; the SpriteMaterial setter still flags the
+  // material dirty even when the value is identical. -1 is the
+  // "force first set" sentinel.
+  lastNameOpacity: number;
 }
 
 // Cache by label string. Mob nameplates with the same name (e.g.
@@ -314,6 +319,7 @@ export class MobRenderer {
           lastRotZ: 0,
           lastScale: 1,
           kindBaseHex: color,
+          lastNameOpacity: 0.9,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
@@ -402,11 +408,16 @@ export class MobRenderer {
           if (vis.nameSprite.visible) vis.nameSprite.visible = false;
         } else {
           if (!vis.nameSprite.visible) vis.nameSprite.visible = true;
+          let targetOpacity: number;
           if (cDistSq > 28 * 28) {
             const dist = Math.sqrt(cDistSq);
-            vis.nameMat.opacity = 0.9 * Math.max(0, 1 - (dist - 28) / 36);
+            targetOpacity = 0.9 * Math.max(0, 1 - (dist - 28) / 36);
           } else {
-            vis.nameMat.opacity = 0.9;
+            targetOpacity = 0.9;
+          }
+          if (vis.lastNameOpacity !== targetOpacity) {
+            vis.nameMat.opacity = targetOpacity;
+            vis.lastNameOpacity = targetOpacity;
           }
         }
       } else {
