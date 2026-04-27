@@ -85,8 +85,9 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
 
   // First pass: compute topOpaque per column + track the global max so
   // we can wholesale-fill sections that are entirely above max with
-  // skyLight=15.
-  const topByCol = new Int16Array(CHUNK_DIM * CHUNK_DIM);
+  // skyLight=15. Use the module scratch — caller iterates synchronously
+  // and never retains the reference.
+  const topByCol = TOP_BY_COL_SCRATCH;
   let maxTopOpaque = -1;
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
@@ -134,6 +135,12 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
 const NEIGHBOR_DX_6: readonly number[] = [-1, 1, 0, 0, 0, 0];
 const NEIGHBOR_DY_6: readonly number[] = [0, 0, -1, 1, 0, 0];
 const NEIGHBOR_DZ_6: readonly number[] = [0, 0, 0, 0, -1, 1];
+
+// Shared per-column top-opaque scratch. computeSkyLight was allocating
+// a fresh Int16Array(16*16) per call — buildLight runs hundreds of
+// times during chunk streaming, so a module-scope scratch saves the
+// allocation churn. Reads + writes are synchronous, never recursive.
+const TOP_BY_COL_SCRATCH = new Int16Array(CHUNK_DIM * CHUNK_DIM);
 // Parallel arrays for the BFS queue. Was an Array<LightNode> with a
 // fresh {x,y,z,value} literal per emissive source AND per propagation
 // step (chunks with many torches/glowstone hit thousands per chunk
