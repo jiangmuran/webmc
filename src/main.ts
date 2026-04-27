@@ -9746,8 +9746,21 @@ function frame(): void {
       cancelEating(eatState);
       rightClickHeldForEat = false;
     }
-    if (hasGamepadApi) {
-      const pad = (navigator.getGamepads() ?? []).find((p) => p?.connected);
+    if (hasGamepadApi && anyGamepadEverConnected) {
+      // Walk the GamepadList directly; .find allocates a closure per
+      // damage event, and the `?? []` allocation is wasted whenever
+      // getGamepads returns null on platforms without the API.
+      const pads = navigator.getGamepads();
+      let pad: Gamepad | null = null;
+      if (pads) {
+        for (let i = 0; i < pads.length; i++) {
+          const p = pads[i];
+          if (p?.connected) {
+            pad = p;
+            break;
+          }
+        }
+      }
       const actuator = (
         pad as
           | (Gamepad & {
