@@ -70,12 +70,12 @@ export class Perlin {
     const zf = z - fz;
     const u = fade(xf);
     const v = fade(zf);
-    const a = ((this.p[xi] ?? 0) + zi) & 255;
-    const b = ((this.p[xi + 1] ?? 0) + zi) & 255;
-    const g00 = grad2(this.p[a] ?? 0, xf, zf);
-    const g10 = grad2(this.p[b] ?? 0, xf - 1, zf);
-    const g01 = grad2(this.p[(a + 1) & 255] ?? 0, xf, zf - 1);
-    const g11 = grad2(this.p[(b + 1) & 255] ?? 0, xf - 1, zf - 1);
+    const a = (this.p[xi]! + zi) & 255;
+    const b = (this.p[xi + 1]! + zi) & 255;
+    const g00 = grad2(this.p[a]!, xf, zf);
+    const g10 = grad2(this.p[b]!, xf - 1, zf);
+    const g01 = grad2(this.p[(a + 1) & 255]!, xf, zf - 1);
+    const g11 = grad2(this.p[(b + 1) & 255]!, xf - 1, zf - 1);
     const x1 = lerp(g00, g10, u);
     const x2 = lerp(g01, g11, u);
     return lerp(x1, x2, v);
@@ -95,27 +95,27 @@ export class Perlin {
     const u = fade(xf);
     const v = fade(yf);
     const w = fade(zf);
-    const A = ((this.p[xi] ?? 0) + yi) & 255;
-    const AA = ((this.p[A] ?? 0) + zi) & 255;
-    const AB = ((this.p[(A + 1) & 255] ?? 0) + zi) & 255;
-    const B = ((this.p[xi + 1] ?? 0) + yi) & 255;
-    const BA = ((this.p[B] ?? 0) + zi) & 255;
-    const BB = ((this.p[(B + 1) & 255] ?? 0) + zi) & 255;
+    const A = (this.p[xi]! + yi) & 255;
+    const AA = (this.p[A]! + zi) & 255;
+    const AB = (this.p[(A + 1) & 255]! + zi) & 255;
+    const B = (this.p[xi + 1]! + yi) & 255;
+    const BA = (this.p[B]! + zi) & 255;
+    const BB = (this.p[(B + 1) & 255]! + zi) & 255;
     return lerp(
       lerp(
-        lerp(grad3(this.p[AA] ?? 0, xf, yf, zf), grad3(this.p[BA] ?? 0, xf - 1, yf, zf), u),
-        lerp(grad3(this.p[AB] ?? 0, xf, yf - 1, zf), grad3(this.p[BB] ?? 0, xf - 1, yf - 1, zf), u),
+        lerp(grad3(this.p[AA]!, xf, yf, zf), grad3(this.p[BA]!, xf - 1, yf, zf), u),
+        lerp(grad3(this.p[AB]!, xf, yf - 1, zf), grad3(this.p[BB]!, xf - 1, yf - 1, zf), u),
         v,
       ),
       lerp(
         lerp(
-          grad3(this.p[(AA + 1) & 255] ?? 0, xf, yf, zf - 1),
-          grad3(this.p[(BA + 1) & 255] ?? 0, xf - 1, yf, zf - 1),
+          grad3(this.p[(AA + 1) & 255]!, xf, yf, zf - 1),
+          grad3(this.p[(BA + 1) & 255]!, xf - 1, yf, zf - 1),
           u,
         ),
         lerp(
-          grad3(this.p[(AB + 1) & 255] ?? 0, xf, yf - 1, zf - 1),
-          grad3(this.p[(BB + 1) & 255] ?? 0, xf - 1, yf - 1, zf - 1),
+          grad3(this.p[(AB + 1) & 255]!, xf, yf - 1, zf - 1),
+          grad3(this.p[(BB + 1) & 255]!, xf - 1, yf - 1, zf - 1),
           u,
         ),
         v,
