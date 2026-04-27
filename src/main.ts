@@ -8775,6 +8775,15 @@ function frame(): void {
   }
 
   fp.update(dtSec, fpUpdateOpts);
+  // Hoist after fp.update so fp.position is final for the rest of the
+  // tick. Replaces ~28 redundant Math.floor calls (particle scans,
+  // fire/contact AABB sweeps, debug overlay) and ~4 effects.has Map
+  // hashes (fire-ignite + lava-walk + avatar visibility + mob ctx).
+  const fireResistant = playerState.effects.has('fire_resistance');
+  const playerInvisible = playerState.effects.has('invisibility');
+  const playerBlockX = Math.floor(fp.position.x);
+  const playerBlockY = Math.floor(fp.position.y);
+  const playerBlockZ = Math.floor(fp.position.z);
   if (touch) {
     if (touch.state.primary && isSpectator) {
       // Spectator can't attack/break — same gate as the desktop attack
@@ -8907,19 +8916,21 @@ function frame(): void {
     const torchId = torchIdCached;
     const glowId = glowstoneIdCached;
     if (torchId !== undefined || glowId !== undefined) {
-      const px = Math.floor(fp.position.x);
-      const py = Math.floor(fp.position.y);
-      const pz = Math.floor(fp.position.z);
       let emitted = 0;
       for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
         for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
           for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
-            const s = world.get(px + dx, py + dy, pz + dz);
+            const s = world.get(playerBlockX + dx, playerBlockY + dy, playerBlockZ + dz);
             if (s === AIR) continue;
             const id = stateId(s);
             if (id !== torchId && id !== glowId) continue;
             if (Math.random() > 0.12) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 0.9, pz + dz + 0.5, TORCH_EMBER_COLOR);
+            blockParticles.emitPlace(
+              playerBlockX + dx + 0.5,
+              playerBlockY + dy + 0.9,
+              playerBlockZ + dz + 0.5,
+              TORCH_EMBER_COLOR,
+            );
             emitted++;
           }
         }
@@ -8931,18 +8942,20 @@ function frame(): void {
   if (lavaEmberAccum > 0.18) {
     lavaEmberAccum = 0;
     if (lavaId !== undefined) {
-      const px = Math.floor(fp.position.x);
-      const py = Math.floor(fp.position.y);
-      const pz = Math.floor(fp.position.z);
       let emitted = 0;
       for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
         for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
           for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
-            const s = world.get(px + dx, py + dy, pz + dz);
+            const s = world.get(playerBlockX + dx, playerBlockY + dy, playerBlockZ + dz);
             if (s === AIR) continue;
             if (stateId(s) !== lavaId) continue;
             if (Math.random() > 0.05) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 1.1, pz + dz + 0.5, LAVA_EMBER_COLOR);
+            blockParticles.emitPlace(
+              playerBlockX + dx + 0.5,
+              playerBlockY + dy + 1.1,
+              playerBlockZ + dz + 0.5,
+              LAVA_EMBER_COLOR,
+            );
             emitted++;
           }
         }
@@ -9007,22 +9020,11 @@ function frame(): void {
   const inWaterBody = fp.inFluid === 'water';
   const inLavaBody = fp.inFluid === 'lava';
   const inWaterEyes = fp.inFluidEyes === 'water';
-  // Hoist a few effects.has lookups that fire 2× per frame across
-  // separate gate blocks — playerState.effects is a Map, so each .has
-  // hashes the string key.
-  const fireResistant = playerState.effects.has('fire_resistance');
-  const playerInvisible = playerState.effects.has('invisibility');
   // Surface-aware footsteps: pick material from block under feet.
   let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
     stepMat = footStepMatForStateId(
-      stateId(
-        world.get(
-          Math.floor(fp.position.x),
-          Math.floor(fp.position.y - 1.05),
-          Math.floor(fp.position.z),
-        ),
-      ),
+      stateId(world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ)),
     );
   } else if (inWaterBody) {
     stepMat = 'water';
@@ -9077,7 +9079,7 @@ function frame(): void {
     if (sprintDustAccum > 0.15) {
       sprintDustAccum = 0;
       const groundY = Math.floor(fp.position.y - 0.95);
-      const groundBlock = world.get(Math.floor(fp.position.x), groundY, Math.floor(fp.position.z));
+      const groundBlock = world.get(playerBlockX, groundY, playerBlockZ);
       if (groundBlock !== AIR) {
         const gDef = registry.get(stateId(groundBlock));
         blockParticles.emitPlace(fp.position.x, fp.position.y - 0.85, fp.position.z, gDef.color);
@@ -9310,10 +9312,8 @@ function frame(): void {
     (vitalsActive) &&
     !fireResistant
   ) {
-    const fpx = Math.floor(fp.position.x);
-    const fpz = Math.floor(fp.position.z);
     for (let dy = 0; dy <= 1; dy++) {
-      const s = world.get(fpx, Math.floor(fp.position.y) + dy, fpz);
+      const s = world.get(playerBlockX, playerBlockY + dy, playerBlockZ);
       if (s !== AIR && stateId(s) === fireIdCached) {
         playerState.fireRemainingSec = Math.max(playerState.fireRemainingSec, 8);
         break;
@@ -9334,10 +9334,7 @@ function frame(): void {
     // 30-block tower still killed the player.
     if (inWaterBody) dmg = 0;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
-    const fx = Math.floor(fp.position.x);
-    const fy = Math.floor(fp.position.y - 1.05);
-    const fz = Math.floor(fp.position.z);
-    const landId = stateId(world.get(fx, fy, fz));
+    const landId = stateId(world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ));
     if (landId === hayBlockIdCached || landId === honeyBlockIdCached) {
       dmg = Math.floor(dmg * 0.2);
     } else if (landId === slimeBlockIdCached) {
@@ -9374,18 +9371,14 @@ function frame(): void {
     // center (halfY=0.9), eyes ~0.72 above (eyeHeight 1.62 from feet).
     // The previous +1.55 was a full cell ABOVE the head — suffocation
     // never fired when a block was placed where the player's head was.
-    const headX = Math.floor(fp.position.x);
-    const headY = Math.floor(fp.position.y + 0.72);
-    const headZ = Math.floor(fp.position.z);
-    if (isSolid(headX, headY, headZ)) {
+    if (isSolid(playerBlockX, Math.floor(fp.position.y + 0.72), playerBlockZ)) {
       envTakeDamage(1 * dtSec, 'suffocation');
     }
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
-      const fx = Math.floor(fp.position.x);
-      const fy = Math.floor(fp.position.y - 1.05);
-      const fz = Math.floor(fp.position.z);
-      const belowBlockId = stateId(world.get(fx, fy, fz));
+      const belowBlockId = stateId(
+        world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ),
+      );
       if (
         belowBlockId === magmaBlockIdCached &&
         !fp.input.sneak &&
