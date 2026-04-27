@@ -7836,13 +7836,6 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
 // player-break path. Was being rebuilt as a fresh literal on every
 // block-break right-click.
 const LEAF_TO_SAPLING = LEAF_TO_SAPLING_FOR_DECAY;
-// Precomputed leaf-name → sapling itemId for the per-decay drop path —
-// avoids the inner itemRegistry.byName(sapName) call inside the random
-// tick loop (was hitting the byName Map every time a leaf decayed).
-const LEAF_TO_SAPLING_ID: Record<string, number | undefined> = {};
-for (const [leafName, sapName] of Object.entries(LEAF_TO_SAPLING_FOR_DECAY)) {
-  LEAF_TO_SAPLING_ID[leafName] = itemRegistry.byName(sapName);
-}
 // Pre-resolved id sets for the leaf-decay BFS. The hot inner loop did
 // `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')` per
 // visited cell — a full BlockDef fetch + 3 string comparisons. Resolve
@@ -7853,8 +7846,8 @@ const LEAF_BFS_LEAVES_IDS = new Set<number>();
 // Same pattern for the sapling random-tick branch — was running
 // `name.endsWith('_sapling')` per sample.
 const SAPLING_IDS = new Set<number>();
-// Per-leaf-id sapling drop lookup — was indexed by leaf-block name
-// (a string lookup per drop event). Numeric-id parallel map.
+// Per-leaf-id sapling drop lookup. Numeric-id parallel map; the
+// previous string-keyed version was an intermediate step.
 const LEAF_TO_SAPLING_BY_ID: (number | undefined)[] = [];
 const OAK_LEAVES_ID = registry.byName('webmc:oak_leaves') ?? -1;
 for (let i = 0; i < registry.defs.length; i++) {
@@ -7862,8 +7855,11 @@ for (let i = 0; i < registry.defs.length; i++) {
   if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD_IDS.add(i);
   else if (n.endsWith('_leaves')) {
     LEAF_BFS_LEAVES_IDS.add(i);
-    const sapItemId = LEAF_TO_SAPLING_ID[n];
-    if (sapItemId !== undefined) LEAF_TO_SAPLING_BY_ID[i] = sapItemId;
+    const sapName = LEAF_TO_SAPLING_FOR_DECAY[n];
+    if (sapName !== undefined) {
+      const sapItemId = itemRegistry.byName(sapName);
+      if (sapItemId !== undefined) LEAF_TO_SAPLING_BY_ID[i] = sapItemId;
+    }
   } else if (n.endsWith('_sapling')) {
     SAPLING_IDS.add(i);
   }
