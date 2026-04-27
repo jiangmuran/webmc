@@ -11,6 +11,12 @@ export class BlockOutline {
   // the writes avoids three.js Object3D + Material setter overhead.
   private lastVisible = false;
   private lastCrackOpacity = -1;
+  // Position diff-cache. Aiming at the same block while mining writes
+  // the same x/y/z every frame, firing matrixWorldNeedsUpdate for
+  // nothing.
+  private lastBx = NaN;
+  private lastBy = NaN;
+  private lastBz = NaN;
 
   constructor() {
     this.group = new THREE.Group();
@@ -40,7 +46,12 @@ export class BlockOutline {
   }
 
   setHit(bx: number, by: number, bz: number, breakProgress01 = 0): void {
-    this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
+    if (bx !== this.lastBx || by !== this.lastBy || bz !== this.lastBz) {
+      this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
+      this.lastBx = bx;
+      this.lastBy = by;
+      this.lastBz = bz;
+    }
     if (!this.lastVisible) {
       this.group.visible = true;
       this.lastVisible = true;
