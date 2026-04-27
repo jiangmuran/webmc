@@ -2204,10 +2204,22 @@ function itemShortNameLower(id: number): string {
   ITEM_SHORT_NAME_LOWER[id] = s;
   return s;
 }
+// Cache for the visible-hotbar fallback path. heldNameLower fires per
+// frame from tickBreak / weapon-damage / footstep paths; in creative
+// mode (where inventory.hotbar is null) we'd allocate a fresh
+// lowercased string every call. Block names are already lowercase by
+// convention but .toLowerCase() still allocates. Track by reference
+// + index so a slot-switch invalidates the cache.
+let heldNameLowerCacheEntry: { name: string } | null = null;
+let heldNameLowerCacheValue = '';
 function heldNameLower(): string {
   const stack = inventory.hotbar[inventory.selectedHotbar];
   if (stack) return itemShortNameLower(stack.itemId);
-  return hotbar.selected?.name.toLowerCase() ?? '';
+  const sel = hotbar.selected;
+  if (sel === heldNameLowerCacheEntry) return heldNameLowerCacheValue;
+  heldNameLowerCacheEntry = sel;
+  heldNameLowerCacheValue = sel?.name.toLowerCase() ?? '';
+  return heldNameLowerCacheValue;
 }
 
 // Vanilla weapon-tier base damage. Touch attack handler reused a hard-coded
@@ -8323,11 +8335,15 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
       const acz = touchAffectedCz[i]!;
       const c = world.getChunk(acx, acz);
       if (!c) continue;
-      let cachedLight = lightCache.get(lightKey(acx, acz));
+      // Compute lightKey once — was being called for both the get and
+      // (potentially) the set. Touch fires per block edit and the
+      // affected loop runs 1 or 5 chunks per call.
+      const lk = lightKey(acx, acz);
+      let cachedLight = lightCache.get(lk);
       const lightWasRebuilt = !lightUnchanged || !cachedLight;
       if (lightWasRebuilt) {
         cachedLight = buildLight(c, lightOracle);
-        lightCache.set(lightKey(acx, acz), cachedLight);
+        lightCache.set(lk, cachedLight);
       }
       if (onlyLocal && acx === cx && acz === cz) {
         // Mark only the touched section + immediate vertical neighbors
