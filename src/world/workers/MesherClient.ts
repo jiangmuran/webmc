@@ -193,7 +193,7 @@ export class MesherClient {
     isOpaque: (s: BlockState) => boolean,
     faceColorsOf: (s: BlockState) => FaceColors,
     borders: BorderOpacity = EMPTY_BORDERS,
-    light: BuildOptions = { flatSkyLight: null, flatBlockLight: null },
+    light: BuildOptions = EMPTY_BUILD_OPTIONS,
   ): Promise<MesherResponse> {
     const id = this._nextId++;
     const req = buildMesherRequest(id, cx, cy, cz, self, isOpaque, faceColorsOf, borders, light);
