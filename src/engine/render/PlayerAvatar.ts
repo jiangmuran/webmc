@@ -89,8 +89,15 @@ export class PlayerAvatar {
 
   setPose(x: number, y: number, z: number, yaw: number): void {
     this.group.position.set(x, y, z);
-    this.group.rotation.y = yaw;
+    // Euler rotation.y= fires _onChangeCallback (quaternion.setFromEuler:
+    // 6 trig + multiple muls). Skip when yaw is unchanged — common in
+    // third-person view while standing still.
+    if (yaw !== this.lastYaw) {
+      this.group.rotation.y = yaw;
+      this.lastYaw = yaw;
+    }
   }
+  private lastYaw = NaN;
 
   animate(dtSec: number, walkSpeed: number): void {
     if (walkSpeed > 0.4) {
