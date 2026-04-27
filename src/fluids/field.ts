@@ -112,6 +112,13 @@ export function tickFluid(
 ): FluidTickResult {
   const updates = TICK_UPDATES_SCRATCH;
   updates.clear();
+  // Fast path: no fluid cells exist (most worlds away from oceans/lava
+  // pools). Skip the loop setup, BFS dry-up scratch clears, and the
+  // merged-state mirror — all of which are no-ops on empty input.
+  if (cells.size === 0) {
+    TICK_RESULT_SCRATCH.stabilized = true;
+    return TICK_RESULT_SCRATCH;
+  }
 
   for (const [key, cell] of cells) {
     if (cell.level <= 0) continue;
