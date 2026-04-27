@@ -2883,7 +2883,7 @@ const grassCtxLookup = {
   hasOpaqueAbove(gx: number, gy: number, gz: number): boolean {
     const ss = world.get(gx, gy, gz);
     if (ss === AIR) return false;
-    return registry.get(stateId(ss)).opaque;
+    return OPAQUE_BY_ID[stateId(ss)] === 1;
   },
 };
 const grassCtxScratch: {
@@ -8813,7 +8813,7 @@ const mobTickCtx: MobTickContext = {
     for (let yy = by; yy < CHUNK_HEIGHT; yy++) {
       const s = world.get(bx, yy, bz);
       if (s === AIR) continue;
-      if (registry.get(stateId(s)).opaque) return false;
+      if (OPAQUE_BY_ID[stateId(s)] === 1) return false;
     }
     return true;
   },
@@ -10860,7 +10860,7 @@ function frame(): void {
           // Ice melt: light > 11 and no solid above. Was unwired —
           // ice in well-lit caves never melted to water.
           const above = world.get(x, y + 1, z);
-          const hasSolidAbove = above !== AIR && registry.get(stateId(above)).opaque;
+          const hasSolidAbove = above !== AIR && OPAQUE_BY_ID[stateId(above)] === 1;
           const cxIce = x >> 4;
           const czIce = z >> 4;
           const ltIce = lightCache.get(lightKey(cxIce, czIce));
