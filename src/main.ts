@@ -1853,6 +1853,7 @@ const soulSandIdCached = registry.byName('webmc:soul_sand');
 const hayBlockIdCached = registry.byName('webmc:hay_block');
 const honeyBlockIdCached = registry.byName('webmc:honey_block');
 const slimeBlockIdCached = registry.byName('webmc:slime_block');
+const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -10280,7 +10281,7 @@ function frame(): void {
       }
       // Sapling growth: same scan, separate registry. Was the other gap
       // — saplings just sat as decorative foliage forever unless bone-mealed.
-      const sugarCaneId = registry.byName('webmc:sugar_cane');
+      const sugarCaneId = sugarCaneIdCached;
       for (let i = 0; i < SAMPLES; i++) {
         const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
         const dy = Math.floor((Math.random() - 0.5) * 8);
