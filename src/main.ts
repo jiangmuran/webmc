@@ -9364,7 +9364,7 @@ function frame(): void {
   // (player not under any potion), and the cluster of 5 Map.get hashes
   // + dependent ifs all collapse to the defaults. Short-circuit so a
   // toxin-free player skips the entire block.
-  if (playerState.effects.size > 0) {
+  if (hasAnyEffect) {
     const speedEff = playerState.effects.get('speed');
     const slowEff = playerState.effects.get('slowness');
     let mul = 1;
@@ -9797,7 +9797,7 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
-  if (playerState.effects.size === 0) {
+  if (!hasAnyEffect) {
     activeEffectsHud.render(ACTIVE_EFFECTS_EMPTY);
   } else {
     const entries = activeEffectsScratch;
