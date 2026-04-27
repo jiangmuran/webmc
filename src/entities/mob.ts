@@ -1225,11 +1225,12 @@ export class MobWorld {
     // bob up to the surface instead of sinking to the floor; without
     // this, cows that walked into a river sat on the riverbed forever.
     // Lava: same but slower (vanilla parity for mobs that don't burn).
-    const inFluidHere = ctx.isFluid?.(
-      Math.floor(mob.position.x),
-      Math.floor(mob.position.y),
-      Math.floor(mob.position.z),
-    );
+    // Hoist Math.floor of mob.position once — JIT can't fold the calls
+    // across the isFluid? optional-chain dispatch boundary.
+    const mobBlockX = Math.floor(mob.position.x);
+    const mobBlockY = Math.floor(mob.position.y);
+    const mobBlockZ = Math.floor(mob.position.z);
+    const inFluidHere = ctx.isFluid?.(mobBlockX, mobBlockY, mobBlockZ);
     if (inFluidHere === 'water') {
       mob.velocity.y = Math.min(mob.velocity.y + 12 * dtSec, 4);
       mob.velocity.x *= Math.max(0, 1 - dtSec * 4);
