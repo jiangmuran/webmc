@@ -5,6 +5,10 @@ export class TpsTracker {
   // Ring buffer over fixed capacity. shift() per frame was O(N) (cap*60
   // ops/sec for nothing); ring writes are O(1).
   private readonly samples: Float64Array;
+  // Reused scratch for percentile() — was a fresh Float64Array(size)
+  // per call. Allocate once at capacity so the /tps command doesn't
+  // pay GC churn for repeat reads.
+  private readonly sortScratch: Float64Array;
   private head = 0;
   private size = 0;
   private capacity: number;
@@ -13,6 +17,7 @@ export class TpsTracker {
   constructor(capacity = 100) {
     this.capacity = capacity;
     this.samples = new Float64Array(capacity);
+    this.sortScratch = new Float64Array(capacity);
   }
 
   pushMspt(ms: number): void {
@@ -35,14 +40,15 @@ export class TpsTracker {
 
   percentile(q: number): number {
     if (this.size === 0) return 0;
-    const sorted = new Float64Array(this.size);
     for (let i = 0; i < this.size; i++) {
       const idx = (this.head - this.size + i + this.capacity) % this.capacity;
-      sorted[i] = this.samples[idx] ?? 0;
+      this.sortScratch[i] = this.samples[idx] ?? 0;
     }
-    sorted.sort();
+    // In-place sort on a size-prefixed view; no allocation.
+    const view = this.sortScratch.subarray(0, this.size);
+    view.sort();
     const idx = Math.min(this.size - 1, Math.floor(q * this.size));
-    return sorted[idx] ?? 0;
+    return view[idx] ?? 0;
   }
 
   isLagging(): boolean {
