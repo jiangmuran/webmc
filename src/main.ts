@@ -8577,6 +8577,10 @@ const rendererInfo = ((): { gl: string; rend: string } => {
   const rend = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) as string) : 'unknown';
   return { gl: api, rend };
 })();
+// Pre-formatted display string. Was a per-HUD-tick template-literal
+// concat (`${rendererInfo.gl}  ${rendererInfo.rend}`) for stable
+// values.
+const rendererInfoDisplay = `${rendererInfo.gl}  ${rendererInfo.rend}`;
 
 loader.setPopulate(async (chunk) => {
   const saved = await chunkStore.load(chunk.cx, chunk.cz);
@@ -11141,7 +11145,7 @@ function frame(): void {
     debugFramePayload.onGround = fp.onGround;
     debugFramePayload.fluid = fp.inFluid;
     debugFramePayload.viewDistance = loader.viewRadius;
-    debugFramePayload.rendererName = `${rendererInfo.gl}  ${rendererInfo.rend}`;
+    debugFramePayload.rendererName = rendererInfoDisplay;
     debugFramePayload.mobs = mobWorld.size;
     debugFramePayload.hostile = mobWorld.hostileCount;
     debugFramePayload.passive = mobWorld.passiveCount;
