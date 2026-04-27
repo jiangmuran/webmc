@@ -35,7 +35,10 @@ export function getLightByte(light: ChunkLight, lx: number, y: number, lz: numbe
   const cy = y >> 4;
   const sec = light.sections[cy];
   if (!sec) return y >= 0 && y < CHUNK_HEIGHT ? packLight(MAX_LIGHT, 0) : 0;
-  return sec[localIndex(lx, y & 0xf, lz)] ?? 0;
+  // Uint8Array indexed in [0, SUBCHUNK_VOLUME) — `!` skips per-call
+  // nullish coalesce. Hot path: light reads in random tick (crops,
+  // saplings, ice) + mob sunlit checks + minimap render.
+  return sec[localIndex(lx, y & 0xf, lz)]!;
 }
 
 function ensureSection(light: ChunkLight, cy: number, skyInit: number): Uint8Array {
@@ -250,7 +253,7 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
             // Cache the localIndex result — was computed twice (read +
             // write) per emissive voxel.
             const idx = localIndex(lx, dy, lz);
-            const prev = lightSec[idx] ?? 0;
+            const prev = lightSec[idx]!;
             lightSec[idx] = packLight(unpackSky(prev), e);
             qx.push(lx);
             qy.push(y);
@@ -314,7 +317,7 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       if (oracle.isOpaque(state)) continue;
       const sec = sectionsByCy[ncy]!;
       const idx = localIndex(nx, localNy, nz);
-      const prev = sec[idx] ?? 0;
+      const prev = sec[idx]!;
       const prevBlock = unpackBlock(prev);
       if (next <= prevBlock) continue;
       sec[idx] = packLight(unpackSky(prev), next);
@@ -358,7 +361,7 @@ export function flatLightForSection(
     return flatLightSliceScratch;
   }
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
-    const b = sec[i] ?? 0;
+    const b = sec[i]!;
     sky[i] = unpackSky(b);
     block[i] = unpackBlock(b);
   }
