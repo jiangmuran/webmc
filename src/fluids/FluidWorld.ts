@@ -83,6 +83,14 @@ export class FluidWorld {
   }
 
   tick(): { stabilized: boolean; changed: readonly { x: number; y: number; z: number }[] } {
+    // Fast path: no fluid in this world. Skip the worker call + post-
+    // processing, which all collapse to no-ops on empty input but
+    // still pay function-call + iterator overhead.
+    if (this.cells.size === 0) {
+      this.changedScratch.length = 0;
+      this.tickResultScratch.stabilized = true;
+      return this.tickResultScratch;
+    }
     const { updates, stabilized } = tickFluid(this.cells, this.isSolidBound);
     applyFluidUpdates(this.cells, updates);
     // Recycle the previous tick's changed entries back into the pool.
