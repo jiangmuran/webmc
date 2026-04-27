@@ -22,7 +22,9 @@ export class TpsTracker {
 
   pushMspt(ms: number): void {
     if (this.size === this.capacity) {
-      this.sum -= this.samples[this.head] ?? 0;
+      // Float64Array, head is always [0, capacity) — `!` skips the
+      // per-frame coalesce.
+      this.sum -= this.samples[this.head]!;
     } else {
       this.size++;
     }
@@ -42,13 +44,13 @@ export class TpsTracker {
     if (this.size === 0) return 0;
     for (let i = 0; i < this.size; i++) {
       const idx = (this.head - this.size + i + this.capacity) % this.capacity;
-      this.sortScratch[i] = this.samples[idx] ?? 0;
+      this.sortScratch[i] = this.samples[idx]!;
     }
     // In-place sort on a size-prefixed view; no allocation.
     const view = this.sortScratch.subarray(0, this.size);
     view.sort();
     const idx = Math.min(this.size - 1, Math.floor(q * this.size));
-    return view[idx] ?? 0;
+    return view[idx]!;
   }
 
   isLagging(): boolean {

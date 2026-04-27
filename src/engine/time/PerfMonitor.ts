@@ -72,7 +72,9 @@ export class PerfMonitor {
     // Evict aged-out samples first so they don't enter the sort.
     while (this.size > 0) {
       const oldestIdx = (this.head - this.size + this.cap) % this.cap;
-      const oldestT = this.times[oldestIdx] ?? 0;
+      // ring-buffer indices are always in range; `!` over `?? 0` for
+      // the TS narrowing artifact.
+      const oldestT = this.times[oldestIdx]!;
       if (this._cumulativeSec - oldestT > this.opts.windowSec) {
         this.size--;
       } else break;
@@ -80,13 +82,13 @@ export class PerfMonitor {
     if (this.size === 0) return 0;
     for (let i = 0; i < this.size; i++) {
       const idx = (this.head - this.size + i + this.cap) % this.cap;
-      this.sortScratch[i] = this.samples[idx] ?? 0;
+      this.sortScratch[i] = this.samples[idx]!;
     }
     // Subarray view + in-place sort: avoids allocating a fresh sorted copy.
     const view = this.sortScratch.subarray(0, this.size);
     view.sort();
     const idx = Math.min(this.size - 1, Math.floor(this.size * 0.95));
-    this.p95Cache = view[idx] ?? 0;
+    this.p95Cache = view[idx]!;
     this.p95CacheAt = this._cumulativeSec;
     return this.p95Cache;
   }
