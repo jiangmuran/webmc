@@ -42,26 +42,32 @@ export function extractBorderFromSubChunk(
   // every iteration recomputed the same axis mapping for a constant
   // face. Branching once on `face` then running a tight loop is cheaper.
   const Dm1 = D - 1;
+  // D=SUBCHUNK_DIM=16 → `a * D` = `a << 4`; saves the multiply per
+  // cell write across the 256-iteration inner loops (~6 faces × N
+  // remeshes per chunk-stream).
   if (face === 'nx' || face === 'px') {
     const x = face === 'nx' ? Dm1 : 0;
     for (let a = 0; a < D; a++) {
+      const rowBase = a << 4;
       for (let b = 0; b < D; b++) {
-        out[a * D + b] = isOpaque(self.get(x, a, b)) ? 1 : 0;
+        out[rowBase + b] = isOpaque(self.get(x, a, b)) ? 1 : 0;
       }
     }
   } else if (face === 'ny' || face === 'py') {
     const y = face === 'ny' ? Dm1 : 0;
     for (let a = 0; a < D; a++) {
+      const rowBase = a << 4;
       for (let b = 0; b < D; b++) {
-        out[a * D + b] = isOpaque(self.get(a, y, b)) ? 1 : 0;
+        out[rowBase + b] = isOpaque(self.get(a, y, b)) ? 1 : 0;
       }
     }
   } else {
     // nz / pz
     const z = face === 'nz' ? Dm1 : 0;
     for (let a = 0; a < D; a++) {
+      const rowBase = a << 4;
       for (let b = 0; b < D; b++) {
-        out[a * D + b] = isOpaque(self.get(a, b, z)) ? 1 : 0;
+        out[rowBase + b] = isOpaque(self.get(a, b, z)) ? 1 : 0;
       }
     }
   }
