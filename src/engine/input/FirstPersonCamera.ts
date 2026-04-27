@@ -227,9 +227,27 @@ export class FirstPersonCamera {
     }
   }
 
+  // Memoization for the yaw/pitch trig. Multiple callsites per frame
+  // (touch attack, third-person offset, elytra glide thrust, raycast)
+  // hit lookVector with the same yaw/pitch most frames — the mouse
+  // doesn't move every frame in 60Hz play. Cache the result vector
+  // and skip the 4 trig calls when neither angle has changed.
+  private cachedLookYaw = Number.NaN;
+  private cachedLookPitch = Number.NaN;
+  private cachedLookX = 0;
+  private cachedLookY = 0;
+  private cachedLookZ = 0;
+
   lookVector(out: THREE.Vector3 = new THREE.Vector3()): THREE.Vector3 {
-    const cp = Math.cos(this.pitch);
-    out.set(Math.sin(this.yaw) * cp * -1, Math.sin(this.pitch), Math.cos(this.yaw) * cp * -1);
+    if (this.yaw !== this.cachedLookYaw || this.pitch !== this.cachedLookPitch) {
+      const cp = Math.cos(this.pitch);
+      this.cachedLookX = -Math.sin(this.yaw) * cp;
+      this.cachedLookY = Math.sin(this.pitch);
+      this.cachedLookZ = -Math.cos(this.yaw) * cp;
+      this.cachedLookYaw = this.yaw;
+      this.cachedLookPitch = this.pitch;
+    }
+    out.set(this.cachedLookX, this.cachedLookY, this.cachedLookZ);
     return out;
   }
 
