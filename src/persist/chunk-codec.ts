@@ -132,9 +132,21 @@ export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
     if (m.bits > 0) {
       const indices = m.sec.indices;
       const words = wordsNeeded(SUBCHUNK_VOLUME, m.bits);
-      for (let i = 0; i < words; i++) {
-        view.setUint32(offset, indices ? (indices[i] ?? 0) : 0, true);
-        offset += 4;
+      // Hoist the null check — `indices` is constant for this section;
+      // was branching `indices ? (indices[i] ?? 0) : 0` per word for
+      // up to 50K words per chunk per save batch.
+      if (indices) {
+        for (let i = 0; i < words; i++) {
+          view.setUint32(offset, indices[i]!, true);
+          offset += 4;
+        }
+      } else {
+        // bits>0 but no indices: section is uniform (single-palette).
+        // Just write zero words for the entire range.
+        for (let i = 0; i < words; i++) {
+          view.setUint32(offset, 0, true);
+          offset += 4;
+        }
       }
     }
     if (m.hasLight && light) {
