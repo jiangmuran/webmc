@@ -1258,8 +1258,8 @@ const playerState = new PlayerState({
     const keepOnDeath =
       mobDamageMultiplier === 0 ||
       gameRules.keepInventory ||
-      gameMode === 'creative' ||
-      gameMode === 'spectator';
+      isCreative ||
+      isSpectator;
     if (keepOnDeath) {
       const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
       const main = inventory.main.map((s) => (s ? { ...s } : null));
@@ -2216,7 +2216,7 @@ function weaponBaseDamageFor(heldName: string): number {
 function placeableFromSlot(
   i: number,
 ): { state: BlockState; blockId: number; itemId: number | null } | null {
-  if (gameMode === 'creative') {
+  if (isCreative) {
     const entry = hotbar.getEntry(i);
     if (!entry) return null;
     return { state: entry.state, blockId: stateId(entry.state), itemId: null };
@@ -2350,7 +2350,7 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
 }
 
 function consumeHeldToolDurability(amount = 1): void {
-  if (gameMode === 'creative') return;
+  if (isCreative) return;
   const sel = inventory.hotbar[inventory.selectedHotbar];
   if (!sel) return;
   const def = itemRegistry.get(sel.itemId);
@@ -2368,7 +2368,7 @@ function consumeArmorDurability(damageAmount: number): void {
   // Vanilla parity: creative armor doesn't degrade. Without this gate,
   // creative players accumulated durability damage on every hit and
   // their cosmetic armor could break / disappear.
-  if (gameMode === 'creative') return;
+  if (isCreative) return;
   const cost = Math.max(1, Math.floor(damageAmount / 4));
   for (let i = 0; i < inventory.armor.length; i++) {
     const slot = inventory.armor[i];
@@ -2800,7 +2800,7 @@ const interaction = new InteractionController(
       else if (heldNameForTool.includes('stone')) toolLevel = 2;
       else if (heldNameForTool.includes('wood') || heldNameForTool.includes('gold')) toolLevel = 1;
       else toolLevel = 0; // bare hand
-      const dropsAllowed = gameMode === 'creative' || toolLevel >= requiredLevel;
+      const dropsAllowed = isCreative || toolLevel >= requiredLevel;
       // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
       // (CROP_DROP + LEAF_TO_SAPLING hoisted to module scope below.)
       let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
@@ -2966,8 +2966,8 @@ const interaction = new InteractionController(
       markSaveDirty(autosaveState);
     },
     canPlace: () => {
-      if (gameMode === 'spectator') return false;
-      if (gameMode === 'creative') return true;
+      if (isSpectator) return false;
+      if (isCreative) return true;
       const placeable = placeableFromSlot(hotbar.selectedIndex);
       if (placeable) return true;
       if (performance.now() - lastEmptyPlaceWarnAt > 800) {
@@ -3026,12 +3026,12 @@ const interaction = new InteractionController(
     },
     canBreak: (bx, by, bz) => {
       // Spectator: ghost mode, no block edits at all (vanilla parity).
-      if (gameMode === 'spectator') return false;
+      if (isSpectator) return false;
       // Bedrock and other indestructible blocks (hardness < 0) are
       // breakable in creative only — vanilla parity. Without this gate
       // bedrock could be punched through after the standard 0.4s timer
       // because nothing was checking hardness in tickBreak.
-      if (gameMode === 'creative') return true;
+      if (isCreative) return true;
       const s = world.get(bx, by, bz);
       if (s === AIR) return false;
       const def = registry.get(stateId(s));
@@ -3044,7 +3044,7 @@ const interaction = new InteractionController(
       // (netherite), 12 (gold). Without this, every block took the flat
       // 0.4s default — mining stone and dirt with bare hands felt
       // identical, and netherite blocks broke as fast as wool.
-      if (gameMode === 'creative') return 0.001;
+      if (isCreative) return 0.001;
       const s = world.get(bx, by, bz);
       if (s === AIR) return 0.4;
       const blockId = stateId(s);
@@ -3152,7 +3152,7 @@ const interaction = new InteractionController(
       // Without this gate, spectators could toggle doors, light TNT,
       // strip logs, place water, ignite fires, set spawn at beds, etc. —
       // anything in the long onInteract chain below.
-      if (gameMode === 'spectator') return false;
+      if (isSpectator) return false;
       const state = world.get(bx, by, bz);
       if (state === AIR) return false;
       const id = stateId(state);
@@ -4167,7 +4167,7 @@ const interaction = new InteractionController(
       // Right-click into the open sky / void (no block hit). Bow firing
       // works here too — vanilla shoots wherever you're aimed. Spectator
       // is gated out (matches the onInteract spectator gate).
-      if (gameMode === 'spectator') return false;
+      if (isSpectator) return false;
       const heldName = heldNameLower();
       if (heldName === 'bow' || heldName === 'crossbow') {
         return fireBowOrCrossbow();
@@ -4421,7 +4421,7 @@ canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
   // Spectator: no entity / world right-click interactions. Mob feed,
   // tame, leash, saddle, name-tag, hold-to-eat all bypass otherwise.
-  if (e.button === 2 && gameMode === 'spectator') return;
+  if (e.button === 2 && isSpectator) return;
   if (e.button === 2) {
     // Right-click: if aimed at a mob, try feed → tame → leash with held item.
     const aimLook = fp.lookVector();
@@ -4601,13 +4601,13 @@ canvas.addEventListener('mousedown', (e) => {
   if (e.button === 1) {
     e.preventDefault();
     // Spectator: no inventory mutation, no held-block change.
-    if (gameMode === 'spectator') return;
+    if (isSpectator) return;
     const hit = interaction.castRay();
     if (!hit) return;
     const pickedState = world.get(hit.bx, hit.by, hit.bz);
     const pickedId = stateId(pickedState);
     const def = registry.get(pickedId);
-    if (gameMode === 'creative') {
+    if (isCreative) {
       hotbar.setEntry(hotbar.selectedIndex, {
         state: pickedState,
         name: def.name.replace(/^webmc:/, ''),
@@ -4657,7 +4657,7 @@ canvas.addEventListener('mousedown', (e) => {
   // Spectator: ghost mode, no damage to mobs (matches the canBreak gate
   // I added for blocks). Without this, spectators could one-shot any mob
   // they aimed at — not vanilla behaviour.
-  if (gameMode === 'spectator') return;
+  if (isSpectator) return;
   const origin = camera.position;
   const look = fp.lookVector();
   const reach = 5;
@@ -4721,7 +4721,7 @@ canvas.addEventListener('mousedown', (e) => {
     // damage). Without the override, creative players had to grind down
     // a wither's 600 HP one normal hit at a time.
     const baseDmg =
-      gameMode === 'creative'
+      isCreative
         ? 9999
         : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
           maceBonus;
@@ -4864,15 +4864,21 @@ function saveHotbarIfChanged(): void {
 }
 
 let gameMode: GameMode = 'creative';
-// Shared boolean derived from gameMode. Replaces dozens of inline
-// `vitalsActive` chains —
-// dominant frame() check for hunger/exhaustion/contact-effect/save-
-// vitals gates. Updated whenever gameMode changes (applyGameMode + the
-// world-load fast path).
+// Shared booleans derived from gameMode. Replace dozens of inline
+// `gameMode === 'survival' || gameMode === 'adventure'` (vitalsActive),
+// `isCreative` (isCreative), and
+// `isSpectator` (isSpectator) chains across the file —
+// dominant frame() checks for hunger/exhaustion/contact-effect/save-
+// vitals gates and creative/spectator suppressions. Updated whenever
+// gameMode changes (applyGameMode is the single downstream mutation).
 let vitalsActive = false;
+let isCreative = true;
+let isSpectator = false;
 function applyGameMode(m: GameMode): void {
   gameMode = m;
   vitalsActive = m === 'survival' || m === 'adventure';
+  isCreative = m === 'creative';
+  isSpectator = m === 'spectator';
   // Persist so the next reload doesn't drop the player back into creative.
   void persistDB.setMeta('gameMode', m);
   const eff = effectsFor(m);
@@ -7024,7 +7030,7 @@ document.addEventListener(
     }
     if (e.code === 'KeyE') {
       e.preventDefault();
-      if (gameMode === 'creative') {
+      if (isCreative) {
         creativeInv.show();
       } else {
         survivalInv.show();
@@ -8655,7 +8661,7 @@ function frame(): void {
         !deathScreen.isVisible() &&
         !chatInput.isOpen()
       ) {
-        if (gameMode === 'creative') creativeInv.show();
+        if (isCreative) creativeInv.show();
         else if (vitalsActive) survivalInv.show();
         fp.inputBlocked = true;
       } else if (survivalInv.isVisible()) {
@@ -8763,7 +8769,7 @@ function frame(): void {
 
   fp.update(dtSec, fpUpdateOpts);
   if (touch) {
-    if (touch.state.primary && gameMode === 'spectator') {
+    if (touch.state.primary && isSpectator) {
       // Spectator can't attack/break — same gate as the desktop attack
       // handler, otherwise tap-to-break would still work via the
       // setHeld('break') fallback.
@@ -8801,7 +8807,7 @@ function frame(): void {
           const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
           // Creative insta-kill (touch parity with desktop).
           const dmg =
-            gameMode === 'creative'
+            isCreative
               ? 9999
               : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
           const result = mobWorld.damage(bestId, dmg);
@@ -9147,7 +9153,7 @@ function frame(): void {
   hand.update(dtSec);
   interaction.tick(now);
 
-  if (gameMode === 'creative') {
+  if (isCreative) {
     hotbar.setCounts(hotbarCountsEmpty, 'infinite');
   } else {
     // Visible hotbar mirrors inventory.hotbar in survival/adventure, so the
@@ -10744,7 +10750,7 @@ function frame(): void {
     // Mutate the hoisted context fields. The whole literal + 5 closures
     // were being allocated every frame previously — at 60Hz that's
     // 360 closures/sec just for the mob tick.
-    if (gameMode === 'spectator') {
+    if (isSpectator) {
       mobTickCtx.playerPos = null;
     } else {
       if (mobTickCtx.playerPos === null) mobTickCtx.playerPos = { x: 0, y: 0, z: 0 };
@@ -10798,13 +10804,13 @@ function frame(): void {
     // tick treats the player as out of range for the magnetic grab.
     // FAR_POS_BLOCK_PICKUP is reused across frames vs allocating
     // {x:-9999,y:0,z:0} per frame.
-    fp.input.sneak || gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
+    fp.input.sneak || isSpectator ? FAR_POS_BLOCK_PICKUP : fp.position,
     droppedItemPickupCallback,
   );
   xpOrbs.tick(
     dtSec,
     isSolid,
-    gameMode === 'spectator' ? FAR_POS_BLOCK_PICKUP : fp.position,
+    isSpectator ? FAR_POS_BLOCK_PICKUP : fp.position,
     xpOrbPickupCallback,
   );
   if (playerState.xpLevel > lastXpLevel) {
