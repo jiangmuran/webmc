@@ -101,6 +101,12 @@ export class FirstPersonCamera {
   constructor(camera: THREE.PerspectiveCamera, opts: Partial<FirstPersonCameraOptions> = {}) {
     this.camera = camera;
     this.opts = { ...DEFAULTS, ...opts };
+    // Initialize stable camera state once. update() was writing
+    // camera.up.copy(UP) and camera.rotation.order='YXZ' every frame —
+    // both are constant, but Vector3.copy fires _onChangeCallback
+    // and Euler.order has its own setter that flags the quaternion.
+    this.camera.up.copy(UP);
+    this.camera.rotation.order = 'YXZ';
 
     this.keyDown = (e) => {
       if (this.inputBlocked) return;
@@ -406,8 +412,6 @@ export class FirstPersonCamera {
       this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset,
       this.position.z,
     );
-    this.camera.up.copy(UP);
-    this.camera.rotation.order = 'YXZ';
     if (this.damageTiltSec > 0) {
       this.damageTiltSec = Math.max(0, this.damageTiltSec - dtSec);
       const k = this.damageTiltSec / 0.4;
@@ -425,8 +429,15 @@ export class FirstPersonCamera {
     this.sprintFovBoost += (targetBoost - this.sprintFovBoost) * fovAlpha;
     const baseFov = this.camera.userData['baseFov'] as number | undefined;
     if (baseFov !== undefined) {
-      this.camera.fov = baseFov + this.sprintFovBoost + this.effectFovBoost;
-      this.camera.updateProjectionMatrix();
+      const targetFov = baseFov + this.sprintFovBoost + this.effectFovBoost;
+      // Diff-cache fov + projectionMatrix recompute. After sprint
+      // boost has settled (~0.5s), targetFov is stable to many decimal
+      // places, but the per-frame write still fired updateProjectionMatrix
+      // (matrix recomputation is non-trivial). Skip when delta < 0.001 deg.
+      if (Math.abs(targetFov - this.camera.fov) > 0.001) {
+        this.camera.fov = targetFov;
+        this.camera.updateProjectionMatrix();
+      }
     }
   }
 
