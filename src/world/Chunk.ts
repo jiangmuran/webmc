@@ -101,9 +101,14 @@ export class Chunk {
     const sc = state === AIR && !this._sections[cy] ? null : this.ensureSection(cy);
     if (!sc) return;
     const localY = localYOf(y);
-    const prev = sc.get(lx, localY, lz);
-    if (prev === state) return;
+    // Use SubChunk._version as the change signal instead of an external
+    // sc.get() probe. The previous code did `sc.get + state-compare`
+    // before sc.set — duplicating the readIndex + palette.get that
+    // SubChunk.set already does internally for its own short-circuit.
+    // Now we let SubChunk.set decide and observe via its version bump.
+    const prevVersion = sc.version;
     sc.set(lx, localY, lz, state);
+    if (sc.version === prevVersion) return;
     this._meshDirty.add(cy);
     if (localY === 0 && cy > 0) this._meshDirty.add(cy - 1);
     if (localY === SUBCHUNK_DIM - 1 && cy < CHUNK_SECTIONS - 1) {
