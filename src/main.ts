@@ -5521,7 +5521,7 @@ const chatInput = new ChatInput(appEl, {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 n++;
-                chunksTouched.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
+                chunksTouched.add(lightKey(x >> 4, z >> 4));
               }
             }
           }
@@ -6084,7 +6084,7 @@ const chatInput = new ChatInput(appEl, {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 count++;
-                chunksTouched.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
+                chunksTouched.add(lightKey(x >> 4, z >> 4));
               }
             }
           }
@@ -7806,8 +7806,11 @@ function igniteTnt(bx: number, by: number, bz: number): void {
   const def = registry.get(id);
   if (def.name !== 'webmc:tnt') return;
   world.set(bx, by, bz, AIR);
-  const cx = Math.floor(bx / 16);
-  const cz = Math.floor(bz / 16);
+  // Block coords are integers; `>> 4` matches Math.floor(_/16) and
+  // skips the divide. Same below in touchWorldEdit + explodeAt
+  // chunksTouched paths.
+  const cx = bx >> 4;
+  const cz = bz >> 4;
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
     const light = lightCache.get(lightKey(cx, cz)) ?? null;
@@ -7877,7 +7880,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
           // Cascading TNT: remove as block, schedule fuse with random delay.
           world.set(x, y, z, airState);
           primedTnt.push({ bx: x, by: y, bz: z, remainingSec: 0.3 + Math.random() * 0.6 });
-          changedChunks.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
+          changedChunks.add(lightKey(x >> 4, z >> 4));
           continue;
         }
         const falloff = 1 - dSq / r2;
@@ -7933,7 +7936,7 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
             );
           }
         }
-        changedChunks.add(lightKey(Math.floor(x / 16), Math.floor(z / 16)));
+        changedChunks.add(lightKey(x >> 4, z >> 4));
       }
     }
   }
@@ -8240,8 +8243,8 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
   if (selfState !== AIR && fallableIds.has(stateId(selfState)) && by > 0) {
     cascadeFalling(bx, by - 1, bz);
   }
-  const cx = Math.floor(bx / 16);
-  const cz = Math.floor(bz / 16);
+  const cx = bx >> 4;
+  const cz = bz >> 4;
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
     // Decide scope: neighbor rebuild only if the block emits light or we're
