@@ -420,8 +420,10 @@ export class MobRenderer {
           vis.hpMat.map = makeHpBarTexture(hpRatio);
           vis.lastHpRatio = hpRatio;
         }
-        vis.hpMat.opacity = 0.92;
-      } else {
+        // Diff-cache opacity — was writing 0.92 every frame for every
+        // damaged mob even when the bar was already shown.
+        if (vis.hpMat.opacity !== 0.92) vis.hpMat.opacity = 0.92;
+      } else if (vis.hpMat.opacity !== 0) {
         vis.hpMat.opacity = 0;
       }
     }
