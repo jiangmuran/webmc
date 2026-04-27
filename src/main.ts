@@ -2900,13 +2900,16 @@ const ACTIVE_EFFECTS_EMPTY: readonly { id: string; amplifier: number; remainingS
 type MinimapMarker = { x: number; z: number; color: string; size?: number };
 const minimapMarkersScratch: MinimapMarker[] = [];
 const minimapMarkerPool: MinimapMarker[] = [];
-function minimapMarker(x: number, z: number, color: string, size?: number): MinimapMarker {
-  const m = minimapMarkerPool.pop() ?? { x: 0, z: 0, color: '' };
+function minimapMarker(x: number, z: number, color: string, size = 2): MinimapMarker {
+  // Default size to 2 here (matches the reader's `?? 2` fallback) and
+  // assign unconditionally — `delete m.size` for the unsized case
+  // shifted the object out of V8's fast-property hidden class into
+  // dictionary mode, costing more than the savings from pooling.
+  const m = minimapMarkerPool.pop() ?? { x: 0, z: 0, color: '', size: 2 };
   m.x = x;
   m.z = z;
   m.color = color;
-  if (size === undefined) delete m.size;
-  else m.size = size;
+  m.size = size;
   return m;
 }
 // Fire-tick ctx scratch + stateful neighborAt closure. The random-
