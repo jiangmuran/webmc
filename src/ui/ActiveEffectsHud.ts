@@ -32,6 +32,14 @@ export class ActiveEffectsHud {
   }
 
   render(effects: readonly EffectEntry[]): void {
+    // Fast path for the empty case: no .map() + .join() + closure
+    // allocations on every frame the player has no active effects.
+    if (effects.length === 0) {
+      if (this.lastSig === '') return;
+      this.lastSig = '';
+      this.root.replaceChildren();
+      return;
+    }
     const sig = effects
       .map((e) => `${e.id}:${String(e.amplifier)}:${Math.ceil(e.remainingSec)}`)
       .join('|');
