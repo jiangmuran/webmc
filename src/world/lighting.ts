@@ -87,15 +87,46 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // and never retains the reference.
   const topByCol = TOP_BY_COL_SCRATCH;
   let maxTopOpaque = -1;
+  // Pre-cache per-cy chunk section refs + per-cy "any opaque" flag.
+  // Was paying chunk.get's section deref + null check on every cell of
+  // the per-column top-down scan (256 columns × ~80 y = ~20K reads
+  // per chunk-light rebuild). Sections without any opaque palette
+  // entry can be skipped wholesale, jumping to the next-lower section.
+  const chunkSecsByCy: (SubChunk | null)[] = [];
+  const cySectionHasOpaque: boolean[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    const sec = chunk.section(cy);
+    chunkSecsByCy.push(sec);
+    let hasOpaque = false;
+    if (sec) {
+      const pal = sec.palette;
+      for (let i = 0; i < pal.size; i++) {
+        if (oracle.isOpaque(pal.get(i))) {
+          hasOpaque = true;
+          break;
+        }
+      }
+    }
+    cySectionHasOpaque.push(hasOpaque);
+  }
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
       let topOpaque = -1;
-      for (let y = searchTopY; y >= 0; y--) {
-        const state = chunk.get(lx, y, lz);
-        if (oracle.isOpaque(state)) {
-          topOpaque = y;
-          break;
+      // Walk sections top-down; for each section with any opaque
+      // palette entry, scan its cells for the first opaque hit.
+      for (let cy = searchTopY >> 4; cy >= 0; cy--) {
+        if (!cySectionHasOpaque[cy]) continue;
+        const sc = chunkSecsByCy[cy];
+        if (!sc) continue;
+        const yMin = cy << 4;
+        const yMax = Math.min(searchTopY, yMin + 15);
+        for (let y = yMax; y >= yMin; y--) {
+          if (oracle.isOpaque(sc.get(lx, y & 0xf, lz))) {
+            topOpaque = y;
+            break;
+          }
         }
+        if (topOpaque >= 0) break;
       }
       topByCol[lx * CHUNK_DIM + lz] = topOpaque;
       if (topOpaque > maxTopOpaque) maxTopOpaque = topOpaque;
