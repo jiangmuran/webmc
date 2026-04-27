@@ -227,27 +227,34 @@ export class FirstPersonCamera {
     }
   }
 
-  // Memoization for the yaw/pitch trig. Multiple callsites per frame
-  // (touch attack, third-person offset, elytra glide thrust, raycast)
-  // hit lookVector with the same yaw/pitch most frames — the mouse
-  // doesn't move every frame in 60Hz play. Cache the result vector
-  // and skip the 4 trig calls when neither angle has changed.
-  private cachedLookYaw = Number.NaN;
-  private cachedLookPitch = Number.NaN;
-  private cachedLookX = 0;
-  private cachedLookY = 0;
-  private cachedLookZ = 0;
+  // Cached yaw/pitch trig — both lookVector and update() consume
+  // sin/cos of yaw and pitch every frame. yaw/pitch only change on
+  // mousemove events, so the cache is hit for most frames in 60Hz
+  // play (mouse doesn't move every frame).
+  private cachedYaw = Number.NaN;
+  private cachedPitch = Number.NaN;
+  private cachedSinYaw = 0;
+  private cachedCosYaw = 0;
+  private cachedSinPitch = 0;
+  private cachedCosPitch = 0;
+
+  private refreshTrigCache(): void {
+    if (this.yaw !== this.cachedYaw) {
+      this.cachedSinYaw = Math.sin(this.yaw);
+      this.cachedCosYaw = Math.cos(this.yaw);
+      this.cachedYaw = this.yaw;
+    }
+    if (this.pitch !== this.cachedPitch) {
+      this.cachedSinPitch = Math.sin(this.pitch);
+      this.cachedCosPitch = Math.cos(this.pitch);
+      this.cachedPitch = this.pitch;
+    }
+  }
 
   lookVector(out: THREE.Vector3 = new THREE.Vector3()): THREE.Vector3 {
-    if (this.yaw !== this.cachedLookYaw || this.pitch !== this.cachedLookPitch) {
-      const cp = Math.cos(this.pitch);
-      this.cachedLookX = -Math.sin(this.yaw) * cp;
-      this.cachedLookY = Math.sin(this.pitch);
-      this.cachedLookZ = -Math.cos(this.yaw) * cp;
-      this.cachedLookYaw = this.yaw;
-      this.cachedLookPitch = this.pitch;
-    }
-    out.set(this.cachedLookX, this.cachedLookY, this.cachedLookZ);
+    this.refreshTrigCache();
+    const cp = this.cachedCosPitch;
+    out.set(-this.cachedSinYaw * cp, this.cachedSinPitch, -this.cachedCosYaw * cp);
     return out;
   }
 
@@ -257,8 +264,9 @@ export class FirstPersonCamera {
     const speed =
       baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1) * this.speedMultiplier;
 
-    const sinY = Math.sin(this.yaw);
-    const cosY = Math.cos(this.yaw);
+    this.refreshTrigCache();
+    const sinY = this.cachedSinYaw;
+    const cosY = this.cachedCosYaw;
     const fwdX = -sinY;
     const fwdZ = -cosY;
     const rightX = cosY;
@@ -266,7 +274,10 @@ export class FirstPersonCamera {
 
     const mx = fwdX * this.input.forward + rightX * this.input.strafe;
     const mz = fwdZ * this.input.forward + rightZ * this.input.strafe;
-    const len = Math.hypot(mx, mz);
+    // sqrt(x²+z²) over Math.hypot — game-coord velocities are always
+    // in normal range; hypot's overflow safety is wasted CPU per
+    // frame.
+    const len = Math.sqrt(mx * mx + mz * mz);
     const hx = len > 0 ? (mx / len) * speed : 0;
     const hz = len > 0 ? (mz / len) * speed : 0;
 
