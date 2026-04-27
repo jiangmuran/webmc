@@ -459,8 +459,14 @@ export class MobRenderer {
         vis.hpMat.opacity = 0;
       }
     }
-    for (const [id, vis] of this.visuals) {
+    // Iterate keys + lookup vs entries — destructuring `[id, vis]`
+    // allocates a fresh 2-tuple per iteration, including for visuals
+    // we early-continue on (the dominant case — most frames every mob
+    // is still alive, so this loop is mostly continues).
+    for (const id of this.visuals.keys()) {
       if (seen.has(id)) continue;
+      const vis = this.visuals.get(id);
+      if (!vis) continue;
       vis.bodyMat.dispose();
       vis.headMat.dispose();
       // hpMat.map is shared (bucket cache) — don't dispose here.

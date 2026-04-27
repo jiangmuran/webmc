@@ -65,6 +65,9 @@ export class Stars {
       this.material.opacity = op;
       this.lastOpacity = op;
     }
-    this.material.needsUpdate = false;
+    // (was: `this.material.needsUpdate = false` — three.js's Material
+    // needsUpdate setter is no-op for false; removing the per-frame
+    // setter call. needsUpdate=true would re-version+recompile the
+    // shader; we never need that here so just don't touch it.)
   }
 }
