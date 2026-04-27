@@ -8,7 +8,7 @@ test.describe('M3 terrain & lighting', () => {
     });
     page.on('pageerror', (err) => consoleErrors.push(err.message));
 
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     await page.waitForFunction(
       () => {
         const hud = document.querySelector('#hud')?.textContent ?? '';
@@ -49,7 +49,7 @@ test.describe('M3 terrain & lighting', () => {
   });
 
   test('HUD reports world seed and pending chunk count', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     const hud = page.getByTestId('hud');
     await expect(hud).toContainText(/seed\s+[0-9a-f]+/);
     await expect(hud).toContainText(/pending\s+\d+/);

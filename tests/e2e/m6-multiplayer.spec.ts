@@ -15,7 +15,7 @@ async function waitForTerrain(page: Page): Promise<void> {
 }
 
 async function clearIdb(page: Page): Promise<void> {
-  await page.goto('/');
+  await page.goto('/?autoplay=1');
   await page.evaluate(async () => {
     const dbs = await indexedDB.databases();
     await Promise.all(

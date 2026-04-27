@@ -8,7 +8,7 @@ test.describe('M2 place/break', () => {
     });
     page.on('pageerror', (err) => consoleErrors.push(err.message));
 
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     const hud = page.getByTestId('hud');
     await page.waitForFunction(
       () => {
@@ -53,7 +53,7 @@ test.describe('M2 place/break', () => {
   });
 
   test('hotbar number keys change the selected slot', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     await expect(page.getByTestId('hotbar')).toBeVisible();
 
     await page.waitForFunction(

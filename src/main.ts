@@ -7066,6 +7066,18 @@ const mainMenu = new MainMenu(appEl, {
   },
 });
 fp.inputBlocked = true;
+// Auto-skip the main menu when the URL requests it (?autoplay=1) or
+// when entering a multiplayer room (?mp=...). Without this, e2e
+// scenarios that go straight to `/` see the menu blocking input + the
+// pause-zeroed dtSec freezing the simulation, so chunks never stream
+// in and the HUD never updates past the boot placeholder.
+{
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('autoplay') === '1' || params.get('mp') !== null) {
+    mainMenu.hide();
+    fp.inputBlocked = false;
+  }
+}
 const savedGameMode = (await persistDB.getMeta('gameMode')) as GameMode | null;
 if (
   savedGameMode === 'survival' ||

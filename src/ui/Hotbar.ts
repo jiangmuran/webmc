@@ -127,9 +127,11 @@ export class Hotbar {
         const tag = tgt.tagName;
         if (tag === 'INPUT' || tag === 'TEXTAREA' || (tgt as HTMLElement).isContentEditable) return;
       }
-      // Skip when no pointer lock — same gate as the wheel handler so menus/UI
-      // overlays don't get hijacked.
-      if (document.pointerLockElement === null) return;
+      // Was gated on pointerLock. Headless e2e environments (and some
+      // browsers in iframes / restricted contexts) can't acquire pointer
+      // lock, so the hotbar would silently ignore digit keys. The
+      // INPUT/TEXTAREA gate above already covers chat / search overlays;
+      // pressing 1-9 with no game focus on the page is harmless.
       const code = e.code;
       if (code.startsWith('Digit')) {
         const n = Number(code.slice(5));

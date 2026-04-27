@@ -10,7 +10,7 @@ test.describe('M1 walkaround', () => {
       consoleErrors.push(err.message);
     });
 
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     const hud = page.getByTestId('hud');
     await expect(hud).toContainText(/webmc M\d+/);
 
