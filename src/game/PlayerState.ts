@@ -202,7 +202,9 @@ export class PlayerState {
     } else {
       this.regenAccumSec = 0;
     }
-    const fireImmune = this.effects.has('fire_resistance');
+    // Skip the Map.has hash entirely when no effects are active (the
+    // dominant case — most frames the player is potion-free).
+    const fireImmune = this.effects.size > 0 && this.effects.has('fire_resistance');
     if (env.inFluid === 'lava') {
       if (!fireImmune) {
         this.tickDamageEv.amount = LAVA_DAMAGE_PER_SEC * dtSec;
@@ -220,7 +222,7 @@ export class PlayerState {
         this.takeDamage(this.tickDamageEv);
       }
     }
-    const waterBreathing = this.effects.has('water_breathing');
+    const waterBreathing = this.effects.size > 0 && this.effects.has('water_breathing');
     // drainHunger doubles as the "vital drains apply" gate: creative /
     // spectator should neither lose air nor drown.
     if (drainHunger && env.inFluid === 'water' && !waterBreathing) {
