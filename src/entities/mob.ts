@@ -1021,6 +1021,10 @@ export class MobWorld {
   }
 
   tick(dtSec: number, ctx: MobTickContext): void {
+    // Skip the entire tick when no mobs exist (e.g. peaceful difficulty
+    // farms in a fully-cleared area). Both inner loops would be no-ops
+    // anyway but the early return saves the iterator construction.
+    if (this.mobs.size === 0) return;
     // Vanilla mob despawn: mobs > 128 blocks from any player despawn instantly,
     // mobs 32–128 blocks roll a small chance per tick. Without this, mobs
     // accumulated forever as the player explored — every chunk the player
