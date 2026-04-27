@@ -275,9 +275,15 @@ const CRC_TABLE = ((): Uint32Array => {
 })();
 
 function crc32(bytes: Uint8Array): number {
+  // Indexed for-loop instead of for-of: V8 generally optimizes for-of
+  // on TypedArray, but indexed access is unambiguous and crc32 walks
+  // every byte of the encoded chunk (often 100+ KB at world save). The
+  // CRC_TABLE lookup is bounded to 0..255, so the index-undefined
+  // fallback is purely a TS noUncheckedIndexedAccess satisfier.
   let crc = 0xffffffff;
-  for (const byte of bytes) {
-    crc = ((crc >>> 8) ^ (CRC_TABLE[(crc ^ byte) & 0xff] ?? 0)) >>> 0;
+  const len = bytes.length;
+  for (let i = 0; i < len; i++) {
+    crc = ((crc >>> 8) ^ (CRC_TABLE[(crc ^ bytes[i]!) & 0xff] ?? 0)) >>> 0;
   }
   return (crc ^ 0xffffffff) >>> 0;
 }
