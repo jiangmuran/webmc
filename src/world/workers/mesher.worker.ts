@@ -64,7 +64,10 @@ function unpackSnapshot(req: MesherRequest): Snapshot {
     const mask = (1 << bits) - 1;
     for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
       const bitPos = i * bits;
-      const word = arr[bitPos >>> 5] ?? 0;
+      // arr is Uint32Array (already null-checked at top of else); `!`
+      // skips the per-cell coalesce — runs 4096 times per chunk-section
+      // dispatch.
+      const word = arr[bitPos >>> 5]!;
       FLAT_IDX_SCRATCH[i] = (word >>> (bitPos & 31)) & mask;
     }
   }
