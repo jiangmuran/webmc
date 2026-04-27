@@ -8285,7 +8285,9 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     // section borders), not all 24 sections. Was rebuilding all 24 per
     // single block place — costly on 12-radius views (5 chunks × 24 =
     // 120 mesh rebuilds for one block placement).
-    const editCy = Math.floor(by / 16);
+    // by is a block-y in [0, 384), always non-negative; `>> 4` matches
+    // Math.floor(by / 16) and skips the divide.
+    const editCy = by >> 4;
     const onlyLocal = !emitsNew && !wasBreak && affectedLen === 1;
     // Skip the full chunk-light BFS when the edit can't change light:
     // - placement: opaque blocks block skylight, so always rebuild
