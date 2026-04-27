@@ -170,25 +170,30 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             npos[u] = iu;
             npos[v] = iv;
             if (opaqueAtCtx(npos[0] ?? 0, npos[1] ?? 0, npos[2] ?? 0)) continue;
-            mask[iv * D + iu] = selfIdx;
+            mask[(iv << 4) + iu] = selfIdx;
           }
         }
 
         for (let iv = 0; iv < D; iv++) {
+          // D=SUBCHUNK_DIM=16 → `iv * D` = `iv << 4`. Hoist the row
+          // base out of the inner loop; saves one multiply per cell
+          // visit + per-width-extend + per-height-extend + per-clear.
+          const ivBase = iv << 4;
           for (let iu = 0; iu < D; ) {
-            const val = mask[iv * D + iu] ?? -1;
+            const val = mask[ivBase + iu] ?? -1;
             if (val < 0) {
               iu++;
               continue;
             }
 
             let width = 1;
-            while (iu + width < D && (mask[iv * D + iu + width] ?? -1) === val) width++;
+            while (iu + width < D && (mask[ivBase + iu + width] ?? -1) === val) width++;
 
             let height = 1;
             heightLoop: while (iv + height < D) {
+              const rowBase = (iv + height) << 4;
               for (let k = 0; k < width; k++) {
-                if ((mask[(iv + height) * D + iu + k] ?? -1) !== val) break heightLoop;
+                if ((mask[rowBase + iu + k] ?? -1) !== val) break heightLoop;
               }
               height++;
             }
@@ -247,8 +252,9 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             quadCount++;
 
             for (let dy = 0; dy < height; dy++) {
+              const rowBase = (iv + dy) << 4;
               for (let dx = 0; dx < width; dx++) {
-                mask[(iv + dy) * D + iu + dx] = -1;
+                mask[rowBase + iu + dx] = -1;
               }
             }
 
