@@ -7835,6 +7835,10 @@ const TORCH_EMBER_COLOR: readonly [number, number, number] = [255, 235, 140];
 const LAVA_EMBER_COLOR: readonly [number, number, number] = [255, 160, 60];
 
 function tickTnt(dtSec: number): void {
+  // Skip the entire tick when no TNT is primed — common case in
+  // normal play. Without this, every frame paid the smoke-accum
+  // advance + emitNow boolean even with nothing to tick.
+  if (primedTnt.length === 0) return;
   tntSmokeAccum += dtSec;
   const emitNow = tntSmokeAccum > 0.1;
   if (emitNow) tntSmokeAccum = 0;
