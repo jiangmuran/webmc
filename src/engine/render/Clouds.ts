@@ -109,8 +109,11 @@ export class Clouds {
     // setter fires GPU-side invalidation; cumulative on already-
     // strained hardware. Scroll continues to advance though, so
     // clouds resume mid-flow when toggled back on.
-    this.scrollX += dtSec * cloudScrollSpeed() * 50 * 0.1;
-    this.scrollZ += dtSec * cloudScrollSpeed() * 50 * 0.035;
+    // Single cloudScrollSpeed() call per tick (was 2; the helper is a
+    // constant return).
+    const scroll = cloudScrollSpeed();
+    this.scrollX += dtSec * scroll * 50 * 0.1;
+    this.scrollZ += dtSec * scroll * 50 * 0.035;
     if (!this.mesh.visible) return;
     this.texture.offset.set(this.scrollX * 0.01, this.scrollZ * 0.01);
     this.mesh.position.x = Math.floor(camX / 16) * 16;
