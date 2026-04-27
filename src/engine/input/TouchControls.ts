@@ -220,7 +220,8 @@ export class TouchControls {
     for (const t of e.changedTouches) {
       if (this.isLeftHalf(t.clientX) && this.stickTouch === null) {
         this.stickTouch = t.identifier;
-        this.stickOrigin = { x: t.clientX, y: t.clientY };
+        this.stickOrigin.x = t.clientX;
+        this.stickOrigin.y = t.clientY;
         if (this.stickBase) {
           this.stickBase.style.left = `${(t.clientX - 48).toString()}px`;
           this.stickBase.style.top = `${(t.clientY - 48).toString()}px`;
@@ -229,7 +230,8 @@ export class TouchControls {
         e.preventDefault();
       } else if (!this.isLeftHalf(t.clientX) && this.lookTouch === null) {
         this.lookTouch = t.identifier;
-        this.lookLast = { x: t.clientX, y: t.clientY };
+        this.lookLast.x = t.clientX;
+        this.lookLast.y = t.clientY;
         e.preventDefault();
       }
     }
@@ -266,7 +268,10 @@ export class TouchControls {
         const dy = t.clientY - this.lookLast.y;
         this.state.lookDx += dx * this.lookSensitivity;
         this.state.lookDy += dy * this.lookSensitivity;
-        this.lookLast = { x: t.clientX, y: t.clientY };
+        // Mutate in place — was `this.lookLast = {x,y}` per touchmove,
+        // ~60 throwaway literals/sec on active look-pad drags.
+        this.lookLast.x = t.clientX;
+        this.lookLast.y = t.clientY;
         e.preventDefault();
       }
     }
