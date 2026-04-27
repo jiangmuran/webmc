@@ -104,6 +104,10 @@ export class Inventory {
   }
 
   count(itemId: number): number {
+    // Negative sentinel (e.g. callers passing `byName(...) ?? -1` for a
+    // missing registry entry) can never match a real stack — skip the
+    // 36-slot scan entirely.
+    if (itemId < 0) return 0;
     let total = 0;
     for (const s of this.hotbar) if (s?.itemId === itemId) total += s.count;
     for (const s of this.main) if (s?.itemId === itemId) total += s.count;

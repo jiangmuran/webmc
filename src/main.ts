@@ -1921,6 +1921,13 @@ interface Achievement {
   readonly title: string;
   readonly check: () => boolean;
 }
+// Pre-resolve item-id lookups used by the per-frame achievement check
+// closures. Was hitting `itemRegistry.byName(...)` (Map lookup) on every
+// frame for the iron_age + diamond_hunter polls until those were
+// unlocked. Resolved once at module init — registry is fully populated
+// before this point (see line ~420 itemRegistry construction).
+const ACHIEVEMENT_IRON_INGOT_ID = itemRegistry.byName('webmc:iron_ingot') ?? -1;
+const ACHIEVEMENT_DIAMOND_ID = itemRegistry.byName('webmc:diamond') ?? -1;
 const achievements: readonly Achievement[] = [
   { id: 'first_block', title: 'Hello World', check: () => playerStats.blocksBroken >= 1 },
   { id: 'mason', title: 'Mason (100 blocks placed)', check: () => playerStats.blocksPlaced >= 100 },
@@ -1959,12 +1966,12 @@ const achievements: readonly Achievement[] = [
   {
     id: 'iron_age',
     title: 'Iron Age',
-    check: () => inventory.count(itemRegistry.byName('webmc:iron_ingot') ?? -1) >= 1,
+    check: () => inventory.count(ACHIEVEMENT_IRON_INGOT_ID) >= 1,
   },
   {
     id: 'diamond_hunter',
     title: 'Diamond Hunter',
-    check: () => inventory.count(itemRegistry.byName('webmc:diamond') ?? -1) >= 1,
+    check: () => inventory.count(ACHIEVEMENT_DIAMOND_ID) >= 1,
   },
   { id: 'level_30', title: 'Level 30 (max enchant)', check: () => playerState.xpLevel >= 30 },
   { id: 'two_weeks', title: 'Two Weeks (day 14)', check: () => dayCounter >= 14 },
