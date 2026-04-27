@@ -9955,7 +9955,10 @@ function frame(): void {
     spawnSystem.tick(dtSec, mobWorld, spawnSystemCtx);
 
     // Chicken egg laying: every 5–10 min per chicken, drop an egg item.
-    const nowEggMs = performance.now();
+    // Reuse `now` sampled once at the top of frame() — within-frame
+    // drift (a few ms) is irrelevant for >1000ms gates and saves a
+    // performance.now() syscall.
+    const nowEggMs = now;
     if (nowEggMs - lastEggCheckMs > 1000) {
       lastEggCheckMs = nowEggMs;
       const eggItemId = itemRegistry.byName('webmc:egg');
@@ -9985,7 +9988,8 @@ function frame(): void {
     }
 
     // Zombie → drowned conversion after ~30s underwater.
-    const nowDrownMs = performance.now();
+    // Reuse `now` (see chicken-egg comment).
+    const nowDrownMs = now;
     if (nowDrownMs - lastDrownCheckMs > 1000) {
       const dt = nowDrownMs - lastDrownCheckMs;
       lastDrownCheckMs = nowDrownMs;
@@ -10024,7 +10028,8 @@ function frame(): void {
     // mob 24-48 blocks from the player at a dark spot. Tries surface first,
     // then random Y for cave spawning. Without this, survival had no
     // naturally-spawned mobs (only /summon).
-    const nowSpawnMs = performance.now();
+    // Reuse `now` (see chicken-egg comment).
+    const nowSpawnMs = now;
     if (
       vitalsActive &&
       // Peaceful difficulty (mobDamageMultiplier === 0) suppresses hostile
@@ -10179,7 +10184,8 @@ function frame(): void {
     }
 
     // Phantom spawning: 3+ days without sleep, at night, sky-exposed.
-    const nowPhantomMs = performance.now();
+    // Reuse `now` (see chicken-egg comment).
+    const nowPhantomMs = now;
     if (nowPhantomMs - lastPhantomCheckMs > 8000) {
       lastPhantomCheckMs = nowPhantomMs;
       const daysSinceSleep = dayCounter - lastSleepDay;
