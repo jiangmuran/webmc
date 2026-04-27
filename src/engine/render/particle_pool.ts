@@ -71,7 +71,21 @@ export class ParticlePool {
     }
     slot = this.instances[this.cursor];
     if (!slot) return null;
-    Object.assign(slot, spec, { ageSec: 0, active: true });
+    // Explicit field writes — was Object.assign with a fresh
+    // {ageSec, active} literal per spawn. Pool spawn fires per particle
+    // emission (block break / explosion / weather), so churn matters.
+    slot.kind = spec.kind;
+    slot.x = spec.x;
+    slot.y = spec.y;
+    slot.z = spec.z;
+    slot.vx = spec.vx;
+    slot.vy = spec.vy;
+    slot.vz = spec.vz;
+    slot.lifeSec = spec.lifeSec;
+    slot.colorRGBA = spec.colorRGBA;
+    slot.size = spec.size;
+    slot.ageSec = 0;
+    slot.active = true;
     this.cursor = (this.cursor + 1) % this.instances.length;
     void start;
     return slot;
