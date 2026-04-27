@@ -1872,6 +1872,11 @@ const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
 const grassBlockIdCached = registry.byName('webmc:grass_block');
 const dirtIdCached = registry.byName('webmc:dirt');
 const bambooIdCached = registry.byName('webmc:bamboo');
+// Item-registry caches for frame-rate paths.
+const eggItemIdCached = itemRegistry.byName('webmc:egg');
+const stickItemIdCached = itemRegistry.byName('webmc:stick');
+const appleItemIdCached = itemRegistry.byName('webmc:apple');
+const totemItemIdCached = itemRegistry.byName('webmc:totem_of_undying');
 // Hoisted spawn-pick tables. Were re-allocated as fresh tuple arrays
 // per spawn attempt inside the per-frame natural-mob-spawn block; the
 // arrays are read-only weights so a single shared instance is safe.
@@ -9681,7 +9686,7 @@ function frame(): void {
     // Totem of Undying: vanilla checks main-hand AND offhand slot. webmc
     // only scanned the inventory grids — a totem in offhand silently
     // failed to save you.
-    const totemId = itemRegistry.byName('webmc:totem_of_undying');
+    const totemId = totemItemIdCached;
     const totemInOffhand = totemId !== undefined && inventory.offhand?.itemId === totemId;
     const totemInInventory = totemId !== undefined && countInventoryItem(totemId) > 0;
     if (totemId !== undefined && (totemInInventory || totemInOffhand)) {
@@ -10147,7 +10152,7 @@ function frame(): void {
     const nowEggMs = now;
     if (nowEggMs - lastEggCheckMs > 1000) {
       lastEggCheckMs = nowEggMs;
-      const eggItemId = itemRegistry.byName('webmc:egg');
+      const eggItemId = eggItemIdCached;
       if (eggItemId !== undefined) {
         for (const m of mobWorld.all()) {
           if (m.def.kind !== 'chicken') continue;
@@ -10687,7 +10692,7 @@ function frame(): void {
                 }
               }
               if (Math.random() < 0.02) {
-                const stickId = itemRegistry.byName('webmc:stick');
+                const stickId = stickItemIdCached;
                 if (stickId !== undefined) {
                   droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
                     itemId: stickId,
@@ -10697,7 +10702,7 @@ function frame(): void {
                 }
               }
               if (name === 'webmc:oak_leaves' && Math.random() < 0.005) {
-                const aId = itemRegistry.byName('webmc:apple');
+                const aId = appleItemIdCached;
                 if (aId !== undefined) {
                   droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
                     itemId: aId,
