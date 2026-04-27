@@ -11223,7 +11223,9 @@ function frame(): void {
     // re-running the /^webmc:/ regex per HUD tick.
     const aimedBlock = aim ? blockShortNameFn(stateId(world.get(aim.bx, aim.by, aim.bz))) : '';
     let effectStr = '';
-    for (const [id, eff] of playerState.effects) {
+    for (const id of playerState.effects.keys()) {
+      const eff = playerState.effects.get(id);
+      if (eff === undefined) continue;
       effectStr += ` ${id}${eff.amplifier > 0 ? `+${String(eff.amplifier)}` : ''}(${eff.remainingSec.toFixed(0)}s)`;
     }
     // Inline the spawn-distance formatter — was an IIFE arrow function
