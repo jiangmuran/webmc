@@ -128,16 +128,12 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   }
 }
 
-// Module-scoped neighbor offsets — was a fresh array per
-// computeBlockLight call.
-const NEIGHBORS_6: readonly (readonly [number, number, number])[] = [
-  [-1, 0, 0],
-  [1, 0, 0],
-  [0, -1, 0],
-  [0, 1, 0],
-  [0, 0, -1],
-  [0, 0, 1],
-];
+// Parallel neighbor-offset arrays. Was a tuple-of-tuples; each BFS
+// step pulled the inner tuple then read off[0]/off[1]/off[2]. Index
+// access on three flat readonly number[]s skips the tuple deref.
+const NEIGHBOR_DX_6: readonly number[] = [-1, 1, 0, 0, 0, 0];
+const NEIGHBOR_DY_6: readonly number[] = [0, 0, -1, 1, 0, 0];
+const NEIGHBOR_DZ_6: readonly number[] = [0, 0, 0, 0, -1, 1];
 // Parallel arrays for the BFS queue. Was an Array<LightNode> with a
 // fresh {x,y,z,value} literal per emissive source AND per propagation
 // step (chunks with many torches/glowstone hit thousands per chunk
@@ -196,7 +192,6 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       }
     }
   }
-  const neighbors = NEIGHBORS_6;
   // Head-pointer dequeue (FIFO without shift). The original
   // queue.shift() is O(N) per pop, so a chunk with N emissive sources
   // and ~10K total propagation nodes ran O(N^2) ≈ 100M ops. With the
@@ -211,15 +206,13 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
     head++;
     const next = cv2 - 1;
     if (next <= 0) continue;
-    // Manual unroll over the 6 neighbors avoids the per-iteration
-    // [dx,dy,dz] tuple destructure that allocated nothing in V8 modern
-    // builds but still showed up in interpreter sample profiles. Cost
-    // of the unroll is one extra explicit per-axis branch.
-    for (let ni = 0; ni < neighbors.length; ni++) {
-      const off = neighbors[ni]!;
-      const nx = cx2 + off[0];
-      const ny = cy2 + off[1];
-      const nz = cz2 + off[2];
+    // Iterate the 6 neighbors via parallel readonly number[]s; was a
+    // tuple-of-tuples (one inner tuple deref + 3 indexed reads per
+    // step) — three flat indexed reads instead.
+    for (let ni = 0; ni < 6; ni++) {
+      const nx = cx2 + NEIGHBOR_DX_6[ni]!;
+      const ny = cy2 + NEIGHBOR_DY_6[ni]!;
+      const nz = cz2 + NEIGHBOR_DZ_6[ni]!;
       if (nx < 0 || nx >= CHUNK_DIM || ny < 0 || ny >= CHUNK_HEIGHT || nz < 0 || nz >= CHUNK_DIM) {
         continue;
       }
