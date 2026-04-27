@@ -48,9 +48,13 @@ export class DayNightCycle {
     // At t=0.25 sun is on east horizon, t=0.5 noon (max y), t=0.75 west horizon,
     // t=0/1 midnight. Offset so timeOfDay 0.75 is already below horizon.
     const sunAngle = (t - 0.25) * Math.PI * 2;
-    this.sunDir.set(Math.cos(sunAngle) * 0.3, Math.sin(sunAngle) * 0.95 - 0.05, 0.4).normalize();
+    // Cache sin/cos — was computing sin(sunAngle) twice per tick (once
+    // in the sunDir build, once for the zone gate).
+    const sinSun = Math.sin(sunAngle);
+    const cosSun = Math.cos(sunAngle);
+    this.sunDir.set(cosSun * 0.3, sinSun * 0.95 - 0.05, 0.4).normalize();
 
-    const sun = Math.sin(sunAngle);
+    const sun = sinSun;
     if (sun < -0.25) {
       // Constant-color zone — skip the copy when we've already painted it.
       if (this.lastZone !== 'night') {
