@@ -7730,6 +7730,7 @@ async function savePlayerNow(): Promise<void> {
 }
 
 let lastPlayerSaveAt = performance.now();
+let lastWorldSaveAnnounceAt = performance.now();
 let fluidTickAccum = 0;
 let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
@@ -11039,10 +11040,17 @@ function frame(): void {
     );
   }
 
-  if (now - lastPlayerSaveAt > 30000) {
+  // Player position saves every 5s. Was 30s; movement-only sessions
+  // (walking around without editing blocks) lost their position on tab
+  // close because the autosave debouncer requires dirty chunks. The
+  // chat-toast confirmation still throttles to 30s so the player isn't
+  // spammed with "World saved." every 5s.
+  if (now - lastPlayerSaveAt > 5000) {
     lastPlayerSaveAt = now;
+    const announce = now - lastWorldSaveAnnounceAt > 30000;
+    if (announce) lastWorldSaveAnnounceAt = now;
     void savePlayerNow().then(() => {
-      chatInput.addLine('World saved.', '#80a0ff');
+      if (announce) chatInput.addLine('World saved.', '#80a0ff');
     });
   }
 
