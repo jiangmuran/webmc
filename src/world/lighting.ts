@@ -194,6 +194,10 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
     // cy is in [0, CHUNK_SECTIONS-1] so `<< 4` matches `* SUBCHUNK_DIM`
     // without the multiply.
     const yBase = cy << 4;
+    // Hoist ensureSection outside the per-cell loop — was called per
+    // emissive voxel found. Section is constant across the 4096-cell
+    // scan of one emissive section.
+    const lightSec = ensureSection(light, cy, 0);
     for (let dy = 0; dy < SUBCHUNK_DIM; dy++) {
       const y = yBase + dy;
       const localY = y & 0xf;
@@ -202,7 +206,6 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
           const state = chunk.get(lx, y, lz);
           const e = oracle.lightEmission(state);
           if (e > 0) {
-            const lightSec = ensureSection(light, cy, 0);
             // Cache the localIndex result — was computed twice (read +
             // write) per emissive voxel.
             const idx = localIndex(lx, localY, lz);
@@ -216,6 +219,15 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
         }
       }
     }
+  }
+  // Pre-resolve all 24 sections once. The BFS-step path called
+  // ensureSection per neighbor visit (~60K calls per chunk-light
+  // rebuild on torch-rich worlds). Each call is a function dispatch +
+  // array deref; precaching turns every visit into a direct array
+  // lookup against `sectionsByCy[ncy]`.
+  const sectionsByCy: Uint8Array[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    sectionsByCy.push(ensureSection(light, cy, 0));
   }
   // Head-pointer dequeue (FIFO without shift). The original
   // queue.shift() is O(N) per pop, so a chunk with N emissive sources
@@ -244,7 +256,7 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       const state = chunk.get(nx, ny, nz);
       if (oracle.isOpaque(state)) continue;
       const ncy = ny >> 4;
-      const sec = ensureSection(light, ncy, 0);
+      const sec = sectionsByCy[ncy]!;
       const idx = localIndex(nx, ny & 0xf, nz);
       const prev = sec[idx] ?? 0;
       const prevBlock = unpackBlock(prev);
