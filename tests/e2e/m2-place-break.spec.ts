@@ -66,7 +66,17 @@ test.describe('M2 place/break', () => {
       return t.split('\n').at(-1) ?? '';
     });
     await page.keyboard.press('Digit3');
-    await page.waitForTimeout(100);
+    // HUD updates are throttled to 5Hz (every 200ms), so wait long
+    // enough to be sure the new slot has been written into #hud.
+    await page.waitForFunction(
+      (firstHud: string) => {
+        const t = document.querySelector('#hud')?.textContent ?? '';
+        const last = t.split('\n').at(-1) ?? '';
+        return last !== '' && last !== firstHud;
+      },
+      firstName,
+      { timeout: 3000 },
+    );
     const thirdName = await page.evaluate(() => {
       const t = document.querySelector('#hud')?.textContent ?? '';
       return t.split('\n').at(-1) ?? '';
