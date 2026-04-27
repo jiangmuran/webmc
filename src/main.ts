@@ -11034,7 +11034,11 @@ function frame(): void {
     });
   }
 
-  hudUpdateAccumSec += dtSec;
+  // Tick HUD on real frame time (not the paused-zeroed dtSec) so the
+  // HUD still refreshes while the main menu / pause menu is up. Without
+  // this the HUD stays at the index.html "booting…" placeholder
+  // forever in e2e mode (which doesn't click "Play").
+  hudUpdateAccumSec += stats.frameMs / 1000;
   const updateHudText = hudUpdateAccumSec >= 0.2;
   if (updateHudText) hudUpdateAccumSec = 0;
   if (debugOverlay.isEnabled() && updateHudText) {
